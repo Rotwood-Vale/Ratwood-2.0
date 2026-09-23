@@ -26,8 +26,7 @@
 	cancel_disconnected_admin_alert()
 	surgeries = null
 	if(LAZYLEN(status_effects))
-		for(var/s in status_effects)
-			var/datum/status_effect/S = s
+		for(var/datum/status_effect/S as anything in status_effects.Copy())
 			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
 				qdel(S)
 			else
@@ -52,7 +51,36 @@
 	sharedSoullinks = null
 	if(craftingthing)
 		QDEL_NULL(craftingthing)
+	clear_enemies()
+	enemies = null
 	return ..()
+
+/// Adds a mob to our enemies list, dropping the reference if that mob is ever destroyed.
+/mob/living/proc/add_enemy(mob/living/new_enemy)
+	if(!new_enemy || new_enemy == src || (new_enemy in enemies))
+		return
+	LAZYSET(enemies, new_enemy, null)
+	RegisterSignal(new_enemy, COMSIG_QDELETING, PROC_REF(on_enemy_destroyed))
+
+/// As add_enemy, but stores an associated value against the mob.
+/mob/living/proc/set_enemy(mob/living/new_enemy, value)
+	if(!new_enemy || new_enemy == src)
+		return
+	add_enemy(new_enemy)
+	enemies[new_enemy] = value
+
+/mob/living/proc/add_enemies(list/new_enemies)
+	for(var/mob/living/new_enemy as anything in new_enemies)
+		add_enemy(new_enemy)
+
+/mob/living/proc/on_enemy_destroyed(datum/source)
+	SIGNAL_HANDLER
+	enemies -= source
+
+/mob/living/proc/clear_enemies()
+	for(var/mob/living/enemy as anything in enemies)
+		UnregisterSignal(enemy, COMSIG_QDELETING)
+	enemies = list()
 
 /mob/living/onZImpact(turf/T, levels)
 	if(HAS_TRAIT(src, TRAIT_NOFALLDAMAGE2))

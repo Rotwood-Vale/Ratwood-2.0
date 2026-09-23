@@ -2022,12 +2022,12 @@ generate/load female uniform sprites matching all previously decided variables
 /mob/living/carbon/human/proc/update_observer_view(obj/item/I, inventory)
 	if(observers && observers.len)
 		for(var/M in observers)
-			var/mob/dead/observe = M
+			var/mob/dead/observer/observe = M
 			if(observe.client && observe.client.eye == src)
 				if(observe.hud_used)
 					if(inventory && !observe.hud_used.inventory_shown)
 						continue
-					observe.client.screen += I
+					observe.add_observed_screen(I)
 			else
 				observers -= observe
 				if(!observers.len)

@@ -367,7 +367,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 				if(istype(src, /mob/living/simple_animal/hostile/retaliate))
 					var/mob/living/simple_animal/hostile/retaliate/retaliating_mount = src
 					if(retaliating_mount.enemies.len)
-						retaliating_mount.enemies = list()
+						retaliating_mount.clear_enemies()
 						visible_message(span_notice("[src] calms down."))
 						retaliating_mount.LoseTarget()
 			if(tame && owner == user)

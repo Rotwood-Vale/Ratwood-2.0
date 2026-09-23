@@ -44,6 +44,7 @@
 	if(underwear)
 		QDEL_NULL(underwear)
 	last_mind = null
+	STOP_PROCESSING(SSiconupdates, src)
 	GLOB.carbon_list -= src
 
 /mob/living/carbon/ZImpactDamage(turf/T, levels)
