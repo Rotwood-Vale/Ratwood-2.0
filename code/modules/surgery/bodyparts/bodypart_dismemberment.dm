@@ -340,6 +340,7 @@
 	if(held_index)
 		was_owner.dropItemToGround(owner.get_item_for_held_index(held_index), force = TRUE)
 		was_owner.hand_bodyparts[held_index] = null
+		was_owner.update_action_buttons_icon()
 
 	if(organ_slowdown)
 		was_owner.remove_movespeed_modifier("[src.type]_slow", update = TRUE)
@@ -575,6 +576,7 @@
 			if(hand)
 				hand.update_hand_vis()
 		C.update_inv_gloves()
+		C.update_action_buttons_icon()
 
 	if(special) //non conventional limb attachment
 		//if we had an ongoing surgery to attach a new limb, we stop it.
