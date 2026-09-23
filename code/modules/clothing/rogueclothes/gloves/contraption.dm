@@ -103,7 +103,7 @@
 
 	var/list/mob/living/valid_targets = list()
 	// Find targets in range
-	for (var/mob/living/carbon/C in view(5, user))
+	for (var/mob/living/carbon/C in view(4, user))
 		if (C.anti_magic_check())
 			visible_message(span_warning("The lightning fizzles harmlessly against [C]!"))
 			playsound(get_turf(C), 'sound/magic/magic_nulled.ogg', 100)
@@ -128,7 +128,7 @@
 			sleep(delay / sprite_changes)
 
 		var/dist = get_dist(user, C)
-		if (dist <= 5)
+		if (dist <= 4)
 			if (HAS_TRAIT(C, TRAIT_SHOCKIMMUNE))
 				continue
 			else
