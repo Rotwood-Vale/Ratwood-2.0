@@ -104,7 +104,7 @@
 // below, so any /sword/long subtype that redefines these won't work for a frei. Kept as defines so the
 // type below and uses_stock_longsword_kit() don't drift apart.
 #define LONGSWORD_STOCK_INTENTS list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, SWORD_STRIKE)
-#define LONGSWORD_STOCK_GRIPPED_INTENTS list(/datum/intent/sword/cut/long, /datum/intent/sword/thrust/long, /datum/intent/sword/chop/long, /datum/intent/sword/thrust/long/deep)
+#define LONGSWORD_STOCK_GRIPPED_INTENTS list(/datum/intent/sword/cut/long, /datum/intent/sword/thrust/long, /datum/intent/sword/chop/long, /datum/intent/sword/peel)
 
 /datum/intent/sword/cut/master
 	name = "mandritto"
@@ -124,6 +124,7 @@
 	attack_verb = list("furiously chops", "powerfully cleaves", "fiercely hacks")
 	// This is almost x2 slower than a regular longsword's chop, giving the opponent more time to riposte you.
 	// This however will penetrate all Light AC armor except for brigandine parts. Also does x2 damage to shields.
+	damfactor = 1.6
 	penfactor = 40
 	swingdelay = 0.8 SECONDS
 	clickcd = CLICK_CD_CHARGED
@@ -148,6 +149,7 @@
 	intent_intdamage_factor = 0.5
 	clickcd = CLICK_CD_MELEE
 	misscost = 0
+	blade_class = BCLASS_PICK //temporary fix until I introduce halfswording
 
 /datum/intent/effect/daze/longsword/clinch
 	name = "clinch & swipe"
