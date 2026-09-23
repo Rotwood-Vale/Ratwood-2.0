@@ -163,7 +163,7 @@
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berzerker
 	name = "unstoppable skin"
 	desc = "I've endured enough. The onslaught has lost its meaning."
-	armor = ARMOR_BRIGANDINE//scary as hell, but longer repair time
+	armor = ARMOR_BRONZE//scary, but longer regen
 	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
 	body_parts_inherent = COVERAGE_FULL
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
