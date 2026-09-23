@@ -15,6 +15,7 @@
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT, CTAG_LICKER_WRETCH)
 	cmode_music = 'sound/music/combat_delf.ogg'
 	traits_applied = list(TRAIT_DARKVISION)
+	subclass_languages = list(/datum/language/otavan)
 	subclass_stats = list(
 		STATKEY_WIL = 1
 	)
