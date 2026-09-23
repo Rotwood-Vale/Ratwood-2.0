@@ -184,34 +184,36 @@
 		return*/
 	if (ready)
 		playsound(src, pick(launchsound), 100)
-		spawn(10)
-			var/obj/item/boulder/P = /obj/item/boulder
-//			var/atom/target = get_edge_target_turf(src, dir)
-			user.visible_message("<span class='notice'>You fire the catapult!</span>")
-			loaded = 0
-			ready = 0
-		// Adjust `distance_input` with a random variation
-		//	var/random_distance = distance_input + rand(-5, 5)
-			var/z_position = src.z + 1 // Start one level above the catapult
-			// Apply random offsets to target position for x and y directions
+		addtimer(CALLBACK(src, PROC_REF(launch_payload), user, T), 10)
 
-/*			if (!isturf(locate(src.x, src.y, z_position)))
-			z_position = src.z // If no z-level above, stay on the current z-level
-			if (!target) // Confirm target validity
-			to_chat(user, "<span class='warning'>No valid target found!</span>")
-			return*/
-			for(var/atom/movable/AM in src)
-				qdel(AM)
-			new P(locate(src.x, src.y, z_position))
+/obj/structure/catapult/proc/launch_payload(mob/user, turf/T)
+	var/obj/item/boulder/P = /obj/item/boulder
+//	var/atom/target = get_edge_target_turf(src, dir)
+	user.visible_message("<span class='notice'>You fire the catapult!</span>")
+	loaded = 0
+	ready = 0
+	// Adjust `distance_input` with a random variation
+	//	var/random_distance = distance_input + rand(-5, 5)
+	var/z_position = src.z + 1 // Start one level above the catapult
+	// Apply random offsets to target position for x and y directions
 
-			for(P in (locate(src.x, src.y, z_position)))
-				P.launched = TRUE
-				P.throw_at(get_turf(T), get_dist(src, T), 3)
-				P.travel_time = get_dist(P, src)
+/*	if (!isturf(locate(src.x, src.y, z_position)))
+	z_position = src.z // If no z-level above, stay on the current z-level
+	if (!target) // Confirm target validity
+	to_chat(user, "<span class='warning'>No valid target found!</span>")
+	return*/
+	for(var/atom/movable/AM in src)
+		qdel(AM)
+	new P(locate(src.x, src.y, z_position))
 
-			cut_overlays()
-			update_icon()
-			update_overlays()
+	for(P in (locate(src.x, src.y, z_position)))
+		P.launched = TRUE
+		P.throw_at(get_turf(T), get_dist(src, T), 3)
+		P.travel_time = get_dist(P, src)
+
+	cut_overlays()
+	update_icon()
+	update_overlays()
 
 /obj/structure/catapult/attack_right(mob/user)
 	. = ..()
@@ -254,31 +256,26 @@
 	icon_state = "boulder"*/
 
 
+/obj/item/boulder/proc/delayed_burst()
+	explosion(get_turf(src), 1, -1, 2, 0)
+	do_shrapnel_effect(get_turf(src))
+	qdel(src)
+
 /obj/item/boulder/Bump(atom/A)
 	if(launched)
 		playsound(get_turf(src), pick(incoming), 100, FALSE)
-		spawn(travel_time * 6)
-			explosion(get_turf(src), 1, -1, 2, 0)
-			do_shrapnel_effect(get_turf(src))
-			qdel(src)
+		addtimer(CALLBACK(src, PROC_REF(delayed_burst)), travel_time * 6)
 
 /obj/item/boulder/onZImpact(turf/T, levels)
 	if(launched)
 		playsound(get_turf(src), pick(incoming), 100, FALSE)
-		spawn(travel_time * 6)
-			explosion(get_turf(src), 1, -1, 2, 0)
-			do_shrapnel_effect(get_turf(src))
-
-			qdel(src)
+		addtimer(CALLBACK(src, PROC_REF(delayed_burst)), travel_time * 6)
 
 /obj/item/boulder/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(launched)
 		if(!istype(hit_atom, /turf/open/space))
 			playsound(get_turf(src), pick(incoming), 100, FALSE)
-			spawn(travel_time * 6)
-				explosion(get_turf(src), 1, -1, 2, 0)
-				do_shrapnel_effect(get_turf(src))
-				qdel(src)
+			addtimer(CALLBACK(src, PROC_REF(delayed_burst)), travel_time * 6)
 
 /obj/item/boulder/proc/do_shrapnel_effect(atom/target)
 	// Create a shrapnel component for this instance of the boulder

@@ -83,7 +83,7 @@
 	duration = 1
 
 /datum/status_effect/debuff/uncookedfood/on_apply()
-	if(HAS_TRAIT(owner, TRAIT_NASTY_EATER) || HAS_TRAIT(owner, TRAIT_ORGAN_EATER) || HAS_TRAIT(owner, TRAIT_WILD_EATER))
+	if(HAS_TRAIT(owner, TRAIT_NASTY_EATER) || HAS_TRAIT(owner, TRAIT_ORGAN_EATER) || HAS_TRAIT(owner, TRAIT_WILD_EATER) || HAS_TRAIT(owner, TRAIT_RAW_EATER))
 		return ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
@@ -456,6 +456,56 @@
 	name = "Dazed by fencer's wrap"
 	desc = "That stupid piece of cloth is so distracting! It pisses me off!"
 	icon_state = "dazed" */
+
+///// Freifechter Daze Variants /////
+/datum/status_effect/debuff/dazed/longsword
+	id = "durchlauffen"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/longsword
+	effectedstats = list(STATKEY_SPD = -3, STATKEY_INT = -1)
+	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/longsword
+	name = "CAN'T FUCKING BREATHE"
+	desc = "How HOW THE FUCK DID THEY DO THAT?! MY EARS RING, MY BREATHING IS HEAVY."
+	icon_state = "mstrike"
+
+/datum/status_effect/debuff/dazed/longsword2h
+	id = "zorn ort"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/longsword2h
+	effectedstats = list(STATKEY_PER = -4, STATKEY_LCK = -3)
+	duration = 16 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/longsword2h
+	name = "CAN'T FUCKING SEE"
+	desc = "HOW THE FUCK DID THEY DO THAT?! MY EYE!!"
+	icon_state = "mstrike"
+
+/datum/status_effect/debuff/dazed/freisabre
+	id = "uszkodzić"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/freisabre
+	effectedstats = list(STATKEY_STR = -2, STATKEY_SPD = -3)
+	duration = 16 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/freisabre
+	name = "Master Strike"
+	desc = "How the fuck did they do that!? My wrist!"
+	icon_state = "mstrike"
+
+/datum/status_effect/debuff/dazed/swipe
+	id = "clinch & swipe"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/swipe
+	effectedstats = list(STATKEY_CON = -4, STATKEY_STR = -1)
+	duration = 1.5 SECONDS	//Should last BARELY ENOUGH for someone who's actively grappling and swiping you to get a constant refresh of the dedbuff, otherwise it's useless.
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/swipe
+	name = "Clinched and Swiped!"
+	desc = "Urgh! My face! My grip is weakened!"
+	icon_state = "swiped"
+
 
 /datum/status_effect/debuff/staggered
 	id = "staggered"
@@ -1221,3 +1271,20 @@
 	name = "Musked"
 	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
 	icon_state = "debuff"
+
+/datum/status_effect/debuff/enchantmenttriggered
+	id = "enchantmenttriggered"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
+	duration = -1 // set explicitly when applied, see below
+
+/datum/status_effect/debuff/enchantmenttriggered/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+	
+/atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
+	name = "Enchantment Dormant"
+	desc = "The Enchantments you wear have activated and are temporarily Dormant!"
+	icon_state = "dazed"
+
+

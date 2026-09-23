@@ -17,6 +17,7 @@
 	throw_speed = 1
 	throw_range = 3
 	dropshrink = 0.8
+	nudist_approved = TRUE
 
 /obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -1276,7 +1277,6 @@
 
 /proc/process_ochre_revivals(list/mob/living/carbon/human/targets_to_revive)
 	for(var/mob/living/carbon/human/target in targets_to_revive)
-		continue
 		if(target.stat != DEAD)
 			continue
 

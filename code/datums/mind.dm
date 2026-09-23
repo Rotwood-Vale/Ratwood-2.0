@@ -114,6 +114,11 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/list/personal_objectives = list() // List of personal objectives not tied to the antag roles
 	var/list/special_people = list() // For characters whose text will display in a different colour when seen by this Mind
 	var/list/curses = list()
+	/// Weakref to this character's severed head, set on decapitation and cleared on reattachment.
+	/// Never qdel it, weakref/Destroy() qdels its target
+	var/datum/weakref/severed_head_ref
+	/// The player's OOC card and identity, captured from their body so it follows the mind through transplants
+	var/datum/player_card/player_card
 
 /datum/mind/New(key)
 	src.key = key
@@ -124,6 +129,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	QDEL_NULL(player_card)
 	QDEL_NULL(sleep_adv)
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
@@ -294,6 +300,14 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
+		// The card rides the mind, captured leaving a body and restamped entering one. Shapeshift shells are
+		// skipped both ways, or the shell's empty fields overwrite it and animals show the player's notes
+		if(ishuman(current))
+			var/mob/living/carbon/human/old_human = current
+			if(!old_human.is_shapeshift_shell())
+				if(!player_card)
+					player_card = new
+				player_card.capture_from(old_human)
 		current.mind = null
 		UnregisterSignal(current, COMSIG_MOB_DEATH)
 		SStgui.on_transfer(current, new_character)
@@ -321,6 +335,10 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(curses && curses.len)
 		apply_curses_to_mob(current, src)
 	new_character.mind = src							//and associate our new body with ourself
+	if(ishuman(new_character) && player_card)
+		var/mob/living/carbon/human/new_human = new_character
+		if(!new_human.is_shapeshift_shell())
+			player_card.apply_card_to(new_human)
 	for(var/datum/antagonist/A in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		A.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
@@ -478,7 +496,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 /datum/mind/proc/recall_targets(mob/recipient, window=1)
 	var/output = "<B>[recipient.real_name]'s Hitlist:</B><br>"
 	for(var/mob/living/carbon in GLOB.mob_living_list) // Iterate through all mobs in the world
-		if((carbon.real_name != recipient.real_name) && ((carbon.has_flaw(/datum/charflaw/assassintarget)) && (!istype(carbon, /mob/living/carbon/human/dummy))))//To be on the list they must be hunted, not be the user and not be a dummy (There is a dummy that has all vices for some reason)
+		if((carbon.real_name != recipient.real_name) && (HAS_TRAIT(carbon, TRAIT_ASSASSIN_TARGET)) && (!istype(carbon, /mob/living/carbon/human/dummy)))//To be on the list they must be hunted, not be the user and not be a dummy (There is a dummy that has all vices for some reason)
 			output += "<br>[carbon.real_name]"
 			output += "<br>[carbon.real_name]"
 			if (carbon.job)
@@ -1037,13 +1055,13 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 						var/custom_name = user.client?.prefs.resolve_loadout_to_name(path2item)
 						if (custom_name)
 							I.original_name = I.name // Store original name before renaming
-							I.name = custom_name
+							I.name = sanitize(custom_name)
 							// Log to game log
 							log_game("[key_name(user)] retrieved loadout item with custom name: '[custom_name]' (original: '[I.original_name]')")
 						// Apply custom description if set
 						var/custom_desc = user.client?.prefs.resolve_loadout_to_desc(path2item)
 						if (custom_desc)
-							I.desc = custom_desc
+							I.desc = html_encode(custom_desc)
 
 						user.put_in_hands(I)
 

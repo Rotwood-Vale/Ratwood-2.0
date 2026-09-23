@@ -31,7 +31,7 @@
 	icon_state = "splintlegs"
 	item_state = "splintlegs"
 	max_integrity = ARMOR_INT_LEG_BRIGANDINE
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_BRIGANDINE
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	blocksound = SOFTHIT
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
@@ -51,6 +51,7 @@
 /obj/item/clothing/under/roguetown/splintlegs/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/under/roguetown/splintlegs/iron
 	name = "splinted leggings"

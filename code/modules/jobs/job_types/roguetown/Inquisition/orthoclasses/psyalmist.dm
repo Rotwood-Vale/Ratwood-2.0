@@ -10,12 +10,10 @@
 	category_tags = list(CTAG_INQUISITION)
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/psydonite.ogg'
-	subclass_stats = list(//This does not follow the typical 8 stat setup.
+	subclass_stats = list(//+9
 		STATKEY_STR = 1,
-		STATKEY_LCK = 1,
 		STATKEY_WIL = 1,
-		STATKEY_CON = 1,
-		STATKEY_SPD = 2,
+		STATKEY_SPD = 3,
 	)
 	subclass_skills = list(
 		/datum/skill/misc/music = SKILL_LEVEL_MASTER,
@@ -25,7 +23,7 @@
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
@@ -51,7 +49,7 @@
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	id = /obj/item/clothing/ring/signet/silver
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
+	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)	//Capped to T2 miracles.//Capped to T2 miracles.
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T3)
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
@@ -107,8 +105,8 @@
 				H.put_in_hands(new /obj/item/rogueweapon/whip/psywhip_lesser(get_turf(H)), forced = TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 			if("Psydonic Rapier")
-				H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy(get_turf(H)), forced = TRUE)
-				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
+				H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy(get_turf(H)), del_on_fail = FALSE, forced = TRUE)
+				H.put_in_hands(new /obj/item/rogueweapon/scabbard/sword(get_turf(H)), del_on_fail = FALSE, forced = TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 
 /datum/outfit/job/roguetown/psyaltrist

@@ -21,7 +21,8 @@
 	cmode_music = 'sound/music/combat_noble.ogg'
 
 	job_traits = list(TRAIT_SEEPRICES, TRAIT_CICERONE)
-
+	virtue_restrictions = list(/datum/virtue/utility/blacksmith, /datum/virtue/utility/artificer, /datum/virtue/utility/tailor)
+	quirk_restrictions = list(/datum/quirk/hunted)
 	advclass_cat_rolls = list(CTAG_MERCH = 2)
 	job_subclasses = list(
 		/datum/advclass/merchant

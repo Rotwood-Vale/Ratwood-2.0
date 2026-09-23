@@ -157,10 +157,116 @@
 	var/milk_stored = 0
 	var/milk_max = 75
 	var/branded_writing = ""
+	var/can_jiggle = TRUE
+	var/is_jiggling = FALSE
+	var/jiggle_endless = FALSE
+	var/jiggle_costs_stamina = FALSE
+	var/jiggle_cycles_left = 0
+	var/jiggle_timerid
+	var/static/list/jiggle_interrupt_signals = list(
+		COMSIG_MOB_ITEM_ATTACK,
+		COMSIG_MOB_ITEM_BEING_ATTACKED,
+		COMSIG_MOB_ATTACK_HAND,
+		COMSIG_MOB_ATTACKED_BY_HAND,
+		COMSIG_MOB_APPLY_DAMGE,
+	)
 
 /obj/item/organ/breasts/New()
 	..()
 	milk_max = max(75, breast_size * 100)
+
+/obj/item/organ/breasts/Destroy()
+	stop_jiggle()
+	return ..()
+
+/obj/item/organ/breasts/get_icon_cache_key(obj/item/bodypart/bodypart)
+	return "[..()]-[breast_size]-[is_jiggling]"
+
+/obj/item/organ/breasts/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	stop_jiggle()
+	return ..()
+
+/obj/item/organ/breasts/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	stop_jiggle()
+	return ..()
+
+/obj/item/organ/breasts/proc/start_jiggle(duration, endless = FALSE, costs_stamina = FALSE)
+	if(is_jiggling || !ishuman(owner))
+		return FALSE
+	is_jiggling = TRUE
+	jiggle_endless = endless
+	jiggle_costs_stamina = costs_stamina
+	jiggle_cycles_left = endless ? 0 : max(1, round(duration / BREAST_JIGGLE_CYCLE, 1))
+	var/mob/living/carbon/human/H = owner
+	RegisterSignal(H, list(COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ATTACK_HAND), PROC_REF(on_jiggle_attacking))
+	RegisterSignal(H, COMSIG_MOB_ITEM_BEING_ATTACKED, PROC_REF(on_jiggle_attacked_with_item))
+	RegisterSignal(H, COMSIG_MOB_ATTACKED_BY_HAND, PROC_REF(on_jiggle_attacked_by_hand))
+	RegisterSignal(H, COMSIG_MOB_APPLY_DAMGE, PROC_REF(on_jiggle_damaged))
+	H.update_body_parts(TRUE)
+	jiggle_cycle()
+	return TRUE
+
+/obj/item/organ/breasts/proc/jiggle_cycle()
+	jiggle_timerid = null
+	if(!is_jiggling)
+		return
+	var/mob/living/carbon/human/H = owner
+	if(QDELETED(H) || !ishuman(H) || H.stat != CONSCIOUS || H.cmode || H.doing || !(H.mobility_flags & MOBILITY_STAND))
+		stop_jiggle()
+		return
+	if(jiggle_costs_stamina && !H.jiggle_stamina_is_free())
+		var/cycle_cost = BREAST_JIGGLE_STAMINA_PER_SECOND * (BREAST_JIGGLE_CYCLE / (1 SECONDS))
+		if(jiggle_endless)
+			cycle_cost *= BREAST_JIGGLE_ENDLESS_STAMINA_MULT
+		if(!H.stamina_add(cycle_cost))
+			stop_jiggle()
+			return
+	H.do_jiggle_hop()
+	if(!jiggle_endless)
+		jiggle_cycles_left--
+		if(jiggle_cycles_left <= 0)
+			stop_jiggle()
+			return
+	jiggle_timerid = addtimer(CALLBACK(src, PROC_REF(jiggle_cycle)), BREAST_JIGGLE_CYCLE, TIMER_STOPPABLE)
+
+/obj/item/organ/breasts/proc/stop_jiggle()
+	if(jiggle_timerid)
+		deltimer(jiggle_timerid)
+		jiggle_timerid = null
+	if(!is_jiggling)
+		return
+	is_jiggling = FALSE
+	jiggle_endless = FALSE
+	jiggle_costs_stamina = FALSE
+	jiggle_cycles_left = 0
+	var/mob/living/carbon/human/H = owner
+	if(QDELETED(H) || !ishuman(H))
+		return
+	UnregisterSignal(H, jiggle_interrupt_signals)
+	H.update_body_parts(TRUE)
+
+/obj/item/organ/breasts/proc/interrupt_jiggle(mob/living/attacker)
+	if(attacker?.used_intent?.type == INTENT_HELP)
+		return
+	stop_jiggle()
+
+/obj/item/organ/breasts/proc/on_jiggle_attacking(datum/source)
+	SIGNAL_HANDLER
+	interrupt_jiggle(owner)
+
+/obj/item/organ/breasts/proc/on_jiggle_attacked_with_item(datum/source, mob/living/victim, mob/living/attacker)
+	SIGNAL_HANDLER
+	interrupt_jiggle(attacker)
+
+/obj/item/organ/breasts/proc/on_jiggle_attacked_by_hand(datum/source, mob/living/attacker, mob/living/victim)
+	SIGNAL_HANDLER
+	interrupt_jiggle(attacker)
+
+/obj/item/organ/breasts/proc/on_jiggle_damaged(datum/source, damage, damagetype, def_zone)
+	SIGNAL_HANDLER
+	if(damage <= 0)
+		return
+	stop_jiggle()
 
 /obj/item/organ/testicles
 	name = "testicles"

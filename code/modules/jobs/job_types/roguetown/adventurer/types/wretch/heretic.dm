@@ -113,15 +113,23 @@
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/bascinet/pigface, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/inhumen/matthios)
 			H.cmode_music = 'sound/music/combat_matthios.ogg'
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/matthios, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/inhumen/baotha)
 			H.cmode_music = 'sound/music/combat_baotha.ogg'
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/rondel/baotha, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/inhumen/graggar)
 			H.cmode_music = 'sound/music/combat_graggar.ogg'
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/guard, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/volfplate, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/combat/messer/graggar, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/divine/astrata)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/astrata, SLOT_RING, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold, SLOT_HEAD, TRUE)
@@ -161,13 +169,13 @@
 			ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)
 		if(/datum/patron/divine/noc)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/noc, SLOT_RING, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/knight, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull, SLOT_HEAD, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE) // Really good at reading... does this really do anything? No. BUT it's soulful.
 			H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 		if(/datum/patron/divine/ravox)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/ravox, SLOT_RING, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/beakhelm, SLOT_HEAD, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 		if(/datum/patron/divine/malum)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/malum, SLOT_RING, TRUE)
@@ -195,7 +203,7 @@
 					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/chain/psydon, SLOT_GLOVES, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/psydonboots, SLOT_SHOES, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/cloak/psydontabard, SLOT_CLOAK, TRUE)
-					var/helmets = list("Barbute", "Sallet", "Armet", "Bucket Helm")
+					var/helmets = list("Barbute", "Sallet", "Armet", "Bucket Helm", "Volfskulle Bascinet")
 					var/helmet_choice = input(H,"Choose your PSYDONIAN helmet.", "TAKE UP PSYDON'S HELMS") as anything in helmets
 					switch(helmet_choice)
 						if("Barbute")
@@ -206,12 +214,14 @@
 							H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm, SLOT_HEAD, TRUE)
 						if("Bucket Helm")
 							H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/psybucket, SLOT_HEAD, TRUE)
+						if("Volfskulle Bascinet")
+							H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/psydonic, SLOT_HEAD, TRUE)
 				if("Reformist") //You look like as if somebody dressed Freifechter into a lot of armour. Better chestpiece, but worse gloves and boots, and worse padded gambeson.
 					to_chat(H, span_warning ("PSYDON fell after his battle against the great evil. But HE LYVES through us, in our memory and our bleeding hearts. As long as we LYVE, so shall HE, through us. All shall be as HE deemed, in HIS name, as HE did."))
 					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/reform, SLOT_RING, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet, SLOT_HEAD, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/fluted, SLOT_ARMOR, TRUE)
-					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter, SLOT_SHIRT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/shirt/freifechter, SLOT_SHIRT, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic, SLOT_PANTS, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/angle, SLOT_GLOVES, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short, SLOT_SHOES, TRUE)
@@ -331,12 +341,20 @@
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/inhumen/matthios)
 			H.cmode_music = 'sound/music/combat_matthios.ogg'
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/matthios, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/inhumen/baotha)
 			H.cmode_music = 'sound/music/combat_baotha.ogg'
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/rondel/baotha, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/inhumen/graggar)
 			H.cmode_music = 'sound/music/combat_graggar.ogg'
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/combat/messer/graggar, SLOT_IN_BACKPACK, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 		if(/datum/patron/divine/astrata)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/astrata, SLOT_RING, TRUE)
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
@@ -408,7 +426,7 @@
 				if("Reformist") //You look like a Reformist Freifechter.
 					to_chat(H, span_warning("God is dead, but this world HE left is beautiful and worth of loving. Don't let the butchers from Otava tell you otherwise."))
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half/fencer, SLOT_ARMOR, TRUE)
-					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter, SLOT_SHIRT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/shirt/freifechter, SLOT_SHIRT, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/fingerless_leather, SLOT_GLOVES, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short, SLOT_SHOES, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic, SLOT_PANTS, TRUE)
@@ -611,12 +629,20 @@
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/bascinet/pigface, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo, SLOT_BELT_L, TRUE)
 		if(/datum/patron/inhumen/matthios)
 			H.cmode_music = 'sound/music/combat_matthios.ogg'
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/matthios, SLOT_BELT_L, TRUE)
 		if(/datum/patron/inhumen/baotha)
 			H.cmode_music = 'sound/music/combat_baotha.ogg'
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/rondel/baotha, SLOT_BELT_L, TRUE)
 		if(/datum/patron/inhumen/graggar)
 			H.cmode_music = 'sound/music/combat_graggar.ogg'
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/volfplate, SLOT_HEAD, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/combat/messer/graggar, SLOT_BELT_L, TRUE)
 		if(/datum/patron/divine/astrata)
 			H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/astrata, SLOT_RING, TRUE)
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)

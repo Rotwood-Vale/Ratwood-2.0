@@ -190,6 +190,12 @@
 	var/sunderfirestacks = 0
 	var/blood = 0
 	var/list/datum/wound/snapshot_wounds
+	var/static/list/purged_effects = list(
+	/datum/status_effect/incapacitating/immobilized,
+	/datum/status_effect/incapacitating/paralyzed,
+	/datum/status_effect/incapacitating/stun,
+	/datum/status_effect/incapacitating/knockdown,)
+	var/position = FALSE
 	miracle = TRUE
 	devotion_cost = 70
 
@@ -244,6 +250,7 @@
 		divinefirestacks = divine_status?.stacks
 		// Snapshot current wounds so we can remove new ones on revert
 		snapshot_wounds = target.get_wounds()
+		position = target.resting
 
 		to_chat(target, span_warning("I feel a part of me was left behind..."))
 		play_indicator(target,'icons/mob/overhead_effects.dmi', "timestop", 100, OBJ_LAYER)
@@ -287,6 +294,9 @@
 			wound.bodypart_owner.remove_wound(wound)
 		else
 			target.simple_remove_wound(wound)
+	for(var/effect in purged_effects)
+		target.remove_status_effect(effect)
+	target.set_resting(position, TRUE)
 
 	playsound(target.loc, 'sound/magic/timereverse.ogg', 100, FALSE)
 
@@ -539,6 +549,7 @@
 	var/damage_per_fragment = 22
 
 	var/mob/living/caster
+	var/slow_timer
 
 /datum/status_effect/debuff/divergence/on_creation(mob/living/new_owner, mob/living/new_caster)
 	. = ..()
@@ -554,7 +565,9 @@
 
 	var/turf/center = get_turf(owner)
 
-	owner.Immobilize(2 SECONDS)
+	owner.Immobilize(0.5 SECONDS)
+	owner.add_movespeed_modifier(MOVESPEED_ID_TIMELINEDIVERGE, update=TRUE, priority=100, multiplicative_slowdown=2, movetypes=GROUND)
+	slow_timer = addtimer(CALLBACK(src, PROC_REF(remove_slow)), 3 SECONDS, TIMER_STOPPABLE)
 
 	owner.visible_message(
 		span_warning("[owner]'s timeline fractures apart!"),
@@ -563,8 +576,16 @@
 
 	spawn_fragments(center)
 
+/datum/status_effect/debuff/divergence/proc/remove_slow()
+	slow_timer = null
+	owner?.remove_movespeed_modifier(MOVESPEED_ID_TIMELINEDIVERGE, TRUE)
+
 /datum/status_effect/debuff/divergence/on_remove()
 	. = ..()
+	// If the effect ends early cancel the timer and make sure the slow is gone
+	if(slow_timer)
+		deltimer(slow_timer)
+		remove_slow()
 
 	for(var/obj/effect/divergence_fragment/F in fragments)
 		if(!QDELETED(F))
