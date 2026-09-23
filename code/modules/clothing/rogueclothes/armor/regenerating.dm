@@ -101,6 +101,10 @@
 		return
 	qdel(src)
 
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest
+	// Chest and body layers need different block sounds to equip together
+	blocksound = SOFTHIT
+
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple
 	name = "disciple's skin"
 	desc = "It's far more than just an oath. </br>'AEON, PSYDON, ADONAI - ENTROPY, HUMENITY, DIVINITY. A TRINITY THAT IS ONE, \
@@ -131,6 +135,7 @@
 	I AM LIVING ON A FUCKING CORPSE. HE IS THE WORLD, AND THE WORLD IS ROTTING AWAY. \
 	HEAVEN CLOSED ITS GATES TO US, LONG AGO.' </br>'YET, HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I. \
 	HAPPINESS MUST BE FOUGHT FOR.'"
+	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_VEST
 	body_parts_inherent = COVERAGE_VEST
 	armor = ARMOR_LEATHER_GOOD
