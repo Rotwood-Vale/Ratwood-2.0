@@ -130,7 +130,7 @@
 	blocksound = SOFTHIT
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
-	repair_time = 20 SECONDS
+	repair_time = 15 SECONDS//less armor and integ so faster regen
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/gladiator
 	name = "pit-hardened skin"
@@ -139,7 +139,7 @@
 	body_parts_inherent = COVERAGE_FULL
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
-	repair_time = 20 SECONDS
+	repair_time = 15 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berzerker
 	name = "unstoppable skin"
@@ -162,7 +162,7 @@
 	body_parts_inherent = COVERAGE_FULL
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
-	repair_time = 20 SECONDS
+	repair_time = 15 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/barbarian
 	name = "hardened chest"
@@ -172,7 +172,7 @@
 	blocksound = SOFTHIT
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
-	repair_time = 20 SECONDS
+	repair_time = 15 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/bodybuilder//dedicated gachi-muchi armor
 	name = "strongman's pride"
@@ -191,7 +191,7 @@
 	blocksound = PLATEHIT//I HAVE BALLS OF STEEL
 	armor = ARMOR_LEATHER_STUDDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
-	repair_time = 30 SECONDS
+	repair_time = 30 SECONDS//better armor, longer repair
 
 #undef COMBAT_TAG_DURATION
 
