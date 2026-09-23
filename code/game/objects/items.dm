@@ -2068,11 +2068,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return TRUE
 	return FALSE
 
-// The mob carrying this, through any depth of containers.
+// The mob carrying this, through any depth of containers. Returns the innermost carrier if nested in more than one.
 /obj/item/proc/find_items_mob_carrier()
 	if(ismob(loc))
 		return loc
-	for(var/atom/location as anything in get_nested_locs(src))
-		if(ismob(location))
-			return location
+	for(var/atom/nested_loc in get_nested_locs(src))
+		if(ismob(nested_loc))
+			return nested_loc
 	return null

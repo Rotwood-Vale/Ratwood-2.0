@@ -131,8 +131,8 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		parcel.forceMove(fallback || get_turf(recipient))
 		return
 	parcel.forceMove(master.loc)
-	var/datum/component/storage/STR = master.GetComponent(/datum/component/storage)
-	STR?.handle_item_insertion(parcel, prevent_warning = TRUE)
+	var/datum/component/storage/storage = master.GetComponent(/datum/component/storage)
+	storage?.handle_item_insertion(parcel, prevent_warning = TRUE)
 	master.new_mail = TRUE
 	master.update_icon()
 	recipient.apply_status_effect(/datum/status_effect/ugotmail)
