@@ -112,22 +112,32 @@
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 
 		//Wow, these sure are long!
-		var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance", "Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
-		var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
-		switch(vow_choice)
-			if("Vow of Solace | +2SPD, Dodge Expert")
-				H.change_stat(STATKEY_SPD, 2)
-				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-			if("Vow of the Feat | +2STR, Critical Resistance")
-				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-				H.change_stat(STATKEY_STR, 2)
-			if("Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
-				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
-				ADD_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC)
-				H.change_stat(STATKEY_STR, 2)
-				H.change_stat(STATKEY_SPD, 2)
-
+		if(weapon_choice == "Penance - Unarmored" || weapon_choice == "Discipline - Unarmed")
+			var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance", "Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
+			var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
+			switch(vow_choice)
+				if("Vow of Solace | +2SPD, Dodge Expert")
+					H.change_stat(STATKEY_SPD, 2)
+					ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+				if("Vow of the Feat | +2STR, Critical Resistance")
+					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+					H.change_stat(STATKEY_STR, 2)
+				if("Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
+					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+					ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
+					ADD_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC)
+					H.change_stat(STATKEY_STR, 2)
+					H.change_stat(STATKEY_SPD, 2)
+		else
+			var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance")
+			var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
+			switch(vow_choice)
+				if("Vow of Solace | +2SPD, Dodge Expert")
+					H.change_stat(STATKEY_SPD, 2)
+					ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+				if("Vow of the Feat | +2STR, Critical Resistance")
+					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+					H.change_stat(STATKEY_STR, 2)
 	H.cmode_music = 'sound/music/combat_holy.ogg'
 
 	switch(H.patron?.type)
