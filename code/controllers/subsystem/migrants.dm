@@ -297,11 +297,9 @@ SUBSYSTEM_DEF(migrants)
 			fakekey = get_fake_key(character.ckey)
 		GLOB.character_list[character.mobid] = "[fakekey] was [character.real_name] ([rank])<BR>"
 		GLOB.character_ckey_list[character.real_name] = character.ckey
-		var/mob_name = character.real_name
-		var/mob_rank = rank
-		if(character.mind.special_role == "Court Agent")
-			mob_rank = "Adventurer"
-		GLOB.actors_list[character.mobid] = list("name" = mob_name, "rank" = mob_rank)
+		// no actors_list write here, EquipRank above already filed them under Wanderers in after_spawn().
+		// this used to be Azure's flat actors_list[mobid] = list("name"=..., "rank"=...), but ours is
+		// actors_list[department][mobid] = "<html>", so it made a bogus "mob1234" department full of "NameMigrant".
 		log_character("[character.ckey] ([fakekey]) - [character.real_name] - [rank]")
 	if(GLOB.respawncounts[character.ckey])
 		var/AN = GLOB.respawncounts[character.ckey]
