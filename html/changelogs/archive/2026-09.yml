@@ -753,3 +753,48 @@
       Spy.'
   zeroisthebiggay:
   - rscadd: Pyris color for tieflings
+2026-09-23:
+  CloverIsLucky:
+  - qol: Coif and Padded coif now needs Apprentice and Journeyman to craft them.(one
+      less crafting level)
+  Kroto-Ker:
+  - rscadd: City watch armor reflects duchy colors.
+  MrShibaa:
+  - balance: RMB DEFEND now applies a 3 sec EXPOSED and CLICKCD effect to con checks.
+  Quink-Fix:
+  - bugfix: fixed a bug that invalidated an intended mechanic; holy crosses now interrupt
+      the prayers of Inhumen characters with the Devout vice if you are too close
+      to them, regardless of whether you meet any other criteria (except being in
+      the zchurch)
+  - bugfix: various spelling errors, missing information, and inaccurate terminology
+      with regards to warnings given for the Devout vice
+  RadiantFlash7:
+  - rscadd: Added Arcyne Silver dagger to Merchant silver/goldface Magic Category
+  - rscdel: Removed silver daggers from Merchant silver/goldface catalogue
+  - balance: Arycne Silver Daggers no longer return silver ore on smelting
+  SirSwagmeyer:
+  - balance: Adds miniscule passive blood regen. Procs when uncon, and not hungry/thirsty
+  - balance: Bandages are 0.5x more effective (compared to 0.25x at current).
+  - balance: Water regens blood more, now. (Just slightly more).
+  - balance: Cheeles start with more blood, and can carry as much blood as in a person.
+  - balance: reduced the slowdowns of mounted barding.
+  - rscadd: Overhauled Noccite and Zizite miracles.
+  Xander3359:
+  - balance: Makes Blacksteel urumi heavy balance
+  - bugfix: Fixed Kargrund Maul being invisible
+  ophaq:
+  - rscadd: Allows the standard shirt to be wearable on the armor slot.
+  - rscadd: Adds footwraps to the loadout.
+  wikimody:
+  - rscadd: Added new ammo types for sling, steel, silver and blessed versions of
+      both
+  - rscadd: Added steel ones into smiths silverface
+  - qol: renamed archery enchantment into sharpshooter enchantment
+  - balance: blacksteel sling ammunition is made in 10ths not 5ths as before
+  - bugfix: and is no longer deleted when impacting somone
+  zeroisthebiggay:
+  - balance: Losing a limb or being disemboweled now rolls your CON and WIL to resist
+      an immediate paincrit. Psydonites who pass this roll will be filled with a stirring
+      of HIS energies for a last stand!
+  - bugfix: Corrected a bunch of random pain screams in reaction to wounds not being
+      forced, so you should be screaming more when someone's breaking all your bones.
