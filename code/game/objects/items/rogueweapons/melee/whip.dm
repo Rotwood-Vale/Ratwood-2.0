@@ -370,7 +370,6 @@
 	force = "31"//+1, same as spider whip
 	minstr = "10"
 	max_integrity = 150
-	max_integrity = 150
 	special = /datum/special_intent/greatsword_swing
 
 /obj/item/rogueweapon/whip/urumi/silver/psydonic
