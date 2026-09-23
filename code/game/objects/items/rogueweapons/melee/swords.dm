@@ -2960,6 +2960,7 @@
 	icon_state = "spiderfalx"
 	sheathe_icon = "spidersaber"
 	wbalance = WBALANCE_SWIFT
+	force = 25 // same as elf sabre
 	wdefense = 5//-1, use it with a shield
 
 /obj/item/rogueweapon/sword/long/elf/stalker
