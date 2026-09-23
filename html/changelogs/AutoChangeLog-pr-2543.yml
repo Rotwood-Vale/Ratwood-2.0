@@ -1,0 +1,7 @@
+author: "MrShibaa"
+delete-after: True
+changes:
+  - rscadd: "Added new recipes for various kazen weaponry and armor"
+  - rscdel: "Removed Hook sword and Naginata from being craftable without having the trait KAZENGUNITE_SMITH"
+  - balance: "Soldier half-mask now only protects mouth and nose and the Ogre Mask, has full face protection but has an FOV reduction (half-mask doesn’t)"
+  - balance: "Increased Armored Sandals durab to 270 (Same as Plated Boots.)"

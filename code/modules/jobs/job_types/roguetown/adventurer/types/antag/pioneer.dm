@@ -65,6 +65,8 @@
 	)
 
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/pioneer/plant_bogtrap_delayed)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/architect_plan)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/architect_conjure)
 
 /datum/outfit/job/roguetown/bandit/pioneer/post_equip(mob/living/carbon/human/H)
 	. = ..()

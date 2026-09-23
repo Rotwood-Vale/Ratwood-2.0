@@ -1,0 +1,5 @@
+author: "UntoldTactics"
+delete-after: True
+changes:
+  - balance: "Excommunication and Apostasy have had their stress values increased, with the former now being more than a small inconvinenence and the latter being a crippling mood debuff for any clergy afflicted."
+  - balance: "Abyssorites and Dendorites are no longer immune to Apostasy or Divine Curse."

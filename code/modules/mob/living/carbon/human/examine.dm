@@ -893,7 +893,7 @@
 			if(!(mobility_flags & MOBILITY_STAND) && user != src && (user.zone_selected == BODY_ZONE_CHEST))
 				. += "<a href='?src=[REF(src)];check_hb=1'>Listen to Heartbeat</a>"
 
-	if((dna?.species?.id != "gnoll") && (!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
+	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes || nsfwflavortext || erpprefs))
 		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
 
 	if(ishuman(user))
@@ -1234,20 +1234,20 @@
 					. += span_beautiful_nb("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
 
 		if (HAS_TRAIT(src, TRAIT_UNSETTLING))
+			var/unsettling_text
+			if (user == src)
+				unsettling_text = "I appear deeply uncanny."
+			else if (user.has_stress_event(/datum/stressevent/uncanny))
+				unsettling_text = "[capitalize(m2)] appearance is deeply unsettling!"
+			else
+				unsettling_text = "Something about [p_them()] looks off..."
 			switch (pronouns)
 				if (HE_HIM, SHE_HER_M)
-					if(user.has_stress_event(/datum/stressevent/uncanny))
-						. += span_beautiful_masc("[m1] looking slightly off... There is something unsettling about their appearance.")
-					else
-						. += span_beautiful_masc("[m1] hauntingly uncanny.")
+					. += span_beautiful_masc(unsettling_text)
 				if (SHE_HER, HE_HIM_F)
-					if(user.has_stress_event(/datum/stressevent/uncanny))
-						. += span_beautiful_fem("[m1] looking slightly off... There is something unsettling about their appearance.")
-					else
-						. += span_beautiful_fem("[m1] hauntingly uncanny.")
+					. += span_beautiful_fem(unsettling_text)
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
-					if(user.has_stress_event(/datum/stressevent/uncanny))
-						. += span_beautiful_nb("[m1] looking slightly off... There is something unsettling about their appearance.")
+					. += span_beautiful_nb(unsettling_text)
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)
