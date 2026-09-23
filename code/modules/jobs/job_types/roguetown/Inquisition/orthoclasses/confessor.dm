@@ -60,7 +60,7 @@
 				H.change_stat(STATKEY_WIL, -1)
 				H.change_stat(STATKEY_SPD, -1)
 		var/weapons = list("Blessed Psydonic Dagger", "Psydonic Handmace", "Psydonic Shortsword")
-		var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
+		var/weapon_choice = input(H,"CHOOSE YOUR WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 		switch(weapon_choice)
 			if("Blessed Psydonic Dagger")
 				l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
@@ -74,7 +74,7 @@
 				r_hand = /obj/item/rogueweapon/scabbard/sword
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 		var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
-		var/bolt_choice = input(H,"Choose your MUNITIONS", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
+		var/bolt_choice = input(H,"CHOOSE YOUR MUNITIONS", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
 		switch(bolt_choice)
 			if("Bolts - Steel-Tipped")
 				beltl = /obj/item/quiver/bolts

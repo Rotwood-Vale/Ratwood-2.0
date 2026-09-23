@@ -50,7 +50,7 @@
 		ADD_TRAIT(H, TRAIT_DRUNK_HEALING, TRAIT_GENERIC)
 	if(H.mind)
 		var/weapons = list("Abboteer - Master Pugilist, Weaponless Oath & No Malus", "Pugilist - Master Athletics, Pain Resistance", "Quarterstaff - Expert Polearms, +I PER / +I INT")
-		var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
+		var/weapon_choice = input(H,"CHOOSE YOUR WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 		switch(weapon_choice)
 			if("Abboteer - Master Pugilist, Weaponless Oath & No Malus")//the enduringest psychud. Weighted 12 stats but no weapons, period.
 				devotion_gain = CLERIC_REGEN_MINOR
