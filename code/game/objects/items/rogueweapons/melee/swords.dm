@@ -1748,6 +1748,7 @@
 	desc = "A once elegant blade of mythril, diminishing under the suns gaze"
 	icon_state = "spidersaber"
 	sheathe_icon = "spidersaber"
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/dagger/sucker_punch)
 	force = 25 // same as elf sabre
 	force_wielded = 25
 	minstr = 7
@@ -2936,6 +2937,8 @@
 	icon_state = "drowshotel"
 	sheathe_icon = "drowshotel"
 	alt_intents = null 
+	possible_item_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/long, /datum/intent/dagger/sucker_punch)
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/long, /datum/intent/dagger/sucker_punch)
 	force = 27
 	force_wielded = 27//doesn't get buffed to 30 like normal shotel
 	max_integrity = 175//tiny bit more integ since it's unique
@@ -2950,6 +2953,7 @@
 	the makeshift weapons of would-be freemen."
 	icon_state = "drowhooksword"
 	sheathe_icon = "drowhook"
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/hook, /datum/intent/dagger/sucker_punch, /datum/intent/sword/disarm)
 	force = 22//+2 over normal hooksword
 	max_integrity = 175//tiny bit more integ since it's unique
 	bigboy = TRUE
@@ -2960,6 +2964,7 @@
 	icon_state = "spiderfalx"
 	sheathe_icon = "spidersaber"
 	wbalance = WBALANCE_SWIFT
+	possible_item_intents = list(/datum/intent/sword/cut/falx,  /datum/intent/sword/chop/falx, /datum/intent/dagger/sucker_punch, /datum/intent/sword/peel)
 	force = 25 // same as elf sabre
 	wdefense = 5//-1, use it with a shield
 
@@ -2974,7 +2979,7 @@
 	force_wielded = 30
 	max_integrity = 200
 	possible_item_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/dagger/sucker_punch)// better to use your fist than dent that pretty pommel
-	gripped_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/pick/bad, /datum/intent/sword/chop/falx)//shitty pick using our spiked bit.
+	gripped_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/pick/bad, /datum/intent/sword/chop/sabre, /datum/intent/dagger/sucker_punch)//shitty pick using our spiked bit.
 	alt_intents = null // nope!
 	bigboy = TRUE
 
