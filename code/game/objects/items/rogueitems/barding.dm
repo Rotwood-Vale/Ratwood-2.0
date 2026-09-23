@@ -1,6 +1,6 @@
 /obj/item/clothing/barding
 	name = "padded barding"
-	desc = "A set of padded body armor for a Saiga, designed to protect your mount's vital organs."
+	desc = "A set of padded body armor for a Saiga, designed to protect your mount's vital organs. Slightly slows down your mount."
 	slot_flags = null
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "sewingkit"
@@ -21,7 +21,7 @@
 	fiber_salvage = TRUE
 	integrity_failure = 0.1
 	/// slowdown for barding. Multiplicative.
-	var/slowdown_factor = 1.25
+	var/slowdown_factor = 1.1
 
 /obj/item/clothing/barding/attack(mob/living/M, mob/living/user)
 	if(!issimple(M))
@@ -67,7 +67,7 @@
 
 /obj/item/clothing/barding/chain
 	name = "chainmail barding"
-	desc = "A set of chainmail body armor for a Saiga, designed to protect your mount's vital organs."
+	desc = "A set of chainmail body armor for a Saiga, designed to protect your mount's vital organs. Slows down your mount by a mild degree."
 	icon_state = "armorkit"
 	barding_state = "barding_chain"
 	female_barding_state = "barding_chain-f"
@@ -81,7 +81,7 @@
 	salvage_result = null
 	salvage_amount = 0
 	fiber_salvage = FALSE
-	slowdown_factor = 1.5
+	slowdown_factor = 1.2
 
 /obj/item/clothing/barding/fogbeast
 	name = "padded barding"
