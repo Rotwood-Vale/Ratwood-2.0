@@ -109,6 +109,15 @@
 	cleave = /datum/cleave_pattern/forward_cleave
 	desc = "A cleave that cuts through a second target behind the first."
 
+/datum/intent/spear/cut/bardiche/cleave/chop
+	name = "cleaving chop"
+	blade_class = BCLASS_CHOP
+	attack_verb = list("chops", "hacks")
+	animname = "chop"
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	penfactor = 35
+	item_d_type = "slash"
+
 /datum/intent/spear/cut/bardiche
 	damfactor = 1.2
 	chargetime = 0
@@ -927,8 +936,8 @@
 	icon_state = "drowbardiche"
 	force = 25
 	force_wielded = 28//-2 force
-	possible_item_intents = list(SPEAR_THRUST, SPEAR_CUT, /datum/intent/dagger/sucker_punch)
-	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive, /datum/intent/axe/chop/scythe, /datum/intent/dagger/sucker_punch)
+	possible_item_intents = list(SPEAR_CUT, /datum/intent/spear/cut/glaive, /datum/intent/axe/chop/scythe, /datum/intent/dagger/sucker_punch)
+	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive/sweep, /datum/intent/spear/cut/bardiche/cleave/chop, /datum/intent/dagger/sucker_punch)
 	wdefense = 4//-2 def given how good it's intents are
 	max_blade_int = 160//-40 blade integ
 	smeltresult = /obj/item/ingot/steel
