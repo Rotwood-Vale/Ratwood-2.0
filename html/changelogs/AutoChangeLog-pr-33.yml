@@ -1,0 +1,6 @@
+author: "Protabs"
+delete-after: True
+changes:
+  - rscadd: "Paper Duster clothing item."
+  - rscadd: "Added crafting recipe for Paper Duster"
+  - image: "added 4 states to cloaks.dmi"

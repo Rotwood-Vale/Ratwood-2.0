@@ -1,0 +1,4 @@
+author: "R3N0mon"
+delete-after: True
+changes:
+  - bugfix: "fixed the spawn bug introduced by a tiny forgotten code change in the Resident Virtue Spawner Code"

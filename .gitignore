@@ -239,3 +239,14 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 !/config/title_screens/images/exclude
 
 *.test.dme
+
+# Generated .NET build intermediates for the TGS test utility.
+/tools/tgs_test/obj/
+
+# Status files.
+/status/*
+!/status/README.txt
+
+# DM versions file.
+/tools/build/dm_versions.json
+

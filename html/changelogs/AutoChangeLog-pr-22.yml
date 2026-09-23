@@ -1,0 +1,4 @@
+author: "Protabs"
+delete-after: True
+changes:
+  - rscadd: "Added new orca-based snout sprite for Axian and Wildkin"

@@ -112,13 +112,15 @@
 	desc += "[fluff_desc]"
 
 /obj/item/mundane/puzzlebox/impossible/attack_self(mob/living/user)
-	var/ckey = user.ckey
-	if(ckey in finished_ckeys)
-		to_chat(user, span_warning("I've already tried my hand at [src]."))
-		return
 	playsound(src.loc, 'sound/items/wood_sharpen.ogg', 75, TRUE)
 	playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
 	if (alert(user, "My fingers trace the outside of this box. It looks nearly impossible. Do I try to solve it?", "ROGUETOWN", "Yes", "No") != "Yes")
+		return
+	var/ckey = user.ckey
+	if(ckey in finished_ckeys)
+		to_chat(user, span_warning("I've already tried my hand at [src]."))
+		//An alert, but we don't need to log this. Just an easy way to gib a guy if he's doing old funny.
+		message_admins("[ckey] attempted to solve the royal puzzlebox. Again. If this duplicates they're trying to use the old exploit. HEADGIB THEM.")
 		return
 	if(do_after(user,100, target = src))
 		if((dice_roll) + 4 <= user.STAINT)

@@ -633,6 +633,11 @@
 #define DOLL_GLOOMHAVEN "897489"
 #define DOLL_EBON "4e3729"
 
+// Harpy flight/less.
+#define HARPY_FLIGHT_KEY "harpy_can_fly"
+#define HARPY_FLIGHTLESS_KEY "harpy_cant_fly"
+#define HARPY_FLIGHT_OR_FLIGHTLESS list(HARPY_FLIGHT_KEY, HARPY_FLIGHTLESS_KEY)
+
 // Pixel shifting
 #define PIXEL_SHIFT_MAXIMUM 16
 #define PIXEL_SHIFT_PASSABLE_THRESHOLD 8

@@ -650,7 +650,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 						if(pref_species.custom_selection[bonus] == race_bonus)
 							race_bonus_display = bonus
 							break
-				dat += "<b>Race Bonus:</b> <a href='?_src_=prefs;preference=race_bonus_select;task=input'>[race_bonus_display ? "[race_bonus_display]" : "None"]</a><BR>"
+				dat += "<b>Race Bonus:</b> <a href='?_src_=prefs;preference=race_bonus_select;task=input'>[race_bonus_display ? "[race_bonus_display]" : "None"]</a><BR><BR>"
 			else
 				race_bonus = null
 				dat += "<BR>"

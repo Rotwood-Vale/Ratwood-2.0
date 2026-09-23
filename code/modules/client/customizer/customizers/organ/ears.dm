@@ -179,7 +179,9 @@
 		/datum/sprite_accessory/ears/dendorite,
 		/datum/sprite_accessory/ears/eoran,
 		/datum/sprite_accessory/ears/pestran,
-		/datum/sprite_accessory/ears/zorzor
+		/datum/sprite_accessory/ears/zorzor,
+		/datum/sprite_accessory/ears/cobrahood,
+		/datum/sprite_accessory/ears/cobrahoodears,
 		)
 
 /datum/customizer/organ/ears/anthro

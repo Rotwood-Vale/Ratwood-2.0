@@ -8,7 +8,7 @@
 	Kobolds are a nomadic tribal people known for their small stature and swift speed. \
 	They prefer mountainous terrain or underground cave systems, but they are adaptable \
 	to new environments. They are often found in the service of dragons or Drakian rulers.<br>\
-	(+1 Fortune, Eating Rocks and Gems Trait)"
+	(+1 Fortune, Eating Rocks and Gems Trait, Feral Appetite)"
 
 	expanded_desc =	"Kobolds are a nomadic tribal people known for their small stature and swift speed. \
 	They prefer mountainous terrain or underground cave systems, but they are adaptable \
@@ -50,6 +50,7 @@
 		OFFSET_BREASTS_F = list(0,-4), \
 		)
 	race_bonus = list(STAT_FORTUNE = 1)
+	inherent_traits = list(TRAIT_NASTY_EATER, TRAIT_ORGAN_EATER)
 	enflamed_icon = "widefire"
 	attack_verb = "slash"
 	attack_sound = 'sound/blank.ogg'

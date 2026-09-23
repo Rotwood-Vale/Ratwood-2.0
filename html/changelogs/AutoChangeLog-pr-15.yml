@@ -1,0 +1,4 @@
+author: "Hmeister-fake"
+delete-after: True
+changes:
+  - rscadd: "Footwraps now appear in character loadouts"

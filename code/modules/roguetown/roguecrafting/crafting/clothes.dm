@@ -343,3 +343,13 @@
 		)
 	skillcraft = /datum/skill/craft/crafting
 	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/survival/paper_duster
+	name = "paper duster"
+	result = /obj/item/clothing/suit/roguetown/shirt/paper_duster
+	category = "Clothes"
+	reqs = list(
+		/obj/item/paper = 5,
+		)
+	craftdiff = 0
+

@@ -184,19 +184,17 @@ export class Changelog extends Component {
 
     const header = (
       <Section>
-        <h1>Ratwood Keep</h1>
+        <h1>Bad Drakian</h1>
         <p>
           <b>Thanks to: </b>
-          Baystation 12, /vg/station, NTstation, CDK Station devs,
+          Ratwood Keep, Baystation 12, /vg/station, NTstation, CDK Station devs,
           FacepunchStation, GoonStation devs, the original Space Station 13
-          developers, Invisty for the title image and the countless others who
-          have contributed to the game, issue tracker or wiki over the years.
+          developers and the countless others who have contributed to the game,
+          issue tracker or wiki over the years.
         </p>
         <p>
-          {'Current organization members can be found '}
-          <a href="https://github.com/orgs/Rotwood-Vale/people">here</a>
-          {', recent GitHub contributors can be found '}
-          <a href="https://github.com/Rotwood-Vale/Ratwood-Keep/pulse/monthly">
+          {'Recent GitHub contributors can be found '}
+          <a href="https://github.com/GarrusVakarian/Bad-Drakian-RW/pulse?period=monthly">
             here
           </a>
           .

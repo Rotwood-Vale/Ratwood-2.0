@@ -635,4 +635,15 @@
 	detail_color = "#FFFFFF"
 	altdetail_color = "#9c2525"
 
-
+// A tengai hat, often worn by Komusu monks. Provides minimal protection, is cheap and covers the face.
+/obj/item/clothing/head/roguetown/baskethat
+	name = "basket hat"
+	desc = "A hat usually worn by Kazengun monks & weirdo assassins. Hides the face and makes you look creepy."
+	body_parts_covered = HEAD|HAIR|EARS|NECK|MOUTH|NOSE|EYES
+	icon_state = "baskethat"
+	nudist_approved = TRUE
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT // Hides the face.
+	salvage_result = /obj/item/natural/fibers
+	salvage_amount = 2 // Minor materials loss
+	heat_protection = HEAD
+	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
