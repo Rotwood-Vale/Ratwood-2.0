@@ -300,12 +300,15 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)//gives them old crit resistance when stacked with blood resists 0.5x bleed
 			ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)
+			H.change_stat(STATKEY_INT, 2)//no malus for pure unarmed
+			H.change_stat(STATKEY_WIL, 1)
 			head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 			gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 			armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/barbarian
 			shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/barbarian
 		if ("Discipline - Bodybuilder")
-			H.adjust_skillrank_up_to(/datum/skill.combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/bodybuilder
 			shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/bodybuilder
 			r_hand = /obj/item/rogueweapon/sword/long/exe//gently nudging them to try for the berserker sword

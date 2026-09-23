@@ -79,9 +79,17 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
 
 	if(H.mind)
-		var/weapons = list("Discipline - Unarmed","Katar","Knuckledusters","Quarterstaff")
+		var/weapons = list("Penance - Unarmored","Discipline - Unarmed","Katar","Knuckledusters","Quarterstaff")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
+			if("Penance - Unarmored") // Skin armor, +1 con because this locks you out of holy monk vestments and the associated stamina boost
+				ADD_TRAIT(H, TRAIT_NOPAINSTUN, JOB_TRAIT)
+				H.change_stat(STATKEY_CON, 1)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
+				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/monk //a leather armor
+				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/monk //a gambeson
 			if("Discipline - Unarmed")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
@@ -104,7 +112,7 @@
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 
 		//Wow, these sure are long!
-		var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance")
+		var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance", "Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
 		var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
 		switch(vow_choice)
 			if("Vow of Solace | +2SPD, Dodge Expert")
@@ -113,6 +121,12 @@
 			if("Vow of the Feat | +2STR, Critical Resistance")
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				H.change_stat(STATKEY_STR, 2)
+			if("Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
+				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC)
+				H.change_stat(STATKEY_STR, 2)
+				H.change_stat(STATKEY_SPD, 2)
 
 	H.cmode_music = 'sound/music/combat_holy.ogg'
 

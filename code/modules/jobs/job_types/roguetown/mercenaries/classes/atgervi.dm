@@ -89,7 +89,7 @@
 	outfit = /datum/outfit/job/roguetown/mercenary/atgervishaman
 	subclass_languages = list(/datum/language/gronnic)
 	cmode_music = 'sound/music/combat_shaman2.ogg'
-	traits_applied = list(TRAIT_STRONGBITE, TRAIT_CIVILIZEDBARBARIAN, TRAIT_CRITICAL_RESISTANCE, TRAIT_NOPAINSTUN)
+	traits_applied = list(TRAIT_STRONGBITE, TRAIT_CIVILIZEDBARBARIAN, TRAIT_BLOOD_RESISTANCE, TRAIT_NOPAINSTUN)
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_CON = 2,
@@ -122,7 +122,6 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 
 	head = /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
-	gloves = /obj/item/clothing/gloves/roguetown/plate/atgervi
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 	pants = /obj/item/clothing/under/roguetown/trou/leather/atgervi
@@ -132,8 +131,23 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	beltl = /obj/item/flashlight/flare/torch
-	H.put_in_hands(new /obj/item/rogueweapon/handclaw/gronn, FALSE)
 	
+	var/unarmed = list("Claws", "Pure Unarmed")
+	var/unarmed_choice = input(H,"Choose your Ritual Weapon.", "HONOR THE ANCESTORS.") as anything in unarmed
+	switch(unarmed_choice)
+		if("Claws")//dual claws
+			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+			gloves = /obj/item/clothing/gloves/roguetown/angle/gronnfur
+			r_hand = /obj/item/rogueweapon/handclaw/gronn
+			l_hand = /obj/item/rogueweapon/handclaw/gronn
+		if("Pure Unarmed")//very good but unlike other pure unarmed subclasses, they dont get rage nor master unarmed since they're miraclists
+			H.change_stat(STATKEY_INT, 1)//no malus for pure unarmed
+			H.change_stat(STATKEY_PER, 1)
+			ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
+			gloves = /obj/item/clothing/gloves/roguetown/plate/atgervi
+
 	var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff") // cool wrestling moves
 	var/technique_choice = input(H,"Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
 	switch(technique_choice)
@@ -206,6 +220,7 @@
 	item_state = "atergvi_shaman_gloves"
 	unarmed_bonus = 1.25
 
+// intentional duplicate for heretic monk so they can have the cool gloves but also punch good
 /obj/item/clothing/gloves/roguetown/plate/atgervi/heretic
 	name = "beast claws"
 	desc = "A menacing pair of plated claws, A closely protected tradition of the Shamans. Decorated with symbols of the gods they praise and the Gods they reject."

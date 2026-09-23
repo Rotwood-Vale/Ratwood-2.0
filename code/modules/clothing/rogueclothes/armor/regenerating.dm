@@ -141,10 +141,31 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
 	repair_time = 15 SECONDS
 
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/monk
+	name = "trained skin"
+	desc = "They say I've taken the first step on a path older than memory."
+	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
+	body_parts_inherent = COVERAGE_FULL
+	armor = ARMOR_PADDED
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
+	repair_time = 15 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/monk
+	name = "trained chest"
+	desc = "I don't fully understand what those names mean yet, but I repeat them as I was taught."
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	blocksound = SOFTHIT
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	repair_time = 15 SECONDS//less armor and integ so faster regen
+
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berzerker
 	name = "unstoppable skin"
 	desc = "I've endured enough. The onslaught has lost its meaning."
 	armor = ARMOR_BRIGANDINE//scary as hell, but longer repair time
+	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
+	body_parts_inherent = COVERAGE_FULL
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	repair_time = 40 SECONDS
 
@@ -152,6 +173,8 @@
 	name = "unstoppable chest"
 	desc = "The callouses could stop arrows! But only so many."
 	armor = ARMOR_MAILLE//covers stabs
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
 	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
 	repair_time = 40 SECONDS
 

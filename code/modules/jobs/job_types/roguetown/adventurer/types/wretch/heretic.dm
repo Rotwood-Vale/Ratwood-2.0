@@ -584,7 +584,7 @@
 				ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-				H.change_stat(STATKEY_INT, 1)
+				H.change_stat(STATKEY_INT, 1)//true unarmed gets no stat malus
 				H.change_stat(STATKEY_PER, 1)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 5, TRUE)
 				switch(style_choice)

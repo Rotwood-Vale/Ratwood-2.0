@@ -92,17 +92,18 @@
 						ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 						H.change_stat(STATKEY_INT, 2)//no stat malus for pure unarmed
 						H.change_stat(STATKEY_WIL, 1)//nice little bonus for our fist only chuds
+						H.change_stat(STATKEY_CON, 1)
 				var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff") // cool wrestling moves
 				var/technique_choice = input(H,"Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
-					switch(technique_choice)
-						if("Dropkick - Pushback + Extra Damage")
-							H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick)
-						if("Chokeslam - Stamina Damage")
-							H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)
-						if("Stunner - Dazed Debuff")
-							H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
-						if("Headbutt - Vulnerable Debuff")
-							H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
+				switch(technique_choice)
+					if("Dropkick - Pushback + Extra Damage")
+						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick)
+					if("Chokeslam - Stamina Damage")
+						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)
+					if("Stunner - Dazed Debuff")
+						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
+					if("Headbutt - Vulnerable Debuff")
+						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 			if("Martial Expert") // designed to compete with unarmed by giving you alternatives to approaching fights- only expert
 				var/list/martial_options = list("Greatsword", "Battle Axe", "Grand Mace", "Grand Maul, 15 STR MIN", "Berserker's Sword, 14 STR MIN")
 				var/weapon_choice = input(H, "Choose your WEAPONS of WAR!", "SPILL THEIR ENTRAILS.") as anything in martial_options
@@ -124,7 +125,7 @@
 						backl = /obj/item/rogueweapon/scabbard/gwstrap
 					if("Berserker's Sword, 14 STR MIN") //Swapped out the falx for this, it's a primary weapon afterall
 						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-						r_hand = /obj/item/rogueweapon/sword/long/exe/berserk
+						r_hand = /obj/item/rogueweapon/sword/long/exe/berserk//if you have the guts
 				var/list/sidearm_options = list("An Arming Sword", "An Axe", "Mace")
 				var/sidearm_choice = input(H, "Choose your secondary WEAPON!", "SPILL THEIR ENTRAILS.") as anything in sidearm_options
 				switch(sidearm_choice)

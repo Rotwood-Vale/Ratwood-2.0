@@ -25,6 +25,8 @@
 		TRAIT_OUTDOORSMAN,
 		TRAIT_WOODSMAN,
 		TRAIT_WILDERNESSGUIDE,
+		TRAIT_DEATHBYSNUSNU,
+		TRAIT_RAGE,
 	)
 	subclass_stats = list(
 		STATKEY_STR = 3,
@@ -62,6 +64,25 @@
 	)
 
 /datum/outfit/job/roguetown/wretch/lunacyembracer/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.set_blindness(0)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/rage)
+	var/unarmed = list("I still use weapons", "I forgo weapons")
+	var/unarmed_choice = input(H,"Have you given up weapons?", "HOW DEDICATED ARE YOU?") as anything in unarmed
+	switch(unarmed_choice)
+		if("I still use weapons")
+			r_hand = /obj/item/rogueweapon/knuckles/ancient
+		if("I forgo weapons")
+			ADD_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_THROWINGARM, TRAIT_GENERIC)//sorta like scarp letting you toss guns at people
+			ADD_TRAIT(H, TRAIT_BIGGUY, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_STRENGTH_UNCAPPED, TRAIT_GENERIC)//experimental, they are still largely unarmored and cant use this for anything apart from unarmed weaponless punching.
+			H.change_stat(STATKEY_INT, 2)//true unarmed gets no stat malus
+			H.change_stat(STATKEY_PER, 2)
+			gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth
 	// -- Start of section for god specific bonuses --	
 	if(H.patron?.type == /datum/patron/inhumen/graggar)
 		ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)

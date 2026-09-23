@@ -33,7 +33,7 @@
 	..()
 	to_chat(H, span_warning("The curtains part, the shieldline rallies, and the eyes of a thousand shadows fall upon you. Snarling gladiator, enthralled shieldbearer, vestumed actor; ready yourself for another bout."))
 	if(H.mind)
-		var/bronzeweapon = list("Spatha & +1 Unarmed","Trident & +1 Unarmed","Greataxe & +1 Unarmed","Dolabra & +1 Unarmed","Winged Spear + Greatshield","Apophis + Greatshield","Gladius + Shield","Kopis + Shield","Makhaira + Shield","Khopesh + Shield","Axe + Shield","Warclub + Shield","Flail + Shield","Spear + Shield","Arbelos + Gladius","Nothing - Skilled Pugilist, +I STR/WIL & -1 INT", "Caestus - Pure Unarmed, No Weapons, +I STR/WIL & -1 INT")
+		var/bronzeweapon = list("Spatha & +1 Unarmed","Trident & +1 Unarmed","Greataxe & +1 Unarmed","Dolabra & +1 Unarmed","Winged Spear + Greatshield","Apophis + Greatshield","Gladius + Shield","Kopis + Shield","Makhaira + Shield","Khopesh + Shield","Axe + Shield","Warclub + Shield","Flail + Shield","Spear + Shield","Arbelos + Gladius","Nothing - Skilled Pugilist, +I STR/WIL & -1 INT", "Caestus - Pure Unarmed, No Weapons, +I STR/WIL")
 		var/bronzeweapon_choice = input(H, "Choose your WEAPONS.", "PUT ON A SHOW FOR THE CROWD.") as anything in bronzeweapon
 		switch(bronzeweapon_choice)
 			if("Spatha & +1 Unarmed")
@@ -126,7 +126,7 @@
 				H.change_stat(STATKEY_STR, 1)
 				H.change_stat(STATKEY_WIL, 1)
 				H.change_stat(STATKEY_INT, -1)
-			if("Caestus - Pure Unarmed, No Weapons, +I STR/WIL & -1 INT")
+			if("Caestus - Pure Unarmed, No Weapons, +I STR/WIL")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted/caestus
@@ -135,7 +135,6 @@
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 				H.change_stat(STATKEY_STR, 1)
 				H.change_stat(STATKEY_WIL, 1)
-				H.change_stat(STATKEY_INT, -1)
 		if(bronzeweapon_choice != "Caestus - Pure Unarmed, No Weapons, +I STR/WIL & -1 INT")//if we are pure unarmed only, skip the sidearm menu and just give them javelins
 			var/bronzesidearm = list("A Javelin's Bag", "A Sling With Bronze Pellets", "A Bow With Bronze Arrows", "Another Gladius & Skills In Dual-Wielding", "Another Makhaira & Skills In Dual-Wielding", "Another Khopesh & Skills In Dual-Wielding", "Another Axe & Skills In Dual-Wielding")
 			var/bronzesidearm_choice = input(H, "Choose your ACCOUTREMENTS.", "PREPARE YOUR OPENING ACT.") as anything in bronzesidearm
@@ -194,9 +193,10 @@
 				pants = /obj/item/clothing/under/roguetown/loincloth/brown
 				belt = /obj/item/storage/belt/rogue/leather/battleskirt/breechcloth/red
 				//shirt = /obj/item/clothing/suit/roguetown/shirt/tribalrag/gladiator //no empty hands to put this in, and cannot seem to 'pre-load' the cosmetic slot of a skin armor. Can hang in limbo untill someone figures out how to grant it.
-				if(bronzeweapon_choice == "Caestus - Pure Unarmed, No Weapons, +I STR/WIL & -1 INT")
+				if(bronzeweapon_choice == "Caestus - Pure Unarmed, No Weapons, +I STR/WIL")
 					ADD_TRAIT(H, TRAIT_RAGE, TRAIT_GENERIC)
 					ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+					ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)
 					H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/rage)
 			if("Shieldbearer - Well-Armored & Maille Training")
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
