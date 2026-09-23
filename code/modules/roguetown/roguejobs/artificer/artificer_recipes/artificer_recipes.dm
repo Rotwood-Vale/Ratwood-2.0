@@ -373,7 +373,7 @@
 	hammers_per_item = 8
 	skill_level = 5
 
-/datum/anvil_recipe/engineering/repairedsandedbarrel
+/datum/artificer_recipe/contraptions/repairedsandedbarrel
 	name = "Repair Sanded Barrel (+3 iron, +1 Sanded Iron Barrel)"
 	required_item = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedbarrel)
