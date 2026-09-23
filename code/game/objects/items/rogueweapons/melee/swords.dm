@@ -124,6 +124,7 @@
 	attack_verb = list("furiously chops", "powerfully cleaves", "fiercely hacks")
 	// This is almost x2 slower than a regular longsword's chop, giving the opponent more time to riposte you.
 	// This however will penetrate all Light AC armor except for brigandine parts. Also does x2 damage to shields.
+	damfactor = 1.6
 	penfactor = 40
 	swingdelay = 0.8 SECONDS
 	clickcd = CLICK_CD_CHARGED
