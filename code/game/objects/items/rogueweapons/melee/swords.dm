@@ -104,7 +104,7 @@
 // below, so any /sword/long subtype that redefines these won't work for a frei. Kept as defines so the
 // type below and uses_stock_longsword_kit() don't drift apart.
 #define LONGSWORD_STOCK_INTENTS list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, SWORD_STRIKE)
-#define LONGSWORD_STOCK_GRIPPED_INTENTS list(/datum/intent/sword/cut/long, /datum/intent/sword/thrust/long, /datum/intent/sword/chop/long, /datum/intent/sword/thrust/long/deep)
+#define LONGSWORD_STOCK_GRIPPED_INTENTS list(/datum/intent/sword/cut/long, /datum/intent/sword/thrust/long, /datum/intent/sword/chop/long, /datum/intent/sword/peel)
 
 /datum/intent/sword/cut/master
 	name = "mandritto"
@@ -148,6 +148,7 @@
 	intent_intdamage_factor = 0.5
 	clickcd = CLICK_CD_MELEE
 	misscost = 0
+	blade_class = BCLASS_PICK //temporary fix until I introduce halfswording
 
 /datum/intent/effect/daze/longsword/clinch
 	name = "clinch & swipe"
