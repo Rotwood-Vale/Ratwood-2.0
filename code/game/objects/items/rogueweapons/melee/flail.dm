@@ -374,7 +374,7 @@
 	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	minstr = 12
 	wdefense = 5
-	max_integrity = 200
+	max_integrity = 300
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	special = /datum/special_intent/greatsword_swing// put that blade to use
 	bigboy = TRUE
