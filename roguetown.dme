@@ -717,6 +717,7 @@
 #include "code\datums\components\mirage_border.dm"
 #include "code\datums\components\mob_chain.dm"
 #include "code\datums\components\movable_lighting.dm"
+#include "code\datums\components\noc_vigil.dm"
 #include "code\datums\components\obsession.dm"
 #include "code\datums\components\orbiter.dm"
 #include "code\datums\components\pollutant.dm"
