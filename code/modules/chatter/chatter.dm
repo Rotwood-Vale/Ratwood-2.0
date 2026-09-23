@@ -16,23 +16,25 @@
 		if(R.group[2])
 			letter_count += R.group[2]
 
-	spawn(0)
-		for(var/item in letter_count)
-			if (item in punctuation)
-				// simulate pausing in talking
-				// ignore semi-colons because of their use in HTML escaping
-				if (item in list(",", ":"))
-					sleep(3)
-				if (item in list("!", "?", "."))
-					sleep(6)
-				continue
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(chatter_pace), letter_count, punctuation, A, phomeme)
 
-			if(isnum(item))
-				var/length = min(item, 10)
-				if (length == 0)
-					// "verbalise" long spaces
-					sleep(1)
-				chatter_speak_word(A.loc, phomeme, length)
+/proc/chatter_pace(list/letter_count, list/punctuation, atom/A, phomeme)
+	for(var/item in letter_count)
+		if (item in punctuation)
+			// simulate pausing in talking
+			// ignore semi-colons because of their use in HTML escaping
+			if (item in list(",", ":"))
+				sleep(3)
+			if (item in list("!", "?", "."))
+				sleep(6)
+			continue
+
+		if(isnum(item))
+			var/length = min(item, 10)
+			if (length == 0)
+				// "verbalise" long spaces
+				sleep(1)
+			chatter_speak_word(A.loc, phomeme, length)
 
 /proc/chatter_speak_word(loc, phomeme, length)
 	var/path = "sound/chatter/[phomeme]_[length].ogg"

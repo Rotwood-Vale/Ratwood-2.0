@@ -85,9 +85,7 @@
 		H.real_name = "[title] [prev_real_name]"
 		H.name = "[title] [prev_name]"
 
-		spawn(50)
-			if(H && H.client)
-				_delayed_path_choice(H)
+		addtimer(CALLBACK(src, PROC_REF(_delayed_path_choice), H), 50)
 
 /datum/advclass/acolyte
 	name = "Acolyte"
