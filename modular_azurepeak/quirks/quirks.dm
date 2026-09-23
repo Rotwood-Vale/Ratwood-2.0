@@ -223,3 +223,10 @@
 	added_traits = list(TRAIT_UNSETTLING)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
 	incompatible_quirks = list(/datum/quirk/ugly, /datum/quirk/pretty)
+
+/datum/quirk/selfaware
+	name = "Self Aware"
+	desc = "I've always been conscious about how hurt my body can get."
+	warning_text = "This quirk costs nothing and does not apply if you are playing a role that already has self aware!"
+	added_traits = list(TRAIT_SELF_AWARE)
+	incompatible_traits = list(TRAIT_SELF_AWARE)

@@ -421,7 +421,7 @@
 
 /datum/stressevent/uncanny
 	stressadd = 2
-	desc = span_red("Their face is.. wrong!")
+	desc = span_red("Their face is... wrong!")
 	timer = 3 MINUTES
 
 /datum/stressevent/syoncalamity
@@ -440,13 +440,13 @@
 	timer = INFINITY
 
 /datum/stressevent/excommunicated
-	stressadd = 5
+	stressadd = 10
 	desc = span_boldred("The Ten have forsaken me!")
 	timer = INFINITY
 
 /datum/stressevent/apostasy
-	stressadd = 3
-	desc = span_boldred("The apostasy's mark is upon me!")
+	stressadd = 15
+	desc = span_boldred("I have been decreed an apostate! My connection to the Divine is SEVERED!")
 	timer = INFINITY
 
 /datum/stressevent/heretic_on_sermon
