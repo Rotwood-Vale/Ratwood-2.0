@@ -115,6 +115,15 @@
 	repair_time = 20 SECONDS
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
 
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple/equipped(mob/living/user, slot)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_MONK_ROBE, TRAIT_GENERIC)
+	to_chat(user, span_notice("HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I!"))
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple/dropped(mob/living/user)//we cant drop it, but whatever.
+	..()
+	REMOVE_TRAIT(user, TRAIT_MONK_ROBE, TRAIT_GENERIC)
+
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/disciple
 	name = "enduring chest"
 	desc = "It's far more than just an oath. \
