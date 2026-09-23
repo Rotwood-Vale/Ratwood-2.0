@@ -40,8 +40,9 @@
 	//No undeath-adjacent virtues for a role that can sacrifice itself. The Ten like their sacrifices 'pure'.
 	//They get those traits during sword activation, anyway.
 	//Dual wielder is there to stand-in for ambidextrous in case they activate their sword in their off-hand.
-	virtue_restrictions = list(/datum/virtue/utility/noble, /datum/virtue/combat/rotcured, /datum/virtue/utility/deadened,
+	virtue_restrictions = list(/datum/virtue/combat/rotcured, /datum/virtue/utility/deadened,
 	/datum/virtue/utility/deathless, /datum/virtue/combat/dualwielder, /datum/virtue/heretic/zchurch_keyholder)
+	quirk_restrictions = list(/datum/quirk/noble, /datum/quirk/hunted)
 
 	advclass_cat_rolls = list(CTAG_MARTYR = 2)
 	job_subclasses = list(
@@ -67,6 +68,9 @@
 	subclass_skills = list(
 	//No, they don't get any miracles. Their miracle is being able to use their weapon at all.
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
@@ -92,28 +96,36 @@
 /datum/outfit/job/roguetown/martyr/basic/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/holysee
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold
 	beltr = /obj/item/storage/keyring/priest
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/rich
-	r_hand = /obj/item/rogueweapon/scabbard/sword
+	r_hand = /obj/item/rogueweapon/scabbard/gwstrap
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backl = /obj/item/rogueweapon/shield/tower/holysee
-	gloves = /obj/item/clothing/gloves/roguetown/chain
+	gloves = /obj/item/clothing/gloves/roguetown/plate/holysee
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/full/holysee
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	pants = /obj/item/clothing/under/roguetown/platelegs/holysee
 	cloak = /obj/item/clothing/cloak/holysee
+	id = /obj/item/clothing/neck/roguetown/psicross/undivided
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/holysee
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/silver = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/mini_flagpole/church,
-		/obj/item/clothing/neck/roguetown/psicross/undivided
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
+	if(H.mind)
+		var/helmets = list("Holy Silver Bascinet","Holy Silver Armet")
+		var/helmets_choice = input(H, "Choose your helmet.", "TAKE UP ARMS") as anything in helmets
+		H.set_blindness(0)
+		switch(helmets_choice)
+			if("Holy Silver Bascinet")
+				head = /obj/item/clothing/head/roguetown/helmet/heavy/holysee
+			if("Holy Silver Armet")
+				head = /obj/item/clothing/head/roguetown/helmet/heavy/holysee/alt
 
 /datum/outfit/job/roguetown/martyr/basic/choose_loadout(mob/living/carbon/human/H)
 	. = ..()

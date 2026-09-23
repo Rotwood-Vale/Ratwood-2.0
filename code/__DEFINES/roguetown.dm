@@ -229,6 +229,8 @@ Balloon Alert / Floating Text defines
 
 #define ALL_DIVINE_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
 
+#define ALL_GRONNIC_PATRONS list(/datum/patron/inhumen/zizo, /datum/patron/inhumen/graggar, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha, /datum/patron/divine/abyssor, /datum/patron/divine/dendor)
+
 #define ALL_INHUMEN_PATRONS list(/datum/patron/inhumen/zizo, /datum/patron/inhumen/graggar, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha)
 
 #define NON_PSYDON_PATRONS list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora, /datum/patron/inhumen/zizo, /datum/patron/inhumen/graggar, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha)	//For lord/heir usage
@@ -278,9 +280,6 @@ GLOBAL_LIST_EMPTY(accused)
 GLOBAL_LIST_EMPTY(confessors)
 
 GLOBAL_LIST_EMPTY(head_bounties)
-GLOBAL_LIST_EMPTY(board_viewers)
-GLOBAL_LIST_EMPTY(noticeboard_posts)
-GLOBAL_LIST_EMPTY(premium_noticeboardposts)
 GLOBAL_LIST_EMPTY(job_respawn_delays)
 GLOBAL_LIST_EMPTY(round_join_times)
 
@@ -350,13 +349,16 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_BOGMASTER		"CAT_BOGMASTER"		// BOGMASTER class - Handles BOGMASTER class selector (weapons selection)
 #define CTAG_SHERIFF		"CAT_SHERIFF"		// SHERIFF class - Handles SHERIFF class selector (weapons selection)
 #define CTAG_SERGEANT		"CAT_SERGEANT"		// Sergeant class - Handles Sergeant class selector (weapons selection)
+#define CTAG_RETAINER		"CAT_RETAINER"		// Retainer class - Handles Retainer class selector
 #define CTAG_ROYALGUARD		"CAT_ROYALGUARD"	// Royal Guard class - Handles Royal Guard class selector
-#define CTAG_CONSORT		"CAT_CONSORT"		// Consort/Suitor subclasses
+#define CTAG_CONSORT		"CAT_CONSORT"		// Consort subclasses.
+#define CTAG_SUITOR			"CAT_SUITOR"		// Suitor subclasses. Unmerged from CTAG_CONSORT
 #define CTAG_MERCENARY		"CAT_MERCENARY"		// Mercenary class - Handles Mercenary class selector
 #define CTAG_HAND			"CAT_HAND"			// Hand class - Handles Hand class selector
 #define CTAG_TEMPLAR		"CAT_TEMPLAR"		// Templar class - Handles Templar class selector
 #define CTAG_HEIR			"CAT_HEIR"			// Prince(cess) class - Handles Heir class selector
 #define CTAG_LORD			"CAT_LORD"			// Lord class - Handles Lord class selector
+#define CTAG_BARON			"CAT_BARON"			// Baron class - Handles Baron class selector
 #define CTAG_SQUIRE			"CAT_SQUIRE"		// Squire class - Handles Squire class selector
 #define CTAG_ROOKIE			"CAT_ROOKIE"		// Rookie class - Handles Rookie class selector
 #define CTAG_VETERAN		"CAT_VETERAN"		// Veteran class - Handles Veteran class selector
@@ -415,6 +417,10 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_BATHMOM		"CAT_BATHMOM"
 #define CTAG_TAPSTER		"CAT_TAPSTER"
 #define CTAG_LUNATIC		"CAT_LUNATIC"
+
+#define CTAG_SLAVER			"CAT_SLAVER"
+#define CTAG_SLAVE			"CAT_SLAVE"
+
 /*
 	Defines for the triumph buy datum categories
 */

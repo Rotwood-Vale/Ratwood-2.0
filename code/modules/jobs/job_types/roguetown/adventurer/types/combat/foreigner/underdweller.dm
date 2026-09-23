@@ -11,11 +11,12 @@
 		/datum/species/kobold,
 		/datum/species/goblinp,				//Might be a little weird but goblins do reside in caves, and they could use a unique merc class type.
 		/datum/species/anthromorphsmall,	//Basically all under-ground races. Perfect for cave-clearing.
+		/datum/species/moth,
 	)
 	outfit = /datum/outfit/job/roguetown/adventurer/underdweller
 	class_select_category = CLASS_CAT_RACIAL
 	category_tags = list(CTAG_ADVENTURER)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WEBWALK)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WEBWALK, TRAIT_EXPLOSIVE_SUPPLY, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
 		STATKEY_CON = 1,
 		STATKEY_WIL = 2,
@@ -39,7 +40,7 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/smelting = SKILL_LEVEL_APPRENTICE,	//Accompanies mining; they know how to smelt, not make armor though.
 	)
-	extra_context = "This subclass is race-limited to: Dwarves, Dark Elves, Kobolds, Goblins & Verminvolk."
+	extra_context = "This subclass is race-limited to: Dwarves, Dark Elves, Kobolds, Fluvians, Goblins & Verminvolk."
 
 /datum/outfit/job/roguetown/adventurer/underdweller/pre_equip(mob/living/carbon/human/H)
 	..()

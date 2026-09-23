@@ -62,8 +62,12 @@
 			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
 			"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
 			"Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
+			"Snouted Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted,
 			"Armet"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
+			"Snouted Armet"	= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/snouted,
 			"Hounskull Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
+			"Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface,
+			"Snouted Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted,
 			"Etruscan Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
 			"Slitted Kettle" = /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
 			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
@@ -232,7 +236,7 @@
 	tutorial = "The mercenary guild is teeming with corn-fed brutes looking to make mammons off the only thing they're good at - while simple-minded describes you best, you possess brute strength and a heavy club. Sometimes that's all you need to solve problems in lyfe."
 	outfit = /datum/outfit/job/roguetown/mercenary/ferentia_thug
 	subclass_languages = list(/datum/language/thievescant)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_BASHDOORS, TRAIT_SEEPRICES_SHITTY, TRAIT_DRUNK_HEALING)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_BIGGUY, TRAIT_SEEPRICES_SHITTY, TRAIT_DRUNK_HEALING)
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_CON = 3,
@@ -268,6 +272,18 @@
 			if("WHO NEEDS A CLUB? I HAVE MY HANDS!")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
+		var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff") // cool wrestling moves
+		var/technique_choice = input(H,"Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
+		switch(technique_choice)
+			if("Dropkick - Pushback + Extra Damage")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick)
+			if("Chokeslam - Stamina Damage")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)
+			if("Stunner - Dazed Debuff")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
+			if("Headbutt - Vulnerable Debuff")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
+
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	belt = /obj/item/storage/belt/rogue/leather
 	head = /obj/item/clothing/neck/roguetown/chaincoif/iron

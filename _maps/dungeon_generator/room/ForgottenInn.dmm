@@ -275,7 +275,9 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Do" = (
-/obj/structure/bars/pipe/left,
+/obj/structure/bars/pipe{
+	dir = 9
+	},
 /mob/living/carbon/human/species/skeleton/npc/supereasy,
 /turf/open/water/bath,
 /area/rogue/under/tomb/indoors)

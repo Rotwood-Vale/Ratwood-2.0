@@ -68,6 +68,11 @@
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 120)
 
+/obj/item/organ/heart/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	if(owner)
+		Restart()
+
 /obj/item/organ/heart/proc/stop_if_unowned()
 	if(!owner)
 		Stop()
@@ -232,7 +237,7 @@
 /obj/item/organ/heart/t2
 	name = "blessed heart"
 	icon_state = "heart"
-	desc = "They accepted this heresy to defeat a greater heresy. They call it a blessing, but we all know it’s not…"
+	desc = "They accepted this heresy to defeat a greater heresy. They call it a blessing, but we all know it's not…"
 	sellprice = 200
 
 /obj/item/organ/heart/t3

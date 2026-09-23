@@ -34,7 +34,7 @@
 		return ELEMENT_INCOMPATIBLE
 	SEND_SIGNAL(target, COMSIG_ELEMENT_ATTACH, src)
 	if(element_flags & ELEMENT_DETACH)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(Detach), override = TRUE)
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(Detach), override = TRUE)
 	if(element_flags & ELEMENT_DETACH_ON_HOST_DESTROY)
 		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(OnTargetDelete), override = TRUE)
 

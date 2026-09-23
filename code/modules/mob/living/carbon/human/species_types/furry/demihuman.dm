@@ -65,6 +65,7 @@
 	)
 	default_features = MANDATORY_FEATURE_LIST
 	use_skintones = TRUE
+	mutant_skin_option = TRUE
 	possible_ages = ALL_AGES_LIST
 	disliked_food = NONE
 	liked_food = NONE
@@ -122,6 +123,8 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/animal,
 		/datum/customizer/organ/vagina/animal,
+		/datum/customizer/bodypart_feature/pubes/furry,
+		/datum/customizer/bodypart_feature/pits/furry,
 		/datum/customizer/organ/horns/tusks,
 		)
 	body_marking_sets = list(

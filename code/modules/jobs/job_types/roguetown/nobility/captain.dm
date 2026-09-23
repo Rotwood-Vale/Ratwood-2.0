@@ -35,7 +35,6 @@
 	)
 
 /datum/outfit/job/roguetown/captain
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/captain
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	cloak = /obj/item/clothing/cloak/captain
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/captain
@@ -105,11 +104,24 @@
 		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 	)
-
 	extra_context = "This class gains Master skill in their weapon of choice."
+
+	virtue_restrictions = list(
+		/datum/virtue/utility/riding
+	)
+	subclass_stashed_items = list("Caparison (Saiga)" = /obj/item/caparison, "Caparison (Fogbeast)" = /obj/item/caparison/fogbeast)
+	extra_context = "This class gains Master skill in their weapon of choice. This subclass receives a caparison in its stash. Use the Saiga or Fogbeast version depending on your mount."
 
 /datum/outfit/job/roguetown/captain/infantry/pre_equip(mob/living/carbon/human/H)
 	..()
+	var/visages = list(
+		"Barbute"			= /obj/item/clothing/head/roguetown/helmet/heavy/captain,
+		"Snouted Sallet"	= /obj/item/clothing/head/roguetown/helmet/heavy/captain/sallet,
+		"Snouted Bascinet"	= /obj/item/clothing/head/roguetown/helmet/heavy/captain/bascinet,
+	)
+	var/visage_choice = input(H, "Choose your helm's visage.", "TAKE UP HELMS") as anything in visages
+	head = visages[visage_choice]
+
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	backpack_contents = list(
 		/obj/item/storage/keyring/kcaptain = 1,

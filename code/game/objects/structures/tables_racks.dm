@@ -211,7 +211,7 @@
 				if(!T)
 					return
 
-				// Fan them out slightly so they don’t stack perfectly
+				// Fan them out slightly so they don't stack perfectly
 				var/offset = -((H.currenthand.len - 1) * 4) / 2
 
 				for(var/cardname in H.currenthand)

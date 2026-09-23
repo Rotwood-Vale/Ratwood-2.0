@@ -110,3 +110,5 @@
 /obj/structure/lever/wall/rat_alarm/proc/reset_cooldown()
 	alarm_cooldown = FALSE
 	QDEL_NULL(soundloop)
+
+

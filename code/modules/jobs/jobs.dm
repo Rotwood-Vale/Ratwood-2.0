@@ -61,6 +61,7 @@ GLOBAL_LIST_INIT(nonhuman_positions, list(
 
 GLOBAL_LIST_INIT(noble_positions, list(
 	"Grand Duke",
+	"Baron",
 	"Consort",
 	"Suitor",
 	"Prince",
@@ -92,6 +93,7 @@ GLOBAL_LIST_INIT(garrison_positions, list(
 	"Rookie",
 	"Warden",
 	"Sergeant",
+	"Retainer",
 	"Veteran",
 	"Man at Arms",
 	"Squire",
@@ -135,7 +137,12 @@ GLOBAL_LIST_INIT(yeoman_positions, list(
 	"Bathmaster",
 	"Guildmaster",
 	"Guildsman",
+	"Slaver",
 	"Tailor",
+))
+GLOBAL_LIST_INIT(bathhouse_positions, list(
+	"Bathmaster",
+	"Bathhouse Attendant",
 ))
 
 GLOBAL_LIST_INIT(peasant_positions, list(
@@ -147,9 +154,11 @@ GLOBAL_LIST_INIT(peasant_positions, list(
 	"Fisher",
 	"Lumberjack",
 	"Towner",
+	"Villager",
 	"Nightmaster",
 	"Tapster",
 	"Bathhouse Attendant",
+	"Slave",
 	"Prisoner",
 	"Beggar",
 	"Refugee",

@@ -47,6 +47,8 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	"tracking" = list("traps" = 0.25, "sneaking" = 0.25),
 	//"ceramics" = (),
 ))
+#define STOCKPILE_COMMUNITY_CONTRIBUTION_THRESHOLD 40
+#define STOCKPILE_COMMUNITY_CONTRIBUTION_DREAM_BONUS 3
 
 /datum/sleep_adv
 	var/sleep_adv_cycle = 0
@@ -59,6 +61,9 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	var/datum/mind/mind = null
 	COOLDOWN_DECLARE(xp_show)
 	COOLDOWN_DECLARE(level_up)
+	var/community_contribution_count = 0
+	var/community_status_points = 0
+	var/pending_community_bonus = 0
 
 /datum/sleep_adv/New(datum/mind/passed_mind)
 	. = ..()
@@ -199,6 +204,39 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 		if(amt && show_xp && (L.client?.prefs.floating_text_toggles & XP_TEXT))
 			L.balloon_alert(L, "[amt] XP")
 			COOLDOWN_START(src, xp_show, XP_SHOW_COOLDOWN)
+//Combat roles don't get to use community points,
+/proc/is_community_contribution_eligible(mob/living/carbon/human/Human)
+	if(!Human)
+		return FALSE
+	if(Human.job in GLOB.peasant_positions)
+		return TRUE
+	if(Human.job in GLOB.yeoman_positions)
+		return TRUE
+	if(Human.job in GLOB.youngfolk_positions)
+		return TRUE
+	return FALSE
+
+// Called when a deposit lands in the town stockpile. Accumulates toward the next
+// community status point; may roll over more than once on a large bundle deposit.
+/datum/sleep_adv/proc/add_community_contribution(amount)
+	if(!amount || amount <= 0)
+		return
+	community_contribution_count += amount
+	while(community_contribution_count >= STOCKPILE_COMMUNITY_CONTRIBUTION_THRESHOLD)
+		community_contribution_count -= STOCKPILE_COMMUNITY_CONTRIBUTION_THRESHOLD
+		community_status_points++
+		pending_community_bonus += STOCKPILE_COMMUNITY_CONTRIBUTION_DREAM_BONUS
+		if(mind?.current)
+			to_chat(mind.current, span_nicegreen("Word of my hard work to the town spreads. I can rest a bit easier with a sense of community."))
+
+// Called when stock is withdrawn from the town stockpile. Reduces progress toward the
+// next community status point; Withdrawing to free up room shouldn't let a subsequent
+// deposit farm credit for stock the town already had. Never revokes status points already
+// banked or a bonus already pending payout only current progress toward the next one.
+/datum/sleep_adv/proc/remove_community_contribution(amount)
+	if(!amount || amount <= 0)
+		return
+	community_contribution_count = max(0, community_contribution_count - amount)
 
 /datum/sleep_adv/proc/add_cross_training_experience(primary_skill, amt)
 	if(!amt || !(primary_skill in GLOB.cross_training_map))
@@ -263,6 +301,10 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	retained_dust = dream_dust_modulo
 
 	sleep_adv_points += dream_points + 1 //Have a dream point. Because you're awesome.
+	if(pending_community_bonus > 0)
+		to_chat(mind.current, span_notice("My good standing with the town enriches my dreams..."))
+		sleep_adv_points += pending_community_bonus
+		pending_community_bonus = 0
 	sleep_adv_cycle++
 
 	show_ui(mind.current)
@@ -417,6 +459,12 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 	if(HAS_TRAIT(mind.current, TRAIT_STUDENT))
 		REMOVE_TRAIT(mind.current, TRAIT_STUDENT, null)
 		to_chat(mind.current, span_nicegreen("I feel that I can be educated in a skill once more."))
+	if(HAS_TRAIT(mind.current, TRAIT_EXPLOSIVE_SUPPLY))
+		mind.has_bomb = TRUE
+		to_chat(mind.current, span_smallnotice("I need to check on HERMES. I think a new package has arrived."))
+	if(HAS_TRAIT(mind.current, TRAIT_DRUG_SUPPLY))
+		mind.has_drug_delivery = TRUE
+		to_chat(mind.current, span_smallnotice("The Guild left something for me. I should check HERMES for my delivery."))
 	for(var/obj/effect/proc_holder/spell/self/martial_prowess/martialspell in mind.spell_list)
 		to_chat(mind.current, span_nicegreen("My old body feels rested and renewed. I can take on another protegé."))
 		martialspell.charges++

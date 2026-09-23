@@ -26,7 +26,6 @@
 
 	var/objtoequip = /obj/item/clothing/ring/fate_weaver
 	var/slottoequip = SLOT_RING
-	var/obj/item/clothing/conjured_armor = null
 	var/checkspot = "ring"
 
 
@@ -41,8 +40,7 @@
 		to_chat(user, span_warning("I don't have any usable hands!"))
 		revert_cast()
 		return FALSE
-	if(src.conjured_armor)
-		qdel(src.conjured_armor)
+	dispel_conjured_item()
 	switch(checkspot)
 		if("ring")
 			if(user.get_num_arms() <= 0)
@@ -61,17 +59,10 @@
 
 	user.visible_message("[user]'s existence briefly jitters, conjuring protection from doomed fates!")
 	var/item = objtoequip
-	conjured_armor = new item(user)
-	user.equip_to_slot_or_del(conjured_armor, slottoequip)
-	if(!QDELETED(conjured_armor))
-		conjured_armor.AddComponent(/datum/component/conjured_item, GLOW_COLOR_ARCANE)
+	var/obj/item/clothing/armor = new item(user)
+	user.equip_to_slot_or_del(armor, slottoequip)
+	set_conjured_item(armor)
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/conjure_armor/miracle
 	associated_skill = /datum/skill/magic/holy
-
-/obj/effect/proc_holder/spell/self/conjure_armor/Destroy()
-	if(src.conjured_armor)
-		conjured_armor.visible_message(span_warning("The [conjured_armor]'s borders begin to shimmer and fade, before it vanishes entirely!"))
-		qdel(conjured_armor)
-	return ..()

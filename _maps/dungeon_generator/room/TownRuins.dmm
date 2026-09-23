@@ -492,11 +492,11 @@
 /turf/open/water/swamp,
 /area/rogue/under/tomb)
 "kg" = (
-/obj/item/natural/glass/shard{
+/obj/item/natural/glass_shard{
 	pixel_x = -13;
 	pixel_y = -13
 	},
-/obj/item/natural/glass/shard{
+/obj/item/natural/glass_shard{
 	pixel_x = 7;
 	pixel_y = 7
 	},

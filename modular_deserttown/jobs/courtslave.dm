@@ -16,6 +16,26 @@
 	class_setup_examine = FALSE
 	social_rank = SOCIAL_RANK_DIRT
 
+// Fix to stop EA latejoining on Rockhill
+/datum/job/roguetown/adventurer/courtslave/proc/is_rockhill_map()
+	if(istype(SSmapping?.map_adjustment, /datum/map_adjustment/template/rockhill))
+		return TRUE
+	if(SSmapping?.current_map?.map_file == "rockhill.dmm")
+		return TRUE
+	if(SSmapping?.current_map?.map_name == "Rockhill")
+		return TRUE
+	return FALSE
+
+/datum/job/roguetown/adventurer/courtslave/special_job_check(mob/dead/new_player/player)
+	if(is_rockhill_map() && SSticker?.HasRoundStarted())
+		return FALSE
+	return ..()
+
+/datum/job/roguetown/adventurer/courtslave/special_check_latejoin(client/C)
+	if(is_rockhill_map())
+		return FALSE
+	return ..()
+
 // //Hooking in here does not mess with their equipment procs
 // /datum/job/roguetown/adventurer/courtagent/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 // 	if(L)

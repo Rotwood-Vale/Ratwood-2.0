@@ -20,6 +20,9 @@
 	cold_protection = LEG_RIGHT | LEG_LEFT | GROIN
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
+/obj/item/clothing/under/roguetown/heavy_leather_pants/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
 	name = "hardened leather shorts"
 	desc = "A thick hide pair of shorts, favored by some for their ease of motion in spite of \
@@ -38,6 +41,12 @@
 	icon_state = "fencerpants"
 	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+
+/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/shepherd
+	name = "shepherd's pants"
+	desc = "A pair of white pants decorated with red stripes and traditional patterning."
+	icon_state = "shepherdpants"
+	color = "#FFFFFF"
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
 	name = "fencing breeches"
@@ -60,7 +69,7 @@
 		add_overlay(pic)
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic/Initialize(mapload)
-	..()
+	. = ..()
 	update_icon()
 
 /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
@@ -150,7 +159,9 @@
 	resistance_flags = FIRE_PROOF
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ingot/bronze //Reskinned version of the Barbarian's heavy leather trousers. 1:1 functionality, but without the ability to sew-repair.
+	smeltresult = /obj/item/ingot/bronze
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_LEG_BRONZE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	dropshrink = null

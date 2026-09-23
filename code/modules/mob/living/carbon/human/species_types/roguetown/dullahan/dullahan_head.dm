@@ -452,6 +452,7 @@
 			if(owner.client)
 				winset(owner.client, "outputwindow.output", "max-lines=1")
 				winset(owner.client, "outputwindow.output", "max-lines=100")
+				log_combat(user, owner, "critically knocked out[from_behind ? " from behind" : ""]", severe = TRUE)
 		var/dislocation_type
 		var/fracture_type = /datum/wound/fracture/head
 		var/necessary_damage = 0.9
@@ -519,6 +520,8 @@
 		if(applied)
 			if(user?.client)
 				GLOB.azure_round_stats[STATS_CRITS_MADE]++
+			if(owner.client)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 
@@ -585,7 +588,9 @@
 			continue
 		listening |= M
 		the_dead[M] = TRUE
-	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
+	// the owner, not the head: log_seen keeps no entry for a non-mob, so a headless dullahan spoke with
+	// no roster at all. Reached via my_head.say() in on_say_postprocess, not by any direct call here
+	log_seen(original_owner, null, listening, message, SEEN_LOG_SAY)
 
 	var/eavesdropping
 	var/eavesrendered

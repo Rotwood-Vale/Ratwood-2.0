@@ -15,7 +15,7 @@
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/town/sewer)
 "j" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/effect/spawner/lootdrop/roguetown/sewers,
 /turf/open/water/swamp/deep,
 /area/rogue/under/town/sewer)
@@ -72,7 +72,7 @@
 /turf/open/water/sewer,
 /area/rogue/under/town/sewer)
 "P" = (
-/obj/effect/decal/cleanable/ash/large,
+/obj/item/ash,
 /turf/closed/mineral/rogue,
 /area/rogue/under/town/sewer)
 "Q" = (

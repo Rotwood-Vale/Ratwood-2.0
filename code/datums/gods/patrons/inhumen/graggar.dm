@@ -13,6 +13,7 @@
 					/obj/effect/proc_holder/spell/self/call_to_slaughter 				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/projectile/blood_net 			= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/revel_in_slaughter 			= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/resurrect/graggar				= CLERIC_T4,
 	)
 	confess_lines = list(
 		"GRAGGAR IS THE BEAST I WORSHIP!",
@@ -66,10 +67,10 @@
 	// Allows prayer in the Zzzzzzzurch(!)
 	if(istype(get_area(follower), /area/rogue/indoors/shelter/mountains))
 		return TRUE
-	// Allows prayer near EEEVIL psycross
-	for(var/obj/structure/fluff/psycross/zizocross/cross in view(4, get_turf(follower)))
+	// Allows prayer at any heretical cross, but interrupts it when near holy ones.
+	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == TRUE)
-			to_chat(follower, span_danger("That acursed cross interupts my prayers!"))
+			to_chat(follower, span_danger("That accursed cross interupts my prayers!"))
 			return FALSE
 		return TRUE
 	// Allows prayer if actively bleeding.
@@ -81,5 +82,5 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/graggar in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("For Graggar to hear my prayers I must either be in the church of the abandoned, near an inverted psycross, near fresh blood or draw blood of my own!"))
+	to_chat(follower, span_danger("For Graggar to hear my prayers I must either be in the church of the abandoned, near an unholy cross, atop a drawn Graggarite symbol, near fresh blood or bleeding my own!"))
 	return FALSE
