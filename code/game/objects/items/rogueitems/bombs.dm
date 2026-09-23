@@ -25,6 +25,9 @@
 /obj/item/bomb/fire_act()
 	light()
 
+/obj/item/bomb/on_package_opened(mob/user)
+	explode(TRUE)
+
 /obj/item/bomb/ex_act()
 	if(!QDELETED(src))
 		lit = TRUE
@@ -303,6 +306,10 @@
 /obj/item/tntstick/fire_act()
 	light()
 
+/obj/item/tntstick/on_package_opened(mob/user)
+	light()
+	explode(TRUE)
+
 /obj/item/tntstick/ex_act()
 	if(!QDELETED(src))
 		lit = TRUE
@@ -376,6 +383,10 @@
 /obj/item/satchel_bomb/fire_act()
 	light()
 
+/obj/item/satchel_bomb/on_package_opened(mob/user)
+	light()
+	explode(TRUE)
+
 /obj/item/satchel_bomb/ex_act()
 	if(!QDELETED(src))
 		lit = TRUE
@@ -446,6 +457,9 @@
 /obj/item/impact_grenade/proc/explodes()
 	STOP_PROCESSING(SSfastprocess, src)
 	qdel(src) // Delete the grenade after use boy (ALWAYS USE IT)
+
+/obj/item/impact_grenade/on_package_opened(mob/user)
+	explodes()
 
 /obj/item/impact_grenade/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()

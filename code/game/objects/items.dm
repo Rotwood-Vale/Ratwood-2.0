@@ -995,6 +995,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/on_found(mob/finder)
 	return
 
+// called when an item is released by opening its package
+/obj/item/proc/on_package_opened(mob/user)
+	return
+
 // called after an item is placed in an equipment slot
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm

@@ -915,28 +915,44 @@
 	for(var/atom/movable/AM in contents)
 		AM.ex_act()
 
-/obj/item/smallDelivery/attack_self(mob/user)
+
+/obj/item/smallDelivery/proc/open_package(mob/user, activation_chance = 100)
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
-	for(var/X in contents)
+	var/list/package_contents = contents.Copy()
+	for(var/X in package_contents)
 		var/atom/movable/AM = X
 		user.put_in_hands(AM)
-	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
+		if(istype(AM, /obj/item) && prob(activation_chance))
+			var/obj/item/I = AM
+			I.on_package_opened(user)
+	playsound(src.loc, 'sound/foley/dropsound/paper_drop.ogg', 50, TRUE)
 	user.visible_message(span_warning("[user] opens [src]."))
 	if(note)
 		note.forceMove(user.loc)
 	qdel(src)
 
+/obj/item/smallDelivery/attack_self(mob/user)
+	open_package(user)
+
 /obj/item/smallDelivery/attack_self_tk(mob/user)
 	if(ismob(loc))
 		var/mob/M = loc
 		M.temporarilyRemoveItemFromInventory(src, TRUE)
-		for(var/X in contents)
+		var/list/package_contents = contents.Copy()
+		for(var/X in package_contents)
 			var/atom/movable/AM = X
 			M.put_in_hands(AM)
+			if(istype(AM, /obj/item))
+				var/obj/item/I = AM
+				I.on_package_opened(user)
 	else
-		for(var/X in contents)
+		var/list/package_contents = contents.Copy()
+		for(var/X in package_contents)
 			var/atom/movable/AM = X
 			AM.forceMove(src.loc)
+			if(istype(AM, /obj/item))
+				var/obj/item/I = AM
+				I.on_package_opened(user)
 	if(note)
 		note.forceMove(user.loc)
 	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
@@ -954,6 +970,11 @@
 		. += "It's from [mailer], addressed to [mailedto].</a>"
 
 /obj/item/smallDelivery/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/rogueweapon/huntingknife))
+		user.visible_message(span_warning("[user] starts cutting open [src]."))
+		if(do_after(user, 5 SECONDS, target = src))
+			open_package(user, 20)
+		return
 	if(istype(W, /obj/item/natural/feather))
 		if(!user.is_literate())
 			to_chat(user, span_notice("I scribble illegibly on the side of [src]!"))
