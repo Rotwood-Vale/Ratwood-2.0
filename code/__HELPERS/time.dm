@@ -185,9 +185,19 @@ GLOBAL_VAR_INIT(date_override_offset, 0)
 
 GLOBAL_VAR_INIT(midnight_rollovers, 0)
 GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
+/**
+ * Updates the midnight rollover count and records the current time of day.
+ *
+ * Record the last observed time on every call so the next call can detect midnight.
+ * Without that assignment, the value stays at 0 and REALTIMEOFDAY resets at midnight.
+ * Elapsed-time calculations spanning midnight then become negative, and pending client-time
+ * timers can stall or never fire. Increment the rollover count before returning it so the
+ * first call after midnight includes the new day.
+ */
 /proc/update_midnight_rollover()
 	if (world.timeofday < GLOB.rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
-		return GLOB.midnight_rollovers++
+		GLOB.midnight_rollovers++
+	GLOB.rollovercheck_last_timeofday = world.timeofday
 	return GLOB.midnight_rollovers
 
 /proc/weekdayofthemonth()

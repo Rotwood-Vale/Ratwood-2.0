@@ -21,6 +21,8 @@
 	if(HAS_TRAIT(src, TRAIT_UNSEEMLY) && user != src)
 		if(!HAS_TRAIT(user, TRAIT_UNSEEMLY))
 			user.add_stress(/datum/stressevent/unseemly)
+	if(HAS_TRAIT(src, TRAIT_UNSETTLING) && user != src)
+		user.add_stress(/datum/stressevent/uncanny)
 	if(HAS_TRAIT(src, TRAIT_LEPROSY) && user != src)
 		user.add_stress(/datum/stressevent/leprosy)
 	// Apply Xylix buff when examining someone with the beautiful trait
@@ -891,7 +893,7 @@
 			if(!(mobility_flags & MOBILITY_STAND) && user != src && (user.zone_selected == BODY_ZONE_CHEST))
 				. += "<a href='?src=[REF(src)];check_hb=1'>Listen to Heartbeat</a>"
 
-	if((dna?.species?.id != "gnoll") && (!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
+	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes || nsfwflavortext || erpprefs))
 		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
 
 	if(ishuman(user))
@@ -1230,6 +1232,22 @@
 					. += span_beautiful_fem("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+
+		if (HAS_TRAIT(src, TRAIT_UNSETTLING))
+			var/unsettling_text
+			if (user == src)
+				unsettling_text = "I appear deeply uncanny."
+			else if (user.has_stress_event(/datum/stressevent/uncanny))
+				unsettling_text = "[capitalize(m2)] appearance is deeply unsettling!"
+			else
+				unsettling_text = "Something about [p_them()] looks off..."
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					. += span_beautiful_masc(unsettling_text)
+				if (SHE_HER, HE_HIM_F)
+					. += span_beautiful_fem(unsettling_text)
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					. += span_beautiful_nb(unsettling_text)
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)

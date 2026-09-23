@@ -147,6 +147,10 @@
 		if(HAS_TRAIT(attacker, TRAIT_CURSE_RAVOX))
 			prob2defend -= 40
 
+		var/datum/status_effect/debuff/magical_blindness/magic_blind = human_dodger.has_status_effect(/datum/status_effect/debuff/magical_blindness)
+		if (magic_blind)
+			prob2defend -= magic_blind.effect_strength * 5 // 5% dodge chance loss per level
+
 		// dodging while knocked down sucks ass
 		if(!(mobility_flags & MOBILITY_STAND))
 			prob2defend *= 0.25

@@ -133,6 +133,13 @@
 					/obj/item/quiver/sling/iron,
 				)
 
+/datum/supply_pack/rogue/ranged_weapons/slingsteel
+	name = "Sling Bullets Pouch, Steel"
+	cost = 80 // 2 Steel Ingots
+	contains = list(
+					/obj/item/quiver/sling/steel,
+				)
+
 /datum/supply_pack/rogue/ranged_weapons/net
 	name = "Net"
 	cost = 20

@@ -546,3 +546,255 @@
       for the purposes of debuffing their stamina regen (like during a fight).
   - balance: To compensate for Fortitude actually working as-written, stamina usage
       reduction is now -30% down from -50%.
+2026-09-17:
+  Ephemeralis:
+  - balance: Psyaltrist now has proper devotion regeneration for a T2 miracle class.
+      (250 -> 400 max devotion, 0.1 (weak) -> 0.5 (minor) regen)
+  Randumb-Phantomb:
+  - qol: dildos now take up 1x1 slot in storage.
+  - qol: dildos of all materials, shapes, and sizes, are available in the loadout
+      menu.
+  - qol: blindfolds are now far easier to create, so kidnappers can tie your eyes
+      shut with 0 skill, tools, and just one cloth.
+  - rscadd: Inquisitors are now mechanically nobility. They were already totally nobles,
+      but now you can shift-click them and it says it, cause like, come on, they were
+      totally nobles before, trust.
+  Yuckuza:
+  - balance: Nerfed thespian crit resistance, replacing it with bleed resistance.
+      Gladitor loadout for thespian is now the only loadout that gets crit resistance.
+  - balance: Bronze heavy armor integ buffed to be on par with steel.
+  - code_imp: bleed rate math adjusted so that bleed resistance 0.5x reduction takes
+      priority over crit resistance 0.8x.
+  zeroisthebiggay:
+  - qol: Guard hotkey. Press G to guard, or assign it in the hotkeys menu if it's
+      not already.
+  - rscadd: With Journeyman unarmed, you can guard while barehanded.
+  - balance: Guard expiring no longer has any form of penalty.
+  - balance: Forcefully and intentionally ending a guard via attacking or swapping
+      hands now always incurs a harsh penalty. It previously did so specifically when
+      you tried to shoot a crossbow, but now it applies to everything done by the
+      person guarding. Let your guard expire instead of trying to end it early.
+  - balance: Disrupting a guard with a feint now incurs the stamina penalty of having
+      your guard kicked or an item being thrown at you in addition to making you vulnerable.
+  - balance: You can guard while sprinting.
+  - balance: You can guard with mage armor.
+  - balance: You can no longer guard while exposed. This shouldn't affect being feinted,
+      but being baited will leave you vulnerable and without the ability to counterattack.
+      Don't get baited.
+  zoktiik:
+  - bugfix: Masochists/Sadists will no longer trigger ~3 screams in quick succession
+      during rough+ interactions.
+2026-09-18:
+  MarioTheShiba:
+  - rscadd: Death Alarms for Admins.
+  MrShibaa:
+  - rscadd: Unsettling Quirk
+  Shadow-Quill:
+  - qol: Added the Self Aware trait to Absolver and Stigmata, letting them examine
+      themselves for full damage numbers, as they could do with others.
+  annikaRU:
+  - bugfix: Having caught the person who had been selling fake rosestones for two
+      years they were promptly shot out of a cannon into mount decapitation
+  trueroguan:
+  - rscadd: New "Jiggle" emote - shake your chest and bounce on the spot.
+  - rscadd: Jiggle Duration and Endless Jiggle settings in the Toggles menu. Long
+      or endless jiggling drains stamina.
+  - rscadd: Bathhouse Attendants don't tire from jiggling inside the bathhouse.
+  - image: Jiggle animation frames for every breast size and type.
+  - bugfix: Characters with different breast sizes no longer risk sharing each other's
+      cached body sprites.
+2026-09-19:
+  AlucardHellsingChapel:
+  - bugfix: fixes a bug (they should have master swords not expert)
+  JustMeTheIInd:
+  - qol: "Parry/Dodge now sets automatically, based on whether or not you have armor\
+      \ traits.\n<!-- Both :cl:'s are required for the changelog to work! You can\
+      \ put your name to the right of the first :cl: if you want to overwrite your\
+      \ GitHub username as author ingame. -->\n<!-- You can use multiple of the same\
+      \ prefix (they're only used for the icon ingame) and delete the unneeded ones.\
+      \ Despite some of the tags, changelogs should generally represent how a player\
+      \ might be affected by the changes rather than a summary of the PR's contents.\
+      \ -->\n<!-- By contributing to this codebase, you confirm that any code and\
+      \ sprites you provide are legal to share and will be licensed under the terms\
+      \ specified in README.md \u2014 AGPLv3 for code and CC-BY-SA 3.0 for assets,\
+      \ unless otherwise stated. You acknowledge that the project maintainers are\
+      \ under no obligation to remove any materials that do not violate these licenses.\
+      \ -->"
+  hugmeorelse:
+  - rscadd: Feeling cute. Added some IC way to explain how to use the fulemnor chair,
+      because I keep seeing new players get stumped without breaking OOC. Might delete
+      later.
+  - rscadd: A severed head can be sewn onto a new body and bound to it in a Fulmenor
+      chair. Takes a master physician and a full tank of elixir. Takes on the head's
+      identity.
+  - rscadd: Bodies whose brain isn't their own refuse ordinary revival.
+  - rscadd: Deadite NPCs can infect you with their bite.
+  - qol: Searching now points out severed heads lying loose, not just bodies.
+  - bugfix: Curing a deadite (typically through admin revival) no longer leaves them
+      permanently non-organic and unable to ever rot, rise or be infected again.
+  - bugfix: Decapitated deadites can be cured.
+  - bugfix: Curing a deadite now actually restores the body instead of leaving it
+      undead while claiming to be cured.
+  - bugfix: Burying a deadite in a grave or coffin no longer deletes the body.
+  - bugfix: Headless deadite corpses are no longer deleted.
+  - bugfix: Players inhabiting an NPC body are no longer despawned (in theory).
+  - bugfix: Corpses waiting to rise as a deadite can ghost once the rise clearly isn't
+      coming, and admin-ghosting always works.
+  - bugfix: Deadite Seek Brains no longer says it smelled nothing when someone is
+      standing on top of you.
+  - bugfix: Tongue surgery looks for tongue wounds instead of ear wounds.
+  - bugfix: Improvised scalpels work for plastic surgery again.
+  - admin: List Severed Heads tool for admins
+2026-09-20:
+  RadiantFlash7:
+  - bugfix: conjured items no longer have a sell value.
+  Shadow-Quill:
+  - qol: Absolver's WEEP can now be used on someone who needs blood, but has no wounds.
+  SirSwagmeyer:
+  - rscdel: Removed the experimental jousting mechanic from the game, due to balance
+      issues.
+  chemistrymain3:
+  - balance: Assassin can spawn as more roles, and is a stronger antagonist now. This
+      does not increase spawn frequency. It is just stronger and can kill people now.
+  envoyin:
+  - balance: duelist coat is now on par with the hardened leather coat
+  hugmeorelse:
+  - code_imp: Ported TG's modern timer subsystem and converted compatible delayed
+      work to timer callbacks.
+  - bugfix: Client-time timers now remain valid across midnight and timer subsystem
+      recovery.
+  - admin: Added Check Timer Sources for identifying which call sites created live
+      timers.
+  - bugfix: Fixed several lifecycle errors exposed by the stricter timer and integration
+      tests.
+  mushy:
+  - rscadd: Black Oak Pariah now has a ranged variant.
+  - balance: Black Oak Pariah now has two slots.
+  zeroisthebiggay:
+  - bugfix: fixed whip special only being usable on mobs
+  zoktiik:
+  - rscadd: Gnolls can now set their own flavortext & rumours in Gnoll Preferences.
+      They have access to all the relevant features, as well as a fully-working preview.
+      Headshot in Chat has NOT been enabled to show on gnolls at this time.
+  - rscadd: Gnolls can now also set overrides for their statpack and name color in
+      Gnoll Preferences. No more having to switch things around! By default, it is
+      set to Fated (random +2/-2 all stats).
+  - bugfix: Preview Examine now works how you'd expect it to. Before, using it while
+      you were spawned-in ignored what you currently had set in your preferences,
+      because the "human" mob took precedence. Now the Examine Panel is told explicitly
+      that it is previewing something, and displays what you have set in your prefs.
+  - code_imp: Conveniently, this "previewing" variable is also used to distinguish
+      whether we are previewing prefs for the character slot, or for the gnoll.
+  - code_imp: Familiar Prefs and Gnoll Prefs now have their saving delegated to local
+      procs, instead of at preferences_savefile.dm. In theory this speeds up save/load,
+      since we're not sanity checking for each saved item.
+  - code_imp: 'Tiny change: if a statpack can''t load, it now just sets you to Fated
+      instead of randoming.'
+2026-09-21:
+  RadiantFlash7:
+  - bugfix: Navigator now actively checks for anything thats 'conjured' rather then
+      worrying about conjured item sellprice
+  - balance: Naledi Complex is no longer optional
+  - balance: Divergence no longer has a 2 second immobilize. It now has a .5 second
+      immobilize and a brief slowdown, like other spells.
+  - bugfix: fixes conjured weapons being sold for value
+  Risraivyn:
+  - rscadd: Added TGUI interface spell pick
+  SirSwagmeyer:
+  - rscadd: FREIFECHTER REWORK - added master strikes, reworked Freifechters in general,
+      and more.
+  - rscadd: Added two new foreigner adventurers, some new, banger ass combat music,
+      and more.
+  - bugfix: Unfucked Flamberge's onmob sprite.
+  UntoldTactics:
+  - code_imp: Twilight Axis appropriately credited for the City Watch armor sprites.
+  Xander3359:
+  - rscadd: Adds Self-Aware as a quirk option. Costs 1 point and lets you see your
+      own damage numbers
+  - bugfix: Knives that have a chance to embed now can actually embed.
+  Yuckuza:
+  - rscadd: Gronn mercs and items reflavored to use Mongol Khanate-inspired, rather
+      than Norse-inspired, wording and naming conventions.
+  - bugfix: Former Atgervi, now Ba'atur, has their miracles once more following an
+      accidental regression.
+  - balance: Werewolf skin and gnoll hide are now affected by blessed silver intdamage
+      multiplier.
+  hugmeorelse:
+  - rscadd: Added iron versions of the armet and roundface bascinet, plus iron snouted
+      armets, iron snouted visored sallets and iron snouted roundface bascinets from
+      AP. They can be forged at the anvil and chosen by the Ironclad. More iron for
+      the iron warriors.
+  - image: The new iron helmets now match the colors of the other iron helmets on
+      RW.
+  - bugfix: Adding a feather or cloth to an iron visored sallet now shows a plume
+      or orle, instead of using up the item and showing nothing.
+  - bugfix: Rainbow orles on armets now show their proper colors and no longer remove
+      an existing plume. Doesn't really fit the setting, but it needed a fix. Not
+      up to me to decide, and I don't really care.
+  - bugfix: Plumes and orles now sit correctly on the iron snouted armet and on snouted
+      visored sallets with the visor raised. The plume now "sits" behind the raised
+      visor.
+  wikimody:
+  - balance: gave keeper major devotion regen instead of minor
+  - bugfix: fixed keepers double devotion bar
+  zeroisthebiggay:
+  - balance: whips are now considered great weapons in length
+  - spellcheck: alters unsettling quirk verbiage
+  - qol: allows turf-click attacks for all melee intents.
+  zoktiik:
+  - rscdel: A number of "important" roles have been forbidden from taking Marked by
+      Gnolls, due to gnolls' high potential for disappearing targets from the round.
+2026-09-22:
+  Yuckuza:
+  - rscadd: Added the psydonic urumi and paladin/psydonite heretic enduring equivalent.
+  - rscadd: 'Added urumi loadout options to the following: Psyalmist, Adjudicator,
+      Duelist, Barbarian, Exorcist, Amazon, Spellblade, Paladin, Zephyr, Cataphract
+      Shieldmaster, Knight Champion, Deserter Fighter, Wretch Outlaw, and Heretic
+      Spy.'
+  zeroisthebiggay:
+  - rscadd: Pyris color for tieflings
+2026-09-23:
+  CloverIsLucky:
+  - qol: Coif and Padded coif now needs Apprentice and Journeyman to craft them.(one
+      less crafting level)
+  Kroto-Ker:
+  - rscadd: City watch armor reflects duchy colors.
+  MrShibaa:
+  - balance: RMB DEFEND now applies a 3 sec EXPOSED and CLICKCD effect to con checks.
+  Quink-Fix:
+  - bugfix: fixed a bug that invalidated an intended mechanic; holy crosses now interrupt
+      the prayers of Inhumen characters with the Devout vice if you are too close
+      to them, regardless of whether you meet any other criteria (except being in
+      the zchurch)
+  - bugfix: various spelling errors, missing information, and inaccurate terminology
+      with regards to warnings given for the Devout vice
+  RadiantFlash7:
+  - rscadd: Added Arcyne Silver dagger to Merchant silver/goldface Magic Category
+  - rscdel: Removed silver daggers from Merchant silver/goldface catalogue
+  - balance: Arycne Silver Daggers no longer return silver ore on smelting
+  SirSwagmeyer:
+  - balance: Adds miniscule passive blood regen. Procs when uncon, and not hungry/thirsty
+  - balance: Bandages are 0.5x more effective (compared to 0.25x at current).
+  - balance: Water regens blood more, now. (Just slightly more).
+  - balance: Cheeles start with more blood, and can carry as much blood as in a person.
+  - balance: reduced the slowdowns of mounted barding.
+  - rscadd: Overhauled Noccite and Zizite miracles.
+  Xander3359:
+  - balance: Makes Blacksteel urumi heavy balance
+  - bugfix: Fixed Kargrund Maul being invisible
+  ophaq:
+  - rscadd: Allows the standard shirt to be wearable on the armor slot.
+  - rscadd: Adds footwraps to the loadout.
+  wikimody:
+  - rscadd: Added new ammo types for sling, steel, silver and blessed versions of
+      both
+  - rscadd: Added steel ones into smiths silverface
+  - qol: renamed archery enchantment into sharpshooter enchantment
+  - balance: blacksteel sling ammunition is made in 10ths not 5ths as before
+  - bugfix: and is no longer deleted when impacting somone
+  zeroisthebiggay:
+  - balance: Losing a limb or being disemboweled now rolls your CON and WIL to resist
+      an immediate paincrit. Psydonites who pass this roll will be filled with a stirring
+      of HIS energies for a last stand!
+  - bugfix: Corrected a bunch of random pain screams in reaction to wounds not being
+      forced, so you should be screaming more when someone's breaking all your bones.
