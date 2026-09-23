@@ -146,6 +146,13 @@
 			return
 	mob_timers["deadite_idle"] = world.time
 	emote("idle")
+/// Whether this mob is a risen deadite, either a turned antag datum or the NPC deadite type, whose datum turns ~6 s after spawn
+/mob/living/carbon/proc/is_risen_deadite()
+	if(istype(src, /mob/living/carbon/human/species/npc/deadite))
+		return TRUE
+	var/datum/antagonist/zombie/zombie_antag = mind?.has_antag_datum(/datum/antagonist/zombie)
+	return zombie_antag?.has_turned
+
 /// Use this to attempt to add the zombie antag datum to a human
 /mob/living/carbon/human/proc/zombie_check()
 	if(!mind)
@@ -196,5 +203,6 @@
 	to_chat(src, span_danger("It hurts... Is this really the end for me?"))
 	emote("scream") // heres your warning to others bro
 	Knockdown(1)
+	drop_all_held_items()
 	zombie_antag.wake_zombie(TRUE)
 	return TRUE

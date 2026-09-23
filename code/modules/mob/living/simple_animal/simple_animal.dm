@@ -217,7 +217,11 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		AddSpell(newspell)
 
 /mob/living/simple_animal/Destroy()
-	GLOB.simple_animals[AIStatus] -= src
+	// Clear every status list rather than the one AIStatus names. Remove() takes out a single copy
+	// starting from the end, so one subtraction against a stale status or a duplicated entry
+	// leaves a reference behind and the mob hard deletes.
+	for(var/list/status_list as anything in GLOB.simple_animals)
+		status_list.RemoveAll(src)
 	SSnpcpool.currentrun -= src
 
 	if(nest)
