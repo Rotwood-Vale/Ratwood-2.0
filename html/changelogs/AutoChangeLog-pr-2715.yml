@@ -1,5 +1,0 @@
-author: "zeroisthebiggay"
-delete-after: True
-changes:
-  - balance: "Losing a limb or being disemboweled now rolls your CON and WIL to resist an immediate paincrit. Psydonites who pass this roll will be filled with a stirring of HIS energies for a last stand!"
-  - bugfix: "Corrected a bunch of random pain screams in reaction to wounds not being forced, so you should be screaming more when someone's breaking all your bones."
