@@ -58511,6 +58511,13 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/cave/northern)
+"kMo" = (
+/obj/structure/rack/rogue,
+/obj/effect/spawner/lootdrop/heresy,
+/obj/effect/spawner/lootdrop/heresy,
+/obj/machinery/light/rogue/candle/red,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/town/church/basement)
 "kMp" = (
 /turf/closed/wall/mineral/rogue/pipe{
 	dir = 4;
@@ -84842,6 +84849,10 @@
 	},
 /turf/closed/wall/mineral/rogue/wooddark/window,
 /area/rogue/indoors/town/manor)
+"pzx" = (
+/obj/machinery/light/rogue/candle/blue,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/church/basement)
 "pzz" = (
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town)
@@ -107395,6 +107406,9 @@
 /obj/structure/rack/rogue,
 /obj/effect/spawner/lootdrop/heresy,
 /obj/effect/spawner/lootdrop/heresy,
+/obj/machinery/light/rogue/candle/red{
+	pixel_y = -32
+	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/church/basement)
 "tFQ" = (
@@ -121061,6 +121075,12 @@
 	},
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/goblindungeon)
+"wfB" = (
+/obj/machinery/light/rogue/candle/blue{
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/church/basement)
 "wfG" = (
 /obj/structure/closet/crate/roguecloset/inn,
 /obj/item/rogueweapon/hoe/stone,
@@ -131487,7 +131507,8 @@
 "ybL" = (
 /obj/structure/mineral_door/wood/fancywood{
 	lockid = "church";
-	name = "custos carceris subterranei"
+	name = "custos carceris subterranei";
+	locked = 1
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/church/basement)
@@ -179082,7 +179103,7 @@ pLd
 pLd
 rLL
 eIB
-tFP
+kMo
 hxo
 cmi
 cmi
@@ -179534,7 +179555,7 @@ wAc
 kcq
 iNm
 eIB
-tFP
+kMo
 hxo
 jsW
 cmi
@@ -179988,9 +180009,9 @@ iNm
 fQy
 gUY
 fQy
-jsW
+pzx
 cmi
-jsW
+wfB
 fQy
 gUY
 fQy
@@ -180892,9 +180913,9 @@ iNm
 fQy
 gUY
 fQy
-jsW
+pzx
 cmi
-jsW
+wfB
 fQy
 gUY
 fQy
@@ -181796,9 +181817,9 @@ iNm
 fQy
 gUY
 fQy
-jsW
+pzx
 cmi
-jsW
+wfB
 fQy
 gUY
 fQy
@@ -182700,9 +182721,9 @@ rLL
 fQy
 gUY
 fQy
-jsW
+pzx
 cmi
-jsW
+wfB
 fQy
 gUY
 fQy
@@ -183604,9 +183625,9 @@ iNm
 fQy
 gUY
 fQy
-jsW
+pzx
 cmi
-jsW
+wfB
 fQy
 gUY
 fQy
