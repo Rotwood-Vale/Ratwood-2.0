@@ -26253,6 +26253,15 @@
 /obj/structure/table/wood/large_table/north_west,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/orcdungeon)
+"eRO" = (
+/obj/structure/mineral_door/wood/donjon/stone{
+	lockid = "church";
+	locked = 1
+	},
+/turf/open/floor/rogue/churchmarble{
+	color = "#d4ffcf"
+	},
+/area/rogue/indoors/town/church)
 "eRP" = (
 /obj/structure/flora/roguegrass/water,
 /turf/open/water/swamp/deep,
@@ -62250,10 +62259,10 @@
 /obj/effect/decal/cleanable/debris/woody{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/debris/woody,
-/obj/item/natural/wood/plank{
-	pixel_x = 6;
-	pixel_y = -6
+/obj/structure/fluff/customsign{
+	desc = "SHOP";
+	icon_state = "signwrote";
+	name = "HAMLET -->"
 	},
 /turf/open/floor/rogue/twig{
 	dir = 4
@@ -326034,7 +326043,7 @@ xtd
 xtd
 tub
 aQH
-suD
+eRO
 tub
 xtd
 xtd
