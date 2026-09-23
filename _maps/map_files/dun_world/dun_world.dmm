@@ -25373,8 +25373,6 @@
 	color = "#86babd"
 	},
 /obj/item/clothing/head/roguetown/helmet/citywatch,
-/obj/item/clothing/head/roguetown/helmet/kettle/citywatch,
-/obj/item/clothing/head/roguetown/helmet/kettle/citywatch,
 /obj/item/clothing/head/roguetown/helmet/citywatch,
 /obj/item/clothing/head/roguetown/helmet/citywatch,
 /obj/item/clothing/head/roguetown/helmet/citywatch,
@@ -38787,14 +38785,22 @@
 /area/rogue/indoors/cave)
 "heD" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/storage/belt/rogue/leather/citywatch,
-/obj/item/storage/belt/rogue/leather/citywatch,
-/obj/item/storage/belt/rogue/leather/citywatch,
-/obj/item/storage/belt/rogue/leather/citywatch,
 /obj/item/clothing/cloak/citywatch,
 /obj/item/clothing/cloak/citywatch,
 /obj/item/clothing/cloak/citywatch,
 /obj/item/clothing/cloak/citywatch,
+/obj/item/rogueweapon/shield/iron{
+	color = "#b0f1f5"
+	},
+/obj/item/rogueweapon/shield/iron{
+	color = "#b0f1f5"
+	},
+/obj/item/rogueweapon/shield/iron{
+	color = "#b0f1f5"
+	},
+/obj/item/rogueweapon/shield/iron{
+	color = "#b0f1f5"
+	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/garrison)
 "heM" = (
@@ -39881,10 +39887,6 @@
 /obj/item/clothing/under/roguetown/chainlegs/iron,
 /obj/item/clothing/under/roguetown/chainlegs/iron,
 /obj/item/clothing/under/roguetown/chainlegs/iron,
-/obj/item/clothing/wrists/roguetown/bracers/citywatch,
-/obj/item/clothing/wrists/roguetown/bracers/citywatch,
-/obj/item/clothing/wrists/roguetown/bracers/citywatch,
-/obj/item/clothing/wrists/roguetown/bracers/citywatch,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/garrison)
 "hol" = (
@@ -86269,7 +86271,6 @@
 /obj/item/scomstone/bad/garrison,
 /obj/item/clothing/cloak/citywatchcaptain,
 /obj/item/clothing/cloak/citywatch,
-/obj/item/rogueweapon/shield/iron/citywatch,
 /obj/item/paper{
 	pixel_y = 7
 	},
@@ -94230,12 +94231,10 @@
 /area/rogue/indoors/inq)
 "rje" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/rogueweapon/shield/iron/citywatch,
-/obj/item/rogueweapon/shield/iron/citywatch,
-/obj/item/rogueweapon/shield/iron/citywatch,
-/obj/item/rogueweapon/shield/iron/citywatch,
-/obj/item/rogueweapon/shield/iron/citywatch,
-/obj/item/rogueweapon/shield/iron/citywatch,
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch,
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch,
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch,
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/garrison)
 "rjj" = (
@@ -113640,11 +113639,11 @@
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron,
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron,
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron,
-/obj/item/clothing/suit/roguetown/armor/plate/citywatch,
 /obj/item/clothing/suit/roguetown/armor/gambeson,
 /obj/item/clothing/suit/roguetown/armor/gambeson,
 /obj/item/clothing/suit/roguetown/armor/gambeson,
 /obj/item/clothing/suit/roguetown/armor/gambeson,
+/obj/item/clothing/suit/roguetown/armor/plate/half/iron,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/garrison)
 "uLn" = (
