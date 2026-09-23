@@ -802,7 +802,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 
 /datum/loadout_item/thong
 	name = "Thong"
-	/obj/item/clothing/under/roguetown/thong
+	path = /obj/item/clothing/under/roguetown/thong
 
 //ACCESSORIES
 /datum/loadout_item/wrappings
