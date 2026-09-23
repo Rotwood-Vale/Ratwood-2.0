@@ -300,6 +300,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)//gives them old crit resistance when stacked with blood resists 0.5x bleed
 			ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)
 			H.change_stat(STATKEY_INT, 2)//no malus for pure unarmed
 			H.change_stat(STATKEY_WIL, 1)
