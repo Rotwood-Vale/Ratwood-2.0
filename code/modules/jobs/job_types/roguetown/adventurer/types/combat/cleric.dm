@@ -85,8 +85,8 @@
 			if("Penance - Unarmored") // Skin armor, +1 con because this locks you out of holy monk vestments and the associated stamina boost
 				ADD_TRAIT(H, TRAIT_NOPAINSTUN, JOB_TRAIT)
 				H.change_stat(STATKEY_CON, 1)
-				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
 				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/monk //a leather armor
 				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/monk //a gambeson
