@@ -101,15 +101,30 @@
 		return
 	qdel(src)
 
-/obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple
 	name = "disciple's skin"
 	desc = "It's far more than just an oath. </br>'AEON, PSYDON, ADONAI - ENTROPY, HUMENITY, DIVINITY. A TRINITY THAT IS ONE, \
 	YET THREE; KNOWN BY ALL, YET FORGOTTEN TO TYME.' </br>'A CORPSE. \
 	I AM LIVING ON A FUCKING CORPSE. HE IS THE WORLD, AND THE WORLD IS ROTTING AWAY. \
 	HEAVEN CLOSED ITS GATES TO US, LONG AGO.' </br>'YET, HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I. \
 	HAPPINESS MUST BE FOUGHT FOR.'"
+	body_parts_covered = COVERAGE_FULL
+	body_parts_inherent = COVERAGE_FULL
 	armor = ARMOR_LEATHER_STUDDED
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
+	repair_time = 20 SECONDS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/disciple
+	name = "enduring chest"
+	desc = "It's far more than just an oath. \
+	YET THREE; KNOWN BY ALL, YET FORGOTTEN TO TYME.' </br>'A CORPSE. \
+	I AM LIVING ON A FUCKING CORPSE. HE IS THE WORLD, AND THE WORLD IS ROTTING AWAY. \
+	HEAVEN CLOSED ITS GATES TO US, LONG AGO.' </br>'YET, HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I. \
+	HAPPINESS MUST BE FOUGHT FOR.'"
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	armor = ARMOR_LEATHER_GOOD
 	repair_time = 20 SECONDS
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
 

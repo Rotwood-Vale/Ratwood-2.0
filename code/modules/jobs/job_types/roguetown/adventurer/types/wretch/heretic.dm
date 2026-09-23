@@ -560,7 +560,8 @@
 				to_chat(H, span_warning("Once you served mortal men and their books. Today and from now on, you serve HIM and HIM alone."))
 				head = /obj/item/clothing/head/roguetown/roguehood/psydon
 				mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
-				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
+				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/disciple
+				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/psythorns
 				shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
