@@ -303,6 +303,7 @@
 	icon_state = "greatflail"
 	wdefense = 6
 	minstr = 12
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	max_integrity = 300//+50 over iron warflail
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
@@ -314,6 +315,7 @@
 	wdefense = 6
 	minstr = 13
 	max_integrity = 300
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	is_silver = TRUE
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/silver
@@ -338,6 +340,7 @@
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)//this having the better intents is a smaller buff than just increasing the base force, on par with things like blacksteel greataxe and flamberg being on par with antag options
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	max_integrity = 500
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/blacksteel
 	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
@@ -353,6 +356,7 @@
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	associated_skill = /datum/skill/combat/whipsflails
 	slot_flags = ITEM_SLOT_BACK
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	wdefense = 7 //on par with blacksteel version, i've seen this thing get broken far to often
 	max_integrity = 350 // 50+ compared to steel, on par with silver blessed
