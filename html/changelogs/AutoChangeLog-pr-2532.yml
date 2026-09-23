@@ -1,0 +1,7 @@
+author: "SirSwagmeyer"
+delete-after: True
+changes:
+  - balance: "Adds miniscule passive blood regen. Procs when uncon, and not hungry/thirsty"
+  - balance: "Bandages are 0.5x more effective (compared to 0.25x at current)."
+  - balance: "Water regens blood more, now. (Just slightly more)."
+  - balance: "Cheeles start with more blood, and can carry as much blood as in a person."
