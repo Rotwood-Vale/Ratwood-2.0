@@ -352,13 +352,13 @@
 		var/cbt_multiplier = 1
 		if(user && HAS_TRAIT(user, TRAIT_NUTCRACKER))
 			cbt_multiplier = 2
-		if(prob(round(dam/5) * cbt_multiplier))
+		if(owner.client?.prefs?.extreme_erp && prob(round(dam/5) * cbt_multiplier))
 			attempted_wounds += /datum/wound/cbt
 		if(prob(dam * cbt_multiplier))
 			owner.emote("groin", TRUE)
 			owner.Stun(10)
 	if(zone_precise == BODY_ZONE_PRECISE_GROIN)
-		if(bclass in GLOB.geld_classes)
+		if((bclass in GLOB.geld_classes) && owner.client?.prefs?.extreme_erp)
 			var/static/list/genital_wound_types = list(
 				/datum/wound/gelding,
 				/datum/wound/genital_nullification,
