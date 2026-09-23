@@ -25974,6 +25974,9 @@
 /obj/structure/table/wood,
 /obj/item/rogueweapon/whip,
 /obj/item/rogueweapon/surgery/cautery/branding,
+/obj/item/dildo/silver,
+/obj/item/dildo/silver,
+/obj/item/dildo/silver,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/inq/basement)
 "frc" = (

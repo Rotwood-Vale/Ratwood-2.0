@@ -4870,6 +4870,9 @@
 /obj/item/rogueweapon/surgery/cautery,
 /obj/item/rogueweapon/surgery/scalpel,
 /obj/item/rogueweapon/surgery/hemostat,
+/obj/item/dildo/silver,
+/obj/item/dildo/silver,
+/obj/item/dildo/silver,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/inq/basement)
 "boR" = (
