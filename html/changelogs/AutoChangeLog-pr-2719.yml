@@ -1,8 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - rscadd: "Added new ammo types for sling, steel, silver and blessed versions of both"
-  - rscadd: "Added steel ones into smiths silverface"
-  - qol: "renamed archery enchantment into sharpshooter enchantment"
-  - balance: "blacksteel sling ammunition is made in 10ths not 5ths as before"
-  - bugfix: "and is no longer deleted when impacting somone"
