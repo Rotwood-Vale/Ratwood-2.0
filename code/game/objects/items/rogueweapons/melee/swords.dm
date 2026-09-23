@@ -2582,6 +2582,11 @@
 	icon_state = "hook_sword"
 	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/hook, /datum/intent/sword/strike, /datum/intent/sword/disarm)
 	max_integrity = 180
+	bigboy = TRUE
+	pixel_y = -16
+	pixel_x = -16
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	wdefense = 5
 
 /obj/item/rogueweapon/sword/sabre/hook/getonmobprop(tag)
