@@ -127,6 +127,7 @@
 	if(human_dodger)
 		if(!human_dodger?.check_armor_skill() || human_dodger?.legcuffed)
 			human_dodger.Knockdown(1)
+			human_dodger.drop_all_held_items()
 			return FALSE
 		if(attacking_item) //the enemy attacked us with a weapon
 			if(!attacking_item.associated_skill) //the enemy weapon doesn't have a skill because its improvised, so penalty to attack
