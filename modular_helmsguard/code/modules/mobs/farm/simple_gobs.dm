@@ -34,7 +34,7 @@
 	attack_verb_continuous = "hacks"
 	attack_verb_simple = "hack"
 	attack_sound = 'sound/blank.ogg'
-	canparry = TRUE
+	mob_can_parry = TRUE
 	d_intent = INTENT_PARRY
 	defprob = 50
 	defdrain = 20

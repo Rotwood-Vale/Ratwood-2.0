@@ -76,6 +76,8 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
 		/datum/customizer/organ/vagina/human_anthro,
+		/datum/customizer/bodypart_feature/pubes,
+		/datum/customizer/bodypart_feature/pits,
 		/datum/customizer/organ/ears/tiefling,
 		)
 	body_marking_sets = list(
@@ -146,7 +148,8 @@
 		"Krizzsha" = SKIN_COLOR_KRIZZSHA,
 		"Tosiz" = SKIN_COLOR_TOSIZ,
 		"Velothel" = SKIN_COLOR_VELOTHEL,
-		"Ashol" = SKIN_COLOR_ASHOL
+		"Ashol" = SKIN_COLOR_ASHOL,
+		"Pyris" = SKIN_COLOR_PYRIS
 	)
 
 /datum/species/tieberian/get_hairc_list()

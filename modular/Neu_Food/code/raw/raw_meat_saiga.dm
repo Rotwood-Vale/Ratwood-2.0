@@ -1,5 +1,4 @@
 // Raw Saiga/Venison meat cuts - from saiga deer and the legendary white stag.
-
 /obj/item/reagent_containers/food/snacks/rogue/meat/saiga
 	name = "venison"
 	desc = "A standard cut of raw venison, freshly severed from a beast. Only the strongest saiga that wisely avoid humen bear true venison."
@@ -49,7 +48,8 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z/cooked
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z/cooked
 	ingredient_size = 4
-	rotprocess = SHELFLIFE_LONG
+	rotprocess = null
+	eat_effect = /datum/status_effect/debuff/rotfood
 	eat_effect = /datum/status_effect/debuff/rotfood
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z
@@ -60,7 +60,8 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z/cooked
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z/cooked
 	ingredient_size = 4
-	rotprocess = SHELFLIFE_LONG
+	rotprocess = null
+	eat_effect = /datum/status_effect/debuff/rotfood
 	eat_effect = /datum/status_effect/debuff/rotfood
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z
@@ -71,7 +72,8 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z/cooked
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z/cooked
 	ingredient_size = 4
-	rotprocess = SHELFLIFE_LONG
+	rotprocess = null
+	eat_effect = /datum/status_effect/debuff/rotfood
 	eat_effect = /datum/status_effect/debuff/rotfood
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z
@@ -82,7 +84,7 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z/cooked
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z/cooked
 	ingredient_size = 4
-	rotprocess = SHELFLIFE_LONG
+	rotprocess = null
 	eat_effect = /datum/status_effect/debuff/rotfood
 
 // White Stag variants - blessed flesh, no rot

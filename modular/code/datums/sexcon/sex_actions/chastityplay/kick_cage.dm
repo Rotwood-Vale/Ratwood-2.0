@@ -1,31 +1,26 @@
 /datum/sex_action/chastityplay/kick_cage
-	name = "Kick their chastity"
+	name = "Kick their chastity cage"
 	check_same_tile = FALSE
 	category = SEX_CATEGORY_HANDS
+	target_sex_part = SEX_PART_GROIN
+	target_needs_chastity = TRUE
+	user_sex_part = SEX_PART_FOOT
 
 /datum/sex_action/chastityplay/kick_cage/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
 	if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
 		return FALSE
-	if(!target_has_front_chastity(target))
+	if(!(. = ..()))
 		return FALSE
 	return TRUE
 
 /datum/sex_action/chastityplay/kick_cage/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
 	if(!HAS_TRAIT(user, TRAIT_NUTCRACKER))
+		return FALSE
+	if(!(. = ..()))
 		return FALSE
 	if(user.resting)
 		return FALSE
-	if(!target_has_front_chastity(target))
-		return FALSE
 	if(!user.Adjacent(target))
-		return FALSE
-	if(!can_reach_target_groin(user, target))
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_L_FOOT) && !check_location_accessible(user, user, BODY_ZONE_PRECISE_R_FOOT))
 		return FALSE
 	return TRUE
 
@@ -65,7 +60,7 @@
 			arousal_amt = 0.0
 			pain_amt = 11
 
-	user.visible_message(user.sexcon.spanify_force(msg))
+	user.sexcon_action_message(user.sexcon.spanify_force(msg))
 	if(force >= SEX_FORCE_EXTREME)
 		play_chastity_impact_sound(target, 'sound/combat/hits/kick/stomp.ogg', 65, 100, TRUE, -1)
 	else

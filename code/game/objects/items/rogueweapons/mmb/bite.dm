@@ -1,7 +1,5 @@
 /datum/intent/bite
 	name = "bite"
-	candodge = TRUE
-	canparry = TRUE
 	chargedrain = 0
 	chargetime = 0
 	swingdelay = 0
@@ -45,6 +43,7 @@
 			. = ..()
 			return
 	user.changeNext_move(clickcd)
+	user.break_invisibility()
 	target.onbite(user)
 	. = ..()
 	return
@@ -132,9 +131,7 @@
 			/*
 				ZOMBIE INFECTION VIA BITE
 			*/
-			var/datum/antagonist/zombie/zombie_antag = user.mind.has_antag_datum(/datum/antagonist/zombie)
-			if(zombie_antag && zombie_antag.has_turned)
-				zombie_antag.last_bite = world.time
+			if(user.is_risen_deadite())
 				if(bite_victim.zombie_infect_attempt())   // infect_attempt on bite
 					to_chat(user, span_danger("You feel your gift trickling from your mouth into [bite_victim]'s wound..."))
 
@@ -149,6 +146,7 @@
 		B.grabbee = user
 		B.limb_grabbed = BP
 		B.sublimb_grabbed = used_limb
+		B.update_grabbed_spell_hud()
 
 		lastattacker = user.real_name
 		lastattackerckey = user.ckey
@@ -241,6 +239,7 @@
 		return FALSE*/
 
 	user.changeNext_move(CLICK_CD_GRABBING)
+	user.break_invisibility()
 	var/mob/living/carbon/C = grabbed
 	var/armor_block = C.run_armor_check(sublimb_grabbed, d_type, armor_penetration = BLUNT_DEFAULT_PENFACTOR)
 	var/damage = user.get_punch_dmg()
@@ -267,10 +266,9 @@
 			/*
 				ZOMBIE CHEW. ZOMBIFICATION
 			*/
-			var/datum/antagonist/zombie/zombie_antag = user.mind.has_antag_datum(/datum/antagonist/zombie)
-			if(zombie_antag && zombie_antag.has_turned)
-				var/datum/antagonist/zombie/existing_zombie = C.mind?.has_antag_datum(/datum/antagonist/zombie) //If the bite target is a zombie
-				if(!existing_zombie && caused_wound?.zombie_infect_attempt())   // infect_attempt on wound
+			if(user.is_risen_deadite())
+				var/existing_zombie = C.is_risen_deadite() || C.mind?.has_antag_datum(/datum/antagonist/zombie) // Already risen, or already pending
+				if(!existing_zombie && caused_wound?.zombie_infect_attempt(user))   // infect_attempt on wound
 					to_chat(user, span_danger("You feel your gift trickling into [C]'s wound...")) //message to the zombie they infected the target
 
 			/*
@@ -318,6 +316,8 @@
 	if(!limb_grabbed.get_bleed_rate())
 		to_chat(user, span_warning("Sigh. It's not bleeding."))
 		return
+
+	user.break_invisibility()
 
 	if(HAS_TRAIT(user, TRAIT_VAMPBITE))
 		if(isliving(grabbed))

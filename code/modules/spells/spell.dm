@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/Destroy()
 	if (action)
-		qdel(action)
+		QDEL_NULL(action)
 	if(ranged_ability_user)
 		remove_ranged_ability()
 	return ..()
@@ -147,6 +147,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	desc = ""
 	panel = "Spells"
 	var/sound = null //The sound the spell makes when it is cast
+	/// Item conjured by this spell, unsummoned when a new one is conjured or the spell is lost.
+	var/obj/item/conjured_item
+	/// Fills in "The <item>'s borders begin to ...!" when the conjured item is unsummoned.
+	var/conjured_dispel_desc = "shimmer and fade, before it vanishes entirely"
+	/// Outline colour for this spell's conjured item, null uses the component's own default.
+	var/conjured_item_glow
 	anchored = TRUE // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
 	density = FALSE
@@ -208,6 +214,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/miracle = FALSE
 	var/devotion_cost = 0
 	var/ignore_cockblock = FALSE //whether or not to ignore TRAIT_SPELLCOCKBLOCK
+	var/mute_allowed = FALSE //Mostly for mimes and mute people in general. Since they have TRAIT_PERMAMUTE it will let them bypass the shout/whisper speech check
 
 	action_icon_state = "spell0"
 	action_icon = 'icons/mob/actions/roguespells.dmi'
@@ -238,6 +245,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
 	if(staff && staff.cast_time_reduction)
 		newtime = newtime - (chargetime * (staff.cast_time_reduction))
+	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens Charge by 25%.
+		newtime *= 0.75
 	if(newtime > 0)
 		return newtime
 	return 0.1
@@ -287,6 +296,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		var/staff_mod = chargetime * staff.cast_time_reduction
 		if(staff_mod > 0)
 			breakdown += span_smallgreen("  Staff: -[DisplayTimeText(staff_mod)]")
+	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE))
+		breakdown += span_smallgreen("  <font color='#00e1ff'>Ley Lines (-25%)</font>")
 	return breakdown
 
 /obj/effect/proc_holder/spell/proc/get_cooldown_breakdown(mob/living/user)
@@ -332,13 +343,18 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(!user || is_cdr_exempt || miracle)
 		return initial(recharge_time)
 	var/base = initial(recharge_time)
+	var/newtime
 	if(user.STAINT > SPELL_SCALING_THRESHOLD)
 		var/diff = min(user.STAINT, SPELL_POSITIVE_SCALING_THRESHOLD) - SPELL_SCALING_THRESHOLD
-		return base - (base * diff * COOLDOWN_REDUCTION_PER_INT)
+		newtime = base - (base * diff * COOLDOWN_REDUCTION_PER_INT)
 	else if(user.STAINT < SPELL_SCALING_THRESHOLD)
 		var/diff2 = SPELL_SCALING_THRESHOLD - user.STAINT
-		return base + (base * (diff2 * COOLDOWN_REDUCTION_PER_INT))
-	return base
+		newtime = base + (base * (diff2 * COOLDOWN_REDUCTION_PER_INT))
+	else
+		newtime = base
+	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
+		newtime *= 0.75
+	return newtime
 
 /obj/effect/proc_holder/spell/proc/get_spell_statistics(mob/living/user)
 	var/list/stats = list()
@@ -373,6 +389,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				stats += get_fatigue_breakdown(user)
 		else
 			stats += span_info("Stamina cost: [base_fd]")
+	if(devotion_cost)
+		stats += span_info("Devotion cost: [devotion_cost]")
 	return stats
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge, mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
@@ -420,7 +438,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if((invocation_type == "whisper" || invocation_type == "shout") && (!H.can_speak_vocal() || !H.getorganslot(ORGAN_SLOT_TONGUE)))
+		if((invocation_type == "whisper" || invocation_type == "shout") && ((!H.can_speak_vocal() && !(mute_allowed && HAS_TRAIT(H, TRAIT_PERMAMUTE) && !H.check_mouth_grabbed())) || !H.getorganslot(ORGAN_SLOT_TONGUE)))
 			to_chat(user, span_warning("I can't get the words out!"))
 			return FALSE
 		// Spells cannot be cast using sign language (check specifically for SIGNLANG flag)
@@ -432,6 +450,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 		if(HAS_TRAIT(H, TRAIT_PARALYSIS) && !stat_allowed)
 			to_chat(user, span_warning("My body is paralyzed!"))
+			return FALSE
+
+		var/last_mount_move_time = H.vars["last_mount_move_time"]
+		if(!isnum(last_mount_move_time))
+			last_mount_move_time = 0
+		if(H.buckled && issimple(H.buckled) && (world.time < last_mount_move_time + 2 SECONDS))
 			return FALSE
 
 		if(miracle && !H.devotion?.check_devotion(src))
@@ -540,8 +564,34 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	qdel(action)
+	dispel_conjured_item()
+	var/mob/owner = action?.owner
+	owner?.mob_spell_list -= src
+	owner?.mind?.spell_list -= src
+	QDEL_NULL(action)
 	return ..()
+
+/// Marks an item as conjured by this spell, dropping our reference to it when it is destroyed.
+/obj/effect/proc_holder/spell/proc/set_conjured_item(obj/item/new_item)
+	if(conjured_item)
+		UnregisterSignal(conjured_item, COMSIG_QDELETING)
+	conjured_item = QDELETED(new_item) ? null : new_item
+	if(!conjured_item)
+		return
+	conjured_item.AddComponent(/datum/component/conjured_item, conjured_item_glow)
+	RegisterSignal(conjured_item, COMSIG_QDELETING, PROC_REF(on_conjured_item_deleted))
+
+/obj/effect/proc_holder/spell/proc/on_conjured_item_deleted(datum/source)
+	SIGNAL_HANDLER
+	conjured_item = null
+
+/// Unsummons the currently conjured item, if any.
+/obj/effect/proc_holder/spell/proc/dispel_conjured_item()
+	if(!conjured_item)
+		return
+	conjured_item.visible_message(span_warning("The [conjured_item]'s borders begin to [conjured_dispel_desc]!"))
+	qdel(conjured_item)
+	conjured_item = null
 
 /obj/effect/proc_holder/spell/Click()
 	if(!cast_check())
@@ -573,7 +623,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		else if(user.STAINT < SPELL_SCALING_THRESHOLD)
 			var/diff2 = SPELL_SCALING_THRESHOLD - user.STAINT
 			recharge_time = initial(recharge_time) + (initial(recharge_time) * (diff2 * COOLDOWN_REDUCTION_PER_INT))
-
+	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
+		recharge_time *= 0.75
 	// If the spell was fully charged before recalculation, keep it fully charged
 	if(charge_counter >= old_recharge && old_recharge > 0)
 		charge_counter = recharge_time
@@ -625,10 +676,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	before_cast(targets, user = user)
 	if(user && user.ckey)
-		user.log_message(span_danger("cast the spell [name]."), LOG_ATTACK)
-	if(breaks_invisibility && user.mob_timers[MT_INVISIBILITY] > world.time)
-		user.mob_timers[MT_INVISIBILITY] = world.time
-		user.update_sneak_invis(reset = TRUE)
+		user.log_message("cast the spell [name].", LOG_ATTACK, color = "red")
+	if(breaks_invisibility)
+		user.break_invisibility()
 	if(cast(targets, user = user))
 		invocation(user)
 		start_recharge()
@@ -871,7 +921,29 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
 		return FALSE
 
-	if(!charge_check(user))
+	if(user.client && user.buckled)
+		if(!issimple(user.buckled))
+			return FALSE
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/last_mount_move_time = H.vars["last_mount_move_time"]
+			if(!isnum(last_mount_move_time))
+				last_mount_move_time = 0
+			if(world.time < last_mount_move_time + 2 SECONDS)
+				return FALSE
+
+	if(user.client && user.buckled)
+		if(!issimple(user.buckled))
+			return FALSE
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/last_mount_move_time = H.vars["last_mount_move_time"]
+			if(!isnum(last_mount_move_time))
+				last_mount_move_time = 0
+			if(world.time < last_mount_move_time + 2 SECONDS)
+				return FALSE
+
+	if(!charge_check(user, TRUE))
 		return FALSE
 
 	if(user.stat && !stat_allowed)
@@ -901,7 +973,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if((invocation_type == "whisper" || invocation_type == "shout") && isliving(user))
 		var/mob/living/living_user = user
 		if(!living_user.can_speak_vocal())
-			return FALSE
+			if(!(mute_allowed && HAS_TRAIT(user, TRAIT_PERMAMUTE)))
+				return FALSE
+			if(ishuman(user))
+				var/mob/living/carbon/human/human_user = user
+				if(human_user.check_mouth_grabbed())
+					return FALSE
 		if(ishuman(user) && !living_user.getorganslot(ORGAN_SLOT_TONGUE)) // Shapeshifter has no tongue yeah
 			return FALSE
 

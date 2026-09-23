@@ -1,0 +1,5 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - rscadd: "Pickpocketing while targeting an arm now pickpockets coresponding back zone (no longer will you roll a dice to see if you pick a shield instead)"
+  - rscadd: "Pickpocketing chest now pickpockets cloak instead"

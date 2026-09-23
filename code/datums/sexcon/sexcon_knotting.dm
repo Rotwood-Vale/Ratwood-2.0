@@ -580,11 +580,11 @@
 	alert_type = null
 
 /datum/status_effect/jaw_gaped/on_apply()
-	ADD_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
+	ADD_TRAIT(owner, TRAIT_GARGLE_SPEECH, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_warning("My jaw... It stings!"))
 	return ..()
 
 /datum/status_effect/jaw_gaped/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
+	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, TRAIT_STATUS_EFFECT(id))
 	if(owner.stat == CONSCIOUS)
 		to_chat(owner, span_warning("I finally feel my jaw again."))

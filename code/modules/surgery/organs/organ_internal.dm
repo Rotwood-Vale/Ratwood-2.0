@@ -52,6 +52,12 @@
 	var/mob/living/carbon/last_owner = null
 	/// Whether or not this organ should be regenerated at /datum/job/proc/equip() in _job.dm via /mob/living/carbon/proc/apply_organ_stuff()
 	var/should_regenerate = FALSE
+	/// Branded enslavement mark on this organ
+	var/enslavement_mark = FALSE
+	/// Full real name of the mob who branded this organ, if it was branded as owned property
+	var/brand_owner_name = ""
+	/// Reference to the mob who branded this organ, if it was branded as owned property
+	var/mob/living/brand_owner = null
 
 	grid_width = 32
 	grid_height = 32
@@ -164,7 +170,7 @@
 	var/obj/item/organ/organ_inside
 
 /obj/item/reagent_containers/food/snacks/organ/On_Consume(mob/living/eater)		//Graggarites looove eating organs, they loooove eating organs!
-	if(HAS_TRAIT(eater, TRAIT_ORGAN_EATER))
+	if(HAS_TRAIT(eater, TRAIT_ORGAN_EATER) || HAS_TRAIT(eater, TRAIT_WILD_EATER))
 		eat_effect = /datum/status_effect/buff/snackbuff
 		check_culling(eater)
 		foodtype = RAW | MEAT
@@ -327,6 +333,16 @@
 
 		bodypart_overlays(organ_overlay)
 		return organ_overlay
+
+/obj/item/organ/proc/get_icon_cache_key(obj/item/bodypart/bodypart)
+	return jointext(list(
+		bodypart_icon,
+		bodypart_icon_state,
+		bodypart_layer,
+		color,
+		accessory_type,
+		accessory_colors
+	), "-")
 
 /// Proc to customize the base icon of the organ.
 /obj/item/organ/proc/bodypart_icon(mutable_appearance/standing)

@@ -20,7 +20,7 @@
 		)
 
 /obj/item/recipe_book/blacksmithing
-	name = "The Smith’s Legacy"
+	name = "The Smith's Legacy"
 	icon_state = "book3_0"
 	base_icon_state = "book3"
 

@@ -17,6 +17,7 @@
 	throw_speed = 1
 	throw_range = 3
 	dropshrink = 0.8
+	nudist_approved = TRUE
 
 /obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -63,6 +64,8 @@
 /obj/effect/proc_holder/spell/invoked/bud
 	name = "Eoran Bloom"
 	desc = "Tries to grow an Eoran bud on the target tile or on the targets head, forcing their thoughts away from violence until removed."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
 	clothes_req = FALSE
 	range = 7
 	overlay_state = "love"
@@ -101,7 +104,9 @@
 /obj/effect/proc_holder/spell/invoked/eoracurse
 	name = "Eora's Curse"
 	desc = "Makes the target both high and drunk."
-	overlay_state = "curse2"
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
+	overlay_state = "curse"
 	releasedrain = 50
 	chargetime = 30
 	range = 7
@@ -165,7 +170,7 @@
 	// Correct signal name
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMGE, PROC_REF(on_damage))
 	RegisterSignal(parent, COMSIG_LIVING_MIRACLE_HEAL_APPLY, PROC_REF(on_heal))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_deletion))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_deletion))
 
 	START_PROCESSING(SSprocessing, src)
 	addtimer(CALLBACK(src, PROC_REF(remove_bond)), duration)
@@ -229,7 +234,7 @@
 		UnregisterSignal(L, list(
 			COMSIG_MOB_APPLY_DAMGE,
 			COMSIG_LIVING_MIRACLE_HEAL_APPLY,
-			COMSIG_PARENT_QDELETING
+			COMSIG_QDELETING
 		))
 
 	if(partner)
@@ -251,6 +256,8 @@
 /obj/effect/proc_holder/spell/invoked/heartweave
 	name = "Heartweave"
 	desc = "Forge a symbiotic bond between two souls."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
 	overlay_state = "bliss"
 	range = 1
 	chargetime = 0.5 SECONDS
@@ -276,12 +283,6 @@
 
 	if(!do_after(user, 2 SECONDS, target = target))
 		to_chat(user, span_warning("The bond requires focused concentration!"))
-		revert_cast()
-		return FALSE
-
-	var/consent = alert(target, "[user] offers a lifebond. Accept?", "Heartweave", "Yes", "No")
-	if(consent != "Yes" || QDELETED(target))
-		to_chat(user, span_warning("The bond was rejected."))
 		revert_cast()
 		return FALSE
 
@@ -363,8 +364,10 @@
 
 /obj/effect/proc_holder/spell/invoked/bless_food
 	name = "Bless Food"
-	invocations = list("Eora, nourish this offering!")
 	desc = "Bless a food item. Items that take longer to eat heal slower. Skilled clergy can bless food more often. Finer food heals more. Eoran masters can make food a golden hue."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
+	invocations = list("Eora, nourish this offering!")
 	sound = 'sound/magic/magnet.ogg'
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	devotion_cost = 25
@@ -406,8 +409,10 @@
 
 /obj/effect/proc_holder/spell/invoked/pomegranate
 	name = "Amaranth Sanctuary"
-	invocations = list("Eora, provide sanctuary for your beauty!")
 	desc = "Grow a pomegranate tree that, when tended to, grows Aurils with a variety of effects. Additionally heals beautiful people and HEAVILY debuffs both STR and PER for everyone in visible range."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
+	invocations = list("Eora, provide sanctuary for your beauty!")
 	sound = 'sound/magic/magnet.ogg'
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	devotion_cost = 500
@@ -1146,13 +1151,13 @@
 /datum/status_effect/buff/eora_grace/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
+		ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
 /datum/status_effect/buff/eora_grace/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		REMOVE_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
+		REMOVE_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_STATUS_EFFECT(id))
 
 /obj/item/reagent_containers/food/snacks/eoran_aril/opalescent
 	name = "opalescent aril"
@@ -1272,7 +1277,6 @@
 
 /proc/process_ochre_revivals(list/mob/living/carbon/human/targets_to_revive)
 	for(var/mob/living/carbon/human/target in targets_to_revive)
-		continue
 		if(target.stat != DEAD)
 			continue
 
@@ -1371,6 +1375,8 @@
 /obj/effect/proc_holder/spell/invoked/eora_blessing
 	name = "Eora's Blessing"
 	desc = "Bestow a person with Eora's calm, if only for a little while."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
 	sound = 'sound/magic/eora_bless.ogg'
 	devotion_cost = 80
 	recharge_time = 5 MINUTES
@@ -1398,7 +1404,7 @@
 	if(assocskill)
 		duration *= assocskill	//+1 minute per skill level.
 	var/mob/living/carbon/human/H = owner
-	ADD_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_GENERIC)	//Generic origin so other Eorans do not have their innate traits overridden (they use TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_STATUS_EFFECT(id))
 	var/hungercheck = H.nutrition
 	var/hydrohomiecheck = H.hydration
 	switch(hungercheck)
@@ -1427,7 +1433,7 @@
 	. = ..()
 
 /datum/status_effect/eora_blessing/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_GENERIC)
+	REMOVE_TRAIT(owner, TRAIT_EORAN_SERENE, TRAIT_STATUS_EFFECT(id))
 	owner.update_stress()
 	return ..()
 

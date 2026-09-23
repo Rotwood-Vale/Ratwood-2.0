@@ -130,7 +130,7 @@
 
 	// Handle single loose bones
 	else if(istype(sacrifice, /obj/item/natural/bone))
-		to_chat(user, span_warning("A single bone isn’t enough to raise a skeleton! You need a bundle of at least four."))
+		to_chat(user, span_warning("A single bone isn't enough to raise a skeleton! You need a bundle of at least four."))
 		revert_cast()
 		return FALSE
 
@@ -226,7 +226,7 @@
 	Requires the target to be within four tiles. Works on undead animals, too, and they will heed your command."
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
-	overlay_state = "tame_deadite"
+	overlay_state = "deadite_tame"
 	range = 4
 	warnie = "sydwarning"
 	recharge_time = 60 SECONDS

@@ -92,6 +92,11 @@
 	update_icon()
 	. = ..()
 
+/obj/machinery/light/roguestreet/Destroy()
+	GLOB.streetlamp_list -= src
+	if(on)
+		GLOB.fires_list -= src
+	return ..()
 
 
 
@@ -141,8 +146,8 @@
 	update_icon()
 	. = ..()
 
-/obj/machinery/light/roguestreet/update_icon()
+/obj/machinery/light/oldlight/Destroy()
+	GLOB.streetlamp_list -= src
 	if(on)
-		icon_state = "[base_state]1"
-	else
-		icon_state = "[base_state]0"
+		GLOB.fires_list -= src
+	return ..()

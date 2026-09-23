@@ -2,9 +2,9 @@
 	name = "Gnolls Migration"
 	typepath = /datum/round_event/migrant_wave/gnolls
 	wave_type = /datum/migrant_wave/gnolls
-	max_occurrences = 2
-	weight = 5
-	earliest_start = 0 SECONDS
+	max_occurrences = 0
+	weight = 0
+	earliest_start = 150 MINUTES
 	tags = list(
 		TAG_COMBAT,
 		TAG_VILLIAN,
@@ -14,8 +14,6 @@
 	var/datum/job/gnoll_job = SSjob.GetJob("Gnoll")
 	gnoll_job.total_positions = min(gnoll_job.total_positions + 2, 6)
 	gnoll_job.spawn_positions = min(gnoll_job.spawn_positions + 2, 6)
-	if(SSgnoll_scaling)
-		SSgnoll_scaling.note_external_slot_adjustment(gnoll_job.total_positions, gnoll_job.spawn_positions)
 	if(gnoll_job.total_positions < 6) // Not at max capacity, increasing goal.
 		SSrole_class_handler.assassins_in_round = TRUE
 		for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)

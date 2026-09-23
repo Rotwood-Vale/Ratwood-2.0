@@ -198,7 +198,7 @@ SUBSYSTEM_DEF(ticker)
 				if(player.ready == PLAYER_READY_TO_PLAY)
 					++totalPlayersReady
 			if(!gamemode_voted)
-				SSvote.initiate_vote("storyteller", "Psydon", null, forced = TRUE)
+				SSvote.initiate_vote("chaos", "PSYDON", null, forced = TRUE)
 				gamemode_voted = TRUE
 
 			if(start_immediately)
@@ -414,6 +414,8 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = FALSE
 
+	SSgamemode.roll_round_modifiers()
+	SSgamemode.open_villain_signups()
 	SSgamemode.current_storyteller?.process(STORYTELLER_WAIT_TIME * 0.1) // we want this asap
 	SSgamemode.current_storyteller?.round_started = TRUE
 
@@ -442,6 +444,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(!rulermob)
 		lord_color_default()
+	barony_color_default()
 
 
 //These callbacks will fire after roundstart key transfer
@@ -476,8 +479,6 @@ SUBSYSTEM_DEF(ticker)
 			continue
 		if(player.ready == PLAYER_READY_TO_PLAY)
 			GLOB.joined_player_list += player.ckey
-			update_wretch_slots()
-			update_bandit_slots()
 			player.create_character(FALSE)
 		else
 			player.new_player_panel()
@@ -822,11 +823,9 @@ SUBSYSTEM_DEF(ticker)
 	var/list/spawn_locs = GLOB.hauntstart.Copy()
 	if(LAZYLEN(GLOB.hauntstart))
 		for(var/i in 1 to 20)
-			var/obj/effect/landmark/events/haunts/_T = pick_n_take(spawn_locs)
-			if(_T)
-				_T = get_turf(_T)
-				if(isfloorturf(_T))
-					new /mob/living/carbon/human/species/skeleton/npc(_T)
+			var/turf/_T = pick_n_take(spawn_locs)
+			if(isfloorturf(_T))
+				new /mob/living/carbon/human/species/skeleton/npc(_T)
 
 /// Returns universe state to normal after the sunstealer has been slain
 /datum/controller/subsystem/ticker/proc/on_sunstealer_death()

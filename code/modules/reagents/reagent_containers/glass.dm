@@ -17,7 +17,7 @@
 	icon_state = "infill"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 
 /datum/intent/pour
@@ -25,7 +25,7 @@
 	icon_state = "infeed"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 
 /datum/intent/splash
@@ -33,7 +33,7 @@
 	icon_state = "insplash"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 
 /obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)

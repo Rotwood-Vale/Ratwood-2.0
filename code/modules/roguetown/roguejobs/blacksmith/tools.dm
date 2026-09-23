@@ -1,5 +1,6 @@
 //Base hammer type. (Wood / Iron / Steel)
 /obj/item/rogueweapon/hammer
+	abstract_type = /obj/item/rogueweapon/hammer
 	force = 21
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
 	name = "template hammer"
@@ -16,6 +17,7 @@
 	grid_width = 32
 	grid_height = 64
 	var/quality = 1
+	is_tool = TRUE
 
 /obj/item/rogueweapon/hammer/getonmobprop(tag)
 	. = ..()
@@ -355,6 +357,7 @@
 	smeltresult = /obj/item/ingot/iron
 	grid_width = 32
 	grid_height = 64
+	is_tool = TRUE
 
 /obj/item/rogueweapon/tongs/examine(mob/user)
 	. = ..()

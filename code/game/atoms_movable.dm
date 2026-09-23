@@ -334,6 +334,8 @@
 		if (!(direct & (direct - 1))) //Cardinal move
 			lastcardinal = direct
 			. = ..()
+		else if(istype(src, /obj/vehicle)) //Vehicles retain true diagonal movement
+			. = ..()
 		else //Diagonal move, split it into cardinal moves
 			if (direct & NORTH)
 				if (direct & EAST)
@@ -456,6 +458,8 @@
 
 	unbuckle_all_mobs(force=1)
 
+	invisibility = INVISIBILITY_ABSTRACT
+
 	. = ..()
 	if(loc)
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
@@ -470,7 +474,6 @@
 	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
 	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
 	LAZYNULL(important_recursive_contents)
-	invisibility = INVISIBILITY_ABSTRACT
 	if(pulledby)
 		pulledby.stop_pulling()
 
@@ -479,6 +482,11 @@
 		orbiting = null
 
 	LAZYNULL(client_mobs_in_contents)
+
+	if(length(vis_locs)) // according to tg checking this pre-cut is actually faster
+		// vis_locs doesn't count as a reference to the things in it,
+		// but their vis_contents count as a reference to us, so we cut it
+		vis_locs.Cut()
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()
@@ -608,6 +616,12 @@
 	if (!target || speed <= 0 || move_resist == INFINITY)
 		return
 
+	var/bonus_throwforce = 0
+	if(isitem(src) && thrower && HAS_TRAIT(thrower, TRAIT_THROWINGARM))
+		range += 1
+		speed += 0.5
+		bonus_throwforce = 2
+
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_THROW, args) & COMPONENT_CANCEL_THROW)
 		return
 
@@ -650,6 +664,7 @@
 	TT.thrower = thrower
 	TT.diagonals_first = diagonals_first
 	TT.force = force
+	TT.bonus_throwforce = bonus_throwforce
 	TT.callback = callback
 	TT.extra = extra
 	if(!QDELETED(thrower))
@@ -733,7 +748,7 @@
 /atom/movable/proc/on_exit_storage(datum/component/storage/concrete/S)
 	return
 
-/// Called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item. 
+/// Called when this atom is added into a storage item, which is passed on as S. The loc variable is already set to the storage item.
 /// If the mob putting the atom in storage is known, it is passed on as M.
 /atom/movable/proc/on_enter_storage(datum/component/storage/concrete/S, mob/M)
 	return
@@ -1298,4 +1313,3 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 			SSspatial_grid.remove_grid_awareness(movable_loc, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
 		ASSOC_UNSETEMPTY(recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		UNSETEMPTY(movable_loc.important_recursive_contents)
-

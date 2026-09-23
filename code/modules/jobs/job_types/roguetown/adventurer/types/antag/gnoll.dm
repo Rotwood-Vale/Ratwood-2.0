@@ -3,8 +3,8 @@
 	flag = GNOLL
 	antag_job = TRUE
 	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	allowed_races = RACES_NO_CONSTRUCT
 	tutorial = "You have proven yourself worthy to Graggar, and he's granted you his blessing most divine. Now you hunt for worthy opponents, seeking out those strong enough to make you bleed."
 	outfit = null
@@ -26,7 +26,7 @@
 	always_show_on_latechoices = TRUE
 	job_reopens_slots_on_death = FALSE
 	same_job_respawn_delay = 1 MINUTES
-	virtue_restrictions = list(/datum/virtue/utility/noble) //Are you for real?
+	quirk_restrictions = list(/datum/quirk/noble) //Are you for real?
 	job_subclasses = list(
 		/datum/advclass/gnoll/berserker,
 		/datum/advclass/gnoll/knight,
@@ -43,6 +43,7 @@
 			var/datum/antagonist/new_antag = new /datum/antagonist/gnoll()
 			H.mind.add_antag_datum(new_antag)
 			H.verbs |= /mob/living/carbon/human/proc/gnoll_inspect_skin
+			H.verbs |= /mob/living/carbon/human/proc/gnoll_view_tracked_char
 
 
 /mob/living/carbon/human/proc/apply_gnoll_preferences(initial_setup = TRUE)
@@ -70,8 +71,22 @@
 		headshot_link = null
 
 	// Gnolls should not inherit player-authored social metadata from their base slot.
+	headshot_link = null
+	flavortext = null
+	ooc_notes = null
 	rumour = null
 	noble_gossip = null
+	nsfwflavortext = null
+	nsfw_ooc_extra_img = null
+	nsfw_ooc_extra_img_link = null
+	song_artist = null
+	song_title = null
+	erpprefs = null
+	img_gallery = list()
+	nsfw_img_gallery = list()
+	ooc_extra = null
+	ooc_extra_img = null
+	ooc_extra_img_link = null
 
 	if(status_traits)
 		for(var/trait in status_traits.Copy())
@@ -88,7 +103,9 @@
 
 	var/datum/gnoll_prefs/prefs = client.prefs.gnoll_prefs
 
-	// Gnolls are assigned their own subclass statlines later in equip flow; wipe inherited statpack roll during initial setup only.
+	// We will be ignoring the slot's statpack in favor of what's set in our Gnoll Preferences.
+	statpack = prefs.gnoll_statpack
+
 	if(initial_setup)
 		roll_stats()
 	refresh_live_vocal_preferences()
@@ -97,6 +114,8 @@
 
 	if(prefs.gnoll_pronouns)
 		pronouns = prefs.gnoll_pronouns
+
+	voice_color = prefs.gnoll_voice_color
 
 	icon_state = prefs.pelt_type || "firepelt"
 	dna?.species?.custom_base_icon = prefs.pelt_type || "firepelt"
@@ -152,6 +171,25 @@
 	add_mob_descriptor(prefs.descriptor_voice || /datum/mob_descriptor/voice/growly)
 	add_mob_descriptor(prefs.descriptor_muzzle || /datum/mob_descriptor/face/gnoll/long_muzzle)
 	add_mob_descriptor(prefs.descriptor_expression || /datum/mob_descriptor/face_exp/gnoll/alert)
+
+	// Copy gnoll flavortext to gnoll mob
+	headshot_link = prefs.headshot_link
+	flavortext = prefs.flavortext
+	ooc_notes = prefs.ooc_notes
+	rumour = prefs.rumour
+	noble_gossip = prefs.noble_gossip
+	nsfwflavortext = prefs.nsfwflavortext
+	nsfw_ooc_extra_img = prefs.nsfw_ooc_extra_img
+	nsfw_ooc_extra_img_link = prefs.nsfw_ooc_extra_img_link
+	song_artist = prefs.song_artist
+	song_title = prefs.song_title
+	erpprefs = prefs.erpprefs
+	img_gallery = prefs.img_gallery
+	nsfw_img_gallery = prefs.nsfw_img_gallery
+	ooc_extra = prefs.ooc_extra
+	ooc_extra_img = prefs.ooc_extra_img
+	ooc_extra_img_link = prefs.ooc_extra_img_link
+
 	return TRUE
 
 /mob/living/carbon/human/proc/reset_gnoll_sprite_scale()
@@ -185,13 +223,6 @@
 			+ span_notice("Rather, it is best to seek the worthiest among your prey, and to ensure a thrilling hunt for all involved."))
 		to_chat(H, span_biginfo("*-------*"))
 
-		var/mode = SSgnoll_scaling.get_gnoll_scaling()
-		if(mode == GNOLL_SCALING_NONE)
-			to_chat(H, span_smallnotice("There will not be any gnoll reinforcements this week, as far as I can tell. ") + span_info("I must rely on cunning over numbers."))
-		else if(mode != GNOLL_SCALING_DOUBLE)
-			to_chat(H, span_smallnotice("I can expect to be joined by my pack this week. ") + span_info("I should wait for them and group up."))
-		else
-			to_chat(H, span_smallnotice("My pack is small this week. ") + span_info("I should regroup with the other gnolls, and avoid reckless fights until we can hunt together."))
 		to_chat(H, span_info("Patience and careful planning are the virtues of my craft. If I can't isolate my mark, it would be wise to stalk another. \n\
 									When tracking difficult marks, I should set up camp and make alliances out in the field."))
 		to_chat(H, span_warning("The Bandit filth are unworthy of my assistance."))
@@ -206,3 +237,27 @@
 		return
 	var/obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor/GA = skin_armor
 	GA.Topic(null, list("inspect" = "1"), src)
+
+/mob/living/carbon/human/proc/gnoll_view_tracked_char()
+	set name = "Remember Your Prey"
+	set category = "Gnoll"
+	set desc = "View your Track target's flavortext panel."
+	var/datum/antagonist/gnoll/gnoll_antag = mind?.has_antag_datum(/datum/antagonist/gnoll)
+	if(!gnoll_antag)
+		to_chat(src, span_warning(pick("What?", "Huh?", "How?")))
+		return
+	var/datum/weakref/tracked_target_ref = gnoll_antag.tracked_target_ref
+	if(!tracked_target_ref)
+		to_chat(src, span_warning("I can't remember anything. Did I forget to track my prey?"))
+		return
+	var/mob/living/carbon/human/tracked_target = tracked_target_ref.resolve()
+	if(!istype(tracked_target))
+		to_chat(src, span_warning("My prey is gone..."))
+		return
+
+	to_chat(src, span_warning("I recall my mark with blessed foreknowledge..."))
+	var/datum/examine_panel/mob_examine_panel = new(src)
+	mob_examine_panel.holder = tracked_target
+	mob_examine_panel.viewing = src
+	mob_examine_panel.ui_interact(src)
+

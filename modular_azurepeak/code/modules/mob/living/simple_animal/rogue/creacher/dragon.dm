@@ -59,7 +59,7 @@
 	retreat_health = 0.3
 	food = 0
 	attack_sound = list('sound/combat/hits/blunt/genblunt (1).ogg','sound/combat/hits/blunt/genblunt (2).ogg','sound/combat/hits/blunt/genblunt (3).ogg','sound/combat/hits/blunt/flailhit.ogg')
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	aggressive = 1
 
 	AIStatus = AI_OFF

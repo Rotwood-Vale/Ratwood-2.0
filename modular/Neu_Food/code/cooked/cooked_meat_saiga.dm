@@ -1,5 +1,4 @@
 // Cooked Saiga/Venison meat cuts - from saiga deer and the legendary white stag.
-
 /obj/item/reagent_containers/food/snacks/rogue/meat/saiga/cooked
 	name = "venison steak"
 	desc = "A fine cut of the forest. The Purview of skilled hunters, not farmers."
@@ -9,7 +8,7 @@
 	faretype = FARE_FINE
 	tastes = list("forest venison" = 1)
 	bitesize = 3
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_CHUNKY)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_FULL_MEAL)
 	rotprocess = SHELFLIFE_LONG
 	fried_type = null
 	cooked_type = null
@@ -23,7 +22,7 @@
 	faretype = FARE_FINE
 	tastes = list("forest venison" = 1)
 	bitesize = 3
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_MEAL_AND_QUARTER)
 	rotprocess = SHELFLIFE_LONG
 	fried_type = null
 	cooked_type = null
@@ -37,7 +36,7 @@
 	faretype = FARE_LAVISH
 	tastes = list("forest loins" = 1)
 	bitesize = 3
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_CHUNKY)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_FULL_MEAL)
 	rotprocess = SHELFLIFE_LONG
 	fried_type = null
 	cooked_type = null
@@ -51,7 +50,7 @@
 	faretype = FARE_LAVISH
 	tastes = list("forest bounty" = 1)
 	bitesize = 6
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GOOD)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_TWO_MEALS)
 	rotprocess = SHELFLIFE_LONG
 	fried_type = null
 	cooked_type = null
@@ -66,10 +65,11 @@
 	faretype = FARE_POOR
 	tastes = list("grout and grime" = 1)
 	bitesize = 3
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_HALF_MEAL)
 	rotprocess = SHELFLIFE_LONG
 	fried_type = null
 	cooked_type = null
+	cooked_smell = /datum/pollutant/food/rotten_meat
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z/cooked
 	name = "putrid venison ribs"
@@ -84,6 +84,7 @@
 	rotprocess = SHELFLIFE_LONG
 	fried_type = null
 	cooked_type = null
+	cooked_smell = /datum/pollutant/food/rotten_meat
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z/cooked
 	name = "decomposing venison loins"
@@ -95,10 +96,11 @@
 	faretype = FARE_POOR
 	tastes = list("grout and grime" = 1)
 	bitesize = 3
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_HALF_MEAL)
 	rotprocess = SHELFLIFE_LONG
 	fried_type = null
 	cooked_type = null
+	cooked_smell = /datum/pollutant/food/rotten_meat
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z/cooked
 	name = "odorous venison prime steak"
@@ -110,10 +112,11 @@
 	faretype = FARE_NEUTRAL
 	tastes = list("grout and grime" = 1)
 	bitesize = 6
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_MEAL_AND_QUARTER)
 	rotprocess = SHELFLIFE_LONG
 	fried_type = null
 	cooked_type = null
+	cooked_smell = /datum/pollutant/food/rotten_meat
 
 // White Stag cooked variants - divine flesh
 /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_w/cooked
@@ -125,7 +128,7 @@
 	faretype = FARE_LAVISH
 	tastes = list("a life of hardship" = 1)
 	bitesize = 8
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEAL_FILLING)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_TWO_AND_HALF_MEALS)
 	fried_type = null
 	cooked_type = null
 
@@ -138,7 +141,7 @@
 	faretype = FARE_LAVISH
 	tastes = list("pure resolve" = 1)
 	bitesize = 10
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEAL_COMICALLY_FILLING)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_THREE_AND_HALF_MEALS)
 	volume = 100
 	fried_type = null
 	cooked_type = null
@@ -152,7 +155,7 @@
 	faretype = FARE_LAVISH
 	tastes = list("dendor's fury" = 1)
 	bitesize = 5
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEAL_FILLING)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_TWO_AND_HALF_MEALS)
 	fried_type = null
 	cooked_type = null
 
@@ -165,7 +168,7 @@
 	faretype = FARE_LAVISH
 	tastes = list("determination" = 1)
 	bitesize = 15
-	bonus_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GODLIKE)
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_FIVE_MEALS)
 	volume = 100
 	fried_type = null
 	cooked_type = null

@@ -254,7 +254,7 @@
 	// Set up processing and expiration
 	START_PROCESSING(SSprocessing, src)
 	RegisterSignal(parent, COMSIG_LIVING_MIRACLE_HEAL_APPLY, PROC_REF(on_heal))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_deletion))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_deletion))
 	addtimer(CALLBACK(src, PROC_REF(remove_immolation)), duration)
 
 	// Apply visual effect
@@ -351,7 +351,7 @@
 		L.remove_status_effect(/datum/status_effect/immolation)
 		UnregisterSignal(L, list(
 			COMSIG_LIVING_MIRACLE_HEAL_APPLY,
-			COMSIG_PARENT_QDELETING
+			COMSIG_QDELETING
 		))
 
 	if(partner)
@@ -525,15 +525,12 @@
 	devotion_cost = 50//See below as to why. Slowdown and funny damage.
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
-	var/obj/item/rogueweapon/conjured_spear = null
 
 /obj/effect/proc_holder/spell/self/astratan_spear/cast(list/targets, mob/living/user = usr)
-	if(src.conjured_spear)
-		qdel(conjured_spear)
+	dispel_conjured_item()
 	var/obj/item/rogueweapon/R = new /obj/item/rogueweapon/light_spear(user.drop_location())
-	R.AddComponent(/datum/component/conjured_item)
 	user.put_in_hands(R)
-	src.conjured_spear = R
+	set_conjured_item(R)
 	return TRUE
 
 //The spear itself. A summoned weapon you charge(throw for now) for an AoE effect.

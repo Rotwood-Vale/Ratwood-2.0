@@ -1,0 +1,4 @@
+author: "Risraivyn"
+delete-after: True
+changes:
+  - qol: "Builders can now plan structures via a TGUI interface and construct them by hammering the foundation rather than placing every tile manually."

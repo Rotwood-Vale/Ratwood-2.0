@@ -48,6 +48,8 @@
 
 /obj/item/canvas/Destroy()
 	. = ..()
+	if(used_canvas?.host == src)
+		used_canvas.host = null
 	for(var/mob/mob in showers)
 		remove_shower(mob)
 
