@@ -71,6 +71,7 @@
 		var/category_choice = input(H, "Choose your MEANS OF VIOLENCE.", "SMASH OR SLASH!!") as anything in main_choices
 		switch(category_choice)
 			if("Unarmed Master")
+				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist // apperantly normal barb gets em so for consistency sake
 				var/list/unarmed_options = list("Katar", "Knuckledusters", "Punch Dagger", "FISTS ONLY, NO WEAPONS EVER")
@@ -88,7 +89,6 @@
 					if("FISTS ONLY, NO WEAPONS EVER")
 						H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 						H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_MASTER, TRUE)
-						ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 						ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 						H.change_stat(STATKEY_INT, 2)//no stat malus for pure unarmed
 						H.change_stat(STATKEY_WIL, 1)//nice little bonus for our fist only chuds

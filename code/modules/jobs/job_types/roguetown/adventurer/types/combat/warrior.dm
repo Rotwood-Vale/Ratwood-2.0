@@ -309,6 +309,7 @@
 			armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/barbarian
 			shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/barbarian
 		if ("Discipline - Bodybuilder")
+			ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/bodybuilder
 			shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/bodybuilder
