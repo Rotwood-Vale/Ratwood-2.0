@@ -368,7 +368,7 @@
 /datum/artificer_recipe/contraptions/sandedbarrel
 	name = "Sanded Iron Barrel (+3 sand, +2 stone dust, +1 Partially Refined Iron Barrel)"
 	required_item = /obj/item/ingot/iron
-	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_partiallyrefinedbarre)
+	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_partiallyrefinedbarrel)
 	created_item = /obj/item/bombard_sandedbarrel
 	hammers_per_item = 8
 	skill_level = 5
