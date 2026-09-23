@@ -56,18 +56,6 @@
 	qdel(src)
 	return TRUE
 
-/obj/item/natural/worms/attack_self(mob/user)
-	if(!ishuman(user))
-		return ..()
-	var/mob/living/carbon/human/H = user
-	return eat_gross_bait(H)
-
-/obj/item/natural/worms/attack(mob/living/M, mob/living/user)
-	if(user?.used_intent?.type == /datum/intent/food && M == user && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		return eat_gross_bait(H)
-	return ..()
-
 /obj/item/natural/worms/grubs
 	name = "grub"
 	desc = "Bait for the desperate, or the daring."
