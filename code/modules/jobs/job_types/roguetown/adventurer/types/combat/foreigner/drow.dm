@@ -155,8 +155,12 @@
 		H.change_stat(STATKEY_WIL, 1)//more likely to have been beaten = more pain tolerance
 		H.change_stat(STATKEY_SPD, 1)
 
-	if(H.age == AGE_OLD)//since these guys just get journeyman save for crossbows, they get the old age skill buff like exorcist. We want drow hags, sire.
+	if(H.age == AGE_MIDDLEAGED)
 		ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC) // YEARS of experience
+
+	if(H.age == AGE_OLD)//since these guys just get journeyman save for crossbows, they get the old age skill buff like exorcist. We want drow hags, sire.
+		ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC) // YEARS & YEARS of experience
+		ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC) // no comment
 		H.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)//sex joke
 		H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
