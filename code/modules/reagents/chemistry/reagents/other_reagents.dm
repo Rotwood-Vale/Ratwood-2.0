@@ -134,8 +134,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-			M.adjustToxLoss(5)
-			M.add_nausea(8) //should instant puke for clearification
+			M.add_nausea(12) //should instant puke for clearification
 		else
 			H.adjust_hydration(hydration)
 			if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
