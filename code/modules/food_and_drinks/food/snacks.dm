@@ -265,14 +265,15 @@ All foods are distributed among various categories. Use common sense.
 	if(!eater)
 		return
 
-	if(HAS_TRAIT(eater, TRAIT_HEMOPHAGE))
-		eater.adjustToxLoss(2) //trait desc states that normal food would make them ill, adjusted accordingly
-		eater.add_nausea(8)S
+	if(HAS_TRAIT(eater, TRAIT_HEMOPHAGE)) //trait desc states that normal food would make them ill, adjusted accordingly
+		eater.adjustToxLoss(2)
 
 	var/apply_effect = TRUE
 	// check to see if what we're eating is appropriate fare for our "social class" (aka nobles shouldn't be eating sticks of butter you troglodytes)
 	if (ishuman(eater))
 		var/mob/living/carbon/human/human_eater = eater
+		if(HAS_TRAIT(human_eater, TRAIT_HEMOPHAGE))
+			human_eater.add_nausea(8)
 		if(human_eater.culinary_preferences)
 			if(HAS_TRAIT(human_eater, TRAIT_ROTMAN))
 				return
