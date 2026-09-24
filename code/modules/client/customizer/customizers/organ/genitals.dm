@@ -403,7 +403,7 @@
 	customizer_choices = list(/datum/customizer_choice/organ/breasts/human)
 
 /datum/customizer_choice/organ/breasts/human
-	sprite_accessories = list(/datum/sprite_accessory/breasts/pair)
+	sprite_accessories = list(/datum/sprite_accessory/breasts/pair, /datum/sprite_accessory/breasts/pecs)
 	allows_accessory_color_customization = FALSE
 
 /datum/customizer/organ/breasts/animal
@@ -414,6 +414,7 @@
 		/datum/sprite_accessory/breasts/pair,
 		/datum/sprite_accessory/breasts/quad,
 		/datum/sprite_accessory/breasts/sextuple,
+		/datum/sprite_accessory/breasts/pecs,
 		)
 
 /datum/customizer/organ/vagina

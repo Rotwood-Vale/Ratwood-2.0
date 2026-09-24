@@ -176,6 +176,18 @@
 	color_key_defaults = list(KEY_CHEST_COLOR)
 	can_jiggle = TRUE
 
+/datum/sprite_accessory/breasts/pecs
+	icon_state = "pecs"
+	name = "Pecs"
+	color_key_defaults = list(KEY_CHEST_COLOR)
+	can_jiggle = TRUE
+
+/datum/sprite_accessory/breasts/pecs/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	var/obj/item/organ/breasts/badonkers = organ
+	if(can_jiggle && owner && badonkers.is_jiggling)
+		return "[icon_state]_1_jiggle"
+	return "[icon_state]_1"
+
 /datum/sprite_accessory/vagina
 	icon = 'icons/mob/sprite_accessory/genitals/nethers.dmi'
 	color_key_name = "Nethers"
