@@ -2,6 +2,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 GLOBAL_LIST_EMPTY(chosen_names)
 
+#define MAX_SONG_TITLE_LENGTH 60
+
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -87,6 +89,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/statpack/statpack	= new /datum/statpack/wildcard/fated // LETHALSTONE EDIT: the statpack we're giving our char instead of racial bonuses
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
 	var/datum/virtue/virtuetwo = new /datum/virtue/none
+	var/list/quirks = list()
 	var/selected_title = "None"
 	var/age = AGE_ADULT						//age of character
 	var/datum/origin/origin
@@ -118,10 +121,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/shake = TRUE
 	var/no_redflash = FALSE
 	var/sexable = FALSE
+	var/erp_visuals = TRUE
 	var/chastenable = FALSE
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
 	var/extreme_erp = FALSE
 	var/edging = FALSE
+	var/free_use_default = FALSE
 	var/sensitive_brands = FALSE
 	var/facial_brands = FALSE
 	var/pubes = FALSE
@@ -157,13 +162,64 @@ GLOBAL_LIST_EMPTY(chosen_names)
 /datum/preferences/proc/get_base_points()
 	return 10
 
-// Points gained from selected vices (+1 per selected vice)
+/datum/preferences/proc/get_default_redolent_scent(scent_type)
+	switch(scent_type)
+		if("Gross")
+			return "rotting meat and sour sweat"
+		if("Pleasant")
+			return "wildflowers and clean rain"
+	return "earth and sweat"
+
+/// The leading text shown on examine before the custom scent, matching redolent_examine_text().
+/datum/preferences/proc/redolent_scent_leadin(scent_type)
+	return scent_type == "Gross" ? "They reek of" : "They smell of"
+
+// Points gained from additional selected vices (+1 per vice after slot one)
 /datum/preferences/proc/get_vice_points()
 	var/points = 0
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 6)
 		if(vars["vice[i]"])
 			points++
 	return points
+
+// Quirk points gained from selected vices. Your first vice doesn't give any at all.
+/datum/preferences/proc/get_quirk_points_earned()
+	var/points = 0
+	for(var/i = 2 to 6)
+		var/datum/charflaw/vice = vars["vice[i]"]
+		if(vice)
+			points += vice.point_value
+	return points
+
+/datum/preferences/proc/get_quirk_points_spent()
+	var/points = 0
+	for(var/datum/quirk/Q in quirks)
+		if(Q)
+			points += Q.point_cost
+	return points
+
+/datum/preferences/proc/get_quirk_points_remaining()
+	return get_quirk_points_earned() - get_quirk_points_spent()
+
+// For when you don't have enough quirk points, you can pay the collateral with triumphs
+/datum/preferences/proc/get_triumph_collateral()
+	var/remaining = get_quirk_points_remaining()
+	if(remaining >= 0)
+		return 0
+	return -remaining * 2
+
+/datum/preferences/proc/get_quirk_typepaths()
+	var/list/types = list()
+	for(var/datum/quirk/Q in quirks)
+		if(Q)
+			types += Q.type
+	return types
+
+/datum/preferences/proc/has_quirk(quirk_typepath)
+	for(var/datum/quirk/Q in quirks)
+		if(Q && Q.type == quirk_typepath)
+			return TRUE
+	return FALSE
 
 // Points spent on selected loadout items (uses triumph_cost as point cost)
 /datum/preferences/proc/get_loadout_points_spent()
@@ -251,12 +307,15 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/nickname = "Please Change Me"
 	var/highlight_color = "#FF0000"
 	var/datum/charflaw/charflaw
-	// Multiple vice selection (up to 5, at least 1 required)
+	// Multiple vice selection (up to 6, slot 1 falls back to No Flaw if cleared)
 	var/datum/charflaw/vice1
 	var/datum/charflaw/vice2
 	var/datum/charflaw/vice3
 	var/datum/charflaw/vice4
 	var/datum/charflaw/vice5
+	var/datum/charflaw/vice6
+	var/redolent_type = "Neutral"
+	var/redolent_scent = ""
 
 	var/setspouse = ""
 	var/gender_choice = ANY_GENDER
@@ -649,6 +708,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					virtue = GLOB.virtues[/datum/virtue/none]
 				if(virtuetwo.type in pref_species.restricted_virtues)
 					virtuetwo = GLOB.virtues[/datum/virtue/none]
+			if(length(pref_species.restricted_quirks))
+				for(var/datum/quirk/Q in quirks)
+					if(Q.type in pref_species.restricted_quirks)
+						quirks -= Q
 			if(statpack.name != "Virtuous")
 				virtuetwo = GLOB.virtues[/datum/virtue/none]
 			dat += "<b>Character Customization:</b> <a href='?_src_=prefs;preference=vices_menu;task=input'>Configure All</a><BR>"
@@ -1190,7 +1253,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 					else
 						name = virtuetwo.name
 				// Check all vices
-				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, vice6, charflaw))
 					if(vice?.type in job.vice_restrictions)
 						if(name)
 							name += ", "
@@ -1215,7 +1278,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			if(length(job.vice_restrictions))
 				var/list/restricted_vices = list()
 				// Check all vices
-				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, charflaw))
+				for(var/datum/charflaw/vice in list(vice1, vice2, vice3, vice4, vice5, vice6, charflaw))
 					if(vice?.type in job.vice_restrictions)
 						restricted_vices += vice.name
 				if(length(restricted_vices))
@@ -2359,6 +2422,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					preview_examine_panel.pref = src
 					preview_examine_panel.holder = user
 					preview_examine_panel.viewing = user
+					preview_examine_panel.previewing = "character"
 					preview_examine_panel.ui_interact(user)
 
 				if("rumour_preview")
@@ -2419,7 +2483,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					log_game("[user] has set their song artist.")
 
 				if("change_title")
-					var/new_title = tgui_input_text(user, "Input your song's title:", "Song title", song_title,  encode = FALSE)
+					var/new_title = tgui_input_text(user, "Input your song's title (Character limit is [MAX_SONG_TITLE_LENGTH]):", "Song title", song_title,  encode = FALSE, max_length = MAX_SONG_TITLE_LENGTH)
 					if(new_title== null)
 						return
 					if(new_title == "")
@@ -3041,7 +3105,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					user << browse(null, "window=preferences") //closes job selection
 					user << browse(null, "window=mob_occupation")
 					user << browse(null, "window=latechoices") //closes late job selection
-					user << browse(null, "window=migration") // Closes migrant menu
+					migrant.hide_ui() // Closes migrant menu
 
 					SStriumphs.remove_triumph_buy_menu(user.client)
 
@@ -3169,8 +3233,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, skip_normal_prefs = FALSE)
 	if(skip_normal_prefs)
-		_load_statpack() /// This should load statpack preferences, I'm at my limit here.
-		character.statpack = statpack
 		// For gnolls spawning from a non-gnoll base slot, we must not apply any base-slot state.
 		// Set species to gnoll immediately so advclass check_requirements can read dna.species.type.
 		character.set_species(/datum/species/gnoll, icon_update = FALSE)
@@ -3249,6 +3311,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.highlight_color = highlight_color
 	character.nickname = nickname
 
+	if(character.sexcon && free_use_default)
+		character.sexcon.freeuse = TRUE
+
 	character.eye_color = eye_color
 	var/origin_lang = FALSE
 	if(origin && origin.origin_language)
@@ -3285,7 +3350,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	// Apply multiple vices system
 	character.vices = list()
-	for(var/i = 1 to 5)
+	for(var/i = 1 to 6)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			var/datum/charflaw/new_vice = new vice.type()
@@ -3469,7 +3534,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 /datum/preferences/proc/is_active_migrant()
 	if(!migrant)
 		return FALSE
-	if(!migrant.active)
+	if(!migrant.queued_wave)
 		return FALSE
 	return TRUE
 
@@ -3501,3 +3566,5 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		dat += "[V.custom_text]"
 		dat += "</font>"
 	return dat
+
+#undef MAX_SONG_TITLE_LENGTH

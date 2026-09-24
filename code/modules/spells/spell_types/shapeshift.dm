@@ -62,8 +62,7 @@
 			Restore(M)
 		else if(shapeshift_type)
 			if(shapeshift_type == /mob/living/simple_animal/hostile/retaliate/gaseousform)
-				spawn(100)
-					Restore(M)
+				addtimer(CALLBACK(src, PROC_REF(Restore), M), 100)
 			Shapeshift(M)
 			return TRUE
 	return

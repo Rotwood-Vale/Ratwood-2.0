@@ -194,9 +194,9 @@
 			s_store = I
 			update_inv_s_store()
 		if(SLOT_MOUTH)
-
 			mouth = I
 			update_inv_mouth()
+			update_action_buttons_icon()
 		if(SLOT_IN_BACKPACK)
 			not_handled = TRUE
 			if(beltr)
@@ -348,6 +348,7 @@
 		mouth = null
 		if(!QDELETED(src))
 			update_inv_mouth()
+			update_action_buttons_icon()
 
 	// Armor class warning - must run after slot vars are nulled so check_armor_skill() sees the correct state
 	if(!QDELETED(src) && istype(I, /obj/item/clothing))
@@ -420,6 +421,8 @@
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_back = get_item_by_slot(slot_id)
+	if(equipped_back?.quickdraw_interact(src, thing))
+		return
 	if(equip_scabbard(thing, equipped_back, slot_id))
 		return
 	if(!equipped_back) // We also let you equip a backpack like this
@@ -456,6 +459,8 @@
 		return
 	var/obj/item/thing = get_active_held_item()
 	var/obj/item/equipped_belt = get_item_by_slot(SLOT_BELT)
+	if(equipped_belt?.quickdraw_interact(src, thing))
+		return
 	if(equip_scabbard(thing, equipped_belt, SLOT_BELT))
 		return
 	if(!equipped_belt) // We also let you equip a belt like this

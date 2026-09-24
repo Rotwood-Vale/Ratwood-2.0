@@ -60915,6 +60915,11 @@
 /obj/structure/fluff/walldeco/church/line{
 	layer = 2.2
 	},
+/obj/structure/mineral_door/wood/window{
+	name = "Upper Apothecary";
+	locked = 1;
+	lockid = "physician"
+	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/physician)
 "mEa" = (
@@ -184766,7 +184771,7 @@ mrD
 hjB
 scK
 gdr
-kdw
+scK
 scK
 scK
 skm

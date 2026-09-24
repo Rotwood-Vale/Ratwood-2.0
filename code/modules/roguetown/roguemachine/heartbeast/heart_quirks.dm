@@ -381,22 +381,24 @@
 	var/cooldown_upper_limit = cooldown_lower_limit * 2
 	var/cooldown = (rand(cooldown_lower_limit, cooldown_upper_limit) SECONDS)
 	if(grace_period)
-		spawn(base_attack_time)
-			if(get_dist(beast.heart_beast, target) > 2)
-				beast.heart_beast.visible_message(span_infection("Tendrils from [beast.heart_beast] barely can't reach [target]! That was close..."))
-				base_attack_time = max(5, base_attack_time - 10)
-				return
-			target.apply_status_effect(/datum/status_effect/territorial_rage, beast.heart_beast)
-			saw_meat = FALSE
-			last_attack_time = world.time
-			attack_cooldown = cooldown
-			base_attack_time = initial(base_attack_time)
+		addtimer(CALLBACK(src, PROC_REF(delayed_territorial_attack), target, beast, cooldown), base_attack_time)
 	else
 		target.apply_status_effect(/datum/status_effect/territorial_rage, beast.heart_beast)
 		saw_meat = FALSE
 		last_attack_time = world.time
 		attack_cooldown = cooldown
 		base_attack_time = initial(base_attack_time)
+
+/datum/flesh_quirk/territorial/proc/delayed_territorial_attack(mob/living/target, datum/component/chimeric_heart_beast/beast, cooldown)
+	if(get_dist(beast.heart_beast, target) > 2)
+		beast.heart_beast.visible_message(span_infection("Tendrils from [beast.heart_beast] barely can't reach [target]! That was close..."))
+		base_attack_time = max(5, base_attack_time - 10)
+		return
+	target.apply_status_effect(/datum/status_effect/territorial_rage, beast.heart_beast)
+	saw_meat = FALSE
+	last_attack_time = world.time
+	attack_cooldown = cooldown
+	base_attack_time = initial(base_attack_time)
 
 /datum/flesh_quirk/mimic
 	name = "Mimic"

@@ -2,9 +2,9 @@
 	name = "Gnolls Migration"
 	typepath = /datum/round_event/migrant_wave/gnolls
 	wave_type = /datum/migrant_wave/gnolls
-	max_occurrences = 2
-	weight = 5
-	earliest_start = 0 SECONDS
+	max_occurrences = 0
+	weight = 0
+	earliest_start = 150 MINUTES
 	tags = list(
 		TAG_COMBAT,
 		TAG_VILLIAN,

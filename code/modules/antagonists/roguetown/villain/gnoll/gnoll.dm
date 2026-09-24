@@ -21,6 +21,7 @@
 	// Gnolls don't really get to unequip their skin so they might as well just register it as soon as they get it
 	// loc is shitcode here because the skin is created inside the gnoll so we can juse abuse that logic
 	RegisterSignal(loc, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE), PROC_REF(on_attacked_by), override = TRUE)
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "HIDE", "#GNOLLED")/// no one should ever see this unless they spawn in gnoll skin via the game panel
 
 /datum/antagonist/gnoll
 	name = "Gnoll"
@@ -123,7 +124,7 @@
 /datum/antagonist/gnoll/proc/get_tracked_target_source(mob/living/target)
 	if(!target)
 		return null
-	if(target.has_flaw(/datum/charflaw/hunted))
+	if(HAS_TRAIT(target, TRAIT_GNOLL_HUNTED))
 		return "Hunted flaw"
 	if(target.job in get_gnoll_tracking_combat_roles())
 		return "Combat fallback"
@@ -132,7 +133,7 @@
 /datum/antagonist/gnoll/proc/is_examine_marked_target(mob/living/target)
 	if(!target)
 		return FALSE
-	if(target.has_flaw(/datum/charflaw/hunted))
+	if(HAS_TRAIT(target, TRAIT_GNOLL_HUNTED))
 		return TRUE
 	if(get_tracked_target() != target)
 		return FALSE
