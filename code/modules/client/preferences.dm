@@ -121,10 +121,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/shake = TRUE
 	var/no_redflash = FALSE
 	var/sexable = FALSE
+	var/erp_visuals = TRUE
 	var/chastenable = FALSE
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
 	var/extreme_erp = FALSE
 	var/edging = FALSE
+	var/free_use_default = FALSE
 	var/sensitive_brands = FALSE
 	var/facial_brands = FALSE
 	var/pubes = FALSE
@@ -160,7 +162,19 @@ GLOBAL_LIST_EMPTY(chosen_names)
 /datum/preferences/proc/get_base_points()
 	return 10
 
-// Points gained from selected vices (+1 per selected vice)
+/datum/preferences/proc/get_default_redolent_scent(scent_type)
+	switch(scent_type)
+		if("Gross")
+			return "rotting meat and sour sweat"
+		if("Pleasant")
+			return "wildflowers and clean rain"
+	return "earth and sweat"
+
+/// The leading text shown on examine before the custom scent, matching redolent_examine_text().
+/datum/preferences/proc/redolent_scent_leadin(scent_type)
+	return scent_type == "Gross" ? "They reek of" : "They smell of"
+
+// Points gained from additional selected vices (+1 per vice after slot one)
 /datum/preferences/proc/get_vice_points()
 	var/points = 0
 	for(var/i = 1 to 6)
@@ -300,6 +314,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/charflaw/vice4
 	var/datum/charflaw/vice5
 	var/datum/charflaw/vice6
+	var/redolent_type = "Neutral"
+	var/redolent_scent = ""
 
 	var/setspouse = ""
 	var/gender_choice = ANY_GENDER
@@ -3089,7 +3105,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					user << browse(null, "window=preferences") //closes job selection
 					user << browse(null, "window=mob_occupation")
 					user << browse(null, "window=latechoices") //closes late job selection
-					user << browse(null, "window=migration") // Closes migrant menu
+					migrant.hide_ui() // Closes migrant menu
 
 					SStriumphs.remove_triumph_buy_menu(user.client)
 
@@ -3294,6 +3310,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.cmode_music_override_name = combat_music.name
 	character.highlight_color = highlight_color
 	character.nickname = nickname
+
+	if(character.sexcon && free_use_default)
+		character.sexcon.freeuse = TRUE
 
 	character.eye_color = eye_color
 	var/origin_lang = FALSE
@@ -3515,7 +3534,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 /datum/preferences/proc/is_active_migrant()
 	if(!migrant)
 		return FALSE
-	if(!migrant.active)
+	if(!migrant.queued_wave)
 		return FALSE
 	return TRUE
 

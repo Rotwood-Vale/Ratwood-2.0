@@ -1,5 +1,0 @@
-author: "Quink-Fix"
-delete-after: True
-changes:
-  - bugfix: "fixed a bug that invalidated an intended mechanic; holy crosses now interrupt the prayers of Inhumen characters with the Devout vice if you are too close to them, regardless of whether you meet any other criteria (except being in the zchurch)"
-  - bugfix: "various spelling errors, missing information, and inaccurate terminology with regards to warnings given for the Devout vice"

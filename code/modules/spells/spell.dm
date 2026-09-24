@@ -147,6 +147,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	desc = ""
 	panel = "Spells"
 	var/sound = null //The sound the spell makes when it is cast
+	/// Item conjured by this spell, unsummoned when a new one is conjured or the spell is lost.
+	var/obj/item/conjured_item
+	/// Fills in "The <item>'s borders begin to ...!" when the conjured item is unsummoned.
+	var/conjured_dispel_desc = "shimmer and fade, before it vanishes entirely"
+	/// Outline colour for this spell's conjured item, null uses the component's own default.
+	var/conjured_item_glow
 	anchored = TRUE // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
 	density = FALSE
@@ -383,6 +389,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				stats += get_fatigue_breakdown(user)
 		else
 			stats += span_info("Stamina cost: [base_fd]")
+	if(devotion_cost)
+		stats += span_info("Devotion cost: [devotion_cost]")
 	return stats
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge, mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
@@ -556,11 +564,34 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
+	dispel_conjured_item()
 	var/mob/owner = action?.owner
 	owner?.mob_spell_list -= src
 	owner?.mind?.spell_list -= src
 	QDEL_NULL(action)
 	return ..()
+
+/// Marks an item as conjured by this spell, dropping our reference to it when it is destroyed.
+/obj/effect/proc_holder/spell/proc/set_conjured_item(obj/item/new_item)
+	if(conjured_item)
+		UnregisterSignal(conjured_item, COMSIG_QDELETING)
+	conjured_item = QDELETED(new_item) ? null : new_item
+	if(!conjured_item)
+		return
+	conjured_item.AddComponent(/datum/component/conjured_item, conjured_item_glow)
+	RegisterSignal(conjured_item, COMSIG_QDELETING, PROC_REF(on_conjured_item_deleted))
+
+/obj/effect/proc_holder/spell/proc/on_conjured_item_deleted(datum/source)
+	SIGNAL_HANDLER
+	conjured_item = null
+
+/// Unsummons the currently conjured item, if any.
+/obj/effect/proc_holder/spell/proc/dispel_conjured_item()
+	if(!conjured_item)
+		return
+	conjured_item.visible_message(span_warning("The [conjured_item]'s borders begin to [conjured_dispel_desc]!"))
+	qdel(conjured_item)
+	conjured_item = null
 
 /obj/effect/proc_holder/spell/Click()
 	if(!cast_check())
