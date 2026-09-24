@@ -1,6 +1,5 @@
 /datum/advclass/wardenmaster/bogguard
 	name = "Bogguard"
-	examine_name = "Bogguard"
 	tutorial = "Ancient. Experienced. You're one of the last remaining Bogguards; guardians of the now-lost forts of the Bogmen. Your loyalty yet persists.\
 	You fought for too long, yet the mind remembers every blow, every slash, and every hardship. Your heart yet beats for Lowtown and those whom you swore to protect."
 	outfit = /datum/outfit/job/roguetown/wardenmaster/bogguard

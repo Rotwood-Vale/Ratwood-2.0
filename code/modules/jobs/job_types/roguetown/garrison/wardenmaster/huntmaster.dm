@@ -1,6 +1,5 @@
 /datum/advclass/wardenmaster/huntmaster
 	name = "Huntmaster"
-	examine_name = "Huntmaster"
 	tutorial = "You're the Huntmaster of Lowtown; the eyes and ears of its people beyond the walls. A master hunter and scout, you've spent countless years serving under the Crown and the Baron.\
 	 You know every trail, every beast, and every danger lurking in the wilds. Keep your eyes open, your quiver filled, and your arrows ready for any who dare harm your folk."
 	outfit = /datum/outfit/job/roguetown/wardenmaster/huntmaster

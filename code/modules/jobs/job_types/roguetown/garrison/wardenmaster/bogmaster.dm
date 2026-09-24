@@ -1,6 +1,5 @@
 /datum/advclass/wardenmaster/bogmaster
 	name = "Bogmaster"
-	examine_name = "Bogmaster"
 	tutorial = "You're the Bogmaster of Lowtown; employed by the Baron to protect its residents and stand as a wall between the Duchy and the Bog.\
 	 You've seen enough, lived enough, fought enough to master the Bog. Do not let your comrades get lost in its putrid depths."
 	outfit = /datum/outfit/job/roguetown/wardenmaster/bogmaster
@@ -16,9 +15,10 @@
 		)
 	subclass_stats = list(
 		STATKEY_WIL = 2,
-		STATKEY_CON = 2,
-		STATKEY_STR = 1,
-		STATKEY_INT = 1,
+		STATKEY_STR = 2,
+		STATKEY_CON = 1,
+		STATKEY_SPD = 1,
+
 	)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
