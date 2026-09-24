@@ -88742,14 +88742,6 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/dungeon/oldgoblincamp)
-"syy" = (
-/obj/structure/mineral_door/wood{
-	locked = 1;
-	lockid = s;
-	name = "Tailor"
-	},
-/turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town)
 "syC" = (
 /obj/structure/flora/rogueshroom,
 /turf/open/floor/rogue/dirt,
@@ -420370,7 +420362,7 @@ koY
 eBW
 bOc
 eBW
-syy
+iyU
 kug
 kug
 uly
