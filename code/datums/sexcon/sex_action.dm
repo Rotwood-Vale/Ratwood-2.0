@@ -71,6 +71,9 @@
 		return TRUE
 	return user.mind?.has_spell(user_required_spell_type)
 
+/datum/sex_action/proc/get_display_name(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return name
+
 /datum/sex_action/proc/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(solo)
 		if(user != target)

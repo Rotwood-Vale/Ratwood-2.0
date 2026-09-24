@@ -1263,7 +1263,7 @@
 			link = "linkOff"
 		if(current_action == action_type)
 			link = "linkOn"
-		dat += "<center><a class='[link]' href='?src=[REF(src)];task=action;action_type=[action_type]'>[action.name]</a></center>"
+		dat += "<center><a class='[link]' href='?src=[REF(src)];task=action;action_type=[action_type]'>[action.get_display_name(user, target)]</a></center>"
 		dat += "</td>"
 		i++
 		if(i >= 2)
