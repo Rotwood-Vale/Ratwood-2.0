@@ -17,7 +17,7 @@
 	advclass_cat_rolls = list(CTAG_BOGMASTER = 20)
 
 	give_bank_account = 50
-	min_pq = 20
+	min_pq = 10
 	max_pq = null
 	job_subclasses = list(
 		/datum/advclass/wardenmaster/bogmaster,

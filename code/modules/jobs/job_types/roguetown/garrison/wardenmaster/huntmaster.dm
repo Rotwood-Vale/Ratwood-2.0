@@ -18,8 +18,8 @@
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_SPD = 2,
-		STATKEY_WIL = 2,//Same statpack as normal ranger warden, but expert knives and master ranged weapons.
-						//Weaker than Wretch Poacher, stronger than Warden Ranger. I... tested it- and bows are...too strong, still. Don't know how to balance it.
+		STATKEY_WIL = 2,//Same statpack as normal ranger warden, but expert knives and +1 WIL.
+
 	)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
@@ -61,21 +61,15 @@
 			if("Crossbow")
 				beltl = /obj/item/quiver/bolts
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
-				H.change_stat(STATKEY_SPD, -1)
-				H.change_stat(STATKEY_PER, -1)//...imagine them after buying a  slurbow. Too strong. Needed nerf.
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 4, TRUE)
 			if("Blackhorn Longbow")
 				beltl = /obj/item/quiver/arrows
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden
-				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 5, TRUE)
-				H.change_stat(STATKEY_SPD, -1)
-				H.change_stat(STATKEY_WIL, 1)//More stamina to use a longbow, but you're slower.
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 			if("Blackhorn Recurve Bow")
 				beltl = /obj/item/quiver/arrows
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden
-				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 5, TRUE)
-				H.change_stat(STATKEY_PER, -1)
-				H.change_stat(STATKEY_SPD, 1)//Quickshooter default warden. Faster, but quickshooting makes them not as precise as their peers.
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 
 		var/helmets = list(
 			"Antlers of the Antelope"   = /obj/item/clothing/head/roguetown/helmet/bascinet/antler/melee,
