@@ -1,4 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - qol: "Spell icons will now update more dynamically to reflect what you can and cannot cast at any given moment. This includes explicit update triggers for skullcracks, antimagic, \"buckling\" to objects, consciousness changes, mouthgrabs, gags, and so on."

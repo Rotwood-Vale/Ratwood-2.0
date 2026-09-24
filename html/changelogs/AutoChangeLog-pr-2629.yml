@@ -1,4 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - rscadd: "Tracking autohiglight is now baseline feature instead of needing Sleuch"

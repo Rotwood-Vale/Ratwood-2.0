@@ -1,4 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - rscadd: "Miracles with an upfront devotion cost will display that in the spell's examine text."

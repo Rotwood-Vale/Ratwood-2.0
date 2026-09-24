@@ -798,3 +798,58 @@
       of HIS energies for a last stand!
   - bugfix: Corrected a bunch of random pain screams in reaction to wounds not being
       forced, so you should be screaming more when someone's breaking all your bones.
+2026-09-24:
+  Arturlang:
+  - bugfix: a lot of harddels related to minds, factions, NPC enemies
+  IronDragoon:
+  - rscadd: Malorodous is now much more configurable, can be gross/neutral or positive
+      and is renamed to Redolent
+  MarioTheShiba:
+  - rscadd: Added some more things to the loadout.
+  MrShibaa:
+  - rscadd: Added new recipes for various kazen weaponry and armor
+  - rscdel: Removed Hook sword and Naginata from being craftable without having the
+      trait KAZENGUNITE_SMITH
+  - balance: "Soldier half-mask now only protects mouth and nose and the Ogre Mask,\
+      \ has full face protection but has an FOV reduction (half-mask doesn\u2019t)"
+  - balance: Increased Armored Sandals durab to 270 (Same as Plated Boots.)
+  Risraivyn:
+  - qol: Builders can now plan structures via a TGUI interface and construct them
+      by hammering the foundation rather than placing every tile manually.
+  SirSwagmeyer:
+  - balance: tweaked vanguard stats and skills just slightly.
+  - rscadd: Added real wrasslin' moves to advanced unarmed builds.
+  - balance: READD LONGSWORD PEEL
+  - refactor: Changed knockdown logic to not involve a disarm. Consequently several
+      effects no longer disarm that used to knock the target down.
+  The-Sun-In-Splendour:
+  - qol: confessors now get to choose between two different statlines
+  - spellcheck: injects sovl into the psydonic weapon choice boxes
+  UntoldTactics:
+  - balance: Excommunication and Apostasy have had their stress values increased,
+      with the former now being more than a small inconvinenence and the latter being
+      a crippling mood debuff for any clergy afflicted.
+  - balance: Abyssorites and Dendorites are no longer immune to Apostasy or Divine
+      Curse.
+  Xander3359:
+  - balance: Legendary Blacksmith now has wrestling 3
+  Yuckuza:
+  - rscadd: Arbiter description changed to remove explicit mention of having "greater
+      miracles"
+  wikimody:
+  - bugfix: Diabloring shoudl be posible again
+  - rscadd: Tracking autohiglight is now baseline feature instead of needing Sleuch
+  - rscadd: Pickpocketing while targeting an arm now pickpockets coresponding back
+      zone (no longer will you roll a dice to see if you pick a shield instead)
+  - rscadd: Pickpocketing chest now pickpockets cloak instead
+  zeroisthebiggay:
+  - rscadd: automatic free use toggle
+  - bugfix: bladed weapons no longer magically become fully sharpened when you drop
+      them
+  zoktiik:
+  - qol: Spell icons will now update more dynamically to reflect what you can and
+      cannot cast at any given moment. This includes explicit update triggers for
+      skullcracks, antimagic, "buckling" to objects, consciousness changes, mouthgrabs,
+      gags, and so on.
+  - rscadd: Miracles with an upfront devotion cost will display that in the spell's
+      examine text.
