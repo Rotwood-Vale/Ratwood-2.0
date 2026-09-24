@@ -59,7 +59,7 @@
 	//engineers can check constructs for injuries
 	if(ishuman(targets[1]) && istype(targets[1], /mob/living/carbon/human/species/construct))
 		var/mob/living/carbon/human/human_target = targets[1]
-		human_target.check_for_injuries(user)		
+		human_target.check_for_injuries(user, TRUE)		
 		return TRUE
 	revert_cast()
 	return FALSE

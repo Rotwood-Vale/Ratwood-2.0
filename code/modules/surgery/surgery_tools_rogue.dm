@@ -786,7 +786,7 @@
 			if(prob(1))
 				playsound(user, 'sound/misc/bonk.ogg', 100, FALSE, -1)
 			var/mob/living/carbon/human/human_target = A
-			human_target.check_for_injuries(user)
+			human_target.check_for_injuries(user, TRUE)
 	return ..()
 
 ////////////////////
