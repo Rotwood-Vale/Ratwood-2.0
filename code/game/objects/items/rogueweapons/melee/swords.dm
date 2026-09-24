@@ -2696,7 +2696,7 @@
 	else
 		I = H.get_inactive_held_item()
 	if(user.mind && weapon.associated_skill)
-		skill_diff += user.get_skill_level(weapon.associated_skill) + 1
+		skill_diff += user.get_skill_level(weapon.associated_skill)
 	if(H.mind)
 		skill_diff -= H.get_skill_level(/datum/skill/combat/wrestling)
 	user.stamina_add(rand(3,8))
@@ -2713,7 +2713,8 @@
 		probby += 20
 	if(H.has_status_effect(/datum/status_effect/debuff/exposed) || H.has_status_effect(/datum/status_effect/debuff/baited) || H.IsOffBalanced())//this is so you dont need to be a STR beast wrestle chud to disarm with any reliability
 		probby += 40
-	if(prob(probby))
+	var/disarm_success = prob(probby)
+	if(disarm_success && !weapon.wielded)///if we weapon steal with a two hander (i.e. aruval), roll the success into regular disarm. You don't have 3 hands, sire
 		H.dropItemToGround(I, force = FALSE, silent = FALSE)
 		user.stop_pulling()
 		user.put_in_inactive_hand(I)
@@ -2725,7 +2726,7 @@
 			H.Stun(10)
 	else
 		probby += 20
-		if(prob(probby))
+		if(disarm_success || prob(probby))
 			H.dropItemToGround(I, force = FALSE, silent = FALSE)
 			H.visible_message(span_danger("[user] disarms [H] of [I]!"), \
 				span_userdanger("[user] disarms me of [I]!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)

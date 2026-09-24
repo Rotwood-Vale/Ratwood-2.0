@@ -54,41 +54,35 @@
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker/lesser//1:1 with regular slurbow, still good, just not as fancy
 				beltr =  /obj/item/quiver/bolts/
 			if("Escrimeuse \"Swordswoman\"")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				var/swords = list("Falx", "Sabre", "Greatsabre", "Shotel", "Thrusting Longsword")
 				var/sword_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in swords
 				switch(sword_choice)
 					if("Falx")
-						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 						beltr = /obj/item/rogueweapon/scabbard/sword
 						r_hand = /obj/item/rogueweapon/sword/falx/stalker
 					if("Sabre")
-						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 						beltr = /obj/item/rogueweapon/scabbard/sword
 						r_hand = /obj/item/rogueweapon/sword/sabre/stalker
 					if("Greatsabre")
-						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 						beltr = /obj/item/rogueweapon/scabbard/sword
 						r_hand = /obj/item/rogueweapon/sword/long/elf/stalker
 					if("Shotel")
-						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 						beltr = /obj/item/rogueweapon/scabbard/sword
 						r_hand = /obj/item/rogueweapon/sword/long/shotel/stalker
 					if("Thrusting Longsword")
-						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 						beltr = /obj/item/rogueweapon/scabbard/sword
 						r_hand = /obj/item/rogueweapon/sword/long/stalker
 			if("Piqueuse \"Whipper\"")
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				var/whips = list("Whip - 10 STR MIN", "Urumi - 10 STR MIN", "Greatflail - 12 STR Min")
 				var/whip_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in whips
 				switch(whip_choice)
 					if("Whip - 10 STR MIN")
-						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN, TRUE)
 						r_hand = /obj/item/rogueweapon/whip/spiderwhip
 					if("Urumi - 10 STR MIN")
-						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN, TRUE)
 						r_hand = /obj/item/rogueweapon/whip/urumi/spider
 					if("Greatflail - 12 STR Min")
-						H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN, TRUE)
 						r_hand = /obj/item/rogueweapon/flail/peasantwarflail/stalker
 
 		var/armors = list("Dodge Expert", "Medium Armor")
