@@ -139,6 +139,7 @@
 	var/list/content_entries = list(
 		list("id" = "animal_emotes", "label" = "Animal Noise Emotes", "enabled" = !!(!owner.prefs.mute_animal_emotes), "desc" = "Play animal emote sound effects."),
 		list("id" = "erp_panel", "label" = "Enable ERP Panel Interactions", "enabled" = !!owner.prefs.sexable, "desc" = "Allow others to use ERP panel interactions on you."),
+		list("id" = "erp_visuals", "label" = "Enable ERP Visual Effects", "enabled" = !!owner.prefs.erp_visuals, "desc" = "Enable visual effects like hearts and screen overlays during ERP."),
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
@@ -245,6 +246,8 @@
 				owner.mute_animal_emotes()
 			if("erp_panel")
 				owner.toggle_ERP()
+			if("erp_visuals")
+				owner.toggle_ERP_visuals()
 			if("chastity")
 				owner.toggle_Chastity()
 			if("permanent_binding")
@@ -439,6 +442,21 @@
 			to_chat(src, "Others can play with you.")
 		else
 			to_chat(src, "Others can't touch you.")
+
+/client/verb/toggle_ERP_visuals()
+	set category = "Options"
+	set name = "Toggle ERP Visual Effects"
+	set hidden = 1
+	if(prefs)
+		prefs.erp_visuals = !prefs.erp_visuals
+		prefs.save_preferences()
+		if(prefs.erp_visuals)
+			to_chat(src, "ERP visual effects enabled.")
+		else
+			to_chat(src, "ERP visual effects disabled.")
+			var/mob/living/carbon/human/H = mob
+			if(istype(H) && H.sexcon)
+				H.sexcon.update_pink_screen()
 
 /client/verb/toggle_Chastity() // Alters whether the user can see or interact with any content related to chastity devices, including the devices themselves, actions that target them, and messages related to them. This is intended for users who want to avoid accidentally encountering this content, but still want to be able to use the game without missing out on unrelated features.
 	set category = "Options"

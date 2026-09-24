@@ -107,14 +107,19 @@
 			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
 
 	if(user != src && get_dist(user, src) <= 3)
-		var/datum/charflaw/malodorous/malodorous_flaw = src.get_flaw(/datum/charflaw/malodorous)
-		if((malodorous_flaw && malodorous_flaw.is_reeking()) || has_status_effect(/datum/status_effect/debuff/stinky_contact))
+		var/reeking_naturally = is_redolent_reeking()
+		if(reeking_naturally || has_status_effect(/datum/status_effect/debuff/stinky_contact))
 			var/can_see_stink = !isliving(user) // adminghost always sees it
 			if(isliving(user))
 				var/mob/living/living_user = user
 				can_see_stink = living_user.can_smell() && !HAS_TRAIT(living_user, TRAIT_NOSTINK)
 			if(can_see_stink)
-				. += span_greentext("They reek.")
+				if(reeking_naturally)
+					. += redolent_examine_text(redolent_scent_type, redolent_scent)
+				else
+					var/datum/status_effect/debuff/stinky_contact/contact_stink = has_status_effect(/datum/status_effect/debuff/stinky_contact)
+					if(contact_stink)
+						. += contact_stink.get_examine_text()
 
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
