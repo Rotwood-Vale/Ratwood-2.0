@@ -39,7 +39,10 @@
 		user.visible_message(span_warning("[user] presses [target]'s face against [user.p_their()] [word]!"), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 		user.sexcon.show_progress = 0
 		return
-	user.visible_message(span_warning("[user] smothers [target]'s head under [user.p_their()] tits!"), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	var/word = "tits"
+	if(breasts.is_pecs())
+		word = "pecs"
+	user.visible_message(span_warning("[user] smothers [target]'s head under [user.p_their()] [word]!"), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/titsmother/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -59,7 +62,10 @@
 			word = "pecs"
 		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] presses [target]'s face into [user.p_their()] [word]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	else
-		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] smothers [target]'s face with [user.p_their()] tits..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+		var/word = "tits"
+		if(breasts.is_pecs())
+			word = "pecs"
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] smothers [target]'s face with [user.p_their()] [word]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		user.sexcon.outercourse_noise(user)
 
@@ -98,7 +104,10 @@
 			word = "pecs"
 		user.visible_message(span_warning("[user] eases [target]'s face away from [user.p_their()] [word]."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 		return
-	user.visible_message(span_warning("[user] pulls [target]'s head out from under [user.p_their()] tits."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	var/word = "tits"
+	if(breasts.is_pecs())
+		word = "pecs"
+	user.visible_message(span_warning("[user] pulls [target]'s head out from under [user.p_their()] [word]."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 
 /datum/sex_action/titsmother/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user.sexcon.finished_check())

@@ -285,7 +285,7 @@
 		branded = ", branded with <span style='font-size:125%;'>[span_boldwarning(brand_text)]</span>"
 	if(breasts.breast_size == 0)
 		return "[adjective][branded]"
-	if(breasts.accessory_type == /datum/sprite_accessory/breasts/pecs)
+	if(breasts.is_pecs())
 		return "[adjective] pair of pecs[branded]"
 	return "[adjective] pair of breasts[branded]"
 
