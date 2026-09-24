@@ -183,6 +183,7 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/client/proc/cmd_debug_del_all,
 	/client/proc/cmd_controller_view_ui,
 	/client/proc/toggle_random_events,
+	/client/proc/toggle_player_traffic_telemetry,
 	/client/proc/adminchangemap,
 	/client/proc/panicbunker,
 	// /datum/admins/proc/BC_WhitelistKeyVerb,
