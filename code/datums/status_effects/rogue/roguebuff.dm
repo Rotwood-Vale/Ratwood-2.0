@@ -1635,12 +1635,10 @@
 
 /datum/status_effect/buff/journey_end_final/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_warning("You feel a wave of calming tides throughout your body... Are you truly free?"))
 
 /datum/status_effect/buff/journey_end_final/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_warning("The tides of your failures were too strong.. It seems your freedom will have to wait another dae.."))
 
 /datum/status_effect/buff/journey_end/on_apply()
