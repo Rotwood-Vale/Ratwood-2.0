@@ -573,6 +573,16 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Simple Shoes"
 	path = /obj/item/clothing/shoes/roguetown/simpleshoes
 
+/datum/loadout_item/paddedfootwraps
+	name = "Padded Footwraps"
+	path = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded
+	triumph_cost = 2
+
+/datum/loadout_item/heleatherfootwraps
+	name = "Hardened Leather Footwraps"
+	path = /obj/item/clothing/shoes/roguetown/boots/footwraps/hleather
+	triumph_cost = 2
+
 //SHIRTS
 /datum/loadout_item/longcoat
 	name = "Longcoat"
@@ -585,6 +595,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/Necromrobe
     name = "Necromancer Robes"
     path = /obj/item/clothing/suit/roguetown/shirt/robe/necromancer
+
+/datum/loadout_item/guilder_jacket
+	name = "Guilder Jacket"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/merchant
 
 /datum/loadout_item/phys_robe
 	name = "Physicker's Robe"
@@ -786,6 +800,19 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/wrappings
 	name = "Handwraps"
 	path = /obj/item/clothing/wrists/roguetown/wrappings
+
+
+/datum/loadout_item/bronze_duelist_goggles
+	name = "Bronze Duelist Goggles"
+	path = /obj/item/clothing/mask/rogue/spectacles/duelist/bronze
+
+/datum/loadout_item/golden_spectacles
+	name = "Golden Spectacles"
+	path = /obj/item/clothing/mask/rogue/spectacles/golden
+
+/datum/loadout_item/fingerless_leather_gloves
+	name = "Fingerless Leather Gloves"
+	path = /obj/item/clothing/gloves/roguetown/fingerless_leather
 
 /datum/loadout_item/allwrappings
 	name = "Cloth Wrappings"
@@ -1767,7 +1794,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 
 /datum/loadout_item/tri_fencing_shirt
 	name = "Fencing Shirt (Padded)"
-	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter
+	path = /obj/item/clothing/suit/roguetown/shirt/freifechter
 	triumph_cost = 3
 
 /datum/loadout_item/tri_gambeson

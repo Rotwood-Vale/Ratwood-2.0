@@ -179,13 +179,13 @@
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/fae/core = 1, /obj/item/magic/fae/scale = 2, /obj/item/magic/melded/t2 = 1)
 	result_atoms = list(/obj/item/enchantmentscroll/greater/woundclosing)
 
-/datum/runeritual/enchanting/archery
-	name = "Archery"
-	desc = "Of bowmanship."
+/datum/runeritual/enchanting/sharshooting
+	name = "Sharshooting"
+	desc = "Of ranged combat."
 	blacklisted = FALSE
 	tier = 3
 	required_atoms = list(/obj/item/rogueore/cinnabar = 1,/obj/item/paper/scroll = 1,/obj/item/magic/infernal/fang = 2, /obj/item/magic/leyline = 2, /obj/item/magic/melded/t2 = 1)
-	result_atoms = list(/obj/item/enchantmentscroll/greater/archery)
+	result_atoms = list(/obj/item/enchantmentscroll/greater/sharpshooter)
 
 
 //T4 Below here

@@ -620,29 +620,6 @@
 		popup.open(FALSE)
 		if(winexists(usr, "classhelp"))
 			winset(usr, "classhelp", "focus=true")
-	if(href_list["jobsubclassinfo"])
-		var/list/dat = list()
-		var/list/subclasses_to_show = job_subclasses
-		if(!length(subclasses_to_show) && length(advclass_cat_rolls))
-			subclasses_to_show = list()
-			for(var/ctag in advclass_cat_rolls)
-				for(var/datum/advclass/ctag_class as anything in SSrole_class_handler.sorted_class_categories[ctag])
-					subclasses_to_show += ctag_class.type
-		for(var/adv in subclasses_to_show)
-			var/datum/advclass/advpath = adv
-			var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(advpath.name))
-			if(subclass.maximum_possible_slots != -1)
-				dat += "[subclass.name] — <b>"
-				if(subclass.total_slots_occupied >= subclass.maximum_possible_slots)
-					dat += "FULL!"
-				else
-					dat += "[subclass.total_slots_occupied] / [subclass.maximum_possible_slots]"
-				dat += "</b><br>"
-		var/datum/browser/popup = new(usr, "subclassslots", "<div style='text-align: center'>[title]</div>", nwidth = 200, nheight = 300)
-		popup.set_content(dat.Join())
-		popup.open(FALSE)
-		if(winexists(usr, "subclassslots"))
-			winset(usr, "subclassslots", "focus=true")
 	. = ..()
 
 /datum/job/proc/has_limited_subclasses()

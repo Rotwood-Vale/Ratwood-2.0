@@ -146,6 +146,7 @@
 		B.grabbee = user
 		B.limb_grabbed = BP
 		B.sublimb_grabbed = used_limb
+		B.update_grabbed_spell_hud()
 
 		lastattacker = user.real_name
 		lastattackerckey = user.ckey
