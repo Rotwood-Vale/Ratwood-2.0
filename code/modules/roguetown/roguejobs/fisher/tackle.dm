@@ -160,7 +160,7 @@
 	icon_state = "bobber"
 	hookmod = 4
 	deepfishingweight = -2
-	difficultymod = 2
+	difficultymod = -2
 	bobber = TRUE
 	max_durability = 100
 	durability = 100
