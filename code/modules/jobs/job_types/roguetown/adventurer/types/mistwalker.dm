@@ -2,13 +2,14 @@
 	name = "Mistwalker" //works
 	tutorial = "Hailing from Kazengun you were once a sacred guardian, dedicating your lyfe to protecting your chosen shrine of the gods against brigands and fiends from beyond alike... now? Your sacred home has fallen, claimed by ruinous forces and you are banished to wander the realm. What will you find in your search for purpose?"
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_NO_CONSTRUCT 
+	allowed_races = RACES_BREATHE 
 	allowed_patrons = ALL_PATRONS 
 	outfit = /datum/outfit/job/roguetown/wretch/mistwalker
 	subclass_languages = list(/datum/language/kazengunese)
 	class_select_category = CLASS_CAT_WARRIOR
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END, TRAIT_DODGEEXPERT) //no armour, literally made to bleed
+	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END) //no armour, literally made to bleed
+	virtue_restrictions = list(/datum/virtue/combat/rotcured, /datum/virtue/utility/deathless)
 	maximum_possible_slots = 2 //you probably don't want many of these
 
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'

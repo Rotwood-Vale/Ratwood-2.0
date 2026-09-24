@@ -1616,18 +1616,21 @@
 	id = "journey_ending"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_ending
 	effectedstats = list(STATKEY_SPD = 2, STATKEY_WIL = 2)
+	examine_text = "<font color= 'blue'>SUBJECTPRONOUN coughs out a portion of blood. They appear to be quicker..</font>"
 	duration = -1
 
 /datum/status_effect/buff/journey_end
 	id = "journey_end"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end
 	effectedstats = list(STATKEY_STR = 2, STATKEY_SPD = 3, STATKEY_WIL = 2, STATKEY_CON = 2)
+	examine_text = "<font color= 'blue'>SUBJECTPRONOUN is infused with an unatural determination to fight! Their muscles have seemed to have hardened.</font>"
 	duration = -1
 
 /datum/status_effect/buff/journey_end_final //takes ages for them to die to bloodloss, but they *do* die to it
 	id = "journey_end_final"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end_final
 	effectedstats = list(STATKEY_STR = 3, STATKEY_SPD = 4, STATKEY_WIL = 4, STATKEY_CON = 4)
+	examine_text = "<font color= 'blue'>SUBJECTPRONOUN appears to have a final burst of strength! You dont think you will be able to hold them down..</font>"
 	duration = -1
 
 /datum/status_effect/buff/journey_end_final/on_apply()
