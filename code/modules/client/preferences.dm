@@ -196,11 +196,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	for(var/datum/quirk/Q in quirks)
 		if(Q)
 			var/cost = Q.point_cost
+
 			// Redolent cost check for non-benefical options.
 			if(istype(Q, /datum/quirk/redolent))
 				if(redolent_type == "Gross" || redolent_type == "Neutral")
 					cost = 0
-		points += cost
+
+			points += cost
 	return points
 
 /datum/preferences/proc/get_quirk_points_remaining()
