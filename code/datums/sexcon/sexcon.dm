@@ -120,6 +120,26 @@
 	//receiving = list()
 	. = ..()
 
+/datum/sex_controller/proc/do_visual_effects(atom/movable/effect_target, datum/sex_action/action)
+	if(do_subtle_action)
+		return
+	if(!action || !(action.category & SEX_CATEGORY_PENETRATE))
+		return
+	var/list/seers = list()
+	if(user?.client?.prefs && user.client.prefs.erp_visuals)
+		seers += user
+	var/mob/living/carbon/human/H = effect_target
+	if(istype(H) && H.client?.prefs && H.client.prefs.erp_visuals && H != user)
+		seers += H
+	if(!length(seers))
+		return
+	var/icon_state_name = (user?.cmode || (istype(H) && H.cmode)) ? "anger" : "redheart"
+	var/atom/movable/spawn_target = effect_target || user
+	for(var/i in 1 to rand(1, 3))
+		new /obj/effect/temp_visual/heart/sex_effects/invisible(get_turf(spawn_target), seers, icon_state_name)
+	for(var/mob/seer in seers)
+		spawn_target.balloon_alert(seer, "plap!", rand(-15, 15), rand(0, 25))
+
 /datum/sex_controller/proc/do_thrust_animate(atom/movable/target, pixels = 4, time = 2.7)
 	var/oldx = user.pixel_x
 	var/oldy = user.pixel_y
@@ -340,6 +360,9 @@
 	manual_arousal = clamp(manual_arousal + amt, SEX_MANUAL_AROUSAL_MIN, SEX_MANUAL_AROUSAL_MAX)
 
 /datum/sex_controller/proc/update_pink_screen()
+	if(!user?.client?.prefs?.erp_visuals)
+		user?.clear_fullscreen("horny")
+		return
 	var/severity = 0
 	switch(arousal)
 		if(1 to 10)
@@ -418,8 +441,8 @@
 					splashed_user.visible_message(span_love("[splashed_user] takes a load on their body!"), span_love("I take a load on my body!"))
 			else
 				external.refresh_cum()
-		if(user.has_flaw(/datum/charflaw/malodorous) && !splashed_user.has_flaw(/datum/charflaw/malodorous))
-			splashed_user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
+		if(HAS_TRAIT(user, TRAIT_REDOLENT) && !HAS_TRAIT(splashed_user, TRAIT_REDOLENT))
+			user.redolent_apply_contact_stink(splashed_user)
 		modular_record_collar_receive_event(splashed_user, user)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
@@ -460,10 +483,12 @@
 			apply_cum_consumed_buff(splashed_user)
 		if(!oral && user?.dna?.species?.id == "gnoll")
 			splashed_user.has_gnoll_scent_this_round = TRUE
-		if(user.has_flaw(/datum/charflaw/malodorous) && !splashed_user.has_flaw(/datum/charflaw/malodorous))
-			splashed_user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
-		else if(splashed_user.has_flaw(/datum/charflaw/malodorous) && !user.has_flaw(/datum/charflaw/malodorous))
-			user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
+		var/user_redolent = HAS_TRAIT(user, TRAIT_REDOLENT)
+		var/target_redolent = HAS_TRAIT(splashed_user, TRAIT_REDOLENT)
+		if(user_redolent && !target_redolent)
+			user.redolent_apply_contact_stink(splashed_user)
+		else if(target_redolent && !user_redolent)
+			splashed_user.redolent_apply_contact_stink(user)
 		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
 			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
@@ -474,7 +499,8 @@
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	after_ejaculation(consume_charge)
-	after_intimate_climax(oral, splashed_user)
+	if(consume_charge)
+		after_intimate_climax(oral, splashed_user)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
 /proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE)
@@ -1231,8 +1257,6 @@
 			continue
 		if(!action.shows_on_menu(user, target))
 			continue
-		if(action_blocked_by_intimate_state(action, TRUE))
-			continue
 		dat += "<td>"
 		var/link = ""
 		if(!can_perform_action(action_type, user_is_incapacitated))
@@ -1420,6 +1444,7 @@
 		suppress_action_messages = !show_action_message
 		find_ringing_collar()
 		action.on_perform(user, target)
+		do_visual_effects(target, action)
 		suppress_action_messages = FALSE
 		// It could want to finish afterwards the performed action
 		if(action.is_finished(user, target))
@@ -1436,35 +1461,11 @@
 		return FALSE
 	if(!inherent_perform_check(action_type, incapacitated))
 		return FALSE
-	if(action_blocked_by_intimate_state(action))
-		return FALSE
 	if(!action.can_perform(user, target))
 		return FALSE
 	return TRUE
-/// Checks if the action is blocked by an intimate state, such as chastity. If menu_check is TRUE, this is being called for the purpose of showing the action in the menu, and certain checks that would be redundant to do on every menu open (like checking for orgasm immunity from a collar) can be skipped.
-/datum/sex_controller/proc/action_blocked_by_intimate_state(datum/sex_action/action, menu_check = FALSE)
-	if(!action || !user)
-		return FALSE
-	if(action.intimate_check_flags == SEX_ACTION_INTIMATE_CHECK_NONE)
-		return FALSE
-
-	var/user_part = action.user_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
-	if((action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_USER) && user_part)
-		if(SEND_SIGNAL(user, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, target, user_part, TRUE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
-			return TRUE
-
-	var/target_part = action.target_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
-	if(target && (action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_TARGET) && target_part)
-		if(SEND_SIGNAL(target, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, user, target_part, FALSE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
-			return TRUE
-
-	return FALSE
 
 /datum/sex_controller/proc/chastity_content_enabled_for(mob/living/carbon/human/H)
-	var/modular_result = modular_chastity_content_enabled_for(H)
-	if(!isnull(modular_result))
-		return modular_result
-
 	if(!H)
 		return FALSE
 	if(!H.client?.prefs)
@@ -1472,10 +1473,6 @@
 	return !!H.client.prefs.chastenable
 
 /datum/sex_controller/proc/chastity_content_enabled_for_pair()
-	var/modular_result = modular_chastity_content_enabled_for_pair()
-	if(!isnull(modular_result))
-		return modular_result
-
 	if(!chastity_content_enabled_for(user))
 		return FALSE
 	if(target && target != user && !chastity_content_enabled_for(target))

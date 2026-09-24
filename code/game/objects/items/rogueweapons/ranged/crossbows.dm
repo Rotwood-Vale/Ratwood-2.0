@@ -206,7 +206,7 @@
 	max_integrity = 80
 	damfactor = 1 // Lower than starting
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/aalloy
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/ancient
 	name = "ancient crossbow"
 	desc = "A deadly weapon from another tyme, which shoots a bolt with terrific power. Unlike the common bow, it \
 	uses a sophisticated mechanism to renock - and retain - its half-length bolts; a matter that relies more on raw \
@@ -289,7 +289,7 @@
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR - 0.45 //Reduces integrity damage modifier to +15%.
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/paalloy
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/ancient
 	name = "ancient siegebow"
 	desc = "A heavier weight crossbow from another tyme - the basis of a mounted ballista, made fit for handheld \
 	usage. Integrated just beneath the stock is a windlass mechanism, necessary to surmount the siegebow's titanic \
@@ -327,7 +327,6 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
 	chargingspeed = 60//+20
 	reloadtime = 6 SECONDS//From 8 seconds to 6, this way it's atleast usable in a fight, otherwise Arbalist is just better switching to a normal crossbow.
-	hasloadedsprite = TRUE
 	penfactor = 1.5//We want this to go through, no matter what, effectively.
 
 /obj/item/ammo_box/magazine/internal/shot/heavy_xbow

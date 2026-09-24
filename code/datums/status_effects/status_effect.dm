@@ -213,6 +213,8 @@
 // applies a given status effect to this mob, returning the effect if it was successful
 /mob/living/proc/apply_status_effect(effect, ...)
 	. = FALSE
+	if(QDELETED(src)) // our status effects have already been cleared, a new one would just hang a ref on us
+		return
 	LAZYINITLIST(status_effects)
 	if(!length(status_effects_by_id))
 		status_effects_by_id = alist()

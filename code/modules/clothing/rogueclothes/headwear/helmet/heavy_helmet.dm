@@ -11,7 +11,11 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
-	armor_class = ARMOR_CLASS_MEDIUM	//Heavy helmets require at least medium armor training. Stops no-armor training plate-headgear users.
+	armor_class = ARMOR_CLASS_MEDIUM	//Not a wearing requirement. check_armor_skill() ignores the head slot, this only feeds highest_ac_worn().
+
+/obj/item/clothing/head/roguetown/helmet/heavy/ComponentInitialize()
+	..()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bronze
 	name = "bronze barbute"
@@ -74,7 +78,7 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/ancient/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
@@ -103,7 +107,7 @@
 /obj/item/clothing/head/roguetown/helmet/ancient/decrepit/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
@@ -206,6 +210,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -223,7 +228,7 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
@@ -343,6 +348,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -363,7 +369,7 @@
 		altdetail_color = GLOB.colorlist[choicealt]
 		altdetail_tag = "_detailalt"
 		if(choicealt in GLOB.pridelist)
-			detail_tag = "_detailp"
+			altdetail_tag = "_detailaltp"
 		update_icon()
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
@@ -373,17 +379,32 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
 	if(get_altdetail_tag())
-		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][altdetail_tag]"))
 		pic2.appearance_flags = RESET_COLOR
 		if(get_altdetail_color())
 			pic2.color = get_altdetail_color()
 		add_overlay(pic2)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/snouted
+	name = "snouted armet"
+	icon_state = "armet_s"
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron
+	name = "iron armet"
+	desc = "Holy lamb, sacrificial hero, blessed idiot - Psydon endures. Will you endure alongside Him, as a knight of humenity, or crumble before temptation?"
+	icon_state = "iarmet"
+	smeltresult = /obj/item/ingot/iron
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron/snouted
+	name = "iron snouted armet"
+	icon_state = "iarmet_s"
 
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold
@@ -424,7 +445,7 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
@@ -444,6 +465,7 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/xylixhelm/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_JINGLE_BELLS, 2)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm
 	name = "astrata helmet"
@@ -502,6 +524,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -531,13 +554,13 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
 	if(get_altdetail_tag())
-		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][altdetail_tag]"))
 		pic2.appearance_flags = RESET_COLOR
 		if(get_altdetail_color())
 			pic2.color = get_altdetail_color()
@@ -599,6 +622,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/ordinatorhelm/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/ordinatorhelm/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -697,7 +721,7 @@
 	desc = "A boiled leather cap, crowned with steel and veiled with His cross. Fear not - He will show you the way, and He will see your blows well-struck."
 	icon_state = "psysallet"
 	item_state = "psysallet"
-	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR
 	adjustable = CAN_CADJUST
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
 	smeltresult = /obj/item/ingot/silver
@@ -713,6 +737,12 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
+
+/obj/item/clothing/head/roguetown/helmet/heavy/nochelm/snouted
+	name = "snouted noc helmet"
+	desc = "Headwear commonly worn by Templars in service to Noc, its brow drawn forward to seat a snout. Without the night there can be no day; without Noc there can be no light in the dark hours."
+	icon_state = "nochelm_s"
+	item_state = "nochelm_s"
 
 /obj/item/clothing/head/roguetown/helmet/heavy/necrahelm
 	name = "necra helmet"
@@ -812,6 +842,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/puritan
 	name = "volfskulle bascinet"
@@ -850,6 +881,9 @@
 	adjustable = CANT_CADJUST
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
 	smeltresult = /obj/item/ingot/silver
+
+/obj/item/clothing/head/roguetown/helmet/heavy/volfplate/psydonic/ComponentInitialize()
+	return	//deliberately skips the parent's adjustable_clothing, this visor doesn't lift
 
 /obj/item/clothing/head/roguetown/helmet/heavy/elven_helm
 	name = "woad elven helm"
@@ -947,7 +981,7 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[get_detail_state(icon_state)][detail_tag]"))
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
@@ -1103,6 +1137,17 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/captain/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+
+/obj/item/clothing/head/roguetown/helmet/heavy/captain/sallet
+	name = "captain's snouted sallet"
+	desc = "An elegant sallet, fitted with the gold trim and polished metal of nobility. Its bevor is drawn forward into a muzzle."
+	icon_state = "capsallet_s"
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR
+
+/obj/item/clothing/head/roguetown/helmet/heavy/captain/bascinet
+	name = "captain's snouted bascinet"
+	desc = "An elegant bascinet, fitted with the gold trim and polished metal of nobility. Its visor tapers into a muzzle."
+	icon_state = "capbascinet_s"
 
 /obj/item/clothing/head/roguetown/helmet/heavy/mimic
 	name = "Symbol of Avarice"
