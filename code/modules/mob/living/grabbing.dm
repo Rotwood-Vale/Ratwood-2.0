@@ -99,6 +99,14 @@
 				D.grabdropped(src)
 		handaction = null
 
+/obj/item/grabbing/proc/update_grabbed_spell_hud()
+	if(sublimb_grabbed != BODY_ZONE_PRECISE_MOUTH)
+		return
+	if(!iscarbon(grabbed))
+		return
+	var/mob/living/carbon/C = grabbed
+	C.update_action_buttons_icon()
+
 /obj/item/grabbing/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	if(isobj(grabbed))
@@ -119,6 +127,7 @@
 			if(part)
 				var/released_held_index = part.held_index
 				LAZYREMOVE(part.grabbedby, src)
+				update_grabbed_spell_hud()
 				carbonmob.update_hud_hand_slot(released_held_index)
 				carbonmob.mark_zone_selector_hud_dirty()
 				part = null
@@ -130,6 +139,7 @@
 			grabbee.l_grab = null
 		if(grabbee.mouth == src)
 			grabbee.mouth = null
+			grabbee.update_action_buttons_icon()
 		grabbee = null
 	for(var/datum/D in dependents)
 		D.grabdropped(src)

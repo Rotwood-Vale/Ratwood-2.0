@@ -434,6 +434,14 @@
 	desc = "You've been smacked on the head very hard. Which way is left, again?"
 	icon_state = "dazed"
 
+/// wrestler verison of daze////
+/datum/status_effect/debuff/dazed/stunner
+	id = "discombobulated"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed
+	effectedstats = list(STATKEY_CON = -2, STATKEY_INT = -2)
+	duration = 15 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
 /datum/status_effect/debuff/cold
 	id = "Frostveiled"
 	alert_type =  /atom/movable/screen/alert/status_effect/debuff/cold
@@ -1242,8 +1250,8 @@
 	desc = "A terrible sweetness floods my senses."
 	icon_state = "vampirebite"
 
-/datum/status_effect/debuff/malodorous_stink
-	id = "malodorous_stink"
+/datum/status_effect/debuff/redolent_stink
+	id = "redolent_stink"
 	duration = 999 MINUTES
 	alert_type = null
 
@@ -1254,18 +1262,67 @@
 /datum/status_effect/debuff/stinky_contact
 	id = "stinky_contact"
 	duration = 15 MINUTES
+	tick_interval = 5 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/stinky_contact
+	var/scent_type = "Gross"
+	var/scent = ""
+	var/last_aura_tick = 0
+
+/datum/status_effect/debuff/stinky_contact/on_creation(mob/living/new_owner, inherited_scent_type = "Gross", inherited_scent = "")
+	set_inherited_scent(inherited_scent_type, inherited_scent)
+	return ..()
+
+/datum/status_effect/debuff/stinky_contact/refresh(mob/living/new_owner, inherited_scent_type = "Gross", inherited_scent = "")
+	set_inherited_scent(inherited_scent_type, inherited_scent)
+	if(owner)
+		process_inherited_scent(TRUE)
+	return ..()
+
+/datum/status_effect/debuff/stinky_contact/proc/set_inherited_scent(inherited_scent_type, inherited_scent)
+	scent_type = inherited_scent_type
+	scent = inherited_scent
+	last_aura_tick = 0
 
 /datum/status_effect/debuff/stinky_contact/on_apply()
 	. = ..()
-	to_chat(owner, span_warning("I reek of someone else's stench now."))
-	if(!owner.has_flaw(/datum/charflaw/malodorous) && !HAS_TRAIT(owner, TRAIT_NOSTINK) && owner.can_smell())
-		owner.add_stress(/datum/stressevent/stinky_contact)
+	if(scent_type == "Pleasant")
+		to_chat(owner, span_notice("I share someone else's pleasant scent now!"))
+	else if(scent_type == "Neutral")
+		to_chat(owner, span_notice("I stink of someone else now..."))
+	else
+		to_chat(owner, span_warning("I reek of someone else's stench now...ew..."))
+	process_inherited_scent(TRUE)
+
+/datum/status_effect/debuff/stinky_contact/tick()
+	process_inherited_scent()
+
+/datum/status_effect/debuff/stinky_contact/proc/process_inherited_scent(force = FALSE)
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	if(!H.can_smell())
+		H.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
+		return
+	if(scent_type != "Pleasant")
+		if(!H.has_status_effect(/datum/status_effect/debuff/redolent_stink))
+			H.apply_status_effect(/datum/status_effect/debuff/redolent_stink)
+	else if(H.has_status_effect(/datum/status_effect/debuff/redolent_stink))
+		H.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
+	if(!force && world.time < last_aura_tick + redolent_aura_tick_delay(scent_type))
+		return
+	last_aura_tick = world.time
+	redolent_visual_effect(H, scent_type)
+	redolent_stink_aura(H, scent_type)
 
 /datum/status_effect/debuff/stinky_contact/on_remove()
-	to_chat(owner, span_notice("The stink finally fades off me."))
-	owner.remove_stress(/datum/stressevent/stinky_contact)
+	to_chat(owner, span_notice("The lingering scent finally fades off me."))
+	if(!HAS_TRAIT(owner, TRAIT_REDOLENT))
+		owner.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
 	return ..()
+
+/datum/status_effect/debuff/stinky_contact/proc/get_examine_text()
+	return redolent_examine_text(scent_type, scent)
 
 /atom/movable/screen/alert/status_effect/debuff/stinky_contact
 	name = "Musked"

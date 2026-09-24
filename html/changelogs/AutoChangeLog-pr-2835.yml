@@ -1,6 +1,0 @@
-author: "RadiantFlash7"
-delete-after: True
-changes:
-  - rscadd: "Added Arcyne Silver dagger to Merchant silver/goldface Magic Category"
-  - rscdel: "Removed silver daggers from Merchant silver/goldface catalogue"
-  - balance: "Arycne Silver Daggers no longer return silver ore on smelting"
