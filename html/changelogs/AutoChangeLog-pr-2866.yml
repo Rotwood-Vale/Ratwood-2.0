@@ -1,0 +1,4 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - bugfix: "bladed weapons no longer magically become fully sharpened when you drop them"
