@@ -47,6 +47,16 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 	var/rammed = FALSE
 	var/heavy = FALSE//Can this fire anywhere, as opposed to exclusively within 124 tiles?
 
+/obj/structure/bombard/proc/shell_apex(obj/item/cannonball/cannonball, turf/T)
+	playsound(T, 'sound/combat/bombard/mortar_long_whistle.ogg', 80, TRUE)
+	T.loud_message("The whistle of a bombard shell can be heard above", hearing_distance = 12)//An acceptable range, m'lord.
+	addtimer(CALLBACK(src, PROC_REF(shell_impact), cannonball, T), 45) //Must go down
+
+/obj/structure/bombard/proc/shell_impact(obj/item/cannonball/cannonball, turf/T)
+	cannonball.detonate(T)
+	qdel(cannonball)
+	firing = 0
+
 //TODO change bombard fluff and desc - I never did this. Whoops!!! - Carl
 /obj/structure/bombard/fixed
 	name = "heavy bombard"
@@ -292,13 +302,7 @@ Also this is later going to the siege mode. But for now, brigands. Woohoo!!!!
 
 			for(var/mob/M in range(7))
 				shake_camera(M, 3, 1)
-			spawn(travel_time) //What goes up
-				playsound(T, 'sound/combat/bombard/mortar_long_whistle.ogg', 80, TRUE)
-				T.loud_message("The whistle of a bombard shell can be heard above", hearing_distance = 12)//An acceptable range, m'lord.
-				spawn(45) //Must go down
-					cannonball.detonate(T)
-					qdel(cannonball)
-					firing = 0
+			addtimer(CALLBACK(src, PROC_REF(shell_apex), cannonball, T), travel_time) //What goes up
 
 			var/msg = "[key_name(user)] fired a bombard, aiming at: X[xinput], Y[yinput], Z[zdial] | (Offset: X[xdial], Y[ydial])"
 			message_admins(msg)

@@ -123,6 +123,7 @@ LICH SKELETONS
 
 	H.energy = H.max_energy
 
+
 // Ranged goon w/ a dumb bow. Ranger, what else is there to say.
 /datum/advclass/greater_skeleton/lich/ballistiares
 	name = "Ancient Ballistiares"

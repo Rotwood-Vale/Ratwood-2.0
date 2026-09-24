@@ -1,4 +1,0 @@
-author: "Ephemeralis"
-delete-after: True
-changes:
-  - balance: "Psyaltrist now has proper devotion regeneration for a T2 miracle class. (250 -> 400 max devotion, 0.1 (weak) -> 0.5 (minor) regen)"
