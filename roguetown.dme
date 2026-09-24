@@ -3091,6 +3091,10 @@
 #include "code\modules\spells\spell_types\wizard\utility\recall.dm"
 #include "code\modules\spells\spell_types\wizard\utility\summon_weapon.dm"
 #include "code\modules\spells\spell_types\wizard\utility\woundclosure.dm"
+#include "code\modules\spells\spell_types\wrestling\chokeslam.dm"
+#include "code\modules\spells\spell_types\wrestling\dropkick.dm"
+#include "code\modules\spells\spell_types\wrestling\headbutt.dm"
+#include "code\modules\spells\spell_types\wrestling\stunner.dm"
 #include "code\modules\status\roundend.dm"
 #include "code\modules\status\roundstart.dm"
 #include "code\modules\status\statusfile.dm"
@@ -3530,4 +3534,5 @@
 #include "modular_rmh\code\modules\clothing\vladegeg\armor\druid.dm"
 #include "modular_rmh\code\modules\mob\dead\body_markings\body_markings.dm"
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
+#include "modular_twilight_axis\code\modules\bildings\blueprint_planner.dm"
 // END_INCLUDE
