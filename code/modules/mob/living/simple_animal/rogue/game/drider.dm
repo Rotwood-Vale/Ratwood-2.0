@@ -27,14 +27,9 @@
 	STASTR = 10
 	tame = FALSE
 	food_type = list(
-		/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/fatty,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/bacon,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/spider,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/crab,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/poultry,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit,
+		/obj/item/reagent_containers/food/snacks/rogue/meat,
+		/obj/item/reagent_containers/food/snacks/rogue/meat_rotten,
+		/obj/item/organ,
 		/obj/item/reagent_containers/food/snacks/rogue/truffles,
 		/obj/item/reagent_containers/food/snacks/grown/apple,
 	)
@@ -50,6 +45,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/drider/Initialize(mapload)
 	. = ..()
+	food_typecache -= typesof(/obj/item/organ/brain)//no round removing someone with your spider
 	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOFALLDAMAGE2, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOFIRE, TRAIT_GENERIC)

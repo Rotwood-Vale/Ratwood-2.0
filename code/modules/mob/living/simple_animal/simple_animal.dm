@@ -353,8 +353,9 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		..()
 		return
 	else
-		if(can_saddle && istype(O, /obj/item/reagent_containers/food/snacks/grown/apple) && has_status_effect(/datum/status_effect/buff/mount_apple_healing))
-			to_chat(user, span_warning("[src] is still chewing on the last apple! Try again in a few seconds when they look hungry."))
+		var/healing_food = can_saddle && (istype(O, /obj/item/reagent_containers/food/snacks/grown/apple) || istype(src, /mob/living/simple_animal/hostile/retaliate/rogue/drider))//driders should heal from meat
+		if(healing_food && has_status_effect(/datum/status_effect/buff/mount_apple_healing))
+			to_chat(user, span_warning("[src] is still chewing on its last meal! Try again in a few seconds when they look hungry."))
 			return
 		if(!stat)
 			user.visible_message(span_info("[user] hand-feeds [O] to [src]."), span_notice("I hand-feed [O] to [src]."))
@@ -362,7 +363,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			qdel(O)
 			food = min(food + 30, 100)
 			adjustHealth(-rand(10,20))
-			if(can_saddle && istype(O, /obj/item/reagent_containers/food/snacks/grown/apple))
+			if(healing_food)
 				apply_status_effect(/datum/status_effect/buff/mount_apple_healing, 1)
 				if(istype(src, /mob/living/simple_animal/hostile/retaliate))
 					var/mob/living/simple_animal/hostile/retaliate/retaliating_mount = src
