@@ -399,6 +399,14 @@
 	converted_type = /area/rogue/outdoors/exposed/dwarf
 	detail_text = DETAIL_TEXT_AZUREAN_GUILD_OF_CRAFT
 
+/area/rogue/indoors/town/engineerworkshop
+	name = "The Engineer's Workshop"
+	icon_state = "dwarfin"
+	droning_sound = 'sound/music/area/harbor.ogg'
+	droning_sound_dusk = null
+	droning_sound_night = null
+	first_time_text = "VALE ENGINEERS WORKSHOP"
+
 /area/rogue/indoors/town/dwarfin/rockhill
 	first_time_text = "Rockhill Guild of Crafts"
 
