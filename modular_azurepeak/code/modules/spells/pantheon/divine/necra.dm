@@ -128,24 +128,32 @@
 	desc = "The magicks that bind me into being are being disrupted! I should get away from the source as soon as I can!"
 	icon_state = "stressvb"
 
+/atom/movable/screen/alert/status_effect/churned_weak
+	name = "Disrupted Essence"
+	desc = "The ghostly mists are beginning to weaken my body."
+	icon_state = "stressvb"
+
+/atom/movable/screen/alert/status_effect/churned_strong
+	name = "Churning Essence"
+	desc = "The ghostly mists are violently disrupting my body!"
+	icon_state = "stressvb"
+
 /datum/status_effect/churned
 	id = "necra_churned"
 	alert_type = /atom/movable/screen/alert/status_effect/churned
-	duration = 30 SECONDS
+	duration = 45 SECONDS
 	examine_text = "<b>SUBJECTPRONOUN is wreathed in a wild frenzy of ghostly motes!</b>"
 	status_type = STATUS_EFFECT_REFRESH
 	var/datum/weakref/debuffer
 	var/outline_colour = "#33cabc"
 	var/base_tick = 0.2
 	var/intensity = 1
-	var/base_intensity = 1
 	var/range = 10
 	var/start_time
-	var/debuff_applied = FALSE
+	var/debuff_stage = 0
 
 /datum/status_effect/churned/on_creation(mob/living/new_owner, mob/living/caster, potency)
 	intensity = potency
-	base_intensity = potency
 	start_time = world.time
 	if (caster)
 		debuffer = WEAKREF(caster)
@@ -160,7 +168,7 @@
 
 /datum/status_effect/churned/refresh()
 	. = ..()
-	to_chat(owner, span_boldwarning("The mists intensify, the glowing wisps steadily gathering around my body..."))
+	to_chat(owner, span_boldwarning("The ghostly mists continue to cling to me!"))
 
 /datum/status_effect/churned/process()
 	. = ..()
@@ -179,45 +187,51 @@
 
 	var/time_inside = world.time - start_time
 
-	if (time_inside < 5 SECONDS)
+	if (time_inside < 15 SECONDS)
 		return
 
-	if (!debuff_applied)
-		debuff_applied = TRUE
-		owner.apply_status_effect(/datum/status_effect/churned_debuff)
-		to_chat(owner, span_boldwarning("The mists sink into my body, their chill beginning to disrupt my form!"))
+	if (time_inside < 30 SECONDS)
+		if (debuff_stage != 1)
+			owner.remove_status_effect(/datum/status_effect/churned_debuff/strong)
+			owner.apply_status_effect(/datum/status_effect/churned_debuff/weak)
+			debuff_stage = 1
+			to_chat(owner, span_warning("The mists begin to sap my strength!"))
 
-	var/new_intensity = base_intensity
-	if (time_inside >= 25 SECONDS)
-		new_intensity += 4
-	else if (time_inside >= 20 SECONDS)
-		new_intensity += 3
-	else if (time_inside >= 15 SECONDS)
-		new_intensity += 2
-	else if (time_inside >= 10 SECONDS)
-		new_intensity += 1
+		if (prob(33))
+			owner.adjustFireLoss(base_tick * intensity)
 
-	if (new_intensity > intensity)
-		intensity = new_intensity
-		to_chat(owner, span_boldwarning("The mists intensify, the glowing wisps steadily disrupting my body..."))
+	else
+		if (debuff_stage != 2)
+			owner.remove_status_effect(/datum/status_effect/churned_debuff/weak)
+			owner.apply_status_effect(/datum/status_effect/churned_debuff/strong)
+			debuff_stage = 2
+			to_chat(owner, span_boldwarning("The mists overwhelm my form, violently disrupting my body!"))
 
-	if (prob(33))
-		owner.adjustFireLoss(base_tick * intensity)
+		if (prob(33))
+			owner.adjustFireLoss(base_tick * (intensity + 1))
+
 	if (prob(10))
 		to_chat(owner, span_warning("A frenzy of ghostly motes assail my form!"))
 		owner.emote("scream")
 
 /datum/status_effect/churned/on_remove()
 	owner.remove_filter(CHURN_FILTER)
-	if (debuff_applied)
-		owner.remove_status_effect(/datum/status_effect/churned_debuff)
+	owner.remove_status_effect(/datum/status_effect/churned_debuff/weak)
+	owner.remove_status_effect(/datum/status_effect/churned_debuff/strong)
 
 /datum/status_effect/churned_debuff
-	id = "necra_churned_debuff"
 	duration = -1
-	alert_type = null
-	effectedstats = list(STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_WIL = -2, STATKEY_SPD = -2)
 	status_type = STATUS_EFFECT_REFRESH
+
+/datum/status_effect/churned_debuff/weak
+	id = "necra_churned_debuff_weak"
+	alert_type = /atom/movable/screen/alert/status_effect/churned_weak
+	effectedstats = list(STATKEY_STR = -1, STATKEY_CON = -1, STATKEY_WIL = -1, STATKEY_SPD = -1)
+
+/datum/status_effect/churned_debuff/strong
+	id = "necra_churned_debuff_strong"
+	alert_type = /atom/movable/screen/alert/status_effect/churned_strong
+	effectedstats = list(STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_WIL = -2, STATKEY_SPD = -2)
 
 #undef CHURN_FILTER
 
