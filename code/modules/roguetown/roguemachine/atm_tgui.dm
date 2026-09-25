@@ -64,36 +64,15 @@
 		"category" = poll_category || "",
 		"category_label" = poll_category ? SStreasury.get_poll_tax_category_pretty_name(poll_category) : "",
 	)
-	var/list/funds = list()
+	// Fund metadata (name/label) is static, but nothing here that gates access - the roster
+	// entries carry live can_manage/label/cap in ui_data below.
 	var/list/patron_rosters_static = list()
 	for(var/fid in ALL_FUND_IDS)
 		var/obj/structure/roguemachine/vaultbank/V = SStreasury.find_jawbank_for_fund_id(fid)
-		var/datum/fund/F = SStreasury.resolve_fund_by_id(fid)
-		if(!F)
-			continue
-		funds += list(list(
-			"id" = fid,
-			"label" = SStreasury.indenture_faction_label(F),
-			"name" = F.name,
-			"can_issue" = (V && V.can_issue_loan(user)) ? TRUE : FALSE,
-			"can_withdraw" = (V && V.can_withdraw(user)) ? TRUE : FALSE,
-			"can_view" = (V && V.can_view(user)) ? TRUE : FALSE,
-			"supports_loans" = V ? (V.supports_loans ? TRUE : FALSE) : TRUE,
-			"allow_zero_rate" = (V && (0 in V.allowed_rates())) ? TRUE : FALSE,
-			"authority_label" = V ? V.get_authority_label() : "",
-			"withdraw_rule" = V ? V.get_withdraw_rule_text() : "",
-			"has_patronage" = (V && !isnull(V.get_patronage_writ_path())) ? TRUE : FALSE,
-			"patron_label" = V ? V.get_patron_label() : "",
-			"patron_cap" = V ? V.get_patron_cap() : 0,
-		))
 		if(V && !isnull(V.get_patronage_writ_path()))
 			patron_rosters_static[fid] = list(
-				"label" = V.get_patron_label(),
-				"cap" = V.get_patron_cap(),
-				"can_manage" = V.can_issue_loan(user) ? TRUE : FALSE,
 				"explanation" = V.get_patron_explanation(),
 			)
-	data["funds"] = funds
 	data["patron_rosters_static"] = patron_rosters_static
 	return data
 
@@ -118,6 +97,31 @@
 		)
 	else
 		data["active_loan"] = null
+
+	// Fund access flags are recomputed every poll so a lapsed cap, a revoked writ, or a
+	// suspended group can't leave a stale button the backend will then reject on click.
+	var/list/funds = list()
+	for(var/fid in ALL_FUND_IDS)
+		var/obj/structure/roguemachine/vaultbank/V = SStreasury.find_jawbank_for_fund_id(fid)
+		var/datum/fund/F = SStreasury.resolve_fund_by_id(fid)
+		if(!F)
+			continue
+		funds += list(list(
+			"id" = fid,
+			"label" = SStreasury.indenture_faction_label(F),
+			"name" = F.name,
+			"can_issue" = (V && V.can_issue_loan(user)) ? TRUE : FALSE,
+			"can_withdraw" = (V && V.can_withdraw(user)) ? TRUE : FALSE,
+			"can_view" = (V && V.can_view(user)) ? TRUE : FALSE,
+			"supports_loans" = V ? (V.supports_loans ? TRUE : FALSE) : TRUE,
+			"allow_zero_rate" = (V && (0 in V.allowed_rates())) ? TRUE : FALSE,
+			"authority_label" = V ? V.get_authority_label() : "",
+			"withdraw_rule" = V ? V.get_withdraw_rule_text() : "",
+			"has_patronage" = (V && !isnull(V.get_patronage_writ_path())) ? TRUE : FALSE,
+			"patron_label" = V ? V.get_patron_label() : "",
+			"patron_cap" = V ? V.get_patron_cap() : 0,
+		))
+	data["funds"] = funds
 
 	// Taxation 2 (ported): live poll data for the Poll Tax tab.
 	var/poll_category = SStreasury.get_poll_tax_category(H)
@@ -186,6 +190,22 @@
 	data["bathhouse_ordinance_available"] = TRUE
 	data["bathhouse_ordinance_active"] = SStreasury.bathhouse_ordinance_active ? TRUE : FALSE
 	data["bathhouse_tithe_round_total"] = SStreasury.round_bathhouse_tithe_total
+	// Bathhouse withdrawal terms (set by the Bathmaster): separate daily caps govern her
+	// workers and her agents, and payments to either group may be suspended outright. The
+	// viewer's remaining tally and suspension state follow whichever group they belong to.
+	data["bathhouse_worker_withdraw_limit"] = SStreasury.bathhouse_worker_daily_withdraw_limit
+	data["bathhouse_agent_withdraw_limit"] = SStreasury.bathhouse_agent_daily_withdraw_limit
+	data["bathhouse_worker_suspended"] = SStreasury.bathhouse_worker_withdrawals_suspended ? TRUE : FALSE
+	data["bathhouse_agent_suspended"] = SStreasury.bathhouse_agent_withdrawals_suspended ? TRUE : FALSE
+	data["bathhouse_withdraw_remaining"] = 0
+	data["bathhouse_viewer_suspended"] = FALSE
+	data["is_bathmaster"] = (H.job == "Bathmaster") ? TRUE : FALSE
+	var/obj/structure/roguemachine/vaultbank/VB = SStreasury.find_jawbank_for_fund_id("bathhouse")
+	if(istype(VB, /obj/structure/roguemachine/vaultbank/bathhouse))
+		var/obj/structure/roguemachine/vaultbank/bathhouse/BH = VB
+		if(!data["is_bathmaster"] && BH.has_capped_access(H))
+			data["bathhouse_withdraw_remaining"] = BH.get_withdraw_remaining(H)
+			data["bathhouse_viewer_suspended"] = BH.are_withdrawals_suspended_for(H) ? TRUE : FALSE
 	var/bh_cooldown_left_ds = max(0, SStreasury.bathhouse_ordinance_next_toggle_time - world.time)
 	data["bathhouse_ordinance_cooldown_seconds"] = round(bh_cooldown_left_ds / 10)
 
@@ -200,11 +220,13 @@
 			var/list/roster_data = list()
 			var/list/roster = V.get_patron_roster()
 			if(islist(roster))
+				V.prune_patron_roster(roster)
 				for(var/mob/living/carbon/human/HP in roster)
-					if(QDELETED(HP))
-						continue
 					roster_data += list(list("ref" = REF(HP), "name" = HP.real_name, "job" = HP.job || ""))
 			patron_rosters[fid] = list(
+				"label" = V.get_patron_label(),
+				"cap" = V.get_patron_cap(),
+				"can_manage" = V.can_issue_loan(user) ? TRUE : FALSE,
 				"patrons" = roster_data,
 			)
 	data["patron_rosters"] = patron_rosters
@@ -239,6 +261,18 @@
 			return TRUE
 		if("withdraw_institutional")
 			handle_withdraw_institutional(H, params)
+			SStgui.update_uis(src)
+			return TRUE
+		if("deposit_institutional")
+			handle_deposit_institutional(H, params)
+			SStgui.update_uis(src)
+			return TRUE
+		if("set_bathhouse_limit")
+			handle_set_bathhouse_limit(H, params)
+			SStgui.update_uis(src)
+			return TRUE
+		if("toggle_bathhouse_suspension")
+			handle_toggle_bathhouse_suspension(H, params)
 			SStgui.update_uis(src)
 			return TRUE
 		if("issue_personal")
@@ -410,6 +444,68 @@
 		to_chat(H, span_warning("You are not authorised to withdraw from [V.get_patron_label() || V.get_faction_label()]."))
 		return
 	V.disburse(H, params)
+
+/// Moves coin from the viewer's personal nervelock account into an institution's fund.
+/// Currently only the Bathhouse opens its coffers to employee deposits.
+/obj/structure/roguemachine/atm/proc/handle_deposit_institutional(mob/living/carbon/human/H, list/params)
+	var/fund_id = "[params["fund_id"]]"
+	var/obj/structure/roguemachine/vaultbank/V = SStreasury.find_jawbank_for_fund_id(fund_id)
+	if(!V)
+		to_chat(H, span_warning("That institution has no coffers to render unto."))
+		return
+	if(!istype(V, /obj/structure/roguemachine/vaultbank/bathhouse))
+		to_chat(H, span_warning("[V.get_faction_label()] does not accept deposits through this panel."))
+		return
+	var/obj/structure/roguemachine/vaultbank/bathhouse/B = V
+	if(!B.can_view(H))
+		to_chat(H, span_warning("You are not employed by the Bathhouse."))
+		return
+	B.deposit_to_fund(H, params)
+
+/// Lets the Bathmaster set the per-day withdrawal caps - workers and agents each have
+/// their own, chosen via the "group" param.
+/obj/structure/roguemachine/atm/proc/handle_set_bathhouse_limit(mob/living/carbon/human/H, list/params)
+	if(H.job != "Bathmaster")
+		to_chat(H, span_warning("Only the Bathmaster may set the terms of employment."))
+		return
+	var/group = "[params["group"]]"
+	if(group != "worker" && group != "agent")
+		return
+	var/limit = round(text2num("[params["amount"]]"))
+	if(isnull(limit) || limit < 0)
+		return
+	limit = min(limit, 10000)
+	if(group == "worker")
+		SStreasury.bathhouse_worker_daily_withdraw_limit = limit
+		say("Workers of the Bathhouse may now draw up to [limit]m per dae.")
+	else
+		SStreasury.bathhouse_agent_daily_withdraw_limit = limit
+		say("Agents of the Bathhouse may now draw up to [limit]m per dae.")
+	playsound(src, 'sound/misc/beep.ogg', 60, FALSE, -1)
+	log_admin("BATHHOUSE LIMIT: [key_name(H)] set the [group] daily withdrawal limit to [limit]m.")
+	message_admins("[key_name_admin(H)] set the Bathhouse [group] daily withdrawal limit to [limit]m.")
+
+/// Lets the Bathmaster suspend (or resume) all withdrawals for either her workers or her
+/// agents, chosen via the "group" param. Suspended groups keep their tallies and caps -
+/// payments simply stop until resumed.
+/obj/structure/roguemachine/atm/proc/handle_toggle_bathhouse_suspension(mob/living/carbon/human/H, list/params)
+	if(H.job != "Bathmaster")
+		to_chat(H, span_warning("Only the Bathmaster may set the terms of employment."))
+		return
+	var/group = "[params["group"]]"
+	if(group != "worker" && group != "agent")
+		return
+	var/state
+	if(group == "worker")
+		SStreasury.bathhouse_worker_withdrawals_suspended = !SStreasury.bathhouse_worker_withdrawals_suspended
+		state = SStreasury.bathhouse_worker_withdrawals_suspended ? "suspended" : "resumed"
+	else
+		SStreasury.bathhouse_agent_withdrawals_suspended = !SStreasury.bathhouse_agent_withdrawals_suspended
+		state = SStreasury.bathhouse_agent_withdrawals_suspended ? "suspended" : "resumed"
+	playsound(src, 'sound/misc/beep.ogg', 60, FALSE, -1)
+	say("Payments to Bathhouse [group]s [state].")
+	log_admin("BATHHOUSE SUSPENSION: [key_name(H)] [state] [group] withdrawals.")
+	message_admins("[key_name_admin(H)] [state] Bathhouse [group] withdrawals.")
 
 /obj/structure/roguemachine/atm/proc/handle_issue_personal_for_fund(mob/living/carbon/human/H, list/params)
 	var/fund_id = "[params["fund_id"]]"

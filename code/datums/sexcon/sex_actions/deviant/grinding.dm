@@ -1,7 +1,6 @@
 /datum/sex_action/grind_body
 	name = "Grind against them"
 	check_same_tile = FALSE
-	subtle_supported = TRUE
 
 /datum/sex_action/grind_body/can_perform(mob/living/user, mob/living/target)
 	if(!(. = ..()))

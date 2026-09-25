@@ -34,8 +34,6 @@
 	var/frenzy_chance_boost = 10
 	var/humanity = 7
 
-	var/potence_weapon_buff = 0
-
 	/// List of covens this mob possesses
 	var/list/datum/coven/covens
 	var/datum/clan_menu_interface/clan_menu_interface
@@ -48,6 +46,27 @@
 
 /mob/living/proc/is_kindred()
 	return !isnull(mind?.has_antag_datum(/datum/antagonist/vampire))
+
+/// Full-antagonists only, and supernatural ones only too.
+/// Yes, Gnolls aren't immune. They can just use cmode, but this gives hunted vampires a card to play to maybe get (1/2 free escapes)
+///
+/// Again, do not give it to virtues. Not blackblooded, not rotcured. Period. This is your quiet take-a-person-down unsuspectingly immunity list.
+/// If you want protection get a silver cross. Do not give people inherent and unexplainable protection, period. Not even constructs/reverents,
+/// it doesn't need to make sense or realistic here. Its a mechanical nessessity.
+/mob/living/proc/is_immune_to_vampire_domination()
+	if(!mind)
+		return FALSE
+	if(mind.has_antag_datum(/datum/antagonist/vampire))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/zombie))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/skeleton))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/werewolf))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/lich))
+		return TRUE
+	return FALSE
 
 /mob/living/proc/is_clanmate(mob/living/other)
 	if(isnull(clan) || isnull(other?.clan))
