@@ -154,6 +154,7 @@
 
 	var/list/virtue_restrictions
 	var/list/vice_restrictions
+	var/list/quirk_restrictions
 
 	///The job's stats
 	var/list/job_stats
@@ -173,6 +174,9 @@
 
 	///The social rank of the job, determines the examine text when examining others or being examined
 	var/social_rank = SOCIAL_RANK_DIRT
+
+	///Whether or not a job should grant a player their preference virtues
+	var/no_virtue = FALSE
 
 /datum/job/proc/special_job_check(mob/dead/new_player/player)
 	return TRUE
@@ -208,6 +212,8 @@
 	if(job_traits)
 		for(var/trait in job_traits)
 			ADD_TRAIT(H, trait, JOB_TRAIT)
+		if(H.client && (HAS_TRAIT(H, TRAIT_MEDIUMARMOR) || HAS_TRAIT(H, TRAIT_HEAVYARMOR)))
+			H.def_intent_change(INTENT_PARRY)
 
 	if(!ishuman(H))
 		return
@@ -239,8 +245,19 @@
 
 		if(H.mind)
 			H.mind?.special_items["Pouch of Coins"] = /obj/item/storage/belt/rogue/pouch/coins/readyuppouch
-
+			if (HAS_TRAIT(H, TRAIT_MEDIUMARMOR) || HAS_TRAIT(H, TRAIT_HEAVYARMOR))
+				H.mind?.special_items["Metal Scrap (Repair kit)"] = /obj/item/repair_kit/metal/bad
+			else
+				H.mind?.special_items["Fabric Patch (Repair kit)"] = /obj/item/repair_kit/bad
 		to_chat(M, span_notice("Rising early, you made sure to pack a pouch of coins in your stash and eat a hearty breakfast before starting your day. A true TRIUMPH!"))
+
+	if(HAS_TRAIT(H, TRAIT_EXPLOSIVE_SUPPLY))
+		H.mind.has_bomb = TRUE
+		to_chat(H.mind, span_smallnotice("I need to check on HERMES. I think a new package has arrived."))
+
+	if(HAS_TRAIT(H, TRAIT_DRUG_SUPPLY))
+		H.mind.has_drug_delivery = TRUE
+		to_chat(H.mind, span_smallnotice("The Guild left something for me. I should check HERMES for my delivery."))
 
 	if(H.islatejoin && announce_latejoin)
 		var/used_title = display_title || title
@@ -251,11 +268,11 @@
 	if(give_bank_account)
 		if(give_bank_account > 1)
 			SStreasury.create_bank_account(H, give_bank_account)
-			if(noble_income)
-				SStreasury.noble_incomes[H] = noble_income
-
 		else
 			SStreasury.create_bank_account(H)
+		if(noble_income)
+			SStreasury.noble_incomes[H] = noble_income
+			SStreasury.grant_estate_income(H, noble_income, TRUE)
 
 	if(show_in_credits)
 		SScrediticons.processing += H
@@ -338,11 +355,6 @@
 		if((H.dna.species.id != "human") && (H.dna.species.id != "humen"))
 			H.set_species(/datum/species/human)
 			H.apply_pref_name("human", preference_source)
-	if(!visualsOnly)
-		var/datum/bank_account/bank_account = new(H.real_name, src)
-		bank_account.payday(STARTING_PAYCHECKS, TRUE)
-		H.account_id = bank_account.account_id
-
 	//Equip the rest of the gear
 	H.dna.species.before_equip_job(src, H, visualsOnly)
 	H.apply_organ_stuff() // apply super special sauce organ stuff when we spawn in, and therefore have MIND
@@ -404,7 +416,7 @@
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)//gives the desert language to all the desert people!
 	. = ..()
-	if(SSmapping.config.map_name == "Desert Town" && !(HAS_TRAIT(H, TRAIT_OUTLANDER)))
+	if(SSmapping.current_map.map_name == "Desert Town" && !(HAS_TRAIT(H, TRAIT_OUTLANDER)))
 		H.grant_language(/datum/language/celestial)
 
 /datum/outfit/job
@@ -485,11 +497,17 @@
 		var/list/dat = list()
 		var/show_job_traits = TRUE
 		var/sclass_count = 0
+		var/list/subclasses_to_show = job_subclasses
+		if(!length(subclasses_to_show) && length(advclass_cat_rolls))
+			subclasses_to_show = list()
+			for(var/ctag in advclass_cat_rolls)
+				for(var/datum/advclass/ctag_class as anything in SSrole_class_handler.sorted_class_categories[ctag])
+					subclasses_to_show += ctag_class.type
 		if(length(job_subclasses) && length(job_stats))
 			CRASH("[REF(src)] has definitions for both class and subclass stats. Likely not intended, and they will stack!")
-		if(length(job_subclasses))
+		if(length(subclasses_to_show))
 			dat += "This class has the following subclasses: "
-			for(var/sclass in job_subclasses)
+			for(var/sclass in subclasses_to_show)
 				sclass_count++
 				var/datum/advclass/adv = sclass
 				var/datum/advclass/adv_ref = SSrole_class_handler.get_advclass_by_name(initial(adv.name))
@@ -602,23 +620,6 @@
 		popup.open(FALSE)
 		if(winexists(usr, "classhelp"))
 			winset(usr, "classhelp", "focus=true")
-	if(href_list["jobsubclassinfo"])
-		var/list/dat = list()
-		for(var/adv in job_subclasses)
-			var/datum/advclass/advpath = adv
-			var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(advpath.name))
-			if(subclass.maximum_possible_slots != -1)
-				dat += "[subclass.name] — <b>"
-				if(subclass.total_slots_occupied >= subclass.maximum_possible_slots)
-					dat += "FULL!"
-				else
-					dat += "[subclass.total_slots_occupied] / [subclass.maximum_possible_slots]"
-				dat += "</b><br>"
-		var/datum/browser/popup = new(usr, "subclassslots", "<div style='text-align: center'>[title]</div>", nwidth = 200, nheight = 300)
-		popup.set_content(dat.Join())
-		popup.open(FALSE)
-		if(winexists(usr, "subclassslots"))
-			winset(usr, "subclassslots", "focus=true")
 	. = ..()
 
 /datum/job/proc/has_limited_subclasses()

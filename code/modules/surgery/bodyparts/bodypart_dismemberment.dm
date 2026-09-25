@@ -95,8 +95,15 @@
 			C.visible_message(span_danger("<B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B>"))
 	else
 		C.visible_message(span_danger("<B>The [src.name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
-	if(!HAS_TRAIT(C, TRAIT_NOPAIN))
-		C.emote("painscream")
+	//past the two stage decapitation returns, so a first stage neck sever is not logged as a limb loss;
+	//the casterless branch is player-only or NPC mobs eating a body would spam it
+	if(user)
+		log_combat(user, C, "dismembered", null, "([src.name])", severe = TRUE)
+	else if(C.client || C.mind)
+		C.log_message("has lost their [src.name] to dismemberment", LOG_ATTACK, color = LOG_COLOR_SEVERE)
+
+	if(body_zone != BODY_ZONE_HEAD) // Sorry pal, no protagonist moment if it's your head flying off. Your ride ends here, mutie.
+		INVOKE_ASYNC(C, TYPE_PROC_REF(/mob/living/carbon, delimb_pain))
 	if(!(NOBLOOD in C.dna?.species?.species_traits) && !(INVISBLOOD in C.dna?.species?.species_traits)) //OV EDIT
 		add_mob_blood(C)
 	C.add_stress(/datum/stressevent/dismembered)
@@ -164,9 +171,7 @@
 	var/mob/living/carbon/C = owner
 	if(!dismemberable)
 		return FALSE
-	
 	// Admin dismember bypasses all armor and resistance checks
-	
 	if(C.status_flags & GODMODE)
 		return FALSE
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
@@ -218,8 +223,8 @@
 			C.visible_message(span_danger("<B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B>"))
 	else
 		C.visible_message(span_danger("<B>The [src.name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
-	if(!HAS_TRAIT(C, TRAIT_NOPAIN))
-		C.emote("painscream")
+	if(body_zone != BODY_ZONE_HEAD)
+		C.delimb_pain()
 	if(!(NOBLOOD in C.dna?.species?.species_traits))
 		add_mob_blood(C)
 	C.add_stress(/datum/stressevent/dismembered)
@@ -290,6 +295,7 @@
 	if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 		return FALSE
 	add_wound(/datum/wound/slash/disembowel)
+	C.delimb_pain()
 	return TRUE
 
 //limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
@@ -334,10 +340,12 @@
 	if(held_index)
 		was_owner.dropItemToGround(owner.get_item_for_held_index(held_index), force = TRUE)
 		was_owner.hand_bodyparts[held_index] = null
+		was_owner.update_action_buttons_icon()
 
 	if(organ_slowdown)
 		was_owner.remove_movespeed_modifier("[src.type]_slow", update = TRUE)
 	was_owner.bodyparts -= src
+	was_owner.bodyparts_by_zone -= body_zone
 	owner = null
 
 	if(ishuman(was_owner))
@@ -348,8 +356,10 @@
 
 	update_icon_dropped()
 	was_owner.update_health_hud() //update the healthdoll
+	was_owner.mark_zone_selector_hud_dirty()
 	was_owner.queue_icon_update(PENDING_UPDATE_BODY)
-	was_owner.update_mobility()
+	if(!special)
+		was_owner.update_mobility()
 
 	// drop_location = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 	if(!drop_location)
@@ -419,7 +429,7 @@
 		if(C.hud_used)
 			var/atom/movable/screen/inventory/hand/R = C.hud_used.hand_slots["[held_index]"]
 			if(R)
-				R.update_icon()
+				R.update_hand_vis()
 		if(C.gloves && (C.get_num_arms(FALSE) < 1))
 			C.dropItemToGround(C.gloves, force = TRUE)
 		C.update_inv_gloves() //to remove the bloody hands overlay
@@ -442,7 +452,7 @@
 		if(C.hud_used)
 			var/atom/movable/screen/inventory/hand/L = C.hud_used.hand_slots["[held_index]"]
 			if(L)
-				L.update_icon()
+				L.update_hand_vis()
 		if(C.gloves && (C.get_num_arms(FALSE) < 1))
 			C.dropItemToGround(C.gloves, force = TRUE)
 		C.update_inv_gloves() //to remove the bloody hands overlay
@@ -457,10 +467,10 @@
 	//OV edit end
 	if(C && !special)
 		if(C.legcuffed)
-			C.legcuffed.forceMove(C.drop_location()) //At this point bodypart is still in nullspace
-			C.legcuffed.dropped(C)
-			C.legcuffed = null
-			C.update_inv_legcuffed()
+			var/obj/item/W = C.legcuffed
+			C.set_legcuffed(null)
+			W.forceMove(C.drop_location()) //At this point bodypart is still in nullspace
+			W.dropped(C)
 		if(C.shoes && (C.get_num_legs(FALSE) < 1))
 			C.dropItemToGround(C.shoes, force = TRUE)
 		C.update_inv_shoes()
@@ -475,10 +485,10 @@
 	//OV edit end
 	if(C && !special)
 		if(C.legcuffed)
-			C.legcuffed.forceMove(C.drop_location())
-			C.legcuffed.dropped(C)
-			C.legcuffed = null
-			C.update_inv_legcuffed()
+			var/obj/item/W = C.legcuffed
+			C.set_legcuffed(null)
+			W.forceMove(C.drop_location())
+			W.dropped(C)
 		if(C.shoes && (C.get_num_legs(FALSE) < 1))
 			C.dropItemToGround(C.shoes, force = TRUE)
 		C.update_inv_shoes()
@@ -491,10 +501,10 @@
 		if(HAS_TRAIT_FROM(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR))
 			REMOVE_TRAIT(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR)
 		if(C.legcuffed)
-			C.legcuffed.forceMove(C.drop_location())
-			C.legcuffed.dropped(C)
-			C.legcuffed = null
-			C.update_inv_legcuffed()
+			var/obj/item/W = C.legcuffed
+			C.set_legcuffed(null)
+			W.forceMove(C.drop_location())
+			W.dropped(C)
 		if(C.shoes && (C.get_num_legs(FALSE) < 1))
 			C.dropItemToGround(C.shoes, force = TRUE)
 		C.update_inv_shoes()
@@ -518,6 +528,10 @@
 //		brainmob.ghostize(0)
 
 	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay
+
+	// Has to happen before ..(), the brain transfer inside it moves the mind to brainmob and nulls owner.mind
+	if(!special && owner?.mind)
+		owner.mind.severed_head_ref = WEAKREF(src)
 
 	name = "[owner.real_name]'s head"
 	. = ..()
@@ -546,6 +560,9 @@
 	moveToNullspace()
 	owner = C
 	C.bodyparts += src
+	if(C.bodyparts_by_zone[body_zone])
+		CRASH("Mob [C] already has a bodypart [C.bodyparts_by_zone[body_zone]] for zone [body_zone], can't add [src]!")
+	C.bodyparts_by_zone[body_zone] = src
 	if(src.body_zone == BODY_ZONE_TAUR)
 		ADD_TRAIT(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR)
 	if(held_index)
@@ -557,8 +574,9 @@
 		if(C.hud_used)
 			var/atom/movable/screen/inventory/hand/hand = C.hud_used.hand_slots["[held_index]"]
 			if(hand)
-				hand.update_icon()
+				hand.update_hand_vis()
 		C.update_inv_gloves()
+		C.update_action_buttons_icon()
 
 	if(special) //non conventional limb attachment
 		//if we had an ongoing surgery to attach a new limb, we stop it.
@@ -596,8 +614,10 @@
 	if(organ_slowdown)
 		C.add_movespeed_modifier("[src.type]_slow", update=TRUE, priority=100, flags=NONE, override=FALSE, multiplicative_slowdown=organ_slowdown, movetypes=GROUND, blacklisted_movetypes=NONE, conflict=FALSE)
 	C.updatehealth()
-	C.queue_icon_update(PENDING_UPDATE_BODY | PENDING_UPDATE_HAIR | PENDING_UPDATE_DAMAGE)	
-	C.update_mobility()
+	C.mark_zone_selector_hud_dirty()
+	C.queue_icon_update(PENDING_UPDATE_BODY | PENDING_UPDATE_HAIR | PENDING_UPDATE_DAMAGE)
+	if(!special)
+		C.update_mobility()
 	return TRUE
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/C, special)
@@ -629,6 +649,9 @@
 		C.real_name = real_name
 	real_name = ""
 	name = initial(name)
+
+	if(C.mind?.severed_head_ref?.resolve() == src)
+		C.mind.severed_head_ref = null
 
 	return ..()
 

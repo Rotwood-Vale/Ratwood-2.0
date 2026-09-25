@@ -1,6 +1,6 @@
 /obj/item/clothing/neck/roguetown/cursed_collar
 	name = "cursed collar"
-	always_show_examine_link = TRUE
+	always_show_examine_link = FALSE
 	desc = "A sinister looking collar with ruby studs. It seems to radiate a dark energy. \nLooks like you'd need someone else's help to take it off."
 	// Credit regarding sprites to Necbro
 	// https://github.com/StoneHedgeSS13/StoneHedge/commit/9ddc09d4cb91903beff6d523c91aef75312d5163
@@ -20,12 +20,24 @@
 	/// Round-persistent counter for non-self ejaculation events received by the current wearer.
 	var/received_cum_count = 0
 
+/obj/item/clothing/neck/roguetown/cursed_collar/show_examine_hover_tooltip()
+	return TRUE
+
+/obj/item/clothing/neck/roguetown/cursed_collar/get_hover_examine_html(mob/user, self_examine = FALSE)
+	. = ..()
+	if(received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		var/tally_line = "<span class='notice'>[tally_text] are etched into the collar's metal surface.</span>"
+		if(length(.))
+			. += "<br>[tally_line]"
+		else
+			. = tally_line
+
 /obj/item/clothing/neck/roguetown/cursed_collar/examine(mob/user)
 	. = ..()
-	if(received_cum_count == 1)
-		. += span_notice("1 tally mark is etched into the collar's metal surface.")
-	else if(received_cum_count > 1)
-		. += span_notice("[received_cum_count] tally marks are etched into the collar's metal surface.")
+	if(received_cum_count > 0)
+		var/tally_text = received_cum_count == 1 ? "1 tally mark" : "[received_cum_count] tally marks"
+		. += span_notice("[tally_text] are etched into the collar's metal surface.")
 
 /obj/item/clothing/neck/roguetown/cursed_collar/proc/record_nonself_ejaculation(mob/living/carbon/human/source, mob/living/carbon/human/wearer)
 	if(!source || !wearer)
@@ -34,9 +46,9 @@
 		return FALSE
 	if(loc != wearer)
 		return FALSE
-	var/added = get_tally_increment_for_source(source)
+	var/added = max(1, get_tally_increment_for_source(source))
 	received_cum_count += added
-	var/tally_msg = added == 1 ? "A metal scraping sound is briefly heard, a tally mark suddenly appears on [wearer]'s collar." : "A metal scraping sound is briefly heard, two tally marks suddenly appear on [wearer]'s collar."
+	var/tally_msg = added == 1 ? "A metal scraping sound is briefly heard, a tally mark suddenly appears on [wearer]'s collar." : "A metal scraping sound is briefly heard, [added] tally marks suddenly appear on [wearer]'s collar."
 	for(var/mob/M in viewers(1, wearer))
 		to_chat(M, span_notice(tally_msg))
 	return TRUE
@@ -47,17 +59,21 @@
 /obj/item/clothing/neck/roguetown/cursed_collar/proc/reset_received_cum_count()
 	received_cum_count = 0
 
-/obj/item/clothing/neck/roguetown/cursed_collar/attack(mob/living/carbon/human/C, mob/living/user)
-	if(!istype(C))
+/obj/item/clothing/neck/roguetown/cursed_collar/attack(mob/living/carbon/human/target, mob/living/user)
+	if(!istype(target))
 		return ..()
 
-	if(C.get_item_by_slot(SLOT_NECK))
-		to_chat(user, span_warning("[C] is already wearing something around their neck!"))
+	if(!target.client?.prefs?.cursed_collarable)
+		to_chat(user, span_warning("[target] has cursed collars disabled in their prefs!"))
 		return
 
-	var/obj/item/chastity/existing_chastity = C.chastity_device
+	if(target.get_item_by_slot(SLOT_NECK))
+		to_chat(user, span_warning("[target] is already wearing something around their neck!"))
+		return
+
+	var/obj/item/chastity/existing_chastity = target.chastity_device
 	if(istype(existing_chastity) && existing_chastity.chastity_cursed)
-		to_chat(user, span_warning("[C] is already bound by cursed chastity."))
+		to_chat(user, span_warning("[target] is already bound by cursed chastity."))
 		return
 
 	var/datum/mind/master_mind = collar_master
@@ -72,34 +88,43 @@
 		return
 
 	var/surrender_mod = 1
-	if(C.surrendering || C.compliance)
+	if(target.surrendering || target.compliance)
 		surrender_mod = 0.5
 
 	applying = TRUE
-	if(do_mob(user, C, 50 * surrender_mod))
-		playsound(loc, 'sound/foley/equip/equip_armor_plate.ogg', 30, TRUE, -2)
+	if(!do_mob(user, target, 50 * surrender_mod))
+		applying = FALSE
+		return
 
-		// Get or create collar master datum first
-		var/datum/component/collar_master/CM = master_mind.GetComponent(/datum/component/collar_master)
-		if(!CM)
-			CM = master_mind.AddComponent(/datum/component/collar_master)
+	if(tgui_alert(target, "Submit to the collar's control?", "Cursed Collar", list("Yes!", "No")) != "Yes!")
+		user.visible_message(span_warning("[target] resists the collar's control."))
+		to_chat(target, span_warning("Your defiant will prevents the collar from binding to you!"))
+		applying = FALSE
+		return
 
-		// Try to equip
-		if(!C.equip_to_slot_if_possible(src, SLOT_NECK, TRUE, TRUE))
-			to_chat(user, span_warning("You fail to lock the collar around [C]'s neck!"))
-			applying = FALSE
-			return
+	playsound(loc, 'sound/foley/equip/equip_armor_plate.ogg', 30, TRUE, -2)
 
-		// Add pet to the master's list before sending collar signals
-		if(!CM.add_pet(C))
-			to_chat(user, span_warning("The collar fails to bind [C]."))
-			C.dropItemToGround(src, force = TRUE)
-			applying = FALSE
-			return
+	// Get or create collar master datum first
+	var/datum/component/collar_master/CM = master_mind.GetComponent(/datum/component/collar_master)
+	if(!CM)
+		CM = master_mind.AddComponent(/datum/component/collar_master)
 
-		SEND_SIGNAL(C, COMSIG_CARBON_COLLAR_BOUND, collar_master, src)
-		ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-		log_combat(user, C, "tried to collar", addition="with [src]")
+	// Try to equip
+	if(!target.equip_to_slot_if_possible(src, SLOT_NECK, TRUE, TRUE))
+		to_chat(user, span_warning("You fail to lock the collar around [target]'s neck!"))
+		applying = FALSE
+		return
+
+	// Add pet to the master's list before sending collar signals
+	if(!CM.add_pet(target))
+		to_chat(user, span_warning("The collar fails to bind [target]."))
+		target.dropItemToGround(src, force = TRUE)
+		applying = FALSE
+		return
+
+	SEND_SIGNAL(target, COMSIG_CARBON_COLLAR_BOUND, collar_master, src)
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+	log_combat(user, target, "tried to collar", addition="with [src]")
 	applying = FALSE
 
 /obj/item/clothing/neck/roguetown/cursed_collar/attack_self(mob/user)
@@ -180,7 +205,6 @@
 
 /obj/item/clothing/neck/roguetown/cursed_collar/dropped(mob/living/carbon/human/user)
 	. = ..()
-	reset_received_cum_count()
 	if(!user)
 		return
 	SEND_SIGNAL(user, COMSIG_CARBON_LOSE_COLLAR)

@@ -1,4 +1,0 @@
-author: "Jamdrawers"
-delete-after: True
-changes:
-  - bugfix: "deserttown: fixes a missing wall and a missing hatch. Also fixes a missing texture and adds some grass"

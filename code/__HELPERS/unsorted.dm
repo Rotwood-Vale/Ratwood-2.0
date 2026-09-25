@@ -235,14 +235,17 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return !!living_target.client?.prefs?.ghost_protection
 
 //Admins keep their existing observer tooling even when a target has ghost protection.
-/proc/ghost_bypasses_ghost_protection(mob/viewer)
-	return !!check_rights_for(viewer?.client, R_ADMIN)
+/mob/dead/observer/proc/bypasses_ghost_protection()
+	return !!check_rights_for(client, R_ADMIN) // this should maybe just be an override on /mob/dead/observer/admin
+
+/mob/dead/observer/screye/bypasses_ghost_protection()
+	return TRUE
 
 //Whether a protected living target should be hidden from this observer.
-/proc/is_hidden_from_ghosts(atom/target, mob/viewer)
+/proc/is_hidden_from_ghosts(atom/target, mob/dead/observer/viewer)
 	if(!isobserver(viewer))
 		return FALSE
-	if(ghost_bypasses_ghost_protection(viewer))
+	if(viewer.bypasses_ghost_protection())
 		return FALSE
 	return has_ghost_protection(target)
 
@@ -1298,6 +1301,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /mob/dview/Initialize(mapload) //Properly prevents this mob from gaining huds or joining any global lists
 	SHOULD_CALL_PARENT(FALSE)
+	if(flags_1 & INITIALIZED_1)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	flags_1 |= INITIALIZED_1
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dview/Destroy(force = FALSE)

@@ -1,6 +1,9 @@
 /obj/effect/proc_holder/spell/invoked/silence
 	name = "Silence"
 	desc = "Quiet the target's tongue. Does not work against full-fledged mages."
+	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
+	action_icon = 'icons/mob/actions/nocmiracles.dmi'
+	overlay_state = "silence"
 	cost = 3
 	xp_gain = TRUE
 	releasedrain = 60
@@ -10,7 +13,6 @@
 	human_req = TRUE
 	warnie = "spellwarning"
 	school = "transmutation"
-	overlay_state = "zizocloud"
 	no_early_release = TRUE
 	movement_interrupt = FALSE
 	spell_tier = 1
@@ -22,14 +24,6 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	zizo_spell = TRUE
-
-/obj/effect/proc_holder/spell/invoked/silence/miracle
-	cost = 0
-	spell_tier = 0
-	associated_skill = /datum/skill/magic/holy
-	chargetime = 9
-	recharge_time = 120 SECONDS
-	invocations = list("Lunaria Silentium!")
 
 /obj/effect/proc_holder/spell/invoked/silence/cast(list/targets, mob/user = usr)
 	if(isliving(targets[1]))
@@ -46,10 +40,10 @@
 		playsound(get_turf(target), 'sound/magic/zizo_snuff.ogg', 80, TRUE, soundping = TRUE)
 		to_chat(target, span_warning("The wind in my voice goes still. I can't speak!"))
 		var/dur = max((9 * (user.get_skill_level(associated_skill, 5))))
-		addtimer(CALLBACK(src, PROC_REF(remove_buff), target), wait = dur SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(remove_silence), target), wait = dur SECONDS)
 		return TRUE
 
 
-/obj/effect/proc_holder/spell/invoked/silence/proc/remove_buff(mob/living/carbon/target)
+/obj/effect/proc_holder/spell/invoked/silence/proc/remove_silence(mob/living/carbon/target)
 	REMOVE_TRAIT(target, TRAIT_MUTE, MAGIC_TRAIT)
 	to_chat(target, span_warning("My voice returns to me!"))

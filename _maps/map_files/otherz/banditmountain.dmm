@@ -1225,7 +1225,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/banditcamp/hoardmaster)
 "AE" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue)
 "AL" = (
 /obj/structure/flora/roguegrass/bush/winter,
@@ -2184,7 +2184,7 @@
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/banditcamp)
 "Vu" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/cave)
 "VL" = (
 /obj/structure/fluff/wallclock/r,

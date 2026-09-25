@@ -95,6 +95,11 @@
 /obj/item/var/pottery_fragile = FALSE
 /obj/item/var/pottery_baked_at = 0
 /obj/item/var/pottery_shatter_chance = 100
+/obj/item/var/glazed = FALSE
+/obj/item/var/glaze_suffix = "glazed"
+/obj/item/var/glaze_bonus_pct = 0
+/// Randomised bonus price for glazing.
+/obj/item/var/glaze_bonus_flat = 0
 
 /obj/item/examine(mob/user)
 	. = ..()
@@ -107,6 +112,25 @@
 			. += span_green("It's been nicely polished.")
 	if(shoddy_repair)
 		. += span_warning("This item has been field-repaired and needs to be fixed by a proper craftsman.")
+
+/obj/item/get_mechanics_examine(mob/user)
+	. = ..()
+	if(glaze_bonus_pct > 0)
+		if(glazed)
+			. += span_info("Glazed in a dyebin - its value is increased by [glaze_bonus_pct]%.")
+		else
+			. += span_info("Can be glazed in a dyebin to increase its value by [glaze_bonus_pct]%.")
+	if(glazed && glaze_bonus_flat > 0)
+		. += span_info("Glazed - its value is increased by [glaze_bonus_flat] mammon.")
+	else if(!glazed && icon && icon_exists(icon, "[icon_state]_glazed"))
+		. += span_info("Can be glazed with a dye brush to increase its value.")
+
+/obj/item/get_real_price()
+	. = ..()
+	if(glazed && glaze_bonus_pct > 0)
+		. = max(1, round(. * (1 + glaze_bonus_pct / 100)))
+	if(glazed && glaze_bonus_flat > 0)
+		. += glaze_bonus_flat
 
 /obj/item/polishing_cream
 	icon = 'icons/roguetown/items/misc.dmi'
@@ -129,7 +153,7 @@
 	var/obj/item/thing = O
 	if(!thing.anvilrepair)
 		return ..()
-	if((HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE) || user.get_skill_level(thing.anvilrepair)) && thing.polished == 0 && obj_integrity <= max_integrity)
+	if((HAS_TRAIT(user, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE) || user.get_skill_level(thing.anvilrepair)) && (!thing.polished || (thing.polished == 4 && !thing.polish_bonus)) && obj_integrity <= max_integrity)//split polish 4 and polish_bonus so we can polish masterworks
 		to_chat(user, span_info("I start applying some compound to \the [thing]..."))
 		if(do_after(user, 50 - user.STASPD*2, target = O))
 			thing.polished = 1
@@ -196,22 +220,30 @@
 				thing.remove_atom_colour(FIXED_COLOUR_PRIORITY)
 				thing.add_atom_colour("#cccccc", FIXED_COLOUR_PRIORITY)
 
-/obj/item/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
-	. = ..()
-	if(obj_integrity <= max_integrity * 0.25)
-		if(polished == 4)
-			polished = 0
-			force -= 2
-			force_wielded -= 3
-			max_integrity -= polish_bonus
-			polish_bonus = 0
-			obj_integrity = min(obj_integrity, max_integrity)
-			var/datum/component/glint = GetComponent(/datum/component/metal_glint)
-			qdel(glint)
-		else if(polished >= 1 && polished <= 3)
-			remove_atom_colour(FIXED_COLOUR_PRIORITY)
-			UnregisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT)
+/obj/item/proc/lose_polish()//called when item's break, if said item is polished, it proceeds.
+	if(!polished)
+		return
 
+	if(polished == 4 && polish_bonus)//require both so we dont remove force from a masterwork item that has polished == 4 but not a polish bonus
+		force -= 2
+		force_wielded -= 3
+		max_integrity -= polish_bonus
+		obj_integrity = min(obj_integrity, max_integrity)
+		update_force_dynamic()
+	else if(polished >= 1 && polished <= 3)//remove partially polished stages if we break the item and its, for some reason, only halfway polished
+		UnregisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT)
+
+	polished = 0
+	polish_bonus = 0
+	remove_atom_colour(FIXED_COLOUR_PRIORITY)
+	var/datum/component/silverbless/silver_blessing = GetComponent(/datum/component/silverbless)
+	var/datum/component/psyblessed/psy_blessing = GetComponent(/datum/component/psyblessed)
+//dont delete glint from blessed silver since it's inate unlike masterwork and polish cream
+	if(!silver_blessing?.is_blessed && !psy_blessing?.is_blessed)
+		var/datum/component/glint = GetComponent(/datum/component/metal_glint)
+		qdel(glint)
+
+//below adds polish buff but is called remove_polish because it lowers the amount of polishing cream uses. name sucks and i hate it but it is what it is. proc/lose_polish() is what actually removes the polish buffs and glint.
 /obj/item/proc/remove_polish(datum/source, strength) // kill polska
 	if(polished == 3 && obj_integrity >= max_integrity)
 		polished = 4
@@ -222,6 +254,7 @@
 		obj_integrity += polish_bonus
 		force += 2
 		force_wielded += 3
+		update_force_dynamic()
 		AddComponent(/datum/component/metal_glint)
 		UnregisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT)
 
@@ -248,7 +281,7 @@
 /datum/component/metal_glint/Initialize()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), PROC_REF(stop_process))
+	RegisterSignal(parent, list(COMSIG_QDELETING), PROC_REF(stop_process))
 	START_PROCESSING(SSobj, src)
 
 /datum/component/metal_glint/process()

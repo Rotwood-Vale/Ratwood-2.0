@@ -45,6 +45,9 @@
 /datum/status_effect/buff/frostbite/tick()
 	var/mob/living/target = owner
 	target.stamina_add(5)
+	// When stamcrit, removes it to prevent it from chaining too hard
+	if(target.stamina >= target.max_stamina)
+		target.remove_status_effect(/datum/status_effect/buff/frostbite)
 
 /datum/status_effect/buff/frostbite/on_remove()
 	var/mob/living/target = owner
@@ -55,7 +58,7 @@
 /datum/status_effect/buff/witherd
 	id = "withered"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/witherd
-	duration = 30 SECONDS
+	duration = 90 SECONDS
 	effectedstats = list(STATKEY_SPD = -2,STATKEY_STR = -2,STATKEY_CON= -2,STATKEY_WIL = -2)
 
 /atom/movable/screen/alert/status_effect/buff/witherd

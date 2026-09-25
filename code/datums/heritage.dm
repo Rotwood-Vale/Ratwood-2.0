@@ -70,7 +70,7 @@
 		desc = "[initial(desc)] [pick(hunger_tips)]"
 
 
-/atom/movable/screen/alert/status_effect/family_curse/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/family_curse/handle_click(location, control, params)
 	. = ..()
 	if(!ishuman(usr))
 		return

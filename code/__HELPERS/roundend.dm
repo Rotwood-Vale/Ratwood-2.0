@@ -130,6 +130,7 @@
 	set waitfor = FALSE
 
 	log_game("The round has ended.")
+	dump_chronicle_stats() // weekly economy-stats disk dump (data/chronicle_stats/)
 
 	to_chat(world, "<BR><BR><BR><span class='reallybig'>So ends this tale on Ratwood Keep.</span>")
 	get_end_reason()
@@ -146,6 +147,11 @@
 		if(H.stat != DEAD)
 			if(H.get_triumphs() < 0)
 				H.adjust_triumphs(1)
+			if(H.unspent_quirk_points > 0)
+				to_chat(H, "\n<font color='purple'>TRIUMPH[H.unspent_quirk_points > 1 ? "S" : ""] AWARDED for [H.unspent_quirk_points] unspent quirk point[H.unspent_quirk_points > 1 ? "s" : ""].</font>")
+				H.playsound_local(get_turf(H), 'sound/misc/notice (2).ogg', 100, FALSE, pressure_affected = FALSE)
+				H.adjust_triumphs(H.unspent_quirk_points)
+				H.unspent_quirk_points = 0
 		if(GLOB.round_join_times[H.ckey] && H.job && H.allmig_reward)
 			if((GLOB.round_join_times[H.ckey] + 45 MINUTES) < world.time)
 				var/datum/job/job = SSjob.GetJob(H.job)
@@ -154,7 +160,7 @@
 					add_roundpoints(job.round_contrib_points, H.ckey)
 	add_roundplayed(key_list)
 	update_god_rankings()
-	
+
 	for(var/mob/M in GLOB.mob_list)
 		M.do_game_over()
 
@@ -210,7 +216,7 @@
 	world.TgsAnnounceRoundEnd()
 
 	sleep(10 SECONDS)
-	SSvote.initiate_vote("map", "Actors")
+	SSvote.initiate_vote("Map", "Actors", null, forced = TRUE)
 	ready_for_reboot = TRUE
 	standard_reboot()
 

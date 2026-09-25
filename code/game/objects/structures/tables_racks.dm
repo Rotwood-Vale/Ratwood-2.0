@@ -57,9 +57,6 @@
 	qdel(src)
 	new /obj/structure/table/wood(A)
 
-/obj/structure/table/attack_paw(mob/user)
-	return attack_hand(user)
-
 /obj/structure/table/attack_hand(mob/living/user)
 	if(Adjacent(user) && user.pulling)
 		if(isliving(user.pulling))
@@ -174,8 +171,12 @@
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I
 		if(T.contents.len > 0) // If the tray isn't empty
+			var/list/dumped = list()
+			for(var/obj/item/dumped_item in T.contents)
+				dumped += "[dumped_item]"
 			SEND_SIGNAL(I, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
 			user.visible_message(span_notice("[user] empties [I] on [src]."))
+			user.log_message("emptied [I] onto [src] (CONTENTS: [english_list(dumped)])", LOG_GAME)
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
@@ -210,7 +211,7 @@
 				if(!T)
 					return
 
-				// Fan them out slightly so they don’t stack perfectly
+				// Fan them out slightly so they don't stack perfectly
 				var/offset = -((H.currenthand.len - 1) * 4) / 2
 
 				for(var/cardname in H.currenthand)
@@ -593,9 +594,6 @@
 				W.pixel_y = initial(W.pixel_y) + CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2) + pixel_y
 				return 1
 
-/obj/structure/rack/attack_paw(mob/living/user)
-	attack_hand(user)
-
 
 
 /obj/structure/rack/rogue
@@ -658,6 +656,7 @@
 	can_buckle = 1
 	buckle_lying = -1
 	buckle_requires_restraints = 1
+	buckle_blocks_spells = TRUE
 	var/mob/living/carbon/human/patient = null
 
 /obj/structure/table/optable/Initialize(mapload)

@@ -175,6 +175,12 @@
 		var/mob/M = loc
 		M.update_inv_hands()
 
+/obj/item/fishingrod/blacksteel
+	name = "blacksteel fishing rod"
+	desc = "G'morning! Nice dae for fishin', ain't it? Hu-hah!"
+	icon_state = "blacksteelrod"
+	max_integrity = 333
+
 /obj/item/fishingrod/decrepit
 	name = "decrepit fishing rod"
 	desc = "The Comet Syon's impact drowned the world, long ago. The waves've long since receded, but His greatest works remain shrouded far beneath the sea."

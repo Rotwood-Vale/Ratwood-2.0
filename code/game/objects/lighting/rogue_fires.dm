@@ -21,6 +21,10 @@
 	crossfire = TRUE
 	fueluse = 0
 	no_refuel = TRUE
+	max_integrity = 200
+	can_damage = TRUE
+	flags_1 = NONE
+	heat_level = 4
 
 /obj/machinery/light/rogue/firebowl/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -36,23 +40,25 @@
 	if(.)
 		return
 
-	if(on)
-		var/mob/living/carbon/human/H = user
+	if(!on)
 
-		if(istype(H))
-			H.visible_message("<span class='info'>[H] warms [user.p_their()] hand over the fire.</span>")
-
-			if(do_after(H, 15, target = src) && H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
-				H.adjust_bodytemperature(75)
-		return TRUE //fires that are on always have this interaction with lmb unless its a torch
-
-	else
 		if(icon_state == "[base_state]over")
 			user.visible_message("<span class='notice'>[user] starts to pick up [src]...</span>", \
 				"<span class='notice'>I start to pick up [src]...</span>")
 			if(do_after(user, 30, target = src))
 				icon_state = "[base_state]0"
 			return
+
+/obj/machinery/light/rogue/firebowl/attack_right(mob/user)	// warm your hands a little at a more accessible spot than fireplaces
+	if(isliving(user))
+		var/mob/living/L = user
+		if(on)
+			L.visible_message(span_info("[user] starts to warm their hands."), span_info("You warm your hands."))
+			if(do_after(L, 4 SECONDS, target = src))
+				if(L.bodytemperature < BODYTEMP_NORMAL_MIN)
+					L.adjust_bodytemperature(10)
+		return
+
 
 /obj/machinery/light/rogue/firebowl/off
 	icon_state = "stonefire0"
@@ -64,11 +70,13 @@
 	icon_state = "stumpfire1"
 	base_state = "stumpfire"
 	desc = "Somewhat crude, but it lights the long winding paths throughout the land."
+	max_integrity = 100
 
 /obj/machinery/light/rogue/firebowl/church
 	desc = "A wide metal bowl mounted on a stand for a healthy roaring flame."
 	icon_state = "churchfire1"
 	base_state = "churchfire"
+	max_integrity = 100
 
 /obj/machinery/light/rogue/firebowl/church/off
 	icon_state = "churchfire0"
@@ -86,6 +94,8 @@
 	cookonme = FALSE
 	crossfire = FALSE
 	density = FALSE
+	max_integrity = 100
+	heat_level = 3
 
 
 /obj/machinery/light/rogue/firebowl/standing/blue
@@ -154,6 +164,7 @@
 	crossfire = FALSE
 	healing_range = 2
 	stamina_status_effect = /datum/status_effect/buff/campfire_stamina/fireplace
+	heat_level = 6
 
 /obj/machinery/light/rogue/campfire/fireplace/attack_right(mob/user)
 	if(isliving(user) && on)
@@ -184,7 +195,12 @@
 	density = FALSE
 	pixel_y = 32
 	cookonme = TRUE
-	
+
+/obj/machinery/light/rogue/campfire/fireplace/crafted/blue
+	desc = "A curious cool fire dances upon a bed of mysteriously glowing embers."
+	icon = 'icons/roguetown/misc/wallfireblue.dmi'
+	bulb_colour = "#6e90ff"
+
 /obj/machinery/light/rogue/campfire/fireplace/blue
 	desc = "A curious cool fire dances upon a bed of mysteriously glowing embers."
 	icon = 'icons/roguetown/misc/wallfireblue.dmi'
@@ -309,6 +325,11 @@
 	layer = TABLE_LAYER
 	cookonme = FALSE
 
+/obj/machinery/light/rogue/candle/floorcandle/OnCrafted(dirin)
+	..() // Base candles offset via pixel x/y, which doesn't handle nicely with floor candles - this resets the offset, so they are placed next the the crafter.
+	pixel_x = 0
+	pixel_y = 0
+
 /obj/machinery/light/rogue/candle/floorcandle/alt
 	icon_state = "floorcandlee1"
 	base_state = "floorcandlee"
@@ -365,6 +386,11 @@
 	torchy.spark_act()
 	torchy.weather_resistant = TRUE
 	. = ..()
+
+/obj/machinery/light/rogue/torchholder/Destroy()
+	if(torchy)
+		QDEL_NULL(torchy)
+	return ..()
 
 /obj/machinery/light/rogue/torchholder/OnCrafted(dirin, user)
 	dirin = turn(dirin, 180)
@@ -498,6 +524,7 @@
 	on = FALSE
 	cookonme = TRUE
 	soundloop = /datum/looping_sound/fireloop
+	heat_level = 3
 	var/obj/item/attachment = null
 	var/obj/item/food = null
 	var/mob/living/carbon/human/lastuser
@@ -536,10 +563,9 @@
 /obj/machinery/light/rogue/hearth/attack_right(mob/user)
 	var/datum/skill/craft/cooking/cs = user?.get_skill_level(/datum/skill/craft/cooking)
 	var/cooktime_divisor = get_cooktime_divisor(cs)
-	if(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
+	while(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
 		to_chat(user, span_info("I fan the flame on [src].")) // Until line combine is on by default gotta do this to avoid spam
 		try_cook(cooktime_divisor)
-		attack_right(user)
 
 /obj/machinery/light/rogue/hearth/attackby(obj/item/W, mob/living/user, params)
 	lastuser = user // For processing food
@@ -731,7 +757,7 @@
 		if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 			if(attachment.reagents)
 				attachment.reagents.expose_temperature(400, 0.033)
-				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE)
+				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE && !boilloop.loop_started)
 					boilloop.start()
 				else
 					boilloop.stop()
@@ -857,9 +883,11 @@
 	cookonme = TRUE
 	max_integrity = 30
 	soundloop = /datum/looping_sound/fireloop
+	heat_level = 5
 	var/healing_range = 1
 	var/static/list/acceptable_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)
 	var/datum/status_effect/buff/stamina_status_effect = /datum/status_effect/buff/campfire_stamina
+
 /obj/machinery/light/rogue/campfire/process()
 	..()
 	if(isopenturf(loc))
@@ -935,6 +963,7 @@
 	pass_flags = LETPASSTHROW
 	bulb_colour = "#eea96a"
 	max_integrity = 60
+	heat_level = 5
 
 /obj/machinery/light/rogue/campfire/densefire/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -962,6 +991,8 @@
 	dir = NORTH
 	buckle_requires_restraints = 1
 	buckle_prevents_pull = 1
+	buckle_blocks_spells = TRUE
+	heat_level = 5
 
 
 /obj/machinery/light/rogue/campfire/pyre/post_buckle_mob(mob/living/M)

@@ -54,8 +54,8 @@
 	do_sprite_shake(owner, 3, 3, 15, 1)
 
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume + healing_strength, BLOOD_VOLUME_NORMAL)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume() + healing_strength, BLOOD_VOLUME_NORMAL))
 
 		var/list/wounds = owner.get_wounds()
 		if(length(wounds) > 0)
@@ -85,25 +85,27 @@
 	if(!target)
 		return
 
-	spawn(0)
-		for(var/i in 1 to cycles)
-			// Randomly offsets
-			var/rand_x = rand(-intensity, intensity)
-			var/rand_y = rand(-intensity, intensity)
+	INVOKE_ASYNC(src, PROC_REF(do_sprite_shake_loop), target, cycles, intensity, speed)
 
-			// Rotation & movement
-			animate(target, \
-				pixel_y = rand_y, \
-				pixel_x = rand_x, \
-				time = speed, \
-				easing = LINEAR_EASING)
-			sleep(speed)
+/datum/status_effect/buff/divine_rebirth_healing/proc/do_sprite_shake_loop(mob/living/target, cycles, intensity, speed)
+	for(var/i in 1 to cycles)
+		// Randomly offsets
+		var/rand_x = rand(-intensity, intensity)
+		var/rand_y = rand(-intensity, intensity)
 
+		// Rotation & movement
 		animate(target, \
-			pixel_y = 0, \
-			pixel_x = 0, \
+			pixel_y = rand_y, \
+			pixel_x = rand_x, \
 			time = speed, \
 			easing = LINEAR_EASING)
+		sleep(speed)
+
+	animate(target, \
+		pixel_y = 0, \
+		pixel_x = 0, \
+		time = speed, \
+		easing = LINEAR_EASING)
 
 #undef MIRACLE_HEALING_FILTER
 
@@ -129,8 +131,8 @@
 	H.color = effect_colour
 
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume + healing_strength, BLOOD_VOLUME_NORMAL)
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume() + healing_strength, BLOOD_VOLUME_NORMAL))
 
 		var/list/wounds = owner.get_wounds()
 		if(length(wounds) > 0)
@@ -426,9 +428,7 @@
 /datum/status_effect/black_rot/proc/trigger_vomit_fit()
 	to_chat(owner, span_userdanger("A wave of nausea overwhelms me! IT'S ONLY GETTING WORSE."))
 	for(var/i in 1 to 5)
-		spawn(rand(1 SECONDS, 20 SECONDS))
-			if(owner && !QDELETED(owner) && owner.stat != DEAD)
-				vomit_black_rot()
+		addtimer(CALLBACK(src, PROC_REF(vomit_black_rot)), rand(1 SECONDS, 20 SECONDS))
 
 /datum/status_effect/black_rot/proc/vomit_black_rot()
 	if(!owner || QDELETED(owner) || owner.stat == DEAD)

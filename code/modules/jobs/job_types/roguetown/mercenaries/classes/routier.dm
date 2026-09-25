@@ -47,7 +47,7 @@
 		switch(classchoice)
 			if("Swordsman")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-				beltl = /obj/item/rogueweapon/scabbard/sword
+				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				l_hand = /obj/item/rogueweapon/sword/short/falchion
 			if("Macebearer")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
@@ -74,6 +74,6 @@
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1
 		)
 	H.merctype = 10

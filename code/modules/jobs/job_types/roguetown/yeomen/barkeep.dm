@@ -19,6 +19,7 @@
 	cmode_music = 'sound/music/cmode/towner/combat_retired.ogg'
 
 	job_traits = list(TRAIT_MEDIUMARMOR, TRAIT_TAVERN_FIGHTER, TRAIT_EMPATH, TRAIT_DODGEEXPERT, TRAIT_CICERONE, TRAIT_HOMESTEAD_EXPERT)
+	quirk_restrictions = list(/datum/quirk/hunted)
 
 	advclass_cat_rolls = list(CTAG_INNKEEPER = 2)
 	job_subclasses = list(
@@ -76,7 +77,7 @@
 	else if(should_wear_masc_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/shortshirt
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/random
 		pants = /obj/item/clothing/under/roguetown/sirwal/plainrandom
 		shoes = /obj/item/clothing/shoes/roguetown/gladiator

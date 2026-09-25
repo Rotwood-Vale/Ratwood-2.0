@@ -1,15 +1,9 @@
 /datum/sex_action/grind_body
 	name = "Grind against them"
 	check_same_tile = FALSE
-	subtle_supported = TRUE
-
-/datum/sex_action/grind_body/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	return TRUE
 
 /datum/sex_action/grind_body/can_perform(mob/living/user, mob/living/target)
-	if(user == target)
+	if(!(. = ..()))
 		return FALSE
 	if(!user.sexcon.Adjacent_Or_Closet(target))
 		return FALSE
@@ -38,7 +32,7 @@
 	user.sexcon.show_progress = !do_subtle
 	user.sexcon.suppress_moan = target.sexcon.suppress_moan = do_subtle
 
-	user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] grinds over [target]'s [zone_text]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective(is_stealth = do_subtle)] grinds over [target]'s [zone_text]..."), vision_distance = (do_subtle ? 1 : DEFAULT_MESSAGE_RANGE))
 	if(!do_subtle)
 		if(user.sexcon.force > SEX_FORCE_HIGH)
 			user.sexcon.outercourse_noise(target)

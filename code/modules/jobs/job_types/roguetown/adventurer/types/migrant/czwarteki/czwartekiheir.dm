@@ -46,14 +46,14 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	l_hand = /obj/item/rogueweapon/sword/sabre/dec
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	beltl = /obj/item/rogueweapon/scabbard/sword/noble
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/scomstone
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1, 
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1, 
 		/obj/item/natural/feather = 1,
 		/obj/item/paper/scroll = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,

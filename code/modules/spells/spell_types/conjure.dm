@@ -54,7 +54,6 @@
 	include_user = TRUE
 	range = -1
 	clothes_req = FALSE
-	var/obj/item/item
 	var/item_type = /obj/item/banhammer
 	school = "conjuration"
 	recharge_time = 150
@@ -62,18 +61,14 @@
 	var/delete_old = TRUE //TRUE to delete the last summoned object if it's still there, FALSE for infinite item stream weeeee
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/cast(list/targets, mob/user = usr)
-	if (delete_old && item && !QDELETED(item))
-		QDEL_NULL(item)
+	if (delete_old && conjured_item)
+		dispel_conjured_item()
 	else
 		for(var/mob/living/carbon/C in targets)
 			if(C.dropItemToGround(C.get_active_held_item()))
 				C.put_in_hands(make_item(), TRUE)
 
-/obj/effect/proc_holder/spell/targeted/conjure_item/Destroy()
-	if(item)
-		qdel(item)
-	return ..()
-
 /obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item()
-	item = new item_type
-	return item
+	var/obj/item/new_item = new item_type
+	set_conjured_item(new_item)
+	return new_item

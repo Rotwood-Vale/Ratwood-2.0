@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - bugfix: "fixed drow urumi doing 0 damage"

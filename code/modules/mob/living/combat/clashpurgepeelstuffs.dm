@@ -108,8 +108,8 @@
 
 	if((!instantloss && !instantwin) || (instantloss && instantwin))	//We are both using normal weapons OR we're both using memes. Either way, proceed as normal.
 		visible_message(span_boldwarning("[src] and [HU] clash!"))
-		flash_fullscreen("whiteflash")
-		HU.flash_fullscreen("whiteflash")
+		fullscreen_redflash("whiteflash")
+		HU.fullscreen_redflash("whiteflash")
 		var/datum/effect_system/spark_spread/S = new()
 		var/turf/front = get_step(src,src.dir)
 		S.set_up(1, 1, front)
@@ -151,6 +151,25 @@
 	var/target_turf = get_ranged_target_turf(current_turf, turndir, dist)
 	throw_item(target_turf, FALSE)
 	apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
+
+///Shared by the Defend RMB stance and the direct Guard keybinding, so both go through the same checks.
+/mob/living/carbon/human/proc/try_guard()
+	if(has_status_effect(/datum/status_effect/buff/clash) || has_status_effect(/datum/status_effect/debuff/clashcd))
+		return FALSE
+	if(!get_active_held_item())
+		if(get_skill_level(/datum/skill/combat/unarmed) < SKILL_LEVEL_JOURNEYMAN)
+			to_chat(src, span_warning("I'm not skilled enough in the art of unarmed combat to guard without a weapon!"))
+			return FALSE
+	if(r_grab || l_grab || length(grabbedby)) //Not while grabbed.
+		return FALSE
+	if(IsImmobilized() || IsOffBalanced() || incapacitated(ignore_restraints = TRUE)) //Not while we can't move.
+		balloon_alert(src, "<font color = '#ffffff'>Can't guard while incapacitated!</font>")
+		return FALSE
+	if(has_status_effect(/datum/status_effect/debuff/exposed))
+		balloon_alert(src, "<font color = '#ffffff'>Can't guard while exposed!</font>")
+		return FALSE
+	apply_status_effect(/datum/status_effect/buff/clash)
+	return TRUE
 
 ///Proc that cancels Riposte with a small stamina penalty, unless it's an extreme case.
 /mob/living/carbon/human/proc/bad_guard(msg, cheesy = FALSE, custom_value)

@@ -145,8 +145,6 @@
 	var/should_self_destruct = TRUE
 	max_integrity = 50
 	fuel = 30 MINUTES
-	light_depth = 0
-	light_height = 0
 	grid_width = 32
 	grid_height = 32
 	metalizer_result = /obj/item/flashlight/flare/torch/lantern
@@ -459,7 +457,6 @@
 	light_outer_range = 6
 	light_color ="#4ac77e"
 	on = FALSE
-	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/flashlight/flare/torch/lantern/bronzelamptern/malums_lamptern //unqiue item as a dungeon reward. Functionally a kite shield and a bronze lamptern combined into one
 	name = "ancient lamptern"

@@ -8,7 +8,8 @@
 	density = FALSE
 	icon = 'icons/roguetown/misc/foliage.dmi'
 	icon_state = "glowshroom1" //replaced in New
-	layer = SPACEVINE_LAYER //A bit high but keeps it from fucking layering UNDER EVERYTHING
+	layer = BELOW_OBJ_LAYER
+	plane = GAME_PLANE
 	light_system = MOVABLE_LIGHT
 	max_integrity = 30
 	blade_dulling = DULLING_CUT

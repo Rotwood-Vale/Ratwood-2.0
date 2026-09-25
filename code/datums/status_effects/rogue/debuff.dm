@@ -83,7 +83,7 @@
 	duration = 1
 
 /datum/status_effect/debuff/uncookedfood/on_apply()
-	if(HAS_TRAIT(owner, TRAIT_NASTY_EATER) || HAS_TRAIT(owner, TRAIT_ORGAN_EATER) || HAS_TRAIT(owner, TRAIT_WILD_EATER))
+	if(HAS_TRAIT(owner, TRAIT_NASTY_EATER) || HAS_TRAIT(owner, TRAIT_ORGAN_EATER) || HAS_TRAIT(owner, TRAIT_WILD_EATER) || HAS_TRAIT(owner, TRAIT_RAW_EATER))
 		return ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
@@ -179,19 +179,6 @@
 	effectedstats = list(STATKEY_SPD = -5, STATKEY_WIL = -2)
 	duration = 30 SECONDS
 
-/datum/status_effect/debuff/netted/on_apply()
-		. = ..()
-		var/mob/living/carbon/C = owner
-		C.add_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN, multiplicative_slowdown = 3)
-
-/datum/status_effect/debuff/netted/on_remove()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		C.legcuffed = null
-		C.update_inv_legcuffed()
-		C.remove_movespeed_modifier(MOVESPEED_ID_NET_SLOWDOWN)
-
 /atom/movable/screen/alert/status_effect/debuff/sleepytime
 	name = "Tired"
 	desc = "I should get some rest."
@@ -241,7 +228,7 @@
 	id = "ritualdefiled"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/ritualdefiled
 	effectedstats = list(STATKEY_STR = -1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_SPD = -1, STATKEY_LCK = -1)
-	duration = 1 HOURS // Punishing AS FUCK, but not as punishing as being dead.
+	duration = 30 MINUTES // Punishing AS FUCK, but not as punishing as being dead.
 
 
 /atom/movable/screen/alert/status_effect/debuff/ritualdefiled
@@ -257,11 +244,11 @@
 
 /datum/status_effect/debuff/breedable/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, id)
+	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/breedable/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, id)
+	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /atom/movable/screen/alert/status_effect/debuff/breedable
 	name = "Obedient"
@@ -302,7 +289,7 @@
 	icon_state = "compliance"
 	alert_group = ALERT_DEBUFF
 
-/atom/movable/screen/alert/status_effect/debuff/yield_prompt/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/debuff/yield_prompt/handle_click(location, control, params)
 	if(!usr || !usr.client)
 		return FALSE
 	var/mob/user = usr
@@ -447,6 +434,14 @@
 	desc = "You've been smacked on the head very hard. Which way is left, again?"
 	icon_state = "dazed"
 
+/// wrestler verison of daze////
+/datum/status_effect/debuff/dazed/stunner
+	id = "discombobulated"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed
+	effectedstats = list(STATKEY_CON = -2, STATKEY_INT = -2)
+	duration = 15 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
 /datum/status_effect/debuff/cold
 	id = "Frostveiled"
 	alert_type =  /atom/movable/screen/alert/status_effect/debuff/cold
@@ -465,10 +460,89 @@
 	desc = "Something has chilled me to the bone! It's hard to move."
 	icon_state = "muscles"
 
+/datum/status_effect/debuff/blackvitae
+	id = "blackvitae"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/blackvitae
+	duration = 20 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/blackvitae
+	name = "Bloodrot"
+	desc = span_bloody("BLACKENED ROT SEEPS INTO MY WOUNDS! IT HURTS, IT HURTS, IT HURTS, IT HURTS!!")
+	icon_state = "ritesexpended"
+
+/datum/status_effect/debuff/blackvitae/on_apply()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/target = owner
+		var/newcolor = rgb(67, 67, 67)
+		var/datum/physiology/phy = target.physiology
+		phy.bleed_mod *= 2
+		phy.pain_mod *= 2
+		target.add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom, remove_atom_colour), TEMPORARY_COLOUR_PRIORITY, newcolor), 20 SECONDS)
+
+/datum/status_effect/debuff/blackvitae/on_remove()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/human/target = owner
+		var/datum/physiology/phy = target.physiology
+		phy.bleed_mod /= 2
+		phy.pain_mod /= 2
+
 /*/atom/movable/screen/alert/status_effect/debuff/dazed/shield
 	name = "Dazed by fencer's wrap"
 	desc = "That stupid piece of cloth is so distracting! It pisses me off!"
 	icon_state = "dazed" */
+
+///// Freifechter Daze Variants /////
+/datum/status_effect/debuff/dazed/longsword
+	id = "durchlauffen"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/longsword
+	effectedstats = list(STATKEY_SPD = -3, STATKEY_INT = -1)
+	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/longsword
+	name = "CAN'T FUCKING BREATHE"
+	desc = "How HOW THE FUCK DID THEY DO THAT?! MY EARS RING, MY BREATHING IS HEAVY."
+	icon_state = "mstrike"
+
+/datum/status_effect/debuff/dazed/longsword2h
+	id = "zorn ort"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/longsword2h
+	effectedstats = list(STATKEY_PER = -4, STATKEY_LCK = -3)
+	duration = 16 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/longsword2h
+	name = "CAN'T FUCKING SEE"
+	desc = "HOW THE FUCK DID THEY DO THAT?! MY EYE!!"
+	icon_state = "mstrike"
+
+/datum/status_effect/debuff/dazed/freisabre
+	id = "uszkodzić"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/freisabre
+	effectedstats = list(STATKEY_STR = -2, STATKEY_SPD = -3)
+	duration = 16 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/freisabre
+	name = "Master Strike"
+	desc = "How the fuck did they do that!? My wrist!"
+	icon_state = "mstrike"
+
+/datum/status_effect/debuff/dazed/swipe
+	id = "clinch & swipe"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/swipe
+	effectedstats = list(STATKEY_CON = -4, STATKEY_STR = -1)
+	duration = 1.5 SECONDS	//Should last BARELY ENOUGH for someone who's actively grappling and swiping you to get a constant refresh of the dedbuff, otherwise it's useless.
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/swipe
+	name = "Clinched and Swiped!"
+	desc = "Urgh! My face! My grip is weakened!"
+	icon_state = "swiped"
+
 
 /datum/status_effect/debuff/staggered
 	id = "staggered"
@@ -587,14 +661,14 @@
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_apply()
 	. = ..()
 	owner.add_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
-	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/on_remove()
 	. = ..()
 	owner.remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
-	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/necrandeathdoorwilloss/process()
 	.=..()
@@ -617,13 +691,13 @@
 
 /datum/status_effect/debuff/deathdoorwilloss/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	ADD_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/deathdoorwilloss/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, STATUS_EFFECT_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_NOBREATH, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/deathdoorwilloss/process()
 	.=..()
@@ -833,13 +907,14 @@
 	harpy.remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD) // If they are slowed down (like being in water) remove it
 	harpy.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown = harpy.dna.species.speedmod)
 	harpy.apply_status_effect(/datum/status_effect/debuff/flight_sound_loop)
-	ADD_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, ORGAN_TRAIT)
+	ADD_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, TRAIT_STATUS_EFFECT(id))
 	harpy.flying = TRUE
 	init_signals()
+	if(isnull(harpy.buckled_mobs))
+		return
 	var/mob/buckled_rider = harpy.buckled_mobs[1]
-	if(!isnull(buckled_rider))
-		buckled_mob = WEAKREF(buckled_rider)
-		buckled_rider.movement_type |= FLYING
+	buckled_mob = WEAKREF(buckled_rider)
+	buckled_rider.movement_type |= FLYING
 
 /datum/status_effect/debuff/harpy_flight/tick()
 	. = ..()
@@ -879,13 +954,13 @@
 	tile_under_harpy.zFall(harpy)
 	remove_signals()
 	animate(harpy)
-	REMOVE_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, ORGAN_TRAIT)
+	REMOVE_TRAIT(harpy, TRAIT_SPELLCOCKBLOCK, TRAIT_STATUS_EFFECT(id))
 	harpy.flying = FALSE
 	if(harpy.is_holding_item_of_type(/obj/item/rogueweapon/huntingknife/idagger/harpy_talons))
 		for(var/obj/item/rogueweapon/huntingknife/idagger/harpy_talons/talons in harpy.held_items)
 			harpy.dropItemToGround(talons, TRUE)
 			return
-	var/mob/buckled_rider = buckled_mob.resolve()
+	var/mob/buckled_rider = buckled_mob?.resolve()
 	if(!isnull(buckled_rider))
 		buckled_rider.movement_type &= ~FLYING
 	buckled_mob = null
@@ -1084,7 +1159,7 @@
 
 /datum/status_effect/debuff/vampbite/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_DRUQK, id)
+	ADD_TRAIT(owner, TRAIT_DRUQK, TRAIT_STATUS_EFFECT(id))
 	owner.add_stress(/datum/stressevent/high)
 	to_chat(owner, span_love("Momentarily, you feel a sharp pain but it quickly shifts into a pleasant feeling washing over you..."))
 	owner.overlay_fullscreen("vampirebite", /atom/movable/screen/fullscreen/weedsm)
@@ -1099,7 +1174,7 @@
 
 /datum/status_effect/debuff/vampbite/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_DRUQK, id)
+	REMOVE_TRAIT(owner, TRAIT_DRUQK, TRAIT_STATUS_EFFECT(id))
 	owner.remove_stress(/datum/stressevent/high)
 	owner.clear_fullscreen("vampirebite")
 	owner.visible_message("[owner]'s eyes appear to return to normal.")
@@ -1159,13 +1234,13 @@
 	. = ..()
 	var/mob/living/carbon/C = owner
 	to_chat(C, span_warning("My joints stiffen as the cold hardens my frame."))
-	ADD_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
+	ADD_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/brittle/on_remove()
 	. = ..()
 	var/mob/living/carbon/C = owner
 	to_chat(C, span_notice("My frame loosens as warmth returns."))
-	REMOVE_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, STATUS_EFFECT_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_CRITICAL_WEAKNESS, TRAIT_STATUS_EFFECT(id))
 
 /atom/movable/screen/alert/status_effect/debuff/brittle
 	name = "brittle cold"
@@ -1182,7 +1257,7 @@
 	. = ..()
 	var/mob/living/carbon/C = owner
 	to_chat(C, span_userdanger("My core temperature rises, overheating my frame."))
-	message_admins("debuff applied")
+
 /datum/status_effect/debuff/overheat/on_remove()
 	. = ..()
 	var/mob/living/carbon/C = owner
@@ -1203,3 +1278,99 @@
 	name = "The Kiss"
 	desc = "A terrible sweetness floods my senses."
 	icon_state = "vampirebite"
+
+/datum/status_effect/debuff/redolent_stink
+	id = "redolent_stink"
+	duration = 999 MINUTES
+	alert_type = null
+
+	mob_effect_icon = 'icons/effects/effects.dmi'
+	mob_effect_icon_state = "mob_smell"
+	mob_effect_layer = ABOVE_MOB_LAYER
+
+/datum/status_effect/debuff/stinky_contact
+	id = "stinky_contact"
+	duration = 15 MINUTES
+	tick_interval = 5 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/stinky_contact
+	var/scent_type = "Gross"
+	var/scent = ""
+	var/last_aura_tick = 0
+
+/datum/status_effect/debuff/stinky_contact/on_creation(mob/living/new_owner, inherited_scent_type = "Gross", inherited_scent = "")
+	set_inherited_scent(inherited_scent_type, inherited_scent)
+	return ..()
+
+/datum/status_effect/debuff/stinky_contact/refresh(mob/living/new_owner, inherited_scent_type = "Gross", inherited_scent = "")
+	set_inherited_scent(inherited_scent_type, inherited_scent)
+	if(owner)
+		process_inherited_scent(TRUE)
+	return ..()
+
+/datum/status_effect/debuff/stinky_contact/proc/set_inherited_scent(inherited_scent_type, inherited_scent)
+	scent_type = inherited_scent_type
+	scent = inherited_scent
+	last_aura_tick = 0
+
+/datum/status_effect/debuff/stinky_contact/on_apply()
+	. = ..()
+	if(scent_type == "Pleasant")
+		to_chat(owner, span_notice("I share someone else's pleasant scent now!"))
+	else if(scent_type == "Neutral")
+		to_chat(owner, span_notice("I stink of someone else now..."))
+	else
+		to_chat(owner, span_warning("I reek of someone else's stench now...ew..."))
+	process_inherited_scent(TRUE)
+
+/datum/status_effect/debuff/stinky_contact/tick()
+	process_inherited_scent()
+
+/datum/status_effect/debuff/stinky_contact/proc/process_inherited_scent(force = FALSE)
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	if(!H.can_smell())
+		H.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
+		return
+	if(scent_type != "Pleasant")
+		if(!H.has_status_effect(/datum/status_effect/debuff/redolent_stink))
+			H.apply_status_effect(/datum/status_effect/debuff/redolent_stink)
+	else if(H.has_status_effect(/datum/status_effect/debuff/redolent_stink))
+		H.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
+	if(!force && world.time < last_aura_tick + redolent_aura_tick_delay(scent_type))
+		return
+	last_aura_tick = world.time
+	redolent_visual_effect(H, scent_type)
+	redolent_stink_aura(H, scent_type)
+
+/datum/status_effect/debuff/stinky_contact/on_remove()
+	to_chat(owner, span_notice("The lingering scent finally fades off me."))
+	if(!HAS_TRAIT(owner, TRAIT_REDOLENT))
+		owner.remove_status_effect(/datum/status_effect/debuff/redolent_stink)
+	return ..()
+
+/datum/status_effect/debuff/stinky_contact/proc/get_examine_text()
+	return redolent_examine_text(scent_type, scent)
+
+/atom/movable/screen/alert/status_effect/debuff/stinky_contact
+	name = "Musked"
+	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
+	icon_state = "debuff"
+
+/datum/status_effect/debuff/enchantmenttriggered
+	id = "enchantmenttriggered"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
+	duration = -1 // set explicitly when applied, see below
+
+/datum/status_effect/debuff/enchantmenttriggered/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+	
+/atom/movable/screen/alert/status_effect/debuff/enchantmenttriggered
+	name = "Enchantment Dormant"
+	desc = "The Enchantments you wear have activated and are temporarily Dormant!"
+	icon_state = "dazed"
+
+

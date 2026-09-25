@@ -172,6 +172,11 @@ body {
 }
 
 @font-face {
+	font-family: "Hammerholdian";
+	src: url("hammerholdian.ttf");
+}
+
+@font-face {
 	font-family: "Romeodn";
 	src: url("aavnic.ttf");
 }
@@ -819,6 +824,18 @@ h2.alert {
 .beautifulnb {
 	color: #9656c9;
 }
+.prettymasc {
+	color: #7b9bdb;
+	font-size: 0.9em;
+}
+.prettyfem {
+	color: #e785b6;
+	font-size: 0.9em;
+}
+.prettynb {
+	color: #c3a2e0;
+	font-size: 0.9em;
+}
 
 .revennotice {
 	color: #1d2953;
@@ -954,6 +971,10 @@ h2.alert {
 	font-family: "Jorvik Informal", "Pterra";
 	font-size: 100%;
 }
+.hammerholdian {
+	font-family: "Hammerholdian", "Pterra";
+	font-size: 100%;
+}
 .aavnic {
 	font-family: "Romeodn", "Pterra";
 	font-size: 100%;
@@ -992,6 +1013,7 @@ h2.alert {
 .posh					{font-family: "Parisish", "Pterra"; font-size: 130%;}
 .etruscan				{font-family: "Feronia", "Pterra"; font-size: 100%;}
 .gronnic				{font-family: "Jorvik Informal", "Pterra"; font-size: 100%;}
+.hammerholdian			{font-family: "Hammerholdian", "Pterra"; font-size: 100%;}
 .aavnic					{font-family: "Romeodn", "Pterra"; font-size: 100%;}
 .abyssal				{font-family: "Achilles", "Pterra"; font-size: 110%;}
 .felid					{font-family: "Rasyideen", "Pterra"; font-size: 120%;}

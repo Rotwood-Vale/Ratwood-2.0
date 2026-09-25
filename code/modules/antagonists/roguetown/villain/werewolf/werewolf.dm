@@ -140,6 +140,10 @@
 	max_integrity = 550
 	item_flags = DROPDEL
 
+/obj/item/clothing/suit/roguetown/armor/skin_armor/werewolf_skin/Initialize(mapload)///makes blessed silver do extra damage
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_GRABIMMUNE, "HIDE", "#VOLFED")/// no one should ever see this unless they spawn in werewolf skin via the game panel. TRAIT_GRABIMMUNE is only on werewolves and the matyr during their super saiyan, should be fine.
+
 /datum/intent/simple/werewolf
 	name = "claw"
 	icon_state = "inchop"
@@ -148,8 +152,6 @@
 	animname = "chop"
 	hitsound = "genslash"
 	penfactor = 50
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"

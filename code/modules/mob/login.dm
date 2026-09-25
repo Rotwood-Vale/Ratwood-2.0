@@ -101,6 +101,7 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		H.update_tongue_noise_verbs()
+		H.update_keen_ears_verb()
 
 /**
  * Checks if the attached client is an admin and may deadmin them

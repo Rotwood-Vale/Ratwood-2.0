@@ -48,7 +48,7 @@
 	else
 		playsound(M, 'sound/blank.ogg', 50, TRUE)
 
-	if(ishuman(M) || ismonkey(M))
+	if(ishuman(M))
 		if(prob(10))
 			M.Paralyze(40)
 	update_icon()

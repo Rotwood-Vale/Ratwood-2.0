@@ -5,6 +5,8 @@
 	aggressive=1
 	rude = TRUE
 	mode = NPC_AI_IDLE
+	smart_combatant = TRUE
+	special_attacker = TRUE
 	faction = list("psy_vault_guard")
 	ambushable = FALSE
 	cmode = 1

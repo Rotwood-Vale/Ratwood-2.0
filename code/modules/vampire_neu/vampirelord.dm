@@ -33,7 +33,7 @@
 	H.equipOutfit(/datum/outfit/job/vamplord)
 	H.set_patron(/datum/patron/inhumen/zizo)
 	H.verbs |= /mob/living/carbon/human/proc/demand_submission
-	H.maxbloodpool += 3000
+	H.adjust_maxbloodpool(3000)
 	H.adjust_bloodpool(3000)
 	for(var/S in MOBSTATS)
 		H.change_stat(S, 2)
@@ -74,13 +74,13 @@
 	set name = "Demand Submission"
 	set category = "VAMPIRE"
 	if(SSmapping.retainer.king_submitted)
-		to_chat(src, span_warning("I am already the Master of [SSmapping.config.map_name]."))
+		to_chat(src, span_warning("I am already the Master of [SSmapping.current_map.map_name]."))
 		return
 
 	var/mob/living/carbon/ruler = SSticker.rulermob
 
 	if(!ruler || (get_dist(src, ruler) > 1))
-		to_chat(src, span_warning("The Master of [SSmapping.config.map_name] is not beside me."))
+		to_chat(src, span_warning("The Master of [SSmapping.current_map.map_name] is not beside me."))
 		return
 
 	if(ruler.stat <= CONSCIOUS)
@@ -98,12 +98,20 @@
 	set name = "Punish Minion"
 	set category = "VAMPIRE"
 
+	if(!clan_position)
+		to_chat(src, span_warning("You have no subordinates to punish."))
+		return
+
 	var/list/possible = list()
-	for(var/datum/mind/V in SSmapping.retainer.vampires)
-		if(V.special_role == "Vampire Spawn")
-			possible[V.current.real_name] = V.current
-	for(var/datum/mind/D in SSmapping.retainer.death_knights)
-		possible[D.current.real_name] = D.current
+	for(var/datum/clan_hierarchy_node/subordinate in clan_position.get_all_subordinates())
+		var/mob/living/carbon/human/member = subordinate.assigned_member
+		if(!member || QDELETED(member))
+			continue
+		possible[member.real_name] = member
+	if(!length(possible))
+		to_chat(src, span_warning("You have no subordinates to punish."))
+		return
+
 	var/name_choice = input(src, "Who to punish?", "PUNISHMENT") as null|anything in possible
 	if(!name_choice)
 		return

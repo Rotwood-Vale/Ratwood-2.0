@@ -21,7 +21,8 @@
 	cmode_music = 'sound/music/combat_noble.ogg'
 
 	job_traits = list(TRAIT_SEEPRICES, TRAIT_CICERONE)
-
+	virtue_restrictions = list(/datum/virtue/utility/blacksmith, /datum/virtue/utility/artificer, /datum/virtue/utility/tailor)
+	quirk_restrictions = list(/datum/quirk/hunted)
 	advclass_cat_rolls = list(CTAG_MERCH = 2)
 	job_subclasses = list(
 		/datum/advclass/merchant
@@ -83,7 +84,7 @@
 		H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	else if(should_wear_femme_clothes(H))
 		shoes = /obj/item/clothing/shoes/roguetown/gladiator
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		head = /obj/item/clothing/head/roguetown/sultan/merchant
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/open
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/merchantbisht
