@@ -39,7 +39,8 @@
 							/obj/structure/flora/rogueshroom/unhappy = 1,
 							/obj/structure/glowshroom = 1,
 							/obj/effect/decal/remains/bear = 0.5,
-							/obj/effect/decal/remains/human = 0.2)
+							/obj/effect/decal/remains/human = 0.2,
+							/obj/effect/landmark/hunting_spawner = 3)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=2,
 						/turf/open/water/swamp=2,)
 	allowed_areas = list(/area/rogue/outdoors/jungle)
@@ -54,7 +55,7 @@
 	clusterCheckFlags = CLUSTER_CHECK_NONE
 	allowed_turfs = list(/turf/open/floor/rogue/AzureSand, /turf/open/floor/rogue/dunes)
 	spawnableAtoms = list(/obj/item/natural/stone = 10, /obj/item/grown/log/tree/stick = 10,
-	/obj/item/reagent_containers/food/snacks/fish/crab = 1, /obj/item/reagent_containers/food/snacks/fish/lobster = 1, /obj/item/reagent_containers/food/snacks/fish/oyster = 2)
+	/obj/item/reagent_containers/food/snacks/fish/crab = 1, /obj/item/reagent_containers/food/snacks/fish/lobster = 1, /obj/item/reagent_containers/food/snacks/fish/oyster = 2, /obj/effect/landmark/hunting_spawner = 2)
 	allowed_areas = list(/area/rogue/outdoors/jungle)
 
 /datum/mapGeneratorModule/junglewater
