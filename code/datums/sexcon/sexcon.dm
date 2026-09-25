@@ -144,6 +144,10 @@
 		spawn_target.balloon_alert(seer, "plap!", rand(-15, 15), rand(0, 25))
 
 /datum/sex_controller/proc/do_thrust_animate(atom/movable/target, pixels = 4, time = 2.7)
+	var/obj/item/organ/breasts/target_breasts
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		target_breasts = H.getorganslot(ORGAN_SLOT_BREASTS)
 	var/oldx = user.pixel_x
 	var/oldy = user.pixel_y
 	var/target_x = oldx
@@ -164,6 +168,29 @@
 			target_x -= pixels
 		if(EAST)
 			target_x += pixels
+
+	if(target_breasts && force >= SEX_FORCE_HIGH)
+		target_breasts.thrust_jiggle_on()
+		addtimer(CALLBACK(target_breasts, TYPE_PROC_REF(/obj/item/organ/breasts, thrust_jiggle_off)), 0.8 SECONDS)
+
+	var/t_oldx = target.pixel_x
+	var/t_oldy = target.pixel_y
+	var/t_target_x = t_oldx
+	var/t_target_y = t_oldy
+	var/t_pixels = pixels * 0.25
+	if(force >= SEX_FORCE_HIGH)
+		t_pixels = pixels * 0.5
+	switch(dir)
+		if(NORTH)
+			t_target_y += t_pixels
+		if(SOUTH)
+			t_target_y -= t_pixels
+		if(WEST)
+			t_target_x -= t_pixels
+		if(EAST)
+			t_target_x += t_pixels
+	animate(target, pixel_x = t_target_x, pixel_y = t_target_y, time = time)
+	animate(pixel_x = t_oldx, pixel_y = t_oldy, time = time)
 
 	animate(user, pixel_x = target_x, pixel_y = target_y, time = time)
 	animate(pixel_x = oldx, pixel_y = oldy, time = time)
