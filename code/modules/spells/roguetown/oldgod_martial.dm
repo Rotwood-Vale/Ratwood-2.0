@@ -335,7 +335,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		return
 
 	for(var/mob/living/carbon/human/M in range(radius, fallzone))
-		if(HAS_TRAIT(M, TRAIT_SILVER_WEAK)) // I plaed psydonate miraclist VL. The silveweakness overrides all else
+		if(HAS_TRAIT(M, TRAIT_SILVER_WEAK)) // I plaed psydonate miraclist VL. The silveweakness has to override all else
 			M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder)
 			M.ignite_mob()
 			visible_message(span_warning("[M] erupts in divine flames originating from [src]!"))
