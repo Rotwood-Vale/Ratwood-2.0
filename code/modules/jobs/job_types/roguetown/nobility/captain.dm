@@ -1,167 +1,167 @@
-/datum/job/roguetown/captain
-	title = "Knight Captain" //The Knight Captain is clearly not drawn from the ranks of guardsmen, or sergeants. They're drawn from the Knightly ranks and should be treated as such.
-	flag = GUARD_CAPTAIN
-	department_flag = NOBLEMEN
-	faction = "Station"
-	total_positions = 1
-	spawn_positions = 1
-	allowed_races = RACES_TOLERATED_UP
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	tutorial = "Your lineage is noble, and generations of strong, loyal knights have come before you. You served your time \
-	gracefully as knight of his royal majesty, and now you've grown into a role which many men can only dream of becoming. \
-	Veteran among knights, you lead the crown's knights to battle and organize the training squires. Obey the Marshal and the Crown. \
-	Lead your men to victory--and keep them in line--and you will see this realm prosper under a thousand suns."
-	display_order = JDO_GUARD_CAPTAIN
-	advclass_cat_rolls = list(CTAG_CAPTAIN = 20)
+// /datum/job/roguetown/captain
+// 	title = "Knight Captain" //The Knight Captain is clearly not drawn from the ranks of guardsmen, or sergeants. They're drawn from the Knightly ranks and should be treated as such.
+// 	flag = GUARD_CAPTAIN
+// 	department_flag = NOBLEMEN
+// 	faction = "Station"
+// 	total_positions = 1
+// 	spawn_positions = 1
+// 	allowed_races = RACES_TOLERATED_UP
+// 	allowed_sexes = list(MALE, FEMALE)
+// 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
+// 	tutorial = "Your lineage is noble, and generations of strong, loyal knights have come before you. You served your time \
+// 	gracefully as knight of his royal majesty, and now you've grown into a role which many men can only dream of becoming. \
+// 	Veteran among knights, you lead the crown's knights to battle and organize the training squires. Obey the Marshal and the Crown. \
+// 	Lead your men to victory--and keep them in line--and you will see this realm prosper under a thousand suns."
+// 	display_order = JDO_GUARD_CAPTAIN
+// 	advclass_cat_rolls = list(CTAG_CAPTAIN = 20)
 
-	spells = list(/obj/effect/proc_holder/spell/self/convertrole/guard)
-	outfit = /datum/outfit/job/roguetown/captain
+// 	spells = list(/obj/effect/proc_holder/spell/self/convertrole/guard)
+// 	outfit = /datum/outfit/job/roguetown/captain
 
-	give_bank_account = 26
-	noble_income = 16
-	min_pq = 9
-	max_pq = null
-	round_contrib_points = 3
-	cmode_music = 'sound/music/combat_knight.ogg'
-	social_rank = SOCIAL_RANK_NOBLE
-	job_traits = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_GUARDSMAN)
-	job_subclasses = list(
-		/datum/advclass/captain/infantry
-	)
+// 	give_bank_account = 26
+// 	noble_income = 16
+// 	min_pq = 9
+// 	max_pq = null
+// 	round_contrib_points = 3
+// 	cmode_music = 'sound/music/combat_knight.ogg'
+// 	social_rank = SOCIAL_RANK_NOBLE
+// 	job_traits = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_NOBLE, TRAIT_GUARDSMAN)
+// 	job_subclasses = list(
+// 		/datum/advclass/captain/infantry
+// 	)
 
-	virtue_restrictions = list(
-		/datum/virtue/utility/riding,
-	)
+// 	virtue_restrictions = list(
+// 		/datum/virtue/utility/riding,
+// 	)
 
-/datum/outfit/job/roguetown/captain
-	neck = /obj/item/clothing/neck/roguetown/bevor
-	cloak = /obj/item/clothing/cloak/captain
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/captain
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
-	pants = /obj/item/clothing/under/roguetown/chainlegs/captain
-	gloves = /obj/item/clothing/gloves/roguetown/plate
-	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
-	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
-	id = /obj/item/scomstone/garrison
-	job_bitflag = BITFLAG_ROYALTY | BITFLAG_GARRISON
+// /datum/outfit/job/roguetown/captain
+// 	neck = /obj/item/clothing/neck/roguetown/bevor
+// 	cloak = /obj/item/clothing/cloak/captain
+// 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/captain
+// 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
+// 	pants = /obj/item/clothing/under/roguetown/chainlegs/captain
+// 	gloves = /obj/item/clothing/gloves/roguetown/plate
+// 	wrists = /obj/item/clothing/wrists/roguetown/bracers
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
+// 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
+// 	id = /obj/item/scomstone/garrison
+// 	job_bitflag = BITFLAG_ROYALTY | BITFLAG_GARRISON
 
-/datum/job/roguetown/captain/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
-	. = ..()
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(istype(H.cloak, /obj/item/clothing/cloak/tabard/knight/guard)  || (istype(H.cloak, /obj/item/clothing/cloak/captain)))
-			var/obj/item/clothing/S = H.cloak
-			var/index = findtext(H.real_name, " ")
-			if(index)
-				index = copytext(H.real_name, 1,index)
-			if(!index)
-				index = H.real_name
-			S.name = "Captain Tabard ([index])" //This doesn't even actually work but you know.
-		var/prev_real_name = H.real_name
-		var/prev_name = H.name
-		var/honorary = "Ser"
-		if(should_wear_femme_clothes(H))
-			honorary = "Dame"
-		H.real_name = "[honorary] [prev_real_name]"
-		H.name = "[honorary] [prev_name]"
+// /datum/job/roguetown/captain/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+// 	. = ..()
+// 	if(ishuman(L))
+// 		var/mob/living/carbon/human/H = L
+// 		if(istype(H.cloak, /obj/item/clothing/cloak/tabard/knight/guard)  || (istype(H.cloak, /obj/item/clothing/cloak/captain)))
+// 			var/obj/item/clothing/S = H.cloak
+// 			var/index = findtext(H.real_name, " ")
+// 			if(index)
+// 				index = copytext(H.real_name, 1,index)
+// 			if(!index)
+// 				index = H.real_name
+// 			S.name = "Captain Tabard ([index])" //This doesn't even actually work but you know.
+// 		var/prev_real_name = H.real_name
+// 		var/prev_name = H.name
+// 		var/honorary = "Ser"
+// 		if(should_wear_femme_clothes(H))
+// 			honorary = "Dame"
+// 		H.real_name = "[honorary] [prev_real_name]"
+// 		H.name = "[honorary] [prev_name]"
 
-		for(var/X in peopleknowme)
-			for(var/datum/mind/MF in get_minds(X))
-				if(MF.known_people)
-					MF.known_people -= prev_real_name
-					H.mind.person_knows_me(MF)
+// 		for(var/X in peopleknowme)
+// 			for(var/datum/mind/MF in get_minds(X))
+// 				if(MF.known_people)
+// 					MF.known_people -= prev_real_name
+// 					H.mind.person_knows_me(MF)
 
-/datum/advclass/captain/infantry
-	name = "Knight Captain"
-	tutorial = "You've fought shoulder to shoulder with the realm's worthiest Knights while embedded directly within \
-	massed infantry formations. As a peerless armed combatant and tactician both, you are a formidable presence \
-	on any battlefield."
-	outfit = /datum/outfit/job/roguetown/captain/infantry
-	category_tags = list(CTAG_CAPTAIN)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_INT = 2,
-		STATKEY_PER = 1,
-		STATKEY_LCK = 1
-	)
-	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
-	)
-	extra_context = "This class gains Master skill in their weapon of choice."
+// /datum/advclass/captain/infantry
+// 	name = "Knight Captain"
+// 	tutorial = "You've fought shoulder to shoulder with the realm's worthiest Knights while embedded directly within \
+// 	massed infantry formations. As a peerless armed combatant and tactician both, you are a formidable presence \
+// 	on any battlefield."
+// 	outfit = /datum/outfit/job/roguetown/captain/infantry
+// 	category_tags = list(CTAG_CAPTAIN)
+// 	subclass_stats = list(
+// 		STATKEY_STR = 2,
+// 		STATKEY_CON = 2,
+// 		STATKEY_WIL = 2,
+// 		STATKEY_INT = 2,
+// 		STATKEY_PER = 1,
+// 		STATKEY_LCK = 1
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+// 	)
+// 	extra_context = "This class gains Master skill in their weapon of choice."
 
-	virtue_restrictions = list(
-		/datum/virtue/utility/riding
-	)
-	subclass_stashed_items = list("Caparison (Saiga)" = /obj/item/caparison, "Caparison (Fogbeast)" = /obj/item/caparison/fogbeast)
-	extra_context = "This class gains Master skill in their weapon of choice. This subclass receives a caparison in its stash. Use the Saiga or Fogbeast version depending on your mount."
+// 	virtue_restrictions = list(
+// 		/datum/virtue/utility/riding
+// 	)
+// 	subclass_stashed_items = list("Caparison (Saiga)" = /obj/item/caparison, "Caparison (Fogbeast)" = /obj/item/caparison/fogbeast)
+// 	extra_context = "This class gains Master skill in their weapon of choice. This subclass receives a caparison in its stash. Use the Saiga or Fogbeast version depending on your mount."
 
-/datum/outfit/job/roguetown/captain/infantry/pre_equip(mob/living/carbon/human/H)
-	..()
-	var/visages = list(
-		"Barbute"			= /obj/item/clothing/head/roguetown/helmet/heavy/captain,
-		"Snouted Sallet"	= /obj/item/clothing/head/roguetown/helmet/heavy/captain/sallet,
-		"Snouted Bascinet"	= /obj/item/clothing/head/roguetown/helmet/heavy/captain/bascinet,
-	)
-	var/visage_choice = input(H, "Choose your helm's visage.", "TAKE UP HELMS") as anything in visages
-	head = visages[visage_choice]
+// /datum/outfit/job/roguetown/captain/infantry/pre_equip(mob/living/carbon/human/H)
+// 	..()
+// 	var/visages = list(
+// 		"Barbute"			= /obj/item/clothing/head/roguetown/helmet/heavy/captain,
+// 		"Snouted Sallet"	= /obj/item/clothing/head/roguetown/helmet/heavy/captain/sallet,
+// 		"Snouted Bascinet"	= /obj/item/clothing/head/roguetown/helmet/heavy/captain/bascinet,
+// 	)
+// 	var/visage_choice = input(H, "Choose your helm's visage.", "TAKE UP HELMS") as anything in visages
+// 	head = visages[visage_choice]
 
-	backr = /obj/item/storage/backpack/rogue/satchel/black
-	backpack_contents = list(
-		/obj/item/storage/keyring/kcaptain = 1,
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
-		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
-		)
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/movemovemove)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/takeaim)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/onfeet)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/hold)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/focustarget)
-	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
-	H.verbs |= list(
-		/mob/living/carbon/human/proc/request_outlaw,
-		/mob/proc/haltyell,
-		/mob/living/carbon/human/mind/proc/setorders,
-		/mob/living/carbon/human/proc/take_squire
-	)
-	H.adjust_blindness(-3)
-	if(H.mind)
-		var/weapons = list(
-			"Sabre",
-			"Glaive",
-			)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-		H.set_blindness(0)
-		switch(weapon_choice)
-			if("Sabre")
-				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
-				r_hand = /obj/item/rogueweapon/sword/capsabre
-				l_hand = /obj/item/rogueweapon/shield/capbuckler
-				beltr = /obj/item/rogueweapon/scabbard/sword/royal
-			if("Glaive")
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
-				r_hand = /obj/item/rogueweapon/halberd/capglaive
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
-	if(H.mind && !H.mind.has_spell(/obj/effect/proc_holder/spell/self/choose_riding_virtue_mount))
-		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
+// 	backr = /obj/item/storage/backpack/rogue/satchel/black
+// 	backpack_contents = list(
+// 		/obj/item/storage/keyring/kcaptain = 1,
+// 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+// 		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
+// 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
+// 		)
+// 	if(H.mind)
+// 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/movemovemove)
+// 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/takeaim)
+// 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/onfeet)
+// 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/hold)
+// 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/focustarget)
+// 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
+// 	H.verbs |= list(
+// 		/mob/living/carbon/human/proc/request_outlaw,
+// 		/mob/proc/haltyell,
+// 		/mob/living/carbon/human/mind/proc/setorders,
+// 		/mob/living/carbon/human/proc/take_squire
+// 	)
+// 	H.adjust_blindness(-3)
+// 	if(H.mind)
+// 		var/weapons = list(
+// 			"Sabre",
+// 			"Glaive",
+// 			)
+// 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+// 		H.set_blindness(0)
+// 		switch(weapon_choice)
+// 			if("Sabre")
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
+// 				r_hand = /obj/item/rogueweapon/sword/capsabre
+// 				l_hand = /obj/item/rogueweapon/shield/capbuckler
+// 				beltr = /obj/item/rogueweapon/scabbard/sword/royal
+// 			if("Glaive")
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 5, TRUE)
+// 				r_hand = /obj/item/rogueweapon/halberd/capglaive
+// 				backl = /obj/item/rogueweapon/scabbard/gwstrap
+// 	if(H.mind && !H.mind.has_spell(/obj/effect/proc_holder/spell/self/choose_riding_virtue_mount))
+// 		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
 /obj/effect/proc_holder/spell/self/convertrole
 	name = "Recruit Beggar"

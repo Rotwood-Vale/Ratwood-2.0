@@ -18,7 +18,7 @@
 		/datum/job/roguetown/prince = list(display_title = "Amir", f_title = "Amira"),
 		// /datum/job/roguetown/marshal = list(display_title = "Mayor"),
 		/datum/job/roguetown/priest =  list(display_title = "High Priest", f_title = "High Priestess"),
-		/datum/job/roguetown/captain = list(display_title = "Cataphract Captain"),
+		// /datum/job/roguetown/captain = list(display_title = "Cataphract Captain"),
 		/datum/job/roguetown/physician = list(display_title = "Palace Physician"),
 		/datum/job/roguetown/villager = list(display_title = "Villager"),
 		/datum/job/roguetown/magician = list(display_title = "Palace Magician"),

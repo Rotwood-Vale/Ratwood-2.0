@@ -399,7 +399,7 @@
 		/datum/job/roguetown/councillor,
 		/datum/job/roguetown/physician,
 		/datum/job/roguetown/marshal,
-		/datum/job/roguetown/captain,
+		// /datum/job/roguetown/captain,
 		/datum/job/roguetown/hand,
 		/datum/job/roguetown/knight,
 		/datum/job/roguetown/lady,

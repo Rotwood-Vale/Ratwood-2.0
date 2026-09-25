@@ -39,7 +39,7 @@
 		// /datum/job/roguetown/marshal = list(display_title = "Mayor"),
 	)
 	tutorial_adjust = list(
-		/datum/job/roguetown/captain = "Your lineage is noble, and generations of strong, loyal knights and men-at-arms have come before you. You served your time \
+		// /datum/job/roguetown/captain = "Your lineage is noble, and generations of strong, loyal knights and men-at-arms have come before you. You served your time \
 				gracefully as knight of his royal majesty, and now you've grown into a role which many men can only dream of becoming. \
 				Veteran among knights, you lead the crown's knights and loyal men at arms into battle and organize the training squires. Obey only the Marshal and Crown. \
 				Lead your men to victory--and keep them in line--and you will see this realm prosper under a thousand suns.",
