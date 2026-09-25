@@ -53,7 +53,7 @@
 
 /datum/charflaw/addiction/New()
 	..()
-	time = rand(10 SECONDS, 20 SECONDS)
+	time = rand(6 MINUTES, 60 MINUTES)
 	next_sate = world.time + time
 
 // Clean up addiction effects when vice is removed
