@@ -864,10 +864,9 @@
 /datum/sex_controller/proc/try_apply_false_sensation()
 	if(!user.has_flaw(/datum/charflaw/addiction/lovefiend) && !user.has_flaw(/datum/charflaw/addiction/baothamarked))
 		return
-	var/already_false = user.has_status_effect(/datum/status_effect/debuff/false_sensation)
-	user.apply_status_effect(/datum/status_effect/debuff/false_sensation)
-	if(!already_false) // So chat isn't spammed
+	if(!user.has_status_effect(/datum/status_effect/debuff/false_sensation)) // So chat isn't spammed
 		to_chat(user, span_warning("My arousal is hollow and false. It won't sate my urges."))
+	user.apply_status_effect(/datum/status_effect/debuff/false_sensation)
 
 /datum/sex_controller/proc/update_erect_state()
 	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
