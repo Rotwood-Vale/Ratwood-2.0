@@ -101,26 +101,25 @@
 	subclass_languages = list(/datum/language/celestial)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CIVILIZEDBARBARIAN, TRAIT_ARCYNE_T1, TRAIT_NALEDI)
 	subclass_stats = list(
-		STATKEY_STR = 3,
+		STATKEY_STR = 2,
+		STATKEY_WIL = 3,
 		STATKEY_SPD = 2,
-		STATKEY_WIL = 1,
-		STATKEY_PER = -1,
-		STATKEY_CON = -1
+		STATKEY_CON = -2
 	)
 	subclass_skills = list(
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, // THEY ARE NOT GRAPPLERS
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/stealing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN,
 	)
-	subclass_spellpoints = 4 // Override inheritance
+	subclass_spellpoints = 0 // NO SPELLPOINTS IT HAS UNIQUE SKILLS
 
 /datum/outfit/job/roguetown/mercenary/warscholar_pontifex
 	var/detailcolor
@@ -146,20 +145,20 @@
 	if(H.mind)
 		detailcolor = input("Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon/bladeofpsydon)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
-		H.mind.AddSpell(new/obj/effect/proc_holder/spell/invoked/projectile/repel)
-		var/weapons = list("Path of War","Path of Control","Path of Shadows","Path of Survival")
-		var/weapon_choice = input(H, "Choose your path.", "WHAT PATH DO YOU WALK?") as anything in weapons
-		switch(weapon_choice)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/spellfist/fist_of_psydon)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/spellfist/grasp_of_psydon)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/spellfist/storm_of_psydon)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/create_campfire)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
+		H.apply_status_effect(/datum/status_effect/buff/arcyne_momentum)
+		var/weapons_weak = list("Path of War","Path of Shadows","Path of Survival")
+		var/weapon_weak_choice = input(H, "Choose your path.", "WHAT PATH DO YOU WALK?") as anything in weapons_weak
+		switch(weapon_weak_choice)
 			if("Path of War")//Weak combat stuff only
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)//longer CD than arcane bolt but more versatile
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
-			if("Path of Control")//Battlefield control, minimal damage dealing
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ensnare)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
 			if("Path of Shadows")//Sneaky trickster punchmage
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/lesserknock)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/invisibility)
@@ -168,7 +167,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, 2, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 5, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, 3, TRUE)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)//as a bodyguard it can be REALLY important to find where the bleed is.
 

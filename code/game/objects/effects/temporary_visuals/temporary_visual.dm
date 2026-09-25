@@ -43,3 +43,10 @@
 	if(set_dur)
 		duration = set_dur
 	. = ..()
+
+/obj/effect/temp_visual/air_strike_telegraph
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "trap"
+	light_outer_range = 1
+	duration = 3
+	layer = MASSIVE_OBJ_LAYER
