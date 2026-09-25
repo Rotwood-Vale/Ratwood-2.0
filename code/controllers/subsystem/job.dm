@@ -732,34 +732,38 @@ SUBSYSTEM_DEF(job)
 
 		if(!handled_resident_spawn)
 			var/obj/S = null
-			for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-				if(sloc.name != spawn_rank)
-					continue
-				if(locate(/mob/living) in sloc.loc)
-					continue
-				S = sloc
-				sloc.used = TRUE
-				break
-			if(!S)
+			var/datum/preferences/p=M.client?.prefs
+			if(p &&istype(p.virtue, /datum/virtue/utility/resident)||istype(p.virtuetwo, /datum/virtue/utility/resident)||istype(p.virtue, /datum/virtue/pack/pubman)||istype(p.virtuetwo, /datum/virtue/pack/pubman)||istype(p.virtue, /datum/virtue/pack/hobbyist)||istype(p.virtuetwo, /datum/virtue/pack/hobbyist)||istype(p.virtue, /datum/virtue/pack/patchjob)||istype(p.virtuetwo, /datum/virtue/pack/patchjob)||istype(p.virtue, /datum/virtue/pack/pitfighter)||istype(p.virtuetwo, /datum/virtue/pack/pitfighter)||istype(p.virtue, /datum/virtue/pack/volfsheep)||istype(p.virtuetwo, /datum/virtue/pack/volfsheep)||istype(p.virtue, /datum/virtue/pack/streetfencer)||istype(p.virtuetwo, /datum/virtue/pack/streetfencer)||istype(p.virtue, /datum/virtue/pack/collector)||istype(p.virtuetwo, /datum/virtue/pack/collector)||istype(p.virtue, /datum/virtue/pack/oneinthedrawstring)||istype(p.virtuetwo, /datum/virtue/pack/oneinthedrawstring)||istype(p.virtue, /datum/virtue/pack/knightstale)||istype(p.virtuetwo, /datum/virtue/pack/knightstale)||istype(p.virtue, /datum/virtue/pack/logger)||istype(p.virtuetwo, /datum/virtue/pack/logger)||istype(p.virtue, /datum/virtue/pack/butcher)||istype(p.virtuetwo, /datum/virtue/pack/butcher)||istype(p.virtue, /datum/virtue/pack/locksmith)||istype(p.virtuetwo, /datum/virtue/pack/locksmith)||istype(p.virtue, /datum/virtue/pack/citizen_militia)||istype(p.virtuetwo, /datum/virtue/pack/citizen_militia)||istype(p.virtue, /datum/virtue/pack/coal_runner)||istype(p.virtuetwo, /datum/virtue/pack/coal_runner))
+				spawn_resident_in_tavern(H)
+			else
 				for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
 					if(sloc.name != spawn_rank)
+						continue
+					if(locate(/mob/living) in sloc.loc)
 						continue
 					S = sloc
 					sloc.used = TRUE
 					break
-			if(!S)//danger will robinson something went wrong
-				log_game("Could not find a landmark for [spawn_rank]!!!!!!")
-				for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-					S = sloc
-					sloc.used = TRUE
-					break
-			if(length(GLOB.jobspawn_overrides[spawn_rank]))
-				S = pick(GLOB.jobspawn_overrides[spawn_rank])
-			if(S)
-				S.JoinPlayerHere(H, FALSE)
-			if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
-				log_world("Couldn't find a round start spawn point for [spawn_rank]")
-				SendToLateJoin(H)
+				if(!S)
+					for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
+						if(sloc.name != spawn_rank)
+							continue
+						S = sloc
+						sloc.used = TRUE
+						break
+				if(!S)//danger will robinson something went wrong
+					log_game("Could not find a landmark for [spawn_rank]!!!!!!")
+					for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
+						S = sloc
+						sloc.used = TRUE
+						break
+				if(length(GLOB.jobspawn_overrides[spawn_rank]))
+					S = pick(GLOB.jobspawn_overrides[spawn_rank])
+				if(S)
+					S.JoinPlayerHere(H, FALSE)
+				if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
+					log_world("Couldn't find a round start spawn point for [spawn_rank]")
+					SendToLateJoin(H)
 
 
 	if(H.mind)
@@ -910,9 +914,14 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/SendToLateJoin(mob/M, buckle = TRUE)
 	var/atom/destination
+	var/forcetowner=FALSE
+	var/datum/preferences/p=M.client?.prefs
+	if(p)
+		if(p &&istype(p.virtue, /datum/virtue/utility/resident)||istype(p.virtuetwo, /datum/virtue/utility/resident)||istype(p.virtue, /datum/virtue/pack/pubman)||istype(p.virtuetwo, /datum/virtue/pack/pubman)||istype(p.virtue, /datum/virtue/pack/hobbyist)||istype(p.virtuetwo, /datum/virtue/pack/hobbyist)||istype(p.virtue, /datum/virtue/pack/patchjob)||istype(p.virtuetwo, /datum/virtue/pack/patchjob)||istype(p.virtue, /datum/virtue/pack/pitfighter)||istype(p.virtuetwo, /datum/virtue/pack/pitfighter)||istype(p.virtue, /datum/virtue/pack/volfsheep)||istype(p.virtuetwo, /datum/virtue/pack/volfsheep)||istype(p.virtue, /datum/virtue/pack/streetfencer)||istype(p.virtuetwo, /datum/virtue/pack/streetfencer)||istype(p.virtue, /datum/virtue/pack/collector)||istype(p.virtuetwo, /datum/virtue/pack/collector)||istype(p.virtue, /datum/virtue/pack/oneinthedrawstring)||istype(p.virtuetwo, /datum/virtue/pack/oneinthedrawstring)||istype(p.virtue, /datum/virtue/pack/knightstale)||istype(p.virtuetwo, /datum/virtue/pack/knightstale)||istype(p.virtue, /datum/virtue/pack/logger)||istype(p.virtuetwo, /datum/virtue/pack/logger)||istype(p.virtue, /datum/virtue/pack/butcher)||istype(p.virtuetwo, /datum/virtue/pack/butcher)||istype(p.virtue, /datum/virtue/pack/locksmith)||istype(p.virtuetwo, /datum/virtue/pack/locksmith)||istype(p.virtue, /datum/virtue/pack/citizen_militia)||istype(p.virtuetwo, /datum/virtue/pack/citizen_militia)||istype(p.virtue, /datum/virtue/pack/coal_runner)||istype(p.virtuetwo, /datum/virtue/pack/coal_runner))
+			forcetowner = TRUE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(should_use_towner_spawn(H))
+		if(forcetowner || should_use_towner_spawn(H))
 			if(length(GLOB.jobspawn_overrides["Towner"]))
 				destination = pick(GLOB.jobspawn_overrides["Towner"])
 				destination.JoinPlayerHere(M, FALSE)

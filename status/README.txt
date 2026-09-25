@@ -1,0 +1,1 @@
+This is where status files will be created by the server. Status files allow the server to communicate its internal status with other monitoring systems.

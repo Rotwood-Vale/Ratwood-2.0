@@ -99,8 +99,8 @@
 
 	// Ask how the user wants to summon
 	var/path_choice = input(user, "How do you want to summon your familiar?") as null|anything in list(
-		"Summon from registered familiars"/*,
-		"Summon a non-sentient familiar"*/
+		"Summon from registered familiars",
+		"Summon a non-sentient familiar"
 	)
 
 	if (path_choice == "Summon from registered familiars")
@@ -179,7 +179,7 @@
 					user.busy_summoning_familiar = FALSE
 					revert_cast()
 					return FALSE
-/*//Commented out, as they can sit as idle buff totems, effectively. No, thanks.
+//BD, Reenabled, cause fun
 	if(path_choice == "Summon a non-sentient familiar")
 		// Non-sentient familiar summoning
 		var/familiarchoice = input("Choose your familiar", "Available familiars") as anything in familiars
@@ -193,7 +193,6 @@
 		log_game("[key_name(user)] summoned non-sentient familiar of type [familiar_type]")
 		user.busy_summoning_familiar = FALSE
 		return TRUE
-*/
 	else
 		user.busy_summoning_familiar = FALSE
 		revert_cast()

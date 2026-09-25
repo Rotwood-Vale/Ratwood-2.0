@@ -1,0 +1,5 @@
+author: "RedCore3-3"
+delete-after: True
+changes:
+  - rscadd: "Added taur bodies as a choice for constructs"
+  - rscadd: "Added cobra hoods to the list of demi-human ears"

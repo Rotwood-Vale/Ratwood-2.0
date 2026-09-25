@@ -1,0 +1,4 @@
+author: "Battlezoz"
+delete-after: True
+changes:
+  - bugfix: "Basket hat now hides the face."

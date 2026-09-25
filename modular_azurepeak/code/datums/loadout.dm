@@ -280,6 +280,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Straw Hat"
 	path = /obj/item/clothing/head/roguetown/strawhat
 
+/datum/loadout_item/baskethat
+	name = "Basket Hat"
+	path = /obj/item/clothing/head/roguetown/baskethat
+
 /datum/loadout_item/witchhat
 	name = "Witch Hat"
 	path = /obj/item/clothing/head/roguetown/witchhat
@@ -560,6 +564,15 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/ankletsfur
 	name = "Fur Anklets"
 	path = /obj/item/clothing/shoes/roguetown/boots/furlinedanklets
+
+/datum/loadout_item/footwraps
+	name = "Footwraps"
+	path = /obj/item/clothing/shoes/roguetown/boots/footwraps
+
+/datum/loadout_item/hleatherfootwraps
+	name = "Hardenned Leather Footwraps"
+	path = /obj/item/clothing/shoes/roguetown/boots/footwraps/hleather
+	triumph_cost = 2
 
 /datum/loadout_item/exoticanklets
 	name = "Exotic Anklets"
@@ -1271,6 +1284,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/kazengun_cloak
 	name = "Jinbaori"
 	path = /obj/item/clothing/cloak/kazengun
+
+/datum/loadout_item/paper_duster
+	name = "Paper Duster"
+	path = /obj/item/clothing/suit/roguetown/shirt/paper_duster
 
 // SHOES
 /datum/loadout_item/sandals

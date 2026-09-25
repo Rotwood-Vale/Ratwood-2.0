@@ -176,6 +176,18 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		character.change_stat(bonus, 1) //atm it only supports one stat getting a +1
 	if(bonus in GLOB.roguetraits)
 		ADD_TRAIT(character, bonus, TRAIT_GENERIC)
+	if((bonus in HARPY_FLIGHT_OR_FLIGHTLESS) && isharpy(character) && character.mind)
+		if(bonus == HARPY_FLIGHTLESS_KEY)
+			var/datum/species/harpy/harpydna = character.dna.species
+			harpydna.flightless = TRUE
+			// These stats are applied on top of the Harpy racials, for a total of STR 1, CON 0, PER 0, SPD 1, INT -1, WIL -2.
+			character.change_stat(STATKEY_STR, 2)
+			character.change_stat(STATKEY_CON, 2)
+			character.change_stat(STATKEY_PER, -1)
+			character.change_stat(STATKEY_SPD, -1)
+			character.change_stat(STATKEY_INT, -2)
+			character.change_stat(STATKEY_WIL, -2)
+			character.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/harpy_flight)
 
 /proc/virtue_check(datum/virtue/V, heretic = FALSE)
 	if(V)
@@ -194,7 +206,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 				vice.apply_post_equipment(character)
 				record_featured_object_stat(FEATURED_STATS_VICES, vice.name)
 				applied_new_system = TRUE
-	
+
 	// Legacy single vice support (deprecated) - only apply if new system wasn't used
 	if(character.charflaw && !applied_new_system)
 		character.charflaw.apply_post_equipment(character)

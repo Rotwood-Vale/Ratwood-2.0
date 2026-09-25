@@ -682,20 +682,7 @@
 	metalizer_result = /obj/item/roguegear/bronze
 
 /obj/structure/fluff/wallclock/attack_right(mob/user)
-	if(user.mind && isliving(user))
-		var/area/rogue/user_area = get_area(user)
-		if(user_area?.no_special_item_retrieval) //area does not allow fetching special items, return
-			return
-		if(user.mind.special_items && user.mind.special_items.len)
-			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
-			if(item)
-				if(user.Adjacent(src))
-					if(user.mind.special_items[item])
-						var/path2item = user.mind.special_items[item]
-						user.mind.special_items -= item
-						var/obj/item/I = new path2item(user.loc)
-						user.put_in_hands(I)
-			return
+	handle_special_items_retrieval(user, src)
 
 /obj/structure/fluff/wallclock/Destroy()
 	if(soundloop)
@@ -1068,12 +1055,12 @@
 
 /obj/structure/fluff/statue/knightalt
 	name = "knight statue"
-	desc = "Many men and women of the Otavan Orthodoxy died here to fight the Rot. It is tradition for the bones of their knights to be encased in these stone works." 
+	desc = "Many men and women of the Otavan Orthodoxy died here to fight the Rot. It is tradition for the bones of their knights to be encased in these stone works."
 	icon_state = "knightstatue2_l"
 
 /obj/structure/fluff/statue/knightalt/r
 	name = "knight statue"
-	desc = "Many men and women of the Otavan Orthodoxy died here to fight the Rot. It is tradition for the bones of their knights to be encased in these stone works." 
+	desc = "Many men and women of the Otavan Orthodoxy died here to fight the Rot. It is tradition for the bones of their knights to be encased in these stone works."
 	icon_state = "knightstatue2_r"
 
 
@@ -1117,7 +1104,7 @@
 	pixel_y = -16
 
 /obj/structure/fluff/statue/femalestatue1
-	name = "queen alexia statue"	
+	name = "queen alexia statue"
 	desc = "A modest depiction of the Queen Alexia the Righteous, lacking her usual armors or finery, many were constructed as a show of her humility and piety by prisoners of the crown."
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "2"
@@ -1425,7 +1412,7 @@
 	icon_state = "cross_zizo_u"
 	divine = FALSE
 	max_integrity = 350
-	
+
 /obj/structure/fluff/psycross/graggar
 	name = "vicious cross"
 	desc = "An unholy symbol wrought from stone. It promises glory to the conqueror and chains to the conquered."
@@ -1531,9 +1518,9 @@
 							else
 								thebride.real_name = "[bride_name_parts[1]] [surname]"
 							// Private notification to both
-							if(thegroom) 
+							if(thegroom)
 								to_chat(thegroom, span_notice("Your new shared surname is [surname]."))
-							if(thebride) 
+							if(thebride)
 								to_chat(thebride, span_notice("Your new shared surname is [surname]."))
 							// Set marriedto fields
 							thegroom.marriedto = thebride.real_name

@@ -4,14 +4,20 @@
 /datum/species/harpy
 	name = "Harpy"
 	id = "harpy"
-	desc = "<b>Harpy</b><br>\
+	desc = "<b>Harpy</b></br>\
 	Harpies, often called \"songbirds\" or \"Magpies\" by some, resemble the half-kin in appearance at first glance. \
 	However, the exact nature of the creatures is a much more complicated, debated topic, with many unknown details. \
 	Their origin comes from the cliffs of Etrusca, but their creation is disputed by scholars to be from one of several gods, but there is no confirmed answer whether they are the creation of Baotha, Eora, Matthios, or even Pestra's hand. \
-	Mistrusted by many for their wily and possessive nature, yet admired by others for their intelligence and beauty, these nomads are oft welcomed at a distance by most new cities they travel to. 	\
-	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>-3 CON | -2 STR</span> |<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> +1 PER | +1 INT | +2 SPD</b></span> </br> \
+	Mistrusted by many for their wily and possessive nature, yet admired by others for their intelligence and beauty, these nomads are oft welcomed at a distance by most new cities they travel to. </br>\
+	<u>Standard stats</u></br>\
+	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>-2 CON | -1 STR</span> |<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> +1 PER | +1 INT | +2 SPD</b></span> </br> \
 	<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Flight | Innate Singing | Strong Bites</b></span> </br> \
+	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Can't wear boots</span> | <span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #00０;'>Slight Fall Damage Reduction </span></b> </br>\
+	<u>Flightless stats</u></br>\
+	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>-1 INT | -2 WIL</span> |<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'> +1 STR | +1 SPD</b></span> </br> \
+	<span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Innate Singing | Strong Bites</b></span> </br> \
 	<span style='color: #cc0f0f;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>Can't wear boots</span> | <span style='color: #6a8cb7;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #00０;'>Slight Fall Damage Reduction </span></b>"
+
 
 	expanded_desc = "<b>Harpy</b><br>\
 	Harpies, often called \"songbirds\" or \"Magpies\" by some, resemble the half-kin in appearance at first glance. \
@@ -53,7 +59,7 @@
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
 		)
 
-	race_bonus = list(STAT_CONSTITUTION = -3, STAT_STRENGTH = -2, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1, STAT_SPEED = 2)
+	race_bonus = list(STAT_CONSTITUTION = -2, STAT_STRENGTH = -1, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1, STAT_SPEED = 2)
 	inherent_traits = list(TRAIT_CALTROPIMMUNE, TRAIT_NOFALLDAMAGE1, TRAIT_STRONGBITE) // hahahahahh
 	inherent_skills = list(
 		/datum/skill/misc/music = 3,
@@ -139,6 +145,11 @@
 		/datum/descriptor_choice/prominent_two_wild,
 		/datum/descriptor_choice/prominent_three_wild,
 		/datum/descriptor_choice/prominent_four_wild,
+	)
+	var/flightless = FALSE
+	custom_selection = list(
+		"Flight" = HARPY_FLIGHT_KEY,
+		"Flightless" = HARPY_FLIGHTLESS_KEY
 	)
 
 /datum/species/harpy/check_roundstart_eligible()

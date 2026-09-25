@@ -387,3 +387,18 @@
 	verbage_simple = "smooth"
 	verbage = "smooths"
 	craftdiff = 0
+
+//Much worse than using a sling, in terms of utility and abuse.
+//So they're cheap. Funny, too.
+/datum/crafting_recipe/roguetown/survival/javelin
+	name = "stone javelins (x2)"
+	category = "Ranged"
+	result = list(
+		/obj/item/ammo_casing/caseless/rogue/javelin/stone,
+		/obj/item/ammo_casing/caseless/rogue/javelin/stone,
+		)
+	reqs = list(/obj/item/grown/log/tree/small = 1,
+				/obj/item/natural/stone = 2)
+	verbage_simple = "craft"
+	verbage = "crafts"
+	craftdiff = 0

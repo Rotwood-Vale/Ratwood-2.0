@@ -279,6 +279,7 @@
 		/datum/sprite_accessory/snout/front/drama1,
 		/datum/sprite_accessory/snout/front/drama2,
 		/datum/sprite_accessory/snout/front/noccite,
+		/datum/sprite_accessory/snout/orca,
 		)
 
 /datum/customizer_choice/organ/snout/anthro/dullahan
@@ -411,6 +412,7 @@
 		/datum/sprite_accessory/snout/front/roundlight,
 		/datum/sprite_accessory/snout/stubby,
 		/datum/sprite_accessory/snout/stubbyalt,
+		/datum/sprite_accessory/snout/orca,
 		)
 
 /datum/customizer_choice/organ/snout/lamia

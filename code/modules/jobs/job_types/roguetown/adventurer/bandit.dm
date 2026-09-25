@@ -20,9 +20,8 @@
 	min_pq = 3
 	max_pq = null
 	round_contrib_points = 5
+	allowed_patrons = ALL_INHUMEN_PATRONS
 	quirk_restrictions = list(/datum/quirk/assassintarget)
-	allowed_patrons = list(/datum/patron/inhumen/matthios) // Bandits bro, they rob you blind
-
 	advclass_cat_rolls = list(CTAG_BANDIT = 20)
 	PQ_boost_divider = 10
 
@@ -72,7 +71,7 @@
 	switch(wanted_choice)
 		if("Yes")
 			ADD_TRAIT(H, TRAIT_KNOWNCRIMINAL, TRAIT_GENERIC)
-		if("No") 
+		if("No")
 			to_chat(H, span_warning("I am still relatively new to the gang. My crimes have gone unnoticed so far, but I lack experience."))
 			return null
 	var/bounty_poster = input(H, "Who placed a bounty on you?", "Bounty Poster") as anything in list("The Justiciary of [SSmapping.map_adjustment.realm_name]", "The Grenzelhoftian Holy See")
