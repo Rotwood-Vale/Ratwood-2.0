@@ -358,9 +358,7 @@
 // Hunting Traits
 #define TRAIT_MASTERFUL_HUNTER "Masterful Hunter"
 #define TRAIT_EXPERT_HUNTER "Expert Hunter"
-#define TRAIT_WHITE_STAG "White Stag"
 #define TRAIT_DEATHLESS "Deathless"
-#define TRAIT_BLOOD_RESISTANCE "Blood Resistance"
 
 // Weaponry Traits
 // Intended for very powerful, very specific or gimmicky weapon skills.
@@ -613,9 +611,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_MARTIAL_PROWESS = span_greentext("I've been trained by a master in the art of combat, allowing me to train my skills in arms past Expert."),
 	TRAIT_MASTERFUL_HUNTER = span_greentext("To hunt well, is to know the land. I have an advantage in becoming a masterful hunter here, for I know about the various watering holes, the feeding grounds, which thickets are bent by animal flanks."),
 	TRAIT_EXPERT_HUNTER = span_greentext("I am a skilled local hunter; my hunting skill can progress to expert levels."),
-	TRAIT_WHITE_STAG = span_info("I have consumed the flesh of the White Stag."),
 	TRAIT_DEATHLESS = span_info("I cannot truly die by ordinary means."),
-	TRAIT_BLOOD_RESISTANCE = span_info("I am resistant to blood-based effects."),
 	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can outright destroy my vessel."),
 	TRAIT_DYES = span_notice("I know my way around pigments and shades, and I'm able to create the exact colors I want in a dye station."),
 	TRAIT_BLACKOAK = span_warning("The Black Oaks can spot <b>any</b> foreigners and outsiders, no matter how long they've lived in the Vale. I can spot an invader at a glance."),
