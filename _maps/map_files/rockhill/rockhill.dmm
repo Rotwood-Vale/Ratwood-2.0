@@ -53110,7 +53110,7 @@
 /obj/item/millstone,
 /obj/structure/roguemachine/noticeboard/wall{
 	pixel_y = 0;
-	pixel_x = 32
+	pixel_x = -32
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
