@@ -3,7 +3,6 @@
 	category = SEX_CATEGORY_HANDS
 	// use user part instead of target part so it doesn't get blocked by self-targeting restrictions
 	user_sex_part = SEX_PART_ANUS
-	subtle_supported = TRUE
 	solo = TRUE
 
 /datum/sex_action/masturbate_anus/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
