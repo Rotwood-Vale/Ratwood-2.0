@@ -11173,6 +11173,14 @@
 	},
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/bath/desert)
+"dad" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = -32;
+	layer = 5
+	},
+/turf/open/floor/carpet/stellar,
+/area/rogue/indoors/town/bath/desert)
 "dag" = (
 /obj/structure/table/wood{
 	icon_state = "longtable"
@@ -13852,6 +13860,14 @@
 /obj/machinery/light/rogue/firebowl/church,
 /turf/open/floor/rogue/citybrick/citybrick6,
 /area/rogue/outdoors/desertdeep/above)
+"dLf" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = -32;
+	layer = 5
+	},
+/turf/open/floor/rogue/blocks/stonered,
+/area/rogue/indoors/town/bath/desert)
 "dLn" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/roguegrass/verdant,
@@ -18097,11 +18113,6 @@
 	dir = 8
 	},
 /area/rogue/outdoors/desertdeep)
-"eVg" = (
-/turf/closed/wall/mineral/rogue/sandstone{
-	color = "#ca9cff"
-	},
-/area/rogue/outdoors/exposed/bath/vault)
 "eVk" = (
 /turf/closed/wall/mineral/rogue/sandstone,
 /area/rogue/indoors/town/steward)
@@ -27152,6 +27163,12 @@
 /obj/item/bedsheet/rogue/wool,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/desert)
+"hEf" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/blocks/stonered/tiny,
+/area/rogue/indoors/town/bath/desert)
 "hEk" = (
 /turf/open/floor/rogue/darkpath{
 	color = "#b0b0b0"
@@ -27163,6 +27180,14 @@
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/indoors/town/desert)
+"hEt" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/tile/harem2{
+	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
+	},
+/area/rogue/indoors/town/bath/desert)
 "hEv" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -27264,6 +27289,12 @@
 	icon_state = "tilewhitebluespecial"
 	},
 /area/rogue/indoors/town/manor/desert)
+"hFx" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/tavern/desert)
 "hFy" = (
 /obj/item/natural/fibers,
 /turf/open/floor/rogue/citybrick,
@@ -31750,7 +31781,7 @@
 /turf/closed/wall/mineral/rogue/sandstone{
 	color = "#ca9cff"
 	},
-/area/rogue/outdoors/exposed/bath/vault)
+/area/rogue/indoors/town/bath/desert)
 "jaT" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/darkpath,
@@ -32833,6 +32864,12 @@
 "jpS" = (
 /turf/closed/wall/mineral/rogue/decostone/end/north,
 /area/rogue/indoors/town/church)
+"jpU" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/blocks/stonered,
+/area/rogue/indoors/town/bath/desert)
 "jpZ" = (
 /obj/structure/mineral_door/bars{
 	locked = 1
@@ -36641,6 +36678,12 @@
 	},
 /turf/open/floor/rogue/deserttempletile,
 /area/rogue/under/cave)
+"kqp" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = -32
+	},
+/turf/open/floor/rogue/woodturned,
+/area/rogue/indoors/town/tavern/desert)
 "kqq" = (
 /obj/structure/mineral_door/wood/violet{
 	locked = 1;
@@ -38457,6 +38500,10 @@
 	},
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/mountains/decap/gunduzirak)
+"kPC" = (
+/obj/structure/roguemachine/rosewall,
+/turf/open/floor/rogue/darkpath,
+/area/rogue/outdoors/town/desert)
 "kPD" = (
 /obj/structure/closet/crate/chest/old_crate{
 	lockid = "walls";
@@ -61757,7 +61804,7 @@
 	lockid = "nightman"
 	},
 /turf/open/floor/rogue/churchrough,
-/area/rogue/outdoors/exposed/bath/vault)
+/area/rogue/indoors/town/bath/desert)
 "rsS" = (
 /obj/structure/table/wood{
 	dir = 6;
@@ -64912,6 +64959,10 @@
 	},
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/indoors/town/garrison/desert/cell)
+"smy" = (
+/obj/structure/roguemachine/rosewall,
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/outdoors/town/desert)
 "smE" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -82521,6 +82572,10 @@
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/indoors/town/steward)
+"xel" = (
+/obj/structure/roguemachine/headeater/treasureseeker,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/bath/desert)
 "xen" = (
 /turf/closed/mineral/rogue/sandstone{
 	max_integrity = 1001
@@ -191055,7 +191110,7 @@ grY
 sbD
 kIW
 sbD
-dKv
+hEf
 iVN
 jBL
 ihz
@@ -192928,7 +192983,7 @@ wuy
 iVN
 lqd
 rEU
-rEU
+dad
 jqH
 iVN
 rVV
@@ -193550,7 +193605,7 @@ kTO
 jbm
 waE
 iVN
-aup
+xel
 aup
 jBn
 iVN
@@ -195721,10 +195776,10 @@ nFL
 wwZ
 wwZ
 wwZ
-eVg
-eVg
-eVg
-eVg
+iVN
+iVN
+iVN
+iVN
 iVN
 iVN
 iVN
@@ -196032,11 +196087,11 @@ nFL
 nFL
 wwZ
 wwZ
-eVg
-eVg
+iVN
+iVN
 auH
 nVS
-eVg
+iVN
 iVN
 iVN
 vMu
@@ -196344,11 +196399,11 @@ nFL
 nFL
 wwZ
 wwZ
-eVg
+iVN
 mHj
 fRz
 fRz
-eVg
+iVN
 myT
 gBk
 gBk
@@ -196968,11 +197023,11 @@ nFL
 nFL
 wwZ
 wwZ
-eVg
+iVN
 eiE
 fRz
 fRz
-eVg
+iVN
 cdt
 kBK
 gBk
@@ -197280,11 +197335,11 @@ nFL
 nFL
 wwZ
 wwZ
-eVg
-eVg
+iVN
+iVN
 qpI
 bsz
-eVg
+iVN
 iVN
 iVN
 mAj
@@ -197593,10 +197648,10 @@ nFL
 wwZ
 wwZ
 cjV
-eVg
-eVg
-eVg
-eVg
+iVN
+iVN
+iVN
+iVN
 oaO
 iVN
 iVN
@@ -312747,7 +312802,7 @@ dFn
 aup
 sbD
 sbD
-sbD
+dLf
 sbD
 dKv
 ogB
@@ -313066,7 +313121,7 @@ ogB
 pSs
 uKv
 dKv
-sbD
+jpU
 iVN
 dSm
 ias
@@ -413195,7 +413250,7 @@ oiv
 oiv
 atu
 iiI
-eok
+smy
 eok
 heV
 eok
@@ -422578,7 +422633,7 @@ ttU
 ttU
 fLH
 oYV
-aCN
+hFx
 ttU
 icQ
 bep
@@ -426307,7 +426362,7 @@ icQ
 ttU
 uzS
 nhK
-nhK
+kqp
 ttU
 ttU
 ttU
@@ -429749,7 +429804,7 @@ xnz
 kCI
 fAK
 muo
-rwu
+hEt
 sTc
 sTc
 dBF
@@ -431896,7 +431951,7 @@ nQW
 aBm
 egP
 ruT
-bep
+kPC
 icQ
 bep
 hIJ

@@ -628,11 +628,24 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_ancient.ogg')
 
 /datum/combat_music/herald
-	name = "Herad of Progress"
+	name = "Herald of Progress"
 	desc = "You cannot stop change."
-	shortname = "Ancient"
+	shortname = "Herald"
 	credits = "Bathory - Call from the Grave"
 	musicpath = list('sound/music/combatheraldprogress.ogg')
+
+/datum/combat_music/delf
+	name = "Crocs de l'araignée"
+	desc = "Oh, I know very well. How the secrets beckon so sweetly."
+	shortname = "Crocs"
+	credits = "Tsukasa Saitoh - Bloodborne (Original Soundtrack) - Darkbeast"
+	musicpath = list('sound/music/combat_delf.ogg')
+
+/datum/combat_music/delfclassic
+	name = "Drow Classic"
+	desc = "The right to own slaves is the greatest freedom a woman could ask for."
+	shortname = "Drow"
+	musicpath = list('sound/music/combat_delfclassic.ogg')
 
 /datum/combat_music/freifechter
 	name = "Freifechter"

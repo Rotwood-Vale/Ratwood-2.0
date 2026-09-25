@@ -358,7 +358,7 @@ GLOBAL_LIST_EMPTY(mass_direct_intercepts)
 					active_attack_routines -= H
 				// For movement, we set the turf as the target
 				H.target = null
-				H.enemies = list()
+				H.clear_enemies()
 				H.aggressive = 0 // Disable auto-retaliation
 				H.wander = FALSE // Disable wandering
 				H.start_pathing_to(T)
@@ -436,7 +436,7 @@ GLOBAL_LIST_EMPTY(mass_direct_intercepts)
 				// For objects, set as target. For mobs, set as enemy
 				if(ismob(target))
 					// Manually set enemy status with proper value for should_target() check
-					H.enemies[target] = TRUE
+					H.set_enemy(target, TRUE)
 					H.retaliate(target) // Use built-in retaliate function
 				else
 					// For objects, set as direct target and enable attack mode
@@ -508,7 +508,7 @@ GLOBAL_LIST_EMPTY(mass_direct_intercepts)
 				var/mob/living/carbon/human/H = M
 				if(!isnull(H.mode))
 					H.target = null
-					H.enemies = list()
+					H.clear_enemies()
 					H.wander = FALSE
 					H.mode = NPC_AI_IDLE
 				walk(H, 0)
@@ -578,7 +578,7 @@ GLOBAL_LIST_EMPTY(mass_direct_intercepts)
 			var/mob/living/carbon/human/H = M
 			if(!isnull(H.mode)) // Has old NPC AI system
 				H.target = null // Clear attack target
-				H.enemies = list() // Clear enemies so they don't attack
+				H.clear_enemies() // Clear enemies so they don't attack
 				H.aggressive = 0 // Disable auto-retaliation
 				H.wander = FALSE // Disable wandering
 				if(ismob(follow_target))
@@ -728,7 +728,7 @@ GLOBAL_LIST_EMPTY(mass_direct_intercepts)
 				else
 					// Make passive
 					H.target = null
-					H.enemies = list()
+					H.clear_enemies()
 					H.friends = list()
 					H.aggressive = 0
 					H.wander = FALSE

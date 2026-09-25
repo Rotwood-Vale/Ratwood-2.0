@@ -1,5 +1,0 @@
-author: "RadiantFlash7"
-delete-after: True
-changes:
-  - balance: "Naledi Complex is no longer optional"
-  - balance: "Divergence no longer has a 2 second immobilize. It now has a .5 second immobilize and a brief slowdown, like other spells."
