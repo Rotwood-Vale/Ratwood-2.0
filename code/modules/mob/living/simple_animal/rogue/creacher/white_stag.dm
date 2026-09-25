@@ -146,17 +146,15 @@
 
 /datum/intent/simple/stag_gore
 	name = "gore"
-	clickcd = CLICK_CD_MELEE
+	clickcd = CLICK_CD_QUICK
 	icon_state = "stab"
 	blade_class = BCLASS_STAB
 	attack_verb = list("gores", "rams", "skewers")
 	animname = "stab"
 	hitsound = 'sound/combat/rend_hit.ogg'
 	penfactor = 50
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "thrusts its antlers wildly!"
-	miss_sound = "bluntswoosh"
+	miss_sound = "bladewooshmed"
 
 /obj/item/rogueweapon/stag_antlers
 	name = "ancient antlers"

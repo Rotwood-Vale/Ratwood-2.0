@@ -122,6 +122,6 @@
 		/obj/item/storage/keyring = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/steel = 1,
 	)
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/shalal
 		head = /obj/item/clothing/head/roguetown/tagelmust

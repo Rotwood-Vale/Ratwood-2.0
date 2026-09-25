@@ -1,8 +1,8 @@
 /obj/item/hunting_map
 	name = "crumpled map"
 	desc = "A rough sketch of animal migratory patterns and bedding sites."
-	icon = 'icons/roguetown/items/misc.dmi'
-	icon_state = "parchment_folded"
+	icon = 'icons/roguetown/items/books.dmi'
+	icon_state = "hunt_map"
 	w_class = WEIGHT_CLASS_TINY
 	/// Category this map forces
 	var/datum/hunting_category/target_category = /datum/hunting_category/low_tier
@@ -15,6 +15,10 @@
 	/// Hard limit on uses
 	var/uses_left = -1
 
+/obj/item/hunting_map/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Use this map on a fresh mound to improve the chance of finding its listed quarry.")
+	. += span_info("Some maps scale with hunting skill, degrade with use, or eventually tear apart.")
 
 /obj/item/hunting_map/afterattack(obj/effect/hunting_track/target, mob/user, proximity)
 	if(!proximity || !istype(target))
@@ -79,6 +83,6 @@
 	name = "boar signs"
 	desc = "A simple map denoting recent areas where there have been boar attacks. It is easy to use for skilled hunters"
 	target_category = /datum/hunting_category/boars
-	skill_chances = list(10, 20, 30, 40, 55, 70, 85)
-	degradation_rate = 0.15
-	uses_left = 3
+	skill_chances = list(20, 30, 40, 50, 70, 90, 100)
+	degradation_rate = 0
+	uses_left = 5
