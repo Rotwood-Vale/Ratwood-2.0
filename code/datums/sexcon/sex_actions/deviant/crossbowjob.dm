@@ -1,7 +1,6 @@
 /datum/sex_action/grind_crossbow
 	name = "Grind buttstock against them"
 	check_same_tile = FALSE
-	subtle_supported = TRUE
 
 /datum/sex_action/grind_crossbow/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(user == target)

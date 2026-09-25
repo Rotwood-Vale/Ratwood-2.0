@@ -853,3 +853,77 @@
       gags, and so on.
   - rscadd: Miracles with an upfront devotion cost will display that in the spell's
       examine text.
+2026-09-25:
+  Kroto-Ker:
+  - balance: You can rip off gambeson sleeves.
+  Randumb-Phantomb:
+  - qol: low-town accent users can now say the word sire. Sir and ser are corrected
+      to sire, and you also can now say butter without it being corrected to arseer.
+  Xander3359:
+  - qol: Subtle toggle can now be done from the ERP panel, rather than on a per-verb
+      basis.
+  Yuckuza:
+  - bugfix: animal butcher results have their unique meats properly set in their butcher
+      results. Troll blubber, bear meat, ham, etc no longer unobtainable.
+  - rscadd: Added 12 new drow weapons available to drow mercs and drow adventurers
+  - rscadd: 3 new drow armor pieces, a light armor vest and two helms
+  - rscadd: "New drow-exclusive adventurer class Crocs de l'araign\xE9e D\xE9broussaillage\
+      \ that gets journeyman skills + drow-specific gear"
+  - rscadd: The drider mount can now climb up a single z-level by clicking with an
+      empty hand on a wall (as you would with normal climbing)
+  - rscadd: Driders now have natural armor barding with brigandine stats and a lengthy
+      40-second regen time per 20% integ.
+  - balance: Drow merc men gender stats changed from -1 STR, +1 LCK -> -1 STR/LCK,
+      +1 SPD/WIL. You're unlucky to be a drow male, but extra beatings have made you
+      more resilient.
+  - qol: Drow mercs now summon their drider via a snowflaked TRAIT_SPIDERBORN spell
+      that works like saddleborn but exclusively for Driders. Driders do not suffer
+      the same dangerous area penalties as regular mounts; they are underdark apex
+      predators after all.
+  - refactor: Disarm intent now functions with any rogue weapon, not just the hooksword.
+      Uses shared logic rather than an on_attack override duplicated per weapon with
+      the intent.
+  - bugfix: Changed the backend of drow merc pre_equip(), far less prone to deleting
+      your items during loadout selection.
+  - sound: Drow merc combat music swapped to "Tsukasa Saitoh - Bloodborne (Original
+      Soundtrack) - Darkbeast". Old combat track selectable under the name "Drow Classic"
+  trueroguan:
+  - bugfix: Transfix no longer permanently gets harder to resist every time you cast
+      it on someone in combat mode.
+  - bugfix: Obfuscate's stealth powers now grant real invisibility - NPCs can no longer
+      see and attack you while cloaked.
+  - bugfix: Kicking and pickpocketing now break your invisibility, same as other attacks
+      already did.
+  - balance: Potence's punch damage bonus now scales 3x per level; higher tiers grant
+      extra strength-related traits.
+  - balance: Celerity's higher tiers grant Leaper and Expert Dodger, with a visible
+      warning when they trigger.
+  - balance: Scorpion's Touch (Quietus) now requires an actual bleeding wound to inflict
+      its debuff, scaled by Blood Magic skill, instead of applying on any touch.
+  - balance: Successfully Diablerizing a vampire now grants their full lifetime Research
+      Points, not just their unspent pool.
+  - qol: Phantom Speaker lets you choose which language to project your voice in.
+  - code_imp: Extracted a shared vampire-domination-immunity check used by Transfix
+      and Obfuscate.
+  wikimody:
+  - rscadd: Naledi mercenary clothes no longer go up in flames at first oportunity
+  yupup123:
+  - rscadd: Added Speech Mannerisms
+  - bugfix: Fixed a bug that made accents apply to emotes when using `*` in `say`
+  zeroisthebiggay:
+  - balance: sex freak vices now require a sexcon interaction to be properly sated
+  zoktiik:
+  - bugfix: Being "buckled" to structures (sitting down in a chair, lying on a bed)
+      no longer blocks spellcasting on its own. It also now respects spells that don't
+      require a gesture component to cast. Now, you have to specifically be restrained,
+      or buckled to a structure that restrains you (i.e. the rack, pillory, etc),
+      or caught in a trap that you need to resist out of, for any of that to block
+      gestural casting.
+  - rscadd: Mounted casting has been opened up to anything you can "ride" (carried/piggyback
+      on a human mob, riding a dinghy). However, these also require that you (and
+      your "mount") stay still for 2 seconds before you can cast.
+  - rscadd: i.ibb.co (imgbb.com) and file.garden (filegarden.com) are now among the
+      approved character image hosts.
+  - admin: Character assets link regex has been hardened somewhat to more reliably
+      enforce the domain whitelist, and quotes cannot be submitted to try and perform
+      any sort of string-escape exploit.

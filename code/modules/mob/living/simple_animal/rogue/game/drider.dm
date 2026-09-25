@@ -27,14 +27,9 @@
 	STASTR = 10
 	tame = FALSE
 	food_type = list(
-		/obj/item/reagent_containers/food/snacks/rogue/meat/steak,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/fatty,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/bacon,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/spider,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/crab,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/poultry,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit,
+		/obj/item/reagent_containers/food/snacks/rogue/meat,
+		/obj/item/reagent_containers/food/snacks/rogue/meat_rotten,
+		/obj/item/organ,
 		/obj/item/reagent_containers/food/snacks/rogue/truffles,
 		/obj/item/reagent_containers/food/snacks/grown/apple,
 	)
@@ -50,9 +45,11 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/drider/Initialize(mapload)
 	. = ..()
+	food_typecache -= typesof(/obj/item/organ/brain)//no round removing someone with your spider
 	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOFALLDAMAGE2, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOFIRE, TRAIT_GENERIC)
+	bbarding = new /obj/item/clothing/barding/drider(src)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/drider/update_icon()
 	cut_overlays()
@@ -165,3 +162,54 @@
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S
 	update_icon()
+/// Handles driders climbing up z-levels. Prior to this, they were uniquely able to fall down Z-levels without taking damage, i.e. climbing down.
+/mob/living/simple_animal/hostile/retaliate/rogue/drider/proc/can_climb_with(mob/living/rider)
+	if(QDELETED(rider) || !tame || anchored || incapacitated() || IsImmobilized() || !(mobility_flags & MOBILITY_MOVE))
+		return FALSE
+	if(rider.buckled != src || rider.loc != loc || rider.incapacitated() || rider.IsImmobilized())
+		return FALSE
+	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
+	return riding_datum && riding_datum.driver == rider
+
+/mob/living/simple_animal/hostile/retaliate/rogue/drider/proc/get_climb_target(turf/closed/wall)
+	if(!isturf(loc) || QDELETED(wall) || !wall.wallclimb || wall.z != z || get_dist(src, wall) != 1)
+		return null
+	if(!(get_dir(src, wall) in GLOB.cardinals))
+		return null
+	var/turf/open/transparent/openspace/opening = get_step_multiz(src, UP)
+	if(!istype(opening) || !can_zTravel(opening, UP))
+		return null
+	var/turf/open/landing = get_step_multiz(wall, UP)
+	if(!istype(landing) || istype(landing, /turf/open/transparent/openspace))
+		return null
+	if(!opening.CanPass(src, landing) || !landing.CanPass(src, opening))
+		return null
+	for(var/atom/movable/blocker in opening)
+		if(!blocker.CanPass(src, landing))
+			return null
+	for(var/atom/movable/blocker in landing)
+		if(!blocker.CanPass(src, opening))
+			return null
+	return landing
+
+/mob/living/simple_animal/hostile/retaliate/rogue/drider/proc/climb_terrain(turf/closed/wall, mob/living/rider)
+	if(!can_climb_with(rider))
+		return FALSE
+	var/turf/start = get_turf(src)
+	var/turf/landing = get_climb_target(wall)
+	if(!landing)
+		to_chat(rider, span_warning("My drider cannot find a clear ledge to climb onto here."))
+		return FALSE
+	rider.visible_message(span_notice("[rider] guides [src] up [wall]..."), span_notice("I guide [src] up [wall]..."))
+	if(!do_after(rider, 2 SECONDS, needhand = FALSE, target = src, extra_checks = CALLBACK(src, PROC_REF(can_climb_with), rider)))
+		return FALSE
+	if(QDELETED(src) || !can_climb_with(rider) || loc != start || get_climb_target(wall) != landing)
+		return FALSE
+	setDir(get_dir(src, wall))
+	// The hostile animal forceMove override brings all buckled passengers along.
+	if(!forceMove(landing))
+		return FALSE
+	var/datum/component/riding/riding_datum = GetComponent(/datum/component/riding)
+	riding_datum.last_vehicle_move = world.time
+	playsound(src, 'sound/foley/climb.ogg', 100, TRUE)
+	return TRUE

@@ -1,0 +1,4 @@
+author: "mushy"
+delete-after: True
+changes:
+  - balance: "Made darkvision slightly brighter."
