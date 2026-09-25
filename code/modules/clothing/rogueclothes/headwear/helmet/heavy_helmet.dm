@@ -13,6 +13,10 @@
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
 	armor_class = ARMOR_CLASS_MEDIUM	//Not a wearing requirement. check_armor_skill() ignores the head slot, this only feeds highest_ac_worn().
 
+/obj/item/clothing/head/roguetown/helmet/heavy/ComponentInitialize()
+	..()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/head/roguetown/helmet/heavy/bronze
 	name = "bronze barbute"
 	desc = "A greathelm of bronze, who's nasalguard and mandibles leave the wearer's face cloaked in darkness. The heroes of yore have long since \
@@ -206,6 +210,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -242,6 +247,45 @@
 	max_integrity = ARMOR_INT_HELMET_HEAVY_DECREPIT
 	color = "#bb9696"
 	anvilrepair = null
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/shadowplate
+	name = "drow cavalier helm"
+	desc = "A greathelm commonly worn by Underdark spider-jockies. The golden wings convey both a feminine elegance and martriarchal tyranny.\
+	While lacking an adjustable visor, the winged halo and accompanying plumage can detach from the helm and be worn seperately."
+	item_state = "gildeddrowhelm"
+	icon_state = "gildeddrowhelm"
+	adjustable = CAN_CADJUST
+	emote_environment = 3
+	body_parts_covered = FULL_HEAD
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES
+	body_parts_covered = HEAD|EARS|HAIR|NOSE|EYES|MOUTH
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/shadowplate/ComponentInitialize()
+	..()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS), null, 'sound/items/visor.ogg', null, UPD_HEAD)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/shadowplate/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(!(istype(W, /obj/item/natural/feather) && !detail_tag))
+		return
+	user.visible_message(span_warning("[user] adds [W] to [src]."))
+	user.transferItemToLoc(W, src, FALSE, FALSE)
+	detail_color = COLOR_WHITE
+	detail_tag = "_detail"
+	update_icon()
+	if(loc == user && ishuman(user))
+		var/mob/living/carbon/H = user
+		H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/shadowplate/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/fluted
 	name = "fluted armet"
@@ -343,6 +387,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -363,7 +408,7 @@
 		altdetail_color = GLOB.colorlist[choicealt]
 		altdetail_tag = "_detailalt"
 		if(choicealt in GLOB.pridelist)
-			detail_tag = "_detailp"
+			altdetail_tag = "_detailaltp"
 		update_icon()
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
@@ -388,6 +433,17 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/snouted
 	name = "snouted armet"
 	icon_state = "armet_s"
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron
+	name = "iron armet"
+	desc = "Holy lamb, sacrificial hero, blessed idiot - Psydon endures. Will you endure alongside Him, as a knight of humenity, or crumble before temptation?"
+	icon_state = "iarmet"
+	smeltresult = /obj/item/ingot/iron
+	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron/snouted
+	name = "iron snouted armet"
+	icon_state = "iarmet_s"
 
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold
@@ -448,6 +504,7 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/xylixhelm/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_JINGLE_BELLS, 2)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm
 	name = "astrata helmet"
@@ -506,6 +563,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -603,6 +661,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/ordinatorhelm/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/ordinatorhelm/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -822,6 +881,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/puritan
 	name = "volfskulle bascinet"

@@ -156,6 +156,15 @@
 		if(!eat_sword(user, I))
 			return ..()
 
+/obj/item/rogueweapon/scabbard/quickdraw_interact(mob/living/user, obj/item/held_item)
+	if(held_item)
+		if(weapon_check(user, held_item))
+			attackby(held_item, user)
+		return TRUE
+	if(sheathed)
+		attack_hand(user)
+	return TRUE
+
 
 /obj/item/rogueweapon/scabbard/examine(mob/user)
 	. = ..()

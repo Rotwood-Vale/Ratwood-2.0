@@ -168,12 +168,15 @@
 
 /obj/item/rogueweapon/katar/punchdagger/frei
 	name = "vývrtka"
-	desc = "A type of punch dagger of Aavnic make initially designed to level the playing field with an orc in fisticuffs, its serrated edges and longer, thinner point are designed to maximize pain for the recipient. It's aptly given the name of \"corkscrew\", and this specific one has the colours of Szöréndnížina. Can be worn on your ring slot."
+	desc = "A type of punch dagger of Czwarteki make initially designed to level the playing field with an orc in fisticuffs, its serrated edges and longer, thinner point are designed to maximize pain for the recipient. It's aptly given the name of \"corkscrew\", and this specific one has the colours of Szöréndnížina. Can be worn on your ring slot."
+	force = 18
 	icon_state = "freiplug"
 	slot_flags = ITEM_SLOT_RING
+	icon = 'icons/roguetown/weapons/special/freifechter32.dmi'
+	possible_item_intents = list(/datum/intent/dagger/thrust, /datum/intent/dagger/thrust/pick, /datum/intent/knuckles/strike)
 
 /obj/item/rogueweapon/katar/punchdagger/aav
-	name = "vývrtka"
+	name = "aavnic punchdagger"
 	desc = "A type of punch dagger of Aavnic make initially designed to level the playing field with an orc in fisticuffs, its serrated edges and longer, thinner point are designed to maximize pain for the recipient. It's aptly given the name of \"corkscrew\", and this specific one has the colours of a Steppesman's banner. Can be worn on your ring slot."
 	icon_state = "avplug"
 	slot_flags = ITEM_SLOT_RING
@@ -360,7 +363,7 @@
 
 /obj/item/rogueweapon/handclaw/gronn
 	name = "Gronn Beast Claws"
-	desc = "A pair of uniquely reinforced iron claws forged with the addition of bone by the Iskarn shamans of the Northern Empty. \
+	desc = "A pair of uniquely reinforced iron claws forged with the addition of bone by the Zayran shamans of the Northern Empty. \
 			Their unique design aids them in slipping between the plates in armor and their light weight supports rapid aggressive slashes. \
 			'To see the claws of the four, Is to see the true danger of the north. Not man, Not land but beast. We are all prey in their eyes.'"
 	icon_state = "gronnclaws"

@@ -65,16 +65,17 @@
 #define BLOODCRAWL_EAT 2
 
 //Mob bio-types flags
-#define MOB_ORGANIC 	1 << 0
-#define MOB_MINERAL		1 << 1
-#define MOB_ROBOTIC 	1 << 2
-#define MOB_UNDEAD		1 << 3
-#define MOB_HUMANOID 	1 << 4
-#define MOB_BUG 		1 << 5
-#define MOB_BEAST		1 << 6
-#define MOB_EPIC		1 << 7 //megafauna
-#define MOB_REPTILE		1 << 8
-#define MOB_SPIRIT		1 << 9
+// Parenthesised because unary ~ binds tighter than <<, so a bare 1 << N clears every lower bit too
+#define MOB_ORGANIC 	(1 << 0)
+#define MOB_MINERAL		(1 << 1)
+#define MOB_ROBOTIC 	(1 << 2)
+#define MOB_UNDEAD		(1 << 3)
+#define MOB_HUMANOID 	(1 << 4)
+#define MOB_BUG 		(1 << 5)
+#define MOB_BEAST		(1 << 6)
+#define MOB_EPIC		(1 << 7) //megafauna
+#define MOB_REPTILE		(1 << 8)
+#define MOB_SPIRIT		(1 << 9)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
@@ -551,6 +552,7 @@
 #define SKIN_COLOR_VELOTHEL "87a665"
 #define SKIN_COLOR_KROSEC "f9f9f9"
 #define SKIN_COLOR_ASHOL "9D807A"
+#define SKIN_COLOR_PYRIS "BDE5ED"
 
 //GOBLIN SKIN TONES
 #define SKIN_COLOR_OCHRE "968127"
@@ -643,3 +645,7 @@
 #else
 #define NPC_THINK(message)
 #endif
+
+/// Rot accumulated before a corpse rises as a deadite. Lives here rather than in rotting.dm because
+/// the ghost lock in observer.dm uses it too
+#define DEAD_TO_ZOMBIE_TIME (5 MINUTES)

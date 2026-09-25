@@ -56,11 +56,6 @@
 	cost = 25
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers/iron)
 
-/datum/supply_pack/rogue/armor_iron/jackchains
-	name = "Bracers, Jack Chain"
-	cost = 20
-	contains = list(/obj/item/clothing/wrists/roguetown/bracers/jackchain)
-
 /datum/supply_pack/rogue/armor_iron/chaingloves_iron
 	name = "Gauntlets, Chain"
 	cost = 20

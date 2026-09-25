@@ -87,7 +87,7 @@
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/
 	if(SSmapping.current_map.map_name == "Rockhill")
 		cloak = /obj/item/clothing/cloak/citywatch
-		head = /obj/item/clothing/head/roguetown/helmet/kettle/citywatch
+		head = /obj/item/clothing/head/roguetown/helmet/kettle
 	if(SSmapping.current_map.map_name == "Desert Town")
 		cloak = /obj/item/clothing/cloak/citywatch/janissary
 		head = /obj/item/clothing/head/roguetown/helmet/janissaryhelm
@@ -160,7 +160,7 @@
 	head = /obj/item/clothing/head/roguetown/helmet/kettle
 	if(SSmapping.current_map.map_name == "Rockhill")
 		cloak = /obj/item/clothing/cloak/citywatch
-		head = /obj/item/clothing/head/roguetown/helmet/kettle/citywatch
+		head = /obj/item/clothing/head/roguetown/helmet/kettle
 	if(SSmapping.current_map.map_name == "Desert Town")
 		cloak = /obj/item/clothing/cloak/citywatch/janissary
 		head = /obj/item/clothing/head/roguetown/helmet/janissaryhelm

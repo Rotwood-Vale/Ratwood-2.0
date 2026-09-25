@@ -456,3 +456,474 @@
   zeroisthebiggay:
   - bugfix: consorts are actually nobles
   - rscadd: braziers are destructible now
+2026-09-16:
+  IronDragoon:
+  - rscadd: Bandit pioneer gets squire knowledge and explosive specialist
+  - balance: Bombstrap cannot hold blastpowder sticks any more
+  - qol: bombstrap and GW strap work with hotkeys
+  - bugfix: made the sprites for bombstrap work (inv was not set up right, and on
+      person was just not used at all
+  RadiantFlash7:
+  - qol: Sacks no longer sold at the navigator
+  - qol: when a price is provided while shift clicking an item, the navigator sales
+      category is provided as well
+  - balance: most stockpile goods now have an export, import interior trade region
+  - bugfix: containers now show the value of all items inside it+ the container
+  - bugfix: smithed items now are marked as 'crafted' for navigator sales
+  - balance: reverts sojourner statline
+  Yuckuza:
+  - balance: bronze armor protections buffed to a uniform B+ across the board
+  - balance: 'Brigandine family of armors (coat of plates, light brig, splint arms,
+      etc.) all now use unique armor protection value var: 70 Blunt, 90 Slash, 40
+      Stab, 70 Pierce. Better blunt and arrow padding than plate, but sword stabs
+      and above will pen. Best light armor gets for melee. Medium/heavy classes should
+      still wear maille under it!'
+  - balance: Sisseans can now eat organs.
+  - bugfix: Fixes dolabra till intent not working; it now hoes around properly.
+  - rscadd: Ported cleave AOE weapon intents from Azure Peak
+  - balance: Greatsword reworked - Removed Rend & Bash on gripped intents, gains Cleave
+      and Sweep AOE intents
+  - balance: Executioner's Sword gains Cleave and Sweep at 1.2 damfactor. No longer
+      heavy balance.
+  - rscadd: Berserker sword, a MUCH lesser daemonslayer guts sword. In the Executioner
+      sword subtype. Loses peel in exchange for a unique smash intent that does knockback
+      and chop B-class damage.
+  - rscadd: New crafting recipe for Daemonslayer, requires an anointed berserker sword
+      which is crafted from glut harvested from dead gnolls, alongside the other uberrare
+      loot the recipe already needed. Go kill gnoll players!
+  - balance: Greataxe gains frontal arc Sweep at 1.1 damfactor with Massive clickCD
+  - balance: Maul gains frontal arc Sweep with Glacial clickCD, loses Daze
+  - balance: Axes cut damfactor increased to 1.3 (from 1.1), loses penfactor, clickCD
+      increased in general
+  - balance: Greatflail / Matthios Flail gain charged horizontal Sweep at 1.5 damfactor
+  - balance: Bardiche gains Cleave and Sweep, loses gripped Chop. AOE intents are
+      2 tiles reach.
+  - balance: Glaive gains Sweep, thrust moved to bad thrust subtype (penfactor 20,
+      no effective range). AOE intents are 2 tiles reach.
+  - balance: Naginata gains Sweep, loses Peel. AOE intent is 2 tile reach.
+  - code_imp: /obj/item/ingot/component types ported. Used in berserker sword and
+      daemonslayer crafting
+  - qol: Attack Speed display is now color-coded across six granular tiers (including
+      new Extremely Sluggish and Glacial)
+  - qol: Cleave examine shows max additional targets, living priority note, and diagonal
+      pattern info
+  - image: Intent icons split out to dedicated rogueintents.dmi. rather than being
+      lumped into roguehud.dmi
+  - image: draconic ingot and enduring ingot now have unique sprites rather than reusing
+      recolored blacksteel and silver ingot icon states.
+  - bugfix: fixed thespian knowing kazengunese, they know Etruscan instead
+  wikimody:
+  - refactor: removes an error causing code from certain eora tree effect
+  - bugfix: Keyimprinter now looks to earth not space for keys (it wanted wrong key
+      type)
+  zeroisthebiggay:
+  - rscadd: Quirks! Essentially lesser virtues unlocked by having additional vices.
+      They typically provide very little mechanical benefit, but contain some neat
+      ways to give your character some extra flavor.
+  - rscdel: Ugly virtue. It was already a vice, and dead nose has been reworked into
+      a quirk.
+  - rscdel: Second Voice virtue. It's been reworked into a quirk.
+  - rscdel: Nobility virtue. It's been reworked into a quirk.
+  - rscdel: High Society virtue. It's been made redundant and is now dead.
+  - rscdel: Acquired Tastes virtue. It's been atomized into the Acquired Tastes and
+      Rough Lover quirks.
+  - rscdel: Annoying Voice, Malodorous, Marked by Gnolls, Marked for Death Scarred,
+      and Ugly vices. They've all been reworked into quirks. !!!!!If you were using
+      these before MAKE SURE THEY'RE SELECTED!!!!!
+  - balance: Those granted nobility from the noble quirk are considered minor nobles.
+  - balance: Minor nobles and foreign nobles are subjected to the poll tax.
+  - refactor: Redid some backend code on how virtues are handled, enabling proper
+      restrictions for incompatible vices and such.
+  - code_imp: No Vice is no longer selectable as a vice. Now you have to clear all
+      your other vices and then clear your first vice slot in order to have No Vice.
+  - rscadd: expanded character song preview
+  - spellcheck: fixes nonbinary genital verbage
+  - rscadd: psicrosses can be right clicked with an empty hand to toggle their wrist/neck
+      display state
+  zoktiik:
+  - bugfix: The Fortitude spell that is supposed to halve stamina usage was also halving
+      stamina regen. Fixed now. It was possible to cast this spell on someone offensively,
+      for the purposes of debuffing their stamina regen (like during a fight).
+  - balance: To compensate for Fortitude actually working as-written, stamina usage
+      reduction is now -30% down from -50%.
+2026-09-17:
+  Ephemeralis:
+  - balance: Psyaltrist now has proper devotion regeneration for a T2 miracle class.
+      (250 -> 400 max devotion, 0.1 (weak) -> 0.5 (minor) regen)
+  Randumb-Phantomb:
+  - qol: dildos now take up 1x1 slot in storage.
+  - qol: dildos of all materials, shapes, and sizes, are available in the loadout
+      menu.
+  - qol: blindfolds are now far easier to create, so kidnappers can tie your eyes
+      shut with 0 skill, tools, and just one cloth.
+  - rscadd: Inquisitors are now mechanically nobility. They were already totally nobles,
+      but now you can shift-click them and it says it, cause like, come on, they were
+      totally nobles before, trust.
+  Yuckuza:
+  - balance: Nerfed thespian crit resistance, replacing it with bleed resistance.
+      Gladitor loadout for thespian is now the only loadout that gets crit resistance.
+  - balance: Bronze heavy armor integ buffed to be on par with steel.
+  - code_imp: bleed rate math adjusted so that bleed resistance 0.5x reduction takes
+      priority over crit resistance 0.8x.
+  zeroisthebiggay:
+  - qol: Guard hotkey. Press G to guard, or assign it in the hotkeys menu if it's
+      not already.
+  - rscadd: With Journeyman unarmed, you can guard while barehanded.
+  - balance: Guard expiring no longer has any form of penalty.
+  - balance: Forcefully and intentionally ending a guard via attacking or swapping
+      hands now always incurs a harsh penalty. It previously did so specifically when
+      you tried to shoot a crossbow, but now it applies to everything done by the
+      person guarding. Let your guard expire instead of trying to end it early.
+  - balance: Disrupting a guard with a feint now incurs the stamina penalty of having
+      your guard kicked or an item being thrown at you in addition to making you vulnerable.
+  - balance: You can guard while sprinting.
+  - balance: You can guard with mage armor.
+  - balance: You can no longer guard while exposed. This shouldn't affect being feinted,
+      but being baited will leave you vulnerable and without the ability to counterattack.
+      Don't get baited.
+  zoktiik:
+  - bugfix: Masochists/Sadists will no longer trigger ~3 screams in quick succession
+      during rough+ interactions.
+2026-09-18:
+  MarioTheShiba:
+  - rscadd: Death Alarms for Admins.
+  MrShibaa:
+  - rscadd: Unsettling Quirk
+  Shadow-Quill:
+  - qol: Added the Self Aware trait to Absolver and Stigmata, letting them examine
+      themselves for full damage numbers, as they could do with others.
+  annikaRU:
+  - bugfix: Having caught the person who had been selling fake rosestones for two
+      years they were promptly shot out of a cannon into mount decapitation
+  trueroguan:
+  - rscadd: New "Jiggle" emote - shake your chest and bounce on the spot.
+  - rscadd: Jiggle Duration and Endless Jiggle settings in the Toggles menu. Long
+      or endless jiggling drains stamina.
+  - rscadd: Bathhouse Attendants don't tire from jiggling inside the bathhouse.
+  - image: Jiggle animation frames for every breast size and type.
+  - bugfix: Characters with different breast sizes no longer risk sharing each other's
+      cached body sprites.
+2026-09-19:
+  AlucardHellsingChapel:
+  - bugfix: fixes a bug (they should have master swords not expert)
+  JustMeTheIInd:
+  - qol: "Parry/Dodge now sets automatically, based on whether or not you have armor\
+      \ traits.\n<!-- Both :cl:'s are required for the changelog to work! You can\
+      \ put your name to the right of the first :cl: if you want to overwrite your\
+      \ GitHub username as author ingame. -->\n<!-- You can use multiple of the same\
+      \ prefix (they're only used for the icon ingame) and delete the unneeded ones.\
+      \ Despite some of the tags, changelogs should generally represent how a player\
+      \ might be affected by the changes rather than a summary of the PR's contents.\
+      \ -->\n<!-- By contributing to this codebase, you confirm that any code and\
+      \ sprites you provide are legal to share and will be licensed under the terms\
+      \ specified in README.md \u2014 AGPLv3 for code and CC-BY-SA 3.0 for assets,\
+      \ unless otherwise stated. You acknowledge that the project maintainers are\
+      \ under no obligation to remove any materials that do not violate these licenses.\
+      \ -->"
+  hugmeorelse:
+  - rscadd: Feeling cute. Added some IC way to explain how to use the fulemnor chair,
+      because I keep seeing new players get stumped without breaking OOC. Might delete
+      later.
+  - rscadd: A severed head can be sewn onto a new body and bound to it in a Fulmenor
+      chair. Takes a master physician and a full tank of elixir. Takes on the head's
+      identity.
+  - rscadd: Bodies whose brain isn't their own refuse ordinary revival.
+  - rscadd: Deadite NPCs can infect you with their bite.
+  - qol: Searching now points out severed heads lying loose, not just bodies.
+  - bugfix: Curing a deadite (typically through admin revival) no longer leaves them
+      permanently non-organic and unable to ever rot, rise or be infected again.
+  - bugfix: Decapitated deadites can be cured.
+  - bugfix: Curing a deadite now actually restores the body instead of leaving it
+      undead while claiming to be cured.
+  - bugfix: Burying a deadite in a grave or coffin no longer deletes the body.
+  - bugfix: Headless deadite corpses are no longer deleted.
+  - bugfix: Players inhabiting an NPC body are no longer despawned (in theory).
+  - bugfix: Corpses waiting to rise as a deadite can ghost once the rise clearly isn't
+      coming, and admin-ghosting always works.
+  - bugfix: Deadite Seek Brains no longer says it smelled nothing when someone is
+      standing on top of you.
+  - bugfix: Tongue surgery looks for tongue wounds instead of ear wounds.
+  - bugfix: Improvised scalpels work for plastic surgery again.
+  - admin: List Severed Heads tool for admins
+2026-09-20:
+  RadiantFlash7:
+  - bugfix: conjured items no longer have a sell value.
+  Shadow-Quill:
+  - qol: Absolver's WEEP can now be used on someone who needs blood, but has no wounds.
+  SirSwagmeyer:
+  - rscdel: Removed the experimental jousting mechanic from the game, due to balance
+      issues.
+  chemistrymain3:
+  - balance: Assassin can spawn as more roles, and is a stronger antagonist now. This
+      does not increase spawn frequency. It is just stronger and can kill people now.
+  envoyin:
+  - balance: duelist coat is now on par with the hardened leather coat
+  hugmeorelse:
+  - code_imp: Ported TG's modern timer subsystem and converted compatible delayed
+      work to timer callbacks.
+  - bugfix: Client-time timers now remain valid across midnight and timer subsystem
+      recovery.
+  - admin: Added Check Timer Sources for identifying which call sites created live
+      timers.
+  - bugfix: Fixed several lifecycle errors exposed by the stricter timer and integration
+      tests.
+  mushy:
+  - rscadd: Black Oak Pariah now has a ranged variant.
+  - balance: Black Oak Pariah now has two slots.
+  zeroisthebiggay:
+  - bugfix: fixed whip special only being usable on mobs
+  zoktiik:
+  - rscadd: Gnolls can now set their own flavortext & rumours in Gnoll Preferences.
+      They have access to all the relevant features, as well as a fully-working preview.
+      Headshot in Chat has NOT been enabled to show on gnolls at this time.
+  - rscadd: Gnolls can now also set overrides for their statpack and name color in
+      Gnoll Preferences. No more having to switch things around! By default, it is
+      set to Fated (random +2/-2 all stats).
+  - bugfix: Preview Examine now works how you'd expect it to. Before, using it while
+      you were spawned-in ignored what you currently had set in your preferences,
+      because the "human" mob took precedence. Now the Examine Panel is told explicitly
+      that it is previewing something, and displays what you have set in your prefs.
+  - code_imp: Conveniently, this "previewing" variable is also used to distinguish
+      whether we are previewing prefs for the character slot, or for the gnoll.
+  - code_imp: Familiar Prefs and Gnoll Prefs now have their saving delegated to local
+      procs, instead of at preferences_savefile.dm. In theory this speeds up save/load,
+      since we're not sanity checking for each saved item.
+  - code_imp: 'Tiny change: if a statpack can''t load, it now just sets you to Fated
+      instead of randoming.'
+2026-09-21:
+  RadiantFlash7:
+  - bugfix: Navigator now actively checks for anything thats 'conjured' rather then
+      worrying about conjured item sellprice
+  - balance: Naledi Complex is no longer optional
+  - balance: Divergence no longer has a 2 second immobilize. It now has a .5 second
+      immobilize and a brief slowdown, like other spells.
+  - bugfix: fixes conjured weapons being sold for value
+  Risraivyn:
+  - rscadd: Added TGUI interface spell pick
+  SirSwagmeyer:
+  - rscadd: FREIFECHTER REWORK - added master strikes, reworked Freifechters in general,
+      and more.
+  - rscadd: Added two new foreigner adventurers, some new, banger ass combat music,
+      and more.
+  - bugfix: Unfucked Flamberge's onmob sprite.
+  UntoldTactics:
+  - code_imp: Twilight Axis appropriately credited for the City Watch armor sprites.
+  Xander3359:
+  - rscadd: Adds Self-Aware as a quirk option. Costs 1 point and lets you see your
+      own damage numbers
+  - bugfix: Knives that have a chance to embed now can actually embed.
+  Yuckuza:
+  - rscadd: Gronn mercs and items reflavored to use Mongol Khanate-inspired, rather
+      than Norse-inspired, wording and naming conventions.
+  - bugfix: Former Atgervi, now Ba'atur, has their miracles once more following an
+      accidental regression.
+  - balance: Werewolf skin and gnoll hide are now affected by blessed silver intdamage
+      multiplier.
+  hugmeorelse:
+  - rscadd: Added iron versions of the armet and roundface bascinet, plus iron snouted
+      armets, iron snouted visored sallets and iron snouted roundface bascinets from
+      AP. They can be forged at the anvil and chosen by the Ironclad. More iron for
+      the iron warriors.
+  - image: The new iron helmets now match the colors of the other iron helmets on
+      RW.
+  - bugfix: Adding a feather or cloth to an iron visored sallet now shows a plume
+      or orle, instead of using up the item and showing nothing.
+  - bugfix: Rainbow orles on armets now show their proper colors and no longer remove
+      an existing plume. Doesn't really fit the setting, but it needed a fix. Not
+      up to me to decide, and I don't really care.
+  - bugfix: Plumes and orles now sit correctly on the iron snouted armet and on snouted
+      visored sallets with the visor raised. The plume now "sits" behind the raised
+      visor.
+  wikimody:
+  - balance: gave keeper major devotion regen instead of minor
+  - bugfix: fixed keepers double devotion bar
+  zeroisthebiggay:
+  - balance: whips are now considered great weapons in length
+  - spellcheck: alters unsettling quirk verbiage
+  - qol: allows turf-click attacks for all melee intents.
+  zoktiik:
+  - rscdel: A number of "important" roles have been forbidden from taking Marked by
+      Gnolls, due to gnolls' high potential for disappearing targets from the round.
+2026-09-22:
+  Yuckuza:
+  - rscadd: Added the psydonic urumi and paladin/psydonite heretic enduring equivalent.
+  - rscadd: 'Added urumi loadout options to the following: Psyalmist, Adjudicator,
+      Duelist, Barbarian, Exorcist, Amazon, Spellblade, Paladin, Zephyr, Cataphract
+      Shieldmaster, Knight Champion, Deserter Fighter, Wretch Outlaw, and Heretic
+      Spy.'
+  zeroisthebiggay:
+  - rscadd: Pyris color for tieflings
+2026-09-23:
+  CloverIsLucky:
+  - qol: Coif and Padded coif now needs Apprentice and Journeyman to craft them.(one
+      less crafting level)
+  Kroto-Ker:
+  - rscadd: City watch armor reflects duchy colors.
+  MrShibaa:
+  - balance: RMB DEFEND now applies a 3 sec EXPOSED and CLICKCD effect to con checks.
+  Quink-Fix:
+  - bugfix: fixed a bug that invalidated an intended mechanic; holy crosses now interrupt
+      the prayers of Inhumen characters with the Devout vice if you are too close
+      to them, regardless of whether you meet any other criteria (except being in
+      the zchurch)
+  - bugfix: various spelling errors, missing information, and inaccurate terminology
+      with regards to warnings given for the Devout vice
+  RadiantFlash7:
+  - rscadd: Added Arcyne Silver dagger to Merchant silver/goldface Magic Category
+  - rscdel: Removed silver daggers from Merchant silver/goldface catalogue
+  - balance: Arycne Silver Daggers no longer return silver ore on smelting
+  SirSwagmeyer:
+  - balance: Adds miniscule passive blood regen. Procs when uncon, and not hungry/thirsty
+  - balance: Bandages are 0.5x more effective (compared to 0.25x at current).
+  - balance: Water regens blood more, now. (Just slightly more).
+  - balance: Cheeles start with more blood, and can carry as much blood as in a person.
+  - balance: reduced the slowdowns of mounted barding.
+  - rscadd: Overhauled Noccite and Zizite miracles.
+  Xander3359:
+  - balance: Makes Blacksteel urumi heavy balance
+  - bugfix: Fixed Kargrund Maul being invisible
+  ophaq:
+  - rscadd: Allows the standard shirt to be wearable on the armor slot.
+  - rscadd: Adds footwraps to the loadout.
+  wikimody:
+  - rscadd: Added new ammo types for sling, steel, silver and blessed versions of
+      both
+  - rscadd: Added steel ones into smiths silverface
+  - qol: renamed archery enchantment into sharpshooter enchantment
+  - balance: blacksteel sling ammunition is made in 10ths not 5ths as before
+  - bugfix: and is no longer deleted when impacting somone
+  zeroisthebiggay:
+  - balance: Losing a limb or being disemboweled now rolls your CON and WIL to resist
+      an immediate paincrit. Psydonites who pass this roll will be filled with a stirring
+      of HIS energies for a last stand!
+  - bugfix: Corrected a bunch of random pain screams in reaction to wounds not being
+      forced, so you should be screaming more when someone's breaking all your bones.
+2026-09-24:
+  Arturlang:
+  - bugfix: a lot of harddels related to minds, factions, NPC enemies
+  IronDragoon:
+  - rscadd: Malorodous is now much more configurable, can be gross/neutral or positive
+      and is renamed to Redolent
+  MarioTheShiba:
+  - rscadd: Added some more things to the loadout.
+  MrShibaa:
+  - rscadd: Added new recipes for various kazen weaponry and armor
+  - rscdel: Removed Hook sword and Naginata from being craftable without having the
+      trait KAZENGUNITE_SMITH
+  - balance: "Soldier half-mask now only protects mouth and nose and the Ogre Mask,\
+      \ has full face protection but has an FOV reduction (half-mask doesn\u2019t)"
+  - balance: Increased Armored Sandals durab to 270 (Same as Plated Boots.)
+  Risraivyn:
+  - qol: Builders can now plan structures via a TGUI interface and construct them
+      by hammering the foundation rather than placing every tile manually.
+  SirSwagmeyer:
+  - balance: tweaked vanguard stats and skills just slightly.
+  - rscadd: Added real wrasslin' moves to advanced unarmed builds.
+  - balance: READD LONGSWORD PEEL
+  - refactor: Changed knockdown logic to not involve a disarm. Consequently several
+      effects no longer disarm that used to knock the target down.
+  The-Sun-In-Splendour:
+  - qol: confessors now get to choose between two different statlines
+  - spellcheck: injects sovl into the psydonic weapon choice boxes
+  UntoldTactics:
+  - balance: Excommunication and Apostasy have had their stress values increased,
+      with the former now being more than a small inconvinenence and the latter being
+      a crippling mood debuff for any clergy afflicted.
+  - balance: Abyssorites and Dendorites are no longer immune to Apostasy or Divine
+      Curse.
+  Xander3359:
+  - balance: Legendary Blacksmith now has wrestling 3
+  Yuckuza:
+  - rscadd: Arbiter description changed to remove explicit mention of having "greater
+      miracles"
+  wikimody:
+  - bugfix: Diabloring shoudl be posible again
+  - rscadd: Tracking autohiglight is now baseline feature instead of needing Sleuch
+  - rscadd: Pickpocketing while targeting an arm now pickpockets coresponding back
+      zone (no longer will you roll a dice to see if you pick a shield instead)
+  - rscadd: Pickpocketing chest now pickpockets cloak instead
+  zeroisthebiggay:
+  - rscadd: automatic free use toggle
+  - bugfix: bladed weapons no longer magically become fully sharpened when you drop
+      them
+  zoktiik:
+  - qol: Spell icons will now update more dynamically to reflect what you can and
+      cannot cast at any given moment. This includes explicit update triggers for
+      skullcracks, antimagic, "buckling" to objects, consciousness changes, mouthgrabs,
+      gags, and so on.
+  - rscadd: Miracles with an upfront devotion cost will display that in the spell's
+      examine text.
+2026-09-25:
+  Kroto-Ker:
+  - balance: You can rip off gambeson sleeves.
+  Randumb-Phantomb:
+  - qol: low-town accent users can now say the word sire. Sir and ser are corrected
+      to sire, and you also can now say butter without it being corrected to arseer.
+  Xander3359:
+  - qol: Subtle toggle can now be done from the ERP panel, rather than on a per-verb
+      basis.
+  Yuckuza:
+  - bugfix: animal butcher results have their unique meats properly set in their butcher
+      results. Troll blubber, bear meat, ham, etc no longer unobtainable.
+  - rscadd: Added 12 new drow weapons available to drow mercs and drow adventurers
+  - rscadd: 3 new drow armor pieces, a light armor vest and two helms
+  - rscadd: "New drow-exclusive adventurer class Crocs de l'araign\xE9e D\xE9broussaillage\
+      \ that gets journeyman skills + drow-specific gear"
+  - rscadd: The drider mount can now climb up a single z-level by clicking with an
+      empty hand on a wall (as you would with normal climbing)
+  - rscadd: Driders now have natural armor barding with brigandine stats and a lengthy
+      40-second regen time per 20% integ.
+  - balance: Drow merc men gender stats changed from -1 STR, +1 LCK -> -1 STR/LCK,
+      +1 SPD/WIL. You're unlucky to be a drow male, but extra beatings have made you
+      more resilient.
+  - qol: Drow mercs now summon their drider via a snowflaked TRAIT_SPIDERBORN spell
+      that works like saddleborn but exclusively for Driders. Driders do not suffer
+      the same dangerous area penalties as regular mounts; they are underdark apex
+      predators after all.
+  - refactor: Disarm intent now functions with any rogue weapon, not just the hooksword.
+      Uses shared logic rather than an on_attack override duplicated per weapon with
+      the intent.
+  - bugfix: Changed the backend of drow merc pre_equip(), far less prone to deleting
+      your items during loadout selection.
+  - sound: Drow merc combat music swapped to "Tsukasa Saitoh - Bloodborne (Original
+      Soundtrack) - Darkbeast". Old combat track selectable under the name "Drow Classic"
+  trueroguan:
+  - bugfix: Transfix no longer permanently gets harder to resist every time you cast
+      it on someone in combat mode.
+  - bugfix: Obfuscate's stealth powers now grant real invisibility - NPCs can no longer
+      see and attack you while cloaked.
+  - bugfix: Kicking and pickpocketing now break your invisibility, same as other attacks
+      already did.
+  - balance: Potence's punch damage bonus now scales 3x per level; higher tiers grant
+      extra strength-related traits.
+  - balance: Celerity's higher tiers grant Leaper and Expert Dodger, with a visible
+      warning when they trigger.
+  - balance: Scorpion's Touch (Quietus) now requires an actual bleeding wound to inflict
+      its debuff, scaled by Blood Magic skill, instead of applying on any touch.
+  - balance: Successfully Diablerizing a vampire now grants their full lifetime Research
+      Points, not just their unspent pool.
+  - qol: Phantom Speaker lets you choose which language to project your voice in.
+  - code_imp: Extracted a shared vampire-domination-immunity check used by Transfix
+      and Obfuscate.
+  wikimody:
+  - rscadd: Naledi mercenary clothes no longer go up in flames at first oportunity
+  yupup123:
+  - rscadd: Added Speech Mannerisms
+  - bugfix: Fixed a bug that made accents apply to emotes when using `*` in `say`
+  zeroisthebiggay:
+  - balance: sex freak vices now require a sexcon interaction to be properly sated
+  zoktiik:
+  - bugfix: Being "buckled" to structures (sitting down in a chair, lying on a bed)
+      no longer blocks spellcasting on its own. It also now respects spells that don't
+      require a gesture component to cast. Now, you have to specifically be restrained,
+      or buckled to a structure that restrains you (i.e. the rack, pillory, etc),
+      or caught in a trap that you need to resist out of, for any of that to block
+      gestural casting.
+  - rscadd: Mounted casting has been opened up to anything you can "ride" (carried/piggyback
+      on a human mob, riding a dinghy). However, these also require that you (and
+      your "mount") stay still for 2 seconds before you can cast.
+  - rscadd: i.ibb.co (imgbb.com) and file.garden (filegarden.com) are now among the
+      approved character image hosts.
+  - admin: Character assets link regex has been hardened somewhat to more reliably
+      enforce the domain whitelist, and quotes cannot be submitted to try and perform
+      any sort of string-escape exploit.
