@@ -324,7 +324,7 @@
 	desc = "A salted cut of hog meat."
 	icon = 'modular/Neu_Food/icons/cooked/cooked_meat.dmi'
 	icon_state = "ham5"
-	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_CHUNKY)
+	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_FULL_MEAL)
 	bitesize = 6
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/ham/sliced
 	faretype = FARE_POOR
@@ -361,7 +361,7 @@
 	bitesize = 2
 	slices_num = FALSE
 	slice_path = FALSE
-	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR)
+	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_QUARTER_MEAL)
 	eat_effect = null
 	tastes = list("hog" = 1)
 

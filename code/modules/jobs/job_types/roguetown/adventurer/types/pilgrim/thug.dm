@@ -25,7 +25,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
 	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/rogue/beer = 1)
 
-H.adjust_skillrank_up_to(/datum/skill/misc/hunting, SKILL_LEVEL_NOVICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/hunting, SKILL_LEVEL_NOVICE, TRUE)
 
 	var/classes = list("Goon", "Miscreant", "Big Man", "Muscle", "Longshoreman")
 	var/classchoice = input(H, "What kind of thug are you?", "TAKE UP ARMS") as anything in classes

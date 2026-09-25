@@ -12,9 +12,15 @@
 	var/spawn_delay = 15 SECONDS
 	var/rot_path
 	var/list/target_factions
+	/// Subtypes with their own initialization can bypass the normal quarry setup.
+	var/skip_parent_call = FALSE
 
-/obj/effect/temp_visual/hunting_phantom/Initialize(mapload, target_mob_path, target_rot)
+/obj/effect/temp_visual/hunting_phantom/Initialize(mapload, target_mob_path, target_rot, custom_delay)
+	if(custom_delay)
+		spawn_delay = custom_delay
 	. = ..()
+	if(skip_parent_call)
+		return
 	if(!ispath(target_mob_path))
 		return INITIALIZE_HINT_QDEL
 

@@ -25,7 +25,7 @@
 	if(eater_tracker[eater.real_name] >= bites_required)
 		to_chat(eater, span_bigbold("Your muscles strengthen. Something has changed, the power of the stag dwells within you now."))
 		eater.AddComponent(/datum/component/stag_protection)
-		ADD_TRAIT(eater, TRAIT_WHITE_STAG, TRAIT_STATUS_EFFECT)
+		ADD_TRAIT(eater, TRAIT_WHITE_STAG, TRAIT_STATUS_EFFECT("stag_essence"))
 
 // FOREST RUSH - buff granted to those who carry stag protection when struck
 #define MOVESPEED_ID_FOREST_RUSH "forest_rush"

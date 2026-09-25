@@ -30,7 +30,9 @@
 	/// The category this hunt belongs to
 	var/datum/hunting_category/hunt_category
 	/// Total tracks to find before the animal spawns
-	var/max_trail_depth = 8
+	var/max_trail_depth = 6
+	/// Minimum trail depth after applying the hunter's skill bonus
+	var/min_trail_depth = 4
 	/// Category boosted by user.
 	var/datum/hunting_category/preferred_hunt
 	/// Hunting map influences
@@ -40,11 +42,38 @@
 	/// Direction the trail continues towards, once revealed
 	var/track_dir
 
+/obj/effect/hunting_track/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Interact with a fresh, dark-brown mound to start a hunt.")
+	. += span_info("Follow the direction of each lighter track; only the hunting party can see the next mound.")
+	. += span_info("Hunting maps improve the odds of finding specific creatures, while hunting skill improves quarry quality and shortens trails.")
+	. += span_info("Right-click your eye to locate the nearest visible track you are following.")
+	. += span_info("A spade or shovel can clear a mound, but doing so triggers the same cooldown as starting a hunt.")
+
+/obj/effect/hunting_track/attackby(obj/item/item, mob/user, params)
+	if(item.tool_behaviour != TOOL_SHOVEL)
+		return ..()
+
+	var/datum/component/hunting_blocker/blocker = user.GetComponent(/datum/component/hunting_blocker)
+	if(!blocker)
+		blocker = user.AddComponent(/datum/component/hunting_blocker)
+
+	if(!blocker.can_start_hunt())
+		to_chat(user, span_notice("You've recently disturbed a trail; it wouldn't be wise to demolish another so soon."))
+		return TRUE
+
+	user.visible_message(
+		span_notice("[user] begins digging up [src]..."),
+		span_notice("You begin digging up [src]...")
+	)
+	if(item.use_tool(src, user, 2 SECONDS, volume = 50))
+		to_chat(user, span_notice("You flatten and dig away the disturbed mound of earth."))
+		blocker.register_hunt()
+		qdel(src)
+	return TRUE
+
 /obj/effect/hunting_track/examine(mob/user)
 	. = ..()
-	. += span_info("Fresh mounds start hunts. Follow each revealed track until you find the quarry.")
-	. += span_info("Hunting maps change what you are likely to find. Better hunting skill improves the result.")
-	. += span_info("Right click your eyeball to highlight your visible trail and get a direction.")
 	if(trail_depth > 0)
 		. += span_notice("You are tracking this track.")
 	if(track_dir)
@@ -221,7 +250,7 @@
 				if(trail_depth >= max_trail_depth)
 					to_chat(user, span_boldwarning("You see your quarry in the distance faintly!"))
 					var/mob/living/example_animal = target_animal_type
-					var/chosen_rot = initial(example_animal.rot_type) ? /datum/component/rot/simple : null
+					var/chosen_rot = initial(example_animal.rot_type) ? /datum/component/rot/simple/hunt : null
 					new /obj/effect/temp_visual/hunting_phantom(next_turf, target_animal_type, chosen_rot)
 					var/bonus_spawned = spawn_group_bonus_animals(next_turf, target_animal_type)
 					if(bonus_spawned)
@@ -340,6 +369,8 @@
 		return FALSE
 	if(istransparentturf(check_turf))
 		return FALSE
+	if(istype(check_turf, /turf/open/lava) || istype(check_turf, /turf/open/water))
+		return FALSE
 	for(var/turf/nearby in range(1, check_turf))
 		if(istype(nearby, /turf/open/water))
 			return FALSE
@@ -361,15 +392,18 @@
 
 /obj/effect/hunting_track/proc/start_fade_animation()
 	animate(src, alpha = 0, time = 200, easing = EASE_OUT)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), src), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(delete_track)), 20 SECONDS)
+
+/obj/effect/hunting_track/proc/delete_track()
+	qdel(src)
 
 /obj/effect/hunting_track/proc/initialize_hunt_chain(mob/living/user)
 	var/skill = user.get_skill_level(/datum/skill/misc/hunting)
 	var/area/current_area = get_area(src)
 	linked_areas = SShunting.get_linked_areas(current_area.type)
 
-	// Calculate total tracks needed: 10 base, minus 1 for each level above 3
-	max_trail_depth = clamp(max_trail_depth - (max(0, skill - 3)), 5, max_trail_depth)
+	// Reduce the trail by one step per skill level above journeyman.
+	max_trail_depth = clamp(max_trail_depth - max(0, skill - 3), min_trail_depth, max_trail_depth)
 	var/list/cat_weights = list()
 
 	if(secret_map_influence)
@@ -382,7 +416,7 @@
 			// Exact type matching for area bonus to avoid using subtypes
 			var/area_bonus = category.preferred_areas[current_area.type]
 			if(area_bonus)
-				weight *= (1 + (area_bonus / 100))
+				weight = max(0, weight * (1 + (area_bonus / 100)))
 
 			// Right-click preference boost
 			if(preferred_hunt && category.type == preferred_hunt.type)
@@ -442,7 +476,7 @@
 			var/turf/spawn_turf = (nearby_turfs.len) ? pick(nearby_turfs) : origin_turf
 			var/bonus_type = pickweight(hunt_category.animals)
 			var/mob/living/example_mob = bonus_type
-			var/chosen_rot = initial(example_mob.rot_type) ? /datum/component/rot/simple : null
+			var/chosen_rot = initial(example_mob.rot_type) ? /datum/component/rot/simple/hunt : null
 			new /obj/effect/temp_visual/hunting_phantom(spawn_turf, bonus_type, chosen_rot)
 			spawned_count++
 	return spawned_count
