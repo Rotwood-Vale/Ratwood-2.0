@@ -330,8 +330,7 @@
 	if(atkswinging)
 		stop_attack(FALSE)
 	if(I)
-		if(client)
-			client.screen -= I
+		remove_screen_object(I)
 		I.layer = initial(I.layer)
 		I.plane = initial(I.plane)
 		I.appearance_flags &= ~NO_CLIENT_COLOR

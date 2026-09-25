@@ -20,7 +20,7 @@ import {
 
 export const PatronageTab = ({ data, act }: TabProps) => {
   const fundsWithPatronage = data.funds.filter(
-    (f) => f.has_patronage && data.patron_rosters_static[f.id]?.can_manage,
+    (f) => f.has_patronage && data.patron_rosters[f.id]?.can_manage,
   );
   const [selectedFundId, setSelectedFundId] = useState<string>(
     fundsWithPatronage[0]?.id ?? '',
@@ -78,11 +78,11 @@ const RosterView = ({
   act: TabProps['act'];
 }) => {
   const enrolled = roster.patrons.length;
-  const full = enrolled >= rosterStatic.cap;
+  const full = enrolled >= roster.cap;
 
   return (
     <>
-      <div style={sectionHeaderStyle}>{rosterStatic.label}</div>
+      <div style={sectionHeaderStyle}>{roster.label}</div>
       {!!rosterStatic.explanation && (() => {
         const sigSplit = rosterStatic.explanation.lastIndexOf(' - ');
         const body =
@@ -120,7 +120,7 @@ const RosterView = ({
       <div style={fieldRowStyle}>
         <div style={fieldLabelStyle}>Roster</div>
         <div style={fieldValueStyle}>
-          {enrolled} / {rosterStatic.cap} enrolled
+          {enrolled} / {roster.cap} enrolled
         </div>
       </div>
       {full && (

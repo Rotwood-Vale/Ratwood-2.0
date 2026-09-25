@@ -1427,20 +1427,22 @@
 	playsound(owner, 'sound/misc/deadbell.ogg', 100, FALSE, -1)
 	ADD_TRAIT(owner, TRAIT_NODEATH, TRAIT_STATUS_EFFECT(id))
 	var/dirgeline = rand(1,6)
-	spawn(15)
-		switch(dirgeline)
-			if(1)
-				to_chat(owner, span_cultsmall("She watches the city skyline as her crimson pours into the drain."))
-			if(2)
-				to_chat(owner, span_cultsmall("He only wanted more for his family. He feels comfort on the pavement, the Watchman's blade having met its mark."))
-			if(3)
-				to_chat(owner, span_cultsmall("A sailor's leg is caught in naval rope. Their last thoughts are of home."))
-			if(4)
-				to_chat(owner, span_cultsmall("She sobbed over the Venardine's corpse. The Brigand's mace stemmed her tears."))
-			if(5)
-				to_chat(owner, span_cultsmall("A farm son chokes up his last. At his bedside, a sister and mother weep."))
-			if(6)
-				to_chat(owner, span_cultsmall("A woman begs at a Headstone. It is your fault."))
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(undermaiden_dirge), owner, dirgeline), 15)
+
+/proc/undermaiden_dirge(mob/living/owner, dirgeline)
+	switch(dirgeline)
+		if(1)
+			to_chat(owner, span_cultsmall("She watches the city skyline as her crimson pours into the drain."))
+		if(2)
+			to_chat(owner, span_cultsmall("He only wanted more for his family. He feels comfort on the pavement, the Watchman's blade having met its mark."))
+		if(3)
+			to_chat(owner, span_cultsmall("A sailor's leg is caught in naval rope. Their last thoughts are of home."))
+		if(4)
+			to_chat(owner, span_cultsmall("She sobbed over the Venardine's corpse. The Brigand's mace stemmed her tears."))
+		if(5)
+			to_chat(owner, span_cultsmall("A farm son chokes up his last. At his bedside, a sister and mother weep."))
+		if(6)
+			to_chat(owner, span_cultsmall("A woman begs at a Headstone. It is your fault."))
 
 /datum/status_effect/buff/undermaidenbargainheal/on_remove()
 	. = ..()
@@ -2332,6 +2334,47 @@
 /datum/status_effect/buff/celerity/New(list/arguments)
 	effectedstats[STATKEY_SPD] = arguments[2]
 	. = ..()
+
+/datum/status_effect/buff/potence
+	id = "potence"
+	alert_type = /atom/movable/screen/alert/status_effect/buff
+	effectedstats = list(STATKEY_STR = 1)
+	status_type = STATUS_EFFECT_REPLACE
+
+/atom/movable/screen/alert/status_effect/buff/potence
+	name = "Potence"
+	desc = "I am a force of destruction."
+	icon_state = "buff"
+
+/datum/status_effect/buff/potence/New(list/arguments)
+	effectedstats[STATKEY_STR] = arguments[2]
+	. = ..()
+
+/datum/status_effect/buff/obfuscate_veil
+	id = "obfuscate_veil"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/obfuscate_veil
+	tick_interval = 2 SECONDS
+
+/atom/movable/screen/alert/status_effect/buff/obfuscate_veil
+	name = "Obfuscated"
+	desc = "A supernatural veil hides me from sight."
+	icon_state = "buff"
+
+/datum/status_effect/buff/obfuscate_veil/on_apply()
+	. = ..()
+	owner.alpha = 0
+	refresh_invisibility()
+
+/datum/status_effect/buff/obfuscate_veil/on_remove()
+	. = ..()
+	owner.mob_timers[MT_INVISIBILITY] = 0
+	owner.alpha = initial(owner.alpha)
+
+/datum/status_effect/buff/obfuscate_veil/tick()
+	refresh_invisibility()
+
+/datum/status_effect/buff/obfuscate_veil/proc/refresh_invisibility()
+	owner.mob_timers[MT_INVISIBILITY] = world.time + 5 SECONDS
 
 /datum/status_effect/buff/fotv
 	id = "fotv"

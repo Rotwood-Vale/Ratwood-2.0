@@ -185,3 +185,5 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/architect_plan)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/architect_conjure)
