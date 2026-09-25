@@ -39,6 +39,10 @@
 				to_chat(user, span_warning("They've already been trained!"))
 				revert_cast()
 				return
+			if(HAS_TRAIT(trainee, TRAIT_GOODTRAINER))
+				to_chat(user, span_warning("They aren't fit to be my protégé."))
+				revert_cast()
+				return
 
 			to_chat(user, span_notice("I offer my services."))
 			var/prompt = alert(trainee, "[user.name] is offering to take you on as their protegé, allowing your martial skills to surpass that of mere Expertise. Do you accept?", "Veteran's Protegé", "SERVE AND LEARN", "I REFUSE")
