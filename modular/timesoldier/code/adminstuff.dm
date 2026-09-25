@@ -16,7 +16,7 @@
 		return
 	
 	var/list/voice_options = list(
-		FUTURE_VOICE_MALE,
+		FUTURE_VOICE_MALE_GENERIC,
 		FUTURE_VOICE_FEMALE
 	)
 
