@@ -74,7 +74,7 @@
 
 /datum/virtue/utility/mining
 	name = "Miner's Apprentice"
-	added_traits = list(TRAIT_SMITHING_EXPERT) // Not sure whether smithing or homestead but given mining goods goes into smithing this fits better?
+	added_traits = list(TRAIT_SMITHING_EXPERT, TRAIT_LEGENDARY_MINER) // Not sure whether smithing or homestead but given mining goods goes into smithing this fits better?
 	desc = "The dark shafts, the damp smells of ichor and the laboring hours are no stranger to me. I keep my pickaxe and lamptern close, and have been taught how to mine well."
 	added_stashed_items = list(
 		"Steel Pickaxe" = /obj/item/rogueweapon/pick/steel,
