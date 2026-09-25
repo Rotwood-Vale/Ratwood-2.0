@@ -4,6 +4,8 @@
 	name = "Profane"
 	desc = "Fire forth a splinter of unholy bone, tearing flesh and causing bleeding. If you hold pieces of bone in your other hand, you will coax a much stronger lance of bone into being."
 	clothes_req = FALSE
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "profane"
 	range = 8
 	associated_skill = /datum/skill/magic/arcane
@@ -108,6 +110,8 @@
 	name = "Rituos"
 	desc = "Do a ritual for she of Z that skeletonises a part of your body and bestows upon you arcyne magycks until you next sleep. Once your whole body has become skeletonised you gain full access to the Arcyne, bolstering your knowledge of spells with each additional ritual."
 	clothes_req = FALSE
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "rituos"
 	associated_skill = /datum/skill/magic/arcane
 	chargedloop = /datum/looping_sound/invokeholy
@@ -200,7 +204,9 @@
 	desc = "Wreath your hand in inhumen energies.\n \
 	USE on a mind-inhabited victim who is alyve, floored, whose lux is intact to plunge your hand into their chest, shattering their ribs and will alike in order to forcefully tear the lux from their chest.\n \
 	DISARM on a PURE lux to convert it into IMPURE lux, in order to deprive it of those who need it or to fuel your wicked necromantic relics."
-	overlay_state = "noc_revive"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "lacrima"
 	clothes_req = FALSE
 	drawmessage = "I pray to ZIZO for but a sliver of Her power, wreathing my hand in inhumen energies!"
 	dropmessage = "I allow the energies upon my hand to dissipate."
@@ -218,7 +224,7 @@
 
 /obj/item/melee/touch_attack/lacrima
 	name = "\improper lux ripper"
-	desc = "ZIZO's will is to perverse the lux of the lyving. With but a mere shred of Her power, you will do exactly that."
+	desc = "ZIZO's will is to perverse the lux of the lyving. With but a mere shred of HER power, you will do exactly that."
 	catchphrase = null
 	possible_item_intents = list(/datum/intent/use, INTENT_DISARM)
 	icon = 'icons/mob/roguehudgrabs.dmi'
@@ -250,7 +256,7 @@
 	if(!target.mind)
 		to_chat(user, span_info("This one's lux is weak and insufficient. I need a victim with higher conscious!"))
 		return
-	if(!isliving(target))
+	if(target.stat == DEAD || !isliving(target))
 		to_chat(user, span_info("Only lyving creachers may have their lux torn."))
 		return
 	if(!target.Adjacent(user))
@@ -310,6 +316,9 @@
 /obj/effect/proc_holder/spell/self/zizo_snuff
 	name = "Snuff Lights"
 	desc = "Extinguish all lights in range, with your Miracles skill increasing range."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "snuff_lights"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -317,7 +326,6 @@
 	invocations = list("Embrace the darkness!")
 	invocation_type = "shout"
 	sound = 'sound/magic/zizo_snuff.ogg'
-	overlay_state = "rune2"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
 	recharge_time = 20 SECONDS
@@ -349,8 +357,11 @@
 
 // Ancient Champion-exclusive: An evil variant of Repulse. Longer charge time and CD, but greater maxthrow, push range and the affected people lose 50 stamina. The undead are immune.
 /obj/effect/proc_holder/spell/invoked/churnliving //Repulse variant.
-	name = "Churn Living"
+	name = "Churn Lyving"
 	desc = "Conjure forth a wave of necrotic energy, repelling non-undead around you and greatly damaging their stamina."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "churn_living"
 	xp_gain = FALSE
 	zizo_spell = TRUE
 	releasedrain = 50
@@ -365,7 +376,6 @@
 	charging_slowdown = 2
 	chargedloop = /datum/looping_sound/invokeascendant
 	associated_skill = /datum/skill/magic/arcane
-	overlay_state = "repulse"
 	spell_tier = 2
 	invocations = list("Irzkrat, nullak!")
 	invocation_type = "shout"
@@ -426,7 +436,9 @@
 /obj/effect/proc_holder/spell/invoked/evil_resurrect
 	name = "Perfect Reanimation" //Wretch Heresiarch-exclusive variant of Anastasis
 	desc = "Rip the target's soul out of Necra's grasp and revive them at a cost of a humanoid being's heart. The target's attributes will be temporarily reduced."
-	overlay_state = "noc_revive"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "revivalevil"
 	releasedrain = 90
 	chargedrain = 0
 	chargetime = 50
@@ -572,3 +584,221 @@
 			if(I.type == item_type)
 				needed--
 				qdel(I)
+
+/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance
+	name = "Avenging Spirits"
+	desc = "Summon three spiteful skulls in Zizo's name to harry a chosen foe."
+	range = 7
+	sound = list('sound/magic/magnet.ogg')
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	releasedrain = 40
+	chargetime = 3
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokeholy
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/holy
+	recharge_time = 45 SECONDS
+	hide_charge_effect = TRUE
+	miracle = TRUE
+	devotion_cost = 50
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "spirits"
+	action_icon_state = "spirits"
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	invocations = list("Woe to the restless who spite Her name!")
+	invocation_type = "shout"
+
+/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance/cast(list/targets, mob/living/user)
+	. = ..()
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(user.dir == SOUTH || user.dir == NORTH)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_turf(user),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, EAST),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, WEST),user)
+		else
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_turf(user),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, NORTH),user)
+			new /mob/living/simple_animal/hostile/rogue/spirit_vengeance(get_step(user, SOUTH),user)
+		for(var/mob/living/simple_animal/hostile/rogue/spirit_vengeance/swarm in view(2, user))
+			swarm.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+		return TRUE
+	revert_cast()
+	return FALSE
+
+
+/obj/effect/proc_holder/spell/invoked/raise_spirit_respite
+	name = "Summon Avatar"
+	desc = "Call forth a towering skeletal aspect of Zizo, granting your foe the only respite she permits."
+	range = 7
+	sound = list('sound/magic/necra_sight.ogg')
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	releasedrain = 40
+	chargetime = 3
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokeholy
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/holy
+	recharge_time = 1 MINUTES
+	hide_charge_effect = TRUE
+	miracle = TRUE
+	devotion_cost = 100
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "raise_avatar"
+	action_icon_state = "raise_avatar"
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	invocations = list("Pallida dominae, vocat!")
+	invocation_type = "shout"
+
+/obj/effect/proc_holder/spell/invoked/raise_spirit_respite/cast(list/targets, mob/living/user)
+	. = ..()
+	if(isliving(targets[1]))
+		var/mob/living/target = targets[1]
+		if(user.dir == SOUTH || user.dir == NORTH)
+			new /mob/living/simple_animal/hostile/rogue/spirit_respite(get_turf(user),user)
+		else
+			new /mob/living/simple_animal/hostile/rogue/spirit_respite(get_turf(user),user)
+		for(var/mob/living/simple_animal/hostile/rogue/spirit_respite/avatar in view(2, user))
+			avatar.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, target)
+		return TRUE
+	revert_cast()
+	return FALSE
+
+
+/obj/effect/proc_holder/spell/invoked/silence/miracle/zizo
+	name = "Profane Silence"
+	desc = "Fill their throat with profane silence - ensure neither mage-nor-man shall interrupt you, be it invocation or insult."
+	overlay_state = "silencezizo"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "silencezizo"
+
+/obj/effect/proc_holder/spell/invoked/cascade
+	name = "Flensing Cataclysm"
+	desc = "Woe to the despairing in the face of Ambition. Unleash a cascade of unholy devotion upon the unbeliever - the more devotion they've consumed, the stronger the effect."
+	range = 7
+	sound = list('sound/magic/churn.ogg')
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "cataclysm"
+	releasedrain = 40
+	chargedrain = 0
+	chargetime = 30
+	warnie = "spellwarning"
+	no_early_release = TRUE
+	charging_slowdown = 1
+	chargedloop = /datum/looping_sound/invokeholy
+	gesture_required = TRUE
+	associated_skill = /datum/skill/magic/holy
+	recharge_time = 90 SECONDS
+	hide_charge_effect = TRUE
+	movement_interrupt = FALSE
+	miracle = TRUE
+	devotion_cost = 100
+
+/obj/effect/proc_holder/spell/invoked/cascade/cast(list/targets, mob/living/user)
+	. = ..()
+
+	if(!targets || !length(targets) || !ishuman(targets[1]))
+		revert_cast()
+		return FALSE
+
+	var/mob/living/carbon/human/target = targets[1]
+
+	if(user.z != target.z)
+		to_chat(user, span_warning("Zizo demands that progress be witnessed on the same level."))
+		revert_cast()
+		return FALSE
+
+	// target.devotion is the devotion DATUM, not a number - the numeric values are on the datum itself.
+	var/datum/devotion/target_devotion = target.devotion
+	var/current_devotion = target_devotion?.devotion
+	var/maximum_devotion = target_devotion?.max_devotion
+
+	if(!isnum(current_devotion) || maximum_devotion <= 0)
+		to_chat(user, span_warning("[target] has no devotion for Zizo to measure."))
+		revert_cast()
+		return FALSE
+
+	var/missing_devotion = maximum_devotion - current_devotion
+
+	if(missing_devotion <= 10)
+		to_chat(user, span_warning("[target]'s faith is not weakened enough to yield."))
+		revert_cast()
+		return FALSE
+
+	if(missing_devotion <= 250)
+		user.say("Yield to the Pale Damsel!")
+		target.visible_message(span_danger("[target] is seared by Zizo's cascade!"), span_userdanger("My weakened faith burns under the weight of dark ambition!"))
+		target.adjustFireLoss(30)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 500)
+		user.say("Falter in the face of TRUE FAITH!")
+		target.visible_message(span_danger("[target] is burned by Zizo's cascade!"), span_userdanger("My devotion falters under searing aspiration!"))
+		target.adjustFireLoss(60)
+		target.adjust_fire_stacks(5, /datum/status_effect/fire_handler/fire_stacks/divine)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 600)
+		user.say("PALE IN THE PATH OF MY DAMSEL'S PROGRESS!!")
+		target.visible_message(span_danger("[target] staggers as Zizo's cascade strikes them!"), span_userdanger("My faith buckles, a burning pain engulfing me!"))
+		target.adjustFireLoss(80)
+		target.adjust_fire_stacks(7, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.Stun(20)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 750)
+		user.say("KNEEL! KNEEL AND WEEP FOR MY LADY!!")
+		target.visible_message(span_danger("[target] is consumed by a cascading, unholy force!"), span_userdanger("My devotion is weakened as a looming, burning darkness fills the gap!"))
+		target.adjustFireLoss(100)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.Stun(20)
+		target.ignite_mob()
+		explosion(get_turf(target), light_impact_range = 1, flame_range = 1, smoke = FALSE)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 800) //something bad happens
+		user.say("YOUR GOD'S FAITH ENDS HERE!!")
+		target.visible_message(span_danger("[target] is wreathed in Zizo's cascading flame!"), span_userdanger("MY SOUL IS NEARLY BURNT ASUNDER - WHERE HAS MY PATRON GONE? IT HURTS."))
+		target.adjustFireLoss(120)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.ignite_mob()
+		target.Stun(40)
+		explosion(get_turf(target), light_impact_range = 1, flame_range = 1, smoke = FALSE)
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		return TRUE
+
+	if(missing_devotion <= 900) //NOTE - THIS IS NOT A CHURN WEALTHY INSTAKILL MOVE. YOU CAN REASONABLY SURVIVE THIS WITH PEOPLE AROUND. 
+		user.say("ZIZO!! ZIZO!! ZIZO!!")
+		target.visible_message(span_danger("[target] begins to SMOLDER AND SCREAM - THE SCENT IS THICK IN FAITHLESS PETRICHOR."), span_userdanger("I CAN ENDVRE NO LONGER - I BRIEFLY LOSE GRIP UPON THE FIRMAMENT OF MY FAITH - A GRAND MISTAKE. THE FINAL SIGHT UPON MYNE VISION IS A PALE FIGURE, ENCROACHING THE APPROACHING DARKNESS. SHE SMILES. I BURN INTO NAUGHT BUT BLOOD AND BONE."))
+		target.Stun(60)
+		target.emote("agony")
+		target.adjustFireLoss(140)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.ignite_mob()
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		explosion(get_turf(target), heavy_impact_range = 2, light_impact_range = 3, flame_range = 4, smoke = FALSE)
+		sleep(80)
+		return TRUE
+
+	else //NOTE - THIS IS IMPOSSIBLE TO ACTUALLY ACHIEVE UNLESS YOU VAREDIT THEIR MAX DEVOTION ABOVE 1000. 
+		user.say("ZIZO BLAST!!") //hilarious
+		target.visible_message(span_danger("[target] begins to SMOLDER AND SCREAM - THE SCENT IS THICK IN FAITHLESS PETRICHOR."), span_userdanger("I CAN ENDVRE NO LONGER - I BRIEFLY LOSE GRIP UPON THE FIRMAMENT OF MY FAITH - A GRAND MISTAKE. THE FINAL SIGHT UPON MYNE VISION IS A PALE FIGURE, ENCROACHING THE APPROACHING DARKNESS. SHE SMILES. I BURN INTO NAUGHT BUT BLOOD AND BONE."))
+		target.Stun(80)
+		target.emote("agony")
+		target.adjustFireLoss(160)
+		target.adjust_fire_stacks(9, /datum/status_effect/fire_handler/fire_stacks/divine)
+		target.ignite_mob()
+		playsound(user, 'sound/magic/churn.ogg', 100, TRUE)
+		explosion(get_turf(target), heavy_impact_range = 2, light_impact_range = 3, flame_range = 4, smoke = FALSE)
+		return TRUE

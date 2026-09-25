@@ -72,7 +72,7 @@
 	cloak = /obj/item/clothing/cloak/heartfelt
 	armor = /obj/item/clothing/suit/roguetown/armor/heartfelt
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
-	beltl =/obj/item/rogueweapon/scabbard/sword
+	beltl =/obj/item/rogueweapon/scabbard/sword/noble
 	r_hand = /obj/item/rogueweapon/sword/long/marlin
 	beltr = /obj/item/rogueweapon/huntingknife
 	gloves = /obj/item/clothing/gloves/roguetown/leather/black
@@ -82,7 +82,7 @@
 		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled(TU)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 2,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		/obj/item/natural/feather = 1,
@@ -181,71 +181,6 @@
 		H.change_stat("perception", 1)
 		H?.mind.adjust_spellpoints(6)
 
-// Semi-Antag role. Similar to Lord, just different background and stats change a bit
-//datum/advclass/heartfelt/lord/conqueror
-//	name = "Conqueror of Heartfelt"
-//	tutorial = "You are the new Lord of Heartfelt of Heartfelt, conquering the a once-prosperous barony now in ruin.
-//  Guided by your Magos, you journey to the Reach, seeking aid to expand your domain, or perhaps claim a new throne."
-//	category_tags = list(CTAG_HFT_LORD)
-//	maximum_possible_slots = 1
-//	outfit = /datum/outfit/job/heartfelt/lord/conqueror
-//	pickprob = 100
-//	class_select_category = CLASS_CAT_HFT_COURT
-//	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_HEARTFELT)
-
-//datum/outfit/job/heartfelt/lord/conqueror/pre_equip(mob/living/carbon/human/H)
-//	..()
-//	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
-//	belt = /obj/item/storage/belt/rogue/leather/black
-//	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
-//	pants = /obj/item/clothing/under/roguetown/tights/black
-//	cloak = /obj/item/clothing/cloak/heartfelt
-//	neck = /obj/item/clothing/neck/roguetown/gorget/steel
-//	beltl =/obj/item/rogueweapon/scabbard/sword
-//	r_hand = /obj/item/rogueweapon/sword/long/marlin
-//	beltr = /obj/item/rogueweapon/huntingknife
-//	gloves = /obj/item/clothing/gloves/roguetown/leather/black
-//	backl = /obj/item/storage/backpack/rogue/satchel // Paper and Feather
-//	backpack_contents = list(
-//		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-//		/obj/item/rogueweapon/scabbard/sheath = 1,
-//		/obj/item/storage/belt/rogue/pouch/coins/rich = 1)
-//	id = /obj/item/scomstone
-//	if(H.mind)
-//		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/heartfelt)
-//		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/heartfelt/retreat)
-//		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/heartfelt/bolster)
-//		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/heartfelt/charge)
-//		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/heartfelt/forheartfelt)
-		// H.mind.AddSpell(new/obj/effect/proc_holder/spell/invoked/order/heartfelt/focustarget)
-//		H.verbs |= list(/mob/living/carbon/human/mind/proc/setordersheartfelt)
-//	H.adjust_skillrank(/datum/skill/combat/crossbows, 3, TRUE)
-//	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-//	H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
-//	H.adjust_skillrank(/datum/skill/combat/bows, 3, TRUE)
-//	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-//	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-//	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-//	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-//	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-//	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
-//	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-//	H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
-//	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
-//	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
-// H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
-//	H.change_stat("strength", 2)
-//	H.change_stat("constitution", 2)
-//	H.change_stat("willpower", 2)
-//	H.change_stat("intelligence", 1)
-//	H.change_stat("perception", 2)
-//	H.change_stat("fortune", 5)
-//	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
-//	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
-
-
-// Funny role I thought I'd make. Reminded me of Canute and his Jarldom
-
 /datum/advclass/heartfelt/lord/chief
 	name = "Chief of Heartfelt"
 	tutorial = "You are the Chieftain of Heartfelt, ruler of a once-prosperous barony now in ruin. \
@@ -309,7 +244,7 @@
 		new /mob/living/simple_animal/hostile/retaliate/rogue/saiga/tame/saddled(TU)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 2,
 		/obj/item/natural/feather = 1,

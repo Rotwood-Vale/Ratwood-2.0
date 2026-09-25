@@ -62,10 +62,12 @@
 		return
 	client.color = ""
 	if(!client_colours?.len)
+		push_client_colour_to_observers()
 		return
 	var/datum/client_colour/CC = client_colours[1]
 	if(CC)
 		client.color = CC.colour
+	push_client_colour_to_observers()
 
 /mob/proc/get_client_color(client_color_type)
 	if(!client)

@@ -34,7 +34,7 @@ He will be missed.
 
 So should you read this and should you get the chance, raise a glass in his memory.
 …but be sure to break out the good stuff.
-That’s how he would have wanted it.
+That's how he would have wanted it.
 */
 /obj/item/clothing/accessory/medal/gold/ordom
 	name = "Tomb of the Paperwork Employee"

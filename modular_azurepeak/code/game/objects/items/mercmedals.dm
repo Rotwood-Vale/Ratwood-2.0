@@ -112,7 +112,7 @@
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/steppesman
 	name = "steppesman's ungent"
-	desc = "A tightly sealed vial of dirt. These are taken from the land of the Steppesman’s Kozak, and given to them as they leave by their closest Kin. When their service ends, if they should see its end, the vial may be emptied, and the glass crushed; the end, it says."
+	desc = "A tightly sealed vial of dirt. These are taken from the land of the Steppesman's Kozak, and given to them as they leave by their closest Kin. When their service ends, if they should see its end, the vial may be emptied, and the glass crushed; the end, it says."
 	icon_state = "steppe_ungent"
 
 /obj/item/clothing/neck/roguetown/luckcharm/mercmedal/vaquero

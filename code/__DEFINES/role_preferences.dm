@@ -35,7 +35,6 @@
 #define ROLE_CULTIST			"Cultist"
 #define ROLE_BLOB				"Blob"
 #define ROLE_NINJA				"Space Ninja"
-#define ROLE_MONKEY				"Monkey"
 #define ROLE_ABDUCTOR			"Abductor"
 #define ROLE_REVENANT			"Revenant"
 #define ROLE_DEVIL				"Devil"
@@ -56,6 +55,7 @@
 #define ROLE_CHOSEN				"Chosen"
 #define ROLE_THIEVESGUILD "Thieves Guild"
 #define ROLE_VAMPIRE_SUMMON		"Vampire Summon"
+#define ROLE_NOTORIOUS_BOUNTY	"Notorious Bounty Target"
 
 GLOBAL_LIST_INIT(special_roles_rogue, list(
 	ROLE_MANIAC = /datum/antagonist/maniac,

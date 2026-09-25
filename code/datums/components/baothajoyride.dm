@@ -17,7 +17,7 @@
 	partner = partner_mob
 	caster = caster_mob
 
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_deletion))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_deletion))
 
 	START_PROCESSING(SSprocessing, src)
 	addtimer(CALLBACK(src, PROC_REF(remove_bond)), duration)
@@ -39,7 +39,7 @@
 	if(L)
 		L.remove_status_effect(/datum/status_effect/baotha_joyride)
 		UnregisterSignal(L, list(
-			COMSIG_PARENT_QDELETING
+			COMSIG_QDELETING
 		))
 
 	if(partner)

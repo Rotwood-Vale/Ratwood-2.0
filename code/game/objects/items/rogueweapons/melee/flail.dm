@@ -41,6 +41,8 @@
 
 /datum/intent/flail/strike/matthiosflail
 	reach = 2
+	damfactor = 1.3 // More damage than peasant flail, not sure why the gilded one had worse intents before, but here we are!
+
 
 /datum/intent/flail/strikerange
 	name = "ranged strike"
@@ -74,6 +76,7 @@
 
 /datum/intent/mace/smash/flail/matthiosflail
 	reach = 2
+	damfactor = 1.6 // so it's better than the militia counterpart.
 
 /datum/intent/mace/smash/flail/militia
 	damfactor = 0.9
@@ -94,6 +97,39 @@
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	item_d_type = "blunt"
 
+/datum/intent/mace/smash/flailchop
+	name = "pendulous chop"
+	icon_state = "inchop"
+	attack_verb = list("chops", "hacks")
+	chargetime = 1.2 SECONDS
+	recovery = 40
+	damfactor = 1.3
+	reach = 2
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	penfactor = 35
+	chargedloop = /datum/looping_sound/flailswing
+	keep_looping = TRUE
+	blade_class = BCLASS_CHOP
+	item_d_type = "slash"
+	blunt_chipping = FALSE
+
+/datum/intent/flail/sweep
+	name = "sweeping strike"
+	icon_state = "insweep"
+	blade_class = BCLASS_BLUNT
+	chargetime = 1.2 SECONDS
+	chargedrain = 1
+	chargedloop = /datum/looping_sound/flailswing
+	attack_verb = list("sweeps", "thrashes through")
+	animname = "strike"
+	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	damfactor = 1.5
+	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	cleave = /datum/cleave_pattern/horizontal_sweep
+	desc = "A charged sweep that smashes through targets to the front."
+
 /obj/item/rogueweapon/flail/getonmobprop(tag)
 	. = ..()
 	if(tag)
@@ -102,6 +138,16 @@
 				return list("shrink" = 0.5,"sx" = -10,"sy" = -3,"nx" = 11,"ny" = -2,"wx" = -7,"wy" = -3,"ex" = 3,"ey" = -3,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 22,"sturn" = -23,"wturn" = -23,"eturn" = 29,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/obj/item/rogueweapon/flail/bronze
+	force = 27
+	throwforce = 20
+	max_integrity = 125
+	icon_state = "bronzeflail"
+	name = "bronze flail"
+	desc = "A studded weight and a whittled handle, linked together with a length of bronze chain. It can be spun around to smash armored opponents with tremendous force, cracking plate and bone alike with unflinching impunity."
+	smeltresult = /obj/item/ingot/bronze
+	minstr = 7
 
 /obj/item/rogueweapon/flail/sflail
 	force = 30
@@ -219,11 +265,11 @@
 	force = 10
 	force_wielded = 35
 	possible_item_intents = list(/datum/intent/flail/strike)
-	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange)
+	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange, /datum/intent/flail/sweep)
 	name = "militia thresher"
 	desc = "Just like how a sling's bullet can fell a giant, so too does this great flail follow the principle of converting 'momentum' into 'plate-rupturing force'."
 	icon_state = "peasantwarflail"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/roguetown/weapons/blunt64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
@@ -251,22 +297,103 @@
 			if("wielded")
 				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
+/obj/item/rogueweapon/flail/peasantwarflail/steel
+	name = "greatflail"
+	desc = "The lucerne's ungaitly cousin, favoring a 'ball-and-chain' design that - once spun - can devastate anything caught in its way; a trait that makes it dearly beloved by both peasantry and knights alike."
+	icon_state = "greatflail"
+	wdefense = 6
+	minstr = 12
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
+	max_integrity = 300//+50 over iron warflail
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/flail/peasantwarflail/silver
+	name = "silver greatflail"
+	desc = "PSLM 81:59... AND HE COMMANDED; \"SHATTER THEM APART, LIKE A POTTER'S VESSEL AGAINST THE STONES!\" AND SO, WE STRUCK!"
+	icon_state = "silver_greatflail"
+	wdefense = 6
+	minstr = 13
+	max_integrity = 300
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
+	is_silver = TRUE
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/rogueweapon/flail/peasantwarflail/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 50,\
+		added_def = 0,\
+	)
+
+/obj/item/rogueweapon/flail/peasantwarflail/blacksteel
+	name = "blacksteel greatflail"
+	desc = "An elegant flail of blacksteel that - once spun - can devastate anything caught in its way."
+	icon_state = "bs_greatflail"
+	wdefense = 7
+	minstr = 12
+	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)//this having the better intents is a smaller buff than just increasing the base force, on par with things like blacksteel greataxe and flamberg being on par with antag options
+	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
+	max_integrity = 500
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/blacksteel
+	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
+
 /obj/item/rogueweapon/flail/peasantwarflail/matthios
+	no_loot_taint = TRUE
 	name = "Gilded Flail"
 	desc = "Weight of wealth in a deadly striking end."
 	icon_state = "matthiosflail"
 	sellprice = 250
-	smeltresult = /obj/item/ingot/steel
+	smeltresult = /obj/item/ingot/gold
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)
-	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail)
+	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	associated_skill = /datum/skill/combat/whipsflails
 	slot_flags = ITEM_SLOT_BACK
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	anvilrepair = /datum/skill/craft/weaponsmithing
-
+	wdefense = 7 //on par with blacksteel version, i've seen this thing get broken far to often
+	max_integrity = 350 // 50+ compared to steel, on par with silver blessed
+	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
 
 /obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "FLAIL")
+
+/obj/item/rogueweapon/flail/peasantwarflail/stalker
+	name = "spined drow greatflail"
+	desc = "A pendulous, bladed, and spined orb of dark mithril hung from a thorned link of chains. For more robustly built drow caviliers, there is \
+	nothing quite as potent as these fearsome greatflails. The spikes have a nasty habit of gumming up with gore; this is intentional."
+	icon = 'icons/roguetown/weapons/blunt64.dmi'
+	icon_state = "drowgreatflail"
+	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/dagger/sucker_punch)//always be punching
+	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange, /datum/intent/mace/smash/flailchop, /datum/intent/flail/sweep)
+	associated_skill = /datum/skill/combat/whipsflails
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
+	minstr = 12
+	wdefense = 5
+	max_integrity = 300
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	special = /datum/special_intent/greatsword_swing// put that blade to use
+	bigboy = TRUE
+
+/obj/item/rogueweapon/flail/peasantwarflail/stalker/alt
+	name = "drow greatflail"
+	desc = "A pendulous orb of dark mithril hung from a thorned link of chains. For more robustly built drow caviliers, there is \
+	nothing quite as potent as these fearsome greatflails."
+	icon_state = "drowgreatflailb"
+	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/dagger/sucker_punch)//we use the better intents here since it's fully focused on blunt damage
+	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
+	minstr = 13// no jaluck twinks allowed!
+	wdefense = 4// not as scary looking so worse defense idk
+	special = /datum/special_intent/greatflail_swing// greatflail special tho!
+	bigboy = TRUE
 
 /obj/item/rogueweapon/flail/militia
 	name = "militia flail"
@@ -276,3 +403,14 @@
 	force = 27
 	wdefense = 3
 	wbalance = WBALANCE_HEAVY
+
+/obj/item/rogueweapon/flail/blacksteel
+	name = "blacksteel flail"
+	icon_state = "bs_flail"
+	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/mace/smash/flailrange, /datum/intent/flail/sweep)
+	desc = "An elegant flail of blacksteel. The heftsome weight makes it unmatched for driving back plate-armored opponents, so long as one \
+	has the stamina to swing its alloyed chains around."
+	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 250
+	minstr = 12
+	force = 35

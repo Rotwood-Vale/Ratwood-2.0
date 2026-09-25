@@ -22,6 +22,8 @@
 
 /datum/coven_power/demonic/sense_the_sin/activate()
 	. = ..()
+	if(!.)
+		return
 	ADD_TRAIT(owner, TRAIT_NOFIRE, VAMPIRE_TRAIT)
 	owner.color = "#884200"
 
@@ -70,9 +72,20 @@
 	duration_length = 40 SECONDS
 	cooldown_length = 1 MINUTES
 
+	var/list/stashed_items
+
 /datum/coven_power/demonic/conflagration/activate()
 	. = ..()
-	owner.drop_all_held_items()
+	if(!.)
+		return
+
+	//stash what was in hand so the claws do not cost the caster their gear
+	stashed_items = list()
+	for(var/obj/item/held in owner.held_items.Copy())
+		if(owner.temporarilyRemoveItemFromInventory(held))
+			held.forceMove(owner)
+			stashed_items += held
+
 	owner.put_in_r_hand(new /obj/item/rogueweapon/gangrel(owner))
 	owner.put_in_l_hand(new /obj/item/rogueweapon/gangrel(owner))
 
@@ -80,6 +93,11 @@
 	. = ..()
 	for(var/obj/item/rogueweapon/gangrel/claws in owner)
 		qdel(claws)
+
+	for(var/obj/item/stashed in stashed_items)
+		if(!owner.put_in_hands(stashed))
+			stashed.forceMove(owner.drop_location())
+	stashed_items = null
 
 //PSYCHOMACHIA
 /datum/coven_power/demonic/psychomachia
@@ -90,9 +108,20 @@
 	research_cost = 3
 	check_flags = COVEN_CHECK_CONSCIOUS | COVEN_CHECK_CAPABLE | COVEN_CHECK_IMMOBILE | COVEN_CHECK_LYING
 
+	var/obj/effect/proc_holder/spell/granted_spell
+
 /datum/coven_power/demonic/psychomachia/post_gain()
 	. = ..()
-	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/baali)
+	if(!owner?.mind)
+		return
+	granted_spell = new /obj/effect/proc_holder/spell/invoked/projectile/fireball/baali
+	owner.mind.AddSpell(granted_spell)
+
+/datum/coven_power/demonic/psychomachia/post_lose()
+	. = ..()
+	if(granted_spell)
+		owner?.mind?.RemoveSpell(granted_spell)
+		granted_spell = null
 
 /obj/effect/proc_holder/spell/invoked/projectile/fireball/baali
 	name = "Infernal Fireball"
@@ -136,7 +165,7 @@
 				continue
 			new /obj/effect/hotspot/vampiric(T, 125, 100+T0C, owner.clan)
 			for(var/mob/living/L in T.contents)
-				if(L.clan == owner.clan)
+				if(L.is_clanmate(owner))
 					continue
 				L.adjustFireLoss(20)
 				L.adjust_fire_stacks(4)

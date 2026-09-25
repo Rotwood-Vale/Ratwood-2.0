@@ -67,6 +67,7 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 
 /datum/hud
 	var/mob/mymob
+	var/mob/living/carbon/human/human_owner
 
 	var/hud_shown = TRUE			//Used for the HUD toggle (F12)
 	var/hud_version = HUD_STYLE_STANDARD	//Current displayed version of the HUD
@@ -136,6 +137,8 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 
 /datum/hud/New(mob/owner)
 	mymob = owner
+	if(ishuman(owner))
+		human_owner = owner
 
 	if (!ui_style)
 		// will fall back to the default if any of these are null
@@ -203,8 +206,17 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	QDEL_LIST_ASSOC_VAL(plane_masters)
 	QDEL_LIST(screenoverlays)
 	mymob = null
+	human_owner = null
 
 	return ..()
+
+/datum/hud/proc/get_human_owner()
+	return human_owner
+
+/datum/hud/proc/claim_screen(atom/movable/screen/screen_object)
+	if(screen_object)
+		screen_object.set_new_hud(src)
+	return screen_object
 
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
@@ -221,7 +233,8 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	if(!screenmob.client)
 		return FALSE
 
-	update_colorblind_hud_palette(screenmob.client?.prefs)
+	// Mutates the shared hud objects, so follow the owner's prefs, not the viewer's (observers would rewrite our UI)
+	update_colorblind_hud_palette(mymob?.client?.prefs)
 
 	screenmob.client.screen = list()
 	screenmob.client.apply_clickcatcher()
@@ -297,10 +310,22 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 			show_hud(hud_version, M)
 	else if (viewmob.hud_used)
 		viewmob.hud_used.plane_masters_update()
+		//A rebuild empties the screen of the watcher, so hand back the overlays and alerts we lend them.
+		var/mob/dead/observer/watcher = viewmob
+		if(istype(watcher) && watcher.observetarget == mymob)
+			watcher.sync_observed_screens()
 
 	return TRUE
 
 /datum/hud/proc/plane_masters_update()
+	//A watcher borrows the planes of the mob it observes. Filters, render targets and pulses on those planes then reach it too.
+	var/mob/dead/observer/watcher = mymob
+	if(istype(watcher) && watcher.observetarget?.hud_used)
+		for(var/thing in plane_masters)
+			mymob.client?.screen -= plane_masters[thing]
+		watcher.sync_observed_planes()
+		return
+
 	// Plane masters are always shown to OUR mob, never to observers
 	for(var/thing in plane_masters)
 		var/atom/movable/screen/plane_master/PM = plane_masters[thing]
@@ -393,12 +418,16 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 		hand_box.name = mymob.get_held_index_name(i)
 		hand_box.icon = ui_style
 		hand_box.icon_state = "hand_[mymob.held_index_to_dir(i)]"
+		if(isliving(mymob))
+			var/mob/living/liv_mymob = mymob
+			if(i == liv_mymob.domhand)
+				hand_box.icon_state += "_dom"
 		hand_box.screen_loc = ui_hand_position(i)
 		hand_box.held_index = i
 		hand_slots["[i]"] = hand_box
-		hand_box.hud = src
+		claim_screen(hand_box)
 		static_inventory += hand_box
-		hand_box.update_icon()
+		hand_box.update_hand_vis()
 
 	var/i = 1
 	for(var/atom/movable/screen/swap_hand/SH in static_inventory)

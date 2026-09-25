@@ -9,19 +9,26 @@
 	)
 
 /datum/virtue/utility/riding/apply_to_human(mob/living/carbon/human/recipient)
+	// Do not grant a duplicate chooser if their class already gave it.
+	if(recipient.mind?.has_spell(/obj/effect/proc_holder/spell/self/choose_riding_virtue_mount))
+		return
+	for(var/obj/effect/proc_holder/spell/existing_spell in recipient.mob_spell_list)
+		if(istype(existing_spell, /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount))
+			return
+
 	// neatly handles everything, when we want it, when we need it.
 	recipient.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/goatmale/tame/saddled/Initialize()
-	. = ..()
+/mob/living/simple_animal/hostile/retaliate/rogue/goatmale/tame/saddled/Initialize(mapload)
+	. = ..(mapload)
 	ssaddle = new /obj/item/natural/saddle(src)
 	update_icon()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goat/tame
 	tame = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/goat/tame/saddled/Initialize()
-	. = ..()
+/mob/living/simple_animal/hostile/retaliate/rogue/goat/tame/saddled/Initialize(mapload)
+	. = ..(mapload)
 	ssaddle = new /obj/item/natural/saddle(src)
 	// excuse me please fucking compile again thank you
 	update_icon()
@@ -41,6 +48,8 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	list("brown mare (horse)", /mob/living/simple_animal/hostile/retaliate/rogue/horse/brown/tame/saddled),
 	list("black stallion (horse)", /mob/living/simple_animal/hostile/retaliate/rogue/horse/male/black/tame/saddled),
 	list("black mare (horse)", /mob/living/simple_animal/hostile/retaliate/rogue/horse/black/tame/saddled),
+	list("fogbeast mare", /mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/tame/saddled),
+	list("fogbeast stallion", /mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/male/tame/saddled),
 )))
 
 /datum/stressevent/precious_mob_died
@@ -67,6 +76,8 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 /mob/living/carbon/human
 	/// Weakref to our bespoke Saddleborn mount (added by the virtue)
 	var/datum/weakref/saddleborn_mount
+	/// World time of the last tick the mount this human is riding moved
+	var/last_mount_move_time = 0
 
 /proc/setup_saddleborn_mount_move_delay(mob/living/carbon/human/user, mob/living/simple_animal/mount)
 	if(!user || !istype(mount, /mob/living/simple_animal/hostile))
@@ -132,7 +143,12 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 		has_name = "No"
 	
 	//spawn in our creature and set it up
-	var/mob/living/simple_animal/the_real_honse = new our_chosen_honse(user.loc)
+	var/mob/living/simple_animal/the_real_honse
+	if(ispath(our_chosen_honse, /mob/living/simple_animal/hostile/retaliate/rogue/fogbeast))
+		var/fogbeast_color_choice = input("What color is your trusty steed?") as null|anything in GLOB.valid_fogbeast_colors
+		the_real_honse = new our_chosen_honse(user.loc, fogbeast_color_choice)
+	else
+		the_real_honse = new our_chosen_honse(user.loc)
 	the_real_honse.owner = user
 	the_real_honse.AddComponent(/datum/component/precious_creature, user)
 	user.saddleborn_mount = WEAKREF(the_real_honse)
@@ -142,6 +158,27 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 		if (honse_name)
 			the_real_honse.name = honse_name
 			the_real_honse.real_name = honse_name
+
+	if(HAS_TRAIT(user, TRAIT_NOBLE) && istype(the_real_honse, /mob/living/simple_animal/hostile/retaliate/rogue/saiga))
+		var/saiga_barding = list("None","Padded Barding","Chainmail Barding")
+		var/saiga_barding_choice = input(user, "What protection have you acquired for your steed?", "Saddleborn") as anything in saiga_barding
+		switch(saiga_barding_choice)
+			if("Padded Barding")
+				the_real_honse.bbarding = new /obj/item/clothing/barding()
+				the_real_honse.update_icon()
+			if("Chainmail Barding")
+				the_real_honse.bbarding = new /obj/item/clothing/barding/chain()
+				the_real_honse.update_icon()
+	else if(HAS_TRAIT(user, TRAIT_NOBLE) && istype(the_real_honse, /mob/living/simple_animal/hostile/retaliate/rogue/fogbeast))
+		var/fogbeast_barding = list("None","Padded Barding","Chainmail Barding")
+		var/fogbeast_barding_choice = input(user, "What protection have you acquired for your steed?", "Saddleborn") as anything in fogbeast_barding
+		switch(fogbeast_barding_choice)
+			if("Padded Barding")
+				the_real_honse.bbarding = new /obj/item/clothing/barding/fogbeast()
+				the_real_honse.update_icon()
+			if("Chainmail Barding")
+				the_real_honse.bbarding = new /obj/item/clothing/barding/fogbeast/chain()
+				the_real_honse.update_icon()
 
 	user.visible_message(span_info("[user] whistles sharply, and [the_real_honse] pads up from afar to their side."), span_notice("With a trusty whistle, my treasured steed returns to my side."))
 	playsound(user, 'sound/magic/saddleborn-call.ogg', 150, FALSE, 5)
@@ -155,29 +192,32 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	user.AddSpell(new /obj/effect/proc_holder/spell/self/saddleborn/whistle)
 	qdel(src)
 
-// dirty subtype for saddleborn spells that handles checking if we can actually do fucking anything at all
+/obj/effect/proc_holder/spell/self/saddleborn/proc/get_mount(mob/living/carbon/human/user)
+	return user.saddleborn_mount?.resolve()
+
+/obj/effect/proc_holder/spell/self/saddleborn/proc/can_mount_travel(area/place, mob/living/simple_animal/mount)
+	if(istype(mount, /mob/living/simple_animal/hostile/retaliate/rogue/drider))
+		return is_spiderborn_mount_area(place)
+	return place?.outdoors
+
 /obj/effect/proc_holder/spell/self/saddleborn/proc/check_mount(mob/living/carbon/human/user)
-	if (!ishuman(user))
+	if(!ishuman(user))
 		return FALSE
 
-	if (!user.saddleborn_mount)
-		to_chat(user, span_warning("You have no treasured mount to send away..."))
-		qdel(src)
-		return FALSE
-
-	var/mob/living/simple_animal/honse = user.saddleborn_mount.resolve()
-	if (!honse || honse.stat == DEAD)
+	var/mob/living/simple_animal/honse = get_mount(user)
+	if(QDELETED(honse) || honse.stat == DEAD)
 		to_chat(user, span_warning("Necra has them now..."))
 		return FALSE
 
-	if (honse && honse.has_buckled_mobs())
+	if(honse.has_buckled_mobs())
 		to_chat(user, span_warning("Your mount needs to have nobody riding on it first!"))
 		return FALSE
 
-	var/area/place = get_area(user.loc)
-	if (!place || !place.outdoors)
-		to_chat(user, span_warning("You need to be outside!"))
-		revert_cast()
+	if(!isturf(user.loc) || !can_mount_travel(get_area(user), honse))
+		if(istype(honse, /mob/living/simple_animal/hostile/retaliate/rogue/drider))
+			to_chat(user, span_warning("I must be outdoors or in the Underdark."))
+		else
+			to_chat(user, span_warning("You need to be outside!"))
 		return FALSE
 
 	return TRUE
@@ -209,7 +249,7 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 		revert_cast()
 		return FALSE
 
-	var/mob/living/simple_animal/honse = user.saddleborn_mount.resolve()
+	var/mob/living/simple_animal/honse = get_mount(user)
 	if (!user.Adjacent(honse))
 		to_chat(user, span_warning("You need to be next to your steed to send them away!"))
 		return FALSE
@@ -218,11 +258,11 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	// if they do it from town or centcomm, give the horse a healing effect
 
 	var/area/rogue/place = get_area(user.loc)
-	var/should_heal = (is_centcom_level(user.loc.z) || place.town_area || place.keep_area)
+	var/should_heal = (is_centcom_level(user.loc.z) || !istype(place) || place.town_area || place.keep_area)
 	user.visible_message(span_info("[user] starts fussing with [honse], preparing to send them away..."), span_notice("I start preparing to send [honse] away to roam freely and safely for a time..."))
 	honse.Immobilize(11 SECONDS)
 	honse.unbuckle_all_mobs(TRUE)
-	if (do_mob(user, honse, 10 SECONDS, double_progress = TRUE) && check_mount(user))
+	if (do_mob(user, honse, 7 SECONDS, double_progress = TRUE) && check_mount(user))
 		honse.apply_status_effect(/datum/status_effect/buff/stasis)
 		honse.unbuckle_all_mobs(TRUE)
 		if (!honse.has_buckled_mobs()) // just really super make sure we can't nullspace riders with this
@@ -255,39 +295,42 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 		revert_cast()
 		return FALSE
 
-	var/mob/living/simple_animal/honse = user.saddleborn_mount.resolve()
+	var/mob/living/simple_animal/honse = get_mount(user)
 	var/back_from_the_void = (honse.loc == null)
-	var/callback_time = back_from_the_void ? 20 SECONDS : 10 SECONDS // nullspace returns take a lot longer to incentivize leaving it in the world
+	var/callback_time = back_from_the_void ? 10 SECONDS : 5 SECONDS // nullspace returns take a lot longer to incentivize leaving it in the world
 	var/dangerous_summon = FALSE // will we try to proc an ambush upon return?
 
-	if (get_dist(honse.loc, user.loc) <= world.view)
+	if(!back_from_the_void && honse.z == user.z && get_dist(honse, user) <= world.view)
 		to_chat(user, span_warning("Your trusty steed is nearby!"))
 		return
 
 	var/area/rogue/place = get_area(user.loc)
 	// apply alterations to our summon time based on our location: remember, this only works outdoors!
-	if (place.threat_region == THREAT_REGION_MOUNT_DECAP)
-		callback_time += 10 SECONDS
-		dangerous_summon = TRUE
-		to_chat(user, span_warning("Mount Decapitation is a dangerous place for a mount to navigate alone..."))
-	if (place.warden_area)
-		callback_time += 5 SECONDS
-		to_chat(user, span_warning("The murderwoods are a dangerous place for a mount to navigate alone..."))
-		dangerous_summon = TRUE
-	if (istype(place, /area/rogue/under/underdark))
-		callback_time += 30 SECONDS
-		to_chat(user, span_warning("The underdark is a <b>VERY</b> dangerous place for a mount to navigate alone..."))
-		dangerous_summon = TRUE
-	if (place.keep_area)
-		if (HAS_TRAIT(user, TRAIT_NOBLE))
-			to_chat(user, span_info("A passing servant helps fetch your mount for you!"))
-			callback_time = 3 SECONDS
-		else
-			callback_time -= 3 SECONDS
-			to_chat(user, span_info("Your mount is trained to linger around town, and the gatekeepers are used to letting lone mounts in these days, helping you fetch it quicker."))
-	if (place.town_area)
-		callback_time -= 5 SECONDS
-		to_chat(user, span_info("Your mount is trained to linger around town, helping you fetch it quicker."))
+	if(!istype(honse, /mob/living/simple_animal/hostile/retaliate/rogue/drider))
+		if(place.threat_region == THREAT_REGION_MOUNT_DECAP)
+			callback_time += 10 SECONDS
+			dangerous_summon = TRUE
+			to_chat(user, span_warning("Mount Decapitation is a dangerous place for a mount to navigate alone..."))
+		if(istype(place, /area/rogue))
+			if(place.warden_area)
+				callback_time += 5 SECONDS
+				to_chat(user, span_warning("The murderwoods are a dangerous place for a mount to navigate alone..."))
+				dangerous_summon = TRUE
+			if(istype(place, /area/rogue/under/underdark))
+				callback_time += 30 SECONDS
+				to_chat(user, span_warning("The underdark is a <b>VERY</b> dangerous place for a mount to navigate alone..."))
+				dangerous_summon = TRUE
+	if(istype(place, /area/rogue))
+		if (place.keep_area)
+			if (HAS_TRAIT(user, TRAIT_NOBLE))
+				to_chat(user, span_info("A passing servant helps fetch your mount for you!"))
+				callback_time = 3 SECONDS
+			else
+				callback_time -= 3 SECONDS
+				to_chat(user, span_info("Your mount is trained to linger around town, and the gatekeepers are used to letting lone mounts in these days, helping you fetch it quicker."))
+		if (place.town_area)
+			callback_time -= 5 SECONDS
+			to_chat(user, span_info("Your mount is trained to linger around town, helping you fetch it quicker."))
 	if (callback_time <= 0)
 		callback_time = 1 SECONDS
 
@@ -296,16 +339,16 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	var/honse_base_loc = honse.loc
 	var/area/rogue/honse_place = get_area(honse.loc)
 	honse.unbuckle_all_mobs(TRUE)
-	if (!back_from_the_void && honse_place.outdoors)
+	if(!back_from_the_void && can_mount_travel(honse_place, honse))
 		honse.visible_message(span_notice("[honse] perks its ears up in response to a distant whistle, and darts off..."))
 		playsound(honse, 'sound/magic/saddleborn-call.ogg', 50, FALSE) // distant spooky whistle OooOOOo
 		honse.moveToNullspace() //temporarily shuffle it off into the null dimension, to reflect it running to the player
 	
-	if (do_after(user, callback_time))
+	if(do_after(user, callback_time) && check_mount(user))
 		if (back_from_the_void) // we're summoning from nullspace, so destasis and remove the heal, if we have one
 			honse.remove_status_effect(/datum/status_effect/buff/stasis)
 		
-		if (!back_from_the_void && honse_place && !honse_place.outdoors)
+		if(!back_from_the_void && !can_mount_travel(honse_place, honse))
 			to_chat(user, span_warning("...but nothing comes. They musn't have heard your whistling."))
 			return TRUE
 		
@@ -320,8 +363,8 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 				user.consider_ambush(ignore_cooldown = TRUE)
 		return TRUE
 	else
-		honse.forceMove(honse_base_loc) // put the honse back, and give some info as to what just happened for onlookers
-		honse.visible_message(span_notice("[honse] trundles back into sight with a confused expression, ears swivelling to catch some manner of sound..."))
-		revert_cast()
+		if(!QDELETED(honse) && honse_base_loc)
+			honse.forceMove(honse_base_loc)
+			honse.visible_message(span_notice("[honse] returns to view after an interrupted call."))
+		revert_cast(user)
 		return FALSE
-

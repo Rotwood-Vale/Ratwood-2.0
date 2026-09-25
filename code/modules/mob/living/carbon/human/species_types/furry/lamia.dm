@@ -90,6 +90,8 @@
 		/datum/customizer/organ/penis/lamia, // only tapered or hemi tapered or tentacle
 		/datum/customizer/organ/breasts/human,
 		/datum/customizer/organ/vagina/anthro,
+		/datum/customizer/bodypart_feature/pubes/feathered,
+		/datum/customizer/bodypart_feature/pits/feathered,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,
@@ -108,6 +110,9 @@
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
+		/datum/body_marking/tall_eyes,
+		/datum/body_marking/outer_tall_eyes,
+		/datum/body_marking/blank_face,
 		/datum/body_marking/plain,
 		/datum/body_marking/tiger,
 		/datum/body_marking/tiger/dark,

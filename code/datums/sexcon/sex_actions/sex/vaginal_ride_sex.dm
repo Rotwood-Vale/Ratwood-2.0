@@ -7,37 +7,15 @@
 	target_sex_part = SEX_PART_COCK
 	knot_on_finish = TRUE
 
-/datum/sex_action/vaginal_ride_sex/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/vaginal_ride_sex/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	return TRUE
-
 /datum/sex_action/vaginal_ride_sex/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] gets on top of [target] and begins riding [target.p_them()] with [user.p_their()] cunt!"))
 	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
 
 /datum/sex_action/vaginal_ride_sex/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!user.sexcon.do_knot_action_as_bottom)
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rides [target]."))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] rides [target]."))
 	else
-		user.visible_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] knot-rides [target]."))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] knot-rides [target]."))
 	user.sexcon.intercourse_noise(user, TRUE)
 	user.sexcon.do_thrust_animate(target)
 

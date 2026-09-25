@@ -114,6 +114,11 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/list/personal_objectives = list() // List of personal objectives not tied to the antag roles
 	var/list/special_people = list() // For characters whose text will display in a different colour when seen by this Mind
 	var/list/curses = list()
+	/// Weakref to this character's severed head, set on decapitation and cleared on reattachment.
+	/// Never qdel it, weakref/Destroy() qdels its target
+	var/datum/weakref/severed_head_ref
+	/// The player's OOC card and identity, captured from their body so it follows the mind through transplants
+	var/datum/player_card/player_card
 
 /datum/mind/New(key)
 	src.key = key
@@ -124,9 +129,30 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	GLOB.personal_objective_minds -= src
+	QDEL_NULL(player_card)
 	QDEL_NULL(sleep_adv)
+	QDEL_NULL(language_holder)
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
+	RemoveAllSpells()
+	if(current)
+		if(current.mind == src)
+			current.mind = null
+		if(iscarbon(current))
+			var/mob/living/carbon/carbon_current = current
+			if(carbon_current.last_mind == src)
+				carbon_current.last_mind = null
+	current = null
+	soulOwner = null
+	martial_art = null
+	champion = null
+	ward = null
+	knight = null
+	squire = null
+	enslaved_to = null
+	special_items.Cut()
+	special_people.Cut()
 	return ..()
 
 /proc/get_minds(role)
@@ -289,10 +315,20 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER
+	if(current?.mind == src)
+		current.mind = null
 	set_current(null)
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
+		// The card rides the mind, captured leaving a body and restamped entering one. Shapeshift shells are
+		// skipped both ways, or the shell's empty fields overwrite it and animals show the player's notes
+		if(ishuman(current))
+			var/mob/living/carbon/human/old_human = current
+			if(!old_human.is_shapeshift_shell())
+				if(!player_card)
+					player_card = new
+				player_card.capture_from(old_human)
 		current.mind = null
 		UnregisterSignal(current, COMSIG_MOB_DEATH)
 		SStgui.on_transfer(current, new_character)
@@ -320,6 +356,10 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(curses && curses.len)
 		apply_curses_to_mob(current, src)
 	new_character.mind = src							//and associate our new body with ourself
+	if(ishuman(new_character) && player_card)
+		var/mob/living/carbon/human/new_human = new_character
+		if(!new_human.is_shapeshift_shell())
+			player_card.apply_card_to(new_human)
 	for(var/datum/antagonist/A in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		A.on_body_transfer(old_current, current)
 	if(iscarbon(new_character))
@@ -328,7 +368,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
 	transfer_martial_arts(new_character)
-	if(old_current.skills)
+	if(old_current?.skills)
 		old_current.skills.set_current(new_character)
 
 	RegisterSignal(new_character, COMSIG_MOB_DEATH, PROC_REF(set_death_time))
@@ -336,7 +376,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		testing("dotransfer to [new_character]")
 		new_character.key = key		//now transfer the key to link the client to our new body
 	new_character.update_fov_angles()
-	SEND_SIGNAL(old_current, COMSIG_MIND_TRANSFER, new_character)
+	if(old_current)
+		SEND_SIGNAL(old_current, COMSIG_MIND_TRANSFER, new_character)
 
 // adjusts the amount of available spellpoints
 /datum/mind/proc/adjust_spellpoints(points)
@@ -477,7 +518,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 /datum/mind/proc/recall_targets(mob/recipient, window=1)
 	var/output = "<B>[recipient.real_name]'s Hitlist:</B><br>"
 	for(var/mob/living/carbon in GLOB.mob_living_list) // Iterate through all mobs in the world
-		if((carbon.real_name != recipient.real_name) && ((carbon.has_flaw(/datum/charflaw/assassintarget)) && (!istype(carbon, /mob/living/carbon/human/dummy))))//To be on the list they must be hunted, not be the user and not be a dummy (There is a dummy that has all vices for some reason)
+		if((carbon.real_name != recipient.real_name) && (HAS_TRAIT(carbon, TRAIT_ASSASSIN_TARGET)) && (!istype(carbon, /mob/living/carbon/human/dummy)))//To be on the list they must be hunted, not be the user and not be a dummy (There is a dummy that has all vices for some reason)
 			output += "<br>[carbon.real_name]"
 			output += "<br>[carbon.real_name]"
 			if (carbon.job)
@@ -778,7 +819,6 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 //To remove a specific spell from a mind
 /datum/mind/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
-	var/success = FALSE
 	if(!spell)
 		return FALSE
 	for(var/X in spell_list)
@@ -786,13 +826,15 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		if(S.name == spell.name && S.type == spell.type) //match by name and type to avoid issues with multiple instances of the same spell
 			spell_list -= S
 			qdel(S)
-			success = TRUE
 			return TRUE // We're deleting only one spell
-	return success
+	return FALSE
 
 /datum/mind/proc/RemoveAllSpells()
-	for(var/obj/effect/proc_holder/S in spell_list)
-		RemoveSpell(S)
+	. = FALSE
+	for(var/obj/effect/proc_holder/S as anything in spell_list)
+		spell_list -= S
+		qdel(S)
+		. = TRUE
 
 //removes spells that have miracle = true on them
 /datum/mind/proc/RemoveAllMiracles()
@@ -816,11 +858,14 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	transfer_mindbound_actions(new_character)
 
 /datum/mind/proc/transfer_mindbound_actions(mob/living/new_character)
-	for(var/X in spell_list)
-		var/obj/effect/proc_holder/spell/S = X
-		S.action.Grant(new_character)
+	// a spell destroyed while its action had no owner cannot remove itself from spell_list, so drop it here
+	for(var/obj/effect/proc_holder/spell/S as anything in spell_list.Copy())
+		if(QDELETED(S))
+			spell_list -= S
+			continue
+		S.action?.Grant(new_character)
 
-/datum/mind/proc/disrupt_spells(delay, list/exceptions = New())
+/datum/mind/proc/disrupt_spells(delay, list/exceptions = new())
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
 		for(var/type in exceptions)
@@ -1035,13 +1080,13 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 						var/custom_name = user.client?.prefs.resolve_loadout_to_name(path2item)
 						if (custom_name)
 							I.original_name = I.name // Store original name before renaming
-							I.name = custom_name
+							I.name = sanitize(custom_name)
 							// Log to game log
 							log_game("[key_name(user)] retrieved loadout item with custom name: '[custom_name]' (original: '[I.original_name]')")
 						// Apply custom description if set
 						var/custom_desc = user.client?.prefs.resolve_loadout_to_desc(path2item)
 						if (custom_desc)
-							I.desc = custom_desc
+							I.desc = html_encode(custom_desc)
 
 						user.put_in_hands(I)
 

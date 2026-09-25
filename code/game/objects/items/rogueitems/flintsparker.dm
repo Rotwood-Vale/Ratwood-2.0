@@ -24,7 +24,7 @@
 	flintcd = world.time
 	playsound(user, 'sound/items/flint.ogg', 100, FALSE)
 	if(prob(80))
-		user.flash_fullscreen("whiteflash")
+		user.fullscreen_redflash("whiteflash")
 		var/datum/effect_system/spark_spread/S = new()
 		var/turf/front = get_step(user,user.dir)
 		S.set_up(1, 1, front)
@@ -40,4 +40,4 @@
 	playsound(user, 'sound/items/flint.ogg', 100, FALSE)
 	if(prob(50))
 		A.spark_act()
-		user.flash_fullscreen("whiteflash")
+		user.fullscreen_redflash("whiteflash")

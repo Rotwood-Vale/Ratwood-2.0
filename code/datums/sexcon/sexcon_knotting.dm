@@ -389,6 +389,12 @@
 				creampie.refresh_cum()
 			if(top?.dna?.species?.id == "gnoll")
 				btm.has_gnoll_scent_this_round = TRUE
+			var/top_redolent = HAS_TRAIT(top, TRAIT_REDOLENT)
+			var/bottom_redolent = HAS_TRAIT(btm, TRAIT_REDOLENT)
+			if(top_redolent && !bottom_redolent)
+				top.redolent_apply_contact_stink(btm)
+			else if(bottom_redolent && !top_redolent)
+				btm.redolent_apply_contact_stink(top)
 			modular_record_collar_receive_event(btm, top)
 			var/obj/item/organ/testicles/testes = top.getorganslot(ORGAN_SLOT_TESTICLES)
 			var/knot_orifice = top.sexcon.knotted_part_partner & (SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_SLIT_SHEATH)
@@ -535,7 +541,7 @@
 	desc = "You were forcefully withdrawn from. Warmth runs freely down your thighs..."
 
 
-/atom/movable/screen/alert/status_effect/knot_tied/Click()
+/atom/movable/screen/alert/status_effect/knot_tied/handle_click()
 	..()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.sexcon)
@@ -558,7 +564,7 @@
 	desc = "I have to be careful where I step..."
 	icon_state = "knotted"
 
-/atom/movable/screen/alert/status_effect/knotted/Click()
+/atom/movable/screen/alert/status_effect/knotted/handle_click()
 	..()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.sexcon)
@@ -576,11 +582,11 @@
 	alert_type = null
 
 /datum/status_effect/jaw_gaped/on_apply()
-	ADD_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
+	ADD_TRAIT(owner, TRAIT_GARGLE_SPEECH, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_warning("My jaw... It stings!"))
 	return ..()
 
 /datum/status_effect/jaw_gaped/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, "jaw_gaped")
+	REMOVE_TRAIT(owner, TRAIT_GARGLE_SPEECH, TRAIT_STATUS_EFFECT(id))
 	if(owner.stat == CONSCIOUS)
 		to_chat(owner, span_warning("I finally feel my jaw again."))

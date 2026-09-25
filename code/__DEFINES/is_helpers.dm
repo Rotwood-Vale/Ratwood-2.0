@@ -108,10 +108,6 @@ GLOBAL_LIST_INIT(our_forest_sex, typecacheof(list(
 #define isharpy(A) (is_species(A, /datum/species/harpy))
 #define isarachnid(A) (is_species(A, /datum/species/arachnid))
 
-
-//more carbon mobs
-#define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
-
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 

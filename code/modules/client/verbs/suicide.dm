@@ -119,25 +119,6 @@
 
 		death(FALSE)
 
-/mob/living/carbon/monkey/verb/suicide()
-	set hidden = 1
-	if(!usr.client.holder)
-		return
-	if(!canSuicide())
-		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
-	if(!canSuicide())
-		return
-	if(confirm == "Yes")
-		set_suicide(TRUE)
-		visible_message(span_danger("[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide."), \
-				span_danger("[src] is attempting to bite [p_their()] tongue. It looks like [p_theyre()] trying to commit suicide."))
-
-		suicide_log()
-
-		adjustOxyLoss(max(200- getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		death(FALSE)
-
 /mob/living/silicon/ai/verb/suicide()
 	set hidden = 1
 	if(!canSuicide())
@@ -191,25 +172,6 @@
 	else
 		to_chat(src, "Aborting suicide attempt.")
 
-/mob/living/carbon/alien/humanoid/verb/suicide()
-	set hidden = 1
-	if(!canSuicide())
-		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
-	if(!canSuicide())
-		return
-	if(confirm == "Yes")
-		set_suicide(TRUE)
-		visible_message(span_danger("[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."), \
-				span_danger("[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."), \
-				span_hear("I hear thrashing."))
-
-		suicide_log()
-
-		//put em at -175
-		adjustOxyLoss(max(200 - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
-		death(FALSE)
-
 /mob/living/simple_animal/verb/suicide()
 	set hidden = 1
 	if(!usr.client.holder)
@@ -228,11 +190,11 @@
 
 		death(FALSE)
 
-/mob/living/proc/suicide_log()
-	log_message("committed suicide as [src.type]", LOG_ATTACK)
+/mob/living/proc/suicide_log(method)
+	log_message("committed suicide as [src.type][method ? " ([method])" : ""]", LOG_ATTACK)
 
-/mob/living/carbon/human/suicide_log()
-	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
+/mob/living/carbon/human/suicide_log(method)
+	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide[method ? " ([method])" : ""]", LOG_ATTACK)
 
 /mob/living/proc/canSuicide()
 	switch(stat)

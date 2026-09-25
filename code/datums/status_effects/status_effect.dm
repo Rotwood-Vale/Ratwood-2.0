@@ -113,6 +113,9 @@
 		tick_interval = world.time + initial(tick_interval)
 	if(duration != -1 && duration < world.time)
 		qdel(src)
+		return
+	if(linked_alert && duration != -1)
+		linked_alert.update_countdown(max(duration - world.time, 0))
 
 /datum/status_effect/proc/on_apply() //Called whenever the buff is applied; returning FALSE will cause it to autoremove itself.
 	for(var/S in effectedstats)
@@ -184,6 +187,18 @@
 			var/newnum = attached_effect.effectedstats[S] * -1
 			inspec += "<br><span class='danger'>[S]</span> \Roman [newnum]"
 
+	if(attached_effect && attached_effect.duration != -1 && attached_effect.duration > world.time)
+		var/remaining = attached_effect.duration - world.time
+		var/total_secs = round(remaining / (1 SECONDS))
+		var/timestring
+		if(total_secs >= 60)
+			var/mins = round(total_secs / 60)
+			var/secs = total_secs % 60
+			timestring = "[mins]:[secs < 10 ? "0[secs]" : "[secs]"]"
+		else
+			timestring = "[total_secs]s"
+		inspec += "<br><span class='smallnotice'>Time remaining: [timestring]</span>"
+
 	inspec += "<br>----------------------"
 	to_chat(user, "[inspec.Join()]")
 
@@ -198,6 +213,8 @@
 // applies a given status effect to this mob, returning the effect if it was successful
 /mob/living/proc/apply_status_effect(effect, ...)
 	. = FALSE
+	if(QDELETED(src)) // our status effects have already been cleared, a new one would just hang a ref on us
+		return
 	LAZYINITLIST(status_effects)
 	if(!length(status_effects_by_id))
 		status_effects_by_id = alist()

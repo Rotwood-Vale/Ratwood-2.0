@@ -17,7 +17,7 @@
 		revert_cast()
 		return FALSE
 
-	var/message = input(user, "You make a connection. What are you trying to say?")
+	var/message = sanitize(input(user, "You make a connection. What are you trying to say?"))
 	if(!message)
 		revert_cast()
 		return FALSE
@@ -89,8 +89,7 @@
 	. = ..()
 	if (prob(60) && isturf(src.loc))
 		var/obj/item/glow_petal/petal = new /obj/item/glow_petal(src.loc)
-		spawn(rand(50, 60))
-			qdel(petal)
+		QDEL_IN(petal, rand(50, 60))
 
 /obj/item/glow_petal
 	name = "Faint Petals"
@@ -262,8 +261,8 @@
 	heal_effect.color = "#129160"
 	var/list/wound_count = owner.get_wounds()
 	if(!owner.construct)
-		if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
-			owner.blood_volume = min(owner.blood_volume+2, BLOOD_VOLUME_NORMAL) //Reduced blood replenishment compared to cleric miracle.
+		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			owner.set_blood_volume(min(owner.get_blood_volume()+2, BLOOD_VOLUME_NORMAL)) //Reduced blood replenishment compared to cleric miracle.
 		if(wound_count.len > 0)
 			owner.heal_wounds(healing_on_tick)
 			owner.update_damage_overlays()
@@ -311,7 +310,7 @@
 	if (isturf(targets[1]))
 		var/turf/front_turf = get_step(user, user.dir)
 		var/datum/effect_system/spark_spread/spark_spread_effect = new()
-		user.flash_fullscreen("whiteflash")
+		user.fullscreen_redflash("whiteflash")
 		flick("flintstrike", src)
 		spark_spread_effect.set_up(1, 1, front_turf)
 		spark_spread_effect.start()
@@ -320,7 +319,7 @@
 	else
 		var/atom/target_atom = targets[1]
 		if (user.Adjacent(target_atom))
-			user.flash_fullscreen("whiteflash")
+			user.fullscreen_redflash("whiteflash")
 			flick("flintstrike", src)
 			target_atom.spark_act()
 			user.visible_message(span_notice("[user.name] exhales a directed spark toward [target_atom]!"), span_notice("You release a pinpoint ember toward [target_atom]."))
@@ -394,7 +393,7 @@
 	illusory_familiar.fully_replace_character_name(null, user.name)
 
 	// Schedule deletion safely with global context
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/delete_illusory_fam, illusory_familiar, user), 200)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(delete_illusory_fam), illusory_familiar, user), 200)
 
 	return TRUE
 
@@ -474,22 +473,24 @@
 
 	user.visible_message(span_emote("[user.name] blurs at the edges, dissolving like mist."))
 
-	spawn(20)
-		// Re-find the entry by name to ensure it's still valid
-		var/current_index = 0
-		for (var/i = 1, i <= user.saved_trails.len, i++)
-			if (user.saved_trails[i]["name"] == selected_trail_name)
-				current_index = i
-				break
-		if (!(isturf(target_location) || isopenturf(target_location)))
-			to_chat(user, span_warning("The path has faded..."))
-			if (current_index)
-				user.saved_trails.Cut(current_index, current_index+1)
-			return
-		do_teleport(user, target_location, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
-		user.visible_message(span_emote("A ripple in the air resolves into fur and paw. [user.name] pads silently into view."))
+	addtimer(CALLBACK(src, PROC_REF(complete_shift), user, selected_trail_name, target_location), 20)
 
 	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/veilbound_shift/proc/complete_shift(mob/living/simple_animal/pet/familiar/mist_lynx/user, selected_trail_name, target_location)
+	// Re-find the entry by name to ensure it's still valid
+	var/current_index = 0
+	for (var/i = 1, i <= user.saved_trails.len, i++)
+		if (user.saved_trails[i]["name"] == selected_trail_name)
+			current_index = i
+			break
+	if (!(isturf(target_location) || isopenturf(target_location)))
+		to_chat(user, span_warning("The path has faded..."))
+		if (current_index)
+			user.saved_trails.Cut(current_index, current_index+1)
+		return
+	do_teleport(user, target_location, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
+	user.visible_message(span_emote("A ripple in the air resolves into fur and paw. [user.name] pads silently into view."))
 
 /obj/effect/proc_holder/spell/self/verdant_veil
 	name = "Verdant Veil"

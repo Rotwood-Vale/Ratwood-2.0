@@ -2,9 +2,11 @@
 /obj/effect/proc_holder/spell/targeted/blesscrop
 	name = "Bless Crops"
 	desc = "Bless a targeted soil plot or tree. Druidic Trickery increases stored charges. Revives dead plants, gives them nutrition and water if low & boosts their growth. Blessed seed powder can expend all charges to bless up to five nearby planted soils at once."
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
+	overlay_state = "blesscrop"
 	range = 5
 	selection_type = "range"
-	overlay_state = "blesscrop"
 	releasedrain = 15
 	charge_type = "charges"
 	recharge_time = 1
@@ -325,9 +327,11 @@
 /obj/effect/proc_holder/spell/targeted/beasttame
 	name = "Tame Beast"
 	desc = "Pacifies a targeted tameable beast with Dendor's blessing, permanently soothing its anger. Has 2 charges; each restores in 10 seconds, or 1 minute if both are spent."
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
+	overlay_state = "tamebeast"
 	range = 5
 	selection_type = "range"
-	overlay_state = "tamebeast"
 	releasedrain = 30
 	charge_type = "charges"
 	recharge_time = 1
@@ -460,10 +464,10 @@
 /obj/effect/proc_holder/spell/targeted/conjure_glowshroom
 	name = "Fungal Illumination"
 	desc = "Summons glowing mushrooms that shock people that try moving into them. Dendorites are immune."
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
+	overlay_state = "glowshroom"
 	range = 1
-	action_icon_state = "glowshroom"
-	action_icon = 'icons/mob/actions/genericmiracles.dmi'
-	overlay_state = "blesscrop"
 	releasedrain = 30
 	recharge_time = 30 SECONDS
 	chargetime = 1 SECONDS
@@ -472,7 +476,7 @@
 	cast_without_targets = TRUE
 	sound = 'sound/items/dig_shovel.ogg'
 	associated_skill = /datum/skill/magic/holy
-	invocations = list("Treefather light the way.")
+	invocations = list("Treefather light the way!")
 	invocation_type = "whisper" //can be none, whisper, emote and shout
 	devotion_cost = 30
 
@@ -497,7 +501,9 @@
 /obj/effect/proc_holder/spell/targeted/conjure_vines
 	name = "Vine Sprout"
 	desc = "Summon vines nearby."
-	overlay_state = "blesscrop"
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
+	overlay_state = "vine"
 	releasedrain = 90
 	invocations = list("Treefather, bring forth vines.")
 	invocation_type = "shout"
@@ -528,6 +534,8 @@
 /obj/effect/proc_holder/spell/self/howl/call_of_the_moon
 	name = "Call of the Moon"
 	desc = "Draw upon the the secrets of the hidden firmament to converse with the mooncursed."
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
 	overlay_state = "howl"
 	antimagic_allowed = FALSE
 	recharge_time = 600
@@ -555,7 +563,9 @@
 /obj/effect/proc_holder/spell/invoked/spiderspeak
 	name = "Spider Speak"
 	desc = "Makes spiders not attack the target."
-	overlay_state = "tamebeast"
+	overlay_icon = 'icons/mob/actions/dendormiracles.dmi'
+	action_icon = 'icons/mob/actions/dendormiracles.dmi'
+	overlay_state = "spider"
 	releasedrain = 15
 	chargedrain = 0
 	chargetime = 1 SECONDS
@@ -604,18 +614,26 @@
 
 	var/atom/target_atom = targets[1]
 	var/obj/structure/flora/newtree/target = null
+	var/obj/structure/flora/newtreealt/target2 = null
 
 	// Use for-in-list idiom: the loop var gets the correct static type regardless of source type.
 	for(var/obj/structure/flora/newtree/NT_target in list(target_atom))
 		if(!NT_target.burnt)
 			target = NT_target
 		break  // only check the first (and only) element
-	if(!target && target_atom.loc && (get_dist(user, target_atom.loc) <= 1))
+	for(var/obj/structure/flora/newtreealt/NT_target2 in list(target_atom))
+		if(!NT_target2.burnt)
+			target = NT_target2
+		break 
+	if(!target || !target2 && target_atom.loc && (get_dist(user, target_atom.loc) <= 1))
 		for(var/obj/structure/flora/newtree/NT in target_atom.loc)
 			if(!NT.burnt)
 				target = NT
 				break
-
+		for(var/obj/structure/flora/newtreealt/NT2 in target_atom.loc)
+			if(!NT2.burnt)
+				target = NT2
+				break
 	// If no living newtree found, search for an unsanctified wise tree to bless instead.
 	var/obj/structure/flora/roguetree/wise/wise_target = null
 	if(!target)
@@ -881,7 +899,7 @@
 		D.ai_controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
 	// For old-style AI mobs, clear the enemies list, lose current target, and set
 	// non-aggressive so the dryad doesn't re-acquire an enemy mid-transit.
-	D.enemies = list()
+	D.clear_enemies()
 	D.target = null
 	D.LoseTarget()
 	D.aggressive = FALSE
@@ -933,7 +951,7 @@
 	switch(order_type)
 		if("goto")
 			D.follow_target = null
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.guard_turf = target_location
@@ -943,7 +961,7 @@
 				D.faction -= "neutral"
 			to_chat(caster, span_notice("[D.name] moves to guard that position."))
 		if("follow")
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.lastattacker_weakref = null
@@ -978,7 +996,7 @@
 			else
 				D.follow_target = caster
 				D.guard_turf = null
-				D.enemies = list()
+				D.clear_enemies()
 				D.target = null
 				D.LoseTarget()
 				D.lastattacker_weakref = null
@@ -990,7 +1008,7 @@
 		if("aggressive")
 			// Clicking an ally — send dryad to their tile as a guard position.
 			D.follow_target = null
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.guard_turf = get_turf(target)

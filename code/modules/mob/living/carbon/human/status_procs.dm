@@ -53,26 +53,26 @@
 	var/modifier = 0
 
 	// Map-specific adjustments
-	if(SSmapping.config.map_name == "Rockhill")	//rockhill temperatures are moderate and wet climate
+	if(SSmapping.current_map.map_name == "Rockhill")	//rockhill temperatures are moderate and wet climate
 	// Time-of-day adjustments
 		if(time_flags & TIME_OF_DAY_BIT_DAY)
 			modifier += 20
 		else if(time_flags & TIME_OF_DAY_BIT_NIGHT)
 			modifier -= 20
 
-	else if(SSmapping.config.map_name == "Desert Town")	//desert map should feel hotter then other maps
+	else if(SSmapping.current_map.map_name == "Desert Town")	//desert map should feel hotter then other maps
 		if(time_flags & TIME_OF_DAY_BIT_DAY)
 			modifier += 100							//300+100 is 400, in the middle of the 'hot' temperature range
 		else if(time_flags & TIME_OF_DAY_BIT_NIGHT)
 			modifier -= 0							//300-0 is 300, in the middle of the 'normal' temperature range
 
-	else if(SSmapping.config.map_name == "Build Your Own Settlement")	//desert map should feel hotter then other maps
+	else if(SSmapping.current_map.map_name == "Build Your Own Settlement")	//desert map should feel hotter then other maps
 		if(time_flags & TIME_OF_DAY_BIT_DAY)
 			modifier += 70							//300+70 is 370, a smidge cooler than the middle of the 'hot' range
 		else if(time_flags & TIME_OF_DAY_BIT_NIGHT)
 			modifier -= 0							//300-0 is 300, in the middle of the 'normal' temperature range
 
-	else if(SSmapping.config.map_name == "Dun World")//Dunworld is colder then the other two maps
+	else if(SSmapping.current_map.map_name == "Dun World")//Dunworld is colder then the other two maps
 		if(time_flags & TIME_OF_DAY_BIT_DAY)
 			modifier += 0							//No bonus for day time temperatures
 		else if(time_flags & TIME_OF_DAY_BIT_NIGHT)

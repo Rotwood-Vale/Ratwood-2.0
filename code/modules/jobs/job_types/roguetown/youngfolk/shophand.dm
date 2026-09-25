@@ -21,7 +21,7 @@
 	cmode_music = 'sound/music/cmode/towner/combat_towner.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
 	job_traits = list(TRAIT_SEEPRICES)
-
+	virtue_restrictions = list(/datum/virtue/utility/blacksmith, /datum/virtue/utility/artificer, /datum/virtue/utility/tailor)
 	advclass_cat_rolls = list(CTAG_SHOPHAND = 2)
 	job_subclasses = list(
 		/datum/advclass/shophand
@@ -56,7 +56,7 @@
 /datum/outfit/job/roguetown/shophand/basic/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.adjust_blindness(-3)
-	if(SSmapping.config.map_name == "Desert Town")
+	if(SSmapping.current_map.map_name == "Desert Town")
 		if(should_wear_femme_clothes(H))
 			pants = /obj/item/clothing/under/roguetown/tights
 			shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt

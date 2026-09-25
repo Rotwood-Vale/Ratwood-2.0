@@ -56,6 +56,19 @@
 		if("Low-Town accent")
 			return strings("poor_replacement.json", type, convert_HTML = TRUE)
 
+/proc/get_mannerism_list_for_name(mannerism_name, type, convert_HTML = TRUE)
+	switch(mannerism_name)
+		if("Nervous Stutter")
+			return strings("nervous_stutter_replacement.json", type, convert_HTML = convert_HTML)
+		if("Stutter")
+			return strings("stutter_replacement.json", type, convert_HTML = convert_HTML)
+		if("Heavy Stutter")
+			return strings("heavy_stutter_replacement.json", type, convert_HTML = convert_HTML)
+		if("Lisp")
+			return strings("lisp_replacement.json", type, convert_HTML = convert_HTML)
+		if("Hesitant")
+			return strings("hesitant_replacement.json", type, convert_HTML = convert_HTML)
+
 /datum/species/proc/get_accent_list(mob/living/carbon/human/H, type, convert_HTML = TRUE)
 	return get_accent_list_for_name(H.char_accent, type, convert_HTML)
 
@@ -74,38 +87,228 @@
 /datum/species/proc/get_accent_end(mob/living/carbon/human/H)
 	return get_accent_list(H,"end")
 
+/datum/species/proc/get_mannerism_list(mob/living/carbon/human/H, type, convert_HTML = TRUE)
+	return get_mannerism_list_for_name(H.char_mannerism, type, convert_HTML)
+
+/datum/species/proc/get_mannerism(mob/living/carbon/human/H)
+	return get_mannerism_list(H, "full")
+
+/datum/species/proc/get_mannerism_multiword(mob/living/carbon/human/H)
+	return get_mannerism_list(H, "multiword")
+
+/datum/species/proc/get_mannerism_any(mob/living/carbon/human/H)
+	return get_mannerism_list(H, "syllable")
+
+/datum/species/proc/get_mannerism_start(mob/living/carbon/human/H)
+	return get_mannerism_list(H, "start")
+
+/datum/species/proc/get_mannerism_end(mob/living/carbon/human/H)
+	return get_mannerism_list(H, "end")
+
 #define REGEX_FULLWORD 1
 #define REGEX_STARTWORD 2
 #define REGEX_ENDWORD 3
 #define REGEX_ANY 4
 
-/// Applies a named accent's full transformation pipeline to a test message and returns the result.
-/// Returns null for accents that have no text transformations (font-only or no accent).
+
+/*
+	Lets a player speak a name or foreign word exactly as they typed it by putting \[brackets\]
+	around it. For each word or phrase in brackets, we save the original text and leave a
+	numbered marker, like "<#1#>", where it was. The accent code doesn't touch the markers
+	because they have no letters in them, so afterward accent_escape_restore puts the saved
+	text back in place of each marker.
+*/
+/proc/accent_escape_extract(message, list/escapes)
+	// A message starting with '*' is an emote, so skip
+	if(!message || message[1] == "*")
+		return message
+	// This finds one \[insert whatever here\] at a time. Static so it is built once instead of on every call.
+	var/static/regex/escape_regex = regex(@"\[([^\]]*)\]?")
+
+	// Search from the start each time, since we rebuild the message whenever we pull one out. Each pass removes an opening bracket, so this always finishes.
+	while(escape_regex.Find(message, 1))
+		// Save the text that was inside the brackets.
+		escapes += (escape_regex.group[1] || "")
+		// Swap the \[word\] out for a numbered marker. The number is its place in the escapes list.
+		message = copytext(message, 1, escape_regex.index) + "<#[escapes.len]#>" + copytext(message, escape_regex.index + length(escape_regex.match))
+	return message
+
+/*
+	The other half of accent_escape_extract: puts each saved word back in place of its
+	"<#N#>" marker, so the brackets are gone and the original words come back unchanged. Runs
+	after the accent code so nothing changes the text
+	we bring back.
+*/
+/proc/accent_escape_restore(message, list/escapes)
+	if(!message)
+		return message
+	// Put each saved word back where its marker is. A player shouldn't be able to fake a marker
+	for(var/i in 1 to escapes.len)
+		message = replacetext(message, "<#[i]#>", escapes[i])
+	return message
+
+
+/*
+	It takes the speaker's five accent word lists and applies each kind of replacement in turn.
+	autopunct and do_trim are on for speech, while the emote quote path turns them off so the quoted words are
+	left exactly as typed.
+*/
+/proc/apply_accent_pipeline(message, list/multiword, list/fullword, list/startword, list/endword, list/syllable, autopunct = TRUE, do_trim = TRUE)
+	var/customsayverb = findtext(message, "*")
+	var/action_prefix
+	if(customsayverb)
+		action_prefix = copytext(message, 1, customsayverb)
+		message = copytext(message, customsayverb + 1)
+	// Only pull out \[\] if the message actually has one, so we skip making the list when there is nothing to escape.
+	var/list/accent_escapes
+	if(message && findtext(message, "\["))
+		accent_escapes = list()
+		message = accent_escape_extract(message, accent_escapes)
+	// Replace whole words that are made up of more than one word.
+	message = treat_message_accent(message, multiword, REGEX_FULLWORD)
+	// One pass over each word, applying the shared universal list and this accent's whole-word list at once.
+	message = treat_message_accent_fullword(message, strings("accent_universal.json", "universal", convert_HTML = TRUE), fullword)
+	// Replace the start of words.
+	message = treat_message_accent(message, startword, REGEX_STARTWORD)
+	// Replace the end of words.
+	message = treat_message_accent(message, endword, REGEX_ENDWORD)
+	// Replace letters or syllables anywhere inside words.
+	message = treat_message_accent(message, syllable, REGEX_ANY)
+
+	if(autopunct)
+		message = autopunct_bare(message)
+	if(do_trim)
+		message = trim(message)
+
+	// Put the escaped words back last so they stay exactly as typed 
+	if(accent_escapes)
+		message = accent_escape_restore(message, accent_escapes)
+	return action_prefix ? "[action_prefix]*[message]" : message
+
+/*
+	The emote version of the say escape brackets, working the other way around where it applies the
+	speaker's accent ONLY to text inside "quotes" in a me/subtle emote and
+	leaves the rest of the emote alone.
+*/
+/proc/accent_emote_quotes(message, mob/living/carbon/human/H)
+	// Stop early for non-humans or messages with no quotes to handle.
+	if(!message || !ishuman(H))
+		return message
+	if(!findtext(message, "\"") && !findtext(message, "&#34;") && !findtext(message, "&quot;"))
+		return message
+	var/accent = H.char_accent
+
+	// Look up the speaker's five accent word lists once.
+	var/list/multiword = get_accent_list_for_name(accent, "multiword")
+	var/list/fullword = get_accent_list_for_name(accent, "full")
+	var/list/startword = get_accent_list_for_name(accent, "start")
+	var/list/endword = get_accent_list_for_name(accent, "end")
+	var/list/syllable = get_accent_list_for_name(accent, "syllable")
+
+	// Built once. Matches an opening quote in any of its three forms
+	var/static/regex/quote_regex = regex(@{"(&#34;|&quot;|")([\S\s\n]*?)(&#34;|&quot;|")"})
+	var/search_pos = 1
+
+	while(quote_regex.Find(message, search_pos))
+		var/match_at = quote_regex.index
+		var/match_len = length(quote_regex.match)
+		var/open_quote = quote_regex.group[1]
+		var/inner_text = quote_regex.group[2]
+		var/close_quote = quote_regex.group[3]
+		// Accent only the text inside the quotes.
+		var/accented = apply_accent_pipeline(inner_text, multiword, fullword, startword, endword, syllable, autopunct = FALSE, do_trim = FALSE)
+		// Keep the same quote marks that were matched, whichever form they arrived in.
+		var/rebuilt = "[open_quote][accented][close_quote]"
+		// Put the accented text (with its quotes) back into the message.
+		message = copytext(message, 1, match_at) + rebuilt + copytext(message, match_at + match_len)
+
+		// Move past what we just wrote so we don't scan it again.
+		search_pos = match_at + length(rebuilt)
+	return message
+
+
 /proc/apply_accent_preview(accent_name, message)
 	if(accent_name == "No accent" || accent_name == "Saut al-Atash accent" || accent_name == "Posh accent")
 		return null
-	message = treat_message_accent(message, get_accent_list_for_name(accent_name, "multiword"), REGEX_FULLWORD)
-	message = treat_message_accent_fullword(message, strings("accent_universal.json", "universal", convert_HTML = TRUE), get_accent_list_for_name(accent_name, "full"))
-	message = treat_message_accent(message, get_accent_list_for_name(accent_name, "start"), REGEX_STARTWORD)
-	message = treat_message_accent(message, get_accent_list_for_name(accent_name, "end"), REGEX_ENDWORD)
-	message = treat_message_accent(message, get_accent_list_for_name(accent_name, "syllable"), REGEX_ANY)
-	message = autopunct_bare(message)
-	return trim(message)
+	var/list/multiword = get_accent_list_for_name(accent_name, "multiword")
+	var/list/fullword = get_accent_list_for_name(accent_name, "full")
+	var/list/startword = get_accent_list_for_name(accent_name, "start")
+	var/list/endword = get_accent_list_for_name(accent_name, "end")
+	var/list/syllable = get_accent_list_for_name(accent_name, "syllable")
+	return apply_accent_pipeline(message, multiword, fullword, startword, endword, syllable)
+
+/proc/apply_mannerism_preview(mannerism_name, message)
+	return apply_mannerism(message, mannerism_name)
+
 
 /datum/species/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
+	var/mob/living/carbon/human/human_source = source
+	var/list/multiword = get_accent_multiword(source)
+	var/list/fullword = get_accent(source)
+	var/list/startword = get_accent_start(source)
+	var/list/endword = get_accent_end(source)
+	var/list/syllable = get_accent_any(source)
+	speech_args[SPEECH_MESSAGE] = apply_accent_pipeline(message, multiword, fullword, startword, endword, syllable)
+	var/list/mannerism_multiword = get_mannerism_multiword(human_source)
+	var/list/mannerism_fullword = get_mannerism(human_source)
+	var/list/mannerism_startword = get_mannerism_start(human_source)
+	var/list/mannerism_endword = get_mannerism_end(human_source)
+	var/list/mannerism_syllable = get_mannerism_any(human_source)
+	speech_args[SPEECH_MESSAGE] = apply_mannerism(speech_args[SPEECH_MESSAGE], human_source.char_mannerism, mannerism_multiword, mannerism_fullword, mannerism_startword, mannerism_endword, mannerism_syllable)
 
-	//message = treat_message_accent(message, strings("accent_universal.json", "universal"), REGEX_FULLWORD)
+/proc/apply_mannerism(message, mannerism, list/multiword, list/fullword, list/startword, list/endword, list/syllable)
+	if(!message || mannerism == "No mannerism")
+		return message
 
-	message = treat_message_accent(message, get_accent_multiword(source), REGEX_FULLWORD)
-	message = treat_message_accent_fullword(message, strings("accent_universal.json", "universal", convert_HTML = TRUE), get_accent(source))
-	message = treat_message_accent(message, get_accent_start(source), REGEX_STARTWORD)
-	message = treat_message_accent(message, get_accent_end(source), REGEX_ENDWORD)
-	message = treat_message_accent(message, get_accent_any(source), REGEX_ANY)
+	var/customsayverb = findtext(message, "*")
+	var/action_prefix
+	if(customsayverb)
+		action_prefix = copytext(message, 1, customsayverb)
+		message = copytext(message, customsayverb + 1)
 
-	message = autopunct_bare(message)
+	if(isnull(multiword))
+		multiword = get_mannerism_list_for_name(mannerism, "multiword")
+		fullword = get_mannerism_list_for_name(mannerism, "full")
+		startword = get_mannerism_list_for_name(mannerism, "start")
+		endword = get_mannerism_list_for_name(mannerism, "end")
+		syllable = get_mannerism_list_for_name(mannerism, "syllable")
+	message = apply_mannerism_pipeline(message, multiword, fullword, startword, endword, syllable)
 
-	speech_args[SPEECH_MESSAGE] = trim(message)
+	var/list/initial = get_mannerism_list_for_name(mannerism, "initial")
+	var/list/middle = get_mannerism_list_for_name(mannerism, "middle")
+	var/list/prefix = get_mannerism_list_for_name(mannerism, "prefix")
+	var/list/repeat = get_mannerism_list_for_name(mannerism, "repeat")
+	if(!initial?.len && !middle?.len && !prefix?.len && !repeat?.len)
+		return action_prefix ? "[action_prefix]*[message]" : message
+
+	var/list/words = splittext(message, " ")
+	for(var/index in 1 to length(words))
+		var/word = words[index]
+		if(prefix?.len && word != "" && prob(20))
+			words[index] = "[pick(prefix)][word]"
+			continue
+		if(repeat?.len && length(word) > 3 && prob(25))
+			var/initial_syllable = copytext(word, 1, 3)
+			words[index] = "[initial_syllable][pick(repeat)][initial_syllable]-[word]"
+			continue
+		if(initial?.len && prob(25))
+			var/first_letter = copytext(word, 1, 2)
+			if(first_letter && first_letter != "<")
+				words[index] = "[first_letter][pick(initial)][word]"
+				continue
+		if(middle?.len && length(word) > 3 && prob(20))
+			var/insertion_point = rand(2, length(word) - 1)
+			words[index] = "[copytext(word, 1, insertion_point)][pick(middle)][copytext(word, insertion_point)]"
+	message = jointext(words, " ")
+	return action_prefix ? "[action_prefix]*[message]" : message
+
+/proc/apply_mannerism_pipeline(message, list/multiword, list/fullword, list/startword, list/endword, list/syllable)
+	message = treat_message_accent(message, multiword, REGEX_FULLWORD)
+	message = treat_message_accent_fullword(message, null, fullword)
+	message = treat_message_accent(message, startword, REGEX_STARTWORD)
+	message = treat_message_accent(message, endword, REGEX_ENDWORD)
+	return treat_message_accent(message, syllable, REGEX_ANY)
 
 /proc/get_value_from_accent(key, list/accent_list)
 	if (!key)

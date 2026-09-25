@@ -64,7 +64,7 @@
 
 	cmode = 1
 	setparrytime = 30
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 
 
 
@@ -135,6 +135,11 @@
 	return 1
 
 /mob/living/simple_animal/hostile/proc/deaggrodel()
+	if(!isturf(loc))
+		return FALSE // Stored in a shapeshift holder or carried, not loose scenery to clean up
+	if(mind || key) // A player owns this body, never despawn it. Checked here to cover every path that can seat a player
+		del_on_deaggro = null
+		return FALSE
 	FindTarget()
 	if(!target)
 		var/escape_path
@@ -264,7 +269,7 @@
 
 // Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
+	if(isturf(the_target) || !the_target) // bail out on invalids
 		return FALSE
 
 	if(binded)
@@ -515,7 +520,7 @@
 
 
 /mob/living/simple_animal/hostile/Move(atom/newloc, dir , step_x , step_y)
-	if(dodging && approaching_target && prob(dodge_prob) && moving_diagonally == 0 && isturf(loc) && isturf(newloc) && !incapacitated())
+	if(dodging && approaching_target && prob(dodge_prob) && moving_diagonally == 0 && isturf(loc) && isturf(newloc) && !incapacitated() && !tame)
 		return dodge(newloc,dir)
 	else
 		return ..()
@@ -541,7 +546,7 @@
 	for(var/obj/O in T.contents)
 		if(!O.Adjacent(targets_from))
 			continue
-		if((ismachinery(O) || isstructure(O)) && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
+		if((ismachinery(O) || isstructure(O)) && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES)
 			O.attack_animal(src)
 			return
 

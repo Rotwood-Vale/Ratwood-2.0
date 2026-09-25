@@ -175,7 +175,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	w_class = WEIGHT_CLASS_TINY
 	experimental_inhand = FALSE
 	mill_result = /obj/item/reagent_containers/powder/mineral
-	possible_item_intents = list(/datum/intent/hit, /datum/intent/mace/smash/wood, /datum/intent/dagger/cut)
+	possible_item_intents = list(/datum/intent/hit, /datum/intent/dagger/cut)
 	sharpening_factor = 21
 	spark_chance = 80
 
@@ -296,6 +296,33 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			S.set_up(1, 1, front)
 			S.start()
 	if( user.used_intent.type == /datum/intent/chisel )
+		if(istype(W, /obj/item/rogueweapon/chisel/assembly))
+			var/obj/item/rogueweapon/chisel/assembly/chisel_set = W
+			if(chisel_set.wielded)
+				var/turf/work_turf = get_turf(src)
+				var/obj/item/natural/stone/current_stone = src
+				while(current_stone)
+					playsound(current_stone.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)
+					user.visible_message("<span class='info'>[user] chisels the stone into a block.</span>")
+					if(!do_after(user, work_time, target = current_stone))
+						return
+					new /obj/item/natural/stoneblock(get_turf(current_stone.loc))
+					if(HAS_TRAIT(user, TRAIT_MASTER_MASON)) //double the amount for any in a stone worker role
+						new /obj/item/natural/stoneblock(get_turf(current_stone.loc))
+					new /obj/effect/decal/cleanable/debris/stony(get_turf(current_stone))
+					playsound(current_stone.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)
+					qdel(current_stone)
+					user.mind.add_sleep_experience(/datum/skill/craft/masonry, (user.STAINT*0.2))
+					if(QDELETED(chisel_set) || !chisel_set.wielded)
+						return
+					var/obj/item/natural/stone/next_stone = null
+					for(var/obj/item/natural/stone/S in work_turf)
+						next_stone = S
+						break
+					if(!next_stone)
+						return
+					current_stone = next_stone
+				return
 		playsound(src.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)
 		user.visible_message("<span class='info'>[user] chisels the stone into a block.</span>")
 		if(do_after(user, work_time))
@@ -384,7 +411,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 
 /obj/item/natural/rock/Initialize(mapload)
 	icon_state = "stonebig[rand(1,2)]"
-	..()
+	return ..()
 
 
 /obj/item/natural/rock/Crossed(mob/living/L)
@@ -392,6 +419,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		if(L.m_intent == MOVE_INTENT_RUN)
 			L.visible_message(span_warning("[L] trips over the boulder!"),span_warning("I trip over the boulder!"))
 			L.Knockdown(10)
+			L.drop_all_held_items()
 			L.consider_ambush(always = TRUE)
 	..()
 
@@ -408,6 +436,9 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			if(has_world_trait(/datum/world_trait/malum_diligence))
 				mineralAmt += rand(1,2)
 			new mineralType(src.loc, mineralAmt)
+		if(prob(15))
+			var/obj/item/Geode = new /obj/item/roguegem/randomgeode(src.loc)
+			playsound(get_turf(src), Geode.drop_sound, 100)
 		for(var/i in 1 to rand(1,4))
 			var/obj/item/S = new /obj/item/natural/stone(src.loc)
 			S.pixel_x = rand(25,-25)
@@ -415,7 +446,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		record_round_statistic(STATS_ROCKS_MINED)
 	qdel(src)
 
-/obj/item/natural/rock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+/obj/item/natural/rock/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir = null, armor_penetration = 0)
 	. = ..()
 	if(.) //damage received
 		if(damage_amount > 10)
@@ -446,6 +477,20 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			var/turf/front = get_turf(src)
 			S.set_up(1, 1, front)
 			S.start()
+		return
+	if(istype(W, /obj/item/rogueweapon/pick))
+		if(!isliving(user))
+			return ..()
+		var/mob/living/living_user = user
+		if(!living_user.client || !living_user.client.prefs?.autopicking)
+			return ..()
+		user.doing = FALSE
+		while(!QDELETED(src) && user.Adjacent(src))
+			if((living_user.energy <= 0))
+				break
+			if(!do_after(user, CLICK_CD_MELEE, TRUE, src))
+				break
+			..()
 		return
 	if( user.used_intent.type == /datum/intent/chisel )
 		playsound(src.loc, pick('sound/combat/hits/onrock/onrock (1).ogg', 'sound/combat/hits/onrock/onrock (2).ogg', 'sound/combat/hits/onrock/onrock (3).ogg', 'sound/combat/hits/onrock/onrock (4).ogg'), 100)

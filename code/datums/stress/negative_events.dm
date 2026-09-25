@@ -50,9 +50,19 @@
 	desc = span_red("Smells like death here.")
 
 /datum/stressevent/stinky_aura
-	timer = 20 SECONDS
+	timer = 1 MINUTES
 	stressadd = 2
 	desc = span_red("Something nearby reeks.")
+
+/datum/stressevent/prominent_scent
+	timer = 1 MINUTES
+	stressadd = 1
+	desc = span_red("There's a prominent scent in the air.")
+
+/datum/stressevent/herald_progress_music
+	timer = 2 MINUTES
+	stressadd = 5
+	desc = span_boldred("This music makes me feel hollow. Something is terribly wrong.")
 
 /datum/stressevent/peckish
 	timer = 10 MINUTES
@@ -416,7 +426,7 @@
 
 /datum/stressevent/uncanny
 	stressadd = 2
-	desc = span_red("Their face is.. wrong!")
+	desc = span_red("Their face is... wrong!")
 	timer = 3 MINUTES
 
 /datum/stressevent/syoncalamity
@@ -435,13 +445,13 @@
 	timer = INFINITY
 
 /datum/stressevent/excommunicated
-	stressadd = 5
+	stressadd = 10
 	desc = span_boldred("The Ten have forsaken me!")
 	timer = INFINITY
 
 /datum/stressevent/apostasy
-	stressadd = 3
-	desc = span_boldred("The apostasy's mark is upon me!")
+	stressadd = 15
+	desc = span_boldred("I have been decreed an apostate! My connection to the Divine is SEVERED!")
 	timer = INFINITY
 
 /datum/stressevent/heretic_on_sermon
@@ -545,3 +555,14 @@
 	timer = 30 SECONDS
 	stressadd = 4
 	desc = span_boldred("My fur and face is drenched! Not only is this humiliating, but a slight to my noble status!")
+
+/datum/stressevent/stinky_contact
+	timer = 15 MINUTES
+	stressadd = 2
+	desc = span_red("Ugh! That foul stench is all over me! I need to wash it off or wait it out.")
+
+// Indebted charflaw: missed the daily debt payment.
+/datum/stressevent/debt
+	timer = 25 MINUTES
+	stressadd = 3
+	desc = span_red("I couldn't pay my debts in time.")

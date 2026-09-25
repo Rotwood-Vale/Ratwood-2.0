@@ -16,6 +16,10 @@
 	smeltresult = /obj/item/ingot/steel
 	armor_class = ARMOR_CLASS_LIGHT //Experimental change; leave unlisted for now? Offers a weight-class advantage over the otherwise-superior hauberk. We'll see how it goes.
 
+/obj/item/clothing/suit/roguetown/armor/chainmail/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/suit/roguetown/armor/chainmail/iron
 	icon_state = "ihaubergeon"
 	name = "iron haubergeon"
@@ -26,6 +30,16 @@
 /obj/item/clothing/suit/roguetown/armor/chainmail/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle)
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/bronze
+	icon_state = "bhaubergeon"
+	name = "bronze haubergeon"
+	desc = "A maille shirt fashioned from hundreds of interlinked bronze rings. The value of flexible protection, especially in \
+	the centuries before plate, made any form of chainmail a rather valuable commodity; enough-so that it was worth its own weight \
+	in gold."
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_BRONZE
+	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
 	name = "ancient haubergeon"
@@ -61,6 +75,30 @@
 	item_state = "ihauberk"
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_IRON
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/bronze
+	name = "bronze hauberk"
+	desc = "A maille-aketon of bronze, sleeved to cover both the arms and legs. In antiquity, such an armored garment was seen as second-to-none \
+	in every facet; light enough to leave a well-trained warrior unfettered, yet still capable of turning away both arrow-and-blade."
+	icon_state = "bhauberk"
+	item_state = "bhauberk"
+	armor = ARMOR_BRONZE
+	smeltresult = /obj/item/ingot/bronze
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_BRONZE
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
+	name = "avantyne hauberk"
+	desc = "The rings crackle softly with avantynic power, yet this lighter weave can still be taken off without being lost to the rite."
+	icon_state = "zizohauberk"
+	item_state = "zizohauberk"
+	armor = ARMOR_ASCENDANT
+	armor_class = ARMOR_CLASS_MEDIUM
+	peel_threshold = 5
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient
 	name = "ancient hauberk"

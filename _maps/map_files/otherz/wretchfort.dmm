@@ -788,7 +788,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/wretch)
 "iy" = (
-/turf/closed/basic,
+/turf/closed/void,
 /area/rogue)
 "iz" = (
 /obj/structure/mirror,
@@ -1529,6 +1529,10 @@
 "pA" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/rogue/dirt,
+/area/rogue/outdoors/wretch)
+"pB" = (
+/obj/structure/roguemachine/talkstatue/mercenary,
+/turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/wretch)
 "pN" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -9580,7 +9584,7 @@ nS
 nw
 jC
 Is
-Is
+pB
 Ov
 nS
 Is

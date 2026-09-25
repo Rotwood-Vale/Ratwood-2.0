@@ -4,14 +4,13 @@
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/mage
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_ALCHEMY_EXPERT)
 	category_tags = list(CTAG_VAGABOND)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	subclass_stats = list(
 		STATKEY_INT = 2,
-		STATKEY_CON = -2,
-		STATKEY_WIL = -2,
-		STATKEY_SPD = -1
+		STATKEY_CON = -1,
+		STATKEY_WIL = -1
 	)
 	subclass_spellpoints = 9
 	subclass_skills = list(

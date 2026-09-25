@@ -11,13 +11,11 @@
 	max_integrity = 250
 	buckle_lying = 0
 	can_buckle = 1
+	buckle_blocks_spells = TRUE
 
 /obj/structure/meathook/examine()
 	. = ..()
 	. += span_notice("Improves the yield of butchering. Also increases speed by 25%.")
-
-/obj/structure/meathook/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/structure/meathook/attack_hand(mob/user)
 	if(VIABLE_MOB_CHECK(user.pulling) && !has_buckled_mobs())

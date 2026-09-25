@@ -37,9 +37,9 @@
 		return
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		H.apply_weather_temperature(rand(1,3))
+		H.apply_weather_temperature(rand(1,2))
 	else
-		L.adjust_bodytemperature(rand(1,3))
+		L.adjust_bodytemperature(rand(1,2))
 	if(prob(25))
 		L.adjust_fire_stacks(1)
 		to_chat(L, span_danger("You're caught in a haze of burning, flammable ash!"))

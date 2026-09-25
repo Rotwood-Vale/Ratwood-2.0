@@ -49,6 +49,8 @@
 		/datum/sprite_accessory/accessory/chokere,
 		/datum/sprite_accessory/accessory/harlequin,
 		/datum/sprite_accessory/accessory/warpaint,
+		/datum/sprite_accessory/accessory/eyesocket,
+		/datum/sprite_accessory/accessory/eyeliner,
 		)
 
 /datum/customizer/bodypart_feature/accessory

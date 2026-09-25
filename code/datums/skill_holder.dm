@@ -67,8 +67,12 @@
 	. = ..()
 
 /datum/skill_holder/proc/set_current(mob/incoming)
+	if(current && current != incoming)
+		UnregisterSignal(current, COMSIG_MIND_TRANSFER)
 	current = incoming
-	RegisterSignal(incoming, COMSIG_MIND_TRANSFER, PROC_REF(transfer_skills))
+	if(!incoming)
+		return
+	RegisterSignal(incoming, COMSIG_MIND_TRANSFER, PROC_REF(transfer_skills), override = TRUE)
 	incoming.skills = src
 
 /datum/skill_holder/proc/transfer_skills(mob/source, mob/destination)
@@ -138,7 +142,7 @@
 	var/datum/skill/S = GetSkillRef(skill)
 	var/current_level = known_skills[S] || SKILL_LEVEL_NONE
 	var/proper_amt = current_level - amt
-	if(proper_amt >= 0)
+	if(proper_amt <= 0)
 		return
 	adjust_skillrank(skill, -proper_amt, silent)
 
@@ -356,7 +360,11 @@
 				if(sadv)
 					var/sleep_xp = sadv.get_sleep_xp(i.type)
 					var/needed_xp = sadv.get_requried_sleep_xp_for_skill(i.type, 1)
-					if(needed_xp > 0)
+					if(sleep_xp > needed_xp)
+						sleep_xp -= sadv.get_requried_sleep_xp_for_skill(i.type, 1)
+						needed_xp = sadv.get_requried_sleep_xp_for_skill(i.type, 2) - sadv.get_requried_sleep_xp_for_skill(i.type, 1)
+						percent = 100 + clamp(round(sleep_xp * 100 / needed_xp), 0, 200)
+					else
 						percent = clamp(round(sleep_xp * 100 / needed_xp), 0, 200)
 			else
 				// Below Apprentice, XP is tracked directly on skill_experience
