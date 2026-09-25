@@ -26,6 +26,7 @@
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_ARMOR, SLOT_WEAR_MASK, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT)
 	nojumpsuit = TRUE
 	sexes = 1
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	soundpack_m = /datum/voicepack/white_stag
 	soundpack_f = /datum/voicepack/white_stag
 
