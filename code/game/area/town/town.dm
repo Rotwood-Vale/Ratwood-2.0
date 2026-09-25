@@ -407,6 +407,15 @@
 	droning_sound_night = null
 	first_time_text = "VALE ENGINEERS WORKSHOP"
 
+/area/rogue/indoors/town/tailor
+	name = "Tailor's Shop"
+	icon_state = "town"
+	droning_sound = 'sound/music/area/towngen.ogg'
+	droning_sound_dusk = 'sound/music/area/septimus.ogg'
+	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	deathsight_message = "A shop with fine fabrics and sewn garments."
+	first_time_text = "VALE TAILOR'S SHOP"
+
 /area/rogue/indoors/town/dwarfin/rockhill
 	first_time_text = "Rockhill Guild of Crafts"
 
