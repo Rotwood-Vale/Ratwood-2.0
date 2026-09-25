@@ -203,7 +203,7 @@
 	resistance_flags = FIRE_PROOF
 	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 
 /obj/item/clothing/shoes/roguetown/anklets/baotha/Initialize(mapload)
 	. = ..()

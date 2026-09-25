@@ -177,7 +177,7 @@ Here because they're unused elsewhere.
 	block2add = FOV_BEHIND
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	sewrepair = TRUE
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/aaslag
 	var/active_item = FALSE
 	dropshrink = null

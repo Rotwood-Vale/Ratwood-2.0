@@ -171,7 +171,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	wbalance = WBALANCE_SWIFT
 	minstr = 13 //Better hit those weights or go back to tossblades chuddy!
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/steel
 	grid_height = 64
 	grid_width = 32
@@ -571,7 +571,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	minstr = 11
 	max_blade_int = 200
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/iron
 	associated_skill = /datum/skill/combat/axes
 	wdefense = 6

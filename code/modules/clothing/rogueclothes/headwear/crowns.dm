@@ -1,7 +1,7 @@
 
 /obj/item/clothing/head/roguetown/crown/
 	sewrepair = FALSE
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 
 /obj/item/clothing/head/roguetown/crown/fakecrown
 	no_loot_taint = TRUE
@@ -47,7 +47,7 @@
 	sellprice = 100
 	resistance_flags = FIRE_PROOF
 	sewrepair = FALSE
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 
 /obj/item/clothing/head/roguetown/nyle/consortcrown
 	name = "gem-encrusted crown"
@@ -61,7 +61,7 @@
 	icon_state = "circlet"
 	item_state = "circlet"
 	sewrepair = FALSE
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	sellprice = 50
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem

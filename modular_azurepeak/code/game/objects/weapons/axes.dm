@@ -6,7 +6,7 @@
 	icon_state = "dreamaxe"
 	minstr = 13
 	max_blade_int = 250
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = null
 	associated_skill = /datum/skill/combat/axes
 	blade_dulling = DULLING_BASHCHOP

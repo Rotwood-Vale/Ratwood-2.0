@@ -35,7 +35,7 @@
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/mining = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/craft/smelting = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 	)
 

@@ -2,7 +2,7 @@
 
 /datum/anvil_recipe/armor/dwarven
 	abstract_type = /datum/anvil_recipe/armor/dwarven
-	appro_skill = /datum/skill/craft/armorsmithing
+	appro_skill = /datum/skill/craft/metalworking
 	i_type = "Armor"
 	req_bar = /obj/item/ingot/steel
 	craftdiff = SKILL_LEVEL_JOURNEYMAN

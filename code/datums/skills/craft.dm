@@ -13,26 +13,17 @@
 	)
 	expert_name = "Crafter"
 
-/datum/skill/craft/weaponsmithing
-	name = "Weaponsmithing"
-	desc = "Determines whether you can smith various weapons. Required to repair weapons successfully on tables."
+/datum/skill/craft/metalworking
+	name = "Metalworking"
+	desc = "Determines wether you can smith metal gear. Required to repair weapons and armor on tables."
 	dreams = list(
 		"...tempered in gold and void, sharpened only by the sun and moon, your creation is finally complete. This one... This one will pierce the heavens...",
 		"...sweat drips down your brow and your arms ache with every strike, but at last, the blade is forged. A masterpiece of steel and gold, adorned with rontz gems...",
-		"...an old hunter stands in front of your counter and demands two dozen arrows. He hands you a bundle of sticks with a smile on his face..."
-	)
-	expert_name = "Weaponsmith"
-	max_untraited_level = SKILL_LEVEL_APPRENTICE
-	trait_uncap = list(TRAIT_SMITHING_EXPERT = SKILL_LEVEL_LEGENDARY, TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN)
-
-/datum/skill/craft/armorsmithing
-	name = "Armorsmithing"
-	desc = "Determines whether you can smith various armor. Required to repair armor successfully on tables."
-	dreams = list(
+		"...an old hunter stands in front of your counter and demands two dozen arrows. He hands you a bundle of sticks with a smile on his face...",
 		"...you stand amidst the deadite horde, their tooth and claw unable to dent your armor. Your creation. Your masterpiece...",
-		"...the veteran's armor, battered beyond recognition, mirrors the scars upon his body. Yet, without your craft, he'd have fallen long ago. With skilled hands and a half a day's work, the armor is reborn - stronger than the day it was forged..."
+		"...the veteran's armor, battered beyond recognition, mirrors the scars upon his body. Yet, without your craft, he'd have fallen long ago. With skilled hands and a half a day's work, the armor is reborn - stronger than the day it was forged...",
 	)
-	expert_name = "Armorsmith"
+	expert_name = "Metalworker"
 	max_untraited_level = SKILL_LEVEL_APPRENTICE
 	trait_uncap = list(TRAIT_SMITHING_EXPERT = SKILL_LEVEL_LEGENDARY, TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN)
 
@@ -47,20 +38,6 @@
 	expert_name = "Blacksmith"
 	max_untraited_level = SKILL_LEVEL_APPRENTICE
 	trait_uncap = list(TRAIT_SMITHING_EXPERT = SKILL_LEVEL_LEGENDARY, TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN)
-
-/datum/skill/craft/smelting
-	name = "Smelting"
-	desc = "Increases the quality of the ingots you smelt. Improves their sell price, but has no effect on the actual functionality of the items created."
-	dream_cost_base = 1
-	dreams = list(
-		"...the slag falls away in glittering shards, leaving a bar of shining silver. It gleams with purpose, ready to be shaped...",
-		"...you toil endlessly under the heat of the furnace; its fire roars with each sacrifice you offer, gifting you malleable metal in return..."
-
-	)
-	expert_name = "Smelter"
-	max_untraited_level = SKILL_LEVEL_APPRENTICE
-	trait_uncap = list(TRAIT_SMITHING_EXPERT = SKILL_LEVEL_LEGENDARY, TRAIT_SELF_SUSTENANCE = SKILL_LEVEL_JOURNEYMAN)
-
 
 /datum/skill/craft/carpentry
 	name = "Carpentry"

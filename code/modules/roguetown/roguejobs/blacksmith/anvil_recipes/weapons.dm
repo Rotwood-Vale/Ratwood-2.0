@@ -1,6 +1,6 @@
 /datum/anvil_recipe/weapons
 	abstract_type = /datum/anvil_recipe/weapons
-	appro_skill = /datum/skill/craft/weaponsmithing  // inheritance yay !!
+	appro_skill = /datum/skill/craft/metalworking  // inheritance yay !!
 	i_type = "Weapons"
 
 /datum/anvil_recipe/weapons/ancient
@@ -1442,7 +1442,7 @@
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/rogueore/iron, /obj/item/rogueore/iron, /obj/item/rogueore/iron, /obj/item/rogueore/iron)
 	created_item = /obj/item/ingot/component/heapofrawiron
-	appro_skill = /datum/skill/craft/weaponsmithing
+	appro_skill = /datum/skill/craft/metalworking
 	craftdiff = 5
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
@@ -1451,7 +1451,7 @@
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/rogueweapon/sword/long/exe, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
 	created_item = /obj/item/ingot/component/berserkswordgrip
-	appro_skill = /datum/skill/craft/weaponsmithing
+	appro_skill = /datum/skill/craft/metalworking
 	craftdiff = 5
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
@@ -1460,7 +1460,7 @@
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/component/heapofrawiron)
 	created_item = /obj/item/ingot/component/berserkswordblade
-	appro_skill = /datum/skill/craft/weaponsmithing
+	appro_skill = /datum/skill/craft/metalworking
 	craftdiff = 5
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
@@ -1469,7 +1469,7 @@
 	req_bar = /obj/item/ingot/component/berserkswordgrip
 	additional_items = list(/obj/item/ingot/component/berserkswordblade)
 	created_item = /obj/item/rogueweapon/sword/long/exe/berserk
-	appro_skill = /datum/skill/craft/weaponsmithing
+	appro_skill = /datum/skill/craft/metalworking
 	craftdiff = 5
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
@@ -1478,7 +1478,7 @@
 	req_bar = /obj/item/ingot/component/berserkswordblade
 	additional_items = list(/obj/item/ingot/component/berserkswordgrip)
 	created_item = /obj/item/rogueweapon/sword/long/exe/berserk
-	appro_skill = /datum/skill/craft/weaponsmithing
+	appro_skill = /datum/skill/craft/metalworking
 	craftdiff = 5
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 

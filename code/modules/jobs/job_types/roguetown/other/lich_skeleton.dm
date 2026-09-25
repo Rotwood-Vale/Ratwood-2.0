@@ -378,8 +378,7 @@ LICH SKELETONS
 	H.adjust_skillrank(/datum/skill/craft/crafting, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/sewing, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/blacksmithing, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/armorsmithing, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/metalworking, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/engineering, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mining, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 6, TRUE)
@@ -580,7 +579,7 @@ LICH SKELETONS
 	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	max_integrity = 220
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/shield/gilbranze/getonmobprop(tag)

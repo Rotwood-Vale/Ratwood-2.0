@@ -34,8 +34,7 @@
 	/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 	/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 	/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
-	/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,
-	/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE,
+	/datum/skill/craft/metalworking = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/czwarteki/retainer/pre_equip(mob/living/carbon/human/H)

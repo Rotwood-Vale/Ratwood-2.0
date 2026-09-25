@@ -799,7 +799,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	w_class = WEIGHT_CLASS_HUGE
 	minstr = 8
 	max_blade_int = 300
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	obj_flags = CAN_BE_HIT | PREVENTS_DESTRUCTION
 	integrity_failure = 0.2
 	smeltresult = null

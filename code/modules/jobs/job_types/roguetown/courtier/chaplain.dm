@@ -204,9 +204,7 @@
 	if(H.patron?.type == /datum/patron/divine/malum) // Craft and Creativity - they can make stuff. - I guess they can... advise public works?
 		ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
 		H.adjust_skillrank(/datum/skill/craft/blacksmithing, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/armorsmithing, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/metalworking, 2, TRUE)
 	if(H.patron?.type == /datum/patron/divine/ravox) // Justice and Honor - athletics and probably a bit better at handling the horrors of war
 		H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE) //Who even plays Ravoxian acolyte? Whatever, this isn't a huge buff.
 		H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE) //Who even plays Ravoxian acolyte? Whatever, this isn't a huge buff.

@@ -531,7 +531,7 @@
 	reqs = list(
 		/obj/item/alch/irondust = 3,
 		)
-	skillcraft = /datum/skill/craft/smelting
+	skillcraft = /datum/skill/craft/blacksmithing
 	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/ironore/advanced

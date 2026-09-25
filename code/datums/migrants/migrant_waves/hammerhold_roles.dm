@@ -341,10 +341,8 @@
 					)
 
 				H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-				H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)
 				H.adjust_skillrank(/datum/skill/craft/blacksmithing, 3, TRUE)
-				H.adjust_skillrank(/datum/skill/craft/armorsmithing, 3, TRUE)
-				H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 3, TRUE)
+				H.adjust_skillrank(/datum/skill/craft/metalworking, 3, TRUE)
 				H.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)
 				H.adjust_skillrank(/datum/skill/craft/ceramics, 2, TRUE)
 

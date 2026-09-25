@@ -229,7 +229,7 @@
 	additional_items = list(/obj/item/ingot/gold, /obj/item/ingot/steel, /obj/item/roguegem/ruby)
 	created_item = /obj/item/rogueweapon/sword/long/exe/cloth
 	craftdiff = SKILL_LEVEL_MASTER
-	appro_skill = /datum/skill/craft/weaponsmithing
+	appro_skill = /datum/skill/craft/metalworking
 	i_type = "Weapons"
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
@@ -328,6 +328,6 @@
 	hides_from_books = TRUE
 	additional_items = list(/obj/item/rogueweapon/sword/long/exe/berserk/gnoll, /obj/item/rogueweapon/sword/long/exe/silver, /obj/item/ingot/draconic, /obj/item/ingot/weeping, /obj/item/riddleofsteel)
 	created_item = /obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer
-	appro_skill = /datum/skill/craft/weaponsmithing
+	appro_skill = /datum/skill/craft/metalworking
 	craftdiff = SKILL_LEVEL_LEGENDARY
 	display_category = ITEM_CAT_WEAPONS_SWORDS

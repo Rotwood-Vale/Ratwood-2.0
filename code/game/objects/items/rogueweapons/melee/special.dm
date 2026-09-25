@@ -531,7 +531,7 @@
 	max_blade_int = 180
 	max_integrity = 600
 	associated_skill = /datum/skill/combat/axes
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/steel
 	wdefense = 3
 	wdefense_wbonus = 5
@@ -561,7 +561,7 @@
 	force_wielded = 27 // +2/3ish over the Maciejowski. A proper killing machine.
 	max_integrity = 175
 	max_blade_int = 350
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/bronze
 	wbalance = WBALANCE_HEAVY
 

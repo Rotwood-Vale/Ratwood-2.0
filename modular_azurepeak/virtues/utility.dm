@@ -345,9 +345,7 @@
 		list(/datum/skill/craft/crafting, 1, 2),
 		list(/datum/skill/craft/blacksmithing, 1, 2),
 		list(/datum/skill/craft/sewing, 1, 2),
-		list(/datum/skill/craft/smelting, 1, 2),
-		list(/datum/skill/craft/weaponsmithing, 1, 2),
-		list(/datum/skill/craft/armorsmithing, 1, 2),
+		list(/datum/skill/craft/metalworking, 1, 2),
 		list(/datum/skill/combat/knives, 1, 2),
 		list(/datum/skill/craft/ceramics, 1, 2),
 		list(/datum/skill/craft/engineering, 1, 2)

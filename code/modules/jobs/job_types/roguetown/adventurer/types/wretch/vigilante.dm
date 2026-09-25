@@ -110,7 +110,7 @@
 	H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 4, TRUE) //Crafty
 	H.adjust_skillrank_up_to(/datum/skill/misc/climbing, 5, TRUE) // Escape routes
 	H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 4, TRUE) //Make your own tinkering tools and smokebombs
-	H.adjust_skillrank_up_to(/datum/skill/craft/smelting, 3, TRUE) //Just so your smelted ingots aren't ruined
+	H.adjust_skillrank_up_to(/datum/skill/craft/blacksmithing, 3, TRUE) //Just so your smelted ingots aren't ruined
 	H.change_stat(STATKEY_CON, 1)
 	H.change_stat(STATKEY_INT, 2)
 	H.change_stat(STATKEY_WIL, 3)

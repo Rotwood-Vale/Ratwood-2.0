@@ -12,7 +12,7 @@
 	icon_state = ""
 	slot_flags = ITEM_SLOT_RING|ITEM_SLOT_GLOVES
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	anvilrepair = /datum/skill/craft/armorsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	experimental_inhand = FALSE
 	drop_sound = 'sound/foley/coinphy (1).ogg'
 	nudist_approved = TRUE

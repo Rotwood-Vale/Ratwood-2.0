@@ -5,7 +5,7 @@
 
 /datum/anvil_recipe/kazengunite
 	abstract_type = /datum/anvil_recipe/kazengunite
-	appro_skill = /datum/skill/craft/armorsmithing
+	appro_skill = /datum/skill/craft/metalworking
 	i_type = "Armor"
 	craftdiff = SKILL_LEVEL_MASTER
 	req_trait = TRAIT_KAZENGUNITE_SMITH
@@ -42,7 +42,7 @@
 
 /datum/anvil_recipe/kazengunite/ssangsudo
 	name = "Ssangsudo"
-	appro_skill = /datum/skill/craft/weaponsmithing
+	appro_skill = /datum/skill/craft/metalworking
 	i_type = "Weapons"
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo

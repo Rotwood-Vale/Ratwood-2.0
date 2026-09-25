@@ -14,7 +14,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
 	associated_skill = /datum/skill/combat/whipsflails
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/iron
 	parrysound = list('sound/combat/parry/parrygen.ogg')
 	swingsound = BLUNTWOOSH_MED
@@ -288,7 +288,7 @@
 	wdefense = 6
 	minstr = 12
 	max_integrity = 300//+50 over iron warflail
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/flail/peasantwarflail/silver
@@ -299,7 +299,7 @@
 	minstr = 13
 	max_integrity = 300
 	is_silver = TRUE
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/silver
 
 /obj/item/rogueweapon/flail/peasantwarflail/silver/ComponentInitialize()
@@ -322,7 +322,7 @@
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)//this having the better intents is a smaller buff than just increasing the base force, on par with things like blacksteel greataxe and flamberg being on par with antag options
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	max_integrity = 500
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	smeltresult = /obj/item/ingot/blacksteel
 	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
 
@@ -337,7 +337,7 @@
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	associated_skill = /datum/skill/combat/whipsflails
 	slot_flags = ITEM_SLOT_BACK
-	anvilrepair = /datum/skill/craft/weaponsmithing
+	anvilrepair = /datum/skill/craft/metalworking
 	wdefense = 7 //on par with blacksteel version, i've seen this thing get broken far to often
 	max_integrity = 350 // 50+ compared to steel, on par with silver blessed
 	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt

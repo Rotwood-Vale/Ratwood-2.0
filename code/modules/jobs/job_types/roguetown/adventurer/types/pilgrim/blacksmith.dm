@@ -31,9 +31,7 @@
 		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/metalworking = SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/adventurer/blacksmith/pre_equip(mob/living/carbon/human/H)
@@ -90,9 +88,7 @@
 
 	if(H.age == AGE_MIDDLEAGED)
 		H.adjust_skillrank_up_to(/datum/skill/craft/blacksmithing, 5, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/craft/armorsmithing, 5, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/craft/weaponsmithing, 5, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/craft/metalworking, 5, TRUE)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/craft/blacksmithing, 6, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/craft/armorsmithing, 6, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/craft/weaponsmithing, 6, TRUE)
+		H.adjust_skillrank_up_to(/datum/skill/craft/metalworking, 6, TRUE)

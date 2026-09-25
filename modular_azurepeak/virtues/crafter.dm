@@ -4,10 +4,8 @@
 	desc = "In my youth, I worked under a skilled blacksmith, honing my skills with an anvil."
 	added_traits = list(TRAIT_SMITHING_EXPERT)
 	added_skills = list(list(/datum/skill/craft/crafting, 2, 2),
-						list(/datum/skill/craft/weaponsmithing, 2, 2),
-						list(/datum/skill/craft/armorsmithing, 2, 2),
+						list(/datum/skill/craft/metalworking, 2, 2),
 						list(/datum/skill/craft/blacksmithing, 2, 2),
-						list(/datum/skill/craft/smelting, 2, 2)
 	)
 	added_stashed_items = list(
 		"Hammer" = /obj/item/rogueweapon/hammer/iron,
@@ -62,7 +60,7 @@
 						list(/datum/skill/craft/carpentry, 2, 2),
 						list(/datum/skill/craft/masonry, 2, 2),
 						list(/datum/skill/craft/engineering, 2, 2),
-						list(/datum/skill/craft/smelting, 2, 2),
+						list(/datum/skill/craft/blacksmithing, 2, 2),
 						list(/datum/skill/craft/ceramics, 2, 2)
 	)
 	added_stashed_items = list(
