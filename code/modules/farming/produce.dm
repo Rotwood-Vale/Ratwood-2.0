@@ -171,33 +171,35 @@
 		return TRUE
 	to_chat(user, span_notice("Adding water, now it needs to be scrubbed clean..."))
 	playsound(get_turf(user), 'modular/Neu_Food/sound/splishy.ogg', 100, TRUE, -1)
-	if(do_after(user, short_cooktime * 2, target = src))
-		add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-		name = "wet baker's root"
-		container.reagents.remove_reagent(/datum/reagent/water, 20)
-		water_added = TRUE
+	if(!do_after(user, short_cooktime * 2, target = src))
+		return TRUE
+	add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+	name = "wet baker's root"
+	container.reagents.remove_reagent(/datum/reagent/water, 20)
+	water_added = TRUE
 	return TRUE
 
 /obj/item/reagent_containers/food/snacks/grown/bakersroot/attack_hand(mob/living/user)
-	if(water_added)
-		update_cooktime(user)
-		playsound(get_turf(user), 'modular/Neu_Food/sound/kneading_alt.ogg', 90, TRUE, -1)
-		if(do_after(user, short_cooktime * 2, target = src))
-			add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-			if(scrubbed_times < 2)
-				scrubbed_times++
-				if(scrubbed_times < 2)
-					to_chat(user, span_notice("It still needs more scrubbing."))
-				else
-					to_chat(user, span_notice("The skin needs to be scraped off with something sharp."))
-				return
-			if(!scraped_clean)
-				to_chat(user, span_notice("The skin needs to be scraped off with something sharp."))
-				return
-			new /obj/item/reagent_containers/food/snacks/grown/bakersroot/clean(loc)
-			qdel(src)
-	else
+	if(!water_added)
 		return ..()
+	update_cooktime(user)
+	playsound(get_turf(user), 'modular/Neu_Food/sound/kneading_alt.ogg', 90, TRUE, -1)
+	if(!do_after(user, short_cooktime * 2, target = src))
+		return TRUE
+	add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+	if(scrubbed_times < 2)
+		scrubbed_times++
+		if(scrubbed_times < 2)
+			to_chat(user, span_notice("It still needs more scrubbing."))
+		else
+			to_chat(user, span_notice("The skin needs to be scraped off with something sharp."))
+		return TRUE
+	if(!scraped_clean)
+		to_chat(user, span_notice("The skin needs to be scraped off with something sharp."))
+		return TRUE
+	new /obj/item/reagent_containers/food/snacks/grown/bakersroot/clean(loc)
+	qdel(src)
+	return TRUE
 
 /obj/item/reagent_containers/food/snacks/grown/bakersroot/clean
 	desc = "A clean, starchy root. It can be eaten or milled into flour."
