@@ -645,34 +645,41 @@
 /datum/status_effect/buff/healing/on_apply()
 	SEND_SIGNAL(owner, COMSIG_LIVING_MIRACLE_HEAL_APPLY, healing_on_tick, src)
 	var/filter = owner.get_filter(MIRACLE_HEALING_FILTER)
-	if (!filter)
+	if(outline_colour == COLOR_PATRON_XYLIX)
+		outline_colour = RANDOM_COLOUR
+	if(!filter)
 		owner.add_filter(MIRACLE_HEALING_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 60, "size" = 1))
 	return TRUE
 
 /datum/status_effect/buff/healing/tick()
-	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
-	H.color = outline_colour
+	var/obj/effect/temp_visual/heal/heal_particle = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
+	heal_particle.color = outline_colour
+	if(heal_particle.color == COLOR_PATRON_XYLIX)
+		animate(heal_particle, time = 2, loop = -1, color = "#FF0000")
+		animate(time = 2, color = "#00FF00")
+		animate(time = 2, color = "#0000FF")
 	var/list/wCount = owner.get_wounds()
-	if(!owner.construct)
-		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-			owner.set_blood_volume(min(owner.get_blood_volume()+healing_on_tick, BLOOD_VOLUME_NORMAL))
+	if(owner.construct)
+		return
+	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		owner.set_blood_volume(min(owner.get_blood_volume()+healing_on_tick, BLOOD_VOLUME_NORMAL))
+	if(wCount.len > 0)
+		owner.heal_wounds(healing_on_tick)
+		owner.update_damage_overlays()
+	if(HAS_TRAIT(owner, TRAIT_SIMPLE_WOUNDS))
 		if(wCount.len > 0)
-			owner.heal_wounds(healing_on_tick)
-			owner.update_damage_overlays()
-		if(HAS_TRAIT(owner, TRAIT_SIMPLE_WOUNDS))
-			if(wCount.len > 0)
-				owner.heal_wounds(healing_on_tick * 2)
-			owner.bleed_rate = owner.get_bleed_rate()
-			if(!length(owner.get_wounds()) && !length(owner.get_embedded_objects()))
-				owner.simple_bleeding = 0
-				owner.bleed_rate = 0
-		owner.adjustBruteLoss(-healing_on_tick, 0)
-		owner.adjustFireLoss(-healing_on_tick, 0)
-		owner.adjustOxyLoss(-healing_on_tick, 0)
-		owner.adjustToxLoss(-healing_on_tick, 0)
-		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
-		owner.adjustCloneLoss(-healing_on_tick, 0)
-		owner.updatehealth()
+			owner.heal_wounds(healing_on_tick * 2)
+		owner.bleed_rate = owner.get_bleed_rate()
+		if(!length(owner.get_wounds()) && !length(owner.get_embedded_objects()))
+			owner.simple_bleeding = 0
+			owner.bleed_rate = 0
+	owner.adjustBruteLoss(-healing_on_tick, 0)
+	owner.adjustFireLoss(-healing_on_tick, 0)
+	owner.adjustOxyLoss(-healing_on_tick, 0)
+	owner.adjustToxLoss(-healing_on_tick, 0)
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
+	owner.adjustCloneLoss(-healing_on_tick, 0)
+	owner.updatehealth()
 // Lesser miracle effect end
 
 #define REWIND_AURA "originhealing"
@@ -879,6 +886,8 @@
 
 /datum/status_effect/buff/lay_hands/on_apply()
 	var/filter = owner.get_filter(LAY_HANDS_FILTER)
+	if(outline_colour == COLOR_PATRON_XYLIX)
+		outline_colour = RANDOM_COLOUR
 	if (!filter)
 		owner.add_filter(LAY_HANDS_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 50, "size" = 1))
 	playsound(owner, 'sound/magic/churn.ogg', 50, FALSE)
@@ -886,8 +895,12 @@
 	return TRUE
 
 /datum/status_effect/buff/lay_hands/tick()
-	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
-	H.color = outline_colour
+	var/obj/effect/temp_visual/heal/heal_particle = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
+	heal_particle.color = outline_colour
+	if(heal_particle.color == COLOR_PATRON_XYLIX)
+		animate(heal_particle, time = 2, loop = -1, color = "#FF0000")
+		animate(time = 2, color = "#00FF00")
+		animate(time = 2, color = "#0000FF")
 	var/list/wCount = owner.get_wounds()
 	if(!owner.construct)
 		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)

@@ -94,7 +94,7 @@
 #define COLOR_PATRON_NOC "#958B84"
 #define COLOR_PATRON_PESTRA "#89A572"
 #define COLOR_PATRON_RAVOX "#980002"
-#define COLOR_PATRON_XYLIX "#000000"
+#define COLOR_PATRON_XYLIX "#888888" // Special handling on this one, we are in for a fun time
 
 #define COLOR_PATRON_ZIZO "#958B84" // Shared with Noc
 #define COLOR_PATRON_GRAGGAR "#980002" // Shared with Ravox
