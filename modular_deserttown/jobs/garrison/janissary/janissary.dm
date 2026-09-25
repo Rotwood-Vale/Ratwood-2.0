@@ -3,8 +3,8 @@
 	flag = JANISSARY
 	department_flag = GARRISON
 	faction = "Station"
-	total_positions = 7
-	spawn_positions = 7
+	total_positions = 6
+	spawn_positions = 6
 
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
