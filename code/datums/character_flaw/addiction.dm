@@ -274,7 +274,7 @@
 	id = "false_sensation"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/false_sensation
 	effectedstats = null
-	duration = 1 MINUTES
+	duration = 2 MINUTES
 	status_type = STATUS_EFFECT_REFRESH
 
 /atom/movable/screen/alert/status_effect/debuff/false_sensation

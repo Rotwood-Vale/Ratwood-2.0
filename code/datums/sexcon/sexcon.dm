@@ -861,6 +861,14 @@
 	update_pink_screen()
 	update_erect_state()
 
+/datum/sex_controller/proc/try_apply_false_sensation()
+	if(!user.has_flaw(/datum/charflaw/addiction/lovefiend) && !user.has_flaw(/datum/charflaw/addiction/baothamarked))
+		return
+	var/already_false = user.has_status_effect(/datum/status_effect/debuff/false_sensation)
+	user.apply_status_effect(/datum/status_effect/debuff/false_sensation)
+	if(!already_false) // So chat isn't spammed
+		to_chat(user, span_warning("My arousal is hollow and false. It won't sate my urges."))
+
 /datum/sex_controller/proc/update_erect_state()
 	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
 
@@ -1295,9 +1303,8 @@
 			to_chat(user, span_notice("Positioning and exposure checks are now [freeuse ? "disabled" : "enabled"]."))
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
-			if(!isnull(amount) && amount > arousal && (user.has_flaw(/datum/charflaw/addiction/lovefiend) || user.has_flaw(/datum/charflaw/addiction/baothamarked)))
-				user.apply_status_effect(/datum/status_effect/debuff/false_sensation)
-				to_chat(user, span_warning("My arousal is hollow and false. It won't sate my urges."))
+			if(!isnull(amount) && amount > arousal)
+				try_apply_false_sensation()
 			if(aphrodisiac > 1 && amount > 0)
 				set_arousal(amount * aphrodisiac)
 			else
@@ -1305,6 +1312,8 @@
 		if("freeze_arousal")
 			if(aphrodisiac == 1)
 				arousal_frozen = !arousal_frozen
+				if(arousal > 60)
+					try_apply_false_sensation()
 		if("category_misc")
 			action_category = SEX_CATEGORY_MISC
 		if("category_hands")
