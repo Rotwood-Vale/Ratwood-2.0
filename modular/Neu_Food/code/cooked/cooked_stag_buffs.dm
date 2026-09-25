@@ -12,7 +12,7 @@
 	bites_required = S.bitesize
 	// Pale white outline and subtle glow
 	S.add_filter("stag_glow_outline", 1, list("type" = "outline", "color" = "#f0f0f0", "size" = 1))
-	S.add_filter("stag_glow_internal", 2, list("type" = "blur", "size" = 2, "color" = "#ffffff"))
+	S.add_filter("stag_glow_internal", 2, list("type" = "drop_shadow", "size" = 2, "color" = "#ffffff"))
 	RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(on_food_eaten))
 
 /datum/component/stag_essence/proc/on_food_eaten(datum/source, mob/living/eater, mob/living/feeder)
