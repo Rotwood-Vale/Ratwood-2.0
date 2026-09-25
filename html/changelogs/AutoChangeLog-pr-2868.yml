@@ -1,0 +1,7 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - rscadd: "Master miner now spawns with lether belt and steel picaxe"
+  - balance: "Leveling mining is now restricted to expert outside of few selected classes (indicated by trained miner trait)"
+  - balance: "Miners lose jurneyman axes and maces, get jurneyman slings skill instead"
+  - bugfix: "Master miner can now claim miners house"
