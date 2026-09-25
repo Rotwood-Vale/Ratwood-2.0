@@ -306,7 +306,7 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 
 		belt = /obj/item/storage/belt/rogue/leather/battleskirt/barbarian
-		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
+		pants = /obj/item/clothing/under/roguetown/chainlegs/skirt/bronze
 		shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
 		wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	if(should_wear_masc_clothes(H))
