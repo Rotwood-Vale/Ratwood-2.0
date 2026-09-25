@@ -1,10 +1,5 @@
 // DEAD_TO_ZOMBIE_TIME lives in __DEFINES/mobs.dm, the ghost lock in observer.dm uses it too
 
-#define SIMPLE_CORPSE_ROT_START 15 MINUTES
-#define SIMPLE_CORPSE_DUST_TIME 25 MINUTES
-#define HUNT_CORPSE_ROT_START 20 MINUTES
-#define HUNT_CORPSE_DUST_TIME 35 MINUTES
-
 /datum/component/rot
 	var/amount = 0
 	var/last_process = 0
@@ -137,29 +132,21 @@
 				soundloop.start()
 		C.update_body()
 
-/datum/component/rot/simple
-	var/rot_start = SIMPLE_CORPSE_ROT_START
-	var/dust_time = SIMPLE_CORPSE_DUST_TIME
-
 /datum/component/rot/simple/process()
 	..()
 	var/mob/living/L = parent
 	if(L.stat != DEAD)
 		qdel(src)
 		return
-	if(amount > rot_start)
+	if(amount > 15 MINUTES)
 		if(soundloop && soundloop.stopped)
 			soundloop.start()
 		var/turf/open/T = get_turf(L)
 		if(istype(T))
 			T.pollute_turf(/datum/pollutant/rot, 5)
-	if(amount > dust_time)
+	if(amount > 25 MINUTES)
 		qdel(src)
 		return L.dust(drop_items=TRUE)
-
-/datum/component/rot/simple/hunt
-	rot_start = HUNT_CORPSE_ROT_START
-	dust_time = HUNT_CORPSE_DUST_TIME
 
 /datum/component/rot/gibs
 	amount = MIASMA_GIBS_MOLES
@@ -169,8 +156,3 @@
 	mid_length = 60
 	volume = 50
 	extra_range = 0
-
-#undef SIMPLE_CORPSE_ROT_START
-#undef SIMPLE_CORPSE_DUST_TIME
-#undef HUNT_CORPSE_ROT_START
-#undef HUNT_CORPSE_DUST_TIME

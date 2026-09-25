@@ -34,8 +34,7 @@
 							/obj/structure/flora/roguegrass/bush/westleach = 10,
 							/obj/structure/flora/roguegrass/maneater/real/juvenile = 3,
 							/obj/structure/deadbodyrandom/med = 0.3,
-						/obj/structure/zizo_bane = 2,
-						/obj/effect/landmark/hunting_spawner = 3)
+							/obj/structure/zizo_bane = 2)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=2,
 						/turf/open/water/swamp=1)
 	allowed_areas = list(/area/rogue/outdoors/bog)
@@ -69,8 +68,9 @@
 							/obj/item/natural/rock = 1,
 							/obj/item/grown/log/tree/stick = 3,
 							/obj/structure/flora/roguetree/stump/log = 3,
-						/obj/structure/flora/roguetree/evil = 5,
-						/obj/effect/landmark/hunting_spawner = 3)
+							/obj/structure/flora/roguetree/evil = 5)
+
+/datum/mapGeneratorModule/bogwater
 	clusterCheckFlags = CLUSTER_CHECK_NONE
 	allowed_turfs = list(/turf/open/water/swamp/deep)
 	excluded_turfs = list()

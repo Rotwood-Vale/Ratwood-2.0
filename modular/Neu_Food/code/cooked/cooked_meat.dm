@@ -147,7 +147,6 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/bear/fried
 	eat_effect = null
 	slices_num = 0
-	bitecount = 4
 	bitesize = 4
 	name = "T-bone bear steak"
 	desc = "Real meat, for real men."
@@ -163,7 +162,6 @@
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll/fried
 	eat_effect = /datum/status_effect/debuff/uncookedfood
 	slices_num = 0
-	bitecount = 5
 	bitesize = 5
 	name = "chewy troll blubber"
 	desc = "Cooking it seems to have only caused the meat to toughen up. It is vile, disgusting, like partially hardened jello with greasy chunks hidden within. Perhaps it can be cooked further to stubbornly quell its spirit."
@@ -176,20 +174,6 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/fat
 	// Takes a really long time unless you're a skilled cook.
 	cooktime = 1500
-
-/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/attackby(obj/item/I, mob/living/user, params)
-	var/found_table = locate(/obj/structure/table) in (loc)
-	update_cooktime(user)
-	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/veg/garlick_clove))
-		if(isturf(loc) && found_table)
-			playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
-			if(do_after(user, short_cooktime, target = src))
-				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT * 0.5)
-				new /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick(loc)
-				qdel(I)
-				qdel(src)
-	else
-		return ..()
 
 /* .............   Seared Gnoll   ................ */
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll/seared
@@ -308,16 +292,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_HALF_MEAL)
 	eat_effect = null
 	tastes = list("crispy chitin" = 1)
-
-/* .............  Garlicked Fried Volf w/ Cucumber  ................ */
-/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlickcucumber
-	name = "hunter's feast"
-	desc = "A slab of volf, fried to a perfect medium rare. A bit gamey and chewy, but tasty. This piece has been coated over in glove of garlick and served with side of cucumber."
-	icon = 'modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
-	icon_state = "fryvolf_garlick_cucumber"
-	tastes = list("gamey volf" = 1, "garlick" = 1, "cucumber" = 1)
-	eat_effect = /datum/status_effect/buff/mealbuff
-	faretype = FARE_LAVISH
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/spider/surprise/cooked
 	name = "spider surprise"

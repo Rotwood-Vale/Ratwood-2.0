@@ -20,12 +20,6 @@
 /proc/get_cooking_do_time(mob/user, time)
 	return time / get_cooking_effort_multiplier(user, 3)
 
-/proc/get_hunting_effort_multiplier(mob/user, factor = 2)
-	return (10 + (user.get_skill_level(/datum/skill/misc/hunting) * factor)) * 0.1
-
-/proc/get_hunting_do_time(mob/user, time)
-	return time / get_hunting_effort_multiplier(user, 3)
-
 /proc/apply_farming_fatigue(mob/user, fatigue_amount)
 	var/multiplier = get_farming_effort_multiplier(user)
 	user.stamina_add(fatigue_amount / multiplier)
