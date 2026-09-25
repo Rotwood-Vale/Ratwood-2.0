@@ -2410,7 +2410,7 @@
 /obj/structure/mineral_door/wood{
 	locked = 1;
 	lockid = "tailor";
-	name = "Tailor"
+	name = "Display Room"
 	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/tailor)
@@ -12086,7 +12086,7 @@
 /obj/structure/mineral_door/wood{
 	locked = 1;
 	lockid = "tailor";
-	name = "Tailor"
+	name = "Second Floor"
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tailor)
@@ -14168,6 +14168,14 @@
 /obj/item/clothing/gloves/roguetown/leather,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
+"cQS" = (
+/obj/structure/mineral_door/wood{
+	locked = 1;
+	lockid = "tailor";
+	name = "Tailor Back Door"
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/tailor)
 "cQX" = (
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/bath)
@@ -420344,7 +420352,7 @@ evo
 rvA
 evo
 fnA
-iyU
+cQS
 nOf
 ieF
 bNh
