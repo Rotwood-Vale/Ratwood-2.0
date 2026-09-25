@@ -625,6 +625,19 @@
 				LAZYREMOVE(turfgrid, T)
 				continue
 
+
+/obj/effect/temp_visual/necra_consecrate
+	icon = 'icons/mob/mob_effects_fog.dmi'
+	icon_state = "subtle"
+	plane = GAME_PLANE_UPPER
+	layer = ABOVE_MOB_LAYER
+	duration = 2 MINUTES
+
+/obj/effect/temp_visual/necra_consecrate/Initialize(mapload, new_duration)
+	if(new_duration)
+		duration = new_duration
+	. = ..()
+
 /obj/structure/fluff/psycross/necra/consecrated/proc/color_grid()
 	for(var/turf/T in turfgrid)
 		var/obj/effect/temp_visual/necra_consecrate/fx = new(T, expires_in)
