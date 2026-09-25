@@ -270,6 +270,7 @@
 		H.change_stat(STATKEY_WIL, -1)
 		H.change_stat(STATKEY_PER, 2)
 		H.change_stat(STATKEY_INT, 2)
+		H.change_stat(STATKEY_CON, -2)
 		H.mind?.adjust_spellpoints(3)
 		ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
 	else
