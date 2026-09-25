@@ -3401,6 +3401,7 @@
 #include "modular\timesoldier\code\clothing.dm"
 #include "modular\timesoldier\code\gear.dm"
 #include "modular\timesoldier\code\language.dm"
+#include "modular\timesoldier\code\flammen.dm"
 #include "modular\timesoldier\code\loadout.dm"
 #include "modular\timesoldier\code\magnumforce.dm"
 #include "modular\timesoldier\code\stuff.dm"
