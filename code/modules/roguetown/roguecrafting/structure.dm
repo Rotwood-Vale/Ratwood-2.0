@@ -676,7 +676,7 @@
 
 /datum/crafting_recipe/roguetown/structure/wooden_spit/TurfCheck(mob/user, turf/T)
 	for(var/obj/machinery/light/rogue/campfire/fire in T)
-		if(fire.type == /obj/machinery/light/rogue/campfire || fire.type == /obj/machinery/light/rogue/campfire/densefire)
+		if(fire.can_support_spit)
 			return TRUE
 	return FALSE
 

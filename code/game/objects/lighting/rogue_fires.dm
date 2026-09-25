@@ -155,6 +155,7 @@
 /obj/machinery/light/rogue/campfire/fireplace
 	name = "fireplace"
 	desc = "A warm fire dances between a pile of half-burnt logs upon a bed of glowing embers."
+	can_support_spit = FALSE
 	icon_state = "wallfire1"
 	base_state = "wallfire"
 	light_outer_range = 4 //slightly weaker than a torch
@@ -800,7 +801,7 @@
 
 /obj/machinery/light/rogue/hearth/wooden_spit/OnCrafted(dirin, mob/user)
 	var/obj/machinery/light/rogue/campfire/fire = locate(/obj/machinery/light/rogue/campfire) in loc
-	var/greater_fire = fire?.type == /obj/machinery/light/rogue/campfire/densefire
+	var/greater_fire = fire?.spit_builds_dense
 	var/remaining_fuel = fire?.fueluse
 	. = ..()
 	if(greater_fire)
@@ -922,6 +923,10 @@
 	max_integrity = 30
 	soundloop = /datum/looping_sound/fireloop
 	heat_level = 5
+	/// Whether a wooden spit can be constructed over this fire.
+	var/can_support_spit = TRUE
+	/// Whether a wooden spit constructed over this fire receives the greater-fire durability and density.
+	var/spit_builds_dense = FALSE
 	var/healing_range = 1
 	var/static/list/acceptable_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)
 	var/datum/status_effect/buff/stamina_status_effect = /datum/status_effect/buff/campfire_stamina
@@ -989,6 +994,8 @@
 		return TRUE //fires that are on always have this interaction with lmb unless its a torch
 
 /obj/machinery/light/rogue/campfire/densefire
+	can_support_spit = TRUE
+	spit_builds_dense = TRUE
 	icon_state = "densefire1"
 	base_state = "densefire"
 	desc = "A ring of stones offers the fire enough protection from the wind to keep the dark at bay and the body warm."
@@ -1017,6 +1024,7 @@
 
 /obj/machinery/light/rogue/campfire/pyre
 	name = "pyre"
+	can_support_spit = FALSE
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "pyre1"
 	base_state = "pyre"
@@ -1043,6 +1051,7 @@
 	M.reset_offsets("bed_buckle")
 
 /obj/machinery/light/rogue/campfire/longlived
+	can_support_spit = FALSE
 	fueluse = 180 MINUTES
 
 #undef MIN_STEW_TEMPERATURE
