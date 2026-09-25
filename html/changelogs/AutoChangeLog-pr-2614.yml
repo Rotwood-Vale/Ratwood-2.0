@@ -1,5 +1,0 @@
-author: "yupup123"
-delete-after: True
-changes:
-  - rscadd: "Added Speech Mannerisms"
-  - bugfix: "Fixed a bug that made accents apply to emotes when using `*` in `say`"
