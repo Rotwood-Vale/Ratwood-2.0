@@ -1749,6 +1749,8 @@
 	name = "stalker sabre"
 	desc = "A once elegant blade of mythril, diminishing under the suns gaze"
 	icon_state = "spidersaber"
+	sheathe_icon = "spidersaber"
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/dagger/sucker_punch)
 	force = 25 // same as elf sabre
 	force_wielded = 25
 	minstr = 7
@@ -2583,6 +2585,11 @@
 	icon_state = "hook_sword"
 	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/hook, /datum/intent/sword/strike, /datum/intent/sword/disarm)
 	max_integrity = 180
+	bigboy = TRUE
+	pixel_y = -16
+	pixel_x = -16
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	wdefense = 5
 
 /obj/item/rogueweapon/sword/sabre/hook/getonmobprop(tag)
@@ -2662,7 +2669,7 @@
 /datum/intent/sword/thrust/hook
 	damfactor = 0.9
 
-//Snowflake version of hand-targeting disarm intent.
+// Shared weapon disarm intent.
 /datum/intent/sword/disarm
 	name = "disarm"
 	icon_state = "intake"
@@ -2675,63 +2682,65 @@
 	clickcd = 22	//Can't spam this; long delay.
 	item_d_type = "blunt"
 
-/obj/item/rogueweapon/sword/sabre/hook/attack(mob/living/M, mob/living/user, bodyzone_hit)
-	. = ..()
+/datum/intent/sword/disarm/spec_on_apply_effect(mob/living/H, mob/living/user, params)
+	if(!iscarbon(H))
+		return
+	var/obj/item/weapon = masteritem
+	if(QDELETED(weapon))
+		return
+
 	var/skill_diff = 0
-	if(istype(user.used_intent, /datum/intent/sword/disarm))
-		var/obj/item/I
-		if(user.zone_selected == BODY_ZONE_PRECISE_L_HAND && M.active_hand_index == 1)
-			I = M.get_active_held_item()
-		else
-			if(user.zone_selected == BODY_ZONE_PRECISE_R_HAND && M.active_hand_index == 2)
-				I = M.get_active_held_item()
+	var/obj/item/I
+	if(user.zone_selected == BODY_ZONE_PRECISE_L_HAND && H.active_hand_index == 1)
+		I = H.get_active_held_item()
+	else if(user.zone_selected == BODY_ZONE_PRECISE_R_HAND && H.active_hand_index == 2)
+		I = H.get_active_held_item()
+	else
+		I = H.get_inactive_held_item()
+	if(user.mind && weapon.associated_skill)
+		skill_diff += user.get_skill_level(weapon.associated_skill)
+	if(H.mind)
+		skill_diff -= H.get_skill_level(/datum/skill/combat/wrestling)
+	user.stamina_add(rand(3,8))
+	var/probby = clamp((((3 + (((user.STASTR - H.STASTR)/4) + skill_diff)) * 10)), 5, 95)
+	if(!I)
+		to_chat(user, span_warning("They aren't holding anything on that hand!"))
+		return
+	if(H.mind)
+		if(I.associated_skill)
+			probby -= H.get_skill_level(I.associated_skill) * 5
+	var/obj/item/mainhand = user.get_active_held_item()
+	var/obj/item/offhand = user.get_inactive_held_item()
+	if(weapon.wielded || (HAS_TRAIT(user, TRAIT_DUALWIELDER) && istype(offhand, mainhand)))
+		probby += 20
+	if(H.has_status_effect(/datum/status_effect/debuff/exposed) || H.has_status_effect(/datum/status_effect/debuff/baited) || H.IsOffBalanced())//this is so you dont need to be a STR beast wrestle chud to disarm with any reliability
+		probby += 40
+	var/disarm_success = prob(probby)
+	if(disarm_success && !weapon.wielded)///if we weapon steal with a two hander (i.e. aruval), roll the success into regular disarm. You don't have 3 hands, sire
+		H.dropItemToGround(I, force = FALSE, silent = FALSE)
+		user.stop_pulling()
+		user.put_in_inactive_hand(I)
+		H.visible_message(span_danger("[user] takes [I] from [H]'s hand!"), \
+			span_userdanger("[user] takes [I] from my hand!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
+		user.changeNext_move(12)//avoids instantly attacking with the new weapon
+		playsound(weapon.loc, 'sound/combat/weaponr1.ogg', 100, FALSE, -1)
+		if(!H.mind)
+			H.Stun(10)
+	else
+		probby += 20
+		if(disarm_success || prob(probby))
+			H.dropItemToGround(I, force = FALSE, silent = FALSE)
+			H.visible_message(span_danger("[user] disarms [H] of [I]!"), \
+				span_userdanger("[user] disarms me of [I]!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
+			if(!H.mind)
+				H.Stun(20)	//high delay to pick up weapon
 			else
-				I = M.get_inactive_held_item()
-		if(user.mind)
-			skill_diff += (user.get_skill_level(/datum/skill/combat/swords))	//You check your sword skill
-		if(M.mind)
-			skill_diff -= (M.get_skill_level(/datum/skill/combat/wrestling))	//They check their wrestling skill to stop the weapon from being pulled.
-		user.stamina_add(rand(3,8))
-		var/probby = clamp((((3 + (((user.STASTR - M.STASTR)/4) + skill_diff)) * 10)), 5, 95)
-		if(I)
-			if(M.mind)
-				if(I.associated_skill)
-					probby -= M.get_skill_level(I.associated_skill) * 5
-			var/obj/item/mainhand = user.get_active_held_item()
-			var/obj/item/offhand = user.get_inactive_held_item()
-			if(HAS_TRAIT(user, TRAIT_DUALWIELDER) && istype(offhand, mainhand))
-				probby += 20	//We give notable bonus to dual-wielders who use two hooked swords, this time for real.
-			if(prob(probby))
-				M.dropItemToGround(I, force = FALSE, silent = FALSE)
-				user.stop_pulling()
-				user.put_in_inactive_hand(I)
-				M.visible_message(span_danger("[user] takes [I] from [M]'s hand!"), \
-				span_userdanger("[user] takes [I] from my hand!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
-				user.changeNext_move(12)//avoids instantly attacking with the new weapon
-				playsound(src.loc, 'sound/combat/weaponr1.ogg', 100, FALSE, -1) //sound queue to let them know that they got disarmed
-				if(!M.mind)	//If you hit an NPC - they pick up weapons instantly. So, we do more stuff.
-					M.Stun(10)
-			else
-				probby += 20
-				if(prob(probby))
-					M.dropItemToGround(I, force = FALSE, silent = FALSE)
-					M.visible_message(span_danger("[user] disarms [M] of [I]!"), \
-					span_userdanger("[user] disarms me of [I]!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
-					if(!M.mind)
-						M.Stun(20)	//high delay to pick up weapon
-					else
-						M.Stun(6)	//slight delay to pick up the weapon
-				else
-					user.Immobilize(10)
-					M.Immobilize(10)
-					M.visible_message(span_notice("[user.name] struggles to disarm [M.name]!"))
-					playsound(src.loc, 'sound/foley/struggle.ogg', 100, FALSE, -1)
-		if(!isliving(M))
-			to_chat(user, span_warning("You cannot disarm this enemy!"))
-			return
+				H.Stun(6)	//slight delay to pick up the weapon
 		else
-			to_chat(user, span_warning("They aren't holding anything on that hand!"))
-			return
+			user.Immobilize(10)
+			H.Immobilize(10)
+			H.visible_message(span_notice("[user.name] struggles to disarm [H.name]!"))
+			playsound(weapon.loc, 'sound/foley/struggle.ogg', 100, FALSE, -1)
 
 /obj/item/rogueweapon/sword/attack(mob/living/M, mob/living/user)
 	if(user == M && user.used_intent && user.used_intent.blade_class == BCLASS_STAB && istype(user.rmb_intent, /datum/rmb_intent/weak))
@@ -2892,6 +2901,121 @@
 			if("onbelt")
 				return list("shrink" = 0.4,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
+
+// Drow weapons
+
+/datum/intent/sword/disarm/range
+	name = "reaching disarm"
+	reach = 2
+
+/datum/intent/sword/cut/sabre/slow
+	clickcd = 12
+	damfactor = 1.25	//Better than rapier (Base is 1.1 for swords)
+	penfactor = 10		//Very slight buff to pen on cut mode. Still weaker then sword-chop mode.
+
+/obj/item/rogueweapon/sword/long/rhomphaia/stalker
+	name = "drow aruval"
+	desc = "For underdark outsiders, drow smithing can seem a competition for who can put the most spikes and hooks on a weapon; \
+	this aruval is the logical end of that philosophy. This curved blade sports a backcurved tip, a hooked claw on the back edge, \
+	and a piercing spike near its gilded crossguard."
+	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon_state = "drowaruval"
+	sheathe_icon = "drowaruval"
+	force = 25
+	force_wielded = 25//good damage both wielded and unweilded, but lower than greatswords and rhomphaia proper
+	max_integrity = 200//50 more than the standard rhomphaia
+	possible_item_intents = list(/datum/intent/sword/cut/falx, /datum/intent/sword/thrust/hook, /datum/intent/sword/chop/falx, /datum/intent/sword/disarm)
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/militia, /datum/intent/pick/bad, /datum/intent/sword/disarm/range)//longer range, two hands on sword makes for better chop, if slower. Shitty pick using our weird spikes
+	alt_intents = null 
+	wdefense_wbonus = 4
+	bigboy = TRUE
+	special = /datum/special_intent/shin_swipe
+
+/obj/item/rogueweapon/sword/long/shotel/stalker
+	name = "drow shotel"
+	desc = "A darkly shimmering shotel of drowsmith. While reminescent of the more commonly used drow falx, \
+	the shotels superior reach and light weight make it a favorite of Crocs de l'araignée Cavaliers who seek \
+	the reach of a polearm with the speed of a sword."
+	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon_state = "drowshotel"
+	sheathe_icon = "drowshotel"
+	alt_intents = null 
+	possible_item_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/long, /datum/intent/dagger/sucker_punch)
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/long, /datum/intent/dagger/sucker_punch)
+	force = 27
+	force_wielded = 27//doesn't get buffed to 30 like normal shotel
+	max_integrity = 175//tiny bit more integ since it's unique
+	bigboy = TRUE
+	special = /datum/special_intent/shin_swipe
+
+/obj/item/rogueweapon/sword/sabre/hook/stalker
+	name = "drow hook sword"
+	desc = "A darkly shimmering hook sword of drowsmith. While reminescent of the more commonly used drow falx, \
+	the hook swords sport a far more aggressive curve that allows the wielder to hook and pull the weapons from the hands of their enemies. \
+	Historically, the hook sword was employed by Crocs de l'araignée Cavaliers tasked with quelling slave rebellions, easily dispatching \
+	the makeshift weapons of would-be freemen."
+	icon_state = "drowhooksword"
+	sheathe_icon = "drowhook"
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/hook, /datum/intent/dagger/sucker_punch, /datum/intent/sword/disarm)
+	force = 22//+2 over normal hooksword
+	max_integrity = 175//tiny bit more integ since it's unique
+	bigboy = TRUE
+
+/obj/item/rogueweapon/sword/falx/stalker
+	name = "stalker falx"
+	desc = "A jagged blade with an inward edge. A popular choice for drow warriors, the falx is adept at slicing through the armor of men and the flesh of lessers."
+	icon_state = "spiderfalx"
+	sheathe_icon = "spidersaber"
+	wbalance = WBALANCE_SWIFT
+	possible_item_intents = list(/datum/intent/sword/cut/falx,  /datum/intent/sword/chop/falx, /datum/intent/dagger/sucker_punch, /datum/intent/sword/peel)
+	force = 25 // same as elf sabre
+	wdefense = 5//-1, use it with a shield
+
+/obj/item/rogueweapon/sword/long/elf/stalker
+	name = "drow greatsabre"
+	desc = "A large, curved blade sporting a single cutting edge and a blunted spine affixed with a piercing spike. \
+	While not near as elaborate as other drow blades, the simple strength of the greatsabre makes it adept at cleaving through armor, chitin, and bone alike."
+	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon_state = "drowsword"
+	sheathe_icon = "drowgreatsabre"
+	force = 25
+	force_wielded = 30
+	max_integrity = 200
+	possible_item_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/dagger/sucker_punch)// better to use your fist than dent that pretty pommel
+	gripped_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/pick/bad, /datum/intent/sword/chop/sabre, /datum/intent/dagger/sucker_punch)//shitty pick using our spiked bit.
+	alt_intents = null // nope!
+	bigboy = TRUE
+
+/obj/item/rogueweapon/sword/long/kriegmesser/stalker
+	name = "drow kriegsmesser"
+	desc = "A wickedly sharp two-handed sword of drow smith. While you'd never get one to admit it, this blade was \
+	undoubtedly inspired by the grenzelhoftian kriegmesser. The drow version features more gilding than its surface-dwelling cousin, \
+	alongside brutal serration found on many drow blades."
+	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon_state = "drowmesser"
+	sheathe_icon = "drowmesser"
+	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/rend/krieg, /datum/intent/dagger/sucker_punch)
+	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/militia, /datum/intent/rend/krieg, /datum/intent/dagger/sucker_punch)
+	alt_intents = null // Can't mordhau this
+	max_integrity = 175// less integ than the real deal, not near as much as the kazen messers
+	bigboy = TRUE
+	special = /datum/special_intent/axe_swing
+
+/obj/item/rogueweapon/sword/long/stalker//what if estoc but longsword?
+	name = "drow longsword"
+	desc = "A long, darkly shimmering blade of drowsmith. While looking familiar to the standard longsword, \
+	the use case is far less versatile. Swords of this kind feature rigidly straight blades, uncharacteristic of drowsmith, and are primarily used as a hunting tool. \
+	Regardless of its intended use, a weapon that can puncture the chitin of underdwelling arachnids can just as easily pierce a man's armor."
+	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon_state = "drowlongsword"
+	sheathe_icon = "drowlongsword"
+	force = 25
+	force_wielded = 27
+	possible_item_intents = list(/datum/intent/sword/thrust/arming, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
+	gripped_intents = list(/datum/intent/sword/thrust/estoc, /datum/intent/sword/lunge/estoc, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
+	alt_intents = null // you wouldn't dare dent that gilded crossguard with a mordhau, would you?
+	bigboy = TRUE
+	special = /datum/special_intent/piercing_lunge
 
 //Elven weapons sprited and added by Jam
 /obj/item/rogueweapon/sword/short/elf
