@@ -369,6 +369,15 @@
 
 #define TRAIT_TRIBAL "Island Tribe-member"
 
+/// Default magic resistance that blocks normal magic
+#define MAGIC_RESISTANCE (1 << 0)
+/// Tinfoil hat magic resistance that blocks mental magic
+#define MAGIC_RESISTANCE_MIND (1 << 1)
+/// Holy magic resistance that blocks miracles
+#define MAGIC_RESISTANCE_HOLY (1 << 2)
+/// Holy magic resistance that blocks unholy magic
+#define MAGIC_RESISTANCE_UNHOLY (1 << 3)
+
 // If you want description to show up you gotta have the trait name defined BEFORE this lol
 
 GLOBAL_LIST_INIT(roguetraits, list(
