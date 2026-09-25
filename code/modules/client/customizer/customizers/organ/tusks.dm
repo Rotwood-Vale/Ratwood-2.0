@@ -11,6 +11,7 @@
 /datum/customizer/organ/tusks/humanoid
 	customizer_choices = list(/datum/customizer_choice/organ/tusks/humanoid)
 	allows_disabling = TRUE
+	default_disabled = TRUE
 
 /datum/customizer_choice/organ/tusks/humanoid
 	name = "Tusks"
