@@ -2419,7 +2419,6 @@
 	if(tier > NECRACON_TIER_EXPERT)
 		REMOVE_TRAIT(owner, TRAIT_NOPAIN, TRAIT_NECRACON)
 
-
 /atom/movable/screen/alert/status_effect/buff/necra_consecrate
 	name = "Necra's Blessed Consecration"
 	desc = "Upon this ground, I hold firm. Upon this ground, Her will guides me true. Upon this ground, I will send them back to Her waiting grasp."
