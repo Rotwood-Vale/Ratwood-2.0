@@ -1,0 +1,5 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - rscadd: "i.ibb.co (imgbb.com) and file.garden (filegarden.com) are now among the approved character image hosts."
+  - admin: "Character assets link regex has been hardened somewhat to more reliably enforce the domain whitelist, and quotes cannot be submitted to try and perform any sort of string-escape exploit."

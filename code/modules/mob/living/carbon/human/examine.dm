@@ -1013,6 +1013,14 @@
 		if(GLOB.lord_titles[name])
 			. += span_notice("[m3] been granted the title of \"[GLOB.lord_titles[name]]\".")
 
+		// Agents of the Bathhouse (granted by a token of the Bathhouse) are a discreet roll:
+		// only those who work the stews - or fellow agents - recognise one, and only while
+		// the agent's face is bare (this branch never runs for the masked or unknown).
+		if(HAS_TRAIT(src, TRAIT_AGENT_BATHHOUSE) && ishuman(user))
+			var/mob/living/carbon/human/bath_viewer = user
+			if((bath_viewer.job in GLOB.bathhouse_positions) || HAS_TRAIT(bath_viewer, TRAIT_AGENT_BATHHOUSE))
+				. += span_notice("[m1] an agent of the Bathhouse.")
+
 		if(HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_DEFILED_NOBLE))
 			if(social_rank < SOCIAL_RANK_NOBLE)
 				. += span_notice("A minor noble.")

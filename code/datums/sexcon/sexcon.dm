@@ -9,11 +9,14 @@
 #define SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL	3
 
 //Used to prevent sexcon messages repeating unless in subtle or through changes in intensity, speed, knot status or subtle usage
-/mob/living/carbon/human/proc/sexcon_action_message(message, self_message = null, blind_message = null, vision_distance = DEFAULT_MESSAGE_RANGE)
-	if(sexcon?.suppress_action_messages)
+/mob/living/carbon/human/proc/sexcon_action_message(message, self_message = null, blind_message = null, vision_distance)
+	if(!sexcon)
+		return
+	if(sexcon.suppress_action_messages)
 		return
 	if(!message)
 		return
+	vision_distance = sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE
 	visible_message(message, self_message, blind_message, vision_distance)
 
 /datum/sex_controller
@@ -768,10 +771,13 @@
 		adjust_charge(-CHARGE_FOR_CLIMAX)
 	else
 		to_chat(user, span_love("<i>Spurt!</i>"))
-	if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
-		user.sate_addiction(/datum/charflaw/addiction/lovefiend)
-	if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
-		user.sate_addiction(/datum/charflaw/addiction/baothamarked)
+	if(user.has_status_effect(/datum/status_effect/debuff/false_sensation))
+		to_chat(user, span_warning("Not enough..."))
+	else
+		if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
+			user.sate_addiction(/datum/charflaw/addiction/lovefiend)
+		if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
+			user.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	user.add_stress(/datum/stressevent/cumok)
 	user.emote("sexmoanhvy", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
@@ -882,6 +888,13 @@
 	arousal = clamp(amount, 0, MAX_AROUSAL)
 	update_pink_screen()
 	update_erect_state()
+
+/datum/sex_controller/proc/try_apply_false_sensation()
+	if(!user.has_flaw(/datum/charflaw/addiction/lovefiend) && !user.has_flaw(/datum/charflaw/addiction/baothamarked))
+		return
+	if(!user.has_status_effect(/datum/status_effect/debuff/false_sensation)) // So chat isn't spammed
+		to_chat(user, span_warning("My arousal is hollow and false. It won't sate my urges."))
+	user.apply_status_effect(/datum/status_effect/debuff/false_sensation)
 
 /datum/sex_controller/proc/update_erect_state()
 	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
@@ -1215,11 +1228,6 @@
 	dat += " ~|~ <a href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "FREEUSE ON" : "FREEUSE OFF"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
-		if(action.subtle_supported)
-			if(do_subtle_action)
-				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING SUBTLY</a>"
-			else
-				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING VISIBLY</a>"
 		if(action.knot_on_finish)
 			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
 				if(do_knot_action)
@@ -1231,6 +1239,10 @@
 					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#d146f5'>FORCING KNOT</font></a>"
 				else
 					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#eac8de'>NOT FORCING KNOT</font></a>"
+	if(do_subtle_action)
+		dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING SUBTLY</a>"
+	else
+		dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING VISIBLY</a>"
 	dat += "</center><center><a href='?src=[REF(src)];task=set_arousal'>SET AROUSAL</a> | <a href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a></center>"
 	if(target == user)
 		dat += "<center>Doing unto yourself</center>"
@@ -1317,6 +1329,8 @@
 			to_chat(user, span_notice("Positioning and exposure checks are now [freeuse ? "disabled" : "enabled"]."))
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
+			if(!isnull(amount) && amount > arousal)
+				try_apply_false_sensation()
 			if(aphrodisiac > 1 && amount > 0)
 				set_arousal(amount * aphrodisiac)
 			else
@@ -1324,6 +1338,8 @@
 		if("freeze_arousal")
 			if(aphrodisiac == 1)
 				arousal_frozen = !arousal_frozen
+				if(arousal > 60)
+					try_apply_false_sensation()
 		if("category_misc")
 			action_category = SEX_CATEGORY_MISC
 		if("category_hands")
@@ -1396,10 +1412,9 @@
 	var/base_force = -1
 	var/base_knot_mode = FALSE
 	var/subtle_message_tick_counter = 0
-	var/was_subtle_mode = action.subtle_supported
+	var/was_subtle_mode = do_subtle_action // By default, we set it to the same value as the panel toggle
 	show_progress = 1
 	suppress_moan = FALSE
-	do_subtle_action = action.subtle_supported // always start subtle-supported actions in subtle mode
 	action.on_start(user, target)
 	find_occupying_furniture()
 	find_occupying_grass()
@@ -1418,7 +1433,6 @@
 			break
 		if(desire_stop)
 			break
-		var/is_subtle_mode = (action.subtle_supported && do_subtle_action)
 		var/current_knot_mode = FALSE
 		if(action.knot_on_finish)
 			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
@@ -1428,16 +1442,16 @@
 		var/show_action_message = (speed != base_speed || force != base_force)
 		if(current_knot_mode != base_knot_mode)
 			show_action_message = TRUE
-		if(!is_subtle_mode && was_subtle_mode)
+		if(!do_subtle_action && was_subtle_mode)
 			show_action_message = TRUE
-		if(!show_action_message && is_subtle_mode)
+		if(!show_action_message && do_subtle_action)
 			subtle_message_tick_counter++
 			if(subtle_message_tick_counter >= SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL)
 				show_action_message = TRUE
 				subtle_message_tick_counter = 0
 		else if(show_action_message)
 			subtle_message_tick_counter = 0
-		was_subtle_mode = is_subtle_mode
+		was_subtle_mode = do_subtle_action
 		base_speed = speed
 		base_force = force
 		base_knot_mode = current_knot_mode

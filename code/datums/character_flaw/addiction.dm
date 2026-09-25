@@ -269,6 +269,19 @@
 	desc = "I must make love. My loins burn with unsated desire."
 	icon_state = "nymphomaniac"
 
+/// For sex freaks. Manually raising their arousal prevents their vices from being sated. Try jerking off.
+/datum/status_effect/debuff/false_sensation
+	id = "false_sensation"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/false_sensation
+	effectedstats = null
+	duration = 2 MINUTES
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/debuff/false_sensation
+	name = "False Sensation"
+	desc = "My body is aflame, but it's not real. Only a real touch of passion will sate my urges."
+	icon_state = "debuff"
+
 /datum/charflaw/addiction/baothamarked
 	name = "Baothan Marked"
 	desc = "I've been branded by a Baothan mark."
