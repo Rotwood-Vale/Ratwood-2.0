@@ -1779,6 +1779,7 @@
 	name = "Psydonic Urumi (+2 Blessed Silver)"
 	created_item = /obj/item/rogueweapon/whip/urumi/silver/psydonic
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed)//3 blades so 1 more buillion over non-psydonite silver urumi
+	display_category = ITEM_CAT_WEAPONS_FLAILS
 
 /// BLESSED SILVER, BULLION VARIANTS - FALLBACK
 //cutting out the duplicate variables so it's more clear what these subtypes actually do

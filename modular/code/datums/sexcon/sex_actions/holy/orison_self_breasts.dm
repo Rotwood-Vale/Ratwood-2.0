@@ -2,7 +2,6 @@
 	name = "Rub your breasts with godhand"
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_BREASTS
-	subtle_supported = TRUE
 	solo = TRUE
 
 /datum/sex_action/holy/masturbate_breasts_orison/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
