@@ -26,10 +26,14 @@
 /obj/projectile/bullet/firearm/timesoldier_fire
 	name = "incendiary stream"
 	desc = "Best get out of the way!"
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "1"
+	nondirectional_sprite = TRUE
 	damage = 10
 	damage_type = BURN
 	armor_penetration = 0
 	range = 5
+	speed = 0.8
 
 /obj/effect/hotspot/timesoldier_fire/proc/start_scorcher_spread(radius = 3)
 	spread_origin = get_turf(src)
@@ -77,12 +81,19 @@
 	if(spread_radius <= max_spread_radius)
 		addtimer(CALLBACK(src, PROC_REF(spread_next_ring)), 2)
 
-/obj/projectile/bullet/firearm/timesoldier_fire/on_hit(atom/target, blocked=FALSE)
+/obj/projectile/bullet/firearm/timesoldier_fire/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 
 	var/turf/T = get_turf(target)
-	if(T && !locate(/obj/effect/hotspot/timesoldier_fire) in T)
-		new /obj/effect/hotspot/timesoldier_fire(T)
+
+	if(T)
+		var/obj/effect/hotspot/timesoldier_fire/F = locate(/obj/effect/hotspot/timesoldier_fire) in T
+
+		if(!F)
+			F = new /obj/effect/hotspot/timesoldier_fire(T)
+
+		if(!F.spread_origin)
+			F.start_scorcher_spread(3)
 
 	if(isliving(target))
 		var/mob/living/L = target
@@ -110,10 +121,9 @@
 	desc = "<span class='yellow'><i>Nothing short of liquid brutality, the flamesprayer belonged to a gang of troublemakers called 'The Scum', but they decided to serve the Crown by giving us the schematic for this.</i></span>"
 	icon = 'modular/timesoldier/sprites/scumguns.dmi'
 	icon_state = "flamesprayer"
-	item_state = "flamesprayer_inhand"
-	lefthand_file = 'modular/timesoldier/sprites/scumguns.dmi'
-	righthand_file = 'modular/timesoldier/sprites/scumguns.dmi'
-	experimental_inhand = FALSE
+	experimental_inhand = TRUE
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	mag_type = /obj/item/ammo_box/magazine/timesoldier_fire
 	internal_magazine = TRUE
 	semi_auto = TRUE
@@ -129,6 +139,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	recoil = 0
 
+
+/obj/item/gun/ballistic/timesoldier_fire_wep/get_extra_onmob_index()
+	return "_inhand"
 
 /obj/item/gun/ballistic/timesoldier_fire_wep/attack_self(mob/living/user)
 	if(wielded)
@@ -157,3 +170,63 @@
 
 	if(chamber_next_round && magazine?.ammo_count())
 		chamber_round()
+
+/obj/item/gun/ballistic/timesoldier_fire_wep/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(user?.client && user.client.selected_target[1])
+		user.atkswinging = "left"
+
+	return ..() // otherwise it'll shoot infinitely.
+
+
+/obj/item/gun/ballistic/timesoldier_fire_wep/getonmobprop(tag)
+	. = ..()
+
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list(
+					"shrink" = 0.80,
+					"sx" = -5, "sy" = 1,
+					"nx" = 5,  "ny" = 1,
+					"wx" = -4, "wy" = 1,
+					"ex" = 4,  "ey" = 1,
+
+					"northabove" = 0,
+					"southabove" = 1,
+					"eastabove" = 1,
+					"westabove" = 0,
+
+					"nturn" = -43,
+					"sturn" = 43,
+					"wturn" = 30,
+					"eturn" = -30,
+
+					"nflip" = 0,
+					"sflip" = 8,
+					"wflip" = 8,
+					"eflip" = 0
+				)
+
+			if("wielded")
+				return list(
+					"shrink" = 0.9,
+					"sx" = 4,  "sy" = -3,
+					"nx" = -4, "ny" = -3,
+					"wx" = -6, "wy" = 0,
+					"ex" = 6,  "ey" = 0,
+
+					"northabove" = 0,
+					"southabove" = 1,
+					"eastabove" = 1,
+					"westabove" = 1,
+
+					"nturn" = -45,
+					"sturn" = 45,
+					"wturn" = 0,
+					"eturn" = 0,
+
+					"nflip" = 8,
+					"sflip" = 0,
+					"wflip" = 8,
+					"eflip" = 0
+				) // pretty much copy pasted from the snipah
