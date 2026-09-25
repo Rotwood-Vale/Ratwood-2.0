@@ -1,0 +1,4 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - balance: "Gargled speech (gained from throat crit, broken jaw, etc. The \"KHSSSHSH\" thing.) now blocks spells requiring a verbal component to cast, similar in nature to being silenced or gagged."
