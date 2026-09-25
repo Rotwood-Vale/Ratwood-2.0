@@ -115830,6 +115830,13 @@
 	color = "#FFA3A3"
 	},
 /area/rogue/indoors/town/bath)
+"vhx" = (
+/obj/structure/roguemachine/rosewall{
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/turf/closed/wall/mineral/rogue/stonebrick,
+/area/rogue/indoors/town/manor)
 "vhD" = (
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/rogue/hexstone,
@@ -467432,7 +467439,7 @@ vxe
 oIo
 qmV
 pFQ
-vxe
+vhx
 lEo
 qmV
 cUH
