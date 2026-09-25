@@ -26,6 +26,7 @@
 		return FALSE
 	changeNext_move(mmb_intent.clickcd)
 	face_atom(A)
+	break_invisibility()
 	SEND_SIGNAL(src, COMSIG_MOB_ON_KICK)
 	playsound(src, pick(PUNCHWOOSH), 100, FALSE, -1)
 	// play the attack animation even when kicking non-mobs

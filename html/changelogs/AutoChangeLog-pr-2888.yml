@@ -1,0 +1,4 @@
+author: "awwliedacoder"
+delete-after: True
+changes:
+  - balance: "changed tainted-lux debuff to 30 mins, instead of 1 hour."
