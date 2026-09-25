@@ -3,9 +3,9 @@
 	wave_type = /datum/migrant_wave/lich
 
 	weight = 6
-	max_occurrences = 1
+	max_occurrences = 0
 
-	earliest_start = 15 MINUTES
+	earliest_start = 180 MINUTES
 
 	tags = list(
 		TAG_HAUNTED,
@@ -15,7 +15,8 @@
 
 /datum/migrant_wave/lich
 	name = "Wandering Lich"
-	roles = list(
+	track = MIGRANT_TRACK_EVENT
+	required_roles = list(
 		/datum/migrant_role/lich = 1,
 	)
 	can_roll = FALSE

@@ -1,0 +1,5 @@
+author: "zoktiik"
+delete-after: True
+changes:
+  - bugfix: "Being \"buckled\" to structures (sitting down in a chair, lying on a bed) no longer blocks spellcasting on its own. It also now respects spells that don't require a gesture component to cast. Now, you have to specifically be restrained, or buckled to a structure that restrains you (i.e. the rack, pillory, etc), or caught in a trap that you need to resist out of, for any of that to block gestural casting."
+  - rscadd: "Mounted casting has been opened up to anything you can \"ride\" (carried/piggyback on a human mob, riding a dinghy). However, these also require that you (and your \"mount\") stay still for 2 seconds before you can cast."

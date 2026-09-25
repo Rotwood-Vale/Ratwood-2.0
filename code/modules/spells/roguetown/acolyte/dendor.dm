@@ -899,7 +899,7 @@
 		D.ai_controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
 	// For old-style AI mobs, clear the enemies list, lose current target, and set
 	// non-aggressive so the dryad doesn't re-acquire an enemy mid-transit.
-	D.enemies = list()
+	D.clear_enemies()
 	D.target = null
 	D.LoseTarget()
 	D.aggressive = FALSE
@@ -951,7 +951,7 @@
 	switch(order_type)
 		if("goto")
 			D.follow_target = null
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.guard_turf = target_location
@@ -961,7 +961,7 @@
 				D.faction -= "neutral"
 			to_chat(caster, span_notice("[D.name] moves to guard that position."))
 		if("follow")
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.lastattacker_weakref = null
@@ -996,7 +996,7 @@
 			else
 				D.follow_target = caster
 				D.guard_turf = null
-				D.enemies = list()
+				D.clear_enemies()
 				D.target = null
 				D.LoseTarget()
 				D.lastattacker_weakref = null
@@ -1008,7 +1008,7 @@
 		if("aggressive")
 			// Clicking an ally — send dryad to their tile as a guard position.
 			D.follow_target = null
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.guard_turf = get_turf(target)
