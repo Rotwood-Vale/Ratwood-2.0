@@ -137,11 +137,10 @@
 		if(target.mob_biotypes & MOB_UNDEAD)
 			if(ishuman(target)) //BLEED AND PAIN
 				var/mob/living/carbon/human/human_target = target
-				var/datum/physiology/phy = human_target.physiology
-				phy.bleed_mod *= 1.5
-				phy.pain_mod *= 1.5
-				addtimer(VARSET_CALLBACK(phy, bleed_mod, phy.bleed_mod /= 1.5), 19 SECONDS)
-				addtimer(VARSET_CALLBACK(phy, pain_mod, phy.pain_mod /= 1.5), 19 SECONDS)
+				human_target.adjust_bleed_mod(1.5)
+				human_target.adjust_pain_mod(1.5)
+				addtimer(CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon/human, adjust_bleed_mod), 1 / 1.5), 19 SECONDS)
+				addtimer(CALLBACK(human_target, TYPE_PROC_REF(/mob/living/carbon/human, adjust_pain_mod), 1 / 1.5), 19 SECONDS)
 				human_target.visible_message(span_danger("[target]'s wounds become inflammed as their vitality is sapped away!"), span_userdanger("Ravox inflammes my wounds and weakens my body!"))
 				return ..()
 			return FALSE
@@ -158,13 +157,13 @@
 			var/obj/item/bodypart/affecting = C.get_bodypart(check_zone(user.zone_selected))
 			if(affecting)
 				for(var/datum/wound/bleeder in affecting.wounds)
-					bleeder.woundpain = max(bleeder.sewn_woundpain, bleeder.woundpain * 0.25)
+					bleeder.set_woundpain(max(bleeder.sewn_woundpain, bleeder.woundpain * 0.25))
 					if(!isnull(bleeder.clotting_threshold) && bleeder.bleed_rate > bleeder.clotting_threshold)
 						var/difference = bleeder.bleed_rate - bleeder.clotting_threshold
 						bleeder.set_bleed_rate(max(bleeder.clotting_threshold, bleeder.bleed_rate - difference * situational_bonus))
 		else if(HAS_TRAIT(target, TRAIT_SIMPLE_WOUNDS))
 			for(var/datum/wound/bleeder in target.simple_wounds)
-				bleeder.woundpain = max(bleeder.sewn_woundpain, bleeder.woundpain * 0.25)
+				bleeder.set_woundpain(max(bleeder.sewn_woundpain, bleeder.woundpain * 0.25))
 				if(!isnull(bleeder.clotting_threshold) && bleeder.bleed_rate > bleeder.clotting_threshold)
 					var/difference = bleeder.bleed_rate - bleeder.clotting_threshold
 					bleeder.set_bleed_rate(max(bleeder.clotting_threshold, bleeder.bleed_rate - difference * situational_bonus))

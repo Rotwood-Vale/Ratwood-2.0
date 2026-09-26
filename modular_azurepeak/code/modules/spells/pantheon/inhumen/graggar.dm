@@ -140,13 +140,11 @@
 		revert_cast()
 		return FALSE
 
-	var/datum/physiology/phy = human.physiology
+	human.adjust_bleed_mod(1.5)
+	human.adjust_pain_mod(1.5)
 
-	phy.bleed_mod *= 1.5
-	phy.pain_mod *= 1.5
-
-	addtimer(VARSET_CALLBACK(phy, bleed_mod, phy.bleed_mod /= 1.5), 25 SECONDS)
-	addtimer(VARSET_CALLBACK(phy, pain_mod, phy.pain_mod /= 1.5), 15 SECONDS)
+	addtimer(CALLBACK(human, TYPE_PROC_REF(/mob/living/carbon/human, adjust_bleed_mod), 1 / 1.5), 25 SECONDS)
+	addtimer(CALLBACK(human, TYPE_PROC_REF(/mob/living/carbon/human, adjust_pain_mod), 1 / 1.5), 15 SECONDS)
 
 	human.visible_message(span_danger("[human]'s wounds become inflammed as their vitality is sapped away!"))
 	to_chat(human, span_warning("My skins feels like pins and needles, as if something were ripping and tearing at me!"))

@@ -2344,6 +2344,11 @@
 	var/mob/user = usr
 	user << browse(null, "window=reading")
 
+/atom/movable/screen/read/Destroy()
+	textright = null
+	textleft = null
+	return ..()
+
 /atom/movable/screen/read/proc/destroy_read()
 	if(textright)
 		textright.alpha = 0

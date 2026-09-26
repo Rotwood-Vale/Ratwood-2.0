@@ -28,3 +28,10 @@
 
 /datum/physiology/New()
 	armor = new
+
+/mob/living/carbon/human/proc/adjust_pain_mod(multiplier)
+	physiology.pain_mod *= multiplier
+	mark_pain_hud_dirty()
+
+/mob/living/carbon/human/proc/adjust_bleed_mod(multiplier)
+	physiology.bleed_mod *= multiplier
