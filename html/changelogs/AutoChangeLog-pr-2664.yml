@@ -1,0 +1,4 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - rscadd: "Orison and Miracle now grant a glow based on the caster's selected patron"
