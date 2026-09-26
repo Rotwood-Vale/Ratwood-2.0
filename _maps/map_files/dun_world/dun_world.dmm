@@ -30303,14 +30303,6 @@
 /obj/structure/flora/hotspring_rocks,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave/his_vault)
-"fGO" = (
-/obj/structure/fluff/customsign{
-	pixel_y = 24;
-	icon_state = "signwrote";
-	name = "CIty Watchhouse ->"
-	},
-/turf/open/floor/rogue/cobble,
-/area/rogue/outdoors/town)
 "fGP" = (
 /obj/machinery/light/rogue/candle/r,
 /turf/open/floor/rogue/naturalstone,
@@ -80381,6 +80373,7 @@
 /area/rogue/under/cave/dungeon1/gethsmane/inner)
 "oLI" = (
 /obj/effect/decal/cobbleedge,
+/obj/structure/roguemachine/rosewall,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town)
 "oLP" = (
@@ -324761,7 +324754,7 @@ rgz
 rgz
 rgz
 mPk
-fGO
+sns
 qfA
 jui
 jWw
