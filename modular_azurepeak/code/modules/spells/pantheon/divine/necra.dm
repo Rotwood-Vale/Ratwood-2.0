@@ -92,7 +92,6 @@
 
 	var/too_powerful = FALSE
 	var/list/things_to_churn = list()
-	var/list/things_to_stun = list()
 	for (var/mob/living/L in targets)
 		var/is_vampire = FALSE
 		var/is_zombie = FALSE
@@ -104,7 +103,6 @@
 				is_vampire = TRUE
 			if (L.mind.has_antag_datum(/datum/antagonist/zombie))
 				is_zombie = TRUE
-				things_to_stun += L
 			if (L.mind.special_role == "Vampire Lord")
 				too_powerful = L
 				user.visible_message(span_warning("[user] suddenly pales before an unseen presence, and gasps!"), span_warning("The sound of rushing blood fills my ears and mind, drowning out my abrogation!"))
@@ -117,11 +115,6 @@
 			user.visible_message(span_warning("A frigid blue glower suddenly erupts in [user]'s eyes as a whispered prayer summons forth a winding veil of ghostly mists!"), span_notice("I perform the sacred rite of Abrogation, bringing forth Her servants to harry and weaken the unliving!"))
 			for(var/mob/living/thing in things_to_churn)
 				thing.apply_status_effect(/datum/status_effect/churned, user, debuff_power)
-		if(LAZYLEN(things_to_stun))
-			for(var/mob/living/thing in things_to_churn)
-				thing.Stun(100)
-				thing.Knockdown(50)
-				thing.emote("scream")
 		if(!LAZYLEN(things_to_churn))
 			to_chat(user, span_notice("The rite of Abrogation passes from my lips in silence, having found nothing to assail."))
 			return
@@ -135,54 +128,110 @@
 	desc = "The magicks that bind me into being are being disrupted! I should get away from the source as soon as I can!"
 	icon_state = "stressvb"
 
+/atom/movable/screen/alert/status_effect/churned_weak
+	name = "Disrupted Essence"
+	desc = "The ghostly mists are beginning to weaken my body."
+	icon_state = "stressvb"
+
+/atom/movable/screen/alert/status_effect/churned_strong
+	name = "Churning Essence"
+	desc = "The ghostly mists are violently disrupting my body!"
+	icon_state = "stressvb"
+
 /datum/status_effect/churned
 	id = "necra_churned"
 	alert_type = /atom/movable/screen/alert/status_effect/churned
-	duration = 30 SECONDS
+	duration = 45 SECONDS
 	examine_text = "<b>SUBJECTPRONOUN is wreathed in a wild frenzy of ghostly motes!</b>"
-	effectedstats = list(STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_WIL = -2, STATKEY_SPD = -2)
 	status_type = STATUS_EFFECT_REFRESH
 	var/datum/weakref/debuffer
 	var/outline_colour = "#33cabc"
 	var/base_tick = 0.2
 	var/intensity = 1
 	var/range = 10
+	var/start_time
+	var/debuff_stage = 0
 
 /datum/status_effect/churned/on_creation(mob/living/new_owner, mob/living/caster, potency)
 	intensity = potency
+	start_time = world.time
 	if (caster)
 		debuffer = WEAKREF(caster)
 	return ..()
 
 /datum/status_effect/churned/on_apply()
 	var/filter = owner.get_filter(CHURN_FILTER)
-	to_chat(owner, span_warning("Wisps leap from the cloying mists to surround me, their chill disrupting my body! FLEE!"))
+	to_chat(owner, span_warning("Wisps leap from the cloying mists to surround me! I should get away before they begin disrupting my body!"))
 	if (!filter)
 		owner.add_filter(CHURN_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
 	return TRUE
 
 /datum/status_effect/churned/refresh()
 	. = ..()
-	intensity += 1
-	to_chat(owner, span_boldwarning("The mists intensify, the glowing wisps steadily disrupting my body..."))
+	to_chat(owner, span_boldwarning("The ghostly mists continue to cling to me!"))
 
 /datum/status_effect/churned/process()
 	. = ..()
 	if (!owner)
 		return
-	if (prob(33))
-		owner.adjustFireLoss(base_tick * intensity)
+
+	var/mob/living/our_debuffer = debuffer.resolve()
+	if (!our_debuffer)
+		qdel(src)
+		return
+
+	if (get_dist(our_debuffer, owner) > range)
+		to_chat(owner, span_notice("I've escaped the cloying mists!"))
+		qdel(src)
+		return
+
+	var/time_inside = world.time - start_time
+
+	if (time_inside < 15 SECONDS)
+		return
+
+	if (time_inside < 30 SECONDS)
+		if (debuff_stage != 1)
+			owner.remove_status_effect(/datum/status_effect/churned_debuff/strong)
+			owner.apply_status_effect(/datum/status_effect/churned_debuff/weak)
+			debuff_stage = 1
+			to_chat(owner, span_warning("The mists begin to sap my strength!"))
+
+		if (prob(33))
+			owner.adjustFireLoss(base_tick * intensity)
+
+	else
+		if (debuff_stage != 2)
+			owner.remove_status_effect(/datum/status_effect/churned_debuff/weak)
+			owner.apply_status_effect(/datum/status_effect/churned_debuff/strong)
+			debuff_stage = 2
+			to_chat(owner, span_boldwarning("The mists overwhelm my form, violently disrupting my body!"))
+
+		if (prob(33))
+			owner.adjustFireLoss(base_tick * (intensity + 1))
+
 	if (prob(10))
 		to_chat(owner, span_warning("A frenzy of ghostly motes assail my form!"))
 		owner.emote("scream")
 
-	var/mob/living/our_debuffer = debuffer.resolve()
-	if (get_dist(our_debuffer, owner) > range)
-		to_chat(owner, span_notice("I've escaped the cloying mists!"))
-		qdel(src)
-
 /datum/status_effect/churned/on_remove()
 	owner.remove_filter(CHURN_FILTER)
+	owner.remove_status_effect(/datum/status_effect/churned_debuff/weak)
+	owner.remove_status_effect(/datum/status_effect/churned_debuff/strong)
+
+/datum/status_effect/churned_debuff
+	duration = -1
+	status_type = STATUS_EFFECT_REFRESH
+
+/datum/status_effect/churned_debuff/weak
+	id = "necra_churned_debuff_weak"
+	alert_type = /atom/movable/screen/alert/status_effect/churned_weak
+	effectedstats = list(STATKEY_STR = -1, STATKEY_CON = -1, STATKEY_WIL = -1, STATKEY_SPD = -1)
+
+/datum/status_effect/churned_debuff/strong
+	id = "necra_churned_debuff_strong"
+	alert_type = /atom/movable/screen/alert/status_effect/churned_strong
+	effectedstats = list(STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_WIL = -2, STATKEY_SPD = -2)
 
 #undef CHURN_FILTER
 
@@ -238,7 +287,7 @@
 	var/outline_colour ="#929186" // A dull grey.
 	id = "necravow"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/necras_vow
-	effectedstats = list(STATKEY_CON = 2)
+	effectedstats = list(STATKEY_CON = 3)
 	duration = -1
 
 /datum/status_effect/buff/necras_vow/on_apply()
@@ -247,6 +296,7 @@
 	if (!filter)
 		owner.add_filter(NECRAVOW_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
 	ADD_TRAIT(owner, TRAIT_NECRAS_VOW, TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, TRAIT_MIRACLE)
 	owner.rot_type = null
 	to_chat(owner, span_warning("My limbs feel more alive than ever... I feel whole..."))
 
