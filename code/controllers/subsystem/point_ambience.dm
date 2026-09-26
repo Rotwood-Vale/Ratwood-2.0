@@ -719,6 +719,10 @@ SUBSYSTEM_DEF(point_ambience)
 	standing_hoist = SSpoint_ambience.standing_hoist
 	clip_coalesce_window = SSpoint_ambience.clip_coalesce_window
 	cross_floor = SSpoint_ambience.cross_floor
+	door_mode = SSpoint_ambience.door_mode
+	door_recheck = SSpoint_ambience.door_recheck
+	door_recheck_period = SSpoint_ambience.door_recheck_period
+	door_recheck_filter = SSpoint_ambience.door_recheck_filter
 	send_cutoff = SSpoint_ambience.send_cutoff
 	falloff_hardness = SSpoint_ambience.falloff_hardness
 	pan_depth_floor = SSpoint_ambience.pan_depth_floor
