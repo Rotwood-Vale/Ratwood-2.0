@@ -229,6 +229,22 @@
 			return
 	jiggle_timerid = addtimer(CALLBACK(src, PROC_REF(jiggle_cycle)), BREAST_JIGGLE_CYCLE, TIMER_STOPPABLE)
 
+/obj/item/organ/breasts/proc/thrust_jiggle_on()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	if(H.stat != CONSCIOUS || H.cmode || H.doing)
+		return
+	if(is_jiggling)
+		return
+	is_jiggling = TRUE
+	H.update_body_parts(TRUE)
+	refresh_viewers(H)
+
+/obj/item/organ/breasts/proc/thrust_jiggle_off()
+	stop_jiggle()
+	refresh_viewers(owner)
+
 /obj/item/organ/breasts/proc/stop_jiggle()
 	if(jiggle_timerid)
 		deltimer(jiggle_timerid)
