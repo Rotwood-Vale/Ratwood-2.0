@@ -261,9 +261,27 @@
 	. = ..()
 
 	// spawnwithmagazine = FALSE makes ballistic guns start locked.
-	// The Hei Long Pao should be ready to accept and chamber a canister.
+	// the Hei Long Pao should be ready to accept and chamber a canister.
 	bolt_locked = FALSE
 	update_icon()
+
+
+/obj/item/gun/ballistic/timesoldier_fire_wep/insert_magazine(mob/user, obj/item/ammo_box/magazine/AM, display_message = TRUE)
+	. = ..()
+
+	if(!.)
+		return FALSE
+
+	// Hei Long Pao handles its canister charges manually.
+	// don't depend on the generic open-bolt state remaining correct.
+	bolt_locked = FALSE
+
+	if(!chambered?.BB && magazine?.ammo_count(FALSE))
+		chambered = magazine.get_round(TRUE)
+
+	update_icon()
+
+	return TRUE
 
 
 /obj/item/gun/ballistic/timesoldier_fire_wep/getonmobprop(tag)
@@ -325,6 +343,11 @@
 /obj/item/gun/ballistic/timesoldier_fire_wep/can_shoot()
 	if(!wielded)
 		return FALSE
+
+	// recover if the generic ballistic machinery somehow left us
+	// with a loaded canister but no chambered lava charge.
+	if(!chambered?.BB && magazine?.ammo_count(FALSE))
+		chambered = magazine.get_round(TRUE)
 
 	return !!chambered?.BB
 

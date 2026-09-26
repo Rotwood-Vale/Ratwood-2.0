@@ -190,7 +190,7 @@
 
 	// anyone directly on top of the grenade is uhhhhh....probably fucked.
 	for(var/mob/living/L in T)
-		timesoldier_pointblank_shrapnel(L, src, 8)
+		timesoldier_pointblank_shrapnel(L, src, 16)
 
 	// send the rest of the fragments out into the surrounding area.
 	timesoldier_shrapnel_burst(src, 6)
