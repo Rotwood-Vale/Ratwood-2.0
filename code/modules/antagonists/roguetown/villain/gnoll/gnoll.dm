@@ -190,9 +190,10 @@
 /obj/item/rogueweapon/werewolf_claw/gnoll
 	name = "Gnoll Claw"
 	// We are smarter, we can use our solid, steel-like claws to defend ourselves.
-	wdefense = 5
-	force = 30
+	wdefense = 6
+	force = 27
 	possible_item_intents = list(/datum/intent/simple/gnoll_cut, /datum/intent/simple/werewolf/gnoll, /datum/intent/mace/smash/werewolf/gnoll, /datum/intent/mace/strike/gnoll)
+	special = /datum/special_intent/shin_swipe
 
 /obj/item/rogueweapon/werewolf_claw/gnoll/right
 	icon_state = "claw_r"
@@ -209,29 +210,32 @@
 	attack_verb = list("claws", "mauls", "eviscerates")
 	animname = "chop"
 	hitsound = "genslash"
-	penfactor = 20
+	penfactor = 50//same as militia chop
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"
-	damfactor = 1.2
+	damfactor = 1.5
+	chargetime = 0.5
+	swingdelay = 0
+	clickcd = CLICK_CD_CHARGED
 
 /datum/intent/mace/smash/werewolf/gnoll
 	name = "thrash"
 	desc = "A powerful smash of savage muscle that deals normal damage, but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 15 (1 - 5 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance."
 	icon_state = "insmash"
 	chargetime = 1
-	penfactor = 0
+	penfactor = BLUNT_DEFAULT_PENFACTOR
 
 /datum/intent/simple/gnoll_cut
 	name = "cutting claw"
 	hitsound = "genslash"
-	penfactor = 60
+	penfactor = 30
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	icon_state = "incut"
 	attack_verb = list("cuts", "slashes")
 	animname = "cut"
-	blade_class = BCLASS_CUT
+	blade_class = BCLASS_CHOP
 	item_d_type = "slash"
 
 /datum/intent/mace/strike/gnoll
@@ -239,7 +243,6 @@
 	miss_text = "strikes the air!"
 	miss_sound = "bluntwooshlarge"
 	attack_verb = list("punches", "strikes", "tears")
-
 
 /obj/item/storage/backpack/rogue/satchel/gnoll 
 	name = "stained satchel"
