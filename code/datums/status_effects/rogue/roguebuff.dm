@@ -1902,7 +1902,8 @@
 
 /datum/status_effect/buff/clash/on_remove()
 	. = ..()
-	owner.apply_status_effect(/datum/status_effect/debuff/clashcd)
+	var/newcd = 30 SECONDS - owner.get_tempo_bonus(TEMPO_TAG_RCLICK_CD_BONUS)
+	owner.apply_status_effect(/datum/status_effect/debuff/clashcd, newcd)
 	if(expired_naturally)
 		owner.balloon_alert_to_viewers("<font color = '#ffffff'>Guard expired!</font>")
 	UnregisterSignal(owner, COMSIG_ATOM_BULLET_ACT)
