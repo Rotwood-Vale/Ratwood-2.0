@@ -21,6 +21,7 @@
 	grid_height = 64
 	special = /datum/special_intent/whip_coil
 	wbalance = WBALANCE_SWIFT
+	weak_wound_coeff = 0.15
 
 /obj/item/rogueweapon/whip/getonmobprop(tag)
 	. = ..()
