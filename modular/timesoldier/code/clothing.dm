@@ -65,3 +65,32 @@
 	mob_overlay_icon = 'modular/timesoldier/sprites/clothing/onmob.dmi'
 	icon_state = "EB_boots_wrapped"
 	item_state = "EB_boots_wrapped"
+
+
+// ARSONIST
+
+/obj/item/clothing/head/roguetown/helmet/leather/timesoldier_arsonist
+	name = "arsonist hood"
+	desc = "A hardened leather hood reinforced for heat and abuse. It fully encloses the head and face, making its wearer look more like a demon than a man."
+	icon = 'modular/timesoldier/sprites/gear.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/gear.dmi'
+	icon_state = "arsonist"
+	item_state = "arsonist"
+
+	// slightly tougher than a regular hardened leather helmet.
+	max_integrity = 175
+
+	// full head + face coverage, replacing the need for a separate mask.
+	body_parts_covered = HEAD|HAIR|EARS|NOSE|MOUTH|EYES
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEMASK|HIDESNOUT
+
+/obj/item/clothing/suit/roguetown/armor/leather/studded/timesoldier_arsonist
+	name = "arsonist coat"
+	desc = "A studded leather coat made for a battlefield pyromaniac; hard-wearing, practical, and built to survive sparks and struggle."
+	icon = 'modular/timesoldier/sprites/gear.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/gear.dmi'
+	icon_state = "arsoncoat"
+	item_state = "arsoncoat"
+
+	// slightly tougher than the base studded leather parent.
+	max_integrity = 250

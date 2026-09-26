@@ -17,7 +17,7 @@
 // ========TEMPERANCE===========
 
 /datum/outfit/timesoldier/temperance
-	name = "Time Soldier - Temperance"
+	name = "Time Soldier - Marksman"
 
 	// clothing
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/timesoldier/temperance/eb_armor
@@ -55,7 +55,6 @@
 
 		/obj/item/quiver/bullet/brutals = 2,
 
-		/obj/item/timesoldier/radio = 1,
 		/obj/item/flashlight/flare/torch/lantern = 1,
 
 		/obj/item/reagent_containers/food/snacks/rogue/timesoldier/ferenchow = 4,
@@ -96,9 +95,9 @@
 	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
 	// fieldwork
-	H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_JOURNEYMAN, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_EXPERT, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_EXPERT, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/tracking, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
 	// education / technical training
@@ -141,3 +140,54 @@
 	apply_timesoldier_temperance_stats(H)
 	apply_timesoldier_temperance_skills(H)
 	apply_timesoldier_temperance_traits(H)
+
+
+
+
+// ARSONIST
+
+/datum/outfit/timesoldier/arsonist
+	name = "Time Soldier - Arsonist"
+
+	// clothing
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/timesoldier/arsoncoat
+
+	head = /obj/item/clothing/head/roguetown/helmet/leather/timesoldier/arsonist
+
+	// same general field gear as Temperance
+	shoes = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded/timesoldier/temperance/boots
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	belt = /obj/item/storage/belt/rogue/leather
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+	gloves = /obj/item/clothing/gloves/roguetown/angle
+
+	// main stuff
+	backl = /obj/item/storage/backpack/rogue/backpack/timesoldier
+	backr = /obj/item/gun/ballistic/timesoldier_fire_wep
+
+	beltr = /obj/item/storage/backpack/rogue/satchel/short/timesoldier_ifak
+
+	neck = /obj/item/reagent_containers/glass/bottle/waterskin/timesoldier
+
+	// same expeditionary kit, but with Hei Long Pao canisters
+	// instead of KZ-41 ammunition.
+	backpack_contents = list(
+		/obj/item/storage/belt/rogue/surgery_bag/full = 1,
+
+		/obj/item/tent_kit/ger = 1,
+		/obj/item/rogueweapon/shovel/small = 1,
+		/obj/item/rogueweapon/mace/warhammer/steel = 1,
+
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri = 1,
+
+		/obj/item/ammo_box/magazine/timesoldier_fire = 3,
+
+		/obj/item/flashlight/flare/torch/lantern = 1,
+
+		/obj/item/reagent_containers/food/snacks/rogue/timesoldier/ferenchow = 4,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/coppiette = 2,
+
+		/obj/item/natural/bundle/cloth/bandage/full = 2,
+		/obj/item/needle = 1
+	)

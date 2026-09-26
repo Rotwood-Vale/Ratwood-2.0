@@ -50,7 +50,7 @@
 /obj/item/gun/ballistic/heavysniper/update_icon()
 	..()
 	if(bolt_open)
-		icon_state = "kz41_open"
+		icon_state = "kz41_o"
 	else
 		icon_state = "kz41"
 
