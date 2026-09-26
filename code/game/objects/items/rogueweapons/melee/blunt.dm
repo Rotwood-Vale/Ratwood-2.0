@@ -879,3 +879,18 @@
 	blade_class = BCLASS_PIERCE//TEAR CHUNKS OFF OF THEM. THROW IT ACROSS THE ROOM.
 	hitsound = list('sound/combat/hits/bladed/genthrust (1).ogg', 'sound/combat/hits/bladed/genthrust (2).ogg')
 	icon_state = "intear"
+
+/obj/item/rogueweapon/mace/goden/steel/tetsubo
+	name = "tetsubo"
+	desc = "A heavier variant of the kanabo, fitted with a steel sleeve bearing menacing spikes and favored by Ogrun Warlords. Requires immense strength to use, but hits like a raging bull."
+	icon_state = "tetsubo"
+	force = 20
+	force_wielded = 40
+	possible_item_intents = list(/datum/intent/mace/strike/goden)
+	gripped_intents = list(/datum/intent/mace/strike/goden, /datum/intent/mace/smash/goden, /datum/intent/effect/daze)
+	sharpness = IS_SHARP
+	icon = 'icons/roguetown/weapons/64.dmi'
+	minstr = 15
+	slot_flags = ITEM_SLOT_BACK
+	special = /datum/special_intent/ground_smash_heavy
+
