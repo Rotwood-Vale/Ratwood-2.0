@@ -57,8 +57,7 @@
 
 		/obj/item/flashlight/flare/torch/lantern = 1,
 
-		/obj/item/reagent_containers/food/snacks/rogue/timesoldier/ferenchow = 4,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/coppiette = 2,
+		/obj/item/reagent_containers/food/snacks/rogue/timesoldier/ferenchow = 6,
 
 		/obj/item/natural/bundle/cloth/bandage/full = 2,
 		/obj/item/needle = 1
@@ -186,8 +185,7 @@
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/timesoldier/grenade/stick = 3,
 
-		/obj/item/reagent_containers/food/snacks/rogue/timesoldier/ferenchow = 4,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/coppiette = 2,
+		/obj/item/reagent_containers/food/snacks/rogue/timesoldier/ferenchow = 6,
 
 		/obj/item/natural/bundle/cloth/bandage/full = 2,
 		/obj/item/needle = 1

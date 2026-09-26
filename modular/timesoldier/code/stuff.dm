@@ -14,7 +14,7 @@
 	tastes = list("salt" = 2, "meat stew" = 2, "home" = 1)
 	foodtype = MEAT | GRAIN
 	faretype = FARE_POOR
-	bitesize = 4
+	bitesize = 5
 	trash = /obj/item/trash/timesoldier/ferenchow
 	drop_sound = 'modular/timesoldier/sounds/candrop.ogg'
 	var/opened = FALSE
