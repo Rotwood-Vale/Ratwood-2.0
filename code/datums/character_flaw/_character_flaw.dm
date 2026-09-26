@@ -256,30 +256,163 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/clingy
 	name = "Clingy"
-	desc = "I like being around people, it's just so lively..."
-	point_value = 0 // Most popular flaw and it's barely considered one. No points for being wholly inconsequential.
-	var/last_check = 0
+	desc = "I am attached to my preferred person. If I am ever too far from them, I get very panicky."
+	point_value = 1
+	/// The person we have marked. If they are ever gone we can establish a new mark
+	var/datum/weakref/special_person
+	/// Grace period, allowing us to spend *some* time away from our person without having a breakdown
+	COOLDOWN_DECLARE(lost_person)
+	/// How long before our stress worsens
+	COOLDOWN_DECLARE(effect_scaling)
+	/// List of people that have denied us clinging to them, prevents us from trying to cling onto them again
+	var/list/denied_cling = list()
 
 /datum/charflaw/clingy/flaw_on_life(mob/user)
 	. = ..()
-	if(world.time < last_check + 10 SECONDS)
+	// So our person is either gone, or not set, so let's start our grace period before we start losing our shit
+	if(isnull(special_person))
+		user.client.verbs |= /client/proc/declare_clingy_person
+		if(!COOLDOWN_STARTED(src, lost_person))
+			COOLDOWN_START(src, lost_person, 10 MINUTES) // Enough time for you to spawn in, grab your shit, mark your person
+			to_chat(user, span_warning("I need to find someone to cling to before I start to panic. (Choose preferred person in IC tab)"))
+		else if(COOLDOWN_FINISHED(src, lost_person))
+			autistic_meltdown(user)
 		return
-	if(!user)
+
+	var/mob/favorite = special_person.resolve()
+	if(!istype(favorite))
+		user.client.verbs |= /client/proc/declare_clingy_person
+		// So we set our mark, but they are gone? They either despawned or shenanigans ensued.
+		if(!COOLDOWN_STARTED(src, lost_person))
+			COOLDOWN_START(src, lost_person, 5 MINUTES) // Enough time for you to realize you need to find a new person to cling to
+			to_chat(user, span_warning("I need to find myself a new person to comfort me before things become worse. (Choose preferred person in IC tab)"))
+		else if(COOLDOWN_FINISHED(src, lost_person))
+			autistic_meltdown(user)
 		return
-	last_check = world.time
-	var/cnt = 0
-	for(var/mob/living/carbon/human/L in hearers(7, user))
-		if(L == user)
+
+	// At this point, we have a mark and we no longer need to check if they exist.
+	if(get_dist(user, favorite) <= 10)
+		COOLDOWN_RESET(src, lost_person)
+		soothe_meltdown(user)
+		return // All good here, free to chill out
+
+	// Okay, don't panic, we've lost our person. But it's ok because we can find them again quickly... Right?
+	if(!COOLDOWN_STARTED(src, lost_person))
+		COOLDOWN_START(src, lost_person, 3 MINUTES)
+		return
+
+	// Okay we've lost our person... PANIC!!!
+	if(COOLDOWN_FINISHED(src, lost_person))
+		autistic_meltdown(user)
+
+/datum/charflaw/clingy/proc/autistic_meltdown(mob/user)
+	if(!COOLDOWN_FINISHED(src, effect_scaling))
+		return
+	user.remove_stress(/datum/stressevent/comfort_person_neaby)
+	var/datum/stressevent/missing_person/stress_event = user.get_stress_event(/datum/stressevent/missing_person)
+	if(!stress_event)
+		stress_event = user.add_stress(/datum/stressevent/missing_person)
+	stress_event.stressadd = min(5, stress_event.stressadd + 1) // Capped to 5 stress
+	user.update_stress()
+	COOLDOWN_START(src, effect_scaling, 2 MINUTES)
+
+/datum/charflaw/clingy/proc/soothe_meltdown(mob/user)
+	user.remove_stress(/datum/stressevent/missing_person)
+	user.add_stress(/datum/stressevent/comfort_person_neaby)
+
+/datum/charflaw/clingy/on_mob_creation(mob/user)
+	. = ..()
+	user?.client?.verbs |= /client/proc/declare_clingy_person
+
+/datum/charflaw/clingy/Topic(href, href_list)
+	. = ..()
+	if(href_list["deny_cling"])
+		dont_cling(href_list["deny_cling"], href_list["clingy_person"])
+
+/// Takes 2 REFs. A user, and a clingy person. Blacklists the clingy person from being able to cling to the user and handles the vice
+/datum/charflaw/clingy/proc/dont_cling(mob/user, mob/clingy_person)
+	// This handles REFs because we pass the user and person via an HREF
+	user = locate(user)
+	clingy_person = locate(clingy_person)
+	if(!istype(user) || !istype(clingy_person))
+		CRASH("dont_cling() was called when either user or clingy_person was not a REF. Or possibly an HREF exploit")
+	if(locate(user.ckey) in denied_cling)
+		return
+	denied_cling |= user.ckey
+	special_person = null
+	log_admin("[key_name(clingy_person)] no longer clings on to [key_name(user)]. This means they were either denied right away, or removed later.")
+	to_chat(user, span_notice("[clingy_person.real_name], will no longer cling to me"))
+	to_chat(clingy_person, span_danger("[user.real_name] has rejected me! I will need to find someone else to cling to."))
+
+/client/proc/declare_clingy_person()
+	set name = "Choose preferred person"
+	set category = "IC"
+
+	var/mob/clingy_person = src.mob
+	if(!istype(clingy_person))
+		return
+	var/datum/charflaw/clingy/clingy_flaw = clingy_person.get_flaw(/datum/charflaw/clingy)
+	if(isnull(clingy_flaw))
+		verbs -= /client/proc/declare_clingy_person // If you aren't clingy how are you using this??
+		return
+
+	var/list/potential_list = list()
+	for(var/mob/living/carbon/human/person in hearers(7, clingy_person))
+		if(person.ckey in clingy_flaw.denied_cling) // If we have been denied from clinging to someone we can't re-add them
 			continue
-		if(L.stat)
+		if(person == clingy_person)
 			continue
-		if(L.dna.species)
-			cnt++
-		if(cnt > 1)
-			break
-	var/mob/living/carbon/P = user
-	if(cnt < 1)
-		P.add_stress(/datum/stressevent/nopeople)
+		potential_list += person
+	if(!length(potential_list))
+		to_chat(clingy_person, span_warning("There's nobody nearby..."))
+		return
+	var/mob/living/carbon/human/selection = tgui_input_list(clingy_person, "Choose your preferred person", "CHOOSE PERSON", potential_list)
+	if(!istype(selection))
+		return
+	clingy_flaw.special_person = WEAKREF(selection)
+	clingy_flaw.soothe_meltdown(clingy_person)
+	selection.client.verbs |= /client/proc/reject_clingy_people
+	to_chat(clingy_person, span_boldnotice("I've selected [selection.real_name] as my preferred person."))
+	to_chat(selection, span_big(span_warn("[clingy_person] has selected me as the person they cling to <a href='byond://?src=[REF(clingy_flaw)];deny_cling=[REF(selection)];clingy_person=[REF(clingy_person)]'>REJECT?</a>")))
+	LAZYADD(selection.list_of_people_who_are_clinging_onto_me, WEAKREF(clingy_person))
+	verbs -= /client/proc/declare_clingy_person
+
+/client/proc/reject_clingy_people()
+	set name = "Reject clingy people"
+	set category = "IC"
+
+	var/mob/living/carbon/human/user = src.mob
+	if(!istype(user))
+		return
+	list_clear_nulls(user.list_of_people_who_are_clinging_onto_me)
+	if(!LAZYLEN(user.list_of_people_who_are_clinging_onto_me))
+		verbs -= /client/proc/reject_clingy_people
+		to_chat(user, span_notice("Nobody is clinging onto me..."))
+		return
+	var/list/clinging_people = list()
+	for(var/datum/weakref/clingy_ref in user.list_of_people_who_are_clinging_onto_me)
+		var/mob/living/carbon/human/clingy_human = clingy_ref.resolve()
+		if(!istype(clingy_human))
+			user.list_of_people_who_are_clinging_onto_me -= clingy_ref
+			continue
+		clinging_people += clingy_human
+		clinging_people[clingy_human] += clingy_ref
+	var/mob/living/carbon/human/selection = tgui_input_list(user, "Choose anyone you wish to reject", "CHOOSE PERSON", clinging_people)
+	if(!istype(selection))
+		return
+	var/confirm = tgui_alert(user, "Reject [selection.name]? THEY WONT BE ABLE TO CLING TO YOU AGAIN.", "Reject clingy person?", list("Yae", "Nae"))
+	if(confirm != "Yae")
+		return
+	// At this point, we've chosen someone to remove from our list.
+	user.list_of_people_who_are_clinging_onto_me -= clinging_people[selection]
+	if(!LAZYLEN(user.list_of_people_who_are_clinging_onto_me))
+		verbs -= /client/proc/reject_clingy_people
+
+	// Now we handle their vice
+	var/datum/charflaw/clingy/clingy_flaw = selection.get_flaw(/datum/charflaw/clingy)
+	if(!istype(clingy_flaw))
+		return
+	clingy_flaw.dont_cling(REF(user), REF(selection))
 
 /datum/charflaw/noeyer
 	name = "Cyclops (R)"
