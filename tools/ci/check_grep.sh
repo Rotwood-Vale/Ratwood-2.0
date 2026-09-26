@@ -182,6 +182,11 @@ if $grep 'balloon_alert\(.*?, ?"[A-Z]' $code_files; then
 	st=1
 fi;
 
+part "blood_volume writes outside set_blood_volume()"
+if ! bash tools/ci/check_blood_volume.sh; then
+	st=1
+fi;
+
 part "update_icon_updates_onmob element usage"
 if $grep 'AddElement\(/datum/element/update_icon_updates_onmob.+ITEM_SLOT_HANDS' $code_files; then
 	echo
