@@ -49,6 +49,12 @@
 
 /obj/item/gun/ballistic/heavysniper/update_icon()
 	..()
+
+	// the generic ballistic code adds magazine overlays.
+	// the KZ-41 doesn't use them, and nonexistent states break
+	// experimental on-mob generation.
+	cut_overlays()
+
 	if(bolt_open)
 		icon_state = "kz41_o"
 	else
@@ -98,71 +104,84 @@
 	return ..()
 
 
-/obj/item/gun/ballistic/heavysniper/getonmobprop(tag) // im just copying the arguebus values. if it works, it works i hope! edit: it worked great.
+/obj/item/gun/ballistic/heavysniper/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
 			if("gen")
 				return list(
 					"shrink" = 0.8,
-					"sx" = -7, "sy" = 6,
-					"nx" = 7,  "ny" = 6,
-					"wx" = -2, "wy" = 3,
-					"ex" = 1,  "ey" = 3,
+
+					"sx" = 0,  "sy" = -1,
+					"nx" = 0,  "ny" = 0,
+					"wx" = -6, "wy" = 0,
+					"ex" = 1,  "ey" = 0,
+
 					"northabove" = 0,
 					"southabove" = 1,
 					"eastabove" = 1,
 					"westabove" = 0,
-					"nturn" = -43,
-					"sturn" = 43,
-					"wturn" = 30,
-					"eturn" = -30,
+
+					"nturn" = 0,
+					"sturn" = 0,
+					"wturn" = 0,
+					"eturn" = 0,
+
 					"nflip" = 0,
 					"sflip" = 8,
 					"wflip" = 8,
 					"eflip" = 0
 				)
+
 			if("wielded")
 				return list(
 					"shrink" = 0.8,
-					"sx" = 5,  "sy" = -2,
+
+					"sx" = 0,  "sy" = 1,
 					"nx" = -5, "ny" = -1,
-					"wx" = -8, "wy" = 2,
-					"ex" = 8,  "ey" = 2,
+					"wx" = -9, "wy" = 4,
+					"ex" = 8,  "ey" = 4,
+
 					"northabove" = 0,
 					"southabove" = 1,
 					"eastabove" = 1,
 					"westabove" = 1,
+
 					"nturn" = -45,
 					"sturn" = 45,
 					"wturn" = 0,
 					"eturn" = 0,
+
 					"nflip" = 8,
 					"sflip" = 0,
 					"wflip" = 8,
 					"eflip" = 0
 				)
+
 			if("onback")
 				return list(
 					"shrink" = 0.8,
-					"sx" = -1, "sy" = 0,
-					"nx" = 1,  "ny" = 0,
+
+					"sx" = -4, "sy" = 2,
+					"nx" = 8,  "ny" = 2,
 					"wx" = 0,  "wy" = 0,
-					"ex" = 0,  "ey" = 0,
+					"ex" = -4, "ey" = 1,
+
 					"northabove" = 0,
 					"southabove" = 1,
 					"eastabove" = 1,
 					"westabove" = 0,
-					"nturn" = 0,
-					"sturn" = 0,
+
+					"nturn" = -85,
+					"sturn" = -85,
 					"wturn" = 90,
 					"eturn" = -90,
+
 					"nflip" = 0,
 					"sflip" = 0,
 					"wflip" = 0,
 					"eflip" = 0
 				)
-
 
 // looking at how temperance 13 does it.
 /obj/item/gun/ballistic/heavysniper/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
