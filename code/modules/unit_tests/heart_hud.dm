@@ -50,17 +50,71 @@
 	TEST_ASSERT(subject.get_blood_volume() < BLOOD_VOLUME_NORMAL, "Healing toxins on a TRAIT_TOXINLOVER mob did not drain blood.")
 	TEST_ASSERT_EQUAL(notifications, 1, "adjustToxLoss() on a TRAIT_TOXINLOVER mob changed blood without going through set_blood_volume().")
 
-/// The heart HUD follows blood changes made through the setter, and poison stays visible while the mob is bleeding.
-/datum/unit_test/blood_volume_heart_hud
+/// Every correct way to change a heart input marks the heart for a refresh, even with updating_health off.
+/datum/unit_test/heart_hud_inputs
 
-/datum/unit_test/blood_volume_heart_hud/Run()
+/datum/unit_test/heart_hud_inputs/Run()
+	var/mob/living/carbon/human/consistent/subject = allocate(/mob/living/carbon/human/consistent)
+	subject.hud_used = new /datum/hud/human(subject)
+	var/obj/item/bodypart/chest = subject.get_bodypart(BODY_ZONE_CHEST)
+	TEST_ASSERT_NOTNULL(chest, "The test human has no chest.")
+
+	subject.flush_injury_huds()
+	subject.adjust_blood_volume(-10)
+	TEST_ASSERT(subject.blood_hud_dirty, "adjust_blood_volume() did not mark the heart.")
+
+	subject.flush_injury_huds()
+	subject.adjustToxLoss(5, FALSE)
+	TEST_ASSERT(subject.blood_hud_dirty, "adjustToxLoss() did not mark the heart.")
+	subject.flush_injury_huds()
+	subject.setToxLoss(0, FALSE)
+	TEST_ASSERT(subject.blood_hud_dirty, "setToxLoss() did not mark the heart.")
+	subject.flush_injury_huds()
+	subject.adjustOxyLoss(5, FALSE)
+	TEST_ASSERT(subject.blood_hud_dirty, "adjustOxyLoss() did not mark the heart.")
+	subject.flush_injury_huds()
+	subject.setOxyLoss(0, FALSE)
+	TEST_ASSERT(subject.blood_hud_dirty, "setOxyLoss() did not mark the heart.")
+
+	subject.flush_injury_huds()
+	chest.receive_damage(brute = 10)
+	TEST_ASSERT(subject.pain_hud_dirty, "receive_damage() did not mark pain.")
+	subject.flush_injury_huds()
+	chest.heal_damage(10, 0, 0)
+	TEST_ASSERT(subject.pain_hud_dirty, "heal_damage() did not mark pain.")
+	subject.flush_injury_huds()
+	chest.set_damage(5, 5)
+	TEST_ASSERT(subject.pain_hud_dirty, "set_damage() did not mark pain.")
+	chest.set_damage(0, 0)
+
+	var/datum/wound/wound = chest.add_wound(/datum/wound/bruise/small, silent = TRUE)
+	TEST_ASSERT_NOTNULL(wound, "Could not apply a test wound.")
+	subject.flush_injury_huds()
+	wound.set_woundpain(wound.woundpain + 10)
+	TEST_ASSERT(subject.pain_hud_dirty, "set_woundpain() did not mark pain.")
+
+	subject.flush_injury_huds()
+	subject.adjust_pain_mod(2)
+	TEST_ASSERT(subject.pain_hud_dirty, "adjust_pain_mod() did not mark pain.")
+	subject.adjust_pain_mod(0.5)
+
+	subject.flush_injury_huds()
+	ADD_TRAIT(subject, TRAIT_ADRENALINE_RUSH, TRAIT_SOURCE_UNIT_TESTS)
+	TEST_ASSERT(subject.pain_hud_dirty, "Gaining TRAIT_ADRENALINE_RUSH did not mark pain.")
+	subject.flush_injury_huds()
+	REMOVE_TRAIT(subject, TRAIT_ADRENALINE_RUSH, TRAIT_SOURCE_UNIT_TESTS)
+	TEST_ASSERT(subject.pain_hud_dirty, "Losing TRAIT_ADRENALINE_RUSH did not mark pain.")
+
+/// The heart shows what the inputs say: blood loss, poison and suffocation together, and pain from limb damage.
+/datum/unit_test/heart_hud_display
+
+/datum/unit_test/heart_hud_display/Run()
 	var/mob/living/carbon/human/consistent/subject = allocate(/mob/living/carbon/human/consistent)
 	subject.hud_used = new /datum/hud/human(subject)
 	var/atom/movable/screen/healths/blood/heart = subject.hud_used.bloods
 	TEST_ASSERT(istype(heart), "The human HUD has no heart indicator.")
 
 	subject.set_blood_volume(200)
-	TEST_ASSERT(subject.blood_hud_dirty, "set_blood_volume() did not mark the heart HUD for a refresh.")
 	subject.flush_injury_huds()
 	TEST_ASSERT_EQUAL(heart.icon_state, "dam60", "The heart did not follow blood loss.")
 
@@ -80,3 +134,27 @@
 	subject.setToxLoss(0)
 	subject.flush_injury_huds()
 	TEST_ASSERT_EQUAL(heart.tox_layer.alpha, 0, "The poison layer stayed visible after the poison was healed.")
+
+	var/obj/item/bodypart/chest = subject.get_bodypart(BODY_ZONE_CHEST)
+	chest.receive_damage(brute = 30)
+	subject.flush_injury_huds()
+	TEST_ASSERT_EQUAL(heart.pain_layer.alpha, 255, "Limb damage did not show pain on the heart.")
+	chest.heal_damage(30, 0, 0)
+	subject.flush_injury_huds()
+	TEST_ASSERT_EQUAL(heart.pain_layer.alpha, 0, "Pain stayed on the heart after the limb healed.")
+
+/// The pain threshold follows live willpower and pain traits, so the heart agrees with pain stuns.
+/datum/unit_test/pain_threshold_is_live
+
+/datum/unit_test/pain_threshold_is_live/Run()
+	var/mob/living/carbon/human/consistent/subject = allocate(/mob/living/carbon/human/consistent)
+	subject.STAWIL = 14
+	TEST_ASSERT_EQUAL(subject.get_pain_threshold(), 140, "The pain threshold ignored the current willpower.")
+
+	ADD_TRAIT(subject, TRAIT_ADRENALINE_RUSH, TRAIT_SOURCE_UNIT_TESTS)
+	TEST_ASSERT_EQUAL(subject.get_pain_threshold(), 190, "The pain threshold ignored TRAIT_ADRENALINE_RUSH.")
+	REMOVE_TRAIT(subject, TRAIT_ADRENALINE_RUSH, TRAIT_SOURCE_UNIT_TESTS)
+
+	ADD_TRAIT(subject, TRAIT_NOPAIN, TRAIT_SOURCE_UNIT_TESTS)
+	TEST_ASSERT_EQUAL(subject.get_pain_threshold(), 250, "The pain threshold ignored TRAIT_NOPAIN.")
+	REMOVE_TRAIT(subject, TRAIT_NOPAIN, TRAIT_SOURCE_UNIT_TESTS)

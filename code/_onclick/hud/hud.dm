@@ -4,6 +4,20 @@
 	including inventories and item quick actions.
 */
 
+/*
+	The heart (blood, poison, suffocation, pain) redraws on events, not by polling.
+	Change its inputs only through these calls, or it shows stale values.
+	tools/ci/check_heart_hud_writes.sh fails CI on any direct write.
+		blood          set_blood_volume() / adjust_blood_volume()
+		poison         adjustToxLoss() / setToxLoss()
+		suffocation    adjustOxyLoss() / setOxyLoss()
+		limb damage    bodypart receive_damage() / heal_damage() / set_damage()
+		wound pain     wound set_woundpain()
+		pain modifier  human adjust_pain_mod()
+	TRAIT_ADRENALINE_RUSH and TRAIT_NOPAIN are tracked automatically.
+	Changed STAWIL or anything else pain depends on? Call mark_pain_hud_dirty().
+*/
+
 // The default UI style is the first one in the list
 GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	"Rogue" = 'icons/mob/roguehud.dmi')))
@@ -199,6 +213,9 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 
 	healths = null
 	healthdoll = null
+	reads = null
+	textl = null
+	textr = null
 	internals = null
 	devilsouldisplay = null
 	blobpwrdisplay = null

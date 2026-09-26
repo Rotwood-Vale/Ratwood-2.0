@@ -477,7 +477,7 @@
 		var/newcolor = rgb(67, 67, 67)
 		var/datum/physiology/phy = target.physiology
 		phy.bleed_mod *= 2
-		phy.pain_mod *= 2
+		target.adjust_pain_mod(2)
 		target.add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom, remove_atom_colour), TEMPORARY_COLOUR_PRIORITY, newcolor), 20 SECONDS)
 
@@ -487,7 +487,7 @@
 		var/mob/living/carbon/human/target = owner
 		var/datum/physiology/phy = target.physiology
 		phy.bleed_mod /= 2
-		phy.pain_mod /= 2
+		target.adjust_pain_mod(0.5)
 
 /*/atom/movable/screen/alert/status_effect/debuff/dazed/shield
 	name = "Dazed by fencer's wrap"

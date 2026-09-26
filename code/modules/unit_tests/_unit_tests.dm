@@ -87,12 +87,12 @@
 // BEGIN_INCLUDE
 #include "anchored_mobs.dm"
 #include "baseturfs.dm"
-#include "blood_volume.dm"
 #include "colorblind_hud_palette.dm"
 #include "component_tests.dm"
 #include "create_and_destroy.dm"
 #include "focus_only_tests.dm"
 #include "harddels.dm"
+#include "heart_hud.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
 #include "spawn_humans.dm"

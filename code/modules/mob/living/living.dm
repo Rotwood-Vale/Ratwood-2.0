@@ -2084,6 +2084,14 @@
 			set_blood_volume(var_value)
 			datum_flags |= DF_VAR_EDITED
 			return TRUE
+		if (NAMEOF(src, toxloss))
+			setToxLoss(var_value, forced = TRUE)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		if (NAMEOF(src, oxyloss))
+			setOxyLoss(var_value, forced = TRUE)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
 		if (NAMEOF(src, bloodpool))
 			set_bloodpool(var_value)
 			datum_flags |= DF_VAR_EDITED

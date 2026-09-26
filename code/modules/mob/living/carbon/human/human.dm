@@ -649,7 +649,7 @@
 
 	var/toxoverlay = get_heart_indicator_state(getToxLoss(), "toxloss", 21, 50)
 	var/oxyoverlay = get_heart_indicator_state(getOxyLoss(), "oxyloss", 21, 50)
-	var/painoverlay = pain_threshold ? get_heart_indicator_state((get_complex_pain() / pain_threshold) * 100, "painloss", 30, 60) : null
+	var/painoverlay = get_heart_indicator_state((get_complex_pain() / get_pain_threshold()) * 100, "painloss", 30, 60)
 
 	var/atom/movable/screen/healths/blood/blood_hud = hud_used.bloods
 	if(istype(blood_hud))

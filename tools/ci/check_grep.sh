@@ -182,8 +182,15 @@ if $grep 'balloon_alert\(.*?, ?"[A-Z]' $code_files; then
 	st=1
 fi;
 
-part "blood_volume writes outside set_blood_volume()"
-if ! bash tools/ci/check_blood_volume.sh; then
+part "heart HUD inputs written outside their setters"
+if ! bash tools/ci/check_heart_hud_writes.sh; then
+	st=1
+fi;
+
+part "VARSET_CALLBACK with a side effect"
+if grep -rnE 'VARSET_CALLBACK\([^)]*([-+*/%]=|\+\+|--)' --include='*.dm' code modular*; then
+	echo
+	echo -e "${RED}ERROR: VARSET_CALLBACK evaluates its value when the timer is created, so an operator like /= inside it runs immediately. Pass a plain value, or CALLBACK a proc that changes the var.${NC}"
 	st=1
 fi;
 

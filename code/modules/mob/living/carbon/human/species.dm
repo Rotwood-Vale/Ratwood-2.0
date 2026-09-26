@@ -1577,7 +1577,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					append_message = "loosening their grip on [target_held_item]"
 
 			if(target.pulling)
-				var/painpercent = (target.get_complex_pain() / target.pain_threshold) * 100
+				var/painpercent = (target.get_complex_pain() / target.get_pain_threshold()) * 100
 				var/painchance = painpercent < 30 ? FALSE : prob(painpercent)
 
 				if(target.grab_state > GRAB_PASSIVE && painchance)

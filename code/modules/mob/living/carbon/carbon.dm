@@ -1,11 +1,7 @@
 /mob/living/carbon/Initialize(mapload)
 	. = ..()
 
-	pain_threshold = HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH) ? ((STAWIL + 5) * 10) : (STAWIL * 10)
-	if(has_flaw(/datum/charflaw/addiction/masochist)) // Masochists handle pain better by about 1 endurance point
-		pain_threshold += 10
-	if(HAS_TRAIT(src, TRAIT_NOPAIN))
-		pain_threshold = 250
+	RegisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_ADRENALINE_RUSH), SIGNAL_REMOVETRAIT(TRAIT_ADRENALINE_RUSH), SIGNAL_ADDTRAIT(TRAIT_NOPAIN), SIGNAL_REMOVETRAIT(TRAIT_NOPAIN)), PROC_REF(on_pain_trait_changed))
 
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
@@ -642,8 +638,19 @@
 
 /mob/living/carbon
 	var/nausea = 0
-	var/pain_threshold = 0
 	var/bleeding_tier = 0
+
+/mob/living/carbon/proc/get_pain_threshold()
+	if(HAS_TRAIT(src, TRAIT_NOPAIN))
+		return 250
+	. = HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH) ? ((STAWIL + 5) * 10) : (STAWIL * 10)
+	if(has_flaw(/datum/charflaw/addiction/masochist)) // Masochists handle pain better by about 1 endurance point
+		. += 10
+	return max(., 1)
+
+/mob/living/carbon/proc/on_pain_trait_changed(datum/source)
+	SIGNAL_HANDLER
+	mark_pain_hud_dirty()
 
 /mob/living/carbon/proc/add_nausea(amt)
 	nausea = clamp(nausea + amt, 0, 300)
