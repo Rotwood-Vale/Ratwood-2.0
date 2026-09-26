@@ -18,6 +18,8 @@
 		/datum/job/roguetown/azebagha,
 		/datum/job/roguetown/slavemaster,
 		/datum/job/roguetown/dtchaplain,
+		/datum/job/roguetown/guardsman,
+		/datum/job/roguetown/watchcaptain,
 		
 		/datum/job/roguetown/tribalchieftain,
 		/datum/job/roguetown/tribalshaman,
@@ -26,12 +28,10 @@
 		/datum/job/roguetown/tribalvillager,
 	)
 	slot_adjust = list(
-		/datum/job/roguetown/manorguard = 4,
+		/datum/job/roguetown/manorguard = 8,
 		/datum/job/roguetown/warden = 4,
 		/datum/job/roguetown/vanguard = 4,
 		/datum/job/roguetown/wardenmaster = 1,
-		/datum/job/roguetown/guardsman = 4,
-		/datum/job/roguetown/watchcaptain = 1,
 		/datum/job/roguetown/baron = 1,
 		/datum/job/roguetown/baron_retainer = 1,
 		/datum/job/roguetown/slaver = 1,
