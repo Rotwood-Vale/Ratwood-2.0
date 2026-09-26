@@ -617,6 +617,12 @@
 	color = CLOTHING_GREEN
 	detail_color = CLOTHING_DARK_GREEN
 
+/obj/item/clothing/cloak/tabard/knight/bogmaster
+	name = "bog sergeant's tabard"
+	desc = "A tabard colored in a glorius green of the mighty protectors of the BOG, the belt is clasped with a pin of the Lowtown Baron." // THE BOG DESERVES A BETTER DESCRIPTION!
+	color = CLOTHING_GREEN
+	detail_color = CLOTHING_DARK_GREEN
+
 /obj/item/clothing/cloak/stabard/grenzelhoft
 	name = "grenzelhoft mercenary tabard"
 	desc = "A tabard bearing the colors of the Grenzelhoft emperiate mercenary guild."
@@ -878,11 +884,11 @@
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 3
 
-/obj/item/clothing/cloak/darkcloak/bear/wardenmaster
-	name = "Warden trophy-cloak"
-	desc = "Made from the mightiest, most ferocious black direbear pelt. The mark of a distinguished huntsman, it is clasped with a pin of the Lowtown Baron."
+/obj/item/clothing/cloak/forrestercloak/snow/wardenmaster
+	name = "Master Warden cloak"
+	desc = "The Master Warden's cloak, designed with greater precision to let them hide within the bog with ease. The mark of a distinguished huntsman, it is clasped with a pin bearing the Lowtown Baron's mark."
 	sellprice = 80
-	color = "#99a39d"
+	color ="#696565"
 
 /obj/item/clothing/cloak/darkcloak/minotaur
 	name = "minotaur cloak"

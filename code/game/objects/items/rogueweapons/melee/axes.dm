@@ -50,6 +50,7 @@
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
+
 //axe objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/stoneaxe
@@ -117,28 +118,19 @@
 	max_blade_int = 500 //Sharper than sharp.
 	resistance_flags = FIRE_PROOF
 
-/obj/item/rogueweapon/stoneaxe/oath
-	force = 30
-	force_wielded = 40
-	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/axe/bash)
+/obj/item/rogueweapon/greataxe/steel/oath
+	force = 15
+	force_wielded = 35 //slightly weaker than Graggar axe when wielded.
+	max_blade_int = 250
 	name = "oath"
 	desc = "A hefty, steel-forged axe marred by the touch of countless Wardens. Despite it's weathered etchings and worn grip, the blade has been honed to a razor's edge and you can see your reflection in the finely polished metal."
 	icon_state = "oath"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	max_blade_int = 500
-	dropshrink = 0.75
-	wlength = WLENGTH_LONG
-	slot_flags = ITEM_SLOT_BACK
-	pixel_y = -16
-	pixel_x = -16
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
-	bigboy = TRUE
-	gripsprite = TRUE
 	smeltresult = /obj/item/ingot/steel
-	gripped_intents = list(/datum/intent/axe/cut/battle ,/datum/intent/axe/chop/battle, /datum/intent/axe/bash)
+	gripped_intents = list(/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe, /datum/intent/axe/sweep, /datum/intent/mace/rangedthrust) //ranged thrust because the tip in the sprite has a huge pointy tip.
 	minstr = 12
 	wdefense = 5
+	dropshrink = 0.75
 
 /obj/item/rogueweapon/stoneaxe/oath/getonmobprop(tag)
 	if(tag)
