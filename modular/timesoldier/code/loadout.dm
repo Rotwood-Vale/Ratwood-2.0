@@ -256,6 +256,10 @@
 
 	H.equipOutfit(/datum/outfit/timesoldier/arsonist)
 
+		H.cmode_music = list(
+		'modular/timesoldier/sounds/muzic/combat_arsonist.ogg'
+	)
+
 	apply_timesoldier_arsonist_stats(H)
 	apply_timesoldier_arsonist_skills(H)
 	apply_timesoldier_arsonist_traits(H)
