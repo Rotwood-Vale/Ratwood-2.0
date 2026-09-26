@@ -15,7 +15,8 @@
 		wound pain     wound set_woundpain()
 		pain modifier  human adjust_pain_mod()
 	TRAIT_ADRENALINE_RUSH and TRAIT_NOPAIN are tracked automatically.
-	Changed STAWIL or anything else pain depends on? Call mark_pain_hud_dirty().
+	Willpower changed through change_stat() is tracked too.
+	Wrote STAWIL directly, or changed anything else pain depends on? Call mark_pain_hud_dirty().
 */
 
 // The default UI style is the first one in the list

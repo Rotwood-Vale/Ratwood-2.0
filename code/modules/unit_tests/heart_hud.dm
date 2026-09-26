@@ -99,6 +99,11 @@
 	subject.adjust_pain_mod(0.5)
 
 	subject.flush_injury_huds()
+	subject.change_stat(STATKEY_WIL, 1)
+	TEST_ASSERT(subject.pain_hud_dirty, "Changing willpower through change_stat() did not mark pain.")
+	subject.change_stat(STATKEY_WIL, -1)
+
+	subject.flush_injury_huds()
 	ADD_TRAIT(subject, TRAIT_ADRENALINE_RUSH, TRAIT_SOURCE_UNIT_TESTS)
 	TEST_ASSERT(subject.pain_hud_dirty, "Gaining TRAIT_ADRENALINE_RUSH did not mark pain.")
 	subject.flush_injury_huds()
