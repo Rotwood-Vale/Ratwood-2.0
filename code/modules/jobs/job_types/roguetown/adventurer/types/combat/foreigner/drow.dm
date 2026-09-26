@@ -52,7 +52,7 @@
 			if("Arbalétrière \"Crossbowyer\"")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker/lesser//1:1 with regular slurbow, still good, just not as fancy
-				beltr =  /obj/item/quiver/bolts/
+				beltr =  /obj/item/quiver/bolt
 			if("Escrimeuse \"Swordswoman\"")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				var/swords = list("Falx", "Sabre", "Greatsabre", "Shotel", "Thrusting Longsword")

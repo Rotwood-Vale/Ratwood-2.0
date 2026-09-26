@@ -339,7 +339,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	r_hand = /obj/item/rogueweapon/sword/short
-	beltl = /obj/item/quiver/bolts
+	beltl = /obj/item/quiver/bolt/standard
 	l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
 	armor = /obj/item/clothing/cloak/tabard/crusader/astrata
