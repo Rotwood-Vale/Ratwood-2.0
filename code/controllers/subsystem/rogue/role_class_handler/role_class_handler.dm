@@ -119,6 +119,14 @@ SUBSYSTEM_DEF(role_class_handler)
 		return // There was just one advclass that got automatically selected
 	class_select_handlers[client_ckey] = XTRA_MEATY
 
+/datum/controller/subsystem/role_class_handler/proc/cancel_class_handler(client_ckey)
+	if(!client_ckey)
+		return
+	var/datum/class_select_handler/GOT_IT = class_select_handlers[client_ckey]
+	if(!GOT_IT)
+		return
+	class_select_handlers -= client_ckey
+	qdel(GOT_IT)
 
 /*
 	Attempt to finish the class handling ordeal, aka they picked something
