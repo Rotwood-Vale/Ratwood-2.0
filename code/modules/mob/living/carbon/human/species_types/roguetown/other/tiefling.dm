@@ -72,6 +72,7 @@
 		/datum/customizer/bodypart_feature/legwear,
 		/datum/customizer/organ/horns/anthro,
 		/datum/customizer/organ/tail/tiefling,
+		/datum/customizer/organ/tail/manticore,
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,

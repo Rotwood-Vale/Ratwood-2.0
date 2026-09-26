@@ -739,6 +739,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/obj/item/organ/vagina/vagina = user.getorganslot(ORGAN_SLOT_VAGINA)
 	if(vagina && !vagina.fertility)
 		vagina.fertility = TRUE
+	var/obj/item/organ/tail/manticore/tail = get_manticore_tail(user)
+	if(tail)
+		tail.fertility = TRUE
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

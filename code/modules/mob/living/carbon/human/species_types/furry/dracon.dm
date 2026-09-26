@@ -88,6 +88,7 @@
 		/datum/customizer/bodypart_feature/legwear,
 		/datum/customizer/organ/wings/dracon,
 		/datum/customizer/organ/tail/lizard,
+		/datum/customizer/organ/tail/manticore,
 		/datum/customizer/organ/tail_feature/lizard_spines,
 		/datum/customizer/organ/snout/lizard/dracon,
 		/datum/customizer/organ/ears/lizard,
