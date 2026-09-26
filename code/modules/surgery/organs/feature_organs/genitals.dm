@@ -206,6 +206,9 @@
 	jiggle_cycle()
 	return TRUE
 
+/obj/item/organ/breasts/proc/is_pecs()
+	return ispath(accessory_type, /datum/sprite_accessory/breasts/pecs)
+
 /obj/item/organ/breasts/proc/jiggle_cycle()
 	jiggle_timerid = null
 	if(!is_jiggling)

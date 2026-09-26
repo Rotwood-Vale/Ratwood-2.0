@@ -24,7 +24,12 @@
 			zone_text = user.dir == target.dir ? "ass" : "crotch"
 			pleasure_target = 1
 		if(BODY_ZONE_CHEST)
-			zone_text = target.getorganslot(ORGAN_SLOT_BREASTS) ? "tits" : "chest"
+			var/obj/item/organ/breasts/chest_organ = target.getorganslot(ORGAN_SLOT_BREASTS)
+			zone_text = "chest"
+			if(chest_organ)
+				zone_text = "tits"
+				if(chest_organ.is_pecs())
+					zone_text = "pecs"
 			pleasure_target = 1
 		else
 			zone_text = LOWER_TEXT(parse_zone(user.zone_selected))

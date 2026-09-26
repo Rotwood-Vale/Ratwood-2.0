@@ -237,6 +237,12 @@
 
 	return TRUE
 
+/mob/living/carbon/human/proc/get_chest_word()
+	var/obj/item/organ/breasts/chest = getorganslot(ORGAN_SLOT_BREASTS)
+	if(chest?.is_pecs())
+		return "pecs"
+	return "breasts"
+
 /datum/sex_controller/proc/Adjacent_Or_Closet(atom/neighbor)
 	if(istype(user.loc, /obj/structure/closet) || istype(user.loc, /obj/structure/handcart) || istype(neighbor.loc, /obj/structure/closet) || istype(neighbor.loc, /obj/structure/handcart)) // within container
 		return user.loc == neighbor.loc
