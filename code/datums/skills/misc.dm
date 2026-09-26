@@ -80,7 +80,7 @@
 	)
 	expert_name = "Rider"
 	max_untraited_level = SKILL_LEVEL_JOURNEYMAN
-	trait_uncap = list(TRAIT_NOBLE = SKILL_LEVEL_EXPERT, TRAIT_DISGRACED_NOBLE = SKILL_LEVEL_EXPERT, TRAIT_EQUESTRIAN = SKILL_LEVEL_LEGENDARY)
+	trait_uncap = list(TRAIT_NOBLE = SKILL_LEVEL_EXPERT, TRAIT_EQUESTRIAN = SKILL_LEVEL_LEGENDARY)
 
 /datum/skill/misc/music
 	name = "Music"
