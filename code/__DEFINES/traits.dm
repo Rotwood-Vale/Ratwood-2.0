@@ -358,6 +358,11 @@
 // Additional trait given to the Tailor job, allowing it to weave cloth on a loom from 1 fibers instead of 2.
 #define TRAIT_EFFICIENT_WEAVER "Efficient Weaver"
 
+// Hunting Traits
+#define TRAIT_MASTERFUL_HUNTER "Masterful Hunter"
+#define TRAIT_EXPERT_HUNTER "Expert Hunter"
+#define TRAIT_DEATHLESS "Deathless"
+
 // Weaponry Traits
 // Intended for very powerful, very specific or gimmicky weapon skills.
 // Firearms, as an example, is one of them. We do not let someone get above JMAN without it.
@@ -608,6 +613,9 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_SELF_SUSTENANCE = span_greentext("Yils of experience running from the law and living off the land have made me a jack of all trades. All crafting and labor skills can progress to Journeyman levels."),
 	TRAIT_LEGENDARY_MINER = span_greentext("I been trained in proper mining techniques. My mining skill can advance to Legendary."),
 	TRAIT_MARTIAL_PROWESS = span_greentext("I've been trained by a master in the art of combat, allowing me to train my skills in arms past Expert."),
+	TRAIT_MASTERFUL_HUNTER = span_greentext("To hunt well, is to know the land. I have an advantage in becoming a masterful hunter here, for I know about the various watering holes, the feeding grounds, which thickets are bent by animal flanks."),
+	TRAIT_EXPERT_HUNTER = span_greentext("I am a skilled local hunter; my hunting skill can progress to expert levels."),
+	TRAIT_DEATHLESS = span_info("I cannot truly die by ordinary means."),
 	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can outright destroy my vessel."),
 	TRAIT_DYES = span_notice("I know my way around pigments and shades, and I'm able to create the exact colors I want in a dye station."),
 	TRAIT_BLACKOAK = span_warning("The Black Oaks can spot <b>any</b> foreigners and outsiders, no matter how long they've lived in the Vale. I can spot an invader at a glance."),
