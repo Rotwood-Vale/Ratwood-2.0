@@ -81,6 +81,14 @@
 	ambush_times = null
 	ambush_mobs = null
 
+/area/rogue/outdoors/woodsrat/maplegrove
+	name = "Maple Grove"
+	first_time_text = null
+	ambush_times = null
+	ambush_mobs = null
+	deathsight_message = "A grove with maple trees"
+	first_time_text = "Maple Grove"
+
 /area/rogue/outdoors/woodsrat/river
 	name = "river"
 	icon_state = "river"
