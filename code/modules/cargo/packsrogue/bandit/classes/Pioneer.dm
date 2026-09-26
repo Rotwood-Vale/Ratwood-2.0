@@ -110,7 +110,10 @@
 	cost = 25
 	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/pick)
 
-/datum/supply_pack/rogue/Pioneer/
+/datum/supply_pack/rogue/Pioneer/saperka
+	name = "Saperka"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/shovel/saperka)
 
 //Tools of the trade.
 
@@ -171,7 +174,7 @@
 
 /datum/supply_pack/rogue/Pioneer/cogs
 	name = "Cogs"
-	cost = 20
+	cost = 10
 	contains = list(/obj/item/roguegear/bronze = 2)
 
 /datum/supply_pack/rogue/Pioneer/bmbstrap
@@ -224,7 +227,7 @@
 
 /datum/supply_pack/rogue/Pioneer/blackpowder_stick
 	name = "Blackpowder stick"
-	cost = 100//From 35. Why was this 35? OOOUGH.
+	cost = 55//From 35. Why was this 35? OOOUGH.
 	contains = list(/obj/item/tntstick)
 
 //WMDs, but for bombard and smokepowder stuff. Zezuz Pyst!!!
@@ -232,27 +235,27 @@
 //Not even bringing up the other costs.
 /datum/supply_pack/rogue/Pioneer/bombard_frame
 	name = "Bombard frame"
-	cost = 200
+	cost = 100
 	contains = list(/obj/item/bombard_frame)
 
 /datum/supply_pack/rogue/Pioneer/bombard_barrel
 	name = "Bombard barrel"
-	cost = 200
+	cost = 100
 	contains = list(/obj/item/bombard_barrel)
 
 /datum/supply_pack/rogue/Pioneer/bombard_palantir
 	name = "Palantir"
-	cost = 100
+	cost = 50
 	contains = list(/obj/item/rogueweapon/palantir)
 
 /datum/supply_pack/rogue/Pioneer/bombard_sponge
 	name = "Bombard sponge"
-	cost = 100
+	cost = 50
 	contains = list(/obj/item/rogueweapon/woodstaff/quarterstaff/bombard_sponge)
 
 /datum/supply_pack/rogue/Pioneer/smokepowder_flask
 	name = "Smokepowder flask"
-	cost = 100
+	cost = 50
 	contains = list(/obj/item/powderflask)
 
 //WMDs, but shells for the above!!!!
@@ -264,34 +267,34 @@
 
 /datum/supply_pack/rogue/Pioneer/bombard_charge_poison
 	name = "Bombard charge (smoke - poison)"
-	cost = 100
+	cost = 60
 	contains = list(/obj/item/cannonball/smoke_poison)
 
 /datum/supply_pack/rogue/Pioneer/bombard_charge_custom
 	name = "Bombard charge (smoke - custom)"
-	cost = 110
+	cost = 65
 	contains = list(/obj/item/cannonball/smoke_custom)
 
 //Dangerous bombard charges.
 /datum/supply_pack/rogue/Pioneer/bombard_charge_canister
 	name = "Bombard charge (canister)"
-	cost = 100
+	cost = 50
 	contains = list(/obj/item/cannonball/canister)
 
 /datum/supply_pack/rogue/Pioneer/bombard_charge_explosive
 	name = "Bombard charge (explosive)"
-	cost = 250
+	cost = 125
 	contains = list(/obj/item/cannonball/explosive)
 
 /datum/supply_pack/rogue/Pioneer/bombard_charge_incendiary
 	name = "Bombard charge (incendiary)"
-	cost = 150
+	cost = 75
 	contains = list(/obj/item/cannonball/incendiary)
 
 //Misc bombard charges.
 /datum/supply_pack/rogue/Pioneer/bombard_charge_flare
 	name = "Bombard charge (flare)"
-	cost = 20
+	cost = 10
 	contains = list(/obj/item/cannonball/flare)
 
 // Ranged Weaponry
@@ -337,3 +340,52 @@
 	name = "Quiver of Bolts"
 	cost = 20
 	contains = list(/obj/item/quiver/bolts)
+
+// contruction suplies
+
+/datum/supply_pack/rogue/Pioneer/iron
+	name = "Iron bar"
+	cost = 3
+	contains = list(/obj/item/ingot/iron)
+
+/datum/supply_pack/rogue/Pioneer/steel
+	name = "Steel bar"
+	cost = 7
+	contains = list(/obj/item/ingot/steel)
+
+/datum/supply_pack/rogue/Pioneer/bronze
+	name = "Bronze bar"
+	cost = 7
+	contains = list(/obj/item/ingot/bronze)
+
+/datum/supply_pack/rogue/Pioneer/rocks
+	name = "A bunch of rocks"
+	cost = 10
+	contains = list(/obj/item/natural/stone, /obj/item/natural/stone, /obj/item/natural/stone, /obj/item/natural/stone, /obj/item/natural/stone, /obj/item/natural/rock,
+	/obj/item/natural/stone, /obj/item/natural/stone, /obj/item/natural/stone, /obj/item/natural/stone, /obj/item/natural/stone, /obj/item/natural/rock)
+
+/datum/supply_pack/rogue/Pioneer/logs
+	name = "A bunch of logs"
+	cost = 10
+	contains = list(/obj/item/grown/log/tree, /obj/item/grown/log/tree, /obj/item/grown/log/tree, /obj/item/grown/log/tree, /obj/item/grown/log/tree, /obj/item/grown/log/tree)
+
+/datum/supply_pack/rogue/Pioneer/fibers
+	name = "A bunch of fibers"
+	cost = 10
+	contains = list(/obj/item/natural/bundle/fibers/full, /obj/item/natural/bundle/fibers/full, /obj/item/natural/bundle/fibers/full, /obj/item/natural/bundle/fibers/full)
+
+/datum/supply_pack/rogue/Pioneer/coal
+	name = "A bunch of coal"
+	cost = 10
+	contains = list(/obj/item/rogueore/coal, /obj/item/rogueore/coal, /obj/item/rogueore/coal, /obj/item/rogueore/coal)
+
+/datum/supply_pack/rogue/Pioneer/cart
+	name = "A cart to carry all that"
+	cost = 15
+	contains = list(/obj/structure/handcart)
+
+
+/datum/supply_pack/rogue/Pioneer/riddle_steel // if they somhow get this much, they deserve it
+	name = "Riddle of steel"
+	cost = 2000
+	contains = list(/obj/item/riddleofsteel)
