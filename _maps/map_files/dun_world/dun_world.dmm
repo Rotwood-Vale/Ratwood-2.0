@@ -47669,7 +47669,7 @@
 /area/rogue/under/town/sewer)
 "jWZ" = (
 /obj/structure/closet/crate/roguecloset/inn,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/misc,
+/obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/under/underdarker/dunsouth)
 "jXb" = (
@@ -48992,6 +48992,7 @@
 "kji" = (
 /obj/structure/closet/crate/roguecloset/inn,
 /obj/item/clothing/cloak/matron,
+/obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/underdarker/dunsouth)
 "kjj" = (
@@ -62640,7 +62641,7 @@
 /area/rogue/under/cave/his_vault)
 "mYe" = (
 /obj/structure/table/wood/poor,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
+/obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/underdark/north)
 "mYf" = (
@@ -100709,11 +100710,6 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/dwarfin)
-"uSs" = (
-/obj/structure/table/wood/poor,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
-/turf/open/floor/rogue/metal,
-/area/rogue/under/underdark/north)
 "uSt" = (
 /obj/structure/stairs/stone,
 /obj/structure/fluff/railing/border/east,
@@ -132648,7 +132644,7 @@ lUW
 xYB
 lnR
 fDU
-uSs
+mYe
 mYe
 fDU
 fDU
