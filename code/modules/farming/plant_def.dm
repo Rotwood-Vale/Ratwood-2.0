@@ -83,6 +83,18 @@
 	maturation_time = FAST_GROWING
 	produce_time = 2 MINUTES
 
+/datum/plant_def/bakersroot
+	name = "baker's root"
+	icon = 'icons/roguetown/items/bakers_root.dmi'
+	icon_state = "br_ripe"
+	produce_type = /obj/item/reagent_containers/food/snacks/grown/bakersroot
+	produce_amount_min = 1
+	produce_amount_max = 2
+	uproot_loot = list(/obj/item/natural/fibers)
+	maturation_time = SLOW_GROWING
+	produce_time = 4 MINUTES
+	water_drain_rate = 3 / (1 MINUTES)
+
 // Rice are faster growing but drain way more water
 /datum/plant_def/rice
 	name = "rice stalks"
