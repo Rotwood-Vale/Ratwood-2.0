@@ -6,10 +6,7 @@
 
 /obj/item/reagent_containers/glass/bottle/waterskin/timesoldier
 	name = "iron canteen"
-	desc = "Also known as the Metal Waterskin, it's commonly used by the Grenzelhoft Military in long expeditions. How did it end up here, though?"
-	desc = "Also known as the Metal Waterskin. The cap has been removed."
-	icon = 'modular/timesoldier/sprites/gear.dmi'
-	icon_state = "canteen"
+	desc = "Also known as the Soldier's Drink, it's commonly used by the Grenzelhoft Military in long expeditions. How did it end up here, though?"
 
 	volume = 225
 	list_reagents = list(

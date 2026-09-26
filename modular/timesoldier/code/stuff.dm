@@ -7,11 +7,11 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/timesoldier/ferenchow
 	name = "Ferentian Ration Can"
-	desc = "<span class='yellow'><i>Made in bulk in Kingsfield, filling, and allegedly edible. I've eaten so many of these to know better than to ask what the slop inside is made of.</i></span>"
+	desc = "<span class='yellow'><i>Made in bulk in Kingsfield, filling, and surprisingly tasty. It's made from everyone's favorite Eoran blessed Meat Stew.</i></span>"
 	icon = 'modular/timesoldier/sprites/stuff.dmi'
-	icon_state = "bluechow" // temporary sprite as i work on actual sprites. shoutout to you matt, i love you forever.
+	icon_state = "ferenchow"
 	list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_FULL_MEAL)
-	tastes = list("salt" = 2, "processed meat" = 2, "something unidentifiable" = 1)
+	tastes = list("salt" = 2, "meat stew" = 2, "home" = 1)
 	foodtype = MEAT | GRAIN
 	faretype = FARE_POOR
 	bitesize = 4
@@ -42,7 +42,7 @@
 		)
 		playsound(src, 'modular/timesoldier/sounds/canopen.ogg', 60, TRUE)
 		opened = TRUE
-		icon_state = "bluechow_open"
+		icon_state = "ferenchow_open"
 		return
 
 	to_chat(user, span_warning("I need something short and sharp to pry [src] open."))
@@ -51,9 +51,9 @@
 
 /obj/item/trash/timesoldier/ferenchow
 	name = "empty Ferentian Ration Can"
-	desc = "An empty military ration can. There's still some unpleasant bits stuck around inside. It looks like something out of Kingsfield!"
+	desc = "An empty military ration can. There's still meat stew at the bottom. It looks like something out of Kingsfield!"
 	icon = 'modular/timesoldier/sprites/stuff.dmi'
-	icon_state = "bluechow_empty"
+	icon_state = "ferenchow_empty"
 	experimental_inhand = TRUE
 
 

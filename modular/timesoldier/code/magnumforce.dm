@@ -5,8 +5,8 @@
 	var/bolt_open = FALSE
 	name = "KZ-41 'Last Rites'"
 	desc = "<span class='yellow'><i>I can still remember when this weapon was given to us. We were fighting on the borders of Grenzelhoft with the Otavans, and this beauty came in a shipment alongside others, and some ammo.<br>We were...stunned at how effective it was. It killed deadites in a singular shot to the head, and tore through lyfeblood armor like it was hot butter. It wouldn't take long for it to be made a war-crime to use it on your fellow man.<br> KZ-41 - it stood for an obvious name.<br>KILL ZIZITES.</i></span>"
-	icon = 'modular/timesoldier/sprites/gun.dmi'
-	icon_state = "heavysniper"
+	icon = 'modular/timesoldier/sprites/nu_guns.dmi'
+	icon_state = "kz41"
 	experimental_inhand = TRUE
 	experimental_onback = TRUE
 	inhand_x_dimension = 64
@@ -50,9 +50,9 @@
 /obj/item/gun/ballistic/heavysniper/update_icon()
 	..()
 	if(bolt_open)
-		icon_state = "heavysniper-open"
+		icon_state = "kz41_open"
 	else
-		icon_state = "heavysniper"
+		icon_state = "kz41"
 
 
 /obj/item/gun/ballistic/heavysniper/can_shoot()

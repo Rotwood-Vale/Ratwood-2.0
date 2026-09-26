@@ -123,21 +123,15 @@
 	desc = "Technically you shouldn't be seeing this either but this might be a by-product of admin stuff."
 	icon_state = null
 	ammo_type = /obj/item/ammo_casing/timesoldier_fire
-	max_ammo = 500
+	max_ammo = 5
 
 
 /obj/item/gun/ballistic/timesoldier_fire_wep
-	name = "flamesprayer"
+	name = "Hei Long Pao"
 	desc = "<span class='yellow'><i>Nothing short of liquid brutality, the flamesprayer belonged to a gang of troublemakers called 'The Scum', but they decided to serve the Crown by giving us the schematic for this.</i></span>"
-	icon = 'modular/timesoldier/sprites/scumguns.dmi'
-	icon_state = "flamesprayer"
-	item_state = "flamesprayer_inhand"
-	lefthand_file = 'modular/timesoldier/sprites/scumguns.dmi'
-	righthand_file = 'modular/timesoldier/sprites/scumguns.dmi'
+	icon = 'modular/timesoldier/sprites/nu_guns.dmi'
+	icon_state = "heilong"
 	experimental_inhand = FALSE
-	dropshrink = 0.6
-	pixel_x = -16
-	pixel_y = -16
 	bigboy = TRUE
 	mag_type = /obj/item/ammo_box/magazine/timesoldier_fire
 	internal_magazine = TRUE

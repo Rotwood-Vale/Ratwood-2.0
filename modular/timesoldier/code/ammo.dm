@@ -1,8 +1,8 @@
 /obj/item/ammo_casing/brutal_round
 	name = "zizite killer round"
 	desc = "<span class='yellow'><i>We've been fighting this war against the Zizites for decades. It's been over 60 years by now. <br>It's exhausting. Though, after the efforts from Kingsfield and from the Zybantine sands, we've managed to create something beyond the lead spheres of the past. This turns any deadite to gore, and any skeleton's bones to dust.<br> No matter how hard their Avantyne is.</i></span>"
-	icon = 'modular/timesoldier/sprites/gun.dmi'
-	icon_state = "lcasing1"
+	icon = 'modular/timesoldier/sprites/nu_guns.dmi'
+	icon_state = "kz41_bullet"
 	caliber = "brutal"
 	projectile_type = /obj/projectile/bullet/firearm/brutal_round
 
@@ -22,8 +22,8 @@
 	name = "BRUTALITY round box"
 	desc = "<span class='yellow'><i>A box meant to dispense BRUTALITY towards Zizites, also known as BRUTAL rounds, or Zizite Killers.<br>When that crazy Dwarf from Kingsfield invented this kind of projectile that surpassed the lead sphere, the entire war on Zizo changed.<br>The Zizites barely adapted the blackpowder to their undead troops, but we adapted and overcame them.</i></span>"
 	max_storage = 20 // this might be overkill. oh well!!! :wilted_rose:
-	icon = 'modular/timesoldier/sprites/gun.dmi'
-	icon_state = "ptsdbox"
+	icon = 'modular/timesoldier/sprites/nu_guns.dmi'
+	icon_state = "kz_box"
 
 /obj/item/quiver/bullet/brutals/Initialize(mapload)
 	. = ..()
@@ -36,7 +36,7 @@
 /obj/item/ammo_casing/brutal_round/update_icon()
 	..()
 	if(!BB)
-		icon_state = "lcasing-spent"
+		icon_state = "kz41_spent"
 		name = "spent zizite killer round"
 	else
 		icon_state = initial(icon_state)
