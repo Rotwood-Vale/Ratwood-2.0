@@ -239,6 +239,28 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/suit/roguetown/shirt/robe/hierophant/stripped
+	desc = "A thin piece of fabric worn under a robe to stop chafing and keep ones dignity if a harsh blow of wind comes through."
+	armor = ARMOR_CLOTHING
+	armor_class = ARMOR_CLASS_NONE
+
+/obj/item/clothing/suit/roguetown/shirt/robe/hierophant/MiddleClick(mob/user, params)
+	if(armor_class == ARMOR_CLASS_NONE)
+		to_chat(user, span_notice("There is nothing to take out of the robes."))
+		return
+	to_chat(user, span_notice("I begin to take out the padding in the robes..."))
+	if(!do_after(user, 5 SECONDS))
+		return
+	to_chat(user, span_notice("I finish taking out the padding."))
+	var/obj/item/clothing/suit/roguetown/shirt/robe/hierophant/stripped/newrobes = new /obj/item/clothing/suit/roguetown/shirt/robe/hierophant/stripped(get_turf(src.loc))
+	if(user.is_holding(src))
+		user.dropItemToGround(src)
+		user.put_in_hands(newrobes)
+	newrobes.color = src.color
+	newrobes.max_integrity = src.max_integrity // in case you got the item from loadout where it has lowered max integrity
+	newrobes.obj_integrity = src.obj_integrity
+	qdel(src)
+
 /obj/item/clothing/suit/roguetown/shirt/robe/pointfex
 	name = "pointfex's qaba"
 	desc = "A slimmed down, tighter fitting robe made of fine silks and fabrics. Somehow you feel more mobile in it than in the nude. Despite the light fabric, it offers decent protection."
