@@ -95823,10 +95823,13 @@
 	locked = 1;
 	lockid = "lich"
 	},
-/obj/item/book/granter/spell/blackstone/skeleton,
 /obj/item/book/granter/spell/blackstone/bonechill,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
+/obj/item/clothing/ring/sapphirebs,
+/obj/item/clothing/ring/quartzbs,
+/obj/item/clothing/ring/topazbs,
+/obj/item/clothing/ring/diamondbs,
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/under/cave/licharena/bossroom)
 "tSz" = (
