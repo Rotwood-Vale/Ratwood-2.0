@@ -184,6 +184,7 @@
 		/obj/item/ammo_box/magazine/timesoldier_fire = 3,
 
 		/obj/item/flashlight/flare/torch/lantern = 1,
+		/obj/item/timesoldier/grenade/stick = 3,
 
 		/obj/item/reagent_containers/food/snacks/rogue/timesoldier/ferenchow = 4,
 		/obj/item/reagent_containers/food/snacks/rogue/meat/coppiette = 2,
