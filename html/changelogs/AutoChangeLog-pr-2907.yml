@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - bugfix: "Fixed Crocs Armory and Rosewood/Blackoak foreign trade vessels coming to trade empty-handed."
