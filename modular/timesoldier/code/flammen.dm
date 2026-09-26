@@ -206,6 +206,7 @@
 // HEI LONG PAO
 
 
+
 /obj/item/gun/ballistic/timesoldier_fire_wep
 	name = "Hei Long Pao"
 	desc = "<span class='red'><i>Created in the Great Jade Empire, this Xinyi piece of arcyne wonder is now MY TOY. Such wondrous carnage I shall sow!</i></span>"
@@ -213,7 +214,10 @@
 	icon = 'modular/timesoldier/sprites/nu_guns.dmi'
 	icon_state = "heilong_e"
 
-	experimental_inhand = FALSE
+	experimental_inhand = TRUE
+	experimental_inhand = TRUE
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	bigboy = TRUE
 
 	mag_type = /obj/item/ammo_box/magazine/timesoldier_fire
@@ -234,6 +238,8 @@
 	load_sound = 'modular/timesoldier/sounds/wepons/cannon_load.ogg'
 	load_empty_sound = 'modular/timesoldier/sounds/wepons/cannon_load.ogg'
 	fire_sound = 'modular/timesoldier/sounds/wepons/cannon.ogg'
+	vary_fire_sound = FALSE
+	load_sound_vary = FALSE
 
 	load_sound_volume = 70
 	fire_sound_volume = 100
@@ -250,6 +256,60 @@
 	recoil = 2
 
 
+/obj/item/gun/ballistic/timesoldier_fire_wep/Initialize(mapload)
+	. = ..()
+
+	// spawnwithmagazine = FALSE makes ballistic guns start locked.
+	// The Hei Long Pao should be ready to accept and chamber a canister.
+	bolt_locked = FALSE
+	update_icon()
+
+
+/obj/item/gun/ballistic/timesoldier_fire_wep/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list(
+					"shrink" = 0.8,
+					"sx" = -7, "sy" = 6,
+					"nx" = 7,  "ny" = 6,
+					"wx" = -2, "wy" = 3,
+					"ex" = 1,  "ey" = 3,
+					"northabove" = 0,
+					"southabove" = 1,
+					"eastabove" = 1,
+					"westabove" = 0,
+					"nturn" = -43,
+					"sturn" = 43,
+					"wturn" = 30,
+					"eturn" = -30,
+					"nflip" = 0,
+					"sflip" = 8,
+					"wflip" = 8,
+					"eflip" = 0
+				)
+
+			if("wielded")
+				return list(
+					"shrink" = 0.8,
+					"sx" = 5,  "sy" = -2,
+					"nx" = -5, "ny" = -1,
+					"wx" = -8, "wy" = 2,
+					"ex" = 8,  "ey" = 2,
+					"northabove" = 0,
+					"southabove" = 1,
+					"eastabove" = 1,
+					"westabove" = 1,
+					"nturn" = -45,
+					"sturn" = 45,
+					"wturn" = 0,
+					"eturn" = 0,
+					"nflip" = 8,
+					"sflip" = 0,
+					"wflip" = 8,
+					"eflip" = 0
+				)
 
 // WIELDING
 
@@ -314,8 +374,8 @@
 
 /datum/status_effect/debuff/timesoldier_scorcher_agony
 	id = "timesoldier_scorcher_agony"
-	duration = 12 SECONDS
-	tick_interval = 3 SECONDS
+	duration = 15 SECONDS
+	tick_interval = 5 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 
@@ -324,10 +384,10 @@
 	. = ..()
 
 	if(owner.stat == CONSCIOUS && !HAS_TRAIT(owner, TRAIT_NOPAIN))
+		to_chat(owner, span_userdanger("FUCK!! THEY'RE TRYING TO BURN ME ALIVE!!"))
 		owner.emote("firescream", forced = TRUE)
 
 	return TRUE
-
 
 /datum/status_effect/debuff/timesoldier_scorcher_agony/tick()
 	if(!owner || owner.stat != CONSCIOUS)
@@ -340,4 +400,15 @@
 		qdel(src)
 		return
 
+	var/pain_message = pick(
+		"IT BURNS!! THE PAIN IS UNBEARABLE!!",
+		"MY FLESH IS BURNING OFF MY BONES!!",
+		"THE PAIN IS SEARING INTO MY NERVES!!",
+		"I CAN'T BEAR THIS AGONY!! KILL ME PLEASE!!",
+		"PLEASE END MY SUFFERING!!",
+		"OH GODS!!!"
+	)
+
+	to_chat(owner, span_userdanger(pain_message))
 	owner.emote("firescream", forced = TRUE)
+
