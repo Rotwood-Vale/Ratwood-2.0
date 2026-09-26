@@ -1613,58 +1613,6 @@
 
 	L.AdjustKnockdown(2)
 
-// escalating buffs applied on bleed out tied to TRAIT_JOURNEYS_END, currently only used by mistwalker
-/atom/movable/screen/alert/status_effect/buff/journey_ending
-	name = "An end in sight..."
-	desc = "Is this to be my story?"
-	icon_state = "buff"
-
-/atom/movable/screen/alert/status_effect/buff/journey_end
-	name = "The chapter's closing."
-	desc = "Treading the fine line of lyfe and death."
-	icon_state = "buff"
-
-/atom/movable/screen/alert/status_effect/buff/journey_end_final
-	name = "The final act!"
-	desc = "A death worthy of song!"
-	icon_state = "buff"
-
-/datum/status_effect/buff/journey_ending
-	id = "journey_ending"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_ending
-	effectedstats = list(STATKEY_SPD = 2, STATKEY_WIL = 2)
-	duration = -1
-
-/datum/status_effect/buff/journey_end
-	id = "journey_end"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end
-	effectedstats = list(STATKEY_STR = 2, STATKEY_SPD = 3, STATKEY_WIL = 2, STATKEY_CON = 2)
-	duration = -1
-
-/datum/status_effect/buff/journey_end_final //takes ages for them to die to bloodloss, but they *do* die to it
-	id = "journey_end_final"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end_final
-	effectedstats = list(STATKEY_STR = 3, STATKEY_SPD = 4, STATKEY_WIL = 4, STATKEY_CON = 4)
-	duration = -1
-
-/datum/status_effect/buff/journey_end_final/on_apply()
-	. = ..()
-	ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
-	to_chat(owner, span_warning("You feel a wave of calming tides throughout your body... Are you truly free?"))
-
-/datum/status_effect/buff/journey_end_final/on_remove()
-	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
-	to_chat(owner, span_warning("The tides of your failures were too strong.. It seems your freedom will have to wait another dae.."))
-
-/datum/status_effect/buff/journey_end/on_apply()
-	. = ..()
-	to_chat(owner, span_warning("You feel the raging currents coursing through your veins.."))
-
-/datum/status_effect/buff/journey_ending/on_apply()
-	. = ..()
-	to_chat(owner, span_warning("You feel the lake of guilt swallowing you whole."))
-
 /datum/status_effect/buff/stagehands_silence
 	id = "Stagehand"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/stagehands_silence
