@@ -169,23 +169,23 @@
 	var/woodtotal = 1
 	switch (skill_level) //how many planks you get is random, but higher with more carpentry skill
 		if (0)
-			woodtotal = 1
+			woodtotal = 3
 		if (1)
-			woodtotal = 1
+			woodtotal = 4
 		if (2)
-			woodtotal = pick(1,2)
+			woodtotal = pick(5,6)
 		if (3)
-			woodtotal = pick(1,2,3)
+			woodtotal = pick(7,8,9)
 		if (4)
-			woodtotal = pick(2,3)
+			woodtotal = pick(10,11,12)
 		if (5)
-			woodtotal = pick(2,3,4)
+			woodtotal = pick(13,14)
 		if (6)
-			woodtotal = pick(3,4)
+			woodtotal = pick(15,16)
 		else
-			woodtotal = 1
+			woodtotal = 3
 	if(HAS_TRAIT(user, TRAIT_MASTER_CARPENTER)) //we give extra to those in the role
-		woodtotal += pick(1,2)
+		woodtotal += pick(2,3)
 	if(I.tool_behaviour == TOOL_SAW)
 		playsound(get_turf(src.loc), 'sound/foley/sawing.ogg', 100)
 		user.visible_message("<span class='notice'>[user] starts sawing planks from [src].</span>")
@@ -455,6 +455,7 @@
 	sellprice = 4
 	bundletype = /obj/item/natural/bundle/plank
 	smeltresult = /obj/item/ash
+	metalizer_result = /obj/item/rogueore/tin
 
 /obj/item/natural/wood/plank/attack_right(mob/living/user)
 	if(user.get_active_held_item())
@@ -496,10 +497,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	stackname = "plank"
 	stacktype = /obj/item/natural/wood/plank
-	maxamount = 6
+	maxamount = 20
 	icon1 = "plankbundle2"
 	icon1step = 3
 	icon2 = "plankbundle3"
 	icon2step = 5
 	smeltresult = /obj/item/ash
-	metalizer_result = /obj/item/rogueore/tin
