@@ -175,6 +175,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/minstr_req = FALSE
 	/// %-age of our raw damage that is dealt to armor or weapon on hit / parry / clip.
 	var/intdamage_factor = 1
+	/// Wound damage multiplier while the attacker is on weak intent. 1 leaves the wound unchanged.
+	var/weak_wound_mult = 1
 
 	var/item_quality = ITEM_QUALITY_STANDARD
 	var/has_item_quality = FALSE

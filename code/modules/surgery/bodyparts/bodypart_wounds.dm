@@ -185,7 +185,11 @@
 			do_crit = FALSE
 	testing("bodypart_attacked_by() dam [dam]")
 
-	var/datum/wound/dynwound = manage_dynamic_wound(bclass, dam, armor)
+	var/wound_dam = dam
+	if(weapon && istype(user?.rmb_intent, /datum/rmb_intent/weak))
+		wound_dam = max(0, wound_dam * clamp(weapon.weak_wound_mult, 0, 1))
+
+	var/datum/wound/dynwound = manage_dynamic_wound(bclass, wound_dam, armor)
 
 	if(do_crit)
 		var/datum/component/silverbless/psyblessed = weapon?.GetComponent(/datum/component/silverbless)
