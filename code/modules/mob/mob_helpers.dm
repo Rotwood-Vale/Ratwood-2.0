@@ -171,6 +171,7 @@
 	return newphrase
 
 /// Makes you talk like you got cult stunned, which is slurring but with some dark messages
+// Except up, its Psyphied so this is what you get from being sundered instead, thank you whoever left this, I will cook.
 /proc/cultslur(n) // Inflicted on victims of a stun talisman
 	var/phrase = STRIP_HTML_SIMPLE(n,MAX_MESSAGE_LEN)
 	var/leng = length_char(phrase)
@@ -189,14 +190,13 @@
 			if(LOWER_TEXT(newletter)=="u")
 				newletter="oo"
 			if(LOWER_TEXT(newletter)=="c")
-				newletter=" NAR "
+				newletter="lr"
+			if(LOWER_TEXT(newletter)=="e")
+				newletter="do"
+			if(LOWER_TEXT(newletter)=="zizo") //YOU WISH
+				newletter="psy"
 			if(LOWER_TEXT(newletter)=="s")
-				newletter=" SIE "
-		if(prob(25))
-			if(newletter==" ")
-				newletter=" no hope... "
-			if(newletter=="H")
-				newletter=" IT COMES... "
+				newletter="zr"
 
 		switch(rand(1,15))
 			if(1)
@@ -206,9 +206,9 @@
 			if(3)
 				newletter="fth"
 			if(4)
-				newletter="nglu"
+				newletter="zghl"
 			if(5)
-				newletter="glor"
+				newletter="psyzl"
 			else
 				;;
 		newphrase+="[newletter]";counter-=1

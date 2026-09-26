@@ -248,7 +248,7 @@
 	name = "Consecratia"
 	desc = "The weight of His anguish, His pain, His hope and His love for humenkind - all hanging on the ornamental silver-steel head chained to this arm. <br><br>A declaration of love for all that Psydon lives for, and a crushing reminder to the arch-nemesis that they will not triumph as long as He endures."
 	icon_state = "psymorningstar"
-	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/mace/smash/flailrange)
+	possible_item_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange, /datum/intent/flail/sweep)//castlevania type shit
 
 /obj/item/rogueweapon/flail/sflail/psyflail/relic/ComponentInitialize()
 	AddComponent(\
