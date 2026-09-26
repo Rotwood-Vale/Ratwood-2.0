@@ -25,7 +25,7 @@
 	var/gain_emote = "paincrit"
 
 	// Limbs bleed worse, but bleed for far shorter periods than slashes etc.
-	bleed_rate = 15				// Artery is 20, but doesn't stop.
+	bleed_rate = 7				// Artery is 20, but doesn't stop.
 	clotting_threshold = 0.25	// Grusome slash is 0.4
 	clotting_rate = 0.60		// Normally it's only 0.02, this is huge compared to that.
 	bypass_bloody_wound_check = TRUE	//We bypass this proc-checkfor fractures.
@@ -121,7 +121,7 @@
 		"The cranium is torn!",
 	)
 	embed_chance = 100	// Didn't we remove embeding..?
-	bleed_rate = 10		// Aooouuugh.. my brain..
+	bleed_rate = 5		// Aooouuugh.. my brain..
 	knockout = 20
 	paralysis = TRUE
 
@@ -209,7 +209,7 @@
 	)
 	mortal = FALSE
 	whp = 50
-	bleed_rate = 5				//Lower than others, still bad though. 
+	bleed_rate = 3				//Lower than others, still bad though. 
 	clotting_threshold = 0.3	//Slightly higher still
 	clotting_rate = 0.1			//Slower clotting, not bad though for bleeder wound.
 
@@ -266,8 +266,8 @@
 		"The ribcage caves in!",
 	)
 	whp = 50
-	bleed_rate = 25				//Higher than artery
-	clotting_threshold = 1		//Will always bleed bad
+	bleed_rate = 15
+	clotting_threshold = 0.5
 	clotting_rate = 1			//Good clotting rate; within 24 ticks (~3 seconds) will lower heavily.
 	shatter_wound = TRUE
 
@@ -299,8 +299,8 @@
 	whp = 50
 	gain_emote = "groin"	//MY PIINTLE!!!!
 	mortal = FALSE
-	bleed_rate = 5
-	clotting_threshold = 1
+	bleed_rate = 3
+	clotting_threshold = 0.5
 	clotting_rate = 0.5
 
 /datum/wound/fracture/groin/on_mob_gain(mob/living/affected)
