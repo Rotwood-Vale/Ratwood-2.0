@@ -187,6 +187,10 @@
 			ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
 		if(/datum/patron/old_god)
 			H.change_stat(STATKEY_WIL, 2) //ENDVRE. You give up useful miracles, rites and miracle-healing from other Heretics, so you'll need this.
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity) //To get your blood back.
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydon/enduring_blast) //99% rock chance, 1% boulder, hilarious.
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_retribution)//Rebuke, but blood cost and worse.
+
 			var/heavypsyfashion = list("Traditionalist", "Orthodoxist", "Reformist") //Only outfits differ.
 			var/heavypsyfashion_choice = input(H, "What is your faith in HIM like?", "HE LYVES, HE ENDURES, HE DIES") as anything in heavypsyfashion
 			switch(heavypsyfashion_choice)
