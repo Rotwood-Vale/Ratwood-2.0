@@ -226,6 +226,8 @@ GLOBAL_LIST_INIT(foreign_positions, list(
 	"Suitor",
 	"Orthodoxist",
 	"Migrant",
+	"Horde Rider",
+	"Warband Sworn",
 ))
 
 GLOBAL_LIST_INIT(test_positions, list(
