@@ -20,6 +20,15 @@
 		targeted.ignite_mob()
 		targeted.visible_message(span_danger("[source] sets [targeted] on fire!"))
 
+/datum/magic_item/mythic/infernalflame/on_hit_response(obj/item/I, mob/living/carbon/human/owner, mob/living/carbon/human/attacker)
+	if(!isliving(attacker) || attacker == owner)
+		return
+	if(!try_start_cooldown(owner, INFERNAL_FLAME_COOLDOWN))
+		return
+	attacker.adjust_fire_stacks(10)
+	attacker.ignite_mob()
+	attacker.visible_message(span_danger("[I] sets [attacker] on fire!"))
+
 /datum/magic_item/mythic/infernalflame/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
 	if(!try_start_cooldown(firer, INFERNAL_FLAME_COOLDOWN))
 		if(!warned)
@@ -61,6 +70,14 @@
 		targeted.apply_status_effect(/datum/status_effect/freon/freezing)
 		targeted.visible_message(span_danger("[source] freezes [targeted] solid!"))
 		last_used = world.time
+
+/datum/magic_item/mythic/freezing/on_hit_response(obj/item/I, mob/living/carbon/human/owner, mob/living/carbon/human/attacker)
+	if(!isliving(attacker) || attacker == owner)
+		return
+	if(!try_start_cooldown(owner, FREEZING_COOLDOWN))
+		return
+	attacker.apply_status_effect(/datum/status_effect/freon/freezing)
+	attacker.visible_message(span_danger("[I] freezes [attacker] solid!"))
 
 /datum/magic_item/mythic/briarcurse
 	name = "Briar's curse"
