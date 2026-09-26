@@ -201,7 +201,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/check_sound_tokens,
 	/client/proc/check_sound_area,
 	/client/proc/point_ambience_mode,
-	/client/proc/point_ambience_counters,
+	/client/proc/point_ambience_server,
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,

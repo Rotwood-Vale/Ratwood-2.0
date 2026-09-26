@@ -77,6 +77,19 @@ GLOBAL_DATUM(point_ambience_survey, /datum/point_ambience_survey)
 /datum/point_ambience_survey/proc/time_real_service(client/listener_client)
 	return
 
+/**
+ * Set while the Counters instrument holds a snapshot, null otherwise, and declared here for the same
+ * reason as the survey above. A snapshot turns on the rustg timing pairs in fire() and the drain,
+ * and the hook below is the one call it overrides. The Server verb never sets it
+ */
+GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
+
+/datum/point_ambience_counters
+
+/// Sorts a step that passed the interval by whether a silence gate could have skipped it
+/datum/point_ambience_counters/proc/observe_move_gate(client/listener_client, mob/listener, discontinuous)
+	return
+
 SUBSYSTEM_DEF(point_ambience)
 	name = "Point Ambience"
 	/**
@@ -407,12 +420,6 @@ SUBSYSTEM_DEF(point_ambience)
 	 */
 	var/sends_this_service = 0
 	/**
-	 * Whether the service running right now reached the walk at all, reset with the send count. A
-	 * standing shortcut and a listener with no turf both leave the client's candidate list holding
-	 * some other cell's, so anything reading it has to know which services ranked a box
-	 */
-	var/walked_this_service = FALSE
-	/**
 	 * Whether the service running right now rebuilt its candidate set, reset with the send count.
 	 * One step in cell_size does, so if the dear tail of the cost distribution is mostly these,
 	 * the spike is the rebuild. If it looks like everything else, the spike is the server
@@ -470,6 +477,27 @@ SUBSYSTEM_DEF(point_ambience)
 	var/door_listeners_marked = 0
 	var/door_gather_ms = 0
 	/**
+	 * Cumulative, always on and never timed, for the Server verb. The four usages sum world.tick_usage
+	 * across each phase of fire(), in percent of a tick: a built-in read, not an FFI timer, so they
+	 * cost nothing a live server would notice. Inline services, with the queue off, are not in them
+	 */
+	var/drain_usage = 0
+	var/walk_usage = 0
+	var/fade_usage = 0
+	var/door_usage = 0
+	/// Services outside the standing walk that found nothing in range and nothing playing, which is
+	/// what a silence gate would skip
+	var/moving_silent = 0
+	var/sends_total = 0
+	/// Services that reached the walk, standing ones included, rather than returning at the standing
+	/// shortcut. What sends and wall checks happen in, so what the Server verb divides them by
+	var/services_walked = 0
+	/// The longest queue wait since the Server verb last started a window
+	var/queue_wait_window_max = 0
+	/// Drains, and the services in them, by how many ran together: 1, 2, 3 to 4, 5 to 8, 9 or more
+	var/list/batch_drains = list(0, 0, 0, 0, 0)
+	var/list/batch_services = list(0, 0, 0, 0, 0)
+	/**
 	 * The echo array a muffled send carries, whether the muffle came from a storey or a corner.
 	 * Built once and never written after, so one
 	 * list serves every client. A send is snapshotted, so sharing it is safe
@@ -487,7 +515,9 @@ SUBSYSTEM_DEF(point_ambience)
 	 * A time cap gives coarser SPATIAL resolution the faster you move, and what a listener hears
 	 * depends on tiles between updates rather than seconds: at speed 15 an interval of 5 is one
 	 * service every four tiles, a wall sconce's whole range in one jump from near-silence to full.
-	 * 3 holds it to two tiles. Intent rather than measured speed, so both values stay hard ceilings
+	 * 3 holds it to two tiles. Intent rather than measured speed, so both values stay hard ceilings.
+	 * move_service_steps below is what bounds the tiles now: at 2 a natural runner is served every
+	 * second step, sooner than this, which then matters only with steps at 0
 	 */
 	var/move_service_interval_running_override = 0
 	/**
@@ -534,11 +564,10 @@ SUBSYSTEM_DEF(point_ambience)
 	var/last_drop_tick_index = 0
 	/**
 	 * The move hook marks the client here instead of servicing inline, and fire() drains the set
-	 * every tick back to back, up to max_services_per_tick. A service costs several times less run
-	 * straight after another than run on its own, the processor's predictor and cache state for
-	 * this path being gone after a tick of other work and back after one pass, so draining a tick's
-	 * movers together pays that once. An entry is the CLIENT, served at wherever they are when
-	 * their turn comes, so nothing goes stale. 0 leaves the inline path with the two rails above
+	 * every tick, oldest first, up to max_services_per_tick. An entry is the CLIENT, served at
+	 * wherever they are when their turn comes, so nothing goes stale. Whether a service run straight
+	 * after another is cheaper than one run alone was measured and not settled. 0 leaves the inline
+	 * path with the two rails above
 	 */
 	var/use_queue = FALSE
 	/// client -> world.time it was marked. Marking is idempotent, so a client keeps its place however
@@ -1502,16 +1531,23 @@ SUBSYSTEM_DEF(point_ambience)
 		return
 	// Ahead of both early returns below, since a listener who stops walking the moment they leave a
 	// range is never served again and their fade still has to finish
+	var/started
 	if(length(fading) && world.time >= fade_next_due)
+		started = TICK_USAGE
 		run_fades()
+		fade_usage += TICK_USAGE - started
 	// Before the drain, so the listeners a door marks are served this fire
 	if(length(changed_doors) && world.time >= next_door_recheck)
+		started = TICK_USAGE
 		recheck_doors()
+		door_usage += TICK_USAGE - started
 	// Whatever is marked, whether or not the queue is still on: switching it off must not strand
 	// anyone already in the set
 	var/drained = TRUE
 	if(length(dirty_clients))
+		started = TICK_USAGE
 		drained = drain_dirty()
+		drain_usage += TICK_USAGE - started
 	// A paused drain must still allow a due or unfinished standing walk to progress.
 	// Its own tick check limits the work and currentrun retains the remaining clients
 	if(!drained && !length(currentrun) && world.time < next_standing_walk)
@@ -1525,6 +1561,7 @@ SUBSYSTEM_DEF(point_ambience)
 		natural_run_step = CONFIG_GET(number/movedelay/run_delay) - 0.5
 	if(!length(currentrun))
 		return
+	started = TICK_USAGE
 	in_standing_walk = TRUE
 	// Timed only while a snapshot is held. The pair is two FFI calls, worth paying to answer a
 	// question and not worth paying when nobody is asking
@@ -1587,6 +1624,7 @@ SUBSYSTEM_DEF(point_ambience)
 	if(timing)
 		standing_walk_ms += rustg_time_microseconds("pa_walk") / 1000
 	in_standing_walk = FALSE
+	walk_usage += TICK_USAGE - started
 
 /**
  * Serves the clients marked by the move hook, back to back, oldest mark first, up to the budget.
@@ -1620,6 +1658,7 @@ SUBSYSTEM_DEF(point_ambience)
 			var/waited = world.time - marked
 			queue_wait_total += waited
 			queue_wait_max = max(queue_wait_max, waited)
+			queue_wait_window_max = max(queue_wait_window_max, waited)
 			queue_served++
 			served++
 			var/services_before = services_total
@@ -1641,11 +1680,15 @@ SUBSYSTEM_DEF(point_ambience)
 			. = FALSE
 			break
 	var/ran = drain_services - services_at_start
-	if(!timing || !ran)
+	if(!ran)
+		return
+	var/bucket = ran <= 2 ? ran : (ran <= 4 ? 3 : (ran <= 8 ? 4 : 5))
+	batch_drains[bucket]++
+	batch_services[bucket] += ran
+	if(!timing)
 		return
 	var/took = rustg_time_microseconds("pa_drain") / 1000
 	drain_ms += took
-	var/bucket = ran <= 2 ? ran : (ran <= 4 ? 3 : (ran <= 8 ? 4 : 5))
 	drain_size_services[bucket] += ran
 	drain_size_ms[bucket] += took
 
@@ -1683,7 +1726,6 @@ SUBSYSTEM_DEF(point_ambience)
 		return
 	services_total++
 	sends_this_service = 0
-	walked_this_service = FALSE
 	rebuilt_this_service = FALSE
 	ranked_candidates_this_service = null
 	occlusion_checks_this_service = 0
@@ -1756,7 +1798,7 @@ SUBSYSTEM_DEF(point_ambience)
 						walks_version++
 					else
 						walks_volume++
-				walked_this_service = TRUE
+				services_walked++
 				nearest_by_category = nearest_sources(listener_turf, listener_client)
 				listener_client.point_ambience_cache_turf = listener_turf
 				listener_client.point_ambience_cache_version = static_version
@@ -1773,6 +1815,8 @@ SUBSYSTEM_DEF(point_ambience)
 	// Nothing answered, nothing playing and no torch in hand is most of the map, and every
 	// iteration below would find nothing to do
 	if(!self_source && !length(nearest_by_category) && !length(sources))
+		if(!in_standing_walk)
+			moving_silent++
 		return
 	var/toggles = listener_client.prefs?.toggles
 	// Sconces, standing fires and the listener's own torch are all this category, so one test turns
@@ -1843,6 +1887,7 @@ SUBSYSTEM_DEF(point_ambience)
 			slot[POINT_AMBIENCE_SLOT_RUNNER_UP] = scratch_second[category]
 		var/sent
 		sends_this_service++
+		sends_total++
 		sent = slim_send(listener, listener_client, category, nearest, fresh, had_previous, FALSE, slot, clip_advance, centre)
 		// Nothing usable was sent, so null what was playing or it repeats client-side at a stale
 		// volume. Keyed on what was playing, not fresh: a failed switch must still silence it
@@ -2573,8 +2618,8 @@ SUBSYSTEM_DEF(point_ambience)
 		urgent = TRUE
 	if(!urgent && move_service_interval && world.time < listener_client.point_ambience_next_service)
 		return
-	if(GLOB.point_ambience_counters && measure_move_gate)
-		observe_move_gate(listener_client, listener, discontinuous)
+	if(GLOB.point_ambience_counters)
+		GLOB.point_ambience_counters.observe_move_gate(listener_client, listener, discontinuous)
 	// Two rails, for the inline path only. Both sit after the interval gate and before the stamp.
 	// See the proc doc
 	if(!use_queue && max_services_per_tick)
@@ -3193,7 +3238,7 @@ SUBSYSTEM_DEF(point_ambience)
  * needs its own reach needs its own category.
  */
 /datum/point_ambience_category
-	/// The name a SILENCE_POINT_AMBIENCE line in config.txt names this category by
+	/// The name a SILENCE_POINT_AMBIENCE line in config/sound.txt names this category by
 	var/config_name
 	var/sound_file
 	/**

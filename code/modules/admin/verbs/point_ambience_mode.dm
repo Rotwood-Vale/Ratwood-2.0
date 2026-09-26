@@ -1,74 +1,156 @@
-/// Switches SSpoint_ambience between its modes and sets every move-service knob, live. The
-/// POINT_AMBIENCE_* config entries seed the same values at boot and document what each one costs.
-/// POINT_AMBIENCE_CROSS_FLOOR is deliberately not here: it changes what players hear, not load.
+/**
+ * Point ambience's load settings, live, from one menu that lists each with its current value. Pick
+ * one to change it and the menu comes back until cancelled. Every change is logged on its own.
+ *
+ * The POINT_AMBIENCE_* config entries seed the same values at boot and say what each costs. Only
+ * settings that change load are here. Cross floor, walls and how doors count change what players
+ * hear, so they are config or VV only
+ */
 /client/proc/point_ambience_mode()
 	set category = "Debug"
 	set name = "Point Ambience Mode"
 	if(!check_rights(R_DEBUG))
 		return
-	var/static/list/mode_names = list(
-		"Live" = POINT_AMBIENCE_LIVE,
-		// Fallback is deliberately NOT offered HERE, though POINT_AMBIENCE_MODE can still select it
-		// at boot. Entering it on a running server gives every source a plain looping sound at once,
-		// which at this map's counts is upward of 1800 TIMER_CLIENT_TIME entries in a linearly
-		// scanned list: it delays every other timer in SSsound_loops and is heard as weather
-		// stuttering. Chosen before a round is a different thing from flipped underneath one.
-		"Off" = POINT_AMBIENCE_OFF,
-		// Reaches the settings below without touching the mode. It matters most on a round booted
-		// into fallback, which is not in this list: without this, picking anything at all is a
-		// one-way door out of fallback, so an admin could not adjust the interval without ending it.
-		"Keep current" = POINT_AMBIENCE_MODE_UNCHANGED,
-	)
-	var/current
-	for(var/name in mode_names)
-		if(mode_names[name] == SSpoint_ambience.mode)
-			current = name
-	// Nothing matched, so the config booted this round on fallback loops. Default to changing
-	// nothing, and say so, because the list above cannot get back there: leaving is one click and
-	// returning needs a restart.
-	if(!current)
-		current = "Keep current"
-		to_chat(src, span_warning("Point ambience is running on FALLBACK LOOPS, set by POINT_AMBIENCE_MODE at boot. This verb cannot switch back to it. Leaving it now means plain loops stay gone until the next round."))
-	var/choice = input(src, "Live serves every client the nearest sources per step and per tick. Off is silent. Fallback loops are set by config at boot and are not offered here, because switching into them on a running server gives every source a plain looping sound at once and delays everything else in SSsound_loops.\n\nFirst of eight prompts. Cancel here leaves the verb entirely; pick \"Keep current\" to change nothing and go on to the seven move-service settings. Fallback is all or nothing; a single category cannot be moved onto plain loops.", "Point Ambience Mode, 1 of 8", current) as null|anything in mode_names
-	if(!choice)
+	var/datum/controller/subsystem/point_ambience/ambience = SSpoint_ambience
+	while(TRUE)
+		var/interval = ambience.move_service_interval
+		var/running = ambience.move_service_interval_running_override
+		var/steps = ambience.move_service_steps
+		var/cap = ambience.max_services_per_tick
+		var/door_period = ambience.door_recheck ? ambience.door_recheck_period : 0
+		var/list/entries = list(
+			"Mode: [point_ambience_mode_name(ambience.mode)]" = "mode",
+			"Move interval: [interval] ds" = "interval",
+			"Running override: [running ? "[running] ds" : "none"]" = "running",
+			"Steps: [steps ? steps : "off"]" = "steps",
+			"Speed cutoff: [ambience.speed_cutoff ? "on" : "off"]" = "cutoff",
+			"Services per tick: [cap ? cap : "no cap"]" = "cap",
+			"Queue: [ambience.use_queue ? "on" : "off"]" = "queue",
+			"Standing skip: [ambience.standing_skip] ds" = "skip",
+			"Door re-check: [door_period ? "every [door_period] ds" : "off"]" = "doors",
+			"Reset all but the mode to config" = "reset",
+		)
+		var/not_live = (ambience.mode == POINT_AMBIENCE_LIVE) ? "" : " Point ambience is not live, so these take effect when it is."
+		var/pick = input(src, "Point ambience load settings. Pick one to change it, cancel when done.[not_live]", "Point Ambience Mode") as null|anything in entries
+		if(!pick)
+			return
+		switch(entries[pick])
+			if("mode")
+				if(ambience.mode == POINT_AMBIENCE_FALLBACK)
+					to_chat(src, span_warning("Point ambience is running on FALLBACK LOOPS, set by POINT_AMBIENCE_MODE at boot. This verb cannot return to them, so leaving them lasts until the next round."))
+				var/choice = input(src, "Live serves every client the nearest sources per step and per tick. Off is silent. Fallback loops are a boot-time choice and are not offered: switching into them on a running round gives every source a plain looping sound at once and delays everything else in SSsound_loops.", "Point Ambience Mode", point_ambience_mode_name(ambience.mode)) as null|anything in list("Live", "Off")
+				var/new_mode = (choice == "Live") ? POINT_AMBIENCE_LIVE : POINT_AMBIENCE_OFF
+				if(!choice || new_mode == ambience.mode)
+					continue
+				point_ambience_setting_changed("mode", point_ambience_mode_name(ambience.mode), choice)
+				ambience.set_mode(new_mode)
+			if("interval")
+				var/binds = steps ? " Steps is [steps], so a natural mover is served by step count sooner and this binds only for one stepping slower than [round(interval / steps, 0.1)] ds a step." : " Steps is off, so this sets the spacing for everyone moving."
+				var/value = point_ambience_number("Longest time in deciseconds between two move-hook services of one client. 0 serves on every step.[binds]", "Move Interval", interval)
+				if(!isnull(value))
+					point_ambience_setting_changed("move interval", interval, value)
+					ambience.move_service_interval = value
+			if("running")
+				var/binds = steps ? " Steps is [steps], so a natural runner is served by step count sooner and this binds only for one stepping slower than [round((running ? running : interval) / steps, 0.1)] ds a step." : ""
+				var/value = point_ambience_number("Replaces the move interval for a client on run intent. 0 means no override, so runners use the move interval, not that they are uncapped.[binds]", "Running Override", running)
+				if(!isnull(value))
+					point_ambience_setting_changed("running override", running, value)
+					ambience.move_service_interval_running_override = value
+			if("steps")
+				var/value = point_ambience_number("Most steps a client covers between move-hook services at a natural pace, walking or running. It only shortens the two intervals, which stay as caps, and 0 leaves them alone. Measured on the lap, 2 served a walker 1.67 times a second against 1.12 on interval 7 alone: 50% more services, about 0.04 ms/s more per walker.", "Steps", steps)
+				if(!isnull(value))
+					point_ambience_setting_changed("steps", steps, value)
+					ambience.move_service_steps = value
+			if("cutoff")
+				var/value = point_ambience_toggle("A client stepping faster than a natural speed 15 run, from a drug, a power, a shapeshift or a fast mount, hears no point ambience while moving. A torch in their own hand keeps playing. Off serves them like anyone else.", "Speed Cutoff", ambience.speed_cutoff)
+				if(!isnull(value))
+					point_ambience_setting_changed("speed cutoff", ambience.speed_cutoff ? "on" : "off", value ? "on" : "off")
+					ambience.speed_cutoff = value
+			if("cap")
+				var/value = point_ambience_number("Ceiling on move-hook services in one tick across every client. With the queue on it is the drain's budget and the rest wait for the next tick. Inline, excess steps are refused, and a gate also refuses once the tick is half spent. 0 turns off both. On rounds 4540 and 4541, 103 to 111 players, demand at steps 2 averaged 1.6 to 2.5 services a tick and the busiest two seconds about 4 to 5.5, derived from measured rates, so 8 is three to five times the average.", "Services Per Tick", cap)
+				if(!isnull(value))
+					point_ambience_setting_changed("services per tick", cap, value)
+					ambience.max_services_per_tick = value
+			if("queue")
+				// Turning it off strands nobody: fire() drains whatever is still marked whether or not
+				// the queue is on, so the set empties on the next tick and only new steps go inline
+				var/value = point_ambience_toggle("On: a step marks the client, and the subsystem serves everyone marked on its next fire, oldest first, up to the cap and inside its own tick budget. Off: each step is served inline inside Move(), at the end of a tick after everything else has spent its share, where the only rail refuses services once the tick is half spent. Off makes a loaded server worse, not cheaper.", "Queue", ambience.use_queue)
+				if(!isnull(value))
+					point_ambience_setting_changed("queue", ambience.use_queue ? "on" : "off", value ? "on" : "off")
+					ambience.use_queue = value
+			if("skip")
+				var/value = point_ambience_number("Deciseconds within which the once-a-second walk passes over a client a step already served. A walker served by movement would otherwise be walked again at a tile they are about to leave. 0 never skips. The price is the catch-up after stopping: the worst case becomes this plus one second.", "Standing Skip", ambience.standing_skip)
+				if(!isnull(value))
+					point_ambience_setting_changed("standing skip", ambience.standing_skip, value)
+					ambience.standing_skip = value
+			if("doors")
+				var/value = point_ambience_number("Deciseconds between gathers of the listeners near a door that opened or shut, who are then served again, so someone standing still hears the change. 0 turns it off, and they keep what they heard until they step. A door worked back and forth is gathered once a period, so a shorter one reacts sooner and costs more. Measured with one listener: about 24 us a gather plus 72 us for each listener served again.", "Door Re-check", door_period)
+				if(!isnull(value))
+					point_ambience_setting_changed("door re-check", door_period, value)
+					ambience.door_recheck = value > 0
+					if(value)
+						ambience.door_recheck_period = value
+					else
+						ambience.changed_doors.Cut()
+			if("reset")
+				var/confirm = input(src, "Reset every setting but the mode to its config value, and the door re-check to its default?", "Reset Point Ambience") as null|anything in list("Reset", "Cancel")
+				if(confirm == "Reset")
+					point_ambience_reset_settings()
+
+/// Puts every setting the menu offers, the mode aside, back to its config value, logging each change
+/client/proc/point_ambience_reset_settings()
+	var/datum/controller/subsystem/point_ambience/ambience = SSpoint_ambience
+	var/value = CONFIG_GET(number/point_ambience_move_interval)
+	point_ambience_setting_changed("move interval", ambience.move_service_interval, value)
+	ambience.move_service_interval = value
+	value = CONFIG_GET(number/point_ambience_move_interval_running_override)
+	point_ambience_setting_changed("running override", ambience.move_service_interval_running_override, value)
+	ambience.move_service_interval_running_override = value
+	value = CONFIG_GET(number/point_ambience_move_steps)
+	point_ambience_setting_changed("steps", ambience.move_service_steps, value)
+	ambience.move_service_steps = value
+	value = !!CONFIG_GET(number/point_ambience_speed_cutoff)
+	point_ambience_setting_changed("speed cutoff", ambience.speed_cutoff ? "on" : "off", value ? "on" : "off")
+	ambience.speed_cutoff = value
+	value = CONFIG_GET(number/point_ambience_max_services_per_tick)
+	point_ambience_setting_changed("services per tick", ambience.max_services_per_tick, value)
+	ambience.max_services_per_tick = value
+	value = !!CONFIG_GET(number/point_ambience_queue)
+	point_ambience_setting_changed("queue", ambience.use_queue ? "on" : "off", value ? "on" : "off")
+	ambience.use_queue = value
+	value = CONFIG_GET(number/point_ambience_standing_skip)
+	point_ambience_setting_changed("standing skip", ambience.standing_skip, value)
+	ambience.standing_skip = value
+	// No config entry, so the default in the code
+	value = initial(ambience.door_recheck) ? initial(ambience.door_recheck_period) : 0
+	point_ambience_setting_changed("door re-check", ambience.door_recheck ? ambience.door_recheck_period : 0, value)
+	ambience.door_recheck = initial(ambience.door_recheck)
+	ambience.door_recheck_period = initial(ambience.door_recheck_period)
+
+/// A whole number of at least 0, or null when cancelled
+/client/proc/point_ambience_number(message, title, current)
+	var/value = input(src, message, title, current) as null|num
+	return isnull(value) ? null : max(0, round(value))
+
+/// TRUE or FALSE, or null when cancelled. A list rather than alert(), which has no cancel
+/client/proc/point_ambience_toggle(message, title, current)
+	var/choice = input(src, message, title, current ? "On" : "Off") as null|anything in list("On", "Off")
+	return isnull(choice) ? null : (choice == "On")
+
+/// One admin message and log line per setting that actually changed
+/client/proc/point_ambience_setting_changed(setting, old_value, new_value)
+	if(old_value == new_value)
 		return
-	var/chosen_mode = mode_names[choice]
-	if(chosen_mode != POINT_AMBIENCE_MODE_UNCHANGED)
-		SSpoint_ambience.set_mode(chosen_mode)
-	// Neither setting below is read outside live mode: the move hook returns before the interval,
-	// and torches get no fallback loop whichever way handhelds are set. Both are still worth
-	// setting here, since they take hold the moment live resumes.
-	var/effective_mode = SSpoint_ambience.mode
-	var/inert = (effective_mode == POINT_AMBIENCE_LIVE) ? "" : "\n\nThe current mode does not read this. It takes effect when you switch back to Live."
-	var/interval = input(src, "Minimum deciseconds between move-hook services of one client. 0 serves on every step; 7 caps one listener at roughly 1.4 services a second.[inert]", "Move Service Interval", SSpoint_ambience.move_service_interval) as null|num
-	if(!isnull(interval))
-		SSpoint_ambience.move_service_interval = max(0, interval)
-	var/running = input(src, "Replaces the interval above for a client who is RUNNING, who covers more ground between services. At speed 15 an interval of 5 puts one service every four tiles, a whole sconce's range in one jump; 3 keeps it to two tiles. 0 means NO OVERRIDE, so runners use the value above. It does not mean runners are uncapped.[inert]", "Move Service Interval, Running", SSpoint_ambience.move_service_interval_running_override) as null|num
-	if(!isnull(running))
-		SSpoint_ambience.move_service_interval_running_override = max(0, running)
-	var/steps = input(src, "Most steps a client covers between move-hook services at a natural pace, walking or running. The two intervals above stay as caps and this only shortens them. 2 serves every second step at any natural speed. 0 leaves the intervals alone.[inert]", "Move Service Steps", SSpoint_ambience.move_service_steps) as null|num
-	if(!isnull(steps))
-		SSpoint_ambience.move_service_steps = max(0, round(steps))
-	var/cutoff_now = SSpoint_ambience.speed_cutoff ? "On" : "Off"
-	var/cutoff_choice = alert(src, "Speed cutoff: a client stepping faster than a natural speed 15 run, from a drug, a power, a shapeshift or a fast mount, hears no point ambience while moving. A torch in their own hand keeps playing. Off serves them like anyone else. Currently [cutoff_now].[inert]", "Speed Cutoff", "On", "Off", "Keep current")
-	if(cutoff_choice == "On")
-		SSpoint_ambience.speed_cutoff = TRUE
-	else if(cutoff_choice == "Off")
-		SSpoint_ambience.speed_cutoff = FALSE
-	var/cap = input(src, "Ceiling on move-hook services in one tick, across every client. 0 disables the count cap and the inline tick-usage gate. In a model assuming 150 in-round players at 20 TPS, a third walking every 0.3 seconds and served every third step, 8 is almost three times the mean demand. This is a projection, not a populated-server test. Excess requests stay queued with the queue on, or are refused with it off; the periodic client walk also catches missed moves. These are not fixed latency guarantees. See POINT_AMBIENCE_MAX_SERVICES_PER_TICK in config.txt.[inert]", "Move Services Per Tick", SSpoint_ambience.max_services_per_tick) as null|num
-	if(!isnull(cap))
-		SSpoint_ambience.max_services_per_tick = max(0, cap)
-	// Turning it off strands nobody: fire() drains whatever is still marked whether or not the queue
-	// is on, so the set empties on the next tick and only new steps take the inline path.
-	var/queue_now = SSpoint_ambience.use_queue ? "On" : "Off"
-	var/queue_choice = alert(src, "Queue: a step marks the client and the tick serves everyone marked back to back, up to the cap, instead of servicing inline inside Move(). A service run straight after another costs several times less than one run on its own, so a full tick of movers pays that cost once. Off is the inline path with the cap and tick gate. Currently [queue_now].[inert]", "Move Service Queue", "On", "Off", "Keep current")
-	if(queue_choice == "On")
-		SSpoint_ambience.use_queue = TRUE
-	else if(queue_choice == "Off")
-		SSpoint_ambience.use_queue = FALSE
-	var/skip = input(src, "Deciseconds within which the once-a-second walk passes over a client a step already served. A walker served by movement would otherwise be walked again every second at a tile they are about to leave. 0 never skips. 5 skips recent movement services for up to half a second; 3 uses a shorter window. The price is the catch-up after stopping: the worst case becomes this plus one second.[inert]", "Standing Walk Skip", SSpoint_ambience.standing_skip) as null|num
-	if(!isnull(skip))
-		SSpoint_ambience.standing_skip = max(0, skip)
-	var/summary = "set point ambience to [chosen_mode == POINT_AMBIENCE_MODE_UNCHANGED ? "[SSpoint_ambience.mode == POINT_AMBIENCE_FALLBACK ? "Fallback" : "its current mode"] (unchanged)" : choice], move interval [SSpoint_ambience.move_service_interval][SSpoint_ambience.move_service_interval_running_override ? " ([SSpoint_ambience.move_service_interval_running_override] running)" : ""], steps [SSpoint_ambience.move_service_steps], speed cutoff [SSpoint_ambience.speed_cutoff ? "on" : "off"], cap [SSpoint_ambience.max_services_per_tick] a tick, queue [SSpoint_ambience.use_queue ? "on" : "off"], standing skip [SSpoint_ambience.standing_skip]"
+	var/summary = "set point ambience [setting] from [old_value] to [new_value]"
 	message_admins("[key_name_admin(src)] [summary].")
 	log_admin("[key_name(src)] [summary].")
+
+/proc/point_ambience_mode_name(mode)
+	switch(mode)
+		if(POINT_AMBIENCE_LIVE)
+			return "Live"
+		if(POINT_AMBIENCE_OFF)
+			return "Off"
+		if(POINT_AMBIENCE_FALLBACK)
+			return "Fallback loops"
+	return "unknown"

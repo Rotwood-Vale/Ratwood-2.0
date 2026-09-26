@@ -434,10 +434,7 @@
  * SSpoint_ambience modes. LIVE serves each client the nearest sources per step and per tick.
  * FALLBACK gives each source a plain timer loop instead, cheaper on a full server, attenuation
  * frozen between replays, torches silent. OFF is silent.
- * Not a mode. The Mode verb's "leave it alone" option, so the settings after the mode prompt can be
- * reached without changing it. Never assigned to SSpoint_ambience.mode
  */
-#define POINT_AMBIENCE_MODE_UNCHANGED -1
 #define POINT_AMBIENCE_OFF 0
 #define POINT_AMBIENCE_LIVE 1
 #define POINT_AMBIENCE_FALLBACK 2
