@@ -215,7 +215,6 @@
 	icon_state = "heilong_e"
 
 	experimental_inhand = TRUE
-	experimental_inhand = TRUE
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	bigboy = TRUE
@@ -402,12 +401,11 @@
 
 	var/pain_message = pick(
 		"IT BURNS!! THE PAIN IS UNBEARABLE!!",
-		"MY FLESH IS BURNING OFF MY BONES!!",
+		"MY FLESH IS MELTING OFF MY BONES!!",
 		"THE PAIN IS SEARING INTO MY NERVES!!",
 		"I CAN'T BEAR THIS AGONY!! KILL ME PLEASE!!",
 		"PLEASE END MY SUFFERING!!",
-		"OH GODS!!!"
-	)
+		"OH GODS!!!")
 
 	to_chat(owner, span_userdanger(pain_message))
 	owner.emote("firescream", forced = TRUE)
