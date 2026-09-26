@@ -65,6 +65,16 @@
 	var/snoutable_for
 	var/snoutable_cached = FALSE
 
+	var/hiked = FALSE
+	var/hiked_overlay_icon
+	var/hiked_base_icon
+	var/hikeable_for
+	var/hikeable_cached = FALSE
+	var/hem_overlay_restore
+	var/hem_flags_restore
+	var/mob/hem_holder
+	var/list/hem_grips
+
 /obj/item
 	var/blocking_behavior
 	var/wetness = 0
@@ -162,6 +172,123 @@
 		snouting = FALSE
 		return
 	icon_state = "[snout_base_state()]_snout"
+
+/obj/item/clothing/proc/is_hikeable()
+	if(hiked)
+		return TRUE
+	if(!hiked_overlay_icon || mob_overlay_icon != hiked_base_icon)
+		return FALSE
+	var/key = "[icon_state]|[hiked_overlay_icon]"
+	if(hikeable_for == key)
+		return hikeable_cached
+	hikeable_for = key
+	var/icon/worn = new(hiked_overlay_icon)
+	hikeable_cached = (icon_state in worn.IconStates())
+	return hikeable_cached
+
+/obj/item/clothing/proc/free_hands_for_hem(mob/living/carbon/user)
+	var/left
+	var/right
+	for(var/index in 1 to length(user.held_items))
+		if(user.held_items[index])
+			continue
+		if(!user.has_hand_for_held_index(index))
+			continue
+		if(index % 2)
+			if(!left)
+				left = index
+		else
+			if(!right)
+				right = index
+	if(!left || !right)
+		return null
+	return list(left, right)
+
+/obj/item/clothing/proc/toggle_hike(mob/living/carbon/user, skip_hands = FALSE)
+	if(hiked)
+		lower_hem()
+		return TRUE
+	if(!istype(user) || loc != user || user.is_holding(src))
+		return FALSE
+	if(!is_hikeable())
+		return FALSE
+	if(!skip_hands)
+		var/list/free = free_hands_for_hem(user)
+		if(length(free) < 2)
+			to_chat(user, span_warning("I need both hands free to hold up \the [src]."))
+			return FALSE
+		var/list/grips = list()
+		for(var/i in 1 to 2)
+			var/obj/item/hem_grip/grip = new(user)
+			grip.wearer = user
+			if(!user.put_in_hand(grip, free[i]))
+				grip.wearer = null
+				qdel(grip)
+				for(var/obj/item/hem_grip/placed in grips)
+					placed.wearer = null
+					qdel(placed)
+				return FALSE
+			grips += grip
+		hem_grips = grips
+	hiked = TRUE
+	hem_holder = user
+	hem_overlay_restore = mob_overlay_icon
+	mob_overlay_icon = hiked_overlay_icon
+	hem_flags_restore = flags_inv
+	flags_inv &= ~HIDECROTCH
+	RegisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND), PROC_REF(on_hem_interrupt))
+	update_icon()
+	refresh_hem_visuals(user)
+	return TRUE
+
+/obj/item/clothing/proc/refresh_hem_visuals(mob/living/carbon/wearer)
+	if(!iscarbon(wearer) || QDELETED(wearer))
+		return
+	wearer.rebuild_obscured_flags()
+	wearer.update_inv_armor_real()
+	wearer.update_inv_shirt_real()
+	wearer.update_inv_pants_real()
+	wearer.update_inv_cloak_real()
+	wearer.update_body_parts(TRUE)
+
+/obj/item/clothing/proc/lower_hem()
+	if(!hiked)
+		return
+	var/mob/living/carbon/wearer = hem_holder
+	if(!iscarbon(wearer))
+		wearer = loc
+	hiked = FALSE
+	mob_overlay_icon = hem_overlay_restore
+	hem_overlay_restore = null
+	if(!isnull(hem_flags_restore))
+		flags_inv = hem_flags_restore
+		hem_flags_restore = null
+	if(hem_holder)
+		if(!QDELETED(hem_holder))
+			UnregisterSignal(hem_holder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND))
+		hem_holder = null
+	var/list/grips = hem_grips
+	hem_grips = null
+	for(var/obj/item/hem_grip/grip in grips)
+		grip.wearer = null
+		qdel(grip)
+	update_icon()
+	refresh_hem_visuals(wearer)
+
+/obj/item/clothing/proc/on_hem_interrupt(datum/source)
+	SIGNAL_HANDLER
+	lower_hem()
+
+/obj/item/clothing/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	. = ..()
+	if(hiked && loc != OldLoc)
+		lower_hem()
+
+/mob/living/proc/drop_hiked_hem()
+	for(var/obj/item/clothing/worn in get_equipped_items())
+		if(worn.hiked)
+			worn.lower_hem()
+
 
 ///Maps a worn state back onto the plain state its detail overlays are drawn for.
 /obj/item/proc/get_detail_state(base_state)
