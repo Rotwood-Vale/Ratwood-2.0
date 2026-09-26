@@ -227,6 +227,12 @@
 	else
 		icon_state = initial(icon_state)
 
+/obj/item/clothing/ring/signet/psy
+	name = "psydonian signet ring"
+	icon_state = "psysignet"
+	desc = "A ring of blessed silver, bearing the Archbishop's symbol. Its face is cut to seal writs of religious importance, a bead of tallow nested in the underside."
+	is_silver = TRUE
+
 //silver rings
 /obj/item/clothing/ring/emeralds
 	name = "silver gemerald ring"

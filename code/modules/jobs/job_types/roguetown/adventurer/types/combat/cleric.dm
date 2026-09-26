@@ -742,7 +742,8 @@
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
 	if(istype(H.patron, /datum/patron/inhumen))
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
-
+	if(istype(H.patron, /datum/patron/old_god))
+		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydon/enduring_blast) //99% rock chance, 1% boulder, hilarious.
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
 			neck = /obj/item/clothing/neck/roguetown/psicross

@@ -35,7 +35,8 @@
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 	)
 	subclass_stashed_items = list(
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
@@ -59,28 +60,35 @@
 				H.change_stat(STATKEY_PER, 1)
 				H.change_stat(STATKEY_WIL, -1)
 				H.change_stat(STATKEY_SPD, -1)
-		var/weapons = list("Blessed Psydonic Dagger", "Psydonic Handmace", "Psydonic Shortsword")
-		var/weapon_choice = input(H,"CHOOSE YOUR WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
+		var/weapons = list("Psydonic Rapier", "Psydonic Shortsword", "Psydonic Tomahawk", "Psydonic Cudgel", "Psydonic Flanged Mace")
+		var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 		switch(weapon_choice)
-			if("Blessed Psydonic Dagger")
-				l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
-				r_hand = /obj/item/rogueweapon/scabbard/sheath
-				H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
-			if("Psydonic Handmace")
-				l_hand = /obj/item/rogueweapon/mace/cudgel/psy
-				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+			if("Psydonic Rapier")
+				l_hand = /obj/item/rogueweapon/sword/rapier/psy
+				r_hand = /obj/item/rogueweapon/scabbard/sword
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 			if("Psydonic Shortsword")
 				l_hand = /obj/item/rogueweapon/sword/short/psy
 				r_hand = /obj/item/rogueweapon/scabbard/sword
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-		var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
+			if("Psydonic Tomahawk")
+				l_hand = /obj/item/rogueweapon/stoneaxe/handaxe/psy
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+			if("Psydonic Cudgel")
+				l_hand = /obj/item/rogueweapon/mace/cudgel/psy
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+			if("Psydonic Flanged Mace")
+				l_hand = /obj/item/rogueweapon/mace/cudgel/flanged/psy
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+		var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage", "Pyrobolts - Incendiary-Tipped, Minimal Damage")
 		var/bolt_choice = input(H,"CHOOSE YOUR MUNITIONS", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
 		switch(bolt_choice)
 			if("Bolts - Steel-Tipped")
 				beltl = /obj/item/quiver/bolts
 			if("Sunderbolts - Silver-Tipped, Halved Damage")
 				beltl = /obj/item/quiver/holybolts
-
+			if("Pyrobolts - Incendiary-Tipped, Minimal Damage")
+				beltl = /obj/item/quiver/pyrobolts
 	head = /obj/item/clothing/head/roguetown/roguehood/psydon/confessor
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/confessor
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq

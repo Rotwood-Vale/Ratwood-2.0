@@ -1775,6 +1775,19 @@
 	additional_items = list(/obj/item/natural/hide/cured, /obj/item/natural/hide/cured, /obj/item/natural/hide/cured)
 	display_category = ITEM_CAT_WEAPONS_FLAILS
 
+/datum/anvil_recipe/weapons/psy/armingsword
+	name = "Psydonic Arming Sword"
+	req_bar = /obj/item/ingot/silverblessed
+	created_item = /obj/item/rogueweapon/sword/psy
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/weapons/psy/tomahawk
+	name = "Psydonic Tomahawk (+1 Small Log)"
+	req_bar = /obj/item/ingot/silverblessed
+	created_item = /obj/item/rogueweapon/stoneaxe/handaxe/psy
+	additional_items = list(/obj/item/grown/log/tree/small)
+	display_category = ITEM_CAT_WEAPONS_AXES
+
 /datum/anvil_recipe/weapons/psy/urumi
 	name = "Psydonic Urumi (+2 Blessed Silver)"
 	created_item = /obj/item/rogueweapon/whip/urumi/silver/psydonic
@@ -1823,6 +1836,12 @@
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
 /datum/anvil_recipe/weapons/psy/whip/inq
+	req_bar = /obj/item/ingot/silverblessed/bullion
+
+/datum/anvil_recipe/weapons/psy/tomahawk/inq
+	req_bar = /obj/item/ingot/silverblessed/bullion
+
+/datum/anvil_recipe/weapons/psy/armingsword/inq
 	req_bar = /obj/item/ingot/silverblessed/bullion
 
 /datum/anvil_recipe/weapons/psy/urumi/inq

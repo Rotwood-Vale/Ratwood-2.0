@@ -30,9 +30,9 @@
 	/// Weapon path and its children that are allowed
 	var/obj/item/rogueweapon/valid_blade
 	/// Specific weapons that are allowed. Bypasses valid_blade
-	var/list/obj/item/rogueweapon/valid_blades
+	var/list/obj/item/rogueweapon/valid_blades = list()
 	/// Specific weapons that are not allowed. Bypassed valid_blade
-	var/list/obj/item/rogueweapon/invalid_blades
+	var/list/obj/item/rogueweapon/invalid_blades = list()
 
 
 
@@ -42,95 +42,12 @@
 	var/sheathe_time = 0.1 SECONDS
 	var/sheathe_sound = 'sound/foley/equip/scabbard_holster.ogg'
 
+/obj/item/rogueweapon/scabbard/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/holster, (valid_blade ? valid_blade : null), (length(valid_blades) ? valid_blades : null), (length(invalid_blades) ? invalid_blades : null))
 
 /obj/item/rogueweapon/scabbard/attack_obj(obj/O, mob/living/user)
 	return FALSE
-
-
-/obj/item/rogueweapon/scabbard/attack_turf(turf/T, mob/living/user)
-	to_chat(user, span_notice("I search for my sword..."))
-	for(var/obj/item/rogueweapon/sword/sword in T.contents)
-		if(eat_sword(user, sword))
-			break
-
-	..()
-
-
-/obj/item/rogueweapon/scabbard/proc/weapon_check(mob/living/user, obj/A)
-	if(sheathed)
-		to_chat(user, span_warning("The sheath is occupied!"))
-		return FALSE
-	if(HAS_TRAIT(A, TRAIT_NODROP))
-		to_chat(user, span_warning("I cannot sheath [A] while it is bound."))
-		return FALSE
-	if(valid_blade && !istype(A, valid_blade))
-		to_chat(user, span_warning("[A] won't fit in there."))
-		return FALSE
-	if(valid_blades)
-		if(!(A.type in valid_blades))
-			to_chat(user, span_warning("[A] won't fit in there."))
-			return FALSE
-	if(invalid_blades)
-		if(A.type in invalid_blades)
-			to_chat(user, span_warning("[A] won't fit in there."))
-			return FALSE
-	return TRUE
-
-
-/obj/item/rogueweapon/scabbard/proc/eat_sword(mob/living/user, obj/A, sheathing_from_belt = FALSE)
-	if(!weapon_check(user, A))
-		return FALSE
-	if(obj_broken)
-		user.visible_message(
-			span_warning("[user] begins to force [A] into [src]!"),
-			span_warningbig("I begin to force [A] into [src].")
-		)
-		if(!move_after(user, 2 SECONDS, target = user))
-			return FALSE
-		return FALSE
-	if(!move_after(user, sheathe_time, target = user))
-		return FALSE
-
-	A.forceMove(src)
-	sheathed = A
-	update_icon(user)
-
-	if(!sheathing_from_belt)
-		user.visible_message(
-			span_notice("[user] sheathes [A] into [src]."),
-			span_notice("I sheathe [A] into [src].")
-		)
-
-	playsound(src, sheathe_sound, 100, TRUE)
-	return TRUE
-
-
-/obj/item/rogueweapon/scabbard/proc/puke_sword(mob/living/user)
-	if(!sheathed)
-		return FALSE
-
-	if(obj_broken)
-		user.visible_message(
-			span_warning("[user] begins to force [sheathed] out of [src]!"),
-			span_warningbig("I begin to force [sheathed] out of [src].")
-		)
-		if(!move_after(user, 2 SECONDS, target = user))
-			return FALSE
-	if(!move_after(user, sheathe_time, target = user))
-		return FALSE
-
-	sheathed.forceMove(user.loc)
-	sheathed.pickup(user)
-	user.put_in_hands(sheathed)
-	sheathed = null
-	update_icon(user)
-
-	user.visible_message(
-		span_warning("[user] draws out of [src]!"),
-		span_notice("I draw out of [src].")
-	)
-	return TRUE
-
 
 /obj/item/rogueweapon/scabbard/MouseDrop(atom/over)
 	..()
@@ -142,48 +59,6 @@
 		var/atom/movable/screen/inventory/hand/H = over
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
-
-
-/obj/item/rogueweapon/scabbard/attack_hand(mob/user)
-	if(sheathed)
-		return puke_sword(user)
-
-	..()
-
-
-/obj/item/rogueweapon/scabbard/attackby(obj/item/I, mob/user, params)
-	if(!sheathed)
-		if(!eat_sword(user, I))
-			return ..()
-
-/obj/item/rogueweapon/scabbard/quickdraw_interact(mob/living/user, obj/item/held_item)
-	if(held_item)
-		if(weapon_check(user, held_item))
-			attackby(held_item, user)
-		return TRUE
-	if(sheathed)
-		attack_hand(user)
-	return TRUE
-
-
-/obj/item/rogueweapon/scabbard/examine(mob/user)
-	. = ..()
-
-	if(sheathed)
-		. += span_notice("The sheath is occupied by [sheathed]. Left-click to pull it out.")
-
-
-/obj/item/rogueweapon/scabbard/update_icon(mob/living/user)
-	if(sheathed)
-		icon_state = "[initial(icon_state)]_[sheathed.sheathe_icon]"
-	else
-		icon_state = "[initial(icon_state)]"
-
-	if(user)
-		user.update_inv_hands()
-		user.update_inv_belt()
-		user.update_inv_back()
-
 
 /obj/item/rogueweapon/scabbard/getonmobprop(tag)
 	..()
@@ -291,15 +166,6 @@
 		/obj/item/rogueweapon/huntingknife/idagger/silver/stake
 	)
 
-/obj/item/rogueweapon/scabbard/sheath/weapon_check(mob/living/user, obj/item/A)
-	. = ..()
-	if(.)
-		if(!istype(A, /obj/item/rogueweapon))
-			return
-		var/obj/item/rogueweapon/sheathing = A
-		if(!sheathing.sheathe_icon)
-			return FALSE
-
 /obj/item/rogueweapon/scabbard/sheath/getonmobprop(tag)
 	..()
 
@@ -379,14 +245,13 @@
 				)
 
 
-/*
-	GREATWEAPON STRAPS
-*/
-
+///////////////////////
+//	GREATWEP. STRAPS //
+///////////////////////
 
 /obj/item/rogueweapon/scabbard/gwstrap
 	name = "greatweapon strap"
-	desc = ""
+	desc = "A buckled sling that can support the weight of weapons too weighty for one's belt. Be mindful, as it takes a couple seconds to properly unfasten-and-refasten the latches."
 
 	icon_state = "gws0"
 	item_state = "gwstrap"
@@ -403,6 +268,7 @@
 	resistance_flags = NONE
 	experimental_onback = FALSE
 	bigboy = TRUE
+	sewrepair = TRUE
 
 	equip_delay_self = 5 SECONDS
 	unequip_delay_self = 5 SECONDS
@@ -410,40 +276,17 @@
 	sheathe_time = 2 SECONDS
 
 	max_integrity = 0
+	sellprice = 15
 
-/obj/item/rogueweapon/scabbard/gwstrap/weapon_check(mob/living/user, obj/item/A)
-	. = ..()
-	if(.)
-		if(sheathed)
-			return FALSE
-		if(istype(A, /obj/item/rogueweapon))
-			if(A.w_class >= WEIGHT_CLASS_BULKY)
-				return TRUE
-		if(!istype(A, /obj/item/clothing/neck/roguetown/psicross)) //snowflake that bypasses the valid_blades that i made. i will commit seppuku eventually
-			return FALSE
-
-/obj/item/rogueweapon/scabbard/gwstrap/update_icon(mob/living/user)
-	if(sheathed)
-		worn_x_dimension = 64
-		worn_y_dimension = 64
-		icon = sheathed.icon
-		icon_state = sheathed.icon_state
-		experimental_onback = TRUE
-	else
-		icon = initial(icon)
-		icon_state = initial(icon_state)
-		worn_x_dimension = initial(worn_x_dimension)
-		worn_y_dimension = initial(worn_y_dimension)
-		experimental_onback = FALSE
-
-	if(user)
-		user.update_inv_back()
+/obj/item/rogueweapon/scabbard/gwstrap/ComponentInitialize()
+	AddComponent(/datum/component/holster/gwstrap, FALSE, FALSE, FALSE, sheathe_time)
 
 /obj/item/rogueweapon/scabbard/gwstrap/getonmobprop(tag)
 	..()
-	if(!sheathed)
+	var/datum/component/holster/HC = GetComponent(/datum/component/holster)
+	if(!HC || !HC.sheathed)
 		return
-	if(istype(sheathed, /obj/item/rogueweapon/estoc) || istype(sheathed, /obj/item/rogueweapon/greatsword))
+	if(istype(HC.sheathed, /obj/item/rogueweapon/estoc) || istype(HC.sheathed, /obj/item/rogueweapon/greatsword))
 		switch(tag)
 			if("onback")
 				return list(
@@ -496,7 +339,6 @@
 					"westabove" = 0
 				)
 
-
 ///////////////////////
 //	SWORD SCABBARDS  //
 ///////////////////////
@@ -525,16 +367,6 @@
 
 	force = 7
 	max_integrity = 750
-
-
-/obj/item/rogueweapon/scabbard/sheath/weapon_check(mob/living/user, obj/item/A)
-	. = ..()
-	if(.)
-		if(!istype(A, /obj/item/rogueweapon))
-			return
-		var/obj/item/rogueweapon/sheathing = A
-		if(!sheathing.sheathe_icon)
-			return FALSE
 
 /obj/item/rogueweapon/scabbard/sword/noble
 	name = "silver-decorated scabbard"

@@ -205,7 +205,7 @@
 	name = "psydonic knuckles"
 	desc = "A simple piece of harm molded in a holy mixture of steel and silver, finished with three stumps - Psydon's crown - to crush the heretics' garments and armor into smithereens."
 	icon_state = "psyknuckle"
-	force = 22
+	force = 25
 	wdefense = 5
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
@@ -214,6 +214,17 @@
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/knuckles/psydon/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
 		silver_type = SILVER_PSYDONIAN,\
 		added_force = 0,\
 		added_blade_int = 0,\

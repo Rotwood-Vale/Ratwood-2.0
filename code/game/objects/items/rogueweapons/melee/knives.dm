@@ -704,7 +704,7 @@
 	desc = "A dagger of pure silver; the bane of vampyres, verevolves, deadites, and all other unsaintly nitecreechers. Errant light transforms into a blinding glare, when cast along the blade's edge."
 	icon_state = "sildagger"
 	sheathe_icon = "sildagger"
-	force = 15
+	force = 20
 	wdefense = 6
 	smeltresult = /obj/item/ingot/silver
 	last_used = 0
@@ -721,6 +721,24 @@
 		added_int = 50,\
 		added_def = 2,\
 	)
+
+/obj/item/rogueweapon/huntingknife/idagger/stake
+	name = "sharpened stake"
+	desc = "A branch that has been broken off of an azurielve tree, sharpened to a fine point. It can lay some unholy creechers to rest, but only by piercing their hearts."
+	icon_state = "heavystake"
+	possible_item_intents = list(/datum/intent/dagger/thrust/pick, /datum/intent/dagger/thrust/quick, /datum/intent/dagger/cut, /datum/intent/dagger/sucker_punch)
+	force = 12
+	throwforce = 12
+	wdefense = 0
+	max_integrity = 25
+	sellprice = 5
+	slot_flags = ITEM_SLOT_HIP
+	smeltresult = /obj/item/rogueore/coal
+	last_used = 0
+	equip_delay_self = 0 //No delay when stowing away, without a scabbard.
+	unequip_delay_self = 0 //No delay when drawing.
+	inv_storage_delay = 0 //No delay when retrieving from a storage slot.
+	anvilrepair = /datum/skill/craft/crafting
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake
 	name = "silver-tipped stake"

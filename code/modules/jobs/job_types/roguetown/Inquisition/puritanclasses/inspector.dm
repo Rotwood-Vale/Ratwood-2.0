@@ -6,7 +6,7 @@
 	tutorial = "Investigators and diplomats, oft-selected from Confessors who've shown their aptitude in a variety of skills. A precise strike is all that's needed to forward the Orthodoxy's missive; whether it's struck with a diplomat's charm or a rapier's tip, however, is up to you."
 	outfit = /datum/outfit/job/roguetown/puritan/inspector
 	subclass_languages = list(/datum/language/otavan)
-	cmode_music = 'sound/music/psydonite.ogg'
+	cmode_music = 'sound/music/combat_inspector.ogg'
 	category_tags = list(CTAG_PURITAN)
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
@@ -36,12 +36,14 @@
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
 	)
 	subclass_stashed_items = list(
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
@@ -57,10 +59,10 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/black/psydon
 	neck = /obj/item/clothing/neck/roguetown/gorget/steel
+	cloak = /obj/item/storage/backpack/rogue/satchel/beltpack
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan/inqboots
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	backr =  /obj/item/storage/backpack/rogue/satchel/otavan
-	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	head = /obj/item/clothing/head/roguetown/inqhat
 	mask = /obj/item/clothing/mask/rogue/spectacles/inq/spawnpair
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
@@ -83,7 +85,7 @@
 
 /datum/outfit/job/roguetown/puritan/inspector/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/weapons = list("Psydonic Longsword", "Psydonic Rapier", "Daybreak (Whip)", "Stigmata (Halberd)", "Eucharist (Rapier)")
+	var/weapons = list("Psydonic Longsword", "Psydonic Rapier", "Daybreak (Whip)", "Stigmata (Halberd)", "Eucharist (Rapier)", "Psydonic Tomahawk", "Relic, 'Providence' (Siegebow)")
 	var/weapon_choice = input(H,"FLOURISH YOUR SILVER.", "WIELD THEM IN HIS NAME.") as anything in weapons
 	switch(weapon_choice)
 		if("Psydonic Longsword")
@@ -115,6 +117,15 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 			H.change_stat(STATKEY_WIL, 1)
 			H.change_stat(STATKEY_SPD, 1)
+		if("Psydonic Tomahawk")
+			H.put_in_hands(new /obj/item/rogueweapon/stoneaxe/handaxe/psy(H), TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/quiver/bolts, SLOT_BELT_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow, SLOT_BACK_L, TRUE)
+		if("Relic, 'Providence' (Siegebow)")
+			H.equip_to_slot_or_del(new /obj/item/quiver/bolt/heavy/stake_silver, SLOT_BELT_L, TRUE)
+			H.put_in_hands(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/relic(H),TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
 	var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
 	var/bolt_choice = input(H,"CHOOSE YOUR MUNITIONS.", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
 	switch(bolt_choice)

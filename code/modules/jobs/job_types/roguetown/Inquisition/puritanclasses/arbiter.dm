@@ -1,122 +1,161 @@
-//The Arbiter. It leans entirely into the martial miracle setup.
-//They get the full set, as a pseudo-flagellant.
-//Think of it like the radical, obsessive faith guy. Old puritan.
-//Middling skills. Half-half stats. A niche. Outside of their miracles.
+//The Arbiter. The Unassuming Chaplain. The Charming Reverend. The Secretly Jacked Minister.
+//A full set of miracles, but not a fully-blown Absolver. You'll be able to hold your own if one is missing.
+//Meant to appear as an honest bureaucrat, and not a zealous witch-hunter or a platebeast psychopath.
+//Deceiving Meekness and Intellectual. Combat-Capable, although you truly shine when you "inspire" your orthodoxists. With money. Because you're obscenely rich. 
 /datum/advclass/puritan/arbiter
 	name = "Arbiter"
-	tutorial = "Unlike Ordinators or Inspectors, Arbiters serve an entirely different purpose. \
-	Drawn from a flock of warrior-priests, they still fight to this day within rot-scoured lands. Uniquely attuned to the rot's touch. \
-	Armed with the purported \"miracles\" of the LYVING GOD, arcane lux manipulations of the orders of the Saints Pestra & Noc, the Arbiter seeks \
-	the unholy, the heretic, and the rotted."
+	tutorial = "You are a humble, yet venerated warrior-priest, specially trained by the sacred Order of Saint Vicquemare in ENDVRING the harshest of environments to spread the word of HIM. \
+	Some join in missionary efforts, whilst others operate alone in monastic travels. Despite their sociability and immense funding from the order, most Arbiters work alone. \
+	You have chosen a different path - enrolling as a Bureaucrat of the Otavan Embassy, you intend on seeking out the rot from within, manipulating their turmoil to suit the needs of the Otavan Holy See."
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter
 	subclass_languages = list(/datum/language/otavan)
-	cmode_music = 'sound/music/psydonite.ogg'
+	cmode_music = 'sound/music/combat_arbiter.ogg'
 	category_tags = list(CTAG_PURITAN)
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
-		TRAIT_MEDIUMARMOR,
+		TRAIT_CRITICAL_RESISTANCE, //Light armor exclusive, they need this. 
 		TRAIT_SILVER_BLESSED,
 		TRAIT_ZOMBIE_IMMUNE,
 		TRAIT_INQUISITION,
 		TRAIT_PURITAN,
 		TRAIT_OUTLANDER,
-		TRAIT_NOBLE
-		)//-1 stats over Ordinator/Inspector, if counting STR/SPD as 2 each. +1 over in a respective area when selecting their sect.
+		TRAIT_RITUALIST, //Mostly fluff, but made to deconvert people.
+		TRAIT_DECEIVING_MEEKNESS, //guarded virtue to prevent others from seeing through your friendly facade
+		TRAIT_INTELLECTUAL, //To assess your foes
+		TRAIT_IGNOREDAMAGESLOWDOWN,
+		TRAIT_NOBLE,
+		)//Their faith is their shield. They don't need "armor" or "dodging". 
 	subclass_stats = list(
 		STATKEY_CON = 3,
 		STATKEY_WIL = 3,
 		STATKEY_STR = 1,
-		STATKEY_SPD = 1,
+		STATKEY_INT = 3,
 		STATKEY_PER = 1
 	)
 	subclass_skills = list(
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER,
-		/datum/skill/misc/tracking = SKILL_LEVEL_MASTER,
-		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_MASTER,
+		/datum/skill/misc/athletics = SKILL_LEVEL_MASTER, //Sleeper build
+		/datum/skill/misc/swimming = SKILL_LEVEL_MASTER, //The peak of athleticism
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER, //The Prelate gets master wrestling, why can't you?
+		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT, //I KICK ASS FOR GOD
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"Particularly Hefty Tome of Psydon" = /obj/item/rogueweapon/mace/cudgel/psyble
 	)
 
+/datum/advclass/puritan/arbiter/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	var/prev_real_name = H.real_name
+	var/prev_name = H.name
+	var/title = "Reverend"
+	switch(H.pronouns)
+		if(SHE_HER)
+			title = "Vestal"
+		if(SHE_HER_M)
+			title = "Vestal"
+		if(HE_HIM)
+			title = "Monseigneur"
+		if(HE_HIM_F)
+			title = "Monseigneur"
+	H.real_name = "[title] [prev_real_name]"
+	H.name = "[title] [prev_name]"
+
+/datum/job/roguetown/puritan/arbiter/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		H.advsetup = 1
+		H.invisibility = INVISIBILITY_MAXIMUM
+		H.become_blind("advsetup")
+
+//Inconspicuous outfit - this is intentional.
 /datum/outfit/job/roguetown/puritan/arbiter/pre_equip(mob/living/carbon/human/H)
 	..()
 	has_loadout = TRUE
 	H.verbs |= /mob/living/carbon/human/proc/faith_test
 	H.verbs |= /mob/living/carbon/human/proc/torture_victim
-	cloak = /obj/item/clothing/cloak/cape/inquisitor
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/arbiter
-	belt = /obj/item/storage/belt/rogue/leather/arbiter
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
+	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/arbiter
+	belt = /obj/item/storage/belt/rogue/leather/double
 	neck = /obj/item/clothing/neck/roguetown/psicross/silver
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan/inqboots
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/arbiter
-	backr =  /obj/item/storage/backpack/rogue/satchel/otavan
-	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-	beltl = /obj/item/quiver/bolts
-	mask = /obj/item/clothing/mask/rogue/sack/psy/arbiter
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
+	backr = /obj/item/storage/backpack/rogue/satchel/otavan
+	beltl = /obj/item/flashlight/flare/torch/lantern
+	mask = /obj/item/clothing/mask/rogue/facemask/psydonmask
+	head = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/arbiter
+	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	id = /obj/item/clothing/ring/signet/silver
 	backpack_contents = list(
 		/obj/item/storage/keyring/puritan = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger,
-		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/veryrich = 1,
 		/obj/item/paper/inqslip/arrival/inq = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/scomstone = 1,
 		)
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) //Capped to T1 miracles.
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)	//Minor regen, starts maxed out.
 	if(H.mind)//The entire spread of greater miracles, barring the lux bolt. For obvious reasons.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_retribution)//Rebuke, but blood cost and worse.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_inspire)//CtA, but blood cost and... kind of worse.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_inviolability)//A shield against the undead.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity)//To get your blood back, m'lord.
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydon/enduring_blast)
 
 /datum/outfit/job/roguetown/puritan/arbiter/choose_loadout(mob/living/carbon/human/H)
-	. = ..()//Just as with the stats, this has a mixture of weapon choice between Ordinators and Inspectors. A less-used weapon list.
-	var/weapons = list("Psydonic Broadsword", "Daybreak (Whip)", "Stigmata (Halberd)", "Consecratia (Flail)")
+	. = ..()//All of their weapon choices are easily-concealable.
+	var/weapons = list("Blessed Psydonic Handmace", "Blessed Psydonic Shortsword", "Blessed Psydonic Knuckleduster")
 	var/weapon_choice = input(H,"FIND YOUR TRUTHS.", "WIELD THEM IN HIS NAME.") as anything in weapons
 	switch(weapon_choice)
-		if("Psydonic Broadsword")
-			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser/psy/preblessed(H), TRUE)
-			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_R, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+		if("Blessed Psydonic Handmace")
+			H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel/psy/preblessed(H), TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 5, TRUE)
+			H.change_stat(STATKEY_STR, 1)
+			H.change_stat(STATKEY_PER, 1)
 		if("Daybreak (Whip)")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/antique/psywhip(H), TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
-		if("Stigmata (Halberd)")
-			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd/relic(H), TRUE)
-			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-		if("Consecratia (Flail)")
-			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/psyflail/relic(H), TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
-	//Now, for their 'sect'. They can either choose a heavy gambeson and +1SPD, or inquisitor coat and +1STR.
-	var/sect = list("Ancient - Gilbranze, Gambesons & Speed", "New Age - Silver, Overcoats & Strength")
-	var/sect_choice = input(H,"FIND YOUR SECT", "WHAT ARE WE?") as anything in sect
+			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 5, TRUE)
+			H.change_stat(STATKEY_STR, 1)
+			H.change_stat(STATKEY_PER, 1)
+		if("Blessed Psydonic Shortsword")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/short/psy/preblessed(H), TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
+			H.change_stat(STATKEY_STR, -1)
+			H.change_stat(STATKEY_SPD, 2)
+		if("Blessed Psydonic Knuckleduster")
+			H.put_in_hands(new /obj/item/rogueweapon/knuckles/psydon/preblessed(H), TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 5, TRUE)
+	//The whole "Sect" shit was stupid and didn't work. Go pick between money or extra virtues.
+	var/sect = list("MIND - Keen Ears & Cicerone", "MATTER - Extra Coinage & Financial Acumen")
+	var/sect_choice = input(H,"FIND YOUR METHODOLOGY", "MIND OR MATTER?") as anything in sect
 	switch(sect_choice)
-		if("Ancient - Gilbranze, Gambesons & Speed")
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/arbiter, SLOT_HEAD, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter, SLOT_GLOVES, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq/arbiter, SLOT_ARMOR, TRUE)
-			H.change_stat(STATKEY_SPD, 1)//We'll probably drop this.
-		if("New Age - Silver, Overcoats & Strength")
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/arbiter/vice, SLOT_HEAD, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/otavan/psygloves/arbiter/vice, SLOT_GLOVES, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat/arbiter, SLOT_ARMOR, TRUE)
-			H.change_stat(STATKEY_STR, 1)//As above. But for now we'll see if it's ok.
+		if("MIND - Keen Ears & Cicerone")
+			ADD_TRAIT(H, TRAIT_KEENEARS, TRAIT_GENERIC)
+			ADD_TRAIT(H, TRAIT_CICERONE, TRAIT_GENERIC)
+		if("MATTER - Extra Coinage & Financial Acumen")
+			H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/pouch/coins/veryrich, SLOT_BELT_R, TRUE)
+			ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
 
 /*
-Below are the Arbiter's funny things.
-Reused from OldRW. But cool. Soulful, even.
-Here because they're unused elsewhere.
+Arbiter's old shit. 
+It's ugly, unsprited, and generally just not desired by the community.
+Commenting it out for now, just in case any inhand sprites get drawn.
 */
+
+/*
 /obj/item/storage/belt/rogue/leather/arbiter
 	name = "webbing"
 	desc = "A leather belt, paired with some Otavan style webbing and pouches. <br>\
@@ -239,3 +278,4 @@ Here because they're unused elsewhere.
 	sleeved = 'icons/roguetown/clothing/special/overseer/onmob/overseer.dmi'
 	color = null
 	dropshrink = null
+*/

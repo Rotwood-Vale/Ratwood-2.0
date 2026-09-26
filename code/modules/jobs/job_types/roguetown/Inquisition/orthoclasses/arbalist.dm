@@ -35,6 +35,7 @@
 		/datum/skill/craft/tanning = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/butchering = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 	)
 	subclass_stashed_items = list(
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy

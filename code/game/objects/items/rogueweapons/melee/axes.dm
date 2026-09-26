@@ -475,6 +475,46 @@
 /obj/item/rogueweapon/stoneaxe/battle/psyaxe/old/ComponentInitialize()
 	return
 
+/obj/item/rogueweapon/stoneaxe/handaxe/psy
+	name = "psydonic tomahawk"
+	desc = "'History prefers legends to men. It prefers nobility to brutality, soaring speeches to \
+	quiet deeds. History remembers the battle, but forgets the blood. However history remembers me, \
+	if it remembers me at all, shall only be a fraction of the truth.'"
+	armor_penetration = 80 //Refers to throwing armor penetration. Heavier than silver tossblades; you get one throw.
+	icon_state = "tomahawk_silver"
+	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 100, "embedded_fall_chance" = 30) //high chance at embed, high chance to fall out on its own.
+	gripped_intents = null
+	thrown_damage_flag = "piercing"
+	minstr = 8
+	smeltresult = /obj/item/ingot/silverblessed
+	special = /datum/special_intent/axe_swing //Cannot be wielded, otherwise.
+	is_tool = FALSE
+	is_silver = TRUE
+	resistance_flags = FIRE_PROOF
+
+/obj/item/rogueweapon/stoneaxe/handaxe/psy/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/stoneaxe/handaxe/psy/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 2,\
+	)
+
+
 /obj/item/rogueweapon/stoneaxe/battle/steppesman
 	name = "aavnic valaška"
 	desc = "A steel axe of Aavnic make that combines a deadly weapon with a walking stick - hence its pointed end. It has a flat head that fits the hand comfortably, and it's usable for chopping and smashing. You could probably stab someone if you tried really hard."

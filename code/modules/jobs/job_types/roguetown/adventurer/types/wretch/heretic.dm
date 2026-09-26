@@ -51,32 +51,32 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					r_hand = /obj/item/rogueweapon/sword/long/oldpsysword
+					r_hand = /obj/item/rogueweapon/sword/long/psysword
 				else
 					r_hand = /obj/item/rogueweapon/sword/long
 			if("Mace")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					r_hand = /obj/item/rogueweapon/mace/goden/psy/old
+					r_hand = /obj/item/rogueweapon/mace/cudgel/flanged/psy
 				else
 					r_hand = /obj/item/rogueweapon/mace/steel
 			if("Flail")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					beltr = /obj/item/rogueweapon/flail/sflail/psyflail/old
+					beltr = /obj/item/rogueweapon/flail/sflail/psyflail
 				else
 					beltr = /obj/item/rogueweapon/flail/sflail
 			if("Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					beltr = /obj/item/rogueweapon/stoneaxe/battle/psyaxe/old
+					beltr = /obj/item/rogueweapon/stoneaxe/battle/psyaxe
 				else
 					beltr = /obj/item/rogueweapon/stoneaxe/woodcut/steel
 			if("Billhook")
 				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					r_hand = /obj/item/rogueweapon/spear/psyspear/old
+					r_hand = /obj/item/rogueweapon/spear/psyspear
 				else
 					r_hand = /obj/item/rogueweapon/spear/billhook
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
@@ -187,6 +187,10 @@
 			ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
 		if(/datum/patron/old_god)
 			H.change_stat(STATKEY_WIL, 2) //ENDVRE. You give up useful miracles, rites and miracle-healing from other Heretics, so you'll need this.
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity) //To get your blood back.
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydon/enduring_blast) //99% rock chance, 1% boulder, hilarious.
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_retribution)//Rebuke, but blood cost and worse.
+
 			var/heavypsyfashion = list("Traditionalist", "Orthodoxist", "Reformist") //Only outfits differ.
 			var/heavypsyfashion_choice = input(H, "What is your faith in HIM like?", "HE LYVES, HE ENDURES, HE DIES") as anything in heavypsyfashion
 			switch(heavypsyfashion_choice)
@@ -301,12 +305,17 @@
 		switch(weapon_choice)
 			if("Rapier")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-				beltl = /obj/item/rogueweapon/scabbard/sword
-				l_hand = /obj/item/rogueweapon/sword/rapier
+				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+					l_hand = /obj/item/rogueweapon/sword/rapier/psy //Fuck you it's aura
+				else
+					l_hand = /obj/item/rogueweapon/sword/rapier
 			if("Dagger")
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/scabbard/sheath
-				l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/special
+				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+					l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
+				else
+					l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
 			if("Bow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				beltl = /obj/item/quiver/arrows
