@@ -352,6 +352,11 @@
 						continue
 					if(IT.unmintable && !accepts_unmintable)
 						continue
+				if(I.GetComponent(/datum/component/conjured_item))
+					if(!refused_announced)
+						refused_announced = TRUE
+						I.visible_message(span_warning("The balloon refuses [I] - conjured goods hold no value in trade."))
+					continue
 				var/datum/trade_good/reagent_match = get_reagent_trade_good(I)
 				var/category = reagent_match?.display_category || (GLOB.derived_categories && GLOB.derived_categories[I.type]) || ITEM_CAT_MISCELLANEOUS
 				var/base_price = I.get_real_price()

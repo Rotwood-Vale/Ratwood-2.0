@@ -147,6 +147,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	desc = ""
 	panel = "Spells"
 	var/sound = null //The sound the spell makes when it is cast
+	/// Item conjured by this spell, unsummoned when a new one is conjured or the spell is lost.
+	var/obj/item/conjured_item
+	/// Fills in "The <item>'s borders begin to ...!" when the conjured item is unsummoned.
+	var/conjured_dispel_desc = "shimmer and fade, before it vanishes entirely"
+	/// Outline colour for this spell's conjured item, null uses the component's own default.
+	var/conjured_item_glow
 	anchored = TRUE // Crap like fireball projectiles are proc_holders, this is needed so fireballs don't get blown back into your face via atmos etc.
 	pass_flags = PASSTABLE
 	density = FALSE
@@ -383,6 +389,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				stats += get_fatigue_breakdown(user)
 		else
 			stats += span_info("Stamina cost: [base_fd]")
+	if(devotion_cost)
+		stats += span_info("Devotion cost: [devotion_cost]")
 	return stats
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge, mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
@@ -430,7 +438,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if((invocation_type == "whisper" || invocation_type == "shout") && ((!H.can_speak_vocal() && !(mute_allowed && HAS_TRAIT(H, TRAIT_PERMAMUTE) && !H.check_mouth_grabbed())) || !H.getorganslot(ORGAN_SLOT_TONGUE)))
+		if((invocation_type == "whisper" || invocation_type == "shout") && (((!H.can_speak_vocal() || HAS_TRAIT(H, TRAIT_GARGLE_SPEECH)) && !(mute_allowed && HAS_TRAIT(H, TRAIT_PERMAMUTE) && !H.check_mouth_grabbed())) || !H.getorganslot(ORGAN_SLOT_TONGUE)))
 			to_chat(user, span_warning("I can't get the words out!"))
 			return FALSE
 		// Spells cannot be cast using sign language (check specifically for SIGNLANG flag)
@@ -444,16 +452,17 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			to_chat(user, span_warning("My body is paralyzed!"))
 			return FALSE
 
-		var/last_mount_move_time = H.vars["last_mount_move_time"]
-		if(!isnum(last_mount_move_time))
-			last_mount_move_time = 0
-		if(H.buckled && issimple(H.buckled) && (world.time < last_mount_move_time + 2 SECONDS))
+		if(moving_mount_blocks_cast(H))
+			to_chat(user, span_warning("The thing I'm riding needs to stop moving first."))
 			return FALSE
 
 		if(miracle && !H.devotion?.check_devotion(src))
 			to_chat(H, span_warning("I don't have enough devotion!"))
 			return FALSE
 		if(gesture_required)
+			if(H.buckled && H.buckled.buckle_blocks_spells)
+				to_chat(user, span_warning("[H.buckled] prevents me from casting [name]!"))
+				return FALSE
 			if(H.handcuffed)
 				to_chat(user, span_warning("[name] cannot be cast with my hands tied up!"))
 				return FALSE
@@ -556,11 +565,34 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
+	dispel_conjured_item()
 	var/mob/owner = action?.owner
 	owner?.mob_spell_list -= src
 	owner?.mind?.spell_list -= src
 	QDEL_NULL(action)
 	return ..()
+
+/// Marks an item as conjured by this spell, dropping our reference to it when it is destroyed.
+/obj/effect/proc_holder/spell/proc/set_conjured_item(obj/item/new_item)
+	if(conjured_item)
+		UnregisterSignal(conjured_item, COMSIG_QDELETING)
+	conjured_item = QDELETED(new_item) ? null : new_item
+	if(!conjured_item)
+		return
+	conjured_item.AddComponent(/datum/component/conjured_item, conjured_item_glow)
+	RegisterSignal(conjured_item, COMSIG_QDELETING, PROC_REF(on_conjured_item_deleted))
+
+/obj/effect/proc_holder/spell/proc/on_conjured_item_deleted(datum/source)
+	SIGNAL_HANDLER
+	conjured_item = null
+
+/// Unsummons the currently conjured item, if any.
+/obj/effect/proc_holder/spell/proc/dispel_conjured_item()
+	if(!conjured_item)
+		return
+	conjured_item.visible_message(span_warning("The [conjured_item]'s borders begin to [conjured_dispel_desc]!"))
+	qdel(conjured_item)
+	conjured_item = null
 
 /obj/effect/proc_holder/spell/Click()
 	if(!cast_check())
@@ -886,31 +918,24 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	qdel(dummy)
 	return 1
 
+/obj/effect/proc_holder/spell/proc/moving_mount_blocks_cast(mob/user)
+	if(!ishuman(user) || !user.buckled)
+		return FALSE
+	if(!user.buckled.GetComponent(/datum/component/riding))
+		return FALSE
+	var/mob/living/carbon/human/H = user
+	var/last_mount_move_time = H.vars["last_mount_move_time"]
+	if(!isnum(last_mount_move_time))
+		last_mount_move_time = 0
+	return world.time < last_mount_move_time + 2 SECONDS
+
 /obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
 		return FALSE
 
 	if(user.client && user.buckled)
-		if(!issimple(user.buckled))
+		if(moving_mount_blocks_cast(user))
 			return FALSE
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			var/last_mount_move_time = H.vars["last_mount_move_time"]
-			if(!isnum(last_mount_move_time))
-				last_mount_move_time = 0
-			if(world.time < last_mount_move_time + 2 SECONDS)
-				return FALSE
-
-	if(user.client && user.buckled)
-		if(!issimple(user.buckled))
-			return FALSE
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			var/last_mount_move_time = H.vars["last_mount_move_time"]
-			if(!isnum(last_mount_move_time))
-				last_mount_move_time = 0
-			if(world.time < last_mount_move_time + 2 SECONDS)
-				return FALSE
 
 	if(!charge_check(user, TRUE))
 		return FALSE
@@ -934,6 +959,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(ishuman(user)) // Make the button red out and unselectable
 		var/mob/living/carbon/human/H = user
 		if(gesture_required)
+			if(H.buckled && H.buckled.buckle_blocks_spells)
+				return FALSE
 			if(H.handcuffed)
 				return FALSE
 			if(!H.has_active_hand())
@@ -941,7 +968,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	if((invocation_type == "whisper" || invocation_type == "shout") && isliving(user))
 		var/mob/living/living_user = user
-		if(!living_user.can_speak_vocal())
+		if(!living_user.can_speak_vocal() || HAS_TRAIT(living_user, TRAIT_GARGLE_SPEECH))
 			if(!(mute_allowed && HAS_TRAIT(user, TRAIT_PERMAMUTE)))
 				return FALSE
 			if(ishuman(user))

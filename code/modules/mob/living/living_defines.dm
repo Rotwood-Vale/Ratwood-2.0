@@ -252,3 +252,5 @@
 	// --- Fellowship (AP Quest 2 port) ---
 	var/datum/fellowship/current_fellowship
 	var/list/incoming_fellowship_invites = list() // list of /datum/weakref to /datum/fellowship; kept in sync with fellowship.pending_invites
+	/// List of enemies for the mob's AI
+	var/list/enemies = list()

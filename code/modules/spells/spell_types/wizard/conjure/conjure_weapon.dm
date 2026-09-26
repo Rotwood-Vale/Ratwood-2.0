@@ -24,8 +24,6 @@
 	glow_color = GLOW_COLOR_METAL
 	glow_intensity = GLOW_INTENSITY_LOW
 
-	var/obj/item/rogueweapon/conjured_weapon = null
-
 	var/list/iron_weapons = list(
 		"Iron Short Sword" = /obj/item/rogueweapon/sword/short/iron,
 		"Iron Messer" = /obj/item/rogueweapon/sword/short/messer/iron,
@@ -66,23 +64,14 @@
 	var/weapon_choice = input(user, "Choose a weapon", "Conjure Weapon") as anything in weapons
 	if(!weapon_choice)
 		return
-	if(src.conjured_weapon)
-		qdel(src.conjured_weapon)
+	dispel_conjured_item()
 	weapon_choice = weapons[weapon_choice]
 
 	var/obj/item/rogueweapon/R = new weapon_choice(user.drop_location())
 	R.blade_dulling = DULLING_SHAFT_CONJURED
-	if(!QDELETED(R))
-		R.AddComponent(/datum/component/conjured_item, GLOW_COLOR_ARCANE)
 	user.put_in_hands(R)
-	src.conjured_weapon = R
+	set_conjured_item(R)
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/conjure_weapon/miracle
 	associated_skill = /datum/skill/magic/holy
-
-/obj/effect/proc_holder/spell/invoked/conjure_weapon/Destroy()
-	if(src.conjured_weapon)
-		conjured_weapon.visible_message(span_warning("The [conjured_weapon]'s borders begin to shimmer and fade, before it vanishes entirely!"))
-		qdel(src.conjured_weapon)
-	return ..()

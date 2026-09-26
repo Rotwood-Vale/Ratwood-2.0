@@ -98,7 +98,7 @@
 			H.change_stat(STATKEY_CON, -2)
 			H.change_stat(STATKEY_WIL, -2)
 
-	var/weapons = list("Psydonic Longsword", "Psydonic Broadsword", "Psydonic Executioner Sword", "Psydonic War Axe", "Psydonic Whip", "Psydonic Flail", "Psydonic Flanged Mace", "Psydonic Grand Mace", "Psydonic Halberd + Arming Sword", "Psydonic Spear + Flanged Mace", "Psydonic Poleaxe + Shortsword")
+	var/weapons = list("Psydonic Longsword", "Psydonic Broadsword", "Psydonic Executioner Sword", "Psydonic War Axe", "Psydonic Whip", "Psydonic Flail", "Psydonic Urumi", "Psydonic Flanged Mace", "Psydonic Grand Mace", "Psydonic Halberd + Arming Sword", "Psydonic Spear + Flanged Mace", "Psydonic Poleaxe + Shortsword")
 	var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 	switch(weapon_choice)
 		if("Psydonic Longsword")
@@ -126,6 +126,10 @@
 		if("Psydonic Flail")
 			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/psyflail(H))
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_R, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
+		if("Psydonic Urumi")
+			H.put_in_hands(new /obj/item/rogueweapon/whip/urumi/silver/psydonic(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/shield/tower/metal, SLOT_BACK_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 		if("Psydonic Flanged Mace")
 			H.put_in_hands(new /obj/item/rogueweapon/mace/cudgel/flanged/psy(H))

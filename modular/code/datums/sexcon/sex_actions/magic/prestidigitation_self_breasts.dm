@@ -2,7 +2,6 @@
 	name = "Rub your breasts with magehand"
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_BREASTS
-	subtle_supported = TRUE
 	solo = TRUE
 
 /datum/sex_action/magic/masturbate_breasts_prestidigitation/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)

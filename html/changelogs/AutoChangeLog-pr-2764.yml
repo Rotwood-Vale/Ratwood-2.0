@@ -1,4 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - bugfix: "Masochists/Sadists will no longer trigger ~3 screams in quick succession during rough+ interactions."
