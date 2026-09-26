@@ -291,6 +291,24 @@
 				return
 			affecting.add_wound(/datum/wound/cbt/permanent)
 			notify_player_of_effect(arg)
+		if("gelding")
+			if(!ishuman(L))
+				return
+			var/mob/living/carbon/human/humie = L
+			var/obj/item/bodypart/affecting = humie.get_bodypart(BODY_ZONE_CHEST)
+			if(!affecting)
+				return
+			affecting.add_wound(/datum/wound/gelding)
+			notify_player_of_effect(arg)
+		if("nullification")
+			if(!ishuman(L))
+				return
+			var/mob/living/carbon/human/humie = L
+			var/obj/item/bodypart/affecting = humie.get_bodypart(BODY_ZONE_CHEST)
+			if(!affecting)
+				return
+			affecting.add_wound(/datum/wound/genital_nullification)
+			notify_player_of_effect(arg)
 		/*if("easy ambush")
 			var/mob/living/simple_animal/M = effect_args["mob_type"]
 			if(!M || !istype(M, /mob/living/simple_animal))
@@ -509,6 +527,10 @@
 			effect_text_self = "flames lick your skin";effect_text_other = "fire catches against them"
 		if("cbt")
 			effect_text_self = "your genitals wrench and twist out of place";effect_text_other = "they look to be in agonizing pain"
+		if("gelding")
+			effect_text_self = "MY BALLS AAAAAAAAAAAAAAAAAAA";effect_text_other = "their geldables have been torn away"
+		if("nullification")
+			effect_text_self = "your genitals are sliced off by some unseen force";effect_text_other = "their genitals fall sadly to the floor"
 		if("explode")
 			effect_text_self = "you detonate violently";effect_text_other = "they erupt in a sudden blast"
 		if("shapeshift")
@@ -903,6 +925,8 @@
 		"shock",
 		"add fire stack",
 		"cbt",
+		"gelding",
+		"nullification",
 		//"easy ambush",
 		//"difficult ambush",
 		"explode",

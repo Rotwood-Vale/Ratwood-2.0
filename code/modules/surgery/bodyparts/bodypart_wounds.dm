@@ -352,11 +352,24 @@
 		var/cbt_multiplier = 1
 		if(user && HAS_TRAIT(user, TRAIT_NUTCRACKER))
 			cbt_multiplier = 2
-		if(prob(round(dam/5) * cbt_multiplier))
+		if(owner.client?.prefs?.extreme_erp && prob(round(dam/5) * cbt_multiplier))
 			attempted_wounds += /datum/wound/cbt
 		if(prob(dam * cbt_multiplier))
 			owner.emote("groin", TRUE)
 			owner.Stun(10)
+	if(zone_precise == BODY_ZONE_PRECISE_GROIN)
+		if((bclass in GLOB.geld_classes) && owner.client?.prefs?.extreme_erp)
+			var/static/list/genital_wound_types = list(
+				/datum/wound/gelding,
+				/datum/wound/genital_nullification,
+			)
+			var/list/eligible_wounds = list()
+			for(var/wound_type in genital_wound_types)
+				var/datum/wound/candidate = GLOB.primordial_wounds[wound_type]
+				if(candidate.can_apply_to_bodypart(src))
+					eligible_wounds += wound_type
+			if(length(eligible_wounds) && prob(round(dam / 5)))
+				attempted_wounds += pick(eligible_wounds)
 	if((bclass in GLOB.fracture_bclasses) && (zone_precise != BODY_ZONE_PRECISE_STOMACH))
 		used = round(damage_dividend * 20 + (dam / 3))
 		if(user && istype(user.rmb_intent, /datum/rmb_intent/strong))

@@ -40,54 +40,40 @@
 
 /**
  * Shared catastrophe handler for spiked cage_twist and cage_pull at extreme force.
- * Defined on the parent /datum/sex_action/chastityplay so both subtypes can call it.
- * action_type is "twist" or "pull" to select appropriately flavored visible messages.
- * - Penis anatomy: organ ripped free with device.
- * - Vagina anatomy: device wrenched out, CBT wound applied.
- * - Intersex (both): cock ripped off, CBT wound, device stripped off.
+ * The wound handles organ removal, injury naming, and screams. This proc retains
+ * the action-specific messages and releases the device after a successful wound.
  */
 /datum/sex_action/chastityplay/proc/_try_spiked_catastrophe(mob/living/carbon/human/user, mob/living/carbon/human/target, action_type = "twist")
-	var/obj/item/organ/penis_organ = target.getorganslot(ORGAN_SLOT_PENIS)
-	var/obj/item/organ/vagina_organ = target.getorganslot(ORGAN_SLOT_VAGINA)
 	var/obj/item/chastity/chastity_dev = target.chastity_device
 	var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
-	var/turf/drop_turf = get_turf(target)
+	if(!chastity_dev || !chest)
+		return FALSE
+	var/has_penis = !isnull(target.getorganslot(ORGAN_SLOT_PENIS))
+	var/has_vagina = !isnull(target.getorganslot(ORGAN_SLOT_VAGINA))
+	var/datum/wound/genital_nullification/applied_wound = chest.add_wound(/datum/wound/genital_nullification)
+	if(!applied_wound)
+		return FALSE
 
-	if(penis_organ && vagina_organ)
-		// Intersex: corkscrew/pull tears the cock loose and batters the remaining anatomy.
+	var/turf/drop_turf = get_turf(target)
+	if(has_penis && has_vagina)
 		if(action_type == "pull")
 			target.visible_message(span_userdanger("[user] hauls [target]'s spiked cage free with catastrophic force — [target.p_their()] prick still inside it, ripped clean off, the rest of [target.p_their()] groin left wrecked by what came with it."))
 		else
 			target.visible_message(span_userdanger("With a catastrophic final rotation, [target]'s spiked cage tears loose completely — [target.p_their()] prick ripped free inside it, the violence of it wrecking everything else it touched on the way out."))
-		playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamIntersex1.ogg', 'modular/sound/masomoans/agony/CBTScreamIntersex2.ogg'), 85, FALSE, 2)
-		target.add_splatter_floor(drop_turf)
-		penis_organ.Remove(target)
-		penis_organ.forceMove(drop_turf)
-		if(chest && !chest.has_wound(/datum/wound/cbt))
-			chest.add_wound(/datum/wound/cbt)
-	else if(penis_organ)
-		// Cock-only: device and organ torn free together.
+	else if(has_penis)
 		if(action_type == "pull")
 			target.visible_message(span_userdanger("With one final heave, [target]'s spiked cage tears clean off — [target.p_their()] prick hauled out still inside it, ripped free at the root."))
 		else
 			target.visible_message(span_userdanger("With a gut-wrenching final revolution, [target]'s spiked cage tears itself from the mount entirely — [target.p_their()] trapped prick ripped clean off with it, dragged free by the inward spines."))
-		playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamMale1.ogg', 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'), 85, FALSE, 2)
-		target.add_splatter_floor(drop_turf)
-		penis_organ.Remove(target)
-		penis_organ.forceMove(drop_turf)
-	else if(vagina_organ && chastity_dev && chest && !chest.has_wound(/datum/wound/cbt))
-		// Vagina-only: device wrenches loose, CBT wound from the internal damage.
+	else if(has_vagina)
 		if(action_type == "pull")
 			target.visible_message(span_userdanger("[user] tears [target]'s spiked [get_chastity_device_name(target)] free entirely — ripping loose from between [target.p_their()] thighs with a sickening wrench, blood following after."))
 		else
 			target.visible_message(span_userdanger("With a vicious final corkscrew, [target]'s spiked [get_chastity_device_name(target)] wrenches itself entirely loose — tearing free of [target.p_their()] body and leaving nothing but ruin."))
-		playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamFemale1.ogg', 'modular/sound/masomoans/agony/CBTScreamFemale2.ogg'), 85, FALSE, 2)
-		target.add_splatter_floor(drop_turf)
-		chest.add_wound(/datum/wound/cbt)
-	else
-		return // No qualifying anatomy found; nothing to tear.
+	target.add_splatter_floor(drop_turf)
 
 	// Strip and drop the device if it is still worn.
 	if(chastity_dev && target.chastity_device == chastity_dev)
 		chastity_dev.remove_chastity(target)
 		chastity_dev.forceMove(drop_turf)
+	return TRUE
