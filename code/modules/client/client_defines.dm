@@ -85,6 +85,13 @@
 	/// served within SSpoint_ambience.standing_skip of now. The step that is coming will serve them
 	var/point_ambience_last_service = 0
 	var/point_ambience_last_move
+	/// world.time of the last step taken faster than a natural run, a teleport included. Null once a
+	/// step comes at a natural pace
+	var/point_ambience_speed_moved
+	/// Everything but a torch in hand faded for moving too fast, until a service finds them slowed
+	var/point_ambience_speed_silenced = FALSE
+	/// world.time before which a forced move or a floor change waits for the interval like a step
+	var/point_ambience_jump_next = 0
 	/// Point ambience off, or its effective volume at zero. Set at login and by the volume menu,
 	/// never per step
 	var/point_ambience_silenced = FALSE

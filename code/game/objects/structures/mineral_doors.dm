@@ -140,6 +140,10 @@
 	if(!base_state)
 		base_state = icon_state
 	air_update_turf(TRUE)
+	// Creating a door calls no Entered, so its turf is told here
+	var/turf/our_turf = loc
+	if(isturf(our_turf))
+		our_turf.recount_sound_doors()
 	if(grant_resident_key && !lockid)
 		lockid = "random_lock_id_[rand(1,9999999)]" // I know, not foolproof
 	if(lockhash)
@@ -464,6 +468,7 @@
 						icon_state = "[base_state]"
 						density = TRUE
 						opacity = TRUE
+						SSpoint_ambience.door_changed(src)
 						brokenstate = FALSE
 						obj_broken = FALSE
 						obj_integrity = max_integrity
@@ -753,6 +758,14 @@
 	set_opacity(anchored ? !door_opened : FALSE)
 	air_update_turf(TRUE)
 
+/// Every open, close and viewport slide lands here, so this is where point ambience hears of it. The
+/// break and the two repairs write opacity directly and tell it themselves
+/obj/structure/mineral_door/set_opacity(new_opacity)
+	var/old_opacity = opacity
+	. = ..()
+	if(opacity != old_opacity)
+		SSpoint_ambience.door_changed(src)
+
 /obj/structure/mineral_door/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I, 40)
@@ -764,6 +777,7 @@
 		icon_state = "[base_state]br"
 		density = FALSE
 		opacity = FALSE
+		SSpoint_ambience.door_changed(src)
 		brokenstate = TRUE
 	..()
 

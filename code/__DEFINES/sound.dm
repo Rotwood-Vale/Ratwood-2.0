@@ -419,6 +419,18 @@
 #define OCCLUSION_MUFFLED 2
 
 /**
+ * How an occlusion walk treats doors, which are objects where walls are turfs. NONE ignores them.
+ * FLANKS lets the line through a door open or shut, but a corner probe starting beside a wall treats
+ * anything opaque on its first tile as a wall, which is what catches a shut door in the gap. LIVE
+ * blocks at a shut door on the line and at the corners alike, reading the door as it stands. ALWAYS
+ * blocks at every door that shuts solid, open or not, and is there to compare by ear
+ */
+#define SOUND_DOORS_NONE 0
+#define SOUND_DOORS_FLANKS 1
+#define SOUND_DOORS_LIVE 2
+#define SOUND_DOORS_ALWAYS 3
+
+/**
  * SSpoint_ambience modes. LIVE serves each client the nearest sources per step and per tick.
  * FALLBACK gives each source a plain timer loop instead, cheaper on a full server, attenuation
  * frozen between replays, torches silent. OFF is silent.
@@ -467,6 +479,21 @@
  * before fades. One walker on a torch lined route keeps about 0.2 running, measured
  */
 #define POINT_AMBIENCE_FADE_CAP 64
+/// Deciseconds since a listener's last step faster than a natural run within which they still count
+/// as moving that fast. Longer than any such step takes, a diagonal's doubled one included, and apart
+/// from the standing skip, which an admin can set to 0
+#define POINT_AMBIENCE_SPEED_STILL 5
+/// Least time between two forced moves of one listener that skip the move interval. Longer than any
+/// interval, so a player carried along by forced moves is served no more often than one walking
+#define POINT_AMBIENCE_JUMP_GAP (1 SECONDS)
+/**
+ * A listener's point ambience volume from their preferences, the slider alone when independent and
+ * under Master otherwise. The arithmetic is at_overall()'s in the same order, so it equals
+ * point_ambience_volume() exactly. A macro because the standing check runs it once a second for
+ * every listener standing still, and a proc call there costs more than the sum. Reads P three times,
+ * so pass a var path, never a call
+ */
+#define POINT_AMBIENCE_VOLUME(P) (P.pointambience_independent ? P.pointambiencevol : P.pointambiencevol * P.overallvol * 0.01)
 
 /**
  * Densest candidate box SSpoint_ambience.drain_density_count gives its own bucket, anything denser
@@ -619,25 +646,15 @@
 						'sound/ambience/rivernight (2).ogg',\
 						'sound/ambience/rivernight (3).ogg')
 
-/// The river point ambience category's own copies of the two sets above, normalised with the other
-/// point ambience clips. The area beds keep the originals
-/// Plain running water, the same set at any hour. Every day take carries bird or frog calls, and
-/// they were recorded over water that sits 5 dB thinner and an octave brighter than these, so one
-/// of them arriving reads as a different river rather than as this one with something singing over
-/// it. Calls want a take recorded over THIS water, which is why the rare set is empty rather than
-/// holding the day clips
-#define POINT_AMBIENCE_RIVER_DAY list('sound/ambience/point/river_night_1.ogg',\
+/// The river point ambience category's own copies of the night beds above, normalised with the other
+/// point ambience clips and played at every hour. The area beds keep the originals.
+/// The day takes are archived as river_day_1 to 3 in the same folder, referenced by nothing. Every
+/// one carries bird or frog calls over water measuring 5 dB thinner under 1 kHz and an octave
+/// brighter than these, so one arriving reads as a different river rather than as this one with
+/// something singing over it. A day set wants a take recorded over THIS water
+#define POINT_AMBIENCE_RIVER list('sound/ambience/point/river_night_1.ogg',\
 						'sound/ambience/point/river_night_2.ogg',\
 						'sound/ambience/point/river_night_3.ogg')
-
-#define POINT_AMBIENCE_RIVER_DAY_RARE null
-
-#define POINT_AMBIENCE_RIVER_NIGHT list('sound/ambience/point/river_night_1.ogg',\
-						'sound/ambience/point/river_night_2.ogg',\
-						'sound/ambience/point/river_night_3.ogg')
-
-/// Nothing yet: the night clips all measured as plain water. A frog or owl take belongs here
-#define POINT_AMBIENCE_RIVER_NIGHT_RARE null
 
 #define AMB_CAVEWATER list('sound/ambience/cavewater (1).ogg',\
 						'sound/ambience/cavewater (2).ogg',\

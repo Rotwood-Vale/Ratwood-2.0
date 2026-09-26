@@ -83,6 +83,15 @@
 	config_entry_value = 0
 	min_val = 0
 
+/datum/config_entry/number/point_ambience_move_steps	// Most steps a client takes between move-hook services at a natural pace, walking or running. The two intervals above stay as caps. 0 leaves them alone
+	config_entry_value = 0
+	min_val = 0
+
+/datum/config_entry/number/point_ambience_speed_cutoff	// 1: a client stepping faster than a natural speed 15 run hears no point ambience while moving, a torch in hand excepted. 0 serves them like anyone else
+	config_entry_value = 1
+	min_val = 0
+	max_val = 1
+
 /datum/config_entry/number/point_ambience_max_services_per_tick	// Ceiling on move-hook ambience services in one tick across all clients. 0 is none and also turns off the tick-usage gate
 	config_entry_value = 8
 	min_val = 0

@@ -3,6 +3,9 @@
 #define CELL_SHIFT 3
 #define POINT_AMBIENCE_SOURCE_CHANGE_FIELDS 10
 #define POINT_AMBIENCE_SOURCE_CHANGE_LIMIT 32
+/// Index changes in one tick, outside any bulk update, that get the caller reported. A starting
+/// heuristic rather than a measured break even
+#define POINT_AMBIENCE_BULK_BURST 64
 
 /**
  * # Point Ambience
@@ -105,6 +108,9 @@ SUBSYSTEM_DEF(point_ambience)
 	 */
 	var/standing_skip = 0
 	var/skip_active_movers = TRUE
+	/// Off sends every standing visit through service_client's shortcut instead of the walk's own
+	/// copy of it. Kept so the copy can be priced
+	var/standing_hoist = TRUE
 	var/clip_coalesce_window = 0.5 SECONDS
 
 	var/list/datum/point_ambience_category/categories = list()
@@ -138,6 +144,34 @@ SUBSYSTEM_DEF(point_ambience)
 	var/tile_cache_checks = 0
 	var/tile_cache_mismatches = 0
 	var/tile_cache_invalidation_ms = 0
+	/**
+	 * Open bulk source updates, nested ones folded into the outermost, see
+	 * begin_bulk_source_update(). Read by source changes and once a fire, never by a service
+	 */
+	var/bulk_depth = 0
+	/// world.time the outermost scope opened. A scope cannot outlive its tick, so depth still up on
+	/// a later one means its caller never closed it
+	var/bulk_opened_at
+	/// The outermost open scope's label, named if it leaks
+	var/bulk_label
+	/// Index changes inside the open scope, so one that changed nothing flushes nothing
+	var/bulk_changes = 0
+	/// Sources removed or moved between categories inside the open scope, which the close checks
+	/// against what each listener is playing
+	var/list/bulk_affected = list()
+	var/bulk_scopes = 0
+	var/bulk_changes_total = 0
+	var/bulk_stops = 0
+	var/bulk_leaks = 0
+	/// Each close's flush and stop pass. The flush is also inside tile_cache_invalidation_ms
+	var/bulk_close_ms = 0
+	var/bulk_close_worst_ms = 0
+	/// Index changes outside any scope within one world.time, for the unbatched burst report
+	var/burst_changes = 0
+	var/burst_time
+	var/unbatched_bursts = 0
+	/// A burst before this is counted but not reported again
+	var/burst_quiet_until = 0
 	/// Own-floor candidates ranked this service, null when no fresh ranking ran
 	var/ranked_candidates_this_service = null
 	/**
@@ -254,11 +288,35 @@ SUBSYSTEM_DEF(point_ambience)
 	var/clip_refresh_queued = 0
 	var/clip_refresh_ms = 0
 	/**
-	 * Whether a wall between listener and source muffles or silences it. Doors do not count, since a
-	 * standing listener never re-sends. Off, a hearth through a keep wall sounds like one in the
-	 * open. Costs a line walk per served category, so switching it off is also how to price it
+	 * Whether a wall between listener and source muffles or silences it, doors included as door_mode
+	 * says. Off, a hearth through a keep wall sounds like one in the open. Costs a line walk per
+	 * served category, so switching it off is also how to price it
 	 */
 	var/occlude_sources = TRUE
+	/**
+	 * How the wall walk treats doors, a SOUND_DOORS_* value. LIVE stops at a shut door on the line
+	 * and at the corners, FLANKS only at the corners, ALWAYS at any door that shuts solid, open or
+	 * not. Read live wherever a turf's sound_door_count says a door may stand
+	 */
+	var/door_mode = SOUND_DOORS_LIVE
+	/**
+	 * Whether a door opening or shutting has the listeners near it served again. Without it a
+	 * listener standing still keeps the answer from their last step until they take another.
+	 * Changed doors are collected and gathered once a period, so a door worked back and forth costs
+	 * one service per listener per period however fast it goes
+	 */
+	var/door_recheck = TRUE
+	/// Deciseconds between door gathers, and so the longest a listener waits to hear a door change
+	var/door_recheck_period = 5
+	/**
+	 * Serves a listener near a changed door only when the door sits in the box between them and the
+	 * winner or runner-up of a category walls can block, widened by a tile. Neither the line nor a
+	 * corner probe leaves that box, so a door outside it cannot change their answer
+	 */
+	var/door_recheck_filter = TRUE
+	/// Turfs whose door changed since the last gather, as turf -> TRUE
+	var/list/changed_doors = list()
+	var/next_door_recheck = 0
 	/// (world.maxy >> CELL_SHIFT) + 2, fixed at the first register. Only maxx can grow at
 	/// runtime, and a larger x only extends a floor's list
 	var/cell_stride = 0
@@ -402,6 +460,16 @@ SUBSYSTEM_DEF(point_ambience)
 	 */
 	var/occlusion_corners = 0
 	/**
+	 * Cumulative door counts. Changes counts every door opacity change whether or not the re-check
+	 * is on, so it measures how often doors move. Then the gathers run, the listeners found in
+	 * reach, those the box filter passed on to a service, and the milliseconds the gathers took
+	 */
+	var/door_changes = 0
+	var/door_gathers = 0
+	var/door_listeners_found = 0
+	var/door_listeners_marked = 0
+	var/door_gather_ms = 0
+	/**
 	 * The echo array a muffled send carries, whether the muffle came from a storey or a corner.
 	 * Built once and never written after, so one
 	 * list serves every client. A send is snapshotted, so sharing it is safe
@@ -422,6 +490,20 @@ SUBSYSTEM_DEF(point_ambience)
 	 * 3 holds it to two tiles. Intent rather than measured speed, so both values stay hard ceilings
 	 */
 	var/move_service_interval_running_override = 0
+	/**
+	 * Most steps a natural mover takes between move-hook services, 0 for no step limit. It only ever
+	 * shortens the two intervals above, which stay as caps. An interval holds the spacing in time, so
+	 * a faster mover covers more tiles between services, and tiles are what a listener hears
+	 */
+	var/move_service_steps = 0
+	/// Whether a listener stepping faster than a natural run hears no point ambience while moving
+	var/speed_cutoff = FALSE
+	/**
+	 * The step delay of a natural run at the speed stat's cap: the config run delay less the half
+	 * decisecond the stat can take off a step. A faster step is paced as this one and trips
+	 * speed_cutoff
+	 */
+	var/natural_run_step = 0
 	/**
 	 * Ceiling on move-hook services in one tick, 0 for none. Under the queue it is the drain's budget
 	 * per tick. On the inline path the move hook is a signal handler running outside MC_TICK_CHECK,
@@ -498,6 +580,12 @@ SUBSYSTEM_DEF(point_ambience)
 	var/standing_skipped = 0
 	var/standing_active_skipped = 0
 	var/standing_pending_skipped = 0
+	var/standing_speed_skipped = 0
+	/// Listeners silenced for moving faster than a natural run, the sounds that faded doing it, and
+	/// the fast steps passed over while silenced
+	var/speed_silences = 0
+	var/speed_fades = 0
+	var/speed_moves_skipped = 0
 	/// world.time this instance was built. An MC restart resets it along with everything above, so a
 	/// reader holding an older snapshot must throw that away rather than subtract from it
 	var/started_at = 0
@@ -563,6 +651,7 @@ SUBSYSTEM_DEF(point_ambience)
  * actually there, so a drifted count does not survive the restart meant to clear it.
  */
 /datum/controller/subsystem/point_ambience/Recover()
+	// An open bulk update is not carried. This flush and the stops below cover all it deferred
 	SSpoint_ambience.clear_tile_cache()
 	// A fade out has already left point_ambience_sources, so the loop below would miss its channel
 	SSpoint_ambience.finish_fades()
@@ -576,6 +665,9 @@ SUBSYSTEM_DEF(point_ambience)
 		listener_client.point_ambience_next_service = 0
 		listener_client.point_ambience_last_service = world.time - SSpoint_ambience.standing_skip
 		listener_client.point_ambience_last_move = null
+		listener_client.point_ambience_speed_moved = null
+		listener_client.point_ambience_speed_silenced = FALSE
+		listener_client.point_ambience_jump_next = 0
 		listener_client.point_ambience_clip_due = FALSE
 	buckets_by_z = SSpoint_ambience.buckets_by_z
 	cell_stride = SSpoint_ambience.cell_stride
@@ -586,12 +678,16 @@ SUBSYSTEM_DEF(point_ambience)
 	mode = SSpoint_ambience.mode
 	move_service_interval = SSpoint_ambience.move_service_interval
 	move_service_interval_running_override = SSpoint_ambience.move_service_interval_running_override
+	move_service_steps = SSpoint_ambience.move_service_steps
+	speed_cutoff = SSpoint_ambience.speed_cutoff
+	natural_run_step = SSpoint_ambience.natural_run_step
 	max_services_per_tick = SSpoint_ambience.max_services_per_tick
 	use_queue = SSpoint_ambience.use_queue
 	use_tile_cache = SSpoint_ambience.use_tile_cache
 	verify_tile_cache = SSpoint_ambience.verify_tile_cache
 	standing_skip = SSpoint_ambience.standing_skip
 	skip_active_movers = SSpoint_ambience.skip_active_movers
+	standing_hoist = SSpoint_ambience.standing_hoist
 	clip_coalesce_window = SSpoint_ambience.clip_coalesce_window
 	cross_floor = SSpoint_ambience.cross_floor
 	send_cutoff = SSpoint_ambience.send_cutoff
@@ -639,7 +735,6 @@ SUBSYSTEM_DEF(point_ambience)
 			category.source_volumes = old_category.source_volumes
 			category.source_continuous = old_category.source_continuous
 			category.files = old_category.files
-			category.files_rare = old_category.files_rare
 	// The buckets carry each source's category as its index into categories, which the new datums
 	// were built with in the same subtypesof order, so the copied buckets stay right
 	refresh_category_ranges()
@@ -744,6 +839,9 @@ SUBSYSTEM_DEF(point_ambience)
 	var/datum/point_ambience_category/previous_category = source_categories[source]
 	if(previous_category != category)
 		if(previous_category)
+			// Checked at the close against listeners still playing it under the old category
+			if(bulk_depth)
+				bulk_affected[source] = TRUE
 			decrement_source_count(previous_category)
 			// The overrides live on the category, so a move leaves them behind holding a hard
 			// reference the old category can no longer reach to clear
@@ -945,24 +1043,6 @@ SUBSYSTEM_DEF(point_ambience)
 	invalidate_listener_cache()
 
 /**
- * Swaps a category's whole clip set, which is how day and night change.
- *
- * Nothing playing is restarted: each listener picks from the new set at their next clip boundary, so
- * the change arrives without a seam.
- *
- * Arguments:
- * * category_path - the category's TYPEPATH, not its datum
- * * files_rare - the occasional set, rolled for at rare_chance instead of sharing the rotation.
- *   Null leaves the category on files alone
- */
-/datum/controller/subsystem/point_ambience/proc/set_category_files(category_path, list/files, list/files_rare)
-	var/datum/point_ambience_category/category = categories_by_path[category_path]
-	if(!category)
-		return
-	category.files = length(files) ? files : null
-	category.files_rare = length(files_rare) ? files_rare : null
-
-/**
  * Marks one expired clip for replacement. An already queued movement service consumes the same
  * marker; otherwise the callback queues this category. The old clip repeats until it is served
  */
@@ -1049,6 +1129,10 @@ SUBSYSTEM_DEF(point_ambience)
 	category.source_sounds -= source
 	category.source_volumes -= source
 	category.source_continuous -= source
+	// Inside a bulk update the close makes this walk once for every source the scope changed
+	if(bulk_depth)
+		bulk_affected[source] = TRUE
+		return
 	// The channel is the stop handle: a snuffed source goes silent now, not when its replay runs
 	// out. One client walk per deactivation
 	for(var/client/listener_client in GLOB.clients)
@@ -1382,12 +1466,16 @@ SUBSYSTEM_DEF(point_ambience)
  * cannot reach back, and this has to clear them out.
  */
 /datum/controller/subsystem/point_ambience/fire(resumed)
+	if(bulk_depth && bulk_opened_at != world.time)
+		close_leaked_bulk()
 	if(!hooked_logins)
 		hook_logins()
 	if(!settings_seeded)
 		settings_seeded = TRUE
 		move_service_interval = CONFIG_GET(number/point_ambience_move_interval)
 		move_service_interval_running_override = CONFIG_GET(number/point_ambience_move_interval_running_override)
+		move_service_steps = CONFIG_GET(number/point_ambience_move_steps)
+		speed_cutoff = CONFIG_GET(number/point_ambience_speed_cutoff)
 		max_services_per_tick = CONFIG_GET(number/point_ambience_max_services_per_tick)
 		use_queue = CONFIG_GET(number/point_ambience_queue)
 		standing_skip = CONFIG_GET(number/point_ambience_standing_skip)
@@ -1403,10 +1491,12 @@ SUBSYSTEM_DEF(point_ambience)
 				any_silenced = TRUE
 		// Copied because unregister_source mutates the list it walks
 		if(any_silenced)
+			begin_bulk_source_update("config silencing")
 			for(var/atom/source as anything in source_categories.Copy())
 				var/datum/point_ambience_category/category = source_categories[source]
 				if(category?.silenced)
 					unregister_source(source, category.type)
+			end_bulk_source_update()
 		static_version++
 	if(mode != POINT_AMBIENCE_LIVE)
 		return
@@ -1414,6 +1504,9 @@ SUBSYSTEM_DEF(point_ambience)
 	// range is never served again and their fade still has to finish
 	if(length(fading) && world.time >= fade_next_due)
 		run_fades()
+	// Before the drain, so the listeners a door marks are served this fire
+	if(length(changed_doors) && world.time >= next_door_recheck)
+		recheck_doors()
 	// Whatever is marked, whether or not the queue is still on: switching it off must not strand
 	// anyone already in the set
 	var/drained = TRUE
@@ -1427,6 +1520,9 @@ SUBSYSTEM_DEF(point_ambience)
 		next_standing_walk = world.time + standing_walk_interval
 		currentrun = GLOB.clients.Copy()
 		standing_walks++
+		// Every walk rather than once at boot, since a localhost admin's login sets the move delays
+		// after it. The speed stat's cap takes half a decisecond off a step
+		natural_run_step = CONFIG_GET(number/movedelay/run_delay) - 0.5
 	if(!length(currentrun))
 		return
 	in_standing_walk = TRUE
@@ -1443,9 +1539,12 @@ SUBSYSTEM_DEF(point_ambience)
 			// leaving. Stamped by steps only, so one waiting past the budget still reads unserved
 			if(standing_skip && world.time - listener_client.point_ambience_last_service < standing_skip)
 				standing_skipped++
-			// A distant source change need not turn an active-mover skip into a full service. Check the
-			// history against their current turf only after the exact-version check misses. Do not advance
-			// the stored version here because its ranking can belong to an earlier turf
+			// Silenced for speed and still moving that fast. A step at a natural pace brings them
+			// back, and so does the first walk after they stop
+			else if(listener_client.point_ambience_speed_silenced && !isnull(listener_client.point_ambience_speed_moved) \
+				&& world.time - listener_client.point_ambience_speed_moved < POINT_AMBIENCE_SPEED_STILL)
+				standing_skipped++
+				standing_speed_skipped++
 			else if(skip_active_movers && standing_skip && !listener_client.point_ambience_clip_due \
 				&& !listener_client.point_ambience_ear && !isnull(listener_client.point_ambience_last_move) \
 				&& world.time - listener_client.point_ambience_last_move < standing_skip \
@@ -1459,6 +1558,23 @@ SUBSYSTEM_DEF(point_ambience)
 			else if(!isnull(dirty_clients[listener_client]))
 				standing_skipped++
 				standing_pending_skipped++
+			// The standing shortcut in service_client, taken before the call so an answer that still
+			// holds costs no proc call and no per service setup. The conditions must match that shortcut
+			// exactly, and it moves the same counters so Counters still reads a cached hit. The fields
+			// that setup resets are only read by callers straight after their own service
+			else if(standing_hoist && !listener_client.point_ambience_clip_due && !listener_client.point_ambience_ear \
+				&& listener_client.point_ambience_cache_turf \
+				&& get_turf(listener_client.mob) == listener_client.point_ambience_cache_turf \
+				&& !isnewplayer(listener_client.mob) \
+				&& listener_client.mob.point_ambience_self_source == listener_client.point_ambience_cache_self \
+				&& (listener_client.prefs ? POINT_AMBIENCE_VOLUME(listener_client.prefs) : null) == listener_client.point_ambience_cache_volume \
+				&& (listener_client.point_ambience_cache_version == static_version \
+					|| can_reuse_tile_listener(listener_client.point_ambience_cache_turf, listener_client.point_ambience_cache_version)))
+				listener_client.point_ambience_cache_version = static_version
+				services_total++
+				standing_hits++
+				tick_services++
+				tick_standing_hits++
 			else
 				var/standing_before = standing_hits
 				service_client(listener_client)
@@ -1585,12 +1701,21 @@ SUBSYSTEM_DEF(point_ambience)
 	var/atom/self_source = null
 	if(listener_turf && (!ear || listener_turf == get_turf(listener)))
 		self_source = listener.point_ambience_self_source
+	// Still moving faster than a natural run, so everything fades where it plays. The service that
+	// finds the stamp gone old clears the silence and serves them as normal
+	if(!isnull(listener_client.point_ambience_speed_moved))
+		if(world.time - listener_client.point_ambience_speed_moved < POINT_AMBIENCE_SPEED_STILL)
+			speed_silence(listener_client, listener_turf, self_source)
+			return
+		listener_client.point_ambience_speed_moved = null
+	listener_client.point_ambience_speed_silenced = FALSE
 	var/list/nearest_by_category
 	var/standing = FALSE
 	var/clip_only = FALSE
 	var/datum/point_ambience_category/clip_category = (length(clip_advances) == 1) ? clip_advances[1] : null
 	if(listener_turf)
-		var/ambience_volume = listener_client.prefs ? listener_client.prefs.point_ambience_volume() : null
+		var/ambience_volume = listener_client.prefs ? POINT_AMBIENCE_VOLUME(listener_client.prefs) : null
+		// The standing walk in fire() repeats this shortcut before calling here, so change both together
 		if(listener_turf == listener_client.point_ambience_cache_turf \
 			&& ambience_volume == listener_client.point_ambience_cache_volume \
 			&& (static_version == listener_client.point_ambience_cache_version \
@@ -1691,8 +1816,12 @@ SUBSYSTEM_DEF(point_ambience)
 		var/atom/previous = sources[category]
 		var/had_previous = !!previous
 		var/fresh = (nearest != previous)
+		var/centre = FALSE
 		if(fresh)
 			sources[category] = nearest
+			if(previous)
+				category.handoffs++
+				centre = category.centre_handoff
 			// Back in earshot mid fade out, so the send carries on with the playing clip rather than
 			// restarting it, which matters past pillars. A clip set restarts as it always has
 			if(!had_previous && !category.files && length(fade_slots) >= category.index)
@@ -1714,7 +1843,7 @@ SUBSYSTEM_DEF(point_ambience)
 			slot[POINT_AMBIENCE_SLOT_RUNNER_UP] = scratch_second[category]
 		var/sent
 		sends_this_service++
-		sent = slim_send(listener, listener_client, category, nearest, fresh, had_previous, FALSE, slot, clip_advance)
+		sent = slim_send(listener, listener_client, category, nearest, fresh, had_previous, FALSE, slot, clip_advance, centre)
 		// Nothing usable was sent, so null what was playing or it repeats client-side at a stale
 		// volume. Keyed on what was playing, not fresh: a failed switch must still silence it
 		if(!sent)
@@ -1795,12 +1924,10 @@ SUBSYSTEM_DEF(point_ambience)
  * stopping at one. A different floor is never occluded: the line is 2D, so an off-z target would run
  * to the step limit and call everything upstairs a wall.
  *
- * A cut-down can_see(), reading turf opacity only and skipping each turf's contents loop. DOORS ARE
- * LEFT OUT DELIBERATELY, not to save time. Doors are objects where walls are turfs, so only that
- * contents loop would catch them, and a listener standing still never re-sends an unchanged static
- * source, so a door's state would freeze into the sound until they moved. Walls do not move, so a
- * frozen answer stays right. The price is that sound crosses a doorway shut or open, along the lines
- * that pass through that turf.
+ * A cut-down can_see(), reading turf opacity and doors but no other object. Doors are objects where
+ * walls are turfs, so a turf's contents are looped only where its sound_door_count says one may
+ * stand. A listener standing still never re-sends an unchanged static source, so a door's state
+ * would freeze into the sound until they moved. recheck_doors() serves them again when one changes.
  *
  * Arguments:
  * * trace - filled with the turfs the line crossed, for the Here verb to print. The live path
@@ -1809,9 +1936,8 @@ SUBSYSTEM_DEF(point_ambience)
 /datum/controller/subsystem/point_ambience/proc/source_occluded(turf/source_turf, turf/listener_turf, datum/point_ambience_category/category, list/trace)
 	if(!occlude_sources || !category.occlude || source_turf == listener_turf || source_turf.z != listener_turf.z)
 		return OCCLUSION_CLEAR
-	// FALSE, or a door's state freezes into the sound of a listener standing still. Graded rather
-	// than a bare walk, or this reports SOLID for a source the service is serving muffled
-	. = sound_occlusion_grade(listener_turf, source_turf, category.range, FALSE, trace, door_flanks = TRUE)
+	// Graded rather than a bare walk, or this reports SOLID for a source the service is serving muffled
+	. = sound_occlusion_grade(listener_turf, source_turf, category.range, FALSE, trace, door_mode)
 	count_occlusion_walk()
 
 /**
@@ -1879,7 +2005,7 @@ SUBSYSTEM_DEF(point_ambience)
 /datum/controller/subsystem/point_ambience/proc/grade_from_listener(turf/source_turf, range)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
-	. = sound_occlusion_grade(serving_turf, source_turf, range, FALSE, door_flanks = TRUE)
+	. = sound_occlusion_grade(serving_turf, source_turf, range, FALSE, null, door_mode)
 	// Counted before another walk overwrites what this one cost
 	count_occlusion_walk()
 	if(. == OCCLUSION_MUFFLED)
@@ -1919,6 +2045,7 @@ SUBSYSTEM_DEF(point_ambience)
  *   silence it
  * * dry_run - fill the datum and return what it would send, without sending
  * * clip_advance - choose the next file in a clip set without treating it as a new arrival
+ * * centre - send this one centred, the send that switches source under centre_handoff
  *
  * Decisions a reader would otherwise undo:
  *
@@ -1940,7 +2067,7 @@ SUBSYSTEM_DEF(point_ambience)
  * degrees on the next step. The direction is also leaned toward the runner-up, so a road of braziers
  * slides between ears instead of flipping as the nearest changes.
  */
-/datum/controller/subsystem/point_ambience/proc/slim_send(mob/listener, client/listener_client, datum/point_ambience_category/category, atom/nearest, fresh, had_previous, dry_run, list/slot, clip_advance = FALSE)
+/datum/controller/subsystem/point_ambience/proc/slim_send(mob/listener, client/listener_client, datum/point_ambience_category/category, atom/nearest, fresh, had_previous, dry_run, list/slot, clip_advance = FALSE, centre = FALSE)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	var/index = category.index
@@ -1975,10 +2102,8 @@ SUBSYSTEM_DEF(point_ambience)
 			restarting = TRUE
 			var/file
 			if(category.files)
-				// The rare set is rolled for rather than sharing the rotation, so a clip with birdsong
-				// on it stays an event. Never the clip just played, where there is a choice
-				var/list/wanted = (category.files_rare && prob(category.rare_chance)) ? category.files_rare : category.files
-				var/list/choices = (length(wanted) > 1) ? (wanted - loaded) : wanted
+				// Never the clip just played, where there is a choice
+				var/list/choices = (length(category.files) > 1) ? (category.files - loaded) : category.files
 				file = pick(choices)
 			else
 				file = category.source_sounds[nearest] || category.sound_file
@@ -2055,7 +2180,7 @@ SUBSYSTEM_DEF(point_ambience)
 	var/pan_x = 0
 	var/pan_z = 0
 	// Continuous source handoffs would reverse between opposite voices, so their stereo image stays centred
-	if(!continuous)
+	if(!continuous && !centre)
 		pan_lean(slot, category, nearest, source_turf, dx, dy)
 		var/lean_dx = serving_lean_dx
 		var/lean_dy = serving_lean_dy
@@ -2185,6 +2310,8 @@ SUBSYSTEM_DEF(point_ambience)
 		return
 	if(player.client)
 		player.client.point_ambience_last_move = null
+		player.client.point_ambience_speed_moved = null
+		player.client.point_ambience_speed_silenced = FALSE
 		update_silenced(player.client)
 
 /**
@@ -2273,6 +2400,94 @@ SUBSYSTEM_DEF(point_ambience)
 	if(use_queue && !dirty_clients[listener_client])
 		dirty_clients[listener_client] = world.time
 
+/// A door's opacity changed, through set_opacity or one of the writes that bypass it. Collected
+/// rather than acted on, so a door worked back and forth is gathered once a period
+/datum/controller/subsystem/point_ambience/proc/door_changed(obj/structure/mineral_door/door)
+	door_changes++
+	if(!door_recheck || door_mode < SOUND_DOORS_LIVE || mode != POINT_AMBIENCE_LIVE)
+		return
+	var/turf/door_turf = get_turf(door)
+	if(door_turf)
+		changed_doors[door_turf] = TRUE
+
+/**
+ * Serves again every listener a changed door could stand between and one of their sources. The
+ * spatial grid finds who is in reach, the box filter drops those whose sources lie elsewhere, and
+ * mark_listener() queues the rest past the standing shortcut.
+ *
+ * The grid follows bodies, so a detached head near the door is not found. Its listener catches up
+ * when the head or the body next moves
+ */
+/datum/controller/subsystem/point_ambience/proc/recheck_doors()
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	next_door_recheck = world.time + door_recheck_period
+	var/timing = !isnull(GLOB.point_ambience_counters)
+	if(timing)
+		rustg_time_reset("pa_door_recheck")
+	for(var/turf/door_turf as anything in changed_doors)
+		door_gathers++
+		for(var/mob/listener as anything in SSspatial_grid.orthogonal_range_search(door_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, max_range))
+			var/client/listener_client = listener.client
+			if(!listener_client || isobserver(listener))
+				continue
+			// The ear is the head, somewhere else, so the body's position says nothing
+			if(listener_client.point_ambience_ear)
+				mark_listener(listener_client)
+				continue
+			var/turf/listener_turf = get_turf(listener)
+			// The grid answers in whole 17 tile cells, so this is the actual reach
+			if(!listener_turf || listener_turf.z != door_turf.z \
+				|| abs(listener_turf.x - door_turf.x) > max_range || abs(listener_turf.y - door_turf.y) > max_range)
+				continue
+			door_listeners_found++
+			if(door_recheck_filter && !door_in_reach(listener_turf, door_turf))
+				continue
+			door_listeners_marked++
+			mark_listener(listener_client)
+	changed_doors.Cut()
+	if(timing)
+		door_gather_ms += rustg_time_microseconds("pa_door_recheck") / 1000
+
+/**
+ * Whether a door could stand on a line a service walks from this turf: inside the box between the
+ * listener and the winner or runner-up of a category walls can block, widened by one tile for the
+ * corner probes. Reads the tile cache's ranking, which is taken before occlusion. A service writes
+ * its occlusion answer into the listener's own list, so a source a shut door silenced is gone from
+ * there and opening the door would never bring it back. No ranking to read means no way to rule
+ * the door out
+ */
+/datum/controller/subsystem/point_ambience/proc/door_in_reach(turf/listener_turf, turf/door_turf)
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(!use_tile_cache || cross_floor)
+		return TRUE
+	var/entry = tile_cache[listener_turf]
+	if(isnull(entry))
+		return TRUE
+	// TRUE is an empty ranking, nothing in range to block
+	if(!islist(entry))
+		return FALSE
+	var/list/ranking = entry
+	for(var/i = 1, i <= length(ranking), i += 5)
+		var/datum/point_ambience_category/category = ranking[i]
+		if(!category.occlude)
+			continue
+		if(door_in_box(listener_turf, ranking[i + 1], door_turf) || door_in_box(listener_turf, ranking[i + 3], door_turf))
+			return TRUE
+	return FALSE
+
+/datum/controller/subsystem/point_ambience/proc/door_in_box(turf/listener_turf, atom/source, turf/door_turf)
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(!source)
+		return FALSE
+	var/turf/source_turf = source_turfs[source] || get_turf(source)
+	if(!source_turf)
+		return FALSE
+	return door_turf.x >= min(listener_turf.x, source_turf.x) - 1 && door_turf.x <= max(listener_turf.x, source_turf.x) + 1 \
+		&& door_turf.y >= min(listener_turf.y, source_turf.y) - 1 && door_turf.y <= max(listener_turf.y, source_turf.y) + 1
+
 /// One watch per dullahan client and none for anybody else, so nothing on everyone's path resolves
 /// a species. Called at login and whenever the species changes
 /datum/controller/subsystem/point_ambience/proc/update_head_watch(client/listener_client, mob/player)
@@ -2330,11 +2545,33 @@ SUBSYSTEM_DEF(point_ambience)
 		return
 	moves_total++
 	// A teleport or a floor change lands where the last budget knows nothing, so it goes to a
-	// full service without a gated step being spent on it
+	// full service without a gated step being spent on it. One a second: whatever carries a player
+	// by forced moves, tile after tile, would otherwise buy a service every tick. A jump held back
+	// counts as a step from here on, so keep "was it a jump" apart from "is it served now"
 	var/turf/old_turf = old_loc
 	var/discontinuous = forced || (old_turf && old_turf.z != listener.z)
-	listener_client.point_ambience_last_move = discontinuous ? null : world.time
-	if(!discontinuous && move_service_interval && world.time < listener_client.point_ambience_next_service)
+	var/jump_served = discontinuous && world.time >= listener_client.point_ambience_jump_next
+	if(jump_served)
+		listener_client.point_ambience_jump_next = world.time + POINT_AMBIENCE_JUMP_GAP
+	listener_client.point_ambience_last_move = jump_served ? null : world.time
+	// A plain read for anyone on foot, the proc only for a rider
+	var/step_delay = listener.buckled ? step_delay_of(listener) : listener.cached_multiplicative_slowdown
+	var/urgent = jump_served
+	// Faster than a natural run hears nothing while moving. The first such step and the first one
+	// back at a natural pace pass the interval, so neither the silence nor the return waits for it.
+	// Not for a headless dullahan, whose ear is the head rather than the body doing the running, and
+	// not for a mob whose pace was never computed, which a null would otherwise read as fastest
+	if(speed_cutoff && !isnull(step_delay) && !listener_client.point_ambience_ear && step_delay < natural_run_step)
+		listener_client.point_ambience_speed_moved = world.time
+		if(!listener_client.point_ambience_speed_silenced)
+			urgent = TRUE
+		else if(!jump_served)
+			speed_moves_skipped++
+			return
+	else if(listener_client.point_ambience_speed_silenced)
+		listener_client.point_ambience_speed_moved = null
+		urgent = TRUE
+	if(!urgent && move_service_interval && world.time < listener_client.point_ambience_next_service)
 		return
 	if(GLOB.point_ambience_counters && measure_move_gate)
 		observe_move_gate(listener_client, listener, discontinuous)
@@ -2355,9 +2592,8 @@ SUBSYSTEM_DEF(point_ambience)
 		services_this_tick++
 	if(move_service_interval)
 		// Read when the next service is scheduled, not when this one is gated, so a change of intent
-		// takes hold from the following step rather than retroactively
-		var/interval = (move_service_interval_running_override && listener.m_intent == MOVE_INTENT_RUN) ? move_service_interval_running_override : move_service_interval
-		listener_client.point_ambience_next_service = world.time + interval
+		// or pace takes hold from the following step rather than retroactively
+		listener_client.point_ambience_next_service = world.time + move_interval_for(step_delay, listener.m_intent == MOVE_INTENT_RUN)
 	if(use_queue)
 		// Idempotent: a client already marked keeps its place, so ten steps in a tick are one entry
 		// and nobody moves up the set by moving more. The stamp is the wait the survey reports
@@ -2371,6 +2607,49 @@ SUBSYSTEM_DEF(point_ambience)
 		GLOB.point_ambience_survey.time_real_service(listener_client)
 		return
 	service_client(listener_client)
+
+/// Deciseconds between this listener's steps as the movement code spaces them: a rider at the
+/// mount's pace, anyone else at their own. A diagonal or a strafe adds to one step after this is read
+/datum/controller/subsystem/point_ambience/proc/step_delay_of(mob/listener)
+	var/datum/component/riding/riding = listener.buckled?.GetComponent(/datum/component/riding)
+	return riding ? riding.vehicle_move_delay : listener.cached_multiplicative_slowdown
+
+/**
+ * The move service interval for one pace: the configured interval, or the running override for a
+ * runner, shortened so a natural mover is served at least every move_service_steps steps. A pace
+ * faster than a natural run counts as one, speed_cutoff deciding what those movers hear.
+ *
+ * Rounded down to the tick. A step lands on the first tick at or after its due time, so where the
+ * step count sets the interval it is exact: that many steps on always arrives at or past it and one
+ * fewer never does
+ */
+/datum/controller/subsystem/point_ambience/proc/move_interval_for(step_delay, running)
+	. = (running && move_service_interval_running_override) ? move_service_interval_running_override : move_service_interval
+	if(move_service_steps)
+		. = min(., FLOOR(move_service_steps * max(step_delay, natural_run_step), world.tick_lag))
+
+/**
+ * Fades everything a listener hears for moving faster than a natural run, except a torch in their
+ * own hand, which at distance 0 sounds no different at speed. Keyed on the source rather than the
+ * category, so a sconce on the torch channel still goes.
+ *
+ * Drops the cached walk too. Otherwise a mover who halts on the tile they were last served at takes
+ * the standing shortcut and stays silent
+ */
+/datum/controller/subsystem/point_ambience/proc/speed_silence(client/listener_client, turf/listener_turf, atom/self_source)
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(!listener_client.point_ambience_speed_silenced)
+		listener_client.point_ambience_speed_silenced = TRUE
+		speed_silences++
+	listener_client.point_ambience_cache_turf = null
+	var/list/sources = listener_client.point_ambience_sources
+	for(var/datum/point_ambience_category/category as anything in categories)
+		var/atom/playing = sources[category]
+		if(!playing || playing == self_source)
+			continue
+		fade_out(listener_client, category, listener_turf, FALSE)
+		speed_fades++
 
 /**
  * Records that this tick refused a move service, once per tick however many it refused.
@@ -2555,7 +2834,8 @@ SUBSYSTEM_DEF(point_ambience)
 /datum/controller/subsystem/point_ambience/proc/invalidate_tile_cache(turf/center, radius)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
-	if(!center || !tile_cache_entries)
+	// Inside a bulk update the close flushes every entry at once
+	if(!center || !tile_cache_entries || bulk_depth)
 		return
 	var/timing = !isnull(GLOB.point_ambience_counters)
 	if(timing)
@@ -2570,9 +2850,27 @@ SUBSYSTEM_DEF(point_ambience)
 	if(timing)
 		tile_cache_invalidation_ms += rustg_time_microseconds("pa_tile_invalidate") / 1000
 
+/**
+ * Every register and unregister that changes the index ends here exactly once, so this is where an
+ * actual change is known and counted. Records it in the history can_reuse_tile_listener() reads,
+ * except inside a bulk update, whose close empties that history
+ */
 /datum/controller/subsystem/point_ambience/proc/record_source_change(version_before, turf/old_turf, old_range, turf/new_turf, new_range)
 	SHOULD_NOT_SLEEP(TRUE)
-	if(!use_tile_cache || cross_floor || version_before == static_version)
+	if(version_before == static_version)
+		return
+	if(bulk_depth)
+		bulk_changes++
+		return
+	// Mapload registers every mapped source within a few ticks by design, so only live play counts
+	if(SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
+		if(burst_time != world.time)
+			burst_time = world.time
+			burst_changes = 0
+		burst_changes++
+		if(burst_changes == POINT_AMBIENCE_BULK_BURST)
+			report_unbatched_burst()
+	if(!use_tile_cache || cross_floor)
 		return
 	var/timing = !isnull(GLOB.point_ambience_counters)
 	if(timing)
@@ -2636,6 +2934,126 @@ SUBSYSTEM_DEF(point_ambience)
 	SHOULD_NOT_SLEEP(TRUE)
 	source_change_history.Cut()
 	static_version++
+
+/**
+ * Opens a bulk source update, for a caller about to change many sources in one go.
+ *
+ * Until the matching close, every register and unregister still keeps the index, the counts, the
+ * overrides and the fallback loops exact and bumps static_version. What it defers is the work that
+ * repeats across overlapping sources: its ranking invalidation, its history entry and its walk over
+ * every client. The outermost close does each once, see finish_bulk(). Unbatched, the Index only
+ * snuff's 1699 overlapping removals took 38.4 ms in one tick with one client connected, and cleared
+ * 69 cached entries between them
+ *
+ * Open and close in the same proc and the same tick, with nothing between that can sleep. A scope
+ * still open on a later tick is closed by the next fire or scope and reported, so a caller that fails
+ * part way leaves rankings stale for about a tick rather than local invalidation off for good
+ *
+ * Arguments:
+ * * label - names the caller if its scope leaks
+ */
+/datum/controller/subsystem/point_ambience/proc/begin_bulk_source_update(label)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(bulk_depth && bulk_opened_at != world.time)
+		close_leaked_bulk()
+	bulk_depth++
+	if(bulk_depth > 1)
+		return
+	bulk_opened_at = world.time
+	bulk_label = label
+
+/// Closes one bulk source update. Only the outermost close does the deferred work
+/datum/controller/subsystem/point_ambience/proc/end_bulk_source_update()
+	SHOULD_NOT_SLEEP(TRUE)
+	// Zero when this caller's scope already leaked and was closed for it
+	if(!bulk_depth)
+		return
+	bulk_depth--
+	if(bulk_depth)
+		return
+	finish_bulk()
+
+/**
+ * The outermost close.
+ *
+ * One clear_tile_cache() for everything the scope changed, which also empties the history and bumps
+ * static_version, so no listener reuses an answer from before or during the scope. Then one pass over
+ * what every listener plays: a channel stops when its source was removed or moved between categories
+ * inside the scope and its FINAL category is not the one it plays under. Membership alone is not
+ * enough. A source put back in the same category keeps playing, one restored under another category
+ * loses its old channel, and a held torch, never in the index, is left alone unless the scope itself
+ * removed it. A channel already fading out has left point_ambience_sources and finishes its fade, as
+ * it does after an ordinary unregister
+ *
+ * A service run inside the scope can rank from buckets still changing or hit an entry not yet
+ * flushed, so it may start or keep a source the scope removes. This pass stops any such channel and
+ * the flush discards the entry, which is why no reader checks bulk_depth
+ */
+/datum/controller/subsystem/point_ambience/proc/finish_bulk()
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	// Taken and reset before the work, so a runtime below cannot hand this scope's state to the next
+	var/list/affected = bulk_affected
+	var/changed = bulk_changes
+	bulk_affected = list()
+	bulk_changes = 0
+	bulk_label = null
+	bulk_scopes++
+	if(!changed)
+		return
+	bulk_changes_total += changed
+	var/timing = !isnull(GLOB.point_ambience_counters)
+	if(timing)
+		rustg_time_reset("pa_bulk")
+	clear_tile_cache()
+	if(length(affected))
+		for(var/client/listener_client in GLOB.clients)
+			var/list/playing = listener_client.point_ambience_sources
+			if(!length(playing))
+				continue
+			// The loop walks a copy, so stop_for() may remove from the list
+			for(var/datum/point_ambience_category/category as anything in playing)
+				var/atom/source = playing[category]
+				if(affected[source] && source_categories[source] != category)
+					stop_for(listener_client, category)
+					bulk_stops++
+	if(timing)
+		var/took = rustg_time_microseconds("pa_bulk") / 1000
+		bulk_close_ms += took
+		bulk_close_worst_ms = max(bulk_close_worst_ms, took)
+
+/// Closes a scope whose caller never did. A scope cannot span ticks, so one open on a later tick leaked
+/datum/controller/subsystem/point_ambience/proc/close_leaked_bulk()
+	PRIVATE_PROC(TRUE)
+	bulk_leaks++
+	var/label = bulk_label
+	bulk_depth = 0
+	finish_bulk()
+	log_world("Point ambience: bulk update [label] was still open a tick later and has been closed. Reached from [call_chain()]")
+
+/**
+ * One tick of index changes outside any bulk update reached POINT_AMBIENCE_BULK_BURST. Names the
+ * caller so it can be moved into a scope, at most once every five minutes. Diagnostic only: the
+ * changes keep the ordinary path, which stays correct, only slower
+ */
+/datum/controller/subsystem/point_ambience/proc/report_unbatched_burst()
+	PRIVATE_PROC(TRUE)
+	unbatched_bursts++
+	if(world.time < burst_quiet_until)
+		return
+	burst_quiet_until = world.time + 5 MINUTES
+	log_world("Point ambience: [POINT_AMBIENCE_BULK_BURST] source changes in one tick outside a bulk update. Wrap the caller in begin_bulk_source_update(). Reached from [call_chain()]")
+
+/**
+ * The procs leading here, innermost first, for a report that must not raise a runtime.
+ * A runtime fails whichever unit test is running, and create_and_destroy changes sources in bulk
+ */
+/datum/controller/subsystem/point_ambience/proc/call_chain()
+	PRIVATE_PROC(TRUE)
+	var/list/chain = list()
+	for(var/callee/frame = caller, frame && length(chain) < 12, frame = frame.caller)
+		chain += "[frame.proc.type][frame.file ? " ([frame.file]:[frame.line])" : ""]"
+	return chain.Join(", ")
 
 /datum/controller/subsystem/point_ambience/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -2782,17 +3200,9 @@ SUBSYSTEM_DEF(point_ambience)
 	 * A set of short clips to draw from instead of sound_file, advanced per listener: when the
 	 * clip a listener is hearing runs out they are served afresh and pick another, never the one
 	 * just played. For a sound whose files are a few seconds each, which native-repeated one at a
-	 * time is one clip forever. Swapped whole by set_category_files
+	 * time is one clip forever
 	 */
 	var/list/files
-	/**
-	 * Clips kept for occasional use rather than put in the rotation, rolled for at rare_chance each
-	 * time a listener reaches a clip boundary. A take carrying something recognisable, birdsong over
-	 * the water, stops reading as a river once it comes round on schedule
-	 */
-	var/list/files_rare
-	/// Percent chance a clip boundary takes files_rare instead of files, where a category has one
-	var/rare_chance = 15
 	var/volume = 100
 	/**
 	 * Volume this category fades TO at its range edge, AT THE VOLUME AUTHORED BESIDE IT. What is
@@ -2905,6 +3315,19 @@ SUBSYSTEM_DEF(point_ambience)
 	 * takes above already tell sources apart, since a new stretch already differs by its file
 	 */
 	var/voice_place = TRUE
+	/**
+	 * The send that switches this category from one source to the next goes out centred, and the next
+	 * update pans to the new source. So a switch between two sources on opposite sides passes through
+	 * the middle rather than leaping from one ear to the other. The clip carries on either way.
+	 *
+	 * A listener who stops right after a switch keeps the centre until they move, since standing still
+	 * sends nothing. Not refreshed on purpose: a switch lands on the first update past the halfway
+	 * point, so they are within a few tiles of it, where centred is close to right, and clearing the
+	 * cached answer to re-pan them cost a full service on about a third of switches for anyone walking
+	 */
+	var/centre_handoff = TRUE
+	/// Since boot, the source changing while this category plays
+	var/handoffs = 0
 
 /// Validates live range edits, protects derived range_sq, and invalidates rankings after accepted edits
 /datum/point_ambience_category/vv_edit_var(var_name, var_value)
@@ -2925,14 +3348,17 @@ SUBSYSTEM_DEF(point_ambience)
 	/**
 	 * Two sets of three takes, and each fire plays the take its position picks, so two hearths are
 	 * two fires and not one. OUTSIDE, braziers and campfires: the old torch recording as the bed
-	 * (heavier than the old fire recording, which the torch has now), 7 dB off its lows, its pieces
-	 * levelled and laced into 17 s, flares of up to 4.5 dB that only ever go up from that base, and
-	 * whole crackles lifted from the old fire recording laid on top, 6 a second, 6 dB under the bed.
-	 * It roars and gusts, which in the open it may. INSIDE, hearths, ovens and forges: the other
-	 * way round, the crackle recording as the base, pitched down a tenth as a whole so a hearth
-	 * crackles deeper than a sconce, re-laced whole into 14 s, and the roar 12 dB under it with 9 dB
-	 * off its lows and flares of 2 dB at most. Takes differ only in the random order of all that. A
-	 * listener keeps the loaded take across a handoff, while a new stretch uses the nearest fire
+	 * (heavier than the old fire recording, which the torch has now), WHOLE and uncut, looped with
+	 * one crossfade at its own seam, 7 dB off its lows, 12 dB off everything over 2 kHz, no flares,
+	 * and stretches of the old fire recording's crackle laced on top, 6 dB under the bed, swelling
+	 * gently busier and calmer. Cutting a continuous roar into short shuffled pieces was heard as
+	 * drops and a loop that did not join, and the roar's own even hiss up top, as loud there as the
+	 * crackle, was heard as back to back crackle with no variety. INSIDE, hearths, ovens and forges:
+	 * the other way round, the crackle recording as the base, pitched down a tenth as a whole so a
+	 * hearth crackles deeper than a sconce, re-laced whole into 14 s, and the roar 12 dB under it
+	 * with 9 dB off its lows and flares of 2 dB at most, crossfaded back into its own start so it
+	 * loops. Takes differ in where the roar starts and where the crackles fall. A listener keeps the
+	 * loaded take across a handoff, while a new stretch uses the nearest fire
 	 */
 	sound_file = 'sound/ambience/point/fire_1.ogg'
 	voices = list('sound/ambience/point/fire_1.ogg', 'sound/ambience/point/fire_2.ogg', 'sound/ambience/point/fire_3.ogg')
@@ -3035,20 +3461,18 @@ SUBSYSTEM_DEF(point_ambience)
  * where 6 gives out at 9. It is also the largest range still fitting three cells per axis.
  *
  * The clips are four to seven seconds each, so they are a set advanced per listener rather than one
- * file looped. SSnightshift swaps the set, and both sets hold the SAME three clips: every day take
- * carries bird or frog calls over water measuring 5 dB thinner under 1 kHz and an octave brighter
- * than these, so one arriving reads as a different river rather than as this one with something
- * singing over it. The swap stays wired for a clean day take that does not exist yet
+ * file looped. The same set plays at every hour, POINT_AMBIENCE_RIVER says why there is no day set
  */
 /datum/point_ambience_category/river
 	config_name = "river"
 	/// Its own normalised copies, the originals are the river areas' ambience beds. Matches the set
 	/// rather than the day takes, or an empty set would fall back to a clip with calls on it
 	sound_file = 'sound/ambience/point/river_night_1.ogg'
-	files = POINT_AMBIENCE_RIVER_DAY
-	files_rare = POINT_AMBIENCE_RIVER_DAY_RARE
+	files = POINT_AMBIENCE_RIVER
 	volume = 45
 	range = 8
+	/// Its voices are one continuous line and always sent centred, so a switch has nothing to centre
+	centre_handoff = FALSE
 	/// The old curve, kept on purpose. The steeper band suits something walked past, and a river is
 	/// a bed of sound stood beside: at 1 it fell away within a few tiles of the bank
 	falloff_exponent = 0.5
@@ -3160,6 +3584,7 @@ SUBSYSTEM_DEF(point_ambience)
 #undef CELL_SHIFT
 #undef POINT_AMBIENCE_SOURCE_CHANGE_FIELDS
 #undef POINT_AMBIENCE_SOURCE_CHANGE_LIMIT
+#undef POINT_AMBIENCE_BULK_BURST
 
 
 /**

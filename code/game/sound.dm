@@ -539,7 +539,7 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 
 /// Point ambience at the listener's chosen scale, independent or under Master Volume
 /datum/preferences/proc/point_ambience_volume()
-	return pointambience_independent ? pointambiencevol : at_overall(pointambiencevol)
+	return POINT_AMBIENCE_VOLUME(src)
 
 /**
  * A volume for a sound that no slider of its own covers, under the listener's Master slider.

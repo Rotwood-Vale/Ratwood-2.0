@@ -169,12 +169,19 @@ export const VolumePowerMenu = () => {
                 selected={tab === 0}
                 onClick={() => setTab(0)}
               >
-                Volume
+                Gameplay Audio
+              </Tabs.Tab>
+              <Tabs.Tab
+                icon="music"
+                selected={tab === 1}
+                onClick={() => setTab(1)}
+              >
+                Other Audio
               </Tabs.Tab>
               <Tabs.Tab
                 icon="fire"
-                selected={tab === 1}
-                onClick={() => setTab(1)}
+                selected={tab === 2}
+                onClick={() => setTab(2)}
               >
                 Point Ambience
               </Tabs.Tab>
@@ -188,28 +195,22 @@ export const VolumePowerMenu = () => {
                   hint="Sounds in the world: combat, footsteps, items, doors."
                 />
                 <VolumeRow
+                  label="Area Ambience"
+                  value={ambience ?? 100}
+                  id="ambience"
+                  hint="The loop for the area you are in, and rain."
+                />
+                <VolumeRow
                   label="Instruments"
                   value={instruments ?? 50}
                   id="instruments"
                   hint="Bards, music boxes, and wax music devices."
                 />
                 <VolumeRow
-                  label="Music"
+                  label="World Music"
                   value={music ?? 100}
                   id="music"
                   hint="The world's own music."
-                />
-                <VolumeRow
-                  label="Admin Sounds"
-                  value={adminmusic ?? 50}
-                  id="adminmusic"
-                  hint="Sound files admins play through the game."
-                />
-                <VolumeRow
-                  label="Streamed Music"
-                  value={streamedmusic ?? 50}
-                  id="streamedmusic"
-                  hint="Music streamed into your chat panel."
                 />
                 <VolumeRow
                   label="Combat Music"
@@ -217,11 +218,21 @@ export const VolumePowerMenu = () => {
                   id="combat"
                   hint="Music while in combat mode."
                 />
+              </Box>
+            )}
+            {tab === 1 && (
+              <Box mt={1}>
                 <VolumeRow
-                  label="Area Ambience"
-                  value={ambience ?? 100}
-                  id="ambience"
-                  hint="The loop for the area you are in, and rain."
+                  label="Streamed Music"
+                  value={streamedmusic ?? 50}
+                  id="streamedmusic"
+                  hint="Music streamed into your chat panel."
+                />
+                <VolumeRow
+                  label="Admin-Played Sounds"
+                  value={adminmusic ?? 50}
+                  id="adminmusic"
+                  hint="Sounds played by admins. Does not affect adminhelp alerts."
                 />
                 <VolumeRow
                   label="Lobby Music"
@@ -231,7 +242,7 @@ export const VolumePowerMenu = () => {
                 />
               </Box>
             )}
-            {tab === 1 && (
+            {tab === 2 && (
               <Box mt={1}>
                 <Box mb={1}>
                   Nearby fires, fountains, rivers, and other ambient sounds.

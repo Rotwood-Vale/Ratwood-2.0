@@ -38,19 +38,7 @@ SUBSYSTEM_DEF(nightshift)
 	if(SSmapping?.current_map?.map_name == "Build Your Own Settlement")
 		apply_desert_times()
 	current_tod = settod()
-	sync_river_ambience()
 	return ..()
-
-/**
- * Rivers draw from a day set or a night set of clips. Set here once the time of day is known and
- * again whenever it changes. Each listener picks the new set up at their next clip, so nothing
- * restarts. Without the call at init a round that starts at night runs the day set until dawn
- */
-/datum/controller/subsystem/nightshift/proc/sync_river_ambience()
-	var/night = (GLOB.tod == "night")
-	var/list/plain = night ? POINT_AMBIENCE_RIVER_NIGHT : POINT_AMBIENCE_RIVER_DAY
-	var/list/occasional = night ? POINT_AMBIENCE_RIVER_NIGHT_RARE : POINT_AMBIENCE_RIVER_DAY_RARE
-	SSpoint_ambience.set_category_files(/datum/point_ambience_category/river, plain, occasional)
 
 /datum/controller/subsystem/nightshift/fire(resumed = FALSE)
 	if(world.time - SSticker.round_start_time < nightshift_first_check)
@@ -85,7 +73,6 @@ SUBSYSTEM_DEF(nightshift)
 
 /datum/controller/subsystem/nightshift/proc/update_nightshift()
 	set waitfor = FALSE
-	sync_river_ambience()
 	for(var/obj/A in GLOB.TodUpdate)
 		A.update_tod(GLOB.tod)
 	for(var/mob/living/M in GLOB.mob_list)

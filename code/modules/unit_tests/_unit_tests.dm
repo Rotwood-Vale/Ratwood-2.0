@@ -91,6 +91,8 @@
 #include "component_tests.dm"
 #include "create_and_destroy.dm"
 #include "focus_only_tests.dm"
+#include "point_ambience_doors.dm"
+#include "point_ambience_speed.dm"
 #include "point_ambience_tile_cache.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"

@@ -61,6 +61,10 @@
 	var/climbable_atom_count = 0
 	/// How many atoms on this turf act as platforms (have BLOCK_Z_OUT_DOWN)?
 	var/platform_atom_count = 0
+	/// Doors standing here, so a sound occlusion walk loops a turf's contents only where one may be.
+	/// Too high costs a loop, too low lets sound through a shut door, so it is recounted rather than
+	/// kept running. See recount_sound_doors()
+	var/sound_door_count = 0
 
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
 
@@ -428,6 +432,8 @@
 			climbable_atom_count += 1
 		if(entered_structure.obj_flags & BLOCK_Z_OUT_DOWN)
 			platform_atom_count += 1
+		if(istype(entered_structure, /obj/structure/mineral_door))
+			recount_sound_doors()
 
 /turf/Exited(atom/movable/gone, atom/newloc)
 	if(!istype(gone))
@@ -443,6 +449,19 @@
 			climbable_atom_count -= 1
 		if(exited_structure.obj_flags & BLOCK_Z_OUT_DOWN)
 			platform_atom_count -= 1
+		if(istype(exited_structure, /obj/structure/mineral_door))
+			recount_sound_doors(exited_structure)
+
+/**
+ * Counts the doors here from scratch. A running count would need every way in and out to agree:
+ * a turf's Initialize enters its contents again, so a door counted at its own Initialize would be
+ * counted twice, and a move to nullspace calls Exited with the door still here, hence leaving
+ */
+/turf/proc/recount_sound_doors(atom/movable/leaving)
+	sound_door_count = 0
+	for(var/obj/structure/mineral_door/door in src)
+		if(door != leaving)
+			sound_door_count++
 
 /turf/open/Entered(atom/movable/AM)
 	..()

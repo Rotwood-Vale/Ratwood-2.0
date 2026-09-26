@@ -93,7 +93,7 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 		var/count = ambience.source_counts[category] || 0
 		if(count)
 			source_parts += "[category.config_name] [count] at [category.volume]"
-	return "conditions: [listening] listening (slider [length(slider_parts) ? slider_parts.Join(", ") : "none"]), [muted] muted, [observing] observing; interval [ambience.move_service_interval], running [ambience.move_service_interval_running_override], skip [ambience.standing_skip], active skip [ambience.skip_active_movers ? "on" : "off"], clip wait [ambience.clip_coalesce_window / 10] s, budget [ambience.max_services_per_tick], cutoff [ambience.send_cutoff], queue [ambience.use_queue ? "on" : "off"], cross floor [ambience.cross_floor ? "on" : "off"], tile cache [ambience.use_tile_cache ? (ambience.cross_floor ? "bypassed" : "on") : "off"], cache verification [ambience.verify_tile_cache ? "on" : "off"]; sources, count at volume: [source_parts.Join(", ")]"
+	return "conditions: [listening] listening (slider [length(slider_parts) ? slider_parts.Join(", ") : "none"]), [muted] muted, [observing] observing; interval [ambience.move_service_interval], running [ambience.move_service_interval_running_override], steps [ambience.move_service_steps], speed cutoff [ambience.speed_cutoff ? "on" : "off"], skip [ambience.standing_skip], active skip [ambience.skip_active_movers ? "on" : "off"], hoist [ambience.standing_hoist ? "on" : "off"], occlusion [ambience.occlude_sources ? "on" : "off"], clip wait [ambience.clip_coalesce_window / 10] s, budget [ambience.max_services_per_tick], cutoff [ambience.send_cutoff], queue [ambience.use_queue ? "on" : "off"], cross floor [ambience.cross_floor ? "on" : "off"], tile cache [ambience.use_tile_cache ? (ambience.cross_floor ? "bypassed" : "on") : "off"], cache verification [ambience.verify_tile_cache ? "on" : "off"]; sources, count at volume: [source_parts.Join(", ")]"
 
 /datum/point_ambience_counters
 	var/time
@@ -133,6 +133,10 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 	var/standing_skipped
 	var/standing_active_skipped
 	var/standing_pending_skipped
+	var/standing_speed_skipped
+	var/speed_silences
+	var/speed_fades
+	var/speed_moves_skipped
 	var/tick_services
 	var/tick_standing_hits
 	var/walks_turf
@@ -155,6 +159,19 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 	var/tile_cache_checks
 	var/tile_cache_mismatches
 	var/tile_cache_invalidation_ms
+	var/bulk_scopes
+	var/bulk_changes_total
+	var/bulk_stops
+	var/bulk_leaks
+	var/bulk_close_ms
+	var/unbatched_bursts
+	var/door_changes
+	var/door_gathers
+	var/door_listeners_found
+	var/door_listeners_marked
+	var/door_gather_ms
+	/// config_name to handoffs, since the counts live on each category
+	var/list/handoffs = list()
 
 /datum/point_ambience_counters/New()
 	var/datum/controller/subsystem/point_ambience/ambience = SSpoint_ambience
@@ -195,6 +212,10 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 	standing_skipped = ambience.standing_skipped
 	standing_active_skipped = ambience.standing_active_skipped
 	standing_pending_skipped = ambience.standing_pending_skipped
+	standing_speed_skipped = ambience.standing_speed_skipped
+	speed_silences = ambience.speed_silences
+	speed_fades = ambience.speed_fades
+	speed_moves_skipped = ambience.speed_moves_skipped
 	tick_services = ambience.tick_services
 	tick_standing_hits = ambience.tick_standing_hits
 	walks_turf = ambience.walks_turf
@@ -217,6 +238,19 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 	tile_cache_checks = ambience.tile_cache_checks
 	tile_cache_mismatches = ambience.tile_cache_mismatches
 	tile_cache_invalidation_ms = ambience.tile_cache_invalidation_ms
+	bulk_scopes = ambience.bulk_scopes
+	bulk_changes_total = ambience.bulk_changes_total
+	bulk_stops = ambience.bulk_stops
+	bulk_leaks = ambience.bulk_leaks
+	bulk_close_ms = ambience.bulk_close_ms
+	unbatched_bursts = ambience.unbatched_bursts
+	door_changes = ambience.door_changes
+	door_gathers = ambience.door_gathers
+	door_listeners_found = ambience.door_listeners_found
+	door_listeners_marked = ambience.door_listeners_marked
+	door_gather_ms = ambience.door_gather_ms
+	for(var/datum/point_ambience_category/category as anything in ambience.categories)
+		handoffs[category.config_name] = category.handoffs
 
 /client/proc/point_ambience_counters()
 	set category = "Debug"
@@ -296,15 +330,31 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 	var/cache_invalidation_ms = ambience.tile_cache_invalidation_ms - snapshot.tile_cache_invalidation_ms
 	var/clip_ms = ambience.clip_refresh_ms - snapshot.clip_refresh_ms
 	var/fade_ms = ambience.fade_ms - snapshot.fade_ms
+	// The gathers only. The services they queue are timed in the drain like any other
+	var/door_ms = ambience.door_gather_ms - snapshot.door_gather_ms
 	var/service_ms = drain_ms + walk_ms
-	var/tracked_ms = service_ms + clip_ms + fade_ms + cache_invalidation_ms
+	var/tracked_ms = service_ms + clip_ms + fade_ms + cache_invalidation_ms + door_ms
 	if(cache_hits || cache_misses || cache_cleared)
 		lines += "&nbsp;&nbsp;tile rankings, all callers: [cache_hits] hits, [cache_misses] misses ([round(cache_hits / max(cache_hits + cache_misses, 1) * 100, 0.1)]% hit), [cache_cleared] entries cleared, [ambience.tile_cache_entries] live entries / [length(ambience.tile_cache)] visited positions; [ambience.tile_cache_checks - snapshot.tile_cache_checks] verified, [ambience.tile_cache_mismatches - snapshot.tile_cache_mismatches] mismatches; invalidation [round(cache_invalidation_ms / seconds, 0.001)] ms/s additional to service timings"
+	var/bulk_closed = ambience.bulk_scopes - snapshot.bulk_scopes
+	var/unbatched = ambience.unbatched_bursts - snapshot.unbatched_bursts
+	if(bulk_closed || unbatched)
+		// Inclusive, not added to the total: each close's flush is already inside cache invalidation
+		lines += "&nbsp;&nbsp;bulk source updates: [bulk_closed] closed, [ambience.bulk_changes_total - snapshot.bulk_changes_total] index changes inside them, [ambience.bulk_stops - snapshot.bulk_stops] channels stopped at close, [ambience.bulk_leaks - snapshot.bulk_leaks] leaked; closes took [round(ambience.bulk_close_ms - snapshot.bulk_close_ms, 0.01)] ms, worst since boot [round(ambience.bulk_close_worst_ms, 0.01)] ms, flush included; [unbatched] unbatched bursts"
+	// A handoff is the playing source changing to another of its kind
+	var/list/handoff_parts = list()
+	for(var/datum/point_ambience_category/category as anything in ambience.categories)
+		var/made = category.handoffs - (snapshot.handoffs[category.config_name] || 0)
+		if(made <= 0)
+			continue
+		handoff_parts += "[category.config_name] [made], [round(made / seconds, 0.01)]/s[category.centre_handoff ? " centred" : ""]"
+	if(length(handoff_parts))
+		lines += "&nbsp;&nbsp;handoffs: [handoff_parts.Join("; ")]"
 	if(ambience.verify_tile_cache)
 		lines += "&nbsp;&nbsp;<i>Cache verification repeats rankings on hits. Turn it off before timing savings.</i>"
 	if(queue_on)
-		lines += "&nbsp;&nbsp;total tracked cost [round(tracked_ms / seconds, 0.001)] ms/s (services [round(service_ms / seconds, 0.001)], clip refresh [round(clip_ms / seconds, 0.001)], fades [round(fade_ms / seconds, 0.001)], cache invalidation [round(cache_invalidation_ms / seconds, 0.001)])"
-		lines += "&nbsp;&nbsp;service cost: steps [round(drain_ms / seconds, 0.001)] ms/s, standing [round(walk_ms / seconds, 0.001)] ms/s"
+		lines += "&nbsp;&nbsp;total tracked cost [round(tracked_ms / seconds, 0.001)] ms/s (services [round(service_ms / seconds, 0.001)], clip refresh [round(clip_ms / seconds, 0.001)], fades [round(fade_ms / seconds, 0.001)], cache invalidation [round(cache_invalidation_ms / seconds, 0.001)], door gathers [round(door_ms / seconds, 0.001)])"
+		lines += "&nbsp;&nbsp;service cost: queued [round(drain_ms / seconds, 0.001)] ms/s, standing [round(walk_ms / seconds, 0.001)] ms/s"
 	else
 		lines += "&nbsp;&nbsp;tracked subtotal [round(tracked_ms / seconds, 0.001)] ms/s; inline movement services are not timed while the queue is off"
 		lines += "&nbsp;&nbsp;service cost: standing [round(walk_ms / seconds, 0.001)] ms/s, steps not timed"
@@ -348,7 +398,7 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 				ninetieth = i - 1
 				break
 		var/density_line = density_total ? ", [median] candidates (90th [ninetieth]), [round(density[1] / density_total * 100)]% empty across [density_total] fresh rankings" : ""
-		lines += "&nbsp;&nbsp;step: [round(drain_ms * 1000 / drained)] us, [round((ambience.drain_sends - snapshot.drain_sends) / drained, 0.01)] sends[density_line]"
+		lines += "&nbsp;&nbsp;queued service: [round(drain_ms * 1000 / drained)] us, [round((ambience.drain_sends - snapshot.drain_sends) / drained, 0.01)] sends[density_line]"
 		var/static/list/size_names = list("1", "2", "3-4", "5-8", "9+")
 		var/list/bucket_parts = list()
 		var/list/bucket_services = list()
@@ -409,8 +459,13 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 		for(var/list/cause in list(list("moved", moved_walks), list("index", index_walks), list("volume", volume_walks), list("no turf", walked - moved_walks - index_walks - volume_walks)))
 			if(cause[2] > 0)
 				causes += "[cause[1]] [round(cause[2] / max(walked, 1) * 100, 0.1)]"
-		lines += "&nbsp;&nbsp;standing: [round(skipped / visits * 100, 0.1)]% skipped, [round(walked / visits * 100, 0.1)]% walked ([causes.Join(", ")]), [round(walk_ms * 1000 / visits, 0.1)] us a visit"
+		lines += "&nbsp;&nbsp;standing: [round(skipped / visits * 100, 0.1)]% skipped before service, [round(tick_hits / visits * 100, 0.1)]% cached, [round(walked / visits * 100, 0.1)]% walked ([causes.Join(", ")]), [round(walk_ms * 1000 / visits, 0.1)] us a visit"
 		lines += "&nbsp;&nbsp;active movement avoided [ambience.standing_active_skipped - snapshot.standing_active_skipped] additional standing services; queued work avoided [ambience.standing_pending_skipped - snapshot.standing_pending_skipped]"
+	var/speed_silenced = ambience.speed_silences - snapshot.speed_silences
+	var/speed_steps = ambience.speed_moves_skipped - snapshot.speed_moves_skipped
+	var/speed_visits = ambience.standing_speed_skipped - snapshot.standing_speed_skipped
+	if(ambience.speed_cutoff || speed_silenced || speed_steps || speed_visits)
+		lines += "&nbsp;&nbsp;speed cutoff [ambience.speed_cutoff ? "on" : "off"]: [speed_silenced] silenced for moving faster than a natural run, [ambience.speed_fades - snapshot.speed_fades] sounds faded, [speed_steps] fast steps and [speed_visits] standing visits passed over. A silencing service counts as a service above"
 	var/burning_down = 0
 	for(var/obj/machinery/light/rogue/fire in GLOB.fires_list)
 		if(initial(fire.fueluse) <= 0 || fire.fueluse <= 0)
@@ -426,6 +481,14 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 		var/blocked = ambience.runner_up_silenced - snapshot.runner_up_silenced
 		var/corners = ambience.occlusion_corners - snapshot.occlusion_corners
 		lines += "&nbsp;&nbsp;walls: [round(checks / all_services, 0.01)] checks per service, [round(blocked / checks * 100, 0.1)]% blocked, [round(corners / checks * 100, 0.1)]% corners"
+	var/door_changes = ambience.door_changes - snapshot.door_changes
+	var/door_gathers = ambience.door_gathers - snapshot.door_gathers
+	if(door_changes || door_gathers)
+		var/static/list/door_mode_names = list("none", "flanks", "live", "always")
+		var/found = ambience.door_listeners_found - snapshot.door_listeners_found
+		var/marked = ambience.door_listeners_marked - snapshot.door_listeners_marked
+		var/filter = ambience.door_recheck_filter ? ", [round(marked / max(found, 1) * 100, 0.1)]% passed the box filter" : ", box filter off"
+		lines += "&nbsp;&nbsp;doors [door_mode_names[ambience.door_mode + 1]]: [door_changes] changes, [round(door_changes / seconds, 0.01)]/s; re-check [ambience.door_recheck ? "every [ambience.door_recheck_period / 10] s" : "off"]: [door_gathers] gathers, [found] listeners in reach, [marked] served again[filter]; gathers [round(door_ms / seconds, 0.001)] ms/s, the services inside queued above"
 	if(GLOB.point_ambience_survey)
 		lines += "&nbsp;&nbsp;survey running: its loops run inside the drain, so step and batched are both inflated"
 	to_chat(recipient, lines.Join("<br>"))

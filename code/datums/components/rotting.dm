@@ -93,9 +93,10 @@
 			return
 
 	var/area/A = get_area(C)
-	if (istype(A, /area/rogue/indoors/town))	//Stops rotting inside town buildings; will stop your zombification such as at church or appothocary.
-		return
-	if (istype(A, /area/rogue/indoors/deathsedge))	//Stops rotting inside Death's Edge (Death's Door spell area)
+	if(istype(A, /area/rogue/indoors/town) || istype(A, /area/rogue/indoors/deathsedge))
+		// Rot pauses here while the body can still move, so keep an existing flies source current.
+		if(flies_playing)
+			set_flies(TRUE)
 		return
 
 

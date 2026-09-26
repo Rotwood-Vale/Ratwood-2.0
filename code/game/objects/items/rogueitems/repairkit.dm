@@ -42,6 +42,7 @@
 				doorrepair.icon_state = "[doorrepair.base_state]"
 				doorrepair.density = TRUE
 				doorrepair.opacity = TRUE
+				SSpoint_ambience.door_changed(doorrepair)
 				doorrepair.brokenstate = FALSE
 				doorrepair.obj_broken = FALSE
 				doorrepair.obj_integrity = doorrepair.max_integrity
