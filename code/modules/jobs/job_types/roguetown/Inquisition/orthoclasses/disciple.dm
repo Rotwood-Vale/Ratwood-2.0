@@ -12,6 +12,7 @@
 	traits_applied = list(
 		TRAIT_CIVILIZEDBARBARIAN,
 		TRAIT_CICERONE,//brewer monks and such, lets them see the booze they make.
+		TRAIT_BLOOD_RESISTANCE,
 	)
 	subclass_stats = list(//(str 3(weighted 6) + wil 3 + con 3) = 12 - (INT -1 + SPD -1 (weighted -2) = 9 weighted stats. Old statblock was weighted 6 because morons dont know the stat weight rules for spd and str.
 		STATKEY_STR = 3,
@@ -59,7 +60,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)//dreamwalkers HATE the aquatic punch monk.
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/abboteer//lets you sunder
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
@@ -102,7 +103,8 @@
 	neck = /obj/item/clothing/neck/roguetown/psicross/silver
 	id = /obj/item/clothing/ring/signet/silver
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
-	armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
+	armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/disciple
+	shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/ortho = 1)

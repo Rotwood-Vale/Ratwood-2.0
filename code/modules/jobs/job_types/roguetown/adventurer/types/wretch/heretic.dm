@@ -454,7 +454,7 @@
 	outfit = /datum/outfit/job/roguetown/wretch/hereticmonk
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_RITUALIST, TRAIT_CRITICAL_RESISTANCE)
+	traits_applied = list(TRAIT_RITUALIST, TRAIT_BLOOD_RESISTANCE)
 	maximum_possible_slots = 1
 	//+9 weighted stat total. Atgervi Shaman's stats 1:1.
 	subclass_stats = list(
@@ -520,7 +520,6 @@
 				to_chat(H, span_warning("Leaving wealth and titles behind, you travel endlessly, bringing the truth to the most ignorant corners of the world."))
 				head = /obj/item/clothing/head/roguetown/headband/monk //Can somebody explain why Adventurer-Monk gets this?
 				neck = /obj/item/clothing/neck/roguetown/leather
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
 				armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 				pants =  /obj/item/clothing/under/roguetown/heavy_leather_pants
@@ -529,7 +528,6 @@
 			if("Eastern Custodian") //Kazengunite fashion. The worst set mechanically, but it's drip or drown in here.
 				to_chat(H, span_warning("The divine tasked you with caring for and protecting a shrine. You failed in your duties, but not your faith. Thus you wander, seeking to appease the gods in a different way."))
 				head = /obj/item/clothing/head/roguetown/mentorhat
-				gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
 				armor = /obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit
 				shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
@@ -538,7 +536,6 @@
 			if("Atgervi Shaman") //Pick this and Unarmed. Now you are a true Atgervi Shaman.
 				to_chat(H, span_warning("Unlike your more opportunistic fellows who bend their knees and betray their beast-gods for a coin, you haven't strayed from your path. Why grovel, when you can take what you want with unrestrained brutality?"))
 				head = /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
-				gloves = /obj/item/clothing/gloves/roguetown/angle/gronnfur
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi
 				shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 				pants = /obj/item/clothing/under/roguetown/trou/leather/atgervi
@@ -563,16 +560,17 @@
 				to_chat(H, span_warning("Once you served mortal men and their books. Today and from now on, you serve HIM and HIM alone."))
 				head = /obj/item/clothing/head/roguetown/roguehood/psydon
 				mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
-				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
+				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/disciple
+				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/psythorns
 				shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 				cloak = /obj/item/clothing/cloak/psydontabard/alt
-		var/monkweapons = list("Unarmed", "Glaive", "Quarterstaff", "Sword", "Faith")
+		var/monkweapons = list("Fist Weapon", "True Unarmed, No Weapons", "Glaive", "Quarterstaff", "Sword", "Faith")
 		var/monkweapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in monkweapons
 		switch(monkweapon_choice)
-			if("Unarmed")
+			if("Fist Weapon")
+				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
 				switch(style_choice)
@@ -582,6 +580,24 @@
 						beltr = /obj/item/rogueweapon/knuckles/psydon/old //Worse than steel or bronze knuckledusters, that's the price you pay for the drip and the natural armor.
 					else
 						beltr = /obj/item/rogueweapon/knuckles
+			if("True Unarmed, No Weapons")
+				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+				H.change_stat(STATKEY_INT, 1)//true unarmed gets no stat malus
+				H.change_stat(STATKEY_PER, 1)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 5, TRUE)
+				switch(style_choice)
+					if("Atgervi Shaman")
+						gloves = /obj/item/clothing/gloves/roguetown/plate/atgervi/heretic
+					if("Disgraced Disciple (Natural Armor)")
+						H.change_stat(STATKEY_WIL, 2)//puts it 1:1 with abboteer
+						H.change_stat(STATKEY_CON, 1)
+						gloves = /obj/item/clothing/gloves/roguetown/bandages/abboteer
+					else
+						gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
 			if("Glaive")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				backr = /obj/item/rogueweapon/scabbard/gwstrap

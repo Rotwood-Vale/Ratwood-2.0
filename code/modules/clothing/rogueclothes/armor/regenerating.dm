@@ -101,15 +101,44 @@
 		return
 	qdel(src)
 
-/obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest
+	// Chest and body layers need different block sounds to equip together
+	blocksound = SOFTHIT
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple
 	name = "disciple's skin"
 	desc = "It's far more than just an oath. </br>'AEON, PSYDON, ADONAI - ENTROPY, HUMENITY, DIVINITY. A TRINITY THAT IS ONE, \
 	YET THREE; KNOWN BY ALL, YET FORGOTTEN TO TYME.' </br>'A CORPSE. \
 	I AM LIVING ON A FUCKING CORPSE. HE IS THE WORLD, AND THE WORLD IS ROTTING AWAY. \
 	HEAVEN CLOSED ITS GATES TO US, LONG AGO.' </br>'YET, HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I. \
 	HAPPINESS MUST BE FOUGHT FOR.'"
+	body_parts_covered = COVERAGE_FULL
+	body_parts_inherent = COVERAGE_FULL
 	armor = ARMOR_LEATHER_STUDDED
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
+	repair_time = 20 SECONDS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple/equipped(mob/living/user, slot)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_MONK_ROBE, TRAIT_GENERIC)
+	to_chat(user, span_notice("HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I!"))
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/disciple/dropped(mob/living/user)//we cant drop it, but whatever.
+	..()
+	REMOVE_TRAIT(user, TRAIT_MONK_ROBE, TRAIT_GENERIC)
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/disciple
+	name = "enduring chest"
+	desc = "It's far more than just an oath. \
+	YET THREE; KNOWN BY ALL, YET FORGOTTEN TO TYME.' </br>'A CORPSE. \
+	I AM LIVING ON A FUCKING CORPSE. HE IS THE WORLD, AND THE WORLD IS ROTTING AWAY. \
+	HEAVEN CLOSED ITS GATES TO US, LONG AGO.' </br>'YET, HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I. \
+	HAPPINESS MUST BE FOUGHT FOR.'"
+	blocksound = SOFTHIT
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	armor = ARMOR_LEATHER_GOOD
 	repair_time = 20 SECONDS
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
 
@@ -130,6 +159,7 @@
 	blocksound = SOFTHIT
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
+	repair_time = 15 SECONDS//less armor and integ so faster regen
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/gladiator
 	name = "pit-hardened skin"
@@ -138,6 +168,82 @@
 	body_parts_inherent = COVERAGE_FULL
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
+	repair_time = 15 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/monk
+	name = "trained skin"
+	desc = "They say I've taken the first step on a path older than memory."
+	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
+	body_parts_inherent = COVERAGE_FULL
+	armor = ARMOR_PADDED
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
+	repair_time = 15 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/monk
+	name = "trained chest"
+	desc = "I don't fully understand what those names mean yet, but I repeat them as I was taught."
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	blocksound = SOFTHIT
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	repair_time = 15 SECONDS//less armor and integ so faster regen
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berzerker
+	name = "unstoppable skin"
+	desc = "I've endured enough. The onslaught has lost its meaning."
+	armor = ARMOR_BRONZE//scary, but longer regen
+	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
+	body_parts_inherent = COVERAGE_FULL
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	repair_time = 40 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berzerker
+	name = "unstoppable chest"
+	desc = "The callouses could stop arrows! But only so many."
+	armor = ARMOR_MAILLE//covers stabs
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
+	repair_time = 40 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/barbarian
+	name = "hardened skin"
+	desc = "Toughened from abuse. My mettle remains. Resting will restore it's strength."
+	body_parts_covered = COVERAGE_FULL
+	body_parts_inherent = COVERAGE_FULL
+	armor = ARMOR_PADDED
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
+	repair_time = 15 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/barbarian
+	name = "hardened chest"
+	desc = "Toughened from abuse. My mettle remains. Resting will restore it's strength."
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	blocksound = SOFTHIT
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
+	repair_time = 15 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/bodybuilder//dedicated gachi-muchi armor
+	name = "strongman's pride"
+	desc = "Toughened from rigorous routine and mettle. A physique that could hold up the sky."
+	body_parts_covered = COVERAGE_FULL
+	body_parts_inherent = COVERAGE_FULL
+	armor = ARMOR_LEATHER_GOOD
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //A full-body leather armor.
+	repair_time = 30 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/bodybuilder
+	name = "strongman's pecs"
+	desc = "Akin to marble hewn by the old Etruscan masters. The skin is pulled taut revealing intricate vascularity beneath."
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	blocksound = PLATEHIT//I HAVE BALLS OF STEEL
+	armor = ARMOR_LEATHER_STUDDED
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
+	repair_time = 30 SECONDS//better armor, longer repair
 
 #undef COMBAT_TAG_DURATION
 
