@@ -151,9 +151,9 @@
 
 	// clothing
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/timesoldier/arsoncoat
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/timesoldier_arsonist
 
-	head = /obj/item/clothing/head/roguetown/helmet/leather/timesoldier/arsonist
+	head = /obj/item/clothing/head/roguetown/helmet/leather/timesoldier_arsonist
 
 	// same general field gear as Temperance
 	shoes = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded/timesoldier/temperance/boots

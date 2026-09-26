@@ -1,4 +1,5 @@
 #define TIMESOLDIER_TEMPERANCE "Temperance"
+#define TIMESOLDIER_ARSONIST "Arsonist"
 #define TIMESOLDIER_INTERWAR "awuff button" // to be removed
 
 #define TIMESOLDIER_SPAWN_CKEY "Ckey"
@@ -158,6 +159,7 @@ GLOBAL_DATUM_INIT(timesoldier_admin_verb_registrar, /datum/timesoldier_admin_ver
 	// what flavor we feelin
 	var/list/soldier_types = list(
 		TIMESOLDIER_TEMPERANCE,
+		TIMESOLDIER_ARSONIST,
 		TIMESOLDIER_INTERWAR
 	)
 
@@ -175,20 +177,20 @@ GLOBAL_DATUM_INIT(timesoldier_admin_verb_registrar, /datum/timesoldier_admin_ver
 			return
 
 		// the illusion of choice.
-		if(selected_type == TIMESOLDIER_INTERWAR)
-			switch(rand(1, 3))
-				if(1)
-					src << sound('sound/vo/mobs/vw/awuff.ogg')
-				if(2)
-					src << sound('sound/vo/mobs/vw/awuff2.ogg')
-				if(3)
-					src << sound('sound/vo/mobs/vw/awuff3.ogg')
+		switch(selected_type)
+			if(TIMESOLDIER_TEMPERANCE, TIMESOLDIER_ARSONIST)
+				break
 
-			continue
+			if(TIMESOLDIER_INTERWAR)
+				switch(rand(1, 3))
+					if(1)
+						src << sound('sound/vo/mobs/vw/awuff.ogg')
+					if(2)
+						src << sound('sound/vo/mobs/vw/awuff2.ogg')
+					if(3)
+						src << sound('sound/vo/mobs/vw/awuff3.ogg')
 
-		// Temperance selected.
-		if(selected_type == TIMESOLDIER_TEMPERANCE)
-			break
+				continue
 
 	// How are we giving control of them?
 	var/list/spawn_options = list(
@@ -361,9 +363,10 @@ GLOBAL_DATUM_INIT(timesoldier_admin_verb_registrar, /datum/timesoldier_admin_ver
 	if(!H)
 		return
 
-
-
 	switch(soldier_type)
 		if(TIMESOLDIER_TEMPERANCE)
 			apply_timesoldier_temperance(H)
+
+		if(TIMESOLDIER_ARSONIST)
+			apply_timesoldier_arsonist(H)
 
