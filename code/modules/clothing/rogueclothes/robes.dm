@@ -167,6 +167,18 @@
 	flags_inv = HIDEBOOB|HIDETAIL
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/suit/roguetown/shirt/robe/physician/plaguebearer
+	name = "reinforced plague coat"
+	desc = "Medicum morbo adhibere."
+	icon_state = "physcoat"
+	slot_flags = ITEM_SLOT_ARMOR
+	flags_inv = HIDEBOOB|HIDETAIL
+	resistance_flags = FIRE_PROOF
+	armor = ARMOR_LEATHER_GOOD
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	cold_protection = CHEST | ARM_LEFT | ARM_RIGHT
+
 //Eora content from Stonekeep
 
 /obj/item/clothing/suit/roguetown/shirt/robe/eora
