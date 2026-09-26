@@ -55,12 +55,14 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	if(H.mind)
 		H.set_blindness(0)
-		var/list/armor_choices = list("Light Armor", "Bare Skin")
+		var/list/armor_choices = list("Light Armor + Crit Resist", "Bare Skin + Blood Resist")
 		var/armor_choice = input(H,"Choose your DEFENSE.", "I CAN TAKE IT!!") as anything in armor_choices
 		switch(armor_choice)
-			if("Light Armor")
+			if("Light Armor + Crit Resist")
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-			if("Bare Skin")
+				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+				REMOVE_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC) //Can't have both.
+			if("Bare Skin + Blood Resist")
 				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berserker //light steel maille
 				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berserker //fullbody leather armor
 		var/list/main_choices = list("Unarmed Master", "Martial Expert") // Unarmed focuses on master punching and wrestling moves, Martial gives you two expert weapon skills to be flexible
@@ -85,7 +87,7 @@
 				switch(weapon_choice)
 					if("HUNK OF IRON") //Actually not a meme anymore
 						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-						r_hand = /obj/item/rogueweapon/sword/long/exe/berserk
+						r_hand = /obj/item/rogueweapon/sword/long/exe/berserk //not as strong as people think
 						backl = /obj/item/rogueweapon/scabbard/gwstrap
 					if("Battle Axe")
 						H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
