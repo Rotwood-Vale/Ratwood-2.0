@@ -79,6 +79,9 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	var/datum/job/assigned_job = SSjob.GetJob(character.mind?.assigned_role)
 	if(assigned_job)
 		assigned_job.clamp_stats(character)
+	character.calculate_energy()
+	character.calculate_stamina()
+	character.energy = character.max_energy
 
 /proc/apply_voicepacks(mob/living/carbon/human/character, client/player)
 	if(!player?.prefs)

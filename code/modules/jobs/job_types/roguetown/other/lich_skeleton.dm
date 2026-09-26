@@ -121,7 +121,6 @@ LICH SKELETONS
 		if("Shawl")
 			cloak = /obj/item/clothing/cloak/thief_cloak/lich
 
-	H.energy = H.max_energy
 
 
 // Ranged goon w/ a dumb bow. Ranger, what else is there to say.
@@ -212,7 +211,6 @@ LICH SKELETONS
 		if("Shawl")
 			cloak = /obj/item/clothing/cloak/thief_cloak/lich
 
-	H.energy = H.max_energy
 
 // Heavy/Tanky goon. Can spec into disciples to be either a slow frontline combatant or a heavy armor wearing line holder.
 /datum/advclass/greater_skeleton/lich/bulwark
@@ -340,8 +338,6 @@ LICH SKELETONS
 		if("Shawl")
 			cloak = /obj/item/clothing/cloak/thief_cloak/lich
 
-	H.energy = H.max_energy
-
 // non-Combat crafter goon. Worse weapons + armor but does base-building. Fortnite.
 /datum/advclass/greater_skeleton/lich/sapper
 	name = "Broken-Bone Sapper"
@@ -427,7 +423,6 @@ LICH SKELETONS
 		if("Shawl")
 			cloak = /obj/item/clothing/cloak/thief_cloak/lich
 
-	H.energy = H.max_energy
 
 ///////////////////////
 // SPECIAL SKELETONS //
