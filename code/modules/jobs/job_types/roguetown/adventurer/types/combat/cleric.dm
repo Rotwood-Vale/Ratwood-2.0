@@ -1,4 +1,5 @@
 /datum/advclass/cleric
+	townie_contract_gate_exempt = TRUE
 	name = "Monk"
 	tutorial = "You are a wandering acolyte, versed in both miracles and martial arts. You forego the hauberk that paladins wear in favor of humbling your foes through bloodless strikes. Your satchel hangs heavy, too, with ample provisions for the pilgrimage you're upon."
 	allowed_sexes = list(MALE, FEMALE)
@@ -51,7 +52,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
 	pants = /obj/item/clothing/under/roguetown/tights/black
-	shoes = /obj/item/clothing/shoes/roguetown/sandals
+	shoes = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded
 	backl = /obj/item/storage/backpack/rogue/satchel
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
 	belt = /obj/item/storage/belt/rogue/leather/rope
@@ -251,7 +252,7 @@
 		if(/datum/patron/old_god)
 			cloak = /obj/item/clothing/cloak/psydontabard
 			if(H.mind)
-				var/helmets = list("Barbute", "Sallet", "Armet","Buckethelm")
+				var/helmets = list("Barbute", "Sallet", "Armet","Buckethelm","Volfskulle Bascinet")
 				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HIS LIGHT.") as anything in helmets
 				switch(helmet_choice)
 					if("Barbute")
@@ -262,6 +263,8 @@
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm
 					if("Buckethelm")
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
+					if("Volfskulle Bascinet")
+						head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/psydonic
 		if(/datum/patron/divine/astrata)
 			cloak = /obj/item/clothing/cloak/templar/astrata
 			if(H.mind)
@@ -327,7 +330,7 @@
 					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
 					beltl = /obj/item/reagent_containers/glass/bottle/rogue/healthpot //No needles or cloth, but a basic potion of lifeblood - similar to the Sorcerer's manna potion. Take the 'Physician's Apprentice' virtue for that, uncapped skills, and more.
 				if("Crusader - Silver Weapon")
-					var/crusaderweapon = list("Silver Longsword", "Silver Mace", "Silver Flail", "Silver Spear", "Silver Axe", "Silver Whip")
+					var/crusaderweapon = list("Silver Longsword", "Silver Mace", "Silver Flail", "Silver Greatflail, 13 STR MIN", "Silver Spear", "Silver Axe", "Silver Whip", "Silver Urumi")
 					var/crusaderweapon_choice = input(H, "Choose your silver weapon, Crusader!") as anything in crusaderweapon
 					switch(crusaderweapon_choice)
 						if("Silver Longsword")
@@ -340,6 +343,9 @@
 						if("Silver Flail")
 							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 							beltl = /obj/item/rogueweapon/flail/sflail/silver
+						if("Silver Greatflail, 13 STR MIN")
+							H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+							l_hand = /obj/item/rogueweapon/flail/peasantwarflail/silver
 						if("Silver Spear")
 							H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 							l_hand = /obj/item/rogueweapon/spear/silver
@@ -349,6 +355,9 @@
 						if("Silver Whip")
 							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 							l_hand = /obj/item/rogueweapon/whip/silver // Die, monster! You don't belong in this world!
+						if("Silver Urumi")
+							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+							l_hand = /obj/item/rogueweapon/whip/urumi/silver // Die, monster! You don't belong in this world!
 		else
 			var/denominations = list("ENDURING, AS HE DOES - FAITH", "VEYLED, LIKE HIS MARTYRS - ARMOUR")
 			var/denomination_choice = input("Choose your DENOMINATION.", "YOUR FAITH IN HIM.") as anything in denominations
@@ -363,7 +372,7 @@
 					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
 					ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC) //Basically a bit more flavourful Knight Errant, so may as very well give HEAVYARMOR
 					armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate
-	var/weapons = list("Longsword","Mace","Flail","Whip","Spear","Axe")
+	var/weapons = list("Longsword","Mace","Flail","Whip","Urumi","Spear","Axe")
 	var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP YOUR GOD'S ARMS.") as anything in weapons
 	switch(weapon_choice)
 		if("Longsword")
@@ -385,6 +394,12 @@
 		if("Whip")
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			beltr = /obj/item/rogueweapon/whip
+		if("Urumi")
+			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+				beltr = /obj/item/rogueweapon/whip/urumi/silver/psydonic/old
+			else
+				beltr = /obj/item/rogueweapon/whip/urumi
 		if("Spear")
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
@@ -779,7 +794,9 @@
 		TRAIT_PACIFISM,
 		TRAIT_EMPATH,
 		TRAIT_CRITICAL_RESISTANCE,
-		TRAIT_STEELHEARTED
+		TRAIT_BLOOD_RESISTANCE,
+		TRAIT_STEELHEARTED,
+		TRAIT_SELF_AWARE
 	)
 	subclass_stats = list(
 		STATKEY_CON = 5,

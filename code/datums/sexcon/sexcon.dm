@@ -9,11 +9,14 @@
 #define SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL	3
 
 //Used to prevent sexcon messages repeating unless in subtle or through changes in intensity, speed, knot status or subtle usage
-/mob/living/carbon/human/proc/sexcon_action_message(message, self_message = null, blind_message = null, vision_distance = DEFAULT_MESSAGE_RANGE)
-	if(sexcon?.suppress_action_messages)
+/mob/living/carbon/human/proc/sexcon_action_message(message, self_message = null, blind_message = null, vision_distance)
+	if(!sexcon)
+		return
+	if(sexcon.suppress_action_messages)
 		return
 	if(!message)
 		return
+	vision_distance = sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE
 	visible_message(message, self_message, blind_message, vision_distance)
 
 /datum/sex_controller
@@ -119,6 +122,26 @@
 		knot_exit()
 	//receiving = list()
 	. = ..()
+
+/datum/sex_controller/proc/do_visual_effects(atom/movable/effect_target, datum/sex_action/action)
+	if(do_subtle_action)
+		return
+	if(!action || !(action.category & SEX_CATEGORY_PENETRATE))
+		return
+	var/list/seers = list()
+	if(user?.client?.prefs && user.client.prefs.erp_visuals)
+		seers += user
+	var/mob/living/carbon/human/H = effect_target
+	if(istype(H) && H.client?.prefs && H.client.prefs.erp_visuals && H != user)
+		seers += H
+	if(!length(seers))
+		return
+	var/icon_state_name = (user?.cmode || (istype(H) && H.cmode)) ? "anger" : "redheart"
+	var/atom/movable/spawn_target = effect_target || user
+	for(var/i in 1 to rand(1, 3))
+		new /obj/effect/temp_visual/heart/sex_effects/invisible(get_turf(spawn_target), seers, icon_state_name)
+	for(var/mob/seer in seers)
+		spawn_target.balloon_alert(seer, "plap!", rand(-15, 15), rand(0, 25))
 
 /datum/sex_controller/proc/do_thrust_animate(atom/movable/target, pixels = 4, time = 2.7)
 	var/oldx = user.pixel_x
@@ -340,6 +363,9 @@
 	manual_arousal = clamp(manual_arousal + amt, SEX_MANUAL_AROUSAL_MIN, SEX_MANUAL_AROUSAL_MAX)
 
 /datum/sex_controller/proc/update_pink_screen()
+	if(!user?.client?.prefs?.erp_visuals)
+		user?.clear_fullscreen("horny")
+		return
 	var/severity = 0
 	switch(arousal)
 		if(1 to 10)
@@ -418,8 +444,8 @@
 					splashed_user.visible_message(span_love("[splashed_user] takes a load on their body!"), span_love("I take a load on my body!"))
 			else
 				external.refresh_cum()
-		if(user.has_flaw(/datum/charflaw/malodorous) && !splashed_user.has_flaw(/datum/charflaw/malodorous))
-			splashed_user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
+		if(HAS_TRAIT(user, TRAIT_REDOLENT) && !HAS_TRAIT(splashed_user, TRAIT_REDOLENT))
+			user.redolent_apply_contact_stink(splashed_user)
 		modular_record_collar_receive_event(splashed_user, user)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
@@ -460,10 +486,12 @@
 			apply_cum_consumed_buff(splashed_user)
 		if(!oral && user?.dna?.species?.id == "gnoll")
 			splashed_user.has_gnoll_scent_this_round = TRUE
-		if(user.has_flaw(/datum/charflaw/malodorous) && !splashed_user.has_flaw(/datum/charflaw/malodorous))
-			splashed_user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
-		else if(splashed_user.has_flaw(/datum/charflaw/malodorous) && !user.has_flaw(/datum/charflaw/malodorous))
-			user.apply_status_effect(/datum/status_effect/debuff/stinky_contact)
+		var/user_redolent = HAS_TRAIT(user, TRAIT_REDOLENT)
+		var/target_redolent = HAS_TRAIT(splashed_user, TRAIT_REDOLENT)
+		if(user_redolent && !target_redolent)
+			user.redolent_apply_contact_stink(splashed_user)
+		else if(target_redolent && !user_redolent)
+			splashed_user.redolent_apply_contact_stink(user)
 		modular_record_collar_receive_event(splashed_user, user)
 		if(!oral)
 			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
@@ -474,7 +502,8 @@
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	after_ejaculation(consume_charge)
-	after_intimate_climax(oral, splashed_user)
+	if(consume_charge)
+		after_intimate_climax(oral, splashed_user)
 
 /// Applies or accumulates a creampie drip status effect, correctly ORing new orifice flags onto an existing drip rather than silently dropping the second application.
 /proc/apply_creampie_drip(mob/living/carbon/human/target, orifice, use_long = FALSE)
@@ -742,10 +771,13 @@
 		adjust_charge(-CHARGE_FOR_CLIMAX)
 	else
 		to_chat(user, span_love("<i>Spurt!</i>"))
-	if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
-		user.sate_addiction(/datum/charflaw/addiction/lovefiend)
-	if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
-		user.sate_addiction(/datum/charflaw/addiction/baothamarked)
+	if(user.has_status_effect(/datum/status_effect/debuff/false_sensation))
+		to_chat(user, span_warning("Not enough..."))
+	else
+		if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
+			user.sate_addiction(/datum/charflaw/addiction/lovefiend)
+		if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
+			user.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	user.add_stress(/datum/stressevent/cumok)
 	user.emote("sexmoanhvy", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
@@ -856,6 +888,13 @@
 	arousal = clamp(amount, 0, MAX_AROUSAL)
 	update_pink_screen()
 	update_erect_state()
+
+/datum/sex_controller/proc/try_apply_false_sensation()
+	if(!user.has_flaw(/datum/charflaw/addiction/lovefiend) && !user.has_flaw(/datum/charflaw/addiction/baothamarked))
+		return
+	if(!user.has_status_effect(/datum/status_effect/debuff/false_sensation)) // So chat isn't spammed
+		to_chat(user, span_warning("My arousal is hollow and false. It won't sate my urges."))
+	user.apply_status_effect(/datum/status_effect/debuff/false_sensation)
 
 /datum/sex_controller/proc/update_erect_state()
 	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
@@ -1189,11 +1228,6 @@
 	dat += " ~|~ <a href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "FREEUSE ON" : "FREEUSE OFF"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
-		if(action.subtle_supported)
-			if(do_subtle_action)
-				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING SUBTLY</a>"
-			else
-				dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING VISIBLY</a>"
 		if(action.knot_on_finish)
 			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
 				if(do_knot_action)
@@ -1205,6 +1239,10 @@
 					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#d146f5'>FORCING KNOT</font></a>"
 				else
 					dat += " | <a href='?src=[REF(src)];task=toggle_knot_bottom'><font color='#eac8de'>NOT FORCING KNOT</font></a>"
+	if(do_subtle_action)
+		dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING SUBTLY</a>"
+	else
+		dat += " | <a href='?src=[REF(src)];task=toggle_subtle'>DOING VISIBLY</a>"
 	dat += "</center><center><a href='?src=[REF(src)];task=set_arousal'>SET AROUSAL</a> | <a href='?src=[REF(src)];task=freeze_arousal'>[arousal_frozen ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a></center>"
 	if(target == user)
 		dat += "<center>Doing unto yourself</center>"
@@ -1230,8 +1268,6 @@
 		if(istype(action, /datum/sex_action/chastityplay) && !chastity_content_enabled_for_pair())
 			continue
 		if(!action.shows_on_menu(user, target))
-			continue
-		if(action_blocked_by_intimate_state(action, TRUE))
 			continue
 		dat += "<td>"
 		var/link = ""
@@ -1293,6 +1329,8 @@
 			to_chat(user, span_notice("Positioning and exposure checks are now [freeuse ? "disabled" : "enabled"]."))
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
+			if(!isnull(amount) && amount > arousal)
+				try_apply_false_sensation()
 			if(aphrodisiac > 1 && amount > 0)
 				set_arousal(amount * aphrodisiac)
 			else
@@ -1300,6 +1338,8 @@
 		if("freeze_arousal")
 			if(aphrodisiac == 1)
 				arousal_frozen = !arousal_frozen
+				if(arousal > 60)
+					try_apply_false_sensation()
 		if("category_misc")
 			action_category = SEX_CATEGORY_MISC
 		if("category_hands")
@@ -1372,10 +1412,9 @@
 	var/base_force = -1
 	var/base_knot_mode = FALSE
 	var/subtle_message_tick_counter = 0
-	var/was_subtle_mode = action.subtle_supported
+	var/was_subtle_mode = do_subtle_action // By default, we set it to the same value as the panel toggle
 	show_progress = 1
 	suppress_moan = FALSE
-	do_subtle_action = action.subtle_supported // always start subtle-supported actions in subtle mode
 	action.on_start(user, target)
 	find_occupying_furniture()
 	find_occupying_grass()
@@ -1394,7 +1433,6 @@
 			break
 		if(desire_stop)
 			break
-		var/is_subtle_mode = (action.subtle_supported && do_subtle_action)
 		var/current_knot_mode = FALSE
 		if(action.knot_on_finish)
 			if((action.user_sex_part & SEX_PART_COCK) && knot_penis_type())
@@ -1404,22 +1442,23 @@
 		var/show_action_message = (speed != base_speed || force != base_force)
 		if(current_knot_mode != base_knot_mode)
 			show_action_message = TRUE
-		if(!is_subtle_mode && was_subtle_mode)
+		if(!do_subtle_action && was_subtle_mode)
 			show_action_message = TRUE
-		if(!show_action_message && is_subtle_mode)
+		if(!show_action_message && do_subtle_action)
 			subtle_message_tick_counter++
 			if(subtle_message_tick_counter >= SEX_SUBTLE_MESSAGE_REPEAT_INTERVAL)
 				show_action_message = TRUE
 				subtle_message_tick_counter = 0
 		else if(show_action_message)
 			subtle_message_tick_counter = 0
-		was_subtle_mode = is_subtle_mode
+		was_subtle_mode = do_subtle_action
 		base_speed = speed
 		base_force = force
 		base_knot_mode = current_knot_mode
 		suppress_action_messages = !show_action_message
 		find_ringing_collar()
 		action.on_perform(user, target)
+		do_visual_effects(target, action)
 		suppress_action_messages = FALSE
 		// It could want to finish afterwards the performed action
 		if(action.is_finished(user, target))
@@ -1436,35 +1475,11 @@
 		return FALSE
 	if(!inherent_perform_check(action_type, incapacitated))
 		return FALSE
-	if(action_blocked_by_intimate_state(action))
-		return FALSE
 	if(!action.can_perform(user, target))
 		return FALSE
 	return TRUE
-/// Checks if the action is blocked by an intimate state, such as chastity. If menu_check is TRUE, this is being called for the purpose of showing the action in the menu, and certain checks that would be redundant to do on every menu open (like checking for orgasm immunity from a collar) can be skipped.
-/datum/sex_controller/proc/action_blocked_by_intimate_state(datum/sex_action/action, menu_check = FALSE)
-	if(!action || !user)
-		return FALSE
-	if(action.intimate_check_flags == SEX_ACTION_INTIMATE_CHECK_NONE)
-		return FALSE
-
-	var/user_part = action.user_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
-	if((action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_USER) && user_part)
-		if(SEND_SIGNAL(user, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, target, user_part, TRUE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
-			return TRUE
-
-	var/target_part = action.target_sex_part & (SEX_PART_COCK | SEX_PART_CUNT | SEX_PART_ANUS)
-	if(target && (action.intimate_check_flags & SEX_ACTION_INTIMATE_CHECK_TARGET) && target_part)
-		if(SEND_SIGNAL(target, COMSIG_CARBON_SEX_ACTION_VALIDATE, action, user, target_part, FALSE, menu_check) & COMPONENT_SEX_ACTION_BLOCK)
-			return TRUE
-
-	return FALSE
 
 /datum/sex_controller/proc/chastity_content_enabled_for(mob/living/carbon/human/H)
-	var/modular_result = modular_chastity_content_enabled_for(H)
-	if(!isnull(modular_result))
-		return modular_result
-
 	if(!H)
 		return FALSE
 	if(!H.client?.prefs)
@@ -1472,10 +1487,6 @@
 	return !!H.client.prefs.chastenable
 
 /datum/sex_controller/proc/chastity_content_enabled_for_pair()
-	var/modular_result = modular_chastity_content_enabled_for_pair()
-	if(!isnull(modular_result))
-		return modular_result
-
 	if(!chastity_content_enabled_for(user))
 		return FALSE
 	if(target && target != user && !chastity_content_enabled_for(target))

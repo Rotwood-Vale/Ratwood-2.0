@@ -157,6 +157,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/dropshrink = 0
 	/// Force value that is force or force_wielded, with any added bonuses from external sources. (Mainly components for enchantments)
 	var/force_dynamic = 0
+	/// Temporary multiplier applied to sharpness decay for cleave secondary hits. Reset to 1 after use.
+	var/tmp/cleave_sharpness_mult = 1
 	/// Weapon's length. Indicates what limbs it can target without extra circumstances (like grabs / on a prone target).
 	var/wlength = WLENGTH_NORMAL
 	/// Weapon's balance. Swift uses SPD difference between attacker and defender to increase hit%. Heavy increases parry stamina drain based on STR diff.
@@ -173,6 +175,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/minstr_req = FALSE
 	/// %-age of our raw damage that is dealt to armor or weapon on hit / parry / clip.
 	var/intdamage_factor = 1
+
+	var/item_quality = ITEM_QUALITY_STANDARD
+	var/has_item_quality = FALSE
+	/// Ferentian Trading Company seal - foreign vessels refuse to buy back Company-sealed stock.
+	/// Not wired up anywhere yet (goldface/silverface catalog step).
+	var/atc_sealed = FALSE
+	/// If TRUE, the stockpile refuses to mint this item as treasure. AP sets this on mapload for
+	/// items spawned inside town areas ("town property"); that marking is not yet wired up in ES,
+	/// so this is declared but currently always FALSE.
+	var/unmintable = FALSE
 
 	var/sleeved = null
 	var/sleevetype = null
@@ -258,13 +270,70 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/no_use_cd = FALSE //if true, no cooldown when interacting with it
 	var/vorpal = FALSE // does this item/weapon circumvent two-stage death during dismemberment? (do not add this to anything but ultra rare shit)
 
+	/// Makes this item impossible to enchant, for temporary item
+	var/unenchantable = FALSE
+
 	/// Item is compatible with Nudist and Nude Sleeper vice traits. Nudists can equip these (where they otherwise couldn't), and nude sleepers can fall asleep while wearing these.
 	/// Mainly intended for small accessories and things that don't cover much, or for resolving unimmersive situations. See other examples of nudist-friendly items.
 	/// Stripping these items from nude sleepers is 2x faster while they are unconscious.
 	var/nudist_approved = FALSE
+	/// This is predominantly for items WITHOUT A RECIPE. Recipes will hold display_category's otherwise
+	var/display_category
 
 /obj/item/Initialize(mapload)
+	if (attack_verb)
+		attack_verb = typelist("attack_verb", attack_verb)
+
+	if(experimental_inhand)
+		var/props2gen = list("gen")
+		var/list/prop
+		if(gripped_intents)
+			props2gen += "wielded"
+		for(var/i in props2gen)
+			prop = getonmobprop(i)
+			if(prop)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
+
+	if(experimental_onhip)
+		if(slot_flags & ITEM_SLOT_BELT)
+			var/i = "onbelt"
+			var/list/prop = getonmobprop(i)
+			if(prop)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
+
+	if(experimental_onback)
+		if(slot_flags & ITEM_SLOT_BACK)
+			var/i = "onback"
+			var/list/prop = getonmobprop(i)
+			if(prop)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
+
+	wdefense_dynamic = wdefense
+	update_force_dynamic()
+
 	. = ..()
+
+	// Town-property marking (AP parity): items placed inside a town area at mapload are
+	// stamped unmintable, so residents can't strip the town's furnishings and mint them for
+	// coin. Read by the stockpile deposit / mint guard (stockpile.dm).
+	if(mapload)
+		var/area/A = get_area(src)
+		if(A && is_type_in_typecache(A, GLOB.roguetown_areas_typecache))
+			unmintable = TRUE
+
+	for(var/path in actions_types)
+		new path(src)
+	actions_types = null
+
 	if(!pixel_x && !pixel_y && !bigboy)
 		pixel_x = rand(-5,5)
 		pixel_y = rand(-5,5)
@@ -278,6 +347,32 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		body_parts_covered_dynamic = body_parts_covered
 	update_transform()
 
+	if(!hitsound)
+		if(damtype == "fire")
+			hitsound = list('sound/blank.ogg')
+		if(damtype == "brute")
+			hitsound = list("swing_hit")
+
+	if (!embedding)
+		embedding = getEmbeddingBehavior()
+	else if (islist(embedding))
+		embedding = getEmbeddingBehavior(arglist(embedding))
+	else if (!istype(embedding, /datum/embedding_behavior))
+		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
+
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
+
+	if(max_blade_int)
+		if(randomize_blade_int_on_init)
+			//set blade integrity to randomized 60% to 100% if not already set
+			if(!blade_int)
+				blade_int = max_blade_int + rand(-(max_blade_int * 0.4), 0)
+			//set dismemberment integrity to max_blade_int if not already set
+			if(!dismember_blade_int)
+				dismember_blade_int = max_blade_int
+		else
+			blade_int = max_blade_int
 
 /obj/item/proc/update_transform()
 	transform = null
@@ -324,80 +419,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			if (obj_broken)
 				update_damaged_state()
 
-/obj/item/Initialize(mapload)
-	if (attack_verb)
-		attack_verb = typelist("attack_verb", attack_verb)
-
-	if(experimental_inhand)
-		var/props2gen = list("gen")
-		var/list/prop
-		if(gripped_intents)
-			props2gen += "wielded"
-		for(var/i in props2gen)
-			prop = getonmobprop(i)
-			if(prop)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
-
-	if(experimental_onhip)
-		if(slot_flags & ITEM_SLOT_BELT)
-			var/i = "onbelt"
-			var/list/prop = getonmobprop(i)
-			if(prop)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
-
-	if(experimental_onback)
-		if(slot_flags & ITEM_SLOT_BACK)
-			var/i = "onback"
-			var/list/prop = getonmobprop(i)
-			if(prop)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
-
-	wdefense_dynamic = wdefense
-	update_force_dynamic()
-
-	. = ..()
-	for(var/path in actions_types)
-		new path(src)
-	actions_types = null
-
-
-	if(!hitsound)
-		if(damtype == "fire")
-			hitsound = list('sound/blank.ogg')
-		if(damtype == "brute")
-			hitsound = list("swing_hit")
-
-	if (!embedding)
-		embedding = getEmbeddingBehavior()
-	else if (islist(embedding))
-		embedding = getEmbeddingBehavior(arglist(embedding))
-	else if (!istype(embedding, /datum/embedding_behavior))
-		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
-
-	if(sharpness) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
-
-	if(max_blade_int)
-		if(randomize_blade_int_on_init)
-			//set blade integrity to randomized 60% to 100% if not already set
-			if(!blade_int)
-				blade_int = max_blade_int + rand(-(max_blade_int * 0.4), 0)
-			//set dismemberment integrity to max_blade_int if not already set
-			if(!dismember_blade_int)
-				dismember_blade_int = max_blade_int
-		else
-			blade_int = max_blade_int
-
-/obj/item/Destroy()
+/obj/item/Destroy(force=FALSE)
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -898,6 +920,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
+
+/obj/item/proc/quickdraw_interact(mob/living/user, obj/item/held_item)
+	return FALSE
 
 /obj/item/proc/GetDeconstructableContents()
 	return GetAllContents() - src
@@ -1788,6 +1813,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return FALSE
 
 	obj_destroyed = TRUE
+	if(src.anvilrepair)
+		if(src.smeltresult == /obj/item/ingot/iron)
+			new /obj/item/scrap(get_turf(src))
+			if(prob(20))
+				new /obj/item/scrap(get_turf(src))
 	if(destroy_sound)
 		playsound(src, destroy_sound, 100, TRUE)
 	if(destroy_message)
@@ -1932,6 +1962,96 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			str += "<b>Sewing</b> and a needle."
 		str = span_info(str)
 		. += str
+
+/obj/item/proc/step_action() //this was made to rewrite clown shoes squeaking, moved here to avoid throwing runtimes with non-/clothing wearables
+	SEND_SIGNAL(src, COMSIG_CLOTHING_STEP_ACTION)
+
+/obj/item/proc/apply_quality(mob/crafter, skill_path, forced_tier = null)
+	var/tier
+	if(!isnull(forced_tier))
+		tier = forced_tier
+	else
+		var/skill_level = 0
+		if(crafter && skill_path)
+			skill_level = crafter.get_skill_level(skill_path)
+		var/roll = rand(1, 100)
+		switch(skill_level)
+			if(SKILL_LEVEL_NONE, SKILL_LEVEL_NOVICE)
+				if(roll <= 60)
+					tier = ITEM_QUALITY_CRUDE
+				else if(roll <= 95)
+					tier = ITEM_QUALITY_ROUGH
+				else
+					tier = ITEM_QUALITY_STANDARD
+			if(SKILL_LEVEL_APPRENTICE)
+				if(roll <= 20)
+					tier = ITEM_QUALITY_CRUDE
+				else if(roll <= 75)
+					tier = ITEM_QUALITY_ROUGH
+				else
+					tier = ITEM_QUALITY_STANDARD
+			if(SKILL_LEVEL_JOURNEYMAN)
+				tier = ITEM_QUALITY_STANDARD
+			if(SKILL_LEVEL_EXPERT)
+				if(roll <= 70)
+					tier = ITEM_QUALITY_FINE
+				else if(roll <= 95)
+					tier = ITEM_QUALITY_FLAWLESS
+				else
+					tier = ITEM_QUALITY_MASTERWORK
+			if(SKILL_LEVEL_MASTER)
+				if(roll <= 30)
+					tier = ITEM_QUALITY_FINE
+				else if(roll <= 80)
+					tier = ITEM_QUALITY_FLAWLESS
+				else
+					tier = ITEM_QUALITY_MASTERWORK
+			else
+				if(roll <= 40)
+					tier = ITEM_QUALITY_FLAWLESS
+				else
+					tier = ITEM_QUALITY_MASTERWORK
+	item_quality = tier
+	var/prefix
+	switch(tier)
+		if(ITEM_QUALITY_LOOTED)
+			prefix = ITEM_QUALITY_PREFIX_LOOTED
+		if(ITEM_QUALITY_RUINED)
+			prefix = ITEM_QUALITY_PREFIX_RUINED
+		if(ITEM_QUALITY_AWFUL)
+			prefix = ITEM_QUALITY_PREFIX_AWFUL
+		if(ITEM_QUALITY_CRUDE)
+			prefix = ITEM_QUALITY_PREFIX_CRUDE
+		if(ITEM_QUALITY_ROUGH)
+			prefix = ITEM_QUALITY_PREFIX_ROUGH
+		if(ITEM_QUALITY_FINE)
+			prefix = ITEM_QUALITY_PREFIX_FINE
+		if(ITEM_QUALITY_FLAWLESS)
+			prefix = ITEM_QUALITY_PREFIX_FLAWLESS
+		if(ITEM_QUALITY_MASTERWORK)
+			prefix = ITEM_QUALITY_PREFIX_MASTERWORK
+	if(prefix)
+		name = "[prefix] [name]"
+	if(!sellprice && !initial(sellprice) && !static_price)
+		sellprice = GLOB.derived_sellprices?[type] || lookup_derived_subtype_price(type)
+		randomize_price()
+	if(sellprice > 0)
+		sellprice = max(1, round(sellprice * ITEM_QUALITY_MULT(tier)))
+	return tier
+
+/obj/item/proc/mark_as_looted()
+	if(looted)
+		return
+	looted = TRUE
+	item_quality = ITEM_QUALITY_LOOTED
+	name = "[ITEM_QUALITY_PREFIX_LOOTED] [name]"
+
+/obj/item/proc/unmark_as_looted()
+	if(!looted)
+		return
+	looted = FALSE
+	item_quality = ITEM_QUALITY_STANDARD
+	name = replacetext(name, "[ITEM_QUALITY_PREFIX_LOOTED] ", "")
 
 /obj/item/proc/update_force_dynamic()
 	force_dynamic = (wielded ? force_wielded : force)

@@ -12,7 +12,6 @@
 	sewrepair = TRUE
 	nodismemsleeves = TRUE
 	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
-	sellprice = 20
 	armor_class = ARMOR_CLASS_LIGHT
 	salvage_result = /obj/item/natural/hide/cured
 	cold_protection = CHEST
@@ -103,6 +102,7 @@
 	name = "forester's brigandine"
 	desc = "A hardened leather harness with a large pauldron worn over a tasseted brigandine, imbued with Dendor's essence."
 	icon_state = "forestbrig"
+	armor = ARMOR_BRIGANDINE
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50
 	equip_delay_self = 4 SECONDS
 	smeltresult = /obj/item/ingot/iron
@@ -133,9 +133,8 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	nodismemsleeves = TRUE
 	body_parts_covered = COVERAGE_TORSO
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL//-25 compared to light brig
 	smeltresult = /obj/item/ingot/iron
-	sellprice = 25
 	armor_class = ARMOR_CLASS_LIGHT
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/ComponentInitialize()
@@ -146,6 +145,7 @@
 	desc = "Treated, water-boiled and composite-layered leather armor of fine Otavan make."
 	icon_state = "cuirbouilli"
 	item_state = "cuirbouilli"
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 25
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy
 	name = "hardened leather armor"
@@ -156,7 +156,6 @@
 	armor = ARMOR_LEATHER_GOOD
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	sellprice = 20
 	cold_protection = CHEST
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
@@ -169,8 +168,19 @@
 	armor = ARMOR_LEATHER_GOOD
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	sellprice = 25
 	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+
+/obj/item/clothing/suit/roguetown/armor/leather/studded/cuirbouilli
+	name = "cuir-bouilli vest"
+	desc = "A padded vest that's been reinforced with 'cuir-bouilli' - leather that's been treated, water-boiled, and composite-layered together. It \
+	is traditionally worn beneath a heavier cuirass to protect against bludgeons-and-thrusts, but can be confidently worn on its own without qualm."
+	icon_state = "cuirbouilli"
+	item_state = "cuirbouilli"
+	body_parts_covered = CHEST | VITALS
+	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER - 25
+	cold_protection = CHEST | VITALS
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/confessor
@@ -195,10 +205,17 @@
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/steppe
-	name = "fur-woven hatanga coat"
-	desc = "A finely woven hatagna coat, replacing much of its scaled armor with fine furs and reinforced padding for lighter rides."
+	name = "fur-woven chargah coat"
+	desc = "A finely woven chargah coat, replacing much of its scaled armor with fine furs and reinforced padding for lighter rides."
+	icon_state = "chargahfur"
+	item_state = "chargahfur"
+
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/elven
+	name = "treated trophy fur robes"
+	desc = "A heavy set of hardened robes, lined with fur. The leather is composed of several creatures that were notably difficult to fell by arrow. A proof or rangership among many."
 	icon_state = "hatangafur"
 	item_state = "hatangafur"
+	sellprice = 100
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket
 	name = "hardened leather jacket"
@@ -210,14 +227,22 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	cold_protection = CHEST | ARM_LEFT | ARM_RIGHT
-	sellprice = 25
+
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/shadowvest
+	name = "drowcraft vest"
+	desc = "Traditional Drow armour made from the hide of one of the Underdark's many beasts, underlayered with the chitin plates of a drider. Durable yet still flexible, perfect for skirmishers."
+	icon_state = "shadowvest"
+	item_state = "shadowvest"
+	body_parts_covered = COVERAGE_FULL
+	armor = ARMOR_LEATHER_STUDDED
+	allowed_race = NON_DWARVEN_RACE_TYPES
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter
 	name = "fencing jacket"
 	desc = "A light, flexible button-up leather jacket that will keep your vitals out of harm's way."
 	icon_state = "freijacket"
 	item_state = "freijacket"
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM + 35
 	detail_tag = "_detail"
 	color = "#5E4440"
 	detail_color = "#c08955"
@@ -234,20 +259,16 @@
 		add_overlay(pic)
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter/Initialize(mapload)
-	..()
+	. = ..()
 	update_icon()
 
-/obj/item/clothing/suit/roguetown/armor/leather/trophyfur
-	name = "treated trophy fur robes"
-	desc = "A heavy set of hardened robes, lined with fur. The leather is composed of several creatures that were notably difficult to fell by arrow. A proof or rangership among many."
-	icon_state = "hatanga"
-	item_state = "hatanga"
-	armor = list("blunt" = 90, "slash" = 30, "stab" = 40, "piercing" = 60, "fire" = 0, "acid" = 0)
-	prevent_crits = list(BCLASS_STAB, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK, BCLASS_TWIST)
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	sellprice = 100
-	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
-	min_cold_protection_temperature = 50
+/obj/item/clothing/suit/roguetown/armor/leather/heavy/shepherd
+	name = "shepherd's vest"
+	desc = "A light, flexible leather vest worn by shepherds in the forested peaks of Aavnr."
+	icon_state = "freijacket"
+	item_state = "freijacket"
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
+	color = "#313131"
 
 /obj/item/clothing/suit/roguetown/armor/leather/bikini
 	name = "leather corslet"
@@ -334,11 +355,13 @@
 	icon_state = "bwleathercoat"
 	item_state = "bwleathercoat"
 	boobed = TRUE
+	resistance_flags = FIRE_PROOF
 
 	slot_flags = ITEM_SLOT_ARMOR
 	armor = ARMOR_LEATHER_GOOD
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	prevent_crits = list(BCLASS_CUT, BCLASS_TWIST, BCLASS_STAB)
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 	detail_tag = "_detail"
 	detail_color = "#FFFFFF"

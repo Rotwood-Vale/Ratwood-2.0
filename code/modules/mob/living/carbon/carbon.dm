@@ -1,5 +1,5 @@
 /mob/living/carbon/Initialize(mapload)
-	..()
+	. = ..()
 
 	pain_threshold = HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH) ? ((STAWIL + 5) * 10) : (STAWIL * 10)
 	if(has_flaw(/datum/charflaw/addiction/masochist)) // Masochists handle pain better by about 1 endurance point
@@ -12,17 +12,41 @@
 	GLOB.carbon_list += src
 	if(GLOB.blood_sight_viewers)
 		AddComponent(/datum/component/blood_glow)
+	RegisterSignal(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_PARALYSIS),
+		SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS),
+		SIGNAL_ADDTRAIT(TRAIT_SPELLCOCKBLOCK),
+		SIGNAL_REMOVETRAIT(TRAIT_SPELLCOCKBLOCK),
+		SIGNAL_ADDTRAIT(TRAIT_MUTE),
+		SIGNAL_REMOVETRAIT(TRAIT_MUTE),
+		SIGNAL_ADDTRAIT(TRAIT_BAGGED),
+		SIGNAL_REMOVETRAIT(TRAIT_BAGGED),
+		SIGNAL_ADDTRAIT(TRAIT_GARGLE_SPEECH),
+		SIGNAL_REMOVETRAIT(TRAIT_GARGLE_SPEECH),
+	), PROC_REF(on_spell_availability_trait_changed))
+
+/mob/living/carbon/proc/on_spell_availability_trait_changed(datum/source, trait)
+	SIGNAL_HANDLER
+	update_action_buttons_icon()
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. =  ..()
 
-	QDEL_LIST(hand_bodyparts)
-	QDEL_LIST(internal_organs)
-	QDEL_LIST(bodyparts)
-	QDEL_LIST(implants)
-	QDEL_NULL(dna)
-	QDEL_NULL(underwear)
+	if(hand_bodyparts)
+		QDEL_LIST(hand_bodyparts)
+	if(internal_organs)
+		QDEL_LIST(internal_organs)
+	if(bodyparts)
+		QDEL_LIST(bodyparts)
+	if(implants)
+		QDEL_LIST(implants)
+	if(dna)
+		QDEL_NULL(dna)
+	if(underwear)
+		QDEL_NULL(underwear)
+	last_mind = null
+	STOP_PROCESSING(SSiconupdates, src)
 	GLOB.carbon_list -= src
 
 /mob/living/carbon/ZImpactDamage(turf/T, levels)
@@ -1099,6 +1123,7 @@
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
 		return
+	var/old_stat = stat
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_NEARDEATH && HAS_TRAIT(src, TRAIT_DEATHBARGAIN))
 			src.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
@@ -1130,6 +1155,8 @@
 	update_health_hud()
 //	update_tod_hud()
 	update_spd()
+	if(stat != old_stat)
+		update_action_buttons_icon()
 
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()

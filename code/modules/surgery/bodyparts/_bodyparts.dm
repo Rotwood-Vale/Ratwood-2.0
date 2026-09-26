@@ -189,6 +189,7 @@
 		owner.bodyparts -= src
 		owner.bodyparts_by_zone -= body_zone
 		owner = null
+	original_owner = null
 	if(bandage)
 		QDEL_NULL(bandage)
 	for(var/datum/wound/wound as anything in wounds)
@@ -480,6 +481,8 @@
 			H.icon_render_key = null
 		owner.queue_icon_update(PENDING_UPDATE_BODY)
 		owner.update_mobility()
+		if(held_index)
+			owner.update_action_buttons_icon()
 	return TRUE //if there was a change.
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
@@ -569,7 +572,7 @@
 	body_gender = H.gender
 	should_draw_gender = S.sexes
 
-	if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits))
+	if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits) || (S.mutant_skin_option && H.mutant_skin))
 		if(S.fixed_mut_color)
 			species_color = S.fixed_mut_color
 		else

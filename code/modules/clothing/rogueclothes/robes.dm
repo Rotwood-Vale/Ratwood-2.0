@@ -86,6 +86,9 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)	 //Ensures that this inherits the padded gambeson's resistances, too.
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 
+/obj/item/clothing/suit/roguetown/shirt/robe/monk/blue
+	color = CLOTHING_BLUE
+
 //This is for templars/psydonites. Gives a boon for wearing it to counter-act giving up plate and such.
 /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy
 	name = "holy monk vestments"
@@ -144,6 +147,7 @@
 	icon_state = "nun"
 	item_state = "nun"
 	allowed_sex = list(MALE, FEMALE)
+	fiber_salvage = FALSE
 
 /obj/item/clothing/suit/roguetown/shirt/robe/wizard
 	name = "wizard's robe"
@@ -219,6 +223,7 @@
 	detail_tag = "_detail"
 	naledicolor = TRUE
 	heat_protection = CHEST | GROIN
+	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/robe/hierophant/Initialize(mapload)
@@ -245,13 +250,15 @@
 	item_state = "monkcloth"
 	boobed_detail = FALSE
 	color = null
-	detail_color = null
+	detail_color = CLOTHING_RED
 	detail_tag = "_detail"
 	naledicolor = TRUE
 	r_sleeve_status = SLEEVE_NOMOD
 	l_sleeve_status = SLEEVE_NOMOD
 	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	resistance_flags = FIRE_PROOF
+
 
 /obj/item/clothing/suit/roguetown/shirt/robe/pointfex/Initialize(mapload)
 	. = ..()

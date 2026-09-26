@@ -1,6 +1,11 @@
 /mob/living
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
+	/// Contract-spawned mobs get this set: their heads pay no HEADEATER bounty (the contract reward is the payment)
+	var/no_head_bounty = FALSE
+	/// Marks a mob as belonging to a contract warband; its corpse dusts itself after death.
+	var/contract_spawned = FALSE
+	var/contract_dust_scheduled = FALSE
 	var/zone_selector_hud_dirty = FALSE
 	var/pain_hud_dirty = FALSE
 	var/blood_hud_dirty = FALSE
@@ -19,10 +24,10 @@
 	init_faith()
 
 /mob/living/Destroy()
+	cancel_disconnected_admin_alert()
 	surgeries = null
 	if(LAZYLEN(status_effects))
-		for(var/s in status_effects)
-			var/datum/status_effect/S = s
+		for(var/datum/status_effect/S as anything in status_effects.Copy())
 			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
 				qdel(S)
 			else
@@ -47,7 +52,36 @@
 	sharedSoullinks = null
 	if(craftingthing)
 		QDEL_NULL(craftingthing)
+	clear_enemies()
+	enemies = null
 	return ..()
+
+/// Adds a mob to our enemies list, dropping the reference if that mob is ever destroyed.
+/mob/living/proc/add_enemy(mob/living/new_enemy)
+	if(!new_enemy || new_enemy == src || (new_enemy in enemies))
+		return
+	LAZYSET(enemies, new_enemy, null)
+	RegisterSignal(new_enemy, COMSIG_QDELETING, PROC_REF(on_enemy_destroyed))
+
+/// As add_enemy, but stores an associated value against the mob.
+/mob/living/proc/set_enemy(mob/living/new_enemy, value)
+	if(!new_enemy || new_enemy == src)
+		return
+	add_enemy(new_enemy)
+	enemies[new_enemy] = value
+
+/mob/living/proc/add_enemies(list/new_enemies)
+	for(var/mob/living/new_enemy as anything in new_enemies)
+		add_enemy(new_enemy)
+
+/mob/living/proc/on_enemy_destroyed(datum/source)
+	SIGNAL_HANDLER
+	enemies -= source
+
+/mob/living/proc/clear_enemies()
+	for(var/mob/living/enemy as anything in enemies)
+		UnregisterSignal(enemy, COMSIG_QDELETING)
+	enemies = list()
 
 /mob/living/onZImpact(turf/T, levels)
 	if(HAS_TRAIT(src, TRAIT_NOFALLDAMAGE2))
@@ -230,6 +264,8 @@
 				L.Knockdown(1)
 			if(self_points < target_points)
 				Knockdown(30)
+				apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
+				apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
 			if(self_points == target_points)
 				L.Knockdown(1)
 				Knockdown(30)
@@ -480,6 +516,7 @@
 				O.sublimb_grabbed = item_override
 			else
 				O.sublimb_grabbed = used_limb
+			O.update_grabbed_spell_hud()
 			if(BP)
 				C.update_hud_hand_slot(BP.held_index)
 				C.mark_zone_selector_hud_dirty()
@@ -849,7 +886,7 @@
 	mark_blood_hud_dirty()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
-/mob/living/proc/check_revive(mob/living/user)
+/mob/living/proc/check_revive(mob/living/user, bypass_foreign_brain_check = FALSE)
 	if(src == user)
 		return FALSE
 	if(stat < DEAD)
@@ -883,32 +920,66 @@
 
 	return TRUE
 
+/// Whether this body holds a brain that belongs to a different body, see is_foreign_to()
+/mob/living/carbon/proc/has_foreign_brain()
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	return B?.is_foreign_to(src)
+
+/mob/living/carbon/human/check_revive(mob/living/user, bypass_foreign_brain_check = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check
+		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair, brimming with elixir under a master's hand, could bind it."))
+		return FALSE
+
+/// The single DEAD-to-alive transition, every revival and rise routes through it.
+/// Returns whether the flip happened, NOT whether they stayed alive, updatehealth re-kills if the caller skipped a health floor
+/mob/living/proc/become_alive(new_stat = CONSCIOUS, bypass_foreign_brain_check = FALSE)
+	if(stat != DEAD)
+		return FALSE
+	if(!bypass_foreign_brain_check && iscarbon(src))
+		var/mob/living/carbon/C = src
+		if(C.has_foreign_brain())
+			return FALSE
+	GLOB.dead_mob_list -= src
+	GLOB.alive_mob_list += src
+	stat = new_stat
+	updatehealth() //then we check if the mob should wake up.
+	update_mobility()
+	update_sight()
+	reload_fullscreen()
+	return TRUE // death() already re-swapped the lists if the updatehealth above re-killed us
+
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller
+/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive, break_restraints = admin_revive)
 	if(stat == DEAD && (admin_revive || can_be_revived())) //in some cases you can't revive (e.g. no brain)
-		GLOB.dead_mob_list -= src  //If any more forms of revival are added, better to use a proc to do this - easier to search
-		GLOB.alive_mob_list += src
+		if(!become_alive(CONSCIOUS, admin_revive || bypass_foreign_brain_check)) // Refused, nothing flipped, nothing to tidy
+			return
+		// Runs even if become_alive's updatehealth re-killed us, or the corpse keeps its
+		// rot, its dormant deadite datum and the monochrome death filter
 		set_suicide(FALSE)
-		stat = CONSCIOUS
-		updatehealth() //then we check if the mob should wake up.
-		update_mobility()
-		update_sight()
 		clear_alert("not_enough_oxy")
-		reload_fullscreen()
 		remove_client_colour(/datum/client_colour/monochrome)
-		// Add message about struggling to recall death circumstances
-		to_chat(src, "<span class='notice'><b>As you return to life, you struggle to recall the circumstances of your death...</b></span>")
-		to_chat(src, "<span class='italic'>Your memories of your final moments are hazy and fragmented.</span>")
-		. = TRUE
+		. = (stat < DEAD) // The flip happened, but only report success if they actually stayed alive
+		if(.)
+			// Add message about struggling to recall death circumstances
+			to_chat(src, "<span class='notice'><b>As you return to life, you struggle to recall the circumstances of your death...</b></span>")
+			to_chat(src, "<span class='italic'>Your memories of your final moments are hazy and fragmented.</span>")
+			var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+			if(heart)
+				heart.Restart()
 		if(mind)
 			if(admin_revive)
 				mind.remove_antag_datum(/datum/antagonist/zombie)
 			for(var/obj/effect/proc_holder/spell/spell as anything in mind.spell_list)
 				spell.updateButtonIcon()
-		qdel(GetComponent(/datum/component/rot))
+		if(.) // A re-died corpse is a corpse again, it keeps its rot and its pending rise
+			qdel(GetComponent(/datum/component/rot))
 
 /mob/living/proc/remove_CC(should_update_mobility = TRUE)
 	SetStun(0, FALSE)
@@ -1173,7 +1244,6 @@
 	if(!instant)
 		if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
 			return
-	log_combat(src, null, "surrendered")
 	surrendering = 1
 	record_round_statistic(STATS_YIELDS)
 	toggle_cmode()
@@ -1182,16 +1252,21 @@
 	vis_contents += flaggy
 	Stun(300)
 	Knockdown(300)
+	drop_all_held_items()
 	apply_status_effect(/datum/status_effect/debuff/breedable)
 	apply_status_effect(/datum/status_effect/debuff/submissive)
 	src.visible_message(span_notice("[src] yields!"))
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1, ignore_walls=TRUE)
 	update_vision_cone()
 	addtimer(CALLBACK(src, PROC_REF(end_submit)), 600)
+	log_combat(src, src, "surrendered")
+	log_admin("([key_name(src)]) surrendered at [AREACOORD(src)].")
+	SSblackbox.record_feedback("tally", "submit", 1, "surrenders")
 
 /mob/living/proc/end_submit()
 	surrendering = 0
 	update_mobility()
+	log_combat(src, src, "stopped surrendering")
 
 /mob/living/proc/toggle_compliance()
 	set name = "Toggle Compliance"
@@ -1680,6 +1755,7 @@
 
 /mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	adjust_bodytemperature(((fire_handler.stacks)) * 0.5 * seconds_per_tick)
+
 /**
  * Adjust the amount of fire stacks on a mob
  *
@@ -1727,12 +1803,12 @@
 	if(HAS_TRAIT(spread_to, TRAIT_NOFIRE) || HAS_TRAIT(src, TRAIT_NOFIRE))
 		return
 
-	if(prob(50))	// 50% chance you don´t catch fire from a bump or walking over a burning corpse. Cause people don´t often bathe in gasoline.
-		return
-
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	var/datum/status_effect/fire_handler/fire_stacks/their_fire_status = spread_to.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	if(fire_status && fire_status.on_fire)
+		if(fire_stacks < 2)// don't spread fire if you have less than two stacks
+			return
+
 		if(their_fire_status && their_fire_status.on_fire)
 			var/firesplit = (fire_stacks + spread_to.fire_stacks) / 2
 			var/fire_type = (spread_to.fire_stacks > fire_stacks) ? their_fire_status.type : fire_status.type
@@ -1740,13 +1816,23 @@
 			spread_to.set_fire_stacks(firesplit, fire_type)
 			return
 
+		if(!(mobility_flags & MOBILITY_STAND) && spread_to.m_intent == MOVE_INTENT_WALK)// don't ignite because we stepped over someone burning unless we are sprinting
+			to_chat(spread_to, span_notice("You step over [src]'s burning body."))
+			return
+
 		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
 		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
 		if(spread_to.ignite_mob())
-			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK)
+			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK, meta = list(LOG_META_TARGET = spread_to.ckey))
 		return
 
 	if(!their_fire_status || !their_fire_status.on_fire)
+		return
+
+	if(spread_to.fire_stacks < 2)// don't spread fire if you have less than two stacks
+		return
+
+	if(!(spread_to.mobility_flags & MOBILITY_STAND))// same as above, but we're rubbing our burning face on their leg
 		return
 
 	spread_to.adjust_fire_stacks(-spread_to.fire_stacks / 2, their_fire_status.type)
@@ -2123,7 +2209,7 @@
 			if(marked)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					if(H.current_mark == M && HAS_TRAIT(H, TRAIT_SLEUTH))
+					if(H.current_mark == M)
 						found_ping(get_turf(M), client, "trap")
 					else
 						found_ping(get_turf(M), client, "hidden")
@@ -2146,6 +2232,9 @@
 				found_ping(get_turf(O), client, "trap")
 			if(istype(O, /obj/structure/quicksand))
 				found_ping(get_turf(O), client, "trap")
+			if(istype(O, /obj/item/bodypart/head)) // Bodies ping as mobs already, a loose head is an item and would be invisible otherwise
+				if(isturf(O.loc)) // Only one lying loose, not one in a bag or held
+					found_ping(get_turf(O), client, "hidden")
 			//Hearthstone port - Tracking
 		for(var/obj/effect/track/potential_track in orange(7, src)) //Can't use view because they're invisible by default.
 			if(!can_see(src, potential_track, 10))
@@ -2443,3 +2532,30 @@
 		)
 	SEND_SIGNAL(offered_item, COMSIG_OBJ_HANDED_OVER, src, offerer)
 	offerer.stop_offering_item()
+
+// Contract-spawned mobs: heads pay no HEADEATER bounty (the contract reward is the payment)
+// and the corpse dusts itself a while after death so cleared warbands don't litter the wilds.
+/mob/living/proc/mark_contract_spawned(dust_corpse = TRUE)
+	no_head_bounty = TRUE
+	contract_spawned = TRUE
+	ADD_TRAIT(src, TRAIT_ZOMBIE_IMMUNE, CONTRACT_SPAWN_TRAIT)
+	if(dust_corpse)
+		RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_contract_death))
+/mob/living/carbon/mark_contract_spawned(dust_corpse = TRUE)
+	. = ..()
+	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
+	if(istype(head))
+		head.no_head_bounty = TRUE
+
+/mob/living/proc/on_contract_death(datum/source, gibbed)
+	SIGNAL_HANDLER
+	if(gibbed || contract_dust_scheduled) // already torn apart, or a timer is already pending
+		return
+	contract_dust_scheduled = TRUE
+	addtimer(CALLBACK(src, PROC_REF(dust_contract_corpse)), QUEST_MOB_DUST_DELAY)
+
+/mob/living/proc/dust_contract_corpse()
+	contract_dust_scheduled = FALSE
+	if(QDELETED(src) || stat != DEAD) // skip if it was somehow revived in the meantime
+		return
+	dust()

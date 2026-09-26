@@ -458,6 +458,8 @@
 
 	unbuckle_all_mobs(force=1)
 
+	invisibility = INVISIBILITY_ABSTRACT
+
 	. = ..()
 	if(loc)
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
@@ -472,7 +474,6 @@
 	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
 	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
 	LAZYNULL(important_recursive_contents)
-	invisibility = INVISIBILITY_ABSTRACT
 	if(pulledby)
 		pulledby.stop_pulling()
 
@@ -481,6 +482,11 @@
 		orbiting = null
 
 	LAZYNULL(client_mobs_in_contents)
+
+	if(length(vis_locs)) // according to tg checking this pre-cut is actually faster
+		// vis_locs doesn't count as a reference to the things in it,
+		// but their vis_contents count as a reference to us, so we cut it
+		vis_locs.Cut()
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()

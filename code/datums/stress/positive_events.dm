@@ -3,6 +3,11 @@
 	stressadd = -2
 	desc = span_green("The Gods smile upon me.")
 
+/datum/stressevent/pleasant_scent
+	timer = 1 MINUTES
+	stressadd = -1
+	desc = span_green("A pleasant scent lifts my mood.")
+
 /datum/stressevent/chastity_devout
 	timer = INFINITY
 	stressadd = -1
@@ -242,6 +247,10 @@
 	stressadd = -2
 	desc = span_green("Their face is a work of art!")
 	timer = 2 MINUTES
+
+/datum/stressevent/pretty
+	desc = span_green("Their face is certainly easy on the eyes.")
+	timer = 1 MINUTES
 
 /datum/stressevent/night_owl
 	stressadd = -3

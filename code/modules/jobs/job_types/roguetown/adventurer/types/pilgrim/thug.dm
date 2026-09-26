@@ -1,4 +1,5 @@
 /datum/advclass/thug
+	townie_contract_gate_exempt = TRUE
 	name = "Thug"
 	tutorial = "Maybe you've never been the smartest person in town, but you've gotten this far - whether by finding odd-jobs around town carting shit for the soilers, being the meathead that somebody needs to stand behind them and look scary, or simply shaking down the weak with the veiled-or-otherwise threat of a clobbering. You might've had some run-ins with the law for petty crimes here and there, but you're tolerated enough to have a home here."
 	allowed_sexes = list(MALE, FEMALE)
@@ -157,7 +158,17 @@
 				if("Big Stick")
 					H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/mace
-
+			var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff") // cool wrestling moves
+			var/technique_choice = input(H,"Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
+			switch(technique_choice)
+				if("Dropkick - Pushback + Extra Damage")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick)
+				if("Chokeslam - Stamina Damage")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)
+				if("Stunner - Dazed Debuff")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
+				if("Headbutt - Vulnerable Debuff")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 		if("Longshoreman")
 			H.mind.cosmetic_class_title = "Longshoreman"
 			to_chat(H, span_warning("You answered Abyssor's call when you were young, though in troublesome ways, \

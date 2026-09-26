@@ -1,0 +1,4 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - bugfix: "Xylixian masks no longer catch fire."

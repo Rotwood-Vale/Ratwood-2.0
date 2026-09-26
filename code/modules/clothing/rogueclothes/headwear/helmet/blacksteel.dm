@@ -18,6 +18,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/bucket
 	name = "blacksteel bucket helm"
@@ -35,6 +36,9 @@
 	max_integrity = ARMOR_INT_HELMET_BLACKSTEEL
 	smeltresult = /obj/item/ingot/blacksteel
 	smelt_bar_num = 2
+
+/obj/item/clothing/head/roguetown/helmet/blacksteel/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
 	name = "crown of psydonian thorns"
@@ -68,3 +72,18 @@
 	else
 		user.visible_message(span_warning("[user] stops reshaping [src]."))
 		return
+
+/obj/item/clothing/head/roguetown/helmet/blacksteel/psychains
+	name = "length of psydonian chains"
+	desc = "Chains fashioned from blacksteel, ritualistically worn atop helmets to testify one's unshatterable bond to Him."
+	icon_state = "psychains"
+	armor = ARMOR_PLATE_BSTEEL
+	body_parts_covered = HAIR
+	max_integrity = ARMOR_INT_SIDE_COVERAGE_BONUS //Translates into 50INT. Tremendously weaker - intended for aesthetics above all else.
+	alternate_worn_layer	= 8.9 //On top of helmet
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	armor_class = ARMOR_CLASS_NONE
+	block2add = FOV_DEFAULT
+	flags_cover = null
+	flags_inv = null
+	smeltresult = /obj/item/ingot/steel//no cheesing free blacksteel for you!

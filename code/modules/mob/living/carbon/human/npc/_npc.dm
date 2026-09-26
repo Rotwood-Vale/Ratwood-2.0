@@ -5,7 +5,6 @@
 	var/frustration=0
 	var/pathing_frustration=0
 	var/pickupTimer=0
-	var/list/enemies = list()
 	var/list/friends = list()
 	var/mob/living/target
 	var/obj/item/pickupTarget
@@ -191,6 +190,11 @@
 		emote("idle")
 
 /mob/living/carbon/human/proc/deaggrodel()
+	if(!isturf(loc))
+		return FALSE // Stored in a shapeshift holder or carried, not loose scenery to clean up
+	if(mind || key) // A player owns this body, never despawn it. Checked here to cover every path that can seat a player
+		del_on_deaggro = null
+		return FALSE
 	if(aggressive)
 		for(var/mob/living/L in view(3)) // scan for enemies
 			if( should_target(L) && (L != src))
@@ -997,7 +1001,7 @@
 		target = L
 		if(pathfinding_target != target)
 			clear_path() // Cancel pathfinding so that we can pursue our new enemy.
-		enemies |= L
+		add_enemy(L)
 
 
 /mob/living/carbon/human/attackby(obj/item/W, mob/user, params)

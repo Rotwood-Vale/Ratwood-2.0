@@ -145,6 +145,8 @@
 		if(!(direction & dpdir))
 			continue
 		var/turf/step_back = get_step(src, direction)
+		if(!step_back)
+			continue
 		for(var/obj/structure/structure in step_back.contents)
 			if(!structure.rotation_network)
 				continue
@@ -205,6 +207,7 @@
 	icon_state = "track_break"
 	can_buckle = TRUE
 	buckle_requires_restraints = TRUE
+	buckle_blocks_spells = TRUE
 	var/force_disabled = FALSE
 	//buckle_lying = NO_BUCKLE_LYING
 

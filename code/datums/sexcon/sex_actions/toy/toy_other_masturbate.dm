@@ -5,14 +5,14 @@
 	category = SEX_CATEGORY_HANDS
 
 /datum/sex_action/toy_other_masturbate/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
+	if(!(. = ..()))
 		return FALSE
 	if(!get_dildo_on_belt(target))
 		return FALSE
 	return TRUE
 
 /datum/sex_action/toy_other_masturbate/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
+	if(!(. = ..()))
 		return FALSE
 	if(!get_dildo_on_belt(target))
 		return FALSE

@@ -108,8 +108,8 @@
 /mob/living/stamina_add(added as num, emote_override, force_emote = TRUE) //call update_stamina here and set last_fatigued, return false when not enough fatigue left
 	if(HAS_TRAIT(src, TRAIT_INFINITE_STAMINA))
 		return TRUE
-	if(HAS_TRAIT(src, TRAIT_FORTITUDE))
-		added = added * 0.5
+	if(HAS_TRAIT(src, TRAIT_FORTITUDE) && added > 0) // 2nd check is to halve stamina SPEND, not stamina GAIN
+		added = added * 0.7
 	if(added < 0 && HAS_TRAIT(src, TRAIT_FROZEN_STAMINA))
 		added = 0
 	if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX && added >=1)	//being max heat(level 2) makes you regen half as much stamina
@@ -174,7 +174,7 @@
 		if(energy <= 0)
 			addtimer(CALLBACK(src, PROC_REF(Knockdown), 30), 1 SECONDS)
 			var/area/rogue/our_area = get_area(src)
-			if(our_area.necra_area)
+			if(istype(our_area) && our_area.necra_area)
 				src.extract_from_deaths_edge()
 
 		addtimer(CALLBACK(src, PROC_REF(Immobilize), 30), 1 SECONDS)

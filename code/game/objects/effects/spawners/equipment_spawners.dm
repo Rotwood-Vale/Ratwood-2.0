@@ -14,7 +14,6 @@
 		/obj/item/clothing/suit/roguetown/armor/leather/heavy = 1,
 		/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat = 1,
 		/obj/item/clothing/suit/roguetown/armor/leather/heavy/jacket = 1,
-		/obj/item/clothing/suit/roguetown/armor/leather/trophyfur = 1,
 		/obj/item/clothing/suit/roguetown/armor/silkcoat = 1,
 		/obj/item/clothing/suit/roguetown/shirt/robe/spellcasterrobe = 1,
 		/obj/item/clothing/suit/roguetown/armor/plate/half/copper = 1,
@@ -326,15 +325,50 @@
 	lootcount = 1
 	loot = list(
 		/obj/item/clothing/suit/roguetown/armor/plate/half/elven = 1,
+		/obj/item/clothing/suit/roguetown/armor/plate/elven_plate/light = 1,
 		/obj/item/clothing/suit/roguetown/armor/plate/elven_plate = 1,
-		/obj/item/clothing/shoes/roguetown/boots/leather/elven_boots = 1,
+		/obj/item/clothing/shoes/roguetown/boots/elven_boots = 1,
 		/obj/item/clothing/gloves/roguetown/elven_gloves = 1,
 		/obj/item/rogueweapon/sword/sabre/elf = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/silver/elvish = 1,
-		/obj/item/clothing/head/roguetown/helmet/sallet/elven = 1,
+		/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm/light = 1,
 		/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm = 1,
 		/obj/item/clothing/head/roguetown/helmet/elvenbarbute = 1,
 		/obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged = 1,
+	)
+
+/obj/effect/spawner/lootdrop/drow_equipment_spawner
+	name = "drow equipment spawner"
+	icon_state = "drowweapon/armor"
+	lootcount = 1
+	loot = list(
+		/obj/item/rogueweapon/sword/sabre/stalker = 1,
+		/obj/item/rogueweapon/sword/long/rhomphaia/stalker = 1,
+		/obj/item/rogueweapon/sword/long/shotel/stalker = 1,
+		/obj/item/rogueweapon/sword/sabre/hook/stalker = 1,
+		/obj/item/rogueweapon/sword/falx/stalker = 1,
+		/obj/item/rogueweapon/sword/long/elf/stalker = 1,
+		/obj/item/rogueweapon/sword/long/kriegmesser/stalker = 1,
+		/obj/item/rogueweapon/sword/long/stalker = 1,
+		/obj/item/rogueweapon/shield/tower/spidershield = 1,
+		/obj/item/rogueweapon/whip/spiderwhip = 1,
+		/obj/item/rogueweapon/whip/urumi/spider = 1,
+		/obj/item/rogueweapon/flail/peasantwarflail/stalker = 1,
+		/obj/item/rogueweapon/flail/peasantwarflail/stalker/alt = 1,
+		/obj/item/rogueweapon/halberd/bardiche/stalker = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/dirk = 1,
+		/obj/item/clothing/suit/roguetown/armor/plate/fluted/shadowplate = 1,
+		/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/shadowrobe = 1,
+		/obj/item/clothing/gloves/roguetown/plate/shadowgauntlets = 1,
+		/obj/item/clothing/mask/rogue/facemask/shadowfacemask = 1,
+		/obj/item/bait/spider = 1,
+		/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/shadowplate = 1,
+		/obj/item/clothing/head/roguetown/helmet/heavy/knight/shadowplate = 1,
+		/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker = 1,
+		/obj/item/clothing/gloves/roguetown/fingerless/shadowgloves/elflock = 1,
+		/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/shadowvest = 1,
+		/obj/item/clothing/under/roguetown/heavy_leather_pants/shadowpants = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/spidervenom_paralytic = 1,
 	)
 
 /obj/effect/spawner/lootdrop/blacksteel_equipment_spawner
@@ -511,7 +545,7 @@
 		/obj/item/clothing/suit/roguetown/armor/plate/baotha = 10,
 		/obj/item/clothing/under/roguetown/platelegs/baotha = 10,
 		/obj/item/clothing/wrists/roguetown/bracers/baotha = 10,
-		/obj/item/rogueweapon/whip/spiderwhip/baotha = 10,
+		/obj/item/rogueweapon/whip/baotha = 10,
 		/obj/item/storage/belt/rogue/leather/plaquegold/baotha = 10,
 	)
 /obj/item/carvedgem/rose/statue/baotha

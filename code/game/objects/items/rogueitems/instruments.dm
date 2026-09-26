@@ -247,6 +247,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	/// When TRUE, songs will loop (repeat) when they end. Off by default.
 	var/loop_enabled = FALSE
 
+	var/last_played // store the last played thing we have here to use in quick cmode toggle
+
 // Added null-guard on soundloop. During Initialize() the parent chain
 // may trigger equipped() before soundloop is assigned.
 /obj/item/rogue/instrument/equipped(mob/living/user, slot)
@@ -274,7 +276,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/Destroy()
 	_remove_self_from_lobbies()
-	qdel(soundloop)
+	QDEL_NULL(soundloop)
 	. = ..()
 
 /obj/item/rogue/instrument/dropped(mob/living/user, silent)
@@ -306,8 +308,21 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			if(!owner_mob)
 				GLOB.instrument_band_lobbies -= lobby_id
 
+/obj/item/rogue/instrument/examine(mob/user)
+	. = ..()
+	if (ishuman(user))
+		var/mob/living/carbon/human/viewer_human = user
+		if (viewer_human.inspiration)
+			. += span_notice("You can quickly add and remove people from your audience by <b>middle-clicking</b> on them with this instrument in your hand.")
+			. += span_notice("If you try to play with combat mode active, you'll automatically play your last song.")
+
+
 /obj/item/rogue/instrument/attack_self(mob/living/user)
 	var/stressevent = /datum/stressevent/music
+	var/can_play_with_occupied_offhand = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/bard = user
+		can_play_with_occupied_offhand = bard.inspiration?.level >= BARD_T2
 	. = ..()
 	if(.)
 		return
@@ -333,6 +348,21 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 		var/volume_label
 		var/loop_notice
 		var/volume_selection
+		if (user.cmode && last_played)
+			// quickly just play the last song we chose if we do this in combat
+			var/quickfile = song_list[last_played]
+			if(quickfile)
+				user.balloon_alert(user, "quick-playing last song! (combat)")
+				soundloop.set_mid_sounds(list(quickfile))
+				soundloop.volume = clamp(curvol, 10, 100)
+				soundloop.repeat_sound = loop_enabled
+				if(!soundloop.start(user))
+					to_chat(user, span_warning("Could not play - no sound channels available. Try again in a moment."))
+					return
+				playing = TRUE
+				user.apply_status_effect(/datum/status_effect/buff/playing_music, stressevent, note_color)
+				return
+			
 		while(TRUE)
 			loop_state = "Off"
 			if(loop_enabled)
@@ -378,7 +408,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 					continue
 				break
 			
-			if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item())
+			if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item() && !can_play_with_occupied_offhand)
 				return
 				
 			if(choice == "Upload New Song" || choice == "upload")
@@ -390,7 +420,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 				if(!infile)
 					return
-				if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item())
+				if(playing || !(src in user.held_items) && !(not_held) || user.get_inactive_held_item() && !can_play_with_occupied_offhand)
 					return
 
 				var/filename = "[infile]"
@@ -411,6 +441,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 					song_list[songname] = curfile
 				return
 			curfile = song_list[choice]
+			last_played = choice
 			if(!user || playing || !(src in user.held_items) && !(not_held))
 				return
 			note_color = "#7f7f7f"
@@ -436,7 +467,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			soundloop.stress2give = stressevent
 			if(!(src in user.held_items) && !(not_held))
 				return
-			if(user.get_inactive_held_item())
+			if(user.get_inactive_held_item() && !can_play_with_occupied_offhand)
 				playing = FALSE
 				soundloop.stop(user)
 				user.remove_status_effect(/datum/status_effect/buff/playing_music)
@@ -805,7 +836,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	"Midyear Melancholy" = 'sound/music/instruments/psyaltery (3).ogg',
 	"Santa Psydonia" = 'sound/music/instruments/psyaltery (4).ogg',
 	"Le Venardine" = 'sound/music/instruments/psyaltery (5).ogg',
-	"Azurea Fair" = 'sound/music/instruments/psyaltery (6).ogg',
+	"Vespermill Fair" = 'sound/music/instruments/psyaltery (6).ogg',
 	"Amoroso" = 'sound/music/instruments/psyaltery (7).ogg',
 	"Lupian's Lullaby" = 'sound/music/instruments/psyaltery (8).ogg',
 	"White Wine Before Breakfast" = 'sound/music/instruments/psyaltery (9).ogg',

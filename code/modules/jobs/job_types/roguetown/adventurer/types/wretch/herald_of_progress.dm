@@ -31,6 +31,9 @@
 		STATKEY_CON = 2,
 		STATKEY_SPD = 2,
 	)
+	subclass_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 
 /datum/outfit/job/roguetown/wretch/herald_of_progress/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/roguehood/red
@@ -74,6 +77,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/the_division_bell)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/forzando)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/song/of_her_embrace)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
 		var/datum/inspiration/I = new /datum/inspiration(H)
 		I.grant_inspiration(H, bard_tier = BARD_T3)
 		H.set_blindness(0)

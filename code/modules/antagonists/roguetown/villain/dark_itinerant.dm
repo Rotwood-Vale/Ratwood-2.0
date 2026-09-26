@@ -48,6 +48,8 @@
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1, 
 		/obj/item/polishing_cream = 1, 
 		/obj/item/armor_brush = 1, 
+		/obj/item/repair_kit/metal = 1,
+		/obj/item/repair_kit = 1,
 	)
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/combat/bows, 3, TRUE)

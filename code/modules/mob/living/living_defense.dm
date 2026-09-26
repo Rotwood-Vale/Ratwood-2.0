@@ -23,7 +23,7 @@
 			to_chat(src, span_warning("[soften_text]"))
 //		else
 //			to_chat(src, span_warning("My armor softens the blow!"))
-	if(mob_timers[MT_INVISIBILITY] > world.time)			
+	if(mob_timers[MT_INVISIBILITY] > world.time)
 		mob_timers[MT_INVISIBILITY] = world.time
 		update_sneak_invis(reset = TRUE)
 	return armor
@@ -70,7 +70,7 @@
 			if(P.dismemberment)
 				check_projectile_dismemberment(P, def_zone,armor)
 			if(P.woundclass)
-				check_projectile_wounding(P, def_zone)
+				check_projectile_wounding(P, def_zone, armor)
 
 			if(P.poisontype)// New proc for poisoning that respects if armor stopped damage from the projectile, by blocking or through reduction. Only called if poison type is defined.
 				if(!P.poisonamount)
@@ -81,7 +81,7 @@
 					if(P.poisonfeel)
 						M.show_message(span_danger("You feel an intense [P.poisonfeel] sensation spreading swiftly from the area!"))
 
-			if(P.embedchance && !check_projectile_embed(P, def_zone))
+			if(P.embedchance && !check_projectile_embed(P, def_zone, armor))
 				P.handle_drop()
 
 		else

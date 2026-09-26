@@ -173,7 +173,7 @@
 
 /obj/structure/fluff/walldeco/stone/Initialize(mapload)
 	icon_state = "walldec[rand(1,6)]"
-	..()
+	return ..()
 
 /obj/structure/fluff/walldeco/maidensigil
 	name = "stone sigil"
@@ -217,11 +217,12 @@
 	buckle_lying = 0
 	breakoutextra = 5 MINUTES
 	buckleverb = "tie"
+	buckle_blocks_spells = TRUE
 	smeltresult = /obj/item/rope/chain
 
 /obj/structure/fluff/walldeco/chains/Initialize(mapload)
 	icon_state = "chains[rand(1,8)]"
-	..()
+	. = ..()
 
 /obj/structure/fluff/walldeco/customflag
 	name = "Banner of Rotwood Vale"
