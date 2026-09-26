@@ -190,6 +190,7 @@
 	var/ourskill = 0
 	var/theirskill = 0
 	var/skill_factor = 0
+
 	if(I)
 		if(I.associated_skill)
 			ourskill = user.get_skill_level(I.associated_skill)
@@ -201,8 +202,16 @@
 	perc += (user.STAINT - L.STAINT)*10	//but it's also mostly a mindgame
 	skill_factor = (ourskill - theirskill)/2
 
+	var/newcd = FEINT_RCLICK_CD
+	var/special_msg
+
 	if(L.has_status_effect(/datum/status_effect/debuff/exposed) || L.has_status_effect(/datum/status_effect/debuff/vulnerable))
 		perc = 0
+
+	if(L.has_status_effect(/datum/status_effect/buff/weapon_binded))
+		perc = 0
+		special_msg = span_warning("They had my tricks figured out and are too aware!")
+		newcd = 10 SECONDS
 
 	var/datum/status_effect/buff/clash/guard = L.has_status_effect(/datum/status_effect/buff/clash)
 	if(guard)
@@ -210,12 +219,21 @@
 		to_chat(user, span_notice("I disrupt [L.p_their()] guard!"))
 		perc = 100
 
-	user.apply_status_effect(/datum/status_effect/debuff/feintcd)
 	perc = CLAMP(perc, 0, 90)
+
+	if(L.has_status_effect(/datum/status_effect/buff/clash))
+		L.remove_status_effect(/datum/status_effect/buff/clash)
+		to_chat(user, span_notice("[L.p_their(TRUE)] Guard disrupted!"))
+		newcd = ((BASE_RCLICK_CD + 10 SECONDS))
+		perc = 100
+
+	user.apply_status_effect(/datum/status_effect/debuff/feintcd, newcd)
 
 	if(!prob(perc)) //feint intent increases the immobilize duration significantly
 		playsound(user, 'sound/combat/feint.ogg', 100, TRUE)
-		if(user.client?.prefs.showrolls)
+		if(special_msg)
+			to_chat(user, special_msg)
+		else if(user.client?.prefs.showrolls)
 			to_chat(user, span_warning("[L.p_they(TRUE)] did not fall for my feint... [perc]%"))
 		if(L.d_intent == INTENT_DODGE)
 			L.changeNext_def(clamp(L.dodgetime - 2, 0, CLICK_CD_DODGE))

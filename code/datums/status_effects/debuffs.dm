@@ -603,6 +603,21 @@
 	desc = "I used it. I must wait."
 	icon_state = "strikecd"
 
+/datum/status_effect/debuff/bindcd
+	id = "bindcd"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/bindcd
+	duration = 15 SECONDS
+
+/datum/status_effect/debuff/bindcd/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/bindcd
+	name = "Bind Cooldown"
+	desc = "Can't expect the magic to work every time."
+	icon_state = "bindcd"
+
 //---- Special CD
 /datum/status_effect/debuff/specialcd
 	id = "specialcd"

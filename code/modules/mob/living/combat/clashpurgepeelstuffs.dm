@@ -266,3 +266,60 @@
 	
 	return highest_ac
 
+/// A defensive boon from matching subzones.
+/mob/living/carbon/human/proc/try_bind(obj/item/used_weapon, mob/living/user, vuln_exception = FALSE)	//user is the attacker in this context
+	if(!used_weapon)
+		return
+	if(!user.get_active_held_item())
+		return
+	if(get_skill_level(used_weapon.associated_skill) < SKILL_LEVEL_JOURNEYMAN)
+		return
+	if(has_status_effect(/datum/status_effect/debuff/bindcd))
+		return
+	if(check_bind(check_bind_subzone(zone_selected), user.zone_selected) || (!user.mind && (check_zone(zone_selected) == check_zone(user.zone_selected))) || (vuln_exception && zone_selected != BODY_ZONE_CHEST))
+		var/chance = 100	//Only here so chest vs chest has a smaller chance to trigger a bind.
+		if(zone_selected == user.zone_selected && zone_selected == BODY_ZONE_CHEST)
+			chance = 3
+		if(prob(chance))
+			apply_status_effect(/datum/status_effect/buff/weapon_binded)
+			//!change_feint(-FEINT_PERC_DECREASE_BASE, user)
+			//user.apply_status_effect(/datum/status_effect/debuff/bindcd)
+
+			var/cd = BIND_CD
+			cd = max(cd, 10.1 SECONDS)	// This is the duration of the bind itself + 1 tick, to prevent any screwiness.
+			apply_status_effect(/datum/status_effect/debuff/bindcd, cd)
+
+			// Immob. Mostly for dramatic flair. ClickCD is to prevent instant follow-up attacks.
+			user.Immobilize(0.3 SECONDS)
+			user.changeNext_move(CLICK_CD_CHARGED)
+			user.changeNext_def(user.parrydelay)
+
+			var/obj/item/rogueweapon/RW = user.get_active_held_item()
+			if(RW)
+				RW.take_damage(RW.sharpness ? (INTEG_PARRY_DECAY) : (INTEG_PARRY_DECAY_NOSHARP), BRUTE, used_weapon.d_type)
+				RW.remove_bintegrity((SHARPNESS_ONHIT_DECAY), src)
+			
+			//if(used_weapon)
+			//	used_weapon.take_damage((used_weapon.sharpness ? (INTEG_PARRY_DECAY) : (INTEG_PARRY_DECAY_NOSHARP)), BRUTE, used_weapon.d_type)
+			//	used_weapon.remove_bintegrity((SHARPNESS_ONHIT_DECAY), src)
+
+			if(vuln_exception)	// If we triggered this via a vuln attack, we suffer an extra penalty.
+				used_weapon.take_damage((INTEG_PARRY_DECAY_NOSHARP * 3), BRUTE, used_weapon.d_type)
+				used_weapon.remove_bintegrity((SHARPNESS_ONHIT_DECAY * 3), src)
+
+			flash_fullscreen("whiteflash")
+			user.flash_fullscreen("whiteflash")
+			var/turf/front = get_turf(src)
+			do_sparks(4, FALSE, front)
+
+			var/soundcategory = WBALANCE_NORMAL
+			var/sfx
+			if(used_weapon)
+				soundcategory = used_weapon.wbalance
+			sfx = pick_bind_sfx(soundcategory)
+			if(sfx)
+				playsound(src, sfx, 100, TRUE, 2)
+			visible_message(span_notice("[src] binds their weapon with [user]'s! They saw that attack coming!"))
+			return TRUE
+		else
+			return FALSE

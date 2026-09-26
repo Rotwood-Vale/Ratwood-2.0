@@ -181,6 +181,8 @@
 	var/list/datum/charflaw/vices = list()  // Multiple vices system
 	var/unspent_quirk_points = 0  // Any leftover quirk points are turned into triumphs after the round ends
 
+	var/list/feint_list = list()
+
 	// curse list and cooldown
 	var/list/curses = list()
 	COOLDOWN_DECLARE(priest_announcement)
