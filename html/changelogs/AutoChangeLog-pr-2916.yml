@@ -1,0 +1,4 @@
+author: "chemistrymain3"
+delete-after: True
+changes:
+  - qol: "Noticeboard posts expire in three hours now."
