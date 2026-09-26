@@ -730,12 +730,6 @@
 	created_item = /obj/item/rogueweapon/sword/sabre/steppesman
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
-/datum/anvil_recipe/weapons/steel/hook
-	name = "Hook Sword, Steel"
-	req_blade = /obj/item/blade/steel_sword
-	created_item = /obj/item/rogueweapon/sword/sabre/hook
-	display_category = ITEM_CAT_WEAPONS_SWORDS
-
 /datum/anvil_recipe/weapons/steel/flail
 	name = "Flail, Steel"
 	req_blade = /obj/item/blade/steel_sword
@@ -906,13 +900,6 @@
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/spear/partizan
-	display_category = ITEM_CAT_WEAPONS_POLEARMS
-
-/datum/anvil_recipe/weapons/steel/naginata
-	name = "Naginata, Steel (+1 Big Log)"
-	req_blade = /obj/item/blade/steel_polearm
-	additional_items = list(/obj/item/grown/log/tree/) //looong spear
-	created_item = /obj/item/rogueweapon/spear/naginata
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
 
 /datum/anvil_recipe/weapons/steel/boarspear
@@ -1792,6 +1779,7 @@
 	name = "Psydonic Urumi (+2 Blessed Silver)"
 	created_item = /obj/item/rogueweapon/whip/urumi/silver/psydonic
 	additional_items = list(/obj/item/ingot/silverblessed, /obj/item/ingot/silverblessed)//3 blades so 1 more buillion over non-psydonite silver urumi
+	display_category = ITEM_CAT_WEAPONS_FLAILS
 
 /// BLESSED SILVER, BULLION VARIANTS - FALLBACK
 //cutting out the duplicate variables so it's more clear what these subtypes actually do

@@ -8,6 +8,7 @@
 	max_buckled_mobs = 1
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
+	buckle_blocks_spells = TRUE
 	buckleverb = "strap"
 	breakoutextra = 4 MINUTES
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg', 'sound/combat/hits/onwood/woodimpact (2).ogg')
@@ -131,6 +132,7 @@
 	layer = MOB_LAYER
 	plane = GAME_PLANE
 	buckleverb = "position"
+	buckle_blocks_spells = FALSE
 	var/buckle_offset_x = 0
 	var/buckle_offset_y = 1
 

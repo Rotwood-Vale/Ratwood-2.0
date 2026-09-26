@@ -9,6 +9,7 @@
 	max_buckled_mobs = 1
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
+	buckle_blocks_spells = TRUE
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_ALL_MOB_LAYER
