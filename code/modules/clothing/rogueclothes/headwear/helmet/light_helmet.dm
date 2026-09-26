@@ -20,6 +20,17 @@
 /obj/item/clothing/head/roguetown/paddedcap/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
+/obj/item/clothing/head/roguetown/paddedcap/heavy
+	name = "padded arming cap"
+	desc = "A padded up arming cap. It might even stop a mace!"
+	icon_state = "paddedarmingcap"
+	item_state = "paddedarmingcap"
+	armor = ARMOR_PADDED
+	max_integrity = ARMOR_INT_HELMET_CLOTH + 60
+
+/obj/item/clothing/head/roguetown/paddedcap/heavy/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/head/roguetown/helmet/leather
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
 	name = "leather helmet"
