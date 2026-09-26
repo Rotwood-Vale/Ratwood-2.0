@@ -704,7 +704,7 @@
 	desc = "A dagger of pure silver; the bane of vampyres, verevolves, deadites, and all other unsaintly nitecreechers. Errant light transforms into a blinding glare, when cast along the blade's edge."
 	icon_state = "sildagger"
 	sheathe_icon = "sildagger"
-	force = 15
+	force = 20
 	wdefense = 6
 	smeltresult = /obj/item/ingot/silver
 	last_used = 0

@@ -550,7 +550,7 @@
 	name = "enduring spear"
 	desc = "An ornate spear, its silver tarnished by neglect. HE still guides the faithful's hand, if not this weapon."
 	icon_state = "psyspear"
-	force = 15
+	force = 25
 	force_wielded = 25
 	is_silver = FALSE
 	smeltresult = /obj/item/ingot/steel
@@ -1530,7 +1530,7 @@
 	desc = "Psydonian prayers and Tennite smiths, working as one to craft a weapon to slay the Four. A heavy and large blade, favored by Saint Ravox, to lay waste to those who threaten His flock. The crossguard's psycross reflects even the faintest of Noc's light. You're the light - show them the way."
 	icon_state = "psybroadsword"
 	force = 25
-	force_wielded = 25
+	force_wielded = 30
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 

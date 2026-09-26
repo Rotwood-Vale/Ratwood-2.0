@@ -387,7 +387,7 @@
 	cursed flesh erupts into holy fire, and unholy bravado twists into mortal fear."
 	icon_state = "silversword"
 	sheathe_icon = "silversword"
-	force = 20
+	force = 25
 	force_wielded = 25
 	minstr = 9
 	wdefense = 5
@@ -1537,8 +1537,8 @@
 	desc = "Despite its shattered blade, this former-longsword finds new purpose and renewed lethality as something shorter and quicker and no less deadly. Like He, it perseveres, no matter what."
 	icon_state = "psyswordshort"
 	sheathe_icon = "psyswordshort"
-	force = 24
-	force_wielded = 24
+	force = 22
+	force_wielded = 22
 	minstr = 7
 	wdefense = 3
 	is_silver = TRUE
