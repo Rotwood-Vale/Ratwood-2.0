@@ -2249,6 +2249,7 @@
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
+	remove_chastity(H) // because ritual name is FREDOM and i find it funny
 
 /obj/structure/ritualcircle/abyssor_alt_inactive/proc/dreamarmor_stage2(mob/living/carbon/human/target)
 	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
