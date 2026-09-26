@@ -120,6 +120,7 @@
 
 /datum/status_effect/debuff/rotfood/on_apply()
 	if(HAS_TRAIT(owner, TRAIT_NASTY_EATER) || HAS_TRAIT(owner, TRAIT_ROT_EATER))
+		owner.reward_actions(patrons = /datum/patron/divine/pestra, success_message = "Pestra encurages your lack of waistfulness.")
 		return ..()
 	owner.add_stress(/datum/stressevent/rotfood)
 	if(iscarbon(owner))
@@ -588,6 +589,8 @@
 	var/original_prayer_effectiveness = 0
 	var/original_passive_devotion_gain = 0
 	var/original_passive_progression_gain = 0
+	var/original_favorite_action_gain = 0
+	var/original_favorite_action_big_gain = 0
 
 /datum/status_effect/debuff/apostasy/on_creation(mob/living/new_owner, resistant = FALSE)
 	src.resistant = resistant
@@ -606,17 +609,23 @@
 	original_prayer_effectiveness = D.prayer_effectiveness
 	original_passive_devotion_gain = D.passive_devotion_gain
 	original_passive_progression_gain = D.passive_progression_gain
+	original_favorite_action_gain = D.favorite_action_gain
+	original_favorite_action_big_gain = D.favorite_action_big_gain
 
 	if(resistant)
 		D.devotion = original_devotion * 0.5
 		D.prayer_effectiveness = original_prayer_effectiveness * 0.5
 		D.passive_devotion_gain = original_passive_devotion_gain * 0.5
 		D.passive_progression_gain = original_passive_progression_gain * 0.5
+		D.favorite_action_gain = original_favorite_action_gain * 0.5
+		D.favorite_action_big_gain = original_favorite_action_big_gain * 0.5
 	else
 		D.devotion = 0
 		D.prayer_effectiveness = 0
 		D.passive_devotion_gain = 0
 		D.passive_progression_gain = 0
+		D.favorite_action_gain = 0
+		D.favorite_action_big_gain = 0
 
 	to_chat(H, span_boldnotice("I have been excommunicated. I am now unable to gain devotion."))
 	return ..()
@@ -631,6 +640,8 @@
 			D.prayer_effectiveness = original_prayer_effectiveness
 			D.passive_devotion_gain = original_passive_devotion_gain
 			D.passive_progression_gain = original_passive_progression_gain
+			D.favorite_action_gain = original_favorite_action_gain
+			D.favorite_action_big_gain = original_favorite_action_big_gain
 
 		to_chat(H, span_boldnotice("I have been welcomed back to the Church. I am now able to gain devotion again."))
 
