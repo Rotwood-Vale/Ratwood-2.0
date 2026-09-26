@@ -352,8 +352,8 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 		return
 	var/datum/ministry/charter_ref = charter
 	councillor.say("[head.real_name], let me be your voice within the keep.")
-	var/answer = alert(head, "[councillor.real_name] petitions to serve as my [initial(charter_ref.display_title)]. They will be granted a measure of my trade's knowledge, and some keys to my place of responsibility. In return I shall receive a writ to speak with them.", "Ministry", "Accept", "Refuse")
-	if(answer != "Accept")
+	var/answer = alert(head, "[councillor.real_name] petitions to serve as my [initial(charter_ref.display_title)]. They will be granted a measure of my trade's knowledge, and some keys to my place of responsibility. In return I shall receive a writ to speak with them.", "Ministry", "Refuse", "Accept")
+	if(answer != "Accept") //Default option is refusal
 		to_chat(councillor, span_warning("[head.real_name] declines my petition."))
 		to_chat(head, span_notice("I decline the petition."))
 		return
