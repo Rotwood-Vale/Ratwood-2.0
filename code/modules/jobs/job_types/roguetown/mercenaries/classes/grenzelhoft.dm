@@ -198,7 +198,7 @@
 
 /datum/advclass/mercenary/grenzelhoft/mage
 	name = "Gefechtsgelehrter"
-	tutorial = "You are a Gefechtsgelehrter - \"Combat Scholar\" - A proud magos from the Celestial Academy of Magos, who's skills in Siege Magic and Arcyne Physics are unmatched."
+	tutorial = "You are a Gefechtsgelehrter - \"Combat Scholar\" - An experienced Zauberer hailing from the prestigious Celestial Academy, your fellow alumni may have pursued summoning, enchantments or similar academical ventures. But you? You studied siegecraft. And you got damn good at it too."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft_mage
@@ -211,11 +211,11 @@
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
 		STATKEY_STR = -1,
-		STATKEY_PER = 3,
-		STATKEY_SPD = 1
+		STATKEY_PER = 2,
+		STATKEY_SPD = 2
 	)
 	subclass_skills = list(
-		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
@@ -232,23 +232,23 @@
 
 /datum/outfit/job/roguetown/mercenary/grenzelhoft_mage/pre_equip(mob/living/carbon/human/H)
 	..()
-	to_chat(H, span_warning("You are a Gefechtsgelehrter - \"Combat Scholar\" - A proud magos from the Celestial Academy of Magos, who's skills in Siege Magic and Arcyne Physics are unmatched."))
+	to_chat(H, span_warning("You are a Gefechtsgelehrter - \"Combat Scholar\" - An experienced Zauberer hailing from the prestigious Celestial Academy, your fellow alumni may have pursued summoning, enchantments or similar academical ventures. But you? You studied siegecraft. And you got damn good at it too."))
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
-	backl = /obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff
+	backl = /obj/item/rogueweapon/woodstaff/gefechtsgelehrter
 	cloak = /obj/item/clothing/cloak/stabard/grenzelmage
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
 	//General gear regardless of class.
-	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	neck = /obj/item/clothing/neck/roguetown/gorget
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
+	neck = /obj/item/clothing/neck/roguetown/coif/padded
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
 	head = /obj/item/clothing/head/roguetown/grenzelhofthat
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
-	backr = /obj/item/storage/backpack/rogue/satchel/black
+	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
@@ -259,21 +259,20 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/repulse)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/conjure_armor)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/counterspell)
-		H.mind?.adjust_spellpoints(3)
+		H.mind?.adjust_spellpoints(6)
 	if(H.age == AGE_OLD) // FEAR the old man in a profession where men die young, or something corny like that.
 		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 5, TRUE)
 		H.change_stat(STATKEY_SPD, -1)
-		H.change_stat(STATKEY_STR, -1)
-		H.change_stat(STATKEY_CON, -2)
+		H.change_stat(STATKEY_WIL, -1)
 		H.change_stat(STATKEY_PER, 2)
 		H.change_stat(STATKEY_INT, 2)
+		H.change_stat(STATKEY_CON, -2)
 		H.mind?.adjust_spellpoints(3)
 		ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
 	else
-		ADD_TRAIT(H, TRAIT_ARCYNE_T2, TRAIT_GENERIC) // Only T2 arcyne (Unless they're old) so if they get spell points from something they can only pick from the curated spellblade list
+		ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC) // T3 because a combat mage from Grenzelhoft shouldn't be the weakest puremage in Merc class.
 	H.merctype = 7
