@@ -758,7 +758,7 @@ and crackling with insidious energies."
 	item_state = "citywatch"
 	blocksound = PLATEHIT
 	body_parts_covered = CHEST|GROIN|VITALS|ARMS
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL //It's apparently steel, so it gets steel integ.
 	armor_class = ARMOR_CLASS_MEDIUM
 	smelt_bar_num = 2
 	sewrepair = FALSE
