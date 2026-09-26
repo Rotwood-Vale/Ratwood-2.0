@@ -209,6 +209,12 @@
 	..()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/gilded
+	name = "gilded visored sallet"
+	desc = "A steel helmet with gilded trim which protects the ears, nose, and eyes."
+	icon_state = "gildedsallet_visor"
+	item_state = "gildedsallet_visor"
+
 /obj/item/clothing/head/roguetown/helmet/sallet/visored/shadow
 	color = "#323232"
 
@@ -539,6 +545,16 @@
 /obj/item/clothing/head/roguetown/helmet/bascinet/ComponentInitialize()
 	..()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/aventail
+	name = "bascinet with aventail"
+	desc = "A steel bascinet helmet, further protected with a thick maille aventail. Burdensome on the shoulders of those not trained to carry \
+	maille, yet excellent in both coverage and durability."
+	icon_state = "aventail"
+	item_state = "aventail"
+	body_parts_covered = HEAD|HAIR|EARS|MOUTH|NECK
+	block2add = FOV_BEHIND
+	armor_class = ARMOR_CLASS_MEDIUM
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface
 	name = "pigface bascinet"
