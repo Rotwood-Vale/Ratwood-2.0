@@ -1,0 +1,4 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - bugfix: "Pestrian ability to turn werwolfs and gnolls into horific flesh abominations have been tuned down, their aility to do so to anyone with a title has been tuned up (some bugfixes on fleshaping miracle)"

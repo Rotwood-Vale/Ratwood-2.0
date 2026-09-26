@@ -821,6 +821,7 @@
 	desc = "A ceramic mask, forever stuck with the joyful smile its patron god favors. Alt+RMB changes style, Shift+RMB toggles snout form, and Shift+MMB toggles identity concealment."
 	max_integrity = ARMOR_INT_MASK_STONE
 	armor = null
+	resistance_flags = FIRE_PROOF
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE
 	block2add = null

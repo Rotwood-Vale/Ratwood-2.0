@@ -62,6 +62,8 @@
 	item_state = "circlet"
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
+	nudist_approved = TRUE
+	resistance_flags = FIRE_PROOF
 	sellprice = 50
 
 /obj/item/clothing/head/roguetown/circlet/carvedgem

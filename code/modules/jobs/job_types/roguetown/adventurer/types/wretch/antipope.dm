@@ -84,6 +84,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/nondetection)//For the purposes of meeting folks.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)//See above.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/evil_resurrect)//Sacrifice a heart to bring somebody back to life.
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
 		H.verbs |= /mob/living/carbon/human/proc/completesermon_evil
 		H.verbs |= /mob/living/carbon/human/proc/revelations
 
