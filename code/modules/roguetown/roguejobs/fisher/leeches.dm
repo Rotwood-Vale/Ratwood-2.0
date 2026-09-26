@@ -8,13 +8,16 @@
 	dropshrink = 0.8
 	baitpenalty = 0
 	fishingMods=list(
-		"commonFishingMod" = 0.7,
-		"rareFishingMod" = 1.3,
-		"treasureFishingMod" = 1,
-		"trashFishingMod" = 1,
-		"dangerFishingMod" = 1.1,
-		"ceruleanFishingMod" = 0, // 1 on cerulean aril, 0 on everything else
+		"commonFishingMod" = 1.2,
+		"rareFishingMod" = 0.65,
+		"treasureFishingMod" = 0.70,
+		"trashFishingMod" = 1.2,
+		"dangerFishingMod" = 1.2,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0
 	)
+	baitresilience = 50
+	bait_max_durability = 50
 
 	embedding = list(
 		"embed_chance" = 100,
@@ -175,12 +178,12 @@
 	if(consistent)
 		return FALSE
 	var/static/list/all_colors = list(
-		"#9860ff" = 8,
-		"#bcff49" = 4,
-		"#ffce49" = 2,
-		"#79ddff" = 2,
-		"#ff7878" = 1,
-		"#ff31e4" = 1,
+		"#8471a7" = 8,
+		"#94ad6a" = 4,
+		"#af995e" = 2,
+		"#83a7b3" = 2,
+		"#b88383" = 1,
+		"#bc69b1" = 1,
 	)
 	var/static/list/all_adjectives = list(
 		"blood-sucking" = 20,
@@ -212,7 +215,7 @@
 	var/evilness_rating = rand(0, MAX_LEECH_EVILNESS)
 	switch(evilness_rating)
 		if(MAX_LEECH_EVILNESS to INFINITY) //maximized evilness holy shit
-			color = "#ff0000"
+			color = "#dc4b4b"
 			adjectives += pick("evil", "malevolent", "misanthropic")
 			descs += span_danger("This one is bursting with hatred!")
 		if(5) //this leech is painfully average, it gets no adjectives

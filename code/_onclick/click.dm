@@ -396,6 +396,7 @@
 		mob_timers[MT_INVISIBILITY] = world.time
 		update_sneak_invis(reset = TRUE)
 
+
 //Branching path for Ranged clicks with or without items
 //DOES NOT ACTUALLY KNOW IF YOU'RE RANGED, DO NoT CALL ON IT'S OWN
 /mob/proc/resolveRangedClick(atom/A,obj/item/W,params,used_hand)
