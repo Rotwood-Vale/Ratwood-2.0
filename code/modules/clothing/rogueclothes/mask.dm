@@ -579,6 +579,12 @@
 	salvage_amount = 1
 	nudist_approved = TRUE
 
+/obj/item/clothing/mask/rogue/physician/head
+	name = "head physician's mask"
+	desc = "An important person, warrants the largest beak of them all."
+	icon_state = "head_phys" // shoutout the_hotline for allowing me to use this sprites. I love you.
+
+
 /obj/item/clothing/mask/rogue/physician/equipped(mob/living/carbon/user, slot)
 	. = ..()
 	if(slot == SLOT_WEAR_MASK)
