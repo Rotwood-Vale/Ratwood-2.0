@@ -172,6 +172,8 @@
 /obj/item/ammo_box/magazine/timesoldier_fire
 	name = "Hei Long Pao canister"
 	desc = "A heavy sealed container, with some arcyne sigils, sealing away incredibly hot lava."
+	grid_width = 64
+	grid_height = 32
 
 	icon = 'modular/timesoldier/sprites/nu_guns.dmi'
 	icon_state = "heilong_a"
