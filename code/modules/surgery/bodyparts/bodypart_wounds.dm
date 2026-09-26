@@ -187,7 +187,7 @@
 
 	var/wound_dam = dam
 	if(weapon && istype(user?.rmb_intent, /datum/rmb_intent/weak))
-		wound_dam = max(0, wound_dam * clamp(weapon.weak_wound_coeff, 0, 1))
+		wound_dam = max(0, wound_dam * clamp(weapon.weak_wound_mult, 0, 1))
 
 	var/datum/wound/dynwound = manage_dynamic_wound(bclass, wound_dam, armor)
 
