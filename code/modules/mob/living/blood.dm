@@ -470,7 +470,8 @@
 		W.water_volume = 10
 		W.update_icon()
 		return
-	new /obj/effect/decal/cleanable/blood/splatter(T)
+	var/obj/effect/decal/cleanable/blood/splatter/splat = new(T)
+	splat.add_mob_blood(src)
 	T?.pollute_turf(/datum/pollutant/metallic_scent, 30)
 
 
@@ -517,15 +518,18 @@
 	var/obj/effect/decal/cleanable/blood/puddle/P = locate() in T
 	if(P)
 		P.blood_vol += amt
+		P.add_mob_blood(src)
 		P.update_icon()
 	else
 		var/obj/effect/decal/cleanable/blood/drip/D = locate() in T
 		if(D)
 			D.blood_vol += amt
 			D.drips++
+			D.add_mob_blood(src)
 			D.update_icon()
 		else
-			new /obj/effect/decal/cleanable/blood/drip(T)
+			D = new(T)
+			D.add_mob_blood(src)
 
 //OV edit
 /mob/living/carbon/human/add_drip_floor(turf/T, amt)

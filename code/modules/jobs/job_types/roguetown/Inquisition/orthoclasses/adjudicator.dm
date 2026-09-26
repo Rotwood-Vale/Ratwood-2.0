@@ -13,6 +13,7 @@
 	cmode_music = 'sound/music/templarofpsydonia.ogg'
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(TRAIT_HEAVYARMOR)
+	pure_heart = TRUE
 	subclass_stats = list(
 		STATKEY_WIL = 3,
 		STATKEY_CON = 3,
