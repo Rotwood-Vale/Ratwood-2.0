@@ -191,3 +191,72 @@
 		/obj/item/natural/bundle/cloth/bandage/full = 2,
 		/obj/item/needle = 1
 	)
+
+/proc/apply_timesoldier_arsonist_stats(mob/living/carbon/human/H)
+	if(!H)
+		return
+
+	// Built more like an assault trooper than a marksman.
+	H.change_stat(STATKEY_STR, 2)
+	H.change_stat(STATKEY_PER, 2)
+	H.change_stat(STATKEY_INT, 1)
+	H.change_stat(STATKEY_CON, 3)
+	H.change_stat(STATKEY_WIL, 3)
+	H.change_stat(STATKEY_SPD, 2)
+
+	H.taints_loot = FALSE
+
+	for(var/obj/item/I in H.get_equipped_items(TRUE) + H.held_items)
+		I.unmark_as_looted()
+
+
+/proc/apply_timesoldier_arsonist_skills(mob/living/carbon/human/H)
+	if(!H)
+		return
+
+	// combat
+	H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_MASTER, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
+
+	// assault / fieldwork
+	H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/tracking, SKILL_LEVEL_APPRENTICE, TRUE)
+
+	// technical training
+	H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_EXPERT, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/craft/engineering, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/craft/crafting, SKILL_LEVEL_APPRENTICE, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_JOURNEYMAN, TRUE)
+
+
+/proc/apply_timesoldier_arsonist_traits(mob/living/carbon/human/H)
+	if(!H)
+		return
+
+	// fieldcraft
+	ADD_TRAIT(H, TRAIT_OUTDOORSMAN, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_LONGSTRIDER, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_SURVIVAL_EXPERT, TRAIT_GENERIC)
+
+	// military training
+	ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
+
+
+// final stuff====
+
+/proc/apply_timesoldier_arsonist(mob/living/carbon/human/H)
+	if(!H)
+		return
+
+	H.equipOutfit(/datum/outfit/timesoldier/arsonist)
+
+	apply_timesoldier_arsonist_stats(H)
+	apply_timesoldier_arsonist_skills(H)
+	apply_timesoldier_arsonist_traits(H)
