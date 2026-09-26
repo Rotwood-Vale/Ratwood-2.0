@@ -73,7 +73,8 @@
 	name = "arsonist hood"
 	desc = "A hardened leather hood reinforced for heat and abuse. It fully encloses the head and face, making its wearer look more like a demon than a man."
 	icon = 'modular/timesoldier/sprites/gear.dmi'
-	mob_overlay_icon = 'modular/timesoldier/sprites/gear.dmi'
+	icon = 'modular/timesoldier/sprites/gear.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/clothing/onmob.dmi'
 	icon_state = "arsonist"
 	item_state = "arsonist"
 
@@ -88,7 +89,7 @@
 	name = "arsonist coat"
 	desc = "A studded leather coat made for a battlefield pyromaniac; hard-wearing, practical, and built to survive sparks and struggle."
 	icon = 'modular/timesoldier/sprites/gear.dmi'
-	mob_overlay_icon = 'modular/timesoldier/sprites/gear.dmi'
+	mob_overlay_icon = 'modular/timesoldier/sprites/clothing/onmob.dmi'
 	icon_state = "arsoncoat"
 	item_state = "arsoncoat"
 
