@@ -627,6 +627,13 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = "Carlos Viola - Cante de los Muertos"
 	musicpath = list('sound/music/combat_ancient.ogg')
 
+/datum/combat_music/HonkFather
+	name = "Honk Father"
+	desc = "Let the father of laughs bless us, in this hilarious scuffle."
+	shortname = "Honkfather"
+	credits = "Boogerman the Sequel - https://youtu.be/eDMEyPgMJxY?si=aqNS8_isvqwxEvEy&t=715"
+	musicpath = list('sound/music/HonkFather.ogg')
+
 /datum/combat_music/herald
 	name = "Herald of Progress"
 	desc = "You cannot stop change."
