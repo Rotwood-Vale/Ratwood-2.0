@@ -74668,6 +74668,12 @@
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/under/town/basement/desert)
+"uTK" = (
+/obj/structure/roguemachine/scomm/r{
+	scom_tag = "Qasr - Sheikh Office"
+	},
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/manor/desert)
 "uTL" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -76400,9 +76406,7 @@
 /turf/open/floor/rogue/darkpath,
 /area/rogue/outdoors/town/desert)
 "vvu" = (
-/obj/structure/roguemachine/scomm/l{
-	scom_tag = "Qasr - Sheikh Office"
-	},
+/obj/structure/roguemachine/ministry_bureau,
 /turf/open/floor/rogue/deserttile{
 	color = "#b8ae9e";
 	icon_state = "tilewhitebluespecial"
@@ -537051,7 +537055,7 @@ oTJ
 hZy
 wBj
 vVO
-jgz
+uTK
 klw
 klw
 klw

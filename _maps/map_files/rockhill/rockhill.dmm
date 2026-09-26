@@ -8257,6 +8257,20 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/bath)
+"bJA" = (
+/obj/structure/fluff/railing/wood{
+	pixel_y = -4
+	},
+/obj/structure/fluff/railing/wood{
+	dir = 4;
+	pixel_y = -4
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/rtfield/rockhill)
+"bJC" = (
+/obj/structure/roguemachine/ministry_bureau,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/manor/rockhill)
 "bJK" = (
 /obj/structure/table/wood/poor,
 /obj/item/paper,
@@ -622030,7 +622044,7 @@ cQd
 pTR
 tpQ
 ged
-ged
+bJC
 ged
 wtF
 jZx
