@@ -1,8 +1,0 @@
-author: "hugmeorelse"
-delete-after: True
-changes:
-  - rscadd: "Added iron versions of the armet and roundface bascinet, plus iron snouted armets, iron snouted visored sallets and iron snouted roundface bascinets from AP. They can be forged at the anvil and chosen by the Ironclad. More iron for the iron warriors."
-  - image: "The new iron helmets now match the colors of the other iron helmets on RW."
-  - bugfix: "Adding a feather or cloth to an iron visored sallet now shows a plume or orle, instead of using up the item and showing nothing."
-  - bugfix: "Rainbow orles on armets now show their proper colors and no longer remove an existing plume. Doesn't really fit the setting, but it needed a fix. Not up to me to decide, and I don't really care."
-  - bugfix: "Plumes and orles now sit correctly on the iron snouted armet and on snouted visored sallets with the visor raised. The plume now \"sits\" behind the raised visor."

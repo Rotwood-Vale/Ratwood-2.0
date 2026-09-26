@@ -13,7 +13,9 @@
 	subclass_stats = list(
 		STATKEY_SPD = 3,
 		STATKEY_WIL = 2,
-		STATKEY_PER = 1
+		STATKEY_PER = 1,
+		STATKEY_STR = -1,
+		STATKEY_INT = 2,
 	)
 	subclass_skills = list(
 		/datum/skill/misc/tracking = SKILL_LEVEL_MASTER,
@@ -61,7 +63,7 @@
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 	)
 	if(H.mind)
-		var/weapons = list("Rapier","Sabre","Parrying Dagger","Whip")
+		var/weapons = list("Rapier","Sabre","Parrying Dagger","Whip","Urumi")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		var/rangedweapons = list("Slurbow", "Crossbow")
 		var/rangedweapon_choice = input(H,"Choose your BOW.", "TAKE AIM.") as anything in rangedweapons
@@ -83,6 +85,9 @@
 			if("Whip")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				l_hand = /obj/item/rogueweapon/whip
+			if ("Urumi")
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+				beltl = /obj/item/rogueweapon/whip/urumi
 		switch(rangedweapon_choice)
 			if("Slurbow")
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow

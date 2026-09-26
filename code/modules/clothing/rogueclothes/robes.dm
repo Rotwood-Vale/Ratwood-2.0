@@ -235,6 +235,7 @@
 	detail_tag = "_detail"
 	naledicolor = TRUE
 	heat_protection = CHEST | GROIN
+	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
 /obj/item/clothing/suit/roguetown/shirt/robe/hierophant/Initialize(mapload)
@@ -268,6 +269,8 @@
 	l_sleeve_status = SLEEVE_NOMOD
 	heat_protection = CHEST | GROIN | ARM_RIGHT | ARM_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	resistance_flags = FIRE_PROOF
+
 
 /obj/item/clothing/suit/roguetown/shirt/robe/pointfex/Initialize(mapload)
 	. = ..()
