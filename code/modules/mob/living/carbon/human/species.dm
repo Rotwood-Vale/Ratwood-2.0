@@ -1959,11 +1959,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(user.mind && user.goodluck(4) && user.d_intent == INTENT_DODGE)
 				user.changeNext_def(clamp(user.dodgetime - 1, 0, CLICK_CD_DODGE))
 				user.changeMaxDodge(1)
-				//Blunt chipping, no matter what. Assuming it has damage. This is done after armour damage.
-				if(user.used_intent.blunt_chipping)//We won't check for blunt. Just that it's able. For funny reasons.
-					var/blunt_chip_block = H.run_armor_check(selzone, "blunt", armor_penetration = 80)//I hate this. So much.
-					H.apply_damage(Iforce * user.used_intent.blunt_chip_strength, BRUTE, def_zone, blunt_chip_block)//, spread_damage = TRUE)
-					H.next_attack_msg += " <span class='warning'>and yet the force punches through!</span>"//But sometimes it lies!
 		if(!nodmg)
 			post_reduction_dmg = (post_weakness_dmg - armor_block)
 			var/datum/wound/crit_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, post_reduction_dmg, user, selzone, crit_message = TRUE, weapon = I)

@@ -623,6 +623,7 @@
 	id = "specialcd"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/specialcd
 	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_UNIQUE
 
 /datum/status_effect/debuff/specialcd/on_creation(mob/living/new_owner, new_dur)
 	if(new_dur)
@@ -630,7 +631,7 @@
 	return ..()
 
 /atom/movable/screen/alert/status_effect/debuff/specialcd
-	name = "Precise Strike Cooldown"
+	name = "Special Manoeuvre Cooldown"
 	desc = "I used it. I must wait."
 	icon_state = "strikecd"
 

@@ -663,6 +663,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			var/obj/item/rogueweapon/W = src
 			if(W.special)
 				inspec += "[W.special.get_examine()]"
+				inspec +="\n<i>This ability can be used by right clicking while in STRONG stance.</i>"
 
 		if(istype(src, /obj/item/rogueweapon/shield))
 			var/obj/item/rogueweapon/shield/S = src

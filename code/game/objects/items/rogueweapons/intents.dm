@@ -226,19 +226,6 @@
 			if(SWINGDELAY_CANCEL)
 				inspec += SPAN_TOOLTIP("I will have no chance to defend while swinging, and a strike against me will interrupt it.", "<font color='#a70d0d'><u>Rigid</u></font>")
 
-	if(blunt_chipping)
-		var/chip_strength
-		switch(blunt_chip_strength)
-			if(BLUNT_CHIP_MINUSCULE)
-				chip_strength = "minuscule"
-			if(BLUNT_CHIP_WEAK)
-				chip_strength = "middling"
-			if(BLUNT_CHIP_STRONG)
-				chip_strength = "considerable"
-			if(BLUNT_CHIP_ABSURD)
-				chip_strength = "significant"
-		inspec += "\nA [chip_strength] sum of damage will bypass armour, if the target has no padded protection."
-
 	if(cleave)
 		inspec += "\n<b>Cleave:</b> [cleave.desc]"
 		inspec += "\n	Max additional targets: [cleave.max_targets ? cleave.max_targets : "Unlimited"]"

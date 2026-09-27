@@ -148,7 +148,7 @@
 
 //mmb intents
 #define INTENT_KICK		/datum/intent/kick
-#define INTENT_STEAL	/datum/intent/steal
+#define INTENT_SPECIAL	/datum/intent/special
 #define INTENT_BITE		/datum/intent/bite
 #define INTENT_JUMP		/datum/intent/jump
 #define INTENT_GIVE		/datum/intent/give
@@ -158,7 +158,7 @@
 #define QINTENT_BITE		 1
 #define QINTENT_JUMP		 2
 #define QINTENT_KICK		 3
-#define QINTENT_STEAL		 4
+#define QINTENT_SPECIAL		 4
 #define QINTENT_GIVE		 5
 #define QINTENT_SPELL		 6
 
@@ -398,13 +398,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// Damage multiplier of silver weapons against mobs with TRAIT_SIMPLE_WOUNDS
 #define SILVER_SIMPLEMOB_DAM_MULT 3
-
-//Damage directly applied to a mob, as a percentage, if struck with blunt against armour.
-//This is to permit beating to death full plate guys with clubs. Or making the lucerne viable again.
-#define BLUNT_CHIP_MINUSCULE 0.10	//A flat 10%, meant for oddities. Staves and the like.
-#define BLUNT_CHIP_WEAK 0.20		//A flat 20%, meant for small clubs.
-#define BLUNT_CHIP_STRONG 0.30		//A flat 30%, meant for larger weapons.
-#define BLUNT_CHIP_ABSURD 0.40		//A flat 40%, meant for mauls and hammers.
 
 //Cast time reduction
 #define TOPER_CAST_TIME_REDUCTION 0.1

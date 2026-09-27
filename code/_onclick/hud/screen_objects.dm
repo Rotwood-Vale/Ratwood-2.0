@@ -730,7 +730,7 @@
 	var/_y = text2num(params2list(params)["icon-y"])
 
 	if(_y<=9)
-		usr.mmb_intent_change(QINTENT_STEAL)
+		usr.mmb_intent_change(QINTENT_SPECIAL)
 
 	else if(_y>=9 && _y<=16)
 		usr.mmb_intent_change(QINTENT_KICK)
@@ -1896,40 +1896,62 @@
 	QDEL_NULL(stress_state_layer)
 	return ..()
 
+/atom/movable/screen/stress/Initialize(mapload, ...)
+	. = ..()
+	var/image/mood_base = image(icon, null, "stressback")
+	mood_base.layer = layer - 0.01
+	add_overlay(mood_base)
+
 /atom/movable/screen/stress/update_icon()
-	var/state2use = "stress1"
-	var/mob/living/carbon/human/H = get_human_owner()
-	if(H)
-		if(!HAS_TRAIT(H, TRAIT_NOMOOD))
-			var/stress_amt = H.get_stress_amount()
-			if(stress_amt > 0)
+	var/state2use = "mood_idle"
+
+	var/mob/our_mob = hud?.mymob
+	if(ishuman(our_mob))
+		var/mob/living/carbon/human/H = our_mob
+		//General stress moodlets
+		var/stress_amt = H.get_stress_amount()
+		switch(stress_amt)
+			if(1 to 4)
+				state2use = "stress"
+			if(5 to 14)
 				state2use = "stress2"
-			if(stress_amt >= 5)
+			if(15 to 24)
 				state2use = "stress3"
-			if(stress_amt >= 15)
+			if(25 to 999)
 				state2use = "stress4"
-			if(stress_amt >= 25)
-				state2use = "stress5"
+			if(-4 to -1)
+				state2use = "peace"
+			if(-9 to -5)
+				state2use = "peace2"
+			if(-20 to -10)
+				state2use = "peace3"
+			if(-999 to -21)
+				state2use = "mood_nirvana"
+
+		//Regular overrides for stress
 		if(H.has_status_effect(/datum/status_effect/buff/drunk))
-			state2use = "mood_drunk"
+			state2use = "mood_drunkorhigh"
 		if(H.has_status_effect(/datum/status_effect/buff/druqks))
-			state2use = "mood_drunk"
-		if(H.InFullCritical())
-			state2use = "stress4"
-		if(H.mind)
-			if(H.mind.has_antag_datum(/datum/antagonist/zombie))
-				state2use = "stress4"
-		if(H.stat == DEAD)
+			state2use = "mood_drunkorhigh"
+		if(H.has_status_effect(/datum/status_effect/buff/starsugar))
+			state2use = "mood_starsugar"
+		if(H.has_status_effect(/datum/status_effect/buff/bloodrage))
+			state2use = "mood_ult"
+
+		//We go down a janky list of exceptions for total overrides
+		if(HAS_TRAIT(H, TRAIT_DETACHED))
+			state2use = "mood_hopeless"
+		else if(H.stat == DEAD)
 			state2use = "mood_dead"
-	if(stress_state_layer)
-		if(stress_state_layer.icon != icon)
-			stress_state_layer.icon = icon
-		if(stress_state_layer.icon_state != state2use)
-			stress_state_layer.icon_state = state2use
-		if(stress_state_layer.alpha != 255)
-			stress_state_layer.alpha = 255
-		if(stress_state_layer.color)
-			stress_state_layer.color = null
+		else if(H.mind?.has_antag_datum(/datum/antagonist/zombie))
+			state2use = "mood_zombidle"
+		else if(H.mind?.has_antag_datum(/datum/antagonist/lich))
+			state2use = "mood_boneidle"
+		else if(H.stat && H.IsSleeping())
+			state2use = "mood_sleep"
+		else if(H.nausea >= 100)
+			state2use = "mood_sick"
+	icon_state = state2use
 
 
 /atom/movable/screen/stress/handle_click(location,control,params)

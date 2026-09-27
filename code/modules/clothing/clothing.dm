@@ -664,69 +664,12 @@ BLIND     // can't see anything
 	if(armor.getRating("slash") == 0 && armor.getRating("stab") == 0 && armor.getRating("blunt") == 0 && armor.getRating("piercing") == 0)
 		return examine_text
 
-	var/str = ""
-	str += "[colorgrade_rating("🔨 BLUNT ", armor.blunt, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🪓 SLASH ", armor.slash, elaborate = TRUE)]"
-	str += "<br>"
-	str += "[colorgrade_rating("🗡️ STAB ", armor.stab, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🏹 PIERCE ", armor.piercing, elaborate = TRUE)] "
-
-	//This makes it appear darker than the rest of examine text. Draws the cursor to it like to a link.
-	examine_text = "<font color = '#808080'>[examine_text]</font>"
-	// Make the armor info clickable; clicking prints full details to chat
-	return "<a href='byond://?src=\ref[src];show_examine=1'>[str]</a>"
-
-// Build the detailed examine string for chat output
-/obj/item/clothing/proc/build_examine_detail(mob/user, showcrits)
-	if(!armor) // No armor
-		return get_examine_string(user)
-
-	var/str = ""
+	var/str
 	str += "<b>ABSORPTION:</b> [colorgrade_rating("🔨 BLUNT", armor.blunt, elaborate = TRUE, max_tier = 5)]<br>"
 	str += "<b>BLOCK:</b> "
 	str += "[colorgrade_rating("🪓 SLASH", armor.slash, elaborate = TRUE)] | "
 	str += "[colorgrade_rating("🗡️ STAB", armor.stab, elaborate = TRUE)] | "
 	str += "[colorgrade_rating("🏹 PIERCE", armor.piercing, elaborate = TRUE)]"
-
-	var/examine_text = get_examine_string(user)
-	if(examine_text && length(examine_text))
-		str += "<br><font color = '#808080'>[examine_text]</font>"
-	return str
-
-/obj/item/clothing/show_examine_hover_tooltip()
-	if(..())
-		return TRUE
-	if(slot_flags & ITEM_SLOT_HEAD)
-		return TRUE
-	if(slot_flags & (ITEM_SLOT_BACK | ITEM_SLOT_BACKPACK | ITEM_SLOT_BELT | ITEM_SLOT_HIP | ITEM_SLOT_CLOAK))
-		return FALSE
-	return TRUE
-
-/obj/item/clothing/get_hover_examine_stat_lines(mob/user, self_examine = FALSE)
-	var/list/lines = list()
-	if(armor && (armor.getRating("slash") != 0 || armor.getRating("stab") != 0 || armor.getRating("blunt") != 0 || armor.getRating("piercing") != 0))
-		var/armor_class_text = "None"
-		switch(armor_class)
-			if(ARMOR_CLASS_LIGHT)
-				armor_class_text = "Light"
-			if(ARMOR_CLASS_MEDIUM)
-				armor_class_text = "Medium"
-			if(ARMOR_CLASS_HEAVY)
-				armor_class_text = "Heavy"
-		lines += "<b>ARMOR CLASS:</b> [armor_class_text]"
-		lines += "[colorgrade_rating("🔨 BLUNT", armor.blunt, TRUE)] | [colorgrade_rating("🪓 SLASH", armor.slash, TRUE)]"
-		lines += "[colorgrade_rating("🗡️ STAB", armor.stab, TRUE)] | [colorgrade_rating("🏹 PIERCE", armor.piercing, TRUE)]"
-	if(self_examine)
-		var/true_durability = get_true_durability_percent_text()
-		if(true_durability)
-			lines += "<b>Durability:</b> [true_durability]"
-	return lines
-
-// Handle clicks from chat to show the examine details
-/obj/item/clothing/Topic(href, href_list)
-	if(href_list["show_examine"])
-		var/mob/user = usr
-		if(user)
-			to_chat(user, build_examine_detail(user, TRUE))
-		return
-	..()
+	str += "<br><b>RESIST:</b> [colorgrade_rating("🔥 FIRE", armor.fire, elaborate = TRUE)]"
+	examine_text = "<font color = '#ffffff'>[examine_text]</font>"
+	return SPAN_TOOLTIP_DANGEROUS_HTML(str, examine_text)

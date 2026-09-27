@@ -289,5 +289,14 @@
 
 /datum/rmb_intent/weak
 	name = "weak"
-	desc = "Your attacks have -1 strength and will never critically-hit. Useful for longer punishments, play-fighting, and bloodletting."
+	desc = "Your attacks have -1 strength and will never critically-hit. Useful for longer punishments, play-fighting, and bloodletting.\nRight click will attempt to steal from the target."
 	icon_state = "rmbweak"
+
+/datum/rmb_intent/weak/special_attack(mob/living/user, atom/target)
+	if(!target.Adjacent(user))
+		return
+	if(!ishuman(user) || !ishuman(target))
+		return
+	var/mob/living/carbon/human/H = user
+	H.attempt_steal(user, target)
+	. = ..()
