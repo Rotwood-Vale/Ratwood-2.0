@@ -16,6 +16,15 @@
 	var/atom/source
 	/// k:v list of mob : sound status
 	var/list/listeners = list()
+	/**
+	 * Listeners whose client is playing this token's current file on its channel, audible or muted.
+	 *
+	 * An update only changes a sound already playing, so an update sent to anyone missing from here
+	 * plays nothing. They get a full send at the current offset instead. A listener who enters a grid
+	 * cell out of earshot is sent nothing, so their first audible send must be a full one. A new file
+	 * empties it, since the channel is still playing the old one
+	 */
+	var/list/started_listeners
 	///k:v list of mobs : bool. Used to quickly check whether a mob is allowed to hear this noise. This is null by default which means ANY MOB can hear this.
 	var/list/allowed_listeners
 	/// Sound maximum range
@@ -157,6 +166,7 @@
 	sound.channel = sound_channel
 	sound_duration = sound_duration_override || SSsounds.get_sound_length(_sound)
 	start_time = REALTIMEOFDAY
+	started_listeners = null
 	if(start_playing)
 		force_update_all_listeners(FALSE)
 	if(delete_on_end && !repeating)
@@ -177,7 +187,7 @@
  * Seeded muted, not NONE. on_listener_audible fires only on a muted to audible edge, and a grid
  * cell, SPATIAL_GRID_CELLSIZE tiles across, is wider than most token ranges, so a listener often
  * enters a cell already in earshot and would cross no edge from NONE. A listener who enters out of
- * range also gets no muted send.
+ * range also gets no muted send, so their first audible send is a full one, see started_listeners.
  *
  * Deviation from TG, which re-evaluates a listener only when the source moves. SSsound_tokens also
  * refreshes a listener on their own movement, or a static source such as a music box stays at the
@@ -207,6 +217,7 @@
 /// Remove a listener from the sound.
 /datum/sound_token/proc/remove_listener(mob/listener_mob)
 	listeners -= listener_mob
+	LAZYREMOVE(started_listeners, listener_mob)
 	LAZYREMOVE(listener_mob.sound_tokens, src)
 
 	if(source != listener_mob)
@@ -284,24 +295,31 @@
 		effective_volume = volume
 
 	sound.status = listeners[listener_mob]
-	if(update_sound)
+	// Always an update, so it mutes whatever the channel is playing and does nothing to an idle one
+	if(sound.status & SOUND_MUTE)
+		sound.status |= SOUND_UPDATE
+		SEND_SOUND(listener_mob, sound)
+		return
+
+	// An update reaches only a channel already playing this file. See started_listeners
+	if(update_sound && LAZYACCESS(started_listeners, listener_mob))
 		sound.status |= SOUND_UPDATE
 	else
 		sound.offset = calculate_offset()
-
-	if(sound.status & SOUND_MUTE)
-		SEND_SOUND(listener_mob, sound)
-		return
 
 	// The Instruments slider under Master stands in for Sound Effects on bards and music boxes
 	var/datum/preferences/prefs = listener_mob.client?.prefs
 	var/volume_pref = (respect_instrument_pref && prefs) ? prefs.at_overall(prefs.instrumentvol) : null
 	// Routed through playsound_local, which applies falloff, panning and the player's
 	// volume sliders on every send, updates included, so re-sends stay pref-scaled
-	if(!listener_mob.playsound_local(get_turf(source), vol = effective_volume, falloff_exponent = falloff_exponent, channel = sound_channel, S = sound, max_distance = range, falloff_distance = falloff_distance, use_reverb = TRUE, muffled = muffled, volume_pref = volume_pref))
-		sound.status = SOUND_UPDATE|SOUND_MUTE
-		SEND_SOUND(listener_mob, sound)
+	var/sent = listener_mob.playsound_local(get_turf(source), vol = effective_volume, falloff_exponent = falloff_exponent, channel = sound_channel, S = sound, max_distance = range, falloff_distance = falloff_distance, use_reverb = TRUE, muffled = muffled, volume_pref = volume_pref)
 	sound.offset = null
+	if(sent)
+		LAZYSET(started_listeners, listener_mob, TRUE)
+		return
+	// Refused, so muted where it plays. A channel that never started stays out of started_listeners
+	sound.status = SOUND_UPDATE|SOUND_MUTE
+	SEND_SOUND(listener_mob, sound)
 
 /// Queues every listener for a refresh. Used when the SOURCE moved or the volume changed
 /datum/sound_token/proc/update_all_listeners()

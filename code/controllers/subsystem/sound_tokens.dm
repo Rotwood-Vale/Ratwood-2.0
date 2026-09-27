@@ -9,6 +9,22 @@ SUBSYSTEM_DEF(sound_tokens)
 	var/list/currentrun = list()
 
 /**
+ * Tracks every mob still holding a token again, on this instance.
+ *
+ * The MC replaces a subsystem it blames twice for a hang, and deleting the old instance drops every
+ * signal it registered. Tokens and each mob's sound_tokens outlive it, so without this their
+ * listeners stop refreshing on their own steps, and track_listener() never re-registers them since
+ * their first token is already counted. Each is queued for one refresh as well
+ */
+/datum/controller/subsystem/sound_tokens/Recover()
+	for(var/client/listener_client as anything in GLOB.clients)
+		var/mob/listener_mob = listener_client?.mob
+		if(!LAZYLEN(listener_mob?.sound_tokens))
+			continue
+		RegisterSignal(listener_mob, COMSIG_MOVABLE_MOVED, PROC_REF(on_listener_moved))
+		clients_needing_update[listener_client] = TRUE
+
+/**
  * Registers movement tracking ONCE per listening mob, rather than once per token.
  *
  * A mob in a tavern with a band and a music box hears several tokens, and a handler per token

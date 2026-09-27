@@ -15,11 +15,12 @@
 			player_login(null, listener_client.mob)
 
 /// Observers get no ambience: whatever the client was hearing stops here, on the transition
-/// itself, and no move hook is attached to the ghost
+/// itself, and no move hook is attached to the ghost. A ghost has no ear, so a head watch goes too
 /datum/controller/subsystem/point_ambience/proc/player_login(datum/source, mob/player)
 	SIGNAL_HANDLER
 	if(isobserver(player))
 		stop_all_for(player.client)
+		qdel(player.client?.point_ambience_head_watch)
 		return
 	if(player.client)
 		player.client.point_ambience_last_move = null
@@ -97,8 +98,7 @@
 	listener_client.point_ambience_silenced = muted_by(prefs, muted_mask)
 	var/mob/player = listener_client.mob
 	if(!player || isobserver(player))
-		// A ghost has no ear, so its watch goes here. Ghosting alone does not reach this, player_login
-		// returning first for an observer, so the watch lasts until a preference change or a login
+		// A ghost has no ear. player_login drops the watch on ghosting, and this is the backstop
 		if(listener_client.point_ambience_head_watch)
 			qdel(listener_client.point_ambience_head_watch)
 		return
@@ -251,7 +251,12 @@
 /// Points the watch at a mob's head, seeded from its CURRENT state, so a client logging in with the
 /// head already off is served from it rather than waiting for the head to move
 /datum/point_ambience_head_watch/proc/retarget(mob/living/carbon/human/human)
-	body = human
+	if(body != human)
+		if(body)
+			UnregisterSignal(body, COMSIG_QDELETING)
+		body = human
+		if(body)
+			RegisterSignal(body, COMSIG_QDELETING, PROC_REF(on_body_deleted))
 	var/datum/species/dullahan/species = human?.dna?.species
 	if(!istype(species))
 		drop_head()
@@ -266,6 +271,11 @@
 		RegisterSignal(head, COMSIG_MOVABLE_MOVED, PROC_REF(on_head_moved))
 		RegisterSignal(head, COMSIG_QDELETING, PROC_REF(on_head_deleted))
 	set_ear(species.headless)
+
+/// The watch holds its body, so it goes with it rather than keeping a deleted mob alive
+/datum/point_ambience_head_watch/proc/on_body_deleted(datum/source)
+	SIGNAL_HANDLER
+	qdel(src)
 
 /// The ear on or off, the holder hooked to match, and the listener served again either way
 /datum/point_ambience_head_watch/proc/set_ear(headless)
