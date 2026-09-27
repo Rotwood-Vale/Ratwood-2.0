@@ -841,6 +841,7 @@
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		/obj/item/storage/belt/rogue/pouch/medicine = 1
+		/obj/item/ritechalk = 1,
 		)
 
 	if (H.mind)
