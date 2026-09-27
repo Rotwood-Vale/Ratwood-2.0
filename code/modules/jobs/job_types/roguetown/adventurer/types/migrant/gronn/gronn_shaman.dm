@@ -73,6 +73,10 @@
 
 	if(H.mind)
 		H.mind.current.faction += "[H.real_name]_faction" //zizo summons check real_name, not name. everyone gets it, it's just a tag
+		//give minion orders if they're a zizite
+		if (istype (H.patron, /datum/patron/inhumen/zizo))
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)	//T4 but capped, same as the missionary. doesn't start maxed
