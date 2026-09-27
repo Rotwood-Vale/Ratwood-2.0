@@ -43,6 +43,8 @@
 	var/datum/toggle_options_menu/toggles_menu = null
 	/// Single-instance Volume Power TGUI menu
 	var/datum/volume_power_menu/volume_power_menu = null
+	/// Single-instance Layout TGUI menu
+	var/datum/layout_menu/layout_menu = null
 	/// Nearest ambient source this client hears per category (category datum -> atom), driven
 	/// by SSpoint_ambience. Always a list, so the hot path indexes it without a null check.
 	var/list/point_ambience_sources = list()

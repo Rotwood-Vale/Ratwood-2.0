@@ -1707,6 +1707,7 @@
 #include "code\modules\client\loadoutmenu\loadout_menu.dm"
 #include "code\modules\client\verbs\etips.dm"
 #include "code\modules\client\verbs\ghost.dm"
+#include "code\modules\client\verbs\layout.dm"
 #include "code\modules\client\verbs\ooc.dm"
 #include "code\modules\client\verbs\ping.dm"
 #include "code\modules\client\verbs\suicide.dm"

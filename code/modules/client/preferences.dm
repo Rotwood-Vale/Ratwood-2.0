@@ -217,6 +217,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	/// Point ambience only, and never multiplied by mastervol
 	var/pointambiencevol = 50
 	var/mastervol = 50
+	/// The Layout window's two splitters: the map's share of the window, and the stat panel's share
+	/// of its column. Null until the player sets one, so the skin's own saved position stands
+	var/layout_map
+	var/layout_stat
 
 	var/anonymize = TRUE
 	var/masked_examine = FALSE
