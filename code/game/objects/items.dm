@@ -995,7 +995,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/on_found(mob/finder)
 	return
 
-// called when an item is released by opening its package
+/// called when an item is released by opening its package
 /obj/item/proc/on_package_opened(mob/user)
 	return
 

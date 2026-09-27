@@ -919,12 +919,10 @@
 /obj/item/smallDelivery/proc/open_package(mob/user, activation_chance = 100)
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	var/list/package_contents = contents.Copy()
-	for(var/X in package_contents)
-		var/atom/movable/AM = X
-		user.put_in_hands(AM)
-		if(istype(AM, /obj/item) && prob(activation_chance))
-			var/obj/item/I = AM
-			I.on_package_opened(user)
+	for(var/obj/item/contained_item in package_contents)
+		user.put_in_hands(contained_item)
+		if(prob(activation_chance))
+			contained_item.on_package_opened(user)
 	playsound(src.loc, 'sound/foley/dropsound/paper_drop.ogg', 50, TRUE)
 	user.visible_message(span_warning("[user] opens [src]."))
 	if(note)
@@ -939,20 +937,14 @@
 		var/mob/M = loc
 		M.temporarilyRemoveItemFromInventory(src, TRUE)
 		var/list/package_contents = contents.Copy()
-		for(var/X in package_contents)
-			var/atom/movable/AM = X
-			M.put_in_hands(AM)
-			if(istype(AM, /obj/item))
-				var/obj/item/I = AM
-				I.on_package_opened(user)
+		for(var/obj/item/contained_item in package_contents)
+			M.put_in_hands(contained_item)
+			contained_item.on_package_opened(user)
 	else
 		var/list/package_contents = contents.Copy()
-		for(var/X in package_contents)
-			var/atom/movable/AM = X
-			AM.forceMove(src.loc)
-			if(istype(AM, /obj/item))
-				var/obj/item/I = AM
-				I.on_package_opened(user)
+		for(var/obj/item/contained_item in package_contents)
+			contained_item.forceMove(src.loc)
+			contained_item.on_package_opened(user)
 	if(note)
 		note.forceMove(user.loc)
 	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
