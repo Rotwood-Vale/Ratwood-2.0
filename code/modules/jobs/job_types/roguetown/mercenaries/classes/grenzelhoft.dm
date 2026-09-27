@@ -193,6 +193,8 @@
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/book/spellbook = 1
+		/obj/item/chalk = 1
 		)
 	H.merctype = 7
 
@@ -211,8 +213,8 @@
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
 		STATKEY_STR = -1,
-		STATKEY_PER = 2,
-		STATKEY_SPD = 2
+		STATKEY_PER = 3,
+		STATKEY_SPD = 1
 	)
 	subclass_skills = list(
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
@@ -252,14 +254,16 @@
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogue/book
 		)
 	if(H.mind) // State mandated spells c:
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/artillery)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/repulse)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/repel)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/rebuke)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/conjure_armor)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/counterspell)
