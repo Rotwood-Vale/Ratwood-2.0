@@ -20,7 +20,7 @@
 		if(SEX_FORCE_EXTREME to SEX_FORCE_LUDICROUS)
 			message = "[user] rams [user.p_their()] arm elbow-deep into [target]'s tail maw, the muscular walls bearing down with bruising force as the feelers writhe and suction to [user.p_their()] skin in a frenzied mass."
 	user.sexcon_action_message(user.sexcon.spanify_force(message))
-	user.sexcon.make_sucking_noise()
+	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.perform_sex_action(target, 2, 3, FALSE)
 	target.sexcon.handle_passive_ejaculation(climax_part = SEX_PART_TAIL_MAW)
 

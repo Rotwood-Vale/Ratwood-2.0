@@ -151,6 +151,7 @@
 /datum/wound/fracture/head/ears
 	name = "temporal fracture"
 	severity = WOUND_SEVERITY_FATAL
+	check_name = span_danger("EARS")
 	crit_message = list(
 		"The orbital bone is punctured!",
 		"The temporal bone is pierced!",
@@ -178,6 +179,7 @@
 
 /datum/wound/fracture/head/nose
 	name = "nasal fracture"
+	check_name = span_warning("NOSE")
 	crit_message = list(
 		"The nasal bone is punctured!",
 		"The nasal bone is pierced!",

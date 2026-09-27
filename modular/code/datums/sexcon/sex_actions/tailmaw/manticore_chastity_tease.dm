@@ -22,7 +22,7 @@
 		if(SEX_FORCE_EXTREME to SEX_FORCE_LUDICROUS)
 			message = "[user]'s tail seals around [target]'s cage entirely, every feeler inside fighting through the bars in a swarming mass, coating the trapped cock in sweet nectar until it drools from the cage's drain hole."
 	user.sexcon_action_message(user.sexcon.spanify_force(message))
-	user.sexcon.make_sucking_noise()
+	user.sexcon.outercourse_noise(user, TRUE)
 	user.sexcon.perform_sex_action(target, 3, 0, TRUE)
 	user.sexcon.perform_sex_action(user, 1, 0, FALSE)
 	user.sexcon.handle_passive_ejaculation(climax_part = SEX_PART_TAIL_MAW)

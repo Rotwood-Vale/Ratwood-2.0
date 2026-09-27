@@ -21,7 +21,7 @@
 		if(SEX_FORCE_EXTREME to SEX_FORCE_LUDICROUS)
 			message = "[user] buries [user.p_their()] face so deep in [target]'s tail the maw clamps around [user.p_their()] skull, feelers coating every inch of tongue and lips as the orifice tries to swallow [user.p_their()] head whole."
 	user.sexcon_action_message(user.sexcon.spanify_force(message))
-	user.sexcon.make_sucking_noise()
+	user.sexcon.oralcourse_noise(user, TRUE)
 	user.sexcon.perform_sex_action(target, 3, 0, FALSE)
 	handle_tailmaw_oral_climax(target, user)
 

@@ -22,7 +22,7 @@
 		if(SEX_FORCE_EXTREME to SEX_FORCE_LUDICROUS)
 			message = "[user]'s tail maw bears down on [target]'s cock with bruising force, every feeler suctioned tight and pumping, the muscular walls milking in crushing, rhythmic spasms."
 	user.sexcon_action_message(user.sexcon.spanify_force(message))
-	user.sexcon.make_sucking_noise()
+	user.sexcon.intercourse_noise(user, TRUE)
 	user.sexcon.perform_sex_action(target, 3, 0, TRUE)
 	handle_tailmaw_ejaculation(user, target, target, user)
 	user.sexcon.perform_sex_action(user, 2, 0, FALSE)

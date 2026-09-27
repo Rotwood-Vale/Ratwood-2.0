@@ -75,6 +75,20 @@
 /mob/living/proc/can_do_sex()
 	return TRUE
 
+/// Shared helper to describe pits, load bearing code (worst proc in the codebase)
+/datum/sex_controller/proc/get_armpit_description(mob/living/carbon/human/described)
+	var/datum/bodypart_feature/pits/pit_hair = described?.get_bodypart_feature_of_slot(BODYPART_FEATURE_PITS)
+	switch(pit_hair?.accessory_type)
+		if(/datum/sprite_accessory/pits/trim)
+			return pick("trimmed armpit", "stubbly armpit", "prickly armpit")
+		if(/datum/sprite_accessory/pits/moderate)
+			return pick("fluffy pit", "wispy-haired armpit", "downy armpit")
+		if(/datum/sprite_accessory/pits/hairy)
+			return pick("hairy pit", "unshaved pit", "bushy armpit")
+		if(/datum/sprite_accessory/pits/extreme)
+			return pick("jungle-bushed pit", "unkempt pit", "overgrown armpit")
+	return "armpit"
+
 /datum/sex_controller/proc/make_sucking_noise()
 	if (!user || QDELETED(user) || !istype(user))
 		return

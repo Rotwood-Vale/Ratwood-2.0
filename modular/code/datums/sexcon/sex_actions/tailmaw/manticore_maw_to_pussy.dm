@@ -12,6 +12,9 @@
 
 /datum/sex_action/manticore_maw_to_pussy/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
+	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || user.STASTR > 12)
+		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+			user.sexcon.try_pelvis_crush(target)
 	var/message
 	switch(user.sexcon.force)
 		if(SEX_FORCE_LOW)
@@ -23,7 +26,7 @@
 		if(SEX_FORCE_EXTREME to SEX_FORCE_LUDICROUS)
 			message = "[user]'s tail seals [target]'s cunt completely, the maw vacuum-locked as every feeler inside bores deeper, a churning mass of tendrils stretching [target]'s walls and flooding [target]'s womb with sweet slick until [target]'s stomach visibly distends."
 	user.sexcon_action_message(user.sexcon.spanify_force(message))
-	user.sexcon.make_sucking_noise()
+	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.perform_sex_action(target, 4, 1, TRUE)
 	user.sexcon.perform_sex_action(user, 2, 0, FALSE)
 	user.sexcon.handle_passive_ejaculation(climax_part = SEX_PART_TAIL_MAW)

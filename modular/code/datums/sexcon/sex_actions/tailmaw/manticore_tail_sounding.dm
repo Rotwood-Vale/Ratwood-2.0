@@ -12,6 +12,9 @@
 
 /datum/sex_action/manticore_tail_sounding/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
+	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || user.STASTR > 12)
+		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+			user.sexcon.try_pelvis_crush(target)
 	var/message
 	switch(user.sexcon.force)
 		if(SEX_FORCE_LOW)
@@ -23,7 +26,7 @@
 		if(SEX_FORCE_EXTREME to SEX_FORCE_LUDICROUS)
 			message = "[user]'s feelers flood [target]'s cock from within, a writhing mass of tendrils bulging the shaft visibly as they bore deeper, venom pouring into the abused canal until [target]'s entire length throbs and twitches with involuntary spasms."
 	user.sexcon_action_message(user.sexcon.spanify_force(message))
-	user.sexcon.make_sucking_noise()
+	user.sexcon.intercourse_noise(target, TRUE)
 	// Sounding: high pain, moderate arousal
 	user.sexcon.perform_sex_action(target, 1, 7, TRUE)
 	user.sexcon.try_do_pain_scream(target, 7)

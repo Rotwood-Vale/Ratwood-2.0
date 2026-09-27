@@ -12,6 +12,9 @@
 
 /datum/sex_action/manticore_tailpeg/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
+	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || user.STASTR > 12)
+		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+			user.sexcon.try_pelvis_crush(target)
 	var/message
 	switch(user.sexcon.force)
 		if(SEX_FORCE_LOW)
@@ -23,7 +26,7 @@
 		if(SEX_FORCE_EXTREME to SEX_FORCE_LUDICROUS)
 			message = "[user] ruts [target]'s guts with [user.p_their()] tail like an animal, the bud hammering [target]'s insides without care, each thrust accompanied by a sickening wet slap."
 	user.sexcon_action_message(user.sexcon.spanify_force(message))
-	user.sexcon.outercourse_noise(target, TRUE)
+	user.sexcon.intercourse_noise(target, TRUE)
 	user.sexcon.perform_sex_action(target, 2, 3, TRUE)
 	user.sexcon.perform_sex_action(user, 1, 0, TRUE)
 	user.sexcon.handle_passive_ejaculation(climax_part = SEX_PART_TAIL_MAW)

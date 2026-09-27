@@ -36,7 +36,7 @@
 			else
 				message = "[user]'s tail maw engulfs [target]'s breast whole, the feelers inside writhing against every inch of captured flesh, suctioning hard enough to leave the skin mottled dark when it finally releases."
 	user.sexcon_action_message(user.sexcon.spanify_force(message))
-	user.sexcon.make_sucking_noise()
+	user.sexcon.oralcourse_noise(user)
 	user.sexcon.perform_sex_action(target, 3, 0, TRUE)
 	user.sexcon.perform_sex_action(user, 1, 0, FALSE)
 	user.sexcon.handle_passive_ejaculation(climax_part = SEX_PART_TAIL_MAW)

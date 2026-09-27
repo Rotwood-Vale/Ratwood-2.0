@@ -18,4 +18,5 @@
 	var/list/excluded = get_extreme_content_excluded_mobs(target)
 	user.sexcon_action_message(span_userdanger("The bud inside [target]'s mouth begins to blossom, the bonelike plates cranking apart with agonizing slowness, forcing [target]'s jaw wider and wider until the joints pop and creak, teeth cracking against the unyielding chitin."), ignored_mobs = excluded)
 	playsound(target, 'sound/combat/fracture/fracturewet (1).ogg', 40, TRUE, ignore_walls = FALSE)
+	target.apply_status_effect(/datum/status_effect/jaw_gaped)
 	user.visible_message(span_userdanger("[user] wrenches [user.p_their()] tail free from [target]'s ruined mouth, the plates folding shut as they drag loose teeth and blood with them, leaving [target]'s jaw hanging at a sickening angle."), ignored_mobs = excluded)

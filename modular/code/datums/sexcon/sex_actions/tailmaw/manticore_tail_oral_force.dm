@@ -10,6 +10,9 @@
 
 /datum/sex_action/manticore_tail_oral_force/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	..()
+	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || user.STASTR > 12)
+		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
+			user.sexcon.try_jaw_crush(target)
 	var/message
 	switch(user.sexcon.force)
 		if(SEX_FORCE_LOW)
@@ -21,7 +24,7 @@
 		if(SEX_FORCE_EXTREME to SEX_FORCE_LUDICROUS)
 			message = "[user]'s tail seals [target]'s mouth completely, the feelers writhing down [target]'s throat in a suffocating mass, pumping nectar until it bubbles from [target]'s nose."
 	user.sexcon_action_message(user.sexcon.spanify_force(message))
-	user.sexcon.make_sucking_noise()
+	user.sexcon.oralcourse_noise(target, TRUE)
 	user.sexcon.perform_sex_action(target, 2, 2, TRUE)
 	user.sexcon.perform_sex_action(user, 2, 0, FALSE)
 	handle_tailmaw_oral_climax(user, target)

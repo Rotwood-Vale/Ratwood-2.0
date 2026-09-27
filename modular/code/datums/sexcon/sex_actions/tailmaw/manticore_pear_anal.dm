@@ -20,4 +20,5 @@
 	var/list/excluded = get_extreme_content_excluded_mobs(target)
 	user.sexcon_action_message(span_userdanger("[user]'s tail bud begins to flower open inside [target]'s ass, the bonelike plates spreading apart with a grinding creak, stretching [target]'s insides far beyond what flesh was meant to accommodate. [target]'s screams are accompanied by the wet crack of something giving way deep inside."), ignored_mobs = excluded)
 	playsound(target, 'sound/combat/fracture/fracturewet (1).ogg', 40, TRUE, ignore_walls = FALSE)
+	target.apply_status_effect(/datum/status_effect/knot_gaped)
 	user.visible_message(span_userdanger("[user] rips [user.p_their()] tail free from [target]'s destroyed rear, the plates snapping shut with a wet crunch, leaving behind a gaping, prolapsed ruin."), ignored_mobs = excluded)
