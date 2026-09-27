@@ -45,6 +45,7 @@
 #define TRAIT_NALEDI "Naledi Complex"
 #define TRAIT_SKILLBLESSED "Skill Blessed"
 #define TRAIT_LONGSWORDSMAN "Master Longswordman"
+#define TRAIT_STAVEMASTER "Staffmaster"
 #define TRAIT_SABRIST "Renowned Sabrist"
 #define TRAIT_INFINITE_STAMINA "Indefatigable" //for ai
 #define TRAIT_NUDIST "Nudist" //you can't wear most clothes
@@ -438,6 +439,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_LONGSWORDSMAN = span_info("\"I will crush anyone who opposes me. I am of royal blood. I dispense justice, advance the cause of good and destroy evil. To those who learn my crossings I will grant great fame and renown in the art of armed fighting.\" - I fight like a Master when I wield a traditional longsword and I know how to perform master strikes with them."),	TRAIT_SABRIST = span_info("I've learned all there is to know about the Southern curve. When using a szöréndnížine sabre, I fight like a Master. My swings are innately more accurate when targetting hands and arms."),
 	TRAIT_MEDIUMARMOR = span_info("I can move freely in medium armor."),
 	TRAIT_HEAVYARMOR = span_info("I can move freely in heavy armor."),
+	TRAIT_STAVEMASTER = span_info("I am proficient with the usage of staves; they're more, way more than a mere walking stick for I. With my training and my Faith; I will correct the heathens."),
 	TRAIT_DODGEEXPERT = span_info("I am much better at dodging incoming strikes, when dressed in either light armor or nothing at all. Heavier armor, such as maille or plate, is too burdensome for me to quickly maneuver in."),
 	TRAIT_BOMBER_EXPERT = span_greentext("I know explosives inside and out. I can draw grenades from a bombdolier instantly, and I've learned how to squeeze an extra bomb out of my supply runs."),
 	TRAIT_EXPLOSIVE_SUPPLY = span_greentext("I've a supplier of bombs. I can request one delivered to my mailbox once a day."),

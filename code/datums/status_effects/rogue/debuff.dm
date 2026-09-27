@@ -617,6 +617,17 @@
 	effectedstats = list(STATKEY_INT = -2, STATKEY_SPD = -2, STATKEY_LCK = -2)
 	duration = 20 MINUTES
 
+/datum/status_effect/debuff/dazed/stavetackle
+	id = "stackle"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavetackle
+	effectedstats = list(STATKEY_SPD = -4)
+	duration = 3 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/stavetackle
+	name = "Stave Tackle"
+	desc = "My foot has been struck-- damned Monks."
+	icon_state = "mstrike"
+
 /atom/movable/screen/alert/status_effect/debuff/hereticsermon
 	name = "Heretic on sermon!"
 	desc = "I was on the sermon. My patron is not proud of me."
