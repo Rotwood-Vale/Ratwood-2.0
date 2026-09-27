@@ -130,6 +130,8 @@
 	// Allows prayer if holding silver psycross.
 	if(istype(follower.get_active_held_item(), /obj/item/clothing/neck/roguetown/psicross/silver))
 		return TRUE
+	if(HAS_TRAIT(follower, TRAIT_LUX_FREAK)) // the ones that became psydons temple in of themselves
+		return TRUE
 	to_chat(follower, span_danger("For Psydon to hear my prayer I must either must be near a Pantheon Cross, shed my own blood in penitence, hold one of his silver holy symbols, or bask in his rain; as Psydon weeps for his children.."))
 	return FALSE
 
