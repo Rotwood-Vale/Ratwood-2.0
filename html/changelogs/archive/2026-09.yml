@@ -951,3 +951,24 @@
   - balance: Gargled speech (gained from throat crit, broken jaw, etc. The "KHSSSHSH"
       thing.) now blocks spells requiring a verbal component to cast, similar in nature
       to being silenced or gagged.
+2026-09-27:
+  The-Sun-In-Splendour:
+  - bugfix: golden circlet is now fireproof & nudist approved
+  Xander3359:
+  - rscadd: Orison and Miracle now grant a glow based on the caster's selected patron
+  Yuckuza:
+  - bugfix: Fixed Crocs Armory and Rosewood/Blackoak foreign trade vessels coming
+      to trade empty-handed.
+  chemistrymain3:
+  - balance: Heretical wretches now have access to Holy/Unholy blast.
+  - balance: Holy Ground buff is gone.
+  - qol: Noticeboard posts expire in three hours now.
+  ophaq:
+  - bugfix: Xylixian masks no longer catch fire.
+  wikimody:
+  - bugfix: Pestrian ability to turn werwolfs and gnolls into horific flesh abominations
+      have been tuned down, their aility to do so to anyone with a title has been
+      tuned up (some bugfixes on fleshaping miracle)
+  zoktiik:
+  - balance: Intensity of bleeding from all types of fractures has been roughly cut
+      by half.
