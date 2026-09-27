@@ -34,7 +34,7 @@
 	if(on)
 		E.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 		user.add_client_colour(/datum/client_colour/monochrome)
-		user.overlay_fullscreen("darkvision_spell", /atom/movable/screen/fullscreen/curse)
+		user.overlay_fullscreen("darkvision_spell", /atom/movable/screen/fullscreen/darkvision)
 	else
 		E.lighting_alpha = initial(E.lighting_alpha)
 		user.remove_client_colour(/datum/client_colour/monochrome)
