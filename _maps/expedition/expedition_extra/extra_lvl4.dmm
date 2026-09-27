@@ -276,7 +276,8 @@
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue)
 "II" = (
-/obj/effect/landmark/teleport_exit,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/structure/expedition_marker/entry/boss_chamber,
 /turf/open/floor/rogue/carpet/lord/center/no_teleport,
 /area/rogue)
 "Jv" = (
@@ -879,8 +880,8 @@ WJ
 SO
 gR
 gR
+pO
 II
-gR
 ID
 "}
 (14,1,1) = {"

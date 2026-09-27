@@ -3145,7 +3145,7 @@
 /turf/open/water/bath,
 /area/rogue/under/tomb/indoors)
 "LB" = (
-/obj/structure/expedition_marker/entry/level_3,
+/obj/structure/expedition_marker/entry/level_3/baroness_castle,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/tomb)
 "LE" = (
@@ -6207,8 +6207,8 @@ KZ
 KZ
 UC
 UC
-LB
 xo
+LB
 dD
 "}
 (27,1,1) = {"

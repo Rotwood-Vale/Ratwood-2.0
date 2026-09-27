@@ -505,7 +505,7 @@
 /turf/open/floor/rogue/sandbrick,
 /area/rogue)
 "Sn" = (
-/obj/structure/expedition_marker/entry/level_2,
+/obj/structure/expedition_marker/entry/level_2/dragon_desert,
 /turf/open/floor/rogue/dunes,
 /area/rogue)
 "SL" = (
@@ -3167,7 +3167,7 @@ sO
 sO
 sO
 sO
-Sn
+sO
 UK
 "}
 (22,1,2) = {"
@@ -3209,7 +3209,7 @@ sO
 sO
 sO
 sO
-sO
+Sn
 UK
 "}
 (23,1,2) = {"

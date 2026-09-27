@@ -1,41 +1,4 @@
 GLOBAL_VAR_INIT(expedition_base_z, 0)
-
-/datum/map_template/expedition
-	abstract_type = /datum/map_template/expedition
-	var/level_number = 1
-
-/datum/map_template/expedition/level_1
-	abstract_type = /datum/map_template/expedition/level_1
-	level_number = 1
-
-/datum/map_template/expedition/level_1/easy
-	name = "Level 1 - Easy"
-	mappath = "_maps/expedition/expedition_lvl1/easy_lvl1.dmm"
-
-/datum/map_template/expedition/level_2
-	abstract_type = /datum/map_template/expedition/level_2
-	level_number = 2
-
-/datum/map_template/expedition/level_2/easy
-	name = "Level 2 - Easy"
-	mappath = "_maps/expedition/expedition_lvl2/easy_lvl2.dmm"
-
-/datum/map_template/expedition/level_3
-	abstract_type = /datum/map_template/expedition/level_3
-	level_number = 3
-
-/datum/map_template/expedition/level_3/boss_easy
-	name = "Level 3 - Easy Boss"
-	mappath = "_maps/expedition/expedition_lvl3/Boss_easy.dmm"
-
-/datum/map_template/expedition/level_4
-	abstract_type = /datum/map_template/expedition/level_4
-	level_number = 4
-
-/datum/map_template/expedition/level_4/extra
-	name = "Level 4 - Extra"
-	mappath = "_maps/expedition/expedition_extra/extra_lvl4.dmm"
-
 SUBSYSTEM_DEF(expedition_loader)
 	name = "Expedition World Loader"
 	init_order = INIT_ORDER_DUNGEON
@@ -81,10 +44,9 @@ SUBSYSTEM_DEF(expedition_loader)
 		var/spawn_y = coords["y"]
 		var/target_z = start_z
 
-		if(spawn_x + template.width > world.maxx || spawn_y + template.height > world.maxy)
-			spawn_x = 1
-			spawn_y = 1
-			target_z = start_z + (level - 1)
+		if(template.width && template.height)
+			spawn_x = clamp(spawn_x, 1, max(1, world.maxx - template.width))
+			spawn_y = clamp(spawn_y, 1, max(1, world.maxy - template.height))
 
 		var/turf/spawn_turf = locate(spawn_x, spawn_y, target_z)
 		if(spawn_turf)
@@ -99,3 +61,151 @@ SUBSYSTEM_DEF(expedition_loader)
 			return SL.z_value
 
 	return 0
+
+/datum/map_template/expedition
+	abstract_type = /datum/map_template/expedition
+	var/level_number = 1
+
+/datum/map_template/expedition/level_1
+	abstract_type = /datum/map_template/expedition/level_1
+	level_number = 1
+
+/datum/map_template/expedition/level_1/crypt
+	name = "Level 1 - Forgotten Crypt"
+	mappath = "_maps/expedition/expedition_lvl1/easy_lvl1.dmm"
+
+/datum/map_template/expedition/level_1/cave
+	name = "Level 1 - Dark Caves"
+	mappath = "_maps/expedition/expedition_lvl1/cave_lvl1.dmm"
+
+/datum/map_template/expedition/level_2
+	abstract_type = /datum/map_template/expedition/level_2
+	level_number = 2
+
+/datum/map_template/expedition/level_2/dragon_desert
+	name = "Level 2 - Dragon's Desert"
+	mappath = "_maps/expedition/expedition_lvl2/easy_lvl2.dmm"
+
+/datum/map_template/expedition/level_2/flooded_grotto
+	name = "Level 2 - Flooded Grotto"
+	mappath = "_maps/expedition/expedition_lvl2/tower_lvl2.dmm"
+
+/datum/map_template/expedition/level_3
+	abstract_type = /datum/map_template/expedition/level_3
+	level_number = 3
+
+/datum/map_template/expedition/level_3/baroness_castle
+	name = "Level 3 - Baroness Keep"
+	mappath = "_maps/expedition/expedition_lvl3/Boss_easy.dmm"
+
+/datum/map_template/expedition/level_3/trap_mid
+	name = "Level 3 - Lava"
+	mappath = "_maps/expedition/expedition_lvl3/trap_mid.dmm"
+
+/datum/map_template/expedition/level_4
+	abstract_type = /datum/map_template/expedition/level_4
+	level_number = 4
+
+/datum/map_template/expedition/level_4/lich_crypt
+	name = "Level 4 - Sanctum of the Archlich"
+	mappath = "_maps/expedition/expedition_extra/extra_lvl4.dmm"
+
+
+/obj/structure/expedition_gate/level_1_exit
+	name = "descending rift"
+	stage_number = 1
+
+/obj/structure/expedition_gate/level_2_exit
+	name = "descending rift"
+	stage_number = 2
+
+/obj/structure/expedition_gate/level_3_exit
+	name = "abyssal threshold"
+	color = "#ff0d00"
+	stage_number = 3
+
+/obj/structure/expedition_marker/entry/level_1
+	stage_number = 1
+	stage_name = "Depth I: Forgotten Depths"
+	level_objectives = list(
+		"explore" = "Descend deeper into the ruins",
+		"find_rift" = "Find the Descending Rift"
+	)
+
+/obj/structure/expedition_marker/entry/level_1/crypt
+	stage_name = "Depth I: Forgotten river"
+
+/obj/structure/expedition_marker/entry/level_1/cave
+	stage_name = "Depth I: Gloomy Caverns"
+	level_objectives = list(
+		"explore" = "Navigate through the jagged caves",
+		"find_rift" = "Find the Descending Rift"
+	)
+
+
+/obj/structure/expedition_marker/entry/level_2
+	stage_number = 2
+	stage_name = "Depth II: Perilous Domain"
+	level_objectives = list(
+		"survive" = "Survive the perils of the depth",
+		"reach_gate" = "Enter the Descending Rift"
+	)
+
+/obj/structure/expedition_marker/entry/level_2/dragon_desert
+	stage_name = "Depth II: Desert of the Dragon"
+	level_objectives = list(
+		"voiddragon" = "Slay the Void Dragon",
+		"reach_gate" = "Enter the Descending Rift"
+	)
+
+/obj/structure/expedition_marker/entry/level_2/tower
+	stage_name = "Depth II: Ancient Tower"
+	level_objectives = list(
+		"fishboss" = "Defeat the Duke of the Deep",
+		"reach_gate" = "Enter the Descending Rift"
+	)
+
+/obj/structure/expedition_marker/entry/level_3
+	stage_number = 3
+	stage_name = "Depth III: High Hold"
+	level_objectives = list(
+		"explore" = "Infiltrate the stronghold",
+		"teleport_chamber" = "Find the passage forward"
+	)
+
+/obj/structure/expedition_marker/entry/level_3/baroness_castle
+	stage_name = "Depth III: Baroness's Keep"
+	level_objectives = list(
+		"baroness" = "Defeat the Baroness",
+		"teleport_chamber" = "Enter the Convergence Chamber"
+	)
+
+/obj/structure/expedition_marker/entry/level_3/trap_mid
+	stage_name = "Depth III: lava see"
+	level_objectives = list(
+		"slay_boss" = "Slay the master of the depth",
+		"teleport_chamber" = "Enter the Convergence Chamber"
+	)
+
+/obj/structure/expedition_marker/entry/level_4
+	stage_number = 4
+	stage_name = "Final Depth: The Abyss"
+	level_objectives = list(
+		"slay_boss" = "Slay the master of the depth",
+		"loot" = "Claim the treasures and escape"
+	)
+
+/obj/structure/expedition_marker/entry/level_4/lich_crypt
+	stage_name = "Final Depth: Sanctum of Bones"
+	level_objectives = list(
+		"slay_boss" = "Slay the Archlich",
+		"loot" = "Claim the treasures and escape"
+	)
+
+/obj/structure/expedition_marker/entry/boss_chamber
+	stage_number = 4
+	stage_name = "Final Depth: Sanctum of Bones"
+	level_objectives = list(
+		"slay_boss" = "Slay the Archlich",
+		"loot" = "Claim the treasures and escape"
+	)

@@ -80,6 +80,8 @@ GLOBAL_LIST_EMPTY(boss_mineral_doors)
 	if(target_door_id)
 		open_linked_doors(target_door_id)
 
+	update_all_expedition_trackers()
+	complete_expedition_objective("baroness")
 	return ..()
 
 
@@ -103,6 +105,36 @@ GLOBAL_LIST_EMPTY(boss_mineral_doors)
 		if(target_door_id)
 			open_linked_doors(target_door_id)
 
+
+		update_all_expedition_trackers()
+
+/mob/living/simple_animal/hostile/boss/fishboss/expedition
+	var/target_door_id = null
+	var/drop_mace = TRUE
+
+/mob/living/simple_animal/hostile/boss/fishboss/expedition/death(gibbed)
+	if(stat == DEAD)
+		return
+
+
+	if(target_door_id)
+		open_linked_doors(target_door_id)
+
+
+	complete_expedition_objective("fishboss")
+	update_all_expedition_trackers()
+
+
+	visible_message("<span class='warning'>The bloated, grotesque fishman explodes in a shower of gore!</span>", "<span class='warning'>The bloated, grotesque fishman explodes in a shower of gore!</span>")
+	spawn_gibs()
+	spawn_gibs()
+	spawn_gibs()
+
+
+	if(drop_mace)
+		new /obj/item/rogueweapon/mace/goden/deepduke(drop_location())
+
+	qdel(src)
 
 /obj/effect/temp_visual/lich_dying_expedition
 	name = "Lich"
@@ -157,6 +189,10 @@ GLOBAL_LIST_EMPTY(boss_mineral_doors)
 		if(!QDELETED(crusader))
 			to_chat(crusader, "<h2 style='color: gold;'>VICTORY! The Archlich has been vanquished! Claim your spoils and assemble at the triumphant gateway!</h2>")
 			playsound(crusader, 'sound/misc/bell.ogg', 80, FALSE)
+
+	update_all_expedition_trackers()
+	complete_expedition_objective("slay_boss")
+	complete_expedition_objective("archlich")
 
 
 /obj/effect/spawner/lootdrop/expedition

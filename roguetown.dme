@@ -3526,6 +3526,8 @@
 #include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_boss.dm"
 #include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_core.dm"
 #include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_gates.dm"
+#include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_quest.dm"
+#include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_quest_utilities.dm"
 #include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_templates.dm"
 #include "modular_twilight_axis\code\modules\roguetown\expedition\expedition_utilities.dm"
 // END_INCLUDE

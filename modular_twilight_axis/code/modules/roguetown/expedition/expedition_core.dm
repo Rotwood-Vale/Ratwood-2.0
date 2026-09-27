@@ -46,6 +46,7 @@
 
 	say("The 6 champions are consecrated! Let the crusade commence!")
 	playsound(src, 'sound/misc/royal_decree.ogg', 100, FALSE, -1)
+	set_expedition_level("Borderlands", list("reach_gate" = "March to the Borderlands Passage"))
 
 	for(var/obj/structure/expedition_gate/departure/dep as anything in GLOB.expedition_departure_gates)
 		dep.reveal_portal()

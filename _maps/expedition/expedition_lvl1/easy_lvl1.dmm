@@ -499,7 +499,7 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue)
 "xS" = (
-/obj/structure/expedition_marker/entry/level_1,
+/obj/structure/expedition_marker/entry/level_1/crypt,
 /turf/open/floor/rogue/grass,
 /area/rogue)
 "xU" = (

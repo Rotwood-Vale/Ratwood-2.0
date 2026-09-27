@@ -123,7 +123,10 @@ GLOBAL_LIST_EMPTY(expedition_departure_gates)
 		if(!QDELETED(traveler))
 			playsound(traveler, 'sound/misc/portal_enter.ogg', 100, TRUE)
 			movable_travel_z_level(traveler, get_turf(dest))
-			to_chat(traveler, "<h3 style='color: #4da6ff;'>You step through the rift into Depth [dest.stage_number]...</h3>")
+			to_chat(traveler, "<h3 style='color: #4da6ff;'>You step through the rift into [dest.stage_name]...</h3>")
+
+	if(dest && length(dest.level_objectives))
+		set_expedition_level(dest.stage_name, dest.level_objectives)
 
 	is_activating = FALSE
 
@@ -208,13 +211,13 @@ GLOBAL_LIST_EMPTY(expedition_departure_gates)
 		return
 
 	var/turf/home_turf = null
-	var/obj/structure/expedition_gate/departure/dep = null
+	var/obj/structure/expedition_gate/departure/portal = null
 
 	if(length(GLOB.expedition_departure_gates))
-		dep = GLOB.expedition_departure_gates[1]
+		portal = GLOB.expedition_departure_gates[1]
 
-	if(dep)
-		home_turf = get_step(dep, dep.dir) || dep.loc
+	if(portal)
+		home_turf = get_step(portal, portal.dir) || portal.loc
 	else if(GLOB.king_throne)
 		var/obj/structure/roguethrone/throne = GLOB.king_throne
 		home_turf = get_step(throne, throne.dir)
@@ -232,10 +235,10 @@ GLOBAL_LIST_EMPTY(expedition_departure_gates)
 
 	complete_expedition(success = TRUE)
 
-	if(dep && !QDELETED(dep))
-		playsound(dep, 'sound/misc/portal_enter.ogg', 100, TRUE)
-		dep.visible_message("<b>With a final groan of shattered space, the borderlands passage collapses into nothingness!</b>")
-		qdel(dep)
+	if(portal && !QDELETED(portal))
+		playsound(portal, 'sound/misc/portal_enter.ogg', 100, TRUE)
+		portal.visible_message("<b>With a final groan of shattered space, the borderlands passage collapses into nothingness!</b>")
+		qdel(portal)
 
 	qdel(src)
 
@@ -249,6 +252,8 @@ GLOBAL_LIST_EMPTY(expedition_departure_gates)
 	anchored = TRUE
 	density = FALSE
 	var/stage_number = 1
+	var/stage_name = "Depth"
+	var/list/level_objectives = list()
 
 /obj/structure/expedition_marker/entry/Initialize(mapload)
 	. = ..()
@@ -257,32 +262,3 @@ GLOBAL_LIST_EMPTY(expedition_departure_gates)
 /obj/structure/expedition_marker/entry/Destroy()
 	GLOB.expedition_level_entries -= "[src.stage_number]"
 	return ..()
-
-/obj/structure/expedition_gate/level_1_exit
-	name = "descending rift"
-	stage_number = 1
-
-/obj/structure/expedition_gate/level_2_exit
-	name = "abyssal threshold"
-	color = "#ff0d00"
-	stage_number = 2
-
-/obj/structure/expedition_gate/level_3_exit
-	name = "abyssal threshold"
-	color = "#ff0d00"
-	stage_number = 3
-
-/obj/structure/expedition_marker/entry/level_1
-	stage_number = 1
-
-/obj/structure/expedition_marker/entry/level_2
-	stage_number = 2
-
-/obj/structure/expedition_marker/entry/level_3
-	stage_number = 3
-
-/obj/structure/expedition_marker/entry/level_4
-	stage_number = 4
-
-/obj/structure/expedition_marker/entry/boss_chamber
-	stage_number = 4
