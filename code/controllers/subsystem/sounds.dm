@@ -23,9 +23,17 @@ SUBSYSTEM_DEF(sounds)
 	/// higher reserve position - decremented and incremented to reserve sound channels, anything above this is reserved. The channel at this index is the highest unreserved channel.
 	var/channel_reserve_high
 
+	var/list/all_music_sounds = list()
+
 /datum/controller/subsystem/sounds/Initialize()
 	setup_available_channels()
-	return ..()
+	all_music_sounds = pathwalk("sound/ambience/", ".ogg")
+	. = ..()
+	preload_music_for_clients()
+
+/datum/controller/subsystem/sounds/proc/preload_music_for_clients()
+	for(var/client/player as anything in GLOB.clients)
+		player.preload_music()
 
 /datum/controller/subsystem/sounds/proc/setup_available_channels()
 	channel_list = list()

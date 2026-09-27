@@ -92,6 +92,7 @@
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
 	enable_client_mobs_in_contents(client)
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
+	client?.preload_music()
 
 	// Re-apply per-client noise verb filtering after a client attaches to a human body.
 	// Human Initialize() runs before client prefs are available, so this keeps
