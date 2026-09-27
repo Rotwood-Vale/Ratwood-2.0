@@ -492,7 +492,6 @@
 	user.adjustCloneLoss(clone_transfer)
 
 	// Visual effects
-	user.visible_message(span_danger("[user] takes [H]'s suffering upon themselves!"))
 	user.visible_message(span_danger("Silvery thread of lux shoots from [user] and hits [H] AMENDING their suffering!"))
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
@@ -503,9 +502,6 @@
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717") 
 	
 	// Notify the user and target
-	to_chat(user, span_warning("You amend [H] of their agony, taking it upon yourself!"))
-	to_chat(H, span_notice("[user] amends you of your agony!"))
-
 	to_chat(user, span_warning("You pull on [H]'s lux, AMENDING their injuries!"))
 	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
 		to_chat(user, span_notice("You feel pull on your soul as [user], AMENDS your suferring."))
