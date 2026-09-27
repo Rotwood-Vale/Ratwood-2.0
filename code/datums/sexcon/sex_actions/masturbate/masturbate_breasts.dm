@@ -2,7 +2,6 @@
 	name = "Rub breasts"
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_BREASTS
-	subtle_supported = TRUE
 	solo = TRUE
 
 /datum/sex_action/masturbate_breasts/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)

@@ -25,7 +25,7 @@
 	for(var/mob/living/carbon/human/target in get_hearers_in_view(6, usr))
 		if(!target.mind || target.stat != CONSCIOUS)
 			continue
-		if(target.mind.has_antag_datum(/datum/antagonist/vampire))
+		if(target.is_immune_to_vampire_domination())
 			continue
 		selection += target
 
@@ -48,7 +48,7 @@
 		return
 
 	if(!powerful)
-		var/mob/selected = input(user, "Ensnare the mind of which mortal?", "Transfix") as null|anything in targets 
+		var/mob/selected = input(user, "Ensnare the mind of which mortal?", "Transfix") as null|anything in targets
 		if(QDELETED(src) || QDELETED(user) || QDELETED(selected))
 			revert_cast(user)
 			return
@@ -61,10 +61,9 @@
 		user.visible_message("<font color='red'>[user]'s eyes glow a ghastly red as they project their will outwards!</font>")
 
 	for(var/mob/living/carbon/human/target as anything in targets)
-		if(target.cmode)
-			will_dice++
+		var/current_will_dice = will_dice + (target.cmode ? 1 : 0)
 		var/willpower = round(target.STAINT / int_divisor, 1)
-		var/willroll = roll(willpower, will_dice)
+		var/willroll = roll(willpower, current_will_dice)
 
 		// If the vampire failed badly
 		var/knowledgable = (willroll - bloodroll) >= 3

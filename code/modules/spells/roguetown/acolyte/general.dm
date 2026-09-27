@@ -70,7 +70,7 @@
 		healing += situational_bonus
 
 	if(!ishuman(target))
-		target.apply_status_effect(/datum/status_effect/buff/healing, healing, is_inhumen)
+		target.apply_status_effect(/datum/status_effect/buff/healing, healing, is_inhumen, user.patron)
 		return TRUE
 
 	var/mob/living/carbon/human/human = target
@@ -91,7 +91,7 @@
 		human.emote("agony")
 		return FALSE
 
-	target.apply_status_effect(/datum/status_effect/buff/healing, healing)
+	target.apply_status_effect(/datum/status_effect/buff/healing, healing, is_inhumen, user.patron)
 	target.visible_message(message_out, message_self)
 
 	return TRUE

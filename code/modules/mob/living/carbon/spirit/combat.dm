@@ -4,7 +4,6 @@
 	var/aggressive=0 // set to 1 using VV for an angry monkey
 	var/frustration=0
 	var/pickupTimer=0
-	var/list/enemies = list()
 	var/mob/living/target
 	var/obj/item/pickupTarget
 	var/mode = SPIRIT_IDLE

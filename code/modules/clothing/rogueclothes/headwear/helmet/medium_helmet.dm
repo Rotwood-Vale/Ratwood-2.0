@@ -44,6 +44,9 @@
 			if("onbelt")
 				return list("shrink" = 0.42,"sx" = -3,"sy" = -8,"nx" = 6,"ny" = -8,"wx" = -1,"wy" = -8,"ex" = 3,"ey" = -8,"nturn" = 180,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 1,"sflip" = 0,"wflip" = 0,"eflip" = 8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
+/obj/item/clothing/head/roguetown/helmet/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/head/roguetown/helmet/skullcap
 	name = "skull cap"
 	desc = "An iron helmet which covers the top of the head."
@@ -86,6 +89,9 @@
 	icon_state = "kettle"
 	body_parts_covered = HEAD|HAIR|EARS
 	armor = ARMOR_PLATE
+
+/obj/item/clothing/head/roguetown/helmet/kettle/shadow
+	color = "#323232"
 
 /obj/item/clothing/head/roguetown/helmet/kettle/iron
 	name = "iron kettle helmet"
@@ -177,6 +183,9 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/head/roguetown/helmet/sallet/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/head/roguetown/helmet/sallet/iron
 	name = "iron sallet"
 	icon_state = "isallet"
@@ -195,6 +204,13 @@
 	block2add = FOV_BEHIND
 	smelt_bar_num = 2
 	armor = ARMOR_PLATE
+
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/ComponentInitialize()
+	..()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/shadow
+	color = "#323232"
 
 /obj/item/clothing/head/roguetown/helmet/sallet/shishak
 	name = "steel shishak"
@@ -265,6 +281,22 @@
 	name = "snouted visored sallet"
 	desc = "A steel 'sallet'-styled helmet with an adjustable visor, its bevor drawn forward into a muzzle. Favored by those with snouts. Away with you, vile beggar!"
 	icon_state = "sallet_visor_s"
+
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/iron/snouted
+	name = "iron snouted visored sallet"
+	desc = "An iron 'sallet'-styled helmet with an adjustable visor, its bevor drawn forward into a muzzle. Favored by those with snouts. Out for a stroll, now, are we?"
+	icon_state = "isallet_visor_s"
+
+/// The raised visor hides part of the plume, so these keep their own raised visor overlays
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted/get_detail_state(base_state)
+	if(base_state == "[initial(icon_state)]_t")
+		return base_state
+	return ..()
+
+/obj/item/clothing/head/roguetown/helmet/sallet/visored/iron/snouted/get_detail_state(base_state)
+	if(base_state == "[initial(icon_state)]_t")
+		return base_state
+	return ..()
 
 /obj/item/clothing/head/roguetown/helmet/sallet/elven
 	desc = "A steel helmet with a thin gold plating designed for Elven woodland guardians."
@@ -408,6 +440,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/otavan/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), HIDEEARS, null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Otavan. Only hides ears when open.
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
@@ -433,6 +466,19 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/shadow
+	color = "#402c56"
+	detail_color = "#cb9d06"
+
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/shadow/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged
 	name = "winged elven barbute"
 	desc = "A winged version of the elven barbute. They have always been known for their vanity."
@@ -440,6 +486,19 @@
 	item_state = "elven_barbute_winged"
 
 /obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/shadow
+	color = "#402c56"
+	detail_color = "#cb9d06"
+
+/obj/item/clothing/head/roguetown/helmet/elvenbarbute/winged/shadow/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
 		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
@@ -477,6 +536,10 @@
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 
+/obj/item/clothing/head/roguetown/helmet/bascinet/ComponentInitialize()
+	..()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface
 	name = "pigface bascinet"
 	desc = "A steel bascinet helmet with a pigface visor that protects the entire head and face. Add a feather to show the colors of your family or allegiance."
@@ -493,6 +556,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -524,6 +588,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull/attackby(obj/item/W, mob/living/user, params)
@@ -567,6 +632,12 @@
 			pic2.color = get_altdetail_color()
 		add_overlay(pic2)
 
+/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/shadowplate
+	name = "smiling bascinet"
+	desc = "A helmet of drowsmith sporting a gold wreath and a grinning visor."
+	icon_state = "drowhelm"
+	item_state = "drowhelm"
+
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface
 	name = "roundface bascinet"
 	desc = "A bascinet with a conical visor, favored by those without snouts and whiskers. Nestle a feather or length of cloth onto the rim to display your allegiance."
@@ -579,6 +650,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -613,6 +685,20 @@
 	desc = "A bascinet with a conical visor, drawn forward into a muzzle for those with snouts. Nestle a feather or length of cloth onto the rim to display your allegiance."
 	icon_state = "roundface_s"
 	item_state = "roundface_s"
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron
+	name = "iron roundface bascinet"
+	desc = "An iron bascinet with a conical visor, favored by those without snouts and whiskers. Nestle a feather or length of cloth onto the rim to display your allegiance."
+	icon_state = "iroundface"
+	item_state = "iroundface"
+	smeltresult = /obj/item/ingot/iron
+	max_integrity = ARMOR_INT_HELMET_IRON
+
+/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron/snouted
+	name = "iron snouted roundface bascinet"
+	desc = "An iron bascinet with a conical visor, drawn forward into a muzzle for those with snouts. Nestle a feather or length of cloth onto the rim to display your allegiance."
+	icon_state = "iroundface_s"
+	item_state = "iroundface_s"
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
 	name = "\improper Etruscan bascinet"
@@ -654,6 +740,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/kettle/jingasa
 	name = "jingasa"
@@ -701,6 +788,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/antler/melee
 	name = "forester's antler helm"
@@ -807,9 +895,38 @@
 	smeltresult = /obj/item/ingot/steel
 	emote_environment = 3
 	dropshrink = null
+	detail_tag = "_detail"
+	var/ducal_color = TRUE
+
+/obj/item/clothing/head/roguetown/helmet/citywatch/Initialize(mapload)
+	. = ..()
+	if(ducal_color == TRUE)
+		if(GLOB.lordprimary)
+			lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
+		GLOB.lordcolor += src
+
+/obj/item/clothing/head/roguetown/helmet/citywatch/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/clothing/head/roguetown/helmet/citywatch/lordcolor(primary,secondary)
+	detail_color = primary
+	update_icon()
+	if(ismob(loc))
+		var/mob/L = loc
+		L.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/citywatch/Destroy()
+	GLOB.lordcolor -= src
+	return ..()
 
 /obj/item/clothing/head/roguetown/helmet/citywatch/captain
 	name = "watch captain helmet"
 	desc = "A heavy helmet in simple greys. Justice is impartial and so are you...in theory."
-	icon_state = "sheriff_helm"
-	item_state = "sheriff_helm"
+	ducal_color = FALSE
+	detail_color = "#36454F"

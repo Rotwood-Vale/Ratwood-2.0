@@ -42,12 +42,19 @@
 	pixel_x = -8
 
 	butcher_results = list(
+		/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z = 3,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z = 1,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z = 1,
 		/obj/item/natural/bone = 6,
 		/obj/item/alch/sinew = 1,
 		/obj/item/alch/bone = 2,
 		/obj/item/alch/viscera = 1
 	)
 	perfect_butcher_results = list(
+		/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z = 2,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z = 3,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z = 2,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z = 2,
 		/obj/item/reagent_containers/food/snacks/fat = 1,
 		/obj/item/natural/hide = 1,
 		/obj/item/natural/bundle/bone/full = 2,

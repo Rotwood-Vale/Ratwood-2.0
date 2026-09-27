@@ -1,8 +1,0 @@
-author: "trueroguan"
-delete-after: True
-changes:
-  - rscadd: "New \"Jiggle\" emote - shake your chest and bounce on the spot."
-  - rscadd: "Jiggle Duration and Endless Jiggle settings in the Toggles menu. Long or endless jiggling drains stamina."
-  - rscadd: "Bathhouse Attendants don't tire from jiggling inside the bathhouse."
-  - image: "Jiggle animation frames for every breast size and type."
-  - bugfix: "Characters with different breast sizes no longer risk sharing each other's cached body sprites."

@@ -86,6 +86,10 @@
 	// You can convert those the church has shunned.
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal)
+	if(istype(H.patron, /datum/patron/divine))
+		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
+	if(istype(H.patron, /datum/patron/inhumen))
+		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
 	if (istype (H.patron, /datum/patron/inhumen/zizo))
 		if(H.mind)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
@@ -221,7 +225,7 @@
 					H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/psicross/reform, SLOT_RING, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet, SLOT_HEAD, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/fluted, SLOT_ARMOR, TRUE)
-					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter, SLOT_SHIRT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/shirt/freifechter, SLOT_SHIRT, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic, SLOT_PANTS, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/angle, SLOT_GLOVES, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short, SLOT_SHOES, TRUE)
@@ -234,6 +238,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/rogue/facemask/steel, SLOT_WEAR_MASK, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/gorget, SLOT_NECK, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/chainlegs, SLOT_PANTS, TRUE)
+
 
 /datum/advclass/wretch/heretic/spy
 	name = "Heretic Spy"
@@ -295,7 +300,7 @@
 	if(H.mind)
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"
-		var/weapons = list("Rapier","Dagger", "Bow", "Crossbow", "Slurbow", "Whip")
+		var/weapons = list("Rapier","Dagger", "Bow", "Crossbow", "Slurbow", "Whip", "Urumi")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -322,6 +327,12 @@
 			if("Whip") //For baothans.
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				beltr = /obj/item/rogueweapon/whip
+			if("Urumi")
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+					beltr = /obj/item/rogueweapon/whip/urumi/silver/psydonic/old
+				else
+					beltr = /obj/item/rogueweapon/whip/urumi
 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
 		C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)	//Minor regen, starts maxed out.
 		wretch_select_bounty(H)
@@ -335,6 +346,11 @@
 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal)
+	if(istype(H.patron, /datum/patron/divine))
+		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
+	if(istype(H.patron, /datum/patron/inhumen))
+		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
+	
 
 /datum/outfit/job/roguetown/wretch/hereticspy/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
@@ -426,7 +442,7 @@
 				if("Reformist") //You look like a Reformist Freifechter.
 					to_chat(H, span_warning("God is dead, but this world HE left is beautiful and worth of loving. Don't let the butchers from Otava tell you otherwise."))
 					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half/fencer, SLOT_ARMOR, TRUE)
-					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter, SLOT_SHIRT, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/shirt/freifechter, SLOT_SHIRT, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/gloves/roguetown/fingerless_leather, SLOT_GLOVES, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short, SLOT_SHOES, TRUE)
 					H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic, SLOT_PANTS, TRUE)

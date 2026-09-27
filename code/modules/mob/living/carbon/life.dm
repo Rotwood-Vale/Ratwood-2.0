@@ -97,11 +97,7 @@
 							emote("painmoan")
 							return
 					if(prob(probby) && !HAS_TRAIT(src, TRAIT_NOPAINSTUN) && !has_status_effect(/datum/status_effect/buff/psyhealing))
-						Immobilize(10)
-						emote("painscream")
-						stuttering += 5
-						addtimer(CALLBACK(src, PROC_REF(Stun), 110), 10)
-						addtimer(CALLBACK(src, PROC_REF(Knockdown), 110), 10)
+						paincrit()
 						mob_timers["painstun"] = world.time + 160
 					else
 						emote("painmoan")
@@ -113,6 +109,61 @@
 
 		if(painpercent >= 100)
 			add_stress(/datum/stressevent/painmax)
+
+/mob/living/carbon/proc/paincrit()
+	Immobilize(10)
+	emote("paincrit", forced = TRUE)
+	stuttering += 5
+	addtimer(CALLBACK(src, PROC_REF(Stun), 110), 10)
+	addtimer(CALLBACK(src, PROC_REF(Knockdown), 110), 10)
+
+// Odds of not getting painstunned by your limbs getting ripped off.
+// Scales linearly off WIL and CON. Intentionally harsh, this is supposed to be cinematic both ways.
+// 10 CON 10 WIL has 20 percent to avoid paincrit, 15 CON 15 WIL has 40 percent exactly.
+/mob/living/carbon/proc/get_delimb_survival_chance()
+	var/con_wil = STACON + STAWIL
+	var/base_chance = (con_wil - 10) * 2
+	// Psydonian grit gives you a flat twenty percent extra to resist limbcrit.
+	// If you succeed the roll with psydonian grit you get a protagonist moment with an adrenaline rush and some cool flavor text.
+	if(HAS_TRAIT(src, TRAIT_PSYDONIAN_GRIT))
+		base_chance += 20
+	return max(base_chance, 0)
+
+/mob/living/carbon/proc/delimb_pain()
+	if(!client)
+		return
+	if(stat)
+		return
+	if(HAS_TRAIT(src, TRAIT_NOPAIN)) // You don't feel shit.
+		return
+	if(HAS_TRAIT(src, TRAIT_NUMBED_LIMBS))
+		return
+	var/survived = HAS_TRAIT(src, TRAIT_NOPAINSTUN) ? TRUE : prob(get_delimb_survival_chance()) // NOPAINSTUN guys simply always succeed the roll.
+	if(!survived)
+		paincrit()
+		return
+	if(HAS_TRAIT(src, TRAIT_PSYDONIAN_GRIT))
+		emote("warcry", forced = TRUE)
+		var/hiswill = pick(
+			"THROUGH HIM, I ENDURE!!",
+			"THE BELLS TOLL MY NAME, BUT I CAN STILL FIGHT!!",
+			"ENDURE!!",
+			"IF I AM TO FALL, THEN THEY SHALL FALL WITH ME!!",
+		)
+		visible_message(span_reallybig(span_danger("[src] ROARS through the pain, teeth bared in defiant fury!")), span_extremelybig(span_userdanger(hiswill)))
+		playsound(src, 'sound/magic/PSYDONE.ogg', 100, FALSE)
+		playsound(src, 'sound/combat/clash_struck.ogg', 100) // Kino
+		var/datum/status_effect/buff/adrenaline_rush/rush = apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
+		if(rush) // These are actually enough to kinda stabilize you, but let's be real you're probably not winning.
+			rush.duration += 4 SECONDS
+		var/datum/status_effect/buff/psyhealing/stirring = apply_status_effect(/datum/status_effect/buff/psyhealing, 3)
+		if(stirring)
+			stirring.duration += 4 SECONDS
+	else
+		emote("painscream", forced = TRUE)
+		visible_message(span_danger("[src] staggers back from the shock, but holds fast with fire in their eyes!"), span_reallybig(span_danger("I can still fight!")))
+		if(STAWIL > 14)
+			apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
 
 /mob/living/carbon/proc/handle_roguebreath()
 	return
