@@ -620,7 +620,7 @@
 /datum/status_effect/debuff/dazed/stavetackle
 	id = "stackle"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavetackle
-	effectedstats = list(STATKEY_SPD = -4)
+	effectedstats = list(STATKEY_SPD = -5)
 	duration = 3 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/dazed/stavetackle

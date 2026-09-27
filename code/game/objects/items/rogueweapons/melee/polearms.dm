@@ -310,34 +310,37 @@
 #define QUARTERSTAFF_STOCK_INTENTS list(SPEAR_BASH)
 #define QUARTERSTAFF_STOCK_GRIPPED_INTENTS list(/datum/intent/spear/bash/ranged/quarterstaff,/datum/intent/spear/thrust/quarterstaff)
 //staff monk, you want? I give. One-handed is where you have your reach. Gripped is where you have more defense.
-/datum/intent/woodstaff/quarterstaff/hsweep
+/datum/intent/woodstaff/quarterstaff/hsweep //Area control. Less damage, multiple targets.
 	name = "horizontal sweep"
 	icon_state = "incrush"
 	blade_class = BCLASS_BLUNT
-	attack_verb = list("strikes down", "sweeps down")
+	attack_verb = list("sweeps across", "sweeps above")
 	swingdelay = 1 SECONDS
-	damfactor = 1.2
-	cleave = /datum/cleave_pattern/forward_cleave
+	damfactor = 0.8
+	reach = 2
+	cleave = /datum/cleave_pattern/horizontal_sweep
 	desc = "Sweep your staff horizontally, striking those whom stand in front of you."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	
+	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
 
-/datum/intent/woodstaff/quarterstaff/vsweep
+/datum/intent/woodstaff/quarterstaff/vsweep //Area control. Less damage, multiple targets.
 	name = "horizontal sweep"
 	icon_state = "insweep"
 	blade_class = BCLASS_BLUNT
-	attack_verb = list("strikes vertically", "sweeps through")
+	attack_verb = list("vertically strikes", "sweeps through")
 	swingdelay = 1 SECONDS
-	damfactor = 1.2
+	damfactor = 0.8
+	reach = 2
 	desc = "Sweep your staff vertically, sweep and punish those ahead."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	cleave = /datum/cleave_pattern/forward_cleave
+	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
 
 /datum/intent/effect/hookfeet
 	name = "tackle feet"
 	icon_state = "intackle"
 	desc = "Extend your staff forth; tackling and disbalancing your opponents."
-	clickcd = RESIST_INTENT
+	clickcd = CLICK_CD_HEAVY
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("tackles", "masterfully disbalances")
 	intent_effect = /datum/status_effect/debuff/dazed/stavetackle
@@ -358,19 +361,20 @@
 	icon_state = "inbash"
 	desc = "Quickly lift your staff up; striking people at a close range to knock the air out of them."
 	blade_class = BCLASS_BLUNT
-	attack_verb = list("masterfully thrusts", "quickly extends", "powerfully jabs")
+	attack_verb = list("masterfully thrusts", "quickly thrusts", "powerfully jabs")
 	reach = 2
 	damfactor = 1.4
 	intent_intdamage_factor = 0.8
 	penfactor = 20
 
-/datum/intent/woodstaff/quarterstaff/guard
+/datum/intent/shield/block/stave
 	name = "block"
 	icon_state = "inblock"
 	tranged = 1 //we can't attack directly with this intent, but we can charge it
 	tshield = 1
 	chargetime = 1
-	chargedloop = 'sound/combat/wooshes/flail_swing.ogg'
+	chargetime = 0.8 SECONDS
+	chargedloop = /datum/looping_sound/flailswing
 	warnie = "shieldwarn"
 	item_d_type = "blunt"
 	charge_pointer = 'icons/effects/mousemice/charge/shield_charging.dmi'
@@ -387,7 +391,7 @@
 	penfactor = 20
 
 
-/datum/intent/woodstaff/quarterstaff/spec_on_apply_effect(mob/living/H, mob/living/user, params)
+/datum/intent/woodstaff/quarterstaff/push/spec_on_apply_effect(mob/living/H, mob/living/user, params)
 	var/chungus_khan_str = user.STASTR
 	if(H.has_status_effect(/datum/status_effect/debuff/yeetcdstave))
 		return // Recently knocked back, cannot be knocked back again yet
@@ -1753,11 +1757,12 @@
 	possible_item_intents = QUARTERSTAFF_STOCK_INTENTS
 	gripped_intents = QUARTERSTAFF_STOCK_GRIPPED_INTENTS
 	icon_state = "quarterstaff"
+	can_parry = TRUE
 	max_integrity = 150
 	/// One-handed intents a TRAIT_STAVEMASTER fights with.
 	var/list/master_item_intents = list(/datum/intent/woodstaff/quarterstaff/hsweep, /datum/intent/woodstaff/quarterstaff/vsweep, /datum/intent/effect/hookfeet)
 	/// Two-handed intents a TRAIT_STAVEMASTER fights with.
-	var/list/master_gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff/strikeplus, /datum/intent/spear/thrust/quarterstaff/thrustplus, /datum/intent/woodstaff/quarterstaff/guard, /datum/intent/woodstaff/quarterstaff/push)
+	var/list/master_gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff/strikeplus, /datum/intent/spear/thrust/quarterstaff/thrustplus, /datum/intent/woodstaff/quarterstaff/push, /datum/intent/shield/block/stave)
 	/// Whether this sword is valid for TRAIT_STAVEMASTER
 	var/master_trainable = FALSE
 	/// Flag for if the master intents are active, e.g., this is being held by someone with TRAIT_STAVEMASTER.
