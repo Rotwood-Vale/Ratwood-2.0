@@ -10,6 +10,7 @@
 	plane = GAME_PLANE_UPPER
 	anchored = TRUE
 	opacity = 0
+	sound_door = TRUE
 	density = FALSE
 	var/open = TRUE
 	var/closedir = 0

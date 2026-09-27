@@ -82,14 +82,16 @@
 		return
 
 	var/vol = clamp(round(volume_value), 0, 100)
-	// Point ambience is unhooked while its effective volume is zero
-	var/point_ambience_was_silent = !prefs.point_ambience_volume()
 	switch(setting_id)
 		if("master")
 			prefs.overallvol = vol
 			update_slider_channels()
+			if(volume_power_menu)
+				volume_power_menu.effects_changed = TRUE
 		if("effects")
 			prefs.mastervol = vol
+			if(volume_power_menu)
+				volume_power_menu.effects_changed = TRUE
 		if("instruments")
 			prefs.instrumentvol = vol
 			sync_instrument_volume()
@@ -124,9 +126,10 @@
 		else
 			return
 
-	// Crossing zero changes whether they are hooked at all, so it takes the call the toggles use.
-	// Any other change reaches their next service without cutting what is playing
-	if(point_ambience_was_silent != !prefs.point_ambience_volume())
+	// Every change to a slider point ambience reads goes through listener_prefs_changed(), which
+	// decides for itself whether anything flipped: zero and the cutoff unhook, and any other value
+	// reaches the next service without cutting what is playing
+	if(setting_id == "point_ambience_volume" || setting_id == "master")
 		SSpoint_ambience.listener_prefs_changed(src)
 	// The setting is already live above. Only the file write waits, so a run of changes collapses
 	// into one, whether that is a held arrow key or a client sending the action in a loop. The menu
@@ -135,6 +138,9 @@
 
 /datum/volume_power_menu
 	var/client/owner
+	/// Master or Sound Effects moved while the menu was open, so the sounds priced by them are
+	/// re-sent once when it closes rather than on every step of the slider
+	var/effects_changed = FALSE
 
 /datum/volume_power_menu/New(client/C)
 	. = ..()
@@ -150,6 +156,9 @@
 	// The write is deferred while the menu is open, so a close that beats the timer would otherwise
 	// lose the last change
 	owner?.prefs?.save_preferences()
+	if(effects_changed)
+		effects_changed = FALSE
+		owner?.resend_effect_sounds()
 	return ..()
 
 /datum/volume_power_menu/ui_interact(mob/user, datum/tgui/ui)

@@ -38,6 +38,11 @@
 	var/obj/second = allocate(/obj, nearby)
 	test_sources += first
 	test_sources += second
+	fire_category.silenced = TRUE
+	TEST_ASSERT(!ambience.register_spread_source(first, fire_category.type, 1), "A silenced category must refuse a spread source")
+	TEST_ASSERT_NULL(ambience.source_categories[first], "A refused spread source must not enter the index")
+	TEST_ASSERT_NULL(fire_category.source_continuous[first], "A refused spread source must not leave a continuity reference")
+	fire_category.silenced = FALSE
 	var/before_registration = ambience.static_version
 	ambience.register_source(first, fire_category.type)
 	TEST_ASSERT(!ambience.can_reuse_tile_listener(center, before_registration), "A new source must refresh listeners inside its reach")
@@ -76,6 +81,7 @@
 
 	var/before_removal = ambience.static_version
 	ambience.unregister_source(first, fire_category.type)
+	TEST_ASSERT_EQUAL(length(ambience.runner_up_by_category), 0, "Removal must release runner-up scratch even with no listener to refresh it")
 	TEST_ASSERT(!ambience.can_reuse_tile_listener(center, before_removal), "Source removal must refresh its old reach")
 	TEST_ASSERT(ambience.can_reuse_tile_listener(far, before_removal), "Source removal must preserve a distant standing answer")
 	TEST_ASSERT_NULL(ambience.tile_cache[center], "Removal must release the cached ranking immediately")

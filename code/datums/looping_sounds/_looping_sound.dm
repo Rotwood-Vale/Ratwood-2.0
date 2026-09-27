@@ -194,7 +194,7 @@
 	audio_index = 0
 
 /**
- * Sets the loop's volume mid-flight. Kept from the old file for weather severity.
+ * Sets the loop's volume mid-flight, for weather severity.
  * Token loops re-send at the new volume; direct mob loops adjust their channel in place.
  */
 /datum/looping_sound/proc/set_volume(new_volume)
@@ -249,8 +249,8 @@
 		else
 			SEND_SOUND(parent, sound_to_play)
 	else
-		// Kept from the old file: fires, torches and clocks blanket the map, and most of
-		// them play to nobody. Probe the spatial grid before paying for playsound().
+		// Most loops play to nobody most of the time, so probe the spatial grid before paying
+		// for playsound()
 		if(!any_possible_listeners())
 			return
 		playsound(
@@ -276,16 +276,17 @@
  * Over-approximate test for "could playsound() possibly reach anyone from here".
  *
  * Answers at spatial-grid-cell granularity and skips the per-turf distance filter, so
- * anyone actually in range always passes. Kept from the old file; only the range math
- * moved from world.view to SOUND_RANGE to match the merged playsound().
+ * anyone actually in range always passes. The range is SOUND_RANGE plus extra_range, what
+ * playsound() reaches.
  */
 /datum/looping_sound/proc/any_possible_listeners()
 	var/turf/source_turf = get_turf(parent)
 	if(!source_turf)
 		return FALSE
 
-	// playsound() treats a falsy extrarange as 1, so match that or we probe a smaller box than it does.
-	var/probe_range = SOUND_RANGE + (extra_range ? extra_range : 1)
+	// playsound() treats an omitted extrarange as 1 and keeps 0 as 0, so match that or we probe a
+	// different box than it reaches
+	var/probe_range = SOUND_RANGE + (isnull(extra_range) ? 1 : extra_range)
 
 	if(SSspatial_grid.any_client_in_range(source_turf, probe_range))
 		return TRUE

@@ -7,6 +7,7 @@
 	plane = GAME_PLANE
 	density = TRUE
 	opacity = TRUE
+	sound_door = TRUE
 	var/base_state = "tent_door"
 
 /obj/structure/roguetent/update_icon()
@@ -34,14 +35,14 @@
 	visible_message(span_info("[user] opens [src]."))
 	playsound(src, 'sound/foley/equip/rummaging-02.ogg', 100, FALSE)
 	density = FALSE
-	opacity = FALSE
+	set_opacity(FALSE)
 	update_icon()
 
 /obj/structure/roguetent/proc/close_up(mob/user)
 	visible_message(span_info("[user] closes [src]."))
 	playsound(src, 'sound/foley/equip/rummaging-02.ogg', 100, FALSE)
 	density = TRUE
-	opacity = TRUE
+	set_opacity(TRUE)
 	update_icon()
 
 /obj/structure/roguetent/attack_hand(mob/living/user)

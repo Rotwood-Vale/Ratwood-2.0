@@ -435,6 +435,7 @@
 	icon_state = "shutter0"
 	density = TRUE
 	opacity = TRUE
+	sound_door = TRUE
 	redstone_structure = TRUE
 
 /obj/structure/bars/passage/shutter/redstone_triggered()
@@ -443,11 +444,11 @@
 	if(density)
 		icon_state = "shutter1"
 		density = FALSE
-		opacity = FALSE
+		set_opacity(FALSE)
 	else
 		icon_state = "shutter0"
 		density = TRUE
-		opacity = TRUE
+		set_opacity(TRUE)
 
 /obj/structure/bars/passage/shutter/open
 	icon_state = "shutter1"
@@ -460,12 +461,12 @@
 	if(density)
 		icon_state = "shutter1"
 		density = FALSE
-		opacity = FALSE
+		set_opacity(FALSE)
 		alpha = 60
 	else
 		icon_state = "shutter0"
 		density = TRUE
-		opacity = TRUE
+		set_opacity(TRUE)
 		alpha = 255
 
 /obj/structure/bars/passage/attackby(obj/item/I, mob/user, params)
@@ -617,6 +618,12 @@
 	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/clock)
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 	..()
+
+/// Dragged, so the index learns the new turf, as the lights do. A broken clock stays silent
+/obj/structure/fluff/clock/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(!obj_broken)
+		SSpoint_ambience.register_source(src, /datum/point_ambience_category/clock)
 
 /obj/structure/fluff/clock/attack_right(mob/user)
 	handle_special_items_retrieval(user, src)

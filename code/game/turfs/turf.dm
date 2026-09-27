@@ -61,9 +61,9 @@
 	var/climbable_atom_count = 0
 	/// How many atoms on this turf act as platforms (have BLOCK_Z_OUT_DOWN)?
 	var/platform_atom_count = 0
-	/// Doors standing here, so a sound occlusion walk loops a turf's contents only where one may be.
-	/// Too high costs a loop, too low lets sound through a shut door, so it is recounted rather than
-	/// kept running. See recount_sound_doors()
+	/// Objects with sound_door standing here, so a sound occlusion walk loops a turf's contents only
+	/// where a door may be. Too high costs a loop, too low lets sound through a shut door, so it is
+	/// recounted rather than kept running. See recount_sound_doors()
 	var/sound_door_count = 0
 
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
@@ -426,14 +426,19 @@
 	if (entered_movable.opacity)
 		opaque_atom_count++ // Make sure to do this before reconsider_lights(), incase we're on instant updates.
 		reconsider_lights()
-	if(isstructure(entered_movable))
-		var/obj/structure/entered_structure = entered_movable
+	if(!isobj(entered_movable))
+		return
+	var/obj/entered_obj = entered_movable
+	if(entered_obj.sound_door)
+		recount_sound_doors()
+		if(entered_obj.opacity || SSpoint_ambience.door_mode == SOUND_DOORS_ALWAYS)
+			SSpoint_ambience.door_changed(src)
+	if(isstructure(entered_obj))
+		var/obj/structure/entered_structure = entered_obj
 		if(entered_structure.density && entered_structure.climbable)
 			climbable_atom_count += 1
 		if(entered_structure.obj_flags & BLOCK_Z_OUT_DOWN)
 			platform_atom_count += 1
-		if(istype(entered_structure, /obj/structure/mineral_door))
-			recount_sound_doors()
 
 /turf/Exited(atom/movable/gone, atom/newloc)
 	if(!istype(gone))
@@ -443,14 +448,19 @@
 	if (gone?.opacity)
 		opaque_atom_count-- // Make sure to do this before reconsider_lights(), incase we're on instant updates.
 		reconsider_lights()
-	if(isstructure(gone))
-		var/obj/structure/exited_structure = gone
+	if(!isobj(gone))
+		return
+	var/obj/gone_obj = gone
+	if(gone_obj.sound_door)
+		recount_sound_doors(gone_obj)
+		if(gone_obj.opacity || SSpoint_ambience.door_mode == SOUND_DOORS_ALWAYS)
+			SSpoint_ambience.door_changed(src)
+	if(isstructure(gone_obj))
+		var/obj/structure/exited_structure = gone_obj
 		if(exited_structure.density && exited_structure.climbable)
 			climbable_atom_count -= 1
 		if(exited_structure.obj_flags & BLOCK_Z_OUT_DOWN)
 			platform_atom_count -= 1
-		if(istype(exited_structure, /obj/structure/mineral_door))
-			recount_sound_doors(exited_structure)
 
 /**
  * Counts the doors here from scratch. A running count would need every way in and out to agree:
@@ -459,8 +469,8 @@
  */
 /turf/proc/recount_sound_doors(atom/movable/leaving)
 	sound_door_count = 0
-	for(var/obj/structure/mineral_door/door in src)
-		if(door != leaving)
+	for(var/obj/door in src)
+		if(door.sound_door && door != leaving)
 			sound_door_count++
 
 /turf/open/Entered(atom/movable/AM)
@@ -721,4 +731,3 @@
 //Should return new turf
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-

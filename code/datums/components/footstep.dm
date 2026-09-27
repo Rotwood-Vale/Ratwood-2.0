@@ -128,16 +128,17 @@
 		used_volume = step_data[2]
 		used_extra_range = step_data[3]
 		do_vary = !feet_covered // only barefoot gets the pitch variation
-	// Step past the last sound rather than subtracting it. `list - item` builds a whole new list, and
-	// this runs on every footstep of every mob on the map, NPCs included.
+	// The last sound is skipped by its position rather than subtracted: `list - item` builds a whole
+	// new list, and this runs on every footstep of every mob on the map, NPCs included. The others
+	// stay equally likely, and a last sound from another floor's list excludes nothing
 	var/count = length(used_footsteps)
-	if(count > 1)
-		var/index = rand(1, count)
-		if(used_footsteps[index] == last_sound)
-			index = (index % count) + 1
-		used_sound = used_footsteps[index]
-	else
-		used_sound = used_footsteps[1]
+	if(!count)
+		return
+	var/last_index = (count > 1) ? used_footsteps.Find(last_sound) : 0
+	var/index = rand(1, last_index ? count - 1 : count)
+	if(last_index && index >= last_index)
+		index++
+	used_sound = used_footsteps[index]
 	last_sound = used_sound
 	playsound(step_location, used_sound,
 		volume * used_volume,

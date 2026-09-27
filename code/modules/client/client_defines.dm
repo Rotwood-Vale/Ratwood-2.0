@@ -92,9 +92,11 @@
 	var/point_ambience_speed_silenced = FALSE
 	/// world.time before which a forced move or a floor change waits for the interval like a step
 	var/point_ambience_jump_next = 0
-	/// Point ambience off, or its effective volume at zero. Set at login and by the volume menu,
-	/// never per step
+	/// Nothing to hear from point ambience: off, its volume at zero or under the cutoff, or every
+	/// category muted. Set at login and by the volume menu, never per step
 	var/point_ambience_silenced = FALSE
+	/// The categories this listener has muted, by their mask bits, set beside the flag above
+	var/point_ambience_muted_mask = 0
 	/**
 	 * The last full ambience scan, reused while the client stands still and nothing in the index
 	 * changed: the turf, SSpoint_ambience.static_version and effective point ambience volume it was

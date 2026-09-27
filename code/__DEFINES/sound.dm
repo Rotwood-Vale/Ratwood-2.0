@@ -22,10 +22,13 @@
  * at most one send per listener, and a source nobody is near costs only a range reject.
  *
  * Billed PER MOVING LISTENER, not per source. That is the trade: adding sources is nearly free,
- * adding players is not. A model based on local timings projected 2 to 7 ms/s for 150 in-round players.
- * 150 was the assumed population, not a tested player count. Client testing used at most two
- * clients. The comparison with plain loops and any break-even population depend on movement,
- * audible sources and batching. Neither design's total cost is independent of listener count.
+ * adding players is not. Priced from a live round's movement telemetry, 111 listeners on average,
+ * with each part timed by Counters on one client, it came to about 3.6 ms/s, 2.2 to 6.0, and 6.4 in
+ * the round's busiest two seconds, at a move interval of 7 with no step count. The shipped step count
+ * serves a walker about 1.5 times as often, which that figure leaves out. It is a projection, not a
+ * load test, local testing used at most four clients, and it may be out of date. The comparison with
+ * plain loops and any break-even population depend on movement, audible sources and batching.
+ * Neither design's total cost is independent of listener count.
  *
  * Use it when: there are many sources, they are static, and they share a handful of sounds.
  * Do NOT use it for: anything with a per-source melody or a long clip. A category is one channel
@@ -208,10 +211,6 @@
 /// Default range of a sound. TG uses 15 for its 15x15 view. Our world.view is 7, so adopting
 /// 15 would double every sound's reach. All the mapped extra_range values were tuned against 7
 #define SOUND_RANGE 7
-/// Extra range for sounds considered to be quieter. TG: -3 against range 15, scaled to our 7
-#define MEDIUM_RANGE_SOUND_EXTRARANGE -1
-/// Default extra range for sounds considered to be quieter still. TG: -7 against range 15
-#define SHORT_RANGE_SOUND_EXTRARANGE -3
 /**
  * Percentage of sound's range where no falloff is applied. 0 on purpose: a flat zone near the
  * source reads as broken rather than loud: you walk several tiles and nothing changes at all.
@@ -493,12 +492,37 @@
 #define POINT_AMBIENCE_VOLUME(P) (P.pointambience_independent ? P.pointambiencevol : P.pointambiencevol * P.overallvol * 0.01)
 
 /**
+ * The listener stands where their last walk left them, at the same volume, and nothing they could
+ * hear has changed, so their cached answer holds. service_client() and fire()'s standing walk both
+ * test it, the walk without the proc call, so it is one macro and the two cannot drift apart.
+ * SSpoint_ambience procs only, since it reads static_version off src. listener_turf is named twice,
+ * so pass a local
+ */
+#define POINT_AMBIENCE_STANDING_UNCHANGED(listener_client, listener_turf, ambience_volume) \
+	((listener_turf) == (listener_client).point_ambience_cache_turf \
+	&& (ambience_volume) == (listener_client).point_ambience_cache_volume \
+	&& ((listener_client).point_ambience_cache_version == static_version \
+		|| can_reuse_tile_listener((listener_turf), (listener_client).point_ambience_cache_version)))
+
+/**
  * Densest candidate box SSpoint_ambience.drain_density_count gives its own bucket, anything denser
  * landing in the last one. The list is one longer, an empty cell taking the first bucket. Twice the
  * densest box on any shipped map, measured, leaving room for the corpses and dropped torches that
  * register on top. Lower it and a busy tile's percentiles read low
  */
 #define POINT_AMBIENCE_DENSITY_MAX 64
+
+/// 8-tile cells: three per axis within max_range 8, nine probes a walk. Larger cells probe fewer and
+/// rank nearly twice the sources, smaller invert it. Measured, so change it with the Here verb in hand
+#define POINT_AMBIENCE_CELL_SHIFT 3
+/// A tile's bucket in SSpoint_ambience.buckets_by_z[z], offset by 1 for DM's one-based list indexing
+#define POINT_AMBIENCE_CELL_INDEX(x, y, stride) (((x) >> POINT_AMBIENCE_CELL_SHIFT) * (stride) + ((y) >> POINT_AMBIENCE_CELL_SHIFT) + 1)
+/// Fields in one SSpoint_ambience.source_change_history entry, and the most entries it keeps
+#define POINT_AMBIENCE_SOURCE_CHANGE_FIELDS 10
+#define POINT_AMBIENCE_SOURCE_CHANGE_LIMIT 32
+/// Index changes in one tick, outside any bulk update, that get the caller reported. A starting
+/// heuristic rather than a measured break even
+#define POINT_AMBIENCE_BULK_BURST 64
 
 /**
  * sound.echo is the 18-slot EAX property array. Slot 7 is Occlusion, in millibels (-10000..0).

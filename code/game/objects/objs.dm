@@ -6,6 +6,9 @@
 	/// This Var ensures the object ignores all object flags, which is extremely important for contraptions (which are supposed ot interact with all objects even if it does not produce a result)
 	var/obj_flags_ignore = FALSE
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
+	/// An openable barrier point ambience treats as a door: counted on its turf, read as it stands,
+	/// and reported when it opens or shuts. Its opacity must only ever change through set_opacity()
+	var/sound_door = FALSE
 
 	var/damtype = BRUTE
 	var/force = 0
@@ -100,12 +103,26 @@
 	// if the turf is uninitialized it'll just call Entered on us
 	if(our_turf && (our_turf.flags_1 & INITIALIZED_1) && (obj_flags & BLOCK_Z_OUT_DOWN))
 		our_turf.platform_atom_count++
+	// Creating an object calls no Entered, so a door counts itself here, and one built shut in play
+	// has point ambience serve the listeners near it again
+	if(sound_door && isturf(loc))
+		var/turf/door_turf = loc
+		door_turf.recount_sound_doors()
+		if(!mapload && (opacity || SSpoint_ambience.door_mode == SOUND_DOORS_ALWAYS))
+			SSpoint_ambience.door_changed(src)
 
 /obj/Destroy(force=FALSE)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
 	. = ..()
+
+/// A door that opens or shuts tells point ambience, which reads doors as they stand. See sound_door
+/obj/set_opacity(new_opacity)
+	var/old_opacity = opacity
+	. = ..()
+	if(sound_door && opacity != old_opacity)
+		SSpoint_ambience.door_changed(src)
 
 /obj/proc/setAnchored(anchorvalue)
 	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)

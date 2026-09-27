@@ -196,10 +196,17 @@ SUBSYSTEM_DEF(sounds)
 /datum/controller/subsystem/sounds/proc/available_channels_left()
 	return length(channel_list) - random_channels_min
 
-/// Returns the duration of a sound file in deciseconds, cached. Thin wrapper keeping TG's
-/// SSsounds.get_sound_length() call surface; the cache itself is rustg_sound_length()'s
-/// static list rather than a duplicate one here.
+/// Returns the duration of a sound file in deciseconds, cached. Keeps TG's SSsounds.get_sound_length()
+/// call surface, the cache being rustg_sound_length()'s static list. A /sound datum is measured by its
+/// file, a value rustg cannot take answers 0, and so does a length rustg reads as no number
 /datum/controller/subsystem/sounds/proc/get_sound_length(file_path)
-	return rustg_sound_length(file_path)
+	if(istype(file_path, /sound))
+		var/sound/as_datum = file_path
+		file_path = as_datum.file
+	// rustg_sound_length() CRASHes on anything but a path or a file that names one, which a runtime
+	// file reference does not. It still CRASHes when the library itself returns nothing
+	if(!istext(file_path) && !(isfile(file_path) && length("[file_path]")))
+		return 0
+	return rustg_sound_length(file_path) || 0
 
 #undef DATUMLESS

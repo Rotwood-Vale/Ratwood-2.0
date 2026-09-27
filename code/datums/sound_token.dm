@@ -35,8 +35,6 @@
 	/// Null sound for cancelling the sound entirely.
 	var/sound/null_sound
 
-	/// Status of the playing sound
-	var/sound_status = NONE
 	/// The channel being used.
 	var/sound_channel
 	/// REALTIMEOFDAY when the sound started (or when the sound file was last changed). Used to calculate playback offset for new listeners.
@@ -272,7 +270,7 @@
 	if(isnull(effective_volume))
 		effective_volume = volume
 
-	sound.status = sound_status|listeners[listener_mob]
+	sound.status = listeners[listener_mob]
 	if(update_sound)
 		sound.status |= SOUND_UPDATE
 	else
@@ -387,11 +385,11 @@
 	var/offset = elapsed * freq_factor * pitch_factor
 	if(!sound_duration)
 		// Length unknown, so any seek is a guess and a guess past the end plays nothing at all.
-		// rustg_sound_length() returns 0 on every failure path rather than signalling one, so
-		// this is reachable whenever a file cannot be measured. Without it the fall-through
-		// returned the raw elapsed time: a listener coming back after two minutes seeked two
-		// minutes into a six second loop and heard silence for the rest of the round, while the
-		// same token had been perfectly audible on their first approach.
+		// SSsounds.get_sound_length() answers 0 for a value rustg cannot take and for a length it
+		// reads as no number, so this is reachable whenever a file cannot be measured. Without it
+		// the fall-through returned the raw elapsed time: a listener coming back after two minutes
+		// seeked two minutes into a six second loop and heard silence for the rest of the round,
+		// while the same token had been perfectly audible on their first approach.
 		return 0
 	if(repeating)
 		offset %= sound_duration

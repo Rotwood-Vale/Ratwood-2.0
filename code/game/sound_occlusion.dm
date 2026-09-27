@@ -137,15 +137,22 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
 	GLOB.opacity_walk_tiles = steps
 
 /**
- * Whether a door on this turf stops sound. LIVE reads each door as it stands, so a donjon door with
- * its viewport slid open passes. ALWAYS also stops at an open door that would shut solid
+ * Whether a door on this turf stops sound, a door being any object with sound_door set. LIVE reads
+ * each as it stands, so a donjon door with its viewport slid open passes. ALWAYS also stops at a
+ * mineral door that is open or opening and would shut solid. Opening clears its opacity before the
+ * animation and marks it open after, so isSwitchingStates covers the gap
  */
 /proc/door_blocks_sound(turf/door_turf, doors)
 	SHOULD_NOT_SLEEP(TRUE)
-	for(var/obj/structure/mineral_door/door in door_turf)
+	for(var/obj/door in door_turf)
+		if(!door.sound_door)
+			continue
 		if(door.opacity)
 			return TRUE
-		if(doors == SOUND_DOORS_ALWAYS && door.door_opened && !door.windowed && !door.brokenstate && initial(door.opacity))
+		if(doors != SOUND_DOORS_ALWAYS || !istype(door, /obj/structure/mineral_door))
+			continue
+		var/obj/structure/mineral_door/mineral = door
+		if((mineral.door_opened || mineral.isSwitchingStates) && !mineral.windowed && !mineral.brokenstate && initial(mineral.opacity))
 			return TRUE
 	return FALSE
 
@@ -197,8 +204,9 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
  *
  * The gap beside a wall is very often a doorway, and a shut door is a wall, but the walk never tests
  * the tile it starts from, so the door on this one is read here. FLANKS reads every opaque object on
- * the tile, about 1 us on 5% of checks, the contents read measured at 0.4 to 1.7 us. LIVE and
- * ALWAYS read the door count and loop only where it says a door may stand
+ * the tile, about 1 us on 5% of checks, the contents read measured at 0.4 to 1.7 us. That was a
+ * bench, run warm under ideal conditions, which understates a cold live read and may be out of date.
+ * LIVE and ALWAYS read the door count and loop only where it says a door may stand
  */
 /proc/probe_open_path(turf/beside, turf/target, steps_allowed, check_contents = FALSE, doors = SOUND_DOORS_NONE)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -268,22 +276,16 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
  * not NONE. Those gates stay in playsound so the common case costs no proc call at all. Contents are
  * read, since a one-shot recomputes from scratch and a door's state cannot freeze into it.
  *
- * Leaves the GLOB walk counters as the walk it made left them, for the falloff verb to print, and
- * bumps GLOB.sound_occlusion_walks/tiles so the survey can price the whole thing.
+ * Leaves the GLOB walk counters as the walk it made left them, for the falloff verb to print.
  */
 /proc/occlusion_muffle_for(turf/listener_turf, turf/source_turf, occlusion, steps_allowed, list/trace)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(occlusion == SOUND_TRAVEL_CARRYING)
-		. = (opacity_between(listener_turf, source_turf, steps_allowed, TRUE, trace) == OCCLUSION_CLEAR) ? SOUND_MUFFLE_NONE : SOUND_MUFFLE_SOFT
-		GLOB.sound_occlusion_walks++
-		GLOB.sound_occlusion_tiles += GLOB.opacity_walk_tiles
-		return
+		return (opacity_between(listener_turf, source_turf, steps_allowed, TRUE, trace) == OCCLUSION_CLEAR) ? SOUND_MUFFLE_NONE : SOUND_MUFFLE_SOFT
 	if(occlusion != SOUND_TRAVEL_LEAKING && occlusion != SOUND_TRAVEL_CONTAINED)
 		return SOUND_MUFFLE_NONE
 
 	var/grade = sound_occlusion_grade(listener_turf, source_turf, steps_allowed, TRUE, trace)
-	GLOB.sound_occlusion_walks += 1 + GLOB.occlusion_probe_walks
-	GLOB.sound_occlusion_tiles += GLOB.opacity_walk_tiles + GLOB.occlusion_probe_tiles
 	if(grade == OCCLUSION_MUFFLED)
 		return SOUND_MUFFLE_SOFT
 	if(grade != OCCLUSION_SOLID)

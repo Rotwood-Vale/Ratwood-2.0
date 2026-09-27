@@ -6,6 +6,22 @@
 GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 
 /**
+ * Picks the falloff curve for a sound from how far it carries. See SOUND_FALLOFF_EXPONENT.
+ *
+ * Called by playsound() and playsound_local() whenever a caller does not name an exponent
+ * itself, which is nearly all of them. Resolved once per call, not per listener, so the three
+ * models cost a pair of comparisons against however many people end up hearing the sound.
+ */
+/proc/sound_falloff_for_range(range)
+	if(range >= SOUND_RANGE_LONG)
+		return SOUND_FALLOFF_EXPONENT_LONG
+	if(range >= SOUND_RANGE_MEDIUM)
+		return SOUND_FALLOFF_EXPONENT_MEDIUM
+	if(range < SOUND_RANGE_CLOSE)
+		return SOUND_FALLOFF_EXPONENT_CLOSE
+	return SOUND_FALLOFF_EXPONENT
+
+/**
  * playsound is a proc used to play a 3D sound in a specific range. This uses SOUND_RANGE + extra_range to determine that.
  *
  * Arguments:
@@ -13,13 +29,14 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * * soundin - Either a file, or a string that can be used to get an SFX.
  * * vol - The volume of the sound, excluding falloff.
  * * vary - bool that determines if the sound changes pitch every time it plays.
- * * extrarange - modifier for sound range. This gets added on top of SOUND_RANGE. A falsy value means 1, see below.
+ * * extrarange - modifier for sound range. This gets added on top of SOUND_RANGE. Omitted means 1, see below.
  * * falloff_exponent - Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
  * * frequency - playback speed of audio.
  * * channel - The channel the sound is played at.
  * * pressure_affected - Whether or not difference in pressure affects the sound (defaults FALSE here. There is no atmos to speak of).
  * * ignore_walls - Whether or not the sound can pass through walls.
  * * falloff_distance - Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
+ * * use_reverb - bool default TRUE, determines if our sound has reverb.
  * * soundping - Show the visual sound ping effect on the source.
  * * animal_pref - Filter the sound away from clients with mute_animal_emotes set.
  * * min_volume - the volume the sound falls off to at max range, instead of to silence.
@@ -67,43 +84,9 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * or in a grab one tile apart. Manhattan rather than get_dist, which is chebyshev and would call a
  * diagonal adjacent. A diagonal CAN be cut by an inside corner, so those are still walked.
  */
-/**
- * Picks the falloff curve for a sound from how far it carries. See SOUND_FALLOFF_EXPONENT.
- *
- * Called by playsound() and playsound_local() whenever a caller does not name an exponent
- * itself, which is nearly all of them. Resolved once per call, not per listener, so the three
- * models cost a pair of comparisons against however many people end up hearing the sound.
- */
-/proc/sound_falloff_for_range(range)
-	if(range >= SOUND_RANGE_LONG)
-		return SOUND_FALLOFF_EXPONENT_LONG
-	if(range >= SOUND_RANGE_MEDIUM)
-		return SOUND_FALLOFF_EXPONENT_MEDIUM
-	if(range < SOUND_RANGE_CLOSE)
-		return SOUND_FALLOFF_EXPONENT_CLOSE
-	return SOUND_FALLOFF_EXPONENT
-
-/**
- * Positional sounds started, counted for the whole round. A one-shot is one call however many
- * people hear it, so read this against the sends below to get listeners per sound: the two
- * together are what the ambient slice has always been quoted without
- */
-GLOBAL_VAR_INIT(sound_positional_calls, 0)
-/// Every playsound_local(), whatever started it: one-shots reaching one listener, the ambience
-/// fallback path, and direct callers. The point ambience slim send is NOT here, having its own path
-GLOBAL_VAR_INIT(sound_local_sends, 0)
-/**
- * Occlusion line walks made for one-shots, and the tiles they crossed. Against
- * sound_positional_calls these price what `occlusion` costs per sound, which was argued from
- * counts before it was ever measured
- */
-GLOBAL_VAR_INIT(sound_occlusion_walks, 0)
-GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
-
 /proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent, frequency = null, channel = 0, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, use_reverb = TRUE, soundping = FALSE, animal_pref = FALSE, min_volume = SOUND_DEFAULT_MIN_VOLUME, travel = SOUND_TRAVEL_UNRESTRICTED, floor_volume = null, erp = FALSE)
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
-	GLOB.sound_positional_calls++
 	// CONTAINED is a guarantee, not a default, so the floor is forced with it. See the proc doc
 	if(travel == SOUND_TRAVEL_CONTAINED)
 		floor_volume = SOUND_FLOOR_NEVER
@@ -273,9 +256,13 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
  * * falloff_distance - Distance at which falloff begins.
  * * distance_multiplier - Default 1, multiplies the perceived distance of our sound.
  * * use_reverb - bool default TRUE, determines if our sound has reverb.
- * * muffled - a SOUND_MUFFLE_* level: NONE, SOFT (the profile: heavier falloff, quieter, dead room)
- *   or ENCLOSED (the profile plus the wall collapse). Boolean callers pass TRUE, which is SOFT.
+ * * muffled - a SOUND_MUFFLE_* level: NONE, SOFT (the profile: heavier falloff, quieter, dead room),
+ *   ENCLOSED (the profile plus the wall collapse) or WALL (the profile with a deeper volume cut).
+ *   Boolean callers pass TRUE, which is SOFT.
  * * min_volume - the volume the sound falls off to at max_distance, instead of to silence.
+ * * travel - the SOUND_TRAVEL_* class playsound gathered with. Only CONTAINED is read here, refusing a storey
+ * * floor_volume - a cap on the volume a floor away, replacing the storey multiplier, as in playsound
+ * * erp - sex audio: a muffled send takes the ERP muffle timbre in place of the occlusion echo
  * * volume_pref, when set, replaces the Sound Effects slider under Master as the result's scale
  *
  * Decisions a reader would otherwise undo:
@@ -329,7 +316,6 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent, channel = 0, pressure_affected = FALSE, sound/S, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE, muffled = FALSE, min_volume = SOUND_DEFAULT_MIN_VOLUME, travel = SOUND_TRAVEL_UNRESTRICTED, floor_volume = null, erp = FALSE, volume_pref = null)
 	if(!client || !can_hear())
 		return FALSE
-	GLOB.sound_local_sends++
 
 	if(!S)
 		S = sound(get_sfx(soundin))
@@ -514,25 +500,6 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 			SEND_SOUND(src, S)
 			S.status &= ~SOUND_UPDATE
 
-/mob/proc/mute_sound(sound/S)
-	if(!client)
-		return
-	if(!S)
-		return
-	S.status |= SOUND_MUTE | SOUND_UPDATE
-	SEND_SOUND(src, S)
-	S.status &= ~SOUND_UPDATE
-
-/mob/proc/unmute_sound(sound/S)
-	if(!client)
-		return
-	if(!S)
-		return
-	S.status |= SOUND_UPDATE
-	S.status &= ~SOUND_MUTE
-	SEND_SOUND(src, S)
-	S.status &= ~SOUND_UPDATE
-
 /// A slider's volume under the Master slider, for anything sent at that slider's level
 /datum/preferences/proc/at_overall(slider_volume)
 	return slider_volume * overallvol * 0.01
@@ -624,6 +591,21 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 	for(var/datum/sound_token/token as anything in mob.sound_tokens)
 		if(token.respect_instrument_pref)
 			token.update_listener(mob)
+
+/// Re-prices every sound token this mob hears and the weather it stands in, after a Master or Sound
+/// Effects change. Both price by those sliders on each send, but re-send only on their own triggers:
+/// a token when either side moves, the weather when its loop replays or its severity is applied. This
+/// reaches a listener standing still in between
+/client/proc/resend_effect_sounds()
+	if(!prefs || !mob)
+		return
+	for(var/datum/sound_token/token as anything in mob.sound_tokens)
+		token.update_listener(mob)
+	var/datum/particle_weather/weather = SSParticleWeather.runningWeather
+	if(!weather)
+		return
+	var/datum/looping_sound/weather_loop = weather.currentSounds[mob]
+	weather_loop?.set_volume(weather_loop.volume)
 
 /proc/get_rand_frequency()
 	return rand(43100, 45100) //Frequency stuff only works with 45kbps oggs.

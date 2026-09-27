@@ -6,6 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = TRUE
+	sound_door = TRUE
 	layer = CLOSED_DOOR_LAYER
 
 	icon = 'icons/roguetown/misc/doors.dmi'
@@ -140,10 +141,6 @@
 	if(!base_state)
 		base_state = icon_state
 	air_update_turf(TRUE)
-	// Creating a door calls no Entered, so its turf is told here
-	var/turf/our_turf = loc
-	if(isturf(our_turf))
-		our_turf.recount_sound_doors()
 	if(grant_resident_key && !lockid)
 		lockid = "random_lock_id_[rand(1,9999999)]" // I know, not foolproof
 	if(lockhash)
@@ -467,8 +464,8 @@
 						playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 						icon_state = "[base_state]"
 						density = TRUE
-						opacity = TRUE
-						SSpoint_ambience.door_changed(src)
+						// A barred or windowed door never shuts solid, so its repair must not make it
+						set_opacity(!windowed)
 						brokenstate = FALSE
 						obj_broken = FALSE
 						obj_integrity = max_integrity
@@ -758,14 +755,6 @@
 	set_opacity(anchored ? !door_opened : FALSE)
 	air_update_turf(TRUE)
 
-/// Every open, close and viewport slide lands here, so this is where point ambience hears of it. The
-/// break and the two repairs write opacity directly and tell it themselves
-/obj/structure/mineral_door/set_opacity(new_opacity)
-	var/old_opacity = opacity
-	. = ..()
-	if(opacity != old_opacity)
-		SSpoint_ambience.door_changed(src)
-
 /obj/structure/mineral_door/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I, 40)
@@ -776,8 +765,7 @@
 	if(!brokenstate)
 		icon_state = "[base_state]br"
 		density = FALSE
-		opacity = FALSE
-		SSpoint_ambience.door_changed(src)
+		set_opacity(FALSE)
 		brokenstate = TRUE
 	..()
 
@@ -1118,12 +1106,10 @@
 	set_opacity(window_closed)
 	playsound(src, 'sound/foley/doors/windowup.ogg', 100, FALSE)
 
+/// Keeps it see-through while the viewport is open, the door shut or not. One parent call with the
+/// final value, so the change is reported and counted once
 /obj/structure/mineral_door/wood/donjon/set_opacity(setter)
-	..()
-	if(!window_closed) //Keeps it non-opaque when the door shuts.
-		opacity = FALSE
-	else
-		opacity = setter
+	return ..(window_closed && setter)
 
 /obj/structure/mineral_door/wood/donjon/stone/broken
 	desc = "A broken stone door from an era bygone. A new one must be constructed in its place."

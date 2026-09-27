@@ -52,7 +52,7 @@
 					ambience.move_service_interval = value
 			if("running")
 				var/binds = steps ? " Steps is [steps], so a natural runner is served by step count sooner and this binds only for one stepping slower than [round((running ? running : interval) / steps, 0.1)] ds a step." : ""
-				var/value = point_ambience_number("Replaces the move interval for a client on run intent. 0 means no override, so runners use the move interval, not that they are uncapped.[binds]", "Running Override", running)
+				var/value = point_ambience_number("Replaces the move interval for a client on run intent. 0 means no override, so runners use the move interval, not that they are uncapped. Does nothing while the move interval is 0, which turns the gate off for everyone.[binds]", "Running Override", running)
 				if(!isnull(value))
 					point_ambience_setting_changed("running override", running, value)
 					ambience.move_service_interval_running_override = value
@@ -97,7 +97,7 @@
 				if(confirm == "Reset")
 					point_ambience_reset_settings()
 
-/// Puts every setting the menu offers, the mode aside, back to its config value, logging each change
+/// Puts every setting the config seeds, the mode aside, back to its config value, logging each change
 /client/proc/point_ambience_reset_settings()
 	var/datum/controller/subsystem/point_ambience/ambience = SSpoint_ambience
 	var/value = CONFIG_GET(number/point_ambience_move_interval)
@@ -121,6 +121,21 @@
 	value = CONFIG_GET(number/point_ambience_standing_skip)
 	point_ambience_setting_changed("standing skip", ambience.standing_skip, value)
 	ambience.standing_skip = value
+	// Not in the menu, but the config seeds them, and each drops what its old value decided
+	value = !!CONFIG_GET(number/point_ambience_cross_floor)
+	if(value != !!ambience.cross_floor)
+		point_ambience_setting_changed("cross floor", ambience.cross_floor ? "on" : "off", value ? "on" : "off")
+		ambience.cross_floor = value
+		ambience.clear_tile_cache()
+	value = CONFIG_GET(number/point_ambience_falloff_hardness)
+	if(value != ambience.falloff_hardness)
+		point_ambience_setting_changed("falloff hardness", ambience.falloff_hardness, value)
+		ambience.set_falloff_hardness(value)
+	value = !!CONFIG_GET(number/point_ambience_pan_depth_floor)
+	if(value != !!ambience.pan_depth_floor)
+		point_ambience_setting_changed("pan depth floor", ambience.pan_depth_floor ? "on" : "off", value ? "on" : "off")
+		ambience.pan_depth_floor = value
+		ambience.invalidate_listener_cache()
 	// No config entry, so the default in the code
 	value = initial(ambience.door_recheck) ? initial(ambience.door_recheck_period) : 0
 	point_ambience_setting_changed("door re-check", ambience.door_recheck ? ambience.door_recheck_period : 0, value)

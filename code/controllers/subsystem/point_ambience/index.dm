@@ -1,0 +1,592 @@
+/**
+ * Puts an active source into the index, or moves one already in it.
+ *
+ * Idempotent. A source that can move must call this again from its own Moved() (the rogue lights and
+ * handheld torches do). The bone structures are treated as immobile and go stale if dragged. One
+ * inside a mob or container is placed on its outermost carrier's turf, and nothing here follows that
+ * carrier: the caller registers it again when it moves.
+ *
+ * A SILENCED category is refused outright rather than skipped at send time, because ranking sources
+ * for an answer that cannot exist is still work: silencing torch at send time left the walk
+ * rejecting every sconce on the map, measured as most of what the category cost. The unregister on
+ * that path covers the one case where sources arrive first, mapload lighting fires before the config
+ * is read at the first fire().
+ *
+ * Any move bumps static_version even when the bucket does not change, or standing listeners keep
+ * hearing a source at the volume and pan of the tile it left until it crosses a cell boundary. A
+ * dragged corpse or pushed brazier is exactly that, and it hides from whoever tests it because the
+ * person dragging is moving and re-walks anyway.
+ *
+ * Arguments:
+ * * category_path - the category's TYPEPATH, not its datum
+ * * sound_override - a file this source plays instead of the category's, so it can ride a category
+ *   it does not sound like
+ * * volume_scale - a MULTIPLE of the category volume, not a volume. 1 is the category's own.
+ *   Range stays per-category, being the walk's gate
+ */
+/datum/controller/subsystem/point_ambience/proc/register_source(atom/source, category_path, sound_override, volume_scale)
+	SHOULD_NOT_SLEEP(TRUE)
+	var/datum/point_ambience_category/category = categories_by_path[category_path]
+	if(!category)
+		CRASH("register_source(): [category_path] is not a point ambience category")
+	if(category.silenced)
+		if(source_keys[source])
+			unregister_source(source, category_path)
+		return
+	var/turf/source_turf = get_turf(source)
+	if(!source_turf)
+		unregister_source(source, category_path)
+		return
+	var/turf/old_turf = source_turfs[source]
+	var/datum/point_ambience_category/old_category = source_categories[source]
+	var/version_before = static_version
+	var/old_range = old_category?.range
+	if(old_turf != source_turf || old_category != category)
+		// A move or category change can alter every tile reached from either endpoint
+		if(old_turf && old_category)
+			invalidate_tile_cache(old_turf, old_category.range)
+		invalidate_tile_cache(source_turf, category.range)
+	source_turfs[source] = source_turf
+	apply_source_overrides(source, category, source_turf, sound_override, volume_scale)
+	if(!cell_stride)
+		cell_stride = (world.maxy >> POINT_AMBIENCE_CELL_SHIFT) + 2
+	var/cell = POINT_AMBIENCE_CELL_INDEX(source_turf.x, source_turf.y, cell_stride)
+	var/z = source_turf.z
+	var/old_cell = source_keys[source]
+	var/old_z = source_zs[source]
+	if(old_cell == cell && old_z == z && old_category == category)
+		// Same bucket, but the bucket carries the position and a carried source moves inside its
+		// bucket on every step
+		if(old_turf != source_turf)
+			var/list/bucket = buckets_by_z[z][cell]
+			var/at = bucket ? bucket.Find(source) : 0
+			if(at)
+				bucket[at - 3] = source_turf.x
+				bucket[at - 2] = source_turf.y
+			static_version++
+			index_changes++
+		record_source_change(version_before, old_turf, old_range, source_turf, category.range)
+		return
+	if(old_cell)
+		remove_from_bucket(source, old_z, old_cell)
+		adjust_floor_count(old_z, old_category, -1)
+	// Tally both sides: a source can move BETWEEN categories, and these decide whether the storey
+	// passes run at all
+	if(old_category != category)
+		move_between_categories(source, old_category, category)
+	source_keys[source] = cell
+	source_zs[source] = z
+	source_categories[source] = category
+	append_to_bucket(source, source_turf, category.index, cell)
+	adjust_floor_count(z, category, 1)
+	static_version++
+	index_changes++
+	record_source_change(version_before, old_turf, old_range, source_turf, category.range)
+	if(mode == POINT_AMBIENCE_FALLBACK)
+		start_fallback(source)
+
+/// The file and volume one source plays at in place of its category's. Any change bumps
+/// static_version
+/datum/controller/subsystem/point_ambience/proc/apply_source_overrides(atom/source, datum/point_ambience_category/category, turf/source_turf, sound_override, volume_scale)
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	// Takes are handed out by position, stable for a fixed source and free of per source state.
+	// Under a roof a source draws from the indoor set, read off the area's own outdoors flag
+	if(!sound_override && category.voices)
+		var/list/takes = category.voices
+		if(category.voices_indoors)
+			var/area/here = source_turf.loc
+			if(!here?.outdoors)
+				takes = category.voices_indoors
+		sound_override = takes[1 + ((source_turf.x * 73 + source_turf.y * 179 + source_turf.z * 283) % 97) % length(takes)]
+	// Reapplied on every call, so a rebucketing move does not drop them
+	if(sound_override && category.source_sounds[source] != sound_override)
+		category.source_sounds[source] = sound_override
+		static_version++
+		index_changes++
+	var/current_volume_scale = category.source_volumes[source]
+	if(volume_scale == 1)
+		if(!isnull(current_volume_scale))
+			category.source_volumes -= source
+			static_version++
+			index_changes++
+	else if(volume_scale && current_volume_scale != volume_scale)
+		category.source_volumes[source] = volume_scale
+		loudest_volume = max(loudest_volume, category.volume * volume_scale)
+		static_version++
+		index_changes++
+
+/// Moves a source's tallies from the category it leaves, if any, to the one it joins
+/datum/controller/subsystem/point_ambience/proc/move_between_categories(atom/source, datum/point_ambience_category/old_category, datum/point_ambience_category/category)
+	PRIVATE_PROC(TRUE)
+	if(old_category)
+		// Checked at the close against listeners still playing it under the old category
+		if(bulk_depth)
+			bulk_affected[source] = TRUE
+		decrement_source_count(old_category)
+		// The overrides live on the category, so a move leaves them behind holding a hard
+		// reference the old category can no longer reach to clear
+		old_category.forget_source(source)
+		stop_fallback(source)
+	increment_source_count(category)
+
+/// Adds a source's four-entry quad to the end of its bucket, growing the floor and bucket lists
+/// as needed. The counterpart of remove_from_bucket
+/datum/controller/subsystem/point_ambience/proc/append_to_bucket(atom/source, turf/source_turf, category_index, cell)
+	PRIVATE_PROC(TRUE)
+	var/z = source_turf.z
+	if(length(buckets_by_z) < z)
+		buckets_by_z.len = z
+	var/list/floor_buckets = buckets_by_z[z]
+	if(!floor_buckets)
+		floor_buckets = list()
+		buckets_by_z[z] = floor_buckets
+	if(length(floor_buckets) < cell)
+		floor_buckets.len = cell
+	var/list/bucket = floor_buckets[cell]
+	if(!bucket)
+		bucket = list()
+		floor_buckets[cell] = bucket
+	bucket += source_turf.x
+	bucket += source_turf.y
+	bucket += category_index
+	bucket += source
+
+/**
+ * Registers one tile of something much larger, returning whether this source was the one taken.
+ *
+ * A river is thousands of turfs and wants one voice every few tiles, so a turf registers only when
+ * no voice of its category is already within spread of it.
+ *
+ * THE COVERAGE RULE IS `spread + 1 <= category.range`, not the obvious one. A tile can sit a full
+ * spread from its nearest voice and a listener stands one tile off the run's edge, so the worst case
+ * is spread + 1. Treating voices as evenly spaced and halving the gap is about twice as generous as
+ * the truth, since claiming is greedy over a 2D area in mapload order.
+ *
+ * Arguments:
+ * * category_path - the category's TYPEPATH, not its datum
+ * * spread - tiles a voice covers, so no second voice is claimed within this of one
+ * * sound_override, volume_scale - as register_source, letting a source ride a category it does
+ *   not sound like
+ * * continuous - the source is one voice of a long thing, so it must not restart or pan on a
+ *   handoff. TRUE by default, since anything spread over a run is a line.
+ */
+/datum/controller/subsystem/point_ambience/proc/register_spread_source(atom/source, category_path, spread, sound_override, volume_scale, continuous = TRUE)
+	var/turf/source_turf = get_turf(source)
+	if(!source_turf)
+		return FALSE
+	// By DISTANCE, not a grid of spread-sized blocks: a grid bounds spacing at 2*spread-1, which at
+	// spread 8 put voices 15 tiles apart against a range of 5 and left the bank silent in the middle
+	var/datum/point_ambience_category/claim_category = categories_by_path[category_path]
+	if(!claim_category || claim_category.silenced)
+		return FALSE
+	if(any_source_within(source_turf, claim_category, spread))
+		return FALSE
+	// Continuous by default: anything spread over a run is a line, and a line played as a point
+	// source restarts and flips its stereo image every time the nearest voice changes
+	if(continuous)
+		claim_category.source_continuous[source] = TRUE
+	register_source(source, category_path, sound_override, volume_scale)
+	return TRUE
+
+/**
+ * Whether any source of a category already sits within radius of a turf. Walks the same buckets
+ * the listener walk does, exiting on the first hit. Spaces a run's voices: mostly at mapload, and
+ * again per candidate neighbour whenever a river voice's turf is destroyed and the run re-seeds
+ */
+/datum/controller/subsystem/point_ambience/proc/any_source_within(turf/check_turf, datum/point_ambience_category/category, radius)
+	PRIVATE_PROC(TRUE)
+	if(length(buckets_by_z) < check_turf.z)
+		return FALSE
+	var/list/floor_buckets = buckets_by_z[check_turf.z]
+	if(!floor_buckets)
+		return FALSE
+	var/cells = length(floor_buckets)
+	var/radius_sq = radius * radius
+	var/wanted = category.index
+	var/by_lo = max(1, check_turf.y - radius) >> POINT_AMBIENCE_CELL_SHIFT
+	var/by_hi = (check_turf.y + radius) >> POINT_AMBIENCE_CELL_SHIFT
+	for(var/bx in (max(1, check_turf.x - radius) >> POINT_AMBIENCE_CELL_SHIFT) to ((check_turf.x + radius) >> POINT_AMBIENCE_CELL_SHIFT))
+		var/row = bx * cell_stride + 1
+		for(var/by in by_lo to by_hi)
+			var/cell = row + by
+			if(cell > cells)
+				break
+			var/list/bucket = floor_buckets[cell]
+			if(!bucket)
+				continue
+			var/count = length(bucket)
+			for(var/i = 1, i <= count, i += 4)
+				if(bucket[i + 2] != wanted)
+					continue
+				var/dx = bucket[i] - check_turf.x
+				var/dy = bucket[i + 1] - check_turf.y
+				if(dx * dx + dy * dy <= radius_sq)
+					return TRUE
+	return FALSE
+
+/**
+ * Takes a source out of the index and silences it for anyone currently hearing it.
+ *
+ * Safe on something never registered, the common case for a mapped emitter that was never lit.
+ *
+ * Arguments:
+ * * category_path - accepted for call-site clarity and then IGNORED. The category is read from the
+ *   index, since a caller passing the wrong path would decrement the wrong tally.
+ */
+/datum/controller/subsystem/point_ambience/proc/unregister_source(atom/source, category_path)
+	SHOULD_NOT_SLEEP(TRUE)
+	// From the index, not the argument: a caller passing the wrong path would decrement the wrong
+	// tally and leave the sound playing. category_path stays in the signature for call-site clarity
+	var/datum/point_ambience_category/category = source_categories[source] || categories_by_path[category_path]
+	if(!category)
+		return
+	var/old_cell = source_keys[source]
+	if(!old_cell)
+		// Never registered, so it cannot be anyone's current source: skips the client walk for the
+		// mapped-off majority whose Initialize lands here
+		return
+	var/turf/old_turf = source_turfs[source]
+	var/version_before = static_version
+	invalidate_tile_cache(old_turf, category.range)
+	remove_from_bucket(source, source_zs[source], old_cell)
+	adjust_floor_count(source_zs[source], category, -1)
+	static_version++
+	index_changes++
+	record_source_change(version_before, old_turf, category.range, null, 0)
+	source_keys -= source
+	source_zs -= source
+	source_turfs -= source
+	source_categories -= source
+	stop_fallback(source)
+	decrement_source_count(category)
+	category.forget_source(source)
+	// Inside a bulk update the close makes this walk once for every source the scope changed
+	if(bulk_depth)
+		bulk_affected[source] = TRUE
+		return
+	// No listener may remain to overwrite scratch that still refers to the removed source.
+	scratch_uncached.Cut()
+	runner_up_by_category.Cut()
+	// The channel is the stop handle: a snuffed source goes silent now, not when its replay runs
+	// out. One client walk per deactivation
+	for(var/client/listener_client in GLOB.clients)
+		if(listener_client.point_ambience_sources[category] == source)
+			stop_for(listener_client, category)
+
+/// The first source of a category makes it answerable, which lets the storey passes look for it
+/datum/controller/subsystem/point_ambience/proc/increment_source_count(datum/point_ambience_category/category)
+	PRIVATE_PROC(TRUE)
+	var/count = (source_counts[category] || 0) + 1
+	source_counts[category] = count
+	if(count == 1)
+		answerable_categories++
+
+/// Guarded against going negative, since answerable_categories drifting below the truth would
+/// stop the storey passes early and quietly lose every source a floor away
+/datum/controller/subsystem/point_ambience/proc/decrement_source_count(datum/point_ambience_category/category)
+	PRIVATE_PROC(TRUE)
+	var/remaining = max(0, (source_counts[category] || 0) - 1)
+	source_counts[category] = remaining
+	if(!remaining)
+		answerable_categories = max(0, answerable_categories - 1)
+
+/**
+ * Cuts a source's four-entry quad out of one bucket. The rare path, so a linear Find is fine.
+ *
+ * Arguments:
+ * * cell - the bucket index, from POINT_AMBIENCE_CELL_INDEX
+ */
+/datum/controller/subsystem/point_ambience/proc/remove_from_bucket(atom/source, z, cell)
+	PRIVATE_PROC(TRUE)
+	if(isnull(z) || length(buckets_by_z) < z)
+		return
+	var/list/floor_buckets = buckets_by_z[z]
+	if(!floor_buckets || length(floor_buckets) < cell)
+		return
+	var/list/bucket = floor_buckets[cell]
+	if(!bucket)
+		return
+	// The source is the last of its four entries
+	var/at = bucket.Find(source)
+	if(at)
+		bucket.Cut(at - 3, at + 1)
+	if(!length(bucket))
+		floor_buckets[cell] = null
+
+/**
+ * Keeps the per-floor tally of sources in a category.
+ *
+ * It decides whether a storey pass runs at all, so it MUST be paired with every bucket add and
+ * remove, or a floor is searched forever, or never searched again.
+ *
+ * Arguments:
+ * * delta - +1 as a source joins the floor, -1 as it leaves
+ */
+/datum/controller/subsystem/point_ambience/proc/adjust_floor_count(z, datum/point_ambience_category/category, delta)
+	PRIVATE_PROC(TRUE)
+	if(isnull(z) || !category)
+		return
+	if(length(floor_counts) < z)
+		floor_counts.len = z
+	var/list/counts = floor_counts[z]
+	if(!counts)
+		counts = list()
+		floor_counts[z] = counts
+	counts[category] = max(0, (counts[category] || 0) + delta)
+
+/// The floor above or below z, or 0 when the map links nothing there. The linkage is a
+/// boolean per floor and the neighbour is always the next z, which is what get_step(UP) walks
+/datum/controller/subsystem/point_ambience/proc/floor_above(z)
+	PRIVATE_PROC(TRUE)
+	var/list/levels = SSmapping.multiz_levels
+	if(length(levels) < z)
+		return 0
+	var/list/links = levels[z]
+	return (links && links[Z_LEVEL_UP]) ? z + 1 : 0
+
+/// The z one storey down, or 0 where nothing connects. Arithmetic rather than a turf lookup, since
+/// the walk only ever wants the number
+/datum/controller/subsystem/point_ambience/proc/floor_below(z)
+	PRIVATE_PROC(TRUE)
+	var/list/levels = SSmapping.multiz_levels
+	if(length(levels) < z)
+		return 0
+	var/list/links = levels[z]
+	return (links && links[Z_LEVEL_DOWN]) ? z - 1 : 0
+
+/// Recomputes every category's squared reach and the subsystem bounds, then invalidates all rankings
+/datum/controller/subsystem/point_ambience/proc/refresh_category_ranges()
+	max_range = 0
+	for(var/datum/point_ambience_category/category as anything in categories)
+		category.resolve_derived()
+		max_range = max(max_range, category.range)
+	max_range_sq = max_range * max_range
+	clear_tile_cache()
+
+/**
+ * Finds the nearest and second-nearest source per category for this listener position.
+ *
+ * Same-floor selection may load an immutable turf ranking. Cross-floor selection retains the
+ * direct or cell-cache path, where the listener's own floor wins and adjacent floors only fill
+ * unanswered categories. The returned winner table belongs to the client and may be changed by
+ * live occlusion after this proc returns. Volume and preferences are applied per listener
+ */
+/datum/controller/subsystem/point_ambience/proc/nearest_sources(turf/listener_turf, client/listener_client)
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	RETURN_TYPE(/list)
+	var/z = listener_turf.z
+	// Ranked straight into the list the client keeps, so a walk allocates nothing
+	var/list/best = listener_client.point_ambience_cache_static
+	if(best)
+		best.Cut()
+	else
+		best = list()
+	if(use_tile_cache && !cross_floor)
+		// Tile hits never refresh the per-client candidate lists. Release their source references and
+		// force a rebuild if selection returns to the cell path
+		if(listener_client.point_ambience_cell_candidates)
+			listener_client.point_ambience_cell_candidates = null
+			listener_client.point_ambience_cell_above = null
+			listener_client.point_ambience_cell_below = null
+			listener_client.point_ambience_cell_version = null
+		var/entry = get_tile_ranking(listener_turf)
+		if(islist(entry))
+			var/list/ranking = entry
+			for(var/i = 1, i <= length(ranking), i += 5)
+				var/datum/point_ambience_category/category = ranking[i]
+				best[category] = ranking[i + 1]
+				if(ranking[i + 3])
+					runner_up_by_category[category] = ranking[i + 3]
+		listener_client.point_ambience_cache_static = best
+		return best
+	var/list/best_distsq = scratch_best_distsq
+	best_distsq.Cut()
+	runner_up_distsq.Cut()
+	if(!use_cell_cache)
+		collect_nearest_on_z(listener_turf.x, listener_turf.y, z, best, best_distsq)
+		ranked_candidates_this_service = round(length(scratch_uncached) / 4)
+	else
+		var/cell = POINT_AMBIENCE_CELL_INDEX(listener_turf.x, listener_turf.y, cell_stride)
+		if(listener_client.point_ambience_cell_index != cell \
+			|| listener_client.point_ambience_cell_z != z \
+			|| listener_client.point_ambience_cell_version != static_version)
+			rebuilt_this_service = TRUE
+			listener_client.point_ambience_cell_index = cell
+			listener_client.point_ambience_cell_z = z
+			listener_client.point_ambience_cell_version = static_version
+			var/list/candidates = listener_client.point_ambience_cell_candidates
+			if(candidates)
+				candidates.Cut()
+			else
+				candidates = list()
+				listener_client.point_ambience_cell_candidates = candidates
+			collect_candidates(listener_turf.x, listener_turf.y, z, candidates)
+			// Dropped rather than rebuilt: the storey passes run only when the own floor leaves
+			// a category unanswered, so most cells never ask for these
+			listener_client.point_ambience_cell_above = null
+			listener_client.point_ambience_cell_below = null
+		rank_candidates(listener_turf.x, listener_turf.y, listener_client.point_ambience_cell_candidates, best, best_distsq)
+		ranked_candidates_this_service = round(length(listener_client.point_ambience_cell_candidates) / 4)
+
+	if(cross_floor && length(best) < answerable_categories)
+		// A snapshot, taken before the storey passes so an own-floor answer cannot be replaced by one
+		// a storey away, while a category answered only above can still lose to a nearer one below
+		var/list/settled = scratch_settled
+		settled.Cut()
+		for(var/datum/point_ambience_category/category as anything in best)
+			settled[category] = TRUE
+		var/above = floor_above(z)
+		if(above && floor_needs_pass(above, settled))
+			listener_client.point_ambience_cell_above = rank_storey(listener_turf, above, listener_client.point_ambience_cell_above, best, best_distsq, settled)
+		var/below = floor_below(z)
+		if(below && floor_needs_pass(below, settled))
+			listener_client.point_ambience_cell_below = rank_storey(listener_turf, below, listener_client.point_ambience_cell_below, best, best_distsq, settled)
+
+	listener_client.point_ambience_cache_static = best
+	return best
+
+/**
+ * One storey pass, filling what the own floor left unanswered from the floor at z. Under the cell
+ * cache the candidates are gathered once per cell and handed back for the client to keep, one list
+ * for the floor above and one for the floor below. Without it, cached comes back untouched
+ */
+/datum/controller/subsystem/point_ambience/proc/rank_storey(turf/listener_turf, z, list/cached, list/best, list/best_distsq, list/settled)
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(!use_cell_cache)
+		collect_nearest_on_z(listener_turf.x, listener_turf.y, z, best, best_distsq, settled)
+		return cached
+	if(isnull(cached))
+		cached = list()
+		collect_candidates(listener_turf.x, listener_turf.y, z, cached)
+	rank_candidates(listener_turf.x, listener_turf.y, cached, best, best_distsq, settled)
+	return cached
+
+/// Whether a storey pass on z can change anything: some category not in skip has sources there
+/datum/controller/subsystem/point_ambience/proc/floor_needs_pass(z, list/skip)
+	PRIVATE_PROC(TRUE)
+	if(length(floor_counts) < z)
+		return FALSE
+	var/list/counts = floor_counts[z]
+	if(!counts)
+		return FALSE
+	for(var/datum/point_ambience_category/category as anything in categories)
+		if(!skip[category] && counts[category])
+			return TRUE
+	return FALSE
+
+/// The uncached walk: the buckets within max_range of the POSITION, gathered and ranked. skip holds
+/// the categories the own floor already answered, so a floor a storey away only fills gaps
+/datum/controller/subsystem/point_ambience/proc/collect_nearest_on_z(x, y, z, list/best, list/best_distsq, list/skip)
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	var/list/gathered = scratch_uncached
+	gathered.Cut()
+	gather_buckets(x - max_range, x + max_range, y - max_range, y + max_range, z, gathered)
+	rank_candidates(x, y, gathered, best, best_distsq, skip)
+
+/// Appends every quad in the buckets whose cells the box touches, straight out of the buckets as
+/// they are stored: one native append per bucket, no lookups
+/datum/controller/subsystem/point_ambience/proc/gather_buckets(min_x, max_x, min_y, max_y, z, list/out)
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(length(buckets_by_z) < z)
+		return
+	var/list/floor_buckets = buckets_by_z[z]
+	if(!floor_buckets)
+		return
+	var/cells = length(floor_buckets)
+	var/by_lo = max(1, min_y) >> POINT_AMBIENCE_CELL_SHIFT
+	var/by_hi = max_y >> POINT_AMBIENCE_CELL_SHIFT
+	for(var/bx in (max(1, min_x) >> POINT_AMBIENCE_CELL_SHIFT) to (max_x >> POINT_AMBIENCE_CELL_SHIFT))
+		var/row = bx * cell_stride + 1
+		for(var/by in by_lo to by_hi)
+			var/cell = row + by
+			if(cell > cells)
+				break
+			var/list/bucket = floor_buckets[cell]
+			if(bucket)
+				out += bucket
+
+/**
+ * Everything the own-floor walk could reach from anywhere in the caller's CELL, gathered once per
+ * cell rather than probed on every step.
+ *
+ * Bounded by the CELL expanded by max_range, NEVER by the caller's position. The list is kept for
+ * every step taken inside the cell, and a box computed from one tile in it drops the sources a
+ * listener walks toward from the far side. Dropping sources is fast, so a timing will not catch that.
+ */
+/datum/controller/subsystem/point_ambience/proc/collect_candidates(x, y, z, list/out)
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	var/cell_min_x = (x >> POINT_AMBIENCE_CELL_SHIFT) << POINT_AMBIENCE_CELL_SHIFT
+	var/cell_min_y = (y >> POINT_AMBIENCE_CELL_SHIFT) << POINT_AMBIENCE_CELL_SHIFT
+	var/cell_max_x = cell_min_x + (1 << POINT_AMBIENCE_CELL_SHIFT) - 1
+	var/cell_max_y = cell_min_y + (1 << POINT_AMBIENCE_CELL_SHIFT) - 1
+	gather_buckets(cell_min_x - max_range, cell_max_x + max_range, cell_min_y - max_range, cell_max_y + max_range, z, out)
+
+/**
+ * Ranks a flat list of quads into the nearest per category and its runner-up. The uncached walk
+ * and the cell cache both rank through here, so a storey pass reaches the same answer either way.
+ * skip holds the categories the own floor already answered
+ */
+/datum/controller/subsystem/point_ambience/proc/rank_candidates(x, y, list/candidates, list/best, list/best_distsq, list/skip)
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+	var/count = length(candidates)
+	for(var/i = 1, i <= count, i += 4)
+		// EUCLIDEAN, unlike playsound()'s chebyshev get_dist: a square admits corners past the
+		// falloff's range, which pin at min volume and hold the channel inaudibly
+		var/dx = candidates[i] - x
+		var/dy = candidates[i + 1] - y
+		var/distsq = dx * dx + dy * dy
+		if(distsq > max_range_sq)
+			continue
+		var/datum/point_ambience_category/category = categories[candidates[i + 2]]
+		if(skip && skip[category])
+			continue
+		if(distsq > category.range_sq)
+			continue
+		var/existing = best_distsq[category]
+		if(isnull(existing) || distsq < existing)
+			// The displaced winner becomes the runner-up. Only sources already inside the category's
+			// range reach here, a handful a service
+			if(!isnull(existing))
+				runner_up_distsq[category] = existing
+				runner_up_by_category[category] = best[category]
+			best_distsq[category] = distsq
+			best[category] = candidates[i + 3]
+		else
+			var/runner_up = runner_up_distsq[category]
+			if(isnull(runner_up) || distsq < runner_up)
+				runner_up_distsq[category] = distsq
+				runner_up_by_category[category] = candidates[i + 3]
+
+/// How many sources a walk from a turf would rank, and per category name when a list is given.
+/// Counts what the cells the walk probes hold, without ranking any of it. For the verbs
+/datum/controller/subsystem/point_ambience/proc/count_walked(turf/from, list/by_category)
+	. = 0
+	if(!from || length(buckets_by_z) < from.z)
+		return
+	var/list/floor_buckets = buckets_by_z[from.z]
+	if(!floor_buckets)
+		return
+	var/cells = length(floor_buckets)
+	var/by_lo = max(1, from.y - max_range) >> POINT_AMBIENCE_CELL_SHIFT
+	var/by_hi = (from.y + max_range) >> POINT_AMBIENCE_CELL_SHIFT
+	for(var/bx in (max(1, from.x - max_range) >> POINT_AMBIENCE_CELL_SHIFT) to ((from.x + max_range) >> POINT_AMBIENCE_CELL_SHIFT))
+		var/row = bx * cell_stride + 1
+		for(var/by in by_lo to by_hi)
+			var/cell = row + by
+			if(cell > cells)
+				break
+			var/list/bucket = floor_buckets[cell]
+			if(!bucket)
+				continue
+			. += length(bucket) / 4
+			if(by_category)
+				for(var/i = 3, i <= length(bucket), i += 4)
+					var/datum/point_ambience_category/category = categories[bucket[i]]
+					by_category[category.config_name] += 1

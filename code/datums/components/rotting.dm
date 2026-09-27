@@ -43,15 +43,36 @@
 		var/mob/living/rotting_mob = parent
 		if(istype(rotting_mob) && rotting_mob.mob_size <= MOB_SIZE_TINY)
 			state = FALSE
-	if(!state)
-		if(flies_playing)
-			flies_playing = FALSE
-			SSpoint_ambience.unregister_source(parent, /datum/point_ambience_category/rot)
+	// The rot poll asks every process, so only a change of state does anything here
+	if(!state == !flies_playing)
 		return
-	// Re-registered every call, not just on the transition: a body gets DRAGGED and the index caches
-	// the turf it registered from. register_source() updates in place, so this is cheap.
-	flies_playing = TRUE
-	SSpoint_ambience.register_source(parent, /datum/point_ambience_category/rot)
+	flies_playing = state
+	if(!state)
+		UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+		SSpoint_ambience.unregister_source(parent, /datum/point_ambience_category/rot)
+		return
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_body_moved))
+	place_flies()
+
+/datum/component/rot/proc/on_body_moved(datum/source)
+	SIGNAL_HANDLER
+	place_flies()
+
+/**
+ * Where the flies are heard, from the body's own moves. A body lying on a turf is heard from it, and
+ * the step it is dragged or carried moves the sound with it.
+ *
+ * A body inside something, a cart or a sack, is silent. Moving the container fires no Moved on the
+ * body, so its position could not be kept, and a sealed container is a fair reason for no flies.
+ * The body's own Moved fires on the way in and on the way out, so it is heard again once it lies on
+ * a turf, with nothing polled in between
+ */
+/datum/component/rot/proc/place_flies()
+	var/atom/movable/body = parent
+	if(isturf(body.loc))
+		SSpoint_ambience.register_source(parent, /datum/point_ambience_category/rot)
+	else
+		SSpoint_ambience.unregister_source(parent, /datum/point_ambience_category/rot)
 
 /datum/component/rot/process()
 
@@ -94,9 +115,6 @@
 
 	var/area/A = get_area(C)
 	if(istype(A, /area/rogue/indoors/town) || istype(A, /area/rogue/indoors/deathsedge))
-		// Rot pauses here while the body can still move, so keep an existing flies source current.
-		if(flies_playing)
-			set_flies(TRUE)
 		return
 
 
