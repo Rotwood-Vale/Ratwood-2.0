@@ -204,10 +204,7 @@
 		light_impact_range = 1,
 		flash_range = 0,
 		smoke = FALSE,
-		soundin = pick(
-			'modular/timesoldier/sounds/wepons/arty1.ogg',
-			'modular/timesoldier/sounds/wepons/arty2.ogg',
-			'modular/timesoldier/sounds/wepons/arty3.ogg')
+		soundin = 'sound/misc/explode/bomb.ogg'
 	)
 
 	qdel(src)
