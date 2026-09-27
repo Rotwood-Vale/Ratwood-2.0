@@ -32,6 +32,7 @@
 		/obj/item/reagent_containers/glass/mortar = 1,
 		/obj/item/pestle = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
+		/obj/item/natural/worms/leech/cheele = 1,
 		/obj/item/recipe_book/alchemy = 1,
 		/obj/item/flashlight/flare/torch/lantern = 1
 		)
