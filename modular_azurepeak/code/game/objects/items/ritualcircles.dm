@@ -1418,6 +1418,7 @@
 		if("Devotio - (arming sword)")
 			r_hand = /obj/item/rogueweapon/sword/arming/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo	
+			
 /obj/structure/ritualcircle/zizo/proc/zizoconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Zizo's blessing.")
