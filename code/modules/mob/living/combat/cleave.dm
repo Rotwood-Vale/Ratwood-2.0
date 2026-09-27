@@ -212,3 +212,11 @@
 	user_relative = TRUE
 	max_targets = 2
 	desc = "Cleaves in a T-shaped pattern directly ahead."
+
+/datum/cleave_pattern/stavevsweep
+	tile_offsets = list(list(-1,0), list(-1, 1), list(0, 1), list(1, 1), list(1, 0))
+	desc = "Sweeps everything in front of you."
+
+/datum/cleave_pattern/stavehsweep
+	tile_offsets = list(list(0, 1), list(0, 2))
+	desc = "Sweeps down- bashing skulls."

@@ -315,10 +315,8 @@
 	icon_state = "incrush"
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("sweeps across", "sweeps above")
-	swingdelay = 1 SECONDS
 	damfactor = 0.8
-	reach = 2
-	cleave = /datum/cleave_pattern/horizontal_sweep
+	cleave = /datum/cleave_pattern/stavehsweep
 	desc = "Sweep your staff horizontally, striking those whom stand in front of you."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
@@ -328,12 +326,10 @@
 	icon_state = "insweep"
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("vertically strikes", "sweeps through")
-	swingdelay = 1 SECONDS
 	damfactor = 0.8
-	reach = 2
 	desc = "Sweep your staff vertically, sweep and punish those ahead."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	cleave = /datum/cleave_pattern/forward_cleave
+	cleave = /datum/cleave_pattern/stavevsweep
 	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
 
 /datum/intent/effect/hookfeet
