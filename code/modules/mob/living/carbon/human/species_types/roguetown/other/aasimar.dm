@@ -74,6 +74,7 @@
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks, //Azure > Hearth
 		/datum/body_marking/eyeliner,
+		/datum/body_marking/bangs,
 		/datum/body_marking/tall_eyes,
 		/datum/body_marking/outer_tall_eyes,
 		/datum/body_marking/blank_face,
