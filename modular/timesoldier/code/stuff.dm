@@ -60,8 +60,8 @@
 /obj/item/timesoldier/radio
 	name = "field transceiver"
 	desc = "<span class='yellow'><i>I still remember when we replaced these over the old SCOMRING. We'd be able to receive orders from so far away. They're powered by arcyne magick, and this one in particular has a piece of the comet in it. They told me it's so they can communicate across 'time'.</span><br><br>You can sense the power of the Comet SYON within this...It must have a very small fragment of it."
-	icon = 'modular/timesoldier/sprites/stuff.dmi'
-	icon_state = "radio_off"
+	icon = 'modular/timesoldier/sprites/radio.dmi'
+	icon_state = "HEART"
 	var/broadcasting = FALSE
 	var/datum/looping_sound/timesoldier_radio/radio_loop
 	var/voice_template = FUTURE_VOICE_MALE_GENERIC
@@ -130,17 +130,23 @@
 		return
 
 	broadcasting = TRUE
-	icon_state = "radio_on"
+
+	// Set our resting state to open, then visually play the opening animation.
+	icon_state = "NERVES"
+	flick("LUNGS", src)
+
 	voice_template = selected_voice
 	broadcast_language = selected_language
 
 	visible_message(
-	span_notice("[src]'s Naledi time-crystal gently clinks against the COMET shard, its strange internals sending it to lyfe with a low, steady hum.")
+		span_notice("[src]'s Naledi time-crystal gently clinks against the COMET shard, its strange internals sending it to lyfe with a low, steady hum.")
 	)
 
-	playsound(src, pick('modular/timesoldier/sounds/comms/broadcast_start1.ogg', 'modular/timesoldier/sounds/comms/broadcast_start2.ogg'), 45, FALSE)
+	playsound(src, pick(
+		'modular/timesoldier/sounds/comms/broadcast_start1.ogg',
+		'modular/timesoldier/sounds/comms/broadcast_start2.ogg'), 45, FALSE)
 
-	QDEL_NULL(radio_loop) // just in case we somehow have it already from before.
+	QDEL_NULL(radio_loop)
 	radio_loop = new(src, TRUE)
 
 	schedule_radio_noise()
@@ -214,18 +220,27 @@
 		return
 
 	broadcasting = FALSE
+
+	// Set our resting state to closed, then visually play the closing animation.
+	icon_state = "HEART"
+	flick("LIVER", src)
+
 	QDEL_NULL(radio_loop)
-	playsound(src, 'modular/timesoldier/sounds/comms/broadcast_end1.ogg', 45, FALSE)
+
+	playsound(
+		src,
+		'modular/timesoldier/sounds/comms/broadcast_end1.ogg',
+		45,
+		FALSE
+	)
 
 	visible_message(
-	span_notice("[src]'s internal hum winds down before falling completely silent, the Naledi time-crystal pushing away from the COMET shard.")
+		span_notice("[src]'s internal hum winds down before falling completely silent, the Naledi time-crystal pushing away from the COMET shard.")
 	)
-	icon_state = "radio_off"
 
 	if(radio_noise_timer)
 		deltimer(radio_noise_timer)
 		radio_noise_timer = null
-
 
 // RADIO TRANSLATION STUFF.
 
