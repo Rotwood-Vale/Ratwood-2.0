@@ -429,7 +429,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_IGNOREDAMAGESLOWDOWN = span_info("Hits slow me down no longer."),
 	TRAIT_NOBLE = span_blue("I'm of noble blood."),
 	TRAIT_PACIFISM = span_info("I cannot harm another living being."),
-	TRAIT_LUX_FREAK = span_warning("I posess ability to manipulate the lux of others."),
+	TRAIT_LUX_FREAK = span_warning("I possess ability to manipulate the lux of others."),
 	TRAIT_EORAN_CONTENTED = span_info("I feel much at ease."),
 	TRAIT_DEFILED_NOBLE = span_blue("I'm of noble blood but... Something feels off!"),
 	TRAIT_DISGRACED_NOBLE = span_warning("I was a scion of a noble house... long ago."),

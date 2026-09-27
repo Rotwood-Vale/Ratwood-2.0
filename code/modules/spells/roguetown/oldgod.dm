@@ -65,9 +65,9 @@
 					targetwound.set_bleed_rate(pre_bleeding) // but we have to manually force a bleed_rate reset for it to cache properly
 					if(targetwound.severity >= WOUND_SEVERITY_SEVERE)
 						if(HAS_TRAIT(H, TRAIT_INQUISITION))
-							to_chat(H, span_notice("You feel your wounds sliping away."))
+							to_chat(H, span_notice("You feel your wounds slipping away."))
 						else
-							to_chat(H, span_danger("You feel a tear as fragment of your soul is replaced!"))
+							to_chat(H, span_danger("You feel a tear as fragment of your lux is replaced!"))
 						C_caster.visible_message(span_danger("Twisting threads of silvery lux blossom upon [C_caster]'s flesh, conveying [targetwound] upon [C_caster.p_their()] [c_BP.name]!"), span_boldwarning("You shudder in pain as a [targetwound] violently weeps into being upon your [c_BP.name]!"))
 					new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
 					new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
@@ -80,7 +80,10 @@
 		blood_transfer = BLOOD_VOLUME_NORMAL - H.get_blood_volume()
 		H.set_blood_volume(BLOOD_VOLUME_NORMAL)
 		user.adjust_blood_volume(-(blood_transfer))
-		to_chat(H, span_warning("You feel a tug at your soul as your blood replenish!"))
+		if(HAS_TRAIT(H, TRAIT_INQUISITION))
+			to_chat(H, span_notice("You feel blood flowing back into your body."))
+		else
+			to_chat(H, span_warning("You feel your lux shiver as your blood replenishes!"))
 		user.visible_message(span_warning("A sudden pallor overtakes [user] as [user.p_their()] lyfeblood flees [user.p_their()] pores and into [H]!"), span_warning("You feel your blood drain into [H]!"))
 		new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
 		new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
@@ -310,13 +313,13 @@
 		H.adjustBruteLoss(bruthealval)
 		H.adjustFireLoss(burnhealval)
 		if (conditional_buff)
-			to_chat(user, span_info("My lux fills the wounds and forcess the flesh to knit back together."))
+			to_chat(user, span_info("My lux fills the wounds and forces the flesh to knit back together."))
 		user.devotion?.update_devotion(-60)
 		to_chat(user, "<font color='purple'>I lose 60 devotion!</font>")
 		cast(user)
 		return TRUE
 	else
-		to_chat(H, span_warning("I lose my focuss and control over my lux escapes me."))
+		to_chat(H, span_warning("I lose my focus and control over my lux escapes me."))  
 		return FALSE
 
 
@@ -365,7 +368,8 @@
 			return FALSE
 		to_chat(user, span_warning("You attempt to revive [H] by ABSOLVING them!"))
 		// Dramatic effect
-		user.visible_message(span_danger("[user] grabs [H] by the wrists, silvery lux thread poring from their hands!"))
+		user.visible_message(span_danger("[user] grabs [H] by the wrists, silvery lux thread pouring from their hands!"))  
+
 		if(alert(H, "They want to ABSOLVE you. Will you let them?", "ABSOLUTION", "I'll allow it", "I refuse") != "I'll allow it")
 			H.visible_message(span_notice("Nothing happens."))
 			return FALSE
@@ -385,7 +389,7 @@
 		ADD_TRAIT(H, TRAIT_IWASREVIVED, "[type]")
 		H.apply_status_effect(/datum/status_effect/buff/psyvived)
 		user.apply_status_effect(/datum/status_effect/buff/psyvived)
-		H.visible_message(span_notice("[H] is ABSOLVED!"), span_green("I awake from the void, covered in innert silver threads."))
+		H.visible_message(span_notice("[H] is ABSOLVED!"), span_green("I awake from the void, covered in inert silver threads."))  
 		H.mind.remove_antag_datum(/datum/antagonist/zombie)
 		H.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
 		H.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.

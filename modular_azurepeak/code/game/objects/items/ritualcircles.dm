@@ -2072,7 +2072,7 @@
 							psydonconversion(target, luxshield)
 		if("Admonishment")//Deconvert WWs/Vampires.
 			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
-				to_chat(user, "How am i suposed to do that? I woudl have to manipulate lux of another!")
+				to_chat(user, "How am I suposed to do that? I would have to manipulate lux of another!")
 				return
 			if(!Adjacent(user))
 				return
@@ -2100,7 +2100,7 @@
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
 		if("Freedom")//Strip folks in rite armour.
 			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
-				to_chat(user, "How am i suposed to do that? I woudl have to manipulate lux of another!")
+				to_chat(user, "How am I suposed to do that? I would have to manipulate lux of another!")
 				return
 			if(!Adjacent(user))
 				return
@@ -2139,10 +2139,10 @@
 		loc.visible_message(span_cult("[target] weeps."))
 		target.Stun(80)//Keep them in place, for a bit. Until we're done.
 		if(luxshield)
-			to_chat(target, span_danger("My former patron doesnt aprove my change, but something stops their wrath from hurting me.")) // absolver doing the legwork
+			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but something stops their wrath from hurting me.")) // absolver doing the legwork
 			loc.visible_message(span_cult("The silver tears boil and evaporate but [target] stays safe in their new conviction."))
 		else
-			to_chat(target, span_danger("My former patron doesnt aprove my change, but I shall ENDURE their wrath.")) // no unnatural lux abomination to save you here!
+			to_chat(target, span_danger("My former patron doesn't aprove of my conversion, but I shall ENDURE their wrath.")) // no unnatural lux abomination to save you here!
 			target.Knockdown(60)
 			to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
 			target.emote("Agony")
