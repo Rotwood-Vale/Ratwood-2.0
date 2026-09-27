@@ -22,19 +22,21 @@
 	var/nomsg = FALSE
 	var/soundping = TRUE
 	var/ignore_silent = FALSE
-	///Whether this emote's sound carries to the floors above and below. TRUE for almost
-	///everything, because hearing a scream through a ceiling matters. FALSE for the ones that should
-	///stay in the room they happen in.
+	/// Whether this emote's sound reaches the floors above and below. TRUE for almost everything, since
+	/// hearing a scream through a ceiling matters. Read only when the caller names no travel class
 	var/cross_z_audible = TRUE
-	///How this emote's sound gets past a barrier: a SOUND_TRAVEL_* class, the same vocabulary every
-	///other system uses. Set LEAKING or CONTAINED per emote and nothing else changes; a call may name
-	///its own class and override this. Floors stay on cross_z_audible above, deliberately: the two
-	///axes come apart here, and an emote wants ordinary attenuation through a ceiling.
-	///
-	///CARRYING on all 96: dulled through anything, full range, never stopped. A PARKED default, not a
-	///verdict. One knob over 96 datums and no evidence yet, on the crowd path, where CARRYING is one
-	///line walk and the graded classes are up to three; CONTAINED would also silence things a listener
-	///may need to hear. Categorise them once the Occlusion Bench prices a walk in a full room.
+	/**
+	 * How this emote's sound gets past a barrier, a SOUND_TRAVEL_* class.
+	 *
+	 * The same vocabulary every other system uses, so setting LEAKING or CONTAINED on an emote changes
+	 * nothing else. A call may name its own class, see run_emote(). Floors are cross_z_audible above,
+	 * since an emote carries through a wall dulled and still attenuates normally through a ceiling.
+	 *
+	 * CARRYING on every emote is a default rather than a verdict: dulled through anything, full range,
+	 * never stopped. On the crowd path it is one line walk where the graded classes are up to three,
+	 * and CONTAINED would silence sounds a listener may need. Categorising emotes one by one may be
+	 * revisited once a walk in a full room is priced.
+	 */
 	var/snd_travel = SOUND_TRAVEL_CARRYING
 	var/snd_vol = 100
 	var/snd_range = -1
@@ -70,9 +72,18 @@
 /datum/emote/proc/adjacentaction(mob/user, mob/target)
 	return
 
-/// travel overrides the emote's own snd_travel for this one call. Null leaves the emote's own
-/// setting alone; any other class takes over, because groan, painmoan and scream are shared
-/// between combat and sex and only the caller knows which this is.
+/**
+ * Runs this emote for user, its message and its sound.
+ *
+ * The message goes through audible_message() or visible_message(), so walls already stop it. The
+ * sound follows snd_travel at walls and cross_z_audible at floors unless the caller names a class.
+ *
+ * Arguments:
+ * * travel - a SOUND_TRAVEL_* class for this call alone, which also picks the floor cap through
+ *   SOUND_TRAVEL_FLOOR. Null keeps snd_travel. The caller decides because groan, painmoan and scream
+ *   are shared between combat and sex, and only the caller knows which this is.
+ * * erp - sex audio, passed through to playsound
+ */
 /datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE, targetted = FALSE, animal = FALSE, travel = null, erp = FALSE)
 	. = TRUE
 	if(!can_run_emote(user, TRUE, intentional))
@@ -134,14 +145,8 @@
 			else// if(!vision.viewing_head)
 				emotelocation = user
 
-		// travel: emote TEXT already respects walls (get_hearers_in_view in emote.dm), but the audio
-		// did not. A groan at volume 100 carried through any number of closed doors at full strength.
-		// The datum's snd_travel decides, CARRYING by default so it still crosses floors and you can
-		// tell something is happening, just plainly through something.
-		// Anything else keeps the emote's own settings. Soundproof areas are handled inside playsound.
-		// A caller naming a class speaks for the floors too, since the classes that do so are the ones
-		// with a reason: sex audio is held quiet through a ceiling. Otherwise the emote's own two
-		// knobs apply, and cross_z_audible keeps its ordinary attenuation.
+		// A caller naming a class sets the floor cap with it, which holds sex audio quiet through a
+		// ceiling. Otherwise snd_travel decides walls and cross_z_audible decides floors
 		var/sound_travel = isnull(travel) ? snd_travel : travel
 		var/floor_volume = isnull(travel) ? (cross_z_audible ? null : SOUND_FLOOR_NEVER) : SOUND_TRAVEL_FLOOR(travel)
 		playsound(emotelocation, tmp_sound, snd_vol, FALSE, snd_range, soundping = soundping, animal_pref = animal, travel = sound_travel, floor_volume = floor_volume, erp = erp)

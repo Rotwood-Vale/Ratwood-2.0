@@ -9,7 +9,7 @@
 //	This also works with decimals.
 #define SAVEFILE_VERSION_MAX	38
 
-// Safely extract a type path from datums or type values. Returns null if unset/invalid
+/// Safely extract a type path from datums or type values. Returns null if unset or invalid
 /proc/preferences_typepath_or_null(value)
 	if(isnull(value))
 		return null

@@ -1,7 +1,9 @@
 /**
- * Attaches the move hook to every mob a player is in, now and on every future login. Moving
- * listeners are served by the hook. The tick covers the ones standing still and sources that
- * change state beside them
+ * Hooks the login signals and runs the login handler for every client already connected.
+ *
+ * The handler gives each player's mob the move hook unless it is a ghost or they have point ambience
+ * muted. Moving listeners are served by the hook. The once-a-second standing walk covers the ones
+ * standing still and sources that change state beside them
  */
 /datum/controller/subsystem/point_ambience/proc/hook_logins()
 	PRIVATE_PROC(TRUE)
@@ -28,8 +30,8 @@
 /datum/controller/subsystem/point_ambience/proc/player_logout(datum/source, mob/player)
 	SIGNAL_HANDLER
 	UnregisterSignal(player, list(COMSIG_MOVABLE_MOVED, COMSIG_SPECIES_GAIN, COMSIG_SPECIES_LOSS))
-	// The set is deliberately not touched: a client that merely changed mobs is still owed a
-	// service, and one that truly left leaves a null key for drain_dirty() to drop
+	// dirty_clients is left alone: a client that merely changed mobs is still owed a service, and
+	// one that truly left leaves a null key for drain_dirty() to drop
 
 /// Recomputed whenever the config decides which categories are silenced, since that is what a
 /// listener's turned-off categories are held against
@@ -52,11 +54,13 @@
 			. |= category.mask
 
 /**
- * Whether a listener's preferences leave them nothing to hear: point ambience off, its volume at
- * zero, a slider so low that even the loudest category at distance 0 would be dropped by the cutoff,
- * or every category they could hear muted. The one place these are read, so a muted listener is
- * unhooked whichever of them did it. No preferences mutes nothing, since such a listener is served
- * unscaled
+ * Whether a listener's preferences leave them nothing to hear.
+ *
+ * The listener is muted when point ambience is off, POINT_AMBIENCE_VOLUME is zero,
+ * loudest_volume scaled by their effective volume falls below send_cutoff even at distance zero,
+ * or muted_mask covers audible_mask.
+ * muted_by() makes that one decision for the move hook. prepare_serving() checks zero volume
+ * again before sending. A listener without preferences is served at the default scale
  *
  * Arguments:
  * * muted_mask - muted_mask_for(prefs), passed by a caller that already has it
@@ -79,10 +83,11 @@
 	return (muted_mask & audible_mask) == audible_mask
 
 /**
- * Recomputes whether a listener hears point ambience at all and which categories they have muted,
- * and attaches or detaches their move hook to match, so a silenced listener's steps cost nothing,
- * the same as an observer's. Called at login and on every change in the volume menu. Nothing on a
- * per step or per walk path reads preferences for this
+ * Recomputes whether a listener hears point ambience at all and which categories they have muted.
+ *
+ * Attaches or detaches their move hook to match, so a muted listener's steps cost nothing, the same
+ * as an observer's. Called at login and on every change in the volume menu. Nothing per step or per
+ * walk decides muting from preferences except prepare_serving's zero check
  */
 /datum/controller/subsystem/point_ambience/proc/update_silenced(client/listener_client)
 	PRIVATE_PROC(TRUE)
@@ -92,7 +97,8 @@
 	listener_client.point_ambience_silenced = muted_by(prefs, muted_mask)
 	var/mob/player = listener_client.mob
 	if(!player || isobserver(player))
-		// A ghost has no ear, and a watch left behind would go on holding the old body's head
+		// A ghost has no ear, so its watch goes here. Ghosting alone does not reach this, player_login
+		// returning first for an observer, so the watch lasts until a preference change or a login
 		if(listener_client.point_ambience_head_watch)
 			qdel(listener_client.point_ambience_head_watch)
 		return
@@ -100,23 +106,21 @@
 		UnregisterSignal(player, COMSIG_MOVABLE_MOVED)
 	else
 		RegisterSignal(player, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
-	// Kept whether they are silenced or not: it costs nothing while nothing moves, and an ear
-	// resolved only on unsilencing would be wrong for the first service after it
+	// Kept whether they are muted or not: it costs nothing while nothing moves, and an ear resolved
+	// only on unmuting would be wrong for the first service after it
 	update_head_watch(listener_client, player)
 	RegisterSignal(player, COMSIG_SPECIES_GAIN, PROC_REF(on_species_changed), override = TRUE)
 	RegisterSignal(player, COMSIG_SPECIES_LOSS, PROC_REF(on_species_changed), override = TRUE)
 
 /**
- * A listener changed their point ambience preferences. Re-reads muted_by() and the off mask and
- * acts on what changed, so every slider and toggle comes through here and none decides for itself
- * whether it mattered.
+ * A listener changed their point ambience preferences.
  *
- * Turning something OFF leaves the sound playing with nothing that will ever service them again to
- * stop it, so a listener now silenced has everything stopped and a category now muted is stopped on
- * its own. Turning something back ON leaves their turf and version unchanged, so the standing
- * shortcut would return before the send loop; they are marked for a service instead. Any other
- * change, a slider moved without crossing zero or the cutoff, reaches their next service through
- * the volume in the shortcut without cutting what is playing
+ * Rechecks the overall mute state and per-category mask after a slider or toggle changes.
+ *
+ * Muting calls stop_all_for() or stop_for() immediately because a fully muted listener no longer
+ * receives services. Unmuting calls mark_listener() because the unchanged-turf shortcut would
+ * otherwise skip the send. Other volume changes take effect on the next service without cutting
+ * the current clip
  *
  * Arguments:
  * * restart - stop everything playing and serve afresh whatever the answer, for a caller that
@@ -144,8 +148,11 @@
 		mark_listener(listener_client)
 
 /**
- * Marks a listener for a service after something the move hook cannot see: their ear moved, or what
- * carries it did. Drops the standing cache too, or the walk would shortcut straight past the change.
+ * Marks a listener for a service after something the move hook cannot see.
+ *
+ * Their ear or what carries it moved, a door near them changed, or a preference came back on. Drops
+ * the standing cache too, or the walk would shortcut straight past the change. With the queue off
+ * only the cache goes, and the standing walk serves them
  */
 /datum/controller/subsystem/point_ambience/proc/mark_listener(client/listener_client)
 	if(!listener_client || mode != POINT_AMBIENCE_LIVE || listener_client.point_ambience_silenced)
@@ -156,23 +163,22 @@
 		dirty_clients[listener_client] = world.time
 
 /**
- * A lit torch in a hand is heard by its carrier alone. It never enters the index: it is marked on
- * its carrier as that mob's self source and served to them at distance 0, so no walk ever scans it
+ * Marks a lit torch in a hand as its carrier's self source, heard by the carrier alone.
+ *
+ * It never enters the index: it is served to its carrier at distance 0, so no walk ever scans it
  * and no standing listener has to be rechecked because someone walked past. A lit torch lying on
- * the ground is not indexed either. The only torch anyone else hears is one in a sconce, and
- * then the sconce is the source
+ * the ground is not indexed either. The only torch anyone else hears is one in a sconce, and then
+ * the sconce is the source
  */
 /datum/controller/subsystem/point_ambience/proc/set_self_source(mob/carrier, atom/source)
 	carrier.point_ambience_self_source = source
 
 /**
- * Clears the mob's self source if it is this one. A source that went out is silenced at once, as an
- * unregister does for an indexed source.
+ * Clears the mob's self source if it is this one.
  *
- * One still burning has only left the hand, into a sconce, onto the floor or to someone else, and
- * its channel is left playing for the next service to re-price. A sconce now holding it is the same
- * clip on the same channel, so it carries on as a change of source where a stop here made it go
- * silent for up to a second and then restart. With nothing in earshot it fades like any other exit
+ * An extinguished torch stops immediately. A lit one can move from the hand into a sconce without
+ * changing its clip or channel, so playback continues until the next service re-prices it. Stopping
+ * here would leave a gap before the sconce is heard. With no other source in range, it fades out
  */
 /datum/controller/subsystem/point_ambience/proc/clear_self_source(mob/carrier, atom/source, still_lit = FALSE)
 	if(carrier.point_ambience_self_source != source)
@@ -218,10 +224,10 @@
  * client.point_ambience_ear. Everyone else has no watch and no ear, and a service reads one var
  * rather than resolving a species.
  *
- * What it does not see: a container moved between holders without the tracked holder moving, a
- * pushed closet, and a muffle change on the same turf. The once-a-second walk catches a turf change
- * on its next visit, subject to the skip and the budget. A muffle change on the same turf waits
- * for the next service either way
+ * What it does not see: a container moved between holders without the tracked holder moving, and a
+ * muffle change on the same turf. The once-a-second walk catches a turf change on its next visit,
+ * subject to the skip and the budget. A muffle change on the same turf waits for the next service
+ * either way
  */
 /datum/point_ambience_head_watch
 	var/client/owner

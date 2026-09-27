@@ -1,17 +1,14 @@
 /**
- * Opens a bulk source update, for a caller about to change many sources in one go.
+ * Opens a scope for changing many point ambience sources together.
  *
- * Until the matching close, every register and unregister still keeps the index, the counts, the
- * overrides and the fallback loops exact and bumps static_version. What it defers is the work that
- * repeats across overlapping sources: its ranking invalidation, its history entry and its walk over
- * every client. The outermost close does each once, see finish_bulk(). Unbatched, the Index only
- * snuff's 1699 overlapping removals took 38.4 ms in one tick with one client connected, and cleared
- * 69 cached entries between them. The Mass Snuff verb timed that under ideal conditions, not a
- * loaded server, and it may be out of date
+ * Each register_source() and unregister_source() still updates the index, counts, overrides,
+ * fallback loops and static_version. The outermost finish_bulk() combines the repeated ranking
+ * invalidation, source-change history update and walk over clients.
+ * In a local one-client test, removing indexed lights one by one took 38.4 ms in one tick under
+ * ideal conditions. That figure may change with the map or implementation.
  *
- * Open and close in the same proc and the same tick, with nothing between that can sleep. A scope
- * still open on a later tick is closed by the next fire or scope and reported, so a caller that fails
- * part way leaves rankings stale for about a tick rather than local invalidation off for good
+ * Open and close in the same proc and tick, without sleeping between them. close_leaked_bulk()
+ * runs on the next fire or scope if a caller fails partway, limiting how long rankings stay stale.
  *
  * Arguments:
  * * label - names the caller if its scope leaks
@@ -38,20 +35,17 @@
 	finish_bulk()
 
 /**
- * The outermost close.
+ * Finishes the outermost bulk source update.
  *
- * One clear_tile_cache() for everything the scope changed, which also empties the history and bumps
- * static_version, so no listener reuses an answer from before or during the scope. Then one pass over
- * what every listener plays: a channel stops when its source was removed or moved between categories
- * inside the scope and its FINAL category is not the one it plays under. Membership alone is not
- * enough. A source put back in the same category keeps playing, one restored under another category
- * loses its old channel, and a held torch, never in the index, is left alone unless the scope itself
- * removed it. A channel already fading out has left point_ambience_sources and finishes its fade, as
- * it does after an ordinary unregister
+ * One clear_tile_cache() resets source_change_history and bumps static_version, so no listener
+ * reuses an answer from before the scope. Then bulk_affected sources are checked against each
+ * client's point_ambience_sources. A source restored to the same category keeps playing. One
+ * removed or moved to another category stops, even if it was indexed during the scope. A held
+ * torch stays alone unless the scope removed it, and an existing fade finishes normally.
  *
- * A service run inside the scope can rank from buckets still changing or hit an entry not yet
- * flushed, so it may start or keep a source the scope removes. This pass stops any such channel and
- * the flush discards the entry, which is why no reader checks bulk_depth
+ * A service inside the scope may use a ranking that is about to change. The final check stops any
+ * channel whose source was removed, while the cache clear discards its stale ranking.
+ * This cleanup is why readers do not check bulk_depth.
  */
 /datum/controller/subsystem/point_ambience/proc/finish_bulk()
 	PRIVATE_PROC(TRUE)
@@ -96,9 +90,11 @@
 	log_world("Point ambience: bulk update [label] was still open a tick later and has been closed. Reached from [call_chain()]")
 
 /**
- * One tick of index changes outside any bulk update reached POINT_AMBIENCE_BULK_BURST. Names the
- * caller so it can be moved into a scope, at most once every five minutes. Diagnostic only: the
- * changes keep the ordinary path, which stays correct, only slower
+ * Logs a burst of unbatched index changes, at most once every five minutes.
+ *
+ * Called when one tick of index changes outside any bulk update reaches POINT_AMBIENCE_BULK_BURST,
+ * and names the caller so it can be moved into a scope. Diagnostic only: the changes keep the
+ * ordinary path, which stays correct, only slower
  */
 /datum/controller/subsystem/point_ambience/proc/report_unbatched_burst()
 	PRIVATE_PROC(TRUE)
@@ -110,6 +106,7 @@
 
 /**
  * The procs leading here, innermost first, for a report that must not raise a runtime.
+ *
  * A runtime fails whichever unit test is running, and create_and_destroy changes sources in bulk
  */
 /datum/controller/subsystem/point_ambience/proc/call_chain()

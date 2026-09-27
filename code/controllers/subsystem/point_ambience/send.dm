@@ -3,8 +3,8 @@
 /// Forgets a slot's fade, in or out, without sending anything
 #define CLEAR_FADE(slot) slot[POINT_AMBIENCE_SLOT_FADE_NEXT] = null; slot[POINT_AMBIENCE_SLOT_FADE_TARGET] = null; slot[POINT_AMBIENCE_SLOT_FADE_LEFT] = null
 
-/// The client's send state for one category, allocated once per client per category like the
-/// sound datum beside it. Every send takes its slot from here
+/// The client's send state for one category, allocated on first use and dropped by stop_all_for,
+/// unlike the sound datum beside it, which is kept. Every slim_send takes its slot from here
 /datum/controller/subsystem/point_ambience/proc/slot_for(client/listener_client, index)
 	PRIVATE_PROC(TRUE)
 	var/list/slots = listener_client.point_ambience_slots
@@ -17,42 +17,33 @@
 	return slot
 
 /**
- * The ambience send: builds the datum playsound_local would and sends it, without the proc call.
+ * Builds and sends one point ambience update without calling playsound_local().
  *
- * Uses the ambience input shape, a turf source at the category's range and no ERP class.
- * One datum per client per category is reused. What the SOURCE decides (file, channel,
- * falloff range, pitch) is written when playback begins. A source handoff updates pitch without
- * replacing or seeking the loaded file. Everything the LISTENER's position decides is per send.
+ * slim_send() uses a turf source and the category's range, without an ERP class. Each client
+ * reuses one sound datum per category. Playback start writes the file, channel, falloff range and
+ * pitch. A source handoff can re-lean the pitch for unique_voice, but does not replace or seek the
+ * loaded file. Listener-dependent volume, pan and environment are recalculated on each send.
  *
- * Derived from playsound_local, with ambience-specific falloff, pan blending, source voices and
- * playback continuity. The local Send Diff verb checks their shared fields with equivalent volume
- * inputs and the extra curve, pan and pitch features disabled. It does not validate those features
- * or playback continuity, and is kept out of git with the other measurement verbs.
+ * Point ambience adds its own falloff, pan blending, source voices and playback continuity.
  *
  * Arguments:
- * * fresh - the winning source changed, so its source-specific state must be refreshed
- * * had_previous - this category was already playing, which decides whether a failed send has to
- *   silence it
+ * * fresh - the winning source changed, requiring a source-specific update
+ * * had_previous - playback already exists on this category's channel
  * * dry_run - fill the datum and return what it would send, without sending
  * * clip_advance - choose the next file in a clip set without treating it as a new arrival
- * * centre - send this one centred, the send that switches source under centre_handoff
+ * * centre - centre the handoff update before later sends pan toward the source
  *
- * Decisions a reader would otherwise undo:
+ * Without unique_voice, nearby sconces sound identical. It gives each source a pitch lean and
+ * starting place fixed by its turf. voice_place applies that offset only when playback begins,
+ * because an offset on SOUND_UPDATE seeks the running clip. A held torch keeps its plain voice.
  *
- * One file a category means every sconce on a wall is the same sconce. A category asking for
- * unique_voice gives each source a voice fixed by WHERE IT STANDS, so it always sounds like itself
- * and never like its neighbour: a lean on the pitch, and its own starting place in the loop. The
- * place is applied only when playback begins because offset on SOUND_UPDATE seeks the playing clip.
- * A torch in the hand keeps the plain voice.
+ * falloff_hardness 1 drops the same proportion per tile, giving an even fade in decibels through
+ * the range edge. Higher values separate nearby sources faster. At 0, the band power curve
+ * matches CALCULATE_SOUND_VOLUME_RATIO, using inv_falloff_exponent instead of dividing per send.
+ * With the authored category settings, its largest per-tile drop in decibels is at the range edge.
  *
- * At hardness 1 every tile drops the same PROPORTION, so the fade is even in decibels, which is what
- * the ear measures. It also lands on the floor with slope still on it, where the band power curve
- * approaches the floor asymptotically and spends its last tiles within a decibel of it. Above 1
- * front-loads the drop, trading that evenness for separation close in. Hardness 0 is the band power
- * curve, CALCULATE_SOUND_VOLUME_RATIO with the reciprocal read rather than divided.
- *
- * Every refusal comes before the restart block, so a refused send writes no file, rolls no pitch
- * and starts no clip timer. Nothing the volume and pan read is written by that block
+ * Refusals precede restart work. A rejected send must not choose a file, roll pitch or start a
+ * clip timer.
  */
 /datum/controller/subsystem/point_ambience/proc/slim_send(mob/listener, client/listener_client, datum/point_ambience_category/category, atom/nearest, fresh, had_previous, dry_run, list/slot, clip_advance = FALSE, centre = FALSE)
 	PRIVATE_PROC(TRUE)
@@ -71,7 +62,7 @@
 	if(!source_turf)
 		return FALSE
 	// Two floors away is silent, one is muffled. Only ranges under the long band muffle by
-	// storey, so the band test stays even though every category is under it today
+	// storey, so the band test stays even though no category's range reaches it
 	var/storeys = (category.range < SOUND_RANGE_LONG) ? abs(source_turf.z - serving_turf.z) : 0
 	if(storeys >= 2)
 		return FALSE
@@ -83,14 +74,14 @@
 	// A share of THIS source's volume, so the walk keeps its dB per tile at any level. Taken
 	// before the muffle cut, so a muffled send lands on the same edge level as a clear one
 	var/volume_floor = vol * category.floor_ratio
-	// Heavier falloff, a quarter off the volume, a dead room and the occlusion echo. A wall with
-	// no way round it is not served at all and never reaches here
+	// Heavier falloff, a volume cut, a dead room and the occlusion echo. A wall with no way round it
+	// is not served at all and never reaches here
 	var/muffled = storeys || serving_muffle_wall || serving_muffle_head
 	var/environment = serving_environment
 	var/list/echo = null
 	if(muffled)
-		// A wall takes the heavier cut, half off, as playsound_local's wall profile does. A storey or
-		// an ear shut inside something takes a quarter off
+		// A wall takes the heavier cut, as playsound_local's wall profile does. A storey or an ear
+		// shut inside something takes the lighter one
 		vol *= serving_muffle_wall ? SOUND_MUFFLE_WALL_VOLUME_MULT : SOUND_MUFFLE_VOLUME_MULT
 		environment = SOUND_MUFFLE_ENVIRONMENT
 		echo = storey_echo
@@ -113,8 +104,8 @@
 	if(!isnull(serving_volume_scale))
 		volume *= serving_volume_scale
 	volume = min(volume, 100)
-	// Against what the listener actually receives, and set to the volume a category's floor
-	// fades to, so this refuses what is under hearing and never anything above it
+	// Against what the listener actually receives, after the slider. A send_cutoff of 0 is off and
+	// refuses only silence
 	if(volume <= 0 || volume < send_cutoff)
 		return FALSE
 	var/pan_x = 0
@@ -125,8 +116,8 @@
 		pan_x = pan_lean_dx
 		pan_z = pan_lean_dy
 	var/restarting = FALSE
-	// Where in the loop this source plays from, 0 to 1. Null when the send is not moving to a source
-	// with a voice of its own
+	// Where in the loop this source plays from, 0 to 1. Null unless playback begins on a source with
+	// its own place in the loop
 	var/voice_phase = null
 	if(fresh || clip_advance)
 		// A change of source is not a restart: playback carries through the handoff. A clip set picks
@@ -216,14 +207,23 @@
 	return volume
 
 /**
- * The verbs' entry to a send, being the dispatch the service otherwise makes inline.
+ * Sends one source using an already prepared listener context.
+ *
+ * The caller must first succeed at prepare_serving() for this listener. It must also reset
+ * serving_muffle_wall and grade the category if needed, and supply any runner-up in the slot.
+ * This wrapper does none of that preparation. No other service or preparation may run between
+ * preparing the context and consuming it here.
+ *
+ * dry_run suppresses packets and clip-timer creation, but still changes the client's sound datum
+ * and slot, including file and pitch on a start. It is not an isolated preview. Diagnostics must
+ * use disposable playback state or restore what they change before live servicing resumes.
  *
  * Returns the target volume, or FALSE when the send is refused.
  *
  * Arguments:
  * * fresh - the winning source changed, so its source-specific state must be refreshed
- * * had_previous - this category was already playing on the channel, which decides whether a failed
- *   send has to silence it
+ * * had_previous - this category was already playing on the channel, so the send updates what is
+ *   loaded rather than starting playback
  * * dry_run - build the datum and return what it would send, without sending
  */
 /datum/controller/subsystem/point_ambience/proc/send_source(client/listener_client, mob/listener, datum/point_ambience_category/category, atom/nearest, fresh, had_previous, dry_run = FALSE)
@@ -231,25 +231,26 @@
 	return slim_send(listener, listener_client, category, nearest, fresh, had_previous, dry_run, slot_for(listener_client, category.index))
 
 /**
- * ONE VOICE, TWO FIRES. A category plays its nearest source only, so walking a road of braziers
- * flips the whole sound from one ear to the other the moment the nearest changes: measured on a Lap
- * of that road, eleven flips in 91 steps, each the full span in one packet.
+ * Works out a send's stereo direction, leaned toward the runner-up and held at a minimum depth.
+ *
+ * A category plays its nearest source only, so walking a road of braziers flips the whole sound from
+ * one ear to the other the moment the nearest changes: measured on one client walking that road,
+ * eleven flips in 91 steps, each the full span in one packet.
  *
  * So the direction is weighted between the nearest and the runner-up the walk already found, each
- * weighted by how far INSIDE its range the other one is, which sends the weight to the nearer
- * source and to zero at either range edge. Walking past, the image slides from one through the
- * middle to the other instead of snapping, and at the moment they swap they are equidistant, so the
- * blend is already centred and the swap changes nothing.
+ * weighted by how far inside the range it is, times the other one's squared distance. That sends the
+ * weight to the nearer source and to zero at either range edge, so walking past, the image slides
+ * from one toward the other instead of snapping. The switch itself is centre_handoff's: under it the
+ * switching send skips this and goes out centred.
  *
  * The volume is not blended: one voice still plays, so the dip between two fires stays. The
  * runner-up is graded only when the winner was occluded, so this can lean toward a fire behind a
- * wall. If that is heard, grade it for occluding categories
+ * wall. If that is heard, grade it for occluding categories.
  *
  * The pan is taken from the listener's turf, then held at a minimum depth so a sideways source stays
  * out of one ear, only the angle changing and not the magnitude. A plain dead zone zeroes an axis
  * within a tile, which puts a source 1.4 tiles off the shoulder dead ahead and then snaps it to 45
- * degrees on the next step. The direction is also leaned toward the runner-up, so a road of braziers
- * slides between ears instead of flipping as the nearest changes.
+ * degrees on the next step.
  *
  * Both numbers go back through pan_lean_dx and pan_lean_dy
  */
@@ -293,8 +294,16 @@
 	pan_lean_dy = pan_z * ratio
 
 /**
- * Marks one expired clip for replacement. An already queued movement service consumes the same
- * marker; otherwise the callback queues this category. The old clip repeats until it is served
+ * Marks one expired clip for replacement.
+ *
+ * The client is queued, and the service picks the next clip. A service already queued takes it
+ * along. A listener expected to step within clip_coalesce_window waits for that step, and the timer
+ * returns with deferred set if the step never comes. With the queue off the service runs inline.
+ * The old clip repeats natively until it is served.
+ *
+ * Arguments:
+ * * deferred - the timer after waiting for a step, which serves the client unless a service
+ *   already took the clip
  */
 /datum/controller/subsystem/point_ambience/proc/advance_clip(client/listener_client, datum/point_ambience_category/category, deferred = FALSE)
 	PRIVATE_PROC(TRUE)
@@ -342,11 +351,11 @@
 		clip_refresh_ms += rustg_time_microseconds("pa_clip_refresh") / 1000
 
 /**
- * Silences one category for one listener and forgets what it was playing.
+ * Stops one category for one listener and forgets what it was playing.
  *
  * Arguments:
- * * send_null - actually stop the channel. FALSE when the caller is about to send something else on
- *   it, where a stop first would be an audible gap.
+ * * send_null - FALSE when nothing was playing on the channel, so there is nothing to stop. A fade
+ *   out is stopped whatever this says.
  */
 /datum/controller/subsystem/point_ambience/proc/stop_for(client/listener_client, datum/point_ambience_category/category, send_null = TRUE)
 	listener_client.point_ambience_sources -= category
@@ -354,21 +363,20 @@
 	var/list/slot = (length(slots) >= category.index) ? slots[category.index] : null
 	if(slot)
 		slot[POINT_AMBIENCE_SLOT_RUNNER_UP] = null
-		// Cleared, or a continuous run re-entered at the volume it left at would match the stale
-		// value and never be started again
+		// Cleared with the rest of the stretch, so nothing later reads the volume it ended at
 		slot[POINT_AMBIENCE_SLOT_LAST_VOLUME] = null
 		CANCEL_CLIP_TIMER(slot)
 		slot[POINT_AMBIENCE_SLOT_CLIP_DUE] = null
 		if(slot[POINT_AMBIENCE_SLOT_FADE_NEXT])
 			// A fade out has the channel still playing and, with its marker gone, nothing left
-			// to silence it, so the stop goes out whatever the caller asked
+			// to end it, so the stop goes out whatever the caller asked
 			if(isnull(slot[POINT_AMBIENCE_SLOT_FADE_TARGET]))
 				send_null = TRUE
 			CLEAR_FADE(slot)
 	if(send_null)
 		SEND_SOUND(listener_client, category.stop_sound)
 
-/// Silences every category for one listener and clears their cached walk, so the next service is
+/// Stops every category for one listener and clears their cached walk, so the next service is
 /// fresh. Leaving the cache would let a stationary listener take the shortcut and stay silent
 /datum/controller/subsystem/point_ambience/proc/stop_all_for(client/listener_client)
 	PRIVATE_PROC(TRUE)
@@ -388,7 +396,7 @@
 			CANCEL_CLIP_TIMER(slot)
 		if(slot?[POINT_AMBIENCE_SLOT_FADE_NEXT])
 			stop_for(listener_client, category)
-	// Muted listeners and ghosts may never service these lists again, so release their sources now.
+	// Muted listeners and ghosts may never service these lists again, so release their sources now
 	slots.Cut()
 	listener_client.point_ambience_cache_static?.Cut()
 	listener_client.point_ambience_cache_self = null
@@ -396,18 +404,17 @@
 	listener_client.point_ambience_cell_above = null
 	listener_client.point_ambience_cell_below = null
 	listener_client.point_ambience_cell_version = null
-	// The cached turf goes too, or a listener who was standing still is silenced until they walk:
-	// their turf and version still match, so the next service returns before the send loop
 	listener_client.point_ambience_cache_turf = null
 
 /**
- * Lets a category die away for one listener instead of cutting it, for the two ways a listener
- * leaves a sound by moving: out of its range, or behind a wall. A snuffed source, a mute, deafness
- * and a teleport still stop at once through stop_for.
+ * Lets a category die away for one listener instead of cutting it.
+ *
+ * For a listener who leaves a sound by moving: out of its range, behind a wall, or faster than a
+ * natural run. A snuffed source, a mute, deafness and a teleport stop at once through stop_for.
  *
  * The first step goes out here, the exit already being a step late, and fire() sends the rest. The
  * category leaves point_ambience_sources now, so the walk treats it as gone, and coming back into
- * earshot before the fade ends picks the playing clip up again
+ * earshot before the fade ends picks the playing clip up again. A clip set restarts instead
  */
 /datum/controller/subsystem/point_ambience/proc/fade_out(client/listener_client, datum/point_ambience_category/category, turf/listener_turf, by_wall)
 	PRIVATE_PROC(TRUE)
@@ -424,7 +431,7 @@
 	if(!fade_steps || !listener_turf)
 		stop_for(listener_client, category)
 		return
-	// Every other cut is counted by its reason, so "it did not trail off" can be read off Counters
+	// Every other cut is counted by its reason, so "it did not trail off" can be traced to one
 	var/refused = FALSE
 	if(!S || !volume || !source_turf)
 		fade_refused_state++
@@ -449,7 +456,8 @@
 		fade_skipped++
 		stop_for(listener_client, category)
 		return
-	// What stop_for does, short of the stop itself
+	// Out of point_ambience_sources and off the clip timer, as stop_for does. The rest of the slot
+	// stays for the fade to read
 	listener_client.point_ambience_sources -= category
 	CANCEL_CLIP_TIMER(slot)
 	// Already listed when it was still fading IN, and that entry carries on as this fade out
@@ -481,12 +489,19 @@
 	fading += category
 
 /**
- * Sends whatever fade steps have come due. Driven by world.time, not by one step a fire, because
- * this subsystem runs in the tick's slack and a late fire has to catch up rather than stretch the
- * fade: every overdue step is taken at once, which is also what keeps the ending firm.
+ * Sends whatever fade steps have come due.
+ *
+ * Driven by world.time, not by one step a fire, because this subsystem runs in the tick's slack and
+ * a late fire has to catch up rather than stretch the fade: every overdue step is taken at once,
+ * which is also what keeps the ending firm.
  *
  * A step never goes through slim_send. That would pin a listener past the range at the floor and
- * refuse the last quiet steps
+ * refuse the last quiet steps.
+ *
+ * A step reads both the capped and the uncapped count of steps elapsed. Read only through the cap,
+ * the last step of a fade out recomputes the same volume however late the run is, stays above
+ * fade_skip, and a budget refusal defers it again writing nothing, so it would never end. The
+ * uncapped count ends it
  */
 /datum/controller/subsystem/point_ambience/proc/run_fades()
 	PRIVATE_PROC(TRUE)
@@ -514,10 +529,7 @@
 		var/volume = slot[POINT_AMBIENCE_SLOT_LAST_VOLUME]
 		var/left = slot[POINT_AMBIENCE_SLOT_FADE_LEFT]
 		var/target = slot[POINT_AMBIENCE_SLOT_FADE_TARGET]
-		// Uncapped as well as capped, so a run arriving after the whole fade was due can tell that
-		// it is over. Read only through the cap, the last step recomputes the same volume however
-		// late the run is, stays above fade_skip, and a budget refusal defers it again writing
-		// nothing, so more elapsed time never ends it
+		// Uncapped as well, so a run arriving after the whole fade was due ends it. See the proc doc
 		var/elapsed_steps = 1 + round((world.time - due) / POINT_AMBIENCE_FADE_STEP)
 		var/expired = elapsed_steps > left
 		var/steps = min(left, elapsed_steps)
@@ -533,9 +545,8 @@
 			// cannot leave it a hair short
 			volume = (steps < left && volume) ? min(volume / fade_ratio ** steps, target) : target
 			arrived = (volume >= target)
-		// Over the budget a step waits, nothing written, and the next run takes it with whatever
-		// else it is behind by then. An ENDING is never held back, out or in: it is what leaves the
-		// sound at the volume it is meant to hold, and holding it back is what stalled a fade out
+		// Over the budget a step waits, and the next run takes it with the rest. An ending never
+		// waits, since it leaves the sound at the volume it must hold
 		if(!stopping && !arrived && (sent >= fade_budget || TICK_CHECK))
 			fade_deferred++
 			earliest = world.time

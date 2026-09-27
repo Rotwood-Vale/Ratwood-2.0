@@ -1,16 +1,18 @@
 /**
- * Tiles of effective distance a crossed floor adds, cached from config at SSsounds init. Read on
- * every positional send, which is every footstep in the game, so it is a global read rather than a
- * CONFIG_GET. 0 is the old behaviour: a floor is a flat halving and nothing else
+ * Tiles of effective distance a crossed floor adds, cached from config at SSsounds init.
+ *
+ * A global rather than a CONFIG_GET because STOREY_ADJUSTED_DISTANCE reads it on every cross-floor
+ * send, in playsound_local and in SSpoint_ambience's slim_send. 0 leaves a floor as the flat storey
+ * halving and nothing else.
  */
 GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 
 /**
  * Picks the falloff curve for a sound from how far it carries. See SOUND_FALLOFF_EXPONENT.
  *
- * Called by playsound() and playsound_local() whenever a caller does not name an exponent
- * itself, which is nearly all of them. Resolved once per call, not per listener, so the three
- * models cost a pair of comparisons against however many people end up hearing the sound.
+ * Four curves for four bands, up to three comparisons. playsound() resolves it once per call.
+ * playsound_local() resolves it on each send for a direct caller that names no exponent, which
+ * includes every token a looping_sound builds. Each point ambience category resolves it once.
  */
 /proc/sound_falloff_for_range(range)
 	if(range >= SOUND_RANGE_LONG)
@@ -33,7 +35,7 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * * falloff_exponent - Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
  * * frequency - playback speed of audio.
  * * channel - The channel the sound is played at.
- * * pressure_affected - Whether or not difference in pressure affects the sound (defaults FALSE here. There is no atmos to speak of).
+ * * pressure_affected - kept for source compatibility. There is no atmos here, so it does nothing.
  * * ignore_walls - Whether or not the sound can pass through walls.
  * * falloff_distance - Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
  * * use_reverb - bool default TRUE, determines if our sound has reverb.
@@ -41,24 +43,24 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * * animal_pref - Filter the sound away from clients with mute_animal_emotes set.
  * * min_volume - the volume the sound falls off to at max range, instead of to silence.
  * * travel - a SOUND_TRAVEL_* class: what a barrier between source and listener does. UNRESTRICTED
- *   by default. Every other class costs a line walk per listener.
- * * floor_volume - what a FLOOR does, separately. Null attenuates and halves as usual;
+ *   by default. Every other class walks a line per listener when ignore_walls is TRUE.
+ * * floor_volume - what a FLOOR does, separately. Null attenuates and halves as usual.
  *   SOUND_FLOOR_NEVER does not cross and skips gathering the floors either side. A positive number
  *   caps the volume there. Forced to NEVER for SOUND_TRAVEL_CONTAINED.
  * * erp - sex audio: takes the ERP muffle timbre, and obeys an area's soundproof flag.
  *
  * Decisions a reader would otherwise undo:
  *
- * CONTAINED is a guarantee rather than a default, so the floor volume is forced with it here and
- * again in playsound_local. "Stays in the room" has to mean the floor too, and a caller naming the
- * class must not be able to hand it a floor volume that lets the sound upstairs.
+ * CONTAINED is a guarantee rather than a default, so the floor volume is forced with it here, and
+ * playsound_local refuses a storey for it as well. "Stays in the room" has to mean the floor too, and
+ * a caller naming the class must not be able to hand it a floor volume that lets the sound upstairs.
  *
  * ERP audio obeys the area's speech rule, line of sight only where soundproof is set. Read from the
- * area the sound LEAVES, which for a headless dullahan is wherever the head is rather than where the
- * body stands. The travel class is cleared with it, since nothing gathered can then be behind a wall
+ * area the sound LEAVES, which for a headless dullahan's voice is wherever the head is rather than
+ * where the body stands. The travel class is cleared with it, since nothing gathered can then be behind a wall
  * or on another floor, leaving no muffle to shape and no cap to apply.
  *
- * OMITTING extrarange gives 1, so a bare playsound() reaches 8 rather than SOUND_RANGE. Some 1400
+ * OMITTING extrarange gives 1, so a bare playsound() reaches SOUND_RANGE + 1. The bare
  * call sites were tuned against that and it stays. Guarded on isnull rather than falsiness so an
  * explicit 0 means what it says. Mapped -1/-2/-3 values are unaffected either way.
  *
@@ -66,23 +68,23 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * rather than a volume of zero: nobody upstairs is ever considered. Ratwood deliberately lets sound
  * leak through ceilings and players navigate by it, so this is opt-out rather than opt-in. Each
  * floor is probed before it is gathered, any_client_in_range walking the same cells with no list to
- * build and an early return on the first hit, and most floors either side are empty.
+ * build and an early return on the first hit, and a floor either side is often empty.
  *
- * Occlusion is A LINE WALK PER LISTENER, not a second get_hearers_in_view() gather. Same answer, and
- * it is the mechanism point ambience and /datum/sound_token already use. The gather was one call for
- * everyone, so it won at high listener counts and lost at low ones, and it could only ever answer
- * yes or no. A walk also says WHERE the line was blocked, which is what grading a corner against an
- * enclosure needs. check_contents catches doors, matching what the view gather did, and a one-shot
- * recomputes from scratch so a door's state cannot freeze into it.
+ * Occlusion is A LINE WALK PER LISTENER, not a second get_hearers_in_view() gather, the mechanism
+ * point ambience and /datum/sound_token use. A gather is one call for everyone, cheaper at high
+ * listener counts and dearer at low ones, and can only answer yes or no. A walk also says WHERE the
+ * line was blocked, which grading a corner against an enclosure needs. check_contents catches
+ * doors, and a one-shot recomputes from scratch so a door's state cannot freeze into it.
  *
  * Listeners are gated on get_dist, not euclidean distance. The gather is an orthogonal square, so an
- * euclidean gate silently discards the corners, about a third of everyone. Volume is still computed
- * euclidean below, so a corner listener sits at min_volume rather than being dropped.
+ * euclidean gate silently discards the corners, about a third of the tiles at ranges 7 and 8. Volume
+ * is still computed euclidean below, so a corner listener sits at min_volume rather than dropped.
  *
  * Nothing can stand between the source and a listener on it or orthogonally beside it, since a wall
  * is a turf, and those two cases are most of ERP: the sex actions put both participants on one tile
  * or in a grab one tile apart. Manhattan rather than get_dist, which is chebyshev and would call a
- * diagonal adjacent. A diagonal CAN be cut by an inside corner, so those are still walked.
+ * diagonal adjacent. A diagonal neighbour is walked and reads clear, because the walk reaches it in
+ * one step without testing the corner tiles.
  */
 /proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent, frequency = null, channel = 0, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, use_reverb = TRUE, soundping = FALSE, animal_pref = FALSE, min_volume = SOUND_DEFAULT_MIN_VOLUME, travel = SOUND_TRAVEL_UNRESTRICTED, floor_volume = null, erp = FALSE)
 	if(isarea(source))
@@ -124,12 +126,11 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 	var/sound/S = soundin
 	if(!istype(S))
 		S = sound(get_sfx(soundin))
-	// OMITTING extrarange gives 1, so a bare call reaches 8, not SOUND_RANGE. See the proc doc
+	// OMITTING extrarange gives 1, so a bare call reaches SOUND_RANGE + 1. See the proc doc
 	if(isnull(extrarange))
 		extrarange = 1
 	var/maxdistance = SOUND_RANGE + extrarange
-	// Falsy rather than isnull: a caller passing 0 here would be a divide by zero below, and
-	// historically a couple passed FALSE into this slot when it meant something else
+	// Falsy rather than isnull, so a 0 or FALSE in this slot takes the band's curve as an omitted one does
 	if(!falloff_exponent)
 		falloff_exponent = sound_falloff_for_range(maxdistance)
 
@@ -147,14 +148,14 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 	var/list/listeners
 
 	// Deviation from TG: no istransparentturf() gate on the above/below gathering.
-	// Taverns leak sound through their floors today and players navigate by it
+	// Taverns leak sound through their floors and players navigate by it
 	if(!ignore_walls) //these sounds don't carry through walls or vertically
 		listeners = get_hearers_in_view(maxdistance, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
 	else
 		listeners = get_hearers_in_range(maxdistance, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 		// Skipping the gather is what makes SOUND_FLOOR_NEVER a guarantee. Probed before gathered,
-		// since most floors either side are empty. See the proc doc
+		// since a floor either side is often empty. See the proc doc
 		if(floor_volume != SOUND_FLOOR_NEVER)
 			var/turf/above_turf = GET_TURF_ABOVE(turf_source)
 			if(above_turf && SSspatial_grid.any_client_in_range(above_turf, maxdistance))
@@ -164,8 +165,7 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 			if(below_turf && SSspatial_grid.any_client_in_range(below_turf, maxdistance))
 				listeners += get_hearers_in_range(maxdistance, below_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
-	// What a wall does to an ignore_walls sound, opt-in because it is a line walk PER LISTENER.
-	// A ternary, not &&: DM's && yields its LAST operand, which would turn every mode into MUFFLE
+	// What a wall does to an ignore_walls sound, opt-in because it is a line walk PER LISTENER
 	var/occlude = ignore_walls ? travel : SOUND_TRAVEL_UNRESTRICTED
 	for(var/mob/listening_mob in listeners) // had nulls sneak in here, hence the typecheck
 		var/turf/mob_turf = get_turf(listening_mob)
@@ -196,18 +196,18 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 
 
 /**
- * Sound made by the sex system: muffled round a corner, collapsed behind a wall for the classes a
- * wall stops, and on its own floor unless told otherwise.
+ * Sound made by the sex system, with the wall and floor policy in one place.
  *
- * A wrapper so the policy lives in one place. emote_erp is its counterpart for vocalisations.
- * Name what the sound is with SOUND_TRAVEL_LEAKING or SOUND_TRAVEL_CARRYING and its behaviour at walls and
- * ceilings follows. The default treats it as vocal, which is the most private of the three.
+ * Muffled round a corner, capped or stopped behind a wall by its class, and on its own floor unless
+ * told otherwise. emote_erp is its counterpart for vocalisations. Name what the sound is with
+ * SOUND_TRAVEL_LEAKING or SOUND_TRAVEL_CARRYING and its behaviour at walls and ceilings follows.
+ * The default treats it as vocal, which is the most private of the three.
  *
  * Omitting extrarange means SOUND_RANGE here, not playsound's SOUND_RANGE + 1.
  */
 /proc/playsound_erp(atom/source, soundin, vol, vary, extrarange = 0, frequency = null, channel = 0, travel = SOUND_TRAVEL_CONTAINED, floor_volume)
 	// The class picks the floor cap unless the caller names one, so a sex sound is still ONE decision
-	// at the call site. CONTAINED ignores an override either way. Playsound forces it
+	// at the call site. CONTAINED ignores an override, since playsound forces it
 	if(isnull(floor_volume))
 		floor_volume = SOUND_TRAVEL_FLOOR(travel)
 	return playsound(source, soundin, vol, vary, extrarange, frequency = frequency, channel = channel, travel = travel, floor_volume = floor_volume, erp = TRUE)
@@ -257,24 +257,25 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * * distance_multiplier - Default 1, multiplies the perceived distance of our sound.
  * * use_reverb - bool default TRUE, determines if our sound has reverb.
  * * muffled - a SOUND_MUFFLE_* level: NONE, SOFT (the profile: heavier falloff, quieter, dead room),
- *   ENCLOSED (the profile plus the wall collapse) or WALL (the profile with a deeper volume cut).
+ *   ENCLOSED (the profile plus the leak cap) or WALL (the profile with a deeper volume cut).
  *   Boolean callers pass TRUE, which is SOFT.
  * * min_volume - the volume the sound falls off to at max_distance, instead of to silence.
  * * travel - the SOUND_TRAVEL_* class playsound gathered with. Only CONTAINED is read here, refusing a storey
  * * floor_volume - a cap on the volume a floor away, replacing the storey multiplier, as in playsound
  * * erp - sex audio: a muffled send takes the ERP muffle timbre in place of the occlusion echo
- * * volume_pref, when set, replaces the Sound Effects slider under Master as the result's scale
+ * * volume_pref - when set, replaces the Sound Effects slider under Master as the result's scale
  *
  * Decisions a reader would otherwise undo:
  *
- * The storey count is resolved once at the top because the muffle and the scaling both depend on it,
- * and this is the only place the vertical rule lives, sound_token deferring to it rather than
- * halving as well and quartering. It is skipped for the LONG band, which models hearing something
- * through the floor above you and stops meaning anything once a sound carries across the map, where
- * it would silence a town-wide sound for anyone two floors up. Keyed on the band so any future
- * long-range sound inherits that. A storey with CONTAINED returns outright, the second half of that
- * class's guarantee: playsound never gathers the other floors, so nothing should arrive here with
- * storeys at all, and a floor cap of zero would otherwise fall through to the halving and be SENT.
+ * The storey count is resolved once at the top because the muffle and the scaling both depend on it.
+ * The vertical rule lives here and in its hand-kept mirror in SSpoint_ambience's slim_send, with
+ * sound_token deferring to it rather than halving twice. It is skipped for the LONG band, which
+ * models hearing something through the floor above you and stops meaning anything once a sound
+ * carries across the map, where it would silence a town-wide sound for anyone two floors up. Keyed
+ * on the band so any future long-range sound inherits that. A storey with CONTAINED returns
+ * outright, the second half of that class's guarantee: playsound never gathers the other floors, so
+ * nothing should arrive here with storeys at all, and a direct caller passing CONTAINED with no
+ * floor cap would otherwise get the halving and be SENT.
  *
  * The environment comes from the listener's area, and the muffle environment wins over it. A muffled
  * sound keeping the cathedral's reverb would lose the dead-room character, which is what actually
@@ -282,8 +283,8 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * works because the default is a live space, so the muffle has something to deaden. Every ERP class
  * takes the heavier environment, screams included, a scream through a wall carrying at full volume
  * but still sounding like it comes from somewhere else. The area test is truthy rather than "not
- * NONE": /area/soundenv defaults to 0, which is BYOND's flattest preset rather than a missing value,
- * so every unset area was claiming one. The turf branch keeps weather, music and UI sounds dry,
+ * NONE": /area/soundenv defaults to 0, BYOND's generic preset rather than a missing value, which
+ * would give every unset area a reverb. The turf branch keeps weather, music and UI sounds dry,
  * having no place in the world to echo in. Assigned on every branch, since playsound() builds ONE
  * sound datum and hands it to every listener in turn, so a value left set by one follows the rest.
  *
@@ -292,7 +293,7 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * than the floor would subtract a negative and get LOUDER the further away you stood.
  *
  * The leak cap and the storey cap are both applied AFTER the falloff, so the number is what a
- * listener hears rather than where the curve starts. Capping first put the figure at distance 0,
+ * listener hears rather than where the curve starts. Capping first would put the figure at distance 0,
  * which is inside the wall. A floor cap REPLACES the storey multiplier rather than stacking with it,
  * holding a capped sound at that volume wherever the listener stands on the floor above, which is
  * the point of capping rather than attenuating.
@@ -367,7 +368,7 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 		// Wins over the area, the dead room being what reads as behind something
 		S.environment = erp ? SOUND_ERP_MUFFLE_ENVIRONMENT : SOUND_MUFFLE_ENVIRONMENT
 	else if(A && A.soundenv && A.soundenv != SOUND_ENVIRONMENT_NONE)
-		// Truthy, not just "not NONE": soundenv defaults to 0, BYOND's flattest preset
+		// Truthy, not just "not NONE": soundenv defaults to 0, BYOND's generic preset
 		S.environment = A.soundenv
 	else if(isturf(turf_source))
 		// Positional only. Weather, music and UI sounds have no room to echo in, so they stay dry
@@ -394,16 +395,15 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 		if(muffled == SOUND_MUFFLE_ENCLOSED && !storeys)
 			S.volume = min(S.volume, SOUND_TRAVEL_LEAK_VOLUME)
 
-		// The distance is horizontal only, so a listener directly overhead is otherwise at full
-		// strength. A floor cap REPLACES this rather than stacking. See the proc doc
+		// The multiplier is the floor as an obstruction, on top of the distance it adds. A floor cap
+		// REPLACES it rather than stacking. See the proc doc
 		if(storeys)
 			if(isnull(floor_volume))
 				S.volume *= SOUND_STOREY_VOLUME_MULT
 			else
 				S.volume = min(S.volume, floor_volume)
 
-		// Pan from the body's own turf, as the old file did, complete with the one-tile
-		// dead zone that keeps adjacent sounds centered
+		// Pan from the body's own turf, with a one-tile dead zone that keeps adjacent sounds centered
 		var/turf/our_turf = get_turf(src)
 		var/dx = turf_source.x - our_turf.x
 		if(dx <= 1 && dx >= -1)
@@ -458,12 +458,10 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 
 	SEND_SOUND(src, S)
 
-	// The volume actually sent, so a caller can report it rather than recomputing it. Still
-	// truthy on success and FALSE when nothing was sent, which is all any caller checks
+	// The volume sent, so a caller can report it. FALSE when nothing was sent
 	return S.volume
 
-// falloff_exponent, not falloff: this value lands in playsound_local's exponent slot, where a
-// 0 would be a divide-by-zero the moment anyone passes a max_distance through here
+/// Plays a sound to every player in the round, unpositioned
 /proc/sound_to_playing_players(soundin, volume = 100, vary = FALSE, frequency = 0, falloff_exponent, channel = 0, pressure_affected = FALSE, sound/S)
 	if(!S)
 		S = sound(get_sfx(soundin))
@@ -512,7 +510,7 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * A volume for a sound that no slider of its own covers, under the listener's Master slider.
  *
  * For stingers and alerts sent straight to a mob or a client. A listener without preferences gets
- * the volume as passed
+ * the volume as passed.
  */
 /proc/overall_volume(target, volume = 100)
 	var/client/listener = target
@@ -592,10 +590,13 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 		if(token.respect_instrument_pref)
 			token.update_listener(mob)
 
-/// Re-prices every sound token this mob hears and the weather it stands in, after a Master or Sound
-/// Effects change. Both price by those sliders on each send, but re-send only on their own triggers:
-/// a token when either side moves, the weather when its loop replays or its severity is applied. This
-/// reaches a listener standing still in between
+/**
+ * Re-prices every sound token this mob hears and the weather it stands in.
+ *
+ * For a Master or Sound Effects change. Both price by those sliders on each send, but re-send only
+ * on their own triggers: a token when either side moves, the weather when its loop replays or its
+ * severity is applied. This reaches a listener standing still in between.
+ */
 /client/proc/resend_effect_sounds()
 	if(!prefs || !mob)
 		return

@@ -1,9 +1,3 @@
-// Sound in this system is muffled through walls rather than blocked by them. These calls used
-// to pass ignore_walls = FALSE, which cut them dead at a wall, but the participants' vocal
-// emotes carry regardless (emotes.dm plays those occluded, LEAK for the ERP classes), so blocking only the
-// physical sounds concealed nothing and left the two halves of the same scene behaving
-// differently. Muffled keeps a closed door meaningful without pretending it is soundproof.
-
 #define SEX_ZONE_NULL				0
 #define SEX_ZONE_GROIN				(1<<0)
 #define SEX_ZONE_GROIN_GRAB			(1<<1)

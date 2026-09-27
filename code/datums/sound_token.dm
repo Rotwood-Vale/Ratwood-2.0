@@ -1,15 +1,16 @@
-// Sound tokens, a datumized handler for spatial sound. Ported from tgstation.
-// Uses the spatial grid to track clients in range and add them as listeners.
+// Sound tokens, a datumized handler for spatial sound.
+// Uses the spatial grid to track clients in range and add them as listeners
 // Updated by the SSsound_tokens subsystem every tick when requested by client so that if the source or listener moves, the sound updates accordingly.
-//
-// Local deviations from upstream, each marked at its site:
-// - multi-z volume rule instead of TG's hard z mute (towns stack their floors)
-// - three cell trackers (source z, above, below) because the spatial grid is per-z
-// - can_hear() polled per update instead of TRAIT_DEAF signals (deafness here is ear
-//   state, not a trait, so there is no signal to subscribe to)
-// - start_time_override so band members playing the same song share one playback clock
-// - graceful channel-pool exhaustion instead of CRASH
-// - respect_instrument_pref / on_listener_audible hooks for instruments and music boxes
+/**
+ * # Sound token
+ *
+ * A token re-sends per listener as either side moves, so volume and pan follow them mid-play.
+ *
+ * Deviations from TG are marked where they live: the multi-z rule and one cell tracker per z,
+ * polled can_hear(), per-move listener refresh, holder tracking, wall muffling, one shared pitch
+ * roll, a start_time shared by a band, and a logged refusal rather than a CRASH when the channel
+ * pool is dry.
+ */
 /datum/sound_token
 	/// The atom playing the sound.
 	var/atom/source
@@ -26,9 +27,13 @@
 	/// Sound falloff distance
 	var/falloff_distance
 
-	/// Roll a random pitch for this token, as playsound's vary does. ONE roll per token, shared by
-	/// every listener, because a token is one sound in the world rather than a sound per listener.
-	/// It rides the master datum below, so it survives every SOUND_UPDATE instead of snapping back.
+	/**
+	 * Roll a random pitch for this token, as playsound's vary does.
+	 *
+	 * ONE roll per token, shared by every listener, because a token is one sound in the world rather
+	 * than a sound per listener. It rides the master datum below, so it survives every SOUND_UPDATE
+	 * instead of snapping back.
+	 */
 	var/vary = FALSE
 	/// The master copy of the playing sound.
 	var/sound/sound
@@ -37,15 +42,18 @@
 
 	/// The channel being used.
 	var/sound_channel
-	/// REALTIMEOFDAY when the sound started (or when the sound file was last changed). Used to calculate playback offset for new listeners.
+	/// REALTIMEOFDAY when the sound started (or when the sound file was last changed). Used to calculate playback offset for new listeners
 	var/start_time
 	/// Duration of the current sound file in deciseconds. Used to wrap offset for looping sounds.
 	var/sound_duration
-	/// Caller-provided duration override for when the length cannot be sniffed from the file.
+	/// Caller-provided duration override for when the length cannot be sniffed from the file
 	var/sound_duration_override
-	/// Cell trackers for the source z plus the z above and below it. The spatial grid is
-	/// per-z and our sounds leak one storey each way, so one tracker cannot cover the
-	/// audience. Index 1 is always the source z.
+	/**
+	 * Cell trackers for the source z plus the z above and below it.
+	 *
+	 * The spatial grid is per-z and our sounds leak one storey each way, so one tracker cannot cover
+	 * the audience. Index 1 is always the source z.
+	 */
 	var/list/datum/cell_tracker/cell_trackers
 	///Should we destroy the datum when the sound is done?
 	var/delete_on_end = FALSE
@@ -54,19 +62,22 @@
 	/// When TRUE, this token is priced by the listener's Instruments slider instead of Sound
 	/// Effects, so a slider at 0 is silence
 	var/respect_instrument_pref = FALSE
-	/// When TRUE, a listener with no line of sight to the source hears the sound muffled, the
-	/// continuous counterpart of playsound()'s SOUND_TRAVEL_CARRYING. Same floor only: cross-floor
-	/// listeners are muffled by the storey rule in playsound_local() regardless.
+	/**
+	 * When TRUE, a listener with no line of sight to the source hears the sound muffled.
+	 *
+	 * The continuous counterpart of playsound()'s SOUND_TRAVEL_CARRYING. Same floor only: cross-floor
+	 * listeners are muffled by the storey rule in playsound_local() regardless.
+	 */
 	var/muffle_behind_walls = FALSE
-	/// Optional callback invoked with (listener) each time a listener crosses muted -> audible.
+	/// Optional callback invoked with (listener) each time a listener crosses from muted to audible
 	var/datum/callback/on_listener_audible
 	/// The outermost movable the source is inside, if any, watched for INDIRECT movement.
-	/// A carried item does not fire Moved() when its holder walks, only the holder does.
+	/// A carried item does not fire Moved() when its holder walks, only the holder does
 	var/atom/movable/tracked_holder
 
 /datum/sound_token/New(atom/_source, _sound, _range = 10, _volume = 50, _falloff_exponent, _falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, _allowed_listeners, _sound_duration_override, _delete_on_end, _repeating, start_time_override, _vary = FALSE)
 	source = _source
-	// Before update_sound() below, which is what builds the sound datum the pitch is rolled onto.
+	// Before update_sound() below, which is what builds the sound datum the pitch is rolled onto
 	vary = _vary
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(source_deleted))
 	RegisterSignal(source, COMSIG_MOVABLE_MOVED, PROC_REF(source_moved))
@@ -86,10 +97,10 @@
 			allowed_listeners[allowed_mob] = TRUE
 
 	if(!update_sound(_sound))
-		return // no channel left; update_sound() already qdel'd us
+		return // No channel left, and update_sound() already qdel'd us
 
 	// Band members share one anchor: identical stamps mean every member's listeners
-	// compute the same offset, so the whole band stays in lockstep for free.
+	// compute the same offset, so the whole band stays in lockstep for free
 	if(start_time_override)
 		start_time = start_time_override
 
@@ -99,14 +110,15 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAYER_LOGOUT, PROC_REF(player_logout))
 	update_holder_tracking()
 
-	// NOT update_tracked_cells() here. See start_tracking(). Upstream gathers listeners
-	// inside New(), which is fine there because it has nothing to configure afterwards.
+	// NOT update_tracked_cells() here. See start_tracking(). TG gathers listeners inside
+	// New(), which is fine there because it has nothing to configure afterwards
 
 /**
- * Finds the initial listeners and starts playing to them. Split out of New() so a caller can
- * set fields like respect_instrument_pref first: adding a listener sends them the sound
- * immediately, so configuring afterwards meant sending twice, and a listener who had
- * instruments turned off got one unmuted send before the second one muted them.
+ * Finds the initial listeners and starts playing to them.
+ *
+ * Separate from New() so a caller can set fields like respect_instrument_pref first. Adding a
+ * listener sends the sound at once, so a field set afterwards costs a second send, and the first
+ * goes out at the wrong volume.
  */
 /datum/sound_token/proc/start_tracking()
 	update_tracked_cells()
@@ -116,16 +128,16 @@
 		remove_listener(listener)
 	listeners = null
 	source = null
-	// The cell trackers hold no refs to us; their cell signals die with our signal
-	// registrations. Drain them so lingering cell membership can't confuse anything.
+	// The cell trackers hold no refs to us, and their cell signals die with our signal
+	// registrations. Drain them so lingering cell membership can't confuse anything
 	for(var/datum/cell_tracker/tracker as anything in cell_trackers)
 		tracker.member_cells.Cut()
 	cell_trackers = null
 	on_listener_audible = null
-	tracked_holder = null // its signal registration is dropped by the datum teardown below
+	tracked_holder = null // Its signal registration is dropped by the datum teardown below
 	return ..()
 
-///Lets us update the sound to a new one. Returns FALSE (after scheduling our own deletion) if no channel could be reserved.
+/// Lets us update the sound to a new one. Returns FALSE (after scheduling our own deletion) if no channel could be reserved
 /datum/sound_token/proc/update_sound(_sound, start_playing = FALSE, _repeating = null)
 	if(!isnull(_repeating))
 		repeating = _repeating
@@ -136,8 +148,8 @@
 	if(!sound_channel)
 		sound_channel = SSsounds.reserve_sound_channel_for_datum(src)
 		if(!sound_channel)
-			// Deviation from TG, which CRASHes: a full pool becomes a quiet refusal the
-			// caller can surface to the player ("no sound channels") instead of a runtime.
+			// Deviation from TG, which CRASHes: a full pool logs, deletes the token and returns FALSE,
+			// which a caller can show as "no sound channels"
 			stack_trace("sound_token for [source] found no free sound channel; deleting itself")
 			sound_channel = null
 			qdel(src)
@@ -159,7 +171,19 @@
 	else
 		update_listener(listener_mob)
 
-/// Adds a listener to the sound. returns TRUE if we already were added, or for some reason couldnt be added.
+/**
+ * Adds a listener to the sound. returns TRUE if we already were added, or for some reason couldnt be added.
+ *
+ * Seeded muted, not NONE. on_listener_audible fires only on a muted to audible edge, and a grid
+ * cell, SPATIAL_GRID_CELLSIZE tiles across, is wider than most token ranges, so a listener often
+ * enters a cell already in earshot and would cross no edge from NONE. A listener who enters out of
+ * range also gets no muted send.
+ *
+ * Deviation from TG, which re-evaluates a listener only when the source moves. SSsound_tokens also
+ * refreshes a listener on their own movement, or a static source such as a music box stays at the
+ * volume it had on arrival. The subsystem registers that once per mob, see track_listener(), for
+ * every client mob in a tracked cell, in earshot or not.
+ */
 /datum/sound_token/proc/add_listener(mob/listener_mob)
 	if(!isnull(listeners[listener_mob]))
 		return TRUE
@@ -170,24 +194,12 @@
 	if(allowed_listeners && !allowed_listeners[listener_mob])
 		return FALSE
 
-	// Seeded muted, not NONE. update_listener() fires on_listener_audible only on a
-	// muted -> audible EDGE, so a listener starting at NONE who is immediately in range
-	// never crosses one: they would hear the music box and take no stress from it. Cells
-	// are 17 tiles against a range of ~10, so entering a cell already within earshot is
-	// the common case, not the corner one. Seeding muted also means a listener who enters
-	// the cell but is out of range gets no pointless muted send at all.
+	// Seeded muted. See the proc doc
 	listeners[listener_mob] = SOUND_MUTE
 	LAZYOR(listener_mob.sound_tokens, src)
 	if(source != listener_mob) //this is possible...yea... :/
 		RegisterSignal(listener_mob, COMSIG_QDELETING, PROC_REF(listener_deleted))
-	// Deviation from TG, which only re-evaluates a listener when they cross a spatial grid
-	// cell. SPATIAL_GRID_CELLSIZE is 17 and our sound ranges are 7-15, so a whole audible
-	// radius fits inside one cell: without this a listener's volume is computed once on
-	// arrival and never again, and a static source like a music box plays at flat volume
-	// until you leave the cell entirely and it cuts out.
-	// Registered by the subsystem, once per mob rather than once per token. See
-	// track_listener(). Tokens only exist while something is actively playing and this only
-	// covers mobs in earshot of one, so with no music anywhere it costs nothing.
+	// Per-move refresh, registered once per mob. See the proc doc
 	SSsound_tokens.track_listener(listener_mob)
 	update_listener(listener_mob, FALSE)
 	return TRUE
@@ -199,9 +211,26 @@
 
 	if(source != listener_mob)
 		UnregisterSignal(listener_mob, COMSIG_QDELETING)
-	SSsound_tokens.untrack_listener(listener_mob) // drops movement tracking on the last token
+	SSsound_tokens.untrack_listener(listener_mob) // Drops movement tracking on the last token
 	SEND_SOUND(listener_mob, null_sound)
 
+/**
+ * Re-evaluates one listener and sends them the sound at their current volume, pan and muffle.
+ *
+ * Only the mute half of the multi-z rule lives here, as an early out for a listener two floors
+ * away. The halving and muffle for one floor belong to playsound_local(), which every send goes
+ * through, so doing them here as well would halve twice.
+ *
+ * A finished non-repeating sound stays muted for a late arrival. The token outlives the audio
+ * until its owner stops, so without this an instrument whose song ended replays from the top.
+ *
+ * The wall muffle is recomputed on every update rather than edge tracked, since an unmuted listener
+ * is re-sent whenever either side moves. opacity_between(), not can_see(), whose get_step_towards
+ * walk tests the wrong tiles at shallow angles. It never tests either end, so the same tile and all
+ * eight neighbours read clear, which keeps the musicians clear. Every opaque object is read, where
+ * point ambience reads only doors, and a grazed corner muffles too. Skipped across floors, where the
+ * storey rule muffles instead.
+ */
 /datum/sound_token/proc/update_listener(mob/listener_mob, update_sound = TRUE)
 	if(QDELETED(src))
 		return
@@ -218,11 +247,7 @@
 	var/should_be_muted = FALSE
 	var/effective_volume = volume
 
-	// Multi-z rule, replacing TG's hard "different z means mute": the floor directly
-	// above or below hears at half volume, two or more storeys away hears nothing.
-	// Only the mute half of the rule lives here, as an early-out so we do not do the work for
-	// a listener two floors away. The volume halving and the muffling for one floor belong to
-	// playsound_local, which every send goes through, so doing it here as well would halve twice.
+	// Two or more floors away hears nothing. The one-floor rule is playsound_local's
 	var/dz = abs(source_turf.z - listener_turf.z)
 	if(dz >= 2)
 		should_be_muted = TRUE
@@ -230,32 +255,20 @@
 	if(get_dist_euclidean(source_turf, listener_turf) > range)
 		should_be_muted = TRUE
 
-	// Polled instead of TG's TRAIT_DEAF signals; a deafness change lands on the next
-	// movement or periodic update, which matches how the old loop system behaved.
+	// Polled rather than TG's TRAIT_DEAF signals, deafness here being ear state. A change lands
+	// on the next movement or replay
 	if(!listener_mob.can_hear())
 		should_be_muted = TRUE
 
-	// A non-repeating sound that has already finished must not restart for someone arriving
-	// late. The token outlives the audio, being destroyed only when its owner stops, so
-	// without this, walking up to an instrument whose song ended replays it from the top.
+	// A finished non-repeating sound stays muted for a late arrival. See the proc doc
 	if(!repeating && sound_duration && (REALTIMEOFDAY - start_time) >= sound_duration)
 		should_be_muted = TRUE
 
 	if(should_be_muted && was_muted)
 		return
 
-	// Recomputed on every update rather than edge-tracked: an unmuted listener is re-sent
-	// whenever either side moves, so stale muffle state cannot outlive a step. can_see()
-	// counts same-tile and orthogonally adjacent as visible before it walks anything, which
-	// keeps the musicians themselves clear. Skipped across floors, where a step-towards walk
-	// means nothing and the storey rule muffles those listeners anyway.
+	// Wall muffle, same floor only. See the proc doc
 	var/muffled = FALSE
-	// opacity_between(), not can_see(): can_see walks with get_step_towards, which steps diagonally
-	// until one axis runs out and then straight along the other, so at shallow angles it tests the
-	// wrong tiles and misses walls that genuinely stand between. Contents ARE read here, unlike in
-	// point ambience, because a token re-evaluates every listener whenever either side moves, so a
-	// door's state cannot freeze into the sound. A grazed corner muffles too, which is what muffling
-	// means on this path.
 	if(muffle_behind_walls && !should_be_muted && !dz)
 		muffled = (opacity_between(listener_turf, source_turf, range, TRUE) != OCCLUSION_CLEAR) ? SOUND_MUFFLE_WALL : SOUND_MUFFLE_NONE
 
@@ -280,8 +293,7 @@
 		SEND_SOUND(listener_mob, sound)
 		return
 
-	// The Instruments slider stands in for Sound Effects on the sources the Hear Instruments toggle
-	// covers, so one control sets how loud a bard or a music box is
+	// The Instruments slider under Master stands in for Sound Effects on bards and music boxes
 	var/datum/preferences/prefs = listener_mob.client?.prefs
 	var/volume_pref = (respect_instrument_pref && prefs) ? prefs.at_overall(prefs.instrumentvol) : null
 	// Routed through playsound_local, which applies falloff, panning and the player's
@@ -291,7 +303,7 @@
 		SEND_SOUND(listener_mob, sound)
 	sound.offset = null
 
-/// Queues every listener for a refresh. Used when the SOURCE moved or the volume changed.
+/// Queues every listener for a refresh. Used when the SOURCE moved or the volume changed
 /datum/sound_token/proc/update_all_listeners()
 	for(var/mob/listener_mob in listeners)
 		if(listener_mob.client)
@@ -326,7 +338,7 @@
 	var/turf/source_turf = get_turf(src.source)
 	if(!player_turf || !source_turf)
 		return
-	if(abs(player_turf.z - source_turf.z) >= 2) // matches the multi-z audibility rule
+	if(abs(player_turf.z - source_turf.z) >= 2) // Matches the multi-z audibility rule
 		return
 	if(get_dist_euclidean(source_turf, player_turf) > range)
 		return
@@ -338,7 +350,7 @@
 	remove_listener(player)
 
 /// If the sound source moves, update tracked cells then refresh all listener positions.
-/// Also fires for INDIRECT movement. See update_holder_tracking().
+/// Also fires for INDIRECT movement. See update_holder_tracking()
 /datum/sound_token/proc/source_moved()
 	SIGNAL_HANDLER
 	update_holder_tracking()
@@ -347,6 +359,7 @@
 
 /**
  * Watches the outermost movable our source sits inside, so a carried source still tracks.
+ *
  * BYOND does not propagate Moved() to contents: a music box in someone's hands never fires
  * COMSIG_MOVABLE_MOVED as they walk, only the carrier does. Without this a carried source
  * keeps the spatial cells it had when it started playing, so people near where it went never
@@ -373,34 +386,33 @@
 
 	qdel(src)
 
-///Calculates the offset to give the sound for people who start hearing it mid-play
+/**
+ * Calculates the offset to give the sound for people who start hearing it mid-play
+ *
+ * sound.frequency holds absolute Hz from get_rand_frequency(), not the percentage TG divides by 100
+ * for, so the factor divides by 44100, the rate of a 44.1 kHz file. A 48 kHz file seeks
+ * 48000/44100 too far, about 9%.
+ *
+ * An unknown length returns 0. get_sound_length() answers 0 for a file it cannot measure, and a
+ * seek past the end plays nothing, which would leave a returning listener silent for the rest of
+ * the round. Offsets are deciseconds until the last line, since sound.offset is in seconds.
+ */
 /datum/sound_token/proc/calculate_offset()
 	var/elapsed = REALTIMEOFDAY - start_time
-	// get_rand_frequency() returns ABSOLUTE Hz around 44100, not a percentage, so this divides by the
-	// files' sample rate rather than by 100. Read as a percentage, a frequency of 44100 gives a
-	// factor of 441 and seeks a listener arriving mid-play far past the end of the file, where they
-	// hear nothing. Harmless until something actually set a frequency on a token, which nothing did.
 	var/freq_factor = sound.frequency ? (sound.frequency / 44100) : 1
 	var/pitch_factor = (sound.pitch || 100) / 100
 	var/offset = elapsed * freq_factor * pitch_factor
 	if(!sound_duration)
-		// Length unknown, so any seek is a guess and a guess past the end plays nothing at all.
-		// SSsounds.get_sound_length() answers 0 for a value rustg cannot take and for a length it
-		// reads as no number, so this is reachable whenever a file cannot be measured. Without it
-		// the fall-through returned the raw elapsed time: a listener coming back after two minutes
-		// seeked two minutes into a six second loop and heard silence for the rest of the round,
-		// while the same token had been perfectly audible on their first approach.
+		// Length unknown, so any seek is a guess. See the proc doc
 		return 0
 	if(repeating)
 		offset %= sound_duration
 	else if(offset >= sound_duration)
-		return 0 // one-shot that already finished; seeking past its end plays nothing
-	// Everything above is deciseconds. REALTIMEOFDAY and rustg_sound_length both are.
-	// sound.offset is in SECONDS, so without this a listener arriving a minute into a
-	// track seeks 600 seconds in and hears silence.
+		return 0 // A finished one-shot, and seeking past its end plays nothing
+	// sound.offset is in seconds, everything above in deciseconds
 	return offset / 10
 
-/// TRUE if the mob's current spatial grid cell is tracked by any of our trackers.
+/// TRUE if the mob's current spatial grid cell is tracked by any of our trackers
 /datum/sound_token/proc/mob_in_tracked_cells(mob/listener_mob)
 	PRIVATE_PROC(TRUE)
 	var/datum/spatial_grid_cell/mob_cell = SSspatial_grid.get_cell_of(listener_mob)
@@ -418,7 +430,7 @@
 		return
 
 	// One tracker per z we can be heard on. Cells never overlap between z's, so the
-	// per-cell signal bookkeeping below cannot double up across trackers.
+	// per-cell signal bookkeeping below cannot double up across trackers
 	var/list/track_turfs = list(source_turf)
 	var/turf/above_turf = GET_TURF_ABOVE(source_turf)
 	if(above_turf)
@@ -432,12 +444,12 @@
 	while(length(cell_trackers) < length(track_turfs))
 		cell_trackers += new /datum/cell_tracker(range, range)
 	var/retired_a_tracker = FALSE
-	while(length(cell_trackers) > length(track_turfs)) // crossed to somewhere with fewer visible z's
+	while(length(cell_trackers) > length(track_turfs)) // Crossed to somewhere with fewer visible z's
 		retired_a_tracker = TRUE
 		var/datum/cell_tracker/retired = cell_trackers[length(cell_trackers)]
 		for(var/datum/spatial_grid_cell/cell as anything in retired.member_cells)
 			UnregisterSignal(cell, list(SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)))
-		retired.member_cells.Cut() // cell_tracker/Destroy refuses qdel; drained, it just drops with our ref
+		retired.member_cells.Cut() // cell_tracker/Destroy refuses qdel. Drained, it just drops with our ref
 		cell_trackers.len--
 
 	var/list/datum/spatial_grid_cell/added_cells = list()
@@ -451,9 +463,8 @@
 	for(var/datum/spatial_grid_cell/cell as anything in removed_cells)
 		UnregisterSignal(cell, list(SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS),))
 
-	// Remove listeners whose mob is no longer in any remaining member cell. Retiring a tracker
-	// also orphans its cells' listeners, and those cells never appear in removed_cells because
-	// they are dropped above rather than by recalculate_cells.
+	// Remove listeners whose mob is no longer in any remaining member cell
+	// A retired tracker's cells never reach removed_cells, so retiring one runs this too
 	if(removed_cells.len || retired_a_tracker)
 		for(var/mob/listener_mob as anything in listeners)
 			if(!mob_in_tracked_cells(listener_mob))
@@ -489,10 +500,11 @@
  * Creates a soundtoken datum (a sound that updates for movement).
  * allowed_listeners is an optional list of mobs that are the only ones that can hear this sound ever.
  * sound_length is an optional length of the sound. Things like TTS need to pass this since we can't dynamically grab the length in that case.
+ * vary is an optional pitch roll, one for the token and shared by every listener.
  */
 /proc/playsoundtoken(atom/source, soundin, volume, range, falloff_exponent, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, allowed_listeners, sound_length, vary = FALSE)
 	var/datum/sound_token/token = new /datum/sound_token(source, soundin, range, volume, falloff_exponent, falloff_distance, allowed_listeners, sound_length, _delete_on_end = TRUE, _vary = vary)
-	if(QDELETED(token)) // no sound channel was free
+	if(QDELETED(token)) // No sound channel was free
 		return null
 	token.start_tracking()
 	return token

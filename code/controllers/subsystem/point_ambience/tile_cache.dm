@@ -59,10 +59,10 @@
 	return ranking
 
 /**
- * Invalidates live ranking entries within a source's reach on its current floor.
+ * Invalidates the live ranking entries within radius of a turf, on that turf's floor.
  *
- * Values become null rather than removing their keys, preserving visited positions without
- * reindexing the associative lists. Their entry counters track live entries independently
+ * Values become null rather than removing their keys, so tile_cache is never reindexed.
+ * tile_cache_entries counts the live ones
  */
 /datum/controller/subsystem/point_ambience/proc/invalidate_tile_cache(turf/center, radius)
 	PRIVATE_PROC(TRUE)
@@ -84,9 +84,11 @@
 		tile_cache_invalidation_ms += rustg_time_microseconds("pa_tile_invalidate") / 1000
 
 /**
+ * Counts one index change and records it for can_reuse_tile_listener().
+ *
  * Every register and unregister that changes the index ends here exactly once, so this is where an
- * actual change is known and counted. Records it in the history can_reuse_tile_listener() reads,
- * except inside a bulk update, whose close empties that history
+ * actual change is known and counted. A change inside a bulk update is counted but not recorded,
+ * since the close empties that history
  */
 /datum/controller/subsystem/point_ambience/proc/record_source_change(version_before, turf/old_turf, old_range, turf/new_turf, new_range)
 	PRIVATE_PROC(TRUE)
@@ -116,6 +118,13 @@
 	if(timing)
 		tile_cache_invalidation_ms += rustg_time_microseconds("pa_source_history") / 1000
 
+/**
+ * Whether recorded source changes leave a same-floor listener's ranking reusable.
+ *
+ * Requires complete history back to cached_version and rejects a change whose old or new reach
+ * covers listener_turf. This establishes only source-history validity. It does not check hearing,
+ * walls, preferences or the ear's enclosure, and is not sufficient on its own to skip a service.
+ */
 /datum/controller/subsystem/point_ambience/proc/can_reuse_tile_listener(turf/listener_turf, cached_version)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(!use_tile_cache || cross_floor || !listener_turf || isnull(cached_version))

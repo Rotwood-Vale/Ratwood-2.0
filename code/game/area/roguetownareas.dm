@@ -195,12 +195,13 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(list(/area/rogue/indoors
 /area/rogue/under
 	name = "basement"
 	icon_state = "under"
-	// No river point sources underground, for the whole subtree. The river category carries
-	// riverday/rivernight, which are surface recordings with BIRDSONG in them, and there are more
-	// river turfs under the map than on top of it. Wet caves already play AMB_CAVEWATER as area
-	// ambience, which is the right sound and was there first; the point sources were adding the
-	// wrong one over the top of it. Set on the base so a new underground area opts out by being
-	// underground rather than by someone remembering to.
+	/**
+	 * No river point sources anywhere underground.
+	 *
+	 * The river clips are surface recordings, and wet caves already play AMB_CAVEWATER as area
+	 * ambience. Set on the base so a new underground area opts out by being underground rather than
+	 * by someone remembering to.
+	 */
 	river_ambience = FALSE
 	droning_sound = 'sound/music/area/towngen.ogg'
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'

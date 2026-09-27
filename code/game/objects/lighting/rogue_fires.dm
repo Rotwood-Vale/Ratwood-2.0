@@ -22,8 +22,8 @@
 	fueluse = 0
 	no_refuel = TRUE
 	heat_level = 4
-	// A real fire: it cooks, it spreads, and it burns at heat level 4, so it belongs on the hearth's
-	// category and channel, where a brazier beside a campfire is one crackle rather than two
+	/// A real fire: it cooks, it spreads, and it burns at heat level 4, so it belongs on the hearth's
+	/// category and channel, where a brazier beside a campfire is one crackle rather than two
 	point_ambience_category = /datum/point_ambience_category/fire
 	/// A smaller fire than a hearth's firebox: 1 dB under the category, by ear
 	point_ambience_volume_scale = 0.9
@@ -95,9 +95,8 @@
 	crossfire = FALSE
 	density = FALSE
 	heat_level = 3
-	// The TORCH sound, 30 over four tiles with a rolled pitch, rather than the hearth's 60 over six:
-	// This is a candle on a stand, it does not cook, does not spread, and burns a level cooler than
-	// the brazier it inherits from. Chosen on sound alone. Cost between the two is a wash
+	/// The torch category rather than fire: a candle on a stand, which does not cook or spread and
+	/// burns a level cooler than the brazier it inherits from. Chosen on sound alone
 	point_ambience_category = /datum/point_ambience_category/torch
 
 
@@ -793,7 +792,7 @@
 	no_refuel = TRUE
 	status = LIGHT_BURNED
 	crossfire = FALSE
-	point_ambience_category = null // Silent, as it was when it opted out of the old fireloop
+	point_ambience_category = null // Silent, unlike the hearth it inherits from
 
 /obj/machinery/light/rogue/hearth/mobilestove/MiddleClick(mob/user, params)
 	. = ..()

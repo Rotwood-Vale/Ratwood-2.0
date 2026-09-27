@@ -14,7 +14,7 @@
 	var/initialized_at
 	/// Each client notifies on protected playback, so this prevents spamming admins.
 	var/static/admins_warned = FALSE
-	/// Opening the settings window is client driven, so it is held off a loop
+	/// Opening the settings window is client driven, so it is rate limited against a client sending it in a loop
 	COOLDOWN_DECLARE(open_settings_cooldown)
 
 /datum/tgui_panel/New(client/client, id)

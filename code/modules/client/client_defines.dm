@@ -49,16 +49,16 @@
 	/// by SSpoint_ambience. Always a list, so the hot path indexes it without a null check
 	var/list/point_ambience_sources = list()
 	/**
-	 * Per category, indexed by category.index: what the send resolved from the source when it
-	 * last changed (turf, base volume, continuous, pitch, clip), the volume last sent and the clip
-	 * timer. Filled on a fresh send and read on every update, so an update looks nothing up.
-	 * The slots are POINT_AMBIENCE_SLOT_* in sound.dm
+	 * Per category send state, indexed by category.index, as the POINT_AMBIENCE_SLOT_* fields in sound.dm.
+	 *
+	 * The source turf, the file and pitch playback began with, the volume and environment last sent, the
+	 * runner-up the pan leans toward, fade state and the clip timer. The turf is rewritten on every send.
 	 */
 	var/list/point_ambience_slots = list()
 	/// At least one category slot has an expired clip for the next point ambience service to advance
 	var/point_ambience_clip_due = FALSE
-	/// One /sound datum per category, indexed by category.index, reused for every send to this
-	/// client. The fields the source decides are written when it changes, the rest per send
+	/// One /sound datum per category, indexed by category.index, reused for every send to this client.
+	/// File, channel and falloff are written when playback starts, and a handoff rewrites only the pitch
 	var/list/point_ambience_sounds = list()
 	/// The self source the last category loop was served with, so a standing listener whose
 	/// torch state changed still gets the loop
@@ -81,12 +81,12 @@
 	/// world.time before which the move hook will not service this client again, when
 	/// SSpoint_ambience.move_service_interval is set
 	var/point_ambience_next_service = 0
-	/// world.time a step last ran a service for this client. The standing walk passes over anyone
-	/// served within SSpoint_ambience.standing_skip of now. The step that is coming will serve them
+	/// world.time the move hook or the queue last served this client, queued clip and door services
+	/// included. The standing walk passes over anyone served within SSpoint_ambience.standing_skip of now
 	var/point_ambience_last_service = 0
 	var/point_ambience_last_move
-	/// world.time of the last step taken faster than a natural run, a teleport included. Null once a
-	/// step comes at a natural pace
+	/// world.time of the last move, forced or not, made at a step delay faster than a natural run. Null
+	/// once a natural step ends the silence or a service finds it older than POINT_AMBIENCE_SPEED_STILL
 	var/point_ambience_speed_moved
 	/// Everything but a torch in hand faded for moving too fast, until a service finds them slowed
 	var/point_ambience_speed_silenced = FALSE
@@ -98,20 +98,24 @@
 	/// The categories this listener has muted, by their mask bits, set beside the flag above
 	var/point_ambience_muted_mask = 0
 	/**
-	 * The last full ambience scan, reused while the client stands still and nothing in the index
-	 * changed: the turf, SSpoint_ambience.static_version and effective point ambience volume it was
-	 * taken at, and the nearest source per category. The walk ranks straight into this list, so it
-	 * allocates nothing
+	 * The last full ambience scan, reused while the client stands still and no index change reached them.
+	 *
+	 * This var and the three below hold the turf, SSpoint_ambience.static_version and effective point
+	 * ambience volume it was taken at, and in point_ambience_cache_static the source served per category,
+	 * which occlusion may have swapped for the runner-up. The walk ranks straight into that list, so it
+	 * allocates nothing.
 	 */
 	var/turf/point_ambience_cache_turf
 	var/point_ambience_cache_version
 	var/point_ambience_cache_volume
 	var/list/point_ambience_cache_static
 	/**
-	 * Every source the own-floor walk could reach from anywhere in the client's current index
-	 * cell, as the flat x, y, category index, source the buckets already store. A step inside the
-	 * same cell ranks this instead of probing nine buckets, and a probe measured 0.7 us. Rebuilt
-	 * on a cell change or a static_version change, which is one step in eight at walking pace
+	 * Every source the own-floor walk could reach from anywhere in the client's current index cell.
+	 *
+	 * Stored as the flat x, y, category index, source the buckets already store. Used only with the tile
+	 * cache off or cross floor on, where a step inside the same cell ranks this instead of probing nine
+	 * buckets. Rebuilt on a cell change or a static_version change, which for a straight walk is one
+	 * step in SSpoint_ambience.cell_size.
 	 */
 	var/list/point_ambience_cell_candidates
 	/// The same for the floors above and below, built only if a storey pass actually runs for this

@@ -214,9 +214,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	/// What an admin plays on CHANNEL_ADMIN, on its own slider so a global track can be turned down
 	/// without taking the game's own music with it
 	var/adminmusicvol = 50
-	/// The chat panel's browser player, which streams a URL rather than a file. Separate because it
-	/// is a separate audio system: it needs the player's own connection and can fail on its own.
-	/// Pushed to the panel scaled, since nothing over there knows about Master
+	/**
+	 * The chat panel's browser player, which streams a URL rather than a file.
+	 *
+	 * Separate because it is a separate audio system: it needs the player's own connection and can
+	 * fail on its own. Pushed to the panel scaled, since nothing over there knows about Master.
+	 */
 	var/streamedmusicvol = 50
 	var/combatmusicvol = 50
 	var/lobbymusicvol = 50
@@ -225,12 +228,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/pointambiencevol = 100
 	/// Keeps point ambience on its own slider instead of scaling it by overallvol
 	var/pointambience_independent = TRUE
-	/// Instruments, the music box and the wax music device: what the Hear Instruments toggle covers
+	/// Instruments, the music box and the wax music device, which play at this in place of Sound Effects
 	var/instrumentvol = 50
-	/// The Sound Effects slider: everything sent through playsound_local but point ambience. It keeps
-	/// the name and savefile key it had as the master volume
+	/// The Sound Effects slider: everything sent through playsound_local but instruments, which read
+	/// instrumentvol. Named mastervol for its savefile key
 	var/mastervol = 50
-	/// The Master slider, which scales every other one. 100 plays each at its own value
+	/// The Master slider, which scales every other one, point ambience only while
+	/// pointambience_independent is off. 100 plays each at its own value
 	var/overallvol = 100
 	/// The Layout window's two splitters: the map's share of the window, and the stat panel's share
 	/// of its column. Null until the player sets one, so the skin's own saved position stands

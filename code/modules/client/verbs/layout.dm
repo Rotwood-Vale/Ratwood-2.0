@@ -28,10 +28,12 @@
 	layout_menu.ui_interact(mob)
 
 /**
- * The Layout window. Its sliders move the real panes from the client's own browser, so a drag
- * costs the server nothing. A release sends the value here to be kept in the preferences and
- * applied again at the next login. The bounds keep every pane usable: the skin has no minimum
- * size of its own, and a pane dragged to nothing takes the command bar with it
+ * The Layout window.
+ *
+ * Its sliders move the real panes from the client's own browser, so a drag costs the server
+ * nothing. A release sends the value here to be kept in the preferences and applied again at the
+ * next login. The bounds keep every pane usable: the skin has no minimum size of its own, and a
+ * pane dragged to nothing takes the command bar with it.
  */
 /datum/layout_menu
 	var/client/owner

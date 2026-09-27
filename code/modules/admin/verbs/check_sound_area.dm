@@ -1,8 +1,9 @@
-/// Prints the area facts that decide how sound leaves where you are standing.
-///
-/// The soundproof line is the exact expression playsound_erp branches on, read at runtime rather
-/// than from the area's definition, so a converted area or a var edited after mapload shows its
-/// real value here.
+/**
+ * Prints the area facts that decide how sound leaves where you are standing.
+ *
+ * The soundproof line reads the area at runtime, the test playsound() makes for ERP audio, rather
+ * than the area's definition, so a converted area or a var edited after mapload shows its real value.
+ */
 /client/proc/check_sound_area()
 	set category = "Debug"
 	set name = "Check Sound Area"
@@ -29,9 +30,8 @@
 		var/area/other = get_area(T)
 		msg += "[T == above ? "above" : "below"]: [other ? "[other.name], soundproof [other.soundproof]" : "nothing"]"
 
-	// What point ambience is actually sending YOU here, which nothing above covers. A category is one
-	// voice, so this list is the whole of it. The volume is the last one sent rather than one
-	// recomputed for the readout, so it is what your client is playing right now.
+	// What point ambience is sending you, one voice per category. The volume is the last one sent
+	// rather than one recomputed for the readout, so it is what your client plays now
 	var/list/playing = list()
 	for(var/datum/point_ambience_category/category as anything in SSpoint_ambience.categories)
 		var/atom/source = point_ambience_sources[category]
@@ -47,14 +47,13 @@
 			var/distsq = dx * dx + dy * dy
 			where = "[round(sqrt(distsq), 0.1)] tiles"
 			// Nothing should ever be playing from outside its own range, so say so loudly here
-			// rather than leaving it to be read off the distance.
+			// rather than leaving it to be read off the distance
 			if(distsq > category.range_sq)
 				where += ", PAST its range of [category.range], which is a BUG"
 			if(source_turf.z != here.z)
 				where += ", [abs(source_turf.z - here.z)] floor away"
-			// What a volume figure cannot show. A muffled send carries a dead-room environment and
-			// the occlusion low-pass as well as its quarter off, so two sources reading the same
-			// number are not equally audible.
+			// A muffled send also carries a dead-room environment and the occlusion low-pass, so two
+			// sources reading the same volume are not equally audible
 			switch(SSpoint_ambience.source_occluded(source_turf, here, category))
 				if(OCCLUSION_MUFFLED)
 					where += ", <b>MUFFLED</b> (dead room + occlusion low-pass, not just quieter)"

@@ -68,10 +68,14 @@
 	var/list/ambientrain = null
 	var/list/ambientnight = null
 
-	/// Whether river tiles here get a point ambience voice of their own. Off where the water is
-	/// set dressing in a built or generated space rather than a river anyone expects to hear, and
-	/// especially where the area already sets an ambientsounds of its own that the river would
-	/// play on top of rather than replace. Inherited, so it silences a whole area tree at once.
+	/**
+	 * Whether river tiles here get a point ambience voice of their own.
+	 *
+	 * Off where the water is set dressing in a built or generated space rather than a river anyone
+	 * expects to hear, and especially where the area already sets an ambientsounds of its own that the
+	 * river would play on top of rather than replace. Inherited, so it silences a whole area tree at
+	 * once.
+	 */
 	var/river_ambience = TRUE
 
 	var/min_ambience_cooldown = 70 SECONDS

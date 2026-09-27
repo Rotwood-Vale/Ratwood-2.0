@@ -141,8 +141,8 @@
 	slot_flags = ITEM_SLOT_HIP
 	/// The mob whose self source this torch is, so it can be cleared when the torch leaves them
 	var/mob/last_carrier
-	/// Heard by whoever holds it and never indexed at all, not even lying on a turf. Lanterns: they
-	/// never burn out and can be worn, so far more of them are about at once than torches
+	/// Set on lanterns and read by nothing at present. Every torch is already heard by whoever holds
+	/// it alone and never indexed, on a turf or not
 	var/ambience_wearer_only = FALSE
 	//added for torch burnout
 	var/should_self_destruct = TRUE
@@ -167,9 +167,10 @@
 	. = ..()
 
 /**
- * A lit torch in a hand is heard by its carrier alone, through the mob's self source, and never
- * enters the index. Lying on the ground it is an ordinary static source everyone nearby hears.
- * Inside a sconce the sconce is the source, not this
+ * Keeps this torch's sound in step with where it is.
+ *
+ * A lit torch in a hand is heard by its carrier alone, through the mob's self source. It never
+ * enters the index, on the ground or in a sconce, where the sconce is the source.
  */
 /obj/item/flashlight/flare/torch/proc/update_point_ambience()
 	var/lit = on && !QDELETED(src)
@@ -179,8 +180,8 @@
 	last_carrier = carrier
 	if(carrier)
 		SSpoint_ambience.set_self_source(carrier, src)
-	// Never indexed on the ground, a sconce holding one being the source others hear. Registering
-	// a loose torch cost a map-wide cache invalidation on every drop, pick-up and throw
+	// Never indexed, a sconce holding one being the source others hear. A loose torch in the index
+	// would cost a map-wide cache invalidation on every drop, pick-up and throw
 	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/torch)
 
 /obj/item/flashlight/flare/torch/Moved(atom/OldLoc, Dir)

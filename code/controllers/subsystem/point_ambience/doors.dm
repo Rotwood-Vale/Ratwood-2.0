@@ -1,5 +1,6 @@
 /**
  * Collects a tile affected by a door change, so repeated changes share one gather per period.
+ *
  * FLANKS counts too, since its corner probes read doors.
  *
  * Arguments:
@@ -7,7 +8,7 @@
  */
 /datum/controller/subsystem/point_ambience/proc/door_changed(atom/location)
 	door_changes++
-	// Before login hooks exist, no listener has a cached answer to refresh.
+	// Before login hooks exist, no listener has a cached answer to refresh
 	if(!hooked_logins || !door_recheck || door_mode == SOUND_DOORS_NONE || mode != POINT_AMBIENCE_LIVE)
 		return
 	var/turf/door_turf = get_turf(location)
@@ -15,9 +16,10 @@
 		changed_doors[door_turf] = TRUE
 
 /**
- * Serves again every listener a changed door could stand between and one of their sources. The
- * spatial grid finds who is in reach, the box filter drops those whose sources lie elsewhere, and
- * mark_listener() queues the rest past the standing shortcut.
+ * Serves again every listener a changed door could stand between and one of their sources.
+ *
+ * The spatial grid finds who is in reach, the box filter drops those whose sources lie elsewhere,
+ * and mark_listener() sends the rest past the standing shortcut, through the queue when it is on.
  *
  * The grid follows bodies, so a detached head near the door is not found. Its listener catches up
  * when the head or the body next moves
@@ -46,7 +48,7 @@
 				mark_listener(listener_client)
 				continue
 			var/turf/listener_turf = get_turf(listener)
-			// The grid answers in whole 17 tile cells, so this is the actual reach
+			// The grid answers in whole SPATIAL_GRID_CELLSIZE cells, so this is the actual reach
 			if(!listener_turf || listener_turf.z != door_turf.z \
 				|| abs(listener_turf.x - door_turf.x) > max_range || abs(listener_turf.y - door_turf.y) > max_range)
 				continue
@@ -59,12 +61,13 @@
 		door_gather_ms += rustg_time_microseconds("pa_door_recheck") / 1000
 
 /**
- * Whether a door could stand on a line a service walks from this turf: inside the box between the
- * listener and the winner or runner-up of a category walls can block, widened by one tile for the
- * corner probes. Reads the tile cache's ranking, which is taken before occlusion. A service writes
- * its occlusion answer into the listener's own list, so a source a shut door silenced is gone from
- * there and opening the door would never bring it back. No ranking to read means no way to rule
- * the door out
+ * Whether a door could stand on a line a service walks from this turf.
+ *
+ * That is inside the box between the listener and the winner or runner-up of a category walls can
+ * block, widened by one tile for the corner probes. Reads the tile cache's ranking, which is taken
+ * before occlusion. A service writes its occlusion answer into the listener's own list, so a source
+ * a shut door stopped is gone from there and opening the door would never bring it back. No ranking
+ * to read means no way to rule the door out
  */
 /datum/controller/subsystem/point_ambience/proc/door_in_reach(turf/listener_turf, turf/door_turf)
 	PRIVATE_PROC(TRUE)

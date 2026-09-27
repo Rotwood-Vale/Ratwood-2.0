@@ -77,6 +77,15 @@
 
 	volume_power_menu.ui_interact(mob)
 
+/**
+ * Applies one Audio Settings slider live and schedules the save.
+ *
+ * A change to a slider point ambience reads goes through listener_prefs_changed(), which decides for
+ * itself whether anything flipped: zero and the cutoff unhook, and any other value reaches the next
+ * service without cutting what is playing. Only the file write waits, so a run of changes collapses
+ * into one, whether that is a held arrow key or a client sending the action in a loop. The menu also
+ * writes when it closes, for a client that leaves inside the window.
+ */
 /client/proc/apply_volume_power_setting(setting_id, volume_value)
 	if(!prefs)
 		return
@@ -126,14 +135,10 @@
 		else
 			return
 
-	// Every change to a slider point ambience reads goes through listener_prefs_changed(), which
-	// decides for itself whether anything flipped: zero and the cutoff unhook, and any other value
-	// reaches the next service without cutting what is playing
+	// The sliders point ambience reads. It decides for itself whether anything flipped
 	if(setting_id == "point_ambience_volume" || setting_id == "master")
 		SSpoint_ambience.listener_prefs_changed(src)
-	// The setting is already live above. Only the file write waits, so a run of changes collapses
-	// into one, whether that is a held arrow key or a client sending the action in a loop. The menu
-	// also writes when it closes, for a client that leaves inside the window
+	// The setting is already live above. Only the file write waits, see the proc doc
 	addtimer(CALLBACK(prefs, TYPE_PROC_REF(/datum/preferences, save_preferences)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/volume_power_menu

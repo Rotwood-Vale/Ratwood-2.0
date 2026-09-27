@@ -746,16 +746,16 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	changing_state = TRUE
 	openn = !openn
 	if(openn)
-		// A token: 6.74 seconds of sound against a 4 second animation, and it is a maw opening under
-		// people, so everyone in earshot is moving. Range is what playsound gave it.
+		// A token: the sound outlasts the animation, and it is a maw opening under people, so
+		// everyone in earshot is moving. Range is what playsound gave it
 		playsoundtoken(src, 'sound/misc/kybraxorop.ogg', 100, SOUND_RANGE + 1)
 		flick("kybraxoropening",src)
 		sleep(40)
 		icon_state = "kybraxor0"
 		changing_state = FALSE
 	else
-		// Same treatment as the opening above. Shorter at 2.91 seconds, but it is the same maw and
-		// the same people moving around it, and a matched pair is one thing to reason about.
+		// Same treatment as the opening above. Shorter, but it is the same maw and the same people
+		// moving around it, and a matched pair is one thing to reason about
 		playsoundtoken(src, 'sound/misc/kybraxor.ogg', 100, SOUND_RANGE + 1)
 		flick("kybraxorclosing",src)
 		sleep(40)

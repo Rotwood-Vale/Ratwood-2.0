@@ -1,14 +1,13 @@
 /datum/looping_sound/instrument
-	mid_length = 120000 // effectively unused on the token path; the song plays or repeats natively
+	mid_length = 120000 // Unused, start_sound_loop() sets no re-fire timer and the song plays or repeats natively
 	volume = 100
 	extra_range = 10	// Increase sound range.
-	// Token-driven: each playing instrument reserves its own channel from the general
-	// pool (roughly 950 wide) instead of checking one out of a fixed 32-channel group.
+	/// Played through a sound token, so each playing instrument reserves its own channel from the general pool
 	use_sound_tokens = TRUE
 	var/stress2give = /datum/stressevent/music
-	/// The player's song-loop toggle; becomes the token's native sound.repeat.
+	/// The player's song-loop toggle, which becomes the token's native sound.repeat
 	var/loop_song = FALSE
-	/// Shared REALTIMEOFDAY anchor for band starts; identical stamps keep members in lockstep.
+	/// Shared REALTIMEOFDAY anchor for band starts. Identical stamps keep members in lockstep
 	var/sync_start_time
 
 GLOBAL_LIST_EMPTY(instrument_band_lobbies)
@@ -161,15 +160,13 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 		var/mob/living/carbon/L = M
 		L.add_stress(stress2give)
 
-// One token per song: repeat is the player's loop toggle, and there is no re-fire
-// timer, because the song either repeats natively or ends and sits silent until stopped,
-// which is what the old 20-minute mid_length amounted to in practice.
+/// One token per song and no re-fire timer. The song repeats natively when loop_song is set, or
+/// ends and sits silent until stopped
 /datum/looping_sound/instrument/start_sound_loop()
 	loop_started = TRUE
 	play(resolve_single_sound() || get_sound(), repeat_sound = loop_song)
 
-/// Keeps the old TRUE/FALSE contract: FALSE means no channel could be had and the
-/// caller should tell the player, exactly like the old 32-channel pool running dry.
+/// Returns FALSE when no channel could be had, and the caller should tell the player
 /datum/looping_sound/instrument/start(atom/on_behalf_of, sync_anchor)
 	sync_start_time = sync_anchor
 	..(on_behalf_of)

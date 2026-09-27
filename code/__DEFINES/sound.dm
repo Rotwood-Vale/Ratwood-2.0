@@ -9,7 +9,8 @@
  *
  * A sound with an end. Footsteps, swings, doors, screams, a bell. Position, falloff and pan are
  * computed once at the instant it fires, which is correct because it is over before anyone has
- * moved. Costs nothing but the send. This is the default and most sound should be this.
+ * moved. Costs a hearer gather at the source, one send per listener, and a line walk per listener for
+ * any travel class but UNRESTRICTED. This is the default and most sound should be this.
  *
  * AMBIENT POINT SOURCE: SSpoint_ambience
  *
@@ -18,17 +19,18 @@
  *
  * Register a source with a category typepath and it is served to any listener in range, live: the
  * volume and pan sweep as you walk, it stops the instant the source does, and a wall between you
- * and it silences it. Only the NEAREST source per category is served, so a thousand hearths cost
+ * and it stops it. Only the NEAREST source per category is served, so a thousand hearths cost
  * at most one send per listener, and a source nobody is near costs only a range reject.
  *
- * Billed PER MOVING LISTENER, not per source. That is the trade: adding sources is nearly free,
- * adding players is not. Priced from a live round's movement telemetry, 111 listeners on average,
- * with each part timed by Counters on one client, it came to about 3.6 ms/s, 2.2 to 6.0, and 6.4 in
- * the round's busiest two seconds, at a move interval of 7 with no step count. The shipped step count
- * serves a walker about 1.5 times as often, which that figure leaves out. It is a projection, not a
- * load test, local testing used at most four clients, and it may be out of date. The comparison with
- * plain loops and any break-even population depend on movement, audible sources and batching.
- * Neither design's total cost is independent of listener count.
+ * Billed PER MOVING LISTENER, not per source. That is the trade: a source costs only the ranking
+ * done by the listeners near it, while every moving player adds services of their own. Priced from
+ * a live round's movement telemetry, 111 listeners on average, with each part timed locally on one
+ * client, it came to about 3.6 ms/s, 2.2 to 6.0, and 6.4 in the round's busiest two seconds, at a
+ * move interval of 7 with no step count. The shipped step count serves a walker about 1.5 times as
+ * often, which that figure leaves out. It is a
+ * projection, not a load test, local testing used at most four clients, and it may be out of date.
+ * The comparison with plain loops and any break-even population depend on movement, audible sources
+ * and batching. Neither design's total cost is independent of listener count.
  *
  * Use it when: there are many sources, they are static, and they share a handful of sounds.
  * Do NOT use it for: anything with a per-source melody or a long clip. A category is one channel
@@ -113,31 +115,30 @@
  *      hearing someone wind up is a warning to whoever is on the other side of the wall, so
  *      muffling it takes that warning away and hands the advantage to the caster.
  *
- * Set on the four music loops and on boilloop. Deliberately NOT set on the rat alarm (range 15
- * outdoors, so the dearest check on the longest line), the spell charge hums (criterion 4, and they
- * land on combat ticks), or fliesloop (one per rotting corpse, so the instance count is unbounded).
+ * Set on the music loops and on boilloop. Deliberately NOT set on the rat alarm (long range and
+ * outdoors, so the dearest check on the longest line) or on the spell charge hums, fliesloop among
+ * them (criterion 4, and they land on combat ticks).
  *
- * Note point ambience does its own occlusion and does not use this. It reads turf opacity ONLY,
- * where a token also reads turf CONTENTS and so catches doors: a token re-evaluates every listener
- * whenever either side moves, while a point ambience listener standing still never re-sends, so a
- * door's state would freeze into the sound until they walked.
+ * Note point ambience does its own occlusion and does not use this. It reads turf opacity, and doors
+ * as its door_mode says, only where a turf's sound_door_count says one may stand. A listener
+ * standing still never re-sends, so a door that changes has the listeners near it served again. A
+ * token re-evaluates every listener whenever either side moves.
  */
 
 //max channel is 1024. Only go lower from here, because byond tends to pick the first availiable channel to play sounds on
 // A channel is a slot on ONE LISTENER'S mixer, not a handle on an object: 1019 on your client and
 // 1019 on mine are unrelated. So a kind of sound needs as many numbers as one person can hear of it
 // at once, never as many as exist. One heartbeat channel serves every player because you only hear
-// your own. One torch channel serves 1112 sconces because point ambience plays only the nearest.
-// FREE: 1016 alone now. It and the two below were held by VOX, JUSTICAR_ARK and BICYCLE, none of
-// which this codebase ever played, and were taken back rather than lowering the pool ceiling
+// your own. One torch channel serves every sconce on the map because point ambience plays only the
+// nearest. 1016 is free, the only number above the pool that no channel claims
 #define CHANNEL_LOBBYMUSIC 1024
 #define CHANNEL_ADMIN 1023 //USED FOR MUSIC
-/// Flies on a rotting body. Split off misc so a corpse and a clock in one room do not silence each
-/// other, which they did while both rode misc's single voice
+/// Flies on a rotting body. Its own channel, so a corpse and a misc source in one room do not
+/// displace each other
 #define CHANNEL_ROT_AMBIENCE 1022
 #define CHANNEL_JUKEBOX 1021
-/// Grandfather and wall clocks. Its own voice for the same reason, and because there are about 70 of
-/// them per map: at misc's range they would have muted each other across a manor
+/// Grandfather and wall clocks. Their own channel, since a manor holds many and at misc's range they
+/// would displace each other across it
 #define CHANNEL_CLOCK_AMBIENCE 1020
 #define CHANNEL_HEARTBEAT 1019 //sound channel for heartbeats
 #define CHANNEL_AMBIENCE 1018
@@ -153,19 +154,23 @@
 #define CHANNEL_MISC_AMBIENCE 1007
 #define CHANNEL_TORCH_AMBIENCE 1006
 #define CHANNEL_WATER_AMBIENCE 1005
-/// Rivers, separate from fountains and waterwheels so the two layer instead of suppressing each
-/// other, and so a river's reach can be set from the bank rather than from the middle of the water
+/// Rivers, separate from fountains so the two layer instead of suppressing each other, and so a
+/// river's reach can be set from the bank rather than from the middle of the water
 #define CHANNEL_RIVER_AMBIENCE 1004
 
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
 
-// SSsounds builds its pool as 1 to this, so every number ABOVE it is reserved by hand and every
-// number at or below it can be handed to any one-shot playsound(channel = 0), token or instrument.
-// 1004 to 1024 is 21 numbers and 20 are taken, 1016 being the only one left. Claiming a SECOND one
-// means LOWERING THIS FIRST. Take 1003 without lowering it and the pool still hands
-// 1003 out, so the new sound and whatever borrowed it cut each other off only when both happen to
-// play, which is the kind of fault that survives a whole round of testing
+/**
+ * The top of the channel pool SSsounds builds, 1 to this.
+ *
+ * Every number ABOVE it is reserved by hand, and every number at or below it can be handed to any
+ * one-shot playsound(channel = 0), token or instrument. 1004 to 1024 is 21 numbers and 20 are taken,
+ * 1016 being the only one left. Claiming a SECOND one means LOWERING THIS FIRST. Take 1003 without
+ * lowering it and the pool still hands 1003 out, so the new sound and whatever borrowed it cut each
+ * other off only when both happen to play, which is the kind of fault that survives a whole round of
+ * testing.
+ */
 #define CHANNEL_HIGHEST_AVAILABLE 1003
 
 
@@ -191,16 +196,16 @@
  * Distance is otherwise 2D, so a listener directly overhead sits at distance 0 and the flat storey
  * multiplier is the only thing between them and full volume: the same penalty standing on top of a
  * source as at the edge of its range. Pythagorean, because that is what the distance is. The
- * multiplier stays as the obstruction term. GLOB.sound_storey_tiles is 0 by default and this
- * returns the distance unchanged then.
+ * multiplier stays as the obstruction term. GLOB.sound_storey_tiles is read from config at SSsounds
+ * init, and at 0 this returns the distance unchanged.
  *
  * A MACRO, not a proc, and not two copies. playsound_local and SSpoint_ambience's slim_send are
- * hand-maintained mirrors of the same recipe: adding this term to one and not the other made every
- * cross-floor send disagree, which the Send Diff verb caught at 1000 mismatches. Anything both
- * paths must compute identically belongs here, where they expand the same source.
+ * hand-maintained mirrors of the same recipe, and a term added to one alone makes every cross-floor
+ * send disagree. Anything both paths must compute identically belongs here, where they expand the
+ * same source.
  *
  * PASS `dist` AS A LOCAL, NEVER AN EXPRESSION. It is named three times below and substitution is
- * textual, so an expression is evaluated up to three times: `sqrt(...)` becomes two square roots,
+ * textual, so an expression is evaluated up to twice: `sqrt(...)` becomes two square roots,
  * and a proc call becomes two calls. A proc would evaluate its arguments once. A macro does not.
  */
 #define STOREY_ADJUSTED_DISTANCE(dist, storeys)\
@@ -208,221 +213,242 @@
 		? sqrt((dist) * (dist) + (storeys) * GLOB.sound_storey_tiles * (storeys) * GLOB.sound_storey_tiles) \
 		: (dist))
 
-/// Default range of a sound. TG uses 15 for its 15x15 view. Our world.view is 7, so adopting
-/// 15 would double every sound's reach. All the mapped extra_range values were tuned against 7
+/// Default range of a sound, the reach of the default view. TG's 15 would double every sound's reach
+/// here, and the extrarange values in code were tuned against 7
 #define SOUND_RANGE 7
 /**
- * Percentage of sound's range where no falloff is applied. 0 on purpose: a flat zone near the
- * source reads as broken rather than loud: you walk several tiles and nothing changes at all.
- * The curve carries the near-field instead: it degrades from the very first tile, gently at the
- * room-scale exponent and hardest in the short band, where the first tile is meant to cost most
+ * Percentage of sound's range where no falloff is applied.
+ *
+ * 0 on purpose: a flat zone near the source reads as broken rather than loud, since you walk several
+ * tiles and nothing changes at all. The curve carries the near field instead, degrading from the
+ * very first tile, evenly at the room-scale exponent and hardest in the close band, where the first
+ * tile is meant to cost most.
  */
 #define SOUND_DEFAULT_FALLOFF_DISTANCE 0
 /**
- * Falloff curves, one per range band. The curve is computed against each sound's OWN range, so
- * its shape is proportional: at half of its range a sound sits at the same volume whether that
- * range is 5 tiles or 50. Perception is not proportional. Four tiles away is four tiles away,
- * so a single exponent tuned for a room reads as "no falloff at all" on anything that carries
- * further. Hence three models, picked by sound_falloff_for_range().
+ * Falloff curves, one per range band.
  *
- * Tuned by hand, mostly to stop music cutting from full to nothing in one step as you walk out of
- * a noisy area. Every curve fades to SOUND_DEFAULT_MIN_VOLUME at the edge instead of reaching zero
- * early, which is what made sounds vanish while still well inside their own range.
+ * The curve is computed against each sound's OWN range, so its shape is proportional: at half of its
+ * range a sound sits at the same volume whether that range is 5 tiles or 50. Perception is not
+ * proportional. Four tiles away is four tiles away, so a single exponent tuned for a room reads as
+ * "no falloff at all" on anything that carries further. Hence four curves, picked by
+ * sound_falloff_for_range().
  *
- * Below 1 the drop is back-loaded: gentle near the source, accelerating toward the edge.
- * Above 1 it inverts, front-loading the drop and then easing onto the floor. The value is the
- * RECIPROCAL of the power applied, so a HIGHER number is a steeper near field.
+ * Tuned by hand, mostly to stop music cutting from full to nothing in one step as you walk out of a
+ * noisy area. Every curve fades to the caller's min_volume at the edge rather than to zero, so a
+ * sound stays audible to the edge of its own range.
  *
- * Room scale, and the overwhelming majority of sounds: 100 86 72 58 44 30 16 2 over tiles 0-7,
- *for a volume 100 source landing on the default floor. Linear, so a tile costs the same
- * wherever you are in the range. It was 0.5, giving 100 98 92 82 68 50 28 2, which held near
- * full volume through half the range and read as no falloff at all on anything you walk past
- * closely
+ * Below 1 the drop is back-loaded: gentle near the source, accelerating toward the edge. Above 1 it
+ * inverts, front-loading the drop and then easing onto the floor. The value is the RECIPROCAL of the
+ * power applied, so a HIGHER number is a steeper near field.
+ *
+ * This one is room scale, where most sounds land. Linear, so a tile costs the same wherever you are
+ * in the range: a volume 100 source at SOUND_RANGE over SOUND_DEFAULT_MIN_VOLUME reads 100 86 72 58
+ * 44 30 16 2 over tiles 0 to 7. A curve under 1 holds near full volume through half the range and
+ * reads as no falloff at all on anything walked past closely.
  */
 #define SOUND_FALLOFF_EXPONENT 1
 /**
- * Anything with a range under SOUND_RANGE_CLOSE, which is torch, clock and rot. The bands exist
- * because perception is not proportional, and the short band still spans 5 to 9 tiles: a range-4
- * sconce and a range-8 river shared a curve, so a street of sconces read as one continuous bed
- * with the nearest never far enough away to fade. Steeper than linear so the first tile costs
- * most: a volume 30 torch on its floor of 8 runs 30 21 16 12 8 over tiles 0-4
+ * The curve for a range under SOUND_RANGE_CLOSE.
+ *
+ * Steeper than linear, so the first tile costs most. On the room curve a street of short range
+ * sconces reads as one continuous bed, the nearest never far enough away to fade. Point ambience
+ * categories this short take it only when they run their band curves, at a falloff hardness of 0.
  */
 #define SOUND_FALLOFF_EXPONENT_CLOSE 1.5
 /**
- * Carries across a hall or a street rather than a room. Below 1 for the same reason the short
- * curve is: the drop stays gentle near the source and steepens toward the edge, so the falloff
- * lands where the sound is leaving earshot rather than while it is still filling the room.
- * At range 17, roughly: 100 97 93 89 84 79 73 68 62 56 50 43 37 30 23 16 9, then the floor
+ * The curve for a range from SOUND_RANGE_MEDIUM, across a hall or a street rather than a room.
+ *
+ * Below 1, so the drop stays gentle near the source and steepens toward the edge, landing where the
+ * sound is leaving earshot rather than while it is still filling the room. A volume 100 source at
+ * range 17 over SOUND_DEFAULT_MIN_VOLUME reads roughly 100 97 93 89 84 79 73 68 62 56 50 43 37 30 23
+ * 16 9, then the floor.
  */
 #define SOUND_FALLOFF_EXPONENT_MEDIUM 0.8
-/// Carries across the map. In practice only the church bell: about 100 at the bell, 77 at 8 tiles,
-/// 43 at 50, 15 at 110, and the floor at the edge
+/// The curve for a range from SOUND_RANGE_LONG, a sound that carries across the map such as the
+/// church bell. Above 1, so the drop comes early and flattens toward the edge
 #define SOUND_FALLOFF_EXPONENT_LONG 2
 
-/// Range at which each band takes over. Most call sites land in the short band, and 22 of the 80
-/// playsound calls with a literal range ask for less than 5, so they take the short curve too
+/// Range at which each band takes over. Most calls land in the 5 to 9 band, and the few that ask
+/// for a range under 5 take the close curve
 #define SOUND_RANGE_CLOSE 5
 #define SOUND_RANGE_MEDIUM 10
 #define SOUND_RANGE_LONG 28
 /**
- * Volume a sound falls off TO at max range, rather than falling off to silence. Without a floor
- * the curve reaches 0 before the edge and sounds vanish well inside their range.
+ * Volume a sound falls off TO at max range, rather than falling off to silence.
  *
- * This is the curve's asymptote, applied BEFORE the sliders, so it arrives scaled: 2 here is 1 for a
- * listener whose Sound Effects under Master comes to 50, and 0.5 at 25. There is no lift back
- * afterwards, on purpose, so a player who turned the game down hears the edge as quiet as they
- * asked for. Point ambience floors are scaled by the listener's effective Point Ambience volume instead.
+ * Without a floor the curve ends at 0 and its last tiles fall under hearing well inside the range.
+ * The curve reaches this floor exactly at max range rather than approaching it. It is applied
+ * BEFORE the sliders, so it arrives scaled: 2 here is 1 for a listener whose Sound Effects under
+ * Master comes to 50, and 0.5 at 25. There is no lift back afterwards, on purpose, so a player who
+ * turned the game down hears the edge as quiet as they asked for. Point ambience floors are scaled
+ * by the listener's effective Point Ambience volume instead.
  *
  * THE DEFAULT, NOT THE ONLY ONE. Point ambience passes its category's floor instead, because a
- * sustained loop and a transient are not audible at the same level: ERP at 1 is heard clearly
- * where a fountain at 1 is not, and 3 carries for a clock's ticks while a torch's crackle at 3 does
- * not. Two is what one-shots and ERP audio land on, and raising it lifts the last tile of every
- * footstep and combat sound in the game, so raise a category instead
+ * sustained loop and a transient are not audible at the same level: a clock's ticks carry at a floor
+ * where a torch's crackle or a fountain does not. This is what one-shots and ERP audio land on, and
+ * raising it lifts the last tile of every footstep and combat sound in the game, so raise a category
+ * instead.
  */
 #define SOUND_DEFAULT_MIN_VOLUME 2
 
 /**
  * How much front-back depth a sound is given relative to its sideways offset, as a floor.
+ *
  * A sound due east or west has no front-back component at all, and BYOND renders that as a
  * hard pan into one ear: fine on speakers, uncomfortable on headphones over a long session.
  * At 1.0 a purely sideways sound is placed at 45 degrees instead of 90, which is about 70%
- * pan rather than 100%, while still being unmistakably on that side. 0 restores hard panning
+ * pan rather than 100%, while still being unmistakably on that side. 0 restores hard panning.
  */
 #define SOUND_PAN_MIN_DEPTH 1
 /**
- * Point ambience only. The depth a source is held at close in, so direction stays continuous
- * instead of switching off inside a one tile box: at 3 a source one tile away sits about 25
- * degrees off centre rather than dead ahead. playsound_local keeps the dead zone
+ * Point ambience only. The depth a source is held at close in.
+ *
+ * Direction stays continuous instead of switching off inside a one tile box: at 3 a source on the
+ * next tile diagonally sits about 25 degrees off centre and one directly beside about 18, rather
+ * than dead ahead. playsound_local keeps the dead zone.
  */
 #define SOUND_PAN_NEAR_DEPTH 3
-/// The floor under that, so a source whose lateral cancels on a row keeps a direction at all
+/// The floor under that, so a lateral the runner-up lean has nearly cancelled plays near centre
 #define SOUND_PAN_MIN_DEPTH_ABS 1
 
 /**
- * Volume multiplier per storey between source and listener. Distance here is horizontal only, so
- * without an explicit rule someone directly above a sound is at distance 0 and hears it at full
- * volume. One floor away is halved, two or more is inaudible. Shared by playsound_local() and
+ * Volume multiplier for a listener one storey from the source.
+ *
+ * The obstruction term a floor adds on top of STOREY_ADJUSTED_DISTANCE. Two or more storeys is
+ * inaudible. Applied in playsound_local(), which sound tokens send through, and in
+ * SSpoint_ambience's slim_send(), so change both together.
  */
-////datum/sound_token so the two paths cannot drift apart.
 #define SOUND_STOREY_VOLUME_MULT 0.5
 
 /**
- * HOW A SOUND GETS PAST A BARRIER. One axis, one vocabulary, used by every system that cares: ERP
- * names one at the call, an emote carries one on its datum, and a bare playsound gets the default.
+ * HOW A SOUND GETS PAST A BARRIER.
  *
- * Ordered by containment, so the ladder reads: each is more contained than the one above it. The
- * A wall mode and a sound class were always the same thing described twice, so this is one enum
- * where there were two.
+ * One axis, one vocabulary, used by every system that cares: ERP names one at the call, an emote
+ * carries one on its datum, and a bare playsound gets the default. Ordered by containment, so the
+ * ladder reads: each is more contained than the one above it. A wall mode and a sound class are one
+ * thing, so this is one enum.
  *
  * FLOORS ARE NOT PART OF THIS. They are `floor_volume` below, because the two axes come apart: an
  * emote carries through walls dulled AND attenuates normally through a ceiling, which no single
  * bundled class could express. Only SOUND_TRAVEL_CONTAINED speaks for both, and only because
  * "contained" means contained.
  *
- * Costs a line walk per listener on everything but UNRESTRICTED, so that is the default for the
- * ~1400 bare call sites. The rest are for things firing every few seconds, not footsteps
+ * Costs a line walk per listener on everything but UNRESTRICTED, so that is the default, and nearly
+ * every playsound call names no class. The rest are for things firing every few seconds, not
+ * footsteps.
  */
 #define SOUND_TRAVEL_UNRESTRICTED 0	// Barriers ignored, no walk. THE DEFAULT
-#define SOUND_TRAVEL_CARRYING 1	// Through a barrier at full range, dulled. == TRUE, so a caller still passing TRUE gets what it did
+#define SOUND_TRAVEL_CARRYING 1	// Through a barrier at full range, dulled. Equals TRUE, so a caller passing TRUE gets this
 #define SOUND_TRAVEL_LEAKING 2	// A few tiles past a barrier and no further: capped at SOUND_TRAVEL_LEAK_VOLUME, reaching SOUND_TRAVEL_LEAK_RANGE tiles PAST IT, wherever the source stands
 #define SOUND_TRAVEL_CONTAINED 3	// Stops at a barrier, and never crosses a floor. A guarantee, not a default: playsound and playsound_local both enforce it
 
 /**
- * What a floor does, separately from what a wall does. NULL attenuates and halves like any
- * positional sound, which is what an ordinary sound and an emote want. SOUND_FLOOR_NEVER does not
- * cross at all and playsound skips gathering the floors either side. Any positive number CAPS the
- * volume there regardless of distance, which is how sex audio is held quiet through a ceiling
- * without being silenced.
+ * What a floor does, separately from what a wall does.
+ *
+ * NULL attenuates and halves like any positional sound, which is what an ordinary sound and an emote
+ * want. SOUND_FLOOR_NEVER does not cross at all and playsound skips gathering the floors either
+ * side. Any positive number CAPS the volume there regardless of distance, which is how sex audio is
+ * held quiet through a ceiling without being cut off.
  *
  * Do not raise the caps. Audio through a floor is a common complaint and the only thing carrying
- * further buys is people breaking the door down. Lowering is always safe
+ * further buys is people breaking the door down. Lowering is always safe.
  */
 #define SOUND_FLOOR_NEVER 0
 /// The cap each travel class asks for by default, which playsound_erp applies and any caller may
 /// override. CONTAINED cannot be overridden: see the enforcement in playsound()
 #define SOUND_TRAVEL_FLOOR(travel) ((travel) == SOUND_TRAVEL_CARRYING ? 4 : ((travel) == SOUND_TRAVEL_LEAKING ? 2 : SOUND_FLOOR_NEVER))
 /**
- * What SOUND_TRAVEL_LEAKING gives a listener properly enclosed behind a barrier: this volume as a CAP,
- *for this many tiles past the barrier, and nothing beyond. The muffle profile alone only dulls a
- * sound and leaves it audible across its whole range, which is why a cap exists at all.
+ * The volume cap SOUND_TRAVEL_LEAKING gives a listener properly enclosed behind a barrier.
+ *
+ * It holds for SOUND_TRAVEL_LEAK_RANGE tiles past the barrier, and nothing is heard beyond. The
+ * muffle profile alone only dulls a sound and leaves it audible across its whole range, which is
+ * why a cap exists at all.
  *
  * The two do different jobs and should be tuned apart. The cap decides how LOUD it is through a wall
  * and dominates most of the zone. The range decides how FAR, and is the only thing that stops it.
  * Ordinary falloff still runs underneath, so the last tile or two fade rather than cutting flat.
  *
  * LEAKING is the only class that reaches these: CONTAINED stops at the barrier and CARRYING is
- * meant to carry. An emote categorised as LEAKING gets them too
+ * meant to carry. An emote categorised as LEAKING gets them too.
  */
 #define SOUND_TRAVEL_LEAK_VOLUME 5
 /**
- * THE LAST TILE STILL AUDIBLE, measured FROM THE BARRIER. One is standing against the wall, so this
- * is that tile plus two more.
+ * THE LAST TILE STILL AUDIBLE, measured FROM THE BARRIER.
  *
- * From the barrier and not the source, which is the whole point: opacity_between walks listener ->
- * source, so the tile it stops on is the first wall on the LISTENER'S side and the distance to it is
- * how far past the wall they are. Measured from the source instead, what you heard outside a room
- * depended on how deep into it the bed sat, and a source three tiles in was inaudible from the far
- * side of its own wall
+ * One is standing against the wall, so this is that tile plus two more. From the barrier and not the
+ * source, which is the whole point: opacity_between walks from listener to source, so the tile it
+ * stops on is the first wall on the LISTENER'S side and the distance to it is how far past the wall
+ * they are. Measured from the source, what a listener outside hears would depend on how deep in the
+ * room the source sits, and a source three tiles in would be inaudible from the far side of its own
+ * wall.
  */
 #define SOUND_TRAVEL_LEAK_RANGE 3
 /**
+ * What playsound_local is told about one listener.
+ *
  * ROUND A CORNER IS NOT THROUGH A WALL. Every class but UNRESTRICTED muffles at full range where an
  * open path exists, because a sound really does reach you round a corner. Only a listener properly
- * enclosed is stopped or capped. That is why the grading exists at all.
- *
- * What playsound_local is told about one listener. Ordered, so truthiness still means "muffled at
- * all" for every caller that only ever knew TRUE and FALSE
+ * enclosed is stopped or capped. That is why the grading exists at all. Ordered, so truthiness means
+ * "muffled at all" for a caller that passes TRUE or FALSE.
  */
 #define SOUND_MUFFLE_NONE 0
-#define SOUND_MUFFLE_SOFT 1	// == TRUE. The profile only: what a storey gives, and what every boolean caller has always meant
+#define SOUND_MUFFLE_SOFT 1	// Equals TRUE. The profile only, what a storey gives and what a boolean TRUE means
 #define SOUND_MUFFLE_ENCLOSED 2	// The profile plus the leak cap. Only playsound produces it, from SOUND_TRAVEL_LEAKING
 #define SOUND_MUFFLE_WALL 3	// The profile with a deeper volume cut. A wall between a listener and a continuous source
 
 /**
- * The muffle profile, used when a sound reaches a listener through a wall, a floor, or (for a
- * dullahan) a container the head is shut inside. Grouped so the character can be tuned in one
- * place rather than as literals buried in playsound_local().
- * Volume and the falloff curve are only half of it. On their own they read as "further away"
- * rather than "behind something". The occlusion pair is what changes the timbre
+ * The muffle profile, for a sound heard through a wall, a floor or a dullahan's container.
+ *
+ * Grouped so the character can be tuned in one place rather than as literals buried in
+ * playsound_local(). Volume and the falloff curve are only half of it. On their own they read as
+ * "further away" rather than "behind something". The occlusion pair is what changes the timbre.
  */
 #define SOUND_MUFFLE_VOLUME_MULT 0.75
 /**
- * A wall against a sound that never stops. A quarter off is inaudible on music: the level is
- * steady, so there is no onset to hear it in, and the reverb half of the profile is overwritten by
- * the next positional sound BYOND sends, environment being a client-wide setting. Half off is a
- * cut you can hear. 0.34 if it should read as nearly gone
+ * The volume cut for a wall against a sound that never stops.
+ *
+ * A quarter off is inaudible on music: the level is steady, so there is no onset to hear it in, and
+ * the reverb half of the profile is overwritten by the next positional sound BYOND sends, environment
+ * being a client-wide setting. Half off is a cut you can hear. 0.34 if it should read as nearly
+ * gone. Point ambience takes the same cut for a source heard round a corner.
  */
 #define SOUND_MUFFLE_WALL_VOLUME_MULT 0.5
-/// A wall takes the ordinary muffle curve and differs only in the volume cut above. Steepening it
-/// further cut the sound off close enough to the wall to read as a bug rather than as distance
+/// Multiplies a muffled send's falloff exponent, a steeper near field. A wall uses the same curve and
+/// differs only in its volume cut, since a steeper one cuts the sound off close enough to read as a bug
 #define SOUND_MUFFLE_EXPONENT_MULT 1.5
 /// BYOND reverb preset 11, "carpeted hallway": a dead, absorbent room with little reflection
 #define SOUND_MUFFLE_ENVIRONMENT 11
 /**
- * Preset 22, "underwater", for ERP audio through a wall. Obviously wrong for open air, which is
- * the point: it should read as something you were not meant to hear clearly rather than as a
- * nearby sound turned down. Using it costs the occlusion filter, since an echo array replaces the
- * preset outright, so this is the preset OR the filter and not both
+ * Preset 22, "underwater", for ERP audio through a wall.
+ *
+ * Obviously wrong for open air, which is the point: it should read as something you were not meant
+ * to hear clearly rather than as a nearby sound turned down. Using it costs the occlusion filter,
+ * since an echo array replaces the preset outright, so this is the preset OR the filter and not
+ * both.
  */
 #define SOUND_ERP_MUFFLE_ENVIRONMENT 22
 
 /**
- * What a line between a listener and a source ran into. CLEAR: nothing opaque on it. SOLID: blocked,
- * and no open line from either tile beside the obstruction, so the source is enclosed and not served.
+ * What a line between a listener and a source ran into.
+ *
+ * CLEAR: nothing opaque on it. SOLID: blocked, and no open line from either tile beside the
+ * obstruction, an enclosure. Point ambience does not serve it and playsound's LEAKING caps it.
  * MUFFLED: blocked on the direct line but open from a tile beside the obstruction, a corner, so it is
- * served dulled. A test for a diagonal step slipping between two corner-to-corner walls was measured
- * and never fired. The line lands on walls rather than between them
+ * served dulled. A diagonal step is taken without testing the two tiles beside it, so a line between
+ * two walls that meet at a corner, and a diagonal neighbour, reads CLEAR.
  */
 #define OCCLUSION_CLEAR 0
 #define OCCLUSION_SOLID 1
 #define OCCLUSION_MUFFLED 2
 
 /**
- * How an occlusion walk treats doors, which are objects where walls are turfs. NONE ignores them.
- * FLANKS lets the line through a door open or shut, but a corner probe starting beside a wall treats
- * anything opaque on its first tile as a wall, which is what catches a shut door in the gap. LIVE
- * blocks at a shut door on the line and at the corners alike, reading the door as it stands. ALWAYS
- * blocks at every door that shuts solid, open or not, and is there to compare by ear
+ * How an occlusion walk treats doors, which are objects where walls are turfs.
+ *
+ * NONE ignores them. FLANKS lets the line through a door open or shut, but a corner probe starting
+ * beside a wall treats anything opaque on its first tile as a wall, which is what catches a shut door
+ * in the gap. LIVE blocks at a shut door on the line and at the corners alike, reading the door as it
+ * stands. ALWAYS also blocks at an open mineral door that shuts solid, and is there to compare by ear.
  */
 #define SOUND_DOORS_NONE 0
 #define SOUND_DOORS_FLANKS 1
@@ -430,21 +456,31 @@
 #define SOUND_DOORS_ALWAYS 3
 
 /**
- * SSpoint_ambience modes. LIVE serves each client the nearest sources per step and per tick.
- * FALLBACK gives each source a plain timer loop instead, cheaper on a full server, attenuation
- * frozen between replays, torches silent. OFF is silent.
+ * SSpoint_ambience modes.
+ *
+ * LIVE serves each client the nearest sources as they step, throttled, and on a periodic walk while
+ * they stand. FALLBACK gives each source a plain timer loop instead, billed per source rather than per
+ * listener, attenuation frozen between replays, torches silent. OFF is silent.
  */
 #define POINT_AMBIENCE_OFF 0
 #define POINT_AMBIENCE_LIVE 1
 #define POINT_AMBIENCE_FALLBACK 2
 
 /**
- * The per-category send state SSpoint_ambience keeps on a client (client.point_ambience_slots),
- * one positional list per category: source turf and playback state, the volume last sent, fade
- * state, and the timer that advances a set of clips.
+ * The per-category send state SSpoint_ambience keeps on a client, client.point_ambience_slots.
  *
- * A list PER CATEGORY, not one flat list with an offset: flattening was measured and moved nothing,
- * and an offset a caller carries can read the neighbouring category's fields where a sublist cannot
+ * One positional list per category: source turf and playback state, the volume last sent, fade
+ * state, and the timer that advances a set of clips. A list PER CATEGORY, not one flat list with an
+ * offset: flattening was measured and moved nothing, and an offset a caller carries can read the
+ * neighbouring category's fields where a sublist cannot.
+ *
+ * point_ambience_sources records selection, not every channel still playing. A fade-out removes
+ * its source but keeps playback until the fade ends. FADE_NEXT with a null FADE_TARGET identifies
+ * that state, which service_client() can take over without restarting an ordinary loop.
+ * stop_for() ends a category and cancels its timer and fade. stop_all_for() also clears slots and
+ * listener caches. Sound datums can remain allocated after either stop, so their existence does
+ * not establish playback. Head-watch subscriptions have their own lifetime and are released by
+ * the listener lifecycle handlers, not by stopping audio.
  */
 #define POINT_AMBIENCE_SLOT_TURF 1
 #define POINT_AMBIENCE_SLOT_FREQUENCY 2
@@ -470,33 +506,51 @@
 /// Deciseconds between the steps of a point ambience fade
 #define POINT_AMBIENCE_FADE_STEP 1
 /**
- * Fades in progress at once across every listener, a backstop on the list's length. What a tick may
- * send is SSpoint_ambience.fade_budget's job. Past this a sound stops or starts at once, as it did
- * before fades. One walker on a torch lined route keeps about 0.2 running, measured
+ * Fades in progress at once across every listener, a backstop on the list's length.
+ *
+ * What a tick may send is SSpoint_ambience.fade_budget's job. Past this a sound stops or starts at
+ * once, with no fade. One walker on a torch lined route keeps about 0.2 running, measured.
  */
 #define POINT_AMBIENCE_FADE_CAP 64
-/// Deciseconds since a listener's last step faster than a natural run within which they still count
-/// as moving that fast. Longer than any such step takes, a diagonal's doubled one included, and apart
-/// from the standing skip, which an admin can set to 0
+/**
+ * Deciseconds a listener still counts as moving faster than a natural run after such a step.
+ *
+ * Longer than any such step takes, a diagonal's doubled one included, and apart from the standing
+ * skip, which an admin can set to 0.
+ */
 #define POINT_AMBIENCE_SPEED_STILL 5
-/// Least time between two forced moves of one listener that skip the move interval. Longer than any
-/// interval, so a player carried along by forced moves is served no more often than one walking
+/// Least time between two forced moves of one listener that skip the move interval. Longer than the
+/// shipped intervals, so a player carried along by forced moves is served no more often than one walking
 #define POINT_AMBIENCE_JUMP_GAP (1 SECONDS)
 /**
- * A listener's point ambience volume from their preferences, the slider alone when independent and
- * under Master otherwise. The arithmetic is at_overall()'s in the same order, so it equals
- * point_ambience_volume() exactly. A macro because the standing check runs it once a second for
- * every listener standing still, and a proc call there costs more than the sum. Reads P three times,
- * so pass a var path, never a call
+ * A listener's point ambience volume from their preferences.
+ *
+ * The slider alone when independent and under Master otherwise. The arithmetic is at_overall()'s in
+ * the same order, so it equals point_ambience_volume() exactly. A macro because the standing walk runs
+ * it for every listener standing still, and a proc call there costs more than the sum. Reads P three
+ * times, so pass a var path, never a call.
  */
 #define POINT_AMBIENCE_VOLUME(P) (P.pointambience_independent ? P.pointambiencevol : P.pointambiencevol * P.overallvol * 0.01)
 
 /**
- * The listener stands where their last walk left them, at the same volume, and nothing they could
- * hear has changed, so their cached answer holds. service_client() and fire()'s standing walk both
- * test it, the walk without the proc call, so it is one macro and the two cannot drift apart.
+ * Whether position, volume and source history allow reuse of a listener's selected sources.
+ *
+ * service_client() and fire()'s standing walk share this predicate to avoid separate versions of
+ * these checks. The client selection may contain an occlusion-resolved runner-up or omit a blocked
+ * category. It is separate from tile_cache's immutable distance rankings.
+ *
+ * | Dependency | How it reaches the selection |
+ * | --- | --- |
+ * | Listener turf and effective volume | Compared here |
+ * | Registered source changes | static_version and can_reuse_tile_listener() |
+ * | Preferences, tracked ear movement and gathered door changes | Their handlers stop or mark the listener |
+ * | Hearing, room environment and enclosure | Read by prepare_serving() after the shortcut |
+ *
+ * Hearing expiry alone does not break this shortcut. Wall edits have no invalidation hook, and a
+ * remote ear can be outside the door gather. Those changes can wait until another event causes a
+ * service to pass the shortcut. This predicate is not a complete check of acoustic validity.
  * SSpoint_ambience procs only, since it reads static_version off src. listener_turf is named twice,
- * so pass a local
+ * so pass a local.
  */
 #define POINT_AMBIENCE_STANDING_UNCHANGED(listener_client, listener_turf, ambience_volume) \
 	((listener_turf) == (listener_client).point_ambience_cache_turf \
@@ -505,15 +559,16 @@
 		|| can_reuse_tile_listener((listener_turf), (listener_client).point_ambience_cache_version)))
 
 /**
- * Densest candidate box SSpoint_ambience.drain_density_count gives its own bucket, anything denser
- * landing in the last one. The list is one longer, an empty cell taking the first bucket. Twice the
- * densest box on any shipped map, measured, leaving room for the corpses and dropped torches that
- * register on top. Lower it and a busy tile's percentiles read low
+ * The densest candidate box SSpoint_ambience.drain_density_count gives its own bucket.
+ *
+ * Anything denser lands in the last one. The list is one longer, an empty cell taking the first
+ * bucket. Twice the densest box on any shipped map, measured, leaving room for the corpses and
+ * dropped torches that register on top. Lower it and a busy tile's percentiles read low.
  */
 #define POINT_AMBIENCE_DENSITY_MAX 64
 
-/// 8-tile cells: three per axis within max_range 8, nine probes a walk. Larger cells probe fewer and
-/// rank nearly twice the sources, smaller invert it. Measured, so change it with the Here verb in hand
+/// 8-tile cells: three per axis while max_range is 8 or less, nine probes a walk. Larger cells probe
+/// fewer and rank nearly twice the sources, smaller invert it. Measured, so re-time any change
 #define POINT_AMBIENCE_CELL_SHIFT 3
 /// A tile's bucket in SSpoint_ambience.buckets_by_z[z], offset by 1 for DM's one-based list indexing
 #define POINT_AMBIENCE_CELL_INDEX(x, y, stride) (((x) >> POINT_AMBIENCE_CELL_SHIFT) * (stride) + ((y) >> POINT_AMBIENCE_CELL_SHIFT) + 1)
@@ -525,35 +580,39 @@
 #define POINT_AMBIENCE_BULK_BURST 64
 
 /**
- * sound.echo is the 18-slot EAX property array. Slot 7 is Occlusion, in millibels (-10000..0).
- * It low-passes the direct path, which is the only thing here that genuinely alters the sound
- * rather than its level. -1500 is roughly a closed door.
+ * EAX Occlusion for a muffled send, slot 7 of the 18-slot sound.echo array, in millibels.
+ *
+ * The range is -10000 to 0. It low-passes the direct path, which is the only thing here that
+ * genuinely alters the sound rather than its level. -1500 is roughly a closed door.
  * EXPERIMENTAL: slots 3 and 4 are proven by our own reverb-kill code, but BYOND's support for
  * the rest of the array is old and may be backend-dependent. If a playtest hears no difference
- * the array is not being honoured: set this to 0 and the volume/environment muffle remains
+ * the array is not being honoured: set this to 0 and the volume and environment muffle remains.
  */
 #define SOUND_MUFFLE_OCCLUSION -1500
 /**
- * Slot 8, OcclusionLFRatio (0..1): how much of the occlusion applies to LOW frequencies. Lower
- * lets more bass through, which is what a wall actually does. You hear the thump, not the
- * detail. 0.25 is the EAX default
+ * Slot 8, OcclusionLFRatio (0..1): how much of the occlusion applies to LOW frequencies.
+ *
+ * Lower lets more bass through, which is what a wall actually does. You hear the thump, not the
+ * detail. 0.25 is the EAX default.
  */
 #define SOUND_MUFFLE_OCCLUSION_LF 0.25
 
 /**
- * Reverb used when the listener's area does not set its own soundenv, which is nearly all of
- * them. Without it the case falls through to SOUND_ENVIRONMENT_NONE, which kills reverb outright
- * and leaves most of the game bone dry. That also makes muffling pointless: the muffle swaps in a
- * dead room, and a dead room is LIVELIER than no reverb at all, so a sound heard through a wall
- * comes out slightly more reverberant than one heard across an open room.
+ * Reverb used when the listener's area does not set its own soundenv, which is nearly all of them.
+ *
+ * Without it the case falls through to SOUND_ENVIRONMENT_NONE, which kills reverb outright and leaves
+ * most of the game bone dry. That also makes muffling pointless: the muffle swaps in a dead room, and
+ * a dead room is LIVELIER than no reverb at all, so a sound heard through a wall comes out slightly
+ * more reverberant than one heard across an open room.
  * BYOND presets: 0 generic, 1 padded cell, 2 room, 4 living room, 5 stone room, 6 auditorium,
  * 7 concert hall, 8 cave, 13 stone corridor, 15 forest, 16 city, 17 mountains, 19 plain.
  * 5 suits stone-and-timber interiors and is clearly audible. Lower it toward 2 or 0 if it sounds
- * overdone outdoors, or set it to SOUND_ENVIRONMENT_NONE to restore the old dry behaviour
+ * overdone outdoors, or set it to SOUND_ENVIRONMENT_NONE for no reverb at all.
  */
 #define SOUND_DEFAULT_ENVIRONMENT 5
 
-/// BYOND sound environment for "no environment". Area soundenv uses this as its off value
+/// BYOND sound environment for "no environment". An area soundenv of this, or of 0, its default,
+/// reads as unset
 #define SOUND_ENVIRONMENT_NONE -1
 
 
@@ -667,12 +726,15 @@
 						'sound/ambience/rivernight (2).ogg',\
 						'sound/ambience/rivernight (3).ogg')
 
-/// The river point ambience category's own copies of the night beds above, normalised with the other
-/// point ambience clips and played at every hour. The area beds keep the originals.
-/// The day takes are archived as river_day_1 to 3 in the same folder, referenced by nothing. Every
-/// one carries bird or frog calls over water measuring 5 dB thinner under 1 kHz and an octave
-/// brighter than these, so one arriving reads as a different river rather than as this one with
-/// something singing over it. A day set wants a take recorded over THIS water
+/**
+ * The river point ambience category's own copies of the night beds above.
+ *
+ * Normalised with the other point ambience clips and played at every hour. The area beds keep the
+ * originals. The day takes are archived as river_day_1 to 3 in the same folder, referenced by
+ * nothing. Every one carries bird or frog calls over water measuring 5 dB thinner under 1 kHz and an
+ * octave brighter than these, so one arriving reads as a different river rather than as this one
+ * with something singing over it. A day set wants a take recorded over THIS water.
+ */
 #define POINT_AMBIENCE_RIVER list('sound/ambience/point/river_night_1.ogg',\
 						'sound/ambience/point/river_night_2.ogg',\
 						'sound/ambience/point/river_night_3.ogg')

@@ -1,10 +1,10 @@
 /**
- * Point ambience's load settings, live, from one menu that lists each with its current value. Pick
- * one to change it and the menu comes back until cancelled. Every change is logged on its own.
+ * Point ambience's load settings, live, from one menu that lists each with its current value.
  *
+ * Pick one to change it and the menu comes back until cancelled. Every change is logged on its own.
  * The POINT_AMBIENCE_* config entries seed the same values at boot and say what each costs. Only
  * settings that change load are here. Cross floor, walls and how doors count change what players
- * hear, so they are config or VV only
+ * hear, so cross floor is config or VV and the other two are VV only.
  */
 /client/proc/point_ambience_mode()
 	set category = "Debug"

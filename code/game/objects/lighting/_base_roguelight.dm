@@ -5,7 +5,7 @@
 	fueluse = 60 MINUTES
 	bulb_colour = "#f9ad80"
 	bulb_power = 1
-	var/datum/looping_sound/soundloop = null // e.g. /datum/looping_sound/boilloop
+	var/datum/looping_sound/soundloop = null // No rogue light sets a type here, point_ambience_category below is their sound
 	pass_flags = LETPASSTHROW
 	flags_1 = NODECONSTRUCT_1
 	var/no_refuel = FALSE // For special holder that don't actually refuel
@@ -14,15 +14,17 @@
 	var/can_damage = FALSE
 	var/heat_level = 0
 	/**
-	 * Category typepath: while lit, this light sits in SSpoint_ambience's index for that
-	 * category and sounds to nearby clients. Replaces the per-fire fireloop. The light owns
-	 * no loop, timer or channel of its own. Null means silent
+	 * The point ambience category this light sounds as while lit, a typepath. Null is silent.
+	 *
+	 * While lit, the light sits in SSpoint_ambience's index for that category and sounds to nearby
+	 * clients. It owns no loop, timer or channel of its own.
 	 */
 	var/point_ambience_category
 	/**
-	 * A MULTIPLE of the fire category's volume, where a kind of fire is not the size of the
-	 * default. Null or 1 takes the category's. A multiple rather than a number, so the offset
-	 * survives the category being retuned and the floor stays a share of what this resolves to
+	 * A MULTIPLE of the category's volume, where a kind of fire is not the size of the default.
+	 *
+	 * Null or 1 takes the category's. A multiple rather than a number, so the offset survives the
+	 * category being retuned and the floor stays a share of what this resolves to.
 	 */
 	var/point_ambience_volume_scale
 

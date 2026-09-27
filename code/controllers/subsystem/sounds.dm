@@ -29,8 +29,7 @@ SUBSYSTEM_DEF(sounds)
 	var/list/all_music_sounds = list()
 
 /datum/controller/subsystem/sounds/Initialize()
-	// Cached here rather than read per send: playsound_local runs on every footstep in the game and
-	// a CONFIG_GET is a proc call. A change needs a restart, which is what tuning it wants anyway.
+	// Read at boot only. See GLOB.sound_storey_tiles
 	GLOB.sound_storey_tiles = CONFIG_GET(number/sound_storey_tiles)
 	setup_available_channels()
 	find_all_available_sounds()
@@ -85,9 +84,7 @@ SUBSYSTEM_DEF(sounds)
 		if(!length(using_channels_by_datum[using]))
 			stop_tracking_datum(using)
 	else
-		// Deviation from TG, which leaves the entry behind: DATUMLESS channels are tracked
-		// in using_channels_by_datum too, so freeing one individually should drop it there.
-		// No stop_tracking_datum for these, as there is no datum and no signal to unregister.
+		// Deviation from TG, which leaves the entry behind. No stop_tracking_datum, as DATUMLESS has no signal
 		using_channels_by_datum[DATUMLESS] -= channel
 	free_channel(channel)
 
@@ -105,7 +102,7 @@ SUBSYSTEM_DEF(sounds)
 /datum/controller/subsystem/sounds/proc/free_datumless_channels()
 	free_datum_channels(DATUMLESS)
 
-/// Reserve a sound channel. NO AUTOMATIC CLEANUP, free it later with free_sound_channel(). Returns an integer for channel.
+/// Reserve a sound channel. NO AUTOMATIC CLEANUP, free it later with free_sound_channel(). Returns an integer for channel
 /datum/controller/subsystem/sounds/proc/reserve_sound_channel()
 	. = reserve_channel()
 	if(!.)		//oh no..
@@ -115,14 +112,14 @@ SUBSYSTEM_DEF(sounds)
 	LAZYINITLIST(using_channels_by_datum[DATUMLESS])
 	using_channels_by_datum[DATUMLESS] += .
 
-/// Reserves a channel for a datum. Automatic cleanup when the datum is deleted. Returns an integer for channel.
+/// Reserves a channel for a datum. Automatic cleanup when the datum is deleted. Returns an integer for channel
 /datum/controller/subsystem/sounds/proc/reserve_sound_channel_for_datum(datum/D)
 	if(!D)		//i don't like typechecks but someone will fuck it up
 		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
 	.= reserve_channel()
 	if(!.)
 		// Deviation from TG, which CRASHes here: instruments need a polite refusal path
-		// so a full pool reads as "no sound channels" to the player, not a runtime.
+		// so a full pool reads as "no sound channels" to the player instead of aborting the caller
 		return FALSE
 	var/text_channel = num2text(.)
 	using_channels[text_channel] = D
@@ -131,7 +128,7 @@ SUBSYSTEM_DEF(sounds)
 
 	RegisterSignal(D, COMSIG_QDELETING, PROC_REF(tracked_datum_deleted))
 
-/// Stops tracking a datum's channels. Private proc.
+/// Stops tracking a datum's channels. Private proc
 /datum/controller/subsystem/sounds/proc/stop_tracking_datum(datum/D)
 	PRIVATE_PROC(TRUE)
 
@@ -139,9 +136,12 @@ SUBSYSTEM_DEF(sounds)
 	if(isdatum(D)) // DATUMLESS is a string key with nothing to unregister
 		UnregisterSignal(D, COMSIG_QDELETING)
 
-/// Handles a tracked datum being deleted, automatically freeing the channels.
-/// This is why reservations no longer root their datum against garbage collection:
-/// the deletion itself clears the hard refs out of using_channels/using_channels_by_datum.
+/**
+ * Handles a tracked datum being deleted, automatically freeing the channels.
+ *
+ * So a reservation does not keep its datum alive: the deletion itself clears the hard refs out of
+ * using_channels and using_channels_by_datum.
+ */
 /datum/controller/subsystem/sounds/proc/tracked_datum_deleted(datum/source)
 	SIGNAL_HANDLER
 	PRIVATE_PROC(TRUE)
@@ -196,9 +196,13 @@ SUBSYSTEM_DEF(sounds)
 /datum/controller/subsystem/sounds/proc/available_channels_left()
 	return length(channel_list) - random_channels_min
 
-/// Returns the duration of a sound file in deciseconds, cached. Keeps TG's SSsounds.get_sound_length()
-/// call surface, the cache being rustg_sound_length()'s static list. A /sound datum is measured by its
-/// file, a value rustg cannot take answers 0, and so does a length rustg reads as no number
+/**
+ * Returns the duration of a sound file in deciseconds, cached.
+ *
+ * Keeps TG's SSsounds.get_sound_length() call surface, the cache being rustg_sound_length()'s
+ * static list. A /sound datum is measured by its file, a value rustg cannot take answers 0, and so
+ * does a length rustg reads as no number.
+ */
 /datum/controller/subsystem/sounds/proc/get_sound_length(file_path)
 	if(istype(file_path, /sound))
 		var/sound/as_datum = file_path

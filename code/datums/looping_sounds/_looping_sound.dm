@@ -1,12 +1,10 @@
 /**
  * A datum for sounds that need to loop, with a high amount of configurability.
- * Ported from tgstation; scheduling runs on SSsound_loops timers instead of a
- * per-tick subsystem walk. Local deviations are commented where they live.
  */
 /datum/looping_sound
 	/// (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end. In a list, path must have also be assigned a value or it will be assigned 0 and not play.
 	var/mid_sounds
-	/// The length of time to wait between playing mid_sounds. WARNING: Continuously looping sounds don't work very well with this, just don't set this if you are doing a continuous loop of machinery.
+	/// The length of time to wait between playing mid_sounds. WARNING: Continuously looping sounds don't work very well with this, just don't set this if you are doing a continuous loop of machinery
 	var/mid_length = 10
 	/// Amount of time to add/take away from the mid length, randomly
 	var/mid_length_vary = 0
@@ -30,7 +28,7 @@
 	var/volume = 100
 	/// Whether or not the sounds will vary in pitch when played.
 	var/vary = FALSE
-	/// Explicit frequency override fed through to playsound.
+	/// Explicit frequency override for playsound and playsound_local. Token loops ignore it, as they do vary
 	var/frequency
 	/// The max amount of loops to run for.
 	var/max_loops
@@ -69,7 +67,7 @@
 	var/reserve_random_channel = FALSE
 	//If we reserve a random sound channel, store the channel number here so we can clean it up later.
 	var/reserved_channel
-	///Whether this looping sound uses sound tokens. This should only be true for sounds that need to update as the source or listeners move. (Generally long or important sounds)
+	/// Whether this looping sound uses sound tokens. This should only be true for sounds that need to update as the source or listeners move. (Generally long or important sounds)
 	var/use_sound_tokens = FALSE
 	///The sound token instance for this looping sound.
 	var/datum/sound_token/sound_token_instance
@@ -78,8 +76,7 @@
 	///Whether we're currently using native sound.repeat instead of re-firing on the SSsound_loops timer.
 	var/native_repeat_active = FALSE
 
-// Deviation from TG's argument order: _channel stays in slot 4 because weather passes
-// CHANNEL_WEATHER positionally there, as it always has here.
+/// Deviation from TG's argument order: _channel stays in slot 4, where weather passes CHANNEL_WEATHER positionally
 /datum/looping_sound/New(
 	_parent,
 	start_immediately = FALSE,
@@ -141,7 +138,13 @@
 		SSsounds.free_sound_channel(reserved_channel)
 		reserved_channel = null
 
-/// The proc that handles starting the actual core sound loop.
+/**
+ * The proc that handles starting the actual core sound loop.
+ *
+ * The first sound_loop() call gets world.time, where TG passes nothing. With start_time null the
+ * max_loops guard reads world.time >= the loop duration, true in any round past that many
+ * deciseconds, so a max_loops loop such as rat_alarm would stop before playing once.
+ */
 /datum/looping_sound/proc/start_sound_loop()
 	loop_started = TRUE
 	if(can_native_repeat())
@@ -150,10 +153,7 @@
 		if(max_loops)
 			timer_id = addtimer(CALLBACK(src, PROC_REF(stop)), mid_length * max_loops, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
 		return
-	// Pass world.time on this first call too. Upstream calls sound_loop() bare here, which
-	// leaves start_time null, so the max_loops guard below evaluates world.time >= 0 + the
-	// loop duration, true in any round past that many deciseconds. A max_loops loop would
-	// stop before playing once. Only rat_alarm sets max_loops here, and it never fired.
+	// world.time on this first call too. See the proc doc
 	sound_loop(world.time)
 	timer_id = addtimer(CALLBACK(src, PROC_REF(sound_loop), world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
 
@@ -184,18 +184,18 @@
 		return
 	updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary), timer_subsystem = SSsound_loops)
 
-/**
- * Replaces the mid_sounds list, resetting the each_once/in_order state that
- * referenced the old one. Kept from the old file for the music boxes and instruments.
- */
+/// Replaces mid_sounds for the music boxes and instruments, resetting the each_once and in_order
+/// state built from the old list
 /datum/looping_sound/proc/set_mid_sounds(new_mid_sounds)
 	mid_sounds = new_mid_sounds
 	cut_list = null
 	audio_index = 0
 
 /**
- * Sets the loop's volume mid-flight, for weather severity.
- * Token loops re-send at the new volume; direct mob loops adjust their channel in place.
+ * Sets the loop's volume mid-flight, for weather severity and for re-pricing after a slider change.
+ *
+ * Token loops re-send at the new volume. Direct mob loops adjust their channel in place. Any other
+ * loop takes it on its next play.
  */
 /datum/looping_sound/proc/set_volume(new_volume)
 	volume = new_volume
@@ -220,18 +220,18 @@
  */
 /datum/looping_sound/proc/play(soundfile, volume_override, repeat_sound = FALSE, delete_when_finished = FALSE)
 	if(use_sound_tokens)
-		if(QDELETED(sound_token_instance)) // self-deleted (source gone, or a finished one-shot)
+		if(QDELETED(sound_token_instance)) // Self-deleted (source gone, or a finished one-shot)
 			sound_token_instance = null
 		if(sound_token_instance)
 			sound_token_instance.set_volume(volume_override || volume, FALSE) // Don't update, we'll do that after
 			sound_token_instance.update_sound(soundfile, TRUE, repeat_sound)
 		else
 			sound_token_instance = new /datum/sound_token(parent, soundfile, SOUND_RANGE + extra_range, volume_override || volume, falloff_exponent, falloff_distance || SOUND_DEFAULT_FALLOFF_DISTANCE, _delete_on_end = delete_when_finished, _repeating = repeat_sound)
-			if(QDELETED(sound_token_instance)) // channel pool ran dry; refused politely
+			if(QDELETED(sound_token_instance)) // The channel pool ran dry and refused politely
 				sound_token_instance = null
 			else
 				// Configure BEFORE listeners are gathered: start_tracking() is what sends the
-				// sound out, so anything set after it would arrive a beat late (and re-send).
+				// sound out, so anything set after it would arrive a beat late (and re-send)
 				configure_token(sound_token_instance)
 				sound_token_instance.start_tracking()
 		return
@@ -242,15 +242,14 @@
 	sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
 	if(direct)
 		// Mob-directed loops go through playsound_local rather than TG's bare SEND_SOUND, so the
-		// volume sliders and the listener's area environment keep applying as they always have here
+		// volume sliders and the listener's area environment apply
 		if(ismob(parent))
 			var/mob/mob_parent = parent
 			mob_parent.playsound_local(null, null, volume_override || volume, vary, frequency, channel = sound_to_play.channel, S = sound_to_play)
 		else
 			SEND_SOUND(parent, sound_to_play)
 	else
-		// Most loops play to nobody most of the time, so probe the spatial grid before paying
-		// for playsound()
+		// A loop out of every client's earshot skips playsound() on a grid probe
 		if(!any_possible_listeners())
 			return
 		playsound(
@@ -267,8 +266,8 @@
 			use_reverb = use_reverb,
 		)
 
-/// Hook for subtypes to decorate a freshly created sound token (pref gates,
-/// audibility callbacks) before its first listener update goes out.
+/// Hook for subtypes to set up a new sound token (the Instruments slider, audibility callbacks)
+/// before its first listener update goes out
 /datum/looping_sound/proc/configure_token(datum/sound_token/token)
 	return
 
@@ -345,7 +344,7 @@
 		tree[i - 1] -= list(branch) // Remove the empty list
 	return .
 
-/// TG stops descending on isfile(); several subtypes here hold /sound datums too.
+/// TG stops descending on isfile(), but several subtypes here hold /sound datums too
 /datum/looping_sound/proc/is_playable_sound(candidate)
 	return isfile(candidate) || istype(candidate, /sound)
 
@@ -408,5 +407,5 @@
 	SIGNAL_HANDLER
 	set_parent(null)
 	// Deviation from TG, which leaves an orphaned loop idling on its timer with play()
-	// bailing every fire: a loop whose source is gone has nothing left to say.
+	// bailing every fire: a loop whose source is gone has nothing left to say
 	stop()

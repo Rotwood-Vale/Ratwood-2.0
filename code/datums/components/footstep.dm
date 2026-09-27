@@ -128,9 +128,8 @@
 		used_volume = step_data[2]
 		used_extra_range = step_data[3]
 		do_vary = !feet_covered // only barefoot gets the pitch variation
-	// The last sound is skipped by its position rather than subtracted: `list - item` builds a whole
-	// new list, and this runs on every footstep of every mob on the map, NPCs included. The others
-	// stay equally likely, and a last sound from another floor's list excludes nothing
+	// Skips the last sound by index, since subtracting it builds a new list on every footstep of every
+	// mob. The rest stay equally likely, and a last sound from another floor's list excludes nothing
 	var/count = length(used_footsteps)
 	if(!count)
 		return

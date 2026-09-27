@@ -4,7 +4,7 @@
 /datum/component/rot
 	var/amount = 0
 	var/last_process = 0
-	/// Whether this corpse is currently registered as a point ambience source.
+	/// Whether this corpse has flies. Heard only while it lies on a turf, see place_flies()
 	var/flies_playing = FALSE
 
 /datum/component/rot/Initialize(new_amount)
@@ -30,9 +30,9 @@
  * only the nearest, so ten corpses are one send and nine range rejects.
  *
  * Gated on SIZE, not biotype: a rat earns flies and a butterfly does not. `rot_type` defaults to
- * /rot/simple on EVERY /mob/living with only humans and goblins overriding it, so without that gate
- * every cockroach a lizard eats becomes a registered source. Non-mob parents fall through, since
- * /rot/gibs is a pile of viscera and earns them.
+ * /rot/simple on every /mob/living that does not set its own, so without that gate every dead
+ * cockroach becomes a registered source. A non-mob parent falls through, though nothing attaches
+ * rot to one.
  *
  * Arguments:
  * * state - TRUE registers the source, FALSE drops it. TRUE is downgraded to FALSE for a mob at or
@@ -59,8 +59,10 @@
 	place_flies()
 
 /**
- * Where the flies are heard, from the body's own moves. A body lying on a turf is heard from it, and
- * the step it is dragged or carried moves the sound with it.
+ * Where the flies are heard, from the body's own moves.
+ *
+ * A body lying on a turf is heard from it, and the step it is dragged or carried moves the sound
+ * with it.
  *
  * A body inside something, a cart or a sack, is silent. Moving the container fires no Moved on the
  * body, so its position could not be kept, and a sealed container is a fair reason for no flies.
@@ -186,8 +188,7 @@
 		return
 	if(amount > 15 MINUTES)
 		var/turf/open/T = get_turf(L)
-		// Gated on an open turf like the full component, or this branch has no way back off: it
-		// started the flies once and a carcass nobody clears held the sound all round.
+		// Gated on an open turf like /rot/corpse, since nothing else in this branch turns the flies off
 		set_flies(istype(T))
 		if(istype(T))
 			T.pollute_turf(/datum/pollutant/rot, 5)

@@ -1,14 +1,11 @@
-/// Live view of the sound token system and the channel pool it draws from.
-///
-/// Written for one question in particular: ambient sources (fires, torches, sconces) are the
-/// case where tokenising could plausibly exhaust channels or bloat the spatial-grid signal web,
-/// and every estimate of that so far has been modelled rather than measured. This shows the
-/// real numbers: how many tokens are live, what is holding channels, and how close the pool is
-/// to running dry, so the decision can be made from data.
-///
-/// Tokens are enumerated from SSsounds.using_channels_by_datum rather than a global list,
-/// because every token reserves its channel through reserve_sound_channel_for_datum() and so
-/// appears there for exactly as long as it is alive. No extra bookkeeping to keep in sync.
+/**
+ * Live view of the sound token system and the channel pool it draws from.
+ *
+ * Shows how many tokens are live, what holds channels, and how close the pool is to running dry.
+ * Tokens are enumerated from SSsounds.using_channels_by_datum rather than a global list, since
+ * every token reserves its channel through reserve_sound_channel_for_datum() and is listed there
+ * for exactly as long as it is alive.
+ */
 /client/proc/check_sound_tokens()
 	set category = "Debug"
 	set name = "Check Sound Tokens"
@@ -21,7 +18,6 @@
 
 	var/list/output = list()
 
-	// ---- channel pool ----
 	var/pool_total = SSsounds.using_channels_max - SSsounds.random_channels_min
 	var/reserved_now = SSsounds.using_channels_max - SSsounds.channel_reserve_high
 	var/reservable_left = SSsounds.channel_reserve_high - SSsounds.random_channels_min
@@ -38,7 +34,6 @@
 	if(reservable_left < 100)
 		output += "<p><b style='color:red'>Fewer than 100 channels left. Token creation refuses when the pool is dry - instruments and music boxes would start failing.</b></p>"
 
-	// ---- walk the channel holders ----
 	var/list/tokens = list()
 	var/list/other_holders = list()
 	for(var/holder in SSsounds.using_channels_by_datum)
@@ -47,7 +42,6 @@
 		else
 			other_holders += holder
 
-	// ---- summary by source type: the row that answers "are ambient sources flooding this" ----
 	var/list/by_type = list()
 	var/total_listeners = 0
 	for(var/datum/sound_token/token as anything in tokens)
@@ -65,7 +59,6 @@
 		output += "<tr><td>[type_key]</td><td align='right'><b>[by_type[type_key]]</b></td></tr>"
 	output += "</table>"
 
-	// ---- individual tokens ----
 	output += "<h3>Individual tokens</h3>"
 	output += "<table border='1' cellpadding='3'><tr>"
 	output += "<th>source</th><th>where</th><th>chan</th><th>range</th><th>vol</th><th>listeners</th><th>repeat</th><th>pref-gated</th><th>cells</th><th>age (s)</th><th>sound</th></tr>"
@@ -91,7 +84,6 @@
 		output += "</tr>"
 	output += "</table>"
 
-	// ---- anything else holding channels ----
 	output += "<h2>Other channel holders: [length(other_holders)]</h2>"
 	if(length(other_holders))
 		output += "<table border='1' cellpadding='3'><tr><th>holder</th><th>type</th><th>channels</th></tr>"
@@ -102,7 +94,6 @@
 	else
 		output += "<p><i>none</i></p>"
 
-	// ---- listener-side queue ----
 	output += "<h2>SSsound_tokens</h2>"
 	if(SSsound_tokens)
 		output += "<table border='1' cellpadding='3'>"

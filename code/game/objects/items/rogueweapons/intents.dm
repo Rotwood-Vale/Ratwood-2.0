@@ -116,8 +116,8 @@
 	)
 
 /datum/intent/Destroy()
-	// chargedloop holds a typepath until update_chargeloop()/on_charge_start() instantiates it,
-	// so istype rather than a truthiness check. Every un-qdeleted loop keeps an SSsounds channel.
+	// chargedloop holds a typepath until update_chargeloop() or on_charge_start() instantiates it,
+	// so istype rather than a truthiness check
 	if(istype(chargedloop, /datum/looping_sound))
 		QDEL_NULL(chargedloop)
 	if(mob_light)
@@ -335,12 +335,10 @@
 	noaa = TRUE
 	pointer = 'icons/effects/mousemice/human_give.dmi'
 
-// The spell charge loops are token-driven. As plain loops these were the worst attenuation
-// offenders in the game: volume frozen for 13s (32s for the two below) across a 10-12 tile
-// range, so a caster charging at you sounded exactly as loud from ten tiles as from one.
-// The token exists only while the charge is held. on_charge_start() starts the loop and
-// on_mouse_up() stops it, so the channel is held for the duration of a cast, nothing more.
-// Native repeat also removes the silent gap these had whenever a charge outlasted the file.
+// The spell charge loops below are token driven, so they re-pan and fade as the listener moves.
+// on_charge_start() starts one and on_mouse_up() stops it, so a token lives only while a charge is
+// held. Native repeat keeps a charge that outlasts its file from falling silent
+
 /datum/looping_sound/invokegen
 	mid_sounds = list('sound/magic/charging.ogg')
 	mid_length = 130

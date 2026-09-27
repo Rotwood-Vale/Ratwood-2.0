@@ -7,8 +7,8 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 	mid_length = 12000 // 20 minutes to force a loop. File size determines server load, not audio length. Low bitrate .ogg files can run long and have their uses as ambient sound.
 	volume = 100
 	extra_range = 10	// Up from 5, fill a room.
-	// Token-driven: per-token reserved channels replace the fixed CMUSIC1-4 set, and the
-	// upload repeats natively client-side while following listeners around.
+	/// Played through a sound token, so each box reserves its own channel and the upload repeats
+	/// natively client side, following listeners as they move
 	use_sound_tokens = TRUE
 	var/stress2give = /datum/stressevent/music
 
@@ -154,7 +154,7 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	if(!playing)
 		if(curfile)
-			// Same four-at-once cap as the old fixed-channel set, now just a headcount.
+			// At most four boxes play at once across the world, counted by headcount
 			var/boxes_playing = 0
 			for(var/obj/item/dmusicbox/musicbox in GLOB.musicboxes)
 				if(musicbox.playing && musicbox.soundloop.is_active())

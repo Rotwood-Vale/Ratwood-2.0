@@ -303,7 +303,7 @@
 	droning_sound_dusk = null
 	droning_sound_night = null
 	// Matches /area/rogue/indoors/town/cell, which this is the desert's equivalent of. It hangs
-	// off garrison rather than off that type, so it inherits none of its sound behaviour.
+	// off garrison rather than off that type, so it inherits none of its sound behaviour
 	soundproof = TRUE
 
 /area/rogue/indoors/town/garrison/desert/cell/outdoor
@@ -318,7 +318,7 @@
 	keep_area = TRUE
 	cell_area = TRUE
 	// Undoes the parent's soundproofing. This one is the open yard, and line of sight only makes
-	// no sense with no walls or ceiling to justify it.
+	// no sense with no walls or ceiling to justify it
 	soundproof = FALSE
 
 /area/rogue/indoors/town/tavern/desert

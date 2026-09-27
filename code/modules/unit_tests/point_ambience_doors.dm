@@ -55,7 +55,7 @@
 	TEST_ASSERT_EQUAL(aside.sound_door_count, 1, "A moved door must be counted where it lands")
 	TEST_ASSERT_EQUAL(opacity_between(listener, source, 6, FALSE, null, SOUND_DOORS_LIVE), OCCLUSION_CLEAR, "A line the door has left must be clear")
 
-	// An open mineral door still obstructs the ALWAYS mode, including when moved or removed.
+	// In ALWAYS mode an open door still counts, so moving or deleting one refreshes its tiles
 	door.set_opacity(FALSE)
 	door.door_opened = TRUE
 	ambience.door_mode = SOUND_DOORS_ALWAYS

@@ -61,9 +61,13 @@
 	var/climbable_atom_count = 0
 	/// How many atoms on this turf act as platforms (have BLOCK_Z_OUT_DOWN)?
 	var/platform_atom_count = 0
-	/// Objects with sound_door standing here, so a sound occlusion walk loops a turf's contents only
-	/// where a door may be. Too high costs a loop, too low lets sound through a shut door, so it is
-	/// recounted rather than kept running. See recount_sound_doors()
+	/**
+	 * Objects with sound_door standing here, so a sound occlusion walk loops a turf's contents only
+	 * where a door may be.
+	 *
+	 * Too high costs a loop, too low lets sound through a shut door, so it is recounted rather than
+	 * kept running. See recount_sound_doors().
+	 */
 	var/sound_door_count = 0
 
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
@@ -463,9 +467,14 @@
 			platform_atom_count -= 1
 
 /**
- * Counts the doors here from scratch. A running count would need every way in and out to agree:
- * a turf's Initialize enters its contents again, so a door counted at its own Initialize would be
- * counted twice, and a move to nullspace calls Exited with the door still here, hence leaving
+ * Counts the doors here from scratch.
+ *
+ * A running count would need every way in and out to agree: a turf's Initialize enters its contents
+ * again, so a door counted at its own Initialize would be counted twice, and a move to nullspace
+ * calls Exited with the door still here.
+ *
+ * Arguments:
+ * * leaving - a door on its way out, left out of the count
  */
 /turf/proc/recount_sound_doors(atom/movable/leaving)
 	sound_door_count = 0

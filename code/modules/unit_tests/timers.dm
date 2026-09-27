@@ -14,9 +14,8 @@
 	// timer_sanity only catches bucket_count going negative. A missed decrement leaks the
 	// count upward instead and is invisible to it, so assert here that a full
 	// schedule/fire/cancel cycle returns the count to where it started. Measured on
-	// SSsound_loops, where only looping sounds schedule, so the baseline holds unless one starts
-	// or stops during the test. Taking this baseline from SStimer would be flaky, since the rest
-	// of the game keeps using it.
+	// SSsound_loops, where only looping sounds schedule, so the baseline holds unless one starts or
+	// stops during the test. SStimer would be flaky, since the rest of the game keeps using it
 	var/sound_loops_baseline = SSsound_loops.bucket_count
 
 	addtimer(CALLBACK(src, PROC_REF(mark), "bucket"), 1)

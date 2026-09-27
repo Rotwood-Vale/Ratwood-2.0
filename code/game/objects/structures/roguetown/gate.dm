@@ -97,8 +97,8 @@ GLOBAL_LIST_EMPTY(biggates)
 	if(isSwitchingStates || !density)
 		return
 	isSwitchingStates = TRUE
-	// A token, not a one-shot: you are guaranteed to be walking through a gate while it plays, and
-	// playsound would fix pan and volume at the instant it fired. Range is what playsound gave it.
+	// A token, not a one-shot, since people are often walking through a gate while it plays and
+	// playsound fixes pan and volume when it fires. Range is what playsound gave it
 	playsoundtoken(src, 'sound/misc/gate.ogg', 100, SOUND_RANGE + 5)
 	flick("[base_state]_opening",src)
 	layer = initial(layer)
@@ -118,8 +118,8 @@ GLOBAL_LIST_EMPTY(biggates)
 	isSwitchingStates = TRUE
 	update_icon()
 	layer = ABOVE_MOB_LAYER
-	// A token, not a one-shot: you are guaranteed to be walking through a gate while it plays, and
-	// playsound would fix pan and volume at the instant it fired. Range is what playsound gave it.
+	// A token, not a one-shot, since people are often walking through a gate while it plays and
+	// playsound fixes pan and volume when it fires. Range is what playsound gave it
 	playsoundtoken(src, 'sound/misc/gate.ogg', 100, SOUND_RANGE + 5)
 	flick("[base_state]_closing",src)
 	sleep(10)

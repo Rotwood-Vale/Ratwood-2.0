@@ -6,12 +6,12 @@
 	max_loops = 1
 	volume = 80
 	extra_range = 7
-	// Token-driven: this is a single 28-second positional blast, so on the plain playsound
+	// Token-driven: this is a single long positional blast, so on the plain playsound
 	// path its volume is fixed at the instant it starts and never changes. Walking toward
-	// or away from the lever does nothing. A token re-pans and re-attenuates as you move.
+	// or away from the lever does nothing. A token re-pans and re-attenuates as you move
 	use_sound_tokens = TRUE
 	// ...but not natively repeating: the max_loops timer is what plays it once and then
-	// calls on_stop() -> alarm_ended(), and native repeat would restart the file instead.
+	// calls on_stop() -> alarm_ended(), and native repeat would restart the file instead
 	never_native_repeat = TRUE
 
 /datum/looping_sound/rat_alarm/on_stop()
@@ -74,7 +74,7 @@
 	addtimer(CALLBACK(src, PROC_REF(start_soundloop)), 5)
 
 /obj/structure/lever/wall/rat_alarm/proc/start_soundloop()
-	QDEL_NULL(soundloop) // alarm_ended() leaves the finished loop set; don't orphan it here
+	QDEL_NULL(soundloop) // alarm_ended() leaves the finished loop set, so don't orphan it here
 	soundloop = new(src, TRUE)
 	for(var/mob/living/hearer in get_hearers_in_range(world.view + 7, src))
 		if(hearer.client && get_dist(src, hearer) > world.view)

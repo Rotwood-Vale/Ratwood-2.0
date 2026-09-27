@@ -25,8 +25,8 @@
 		for(var/atom/source as anything in source_categories)
 			start_fallback(source)
 
-/// The plain loop a source runs in fallback mode, configured from its category so it sounds as
-/// the live path would. Cannot native-repeat without a token, so it replays every file length
+/// The plain loop a source runs in fallback mode, taking its file, volume, pitch roll and reach
+/// from its category. Cannot native-repeat without a token, so it replays every file length
 /datum/looping_sound/point_ambience_fallback
 
 /// Gives one source its fallback loop, if its category takes one and it has none already
@@ -57,9 +57,10 @@
 	qdel(loop)
 
 /**
- * Flips every knob the curve work touched, so hearing the before and after is one prompt rather
- * than four. The original is the band power curve with no cutoff. The floors are the same either
- * way, being what they always were
+ * Switches every category to the band power curve with no send cutoff, or back again.
+ *
+ * One prompt for an A/B by ear. Back again means the initial hardness and cutoff, not what config
+ * seeded. The floors are the same either way
  */
 /datum/controller/subsystem/point_ambience/proc/set_original_sound(original)
 	original_sound = original
@@ -71,9 +72,11 @@
 	set_send_cutoff(original ? 0 : initial(send_cutoff))
 
 /**
- * Sets the volume under which a send is refused, for everyone. Every listener's cached answer was
- * priced under the old cutoff, so all are dropped, and each listener is re-classed, since a slider
- * the new cutoff cannot clear at distance 0 mutes them and one it can clear unmutes them
+ * Sets the volume under which a send is refused, for everyone.
+ *
+ * Every listener's cached answer was priced under the old cutoff, so all are dropped, and each
+ * listener is re-classed, since a slider the new cutoff cannot clear at distance 0 mutes them and
+ * one it can clear unmutes them
  */
 /datum/controller/subsystem/point_ambience/proc/set_send_cutoff(value)
 	send_cutoff = clamp(value, 0, 100)
@@ -82,9 +85,11 @@
 		listener_prefs_changed(listener_client)
 
 /**
- * Sets the hard decay exponent on every category whose curve is not pinned, null restoring each
- * category's own default. Written into the categories rather than read through the subsystem per
- * send, so the curve costs a plain var read. Takes effect on the next send to each listener
+ * Sets the hard decay exponent on every category whose curve is not pinned.
+ *
+ * Null restores each category's own default. Written into the categories rather than read through
+ * the subsystem per send, so the curve costs a plain var read. Takes effect on the next send to
+ * each listener
  */
 /datum/controller/subsystem/point_ambience/proc/set_falloff_hardness(value)
 	falloff_hardness = value

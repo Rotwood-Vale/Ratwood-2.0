@@ -312,7 +312,7 @@
 /datum/particle_weather/proc/weather_sound_effect(mob/living/L, outside = TRUE)
 	var/datum/looping_sound/currentSound = currentSounds[L]
 	if(currentSound)
-		//SET VOLUME, through the setter, so a severity change reaches the playing channel
+		// SET VOLUME, through the setter, so a severity change reaches the playing channel
 		if(scale_vol_with_severity)
 			currentSound.set_volume(initial(currentSound.volume) * severityMod())
 		if(!currentSound.is_active()) //don't restart already playing sounds
@@ -329,7 +329,7 @@
 	if(tempSound)
 		currentSound = new tempSound(L, FALSE, TRUE, CHANNEL_WEATHER)
 		currentSounds[L] = currentSound
-		//SET VOLUME, plain assignment is fine here, nothing is playing yet
+		// SET VOLUME, plain assignment is fine here, nothing is playing yet
 		if(scale_vol_with_severity)
 			currentSound.volume = initial(currentSound.volume) * severityMod()
 		currentSound.start()
@@ -337,7 +337,7 @@
 /datum/particle_weather/proc/stop_weather_sound_effect(mob/living/L)
 	var/datum/looping_sound/currentSound = currentSounds[L]
 	if(currentSound)
-		currentSounds -= L // actually remove the key; nulling it left one dead entry per mob
+		currentSounds -= L // Removes the key, since a nulled one stays as a dead entry per mob
 		qdel(currentSound) // Destroy() stops it
 
 /datum/particle_weather/proc/weather_message(mob/living/L)

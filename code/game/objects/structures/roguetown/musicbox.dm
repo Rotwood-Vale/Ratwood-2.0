@@ -3,16 +3,14 @@
 	mid_length = 2400
 	volume = 70
 	extra_range = 8
-	// Token-driven: the song repeats natively client-side and follows listeners as they
-	// move, replacing the old persistent_loop/CHANNEL_JUKEBOX machinery wholesale.
+	/// Played through a sound token, so the song repeats natively client side and follows listeners as they move
 	use_sound_tokens = TRUE
 	var/stress2give = /datum/stressevent/music
 
 /datum/looping_sound/musloop/configure_token(datum/sound_token/token)
 	token.respect_instrument_pref = TRUE
 	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
-	// Stress lands when a listener first comes into earshot rather than on every replay
-	// of the track, which is what per-replay on_hear_sound amounted to in practice.
+	// Stress lands when a listener first comes into earshot, not on every replay of the track
 	token.on_listener_audible = CALLBACK(src, PROC_REF(give_stress))
 
 /datum/looping_sound/musloop/proc/give_stress(mob/M)
@@ -29,9 +27,7 @@
 	anchored = TRUE
 	max_integrity = 0
 	var/datum/looping_sound/musloop/soundloop
-	/// Rolled once per device in Initialize(), so boxes across a map are not all playing the same
-	/// thing. Rotating a single box mid-track would need a timer and a real track length, and the
-	/// token restart it takes to change file is an audible cut for everyone in range.
+	/// Rolled once per device in Initialize(), so boxes across a map are not all playing the same thing
 	/// MUST BE IN ONE OF THE MUSIC_TAVCAT_'s.
 	var/list/init_curfile = list(
 		'sound/music/jukeboxes/oldschool/Autumn_Voyage.ogg',
@@ -82,13 +78,15 @@
 
 /obj/structure/roguemachine/musicbox/Initialize(mapload)
 	. = ..()
+	// Once per device. Rotating mid-track would need a timer and a real track length, and changing
+	// file restarts the token, an audible cut for everyone in range
 	curfile = pick(init_curfile)
 	soundloop = new(src, FALSE)
 	if(playuponspawn)
 		start_playing()
 
 /obj/structure/roguemachine/musicbox/Destroy()
-	QDEL_NULL(soundloop) // before ..(): the parent call tears down our datum half
+	QDEL_NULL(soundloop) // Before ..(), so the loop stops while this box is still whole
 	return ..()
 
 /obj/structure/roguemachine/musicbox/update_icon()

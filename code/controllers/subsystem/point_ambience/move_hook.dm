@@ -1,18 +1,25 @@
 /**
- * Requests source discovery and positional updates on eligible steps, normally through the queue.
- * The interval can skip moves. The periodic client walk catches a skipped final step. Discovery
- * must include new sources, since refreshing only those already heard delays entry into range.
+ * Requests a point ambience service after an eligible move, normally through the queue.
  *
- * The inline path carries two rails, which the queue does not need because the drain applies the
- * budget in the tick's slack. TICK_USAGE bounds the peak tick, rising with what a service costs and
- * with whatever else is loading the tick, which is the tick a crowd makes. The count bounds the
- * second, which tick usage alone does not. Both sit AFTER the interval gate, so a move it was
- * dropping anyway never spends the budget, and BEFORE the stamp, so a refused step does not also
- * spend the client's interval: they retry next move and fire() catches them within a second.
- * TICK_CHECK_LOW rather than the MC limit, since this runs inside Move(), and Move() runs in the
- * verb slot at the END of the tick, after the MC, gc and SendMaps have spent their share. The usage
- * read there is already high whenever the server is busy at all, so on a loaded server this path
- * refuses most steps. That is why the queue is the default and this is the fallback
+ * The interval skips some moves, and the periodic client walk catches a skipped final step. A
+ * service must discover new sources as well as update those already playing.
+ *
+ * Forced moves and floor changes can invalidate the last answer. They bypass
+ * move_service_interval at most once per POINT_AMBIENCE_JUMP_GAP, so repeated forced moves cannot
+ * demand a service every tick. A jump held by that gap follows the ordinary interval.
+ *
+ * With speed_cutoff enabled, movement faster than a natural run fades point ambience. The first
+ * fast step and the first step back at a natural pace bypass the interval. Intermediate fast steps
+ * need no service. A headless dullahan is exempt because its detached head hears from its own
+ * position. An unknown step delay must not be mistaken for fast movement.
+ *
+ * The inline fallback checks TICK_CHECK_LOW and max_services_per_tick after the interval gate but
+ * before setting point_ambience_next_service. A refused move can retry on the next step. The
+ * standing walk can catch a listener who stops, with its next check governed by
+ * standing_walk_interval and standing_skip. TICK_CHECK_LOW leaves half the tick limit unused
+ * because Move() runs late in the tick, after the controller, garbage collection and SendMaps.
+ * On a busy server this rejects work the queue can defer into tick slack, so the queue remains
+ * the default.
  */
 /datum/controller/subsystem/point_ambience/proc/on_moved(atom/movable/mover, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
@@ -28,10 +35,7 @@
 	if(!listener_client)
 		return
 	moves_total++
-	// A teleport or a floor change lands where the last budget knows nothing, so it goes to a
-	// full service without a gated step being spent on it. One a second: whatever carries a player
-	// by forced moves, tile after tile, would otherwise buy a service every tick. A jump held back
-	// counts as a step from here on, so keep "was it a jump" apart from "is it served now"
+	// A jump skips the interval, one per POINT_AMBIENCE_JUMP_GAP. See the proc doc
 	var/turf/old_turf = old_loc
 	var/discontinuous = forced || (old_turf && old_turf.z != listener.z)
 	var/jump_served = discontinuous && world.time >= listener_client.point_ambience_jump_next
@@ -41,10 +45,7 @@
 	// A plain read for anyone on foot, the proc only for a rider
 	var/step_delay = listener.buckled ? step_delay_of(listener) : listener.cached_multiplicative_slowdown
 	var/urgent = jump_served
-	// Faster than a natural run hears nothing while moving. The first such step and the first one
-	// back at a natural pace pass the interval, so neither the silence nor the return waits for it.
-	// Not for a headless dullahan, whose ear is the head rather than the body doing the running, and
-	// not for a mob whose pace was never computed, which a null would otherwise read as fastest
+	// The speed cutoff. See the proc doc
 	if(speed_cutoff && !isnull(step_delay) && !listener_client.point_ambience_ear && step_delay < natural_run_step)
 		listener_client.point_ambience_speed_moved = world.time
 		if(!listener_client.point_ambience_speed_silenced)
@@ -59,8 +60,7 @@
 		return
 	if(GLOB.point_ambience_counters)
 		GLOB.point_ambience_counters.observe_move_gate(listener_client, listener, discontinuous)
-	// Two rails, for the inline path only. Both sit after the interval gate and before the stamp.
-	// See the proc doc
+	// The inline path's two rails. See the proc doc
 	if(!use_queue && max_services_per_tick)
 		if(TICK_CHECK_LOW)
 			services_dropped_tick_usage++

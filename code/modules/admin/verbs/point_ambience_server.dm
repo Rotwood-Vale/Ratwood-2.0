@@ -1,11 +1,4 @@
-/**
- * Point ambience on a live server: what it costs and what it does across every player, from counts
- * the subsystem keeps anyway. Nothing here times, observes or switches anything on, so opening it
- * changes nothing it reports. The first use starts a window and later ones report since its start.
- *
- * Cost is world.tick_usage summed over each phase of fire(). Outside it are inline services, with
- * the queue off, and the move hook's marks and index changes, which are small
- */
+/// The window the next report measures from
 GLOBAL_DATUM(point_ambience_server_window, /datum/point_ambience_server_window)
 
 /// The counts at the start of a window, which a report subtracts from the current ones
@@ -18,6 +11,16 @@ GLOBAL_DATUM(point_ambience_server_window, /datum/point_ambience_server_window)
 	counts = point_ambience_server_counts()
 	SSpoint_ambience.queue_wait_window_max = 0
 
+/**
+ * Point ambience on a live server: what it costs and what it does across every player.
+ *
+ * Read from counts the subsystem keeps anyway. Nothing here times, observes or switches anything on,
+ * so opening it changes nothing it reports. The first use starts a window and later ones report
+ * since its start.
+ *
+ * Cost is world.tick_usage summed over each phase of fire(). Outside it, and not counted, are inline
+ * services with the queue off, and the move hook's marks and index changes.
+ */
 /client/proc/point_ambience_server()
 	set category = "Debug"
 	set name = "Point Ambience Server"

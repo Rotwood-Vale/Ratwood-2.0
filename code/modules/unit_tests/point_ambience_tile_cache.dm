@@ -179,9 +179,12 @@
 		ambience.set_tile_cache(saved_use_tile_cache, saved_verify_tile_cache)
 	return ..()
 
-/// Bulk source updates keep the index exact, defer invalidation to the outermost close, flush once,
-/// and recover from a scope left open. The close's stop pass needs connected clients, so it is
-/// checked in game rather than here
+/**
+ * Bulk source updates keep the index exact, defer invalidation to the outermost close, flush once,
+ * and recover from a scope left open.
+ *
+ * The close's stop pass needs connected clients, so it is checked in game rather than here.
+ */
 /datum/unit_test/point_ambience_bulk_update
 	var/datum/point_ambience_category/fire_category
 	var/datum/point_ambience_category/torch_category

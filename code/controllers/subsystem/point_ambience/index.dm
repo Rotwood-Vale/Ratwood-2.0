@@ -1,28 +1,25 @@
 /**
  * Puts an active source into the index, or moves one already in it.
  *
- * Idempotent. A source that can move must call this again from its own Moved() (the rogue lights and
- * handheld torches do). The bone structures are treated as immobile and go stale if dragged. One
- * inside a mob or container is placed on its outermost carrier's turf, and nothing here follows that
- * carrier: the caller registers it again when it moves.
+ * Repeated registration is safe. Moving sources must call register_source() again when their turf
+ * changes. Rogue lights and clocks do this in Moved(), while a rotting body uses its component.
+ * get_turf() can place a contained source at its carrier's turf, but this index does not follow
+ * that carrier. A caller that moves it must register it again.
  *
- * A SILENCED category is refused outright rather than skipped at send time, because ranking sources
- * for an answer that cannot exist is still work: silencing torch at send time left the walk
- * rejecting every sconce on the map, measured as most of what the category cost. The unregister on
- * that path covers the one case where sources arrive first, mapload lighting fires before the config
- * is read at the first fire().
+ * A category silenced by config is refused before its sources add work to every ranking. The
+ * unregister on this path also removes a source left indexed by a route other than seed_settings(),
+ * which clears mapload sources itself.
  *
- * Any move bumps static_version even when the bucket does not change, or standing listeners keep
- * hearing a source at the volume and pan of the tile it left until it crosses a cell boundary. A
- * dragged corpse or pushed brazier is exactly that, and it hides from whoever tests it because the
- * person dragging is moving and re-walks anyway.
+ * A move bumps static_version even within one bucket. Otherwise a standing listener can keep the
+ * old volume and pan until the source crosses a cell boundary. The person dragging a corpse or
+ * brazier moves and gets fresh answers, which can hide this error during testing.
  *
  * Arguments:
- * * category_path - the category's TYPEPATH, not its datum
+ * * category_path - the category's type path, not its datum
  * * sound_override - a file this source plays instead of the category's, so it can ride a category
  *   it does not sound like
- * * volume_scale - a MULTIPLE of the category volume, not a volume. 1 is the category's own.
- *   Range stays per-category, being the walk's gate
+ * * volume_scale - multiplier of category volume. 1 removes an override, while null keeps the
+ *   current scale. Range belongs to the category because it gates the walk
  */
 /datum/controller/subsystem/point_ambience/proc/register_source(atom/source, category_path, sound_override, volume_scale)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -55,8 +52,8 @@
 	var/old_cell = source_keys[source]
 	var/old_z = source_zs[source]
 	if(old_cell == cell && old_z == z && old_category == category)
-		// Same bucket, but the bucket carries the position and a carried source moves inside its
-		// bucket on every step
+		// Same bucket, but the bucket carries the position, and a dragged source moves inside its
+		// bucket on most steps
 		if(old_turf != source_turf)
 			var/list/bucket = buckets_by_z[z][cell]
 			var/at = bucket ? bucket.Find(source) : 0
@@ -90,8 +87,8 @@
 /datum/controller/subsystem/point_ambience/proc/apply_source_overrides(atom/source, datum/point_ambience_category/category, turf/source_turf, sound_override, volume_scale)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
-	// Takes are handed out by position, stable for a fixed source and free of per source state.
-	// Under a roof a source draws from the indoor set, read off the area's own outdoors flag
+	// Takes are handed out by position, so a fixed source always draws the same one. Under a roof
+	// a source draws from the indoor set, read off the area's own outdoors flag
 	if(!sound_override && category.voices)
 		var/list/takes = category.voices
 		if(category.voices_indoors)
@@ -99,7 +96,8 @@
 			if(!here?.outdoors)
 				takes = category.voices_indoors
 		sound_override = takes[1 + ((source_turf.x * 73 + source_turf.y * 179 + source_turf.z * 283) % 97) % length(takes)]
-	// Reapplied on every call, so a rebucketing move does not drop them
+	// Reapplied on every call, so a category change carries them to the new category and a take
+	// follows its source's position
 	if(sound_override && category.source_sounds[source] != sound_override)
 		category.source_sounds[source] = sound_override
 		static_version++
@@ -168,31 +166,31 @@
  * * spread - tiles a voice covers, so no second voice is claimed within this of one
  * * sound_override, volume_scale - as register_source, letting a source ride a category it does
  *   not sound like
- * * continuous - the source is one voice of a long thing, so it must not restart or pan on a
- *   handoff. TRUE by default, since anything spread over a run is a line.
+ * * continuous - the source is one voice of a long thing, so it is always sent centred and an
+ *   update that changes nothing is skipped. TRUE by default, since anything spread over a run is a
+ *   line.
  */
 /datum/controller/subsystem/point_ambience/proc/register_spread_source(atom/source, category_path, spread, sound_override, volume_scale, continuous = TRUE)
 	var/turf/source_turf = get_turf(source)
 	if(!source_turf)
 		return FALSE
-	// By DISTANCE, not a grid of spread-sized blocks: a grid bounds spacing at 2*spread-1, which at
-	// spread 8 put voices 15 tiles apart against a range of 5 and left the bank silent in the middle
 	var/datum/point_ambience_category/claim_category = categories_by_path[category_path]
 	if(!claim_category || claim_category.silenced)
 		return FALSE
+	// By distance, not a grid of spread-sized blocks, which spaces voices up to 2*spread-1 apart
 	if(any_source_within(source_turf, claim_category, spread))
 		return FALSE
-	// Continuous by default: anything spread over a run is a line, and a line played as a point
-	// source restarts and flips its stereo image every time the nearest voice changes
 	if(continuous)
 		claim_category.source_continuous[source] = TRUE
 	register_source(source, category_path, sound_override, volume_scale)
 	return TRUE
 
 /**
- * Whether any source of a category already sits within radius of a turf. Walks the same buckets
- * the listener walk does, exiting on the first hit. Spaces a run's voices: mostly at mapload, and
- * again per candidate neighbour whenever a river voice's turf is destroyed and the run re-seeds
+ * Whether any source of a category already sits within radius of a turf.
+ *
+ * Walks the same buckets the listener walk does, exiting on the first hit. Spaces a run's voices:
+ * mostly at mapload, and again per candidate neighbour whenever a river voice's turf is destroyed
+ * and the run re-seeds.
  */
 /datum/controller/subsystem/point_ambience/proc/any_source_within(turf/check_turf, datum/point_ambience_category/category, radius)
 	PRIVATE_PROC(TRUE)
@@ -231,20 +229,19 @@
  * Safe on something never registered, the common case for a mapped emitter that was never lit.
  *
  * Arguments:
- * * category_path - accepted for call-site clarity and then IGNORED. The category is read from the
- *   index, since a caller passing the wrong path would decrement the wrong tally.
+ * * category_path - read only when the index holds no category for the source. The index wins,
+ *   since a caller passing the wrong path would decrement the wrong tally and leave the sound
+ *   playing.
  */
 /datum/controller/subsystem/point_ambience/proc/unregister_source(atom/source, category_path)
 	SHOULD_NOT_SLEEP(TRUE)
-	// From the index, not the argument: a caller passing the wrong path would decrement the wrong
-	// tally and leave the sound playing. category_path stays in the signature for call-site clarity
 	var/datum/point_ambience_category/category = source_categories[source] || categories_by_path[category_path]
 	if(!category)
 		return
 	var/old_cell = source_keys[source]
 	if(!old_cell)
-		// Never registered, so it cannot be anyone's current source: skips the client walk for the
-		// mapped-off majority whose Initialize lands here
+		// Never registered, so it cannot be anyone's current source: skips the client walk for a
+		// mapped emitter that was never lit
 		return
 	var/turf/old_turf = source_turfs[source]
 	var/version_before = static_version
@@ -265,11 +262,11 @@
 	if(bulk_depth)
 		bulk_affected[source] = TRUE
 		return
-	// No listener may remain to overwrite scratch that still refers to the removed source.
+	// The last walk's scratch may still hold the removed source, and nothing is due to overwrite it
 	scratch_uncached.Cut()
 	runner_up_by_category.Cut()
-	// The channel is the stop handle: a snuffed source goes silent now, not when its replay runs
-	// out. One client walk per deactivation
+	// The channel is the stop handle: a snuffed source goes silent now, not at each listener's next
+	// service. One client walk per deactivation
 	for(var/client/listener_client in GLOB.clients)
 		if(listener_client.point_ambience_sources[category] == source)
 			stop_for(listener_client, category)
@@ -335,8 +332,8 @@
 		floor_counts[z] = counts
 	counts[category] = max(0, (counts[category] || 0) + delta)
 
-/// The floor above or below z, or 0 when the map links nothing there. The linkage is a
-/// boolean per floor and the neighbour is always the next z, which is what get_step(UP) walks
+/// The z one storey up, or 0 when the map links nothing there. The linkage is a boolean per
+/// floor and the neighbour is always the next z, which is what get_step(UP) walks
 /datum/controller/subsystem/point_ambience/proc/floor_above(z)
 	PRIVATE_PROC(TRUE)
 	var/list/levels = SSmapping.multiz_levels
@@ -448,9 +445,11 @@
 	return best
 
 /**
- * One storey pass, filling what the own floor left unanswered from the floor at z. Under the cell
- * cache the candidates are gathered once per cell and handed back for the client to keep, one list
- * for the floor above and one for the floor below. Without it, cached comes back untouched
+ * One storey pass, filling what the own floor left unanswered from the floor at z.
+ *
+ * Under the cell cache the candidates are gathered once per cell and handed back for the client to
+ * keep, one list for the floor above and one for the floor below. Without it, cached comes back
+ * untouched.
  */
 /datum/controller/subsystem/point_ambience/proc/rank_storey(turf/listener_turf, z, list/cached, list/best, list/best_distsq, list/settled)
 	PRIVATE_PROC(TRUE)
@@ -528,9 +527,10 @@
 	gather_buckets(cell_min_x - max_range, cell_max_x + max_range, cell_min_y - max_range, cell_max_y + max_range, z, out)
 
 /**
- * Ranks a flat list of quads into the nearest per category and its runner-up. The uncached walk
- * and the cell cache both rank through here, so a storey pass reaches the same answer either way.
- * skip holds the categories the own floor already answered
+ * Ranks a flat list of quads into the nearest per category and its runner-up.
+ *
+ * The uncached walk and the cell cache both rank through here, so a storey pass reaches the same
+ * answer either way. skip holds the categories the own floor already answered.
  */
 /datum/controller/subsystem/point_ambience/proc/rank_candidates(x, y, list/candidates, list/best, list/best_distsq, list/skip)
 	PRIVATE_PROC(TRUE)

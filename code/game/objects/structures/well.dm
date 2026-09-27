@@ -69,7 +69,7 @@
 	plane = GAME_PLANE_UPPER
 	pixel_x = -15
 
-// Always running, unlike the lights, so it registers once rather than on a state change.
+/// Always running, unlike the lights, so it registers once rather than on a state change
 /obj/structure/well/fountain/Initialize(mapload)
 	. = ..()
 	SSpoint_ambience.register_source(src, /datum/point_ambience_category/water)
