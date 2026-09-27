@@ -132,6 +132,12 @@ SUBSYSTEM_DEF(point_ambience)
 	/// passes run whenever the own floor leaves a category unanswered. Seeded from
 	/// POINT_AMBIENCE_CROSS_FLOOR, and the floor counts the passes read are kept either way.
 	var/cross_floor = FALSE
+	/**
+	 * Sent volume below which a category stops instead of sending, so an inaudible outer ring costs
+	 * no packets. 0 is off. A starting value, tuned by ear in View Variables while playing, and the
+	 * range edge already cuts from the category floor, 8 or 3, times the slider under Master
+	 */
+	var/send_cutoff = 5
 	/// Whether a wall between listener and source muffles or silences it; doors do not count, since a
 	/// standing listener never re-sends. Off, a hearth through a keep wall sounds like one in the
 	/// open. Costs a line walk per served category, so switching it off is also how to price it.
@@ -180,17 +186,19 @@ SUBSYSTEM_DEF(point_ambience)
 	var/list/scratch_second = list()
 	var/list/scratch_second_distsq = list()
 	/**
-	 * The listener a service is for, resolved once per service and read by every send in it: their
-	 * turf, the environment their area gives a sound, their point ambience volume as a factor (null
-	 * when they have no prefs), and whether the slim send may serve them at all. A dullahan hears
-	 * from the head, which the slim send does not model, so they take the full playsound_local path.
-	 * Only while HEADLESS: with the head on, playsound_local resolves the listener back to the mob
-	 * and the two paths agree
+	 * The listener a service is for, resolved once per service and read by every send in it: the
+	 * turf they hear FROM, the environment their area gives a sound, their point ambience volume as
+	 * a factor (null when they have no prefs), and whether their ear is inside something.
+	 *
+	 * The turf is the ear's, which for a headless dullahan is wherever the head is. Selection and
+	 * pricing both use it, so they cannot disagree the way two paths did
 	 */
 	var/turf/serving_turf
 	var/serving_environment = SOUND_DEFAULT_ENVIRONMENT
 	var/serving_volume_scale
-	var/serving_slim = FALSE
+	/// The ear is shut in a closet or a bag, so everything this service sends is muffled. Dullahans
+	/// only: nobody else's ear is ever inside anything
+	var/serving_muffle_head = FALSE
 	/// Set per category while it is being resolved, when the direct line is blocked but a line from
 	/// beside the obstruction is not: a corner, rather than an enclosure. Nothing counts walls; a
 	/// straight run with no way round silences the category instead. Read by the send that follows
@@ -354,7 +362,8 @@ SUBSYSTEM_DEF(point_ambience)
 		max_range = max(max_range, category.range)
 		max_range_sq = max_range * max_range
 		category.range_sq = category.range * category.range
-		category.falloff_exponent = sound_falloff_for_range(category.range)
+		if(!category.falloff_exponent)
+			category.falloff_exponent = sound_falloff_for_range(category.range)
 		category.inv_falloff_exponent = 1 / category.falloff_exponent
 		category.inv_muffled_exponent = 1 / (category.falloff_exponent * SOUND_MUFFLE_EXPONENT_MULT)
 		category.stop_sound = sound(null, channel = category.channel)
@@ -401,6 +410,7 @@ SUBSYSTEM_DEF(point_ambience)
 	use_queue = SSpoint_ambience.use_queue
 	standing_skip = SSpoint_ambience.standing_skip
 	cross_floor = SSpoint_ambience.cross_floor
+	send_cutoff = SSpoint_ambience.send_cutoff
 	// The set is not carried: the standing walk catches everyone in it within a second.
 	fallback_loops = SSpoint_ambience.fallback_loops
 	source_zs = SSpoint_ambience.source_zs
@@ -970,18 +980,23 @@ SUBSYSTEM_DEF(point_ambience)
 	scratch_second_distsq.Cut()
 	var/mob/listener = listener_client.mob
 	var/turf/listener_turf
+	// A headless dullahan hears from the head, kept current by the watch, null for everyone else
+	var/atom/movable/ear = listener_client.point_ambience_ear
 	// Observers are skipped by the tick and silenced at login; this catches any that arrive
 	// another way.
 	if(listener && !isnewplayer(listener) && !isobserver(listener))
-		listener_turf = get_turf(listener)
-	// The mob's own lit torch, served ahead of whatever the walk found for that category.
-	var/atom/self_source = listener_turf ? listener.point_ambience_self_source : null
+		listener_turf = get_turf(ear || listener)
+	// The mob's own lit torch, served ahead of what the walk found. It is in the body's hand, so
+	// it is only theirs to hear while the ear is on that turf
+	var/atom/self_source = null
+	if(listener_turf && (!ear || listener_turf == get_turf(listener)))
+		self_source = listener.point_ambience_self_source
 	// Same turf, same index version, same point ambience volume: the answer cannot have changed.
 	// Everything else is a full walk
 	var/list/nearest_by_category
 	var/standing = FALSE
 	if(listener_turf)
-		var/ambience_volume = listener_client.prefs?.pointambiencevol
+		var/ambience_volume = listener_client.prefs ? listener_client.prefs.at_overall(listener_client.prefs.pointambiencevol) : null
 		if(listener_turf == listener_client.point_ambience_cache_turf \
 			&& static_version == listener_client.point_ambience_cache_version \
 			&& ambience_volume == listener_client.point_ambience_cache_volume)
@@ -1055,14 +1070,9 @@ SUBSYSTEM_DEF(point_ambience)
 		// reaches here having moved: anything that moves bumps static_version, which ends standing.
 		else if(standing)
 			continue
-		// A continuous source has no single point to hear it from, so a dullahan's head-relative path
-		// has nothing to work with. serving_slim first, so the lookup is only paid for a dullahan.
 		var/sent
 		sends_this_service++
-		if(serving_slim || category.source_continuous[nearest])
-			sent = slim_send(listener, listener_client, category, nearest, fresh, !!previous, FALSE)
-		else
-			sent = full_send(listener, listener_client, category, nearest, fresh)
+		sent = slim_send(listener, listener_client, category, nearest, fresh, !!previous, FALSE)
 		// Nothing usable was sent, so null whatever was playing or it repeats client-side at a stale
 		// volume. Keyed on previous, not fresh: a failed switch must still silence the live source.
 		if(!sent)
@@ -1070,10 +1080,9 @@ SUBSYSTEM_DEF(point_ambience)
 
 /**
  * Resolves what every send in one service needs from the listener, once. Whether they can hear at
- * all (three user procs and an organ walk on a carbon) and whether the slim send may serve them (a
- * HEADLESS dullahan hears from wherever the head is, which it does not model) are held on the
- * client for one standing_walk_interval. Turf, area environment and point ambience volume are per
- * service, and a caller that already has the turf passes it. Runs after the standing shortcut,
+ * all (three user procs and an organ walk on a carbon) is held on the client for one
+ * standing_walk_interval. Turf, area environment, whether their ear is shut inside something and
+ * their point ambience volume are per service, and a caller that already has the turf passes it. Runs after the standing shortcut,
  * never before it: a listener standing still pays nothing here, and one who goes deaf while
  * standing keeps what is playing until a service passes the shortcut after the hearing cache
  * expires. A step, index change or volume change before expiry can still reuse the old hearing
@@ -1084,20 +1093,11 @@ SUBSYSTEM_DEF(point_ambience)
 	if(world.time >= listener_client.point_ambience_profile_until)
 		listener_client.point_ambience_profile_until = world.time + standing_walk_interval
 		listener_client.point_ambience_hearing = listener.can_hear()
-		// HEADLESS, not "is a dullahan": playsound_local only substitutes the head's position when
-		// headless, and otherwise resolves back to the mob for the same answer the slim send gives.
-		var/slim = TRUE
-		var/mob/living/carbon/human/human = listener
-		if(istype(human) && human.dna)
-			var/datum/species/dullahan/dullahan = human.dna.species
-			if(istype(dullahan) && dullahan.headless)
-				slim = FALSE
-		listener_client.point_ambience_slim = slim
 	if(!listener_client.point_ambience_hearing)
 		return FALSE
 	// Checked here so nothing below works for a muted listener. ZERO only, never "low", and null is
 	// not zero: no prefs means no scaling rather than silence.
-	var/volume_scale = listener_client.prefs ? listener_client.prefs.pointambiencevol * 0.01 : null
+	var/volume_scale = listener_client.prefs ? listener_client.prefs.at_overall(listener_client.prefs.pointambiencevol) * 0.01 : null
 	if(volume_scale == 0)
 		return FALSE
 	if(!listener_turf)
@@ -1105,7 +1105,16 @@ SUBSYSTEM_DEF(point_ambience)
 		if(!listener_turf)
 			return FALSE
 	serving_turf = listener_turf
-	serving_slim = listener_client.point_ambience_slim
+	// Only a dullahan has an ear that can be inside anything, so nobody else walks a loc chain
+	serving_muffle_head = FALSE
+	var/atom/movable/ear = listener_client.point_ambience_ear
+	if(ear)
+		var/atom/holder = ear.loc
+		while(holder && !isturf(holder))
+			if(istype(holder, /obj/structure/closet) || istype(holder, /obj/item/storage))
+				serving_muffle_head = TRUE
+				break
+			holder = holder.loc
 	var/area/A = listener_turf.loc
 	serving_environment = (A && A.soundenv && A.soundenv != SOUND_ENVIRONMENT_NONE) ? A.soundenv : SOUND_DEFAULT_ENVIRONMENT
 	// null when there are no prefs, so no scaling; a prefs datum with no volume scales to 0,
@@ -1127,11 +1136,7 @@ SUBSYSTEM_DEF(point_ambience)
  */
 /datum/controller/subsystem/point_ambience/proc/send_source(client/listener_client, mob/listener, datum/point_ambience_category/category, atom/nearest, fresh, had_previous, dry_run = FALSE)
 	SHOULD_NOT_SLEEP(TRUE)
-	if(serving_slim || category.source_continuous[nearest])
-		return slim_send(listener, listener_client, category, nearest, fresh, had_previous, dry_run)
-	if(dry_run)
-		return null
-	return full_send(listener, listener_client, category, nearest, fresh)
+	return slim_send(listener, listener_client, category, nearest, fresh, had_previous, dry_run)
 
 /**
  * Whether a wall stands between source and listener, so the send should be muffled.
@@ -1244,40 +1249,6 @@ SUBSYSTEM_DEF(point_ambience)
 	return slot
 
 /**
- * playsound_local itself, for the listener the slim send cannot serve.
- *
- * That is a HEADLESS dullahan, who hears from wherever the head is. Rare, so it looks its source up
- * every time.
- *
- * It selects from the BODY and prices from the HEAD, which disagree: the walk finds sources near the
- * body, then playsound_local measures them from the head. Carry the head further than the category's
- * range from the body and everything selected prices out of range, so they hear nothing. Fixing that
- * means moving serving_turf to the head so both halves agree.
- *
- * Arguments:
- * * fresh - the winning source changed, so the sound restarts rather than taking SOUND_UPDATE
- */
-/datum/controller/subsystem/point_ambience/proc/full_send(mob/listener, client/listener_client, datum/point_ambience_category/category, atom/nearest, fresh)
-	PRIVATE_PROC(TRUE)
-	var/turf/source_turf = source_turfs[nearest] || get_turf(nearest)
-	if(!source_turf)
-		return FALSE
-	var/list/slot = slot_for(listener_client, category.index)
-	if(fresh)
-		slot[POINT_AMBIENCE_SLOT_FILE] = category.files ? pick(category.files) : (category.source_sounds[nearest] || category.sound_file)
-		// One roll per stretch, re-sent on every update: frequency 0 on a SOUND_UPDATE would
-		// snap the pitch back to normal mid-loop.
-		slot[POINT_AMBIENCE_SLOT_FREQUENCY] = category.vary_pitch ? get_rand_frequency() : 0
-	var/sound/repeat_sound = sound(slot[POINT_AMBIENCE_SLOT_FILE])
-	repeat_sound.repeat = TRUE
-	if(!fresh)
-		repeat_sound.status = SOUND_UPDATE
-	var/vol = category.source_volumes[nearest] || category.volume
-	// Storeys it works out itself; a corner verdict is ours and nothing else would carry it. Passing
-	// TRUE when it already muffled for storeys changes nothing, the multipliers applying once.
-	return listener.playsound_local(source_turf, vol = vol, frequency = slot[POINT_AMBIENCE_SLOT_FREQUENCY], channel = category.channel, S = repeat_sound, max_distance = category.range, muffled = serving_muffle_wall, min_volume = category.min_volume, volume_pref = listener_client.prefs?.pointambiencevol)
-
-/**
  * The ambience send: builds the datum playsound_local would and sends it, without the proc call.
  *
  * Exactly the ambience input shape, a turf source at the category's range with no pitch vary and no
@@ -1314,13 +1285,13 @@ SUBSYSTEM_DEF(point_ambience)
 		S = sound()
 		sounds[index] = S
 	var/restarting = FALSE
+	// Re-read on EVERY send, not only when the winning atom changes: a dragged corpse or a changed
+	// override keeps the same atom, and the slot would serve it from the tile it left
+	slot[POINT_AMBIENCE_SLOT_TURF] = source_turfs[nearest] || get_turf(nearest)
+	slot[POINT_AMBIENCE_SLOT_VOLUME] = category.source_volumes[nearest] || category.volume
+	slot[POINT_AMBIENCE_SLOT_CONTINUOUS] = category.source_continuous[nearest]
+	slot[POINT_AMBIENCE_SLOT_VERSION] = static_version
 	if(fresh)
-		// Everything the source decides, resolved once. The get_turf fallback is for the verbs, which
-		// send from bare turfs; a registered source is always in source_turfs.
-		var/continuous = category.source_continuous[nearest]
-		slot[POINT_AMBIENCE_SLOT_TURF] = source_turfs[nearest] || get_turf(nearest)
-		slot[POINT_AMBIENCE_SLOT_VOLUME] = category.source_volumes[nearest] || category.volume
-		slot[POINT_AMBIENCE_SLOT_CONTINUOUS] = continuous
 		// A CHANGE OF SOURCE IS NOT A RESTART: two braziers share a file, and passing between them
 		// restarted playback. Clip sets are excluded, their file being a fresh pick() each time.
 		var/loaded = slot[POINT_AMBIENCE_SLOT_FILE]
@@ -1347,10 +1318,6 @@ SUBSYSTEM_DEF(point_ambience)
 				if(slot[POINT_AMBIENCE_SLOT_TIMER])
 					deltimer(slot[POINT_AMBIENCE_SLOT_TIMER])
 				slot[POINT_AMBIENCE_SLOT_TIMER] = addtimer(CALLBACK(src, PROC_REF(advance_clip), listener_client, category), max(SSsounds.get_sound_length(file), 10), TIMER_STOPPABLE)
-	else if(nearest == listener.point_ambience_self_source)
-		// The self source is never indexed, so source_turfs has nothing to re-read and it would stay
-		// at the tile it was first served from. It is in their hand, so this service's turf is it.
-		slot[POINT_AMBIENCE_SLOT_TURF] = serving_turf
 	var/turf/source_turf = slot[POINT_AMBIENCE_SLOT_TURF]
 	if(!source_turf)
 		return FALSE
@@ -1364,7 +1331,7 @@ SUBSYSTEM_DEF(point_ambience)
 	// Muffle is heavier falloff, a quarter off the volume, a dead room and the occlusion echo. A
 	// storey away, or a wall with a way round it, reaches this; a wall with no way round is not
 	// served at all.
-	var/muffled = storeys || serving_muffle_wall
+	var/muffled = storeys || serving_muffle_wall || serving_muffle_head
 	var/inv_exponent = category.inv_falloff_exponent
 	var/environment = serving_environment
 	var/list/echo = null
@@ -1409,7 +1376,7 @@ SUBSYSTEM_DEF(point_ambience)
 	if(!isnull(serving_volume_scale))
 		volume *= serving_volume_scale
 	volume = min(volume, 100)
-	if(volume <= 0)
+	if(volume <= 0 || volume < send_cutoff)
 		return FALSE
 	// Already playing at this volume, and a continuous run has no pan to have changed either, so
 	// there is nothing to tell the client.
@@ -1487,14 +1454,22 @@ SUBSYSTEM_DEF(point_ambience)
 /datum/controller/subsystem/point_ambience/proc/update_silenced(client/listener_client)
 	PRIVATE_PROC(TRUE)
 	var/datum/preferences/prefs = listener_client.prefs
-	listener_client.point_ambience_silenced = prefs && ((prefs.toggles & SOUND_DISABLE_POINT_AMBIENCE) || !prefs.pointambiencevol)
+	listener_client.point_ambience_silenced = prefs && ((prefs.toggles & SOUND_DISABLE_POINT_AMBIENCE) || !prefs.pointambiencevol || !prefs.overallvol)
 	var/mob/player = listener_client.mob
 	if(!player || isobserver(player))
+		// A ghost has no ear, and a watch left behind would go on holding the old body's head
+		if(listener_client.point_ambience_head_watch)
+			qdel(listener_client.point_ambience_head_watch)
 		return
 	if(listener_client.point_ambience_silenced)
 		UnregisterSignal(player, COMSIG_MOVABLE_MOVED)
 	else
 		RegisterSignal(player, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
+	// Kept whether they are silenced or not: it costs nothing while nothing moves, and an ear
+	// resolved only on unsilencing would be wrong for the first service after it
+	update_head_watch(listener_client, player)
+	RegisterSignal(player, COMSIG_SPECIES_GAIN, PROC_REF(on_species_changed), override = TRUE)
+	RegisterSignal(player, COMSIG_SPECIES_LOSS, PROC_REF(on_species_changed), override = TRUE)
 
 /**
  * A listener changed their point ambience preferences. Silences their channels, drops their
@@ -1525,10 +1500,47 @@ SUBSYSTEM_DEF(point_ambience)
 
 /datum/controller/subsystem/point_ambience/proc/player_logout(datum/source, mob/player)
 	SIGNAL_HANDLER
-	UnregisterSignal(player, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(player, list(COMSIG_MOVABLE_MOVED, COMSIG_SPECIES_GAIN, COMSIG_SPECIES_LOSS))
 	// The set is deliberately not touched here. BYOND has already taken the client off the mob by
 	// the time this fires, and a client that merely changed mobs is still owed a service; a client
 	// that truly left leaves a null key, which drain_dirty() drops on its way past.
+
+/**
+ * Marks a listener for a service after something the move hook cannot see: their ear moved, or what
+ * carries it did. Drops the standing cache too, or the walk would shortcut straight past the change.
+ */
+/datum/controller/subsystem/point_ambience/proc/mark_listener(client/listener_client)
+	if(!listener_client || mode != POINT_AMBIENCE_LIVE || listener_client.point_ambience_silenced)
+		return
+	listener_client.point_ambience_cache_turf = null
+	if(use_queue && !dirty_clients[listener_client])
+		dirty_clients[listener_client] = world.time
+
+/// One watch per dullahan client and none for anybody else, so nothing on everyone's path resolves
+/// a species. Called at login and whenever the species changes
+/datum/controller/subsystem/point_ambience/proc/update_head_watch(client/listener_client, mob/player)
+	PRIVATE_PROC(TRUE)
+	var/datum/point_ambience_head_watch/watch = listener_client.point_ambience_head_watch
+	var/mob/living/carbon/human/human = player
+	if(!istype(human) || !istype(human.dna?.species, /datum/species/dullahan))
+		if(watch)
+			qdel(watch)
+		return
+	if(watch)
+		watch.retarget(human)
+	else
+		listener_client.point_ambience_head_watch = new /datum/point_ambience_head_watch(listener_client, human)
+
+/// The gain signal is sent before the dullahan assigns my_head, so the watch is built a tick later
+/datum/controller/subsystem/point_ambience/proc/on_species_changed(mob/player)
+	SIGNAL_HANDLER
+	addtimer(CALLBACK(src, PROC_REF(rebuild_head_watch), player), 0)
+
+/datum/controller/subsystem/point_ambience/proc/rebuild_head_watch(mob/player)
+	PRIVATE_PROC(TRUE)
+	var/client/listener_client = player?.client
+	if(listener_client)
+		update_head_watch(listener_client, player)
 
 /// Requests source discovery and positional updates on eligible steps, normally through the queue.
 /// The interval can skip moves; the periodic client walk catches a skipped final step. Discovery
@@ -1833,8 +1845,8 @@ SUBSYSTEM_DEF(point_ambience)
 	var/list/source_continuous = list()
 	/// Position in categories, the index into each client's per-category sound datums. Set on New().
 	var/index = 0
-	/// The falloff band for this range, resolved once. The same answer playsound_local would
-	/// compute per send from the range.
+	/// The falloff curve. Left at 0, it is the band for this range, resolved once on New() and the
+	/// same answer playsound_local computes per send. A category can set its own instead
 	var/falloff_exponent = 0
 	/// 1 / falloff_exponent, so a send reads it rather than dividing.
 	var/inv_falloff_exponent = 0
@@ -1947,6 +1959,9 @@ SUBSYSTEM_DEF(point_ambience)
 	files = AMB_RIVERDAY
 	volume = 55
 	range = 8
+	/// The old curve, kept on purpose. The steeper band suits something walked past, and a river is
+	/// a bed of sound stood beside: at 1 it fell away within a few tiles of the bank
+	falloff_exponent = 0.5
 	/// Sustained and broadband like the torch, so it starts where the torch does. UNTESTED.
 	min_volume = 8
 	channel = CHANNEL_RIVER_AMBIENCE
@@ -1959,9 +1974,11 @@ SUBSYSTEM_DEF(point_ambience)
 	sound_file = 'sound/items/torchloop.ogg'
 	volume = 30
 	range = 4
-	/// UNTESTED, and a bisection rather than a reading: 3 is confirmed inaudible here and the 14.8
-	/// this curve gives at three tiles is confirmed audible, so start between them. A crackle is
-	/// broadband and needs far more level than the clock's ticks to register at all.
+	/**
+	 * UNTESTED, and a bisection rather than a reading: 3 is confirmed inaudible here and the 14.8
+	 * the old 0.5 curve gave at three tiles is confirmed audible, so start between them. A crackle is
+	 * broadband and needs far more level than the clock's ticks to register at all
+	 */
 	min_volume = 8
 	channel = CHANNEL_TORCH_AMBIENCE
 	vary_pitch = TRUE
@@ -2023,3 +2040,119 @@ SUBSYSTEM_DEF(point_ambience)
 	qdel(loop)
 
 #undef CELL_SHIFT
+
+
+/**
+ * Keeps a headless dullahan's listening point on their head.
+ *
+ * One per dullahan client, made at login and dropped when they stop being one. It follows the head
+ * and whatever carries it, so a head in a bag on somebody's back still moves the ear, and writes
+ * client.point_ambience_ear. Everyone else has no watch and no ear, and a service reads one var
+ * rather than resolving a species.
+ *
+ * What it does not see: a container moved between holders without the tracked holder moving, a
+ * pushed closet, and a muffle change on the same turf. The once-a-second walk catches a turf change
+ * on its next visit, subject to the skip and the budget. A muffle change on the same turf waits
+ * for the next service either way
+ */
+/datum/point_ambience_head_watch
+	var/client/owner
+	var/mob/living/carbon/human/body
+	var/obj/item/bodypart/head/dullahan/head
+	/// The outermost movable carrying the head, so a carried head moves the ear with no head MOVED
+	var/atom/movable/holder
+
+/datum/point_ambience_head_watch/New(client/listener_client, mob/living/carbon/human/human)
+	owner = listener_client
+	retarget(human)
+
+/datum/point_ambience_head_watch/Destroy(force)
+	drop_head()
+	if(owner?.point_ambience_head_watch == src)
+		owner.point_ambience_head_watch = null
+	owner = null
+	body = null
+	return ..()
+
+/// Points the watch at a mob's head, seeded from its CURRENT state, so a client logging in with the
+/// head already off is served from it rather than waiting for the head to move
+/datum/point_ambience_head_watch/proc/retarget(mob/living/carbon/human/human)
+	body = human
+	var/datum/species/dullahan/species = human?.dna?.species
+	if(!istype(species))
+		drop_head()
+		return
+	var/obj/item/bodypart/head/dullahan/new_head = species.my_head
+	if(head && head != new_head)
+		drop_head()
+	if(!new_head)
+		return
+	if(head != new_head)
+		head = new_head
+		RegisterSignal(head, COMSIG_MOVABLE_MOVED, PROC_REF(on_head_moved))
+		RegisterSignal(head, COMSIG_QDELETING, PROC_REF(on_head_deleted))
+	set_ear(species.headless)
+
+/// The ear on or off, the holder hooked to match, and the listener served again either way
+/datum/point_ambience_head_watch/proc/set_ear(headless)
+	if(!owner)
+		return
+	if(headless && head)
+		owner.point_ambience_ear = head
+		hook_holder()
+	else
+		owner.point_ambience_ear = null
+		unhook_holder()
+	SSpoint_ambience.mark_listener(owner)
+
+/datum/point_ambience_head_watch/proc/drop_head()
+	unhook_holder()
+	if(head)
+		UnregisterSignal(head, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
+		head = null
+	if(owner)
+		owner.point_ambience_ear = null
+
+/// The outermost movable holding the head: a pouch inside a backpack on a mob moves with the mob,
+/// and only the mob's own MOVED will fire
+/datum/point_ambience_head_watch/proc/hook_holder()
+	var/atom/movable/outermost
+	var/atom/above = head?.loc
+	while(ismovable(above))
+		outermost = above
+		above = above.loc
+	if(outermost == holder)
+		return
+	unhook_holder()
+	holder = outermost
+	if(holder)
+		RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
+		RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(on_holder_deleted))
+
+/datum/point_ambience_head_watch/proc/unhook_holder()
+	if(!holder)
+		return
+	UnregisterSignal(holder, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
+	holder = null
+
+/// Reads the species, not the head's loc: doMove fires Moved BEFORE loc is null, so where the head
+/// is cannot tell a detachment from a reattachment. Both paths set headless before they move it
+/datum/point_ambience_head_watch/proc/on_head_moved(datum/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+	var/datum/species/dullahan/species = body?.dna?.species
+	set_ear(istype(species) && species.headless)
+
+/datum/point_ambience_head_watch/proc/on_holder_moved(datum/source, atom/old_loc, dir, forced)
+	SIGNAL_HANDLER
+	// A bag picked up changes the chain without the head moving, so it is re-read on every carry
+	hook_holder()
+	SSpoint_ambience.mark_listener(owner)
+
+/datum/point_ambience_head_watch/proc/on_head_deleted(datum/source)
+	SIGNAL_HANDLER
+	drop_head()
+	SSpoint_ambience.mark_listener(owner)
+
+/datum/point_ambience_head_watch/proc/on_holder_deleted(datum/source)
+	SIGNAL_HANDLER
+	unhook_holder()

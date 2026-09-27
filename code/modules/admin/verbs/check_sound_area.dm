@@ -8,7 +8,8 @@
 	set name = "Check Sound Area"
 	if(!check_rights(R_DEBUG))
 		return
-	var/turf/here = get_turf(mob)
+	// The ear, not the body: a headless dullahan's sound is decided where the head is
+	var/turf/here = get_turf(point_ambience_ear || mob)
 	if(!here)
 		to_chat(usr, span_warning("You are not standing anywhere."))
 		return

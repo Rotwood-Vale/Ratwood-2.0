@@ -245,7 +245,7 @@ SUBSYSTEM_DEF(vote)
 		generated_actions += voting_action
 		
 		if(current_vote.vote_sound)
-			SEND_SOUND(new_voter, sound(current_vote.vote_sound))
+			SEND_SOUND(new_voter, sound(current_vote.vote_sound, volume = overall_volume(new_voter)))
 
 		if(SSvote.initialized && new_voter.prefs.voting_popup)
 			SSvote.ui_interact(new_voter.mob)
@@ -459,7 +459,7 @@ SUBSYSTEM_DEF(vote)
 	generated_actions += voting_action
 
 	if(current_vote.vote_sound)
-		SEND_SOUND(C, sound(current_vote.vote_sound))
+		SEND_SOUND(C, sound(current_vote.vote_sound, volume = overall_volume(C)))
 
 	// Notify them in chat
 	var/remaining_time = max(0, current_vote.time_remaining) * 10

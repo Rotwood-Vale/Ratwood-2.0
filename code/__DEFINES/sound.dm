@@ -228,11 +228,21 @@
 ///early, which is what made sounds vanish while still well inside their own range.
 ///
 ///Below 1 the drop is back-loaded: gentle near the source, accelerating toward the edge.
-///Above 1 it inverts, front-loading the drop and then easing onto the floor.
+///Above 1 it inverts, front-loading the drop and then easing onto the floor. The value is the
+///RECIPROCAL of the power applied, so a HIGHER number is a steeper near field.
 ///
-///Room scale, and the overwhelming majority of sounds: 100 98 92 82 68 50 28 2 over tiles 0-7,
-///for a volume 100 source landing on the default floor.
-#define SOUND_FALLOFF_EXPONENT 0.5
+///Room scale, and the overwhelming majority of sounds: 100 86 72 58 44 30 16 2 over tiles 0-7,
+///for a volume 100 source landing on the default floor. Linear, so a tile costs the same
+///wherever you are in the range. It was 0.5, giving 100 98 92 82 68 50 28 2, which held near
+///full volume through half the range and read as no falloff at all on anything you walk past
+///closely.
+#define SOUND_FALLOFF_EXPONENT 1
+///Anything with a range under SOUND_RANGE_CLOSE, which is torch, clock and rot. The bands exist
+///because perception is not proportional, and the short band still spans 5 to 9 tiles: a range-4
+///sconce and a range-8 river shared a curve, so a street of sconces read as one continuous bed
+///with the nearest never far enough away to fade. Steeper than linear so the first tile costs
+///most: a volume 30 torch on its floor of 8 runs 30 21 16 12 8 over tiles 0-4.
+#define SOUND_FALLOFF_EXPONENT_CLOSE 1.5
 ///Carries across a hall or a street rather than a room. Below 1 for the same reason the short
 ///curve is: the drop stays gentle near the source and steepens toward the edge, so the falloff
 ///lands where the sound is leaving earshot rather than while it is still filling the room.
@@ -242,17 +252,19 @@
 ///43 at 50, 15 at 110, and the floor at the edge.
 #define SOUND_FALLOFF_EXPONENT_LONG 2
 
-///Range at which each band takes over. Nearly every call site lands in the short band.
+///Range at which each band takes over. Nearly every call site lands in the short band; only point
+///ambience reaches below CLOSE today, since no playsound caller sets a range under 5.
+#define SOUND_RANGE_CLOSE 5
 #define SOUND_RANGE_MEDIUM 10
 #define SOUND_RANGE_LONG 28
 /**
  * Volume a sound falls off TO at max range, rather than falling off to silence. Without a floor
  * the curve reaches 0 before the edge and sounds vanish well inside their range.
  *
- * This is the curve's asymptote, applied BEFORE mastervol, so it arrives scaled: 2 here is 1 for a
- * listener at 50 and 0.5 at 25. There is no lift back afterwards, on purpose, so a player who
- * turned the game down hears the edge as quiet as they asked for. Point ambience floors are scaled
- * by the point ambience slider instead of mastervol.
+ * This is the curve's asymptote, applied BEFORE the sliders, so it arrives scaled: 2 here is 1 for a
+ * listener whose Sound Effects under Master comes to 50, and 0.5 at 25. There is no lift back
+ * afterwards, on purpose, so a player who turned the game down hears the edge as quiet as they
+ * asked for. Point ambience floors are scaled by the point ambience slider under Master instead.
  *
  * THE DEFAULT, NOT THE ONLY ONE. Point ambience passes its category's floor instead, because a
  * sustained loop and a transient are not audible at the same level: ERP at 1 is heard clearly
@@ -335,6 +347,7 @@
 #define SOUND_MUFFLE_NONE 0
 #define SOUND_MUFFLE_SOFT 1	//== TRUE. The profile only: what a storey gives, and what every boolean caller has always meant.
 #define SOUND_MUFFLE_ENCLOSED 2	//the profile plus the leak cap. Only playsound produces it, from SOUND_TRAVEL_LEAKING.
+#define SOUND_MUFFLE_WALL 3	//The profile with a deeper volume cut. A wall between a listener and a continuous source
 
 ///The muffle profile, used when a sound reaches a listener through a wall, a floor, or (for a
 ///dullahan) a container the head is shut inside. Grouped so the character can be tuned in one
@@ -342,6 +355,11 @@
 ///Volume and the falloff curve are only half of it. On their own they read as "further away"
 ///rather than "behind something". The occlusion pair is what changes the timbre.
 #define SOUND_MUFFLE_VOLUME_MULT 0.75
+///A wall against a sound that never stops. A quarter off is inaudible on music: the level is
+///steady, so there is no onset to hear it in, and the reverb half of the profile is overwritten by
+///the next positional sound BYOND sends, environment being a client-wide setting. Half off is a
+///cut you can hear. 0.34 if it should read as nearly gone.
+#define SOUND_MUFFLE_WALL_VOLUME_MULT 0.5
 #define SOUND_MUFFLE_EXPONENT_MULT 1.5
 ///BYOND reverb preset 11, "carpeted hallway": a dead, absorbent room with little reflection.
 #define SOUND_MUFFLE_ENVIRONMENT 11
@@ -383,7 +401,10 @@
 #define POINT_AMBIENCE_SLOT_LAST_VOLUME 5
 #define POINT_AMBIENCE_SLOT_FILE 6
 #define POINT_AMBIENCE_SLOT_TIMER 7
-#define POINT_AMBIENCE_SLOT_FIELDS 7
+/// The static_version the slot's turf and volume were last refreshed at, so a send can tell that
+/// what it holds predates an index change and refuse to serve from it
+#define POINT_AMBIENCE_SLOT_VERSION 8
+#define POINT_AMBIENCE_SLOT_FIELDS 8
 
 ///Densest candidate box SSpoint_ambience.drain_density_count gives its own bucket, anything denser
 ///landing in the last one. The list is one longer, an empty cell taking the first bucket. Twice the

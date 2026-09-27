@@ -40,6 +40,8 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 		return SOUND_FALLOFF_EXPONENT_LONG
 	if(range >= SOUND_RANGE_MEDIUM)
 		return SOUND_FALLOFF_EXPONENT_MEDIUM
+	if(range < SOUND_RANGE_CLOSE)
+		return SOUND_FALLOFF_EXPONENT_CLOSE
 	return SOUND_FALLOFF_EXPONENT
 
 /// Positional sounds started, counted for the whole round. A one-shot is one call however many
@@ -270,7 +272,7 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
  * * muffled - a SOUND_MUFFLE_* level: NONE, SOFT (the profile: heavier falloff, quieter, dead room)
  *   or ENCLOSED (the profile plus the wall collapse). Boolean callers pass TRUE, which is SOFT.
  * * min_volume - the volume the sound falls off to at max_distance, instead of to silence.
- * * volume_pref, when set, replaces mastervol as the preference the result is scaled by
+ * * volume_pref, when set, replaces the Sound Effects slider under Master as the result's scale
  */
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff_exponent, channel = 0, pressure_affected = FALSE, sound/S, max_distance, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, distance_multiplier = 1, use_reverb = TRUE, muffled = FALSE, min_volume = SOUND_DEFAULT_MIN_VOLUME, travel = SOUND_TRAVEL_UNRESTRICTED, floor_volume = null, erp = FALSE, volume_pref = null)
 	if(!client || !can_hear())
@@ -324,7 +326,7 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 
 	if(muffled)
 		falloff_exponent *= SOUND_MUFFLE_EXPONENT_MULT
-		vol *= SOUND_MUFFLE_VOLUME_MULT
+		vol *= (muffled == SOUND_MUFFLE_WALL) ? SOUND_MUFFLE_WALL_VOLUME_MULT : SOUND_MUFFLE_VOLUME_MULT
 
 	S.volume = vol
 
@@ -450,10 +452,10 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 		else
 			S.echo = null
 
-	// Master volume applies after falloff so the falloff curve is computed on the
-	// caller's numbers, then the whole result is scaled to the player's preference.
+	// The sliders apply after falloff so the falloff curve is computed on the caller's numbers,
+	// then the whole result is scaled to the player's Sound Effects under Master
 	if(client.prefs)
-		S.volume *= (isnull(volume_pref) ? client.prefs.mastervol : volume_pref) * 0.01
+		S.volume *= (isnull(volume_pref) ? client.prefs.at_overall(client.prefs.mastervol) : volume_pref) * 0.01
 	S.volume = min(S.volume, 100)
 
 	if(S.volume <= 0)
@@ -522,6 +524,43 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 	SEND_SOUND(src, S)
 	S.status &= ~SOUND_UPDATE
 
+/// A slider's volume under the Master slider, for anything sent at that slider's level
+/datum/preferences/proc/at_overall(slider_volume)
+	return slider_volume * overallvol * 0.01
+
+/**
+ * A volume for a sound that no slider of its own covers, under the listener's Master slider.
+ *
+ * For stingers and alerts sent straight to a mob or a client. A listener without preferences gets
+ * the volume as passed
+ */
+/proc/overall_volume(target, volume = 100)
+	var/client/listener = target
+	if(ismob(target))
+		var/mob/target_mob = target
+		listener = target_mob.client
+	if(!istype(listener) || !listener.prefs)
+		return volume
+	return listener.prefs.at_overall(volume)
+
+/// Re-sends each playing music and ambience channel at its slider under Master, after a Master change
+/client/proc/update_slider_channels()
+	if(!mob || !prefs)
+		return
+	mob.update_music_volume(CHANNEL_MUSIC, prefs.at_overall(prefs.musicvol))
+	mob.update_music_volume(CHANNEL_ADMIN, prefs.at_overall(prefs.musicvol))
+	if(mob.cmode)
+		var/combat_volume = prefs.at_overall(prefs.combatmusicvol)
+		mob.update_music_volume(CHANNEL_BUZZ, combat_volume)
+		mob.update_music_volume(CHANNEL_CMUSIC1, combat_volume)
+		mob.update_music_volume(CHANNEL_CMUSIC2, combat_volume)
+		mob.update_music_volume(CHANNEL_CMUSIC3, combat_volume)
+		mob.update_music_volume(CHANNEL_CMUSIC4, combat_volume)
+	mob.update_channel_volume(CHANNEL_AMBIENCE, prefs.at_overall(prefs.ambiencevol))
+	mob.update_channel_volume(CHANNEL_RAIN, prefs.at_overall(prefs.ambiencevol))
+	if(isnewplayer(mob))
+		mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.at_overall(prefs.lobbymusicvol))
+
 /mob/proc/update_music_volume(chan, vol)
 	if(!client)
 		return
@@ -558,7 +597,7 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
-		SEND_SOUND(src, sound(SSticker.login_music, repeat = 1, wait = 0, volume = prefs.lobbymusicvol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
+		SEND_SOUND(src, sound(SSticker.login_music, repeat = 1, wait = 0, volume = prefs.at_overall(prefs.lobbymusicvol), channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
 /client/proc/sync_instrument_audio_toggle()
 	if(!prefs || !mob)
@@ -600,7 +639,7 @@ GLOBAL_VAR_INIT(sound_occlusion_tiles, 0)
 			if ("clothwipe")
 				soundin = pick('sound/foley/cloth_wipe (1).ogg','sound/foley/cloth_wipe (2).ogg','sound/foley/cloth_wipe (3).ogg')
 			if ("glassbreak")
-				soundin = pick('sound/combat/hits/onglass/glassbreak (1).ogg','sound/combat/hits/onglass/glassbreak (2).ogg','sound/combat/hits/onglass/glassbreak (3).ogg', 95)
+				soundin = pick('sound/combat/hits/onglass/glassbreak (1).ogg','sound/combat/hits/onglass/glassbreak (2).ogg','sound/combat/hits/onglass/glassbreak (3).ogg')
 			if ("parrywood")
 				soundin = pick('sound/combat/parry/wood/parrywood (1).ogg', 'sound/combat/parry/wood/parrywood (2).ogg', 'sound/combat/parry/wood/parrywood (3).ogg')
 			if ("unarmparry")

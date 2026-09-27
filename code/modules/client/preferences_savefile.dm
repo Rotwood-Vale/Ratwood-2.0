@@ -245,6 +245,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["lobbymusicvol"]		>> lobbymusicvol
 	S["ambiencevol"]		>> ambiencevol
 	S["pointambiencevol"]	>> pointambiencevol
+	S["overallvol"]		>> overallvol
+	S["instrumentvol"]	>> instrumentvol
 	S["layout_map"]		>> layout_map
 	S["layout_stat"]		>> layout_stat
 	S["anonymize"]			>> anonymize
@@ -372,6 +374,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	lobbymusicvol = sanitize_integer(lobbymusicvol, 0, 100, initial(lobbymusicvol))
 	ambiencevol = sanitize_integer(ambiencevol, 0, 100, initial(ambiencevol))
 	pointambiencevol = sanitize_integer(pointambiencevol, 0, 100, initial(pointambiencevol))
+	overallvol = sanitize_integer(overallvol, 0, 100, initial(overallvol))
+	instrumentvol = sanitize_integer(instrumentvol, 0, 100, initial(instrumentvol))
 	// Null stays null: it means the layout was never set, which is different from a bad value
 	if(!isnull(layout_map))
 		layout_map = sanitize_integer(layout_map, 0, 100, null)
@@ -438,6 +442,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["lobbymusicvol"], lobbymusicvol)
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["pointambiencevol"], pointambiencevol)
+	WRITE_FILE(S["overallvol"], overallvol)
+	WRITE_FILE(S["instrumentvol"], instrumentvol)
 	WRITE_FILE(S["layout_map"], layout_map)
 	WRITE_FILE(S["layout_stat"], layout_stat)
 	WRITE_FILE(S["anonymize"], anonymize)

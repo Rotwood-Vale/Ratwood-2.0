@@ -59,12 +59,20 @@
 	/// The self source the last category loop was served with, so a standing listener whose
 	/// torch state changed still gets the loop.
 	var/atom/point_ambience_cache_self
-	/// Whether the mob can hear and whether the slim send may serve it, held until
-	/// point_ambience_profile_until: can_hear() is three user procs and an organ walk on a carbon.
-	/// Refreshed only by a service that walks or sends, never by the standing shortcut, so a
-	/// listener standing still keeps the last answer until they step.
+	/**
+	 * Whether the mob can hear, held until point_ambience_profile_until: can_hear() is three user
+	 * procs and an organ walk on a carbon. Refreshed only by a service that walks or sends, never
+	 * by the standing shortcut, so a listener standing still keeps the last answer until they step
+	 */
 	var/point_ambience_hearing = FALSE
-	var/point_ambience_slim = TRUE
+	/**
+	 * Where this listener hears from when it is not their own turf: a headless dullahan's head,
+	 * wherever it has been carried to. Null for everyone else, and kept current by the watch below
+	 * rather than by the service, which reads one var instead of resolving a species
+	 */
+	var/atom/movable/point_ambience_ear
+	/// Follows the head and whatever carries it, one per dullahan client and nothing for anyone else
+	var/datum/point_ambience_head_watch/point_ambience_head_watch
 	var/point_ambience_profile_until = 0
 	/// world.time before which the move hook will not service this client again, when
 	/// SSpoint_ambience.move_service_interval is set.
@@ -72,13 +80,14 @@
 	/// world.time a step last ran a service for this client. The standing walk passes over anyone
 	/// served within SSpoint_ambience.standing_skip of now; the step that is coming will serve them.
 	var/point_ambience_last_service = 0
-	/// Point ambience off or its volume at zero. Set at login and by the volume menu, never per step
+	/// Point ambience off, or its slider or Master at zero. Set at login and by the volume menu,
+	/// never per step
 	var/point_ambience_silenced = FALSE
 	/**
 	 * The last full ambience scan, reused while the client stands still and nothing in the index
-	 * changed: the turf, SSpoint_ambience.static_version and point ambience volume it was taken at,
-	 * and the nearest source per category. The walk ranks straight into this list, so it allocates
-	 * nothing
+	 * changed: the turf, SSpoint_ambience.static_version and point ambience volume under Master it was
+	 * taken at, and the nearest source per category. The walk ranks straight into this list, so it
+	 * allocates nothing
 	 */
 	var/turf/point_ambience_cache_turf
 	var/point_ambience_cache_version

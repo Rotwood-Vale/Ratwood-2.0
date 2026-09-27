@@ -860,7 +860,7 @@
 			orbit_link = " <a href='?src=[REF(O)];follow=[REF(source)]'>(Orbit)</a>"
 		to_chat(O, span_ghostalert("[message][(enter_link) ? " [enter_link]" : ""][orbit_link]"))
 		if(ghost_sound)
-			SEND_SOUND(O, sound(ghost_sound, volume = notify_volume))
+			SEND_SOUND(O, sound(ghost_sound, volume = overall_volume(O, notify_volume)))
 		if(flashwindow)
 			window_flash(O.client)
 		if(source)

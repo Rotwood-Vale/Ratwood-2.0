@@ -214,9 +214,15 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/combatmusicvol = 50
 	var/lobbymusicvol = 50
 	var/ambiencevol = 50
-	/// Point ambience only, and never multiplied by mastervol
-	var/pointambiencevol = 50
+	/// Point ambience only, scaled by overallvol and never by mastervol
+	var/pointambiencevol = 100
+	/// Instruments, the music box and the wax music device: what the Hear Instruments toggle covers
+	var/instrumentvol = 50
+	/// The Sound Effects slider: everything sent through playsound_local but point ambience. It keeps
+	/// the name and savefile key it had as the master volume
 	var/mastervol = 50
+	/// The Master slider, which scales every other one. 100 plays each at its own value
+	var/overallvol = 100
 	/// The Layout window's two splitters: the map's share of the window, and the stat panel's share
 	/// of its column. Null until the player sets one, so the skin's own saved position stands
 	var/layout_map

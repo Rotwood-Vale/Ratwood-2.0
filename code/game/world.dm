@@ -295,7 +295,7 @@ GLOBAL_VAR(restart_counter)
 	for(var/client/thing in GLOB.clients)
 		if(!thing)
 			continue
-		thing << sound(round_end_sound)
+		thing << sound(round_end_sound, volume = overall_volume(thing))
 
 	to_chat(world, "Please be patient as the server restarts. You will be automatically reconnected in about 60 seconds.")
 	Master.Shutdown()	//run SS shutdowns? rtchange

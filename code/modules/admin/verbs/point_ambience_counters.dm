@@ -1,5 +1,38 @@
 GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 
+/**
+ * What a point ambience measurement depends on besides the code, as one line to print beside a result.
+ *
+ * Each listener's slider under Master decides the volume sent and, once sends below a threshold
+ * stop, how many sends happen at all. Muted and observing clients are passed over entirely. The
+ * knobs set the service rate and the index's contents set the walk. Two runs are comparable only
+ * when these match, so every report carries them. Read when printed, never per service.
+ */
+/proc/point_ambience_conditions()
+	var/datum/controller/subsystem/point_ambience/ambience = SSpoint_ambience
+	var/listening = 0
+	var/muted = 0
+	var/observing = 0
+	var/list/sliders = list()
+	for(var/client/listener_client as anything in GLOB.clients)
+		if(isobserver(listener_client.mob))
+			observing++
+		else if(listener_client.point_ambience_silenced)
+			muted++
+		else
+			listening++
+			var/slider = listener_client.prefs ? "[listener_client.prefs.pointambiencevol] at Master [listener_client.prefs.overallvol]" : "no prefs"
+			sliders[slider] = (sliders[slider] || 0) + 1
+	var/list/slider_parts = list()
+	for(var/slider in sliders)
+		slider_parts += "[slider] x[sliders[slider]]"
+	var/list/source_parts = list()
+	for(var/datum/point_ambience_category/category as anything in ambience.categories)
+		var/count = ambience.source_counts[category] || 0
+		if(count)
+			source_parts += "[category.config_name] [count] at [category.volume]"
+	return "conditions: [listening] listening (slider [length(slider_parts) ? slider_parts.Join(", ") : "none"]), [muted] muted, [observing] observing; interval [ambience.move_service_interval], running [ambience.move_service_interval_running_override], skip [ambience.standing_skip], budget [ambience.max_services_per_tick], cutoff [ambience.send_cutoff], queue [ambience.use_queue ? "on" : "off"], cross floor [ambience.cross_floor ? "on" : "off"]; sources, count at volume: [source_parts.Join(", ")]"
+
 /datum/point_ambience_counters
 	var/time
 	var/moves_total
@@ -103,6 +136,7 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 
 	var/list/lines = list()
 	lines += "Point ambience: [round(minutes, 0.1)] min, [round(players)] players, queue [queue_on ? "on" : "off"], budget [ambience.max_services_per_tick], interval [ambience.move_service_interval], skip [ambience.standing_skip]"
+	lines += "&nbsp;&nbsp;now, [point_ambience_conditions()]"
 	if(queue_on)
 		lines += "&nbsp;&nbsp;cost [round((drain_ms + walk_ms) / seconds, 0.01)] ms/s (steps [round(drain_ms / seconds, 0.01)], standing [round(walk_ms / seconds, 0.01)])"
 	else
@@ -130,11 +164,41 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
 		lines += "&nbsp;&nbsp;step: [round(drain_ms * 1000 / drained)] us, [round((ambience.drain_sends - snapshot.drain_sends) / drained, 0.01)] sends[density_line]"
 		var/static/list/size_names = list("1", "2", "3-4", "5-8", "9+")
 		var/list/bucket_parts = list()
+		var/list/bucket_services = list()
+		var/list/bucket_us = list()
+		var/timed_services = 0
 		for(var/i in 1 to length(size_names))
-			var/bucket_services = ambience.drain_size_services[i] - snapshot.drain_size_services[i]
-			var/bucket_ms = ambience.drain_size_ms[i] - snapshot.drain_size_ms[i]
-			bucket_parts += "[size_names[i]]: " + (bucket_services ? "[round(bucket_ms * 1000 / bucket_services)] us x[bucket_services]" : "none")
+			var/services_in = ambience.drain_size_services[i] - snapshot.drain_size_services[i]
+			var/ms_in = ambience.drain_size_ms[i] - snapshot.drain_size_ms[i]
+			bucket_services += services_in
+			bucket_us += services_in ? ms_in * 1000 / services_in : 0
+			timed_services += services_in
+			bucket_parts += "[size_names[i]]: " + (services_in ? "[round(bucket_us[i])] us x[services_in]" : "none")
 		lines += "&nbsp;&nbsp;batched: [bucket_parts.Join(", ")]"
+		// What the batching buys, from the counts above and nothing sampled. A service drained alone
+		// pays the cold start, so the solo bucket prices every service as if nothing ran beside it
+		var/drain_total = ambience.drains - snapshot.drains
+		// One mover never shares a drain, and a saving of 0 would read as batching buying nothing
+		// rather than having nothing to compare
+		if(timed_services && bucket_services[1] == timed_services)
+			lines += "&nbsp;&nbsp;batches: every service ran alone this window, so there is nothing to compare. It takes two or more movers served in the same tick."
+		else if(timed_services && drain_total)
+			var/services_seen = 0
+			var/median_size = size_names[1]
+			for(var/i in 1 to length(size_names))
+				services_seen += bucket_services[i]
+				if(services_seen >= timed_services * 0.5)
+					median_size = size_names[i]
+					break
+			var/deferred = ambience.queue_deferred_ticks - snapshot.queue_deferred_ticks
+			var/batch_line = "batches: [round(drained / drain_total, 0.01)] services a drain, half of all services in drains of [median_size] or more, [round(deferred / drain_total * 100, 0.1)]% of drains stopped at the budget of [ambience.max_services_per_tick]"
+			if(bucket_services[1])
+				var/alone_us = bucket_us[1]
+				var/saved_us = alone_us * timed_services - drain_ms * 1000
+				batch_line += ", [round(saved_us / timed_services, 0.1)] us a service saved against all at the solo price ([round(saved_us / (alone_us * timed_services) * 100, 0.1)]%)"
+				if(bucket_services[2])
+					batch_line += ", the second of a pair [round(2 * bucket_us[2] - alone_us)] us against [round(alone_us)] alone"
+			lines += "&nbsp;&nbsp;[batch_line]"
 	if(queue_on)
 		var/served = ambience.queue_served - snapshot.queue_served
 		var/drain_count = ambience.drains - snapshot.drains

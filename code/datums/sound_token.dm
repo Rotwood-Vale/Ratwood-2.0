@@ -261,7 +261,7 @@
 	// door's state cannot freeze into the sound. A grazed corner muffles too, which is what muffling
 	// means on this path.
 	if(muffle_behind_walls && !should_be_muted && !dz)
-		muffled = opacity_between(listener_turf, source_turf, range, TRUE) != OCCLUSION_CLEAR
+		muffled = (opacity_between(listener_turf, source_turf, range, TRUE) != OCCLUSION_CLEAR) ? SOUND_MUFFLE_WALL : SOUND_MUFFLE_NONE
 
 	set_listener_status(listener_mob, should_be_muted ? SOUND_MUTE : NONE)
 	if(!should_be_muted && was_muted && on_listener_audible)
@@ -284,9 +284,13 @@
 		SEND_SOUND(listener_mob, sound)
 		return
 
+	// The Instruments slider stands in for Sound Effects on the sources the Hear Instruments toggle
+	// covers, so one control sets how loud a bard or a music box is
+	var/datum/preferences/prefs = listener_mob.client?.prefs
+	var/volume_pref = (respect_instrument_pref && prefs) ? prefs.at_overall(prefs.instrumentvol) : null
 	// Routed through playsound_local, which applies falloff, panning and the player's
-	// master volume on every send, updates included, so re-sends stay pref-scaled.
-	if(!listener_mob.playsound_local(get_turf(source), vol = effective_volume, falloff_exponent = falloff_exponent, channel = sound_channel, S = sound, max_distance = range, falloff_distance = falloff_distance, use_reverb = TRUE, muffled = muffled))
+	// volume sliders on every send, updates included, so re-sends stay pref-scaled
+	if(!listener_mob.playsound_local(get_turf(source), vol = effective_volume, falloff_exponent = falloff_exponent, channel = sound_channel, S = sound, max_distance = range, falloff_distance = falloff_distance, use_reverb = TRUE, muffled = muffled, volume_pref = volume_pref))
 		sound.status = SOUND_UPDATE|SOUND_MUTE
 		SEND_SOUND(listener_mob, sound)
 	sound.offset = null

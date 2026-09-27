@@ -32,9 +32,9 @@
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
-			var/user_vol = M.client.prefs.musicvol
-			if(user_vol)
-				admin_sound.volume = vol * (user_vol / 100)
+			// Set for every player, since the one sound is shared and a skipped assignment would carry
+			// the previous player's volume over
+			admin_sound.volume = vol * M.client.prefs.at_overall(M.client.prefs.musicvol) * 0.01
 			SEND_SOUND(M, admin_sound)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Global Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -62,12 +62,12 @@
 		prefs.musicvol = vol
 		prefs.save_preferences()
 
-		mob.update_music_volume(CHANNEL_MUSIC, prefs.musicvol)
-		mob.update_music_volume(CHANNEL_ADMIN, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_MUSIC, prefs.at_overall(prefs.musicvol))
+		mob.update_music_volume(CHANNEL_ADMIN, prefs.at_overall(prefs.musicvol))
 
 /client/verb/volume_power_menu()
 	set category = "Options"
-	set name = "Volume Power"
+	set name = "Audio Settings"
 
 	if(!prefs)
 		return
@@ -82,39 +82,51 @@
 		return
 
 	var/vol = clamp(round(volume_value), 0, 100)
+	// Point ambience is unhooked while it is silent, and either of two sliders can silence it
+	var/point_ambience_was_silent = !prefs.pointambiencevol || !prefs.overallvol
 	switch(setting_id)
 		if("master")
+			prefs.overallvol = vol
+			update_slider_channels()
+		if("effects")
 			prefs.mastervol = vol
+		if("instruments")
+			prefs.instrumentvol = vol
+			// Tokens are not channels the volume menu can re-send, so each one is poked to re-price
+			// this listener. The same path the Hear Instruments toggle uses
+			for(var/datum/sound_token/token as anything in mob?.sound_tokens)
+				if(token.respect_instrument_pref)
+					token.update_listener(mob)
 		if("music")
 			prefs.musicvol = vol
-			mob?.update_music_volume(CHANNEL_MUSIC, prefs.musicvol)
-			mob?.update_music_volume(CHANNEL_ADMIN, prefs.musicvol)
+			mob?.update_music_volume(CHANNEL_MUSIC, prefs.at_overall(prefs.musicvol))
+			mob?.update_music_volume(CHANNEL_ADMIN, prefs.at_overall(prefs.musicvol))
 		if("combat")
 			prefs.combatmusicvol = vol
 			if(mob?.cmode)
-				mob.update_music_volume(CHANNEL_BUZZ, prefs.combatmusicvol)
-				mob.update_music_volume(CHANNEL_CMUSIC1, prefs.combatmusicvol)
-				mob.update_music_volume(CHANNEL_CMUSIC2, prefs.combatmusicvol)
-				mob.update_music_volume(CHANNEL_CMUSIC3, prefs.combatmusicvol)
-				mob.update_music_volume(CHANNEL_CMUSIC4, prefs.combatmusicvol)
+				var/combat_volume = prefs.at_overall(prefs.combatmusicvol)
+				mob.update_music_volume(CHANNEL_BUZZ, combat_volume)
+				mob.update_music_volume(CHANNEL_CMUSIC1, combat_volume)
+				mob.update_music_volume(CHANNEL_CMUSIC2, combat_volume)
+				mob.update_music_volume(CHANNEL_CMUSIC3, combat_volume)
+				mob.update_music_volume(CHANNEL_CMUSIC4, combat_volume)
 		if("ambience")
 			prefs.ambiencevol = vol
-			mob?.update_channel_volume(CHANNEL_AMBIENCE, prefs.ambiencevol)
-			mob?.update_channel_volume(CHANNEL_RAIN, prefs.ambiencevol)
+			mob?.update_channel_volume(CHANNEL_AMBIENCE, prefs.at_overall(prefs.ambiencevol))
+			mob?.update_channel_volume(CHANNEL_RAIN, prefs.at_overall(prefs.ambiencevol))
 		if("lobby")
 			prefs.lobbymusicvol = vol
 			if(isnewplayer(mob))
-				mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.lobbymusicvol)
+				mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.at_overall(prefs.lobbymusicvol))
 		if("point_ambience_volume")
-			var/was_silent = !prefs.pointambiencevol
 			prefs.pointambiencevol = vol
-			// Crossing zero changes whether they are hooked at all, so it takes the call the toggles
-			// use. Any other change reaches their next service without cutting what is playing
-			if(was_silent != !vol)
-				SSpoint_ambience.listener_prefs_changed(src)
 		else
 			return
 
+	// Crossing zero changes whether they are hooked at all, so it takes the call the toggles use.
+	// Any other change reaches their next service without cutting what is playing
+	if(point_ambience_was_silent != (!prefs.pointambiencevol || !prefs.overallvol))
+		SSpoint_ambience.listener_prefs_changed(src)
 	prefs.save_preferences()
 
 /datum/volume_power_menu
@@ -133,7 +145,7 @@
 /datum/volume_power_menu/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "VolumePowerMenu", "Volume Power")
+		ui = new(user, src, "VolumePowerMenu", "Audio Settings")
 		ui.set_state(GLOB.always_state)
 		ui.open()
 
@@ -142,7 +154,9 @@
 	if(!owner?.prefs)
 		return data
 
-	data["master"] = isnum(owner.prefs.mastervol) ? owner.prefs.mastervol : initial(owner.prefs.mastervol)
+	data["master"] = isnum(owner.prefs.overallvol) ? owner.prefs.overallvol : initial(owner.prefs.overallvol)
+	data["effects"] = isnum(owner.prefs.mastervol) ? owner.prefs.mastervol : initial(owner.prefs.mastervol)
+	data["instruments"] = isnum(owner.prefs.instrumentvol) ? owner.prefs.instrumentvol : initial(owner.prefs.instrumentvol)
 	data["music"] = isnum(owner.prefs.musicvol) ? owner.prefs.musicvol : initial(owner.prefs.musicvol)
 	data["combat"] = isnum(owner.prefs.combatmusicvol) ? owner.prefs.combatmusicvol : initial(owner.prefs.combatmusicvol)
 	data["ambience"] = isnum(owner.prefs.ambiencevol) ? owner.prefs.ambiencevol : initial(owner.prefs.ambiencevol)
@@ -207,7 +221,7 @@
 	set hidden = 1
 
 	if(prefs)
-		var/vol = input(usr, "Current master volume power (affects all sounds except music and ambience): [prefs.mastervol]",, 100) as null|num
+		var/vol = input(usr, "Current sound effects power (every sound but music and ambience, under Master): [prefs.mastervol]",, 100) as null|num
 		if(!vol)
 			if(vol != 0)
 				return
@@ -229,8 +243,8 @@
 		prefs.ambiencevol = vol
 		prefs.save_preferences()
 
-		mob.update_channel_volume(CHANNEL_AMBIENCE, prefs.ambiencevol)
-		mob.update_channel_volume(CHANNEL_RAIN, prefs.ambiencevol)
+		mob.update_channel_volume(CHANNEL_AMBIENCE, prefs.at_overall(prefs.ambiencevol))
+		mob.update_channel_volume(CHANNEL_RAIN, prefs.at_overall(prefs.ambiencevol))
 
 /client/verb/change_lobby_music_vol()
 	set category = "Options"
@@ -247,7 +261,7 @@
 		prefs.save_preferences()
 
 		if(isnewplayer(mob))
-			mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.lobbymusicvol)
+			mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.at_overall(prefs.lobbymusicvol))
 
 /*
 /client/verb/help_rpguide()

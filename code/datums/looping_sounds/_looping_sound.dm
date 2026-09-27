@@ -204,7 +204,10 @@
 		return
 	if(direct && ismob(parent) && sound_channel)
 		var/mob/mob_parent = parent
-		mob_parent.update_channel_volume(sound_channel, new_volume)
+		var/datum/preferences/listener_prefs = mob_parent.client?.prefs
+		// The first send went through playsound_local, its sliders and its cap of 100, so the update
+		// has to as well
+		mob_parent.update_channel_volume(sound_channel, min(listener_prefs ? listener_prefs.at_overall(new_volume * listener_prefs.mastervol * 0.01) : new_volume, 100))
 
 /**
  * The proc that handles actually playing the sound.
@@ -238,9 +241,8 @@
 	sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
 	sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
 	if(direct)
-		// Deviation from TG's bare SEND_SOUND: route mob-directed loops through
-		// playsound_local so master volume and the listener's area environment
-		// keep applying, the way every direct loop here always has.
+		// Mob-directed loops go through playsound_local rather than TG's bare SEND_SOUND, so the
+		// volume sliders and the listener's area environment keep applying as they always have here
 		if(ismob(parent))
 			var/mob/mob_parent = parent
 			mob_parent.playsound_local(null, null, volume_override || volume, vary, frequency, channel = sound_to_play.channel, S = sound_to_play)

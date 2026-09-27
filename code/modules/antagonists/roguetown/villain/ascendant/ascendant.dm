@@ -60,7 +60,7 @@
 			dreamer.STAWIL += 2
 
 		if(length(objectives))
-			SEND_SOUND(owner.current, 'sound/villain/ascendant_intro.ogg')
+			SEND_SOUND(owner.current, sound('sound/villain/ascendant_intro.ogg', volume = overall_volume(owner.current)))
 			to_chat(owner.current, span_danger("[antag_memory]"))
 			owner.announce_objectives()
 
