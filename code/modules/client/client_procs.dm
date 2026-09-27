@@ -1269,8 +1269,3 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		log_game("COMMEND: [ckey] commends [theykey].")
 		log_admin("COMMEND: [ckey] commends [theykey].")
 	return
-
-/client/proc/preload_music()
-	if(SSsounds.initialized == TRUE)
-		for(var/sound_path as anything in SSsounds.all_music_sounds)
-			src << load_resource(sound_path, -1)

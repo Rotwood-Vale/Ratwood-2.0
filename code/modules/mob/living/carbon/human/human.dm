@@ -194,6 +194,7 @@
 	STOP_PROCESSING(SShumannpc, src)
 	QDEL_NULL(physiology)
 	QDEL_NULL(sunder_light_obj)
+	QDEL_NULL(devotion)
 	GLOB.human_list -= src
 	if(current_fellowship)
 		current_fellowship.remove_member(src, reason = FELLOWSHIP_REASON_DESTROYED)
