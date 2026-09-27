@@ -74,6 +74,9 @@
 	flag = "piercing"
 	speed = 0.5
 	npc_simple_damage_mult = 2
+	min_range = 2
+	max_range = 9
+	dam_falloff_factor = 0.75
 
 //more speed and damage vs NPCs but less pen
 /obj/projectile/bullet/reusable/bolt/bronze
@@ -227,6 +230,9 @@
 	woundclass = BCLASS_PIERCE
 	flag = "piercing"
 	speed = 0.4
+	min_range = 2
+	max_range = 14
+	dam_falloff_factor = 0.5
 
 /obj/projectile/bullet/reusable/arrow/on_hit(atom/target)
 	..()
@@ -1074,6 +1080,8 @@
 	flag = "piercing"
 	speed = 0.3
 	npc_simple_damage_mult = 2
+	min_range = 4
+	max_range = 12
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
 	name = "stake bolt"

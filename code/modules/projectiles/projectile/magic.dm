@@ -1,3 +1,5 @@
+#define MAGE_LONG_PROJ_RANGE 7
+
 /obj/projectile/magic
 	name = "bolt of nothing"
 	icon_state = "energy"
@@ -7,8 +9,14 @@
 	armor_penetration = 100
 	pass_flags = PASSTABLE | PASSGRILLE
 	flag = "magic"
+	dam_falloff_factor = 0.5
+	max_range = MAGE_LONG_PROJ_RANGE
 	var/explode_sound = list('sound/misc/explode/incendiary (1).ogg','sound/misc/explode/incendiary (2).ogg')
 	var/mob/living/carbon/human/sender
+
+/obj/projectile/energy
+	dam_falloff_factor = 0.5
+	max_range = MAGE_LONG_PROJ_RANGE
 
 /obj/projectile/magic/death
 	name = "bolt of death"
