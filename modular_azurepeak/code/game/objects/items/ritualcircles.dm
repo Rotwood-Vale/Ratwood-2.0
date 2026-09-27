@@ -1353,6 +1353,7 @@
 	else
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
 	addtimer(CALLBACK(src, PROC_REF(zizoarmaments_stage2), target), 20)
+
 /datum/outfit/job/roguetown/darksteelrite/pre_equip(mob/living/carbon/human/H)
 	..()
 	var/list/items = list()

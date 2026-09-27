@@ -222,6 +222,11 @@
 		target.visible_message(span_info("A strange stirring feeling pours from [target]!"), span_info("Sentimental thoughts drive away my pain..."))
 		var/psyhealing = 3
 		psyhealing += psicross_bonus
+
+		if(HAS_TRAIT(user, TRAIT_LUX_FREAK) && zcross_trigger) // LUX ABOMINATIONS WONT STOP SO EASLY!!!
+			user.visible_message(span_warning("[user] shuddered but they eyes flash silver and they keep on going."), span_userdanger("Cold shoots through my spine and dark laughs resounds, but i focus on my lux and ENDURE."))
+			zcross_trigger = FALSE
+
 		if (conditional_buff & !zcross_trigger)
 			to_chat(user, "In <b>ENDURING</b> so much, become <b>EMBOLDENED</b>!")
 			psyhealing += situational_bonus
