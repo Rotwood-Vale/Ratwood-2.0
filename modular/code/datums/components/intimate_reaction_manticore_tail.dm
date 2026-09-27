@@ -3,6 +3,8 @@
 /datum/component/intimate_reaction/manticore_tail
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	movement_message_cooldown = 30 SECONDS
+	/// throttle these messages, same as chastity, less spammy
+	var/movement_move_counter = 0
 	/// Cooldown for sex-received flavor messages.
 	var/last_receive_flavor_time = 0
 	var/receive_flavor_cooldown = 20 SECONDS
@@ -18,6 +20,7 @@
 		return FALSE
 	if(already_bound)
 		return TRUE
+	movement_move_counter = 0
 	register_movement_reaction(H)
 	return TRUE
 
@@ -40,12 +43,19 @@
 		return FALSE
 	if(source.stat != CONSCIOUS)
 		return FALSE
-	if(last_movement_message_time + movement_message_cooldown >= world.time)
-		return FALSE
-	if(!prob(18))
+	if(max(last_movement_message_time, last_receive_flavor_time) + movement_message_cooldown >= world.time)
 		return FALSE
 	var/datum/sex_controller/sexcon = source.sexcon
 	if(!sexcon || !source.client?.prefs?.sexable)
+		return FALSE
+	movement_move_counter++
+	if(movement_move_counter < CHASTITY_MOVE_SOUND_DELAY)
+		return FALSE
+	movement_move_counter = 0
+	var/movement_message_chance = 5
+	if(GLOB.clients?.len >= CHASTITY_HIGH_POP_THRESHOLD)
+		movement_message_chance = max(1, round(movement_message_chance * CHASTITY_HIGH_POP_SOUND_MULT))
+	if(!prob(movement_message_chance))
 		return FALSE
 	// Pick arousal-aware string key
 	var/string_key = "manticore_tail_idle"
@@ -67,12 +77,12 @@
 		return FALSE
 	if(source.stat != CONSCIOUS)
 		return FALSE
-	if(last_receive_flavor_time + receive_flavor_cooldown >= world.time)
-		return FALSE
-	if(!prob(15 + (applied_force * 4) + (applied_speed * 4)))
+	if(max(last_receive_flavor_time, last_movement_message_time) + receive_flavor_cooldown >= world.time)
 		return FALSE
 	var/datum/sex_controller/sexcon = source.sexcon
 	if(!sexcon || !source.client?.prefs?.sexable)
+		return FALSE
+	if(!prob(10 + (applied_force * 4) + (applied_speed * 4)))
 		return FALSE
 	var/string_key = get_receive_flavor_key(receiver_part, action, sexcon)
 	var/message = pick_string_bank("manticore_tail_receive_flavor.json", string_key, MANTICORE_TAIL_STRINGS_PATH)
