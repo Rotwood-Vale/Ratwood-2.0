@@ -142,9 +142,7 @@
 		span_notice("[src]'s Naledi time-crystal gently clinks against the COMET shard, its strange internals sending it to lyfe with a low, steady hum.")
 	)
 
-	playsound(src, pick(
-		'modular/timesoldier/sounds/comms/broadcast_start1.ogg',
-		'modular/timesoldier/sounds/comms/broadcast_start2.ogg'), 45, FALSE)
+	playsound(src, 'modular/timesoldier/sounds/comms/broadstart.ogg', 55, FALSE)
 
 	QDEL_NULL(radio_loop)
 	radio_loop = new(src, TRUE)
@@ -229,7 +227,7 @@
 
 	playsound(
 		src,
-		'modular/timesoldier/sounds/comms/broadcast_end1.ogg',
+		'modular/timesoldier/sounds/comms/broadend.ogg',
 		45,
 		FALSE
 	)
