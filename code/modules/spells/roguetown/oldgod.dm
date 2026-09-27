@@ -95,7 +95,7 @@
 	if(HAS_TRAIT(H, TRAIT_INQUISITION))
 		to_chat(H, span_notice("Your wounds are being removed by the silver string."))
 	else
-		to_chat(H, span_danger("You feel somthing grabing at your lux Lux, stealing parts of it!"))
+		to_chat(H, span_danger("You feel somthing grabing at your Lux, stealing parts of it!"))
 		to_chat(H, span_notice("Your wounds seem to be vanishing."))
 	return TRUE
 
