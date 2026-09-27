@@ -64,6 +64,10 @@
 					targetwound.apply_to_bodypart(c_BP, silent = TRUE, crit_message = FALSE)
 					targetwound.set_bleed_rate(pre_bleeding) // but we have to manually force a bleed_rate reset for it to cache properly
 					if(targetwound.severity >= WOUND_SEVERITY_SEVERE)
+						if(HAS_TRAIT(H, TRAIT_INQUISITION))
+							to_chat(H, span_notice("You feel your wounds sliping away."))
+						else
+							to_chat(H, span_danger("You feel a tear as fragment of your soul is replaced!"))
 						C_caster.visible_message(span_danger("Twisting threads of silvery lux blossom upon [C_caster]'s flesh, conveying [targetwound] upon [C_caster.p_their()] [c_BP.name]!"), span_boldwarning("You shudder in pain as a [targetwound] violently weeps into being upon your [c_BP.name]!"))
 					new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
 					new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
@@ -76,7 +80,7 @@
 		blood_transfer = BLOOD_VOLUME_NORMAL - H.get_blood_volume()
 		H.set_blood_volume(BLOOD_VOLUME_NORMAL)
 		user.adjust_blood_volume(-(blood_transfer))
-		to_chat(H, span_notice("You feel your blood replenish!"))
+		to_chat(H, span_warning("You feel a tug at your soul as your blood replenish!"))
 		user.visible_message(span_warning("A sudden pallor overtakes [user] as [user.p_their()] lyfeblood flees [user.p_their()] pores and into [H]!"), span_warning("You feel your blood drain into [H]!"))
 		new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
 		new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
@@ -88,7 +92,11 @@
 
 	// Notify the user and target
 	to_chat(user, span_notice("You purify their Lux with the merging of theirs and your own, for a mote."))
-	to_chat(H, span_info("You feel a strange stirring sensation pour over your Lux, stealing your wounds."))
+	if(HAS_TRAIT(H, TRAIT_INQUISITION))
+		to_chat(H, span_notice("Your wounds are being removed by the silver string."))
+	else
+		to_chat(H, span_danger("You feel somthing grabing at your lux Lux, stealing parts of it!"))
+		to_chat(H, span_notice("Your wounds seem to be vanishing."))
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/psydonrespite
