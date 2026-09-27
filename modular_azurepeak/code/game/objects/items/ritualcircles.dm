@@ -2017,7 +2017,7 @@
 	else
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
 	addtimer(CALLBACK(src, PROC_REF(baothaarmor_stage2), target), 20)
-//TIME FOR THE ONE. Exclusive to ABSOLVERS. Allowing conversion, deconversion and removal of rite armour.
+//TIME FOR THE ONE. Exclusive to ABSOLVERS NO LONGER!. Allowing conversion, deconversion and removal of rite armour. Only LUX FREAKS aka absolver and sigmata have acces to the deconversion and striping
 //'Lesser' expenditure allows us to have a stopgap to this, while not entirely making poultice farming useless.
 
 
