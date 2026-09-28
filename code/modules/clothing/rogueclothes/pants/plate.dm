@@ -82,7 +82,7 @@
 /obj/item/clothing/under/roguetown/platelegs/zizo
 	max_integrity = ARMOR_INT_LEG_ANTAG
 	name = "avantyne garments"
-	desc = "<font color='A50021'>Nothing beside remains. Round the decay of that collosal wreck, boundless and bare.</font>"
+	desc = "<font color='A50021'>Nothing beside remains. Round the decay of that colossal wreck, boundless and bare.</font>"
 	icon_state = "zizocloth"
 	armor = ARMOR_ASCENDANT
 	peel_threshold = 5
