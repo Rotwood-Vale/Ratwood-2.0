@@ -1,0 +1,201 @@
+## Sound settings
+## Included by config.txt. The Point Ambience Mode admin verb
+## can change most load settings live and reset them to the loaded config values.
+##
+## CURRENT DEFAULTS
+## This file starts point ambience OFF (MODE 0). Set MODE 1 to use LIVE sound. In LIVE, eligible
+## movement can request service on every step (MOVE_INTERVAL 0). The running override and step
+## limit are also 0, so neither changes that schedule. QUEUE 1 handles requests, up to 8 per run.
+## A separate walk visits clients about once a second; STANDING_SKIP 0 does not skip recent movers.
+## SPEED_CUTOFF 1 silences point ambience during unusually fast movement, apart from a carried
+## torch.
+##
+## SOUND_STOREY_TILES is for sounds that are permitted to cross floors.
+##
+## WHAT AN INTERVAL ACTUALLY CONTROLS
+## A source is a torch, fire, fountain or other sound-making object. A service checks one
+## listener's nearby sources and decides whether any channels need an update. One service may
+## send several sound packets or none. A movement interval controls how often a step REQUESTS
+## a service. A playing loop can continue between services at its last sent volume and position;
+## a fade has its own updates. An interval does not restart the loop or make every request audible.
+##
+## The interval is the minimum time between movement requests. Once it expires, the NEXT step
+## requests service. A larger interval saves work but lets volume, direction, entry and exit
+## changes lag farther behind movement. The queue can defer a request; the periodic client visit
+## can also update a listener. Tables below describe movement requests, not guaranteed packets
+## or total services. All times here are deciseconds (ds); 10 ds = 1 second.
+## Short names in examples omit POINT_AMBIENCE_. RUNNING_OVERRIDE is short for the full
+## POINT_AMBIENCE_MOVE_INTERVAL_RUNNING_OVERRIDE setting below.
+##
+## A PRACTICAL TUNING ORDER
+## 1. Leave QUEUE at 1 and the service cap at 8 while finding an audible setting.
+## 2. Try a nonzero MOVE_INTERVAL, such as 6. Walk past torches and braziers, then run past
+##    short-range sources. At 6, a typical walker gets a request every 2 tiles, but a faster
+##    runner can travel 4. If the runner sounds late, try a RUNNING_OVERRIDE of 3.
+## 3. MOVE_STEPS can bound the tile gap at any natural pace. A value of 2 keeps that walker and
+##    runner within 2 tiles, but adds requests and reduces some of the interval's savings.
+## 4. Try STANDING_SKIP only after movement sounds acceptable. A larger value saves some
+##    periodic work but delays catch-up when a player stops.
+## 5. Read Point Ambience Server before and after a change. Compare cost, queue waits and drops
+##    with similar movement and source density. It times the subsystem's fire phases, not all
+##    sound or network work. Listen for late starts, trailing exits, and jumps in volume or pan.
+##
+## The examples assume WALK_DELAY 3 and RUN_DELAY 2, as in the example movement config. At
+## speed 10, walking takes 3 ds per tile and running 2 ds. A speed 15 runner takes about 1.5 ds.
+## A smaller step delay means faster movement. Modifiers and mounts change these rates. The
+## requests per second below assume continuous movement and no queue delay.
+
+## Music through walls
+## 0 muffles music behind walls. 1 lets instruments, bands and music boxes play through walls
+## unmuffled. New music sources take the setting when they start.
+DISABLE_MUSIC_WALL_MUFFLE 0
+
+## Entire point ambience categories
+## Add one active line per category to silence it, for example:
+##   SILENCE_POINT_AMBIENCE torch
+## Available names below. No active lines means all categories remain enabled.
+## A silenced category sends no point ambience and its sources are
+## removed from the index. Using the verb in-game will still keep its
+##
+##   fire   hearths, campfires, braziers, forges, smelters and ovens
+##   torch  wall sconces, standing fires and the listener's own carried torch
+##   misc   bone piles, evil trees and goblin portals
+##   rot    flies around rotting bodies
+##   clock  grandfather and wall clocks
+##   water  fountains
+##   river  river ambience
+##
+## In LIVE mode, moving listeners drive most of the work. Nearby sources affect the cost of a
+## service, rather than each source running its own loop. Torch is the largest mapped category,
+## so silencing it may reduce that cost substantially where players pass many lit torches.
+## Depending on the route, cache reuse, move interval and step limit, the total saving may be
+## small. Silencing torch stops a player's carried torch too. In one historical one-client
+## town lap at MOVE_INTERVAL 5 with no step limit, a service fell from 100 to 68 microseconds
+## and that walker's total from 0.21 to 0.14 ms/s. That result does not predict other settings.
+
+## Point ambience mode
+## 0 OFF: stop point ambience.
+## 1 LIVE: select nearby sources per listener and update them as the listener moves.
+## 2 FALLBACK: plain loops per eligible source. Torches have no fallback loop. Sounds can arrive
+##   only on a later replay, so a short pass by a source may be silent. Volume does not track a
+##   moving listener between replays. Cost follows source count more than moving player count.
+##
+## The normal admin verb can switch between LIVE and OFF. Select FALLBACK here before startup.
+## It may be left through the verb, but the verb cannot re-enter it during the same round:
+## creating all source loops at once would burst timer work. VV can bypass that menu restriction.
+## Do not automatically restore per-object loops for players who mute point ambience, or for a
+## silenced category outside of FALLBACK mode. The existing plain fallback loops each keep a timer and check for nearby
+## listeners on replay, adding work per source alongside any LIVE servicing still running.
+## Muting should simply silence. FALLBACK remains a deliberate server-wide alternative to LIVE.
+POINT_AMBIENCE_MODE 1
+
+## Movement scheduling, LIVE mode
+## MOVE_INTERVAL is the minimum ds between movement requests from one client. At 0, every
+## eligible step can request service. At higher values, the first step after the due time
+## requests it, so the number of tiles depends on how fast the player moves. These are
+## approximate requests per second and tiles between requests, with RUNNING_OVERRIDE and
+## MOVE_STEPS both at 0:
+##
+##   MOVE_INTERVAL    Walk, speed 10     Run, speed 10      Run, speed 15
+##   0                3.3/s, 1 tile      5.0/s, 1 tile      6.7/s, 1 tile
+##   3                3.3/s, 1 tile      2.5/s, 2 tiles     3.3/s, 2 tiles
+##   6                1.7/s, 2 tiles     1.7/s, 3 tiles     1.7/s, 4 tiles
+##   9                1.1/s, 3 tiles     1.0/s, 5 tiles     1.1/s, 6 tiles
+##   12               0.8/s, 4 tiles     0.8/s, 6 tiles     0.8/s, 8 tiles
+##
+## For example, a 3 ds walker given an 8 ds interval reaches the next eligible step at 9 ds.
+## For that walker, 8 and 9 both produce a 3-tile gap. Longer gaps reduce movement work, but
+## a listener can enter or leave a short-range source before the next movement request. The
+## periodic visit can still catch up after about a second.
+POINT_AMBIENCE_MOVE_INTERVAL 0
+
+## RUNNING_OVERRIDE replaces MOVE_INTERVAL while the player has run intent. 0 means runners
+## use MOVE_INTERVAL; it does not mean no limit. A shorter value gives runners more requests
+## and steadier spatial changes. With MOVE_INTERVAL 6 and MOVE_STEPS 0:
+##
+##   RUNNING_OVERRIDE    Walk, speed 10     Run, speed 10      Run, speed 15
+##   0                   1.7/s, 2 tiles     1.7/s, 3 tiles     1.7/s, 4 tiles
+##   2                   1.7/s, 2 tiles     5.0/s, 1 tile      3.3/s, 2 tiles
+##   3                   1.7/s, 2 tiles     2.5/s, 2 tiles     3.3/s, 2 tiles
+##   4                   1.7/s, 2 tiles     2.5/s, 2 tiles     2.2/s, 3 tiles
+##
+## MOVE_INTERVAL 0 disables the time gate, so this override has no effect then. If MOVE_STEPS
+## already requests service sooner for a runner, a shorter override may add no requests either.
+POINT_AMBIENCE_MOVE_INTERVAL_RUNNING_OVERRIDE 0
+
+## MOVE_STEPS limits tiles between requests at a natural pace. It only SHORTENS the interval
+## chosen above; 0 leaves it alone. This preserves spatial detail when a time interval lets
+## faster movers travel too far. With MOVE_INTERVAL 12 and RUNNING_OVERRIDE 0:
+##
+##   MOVE_STEPS    Walk, speed 10     Run, speed 10      Run, speed 15
+##   0             0.8/s, 4 tiles     0.8/s, 6 tiles     0.8/s, 8 tiles
+##   1             3.3/s, 1 tile      5.0/s, 1 tile      6.7/s, 1 tile
+##   2             1.7/s, 2 tiles     2.5/s, 2 tiles     3.3/s, 2 tiles
+##   3             1.1/s, 3 tiles     1.7/s, 3 tiles     2.2/s, 3 tiles
+##   4             0.8/s, 4 tiles     1.2/s, 4 tiles     1.7/s, 4 tiles
+##
+## Under MOVE_INTERVAL 12, setting MOVE_STEPS 2 changes a walker from every 4 tiles to every
+## 2. That roughly doubles their movement requests, giving back some of the interval's
+## saving. MOVE_INTERVAL 0 already requests on every eligible step, so MOVE_STEPS then does
+## nothing. For a rider, this uses the mounted step delay, which the mount's speed and the
+## rider's intent and riding skill set together.
+POINT_AMBIENCE_MOVE_STEPS 0
+
+## 1 silences point ambience while a player moves faster than a natural speed-15 run. Already
+## playing sounds fade out when possible, or stop at once; new nearby sources do not start.
+## A carried torch keeps playing for its holder. Sound returns on a normal-paced step or a later
+## standing visit after stopping. 0 serves fast movers normally, adding frequent move requests.
+POINT_AMBIENCE_SPEED_CUTOFF 1
+
+## Load protection, LIVE mode
+## MAX_SERVICES_PER_TICK limits movement services across all clients in one subsystem run.
+## With QUEUE 1 and a cap of 8, if 11 clients are marked, at most 8 are served in that run;
+## the other 3 wait for another run. At 20 ticks/s, 8 times 20 is a theoretical ceiling of
+## 160 movement services/s, not promised throughput. Service cost and the tick budget also
+## matter. A count cap is not a millisecond budget because services vary in cost.
+## If Point Ambience Server shows growing queue waits or deferred work, a higher cap may
+## restore responsiveness but allow more work in one tick. Raising it when waits are already
+## zero does not make services cheaper.
+## With QUEUE 0, excess inline requests are refused. A value of 0 removes this count cap and
+## the inline half-tick usage gate, but the subsystem still obeys master controller tick checks.
+POINT_AMBIENCE_MAX_SERVICES_PER_TICK 8
+
+## QUEUE 1 marks the moving client and serves marked clients oldest first under the subsystem
+## budget. Repeated marks for the same client coalesce. QUEUE 0 runs service inside Move().
+## If the cap or tick-usage gate rejects that inline request, it is dropped rather than queued;
+## the next movement or periodic visit may catch it. Keep the queue on for normal play.
+POINT_AMBIENCE_QUEUE 1
+
+## A separate periodic walk visits every client about once a second, even when they are still.
+## Many visits return through a cheap shortcut if nothing relevant changed. STANDING_SKIP
+## passes over a client whose movement service was recent, avoiding another visit just before
+## they move again. At 0, no recent service is skipped for this reason. At 5 ds, a service
+## within the last half-second may skip the periodic visit. That saves some work but makes
+## volume and pan change in larger steps while moving. If the player then stops at a range
+## edge, catch-up can take roughly 1.5 seconds instead of 1 second. At 10 ds it can approach
+## 2 seconds. Listen both while walking past several sources and after stopping.
+## A prior two-walker test at MOVE_INTERVAL 5 saw the standing walk fall from 0.045 to
+## 0.015 ms/s per walker with STANDING_SKIP 5. That is one local comparison, not an expected
+## saving at other intervals or populations.
+POINT_AMBIENCE_STANDING_SKIP 0
+
+## Sound shape, LIVE mode
+## FALLOFF_HARDNESS controls how quickly volume drops with distance. 0 uses each category's
+## original curve. 1 gives an even fall in decibels to the category's range edge. Values above
+## 1 drop faster close to the source. The river keeps its own curve and ignores this setting.
+## This changes what players hear, not how often service runs.
+POINT_AMBIENCE_FALLOFF_HARDNESS 1
+
+## PAN_DEPTH_FLOOR affects left/right placement when passing close to a source. 1 holds a
+## minimum depth, so a source moves smoothly from one side to the other. 0 uses the older
+## one-tile axis dead zone, which can make a source snap from centered to one side after a
+## step. Ordinary one-shot sounds use their own panning rule.
+POINT_AMBIENCE_PAN_DEPTH_FLOOR 1
+
+## Sound across floors
+## Effective distance added for each storey crossed, in addition to the usual floor muffling.
+## 0 leaves the ordinary horizontal falloff and a flat floor penalty. Larger values combine
+## horizontal and vertical distance for the falloff. This applies only to sounds already permitted
+## to cross floors; it does not enable cross-floor point ambience. At 4, short-range sounds are
+## faint overhead while longer sounds, such as music, can carry farther. Read at startup.
+SOUND_STOREY_TILES 4
