@@ -1,0 +1,5 @@
+author: "Mannybrado"
+delete-after: True
+changes:
+  - rscadd: "Light Otavan accent, like Otavan but without overt french word replacements"
+  - code_imp: "Renamed Dark Elf accent to Otavan"
