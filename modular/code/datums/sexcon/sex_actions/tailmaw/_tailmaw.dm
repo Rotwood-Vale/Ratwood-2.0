@@ -60,13 +60,18 @@
 	if(!tail)
 		return FALSE
 	var/bursts = donor.sexcon.get_load_bursts()
+	var/ejaculated = FALSE
 	for(var/i in 1 to bursts)
 		if(QDELETED(tail) || get_manticore_tail(receiver) != tail || !can_perform(user, target) || !donor.getorganslot(ORGAN_SLOT_PENIS))
 			break
 		donor.sexcon.cum_into(splashed_user = receiver, orifice = SEX_PART_TAIL_MAW, skip_knot_try = TRUE, consume_charge = i == 1)
+		ejaculated = TRUE
 		if(i < bursts)
 			sleep(1 SECONDS)
-	return TRUE
+	if(ejaculated)
+		donor.virginity = FALSE
+		receiver.virginity = FALSE
+	return ejaculated
 
 /datum/sex_action/tailmaw/proc/handle_tailmaw_oral_climax(mob/living/carbon/human/owner, mob/living/carbon/human/receiver)
 	if(get_manticore_tail(owner) && owner.sexcon.check_active_ejaculation())

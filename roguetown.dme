@@ -3326,6 +3326,7 @@
 #include "modular\code\datums\sexcon\sex_actions\tailmaw\manticore_pear_anal.dm"
 #include "modular\code\datums\sexcon\sex_actions\tailmaw\manticore_pear_oral.dm"
 #include "modular\code\datums\sexcon\sex_actions\tailmaw\manticore_pear_vaginal.dm"
+#include "modular\code\datums\sexcon\sex_actions\tailmaw\manticore_reacharound_anal.dm"
 #include "modular\code\datums\sexcon\sex_actions\tailmaw\manticore_tail_oral_force.dm"
 #include "modular\code\datums\sexcon\sex_actions\tailmaw\manticore_tail_oral_receive.dm"
 #include "modular\code\datums\sexcon\sex_actions\tailmaw\manticore_tail_sounding.dm"
