@@ -15,8 +15,8 @@ GLOBAL_DATUM(point_ambience_server_window, /datum/point_ambience_server_window)
  * Point ambience on a live server: what it costs and what it does across every player.
  *
  * Read from counts the subsystem keeps anyway. Nothing here times, observes or switches anything on,
- * so opening it changes nothing it reports. The first use starts a window and later ones report
- * since its start.
+ * so an open window costs nothing and opening it changes nothing it reports. The first run marks a
+ * start. Each later run reports the stretch since it, then offers Keep, Restart or Clear.
  *
  * Cost is world.tick_usage summed over each phase of fire(). Outside it, and not counted, are inline
  * services with the queue off, and the move hook's marks and index changes.
@@ -27,16 +27,28 @@ GLOBAL_DATUM(point_ambience_server_window, /datum/point_ambience_server_window)
 	if(!check_rights(R_DEBUG))
 		return
 	var/datum/point_ambience_server_window/window = GLOB.point_ambience_server_window
-	if(!window || SSpoint_ambience.started_at > window.time)
+	if(!window)
+		if(alert(src, "Marks a start, then each run reports the stretch since it. Nothing is switched on: the subsystem keeps these counts anyway, so an open window costs nothing.", "Point Ambience Server", "Start", "Cancel") != "Start")
+			return
 		GLOB.point_ambience_server_window = new
-		to_chat(src, span_notice("Point ambience server: window started."))
+		to_chat(src, span_notice("Point ambience server: <b>start marked.</b> Nothing is switched on. Clear closes the window. Run the verb again whenever you want the stretch since now."))
 		return
-	var/choice = input(src, "Window open for [round((world.time - window.time) / 10)] s.", "Point Ambience Server") as null|anything in list("Report", "Report and start a new window")
-	if(!choice)
+	var/seconds = (world.time - window.time) / 10
+	if(seconds < 10)
+		to_chat(src, span_warning("Point ambience server: only [round(seconds)] s since the start. Give it longer."))
+		return
+	if(SSpoint_ambience.started_at > window.time)
+		GLOB.point_ambience_server_window = new
+		to_chat(src, span_warning("Point ambience server: the subsystem restarted since the start. Taken again from now."))
 		return
 	to_chat(src, point_ambience_server_report(window))
-	if(choice == "Report and start a new window")
-		GLOB.point_ambience_server_window = new
+	switch(alert(src, "Keep: report from the same start, so the window keeps growing.\nRestart: start a fresh window from now.\nClear: close the window until someone runs this again.\n\nNothing is switched on either way: the subsystem keeps these counts anyway.", "Point Ambience Server", "Keep", "Restart", "Clear"))
+		if("Restart")
+			GLOB.point_ambience_server_window = new
+			to_chat(src, span_notice("Point ambience server: new start marked."))
+		if("Clear")
+			GLOB.point_ambience_server_window = null
+			to_chat(src, span_notice("Point ambience server: <b>cleared.</b> The next run marks a fresh start."))
 
 /// Every count a report reads, by name
 /proc/point_ambience_server_counts()
