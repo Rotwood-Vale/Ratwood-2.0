@@ -1,0 +1,5 @@
+author: "trueroguan"
+delete-after: True
+changes:
+  - bugfix: "Fixed the icon display for the inpeculate intent of Graggar's Assassin Dagger."
+  - bugfix: "Fix stat market for the vilians"

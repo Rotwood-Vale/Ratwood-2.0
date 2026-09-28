@@ -579,6 +579,12 @@
 	salvage_amount = 1
 	nudist_approved = TRUE
 
+/obj/item/clothing/mask/rogue/physician/head
+	name = "head physician's mask"
+	desc = "An important person, warrants the largest beak of them all."
+	icon_state = "head_phys" // shoutout the_hotline for allowing me to use this sprites. I love you.
+
+
 /obj/item/clothing/mask/rogue/physician/equipped(mob/living/carbon/user, slot)
 	. = ..()
 	if(slot == SLOT_WEAR_MASK)
@@ -821,6 +827,7 @@
 	desc = "A ceramic mask, forever stuck with the joyful smile its patron god favors. Alt+RMB changes style, Shift+RMB toggles snout form, and Shift+MMB toggles identity concealment."
 	max_integrity = ARMOR_INT_MASK_STONE
 	armor = null
+	resistance_flags = FIRE_PROOF
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE
 	block2add = null

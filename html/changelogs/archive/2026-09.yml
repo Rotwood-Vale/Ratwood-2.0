@@ -927,3 +927,48 @@
   - admin: Character assets link regex has been hardened somewhat to more reliably
       enforce the domain whitelist, and quotes cannot be submitted to try and perform
       any sort of string-escape exploit.
+2026-09-26:
+  Yuckuza:
+  - qol: Gossip and rumor character limit increased from 400 -> 750
+  - bugfix: fixed drow urumi doing 0 damage
+  awwliedacoder:
+  - balance: changed tainted-lux debuff to 30 mins, instead of 1 hour.
+  mushy:
+  - balance: Made darkvision slightly brighter.
+  wikimody:
+  - balance: Absolver and stigmata once again bleed with 0.5 mod, instead of 0.8 they
+      had post crit resistance nerf
+  - rscadd: Master miner now spawns with lether belt and steel picaxe
+  - balance: Leveling mining is now restricted to expert outside of few selected classes
+      (indicated by trained miner trait)
+  - balance: Miners lose jurneyman axes and maces, get jurneyman slings skill instead
+  - bugfix: Master miner can now claim miners house
+  - rscdel: Miners aprientece no longer lets you level picaxes to legendary (still
+      to expert)
+  zeroisthebiggay:
+  - balance: makes short swords swift
+  zoktiik:
+  - balance: Gargled speech (gained from throat crit, broken jaw, etc. The "KHSSSHSH"
+      thing.) now blocks spells requiring a verbal component to cast, similar in nature
+      to being silenced or gagged.
+2026-09-27:
+  The-Sun-In-Splendour:
+  - bugfix: golden circlet is now fireproof & nudist approved
+  Xander3359:
+  - rscadd: Orison and Miracle now grant a glow based on the caster's selected patron
+  Yuckuza:
+  - bugfix: Fixed Crocs Armory and Rosewood/Blackoak foreign trade vessels coming
+      to trade empty-handed.
+  chemistrymain3:
+  - balance: Heretical wretches now have access to Holy/Unholy blast.
+  - balance: Holy Ground buff is gone.
+  - qol: Noticeboard posts expire in three hours now.
+  ophaq:
+  - bugfix: Xylixian masks no longer catch fire.
+  wikimody:
+  - bugfix: Pestrian ability to turn werwolfs and gnolls into horific flesh abominations
+      have been tuned down, their aility to do so to anyone with a title has been
+      tuned up (some bugfixes on fleshaping miracle)
+  zoktiik:
+  - balance: Intensity of bleeding from all types of fractures has been roughly cut
+      by half.

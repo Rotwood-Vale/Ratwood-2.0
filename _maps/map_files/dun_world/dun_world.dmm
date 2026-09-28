@@ -89957,6 +89957,7 @@
 /obj/item/roguekey/psy_bog/two{
 	name = "Rusted exit key"
 	},
+/obj/item/clothing/neck/roguetown/psicross/weeping,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/cave/his_vault/four)
 "sHL" = (
@@ -94993,10 +94994,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
-"tJb" = (
-/obj/item/clothing/neck/roguetown/psicross/weeping,
-/turf/closed/mineral/random/rogue/high,
-/area/rogue/indoors/cave)
 "tJd" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/machinery/light/rogue/candle/off,
@@ -287721,7 +287718,7 @@ onF
 onF
 onF
 onF
-tJb
+onF
 ibp
 cGu
 nXi
