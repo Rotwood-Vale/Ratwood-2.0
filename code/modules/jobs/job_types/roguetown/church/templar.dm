@@ -223,6 +223,7 @@
 //Actual patron specific weapons below.
 		if("Solar Judgement")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/exe/astrata(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
 		if("Moonlight Khopesh")
