@@ -2,7 +2,7 @@ GLOBAL_LIST_INIT(character_accents, list("No accent",
 	"Dwarf accent",
 	"Dwarf Gibberish accent",
 	"Otavan accent",
-	"Otavan accent(light)"
+	"Otavan accent(light)",
 	"Elf accent",
 	"Grenzelhoft accent",
 	"North Etruscan accent",

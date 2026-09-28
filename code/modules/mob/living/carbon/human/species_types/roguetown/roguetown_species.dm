@@ -12,7 +12,7 @@
 		if("Otavan accent")
 			return strings("french_replacement.json", type, convert_HTML = TRUE)
 		if("Otavan accent(light)")
-			return strings("french_light_replacement.json", tpye, convert_HTML = TRUE)
+			return strings("french_light_replacement.json", type, convert_HTML = TRUE)
 		if("Elf accent")
 			return strings("russian_replacement.json", type, convert_HTML = TRUE)
 		if("Grenzelhoft accent")
