@@ -60,6 +60,12 @@
 	var/last_arousal_increase_time = 0
 	var/last_ejaculation_time = 0
 	var/last_oral_drip_consume_time = 0
+	/// world.time of the last finished act iteration involving us
+	var/last_sex_iteration = 0
+	/// Silent progress toward sating a sex vice
+	var/vice_points = 0
+	/// Set once vice_points reaches VICE_SATE_POINTS. Cleared with the counter after a gap.
+	var/vice_ready = FALSE
 	var/last_moan = 0
 	var/last_pain = 0
 	var/aphrodisiac = 1 //1 by default, acts as a multiplier on arousal gain. If this is different than 1, set/freeze arousal is disabled.
@@ -447,10 +453,8 @@
 		if(HAS_TRAIT(user, TRAIT_REDOLENT) && !HAS_TRAIT(splashed_user, TRAIT_REDOLENT))
 			user.redolent_apply_contact_stink(splashed_user)
 		modular_record_collar_receive_event(splashed_user, user)
-	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
-		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
-	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
-		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
+	if(effective_target != user)
+		try_sate_sex_vice(effective_target)
 	after_ejaculation()
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE)
@@ -497,10 +501,8 @@
 			var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 			if(!is_receiver_actively_knotted_to_user)
 				apply_creampie_drip(splashed_user, orifice, use_long = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
-	if(effective_target?.has_flaw(/datum/charflaw/addiction/lovefiend))
-		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
-	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
-		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
+	if(consume_charge && effective_target != user)
+		try_sate_sex_vice(effective_target)
 	after_ejaculation(consume_charge)
 	if(consume_charge)
 		after_intimate_climax(oral, splashed_user)
@@ -771,10 +773,8 @@
 		adjust_charge(-CHARGE_FOR_CLIMAX)
 	else
 		to_chat(user, span_love("<i>Spurt!</i>"))
-	if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
-		user.sate_addiction(/datum/charflaw/addiction/lovefiend)
-	if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
-		user.sate_addiction(/datum/charflaw/addiction/baothamarked)
+	if(consume_charge)
+		try_sate_sex_vice(user)
 	user.add_stress(/datum/stressevent/cumok)
 	user.emote("sexmoanhvy", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
@@ -849,7 +849,7 @@
 			else
 				effective_target.add_stress(/datum/stressevent/unseemly_made_love)
 			user.add_stress(/datum/stressevent/cummax)
-	if(!oral && force >= SEX_FORCE_HIGH && (user.has_flaw(/datum/charflaw/addiction/sadist) || effective_target.has_flaw(/datum/charflaw/addiction/masochist)))
+	if(!oral && force >= SEX_FORCE_HIGH && vice_is_ready() && (user.has_flaw(/datum/charflaw/addiction/sadist) || effective_target.has_flaw(/datum/charflaw/addiction/masochist)))
 		effective_target.emote("paincrit", forced = TRUE) // this satiates the sadomasochists in range
 	if(ishuman(user) && ishuman(target) && user.client && target.client)
 		eora_register_consensual_pair(user, target)
@@ -1376,6 +1376,9 @@
 	if(!can_perform_action(action_type, user.incapacitated()))
 		return
 	knot_check_remove(action_type)
+	expire_vice_progress()
+	if(target?.sexcon && target.sexcon != src)
+		target.sexcon.expire_vice_progress()
 	// Set vars
 	desire_stop = FALSE
 	orison_indulgence_notice_shown = FALSE
@@ -1443,6 +1446,7 @@
 		base_knot_mode = current_knot_mode
 		suppress_action_messages = !show_action_message
 		find_ringing_collar()
+		grant_vice_progress()
 		action.on_perform(user, target)
 		do_visual_effects(target, action)
 		suppress_action_messages = FALSE
@@ -1550,6 +1554,72 @@
 	target = new_target
 	//var/datum/sex_controller/target_con = new_target.sexcon
 	//target_con.receiving += user
+
+/datum/sex_controller/proc/try_sate_sex_vice(mob/living/carbon/human/who)
+	if(!who)
+		return
+	var/lovefiend = who.has_flaw(/datum/charflaw/addiction/lovefiend)
+	var/baothan = who.has_flaw(/datum/charflaw/addiction/baothamarked)
+	if(!lovefiend && !baothan)
+		return
+	if(!who.sexcon?.vice_is_ready())
+		if((lovefiend && who.has_status_effect(/datum/status_effect/debuff/addiction/nympho)) || (baothan && who.has_status_effect(/datum/status_effect/debuff/addiction/baothamarked)))
+			to_chat(who, span_warning("Not enough! I need to keep going until I'm satisfied."))
+		return
+	if(lovefiend)
+		who.sate_addiction(/datum/charflaw/addiction/lovefiend)
+	if(baothan)
+		who.sate_addiction(/datum/charflaw/addiction/baothamarked)
+
+/datum/sex_controller/proc/expire_vice_progress()
+	if(!last_sex_iteration)
+		return
+	if(world.time < last_sex_iteration + VICE_PROGRESS_TIMEOUT)
+		return
+	vice_points = 0
+	vice_ready = FALSE
+	last_sex_iteration = 0
+
+/datum/sex_controller/proc/vice_is_ready()
+	expire_vice_progress()
+	return vice_ready
+
+/datum/sex_controller/proc/add_vice_points(amount)
+	if(amount <= 0)
+		return
+	vice_points += amount
+	if(vice_points >= VICE_SATE_POINTS)
+		vice_ready = TRUE
+
+/datum/sex_controller/proc/iteration_vice_points()
+	switch(speed)
+		if(SEX_SPEED_LOW)
+			return VICE_POINTS_SLOW
+		if(SEX_SPEED_MID)
+			return VICE_POINTS_STEADY
+		if(SEX_SPEED_HIGH)
+			return VICE_POINTS_QUICK
+		if(SEX_SPEED_EXTREME)
+			return VICE_POINTS_UNRELENTING
+		if(SEX_SPEED_LUDICROUS)
+			return VICE_POINTS_FURIOUS
+	return VICE_POINTS_STEADY
+
+/datum/sex_controller/proc/grant_vice_progress()
+	if(!user || QDELETED(user))
+		return
+	var/points = iteration_vice_points()
+	last_sex_iteration = world.time
+	add_vice_points(points)
+	if(!target || target == user || QDELETED(target))
+		return
+	var/datum/sex_controller/partner = target.sexcon
+	if(!partner)
+		return
+	partner.last_sex_iteration = world.time
+	if(partner.current_action)
+		return
+	partner.add_vice_points(points)
 
 /datum/sex_controller/proc/get_speed_multiplier()
 	switch(speed)

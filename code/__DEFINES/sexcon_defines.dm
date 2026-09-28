@@ -29,6 +29,15 @@ GLOBAL_LIST_INIT(sex_actions, build_sex_actions())
 #define SEX_SPEED_MIN 1
 #define SEX_SPEED_MAX 5
 
+// Higher speed grants fewer points per iteration, so the bar still fills in about 1m30s.
+#define VICE_SATE_POINTS 600
+#define VICE_POINTS_SLOW 30
+#define VICE_POINTS_STEADY 20
+#define VICE_POINTS_QUICK 15
+#define VICE_POINTS_UNRELENTING 12
+#define VICE_POINTS_FURIOUS 10
+#define VICE_PROGRESS_TIMEOUT (60 SECONDS)
+
 #define SEX_FORCE_LOW 1
 #define SEX_FORCE_MID 2
 #define SEX_FORCE_HIGH 3
