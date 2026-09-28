@@ -37,8 +37,12 @@
 	if(!ishuman(targets[1]))
 		to_chat(caster, span_warning("You need living human flesh to reshape."))
 		return FALSE
-
+	
 	var/mob/living/carbon/human/target = targets[1]
+
+	if(istype(target.dna?.species,  /datum/species/gnoll) || istype(target.dna?.species, /datum/species/werewolf))
+		to_chat(caster, span_warning("The mad god's hold over this flesh is unbreakable, any changes will be undone the instant I stop shaping."))
+		return FALSE
 
 	if(get_dist(caster, target) > 1)
 		to_chat(caster, span_warning("They are too far away."))
@@ -346,19 +350,11 @@
 		to_chat(chooser, span_warning("They do not have character preferences saved."))
 		return FALSE
 
-	if(H.client.prefs.real_name != H.real_name)
-		to_chat(chooser, span_warning("You can only reset someone to the appearance of the character they are currently playing."))
-		return FALSE
-
 	var/confirm = alert(chooser, "Reset [H]'s appearance to match their character preferences? This will reapply physical features, colors, and descriptors but will not change name, skills, or abilities.", "Reset Appearance", "Yes", "No")
 	if(confirm != "Yes")
 		return FALSE
 
 	if(!H.client || !H.client.prefs)
-		return FALSE
-
-	if(H.client.prefs.real_name != H.real_name)
-		to_chat(chooser, span_warning("You can only reset someone to the appearance of the character they are currently playing."))
 		return FALSE
 
 	var/original_name = H.real_name

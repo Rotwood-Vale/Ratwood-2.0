@@ -109,6 +109,15 @@
 	cleave = /datum/cleave_pattern/forward_cleave
 	desc = "A cleave that cuts through a second target behind the first."
 
+/datum/intent/spear/cut/bardiche/cleave/chop
+	name = "cleaving chop"
+	blade_class = BCLASS_CHOP
+	attack_verb = list("chops", "hacks")
+	animname = "chop"
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	penfactor = 35
+	item_d_type = "slash"
+
 /datum/intent/spear/cut/bardiche
 	damfactor = 1.2
 	chargetime = 0
@@ -917,6 +926,34 @@
 	color = "#bb9696"
 	anvilrepair = null
 	randomize_blade_int_on_init = TRUE
+
+/obj/item/rogueweapon/halberd/bardiche/stalker
+	name = "drow bardiche"
+	desc = "While similar to the iron bardiche wielded by petty drow raiders, this elegant polearm cut a far more striking image. \
+	Finely forged and superbly balanced, the bardiche of a drow cavalier can cleave through enemy chaff both one-handed on spiderback \
+	& two-handed on foot."
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon_state = "drowbardiche"
+	force = 25
+	force_wielded = 28//-2 force
+	possible_item_intents = list(SPEAR_THRUST, /datum/intent/spear/cut/glaive, /datum/intent/axe/chop/scythe, /datum/intent/dagger/sucker_punch)
+	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive/sweep, /datum/intent/spear/cut/bardiche/cleave/chop, /datum/intent/dagger/sucker_punch)
+	wdefense = 4//-2 def given how good it's intents are
+	max_blade_int = 160//-40 blade integ
+	smeltresult = /obj/item/ingot/steel
+	slot_flags = ITEM_SLOT_BACK //Option-unique, uncraftable. Ensures the loadout doesn't implode on itself.
+	equip_delay_self = 2 SECONDS
+	unequip_delay_self = 2 SECONDS
+	inv_storage_delay = 1 SECONDS
+
+/obj/item/rogueweapon/halberd/bardiche/stalker/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -6,"sy" = 2,"nx" = 8,"ny" = 2,"wx" = -4,"wy" = 2,"ex" = 1,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 300,"wturn" = 32,"eturn" = -23,"nflip" = 0,"sflip" = 100,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 4,"sy" = -2,"nx" = -3,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
 /obj/item/rogueweapon/halberd/blacksteel
 	name = "blacksteel halberd"

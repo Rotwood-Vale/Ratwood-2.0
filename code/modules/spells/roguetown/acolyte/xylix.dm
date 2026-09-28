@@ -317,6 +317,8 @@
 //Successful teleport, complete reset.
 /obj/effect/proc_holder/spell/invoked/abscond/proc/tp(mob/user)
 	if(destination_turf)
+		if(user.buckled)
+			user.buckled.unbuckle_mob(user, TRUE)
 		if(do_teleport(user, destination_turf, no_effects=TRUE))
 			log_admin("[user.real_name]([key_name(user)] Shadowstepped from X:[user_turf.x] Y:[user_turf.y] Z:[user_turf.z] to X:[destination_turf.x] Y:[destination_turf.y] Z:[destination_turf.z] in area: [get_area(destination_turf)]")
 			if(user.m_intent == MOVE_INTENT_SNEAK)

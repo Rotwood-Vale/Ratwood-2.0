@@ -105,7 +105,7 @@
 		if("familiar_headshot")
 			to_chat(user, "<span class='notice'>Please use a relatively SFW image of the head and shoulder area to maintain immersion level. <b>Do not use a real life photo or unserious images.</b></span>")
 			to_chat(user, "<span class='notice'>Ensure it's a direct image link. The photo will be resized to 325x325 pixels.</span>")
-			var/new_headshot_link = input(user, "Input the headshot link (https, hosts: gyazo, discord, lensdump, imgbox, catbox):", "Headshot", familiar_headshot_link) as text|null
+			var/new_headshot_link = input(user, "Input the headshot link (https, hosts: gyazo, discord, lensdump, imgbox, catbox, imgbb, filegarden):", "Headshot", familiar_headshot_link) as text|null
 			if(new_headshot_link == null)
 				return
 			if(new_headshot_link == "")

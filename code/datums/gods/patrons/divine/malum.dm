@@ -17,6 +17,7 @@
 					/obj/effect/proc_holder/spell/invoked/craftercovenant		= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/resurrect/malum		= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_MALUM
 	confess_lines = list(
 		"MALUM IS MY MUSE!",
 		"TRUE VALUE IS IN THE TOIL!",

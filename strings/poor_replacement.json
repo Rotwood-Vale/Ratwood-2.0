@@ -1,6 +1,9 @@
 {
     "full": {
-
+		"butt": "arse",
+		"ser": "sire",
+		"sir": "sire",
+		"penis": "pintle"
     },
     "start": {
 		"h": "'",
@@ -13,22 +16,20 @@
 		"those": "them",
 		"one": "won",
 		"two": "tew",
-		"three": "thryee",
+		"three": "free",
 		"four": "fore",
-		"five": "fayve",
+		"five": "fyve",
 		"six": "sicks",
 		"seven": "sevenn",
 		"eight": "ayte",
 		"nine": "naeyn",
 		"and": "an'",
-		"penis": "pintle",
 		"ten": "tenn",
 		"archivist": "bookie",
 		"su": "s'",
 		"my ": "m'",
         "you": "yew",
         "your": "yous",
-		"butt": "arse",
 		"copper": "coppen",
 		"something": "some'n",
 		"love": "luv",
@@ -36,7 +37,6 @@
     },
     "end": {
 		"ing": "in'",
-		"re": "s",
 		"uis": "wyre",
 		"ve": "s'a",
 		"he": "'",
