@@ -15,9 +15,14 @@
 		if(HAS_TRAIT(user, TRAIT_XYLIX) && !user.has_status_effect(/datum/status_effect/buff/xylix_joy))
 			user.apply_status_effect(/datum/status_effect/buff/xylix_joy)
 			to_chat(user, span_info("Their beauty brings a smile to my face, and fortune to my steps!"))
+	else if(HAS_TRAIT(src, TRAIT_PRETTY) && user != src) //Beautiful takes priority if you somehow have both
+		user.add_stress(/datum/stressevent/pretty)
+		to_chat(user, span_info("[p_they(TRUE)] [p_are()] pretty."))
 	if(HAS_TRAIT(src, TRAIT_UNSEEMLY) && user != src)
 		if(!HAS_TRAIT(user, TRAIT_UNSEEMLY))
 			user.add_stress(/datum/stressevent/unseemly)
+	if(HAS_TRAIT(src, TRAIT_UNSETTLING) && user != src)
+		user.add_stress(/datum/stressevent/uncanny)
 	if(HAS_TRAIT(src, TRAIT_LEPROSY) && user != src)
 		user.add_stress(/datum/stressevent/leprosy)
 	// Apply Xylix buff when examining someone with the beautiful trait
@@ -91,7 +96,7 @@
 	if(user.client?.prefs?.top_examine)
 		. += generate_main_examine_body(user, m1, m2, m3, obscure_name, race_name, observer_privilege, unknown_names)
 
-	if(has_flaw(/datum/charflaw/hunted) && ishuman(user) && istype(user, /mob/living/carbon/human))
+	if(HAS_TRAIT(src, TRAIT_GNOLL_HUNTED) && ishuman(user) && istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.dna?.species?.type == /datum/species/gnoll)
 			. += span_cultsmall("Graggar has marked them!")
@@ -102,14 +107,19 @@
 			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
 
 	if(user != src && get_dist(user, src) <= 3)
-		var/datum/charflaw/malodorous/malodorous_flaw = src.get_flaw(/datum/charflaw/malodorous)
-		if((malodorous_flaw && malodorous_flaw.is_reeking()) || has_status_effect(/datum/status_effect/debuff/stinky_contact))
+		var/reeking_naturally = is_redolent_reeking()
+		if(reeking_naturally || has_status_effect(/datum/status_effect/debuff/stinky_contact))
 			var/can_see_stink = !isliving(user) // adminghost always sees it
 			if(isliving(user))
 				var/mob/living/living_user = user
 				can_see_stink = living_user.can_smell() && !HAS_TRAIT(living_user, TRAIT_NOSTINK)
 			if(can_see_stink)
-				. += span_greentext("They reek.")
+				if(reeking_naturally)
+					. += redolent_examine_text(redolent_scent_type, redolent_scent)
+				else
+					var/datum/status_effect/debuff/stinky_contact/contact_stink = has_status_effect(/datum/status_effect/debuff/stinky_contact)
+					if(contact_stink)
+						. += contact_stink.get_examine_text()
 
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -841,7 +851,7 @@
 
 	// Characters with the marked for death flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
-		if(skipface && user.has_flaw(/datum/charflaw/assassintarget) && user != src)
+		if(skipface && HAS_TRAIT(user, TRAIT_ASSASSIN_TARGET) && user != src)
 			user.add_stress(/datum/stressevent/hunted)
 
 	if(dna?.species?.type == /datum/species/gnoll)
@@ -888,7 +898,7 @@
 			if(!(mobility_flags & MOBILITY_STAND) && user != src && (user.zone_selected == BODY_ZONE_CHEST))
 				. += "<a href='?src=[REF(src)];check_hb=1'>Listen to Heartbeat</a>"
 
-	if((dna?.species?.id != "gnoll") && (!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
+	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes || nsfwflavortext || erpprefs))
 		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
 
 	if(ishuman(user))
@@ -1003,8 +1013,18 @@
 		if(GLOB.lord_titles[name])
 			. += span_notice("[m3] been granted the title of \"[GLOB.lord_titles[name]]\".")
 
+		// Agents of the Bathhouse (granted by a token of the Bathhouse) are a discreet roll:
+		// only those who work the stews - or fellow agents - recognise one, and only while
+		// the agent's face is bare (this branch never runs for the masked or unknown).
+		if(HAS_TRAIT(src, TRAIT_AGENT_BATHHOUSE) && ishuman(user))
+			var/mob/living/carbon/human/bath_viewer = user
+			if((bath_viewer.job in GLOB.bathhouse_positions) || HAS_TRAIT(bath_viewer, TRAIT_AGENT_BATHHOUSE))
+				. += span_notice("[m1] an agent of the Bathhouse.")
+
 		if(HAS_TRAIT(src, TRAIT_NOBLE) || HAS_TRAIT(src, TRAIT_DEFILED_NOBLE))
-			if(HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_DEFILED_NOBLE))
+			if(social_rank < SOCIAL_RANK_NOBLE)
+				. += span_notice("A minor noble.")
+			else if((HAS_TRAIT(user, TRAIT_NOBLE) || HAS_TRAIT(user, TRAIT_DEFILED_NOBLE)) && user.social_rank >= SOCIAL_RANK_NOBLE)
 				. += span_notice("A fellow noble.")
 			else
 				. += span_notice("A noble!")
@@ -1193,6 +1213,14 @@
 					. += span_beautiful_fem("[m1] beautiful!")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb("[m1] good-looking!")
+		else if (HAS_TRAIT(src, TRAIT_PRETTY))
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					. += span_pretty_masc("[m1] pretty handsome.")
+				if (SHE_HER, HE_HIM_F)
+					. += span_pretty_fem("[m1] pretty.")
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					. += span_pretty_nb("[m1] pretty good-looking.")
 
 		if (HAS_TRAIT(src, TRAIT_UNSEEMLY))
 			switch (pronouns)
@@ -1217,6 +1245,22 @@
 					. += span_beautiful_fem("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb("[capitalize(m2)] face is grotesquely disfigured, making [m2] unrecognizable.")
+
+		if (HAS_TRAIT(src, TRAIT_UNSETTLING))
+			var/unsettling_text
+			if (user == src)
+				unsettling_text = "I appear deeply uncanny."
+			else if (user.has_stress_event(/datum/stressevent/uncanny))
+				unsettling_text = "[capitalize(m2)] appearance is deeply unsettling!"
+			else
+				unsettling_text = "Something about [p_them()] looks off..."
+			switch (pronouns)
+				if (HE_HIM, SHE_HER_M)
+					. += span_beautiful_masc(unsettling_text)
+				if (SHE_HER, HE_HIM_F)
+					. += span_beautiful_fem(unsettling_text)
+				if (THEY_THEM, THEY_THEM_F, IT_ITS)
+					. += span_beautiful_nb(unsettling_text)
 
 		// Shouldn't be able to tell they are unrevivable through a mask as a Necran
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user)

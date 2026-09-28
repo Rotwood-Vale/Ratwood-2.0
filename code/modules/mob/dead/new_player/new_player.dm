@@ -511,7 +511,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		if((client.prefs.virtue?.type in job.virtue_restrictions) || (client.prefs.virtuetwo?.type in job.virtue_restrictions))
 			return JOB_UNAVAILABLE_VIRTUESVICE
 		// Check all vices
-		for(var/datum/charflaw/vice in list(client.prefs.vice1, client.prefs.vice2, client.prefs.vice3, client.prefs.vice4, client.prefs.vice5, client.prefs.charflaw))
+		for(var/datum/charflaw/vice in list(client.prefs.vice1, client.prefs.vice2, client.prefs.vice3, client.prefs.vice4, client.prefs.vice5, client.prefs.vice6, client.prefs.charflaw))
 			if(vice?.type in job.vice_restrictions)
 				return JOB_UNAVAILABLE_VIRTUESVICE
 //	if(job.title == "Adventurer" && latejoin)
@@ -827,7 +827,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	src << browse(null, "window=preferences") //closes job selection
 	src << browse(null, "window=mob_occupation")
 	src << browse(null, "window=latechoices") //closes late job selection
-	src << browse(null, "window=migration") // Closes migrant menu
+	if(client?.prefs?.migrant)
+		client.prefs.migrant.hide_ui() // Closes migrant menu
 	src << browse(null, "window=familiar_prefs") // Closes familiar prefs menu
 
 	SStriumphs.remove_triumph_buy_menu(client)

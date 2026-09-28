@@ -39,12 +39,9 @@
 
 	spawn(rand(10,20))
 		..()
-		spawn (1)
-			new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
-		spawn (5)
-			new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 2))
-		spawn (12)
-			new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
+		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 1)
+		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 2), 5)
+		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 12)
 
 		for(var/mob/M in range(5, user))
 			if(!M.stat)
@@ -111,12 +108,9 @@
 
 	spawn(fire_delay)
 		..()
-		spawn (1)
-			new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
-		spawn (5)
-			new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 2))
-		spawn (12)
-			new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
+		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 1)
+		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 2), 5)
+		addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 12)
 
 		for(var/mob/M in range(5, user))
 			if(!M.stat)

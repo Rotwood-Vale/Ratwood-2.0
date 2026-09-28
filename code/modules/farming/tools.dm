@@ -146,8 +146,8 @@
 	wlength = WLENGTH_NORMAL
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	smeltresult = /obj/item/ingot/iron
-	var/hoe_damage = null //the durability damage recieved for every work cycle
-	var/work_time = 3 SECONDS // the time it takes to make new soil or till soil
+	hoe_damage = null
+	work_time = 3 SECONDS
 	is_tool = TRUE
 
 /obj/item/rogueweapon/hoe/decrepit
@@ -240,7 +240,7 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/rogueweapon/hoe/attack_turf(turf/T, mob/living/user)
+/obj/item/rogueweapon/attack_turf(turf/T, mob/living/user)
 	if(user.used_intent.type == /datum/intent/till)
 		if(user.get_skill_level(/datum/skill/labor/farming) == SKILL_LEVEL_LEGENDARY) //check if the user has legendary farming skill
 			work_time = 0.5 SECONDS //if legendary skill, do_afters take half a second instead of 3
@@ -368,13 +368,11 @@
 
 /obj/item/rogueweapon/pitchfork/copper
 	name = "copper pitchfork"
-	// these sprites are currently missing
-	// icon = 'icons/roguetown/weapons/64.dmi'
-	// icon_state = "cfork"
-	// pixel_y = -16
-	// pixel_x = -16
-	// inhand_x_dimension = 64
-	// inhand_y_dimension = 64
+	pixel_y = -16
+	pixel_x = -16
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	icon_state = "cpitchfork"
 	smeltresult = /obj/item/ingot/copper
 
 /obj/item/rogueweapon/pitchfork/blacksteel

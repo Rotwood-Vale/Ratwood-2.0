@@ -192,29 +192,32 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	user.AddSpell(new /obj/effect/proc_holder/spell/self/saddleborn/whistle)
 	qdel(src)
 
-// dirty subtype for saddleborn spells that handles checking if we can actually do fucking anything at all
+/obj/effect/proc_holder/spell/self/saddleborn/proc/get_mount(mob/living/carbon/human/user)
+	return user.saddleborn_mount?.resolve()
+
+/obj/effect/proc_holder/spell/self/saddleborn/proc/can_mount_travel(area/place, mob/living/simple_animal/mount)
+	if(istype(mount, /mob/living/simple_animal/hostile/retaliate/rogue/drider))
+		return is_spiderborn_mount_area(place)
+	return place?.outdoors
+
 /obj/effect/proc_holder/spell/self/saddleborn/proc/check_mount(mob/living/carbon/human/user)
-	if (!ishuman(user))
+	if(!ishuman(user))
 		return FALSE
 
-	if (!user.saddleborn_mount)
-		to_chat(user, span_warning("You have no treasured mount to send away..."))
-		qdel(src)
-		return FALSE
-
-	var/mob/living/simple_animal/honse = user.saddleborn_mount.resolve()
-	if (!honse || honse.stat == DEAD)
+	var/mob/living/simple_animal/honse = get_mount(user)
+	if(QDELETED(honse) || honse.stat == DEAD)
 		to_chat(user, span_warning("Necra has them now..."))
 		return FALSE
 
-	if (honse && honse.has_buckled_mobs())
+	if(honse.has_buckled_mobs())
 		to_chat(user, span_warning("Your mount needs to have nobody riding on it first!"))
 		return FALSE
 
-	var/area/place = get_area(user.loc)
-	if (!place || !place.outdoors)
-		to_chat(user, span_warning("You need to be outside!"))
-		revert_cast()
+	if(!isturf(user.loc) || !can_mount_travel(get_area(user), honse))
+		if(istype(honse, /mob/living/simple_animal/hostile/retaliate/rogue/drider))
+			to_chat(user, span_warning("I must be outdoors or in the Underdark."))
+		else
+			to_chat(user, span_warning("You need to be outside!"))
 		return FALSE
 
 	return TRUE
@@ -246,7 +249,7 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 		revert_cast()
 		return FALSE
 
-	var/mob/living/simple_animal/honse = user.saddleborn_mount.resolve()
+	var/mob/living/simple_animal/honse = get_mount(user)
 	if (!user.Adjacent(honse))
 		to_chat(user, span_warning("You need to be next to your steed to send them away!"))
 		return FALSE
@@ -292,30 +295,32 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 		revert_cast()
 		return FALSE
 
-	var/mob/living/simple_animal/honse = user.saddleborn_mount.resolve()
+	var/mob/living/simple_animal/honse = get_mount(user)
 	var/back_from_the_void = (honse.loc == null)
 	var/callback_time = back_from_the_void ? 10 SECONDS : 5 SECONDS // nullspace returns take a lot longer to incentivize leaving it in the world
 	var/dangerous_summon = FALSE // will we try to proc an ambush upon return?
 
-	if (get_dist(honse.loc, user.loc) <= world.view)
+	if(!back_from_the_void && honse.z == user.z && get_dist(honse, user) <= world.view)
 		to_chat(user, span_warning("Your trusty steed is nearby!"))
 		return
 
 	var/area/rogue/place = get_area(user.loc)
 	// apply alterations to our summon time based on our location: remember, this only works outdoors!
-	if (place.threat_region == THREAT_REGION_MOUNT_DECAP)
-		callback_time += 10 SECONDS
-		dangerous_summon = TRUE
-		to_chat(user, span_warning("Mount Decapitation is a dangerous place for a mount to navigate alone..."))
+	if(!istype(honse, /mob/living/simple_animal/hostile/retaliate/rogue/drider))
+		if(place.threat_region == THREAT_REGION_MOUNT_DECAP)
+			callback_time += 10 SECONDS
+			dangerous_summon = TRUE
+			to_chat(user, span_warning("Mount Decapitation is a dangerous place for a mount to navigate alone..."))
+		if(istype(place, /area/rogue))
+			if(place.warden_area)
+				callback_time += 5 SECONDS
+				to_chat(user, span_warning("The murderwoods are a dangerous place for a mount to navigate alone..."))
+				dangerous_summon = TRUE
+			if(istype(place, /area/rogue/under/underdark))
+				callback_time += 30 SECONDS
+				to_chat(user, span_warning("The underdark is a <b>VERY</b> dangerous place for a mount to navigate alone..."))
+				dangerous_summon = TRUE
 	if(istype(place, /area/rogue))
-		if (place.warden_area)
-			callback_time += 5 SECONDS
-			to_chat(user, span_warning("The murderwoods are a dangerous place for a mount to navigate alone..."))
-			dangerous_summon = TRUE
-		if (istype(place, /area/rogue/under/underdark))
-			callback_time += 30 SECONDS
-			to_chat(user, span_warning("The underdark is a <b>VERY</b> dangerous place for a mount to navigate alone..."))
-			dangerous_summon = TRUE
 		if (place.keep_area)
 			if (HAS_TRAIT(user, TRAIT_NOBLE))
 				to_chat(user, span_info("A passing servant helps fetch your mount for you!"))
@@ -334,16 +339,16 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 	var/honse_base_loc = honse.loc
 	var/area/rogue/honse_place = get_area(honse.loc)
 	honse.unbuckle_all_mobs(TRUE)
-	if (!back_from_the_void && honse_place.outdoors)
+	if(!back_from_the_void && can_mount_travel(honse_place, honse))
 		honse.visible_message(span_notice("[honse] perks its ears up in response to a distant whistle, and darts off..."))
 		playsound(honse, 'sound/magic/saddleborn-call.ogg', 50, FALSE) // distant spooky whistle OooOOOo
 		honse.moveToNullspace() //temporarily shuffle it off into the null dimension, to reflect it running to the player
 	
-	if (do_after(user, callback_time))
+	if(do_after(user, callback_time) && check_mount(user))
 		if (back_from_the_void) // we're summoning from nullspace, so destasis and remove the heal, if we have one
 			honse.remove_status_effect(/datum/status_effect/buff/stasis)
 		
-		if (!back_from_the_void && honse_place && !honse_place.outdoors)
+		if(!back_from_the_void && !can_mount_travel(honse_place, honse))
 			to_chat(user, span_warning("...but nothing comes. They musn't have heard your whistling."))
 			return TRUE
 		
@@ -358,8 +363,8 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 				user.consider_ambush(ignore_cooldown = TRUE)
 		return TRUE
 	else
-		honse.forceMove(honse_base_loc) // put the honse back, and give some info as to what just happened for onlookers
-		honse.visible_message(span_notice("[honse] trundles back into sight with a confused expression, ears swivelling to catch some manner of sound..."))
-		revert_cast()
+		if(!QDELETED(honse) && honse_base_loc)
+			honse.forceMove(honse_base_loc)
+			honse.visible_message(span_notice("[honse] returns to view after an interrupted call."))
+		revert_cast(user)
 		return FALSE
-

@@ -91,7 +91,7 @@
 	if(!QDELETED(owner_mob) && world.time >= ignore_owner_defense_until)
 		var/mob/living/attacker = owner_mob.lastattacker_weakref?.resolve()
 		if(isliving(attacker) && attacker.stat != DEAD && attacker != src && attacker != owner_mob)
-			enemies |= attacker
+			add_enemy(attacker)
 			GiveTarget(attacker)
 			toggle_ai(AI_ON)
 			return
@@ -118,7 +118,7 @@
 	toggle_ai(AI_ON)
 	var/mob/living/attacker = lastattacker_weakref?.resolve()
 	if(isliving(attacker) && attacker != owner_mob && !faction_check_mob(attacker) && attacker.stat != DEAD)
-		enemies |= attacker
+		add_enemy(attacker)
 
 /// Zone targeting priority: head → legs (if skull broken) → random (if both skull and legs broken).
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/dryad/lesser/AttackingTarget()

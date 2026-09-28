@@ -70,7 +70,7 @@
 	desc = "Fine armor made of treated animal scales, denoting an esteemed career in the dunes."
 	icon_state = "huus"
 	item_state = "huus"
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_BRIGANDINE
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS|ARMS
 	sewrepair = TRUE
 	armor_class = ARMOR_CLASS_MEDIUM

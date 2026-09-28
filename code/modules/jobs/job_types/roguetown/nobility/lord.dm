@@ -36,6 +36,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	social_rank = SOCIAL_RANK_ROYAL
 	// Can't use the Throat when you can't talk properly or.. at all for that matter.
 	vice_restrictions = list(/datum/charflaw/mute, /datum/charflaw/unintelligible)
+	quirk_restrictions = list(/datum/quirk/hunted)
 
 	job_subclasses = list(
 		/datum/advclass/lord/warrior,

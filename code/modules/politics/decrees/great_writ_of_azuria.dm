@@ -3,7 +3,7 @@
 	name = "The Great Writ of Ferentia"
 	category = DECREE_CATEGORY_ANCIENT
 	mechanical_text = "Nobles pay no taxes nor fines."
-	flavor_text = {"This Great Writ of Ferentia, pronounced under Astrata's Sun and with Ravox as witness, declareth that the nobility of this land, and the blue blood of foreign realms sojourning within it, being of lineage blessed by Astrata's grace, shall bear no tax nor levy upon their persons or estates.
+	flavor_text = {"This Great Writ of Ferentia, pronounced under Astrata's Sun and with Ravox as witness, declareth that the titled nobility of this land, being of lineage blessed by Astrata's grace, shall bear no tax nor levy upon their persons or estates. Untitled blood and the blue blood of foreign realms sojourning within it enjoy no such exemption, and shall render unto the Crown as any other subject.
 
 In return, the nobles of The Realm shall undertake the duty of arms - to defend the Realm in their own person and with their retainers, to answer the Crown's call to war in whatsoever hour it cometh, and to render unto the throne the fealty that is owed by blood and by oath.
 
@@ -17,6 +17,6 @@ Yeven under the seal of the Crown, in witness of the Ten."}
 /datum/decree/great_writ/apply_exemption(mob/living/payer, tax_category)
 	if(!active)
 		return FALSE
-	if(HAS_TRAIT(payer, TRAIT_NOBLE))
+	if(HAS_TRAIT(payer, TRAIT_NOBLE) && payer.social_rank >= SOCIAL_RANK_NOBLE && !HAS_TRAIT(payer, TRAIT_OUTLANDER))
 		return TRUE
 	return FALSE

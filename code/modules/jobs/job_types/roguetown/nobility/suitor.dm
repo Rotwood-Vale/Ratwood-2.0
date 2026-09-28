@@ -8,7 +8,7 @@
 
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_NO_CONSTRUCT
-	advclass_cat_rolls = list(CTAG_CONSORT = 20)
+	advclass_cat_rolls = list(CTAG_SUITOR = 20)
 	tutorial = "You are a noble from a foreign court who has travelled to the realm in order to win the hand of the realm's most eligible bachelor and secure a political ally for your house. Competition is fierce, and it seems you're not the only one vying for the duke's favor..."
 
 	outfit = /datum/outfit/job/roguetown/suitor
@@ -30,7 +30,7 @@
 	name = "Envoy"
 	tutorial = "You're a graceful envoy - fluent in flattery, courtesy, and calculated sincerity. You'll charm your way into the Duke's heart, winning favor with warmth, wit, and well-timed smiles."
 	outfit = /datum/outfit/job/roguetown/suitor/envoy
-	category_tags = list(CTAG_CONSORT)
+	category_tags = list(CTAG_SUITOR)
 	traits_applied = list(TRAIT_SEEPRICES, TRAIT_NUTCRACKER, TRAIT_GOODLOVER)
 	subclass_stats = list(
 		STATKEY_INT = 3,
@@ -88,7 +88,7 @@
 	tutorial = "You're a silver-tongued snake - master of whispers, poison, and perfectly timed accidents. Why win hearts when you can twist them? With rivals removed and secrets weaponized, the Duke will have no choice but to choose you."
 	outfit = /datum/outfit/job/roguetown/suitor/schemer
 	traits_applied = list(TRAIT_ALCHEMY_EXPERT)
-	category_tags = list(CTAG_CONSORT)
+	category_tags = list(CTAG_SUITOR)
 	subclass_stats = list(
 		STATKEY_SPD = 3,
 		STATKEY_INT = 1,
@@ -139,7 +139,7 @@
 	name = "Gallant"
 	tutorial = "With honor and the flash of your steel, you meet your rivals in open challenge. You'll win the Duke's favor not with whispers or warmth, but with roaring applause."
 	outfit = /datum/outfit/job/roguetown/suitor/gallant
-	category_tags = list(CTAG_CONSORT)
+	category_tags = list(CTAG_SUITOR)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
 		STATKEY_INT = 2,

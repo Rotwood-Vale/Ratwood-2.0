@@ -73,7 +73,7 @@
 			continue
 		if(human.advsetup || !human.class_equip_finished) // they haven't gotten their true class name yet
 			continue
-		if(human.has_flaw(/datum/charflaw/hunted))
+		if(HAS_TRAIT(human, TRAIT_GNOLL_HUNTED))
 			add_target_to_list(human, hunted_targets, name_counts)
 		else if(human.job in combat_roles)
 			add_target_to_list(human, combat_targets, name_counts)
@@ -217,7 +217,7 @@
 
 	// Determine Channel Time
 	var/channel_time = 15 SECONDS
-	if(target.has_flaw(/datum/charflaw/hunted))
+	if(HAS_TRAIT(target, TRAIT_GNOLL_HUNTED))
 		channel_time = 6 SECONDS
 
 	to_chat(user, span_notice("You begin pulling [target] into graggar's plane"))
@@ -288,9 +288,9 @@
 	H.invisibility = initial(H.invisibility) //Prevent any potential issues with gnolls becoming invisible (THIS SHOULD NEVER BE NECESSARY, but the timer may fail!)
 	if(channeling_abduction && ishuman(parent) && get_recent_damage() >= GNOLL_ABDUCT_DAMAGE_THRESHOLD)
 		// micro stun to break any do_afters
-		// asynchronous as to not mess with signal behavior!
-		spawn(0)
-			H.Stun(1)
+		// Defer to preserve signal behavior. Stun() never sleeps, so INVOKE_ASYNC would run it
+		// inline inside this handler. A 0-delay timer preserves the original deferral.
+		addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living, Stun), 1), 0)
 		to_chat(H, span_userdanger("The pain interrupts your concentration!"))
 		channeling_abduction = FALSE // Reset channel flag
 

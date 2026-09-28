@@ -1,6 +1,0 @@
-author: "RadiantFlash7"
-delete-after: True
-changes:
-  - bugfix: "loan payments now pay properly"
-  - bugfix: "stockpile now presumes theres 100 players in round when setting limits at the start, rather then defaulting to 0."
-  - bugfix: "Community Contribution now is only visible and usable by peasants, sidefolk, and yeoman"

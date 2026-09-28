@@ -1,5 +1,0 @@
-author: "AlucardHellsingChapel"
-delete-after: True
-changes:
-  - rscadd: "Check for enchant weapon"
-  - balance: "made new zizo weapons unenchantable"
