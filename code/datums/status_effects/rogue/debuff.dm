@@ -617,6 +617,13 @@
 	effectedstats = list(STATKEY_INT = -2, STATKEY_SPD = -2, STATKEY_LCK = -2)
 	duration = 20 MINUTES
 
+/atom/movable/screen/alert/status_effect/debuff/hereticsermon
+	name = "Heretic on sermon!"
+	desc = "I was on the sermon. My patron is not proud of me."
+	icon_state = "debuff"
+	color ="#af9f9f"
+//Stavemaster status effects below
+
 /datum/status_effect/debuff/dazed/stavetackle
 	id = "stackle"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavetackle
@@ -625,14 +632,50 @@
 
 /atom/movable/screen/alert/status_effect/debuff/dazed/stavetackle
 	name = "Stave Tackle"
-	desc = "My foot has been struck-- damned Monks."
+	desc = "My footing is ruined-- damn Monks."
 	icon_state = "mstrike"
 
-/atom/movable/screen/alert/status_effect/debuff/hereticsermon
-	name = "Heretic on sermon!"
-	desc = "I was on the sermon. My patron is not proud of me."
-	icon_state = "debuff"
-	color ="#af9f9f"
+/datum/status_effect/debuff/dazed/stavesweepv
+	id = "stavesweepv"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavevsweep
+	effectedstats = list(STATKEY_CON = -2, STATKEY_WIL = -1)
+	duration = 2 SECONDS
+
+
+/datum/status_effect/debuff/dazed/stavesweepv/on_apply()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		var/msg = pick("gasp")
+		C.emote(msg, forced = TRUE)
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/stavevsweep
+	name = "Sweeped Through"
+	desc = "OUGH!-- MY RIBS! WHAT THE FUCK?!"
+	icon_state = "mstrike"
+
+/datum/status_effect/debuff/dazed/stavesweeph
+	id = "stavesweeph"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavehsweep
+	effectedstats = list(STATKEY_INT = -1, STATKEY_PER = -3)
+	duration = 2 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/stavehsweep
+	name = "Smacked on the Head"
+	desc = "GHH-- INSOLENT WHORE! MY HEAD!"
+	icon_state = "mstrike"
+
+/datum/status_effect/debuff/stavecooldown
+	id = "stavecooldown"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/stavecooldown
+	duration = 30 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/stavecooldown
+	name = "Master Monk Cooldown"
+	desc = "I am free from this monk's wrath-- for a brief moment."
+	icon_state = "effectcd"
+
+//Master staves done
 
 /datum/status_effect/debuff/necrandeathdoorwilloss
 	id = "Necran Deathly calm!"

@@ -79,7 +79,9 @@
 					if("Knuckledusters")
 						r_hand = /obj/item/rogueweapon/knuckles/psydon
 			if("Quarterstaff - Expert Polearms, +I PER / +I INT")//stave user but with no int and per malus so they dont get folded.
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				ADD_TRAIT(H, TRAIT_STAVEMASTER, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_BADTRAINER, TRAIT_GENERIC)
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/psy
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted//no pugulist gloves for you sire, you have a staff.
 				H.change_stat(STATKEY_PER, 1)

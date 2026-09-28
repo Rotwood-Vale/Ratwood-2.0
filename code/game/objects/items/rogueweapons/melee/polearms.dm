@@ -310,27 +310,45 @@
 #define QUARTERSTAFF_STOCK_INTENTS list(SPEAR_BASH)
 #define QUARTERSTAFF_STOCK_GRIPPED_INTENTS list(/datum/intent/spear/bash/ranged/quarterstaff,/datum/intent/spear/thrust/quarterstaff)
 //staff monk, you want? I give. One-handed is where you have your reach. Gripped is where you have more defense.
-/datum/intent/woodstaff/quarterstaff/hsweep //Area control. Less damage, multiple targets.
+/datum/intent/effect/quarterstaff/hsweep //Area control. Less damage, multiple targets.
 	name = "horizontal sweep"
 	icon_state = "incrush"
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("sweeps across", "sweeps above")
-	damfactor = 0.8
+	damfactor = 0.6
 	cleave = /datum/cleave_pattern/stavehsweep
+	chargedloop = /datum/looping_sound/stavecharge
+	chargetime = 1 SECONDS
 	desc = "Sweep your staff horizontally, striking those whom stand in front of you."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
+	target_parts = list(BODY_ZONE_PRECISE_SKULL)	
 
-/datum/intent/woodstaff/quarterstaff/vsweep //Area control. Less damage, multiple targets.
+/datum/intent/effect/quarterstaff/hsweep/spec_on_apply_effect(mob/living/H, mob/living/user, params)
+	if(H.has_status_effect(/datum/status_effect/debuff/stavecooldown))
+		return
+	H.apply_status_effect(/datum/status_effect/debuff/dazed/stavesweeph)
+	H.apply_status_effect(/datum/status_effect/debuff/stavecooldown)
+
+/datum/intent/effect/quarterstaff/vsweep //Area control. Less damage, multiple targets.
 	name = "horizontal sweep"
 	icon_state = "insweep"
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("vertically strikes", "sweeps through")
-	damfactor = 0.8
+	chargetime = 1 SECONDS
+	chargedloop = /datum/looping_sound/stavecharge
+	damfactor = 0.6
 	desc = "Sweep your staff vertically, sweep and punish those ahead."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	cleave = /datum/cleave_pattern/stavevsweep
 	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
+	target_parts = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_STOMACH)
+
+/datum/intent/effect/quarterstaff/vsweep/spec_on_apply_effect(mob/living/H, mob/living/user, params)
+	if(H.has_status_effect(/datum/status_effect/debuff/stavecooldown))
+		return
+	H.apply_status_effect(/datum/status_effect/debuff/dazed/stavesweepv)
+	H.apply_status_effect(/datum/status_effect/debuff/stavecooldown)
 
 /datum/intent/effect/hookfeet
 	name = "tackle feet"
@@ -1756,7 +1774,7 @@
 	can_parry = TRUE
 	max_integrity = 150
 	/// One-handed intents a TRAIT_STAVEMASTER fights with.
-	var/list/master_item_intents = list(/datum/intent/woodstaff/quarterstaff/hsweep, /datum/intent/woodstaff/quarterstaff/vsweep, /datum/intent/effect/hookfeet)
+	var/list/master_item_intents = list(/datum/intent/effect/quarterstaff/vsweep, /datum/intent/effect/quarterstaff/hsweep, /datum/intent/effect/hookfeet)
 	/// Two-handed intents a TRAIT_STAVEMASTER fights with.
 	var/list/master_gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff/strikeplus, /datum/intent/spear/thrust/quarterstaff/thrustplus, /datum/intent/woodstaff/quarterstaff/push, /datum/intent/shield/block/stave)
 	/// Whether this sword is valid for TRAIT_STAVEMASTER
