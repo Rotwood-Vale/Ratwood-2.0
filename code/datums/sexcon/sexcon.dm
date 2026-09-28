@@ -771,10 +771,13 @@
 		adjust_charge(-CHARGE_FOR_CLIMAX)
 	else
 		to_chat(user, span_love("<i>Spurt!</i>"))
-	if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
-		user.sate_addiction(/datum/charflaw/addiction/lovefiend)
-	if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
-		user.sate_addiction(/datum/charflaw/addiction/baothamarked)
+	if(user.has_status_effect(/datum/status_effect/debuff/false_sensation))
+		to_chat(user, span_warning("Not enough..."))
+	else
+		if(user.has_flaw(/datum/charflaw/addiction/lovefiend))
+			user.sate_addiction(/datum/charflaw/addiction/lovefiend)
+		if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
+			user.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	user.add_stress(/datum/stressevent/cumok)
 	user.emote("sexmoanhvy", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
@@ -885,6 +888,13 @@
 	arousal = clamp(amount, 0, MAX_AROUSAL)
 	update_pink_screen()
 	update_erect_state()
+
+/datum/sex_controller/proc/try_apply_false_sensation()
+	if(!user.has_flaw(/datum/charflaw/addiction/lovefiend) && !user.has_flaw(/datum/charflaw/addiction/baothamarked))
+		return
+	if(!user.has_status_effect(/datum/status_effect/debuff/false_sensation)) // So chat isn't spammed
+		to_chat(user, span_warning("My arousal is hollow and false. It won't sate my urges."))
+	user.apply_status_effect(/datum/status_effect/debuff/false_sensation)
 
 /datum/sex_controller/proc/update_erect_state()
 	var/obj/item/organ/penis/penis = user.getorganslot(ORGAN_SLOT_PENIS)
@@ -1319,6 +1329,8 @@
 			to_chat(user, span_notice("Positioning and exposure checks are now [freeuse ? "disabled" : "enabled"]."))
 		if("set_arousal")
 			var/amount = input(user, "Value above 120 will immediately cause orgasm!", "Set Arousal", arousal) as num
+			if(!isnull(amount) && amount > arousal)
+				try_apply_false_sensation()
 			if(aphrodisiac > 1 && amount > 0)
 				set_arousal(amount * aphrodisiac)
 			else
@@ -1326,6 +1338,8 @@
 		if("freeze_arousal")
 			if(aphrodisiac == 1)
 				arousal_frozen = !arousal_frozen
+				if(arousal > 60)
+					try_apply_false_sensation()
 		if("category_misc")
 			action_category = SEX_CATEGORY_MISC
 		if("category_hands")

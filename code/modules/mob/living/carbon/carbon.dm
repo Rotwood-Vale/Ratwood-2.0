@@ -21,6 +21,8 @@
 		SIGNAL_REMOVETRAIT(TRAIT_MUTE),
 		SIGNAL_ADDTRAIT(TRAIT_BAGGED),
 		SIGNAL_REMOVETRAIT(TRAIT_BAGGED),
+		SIGNAL_ADDTRAIT(TRAIT_GARGLE_SPEECH),
+		SIGNAL_REMOVETRAIT(TRAIT_GARGLE_SPEECH),
 	), PROC_REF(on_spell_availability_trait_changed))
 
 /mob/living/carbon/proc/on_spell_availability_trait_changed(datum/source, trait)

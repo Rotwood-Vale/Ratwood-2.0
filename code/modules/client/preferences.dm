@@ -345,6 +345,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/list/custom_descriptors = list()
 
 	var/char_accent = "No accent"
+	var/char_mannerism = "No mannerism"
 
 	// Vocal bark prefs
 	var/bark_id = "mutedc3"
@@ -808,6 +809,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<br><b>Nickname Color: </b> </b><a href='?_src_=prefs;preference=highlight_color;task=input'>Change</a>"
 			dat += "<br><b>Voice Pitch: </b><a href='?_src_=prefs;preference=voice_pitch;task=input'>[voice_pitch]</a>"
 			dat += "<br><b>Accent:</b> <a href='?_src_=prefs;preference=char_accent;task=input'>[char_accent]</a>"
+			dat += "<br><b>Speech Mannerism:</b> <a href='?_src_=prefs;preference=char_mannerism;task=input'>[char_mannerism]</a>"
 			dat += "<br><b>Features:</b> <a href='?_src_=prefs;preference=customizers;task=menu'>Change</a>"
 			dat += "<br><b>Sprite Scale:</b><a href='?_src_=prefs;preference=body_size;task=input'>[(features["body_size"] * 100)]%</a>"
 			dat += "<br><b>Markings:</b> <a href='?_src_=prefs;preference=markings;task=menu'>Change</a>"
@@ -2281,8 +2283,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						rumour = null
 						ShowChoices(user)
 						return
-					if(length(new_rumour) > 400)
-						to_chat(user, span_warning("Rumours cannot exceed 400 characters."))
+					if(length(new_rumour) > 750)
+						to_chat(user, span_warning("Rumours cannot exceed 750 characters."))
 						ShowChoices(user)
 						return
 					rumour = new_rumour
@@ -2298,8 +2300,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						noble_gossip = null
 						ShowChoices(user)
 						return
-					if(length(new_gossip) > 400)
-						to_chat(user, span_notice("Noble gossip cannot exceed 400 characters."))
+					if(length(new_gossip) > 750)
+						to_chat(user, span_notice("Noble gossip cannot exceed 750 characters."))
 						ShowChoices(user)
 						return
 					noble_gossip = new_gossip
@@ -2724,6 +2726,23 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 								preview_text = "<span class='[accent_preview_span]'>[preview_text]</span>"
 
 						to_chat(user, span_info("<b>[selectedaccent] Preview:</b> [preview_text]"))
+
+				if("char_mannerism")
+					var/selected_mannerism = tgui_input_list(user, "Choose your character's speech mannerism:", "Character Preference", GLOB.character_mannerisms)
+					if(selected_mannerism)
+						char_mannerism = selected_mannerism
+						var/test_message = "Hello friend, yes this is good. My Lord rides through the Duchy with servants and soldiers; the captain and sergeant guard the church while archers and cavalry hold the north road. My sword and shield are sharp, the water flows refreshingly, and we thank the Duke before saying goodbye."
+						var/accent_preview = apply_accent_preview(char_accent, test_message)
+						var/preview_message = accent_preview ? "[accent_preview]" : test_message
+						var/preview_text = apply_mannerism_preview(selected_mannerism, preview_message)
+
+						var/list/accent_preview_spans = GLOB.accent_spans?[char_accent]
+						if(accent_preview_spans?.len)
+							var/accent_preview_span = accent_preview_spans[1]
+							if(accent_preview_span)
+								preview_text = "<span class='[accent_preview_span]'>[preview_text]</span>"
+
+						to_chat(user, span_info("<b>[selected_mannerism] Preview:</b> [preview_text]"))
 
 				if("ooccolor")
 					var/new_ooccolor = color_pick_sanitized(user, "Choose your OOC colour:", "Game Preference",ooccolor)
@@ -3437,6 +3456,12 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	else
 		char_accent = "No accent"
 		character.char_accent = char_accent
+
+	if (char_mannerism in GLOB.character_mannerisms)
+		character.char_mannerism = char_mannerism
+	else
+		char_mannerism = "No mannerism"
+		character.char_mannerism = char_mannerism
 
 	if(culinary_preferences)
 		apply_culinary_preferences(character)

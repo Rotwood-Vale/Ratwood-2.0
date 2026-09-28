@@ -1382,6 +1382,7 @@
 	gripped_intents = null
 	minstr = 4
 	wdefense = 4
+	wbalance = WBALANCE_SWIFT
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_NORMAL
 	grid_width = 32
@@ -1501,7 +1502,6 @@
 	force_wielded = 20
 	minstr = 7
 	wdefense = 3
-	wbalance = WBALANCE_SWIFT
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
@@ -1537,7 +1537,6 @@
 	force_wielded = 20
 	minstr = 7
 	wdefense = 3
-	wbalance = WBALANCE_SWIFT
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 

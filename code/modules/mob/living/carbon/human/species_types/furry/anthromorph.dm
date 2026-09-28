@@ -149,6 +149,7 @@
 		/datum/body_marking/tall_eyes,
 		/datum/body_marking/outer_tall_eyes,
 		/datum/body_marking/blank_face,
+		/datum/body_marking/face_paint,
 		/datum/body_marking/wolf,
 		/datum/body_marking/plain,
 		/datum/body_marking/tiger,
