@@ -723,7 +723,7 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)//Only T4 NOT to start maxed, with a devotion cap.
 	C.update_devotion(C.max_devotion / 4 - 50, C.max_devotion / 4 - 50, silent = TRUE) // Start at ~25% of devotion cap
 	if(H.mind)
-		var/weapons = list("Path of the Preacher", "Path of the Shepard")
+		var/weapons = list("Path of the Shepherd", "Path of the Preacher")
 		var/weapon_choice = input(H, "Choose your path.", "CHOOSE YOUR DISCIPLINE.") as anything in weapons
 		switch(weapon_choice)
 			if("Path of the Preacher")//Discount homesteader. No trait so you can't level these skills up, nor do you have starting tools.
@@ -732,7 +732,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 1, TRUE)//just so you can make pretty floors easier
 				H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 3, TRUE)
-			if("Path of the Shepard")//The "combat" variant. The core stat spread should keep this class from ever overshadowing the others, but it's worth keeping an eye out anyway.
+			if("Path of the Shepherd")//The "combat" variant. The core stat spread should keep this class from ever overshadowing the others, but it's worth keeping an eye out anyway.
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
