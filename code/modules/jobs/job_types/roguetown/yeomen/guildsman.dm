@@ -109,7 +109,7 @@
 	outfit = /datum/outfit/job/roguetown/guildsman/artificer
 
 	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_ARCYNE_T1, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER)
+	traits_applied = list(TRAIT_ARCYNE_T1, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER, TRAIT_LEGENDARY_MINER)
 	subclass_stats = list( // alchemy expert upon request
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
