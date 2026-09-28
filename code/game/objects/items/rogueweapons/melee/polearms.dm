@@ -321,17 +321,17 @@
 	chargetime = 1 SECONDS
 	desc = "Sweep your staff horizontally, striking those whom stand in front of you."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
-	target_parts = list(BODY_ZONE_PRECISE_SKULL)	
 
 /datum/intent/effect/quarterstaff/hsweep/spec_on_apply_effect(mob/living/H, mob/living/user, params)
-	if(H.has_status_effect(/datum/status_effect/debuff/stavecooldown))
+	if(H.has_status_effect(/datum/status_effect/debuff/stavehorizontalcd))
 		return
+	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
+	target_parts = list(BODY_ZONE_PRECISE_SKULL)	
 	H.apply_status_effect(/datum/status_effect/debuff/dazed/stavesweeph)
-	H.apply_status_effect(/datum/status_effect/debuff/stavecooldown)
+	H.apply_status_effect(/datum/status_effect/debuff/stavehorizontalcd)
 
 /datum/intent/effect/quarterstaff/vsweep //Area control. Less damage, multiple targets.
-	name = "horizontal sweep"
+	name = "vertical sweep"
 	icon_state = "insweep"
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("vertically strikes", "sweeps through")
@@ -341,14 +341,14 @@
 	desc = "Sweep your staff vertically, sweep and punish those ahead."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	cleave = /datum/cleave_pattern/stavevsweep
-	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
-	target_parts = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_STOMACH)
 
 /datum/intent/effect/quarterstaff/vsweep/spec_on_apply_effect(mob/living/H, mob/living/user, params)
-	if(H.has_status_effect(/datum/status_effect/debuff/stavecooldown))
+	if(H.has_status_effect(/datum/status_effect/debuff/staveverticalcd))
 		return
+	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
+	target_parts = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_STOMACH)
 	H.apply_status_effect(/datum/status_effect/debuff/dazed/stavesweepv)
-	H.apply_status_effect(/datum/status_effect/debuff/stavecooldown)
+	H.apply_status_effect(/datum/status_effect/debuff/staveverticalcd)
 
 /datum/intent/effect/hookfeet
 	name = "tackle feet"
@@ -363,23 +363,23 @@
 /datum/intent/spear/bash/ranged/quarterstaff/strikeplus
 	name = "strike"
 	icon_state = "instrike"
-	desc = "Powerfully swing your staff; breaking spirit and bones alike"
+	desc = "Powerfully swing your staff; breaking spirit and bones alike."
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("powerfully strikes", "powerfully hits", "masterfully attacks")
 	reach = 1
-	damfactor = 1.8
+	damfactor = 1.5
 	intent_intdamage_factor = 0.5
 
 /datum/intent/spear/thrust/quarterstaff/thrustplus
 	name = "thrust"
 	icon_state = "inbash"
-	desc = "Quickly lift your staff up; striking people at a close range to knock the air out of them."
+	desc = "Quickly extend your staff forth; striking people at a greater range to knock the air out of them."
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("masterfully thrusts", "quickly thrusts", "powerfully jabs")
 	reach = 2
 	damfactor = 1.4
 	intent_intdamage_factor = 0.8
-	penfactor = 20
+	penfactor = 10
 
 /datum/intent/shield/block/stave
 	name = "block"

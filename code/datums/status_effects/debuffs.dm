@@ -974,3 +974,23 @@
 	name = "Knockback Cooldown"
 	desc = "I have been knocked back recently by a stave and cannot be knocked back again."
 	icon_state = "debuff" // Placeholder
+
+/datum/status_effect/debuff/stavehorizontalcd
+	id = "stavecooldownh"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/stavehorizontalcd
+	duration = 15 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/stavehorizontalcd
+	name = "Master Monk Cooldown"
+	desc = "I am free from this monk's wrath-- my ribs are safe, for a brief moment."
+	icon_state = "effectcd"
+
+/datum/status_effect/debuff/staveverticalcd
+	id = "stavecooldownv"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/staveverticalcd
+	duration = 15 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/staveverticalcd
+	name = "Master Monk Cooldown"
+	desc = "I adapted to their smash-- for a brief moment. My skull is safe."
+	icon_state = "effectcd"

@@ -639,8 +639,7 @@
 	id = "stavesweepv"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavevsweep
 	effectedstats = list(STATKEY_CON = -2, STATKEY_WIL = -1)
-	duration = 2 SECONDS
-
+	duration = 4 SECONDS
 
 /datum/status_effect/debuff/dazed/stavesweepv/on_apply()
 	. = ..()
@@ -656,24 +655,14 @@
 
 /datum/status_effect/debuff/dazed/stavesweeph
 	id = "stavesweeph"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavehsweep
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavesweeph
 	effectedstats = list(STATKEY_INT = -1, STATKEY_PER = -3)
-	duration = 2 SECONDS
+	duration = 4 SECONDS
 
-/atom/movable/screen/alert/status_effect/debuff/dazed/stavehsweep
+/atom/movable/screen/alert/status_effect/debuff/dazed/stavesweeph
 	name = "Smacked on the Head"
 	desc = "GHH-- INSOLENT WHORE! MY HEAD!"
 	icon_state = "mstrike"
-
-/datum/status_effect/debuff/stavecooldown
-	id = "stavecooldown"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/stavecooldown
-	duration = 30 SECONDS
-
-/atom/movable/screen/alert/status_effect/debuff/stavecooldown
-	name = "Master Monk Cooldown"
-	desc = "I am free from this monk's wrath-- for a brief moment."
-	icon_state = "effectcd"
 
 //Master staves done
 
