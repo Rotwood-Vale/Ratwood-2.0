@@ -395,8 +395,8 @@
 	volume = 100
 
 /datum/looping_sound/stavecharge
-	mid_sounds = list('sound/combat/wooshes/stavecharge.ogg')
-	mid_length = 4
+	mid_sounds = list('sound/combat/wooshes/stave_swing.ogg')
+	mid_length = 4 SECONDS
 	volume = 100
 
 

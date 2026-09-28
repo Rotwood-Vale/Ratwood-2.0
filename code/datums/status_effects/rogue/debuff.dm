@@ -637,7 +637,7 @@
 
 /datum/status_effect/debuff/dazed/stavesweepv
 	id = "stavesweepv"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavevsweep
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavesweepv
 	effectedstats = list(STATKEY_CON = -2, STATKEY_WIL = -1)
 	duration = 4 SECONDS
 
@@ -648,7 +648,7 @@
 		var/msg = pick("gasp")
 		C.emote(msg, forced = TRUE)
 
-/atom/movable/screen/alert/status_effect/debuff/dazed/stavevsweep
+/atom/movable/screen/alert/status_effect/debuff/dazed/stavesweepv
 	name = "Sweeped Through"
 	desc = "OUGH!-- MY RIBS! WHAT THE FUCK?!"
 	icon_state = "mstrike"
@@ -661,7 +661,7 @@
 
 /atom/movable/screen/alert/status_effect/debuff/dazed/stavesweeph
 	name = "Smacked on the Head"
-	desc = "GHH-- INSOLENT WHORE! MY HEAD!"
+	desc = "GHH-- FUCKING MONK! MY HEAD!"
 	icon_state = "mstrike"
 
 //Master staves done

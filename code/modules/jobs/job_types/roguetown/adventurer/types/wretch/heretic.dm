@@ -569,7 +569,7 @@
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/psythorns
 				shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 				cloak = /obj/item/clothing/cloak/psydontabard/alt
-		var/monkweapons = list("Unarmed", "Glaive", "Quarterstaff", "Sword", "Faith")
+		var/monkweapons = list("Unarmed", "Glaive", "Quarterstaff + Stavemaster", "Sword", "Faith")
 		var/monkweapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in monkweapons
 		switch(monkweapon_choice)
 			if("Unarmed")
@@ -590,8 +590,10 @@
 						l_hand = /obj/item/rogueweapon/spear/naginata
 					else
 						l_hand = /obj/item/rogueweapon/halberd/glaive
-			if("Quarterstaff")
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+			if("Quarterstaff + Stavemaster")
+				ADD_TRAIT(H, TRAIT_STAVEMASTER, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_BADTRAINER, TRAIT_GENERIC)
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
 				backr = /obj/item/rogueweapon/woodstaff/quarterstaff/steel
 			if("Sword") //Gimmicky choice. Heretic Spy called, they want their sword back.
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)

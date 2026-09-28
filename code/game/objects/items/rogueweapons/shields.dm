@@ -97,9 +97,6 @@
 	charge_pointer = 'icons/effects/mousemice/charge/shield_charging.dmi'
 	charged_pointer = 'icons/effects/mousemice/charge/shield_charged.dmi'
 
-/datum/intent/shield/block/stave
-	chargedloop = /datum/looping_sound/flailswing
-
 /datum/intent/shield/block/metal
 	hitsound = list('sound/combat/parry/shield/metalshield (1).ogg')
 

@@ -306,7 +306,6 @@
 	damfactor = 4 // 25% less damage
 	cleave = /datum/cleave_pattern/lance
 
-
 #define QUARTERSTAFF_STOCK_INTENTS list(SPEAR_BASH)
 #define QUARTERSTAFF_STOCK_GRIPPED_INTENTS list(/datum/intent/spear/bash/ranged/quarterstaff,/datum/intent/spear/thrust/quarterstaff)
 //staff monk, you want? I give. One-handed is where you have your reach. Gripped is where you have more defense.
@@ -316,39 +315,37 @@
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("sweeps across", "sweeps above")
 	damfactor = 0.6
+	clickcd = CLICK_CD_CHARGED
 	cleave = /datum/cleave_pattern/stavehsweep
 	chargedloop = /datum/looping_sound/stavecharge
 	chargetime = 1 SECONDS
-	desc = "Sweep your staff horizontally, striking those whom stand in front of you."
+	keep_looping = TRUE
+	desc = "Sweep your staff horizontally; extending your arm to hit the Heathen's skull, striking those whom stand in front of you."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
-
-/datum/intent/effect/quarterstaff/hsweep/spec_on_apply_effect(mob/living/H, mob/living/user, params)
-	if(H.has_status_effect(/datum/status_effect/debuff/stavehorizontalcd))
-		return
 	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
-	target_parts = list(BODY_ZONE_PRECISE_SKULL)	
-	H.apply_status_effect(/datum/status_effect/debuff/dazed/stavesweeph)
-	H.apply_status_effect(/datum/status_effect/debuff/stavehorizontalcd)
+	target_parts = list(BODY_ZONE_PRECISE_SKULL)
+	intent_effect = /datum/status_effect/debuff/dazed/stavesweeph
+	chargedrain = 3 //if you hold it for too long, you will stamcrit and die.
+	misscost = 10
 
 /datum/intent/effect/quarterstaff/vsweep //Area control. Less damage, multiple targets.
 	name = "vertical sweep"
 	icon_state = "insweep"
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("vertically strikes", "sweeps through")
+	clickcd = CLICK_CD_CHARGED
 	chargetime = 1 SECONDS
 	chargedloop = /datum/looping_sound/stavecharge
+	keep_looping = TRUE
 	damfactor = 0.6
-	desc = "Sweep your staff vertically, sweep and punish those ahead."
+	desc = "Sweep your staff vertically by aiming at their hipbone or waist, sweeping and punish those ahead."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	cleave = /datum/cleave_pattern/stavevsweep
-
-/datum/intent/effect/quarterstaff/vsweep/spec_on_apply_effect(mob/living/H, mob/living/user, params)
-	if(H.has_status_effect(/datum/status_effect/debuff/staveverticalcd))
-		return
 	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
 	target_parts = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_STOMACH)
-	H.apply_status_effect(/datum/status_effect/debuff/dazed/stavesweepv)
-	H.apply_status_effect(/datum/status_effect/debuff/staveverticalcd)
+	intent_effect = /datum/status_effect/debuff/dazed/stavesweepv
+	chargedrain = 3 //if you hold it for too long, you will stamcrit and die.
+	misscost = 10
 
 /datum/intent/effect/hookfeet
 	name = "tackle feet"
@@ -358,7 +355,9 @@
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("tackles", "masterfully disbalances")
 	intent_effect = /datum/status_effect/debuff/dazed/stavetackle
-	target_parts = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	target_parts = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT)
+	effective_range = 2
+	effective_range_type = EFF_RANGE_EXACT
 
 /datum/intent/spear/bash/ranged/quarterstaff/strikeplus
 	name = "strike"
@@ -367,8 +366,8 @@
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("powerfully strikes", "powerfully hits", "masterfully attacks")
 	reach = 1
-	damfactor = 1.5
-	intent_intdamage_factor = 0.5
+	damfactor = 1.3
+	intent_intdamage_factor = 0.3
 
 /datum/intent/spear/thrust/quarterstaff/thrustplus
 	name = "thrust"
@@ -380,20 +379,8 @@
 	damfactor = 1.4
 	intent_intdamage_factor = 0.8
 	penfactor = 10
-
-/datum/intent/shield/block/stave
-	name = "block"
-	icon_state = "inblock"
-	tranged = 1 //we can't attack directly with this intent, but we can charge it
-	tshield = 1
-	chargetime = 1
-	chargetime = 0.8 SECONDS
-	chargedloop = /datum/looping_sound/flailswing
-	warnie = "shieldwarn"
-	item_d_type = "blunt"
-	charge_pointer = 'icons/effects/mousemice/charge/shield_charging.dmi'
-	charged_pointer = 'icons/effects/mousemice/charge/shield_charged.dmi'
-
+	effective_range = 2
+	effective_range_type = EFF_RANGE_EXACT
 
 /datum/intent/woodstaff/quarterstaff/push
 	name = "push"
@@ -403,7 +390,6 @@
 	damfactor = 0.6
 	intent_intdamage_factor = 0.8
 	penfactor = 20
-
 
 /datum/intent/woodstaff/quarterstaff/push/spec_on_apply_effect(mob/living/H, mob/living/user, params)
 	var/chungus_khan_str = user.STASTR
@@ -1774,9 +1760,9 @@
 	can_parry = TRUE
 	max_integrity = 150
 	/// One-handed intents a TRAIT_STAVEMASTER fights with.
-	var/list/master_item_intents = list(/datum/intent/effect/quarterstaff/vsweep, /datum/intent/effect/quarterstaff/hsweep, /datum/intent/effect/hookfeet)
+	var/list/master_item_intents = list(/datum/intent/effect/quarterstaff/vsweep, /datum/intent/effect/quarterstaff/hsweep,)
 	/// Two-handed intents a TRAIT_STAVEMASTER fights with.
-	var/list/master_gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff/strikeplus, /datum/intent/spear/thrust/quarterstaff/thrustplus, /datum/intent/woodstaff/quarterstaff/push, /datum/intent/shield/block/stave)
+	var/list/master_gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff/strikeplus, /datum/intent/spear/thrust/quarterstaff/thrustplus, /datum/intent/woodstaff/quarterstaff/push, /datum/intent/effect/hookfeet)
 	/// Whether this sword is valid for TRAIT_STAVEMASTER
 	var/master_trainable = FALSE
 	/// Flag for if the master intents are active, e.g., this is being held by someone with TRAIT_STAVEMASTER.
