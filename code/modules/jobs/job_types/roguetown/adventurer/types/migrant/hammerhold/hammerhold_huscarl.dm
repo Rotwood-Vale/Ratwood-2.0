@@ -49,15 +49,13 @@
 		/obj/item/flashlight/flare/torch/lantern = 1
 		)
 
-	var/weapons = list("Battle Axe + Shield", "Greataxe", "Steel Warhammer + Shield", "Arming Sword + Shield", "Boar Spear")
+	var/weapons = list("Battle Axe", "Greataxe", "Steel Warhammer + Shield", "Arming Sword + Shield", "Boar Spear")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
-		if("Battle Axe + Shield")
+		if("Battle Axe")
 			r_hand = /obj/item/rogueweapon/stoneaxe/battle
-			backr = /obj/item/rogueweapon/shield/tower/metal
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
 		if("Greataxe")
 			r_hand = /obj/item/rogueweapon/greataxe/steel
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -79,9 +77,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		else //In case they DC or don't choose close the panel, etc
 			r_hand = /obj/item/rogueweapon/stoneaxe/battle
-			backr = /obj/item/rogueweapon/shield/tower/metal
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
 
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.dna.species.soundpack_f = new /datum/voicepack/female/warrior()

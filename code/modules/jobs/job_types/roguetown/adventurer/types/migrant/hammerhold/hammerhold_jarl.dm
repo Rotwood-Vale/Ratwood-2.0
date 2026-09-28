@@ -13,6 +13,7 @@
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, //weapon pick bumps whatever you take to expert
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
@@ -51,7 +52,7 @@
 		)
 
 	//whatever meager pieces of blacksteel gear hammerhold has, I imagine it goes to their leaders
-	var/weapons = list("Blacksteel Greataxe", "Great Mace", "Blacksteel Axe + Steel Shield", "Blacksteel Warhammer + Steel Shield")
+	var/weapons = list("Blacksteel Greataxe", "Great Mace", "Blacksteel Axe", "Blacksteel Warhammer + Steel Shield", "Blacksteel Sword + Steel Shield")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
@@ -63,15 +64,19 @@
 			r_hand = /obj/item/rogueweapon/mace/goden/steel //no blacksteel grand mace exists
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-		if("Blacksteel Axe + Steel Shield")
+		if("Blacksteel Axe")
 			r_hand = /obj/item/rogueweapon/stoneaxe/battle/blacksteel
-			backr = /obj/item/rogueweapon/shield/tower/metal
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
 		if("Blacksteel Warhammer + Steel Shield")
 			r_hand = /obj/item/rogueweapon/mace/warhammer/blacksteel
 			backr = /obj/item/rogueweapon/shield/tower/metal
 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
+		if("Blacksteel Sword + Steel Shield")
+			r_hand = /obj/item/rogueweapon/sword/blacksteel
+			beltl = /obj/item/rogueweapon/scabbard/sword
+			backr = /obj/item/rogueweapon/shield/tower/metal
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
 		else //In case they DC or don't choose close the panel, etc
 			r_hand = /obj/item/rogueweapon/greataxe/blacksteel

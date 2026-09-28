@@ -47,7 +47,7 @@
 		/obj/item/rogueweapon/huntingknife = 1,
 	)
 	if(H.mind)
-		var/weapons = list("Iron Greataxe", "Iron Spear", "Bardiche", "Beast Claws + Iron Claw", "Iron Warhammer + Shield", "Iron Mace + Shield")
+		var/weapons = list("Iron Greataxe", "Iron Spear", "Bardiche", "Beast Claws + Iron Claw", "Iron Warhammer + Shield", "Iron Mace")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Iron Greataxe")
@@ -72,11 +72,9 @@
 				backr = /obj/item/rogueweapon/shield/iron/steppesman
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
-			if("Iron Mace + Shield")
+			if("Iron Mace")
 				r_hand = /obj/item/rogueweapon/mace
-				backr = /obj/item/rogueweapon/shield/iron/steppesman
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
 			else //In case they DC or don't choose close the panel, etc
 				r_hand = /obj/item/rogueweapon/greataxe
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
