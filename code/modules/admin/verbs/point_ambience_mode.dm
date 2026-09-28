@@ -3,8 +3,8 @@
  *
  * Pick one to change it and the menu comes back until cancelled. Every change is logged on its own.
  * The POINT_AMBIENCE_* config entries seed the same values at boot and say what each costs. Only
- * settings that change load are here. Cross floor, walls and how doors count change what players
- * hear, so cross floor is config or VV and the other two are VV only.
+ * settings that change load are here. Walls and how doors count change what players hear, so they
+ * are VV only.
  */
 /client/proc/point_ambience_mode()
 	set category = "Debug"
@@ -122,11 +122,6 @@
 	point_ambience_setting_changed("standing skip", ambience.standing_skip, value)
 	ambience.standing_skip = value
 	// Not in the menu, but the config seeds them, and each drops what its old value decided
-	value = !!CONFIG_GET(number/point_ambience_cross_floor)
-	if(value != !!ambience.cross_floor)
-		point_ambience_setting_changed("cross floor", ambience.cross_floor ? "on" : "off", value ? "on" : "off")
-		ambience.cross_floor = value
-		ambience.clear_tile_cache()
 	value = CONFIG_GET(number/point_ambience_falloff_hardness)
 	if(value != ambience.falloff_hardness)
 		point_ambience_setting_changed("falloff hardness", ambience.falloff_hardness, value)

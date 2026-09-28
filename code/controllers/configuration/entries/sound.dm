@@ -49,11 +49,6 @@
 	min_val = 0
 	max_val = 1
 
-/datum/config_entry/number/point_ambience_cross_floor	// 1 also ranks the floor above and below, served muffled. 0 ranks the listener's own floor only. Off by design, and on it adds a storey pass to any walk whose own floor leaves a category unanswered
-	config_entry_value = 0
-	min_val = 0
-	max_val = 1
-
 /**
  * Tiles of effective distance a floor adds between a source and a listener.
  *

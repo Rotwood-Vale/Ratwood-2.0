@@ -207,19 +207,11 @@ SUBSYSTEM_DEF(point_ambience)
 	 * Keep the switch: it is the only way to price the cell cache
 	 */
 	var/use_cell_cache = TRUE
-	/// Whether a same-floor walk reads the per-turf ranking in tile_cache. Cross-floor
-	/// selection keeps the direct or cell-cache path
+	/// Whether a walk reads the per-turf ranking in tile_cache, rather than the direct or cell-cache
+	/// path. A walk ranks the listener's own floor only, since ambience does not carry between floors
 	var/use_tile_cache = TRUE
 	/// Re-ranks cache hits and repairs mismatches while counting checks and failures
 	var/verify_tile_cache = FALSE
-	/**
-	 * Whether a listener hears sources one storey up or down, muffled.
-	 *
-	 * Off by design, ambience not carrying between floors. The tile cache covers same-floor rankings
-	 * only, so turning this on sends every walk, own floor included, down the direct or cell-cache
-	 * path and ends tile reuse for standing listeners. Seeded from POINT_AMBIENCE_CROSS_FLOOR
-	 */
-	var/cross_floor = FALSE
 	/**
 	 * Sent volume below which a category stops instead of sending, 0 for off.
 	 *
@@ -362,9 +354,6 @@ SUBSYSTEM_DEF(point_ambience)
 	var/max_range_sq = 0
 	/// category -> how many sources it has in the index
 	var/list/source_counts = list()
-	/// Categories with any source in the index. The storey passes run only while fewer than this are
-	/// answered, so a kind absent from the map never sends every walk to both neighbouring floors
-	var/answerable_categories = 0
 	/// Source -> its turf at last register, so the send, the wall walk, the pan lean and the door
 	/// filter skip get_turf, and a move or removal knows the tiles it leaves
 	var/list/source_turfs = list()
@@ -376,11 +365,8 @@ SUBSYSTEM_DEF(point_ambience)
 	 * invalidate_listener_cache(). Clients compare it to skip the scan while nothing changed
 	 */
 	var/static_version = 0
-	/// Source -> the z it is bucketed on, so a removal can find its floor tally and cell
+	/// Source -> the z it is bucketed on, so a removal can find its cell
 	var/list/source_zs = list()
-	/// Positional by z: category -> how many sources are bucketed on that floor, or null. An
-	/// adjacent-floor pass runs only when some still-unanswered category has sources there
-	var/list/floor_counts = list()
 
 	// Tile cache
 	/**
@@ -471,7 +457,6 @@ SUBSYSTEM_DEF(point_ambience)
 	 * SHOULD_NOT_SLEEP marks the no-yield contract, but does not prevent a nested synchronous call
 	 */
 	var/list/scratch_best_distsq = list()
-	var/list/scratch_settled = list()
 	var/list/scratch_uncached = list()
 	/**
 	 * The second nearest source per category from the ranking just loaded, and its distance.
@@ -837,7 +822,6 @@ SUBSYSTEM_DEF(point_ambience)
 	standing_walk_interval = old.standing_walk_interval
 	clip_coalesce_window = old.clip_coalesce_window
 	use_cell_cache = old.use_cell_cache
-	cross_floor = old.cross_floor
 	occlude_sources = old.occlude_sources
 	door_mode = old.door_mode
 	door_recheck = old.door_recheck
@@ -866,7 +850,6 @@ SUBSYSTEM_DEF(point_ambience)
 			continue
 		source_categories[source] = category
 		increment_source_count(category)
-		adjust_floor_count(source_zs[source], category, 1)
 
 /// Copies each category's live tuning and per source overrides onto its replacement
 /datum/controller/subsystem/point_ambience/proc/carry_category_tuning(datum/controller/subsystem/point_ambience/old)
@@ -966,7 +949,6 @@ SUBSYSTEM_DEF(point_ambience)
 	max_services_per_tick = CONFIG_GET(number/point_ambience_max_services_per_tick)
 	use_queue = CONFIG_GET(number/point_ambience_queue)
 	standing_skip = CONFIG_GET(number/point_ambience_standing_skip)
-	cross_floor = CONFIG_GET(number/point_ambience_cross_floor)
 	set_falloff_hardness(CONFIG_GET(number/point_ambience_falloff_hardness))
 	pan_depth_floor = CONFIG_GET(number/point_ambience_pan_depth_floor)
 	set_mode(CONFIG_GET(number/point_ambience_mode))
@@ -1174,5 +1156,5 @@ SUBSYSTEM_DEF(point_ambience)
 			set_falloff_hardness(var_value)
 		if("send_cutoff")
 			set_send_cutoff(var_value)
-		if("use_tile_cache", "verify_tile_cache", "use_cell_cache", "cross_floor", "max_range", "max_range_sq")
+		if("use_tile_cache", "verify_tile_cache", "use_cell_cache", "max_range", "max_range_sq")
 			clear_tile_cache()

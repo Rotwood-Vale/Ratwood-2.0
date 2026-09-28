@@ -72,7 +72,7 @@
 /datum/controller/subsystem/point_ambience/proc/door_in_reach(turf/listener_turf, turf/door_turf)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
-	if(!use_tile_cache || cross_floor)
+	if(!use_tile_cache)
 		return TRUE
 	var/entry = tile_cache[listener_turf]
 	if(isnull(entry))

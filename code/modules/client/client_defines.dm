@@ -113,15 +113,11 @@
 	 * Every source the own-floor walk could reach from anywhere in the client's current index cell.
 	 *
 	 * Stored as the flat x, y, category index, source the buckets already store. Used only with the tile
-	 * cache off or cross floor on, where a step inside the same cell ranks this instead of probing nine
-	 * buckets. Rebuilt on a cell change or a static_version change, which for a straight walk is one
-	 * step in SSpoint_ambience.cell_size.
+	 * cache off, where a step inside the same cell ranks this instead of probing nine buckets. Rebuilt
+	 * on a cell change or a static_version change, which for a straight walk is one step in
+	 * SSpoint_ambience.cell_size.
 	 */
 	var/list/point_ambience_cell_candidates
-	/// The same for the floors above and below, built only if a storey pass actually runs for this
-	/// cell. Null means not built yet, an empty list means built and there was nothing there
-	var/list/point_ambience_cell_above
-	var/list/point_ambience_cell_below
 	var/point_ambience_cell_index
 	var/point_ambience_cell_z
 	var/point_ambience_cell_version

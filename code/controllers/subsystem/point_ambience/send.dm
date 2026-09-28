@@ -401,8 +401,6 @@
 	listener_client.point_ambience_cache_static?.Cut()
 	listener_client.point_ambience_cache_self = null
 	listener_client.point_ambience_cell_candidates = null
-	listener_client.point_ambience_cell_above = null
-	listener_client.point_ambience_cell_below = null
 	listener_client.point_ambience_cell_version = null
 	listener_client.point_ambience_cache_turf = null
 

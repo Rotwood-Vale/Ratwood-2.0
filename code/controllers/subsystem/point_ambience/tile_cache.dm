@@ -106,7 +106,7 @@
 		burst_changes++
 		if(burst_changes == POINT_AMBIENCE_BULK_BURST)
 			report_unbatched_burst()
-	if(!use_tile_cache || cross_floor)
+	if(!use_tile_cache)
 		return
 	var/timing = !isnull(GLOB.point_ambience_counters)
 	if(timing)
@@ -127,7 +127,7 @@
  */
 /datum/controller/subsystem/point_ambience/proc/can_reuse_tile_listener(turf/listener_turf, cached_version)
 	SHOULD_NOT_SLEEP(TRUE)
-	if(!use_tile_cache || cross_floor || !listener_turf || isnull(cached_version))
+	if(!use_tile_cache || !listener_turf || isnull(cached_version))
 		return FALSE
 	if(cached_version == static_version)
 		return TRUE

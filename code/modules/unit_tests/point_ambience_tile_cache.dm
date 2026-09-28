@@ -6,7 +6,6 @@
 	var/torch_silenced
 	var/saved_use_tile_cache
 	var/saved_verify_tile_cache
-	var/saved_cross_floor
 	var/list/test_sources = list()
 
 /datum/unit_test/point_ambience_tile_cache/Run()
@@ -18,8 +17,6 @@
 	torch_silenced = torch_category.silenced
 	saved_use_tile_cache = ambience.use_tile_cache
 	saved_verify_tile_cache = ambience.verify_tile_cache
-	saved_cross_floor = ambience.cross_floor
-	ambience.cross_floor = FALSE
 	fire_category.silenced = FALSE
 	torch_category.silenced = FALSE
 	ambience.set_tile_cache(TRUE)
@@ -154,9 +151,6 @@
 	var/before_known_change = ambience.static_version
 	ambience.register_source(first, fire_category.type, volume_scale = 0.7)
 	TEST_ASSERT(ambience.can_reuse_tile_listener(far, before_known_change), "A listener refreshed after a global gap may reuse a later known distant change")
-	ambience.cross_floor = TRUE
-	TEST_ASSERT(!ambience.can_reuse_tile_listener(far, before_known_change), "Cross-floor selection must retain global refresh")
-	ambience.cross_floor = FALSE
 	var/before_history_expiry = ambience.static_version
 	for(var/change in 1 to 64)
 		ambience.register_source(first, fire_category.type, volume_scale = 0.7 + change * 0.01)
@@ -175,7 +169,6 @@
 		fire_category.silenced = fire_silenced
 		torch_category.silenced = torch_silenced
 		ambience.refresh_category_ranges()
-		ambience.cross_floor = saved_cross_floor
 		ambience.set_tile_cache(saved_use_tile_cache, saved_verify_tile_cache)
 	return ..()
 
@@ -192,7 +185,6 @@
 	var/torch_silenced
 	var/saved_use_tile_cache
 	var/saved_verify_tile_cache
-	var/saved_cross_floor
 	var/list/test_sources = list()
 
 /datum/unit_test/point_ambience_bulk_update/Run()
@@ -203,8 +195,6 @@
 	torch_silenced = torch_category.silenced
 	saved_use_tile_cache = ambience.use_tile_cache
 	saved_verify_tile_cache = ambience.verify_tile_cache
-	saved_cross_floor = ambience.cross_floor
-	ambience.cross_floor = FALSE
 	fire_category.silenced = FALSE
 	torch_category.silenced = FALSE
 	ambience.set_tile_cache(TRUE)
@@ -318,6 +308,5 @@
 	if(fire_category)
 		fire_category.silenced = fire_silenced
 		torch_category.silenced = torch_silenced
-		ambience.cross_floor = saved_cross_floor
 		ambience.set_tile_cache(saved_use_tile_cache, saved_verify_tile_cache)
 	return ..()

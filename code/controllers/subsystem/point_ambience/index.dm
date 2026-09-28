@@ -66,16 +66,13 @@
 		return
 	if(old_cell)
 		remove_from_bucket(source, old_z, old_cell)
-		adjust_floor_count(old_z, old_category, -1)
-	// Tally both sides: a source can move BETWEEN categories, and these decide whether the storey
-	// passes run at all
+	// A source can move BETWEEN categories, so both counts follow it
 	if(old_category != category)
 		move_between_categories(source, old_category, category)
 	source_keys[source] = cell
 	source_zs[source] = z
 	source_categories[source] = category
 	append_to_bucket(source, source_turf, category.index, cell)
-	adjust_floor_count(z, category, 1)
 	static_version++
 	index_changes++
 	record_source_change(version_before, old_turf, old_range, source_turf, category.range)
@@ -247,7 +244,6 @@
 	var/version_before = static_version
 	invalidate_tile_cache(old_turf, category.range)
 	remove_from_bucket(source, source_zs[source], old_cell)
-	adjust_floor_count(source_zs[source], category, -1)
 	static_version++
 	index_changes++
 	record_source_change(version_before, old_turf, category.range, null, 0)
@@ -271,22 +267,14 @@
 		if(listener_client.point_ambience_sources[category] == source)
 			stop_for(listener_client, category)
 
-/// The first source of a category makes it answerable, which lets the storey passes look for it
 /datum/controller/subsystem/point_ambience/proc/increment_source_count(datum/point_ambience_category/category)
 	PRIVATE_PROC(TRUE)
-	var/count = (source_counts[category] || 0) + 1
-	source_counts[category] = count
-	if(count == 1)
-		answerable_categories++
+	source_counts[category] = (source_counts[category] || 0) + 1
 
-/// Guarded against going negative, since answerable_categories drifting below the truth would
-/// stop the storey passes early and quietly lose every source a floor away
+/// Guarded against going negative, so an unbalanced removal cannot leave a category owing a source
 /datum/controller/subsystem/point_ambience/proc/decrement_source_count(datum/point_ambience_category/category)
 	PRIVATE_PROC(TRUE)
-	var/remaining = max(0, (source_counts[category] || 0) - 1)
-	source_counts[category] = remaining
-	if(!remaining)
-		answerable_categories = max(0, answerable_categories - 1)
+	source_counts[category] = max(0, (source_counts[category] || 0) - 1)
 
 /**
  * Cuts a source's four-entry quad out of one bucket. The rare path, so a linear Find is fine.
@@ -311,47 +299,6 @@
 	if(!length(bucket))
 		floor_buckets[cell] = null
 
-/**
- * Keeps the per-floor tally of sources in a category.
- *
- * It decides whether a storey pass runs at all, so it MUST be paired with every bucket add and
- * remove, or a floor is searched forever, or never searched again.
- *
- * Arguments:
- * * delta - +1 as a source joins the floor, -1 as it leaves
- */
-/datum/controller/subsystem/point_ambience/proc/adjust_floor_count(z, datum/point_ambience_category/category, delta)
-	PRIVATE_PROC(TRUE)
-	if(isnull(z) || !category)
-		return
-	if(length(floor_counts) < z)
-		floor_counts.len = z
-	var/list/counts = floor_counts[z]
-	if(!counts)
-		counts = list()
-		floor_counts[z] = counts
-	counts[category] = max(0, (counts[category] || 0) + delta)
-
-/// The z one storey up, or 0 when the map links nothing there. The linkage is a boolean per
-/// floor and the neighbour is always the next z, which is what get_step(UP) walks
-/datum/controller/subsystem/point_ambience/proc/floor_above(z)
-	PRIVATE_PROC(TRUE)
-	var/list/levels = SSmapping.multiz_levels
-	if(length(levels) < z)
-		return 0
-	var/list/links = levels[z]
-	return (links && links[Z_LEVEL_UP]) ? z + 1 : 0
-
-/// The z one storey down, or 0 where nothing connects. Arithmetic rather than a turf lookup, since
-/// the walk only ever wants the number
-/datum/controller/subsystem/point_ambience/proc/floor_below(z)
-	PRIVATE_PROC(TRUE)
-	var/list/levels = SSmapping.multiz_levels
-	if(length(levels) < z)
-		return 0
-	var/list/links = levels[z]
-	return (links && links[Z_LEVEL_DOWN]) ? z - 1 : 0
-
 /// Recomputes every category's squared reach and the subsystem bounds, then invalidates all rankings
 /datum/controller/subsystem/point_ambience/proc/refresh_category_ranges()
 	max_range = 0
@@ -364,10 +311,9 @@
 /**
  * Finds the nearest and second-nearest source per category for this listener position.
  *
- * Same-floor selection may load an immutable turf ranking. Cross-floor selection retains the
- * direct or cell-cache path, where the listener's own floor wins and adjacent floors only fill
- * unanswered categories. The returned winner table belongs to the client and may be changed by
- * live occlusion after this proc returns. Volume and preferences are applied per listener
+ * Ranks the listener's own floor only, since ambience does not carry between floors. Selection may
+ * load an immutable turf ranking. The returned winner table belongs to the client and may be changed
+ * by live occlusion after this proc returns. Volume and preferences are applied per listener
  */
 /datum/controller/subsystem/point_ambience/proc/nearest_sources(turf/listener_turf, client/listener_client)
 	PRIVATE_PROC(TRUE)
@@ -380,13 +326,11 @@
 		best.Cut()
 	else
 		best = list()
-	if(use_tile_cache && !cross_floor)
+	if(use_tile_cache)
 		// Tile hits never refresh the per-client candidate lists. Release their source references and
 		// force a rebuild if selection returns to the cell path
 		if(listener_client.point_ambience_cell_candidates)
 			listener_client.point_ambience_cell_candidates = null
-			listener_client.point_ambience_cell_above = null
-			listener_client.point_ambience_cell_below = null
 			listener_client.point_ambience_cell_version = null
 		var/entry = get_tile_ranking(listener_turf)
 		if(islist(entry))
@@ -420,71 +364,20 @@
 				candidates = list()
 				listener_client.point_ambience_cell_candidates = candidates
 			collect_candidates(listener_turf.x, listener_turf.y, z, candidates)
-			// Dropped rather than rebuilt: the storey passes run only when the own floor leaves
-			// a category unanswered, so most cells never ask for these
-			listener_client.point_ambience_cell_above = null
-			listener_client.point_ambience_cell_below = null
 		rank_candidates(listener_turf.x, listener_turf.y, listener_client.point_ambience_cell_candidates, best, best_distsq)
 		ranked_candidates_this_service = round(length(listener_client.point_ambience_cell_candidates) / 4)
-
-	if(cross_floor && length(best) < answerable_categories)
-		// A snapshot, taken before the storey passes so an own-floor answer cannot be replaced by one
-		// a storey away, while a category answered only above can still lose to a nearer one below
-		var/list/settled = scratch_settled
-		settled.Cut()
-		for(var/datum/point_ambience_category/category as anything in best)
-			settled[category] = TRUE
-		var/above = floor_above(z)
-		if(above && floor_needs_pass(above, settled))
-			listener_client.point_ambience_cell_above = rank_storey(listener_turf, above, listener_client.point_ambience_cell_above, best, best_distsq, settled)
-		var/below = floor_below(z)
-		if(below && floor_needs_pass(below, settled))
-			listener_client.point_ambience_cell_below = rank_storey(listener_turf, below, listener_client.point_ambience_cell_below, best, best_distsq, settled)
 
 	listener_client.point_ambience_cache_static = best
 	return best
 
-/**
- * One storey pass, filling what the own floor left unanswered from the floor at z.
- *
- * Under the cell cache the candidates are gathered once per cell and handed back for the client to
- * keep, one list for the floor above and one for the floor below. Without it, cached comes back
- * untouched.
- */
-/datum/controller/subsystem/point_ambience/proc/rank_storey(turf/listener_turf, z, list/cached, list/best, list/best_distsq, list/settled)
-	PRIVATE_PROC(TRUE)
-	SHOULD_NOT_SLEEP(TRUE)
-	if(!use_cell_cache)
-		collect_nearest_on_z(listener_turf.x, listener_turf.y, z, best, best_distsq, settled)
-		return cached
-	if(isnull(cached))
-		cached = list()
-		collect_candidates(listener_turf.x, listener_turf.y, z, cached)
-	rank_candidates(listener_turf.x, listener_turf.y, cached, best, best_distsq, settled)
-	return cached
-
-/// Whether a storey pass on z can change anything: some category not in skip has sources there
-/datum/controller/subsystem/point_ambience/proc/floor_needs_pass(z, list/skip)
-	PRIVATE_PROC(TRUE)
-	if(length(floor_counts) < z)
-		return FALSE
-	var/list/counts = floor_counts[z]
-	if(!counts)
-		return FALSE
-	for(var/datum/point_ambience_category/category as anything in categories)
-		if(!skip[category] && counts[category])
-			return TRUE
-	return FALSE
-
-/// The uncached walk: the buckets within max_range of the POSITION, gathered and ranked. skip holds
-/// the categories the own floor already answered, so a floor a storey away only fills gaps
-/datum/controller/subsystem/point_ambience/proc/collect_nearest_on_z(x, y, z, list/best, list/best_distsq, list/skip)
+/// The uncached walk: the buckets within max_range of the POSITION, gathered and ranked
+/datum/controller/subsystem/point_ambience/proc/collect_nearest_on_z(x, y, z, list/best, list/best_distsq)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	var/list/gathered = scratch_uncached
 	gathered.Cut()
 	gather_buckets(x - max_range, x + max_range, y - max_range, y + max_range, z, gathered)
-	rank_candidates(x, y, gathered, best, best_distsq, skip)
+	rank_candidates(x, y, gathered, best, best_distsq)
 
 /// Appends every quad in the buckets whose cells the box touches, straight out of the buckets as
 /// they are stored: one native append per bucket, no lookups
@@ -529,10 +422,10 @@
 /**
  * Ranks a flat list of quads into the nearest per category and its runner-up.
  *
- * The uncached walk and the cell cache both rank through here, so a storey pass reaches the same
- * answer either way. skip holds the categories the own floor already answered.
+ * The uncached walk, the cell cache and the tile cache all rank through here, so each reaches the
+ * same answer.
  */
-/datum/controller/subsystem/point_ambience/proc/rank_candidates(x, y, list/candidates, list/best, list/best_distsq, list/skip)
+/datum/controller/subsystem/point_ambience/proc/rank_candidates(x, y, list/candidates, list/best, list/best_distsq)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	var/count = length(candidates)
@@ -545,8 +438,6 @@
 		if(distsq > max_range_sq)
 			continue
 		var/datum/point_ambience_category/category = categories[candidates[i + 2]]
-		if(skip && skip[category])
-			continue
 		if(distsq > category.range_sq)
 			continue
 		var/existing = best_distsq[category]
