@@ -97,7 +97,6 @@
 		/datum/customizer/bodypart_feature/pits/feathered,
 		/datum/customizer/organ/snout/harpy,
 		/datum/customizer/organ/neck_feature/anthro,
-		/datum/customizer/organ/ears/wings,
 		/datum/customizer/organ/horns/wings,
 		)
 	body_marking_sets = list(
