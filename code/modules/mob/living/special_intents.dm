@@ -532,6 +532,25 @@ SPECIALS START HERE
 	playsound(T, sfx, 100, TRUE)
 	..()
 
+/datum/special_intent/ground_smash_heavy
+	name = "Heavy Ground Smash"
+	desc = "Slams the earth with overwhelming force, unleashing a widening quake across a 3x3 front. Anyone struck by it will be slowed and off-balanced, or knocked down if already off-balanced."
+	tile_coordinates = list(
+		list(-1,0), list(0,0), list(1,0),
+		list(-1,1, 0.1 SECONDS), list(0,1, 0.1 SECONDS), list(1,1, 0.1 SECONDS),
+		list(-1,2, 0.2 SECONDS), list(0,2, 0.2 SECONDS), list(1,2, 0.2 SECONDS)
+	)
+	post_icon_state = "kick_fx"
+	pre_icon_state = "trap"
+	respect_adjacency = TRUE
+	delay = 0.7 SECONDS
+	cooldown = 25 SECONDS
+	stamcost = 25
+	var/slow_dur = 5    //We do NOT want to use SECONDS macro here. Slowdown() takes in an int and turns it into seconds already.
+	var/KD_dur = 2 SECONDS
+	var/Offb_dur = 5 SECONDS
+	var/self_immob_dur = 1.1 SECONDS
+	var/dam = 100
 
 /datum/special_intent/flail_sweep
 	name = "Flail Sweep"

@@ -494,6 +494,15 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 /proc/can_train_combat_skill(mob/living/user, skill_type, target_skill_level)
 	if(!user.mind)
 		return FALSE
+	var/is_feral = FALSE
+	if(user && HAS_TRAIT(user, TRAIT_MARTIAL_INCOMPETENCE))
+		is_feral = TRUE
+	else if(user.mind && HAS_TRAIT(user.mind, TRAIT_MARTIAL_INCOMPETENCE))
+		is_feral = TRUE
+		
+	if(is_feral && ispath(skill_type, /datum/skill/combat))
+		if(user.get_skill_level(skill_type) >= SKILL_LEVEL_JOURNEYMAN)
+			return FALSE
 	var/user_skill_level = user.get_skill_level(skill_type)
 	var/level_diff = target_skill_level - user_skill_level
 	if(level_diff <= 0)

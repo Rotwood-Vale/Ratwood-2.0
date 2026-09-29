@@ -81,6 +81,16 @@
 
 /datum/skill_holder/proc/adjust_experience(skill, amt, silent = FALSE)
 	var/datum/skill/S = GetSkillRef(skill)
+
+	if(amt > 0 && istype(S, /datum/skill/combat))
+		var/is_feral = FALSE
+		if(current && HAS_TRAIT(current, TRAIT_MARTIAL_INCOMPETENCE))
+			is_feral = TRUE
+		else if(current?.mind && HAS_TRAIT(current.mind, TRAIT_MARTIAL_INCOMPETENCE))
+			is_feral = TRUE
+		if(is_feral && (known_skills[S] || SKILL_LEVEL_NONE) >= SKILL_LEVEL_JOURNEYMAN)
+			return 0
+
 	skill_experience[S] = max(0, skill_experience[S] + amt) //Prevent going below 0
 	var/old_level = known_skills[S]
 	switch(skill_experience[S])
@@ -153,6 +163,16 @@
 		CRASH("adjust_skillrank was called without a specified skill!")
 	/// The skill we are changing
 	var/datum/skill/skill_ref = GetSkillRef(skill)
+
+	if(amt > 0 && istype(skill_ref, /datum/skill/combat))
+		var/is_feral = FALSE
+		if(current && HAS_TRAIT(current, TRAIT_MARTIAL_INCOMPETENCE))
+			is_feral = TRUE
+		else if(current?.mind && HAS_TRAIT(current.mind, TRAIT_MARTIAL_INCOMPETENCE))
+			is_feral = TRUE
+		if(is_feral && (known_skills[skill_ref] || SKILL_LEVEL_NONE) >= SKILL_LEVEL_JOURNEYMAN)
+			return
+
 	/// How much experience the mob gets at the end
 	var/amt2gain = 0
 	if(amt > 0)
@@ -267,6 +287,11 @@
 		if(istype(S, /datum/skill/misc/music) && HAS_TRAIT(current, TRAIT_XYLIX))
 			level += 1
 	level = clamp(level, SKILL_LEVEL_NONE, SKILL_LEVEL_LEGENDARY)
+	if(istype(S, /datum/skill/combat))
+		if(current && HAS_TRAIT(current, TRAIT_MARTIAL_INCOMPETENCE))
+			level = min(level, SKILL_LEVEL_JOURNEYMAN)
+		else if(current?.mind && HAS_TRAIT(current.mind, TRAIT_MARTIAL_INCOMPETENCE))
+			level = min(level, SKILL_LEVEL_JOURNEYMAN)
 	return level
 
 /datum/skill_holder/proc/get_effective_skill_cap(datum/skill/skill_ref)
@@ -280,6 +305,11 @@
 	#ifndef USES_TRAIT_SKILL_GATING
 	cap = SKILL_LEVEL_LEGENDARY
 	#endif
+	if(istype(skill_ref, /datum/skill/combat))
+		if(current && HAS_TRAIT(current, TRAIT_MARTIAL_INCOMPETENCE))
+			cap = min(cap, SKILL_LEVEL_JOURNEYMAN)
+		else if(current?.mind && HAS_TRAIT(current.mind, TRAIT_MARTIAL_INCOMPETENCE))
+			cap = min(cap, SKILL_LEVEL_JOURNEYMAN)
 	return cap
 
 /datum/skill_holder/proc/get_xp_brackets(skill_level)
