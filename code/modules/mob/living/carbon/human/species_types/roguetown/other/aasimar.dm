@@ -60,6 +60,7 @@
 		/datum/customizer/bodypart_feature/pubes,
 		/datum/customizer/bodypart_feature/pits,
 		/datum/customizer/organ/wings/anthro,
+		/datum/customizer/organ/ears/elf,
 		/datum/customizer/organ/ears/wings,
 		/datum/customizer/organ/horns/wings,
 		)
