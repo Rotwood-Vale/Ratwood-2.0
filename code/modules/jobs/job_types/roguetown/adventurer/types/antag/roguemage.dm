@@ -65,7 +65,7 @@
 		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_MASTER, TRUE)
 		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 1)
-		H.mind?.adjust_spellpoints(6)
+		H.mind?.adjust_spellpoints(9)
 
 /datum/outfit/job/roguetown/bandit/roguemage/post_equip(mob/living/carbon/human/H)
 	. = ..()
