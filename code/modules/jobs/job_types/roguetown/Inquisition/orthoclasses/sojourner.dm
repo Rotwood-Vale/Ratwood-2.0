@@ -13,6 +13,8 @@
 	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_INQUISITION)
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
+	adv_stat_ceiling = list(STAT_STRENGTH = 10, STAT_SPEED = 10, STAT_CONSTITUTION = 10) //This is to enforce the stat setup Radiant wishes to insist on for Sojourner. Subject to change.
 	traits_applied = list(
 		TRAIT_MAGEARMOR,
 		TRAIT_ALCHEMY_EXPERT,
