@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/repulse
 	name = "Repulse"
 	desc = "Conjure forth a wave of energy, repelling anyone around you."
-	cost = 3
+	cost = 5 //Meta pick. 3 is too cheap for a spell this absurdly strong. 
 	xp_gain = TRUE
 	releasedrain = 50
 	chargedrain = 1
