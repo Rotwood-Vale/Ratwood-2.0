@@ -35,6 +35,7 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE, //no miracles to deal w/ stabs through plate armor
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 	)
 	subclass_stashed_items = list(
 		"Armor Plates" =  /obj/item/repair_kit/metal,
