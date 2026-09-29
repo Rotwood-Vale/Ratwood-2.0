@@ -172,9 +172,10 @@
 	name = "Advisor"
 	tutorial = "You serve as both scholar and advisor to the Noble-Family, wielding knowledge and magicks with potent ability. Let no man forget whose ear you whisper into, your sage advice has saved more lives than any strategist's orders or spymaster's schemes could ever claim to."
 	outfit = /datum/outfit/job/roguetown/hand/advisor
-
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
+	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 10)
 	category_tags = list(CTAG_HAND)
-	traits_applied = list(TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3)
+	traits_applied = list(TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_MAGEDEXTERITY)
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 3,
