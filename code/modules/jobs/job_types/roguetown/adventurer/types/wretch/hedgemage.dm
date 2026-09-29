@@ -61,8 +61,10 @@
 	)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.age == AGE_OLD)
+		H.change_stat(STATKEY_INT, 2)
+		H.change_stat(STATKEY_PER, 2) //cancels out the age malus
 		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_MASTER, TRUE)
-		H.mind?.adjust_spellpoints(6)
+		H.mind?.adjust_spellpoints(9)
 	if(H.mind)
 		wretch_select_bounty(H)
 
