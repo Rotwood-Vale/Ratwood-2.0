@@ -488,7 +488,7 @@ and crackling with insidious energies."
 	icon_state = "fencercuirass"
 	item_state = "fencercuirass"
 
-/obj/item/clothing/suit/roguetown/armor/plate/cuirass/fencer/ComponentInitialize()
+/obj/item/clothing/suit/roguetown/armor/plate/half/fencer/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/psydon
@@ -715,7 +715,7 @@ and crackling with insidious energies."
 	icon_state = "bronzeplate"
 	item_state = "bronzeplate"
 	armor = ARMOR_BRONZE
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRONZE + 100
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL//shittier prot but good dura like the helms
 	armor_class = ARMOR_CLASS_HEAVY
 	smeltresult = /obj/item/ingot/bronze
 	smelt_bar_num = 3
@@ -744,9 +744,10 @@ and crackling with insidious energies."
 	icon_state = "bronzeplatealt"
 	item_state = "bronzeplatealt"
 	body_parts_covered = CHEST | VITALS | LEGS
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRONZE //Halfplate analogue. Still heavy as hell.
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEELLIGHT
 
 //----------------- Citywatch Armor ---------------------
+// Credits to Twilight Axis (https://github.com/Twilight-Fortress-SS13/Twilight-Axis) for the sprites!
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "citywatch armor"
@@ -763,9 +764,38 @@ and crackling with insidious energies."
 	sewrepair = FALSE
 	allowed_sex = list(MALE, FEMALE)
 	equip_delay_self = 4 SECONDS
+	detail_tag = "_detail"
+	var/ducal_color = TRUE
+
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch/Initialize(mapload)
+	. = ..()
+	if(ducal_color == TRUE)
+		if(GLOB.lordprimary)
+			lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
+		GLOB.lordcolor += src
+
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch/lordcolor(primary,secondary)
+	detail_color = primary
+	update_icon()
+	if(ismob(loc))
+		var/mob/L = loc
+		L.update_inv_armor()
+
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch/Destroy()
+	GLOB.lordcolor -= src
+	return ..()
 
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch/captain
 	name = "watch captain armor"
 	desc = "Heavy, well worn armour featuring simple greys. Justice is impartial. Are you?"
-	icon_state = "sheriffarmor"
-	item_state = "sheriffarmor"
+	ducal_color = FALSE
+	detail_color = "#36454F"

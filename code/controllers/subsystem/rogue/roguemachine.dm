@@ -16,6 +16,8 @@ PROCESSING_SUBSYSTEM_DEF(roguemachine)
 	var/list/mercenary_statues = list()
 	/// The primary church talking statue (first one Initialize()d). See talkstatue.dm.
 	var/obj/structure/roguemachine/talkstatue/church/church_statue
+	/// All Rosewall boards (bathhouse service adverts). See noticeboard/rosewall.dm.
+	var/list/rosewalls = list()
 	var/hermailermaster
 	var/list/death_queue = list()
 	var/last_death_report

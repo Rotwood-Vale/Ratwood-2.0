@@ -14,6 +14,8 @@ export type ExaminePanelData = {
   ooc_extra_image: string;
   nsfw_ooc_extra_image: string;
   is_playing: boolean;
+  song_title: string;
+  song_artist: string;
   has_song: boolean;
   is_vet: boolean;
   is_naked: boolean;

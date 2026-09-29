@@ -74,8 +74,6 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 /mob/living/carbon/can_be_blood_drunk()
 	if(stat == DEAD)
 		return FALSE
-	if(clan || mind?.has_antag_datum(/datum/antagonist/vampire))
-		return FALSE
 	if(dna?.species && (NOBLOOD in dna.species.species_traits))
 		return FALSE
 	return blood_volume > 0

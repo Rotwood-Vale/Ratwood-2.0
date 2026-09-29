@@ -5,12 +5,9 @@
 	)
 
 #define CHARFLAWS_PHYSICAL_TYPES list(\
-		/datum/charflaw/annoying_face,\
-		/datum/charflaw/ugly,\
 		/datum/charflaw/noeyel,\
 		/datum/charflaw/noeyer,\
 		/datum/charflaw/leprosy,\
-		/datum/charflaw/scarred,\
 		/datum/charflaw/disfigured,\
 		/datum/charflaw/limbloss/arm_l,\
 		/datum/charflaw/limbloss/arm_r,\

@@ -20,7 +20,7 @@
 /datum/mob_descriptor/penis
 	name = "penis"
 	slot = MOB_DESCRIPTOR_SLOT_PENIS
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 	descriptor_color = "#ff66cc"
 	aroused_descriptor_color = "#ff5555"
@@ -101,7 +101,7 @@
 /datum/mob_descriptor/testicles
 	name = "balls"
 	slot = MOB_DESCRIPTOR_SLOT_TESTICLES
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 	descriptor_color = "#ff66cc"
 	aroused_descriptor_color = "#ff5555"
@@ -155,7 +155,7 @@
 /datum/mob_descriptor/vagina
 	name = "vagina"
 	slot = MOB_DESCRIPTOR_SLOT_VAGINA
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 	descriptor_color = "#ff66cc"
 	aroused_descriptor_color = "#ff5555"
@@ -224,7 +224,7 @@
 /datum/mob_descriptor/breasts
 	name = "breasts"
 	slot = MOB_DESCRIPTOR_SLOT_BREASTS
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 	descriptor_color = "#ff66cc"
 	aroused_descriptor_color = "#ff5555"
@@ -290,7 +290,7 @@
 /datum/mob_descriptor/pubes
 	name = "pubes"
 	slot = MOB_DESCRIPTOR_SLOT_PUBES
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/pubes/proc/get_pubes_feature(mob/living/carbon/human/H)
@@ -365,7 +365,7 @@
 /datum/mob_descriptor/pits
 	name = "armpits"
 	slot = MOB_DESCRIPTOR_SLOT_PITS
-	verbage = "has"
+	verbage = "%HAVE%"
 	show_obscured = TRUE
 
 /datum/mob_descriptor/pits/proc/get_pits_feature(mob/living/carbon/human/H)

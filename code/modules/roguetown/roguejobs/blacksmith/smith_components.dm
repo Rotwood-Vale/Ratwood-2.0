@@ -239,6 +239,7 @@
 		var/obj/item/I = new current_recipe.created_item(create_turf)
 		// Apply the quality to each item
 		I.name = initial(I.name) // Reset the name first
+		I.was_crafted = TRUE
 		if(modifier != 1)
 			switch(modifier)
 				if(0.3)

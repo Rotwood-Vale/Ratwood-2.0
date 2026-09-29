@@ -24,6 +24,7 @@
 	max_buckled_mobs = 1
 	buckle_lying = FALSE
 	buckle_prevents_pull = TRUE
+	buckle_blocks_spells = TRUE
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	var/blade_status = GUILLOTINE_BLADE_RAISED

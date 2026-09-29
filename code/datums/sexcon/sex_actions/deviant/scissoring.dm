@@ -3,28 +3,6 @@
 	user_sex_part = SEX_PART_CUNT
 	target_sex_part = SEX_PART_CUNT
 
-/datum/sex_action/scissoring/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_VAGINA))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/scissoring/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN))
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_VAGINA))
-		return FALSE
-	return TRUE
-
 /datum/sex_action/scissoring/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] spreads [user.p_their()] legs and aligns [user.p_their()] cunt against [target]'s own!"))
 

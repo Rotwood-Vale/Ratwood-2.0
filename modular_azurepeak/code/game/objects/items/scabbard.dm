@@ -156,6 +156,15 @@
 		if(!eat_sword(user, I))
 			return ..()
 
+/obj/item/rogueweapon/scabbard/quickdraw_interact(mob/living/user, obj/item/held_item)
+	if(held_item)
+		if(weapon_check(user, held_item))
+			attackby(held_item, user)
+		return TRUE
+	if(sheathed)
+		attack_hand(user)
+	return TRUE
+
 
 /obj/item/rogueweapon/scabbard/examine(mob/user)
 	. = ..()
@@ -506,7 +515,12 @@
 	invalid_blades = list(
 		/obj/item/rogueweapon/sword/long/exe,
 		/obj/item/rogueweapon/sword/long/exe/astrata,
-		/obj/item/rogueweapon/sword/long/martyr
+		/obj/item/rogueweapon/sword/long/exe/cloth,
+		/obj/item/rogueweapon/sword/long/martyr,
+		/obj/item/rogueweapon/sword/long/exe/silver,
+		/obj/item/rogueweapon/sword/long/exe/psy,
+		/obj/item/rogueweapon/sword/long/exe/berserk,
+		/obj/item/rogueweapon/sword/long/exe/berserk/dragonslayer
 	)
 
 	force = 7

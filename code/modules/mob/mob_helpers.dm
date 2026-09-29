@@ -378,6 +378,12 @@
 			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
 	animate(pixel_x=oldx, pixel_y=oldy, time=1)
 
+/// refreshes vision of everyone visible 2 update icon_state changes ! Usually not needed
+/proc/refresh_viewers(atom/source)
+	for(var/mob/M in viewers(7, source))
+		if(M.client)
+			M.update_vision_cone()
+
 
 ///Find if the message has the real name of any user mob in the mob_list
 /proc/findname(msg)

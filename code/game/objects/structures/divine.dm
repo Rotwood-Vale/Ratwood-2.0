@@ -6,6 +6,7 @@
 	anchored = TRUE
 	density = FALSE
 	can_buckle = 1
+	buckle_blocks_spells = TRUE
 
 /obj/structure/sacrificealtar/attack_hand(mob/living/user)
 	. = ..()

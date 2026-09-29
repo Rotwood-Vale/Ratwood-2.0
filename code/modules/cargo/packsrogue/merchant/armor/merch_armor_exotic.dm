@@ -29,7 +29,7 @@
 		)
 
 /datum/supply_pack/rogue/armor_exotic/hammerhold_pack_heavy
-	name = "Norsii Plate Set (Heavy)"
+	name = "Kheshig Plate Set (Heavy)"
 	cost = 400
 	contains = list(
 		/obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn,

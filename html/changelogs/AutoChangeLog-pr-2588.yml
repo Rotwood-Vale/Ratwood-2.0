@@ -1,6 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - qol: "The Examine Panel (\"Examine closer\") window is now collapsible, hiding the flavortext section and giving you a slim window profile that allows for reading OOC Notes without taking up the whole screen (on 1080p displays). Resizing the collapsed window will also resize the OOC Notes pane."
-  - qol: "Headshots in the Examine Panel can now be hidden, giving that space to the OOC Notes pane."
-  - qol: "You can now zoom in/out on Flavortext & OOC notes, increasing or decreasing the font size proportionally."

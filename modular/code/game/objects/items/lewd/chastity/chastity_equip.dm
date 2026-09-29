@@ -121,9 +121,6 @@
 	if(H.chastity_device != src)
 		return
 	var/mob/living/carbon/human/old_wearer = H
-	var/datum/component/intimate_action_guard/chastity/action_guard_component = GetComponent(/datum/component/intimate_action_guard/chastity)
-	if(action_guard_component)
-		action_guard_component.unbind_from_wearer(H)
 	var/datum/component/intimate_reaction/chastity_receive_flavor/reaction_component = GetComponent(/datum/component/intimate_reaction/chastity_receive_flavor)
 	if(reaction_component)
 		reaction_component.unbind_from_wearer(H)

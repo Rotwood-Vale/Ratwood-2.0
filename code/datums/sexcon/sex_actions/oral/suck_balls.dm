@@ -1,24 +1,7 @@
 /datum/sex_action/suck_balls
 	name = "Suck their balls"
 	user_sex_part = SEX_PART_JAWS
-
-/datum/sex_action/suck_balls/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_TESTICLES))
-		return FALSE
-	return TRUE
-
-/datum/sex_action/suck_balls/can_perform(mob/living/user, mob/living/target)
-	if(user == target)
-		return FALSE
-	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_TESTICLES))
-		return FALSE
-	return TRUE
+	target_sex_part = SEX_PART_BALLS
 
 /datum/sex_action/suck_balls/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] starts sucking [target]'s balls..."))

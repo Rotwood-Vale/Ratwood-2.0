@@ -90,6 +90,13 @@
 	source_region_id = TRADE_REGION_KINGSFIELD
 	item_type = /obj/item/reagent_containers/food/snacks/rogue/meat/sausage/cooked
 
+/datum/trade_good/animal_preserved/honey
+	id = TRADE_GOOD_HONEY
+	name = "Honey"
+	base_price = SELLPRICE_HONEY
+	source_region_id = TRADE_REGION_HEARTFELT
+	item_type = /obj/item/reagent_containers/food/snacks/rogue/honey
+
 /datum/trade_good/animal_preserved/dried_fish
 	id = TRADE_GOOD_DRIED_FISH
 	name = "Dried Fish Filet"

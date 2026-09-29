@@ -21,6 +21,9 @@
 	crossfire = TRUE
 	fueluse = 0
 	no_refuel = TRUE
+	max_integrity = 200
+	can_damage = TRUE
+	flags_1 = NONE
 	heat_level = 4
 	/// A real fire: it cooks, it spreads, and it burns at heat level 4, so it belongs on the hearth's
 	/// category and channel, where a brazier beside a campfire is one crackle rather than two
@@ -72,11 +75,13 @@
 	icon_state = "stumpfire1"
 	base_state = "stumpfire"
 	desc = "Somewhat crude, but it lights the long winding paths throughout the land."
+	max_integrity = 100
 
 /obj/machinery/light/rogue/firebowl/church
 	desc = "A wide metal bowl mounted on a stand for a healthy roaring flame."
 	icon_state = "churchfire1"
 	base_state = "churchfire"
+	max_integrity = 100
 
 /obj/machinery/light/rogue/firebowl/church/off
 	icon_state = "churchfire0"
@@ -94,6 +99,7 @@
 	cookonme = FALSE
 	crossfire = FALSE
 	density = FALSE
+	max_integrity = 100
 	heat_level = 3
 	/// The torch category rather than fire: a candle on a stand, which does not cook or spread and
 	/// burns a level cooler than the brazier it inherits from. Chosen on sound alone
@@ -997,6 +1003,7 @@
 	dir = NORTH
 	buckle_requires_restraints = 1
 	buckle_prevents_pull = 1
+	buckle_blocks_spells = TRUE
 	heat_level = 5
 
 

@@ -47,6 +47,7 @@
 	var/travel_deny_message = "It is a dead end."
 	var/travel_access_hint = null
 	var/watchable = TRUE
+	var/craftblock = TRUE
 
 /obj/structure/fluff/traveltile/Initialize(mapload)
 	GLOB.traveltiles += src
@@ -300,7 +301,9 @@
 	travel_access_hint = "A tight passage that leads between the bathhouse and the northern coast, with many twists and turns - only a bathhouse staff member can fit through it. It takes a while to travel through, and is a popular route for smuggling goods in and out of town."
 	aportalid = "smuggler_bathhouse"
 	aportalgoesto = "smuggler_cove"
+	craftblock = FALSE // maybe dont block crafting in half of the bathouse?
 
 /obj/structure/fluff/traveltile/bathhouse_passage/cave // this is ON THE COAST in the ne
 	aportalid = "smuggler_cove"
 	aportalgoesto = "smuggler_bathhouse"
+	craftblock = TRUE

@@ -7,7 +7,7 @@
 	icon = 'icons/roguetown/weapons/whips32.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.75
-	wlength = WLENGTH_NORMAL
+	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BELT
 	associated_skill = /datum/skill/combat/whipsflails
@@ -362,6 +362,51 @@
 		added_def = 0,\
 	)
 
+/obj/item/rogueweapon/whip/urumi/spider
+	name = "drow urumi"
+	desc = "Two darkly shimmering and flexible blades coiling outwards from a gilded hilt wrapped with a small piece of spider-silk. \
+	The knuckleguarded handle betrays the weapon's grim purpose: to bring the enemies of the drow to their knees, be it through blade or bludgeon."
+	icon_state = "spider_urumi"
+	force = 31//+1, same as spider whip
+	minstr = 10
+	max_integrity = 150
+	special = /datum/special_intent/greatsword_swing
+
+/obj/item/rogueweapon/whip/urumi/silver/psydonic
+	name = "psydonic urumi"
+	desc = "Three lengths of shimmering silver coiling outwards from psycross wrapped handle of boswellia wood. This trio of blades, although hefty, can move with devestating speed in a trained hand."
+	icon_state = "psy_urumi"
+	force = 30//less force than tennite silver cause swift balance
+	minstr = 11//taut can reasonably reach this + make use of the swift balance
+	possible_item_intents = list(/datum/intent/whip/lash/urumi, /datum/intent/whip/crack/urumi, /datum/intent/whip/thrust, /datum/intent/dagger/sucker_punch)
+	max_integrity = 125//more blades equals less overall integ, i guess
+	max_blade_int = 200//3 blades, more blade for your buck!
+	is_silver = TRUE
+	wbalance = WBALANCE_SWIFT
+	smeltresult = /obj/item/ingot/silverblessed
+	special = /datum/special_intent/greatsword_swing//GET BEHIND ME ZIZO
+
+/obj/item/rogueweapon/whip/urumi/silver/psydonic/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 50,\
+		added_int = 50,\
+		added_def = 0,\
+	)
+
+/obj/item/rogueweapon/whip/urumi/silver/psydonic/old
+	name = "enduring urumi"
+	desc = "Three lengths of tarnished silver coiling outwards from psycross wrapped handle of cut-marred boswellia wood. This trio of blades, although hefty, can move with devestating speed in a trained hand."
+	is_silver = FALSE
+	smeltresult = /obj/item/ingot/steel
+	color = COLOR_FLOORTILE_GRAY
+
+/obj/item/rogueweapon/whip/urumi/silver/psydonic/old/ComponentInitialize()
+	return
+
 /obj/item/rogueweapon/whip/urumi/blacksteel
 	name = "blacksteel urumi"
 	desc = "Two lengths of precious blacksteel coiling outwards from a finely ornamented hilt. As much an artpiece as it is weapon."
@@ -370,4 +415,5 @@
 	minstr = 11
 	max_integrity = 280
 	max_blade_int = 280
+	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/blacksteel

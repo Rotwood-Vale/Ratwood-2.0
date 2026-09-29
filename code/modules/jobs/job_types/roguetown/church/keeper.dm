@@ -28,10 +28,11 @@
 		TRAIT_ALCHEMY_EXPERT, TRAIT_SEWING_EXPERT,
 		TRAIT_SURVIVAL_EXPERT, TRAIT_NOSTINK,
 		TRAIT_STEELHEARTED, TRAIT_RITUALIST,
+		TRAIT_NUMBED_LIMBS,
 	)
 
 	//You're part of a Pestran sect. Not nobility.
-	virtue_restrictions = list(/datum/virtue/utility/noble)
+	quirk_restrictions = list(/datum/quirk/noble)
 
 	advclass_cat_rolls = list(CTAG_KEEPER = 2)
 	job_subclasses = list(
@@ -135,7 +136,7 @@
 	REMOVE_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)
 
 	to_chat(H, span_notice("I remain on the old path of Pestra's devotion."))
 
@@ -150,7 +151,7 @@
 	H.church_favor += 1500
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)
 
 	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/self/learnmiracle))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/learnmiracle, H)

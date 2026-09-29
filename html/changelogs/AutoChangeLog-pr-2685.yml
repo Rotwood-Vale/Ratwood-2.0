@@ -1,5 +1,0 @@
-author: "Ephemeralis"
-delete-after: True
-changes:
-  - qol: "Instruments now play their last-played song immediately if used in combat, instead of needing you to navigate two dialogs while completely still."
-  - qol: "Instruments now have helpful examine text for characters with inspiration to explain the above change, and other QoL changes made recently."
