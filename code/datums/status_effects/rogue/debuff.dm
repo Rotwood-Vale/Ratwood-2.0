@@ -168,6 +168,30 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/sleepytime
 	needs_processing = FALSE
 
+/datum/status_effect/debuff/sleepytime/t2
+	id = "sleepytime2"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/sleepytimet2
+
+/datum/status_effect/debuff/sleepytime/t2/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier("SLEEP_TIER2", update=TRUE, priority=100, multiplicative_slowdown=1.05)
+
+/datum/status_effect/debuff/sleepytime/t2/on_remove()
+	owner.remove_movespeed_modifier("SLEEP_TIER2")
+	return ..()
+
+/datum/status_effect/debuff/sleepytime/t3
+	id = "sleepytime3"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/sleepytimet3
+
+/datum/status_effect/debuff/sleepytime/t3/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier("SLEEP_TIER3", update=TRUE, priority=100, multiplicative_slowdown=1.4)
+
+/datum/status_effect/debuff/sleepytime/t3/on_remove()
+	owner.remove_movespeed_modifier("SLEEP_TIER3")
+	return ..()
+
 /atom/movable/screen/alert/status_effect/debuff/netted
 	name = "Net"
 	desc = "A net was thrown on me.. how can I move?"
@@ -182,6 +206,16 @@
 /atom/movable/screen/alert/status_effect/debuff/sleepytime
 	name = "Tired"
 	desc = "I should get some rest."
+	icon_state = "sleepy"
+
+/atom/movable/screen/alert/status_effect/debuff/sleepytimet2
+	name = "Fatigued"
+	desc = "When was the last time I even slept...?"
+	icon_state = "sleepy"
+
+/atom/movable/screen/alert/status_effect/debuff/sleepytimet3
+	name = "Exhausted"
+	desc = "Just... one little quick nap... five minute rest... please..."
 	icon_state = "sleepy"
 
 /datum/status_effect/debuff/muscle_sore
