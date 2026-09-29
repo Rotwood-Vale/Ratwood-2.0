@@ -1,4 +1,0 @@
-author: "FreeStylaLT"
-delete-after: True
-changes:
-  - bugfix: "Fixed a bug with blood transfer that was causing it to increase the amount of blood restored every cast."
