@@ -24,6 +24,7 @@
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle)
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/under/roguetown/splintlegs
 	name = "brigandine chausses"
@@ -52,6 +53,7 @@
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/under/roguetown/splintlegs/iron
 	name = "splinted leggings"
