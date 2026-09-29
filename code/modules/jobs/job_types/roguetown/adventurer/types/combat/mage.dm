@@ -56,7 +56,7 @@
 		)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.age == AGE_OLD)
-		H.mind?.adjust_spellpoints(6)
+		H.mind?.adjust_spellpoints(9)
 	H.cmode_music = 'sound/music/cmode/adventurer/combat_outlander4.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
@@ -179,6 +179,14 @@
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
+	if(H.age == AGE_OLD)
+		H.change_stat(STATKEY_INT, 1)
+		H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/axes, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
 
 /datum/advclass/mage/spellsinger
 	name = "Spellsinger"
