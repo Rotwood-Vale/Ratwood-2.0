@@ -391,8 +391,8 @@
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	pixel_y = 0
 	pixel_x = 0
-	possible_item_intents = list(POLEARM_BASH, /datum/intent/priest_smite, /datum/intent/priest_silence)
-	gripped_intents = list(POLEARM_BASH, /datum/intent/mace/smash/wood, /datum/intent/priest_smite, /datum/intent/priest_silence)
+	possible_item_intents = list(SPEAR_BASH, /datum/intent/priest_smite, /datum/intent/priest_silence)
+	gripped_intents = list(SPEAR_BASH, /datum/intent/mace/smash/wood, /datum/intent/priest_smite, /datum/intent/priest_silence)
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	bigboy = FALSE
@@ -411,7 +411,7 @@
 		var/mob/living/carbon/human/HU = user
 
 		if(HU.job != "Bishop")
-			to_chat(user, "<font color='yellow'>THIS IS NOT YOURS.</font>"))
+			to_chat(user, "<font color='yellow'>THIS IS NOT YOURS.</font>")
 			return
 
 		if(ishuman(target))
