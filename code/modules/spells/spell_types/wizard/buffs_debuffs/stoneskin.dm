@@ -3,7 +3,7 @@
 	name = "Stoneskin"
 	overlay_state = "stoneskin"
 	desc = "Harden the target's skin like stone. (+5 Constitution)"
-	cost = 2
+	cost = 4
 	xp_gain = TRUE
 	releasedrain = 60
 	chargedrain = 1
@@ -12,7 +12,7 @@
 	human_req = TRUE
 	warnie = "spellwarning"
 	school = "transmutation"
-	spell_tier = 2
+	spell_tier = 3
 	invocations = list("Perstare Sicut Saxum.") // Endure like Stone
 	invocation_type = "whisper"
 	glow_color = GLOW_COLOR_BUFF
