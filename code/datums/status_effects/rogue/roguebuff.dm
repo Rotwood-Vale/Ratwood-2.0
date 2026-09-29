@@ -990,7 +990,7 @@
 	return TRUE
 
 /datum/status_effect/buff/healing/necras_vow/tick()
-	if (owner.stat > 0 && (!owner.get_blood_volume || owner.health < owner.crit_threshold))
+	if (owner.stat > 0 && (!owner.get_blood_volume() || owner.health < owner.crit_threshold))
 		// OH SHIT. SHE'S CASHING IN ON THE VOW!!! YOU'RE FUCKED!!!
 		if (!oh_god_it_hurts)
 			to_chat(owner, span_boldwarning("The everblack settles around you. Oblivion. Then, you hear it. You hear <i>HER</i>."))
