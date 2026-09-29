@@ -362,7 +362,7 @@
 			btm.Stun(80)
 			playsound_erp(btm, 'sound/misc/mat/pop.ogg', 100, TRUE, -2)
 			playsound_erp(top, 'sound/misc/mat/segso.ogg', 50, TRUE, -2)
-			btm.emote_erp("paincrit", travel = SOUND_TRAVEL_CARRYING)
+			btm.emote_erp("paincrit", travel = SOUND_TRAVEL_LEAKING)
 			if(notify)
 				var/knot_word_yank = top.sexcon.get_knot_synonym()
 				if(btm_removed)

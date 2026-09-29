@@ -8,6 +8,7 @@
 	density = TRUE
 	opacity = TRUE
 	sound_door = TRUE
+	sound_opening = TRUE
 	var/base_state = "tent_door"
 
 /obj/structure/roguetent/update_icon()

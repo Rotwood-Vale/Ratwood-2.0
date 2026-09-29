@@ -137,9 +137,9 @@
 	// Male masochists moan in pleasure rather than screaming in pure agony.
 	// Masochism is a charflaw addiction, not a trait — use has_flaw() instead of HAS_TRAIT().
 	if(action_target.has_flaw(/datum/charflaw/addiction/masochist) && action_target.gender == MALE)
-		playsound_erp(get_turf(action_target), pick('modular/sound/masomoans/masomoan1.ogg', 'modular/sound/masomoans/masomoan2.ogg', 'modular/sound/masomoans/masomoan3.ogg', 'modular/sound/masomoans/masomoan4.ogg', 'modular/sound/masomoans/masomoan5.ogg', 'modular/sound/masomoans/masomoan6.ogg'), 70, TRUE, 0, travel = SOUND_TRAVEL_CARRYING) // extrarange 0 is SOUND_RANGE. It stands in for a scream, so it carries like one
+		playsound_erp(get_turf(action_target), pick('modular/sound/masomoans/masomoan1.ogg', 'modular/sound/masomoans/masomoan2.ogg', 'modular/sound/masomoans/masomoan3.ogg', 'modular/sound/masomoans/masomoan4.ogg', 'modular/sound/masomoans/masomoan5.ogg', 'modular/sound/masomoans/masomoan6.ogg'), 70, TRUE, 0, travel = SOUND_TRAVEL_LEAKING) // extrarange 0 is SOUND_RANGE. It stands in for a scream, so it carries like one
 		return
-	action_target.emote_erp("scream", travel = SOUND_TRAVEL_CARRYING)
+	action_target.emote_erp("scream", travel = SOUND_TRAVEL_LEAKING)
 	
 /mob/living/carbon/human/proc/try_impregnate(mob/living/carbon/human/wife)
 	var/obj/item/organ/testicles/testes = getorganslot(ORGAN_SLOT_TESTICLES)

@@ -69,6 +69,9 @@
 	 * kept running. See recount_sound_doors().
 	 */
 	var/sound_door_count = 0
+	/// Objects with sound_opening standing here, so the ERP walk finds a window or door without a
+	/// search. Recounted like sound_door_count, see recount_sound_openings()
+	var/sound_opening_count = 0
 
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
 
@@ -437,6 +440,8 @@
 		recount_sound_doors()
 		if(entered_obj.opacity || SSpoint_ambience.door_mode == SOUND_DOORS_ALWAYS)
 			SSpoint_ambience.door_changed(src)
+	if(entered_obj.sound_opening)
+		recount_sound_openings()
 	if(isstructure(entered_obj))
 		var/obj/structure/entered_structure = entered_obj
 		if(entered_structure.density && entered_structure.climbable)
@@ -459,6 +464,8 @@
 		recount_sound_doors(gone_obj)
 		if(gone_obj.opacity || SSpoint_ambience.door_mode == SOUND_DOORS_ALWAYS)
 			SSpoint_ambience.door_changed(src)
+	if(gone_obj.sound_opening)
+		recount_sound_openings(gone_obj)
 	if(isstructure(gone_obj))
 		var/obj/structure/exited_structure = gone_obj
 		if(exited_structure.density && exited_structure.climbable)
@@ -481,6 +488,13 @@
 	for(var/obj/door in src)
 		if(door.sound_door && door != leaving)
 			sound_door_count++
+
+/// Counts the windows and doors here from scratch, for the same reasons as recount_sound_doors()
+/turf/proc/recount_sound_openings(atom/movable/leaving)
+	sound_opening_count = 0
+	for(var/obj/opening in src)
+		if(opening.sound_opening && opening != leaving)
+			sound_opening_count++
 
 /turf/open/Entered(atom/movable/AM)
 	..()

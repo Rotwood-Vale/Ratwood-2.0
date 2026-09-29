@@ -9,6 +9,10 @@
 	/// An openable barrier point ambience treats as a door: counted on its turf, read as it stands,
 	/// and reported when it opens or shuts. Its opacity must only ever change through set_opacity()
 	var/sound_door = FALSE
+	/// A window or door to ERP audio, counted on its turf so the ERP walk finds one without a search.
+	/// Kept apart from sound_door, which point ambience reads, so a false wall can be a door to point
+	/// ambience and a wall to ERP audio
+	var/sound_opening = FALSE
 
 	var/damtype = BRUTE
 	var/force = 0
@@ -103,13 +107,16 @@
 	// if the turf is uninitialized it'll just call Entered on us
 	if(our_turf && (our_turf.flags_1 & INITIALIZED_1) && (obj_flags & BLOCK_Z_OUT_DOWN))
 		our_turf.platform_atom_count++
-	// Creating an object calls no Entered, so a door counts itself here, and one built shut in play
-	// has point ambience serve the listeners near it again
+	// Creating an object calls no Entered, so a door or window counts itself here, and a door built
+	// shut in play has point ambience serve the listeners near it again
 	if(sound_door && isturf(loc))
 		var/turf/door_turf = loc
 		door_turf.recount_sound_doors()
 		if(!mapload && (opacity || SSpoint_ambience.door_mode == SOUND_DOORS_ALWAYS))
 			SSpoint_ambience.door_changed(src)
+	if(sound_opening && isturf(loc))
+		var/turf/opening_turf = loc
+		opening_turf.recount_sound_openings()
 
 /obj/Destroy(force=FALSE)
 	if(!ismachinery(src))

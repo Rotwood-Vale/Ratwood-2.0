@@ -345,8 +345,8 @@
  * floors, and the send's storey rule muffles those sources instead.
  *
  * NO LEAK HERE, DELIBERATELY. playsound's SOUND_TRAVEL_LEAKING lets an enclosed listener hear a
- * one-shot faintly for a few tiles past the barrier, and that is right for a one-shot and wrong for
- * a loop. A hearth leaking at a fixed volume through every wall in a town is a permanent drone, and
+ * one-shot faintly just past a window or door, and that is right for a one-shot and wrong for a
+ * loop. A hearth leaking at a fixed volume past every window in a town is a permanent drone, and
  * since only the nearest source per category is served it would be a GHOST of a fire nobody can
  * reach, displacing the runner-up below, which is a real one with a real path to it. It would also
  * turn silence into a send on the one system billed per moving listener.

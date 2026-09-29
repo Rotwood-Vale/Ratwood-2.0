@@ -136,7 +136,7 @@
 	)
 
 	var/list/content_entries = list(
-		list("id" = "animal_emotes", "label" = "Animal Noise Emotes", "enabled" = !!(!owner.prefs.mute_animal_emotes), "desc" = "Play animal emote sound effects."),
+		list("id" = "anthro_noises", "label" = "Anthro Noise Emotes", "enabled" = !!(!owner.prefs.mute_anthro_noises), "desc" = "Play anthro noise emote sound effects."),
 		list("id" = "erp_panel", "label" = "Enable ERP Panel Interactions", "enabled" = !!owner.prefs.sexable, "desc" = "Allow others to use ERP panel interactions on you."),
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
@@ -232,8 +232,8 @@
 				owner.toggle_roleplay_ads()
 			if("lobby_music")
 				owner.toggle_lobby_music()
-			if("animal_emotes")
-				owner.mute_animal_emotes()
+			if("anthro_noises")
+				owner.mute_anthro_noises()
 			if("erp_panel")
 				owner.toggle_ERP()
 			if("chastity")
@@ -354,17 +354,17 @@
 		else
 			to_chat(src, "Your character NSFW information will only be visible when nude.")
 
-/client/verb/mute_animal_emotes()
+/client/verb/mute_anthro_noises()
 	set category = "Options"
-	set name = "Toggle Animal Noise Emotes"
+	set name = "Toggle Anthro Noise Emotes"
 	set hidden = 1
 	if(prefs)
-		prefs.mute_animal_emotes = !prefs.mute_animal_emotes
+		prefs.mute_anthro_noises = !prefs.mute_anthro_noises
 		prefs.save_preferences()
-		if(prefs.mute_animal_emotes)
-			to_chat(src, "You can no longer hear animal sound emotes.")
+		if(prefs.mute_anthro_noises)
+			to_chat(src, "You can no longer hear anthro noise emotes.")
 		else
-			to_chat(src, "You will now hear animal sound emotes.")
+			to_chat(src, "You will now hear anthro noise emotes.")
 
 /client/verb/autoconsume()
 	set category = "Options"

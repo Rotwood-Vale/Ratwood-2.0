@@ -26,9 +26,9 @@
  * done by the listeners near it, while every moving player adds services of their own. Priced from
  * a live round's movement telemetry, 111 listeners on average, with each part timed locally on one
  * client, it came to about 3.6 ms/s, 2.2 to 6.0, and 6.4 in the round's busiest two seconds, at a
- * move interval of 7 with no step count. The shipped step count serves a walker about 1.5 times as
- * often, which that figure leaves out. It is a
- * projection, not a load test, local testing used at most four clients, and it may be out of date.
+ * move interval of 7 with no step count. It is a projection from our own server's players and
+ * population, not a load test, so it will not be accurate for another server. Local testing used at
+ * most four clients, and it may be out of date.
  * The comparison with plain loops and any break-even population depend on movement, audible sources
  * and batching. Neither design's total cost is independent of listener count.
  *
@@ -324,15 +324,15 @@
 /**
  * HOW A SOUND GETS PAST A BARRIER.
  *
- * One axis, one vocabulary, used by every system that cares: ERP names one at the call, an emote
- * carries one on its datum, and a bare playsound gets the default. Ordered by containment, so the
- * ladder reads: each is more contained than the one above it. A wall mode and a sound class are one
- * thing, so this is one enum.
+ * One axis, one vocabulary, used by every system that cares: ERP names CONTAINED or LEAKING at the
+ * call, an emote carries one on its datum, and a bare playsound gets the default. Ordered by
+ * containment, so the ladder reads: each is more contained than the one above it. A wall mode and a
+ * sound class are one thing, so this is one enum.
  *
- * FLOORS ARE NOT PART OF THIS. They are `floor_volume` below, because the two axes come apart: an
- * emote carries through walls dulled AND attenuates normally through a ceiling, which no single
- * bundled class could express. Only SOUND_TRAVEL_CONTAINED speaks for both, and only because
- * "contained" means contained.
+ * FLOORS ARE NOT PART OF THIS. They are `floor_volume` below, because the two axes come apart: a
+ * CARRYING sound is dulled through walls AND attenuates normally through a ceiling, which no single
+ * bundled class could express. Only the two ERP classes speak for both, since neither ever crosses a
+ * floor.
  *
  * Costs a line walk per listener on everything but UNRESTRICTED, so that is the default, and nearly
  * every playsound call names no class. The rest are for things firing every few seconds, not
@@ -340,61 +340,41 @@
  */
 #define SOUND_TRAVEL_UNRESTRICTED 0	// Barriers ignored, no walk. THE DEFAULT
 #define SOUND_TRAVEL_CARRYING 1	// Through a barrier at full range, dulled. Equals TRUE, so a caller passing TRUE gets this
-#define SOUND_TRAVEL_LEAKING 2	// A few tiles past a barrier and no further: capped at SOUND_TRAVEL_LEAK_VOLUME, reaching SOUND_TRAVEL_LEAK_RANGE tiles PAST IT, wherever the source stands
-#define SOUND_TRAVEL_CONTAINED 3	// Stops at a barrier, and never crosses a floor. A guarantee, not a default: playsound and playsound_local both enforce it
+#define SOUND_TRAVEL_LEAKING 2	// ERP. Open doors and windows pass it; one shut opening on the direct line leaks one tile, capped at SOUND_TRAVEL_LEAK_VOLUME. Walls stop it. Soundproof areas seal open openings too. Never crosses a floor
+#define SOUND_TRAVEL_CONTAINED 3	// ERP. Walls and shut openings stop it; open doors and windows pass it unless the source area is soundproof. Never crosses a floor, enforced by playsound and playsound_local
 
 /**
  * What a floor does, separately from what a wall does.
  *
  * NULL attenuates and halves like any positional sound, which is what an ordinary sound and an emote
  * want. SOUND_FLOOR_NEVER does not cross at all and playsound skips gathering the floors either
- * side. Any positive number CAPS the volume there regardless of distance, which is how sex audio is
- * held quiet through a ceiling without being cut off.
+ * side. Any positive number CAPS the volume there regardless of distance. LEAKING and CONTAINED never
+ * cross a floor.
  *
  * Do not raise the caps. Audio through a floor is a common complaint and the only thing carrying
  * further buys is people breaking the door down. Lowering is always safe.
  */
 #define SOUND_FLOOR_NEVER 0
-/// The cap each travel class asks for by default, which playsound_erp applies and any caller may
-/// override. CONTAINED cannot be overridden: see the enforcement in playsound()
-#define SOUND_TRAVEL_FLOOR(travel) ((travel) == SOUND_TRAVEL_CARRYING ? 4 : ((travel) == SOUND_TRAVEL_LEAKING ? 2 : SOUND_FLOOR_NEVER))
+/// The floor cap each travel class asks for by default, which playsound_erp and a named emote class
+/// apply. CARRYING is heard faintly through a ceiling, and the ERP classes never cross one
+#define SOUND_TRAVEL_FLOOR(travel) ((travel) == SOUND_TRAVEL_CARRYING ? 4 : SOUND_FLOOR_NEVER)
 /**
- * The volume cap SOUND_TRAVEL_LEAKING gives a listener properly enclosed behind a barrier.
+ * The volume cap a LEAKING sound gets past a shut window or door.
  *
- * It holds for SOUND_TRAVEL_LEAK_RANGE tiles past the barrier, and nothing is heard beyond. The
- * muffle profile alone only dulls a sound and leaves it audible across its whole range, which is
- * why a cap exists at all.
- *
- * The two do different jobs and should be tuned apart. The cap decides how LOUD it is through a wall
- * and dominates most of the zone. The range decides how FAR, and is the only thing that stops it.
- * Ordinary falloff still runs underneath, so the last tile or two fade rather than cutting flat.
- *
- * LEAKING is the only class that reaches these: CONTAINED stops at the barrier and CARRYING is
- * meant to carry. An emote categorised as LEAKING gets them too.
+ * The muffle profile alone only dulls a sound, which through glass or a shut door is still too loud,
+ * hence the cap. Ordinary falloff still runs underneath it
  */
 #define SOUND_TRAVEL_LEAK_VOLUME 5
 /**
- * THE LAST TILE STILL AUDIBLE, measured FROM THE BARRIER.
- *
- * One is standing against the wall, so this is that tile plus two more. From the barrier and not the
- * source, which is the whole point: opacity_between walks from listener to source, so the tile it
- * stops on is the first wall on the LISTENER'S side and the distance to it is how far past the wall
- * they are. Measured from the source, what a listener outside hears would depend on how deep in the
- * room the source sits, and a source three tiles in would be inaudible from the far side of its own
- * wall.
- */
-#define SOUND_TRAVEL_LEAK_RANGE 3
-/**
  * What playsound_local is told about one listener.
  *
- * ROUND A CORNER IS NOT THROUGH A WALL. Every class but UNRESTRICTED muffles at full range where an
- * open path exists, because a sound really does reach you round a corner. Only a listener properly
- * enclosed is stopped or capped. That is why the grading exists at all. Ordered, so truthiness means
- * "muffled at all" for a caller that passes TRUE or FALSE.
+ * ERP uses a direct line: a permitted one-tile leak gets ENCLOSED; any other blocked path is not
+ * sent. Other sound systems also use SOFT for floors or corners and WALL for stronger attenuation.
+ * Ordered, so truthiness means "muffled at all" for a caller that passes TRUE or FALSE.
  */
 #define SOUND_MUFFLE_NONE 0
 #define SOUND_MUFFLE_SOFT 1	// Equals TRUE. The profile only, what a storey gives and what a boolean TRUE means
-#define SOUND_MUFFLE_ENCLOSED 2	// The profile plus the leak cap. Only playsound produces it, from SOUND_TRAVEL_LEAKING
+#define SOUND_MUFFLE_ENCLOSED 2	// The profile plus the leak cap. Only playsound produces it, for LEAKING past a shut window or door
 #define SOUND_MUFFLE_WALL 3	// The profile with a deeper volume cut. A wall between a listener and a continuous source
 
 /**
@@ -433,7 +413,7 @@
  * What a line between a listener and a source ran into.
  *
  * CLEAR: nothing opaque on it. SOLID: blocked, and no open line from either tile beside the
- * obstruction, an enclosure. Point ambience does not serve it and playsound's LEAKING caps it.
+ * obstruction, an enclosure. Point ambience does not serve it. ERP uses its own direct walk.
  * MUFFLED: blocked on the direct line but open from a tile beside the obstruction, a corner, so it is
  * served dulled. A diagonal step is taken without testing the two tiles beside it, so a line between
  * two walls that meet at a corner, and a diagonal neighbour, reads CLEAR.

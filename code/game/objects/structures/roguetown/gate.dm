@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY(biggates)
 	appearance_flags = NONE
 	opacity = TRUE
 	sound_door = TRUE
+	sound_opening = TRUE
 	var/base_state = "gate"
 	var/isSwitchingStates = FALSE
 	var/list/turfsy = list()
@@ -33,6 +34,7 @@ GLOBAL_LIST_EMPTY(biggates)
 	base_state = "bar"
 	opacity = FALSE
 	sound_door = FALSE
+	sound_opening = FALSE
 
 /obj/structure/gate/bars/Initialize(mapload)
 	. = ..()
@@ -52,8 +54,10 @@ GLOBAL_LIST_EMPTY(biggates)
 	density = TRUE
 	mouse_opacity = 0
 	opacity = TRUE
-	/// A gate spans several tiles and these stand on each, so they are what point ambience reads there
+	/// A gate spans several tiles and these stand on each, so they are what point ambience and ERP
+	/// audio read there
 	sound_door = TRUE
+	sound_opening = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/structure/gate/Initialize(mapload)

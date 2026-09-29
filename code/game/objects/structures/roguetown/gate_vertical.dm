@@ -7,6 +7,7 @@
 	anchored = TRUE
 	opacity = TRUE
 	sound_door = TRUE
+	sound_opening = TRUE
 	bound_width = 32
 	bound_height = 96
 	layer = ABOVE_MOB_LAYER

@@ -94,7 +94,8 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
  * survey and counters hooks have no measuring implementation in a plain checkout, so measured_*
  * vars remain zero there. Local timing used at most four clients. The quoted lap used one.
  * Recheck the figures after code changes. Population-wide costs use live movement counts and
- * local per-service timing as a model, not a load test.
+ * local per-service timing as a model, not a load test. The movement counts are our own server's
+ * players and population, so those costs will not be accurate for another server.
  *
  * To measure a live server, use the Point Ambience Server verb, which ships. It reports across
  * every real player from counters the subsystem keeps anyway, takes cost from the tick usage of
@@ -129,8 +130,8 @@ SUBSYSTEM_DEF(point_ambience)
 	 * depends on tiles between updates rather than seconds: under a cap of a few deciseconds a fast
 	 * runner can cross a short-range category's whole reach between two services, a jump from
 	 * near-silence to full. Intent rather than measured speed, so both values stay hard ceilings.
-	 * move_service_steps below bounds the tiles: at 2 a natural runner is served every second
-	 * step, sooner than this, which then matters only with steps at 0
+	 * move_service_steps below bounds the tiles: at 2 a natural runner is served at least every
+	 * second step
 	 */
 	var/move_service_interval_running_override = 0
 	/**

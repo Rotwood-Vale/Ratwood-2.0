@@ -57,7 +57,7 @@
 					point_ambience_setting_changed("running override", running, value)
 					ambience.move_service_interval_running_override = value
 			if("steps")
-				var/value = point_ambience_number("Most steps a client covers between move-hook services at a natural pace, walking or running. It only shortens the two intervals, which stay as caps, and 0 leaves them alone. Measured on the lap, 2 served a walker 1.67 times a second against 1.12 on interval 7 alone: 50% more services, about 0.04 ms/s more per walker.", "Steps", steps)
+				var/value = point_ambience_number("Most steps a client covers between move-hook services at a natural pace, walking or running. It only shortens the two intervals, which stay as caps, and 0 leaves them alone. Under an interval of 12, 2 serves a speed 10 walker every 6 ds instead of every 12, twice the services.", "Steps", steps)
 				if(!isnull(value))
 					point_ambience_setting_changed("steps", steps, value)
 					ambience.move_service_steps = value
@@ -67,7 +67,7 @@
 					point_ambience_setting_changed("speed cutoff", ambience.speed_cutoff ? "on" : "off", value ? "on" : "off")
 					ambience.speed_cutoff = value
 			if("cap")
-				var/value = point_ambience_number("Ceiling on move-hook services in one tick across every client. With the queue on it is the drain's budget and the rest wait for the next tick. Inline, excess steps are refused, and a gate also refuses once the tick is half spent. 0 turns off both. On rounds 4540 and 4541, 103 to 111 players, demand at steps 2 averaged 1.6 to 2.5 services a tick and the busiest two seconds about 4 to 5.5, derived from measured rates, so 8 is three to five times the average.", "Services Per Tick", cap)
+				var/value = point_ambience_number("Ceiling on move-hook services in one tick across every client. With the queue on it is the drain's budget and the rest wait for the next tick. Inline, excess steps are refused, and a gate also refuses once the tick is half spent. 0 turns off both. At 20 ticks a second, 8 allows up to 160 services a second, enough for 48 walkers each served on every step.", "Services Per Tick", cap)
 				if(!isnull(value))
 					point_ambience_setting_changed("services per tick", cap, value)
 					ambience.max_services_per_tick = value

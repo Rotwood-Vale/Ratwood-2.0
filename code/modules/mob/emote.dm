@@ -1,5 +1,5 @@
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, forced = FALSE, targetted = FALSE, custom_me = FALSE, animal = FALSE, travel = null, erp = FALSE)
+/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, forced = FALSE, targetted = FALSE, custom_me = FALSE, anthro_noise = FALSE, travel = null, erp = FALSE)
 	var/oldact = act
 	act = LOWER_TEXT(act)
 	var/param = message
@@ -23,12 +23,12 @@
 			var/list/custom_emote = GLOB.emote_list["me"]
 			for(var/datum/emote/P in custom_emote)
 				mute_time = P.mute_time
-				P.run_emote(src, oldact, m_type, intentional, targetted, (animal ? animal : P.is_animal), travel, erp)
+				P.run_emote(src, oldact, m_type, intentional, targetted, (anthro_noise ? anthro_noise : P.anthro_noise), travel, erp)
 				break
 	else
 		for(var/datum/emote/P in key_emotes)
 			mute_time = P.mute_time
-			if(P.run_emote(src, param, m_type, intentional, targetted, (animal ? animal : P.is_animal), travel, erp))
+			if(P.run_emote(src, param, m_type, intentional, targetted, (anthro_noise ? anthro_noise : P.anthro_noise), travel, erp))
 				break
 
 	if(custom_me)
@@ -37,11 +37,12 @@
 		next_emote = world.time + mute_time
 
 /**
- * Vocalisation made by the sex system. CONTAINED by default: stays in the room and on its floor.
+ * Vocalisation made by ERP, or caused by it. CONTAINED by default, stopping at walls and shut
+ * openings. SOUND_TRAVEL_LEAKING is also heard one tile past a shut window or door on the direct
+ * line. Open ones pass both classes unless the source area is soundproof.
  *
- * The caller decides rather than the emote, because groan, painmoan, scream and paincrit are
- * shared with combat, surgery and wounds, where carrying through a ceiling is the point. Pass
- * SOUND_TRAVEL_CARRYING for a scream, which should still read as a loud noise from a floor away.
+ * A call of its own rather than a setting on the emote, because groan, painmoan, scream and paincrit
+ * are shared with combat, surgery and wounds, where carrying through a ceiling is the point.
  */
 /mob/proc/emote_erp(act, bypass_cooldown = TRUE, travel = SOUND_TRAVEL_CONTAINED)
 	return emote(act, forced = bypass_cooldown, travel = travel, erp = TRUE)

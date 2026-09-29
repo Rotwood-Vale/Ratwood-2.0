@@ -72,7 +72,7 @@
 /mob/living/simple_animal/hostile/retaliate/bat/crow/proc/emote_caw()
 	set category = "Winged Form"
 	set name = "Caw"
-	emote("caw", intentional = TRUE, animal = TRUE)
+	emote("caw", intentional = TRUE, anthro_noise = TRUE)
 
 /mob/living/simple_animal/hostile/retaliate/bat/crow/get_sound(input)
 	if(input == "caw")

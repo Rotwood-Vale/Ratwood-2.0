@@ -82,6 +82,7 @@
 	density = TRUE
 	opacity = TRUE
 	sound_door = TRUE
+	sound_opening = TRUE
 	dir = SOUTH
 	invisibility = 101 //cannot be seen or interacted with and has density and opacity until triggered
 	activated = FALSE

@@ -7,6 +7,7 @@
 	anchored = TRUE
 	opacity = TRUE
 	sound_door = TRUE
+	sound_opening = TRUE
 	layer = CLOSED_DOOR_LAYER
 
 	icon = 'icons/roguetown/misc/doors.dmi'

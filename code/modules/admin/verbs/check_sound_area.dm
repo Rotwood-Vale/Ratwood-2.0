@@ -20,7 +20,7 @@
 		return
 
 	var/list/msg = list("<b>[A.name]</b>  <span class='notice'>[A.type]</span>")
-	msg += "soundproof: <b>[A.soundproof ? "TRUE, ERP audio and speech are line of sight only here" : "FALSE, sound leaves normally"]</b>"
+	msg += "soundproof: <b>[A.soundproof ? "TRUE, speech is line of sight only and ERP audio stays in the room here" : "FALSE, sound leaves normally"]</b>"
 	msg += "soundenv: [A.soundenv][A.soundenv ? "" : " (unset, so positional sounds get SOUND_DEFAULT_ENVIRONMENT [SOUND_DEFAULT_ENVIRONMENT])"]"
 	msg += "turf ([here.x],[here.y],[here.z]) | converted_type [A.converted_type || "none"]"
 

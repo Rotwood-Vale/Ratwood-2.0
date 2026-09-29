@@ -436,6 +436,7 @@
 	density = TRUE
 	opacity = TRUE
 	sound_door = TRUE
+	sound_opening = TRUE
 	redstone_structure = TRUE
 
 /obj/structure/bars/passage/shutter/redstone_triggered()

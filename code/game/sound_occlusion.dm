@@ -53,6 +53,9 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
  * way and never touches (2,0) or (3,0), which is where a wall between the two actually stands.
  * Shallow angles are the worst case and the common one indoors.
  *
+ * erp_muffle_for() uses the same stepping for ERP audio, kept apart so no other sound pays for
+ * its opening checks. Change the stepping in both.
+ *
  * Arguments:
  * * steps_allowed - tiles walked before giving up and calling it SOLID, silence being the safer
  *   failure. Only a target further than this on either axis gets there, and callers pass their
@@ -258,42 +261,148 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
 /**
  * What playsound_local should be told about one listener, from the caller's SOUND_TRAVEL_* class.
  *
- * SOUND_MUFFLE_NONE, SOFT or ENCLOSED, or NULL for "do not send". CONTAINED stops at an enclosure,
- * LEAKING stops beyond SOUND_TRAVEL_LEAK_RANGE from the barrier.
- * CARRYING is one opacity_between() and anything on the line is SOFT. LEAKING and CONTAINED grade,
- * one walk when the line is clear and up to three when it is not, and differ only in what an
- * enclosure becomes.
- *
- * The leak range is measured from the barrier, not the source. The walk runs listener to source, so
- * the block it reports is the first wall on the listener's side and the distance to it is how far
- * past it they stand. Measured from the source, a bed three tiles into a room would be out of
- * earshot from the far side of its own wall.
+ * SOUND_MUFFLE_NONE, SOFT or ENCLOSED, or NULL for "do not send". CARRYING is one opacity_between()
+ * and anything on the line is SOFT. CONTAINED and LEAKING are ERP's and walk their own way, see
+ * erp_muffle_for().
  *
  * The caller has already decided this listener is worth walking to: same floor, more than one
  * orthogonal step away, class not SOUND_TRAVEL_UNRESTRICTED. A diagonal neighbour passes that gate
- * and always reads clear, the walk landing on the target at its first step. Those gates stay in
+ * and reads clear, the walk landing on the target at its first step, unless ERP audio has a window
+ * or door on either tile, see erp_muffle_for(). Those gates stay in
  * playsound so the common case costs no proc call at all. Contents are read on the line, since a
  * one-shot recomputes from scratch and a door's state cannot freeze into it.
  *
- * Leaves the GLOB walk counters as the walk it made left them, for a caller pricing it.
+ * The GLOB walk counters belong to the shared walkers; ERP does not update them.
+ *
+ * Arguments:
+ * * seal_openings - soundproof ERP containment, including open doors and windows
  */
-/proc/occlusion_muffle_for(turf/listener_turf, turf/source_turf, occlusion, steps_allowed, list/trace)
+/proc/occlusion_muffle_for(turf/listener_turf, turf/source_turf, occlusion, steps_allowed, list/trace, seal_openings = FALSE)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(occlusion == SOUND_TRAVEL_CARRYING)
 		return (opacity_between(listener_turf, source_turf, steps_allowed, TRUE, trace) == OCCLUSION_CLEAR) ? SOUND_MUFFLE_NONE : SOUND_MUFFLE_SOFT
-	if(occlusion != SOUND_TRAVEL_LEAKING && occlusion != SOUND_TRAVEL_CONTAINED)
-		return SOUND_MUFFLE_NONE
+	if(occlusion == SOUND_TRAVEL_CONTAINED || occlusion == SOUND_TRAVEL_LEAKING)
+		return erp_muffle_for(listener_turf, source_turf, steps_allowed, occlusion == SOUND_TRAVEL_LEAKING, seal_openings)
+	return SOUND_MUFFLE_NONE
 
-	var/grade = sound_occlusion_grade(listener_turf, source_turf, steps_allowed, TRUE, trace)
-	if(grade == OCCLUSION_MUFFLED)
-		return SOUND_MUFFLE_SOFT
-	if(grade != OCCLUSION_SOLID)
-		return SOUND_MUFFLE_NONE
-	if(occlusion == SOUND_TRAVEL_CONTAINED)
+/**
+ * Traces ERP audio directly to its source, returning a muffle level or null for "do not send".
+ *
+ * Open doors and windows pass sound at its normal range. LEAKING can cross one shut opening on
+ * the first step from the listener, muffled and capped. Continue along that same line to reject
+ * any further barrier. No corner probes or nearby-opening search run for ERP audio.
+ *
+ * A closed opening on either endpoint needs its own check because the walk skips its endpoints.
+ * A source there is heard only within one tile; a listener there consumes the one allowed leak.
+ * Adjacent endpoint exceptions match playsound's unwalked participants. An open doorway has no
+ * such limit unless seal_openings is set for a soundproof source area.
+ *
+ * The stepping matches opacity_between(), but the walks stay separate to keep ERP's opening
+ * policy off every tile checked by point ambience and sound tokens. Only counted opening tiles
+ * need a live state lookup; an open window can override a transparent window-wall frame.
+ *
+ * Arguments:
+ * * leaking - SOUND_TRAVEL_LEAKING rather than CONTAINED
+ * * seal_openings - blocks open openings too and disables leakage for soundproof rooms
+ */
+/proc/erp_muffle_for(turf/listener_turf, turf/source_turf, steps_allowed, leaking, seal_openings = FALSE)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(!listener_turf || !source_turf || listener_turf.z != source_turf.z)
 		return null
+	if(seal_openings)
+		leaking = FALSE
+	var/muffled = SOUND_MUFFLE_NONE
+	if(source_turf.sound_opening_count || listener_turf.sound_opening_count)
+		var/source_blocked = source_turf.sound_opening_count && (seal_openings || sound_opening_blocks(source_turf))
+		var/listener_blocked = listener_turf.sound_opening_count && (seal_openings || sound_opening_blocks(listener_turf))
+		if(source_blocked || listener_blocked)
+			if(get_dist(listener_turf, source_turf) <= 1)
+				return leaking ? SOUND_MUFFLE_ENCLOSED : SOUND_MUFFLE_NONE
+			if(!leaking || source_blocked)
+				return null
+			muffled = SOUND_MUFFLE_ENCLOSED
+	var/x = listener_turf.x
+	var/y = listener_turf.y
+	var/z = listener_turf.z
+	var/target_x = source_turf.x
+	var/target_y = source_turf.y
+	var/dx = abs(target_x - x)
+	var/dy = -abs(target_y - y)
+	if(!dx && !dy)
+		return muffled
+	var/step_x = (x < target_x) ? 1 : -1
+	var/step_y = (y < target_y) ? 1 : -1
+	var/err = dx + dy
+	var/steps = 0
+	while(TRUE)
+		steps++
+		if(steps > steps_allowed)
+			return null
+		var/e2 = err * 2
+		if(e2 >= dy)
+			err += dy
+			x += step_x
+		if(e2 <= dx)
+			err += dx
+			y += step_y
+		if(x == target_x && y == target_y)
+			return muffled
+		var/turf/current = locate(x, y, z)
+		if(!current || current.opacity)
+			return null
+		var/has_opening = current.sound_opening_count
+		if(seal_openings && has_opening)
+			return null
+		var/shut_opening = has_opening ? sound_opening_blocks(current) : isclosedturf(current)
+		if(shut_opening)
+			if(!leaking || steps != 1 || muffled == SOUND_MUFFLE_ENCLOSED)
+				return null
+			muffled = SOUND_MUFFLE_ENCLOSED
+		for(var/atom/thing as anything in current)
+			if(!thing.opacity)
+				continue
+			if(!shut_opening || !isobj(thing))
+				return null
+			// Only the crossed opening may be opaque; other contents must still block the line.
+			var/obj/opening = thing
+			if(!opening.sound_opening)
+				return null
 
-	var/barrier_dx = listener_turf.x - GLOB.opacity_block_x
-	var/barrier_dy = listener_turf.y - GLOB.opacity_block_y
-	if(barrier_dx * barrier_dx + barrier_dy * barrier_dy > SOUND_TRAVEL_LEAK_RANGE * SOUND_TRAVEL_LEAK_RANGE)
-		return null
-	return SOUND_MUFFLE_ENCLOSED
+/**
+ * Whether any opening on this turf is acoustically shut.
+ *
+ * Callers check sound_opening_count first. Check all openings so an open gate or curtain cannot
+ * hide a closed one sharing its tile. The same rule serves endpoints and walks.
+ * Some maps put a window object over a transparent window-wall turf. Read the window's state
+ * there instead of treating its frame as a second shut barrier. A frame without a window object
+ * retains its containment rule; an open curtain alone must not override it.
+ */
+/proc/sound_opening_blocks(turf/checked)
+	SHOULD_NOT_SLEEP(TRUE)
+	var/frame_without_window = isclosedturf(checked)
+	for(var/obj/opening in checked)
+		if(!opening.sound_opening)
+			continue
+		if(opening.sound_opening_is_shut())
+			return TRUE
+		if(frame_without_window && istype(opening, /obj/structure/roguewindow))
+			frame_without_window = FALSE
+	return frame_without_window
+
+/**
+ * Whether this opening muffles ERP audio as a shut barrier.
+ *
+ * Transparent doors still shut solid, so density matters alongside opacity. Types whose open
+ * state differs from these fields override this read-only check; it never changes collision.
+ */
+/obj/proc/sound_opening_is_shut()
+	SHOULD_NOT_SLEEP(TRUE)
+	return opacity || density
+
+/// Gate blockers retain density when a vertical gate opens; opacity follows the gate's state.
+/obj/gblock/sound_opening_is_shut()
+	return opacity
+
+/// An open or broken window is climbable but stays dense, so its sash state decides containment.
+/obj/structure/roguewindow/sound_opening_is_shut()
+	return opacity || !climbable

@@ -821,7 +821,7 @@
 				effective_target.add_stress(/datum/stressevent/unseemly_made_love)
 			user.add_stress(/datum/stressevent/cummax)
 	if(!oral && force >= SEX_FORCE_HIGH && (user.has_flaw(/datum/charflaw/addiction/sadist) || effective_target.has_flaw(/datum/charflaw/addiction/masochist)))
-		effective_target.emote_erp("paincrit", travel = SOUND_TRAVEL_CARRYING) // this satiates the sadomasochists in range
+		effective_target.emote_erp("paincrit", travel = SOUND_TRAVEL_LEAKING) // this satiates the sadomasochists in range
 	if(ishuman(user) && ishuman(target) && user.client && target.client)
 		eora_register_consensual_pair(user, target)
 

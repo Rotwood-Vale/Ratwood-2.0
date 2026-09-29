@@ -246,7 +246,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/top_examine = FALSE
 	var/show_mouseover_role = FALSE
 	var/nsfw_examine_always = FALSE
-	var/mute_animal_emotes = FALSE
+	var/mute_anthro_noises = FALSE
 	var/autoconsume = FALSE
 	var/autowoodcut = TRUE
 	var/autopicking = TRUE

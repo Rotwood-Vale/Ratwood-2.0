@@ -93,7 +93,8 @@
 	service_client(listener_client)
 
 /// Deciseconds between this listener's steps as the movement code spaces them: a rider at the
-/// mount's pace, anyone else at their own. A diagonal or a strafe adds to one step after this is read
+/// mounted pace, which the mount's speed and the rider's intent and riding skill set together,
+/// anyone else at their own. A diagonal or a strafe adds to one step after this is read
 /datum/controller/subsystem/point_ambience/proc/step_delay_of(mob/listener)
 	var/datum/component/riding/riding = listener.buckled?.GetComponent(/datum/component/riding)
 	return riding ? riding.vehicle_move_delay : listener.cached_multiplicative_slowdown

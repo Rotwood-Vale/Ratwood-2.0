@@ -40,25 +40,25 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * * falloff_distance - Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
  * * use_reverb - bool default TRUE, determines if our sound has reverb.
  * * soundping - Show the visual sound ping effect on the source.
- * * animal_pref - Filter the sound away from clients with mute_animal_emotes set.
+ * * anthro_noise - an anthro noise, not sent to listeners who mute anthro noise emotes
  * * min_volume - the volume the sound falls off to at max range, instead of to silence.
  * * travel - a SOUND_TRAVEL_* class: what a barrier between source and listener does. UNRESTRICTED
  *   by default. Every other class walks a line per listener when ignore_walls is TRUE.
  * * floor_volume - what a FLOOR does, separately. Null attenuates and halves as usual.
  *   SOUND_FLOOR_NEVER does not cross and skips gathering the floors either side. A positive number
- *   caps the volume there. Forced to NEVER for SOUND_TRAVEL_CONTAINED.
- * * erp - sex audio: takes the ERP muffle timbre, and obeys an area's soundproof flag.
+ *   caps the volume there. Forced to NEVER for LEAKING and CONTAINED.
+ * * erp - ERP audio: takes the ERP muffle timbre. playsound_erp and emote_erp set it, with CONTAINED
+ *   or LEAKING.
  *
  * Decisions a reader would otherwise undo:
  *
- * CONTAINED is a guarantee rather than a default, so the floor volume is forced with it here, and
- * playsound_local refuses a storey for it as well. "Stays in the room" has to mean the floor too, and
- * a caller naming the class must not be able to hand it a floor volume that lets the sound upstairs.
+ * LEAKING and CONTAINED never cross a floor, a guarantee rather than a default, so the floor volume is
+ * forced with them here, and playsound_local refuses a storey for them as well. A caller naming either
+ * class must not be able to hand it a floor volume that lets the sound upstairs.
  *
- * ERP audio obeys the area's speech rule, line of sight only where soundproof is set. Read from the
- * area the sound LEAVES, which for a headless dullahan's voice is wherever the head is rather than
- * where the body stands. The travel class is cleared with it, since nothing gathered can then be behind a wall
- * or on another floor, leaving no muffle to shape and no cap to apply.
+ * A soundproof source area makes LEAKING CONTAINED and treats even open doors and windows as
+ * barriers for both ERP classes. Read from the area the sound LEAVES, which for a headless
+ * dullahan's voice is wherever the head is rather than where the body stands.
  *
  * OMITTING extrarange gives 1, so a bare playsound() reaches SOUND_RANGE + 1. The bare
  * call sites were tuned against that and it stays. Guarded on isnull rather than falsiness so an
@@ -70,11 +70,9 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * floor is probed before it is gathered, any_client_in_range walking the same cells with no list to
  * build and an early return on the first hit, and a floor either side is often empty.
  *
- * Occlusion is A LINE WALK PER LISTENER, not a second get_hearers_in_view() gather, the mechanism
- * point ambience and /datum/sound_token use. A gather is one call for everyone, cheaper at high
- * listener counts and dearer at low ones, and can only answer yes or no. A walk also says WHERE the
- * line was blocked, which grading a corner against an enclosure needs. check_contents catches
- * doors, and a one-shot recomputes from scratch so a door's state cannot freeze into it.
+ * Occlusion walks a line per listener, reading live contents so door changes affect the next sound.
+ * ERP uses only that direct line. LEAKING may cross one shut opening immediately beside the
+ * listener, then continues to reject any further barrier. It does not search around corners.
  *
  * Listeners are gated on get_dist, not euclidean distance. The gather is an orthogonal square, so an
  * euclidean gate silently discards the corners, about a third of the tiles at ranges 7 and 8. Volume
@@ -84,13 +82,13 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * is a turf, and those two cases are most of ERP: the sex actions put both participants on one tile
  * or in a grab one tile apart. Manhattan rather than get_dist, which is chebyshev and would call a
  * diagonal adjacent. A diagonal neighbour is walked and reads clear, because the walk reaches it in
- * one step without testing the corner tiles.
+ * one step without testing the corner tiles, save ERP audio with a window or door on either tile.
  */
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent, frequency = null, channel = 0, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, use_reverb = TRUE, soundping = FALSE, animal_pref = FALSE, min_volume = SOUND_DEFAULT_MIN_VOLUME, travel = SOUND_TRAVEL_UNRESTRICTED, floor_volume = null, erp = FALSE)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff_exponent, frequency = null, channel = 0, pressure_affected = FALSE, ignore_walls = TRUE, falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, use_reverb = TRUE, soundping = FALSE, anthro_noise = FALSE, min_volume = SOUND_DEFAULT_MIN_VOLUME, travel = SOUND_TRAVEL_UNRESTRICTED, floor_volume = null, erp = FALSE)
 	if(isarea(source))
 		CRASH("playsound(): source is an area")
-	// CONTAINED is a guarantee, not a default, so the floor is forced with it. See the proc doc
-	if(travel == SOUND_TRAVEL_CONTAINED)
+	// LEAKING and CONTAINED, the top of the ladder, never cross a floor. See the proc doc
+	if(travel >= SOUND_TRAVEL_LEAKING)
 		floor_volume = SOUND_FLOOR_NEVER
 
 	// TG CRASHes on a list or a null soundin. Kept tolerant here because get_sfx()
@@ -112,13 +110,12 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 		return
 
 	// Here rather than in playsound_erp, so it reads the area the sound leaves from
-	if(erp)
+	var/seal_openings = FALSE
+	if(travel >= SOUND_TRAVEL_LEAKING)
 		var/area/source_area = get_area(turf_source)
-		if(source_area?.soundproof)
-			ignore_walls = FALSE
-			travel = SOUND_TRAVEL_UNRESTRICTED
-			floor_volume = SOUND_FLOOR_NEVER
-			erp = FALSE
+		seal_openings = source_area?.soundproof
+		if(seal_openings)
+			travel = SOUND_TRAVEL_CONTAINED
 
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || SSsounds.random_available_channel()
@@ -177,7 +174,7 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 				mob_turf = get_turf(dullahan.my_head)
 		if(!mob_turf)
 			continue
-		if(animal_pref && listening_mob.client?.prefs?.mute_animal_emotes)
+		if(anthro_noise && listening_mob.client?.prefs?.mute_anthro_noises)
 			continue
 		// get_dist, not euclidean: the gather is a square and a round gate drops its corners
 		if(get_dist(mob_turf, turf_source) > maxdistance)
@@ -186,7 +183,7 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 		// Manhattan: nothing fits between a source and a listener on it or orthogonally beside it.
 		// A different floor is handled by the storey rule in playsound_local, and this walk is 2D
 		if(occlude && mob_turf.z == turf_source.z && (abs(mob_turf.x - turf_source.x) + abs(mob_turf.y - turf_source.y) > 1))
-			muffled = occlusion_muffle_for(mob_turf, turf_source, occlude, maxdistance)
+			muffled = occlusion_muffle_for(mob_turf, turf_source, occlude, maxdistance, seal_openings = seal_openings)
 			// STOP behind a wall. Still in the returned gather, as anyone out of range is
 			if(isnull(muffled))
 				continue
@@ -196,21 +193,17 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 
 
 /**
- * Sound made by the sex system, with the wall and floor policy in one place.
+ * Sound made by ERP, or caused by it, with the wall and floor policy in one place.
  *
- * Muffled round a corner, capped or stopped behind a wall by its class, and on its own floor unless
- * told otherwise. emote_erp is its counterpart for vocalisations. Name what the sound is with
- * SOUND_TRAVEL_LEAKING or SOUND_TRAVEL_CARRYING and its behaviour at walls and ceilings follows.
- * The default treats it as vocal, which is the most private of the three.
+ * CONTAINED by default, stopping at walls and closed openings. Name SOUND_TRAVEL_LEAKING for a sound
+ * that should also be heard one tile past a shut window or door on the direct line. Open ones
+ * pass both classes unless the source area is soundproof. Neither crosses a floor; SOUND_TRAVEL_FLOOR
+ * picks that rule. emote_erp is its counterpart for vocalisations.
  *
  * Omitting extrarange means SOUND_RANGE here, not playsound's SOUND_RANGE + 1.
  */
-/proc/playsound_erp(atom/source, soundin, vol, vary, extrarange = 0, frequency = null, channel = 0, travel = SOUND_TRAVEL_CONTAINED, floor_volume)
-	// The class picks the floor cap unless the caller names one, so a sex sound is still ONE decision
-	// at the call site. CONTAINED ignores an override, since playsound forces it
-	if(isnull(floor_volume))
-		floor_volume = SOUND_TRAVEL_FLOOR(travel)
-	return playsound(source, soundin, vol, vary, extrarange, frequency = frequency, channel = channel, travel = travel, floor_volume = floor_volume, erp = TRUE)
+/proc/playsound_erp(atom/source, soundin, vol, vary, extrarange = 0, frequency = null, channel = 0, travel = SOUND_TRAVEL_CONTAINED)
+	return playsound(source, soundin, vol, vary, extrarange, frequency = frequency, channel = channel, travel = travel, floor_volume = SOUND_TRAVEL_FLOOR(travel), erp = TRUE)
 
 
 /proc/ping_sound(atom/A)
@@ -260,9 +253,10 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  *   ENCLOSED (the profile plus the leak cap) or WALL (the profile with a deeper volume cut).
  *   Boolean callers pass TRUE, which is SOFT.
  * * min_volume - the volume the sound falls off to at max_distance, instead of to silence.
- * * travel - the SOUND_TRAVEL_* class playsound gathered with. Only CONTAINED is read here, refusing a storey
+ * * travel - the SOUND_TRAVEL_* class playsound gathered with. Only LEAKING and CONTAINED are read
+ *   here, each refusing a storey
  * * floor_volume - a cap on the volume a floor away, replacing the storey multiplier, as in playsound
- * * erp - sex audio: a muffled send takes the ERP muffle timbre in place of the occlusion echo
+ * * erp - ERP audio: a muffled send takes the ERP muffle timbre in place of the occlusion echo
  * * volume_pref - when set, replaces the Sound Effects slider under Master as the result's scale
  *
  * Decisions a reader would otherwise undo:
@@ -272,21 +266,20 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * sound_token deferring to it rather than halving twice. It is skipped for the LONG band, which
  * models hearing something through the floor above you and stops meaning anything once a sound
  * carries across the map, where it would silence a town-wide sound for anyone two floors up. Keyed
- * on the band so any future long-range sound inherits that. A storey with CONTAINED returns
- * outright, the second half of that class's guarantee: playsound never gathers the other floors, so
- * nothing should arrive here with storeys at all, and a direct caller passing CONTAINED with no
+ * on the band so any future long-range sound inherits that. A storey with LEAKING or CONTAINED
+ * returns outright, the second half of their guarantee: playsound never gathers the other floors for
+ * them, so nothing should arrive here with storeys at all, and a direct caller passing either with no
  * floor cap would otherwise get the halving and be SENT.
  *
  * The environment comes from the listener's area, and the muffle environment wins over it. A muffled
  * sound keeping the cathedral's reverb would lose the dead-room character, which is what actually
  * reads as "behind something", where the volume drop alone just reads as "further away". That only
- * works because the default is a live space, so the muffle has something to deaden. Every ERP class
- * takes the heavier environment, screams included, a scream through a wall carrying at full volume
- * but still sounding like it comes from somewhere else. The area test is truthy rather than "not
- * NONE": /area/soundenv defaults to 0, BYOND's generic preset rather than a missing value, which
- * would give every unset area a reverb. The turf branch keeps weather, music and UI sounds dry,
- * having no place in the world to echo in. Assigned on every branch, since playsound() builds ONE
- * sound datum and hands it to every listener in turn, so a value left set by one follows the rest.
+ * works because the default is a live space, so the muffle has something to deaden. Muffled ERP audio
+ * takes the heavier environment. The area test is truthy rather than "not NONE": /area/soundenv
+ * defaults to 0, BYOND's generic preset rather than a missing value, which would give every unset
+ * area a reverb. The turf branch keeps weather, music and UI sounds dry, having no place in the
+ * world to echo in. Assigned on every branch, since playsound() builds ONE sound datum and hands it
+ * to every listener in turn, so a value left set by one follows the rest.
  *
  * min_volume is clamped to vol before the falloff subtracts it. Without the floor the curve reaches
  * 0 short of the edge and the sound disappears inside its own range, and a sound already quieter
@@ -342,11 +335,11 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 		turf_loc = get_turf(tocheck)
 
 	// Resolved here because the muffle and the scaling both depend on it. See the proc doc
-	var/storeys = (turf_loc && max_distance && max_distance < SOUND_RANGE_LONG) ? abs(turf_source.z - turf_loc.z) : 0
+	var/storeys = (turf_loc && ((max_distance && max_distance < SOUND_RANGE_LONG) || travel >= SOUND_TRAVEL_LEAKING)) ? abs(turf_source.z - turf_loc.z) : 0
 	if(storeys >= 2)
 		return FALSE
-	// The second half of CONTAINED's guarantee, and the backstop for a direct caller
-	if(storeys && travel == SOUND_TRAVEL_CONTAINED)
+	// The second half of the LEAKING and CONTAINED guarantee, and the backstop for a direct caller
+	if(storeys && travel >= SOUND_TRAVEL_LEAKING)
 		return FALSE
 	if(storeys)
 		muffled ||= SOUND_MUFFLE_SOFT
