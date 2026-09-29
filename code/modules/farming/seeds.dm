@@ -128,6 +128,7 @@
 	var/type = pick(list(
 	/obj/item/seeds/wheat,
 	/obj/item/seeds/wheat/oat,
+	/obj/item/seeds/bakersroot,
 	/obj/item/seeds/rice,
 	/obj/item/seeds/apple,
 	/obj/item/seeds/pear,
@@ -173,6 +174,10 @@
 /obj/item/seeds/wheat/oat
 	seed_identity = "oat seeds"
 	plant_def_type = /datum/plant_def/oat
+
+/obj/item/seeds/bakersroot
+	seed_identity = "baker's root seeds"
+	plant_def_type = /datum/plant_def/bakersroot
 
 /obj/item/seeds/rice
 	seed_identity = "rice seeds"
