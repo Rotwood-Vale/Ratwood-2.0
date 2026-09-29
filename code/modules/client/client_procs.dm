@@ -540,7 +540,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		toggle_fullscreeny(TRUE)
 	else
 		toggle_fullscreeny(FALSE)
-	apply_layout()
 
 	if(prefs.anonymize)
 		GLOB.anonymize |= ckey

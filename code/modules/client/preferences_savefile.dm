@@ -251,8 +251,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["point_ambience_toggles"] >> point_ambience_toggles
 	S["overallvol"]		>> overallvol
 	S["instrumentvol"]	>> instrumentvol
-	S["layout_map"]		>> layout_map
-	S["layout_stat"]		>> layout_stat
 	S["anonymize"]			>> anonymize
 	S["ghost_protection"]	>> ghost_protection
 	S["masked_examine"]		>> masked_examine
@@ -390,11 +388,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	point_ambience_toggles = sanitize_integer(point_ambience_toggles, 0, SOUND_DISABLE_POINT_AMBIENCE | SOUND_DISABLE_TORCH_AMBIENCE, initial(point_ambience_toggles))
 	overallvol = sanitize_integer(overallvol, 0, 100, initial(overallvol))
 	instrumentvol = sanitize_integer(instrumentvol, 0, 100, initial(instrumentvol))
-	// Null stays null: it means the layout was never set, which is different from a bad value
-	if(!isnull(layout_map))
-		layout_map = sanitize_integer(layout_map, 0, 100, null)
-	if(!isnull(layout_stat))
-		layout_stat = sanitize_integer(layout_stat, 0, 100, null)
 	mastervol = sanitize_integer(mastervol, 0, 100, initial(mastervol))
 	hide_unavailable_emotes = sanitize_integer(hide_unavailable_emotes, 0, 1, initial(hide_unavailable_emotes))
 
@@ -462,8 +455,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["point_ambience_toggles"], point_ambience_toggles)
 	WRITE_FILE(S["overallvol"], overallvol)
 	WRITE_FILE(S["instrumentvol"], instrumentvol)
-	WRITE_FILE(S["layout_map"], layout_map)
-	WRITE_FILE(S["layout_stat"], layout_stat)
 	WRITE_FILE(S["anonymize"], anonymize)
 	WRITE_FILE(S["masked_examine"], masked_examine)
 	WRITE_FILE(S["top_examine"], top_examine)

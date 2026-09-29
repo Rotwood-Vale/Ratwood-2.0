@@ -34,8 +34,6 @@ type VolumeRowProps = {
   hint: string;
 };
 
-// The shared slider, so this menu and the Layout menu behave the same: drag to follow, release to
-// commit, arrow keys, and a number you can type into.
 const VolumeRow = ({ label, value, id, hint }: VolumeRowProps) => {
   const { act } = useBackend<Data>();
 
