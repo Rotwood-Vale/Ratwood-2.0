@@ -599,6 +599,7 @@
 
 	buckle_lying = FALSE
 	buckle_prevents_pull = TRUE
+	buckle_blocks_spells = TRUE
 	max_integrity = -1
 	alpha = 175
 	plane = -8

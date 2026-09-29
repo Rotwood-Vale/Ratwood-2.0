@@ -11,6 +11,7 @@
 	max_integrity = 250
 	buckle_lying = 0
 	can_buckle = 1
+	buckle_blocks_spells = TRUE
 
 /obj/structure/meathook/examine()
 	. = ..()

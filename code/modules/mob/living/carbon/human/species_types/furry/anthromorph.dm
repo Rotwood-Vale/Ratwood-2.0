@@ -133,7 +133,7 @@
 		/datum/customizer/organ/vagina/anthro,
 		/datum/customizer/bodypart_feature/pubes/furry,
 		/datum/customizer/bodypart_feature/pits/furry,
-		/datum/customizer/organ/horns/tusks,
+		/datum/customizer/organ/tusks/humanoid,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,
@@ -149,6 +149,7 @@
 		/datum/body_marking/tall_eyes,
 		/datum/body_marking/outer_tall_eyes,
 		/datum/body_marking/blank_face,
+		/datum/body_marking/face_paint,
 		/datum/body_marking/wolf,
 		/datum/body_marking/plain,
 		/datum/body_marking/tiger,

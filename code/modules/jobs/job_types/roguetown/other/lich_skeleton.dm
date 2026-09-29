@@ -123,6 +123,7 @@ LICH SKELETONS
 
 	H.energy = H.max_energy
 
+
 // Ranged goon w/ a dumb bow. Ranger, what else is there to say.
 /datum/advclass/greater_skeleton/lich/ballistiares
 	name = "Ancient Ballistiares"
@@ -363,6 +364,7 @@ LICH SKELETONS
 	ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_TRAINED_SMITH, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SELF_SUSTENANCE, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_LEGENDARY_MINER, TRAIT_GENERIC)
 
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)

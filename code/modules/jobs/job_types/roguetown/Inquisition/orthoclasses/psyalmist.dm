@@ -49,7 +49,7 @@
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	id = /obj/item/clothing/ring/signet/silver
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
+	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)	//Capped to T2 miracles.//Capped to T2 miracles.
 	var/datum/inspiration/I = new /datum/inspiration(H)
 	I.grant_inspiration(H, bard_tier = BARD_T3)
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
@@ -98,16 +98,19 @@
 				backr = /obj/item/rogue/instrument/viola
 			if("Vocal Talisman")
 				backr = /obj/item/rogue/instrument/vocals
-		var/weapons = list("Psydonic Whip", "Psydonic Rapier")
-		var/weapon_choice = tgui_input_list(H, "Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.", weapons)
+		var/weapons = list("Psydonic Whip", "Psydonic Rapier", "Psydonic Urumi (11 STR Minimum)")
+		var/weapon_choice = tgui_input_list(H, "CHOOSE YOUR WEAPON.", "TAKE UP PSYDON'S ARMS.", weapons)
 		switch(weapon_choice)
 			if("Psydonic Whip")
 				H.put_in_hands(new /obj/item/rogueweapon/whip/psywhip_lesser(get_turf(H)), forced = TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 			if("Psydonic Rapier")
-				H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy(get_turf(H)), forced = TRUE)
-				H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
+				H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy(get_turf(H)), del_on_fail = FALSE, forced = TRUE)
+				H.put_in_hands(new /obj/item/rogueweapon/scabbard/sword(get_turf(H)), del_on_fail = FALSE, forced = TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
+			if("Psydonic Urumi (11 STR Minimum)")
+				H.put_in_hands(new /obj/item/rogueweapon/whip/urumi/silver/psydonic(get_turf(H)), forced = TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 
 /datum/outfit/job/roguetown/psyaltrist
 	job_bitflag = BITFLAG_HOLY_WARRIOR

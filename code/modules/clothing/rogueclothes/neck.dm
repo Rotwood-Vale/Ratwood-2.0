@@ -115,6 +115,9 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/roguetown/coif/padded/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/neck/roguetown/coif/heavypadding
 	name = "heavy padded coif"
 	desc = "A heavier padded coif meant to be worn on its own or under a helmet. Layered properly, it can last through even the busiest of daes."
@@ -362,6 +365,9 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
 
+/obj/item/clothing/neck/roguetown/gorget/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/neck/roguetown/gorget/steel
 	name = "steel gorget"
 	smeltresult = /obj/item/ingot/steel
@@ -462,6 +468,10 @@
 	. = ..()
 	update_icon()
 
+/obj/item/clothing/neck/roguetown/fencerguard/generic
+	color = "#FFFFFF"
+	detail_color = "#5E4440"
+
 /obj/item/clothing/neck/roguetown/gorget/forlorncollar
 	name = "vreccale"
 	desc = "Nature knows not of mercy."
@@ -506,23 +516,38 @@
 	grid_height = 32
 	nudist_approved = TRUE
 	dropshrink = 0.6
+	/// Used to see whether or not we display the wrist icon or the neck icon regardless.
+	var/wrist_display = FALSE
 
 /obj/item/clothing/neck/roguetown/psicross/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	..()
 
-	if(slot == SLOT_WRISTS)
+	if(slot == SLOT_WRISTS || (wrist_display && slot != SLOT_NECK))
 		mob_overlay_icon = 'icons/roguetown/clothing/onmob/wrists.dmi'
 		sleeved = 'icons/roguetown/clothing/onmob/wrists.dmi'
-	if(slot == SLOT_NECK)
+	else
 		mob_overlay_icon = initial(mob_overlay_icon)
 		sleeved = initial(sleeved)
 
 	return TRUE
 
 /obj/item/clothing/neck/roguetown/psicross/attack_right(mob/user)
-	..()
-	user.emote("pray")
-	return
+	if(!ismob(loc))
+		return ..()
+
+	wrist_display = !wrist_display
+	to_chat(user, span_info("You adjust \the [src] to [wrist_display ? "display on your wrists" : "display around your neck"]."))
+	if(wrist_display)
+		mob_overlay_icon = 'icons/roguetown/clothing/onmob/wrists.dmi'
+		sleeved = 'icons/roguetown/clothing/onmob/wrists.dmi'
+	else
+		mob_overlay_icon = initial(mob_overlay_icon)
+		sleeved = initial(sleeved)
+
+	if(isliving(loc))
+		var/mob/living/L = loc
+		L.regenerate_clothes()
+	return ..()
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen
 	name = "inverted psycross"
@@ -674,7 +699,7 @@
 
 /obj/item/clothing/neck/roguetown/psicross/reform
 	name = "reformist psycross"
-	desc = "A psycross with its prongs bent inward. God is dead, but this world HE left is beautiful and worth of loving. ENDURE with every broken bone in your body."
+	desc = "'It occured to me that our God had left us, but not our ability to endure hardship. We shall make something out of this world, I said, before we pass onto the next.'"
 	sellprice = 0
 	icon_state = "psycross_reform"
 

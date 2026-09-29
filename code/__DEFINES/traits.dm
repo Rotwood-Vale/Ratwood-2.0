@@ -4,6 +4,7 @@
 // ROGUETRAITS (description when rmb skills button)
 #define TRAIT_WEBWALK "Webwalker"
 #define TRAIT_NOSTINK "Dead Nose"
+#define TRAIT_REDOLENT "Redolent"
 #define TRAIT_ZJUMP "High Jumping"
 #define TRAIT_JESTERPHOBIA "Jesterphobic"
 #define TRAIT_XENOPHOBIC "Xenophobic"
@@ -18,6 +19,8 @@
 #define TRAIT_NOBLE "Noble Blooded"
 #define TRAIT_DEFILED_NOBLE "Drained Noble Blood"
 #define TRAIT_DISGRACED_NOBLE "Formerly Noble Blooded"
+#define TRAIT_ASSASSIN_TARGET "Marked for Death"
+#define TRAIT_GNOLL_HUNTED "Marked by Gnolls"
 #define TRAIT_EMPATH "Empath"
 #define TRAIT_EXPLOSIVE_SUPPLY "Explosive Supply"
 #define TRAIT_DRUG_SUPPLY "Drug Supply"
@@ -40,6 +43,9 @@
 #define TRAIT_DNR "Bane of Existence"
 #define TRAIT_MANIAC_AWOKEN "Awoken"
 #define TRAIT_NALEDI "Naledi Complex"
+#define TRAIT_SKILLBLESSED "Skill Blessed"
+#define TRAIT_LONGSWORDSMAN "Master Longswordman"
+#define TRAIT_SABRIST "Renowned Sabrist"
 #define TRAIT_INFINITE_STAMINA "Indefatigable" //for ai
 #define TRAIT_NUDIST "Nudist" //you can't wear most clothes
 #define TRAIT_CYCLOPS_LEFT "Cyclops (Left)" //poked left eye
@@ -47,6 +53,14 @@
 #define TRAIT_INHUMEN_ANATOMY "Inhumen Anatomy" //can't wear hats and shoes
 #define TRAIT_NASTY_EATER "Inhumen Digestion" //can eat rotten food, organs, poison berries, and drink murky water
 #define TRAIT_WILD_EATER "Beastly Digestion" //can eat raw and rotten food and drink murky water
+/// can eat raw and uncooked food, not rotten, not organs, not murky water, etcetera
+#define TRAIT_RAW_EATER "Raw Diet"
+/// lets you cook spider meat as if you were a drow
+#define TRAIT_UNDERDARK_CHEF "Underdark Chef"
+/// lets you cut pretzels from butterdough as if you were a dwarf
+#define TRAIT_DWARVEN_CHEF "Dwarven Chef"
+/// lets you see noble gossip
+#define TRAIT_GOSSIPER "Gossiper"
 #define INSPIRING_MUSICIAN "Inspiring Musician" // unlocks bardic inspiration stuff
 #define TRAIT_NOFALLDAMAGE1 "Fall Damage Reduction"
 #define TRAIT_NOFALLDAMAGE2 "Fall Damage Immunity"
@@ -71,6 +85,7 @@
 #define TRAIT_MONOTHEIST "Monotheist"
 #define TRAIT_GUARDSMAN "Vigilant Guardsman"
 #define TRAIT_TAVERN_FIGHTER "Tavern Fighter"
+#define TRAIT_BATHHOUSE_DANCER "Bathhouse Dancer"
 #define TRAIT_FROZEN_STAMINA "Frozen Stamina"
 #define TRAIT_WOODSMAN "Talented Woodsman"
 #define TRAIT_LAMIAN_TAIL "Lamian Tail"
@@ -126,6 +141,7 @@
 #define TRAIT_EXTREME_TEMPERATURE_IMMUNE "Extreme Temperature Immunity" //immunitty to heatstroke and frostbite without damage reduction
 #define TRAIT_COMPLIANT "Compliant" //forced to be compliant
 #define TRAIT_MARTIAL_PROWESS "Martial Prowess" //allows mastering weapon skills
+#define TRAIT_SELF_AWARE "Self Aware" //Absolver/Stigmata trait that allows them to self-diagnose and get full damage numbers.
 
 //travel zone traits
 #define TRAIT_BANDITCAMP "banditcamp"
@@ -209,6 +225,9 @@
 #define TRAIT_BAD_MOOD "Bad Mood"
 #define TRAIT_NIGHT_OWL "Night Owl"
 #define TRAIT_BEAUTIFUL "Beautiful"
+/// lesser version of beautiful
+#define TRAIT_PRETTY "Pretty"
+#define TRAIT_UNSETTLING "Unsettling"
 #define TRAIT_SCARRED "Scarred"
 #define TRAIT_SIMPLE_WOUNDS "simple_wounds"
 #define TRAIT_VAMP_DREAMS "vamp_dreams"
@@ -257,6 +276,8 @@
 #define TRAIT_EASYDECAPITATION "Easy Decapitation"
 #define TRAIT_NOPAIN	"Painless"
 #define TRAIT_NOPAINSTUN	"Enduring"
+// Bypass failure chances for the delimb paincrit roll
+#define TRAIT_NUMBED_LIMBS	"Numbed Limbs"
 #define TRAIT_NOBREATH	"Breathless"
 #define TRAIT_TOXIMMUNE	"Poison Immune"
 #define TRAIT_GRABIMMUNE "Unstoppable"
@@ -296,6 +317,7 @@
 #define TRAIT_WORN_SILVER_PSICROSS "worn_silver_psicross"
 #define TRAIT_ASSASSIN	"Assassin"
 #define TRAIT_EQUESTRIAN "Equestrian"
+#define TRAIT_SPIDERBORN "Spiderborn"// drow merc snowflake version of saddleborn that only works with drider mounts
 #define TRAIT_REGROW_LIMBS "Regrow Limbs" //OV ADD, regrows lost limbs at cost of nutrition
 #define TRAIT_GANG_A "Gang Rontz Ratz"
 #define TRAIT_GANG_B "Gang Blortz Volves"
@@ -329,6 +351,9 @@
 #define TRAIT_SURVIVAL_EXPERT "Expert Survivalist" // Butchering, Cooking, Fishing & Skincraft, Sewing = Jman.
 #define TRAIT_HOMESTEAD_EXPERT "Expert Homesteader" // Farming, Mining, Cooking, Fishing, Butchering, Lumberjacking (All Labor), Pottery. Skincraft + Sewing = Jman.
 #define TRAIT_SELF_SUSTENANCE "Self-Sustenance" // Unlocks all gated crafting skills to Jman. Wretches & Antags only.
+
+// To limit the legendary picaxes to specyfic classes. Everything else uncaps to expert max
+#define TRAIT_LEGENDARY_MINER "Trained Miner"
 
 // Additional trait given to the Tailor job, allowing it to weave cloth on a loom from 1 fibers instead of 2.
 #define TRAIT_EFFICIENT_WEAVER "Efficient Weaver"
@@ -368,6 +393,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_LEPROSY = span_necrosis("I'm a disgusting leper..."),
 	TRAIT_VOTARY = span_info("I'm of the Holy See's own. I feel most comfortable on hallowed ground."),
 	TRAIT_TAVERN_FIGHTER = span_info("I am vigilant in my duties. The Tavern is my home, none shall dare oppose me or skip out on payment."),
+	TRAIT_BATHHOUSE_DANCER = span_info("I am trained in the bathhouse arts. Within its walls I can dance and shake for a patron all night without tiring."),
 	TRAIT_GUARDSMAN = span_info("I am vigilant in my duties. In the town I am sworn to protect, my abilities are sharper due to my routine and familiarity."),
 	TRAIT_WOODSMAN = span_info("I am vigilant in my duties. In the outdoor wilderness I am sworn to protect, my abilities are sharper due to my routine and familiarity."),
 	TRAIT_DEATHBARGAIN = span_info("A horrible deal has been prepared in your name. May you never see it fulfilled..."),
@@ -378,14 +404,16 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_CHOSEN = "Astrata choose you to represent her glory.",
 	TRAIT_WEBWALK = "I can move freely between webs.",
 	TRAIT_NOSTINK = span_dead("My nose is numb to the smell of decay."),
+	TRAIT_REDOLENT = span_warning("My body odor is strong and distinct. Without regular baths, others will notice..."),
 	TRAIT_ZJUMP = "Time to reach a new high.",
 	TRAIT_JESTERPHOBIA = span_warning("I have a severe irrational fear of Jesters"),
 	TRAIT_XENOPHOBIC = span_warning("Lesser races pollute our land"),
 	TRAIT_TOLERANT = span_info("I dream of an ideal future, one with peace between all races"),
 	TRAIT_NIGHT_OWL = span_info("I enjoy spending my time in the night."),
 	TRAIT_BEAUTIFUL = span_info("People love looking at my face"),
+	TRAIT_PRETTY = span_info("I'm told I'm rather easy on the eyes."),
 	TRAIT_BEAUTIFUL_UNCANNY = span_info("<i>Some</i> would say my visage is an artwork created by the gods themselves; the others call me an unsettling abomination."),
-	TRAIT_UNSETTLING_BEAUTY = span_warning("My appearance is deeply unsettling to most. There's something profoundly wrong about my features."),
+	TRAIT_UNSETTLING = span_warning("My appearance is deeply unsettling to most. There's something profoundly wrong about my features."),
 	TRAIT_SCARRED = span_info("My face bears terrible scars that make identification difficult."),
 	TRAIT_BAD_MOOD = span_warning("Everything just seems to piss me off"),
 	TRAIT_LEAPER = "I can leap like a frog, landing where I want.",
@@ -403,11 +431,15 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_EORAN_CONTENTED = span_info("I feel much at ease."),
 	TRAIT_DEFILED_NOBLE = span_blue("I'm of noble blood but... Something feels off!"),
 	TRAIT_DISGRACED_NOBLE = span_warning("I was a scion of a noble house... long ago."),
+	TRAIT_ASSASSIN_TARGET = span_warning("Something in my past has made me a target. I'm always looking over my shoulder."),
+	TRAIT_GNOLL_HUNTED = span_cultsmall("Graggar's champions hunger for me. I hear their cackles anywhere I go."),
 	TRAIT_EMPATH = span_info("I can notice when people are in pain."),
 	TRAIT_BREADY = span_info("Defensive stance does not passively fatigue me. I regain energy slowly over time."),
 	TRAIT_ARMOUR_LIKED = span_greentext("I'm wearing something more suited to my style."),
 	TRAIT_ARMOUR_DISLIKED = span_warning("I'm wearing something that burdens me."),
 	TRAIT_FENCERDEXTERITY = span_info("I've trained my entire lyfe around the art of unarmoured fencing, affording myself unmatched speed when wearing very light armour. I'm very choosy otherwise."),
+	TRAIT_SKILLBLESSED = span_greentext("I've reunited with an old friend of mine. All is well."),
+	TRAIT_LONGSWORDSMAN = span_info("\"I will crush anyone who opposes me. I am of royal blood. I dispense justice, advance the cause of good and destroy evil. To those who learn my crossings I will grant great fame and renown in the art of armed fighting.\" - I fight like a Master when I wield a traditional longsword and I know how to perform master strikes with them."),	TRAIT_SABRIST = span_info("I've learned all there is to know about the Southern curve. When using a szöréndnížine sabre, I fight like a Master. My swings are innately more accurate when targetting hands and arms."),
 	TRAIT_MEDIUMARMOR = span_info("I can move freely in medium armor."),
 	TRAIT_HEAVYARMOR = span_info("I can move freely in heavy armor."),
 	TRAIT_DODGEEXPERT = span_info("I am much better at dodging incoming strikes, when dressed in either light armor or nothing at all. Heavier armor, such as maille or plate, is too burdensome for me to quickly maneuver in."),
@@ -434,6 +466,10 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_INHUMEN_ANATOMY = "My anatomy is inhumen, preventing me from wearing hats and shoes.",
 	TRAIT_NASTY_EATER = span_dead("I can eat bad food, and water that would be toxic to humen will not affect me."),
 	TRAIT_WILD_EATER = span_info("I can eat raw food and drink from dirty water."),
+	TRAIT_RAW_EATER = span_info("I can eat raw and uncooked food."),
+	TRAIT_UNDERDARK_CHEF = span_info("I've learned the culinary secrets of the Underdark, and can prepare its delicacies."),
+	TRAIT_DWARVEN_CHEF = span_info("I know the dwarven trick to cutting a proper pretzel."),
+	TRAIT_GOSSIPER = span_info("I have an ear for gossip, even amongst those with blue blood."),
 	TRAIT_NOFALLDAMAGE1 = span_warning("I can easily handle minor falls."),
 	TRAIT_NOFALLDAMAGE2 = span_warning("I can handle a fall from any height."),
 	TRAIT_GRABIMMUNE = span_warning("My great strength, or slippery agility, prevents others from getting ahold of me!"),
@@ -515,6 +551,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_EASYDECAPITATION = span_info("I often find my head rolling from my shoulders."),
 	TRAIT_NOPAIN = span_info("I feel no pain."),
 	TRAIT_NOPAINSTUN = span_info("Pain does not impair me."),
+	TRAIT_NUMBED_LIMBS = span_info("Yils of repeated trauma dealt to my body has left my limbs feeling numb and my sense of pain dulled. I won't crumple from pain if I lose any limbs."),
 	TRAIT_NOBREATH = span_info("I do not breathe."),
 	TRAIT_TOXIMMUNE = span_info("Poisons do nothing to me."),
 	TRAIT_ZOMBIE_IMMUNE = span_info("Deadite bites cannot infect me."),
@@ -526,7 +563,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NOMOOD = span_info("I feel no sorrow, no joy, and no stress."),
 	TRAIT_DETACHED = span_info("Nothing could move me. Any emotion I show is a facade."),
 	TRAIT_AZURENATIVE = span_info("I've grown up and lived all my lyfe in these lands. I can only trigger ambushes if I sprint through them."),
-	TRAIT_SLEUTH = span_info("I can spot my tracked Mark's trail without needing to approach it, and can spot them at a distance. I can track more frequently, and the act is not impaired by movement. I can examine tracks right away."),
+	TRAIT_SLEUTH = span_info("I can track more frequently, and the act is not impaired by movement. I can examine tracks right away."),
 	TRAIT_HARDSHELL = span_info("The bulk of this armor prevents me from parrying effectively, but I can still move out of the way."),
 	TRAIT_MATTHIOS_EYES = span_notice("I have a sense for what the most valuable item someone has is."),
 	TRAIT_WOODWALKER = span_notice("I can climb trees quicker, and gain climbing experience twice as quickly. I can step on thorns and branches safely in the woods. I can get twice as many things from searching bushes, and I can stand on leaves in trees safely."),
@@ -569,6 +606,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_SURVIVAL_EXPERT = span_greentext("I'm experienced with the arts of survival in the wild. Cooking, Fishing, Butchering and Skincrafting can progress to Legendary levels. Sewing can progress to Journeyman levels."),
 	TRAIT_HOMESTEAD_EXPERT = span_greentext("I'm experienced with the arts of homesteading. Farming, Mining, Cooking, Fishing, Butchering, Lumberjacking, Masonry and Pottery can progress to Legendary levels. Sewing and Skincrafting can progress to Journeyman levels. I am also quite savvy at repairing damaged equipment."),
 	TRAIT_SELF_SUSTENANCE = span_greentext("Yils of experience running from the law and living off the land have made me a jack of all trades. All crafting and labor skills can progress to Journeyman levels."),
+	TRAIT_LEGENDARY_MINER = span_greentext("I been trained in proper mining techniques. My mining skill can advance to Legendary."),
 	TRAIT_MARTIAL_PROWESS = span_greentext("I've been trained by a master in the art of combat, allowing me to train my skills in arms past Expert."),
 	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can outright destroy my vessel."),
 	TRAIT_DYES = span_notice("I know my way around pigments and shades, and I'm able to create the exact colors I want in a dye station."),
@@ -597,6 +635,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_MASTER_MASON = span_warning("I've been trained to make the most of stone"),
 	TRAIT_EFFICIENT_WEAVER = span_info("I can weave cloth on a loom more efficiently than others can."),
 	TRAIT_EQUESTRIAN = span_warning("I am a capable rider. My mount is an extension of me."),
+	TRAIT_SPIDERBORN = span_warning("I am a spider rider, my darleeng pet is et extension of moi."),
 	TRAIT_BLOODPOOL_BORN = span_bloody("I emerged from the bloodpool of a Vampire Lord. There is no possibility for redemption for me in this land."),
 	TRAIT_ROYALSERVANT = span_greentext("I've been serving the royal family for long enough to know their exotic tastes."),
 	TRAIT_SPELL_DISPERSION = span_necrosis("Spells are useless against me, so long as I maintain my arcyne barrier."),
@@ -622,7 +661,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_NATURALARMOR = span_info("Whether by natural or other means, my skin is strong enough to resist being pierced and cut."),
 	TRAIT_CLERGYRADICAL = span_info("I follow the radical path of the clergy, abandoning the old road of devotion in favor of self-guided miracle study."),
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
-	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others.")
+	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
+	TRAIT_SELF_AWARE = span_info("I know my body well, and know innately what its aches mean.")
 ))
 
 // trait accessor defines
@@ -837,7 +877,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FAN_CLOWN			"fan_clown"
 #define TRAIT_FAN_MIME			"fan_mime"
 #define TRAIT_VORACIOUS			"voracious"
-#define TRAIT_SELF_AWARE		"self_aware"
 #define TRAIT_FREERUNNING		"freerunning"
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"

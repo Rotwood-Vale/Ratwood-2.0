@@ -18,10 +18,10 @@
 	display_order = JDO_TEMPLAR
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
 	give_bank_account = TRUE
-	job_traits = list(TRAIT_RITUALIST, TRAIT_STEELHEARTED, TRAIT_HOLYWARRIOR)
+	job_traits = list(TRAIT_RITUALIST, TRAIT_STEELHEARTED)
 
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
-	virtue_restrictions = list(/datum/virtue/utility/noble)
+	quirk_restrictions = list(/datum/quirk/noble)
 	job_subclasses = list(
 		/datum/advclass/templar/crusader
 	)

@@ -94,6 +94,7 @@
 		/datum/body_marking/tall_eyes,
 		/datum/body_marking/outer_tall_eyes,
 		/datum/body_marking/blank_face,
+		/datum/body_marking/face_paint,
 		/datum/body_marking/tonage,
 		/datum/body_marking/bangs,
 		/datum/body_marking/bun,
@@ -148,7 +149,8 @@
 		"Krizzsha" = SKIN_COLOR_KRIZZSHA,
 		"Tosiz" = SKIN_COLOR_TOSIZ,
 		"Velothel" = SKIN_COLOR_VELOTHEL,
-		"Ashol" = SKIN_COLOR_ASHOL
+		"Ashol" = SKIN_COLOR_ASHOL,
+		"Pyris" = SKIN_COLOR_PYRIS
 	)
 
 /datum/species/tieberian/get_hairc_list()

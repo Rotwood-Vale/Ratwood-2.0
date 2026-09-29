@@ -22,7 +22,7 @@
 	cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // this was originally druid music. i think its ok to have druids share it w/ wardens.
 
 	//You're.. not REALLY a full-on church member, but being a druid implies you became a clergy-man of some sort; even if it's non-organized. So, still shouldn't be noble.
-	virtue_restrictions = list(/datum/virtue/utility/noble)
+	quirk_restrictions = list(/datum/quirk/noble)
 	job_traits = list(TRAIT_SEEDKNOW, TRAIT_OUTDOORSMAN, TRAIT_RITUALIST, TRAIT_HOMESTEAD_EXPERT, TRAIT_WILDERNESSGUIDE, TRAIT_WOODWALKER)
 
 	advclass_cat_rolls = list(CTAG_DRUID = 2)
@@ -101,9 +101,7 @@
 	H.invisibility = INVISIBILITY_MAXIMUM
 	H.become_blind("advsetup")
 
-	spawn(50)
-		if(H && H.client)
-			_delayed_path_choice(H)
+	addtimer(CALLBACK(src, PROC_REF(_delayed_path_choice), H), 50)
 
 /datum/job/roguetown/druid/proc/grant_old_path(mob/living/carbon/human/H)
 	if(!H || !H.mind || !H.patron)
