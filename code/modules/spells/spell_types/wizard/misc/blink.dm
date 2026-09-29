@@ -3,7 +3,7 @@
 	desc = "Teleport to a targeted location within your field of view. Limited to a range of 5 tiles. Only works on the same plane as the caster."
 	school = "conjuration"
 	cost = 3
-	releasedrain = 30
+	releasedrain = 50
 	chargedrain = 1
 	chargetime = 3
 	recharge_time = 16 SECONDS
