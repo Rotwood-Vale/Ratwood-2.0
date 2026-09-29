@@ -132,8 +132,8 @@
 			if (HAS_TRAIT(C, TRAIT_SHOCKIMMUNE))
 				continue
 			else
-				C.Immobilize(5 SECONDS)
-				C.apply_status_effect(/datum/status_effect/debuff/clickcd, 8 SECONDS)
+				C.Immobilize(3 SECONDS)
+				C.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS)
 				C.electrocute_act(1, src, 1, SHOCK_NOSTUN)
 				C.apply_status_effect(/datum/status_effect/buff/lightningstruck, 8 SECONDS)
 		else

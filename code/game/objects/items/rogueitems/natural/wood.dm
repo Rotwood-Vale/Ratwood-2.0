@@ -169,19 +169,19 @@
 	var/woodtotal = 1
 	switch (skill_level) //how many planks you get is random, but higher with more carpentry skill
 		if (0)
-			woodtotal = 3
+			woodtotal = 2
 		if (1)
-			woodtotal = 4
+			woodtotal = 3
 		if (2)
-			woodtotal = pick(5,6)
+			woodtotal = pick(4,5)
 		if (3)
-			woodtotal = pick(7,8,9)
+			woodtotal = pick(6,7)
 		if (4)
-			woodtotal = pick(10,11,12)
+			woodtotal = pick(8,9)
 		if (5)
-			woodtotal = pick(13,14)
+			woodtotal = pick(10,11)
 		if (6)
-			woodtotal = pick(15,16)
+			woodtotal = pick(12)
 		else
 			woodtotal = 3
 	if(HAS_TRAIT(user, TRAIT_MASTER_CARPENTER)) //we give extra to those in the role
