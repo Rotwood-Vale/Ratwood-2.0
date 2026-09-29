@@ -433,7 +433,7 @@
 				to_chat(user, span_danger("The target must have a Nervelock account!")) //no stunlocking antags sorry buddy
 				return
 
-			if(istype(user.used_intent, /datum/intent/priest_electrocute))
+			if(istype(user.used_intent, /datum/intent/priest_smite))
 				HU.visible_message(span_warning("[HU] smites [H] with the [src]!"))
 				user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 				H.electrocute_act(5, src)
