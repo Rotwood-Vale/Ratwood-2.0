@@ -631,7 +631,7 @@
 	duration = 8 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/dazed/stavetackle
-	name = "Stave Tackle"
+	name = "Stave Tackled"
 	desc = "My footing is ruined-- damned Monks."
 	icon_state = "mstrike"
 
@@ -649,7 +649,7 @@
 		C.emote(msg, forced = TRUE)
 
 /atom/movable/screen/alert/status_effect/debuff/dazed/stavesweepv
-	name = "Sweeped Through"
+	name = "MY RIBS!"
 	desc = "OUGH!-- MY RIBS! WHAT THE FUCK?!"
 	icon_state = "mstrike"
 
@@ -660,7 +660,7 @@
 	duration = 6 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/dazed/stavesweeph
-	name = "Smacked on the Head"
+	name = "GAH! MY HEAD!"
 	desc = "GHH-- FUCKING MONK! MY HEAD!"
 	icon_state = "mstrike"
 
