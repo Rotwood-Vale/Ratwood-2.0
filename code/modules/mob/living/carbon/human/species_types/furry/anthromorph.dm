@@ -119,6 +119,7 @@
 		/datum/customizer/bodypart_feature/underwear,
 		/datum/customizer/bodypart_feature/legwear,
 		/datum/customizer/organ/tail/anthro,
+		/datum/customizer/organ/tail/manticore,
 		/datum/customizer/organ/tail_feature/anthro,
 		/datum/customizer/organ/snout/anthro,
 		/datum/customizer/organ/ears/anthro,
@@ -133,7 +134,7 @@
 		/datum/customizer/organ/vagina/anthro,
 		/datum/customizer/bodypart_feature/pubes/furry,
 		/datum/customizer/bodypart_feature/pits/furry,
-		/datum/customizer/organ/horns/tusks,
+		/datum/customizer/organ/tusks/humanoid,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,

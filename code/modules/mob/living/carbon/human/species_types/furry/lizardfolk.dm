@@ -78,6 +78,7 @@
 		/datum/customizer/bodypart_feature/underwear,
 		/datum/customizer/bodypart_feature/legwear,
 		/datum/customizer/organ/tail/lizard,
+		/datum/customizer/organ/tail/manticore,
 		/datum/customizer/organ/tail_feature/lizard_spines,
 		/datum/customizer/organ/snout/lizard,
 		/datum/customizer/organ/ears/lizard,

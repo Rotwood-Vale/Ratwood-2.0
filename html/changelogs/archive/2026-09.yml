@@ -972,3 +972,30 @@
   zoktiik:
   - balance: Intensity of bleeding from all types of fractures has been roughly cut
       by half.
+2026-09-29:
+  FreeStylaLT:
+  - bugfix: Fixed a bug with blood transfer that was causing it to increase the amount
+      of blood restored every cast.
+  Kroto-Ker:
+  - rscadd: Breasts jiggle during sex.
+  Mannybrado:
+  - rscadd: Face paint marking
+  - rscadd: Light Otavan accent, like Otavan but without overt french word replacements
+  - code_imp: Renamed Dark Elf accent to Otavan
+  MarioTheShiba:
+  - rscadd: Big Beak for the Head Physician.
+  MrShibaa:
+  - rscadd: New examine texts dependent on JOURNEYS END TIER
+  - balance: People with TRAIT_JOURNEYS_END are unable to have their blood drained
+      by leeches.
+  - balance: Mistwalker no longer has dodge expert.
+  - balance: Races and virtues with BREATHLESS are forbidden from Mistwalker.
+  - balance: Removed GRAB_IMMUNE from T3 (They already get high con and wil, so nothing
+      burger at most.)
+  - code_imp: New DEFINE for all races that BREATHE
+  Randumb-Phantomb:
+  - image: Reckless hairstyle's forehead nerfed.
+  trueroguan:
+  - bugfix: Fixed the icon display for the inpeculate intent of Graggar's Assassin
+      Dagger.
+  - bugfix: Fix stat market for the vilians
