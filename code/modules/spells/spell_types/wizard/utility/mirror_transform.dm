@@ -852,10 +852,13 @@
 						should_update = TRUE
 				else
 					var/obj/item/organ/tail/tail = H.getorganslot(ORGAN_SLOT_TAIL)
-					if(!tail)
-						tail = new /obj/item/organ/tail/anthro()
+					var/new_accessory_type = valid_tails[new_style]
+					var/wants_tail_maw = new_accessory_type == /datum/sprite_accessory/tail/manticore
+					if(!tail || wants_tail_maw != istype(tail, /obj/item/organ/tail/manticore))
+						var/new_tail_type = wants_tail_maw ? /obj/item/organ/tail/manticore : /obj/item/organ/tail/anthro
+						tail = new new_tail_type()
 						tail.Insert(H, TRUE, FALSE)
-					tail.accessory_type = valid_tails[new_style]
+					tail.accessory_type = new_accessory_type
 					// Use build_colors_for_accessory to properly set colors from character
 					tail.build_colors_for_accessory(null)
 					H.update_body()
