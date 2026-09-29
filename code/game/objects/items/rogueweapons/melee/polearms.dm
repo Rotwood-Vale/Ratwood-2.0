@@ -320,7 +320,7 @@
 	chargedloop = /datum/looping_sound/stavecharge
 	chargetime = 1 SECONDS
 	keep_looping = TRUE
-	desc = "Sweep your staff horizontally; extending your arm to hit the Heathen's skull, striking those whom stand in front of you."
+	desc = "Sweep your staff horizontally; extending your arm to hit your opponent's skull."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
 	target_parts = list(BODY_ZONE_PRECISE_SKULL)
@@ -338,7 +338,7 @@
 	chargedloop = /datum/looping_sound/stavecharge
 	keep_looping = TRUE
 	damfactor = 0.6
-	desc = "Sweep your staff vertically by aiming at their hipbone or waist, sweeping and punish those ahead."
+	desc = "Sweep your staff vertically by aiming at their hipbone or waist, masterfully punishing their ribcage."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	cleave = /datum/cleave_pattern/stavevsweep
 	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
@@ -355,9 +355,15 @@
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("tackles", "masterfully disbalances")
 	intent_effect = /datum/status_effect/debuff/dazed/stavetackle
-	target_parts = list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT)
+	target_parts = list(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT)
 	effective_range = 2
 	effective_range_type = EFF_RANGE_EXACT
+	damfactor = 0.2
+
+/datum/intent/effect/hookfeet/spec_on_apply_effect(mob/living/H, mob/living/user, params)
+	if(H.has_status_effect(/datum/status_effect/debuff/exposed))
+		H.Knockdown(1 SECONDS)
+	else
 
 /datum/intent/spear/bash/ranged/quarterstaff/strikeplus
 	name = "strike"
@@ -366,19 +372,19 @@
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("powerfully strikes", "powerfully hits", "masterfully attacks")
 	reach = 1
-	damfactor = 1.3
-	intent_intdamage_factor = 0.3
+	damfactor = 1.1
+	intent_intdamage_factor = 0.4
+	penfactor = 15
 
 /datum/intent/spear/thrust/quarterstaff/thrustplus
 	name = "thrust"
-	icon_state = "inbash"
+	icon_state = "instab"
 	desc = "Quickly extend your staff forth; striking people at a greater range to knock the air out of them."
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("masterfully thrusts", "quickly thrusts", "powerfully jabs")
 	reach = 2
 	damfactor = 1.4
 	intent_intdamage_factor = 0.8
-	penfactor = 10
 	effective_range = 2
 	effective_range_type = EFF_RANGE_EXACT
 

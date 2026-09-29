@@ -969,8 +969,3 @@
 	id = "yeetcd"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/yeetcd
 	duration = 2 SECONDS
-
-/atom/movable/screen/alert/status_effect/debuff/yeetcdstave
-	name = "Knockback Cooldown"
-	desc = "I have been knocked back recently by a stave and cannot be knocked back again."
-	icon_state = "debuff" // Placeholder
