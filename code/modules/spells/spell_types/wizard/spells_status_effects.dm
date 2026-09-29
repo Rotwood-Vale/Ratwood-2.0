@@ -12,6 +12,7 @@
 
 /datum/status_effect/buff/frost/tick()
 	var/mob/living/target = owner
+	target.adjustFireLoss(2)
 	if(prob(20))
 		target.emote(pick("shiver"))
 
@@ -40,11 +41,12 @@
 	target.add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	addtimer(CALLBACK(target, TYPE_PROC_REF(/atom, remove_atom_colour), TEMPORARY_COLOUR_PRIORITY, newcolor), 20 SECONDS)
 	target.add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, update=TRUE, priority=100, multiplicative_slowdown=4, movetypes=GROUND)
-	target.stamina_add(15)
+	target.stamina_add(15) 
 
 /datum/status_effect/buff/frostbite/tick()
 	var/mob/living/target = owner
-	target.stamina_add(2)
+	target.adjustFireLoss(15)
+	target.stamina_add(2) //It used to be 5 stamina damage per tick. At 20 ticks in a second, with the debuff lasting 6 seconds. That's (20 x 5) x 6 = 150. 150 stamina damage in a single frostbite proc. This is enough to stamcrit anyone not heavily invested into WIL.  
 	// When stamcrit, removes it to prevent it from chaining too hard
 	if(target.stamina >= target.max_stamina)
 		target.remove_status_effect(/datum/status_effect/buff/frostbite)
