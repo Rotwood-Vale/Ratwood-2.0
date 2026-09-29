@@ -11,7 +11,7 @@
 	warnie = "spellwarning"
 	school = "transmutation"
 	overlay_state = "haste" // Temporary icon from RW
-	spell_tier = 2
+	spell_tier = 3 //Mages have begun to take enduring + haste to mitigate the statpack malus for the free END and CON. Sorry powergamers, but you need to be an advanced mage for that. 
 	invocations = list("Festinatio!")
 	invocation_type = "shout" // I mean, it is fast
 	glow_color = GLOW_COLOR_BUFF
