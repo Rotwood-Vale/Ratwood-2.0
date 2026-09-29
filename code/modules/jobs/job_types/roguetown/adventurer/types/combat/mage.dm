@@ -9,6 +9,8 @@
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
+	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 10)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 1,
