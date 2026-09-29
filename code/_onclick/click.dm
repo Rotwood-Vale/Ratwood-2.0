@@ -74,7 +74,7 @@
 			parrydelay = num
 	hud_used?.defdelay?.mark_dirty()
 
-/mob/living/proc/changeMaxDodge(num)
+/mob/living/proc/changeMaxDodge(num, clamp = FALSE)
 	if(num < 0)
 		if(max_dodge <= MAX_DODGE_FLOOR)
 			return
@@ -82,7 +82,13 @@
 	if(num > 0)
 		if(max_dodge >= MAX_DODGE_CEIL)
 			return
-		max_dodge = CLAMP((max_dodge + num), MAX_DODGE_FLOOR, MAX_DODGE_CEIL)
+		var/newmax = max_dodge + num
+		if(clamp)
+			if(newmax > MAX_DODGE_CLAMP && max_dodge < MAX_DODGE_CLAMP)
+			// We had less than the clamp, and we are set to gain above the clamp, we override.
+			// Mainly used to clamp compensatory dodge increases, NOT offensive ones.
+				newmax = MAX_DODGE_CLAMP
+		max_dodge = CLAMP((newmax), MAX_DODGE_FLOOR, MAX_DODGE_CEIL)
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -410,6 +416,108 @@
 /mob/living/proc/is_swinging()
 	return (has_status_effect(/datum/status_effect/swingdelay) || has_status_effect(/datum/status_effect/swingdelay/disrupt))
 
+/mob/living/proc/can_dualwield(obj/item/mainhand, obj/item/offhand)
+	if(!mainhand || !offhand)
+		return FALSE
+	if(istype(mainhand, /obj/item/rogueweapon/shield) || istype(mainhand, /obj/item/flashlight/flare/torch) || istype(mainhand, /obj/item/flashlight/flare/torch/lantern) || istype(mainhand, /obj/item/flashlight))
+		return FALSE
+	if(istype(offhand, /obj/item/rogueweapon/shield) || istype(offhand, /obj/item/flashlight/flare/torch) || istype(offhand, /obj/item/flashlight/flare/torch/lantern) || istype(offhand, /obj/item/flashlight))
+		return FALSE
+	if(mainhand.w_class >= WEIGHT_CLASS_HUGE)
+		return FALSE
+	if(offhand.w_class >= WEIGHT_CLASS_HUGE)
+		return FALSE
+	if(mainhand.wielded || offhand.wielded)
+		return FALSE
+	if(mainhand.wlength >= WLENGTH_GREAT)
+		return FALSE
+	if(offhand.wlength >= WLENGTH_GREAT)
+		return FALSE
+	if(mainhand.associated_skill)
+		if(get_skill_level(mainhand.associated_skill) < SKILL_LEVEL_JOURNEYMAN)
+			return FALSE
+	if(offhand.associated_skill)
+		if(get_skill_level(offhand.associated_skill) < SKILL_LEVEL_JOURNEYMAN)
+			return FALSE
+
+	if(mainhand.force <= 9 || offhand.force <= 9) // should prevent things that have tiny damage from being used, those are often tools anyway.
+		return FALSE
+	return TRUE
+
+/mob/living/proc/process_dualwield(obj/item/attack_weapon)
+	if(!HAS_TRAIT(src, TRAIT_DUALWIELDER))
+		return
+
+	if(dualwield_processing)
+		return
+
+	var/obj/item/mainhand = get_active_held_item()
+	var/obj/item/offhand = get_inactive_held_item()
+
+	// Weapon attack validation
+	if(attack_weapon)
+		if(!mainhand || !offhand)
+			return
+
+		if(attack_weapon != mainhand)
+			return
+
+		if(check_arm_grabbed(get_inactive_hand_index()))
+			return
+
+		if(!can_dualwield(attack_weapon, offhand))
+			return
+
+	// Unarmed validation
+	else
+		if(mainhand || offhand)
+			return
+
+	// Combo timeout
+	if(world.time >= dualwield_resets_in)
+		dualwield_attack_count = 0
+		dualwield_finisher = FALSE
+
+	dualwield_resets_in = world.time + 3 SECONDS
+	dualwield_attack_count++
+	if(dualwield_attack_count >= 3)
+		dualwield_attack_count = 0
+		dualwield_finisher = TRUE
+
+	return TRUE
+
+/mob/living/proc/complete_dualwield_attack(atom/target, params)
+	var/paired_attack = dualwield_finisher
+	dualwield_finisher = FALSE
+	if(!swap_hand())
+		dualwield_attack_count = 0
+		return
+	if(paired_attack)
+		fire_dualwield_paired(target, params)
+
+/mob/living/proc/fire_dualwield_paired(atom/A, params)
+	if(dualwield_processing)
+		return
+	if(QDELETED(src) || QDELETED(A))
+		return
+	dualwield_processing = TRUE
+	if(stamina_add(3))
+		balloon_alert_to_viewers("<font color='#bb2b2b'>Dual Hit!!</font>")
+		to_chat(src, "<font color='#ffc400'>I strike twice!</font>")
+		to_chat(A, "<font color='#ffc400'>I am hit twice!</font>")
+		if(a_intent)
+			used_intent = a_intent
+		dualwield_twoswing = TRUE
+		var/obj/item/paired_weapon = get_active_held_item()
+		if(paired_weapon)
+			paired_weapon.melee_attack_chain(src, A, params)
+		else
+			UnarmedAttack(A, TRUE, params)
+		dualwield_twoswing = FALSE
+	playsound_local(A, 'sound/combat/polearm_woosh.ogg', 75, FALSE, 0, 3)
+	playsound_local(A, 'sound/combat/rend_hit.ogg', 75, FALSE, 0, 3)
+	dualwield_processing = FALSE
+
 //Branching path for Adjacent clicks with or without items
 //DOES NOT ACTUALLY KNOW IF YOU'RE ADJACENT, DO NOT CALL ON IT'S OWN
 /mob/proc/resolveAdjacentClick(atom/A,obj/item/W,params,used_hand)
@@ -417,15 +525,6 @@
 		return
 	if(W)
 		W.melee_attack_chain(src, A, params)
-		if(isliving(src))
-			var/mob/living/L = src
-			var/obj/item/offh = L.get_inactive_held_item()
-			if(offh && HAS_TRAIT(L, TRAIT_DUALWIELDER) && istype(offh, /obj/item/rogueweapon))//Check if theres even a weapon in the second hand
-				if((istype(W, offh) || istype(offh, W)) && W != offh && !(L.check_arm_grabbed(L.get_inactive_hand_index())) && (L.last_used_double_attack <= world.time))
-					if(L.stamina_add(2))
-						L.last_used_double_attack = world.time + 3 SECONDS
-						L.visible_message(span_warning("There's an opening! I strike with my off-hand weapon!"))
-						offh.melee_attack_chain(src, A, params)
 	else
 		if(ismob(A))
 			changeNext_move(get_rmb_clickcd(used_intent.clickcd))

@@ -11,10 +11,16 @@
 		return FALSE
 	if(!can_see_cone(attacker))
 		return FALSE
-	if(!COOLDOWN_FINISHED(src, last_parry))
+	var/paired_swing = src?.dualwield_twoswing
+	if(!paired_swing && world.time < (last_parry + parrydelay))
 		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
 			return FALSE
-	COOLDOWN_START(src, last_parry, setparrytime)
+
+	if(!paired_swing)
+		last_parry = world.time
+		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
+			var/parrytime = setparrytime
+			changeNext_def(parrytime)
 
 	var/prob2defend = attacker.mind ? 0 : attacker.defprob
 	if(m_intent == MOVE_INTENT_RUN)
@@ -147,29 +153,22 @@
 		prob2defend = clamp(prob2defend, 5, 75) //Caps your max parry to 75 if using armor you're not trained in. Bad dexerity.
 		stamina_drained = stamina_drained + 5 //More stamina usage for not being trained in the armor you're using.
 
-	//Dual Wielding
-	var/defender_dualw
-	var/extradefroll
+	var/parry_status = FALSE
+	var/text
 
-	//Dual Wielder defense disadvantage
-	if(HAS_TRAIT(src, TRAIT_DUALWIELDER) && (istype(offhand, mainhand) || istype(mainhand, offhand)))
-		extradefroll = prob(prob2defend)
-		defender_dualw = TRUE
+	text += "Roll to parry... [HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS) ? "???" : prob2defend]%"
 
-	var/text = "Roll to parry... [HAS_TRAIT(attacker, TRAIT_DECEIVING_MEEKNESS) ? "???" : prob2defend]%"
-	if(defender_dualw)
-		text += " Twice! Disadvantage! [!HAS_TRAIT(attacker, TRAIT_DECEIVING_MEEKNESS) ? "([(prob2defend / 100) * (prob2defend / 100) * 100]%)" : ""]"
+	// Dual wield drawback (-5%)
+	var/dualwield_penalty = HAS_TRAIT(src, TRAIT_DUALWIELDER) && src.can_dualwield(mainhand, offhand)
+	if(dualwield_penalty)
+		prob2defend = clamp(prob2defend - 5, 5, 90)
+		text += " (-5%)"
 
 	if(has_status_effect(/datum/status_effect/swingdelay/penalty))
 		prob2defend -= 50
 
-	var/parry_status = FALSE
-	if(defender_dualw)
-		if(prob(prob2defend) && extradefroll)
-			parry_status = TRUE
-	else
-		if(prob(prob2defend))
-			parry_status = TRUE
+	if(prob(prob2defend))
+		parry_status = TRUE
 
 	if(parry_status)
 		if(!has_status_effect(/datum/status_effect/buff/weapon_binded))

@@ -170,11 +170,16 @@
 		return
 	if(user.incapacitated())
 		return
+	var/dualwield_armed = FALSE
+	if(HAS_TRAIT(user, TRAIT_DUALWIELDER))
+		dualwield_armed = user.process_dualwield(src)
 	if((M.mobility_flags & MOBILITY_STAND))
 		if(M.checkmiss(user))
 			if(!swingdelay && !user.used_intent?.cleave)
 				if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
 					user.do_attack_animation(M, user.used_intent.animname, used_item = src, used_intent = user.used_intent, simplified = TRUE)
+			if(dualwield_armed)
+				user.complete_dualwield_attack(M, null)
 			return
 	// Release drain on attacks besides unarmed attacks/grabs is 1, so it'll just be whatever the penalty is + 1.
 	// Unarmed attacks are the only ones right now that have differing releasedrain, see unarmed attacks for their calc.
@@ -190,6 +195,8 @@
 		if(user.used_intent.masteritem)
 			IU = user.used_intent.masteritem
 		HM.process_clash(user, IM, IU)
+		if(dualwield_armed)
+			user.complete_dualwield_attack(M, null)
 		return
 	if(bad_guard)
 		if(ishuman(user))
@@ -222,12 +229,16 @@
 	_attacker_signal = null
 	_attacker_signal = SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK_POST_SWINGDELAY, M, user, src)
 	if(_attacker_signal & COMPONENT_ITEM_NO_ATTACK)
+		if(dualwield_armed)
+			user.complete_dualwield_attack(M, null)
 		return FALSE
 	else if(_attacker_signal & COMPONENT_ITEM_NO_DEFENSE)
 		override_status = ATTACK_OVERRIDE_NODEFENSE
 
 	if(override_status != ATTACK_OVERRIDE_NODEFENSE)
 		if(M.checkdefense(user.used_intent, user))
+			if(dualwield_armed)
+				user.complete_dualwield_attack(M, null)
 			return
 
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SUCCESS, M, user)
@@ -242,6 +253,8 @@
 				M.dropItemToGround(W)
 			M.visible_message(span_notice("[user] disarms [M]!"), \
 							span_boldwarning("I'm disarmed by [user]!"))
+			if(dualwield_armed)
+				user.complete_dualwield_attack(M, null)
 			return
 
 	if(user.zone_selected == BODY_ZONE_PRECISE_L_INHAND)
@@ -254,19 +267,23 @@
 				M.dropItemToGround(W)
 			M.visible_message(span_notice("[user] disarms [M]!"), \
 							span_boldwarning("I'm disarmed by [user]!"))
+			if(dualwield_armed)
+				user.complete_dualwield_attack(M, null)
 			return
 
 	if(M.attacked_by(src, user))
-		if(user.used_intent == cached_intent)
-			var/tempsound = user.used_intent.hitsound
-			if(tempsound)
-				playsound(M.loc,  tempsound, 100, FALSE, -1)
-			else
-				playsound(M.loc,  "nodmg", 100, FALSE, -1)
+		var/tempsound = cached_intent?.hitsound
+		if(tempsound)
+			playsound(M.loc, tempsound, 100, FALSE, -1)
+		else
+			playsound(M.loc, "nodmg", 100, FALSE, -1)
 
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)]) (AIMED: [uppertext(parse_zone(user.zone_selected))])")
 
 	execute_cleave(user, get_turf(M), M)
+
+	if(dualwield_armed)
+		user.complete_dualwield_attack(M, null)
 
 	add_fingerprint(user)
 

@@ -1,67 +1,72 @@
-/mob/living/proc/attempt_dodge(datum/intent/intenty, mob/living/attacker)
-	if(!intenty.dodgeable_intent) // If the intent is undodgeable whatsoever just skip all the math
-		return FALSE
-	if(HAS_TRAIT(src, TRAIT_NODEF) || !mob_can_dodge)
-		return FALSE
+/mob/living/proc/attempt_dodge(datum/intent/attack_intent, mob/living/user)
 	if(pulledby || pulling)
 		return FALSE
-	if(has_status_effect(/datum/status_effect/debuff/exposed) || has_status_effect(/datum/status_effect/debuff/vulnerable) || has_status_effect(/datum/status_effect/debuff/riposted))
+	var/paired_swing = user?.dualwield_twoswing
+	if(!paired_swing && world.time < last_dodge + dodgetime)
 		return FALSE
-	if(loc == attacker.loc)
+	if(has_status_effect(/datum/status_effect/debuff/riposted))
 		return FALSE
-	if(!COOLDOWN_FINISHED(src, last_dodge))
+	if(has_status_effect(/datum/status_effect/debuff/exposed) || has_status_effect(/datum/status_effect/debuff/vulnerable))
 		return FALSE
-	COOLDOWN_START(src, last_dodge, dodgetime)
-
-	var/list/dirry = list()
-	var/dx = x - attacker.x
-	var/dy = y - attacker.y
-	if(abs(dx) < abs(dy))
-		if(dy > 0)
-			dirry += NORTH
-			dirry += WEST
-			dirry += EAST
+	if(!paired_swing)
+		last_dodge = world.time
+	if(src.loc == user.loc)
+		return FALSE
+	if(attack_intent)
+		if(!attack_intent.dodgeable_intent)
+			return FALSE
+	if(HAS_TRAIT(src, TRAIT_NODEF))
+		return FALSE
+	if(attack_intent?.dodgeable_intent)
+		var/list/dirry = list()
+		var/dx = x - user.x
+		var/dy = y - user.y
+		if(abs(dx) < abs(dy))
+			if(dy > 0)
+				dirry += NORTH
+				dirry += WEST
+				dirry += EAST
+			else
+				dirry += SOUTH
+				dirry += WEST
+				dirry += EAST
 		else
-			dirry += SOUTH
-			dirry += WEST
-			dirry += EAST
-	else
-		if(dx > 0)
-			dirry += EAST
-			dirry += SOUTH
-			dirry += NORTH
-		else
-			dirry += WEST
-			dirry += NORTH
-			dirry += SOUTH
-	var/turf/turfy
-	if(fixedeye)
-		var/dodgedir = turn(dir, 180)
-		var/turf/turfcheck = get_step(src, dodgedir)
-		if(turfcheck)
-			if(check_dodge_turf(turfcheck))
-				turfy = turfcheck
-	if(!turfy)
-		for(var/x in shuffle(dirry.Copy()))
-			var/turf/turfcheck = turfy = get_step(src,x)
+			if(dx > 0)
+				dirry += EAST
+				dirry += SOUTH
+				dirry += NORTH
+			else
+				dirry += WEST
+				dirry += NORTH
+				dirry += SOUTH
+		var/turf/dodge_turf
+		if(fixedeye)
+			var/dodgedir = turn(dir, 180)
+			var/turf/turfcheck = get_step(src, dodgedir)
 			if(turfcheck)
 				if(check_dodge_turf(turfcheck))
-					turfy = turfcheck
-					break
-	if(!turfy)
-		to_chat(src, span_boldwarning("There's nowhere to dodge to!"))
+					dodge_turf = turfcheck
+		if(!dodge_turf)
+			for(var/dodge_dir in shuffle(dirry.Copy()))
+				var/turf/turfcheck = get_step(src, dodge_dir)
+				if(turfcheck)
+					if(check_dodge_turf(turfcheck))
+						dodge_turf = turfcheck
+						break
+		if(pulledby)
+			return FALSE
+		if(!dodge_turf)
+			to_chat(src, span_boldwarning("There's nowhere to dodge to!"))
+			return FALSE
+		else
+			if(do_dodge(user, dodge_turf))
+				flash_fullscreen("blackflash2")
+				user.aftermiss()
+				return TRUE
+			else
+				return FALSE
+	else
 		return FALSE
-	if(do_dodge(attacker, turfy))
-		flash_fullscreen("blackflash2")
-		attacker.aftermiss()
-		return TRUE
-	if(HAS_TRAIT(src, TRAIT_MAGEARMOR))
-		if(magearmor == 0)
-			magearmor = 1
-			apply_status_effect(/datum/status_effect/buff/magearmor)
-			to_chat(src, span_boldwarning("My mage armor absorbs the hit and dissipates!"))
-			return TRUE
-	return FALSE
 
 /mob/living/proc/check_dodge_turf(turf/check_turf)
 	if(!check_turf)
@@ -107,6 +112,8 @@
 	var/theirskill = 0
 	var/drained = 8
 	var/drained_npc = 5
+	var/mainh = get_active_held_item()
+	var/offh = get_inactive_held_item()
 	var/obj/item/attacking_item = attacker?.used_intent?.masteritem
 
 	var/mob/living/carbon/human/human_dodger
@@ -203,68 +210,30 @@
 			prob2defend = 90	//We cap it out if we have Dodge Expert as a Player.
 
 		if(dodgetime <= CLICK_CD_DODGE && !ignore_DE_bonus && has_trait && human_dodger.mind)
-
-			var/mainh = get_active_held_item()
-			var/offh = get_inactive_held_item()
 			if(istype(mainh, /obj/item/rogueweapon/shield) || istype(offh, /obj/item/rogueweapon/shield))	//why do I have to pre-empt the worst of you
 				max_dodge = MAX_DODGE_FLOOR
 				changeNext_def(CLICK_CD_DODGE)
 		prob2defend = clamp((prob2defend + max_dodge), 5, (90 + max_dodge))
 
-		//------------Dual Wielding Checks------------
-		var/attacker_dualw
-		var/defender_dualw
-		var/extraattroll
-		var/extradefroll
-		var/mainhand = get_active_held_item()
-		var/offhand	= get_inactive_held_item()
-
-		//Dual Wielder defense disadvantage
-		if(mainhand && offhand)
-			if(HAS_TRAIT(src, TRAIT_DUALWIELDER) && istype(offhand, mainhand))
-				extradefroll = prob(prob2defend)
-				defender_dualw = TRUE
-
-		//dual-wielder attack advantage
-		var/obj/item/mainh = attacker.get_active_held_item()
-		var/obj/item/offh = attacker.get_inactive_held_item()
-		if(mainh && offh && HAS_TRAIT(attacker, TRAIT_DUALWIELDER))
-			if(istype(mainh, offh))
-				extraattroll = prob(prob2defend)
-				attacker_dualw = TRUE
-		//----------Dual Wielding check end---------
-
-		var/attacker_feedback
-		if(attacker.client?.prefs.showrolls && (attacker_dualw || defender_dualw))
-			attacker_feedback = "Attacking with advantage. ([100 - ((prob2defend / 100) * (prob2defend / 100) * 100)]%)"
+		// Dual wield drawback (-5%)
+		var/dualwield_penalty = HAS_TRAIT(src, TRAIT_DUALWIELDER) && human_dodger.can_dualwield(mainh, offh)
+		if(dualwield_penalty)
+			prob2defend = max(prob2defend - 5, 0)
 
 		if(client?.prefs.showrolls)
-			var/text = "Roll to dodge... [prob2defend]%"
-			if((defender_dualw || attacker_dualw))
-				if(defender_dualw && attacker_dualw)
-					text += " Our dual wielding cancels out!"
-				else//If we're defending against or as a dual wielder, we roll disadv. But if we're both dual wielding it cancels out.
-					text += " Twice! Disadvantage! ([(prob2defend / 100) * (prob2defend / 100) * 100]%)"
-			to_chat(src, span_info("[text]"))
+			var/text = "Roll to dodge... [HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS) ? "???" : prob2defend]%"
+
+			if(dualwield_penalty)
+				text += " (-5%)"
+
+			to_chat(src, span_info(text))
 
 		if(src.has_status_effect(/datum/status_effect/swingdelay/penalty))
 			prob2defend -= 50
 
 		var/dodge_status = FALSE
-		if((!defender_dualw && !attacker_dualw) || (defender_dualw && attacker_dualw)) //They cancel each other out
-			if(attacker_feedback)
-				attacker_feedback = "Advantage cancelled out!"
-			if(prob(prob2defend))
-				dodge_status = TRUE
-		else if(attacker_dualw)
-			if(prob(prob2defend) && extraattroll)
-				dodge_status = TRUE
-		else if(defender_dualw)
-			if(prob(prob2defend) && extradefroll)
-				dodge_status = TRUE
-
-		if(attacker_feedback)
-			to_chat(attacker, span_info("[attacker_feedback]"))
+		if(prob(prob2defend))
+			dodge_status = TRUE
 
 		if(!dodge_status)
 			return FALSE
