@@ -249,8 +249,9 @@
 	owner.add_stress(/datum/stressevent/starsugar)
 	ADD_TRAIT(owner, TRAIT_DODGEEXPERT, TRAIT_STATUS_EFFECT(id))
 	ADD_TRAIT(owner, TRAIT_DARKVISION, TRAIT_STATUS_EFFECT(id))
-	if(owner.has_status_effect(/datum/status_effect/debuff/sleepytime))
-		owner.remove_status_effect(/datum/status_effect/debuff/sleepytime)
+	if(owner.has_status_effect(/datum/status_effect/debuff/sleepytime) || owner.has_status_effect(/datum/status_effect/debuff/sleepytime/t2) || owner.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+		var/mob/living/carbon/human/H = owner
+		H.remove_sleep_depravation(TRUE)
 	originalcmode = owner.cmode_music
 	owner.cmode_music = 'sound/music/combat_starsugar.ogg'
 
