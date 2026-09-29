@@ -9,6 +9,8 @@
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/warscholar.ogg'
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_NALEDI, TRAIT_MAGEDEXTERITY)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
+	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 10)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
@@ -198,6 +200,8 @@
 	tutorial = "You are a Naledi Vizier. Your research into miracles and holy incantations has lead you to esoteric magycks. Though psydonians have long struggled to channel their all-father's divinity, The Great City of Naledi came the closest with it's Origin Magic."
 	outfit = /datum/outfit/job/roguetown/mercenary/warscholar_vizier
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_NALEDI, TRAIT_MEDICINE_EXPERT, TRAIT_MAGEDEXTERITY)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
+	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 10)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 2,
