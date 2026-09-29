@@ -28,7 +28,8 @@
 							/obj/structure/flora/roguetree/stump/log = 3,
 							/obj/structure/flora/roguetree/stump = 4,
 							/obj/structure/closet/dirthole/closed/loot=3,
-							/obj/structure/flora/roguegrass/maneater/real/juvenile=3)
+						/obj/structure/flora/roguegrass/maneater/real/juvenile=3,
+						/obj/effect/landmark/hunting_spawner = 3)
 	spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=2,
 						/turf/open/water/swamp=1)
 	allowed_areas = list(/area/rogue/outdoors/woods)
@@ -62,4 +63,5 @@
 							/obj/item/natural/stone = 6,
 							/obj/item/natural/rock = 1,
 							/obj/item/grown/log/tree/stick = 3,
-							/obj/structure/flora/roguetree/stump/log = 3)
+						/obj/structure/flora/roguetree/stump/log = 3,
+						/obj/effect/landmark/hunting_spawner = 2)
