@@ -223,13 +223,13 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker
 				beltl = /obj/item/rogueweapon/sword/falx/stalker//backup
-				beltr =  /obj/item/quiver/bolts/
+				beltr =  /obj/item/quiver/bolt/standard
 			if("Shortbow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/falx/stalker//backup
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
-				beltr = /obj/item/quiver/poisonarrows/
+				beltr = /obj/item/quiver/poisonarrows
 			if("Dual Daggers")
 				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)

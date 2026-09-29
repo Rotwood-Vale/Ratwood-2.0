@@ -106,7 +106,7 @@
 				backl = /obj/item/rogueweapon/shield/tower/metal
 			if("Stunmace & Crossbow")
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				backl = /obj/item/quiver/bolts
+				backl = /obj/item/quiver/bolt/standard
 				H.change_stat(STATKEY_SPD, 1)
 				H.change_stat(STATKEY_STR, -1)
 				beltr = /obj/item/rogueweapon/mace/stunmace

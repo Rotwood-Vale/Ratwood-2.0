@@ -84,7 +84,7 @@
 	name = "Arrows and Bolts"
 	loot = list(
 		/obj/item/quiver/arrows,
-		/obj/item/quiver/bolts,
+		/obj/item/quiver/bolt/standard,
 	)
 
 /datum/carebox_loot/wretch/throwing_knifes

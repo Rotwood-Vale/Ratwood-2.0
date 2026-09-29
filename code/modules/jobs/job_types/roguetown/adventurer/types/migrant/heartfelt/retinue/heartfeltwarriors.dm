@@ -167,8 +167,8 @@
 	H.set_blindness(0)
 	switch(weapon_choice)
 		if("Crossbow")
-			beltr = /obj/item/quiver/bolts
-			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+			beltr = /obj/item/quiver/bolt/standard
+			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 			H.change_stat(STATKEY_STR, 1)
 		if("Bow")
 			beltr = /obj/item/quiver/arrows
@@ -179,8 +179,8 @@
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling // Both are belt slots and it's not worth setting where the cugel goes for everyone else, sad.
 			H.change_stat(STATKEY_SPD, 1)
 		else
-			beltr = /obj/item/quiver/bolts
-			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+			beltr = /obj/item/quiver/bolt
+			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
@@ -302,7 +302,7 @@
 			r_hand = /obj/item/rogueweapon/spear/boar
 			backl = /obj/item/rogueweapon/shield/iron
 		if("Crossbow")
-			beltr = /obj/item/quiver/bolts
+			beltr = /obj/item/quiver/bolt
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 		if("Bow")
 			beltr = /obj/item/quiver/arrows

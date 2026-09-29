@@ -218,7 +218,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/mid
-	beltr = /obj/item/quiver/bolts
+	beltr = /obj/item/quiver/bolt/standard
 	backpack_contents = list(
 		/obj/item/rope/chain = 1, 
 		/obj/item/rogueweapon/huntingknife/idagger = 1, 

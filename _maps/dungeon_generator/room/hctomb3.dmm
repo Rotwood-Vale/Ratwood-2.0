@@ -397,7 +397,6 @@
 /area/rogue/under/tomb/cave/wet)
 "oh" = (
 /obj/structure/table/wood,
-/obj/item/quiver/bolts,
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/under/tomb/indoors)
@@ -537,6 +536,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
+/obj/item/quiver/bolt,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/under/tomb/indoors)
 "tD" = (

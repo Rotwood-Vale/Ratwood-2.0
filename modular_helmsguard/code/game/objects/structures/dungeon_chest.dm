@@ -296,7 +296,7 @@
 		/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow = 20,
 
 	//ammunition
-		/obj/item/quiver/bolts = 30,
+		/obj/item/quiver/bolt/standard = 30,
 		/obj/item/quiver/arrows = 35,
 
 	//throwing

@@ -54,18 +54,18 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	if(H.mind)
-		var/weapons = list("Archery", "Crossbows", "LET THERE BE FLAME!!!", "BOMBS")
+		var/weapons = list("Archery", "Munition Crossbows", "LET THERE BE FLAME!!!", "BOMBS")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Archery")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-				beltl = /obj/item/quiver/pyroarrows
-			if("Crossbows")
+				beltl = /obj/item/quiver/bolt/pyro
+			if("Munition Crossbows")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 4, TRUE)
-				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltl = /obj/item/quiver/pyrobolts
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
+				beltl = /obj/item/quiver/bolt/pyro
 			if("LET THERE BE FLAME!!!")
 				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 2, TRUE)
 				backr = /obj/item/rogueweapon/woodstaff/toper

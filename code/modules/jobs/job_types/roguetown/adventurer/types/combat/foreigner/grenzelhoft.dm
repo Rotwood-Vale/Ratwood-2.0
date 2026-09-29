@@ -64,8 +64,8 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/tracking, 3, TRUE)
 				l_hand = /obj/item/rogueweapon/sword/long/kriegmesser
-				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltl = /obj/item/quiver/bolts
+				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
+				beltl = /obj/item/quiver/bolt/standard
 				beltr = /obj/item/rogueweapon/scabbard
 				H.change_stat(STATKEY_STR, -1)
 				H.change_stat(STATKEY_PER, 2) // so the boy can aim his crossbow and see further, maintain +7 stats total.

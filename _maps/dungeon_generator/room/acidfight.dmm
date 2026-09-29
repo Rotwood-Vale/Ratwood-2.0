@@ -42,6 +42,10 @@
 "hA" = (
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/tomb/indoors)
+"kE" = (
+/obj/item/quiver/bolt/standard,
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/under/tomb/indoors)
 "kF" = (
 /obj/structure/fluff/big_chain,
 /turf/open/floor/rogue/metal/barograte,
@@ -201,10 +205,6 @@
 "YL" = (
 /obj/effect/dungeon_directional_helper/west,
 /turf/open/floor/rogue/naturalstone,
-/area/rogue/under/tomb/cave/lava)
-"ZG" = (
-/obj/item/quiver/bolts,
-/turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/tomb/cave/lava)
 
 (1,1,1) = {"
@@ -877,7 +877,7 @@ uV
 uV
 Ar
 kF
-ZG
+rg
 rg
 kF
 Ar
@@ -1040,7 +1040,7 @@ Ar
 AC
 uy
 RX
-RX
+kE
 RX
 hA
 "}

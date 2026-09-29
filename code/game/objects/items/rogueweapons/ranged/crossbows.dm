@@ -199,21 +199,23 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/iron
 	name = "munition crossbow"
-	desc = "A deadly weapon that shoots a bolt with terrific power. Unlike the common bow, \
-	it uses a sophisticated mechanism to renock - and retain - its half-length bolts; a \
-	matter that relies more on raw strength than dexterity to master. </br>An cruder version of the common crossbow built with wrought iron with steel like property. When smelted, it does not yield good steel ingot but trash steel. but it is cheap and it works well and is often imported en masse from Grenzelhoft. Some of them find their way into the hands of common brigands and highwaymen."
+	desc = "An cruder version of the common crossbow built with wrought iron with steel-like property. When smelted, it does not yield good steel ingot but iron. but it is cheap and it works well and is often imported en masse from Grenzelhoft. Some of them find their way into the hands of common brigands and highwaymen."
 	smeltresult = /obj/item/ingot/iron
+	icon_state = "crossbowshort0"
+	item_state = "crossbowshort"
+	reloadtime = 60
 	max_integrity = 80
-	damfactor = 1 // Lower than starting
+	damfactor = 0.9 // Lower than starting
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/ancient
 	name = "ancient crossbow"
 	desc = "A deadly weapon from another tyme, which shoots a bolt with terrific power. Unlike the common bow, it \
 	uses a sophisticated mechanism to renock - and retain - its half-length bolts; a matter that relies more on raw \
-	strength than dexterity to master. </br>Once, these mechanical delights bristled the arms of Zaelorian's ancient \
-	empire; now, it shudders in the grasp of Zizo's deathless crusade."
+	strength than dexterity to master. </br>Once, these mechanical delights bristled the arms of ancient \
+	empires; now, it shudders in the grasp of Zizo's deathless crusade."
 	icon_state = "ancientcrossbow0"
 	item_state = "ancientcrossbow"
+	reloadtime = 60
 	max_integrity = 80
 	damfactor = 1 // Lower than starting
 	
@@ -274,7 +276,7 @@
 	desc = "A heavier weight crossbow - the basis of a mounted ballista, made fit for handheld usage. Integrated just \
 	beneath the stock is a windlass mechanism, necessary to surmount the siegebow's titanic draw-strength. It loads \
 	heavier, full-length bolts; purpose-made to pulverize. </br>Assembled in the Grenzelhoft clientstate Vakra and \
-	used extensively in the vakra civilwar, it is foreign to most lands."
+	used extensively in the Vakran civilwar, it is foreign to most lands."
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	icon_state = "heavycrossbow0"
 	item_state = "heavycrossbow"
@@ -341,8 +343,8 @@
 	max_integrity = 200
 	chargingspeed = 50 //Halfway between the standard crossbow and siegebow.
 	reloadtime = 120 //Halfway between the standard crossbow and siegebow.
-	icon_state = "relicpsyheavycrossbow0"
-	item_state = "relicpsyheavycrossbow"
+	icon_state = "relicpsyheavybow0"
+	item_state = "relicpsyheavybow"
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/relic/marque
 	name = "\"Epistle\""
@@ -360,9 +362,9 @@
 	item_state = "psyheavycrossbow"
 	fire_sound = 'sound/combat/Ranged/firebow-shot-02.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
-	chargingspeed = 60//+20
-	reloadtime = 6 SECONDS//From 8 seconds to 6, this way it's atleast usable in a fight, otherwise Arbalist is just better switching to a normal crossbow.
-	penfactor = 1.5//We want this to go through, no matter what, effectively.
+	chargingspeed = 50 //Halfway between the standard crossbow and siegebow.
+	reloadtime = 120 //Halfway between the standard crossbow and siegebow.
+	damfactor = 0.8 //72 damage with 90 damage bolts, with full AP on the bolt.
 
 /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt

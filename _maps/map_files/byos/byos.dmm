@@ -10928,7 +10928,6 @@
 	pixel_y = 2
 	},
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow,
-/obj/item/quiver/bolts,
 /obj/item/rogueweapon/sword/rapier,
 /obj/item/rogueweapon/scabbard/sword,
 /obj/item/reagent_containers/powder/spice{
@@ -13468,7 +13467,6 @@
 /obj/item/rope/chain,
 /obj/item/reagent_containers/glass/bottle/rogue/healthpot,
 /obj/item/clothing/shoes/roguetown/armor,
-/obj/item/quiver/bolts,
 /obj/item/clothing/cloak/wardencloak,
 /obj/item/rogueweapon/sword/short/iron,
 /obj/item/rogueweapon/sword/short/iron,
@@ -135600,7 +135598,7 @@ rPH
 rPH
 rPH
 aIK
-rPH
+eqe
 rPH
 eqe
 eqe
