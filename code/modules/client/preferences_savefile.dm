@@ -248,6 +248,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ambiencevol"]		>> ambiencevol
 	S["pointambiencevol"]	>> pointambiencevol
 	S["pointambience_independent"] >> pointambience_independent
+	S["point_ambience_toggles"] >> point_ambience_toggles
 	S["overallvol"]		>> overallvol
 	S["instrumentvol"]	>> instrumentvol
 	S["layout_map"]		>> layout_map
@@ -384,6 +385,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ambiencevol = sanitize_integer(ambiencevol, 0, 100, initial(ambiencevol))
 	pointambiencevol = sanitize_integer(pointambiencevol, 0, 100, initial(pointambiencevol))
 	pointambience_independent = sanitize_integer(pointambience_independent, 0, 1, initial(pointambience_independent))
+	point_ambience_toggles = sanitize_integer(point_ambience_toggles, 0, SOUND_DISABLE_POINT_AMBIENCE | SOUND_DISABLE_TORCH_AMBIENCE, initial(point_ambience_toggles))
 	overallvol = sanitize_integer(overallvol, 0, 100, initial(overallvol))
 	instrumentvol = sanitize_integer(instrumentvol, 0, 100, initial(instrumentvol))
 	// Null stays null: it means the layout was never set, which is different from a bad value
@@ -455,6 +457,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["pointambiencevol"], pointambiencevol)
 	WRITE_FILE(S["pointambience_independent"], pointambience_independent)
+	WRITE_FILE(S["point_ambience_toggles"], point_ambience_toggles)
 	WRITE_FILE(S["overallvol"], overallvol)
 	WRITE_FILE(S["instrumentvol"], instrumentvol)
 	WRITE_FILE(S["layout_map"], layout_map)

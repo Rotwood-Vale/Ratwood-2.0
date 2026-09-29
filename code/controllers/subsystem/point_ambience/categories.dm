@@ -80,7 +80,7 @@
 	/// This category's bit in a client's point_ambience_muted_mask, 1 << index, set by
 	/// SSpoint_ambience's New()
 	var/mask = 0
-	/// The preference toggle that turns this category off for one listener, 0 where there is none
+	/// The point_ambience_toggles bit that turns this category off for one listener, 0 where there is none
 	var/disable_toggle = 0
 	/// The falloff curve. Left at 0, SSpoint_ambience's New() resolves it to the band for this range,
 	/// as playsound_local does per send. A live range edit keeps that band. A category can set its own
@@ -189,7 +189,7 @@
 /// Whether one listener has muted this category. Everything a listener's preferences can do to one
 /// category goes here, so update_silenced sees it and a listener with nothing left on is unhooked
 /datum/point_ambience_category/proc/muted_for(datum/preferences/prefs)
-	return disable_toggle && (prefs.toggles & disable_toggle)
+	return disable_toggle && (prefs.point_ambience_toggles & disable_toggle)
 
 /// Drops a source's per source overrides. They hold a hard reference to it, so every path that
 /// takes a source out of this category calls this

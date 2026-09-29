@@ -228,6 +228,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/pointambiencevol = 100
 	/// Keeps point ambience on its own slider instead of scaling it by overallvol
 	var/pointambience_independent = TRUE
+	/// SOUND_DISABLE_POINT_AMBIENCE and SOUND_DISABLE_TORCH_AMBIENCE, inverted so that unset is on
+	var/point_ambience_toggles = 0
 	/// Instruments, the music box and the wax music device, which play at this in place of Sound Effects
 	var/instrumentvol = 50
 	/// The Sound Effects slider: everything sent through playsound_local but instruments, which read

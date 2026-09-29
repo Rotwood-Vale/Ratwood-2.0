@@ -70,7 +70,7 @@
 	PRIVATE_PROC(TRUE)
 	if(!prefs)
 		return FALSE
-	if(prefs.toggles & SOUND_DISABLE_POINT_AMBIENCE)
+	if(prefs.point_ambience_toggles & SOUND_DISABLE_POINT_AMBIENCE)
 		return TRUE
 	var/effective_volume = POINT_AMBIENCE_VOLUME(prefs)
 	if(!effective_volume)

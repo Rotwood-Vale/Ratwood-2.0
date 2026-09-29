@@ -191,8 +191,8 @@
 	data["point_ambience_independent"] = owner.prefs.pointambience_independent
 	// Sent the way round the player thinks about it: these two are stored inverted so that an
 	// existing savefile without them reads as on
-	data["point_ambience"] = !(owner.prefs.toggles & SOUND_DISABLE_POINT_AMBIENCE)
-	data["point_ambience_torch"] = !(owner.prefs.toggles & SOUND_DISABLE_TORCH_AMBIENCE)
+	data["point_ambience"] = !(owner.prefs.point_ambience_toggles & SOUND_DISABLE_POINT_AMBIENCE)
+	data["point_ambience_torch"] = !(owner.prefs.point_ambience_toggles & SOUND_DISABLE_TORCH_AMBIENCE)
 	return data
 
 /datum/volume_power_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -224,7 +224,7 @@
 				flag = SOUND_DISABLE_TORCH_AMBIENCE
 			else
 				return FALSE
-		owner.prefs.toggles ^= flag
+		owner.prefs.point_ambience_toggles ^= flag
 		owner.prefs.save_preferences()
 		// Either direction, and it has to happen here: nothing else will service them again to stop
 		// what is playing, and a listener standing still would not pick a re-enabled category up

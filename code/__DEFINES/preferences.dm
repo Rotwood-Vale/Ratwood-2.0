@@ -25,22 +25,6 @@
 #define DEADMIN_ANTAGONIST		(1<<16)
 #define DEADMIN_POSITION_HEAD	(1<<17)
 
-/**
- * Point ambience, per listener: hearths, fountains, rivers, sconces.
- *
- * INVERTED, like the rattles above, because `toggles` loads straight out of the savefile with no
- * migration: a bit meaning "enabled" reads as 0 for everyone who already has a savefile, which would
- * mute every one of them. Unset is on, which is what every existing player and every new one gets.
- */
-#define SOUND_DISABLE_POINT_AMBIENCE	(1<<18)
-/**
- * Just the torch category: wall sconces, STANDING firebowls and a torch in your own hand.
- *
- * Not hearths, campfires or floor firebowls, which are the fire category and keep playing. It is the
- * most numerous kind and the one most likely to be found grating, so it turns off alone.
- */
-#define SOUND_DISABLE_TORCH_AMBIENCE	(1<<19)
-
 #define TOGGLE_FULLSCREEN		(1<<20)
 #define SCHIZO_VOICE			(1<<21)
 #define ROLEPLAY_ADS			(1<<22)
@@ -51,6 +35,24 @@
 #define TOGGLES_TEXT_DEFAULT (FLOATING_TEXT|XP_TEXT)
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|TOGGLE_FULLSCREEN|ROLEPLAY_ADS)
+
+/**
+ * Point ambience, per listener: hearths, fountains, rivers, sconces.
+ *
+ * Bits of prefs.point_ambience_toggles, a var of their own since `toggles` has no bit to spare.
+ *
+ * INVERTED, like the rattles in `toggles`, because the var loads straight out of the savefile with no
+ * migration: a bit meaning "enabled" reads as 0 for everyone who already has a savefile, which would
+ * mute every one of them. Unset is on, which is what every existing player and every new one gets.
+ */
+#define SOUND_DISABLE_POINT_AMBIENCE	(1<<0)
+/**
+ * Just the torch category: wall sconces, STANDING firebowls and a torch in your own hand.
+ *
+ * Not hearths, campfires or floor firebowls, which are the fire category and keep playing. It is the
+ * most numerous kind and the one most likely to be found grating, so it turns off alone.
+ */
+#define SOUND_DISABLE_TORCH_AMBIENCE	(1<<1)
 
 //Chat toggles
 #define CHAT_OOC			(1<<0)
