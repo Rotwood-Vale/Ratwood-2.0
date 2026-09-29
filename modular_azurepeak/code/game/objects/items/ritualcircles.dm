@@ -2025,7 +2025,6 @@
 			target.equipOutfit(/datum/outfit/job/roguetown/baothalightarmor)
 			if(HAS_TRAIT(target, TRAIT_RITUALIST))
 				ADD_TRAIT(target, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-				ADD_TRAIT(target, TRAIT_IGNORESLOWDOWN, TRAIT_GENERIC)
 				REMOVE_TRAIT(target, TRAIT_HEAVYARMOR, null)
 				target.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 	target.Stun(60)
