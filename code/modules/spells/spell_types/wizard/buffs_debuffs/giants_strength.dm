@@ -12,7 +12,7 @@
 	warnie = "spellwarning"
 	school = "transmutation"
 	overlay_state = "giants_strength"
-	spell_tier = 2
+	spell_tier = 3 //+3 strength AND unbound strength? Get real, sire - this is a Tier 3 spell.
 	invocations = list("Vis Gigantis.") // Vis - Strength. Gigantis - Singular possessive form.
 	invocation_type = "whisper"
 	glow_color = GLOW_COLOR_BUFF
