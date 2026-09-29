@@ -15,7 +15,7 @@
 	no_early_release = TRUE
 	antimagic_allowed = FALSE
 	charging_slowdown = 3
-	cost = 4 // upgrade on ring, + firestack immunity pretty dang good.
+	cost = 2 // upgrade on ring, + firestack immunity pretty dang good.
 	spell_tier = 2 // Spellblade tier.
 
 	invocations = list("Equitare Draconis") // google translate latin 'ride the dragon' - If someone literate wants to change this, feel free to.
