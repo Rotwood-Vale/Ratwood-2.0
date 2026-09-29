@@ -33,7 +33,7 @@
 /obj/item/clothing/suit/roguetown/dragonhide
 	name = "dragonhide"
 	desc = "An arcyne art first mastered by the 'dragonsbreath magisters'. This barrier protects best against the heat."
-	max_integrity = 200
+	max_integrity = 300
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	icon = 'icons/mob/actions/roguespells.dmi'
