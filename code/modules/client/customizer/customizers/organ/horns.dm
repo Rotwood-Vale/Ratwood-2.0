@@ -213,32 +213,31 @@
 	sprite_accessories = list(
 		/datum/sprite_accessory/horns/angler,
 		)
-
 /datum/customizer/organ/horns/tusks
-	name = "Tusks"
-	customizer_choices = list(/datum/customizer_choice/organ/horns/tusks)
-	allows_disabling = TRUE
-	default_disabled =  TRUE
+    name = "Tusks"
+    customizer_choices = list(/datum/customizer_choice/organ/horns/tusks)
+    allows_disabling = TRUE
+    default_disabled =  TRUE
 
 /datum/customizer_choice/organ/horns/tusks
-	name = "Tusks"
-	organ_type = /obj/item/organ/horns
-	sprite_accessories = list(
-		/datum/sprite_accessory/horns/halforc,
-		/datum/sprite_accessory/horns/longtusk
-		)
+    name = "Tusks"
+    organ_type = /obj/item/organ/horns
+    sprite_accessories = list(
+        /datum/sprite_accessory/horns/halforc,
+        /datum/sprite_accessory/horns/longtusk
+    )
 
 /datum/customizer/organ/horns/wings
-	name = "Headwing"
-	customizer_choices = list(/datum/customizer_choice/organ/horns/wings)
-	allows_disabling = TRUE
-	default_disabled =  TRUE
+    name = "Headwing"
+    customizer_choices = list(/datum/customizer_choice/organ/horns/wings)
+    allows_disabling = TRUE
+    default_disabled =  TRUE
 
 /datum/customizer_choice/organ/horns/wings
-	name = "Headwing"
-	organ_type = /obj/item/organ/horns
-	sprite_accessories = list(
-		/datum/sprite_accessory/horns/messenger,
-		/datum/sprite_accessory/horns/rmessenger,
-		/datum/sprite_accessory/horns/lmessenger
-		)
+    name = "Headwing"
+    organ_type = /obj/item/organ/horns
+    sprite_accessories = list(
+        /datum/sprite_accessory/horns/messenger,
+        /datum/sprite_accessory/horns/rmessenger,
+        /datum/sprite_accessory/horns/lmessenger
+    )

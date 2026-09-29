@@ -230,53 +230,52 @@
 /datum/sprite_accessory/horns/tieflingalt
 	name = "Tiefling Alt"
 	icon_state = "tiebhornsalt"
-
 /datum/sprite_accessory/horns/halforc
-	name = "Orc"
-	icon = 'icons/mob/sprite_accessory/halforc.dmi'
-	icon_state = "orctusk"
-	default_colors = list("#F4F4BE")
+    name = "Orc"
+    icon = 'icons/mob/sprite_accessory/halforc.dmi'
+    icon_state = "orctusk"
+    default_colors = list("#F4F4BE")
 
 /datum/sprite_accessory/horns/longtusk
-	name = "Long"
-	icon = 'icons/mob/sprite_accessory/halforc.dmi'
-	icon_state = "longtusk"
-	default_colors = list("#F4F4BE")
+    name = "Long"
+    icon = 'icons/mob/sprite_accessory/halforc.dmi'
+    icon_state = "longtusk"
+    default_colors = list("#F4F4BE")
 
 /datum/sprite_accessory/horns/messenger
-	name = "Winged Messenger"
-	icon_state = "messenger"
-	color_keys = 2
-	color_key_names = list("Wings", "Tips")
-	default_colors = list("#EAEAEA", "#EAEAEA")
-	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+    name = "Winged Messenger"
+    icon_state = "messenger"
+    color_keys = 2
+    color_key_names = list("Wings", "Tips")
+    default_colors = list("#EAEAEA", "#EAEAEA")
+    relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/horns/rmessenger
-	name = "One-Winged Messenger (Right)"
-	icon_state = "rmessenger"
-	color_keys = 2
-	color_key_names = list("Wings", "Tips")
-	default_colors = list("#EAEAEA", "#EAEAEA")
-	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER, BODY_BEHIND_LAYER)
+    name = "One-Winged Messenger (Right)"
+    icon_state = "rmessenger"
+    color_keys = 2
+    color_key_names = list("Wings", "Tips")
+    default_colors = list("#EAEAEA", "#EAEAEA")
+    relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER, BODY_BEHIND_LAYER)
 
 /datum/sprite_accessory/horns/lmessenger
-	name = "One-Winged Messenger (Left)"
-	icon_state = "lmessenger"
-	color_keys = 2
-	color_key_names = list("Wings", "Tips")
-	default_colors = list("#EAEAEA", "#EAEAEA")
-	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER, BODY_BEHIND_LAYER)
+    name = "One-Winged Messenger (Left)"
+    icon_state = "lmessenger"
+    color_keys = 2
+    color_key_names = list("Wings", "Tips")
+    default_colors = list("#EAEAEA", "#EAEAEA")
+    relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER, BODY_BEHIND_LAYER)
 
 /datum/sprite_accessory/horns/chiroptera
-	name = "Chiroptera Wings"
-	icon_state = "chiroptera"
-	color_key_name = "Wings"
-	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+    name = "Chiroptera Wings"
+    icon_state = "chiroptera"
+    color_key_name = "Wings"
+    relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
 
 /datum/sprite_accessory/horns/nightstalker
-	name = "Nightstalker Wings"
-	icon_state = "nightstalker"
-	color_keys = 2
-	color_key_names = list("Wings", "Tips")
-	default_colors = list("#555555", "#B41919")
-	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+    name = "Nightstalker Wings"
+    icon_state = "nightstalker"
+    color_keys = 2
+    color_key_names = list("Wings", "Tips")
+    default_colors = list("#555555", "#B41919")
+    relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
