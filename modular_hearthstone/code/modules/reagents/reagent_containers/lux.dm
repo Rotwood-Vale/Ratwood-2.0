@@ -38,3 +38,47 @@
 	item_state = "lux_impure"
 	sellprice = 15
 	dropshrink = 0.7
+
+/obj/item/reagent_containers/lux/attack(mob/living/M, mob/user)
+	testing("attack")
+	if(!user.cmode)
+
+		if(M.construct)
+			if(M == user)
+				user.visible_message(span_notice("[user] puts [src] against [user.p_their()] frame and absorbs it."), span_notice("I absorb [src], feeling my energy return."))
+			else
+				user.visible_message(span_notice("[user] attempts to press [src] to [M]."), span_notice("I attempt to press [src] to [M]."))
+				if(!do_mob(user, M, 30))
+					return
+				user.visible_message(span_notice("[user] presses [src] against [M]."), span_notice("I press [src] against [M]."))
+				to_chat(M, span_notice("I absorb [src], feeling my energy return."))
+			M.energy_add(750)
+			playsound(M.loc,'sound/magic/cosmic_expansion.ogg', rand(30,60), TRUE)
+			qdel(src)
+
+		else
+			return ..()
+	else
+		return ..()
+
+/obj/item/reagent_containers/lux_impure/attack(mob/living/M, mob/user)
+	testing("attack")
+	if(!user.cmode)
+
+		if(M.construct)
+			if(M == user)
+				user.visible_message(span_notice("[user] puts [src] against [user.p_their()] frame and absorbs it."), span_notice("I absorb [src], feeling my energy return."))
+			else
+				user.visible_message(span_notice("[user] attempts to press [src] to [M]."), span_notice("I attempt to press [src] to [M]."))
+				if(!do_mob(user, M, 30))
+					return
+				user.visible_message(span_notice("[user] presses [src] against [M]."), span_notice("I press [src] against [M]."))
+				to_chat(M, span_notice("I absorb [src], feeling my energy return."))
+			M.energy_add(500)
+			playsound(M.loc,'sound/magic/cosmic_expansion.ogg', rand(30,60), TRUE)
+			qdel(src)
+
+		else
+			return ..()
+	else
+		return ..()
