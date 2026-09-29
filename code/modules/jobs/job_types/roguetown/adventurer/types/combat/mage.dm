@@ -80,6 +80,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 4, TRUE)
 				H.mind?.adjust_spellpoints(6)
 				ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_MAGEDEXTERITY, TRAIT_GENERIC)
 				H.change_stat("willpower", 2)
 
 /datum/advclass/mage/spellblade
@@ -274,7 +275,7 @@
 
 	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_DODGEEXPERT, TRAIT_LIGHT_STEP) //dodge expert has the potential for being a big pain on spellcasters,  so we take away their mage armor as a trade.
 	subclass_stats = list(
-		STATKEY_STR = -1,
+		STATKEY_CON = -2,
 		STATKEY_INT = 2,
 		STATKEY_PER = 1,
 		STATKEY_WIL = 1,

@@ -51,7 +51,7 @@
 
 /obj/item/clothing/gloves/roguetown/fingerless_leather
 	name = "fingerless leather gloves"
-	desc = "A pair of protective gloves favored by lockshimmers, laborers, and smokers for maintaining \
+	desc = "A pair of protective gloves favored by learned mages, lockshimmers, laborers, and smokers for maintaining \
 	manual dexterity over regular gloves."
 	icon_state = "roguegloves"
 	armor = ARMOR_LEATHER_GOOD

@@ -18,6 +18,7 @@
 		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_ARCYNE_T1,//They're not meant to get more spellpoints. If they do, via Arcyne virtue, for example, T1 only.
 		TRAIT_NALEDI,
+		TRAIT_MAGEDEXTERITY, //THEY NEED THIS MORE THAN ANY OTHER MAGECHUD IN THE GAME. 
 	)
 	subclass_stats = list(// This does not follow the typical 8 stat setup. Do not increase this.
 		STATKEY_INT = 3,
@@ -82,7 +83,7 @@
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
 	belt = /obj/item/storage/belt/rogue/leather/rope/dark
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
+	pants = /obj/item/clothing/under/roguetown/trou/leather
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/mid
 	cloak = /obj/item/clothing/cloak/psydontabard/alt
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,

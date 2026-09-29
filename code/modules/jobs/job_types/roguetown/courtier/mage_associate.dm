@@ -35,6 +35,7 @@
 	pants = /obj/item/clothing/under/roguetown/tights/random
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	belt = /obj/item/storage/belt/rogue/leather
+	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 	beltr = /obj/item/storage/keyring/mageapprentice
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/woodstaff
@@ -46,7 +47,7 @@
 	outfit = /datum/outfit/job/roguetown/wapprentice/associate
 
 	category_tags = list(CTAG_WASSOCIATE)
-	traits_applied = list(TRAIT_ARCYNE_T3)
+	traits_applied = list(TRAIT_ARCYNE_T3, TRAIT_MAGEDEXTERITY)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_CON = 1,
@@ -162,7 +163,7 @@
 	outfit = /datum/outfit/job/roguetown/wapprentice/apprentice
 
 	category_tags = list(CTAG_WASSOCIATE)
-	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)//emphasizing the "serve" part of their description
+	traits_applied = list(TRAIT_HOMESTEAD_EXPERT, TRAIT_MAGEDEXTERITY)//emphasizing the "serve" part of their description
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_WIL = 2,
