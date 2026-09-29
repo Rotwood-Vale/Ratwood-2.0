@@ -1115,9 +1115,12 @@
 	RETURN_TYPE(/obj/item/organ/breasts)
 	return getorganslot(ORGAN_SLOT_BREASTS)
 
-/mob/living/carbon/human/proc/is_fertile()
+/mob/living/carbon/human/proc/is_fertile(orifice = SEX_PART_CUNT)
+	if(orifice & SEX_PART_TAIL_MAW)
+		var/obj/item/organ/tail/manticore/tail = get_manticore_tail(src)
+		return tail?.fertility
 	var/obj/item/organ/vagina/vagina = getorganslot(ORGAN_SLOT_VAGINA)
-	return vagina.fertility
+	return vagina?.fertility
 
 /mob/living/carbon/human/proc/is_virile()
 	var/obj/item/organ/testicles/testicles = getorganslot(ORGAN_SLOT_TESTICLES)
