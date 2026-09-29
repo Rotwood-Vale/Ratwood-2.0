@@ -5,7 +5,7 @@
 	school = "transmutation"
 	releasedrain = 30
 	chargedrain = 1
-	chargetime = 10
+	chargetime = 6
 	recharge_time = 30 SECONDS
 	human_req = TRUE
 	warnie = "spellwarning"
@@ -24,7 +24,7 @@
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	var/wall_type = /obj/structure/forcefield_weak
-	cost = 3
+	cost = 2
 
 //adapted from forcefields.dm, this needs to be destructible
 /obj/structure/forcefield_weak
@@ -36,9 +36,9 @@
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
 	opacity = 0
 	density = TRUE
-	max_integrity = 150
+	max_integrity = 250
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	var/timeleft = 20 SECONDS
+	var/timeleft = 40 SECONDS
 
 /obj/structure/forcefield_weak/Initialize(mapload)
 	. = ..()
