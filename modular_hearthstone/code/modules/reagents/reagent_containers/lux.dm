@@ -52,7 +52,7 @@
 					return
 				user.visible_message(span_notice("[user] presses [src] against [M]."), span_notice("I press [src] against [M]."))
 				to_chat(M, span_notice("I absorb [src], feeling my energy return."))
-			M.energy_add(750)
+			M.energy_add(1000)
 			playsound(M.loc,'sound/magic/cosmic_expansion.ogg', rand(30,60), TRUE)
 			qdel(src)
 
@@ -74,7 +74,7 @@
 					return
 				user.visible_message(span_notice("[user] presses [src] against [M]."), span_notice("I press [src] against [M]."))
 				to_chat(M, span_notice("I absorb [src], feeling my energy return."))
-			M.energy_add(500)
+			M.energy_add(700)
 			playsound(M.loc,'sound/magic/cosmic_expansion.ogg', rand(30,60), TRUE)
 			qdel(src)
 
