@@ -87,7 +87,7 @@
 		H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)
-		H.mind?.adjust_spellpoints(6)
+		H.mind?.adjust_spellpoints(9)
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
@@ -142,7 +142,7 @@
 		H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 		H.change_stat(STATKEY_PER, -1)
 		H.change_stat(STATKEY_INT, 1)
-		H.mind?.adjust_spellpoints(3)//split studies, less magic
+		H.mind?.adjust_spellpoints(6)//split studies, less magic
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
