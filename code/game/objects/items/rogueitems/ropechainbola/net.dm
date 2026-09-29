@@ -12,6 +12,7 @@
 	legcuff_slowdown = 3
 	gender = NEUTER
 	throw_speed = 2
+	inv_storage_delay = 1 SECONDS
 	var/knockdown = 0
 
 /obj/item/net/Initialize(mapload)
