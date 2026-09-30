@@ -145,6 +145,7 @@
 	armor = ARMOR_LEATHER_STUDDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //A full-body leather armor.
 	repair_time = 20 SECONDS
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berserker
 	name = "unstoppable chest"
@@ -153,6 +154,7 @@
 	armor = ARMOR_MAILLE
 	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
 	repair_time = 30 SECONDS
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 
 #undef COMBAT_TAG_DURATION
 
