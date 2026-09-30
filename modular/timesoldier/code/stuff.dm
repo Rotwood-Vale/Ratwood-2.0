@@ -113,7 +113,7 @@
 	mid_length = 10
 	volume = 100
 	extra_range = 9
-	persistent_loop = TRUE
+	use_sound_tokens = TRUE
 
 /obj/item/timesoldier/radio/Destroy() // so if we qdel it - which we will, we don't accidentally leave the looping sound hanging in the air.
 	if(radio_noise_timer)
