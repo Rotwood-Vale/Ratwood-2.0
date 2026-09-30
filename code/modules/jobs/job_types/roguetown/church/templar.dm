@@ -18,7 +18,7 @@
 	display_order = JDO_TEMPLAR
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
 	give_bank_account = TRUE
-	job_traits = list(TRAIT_RITUALIST, TRAIT_STEELHEARTED, TRAIT_HOLYWARRIOR)
+	job_traits = list(TRAIT_RITUALIST, TRAIT_STEELHEARTED)
 
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
 	quirk_restrictions = list(/datum/quirk/noble)
@@ -355,7 +355,9 @@
 	if(H.patron?.type == /datum/patron/divine/dendor)
 		H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/hunting, SKILL_LEVEL_NOVICE, TRUE)
 		ADD_TRAIT(H, TRAIT_SURVIVAL_EXPERT, TRAIT_GENERIC)
+		ADD_TRAIT(H, TRAIT_EXPERT_HUNTER, TRAIT_GENERIC)
 	if(H.patron?.type == /datum/patron/divine/noc)
 		H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE) // Really good at reading... does this really do anything? No. BUT it's soulful.
 		H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)

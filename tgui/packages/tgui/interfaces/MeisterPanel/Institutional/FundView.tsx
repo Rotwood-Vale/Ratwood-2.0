@@ -6,6 +6,7 @@ import {
   SEAL_AMBER,
 } from '../../common/parchment';
 import { type FundEntry, type TabProps } from '../types';
+import { BathhouseFundSection } from './BathhouseFundSection';
 import { BathhouseOrdinanceSection } from './BathhouseOrdinanceSection';
 import { FundActivity } from './FundActivity';
 import { IssueLoanSection } from './IssueLoanSection';
@@ -17,8 +18,7 @@ export const FundView = ({
   act,
 }: TabProps & { fund: FundEntry }) => {
   const balance = data.fund_balances[fund.id]?.balance ?? 0;
-  const outstanding =
-    data.fund_balances[fund.id]?.outstanding_principal ?? 0;
+  const outstanding = data.fund_balances[fund.id]?.outstanding_principal ?? 0;
 
   const view_only = !fund.can_withdraw && !fund.can_issue && fund.can_view;
   const can_issue_loan = fund.can_issue && fund.supports_loans;
@@ -49,13 +49,18 @@ export const FundView = ({
       {!!can_issue_loan && (
         <IssueLoanSection fund={fund} data={data} act={act} />
       )}
+      {/* Bathhouse employment: deposits for anyone who can see the fund, and the
+          Bathmaster's daily-limit setter. */}
+      {fund.id === 'bathhouse' && !!fund.can_view && (
+        <BathhouseFundSection data={data} act={act} />
+      )}
       {/* Gated on bathhouse_ordinance_available from atm_tgui.dm; the ordinance system is live. */}
       {!!data.bathhouse_ordinance_available &&
         (fund.id === 'bathhouse' || fund.id === 'church') &&
-        fund.can_issue && <BathhouseOrdinanceSection data={data} act={act} />}
+        !!fund.can_issue && <BathhouseOrdinanceSection data={data} act={act} />}
       {!!view_only && (
         <div style={{ color: INK_FAINT, marginTop: 8 }}>
-          {'You may view this institution\'s coffers, but not act upon them.'}
+          {"You may view this institution's coffers, but not act upon them."}
         </div>
       )}
       <FundActivity fund={fund} data={data} />

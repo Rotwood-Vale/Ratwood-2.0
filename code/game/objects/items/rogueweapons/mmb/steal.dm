@@ -220,6 +220,8 @@
 		to_chat(thief, span_warning("What am I going to steal from there?"))
 		return
 
+	thief.break_invisibility()
+
 	// No lifting from the front - it has to be from behind, or off someone who can't see at all.
 	var/victim_unaware = victim.IsUnconscious() || victim.eyesclosed || victim.eye_blind || victim.eye_blurry || !(victim.mobility_flags & MOBILITY_STAND)
 	var/list/mobsbehind = cone(victim, list(turn(victim.dir, 180)), list(thief))

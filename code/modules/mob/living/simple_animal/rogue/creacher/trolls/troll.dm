@@ -22,12 +22,12 @@
 	vision_range = 6
 	aggro_vision_range = 6
 	botched_butcher_results = list (
-		/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll = 2,
 		/obj/item/natural/bundle/bone/full = 1,
 		/obj/item/alch/horn = 1, 
 		/obj/item/natural/hide = 2)
 	butcher_results = list(
-		/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 3,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll = 3,
 		/obj/item/natural/hide = 3,
 		/obj/item/natural/bundle/bone/full = 1,
 		/obj/item/alch/sinew = 5,
@@ -36,7 +36,7 @@
 		/obj/item/natural/head/troll = 1, // We want head in normal tier to guarantee towner hunter get heads
 		)
 	perfect_butcher_results = list(
-		/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 5,
+		/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll = 5,
 		/obj/item/natural/hide = 5,
 		/obj/item/natural/bundle/bone/full = 1, 
 		/obj/item/alch/sinew = 7, 
