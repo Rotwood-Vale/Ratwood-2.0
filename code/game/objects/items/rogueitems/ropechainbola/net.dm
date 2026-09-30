@@ -6,13 +6,13 @@
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
 	force = 10
 	throwforce = 5
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_NORMAL // Sacrifice your storage space for nets
 	icon_state = "net"
 	slipouttime = 2 SECONDS //ideally you're using this to catch a dodger, not in the middle of combat
 	legcuff_slowdown = 3
 	gender = NEUTER
 	throw_speed = 2
-	inv_storage_delay = 1 SECONDS
+	inv_storage_delay = 4 SECONDS
 	var/knockdown = 0
 
 /obj/item/net/Initialize(mapload)
