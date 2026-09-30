@@ -497,7 +497,4 @@
 			if(party_member?.client)
 				party_member.client.images -= party_image
 
-		// Explicitly qdel the image object to avoid hard deletes
-		qdel(party_image)
-
 	party_images.Cut()
