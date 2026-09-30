@@ -33,6 +33,9 @@
 	)
 	extra_context = "This subclass is given access to the strongest miracles in Ferentian lands, at the cost of suffering elsewhere."
 
+/datum/outfit/job/roguetown/ukj_dark_chaplain
+	has_loadout = TRUE
+
 /datum/outfit/job/roguetown/ukj_dark_chaplain/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind?.current)
@@ -60,21 +63,6 @@
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)//Only T4 NOT to start maxed, with a devotion cap.
 	C.update_devotion(C.max_devotion / 4 - 50, C.max_devotion / 4 - 50, silent = TRUE) // Start at ~25% of devotion cap
-	if(H.mind)
-		var/weapons = list("Path of the Preacher", "Path of the Shepard")
-		var/weapon_choice = input(H, "Choose your path.", "CHOOSE YOUR DISCIPLINE.") as anything in weapons
-		switch(weapon_choice)
-			if("Path of the Preacher")//Discount homesteader. No trait so you can't level these skills up, nor do you have starting tools.
-				r_hand = /obj/item/rogueweapon/woodstaff
-				H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 3, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 3, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 1, TRUE)//just so you can make pretty floors easier
-				H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 3, TRUE)
-			if("Path of the Shepard")//The "combat" variant. The core stat spread should keep this class from ever overshadowing the others, but it's worth keeping an eye out anyway.
-				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 3, TRUE)//Good luck fighting like a monk without monk stats or Dodge Expert.
 
 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
 
@@ -92,5 +80,23 @@
 		if(/datum/patron/inhumen/baotha)
 			neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha
 			H.cmode_music = 'sound/music/combat_baotha.ogg'
-	if(H.mind)
-		wretch_select_bounty(H)
+
+//only class in its ctag, so it gets auto-picked on spawn and anything that asks in pre_equip never shows up. asks here instead
+/datum/outfit/job/roguetown/ukj_dark_chaplain/choose_loadout(mob/living/carbon/human/H)
+	. = ..()
+
+	var/weapons = list("Path of the Preacher", "Path of the Shepard")
+	var/weapon_choice = input(H, "Choose your path.", "CHOOSE YOUR DISCIPLINE.") as anything in weapons
+	switch(weapon_choice)
+		if("Path of the Preacher")//Discount homesteader. No trait so you can't level these skills up, nor do you have starting tools.
+			H.put_in_hands(new /obj/item/rogueweapon/woodstaff(H), TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 3, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 3, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 1, TRUE)//just so you can make pretty floors easier
+			H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 3, TRUE)
+		if("Path of the Shepard")//The "combat" variant. The core stat spread should keep this class from ever overshadowing the others, but it's worth keeping an eye out anyway.
+			H.put_in_hands(new /obj/item/rogueweapon/woodstaff/quarterstaff/iron(H), TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 3, TRUE)//Good luck fighting like a monk without monk stats or Dodge Expert.
+	wretch_select_bounty(H)
