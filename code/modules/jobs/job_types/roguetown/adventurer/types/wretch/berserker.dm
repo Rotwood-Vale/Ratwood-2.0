@@ -56,16 +56,16 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	if(H.mind)
 		H.set_blindness(0)
-		var/list/armor_choices = list("Light Armor + Crit Resist", "Bare Skin + Blood Resist")
+		var/list/armor_choices = list("Light Armor + Blood Resist", "Bare Skin + Crit Resist")
 		var/armor_choice = input(H,"Choose your DEFENSE.", "I CAN TAKE IT!!") as anything in armor_choices
 		switch(armor_choice)
-			if("Light Armor + Crit Resist")
+			if("Light Armor + Blood Resist")
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-				REMOVE_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC) //Can't have both.
-			if("Bare Skin + Blood Resist")
+			if("Bare Skin + Crit Resist")
 				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berserker //light steel maille
 				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berserker //fullbody leather armor
+				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+				REMOVE_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC) //Can't have both.
 		var/list/main_choices = list("Unarmed Master", "Martial Expert") // Unarmed focuses on master punching and wrestling moves, Martial gives you two expert weapon skills to be flexible
 		var/category_choice = input(H, "Choose your MEANS OF VIOLENCE.", "SMASH OR SLASH!!") as anything in main_choices
 		switch(category_choice)
