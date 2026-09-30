@@ -171,7 +171,7 @@
 	desc = "A stone sinker. Keeps the hook low to catch fish that lurk at the bottom of the water."
 	icon_state = "sinker"
 	deepfishingweight = 1
-	sizemod = list("normal" = -1, "large" = -1, "huge" = -1, "prize" = -2)
+	sizemod = list("normal" = 1, "large" = 1, "huge" = -1, "prize" = -2)
 	max_durability = 100
 	durability = 100
 

@@ -1462,7 +1462,7 @@
 	var/shore_gear_override = sinker_shore_override || flyfish_shore_override
 	if(istype(targeted, /turf/open/water/cleanshallow))
 		near_shore_penalty = max(near_shore_penalty, 1)
-		if(shore_distance <= 3 && !flyfish_shore_override)
+		if(shore_distance <= 3 && !shore_gear_override)
 			shallow_excluded_junk_zone = TRUE
 	if(shore_distance <= 3 && !shore_gear_override)
 		shallow_excluded_junk_zone = TRUE
@@ -1609,13 +1609,20 @@
 			raritypicker = pickweightmerge(raritypicker, list("com" = -1, "rare" = 1))
 			if(depth_step >= 2)
 				raritypicker = pickweightmerge(raritypicker, list("ultra" = 1))
-			sizepicker = pickweightmerge(sizepicker, list("tiny" = -1, "small" = -1, "large" = 1, "huge" = 1, "prize" = 1))
+			// Size scales across the same full distance range as rarity - it just climbs at half the
+			// rate (every other step out) instead of 1:1, so going further always helps size too
+			// without size overtaking rarity and making "far out" a near-guaranteed huge/prize
+			if(depth_step % 2 == 1)
+				sizepicker = pickweightmerge(sizepicker, list("tiny" = -1, "small" = -1, "large" = 1, "huge" = 1, "prize" = 1))
 
 	if(near_shore_penalty)
 		deepmod = max(0, deepmod - near_shore_penalty)
-		for(var/shore_step in 1 to near_shore_penalty)
-			raritypicker = pickweightmerge(raritypicker, list("com" = 2, "rare" = -1, "ultra" = -1, "gold" = -1))
-			sizepicker = pickweightmerge(sizepicker, list("tiny" = 2, "small" = 1, "large" = -1, "huge" = -2, "prize" = -3))
+		// The shallow junk zone below applies its own tailored size/rarity bias; stacking this one on
+		// top of it double-penalized shallow catches and crowded "normal" fish out almost entirely.
+		if(!shallow_excluded_junk_zone)
+			for(var/shore_step in 1 to near_shore_penalty)
+				raritypicker = pickweightmerge(raritypicker, list("com" = 2, "rare" = -1, "ultra" = -1, "gold" = -1))
+				sizepicker = pickweightmerge(sizepicker, list("tiny" = 2, "small" = 1, "large" = -1, "huge" = -2, "prize" = -3))
 
 	if(shallow_excluded_junk_zone)
 		raritypicker = pickweightmerge(raritypicker, list("com" = 12, "rare" = -999, "ultra" = -999, "gold" = -999))

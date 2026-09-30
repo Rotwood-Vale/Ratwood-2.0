@@ -308,7 +308,7 @@
 	icon_state = "salmon"
 	faretype = FARE_NEUTRAL
 	no_rarity_sprite = TRUE
-	sellprice = 15
+	sellprice = 7
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/salmon
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/salmon
 
@@ -318,7 +318,7 @@
 	icon_state = "plaice"
 	faretype = FARE_NEUTRAL
 	no_rarity_sprite = TRUE
-	sellprice = 15
+	sellprice = 7
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/plaice
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/plaice
 
@@ -338,7 +338,7 @@
 	icon_state = "seabass"
 	faretype = FARE_NEUTRAL
 	no_rarity_sprite = TRUE
-	sellprice = 10
+	sellprice = 5
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/bass
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/bass
 
@@ -348,7 +348,7 @@
 	icon_state = "sunny"
 	faretype = FARE_NEUTRAL
 	no_rarity_sprite = TRUE
-	sellprice = 3
+	sellprice = 6
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/sunny
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/sunny
 
@@ -358,6 +358,7 @@
 	faretype = FARE_IMPOVERISHED
 	icon_state = "carpcom"
 	rarity_icon_states = list("com" = "carpcom", "rare" = "carprare", "ultra" = "carpultra", "gold" = "carpgold")
+	sellprice = 5
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/carp
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/carp
 
@@ -377,7 +378,7 @@
 	faretype = FARE_NEUTRAL
 	icon_state = "anglercom"
 	rarity_icon_states = list("com" = "anglercom", "rare" = "anglerrare", "ultra" = "anglerultra", "gold" = "anglergold")
-	sellprice = 15
+	sellprice = 7
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/angler
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/angler
 
@@ -419,6 +420,7 @@
 	icon_state = "cod"
 	faretype = FARE_NEUTRAL
 	no_rarity_sprite = TRUE
+	sellprice = 5
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/cod
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/cod
 
@@ -454,7 +456,7 @@
 	icon_state = "octopuscom"
 	faretype = FARE_NEUTRAL
 	rarity_icon_states = list("com" = "octopuscom", "rare" = "octopusrare", "ultra" = "octopusultra", "gold" = "octopusgold")
-	sellprice = 25
+	sellprice = 13
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/octopus
 
@@ -537,7 +539,7 @@
 	no_rarity_sprite = TRUE
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/salmon/black_headed
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/salmon/black_headed
-	sellprice = 17
+	sellprice = 7
 
 /obj/item/reagent_containers/food/snacks/fish/flounder
 	name = "flounder"
@@ -547,7 +549,7 @@
 	no_rarity_sprite = TRUE
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/flounder
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/flounder
-	sellprice = 10
+	sellprice = 5
 
 /obj/item/reagent_containers/food/snacks/fish/swamp_shrimp
 	name = "swamp shrimp"
@@ -577,7 +579,7 @@
 	no_rarity_sprite = TRUE
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/black_bass
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/black_bass
-	sellprice = 10
+	sellprice = 5
 
 /obj/item/reagent_containers/food/snacks/fish/zizo_abberation
 	name = "zizo abberation"
@@ -619,7 +621,7 @@
 	no_rarity_sprite = TRUE
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/sturgeon
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/sturgeon
-	sellprice = 15
+	sellprice = 7
 
 /obj/item/reagent_containers/food/snacks/fish/mackerel
 	name = "mackerel"
@@ -629,7 +631,7 @@
 	no_rarity_sprite = TRUE
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/mackerel
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/mackerel
-	sellprice = 15
+	sellprice = 7
 
 /obj/item/reagent_containers/food/snacks/fish/beaksnapper
 	name = "beaksnapper"
@@ -639,4 +641,4 @@
 	no_rarity_sprite = TRUE
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/beaksnapper
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/beaksnapper
-	sellprice = 15
+	sellprice = 7

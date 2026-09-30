@@ -37,7 +37,7 @@
 	fish_normal_size_scale = 0.9
 	faretype = FARE_NEUTRAL
 	no_rarity_sprite = TRUE
-	sellprice = 15
+	sellprice = 3
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/clam
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/clam
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish
@@ -61,7 +61,7 @@
 	icon_state = "crawfish"
 	faretype = FARE_NEUTRAL
 	no_rarity_sprite = TRUE
-	sellprice = 4
+	sellprice = 5
 	fried_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/crawfish
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/fryfish/crawfish
 	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meat/shellfish
