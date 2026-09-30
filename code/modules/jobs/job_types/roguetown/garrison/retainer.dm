@@ -1,7 +1,7 @@
 /datum/job/roguetown/baron_retainer
 	title = "Retainer"
 	flag = RETAINER
-	department_flag = GARRISON
+	department_flag = BARONY_GARRISON
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -21,6 +21,7 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_ManAtArms.ogg'
 	social_rank = SOCIAL_RANK_YEOMAN
+	job_traits = list(TRAIT_BARONY_WATCH)
 	job_subclasses = list(
 		/datum/advclass/baron_retainer/henchman,
 		/datum/advclass/baron_retainer/duelist,

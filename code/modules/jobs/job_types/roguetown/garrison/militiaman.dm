@@ -1,7 +1,7 @@
 /datum/job/roguetown/militiaman
 	title = "Militiaman"
 	flag = MILITIAMAN
-	department_flag = GARRISON
+	department_flag = BARONY_GARRISON
 	faction = "Station"
 	total_positions = 0
 	spawn_positions = 0

@@ -118,14 +118,17 @@
 #define MANATARMS	(1<<2)
 #define DUNGEONEER	(1<<3)
 #define SQUIRE		(1<<4)
-#define BOGGUARD	(1<<5)
 #define SERGEANT	(1<<6)
 #define SHERIFF		(1<<7)
 #define VETERAN		(1<<8)
-#define BOGMASTER	(1<<9)
-#define RETAINER	(1<<10)
 #define WATCHMAN	(1<<11)
-#define MILITIAMAN	(1<<12)
+
+#define BARONY_GARRISON		(1<<12)
+
+#define RETAINER	(1<<0)
+#define BOGMASTER	(1<<1)
+#define BOGGUARD	(1<<2)
+#define MILITIAMAN	(1<<3)
 
 #define CHURCHMEN		(1<<2)
 
@@ -239,6 +242,7 @@
 	"Noblemen" = JCOLOR_NOBLE,\
 	"Courtiers" = JCOLOR_COURTIER,\
 	"Garrison" = JCOLOR_SOLDIER,\
+	"Barony Garrison" = JCOLOR_SOLDIER,\
 	"Church" = JCOLOR_CHURCH,\
 	"Inquisition" = JCOLOR_INQUISITION,\
 	"Yeomen" = JCOLOR_YEOMAN,\

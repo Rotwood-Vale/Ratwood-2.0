@@ -689,6 +689,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 					cat_name = "Courtiers"
 				if (GARRISON)
 					cat_name = "Garrison"
+				if (BARONY_GARRISON)
+					cat_name = "Barony Garrison"
 				if (CHURCHMEN)
 					cat_name = "Churchmen"
 				if (YEOMEN)
@@ -703,8 +705,6 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 					cat_name = "Inquisition"
 				if (TRIBAL)
 					cat_name = "Tribe"
-			if(category == GLOB.barony_garrison_positions)
-				cat_name = "Barony Garrison"
 
 			dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 			dat += "<legend align='center' style='font-weight: bold; color: [cat_color]'>[cat_name]</legend>"

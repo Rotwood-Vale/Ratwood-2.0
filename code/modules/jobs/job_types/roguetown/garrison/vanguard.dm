@@ -1,7 +1,7 @@
 /datum/job/roguetown/vanguard
 	title = "Vanguard"
 	flag = BOGGUARD
-	department_flag = GARRISON
+	department_flag = BARONY_GARRISON
 	faction = "Station"
 	total_positions = 4
 	spawn_positions = 4
@@ -23,7 +23,7 @@
 	round_contrib_points = 2
 	cmode_music = 'sound/music/combat_blackoak.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
-	job_traits = list(TRAIT_SURVIVAL_EXPERT)
+	job_traits = list(TRAIT_SURVIVAL_EXPERT, TRAIT_BARONY_WATCH)
 	job_subclasses = list(
 		/datum/advclass/vanguard/footman,
 		/datum/advclass/vanguard/archer

@@ -18,7 +18,8 @@ GLOBAL_LIST_EMPTY(lord_titles)
 		/obj/effect/proc_holder/spell/self/grant_title,
 		/obj/effect/proc_holder/spell/self/convertrole/servant,
 		/obj/effect/proc_holder/spell/self/convertrole/guard,
-		/obj/effect/proc_holder/spell/self/grant_nobility
+		/obj/effect/proc_holder/spell/self/grant_nobility,
+		/obj/effect/proc_holder/spell/self/convertrole/cityguard
 	)
 	outfit = /datum/outfit/job/roguetown/lord
 	visuals_only_outfit = /datum/outfit/job/roguetown/lord/visuals
@@ -362,17 +363,21 @@ GLOBAL_LIST_EMPTY(lord_titles)
 		return FALSE
 	return TRUE
 
+/obj/effect/proc_holder/spell/self/grant_title/proc/get_title_registry()
+	return GLOB.lord_titles
+
 /obj/effect/proc_holder/spell/self/grant_title/proc/village_idiotify(mob/living/carbon/human/recruit, mob/living/carbon/human/recruiter, granted_title)
 	if(QDELETED(recruit) || QDELETED(recruiter) || !granted_title)
 		return FALSE
-	if(GLOB.lord_titles[recruit.real_name])
-		recruiter.say("I HEREBY STRIP YOU, [uppertext(recruit.name)], OF THE TITLE OF [uppertext(GLOB.lord_titles[recruit.real_name])]!")
-		GLOB.lord_titles -= recruit.real_name
+	var/list/titles = get_title_registry()
+	if(titles[recruit.real_name])
+		recruiter.say("I HEREBY STRIP YOU, [uppertext(recruit.name)], OF THE TITLE OF [uppertext(titles[recruit.real_name])]!")
+		titles -= recruit.real_name
 		return FALSE
 	recruiter.say("I HEREBY GRANT YOU, [uppertext(recruit.name)], THE TITLE OF [uppertext(granted_title)]!")
 	REMOVE_TRAIT(recruit, TRAIT_OUTLANDER, ADVENTURER_TRAIT)
 	REMOVE_TRAIT(recruit, TRAIT_OUTLANDER, TRAIT_GENERIC)
-	GLOB.lord_titles[recruit.real_name] = granted_title
+	titles[recruit.real_name] = granted_title
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/grant_nobility

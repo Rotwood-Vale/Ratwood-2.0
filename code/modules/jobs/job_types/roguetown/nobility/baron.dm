@@ -23,13 +23,15 @@
 	advclass_cat_rolls = list(CTAG_BARON = 20)
 	social_rank = SOCIAL_RANK_NOBLE
 	quirk_restrictions = list(/datum/quirk/hunted)
-	job_traits = list(TRAIT_NOBLE)
+	job_traits = list(TRAIT_NOBLE, TRAIT_BARONY_WATCH)
 	job_subclasses = list(
 		/datum/advclass/baron/shrewd_nobleman,
 		/datum/advclass/baron/landed_knight
 	)
 	spells = list(
 		/obj/effect/proc_holder/spell/self/convertrole/militia,
+		/obj/effect/proc_holder/spell/self/convertrole/servant/manor,
+		/obj/effect/proc_holder/spell/self/grant_title/barony,
 		/obj/effect/proc_holder/spell/self/grant_barony_residency
 	)
 
@@ -52,7 +54,7 @@
 
 /datum/outfit/job/roguetown/baron/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.verbs |= /mob/living/carbon/human/proc/declare_barony_outlaw
+	H.verbs |= list(/mob/living/carbon/human/proc/declare_barony_outlaw, /mob/living/carbon/human/proc/post_barony_bounty)
 
 // Baron subclasses
 
