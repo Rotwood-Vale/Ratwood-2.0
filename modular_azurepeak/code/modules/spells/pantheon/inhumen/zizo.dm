@@ -33,7 +33,7 @@
 	var/big_cast = FALSE
 	if (ishuman(user)) // if we're wearing a zcross, always big-cast
 		var/mob/living/carbon/human/human_user = user
-		if (istype(human_user.wear_neck, /obj/item/clothing/neck/roguetown/zcross)) 
+		if (istype(human_user.wear_neck, /obj/item/clothing/neck/roguetown/psicross/inhumen)) 
 			projectile_type = /obj/projectile/magic/profane/major
 			big_cast = TRUE
 	
@@ -72,14 +72,14 @@
 	nodamage = FALSE
 	var/embed_prob = 10
 	woundclass = BCLASS_PIERCE
-	npc_damage_mult = 1.5
+	npc_simple_damage_mult = 1.5
 
 /obj/projectile/magic/profane/major
 	name = "profaned bone lance"
 	damage = 55
 	embed_prob = 30
 	woundclass = BCLASS_CUT
-	npc_damage_mult = 2
+	npc_simple_damage_mult = 2
 
 /obj/projectile/magic/profane/on_hit(atom/target, blocked)
 	. = ..()
