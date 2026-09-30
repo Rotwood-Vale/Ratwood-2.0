@@ -20,6 +20,7 @@
 					/obj/effect/proc_holder/spell/invoked/cure_rot				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/pestra		= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_PESTRA
 	confess_lines = list(
 		"PESTRA SOOTHES ALL ILLS!",
 		"DECAY IS A CONTINUATION OF LIFE!",
