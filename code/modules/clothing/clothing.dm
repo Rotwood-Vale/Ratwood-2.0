@@ -72,6 +72,7 @@
 	var/hikeable_cached = FALSE
 	var/hem_overlay_restore
 	var/hem_flags_restore
+	var/hem_coverage_restore
 	var/mob/hem_holder
 	var/list/hem_grips
 
@@ -236,6 +237,8 @@
 	mob_overlay_icon = hiked_overlay_icon
 	hem_flags_restore = flags_inv
 	flags_inv &= ~HIDECROTCH
+	hem_coverage_restore = body_parts_covered_dynamic & GROIN
+	body_parts_covered_dynamic &= ~GROIN
 	RegisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND), PROC_REF(on_hem_interrupt))
 	update_icon()
 	refresh_hem_visuals(user)
@@ -264,6 +267,9 @@
 	if(!isnull(hem_flags_restore))
 		flags_inv = hem_flags_restore
 		hem_flags_restore = null
+	if(hem_coverage_restore)
+		body_parts_covered_dynamic |= hem_coverage_restore
+		hem_coverage_restore = null
 	if(hem_holder)
 		if(!QDELETED(hem_holder))
 			UnregisterSignal(hem_holder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND))
