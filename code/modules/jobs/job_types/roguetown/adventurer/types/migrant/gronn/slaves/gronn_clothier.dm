@@ -27,6 +27,9 @@
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	pants = /obj/item/clothing/under/roguetown/trou
+	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant
+	if(prob(50))
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant/l
 	cloak = /obj/item/clothing/cloak/apron/waist/brown
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltr = /obj/item/rogueweapon/huntingknife/scissors

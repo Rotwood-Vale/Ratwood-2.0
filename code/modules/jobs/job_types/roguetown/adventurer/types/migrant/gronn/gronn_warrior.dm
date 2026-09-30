@@ -53,32 +53,32 @@
 			if("Iron Greataxe")
 				r_hand = /obj/item/rogueweapon/greataxe
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 			if("Iron Spear")
 				r_hand = /obj/item/rogueweapon/spear
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			if("Bardiche")
 				r_hand = /obj/item/rogueweapon/halberd/bardiche
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			if("Beast Claws + Iron Claw")
 				r_hand = /obj/item/rogueweapon/handclaw/gronn //beast claws
 				l_hand = /obj/item/rogueweapon/handclaw //iron hound claws, the plain gronnic ones
-				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
 			if("Iron Warhammer + Shield")
 				r_hand = /obj/item/rogueweapon/mace/warhammer
 				backr = /obj/item/rogueweapon/shield/iron/steppesman
-				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 			if("Iron Mace")
 				r_hand = /obj/item/rogueweapon/mace
-				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 			else //In case they DC or don't choose close the panel, etc
 				r_hand = /obj/item/rogueweapon/greataxe
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
-				H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
@@ -156,19 +156,19 @@
 			if("Recurve Bow")
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				l_hand = /obj/item/quiver/arrows
-				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 			if("Yew Longbow")
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow //heavy bow, draw time checks str
 				l_hand = /obj/item/quiver/arrows
-				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 			if("Sling")
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 				l_hand = /obj/item/quiver/sling/iron
-				H.adjust_skillrank_up_to(/datum/skill/combat/slings, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_EXPERT, TRUE)
 			else //In case they DC or don't choose close the panel, etc
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				l_hand = /obj/item/quiver/arrows
-				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)

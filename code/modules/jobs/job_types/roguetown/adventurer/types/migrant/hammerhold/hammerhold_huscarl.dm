@@ -55,29 +55,29 @@
 	switch(weapon_choice)
 		if("Battle Axe")
 			r_hand = /obj/item/rogueweapon/stoneaxe/battle
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 		if("Greataxe")
 			r_hand = /obj/item/rogueweapon/greataxe/steel
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 		if("Steel Warhammer + Shield")
 			r_hand = /obj/item/rogueweapon/mace/warhammer/steel
 			backr = /obj/item/rogueweapon/shield/tower/metal
-			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 		if("Arming Sword + Shield")
 			r_hand = /obj/item/rogueweapon/sword
 			beltl = /obj/item/rogueweapon/scabbard/sword
 			backr = /obj/item/rogueweapon/shield/tower/metal
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 		if("Boar Spear")
 			r_hand = /obj/item/rogueweapon/spear/boar
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
-			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 		else //In case they DC or don't choose close the panel, etc
 			r_hand = /obj/item/rogueweapon/stoneaxe/battle
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.dna.species.soundpack_f = new /datum/voicepack/female/warrior()
@@ -138,19 +138,19 @@
 		if("Longbow")
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow //heavy bow, draw time checks str
 			l_hand = /obj/item/quiver/arrows
-			H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 		if("Crossbow")
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 			l_hand = /obj/item/quiver/bolts
-			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 		if("Sling")
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 			l_hand = /obj/item/quiver/sling/steel //hammerhold gets steel shot, gronn gets iron
-			H.adjust_skillrank_up_to(/datum/skill/combat/slings, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_EXPERT, TRUE)
 		else //In case they DC or don't choose close the panel, etc
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 			l_hand = /obj/item/quiver/arrows
-			H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.dna.species.soundpack_f = new /datum/voicepack/female/warrior()

@@ -11,7 +11,7 @@
 		STATKEY_INT = -2,
 	)
 	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, //weapon pick bumps whatever you take to expert
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, //weapon pick bumps whatever you take to master
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
@@ -66,23 +66,23 @@
 		if("Twin Battle Axes")
 			beltl = /obj/item/rogueweapon/stoneaxe/battle
 			beltr = /obj/item/rogueweapon/stoneaxe/battle
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 		if("Twin Warhammers")
 			beltl = /obj/item/rogueweapon/mace/warhammer/steel
 			beltr = /obj/item/rogueweapon/mace/warhammer/steel
-			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 		if("Twin Seaxes")
 			beltl = /obj/item/rogueweapon/huntingknife/combat
 			beltr = /obj/item/rogueweapon/huntingknife/combat
-			H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_MASTER, TRUE)
 		if("Twin Claws")
 			beltl = /obj/item/rogueweapon/handclaw/steel
 			beltr = /obj/item/rogueweapon/handclaw/steel
-			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 		else //In case they DC or don't choose close the panel, etc
 			beltl = /obj/item/rogueweapon/stoneaxe/battle
 			beltr = /obj/item/rogueweapon/stoneaxe/battle
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.dna.species.soundpack_f = new /datum/voicepack/female/warrior()

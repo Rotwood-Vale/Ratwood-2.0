@@ -39,6 +39,9 @@
 	cloak = /obj/item/clothing/cloak/apron/blacksmith
 	mouth = /obj/item/rogueweapon/huntingknife
 	pants = /obj/item/clothing/under/roguetown/trou
+	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant
+	if(prob(50))
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant/l
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backr = /obj/item/rogueweapon/scabbard/sheath
 	backpack_contents = list(

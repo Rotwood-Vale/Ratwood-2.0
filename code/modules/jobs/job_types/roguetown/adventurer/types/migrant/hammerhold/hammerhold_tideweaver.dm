@@ -3,7 +3,7 @@
 	tutorial = "You are a cleric of the Lord of Abyss, devoted to him in prayer and arcyne. You have minor magical spells and medical knowledge in addition to your miracles."
 	outfit = /datum/outfit/job/roguetown/hammerhold/tideweaver
 	category_tags = list(CTAG_HAMMERHOLD_TIDEWEAVER)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_STEELHEARTED, TRAIT_OUTLANDER, TRAIT_HAMMERHOLD_WARBAND)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_STEELHEARTED, TRAIT_RITUALIST, TRAIT_OUTLANDER, TRAIT_HAMMERHOLD_WARBAND)
 	subclass_stats = list(
 		STATKEY_CON = 2,
 		STATKEY_WIL = 2,
@@ -47,14 +47,15 @@
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
 	beltl = /obj/item/rogueweapon/scabbard/sheath
-	beltr = /obj/item/storage/belt/rogue/surgery_bag/full/improv
+	beltr = /obj/item/storage/belt/rogue/surgery_bag/full
 	id = /obj/item/clothing/neck/roguetown/psicross/abyssor
 	r_hand = /obj/item/rogueweapon/spear/trident
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/mortar = 1,
 		/obj/item/pestle = 1,
 		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/huntingknife/bronze = 1
+		/obj/item/rogueweapon/huntingknife/bronze = 1,
+		/obj/item/ritechalk = 1
 		)
 
 	if(H.mind)

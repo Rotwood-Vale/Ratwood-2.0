@@ -12,7 +12,7 @@
 		STATKEY_LCK = 1,
 	)
 	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, //weapon pick bumps whatever you take to expert
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, //weapon pick bumps whatever you take to master
 		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
@@ -54,7 +54,7 @@
 		)
 
 	//the only steel in the tribe hangs off the chieftain
-	var/weapons = list("Battle Axe + Recurve Bow", "Double-head Greataxe", "Glaive", "Steel Warhammer + Shield")
+	var/weapons = list("Battle Axe + Recurve Bow", "Double-head Greataxe", "Steel Warhammer + Shield", "Great Mace", "Glaive")
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
@@ -62,27 +62,31 @@
 			beltr = /obj/item/rogueweapon/stoneaxe/battle
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			l_hand = /obj/item/quiver/arrows
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
 		if("Double-head Greataxe")
 			r_hand = /obj/item/rogueweapon/greataxe/steel/doublehead
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
-		if("Glaive")
-			r_hand = /obj/item/rogueweapon/halberd/glaive
-			backr = /obj/item/rogueweapon/scabbard/gwstrap
-			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 		if("Steel Warhammer + Shield")
 			r_hand = /obj/item/rogueweapon/mace/warhammer/steel
 			backr = /obj/item/rogueweapon/shield/iron/steppesman
-			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
+		if("Great Mace")
+			r_hand = /obj/item/rogueweapon/mace/goden/steel
+			backr = /obj/item/rogueweapon/scabbard/gwstrap
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
+		if("Glaive")
+			r_hand = /obj/item/rogueweapon/halberd/glaive
+			backr = /obj/item/rogueweapon/scabbard/gwstrap
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
 		else //In case they DC or don't choose close the panel, etc
 			beltr = /obj/item/rogueweapon/stoneaxe/battle
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			l_hand = /obj/item/quiver/arrows
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
 
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)

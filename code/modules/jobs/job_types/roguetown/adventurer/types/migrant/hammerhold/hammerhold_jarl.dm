@@ -59,29 +59,29 @@
 		if("Blacksteel Greataxe")
 			r_hand = /obj/item/rogueweapon/greataxe/blacksteel
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 		if("Great Mace")
 			r_hand = /obj/item/rogueweapon/mace/goden/steel //no blacksteel grand mace exists
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
-			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 		if("Blacksteel Axe")
 			r_hand = /obj/item/rogueweapon/stoneaxe/battle/blacksteel
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 		if("Blacksteel Warhammer + Steel Shield")
 			r_hand = /obj/item/rogueweapon/mace/warhammer/blacksteel
 			backr = /obj/item/rogueweapon/shield/tower/metal
-			H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 		if("Blacksteel Sword + Steel Shield")
 			r_hand = /obj/item/rogueweapon/sword/blacksteel
 			beltl = /obj/item/rogueweapon/scabbard/sword
 			backr = /obj/item/rogueweapon/shield/tower/metal
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/shields, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_EXPERT, TRUE)
 		else //In case they DC or don't choose close the panel, etc
 			r_hand = /obj/item/rogueweapon/greataxe/blacksteel
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/hammerhold)

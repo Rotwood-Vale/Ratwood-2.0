@@ -32,6 +32,9 @@
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
+	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant
+	if(prob(50))
+		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/vagrant/l
 	armor = /obj/item/clothing/suit/roguetown/armor/workervest
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/hoe
