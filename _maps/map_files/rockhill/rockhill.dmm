@@ -4484,6 +4484,18 @@
 /obj/structure/stairs,
 /turf/open/floor/rogue/metal,
 /area/rogue/outdoors/beach/harbor)
+"aTx" = (
+/obj/structure/roguewindow,
+/obj/structure/bars{
+	color = "#b0a497";
+	layer = 2
+	},
+/obj/structure/bars/passage/shutter{
+	redstone_id = "engineer_workshop";
+	name = "Engineer's Workshop"
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/engineerworkshop)
 "aTy" = (
 /obj/machinery/light/rogue/torchholder/c,
 /turf/open/floor/rogue/ruinedwood{
@@ -11872,6 +11884,32 @@
 /obj/machinery/light/rogue/campfire/fireplace/blue{
 	pixel_y = -32
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/closet/crate/chest/old_crate,
+/obj/item/reagent_containers/glass/bowl/bronze,
+/obj/item/reagent_containers/glass/bowl/bronze,
+/obj/item/reagent_containers/glass/bowl/bronze,
+/obj/item/cooking/platter/bronze,
+/obj/item/cooking/platter/bronze,
+/obj/item/cooking/platter/bronze,
+/obj/item/reagent_containers/glass/cup/bronzemug,
+/obj/item/reagent_containers/glass/cup/bronzemug,
+/obj/item/reagent_containers/glass/cup/bronzemug,
+/obj/item/reagent_containers/glass/cup/bronzegob,
+/obj/item/reagent_containers/glass/cup/bronzegob,
+/obj/item/reagent_containers/glass/cup/bronzegob,
+/obj/item/kitchen/fork/bronze,
+/obj/item/kitchen/fork/bronze,
+/obj/item/kitchen/fork/bronze,
+/obj/item/kitchen/spoon/bronze,
+/obj/item/kitchen/spoon/bronze,
+/obj/item/kitchen/spoon/bronze,
+/obj/machinery/light/rogue/campfire/fireplace/blue{
+	pixel_y = -32
+	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/engineerworkshop)
 "cva" = (
@@ -12824,6 +12862,17 @@
 /area/rogue/outdoors/town/grove)
 "cEx" = (
 /obj/machinery/light/roguestreet/walllamp,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/light/roguestreet/walllamp,
+/obj/structure/lever{
+	name = "Lockdown";
+	redstone_id = "workshop_lockdown";
+	pixel_y = 20;
+	pixel_x = 5
+	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/engineerworkshop)
 "cEz" = (
@@ -21001,6 +21050,19 @@
 	},
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/rack/rogue/shelf,
+/obj/item/rogueweapon/huntingknife/chefknife{
+	pixel_y = 35;
+	pixel_x = -10
+	},
+/obj/item/cooking/pan{
+	pixel_x = 5;
+	pixel_y = 30
 	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/engineerworkshop)
@@ -32013,6 +32075,19 @@
 /obj/machinery/light/roguestreet/walllamp{
 	dir = 1
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/closet/crate/chest/old_crate,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/reagent_containers/food/snacks/grown/wheat,
+/obj/item/kitchen/rollingpin,
+/obj/machinery/light/roguestreet/walllamp{
+	dir = 1
+	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/engineerworkshop)
 "gzD" = (
@@ -36565,6 +36640,19 @@
 	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/church/chapel)
+"hwv" = (
+/obj/structure/mineral_door/wood/donjon{
+	dir = 8;
+	locked = 1;
+	lockid = "crafterguild";
+	name = "Engineer's Workshop"
+	},
+/obj/structure/bars/passage/shutter/open{
+	name = "Engineer's Workshop";
+	redstone_id = "workshop_lockdown"
+	},
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/indoors/town/engineerworkshop)
 "hww" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/fluff/railing/wood{
@@ -38381,6 +38469,13 @@
 /obj/structure/flora/newbranch/connector,
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/town/grove)
+"hPP" = (
+/obj/structure/bell_common{
+	pixel_x = -10;
+	pixel_y = -10
+	},
+/turf/open/floor/rogue/metal,
+/area/rogue/indoors/town/engineerworkshop)
 "hPT" = (
 /obj/structure/closet/crate/chest/wicker,
 /turf/open/floor/rogue/dirt/road,
@@ -47664,6 +47759,13 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
 	},
+/obj/machinery/light/rogue/hearth,
+/obj/item/reagent_containers/glass/bucket/pot,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/light/rogue/oven/south,
 /obj/machinery/light/rogue/hearth,
 /obj/item/reagent_containers/glass/bucket/pot,
 /turf/open/floor/rogue/metal/barograte,
@@ -57442,6 +57544,23 @@
 "lOm" = (
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/town/basement/tavern)
+"lOp" = (
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/bars/passage/shutter{
+	redstone_id = "engineer_workshop";
+	name = "Engineer's Workshop"
+	},
+/obj/structure/table/wood,
+/obj/structure/bars{
+	icon_state = "barsbent";
+	layer = 2.81
+	},
+/obj/structure/fluff/canopy/green,
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/indoors/town/engineerworkshop)
 "lOr" = (
 /obj/item/cooking/pan,
 /obj/structure/closet/crate/chest{
@@ -75445,10 +75564,6 @@
 /obj/structure/fluff/railing/border{
 	dir = 9
 	},
-/obj/structure/bell_common{
-	pixel_x = -10;
-	pixel_y = -10
-	},
 /turf/open/floor/rogue/metal,
 /area/rogue/indoors/town/engineerworkshop)
 "pyW" = (
@@ -81265,6 +81380,12 @@
 	dir = 1
 	},
 /obj/machinery/light/rogue/hearth,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/machinery/light/rogue/oven/south,
+/obj/machinery/light/rogue/hearth,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/engineerworkshop)
 "qJE" = (
@@ -82683,6 +82804,13 @@
 	pixel_y = -32
 	},
 /obj/structure/fluff/walldeco/church/line,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/roguemachine/withdraw{
+	pixel_y = -32
+	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/engineerworkshop)
 "raC" = (
@@ -84871,6 +84999,11 @@
 "rxY" = (
 /obj/structure/fermentation_keg/random/water,
 /obj/structure/fluff/walldeco/church/line,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/fermentation_keg/random/water,
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/engineerworkshop)
 "ryh" = (
@@ -87810,6 +87943,17 @@
 	dir = 8
 	},
 /obj/structure/fluff/walldeco/church/line,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/table/wood/large_table/middle_west{
+	pixel_x = -8
+	},
+/obj/item/millstone{
+	pixel_y = 7;
+	pixel_x = -3
+	},
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/engineerworkshop)
 "sfV" = (
@@ -96300,6 +96444,20 @@
 	name = "Harbor Entrance";
 	redstone_id = "guild_harbor"
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/mineral_door/wood/donjon{
+	locked = 1;
+	lockid = "tailor";
+	name = "Tailor";
+	dir = 1
+	},
+/obj/structure/bars/passage/shutter/open{
+	name = "Harbor Entrance";
+	redstone_id = "tailor_harbor"
+	},
 /turf/open/floor/rogue/blocks/newstone/alt,
 /area/rogue/indoors/town/tailor)
 "tTN" = (
@@ -96740,6 +96898,11 @@
 "tYs" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
+	},
+/obj/machinery/light/roguestreet/walllamp,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
 	},
 /obj/machinery/light/roguestreet/walllamp,
 /turf/open/floor/rogue/tile/brownbrick,
@@ -107120,6 +107283,14 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
 	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/table/wood/large_table/middle_west{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/peppermill,
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/engineerworkshop)
 "whv" = (
@@ -116454,6 +116625,20 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
 	},
+/obj/structure/rack/rogue/shelf,
+/obj/item/reagent_containers/glass/bottle/rogue/wine{
+	pixel_x = -6;
+	pixel_y = 32
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/wine{
+	pixel_x = 6;
+	pixel_y = 32
+	},
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/structure/fermentation_keg/random/water,
 /obj/structure/rack/rogue/shelf,
 /obj/item/reagent_containers/glass/bottle/rogue/wine{
 	pixel_x = -6;
@@ -199654,8 +199839,8 @@ tjt
 tjt
 gBJ
 lcA
-cJN
-jSn
+hwv
+aTx
 hQf
 gBJ
 sYV
@@ -200953,7 +201138,7 @@ fSi
 ebj
 ebj
 pyT
-gBJ
+lOp
 avH
 avH
 nDi
@@ -201384,7 +201569,7 @@ mXD
 bDa
 qNs
 vLS
-vLS
+hPP
 hjA
 eOD
 eOD
