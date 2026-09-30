@@ -5885,9 +5885,6 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/warden)
-"bir" = (
-/turf/closed/wall/mineral/rogue/wooddark/vertical,
-/area/rogue/indoors/town/tailor)
 "bit" = (
 /obj/structure/table/wood{
 	icon_state = "longtable"
@@ -7728,7 +7725,7 @@
 	dir = 1
 	},
 /obj/machinery/gear_painter,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "bBZ" = (
 /obj/effect/decal/cleanable/debris/glassy,
@@ -8330,10 +8327,6 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/engineerworkshop)
-"bJj" = (
-/obj/machinery/light/rogue/campfire/densefire,
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/under/town/sewer)
 "bJk" = (
 /obj/machinery/light/rogue/candle/blue,
 /turf/open/floor/rogue/naturalstone,
@@ -11145,16 +11138,11 @@
 	},
 /area/rogue/under/town/sewer)
 "cmK" = (
-/obj/structure/chair/stool/rogue,
 /obj/machinery/light/rogue/torchholder{
 	pixel_y = 26
 	},
-/obj/effect/decal/cleanable/debris/woody{
-	dir = 1
-	},
-/obj/effect/spawner/lootdrop/roguetown/sewers,
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/under/town/sewer)
+/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/area/rogue/indoors/town/tailor)
 "cmL" = (
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/reagent_containers/glass/bottle/rogue,
@@ -11861,33 +11849,6 @@
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/town/basement/keep)
 "cuR" = (
-/obj/structure/fluff/walldeco/church/line,
-/obj/structure/closet/crate/chest/old_crate,
-/obj/item/reagent_containers/glass/bowl/bronze,
-/obj/item/reagent_containers/glass/bowl/bronze,
-/obj/item/reagent_containers/glass/bowl/bronze,
-/obj/item/cooking/platter/bronze,
-/obj/item/cooking/platter/bronze,
-/obj/item/cooking/platter/bronze,
-/obj/item/reagent_containers/glass/cup/bronzemug,
-/obj/item/reagent_containers/glass/cup/bronzemug,
-/obj/item/reagent_containers/glass/cup/bronzemug,
-/obj/item/reagent_containers/glass/cup/bronzegob,
-/obj/item/reagent_containers/glass/cup/bronzegob,
-/obj/item/reagent_containers/glass/cup/bronzegob,
-/obj/item/kitchen/fork/bronze,
-/obj/item/kitchen/fork/bronze,
-/obj/item/kitchen/fork/bronze,
-/obj/item/kitchen/spoon/bronze,
-/obj/item/kitchen/spoon/bronze,
-/obj/item/kitchen/spoon/bronze,
-/obj/machinery/light/rogue/campfire/fireplace/blue{
-	pixel_y = -32
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/closet/crate/chest/old_crate,
 /obj/item/reagent_containers/glass/bowl/bronze,
 /obj/item/reagent_containers/glass/bowl/bronze,
@@ -12861,11 +12822,6 @@
 /turf/open/floor/rogue/ruinedwood/platform,
 /area/rogue/outdoors/town/grove)
 "cEx" = (
-/obj/machinery/light/roguestreet/walllamp,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/light/roguestreet/walllamp,
 /obj/structure/lever{
 	name = "Lockdown";
@@ -14186,7 +14142,7 @@
 /area/rogue/outdoors/exposed/town/keep)
 "cQl" = (
 /obj/machinery/artificer_table,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "cQp" = (
 /turf/open/floor/rogue/cobble,
@@ -14273,14 +14229,6 @@
 /obj/item/clothing/gloves/roguetown/leather,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
-"cQS" = (
-/obj/structure/mineral_door/wood{
-	locked = 1;
-	lockid = "tailor";
-	name = "Tailor Back Door"
-	},
-/turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/tailor)
 "cQX" = (
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/bath)
@@ -15173,7 +15121,7 @@
 	},
 /obj/item/magic/melded/t1,
 /obj/item/magic/melded/t1,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "dbg" = (
 /obj/structure/fluff/railing/border{
@@ -15280,9 +15228,6 @@
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/bograt/above)
-"dbY" = (
-/turf/closed/wall/mineral/rogue/wooddark/end,
-/area/rogue/indoors/town/tailor)
 "dca" = (
 /obj/structure/flora/roguegrass/water/reeds,
 /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/unbound{
@@ -17116,7 +17061,7 @@
 /obj/item/roguegear/bronze,
 /obj/item/roguegear/bronze,
 /obj/item/roguegear/bronze,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "dwr" = (
 /obj/structure/fluff/statue/small{
@@ -18165,6 +18110,25 @@
 /obj/structure/roguemachine/noticeboard,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/beach/harbor)
+"dHp" = (
+/obj/structure/roguewindow,
+/obj/structure/bars{
+	color = "#b0a497";
+	layer = 2
+	},
+/obj/structure/bars/passage/shutter/open{
+	name = "Guild Window Bars";
+	redstone_id = "guild_front"
+	},
+/obj/structure/fluff/signage{
+	name = "Engineer's Shop Below";
+	pixel_y = 31;
+	dir = 4;
+	pixel_x = 1;
+	desc = "If closed check the workshop!"
+	},
+/turf/open/floor/rogue/blocks,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "dHr" = (
 /obj/structure/flora/hotspring_rocks,
 /obj/effect/decal/cleanable/dirt/cobweb{
@@ -21036,25 +21000,6 @@
 /turf/open/floor/rogue/carpet/lord/left,
 /area/rogue/indoors/town/manor/rockhill)
 "elh" = (
-/obj/structure/rack/rogue/shelf,
-/obj/item/rogueweapon/huntingknife/chefknife{
-	pixel_y = 35;
-	pixel_x = -10
-	},
-/obj/item/cooking/pan{
-	pixel_x = 5;
-	pixel_y = 30
-	},
-/obj/structure/fluff/walldeco/church/line{
-	dir = 1
-	},
-/obj/structure/fluff/walldeco/church/line{
-	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/rack/rogue/shelf,
 /obj/item/rogueweapon/huntingknife/chefknife{
 	pixel_y = 35;
@@ -25566,7 +25511,7 @@
 /area/rogue/indoors/town/magician/rockhill)
 "fia" = (
 /obj/structure/roguemachine/withdraw,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "fib" = (
 /obj/item/reagent_containers/glass/bucket{
@@ -25760,7 +25705,7 @@
 /obj/item/rogueore/copper,
 /obj/item/rogueore/tin,
 /obj/item/rogueore/tin,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "fjv" = (
 /obj/structure/fluff/walldeco/church/line{
@@ -25903,7 +25848,7 @@
 /obj/item/rogueweapon/tongs,
 /obj/item/rogueweapon/hammer/iron,
 /obj/item/rogueweapon/hammer/iron,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "fkB" = (
 /obj/structure/stairs/stone,
@@ -26144,10 +26089,6 @@
 /obj/structure/mannequin/male,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/manor/rockhill)
-"fnX" = (
-/obj/structure/flora/roguegrass,
-/turf/open/floor/rogue/cobble,
-/area/rogue/outdoors/town/rockhill)
 "fob" = (
 /obj/structure/mineral_door/wood/donjon{
 	locked = 1;
@@ -26792,6 +26733,10 @@
 	},
 /turf/open/floor/rogue/grasscold,
 /area/rogue/outdoors/rtfield/rockhill)
+"fvt" = (
+/obj/structure/flora/roguegrass/bush/wall/tall,
+/turf/open/floor/rogue/grass,
+/area/rogue/indoors/town/tailor)
 "fvu" = (
 /obj/effect/spawner/roguemap/hauntpile,
 /turf/open/floor/rogue/grass,
@@ -32070,20 +32015,6 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/food,
 /obj/item/reagent_containers/food/snacks/grown/wheat,
 /obj/item/reagent_containers/food/snacks/grown/wheat,
-/obj/structure/fluff/walldeco/church/line,
-/obj/item/kitchen/rollingpin,
-/obj/machinery/light/roguestreet/walllamp{
-	dir = 1
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/closet/crate/chest/old_crate,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/food,
-/obj/item/reagent_containers/food/snacks/grown/wheat,
-/obj/item/reagent_containers/food/snacks/grown/wheat,
 /obj/item/kitchen/rollingpin,
 /obj/machinery/light/roguestreet/walllamp{
 	dir = 1
@@ -34301,7 +34232,7 @@
 	},
 /obj/structure/bars/passage/shutter/open{
 	name = "Harbor Entrance";
-	redstone_id = "tailor_harbor"
+	redstone_id = "guild_harbor"
 	},
 /turf/open/floor/rogue/blocks/newstone/alt,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -37343,22 +37274,9 @@
 /area/rogue/indoors/town/bath)
 "hEF" = (
 /obj/structure/fluff/railing/border{
-	dir = 8
+	dir = 9
 	},
-/obj/structure/closet/crate/roguecloset{
-	keylock = 1;
-	locked = 1;
-	lockid = "tailor";
-	pixel_y = 0;
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/glass/bucket/pot,
-/obj/item/reagent_containers/glass/cup/tin,
-/obj/item/reagent_containers/glass/cup/tin,
-/obj/item/reagent_containers/glass/bowl/iron,
-/obj/item/reagent_containers/glass/bowl/iron,
-/obj/item/cooking/platter/pewter,
-/obj/item/cooking/platter/pewter,
+/obj/structure/fluff/wallclock,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tailor)
 "hEG" = (
@@ -38219,6 +38137,11 @@
 "hNo" = (
 /turf/open/floor/rogue/snowrough,
 /area/rogue/under/cave)
+"hNq" = (
+/obj/structure/composter/halffull,
+/obj/structure/composter/halffull,
+/turf/open/floor/rogue/dirt,
+/area/rogue/under/town/sewer)
 "hNr" = (
 /obj/structure/flora/roguegrass/reedbush,
 /turf/open/floor/rogue/dirt/road,
@@ -39124,12 +39047,6 @@
 /obj/structure/closet/crate/chest/gold,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/vault)
-"hVA" = (
-/obj/structure/fluff/railing/border{
-	dir = 6
-	},
-/turf/open/floor/rogue/cobblerock,
-/area/rogue/outdoors/town/rockhill)
 "hVF" = (
 /obj/structure/rack/rogue/shelf/biggest{
 	pixel_y = 6
@@ -40064,12 +39981,6 @@
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/manor/rockhill)
-"ifd" = (
-/obj/structure/fluff/railing/border{
-	dir = 9
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town/tailor)
 "ift" = (
 /obj/structure/rack/rogue/shelf/big,
 /obj/item/clothing/suit/roguetown/shirt/robe/necra{
@@ -45669,7 +45580,7 @@
 	dir = 8
 	},
 /turf/open/floor/rogue/cobble/mossy,
-/area/rogue/outdoors/town/rockhill)
+/area/rogue/indoors/town/engineerworkshop)
 "jnW" = (
 /obj/effect/decal/cobbleedge{
 	icon_state = "borderfall";
@@ -47756,16 +47667,6 @@
 /area/rogue/outdoors/bograt/above)
 "jLf" = (
 /obj/machinery/light/rogue/oven/south,
-/obj/structure/fluff/walldeco/church/line{
-	dir = 1
-	},
-/obj/machinery/light/rogue/hearth,
-/obj/item/reagent_containers/glass/bucket/pot,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/light/rogue/oven/south,
 /obj/machinery/light/rogue/hearth,
 /obj/item/reagent_containers/glass/bucket/pot,
 /turf/open/floor/rogue/metal/barograte,
@@ -48425,7 +48326,7 @@
 /area/rogue/outdoors/exposed/town/keep)
 "jSN" = (
 /obj/machinery/light/rogue/smelter/great,
-/turf/open/floor/rogue/metal,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "jSQ" = (
 /obj/structure/fluff/canopy/side{
@@ -48790,6 +48691,16 @@
 /obj/machinery/light/rogue/forge,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
+"jWz" = (
+/obj/structure/stairs/cw{
+	dir = 8
+	},
+/obj/structure/stairs{
+	dir = 8
+	},
+/obj/structure/stairs/cwdown,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/tailor)
 "jWA" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -49456,14 +49367,11 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/goblinfort)
 "kek" = (
-/obj/structure/stairs{
-	dir = 8
-	},
-/obj/structure/stairs/cw{
-	dir = 8
-	},
 /obj/machinery/light/rogue/candle/r{
 	pixel_x = -32
+	},
+/obj/structure/fluff/railing/border{
+	dir = 5
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tailor)
@@ -55658,7 +55566,7 @@
 	pixel_x = -8
 	},
 /obj/item/rogueweapon/hammer/wood,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "lsZ" = (
 /obj/structure/flora/roguegrass,
@@ -55936,6 +55844,10 @@
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/outdoors/town/rockhill)
+"lwE" = (
+/obj/structure/roguemachine/withdraw,
+/turf/open/floor/rogue/tile/harem1,
+/area/rogue/indoors/town/tailor)
 "lwF" = (
 /obj/item/natural/worms/leech,
 /obj/item/natural/worms/leech{
@@ -57545,10 +57457,6 @@
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/town/basement/tavern)
 "lOp" = (
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/bars/passage/shutter{
 	redstone_id = "engineer_workshop";
 	name = "Engineer's Workshop"
@@ -59068,10 +58976,10 @@
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/outdoors/rtfield/rockhill/above)
 "mcj" = (
-/obj/structure/fluff/railing/border{
-	dir = 5
+/obj/effect/decal/carpet/kover_black{
+	pixel_y = 15;
+	pixel_x = 30
 	},
-/obj/structure/stairs/cw,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tailor)
 "mck" = (
@@ -59675,10 +59583,6 @@
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/church)
-"mhC" = (
-/obj/structure/composter/halffull,
-/turf/open/floor/rogue/dirt,
-/area/rogue/under/town/sewer)
 "mhF" = (
 /obj/structure/flora/newtree,
 /turf/open/floor/rogue/grassyel,
@@ -61776,6 +61680,12 @@
 /obj/item/rogueweapon/shovel/small,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town/grove)
+"mDc" = (
+/obj/structure/stairs{
+	dir = 4
+	},
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/indoors/town/engineerworkshop)
 "mDf" = (
 /obj/structure/rack/rogue/shelf,
 /obj/item/rogueweapon/huntingknife/chefknife{
@@ -66590,6 +66500,9 @@
 /obj/item/natural/rock/coal,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cave)
+"nEm" = (
+/turf/closed/wall/mineral/rogue/wooddark/horizontal,
+/area/rogue/indoors/town/tailor)
 "nEn" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -67441,6 +67354,12 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/bath)
+"nPf" = (
+/obj/structure/fluff/railing/border{
+	dir = 5
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/tailor)
 "nPi" = (
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/dirt,
@@ -69582,7 +69501,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/cobblerock,
-/area/rogue/outdoors/town/rockhill)
+/area/rogue/indoors/town/engineerworkshop)
 "omm" = (
 /obj/structure/table/wood/poor,
 /obj/effect/spawner/lootdrop/roguetown/sewers,
@@ -76136,7 +76055,7 @@
 "pED" = (
 /obj/machinery/light/roguestreet/walllamp,
 /obj/machinery/light/rogue/smelter/bronze,
-/turf/open/floor/rogue/metal,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "pEE" = (
 /obj/structure/flora/roguegrass/bush,
@@ -76864,7 +76783,9 @@
 /turf/closed/wall/mineral/rogue/stone/window/blue_moss,
 /area/rogue/indoors/town/church)
 "pNd" = (
-/obj/machinery/light/roguestreet/orange/walllamp,
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 1
+	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/tailor)
 "pNf" = (
@@ -76953,7 +76874,7 @@
 /turf/open/floor/rogue/metal{
 	icon_state = "plating2"
 	},
-/area/rogue/outdoors/town/rockhill)
+/area/rogue/indoors/town/engineerworkshop)
 "pNw" = (
 /obj/structure/flora/rogueshroom,
 /turf/open/floor/rogue/grassyel,
@@ -79279,7 +79200,7 @@
 	pixel_x = -8
 	},
 /obj/item/rogueweapon/hammer/wood,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "qoh" = (
 /obj/structure/fluff/railing/border{
@@ -81376,15 +81297,6 @@
 /area/rogue/indoors/town/physician)
 "qJA" = (
 /obj/machinery/light/rogue/oven/south,
-/obj/structure/fluff/walldeco/church/line{
-	dir = 1
-	},
-/obj/machinery/light/rogue/hearth,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/light/rogue/oven/south,
 /obj/machinery/light/rogue/hearth,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/engineerworkshop)
@@ -81803,6 +81715,12 @@
 	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/shop)
+"qNR" = (
+/obj/structure/fluff/railing/border{
+	dir = 9
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/engineerworkshop)
 "qNS" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp{
 	faction = list("infernal","neutral");
@@ -82273,6 +82191,12 @@
 /obj/machinery/light/rogue/torchholder/r,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/rockhill)
+"qTS" = (
+/obj/structure/fluff/railing/border{
+	dir = 10
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/tailor)
 "qTZ" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -82800,14 +82724,6 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/rockhill)
 "rav" = (
-/obj/structure/roguemachine/withdraw{
-	pixel_y = -32
-	},
-/obj/structure/fluff/walldeco/church/line,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/roguemachine/withdraw{
 	pixel_y = -32
 	},
@@ -83971,6 +83887,12 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/magician/rockhill)
+"rnN" = (
+/obj/structure/fluff/railing/border{
+	dir = 1
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/tailor)
 "rnR" = (
 /obj/structure/fermentation_keg/beer,
 /turf/open/floor/rogue/concrete,
@@ -84997,12 +84919,6 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/engineerworkshop)
 "rxY" = (
-/obj/structure/fermentation_keg/random/water,
-/obj/structure/fluff/walldeco/church/line,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/fermentation_keg/random/water,
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/engineerworkshop)
@@ -87932,21 +87848,6 @@
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/under/underdark/rockhill/west)
 "sfU" = (
-/obj/structure/table/wood/large_table/middle_west{
-	pixel_x = -8
-	},
-/obj/item/millstone{
-	pixel_y = 7;
-	pixel_x = -3
-	},
-/obj/structure/fluff/walldeco/church/line{
-	dir = 8
-	},
-/obj/structure/fluff/walldeco/church/line,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/table/wood/large_table/middle_west{
 	pixel_x = -8
 	},
@@ -91655,6 +91556,12 @@
 /obj/item/reagent_containers/food/snacks/smallrat,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
+"sVT" = (
+/obj/structure/fluff/railing/border{
+	dir = 9
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/tailor)
 "sWg" = (
 /obj/structure/fluff/railing/border/east{
 	pixel_x = 8
@@ -96213,7 +96120,7 @@
 /obj/item/rogueweapon/stoneaxe/woodcut,
 /obj/item/rogueweapon/pick/bronze,
 /obj/item/rogueweapon/pick/bronze,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "tRJ" = (
 /turf/closed/wall/mineral/rogue/pipe,
@@ -96434,20 +96341,6 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/shelter/bog)
 "tTI" = (
-/obj/structure/mineral_door/wood/donjon{
-	locked = 1;
-	lockid = "tailor";
-	name = "Tailor";
-	dir = 1
-	},
-/obj/structure/bars/passage/shutter/open{
-	name = "Harbor Entrance";
-	redstone_id = "guild_harbor"
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/mineral_door/wood/donjon{
 	locked = 1;
 	lockid = "tailor";
@@ -96896,14 +96789,6 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "tYs" = (
-/obj/structure/fluff/walldeco/church/line{
-	dir = 1
-	},
-/obj/machinery/light/roguestreet/walllamp,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/machinery/light/roguestreet/walllamp,
 /turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/engineerworkshop)
@@ -97702,14 +97587,6 @@
 /obj/structure/flora/newleaf,
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/grove)
-"uhZ" = (
-/obj/effect/decal/cleanable/debris/woody{
-	dir = 1
-	},
-/turf/closed/wall/mineral/rogue/wooddark/end{
-	dir = 1
-	},
-/area/rogue/under/town/sewer)
 "uif" = (
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/rtfield/rockhill)
@@ -98215,6 +98092,12 @@
 	},
 /turf/open/floor/rogue/tile/masonic/inverted,
 /area/rogue/indoors/town/manor/rockhill)
+"unm" = (
+/obj/structure/fluff/railing/border{
+	dir = 6
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/tailor)
 "uno" = (
 /obj/structure/mineral_door/wood/donjon{
 	dir = 4;
@@ -100128,7 +100011,7 @@
 /obj/item/flint,
 /obj/item/flint,
 /obj/machinery/light/roguestreet/walllamp,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "uIv" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/imp,
@@ -104201,6 +104084,19 @@
 	},
 /turf/open/floor/rogue/churchrough,
 /area/rogue/under/dungeon/tricksntraps)
+"vxU" = (
+/obj/structure/fluff/railing/border{
+	dir = 8
+	},
+/obj/structure/fluff/railing/border{
+	dir = 8
+	},
+/obj/structure/flora/roguegrass/bush{
+	icon_state = "bush1"
+	},
+/obj/structure/flora/roguegrass,
+/turf/open/floor/rogue/grass,
+/area/rogue/indoors/town/tailor)
 "vxV" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4;
@@ -106439,9 +106335,10 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/church)
 "vYj" = (
-/obj/structure/flora/roguegrass/bush{
-	pixel_y = 5
+/obj/structure/fluff/railing/border{
+	dir = 8
 	},
+/obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/tailor)
 "vYn" = (
@@ -107276,17 +107173,6 @@
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town/manor/rockhill)
 "whu" = (
-/obj/structure/table/wood/large_table/middle_west{
-	pixel_x = -8
-	},
-/obj/item/reagent_containers/peppermill,
-/obj/structure/fluff/walldeco/church/line{
-	dir = 8
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/table/wood/large_table/middle_west{
 	pixel_x = -8
 	},
@@ -110250,7 +110136,7 @@
 /obj/item/grown/log/tree/small,
 /obj/item/grown/log/tree/small,
 /obj/item/grown/log/tree/small,
-/turf/open/floor/rogue/tile/brownbrick,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "wNk" = (
 /obj/structure/roguemachine/bounty,
@@ -110675,16 +110561,6 @@
 /obj/structure/chair/stool/rogue,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/beach/harbor)
-"wQD" = (
-/obj/structure/roguewindow,
-/obj/structure/curtain/directional/brown{
-	dir = 1
-	},
-/obj/structure/curtain/directional/brown{
-	dir = 1
-	},
-/turf/open/floor/rogue/woodturned,
-/area/rogue/indoors/town)
 "wQG" = (
 /turf/open/water/bath/fakepond,
 /area/rogue/indoors/town/bath)
@@ -111518,6 +111394,10 @@
 	},
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors)
+"wZn" = (
+/obj/structure/fluff/railing/border,
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/tailor)
 "wZx" = (
 /turf/open/floor/rogue/grassgrey,
 /area/rogue/outdoors/bograt/above)
@@ -113536,7 +113416,7 @@
 /area/rogue/under/dungeon/wizarddungeon)
 "xvd" = (
 /obj/machinery/light/rogue/smelter/bronze,
-/turf/open/floor/rogue/metal,
+/turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "xve" = (
 /obj/machinery/light/rogue/candle{
@@ -116619,26 +116499,6 @@
 /area/rogue/outdoors/woodsrat/south)
 "ybJ" = (
 /obj/structure/fermentation_keg/random/water,
-/obj/structure/fluff/walldeco/church/line{
-	dir = 8
-	},
-/obj/structure/fluff/walldeco/church/line{
-	dir = 1
-	},
-/obj/structure/rack/rogue/shelf,
-/obj/item/reagent_containers/glass/bottle/rogue/wine{
-	pixel_x = -6;
-	pixel_y = 32
-	},
-/obj/item/reagent_containers/glass/bottle/rogue/wine{
-	pixel_x = 6;
-	pixel_y = 32
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/fermentation_keg/random/water,
 /obj/structure/rack/rogue/shelf,
 /obj/item/reagent_containers/glass/bottle/rogue/wine{
 	pixel_x = -6;
@@ -116705,6 +116565,20 @@
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/underdarker/rockhill)
 "ycq" = (
+/obj/structure/closet/crate/roguecloset{
+	keylock = 1;
+	locked = 1;
+	lockid = "tailor";
+	pixel_y = 0;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/glass/bucket/pot,
+/obj/item/reagent_containers/glass/cup/tin,
+/obj/item/reagent_containers/glass/cup/tin,
+/obj/item/reagent_containers/glass/bowl/iron,
+/obj/item/reagent_containers/glass/bowl/iron,
+/obj/item/cooking/platter/pewter,
+/obj/item/cooking/platter/pewter,
 /obj/machinery/light/rogue/campfire/fireplace{
 	pixel_y = 32
 	},
@@ -116989,7 +116863,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town/rockhill)
 "yeF" = (
-/obj/structure/rack/rogue/shelf/big,
+/obj/effect/spawner/lootdrop/roguetown/sewers,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/sewer)
 "yeH" = (
@@ -312149,8 +312023,8 @@ nWv
 hdl
 bqq
 bqq
-bqq
-mhC
+hNq
+ieF
 hsj
 hsj
 hsj
@@ -312582,9 +312456,9 @@ hdl
 cQp
 bqq
 izO
-kjP
-dbY
+nEm
 lZz
+nOf
 eFf
 qau
 hsj
@@ -313015,8 +312889,8 @@ cQp
 rEg
 xCD
 cmK
-bir
 fom
+nOf
 nOf
 nOf
 hZF
@@ -313446,9 +313320,9 @@ dxx
 crg
 hdL
 lYr
-lYr
 ieF
-dbY
+ieF
+hsj
 hsj
 hsj
 hsj
@@ -313879,8 +313753,8 @@ bqq
 xCD
 yeF
 yex
-wfq
-qUs
+lYr
+lYr
 ieF
 hsj
 kZf
@@ -314311,9 +314185,9 @@ bqq
 rEg
 izO
 ugH
-bJj
-uhZ
-bqq
+mPU
+vsL
+izO
 iqH
 lrs
 lrs
@@ -314745,7 +314619,7 @@ xCD
 kjP
 kjP
 rEg
-bqq
+rEg
 bqq
 bqq
 crg
@@ -418862,7 +418736,7 @@ aOv
 nMX
 wbg
 wbg
-pXY
+dHp
 fDk
 mmH
 mmH
@@ -419289,8 +419163,8 @@ wbg
 wbg
 wbg
 wbg
-fnA
-hVA
+cnH
+pYS
 pYS
 xez
 mMI
@@ -419715,7 +419589,6 @@ vbM
 cZA
 cZA
 evo
-oHv
 ieF
 bNh
 ieF
@@ -419723,6 +419596,7 @@ tFz
 tFz
 tFz
 ieF
+ehs
 ehs
 kYn
 aOv
@@ -420146,8 +420020,7 @@ fnA
 xFN
 oVa
 gmW
-wQD
-fnA
+evo
 bNh
 ieF
 bNh
@@ -420156,8 +420029,9 @@ tyz
 qrg
 tFz
 ehs
+ehs
 oml
-kZh
+mDc
 lhn
 xge
 tyZ
@@ -420578,8 +420452,7 @@ wbg
 evo
 lRz
 bKn
-bux
-fnX
+evo
 bNh
 idr
 bNh
@@ -420587,9 +420460,10 @@ gOO
 hlF
 rbf
 tFz
+vxU
 vYj
-gFP
-yht
+qNR
+vPr
 lhn
 tyZ
 tyZ
@@ -421011,17 +420885,17 @@ evo
 evo
 rvA
 evo
-fnA
-cQS
+bNh
 nOf
 ieF
+lwE
 pNd
-hlF
 bNh
 ieF
 rNk
-vYa
-yht
+unm
+nPf
+vPr
 lhn
 qBK
 iSq
@@ -421443,7 +421317,6 @@ iLJ
 lhm
 jnE
 evo
-fnX
 bNh
 fPZ
 cxq
@@ -421452,7 +421325,8 @@ nOf
 xmJ
 vSH
 ubl
-cXi
+wZn
+rnN
 vPr
 jgf
 cNT
@@ -421874,8 +421748,7 @@ fnA
 evo
 jPU
 bvd
-bux
-wbg
+evo
 ieF
 bNh
 ieF
@@ -421884,7 +421757,8 @@ iym
 gYd
 buN
 ubl
-cXi
+wZn
+rnN
 vPr
 vLS
 bJd
@@ -422307,8 +422181,7 @@ evo
 wFJ
 nlE
 evo
-wVI
-tFz
+bNh
 cth
 kZw
 nOf
@@ -422316,7 +422189,8 @@ rBc
 sRj
 svE
 iyU
-cXi
+qTS
+sVT
 vPr
 vLS
 bJd
@@ -422739,7 +422613,6 @@ evo
 evo
 hsC
 vbM
-jnV
 bNh
 fqH
 vdj
@@ -422749,6 +422622,7 @@ ehs
 kVV
 qnR
 cXi
+vPr
 vPr
 tJv
 scN
@@ -423171,7 +423045,6 @@ gys
 gCD
 wbg
 fnA
-wbg
 ieF
 bNh
 xcZ
@@ -423180,6 +423053,7 @@ tFz
 tFz
 jvm
 ieF
+fvt
 pNv
 jnV
 wbg
@@ -529877,7 +529751,7 @@ qEB
 evo
 qEB
 vbM
-ieF
+cqD
 cqD
 ukS
 cqD
@@ -530309,7 +530183,7 @@ ahX
 vlU
 spU
 evo
-cqD
+jWz
 kek
 mcj
 cqD
@@ -530741,9 +530615,9 @@ fVh
 bvd
 eBW
 evo
-cqD
 ehs
 kVV
+nOf
 cqD
 nOf
 bbh
@@ -531175,7 +531049,7 @@ azG
 evo
 cqD
 hEF
-ifd
+nOf
 efj
 nOf
 mOJ
