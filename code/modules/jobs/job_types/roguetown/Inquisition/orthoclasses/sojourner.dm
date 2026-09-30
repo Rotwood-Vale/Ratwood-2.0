@@ -56,7 +56,7 @@
 //For context, Heirophant gets 25 total, with 6 of those being liquid free spellpoints.
 	if(H.mind)
 		//Integral spells.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/conjure_armor/barrier)//Anti-magic.
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/counterspell)//Anti-magic replacement.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		//Buff spells, next.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
