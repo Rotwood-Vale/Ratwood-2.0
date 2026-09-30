@@ -9,8 +9,6 @@
 	allowed_races = ACCEPTED_RACES
 	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	advclass_cat_rolls = list(CTAG_WASSOCIATE = 20)
-	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
-	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 10)
 	tutorial = "Your master once saw potential in you, although you are uncertain if they still do, given how rigorous and difficult your studies have been. The path to using magic is a treacherous and untamed one, and you are still decades away from calling yourself even a journeyman in the field. Listen and serve, and someday you will earn your hat."
 
 	outfit = /datum/outfit/job/roguetown/wapprentice
@@ -55,6 +53,9 @@
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1
 	)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
+	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 10)
+
 	subclass_spellpoints = 21
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
@@ -104,6 +105,9 @@
 		STATKEY_PER = 2,
 		STATKEY_WIL = 1
 	)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
+	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 10)
+
 	subclass_spellpoints = 18
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
@@ -170,6 +174,9 @@
 		STATKEY_WIL = 2,
 		STATKEY_SPD = 1,
 	)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
+	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 10)
+
 	subclass_spellpoints = 18
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
