@@ -22,7 +22,7 @@ GLOBAL_VAR(baronsecondary)
 	if(choice)
 		sec = GLOB.colorlist[choice]
 	if(!prim || !sec)
-		return // keep the default scheme; the banner and cloak registry must stay intact
+		return
 	GLOB.baronprimary = prim
 	GLOB.baronsecondary = sec
 	for(var/obj/O in GLOB.baronycolor)

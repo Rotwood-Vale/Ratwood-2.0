@@ -237,7 +237,7 @@
 		var/list/headless_job_lists = list("Nobles" = GLOB.noble_positions,
 							"Courtiers" = GLOB.courtier_positions,
 							"Garrison" = GLOB.garrison_positions,
-							"Barony" = GLOB.barony_garrison_positions - BARONY_MILITIA_ROLE, // the militia is a recruit-only role, not a job that can be banned
+							"Barony" = GLOB.barony_garrison_positions - BARONY_MILITIA_ROLE,
 							"Church" = GLOB.church_positions,
 							"Inquisition" = GLOB.inquisition_positions,
 							"Mercenaries" = GLOB.mercenary_positions,

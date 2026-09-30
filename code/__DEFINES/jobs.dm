@@ -125,7 +125,6 @@
 #define BOGMASTER	(1<<9)
 #define RETAINER	(1<<10)
 
-/// Role string given by the Baron's "Recruit Militia" spell. Not a job datum, like the legacy "Watchman" recruit.
 #define BARONY_MILITIA_ROLE "Militiaman"
 
 #define CHURCHMEN		(1<<2)

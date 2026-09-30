@@ -88,7 +88,6 @@ GLOBAL_LIST_INIT(courtier_positions, list(
 	"Palace Chaplain",
 ))
 
-/// The Crown's garrison: the city watch and the keep's men-at-arms.
 GLOBAL_LIST_INIT(garrison_positions, list(
 	"City Guard",
 	"Rookie",
@@ -107,8 +106,6 @@ GLOBAL_LIST_INIT(garrison_positions, list(
 	"Slave Master",
 ))
 
-/// The Lowtown barony's own garrison. A separate faction from garrison_positions, but allied to it:
-/// anything that treats "the garrison" as friendly or official must read all_garrison_positions.
 GLOBAL_LIST_INIT(barony_garrison_positions, list(
 	"Retainer",
 	"Master Warden",
@@ -117,7 +114,6 @@ GLOBAL_LIST_INIT(barony_garrison_positions, list(
 	BARONY_MILITIA_ROLE,
 ))
 
-/// Both garrison factions together. Must stay declared after the two lists above.
 GLOBAL_LIST_INIT(all_garrison_positions, GLOB.garrison_positions + GLOB.barony_garrison_positions)
 
 GLOBAL_LIST_INIT(church_positions, list(

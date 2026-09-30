@@ -658,7 +658,6 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	omegalist += list(GLOB.tribal_positions)
 
 	for(var/list/category in omegalist)
-		// The category is led by its first job that exists on this map (the barony's lead jobs can be blacklisted per map)
 		var/datum/job/category_head
 		for(var/head_job in category)
 			category_head = SSjob.name_occupations[head_job]
@@ -705,7 +704,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 				if (TRIBAL)
 					cat_name = "Tribe"
 			if(category == GLOB.barony_garrison_positions)
-				cat_name = "Barony Garrison" // same department flag as the Crown's garrison, but its own faction
+				cat_name = "Barony Garrison"
 
 			dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 			dat += "<legend align='center' style='font-weight: bold; color: [cat_color]'>[cat_name]</legend>"
