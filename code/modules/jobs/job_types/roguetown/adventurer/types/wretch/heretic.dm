@@ -8,7 +8,7 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_HEAVYARMOR)
 	maximum_possible_slots = 2
-	// same stats as templar as you are essentially an antagonist aligned templar with miracles and armor
+	// similar stats as templar, as you are essentially an antagonist aligned templar with miracles and armor
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_CON = 2,
@@ -32,7 +32,7 @@
 	subclass_stashed_items = list(
 		"Armor Plates" =  /obj/item/repair_kit/metal,
 	)
-	extra_context = "This subclass gain the Wound Heal miracle and the Convert Heretic spell."
+	extra_context = "This subclass gains the Wound Heal miracle and the Convert Heretic spell."
 
 /datum/outfit/job/roguetown/wretch/heretic
 	has_loadout = TRUE
@@ -111,6 +111,11 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
+	if(H.age == AGE_OLD)
+		H.change_stat(STATKEY_SPD, -1)
+		H.change_stat(STATKEY_STR, -1)
+		H.change_stat(STATKEY_INT, 2) //We double down on the mental bonuses. 
+		H.change_stat(STATKEY_PER, 2)
 /datum/outfit/job/roguetown/wretch/heretic/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
 	var/helmets = list(

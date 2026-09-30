@@ -8,15 +8,14 @@
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_EQUESTRIAN, TRAIT_DISGRACED_NOBLE, TRAIT_BOGWALKER)
 	maximum_possible_slots = 2 //Ideal role for fraggers. Better to limit it.
 
-	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg' // same as new hedgeknight music
+	cmode_music = 'sound/music/cmode/antag/combat_disgraced.ogg' // New music since I had some unused oggs around anyway.
 	class_select_category = CLASS_CAT_WARRIOR
 	// Deserter are the knight-equivalence. They get a balanced, straightforward 11 weighted balance to endure and overcome.
 	subclass_stats = list(
 		STATKEY_WIL = 3,
-		STATKEY_CON = 2,
+		STATKEY_CON = 3,
 		STATKEY_STR = 2,
 		STATKEY_PER = 2,
-		STATKEY_LCK = 1
 	)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
@@ -156,6 +155,7 @@
 			"Snouted Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted,
 			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
 			"Cataphract Helmet" = /obj/item/clothing/head/roguetown/helmet/heavy/cataphract,
+			"Beaked Helmet" = /obj/item/clothing/head/roguetown/helmet/heavy/beakhelm,
 			"None"
 		)
 		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
@@ -194,7 +194,11 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
-
+	if(H.age == AGE_OLD) // To discourage old strugglers
+		H.change_stat(STATKEY_PER, 2)
+		H.change_stat(STATKEY_CON, 2)
+		H.change_stat(STATKEY_SPD, -2) //We're crippling you little buddy
+		H.change_stat(STATKEY_LCK, -1) 
 	if (H.mind)
 		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
 
