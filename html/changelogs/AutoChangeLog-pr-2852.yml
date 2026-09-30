@@ -1,4 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - bugfix: "animal butcher results have their unique meats properly set in their butcher results. Troll blubber, bear meat, ham, etc no longer unobtainable."
