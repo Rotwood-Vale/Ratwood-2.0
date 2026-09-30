@@ -1,5 +1,4 @@
-// Guildsman. Replacement class for the Blacksmith, Artificer.
-// But also includes a Mason-Architect.
+// Guildsman. Replacement class for the Blacksmith, Artificer-Mason-Carpenter
 /datum/job/roguetown/guildsman
 	title = "Guildsman"
 	flag = GUILDSMAN
@@ -12,7 +11,7 @@
 	allowed_races = ACCEPTED_RACES
 
 	tutorial = "You are a member of the Duchy's Guild of Crafts, a massive guild formed to represent the interests of all craftsmen in the township.\
-	As a Guildsman, you hail from the three most important constituent guilds: The Smith's Guild, the Artificer's Guild, and the Architect's Guild. The Guildsmaster has sway over you, but it is not absolute."
+	As a Guildsman, you hail from the two most important constituent guilds: The Smith's Guild, and the Engineer's Guild. The Guildsmaster has sway over you, but it is not absolute."
 	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT)
 
 	outfit = /datum/outfit/job/roguetown/guildsman
@@ -41,7 +40,7 @@
 		STATKEY_WIL = 2,
 		STATKEY_CON = 2,
 		STATKEY_INT = 2,
-		STATKEY_LCK = 1 // general skillbuff to bring them in line with the architech
+		STATKEY_LCK = 1 // general skillbuff to bring them in line with the engineer
 	)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
@@ -102,7 +101,7 @@
 		head = /obj/item/clothing/head/roguetown/turban/random
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 
-/datum/advclass/guildsman/artificer
+/datum/advclass/guildsman/artificer // Architect and Artificer in one
 	name = "Guild Engineer"
 	tutorial = "You are an engineer, Once trained under architects and artificers you now have the experience to surpass them both. \
 	Your calling is the works of artificing and architecture, be it smithing, constructing or the arcane machinery you do it all, your experience demands respect."
@@ -123,7 +122,7 @@
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN, // this will allow an architech to use a portable bombard
+		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN, // this will allow an engineer to use a portable bombard
 		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
@@ -135,13 +134,13 @@
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE, // AP gave them apprentice to allow for grinding since bombs need alchemy skill to get the ingredients
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT, // you can't even climb the walls you make
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT, // glass making
+		/datum/skill/craft/ceramics = SKILL_LEVEL_MASTER, // glass making, try making a glass pane you'll want to end it all
 	)
 
 /datum/outfit/job/roguetown/guildsman/artificer/pre_equip(mob/living/carbon/human/H)
