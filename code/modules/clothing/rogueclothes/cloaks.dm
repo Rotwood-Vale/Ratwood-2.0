@@ -378,7 +378,7 @@
 
 /obj/item/clothing/cloak/tabard/retinue
 	name = "royal tabard"
-	desc = "A royal tabard in the heraldic colors of the Grand Duke."
+	desc = "A tabard with the lord's heraldic colors."
 	color = CLOTHING_AZURE
 	detail_tag = "_quad"
 	detail_color = CLOTHING_WHITE
