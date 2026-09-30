@@ -63,7 +63,6 @@
 	icon = 'modular/timesoldier/sprites/radio.dmi'
 	icon_state = "HEART"
 	var/broadcasting = FALSE
-	var/datum/looping_sound/timesoldier_radio/radio_loop
 	var/voice_template = FUTURE_VOICE_MALE_GENERIC
 	var/broadcast_language = FUTURE_LANGUAGE_NEW_IMPERIAL
 	var/radio_noise_timer
@@ -108,12 +107,7 @@
 
 	return "<a href='byond://?src=\ref[M.client];lang_name=[language_name];lang_desc=[language_desc]'><span style=\"position: relative; bottom: 4px;\">[language.get_icon()]</span></a>"
 
-/datum/looping_sound/timesoldier_radio
-	mid_sounds = 'modular/timesoldier/sounds/comms/lsloop.ogg'
-	mid_length = 10
-	volume = 100
-	extra_range = 9
-	use_sound_tokens = TRUE
+
 
 /obj/item/timesoldier/radio/Destroy() // so if we qdel it - which we will, we don't accidentally leave the looping sound hanging in the air.
 	if(radio_noise_timer)
@@ -121,7 +115,7 @@
 		radio_noise_timer = null
 
 
-	QDEL_NULL(radio_loop)
+
 	return ..()
 
 
@@ -144,8 +138,7 @@
 
 	playsound(src, 'modular/timesoldier/sounds/comms/broadstart.ogg', 55, FALSE)
 
-	QDEL_NULL(radio_loop)
-	radio_loop = new(src, TRUE)
+
 
 	schedule_radio_noise()
 
@@ -223,7 +216,7 @@
 	icon_state = "HEART"
 	flick("LIVER", src)
 
-	QDEL_NULL(radio_loop)
+
 
 	playsound(
 		src,
