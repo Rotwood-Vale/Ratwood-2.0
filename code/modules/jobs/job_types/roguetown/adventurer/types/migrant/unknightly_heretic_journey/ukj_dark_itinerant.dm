@@ -8,7 +8,7 @@
 	outfit = /datum/outfit/job/roguetown/ukj_dark_itinerant
 	category_tags = list(CTAG_UKJ_DARK_ITINERANT)
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
-	traits_applied = list(TRAIT_DISGRACED_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_RITUALIST)
+	traits_applied = list(TRAIT_DISGRACED_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_PER = 2,
@@ -52,7 +52,6 @@
 		/obj/item/needle = 1,
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/recipe_book/survival = 1,
-		/obj/item/ritechalk = 1,
 	)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
@@ -185,7 +184,7 @@
 			H.put_in_hands(new /obj/item/rogueweapon/stoneaxe/battle(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 
-// HARBINGER - light armor, a horse and a bow
+// HARBINGER - medium armor, a horse and a bow
 
 /datum/advclass/ukj_dark_itinerant_harbinger
 	name = "Knight Harbinger"
@@ -195,7 +194,7 @@
 	outfit = /datum/outfit/job/roguetown/ukj_dark_itinerant_harbinger
 	category_tags = list(CTAG_UKJ_DARK_ITINERANT)
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
-	traits_applied = list(TRAIT_DISGRACED_NOBLE, TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_STEELHEARTED, TRAIT_RITUALIST)
+	traits_applied = list(TRAIT_DISGRACED_NOBLE, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
 	subclass_stats = list(
 		STATKEY_STR = 1,
 		STATKEY_PER = 1,
@@ -230,6 +229,7 @@
 /datum/outfit/job/roguetown/ukj_dark_itinerant_harbinger/pre_equip(mob/living/carbon/human/H)
 	..()
 	gloves = /obj/item/clothing/gloves/roguetown/plate
+	pants = /obj/item/clothing/under/roguetown/chainlegs
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
@@ -242,7 +242,6 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 3,
 		/obj/item/needle = 1,
 		/obj/item/recipe_book/survival = 1,
-		/obj/item/ritechalk = 1,
 	)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
@@ -300,17 +299,16 @@
 	if(helm)
 		H.equip_to_slot_or_del(new helm(H), SLOT_HEAD, TRUE)
 
-	var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in list("Light Coat", "Light Brigandine", "Steel Cuirass")
-	switch(armor_choice)
-		if("Light Coat")
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat(H), SLOT_ARMOR, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants(H), SLOT_PANTS, TRUE)
-		if("Light Brigandine")
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/brigandine/light(H), SLOT_ARMOR, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/splintlegs(H), SLOT_PANTS, TRUE)
-		if("Steel Cuirass")
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half(H), SLOT_ARMOR, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/chainlegs(H), SLOT_PANTS, TRUE)
+	var/armors = list(
+		"Brigandine"		= /obj/item/clothing/suit/roguetown/armor/brigandine,
+		"Steel Cuirass"		= /obj/item/clothing/suit/roguetown/armor/plate/half,
+		"Fluted Cuirass"	= /obj/item/clothing/suit/roguetown/armor/plate/half/fluted,
+		"Scalemail"			= /obj/item/clothing/suit/roguetown/armor/plate/scale,
+	)
+	var/armorchoice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
+	var/picked_armor = armors[armorchoice]
+	if(picked_armor)
+		H.equip_to_slot_or_del(new picked_armor(H), SLOT_ARMOR, TRUE)
 
 	var/cloaks = list("Surcoat", "Tabard", "Jupon")
 	var/cloaks_choice = input(H, "Choose your cloak.", "BEAR YOUR GOD'S COLORS.") as anything in cloaks

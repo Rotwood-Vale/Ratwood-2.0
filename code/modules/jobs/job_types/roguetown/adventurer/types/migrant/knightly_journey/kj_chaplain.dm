@@ -206,6 +206,8 @@
 	pants = /obj/item/clothing/under/roguetown/tights/black
 	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/black
 	neck = /obj/item/clothing/neck/roguetown/psicross/silver
+	cloak = /obj/item/clothing/cloak/psydontabard
+	head = /obj/item/clothing/head/roguetown/roguehood/psydon
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	backl = /obj/item/storage/backpack/rogue/satchel
 	belt = /obj/item/storage/belt/rogue/leather

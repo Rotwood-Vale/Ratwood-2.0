@@ -157,7 +157,7 @@
 			H.put_in_hands(new /obj/item/rogueweapon/stoneaxe/battle(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 
-// OUTRIDER - light armor, a horse and a bow
+// OUTRIDER - medium armor, a horse and a bow
 
 /datum/advclass/kj_knight_outrider
 	name = "Knight Outrider"
@@ -166,7 +166,7 @@
 	allowed_races = RACES_NO_CONSTRUCT
 	outfit = /datum/outfit/job/roguetown/adventurer/kj_knight_outrider
 	category_tags = list(CTAG_KJ_KNIGHT)
-	traits_applied = list(TRAIT_NOBLE, TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	subclass_stats = list(
 		STATKEY_STR = 1,
 		STATKEY_PER = 1,
@@ -201,6 +201,7 @@
 /datum/outfit/job/roguetown/adventurer/kj_knight_outrider/pre_equip(mob/living/carbon/human/H)
 	..()
 	gloves = /obj/item/clothing/gloves/roguetown/plate
+	pants = /obj/item/clothing/under/roguetown/chainlegs
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
@@ -243,17 +244,16 @@
 	if(helm)
 		H.equip_to_slot_or_del(new helm(H), SLOT_HEAD, TRUE)
 
-	var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in list("Light Coat", "Light Brigandine", "Fluted Cuirass")
-	switch(armor_choice)
-		if("Light Coat")
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat(H), SLOT_ARMOR, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/heavy_leather_pants(H), SLOT_PANTS, TRUE)
-		if("Light Brigandine")
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/brigandine/light(H), SLOT_ARMOR, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/splintlegs(H), SLOT_PANTS, TRUE)
-		if("Fluted Cuirass")
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate/half/fluted(H), SLOT_ARMOR, TRUE)
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/chainlegs(H), SLOT_PANTS, TRUE)
+	var/armors = list(
+		"Brigandine"		= /obj/item/clothing/suit/roguetown/armor/brigandine,
+		"Steel Cuirass"		= /obj/item/clothing/suit/roguetown/armor/plate/half,
+		"Fluted Cuirass"	= /obj/item/clothing/suit/roguetown/armor/plate/half/fluted,
+		"Scalemail"			= /obj/item/clothing/suit/roguetown/armor/plate/scale,
+	)
+	var/armorchoice = input(H, "Choose your armor.", "TAKE UP ARMOR") as anything in armors
+	var/picked_armor = armors[armorchoice]
+	if(picked_armor)
+		H.equip_to_slot_or_del(new picked_armor(H), SLOT_ARMOR, TRUE)
 
 	var/cloaks = list("Surcoat", "Tabard", "Jupon")
 	var/cloaks_choice = input(H, "Choose your cloak.", "BEAR YOUR HOUSE'S HERALDRY.") as anything in cloaks

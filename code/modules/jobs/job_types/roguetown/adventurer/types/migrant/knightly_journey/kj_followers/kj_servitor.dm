@@ -40,7 +40,6 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/guard
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather
-	beltl = /obj/item/cooking/pan
 	beltr = /obj/item/rogueweapon/huntingknife
 	armor = /obj/item/clothing/suit/roguetown/armor/workervest
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
@@ -56,6 +55,7 @@
 	/obj/item/soap/bath = 1,
 	/obj/item/flint = 1,
 	/obj/item/rogueweapon/scabbard/sheath = 1,
+	/obj/item/cooking/pan = 1,
 	/obj/item/flashlight/flare/torch/lantern = 1,
 	/obj/item/folding_table_stored = 2,
 	)

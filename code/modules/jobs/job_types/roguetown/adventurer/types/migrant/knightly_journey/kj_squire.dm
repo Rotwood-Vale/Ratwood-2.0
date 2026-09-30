@@ -52,6 +52,7 @@
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/rogueweapon/hammer/iron = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/polishing_cream = 1,
 		/obj/item/armor_brush = 1,
@@ -166,6 +167,7 @@
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/rogueweapon/hammer/iron = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/polishing_cream = 1,
 		/obj/item/armor_brush = 1,
@@ -324,6 +326,7 @@
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/sling(H), SLOT_BELT_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/quiver/sling/iron(H), SLOT_BELT_R, TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/sword(H), TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife(H), SLOT_IN_BACKPACK, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_EXPERT, TRUE)
 		if("Javelins & Dagger")
 			H.equip_to_slot_or_del(new /obj/item/quiver/javelin/iron(H), SLOT_BELT_R, TRUE)
