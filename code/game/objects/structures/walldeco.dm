@@ -116,8 +116,8 @@
 	icon_state = "serpent"
 
 /obj/structure/fluff/walldeco/artificerflag
-	name = "artificer guild flag"
-	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the artificer guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
+	name = "engineer's guild flag"
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the  guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
 	icon_state = "artificer"
 
 /obj/structure/fluff/walldeco/maidendrape

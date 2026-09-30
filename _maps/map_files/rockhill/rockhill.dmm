@@ -3689,6 +3689,13 @@
 	icon_state = "rockwd"
 	},
 /area/rogue/under/town/sewer)
+"aLU" = (
+/obj/structure/bell_common{
+	pixel_x = 11;
+	pixel_y = -10
+	},
+/turf/open/floor/rogue/metal,
+/area/rogue/indoors/town/engineerworkshop)
 "aLZ" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	dir = 4
@@ -4002,6 +4009,19 @@
 	},
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/under/cavewet)
+"aOy" = (
+/obj/structure/fluff/canopy/green,
+/obj/structure/table/wood,
+/obj/structure/bars{
+	icon_state = "barsbent";
+	layer = 2.81
+	},
+/obj/structure/bars/passage/shutter{
+	redstone_id = "engineer_workshop2";
+	name = "Engineer's Workshop"
+	},
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/indoors/town/engineerworkshop)
 "aOC" = (
 /obj/structure/composter,
 /turf/open/floor/rogue/grassyel,
@@ -12598,7 +12618,8 @@
 /area/rogue/indoors/town/tailor)
 "cCr" = (
 /obj/structure/fluff/walldeco/artificerflag{
-	name = "Smithing Guild"
+	name = "Smithing Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the smith's guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
 	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -13592,7 +13613,8 @@
 /area/rogue/outdoors/bograt/west)
 "cLG" = (
 /obj/structure/fluff/walldeco/artificerflag{
-	name = "Smithing Guild"
+	name = "Smithing Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the smith's guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
 	},
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -18704,7 +18726,8 @@
 /area/rogue/indoors/town/church)
 "dMn" = (
 /obj/structure/fluff/walldeco/artificerflag{
-	name = "Smithing Guild"
+	name = "Smithing Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the smith's guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
 	},
 /turf/closed/wall/mineral/rogue/decostone/cand,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -25735,6 +25758,10 @@
 /obj/item/rogueore/copper,
 /obj/item/rogueore/tin,
 /obj/item/rogueore/tin,
+/obj/item/rogueore/coal,
+/obj/item/rogueore/coal,
+/obj/item/rogueore/coal,
+/obj/item/rogueore/coal,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "fjv" = (
@@ -28921,7 +28948,7 @@
 /obj/machinery/light/roguestreet/walllamp{
 	dir = 1
 	},
-/obj/machinery/artificer_table,
+/obj/machinery/anvil,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/engineerworkshop)
 "fRe" = (
@@ -36688,6 +36715,15 @@
 	},
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town/church)
+"hxd" = (
+/obj/structure/roguemachine/vendor{
+	keycontrol = "crafterguild"
+	},
+/turf/closed/wall/mineral/rogue/pipe{
+	dir = 4;
+	icon_state = "iron_line"
+	},
+/area/rogue/indoors/town/engineerworkshop)
 "hxg" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -37387,6 +37423,7 @@
 /area/rogue/outdoors/beach/harbor)
 "hFo" = (
 /obj/structure/rack/rogue/shelf/biggest,
+/obj/item/rogueore/iron,
 /obj/item/rogueore/iron,
 /obj/item/rogueore/iron,
 /obj/item/rogueore/iron,
@@ -43131,6 +43168,13 @@
 "iPe" = (
 /turf/closed/wall/mineral/rogue/stone/window/moss,
 /area/rogue/outdoors/bograt/sunken)
+"iPq" = (
+/obj/structure/fluff/walldeco/artificerflag{
+	name = "Engineering Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the engineering guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
+	},
+/turf/closed/wall/mineral/rogue/pipe/joint/eight,
+/area/rogue/indoors/town/engineerworkshop)
 "iPs" = (
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/pick/decrepit,
@@ -44866,7 +44910,10 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
 "jgf" = (
-/obj/structure/fluff/walldeco/artificerflag,
+/obj/structure/fluff/walldeco/artificerflag{
+	name = "Engineering Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the engineering guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
+	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "jgh" = (
@@ -46813,7 +46860,10 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors/beach/harbor)
 "jAY" = (
-/obj/structure/fluff/walldeco/artificerflag,
+/obj/structure/fluff/walldeco/artificerflag{
+	name = "Engineering Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the engineering guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
+	},
 /turf/closed/wall/mineral/rogue/pipe/corners/four,
 /area/rogue/indoors/town/engineerworkshop)
 "jAZ" = (
@@ -49430,12 +49480,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/tailor)
-"kep" = (
-/obj/structure/fluff/railing/border{
-	dir = 9
-	},
-/turf/open/floor/rogue/AzureSand,
-/area/rogue/outdoors/beach/harbor)
 "keq" = (
 /obj/structure/bed/rogue/inn/wool{
 	pixel_y = 13
@@ -57527,19 +57571,6 @@
 "lOm" = (
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/under/town/basement/tavern)
-"lOp" = (
-/obj/structure/bars/passage/shutter{
-	redstone_id = "engineer_workshop";
-	name = "Engineer's Workshop"
-	},
-/obj/structure/table/wood,
-/obj/structure/bars{
-	icon_state = "barsbent";
-	layer = 2.81
-	},
-/obj/structure/fluff/canopy/green,
-/turf/open/floor/rogue/metal/barograte,
-/area/rogue/indoors/town/engineerworkshop)
 "lOr" = (
 /obj/item/cooking/pan,
 /obj/structure/closet/crate/chest{
@@ -62246,6 +62277,15 @@
 /obj/item/cooking/pan,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/woods)
+"mHX" = (
+/obj/structure/closet/crate/roguecloset{
+	keylock = 1;
+	locked = 1;
+	lockid = "crafterguild"
+	},
+/obj/item/rogueweapon/hammer/wood,
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/engineerworkshop)
 "mHZ" = (
 /obj/structure/fluff/walldeco/stone{
 	pixel_y = 32
@@ -65793,6 +65833,12 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/bog)
+"nuG" = (
+/obj/machinery/light/roguestreet/walllamp{
+	dir = 1
+	},
+/turf/open/floor/rogue/tile/brownbrick,
+/area/rogue/indoors/town/engineerworkshop)
 "nuR" = (
 /obj/structure/closet/crate/chest/old_crate,
 /obj/item/reagent_containers/glass/cup/wooden,
@@ -74464,9 +74510,6 @@
 /obj/machinery/light/rogue/candle/floorcandle,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/church)
-"pnf" = (
-/turf/open/water/river/flow,
-/area/rogue/under/cavewet/river)
 "pnh" = (
 /obj/structure/fluff/statue/knight/interior/r{
 	pixel_x = 10
@@ -79598,7 +79641,10 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/indoors/town/garrison)
 "qrt" = (
-/obj/structure/fluff/walldeco/artificerflag,
+/obj/structure/fluff/walldeco/artificerflag{
+	name = "Engineering Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the engineering guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
+	},
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/indoors/town)
 "qrv" = (
@@ -79704,12 +79750,6 @@
 	icon_state = "carpet_l"
 	},
 /area/rogue/indoors/town/manor/rockhill)
-"qti" = (
-/obj/structure/fluff/railing/border{
-	dir = 1
-	},
-/turf/open/floor/rogue/AzureSand,
-/area/rogue/outdoors/beach/harbor)
 "qtm" = (
 /obj/structure/flora/roguegrass,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -82429,6 +82469,8 @@
 /obj/item/ingot/steel,
 /obj/item/ingot/steel,
 /obj/item/ingot/steel,
+/obj/item/ingot/steel,
+/obj/item/ingot/iron,
 /obj/item/ingot/iron,
 /obj/item/ingot/iron,
 /obj/item/ingot/iron,
@@ -85994,7 +86036,10 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement/keep)
 "rIP" = (
-/obj/structure/fluff/walldeco/artificerflag,
+/obj/structure/fluff/walldeco/artificerflag{
+	name = "Engineering Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the engineering guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
+	},
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "rIU" = (
@@ -86916,6 +86961,13 @@
 /obj/item/reagent_containers/glass/bottle/rogue/redwine,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/dwarfin/rockhill)
+"rUJ" = (
+/obj/machinery/light/rogue/forge,
+/obj/machinery/light/roguestreet/walllamp{
+	dir = 4
+	},
+/turf/open/floor/rogue/concrete,
+/area/rogue/indoors/town/engineerworkshop)
 "rUK" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -95503,7 +95555,10 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "tJv" = (
-/obj/structure/fluff/walldeco/artificerflag,
+/obj/structure/fluff/walldeco/artificerflag{
+	name = "Engineering Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the engineering guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
+	},
 /turf/closed/wall/mineral/rogue/decostone/cand,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "tJx" = (
@@ -97633,7 +97688,10 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/rockhill)
 "ugs" = (
-/obj/structure/fluff/walldeco/artificerflag,
+/obj/structure/fluff/walldeco/artificerflag{
+	name = "Engineering Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the engineering guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
+	},
 /turf/closed/wall/mineral/rogue/pipe{
 	dir = 4;
 	icon_state = "iron_line"
@@ -100876,7 +100934,10 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors)
 "uQD" = (
-/obj/structure/fluff/walldeco/artificerflag,
+/obj/structure/fluff/walldeco/artificerflag{
+	name = "Engineering Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the engineering guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
+	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/outdoors/beach/harbor)
 "uQH" = (
@@ -104726,11 +104787,6 @@
 /obj/structure/roguemachine/talkstatue/mercenary,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/town/rockhill)
-"vCQ" = (
-/obj/structure/flora/roguegrass/reedbush,
-/obj/structure/flora/roguegrass/water/reeds,
-/turf/open/water/cleanshallow,
-/area/rogue/outdoors/beach/harbor)
 "vCU" = (
 /turf/closed/wall/mineral/rogue/roofwall/middle/dir8,
 /area/rogue/indoors/shelter/bog)
@@ -105278,10 +105334,6 @@
 /obj/item/rogueweapon/shovel/small,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/dungeon/oldgoblincamp)
-"vIS" = (
-/obj/machinery/light/rogue/candle/green/l,
-/turf/open/floor/rogue/metal,
-/area/rogue/indoors/town/engineerworkshop)
 "vIT" = (
 /obj/structure/toilet,
 /turf/open/floor/rogue/blocks,
@@ -106971,8 +107023,13 @@
 /turf/open/water/swamp,
 /area/rogue/outdoors/bograt/south)
 "wbX" = (
-/obj/machinery/light/rogue/candle/green/r,
-/turf/open/floor/rogue/metal,
+/obj/structure/lever/wall{
+	pixel_y = 0;
+	redstone_id = "engineer_workshop2";
+	name = "shutters";
+	pixel_x = 28
+	},
+/turf/open/floor/rogue/tile/brownbrick,
 /area/rogue/indoors/town/engineerworkshop)
 "wbZ" = (
 /obj/structure/mineral_door/wood/deadbolt{
@@ -107959,9 +108016,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/inq/office)
-"wnF" = (
-/turf/closed/wall/mineral/rogue/pipe,
-/area/rogue/outdoors/beach/harbor)
 "wnG" = (
 /obj/item/natural/cloth,
 /obj/item/reagent_containers/glass/bottle,
@@ -113679,12 +113733,6 @@
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors)
-"xvo" = (
-/obj/structure/fluff/railing/border{
-	dir = 8
-	},
-/turf/open/floor/rogue/AzureSand,
-/area/rogue/outdoors/beach/harbor)
 "xvt" = (
 /obj/structure/mirror{
 	pixel_y = -32
@@ -200835,7 +200883,7 @@ avH
 avH
 avH
 avH
-pNn
+wjy
 imn
 epa
 epa
@@ -201262,12 +201310,12 @@ fSi
 ebj
 ebj
 pyT
-lOp
+pXb
 avH
 avH
-nDi
 avH
-wjy
+avH
+pNn
 imn
 epa
 iaR
@@ -201697,9 +201745,9 @@ hPP
 hjA
 eOD
 eOD
-gBJ
+nDi
 avH
-xYN
+cQl
 imn
 iaR
 iaR
@@ -202126,12 +202174,12 @@ imn
 qNs
 vLS
 kJH
-rRB
+iPq
 tjt
 tjt
-hQf
-tjt
-tjt
+gBJ
+tYs
+avH
 gBJ
 suP
 iaR
@@ -202557,13 +202605,13 @@ uJZ
 mXD
 suN
 vLS
-vLS
-ugs
-hRE
-hRE
-hRE
-jPA
-vCQ
+aLU
+hxd
+qpO
+xYN
+rUJ
+avH
+avH
 imn
 rDd
 iaR
@@ -202990,13 +203038,13 @@ ptv
 imn
 hzf
 vLS
-mXD
-tjt
-tjt
-wnF
-uHA
-uHA
-mXD
+aOy
+avH
+avH
+avH
+avH
+nuG
+gBJ
 gBJ
 fHP
 fHP
@@ -203005,7 +203053,7 @@ gBJ
 tjt
 tjt
 gBJ
-swJ
+iwJ
 swJ
 swJ
 swJ
@@ -203422,22 +203470,22 @@ btm
 imn
 vLS
 vLS
-vLS
-vIS
-vLS
-qti
-jPA
+aOy
+avH
+avH
+avH
+avH
+mHX
+fHP
 uHA
-rdE
+uHA
+uHA
 uHA
 uHA
 uHA
 uHA
 whb
 whb
-whb
-whb
-swJ
 swJ
 swJ
 swJ
@@ -203854,20 +203902,20 @@ xsw
 gBJ
 huP
 vLS
-vLS
+aOy
 wbX
-vLS
-qti
+cQl
+pNn
+avH
+mHX
+fHP
 uHA
 uHA
-jPA
 uHA
 uHA
 uHA
 uHA
-whb
-whb
-whb
+uHA
 whb
 whb
 swJ
@@ -204286,20 +204334,20 @@ oYe
 imn
 fTC
 dsT
-wvi
 gBJ
-xvo
-kep
-bER
+tjt
+tjt
+tjt
+fHP
+tjt
+gBJ
 uHA
-tGT
 uHA
 uHA
 uHA
-whb
-whb
-whb
-whb
+uHA
+uHA
+uHA
 whb
 whb
 swJ
@@ -204728,12 +204776,12 @@ uHA
 uHA
 uHA
 uHA
+uHA
+uHA
+uHA
+uHA
 whb
 whb
-whb
-pnf
-swJ
-swJ
 swJ
 swJ
 swJ
@@ -205157,14 +205205,14 @@ idK
 jPA
 uHA
 jPA
+uHA
+uHA
+uHA
+uHA
+uHA
+uHA
+uHA
 whb
-whb
-whb
-whb
-whb
-whb
-whb
-swJ
 swJ
 swJ
 swJ
@@ -205589,14 +205637,14 @@ tGT
 uHA
 bER
 rdE
+uHA
+uHA
+uHA
+uHA
+uHA
+uHA
 whb
 whb
-whb
-whb
-whb
-whb
-whb
-swJ
 swJ
 swJ
 swJ
@@ -206021,12 +206069,12 @@ uHA
 uHA
 uHA
 jPA
-whb
-whb
-whb
-whb
-whb
-whb
+uHA
+uHA
+uHA
+uHA
+uHA
+uHA
 whb
 swJ
 swJ
@@ -206453,12 +206501,12 @@ jPA
 uHA
 uHA
 uHA
-whb
-whb
-whb
-whb
-whb
-whb
+uHA
+uHA
+uHA
+uHA
+uHA
+uHA
 whb
 swJ
 swJ
@@ -206885,12 +206933,12 @@ idK
 jPA
 uHA
 rdE
-whb
-whb
-whb
-whb
-whb
-whb
+uHA
+uHA
+uHA
+uHA
+uHA
+uHA
 whb
 swJ
 swJ
@@ -207317,12 +207365,12 @@ jPA
 uHA
 jPA
 jPA
-whb
-whb
-whb
-whb
-whb
-whb
+uHA
+uHA
+uHA
+uHA
+uHA
+uHA
 whb
 swJ
 swJ
@@ -207749,12 +207797,12 @@ tGT
 bER
 uHA
 jPA
-whb
-whb
-whb
-whb
-whb
-whb
+uHA
+uHA
+uHA
+uHA
+uHA
+uHA
 whb
 swJ
 swJ
@@ -208181,11 +208229,11 @@ ybO
 uHA
 tGT
 uHA
-whb
-whb
-whb
-whb
-whb
+uHA
+uHA
+uHA
+uHA
+uHA
 whb
 whb
 swJ
@@ -208613,11 +208661,11 @@ idK
 uHA
 jPA
 jPA
-whb
-whb
-whb
-whb
-whb
+uHA
+uHA
+uHA
+oNE
+uHA
 whb
 whb
 swJ
@@ -209045,9 +209093,9 @@ uHA
 tGT
 iaQ
 iRX
-whb
-whb
-whb
+uHA
+uHA
+uHA
 whb
 whb
 whb
