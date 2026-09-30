@@ -2,7 +2,7 @@
 
 /obj/effect/proc_holder/spell/invoked/projectile/profane
 	name = "Profane"
-	desc = "Fire forth a splinter of unholy bone, tearing flesh and causing bleeding. If you hold pieces of bone in your other hand, you will coax a much stronger lance of bone into being."
+	desc = "Fire forth a splinter of unholy bone, tearing flesh and causing bleeding. If you hold pieces of bone in your other hand (or are wearing a zcross around your neck), you will coax a much stronger lance of bone into being, which is capable of severing limbs. 50% stronger versus simple-minded creechers."
 	clothes_req = FALSE
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -15,8 +15,10 @@
 	invocation_type = "whisper"
 	releasedrain = 30
 	chargedrain = 0
-	chargetime = 15
-	recharge_time = 10 SECONDS
+	chargetime = 1
+	no_early_release = TRUE
+	movement_interrupt = FALSE
+	recharge_time = 4 SECONDS
 	hide_charge_effect = TRUE // Left handed magick babe
 
 /obj/effect/proc_holder/spell/invoked/projectile/profane/miracle
@@ -29,16 +31,22 @@
 
 	var/obj/item/held_item = user.get_active_held_item()
 	var/big_cast = FALSE
-	if (istype(held_item, /obj/item/natural/bundle/bone))
+	if (ishuman(user)) // if we're wearing a zcross, always big-cast
+		var/mob/living/carbon/human/human_user = user
+		if (istype(human_user.wear_neck, /obj/item/clothing/neck/roguetown/zcross)) 
+			projectile_type = /obj/projectile/magic/profane/major
+			big_cast = TRUE
+	
+	if (!big_cast && istype(held_item, /obj/item/natural/bundle/bone))
 		var/obj/item/natural/bundle/bone/bonez = held_item
 		if (bonez.use(1))
 			projectile_type = /obj/projectile/magic/profane/major
 			big_cast = TRUE
-	else if (istype(held_item, /obj/item/natural/bone))
+	else if (!big_cast && istype(held_item, /obj/item/natural/bone))
 		qdel(held_item)
 		projectile_type = /obj/projectile/magic/profane/major
 		big_cast = TRUE
-	else if (istype(held_item, /obj/item/natural/bundle/bone))
+	else if (!big_cast && istype(held_item, /obj/item/natural/bundle/bone))
 		var/obj/item/natural/bundle/bone/boney_bundle = held_item
 		if (boney_bundle.use(1))
 			projectile_type = /obj/projectile/magic/profane/major
@@ -63,19 +71,29 @@
 	damage_type = BRUTE
 	nodamage = FALSE
 	var/embed_prob = 10
+	woundclass = BCLASS_PIERCE
+	npc_damage_mult = 1.5
 
 /obj/projectile/magic/profane/major
 	name = "profaned bone lance"
-	damage = 35
+	damage = 55
 	embed_prob = 30
+	woundclass = BCLASS_CUT
+	npc_damage_mult = 2
 
 /obj/projectile/magic/profane/on_hit(atom/target, blocked)
 	. = ..()
 	if (iscarbon(target) && prob(embed_prob))
+		if (HAS_TRAIT(target, TRAIT_SIMPLE_WOUNDS))
+			var/mob/living/simple_animal/simple_target = target
+			simple_target.simple_bleeding += 10
+			simple_target.visible_message(span_danger("[src] tears into [target]!"), span_userdanger("[src] tears into you, causing violent bleeding!"))
+			return
 		var/mob/living/carbon/carbon_target = target
 		var/obj/item/bodypart/victim_limb = pick(carbon_target.bodyparts)
 		var/obj/item/bone/splinter/our_splinter = new
 		victim_limb.add_embedded_object(our_splinter, FALSE, TRUE)
+		return
 
 /obj/item/bone/splinter
 	name = "bone splinter"
@@ -83,6 +101,7 @@
 		"embed_chance" = 100,
 		"embedded_pain_chance" = 25,
 		"embedded_fall_chance" = 5,
+		"embedded_bloodloss" = 5,
 	)
 
 /obj/item/bone/splinter/dropped(mob/user, silent)
