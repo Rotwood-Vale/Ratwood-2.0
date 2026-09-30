@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(barony_titles)
-
 /obj/effect/proc_holder/spell/self/convertrole/militia
 	name = "Recruit Militia"
 	desc = "Call a local to serve in the barony's militia."
@@ -19,13 +17,6 @@ GLOBAL_LIST_EMPTY(barony_titles)
 	name = "Recruit Manor Servant"
 	recruitment_message = "Serve the manor, %RECRUIT!"
 	accept_message = "FOR THE MANOR!"
-
-/obj/effect/proc_holder/spell/self/grant_title/barony
-	name = "Grant Barony Title"
-	desc = "Grant someone a title of the barony... Or shame."
-
-/obj/effect/proc_holder/spell/self/grant_title/barony/get_title_registry()
-	return GLOB.barony_titles
 
 /obj/effect/proc_holder/spell/self/grant_barony_residency
 	name = "Grant Residency"
@@ -60,6 +51,8 @@ GLOBAL_LIST_EMPTY(barony_titles)
 		REMOVE_TRAIT(resident, TRAIT_BARONY_RESIDENT, TRAIT_GENERIC)
 		return
 	baron.say("I HEREBY GRANT YOU, [uppertext(resident.name)], A HOUSE IN THE BARONY!")
+	REMOVE_TRAIT(resident, TRAIT_OUTLANDER, ADVENTURER_TRAIT)
+	REMOVE_TRAIT(resident, TRAIT_OUTLANDER, TRAIT_GENERIC)
 	ADD_TRAIT(resident, TRAIT_BARONY_RESIDENT, TRAIT_GENERIC)
 
 /proc/find_baron(required_stat = CONSCIOUS)

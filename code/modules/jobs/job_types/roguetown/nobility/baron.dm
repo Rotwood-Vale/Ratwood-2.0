@@ -31,7 +31,6 @@
 	spells = list(
 		/obj/effect/proc_holder/spell/self/convertrole/militia,
 		/obj/effect/proc_holder/spell/self/convertrole/servant/manor,
-		/obj/effect/proc_holder/spell/self/grant_title/barony,
 		/obj/effect/proc_holder/spell/self/grant_barony_residency
 	)
 

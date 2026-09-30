@@ -1013,9 +1013,6 @@
 		if(GLOB.lord_titles[name])
 			. += span_notice("[m3] been granted the title of \"[GLOB.lord_titles[name]]\".")
 
-		if(GLOB.barony_titles[name])
-			. += span_notice("[m3] been granted the barony title of \"[GLOB.barony_titles[name]]\".")
-
 		// Agents of the Bathhouse (granted by a token of the Bathhouse) are a discreet roll:
 		// only those who work the stews - or fellow agents - recognise one, and only while
 		// the agent's face is bare (this branch never runs for the masked or unknown).
