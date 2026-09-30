@@ -23441,15 +23441,6 @@
 /obj/structure/fluff/walldeco/customflag/barony,
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/outdoors/bograt/north)
-"eKZ" = (
-/obj/structure/fluff/railing/border{
-	dir = 9
-	},
-/obj/structure/fluff/railing/border{
-	dir = 1
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "eLd" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4;
@@ -26260,7 +26251,9 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/goblinfort)
 "fpN" = (
-/obj/structure/bookcase,
+/obj/structure/bookcase/random{
+	density = 0
+	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "fqd" = (
@@ -26599,6 +26592,14 @@
 "ftI" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/end,
 /area/rogue/under/dungeon/tricksntraps)
+"ftL" = (
+/obj/structure/mineral_door/wood{
+	locked = 1;
+	lockid = "crafterguild";
+	name = "'Apprentice's Bedroom"
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "ftM" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood3"
@@ -34097,6 +34098,10 @@
 	dir = 8
 	},
 /area/rogue/outdoors/town/roofs)
+"gWd" = (
+/obj/structure/bars/cemetery,
+/turf/open/floor/rogue/greenstone,
+/area/rogue/outdoors/town/rockhill)
 "gWn" = (
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/shop)
@@ -39437,6 +39442,12 @@
 /obj/structure/bookcase/random,
 /turf/open/floor/rogue/grasspurple,
 /area/rogue/under/dungeon/wizarddungeon)
+"hZV" = (
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 1
+	},
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "hZY" = (
 /obj/structure/mineral_door/wood/window{
 	locked = 1;
@@ -44045,10 +44056,10 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors)
 "iZe" = (
-/obj/machinery/light/roguestreet/walllamp{
+/obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 1
 	},
-/turf/open/floor/rogue/metal/barograte,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "iZi" = (
 /turf/open/transparent/openspace,
@@ -55462,6 +55473,12 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors)
+"lrV" = (
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 1
+	},
+/turf/closed/mineral/rogue,
+/area/rogue/outdoors/mountains)
 "lsh" = (
 /obj/structure/table/wood/poor/alt,
 /obj/item/rogueweapon/surgery/retractor,
@@ -66308,13 +66325,6 @@
 /obj/item/storage/roguebag,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/cavewet)
-"nCF" = (
-/obj/structure/bars/grille,
-/turf/open/water/river{
-	dir = 4;
-	icon_state = "rockwd"
-	},
-/area/rogue/under/town/sewer)
 "nCG" = (
 /obj/item/roguebin/water,
 /turf/open/floor/rogue/metal/barograte,
@@ -77540,6 +77550,7 @@
 	pixel_y = -2;
 	pixel_x = -15
 	},
+/obj/machinery/light/roguestreet/walllamp,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/engineerworkshop)
 "pVg" = (
@@ -91972,7 +91983,7 @@
 	name = "Guild Vault"
 	},
 /obj/structure/curtain/directional/orange,
-/turf/open/floor/rogue/metal/barograte,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "taK" = (
 /obj/structure/closet/crate/roguecloset/dark{
@@ -93752,6 +93763,9 @@
 /obj/item/rogueweapon/hammer/wood,
 /obj/item/contraption/linker,
 /obj/item/roguegear/bronze,
+/obj/machinery/light/roguestreet/walllamp{
+	dir = 1
+	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/engineerworkshop)
 "tsG" = (
@@ -116066,6 +116080,10 @@
 "xXH" = (
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/rtfield/rockhill/above)
+"xXM" = (
+/obj/structure/bookcase/random,
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "xXO" = (
 /obj/structure/fluff/railing/fence{
 	dir = 4
@@ -116089,6 +116107,10 @@
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/tavern)
+"xYf" = (
+/obj/structure/mineral_door/bars,
+/turf/open/floor/rogue/greenstone,
+/area/rogue/outdoors/town/rockhill)
 "xYi" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -305485,8 +305507,8 @@ lrs
 lrs
 gLf
 gLf
-nCF
-nCF
+iyQ
+iyQ
 gLf
 oAn
 aAX
@@ -305919,7 +305941,7 @@ gLf
 gLf
 kdN
 kdN
-nCF
+gLf
 oAn
 fnA
 fnA
@@ -306351,8 +306373,8 @@ uDH
 uDH
 uDH
 kdN
-nCF
-hdB
+gLf
+gWd
 wbg
 wbg
 wbg
@@ -306783,8 +306805,8 @@ sco
 sco
 gRj
 kdN
-nCF
-hdB
+gLf
+xYf
 fnA
 fnA
 wbg
@@ -307215,8 +307237,8 @@ qZA
 ezy
 sco
 kdN
-kdN
-hdB
+gLf
+gWd
 fnA
 wbg
 wbg
@@ -307647,8 +307669,8 @@ ezy
 gYF
 sco
 kdN
-kdN
-hdB
+gLf
+xYf
 fnA
 fnA
 fnA
@@ -308078,9 +308100,9 @@ dKZ
 ezy
 ezy
 sco
+uDH
 kdN
-kdN
-hdB
+gWd
 wbg
 wbg
 wbg
@@ -524947,7 +524969,7 @@ bWt
 dMk
 cPn
 nPA
-sco
+xXM
 hGS
 aWw
 oWO
@@ -525809,10 +525831,10 @@ gtr
 sco
 vnZ
 dMk
-dMk
+xoc
 dAF
 sco
-aWw
+dMk
 sco
 xZg
 xZg
@@ -526245,7 +526267,7 @@ dMk
 fpN
 taI
 iZe
-sco
+hZV
 xZg
 xZg
 xZg
@@ -526673,12 +526695,12 @@ gtr
 sco
 jDY
 dMk
-dMk
+eGL
 dAF
 sco
-aWw
+dMk
 sco
-xZg
+lrV
 xZg
 xlA
 xlA
@@ -527110,7 +527132,7 @@ sco
 sco
 sco
 sco
-xZg
+lrV
 xZg
 xlA
 xlA
@@ -527527,7 +527549,7 @@ srk
 nMh
 dMk
 dMk
-rqb
+ftL
 dMk
 dMk
 dMk
@@ -527541,8 +527563,8 @@ dMk
 xoc
 sco
 xZg
-xZg
-xZg
+lrV
+lrV
 xZg
 xlA
 xlA
@@ -528391,7 +528413,7 @@ mKC
 cGi
 tLF
 dMk
-rqb
+ftL
 dMk
 dMk
 dMk
@@ -531416,7 +531438,7 @@ sco
 sco
 gBD
 xbo
-eKZ
+lux
 dMk
 sco
 sco
