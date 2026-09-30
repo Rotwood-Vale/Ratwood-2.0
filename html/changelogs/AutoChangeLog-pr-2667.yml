@@ -1,0 +1,5 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - rscadd: "Gave keepers extra 3 hearblood containers at roundstart"
+  - bugfix: "Hearbeast tentacles are no longer is beaten by a gambelson"
