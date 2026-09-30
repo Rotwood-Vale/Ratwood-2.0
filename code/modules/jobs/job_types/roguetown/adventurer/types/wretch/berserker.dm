@@ -88,7 +88,6 @@
 					if("HUNK OF IRON") //Actually not a meme anymore
 						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 						r_hand = /obj/item/rogueweapon/sword/long/exe/berserk //not as strong as people think
-						backl = /obj/item/rogueweapon/scabbard/gwstrap
 					if("Battle Axe")
 						H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 						beltr = /obj/item/rogueweapon/stoneaxe/battle
