@@ -898,6 +898,8 @@ There are several things that need to be remembered:
 						if(OFFSET_BELT_F in dna.species.offset_features)
 							mbeltoverlay.pixel_x += dna.species.offset_features[OFFSET_BELT_F][1]
 							mbeltoverlay.pixel_y += dna.species.offset_features[OFFSET_BELT_F][2]
+					if(has_hiked_hem())
+						mbeltoverlay.pixel_y += 2 //the belt sits on the underwear rows; ride above them while the hem is held up
 				standing_front += mbeltoverlay
 				if(istype(belt, /obj/item/storage/belt/rogue)) // check if belt has dildo attached
 					var/obj/item/storage/belt/rogue/belt_with_dildo = belt

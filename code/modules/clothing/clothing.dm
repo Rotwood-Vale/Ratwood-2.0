@@ -249,6 +249,7 @@
 	wearer.update_inv_shirt_real()
 	wearer.update_inv_pants_real()
 	wearer.update_inv_cloak_real()
+	wearer.update_inv_belt()
 	wearer.update_body_parts(TRUE)
 
 /obj/item/clothing/proc/lower_hem()
