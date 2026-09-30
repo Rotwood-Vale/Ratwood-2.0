@@ -253,7 +253,7 @@
 
 /datum/advclass/baron_retainer/houndmaster
 	name = "Bogwarden Houndmaster"
-	tutorial = "The wardens keep hounds to run down what the bog hides, and you kept the best of them. The Baron took you and your hound into his household. You read the tracks on his roads, your hound reads the scent, and between you nobody comes to his door unseen."
+	tutorial = "The wardens keep hounds to run down what the bog hides, and you kept the kennels. The Baron took you into his household. You read the tracks on his roads, and nobody comes to his door unseen."
 	outfit = /datum/outfit/job/roguetown/baron_retainer/houndmaster
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_PERFECT_TRACKER, TRAIT_STEELHEARTED)
@@ -299,14 +299,6 @@
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltr = /obj/item/quiver/bolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
-
-/datum/outfit/job/roguetown/baron_retainer/houndmaster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	var/turf/hound_turf = get_turf(H)
-	if(visualsOnly || !hound_turf)
-		return
-	var/mob/living/simple_animal/hostile/retaliate/rogue/wolf/hound/hound = new(hound_turf)
-	hound.bind_to_handler(H)
 
 /datum/advclass/baron_retainer/shield_ward
 	name = "Shield-Ward"
