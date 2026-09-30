@@ -687,4 +687,4 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	desc = ""
 	credits = "Studio EIM - Canto VII Boss 3 Battle Theme"
 	shortname = "Fallen Knight"
-	musicpath = list('sound/music/combat_arbiter.ogg')
+	musicpath = list('sound/music/cmode/antag/combat_disgraced.ogg')
