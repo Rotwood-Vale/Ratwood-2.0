@@ -648,6 +648,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	omegalist += list(GLOB.noble_positions)
 	omegalist += list(GLOB.courtier_positions)
 	omegalist += list(GLOB.garrison_positions)
+	omegalist += list(GLOB.barony_garrison_positions)
 	omegalist += list(GLOB.church_positions)
 	omegalist += list(GLOB.inquisition_positions)
 	omegalist += list(GLOB.yeoman_positions)
@@ -657,7 +658,13 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	omegalist += list(GLOB.tribal_positions)
 
 	for(var/list/category in omegalist)
-		if(!SSjob.name_occupations[category[1]])
+		// The category is led by its first job that exists on this map (the barony's lead jobs can be blacklisted per map)
+		var/datum/job/category_head
+		for(var/head_job in category)
+			category_head = SSjob.name_occupations[head_job]
+			if(category_head)
+				break
+		if(!category_head)
 			testing("HELP NO THING FOUND FOR [category[1]]")
 			continue
 
@@ -674,9 +681,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 				available_jobs += job
 
 		if (length(available_jobs))
-			var/cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
+			var/cat_color = category_head.selection_color //use the color of the first job in the category (the department head) as the category color
 			var/cat_name = ""
-			switch (SSjob.name_occupations[category[1]].department_flag)
+			switch (category_head.department_flag)
 				if (NOBLEMEN)
 					cat_name = "Nobles"
 				if (COURTIERS)
@@ -697,6 +704,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 					cat_name = "Inquisition"
 				if (TRIBAL)
 					cat_name = "Tribe"
+			if(category == GLOB.barony_garrison_positions)
+				cat_name = "Barony Garrison" // same department flag as the Crown's garrison, but its own faction
 
 			dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 			dat += "<legend align='center' style='font-weight: bold; color: [cat_color]'>[cat_name]</legend>"

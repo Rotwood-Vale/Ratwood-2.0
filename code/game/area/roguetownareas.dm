@@ -17,6 +17,8 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(list(/area/rogue/indoors
 	var/keep_area = FALSE
 	var/tavern_area = FALSE
 	var/warden_area = FALSE
+	/// Part of the Lowtown barony's domain (see code/game/area/town/barony.dm)
+	var/barony_area = FALSE
 	var/holy_area = FALSE
 	var/cell_area = FALSE
 	var/viewing_area = FALSE

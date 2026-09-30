@@ -28,6 +28,7 @@
 		/datum/advclass/baron/shrewd_nobleman,
 		/datum/advclass/baron/landed_knight
 	)
+	spells = list(/obj/effect/proc_holder/spell/self/convertrole/militia)
 
 /datum/job/roguetown/baron/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
@@ -36,7 +37,6 @@
 
 /datum/outfit/job/roguetown/baron
 	neck = /obj/item/roguekey/manor
-	id = /obj/item/scomstone/bad/garrison
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
 	pants = /obj/item/clothing/under/roguetown/trou/formal
 	cloak = /obj/item/clothing/cloak/lordcloak/baronycloak
@@ -115,3 +115,16 @@
 	backl = /obj/item/rogueweapon/shield/iron
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath/royal = 1, /obj/item/storage/keyring/baronretainer = 1)
+
+// Baron spells
+
+/// The Baron raises the barony's levy. Wardens are an elite and cannot be recruited off the street; this fills the rank below the Vanguard.
+/obj/effect/proc_holder/spell/self/convertrole/militia
+	name = "Recruit Militia"
+	desc = "Call a local to serve in the barony's militia."
+	new_role = BARONY_MILITIA_ROLE
+	overlay_state = "recruit_guard"
+	recruitment_faction = "Barony Garrison"
+	recruitment_message = "Serve the barony, %RECRUIT!"
+	accept_message = "FOR THE BARONY!"
+	refuse_message = "I refuse."

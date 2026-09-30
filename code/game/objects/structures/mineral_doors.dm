@@ -172,7 +172,7 @@
 		return FALSE
 	if(resident_role)
 		var/datum/job/job = SSjob.name_occupations[human.job]
-		if(job.type != resident_role)
+		if(!job || job.type != resident_role) // recruited roles ("Watchman", the barony's militia) have no job datum
 			if(!HAS_TRAIT(human, TRAIT_RESIDENT))
 				return FALSE
 	if(resident_advclass)

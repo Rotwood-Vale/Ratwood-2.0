@@ -77,7 +77,7 @@
 				if("The Inquisition")
 					rolestonotify = GLOB.inquisition_positions
 				if("Garrison", "Warden Fort")
-					rolestonotify = GLOB.garrison_positions + GLOB.noble_positions
+					rolestonotify = GLOB.all_garrison_positions + GLOB.noble_positions
 			send_ooc_note(("I hear the distant sounds of [src] ringing. I'm being called to the [localarea]."), job = rolestonotify)
 
 /obj/structure/standingbell/proc/reset_cooldown()

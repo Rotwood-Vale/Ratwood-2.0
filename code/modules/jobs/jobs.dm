@@ -88,18 +88,15 @@ GLOBAL_LIST_INIT(courtier_positions, list(
 	"Palace Chaplain",
 ))
 
+/// The Crown's garrison: the city watch and the keep's men-at-arms.
 GLOBAL_LIST_INIT(garrison_positions, list(
 	"City Guard",
 	"Rookie",
-	"Warden",
 	"Sergeant",
-	"Retainer",
 	"Veteran",
 	"Man at Arms",
 	"Squire",
-	"Vanguard",
 	"Dungeoneer",
-	"Master Warden",
 	"Watch Captain",
 	//desert
 	"Cataphract",
@@ -109,6 +106,19 @@ GLOBAL_LIST_INIT(garrison_positions, list(
 	"Azeb Agha",
 	"Slave Master",
 ))
+
+/// The Lowtown barony's own garrison. A separate faction from garrison_positions, but allied to it:
+/// anything that treats "the garrison" as friendly or official must read all_garrison_positions.
+GLOBAL_LIST_INIT(barony_garrison_positions, list(
+	"Retainer",
+	"Master Warden",
+	"Warden",
+	"Vanguard",
+	BARONY_MILITIA_ROLE,
+))
+
+/// Both garrison factions together. Must stay declared after the two lists above.
+GLOBAL_LIST_INIT(all_garrison_positions, GLOB.garrison_positions + GLOB.barony_garrison_positions)
 
 GLOBAL_LIST_INIT(church_positions, list(
 	"Bishop",
@@ -239,6 +249,7 @@ GLOBAL_LIST_INIT(job_assignment_order, get_job_assignment_order())
 	sorting_order += GLOB.noble_positions
 	sorting_order += GLOB.courtier_positions
 	sorting_order += GLOB.garrison_positions
+	sorting_order += GLOB.barony_garrison_positions
 	sorting_order += GLOB.church_positions
 	sorting_order += GLOB.inquisition_positions
 	sorting_order += GLOB.yeoman_positions

@@ -377,7 +377,8 @@
 	picked = TRUE
 
 /obj/item/clothing/cloak/tabard/retinue
-	desc = "A tabard with the lord's heraldic colors."
+	name = "royal tabard"
+	desc = "A royal tabard in the heraldic colors of the Grand Duke."
 	color = CLOTHING_AZURE
 	detail_tag = "_quad"
 	detail_color = CLOTHING_WHITE
@@ -444,6 +445,7 @@
 	name = "captain's tabard"
 
 /obj/item/clothing/cloak/tabard/retinue/baronycloak
+	name = "tabard" // the plain name the retinue tabard had before the ducal one became the "royal tabard"
 	desc = "A tabard with the baron's heraldic colors."
 
 /obj/item/clothing/cloak/tabard/retinue/baronycloak/Initialize(mapload)
@@ -812,6 +814,11 @@
 /obj/item/clothing/cloak/lordcloak/Destroy()
 	GLOB.lordcolor -= src
 	return ..()
+
+/// The ruler's own cloak, worn by the Grand Duke. The plain lordcloak stays the craftable "lordly cloak".
+/obj/item/clothing/cloak/lordcloak/royal
+	name = "royal cloak"
+	desc = "Ermine trimmed, handed down. Worn by the ruler of the realm."
 
 /obj/item/clothing/cloak/lordcloak/baronycloak
 	name = "Barony Cloak"
