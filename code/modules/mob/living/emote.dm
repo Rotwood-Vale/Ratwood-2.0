@@ -2362,32 +2362,44 @@
 			found += worn
 	return found
 
+/mob/living/carbon/human/proc/has_hiked_hem()
+	for(var/obj/item/clothing/worn in get_equipped_items())
+		if(worn.hiked)
+			return TRUE
+	return FALSE
+
 /datum/emote/living/carbon/human/hike
 	key = "hike"
 	key_third_person = "hikes"
 	message = "gathers up their hem in both hands."
+	var/message_lowered = "lets their hem fall."
 	emote_type = EMOTE_VISIBLE
 	show_runechat = TRUE
 
-/datum/emote/living/carbon/human/hike/run_emote(mob/user, params, type_override, intentional)
-	. = ..()
-	if(!.)
-		return
+/datum/emote/living/carbon/human/hike/run_emote(mob/user, params, type_override, intentional = FALSE, targetted = FALSE, animal = FALSE)
 	var/mob/living/carbon/human/H = user
-	if(!istype(H))
-		return
+	if(!istype(H) || !can_run_emote(user, TRUE, intentional))
+		return FALSE
 	var/list/garments = H.get_hikeable_garments()
 	if(!length(garments))
-		return
+		return FALSE
 	var/obj/item/clothing/first = garments[1]
 	if(first.hiked)
 		H.drop_hiked_hem()
-		return
-	if(!first.toggle_hike(H))
-		return
-	for(var/i in 2 to length(garments))
-		var/obj/item/clothing/extra = garments[i]
-		extra.toggle_hike(H, TRUE)
+	else
+		if(!first.toggle_hike(H))
+			return FALSE
+		for(var/i in 2 to length(garments))
+			var/obj/item/clothing/extra = garments[i]
+			extra.toggle_hike(H, TRUE)
+	return ..()
+
+///Runs after the hem changed, so the text follows what actually happened instead of always announcing a lift.
+/datum/emote/living/carbon/human/hike/select_message_type(mob/user, intentional)
+	. = ..()
+	var/mob/living/carbon/human/H = user
+	if(istype(H) && !H.has_hiked_hem())
+		. = message_lowered
 
 /datum/emote/living/carbon/human/hike/can_run_emote(mob/user, status_check = TRUE , intentional)
 	if(!..())
