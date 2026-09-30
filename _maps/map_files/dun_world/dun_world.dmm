@@ -15790,6 +15790,13 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/garrison)
+"cTe" = (
+/obj/machinery/light/rogue/torchholder/c{
+	pixel_y = -32
+	},
+/obj/structure/bars/cemetery,
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/town)
 "cTk" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -61170,12 +61177,6 @@
 "lmC" = (
 /turf/closed/wall/mineral/rogue/pipe,
 /area/rogue/indoors/shelter/mountains/decap)
-"lmH" = (
-/obj/machinery/light/rogue/torchholder/c{
-	pixel_y = -32
-	},
-/turf/open/floor/rogue/blocks/green,
-/area/rogue/under/town/sewer)
 "lmI" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/rogue/cobble,
@@ -115278,6 +115279,10 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave/his_vault)
+"uWd" = (
+/obj/machinery/light/rogue/candle/blue/r,
+/turf/open/floor/rogue/blocks/green,
+/area/rogue/under/town/sewer)
 "uWi" = (
 /obj/structure/flora/roguegrass/bush/wall/tall,
 /turf/open/floor/rogue/grassred,
@@ -182634,7 +182639,7 @@ ylh
 ylh
 ylh
 ylh
-ylh
+uWd
 ylh
 urZ
 urZ
@@ -182651,10 +182656,10 @@ sMT
 ylh
 urZ
 ylh
-ylh
+uWd
 urZ
 ylh
-ylh
+uWd
 urZ
 ylh
 ylh
@@ -182668,7 +182673,7 @@ ylh
 urZ
 lJn
 ylh
-ylh
+uWd
 urZ
 ylh
 sMT
@@ -183557,7 +183562,7 @@ bhJ
 bhJ
 yjE
 xZv
-lmH
+uWd
 cqm
 bhJ
 bhJ
@@ -298815,7 +298820,7 @@ xhB
 tTp
 pxF
 qmr
-rOx
+eTG
 vCy
 iEh
 qmr
@@ -299718,7 +299723,7 @@ qen
 sNZ
 sNZ
 quW
-sNZ
+jFA
 asY
 nas
 rZO
@@ -309608,11 +309613,11 @@ pWT
 sns
 sns
 qfA
-pWT
+qfA
+qfA
+sns
+qfA
 aWb
-njB
-fpx
-rcz
 kXM
 wyE
 wyE
@@ -310061,8 +310066,8 @@ cne
 xPB
 sns
 pWT
-aWb
-rWb
+rYO
+cTe
 dJN
 gMl
 xmq
@@ -323226,9 +323231,9 @@ wyq
 pxc
 yfE
 jWw
-dEP
+gnr
 aem
-dEP
+gnr
 jWw
 eWi
 pWT
@@ -324039,9 +324044,9 @@ rZO
 asY
 mEf
 jWw
-dEP
+gnr
 hOT
-dEP
+gnr
 jWw
 qrJ
 exD
