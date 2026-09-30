@@ -2039,7 +2039,6 @@
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
 	spawn(20)
 		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)
 		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
 			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
