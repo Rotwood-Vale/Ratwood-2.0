@@ -1,0 +1,6 @@
+author: "Guidesu"
+delete-after: True
+changes:
+  - rscadd: "Ports AP hunting rework made by Ketrai: https://github.com/Azure-Peak/Azure-Peak/pull/6761"
+  - balance: "Makes Biome Wanderer a less forgotten class."
+  - balance: "Gives the towner bow-hunter class options for main bow weapon."

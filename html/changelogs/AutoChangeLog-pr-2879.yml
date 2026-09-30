@@ -1,9 +1,0 @@
-author: "MrShibaa"
-delete-after: True
-changes:
-  - rscadd: "New examine texts dependent on JOURNEYS END TIER"
-  - balance: "People with TRAIT_JOURNEYS_END are unable to have their blood drained by leeches."
-  - balance: "Mistwalker no longer has dodge expert."
-  - balance: "Races and virtues with BREATHLESS are forbidden from Mistwalker."
-  - balance: "Removed GRAB_IMMUNE from T3 (They already get high con and wil, so nothing burger at most.)"
-  - code_imp: "New DEFINE for all races that BREATHE"
