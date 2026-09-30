@@ -90,6 +90,7 @@ GLOBAL_LIST_INIT(courtier_positions, list(
 
 GLOBAL_LIST_INIT(garrison_positions, list(
 	"City Guard",
+	"Watchman",
 	"Rookie",
 	"Sergeant",
 	"Veteran",
@@ -111,7 +112,7 @@ GLOBAL_LIST_INIT(barony_garrison_positions, list(
 	"Master Warden",
 	"Warden",
 	"Vanguard",
-	BARONY_MILITIA_ROLE,
+	"Militiaman",
 ))
 
 GLOBAL_LIST_INIT(all_garrison_positions, GLOB.garrison_positions + GLOB.barony_garrison_positions)

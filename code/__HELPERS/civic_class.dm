@@ -17,7 +17,7 @@
 		if("Councillor", "Seneschal", "Clerk", "Servant", "Head Physician", "Court Chaplain", "Magicians Associate")
 			return "KEEP"
 		// Garrison.
-		if("Sergeant", "Man at Arms", "Warden", "Master Warden", "Watchman", "Watch Captain", "City Guard", "Rookie", "Vanguard", BARONY_MILITIA_ROLE, "Veteran", "Squire", "Dungeoneer")
+		if("Sergeant", "Man at Arms", "Warden", "Master Warden", "Watchman", "Watch Captain", "City Guard", "Rookie", "Vanguard", "Militiaman", "Veteran", "Squire", "Dungeoneer")
 			return "KEEP"
 		if("Inquisitor", "Absolver", "Orthodoxist")
 			return "INQUISITION"

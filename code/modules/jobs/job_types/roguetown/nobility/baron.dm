@@ -28,7 +28,10 @@
 		/datum/advclass/baron/shrewd_nobleman,
 		/datum/advclass/baron/landed_knight
 	)
-	spells = list(/obj/effect/proc_holder/spell/self/convertrole/militia)
+	spells = list(
+		/obj/effect/proc_holder/spell/self/convertrole/militia,
+		/obj/effect/proc_holder/spell/self/grant_barony_residency
+	)
 
 /datum/job/roguetown/baron/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
@@ -46,6 +49,10 @@
 	id = /obj/item/scomstone/garrison //Giving them a crownstone given their new position over lowtown garrison
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
+
+/datum/outfit/job/roguetown/baron/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.verbs |= /mob/living/carbon/human/proc/declare_barony_outlaw
 
 // Baron subclasses
 
@@ -115,13 +122,3 @@
 	backl = /obj/item/rogueweapon/shield/iron
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath/royal = 1, /obj/item/storage/keyring/baronretainer = 1)
-
-/obj/effect/proc_holder/spell/self/convertrole/militia
-	name = "Recruit Militia"
-	desc = "Call a local to serve in the barony's militia."
-	new_role = BARONY_MILITIA_ROLE
-	overlay_state = "recruit_guard"
-	recruitment_faction = "Barony Garrison"
-	recruitment_message = "Serve the barony, %RECRUIT!"
-	accept_message = "FOR THE BARONY!"
-	refuse_message = "I refuse."

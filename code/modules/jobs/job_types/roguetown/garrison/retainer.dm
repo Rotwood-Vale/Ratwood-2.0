@@ -21,7 +21,13 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_ManAtArms.ogg'
 	social_rank = SOCIAL_RANK_YEOMAN
-	job_subclasses = list(/datum/advclass/baron_retainer/henchman, /datum/advclass/baron_retainer/duelist, /datum/advclass/baron_retainer/greyleaf)
+	job_subclasses = list(
+		/datum/advclass/baron_retainer/henchman,
+		/datum/advclass/baron_retainer/duelist,
+		/datum/advclass/baron_retainer/greyleaf,
+		/datum/advclass/baron_retainer/houndmaster,
+		/datum/advclass/baron_retainer/shield_ward
+	)
 
 /datum/outfit/job/roguetown/baron_retainer
 	job_bitflag = BITFLAG_GARRISON
@@ -243,3 +249,107 @@
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 				beltr = /obj/item/quiver/bolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
+
+/datum/advclass/baron_retainer/houndmaster
+	name = "Bogwarden Houndmaster"
+	tutorial = "The wardens keep hounds to run down what the bog hides, and you kept the best of them. The Baron took you and your hound into his household. You read the tracks on his roads, your hound reads the scent, and between you nobody comes to his door unseen."
+	outfit = /datum/outfit/job/roguetown/baron_retainer/houndmaster
+	category_tags = list(CTAG_RETAINER)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_PERFECT_TRACKER, TRAIT_STEELHEARTED)
+	subclass_stats = list(STATKEY_PER = 3, STATKEY_WIL = 2, STATKEY_CON = 1, STATKEY_SPD = 1)
+	subclass_skills = list(
+		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/hunting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/butchering = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+	)
+
+/datum/outfit/job/roguetown/baron_retainer/houndmaster/pre_equip(mob/living/carbon/human/H)
+	..()
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+	gloves = /obj/item/clothing/gloves/roguetown/angle
+	neck = /obj/item/clothing/neck/roguetown/coif/heavypadding
+	head = /obj/item/clothing/head/roguetown/roguehood/warden
+	cloak = /obj/item/clothing/cloak/wardencloak
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
+	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/storage/keyring/baronretainer = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath = 1, /obj/item/signal_horn = 1)
+	H.verbs |= /mob/proc/haltyell
+	if(H.mind)
+		var/weapons = list("Spear", "Crossbow")
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Spear")
+				r_hand = /obj/item/rogueweapon/spear
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
+			if("Crossbow")
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+				beltr = /obj/item/quiver/bolts
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
+
+/datum/outfit/job/roguetown/baron_retainer/houndmaster/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	var/turf/hound_turf = get_turf(H)
+	if(visualsOnly || !hound_turf)
+		return
+	var/mob/living/simple_animal/hostile/retaliate/rogue/wolf/hound/hound = new(hound_turf)
+	hound.bind_to_handler(H)
+
+/datum/advclass/baron_retainer/shield_ward
+	name = "Shield-Ward"
+	tutorial = "You are the wall between the Baron and whatever comes for him. Lowtown taught you the shield before the sword: you stand at his shoulder in the hall and on the road, tower shield forward, and nothing reaches him past you."
+	outfit = /datum/outfit/job/roguetown/baron_retainer/shield_ward
+	category_tags = list(CTAG_RETAINER)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
+	subclass_stats = list(STATKEY_STR = 1, STATKEY_CON = 3, STATKEY_WIL = 3, STATKEY_SPD = -1)
+	subclass_skills = list(
+		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+	)
+
+/datum/outfit/job/roguetown/baron_retainer/shield_ward/pre_equip(mob/living/carbon/human/H)
+	..()
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
+	pants = /obj/item/clothing/under/roguetown/chainlegs
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
+	gloves = /obj/item/clothing/gloves/roguetown/angle
+	neck = /obj/item/clothing/neck/roguetown/bevor
+	head = /obj/item/clothing/head/roguetown/helmet/kettle
+	cloak = /obj/item/clothing/cloak/tabard/retinue/baronycloak
+	backl = /obj/item/rogueweapon/shield/tower/metal
+	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/storage/keyring/baronretainer = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
+	H.verbs |= /mob/proc/haltyell
+	if(H.mind)
+		var/weapons = list("Spear", "Mace", "Sword")
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Spear")
+				r_hand = /obj/item/rogueweapon/spear
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
+			if("Mace")
+				r_hand = /obj/item/rogueweapon/mace/steel
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+			if("Sword")
+				r_hand = /obj/item/rogueweapon/sword
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)

@@ -124,8 +124,8 @@
 #define VETERAN		(1<<8)
 #define BOGMASTER	(1<<9)
 #define RETAINER	(1<<10)
-
-#define BARONY_MILITIA_ROLE "Militiaman"
+#define WATCHMAN	(1<<11)
+#define MILITIAMAN	(1<<12)
 
 #define CHURCHMEN		(1<<2)
 
@@ -282,10 +282,12 @@
 #define JDO_GATEMASTER 8.5
 #define JDO_SHERIFF 8.6
 #define JDO_TOWNGUARD 8.7
+#define JDO_WATCHMAN 8.75
 #define JDO_DUNGEONEER 8.8
 #define JDO_VET 8.9
 #define JDO_BOGMASTER 9.0
 #define JDO_BOGGUARD 9.1
+#define JDO_MILITIAMAN 9.2
 
 #define JDO_PRIEST 10
 #define JDO_MARTYR 11
