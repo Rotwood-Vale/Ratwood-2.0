@@ -11,8 +11,8 @@
 	// same stats as templar as you are essentially an antagonist aligned templar with miracles and armor
 	subclass_stats = list(
 		STATKEY_STR = 2,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 3
+		STATKEY_CON = 2,
+		STATKEY_WIL = 2,
 	)
 	subclass_skills = list(
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
@@ -140,7 +140,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.change_stat(STATKEY_INT, 1)
 			H.change_stat(STATKEY_PER, 1)
-			H.change_stat(STATKEY_WIL, 1)
+			H.change_stat(STATKEY_WIL, 2)
 		if(/datum/patron/inhumen/matthios)
 			H.cmode_music = 'sound/music/combat_matthios.ogg'
 			helmets += list("Decorated Bucket Helmet" = /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold,) // This is so stupid. - Just a little, but it does look cool!
@@ -255,6 +255,9 @@
 		if(/datum/patron/old_god)
 			H.change_stat(STATKEY_WIL, 2) //ENDVRE. You give up useful miracles, rites and miracle-healing from other Heretics, so you'll need this.
 			H.change_stat(STATKEY_CON, 2)
+			if(H.mind)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity)//To get your blood back, m'lord.
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_retribution)//Rebuke, but blood cost and worse.
 			helmets += list("Psydonic Barbute" = /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute,
 				"Psydonic Sallet" = /obj/item/clothing/head/roguetown/helmet/heavy/psysallet,
 				"Psydonic Armet" = /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm,
