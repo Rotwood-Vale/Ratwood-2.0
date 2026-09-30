@@ -211,12 +211,12 @@
 /atom/movable/screen/alert/status_effect/debuff/sleepytimet2
 	name = "Fatigued"
 	desc = "When was the last time I even slept...?"
-	icon_state = "sleepy"
+	icon_state = "sleepy2"
 
 /atom/movable/screen/alert/status_effect/debuff/sleepytimet3
 	name = "Exhausted"
 	desc = "Just... one little quick nap... five minute rest... please..."
-	icon_state = "sleepy"
+	icon_state = "sleepy3"
 
 /datum/status_effect/debuff/muscle_sore
 	id = "muscle_sore"
