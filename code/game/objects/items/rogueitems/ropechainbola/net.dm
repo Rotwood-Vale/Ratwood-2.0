@@ -6,7 +6,7 @@
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
 	force = 10
 	throwforce = 5
-	w_class = WEIGHT_CLASS_NORMAL // Sacrifice your storage space for nets
+	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "net"
 	slipouttime = 2 SECONDS //ideally you're using this to catch a dodger, not in the middle of combat
 	legcuff_slowdown = 3
