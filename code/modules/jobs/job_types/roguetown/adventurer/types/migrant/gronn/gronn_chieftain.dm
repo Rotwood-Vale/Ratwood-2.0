@@ -63,7 +63,7 @@
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 			l_hand = /obj/item/quiver/arrows
 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_EXPERT, TRUE)
 		if("Double-head Greataxe")
 			r_hand = /obj/item/rogueweapon/greataxe/steel/doublehead
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
