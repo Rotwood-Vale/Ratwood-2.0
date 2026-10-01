@@ -281,7 +281,6 @@
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltr = /obj/item/quiver/heavybluntbolts
 
-	H.verbs += /mob/proc/haltyell //Ex-Garrisoner
 
 	H.verbs += /mob/living/carbon/human/mind/proc/setorders //Kill if problematic
 	if(H.mind)
@@ -290,6 +289,8 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/brotherhood)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/charge)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/brotherhood)
+	H.verbs |= list(/mob/proc/haltyell, /mob/living/carbon/human/mind/proc/setorders)
+
 		/*
 		meant to be less knightly-helmets and more in-line with banditry, brigand loadouts and such so, so no armlets
 
