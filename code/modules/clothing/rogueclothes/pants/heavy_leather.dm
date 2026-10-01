@@ -43,7 +43,7 @@
 	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
-/obj/item/clothing/under/roguetown/heavy_leather_pants/ComponentInitialize()
+/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
