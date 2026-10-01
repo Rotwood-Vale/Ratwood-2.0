@@ -9,8 +9,8 @@
 	penfactor = PEN_LIGHT
 	chargetime = 0
 	swingdelay = 0
-	damfactor = 1.3
-	clickcd = CLICK_CD_FAST
+	damfactor = 1.2
+	clickcd = CLICK_CD_QUICK
 	item_d_type = "slash"
 
 /datum/intent/katar/thrust
@@ -22,7 +22,7 @@
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	penfactor = PEN_LIGHT
 	chargetime = 0
-	clickcd = CLICK_CD_FAST
+	clickcd = CLICK_CD_QUICK
 	item_d_type = "stab"
 
 /datum/intent/axe/chop/arbelos
@@ -38,46 +38,6 @@
 	damfactor = 0.8
 	clickcd = CLICK_CD_QUICK //Slower than a regular thrust, with slightly less penetration and damage. Inverse to the katar.
 
-
-/datum/intent/knuckles/strike
-	name = "punch"
-	blade_class = BCLASS_BLUNT
-	attack_verb = list("punches", "clocks")
-	hitsound = list('sound/combat/hits/punch/punch_hard (1).ogg', 'sound/combat/hits/punch/punch_hard (2).ogg', 'sound/combat/hits/punch/punch_hard (3).ogg')
-	chargetime = 0
-	penfactor = PEN_NONE
-	clickcd = 8
-	swingdelay = 0
-	icon_state = "inpunch"
-	item_d_type = "blunt"
-	intent_intdamage_factor = 1
-
-/datum/intent/knuckles/smash
-	name = "smash"
-	blade_class = BCLASS_SMASH
-	attack_verb = list("smashes")
-	hitsound = list('sound/combat/hits/punch/punch_hard (1).ogg', 'sound/combat/hits/punch/punch_hard (2).ogg', 'sound/combat/hits/punch/punch_hard (3).ogg')
-	penfactor = PEN_NONE
-	clickcd = CLICK_CD_MELEE
-	swingdelay = 8
-	icon_state = "insmash"
-	item_d_type = "blunt"
-
-/datum/intent/knuckles/strike/wallop
-	name = "wallop"
-	blade_class = BCLASS_TWIST
-	attack_verb = list("wallops", "thwacks", "thwamps")
-	damfactor = 1.1
-	intent_intdamage_factor = 0.6
-	icon_state = "inbash"	// Wallop is too long for a button; placeholder.
-
-//Knuckle utility. Use it to line up strikes. -2PER, -1LCK.
-//Open up a feint window with it. 10 seconds duration.
-/datum/intent/effect/daze/unarmed
-	attack_verb = list("strikes")
-	damfactor = 0.8
-	swingdelay = 8//Same as smash.
-	intent_effect = /datum/status_effect/debuff/dazed/unarmed
 
 /// INTENT DATUMS	^
 
@@ -136,7 +96,7 @@
 	name = "barotrauma"
 	desc = "A gift from a creature of the sea. The claw is sharpened to a wicked edge."
 	icon_state = "abyssorclaw"
-	force = 27	//Its thrust will be able to pen 80 stab armor if the wielder has 17 STR. (With softcap)
+	force = 27
 	max_integrity = 80
 
 // swapped from katar to pata cause it's cool. Otherwise indentical
@@ -167,7 +127,7 @@
 	icon_state = "freiplug"
 	slot_flags = ITEM_SLOT_RING
 	icon = 'icons/roguetown/weapons/special/freifechter32.dmi'
-	possible_item_intents = list(/datum/intent/dagger/thrust, /datum/intent/dagger/thrust/pick, /datum/intent/knuckles/strike)
+	possible_item_intents = list(/datum/intent/dagger/thrust, /datum/intent/dagger/thrust/pick, /datum/intent/mace/smash)
 
 /obj/item/rogueweapon/katar/punchdagger/aav
 	name = "aavnic punchdagger"
@@ -194,122 +154,6 @@
 		added_int = 50,\
 		added_def = 2,\
 	)
-
-/obj/item/rogueweapon/knuckles/psydon
-	name = "psydonic knuckles"
-	desc = "A simple piece of harm molded in a holy mixture of steel and silver, finished with three stumps - Psydon's crown - to crush the heretics' garments and armor into smithereens."
-	icon_state = "psyknuckle"
-	force = 22
-	wdefense = 5
-	is_silver = TRUE
-	smeltresult = /obj/item/ingot/silverblessed
-
-/obj/item/rogueweapon/knuckles/psydon/ComponentInitialize()
-	AddComponent(\
-		/datum/component/silverbless,\
-		pre_blessed = BLESSING_NONE,\
-		silver_type = SILVER_PSYDONIAN,\
-		added_force = 0,\
-		added_blade_int = 0,\
-		added_int = 50,\
-		added_def = 2,\
-	)
-
-/obj/item/rogueweapon/knuckles/psydon/old
-	name = "enduring knuckles"
-	desc = "A simple piece of harm molded in a holy mixture of steel and silver, its holy blessing long since faded. You are HIS weapon, you needn't fear Aeon."
-	icon_state = "psyknuckle"
-	force = 17
-	is_silver = FALSE
-	smeltresult = /obj/item/ingot/steel
-	color = COLOR_FLOORTILE_GRAY
-
-/obj/item/rogueweapon/knuckles/psydon/old/ComponentInitialize()
-	return
-
-/obj/item/rogueweapon/knuckles
-	name = "steel knuckles"
-	desc = "A mean looking pair of steel knuckles."
-	force = 25
-	possible_item_intents = list(/datum/intent/knuckles/strike,/datum/intent/knuckles/smash, /datum/intent/knuckles/strike/wallop, /datum/intent/effect/daze/unarmed)
-	icon = 'icons/roguetown/weapons/unarmed32.dmi'
-	icon_state = "steelknuckle"
-	gripsprite = FALSE
-	wlength = WLENGTH_SHORT
-	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = ITEM_SLOT_HIP
-	parrysound = list('sound/combat/parry/pugilism/unarmparry (1).ogg','sound/combat/parry/pugilism/unarmparry (2).ogg','sound/combat/parry/pugilism/unarmparry (3).ogg')
-	sharpness = IS_BLUNT
-	max_integrity = 200
-	swingsound = list('sound/combat/wooshes/punch/punchwoosh (1).ogg','sound/combat/wooshes/punch/punchwoosh (2).ogg','sound/combat/wooshes/punch/punchwoosh (3).ogg')
-	associated_skill = /datum/skill/combat/unarmed
-	throwforce = 12
-	wdefense = 4
-	wbalance = WBALANCE_SWIFT
-	anvilrepair = /datum/skill/craft/weaponsmithing
-	smeltresult = /obj/item/ingot/steel
-	grid_width = 64
-	grid_height = 32
-	special = /datum/special_intent/upper_cut
-
-/obj/item/rogueweapon/knuckles/getonmobprop(tag)
-	. = ..()
-	if(tag)
-		switch(tag)
-			if("gen")
-				return list("shrink" = 0.2,"sx" = -7,"sy" = -4,"nx" = 7,"ny" = -4,"wx" = -3,"wy" = -4,"ex" = 1,"ey" = -4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 110,"sturn" = -110,"wturn" = -110,"eturn" = 110,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
-			if("onbelt")
-				return list("shrink" = 0.1,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
-
-/obj/item/rogueweapon/knuckles/bronzeknuckles
-	name = "bronze knuckles"
-	desc = "A mean looking pair of bronze knuckles. Mildly heavier than it's steel counterpart, making it a solid defensive option, if less wieldy."
-	force = 22
-	possible_item_intents = list(/datum/intent/knuckles/strike, /datum/intent/knuckles/smash, /datum/intent/knuckles/strike/wallop)
-	icon = 'icons/roguetown/weapons/unarmed32.dmi'
-	icon_state = "bronzeknuckle"
-	gripsprite = FALSE
-	wlength = WLENGTH_SHORT
-	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = ITEM_SLOT_HIP
-	parrysound = list('sound/combat/parry/pugilism/unarmparry (1).ogg','sound/combat/parry/pugilism/unarmparry (2).ogg','sound/combat/parry/pugilism/unarmparry (3).ogg')
-	sharpness = IS_BLUNT
-	max_integrity = 200
-	swingsound = list('sound/combat/wooshes/punch/punchwoosh (1).ogg','sound/combat/wooshes/punch/punchwoosh (2).ogg','sound/combat/wooshes/punch/punchwoosh (3).ogg')
-	associated_skill = /datum/skill/combat/unarmed
-	throwforce = 12
-	wdefense = 6
-	anvilrepair = /datum/skill/craft/weaponsmithing
-	smeltresult = /obj/item/ingot/bronze
-
-/obj/item/rogueweapon/knuckles/ancient
-	name = "ancient knuckles"
-	desc = "a set of knuckles made of ancient metals, Aeon's grasp has been lifted from their form."
-	icon_state = "aknuckle"
-	smeltresult = /obj/item/ingot/aaslag
-
-/obj/item/rogueweapon/knuckles/ancient/decrepit
-	name = "decrepit knuckles"
-	desc = "a set of knuckles made of ancient metals, Aeon's grasp wither their form."
-	force = 12
-	max_integrity = 100
-	wdefense = 4
-	blade_dulling = DULLING_SHAFT_CONJURED
-
-/obj/item/rogueweapon/knuckles/eora
-	name = "close caress"
-	desc = "Some times call for a more intimate approach."
-	force = 24
-	icon_state = "eoraknuckle"
-
-/obj/item/rogueweapon/knuckles/blacksteel
-	name = "blacksteel knuckles"
-	desc = "Take that, taste the pain!"
-	icon_state = "bsknuckledusters"
-	force = 30
-	max_integrity = 300
-	wdefense = 7
-	smeltresult = /obj/item/ingot/blacksteel
 
 //Claws. God, I hate these.
 /obj/item/rogueweapon/handclaw

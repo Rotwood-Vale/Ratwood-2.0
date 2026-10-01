@@ -389,12 +389,18 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 // Integrity & Sharpness Value
 #define INTEG_PARRY_DECAY			1	//Default integrity decay on parry.
 #define INTEG_PARRY_DECAY_NOSHARP	5	//Integrity decay on parry for weapons with no sharpness OR for off-hand parries.
+#define INTEG_PARRY_DECAY_UNARMED	5	//Integrity decay on parry when the attacker is unarmed (fists still wear down shields).
+
 #define SHARPNESS_ONHIT_DECAY		3	//Sharpness decay on parry.
 #define SHARPNESS_TIER1_THRESHOLD	0.8	//%-age threshold when damage starts to fall off -- mainly damfactor and STR factor. NOT base damage value.
 #define SHARPNESS_TIER1_FLOOR		0.45//%-age threshold when damfactors and STR factors become 0.
 #define SHARPNESS_TIER2_THRESHOLD	0.2 //%-age threshold when damage *really* falls off. Base damage value included.
 
-#define UNARMED_DAMAGE_DEFAULT		12
+#define UNARMED_DAMAGE_DEFAULT		17
+#define UNARMED_DAMAGE_CIVILBARB	5
+//Base weapon-defense for an unarmed parry. Multiplied by PARRY_PER_WDEF_POINT to become a parry percentage.
+#define UNARMED_BASE_WDEF_BARE 2		// Bare fists — still bad, but not hopeless
+#define UNARMED_BASE_WDEF_EQUIPPED 8	// Bracers / knuckles / bandages — 80 base parry for expert pugilists
 
 /// Damage multiplier of silver weapons against mobs with TRAIT_SIMPLE_WOUNDS
 #define SILVER_SIMPLEMOB_DAM_MULT 3
@@ -435,3 +441,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 #define MAX_DODGE_CEIL 5
 #define MAX_DODGE_FLOOR -15
+
+#define RIPOSTE_SHARPNESS_FACTOR	0.15	//Fraction of blade_int lost on riposte (15%). Heavy weapons add +0.05.
+#define RIPOSTE_INTEG_DIVISOR		5	//max_integrity / this = integrity damage on riposte for non-bladed weapons.

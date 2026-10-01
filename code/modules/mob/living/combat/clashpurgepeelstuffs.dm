@@ -5,29 +5,49 @@
 		bad_guard(span_warning("I hit myself."))
 		return
 	var/mob/living/carbon/human/H = user
-	if(!IU)	//The opponent is trying to rawdog us with their bare hands while we have Guard up. We get a free attack on their active hand.
-		var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-		var/force = get_complex_damage(IM, src)
-		var/armor_block = H.run_armor_check(BODY_ZONE_PRECISE_L_HAND, used_intent.item_d_type, armor_penetration = used_intent.penfactor, damage = force, used_weapon = IM)
-		if(H.apply_damage(force, IM.damtype, affecting, armor_block))
-			visible_message(span_suicide("[src] gores [user]'s hands with \the [IM]!"))
-			affecting.bodypart_attacked_by(used_intent.blade_class, force, crit_message = TRUE, weapon = IM)
+	if(H.has_status_effect(/datum/status_effect/buff/clash))	//They also have Riposte active. It'll trigger the special event.
+		clash(user, IM, IU)
+		return
+	if(!IU)	//The opponent is trying to rawdog us with their bare hands while we have Guard up. We get a riposte window.
+		if(!IM)
+			visible_message(span_suicide("[src] ripostes [H]'s strike with [p_their()] bare hands!"))
 		else
-			visible_message(span_suicide("[src] clashes into [user]'s hands with \the [IM]!"))
-		playsound(src, pick(used_intent.hitsound), 80)
+			visible_message(span_suicide("[src] ripostes [H] with \the [IM]!"))
+		H.apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
+		H.apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
+		if(H.mind)
+			H.dodgetime = clamp(H.dodgetime + 5, 0, CLICK_CD_HEAVY)
+		H.Slowdown(3)
+		to_chat(src, span_notice("[capitalize(H.p_theyre())] exposed!"))
+		playsound(src, 'sound/combat/clash_struck.ogg', 100)
 		remove_status_effect(/datum/status_effect/buff/clash)
 		apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
 		return
-	if(H.has_status_effect(/datum/status_effect/buff/clash))	//They also have Riposte active. It'll trigger the special event.
-		clash(user, IM, IU)
+	if(!IM)	//We are guarding unarmed but they have a weapon -- no clash, just consume the guard to block the hit.
+		visible_message(span_suicide("[src] ripostes [H]'s strike with [p_their()] bare hands!"))
+		var/sharpnesspenalty = RIPOSTE_SHARPNESS_FACTOR
+		if(IU.max_blade_int)
+			IU.remove_bintegrity((IU.blade_int * sharpnesspenalty), user)
+		else
+			var/integdam = max((IU.max_integrity / RIPOSTE_INTEG_DIVISOR), (INTEG_PARRY_DECAY_NOSHARP * 5))
+			if(IU.blade_dulling == DULLING_SHAFT_CONJURED)
+				integdam *= 2
+			IU.take_damage(integdam, BRUTE, "blunt")
+		H.apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
+		H.apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
+		H.Slowdown(3)
+		to_chat(src, span_notice("[capitalize(H.p_theyre())] exposed!"))
+		playsound(src, 'sound/combat/clash_struck.ogg', 100)
+		remove_status_effect(/datum/status_effect/buff/clash)
+		return
 	else	//Otherwise, we just riposte them.
-		var/sharpnesspenalty = 0.15
+		var/sharpnesspenalty = RIPOSTE_SHARPNESS_FACTOR
 		if(IM.wbalance == WBALANCE_HEAVY || IU.blade_dulling == DULLING_SHAFT_CONJURED)
 			sharpnesspenalty += 0.05
 		if(IU.max_blade_int)
 			IU.remove_bintegrity((IU.blade_int * sharpnesspenalty), user)
 		else
-			var/integdam = max((IU.max_integrity / 5), (INTEG_PARRY_DECAY_NOSHARP * 5))
+			var/integdam = max((IU.max_integrity / RIPOSTE_INTEG_DIVISOR), (INTEG_PARRY_DECAY_NOSHARP * 5))
 			if(IU.blade_dulling == DULLING_SHAFT_CONJURED)
 				integdam *= 2
 			IU.take_damage(integdam, BRUTE, IM.d_type)
@@ -46,8 +66,6 @@
 //For future coders: Feel free to change this, just make sure someone like Struggler statpack doesn't get 3-fold advantage.
 /mob/living/carbon/human/proc/clash(mob/user, obj/item/IM, obj/item/IU)
 	var/mob/living/carbon/human/HU = user
-	var/instantloss = FALSE
-	var/instantwin = FALSE
 
 	//Stat checks. Basic comparison.
 	var/strdiff = STASTR - HU.STASTR
@@ -60,20 +78,20 @@
 
 	//Skill check, very simple. If you're more skilled with your weapon than the opponent is with theirs -> +10% to disarm or vice-versa.
 	var/skilldiff
-	if(IM.associated_skill)
+	if(IM?.associated_skill)
 		skilldiff = get_skill_level(IM.associated_skill)
 	else
-		instantloss = TRUE	//We are Guarding with a book or something -- no chance for us.
+		skilldiff = get_skill_level(/datum/skill/combat/unarmed)
 
-	if(IU.associated_skill)
+	if(IU?.associated_skill)
 		skilldiff = skilldiff - HU.get_skill_level(IU.associated_skill)
 	else
-		instantwin = TRUE	//THEY are Guarding with a book or something -- no chance for them.
+		skilldiff = skilldiff - HU.get_skill_level(/datum/skill/combat/unarmed)
 	
 	//Weapon checks.
-	var/lengthdiff = IM.wlength - IU.wlength //The longer the weapon the better.
-	var/wieldeddiff = IM.wielded - IU.wielded //If ours is wielded but theirs is not.
-	var/weightdiff = (IM.wbalance < IU.wbalance) //If our weapon is heavy-balanced and theirs is not.
+	var/lengthdiff = IM?.wlength - IU?.wlength //The longer the weapon the better.
+	var/wieldeddiff = IM?.wielded - IU?.wielded //If ours is wielded but theirs is not.
+	var/weightdiff = (IM?.wbalance < IU?.wbalance) //If our weapon is heavy-balanced and theirs is not.
 	var/wildcard = pick(-1,0,1)
 
 	var/list/wepdiffs = list(lengthdiff, wieldeddiff, weightdiff)
@@ -88,6 +106,13 @@
 		else if(statdiff <= -2)
 			prob_opp += 10
 	
+
+	if(skilldiff > 0)
+		prob_us += 10
+	else if(skilldiff < 0)
+		prob_opp +=10
+
+
 	for(var/wepdiff in wepdiffs)
 		if(wepdiff > 0)
 			prob_us += 10
@@ -108,35 +133,37 @@
 		prob_us = max(prob_us, prob_opp)
 		prob_opp = max(prob_us, prob_opp)
 
-	if((!instantloss && !instantwin) || (instantloss && instantwin))	//We are both using normal weapons OR we're both using memes. Either way, proceed as normal.
-		visible_message(span_boldwarning("[src] and [HU] clash!"))
-		fullscreen_redflash("whiteflash")
-		HU.fullscreen_redflash("whiteflash")
-		var/datum/effect_system/spark_spread/S = new()
-		var/turf/front = get_step(src,src.dir)
-		S.set_up(1, 1, front)
-		S.start()
-		var/success
-		if(prob(prob_us))
-			HU.play_overhead_indicator('icons/mob/overhead_effects.dmi', "clashtwo", 1 SECONDS, OBJ_LAYER, soundin = 'sound/combat/clash_disarm_us.ogg', y_offset = 24)
+	visible_message(span_boldwarning("[src] and [HU] clash!"))
+	flash_fullscreen("whiteflash")
+	HU.flash_fullscreen("whiteflash")
+	var/datum/effect_system/spark_spread/S = new()
+	var/turf/front = get_step(src,src.dir)
+	S.set_up(1, 1, front)
+	S.start()
+	var/success
+	if(prob(prob_us))
+		HU.play_overhead_indicator('icons/mob/overhead_effects.dmi', "clashtwo", 1 SECONDS, OBJ_LAYER, soundin = 'sound/combat/clash_disarm_us.ogg', y_offset = 24)
+		if(IM)
 			disarmed(IM)
-			Slowdown(5)
-			success = TRUE
-		if(prob(prob_opp))
+		else
+			apply_status_effect(/datum/status_effect/debuff/vulnerable, 5 SECONDS)
+			apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
+		Slowdown(5)
+		success = TRUE
+	if(prob(prob_opp))
+		if(IU)
 			HU.disarmed(IU)
-			HU.Slowdown(5)
-			play_overhead_indicator('icons/mob/overhead_effects.dmi', "clashtwo", 1 SECONDS, OBJ_LAYER, soundin = 'sound/combat/clash_disarm_opp.ogg', y_offset = 24)
-			success = TRUE
-		if(!success)
-			to_chat(src, span_warningbig("Draw! Opponent's chances were... [prob_opp]%"))
-			to_chat(HU, span_warningbig("Draw! Opponent's chances were... [prob_us]%"))
-			playsound(src, 'sound/combat/clash_draw.ogg', 100, TRUE)
-	else
-		if(instantloss)
-			disarmed(IM)
-		if(instantwin)
-			HU.disarmed(IU)
-	
+		else
+			HU.apply_status_effect(/datum/status_effect/debuff/vulnerable, 3 SECONDS)
+			HU.apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
+		HU.Slowdown(5)
+		play_overhead_indicator('icons/mob/overhead_effects.dmi', "clashtwo", 1 SECONDS, OBJ_LAYER, soundin = 'sound/combat/clash_disarm_opp.ogg', y_offset = 24)
+		success = TRUE
+	if(!success)
+		to_chat(src, span_warningbig("Draw! Opponent's chances were... [prob_opp]%"))
+		to_chat(HU, span_warningbig("Draw! Opponent's chances were... [prob_us]%"))
+		playsound(src, 'sound/combat/clash_draw.ogg', 100, TRUE)
+
 	remove_status_effect(/datum/status_effect/buff/clash)
 	HU.remove_status_effect(/datum/status_effect/buff/clash)
 
@@ -159,7 +186,7 @@
 	if(has_status_effect(/datum/status_effect/buff/clash) || has_status_effect(/datum/status_effect/debuff/clashcd))
 		return FALSE
 	if(!get_active_held_item())
-		if(get_skill_level(/datum/skill/combat/unarmed) < SKILL_LEVEL_JOURNEYMAN)
+		if(get_skill_level(/datum/skill/combat/unarmed) < 3)
 			to_chat(src, span_warning("I'm not skilled enough in the art of unarmed combat to guard without a weapon!"))
 			return FALSE
 	if(r_grab || l_grab || length(grabbedby)) //Not while grabbed.

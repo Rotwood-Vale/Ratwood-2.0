@@ -1301,6 +1301,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.process_clash(user, IM)
 			return
 
+		if(user.has_status_effect(/datum/status_effect/buff/clash) && !target.has_status_effect(/datum/status_effect/buff/clash))
+			user.bad_guard(span_suicide("I tried to strike while focused on defense whole! It drains me!"), cheesy = TRUE)
+			return
+
 		if(user.mob_biotypes & MOB_UNDEAD)
 			if(target.has_status_effect(/datum/status_effect/buff/necras_vow))
 				if(isnull(user.mind))
@@ -1416,7 +1420,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.forcesay(GLOB.hit_appends)
 		if(!nodmg)
 			playsound(target.loc, user.used_intent.hitsound, 100, FALSE)
-
+			if(user.mind)
+				user.dodgetime = (clamp(user.dodgetime - 2, 0, CLICK_CD_DODGE))
+				user.changeMaxDodge(3)
+			if(target.mind)
+				target.dodgetime = (clamp(target.dodgetime - 8, 0, CLICK_CD_DODGE))	//We reset the dodgetime after getting struck directly in the body.
+				target.changeMaxDodge(5)
 
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
@@ -1781,7 +1790,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			log_combat(user, target, "kicked", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 
 
-		var/selzone = melee_accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
+		var/selzone = user.zone_selected
 		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 		if(!affecting)
 			affecting = target.get_bodypart(BODY_ZONE_CHEST)

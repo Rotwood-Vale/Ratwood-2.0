@@ -165,6 +165,8 @@
 			if(attacker?.used_intent?.unarmed)
 				prob2defend = prob2defend - (attacker.get_skill_level(/datum/skill/combat/unarmed) * 10)
 				prob2defend = prob2defend + (human_dodger.get_skill_level(/datum/skill/combat/unarmed) * 10)
+				if(attacker.STASPD > STASPD) //unarmed is inherently swift
+					prob2defend = prob2defend - ((attacker.STASPD - STASPD) * 10)
 
 		var/ignore_DE_bonus = FALSE
 

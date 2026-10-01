@@ -49,6 +49,8 @@ GLOBAL_VAR_INIT(mobids, 1)
 		QDEL_NULL(mmb_intent)
 	if(rmb_intent)
 		QDEL_NULL(rmb_intent)
+	if(unarmed_special)
+		QDEL_NULL(unarmed_special)
 	a_intent = null // this SHOULD be in possible_a_intents, so don't qdel it
 	o_intent = null // ditto but for possible_offhand_intents
 	QDEL_LIST(possible_a_intents)

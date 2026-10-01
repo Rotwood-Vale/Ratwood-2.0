@@ -191,13 +191,16 @@
 	var/theirskill = 0
 	var/skill_factor = 0
 
-	if(I)
-		if(I.associated_skill)
-			ourskill = user.get_skill_level(I.associated_skill)
-		if(L.skills)
-			I = L.get_active_held_item()
-			if(I && I?.associated_skill)
-				theirskill = L.get_skill_level(I.associated_skill)
+	if(I?.associated_skill)
+		ourskill = user.get_skill_level(I.associated_skill)
+	else
+		ourskill = user.get_skill_level(/datum/skill/combat/unarmed)
+	if(L.mind)
+		I = L.get_active_held_item()
+		if(I?.associated_skill)
+			theirskill = L.get_skill_level(I.associated_skill)
+		else
+			theirskill = L.get_skill_level(/datum/skill/combat/unarmed)
 	perc += (ourskill - theirskill)*15 	//skill is of the essence
 	perc += (user.STAINT - L.STAINT)*10	//but it's also mostly a mindgame
 	skill_factor = (ourskill - theirskill)/2

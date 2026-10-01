@@ -41,6 +41,11 @@
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/steel
 
+/obj/item/clothing/wrists/roguetown/bracers/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_notice("Allows unarmed parrying. Takes integrity damage when parrying.")
+	. += span_notice("Unarmed attacks are swift-balanced: faster attackers are harder to parry and dodge.")
+
 /obj/item/clothing/wrists/roguetown/bracers/ancient
 	name = "ancient bracers"
 	desc = "Polished gilbranze cuffings, clasped around the wrists. Through ascension, the chains of mortality are broken; and only through death will the spirit be ready to embrace divinity."
