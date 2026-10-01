@@ -19,6 +19,8 @@
 	unequip_delay_self = 4 SECONDS
 	armor_class = ARMOR_CLASS_HEAVY
 	smelt_bar_num = 3
+	chunkcolor = "#a9c1ca"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/suit/roguetown/armor/plate/ComponentInitialize()
 	. = ..()
@@ -41,6 +43,8 @@
 	icon_state = "ancientplate"
 	item_state = "ancientplate"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/suit/roguetown/armor/plate/ancient/decrepit
 	name = "decrepit half-plate"
@@ -320,6 +324,8 @@
 	icon_state = "zizoplate"
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/zizo/Initialize(mapload)
 	. = ..()
@@ -499,6 +505,8 @@ and crackling with insidious energies."
 	desc = "Polished gilbranze, curved into a breastplate. It is not for the heart that beats no more, but for the spirit that flows through luxless marrow; one of Her many gifts."
 	icon_state = "ancientcuirass"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/suit/roguetown/armor/plate/half/ancient/decrepit
 	name = "decrepit cuirass"

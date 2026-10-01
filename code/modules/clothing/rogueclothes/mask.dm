@@ -360,6 +360,8 @@
 	max_integrity = 200
 	icon_state = "ancientmask"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/mask/rogue/facemask/ancient/decrepit
 	name = "decrepit mask"

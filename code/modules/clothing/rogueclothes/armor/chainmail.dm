@@ -14,6 +14,7 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/steel
 	armor_class = ARMOR_CLASS_LIGHT //Experimental change; leave unlisted for now? Offers a weight-class advantage over the otherwise-superior hauberk. We'll see how it goes.
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/ComponentInitialize()
 	. = ..()
@@ -45,6 +46,8 @@
 	desc = "Polished gilbranze rings and silk, woven together to form a short maille-atekon. The death of a million brought forth the ascension of Zizo; and if a million more must perish to complete Her works, then let it be done."
 	icon_state = "ancientchain"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/ancient/decrepit
 	name = "decrepit haubergeon"
@@ -93,6 +96,8 @@
 	armor = ARMOR_PLATE_BSTEEL
 	armor_class = ARMOR_CLASS_MEDIUM
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo/Initialize(mapload)
 	. = ..()
@@ -103,6 +108,8 @@
 	desc = "Polished gilbranze rings and silk, woven together to form a sleeved maille-atekon. To bring the lyfeless back from decrepity, to elevate them to heights once thought unsurmountable; that is the will of Zizo, made manifest."
 	icon_state = "ancienthauberk"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient/decrepit
 	name = "decrepit hauberk"

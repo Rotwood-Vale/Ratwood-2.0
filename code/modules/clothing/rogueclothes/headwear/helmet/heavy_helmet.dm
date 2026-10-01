@@ -60,6 +60,8 @@
 	desc = "Polished gilbranze plates, pounded to form a visored helmet. Zizo commands ambition, and ambition commands sacrifice; let these sundered legionnaires rise again, to spill the blood of unenlightened fools. A coiled pocket is perched atop the rim, awaiting to be plumed."
 	icon_state = "ancientbarbute"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/ancient/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -133,6 +135,8 @@
 	desc = "Polished gilbranze plates, molded into a bulwark's greathelm. The Comet Syon's glare has been forever burnt into the alloy; a decayed glimpse into the world that was, before Psydon's slumber and Zizo's awakening."
 	icon_state = "ancientsavoyard"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit
 	name = "decrepit savoyard"
@@ -1096,6 +1100,8 @@
 	icon_state = "zizobarbute"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
 	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/zizo/Initialize(mapload)
 	. = ..()
@@ -1114,6 +1120,8 @@
 	item_state = "zizobascinet"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
 	armor = ARMOR_PLATE_BSTEEL
+	material_category = ARMOR_MAT_PLATE
+	chunkcolor = "#363030"
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/zizo/Initialize(mapload)
 	. = ..()
@@ -1134,7 +1142,9 @@
 	armor = ARMOR_PLATE_BSTEEL
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	armor_class = ARMOR_CLASS_MEDIUM
-	
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_PLATE
+
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/zizo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "HELMET")

@@ -101,6 +101,8 @@
 	sleevetype = "achainkilt"
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = /datum/skill/craft/armorsmithing
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient/decrepit
 	name = "decrepit chain kilt"

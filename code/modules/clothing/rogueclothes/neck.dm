@@ -210,6 +210,8 @@
 	desc = "Polished gilbranze rings, linked together to form a billowing hood. Let it not be a crown of thorns that saves this dying world, but a crown of ambition; of fettered metal and stained bone, rejuvenated by Zizo's will to herald Her greatest works yet."
 	icon_state = "achaincoif"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/neck/roguetown/chaincoif/ancient/decrepit
 	name = "decrepit coif"
@@ -319,7 +321,8 @@
 	item_state = "zizobevor"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	armor = ARMOR_PLATE_BSTEEL
-
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/neck/roguetown/bevor/zizo/Initialize(mapload)
 	. = ..()
@@ -371,6 +374,8 @@
 	desc = "Polished gilbranze plates, layered atop one-another to guard the neck. The spine; a sacred leyline between spirit and sinew. It must remain unsevered, lest Her blessings be lost."
 	icon_state = "ancientgorget"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/neck/roguetown/gorget/steel/ancient/decrepit
 	name = "decrepit gorget"
@@ -549,6 +554,8 @@
 	desc = "'Ambition. Destiny. Ascension. A mandate, commanded by God, to be fulfilled by Man. She called us forth from the edge of reality - and with Her dying breath, rasped out the final truth; the fire is gone, and the world will soon follow.'"
 	icon_state = "zcross_a"
 	color = "#bb9696"
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/bronze
 	name = "bronze inverted psycross"
@@ -638,6 +645,8 @@
 	desc = "'A comet capable of rending all the enemies of humanity apart; oh, how graceful His power was! And His sacrifice, ever so noble! Yet now He slumbers, unaware of the fruits His efforts came to give. And He sighs. And He weeps.'"
 	icon_state = "psycross_a"
 	color = "#bb9696"
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/neck/roguetown/psicross/ravox/bronze
 	name = "bronze amulet of Ravox"

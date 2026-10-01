@@ -23,6 +23,8 @@
 	grid_width = 64
 	experimental_onhip = TRUE
 	experimental_inhand = TRUE
+	chunkcolor = "#8c9599"
+	material_category = ARMOR_MAT_LEATHER
 
 /obj/item/clothing/head/roguetown/helmet/MiddleClick(mob/user)
 	if(!ishuman(user))
@@ -104,6 +106,8 @@
 	desc = "A polished gilbranze helmet which protects the top and sides of the head. ZIZO's glare musn't be interceded when matters of unholy war are at hand. Undead ballistaemen practice a curious method of tying dyed cloth around its rim; can they, too, think and associate?"
 	icon_state = "ancientkettle"
 	smeltresult = /obj/item/ingot/aaslag
+	material_category = ARMOR_MAT_PLATE
+	chunkcolor = "#532e25"
 
 /obj/item/clothing/head/roguetown/helmet/kettle/ancient/decrepit
 	name = "decrepit kettle helmet"

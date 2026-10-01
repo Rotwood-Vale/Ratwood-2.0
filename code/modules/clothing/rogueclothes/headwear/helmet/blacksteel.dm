@@ -14,6 +14,8 @@
 	smeltresult = /obj/item/ingot/blacksteel
 	smelt_bar_num = 2
 	adjustable = CAN_CADJUST
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)
@@ -34,6 +36,8 @@
 	max_integrity = ARMOR_INT_HELMET_BLACKSTEEL
 	smeltresult = /obj/item/ingot/blacksteel
 	smelt_bar_num = 2
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)

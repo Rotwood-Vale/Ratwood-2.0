@@ -1365,7 +1365,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(!target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block))
 			nodmg = TRUE
-			target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+			target.next_attack_msg += VISMSG_ARMOR_BLOCKED
 		else
 			affecting.bodypart_attacked_by(user.used_intent.blade_class, damage, user, selzone, crit_message = TRUE)
 			SEND_SIGNAL(target, COMSIG_ATOM_ATTACK_HAND, user)
@@ -1635,7 +1635,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/nodmg = FALSE
 			if(!target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block))
 				nodmg = TRUE
-				target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+				target.next_attack_msg += VISMSG_ARMOR_BLOCKED
 			else
 				if(affecting)
 					affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, selzone, crit_message = TRUE)
@@ -1790,7 +1790,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/armor_block = target.run_armor_check(selzone, "blunt", blade_dulling = BCLASS_BLUNT)
 		var/damage = user.get_punch_dmg()
 		if(!target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block))
-			target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+			target.next_attack_msg += VISMSG_ARMOR_BLOCKED
 		else
 			affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, selzone)
 		playsound(target, 'sound/combat/hits/kick/kick.ogg', 100, TRUE, -1)
@@ -1945,7 +1945,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.next_attack_msg.Cut()
 		if(!apply_damage(post_weakness_dmg, I.damtype, def_zone, armor_block, H))
 			nodmg = TRUE
-			H.next_attack_msg += " <span class='warning'>The armor yet remains...</span>"
+			H.next_attack_msg += VISMSG_ARMOR_BLOCKED
+			var/obj/item/clothing/C = H.get_best_worn_armor(def_zone, I.d_type)	//this is kinda relying on the proc returnig the same as run_armor_check did. Clunky!
+			var/extra_msg = C.get_armor_integ()
+			if(extra_msg)
+				H.next_attack_msg += extra_msg
 			if(I)
 				I.remove_bintegrity(1)
 				I.take_damage(1, BRUTE, I.d_type)

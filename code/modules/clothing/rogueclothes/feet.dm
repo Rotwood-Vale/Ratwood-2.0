@@ -415,6 +415,8 @@
 	desc = "Plate boots. Called forth from the edge of what should be known. In Her name."
 	icon_state = "zizoboots"
 	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/shoes/roguetown/boots/armor/zizo/Initialize(mapload)
 	. = ..()
@@ -663,6 +665,8 @@
 	resistance_flags = FIRE_PROOF
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/shoes/roguetown/boots/blacksteel/plateboots
 	name = "ancient blacksteel plate boots"
@@ -682,6 +686,8 @@
 	resistance_flags = FIRE_PROOF
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 // ----------------- BLACKSTEEL END -----------------------
 

@@ -57,6 +57,8 @@
 	var/armor_class = ARMOR_CLASS_NONE
 
 	var/naledicolor = FALSE
+	var/chunkcolor = "#5e5e5e"
+	var/material_category = ARMOR_MAT_LEATHER
 
 	var/snouting = FALSE //do we have the snout-snug sprite toggled?
 	var/adjusted_inv_mask = NONE
@@ -632,6 +634,35 @@ BLIND     // can't see anything
 			return 1
 	return 0
 
+/obj/item/clothing/proc/pick_damage_sound(tier)
+	var/picked_sound
+	switch(material_category)
+		if(ARMOR_MAT_PLATE)
+			switch(tier)
+				if(1)
+					picked_sound = 'sound/combat/armor_degrade_plate1.ogg'
+				if(2)
+					picked_sound = 'sound/combat/armor_degrade_plate2.ogg'
+				if(3)
+					picked_sound = 'sound/combat/armor_degrade_plate3.ogg'
+		if(ARMOR_MAT_CHAINMAIL)
+			switch(tier)
+				if(1)
+					picked_sound = 'sound/combat/armor_degrade_chain1.ogg'
+				if(2)
+					picked_sound = 'sound/combat/armor_degrade_chain2.ogg'
+				if(3)
+					picked_sound = 'sound/combat/armor_degrade_chain3.ogg'
+		if(ARMOR_MAT_LEATHER)
+			switch(tier)
+				if(1)
+					picked_sound = 'sound/combat/armor_degrade_leather1.ogg'
+				if(2)
+					picked_sound = 'sound/combat/armor_degrade_leather2.ogg'
+				if(3)
+					picked_sound = 'sound/combat/armor_degrade_leather3.ogg'
+	return (picked_sound ? picked_sound : FALSE)
+
 /obj/item/clothing/take_damage(damage_amount, damage_type = BRUTE, damage_flag, sound_effect, attack_dir, armor_penetration)
 	var/newdam = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armor_penetration)
 	var/eff_maxint = max_integrity - (max_integrity * integrity_failure)
@@ -640,16 +671,26 @@ BLIND     // can't see anything
 	var/ratio_newinteg = (eff_currint - newdam) / eff_maxint
 	var/text
 	var/y_offset
+	var/chunkicon
+	var/sfx
 	if(ratio > 0.75 && ratio_newinteg < 0.75)
 		text = "Armor <br><font color = '#8aaa4d'>marred</font>"
 		y_offset = -5
+		sfx = pick_damage_sound(1)
+		chunkicon = "chunkfall1"
 	if(ratio > 0.5 && ratio_newinteg < 0.5)
 		text = "Armor <br><font color = '#d4d36c'>damaged</font>"
 		y_offset = 15
+		sfx = pick_damage_sound(2)
+		chunkicon = "chunkfall2"
 	if(ratio > 0.25 && ratio_newinteg < 0.25)
 		text = "Armor <br><font color = '#a8705a'>sundered</font>"
 		y_offset = 30
+		sfx = pick_damage_sound(3)
+		chunkicon = "chunkfall3"
 	if(text)
+		new /obj/effect/temp_visual/armor_chunk(get_turf(src), 0.7 SECONDS, chunkcolor, chunkicon)
+		playsound(src, sfx, 100, TRUE)
 		filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, -20, y_offset)
 	. = ..()
 
@@ -673,3 +714,17 @@ BLIND     // can't see anything
 	str += "<br><b>RESIST:</b> [colorgrade_rating("🔥 FIRE", armor.fire, elaborate = TRUE)]"
 	examine_text = "<font color = '#ffffff'>[examine_text]</font>"
 	return SPAN_TOOLTIP_DANGEROUS_HTML(str, examine_text)
+
+/obj/item/clothing/proc/get_armor_integ()
+	var/eff_maxint = max_integrity - (max_integrity * integrity_failure)
+	var/eff_currint = max(obj_integrity - (max_integrity * integrity_failure), 0)
+	var/ratio =	(eff_currint / eff_maxint)
+	switch(ratio)
+		if(0.75 to 1)
+			return null
+		if(0.5 to 0.74)
+			return VISMSG_ARMOR_INT_STAGEONE
+		if(0.25 to 0.49)
+			return VISMSG_ARMOR_INT_STAGETWO
+		if(0 to 0.24)
+			return VISMSG_ARMOR_INT_STAGETHREE

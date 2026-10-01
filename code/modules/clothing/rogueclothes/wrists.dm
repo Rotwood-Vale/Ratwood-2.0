@@ -46,6 +46,8 @@
 	desc = "Polished gilbranze cuffings, clasped around the wrists. Through ascension, the chains of mortality are broken; and only through death will the spirit be ready to embrace divinity."
 	icon_state = "ancientbracers"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/wrists/roguetown/bracers/ancient/decrepit
 	name = "decrepit bracers"
@@ -281,6 +283,8 @@
 	item_state = "zizobracers"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/wrists/roguetown/bracers/zizo/Initialize(mapload)
 	. = ..()

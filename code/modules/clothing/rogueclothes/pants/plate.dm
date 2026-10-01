@@ -38,6 +38,8 @@
 	desc = "Polished gilbranze plates, layered atop silken chausses. Only the few who had embraced undeath were spared from Zizo's ascension; now, they command the undying legionnaires who march forth to sunder creation in Her name."
 	icon_state = "ancientplate_legs"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/under/roguetown/platelegs/ancient/decrepit
 	name = "decrepit plate chausses"
@@ -82,6 +84,7 @@
 	desc = "Leg garments worn by true anointed of the Dame of Ambition. In Her name."
 	icon_state = "zizocloth"
 	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#363030"
 
 /obj/item/clothing/under/roguetown/platelegs/zizo/Initialize(mapload)
 	. = ..()
@@ -107,6 +110,7 @@
 	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_LEG_ANTAG
 	armor_class = ARMOR_CLASS_MEDIUM
+	chunkcolor = "#363030"
 
 /obj/item/clothing/under/roguetown/platelegs/medium/zizo/Initialize(mapload)
 	. = ..()

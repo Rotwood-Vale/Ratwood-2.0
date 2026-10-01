@@ -33,6 +33,9 @@
 	desc = "Polished gilbranze mechanisms, meticulously interconnected to shroud splayed hands. 'Mercy' and 'innocence' are concepts paraded by the unenlightened; spill their blood without guilt, so that the world may yet be remade in Her image."
 	icon_state = "agauntlets"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/gloves/roguetown/plate/ancient/decrepit
 	name = "decrepit plate gauntlets"
@@ -77,6 +80,8 @@
 	icon_state = "zizogauntlets"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/gloves/roguetown/plate/zizo/Initialize(mapload)
 	. = ..()

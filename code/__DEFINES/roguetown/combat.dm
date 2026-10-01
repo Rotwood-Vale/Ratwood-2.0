@@ -39,3 +39,9 @@ Misc. Category. Spin it out if needed
 
 #define PROJ_PARRY_TIMER	0.65 SECONDS	//The time after an attack (swinging in the air counts) when a thrown item would be deflected at a higher chance.
 #define MAX_DODGE_CLAMP -5 // at 85%. Base is 90%.
+
+//Visible message presets.
+#define VISMSG_ARMOR_BLOCKED " <span class='armoralert'>Armor stops the damage.</span>"
+#define VISMSG_ARMOR_INT_STAGEONE "<span class='armoralert'><i> Dented.</i></span>"
+#define VISMSG_ARMOR_INT_STAGETWO "<span class='armoralert'> Damaged.</span>"
+#define VISMSG_ARMOR_INT_STAGETHREE "<span class='armoralert'><b> Crumbling!</b></span>"
