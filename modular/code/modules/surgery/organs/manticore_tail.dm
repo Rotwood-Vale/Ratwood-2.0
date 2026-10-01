@@ -4,6 +4,16 @@
 // Works with all existing tail-based sex actions (tailjob, tailpegging, etc.)
 // because it occupies the standard ORGAN_SLOT_TAIL.
 
+GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
+	/datum/sprite_accessory/tail/tailmaw2,
+	/datum/sprite_accessory/tail/tailmaw2_head,
+	/datum/sprite_accessory/tail/tailmaw2_stripes,
+	/datum/sprite_accessory/tail/tailmaw2_headstripes,
+	/datum/sprite_accessory/tail/tiefling/tailmaw,
+	/datum/sprite_accessory/tail/tiefling/heart/tailmaw,
+	/datum/sprite_accessory/tail/tiefling/spade/tailmaw,
+))
+
 /obj/item/organ/tail/manticore
 	name = "manticore tail"
 	desc = "A thick, undulating appendage of dark-furred base \
@@ -79,9 +89,16 @@
 /obj/item/organ/tail/manticore/proc/get_examine_text(mob/living/carbon/human/looker)
 	if(!owner)
 		return
+	if(is_plain_tailmaw())
+		if(maw_engorged)
+			return "The maw at [owner.p_their()] tail's tip blooms open, feelers writhing visibly and slick with sweet-smelling nectar."
+		return "The bulbous tip of [owner.p_their()] tail is sealed tightly shut around its maw, with only a faint bead of fluid visible at the seam."
 	if(maw_engorged)
 		return "The maw at [owner.p_their()] tail's tip is splayed open, feelers writhing visibly and slick with sweet-smelling nectar."
 	return "The bonelike plates at [owner.p_their()] tail's tip are sealed tightly shut, with only a faint bead of fluid visible at the seam."
+
+/obj/item/organ/tail/manticore/proc/is_plain_tailmaw()
+	return accessory_type in GLOB.manticore_plain_tailmaw_accessories
 
 /obj/item/organ/tail/manticore/proc/update_maw_state()
 	if(!owner || !owner.sexcon)
