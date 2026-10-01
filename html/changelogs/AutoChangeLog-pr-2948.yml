@@ -1,5 +1,0 @@
-author: "RadiantFlash7"
-delete-after: True
-changes:
-  - rscdel: "Hunters no longer start with a crossbow"
-  - bugfix: "images are no longer qdeled on the hunting trackers"

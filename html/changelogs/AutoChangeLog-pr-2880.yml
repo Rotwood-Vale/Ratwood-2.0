@@ -1,0 +1,4 @@
+author: "chemistrymain3"
+delete-after: True
+changes:
+  - bugfix: "Fixed a missing crafting recipe for skysugar."
