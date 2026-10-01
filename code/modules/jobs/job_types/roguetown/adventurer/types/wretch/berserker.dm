@@ -79,7 +79,7 @@
 					if("Katar")
 						beltr = /obj/item/rogueweapon/katar
 					if("Knuckledusters")
-						gloves = /obj/item/rogueweapon/knuckles
+						beltr = /obj/item/rogueweapon/knuckles
 					if("Punch Dagger")
 						beltr = /obj/item/rogueweapon/katar/punchdagger
 			if("Martial Expert") // designed to compete with unarmed by giving you alternatives to approaching fights.
