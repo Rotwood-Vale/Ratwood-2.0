@@ -2204,6 +2204,7 @@
 	wdefense = 5
 	wdefense_wbonus = 5
 	wbalance = WBALANCE_NORMAL
+	unenchantable = TRUE
 	smeltresult = null 
 	slot_flags = ITEM_SLOT_BACK //No need for a supplemental greatweapon strap.
 	equip_delay_self = 2 SECONDS

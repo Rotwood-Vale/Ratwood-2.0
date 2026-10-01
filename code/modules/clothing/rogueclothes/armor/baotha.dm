@@ -127,7 +127,6 @@
 	shoes = /obj/item/clothing/shoes/roguetown/anklets/baotha
 	neck = /obj/item/clothing/neck/roguetown/gorget/boatha
 	backr = /obj/item/storage/backpack/rogue/satchel/short
-	beltr = /obj/item/rogueweapon/whip/baotha
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 
 
@@ -237,7 +236,8 @@
 	desc = "Wicked, wicked, wicked."
 	icon_state = "baotha_whip"
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/dagger/sucker_punch) // sucker as a little flavor and bonus. 
-	force = 22
+	unenchantable = TRUE
+	force = 27
 	minstr = 8
 
 /obj/item/rogueweapon/whip/baotha/Initialize(mapload)
@@ -403,5 +403,4 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/baotha
 	neck = /obj/item/clothing/neck/roguetown/coif/baotha
 	backr = /obj/item/storage/backpack/rogue/satchel/short
-	backl = /obj/item/rogueweapon/spear/partizan/baotha
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)

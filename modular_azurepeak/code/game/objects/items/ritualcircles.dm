@@ -1930,8 +1930,11 @@
 			for(var/mob/living/carbon/human/persononrune in onrune)
 				if(HAS_TRAIT(persononrune, TRAIT_DEPRAVED))
 					folksonrune += persononrune
-			var/target = input(user, "Choose a host") as null|anything in folksonrune
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in folksonrune
 			if(!target)
+				return
+			if(HAS_TRAIT(target, TRAIT_NUDIST))
+				to_chat(user, "The target is a nudist and cannot wear armor!")
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
@@ -1942,6 +1945,15 @@
 			var/armor_choice = show_radial_menu(user, src, armor_options, require_near = TRUE, tooltips = TRUE)
 			if(!armor_choice)
 				armor_choice = "Baothan Cuirass"
+
+			var/list/weapon_options = list(
+				"Perfect Agony" = image(icon = 'icons/roguetown/weapons/whips32.dmi', icon_state = "baotha_whip"),
+				"Saccharine Swordspear" = image(icon = 'icons/roguetown/weapons/polearms64.dmi', icon_state = "swordstaff"),
+			)
+			var/weapon_choice = show_radial_menu(user, src, weapon_options, require_near = TRUE, tooltips = TRUE)
+			if(!weapon_choice)
+				weapon_choice = "Perfect Agony"
+
 			user.say("Lady, my Lady...")
 			if(!do_after(user, 5 SECONDS))
 				return
@@ -2010,7 +2022,7 @@
 		target.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
 		loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as they dare to defy Baotha."))
 
-/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target, armor_choice)
+/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target, armor_choice, weapon_choice)
 	if(!HAS_TRAIT(target, TRAIT_DEPRAVED))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE NOT OF HER LOVE"))
 		return
@@ -2018,15 +2030,23 @@
 		armor_choice = "Baothan Cuirass"
 	switch(armor_choice)
 		if("Baothan Cuirass")
-			target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)
-			if(HAS_TRAIT(target, TRAIT_RITUALIST))
-				target.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+			target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)	
 		if("Saccharine Plate Armor")
 			target.equipOutfit(/datum/outfit/job/roguetown/baothalightarmor)
 			if(HAS_TRAIT(target, TRAIT_RITUALIST))
 				ADD_TRAIT(target, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 				REMOVE_TRAIT(target, TRAIT_HEAVYARMOR, null)
-				target.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
+	if(!weapon_choice)
+		weapon_choice = "Perfect Agony"
+	switch(weapon_choice)
+		if("Perfect Agony")
+			target.put_in_hands(new /obj/item/rogueweapon/whip/baotha(target), TRUE)
+			if(HAS_TRAIT(target, TRAIT_RITUALIST))
+				target.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT)
+		if("Saccharine Swordspear")
+			target.put_in_hands(new /obj/item/rogueweapon/spear/partizan/baotha(target), TRUE)
+			if(HAS_TRAIT(target, TRAIT_RITUALIST))
+				target.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT)
 	target.Stun(60)
 	target.Knockdown(60)
 	to_chat(target, span_userdanger("DELECTABLE PAIN!"))
