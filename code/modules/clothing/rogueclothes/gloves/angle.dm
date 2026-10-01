@@ -49,3 +49,7 @@
 	icon_state = "clothwraps"
 	item_state = "clothwraps"
 	color = "#ffffff"
+
+/obj/item/clothing/gloves/roguetown/angle/pontifex/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
