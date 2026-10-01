@@ -10,7 +10,7 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY)
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
-	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 10)
+	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 13)
 	// Same stat spread as necromancer, same reasoning
 	subclass_stats = list(
 		STATKEY_INT = 4,
