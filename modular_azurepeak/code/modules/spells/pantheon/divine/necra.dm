@@ -287,7 +287,7 @@
 	var/outline_colour ="#929186" // A dull grey.
 	id = "necravow"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/necras_vow
-	effectedstats = list(STATKEY_CON = 3)
+	effectedstats = list(STATKEY_CON = 2)
 	duration = -1
 
 /datum/status_effect/buff/necras_vow/on_apply()
@@ -296,7 +296,6 @@
 	if (!filter)
 		owner.add_filter(NECRAVOW_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
 	ADD_TRAIT(owner, TRAIT_NECRAS_VOW, TRAIT_MIRACLE)
-	ADD_TRAIT(owner, TRAIT_CRITICAL_WEAKNESS, TRAIT_MIRACLE)
 	owner.rot_type = null
 	to_chat(owner, span_warning("My limbs feel more alive than ever... I feel whole..."))
 
