@@ -67,6 +67,9 @@
 	.=..()
 	update_description()
 
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+
 /obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/tongs))
 		if(user.get_skill_level(/datum/skill/craft/engineering) >= 3)
