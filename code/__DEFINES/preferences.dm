@@ -166,6 +166,7 @@ GLOBAL_LIST_INIT(voice_types_list, list(VOICE_TYPE_MASC, VOICE_TYPE_FEM, VOICE_T
 #define VOICE_PACK_FEM_ELF	"Elvish (Fem)"
 #define VOICE_PACK_FEM_DWARF "Dwarvish (Fem)"
 #define VOICE_PACK_ROTWOMAN "Rotman (Fem)"
+#define VOICE_PACK_CHOSEN "Chosen (Masc)"
 
 GLOBAL_LIST_INIT(voice_packs_list, list(
 	VOICE_PACK_DEFAULT = null,
@@ -185,5 +186,6 @@ GLOBAL_LIST_INIT(voice_packs_list, list(
 	VOICE_PACK_FEM_HAUGHTY = /datum/voicepack/female/haughty,
 	VOICE_PACK_FEM_ELF = /datum/voicepack/female/elf,
 	VOICE_PACK_FEM_DWARF = /datum/voicepack/female/dwarf,
-	VOICE_PACK_ROTWOMAN = /datum/voicepack/female/rotman
+	VOICE_PACK_ROTWOMAN = /datum/voicepack/female/rotman,
+	VOICE_PACK_CHOSEN = /datum/voicepack/male/chosen
 ))
