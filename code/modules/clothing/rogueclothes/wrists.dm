@@ -224,6 +224,10 @@
 	color = "#48443B"
 	nudist_approved = TRUE
 
+/obj/item/clothing/wrists/roguetown/bracers/cloth/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+
 /obj/item/clothing/wrists/roguetown/bracers/cloth/gladiator
 	name = "padded wrappings"
 	desc = "Sheared burlap and cloth, meticulously fashioned around the forearms. Taut fibers turn weeping gashes into mere tears along the cloth. </br>"
