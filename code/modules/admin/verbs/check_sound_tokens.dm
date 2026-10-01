@@ -104,6 +104,50 @@
 	else
 		output += "<p><i>SSsound_tokens does not exist.</i></p>"
 
+	output += "<h2>Your token channels</h2>"
+	if(SSsound_tokens)
+		var/queued_for_update = SSsound_tokens.clients_needing_update[src] || (src in SSsound_tokens.currentrun)
+		output += "<p>Positional refresh queued for you: [queued_for_update ? "yes" : "no"]</p>"
+	output += "<table border='1' cellpadding='3'><tr><th>source</th><th>source turf</th><th>channel</th><th>distance</th><th>server muted</th><th>started</th><th>client playing, position</th></tr>"
+	var/own_token_count = 0
+	var/list/client_sounds_by_channel = list()
+	// SoundQuery reports no volume, and its status carries only SOUND_PAUSED, so mute and volume are
+	// known from the server side alone
+	var/list/queried_sounds = src.SoundQuery()
+	for(var/sound/client_sound as anything in queried_sounds)
+		client_sounds_by_channel["[client_sound.channel]"] = client_sound
+	for(var/datum/sound_token/token as anything in tokens)
+		if(isnull(token.listeners[mob]))
+			continue
+		own_token_count++
+		var/turf/source_turf = get_turf(token.source)
+		var/turf/listener_turf = get_turf(mob)
+		var/distance = (source_turf && listener_turf) ? round(get_dist_euclidean(source_turf, listener_turf), 0.1) : "no turf"
+		var/sound/client_sound = client_sounds_by_channel["[token.sound_channel]"]
+		var/source_name = html_encode("[token.source]")
+		var/source_coords = source_turf ? "[source_turf.x],[source_turf.y],[source_turf.z]" : "none"
+		var/server_muted = (token.listeners[mob] & SOUND_MUTE) ? "yes" : "no"
+		var/started = LAZYACCESS(token.started_listeners, mob) ? "yes" : "no"
+		var/client_state = "no"
+		if(client_sound)
+			client_state = "yes, [round(client_sound.offset, 0.1)] of [round(client_sound.len, 0.1)] s"
+		output += "<tr><td>[source_name]</td><td>[source_coords]</td><td>[token.sound_channel]</td><td>[distance] / [token.range]</td><td>[server_muted]</td><td>[started]</td><td>[client_state]</td></tr>"
+	output += "</table>"
+	if(!own_token_count)
+		output += "<p>No tokens currently list your mob as a listener.</p>"
+
+	output += "<h3>Pool channels playing on your client</h3>"
+	output += "<p><i>A holder of none is a one-shot sound on a random channel.</i></p>"
+	output += "<table border='1' cellpadding='3'><tr><th>channel</th><th>file</th><th>position</th><th>repeat</th><th>server holder</th></tr>"
+	for(var/sound/queried_sound as anything in queried_sounds)
+		if(queried_sound.channel <= SSsounds.random_channels_min || queried_sound.channel > SSsounds.using_channels_max)
+			continue
+		var/holder = SSsounds.using_channels["[queried_sound.channel]"]
+		var/sound_file = html_encode("[queried_sound.file]")
+		var/holder_name = holder ? html_encode("[holder]") : "none"
+		output += "<tr><td>[queried_sound.channel]</td><td>[sound_file]</td><td>[round(queried_sound.offset, 0.1)] of [round(queried_sound.len, 0.1)] s</td><td>[queried_sound.repeat]</td><td>[holder_name]</td></tr>"
+	output += "</table>"
+
 	var/datum/browser/browser = new(usr, "check_sound_tokens", "Sound Tokens & Channels", 900, 700)
 	browser.set_content(jointext(output, ""))
 	browser.open()

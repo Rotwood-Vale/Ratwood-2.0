@@ -1,7 +1,7 @@
 /datum/looping_sound/instrument
 	mid_length = 120000 // Unused, start_sound_loop() sets no re-fire timer and the song plays or repeats natively
 	volume = 100
-	extra_range = 10	// Increase sound range.
+	extra_range = 2
 	/// Played through a sound token, so each playing instrument reserves its own channel from the general pool
 	use_sound_tokens = TRUE
 	var/stress2give = /datum/stressevent/music
@@ -151,6 +151,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 /datum/looping_sound/instrument/configure_token(datum/sound_token/token)
 	token.respect_instrument_pref = TRUE
 	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
+	token.same_floor_only = TRUE
 	token.on_listener_audible = CALLBACK(src, PROC_REF(give_stress))
 	if(sync_start_time)
 		token.start_time = sync_start_time
@@ -763,7 +764,6 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/ztratocaster/Initialize(mapload)
 	. = ..()
-	soundloop.extra_range = 5 //stop blowing up my ears ser
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "INSTRUMENT")
 
 /obj/item/rogue/instrument/lute

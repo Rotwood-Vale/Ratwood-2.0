@@ -58,10 +58,10 @@
 	/// Caller-provided duration override for when the length cannot be sniffed from the file
 	var/sound_duration_override
 	/**
-	 * Cell trackers for the source z plus the z above and below it.
+	 * Cell trackers for the source z and, unless same_floor_only, the z above and below it.
 	 *
 	 * The spatial grid is per-z and our sounds leak one storey each way, so one tracker cannot cover
-	 * the audience. Index 1 is always the source z.
+	 * the audience across floors. Index 1 is always the source z.
 	 */
 	var/list/datum/cell_tracker/cell_trackers
 	///Should we destroy the datum when the sound is done?
@@ -74,10 +74,12 @@
 	/**
 	 * When TRUE, a listener with no line of sight to the source hears the sound muffled.
 	 *
-	 * The continuous counterpart of playsound()'s SOUND_TRAVEL_CARRYING. Same floor only: cross-floor
-	 * listeners are muffled by the storey rule in playsound_local() regardless.
+	 * The continuous counterpart of playsound()'s SOUND_TRAVEL_CARRYING. It only checks walls on the
+	 * same floor; allowed cross-floor listeners get the storey muffle in playsound_local().
 	 */
 	var/muffle_behind_walls = FALSE
+	/// Restricts listener tracking and playback to the source floor.
+	var/same_floor_only = FALSE
 	/// Optional callback invoked with (listener) each time a listener crosses from muted to audible
 	var/datum/callback/on_listener_audible
 	/// The outermost movable the source is inside, if any, watched for INDIRECT movement.
@@ -228,9 +230,9 @@
 /**
  * Re-evaluates one listener and sends them the sound at their current volume, pan and muffle.
  *
- * Only the mute half of the multi-z rule lives here, as an early out for a listener two floors
- * away. The halving and muffle for one floor belong to playsound_local(), which every send goes
- * through, so doing them here as well would halve twice.
+ * The floor limit lives here: ordinary tokens mute two floors away, while same-floor tokens mute
+ * across any floor. The halving and muffle for an allowed adjacent floor belong to
+ * playsound_local(), which every send goes through, so doing them here as well would halve twice.
  *
  * A finished non-repeating sound stays muted for a late arrival. The token outlives the audio
  * until its owner stops, so without this an instrument whose song ended replays from the top.
@@ -241,6 +243,9 @@
  * eight neighbours read clear, which keeps the musicians clear. Every opaque object is read, where
  * point ambience reads only doors, and a grazed corner muffles too. Skipped across floors, where the
  * storey rule muffles instead.
+ *
+ * If either end leaves the map, stop its established channel. Otherwise a loop keeps playing at
+ * its last position until both ends have turfs again.
  */
 /datum/sound_token/proc/update_listener(mob/listener_mob, update_sound = TRUE)
 	if(QDELETED(src))
@@ -252,15 +257,18 @@
 	var/turf/listener_turf = get_turf(listener_mob)
 
 	if(!source_turf || !listener_turf)
+		if(LAZYACCESS(started_listeners, listener_mob))
+			SEND_SOUND(listener_mob, null_sound)
+			LAZYREMOVE(started_listeners, listener_mob)
+		set_listener_status(listener_mob, SOUND_MUTE)
 		return
 
 	var/was_muted = listeners[listener_mob] & SOUND_MUTE
 	var/should_be_muted = FALSE
 	var/effective_volume = volume
 
-	// Two or more floors away hears nothing. The one-floor rule is playsound_local's
 	var/dz = abs(source_turf.z - listener_turf.z)
-	if(dz >= 2)
+	if(dz >= 2 || (same_floor_only && dz))
 		should_be_muted = TRUE
 
 	if(get_dist_euclidean(source_turf, listener_turf) > range)
@@ -356,7 +364,8 @@
 	var/turf/source_turf = get_turf(src.source)
 	if(!player_turf || !source_turf)
 		return
-	if(abs(player_turf.z - source_turf.z) >= 2) // Matches the multi-z audibility rule
+	var/dz = abs(player_turf.z - source_turf.z)
+	if(dz >= 2 || (same_floor_only && dz))
 		return
 	if(get_dist_euclidean(source_turf, player_turf) > range)
 		return
@@ -450,12 +459,13 @@
 	// One tracker per z we can be heard on. Cells never overlap between z's, so the
 	// per-cell signal bookkeeping below cannot double up across trackers
 	var/list/track_turfs = list(source_turf)
-	var/turf/above_turf = GET_TURF_ABOVE(source_turf)
-	if(above_turf)
-		track_turfs += above_turf
-	var/turf/below_turf = GET_TURF_BELOW(source_turf)
-	if(below_turf)
-		track_turfs += below_turf
+	if(!same_floor_only)
+		var/turf/above_turf = GET_TURF_ABOVE(source_turf)
+		if(above_turf)
+			track_turfs += above_turf
+		var/turf/below_turf = GET_TURF_BELOW(source_turf)
+		if(below_turf)
+			track_turfs += below_turf
 
 	if(!cell_trackers)
 		cell_trackers = list()

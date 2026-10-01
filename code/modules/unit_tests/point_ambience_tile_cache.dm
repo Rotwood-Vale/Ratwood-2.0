@@ -49,15 +49,18 @@
 	ambience.register_source(second, fire_category.type)
 	TEST_ASSERT(ambience.can_reuse_tile_listener(far, before_registration), "Several known distant changes must preserve a standing answer")
 	var/before_override = ambience.static_version
+	var/indoor_scale = fire_category.indoor_volume / fire_category.volume
 	ambience.register_source(first, fire_category.type, volume_scale = 0.5)
-	TEST_ASSERT_EQUAL(fire_category.source_volumes[first], 0.5, "A source volume override must be retained")
+	TEST_ASSERT_EQUAL(fire_category.source_base_volumes[first], 0.5, "The source multiplier must be retained before indoor adjustment")
+	TEST_ASSERT_EQUAL(fire_category.source_volumes[first], 0.5 * indoor_scale, "Indoor fire volume must include the source multiplier")
 	TEST_ASSERT(!ambience.can_reuse_tile_listener(center, before_override), "A source volume override must refresh nearby listeners without movement")
 	TEST_ASSERT(ambience.can_reuse_tile_listener(far, before_override), "A source volume override must not refresh distant listeners")
 	ambience.register_source(first, fire_category.type)
-	TEST_ASSERT_EQUAL(fire_category.source_volumes[first], 0.5, "An omitted volume scale must preserve an existing override")
+	TEST_ASSERT_EQUAL(fire_category.source_volumes[first], 0.5 * indoor_scale, "An omitted volume scale must preserve an existing override")
 	var/before_override_reset = ambience.static_version
 	ambience.register_source(first, fire_category.type, volume_scale = 1)
-	TEST_ASSERT_NULL(fire_category.source_volumes[first], "An explicit scale of one must restore the category volume")
+	TEST_ASSERT_NULL(fire_category.source_base_volumes[first], "An explicit scale of one must clear the source multiplier")
+	TEST_ASSERT_EQUAL(fire_category.source_volumes[first], indoor_scale, "An explicit scale of one must keep only the indoor adjustment")
 	TEST_ASSERT(!ambience.can_reuse_tile_listener(center, before_override_reset), "Resetting a source volume must refresh nearby listeners")
 	TEST_ASSERT(ambience.can_reuse_tile_listener(far, before_override_reset), "Resetting a source volume must preserve distant listeners")
 	var/list/ranking = ambience.get_tile_ranking(center)

@@ -866,6 +866,7 @@ SUBSYSTEM_DEF(point_ambience)
 		category.min_volume = old_category.min_volume
 		category.floor_ratio = old_category.floor_ratio
 		category.volume = old_category.volume
+		category.indoor_volume = old_category.indoor_volume
 		loudest_volume = max(loudest_volume, category.volume)
 		category.hardness_pinned = old_category.hardness_pinned
 		category.indoors_volume_mult = old_category.indoors_volume_mult
@@ -876,6 +877,7 @@ SUBSYSTEM_DEF(point_ambience)
 			loudest_volume = max(loudest_volume, category.volume * old_category.source_volumes[overridden])
 		category.source_sounds = old_category.source_sounds
 		category.source_volumes = old_category.source_volumes
+		category.source_base_volumes = old_category.source_base_volumes
 		category.source_continuous = old_category.source_continuous
 		category.files = old_category.files
 

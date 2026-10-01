@@ -197,5 +197,6 @@ POINT_AMBIENCE_PAN_DEPTH_FLOOR 1
 ## 0 leaves the ordinary horizontal falloff and a flat floor penalty. Larger values combine
 ## horizontal and vertical distance for the falloff. This applies only to sounds already permitted
 ## to cross floors; it does not enable cross-floor point ambience. At 4, short-range sounds are
-## faint overhead while longer sounds, such as music, can carry farther. Read at startup.
+## faint overhead while longer eligible sounds, such as music boxes, can carry farther. Played
+## instruments stay on their source floor. Read at startup.
 SOUND_STOREY_TILES 4

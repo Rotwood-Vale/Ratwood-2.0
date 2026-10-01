@@ -99,6 +99,16 @@
 		category.source_sounds[source] = sound_override
 		static_version++
 		index_changes++
+	if(!isnull(category.indoor_volume))
+		if(isnull(volume_scale))
+			volume_scale = category.source_base_volumes[source] || 1
+		else if(volume_scale == 1)
+			category.source_base_volumes -= source
+		else if(volume_scale)
+			category.source_base_volumes[source] = volume_scale
+		var/area/source_area = source_turf.loc
+		if(!source_area?.outdoors && category.volume)
+			volume_scale *= category.indoor_volume / category.volume
 	var/current_volume_scale = category.source_volumes[source]
 	if(volume_scale == 1)
 		if(!isnull(current_volume_scale))

@@ -141,9 +141,6 @@
 	slot_flags = ITEM_SLOT_HIP
 	/// The mob whose self source this torch is, so it can be cleared when the torch leaves them
 	var/mob/last_carrier
-	/// Set on lanterns and read by nothing at present. Every torch is already heard by whoever holds
-	/// it alone and never indexed, on a turf or not
-	var/ambience_wearer_only = FALSE
 	//added for torch burnout
 	var/should_self_destruct = TRUE
 	max_integrity = 50
@@ -418,7 +415,6 @@
 
 /obj/item/flashlight/flare/torch/lantern
 	name = "iron lamptern"
-	ambience_wearer_only = TRUE
 	icon_state = "lamp"
 	desc = "A light to guide the way."
 	light_outer_range = 5
@@ -436,6 +432,12 @@
 	weather_resistant = TRUE
 	metalizer_result = null
 	dropshrink = 0.8
+
+/// Lampterns do not use the torch crackle when lit or carried
+/obj/item/flashlight/flare/torch/lantern/update_point_ambience()
+	if(last_carrier)
+		SSpoint_ambience.clear_self_source(last_carrier, src)
+		last_carrier = null
 
 /obj/item/flashlight/flare/torch/lantern/afterattack(atom/movable/A, mob/user, proximity)
 	. = ..()

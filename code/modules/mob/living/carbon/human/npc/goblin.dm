@@ -389,7 +389,7 @@
 /obj/structure/gob_portal/Initialize(mapload)
 	. = ..()
 	SSpoint_ambience.register_source(src, /datum/point_ambience_category/misc)
-	spawn_gob()
+	INVOKE_ASYNC(src, PROC_REF(spawn_gob))
 
 /obj/structure/gob_portal/attack_ghost(mob/dead/observer/user)
 	if(QDELETED(user))

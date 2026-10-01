@@ -11,8 +11,8 @@
  * the category because the shared walk uses it to select candidates. Sources that need different
  * reach need separate categories.
  *
- * Every point ambience clip is normalised to about -30 dB A-weighted, as loud as the set goes
- * without clipping, so a volume or a floor is the same loudness in any category.
+ * Point ambience clips are prepared to comparable levels. Their authored levels and category
+ * volumes still differ, so the same volume number need not sound equally loud in every category.
  */
 /datum/point_ambience_category
 	/// The name a SILENCE_POINT_AMBIENCE line in config/sound.txt names this category by
@@ -57,6 +57,8 @@
 	 * slim_send() applies floor_ratio to the resulting source volume, keeping its edge proportional
 	 */
 	var/list/source_volumes = list()
+	/// Explicit source multipliers before any indoor volume adjustment. An omitted scale preserves one.
+	var/list/source_base_volumes = list()
 	/**
 	 * Marks a voice as part of one continuous feature rather than an isolated point.
 	 *
@@ -74,6 +76,8 @@
 	 * state instead of walking a wall path for every river voice
 	 */
 	var/indoors_volume_mult = 1
+	/// Base volume for indoor sources, when different from volume
+	var/indoor_volume
 	/// Position in categories, the index into each client's per-category sound datums. Set by
 	/// SSpoint_ambience's New()
 	var/index = 0
@@ -138,8 +142,8 @@
 	/// The takes for a source whose area is not outdoors, where a category wants a fire in a room to
 	/// be a different sound from one in the open. voices is then the outdoor set
 	var/list/voices_indoors
-	/// Whether unique_voice also gives each source its own starting place in the loop. Off where the
-	/// takes above already tell sources apart, since a new stretch already differs by its file
+	/// Whether a new stretch starts at a place in the loop chosen by source position.
+	/// Source handoffs keep their current playback position.
 	var/voice_place = TRUE
 	/**
 	 * Sends a source handoff from the centre before panning toward the new source.
@@ -196,6 +200,7 @@
 /datum/point_ambience_category/proc/forget_source(atom/source)
 	source_sounds -= source
 	source_volumes -= source
+	source_base_volumes -= source
 	source_continuous -= source
 
 /datum/point_ambience_category/fire
@@ -203,23 +208,25 @@
 	/**
 	 * Gives each fire a take chosen by position and whether it is outdoors.
 	 *
-	 * Different takes help nearby hearths sound like separate fires.
+	 * The takes vary crackle timing, but each set shares the same source recordings.
 	 *
 	 * Braziers and campfires keep the roar whole, with its lows and top end cut, beneath varying
 	 * stretches of crackle and without flares. Chopping the roar makes the loop audibly drop out,
 	 * so it keeps its own crossfaded seam.
-	 * Hearths, ovens and forges use a pitched-down crackle bed with a quieter, low-cut roar and
-	 * only small flares. Their takes vary the roar's starting place and crackle spacing
+	 * Hearths, ovens and forges use quieter indoor takes with less low roar and softer crackle.
+	 * Their takes start at different places, so nearby fires do not all repeat in step.
 	 */
 	sound_file = 'sound/ambience/point/fire_1.ogg'
 	voices = list('sound/ambience/point/fire_1.ogg', 'sound/ambience/point/fire_2.ogg', 'sound/ambience/point/fire_3.ogg')
 	voices_indoors = list('sound/ambience/point/fire_in_1.ogg', 'sound/ambience/point/fire_in_2.ogg', 'sound/ambience/point/fire_in_3.ogg')
-	/// Just under a fountain's volume, every clip being normalised to one level. Set by ear
-	volume = 30
+	/// Outdoor level, set by ear against other point ambience categories
+	volume = 32
+	/// Indoor fire level, lower than the outdoor level before distance falloff
+	indoor_volume = 30
 	range = 6
 	unique_voice = TRUE
-	voice_place = FALSE
-	/// Chosen to keep a 17.5 dB walk from the volume above to the range edge, the floor being read as
+	voice_place = TRUE
+	/// Chosen to keep an 18.1 dB walk from the volume above to the range edge, the floor being read as
 	/// a share of the volume
 	min_volume = 4
 	channel = CHANNEL_FIRE_AMBIENCE
@@ -351,10 +358,10 @@
 	/// The crackle recording. The fire takes use the heavier roar as their bed
 	sound_file = 'sound/ambience/point/torch.ogg'
 	/// Faint against the rest by design. Set by ear
-	volume = 11
+	volume = 12
 	range = 4
 	unique_voice = TRUE
-	/// Chosen to keep an 11.3 dB walk from the volume above to the range edge, the floor being read
+	/// Chosen to keep a 12 dB walk from the volume above to the range edge, the floor being read
 	/// as a share of the volume
 	min_volume = 3
 	channel = CHANNEL_TORCH_AMBIENCE
