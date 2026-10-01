@@ -28,6 +28,7 @@
 		TRAIT_ALCHEMY_EXPERT, TRAIT_SEWING_EXPERT,
 		TRAIT_SURVIVAL_EXPERT, TRAIT_NOSTINK,
 		TRAIT_STEELHEARTED, TRAIT_RITUALIST,
+		TRAIT_NUMBED_LIMBS,
 	)
 
 	//You're part of a Pestran sect. Not nobility.
@@ -118,7 +119,7 @@
 							/obj/item/heart_blood_vial/filled = 2,
 							/obj/item/heart_blood_canister/filled = 1,
 							/obj/item/heart_blood_vial = 5,
-							/obj/item/heart_blood_canister = 1,
+							/obj/item/heart_blood_canister = 4,
 							/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
 							/obj/item/roguekey/keeper = 1,
 							/obj/item/roguekey/keeper_inner = 1,

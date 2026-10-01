@@ -347,6 +347,32 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		body_parts_covered_dynamic = body_parts_covered
 	update_transform()
 
+	if(!hitsound)
+		if(damtype == "fire")
+			hitsound = list('sound/blank.ogg')
+		if(damtype == "brute")
+			hitsound = list("swing_hit")
+
+	if (!embedding)
+		embedding = getEmbeddingBehavior()
+	else if (islist(embedding))
+		embedding = getEmbeddingBehavior(arglist(embedding))
+	else if (!istype(embedding, /datum/embedding_behavior))
+		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
+
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
+
+	if(max_blade_int)
+		if(randomize_blade_int_on_init)
+			//set blade integrity to randomized 60% to 100% if not already set
+			if(!blade_int)
+				blade_int = max_blade_int + rand(-(max_blade_int * 0.4), 0)
+			//set dismemberment integrity to max_blade_int if not already set
+			if(!dismember_blade_int)
+				dismember_blade_int = max_blade_int
+		else
+			blade_int = max_blade_int
 
 /obj/item/proc/update_transform()
 	transform = null
@@ -392,35 +418,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				B.apply()
 			if (obj_broken)
 				update_damaged_state()
-
-
-
-	if(!hitsound)
-		if(damtype == "fire")
-			hitsound = list('sound/blank.ogg')
-		if(damtype == "brute")
-			hitsound = list("swing_hit")
-
-	if (!embedding)
-		embedding = getEmbeddingBehavior()
-	else if (islist(embedding))
-		embedding = getEmbeddingBehavior(arglist(embedding))
-	else if (!istype(embedding, /datum/embedding_behavior))
-		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
-
-	if(sharpness) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
-
-	if(max_blade_int)
-		if(randomize_blade_int_on_init)
-			//set blade integrity to randomized 60% to 100% if not already set
-			if(!blade_int)
-				blade_int = max_blade_int + rand(-(max_blade_int * 0.4), 0)
-			//set dismemberment integrity to max_blade_int if not already set
-			if(!dismember_blade_int)
-				dismember_blade_int = max_blade_int
-		else
-			blade_int = max_blade_int
 
 /obj/item/Destroy(force=FALSE)
 	item_flags &= ~DROPDEL	//prevent reqdels

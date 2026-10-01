@@ -132,6 +132,7 @@
 			if(2)
 				targeted.apply_damage(10, BRUTE)
 				targeted.Knockdown(20)
+				targeted.drop_all_held_items()
 				to_chat(targeted, span_warning("Chaotic force slams into you!"))
 			if(3)
 				targeted.electrocute_act(12, source, 1)

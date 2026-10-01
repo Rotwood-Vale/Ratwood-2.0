@@ -26,8 +26,6 @@
 	var/user_sex_part = SEX_PART_NULL
 	/// Set which part/oriface the target will be using
 	var/target_sex_part = SEX_PART_NULL
-	/// Only allow select actions to be done subtly
-	var/subtle_supported = FALSE
 	/// Only allow select actions to end with a knot-tie
 	var/knot_on_finish = FALSE
 	/// Requires can_use_penis() to be TRUE for the user in standard sex part checks.
@@ -134,6 +132,8 @@
 			return FALSE
 	if((parts_to_check & SEX_PART_TAIL) && !actor.getorganslot(ORGAN_SLOT_TAIL) && !islamia(actor))
 		return FALSE
+	if((parts_to_check & SEX_PART_TAIL_MAW) && !get_manticore_tail(actor))
+		return FALSE
 	return TRUE
 
 // this proc is fail-open, e.g. it returns TRUE by default and all checks are early false returns
@@ -143,6 +143,8 @@
 	if(parts_to_check == SEX_PART_NULL) // & doesn't work here because it's 0
 		return TRUE // no further checks
 	var/needs_groin_check = FALSE
+	if((parts_to_check & SEX_PART_TAIL_MAW) && !get_manticore_tail(actor))
+		return FALSE
 	if((parts_to_check & SEX_PART_ANUS))
 		if(needs_chastity != !!actor.sexcon.has_chastity_anal())
 			return FALSE

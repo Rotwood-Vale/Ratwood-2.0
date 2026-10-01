@@ -101,7 +101,7 @@
 	var/weapons = list("Psydonic Longsword + Shield", "Psydonic Executioner Sword + Shield", "Psydonic War Axe + Shield", "Psydonic Whip + Shield",
 		"Psydonic Urumi + Shield","Psydonic Flail + Shield", "Psydonic Grand Mace + Shortsword", "Psydonic Spear + Handmace", "Psydonic Poleaxe + Shortsword",
 		"Psydonic Halberd + Shortsword", "Psydonic Greatsword + Handmace")
-	var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
+	var/weapon_choice = input(H,"CHOOSE YOUR WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 	switch(weapon_choice)
 		//Typical arms and such.
 		if("Psydonic Longsword + Shield")

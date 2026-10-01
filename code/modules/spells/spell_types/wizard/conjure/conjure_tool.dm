@@ -25,8 +25,6 @@
 	glow_color = GLOW_COLOR_METAL
 	glow_intensity = GLOW_INTENSITY_LOW
 
-	var/obj/item/conjured_tool = null
-
 	var/list/tool_options = list(
 		"Hoe" = /obj/item/rogueweapon/hoe,
 		"Thresher" = /obj/item/rogueweapon/thresher,
@@ -53,24 +51,10 @@
 	if(!tool_choice)
 		return
 	tool_choice = tool_options[tool_choice]
-	if(src.conjured_tool)
-		qdel(src.conjured_tool)
-		src.conjured_tool = null
+	dispel_conjured_item()
 
 	var/obj/item/R = new tool_choice(user.drop_location())
 	R.blade_dulling = DULLING_SHAFT_CONJURED
-	R.filters += filter(type = "drop_shadow", x=0, y=0, size=1, offset = 2, color = GLOW_COLOR_ARCANE)
-	R.smeltresult = null
-	R.salvage_result = null
-	R.fiber_salvage = FALSE
-	R.sellprice = 0
 	user.put_in_hands(R)
-	src.conjured_tool = R
+	set_conjured_item(R)
 	return TRUE
-
-/obj/effect/proc_holder/spell/invoked/conjure_tool/Destroy()
-	if(src.conjured_tool)
-		src.visible_message(span_warning("The [src]'s borders begin to shimmer and fade, before it vanishes entirely!"))
-		qdel(src.conjured_tool)
-		src.conjured_tool = null
-	return ..()

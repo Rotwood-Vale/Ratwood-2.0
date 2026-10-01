@@ -83,13 +83,105 @@
 	recipient.transform = recipient.transform.Translate(0, (0.25 * 16))
 	recipient.update_transform()
 
-/datum/quirk/malodorous
-	name = "Malodorous"
-	desc = "My body odor is unbearable without regular baths, and others can tell."
-	point_cost = 0
+/datum/quirk/redolent
+	name = "Redolent"
+	desc = "My body odor is strong and distinct. Without regular baths, others will notice..."
+	point_cost = 1
+	added_traits = list(TRAIT_REDOLENT)
 
-/datum/quirk/malodorous/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.vices += new /datum/charflaw/malodorous()
+/datum/quirk/redolent/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.redolent_scent_type = recipient.client?.prefs?.redolent_type || "Neutral"
+	recipient.redolent_scent = recipient.client?.prefs?.redolent_scent || ""
+
+// Redolent scent state and behavior. This is purely quirk-driven now: the quirk applies
+// TRAIT_REDOLENT, the mob holds the scent state, and life.dm drives handle_redolent_scent().
+/mob/living/carbon/human
+	/// How others perceive our scent: "Gross", "Neutral" or "Pleasant".
+	var/redolent_scent_type = "Neutral"
+	/// Player-written description of our scent.
+	var/redolent_scent = ""
+	/// Bathing suppresses our scent until this world.time.
+	var/redolent_suppressed_until = 0
+	/// The last time our scent aura pulsed.
+	var/redolent_last_aura_tick = 0
+
+/mob/living/carbon/human/proc/is_redolent_reeking()
+	return HAS_TRAIT(src, TRAIT_REDOLENT) && world.time >= redolent_suppressed_until
+
+/mob/living/carbon/human/proc/redolent_on_bath()
+	redolent_suppressed_until = world.time + 30 MINUTES
+	remove_status_effect(/datum/status_effect/debuff/redolent_stink)
+	to_chat(src, span_notice("I scrub the stink away. I should stay fresh for a while."))
+
+/mob/living/carbon/human/proc/redolent_apply_contact_stink(mob/living/carbon/human/target)
+	target.apply_status_effect(/datum/status_effect/debuff/stinky_contact, redolent_scent_type, redolent_scent)
+
+/mob/living/carbon/human/proc/handle_redolent_scent()
+	var/should_reek = is_redolent_reeking() && can_smell()
+
+	if(should_reek && mind?.antag_datums)
+		for(var/datum/antagonist/D in mind.antag_datums)
+			if(istype(D, /datum/antagonist/vampire/lord) || istype(D, /datum/antagonist/werewolf) || istype(D, /datum/antagonist/skeleton) || istype(D, /datum/antagonist/zombie) || istype(D, /datum/antagonist/lich))
+				should_reek = FALSE
+				break
+
+	if(should_reek && redolent_scent_type != "Pleasant")
+		apply_status_effect(/datum/status_effect/debuff/redolent_stink)
+	else
+		remove_status_effect(/datum/status_effect/debuff/redolent_stink)
+
+	if(!should_reek)
+		return
+	if(world.time < redolent_last_aura_tick + redolent_aura_tick_delay(redolent_scent_type))
+		return
+	redolent_last_aura_tick = world.time
+	redolent_visual_effect(src, redolent_scent_type)
+	redolent_stink_aura(src, redolent_scent_type)
+
+/proc/redolent_aura_tick_delay(scent_type)
+	return 30 SECONDS
+
+/proc/redolent_examine_text(scent_type, scent)
+	var/scent_text = html_encode(scent || "an unusual scent")
+	switch(scent_type)
+		if("Gross")
+			return span_greentext("They reek of [scent_text].")
+		if("Pleasant")
+			return "<span style='color:#FFB6C1'>They smell of [scent_text].</span>"
+	return "<span style='color:#d8cf8a'>They smell of [scent_text].</span>"
+
+/proc/redolent_visual_effect(mob/living/carbon/human/H, scent_type)
+	switch(scent_type)
+		if("Gross")
+			new /obj/effect/temp_visual/flies(get_turf(H))
+		if("Pleasant")
+			new /obj/effect/temp_visual/pleasant_scent(get_turf(H))
+
+/proc/redolent_stink_aura(mob/living/carbon/human/H, scent_type)
+	for(var/mob/living/nearby in view(2, H))
+		if(nearby == H)
+			continue
+		if(nearby.stat)
+			continue
+		if(!nearby.can_smell())
+			continue
+		if(HAS_TRAIT(nearby, TRAIT_NOSTINK))
+			continue
+		if(HAS_TRAIT(nearby, TRAIT_NOBREATH))
+			continue
+		switch(scent_type)
+			if("Gross")
+				if(!nearby.has_stress_event(/datum/stressevent/stinky_aura))
+					to_chat(nearby, "<span class='warning' style='color:#48c75a'>Something nearby reeks.</span>")
+					nearby.add_stress(/datum/stressevent/stinky_aura)
+			if("Neutral")
+				if(!nearby.has_stress_event(/datum/stressevent/prominent_scent))
+					to_chat(nearby, "<span class='warning' style='color:#d8cf8a'>There's a prominent scent in the air.</span>")
+					nearby.add_stress(/datum/stressevent/prominent_scent)
+			if("Pleasant")
+				if(!nearby.has_stress_event(/datum/stressevent/pleasant_scent))
+					to_chat(nearby, "<span class='warning' style='color:#ffb6c1'>A pleasant scent drifts through the air.</span>")
+					nearby.add_stress(/datum/stressevent/pleasant_scent)
 
 /datum/quirk/hunted
 	name = "Marked by Gnolls"

@@ -80,6 +80,9 @@
 				host.simple_remove_embedded_object(src)
 			return TRUE
 	else
+		if(HAS_TRAIT(host, TRAIT_JOURNEYS_END))
+			return FALSE
+
 		var/blood_extracted = min(blood_maximum - blood_storage, host.get_blood_volume(), blood_sucking)
 		host.set_blood_volume(max(host.get_blood_volume() - blood_extracted, 0))
 		blood_storage += blood_extracted
@@ -106,6 +109,9 @@
 				user.simple_remove_embedded_object(src)
 			return TRUE
 	else
+		if(HAS_TRAIT(user, TRAIT_JOURNEYS_END))
+			return FALSE
+
 		var/blood_extracted = min(blood_maximum - blood_storage, user.get_blood_volume(), blood_sucking)
 		user.set_blood_volume(max(user.get_blood_volume() - blood_extracted, 0))
 		blood_storage += blood_extracted * blood_multiplier
@@ -255,8 +261,8 @@
 	blood_sucking = 5
 	toxin_healing = -2
 	blood_multiplier = 3
-	blood_storage = BLOOD_VOLUME_BAD
-	blood_maximum = BLOOD_VOLUME_NORMAL
+	blood_storage = BLOOD_VOLUME_OKAY
+	blood_maximum = BLOOD_VOLUME_MAXIMUM
 	mindless_attach = FALSE
 	embedding = list(
 		"embed_chance" = 100,

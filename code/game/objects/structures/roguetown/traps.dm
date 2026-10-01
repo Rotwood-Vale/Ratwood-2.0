@@ -9,6 +9,7 @@
 	can_buckle = FALSE
 	max_integrity = 0
 	buckle_lying = 90
+	buckle_blocks_spells = TRUE
 	layer = 2.8
 
 /obj/structure/spike_pit/Crossed(atom/movable/AM)
