@@ -16,7 +16,7 @@
 		STATKEY_SPD = 1
 	)
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
-	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 10)
+	adv_stat_ceiling = list(STAT_STRENGTH = 12, STAT_CONSTITUTION = 13) //omnistat threshold change
 	subclass_spellpoints = 16
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
