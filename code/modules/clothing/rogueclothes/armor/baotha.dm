@@ -300,13 +300,6 @@
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "ARMOR")
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-
-/obj/item/clothing/suit/roguetown/armor/plate/fluted/baotha/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/baotha
 	name = "Saccharine Vestments"
@@ -347,13 +340,6 @@
 /obj/item/clothing/wrists/roguetown/bracers/leather/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "BRACERS")
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-
-/obj/item/clothing/wrists/roguetown/bracers/leather/baotha/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
 
 /obj/item/clothing/under/roguetown/baotha/skirt
 	name = "Saccharine Fauldcoat"
@@ -369,13 +355,6 @@
 /obj/item/clothing/under/roguetown/baotha/skirt/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "SKIRT")
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-
-/obj/item/clothing/under/roguetown/baotha/skirt/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
 
 /obj/item/clothing/gloves/roguetown/plate/baotha
 	name = "Saccharine Gauntlets"
@@ -389,13 +368,6 @@
 /obj/item/clothing/gloves/roguetown/plate/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "GLOVES")
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-
-/obj/item/clothing/gloves/roguetown/plate/baotha/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
 
 /obj/item/clothing/shoes/roguetown/boots/armor/baotha
 	name = "Saccharine Heels"
@@ -409,18 +381,11 @@
 /obj/item/clothing/shoes/roguetown/boots/armor/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "BOOTS")
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /obj/item/clothing/shoes/roguetown/boots/armor/baotha/ComponentInitialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_HEELS, 2)
 	stepnoise_flag = STEPNOISE_HEELS // This will prevent default footstep noise from being made by the heels (sounds odd)
-
-/obj/item/clothing/shoes/roguetown/boots/armor/baotha/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)	
 
 /datum/outfit/job/roguetown/baothalightarmor/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -434,7 +399,6 @@
 	pants = /obj/item/clothing/under/roguetown/baotha/skirt
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/baotha
 	head = /obj/item/clothing/head/roguetown/helmet/light/baotha
-	belt = /obj/item/storage/belt/rogue/leather/plaquegold/baotha
 	gloves = /obj/item/clothing/gloves/roguetown/plate/baotha
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/baotha
 	neck = /obj/item/clothing/neck/roguetown/coif/baotha
