@@ -181,6 +181,7 @@
 		STATKEY_WIL = 2,
 		STATKEY_LCK = 2,
 	)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_spellpoints = 15
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
