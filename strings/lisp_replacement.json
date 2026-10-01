@@ -7,5 +7,7 @@
 		"ss": "th",
         "s": "th"
     },
-    "middle": {}
+	"initial": [],
+    "middle": [],
+    "repeat": []
 }
