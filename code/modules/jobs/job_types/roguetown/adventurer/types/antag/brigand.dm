@@ -7,7 +7,7 @@
 	category_tags = list(CTAG_BANDIT)
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	traits_applied = list(TRAIT_MEDIUMARMOR)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_BIGGUY)
 	subclass_stats = list(
 		STATKEY_STR = 4,//have you seen this idiot's starting gear and skill spread??
 		STATKEY_WIL = 2,
