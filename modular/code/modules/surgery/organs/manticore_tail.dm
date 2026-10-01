@@ -90,6 +90,8 @@
 	if(new_state == maw_engorged)
 		return
 	maw_engorged = new_state
+	if(accessory_type != /datum/sprite_accessory/tail/manticore)
+		return
 	wagging = maw_engorged
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
