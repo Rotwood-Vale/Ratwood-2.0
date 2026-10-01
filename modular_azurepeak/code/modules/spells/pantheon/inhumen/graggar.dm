@@ -196,12 +196,12 @@
 
 /obj/effect/proc_holder/spell/invoked/resurrect/graggar
 	name = "Blood for Graggar"
-	desc = "You cannot dominate the dead. Place GRAGGAR'S EYES upon a fallen mortal, granting them the\
+	desc = "You cannot dominate the dead. Place GRAGGAR'S DECORATIONS upon a fallen mortal, granting them the\
 	chance to fight again... for a price. Their intelligence will be drained for some time, or until\
 	they slay an orcish challenger from His realm."
 	debuff_type = /datum/status_effect/debuff/graggar_challenge
-	alt_required_items = list(/obj/item/organ/heart = 1)
-	required_items = list(/obj/item/organ/heart = 1)
+	alt_required_items = list(/obj/item/organ = 1)
+	required_items = list(/obj/item/organ = 1)
 	sound = 'sound/magic/slimesquish.ogg'
 	chargedloop = /datum/looping_sound/invokeascendant
 	harms_undead = FALSE
