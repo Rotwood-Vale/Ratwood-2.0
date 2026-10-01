@@ -73,7 +73,8 @@
 				backl = /obj/item/rogueweapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)		//No shields, 'cause of things like greataxes.
 			if("Master Bludgeoner")
-				beltl = /obj/item/rogueweapon/mace/goden/steel
+				r_hand = /obj/item/rogueweapon/mace/goden/steel
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
