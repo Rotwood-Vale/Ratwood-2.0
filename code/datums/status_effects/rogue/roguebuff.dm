@@ -466,7 +466,7 @@
 	. = ..()
 	to_chat(owner, span_warning("My magical barrier reforms."))
 	playsound(owner, 'sound/magic/magearmorup.ogg', 75, FALSE)
-	owner.scalearmor = 0
+	owner.magearmor = 0
 
 /atom/movable/screen/alert/status_effect/buff/scalearmor
 	name = "Scale Struck"
