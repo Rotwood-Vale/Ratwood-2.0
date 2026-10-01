@@ -13,7 +13,7 @@
 		STATKEY_CON = 3, //dark souls 3 dual greatshield moment
 		STATKEY_STR = 2,
 		STATKEY_WIL = 3,
-		STATKEY_LCK = 2,
+		STATKEY_INT = 2,
 		STATKEY_SPD = -2,
 	)
 	subclass_skills = list(
