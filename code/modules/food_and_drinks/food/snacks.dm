@@ -306,7 +306,7 @@ All foods are distributed among various categories. Use common sense.
 					if(human_eater.add_stress(/datum/stressevent/hated_food))
 						to_chat(human_eater, span_red("Yuck! My hated food!"))
 
-		if (!HAS_TRAIT(human_eater, TRAIT_NASTY_EATER) && !HAS_TRAIT(human_eater, TRAIT_ORGAN_EATER))
+		if (!HAS_TRAIT(human_eater, TRAIT_NASTY_EATER) && !HAS_TRAIT(human_eater, TRAIT_ORGAN_EATER) && !HAS_TRAIT(human_eater, TRAIT_WILD_EATER))
 			if (human_eater.is_noble())
 				if (!portable)
 					if(!(locate(/obj/structure/table) in range(1, eater)))
@@ -453,7 +453,7 @@ All foods are distributed among various categories. Use common sense.
 			if(reagents.total_volume)
 				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
-				var/amt2take = reagents.total_volume / (bitesize - bitecount)
+				var/amt2take = reagents.total_volume / max(bitesize - bitecount, 1)
 				if((bitecount >= bitesize) || (bitesize == 1))
 					amt2take = reagents.total_volume
 				reagents.trans_to(M, amt2take, transfered_by = user, method = INGEST)

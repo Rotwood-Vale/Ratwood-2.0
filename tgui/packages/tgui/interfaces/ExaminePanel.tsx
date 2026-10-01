@@ -30,6 +30,8 @@ export const ExaminePanel = (props) => {
     is_vet,
     character_name,
     is_playing,
+    song_title,
+    song_artist,
     has_song,
     img_gallery,
     nsfw_img_gallery,
@@ -76,7 +78,11 @@ export const ExaminePanel = (props) => {
             onClick={() => act('toggle')}
             disabled={!has_song}
             selected={!is_playing}
-          />
+          >
+            {song_title && song_artist
+              ? `${song_title} — ${song_artist}`
+              : song_title ?? song_artist ?? null}
+          </Button>
         </>
       }
     >

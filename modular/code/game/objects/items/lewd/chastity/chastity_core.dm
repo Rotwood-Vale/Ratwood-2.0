@@ -225,9 +225,6 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	forceMove(H)
 	H.chastity_device = src
 	chastity_victim = H
-	var/datum/component/intimate_action_guard/chastity/action_guard_component = LoadComponent(/datum/component/intimate_action_guard/chastity)
-	if(action_guard_component)
-		action_guard_component.bind_to_wearer(H)
 	var/datum/component/intimate_reaction/chastity_receive_flavor/reaction_component = LoadComponent(/datum/component/intimate_reaction/chastity_receive_flavor)
 	if(reaction_component)
 		reaction_component.bind_to_wearer(H)

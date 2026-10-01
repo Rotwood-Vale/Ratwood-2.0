@@ -75,6 +75,11 @@
 		rider = M
 		ride_check(M)
 		M.set_glide_size(AM.glide_size)
+		if(ishuman(M))
+			var/mob/living/carbon/human/human_rider = M
+			human_rider.vars["last_mount_move_time"] = world.time
+			human_rider.update_action_buttons_icon()
+			addtimer(CALLBACK(human_rider, TYPE_PROC_REF(/mob, update_action_buttons_icon)), 2 SECONDS)
 	// Award riding XP only to the driver, once per completed mount move.
 	if(current_driver && !QDELETED(current_driver) && (current_driver in AM.buckled_mobs))
 		if(current_driver.m_intent == MOVE_INTENT_RUN)

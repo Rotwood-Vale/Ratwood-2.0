@@ -61,6 +61,7 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/heir/daring/pre_equip(mob/living/carbon/human/H)
@@ -192,6 +193,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/tanning = SKILL_LEVEL_JOURNEYMAN,
 	)
 
@@ -455,9 +457,11 @@
 
 
 /datum/status_effect/buff/champion/on_creation()
-	spawn(5) // sob doesnt work without this??
-		examine_text = "<font color='yellow'>SUBJECTPRONOUN is the Champion Of [owner.mind.ward.real_name]!</font>"
+	addtimer(CALLBACK(src, PROC_REF(build_examine_text)), 5)
 	return ..()
+
+/datum/status_effect/buff/champion/proc/build_examine_text()
+	examine_text = "<font color='yellow'>SUBJECTPRONOUN is the Champion Of [owner.mind.ward.real_name]!</font>"
 
 /datum/status_effect/buff/champion/tick()
 	for (var/mob/living/carbon/H in view(5, owner))

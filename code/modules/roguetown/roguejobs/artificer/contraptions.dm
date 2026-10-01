@@ -479,8 +479,8 @@
 
 /obj/item/contraption/lock_imprinter/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/key))
-		var/obj/item/key/the_key = I
+	if(istype(I, /obj/item/roguekey))
+		var/obj/item/roguekey/the_key = I
 		user.changeNext_move(CLICK_CD_FAST)
 		flick(off_icon, src)
 		playsound(user, 'sound/foley/doors/unlock.ogg', 100, TRUE)

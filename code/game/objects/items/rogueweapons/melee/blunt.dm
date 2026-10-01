@@ -126,12 +126,10 @@
 	force = 23
 	force_wielded = 29
 	name = "bronze mace"
-	color = "#f9d690"
+	icon_state = "bronzemace"
 	desc = "An antiquital staff, crested with a studded sphere of bronze. Bludgeons were the first implements made for the explicit purpose of killing another; fittingly, this was the second."
-	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/bronze
 	max_integrity = 250
-	wdefense = 2
 
 /obj/item/rogueweapon/mace/church
 	force = 25
@@ -569,6 +567,26 @@
 	smeltresult = /obj/item/ingot/iron
 	wdefense = 3
 
+/obj/item/rogueweapon/mace/warhammer/bronze
+	force = 22
+	name = "bronze warclub"
+	desc = "The warhammer's ancestral link, carved from a weightsome log and studded with bronze. Elven natureguards carry it to both honor their forefathers, and as a way to sunder those who'd ravage Dendor's bounties without thought-or-restraint; a toss from afar turns into a sundering hurlbat."
+	icon_state = "bronzeclub"
+	wbalance = WBALANCE_HEAVY
+	throwforce = 30
+	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 50, "embedded_fall_chance" = 20)//hilarious
+	smeltresult = /obj/item/ingot/bronze
+	wdefense = 3
+	max_integrity = 180
+
+/obj/item/rogueweapon/mace/warhammer/bronze/decorated
+	name = "decorated bronze warclub"
+	desc = "Flowers, silk, and gold caress this carved-and-spiked log; a honored totem who's roots trace back to the daes before Syon's impact. Myths speak of ancient elve-and-humen alike, wielding such bronzen bludgeons against the Archdevil's rampaging hordes."
+	icon_state = "bronzeclubdec"
+	smeltresult = /obj/item/ingot/gold
+	wdefense = 5
+	max_integrity = 250
+
 /obj/item/rogueweapon/mace/warhammer/steel
 	force = 25
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/warhammer/pick, /datum/intent/mace/warhammer/stab)
@@ -672,11 +690,11 @@
 	force = 12//Don't one-hand this.
 	force_wielded = 32//-3 compared to grand mace(steel goden). Better intents.
 	possible_item_intents = list(/datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/effect/daze, /datum/intent/effect/hobble)
+	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble)
 	name = "maul"
 	desc = "Who would need something this large? It looks like it was made for tearing down walls, rather than men."
 	icon_state = "sledge"
-	icon = 'icons/roguetown/weapons/64.dmi'
+	icon = 'icons/roguetown/weapons/blunt64.dmi'
 	wlength = WLENGTH_LONG
 	swingsound = BLUNTWOOSH_HUGE
 	slot_flags = null//No.
@@ -719,7 +737,7 @@
 //Malumite maul. Intended for Templars.
 /obj/item/rogueweapon/mace/maul/grand/malum
 	name = "Kargrund Maul"
-	desc = "Forged from the legacy of dwarven rock-hammers, this maul's holy steel and divine runes grant it immense power. \
+	desc = "Forged from the legacy of dwarven rock-hammers, this maul’s holy steel and divine runes grant it immense power. \
 	Unwieldy to those weak of arm or faith, its mighty blows have the strength to shatter both stone and skull alike."
 	icon_state = "malumhammer"
 	is_silver = TRUE
@@ -762,11 +780,27 @@
 	desc = "Covered in spikes, such is the weapon of a Dwarvish smith. \
 	This one has been well balanced, allowing for a weaker wielder to make use of it."
 	icon_state = "spiky"
-	gripped_intents = list(/datum/intent/maul/spiked, /datum/intent/maul/crush, /datum/intent/effect/daze, /datum/intent/effect/hobble)
+	gripped_intents = list(/datum/intent/maul/spiked, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble)
 	wdefense_wbonus = 3//7
 	minstr = 10//+1STR from Grudgebearer Smith. It should be fine.
 	smelt_bar_num = 3//Please don't...
 	max_integrity = 320
+
+/datum/intent/mace/sweep
+	name = "sweeping strike"
+	icon_state = "insweep"
+	blade_class = BCLASS_BLUNT
+	attack_verb = list("sweeps through", "smashes across")
+	animname = "strike"
+	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	chargetime = 0
+	damfactor = 1.2
+	clickcd = CLICK_CD_GLACIAL
+	item_d_type = "blunt"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
+	cleave = /datum/cleave_pattern/frontal_arc
+	desc = "A heavy sweep that smashes through targets to the sides and front."
 
 //Intents for the mauls.
 /datum/intent/effect/hobble

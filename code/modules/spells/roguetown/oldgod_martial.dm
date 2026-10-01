@@ -203,6 +203,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	antimagic_allowed = TRUE
 	miracle = TRUE
 	devotion_cost = 100
+	conjured_dispel_desc = "buckle and warp, before it disperses entirely"
 
 /obj/effect/proc_holder/spell/self/psydonic_inviolability/cast(mob/living/carbon/human/user)
 	if(!isliving(user))
@@ -265,22 +266,19 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	antimagic_allowed = TRUE
 	miracle = TRUE
 	devotion_cost = 100
-	var/obj/item/rogueweapon/conjured_lux_bolt = null
 
 /obj/effect/proc_holder/spell/self/psydonic_lux_bolt/cast(mob/living/carbon/human/user)
 	if(!isliving(user))
 		return FALSE
 
-	if(src.conjured_lux_bolt)
-		qdel(conjured_lux_bolt)
+	dispel_conjured_item()
 	var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/R = new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/lux(user.drop_location())
-	R.AddComponent(/datum/component/conjured_item)
 
 	if(user.STAPER > 10)
 		var/int_scaling = user.STAPER - 10
 		R.name = "lux bolt +[int_scaling]"//This doesn't do anything, just yet.
 	user.put_in_hands(R)
-	src.conjured_lux_bolt = R
+	set_conjured_item(R)
 	addtimer(CALLBACK(src, PROC_REF(lux_punish), user), wait = 12 SECONDS)
 //For later. We'll have this multi-purpose eventually.
 /*
@@ -305,12 +303,6 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	new /obj/effect/decal/cleanable/blood/puddle(target.loc)
 	target.apply_damage(250, BRUTE, spread_damage = TRUE) //Lowered from 300. At 300, it's enough to literally cripple limbs, which renders the miracle only useful if you have the absolver ready to take damage or in bed. It's limited to one bolt at a time anyways, so at most you'll only use it once in battle.
 	playsound(target.loc, 'sound/magic/woundheal_crunch.ogg', 100, FALSE)
-
-/obj/effect/proc_holder/spell/self/psydonic_lux_bolt/Destroy()
-	if(src.conjured_lux_bolt)
-		conjured_lux_bolt.visible_message(span_warning("The [conjured_lux_bolt]'s borders begin to buckle and warp, before it disperses entirely!"))
-		qdel(conjured_lux_bolt)
-	return ..()
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/lux
 	name = "lux bolt"
