@@ -1,4 +1,0 @@
-author: "sippykot"
-delete-after: True
-changes:
-  - bugfix: "adds the new drow gear to the vendor, it was not added properly"
