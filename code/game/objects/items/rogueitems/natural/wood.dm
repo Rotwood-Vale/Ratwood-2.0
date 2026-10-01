@@ -169,7 +169,7 @@
 	var/woodtotal = 1
 	switch (skill_level) //how many planks you get is random, but higher with more carpentry skill
 		if (0)
-			woodtotal = 2
+			woodtotal = 1
 		if (1)
 			woodtotal = 3
 		if (2)
