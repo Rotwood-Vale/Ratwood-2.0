@@ -250,7 +250,7 @@
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_APPRENTICE, //Ditto
 	)
 
-/datum/outfit/job/roguetown/wretch/deserter/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/wretch/deserter/maa/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
 		var/weapons = list("Warhammer & Shield","Sabre & Shield","Axe & Shield","Billhook","Greataxe","Halberd","Crossbow")
