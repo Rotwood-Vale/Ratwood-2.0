@@ -121,3 +121,20 @@
 	name = "Woods above"
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN
+
+/area/rogue/outdoors/woods/maplegrove
+	name = "Maple Grove"
+	first_time_text = null
+	ambush_times = null
+	ambush_mobs = null
+	deathsight_message = "A grove with maple trees"
+	deathsight_message = "A grove with maple trees in the southern forests"
+	first_time_text = "Maple Grove"
+
+/area/rogue/outdoors/woods/maplespring
+	name = "Maple Springs"
+	first_time_text = null
+	ambush_times = null
+	ambush_mobs = null
+	deathsight_message = "A hotspring with maple trees inside the city of rockhill"
+	first_time_text = "Maple Springs"
