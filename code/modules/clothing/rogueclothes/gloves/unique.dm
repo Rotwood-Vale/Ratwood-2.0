@@ -101,3 +101,17 @@
 	armor = ARMOR_BRONZE
 	max_integrity = ARMOR_INT_SIDE_BRONZE
 	salvage_result = /obj/item/natural/hide/cured
+
+/obj/item/clothing/gloves/roguetown/bandages/weighted/iconoclast
+	name = "rontz-set caestus"
+	desc = "We don't cotton to nobles around these parts, OH YEAH TASTE THE PAIN!"
+	icon_state = "icono_caestus"
+	item_state = "caestus"
+	unarmed_bonus = 1.3
+	armor = ARMOR_BRIGANDINE
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	salvage_result = /obj/item/roguegem/ruby
+
+/obj/item/clothing/gloves/roguetown/bandages/weighted/iconoclast/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "GLOVES")

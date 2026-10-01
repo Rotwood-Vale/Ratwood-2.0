@@ -207,6 +207,25 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
 	repair_time = 40 SECONDS
 
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/iconclast
+	name = "gilded skin"
+	desc = "The Many-Faced smiles on me. Wreath me in gold melted from crowns, let my skin shine radiant and glittering."
+	armor = ARMOR_BRONZE
+	blocksound = PLATEHIT
+	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
+	body_parts_inherent = COVERAGE_FULL
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	repair_time = 40 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/iconoclast
+	name = "gilded chest"
+	desc = "The Many-Faced smiles on me. Shield my heart O' Matthios, cover my ribs with drake scales."
+	armor = ARMOR_BRIGANDINE//neither bronze nor brig cover stab damage well, meaning nat armor icono has a chink in the armor
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL
+	repair_time = 40 SECONDS
+
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/barbarian
 	name = "hardened skin"
 	desc = "Toughened from abuse. My mettle remains. Resting will restore it's strength."
