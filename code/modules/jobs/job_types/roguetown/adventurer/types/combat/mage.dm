@@ -9,6 +9,7 @@
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 1,
@@ -80,6 +81,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 4, TRUE)
 				H.mind?.adjust_spellpoints(6)
 				ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_MAGEDEXTERITY, TRAIT_GENERIC)
 				H.change_stat("willpower", 2)
 
 /datum/advclass/mage/spellblade
@@ -272,7 +274,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
 
-	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_DODGEEXPERT, TRAIT_LIGHT_STEP) //dodge expert has the potential for being a big pain on spellcasters,  so we take away their mage armor as a trade.
+	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_DODGEEXPERT, TRAIT_LIGHT_STEP, TRAIT_MAGEDEXTERITY) //dodge expert has the potential for being a big pain on spellcasters,  so we take away their mage armor as a trade.
 	subclass_stats = list(
 		STATKEY_STR = -1,
 		STATKEY_INT = 2,
