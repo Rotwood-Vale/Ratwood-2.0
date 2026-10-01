@@ -20,6 +20,7 @@
 
 /obj/item/clothing/gloves/roguetown/angle/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
 	name = "grenzelhoft gloves"
@@ -48,3 +49,7 @@
 	icon_state = "clothwraps"
 	item_state = "clothwraps"
 	color = "#ffffff"
+
+/obj/item/clothing/gloves/roguetown/angle/pontifex/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
