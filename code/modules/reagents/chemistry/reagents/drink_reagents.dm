@@ -45,7 +45,7 @@
 			if(M.mind?.sleep_adv)
 				M.mind.sleep_adv.sleep_adv_points += 3
 				M.mind.sleep_adv.advance_cycle()
-		else if(M.has_status_effect(/datum/status_effect/debuff/sleepytime/t2) && metabolized_acoffee >= 30)
+		else if(M.has_status_effect(/datum/status_effect/debuff/sleepytime/t2) && metabolized_acoffee >= 20)
 			H.remove_sleep_depravation(TRUE)
 			to_chat(M, span_green("I feel SO much more focused from that coffee!"))
 			M.visible_message(span_info("[M] visibly wakes up, their eyes opening fully and the weary tired expression lifting from [M.p_them()]."))
@@ -53,7 +53,7 @@
 			if(M.mind?.sleep_adv)
 				M.mind.sleep_adv.sleep_adv_points += 5
 				M.mind.sleep_adv.advance_cycle()
-		else if(M.has_status_effect(/datum/status_effect/debuff/sleepytime/t2) && metabolized_acoffee >= 60)
+		else if(M.has_status_effect(/datum/status_effect/debuff/sleepytime/t2) && metabolized_acoffee >= 40)
 			H.remove_sleep_depravation(TRUE)
 			to_chat(M, span_green("That coffee hit the spot, I can think and move again without my eyelids weighing the same as my entire body."))
 			M.visible_message(span_info("[M] suddenly looks like [M.p_they()] aren't about to collapse anymore, blinking a couple of times as some conciousness comes back to [M.p_them()]."))

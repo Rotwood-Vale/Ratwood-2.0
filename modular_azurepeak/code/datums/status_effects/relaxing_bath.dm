@@ -80,7 +80,7 @@ dreaming. Still have to go to sleep to learn skills. Also gives healing tickrate
 		if(src.energy < src.max_energy)
 			src.energy_add(100) // Refilling our blue bar
 
-		if(soak_count >= soak_threshold && !ultimate_soak) //REMEMBER TO CHANGE THIS!!!!
+		if(soak_count >= soak_threshold && !ultimate_soak)
 			if(has_status_effect(/datum/status_effect/debuff/sleepytime))
 				to_chat(src, span_green("I feel completely refreshed from my soak!"))
 				src.visible_message(span_info("[src] looks completely refreshed, the exhaustion lifting from [src.p_them()]."))
