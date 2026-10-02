@@ -1,0 +1,18 @@
+2026-10-01:
+  RadiantFlash7:
+  - bugfix: Arcyne silver daggers now properly no longer smelt.
+  - bugfix: miscellaneous runtime fixes for json strings and meat
+  - rscdel: Hunters no longer start with a crossbow
+  - bugfix: images are no longer qdeled on the hunting trackers
+  sippykot:
+  - bugfix: adds the new drow gear to the vendor, it was not added properly
+2026-10-02:
+  Kroto-Ker:
+  - rscadd: Pecs breast option.
+  UntoldTactics:
+  - rscadd: Avantyne luxplate armor pieces have had their flavor text reworked into
+      a poem.
+  Yuckuza:
+  - balance: Amazon adventurers now get the bed breaker trait by default
+  chemistrymain3:
+  - bugfix: Fixed a missing crafting recipe for skysugar.
