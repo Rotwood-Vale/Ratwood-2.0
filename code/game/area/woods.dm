@@ -33,6 +33,18 @@
 	// droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	// droning_sound_night = 'sound/music/area/forestnight.ogg'
 
+/area/rogue/outdoors/woodsrat/valley // the valley should NEVER contain any antag exit or dungeons, it is meant to be a semi safe place to build
+	name = "Rockhill Woods - The Valley"
+	ambush_mobs = list(
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf = 10,
+		/mob/living/simple_animal/hostile/retaliate/rogue/bigrat = 5,
+		/mob/living/simple_animal/hostile/retaliate/rogue/mole = 5,
+		/mob/living/simple_animal/hostile/retaliate/rogue/wolf/bobcat = 10,
+		/mob/living/simple_animal/hostile/retaliate/rogue/direbear = 2)
+	converted_type = /area/rogue/indoors/shelter/woods
+	deathsight_message = "somewhere in the valley"
+	first_time_text = "The Valley"
+
 /area/rogue/outdoors/woods/north
 	name = "Rotwood Vale - North"
 	// This section shouldn't have any sea mobs, but is close to the old warden tower
@@ -109,3 +121,19 @@
 	name = "Woods above"
 	ambientsounds = AMB_MOUNTAIN
 	ambientnight = AMB_MOUNTAIN
+
+/area/rogue/outdoors/woods/maplegrove
+	name = "Maple Grove"
+	first_time_text = null
+	ambush_times = null
+	ambush_mobs = null
+	deathsight_message = "A grove with maple trees in the southern forests"
+	first_time_text = "Maple Grove"
+
+/area/rogue/outdoors/woods/maplespring
+	name = "Maple Springs"
+	first_time_text = null
+	ambush_times = null
+	ambush_mobs = null
+	deathsight_message = "A hotspring with maple trees inside the city of rockhill"
+	first_time_text = "Maple Springs"
