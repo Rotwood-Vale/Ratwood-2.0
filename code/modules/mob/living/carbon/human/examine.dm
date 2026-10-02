@@ -148,6 +148,7 @@
 	var/is_stupid = FALSE
 	var/is_smart = FALSE
 	var/is_normal = FALSE
+	var/guarded = FALSE
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 
@@ -157,6 +158,10 @@
 			is_stupid = TRUE
 		if(((H?.STAINT - 10) + (H?.STAPER - 10) + H.get_skill_level(/datum/skill/misc/reading)) >= 5)
 			is_normal = TRUE
+
+		if(user != src)
+			if(HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
+				guarded = TRUE
 
 	if(user != src)
 		var/datum/mind/Umind = user.mind
@@ -199,7 +204,7 @@
 
 	if(wear_shirt && !(SLOT_SHIRT in obscured))
 		var/str = "[m3] [wear_shirt.generate_tooltip(wear_shirt.get_examine_string(user))]. "
-		str += "[wear_shirt.integrity_check(is_smart)]"
+		str += "[wear_shirt.integrity_check(is_smart, guarded)]"
 		if(is_stupid)
 			str = "[m3] some kind of shirt!"
 		. += str
@@ -213,7 +218,7 @@
 			if(U.attached_accessory)
 				accessory_msg += " with [icon2html(U.attached_accessory, user)] \a [U.attached_accessory]"
 		var/str = "[m3] [wear_pants.generate_tooltip(wear_pants.get_examine_string(user))][accessory_msg]. "
-		str += wear_pants.integrity_check(is_smart)
+		str += wear_pants.integrity_check(is_smart, guarded)
 		if(is_stupid)
 			str = "[m3] a pair of some pants! "
 		. += str
@@ -222,7 +227,7 @@
 	//head
 	if(head && !(SLOT_HEAD in obscured))
 		var/str = "[m3] [head.generate_tooltip(head.get_examine_string(user))] on [m2] head. "
-		var/head_condition = head.integrity_check(is_smart)
+		var/head_condition = head.integrity_check(is_smart, guarded)
 		str += head_condition
 		if(is_stupid)
 			if(istype(head,/obj/item/clothing/head/roguetown/helmet))
@@ -236,7 +241,7 @@
 	//suit/armor
 	if(wear_armor && !(SLOT_ARMOR in obscured))
 		var/str = "[m3] [wear_armor.generate_tooltip(wear_armor.get_examine_string(user))]. "
-		var/armor_condition = wear_armor.integrity_check()
+		var/armor_condition = wear_armor.integrity_check(is_smart, guarded)
 		if(is_smart || is_normal)
 			str += armor_condition
 		else if (is_stupid)
@@ -272,7 +277,7 @@
 			str = "[m3] [CL.generate_tooltip(CL.get_examine_string(user))] on [m2] shoulders. "
 		else
 			str = "[m3] [get_examine_item_name_with_hover(user, cloak)] on [m2] shoulders. "
-		str += cloak.integrity_check(is_smart)
+		str += cloak.integrity_check(is_smart, guarded)
 		if (is_stupid)					//So they can tell the named RG tabards. If they can read them, anyway.
 			if(!istype(cloak, /obj/item/clothing/cloak/stabard) && user.get_skill_level(/datum/skill/misc/reading) == 0)
 				str = "[m3] some kinda clothy thing on [m2] shoulders!"
@@ -281,27 +286,27 @@
 	//right back
 	if(backr && !(SLOT_BACK_R in obscured))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, backr)] on [m2] back. "
-		str += backr.integrity_check(is_smart)
+		str += backr.integrity_check(is_smart, guarded)
 		. += str
 
 	//left back
 	if(backl && !(SLOT_BACK_L in obscured))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, backl)] on [m2] back. "
-		str += backl.integrity_check(is_smart)
+		str += backl.integrity_check(is_smart, guarded)
 		. += str
 
 	//Hands
 	for(var/obj/item/I in held_items)
 		if(!(I.item_flags & ABSTRACT))
 			var/str = "[m1] holding [get_examine_item_name_with_hover(user, I)] in [m2] [get_held_index_name(get_held_index_of_item(I))]. "
-			str += I.integrity_check(is_smart)
+			str += I.integrity_check(is_smart, guarded)
 			. += str
 
 	var/datum/component/forensics/FR = GetComponent(/datum/component/forensics)
 	//gloves
 	if(gloves && !(SLOT_GLOVES in obscured))
 		var/str = "[m3] [gloves.generate_tooltip(gloves.get_examine_string(user))] on [m2] hands. "
-		str += gloves.integrity_check(is_smart)
+		str += gloves.integrity_check(is_smart, guarded)
 		if(is_stupid)
 			str = "[m3] a pair of gloves of some kind!"
 		. += str
@@ -316,7 +321,7 @@
 	//belt
 	if(belt && !(SLOT_BELT in obscured))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, belt)] about [m2] waist. "
-		str += belt.integrity_check(is_smart)
+		str += belt.integrity_check(is_smart, guarded)
 		. += str
 		if(istype(belt, /obj/item/storage/belt/rogue)) // check if belt has dildo attached
 			var/obj/item/storage/belt/rogue/belt_with_dildo = belt
@@ -326,13 +331,13 @@
 	//right belt
 	if(beltr && !(SLOT_BELT_R in obscured))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, beltr)] on [m2] belt. "
-		str += beltr.integrity_check(is_smart)
+		str += beltr.integrity_check(is_smart, guarded)
 		. += str
 
 	//left belt
 	if(beltl && !(SLOT_BELT_L in obscured))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, beltl)] on [m2] belt. "
-		str += beltl.integrity_check(is_smart)
+		str += beltl.integrity_check(is_smart, guarded)
 		. += str
 
 	// chastity cages go HERE, where they SHOULD'VE FUCKING GONE.
@@ -353,7 +358,7 @@
 	//shoes
 	if(shoes && !(SLOT_SHOES in obscured))
 		var/str = "[m3] [shoes.generate_tooltip(shoes.get_examine_string(user))] on [m2] feet. "
-		str += shoes.integrity_check(is_smart)
+		str += shoes.integrity_check(is_smart, guarded)
 		if(is_stupid)
 			str = "[m3] some shoes on [m2] feet!"
 		. += str
@@ -361,7 +366,7 @@
 	//mask
 	if(wear_mask && !(SLOT_WEAR_MASK in obscured))
 		var/str = "[m3] [wear_mask.generate_tooltip(wear_mask.get_examine_string(user))] on [m2] face. "
-		str += wear_mask.integrity_check(is_smart)
+		str += wear_mask.integrity_check(is_smart, guarded)
 		if(is_stupid)
 			str = "[m3] some kinda thing on [m2] face!"
 		. += str
@@ -374,7 +379,7 @@
 			str = "[m3] [CM.generate_tooltip(CM.get_examine_string(user))] in [m2] mouth. "
 		else
 			"[m3] [get_examine_item_name_with_hover(user, mouth)] in [m2] mouth. "
-		str += mouth.integrity_check(is_smart)
+		str += mouth.integrity_check(is_smart, guarded)
 		if(is_stupid)
 			str = "[m3] some kinda thing on [m2] mouth!"
 		. += str
@@ -382,7 +387,7 @@
 	//neck
 	if(wear_neck && !(SLOT_NECK in obscured))
 		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_neck)] around [m2] neck. "
-		str += wear_neck.integrity_check(is_smart)
+		str += wear_neck.integrity_check(is_smart, guarded)
 		if (is_stupid)
 			str = "[m3] something on [m2] neck!"
 		. += str
@@ -415,7 +420,7 @@
 	//wrists
 	if(wear_wrists && !(SLOT_WRISTS in obscured))
 		var/str = "[m3] [wear_wrists.generate_tooltip(wear_wrists.get_examine_string(user))] on [m2] wrists."
-		str += wear_wrists.integrity_check(is_smart)
+		str += wear_wrists.integrity_check(is_smart, guarded)
 		if (is_stupid)
 			str = "[m3] something on [m2] wrists!"
 		. += str
@@ -784,14 +789,25 @@
 				. += "<span class='info' style='color: #313131ff'>[m1] wearing black lipstick.</span>"
 
 
-	var/list/lines
-	if((get_face_name() != real_name) && !observer_privilege)
-		lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src, user)
-	else
-		lines = build_cool_description(get_mob_descriptors(obscure_name, user), src, user)
+	if(show_descriptors)
+		var/list/lines
+		if((get_face_name() != real_name) && !observer_privilege)
+			lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src)
+		else
+			lines = build_cool_description(get_mob_descriptors(obscure_name, user), src)
 
-	for(var/line in lines)
-		. += span_info(line)
+		var/app_str
+		if(!(user.client?.prefs?.full_examine))
+			app_str = "<details><summary>[span_info("Details")]</summary>"
+		
+		for(var/line in lines)
+			app_str += span_info(line)
+			app_str += "<br>"
+		if(!(user.client?.prefs?.full_examine))
+			if(length(lines))
+				app_str += "</details>"
+
+		. += app_str
 
 	// for underwears that don't cover from the rear, genital descriptions are still shown
 	if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN) && src.underwear)
@@ -898,13 +914,15 @@
 			if(!(mobility_flags & MOBILITY_STAND) && user != src && (user.zone_selected == BODY_ZONE_CHEST))
 				. += "<a href='?src=[REF(src)];check_hb=1'>Listen to Heartbeat</a>"
 
-	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes || nsfwflavortext || erpprefs))
-		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
-
+	var/showassess = FALSE
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(get_dist(src, H) <= ((2 + clamp(floor(((H.STAPER - 10))),-1, 4)) + HAS_TRAIT(user, TRAIT_INTELLECTUAL)))
-			. += "<a href='?src=[REF(src)];task=assess;'>Assess</a>"
+			showassess = TRUE
+
+	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
+		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a> [showassess ? " | <a href='?src=[REF(src)];task=assess;'>Assess</a>" : ""]"
+
 
 	/// Rumours & Gossip
 	if(length(rumour) || length(noble_gossip))

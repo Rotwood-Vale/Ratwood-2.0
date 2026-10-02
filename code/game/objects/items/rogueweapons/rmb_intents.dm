@@ -237,7 +237,7 @@
 		if(special_msg)
 			to_chat(user, special_msg)
 		else if(user.client?.prefs.showrolls)
-			to_chat(user, span_warning("[L.p_they(TRUE)] did not fall for my feint... [perc]%"))
+			to_chat(user, span_warning("[L.p_they(TRUE)] did not fall for my feint... [HAS_TRAIT(L, TRAIT_DECEIVING_MEEKNESS) ? "???" : perc]%"))
 		if(L.d_intent == INTENT_DODGE)
 			L.changeNext_def(clamp(L.dodgetime - 2, 0, CLICK_CD_DODGE))
 			L.changeMaxDodge(-2)
