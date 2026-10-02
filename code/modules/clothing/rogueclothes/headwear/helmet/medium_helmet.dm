@@ -554,7 +554,7 @@
 	item_state = "aventail"
 	body_parts_covered = HEAD|HAIR|EARS|MOUTH|NECK
 	block2add = FOV_BEHIND
-	armor_class = ARMOR_CLASS_MEDIUM
+	armor_class = ARMOR_CLASS_HEAVY
 
 /obj/item/clothing/head/roguetown/helmet/bascinet/pigface
 	name = "pigface bascinet"
