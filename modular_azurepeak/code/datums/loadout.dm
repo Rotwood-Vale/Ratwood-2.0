@@ -1637,6 +1637,16 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	path = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 	loadout_category = LOADOUT_ARMOR
 
+/datum/loadout_item/tri_fencing_shirt_shepherd
+	name = "Shepherd's Shirt (Padded)"
+	path = /obj/item/clothing/suit/roguetown/shirt/freifechter/shepherd
+	triumph_cost = 3
+
+/datum/loadout_item/tri_fencing_vest_shepherd
+	name = "Shepherd's Vest (Padded)"
+	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/shepherd
+	triumph_cost = 3
+
 /datum/loadout_item/tri_gambeson
 	name = "Gambeson"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson
