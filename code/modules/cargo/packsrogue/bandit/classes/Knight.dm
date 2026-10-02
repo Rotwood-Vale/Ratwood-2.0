@@ -121,6 +121,11 @@
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail)
 
+/datum/supply_pack/rogue/Knight/chaincorslet
+	name = "Chain Corslet"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bikini)
+
 /datum/supply_pack/rogue/Knight/hauberk
 	name = "Hauberk"
 	cost = 40
@@ -140,6 +145,11 @@
 	name = "Steel Full plate"
 	cost = 60
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full)
+
+/datum/supply_pack/rogue/Knight/fullcorslet
+	name = "Full Plate Corslet"
+	cost = 55
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/bikini)
 
 /datum/supply_pack/rogue/Knight/Fullplate
 	name = "Coat of Plates"
