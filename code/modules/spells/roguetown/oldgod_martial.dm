@@ -341,6 +341,8 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 			visible_message(span_warning("[M] erupts in divine flames originating from [src]!"))
 			M.apply_damage(50, BRUTE, spread_damage = TRUE)
 			M.apply_damage(50, BURN, spread_damage = TRUE)
+			if(M.mob_biotypes & MOB_UNDEAD)
+				M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
 		else
 			if(HAS_TRAIT(M, TRAIT_PSYDONITE)) // only for practicing psydonites, all of inqusition qualifies. I dont want arbalist linched
 				M.adjust_fire_stacks(3)
