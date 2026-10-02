@@ -15,6 +15,12 @@
 #define BIND_TORSO 4
 #define BIND_NECK 5
 
+/* SWIFT BALANCE DEFINES */
+#define SWIFTCAP_CHEST 10
+#define SWIFTCAP_LIMBS 25
+#define SWIFTCAP_PRECISE 45
+#define STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL -2
+
 /*
 Medical defines
 */
