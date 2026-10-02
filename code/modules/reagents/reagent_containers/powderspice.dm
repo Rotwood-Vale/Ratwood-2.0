@@ -528,7 +528,7 @@
 	name = "sleep powder"
 	description = ""
 	color = "#ddd3df" // rgb: 96, 165, 132
-	metabolization_rate = 0.25
+	metabolization_rate = 0.20
 
 /datum/reagent/sleep_powder/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
