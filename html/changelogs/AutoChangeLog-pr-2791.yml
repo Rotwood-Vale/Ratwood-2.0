@@ -1,0 +1,7 @@
+author: "zeroisthebiggay"
+delete-after: True
+changes:
+  - bugfix: "Fixed the unholy grasp miracle not cleansing its debuff when you remove the net."
+  - balance: "Reworked the unholy grasp miracle. It now just summons a net made of gore in your hands that will splatter into blood if you miss it, and can't be reused, rather than shooting a projectile."
+  - balance: "The unholy grasp miracle loses its knockdown capabilities."
+  - sound: "Added throw and attach sound effects to nets."
