@@ -110,6 +110,11 @@
 // PROSTHETICS //
 /////////////////
 
+/datum/supply_pack/rogue/Medicaments/exhibitor
+	name = "Modified Construct Skill Exhibitor"
+	cost = 200
+	contains = list(/obj/item/construct_skill_core/blackmarket)
+
 /datum/supply_pack/rogue/Medicaments/bronzeprosthetic
 	name = "Bronze Prosthetic"
 	cost = 150
