@@ -18,10 +18,45 @@
 	cost = 10
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather)
 
-/datum/supply_pack/rogue/Pioneer/leather/studded
+/datum/supply_pack/rogue/Knave/leather/lcorslet
+	name = "Leather Corslet"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/bikini)
+
+/datum/supply_pack/rogue/Knave/leather/hidekini
+	name = "Hide Corslet"
+	cost = 10
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/hide/bikini)
+
+/datum/supply_pack/rogue/Knave/leather/studded
 	name = "Studded Leather Armor"
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded)
+
+/datum/supply_pack/rogue/Knave/leather/studded/bikini
+	name = "Studded Leather Corslet"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/bikini)
+
+/datum/supply_pack/rogue/Knave/Haubergeon
+	name = "Haubergeon"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail)
+
+/datum/supply_pack/rogue/Knave/Haubergeon/bronze
+	name = "Haubergeon, Bronze"
+	cost = 15
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bronze)
+
+/datum/supply_pack/rogue/Knave/chaincorslet
+	name = "Chain Corslet"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bikini)
+
+/datum/supply_pack/rogue/Knave/brigandine
+	name = "Light Brigandine"
+	cost = 30
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/light)
 
 /datum/supply_pack/rogue/Pioneer/leather/heavy
 	name = "Hardened Leather Armor"
@@ -110,7 +145,15 @@
 	cost = 25
 	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/pick)
 
-/datum/supply_pack/rogue/Pioneer/
+/datum/supply_pack/rogue/Pioneer/steppeaxe
+	name = "Valaška Axe"
+	cost = 70
+	contains = list(/obj/item/rogueweapon/stoneaxe/battle/steppesman)
+
+/datum/supply_pack/rogue/Pioneer/chupaaxe
+	name = "Shepherd Axe"//Juraj Jánošík larp
+	cost = 70
+	contains = list(/obj/item/rogueweapon/stoneaxe/battle/steppesman/chupa)
 
 //Tools of the trade.
 
@@ -333,7 +376,27 @@
 	cost = 10
 	contains = list(/obj/item/quiver/arrows)
 
+/datum/supply_pack/rogue/Pioneer/quivers/bronzearrows
+	name = "Quiver of Bronze Arrows"
+	cost = 10
+	contains = list(/obj/item/quiver/bronzearrows)
+
+/datum/supply_pack/rogue/Pioneer/quivers/bodkins
+	name = "Quiver of Bodkin Arrows"
+	cost = 60
+	contains = list(/obj/item/quiver/bodkin)
+
 /datum/supply_pack/rogue/Pioneer/quivers/bolts
 	name = "Quiver of Bolts"
 	cost = 20
 	contains = list(/obj/item/quiver/bolts)
+
+/datum/supply_pack/rogue/Pioneer/quivers/bronzebolts
+	name = "Quiver of Bronze Bolts"
+	cost = 20
+	contains = list(/obj/item/quiver/bolt/bronze)
+
+/datum/supply_pack/rogue/Pioneer/quivers/steelbolts
+	name = "Quiver of Blunt Bolts"
+	cost = 20
+	contains = list(/obj/item/quiver/bluntbolts)

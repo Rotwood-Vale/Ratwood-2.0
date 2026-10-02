@@ -33,6 +33,16 @@
 	cost = 40
 	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull)
 
+/datum/supply_pack/rogue/Knight/roundface
+	name = "Roundface Bascinet"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface)
+
+/datum/supply_pack/rogue/Knight/roundface
+	name = "Roundface Bascinet, Snouted"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted)
+
 /datum/supply_pack/rogue/Knight/knighthelm
 	name = "Knight's Helmet"
 	cost = 40
@@ -121,10 +131,20 @@
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy)
 
+/datum/supply_pack/rogue/Knight/brigandine
+	name = "Brigandine"
+	cost = 50
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine)
+
 /datum/supply_pack/rogue/Knight/Fullplate
 	name = "Steel Full plate"
 	cost = 60
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full)
+
+/datum/supply_pack/rogue/Knight/Fullplate
+	name = "Coat of Plates"
+	cost = 60
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/coatplates)
 
 /datum/supply_pack/rogue/Knight/Fullplate
 	name = "Fluted Full plate"
@@ -213,6 +233,16 @@
 	cost = 20
 	contains = list(/obj/item/rogueweapon/sword/long/death)
 
+/datum/supply_pack/rogue/Knight/lsword
+	name = "Broadsword"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/long/broadsword/steel)
+
+/datum/supply_pack/rogue/Knight/exesword
+	name = "Executioner's Sword"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/sword/long/exe)
+
 /datum/supply_pack/rogue/Knight/krieg
 	name = "Kriegmesser"
 	cost = 20
@@ -292,6 +322,11 @@
 	name = "Steel Warhammer"
 	cost = 20
 	contains = list(/obj/item/rogueweapon/mace/warhammer/steel)
+
+/datum/supply_pack/rogue/Knight/greatflail/steel
+	name = "Steel Greatflail"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/flail/peasantwarflail/steel)
 
 /datum/supply_pack/rogue/Knight/silvermace
 	name = "Silver Mace"

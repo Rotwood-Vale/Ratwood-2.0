@@ -47,6 +47,16 @@
 	cost = 40
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/strongstampot)
 
+/datum/supply_pack/rogue/Medicaments/antidote
+	name = "Poison Antidote"
+	cost = 40
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/strong_antidote)
+
+/datum/supply_pack/rogue/Medicaments/fireresist
+	name = "Fire Resistance Potion"
+	cost = 120//worse price than what sawbones gets
+	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/fireresist)
+
 /datum/supply_pack/rogue/Medicaments/rotcure
 	name = "Rot Cure Potion"
 	cost = 200

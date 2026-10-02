@@ -2072,6 +2072,8 @@
 	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier)
 	gripped_intents = null
 	force_wielded = 0
+	force = 25 // Same statline as the cup hilted etruscan rapier
+	wdefense = 8
 
 /obj/item/rogueweapon/sword/rapier/hand
 	name = "dark sister"
@@ -2083,6 +2085,8 @@
 	icon_state = "staffblade"
 	item_state = "staffblade"
 	sheathe_icon = "staffblade"
+	force = 25 // Same statline as the cup hilted etruscan rapier
+	wdefense = 8
 
 /obj/item/rogueweapon/sword/cutlass
 	name = "cutlass"
