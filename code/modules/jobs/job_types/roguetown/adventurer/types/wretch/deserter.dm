@@ -64,7 +64,7 @@
 			"Flail + Shield",
 			"Longsword + Shield",
 			"Lucerne",
-			"Battle Axe",
+			"Battle Axe + Shield",
 			"Lance + Kite Shield",
 			"Samshir",
 			"Ssangsudo",
@@ -101,8 +101,9 @@
 				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
-			if("Battle Axe")
-				backr = /obj/item/rogueweapon/stoneaxe/battle
+			if("Battle Axe + Shield")
+				r_hand = /obj/item/rogueweapon/stoneaxe/battle
+				backr = /obj/item/rogueweapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 			if("Lance + Kite Shield")
 				r_hand = /obj/item/rogueweapon/spear/lance
