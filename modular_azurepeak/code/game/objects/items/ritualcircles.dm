@@ -1965,7 +1965,7 @@
 				return
 			icon_state = "baotha_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-			baothaarmor(target, armor_choice)
+			baothaarmor(target, armor_choice, weapon_choice)
 			spawn(120)
 				icon_state = "baotha_active"
 
