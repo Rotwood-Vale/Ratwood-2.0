@@ -222,7 +222,7 @@
 /mob/living/carbon/human/proc/reset_dodgetime()
 	if(!cmode && mind)
 		dodgetime = 0
-		max_dodge = MAX_DODGE_CEIL
+		max_dodge = MAX_DODGE_START
 
 ///A Unique Stat comparison between src and HT.
 ///It takes the highest stats up to 14 and lowest stats 'up to' 14.
