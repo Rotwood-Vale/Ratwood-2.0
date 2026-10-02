@@ -18,42 +18,42 @@
 	cost = 10
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather)
 
-/datum/supply_pack/rogue/Knave/leather/lcorslet
+/datum/supply_pack/rogue/Pioneer/leather/lcorslet
 	name = "Leather Corslet"
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/bikini)
 
-/datum/supply_pack/rogue/Knave/leather/hidekini
+/datum/supply_pack/rogue/Pioneer/leather/hidekini
 	name = "Hide Corslet"
 	cost = 10
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/hide/bikini)
 
-/datum/supply_pack/rogue/Knave/leather/studded
+/datum/supply_pack/rogue/Pioneer/leather/studded
 	name = "Studded Leather Armor"
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded)
 
-/datum/supply_pack/rogue/Knave/leather/studded/bikini
+/datum/supply_pack/rogue/Pioneer/leather/studded/bikini
 	name = "Studded Leather Corslet"
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/bikini)
 
-/datum/supply_pack/rogue/Knave/Haubergeon
+/datum/supply_pack/rogue/Pioneer/Haubergeon
 	name = "Haubergeon"
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail)
 
-/datum/supply_pack/rogue/Knave/Haubergeon/bronze
+/datum/supply_pack/rogue/Pioneer/Haubergeon/bronze
 	name = "Haubergeon, Bronze"
 	cost = 15
 	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bronze)
 
-/datum/supply_pack/rogue/Knave/chaincorslet
+/datum/supply_pack/rogue/Pioneer/chaincorslet
 	name = "Chain Corslet"
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bikini)
 
-/datum/supply_pack/rogue/Knave/brigandine
+/datum/supply_pack/rogue/Pioneer/brigandine
 	name = "Light Brigandine"
 	cost = 30
 	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/light)
