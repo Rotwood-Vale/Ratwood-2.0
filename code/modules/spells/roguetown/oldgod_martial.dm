@@ -327,8 +327,6 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 				visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
 				M.apply_damage(50, BRUTE, spread_damage = TRUE)
 				M.apply_damage(50, BURN, spread_damage = TRUE)
-				if(M.mob_biotypes & MOB_UNDEAD)
-					M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
 			else
 				M.adjust_fire_stacks(12)
 				M.ignite_mob()
