@@ -69,7 +69,7 @@
 	var/list/ambientnight = null
 
 	/**
-	 * Whether river tiles here get a point ambience voice of their own.
+	 * Whether river tiles here seed the river ambience fill.
 	 *
 	 * Off where the water is set dressing in a built or generated space rather than a river anyone
 	 * expects to hear, and especially where the area already sets an ambientsounds of its own that the
@@ -77,15 +77,6 @@
 	 * once.
 	 */
 	var/river_ambience = TRUE
-	/**
-	 * Underground water, whose river voices are heard by reach rather than by roof.
-	 *
-	 * A cave or a sewer has its water in the same space as the listener, but the area cannot tell a
-	 * cliff face between an outdoor listener and that water, or a hut built inside the cave. So this
-	 * area's river voices take the river's indoors_volume_mult wherever the underground river fill does not reach,
-	 * and a listener standing here still counts as open for a river outside
-	 */
-	var/river_underground = FALSE
 
 	var/min_ambience_cooldown = 70 SECONDS
 	var/max_ambience_cooldown = 120 SECONDS

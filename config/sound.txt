@@ -76,7 +76,7 @@ DISABLE_MUSIC_WALL_MUFFLE 0
 ## Point ambience mode
 ## 0 OFF: stop point ambience.
 ## 1 LIVE: select nearby sources per listener and update them as the listener moves.
-## 2 FALLBACK: plain loops per eligible source. Torches have no fallback loop. Sounds can arrive
+## 2 FALLBACK: plain loops per eligible source. Torches and rivers stay silent. Sounds can arrive
 ##   only on a later replay, so a short pass by a source may be silent. Volume does not track a
 ##   moving listener between replays. Cost follows source count more than moving player count.
 ##
@@ -192,13 +192,14 @@ POINT_AMBIENCE_FALLOFF_HARDNESS 1
 ## step. Ordinary one-shot sounds use their own panning rule.
 POINT_AMBIENCE_PAN_DEPTH_FLOOR 1
 
-## Rivers underground
-## 1 plays cave and sewer rivers at full volume only where open ground reaches their water within
-## 8 steps. Everywhere else they play at the river's roof level: a building beside the sewer, a
-## hut built inside a cave, or outdoors beside a cliff with a cave river behind it. Doors and
-## windows always block, open or shut. 0 judges them by the listener's roof alone, so they carry
-## at full through rock to anyone outdoors. Read at startup.
-POINT_AMBIENCE_UNDERGROUND_RIVER_FILL 1
+## River reach, LIVE mode
+## River ambience follows open ground from eligible water on the listener's floor. Its authored
+## reach is 8 tiles: cardinal steps count as 1 tile and diagonals as 1.5. Walls, opaque turfs,
+## doors and windows block it, even when an opening is open. The blocked tile itself is silent.
+## Water can be heard around a corner within that path budget, but never through a wall.
+## The fill is built after map placement and updated locally when water or barriers change.
+## Fallback mode has no river playback. To disable river ambience in Live mode, use
+## SILENCE_POINT_AMBIENCE river.
 
 ## Sound across floors
 ## Effective distance added for each storey crossed, in addition to the usual floor muffling.

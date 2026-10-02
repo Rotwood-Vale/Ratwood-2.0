@@ -14,7 +14,7 @@
 	 * Already FALSE from /area/rogue/under, restated for this tree.
 	 *
 	 * These rooms are generated dungeon pieces and each one already chooses the sound it wants, beach
-	 * for the lake, cave water for the sewer, basement here. River voices would layer under all of it
+	 * for the lake, cave water for the sewer, basement here. River ambience would layer under all of it
 	 * rather than replace it, and none of these rivers is one anyone came to listen to.
 	 */
 	river_ambience = FALSE

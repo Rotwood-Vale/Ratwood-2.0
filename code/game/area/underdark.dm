@@ -4,7 +4,6 @@
 	warden_area = FALSE
 	first_time_text = "The Underdark" // This is where most people will enter Underdark
 	river_ambience = TRUE
-	river_underground = TRUE
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
 	spookysounds = SPOOKY_CAVE
@@ -66,7 +65,6 @@
 	warden_area = FALSE
 	first_time_text = "The Underdark" // This is where most people will enter Underdark
 	river_ambience = TRUE
-	river_underground = TRUE
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
 	spookysounds = SPOOKY_CAVE

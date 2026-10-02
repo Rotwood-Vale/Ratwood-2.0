@@ -93,6 +93,7 @@
 #include "focus_only_tests.dm"
 #include "harddels.dm"
 #include "point_ambience_doors.dm"
+#include "point_ambience_river_fill.dm"
 #include "point_ambience_speed.dm"
 #include "point_ambience_tile_cache.dm"
 #include "reagent_id_typos.dm"

@@ -163,6 +163,8 @@
 // rolls cultural stock / victualling lines against SSmerchant.supply_packs at Initialize().
 #define INIT_ORDER_MERCHANT_TRADE	-23
 #define INIT_ORDER_MINOR_MAPPING	-40
+// After minor mapping, the last subsystem to place turfs at init, so the river fill sees every map
+#define INIT_ORDER_POINT_AMBIENCE	-45
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60
 #define INIT_ORDER_PERSISTENCE		-95

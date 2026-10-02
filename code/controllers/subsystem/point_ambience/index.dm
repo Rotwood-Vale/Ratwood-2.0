@@ -158,79 +158,6 @@
 	bucket += source
 
 /**
- * Registers one tile of something much larger, returning whether this source was the one taken.
- *
- * A river is thousands of turfs and wants one voice every few tiles, so a turf registers only when
- * no voice of its category is already within spread of it.
- *
- * THE COVERAGE RULE IS `spread + 1 <= category.range`, not the obvious one. A tile can sit a full
- * spread from its nearest voice and a listener stands one tile off the run's edge, so the worst case
- * is spread + 1. Treating voices as evenly spaced and halving the gap is about twice as generous as
- * the truth, since claiming is greedy over a 2D area in mapload order.
- *
- * Arguments:
- * * category_path - the category's TYPEPATH, not its datum
- * * spread - tiles a voice covers, so no second voice is claimed within this of one
- * * sound_override, volume_scale - as register_source, letting a source ride a category it does
- *   not sound like
- * * continuous - the source is one voice of a long thing, so it is always sent centred and an
- *   update that changes nothing is skipped. TRUE by default, since anything spread over a run is a
- *   line.
- */
-/datum/controller/subsystem/point_ambience/proc/register_spread_source(atom/source, category_path, spread, sound_override, volume_scale, continuous = TRUE)
-	var/turf/source_turf = get_turf(source)
-	if(!source_turf)
-		return FALSE
-	var/datum/point_ambience_category/claim_category = categories_by_path[category_path]
-	if(!claim_category || claim_category.silenced)
-		return FALSE
-	// By distance, not a grid of spread-sized blocks, which spaces voices up to 2*spread-1 apart
-	if(any_source_within(source_turf, claim_category, spread))
-		return FALSE
-	if(continuous)
-		claim_category.source_continuous[source] = TRUE
-	register_source(source, category_path, sound_override, volume_scale)
-	return TRUE
-
-/**
- * Whether any source of a category already sits within radius of a turf.
- *
- * Walks the same buckets the listener walk does, exiting on the first hit. Spaces a run's voices:
- * mostly at mapload, and again per candidate neighbour whenever a river voice's turf is destroyed
- * and the run re-seeds.
- */
-/datum/controller/subsystem/point_ambience/proc/any_source_within(turf/check_turf, datum/point_ambience_category/category, radius)
-	PRIVATE_PROC(TRUE)
-	if(length(buckets_by_z) < check_turf.z)
-		return FALSE
-	var/list/floor_buckets = buckets_by_z[check_turf.z]
-	if(!floor_buckets)
-		return FALSE
-	var/cells = length(floor_buckets)
-	var/radius_sq = radius * radius
-	var/wanted = category.index
-	var/by_lo = max(1, check_turf.y - radius) >> POINT_AMBIENCE_CELL_SHIFT
-	var/by_hi = (check_turf.y + radius) >> POINT_AMBIENCE_CELL_SHIFT
-	for(var/bx in (max(1, check_turf.x - radius) >> POINT_AMBIENCE_CELL_SHIFT) to ((check_turf.x + radius) >> POINT_AMBIENCE_CELL_SHIFT))
-		var/row = bx * cell_stride + 1
-		for(var/by in by_lo to by_hi)
-			var/cell = row + by
-			if(cell > cells)
-				break
-			var/list/bucket = floor_buckets[cell]
-			if(!bucket)
-				continue
-			var/count = length(bucket)
-			for(var/i = 1, i <= count, i += 4)
-				if(bucket[i + 2] != wanted)
-					continue
-				var/dx = bucket[i] - check_turf.x
-				var/dy = bucket[i + 1] - check_turf.y
-				if(dx * dx + dy * dy <= radius_sq)
-					return TRUE
-	return FALSE
-
-/**
  * Takes a source out of the index and silences it for anyone currently hearing it.
  *
  * Safe on something never registered, the common case for a mapped emitter that was never lit.
@@ -314,7 +241,8 @@
 	max_range = 0
 	for(var/datum/point_ambience_category/category as anything in categories)
 		category.resolve_derived()
-		max_range = max(max_range, category.range)
+		if(category != river_category)
+			max_range = max(max_range, category.range)
 	max_range_sq = max_range * max_range
 	clear_tile_cache()
 

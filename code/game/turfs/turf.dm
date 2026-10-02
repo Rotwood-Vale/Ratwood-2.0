@@ -488,7 +488,7 @@
 	for(var/obj/door in src)
 		if(door.sound_door && door != leaving)
 			sound_door_count++
-	SSpoint_ambience?.underground_river_turf_changed(src)
+	SSpoint_ambience?.river_fill_turf_changed(src)
 
 /// Counts the windows and doors here from scratch, for the same reasons as recount_sound_doors()
 /turf/proc/recount_sound_openings(atom/movable/leaving)
@@ -496,7 +496,7 @@
 	for(var/obj/opening in src)
 		if(opening.sound_opening && opening != leaving)
 			sound_opening_count++
-	SSpoint_ambience?.underground_river_turf_changed(src)
+	SSpoint_ambience?.river_fill_turf_changed(src)
 
 /turf/open/Entered(atom/movable/AM)
 	..()

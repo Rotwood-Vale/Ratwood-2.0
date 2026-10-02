@@ -558,8 +558,15 @@
 /// Index changes in one tick, outside any bulk update, that get the caller reported. A starting
 /// heuristic rather than a measured break even
 #define POINT_AMBIENCE_BULK_BURST 64
-/// Steps the underground river fill walks out from underground water, the river category's range
-#define POINT_AMBIENCE_UNDERGROUND_RIVER_FILL_STEPS 8
+/// Authored river reach in tiles. The fill walks it in half steps, a cardinal 2 and a diagonal 3,
+/// so its budget is twice this
+#define POINT_AMBIENCE_RIVER_FILL_RANGE 8
+#define POINT_AMBIENCE_RIVER_FILL_BUDGET (POINT_AMBIENCE_RIVER_FILL_RANGE * 2)
+/// Packed fill marks keep blocker dependencies without making those turfs audible. Null means absent
+#define RIVER_FILL_BLOCKED_BIT 1
+#define RIVER_FILL_MARK(cost, blocked) (((cost) << 1) | (blocked))
+#define RIVER_FILL_COST(mark) ((mark) >> 1)
+#define RIVER_FILL_AUDIBLE(mark) (!isnull(mark) && !((mark) & RIVER_FILL_BLOCKED_BIT))
 
 /**
  * EAX Occlusion for a muffled send, slot 7 of the 18-slot sound.echo array, in millibels.

@@ -599,10 +599,8 @@
 	wash_in = TRUE
 	swim_skill = TRUE
 	swimdir = TRUE
-	/// Whether this turf is the one speaking for its stretch of river. One in every few tiles
-	var/ambience_source = FALSE
-	/// Whether this turf seeds the underground river fill, so its Destroy takes it out again
-	var/underground_river_source = FALSE
+	/// Whether this turf seeds river ambience, so Destroy removes it again
+	var/river_fill_source = FALSE
 
 /turf/open/water/river/muddy
 	water_color = "#705a43"
@@ -633,63 +631,14 @@
 		water_top_overlay.icon_state = "rivertop"
 		water_top_overlay.dir = dir
 
-/**
- * One river turf in every RIVER_SPREAD speaks for its stretch, the rest are silent.
- *
- * A river is thousands of turfs and one continuous sound. Voices are claimed by distance from each
- * other, so this is the furthest a river tile sits from its nearest voice.
- *
- * It must stay at or under the river category's range minus one: a tile can sit a full spread from
- * its voice and a listener stands a tile off the water, so the worst case is spread + 1 and the range
- * has to cover it. At range 8 that is a ceiling of 7, and 6 leaves a tile in hand. See
- * register_spread_source() for why claiming is by distance rather than by grid.
- */
-#define RIVER_SPREAD 6
-
 /turf/open/water/river/Initialize(mapload)
 	icon_state = "rock"
-	.  = ..()
-	// A turf's loc is its area. Areas that hold water as scenery opt out, so a generated dungeon
-	// room does not babble at you
+	. = ..()
+	// Scenery water can opt out by area. Other water types do not seed this fill
 	var/area/our_area = loc
-	// Before the opt out below, so the fill's sources follow the area flag alone
-	if(our_area?.river_underground)
-		underground_river_source = TRUE
-		SSpoint_ambience.underground_river_tile_added(src)
-	if(our_area && !our_area.river_ambience)
-		return
-	// Unregistered from the Destroy in rivers.dm, which this type already has. No file of its own:
-	// the category carries the clip set and each listener advances through it independently
-	if(SSpoint_ambience.register_spread_source(src, /datum/point_ambience_category/river, RIVER_SPREAD))
-		ambience_source = TRUE
-
-/**
- * Hands this river voice's claim to a neighbour as the turf goes away.
- *
- * Nothing re-runs claiming for the turfs around a lost voice, so without this its stretch of bank
- * stays silent for the rest of the round. Grants one voice, the first river neighbour within
- * RIVER_SPREAD that no other voice reaches, so tiles on the far side of the lost one can still be
- * left uncovered. None qualifying means every river tile in reach already has another voice near
- * enough, or sits in an area that opts out.
- *
- * Must run AFTER the unregister, or this turf is still in the index and refuses every candidate.
- */
-/turf/open/water/river/proc/hand_off_ambience()
-	ambience_source = FALSE
-	// Typed loop, never `as anything`: range() returns each turf's CONTENTS alongside it, so the
-	// istype filter is what keeps a mob standing in the water out of the river's voice list
-	for(var/turf/open/water/river/neighbour in range(RIVER_SPREAD, src))
-		if(neighbour == src || neighbour.ambience_source)
-			continue
-		// The same opt-out Initialize honours: areas holding water as scenery stay quiet
-		var/area/their_area = neighbour.loc
-		if(their_area && !their_area.river_ambience)
-			continue
-		if(SSpoint_ambience.register_spread_source(neighbour, /datum/point_ambience_category/river, RIVER_SPREAD))
-			neighbour.ambience_source = TRUE
-			return
-
-#undef RIVER_SPREAD
+	if(our_area?.river_ambience)
+		river_fill_source = TRUE
+		SSpoint_ambience.river_fill_tile_added(src)
 
 /turf/open/water/river/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()

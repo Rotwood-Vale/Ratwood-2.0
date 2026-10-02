@@ -40,9 +40,8 @@
 	test_sources += first
 	test_sources += second
 	fire_category.silenced = TRUE
-	TEST_ASSERT(!ambience.register_spread_source(first, fire_category.type, 1), "A silenced category must refuse a spread source")
-	TEST_ASSERT_NULL(ambience.source_categories[first], "A refused spread source must not enter the index")
-	TEST_ASSERT_NULL(fire_category.source_continuous[first], "A refused spread source must not leave a continuity reference")
+	ambience.register_source(first, fire_category.type)
+	TEST_ASSERT_NULL(ambience.source_categories[first], "A refused source must not enter the index")
 	fire_category.silenced = FALSE
 	var/before_registration = ambience.static_version
 	ambience.register_source(first, fire_category.type)

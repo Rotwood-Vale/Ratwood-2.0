@@ -32,6 +32,8 @@
  * * dry_run - fill the datum and return what it would send, without sending
  * * clip_advance - choose the next file in a clip set without treating it as a new arrival
  * * centre - centre the handoff update before later sends pan toward the source
+ * * river_cost - precomputed river path length in half-steps. Null, from a diagnostic caller,
+ *   reads it from the fill
  *
  * Without unique_voice, nearby sconces sound identical. It gives each source a pitch lean and
  * starting place fixed by its turf. voice_place applies that offset only when playback begins,
@@ -45,7 +47,7 @@
  * Refusals precede restart work. A rejected send must not choose a file, roll pitch or start a
  * clip timer.
  */
-/datum/controller/subsystem/point_ambience/proc/slim_send(mob/listener, client/listener_client, datum/point_ambience_category/category, atom/nearest, fresh, had_previous, dry_run, list/slot, clip_advance = FALSE, centre = FALSE)
+/datum/controller/subsystem/point_ambience/proc/slim_send(mob/listener, client/listener_client, datum/point_ambience_category/category, atom/nearest, fresh, had_previous, dry_run, list/slot, clip_advance = FALSE, centre = FALSE, river_cost = null)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	var/index = category.index
@@ -56,8 +58,14 @@
 	if(!S)
 		S = sound()
 		sounds[index] = S
-	// Re-read on every send because a dragged or retuned source may still be the winning atom
-	var/turf/source_turf = source_turfs[nearest] || get_turf(nearest)
+	var/is_river = category == river_category
+	if(is_river && isnull(river_cost))
+		var/river_mark = river_fill_marks[serving_turf]
+		if(!RIVER_FILL_AUDIBLE(river_mark))
+			return FALSE
+		river_cost = RIVER_FILL_COST(river_mark)
+	// Indexed sources can move. A river's carrier is always the current hearing turf
+	var/turf/source_turf = is_river ? serving_turf : (source_turfs[nearest] || get_turf(nearest))
 	slot[POINT_AMBIENCE_SLOT_TURF] = source_turf
 	if(!source_turf)
 		return FALSE
@@ -66,14 +74,7 @@
 	var/storeys = (category.range < SOUND_RANGE_LONG) ? abs(source_turf.z - serving_turf.z) : 0
 	if(storeys >= 2)
 		return FALSE
-	var/vol = category.volume * (category.source_volumes[nearest] || 1)
-	var/continuous = category.source_continuous[nearest]
-	// Before the floor, so a category cut indoors keeps its dB per tile and only drops a level.
-	// A cave or sewer voice asks the underground river fill whether open ground reaches the listener, not the roof
-	if(category.indoors_volume_mult != 1)
-		var/area/source_area = source_turf.loc
-		if((underground_river_fill_done && source_area?.river_underground) ? isnull(underground_river_marks[serving_turf]) : serving_indoors)
-			vol *= category.indoors_volume_mult
+	var/vol = is_river ? category.volume : category.volume * (category.source_volumes[nearest] || 1)
 	// A share of THIS source's volume, so the walk keeps its dB per tile at any level. Taken
 	// before the muffle cut, so a muffled send lands on the same edge level as a clear one
 	var/volume_floor = vol * category.floor_ratio
@@ -93,7 +94,7 @@
 	var/dx = source_turf.x - serving_turf.x
 	var/dy = source_turf.y - serving_turf.y
 	// Keep this local: STOREY_ADJUSTED_DISTANCE names its first argument three times
-	var/distance = sqrt(dx * dx + dy * dy)
+	var/distance = is_river ? river_cost * 0.5 : sqrt(dx * dx + dy * dy)
 	distance = STOREY_ADJUSTED_DISTANCE(distance, storeys)
 	var/fall_ratio = max(distance - SOUND_DEFAULT_FALLOFF_DISTANCE, 0) / (max(category.range, distance) - SOUND_DEFAULT_FALLOFF_DISTANCE)
 	var/volume
@@ -113,8 +114,8 @@
 		return FALSE
 	var/pan_x = 0
 	var/pan_z = 0
-	// Continuous source handoffs would reverse between opposite voices, so their stereo image stays centred
-	if(!continuous && !centre)
+	// River playback represents the surrounding water, so it stays centred along the bank
+	if(!is_river && !centre)
 		pan_lean(slot, category, nearest, source_turf, dx, dy, distance)
 		pan_x = pan_lean_dx
 		pan_z = pan_lean_dy
@@ -164,9 +165,9 @@
 					voice_phase = ((source_turf.x * 73 + source_turf.y * 179 + source_turf.z * 283) % 97) / 97
 			// Always written, so a lean left over from the last source never outlives it
 			S.frequency = pitch
-	// Same volume, same room, no restart due, and a continuous run has no pan to have changed, so
-	// there is nothing to tell the client. A vertical change at matched volume is not caught
-	if(continuous && had_previous && !restarting && slot[POINT_AMBIENCE_SLOT_LAST_VOLUME] == volume && slot[POINT_AMBIENCE_SLOT_ENVIRONMENT] == environment)
+	// The early river shortcut misses changed inputs that resolve to an identical send. Do not
+	// skip a fade completion or leave a previous head-container muffle on the reused sound datum
+	if(is_river && had_previous && !restarting && !slot[POINT_AMBIENCE_SLOT_FADE_NEXT] && S.echo == echo && slot[POINT_AMBIENCE_SLOT_LAST_VOLUME] == volume && slot[POINT_AMBIENCE_SLOT_ENVIRONMENT] == environment)
 		return volume
 	// Status 0 restarts the file and the block above already decided that. Both must give the SAME
 	// answer, since a rewritten file with SOUND_UPDATE is half a restart either way
@@ -362,6 +363,10 @@
  */
 /datum/controller/subsystem/point_ambience/proc/stop_for(client/listener_client, datum/point_ambience_category/category, send_null = TRUE)
 	listener_client.point_ambience_sources -= category
+	if(category == river_category)
+		listener_client.point_ambience_river_cost = null
+		listener_client.point_ambience_river_scale = null
+		listener_client.point_ambience_river_version = null
 	var/list/slots = listener_client.point_ambience_slots
 	var/list/slot = (length(slots) >= category.index) ? slots[category.index] : null
 	if(slot)
@@ -387,6 +392,9 @@
 		return
 	listener_client.point_ambience_clip_due = FALSE
 	listener_client.point_ambience_last_move = null
+	listener_client.point_ambience_river_cost = null
+	listener_client.point_ambience_river_scale = null
+	listener_client.point_ambience_river_version = null
 	var/list/slots = listener_client.point_ambience_slots
 	for(var/datum/point_ambience_category/category as anything in categories)
 		if(listener_client.point_ambience_sources[category])

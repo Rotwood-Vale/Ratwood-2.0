@@ -53,6 +53,10 @@
 	 * runner-up the pan leans toward, fade state and the clip timer. The turf is rewritten on every send.
 	 */
 	var/list/point_ambience_slots = list()
+	/// Inputs of the last clear river send. Null cost prevents reuse after muffling or a stop
+	var/point_ambience_river_cost
+	var/point_ambience_river_scale
+	var/point_ambience_river_version
 	/// At least one category slot has an expired clip for the next point ambience service to advance
 	var/point_ambience_clip_due = FALSE
 	/// One /sound datum per category, indexed by category.index, reused for every send to this client.

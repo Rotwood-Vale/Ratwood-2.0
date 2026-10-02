@@ -4,7 +4,6 @@
 	warden_area = TRUE
 	first_time_text = "The Undergrove"
 	river_ambience = TRUE
-	river_underground = TRUE
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
 	spookysounds = SPOOKY_CAVE
@@ -81,9 +80,8 @@
 /**
  * Flowing cave water, including Rockhill's moat below High Town.
  *
- * Inherits river voices from the wet-cave area. The underground fill lets listeners beside the
- * water hear it fully despite the roof. Keeps the parent's AMB_CAVEWATER bed instead of the surface
- * area recordings, which include birds.
+ * Inherits river ambience from the wet-cave area. Keeps the parent's AMB_CAVEWATER bed instead of
+ * the surface area recordings, which include birds
  */
 /area/rogue/under/cavewet/river
 	name = "Cave River"

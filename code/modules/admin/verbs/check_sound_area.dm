@@ -30,10 +30,11 @@
 		var/area/other = get_area(T)
 		msg += "[T == above ? "above" : "below"]: [other ? "[other.name], soundproof [other.soundproof]" : "nothing"]"
 
-	// Whether cave and sewer rivers reach this tile in full, and whether this area's own water seeds the fill
-	var/steps = SSpoint_ambience.underground_river_marks[here]
-	var/fill_state = isnull(steps) ? "unmarked, cave and sewer rivers reach you at their roof level" : "marked, [steps] steps from underground water"
-	msg += "underground river fill: [SSpoint_ambience.underground_river_fill_done ? fill_state : "off in config"] | area river_underground [A.river_underground ? "TRUE" : "FALSE"]"
+	var/river_mark = SSpoint_ambience.river_fill_marks[here]
+	var/fill_state = "unmarked, no river reach"
+	if(!isnull(river_mark))
+		fill_state = RIVER_FILL_AUDIBLE(river_mark) ? "reachable, [RIVER_FILL_COST(river_mark) * 0.5] tiles by path" : "blocked, silent"
+	msg += "river fill: [SSpoint_ambience.river_fill_done ? fill_state : "pending initial fill"] | area river_ambience [A.river_ambience ? "TRUE" : "FALSE"]"
 
 	// What point ambience is sending you, one voice per category. The volume is the last one sent
 	// rather than one recomputed for the readout, so it is what your client plays now
@@ -46,7 +47,9 @@
 		var/vol = slot ? slot[POINT_AMBIENCE_SLOT_LAST_VOLUME] : null
 		var/turf/source_turf = SSpoint_ambience.source_turfs[source] || get_turf(source)
 		var/where = "position unknown"
-		if(source_turf)
+		if(category == SSpoint_ambience.river_category)
+			where = "fill: [fill_state]"
+		else if(source_turf)
 			var/dx = source_turf.x - here.x
 			var/dy = source_turf.y - here.y
 			var/distsq = dx * dx + dy * dy

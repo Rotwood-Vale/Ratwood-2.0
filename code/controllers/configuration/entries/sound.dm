@@ -49,11 +49,6 @@
 	min_val = 0
 	max_val = 1
 
-/datum/config_entry/number/point_ambience_underground_river_fill	// 1: cave and sewer rivers are heard in full only where open ground reaches their water, and at the river's roof level elsewhere. 0: by the listener's roof alone. Read once at the first fire
-	config_entry_value = 1
-	min_val = 0
-	max_val = 1
-
 /**
  * Tiles of effective distance a floor adds between a source and a listener.
  *

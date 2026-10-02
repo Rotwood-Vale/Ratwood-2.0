@@ -59,24 +59,6 @@
 	var/list/source_volumes = list()
 	/// Explicit source multipliers before any indoor volume adjustment. An omitted scale preserves one.
 	var/list/source_base_volumes = list()
-	/**
-	 * Marks a voice as part of one continuous feature rather than an isolated point.
-	 *
-	 * River handoffs can switch between voices on opposite sides of the listener. When
-	 * source_continuous[source] is set, slim_send() keeps them centred to avoid a stereo reversal.
-	 * Distance still changes volume. An update needs no packet when volume and environment match
-	 * the last send and playback does not restart
-	 */
-	var/list/source_continuous = list()
-	/**
-	 * Volume multiplier for a listener under a roof.
-	 *
-	 * Point sources use occlusion to check the path through walls and doorways. A river is one
-	 * continuous feature, so slim_send() applies indoors_volume_mult from the listener's roof
-	 * state, or for underground water from the underground river fill, instead of walking a wall path for every
-	 * river voice
-	 */
-	var/indoors_volume_mult = 1
 	/// Base volume for indoor sources, when different from volume
 	var/indoor_volume
 	/// Position in categories, the index into each client's per-category sound datums. Set by
@@ -116,14 +98,7 @@
 	 * sources is a bulk operation that must not land on a running server
 	 */
 	var/silenced = FALSE
-	/**
-	 * Whether a wall between listener and source stops or muffles this category.
-	 *
-	 * Off for anything whose sources are one long thing rather than a point: consecutive voices of a
-	 * line sit close enough that one rock face takes both, so the whole run goes quiet from a spot
-	 * where plenty of it is in the open. The river's wall walks would also be the longest, its range
-	 * being the widest
-	 */
+	/// Whether indexed sources use direct and corner occlusion. Rivers use their fill instead
 	var/occlude = TRUE
 	/**
 	 * Whether each source gets a voice of its own, fixed by where it stands.
@@ -180,8 +155,8 @@
  * Recomputes what a send reads in place of the authored numbers.
  *
  * Called wherever range or falloff_hardness is written. A band exponent resolved at boot is kept
- * across a range edit. A VV edit of falloff_exponent does not call this, so sends keep the curve of
- * the exponent the reciprocals were built from
+ * across a range edit. The river's live exponent editor also refreshes these values, while other
+ * categories keep their resolved exponent until the next range or hardness edit
  */
 /datum/point_ambience_category/proc/resolve_derived()
 	range_sq = range * range
@@ -202,7 +177,6 @@
 	source_sounds -= source
 	source_volumes -= source
 	source_base_volumes -= source
-	source_continuous -= source
 
 /datum/point_ambience_category/fire
 	config_name = "fire"
@@ -288,10 +262,8 @@
  * A category is one voice, so anything else riding this one is cut by any nearer fountain. Rivers
  * have their own category, see /river below.
  *
- * A RANGE UP TO THE RIVER'S COSTS NOTHING. max_range is the largest range of any category and it
- * sizes the walk's box for every service on the map, so one above the river's would be paid by
- * everyone. At hardness 1 the walk from volume to floor is spread evenly across the range, so a
- * longer range buys both audible tiles and a gentler step
+ * Water currently sets the largest indexed range. Raising it widens candidate searches for
+ * every indexed category. Rivers use a separate fill and do not set this bound.
  */
 /datum/point_ambience_category/water
 	config_name = "water"
@@ -304,18 +276,11 @@
 	channel = CHANNEL_WATER_AMBIENCE
 
 /**
- * Gives river voices their own range and channel, separate from fountains.
+ * Plays one centred river bed per listener, using the fill's path distance for attenuation.
  *
- * Voices sit on river turfs, so their range must reach the bank before it reaches a listener. At
- * range 5, a seven-tile river leaves about a tile and a half of audible bank.
- *
- * Range 8 sets max_range and widens the candidate box for every service, including those far from
- * water. register_spread_source() leaves every river tile within RIVER_SPREAD of a voice, so a
- * listener one tile off the water is at most RIVER_SPREAD + 1 away. Range 8 covers a spread of 6
- * with a tile to spare and still fits three cells per axis.
- *
- * Each listener advances through the short POINT_AMBIENCE_RIVER clips instead of repeating one
- * file. The same set plays at every hour
+ * Eligible water seeds a same-floor fill, and walls and openings block it. No river speakers are
+ * indexed. Each listener advances through POINT_AMBIENCE_RIVER without restarting on movement.
+ * The same set plays at every hour. Reach is fixed because changing it requires rebuilding the fill
  */
 /datum/point_ambience_category/river
 	config_name = "river"
@@ -324,8 +289,9 @@
 	sound_file = 'sound/ambience/point/river_night_1.ogg'
 	files = POINT_AMBIENCE_RIVER
 	volume = 45
-	range = 8
-	/// Its voices are one continuous line and always sent centred, so a switch has nothing to centre
+	range = POINT_AMBIENCE_RIVER_FILL_RANGE
+	fallback = FALSE
+	/// River playback stays centred, and moving the hearing turf carrier is not a source handoff
 	centre_handoff = FALSE
 	/// Gentler than the band sound_falloff_for_range() gives this range. A river is a bed of sound
 	/// stood beside, and on that band it falls away within a few tiles of the bank
@@ -339,9 +305,22 @@
 	min_volume = 6.5
 	channel = CHANNEL_RIVER_AMBIENCE
 	occlude = FALSE
-	/// Faint through a roof. A river carries through a wall in a way a fountain does not, so this
-	/// is a level rather than a silence, and it is what a riverside house gets instead of occlusion
-	indoors_volume_mult = 0.3
+
+/// Keeps fill reach fixed while allowing live river volume, floor and curve tuning
+/datum/point_ambience_category/river/vv_edit_var(var_name, var_value)
+	if(var_name == "range")
+		return FALSE
+	if(var_name == "falloff_exponent" && (!isnum(var_value) || var_value <= 0))
+		return FALSE
+	if(var_name == "min_volume" && (!isnum(var_value) || var_value < 0))
+		return FALSE
+	. = ..()
+	if(!.)
+		return
+	if(var_name == "falloff_exponent")
+		resolve_derived()
+	if(var_name == "min_volume")
+		floor_ratio = clamp(min_volume / max(volume, 1), 0.001, 1)
 
 /**
  * Wall sconces and standing fires. A handheld torch is heard by its carrier alone, off the index.
