@@ -2602,3 +2602,74 @@
 /atom/movable/screen/alert/status_effect/buff/oath_ring
 	name = "Oathmarked"
 	desc = "The oath drives me forward, so long as the reminder is kept near."
+
+
+/atom/movable/screen/alert/status_effect/buff/dagger_dash
+	name = "Dagger Dash"
+	desc = "I'm slipping through!"
+	icon_state = "daggerboost"
+
+/atom/movable/screen/alert/status_effect/buff/dagger_boost
+	name = "Dagger Boost"
+	desc = "I'm rushing!"
+	icon_state = "daggerboost"
+
+/datum/status_effect/buff/dagger_dash
+	id = "dagger_dash"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/dagger_dash
+	effectedstats = list(STATKEY_SPD = 1)
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 3 SECONDS
+	mob_effect_icon_state = "eff_daggerboost"
+	mob_effect_layer = MOB_EFFECT_LAYER_DBOOST
+
+/datum/status_effect/buff/dagger_dash/on_creation(mob/living/new_owner)
+	if(!ishuman(new_owner))
+		return
+	var/spd_bonus = 1
+	var/highest_ac
+	var/mob/living/carbon/human/H = new_owner
+	highest_ac = H.highest_ac_worn()
+	switch(highest_ac)
+		if(ARMOR_CLASS_NONE)
+			duration = 5 SECONDS
+			spd_bonus = 4
+		if(ARMOR_CLASS_LIGHT)
+			duration = 4 SECONDS
+			spd_bonus = 3
+		if(ARMOR_CLASS_MEDIUM)
+			duration = 3 SECONDS
+			spd_bonus = 2
+		if(ARMOR_CLASS_HEAVY)
+			duration = 2 SECONDS
+			spd_bonus = 1
+	new_owner.apply_status_effect(/datum/status_effect/buff/dagger_boost, spd_bonus)
+	. = ..()
+
+/datum/status_effect/buff/dagger_dash/on_apply()
+	owner.pass_flags |= PASSMOB
+	ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
+	. = ..()
+
+/datum/status_effect/buff/dagger_dash/on_remove()
+	owner.pass_flags &= ~PASSMOB
+	REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
+	. = ..()
+
+/datum/status_effect/buff/dagger_boost
+	id = "dagger_boost"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/dagger_boost
+	effectedstats = list(STATKEY_SPD = 1)
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 30 SECONDS
+	var/obj/item/rogueweapon/held_dagger
+
+/datum/status_effect/buff/dagger_boost/on_creation(mob/living/new_owner, spd_boost)
+	if(spd_boost)
+		effectedstats[STATKEY_SPD] = spd_boost
+	held_dagger = new_owner.get_active_held_item()
+	. = ..()
+
+/datum/status_effect/buff/dagger_boost/process()
+	if(!istype(owner.get_active_held_item(), held_dagger))
+		owner.remove_status_effect(/datum/status_effect/buff/dagger_boost)
