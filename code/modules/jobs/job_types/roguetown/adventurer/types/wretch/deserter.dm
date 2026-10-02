@@ -207,7 +207,7 @@
 	tutorial = "You had your post. You had your duty. Dissatisfied, lacking in morale, or simply thinking yourself better than it. - You decided to walk. Now it follows you everywhere you go."
 	allowed_sexes = list(MALE, FEMALE)
 
-	outfit = /datum/outfit/job/roguetown/wretch/deserter/maa
+	outfit = /datum/outfit/job/roguetown/wretch/deserter_maa
 
 	class_select_category = CLASS_CAT_WARRIOR
 	category_tags = list(CTAG_WRETCH)
@@ -250,7 +250,7 @@
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_APPRENTICE, //Ditto
 	)
 
-/datum/outfit/job/roguetown/wretch/deserter/maa/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/wretch/deserter_maa/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
 		var/weapons = list("Warhammer & Shield","Sabre & Shield","Axe & Shield","Billhook","Greataxe","Halberd","Crossbow")
@@ -281,7 +281,7 @@
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltr = /obj/item/quiver/heavybluntbolts
 
-
+	H.verbs += /mob/proc/haltyell //Ex-Garrisoner
 	H.verbs += /mob/living/carbon/human/mind/proc/setorders //Kill if problematic
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/retreat)
@@ -289,7 +289,6 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/brotherhood)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/charge)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/brotherhood)
-	H.verbs |= list(/mob/proc/haltyell, /mob/living/carbon/human/mind/proc/setorders)
 
 		/*
 		meant to be less knightly-helmets and more in-line with banditry, brigand loadouts and such so, so no armlets
