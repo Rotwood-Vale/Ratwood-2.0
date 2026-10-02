@@ -123,18 +123,22 @@ SUBSYSTEM_DEF(nightshift)
 				advance_sleep_depravation()
 
 /mob/living/carbon/human/proc/advance_sleep_depravation()
+	if(has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+		return
 	if(has_status_effect(/datum/status_effect/debuff/sleepytime))
 		remove_status_effect(/datum/status_effect/debuff/sleepytime)
 		apply_status_effect(/datum/status_effect/debuff/sleepytime/t2)
 		if(!HAS_TRAIT(src, TRAIT_NIGHT_OWL))
 			add_stress(/datum/stressevent/sleepytimet2)
 			remove_stress(/datum/stressevent/sleepytime)
+		return
 	else if(has_status_effect(/datum/status_effect/debuff/sleepytime/t2))
 		remove_status_effect(/datum/status_effect/debuff/sleepytime/t2)
 		apply_status_effect(/datum/status_effect/debuff/sleepytime/t3)
 		if(!HAS_TRAIT(src, TRAIT_NIGHT_OWL))
 			add_stress(/datum/stressevent/sleepytimet3)
 			remove_stress(/datum/stressevent/sleepytimet2)
+		return
 	else 
 		apply_status_effect(/datum/status_effect/debuff/sleepytime)
 		if(!HAS_TRAIT(src, TRAIT_NIGHT_OWL))
