@@ -13,13 +13,8 @@
 		TRAIT_CIVILIZEDBARBARIAN,
 		TRAIT_CICERONE,//brewer monks and such, lets them see the booze they make.
 	)
-	subclass_stats = list(//(str 3(weighted 6) + wil 3 + con 3) = 12 - (INT -1 + SPD -1 (weighted -2) = 9 weighted stats. Old statblock was weighted 6 because morons dont know the stat weight rules for spd and str.
-		STATKEY_STR = 3,
-		STATKEY_WIL = 3,
-		STATKEY_CON = 3,
-		STATKEY_INT = -1,
-		STATKEY_SPD = -1
-	)
+	stat_budget = STAT_BUDGET_ELITE - 1.5
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_INT = STAT_DISFAVORED, STATKEY_SPD = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,

@@ -8,11 +8,9 @@
 	cmode_music = 'sound/music/combat_physician.ogg'
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_MEDICINE_EXPERT, TRAIT_NOSTINK, TRAIT_EMPATH, TRAIT_DODGEEXPERT, TRAIT_DECEIVING_MEEKNESS, TRAIT_ALCHEMY_EXPERT)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_SPD = 2,
-		STATKEY_LCK = 3
-	)
+	stat_budget = STAT_BUDGET_HIGH - 1
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 3)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,

@@ -8,11 +8,8 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/freishepherd
 	traits_applied = list()
 	cmode_music = 'sound/music/frei_shepherd.ogg'
-	subclass_stats = list(
-		STATKEY_WIL = 1,
-		STATKEY_PER = 2,
-		STATKEY_CON = 2,
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,

@@ -5,11 +5,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/excommunicated
 	category_tags = list(CTAG_VAGABOND)
-	subclass_stats = list(
-		STATKEY_PER = 2,
-		STATKEY_CON = -1,
-		STATKEY_WIL = -1
-	)
+	stat_budget = STAT_BUDGET_BASE
 	subclass_skills = list(
 		/datum/skill/magic/holy = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,

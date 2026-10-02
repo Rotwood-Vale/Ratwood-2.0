@@ -7,11 +7,8 @@
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	category_tags = list(CTAG_TOWNER)
-	subclass_stats = list(
-		STATKEY_LCK = 2,
-		STATKEY_CON = 1,
-		STATKEY_STR = 1,
-	)
+	stat_budget = STAT_BUDGET_MID
+	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_skills = list(
 		/datum/skill/misc/stealing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,

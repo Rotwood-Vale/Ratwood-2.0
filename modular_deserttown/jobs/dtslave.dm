@@ -35,11 +35,8 @@
 	outfit = /datum/outfit/job/roguetown/slave/servant
 	category_tags = list(CTAG_PSLAVE)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_ROYAL_SUBSIDY)
-	subclass_stats = list(
-		STATKEY_PER = 2,
-		STATKEY_INT = 1,
-		STATKEY_SPD = 1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
@@ -81,11 +78,8 @@
 	outfit = /datum/outfit/job/roguetown/slave/pleasure
 	category_tags = list(CTAG_PSLAVE)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_ROYAL_SUBSIDY)
-	subclass_stats = list(
-		STATKEY_PER = 2,
-		STATKEY_INT = 1,
-		STATKEY_SPD = 1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,

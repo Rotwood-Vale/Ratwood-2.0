@@ -36,6 +36,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		player = character.client
 	if(!player?.prefs)
 		return
+	player.prefs.validate_background()
 	apply_charflaw_equipment(character, player)
 	apply_prefs_special(character, player)
 	apply_prefs_virtue(character, player)
@@ -46,36 +47,13 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		apply_voicepacks(character, player)
 	if(player.prefs.dnr_pref)
 		apply_dnr_trait(character, player)
-	if(player.prefs.loadout)
-		var/display_name = player.prefs.loadout_1_name ? player.prefs.loadout_1_name : player.prefs.loadout.name
-		character.mind.special_items[display_name] = player.prefs.loadout.path
-	if(player.prefs.loadout2)
-		var/display_name = player.prefs.loadout_2_name ? player.prefs.loadout_2_name : player.prefs.loadout2.name
-		character.mind.special_items[display_name] = player.prefs.loadout2.path
-	if(player.prefs.loadout3)
-		var/display_name = player.prefs.loadout_3_name ? player.prefs.loadout_3_name : player.prefs.loadout3.name
-		character.mind.special_items[display_name] = player.prefs.loadout3.path
-	if(player.prefs.loadout4)
-		var/display_name = player.prefs.loadout_4_name ? player.prefs.loadout_4_name : player.prefs.loadout4.name
-		character.mind.special_items[display_name] = player.prefs.loadout4.path
-	if(player.prefs.loadout5)
-		var/display_name = player.prefs.loadout_5_name ? player.prefs.loadout_5_name : player.prefs.loadout5.name
-		character.mind.special_items[display_name] = player.prefs.loadout5.path
-	if(player.prefs.loadout6)
-		var/display_name = player.prefs.loadout_6_name ? player.prefs.loadout_6_name : player.prefs.loadout6.name
-		character.mind.special_items[display_name] = player.prefs.loadout6.path
-	if(player.prefs.loadout7)
-		var/display_name = player.prefs.loadout_7_name ? player.prefs.loadout_7_name : player.prefs.loadout7.name
-		character.mind.special_items[display_name] = player.prefs.loadout7.path
-	if(player.prefs.loadout8)
-		var/display_name = player.prefs.loadout_8_name ? player.prefs.loadout_8_name : player.prefs.loadout8.name
-		character.mind.special_items[display_name] = player.prefs.loadout8.path
-	if(player.prefs.loadout9)
-		var/display_name = player.prefs.loadout_9_name ? player.prefs.loadout_9_name : player.prefs.loadout9.name
-		character.mind.special_items[display_name] = player.prefs.loadout9.path
-	if(player.prefs.loadout10)
-		var/display_name = player.prefs.loadout_10_name ? player.prefs.loadout_10_name : player.prefs.loadout10.name
-		character.mind.special_items[display_name] = player.prefs.loadout10.path
+	for(var/i in 1 to LOADOUT_SLOTS)
+		var/datum/loadout_item/item = player.prefs.vars[player.prefs.loadout_var(i)]
+		if(!item)
+			continue
+		var/display_name = player.prefs.vars["loadout_[i]_name"] || item.name
+		character.mind.special_items[display_name] = item.path
+		character.mind.loadout_item_info[item.path] = list("category" = item.loadout_category, "shabby" = player.prefs.is_loadout_shabby(item.loadout_category), "keep_stats" = item.keep_loadout_stats)
 	var/datum/job/assigned_job = SSjob.GetJob(character.mind?.assigned_role)
 	if(assigned_job)
 		assigned_job.clamp_stats(character)
@@ -105,7 +83,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 	if(istype(player.prefs.selected_patron, /datum/patron/inhumen))
 		heretic = TRUE
 
-	if(player.prefs.statpack.name == "Virtuous")
+	if(player.prefs.second_virtue_allowed())
 		virtuous = TRUE
 
 	var/datum/virtue/virtue_type = player.prefs.virtue
@@ -121,8 +99,6 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		else
 			to_chat(character, "Incorrect Second Virtue parameters! (Heretic virtue on a non-heretic) It will not be applied.")
 
-// Quirks are paid for with quirk points first, then real TRIUMPH for any shortfall at two per point.
-// Skip a quirk if your untriumphant broke ass still can't afford it. Bank excess points for the roundend rebate.
 /proc/apply_prefs_quirks(mob/living/carbon/human/character, client/player)
 	if(!player)
 		player = character.client
@@ -132,8 +108,6 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		return
 
 	var/datum/job/job = SSjob.GetJob(character.job)
-	var/available_points = player.prefs.get_quirk_points_earned()
-	var/triumphs_spent = 0
 	for(var/datum/quirk/Q in player.prefs.quirks)
 		if(job && length(job.quirk_restrictions) && (Q.type in job.quirk_restrictions))
 			to_chat(character, span_warning("My duties as \a [character.job] leave no room for [Q.name]. It will not be applied."))
@@ -142,21 +116,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		if(conflicting_trait)
 			to_chat(character, span_warning("[Q.name] conflicts with [conflicting_trait], something I already have. It will not be applied."))
 			continue
-
-		if(available_points >= Q.point_cost)
-			available_points -= Q.point_cost
-		else
-			var/points_short = Q.point_cost - available_points
-			var/triumph_cost = points_short * 2
-			if(character.get_triumphs() < triumphs_spent + triumph_cost)
-				continue
-			triumphs_spent += triumph_cost
-			available_points = 0
 		apply_quirk(character, Q)
-
-	if(triumphs_spent)
-		character.adjust_triumphs(-triumphs_spent, FALSE)
-	character.unspent_quirk_points = available_points
 
 /proc/apply_prefs_race_bonus(mob/living/carbon/human/character, client/player)
 	if (!player)

@@ -165,7 +165,6 @@
 	///The job's subclasses, if any. Overrides job_stats if present.
 	var/list/job_subclasses
 
-	///The job's stat UPPER ceilings, clamped after statpacks and job stats are applied.
 	var/list/stat_ceilings
 	var/carebox_table = null
 
@@ -516,17 +515,31 @@
 				dat += "<tr style='vertical-align:top'>"
 				dat += "<td width = 70%><i><font color ='#ece9e9'>[adv_ref.tutorial]</font></i></td>"
 				dat += "<td width = 30%; style='text-align:right'>"
-				if(length(adv_ref.subclass_stats))
-					dat += "<font color ='#7a4d0a'>Stat Bonuses:</font><font color ='#d4b164'>"
-					for(var/stat in adv_ref.subclass_stats)
-						dat += "<br>[capitalize(stat)]: <b>[adv_ref.subclass_stats[stat] < 0 ? "<font color = '#cf2a2a'>" : "<font color = '#91cf68'>"]\Roman[adv_ref.subclass_stats[stat]]</font></b>"
+				dat += "<font color ='#7a4d0a'>Stat Budget:</font><font color ='#d4b164'> <b>[adv_ref.stat_budget]</b>"
+				for(var/stat in adv_ref.favored_stats)
+					var/tier = adv_ref.favored_stats[stat]
+					var/tier_name = "Favored"
+					var/tier_color = "#b4cf68"
+					if(tier == STAT_VERY_FAVORED)
+						tier_name = "Very Favored"
+						tier_color = "#91cf68"
+					if(tier == STAT_DISFAVORED)
+						tier_name = "Disfavored"
+						tier_color = "#cf2a2a"
+					if(tier == STAT_VERY_DISFAVORED)
+						tier_name = "Very Disfavored"
+						tier_color = "#cf2a2a"
+					dat += "<br><font color = '[tier_color]'>[tier_name]: [capitalize(stat)]</font>"
+				for(var/stat in adv_ref.subclass_stats)
+					dat += "<br>[capitalize(stat)]: <b>\Roman[adv_ref.subclass_stats[stat]]</b>"
+				dat += "</font>"
 				dat += "<br></td></tr></table></font>"
 				if(length(adv_ref.adv_stat_ceiling))
 					dat += "["<font color = '#cf2a2a'><b>This subclass has the following stat limits: "]</b></font><br>"
 					dat += " | "
 					for(var/stat in adv_ref.adv_stat_ceiling)
 						dat += "["[capitalize(stat)]: <b>\Roman[adv_ref.adv_stat_ceiling[stat]]</b>"] | "
-					dat += "<i><br>Regardless of your statpacks or race choice, you will not be able to exceed these stats on spawn.</i></font>"
+					dat += "<i><br>Regardless of your stat choices or race, you will not be able to exceed these stats on spawn.</i></font>"
 				if(adv_ref.subclass_spellpoints > 0)
 					dat += "<font color = '#a3a7e0'>Starting Spellpoints: <b>[adv_ref.subclass_spellpoints]</b></font>"
 				if(length(adv_ref.subclass_languages))
@@ -594,7 +607,7 @@
 				dat += " | "
 				for(var/stat in stat_ceilings)
 					dat += "["[capitalize(stat)]: <b>\Roman[stat_ceilings[stat]]</b>"] | "
-				dat += "<br><i>Regardless of your statpacks or race choice, you will not be able to exceed these stats on spawn.</i></font>"
+				dat += "<br><i>Regardless of your stat choices or race, you will not be able to exceed these stats on spawn.</i></font>"
 				dat += "</font>"	//Ends the stat limit colors
 		if(length(job_traits) && (show_job_traits || sclass_count > 1))
 			dat += "<b>Class</b></font> Traits: "

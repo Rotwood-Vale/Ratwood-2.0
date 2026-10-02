@@ -188,3 +188,11 @@ GLOBAL_LIST_INIT(voice_packs_list, list(
 	VOICE_PACK_ROTWOMAN = /datum/voicepack/female/rotman,
 	VOICE_PACK_CHOSEN = /datum/voicepack/male/chosen
 ))
+
+#define VICE_SLOTS 6
+#define LOADOUT_SLOTS 10
+#define PRESET_SLOTS 3
+#define LOADOUT_NOBLE "noble"
+#define LOADOUT_CAMPING "camping"
+#define LOADOUT_ARMOR "light armor"
+#define LOADOUT_TOOLS "tools and simple weapons"

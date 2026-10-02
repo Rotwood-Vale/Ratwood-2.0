@@ -8,12 +8,8 @@
 	allowed_patrons = list(/datum/patron/divine/dendor)
 	outfit = /datum/outfit/job/roguetown/adventurer/nudist
 	category_tags = list(CTAG_ADVENTURER, CTAG_LICKER_WRETCH)
-	subclass_stats = list(
-		STATKEY_SPD = 2,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 1,
-		STATKEY_INT = -2
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_INT = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,

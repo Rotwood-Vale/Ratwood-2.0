@@ -33,12 +33,9 @@
 	name = "Head Slave"
 	tutorial = "While still expected to fill in for the duties of the household slaves as needed, you have styled yourself as a figure beyond them."
 	outfit = /datum/outfit/job/roguetown/headslave/headslave
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_PER = 2,
-		STATKEY_LCK = 1, // Usual leadership carrot.
-		STATKEY_SPD = 1
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,

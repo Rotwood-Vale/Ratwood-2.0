@@ -9,13 +9,8 @@
 	maximum_possible_slots = 1
 
 	category_tags = list(CTAG_DISABLED)
-	subclass_stats = list(
-		STATKEY_STR = 4,
-		STATKEY_CON = 4,
-		STATKEY_WIL = 4,
-		STATKEY_INT = 3,
-		STATKEY_SPD = 2,
-	)
+	stat_budget = STAT_BUDGET_MAX
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_STR = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	subclass_spellpoints = 9
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,

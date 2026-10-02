@@ -13,12 +13,8 @@
 		/datum/language/aavnic,
 	)
 
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_WIL = 2,
-		STATKEY_CON = 2,
-		STATKEY_PER = 1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED)
 
 	subclass_skills = list(
 	/datum/skill/combat/maces = SKILL_LEVEL_NOVICE,

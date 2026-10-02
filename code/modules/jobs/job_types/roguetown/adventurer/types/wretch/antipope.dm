@@ -16,12 +16,8 @@
 //Seer to see other Inhumen.
 	traits_applied = list(TRAIT_HERETIC_SEER, TRAIT_RITUALIST, TRAIT_GRAVEROBBER, TRAIT_RESONANCE, TRAIT_OVERTHERETIC)
 //Support class statline, somewhat better than Bishop's. No armour traits, DE or CR, so needs good stats desperately.
-	subclass_stats = list(
-		STATKEY_INT = 4,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 2,
-	)
+	stat_budget = STAT_BUDGET_PEAK
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	maximum_possible_slots = 1//THERE CAN BE ONLY ONE GOD HAND.
 	subclass_skills = list(//Has Expert in two comparatively bad weapon types, otherwise supposed to be a support rather than a frontliner.
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,

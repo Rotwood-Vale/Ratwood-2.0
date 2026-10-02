@@ -16,9 +16,7 @@
 	cmode_music = 'sound/music/combat_delf.ogg'
 	traits_applied = list(TRAIT_DARKVISION)
 	subclass_languages = list(/datum/language/otavan)
-	subclass_stats = list(
-		STATKEY_WIL = 1
-	)
+	stat_budget = STAT_BUDGET_BASE - 4
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,//you learn to backstab early

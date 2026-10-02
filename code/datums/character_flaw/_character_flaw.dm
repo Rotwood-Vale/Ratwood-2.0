@@ -6,15 +6,15 @@ GLOBAL_LIST_INIT(charflaw_singletons, init_charflaw_singletons())
 /// Used primarily for adding a vice, but also for randomly picking a vice from the selectable space. Try pick_assoc().
 GLOBAL_LIST_INIT(character_flaws, list(
 	"Alcoholic"=/datum/charflaw/addiction/alcoholic,
-	"Asundered Mind (+2 Q-Points)"=/datum/charflaw/mind_broken,
-	"Bad Sight (+2 Q-Points)"=/datum/charflaw/badsight,
-	"Blindness (+2 Q-Points)"=/datum/charflaw/noeyeall,
+	"Asundered Mind"=/datum/charflaw/mind_broken,
+	"Bad Sight"=/datum/charflaw/badsight,
+	"Blindness"=/datum/charflaw/noeyeall,
 	"Clingy"=/datum/charflaw/clingy,
-	"Colorblind (+2 Q-Points)"=/datum/charflaw/colorblind,
+	"Colorblind"=/datum/charflaw/colorblind,
 	"Compliant"=/datum/charflaw/compliant,
-	"Critical Weakness (+2 Q-Points)"=/datum/charflaw/critweakness,
-	"Cyclops (L) (+2 Q-Points)"=/datum/charflaw/noeyel,
-	"Cyclops (R) (+2 Q-Points)"=/datum/charflaw/noeyer,
+	"Critical Weakness"=/datum/charflaw/critweakness,
+	"Cyclops (L)"=/datum/charflaw/noeyel,
+	"Cyclops (R)"=/datum/charflaw/noeyer,
 	"Devout Follower"=/datum/charflaw/addiction/godfearing,
 	"Greedy"=/datum/charflaw/greedy,
 	"Indebted"=/datum/charflaw/indebted,
@@ -22,13 +22,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Caffiend"=/datum/charflaw/addiction/caffiend,
 	"Junkie"=/datum/charflaw/addiction/junkie,
 	"Lawless"=/datum/charflaw/lawless,
-	"Marked by Baotha" =/datum/charflaw/marked_by_baotha,
-	"Leper (+2 Q-Points)"=/datum/charflaw/leprosy,
+	"Leper"=/datum/charflaw/leprosy,
 	"Loose Straps"=/datum/charflaw/loose_armor,
 	"Masochist"=/datum/charflaw/addiction/masochist,
 	"Missing Nose"=/datum/charflaw/missing_nose,
-	"Mute (+2 Q-Points)"=/datum/charflaw/mute,
-	"Narcoleptic (+2 Q-Points)"=/datum/charflaw/narcoleptic,
+	"Mute"=/datum/charflaw/mute,
+	"Narcoleptic"=/datum/charflaw/narcoleptic,
 	"Nude Sleeper"=/datum/charflaw/nude_sleeper,
 	"Nudist"=/datum/charflaw/nudist,
 	"Nymphomaniac"=/datum/charflaw/addiction/lovefiend,
@@ -37,12 +36,12 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Random or No Flaw"=/datum/charflaw/randflaw,
 	"Sadist"=/datum/charflaw/addiction/sadist,
 	"Silver Weakness"=/datum/charflaw/silverweakness,
-	"Sleepless (+2 Q-Points)"=/datum/charflaw/sleepless,
+	"Sleepless"=/datum/charflaw/sleepless,
 	"Smoker"=/datum/charflaw/addiction/smoker,
-	"Unintelligible (+2 Q-Points)"=/datum/charflaw/unintelligible,
-	"Wood Arm (L) (+2 Q-Points)"=/datum/charflaw/limbloss/arm_l,
-	"Wood Arm (R) (+2 Q-Points)"=/datum/charflaw/limbloss/arm_r,
-	"Hemophage (+2 Q-Points)"=/datum/charflaw/hemophage,
+	"Unintelligible"=/datum/charflaw/unintelligible,
+	"Wood Arm (L)"=/datum/charflaw/limbloss/arm_l,
+	"Wood Arm (R)"=/datum/charflaw/limbloss/arm_r,
+	"Hemophage"=/datum/charflaw/hemophage,
 	"Feeble-bodied"=/datum/charflaw/weak,
 	"Frail"=/datum/charflaw/frail,
 	"Doddering"=/datum/charflaw/slow,
@@ -54,7 +53,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/name
 	var/desc
 	var/ephemeral = FALSE // This flaw is currently disabled and will not process
-	var/point_value = 1 // Quirk points granted by this vice. Insignificant vices set this to zero.
+	var/point_value = 1
 
 /datum/charflaw/proc/on_mob_creation(mob/user)
 	return
@@ -106,6 +105,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/randflaw
 	name = "Random or None"
+	point_value = 0
 	desc = "A 50% chance to be given a random flaw, or a 50% chance to have NO flaw."
 
 /datum/charflaw/randflaw/apply_post_equipment(mob/user)
@@ -257,7 +257,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/clingy
 	name = "Clingy"
 	desc = "I like being around people, it's just so lively..."
-	point_value = 0 // Most popular flaw and it's barely considered one. No points for being wholly inconsequential.
 	var/last_check = 0
 
 /datum/charflaw/clingy/flaw_on_life(mob/user)
@@ -362,6 +361,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/nudist
 	name = "Nudist"
+	point_value = 2
 	desc = "I refuse to wear clothes. They are a hindrance to my freedom. I can tolerate certain accessories."
 
 /datum/charflaw/nudist/on_mob_creation(mob/user)
@@ -715,47 +715,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/mind_broken/apply_post_equipment(mob/living/carbon/human/insane_fool)
 	insane_fool.hallucination = INFINITY
 	ADD_TRAIT(insane_fool, TRAIT_PSYCHOSIS, TRAIT_GENERIC)
-
-/datum/charflaw/marked_by_baotha
-	name = "Marked by Baotha"
-	desc = "Whether through intentionally seeking out heretical ritualists or against my will, I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this. I will need to sate my new urges often to avoid stress..."
-
-/datum/charflaw/marked_by_baotha/on_mob_creation(mob/user)
-
-	var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[user.gender == "male" ? "m" : "f"]", -BODY_LAYER)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(isdwarf(H) || isgoblinp(H) || iskobold(H) || iscritter(H))
-			if(H.gender == MALE)
-				marking_overlay.pixel_y -= 5
-			else
-				marking_overlay.pixel_y -= 3
-	user.add_overlay(marking_overlay)
-
-	// A bodyless spawn(40) sat here. DM binds the next single statement as the spawn body,
-	// so the boon has always landed 4 seconds after the marking, not with it.
-	addtimer(CALLBACK(src, PROC_REF(grant_fertility_boon), user), 40)
-
-	var/obj/item/organ/vagina/vagina = user.getorganslot(ORGAN_SLOT_VAGINA)
-	if(vagina && !vagina.fertility)
-		vagina.fertility = TRUE
-	var/obj/item/organ/tail/manticore/tail = get_manticore_tail(user)
-	if(tail)
-		tail.fertility = TRUE
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-
-		// Add the adjusted Nymphomaniac addiction flaw
-		if(!HAS_TRAIT(H, TRAIT_DEPRAVED))
-			var/datum/charflaw/addiction/baothamarked/L = new
-			H.vices += L
-			L.on_mob_creation(H)
-
-/datum/charflaw/marked_by_baotha/proc/grant_fertility_boon(mob/user)
-	if(QDELETED(user))
-		return
-	ADD_TRAIT(user, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
 
 /datum/charflaw/hemophage
 	name = "Hemophage"

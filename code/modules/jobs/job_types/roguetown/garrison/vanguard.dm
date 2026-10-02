@@ -62,11 +62,8 @@
 	outfit = /datum/outfit/job/roguetown/vanguard/archer
 	category_tags = list(CTAG_VANGUARD)
 	traits_applied = list(TRAIT_DODGEEXPERT)
-	subclass_stats = list(
-		STATKEY_PER = 3,//9 points but no buff
-		STATKEY_SPD = 2,
-		STATKEY_WIL = 2
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/bows = 4,
 		/datum/skill/combat/slings = 4,
@@ -113,13 +110,8 @@
 	outfit = /datum/outfit/job/roguetown/vanguard/footman
 	category_tags = list(CTAG_VANGUARD)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	subclass_stats = list(
-		STATKEY_STR = 1, //I do not think that a 4 slot role specifically meant to be for scrappy fodder should be able to hit the STR softcap.
-		STATKEY_CON = 1,
-		STATKEY_WIL = 2, //A force of sheer will
-		STATKEY_PER = 2, //Stab 'em in the pintle!
-		STATKEY_SPD = 1
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/axes = 3,
 		/datum/skill/combat/polearms = 3,

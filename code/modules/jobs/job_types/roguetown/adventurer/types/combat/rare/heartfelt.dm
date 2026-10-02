@@ -10,14 +10,9 @@
 	pickprob = 100
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_MEDIUMARMOR)
 	category_tags = list(CTAG_DISABLED)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_INT = 2,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 1,
-		STATKEY_PER = 2,
-		STATKEY_LCK = 5
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_STR = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 5)
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,

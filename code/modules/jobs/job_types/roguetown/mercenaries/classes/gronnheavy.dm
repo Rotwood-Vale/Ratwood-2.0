@@ -10,14 +10,8 @@
 	traits_applied = list(TRAIT_HEAVYARMOR)
 	cmode_music = 'sound/music/combat_vagarian.ogg'
 	subclass_languages = list(/datum/language/gronnic)
-	subclass_stats = list(
-		STATKEY_WIL = 3, //People see big numbers and start shitting their pants, but their weighted stats are 7. This is fine. 
-		STATKEY_STR = 3, //TO WIELD THE MAUL. THEY CAN'T USE ANY OTHER WEAPON TYPE BUT MACES ANYWAY.
-		STATKEY_INT = 2,
-		STATKEY_CON = 3,
-		STATKEY_PER = -1, //CAN'T SEE SHIT OUTTA THIS THING!!
-		STATKEY_SPD = -3 //SLOW AND UNWIELDY
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_PER = STAT_DISFAVORED, STATKEY_SPD = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,

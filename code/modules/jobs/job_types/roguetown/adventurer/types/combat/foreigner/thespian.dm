@@ -11,12 +11,8 @@
 	maximum_possible_slots = 3 //Should be categorically rarer to see than Iron- and Steel-clad adventurers. Tickles the powerscale ala the Exorcist, albeit to a wider extent with its potential combinations.
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_BLOOD_RESISTANCE)//may work on a lesser TRAIT_STRONGKICK so the leonidus wannabes can do the spartan kick.
 	subclass_languages = list(/datum/language/etruscan)
-	subclass_stats = list(
-		STATKEY_STR = 2, //+2(4)/+3/+2/-2(-4)=weighted 5 point total. +2 strength mostly for greatshield requirement. Slightly below other adv weights but they get crit resistnace and limited slots so whatever.
-		STATKEY_WIL = 3,
-		STATKEY_CON = 2,
-		STATKEY_SPD = -2,
-	)
+	stat_budget = STAT_BUDGET_MID - 1.5
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_SPD = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,

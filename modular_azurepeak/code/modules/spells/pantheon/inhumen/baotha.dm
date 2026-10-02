@@ -214,23 +214,6 @@
 					vice_paths += vice_to_get.type
 					vices_to_gen--
 					continue
-			// And Baothans can already tell if someone is Marked by Baotha.
-			// Having it also implies Nymphomaniac, since that vice gets added by Marked if it doesn't already exist.
-			if(/datum/charflaw/marked_by_baotha)
-				if(HAS_TRAIT(our_human, TRAIT_DEPRAVED)) // Just making sure...
-					vice_paths += vice_to_get.type
-					vices_to_gen--
-					// Now to add Nympho, regardless of whether the caster has it themselves.
-					var/nympho_check = FALSE
-					for(var/path in vice_paths)
-						if(path == /datum/charflaw/addiction/lovefiend)
-							nympho_check = TRUE
-							break
-					if(!nympho_check)
-						baothamarked_nympho_check = TRUE
-						vice_paths += /datum/charflaw/addiction/lovefiend
-						vices_to_gen--
-					continue
 			if(/datum/charflaw/addiction/lovefiend)
 				if(baothamarked_nympho_check) // Since we don't have duplicate checking until later.
 					continue
@@ -270,10 +253,6 @@
 	// We already grabbed the physical vices the target has.
 	if(vice_type in CHARFLAWS_PHYSICAL_TYPES)
 		return FALSE
-	// We already know if you're marked by Baotha.
-	if(vice_type == /datum/charflaw/marked_by_baotha)
-		return FALSE
-
 	return TRUE
 
 // T0, orison inspired healing spell that pours a drink called Lover's Ruin. Works like a red for baotha blessed, poisons non-blessed.

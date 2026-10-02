@@ -12,13 +12,8 @@
 	maximum_possible_slots = 1 
 
 	// balance isn't real i picked these bc they're funny
-	subclass_stats = list(
-		STATKEY_STR = -1, //YOU ARE WRETCHED!!!
-		STATKEY_CON = -2, //AND YOU WILL +TOIL+!!!!!!!!!!!
-		STATKEY_INT = 2, //4 int so you can be a feintbeast with the master swordskill I'm giving yo-HAHAHAHAHA JUST KIDDING! GRIND EXPERT ALCHEMY, WORMS!!!
-		STATKEY_PER = 1, //i like looking into the distance
-		STATKEY_WIL = 1, //i want this to be lower because i like hearing the stamout sfx but i will allow you ONE point of END
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED, STATKEY_CON = STAT_VERY_DISFAVORED)
 	subclass_stashed_items = list(
 		"Sewing Kit" = /obj/item/repair_kit,
 	)

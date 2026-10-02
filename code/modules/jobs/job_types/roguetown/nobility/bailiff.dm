@@ -57,15 +57,9 @@
 	outfit = /datum/outfit/job/roguetown/marshal/classic
 
 	category_tags = list(CTAG_MARSHAL)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_PER = 3,
-		STATKEY_LCK = 2,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1,
-		STATKEY_STR = 1,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
@@ -95,15 +89,9 @@
 	outfit = /datum/outfit/job/roguetown/marshal/kcommander
 
 	category_tags = list(CTAG_MARSHAL)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_PER = 3,
-		STATKEY_LCK = 2,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1,
-		STATKEY_STR = 1,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,

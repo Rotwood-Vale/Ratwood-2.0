@@ -15,13 +15,8 @@
 // HIGH COURT - /ONE SLOT/ Roles that were previously in the Court, but moved here.
 
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T4, TRAIT_INTELLECTUAL, TRAIT_SEEPRICES, TRAIT_ALCHEMY_EXPERT, TRAIT_HEARTFELT)
-	subclass_stats = list(
-		STATKEY_INT = 5,
-		STATKEY_PER = 3,
-		STATKEY_WIL = 2,
-		STATKEY_STR = -1,
-		STATKEY_CON = -1,
-	)
+	stat_budget = STAT_BUDGET_PEAK
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED, STATKEY_CON = STAT_DISFAVORED)
 
 	subclass_spellpoints = 36
 

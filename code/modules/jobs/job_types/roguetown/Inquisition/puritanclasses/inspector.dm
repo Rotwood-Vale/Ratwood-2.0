@@ -21,13 +21,8 @@
 		TRAIT_OUTLANDER,
 		TRAIT_NOBLE
 		)
-	subclass_stats = list(
-		STATKEY_WIL = 2,
-		STATKEY_CON = 2,
-		STATKEY_SPD = 1,
-		STATKEY_PER = 2,
-		STATKEY_INT = 1
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/tracking = SKILL_LEVEL_MASTER,

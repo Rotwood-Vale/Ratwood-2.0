@@ -13,12 +13,8 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/bluthund
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	subclass_languages = list(/datum/language/grenzelhoftian)
-	subclass_stats = list(//7 points total.
-		STATKEY_STR = 2,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_PER = 1,
-	)
+	stat_budget = STAT_BUDGET_MID - 0.5
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
@@ -82,10 +78,8 @@
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander2.ogg'
 	traits_applied = list(TRAIT_INTELLECTUAL, TRAIT_FENCERDEXTERITY)
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_PER = 3,
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,

@@ -22,13 +22,8 @@
 		TRAIT_OUTLANDER,
 		TRAIT_NOBLE
 		)//-1 stats over Ordinator/Inspector, if counting STR/SPD as 2 each. +1 over in a respective area when selecting their sect.
-	subclass_stats = list(
-		STATKEY_CON = 3,
-		STATKEY_WIL = 3,
-		STATKEY_STR = 1,
-		STATKEY_SPD = 1,
-		STATKEY_PER = 1
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = STATS_BULWARK
 	subclass_skills = list(
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/tracking = SKILL_LEVEL_MASTER,

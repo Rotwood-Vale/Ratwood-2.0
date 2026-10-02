@@ -9,6 +9,7 @@
 	category_tags = list(CTAG_TOWNER)
 	cmode_music = 'sound/music/combat_bum.ogg'
 	outfit = /datum/outfit/job/roguetown/adventurer/thug
+	stat_budget = STAT_BUDGET_BASE - 4
 	maximum_possible_slots = 8 // I dont want an army of towner thugs
 	subclass_languages = list(/datum/language/thievescant)
 

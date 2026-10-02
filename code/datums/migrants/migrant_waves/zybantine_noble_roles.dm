@@ -16,13 +16,8 @@
 	outfit = /datum/outfit/job/roguetown/zybantine/emir
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_ZYBANTINE_EMIR)
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 2,
-		STATKEY_PER = 1,
-		STATKEY_SPD = 1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_CLERIC
 
 /datum/outfit/job/roguetown/zybantine/emir/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -78,12 +73,8 @@
 	outfit = /datum/outfit/job/roguetown/zybantine/amirah
 	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_NUTCRACKER, TRAIT_GOODLOVER, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_ZYBANTINE_AMIRAH)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 3,
-		STATKEY_PER = 1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_CLERIC
 
 /datum/outfit/job/roguetown/zybantine/amirah/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -137,13 +128,8 @@
 	outfit = /datum/outfit/job/roguetown/zybantine/janissary
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_BREADY, TRAIT_LONGSTRIDER, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_ZYBANTINE_JANISSARY)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_WIL = 2,
-		STATKEY_CON = 2,
-		STATKEY_PER = 1,
-		STATKEY_SPD = 1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
 
 /datum/outfit/job/roguetown/zybantine/janissary/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -197,11 +183,8 @@
 	outfit = /datum/outfit/job/roguetown/zybantine/advisor
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_ZYBANTINE_ADVISOR)
-	subclass_stats = list(
-		STATKEY_SPD = 2,
-		STATKEY_PER = 2,
-		STATKEY_INT = 2,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED)
 
 /datum/outfit/job/roguetown/zybantine/advisor/pre_equip(mob/living/carbon/human/H)
 	..()

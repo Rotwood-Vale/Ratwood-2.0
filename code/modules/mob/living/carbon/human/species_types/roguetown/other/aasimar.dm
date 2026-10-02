@@ -3,6 +3,7 @@
 
 /datum/species/aasimar
 	name = "Aasimar"
+	origin_stats_allowed = FALSE
 	id = "aasimar"
 	desc = "<b>Aasimar</b><br>\
 	Aasimar are born of a rare union between Humens and Angels. \

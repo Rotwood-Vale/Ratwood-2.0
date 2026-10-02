@@ -69,11 +69,8 @@
 	outfit = /datum/outfit/job/roguetown/warden/ranger
 	category_tags = list(CTAG_WARDEN)
 	traits_applied = list(TRAIT_DODGEEXPERT)
-	subclass_stats = list(
-		STATKEY_PER = 2,//7 points weighted, same as MAA. They get temp buffs in the woods instead of in the city.
-		STATKEY_SPD = 2,
-		STATKEY_WIL = 1
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_ARCHER
 	subclass_skills = list(
 		/datum/skill/combat/bows = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/slings = SKILL_LEVEL_EXPERT,
@@ -145,12 +142,8 @@
 	outfit = /datum/outfit/job/roguetown/warden/forester
 	category_tags = list(CTAG_WARDEN)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	subclass_stats = list(
-		STATKEY_STR = 2,//7 points weighted, same as MAA. They get temp buffs in the woods instead of in the city.
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_PER = 1
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,

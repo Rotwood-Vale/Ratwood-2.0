@@ -32,7 +32,7 @@
 	)
 
 	//You're part of a Pestran sect. Not nobility.
-	quirk_restrictions = list(/datum/quirk/noble)
+	virtue_restrictions = list(/datum/virtue/nobility)
 
 	advclass_cat_rolls = list(CTAG_KEEPER = 2)
 	job_subclasses = list(
@@ -52,13 +52,8 @@
 	category_tags = list(CTAG_KEEPER)
 	// No perception as to dissuade picking statpacks to negate the strength penalty.
 	// Positive stat delta of 3. It's lower than a towner (5) & Acolyte (7), but you have outlier stats and master skills, so less stats for you.
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_WIL = 5,
-		STATKEY_CON = 3,
-		STATKEY_STR = -5,
-		STATKEY_PER = 2
-	)
+	stat_budget = STAT_BUDGET_MAX
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_STR = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,

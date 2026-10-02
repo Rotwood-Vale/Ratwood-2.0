@@ -6,12 +6,8 @@
 
 	category_tags = list(CTAG_MENATARMS)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	subclass_stats = list(
-		STATKEY_STR = 2,// seems kinda lame but remember guardsman bonus!!
-		STATKEY_INT = 1,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,

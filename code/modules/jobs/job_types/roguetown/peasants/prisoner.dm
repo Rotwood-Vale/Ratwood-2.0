@@ -455,6 +455,7 @@
 /datum/advclass/prisoner_woodcutter
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_woodcutter
+	stat_budget = STAT_BUDGET_BASE - 1
 	name = "Prisoner Woodcutter"
 	category_tags = list(CTAG_PRISONER)
 

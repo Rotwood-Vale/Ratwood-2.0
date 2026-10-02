@@ -54,14 +54,8 @@
 
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_HEAVYARMOR)
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_STR = 1,
-		STATKEY_SPD = 1,
-		STATKEY_WIL = 2,
-		STATKEY_CON = 1,
-		STATKEY_PER = 1
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_CLERIC
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/maces = SKILL_LEVEL_MASTER,
@@ -162,13 +156,8 @@
 
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	subclass_stats = list(
-		STATKEY_CON = 2,
-		STATKEY_INT = 2,
-		STATKEY_STR = 1,
-		STATKEY_PER = 1,
-		STATKEY_WIL = 3
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = STATS_CLERIC
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/maces = SKILL_LEVEL_MASTER,
@@ -268,14 +257,8 @@
 
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_NOBLE, TRAIT_GOODTRAINER, TRAIT_EQUESTRIAN) //So they can actually do the job as good as other classes, while trading own potential for some flavor
-	subclass_stats = list(
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_STR = 1,
-		STATKEY_PER = 2,
-		STATKEY_INT = 2,
-		STATKEY_SPD = -1 //Malus in exchange for other things
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_SPD = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/maces = SKILL_LEVEL_MASTER,
@@ -379,12 +362,8 @@
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_HEAVYARMOR)
-	subclass_stats = list(
-		STATKEY_WIL = 3,// two handed weapons require a LOT of stamina.
-		STATKEY_STR = 2,
-		STATKEY_CON = 2,
-		STATKEY_INT = 1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
@@ -478,13 +457,8 @@
 
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WOODSMAN, TRAIT_OUTDOORSMAN, TRAIT_PERFECT_TRACKER)
-	subclass_stats = list(
-		STATKEY_PER = 3, // You are OLD you have OLD EYES. this is to counter that debuff so you can be OBSERVANT. Moved the bonus from BEING OLD since now veterans are forced to be such
-		STATKEY_INT = 2,
-		STATKEY_WIL = 2,
-		STATKEY_CON = 1,
-		STATKEY_STR = 1 //STR bonus instead of SPD one snce changed to medium armor. Dodge-maxxing is for the Spy Class.
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
@@ -587,13 +561,8 @@
 	cmode_music = 'sound/music/cmode/nobility/combat_spymaster.ogg'
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CICERONE, TRAIT_SEEPRICES, TRAIT_DECEIVING_MEEKNESS) //Mostly SOVL traits
-	subclass_stats = list(
-		STATKEY_INT = 3,// you are int-maxxing, especially if you go old.
-		STATKEY_PER = 2,
-		STATKEY_CON = 1,
-		STATKEY_SPD = 3,
-		STATKEY_STR = -1
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = STATS_ROGUE
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,

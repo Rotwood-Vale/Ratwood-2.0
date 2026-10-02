@@ -14,10 +14,8 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/nostromo
 	cmode_music = 'sound/music/combat_vaquero.ogg'
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_GOODLOVER, TRAIT_INTELLECTUAL)//No dodge / crit resist slop. Zzz...
-	subclass_stats = list(
-		STATKEY_SPD = 1,
-		STATKEY_INT = 3
-	)
+	stat_budget = STAT_BUDGET_MID - 2.5
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,//Not much of a wrestler.

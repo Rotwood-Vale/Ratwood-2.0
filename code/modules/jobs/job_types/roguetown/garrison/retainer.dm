@@ -35,7 +35,8 @@
 	outfit = /datum/outfit/job/roguetown/baron_retainer/henchman
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
-	subclass_stats = list(STATKEY_STR = 2, STATKEY_CON = 2, STATKEY_WIL = 3, STATKEY_PER = 2)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
@@ -102,7 +103,8 @@
 	outfit = /datum/outfit/job/roguetown/baron_retainer/duelist
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_COMBAT_AWARE, TRAIT_INTELLECTUAL, TRAIT_STEELHEARTED) //That musket round really did a number on your dodging reflexes, but you can still strike true with the blade.
-	subclass_stats = list(STATKEY_INT = 2, STATKEY_PER = 2, STATKEY_SPD = 3, STATKEY_WIL = 2, STATKEY_CON = -1) //4 speed was the most ridiculous thing anyone's ever added
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_CON = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT, //So-called "Grapplebait" by my peer group session. Ok bro
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
@@ -175,7 +177,8 @@
 	outfit = /datum/outfit/job/roguetown/baron_retainer/greyleaf
 	category_tags = list(CTAG_RETAINER)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SURVIVAL_EXPERT, TRAIT_WOODWALKER, TRAIT_PERFECT_TRACKER, TRAIT_STEELHEARTED)
-	subclass_stats = list(STATKEY_STR = 1, STATKEY_SPD = 3, STATKEY_PER = 4)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = STATS_ARCHER
 	subclass_skills = list(
 		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,

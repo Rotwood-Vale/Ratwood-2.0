@@ -5,11 +5,8 @@
 	outfit = /datum/outfit/job/roguetown/janissary/zephyr
 
 	category_tags = list(CTAG_JANISSARY)
-	subclass_stats = list(
-		STATKEY_SPD = 2,// seems kinda lame but remember guardsman bonus!!
-		STATKEY_PER = 2,
-		STATKEY_WIL = 1,
-		traits_applied = list(TRAIT_DODGEEXPERT))
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_ARCHER
 
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_MASTER,

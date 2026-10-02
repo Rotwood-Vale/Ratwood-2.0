@@ -510,7 +510,6 @@ GLOBAL_LIST_EMPTY(patron_follower_counts)
 #define FEATURED_STATS_FARMERS "farmers"
 #define FEATURED_STATS_STORYTELLERS "storytellers"
 #define FEATURED_STATS_VIRTUES	"virtues"
-#define FEATURED_STATS_STATPACKS "statpacks"
 #define FEATURED_STATS_VICES	"vices"
 #define FEATURED_STATS_QUIRKS	"quirks"
 
@@ -616,13 +615,6 @@ GLOBAL_LIST_INIT(featured_stats, list(
 	),	FEATURED_STATS_VIRTUES = list(
 		"name" = "TOP 10 Virtues",
 		"color" = "#df5cb8",
-		"entries" = list(),
-		"object_stat" = TRUE,
-		"admin_only" = TRUE
-	),
-	FEATURED_STATS_STATPACKS = list(
-		"name" = "TOP 10 Statpacks",
-		"color" = "#3aa4e2",
 		"entries" = list(),
 		"object_stat" = TRUE,
 		"admin_only" = TRUE

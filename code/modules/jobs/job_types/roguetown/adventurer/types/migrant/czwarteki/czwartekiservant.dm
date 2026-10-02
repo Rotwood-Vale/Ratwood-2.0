@@ -9,12 +9,8 @@
 		/datum/language/aavnic,
 	)
 
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_PER = 1,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 2,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,

@@ -13,11 +13,8 @@
 	pickprob = 5
 
 	category_tags = list(CTAG_TOWNER)
-	subclass_stats = list(
-		STATKEY_CON = 2,
-		STATKEY_PER = 2,
-		STATKEY_SPD = 2
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_CON = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,

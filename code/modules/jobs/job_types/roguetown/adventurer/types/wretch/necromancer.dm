@@ -9,12 +9,8 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_ZOMBIE_IMMUNE, TRAIT_MAGEARMOR, TRAIT_GRAVEROBBER, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT,TRAIT_RITUALIST,TRAIT_OUTLANDER,)
 	maximum_possible_slots = 1
-	subclass_stats = list(
-		STATKEY_INT = 4,
-		STATKEY_PER = 2,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_spellpoints = 16
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,

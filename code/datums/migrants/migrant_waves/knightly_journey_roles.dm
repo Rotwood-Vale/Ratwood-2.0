@@ -33,13 +33,8 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/knighte_expert
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_KJ_KNIGHT)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_INT = 1,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_PER = 2,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/riding= SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/polearms= SKILL_LEVEL_APPRENTICE,
@@ -157,13 +152,8 @@
 	traits_applied = list(TRAIT_SQUIRE_REPAIR, TRAIT_MEDIUMARMOR, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_KG_SQUIRE)
 	horse = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled
-	subclass_stats = list(
-		STATKEY_STR = 1,
-		STATKEY_PER = 1,
-		STATKEY_CON = 1,
-		STATKEY_INT = 1,
-		STATKEY_WIL = 1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,

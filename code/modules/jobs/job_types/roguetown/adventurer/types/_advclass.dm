@@ -34,7 +34,11 @@
 	/// Stat ceilings for the specific subclass.
 	var/list/adv_stat_ceiling
 
-	/// Subclass stat bonuses.
+	/// the class' budget for stats.
+	var/stat_budget = STAT_BUDGET_BASE
+
+	var/list/favored_stats
+
 	var/list/subclass_stats
 
 	/// Subclass skills. Everything here is leveled UP TO using adjust_skillrank_up_to EX. list(/datum/skill = SKILL_LEVEL_JOURNEYMAN)
@@ -106,9 +110,9 @@
 		for(var/lang in subclass_languages)
 			H.grant_language(lang)
 
-	if(length(subclass_stats))
-		for(var/stat in subclass_stats)
-			H.change_stat(stat, subclass_stats[stat])
+	H.apply_role_stats(stat_budget, favored_stats)
+	for(var/stat in subclass_stats)
+		H.change_stat(stat, subclass_stats[stat])
 
 	if(length(subclass_skills))
 		for(var/skill in subclass_skills)

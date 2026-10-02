@@ -22,7 +22,7 @@
 	cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // this was originally druid music. i think its ok to have druids share it w/ wardens.
 
 	//You're.. not REALLY a full-on church member, but being a druid implies you became a clergy-man of some sort; even if it's non-organized. So, still shouldn't be noble.
-	quirk_restrictions = list(/datum/quirk/noble)
+	virtue_restrictions = list(/datum/virtue/nobility)
 	job_traits = list(TRAIT_SEEDKNOW, TRAIT_OUTDOORSMAN, TRAIT_RITUALIST, TRAIT_HOMESTEAD_EXPERT, TRAIT_WILDERNESSGUIDE, TRAIT_WOODWALKER, TRAIT_EXPERT_HUNTER)
 
 	advclass_cat_rolls = list(CTAG_DRUID = 2)
@@ -38,12 +38,8 @@
 	outfit = /datum/outfit/job/roguetown/druid/basic
 	category_tags = list(CTAG_DRUID)
 	subclass_languages = list(/datum/language/beast)
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 1,
-		STATKEY_PER = -1
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_PER = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/tanning = SKILL_LEVEL_NOVICE,

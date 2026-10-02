@@ -57,13 +57,8 @@
 	outfit = /datum/outfit/job/roguetown/janissarysergeant/janissarysergeant
 
 	category_tags = list(CTAG_JANISSARYSERGEANT)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_INT = 1,
-		STATKEY_CON = 1,
-		STATKEY_PER = 1, //Gets bow-skills, so give a SMALL tad of perception to aid in bow draw.
-		STATKEY_WIL = 1,
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = 4,
 		/datum/skill/combat/swords = 4,

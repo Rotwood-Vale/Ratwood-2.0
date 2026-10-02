@@ -34,11 +34,8 @@
 	With time, perhaps you will one day be more than a glorified servant."
 	outfit = /datum/outfit/job/roguetown/shophand/basic
 	category_tags = list(CTAG_SHOPHAND)
-	subclass_stats = list(
-		STATKEY_SPD = 1,
-		STATKEY_INT = 1,
-		STATKEY_LCK = 1
-	)
+	stat_budget = STAT_BUDGET_LOW - 0.5
+	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		//worse skills than a normal peasant, generally, with random bad combat skill
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,

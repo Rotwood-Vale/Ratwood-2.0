@@ -8,12 +8,8 @@
 
 	category_tags = list(CTAG_JANISSARY)
 	//Garrison ranged/speed class. Time to go wild
-	subclass_stats = list(
-		STATKEY_SPD = 1,// probably objectively worse stats than skirmisher but the price ye pay
-		STATKEY_PER = 2,
-		STATKEY_WIL = 2,
-		STATKEY_INT = 1,
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_INT = STAT_FAVORED)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_FUSILIER)
 
 	subclass_skills = list(

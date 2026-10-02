@@ -17,13 +17,8 @@
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_fullplate.ogg'
 	traits_applied = list(TRAIT_HEAVYARMOR)
-	subclass_stats = list( //Roughly equivalent to the Doppelsoldner, but without their unique sword or blacksteel armor, in exchange they're basically a regular guy in plate armor
-		STATKEY_CON = 3,
-		STATKEY_WIL = 3,
-		STATKEY_STR = 2,
-		STATKEY_INT = 1,
-		STATKEY_SPD = -1
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = STATS_TANK
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
@@ -100,13 +95,8 @@
 	tutorial = "Faceless and numerous, the mercenary guild is occupied by many of your ilk. Maille and polearms are as easily used by the unskilled as they are effective."
 	outfit = /datum/outfit/job/roguetown/mercenary/ferentia_sellspear
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	subclass_stats = list( //Extremely all-rounder statline for an extremely all-rounder weapon class and middling armor class. You are John Spearman
-		STATKEY_PER = 2, //For stabbing and guardsman larping
-		STATKEY_WIL = 2,
-		STATKEY_STR = 1,
-		STATKEY_CON = 1,
-		STATKEY_SPD = 1
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
@@ -175,13 +165,8 @@
 	outfit = /datum/outfit/job/roguetown/mercenary/ferentia_sellblade
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_SEEPRICES_SHITTY) //Obligatory fast and nimble dodge expert class, specializing in either daggers or stabby swift weighted swords
-	subclass_stats = list( //Potentially a kind of scary statline, but you're going to be frail
-		STATKEY_SPD = 3,
-		STATKEY_PER = 2,
-		STATKEY_INT = 2,
-		STATKEY_CON = -1
-
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE, //No lockpicking or pickpocketing, you're a shady as fuck shanker, not a thief role
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
@@ -237,13 +222,8 @@
 	outfit = /datum/outfit/job/roguetown/mercenary/ferentia_thug
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_BIGGUY, TRAIT_SEEPRICES_SHITTY, TRAIT_DRUNK_HEALING)
-	subclass_stats = list(
-		STATKEY_STR = 3,
-		STATKEY_CON = 3,
-		STATKEY_WIL = 2,
-		STATKEY_INT = -2
-
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_INT = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
@@ -310,13 +290,8 @@
 	tutorial = "Once a member of a guard mayhaps - you recieved training in bludgeons and crossbows, serving as a ferentia yet numerous and effective ranged service to the mercenary guild."
 	outfit = /datum/outfit/job/roguetown/mercenary/ferentia_crossbowman
 	traits_applied = list(TRAIT_KEENEARS) //Guardmaxing
-	subclass_stats = list( //You're a little bit more tailored to the crossbowman identity than the Grenzelhoft crossbowman which is more of a utility role
-		STATKEY_PER = 3,
-		STATKEY_WIL = 2,
-		STATKEY_STR = 1,
-		STATKEY_SPD = 1,
-		STATKEY_CON = -1
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_CON = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
@@ -380,12 +355,8 @@
 	tutorial = "You've trained since you were young with a bow hunting game in the forest. You know the woods like you know the vitals of a wild saiga. In the mercenary guild, it's not hard to think of a brigand as a bipedal saiga."
 	outfit = /datum/outfit/job/roguetown/mercenary/ferentia_longbowman
 	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT) //Warden at home
-	subclass_stats = list( //Minus three weighted stats but they get woodsman to specialize them in being forest battlers, maybe try and get hired by the wardens pal
-		STATKEY_PER = 2,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_ARCHER
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,

@@ -6,11 +6,8 @@
 	subclass_languages = list(/datum/language/celestial)
 	cmode_music = 'sound/music/warscholar.ogg'
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_NALEDI)
-	subclass_stats = list(
-		STATKEY_SPD = 2,
-		STATKEY_PER = 1,
-		STATKEY_WIL = 1,
-	)
+	stat_budget = STAT_BUDGET_LOW - 2.5
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,

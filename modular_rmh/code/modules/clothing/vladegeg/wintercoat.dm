@@ -23,4 +23,4 @@
 /datum/loadout_item/winter_coat
 	name = "warm winter coat"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/winter_coat
-	triumph_cost = 3
+	loadout_category = LOADOUT_ARMOR

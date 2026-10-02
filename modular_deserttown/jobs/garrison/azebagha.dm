@@ -81,14 +81,8 @@
 	outfit = /datum/outfit/job/roguetown/azebagha/azebagha
 
 	category_tags = list(CTAG_AZEBAGHA)
-	subclass_stats = list(
-		STATKEY_STR = 1,
-		STATKEY_SPD = 1,
-		STATKEY_INT = 1,
-		STATKEY_PER = 1,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = 4,
 		/datum/skill/combat/swords = 4,

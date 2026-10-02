@@ -595,13 +595,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		reset_culinary_preferences()
 
-/datum/preferences/proc/_load_statpack(S)
-	var/statpack_type
-	S["statpack"] >> statpack_type
-	if (statpack_type && ispath(statpack_type))
-		statpack = new statpack_type()
-	else
-		statpack = new /datum/statpack/wildcard/fated()
+/datum/preferences/proc/_load_stat_prefs(S)
+	var/list/loaded_prefs
+	S["stat_source"] >> stat_source
+	S["origin_bonus_stat"] >> origin_bonus_stat
+	if(stat_source != "origin")
+		stat_source = "race"
+	S["stat_prefs"] >> loaded_prefs
+	stat_prefs = list()
+	if(!islist(loaded_prefs))
+		return
+	for(var/stat in GLOB.budget_stats)
+		if(loaded_prefs[stat] in GLOB.stat_pref_levels)
+			stat_prefs[stat] = loaded_prefs[stat]
 
 /datum/preferences/proc/_load_virtue(S)
 	var/virtue_type
@@ -817,8 +823,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["extra_language"]		>> extra_language
 	S["origin"]				>> origin
 	S["selected_title"]		>> selected_title
-	S["extra_language_1"]	>> extra_language_1
-	S["extra_language_2"]	>> extra_language_2
 	S["voice_color"]		>> voice_color
 	S["voice_pitch"]		>> voice_pitch
 	if (!voice_pitch)
@@ -841,6 +845,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["voice_type"]			>> voice_type
 	S["voice_pack"]			>> voice_pack
 	S["nickname"]			>> nickname
+	if(nickname == "Please Change Me")
+		nickname = null
 	S["highlight_color"]	>> highlight_color
 	S["taur_type"]			>> taur_type
 	S["taur_color"]			>> taur_color
@@ -878,8 +884,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	_load_culinary_preferences(S)
 
-	// LETHALSTONE edit: jank-ass load our statpack choice
-	_load_statpack(S)
+	_load_stat_prefs(S)
 
 	_load_loadout(S)
 	_load_loadout2(S)
@@ -1132,8 +1137,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["extra_language"]		, extra_language)
 	WRITE_FILE(S["origin"]				, origin)
 	WRITE_FILE(S["selected_title"]		, selected_title)
-	WRITE_FILE(S["extra_language_1"]	, extra_language_1)
-	WRITE_FILE(S["extra_language_2"]	, extra_language_2)
 	WRITE_FILE(S["voice_color"]			, voice_color)
 	WRITE_FILE(S["voice_pitch"]			, voice_pitch)
 	WRITE_FILE(S["skin_tone"]			, skin_tone)
@@ -1223,7 +1226,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["voice_type"] , voice_type)
 	WRITE_FILE(S["voice_pack"] , voice_pack)
 	WRITE_FILE(S["pronouns"] , pronouns)
-	WRITE_FILE(S["statpack"] , preferences_typepath_or_null(statpack))
+	WRITE_FILE(S["stat_prefs"] , stat_prefs)
+	WRITE_FILE(S["stat_source"] , stat_source)
+	WRITE_FILE(S["origin_bonus_stat"] , origin_bonus_stat)
 	// Save virtues with explicit null-safety
 	var/virtue_typepath = preferences_typepath_or_null(virtue)
 	if(!virtue_typepath)

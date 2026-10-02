@@ -8,11 +8,8 @@
 
 	category_tags = list(CTAG_MENATARMS)
 	//Garrison ranged/speed class. Time to go wild
-	subclass_stats = list(
-		STATKEY_SPD = 2,// seems kinda lame but remember guardsman bonus!!
-		STATKEY_PER = 2,
-		STATKEY_WIL = 1
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_ARCHER
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/bows = SKILL_LEVEL_MASTER,

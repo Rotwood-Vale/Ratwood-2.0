@@ -46,6 +46,7 @@
 /datum/species
 	// Associative list of stat (STAT_STRENGTH, etc) bonuses used to differentiate each race. They should ALWAYS be positive.
 	var/list/race_bonus = list()
+	var/origin_stats_allowed = TRUE
 	var/construct = 0
 	var/gibs_on_shapeshift = FALSE // do we play the gibs fx + foley when shapeshifting into this species?
 
@@ -60,13 +61,12 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 
-		if (H.statpack)
-			H.statpack.apply_to_human(H)
 		if (H.dna?.species) // LETHALSTONE EDIT: apply our race bonus, if we have one
 			var/datum/species/species = H.dna.species
-			if (species.race_bonus)
-				for (var/stat in species.race_bonus)
-					var/amt = species.race_bonus[stat]
+			var/list/bonuses = H.stat_bonuses || species.race_bonus
+			if (bonuses)
+				for (var/stat in bonuses)
+					var/amt = bonuses[stat]
 					H.change_stat(stat, amt)
 		switch(H.age)
 			if(AGE_MIDDLEAGED)
