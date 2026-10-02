@@ -528,13 +528,18 @@
 	name = "sleep powder"
 	description = ""
 	color = "#ddd3df" // rgb: 96, 165, 132
-	metabolization_rate = 1
+	metabolization_rate = 0.25
 
-// TO DO: eventually rewrite drowsyness code to do this instead then it can be expanded
-// The reason why I haven't is because vampire lords have some special code for drowsyness I'll ave to get to...
-/datum/reagent/sleep_powder/on_mob_metabolize(mob/living/carbon/M)
-	M.apply_status_effect(/datum/status_effect/debuff/knockout)
-	..()
+/datum/reagent/sleep_powder/on_mob_life(mob/living/carbon/M)
+	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
+		M.energy_add(-10) //a quarter of the power of weak stamina poison
+	if(prob(20))
+		to_chat(M, span_danger("I feel like i'm going to pass out!"))
+	if(M.health > 80)
+		M.adjustToxLoss(1*REM, 0)
+	if(current_cycle >= 22)
+		M.Sleeping(40, 0)
+	return ..()
 
 
 /obj/item/reagent_containers/powder/sleep_powder
