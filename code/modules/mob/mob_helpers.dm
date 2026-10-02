@@ -655,6 +655,8 @@
 			cmode = FALSE
 			SSdroning.kill_droning(client)
 			SSdroning.play_area_sound(get_area(src), client)
+			// The area loop as well, which entering the area skipped in combat mode
+			SSdroning.play_loop(get_area(src), client)
 		if(hud_used)
 			if(hud_used.cmode_button)
 				hud_used.cmode_button.update_icon()
@@ -664,6 +666,8 @@
 		cmode = FALSE
 		SSdroning.kill_droning(client)
 		SSdroning.play_area_sound(get_area(src), client)
+		// The area loop as well, which entering the area skipped in combat mode
+		SSdroning.play_loop(get_area(src), client)
 		clear_fullscreen("CMODE")
 		if(client && HAS_TRAIT(src, TRAIT_SCREENSHAKE))
 			animate(client, pixel_y)

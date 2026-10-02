@@ -86,7 +86,8 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
  * tile_cache.dm shares rankings by turf, while bulk.dm combines mass source changes. service.dm
  * selects sounds, send.dm sends and fades them, and doors.dm refreshes listeners near changed doors.
  * move_hook.dm handles movement and speed, listeners.dm handles login, muting and detached ears,
- * categories.dm defines each sound type, and mode.dm switches live, fallback and off.
+ * categories.dm defines each sound type, and mode.dm switches live, fallback and off. underground_rivers.dm
+ * marks where open ground reaches underground water.
  *
  * ## Measurements
  *
@@ -415,9 +416,23 @@ SUBSYSTEM_DEF(point_ambience)
 	/// The earliest step due across fading, so fire() enters run_fades only when there is one to
 	/// send. Steps fall on whole deciseconds, which lets fades from different listeners share a run
 	var/fade_next_due = 0
-	/// Turfs whose door changed since the last gather, as turf -> TRUE
+	/// Turfs whose door changed since the last gather, each keyed to TRUE
 	var/list/changed_doors = list()
 	var/next_door_recheck = 0
+	/// Each turf's steps from underground water through open ground, null where the fill does not
+	/// reach. Keyed by turf, and a replaced turf keeps its key. See underground_rivers.dm
+	var/list/underground_river_marks = list()
+	/// Every river turf in an area with river_underground, the fill's sources, each keyed to TRUE
+	var/list/underground_river_tiles = list()
+	/// Marked turfs that changed and are not refilled yet, each keyed to TRUE
+	var/list/underground_river_fill_dirty = list()
+	var/next_underground_river_fill = 0
+	/// Whether the fill has run. Off in config, it never does, and underground rivers go by the roof
+	var/underground_river_fill_done = FALSE
+	/// Reused by every fill, so nothing is allocated per turf
+	var/list/scratch_fill_queue = list()
+	var/list/scratch_fill_marks = list()
+	var/list/scratch_fill_open = list(FALSE, FALSE, FALSE, FALSE)
 	/// Whether the per-mob move hook has been attached to the global login signals yet. Done on
 	/// the first fire() rather than in New(), which may run before SSdcs exists
 	var/hooked_logins = FALSE
@@ -497,7 +512,8 @@ SUBSYSTEM_DEF(point_ambience)
 	 * Whether the listener is under a roof, from the same area the environment above is read off.
 	 *
 	 * Only categories that set indoors_volume_mult look at it, the river being the one that cannot
-	 * use occlusion: its voices are a line, so the nearest and the runner-up sit behind one wall
+	 * use occlusion: its voices are a line, so the nearest and the runner-up sit behind one wall. An
+	 * area with river_underground counts as open, and a voice in one goes by the underground river fill instead
 	 */
 	var/serving_indoors = FALSE
 	/**
@@ -568,6 +584,10 @@ SUBSYSTEM_DEF(point_ambience)
 	/// Listeners a door gather served again after the box filter. A detached ear is served
 	/// without it and not counted
 	var/door_listeners_marked = 0
+	/// River fill boxes rebuilt since boot, the turfs marked now, and the boot fill's cost
+	var/underground_river_fills = 0
+	var/underground_river_marked_tiles = 0
+	var/underground_river_fill_boot_ms = 0
 	/**
 	 * Tick usage of each phase of fire(), cumulative, for the Server verb.
 	 *
@@ -579,6 +599,7 @@ SUBSYSTEM_DEF(point_ambience)
 	var/walk_usage = 0
 	var/fade_usage = 0
 	var/door_usage = 0
+	var/underground_river_fill_usage = 0
 	/// Services outside the standing walk that found nothing in range and nothing playing, which is
 	/// what a silence gate would skip
 	var/moving_silent = 0
@@ -779,6 +800,13 @@ SUBSYSTEM_DEF(point_ambience)
 	// dirty_clients is not carried: the standing walk catches everyone in it within a second
 	fallback_loops = old.fallback_loops
 	source_zs = old.source_zs
+	// Carried rather than filled again, since seed_settings, which runs the fill, does not run twice
+	underground_river_marks = old.underground_river_marks
+	underground_river_tiles = old.underground_river_tiles
+	underground_river_fill_dirty = old.underground_river_fill_dirty
+	underground_river_fill_done = old.underground_river_fill_done
+	underground_river_marked_tiles = old.underground_river_marked_tiles
+	underground_river_fill_boot_ms = old.underground_river_fill_boot_ms
 	// One past the old value, so every client's cached scan is redone against the new datum
 	static_version = old.static_version + 1
 	recount_sources(old)
@@ -882,7 +910,7 @@ SUBSYSTEM_DEF(point_ambience)
 		category.files = old_category.files
 
 /**
- * Runs the fades, the door gathers, the queue and the standing walk, in that order.
+ * Runs the river refills, the fades, the door gathers, the queue and the standing walk, in that order.
  *
  * Each is timed into its own usage counter for the Server verb. On its first run it also seeds the
  * config and then hooks logins, in that order so the first muting check of every client sees the
@@ -895,11 +923,16 @@ SUBSYSTEM_DEF(point_ambience)
 		seed_settings()
 	if(!hooked_logins)
 		hook_logins()
+	var/started
+	// Kept current in every mode, since live mode reads the marks the moment it returns
+	if(length(underground_river_fill_dirty) && world.time >= next_underground_river_fill)
+		started = TICK_USAGE
+		refill_underground_river_marks()
+		underground_river_fill_usage += TICK_USAGE - started
 	if(mode != POINT_AMBIENCE_LIVE)
 		return
 	// First, so the drain and the walk cannot spend the tick a fade step is due in. Nothing else
 	// finishes the fade of a listener who stops past a range
-	var/started
 	if(length(fading) && world.time >= fade_next_due)
 		started = TICK_USAGE
 		run_fades()
@@ -971,6 +1004,9 @@ SUBSYSTEM_DEF(point_ambience)
 		end_bulk_source_update()
 	refresh_audible_mask()
 	static_version++
+	// Read once, here, because the fill runs once, against a map that is all in place by now
+	if(CONFIG_GET(number/point_ambience_underground_river_fill))
+		fill_underground_river_marks()
 
 /**
  * The once-a-second visit to every client, resumed where the last fire paused.

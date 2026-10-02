@@ -583,6 +583,15 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 		if(token.respect_instrument_pref)
 			token.update_listener(mob)
 
+/// Swaps every upload this mob hears for its stand in, or back, after the Uploaded Songs toggle
+/client/proc/sync_uploaded_songs()
+	if(!prefs || !mob)
+		return
+
+	for(var/datum/sound_token/token as anything in mob.sound_tokens)
+		if(token.uploaded)
+			token.update_listener(mob)
+
 /**
  * Re-prices every sound token this mob hears and the weather it stands in.
  *

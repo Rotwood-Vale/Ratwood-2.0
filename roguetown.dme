@@ -456,6 +456,7 @@
 #include "code\controllers\subsystem\point_ambience\listeners.dm"
 #include "code\controllers\subsystem\point_ambience\mode.dm"
 #include "code\controllers\subsystem\point_ambience\move_hook.dm"
+#include "code\controllers\subsystem\point_ambience\underground_rivers.dm"
 #include "code\controllers\subsystem\point_ambience\send.dm"
 #include "code\controllers\subsystem\point_ambience\service.dm"
 #include "code\controllers\subsystem\point_ambience\tile_cache.dm"

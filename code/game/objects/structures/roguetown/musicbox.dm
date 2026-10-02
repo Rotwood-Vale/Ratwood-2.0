@@ -1,3 +1,18 @@
+/// The wax music device's OLDSCHOOL list, name to file. The dwarven music box plays one in place of
+/// an upload for a listener who turned uploaded songs off
+GLOBAL_LIST_INIT(oldschool_songs, list(
+	"Autumn Voyage" = 'sound/music/jukeboxes/oldschool/Autumn_Voyage.ogg',
+	"Fanfare" = 'sound/music/jukeboxes/oldschool/Fanfare.ogg',
+	"Greatness" = 'sound/music/jukeboxes/oldschool/Greatness.ogg',
+	"Medieval" = 'sound/music/jukeboxes/oldschool/Medieval.ogg',
+	"Sea Shanty2" = 'sound/music/jukeboxes/oldschool/Sea_Shanty2.ogg',
+	"Shine" = 'sound/music/jukeboxes/oldschool/Shine.ogg',
+	"Spirit" = 'sound/music/jukeboxes/oldschool/Spirit.ogg',
+	"Still Night" = 'sound/music/jukeboxes/oldschool/Still_Night.ogg',
+	"Venture" = 'sound/music/jukeboxes/oldschool/Venture.ogg',
+	"Yesteryear" = 'sound/music/jukeboxes/oldschool/Yesteryear.ogg',
+))
+
 /datum/looping_sound/musloop
 	mid_sounds = list()
 	mid_length = 2400
@@ -62,18 +77,6 @@
 		"Song 1" = 'sound/music/jukeboxes/gen/tavern1.ogg',
 		"Song 2" = 'sound/music/jukeboxes/gen/tavern2.ogg',
 		"Song 3" = 'sound/music/jukeboxes/gen/tavern3.ogg'
-	)
-	var/list/static/songlist_oldschool = list(\
-		"Autumn Voyage" = 'sound/music/jukeboxes/oldschool/Autumn_Voyage.ogg',
-		"Fanfare" = 'sound/music/jukeboxes/oldschool/Fanfare.ogg',
-		"Greatness" = 'sound/music/jukeboxes/oldschool/Greatness.ogg',
-		"Medieval" = 'sound/music/jukeboxes/oldschool/Medieval.ogg',
-		"Sea Shanty2" = 'sound/music/jukeboxes/oldschool/Sea_Shanty2.ogg',
-		"Shine" = 'sound/music/jukeboxes/oldschool/Shine.ogg',
-		"Spirit" = 'sound/music/jukeboxes/oldschool/Spirit.ogg',
-		"Still Night" = 'sound/music/jukeboxes/oldschool/Still_Night.ogg',
-		"Venture" = 'sound/music/jukeboxes/oldschool/Venture.ogg',
-		"Yesteryear" = 'sound/music/jukeboxes/oldschool/Yesteryear.ogg'
 	)
 
 /obj/structure/roguemachine/musicbox/Initialize(mapload)
@@ -140,7 +143,7 @@
 			if("GENERIC")
 				chosen_songlists_selection = songlist_generic
 			if("OLDSCHOOL")
-				chosen_songlists_selection = songlist_oldschool
+				chosen_songlists_selection = GLOB.oldschool_songs
 		var/song_selection = input(user, "Which song do I play?", "\The [src]") as null | anything in chosen_songlists_selection
 		if(!Adjacent(user))
 			return

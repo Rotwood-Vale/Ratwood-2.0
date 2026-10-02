@@ -558,6 +558,8 @@
 /// Index changes in one tick, outside any bulk update, that get the caller reported. A starting
 /// heuristic rather than a measured break even
 #define POINT_AMBIENCE_BULK_BURST 64
+/// Steps the underground river fill walks out from underground water, the river category's range
+#define POINT_AMBIENCE_UNDERGROUND_RIVER_FILL_STEPS 8
 
 /**
  * EAX Occlusion for a muffled send, slot 7 of the 18-slot sound.echo array, in millibels.
@@ -798,3 +800,8 @@
 #define DROP_SOUND_VOLUME 100
 #define YEET_SOUND_VOLUME 100
 #define HOLSTER_SOUND_VOLUME 15
+
+/// Where instruments and the dwarven music box save player uploads, and how an upload is told apart
+#define SONG_UPLOAD_FOLDER "data/jukeboxuploads/"
+/// A stock song is a compiled resource whose path starts at sound/, an upload a file under the folder
+#define IS_UPLOADED_SONG(song) (findtext("[song]", SONG_UPLOAD_FOLDER) == 1)

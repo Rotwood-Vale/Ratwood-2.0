@@ -15,6 +15,7 @@ type Data = {
   master: number;
   effects: number;
   instruments: number;
+  replace_uploaded_songs: boolean;
   music: number;
   adminmusic: number;
   streamedmusic: number;
@@ -83,7 +84,7 @@ const ToggleRow = ({ label, enabled, id, hint }: ToggleRowProps) => {
 };
 
 export const VolumePowerMenu = () => {
-  const { data, config } = useBackend<Data>();
+  const { act, data, config } = useBackend<Data>();
   const [tab, setTab] = useState(0);
   const [content, setContent] = useState<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(420);
@@ -133,6 +134,7 @@ export const VolumePowerMenu = () => {
     master,
     effects,
     instruments,
+    replace_uploaded_songs,
     music,
     adminmusic,
     streamedmusic,
@@ -204,6 +206,21 @@ export const VolumePowerMenu = () => {
                   id="instruments"
                   hint="Bards, music boxes, and wax music devices."
                 />
+                <Box ml={1} mt={-0.5} mb={0.5}>
+                  <Button.Checkbox
+                    checked={replace_uploaded_songs ?? false}
+                    color="transparent"
+                    compact
+                    fontSize="0.85em"
+                    tooltip="For lower bandwidth: replaces player-uploaded instrument and music-box songs with built-in songs. The uploaded file is not sent to you."
+                    tooltipPosition="right"
+                    onClick={() =>
+                      act('toggle', { id: 'replace_uploaded_songs' })
+                    }
+                  >
+                    Use In-Game Songs Instead
+                  </Button.Checkbox>
+                </Box>
                 <VolumeRow
                   label="World Music"
                   value={music ?? 100}
@@ -277,6 +294,14 @@ export const VolumePowerMenu = () => {
               <Box className="AudioSettings__muteNote">{volumeNotice}</Box>
             </Box>
           )}
+          <Box
+            mt={0.5}
+            fontSize="0.75em"
+            textAlign="center"
+            style={{ opacity: 0.7 }}
+          >
+            Hover over a setting to see its tooltip.
+          </Box>
         </div>
       </Window.Content>
     </Window>

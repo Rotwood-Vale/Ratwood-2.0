@@ -2,6 +2,7 @@
 	var/datum/point_ambience_category/fire_category
 	var/datum/point_ambience_category/torch_category
 	var/fire_range
+	var/fire_indoor_volume
 	var/fire_silenced
 	var/torch_silenced
 	var/saved_use_tile_cache
@@ -13,10 +14,13 @@
 	fire_category = ambience.categories_by_path[/datum/point_ambience_category/fire]
 	torch_category = ambience.categories_by_path[/datum/point_ambience_category/torch]
 	fire_range = fire_category.range
+	fire_indoor_volume = fire_category.indoor_volume
 	fire_silenced = fire_category.silenced
 	torch_silenced = torch_category.silenced
 	saved_use_tile_cache = ambience.use_tile_cache
 	saved_verify_tile_cache = ambience.verify_tile_cache
+	// Half the outdoor level, so the indoor scaling is tested whatever the fire is tuned to
+	fire_category.indoor_volume = fire_category.volume / 2
 	fire_category.silenced = FALSE
 	torch_category.silenced = FALSE
 	ambience.set_tile_cache(TRUE)
@@ -169,6 +173,7 @@
 	test_sources.Cut()
 	if(fire_category)
 		fire_category.range = fire_range
+		fire_category.indoor_volume = fire_indoor_volume
 		fire_category.silenced = fire_silenced
 		torch_category.silenced = torch_silenced
 		ambience.refresh_category_ranges()

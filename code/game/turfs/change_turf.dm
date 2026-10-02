@@ -114,6 +114,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/list/old_comp_lookup = comp_lookup?.Copy()
 	var/list/old_signal_procs = signal_procs?.Copy()
 	var/turf/W = new path(src)
+	// A marked turf is the exact test, since the blockers bordering the underground river fill are marked too
+	SSpoint_ambience?.underground_river_turf_changed(W)
 
 	// WARNING WARNING
 	// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS

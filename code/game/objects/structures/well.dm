@@ -133,6 +133,15 @@
 	plane = GAME_PLANE_UPPER
 	pixel_x = -15
 
+/// A sibling of the fountain rather than a subtype, so it registers itself the same way
+/obj/structure/well/fountainswamp/Initialize(mapload)
+	. = ..()
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/water)
+
+/obj/structure/well/fountainswamp/Destroy()
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/water)
+	return ..()
+
 /obj/structure/well/fountainswamp/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass))
 		var/obj/item/reagent_containers/glass/W = I

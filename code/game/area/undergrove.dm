@@ -3,6 +3,8 @@
 	icon_state = "cavewet"
 	warden_area = TRUE
 	first_time_text = "The Undergrove"
+	river_ambience = TRUE
+	river_underground = TRUE
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
 	spookysounds = SPOOKY_CAVE
@@ -77,14 +79,11 @@
 	detail_text = DETAIL_TEXT_SKELETON_CRYPT
 
 /**
- * Cave river, heard through the parent's AMB_CAVEWATER alone.
+ * Flowing cave water, including Rockhill's moat below High Town.
  *
- * No ambientsounds of its own: AMB_RIVERDAY and AMB_RIVERNIGHT are surface recordings, birds
- * included. /area/rogue/under sets river_ambience = FALSE, so the river turfs here register no point
- * sources either. Point sources would attenuate where the area layer does not, but would need a
- * category of their own carrying cave water, since the clip set lives on the category and the
- * surface one is wrong down here. Not worth a category and a channel for a sound the area layer
- * already covers.
+ * Inherits river voices from the wet-cave area. The underground fill lets listeners beside the
+ * water hear it fully despite the roof. Keeps the parent's AMB_CAVEWATER bed instead of the surface
+ * area recordings, which include birds.
  */
 /area/rogue/under/cavewet/river
 	name = "Cave River"

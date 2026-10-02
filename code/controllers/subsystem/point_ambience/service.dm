@@ -266,7 +266,7 @@
 				break
 			holder = holder.loc
 	var/area/A = listener_turf.loc
-	serving_indoors = A && !A.outdoors
+	serving_indoors = A && !A.outdoors && !A.river_underground
 	serving_environment = (A && A.soundenv && A.soundenv != SOUND_ENVIRONMENT_NONE) ? A.soundenv : SOUND_DEFAULT_ENVIRONMENT
 	// No prefs leaves this null, so no scaling. A zero never gets here, having returned above
 	serving_volume_scale = volume_scale

@@ -192,6 +192,14 @@ POINT_AMBIENCE_FALLOFF_HARDNESS 1
 ## step. Ordinary one-shot sounds use their own panning rule.
 POINT_AMBIENCE_PAN_DEPTH_FLOOR 1
 
+## Rivers underground
+## 1 plays cave and sewer rivers at full volume only where open ground reaches their water within
+## 8 steps. Everywhere else they play at the river's roof level: a building beside the sewer, a
+## hut built inside a cave, or outdoors beside a cliff with a cave river behind it. Doors and
+## windows always block, open or shut. 0 judges them by the listener's roof alone, so they carry
+## at full through rock to anyone outdoors. Read at startup.
+POINT_AMBIENCE_UNDERGROUND_RIVER_FILL 1
+
 ## Sound across floors
 ## Effective distance added for each storey crossed, in addition to the usual floor muffling.
 ## 0 leaves the ordinary horizontal falloff and a flat floor penalty. Larger values combine

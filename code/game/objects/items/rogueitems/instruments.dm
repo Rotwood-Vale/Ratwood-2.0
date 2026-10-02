@@ -9,6 +9,16 @@
 	var/loop_song = FALSE
 	/// Shared REALTIMEOFDAY anchor for band starts. Identical stamps keep members in lockstep
 	var/sync_start_time
+	/// The instrument's stock songs, name to file, which stand in for an upload
+	var/list/stand_in_songs
+	/**
+	 * Suppresses separate replacement songs for the other members of a band.
+	 *
+	 * Band starts try the leader first. After one member starts successfully, followers get no
+	 * stand in, so listeners with uploads off hear one stock song rather than several.
+	 * Cleared after start() so later solo plays can use their own replacement
+	 */
+	var/band_follower = FALSE
 
 GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
@@ -152,6 +162,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	token.respect_instrument_pref = TRUE
 	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
 	token.same_floor_only = TRUE
+	token.stand_in_songs = band_follower ? null : stand_in_songs
 	token.on_listener_audible = CALLBACK(src, PROC_REF(give_stress))
 	if(sync_start_time)
 		token.start_time = sync_start_time
@@ -228,6 +239,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 
 /obj/item/rogue/instrument/Initialize(mapload)
 	soundloop = new(src, FALSE)
+	// Before any upload joins song_list, so the copy holds the stock songs alone
+	soundloop.stand_in_songs = song_list.Copy()
 	. = ..()
 
 /obj/item/rogue/instrument/Destroy()
@@ -390,8 +403,8 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 					to_chat(user, span_warning("TOO BIG. 6 MEGS OR LESS."))
 					return
 				lastfilechange = world.time
-				fcopy(infile,"data/jukeboxuploads/[user.ckey]/[filename]")
-				curfile = file("data/jukeboxuploads/[user.ckey]/[filename]")
+				fcopy(infile,"[SONG_UPLOAD_FOLDER][user.ckey]/[filename]")
+				curfile = file("[SONG_UPLOAD_FOLDER][user.ckey]/[filename]")
 				var/songname = input(user, "Name your song:", "Song Name") as text|null
 				if(songname)
 					song_list[songname] = curfile
@@ -528,6 +541,12 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			return
 		owned_lobby.add_or_replace_member(user, src, curfile)
 
+		// Gather ready members after the delay, since someone may start playing while it runs.
+		if(!do_after(user, 1))
+			return
+		if(GLOB.instrument_band_lobbies[member_id] != owned_lobby)
+			return
+
 		var/list/slots = owned_lobby.get_active_slots()
 		if(!slots.len)
 			to_chat(user, span_warning("Nobody is registered in your band lobby."))
@@ -590,11 +609,16 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			to_chat(user, span_warning("No ready band members to start."))
 			return
 
-		if(!do_after(user, 1))
-			return
-
 		var/sync_anchor = REALTIMEOFDAY // token playback clocks run on real time
 
+		// Try the leader first, but only a successful start claims the band's stand in.
+		for(var/i in 1 to instruments_to_start.len)
+			var/obj/item/rogue/instrument/band_instrument = instruments_to_start[i]
+			if(instrument_to_bandmate[band_instrument] == user)
+				instruments_to_start.Swap(1, i)
+				break
+
+		var/stand_in_assigned = FALSE
 		for(var/obj/item/rogue/instrument/band_instrument in instruments_to_start)
 			if(band_instrument.playing || !band_instrument.curfile)
 				continue
@@ -609,10 +633,15 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			band_instrument.soundloop.set_mid_sounds(list(band_instrument.curfile))
 			band_instrument.soundloop.volume = clamp(band_instrument.curvol, 10, 100)
 			band_instrument.soundloop.loop_song = band_instrument.loop_enabled
-			if(!band_instrument.soundloop.start(play_source, sync_anchor))
+			band_instrument.soundloop.band_follower = stand_in_assigned
+			var/started = band_instrument.soundloop.start(play_source, sync_anchor)
+			// The token is configured by now, and a later solo play must not inherit the flag
+			band_instrument.soundloop.band_follower = FALSE
+			if(!started)
 				if(isliving(play_source))
 					to_chat(play_source, span_warning("Could not play [band_instrument.name] - no sound channels available."))
 				continue
+			stand_in_assigned = TRUE
 			band_instrument.playing = TRUE
 			band_instrument.groupplaying = TRUE
 

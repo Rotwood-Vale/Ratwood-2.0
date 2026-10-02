@@ -181,6 +181,7 @@
 	data["master"] = isnum(owner.prefs.overallvol) ? owner.prefs.overallvol : initial(owner.prefs.overallvol)
 	data["effects"] = isnum(owner.prefs.mastervol) ? owner.prefs.mastervol : initial(owner.prefs.mastervol)
 	data["instruments"] = isnum(owner.prefs.instrumentvol) ? owner.prefs.instrumentvol : initial(owner.prefs.instrumentvol)
+	data["replace_uploaded_songs"] = !(owner.prefs.toggles & SOUND_UPLOADED_SONGS)
 	data["music"] = isnum(owner.prefs.musicvol) ? owner.prefs.musicvol : initial(owner.prefs.musicvol)
 	data["adminmusic"] = isnum(owner.prefs.adminmusicvol) ? owner.prefs.adminmusicvol : initial(owner.prefs.adminmusicvol)
 	data["streamedmusic"] = isnum(owner.prefs.streamedmusicvol) ? owner.prefs.streamedmusicvol : initial(owner.prefs.streamedmusicvol)
@@ -210,6 +211,13 @@
 		return TRUE
 
 	if(action == "toggle")
+		if(params["id"] == "replace_uploaded_songs")
+			owner.prefs.toggles ^= SOUND_UPLOADED_SONGS
+			owner.prefs.save_preferences()
+			// Swaps what is already playing, since nothing else re-sends to a listener standing still
+			owner.sync_uploaded_songs()
+			SStgui.update_uis(src)
+			return TRUE
 		if(params["id"] == "point_ambience_independent")
 			owner.prefs.pointambience_independent = !owner.prefs.pointambience_independent
 			owner.prefs.save_preferences()

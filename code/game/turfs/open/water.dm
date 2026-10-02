@@ -601,6 +601,8 @@
 	swimdir = TRUE
 	/// Whether this turf is the one speaking for its stretch of river. One in every few tiles
 	var/ambience_source = FALSE
+	/// Whether this turf seeds the underground river fill, so its Destroy takes it out again
+	var/underground_river_source = FALSE
 
 /turf/open/water/river/muddy
 	water_color = "#705a43"
@@ -650,6 +652,10 @@
 	// A turf's loc is its area. Areas that hold water as scenery opt out, so a generated dungeon
 	// room does not babble at you
 	var/area/our_area = loc
+	// Before the opt out below, so the fill's sources follow the area flag alone
+	if(our_area?.river_underground)
+		underground_river_source = TRUE
+		SSpoint_ambience.underground_river_tile_added(src)
 	if(our_area && !our_area.river_ambience)
 		return
 	// Unregistered from the Destroy in rivers.dm, which this type already has. No file of its own:

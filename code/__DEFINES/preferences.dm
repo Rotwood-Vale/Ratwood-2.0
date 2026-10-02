@@ -10,9 +10,8 @@
 #define MEMBER_PUBLIC			(1<<4)
 #define INTENT_STYLE			(1<<5)
 #define MIDROUND_ANTAG			(1<<6)
-// Bit 7 is retired and deliberately left unused. Every savefile written before the Instruments
-// volume slider still has it set, so a new toggle placed here would read as enabled for every
-// returning player
+// Keep at bit 7, existing savefiles already have it set for most players
+#define SOUND_UPLOADED_SONGS	(1<<7)
 #define SOUND_SHIP_AMBIENCE		(1<<8)
 #define SOUND_PRAYERS			(1<<9)
 #define ANNOUNCE_LOGIN			(1<<10)
@@ -34,7 +33,7 @@
 #define XP_TEXT					(1<<1)
 #define TOGGLES_TEXT_DEFAULT (FLOATING_TEXT|XP_TEXT)
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|SOUND_DEATH_ALARM|TOGGLE_FULLSCREEN|ROLEPLAY_ADS)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_UPLOADED_SONGS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|SOUND_DEATH_ALARM|TOGGLE_FULLSCREEN|ROLEPLAY_ADS)
 
 /**
  * Point ambience, per listener: hearths, fountains, rivers, sconces.

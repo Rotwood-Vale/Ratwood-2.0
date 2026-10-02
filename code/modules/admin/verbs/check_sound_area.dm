@@ -30,6 +30,11 @@
 		var/area/other = get_area(T)
 		msg += "[T == above ? "above" : "below"]: [other ? "[other.name], soundproof [other.soundproof]" : "nothing"]"
 
+	// Whether cave and sewer rivers reach this tile in full, and whether this area's own water seeds the fill
+	var/steps = SSpoint_ambience.underground_river_marks[here]
+	var/fill_state = isnull(steps) ? "unmarked, cave and sewer rivers reach you at their roof level" : "marked, [steps] steps from underground water"
+	msg += "underground river fill: [SSpoint_ambience.underground_river_fill_done ? fill_state : "off in config"] | area river_underground [A.river_underground ? "TRUE" : "FALSE"]"
+
 	// What point ambience is sending you, one voice per category. The volume is the last one sent
 	// rather than one recomputed for the readout, so it is what your client plays now
 	var/list/playing = list()

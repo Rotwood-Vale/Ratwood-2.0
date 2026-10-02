@@ -17,7 +17,8 @@
 	/// k:v list of mob : sound status
 	var/list/listeners = list()
 	/**
-	 * Listeners whose client is playing this token's current file on its channel, audible or muted.
+	 * Listener to the sound datum their channel is playing, audible or muted: the token's own, or the
+	 * stand in.
 	 *
 	 * An update only changes a sound already playing, so an update sent to anyone missing from here
 	 * plays nothing. They get a full send at the current offset instead. A listener who enters a grid
@@ -85,6 +86,14 @@
 	/// The outermost movable the source is inside, if any, watched for INDIRECT movement.
 	/// A carried item does not fire Moved() when its holder walks, only the holder does
 	var/atom/movable/tracked_holder
+	/// Name to file. A listener who turned uploaded songs off hears one of these in place of an upload
+	var/list/stand_in_songs
+	/// Whether the playing file is a player upload
+	var/uploaded = FALSE
+	/// One of stand_in_songs, picked per file so every listener who turned uploads off hears the same one
+	var/sound/stand_in
+	/// The stand in's length in deciseconds, for its offset
+	var/stand_in_duration
 
 /datum/sound_token/New(atom/_source, _sound, _range = 10, _volume = 50, _falloff_exponent, _falloff_distance = SOUND_DEFAULT_FALLOFF_DISTANCE, _allowed_listeners, _sound_duration_override, _delete_on_end, _repeating, start_time_override, _vary = FALSE)
 	source = _source
@@ -132,6 +141,8 @@
  * goes out at the wrong volume.
  */
 /datum/sound_token/proc/start_tracking()
+	// Again here, since stand_in_songs is one of the fields set after New()
+	refresh_stand_in()
 	update_tracked_cells()
 
 /datum/sound_token/Destroy(force, ...)
@@ -146,6 +157,8 @@
 	cell_trackers = null
 	on_listener_audible = null
 	tracked_holder = null // Its signal registration is dropped by the datum teardown below
+	stand_in = null
+	stand_in_songs = null
 	return ..()
 
 /// Lets us update the sound to a new one. Returns FALSE (after scheduling our own deletion) if no channel could be reserved
@@ -169,11 +182,43 @@
 	sound_duration = sound_duration_override || SSsounds.get_sound_length(_sound)
 	start_time = REALTIMEOFDAY
 	started_listeners = null
+	refresh_stand_in()
 	if(start_playing)
 		force_update_all_listeners(FALSE)
 	if(delete_on_end && !repeating)
 		addtimer(CALLBACK(src, PROC_REF(on_sound_ended)), sound_duration, TIMER_UNIQUE | TIMER_OVERRIDE)
 	return TRUE
+
+/// Picks the stand in for an upload, or clears it for a stock file. Once per file, so every listener
+/// who turned uploads off hears the same one
+/datum/sound_token/proc/refresh_stand_in()
+	PRIVATE_PROC(TRUE)
+	uploaded = IS_UPLOADED_SONG(sound.file)
+	stand_in = null
+	if(!uploaded || !length(stand_in_songs))
+		return
+	var/song_file = stand_in_songs[pick(stand_in_songs)]
+	stand_in = sound(song_file)
+	stand_in.channel = sound_channel
+	stand_in.repeat = repeating
+	// The token's one pitch roll, so a stand in sounds as varied as the upload would
+	stand_in.frequency = sound.frequency
+	stand_in_duration = SSsounds.get_sound_length(song_file)
+
+/**
+ * The sound datum this listener is sent: the token's own, or the stand in for a listener who turned
+ * uploaded songs off.
+ *
+ * Null for such a listener when there is no stand in. They hear nothing, and are never sent the upload
+ */
+/datum/sound_token/proc/sound_for(mob/listener_mob)
+	PRIVATE_PROC(TRUE)
+	if(!uploaded)
+		return sound
+	var/datum/preferences/prefs = listener_mob.client?.prefs
+	if(!prefs || (prefs.toggles & SOUND_UPLOADED_SONGS))
+		return sound
+	return stand_in
 
 /// Updates the data of a listener, or adds them if they are not present.
 /datum/sound_token/proc/add_or_update_listener(mob/listener_mob)
@@ -302,32 +347,55 @@
 	if(isnull(effective_volume))
 		effective_volume = volume
 
-	sound.status = listeners[listener_mob]
-	// Always an update, so it mutes whatever the channel is playing and does nothing to an idle one
-	if(sound.status & SOUND_MUTE)
-		sound.status |= SOUND_UPDATE
-		SEND_SOUND(listener_mob, sound)
+	// What the channel plays now, and what this listener should hear. They differ after the Uploaded
+	// Songs toggle flips, and a full send of the new one replaces the old
+	var/sound/playing = LAZYACCESS(started_listeners, listener_mob)
+	var/sound/listener_sound = sound_for(listener_mob)
+
+	if(listeners[listener_mob] & SOUND_MUTE)
+		// Only a channel that started has anything to mute, and the packet names its file
+		if(!playing)
+			return
+		playing.status = SOUND_UPDATE|SOUND_MUTE
+		SEND_SOUND(listener_mob, playing)
+		return
+
+	// Uploads off and no stand in, so stop anything playing and send nothing else
+	if(!listener_sound)
+		if(playing)
+			SEND_SOUND(listener_mob, null_sound)
+			LAZYREMOVE(started_listeners, listener_mob)
 		return
 
 	// An update reaches only a channel already playing this file. See started_listeners
-	if(update_sound && LAZYACCESS(started_listeners, listener_mob))
-		sound.status |= SOUND_UPDATE
+	if(update_sound && playing == listener_sound)
+		listener_sound.status = SOUND_UPDATE
 	else
-		sound.offset = calculate_offset()
+		var/offset = (listener_sound == stand_in) ? calculate_offset(stand_in, stand_in_duration) : calculate_offset(sound, sound_duration)
+		// A sound that does not loop and has ended starts nothing, and anything else playing stops
+		if(isnull(offset))
+			if(playing)
+				SEND_SOUND(listener_mob, null_sound)
+				LAZYREMOVE(started_listeners, listener_mob)
+			return
+		listener_sound.status = NONE
+		listener_sound.offset = offset
 
 	// The Instruments slider under Master stands in for Sound Effects on bards and music boxes
 	var/datum/preferences/prefs = listener_mob.client?.prefs
 	var/volume_pref = (respect_instrument_pref && prefs) ? prefs.at_overall(prefs.instrumentvol) : null
 	// Routed through playsound_local, which applies falloff, panning and the player's
 	// volume sliders on every send, updates included, so re-sends stay pref-scaled
-	var/sent = listener_mob.playsound_local(get_turf(source), vol = effective_volume, falloff_exponent = falloff_exponent, channel = sound_channel, S = sound, max_distance = range, falloff_distance = falloff_distance, use_reverb = TRUE, muffled = muffled, volume_pref = volume_pref)
-	sound.offset = null
+	var/sent = listener_mob.playsound_local(get_turf(source), vol = effective_volume, falloff_exponent = falloff_exponent, channel = sound_channel, S = listener_sound, max_distance = range, falloff_distance = falloff_distance, use_reverb = TRUE, muffled = muffled, volume_pref = volume_pref)
+	listener_sound.offset = null
 	if(sent)
-		LAZYSET(started_listeners, listener_mob, TRUE)
+		LAZYSET(started_listeners, listener_mob, listener_sound)
 		return
-	// Refused, so muted where it plays. A channel that never started stays out of started_listeners
-	sound.status = SOUND_UPDATE|SOUND_MUTE
-	SEND_SOUND(listener_mob, sound)
+	// Refused, so muted where it plays. An idle channel is sent nothing, as above
+	if(!playing)
+		return
+	playing.status = SOUND_UPDATE|SOUND_MUTE
+	SEND_SOUND(listener_mob, playing)
 
 /// Queues every listener for a refresh. Used when the SOURCE moved or the volume changed
 /datum/sound_token/proc/update_all_listeners()
@@ -414,28 +482,29 @@
 	qdel(src)
 
 /**
- * Calculates the offset to give the sound for people who start hearing it mid-play
+ * Calculates the offset to give a sound for people who start hearing it mid-play
  *
- * sound.frequency holds absolute Hz from get_rand_frequency(), not the percentage TG divides by 100
- * for, so the factor divides by 44100, the rate of a 44.1 kHz file. A 48 kHz file seeks
- * 48000/44100 too far, about 9%.
+ * Takes the datum and its length, since a stand in has a length of its own. Its frequency holds
+ * absolute Hz from get_rand_frequency(), not the percentage TG divides by 100 for, so the factor
+ * divides by 44100, the rate of a 44.1 kHz file. A 48 kHz file seeks 48000/44100 too far, about 9%.
  *
  * An unknown length returns 0. get_sound_length() answers 0 for a file it cannot measure, and a
  * seek past the end plays nothing, which would leave a returning listener silent for the rest of
- * the round. Offsets are deciseconds until the last line, since sound.offset is in seconds.
+ * the round. A sound that does not loop and has ended returns null, since 0 would replay it from
+ * the top. Offsets are deciseconds until the last line, since sound.offset is in seconds.
  */
-/datum/sound_token/proc/calculate_offset()
+/datum/sound_token/proc/calculate_offset(sound/playing_sound, duration)
 	var/elapsed = REALTIMEOFDAY - start_time
-	var/freq_factor = sound.frequency ? (sound.frequency / 44100) : 1
-	var/pitch_factor = (sound.pitch || 100) / 100
+	var/freq_factor = playing_sound.frequency ? (playing_sound.frequency / 44100) : 1
+	var/pitch_factor = (playing_sound.pitch || 100) / 100
 	var/offset = elapsed * freq_factor * pitch_factor
-	if(!sound_duration)
+	if(!duration)
 		// Length unknown, so any seek is a guess. See the proc doc
 		return 0
 	if(repeating)
-		offset %= sound_duration
-	else if(offset >= sound_duration)
-		return 0 // A finished one-shot, and seeking past its end plays nothing
+		offset %= duration
+	else if(offset >= duration)
+		return null // See the proc doc
 	// sound.offset is in seconds, everything above in deciseconds
 	return offset / 10
 

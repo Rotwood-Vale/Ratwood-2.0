@@ -3,6 +3,8 @@
 	name = "cave"
 	warden_area = TRUE
 	icon_state = "cave"
+	river_ambience = TRUE
+	river_underground = TRUE
 	ambientsounds = AMB_GENCAVE
 	ambientnight = AMB_GENCAVE
 	spookysounds = SPOOKY_CAVE

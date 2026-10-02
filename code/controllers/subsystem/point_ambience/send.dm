@@ -68,9 +68,12 @@
 		return FALSE
 	var/vol = category.volume * (category.source_volumes[nearest] || 1)
 	var/continuous = category.source_continuous[nearest]
-	// Before the floor, so a category cut indoors keeps its dB per tile and only drops a level
-	if(serving_indoors && category.indoors_volume_mult != 1)
-		vol *= category.indoors_volume_mult
+	// Before the floor, so a category cut indoors keeps its dB per tile and only drops a level.
+	// A cave or sewer voice asks the underground river fill whether open ground reaches the listener, not the roof
+	if(category.indoors_volume_mult != 1)
+		var/area/source_area = source_turf.loc
+		if((underground_river_fill_done && source_area?.river_underground) ? isnull(underground_river_marks[serving_turf]) : serving_indoors)
+			vol *= category.indoors_volume_mult
 	// A share of THIS source's volume, so the walk keeps its dB per tile at any level. Taken
 	// before the muffle cut, so a muffled send lands on the same edge level as a clear one
 	var/volume_floor = vol * category.floor_ratio

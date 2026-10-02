@@ -73,7 +73,8 @@
 	 *
 	 * Point sources use occlusion to check the path through walls and doorways. A river is one
 	 * continuous feature, so slim_send() applies indoors_volume_mult from the listener's roof
-	 * state instead of walking a wall path for every river voice
+	 * state, or for underground water from the underground river fill, instead of walking a wall path for every
+	 * river voice
 	 */
 	var/indoors_volume_mult = 1
 	/// Base volume for indoor sources, when different from volume
@@ -221,8 +222,8 @@
 	voices_indoors = list('sound/ambience/point/fire_in_1.ogg', 'sound/ambience/point/fire_in_2.ogg', 'sound/ambience/point/fire_in_3.ogg')
 	/// Outdoor level, set by ear against other point ambience categories
 	volume = 32
-	/// Indoor fire level, lower than the outdoor level before distance falloff
-	indoor_volume = 30
+	/// Indoor fire level, matching the outdoor one. Lower it to make a fire in a room quieter than one in the open
+	indoor_volume = 32
 	range = 6
 	unique_voice = TRUE
 	voice_place = TRUE

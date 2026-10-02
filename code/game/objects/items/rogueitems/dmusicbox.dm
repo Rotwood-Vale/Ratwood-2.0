@@ -15,6 +15,7 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 /datum/looping_sound/dmusloop/configure_token(datum/sound_token/token)
 	token.respect_instrument_pref = TRUE
 	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
+	token.stand_in_songs = GLOB.oldschool_songs
 	token.on_listener_audible = CALLBACK(src, PROC_REF(give_stress))
 
 /datum/looping_sound/dmusloop/proc/give_stress(mob/M)
@@ -121,7 +122,7 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 		return
 	lastfilechange = world.time
 	GLOB.musicboxes_last_upload = world.time
-	var/logged_filename = "data/jukeboxuploads/round-[GLOB.round_id ? GLOB.round_id : "NULL"]/[user.ckey[1]]/[user.ckey]/[time2text(world.time, "hh_mm_ss", 0)][file_ext]"
+	var/logged_filename = "[SONG_UPLOAD_FOLDER]round-[GLOB.round_id ? GLOB.round_id : "NULL"]/[user.ckey[1]]/[user.ckey]/[time2text(world.time, "hh_mm_ss", 0)][file_ext]"
 	if(fexists(logged_filename))
 		fdel(logged_filename)
 	if(!fcopy(infile, logged_filename))
