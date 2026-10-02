@@ -23,4 +23,4 @@
 /datum/loadout_item/winter_coat
 	name = "warm winter coat"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/winter_coat
-	loadout_category = LOADOUT_ARMOR
+	loadout_category = LOADOUT_CAMPING

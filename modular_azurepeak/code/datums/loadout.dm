@@ -93,22 +93,18 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/candle
 	name = "candle"
 	path = /obj/item/candle/yellow
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/keyring
 	name = "keyring"
 	path = /obj/item/storage/keyring
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/wooden_bowl
 	name = "bowl"
 	path = /obj/item/reagent_containers/glass/bowl
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/wooden_cup
 	name = "cup"
 	path = /obj/item/reagent_containers/glass/cup/wooden
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/bottle
 	name = "bottle"
@@ -134,10 +130,14 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	path = /obj/item/natural/bundle/cloth/bandage/full
 	loadout_category = LOADOUT_CAMPING
 
+/datum/loadout_item/bedroll
+	name = "Bedroll"
+	path = /obj/item/bedroll
+	loadout_category = LOADOUT_CAMPING
+
 /datum/loadout_item/sack
 	name = "Sack"
 	path = /obj/item/storage/roguebag
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/mallet
 	name = "Wooden Mallet"
@@ -2217,12 +2217,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/saddle
 	name = "Saddle"
 	path = /obj/item/natural/saddle
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/pouches
 	name = "Pouche"
 	path = /obj/item/storage/belt/rogue/pouch
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/swatchbook
 	name = "Tailor's Swatchbook"
@@ -2255,7 +2253,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/greatweaponstrap
 	name = "Great Weapon Strap"
 	path = /obj/item/rogueweapon/scabbard/gwstrap
-	loadout_category = LOADOUT_CAMPING
 
 //INSTRUMENTS
 
