@@ -308,8 +308,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	hitsound = 'sound/combat/hits/hi_bolt (1).ogg'
 	speed = 0.3
 	npc_simple_damage_mult = 7
-	poisontype = /datum/reagent/water/blessed
-	poisonamount = 15
+	
 
 /obj/projectile/bullet/reusable/heavy_bolt/lux/on_hit(target)
 	. = ..()
@@ -320,12 +319,16 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	if(!fallzone) // falback in case we hit somone without a turf (Harpy flying?)
 		if(ismob(target))
 			var/mob/living/carbon/human/M = target
+			if(M.mob_biotypes & MOB_UNDEAD)
+				M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
 			if(HAS_TRAIT(M, TRAIT_SILVER_WEAK))
 				M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder)
 				M.ignite_mob()
 				visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
 				M.apply_damage(50, BRUTE, spread_damage = TRUE)
 				M.apply_damage(50, BURN, spread_damage = TRUE)
+				if(M.mob_biotypes & MOB_UNDEAD)
+					M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
 			else
 				M.adjust_fire_stacks(12)
 				M.ignite_mob()
@@ -335,14 +338,14 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		return
 
 	for(var/mob/living/carbon/human/M in range(radius, fallzone))
+		if(M.mob_biotypes & MOB_UNDEAD)
+			M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
 		if(HAS_TRAIT(M, TRAIT_SILVER_WEAK)) // I plaed psydonate miraclist VL. The silveweakness has to override all else
 			M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder)
 			M.ignite_mob()
 			visible_message(span_warning("[M] erupts in divine flames originating from [src]!"))
 			M.apply_damage(50, BRUTE, spread_damage = TRUE)
 			M.apply_damage(50, BURN, spread_damage = TRUE)
-			if(M.mob_biotypes & MOB_UNDEAD)
-				M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
 		else
 			if(HAS_TRAIT(M, TRAIT_PSYDONITE)) // only for practicing psydonites, all of inqusition qualifies. I dont want arbalist linched
 				M.adjust_fire_stacks(3)
