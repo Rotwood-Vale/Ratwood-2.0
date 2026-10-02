@@ -618,6 +618,11 @@
 	cost = 200
 	contains = list(/obj/item/rogueweapon/stoneaxe/hurlbat/blacksteel)
 
+/datum/supply_pack/rogue/Brigand/returnscroll
+	name = "Enchanting Scroll of Returning Weapon"// so they can be kratos
+	cost = 2000
+	contains = list(/obj/item/enchantmentscroll/greater/returningweapon)
+
 /datum/supply_pack/rogue/Brigand/javelinsteel
 	name = "Steel Javelin Bag"
 	cost = 40 
