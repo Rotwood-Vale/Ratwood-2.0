@@ -5,7 +5,7 @@
 	worshippers = "Wizards, Scholars, Night Owls"
 	virtues = "Wisdom, Curiosity, Pursuit of Arcyne"
 	sins = "Ignorance, Censorship, Bookburning"
-	mob_traits = list(TRAIT_NIGHT_OWL, TRAIT_NOCSIGHT)
+	mob_traits = list(TRAIT_NIGHT_OWL)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/targeted/touch/prestidigitation	= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 				= CLERIC_T1,
@@ -24,6 +24,14 @@
 		"I SEEK THE MYSTERIES OF THE MOON!",
 	)
 	storyteller = /datum/storyteller/noc
+
+/datum/patron/divine/noc/on_gain(mob/living/follower)
+	. = ..()
+	follower.AddComponent(/datum/component/noc_vigil)
+
+/datum/patron/divine/noc/on_loss(mob/living/follower)
+	qdel(follower.GetComponent(/datum/component/noc_vigil))
+	. = ..()
 
 // In moonlight, church, cross, or ritual chalk
 /datum/patron/divine/noc/can_pray(mob/living/follower)
