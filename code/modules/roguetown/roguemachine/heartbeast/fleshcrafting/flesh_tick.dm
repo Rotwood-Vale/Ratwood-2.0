@@ -5,6 +5,18 @@
 	desc = "A pestran invader of Abyssor's divine sea. These are well known to latch onto the corpses of underwater leviathans. More than a pest, leechticks suck the soul out of those that disturb them, digesting the lux of assailants."
 	// Don't lower the size, they'll make effective throwing weapons otherwise.
 	w_class = WEIGHT_CLASS_NORMAL
+	isbait = TRUE
+	baitpenalty = 5
+	fishingMods=list(
+		"commonFishingMod" = 0.8,
+		"rareFishingMod" = 1.2,
+		"treasureFishingMod" = 0.5,
+		"trashFishingMod" = 1,
+		"dangerFishingMod" = 1.1,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0
+	)
+	baitresilience = 5
 
 /obj/item/leechtick_bloated
 	icon_state = "leechthick"
@@ -13,6 +25,18 @@
 	desc = "This leechtick has feasted on lux and digested it. A crazy person might use this for revival..."
 	sellprice = 40
 	w_class = WEIGHT_CLASS_TINY
+	isbait = TRUE
+	baitpenalty = 0
+	fishingMods=list(
+		"commonFishingMod" = 0.65,
+		"rareFishingMod" = 1.35,
+		"treasureFishingMod" = 0.5,
+		"trashFishingMod" = 0.9,
+		"dangerFishingMod" = 1,
+		"ceruleanFishingMod" = 0,
+		"cheeseFishingMod" = 0
+	)
+	baitresilience = 10
 	dropshrink = 0.85
 
 /obj/item/leechtick/afterattack(atom/target, mob/user, proximity_flag, click_parameters)

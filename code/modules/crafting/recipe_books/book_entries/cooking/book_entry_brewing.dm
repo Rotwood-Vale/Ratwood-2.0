@@ -30,3 +30,28 @@
 	Opening the bottle will reduce its sell price to 0.<br> 
 	</div>
 	"}
+
+/datum/book_entry/brewing/fishing
+	name = "Fishing Brews"
+	category = "Brewing"
+
+/datum/book_entry/brewing/fishing/inner_book_html(mob/user)
+	return {"
+	<div>
+	<h2>Fishing Brews</h2>
+	These brews support fishing work and fish processing.<br>
+	Use a barrel with water, add the listed ingredients, and brew.<br>
+	</div>
+	<div>
+	<h3>Chum</h3>
+	Ingredients: 198 water, 10 mince, 1 viscera.<br>
+	Result: 6 units of chum brew.<br>
+	Use: Pour onto water or soak a fishing net to increase activity at that spot.<br>
+	</div>
+	<div>
+	<h3>Crab, Fermented</h3>
+	Ingredients: 198 water, 1 crab meat, 2 sugar, 1 viscera, 1 valeriana.<br>
+	Result: 2 units of fermented crab brew.<br>
+	Use: Stored product for brewing and trade workflows.<br>
+	</div>
+	"}
