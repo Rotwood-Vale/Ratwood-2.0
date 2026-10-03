@@ -164,7 +164,7 @@
 	misscost = 10
 	intent_intdamage_factor = 0.25
 	sharpness_penalty = 2
-
+	accuracy_modifier = -15
 /datum/intent/sword/cut/zwei/sweep
 	name = "sweeping cut"
 	icon_state = "insweep"
