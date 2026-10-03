@@ -36,7 +36,7 @@
 	outfit = /datum/outfit/job/roguetown/guildsman/blacksmith
 
 	category_tags = list(CTAG_GUILDSMEN)
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_INT = STAT_FAVORED)
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
@@ -106,7 +106,7 @@
 
 	category_tags = list(CTAG_GUILDSMEN)
 	traits_applied = list(TRAIT_ARCYNE_T1, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER, TRAIT_LEGENDARY_MINER)
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_CLERIC
 	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_skills = list(

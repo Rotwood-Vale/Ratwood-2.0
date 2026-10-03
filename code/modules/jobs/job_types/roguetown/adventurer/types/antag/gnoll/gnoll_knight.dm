@@ -9,7 +9,7 @@
 	applies_post_equipment = FALSE
 	traits_applied = list(TRAIT_HEAVYARMOR) // Flavoring
 
-	stat_budget = STAT_BUDGET_PEAK
+	stat_budget = STAT_BUDGET_MAX
 	favored_stats = STATS_BULWARK
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,

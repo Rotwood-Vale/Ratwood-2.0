@@ -48,7 +48,8 @@
 	custom_text = "Lets you view noble gossip."
 	point_cost = 1
 	added_traits = list(TRAIT_GOSSIPER)
-	incompatible_virtues = list(/datum/virtue/utility/tracker, /datum/virtue/nobility, /datum/virtue/defilednobility)
+	incompatible_virtues = list(/datum/virtue/utility/tracker, /datum/virtue/nobility)
+	incompatible_quirks = list(/datum/quirk/defilednobility)
 	incompatible_traits = list(TRAIT_NOBLE)
 
 /datum/quirk/hobbyistmusician
@@ -315,3 +316,20 @@
 	if(QDELETED(recipient))
 		return
 	ADD_TRAIT(recipient, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
+
+/datum/quirk/defilednobility
+	name = "Disgraced Nobility"
+	desc = "I was a scion of a noble house... long ago. Now I am a commoner, and my family name is a source of shame."
+	custom_text = "Marks you as formerly noble."
+	point_cost = 1
+	added_traits = list(TRAIT_DISGRACED_NOBLE)
+	incompatible_virtues = list(/datum/virtue/nobility)
+	incompatible_quirks = list(/datum/quirk/gossiper)
+	incompatible_traits = list(TRAIT_NOBLE)
+
+/datum/quirk/loosestraps
+	name = "Loose Straps"
+	desc = "My armor never seems to fit quite right. It has a nasty habit of exploding off my body when under inordinate stress."
+	custom_text = "Armor may be flung off when you take too much damage."
+	point_cost = 0
+	added_traits = list(TRAIT_LOOSE_STRAPS)

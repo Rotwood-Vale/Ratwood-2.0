@@ -8,7 +8,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_WOODWALKER, TRAIT_OUTDOORSMAN)	// Master of the Forest - Tosses them a bone for wilderness chases.
 	// Weighted 14
-	stat_budget = STAT_BUDGET_PEAK
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = STATS_ARCHER
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,

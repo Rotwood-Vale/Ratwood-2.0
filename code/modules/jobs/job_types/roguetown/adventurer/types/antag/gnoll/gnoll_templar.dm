@@ -8,7 +8,7 @@
 	applies_post_equipment = FALSE
 	category_tags = list(CTAG_GNOLL)
 	traits_applied = list(TRAIT_HEAVYARMOR)
-	stat_budget = STAT_BUDGET_PEAK
+	stat_budget = STAT_BUDGET_MAX
 	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,

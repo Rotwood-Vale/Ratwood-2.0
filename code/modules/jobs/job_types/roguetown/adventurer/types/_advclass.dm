@@ -38,6 +38,7 @@
 	var/stat_budget = STAT_BUDGET_BASE
 
 	var/list/favored_stats
+	var/list/forced_stats
 
 	var/list/subclass_stats
 
@@ -110,7 +111,11 @@
 		for(var/lang in subclass_languages)
 			H.grant_language(lang)
 
-	H.apply_role_stats(stat_budget, favored_stats)
+	if(forced_stats)
+		for(var/stat in forced_stats)
+			H.change_stat(stat, forced_stats[stat] - 10)
+	else
+		H.apply_role_stats(stat_budget, favored_stats)
 	for(var/stat in subclass_stats)
 		H.change_stat(stat, subclass_stats[stat])
 

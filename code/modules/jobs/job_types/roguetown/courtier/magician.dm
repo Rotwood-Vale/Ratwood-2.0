@@ -40,7 +40,7 @@
 
 	subclass_spellpoints = 36
 	category_tags = list(CTAG_COURTMAGE)
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = STATS_CASTER
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(

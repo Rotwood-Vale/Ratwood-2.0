@@ -258,6 +258,9 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		preview_label = " - [preview_subclass.name]"
 	// subclass preview shows stats for that role!
 	var/list/final_stats = calculate_role_stats(stat_prefs, budget, favored_stats)
+	var/list/forced_stats = preview_subclass?.forced_stats
+	if(forced_stats)
+		final_stats = forced_stats
 	html += pref_sub("Stats[preview_label]")
 	html += "<div class='r'><font size='4' color='#e3c06f'><b>Points: [get_points_remaining()]</b></font></div>"
 	var/source_name = "Racial"
@@ -281,6 +284,8 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		var/current_level = stat_prefs[stat] || "-"
 		var/race_value = stat_bonuses_list[stat] || 0
 		var/shown_stat = min(final_stats[stat] + race_value + LAZYACCESS(age_bonuses, stat), max(final_stats[stat], STAT_BASE_MAX + stat_cap_shift(stat, favored_stats) + STAT_MODIFIER_OVERCAP))
+		if(forced_stats)
+			shown_stat = final_stats[stat] + race_value + LAZYACCESS(age_bonuses, stat)
 		var/boost_mark = ""
 		if(race_value > 0)
 			boost_mark = "<font color='#91cf68'>^</font>"

@@ -93,7 +93,7 @@
 	outfit = /datum/outfit/job/roguetown/monk/basic
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	category_tags = list(CTAG_ACOLYTE)
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_CLERIC
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
