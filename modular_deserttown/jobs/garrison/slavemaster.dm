@@ -30,7 +30,7 @@
 /datum/job/roguetown/slavemaster/New()
 	. = ..()
 	peopleknowme = list()
-	for(var/X in GLOB.garrison_positions)
+	for(var/X in GLOB.all_garrison_positions)
 		peopleknowme += X
 	for(var/X in GLOB.noble_positions)
 		peopleknowme += X

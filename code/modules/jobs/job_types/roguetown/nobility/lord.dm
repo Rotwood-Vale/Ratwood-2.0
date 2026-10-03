@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 		/obj/effect/proc_holder/spell/self/convertrole/servant,
 		/obj/effect/proc_holder/spell/self/convertrole/guard,
 		/obj/effect/proc_holder/spell/self/grant_nobility,
-		/obj/effect/proc_holder/spell/self/convertrole/bog
+		/obj/effect/proc_holder/spell/self/convertrole/cityguard
 	)
 	outfit = /datum/outfit/job/roguetown/lord
 	visuals_only_outfit = /datum/outfit/job/roguetown/lord/visuals
@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 
 /datum/outfit/job/roguetown/lord
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
-	cloak = /obj/item/clothing/cloak/lordcloak
+	cloak = /obj/item/clothing/cloak/lordcloak/royal
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold
 	beltl = /obj/item/storage/keyring/lord
 	id = /obj/item/scomstone/garrison
@@ -445,11 +445,3 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	accept_message = "FOR THE CROWN!"
 	refuse_message = "I refuse."
 	recharge_time = 100
-
-/obj/effect/proc_holder/spell/self/convertrole/bog
-	name = "Recruit Warden"
-	new_role = "Warden"
-	recruitment_faction = "Bog Guard"
-	recruitment_message = "Serve the Wardens, %RECRUIT!"
-	accept_message = "FOR THE GROVE!"
-	refuse_message = "I refuse."
