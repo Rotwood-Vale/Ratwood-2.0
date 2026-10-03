@@ -13596,15 +13596,9 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/tavern)
 "cNG" = (
-/obj/item/rogueweapon/spear/billhook{
-	pixel_x = -17
-	},
-/obj/item/rogueweapon/halberd{
-	pixel_x = -9
-	},
-/obj/item/rogueweapon/eaglebeak{
-	pixel_x = -28
-	},
+/obj/item/rogueweapon/spear,
+/obj/item/rogueweapon/halberd/bardiche,
+/obj/item/rogueweapon/eaglebeak/lucerne,
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/scabbard/gwstrap{
 	pixel_y = 16
@@ -74461,10 +74455,10 @@
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/item/clothing/suit/roguetown/armor/chainmail/iron,
 /obj/item/clothing/suit/roguetown/armor/chainmail/iron,
-/obj/item/clothing/suit/roguetown/armor/chainmail/iron,
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch,
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron,
 /obj/item/clothing/suit/roguetown/armor/plate/half/iron,
-/obj/item/clothing/suit/roguetown/armor/plate/half/iron,
+/obj/item/clothing/suit/roguetown/armor/plate/citywatch,
 /obj/item/clothing/suit/roguetown/armor/plate/citywatch,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town/garrison)
@@ -82862,10 +82856,7 @@
 /area/rogue/outdoors/bograt/west)
 "rno" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/huntingknife/idagger/steel{
-	pixel_x = 14;
-	pixel_y = 32
-	},
+/obj/item/rogueweapon/huntingknife/idagger,
 /obj/item/rogueweapon/mace/cudgel{
 	pixel_x = -4
 	},
@@ -82884,10 +82875,7 @@
 /obj/item/rogueweapon/scabbard/sheath{
 	pixel_y = 32
 	},
-/obj/item/rogueweapon/huntingknife/idagger/steel{
-	pixel_x = 14;
-	pixel_y = 32
-	},
+/obj/item/rogueweapon/huntingknife/idagger,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
 "rny" = (
@@ -114940,18 +114928,10 @@
 	pixel_x = -5;
 	pixel_y = 32
 	},
-/obj/item/clothing/head/roguetown/helmet/kettle{
-	color = "#86babd"
-	},
-/obj/item/clothing/head/roguetown/helmet/kettle{
-	color = "#86babd"
-	},
-/obj/item/clothing/head/roguetown/helmet/kettle{
-	color = "#86babd"
-	},
-/obj/item/clothing/head/roguetown/helmet/kettle{
-	color = "#86babd"
-	},
+/obj/item/clothing/head/roguetown/helmet/kettle/iron/citywatch,
+/obj/item/clothing/head/roguetown/helmet/kettle/iron/citywatch,
+/obj/item/clothing/head/roguetown/helmet/kettle/iron/citywatch,
+/obj/item/clothing/head/roguetown/helmet/kettle/iron/citywatch,
 /obj/item/clothing/head/roguetown/helmet/citywatch,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/garrison)
