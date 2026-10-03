@@ -1,8 +1,10 @@
-/mob/living/Moved()
+/mob/living/Moved(atom/OldLoc, Dir, Forced = FALSE)
 	. = ..()
 	stop_looking()
 	update_turf_movespeed(loc)
 	update_pixel_shifting(TRUE)
+	if(client && SSplayer_traffic?.collecting)
+		SSplayer_traffic.count_move(src, OldLoc, Dir, Forced)
 //	if(m_intent == MOVE_INTENT_RUN)
 //		consider_ambush()
 
