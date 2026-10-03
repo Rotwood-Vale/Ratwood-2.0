@@ -316,25 +316,6 @@
 		return
 	ADD_TRAIT(recipient, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
 
-// gates loadout stuff
-/datum/quirk/campingsupplies
-	name = "Camping Supplies"
-	desc = "I'm a bit more prepared than others!"
-	custom_text = "Unlocks camping supplies in the loadout. Limited to 3."
-	loadout_grants = list(LOADOUT_CAMPING = 3)
-
-/datum/quirk/lightarmor
-	name = "Light Armor"
-	desc = "I love the snuggly, comfortable feeling of a gambeson."
-	custom_text = "Unlocks light armor in the loadout. Limited to 4."
-	loadout_grants = list(LOADOUT_ARMOR = 4)
-
-/datum/quirk/toolsandweapons
-	name = "Tools and Simple Weapons"
-	desc = "I found these tools in a hole."
-	custom_text = "Unlocks tools in the loadout. Limited to 2."
-	loadout_grants = list(LOADOUT_TOOLS = 2)
-
 // good idea?? IDK
 /datum/quirk/secondvirtue
 	name = "Second Virtue"

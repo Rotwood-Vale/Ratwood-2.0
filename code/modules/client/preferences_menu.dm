@@ -178,7 +178,6 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		virtuetwo = GLOB.virtues[/datum/virtue/none]
 	if(get_points_remaining() < 0)
 		stat_prefs = list()
-	validate_loadout()
 
 /datum/preferences/proc/page_identity(mob/user)
 	var/html = ""

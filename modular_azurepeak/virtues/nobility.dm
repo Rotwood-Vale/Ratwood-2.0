@@ -13,7 +13,6 @@
 	incompatible_virtues = list(/datum/virtue/defilednobility)
 	incompatible_quirks = list(/datum/quirk/gossiper)
 	incompatible_traits = list(TRAIT_NOBLE)
-	loadout_grants = list(LOADOUT_NOBLE = 2)
 
 /datum/virtue/nobility/apply_to_human(mob/living/carbon/human/recipient)
 	SStreasury.noble_incomes[recipient] += 15
@@ -28,5 +27,3 @@
 	added_traits = list(TRAIT_DISGRACED_NOBLE)
 	incompatible_virtues = list(/datum/virtue/nobility)
 	incompatible_traits = list(TRAIT_NOBLE)
-	loadout_grants = list(LOADOUT_NOBLE = 2)
-	loadout_shabby = list(LOADOUT_NOBLE)

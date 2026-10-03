@@ -5,72 +5,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		return "loadout"
 	return "loadout[slot]"
 
-GLOBAL_LIST_INIT(loadout_categories, list(LOADOUT_NOBLE, LOADOUT_CAMPING, LOADOUT_ARMOR, LOADOUT_TOOLS))
-
-/proc/get_loadout_unlock_names(category)
-	var/list/names = list()
-	if(!category)
-		return names.Join(" / ")
-	for(var/path in GLOB.quirks)
-		var/datum/quirk/Q = GLOB.quirks[path]
-		if(LAZYACCESS(Q.loadout_grants, category))
-			names += Q.name
-	for(var/path in GLOB.virtues)
-		var/datum/virtue/V = GLOB.virtues[path]
-		if(LAZYACCESS(V.loadout_grants, category))
-			names += V.name
-	return names.Join(" / ")
-
-// quirks & virtue now gates some items
-/datum/preferences/proc/get_loadout_allowance(category)
-	var/total = 0
-	var/list/sources = list(virtue, virtuetwo) + quirks
-	for(var/datum/customization_trait/T in sources)
-		total += LAZYACCESS(T.loadout_grants, category) || 0
-	if(category == LOADOUT_NOBLE)
-		for(var/job_title in GLOB.noble_positions + GLOB.courtier_positions + GLOB.yeoman_positions)
-			if(job_preferences[job_title] == JP_HIGH)
-				total += 2
-				break
-	return total
-
-/datum/preferences/proc/get_loadout_used(category, skip_slot)
-	var/used = 0
-	for(var/i in 1 to LOADOUT_SLOTS)
-		var/datum/loadout_item/item = vars[loadout_var(i)]
-		if(i != skip_slot && item?.loadout_category == category)
-			used++
-	return used
-
-/datum/preferences/proc/can_pick_loadout_item(datum/loadout_item/item, slot)
-	if(!item.loadout_category)
-		return TRUE
-	return get_loadout_used(item.loadout_category, slot) < get_loadout_allowance(item.loadout_category)
-
-// for disgraced nobles
-/datum/preferences/proc/is_loadout_shabby(category)
-	var/shabby = FALSE
-	var/list/sources = list(virtue, virtuetwo) + quirks
-	for(var/datum/customization_trait/T in sources)
-		if(!LAZYACCESS(T.loadout_grants, category))
-			continue
-		if(category in T.loadout_shabby)
-			shabby = TRUE
-		else
-			return FALSE
-	return shabby
-
-/datum/preferences/proc/validate_loadout()
-	for(var/category in GLOB.loadout_categories)
-		for(var/i = LOADOUT_SLOTS, i >= 1, i--)
-			if(get_loadout_used(category) <= get_loadout_allowance(category))
-				break
-			var/datum/loadout_item/item = vars[loadout_var(i)]
-			if(item?.loadout_category == category)
-				vars[loadout_var(i)] = null
-				for(var/suffix in list("name", "desc", "hex"))
-					vars["loadout_[i]_[suffix]"] = null
-
 /datum/preferences/proc/open_loadout_menu(mob/user, slot = 1)
 	if(!user || !user.client)
 		return
@@ -85,10 +19,6 @@ GLOBAL_LIST_INIT(loadout_categories, list(LOADOUT_NOBLE, LOADOUT_CAMPING, LOADOU
 	user << browse(get_loadout_slots_html(user), "window=loadout_slots;size=750x600")
 
 /datum/preferences/proc/get_loadout_slots_html(mob/user)
-	var/list/category_lines = list()
-	for(var/category in GLOB.loadout_categories)
-		if(get_loadout_allowance(category))
-			category_lines += "[capitalize(category)]: [get_loadout_used(category)]/[get_loadout_allowance(category)]"
 	var/html = {"
 		<style>
 			body { font-family: Verdana, Arial, sans-serif; background: #100000; color: #aa8f8f; }
@@ -97,14 +27,11 @@ GLOBAL_LIST_INIT(loadout_categories, list(LOADOUT_NOBLE, LOADOUT_CAMPING, LOADOU
 			a:hover { background: rgba(123, 83, 83, 0.3); }
 		</style>
 		<h2>Loadout</h2>
-		<font color='#b09a6e'>[category_lines.Join(" | ")]</font><hr>
+		<hr>
 		<table width='100%'><tr>"}
 	for(var/i in 1 to LOADOUT_SLOTS)
 		var/datum/loadout_item/current_item = vars[loadout_var(i)]
-		var/slot_style = ""
-		if(current_item?.loadout_category)
-			slot_style = " style='border-color: #8a7650; background: #c9a96e14;'"
-		html += "<td width='50%' valign='top'><div class='slot'[slot_style]><b>Slot [i]</b>"
+		html += "<td width='50%' valign='top'><div class='slot'><b>Slot [i]</b>"
 		if(current_item)
 			html += "<br>[get_loadout_item_html(user, i, current_item)]"
 			html += "<br>[loadout_link("Change", "item", i)] [loadout_link("Rename", "rename", i)] [loadout_link("Description", "describe", i)] [loadout_link("Color", "color", i)] [loadout_link("Clear", "clear", i)]"

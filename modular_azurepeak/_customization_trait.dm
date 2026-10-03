@@ -15,8 +15,6 @@
 	/// An associative list containing any extra stats we need to add to the mob. NOTE: GENERALLY should not add stats unless it imposes serious downsides.
 	var/list/added_stats = list()
 	var/point_cost = 0
-	var/list/loadout_grants
-	var/list/loadout_shabby
 	/// A custom addendum explaining what it does outside of the trait / skill adjustments.
 	var/custom_text
 	/// Mutually exclusive virtues. Virtue packs are automatically considered.

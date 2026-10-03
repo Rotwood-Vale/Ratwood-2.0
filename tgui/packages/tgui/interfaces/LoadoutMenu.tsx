@@ -13,10 +13,6 @@ import { Window } from '../layouts';
 type LoadoutItem = {
   name: string;
   desc: string;
-  category: string | null;
-  granted: boolean;
-  locked: boolean;
-  unlock: string;
   donoritem: boolean;
   ref: string;
   icon: string;
@@ -61,8 +57,7 @@ export const ItemDisplay = (props) => {
       } else {
         return true;
       }
-    })
-    .sort((a, b) => Number(b.granted) - Number(a.granted));
+    });
 
   return (
     <Section
@@ -75,15 +70,6 @@ export const ItemDisplay = (props) => {
         <Button
           key={item.ref}
           fluid
-          style={
-            item.granted
-              ? {
-                  background: 'rgba(201, 169, 110, 0.12)',
-                  border: '1px solid rgba(201, 169, 110, 0.35)',
-                }
-              : undefined
-          }
-          disabled={!!item.locked}
           onClick={() => act('choose_item', { ref: item.ref })}
         >
           <Stack align="center">
@@ -92,11 +78,6 @@ export const ItemDisplay = (props) => {
             </Stack.Item>
             <Stack.Item>
              {item.name}
-             {!!item.locked && (
-               <Box inline ml={1} color="grey">
-                 LOCKED ({item.unlock})
-               </Box>
-             )}
             </Stack.Item>
           </Stack>
           <Stack align="center">

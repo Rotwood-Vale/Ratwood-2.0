@@ -27,4 +27,3 @@
 /datum/loadout_item/druid
 	name = "druid armor"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/druid/loadout
-	loadout_category = LOADOUT_ARMOR

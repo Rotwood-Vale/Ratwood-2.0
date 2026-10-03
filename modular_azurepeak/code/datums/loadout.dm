@@ -6,7 +6,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	var/path
 	var/donoritem			//autoset on new if null
 	var/list/ckeywhitelist
-	var/loadout_category	// categories gates stuff to virtues & quirks
 	var/keep_loadout_stats = FALSE	// If TRUE, item keeps default values (not nerfed)
 
 /datum/loadout_item/New()
@@ -78,17 +77,14 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/bauernwehr
 	name = "Bauernwehr"
 	path = /obj/item/rogueweapon/huntingknife/throwingknife/bauernwehr
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/broom
 	name = "broom"
 	path = /obj/item/broom
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/soap
 	name = "soap"
 	path = /obj/item/soap
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/candle
 	name = "candle"
@@ -109,17 +105,14 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/bottle
 	name = "bottle"
 	path = /obj/item/reagent_containers/glass/bottle/rogue
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/waterskin
 	name = "Waterskin"
 	path = /obj/item/reagent_containers/glass/bottle/waterskin
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/flint
 	name = "Flint"
 	path = /obj/item/flint
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/aaneedle
 	name = "Thorn Needle"
@@ -128,12 +121,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/bandage_roll
 	name = "Roll of Bandages"
 	path = /obj/item/natural/bundle/cloth/bandage/full
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/bedroll
 	name = "Bedroll"
 	path = /obj/item/bedroll
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/sack
 	name = "Sack"
@@ -142,107 +133,87 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/mallet
 	name = "Wooden Mallet"
 	path = /obj/item/rogueweapon/hammer/wood
-	loadout_category = LOADOUT_TOOLS
 
 //ANCIENT TOOLS (Ancient Alloy)
 
 /datum/loadout_item/ancient_hammer
 	name = "Ancient Hammer"
 	path = /obj/item/rogueweapon/hammer/ancient/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_tongs
 	name = "Ancient Tongs"
 	path = /obj/item/rogueweapon/tongs/ancient/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_pick
 	name = "Ancient Pick"
 	path = /obj/item/rogueweapon/pick/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_shovel
 	name = "Ancient Shovel"
 	path = /obj/item/rogueweapon/shovel/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_hoe
 	name = "Ancient Hoe"
 	path = /obj/item/rogueweapon/hoe/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_sickle
 	name = "Ancient Sickle"
 	path = /obj/item/rogueweapon/sickle/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_thresher
 	name = "Ancient Thresher"
 	path = /obj/item/rogueweapon/thresher/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_pitchfork
 	name = "Ancient Pitchfork"
 	path = /obj/item/rogueweapon/pitchfork/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 //COOKWARE
 /datum/loadout_item/ancient_pan
 	name = "Ancient Pan"
 	path = /obj/item/cooking/pan/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_pot
 	name = "Ancient Pot"
 	path = /obj/item/reagent_containers/glass/bucket/pot/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_platter
 	name = "Ancient Platter"
 	path = /obj/item/cooking/platter/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_bowl
 	name = "Ancient Bowl"
 	path = /obj/item/reagent_containers/glass/bowl/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_mug
 	name = "Ancient Mug"
 	path = /obj/item/reagent_containers/glass/cup/decrepitmug
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_goblet
 	name = "Ancient Goblet"
 	path = /obj/item/reagent_containers/glass/cup/decrepitgob
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_spoon
 	name = "Ancient Spoon"
 	path = /obj/item/kitchen/spoon/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_fork
 	name = "Ancient Fork"
 	path = /obj/item/kitchen/fork/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 // TENT KITS
 
 /datum/loadout_item/small_tent
 	name = "Small Tent"
 	path = /obj/item/tent_kit
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/ger_kit
 	name = "Ger Tent"
 	path = /obj/item/tent_kit/ger
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/yurt_tent
 	name = "Yurt Tent"
 	path = /obj/item/tent_kit/yurt
-	loadout_category = LOADOUT_CAMPING
 
 //HATS
 /datum/loadout_item/shalal
@@ -292,7 +263,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/fancyhat
 	name = "Fancy Hat"
 	path = /obj/item/clothing/head/roguetown/fancyhat
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/furhat
 	name = "Fur Hat"
@@ -526,7 +496,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/nobleboots
 	name = "Noble Boots"
 	path = /obj/item/clothing/shoes/roguetown/boots/nobleboot
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/sandals
 	name = "Sandals"
@@ -535,7 +504,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/toga_sandals
 	name = "Fancy Sandals"
 	path = /obj/item/clothing/shoes/roguetown/sandals/toga_sandals
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/shortboots
 	name = "Short Boots"
@@ -572,12 +540,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/paddedfootwraps
 	name = "Padded Footwraps"
 	path = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/heleatherfootwraps
 	name = "Hardened Leather Footwraps"
 	path = /obj/item/clothing/shoes/roguetown/boots/footwraps/hleather
-	loadout_category = LOADOUT_ARMOR
 
 //SHIRTS
 /datum/loadout_item/longcoat
@@ -607,7 +573,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/formalsilks
 	name = "Formal Silks"
 	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/puritan
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/longshirt
 	name = "Shirt"
@@ -720,7 +685,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/gown
 	name = "Gown, Spring"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/gown
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/gown/summer
 	name = "Gown, Summer"
@@ -741,7 +705,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/noblecoat
 	name = "Fancy Coat"
 	path = /obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/leathervest
 	name = "Leather Vest"
@@ -820,7 +783,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/golden_spectacles
 	name = "Golden Spectacles"
 	path = /obj/item/clothing/mask/rogue/spectacles/golden
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/fingerless_leather_gloves
 	name = "Fingerless Leather Gloves"
@@ -877,7 +839,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/golden_half_mask
 	name = "Golden Half-Mask"
 	path = /obj/item/clothing/mask/rogue/lordmask
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/exoticsilkmask
 	name = "Exotic Silk Mask"
@@ -1014,7 +975,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_kazengun_scabbard
 	name = "Kazengun Cerimonial Scabbard"
 	path = /obj/item/rogueweapon/scabbard/sword/kazengun/noparry/loadout
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/tri_shalal_belt
 	name = "Shalal Belt"
@@ -1170,7 +1130,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/cotehardie
 	name = "Fitted Coat"
 	path = /obj/item/clothing/cloak/cotehardie
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/zcross_iron
 	name = "Zizo Cross"
@@ -1409,79 +1368,66 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_shovel
 	name = "Shovel"
 	path = /obj/item/rogueweapon/shovel
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/tri_sickle
 	name = "Sickle"
 	path = /obj/item/rogueweapon/sickle
-	loadout_category = LOADOUT_TOOLS
 
 // BLUNT WEAPONS
 /datum/loadout_item/tri_woodclub
 	name = "Wooden Club"
 	path = /obj/item/rogueweapon/mace/woodclub
-	loadout_category = LOADOUT_TOOLS
 	keep_loadout_stats = TRUE
 
 // AXES
 /datum/loadout_item/tri_bone_axe
 	name = "Bone Axe"
 	path = /obj/item/rogueweapon/stoneaxe/boneaxe
-	loadout_category = LOADOUT_TOOLS
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/ancient_axe
 	name = "Ancient Axe"
 	path = /obj/item/rogueweapon/stoneaxe/woodcut/steel/ancient
-	loadout_category = LOADOUT_TOOLS
 
 // SWORDS
 /datum/loadout_item/tri_stone_sword
 	name = "Stone Sword"
 	path = /obj/item/rogueweapon/sword/stone
-	loadout_category = LOADOUT_TOOLS
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/ancient_gladius
 	name = "Ancient Gladius"
 	path = /obj/item/rogueweapon/sword/short/gladius/ancient
-	loadout_category = LOADOUT_TOOLS
 
 /datum/loadout_item/ancient_khopesh
 	name = "Ancient Khopesh"
 	path = /obj/item/rogueweapon/sword/sabre/ancient
-	loadout_category = LOADOUT_TOOLS
 
 // DAGGERS & KNIVES
 /datum/loadout_item/tri_stone_knife
 	name = "Stone Knife"
 	path = /obj/item/rogueweapon/huntingknife/stoneknife
-	loadout_category = LOADOUT_TOOLS
 	keep_loadout_stats = TRUE
 
 // MACES & BLUNT
 /datum/loadout_item/ancient_mace
 	name = "Ancient Mace"
 	path = /obj/item/rogueweapon/mace/goden/steel/ancient
-	loadout_category = LOADOUT_TOOLS
 
 // POLEARMS & SPEARS
 /datum/loadout_item/tri_stone_spear
 	name = "Stone Spear"
 	path = /obj/item/rogueweapon/spear/stone
-	loadout_category = LOADOUT_TOOLS
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/tri_bone_spear
 	name = "Bone Spear"
 	path = /obj/item/rogueweapon/spear/bonespear
-	loadout_category = LOADOUT_TOOLS
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/ancient_spear
 	name = "Ancient Spear"
 	path = /obj/item/rogueweapon/spear/ancient/decrepit
-	loadout_category = LOADOUT_TOOLS
 
 // ARMOR & CLOTHING
 /datum/loadout_item/ancient_mask
@@ -1500,19 +1446,16 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_quarterstaff
 	name = "Quarterstaff"
 	path = /obj/item/rogueweapon/woodstaff/quarterstaff
-	loadout_category = LOADOUT_TOOLS
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/tri_woodstaff
 	name = "Woodstaff"
 	path = /obj/item/rogueweapon/woodstaff
-	loadout_category = LOADOUT_TOOLS
 	keep_loadout_stats = TRUE
 
 /datum/loadout_item/tri_scythe
 	name = "Peasant Scythe"
 	path = /obj/item/rogueweapon/scythe
-	loadout_category = LOADOUT_TOOLS
 	keep_loadout_stats = TRUE
 
 // CLOTHING - TABARDS & RELIGIOUS CLOAKS
@@ -1569,59 +1512,48 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_ornate_dress
 	name = "Ornate Dress"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/steward
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/tri_ornate_tunic
 	name = "Ornate Tunic"
 	path = /obj/item/clothing/suit/roguetown/shirt/tunic/silktunic
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/tri_princess_dress
 	name = "Princess Dress"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/royal/princess
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/tri_royal_dress
 	name = "Royal Dress"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/royal
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/tri_royal_sleeves
 	name = "Royal Sleeves"
 	path = /obj/item/clothing/wrists/roguetown/royalsleeves
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/tri_lady_cloak
 	name = "Lady's Cloak"
 	path = /obj/item/clothing/cloak/lordcloak/ladycloak
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/wedding_dress
 	name = "Wedding Silk Dress"
 	path = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/weddingdress
-	loadout_category = LOADOUT_NOBLE
 
 // CLOTHING - HEADWEAR
 /datum/loadout_item/tri_circlet
 	name = "Circlet"
 	path = /obj/item/clothing/head/roguetown/circlet
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/tri_volfhelm
 	name = "Volf Helm"
 	path = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_saiga
 	name = "Saiga Helm"
 	path = /obj/item/clothing/head/roguetown/helmet/leather/saiga
-	loadout_category = LOADOUT_ARMOR
 
 // CLOTHING - JEWELRY & ACCESSORIES
 /datum/loadout_item/tri_noble_amulet
 	name = "Noble Amulet"
 	path = /obj/item/clothing/neck/roguetown/ornateamulet/noble
-	loadout_category = LOADOUT_NOBLE
 
 /datum/loadout_item/tri_shell_bracelet
 	name = "Shell Bracelet"
@@ -1635,7 +1567,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_duelist_coat
 	name = "Duelist Coat"
 	path = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_fencing_shirt_shepherd
 	name = "Shepherd's Shirt (Padded)"
@@ -1648,72 +1579,58 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_gambeson
 	name = "Gambeson"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_desert_coat
 	name = "Desert Coat"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_fencing_gambeson
 	name = "Fencing Gambeson (Otavan)"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_fencing_shirt
 	name = "Fencing Shirt (Padded)"
 	path = /obj/item/clothing/suit/roguetown/shirt/freifechter
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_grenzelhoft_hipshirt
 	name = "Grenzelhoft Hip-Shirt"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_gronn_byrine_hauberk
 	name = "Byrine"
 	path = /obj/item/clothing/suit/roguetown/armor/brigandine/gronn
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_otavan_gambeson
 	name = "Otavan Gambeson"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_padded_caftan
 	name = "Padded Caftan"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_zyb_gambeson
 	name = "Desert Gambeson"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_gambeson_light
 	name = "Gambeson (Light)"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/light
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_gronn_byrine_chausses
 	name = "Byrine Chausses"
 	path = /obj/item/clothing/under/roguetown/splintlegs/iron/gronn
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_gronn_byrine_gloves
 	name = "Byrine Gloves"
 	path = /obj/item/clothing/gloves/roguetown/chain/gronn
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_gronn_fur_pants
 	name = "Fur Pants"
 	path = /obj/item/clothing/under/roguetown/trou/leather/gronn
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_gronn_bone_gloves
 	name = "Bone Gloves"
 	path = /obj/item/clothing/gloves/roguetown/angle/gronnfur
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_hierophant_gambeson
 	name = "Hierophant Gambeson"
@@ -1722,27 +1639,22 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_gronn_ravager_mantle
 	name = "Ravager Mantle"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_huus_quyaq
 	name = "Huus Quyaq (Northern)"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/Huus_quyaq
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_kurche
 	name = "Kurche (Gronn)"
 	path = /obj/item/clothing/suit/roguetown/armor/kurche
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_leather_cuirass
 	name = "Leather Cuirass"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/cuirass
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_leather_corslet
 	name = "Leather Corslet"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/bikini
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/corset
 	name = "Corset"
@@ -1751,22 +1663,18 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_moose_hood
 	name = "Moose Hood (Shaman)"
 	path = /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_newmoon_hood
 	name = "New Moon Hood"
 	path = /obj/item/clothing/head/roguetown/roguehood/reinforced/newmoon
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_newmoon_jacket
 	name = "New Moon Jacket"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/newmoon_jacket
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_newmoon_tunic
 	name = "New Moon Tunic"
 	path = /obj/item/clothing/suit/roguetown/shirt/tunic/newmoon
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_pontifex_gambeson
 	name = "Pontifex Gambeson"
@@ -1775,33 +1683,27 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_psyaltrist_leather
 	name = "Psyaltrist Leather"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/studded/psyaltrist
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_zyb_coat
 	name = "Desert Coat"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_shamanic_coat
 	name = "Shamanic Coat"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_spellcaster_hat
 	name = "Spellcaster Hat"
 	path = /obj/item/clothing/head/roguetown/spellcasterhat
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_steppe_coat
 	name = "Steppe Coat"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/steppe
-	loadout_category = LOADOUT_ARMOR
 
 // HELMETS AND HEADWEAR (Alphabetically Ordered)
 /datum/loadout_item/tri_grenzelhoft_hat
 	name = "Grenzelhoft Hat"
 	path = /obj/item/clothing/head/roguetown/grenzelhofthat
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_hierophant_hood
 	name = "Hierophant Hood"
@@ -1810,7 +1712,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_armorhood_hood
 	name = "Studded Leather Hood"
 	path = /obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_pontifex_hood
 	name = "Pontifex Hood"
@@ -1819,34 +1720,28 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_zyb_hijab
 	name = "Desert Hijab"
 	path = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
-	loadout_category = LOADOUT_ARMOR
 
 
 // GLOVES (Alphabetically Ordered)
 /datum/loadout_item/tri_atgervi_gloves
 	name = "Atgervi Gloves"
 	path = /obj/item/clothing/gloves/roguetown/angle/atgervi
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_eastern_gloves
 	name = "Eastern Gloves"
 	path = /obj/item/clothing/gloves/roguetown/eastgloves2
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_grenzelhoft_gloves
 	name = "Grenzelhoft Gloves"
 	path = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_kote_gloves
 	name = "Kote Gauntlets"
 	path = /obj/item/clothing/gloves/roguetown/plate/kote
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_otavan_gloves
 	name = "Otavan Gloves"
 	path = /obj/item/clothing/gloves/roguetown/otavan
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_pontifex_gloves
 	name = "Pontifex Gloves"
@@ -1887,37 +1782,30 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_atgervi_pants
 	name = "Atgervi Fur Pants"
 	path = /obj/item/clothing/under/roguetown/trou/leather/atgervi
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_eastern_pants_1
 	name = "Eastern Pants (Black)"
 	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_eastern_pants_2
 	name = "Eastern Pants (White)"
 	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_grenzelhoft_pants
 	name = "Grenzelhoft Pants"
 	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_otavan_pants
 	name = "Otavan Pants"
 	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_otavan_generic_pants
 	name = "Otavan Pants (Generic)"
 	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_kazengun_pants
 	name = "Kazengun Pants"
 	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_pontifex_pants
 	name = "Pontifex Pants"
@@ -1926,7 +1814,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_zyb_pants
 	name = "Zybantine Pants"
 	path = /obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb
-	loadout_category = LOADOUT_ARMOR
 
 
 // CLOAKS & CAPES (Alphabetically Ordered)
@@ -1950,7 +1837,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_fencerguard
 	name = "Fencerguard"
 	path = /obj/item/clothing/neck/roguetown/fencerguard
-	loadout_category = LOADOUT_ARMOR
 
 /datum/loadout_item/tri_naledi_cross
 	name = "Naledi Psicross"
@@ -1989,7 +1875,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_lord_cloak
 	name = "Lord's Cloak"
 	path = /obj/item/clothing/cloak/lordcloak
-	loadout_category = LOADOUT_NOBLE
 
 //==========================
 //Donator Section
@@ -2205,22 +2090,18 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/backpack
 	name = "Backpack"
 	path = /obj/item/storage/backpack/rogue/backpack
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/satchel
 	name = "Satchel"
 	path = /obj/item/storage/backpack/rogue/satchel
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/otavansatchel
 	name = "Otavan Satchel"
 	path = /obj/item/storage/backpack/rogue/satchel/otavan
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/shortsatchel
 	name = "Short Satchel"
 	path = /obj/item/storage/backpack/rogue/satchel/short
-	loadout_category = LOADOUT_CAMPING
 
 /datum/loadout_item/saddle
 	name = "Saddle"
@@ -2364,14 +2245,3 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/caparison/fogbeast/azure
 	name = "Ducal Caparison (Fogbeast)"
 	path = /obj/item/caparison/fogbeast/azure
-
-/proc/cap_loadout_armor(obj/item/clothing/C)
-	var/list/cap = ARMOR_PADDED
-	if(C.armor && istype(C.armor, /datum/armor))
-		C.armor = getArmor(min(C.armor.blunt, cap["blunt"]), min(C.armor.slash, cap["slash"]), min(C.armor.stab, cap["stab"]), min(C.armor.piercing, cap["piercing"]), C.armor.fire, C.armor.acid, C.armor.magic)
-	if(length(C.prevent_crits))
-		C.prevent_crits = C.prevent_crits & list(BCLASS_CUT, BCLASS_BLUNT)
-	if(C.armor_class > ARMOR_CLASS_LIGHT)
-		C.armor_class = ARMOR_CLASS_LIGHT
-	C.max_integrity = min(C.max_integrity, ARMOR_INT_CHEST_LIGHT_MEDIUM)
-	C.obj_integrity = min(C.obj_integrity, C.max_integrity)

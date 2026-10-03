@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 			continue
 		var/display_name = player.prefs.vars["loadout_[i]_name"] || item.name
 		character.mind.special_items[display_name] = item.path
-		character.mind.loadout_item_info[item.path] = list("category" = item.loadout_category, "shabby" = player.prefs.is_loadout_shabby(item.loadout_category), "keep_stats" = item.keep_loadout_stats)
+		character.mind.loadout_item_info[item.path] = item.keep_loadout_stats
 	var/datum/job/assigned_job = SSjob.GetJob(character.mind?.assigned_role)
 	if(assigned_job)
 		assigned_job.clamp_stats(character)

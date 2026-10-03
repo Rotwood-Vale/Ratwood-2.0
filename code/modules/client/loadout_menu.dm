@@ -28,23 +28,17 @@
 /datum/loadout_menu/ui_static_data(mob/user)
 	var/list/data = ..()
 	var/list/loadout_items = list()
-	var/datum/preferences/prefs = user.client?.prefs
 	var/datum/asset/spritesheet/spritesheet = get_asset_datum(/datum/asset/spritesheet/loadout_items)
 
 	for(var/datum/loadout_item/item as anything in GLOB.loadout_items)
 		var/obj/item/I = item.path
 		var/donoritem_passed = TRUE // This isn't checking if it is a donor item.
-		var/granted = item.loadout_category && prefs?.get_loadout_allowance(item.loadout_category)
 		if(item.donoritem)
 			if(!item.donator_ckey_check(user.key)) // IF it is a donor item AND the ckey doesn't match the donor ckey list...
 				donoritem_passed = FALSE // True means it won't show up in the TGUI
 		UNTYPED_LIST_ADD(loadout_items, list(
 			"name" = item.name,
 			"desc" = initial(I.desc),
-			"category" = item.loadout_category,
-			"unlock" = get_loadout_unlock_names(item.loadout_category),
-			"granted" = !!granted,
-			"locked" = !!(item.loadout_category && !granted),
 			"donoritem" = donoritem_passed,
 			"ref" = ref(item),
 			"icon" = spritesheet.icon_class_name(sanitize_css_class_name("loadout_item_[REF(item)]"))
@@ -80,11 +74,6 @@
 					ui.close()
 					prefs.open_loadout_slots(user)
 					return TRUE
-			if(!prefs.can_pick_loadout_item(item, current_slot))
-				to_chat(usr, span_warning("Your traits don't allow another [item.loadout_category] item."))
-				ui.close()
-				prefs.open_loadout_slots(user)
-				return TRUE
 			// apply item to loadout
 			prefs.vars[prefs.loadout_var(current_slot)] = item
 			to_chat(usr, span_notice("Selected [item.name] for slot [current_slot]."))
