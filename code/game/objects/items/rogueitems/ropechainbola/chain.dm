@@ -5,6 +5,7 @@
 	penfactor = 0 //40
 	chargetime = 5
 	item_d_type = "slash"
+	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 
 /obj/item/rope/chain
 	name = "chain"
@@ -30,3 +31,6 @@
 	resistance_flags = FIRE_PROOF
 	nudist_approved = TRUE
 	dropshrink = null
+	force = 10
+	swingsound = BLUNTWOOSH_MED
+	
