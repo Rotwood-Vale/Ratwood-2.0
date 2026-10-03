@@ -9,7 +9,7 @@
 	category_tags = list(CTAG_WRETCH)
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_DODGEEXPERT)
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
@@ -90,7 +90,7 @@
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_MEDIUMARMOR)	//let us Try giving them medium armor. What can go wrong?!
 	//Still a bit quick but sturdier. A bit more stupid, though.	
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_INT = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,

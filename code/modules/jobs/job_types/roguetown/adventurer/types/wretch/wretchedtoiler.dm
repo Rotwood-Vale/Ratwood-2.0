@@ -12,7 +12,7 @@
 	maximum_possible_slots = 1 
 
 	// balance isn't real i picked these bc they're funny
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED, STATKEY_CON = STAT_VERY_DISFAVORED)
 	subclass_stashed_items = list(
 		"Sewing Kit" = /obj/item/repair_kit,
