@@ -229,6 +229,7 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backr = /obj/item/rogueweapon/shield/iron
+	armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	pants = /obj/item/clothing/under/roguetown/chainlegs
@@ -277,47 +278,36 @@
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor
 					if("Buckethelm")
 						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratan
-			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if(/datum/patron/divine/noc)
 			cloak = /obj/item/clothing/cloak/templar/noc
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/nochelm
-			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if(/datum/patron/divine/abyssor)
 			cloak = /obj/item/clothing/cloak/abyssortabard
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/abyssorgreathelm
-			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if(/datum/patron/divine/dendor)
 			cloak = /obj/item/clothing/cloak/templar/dendor
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/dendorhelm
-			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if(/datum/patron/divine/necra)
 			cloak = /obj/item/clothing/cloak/templar/necra
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/necrahelm
-			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if (/datum/patron/divine/malum)
 			cloak = /obj/item/clothing/cloak/templar/malum
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/malum
-			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if (/datum/patron/divine/eora)
 			cloak = /obj/item/clothing/cloak/templar/eora
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/eoran
-			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if (/datum/patron/divine/ravox)
 			cloak = /obj/item/clothing/cloak/cleric/ravox
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold
-			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if (/datum/patron/divine/xylix)
 			cloak = /obj/item/clothing/cloak/templar/xylix
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket
-			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		if (/datum/patron/divine/pestra)
 			cloak = /obj/item/clothing/cloak/templar/pestra
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/pestran
-			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 		else
 			cloak = /obj/item/clothing/cloak/cape/crusader
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket
-			armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	if(H.mind)
