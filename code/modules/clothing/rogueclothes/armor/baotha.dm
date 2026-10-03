@@ -237,7 +237,7 @@
 	icon_state = "baotha_whip"
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/dagger/sucker_punch) // sucker as a little flavor and bonus. 
 	unenchantable = TRUE
-	force = 27
+	force = 25
 	minstr = 8
 
 /obj/item/rogueweapon/whip/baotha/Initialize(mapload)
