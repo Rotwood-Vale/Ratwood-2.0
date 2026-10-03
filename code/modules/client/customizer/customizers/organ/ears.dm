@@ -381,3 +381,17 @@
 		/datum/sprite_accessory/ears/big/sandfox_large,
 		/datum/sprite_accessory/ears/lynx,
 	)
+
+/datum/customizer_choice/organ/ears/wings
+	name = "Aasimar Ears"
+	organ_type = /obj/item/organ/ears
+	sprite_accessories = list(
+		/datum/sprite_accessory/ears/elf,
+		/datum/sprite_accessory/ears/elfw,
+		/datum/sprite_accessory/ears/wispy,
+		/datum/sprite_accessory/ears/small,
+		)
+
+/datum/customizer/organ/ears/wings
+	customizer_choices = list(/datum/customizer_choice/organ/ears/wings)
+	allows_disabling = TRUE
