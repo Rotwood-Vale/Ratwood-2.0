@@ -9,8 +9,8 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_MEDICINE_EXPERT, TRAIT_NOSTINK, TRAIT_EMPATH, TRAIT_DODGEEXPERT, TRAIT_DECEIVING_MEEKNESS, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_SPD = 2,
+		STATKEY_INT = 4,
+		STATKEY_SPD = 3,
 		STATKEY_LCK = 3
 	)
 	subclass_skills = list(
@@ -56,6 +56,14 @@
 		H.change_stat(STATKEY_PER, 1)
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
+		var/armor_options = list("Light Armor", "Medium Armor")
+		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
+
+		switch(armor_choice)
+			if("Light Armor")
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+			if("Medium Armor")
+				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 
 /datum/outfit/job/roguetown/bandit/sawbones/post_equip(mob/living/carbon/human/H)
 	. = ..()

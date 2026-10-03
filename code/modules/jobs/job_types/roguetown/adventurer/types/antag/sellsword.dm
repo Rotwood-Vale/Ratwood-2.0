@@ -43,24 +43,41 @@
 
 /datum/outfit/job/roguetown/bandit/sellsword/pre_equip(mob/living/carbon/human/H)
 	..()
+	head = snouthelm_pick(H, /obj/item/clothing/head/roguetown/helmet/sallet/visored, /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted)
+	neck = /obj/item/clothing/neck/roguetown/bevor
+	cloak = /obj/item/clothing/cloak/tabard/stabard/dungeon
+	armor = /obj/item/clothing/suit/roguetown/armor/chainmail
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	belt = /obj/item/storage/belt/rogue/leather
 	pants = /obj/item/clothing/under/roguetown/trou/leather
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	shoes = /obj/item/clothing/shoes/roguetown/boots
-	backl = /obj/item/rogueweapon/shield/heater
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	beltr = /obj/item/rogueweapon/sword/short/falchion
-	armor = /obj/item/clothing/suit/roguetown/armor/chainmail
-	head = /obj/item/clothing/head/roguetown/helmet/sallet
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 					/obj/item/needle/thorn = 1,
 					/obj/item/natural/cloth = 1,
 					/obj/item/flashlight/flare/torch = 1,
 					)
-	mask = /obj/item/clothing/mask/rogue/facemask/steel
-	neck = /obj/item/clothing/neck/roguetown/chaincoif
+
 	id = /obj/item/mattcoin
+	H.adjust_blindness(-3)
+	var/weapons = list("Kriegmesser & Buckler","Falchion & Kite Shield","Sword & Crossbow")
+	if(H.mind)
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		H.set_blindness(0)
+		switch(weapon_choice)
+			if("Kriegmesser & Buckler") //Grenzel
+				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
+				backl= /obj/item/rogueweapon/shield/buckler
+				beltr = /obj/item/rogueweapon/scabbard/sword
+			if("Falchion & Kite Shield") //Otavan
+				r_hand = /obj/item/rogueweapon/sword/short/falchion
+				backl= /obj/item/rogueweapon/shield/tower/metal
+				beltr = /obj/item/rogueweapon/scabbard/sword
+			if("Sword & Crossbow") //Etruscan
+				backl= /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+				beltr = /obj/item/quiver/bolt
+				r_hand = /obj/item/rogueweapon/sword
+				beltl = /obj/item/rogueweapon/scabbard/sword
 
 /datum/outfit/job/roguetown/bandit/sellsword/post_equip(mob/living/carbon/human/H)
 	. = ..()
