@@ -66,11 +66,12 @@
 /obj/item/candle/candlestick/gold/lit{
 	pixel_y = 15
 	},
-/turf/open/floor/rogue/grass,
-/area)
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "cd" = (
-/turf/closed/mineral/rogue/bedrock,
-/area)
+/obj/item/roguemachine/mastermail,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "ce" = (
 /obj/effect/decal/mossy{
 	dir = 1
@@ -189,8 +190,9 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/bog/north)
 "fE" = (
-/turf/closed/wall/mineral/rogue/decowood/vert,
-/area)
+/obj/machinery/light/rogue/candle/r,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "gP" = (
 /obj/structure/table/cooling,
 /obj/item/storage/roguebag,
@@ -343,7 +345,7 @@
 /obj/item/rogueweapon/surgery/scalpel,
 /obj/item/needle,
 /turf/open/floor/rogue/dirt/road,
-/area)
+/area/rogue/indoors)
 "mq" = (
 /obj/machinery/light/rogue/firebowl/stump,
 /turf/open/floor/rogue/grass,
@@ -1100,8 +1102,9 @@
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors)
 "DO" = (
+/obj/structure/roguemachine/ministry_bureau,
 /turf/open/floor/rogue/tile/harem,
-/area)
+/area/rogue/indoors)
 "Ef" = (
 /obj/effect/decal/mossy{
 	dir = 8
@@ -1212,10 +1215,6 @@
 /obj/item/rogueweapon/thresher,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors)
-"Jc" = (
-/obj/machinery/light/rogue/candle/l,
-/turf/open/floor/rogue/tile/harem,
-/area)
 "JD" = (
 /obj/item/rogueweapon/pick/blacksteel,
 /turf/open/floor/rogue/ruinedwood,
@@ -1781,15 +1780,15 @@ AO
 AO
 AO
 AO
-cd
-cd
-cd
-cd
-dB
-dB
-dB
-dB
-dB
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+AO
 dB
 dB
 dB
@@ -1836,12 +1835,12 @@ zo
 zo
 zo
 zo
-fE
-fE
-fE
-dB
-dB
-dB
+zo
+zo
+zo
+zo
+zo
+AO
 dB
 dB
 dB
@@ -1888,12 +1887,12 @@ Ey
 tc
 Ey
 Ey
-Jc
-DO
-fE
-dB
-dB
-dB
+tc
+Ey
+tc
+Ey
+zo
+AO
 dB
 dB
 dB
@@ -1941,11 +1940,11 @@ zo
 Br
 Ey
 mm
-DO
-fE
-dB
-dB
-dB
+Ey
+Ey
+Ey
+zo
+AO
 dB
 dB
 dB
@@ -1993,11 +1992,11 @@ zo
 BX
 Ey
 ca
-DO
-fE
-dB
-dB
-dB
+Ey
+Ey
+Ey
+zo
+AO
 dB
 dB
 dB
@@ -2040,15 +2039,15 @@ zo
 DG
 zo
 zo
-Ey
+cd
 zo
 KJ
 Ey
 bm
 Ey
+fE
+DO
 zo
-AO
-AO
 AO
 AO
 AO
