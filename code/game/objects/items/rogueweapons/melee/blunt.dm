@@ -468,7 +468,7 @@
 
 /obj/item/rogueweapon/mace/goden/steel/ancient
 	name = "ancient grand mace"
-	desc = "A twisting polehammer, forged in polished gilbranze. What did you think this was all about? This destruction, this war, this sacrifice; it was all to prepare Man for its true ascension."
+	desc = "A twisting lucerne, forged in polished gilbranze. What did you think this was all about? This destruction, this war, this sacrifice; it was all to prepare Man for its true ascension."
 	icon_state = "ancient_supermace"
 	smeltresult = /obj/item/ingot/aaslag
 
@@ -636,7 +636,7 @@
 
 /obj/item/rogueweapon/mace/warhammer/steel/silver
 	name = "silver warhammer"
-	desc = "A heavy warhammer, forged from pure silver. It follows the Otavan design of a 'lucerene'; a shortened polehammer with a pronounced spike, rebalanced for one-handed usage. Resplendent in presentation, righteous in purpose."
+	desc = "A heavy warhammer, forged from pure silver. It follows the Otavan design of a 'lucerne'; shortened and rebalanced for one-handed usage. Resplendent in presentation, righteous in purpose."
 	icon_state = "silverhammer"
 	force = 30
 	force_wielded = 30

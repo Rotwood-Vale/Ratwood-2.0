@@ -26,7 +26,7 @@
 	ship_qty_max = 3
 
 /datum/supply_pack/rogue/otava/lucerne
-	name = "Lucerne Warhammer"
+	name = "Steel Warhammer"
 	cost = 150
 	contains = list(/obj/item/rogueweapon/mace/warhammer/steel)
 	ship_qty_min = 1
