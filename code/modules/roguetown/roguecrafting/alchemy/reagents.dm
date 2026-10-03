@@ -305,6 +305,41 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 			M.adjustToxLoss(4.5) // just enough so 5u will kill you dead with no help
 	return ..()
 
+/datum/reagent/deaditerot         // Gives people the deadite rot or speeds up transformation on corpses. As simple as that
+	name =  "Concentrated Rot"
+	description = ""
+	reagent_state = LIQUID
+	color = "#000000"
+	taste_description = "sour meat"
+	metabolization_rate = 1000000 // handled by on add, any amount is dangerus
+	harmful = TRUE
+	self_consuming = TRUE // shoudnt matter, but yes, its liver independent
+
+/datum/reagent/deaditerot/on_mob_add(mob/living/carbon/M)
+	if(!ishuman(M))
+		return ..()
+	var/mob/living/carbon/human/H = M
+	
+	var/alredy_zombied = FALSE
+	var/datum/status_effect/zombie_infection/infection = H.has_status_effect(/datum/status_effect/zombie_infection)
+	if(infection)
+		alredy_zombied = TRUE
+	var/datum/antagonist/zombie/zomb = H.mind?.has_antag_datum(/datum/antagonist/zombie)
+	if(zomb)
+		alredy_zombied = TRUE
+	if(!alredy_zombied)
+		if(H.zombie_check_can_convert())
+			H.infected = TRUE //Is this in use? Just in case it is
+			H.apply_status_effect(/datum/status_effect/zombie_infection, 3 MINUTES, "potion")
+
+	if(H.stat == DEAD || H.InCritical())
+		var/datum/antagonist/zombie/Z = H.mind?.has_antag_datum(/datum/antagonist/zombie)
+		if(Z)
+			Z.wake_zombie(TRUE)
+		
+	M.reagents.remove_reagent(src, 1000000000000000)
+	return ..()
+
 /datum/reagent/bloodacid // Quietus Poison for Vampires
 	name = "Vitae Acid"
 	description = ""
