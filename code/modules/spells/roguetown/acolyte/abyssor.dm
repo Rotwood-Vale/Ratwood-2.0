@@ -1,7 +1,7 @@
 //t1, the bends
 /obj/effect/proc_holder/spell/invoked/abyssor_bends
-	name = "Depth Bends"
-	desc = "Drains the targets stamina, unless they worship Abyssor. Also makes them dizzy and blurs their screen."
+	name = "Abyssal Quenching"
+	desc = "Extinguishes the target and grants them fire resistance for 30 seconds."
 	overlay_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	action_icon = 'icons/mob/actions/abyssormiracles.dmi'
 	overlay_state = "bends"
@@ -11,29 +11,27 @@
 	range = 15
 	movement_interrupt = FALSE
 	chargedloop = null
-	sound = 'sound/foley/bubb (5).ogg'
-	invocations = list("Weight of the deep, crush!")
+	sound = 'sound/foley/waterenter.ogg'
+	invocations = list("Weight of the deep, extinguish!")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
 	recharge_time = 20 SECONDS
 	miracle = TRUE
 	devotion_cost = 15
-	var/base_fatdrain = 10
 
 /obj/effect/proc_holder/spell/invoked/abyssor_bends/cast(list/targets, mob/user = usr)
 	. = ..()
 	if(isliving(targets[1]))
 		var/mob/living/target = targets[1]
 		user.visible_message("<font color='yellow'>[user] makes a fist at [target]!</font>")
+		target.adjust_fire_stacks(-100)
 		if(istype(target, /mob/living/carbon))
-			var/mob/living/carbon = target
-			if(carbon.patron?.type != /datum/patron/divine/abyssor)
-				var/fatdrain = user.get_skill_level(associated_skill) * base_fatdrain
-				carbon.stamina_add(fatdrain)
-		target.Dizzy(10)
-		target.blur_eyes(20)
-		target.emote("drown")
+			var/mob/living/carbon/carbon_target = target
+			for(var/obj/item/clothing/clothing in carbon_target.get_equipped_items())
+				if((clothing.resistance_flags & ON_FIRE) && clothing.extinguishable)
+					clothing.extinguish()
+		target.apply_status_effect(/datum/status_effect/buff/abyssor_fire_resistance)
 		return TRUE
 	revert_cast()
 	return FALSE
