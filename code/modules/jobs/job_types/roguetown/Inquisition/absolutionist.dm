@@ -43,7 +43,7 @@
 	outfit = /datum/outfit/job/roguetown/absolver/basic
 	subclass_languages = list(/datum/language/otavan)
 	category_tags = list(CTAG_ABSOLVER)
-	forced_stats = list(STATKEY_CON = 17, STATKEY_WIL = 13, STATKEY_SPD = 8, STATKEY_STR = 13, STATKEY_INT = 10, STATKEY_PER = 11)
+	forced_stats = list(STATKEY_CON = 17, STATKEY_WIL = 13, STATKEY_SPD = 8, STATKEY_STR = 10, STATKEY_INT = 10, STATKEY_PER = 11)
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN, // Enduring.
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
