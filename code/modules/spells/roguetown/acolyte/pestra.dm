@@ -149,6 +149,10 @@
 		ORGAN_SLOT_STOMACH,
 		ORGAN_SLOT_APPENDIX,
 	)
+	// Optional anatomy is missing only if a wound records its removal
+	for(var/datum/wound/wound in human_target.get_wounds())
+		for(var/organ_slot in wound.missing_organ_dna)
+			missing_organs |= organ_slot
 
 	// Remove organs that are already present
 	for(var/organ_slot in missing_organs)
@@ -158,8 +162,8 @@
 	// Search for organs in the same locations
 	var/list/organ_locations = list()
 	if(user)
-		organ_locations += user.held_items
-	organ_locations += human_target.held_items
+		organ_locations |= user
+	organ_locations |= human_target
 	organ_locations += range(1, human_target)
 
 	// Try to attach organs
@@ -173,7 +177,7 @@
 				continue
 
 			// Necra vow check for organs
-			if(same_owner && organ.owner && organ.owner != human_target)
+			if(same_owner && organ.last_owner && organ.last_owner != human_target)
 				continue
 
 			// Check if target already has this organ
@@ -181,7 +185,8 @@
 				continue
 
 			// Try to insert the organ
-			if(organ.Insert(human_target))
+			organ.Insert(human_target)
+			if(organ.owner == human_target)
 				human_target.visible_message(
 					span_info("\The [organ] attaches itself to [human_target]!"),
 					span_notice("\The [organ] attaches itself to me!")
