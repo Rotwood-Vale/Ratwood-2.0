@@ -279,7 +279,7 @@
 /datum/status_effect/debuff/yield_prompt/on_apply()
 	if(isliving(owner) && owner.has_flaw(/datum/charflaw/compliant))
 		var/mob/living/living_owner = owner
-		living_owner.submit(TRUE)
+		living_owner.submit()
 		return FALSE
 	return ..()
 
