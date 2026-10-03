@@ -50,7 +50,7 @@
 	if(IsSleeping())
 		if(health > 0)
 			if(has_status_effect(/datum/status_effect/debuff/sleepytime) || has_status_effect(/datum/status_effect/debuff/sleepytime/t2) || has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
-				if(world.time > last_sleep + 200) //20 seconds of delay for every progress, the more tired you are, the longer you need to sleep!
+				if(world.time > last_sleep + 35 SECONDS) //35 seconds of delay for every progress, letting people wake up before the second sleep removal happens
 					last_sleep = world.time
 					remove_sleep_depravation()
 					if(mind)
