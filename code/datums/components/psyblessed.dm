@@ -21,7 +21,9 @@
 	var/cursed_item_intdamage
 
 /datum/component/silverbless/Initialize(pre_blessed = BLESSING_NONE, silver_type, added_force, added_blade_int, added_int, added_def)
-	if(!istype(parent, /obj/item/rogueweapon) && !istype(parent, /obj/item/ammo_casing/caseless/rogue))
+	if(!istype(parent, /obj/item/rogueweapon) \
+		&& !istype(parent, /obj/item/ammo_casing/caseless/rogue) \
+		&& !istype(parent, /obj/item/clothing/gloves/roguetown/bandages/abotteer))
 		return COMPONENT_INCOMPATIBLE
 	src.pre_blessed = pre_blessed
 	src.silver_type = silver_type
@@ -98,7 +100,7 @@
 
 // This is called right after the object is fixed and all of its force / wdefense values are reset to initial. We re-apply the relevant bonuses.
 /datum/component/silverbless/proc/on_fix()
-	if(!is_blessed)
+	if(!is_blessed || !istype(parent, /obj/item/rogueweapon))
 		return
 	var/obj/item/rogueweapon/I = parent
 	I.force += added_force
