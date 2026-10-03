@@ -13,6 +13,7 @@
 	if(!cmode)	//We just toggled it off.
 		addtimer(CALLBACK(src, PROC_REF(purge_bait)), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		addtimer(CALLBACK(src, PROC_REF(expire_peel)), 60 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(clear_tempo_all)), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	if(!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 		filtered_balloon_alert(TRAIT_COMBAT_AWARE, (cmode ? ("<i><font color = '#831414'>Tense</font></i>") : ("<i><font color = '#c7c6c6'>Relaxed</font></i>")), y_offset = 32)
 
@@ -50,7 +51,8 @@
 		return
 
 	HU.visible_message(span_danger("[HU] baits an attack from [HT]!"))
-	HU.apply_status_effect(/datum/status_effect/debuff/baitcd)
+	var/newcd = 30 SECONDS - user.get_tempo_bonus(TEMPO_TAG_RCLICK_CD_BONUS)
+	HU.apply_status_effect(/datum/status_effect/debuff/baitcd, newcd)
 
 	if(check_zone(target_zone) != check_zone(user_zone) || ((target_zone == BODY_ZONE_CHEST)))
 		guaranteed_fail = TRUE
