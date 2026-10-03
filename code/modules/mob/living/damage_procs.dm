@@ -190,14 +190,16 @@
 	if (!.)
 		return FALSE
 
+	mark_blood_hud_dirty()
 	if(updating_health)
 		updatehealth()
 	return amount
 
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(status_flags & GODMODE)
+	if(!forced && (status_flags & GODMODE))
 		return 0
 	oxyloss = amount
+	mark_blood_hud_dirty()
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -216,6 +218,7 @@
 	if (!.)
 		return FALSE
 
+	mark_blood_hud_dirty()
 	if(updating_health)
 		updatehealth()
 	return amount
@@ -224,6 +227,7 @@
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	toxloss = amount
+	mark_blood_hud_dirty()
 	if(updating_health)
 		updatehealth()
 	return amount

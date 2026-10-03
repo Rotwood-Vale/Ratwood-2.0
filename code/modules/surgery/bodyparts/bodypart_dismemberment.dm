@@ -676,8 +676,7 @@
 	L = newBodyPart(limb_zone, 0, 0)
 	if(L)
 		if(!noheal)
-			L.brute_dam = 0
-			L.burn_dam = 0
+			L.set_damage(0, 0)
 			L.brutestate = 0
 			L.burnstate = 0
 
