@@ -51,12 +51,12 @@ GLOBAL_LIST_INIT(stat_pref_costs, list("++" = 1, "+" = 1, "-" = 0, "--" = 0))
 		if(stat_prefs && stat_prefs[stat])
 			pick = stat_prefs[stat]
 		var/shift = stat_cap_shift(stat, favored_stats)
-		if(pick == "--" && shift > 0)
-			pick = "-"
 		values[stat] = 8
 		caps[stat] = STAT_BASE_MAX + shift
 		baselines[stat] = STAT_BASELINE + min(shift, 0)
-		if(pick == "--")
+		if(pick == "--" && shift > 0)
+			caps[stat]--
+		else if(pick == "--")
 			caps[stat] = 8
 			baselines[stat] = 8
 		weights[stat] = (max(STAT_MIN_WEIGHT, stat_role_weight(stat, favored_stats) + GLOB.stat_pref_levels[pick]) ** STAT_FOCUS) * GLOB.stat_weight_mults[stat]

@@ -101,11 +101,11 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	if(user.get_triumphs())
 		triumphs = "\Roman [user.get_triumphs()]"
 	var/html = "<center>"
-	html += "[pref_link("Change Character", "changeslot", null)] | [pref_link("Class Selection", "job", "menu")] | [pref_link("Villain Selection", "antag", "menu")] | [pref_link("Keybinds", "keybinds", "menu")]<br>"
+	html += "[pref_link("Change Character", "changeslot", "")] | [pref_link("Class Selection", "job", "menu")] | [pref_link("Villain Selection", "antag", "menu")] | [pref_link("Keybinds", "keybinds", "menu")]<br>"
 	html += "[pref_link("PQ:", "playerquality", "menu")] [get_playerquality(user.ckey, text = TRUE)] | [pref_link("TRIUMPHS:", "triumphs", "menu")] [triumphs]"
 	if(SStriumphs.triumph_buys_enabled)
 		html += " [pref_link("Triumph Buy", "triumph_buy_menu", null)]"
-	html += "<br>[pref_link(get_ui_style_name(), "tgui_ui_prefs", "menu")] | [pref_link("Theme: [get_tgui_theme_display_name()]", "tgui_theme", null)] | [pref_link("Parchment: [get_parchment_skin_display_name()]", "parchment_skin", null)]<br>"
+	html += "<br>[pref_link(get_ui_style_name(), "tgui_ui_prefs", "menu")] | [pref_link("Theme: [get_tgui_theme_display_name()]", "tgui_theme", "")] | [pref_link("Parchment: [get_parchment_skin_display_name()]", "parchment_skin", "")]<br>"
 	html += get_preview_html()
 	html += "</center><hr>"
 	return html
@@ -133,7 +133,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		arousal_label = "Partial"
 	if(preview_erect_state == ERECT_STATE_HARD)
 		arousal_label = "Hard"
-	html += "Arousal Preview: [pref_link(arousal_label, "preview_erect_state", null)]"
+	html += "Arousal Preview: [pref_link(arousal_label, "preview_erect_state", "")]"
 	return html
 
 // ppl can choose between your RACIAL stat bonus or one from your ORIGIN.
@@ -215,8 +215,8 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 			body_type = "Masculine"
 		if(gender == FEMALE)
 			body_type = "Feminine"
-		html += pref_line(list(pref_item("Body Type", pref_link(body_type, "gender", null))))
-	html += pref_line(list(pref_item("Dominance", pref_link(hand, "domhand", null))))
+		html += pref_line(list(pref_item("Body Type", pref_link(body_type, "gender", ""))))
+	html += pref_line(list(pref_item("Dominance", pref_link(hand, "domhand", ""))))
 	if(!(AGENDER in pref_species.species_traits))
 		if(randomise[RANDOM_BODY] || randomise[RANDOM_BODY_ANTAG])
 			html += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER]'>Always Random Bodytype: [yes_no(randomise[RANDOM_GENDER])]</a> "
@@ -228,7 +228,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	var/origin_name = "None"
 	if(origin)
 		origin_name = origin.name
-	html += pref_line(list(pref_item("Origin", pref_link(origin_name, "origin")), pref_item("Family", pref_link(family || "None", "family", null))))
+	html += pref_line(list(pref_item("Origin", pref_link(origin_name, "origin")), pref_item("Family", pref_link(family || "None", "family", ""))))
 	if(family != FAMILY_NONE)
 		var/spousename = "Spouse"
 		if(family == FAMILY_PARTIAL)
@@ -238,7 +238,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 			species_text = "<font color='#FFA500'>Same Race</font>"
 		if(xenophobe_pref == 2 && restricted_species_pref)
 			species_text = "<font color='#aa0202'>[restricted_species_pref] Only</font>"
-		html += pref_line(list(pref_item(spousename, pref_link(setspouse || "None", "setspouse", null)), pref_item("Gender", pref_link(gender_choice || "Any", "gender_choice", null)), pref_item("Species", pref_link(species_text, "species_choice", null))))
+		html += pref_line(list(pref_item(spousename, pref_link(setspouse || "None", "setspouse", "")), pref_item("Gender", pref_link(gender_choice || "Any", "gender_choice", "")), pref_item("Species", pref_link(species_text, "species_choice", ""))))
 	var/datum/faith/selected_faith = GLOB.faithlist[selected_patron?.associated_faith]
 	html += pref_line(list(pref_item("Faith", pref_link(selected_faith?.name || "INVALID", "faith")), pref_item("Patron", pref_link(selected_patron?.name || "INVALID", "patron"))))
 	var/language_text = "Locked by origin"
