@@ -64,7 +64,7 @@
 	name = "Large Frame"
 	desc = "I'm simply built bigger than most. My strength and hardiness has nothing to show for my size, though."
 	custom_text = "This quirk increases your sprite size. Incompatible with the Giant virtue."
-	point_cost = 2
+	point_cost = 1
 	incompatible_virtues = list(/datum/virtue/size/giant)
 
 /datum/quirk/largeframe/apply_to_human(mob/living/carbon/human/recipient)
@@ -75,7 +75,7 @@
 /datum/quirk/redolent
 	name = "Redolent"
 	desc = "My body odor is strong and distinct. Without regular baths, others will notice..."
-	point_cost = 1
+	point_cost = 0
 	added_traits = list(TRAIT_REDOLENT)
 
 /datum/quirk/redolent/apply_to_human(mob/living/carbon/human/recipient)
@@ -220,7 +220,7 @@
 /datum/quirk/pretty
 	name = "Pretty"
 	desc = "I'm no great beauty, but people seem to like looking at my face well enough."
-	point_cost = 2
+	point_cost = 1
 	added_traits = list(TRAIT_PRETTY)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
 	incompatible_quirks = list(/datum/quirk/ugly)
