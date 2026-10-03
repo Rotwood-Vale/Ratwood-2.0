@@ -127,8 +127,25 @@
 
 	var/target_z = 0
 
+	var/min_range = 0
+	var/max_range = 0
+	var/dam_falloff_factor = 1
+
 /obj/projectile/proc/handle_drop()
 	return
+
+/obj/projectile/proc/check_range(turf/T)
+	if(!starting)
+		return FALSE
+	if(!istype(T))
+		T = get_turf(src)
+	if(!istype(T))
+		return FALSE
+	if(T.z != starting.z)
+		return FALSE
+	var/distance = get_dist(T, starting)
+	if((min_range && distance < min_range) || (max_range && distance > max_range))
+		return TRUE
 
 /obj/projectile/Initialize(mapload)
 	. = ..()
@@ -310,6 +327,10 @@
 #define FORCE_QDEL 3		//Force deletion.
 
 /obj/projectile/proc/process_hit(turf/T, atom/target, qdel_self, hit_something = FALSE)		//probably needs to be reworked entirely when pixel movement is done.
+	if(check_range(T))
+		if(damage)
+			damage = round(damage * dam_falloff_factor)
+
 	if(QDELETED(src) || !T || !target)		//We're done, nothing's left.
 		if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !CHECK_BITFIELD(movement_type, UNSTOPPABLE)))
 			qdel(src)
