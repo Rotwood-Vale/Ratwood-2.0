@@ -23,12 +23,12 @@ SUBSYSTEM_DEF(ParticleWeather)
 			runningWeather.tick()
 			for(var/mob/act_on as anything in GLOB.mob_living_list) //yikes. this should probably be a client scan not all mobs. it already checks for minds
 				if(!runningWeather)
-					return
+					break
 				runningWeather.try_weather_act(act_on)
 			if(runningWeather?.target_trait == PARTICLEWEATHER_RAIN)	//also a bit of a yikes- but none of our other weather needs to affect objects. No sense in running the for loop every single weather that doesn't even use it
 				for(var/obj/act_on as anything in GLOB.weather_act_upon_list)
 					if(!runningWeather)
-						return
+						break
 					runningWeather.weather_obj_act(act_on)
 
 

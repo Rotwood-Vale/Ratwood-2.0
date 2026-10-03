@@ -134,7 +134,7 @@ GLOBAL_VAR_INIT(date_override_offset, 0)
 		var/time_change_tips_random = pick(GLOB.time_change_tips)
 		to_chat(client, span_notice("<b>[time_change_tips_random]</b>"))
 		var/mob/living/carbon/human/H = src
-		if(H)
+		if(ishuman(H))
 			H.time_flags &= ~(TIME_OF_DAY_BIT_DAY | TIME_OF_DAY_BIT_NIGHT)	//temperature bitflag clear
 			H.time_flags |= TIME_OF_DAY_BIT_DAY								//not actually day, but gives 'dawn, day, and dusk' as warmer time periods, given day is short
 		if(HAS_TRAIT(mind.current, TRAIT_NOSLEEP)) // new hackslop to allow anything that cannot sleep to do their daily stuff
@@ -158,7 +158,7 @@ GLOBAL_VAR_INIT(date_override_offset, 0)
 	else if(GLOB.tod == "night")
 		playsound_local(src, 'sound/misc/nightfall.ogg', 100, FALSE)
 		var/mob/living/carbon/human/H = src
-		if(H)
+		if(ishuman(H))
 			H.time_flags &= ~(TIME_OF_DAY_BIT_DAY | TIME_OF_DAY_BIT_NIGHT)
 			H.time_flags |= TIME_OF_DAY_BIT_NIGHT
 	var/atom/movable/screen/daynight/D = new()

@@ -816,6 +816,10 @@ GLOBAL_LIST(teleport_runes)
 		do_invoke_glow()
 		clear_obstacles(user)
 		sleep(20)
+		if(!summoning || QDELETED(summoned_mob))
+			summoned_mob = null
+			summoning = FALSE
+			return
 		animate(summoned_mob, color = null,time = 5)
 		REMOVE_TRAIT(summoned_mob, TRAIT_PACIFISM, TRAIT_GENERIC)	//can't kill while planar bound.
 		summoned_mob.status_flags -= GODMODE//remove godmode
