@@ -78,8 +78,8 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	outfit = /datum/outfit/job/roguetown/priest/basic
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	category_tags = list(CTAG_BISHOP)
-	stat_budget = STAT_BUDGET_MID
-	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_STR = STAT_DISFAVORED, STATKEY_CON = STAT_DISFAVORED, STATKEY_SPD = STAT_DISFAVORED)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = STATS_CLERIC
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,

@@ -94,7 +94,7 @@
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	category_tags = list(CTAG_ACOLYTE)
 	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED)
+	favored_stats = STATS_CLERIC
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
