@@ -30,7 +30,7 @@
 /datum/advclass/clerk
 	name = "Clerk"
 	tutorial = "Clerk, tax-collector, blessed fool. You help the Steward with anything they need and perform their tasks when they are unavailable. Although you aren't a noble, it's not the worst position. The caveat? If money is misplaced or goes missing, a noble could probably weasel out of the stockades as punishment. You? Eh...well, Etrusca is lovely this time of year."
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_STR = STAT_DISFAVORED)
 	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_skills = list(

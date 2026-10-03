@@ -36,8 +36,8 @@
 		As a member of the upper class, expect to treat nobility. You have access to accommodate this."
 	outfit = /datum/outfit/job/roguetown/physician/basic
 	category_tags = list(CTAG_COURTPHYS)
-	stat_budget = STAT_BUDGET_MID
-	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_STR = STAT_DISFAVORED, STATKEY_CON = STAT_DISFAVORED)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_SCHOLAR
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,

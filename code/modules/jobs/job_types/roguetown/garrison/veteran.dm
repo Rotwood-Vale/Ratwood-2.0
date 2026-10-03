@@ -54,8 +54,8 @@
 
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_HEAVYARMOR)
-	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = STATS_CLERIC
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = STATS_FIGHTER
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/maces = SKILL_LEVEL_MASTER,
@@ -156,8 +156,8 @@
 
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = STATS_CLERIC
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = STATS_FIGHTER
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/maces = SKILL_LEVEL_MASTER,
@@ -257,7 +257,7 @@
 
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_NOBLE, TRAIT_GOODTRAINER, TRAIT_EQUESTRIAN) //So they can actually do the job as good as other classes, while trading own potential for some flavor
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_SPD = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
@@ -362,7 +362,7 @@
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_HEAVYARMOR)
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
@@ -457,7 +457,7 @@
 
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WOODSMAN, TRAIT_OUTDOORSMAN, TRAIT_PERFECT_TRACKER)
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
@@ -561,7 +561,7 @@
 	cmode_music = 'sound/music/cmode/nobility/combat_spymaster.ogg'
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CICERONE, TRAIT_SEEPRICES, TRAIT_DECEIVING_MEEKNESS) //Mostly SOVL traits
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = STATS_ROGUE
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,

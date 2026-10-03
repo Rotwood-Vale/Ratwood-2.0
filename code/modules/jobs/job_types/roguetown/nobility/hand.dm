@@ -169,7 +169,7 @@
 
 	category_tags = list(CTAG_HAND)
 	traits_applied = list(TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3)
-	stat_budget = STAT_BUDGET_PEAK
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_spellpoints = 15

@@ -33,7 +33,7 @@
 	outfit = /datum/outfit/job/roguetown/councillor/basic
 	category_tags = list(CTAG_COUNCILLOR)
 	stat_budget = STAT_BUDGET_MID
-	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED, STATKEY_CON = STAT_DISFAVORED)
+	favored_stats = STATS_ROGUE
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,

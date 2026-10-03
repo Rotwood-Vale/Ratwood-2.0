@@ -36,7 +36,7 @@
 	outfit = /datum/outfit/job/roguetown/farmer/basic
 	category_tags = list(CTAG_SOILBRIDE)
 	stat_budget = STAT_BUDGET_MID
-	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_INT = STAT_DISFAVORED)
+	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_STR = STAT_FAVORED, STATKEY_INT = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_NOVICE,

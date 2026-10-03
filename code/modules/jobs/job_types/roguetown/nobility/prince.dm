@@ -41,7 +41,7 @@
 	outfit = /datum/outfit/job/roguetown/heir/daring
 	category_tags = list(CTAG_HEIR)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
@@ -99,7 +99,7 @@
 	outfit = /datum/outfit/job/roguetown/heir/bookworm
 	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_MAGEARMOR, TRAIT_GOODWRITER)
 	category_tags = list(CTAG_HEIR)
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_STR = STAT_DISFAVORED, STATKEY_CON = STAT_DISFAVORED)
 	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_spellpoints = 9
@@ -165,7 +165,7 @@
 	outfit = /datum/outfit/job/roguetown/heir/aristocrat
 	traits_applied = list(TRAIT_SEEPRICES_SHITTY, TRAIT_GOODLOVER, TRAIT_SEWING_EXPERT)
 	category_tags = list(CTAG_HEIR)
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED)
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
@@ -298,8 +298,7 @@
 	outfit = /datum/outfit/job/roguetown/heir/scamp
 	traits_applied = list(TRAIT_SEEPRICES_SHITTY)
 	category_tags = list(CTAG_HEIR)
-	//Not standard weighted. Not intended to be considering the stat ceilings. -F
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_STR = STAT_VERY_DISFAVORED, STATKEY_CON = STAT_VERY_DISFAVORED)
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
@@ -316,7 +315,6 @@
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 	)
-	adv_stat_ceiling = list(STAT_STRENGTH = 8, STAT_CONSTITUTION = 8, STAT_SPEED = 15)	//don't get caught
 
 /datum/outfit/job/roguetown/heir/scamp/pre_equip(mob/living/carbon/human/H)
 	..()

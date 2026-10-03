@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	category_tags = list(CTAG_LORD)
 	noble_income = 400 // Let's go crazy. This is +400 per day for a total of 2400 per round at the end of a day. This is probably equal to doubling passive incomes of the keep.
 	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES, TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_DNR, TRAIT_MEDIUMARMOR)
-	stat_budget = STAT_BUDGET_MAX
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_stats = list(STATKEY_LCK = 5)
 	subclass_skills = list(
@@ -221,7 +221,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	outfit = /datum/outfit/job/roguetown/lord/wizard
 	category_tags = list(CTAG_LORD)
 	traits_applied = list(TRAIT_NOBLE, TRAIT_MAGEARMOR, TRAIT_DNR, TRAIT_ARCYNE_T3, TRAIT_INTELLECTUAL)
-	stat_budget = STAT_BUDGET_MAX
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	subclass_stats = list(STATKEY_LCK = 5)
 	subclass_spellpoints = 27

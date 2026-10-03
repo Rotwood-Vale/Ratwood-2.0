@@ -50,8 +50,8 @@
 
 	category_tags = list(CTAG_ROOKIE)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_CON = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_FIGHTER
 	subclass_skills = list(
 		/datum/skill/combat/shields = 2,
 		/datum/skill/combat/maces = 3,
@@ -119,8 +119,8 @@
 	outfit = /datum/outfit/job/roguetown/rookie/skirmisher
 
 	category_tags = list(CTAG_ROOKIE)
-	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_SPD = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_ARCHER
 	subclass_skills = list(
 		/datum/skill/combat/bows = 3,
 		/datum/skill/combat/crossbows = 3,

@@ -64,8 +64,8 @@
 	outfit = /datum/outfit/job/roguetown/wardenmaster/wardenmaster
 
 	category_tags = list(CTAG_BOGMASTER)
-	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = STATS_FIGHTER
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,

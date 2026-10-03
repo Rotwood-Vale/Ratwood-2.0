@@ -71,8 +71,8 @@
 
 	category_tags = list(CTAG_WATCH)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_FIGHTER
 	subclass_skills = list(
 		/datum/skill/combat/maces = 3,//They're serviceable with all weapons but I really don't want them to get expert outside of the weapons that fit them - blunt weapons are the role's identity. It's not their job to kill people.
 		/datum/skill/combat/swords = 3,

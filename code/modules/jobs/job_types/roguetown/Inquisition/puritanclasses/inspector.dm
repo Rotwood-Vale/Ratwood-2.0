@@ -21,7 +21,7 @@
 		TRAIT_OUTLANDER,
 		TRAIT_NOBLE
 		)
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
