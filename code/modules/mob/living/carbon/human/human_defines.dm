@@ -213,3 +213,6 @@
 	var/hypothermia_timer_id
 
 	var/branded = FALSE // Saves time during examine if character hasn't been branded at all
+
+	/// List of people who decide to cling on to us
+	var/list/list_of_people_who_are_clinging_onto_me
