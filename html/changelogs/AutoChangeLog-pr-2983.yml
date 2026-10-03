@@ -1,0 +1,4 @@
+author: "Xander3359"
+delete-after: True
+changes:
+  - bugfix: "The throat no longer tells you how to set laws twice, or lie to you about being able to ascend when that's not a thing."
