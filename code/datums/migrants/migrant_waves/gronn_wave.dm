@@ -1,5 +1,5 @@
 /datum/migrant_wave/gronn
-	name = "Gronn Raiding Party"
+	name = "Gronnic Raiding Party"
 	max_spawns = 1
 	weight = 40
 	track = MIGRANT_TRACK_SPECIAL

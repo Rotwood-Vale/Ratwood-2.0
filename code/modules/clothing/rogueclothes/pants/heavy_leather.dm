@@ -128,7 +128,6 @@
 	desc = "Tight fitting leather pants worn under clothing of the steppes."
 	icon_state = "nomadpants"
 	max_integrity = ARMOR_INT_LEG_HARDLEATHER
-	armor = ARMOR_LEATHER
 	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	min_cold_protection_temperature = 50
 	dropshrink = null
