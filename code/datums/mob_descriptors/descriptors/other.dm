@@ -32,6 +32,8 @@
 	var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
 	if(!penis)
 		return FALSE
+	if(H.sexcon && (ORGAN_SLOT_PENIS in H.sexcon.hidden_genitals))
+		return FALSE
 	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
 		return TRUE
 	if(H.underwear)
@@ -116,6 +118,8 @@
 		return FALSE
 	if(!testes)
 		return FALSE
+	if(H.sexcon && (ORGAN_SLOT_TESTICLES in H.sexcon.hidden_genitals))
+		return FALSE
 	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
 		return TRUE
 	if(H.underwear)
@@ -166,6 +170,8 @@
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/vagina/vagina = H.getorganslot(ORGAN_SLOT_VAGINA)
 	if(!vagina)
+		return FALSE
+	if(H.sexcon && (ORGAN_SLOT_VAGINA in H.sexcon.hidden_genitals))
 		return FALSE
 	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
 		return TRUE
