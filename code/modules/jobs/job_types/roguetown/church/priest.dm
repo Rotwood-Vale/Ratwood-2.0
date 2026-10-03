@@ -67,8 +67,6 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		H.real_name = "[title] [prev_real_name]"
 		H.name = "[title] [prev_name]"
 
-		addtimer(CALLBACK(src, PROC_REF(_delayed_path_choice), H), 50)
-
 /datum/advclass/bishop
 	name = "Bishop"
 	tutorial = "The Divine is all that matters in a world of the immoral. \
