@@ -5669,11 +5669,6 @@
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
 /area/rogue/under/dungeon/bizbaz)
-"bAe" = (
-/obj/structure/rack/rogue,
-/obj/item/rogueweapon/whip/spiderwhip,
-/turf/open/floor/rogue/hexstone,
-/area/rogue/under/underdesert)
 "bAi" = (
 /turf/closed/wall/mineral/rogue/tent{
 	dir = 4
@@ -14477,6 +14472,7 @@
 	},
 /obj/item/rogueweapon/huntingknife/idagger/silver/elvish/drow,
 /obj/item/roguegem/random,
+/obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/under/underdesert)
 "dTW" = (
@@ -32301,7 +32297,7 @@
 /area/rogue/outdoors/desert/above)
 "jip" = (
 /obj/structure/closet/crate/chest/old_crate,
-/obj/effect/spawner/lootdrop/horny_armor_spawner,
+/obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /obj/machinery/light/rogue/candle/blue/r,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/underdesert)
@@ -32461,7 +32457,7 @@
 /obj/structure/rack/rogue{
 	pixel_y = 16
 	},
-/obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
+/obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/underdesert)
 "jlk" = (
@@ -38103,7 +38099,7 @@
 /area/rogue/indoors/town/desert)
 "kIZ" = (
 /obj/structure/table/wood/poor,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
+/obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/underdesert)
 "kJa" = (
@@ -70373,7 +70369,7 @@
 /area/rogue/indoors/town/church)
 "tKO" = (
 /obj/structure/table/wood/poor,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/weapons,
+/obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/tools,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/underdesert)
@@ -72342,7 +72338,7 @@
 /area/rogue/indoors/town/shop/desert)
 "umr" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/shield/tower/spidershield,
+/obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/underdesert)
 "umB" = (
@@ -74649,11 +74645,6 @@
 /obj/item/book/rogue/bibble,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/indoors/town/academy/desert)
-"uTn" = (
-/obj/structure/rack/rogue,
-/obj/item/rogueweapon/sword/sabre/stalker,
-/turf/open/floor/rogue/hexstone,
-/area/rogue/under/underdesert)
 "uTp" = (
 /obj/structure/flora/roguegrass/herb/random,
 /turf/open/floor/rogue/dirt/desert,
@@ -234030,7 +234021,7 @@ jkT
 jft
 phY
 eLJ
-uTn
+umr
 jft
 mlc
 mlc
@@ -235278,7 +235269,7 @@ aJV
 jft
 qCl
 eLJ
-bAe
+umr
 jft
 mCl
 mCl
