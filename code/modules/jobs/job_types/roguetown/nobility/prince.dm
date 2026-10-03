@@ -48,6 +48,7 @@
 		STATKEY_SPD = 1,
 		STATKEY_LCK = 1,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
@@ -110,6 +111,7 @@
 		STATKEY_CON = -1,
 		STATKEY_LCK = 2,
 	)
+	pure_heart = TRUE
 	subclass_spellpoints = 9
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
@@ -180,6 +182,7 @@
 		STATKEY_LCK = 1,
 		STATKEY_SPD = 1
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/bows = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
@@ -253,6 +256,7 @@
 		STATKEY_WIL = -2,
 		STATKEY_LCK = -2
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
@@ -326,6 +330,7 @@
 	STATKEY_WIL = 1,
 	STATKEY_LCK = 1,
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/misc/sneaking = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,

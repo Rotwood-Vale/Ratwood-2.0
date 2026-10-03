@@ -10,6 +10,7 @@
 	category_tags = list(CTAG_INQUISITION)
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg'
+	pure_heart = TRUE
 	traits_applied = list(
 		TRAIT_DODGEEXPERT,
 		TRAIT_BLACKBAGGER,
@@ -103,7 +104,9 @@
 		/obj/item/clothing/head/inqarticles/blackbag = 1,
 		/obj/item/inqarticles/garrote = 1,
 		/obj/item/grapplinghook = 1,
-		/obj/item/paper/inqslip/arrival/ortho = 1
+		/obj/item/paper/inqslip/arrival/ortho = 1,
+		/obj/item/inqhound = 1,
+		/obj/item/inqscanner = 1,
 		)
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
