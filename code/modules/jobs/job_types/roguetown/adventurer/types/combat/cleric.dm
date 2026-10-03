@@ -49,8 +49,10 @@
 	You forego the hauberk that paladins wear in favor of humbling your foes through bloodless strikes. \
 	Your satchel hangs heavy, too, with ample provisions for the pilgrimage you're upon."))
 	head = /obj/item/clothing/head/roguetown/headband/monk
+	mask = /obj/item/clothing/head/roguetown/roguehood
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
+	cloak = /obj/item/clothing/suit/roguetown/shirt/robe //anyone who doesn't have cool patron drip sprites just gets this generic robe and hood.
 	pants = /obj/item/clothing/under/roguetown/tights/black
 	shoes = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded
 	backl = /obj/item/storage/backpack/rogue/satchel
@@ -120,58 +122,48 @@
 		if(/datum/patron/old_god)
 			cloak = /obj/item/clothing/cloak/psydontabard
 			mask = /obj/item/clothing/head/roguetown/roguehood/psydon
+			neck = /obj/item/clothing/neck/roguetown/psicross
 		if(/datum/patron/divine/astrata)
 			mask = /obj/item/clothing/head/roguetown/roguehood/astrata
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/astrata
-		if(/datum/patron/divine/noc)
-			mask =  /obj/item/clothing/head/roguetown/nochood
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/noc
-		if(/datum/patron/divine/abyssor)
-			mask = /obj/item/clothing/head/roguetown/roguehood/abyssor
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor
-		if(/datum/patron/divine/dendor)
-			mask = /obj/item/clothing/head/roguetown/dendormask
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
-		if(/datum/patron/divine/necra)
-			mask = /obj/item/clothing/head/roguetown/necrahood
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/necra
-		if (/datum/patron/divine/malum)
-			mask = /obj/item/clothing/head/roguetown/roguehood //placeholder
-			cloak = /obj/item/clothing/cloak/templar/malumite
-		if (/datum/patron/divine/eora)
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/eora
-			mask = /obj/item/clothing/head/roguetown/eoramask
-		if (/datum/patron/divine/xylix)
-			cloak = /obj/item/clothing/cloak/templar/xylix
-			mask = /obj/item/clothing/mask/rogue/xylixmask
-		else
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe //placeholder, anyone who doesn't have cool patron drip sprites just gets generic robes
-			mask = /obj/item/clothing/head/roguetown/roguehood
-	switch(H.patron?.type)
-		if(/datum/patron/old_god)
-			neck = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/astrata)
 			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
 		if(/datum/patron/divine/noc)
+			mask =  /obj/item/clothing/head/roguetown/nochood
+			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/noc
 			neck = /obj/item/clothing/neck/roguetown/psicross/noc
 		if(/datum/patron/divine/abyssor)
+			mask = /obj/item/clothing/head/roguetown/roguehood/abyssor
+			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor
 			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
 		if(/datum/patron/divine/dendor)
+			mask = /obj/item/clothing/head/roguetown/dendormask
+			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
 			neck = /obj/item/clothing/neck/roguetown/psicross/dendor
 			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // see: druid.dm
 		if(/datum/patron/divine/necra)
+			mask = /obj/item/clothing/head/roguetown/necrahood
+			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/necra
 			neck = /obj/item/clothing/neck/roguetown/psicross/necra
 			H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
+		if (/datum/patron/divine/malum)
+			mask = /obj/item/clothing/head/roguetown/roguehood //placeholder
+			cloak = /obj/item/clothing/cloak/templar/malumite
+			neck = /obj/item/clothing/neck/roguetown/psicross/malum
+		if (/datum/patron/divine/eora)
+			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/eora
+			mask = /obj/item/clothing/head/roguetown/eoramask
+			neck = /obj/item/clothing/neck/roguetown/psicross/eora
+			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
+		if (/datum/patron/divine/xylix)
+			cloak = /obj/item/clothing/cloak/templar/xylix
+			mask = /obj/item/clothing/mask/rogue/xylixmask
+			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
+			H.cmode_music = 'sound/music/combat_jester.ogg'
 		if(/datum/patron/divine/pestra)
 			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
 		if(/datum/patron/divine/ravox)
 			neck = /obj/item/clothing/neck/roguetown/psicross/ravox
-		if(/datum/patron/divine/malum)
-			neck = /obj/item/clothing/neck/roguetown/psicross/malum
-		if(/datum/patron/divine/eora)
-			neck = /obj/item/clothing/neck/roguetown/psicross/eora
-			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
 		if(/datum/patron/inhumen/zizo)
 			H.cmode_music = 'sound/music/combat_heretic.ogg'
 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
@@ -184,9 +176,6 @@
 		if(/datum/patron/inhumen/baotha)
 			H.cmode_music = 'sound/music/combat_baotha.ogg'
 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/divine/xylix)
-			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
-			H.cmode_music = 'sound/music/combat_jester.ogg'
 
 /datum/advclass/cleric/paladin
 	name = "Paladin"
