@@ -173,6 +173,8 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_shirts_royalty.dmi'
 	name = "royal gown"
 	desc = "An elaborate ball gown, a favoured fashion of queens and elevated nobility in Enigma."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
@@ -232,6 +234,8 @@
 	name = "cold dress"
 	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_shirts_royalty.dmi'
 	desc = "A thick and comfortable dress popular amongst nobility during winter."
 	body_parts_covered = COVERAGE_FULL
 	icon_state = "winterdress"
@@ -280,6 +284,8 @@
 /obj/item/clothing/suit/roguetown/shirt/dress/gown
 	icon = 'icons/roguetown/clothing/shirts_gown.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_gown.dmi'
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/shirts_gown.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_shirts_gown.dmi'
 	name = "spring gown"
 	desc = "A delicate gown that captures the essence of the season of renewal."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
@@ -464,6 +470,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon_state = "dress"
 	item_state = "dress"
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_shirts.dmi'
 	allowed_sex = list(MALE, FEMALE)
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
@@ -834,6 +842,8 @@
 	desc = "A modest yet decorated dress made of the finest silks and softest fabrics. Inlaid with golden thread, this is the height of fashion for the wealthiest of wearers."
 	icon = 'icons/roguetown/clothing/special/steward.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/steward.dmi'
+	hiked_base_icon = 'icons/roguetown/clothing/special/onmob/steward.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_steward.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/steward.dmi'
 	icon_state = "stewarddress"
 	item_state = "stewarddress"

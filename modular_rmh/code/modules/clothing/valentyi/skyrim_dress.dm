@@ -21,6 +21,8 @@
 	body_parts_covered = CHEST|GROIN
 	icon = 'modular_rmh/icons/clothing/valentyi/skyrim_dress.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/valentyi/onmob/skyrim_dress.dmi'
+	hiked_base_icon = 'modular_rmh/icons/clothing/valentyi/onmob/skyrim_dress.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_skyrim_dress.dmi'
 
 	icon_state = "hdress"
 	item_state = "hdress"
