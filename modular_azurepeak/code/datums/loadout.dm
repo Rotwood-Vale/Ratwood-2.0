@@ -744,6 +744,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Fancy Coat"
 	path = /obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat
 
+/datum/loadout_item/tailcoat
+	name = "Tailcoat"
+	path = /obj/item/clothing/armor/gambeson/tailcoat
+
 /datum/loadout_item/leathervest
 	name = "Leather Vest"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/vest
@@ -1933,6 +1937,30 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "New Moon Tunic"
 	path = /obj/item/clothing/suit/roguetown/shirt/tunic/newmoon
 	triumph_cost = 3
+
+/datum/loadout_item/tri_ornate_tailcoat
+	name = "Ornate Tailcoat"
+	path = /obj/item/clothing/suit/roguetown/shirt/coat/steward
+	triumph_cost = 3
+
+/datum/loadout_item/tri_ornate_tailcoat/nobility_check(client/C)
+	var/datum/preferences/P = C.prefs
+	if(!P)
+		return FALSE
+	// Check if user has the Nobility quirk
+	if(P.has_quirk(/datum/quirk/noble))
+		return TRUE
+	// Check if user has high priority for any noble, courtier, or yeoman job
+	for(var/job_title in GLOB.noble_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.courtier_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	for(var/job_title in GLOB.yeoman_positions)
+		if(P.job_preferences[job_title] == JP_HIGH)
+			return TRUE
+	return FALSE
 
 /datum/loadout_item/tri_otavan_gambeson
 	name = "Otavan Gambeson"
