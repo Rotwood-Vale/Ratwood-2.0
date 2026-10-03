@@ -39,13 +39,14 @@
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	visible_message(span_notice ("[user] presses their ring against their mouth."))
+	if(do_after(src, 15 SECONDS, target = src))
 	var/input_text = input(user, "Enter your message:", "Message")
 	if(!input_text)
 		return
 	var/usedcolor = user.voice_color
 	if(user.voicecolor_override)
 		usedcolor = user.voicecolor_override
-	user.whisper(input_text)
+	user.say(input_text)
 	if(length(input_text) > 100) //When these people talk too much, put that shit in slow motion, yeah
 		input_text = "<small>[input_text]</small>"
 	for(var/obj/structure/roguemachine/scomm/S in SSroguemachine.scomm_machines)
@@ -164,13 +165,14 @@
 		playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 	visible_message(span_notice ("[user] presses their ring against their mouth."))
+	if(do_after(src, 15 SECONDS, target = src))
 	var/input_text = input(user, "Enter your message:", "Message")
 	if(!input_text)
 		return
 	var/usedcolor = user.voice_color
 	if(user.voicecolor_override)
 		usedcolor = user.voicecolor_override
-	user.whisper(input_text)
+	user.say(input_text)
 	if(length(input_text) > 100) //When these people talk too much, put that shit in slow motion, yeah
 		input_text = "<small>[input_text]</small>"
 	playsound(loc, 'sound/misc/garrisonscom.ogg', 100, FALSE, -1)
