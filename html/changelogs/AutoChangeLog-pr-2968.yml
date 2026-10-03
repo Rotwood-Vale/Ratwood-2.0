@@ -1,4 +1,0 @@
-author: "chemistrymain3"
-delete-after: True
-changes:
-  - rscadd: "Mage summons now inform you who the summoner is and what mob is being bound."

@@ -1,8 +1,0 @@
-author: "KurobaKetsukane"
-delete-after: True
-changes:
-  - rscadd: "Grenzelhoft, Gronn, Otava and Naledi ships have a rare chance to carry a Ring of Vitality, Courage, Wisdom or Swiftness."
-  - rscadd: "Kazengun ships sell wooden and ebony puzzle-boxes, with a rare chance of a royal puzzle-box."
-  - qol: "Rare ship cargo is marked \"(rare)\" in the Harbor tab's realm list."
-  - balance: "Royal puzzle-boxes can be retried after a failed attempt, but crumble to dust once solved."
-  - code_imp: "Supply packs have a ship_chance var for cargo that only shows up on some ships."

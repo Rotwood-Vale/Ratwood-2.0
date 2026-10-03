@@ -1,4 +1,0 @@
-author: "IronDragoon"
-delete-after: True
-changes:
-  - bugfix: "fixed the 'secrets of the throat' command to not be incorrect in the info it gives"
