@@ -68,11 +68,6 @@
 	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
 	beltl = /obj/item/storage/keyring/churchie
 
-/datum/outfit/job/roguetown/churchling/basic/post_equip(mob/living/carbon/human/H, visualsOnly)
-	. = ..()
-	if (H && H.mind)
-		_delayed_path_choice(H)
-
 /datum/outfit/job/roguetown/churchling/basic/proc/_delayed_path_choice(mob/living/carbon/human/H)
 	if(!H || !H.client || !H.mind)
 		return
