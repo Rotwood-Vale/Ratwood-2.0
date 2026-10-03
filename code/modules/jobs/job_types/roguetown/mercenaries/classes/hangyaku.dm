@@ -10,7 +10,7 @@
 	traits_applied = list(TRAIT_NOBLE) //i hate nobles but it's thematic
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
 	maximum_possible_slots = 3
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_SPD = STAT_DISFAVORED)
 	subclass_skills = list( //impressively limited in terms of what they can do. this is a wall that doesn't do much else.
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
@@ -104,7 +104,7 @@
 	category_tags = list(CTAG_MERCENARY)
 	traits_applied = list(TRAIT_DECEIVING_MEEKNESS, TRAIT_MEDIUMARMOR) //peasant levy turned mercenary. the underdog.
 	cmode_music = 'sound/music/combat_kazengite.ogg'
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list( 
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,

@@ -10,7 +10,7 @@
 	traits_applied = list(TRAIT_HEAVYARMOR)
 	cmode_music = 'sound/music/combat_vagarian.ogg'
 	subclass_languages = list(/datum/language/gronnic)
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_PER = STAT_DISFAVORED, STATKEY_SPD = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,

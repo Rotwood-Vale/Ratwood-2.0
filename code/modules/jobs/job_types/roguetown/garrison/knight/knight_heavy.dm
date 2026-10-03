@@ -6,7 +6,7 @@
 
 	category_tags = list(CTAG_ROYALGUARD)
 	traits_applied = list(TRAIT_HEAVYARMOR)
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = STATS_TANK
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,

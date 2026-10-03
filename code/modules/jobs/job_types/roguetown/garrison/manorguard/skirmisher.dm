@@ -8,7 +8,7 @@
 
 	category_tags = list(CTAG_MENATARMS)
 	//Garrison ranged/speed class. Time to go wild
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_SKIRMISHER
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_MASTER,

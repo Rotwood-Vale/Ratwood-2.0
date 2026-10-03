@@ -10,7 +10,7 @@
 	subclass_languages = list(/datum/language/celestial)
 	cmode_music = 'sound/music/horror.ogg'
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_DECEIVING_MEEKNESS)
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_LOW
 	subclass_skills = list(//Other skills handled by loadout.
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,

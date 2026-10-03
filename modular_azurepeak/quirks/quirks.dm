@@ -315,10 +315,3 @@
 	if(QDELETED(recipient))
 		return
 	ADD_TRAIT(recipient, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
-
-// good idea?? IDK
-/datum/quirk/secondvirtue
-	name = "Second Virtue"
-	desc = "I'm a bit more interesting than other people."
-	custom_text = "Unlocks second virtue slot."
-	point_cost = 3

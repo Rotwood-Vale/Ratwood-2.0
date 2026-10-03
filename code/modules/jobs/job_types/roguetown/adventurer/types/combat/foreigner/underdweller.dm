@@ -17,7 +17,7 @@
 	class_select_category = CLASS_CAT_RACIAL
 	category_tags = list(CTAG_ADVENTURER)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WEBWALK, TRAIT_EXPLOSIVE_SUPPLY, TRAIT_ALCHEMY_EXPERT, TRAIT_LEGENDARY_MINER)
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_LOW
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(

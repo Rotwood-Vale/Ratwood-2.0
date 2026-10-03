@@ -599,7 +599,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/list/loaded_prefs
 	S["stat_source"] >> stat_source
 	S["origin_bonus_stat"] >> origin_bonus_stat
-	if(stat_source != "origin")
+	if(stat_source != "origin" && stat_source != "virtue")
 		stat_source = "race"
 	S["stat_prefs"] >> loaded_prefs
 	stat_prefs = list()

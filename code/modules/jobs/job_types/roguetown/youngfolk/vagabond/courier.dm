@@ -7,7 +7,7 @@
 	outfit = /datum/outfit/job/roguetown/vagabond/courier
 	category_tags = list(CTAG_VAGABOND)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_FRAIL
 	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_CON = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,

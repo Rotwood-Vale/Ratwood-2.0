@@ -99,7 +99,10 @@ GLOBAL_LIST_INIT(stat_pref_costs, list("++" = 1, "+" = 1, "-" = 0, "--" = 0))
 
 /mob/living/carbon/human/proc/apply_role_stats(budget, list/favored_stats)
 	var/list/values = calculate_role_stats(stat_prefs, budget, favored_stats)
+	if(isnull(flat))
+		flat = dna.species.race_bonus
+	var/list/age_bonuses = GLOB.age_stat_bonuses[age]
 	for(var/stat in values)
-		var/final = values[stat] + get_stat(stat) - 10
+		var/bonus = flat[stat] + LAZYACCESS(age_bonuses, stat)
 		var/ceiling = max(values[stat], STAT_BASE_MAX + stat_cap_shift(stat, favored_stats) + STAT_MODIFIER_OVERCAP)
-		change_stat(stat, min(final, ceiling) - get_stat(stat))
+		change_stat(stat, min(values[stat] + bonus, ceiling) - 10 - bonus)

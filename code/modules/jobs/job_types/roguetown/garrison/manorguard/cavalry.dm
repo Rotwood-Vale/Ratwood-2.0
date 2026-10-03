@@ -8,7 +8,7 @@
 	category_tags = list(CTAG_MENATARMS)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_EQUESTRIAN)
 	//Garrison mounted class; charge and charge often.
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_SKIRMISHER
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,

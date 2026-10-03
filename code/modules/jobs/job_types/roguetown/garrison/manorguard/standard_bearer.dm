@@ -10,7 +10,7 @@
 	outfit = /datum/outfit/job/roguetown/manorguard/standard_bearer
 	category_tags = list(CTAG_MENATARMS)
 	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_STANDARD_BEARER)
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_ZEALOT
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,//SWING THAT THING.

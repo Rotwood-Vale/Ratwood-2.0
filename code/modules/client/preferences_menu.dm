@@ -138,6 +138,8 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 
 // ppl can choose between your RACIAL stat bonus or one from your ORIGIN.
 /datum/preferences/proc/get_stat_bonuses()
+	if(stat_source == "virtue")
+		return list()
 	if(stat_source == "origin" && pref_species.origin_stats_allowed && origin)
 		if(!origin.choose_stat)
 			return origin.stat_bonuses
@@ -148,7 +150,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	return pref_species.race_bonus
 
 /datum/preferences/proc/second_virtue_allowed()
-	return has_quirk(/datum/quirk/secondvirtue)
+	return stat_source == "virtue"
 
 // checks for overspending & whatnot
 /datum/preferences/proc/validate_background()
@@ -161,6 +163,8 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		for(var/datum/quirk/Q in quirks.Copy())
 			if(Q.type in pref_species.restricted_quirks)
 				quirks -= Q
+	if(stat_source == "origin" && !pref_species.origin_stats_allowed)
+		stat_source = "race"
 	if(!second_virtue_allowed() || virtuetwo.type == virtue.type)
 		virtuetwo = GLOB.virtues[/datum/virtue/none]
 	var/list/seen_quirks = list()
@@ -256,15 +260,17 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	var/list/final_stats = calculate_role_stats(stat_prefs, budget, favored_stats)
 	html += pref_sub("Stats[preview_label]")
 	html += "<div class='r'><font size='4' color='#e3c06f'><b>Points: [get_points_remaining()]</b></font></div>"
-	if(pref_species.origin_stats_allowed)
-		var/source_name = "Racial"
-		if(stat_source == "origin")
-			source_name = "Origin"
-		var/list/source_items = list(pref_item("Stat Source", bg_link(source_name, "stat_source")))
-		if(stat_source == "origin" && origin?.choose_stat)
-			source_items += pref_item("Bonus", bg_link(capitalize(origin_bonus_stat) || "Choose", "origin_stat"))
-		html += pref_line(source_items)
+	var/source_name = "Racial"
+	if(stat_source == "origin")
+		source_name = "Origin"
+	if(stat_source == "virtue")
+		source_name = "Second Virtue"
+	var/list/source_items = list(pref_item("Stat Source", bg_link(source_name, "stat_source")))
+	if(stat_source == "origin" && origin?.choose_stat)
+		source_items += pref_item("Bonus", bg_link(capitalize(origin_bonus_stat) || "Choose", "origin_stat"))
+	html += pref_line(source_items)
 	var/list/stat_bonuses_list = get_stat_bonuses()
+	var/list/age_bonuses = GLOB.age_stat_bonuses[age]
 	var/list/stat_items = list()
 	for(var/stat in GLOB.budget_stats)
 		var/color = "#d9d9d9"
@@ -274,7 +280,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 			color = "#cf2a2a"
 		var/current_level = stat_prefs[stat] || "-"
 		var/race_value = stat_bonuses_list[stat] || 0
-		var/shown_stat = min(final_stats[stat] + race_value, max(final_stats[stat], STAT_BASE_MAX + stat_cap_shift(stat, favored_stats) + STAT_MODIFIER_OVERCAP))
+		var/shown_stat = min(final_stats[stat] + race_value + LAZYACCESS(age_bonuses, stat), max(final_stats[stat], STAT_BASE_MAX + stat_cap_shift(stat, favored_stats) + STAT_MODIFIER_OVERCAP))
 		var/boost_mark = ""
 		if(race_value > 0)
 			boost_mark = "<font color='#91cf68'>^</font>"
@@ -450,10 +456,12 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 				return
 			stat_prefs = new_prefs
 		if("stat_source")
-			if(stat_source == "origin")
-				stat_source = "race"
-			else if(pref_species.origin_stats_allowed)
-				stat_source = "origin"
+			var/list/sources = list("Racial" = "race", "Second Virtue" = "virtue")
+			if(pref_species.origin_stats_allowed)
+				sources["Origin"] = "origin"
+			var/choice = tgui_input_list(user, "What defines you?", "Stat Source", sources)
+			if(choice)
+				stat_source = sources[choice]
 		if("origin_stat")
 			var/list/choices = list()
 			for(var/stat in GLOB.budget_stats + STATKEY_LCK)

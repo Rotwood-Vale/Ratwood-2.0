@@ -50,7 +50,7 @@
 	outfit = /datum/outfit/job/roguetown/rockhillslave/house_slave
 	category_tags = list(CTAG_SLAVE)
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_LOW
 	favored_stats = list(STATKEY_CON = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,
@@ -81,7 +81,7 @@
 	outfit = /datum/outfit/job/roguetown/rockhillslave/labor_slave
 	category_tags = list(CTAG_SLAVE)
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_LOW
 	favored_stats = list(STATKEY_CON = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT, TRAIT_SMITHING_EXPERT, TRAIT_LEGENDARY_MINER)
 	subclass_skills = list(
@@ -115,7 +115,7 @@
 	Protect your Master's interests, serve them."
 	outfit = /datum/outfit/job/roguetown/rockhillslave/slave_sentry
 	category_tags = list(CTAG_SLAVE)
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_LOW
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_skills = list(

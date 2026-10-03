@@ -32,7 +32,7 @@
 	name = "Seneschal"
 	tutorial = "While still expected to fill in for the duties of the household servantry as needed, you have styled yourself as a figure beyond them."
 	outfit = /datum/outfit/job/roguetown/seneschal/seneschal
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_LOW
 	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
@@ -80,7 +80,7 @@
 	name = "Head Maid"
 	tutorial = "Whether you were promoted from one or just like the frills, you stylize yourself as a head maid. Your duties and talents remain the same, though."
 	outfit = /datum/outfit/job/roguetown/seneschal/headmaid
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_LOW
 	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
@@ -112,7 +112,7 @@
 	name = "Chief Butler"
 	tutorial = "You are the ruling class of butler and your ability to clear your throat and murmur 'I say' is without peer. Your duties and talents as seneschal remain the same, though."
 	outfit = /datum/outfit/job/roguetown/seneschal/chiefbutler
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_LOW
 	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(

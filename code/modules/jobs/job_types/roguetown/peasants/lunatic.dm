@@ -33,7 +33,7 @@
 	tutorial = "The Lunatic, shunned by society and a magnet for misfortune. Your task is simple yet perilous: survive by any means, though your very existence invites danger from every corner. It is said that these lands drive those most familiar with it, the most insane."
 	outfit = /datum/outfit/job/roguetown/lunatic/basic
 	category_tags = list(CTAG_LUNATIC)
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_LOW
 	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/sneaking = SKILL_LEVEL_APPRENTICE,

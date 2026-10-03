@@ -48,7 +48,7 @@
 		/datum/language/aavnic, // All but beast, which is associated with werewolves.
 	)
 	category_tags = list(CTAG_TOWNCRIER)
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_LOW
 	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
