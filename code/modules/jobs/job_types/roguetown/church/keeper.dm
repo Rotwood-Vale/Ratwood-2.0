@@ -87,8 +87,6 @@
 
 	var/mob/living/carbon/human/H = L
 
-	addtimer(CALLBACK(src, PROC_REF(_delayed_path_choice), H), 50)
-
 /datum/job/roguetown/keeper/proc/_delayed_path_choice(mob/living/carbon/human/H)
 	if(!H || !H.client || !H.mind)
 		return
