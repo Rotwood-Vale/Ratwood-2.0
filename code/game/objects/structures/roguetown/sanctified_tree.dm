@@ -87,11 +87,11 @@
 
 	// ---- Ritual state -------------------------------------------------------
 	/// Currently active ritual category string, or null if none.
-	var/active_ritual = null
+	var/datum/druid_ritual/active_ritual = null
 	/// Progress for the active ritual: associative list of "key" = deposited_count.
 	var/list/ritual_progress = list()
 	/// Cat1 berry-only tracking: TRUE while current cat1 ritual has only received berry food.
-	var/cat1_all_berries = TRUE
+	var/harvest_all_berries = TRUE
 	/// Armor held for cat6 transmutation. Stored at the tree's turf until completion.
 	var/obj/item/ritual_armor = null
 
@@ -248,6 +248,7 @@
 // Ritual Framework
 //==============================================================================
 
+/// Returns a list of rituals that can be started
 /obj/structure/flora/roguetree/wise/sanctified/proc/open_ritual_menu(mob/living/user)
 	if(!tree_data)
 		return
@@ -263,217 +264,67 @@
 
 	if(tree_data.active_ritual)
 		// Show progress and only allow cancellation from the amulet menu.
-		show_ritual_requirements(user, tree_data.active_ritual)
-		var/choice = alert(user, "[get_ritual_display_name(tree_data.active_ritual)] is active.\n\nOffer items by clicking the tree while holding them.\n\nCancel this ritual?", "Sanctified Tree", "Keep Ritual", "Cancel Ritual")
+		var/text = "[tree_data.active_ritual.name] is active.\n\nOffer items by clicking the tree while holding them."
+		for(var/line in tree_data.active_ritual.get_plaintext_examine())
+			text += "\n[line]"
+		text += "\n\nCancel this ritual?"
+		var/choice = alert(user, text, "Sanctified Tree", "Keep Ritual", "Cancel Ritual")
 		if(choice != "Cancel Ritual" || QDELETED(src) || QDELETED(user))
 			return
 		cancel_ritual(user)
 		return
 
-	// No active ritual — show the category picker.
-	// Display order and skill gates:
-	//   cat1 (Dendor's Harvest)    — None
-	//   cat8 (Nature's Union)      — Novice
-	//   cat10 (Floral Conjuration) — Novice
-	//   cat2 (Fungal Vigil)        — Apprentice
-	//   cat5 (Living Light)        — Apprentice
-	//   cat12 (Timber's Tithe)     — Apprentice
-	//   cat4 (Treefather's Bulwark)— Journeyman
-	//   cat7 (Soulbind)            — Journeyman
-	//   cat9 (Harvest Bloomstone)  — Expert
-	//   cat3 (Fey Weaving)         — Expert
-	//   cat6 (Nature's Temper)     — Master
-	//   cat11 (Winged Rebirth)   — Legendary
-	var/list/cat_opts = list()
-	var/list/cat_map = list()
-	for(var/cat in list("cat1", "cat8", "cat10", "cat2", "cat5", "cat12", "cat4", "cat7", "cat9", "cat3", "cat6", "cat11"))
-		var/cat_name = get_ritual_display_name(cat)
-		if(is_once_per_tree(cat) && (cat in tree_data.rituals_completed))
-			cat_opts["[cat_name] (completed)"] = null
+	// No active ritual, so let's start one
+	var/list/possible_rituals = list()
+	var/list/ritual_names = list()
+	for(var/datum/druid_ritual/new_ritual as anything in subtypesof(/datum/druid_ritual))
+		new_ritual = new new_ritual
+		if(!new_ritual.can_see_ritual(user))
 			continue
-		cat_opts[cat_name] = cat
-		cat_map[cat_name] = cat
-	var/choice = input(user, "Choose a ritual to perform:", "Sanctified Tree Rituals") as null|anything in cat_opts
-	if(isnull(choice) || QDELETED(src) || QDELETED(user))
+		if(new_ritual.unique_tree_rite && (locate(new_ritual) in tree_data.rituals_completed))
+			new_ritual.name = "[new_ritual.name] (Completed)"
+		possible_rituals += new_ritual.name
+		ritual_names[new_ritual.name] = new_ritual
+
+	var/choice = tgui_input_list(user, "Choose a ritual to perform:", "Sanctified Tree Rituals", possible_rituals)
+	var/datum/druid_ritual/selected_ritual = ritual_names[choice]
+	if(isnull(selected_ritual) || QDELETED(src) || QDELETED(user))
 		return
-	var/selected = cat_map[choice]
-	if(!selected)
+
+	if(locate(selected_ritual) in tree_data.rituals_completed)
 		to_chat(user, span_info("That ritual has already been completed on this tree and cannot be repeated."))
 		return
-	// Druidic Trickery skill gate for each ritual.
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/Hg = user
-		var/druidic_level = Hg.get_skill_level(/datum/skill/magic/druidic)
-		var/required_level = 0
-		var/required_name = ""
-		switch(selected)
-			if("cat8", "cat10")
-				required_level = SKILL_LEVEL_NOVICE
-				required_name = "Novice"
-			if("cat2", "cat5", "cat12")
-				required_level = SKILL_LEVEL_APPRENTICE
-				required_name = "Apprentice"
-			if("cat4", "cat7")
-				required_level = SKILL_LEVEL_JOURNEYMAN
-				required_name = "Journeyman"
-			if("cat9", "cat3")
-				required_level = SKILL_LEVEL_EXPERT
-				required_name = "Expert"
-			if("cat6")
-				required_level = SKILL_LEVEL_MASTER
-				required_name = "Master"
-			if("cat11")
-				required_level = SKILL_LEVEL_LEGENDARY
-				required_name = "Legendary"
-		if(required_level > 0 && druidic_level < required_level)
-			to_chat(user, span_warning("The Treefather will not reveal [get_ritual_display_name(selected)] to one unprepared — [required_name] Druidic Trickery is required."))
-			return
-	// Once-per-person gate for Floral Conjuration: prevent initiating if already have the spell.
-	if(selected == "cat10" && istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/Hcat10 = user
-		if(Hcat10.mind)
-			for(var/obj/effect/proc_holder/spell/self/conjure_floral_seed/S in Hcat10.mind.spell_list)
-				to_chat(user, span_warning("The Treefather's floral gift is already within me — I cannot receive this blessing twice."))
-				return
-	if(!confirm_start_ritual(user, selected))
-		return
-	tree_data.active_ritual = selected
-	var/req = get_required_offerings(selected)
-	tree_data.ritual_progress = list()
-	for(var/key in req)
-		tree_data.ritual_progress[key] = 0
-	if(selected == "cat1")
-		tree_data.cat1_all_berries = TRUE
-	to_chat(user, span_notice("I begin the [get_ritual_display_name(selected)] ritual. Offer items by clicking the tree while holding them. Use the amulet only if I need to cancel."))
-	show_ritual_requirements(user, selected)
 
-/obj/structure/flora/roguetree/wise/sanctified/proc/confirm_start_ritual(mob/living/user, category)
-	var/list/req = get_required_offerings(category)
-	var/list/lines = list()
-	for(var/key in req)
-		lines += "- [req[key]]x [get_offering_desc(key)]"
-	var/text = "Begin [get_ritual_display_name(category)]?\n\nRequired offerings:\n[jointext(lines, "\n")]"
+	if(selected_ritual.granted_spell)
+		if(!user.mind)
+			return
+		if(locate(selected_ritual.granted_spell) in user.mind.spell_list)
+			to_chat(user, span_warning("The Treefather's floral gift is already within me — I cannot receive this blessing twice."))
+			return
+
+	selected_ritual.prepare_tracker()
+	if(!confirm_start_ritual(user, selected_ritual))
+		return
+	tree_data.active_ritual = selected_ritual
+	to_chat(user, span_notice("I begin the ritual. Offer items by clicking the tree while holding them. Use the amulet only if I need to cancel."))
+
+	// XANTODO: Maybe handle this on the ritual itself
+	if(selected_ritual == /datum/druid_ritual/dendors_harvest)
+		tree_data.harvest_all_berries = TRUE
+
+/obj/structure/flora/roguetree/wise/sanctified/proc/confirm_start_ritual(mob/living/user, datum/druid_ritual/selected_ritual)
+	var/text = "Begin [selected_ritual.name]?\n\nRequired offerings:"
+	for(var/line in selected_ritual.get_plaintext_examine())
+		text += "\n[line]"
 	var/choice = alert(user, text, "Sanctified Tree Bounty", "Begin", "Cancel")
 	return (choice == "Begin")
 
-/obj/structure/flora/roguetree/wise/sanctified/proc/get_ritual_display_name(category)
-	switch(category)
-		if("cat1") return "Dendor's Harvest"
-		if("cat2") return "Fungal Vigil"
-		if("cat3") return "Fey Weaving"
-		if("cat12") return "Timber's Tithe"
-		if("cat4") return "Treefather's Bulwark"
-		if("cat5") return "Living Light"
-		if("cat6") return "Nature's Temper"
-		if("cat7") return "Soulbind"
-		if("cat8") return "Nature's Union"
-		if("cat9") return "Harvest Bloomstone"
-		if("cat10") return "Floral Conjuration"
-		if("cat11") return "Winged Rebirth"
-	return "Unknown Ritual"
-
-/// Returns XP awarded to the player upon completing a ritual.
-/obj/structure/flora/roguetree/wise/sanctified/proc/get_ritual_xp(category)
-	switch(category)
-		if("cat1")  return 5
-		if("cat2")  return 25
-		if("cat3")  return 50
-		if("cat4")  return 100
-		if("cat5")  return 100
-		if("cat6")  return 200
-		if("cat7")  return 100
-		if("cat8")  return 25
-		if("cat9")  return 50
-		if("cat10") return 100
-		if("cat12") return 10
-	return 0
-
-/obj/structure/flora/roguetree/wise/sanctified/proc/is_once_per_tree(category)
-	return (category in list("cat4", "cat5", "cat6", "cat7", "cat9", "cat10", "cat11")) // cat12 is repeatable
-
-/// Returns associative list of offering key -> required count for the given category.
-/obj/structure/flora/roguetree/wise/sanctified/proc/get_required_offerings(category)
-	switch(category)
-		if("cat1") return list("food_item" = 6)
-		if("cat2") return list("manabloom_or_manacrystal" = 10)
-		if("cat3") return list("runed_or_leyline" = 1, "blessed_powder_alt" = 4)
-		if("cat4") return list("boulder_cat4" = 5, "any_stone_cat4" = 15)
-		if("cat5") return list("vital_item" = 10, "ash" = 10, "compost" = 10)
-		if("cat6") return list("zizobane" = 5, "runed_artifact" = 2, "druid_armor" = 1, "volf_head" = 1, "spider_head" = 1, "tree_seed" = 1, "blessed_seed_powder" = 1, "holy_water_container" = 1)
-		if("cat7") return list("leechtick" = 1, "bones" = 4)
-		if("cat8") return list("wedding_flower" = 1)
-		if("cat9") return list("boulder_only" = 1, "magic_stone_or_essence" = 1, "blessed_powder" = 5)
-		if("cat10") return list(
-			"herb_atropa"     = 1,
-			"herb_matricaria"  = 1,
-			"herb_symphitum"   = 1,
-			"herb_taraxacum"   = 1,
-			"herb_euphrasia"   = 1,
-			"herb_paris"       = 1,
-			"herb_calendula"   = 1,
-			"herb_mentha"      = 1,
-			"herb_urtica"      = 1,
-			"herb_salvia"      = 1,
-			"herb_hypericum"   = 1,
-			"herb_benedictus"  = 1,
-			"herb_valeriana"   = 1,
-			"herb_artemisia"   = 1,
-			"herb_rosa"        = 1,
-			"manabloom_single" = 1
-		)
-		if("cat11") return list("feather" = 10, "bonedust" = 10, "essence_of_wilderness" = 1, "bloomstone" = 1)
-		if("cat12") return list("tree_sapling_any" = 5)
-	return list()
-
-/obj/structure/flora/roguetree/wise/sanctified/proc/get_offering_desc(key)
-	switch(key)
-		if("food_item") return "Any fresh or rotten produce"
-		if("manabloom_or_manacrystal") return "Mana bloom OR crystalized mana"
-		if("runed_or_leyline") return "Runed artifact OR leyline shard"
-		if("blessed_powder_alt") return "Blessed seed powder"
-		if("enchanted_stone_or_boulder") return "Enchanted stone (magic power 5+) OR boulder"
-		if("boulder_cat4") return "A large boulder"
-		if("any_stone_cat4") return "A stone of any type"
-		if("vital_item") return "Sinew, viscera, bonemeal, or skull"
-		if("ash") return "Ash"
-		if("compost") return "Compost"
-		if("zizobane") return "Zizo's bane mushroom"
-		if("runed_artifact") return "Runed artifact"
-		if("druid_armor") return "Druid armor"
-		if("volf_head") return "Volf head"
-		if("spider_head") return "Spider head"
-		if("tree_seed") return "Tree seed"
-		if("tree_sapling_any") return "Any tree sapling"
-		if("blessed_seed_powder") return "Blessed seed powder"
-		if("holy_water_container") return "Stone mortar or bucket with 30+ drams of blessed water"
-		if("lux") return "Lux"
-		if("leechtick") return "Bloated leech tick"
-		if("bones") return "Bones"
-		if("wedding_flower") return "Eoran peace flower"
-		if("boulder_only") return "A large boulder"
-		if("magic_stone_or_essence") return "An enchanted stone (magic power 5+), essence of wilderness, or essence of lumber"
-		if("blessed_powder") return "Blessed seed powder"
-		if("herb_atropa")    return "Atropa herb"
-		if("herb_matricaria") return "Matricaria herb"
-		if("herb_symphitum") return "Symphitum herb"
-		if("herb_taraxacum") return "Taraxacum herb"
-		if("herb_euphrasia") return "Euphrasia herb"
-		if("herb_paris")     return "Paris herb"
-		if("herb_calendula") return "Calendula herb"
-		if("herb_mentha")    return "Mentha herb"
-		if("herb_urtica")    return "Urtica herb"
-		if("herb_salvia")    return "Salvia herb"
-		if("herb_hypericum") return "Hypericum herb"
-		if("herb_benedictus") return "Benedictus herb"
-		if("herb_valeriana") return "Valeriana herb"
-		if("herb_artemisia") return "Artemisia herb"
-		if("herb_rosa")      return "Rosa herb"
-		if("manabloom_single") return "A mana bloom flower"
-		if("feather") return "Feather"
-		if("bonedust") return "Bone meal"
-		if("essence_of_wilderness") return "Essence of wilderness"
-		if("bloomstone") return "Harvest bloomstone"
-	return key
+	/*
+	var/req = get_required_offerings(selected_ritual)
+	tree_data.ritual_progress = list()
+	for(var/key in req)
+		tree_data.ritual_progress[key] = 0
+	show_ritual_requirements(user, selected_ritual)
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/show_ritual_requirements(mob/living/user, category)
 	var/req = get_required_offerings(category)
@@ -500,6 +351,7 @@
 			to_chat(user, span_notice("  [get_offering_desc(key)]: [current]/[needed] (fulfilled)"))
 		else
 			to_chat(user, span_warning("  [get_offering_desc(key)]: [current]/[needed]"))
+	*/
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/offer_item(mob/living/user)
 	if(!tree_data?.active_ritual)
@@ -508,6 +360,12 @@
 	if(!held)
 		to_chat(user, span_warning("I am not holding anything to offer."))
 		return FALSE
+	if(tree_data.active_ritual.accept_offering(held, user))
+		return TRUE
+	return FALSE
+
+
+	/* XANTODO: Handling per-ritual
 	var/req = get_required_offerings(tree_data.active_ritual)
 	// For cat4, skip accepting items for the path that is already completed.
 	var/skip_boulder_cat4 = (tree_data.active_ritual == "cat4") && ((tree_data.ritual_progress["any_stone_cat4"] || 0) >= req["any_stone_cat4"])
@@ -534,7 +392,7 @@
 					continue
 				if(tree_data.active_ritual == "cat1" && key == "food_item")
 					if(!istype(sack_item, /obj/item/reagent_containers/food/snacks/grown/berries))
-						tree_data.cat1_all_berries = FALSE
+						tree_data.harvest_all_berries = FALSE
 				consume_offering(key, sack_item, user)
 				current++
 				tree_data.ritual_progress[key] = current
@@ -560,7 +418,7 @@
 		// Track whether cat1 offering is a berry.
 		if(tree_data.active_ritual == "cat1" && key == "food_item")
 			if(!istype(held, /obj/item/reagent_containers/food/snacks/grown/berries))
-				tree_data.cat1_all_berries = FALSE
+				tree_data.harvest_all_berries = FALSE
 		consume_offering(key, held, user)
 		tree_data.ritual_progress[key] = current + 1
 		playsound(get_turf(src), 'sound/magic/churn.ogg', 40, FALSE)
@@ -568,140 +426,6 @@
 			complete_ritual(user)
 		return TRUE
 	to_chat(user, span_warning("The tree does not need [held.name] right now."))
-	return FALSE
-
-/obj/structure/flora/roguetree/wise/sanctified/proc/is_harvest_offering(obj/item/held)
-	if(!istype(held, /obj/item/reagent_containers/food/snacks))
-		return FALSE
-	if(istype(held, /obj/item/reagent_containers/food/snacks/grown/berries))
-		return TRUE
-	var/obj/item/reagent_containers/food/snacks/food = held
-	if(food.foodtype & (FRUIT | VEGETABLES | GRAIN))
-		return TRUE
-	var/static/list/extra_harvest_types = list(
-		/obj/item/reagent_containers/food/snacks/grown/garlick/rogue,
-		/obj/item/reagent_containers/food/snacks/grown/onion/rogue,
-		/obj/item/reagent_containers/food/snacks/grown/vegetable/turnip,
-		/obj/item/reagent_containers/food/snacks/grown/cabbage/rogue,
-		/obj/item/reagent_containers/food/snacks/grown/potato/rogue,
-		/obj/item/reagent_containers/food/snacks/grown/rice,
-		/obj/item/reagent_containers/food/snacks/grown/cucumber,
-		/obj/item/reagent_containers/food/snacks/grown/eggplant,
-		/obj/item/reagent_containers/food/snacks/grown/carrot,
-		/obj/item/reagent_containers/food/snacks/grown/wheat,
-		/obj/item/reagent_containers/food/snacks/grown/oat,
-		/obj/item/reagent_containers/food/snacks/grown/sugarcane,
-		/obj/item/reagent_containers/food/snacks/grown/coffeebeans,
-		/obj/item/reagent_containers/food/snacks/grown/rogue/poppy,
-		/obj/item/reagent_containers/food/snacks/grown/nut,
-		/obj/item/reagent_containers/food/snacks/grown/tea,
-		/obj/item/reagent_containers/food/snacks/grown/apple,
-		/obj/item/reagent_containers/food/snacks/grown/fruit/pear,
-		/obj/item/reagent_containers/food/snacks/grown/fruit/lemon,
-		/obj/item/reagent_containers/food/snacks/grown/fruit/lime,
-		/obj/item/reagent_containers/food/snacks/grown/fruit/tangerine,
-		/obj/item/reagent_containers/food/snacks/grown/fruit/plum,
-		/obj/item/reagent_containers/food/snacks/grown/fruit/strawberry,
-		/obj/item/reagent_containers/food/snacks/grown/fruit/blackberry,
-		/obj/item/reagent_containers/food/snacks/grown/fruit/raspberry,
-		/obj/item/reagent_containers/food/snacks/grown/fruit/tomato,
-		/obj/item/natural/shellplant/pumpkin,
-		/obj/item/reagent_containers/food/snacks/grown/berries/rogue
-	)
-	for(var/path in extra_harvest_types)
-		if(istype(held, path))
-			return TRUE
-	return FALSE
-
-/obj/structure/flora/roguetree/wise/sanctified/proc/check_offering_match(key, obj/item/held)
-	if(!held)
-		return FALSE
-	switch(key)
-		if("food_item")
-			return is_harvest_offering(held)
-		if("manabloom_or_manacrystal")
-			return istype(held, /obj/item/reagent_containers/food/snacks/grown/manabloom) || istype(held, /obj/item/magic/manacrystal)
-		if("runed_or_leyline")
-			return istype(held, /obj/item/magic/artifact) || istype(held, /obj/item/magic/leyline)
-		if("blessed_powder_alt")
-			return held.type == /obj/item/alch/blessedseedpowder
-		if("enchanted_stone_or_boulder")
-			if(istype(held, /obj/item/natural/stone))
-				var/obj/item/natural/stone/stone = held
-				return stone.magic_power >= 5
-			return istype(held, /obj/item/natural/rock)
-		if("boulder_cat4")
-			return istype(held, /obj/item/natural/rock)
-		if("any_stone_cat4")
-			return istype(held, /obj/item/natural/stone)
-		if("vital_item")
-			return istype(held, /obj/item/alch/sinew) || istype(held, /obj/item/alch/viscera) || istype(held, /obj/item/alch/bonemeal) || istype(held, /obj/item/skull)
-		if("ash")
-			return istype(held, /obj/item/ash)
-		if("compost")
-			return istype(held, /obj/item/compost)
-		if("zizobane")
-			return istype(held, /obj/item/reagent_containers/food/snacks/zizo_bane)
-		if("runed_artifact")
-			return istype(held, /obj/item/magic/artifact)
-		if("druid_armor")
-			return held.type == /obj/item/clothing/suit/roguetown/armor/leather/druid
-		if("volf_head")
-			return istype(held, /obj/item/natural/head/volf)
-		if("spider_head")
-			return istype(held, /obj/item/natural/head/honeyspider) || istype(held, /obj/item/natural/head/mirespider)
-		if("tree_seed")
-			return istype(held, /obj/item/seeds/treesap)
-		if("tree_sapling_any")
-			return istype(held, /obj/item/seeds/treesap) || istype(held, /obj/structure/tree_sapling)
-		if("blessed_seed_powder")
-			return istype(held, /obj/item/alch/blessedseedpowder)
-		if("holy_water_container")
-			if(!(istype(held, /obj/item/reagent_containers/glass/mortar) || istype(held, /obj/item/reagent_containers/glass/bucket)))
-				return FALSE
-			if(!held.reagents)
-				return FALSE
-			return held.reagents.get_reagent_amount(/datum/reagent/water/blessed) >= 30
-		if("lux")
-			return istype(held, /obj/item/reagent_containers/lux)
-		if("leechtick")
-			return istype(held, /obj/item/leechtick_bloated)
-		if("bones")
-			return istype(held, /obj/item/natural/bone) || istype(held, /obj/item/alch/bone)
-		if("wedding_flower")
-			return istype(held, /obj/item/clothing/head/peaceflower)
-		if("boulder_only")
-			return istype(held, /obj/item/natural/rock)
-		if("magic_stone_or_essence")
-			if(istype(held, /obj/item/natural/cured/essence) || istype(held, /obj/item/grown/log/tree/small/essence))
-				return TRUE
-			if(!istype(held, /obj/item/natural/stone))
-				return FALSE
-			var/obj/item/natural/stone/stone = held
-			return stone.magic_power >= 5
-		if("blessed_powder")
-			// Exact type check — bloomstone is excluded intentionally.
-			return held.type == /obj/item/alch/blessedseedpowder
-		if("herb_atropa")    return held.type == /obj/item/alch/atropa
-		if("herb_matricaria") return held.type == /obj/item/alch/matricaria
-		if("herb_symphitum") return held.type == /obj/item/alch/symphitum
-		if("herb_taraxacum") return held.type == /obj/item/alch/taraxacum
-		if("herb_euphrasia") return held.type == /obj/item/alch/euphrasia
-		if("herb_paris")     return held.type == /obj/item/alch/paris
-		if("herb_calendula") return held.type == /obj/item/alch/calendula
-		if("herb_mentha")    return held.type == /obj/item/alch/mentha
-		if("herb_urtica")    return held.type == /obj/item/alch/urtica
-		if("herb_salvia")    return held.type == /obj/item/alch/salvia
-		if("herb_hypericum") return held.type == /obj/item/alch/hypericum
-		if("herb_benedictus") return held.type == /obj/item/alch/benedictus
-		if("herb_valeriana") return held.type == /obj/item/alch/valeriana
-		if("herb_artemisia") return held.type == /obj/item/alch/artemisia
-		if("herb_rosa")      return held.type == /obj/item/alch/rosa
-		if("manabloom_single") return istype(held, /obj/item/reagent_containers/food/snacks/grown/manabloom)
-		if("feather") return istype(held, /obj/item/natural/feather)
-		if("bonedust") return istype(held, /obj/item/alch/bonemeal)
-		if("essence_of_wilderness") return istype(held, /obj/item/natural/cured/essence)
-		if("bloomstone") return istype(held, /obj/item/alch/bloomstone)
 	return FALSE
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/consume_offering(key, obj/item/held, mob/living/user)
@@ -761,18 +485,373 @@
 		if("cat10") reward_cat10(user)
 		if("cat11") reward_cat11(user)
 		if("cat12") reward_cat12(user)
+	*/
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/cancel_ritual(mob/living/user)
 	if(!tree_data?.active_ritual)
 		return
-	var/cat_name = get_ritual_display_name(tree_data.active_ritual)
 	if(tree_data.ritual_armor && !QDELETED(tree_data.ritual_armor))
 		tree_data.ritual_armor.forceMove(get_turf(src))
 		to_chat(user, span_notice("The offered armor returns to my feet."))
 		tree_data.ritual_armor = null
 	tree_data.active_ritual = null
 	tree_data.ritual_progress = list()
-	to_chat(user, span_warning("I cancel the [cat_name] ritual. All progress is lost."))
+	to_chat(user, span_warning("I cancel the [tree_data.active_ritual.name] ritual. All progress is lost."))
+
+
+/datum/druid_ritual
+	abstract_type = /datum/druid_ritual
+	/// Name of the ritual, how it shows up in the UI
+	var/name = "Abstract Ritual"
+	/// Tier of the ritual, you need equal or greater skill to be elligible to start/complete the ritual
+	var/druid_ritual_tier = SKILL_LEVEL_NONE
+	/// How much XP the ritual gives upon completion
+	var/experience_payout = 0
+	/// TRUE if the ritual is once-per-tree
+	var/unique_tree_rite = FALSE // Repeatable rituals by default
+	/// If the rite isn't repeatable, mark as completed
+	var/rite_completed = FALSE
+
+	/// Spell this ritual grants on completion
+	var/granted_spell
+
+	/// Assoc list of [typepaths we need] to [amount needed].
+	/// If one of the items in the list is a list, it's treated as 'any of these items will work'
+	var/list/specific_offerings
+
+	//---- If specific_offerings isn't set, we have to handle things on a more specific basis
+	/// List of types that this ritual can accept
+	var/list/elligible_offerings
+	/// Amount of offerings needed
+	var/required_amount
+	/// What this ritual will ask for when starting the ritual
+	var/offering_description
+
+	/// List that keeps track of how many offerings we've already given to the tree
+	var/list/offering_tracker
+
+/// Checks what rituals the user is able to see, used to build the list to display to the user
+/datum/druid_ritual/proc/can_see_ritual(mob/druid)
+	var/druidic_level = druid.get_skill_level(/datum/skill/magic/druidic)
+	if(druidic_level >= druid_ritual_tier)
+		return TRUE
+	return FALSE
+
+/// Checks if the user is elligible to even start the ritual
+/datum/druid_ritual/proc/can_start_ritual(mob/druid)
+	if(unique_tree_rite && rite_completed)
+		return FALSE
+	var/druidic_level = druid.get_skill_level(/datum/skill/magic/druidic)
+	if(druidic_level >= druid_ritual_tier)
+		return TRUE
+	return FALSE
+
+/// Copies our list of requirements once the ritual actually begins
+/datum/druid_ritual/proc/prepare_tracker()
+	offering_tracker = list()
+	if(!isnull(specific_offerings))
+		offering_tracker = specific_offerings.Copy()
+		return
+	if(!isnull(elligible_offerings))
+		offering_tracker = 0
+
+/// Checks if the item offered to the tree meets our criteria. Returns TRUE if the item is accepted and consumed
+/datum/druid_ritual/proc/accept_offering(obj/item/offering, mob/living/user)
+	if(!isnull(specific_offerings))
+		for(var/key in offering_tracker)
+			if(islist(key)) // If it's a list, check if it matches something in the list
+				if(!is_type_in_list(offering, key))
+					continue
+				else if(offering_tracker[key] <= 0) // Found in the list, check if it's needed
+					to_chat(user, span_warning("The tree does not need [offering.name] right now."))
+					return FALSE
+			else if(istype(offering, key)) // Key isn't a list, check if the type matches directly
+				if(offering_tracker[key] <= 0)
+					to_chat(user, span_warning("The tree does not need [offering.name] right now."))
+					return FALSE
+			else
+				continue // Not a key list and doesn't match a type
+			// Ok, we found the item in our list, now we can track it and delete the item
+			offering_tracker[key]--
+			qdel(offering)
+			return TRUE
+	if(!isnull(elligible_offerings)) // Most of these lists will have custom handling, this just covers the generic case
+		for(var/key in offering_tracker)
+			if(islist(key))
+				if(!is_type_in_list(offering, key))
+					continue
+				else if(offering_tracker[key] <= 0) // Found in the list, check if it's needed
+					to_chat(user, span_warning("The tree does not need [offering.name] right now."))
+					return FALSE
+
+			else if(istype(offering, key))
+				if(offering_tracker[key] <= 0)
+					to_chat(user, span_warning("The tree does not need [offering.name] right now."))
+					return FALSE
+			else
+				continue // No matches
+			// Ok, we found the item in our list, now we can track it and delete the item
+			offering_tracker[key]++
+			qdel(offering)
+			return TRUE
+
+	return FALSE
+
+/// Grants rewards when the ritual is completed
+/datum/druid_ritual/proc/on_complete()
+	return
+
+/// Returns the current ritual progress
+/datum/druid_ritual/proc/get_ritual_examine()
+	var/list/examine_list = list()
+	if(!isnull(specific_offerings))
+		for(var/key in offering_tracker)
+			var/target = specific_offerings[key] // Maximum amount
+			var/current = target - offering_tracker[key] // Copy list means ex: 10 - 10 = 0 contributed
+			var/english_text
+
+			if(islist(key))
+				var/list/key_list = key
+				var/list/key_text_list = list()
+				for(var/atom/possible_type as anything in key_list)
+					key_text_list += "[initial(possible_type.name)]"
+				english_text = english_list(key_text_list, and_text = " or ")
+
+			else
+				var/atom/key_atom = key
+				english_text = initial(key_atom.name)
+
+			if(current >= target)
+				examine_list += span_notice("[english_text]: [current]/[target] (fulfilled)<br>")
+			else
+				examine_list += span_warning("[english_text]: [current]/[target]<br>")
+	return examine_list.Join()
+
+/// Returns the current ritual progress but in plaintext
+/datum/druid_ritual/proc/get_plaintext_examine()
+	var/list/examine_list = list()
+	if(!isnull(specific_offerings))
+		for(var/key in offering_tracker)
+			var/target = specific_offerings[key] // Maximum amount
+			var/current = target - offering_tracker[key] // Copy list means ex: 10 - 10 = 0 contributed
+			var/english_text
+
+			if(islist(key))
+				var/list/key_list = key
+				var/list/key_text_list = list()
+				for(var/atom/possible_type as anything in key_list)
+					key_text_list += "[initial(possible_type.name)]"
+				english_text = english_list(key_text_list, and_text = " or ")
+
+			else
+				var/atom/key_atom = key
+				english_text = initial(key_atom.name)
+
+			if(current >= target)
+				examine_list += "[english_text]: [current]/[target] (fulfilled)"
+			else
+				examine_list += "[english_text]: [current]/[target]"
+	return examine_list
+
+/datum/druid_ritual/dendors_harvest
+	name = "Dendor's Harvest"
+	experience_payout = 5
+	druid_ritual_tier = SKILL_LEVEL_NONE // Starting point
+	required_amount = 6
+	offering_description = "any fresh or rotten produce"
+	var/static/list/produce_subtypes = subtypesof(/obj/item/reagent_containers/food/snacks/grown)
+
+/datum/druid_ritual/dendors_harvest/New()
+	. = ..()
+	elligible_offerings = produce_subtypes.Copy()
+	elligible_offerings |= /obj/item/natural/shellplant/pumpkin
+
+/datum/druid_ritual/dendors_harvest/prepare_tracker()
+	offering_tracker = list("food_item" = required_amount)
+
+/datum/druid_ritual/dendors_harvest/accept_offering(obj/item/offering, mob/living/user)
+	if(!is_type_in_list(offering, elligible_offerings))
+		return FALSE
+	offering_tracker["food_item"]--
+	qdel(offering)
+	if(offering_tracker["food_item"] <= 0)
+		complete_ritual()
+	return TRUE
+
+/datum/druid_ritual/dendors_harvest/get_ritual_examine()
+	return span_warning("Grown Produce: [(required_amount - offering_tracker["food_item"])]/[required_amount]<br>")
+
+/datum/druid_ritual/dendors_harvest/get_plaintext_examine()
+	var/list/examine_list = list()
+	examine_list += "Grown Produce: [(required_amount - offering_tracker["food_item"])]/[required_amount]"
+	return examine_list
+
+/datum/druid_ritual/natures_union
+	name = "Nature's Union"
+	experience_payout = 25
+	druid_ritual_tier = SKILL_LEVEL_NOVICE
+	specific_offerings = list(/obj/item/clothing/head/peaceflower = 1)
+	offering_description = "Eoran peace flower"
+
+/datum/druid_ritual/floral_conjuration
+	name = "Floral Conjuration"
+	unique_tree_rite = TRUE // One spell per tree
+	experience_payout = 100
+	druid_ritual_tier = SKILL_LEVEL_NOVICE
+	specific_offerings = list(
+		/obj/item/alch/atropa = 1,
+		/obj/item/alch/matricaria = 1,
+		/obj/item/alch/symphitum = 1,
+		/obj/item/alch/taraxacum = 1,
+		/obj/item/alch/euphrasia = 1,
+		/obj/item/alch/paris = 1,
+		/obj/item/alch/calendula = 1,
+		/obj/item/alch/mentha = 1,
+		/obj/item/alch/urtica = 1,
+		/obj/item/alch/salvia = 1,
+		/obj/item/alch/hypericum = 1,
+		/obj/item/alch/benedictus = 1,
+		/obj/item/alch/valeriana = 1,
+		/obj/item/alch/artemisia = 1,
+		/obj/item/alch/rosa = 1,
+		/obj/item/reagent_containers/food/snacks/grown/manabloom = 1,
+	)
+	offering_description = "One of every herb"
+	granted_spell = /obj/effect/proc_holder/spell/self/conjure_floral_seed
+
+/datum/druid_ritual/fungal_vigil
+	name = "Fungal Vigil"
+	experience_payout = 25
+	druid_ritual_tier = SKILL_LEVEL_APPRENTICE
+	elligible_offerings = list(
+		list(/obj/item/reagent_containers/food/snacks/grown/manabloom, /obj/item/magic/manacrystal)
+	)
+	required_amount = 10
+	offering_description = "Mana bloom OR Crystalized Mana"
+
+/datum/druid_ritual/living_light
+	name = "Living Light"
+	unique_tree_rite = TRUE // Provides an AOE heal aura
+	experience_payout = 100
+	druid_ritual_tier = SKILL_LEVEL_APPRENTICE
+	specific_offerings = list(
+		list(/obj/item/alch/sinew, /obj/item/alch/viscera, /obj/item/alch/bonemeal, /obj/item/skull) = 10,
+		/obj/item/ash = 10,
+		/obj/item/compost = 10,
+	)
+
+/datum/druid_ritual/timbers_tithe
+	name = "Timber's Tithe"
+	experience_payout = 10
+	druid_ritual_tier = SKILL_LEVEL_APPRENTICE
+	elligible_offerings = list(
+		/obj/item/seeds/treesap,
+		/obj/structure/tree_sapling,
+	)
+	required_amount = 5
+	offering_description = "Any tree sapling"
+
+/datum/druid_ritual/treefathers_bulwark
+	name = "Treefather's Bulwark"
+	unique_tree_rite = TRUE // Increases integrity
+	experience_payout = 100
+	druid_ritual_tier = SKILL_LEVEL_JOURNEYMAN
+	elligible_offerings = list(
+		/obj/item/natural/rock,
+		/obj/item/natural/stone,
+	) // Special handling
+	offering_description = "Boulders or small stones" // 5 Boulders or 15 Stones
+
+/datum/druid_ritual/treefathers_bulwark
+
+/datum/druid_ritual/soulbind
+	name = "Soulbind"
+	unique_tree_rite = TRUE // You can only soulbind to 1 tree. Ever
+	experience_payout = 100
+	druid_ritual_tier = SKILL_LEVEL_JOURNEYMAN
+	// XANTODO: Remove item requirement, make it only the ritual
+
+/datum/druid_ritual/harvest_bloomstone
+	name = "Harvest Bloomstone"
+	unique_tree_rite = TRUE // One stone per tree
+	experience_payout = 50
+	druid_ritual_tier = SKILL_LEVEL_EXPERT
+	specific_offerings = list(
+		/obj/item/natural/rock = 1,
+		list(/obj/item/natural/cured/essence, /obj/item/grown/log/tree/small/essence, /obj/item/natural/stone) = 1, //XANTODO Custom handling on the stone
+		/obj/item/alch/blessedseedpowder = 1,
+	)
+//		if("cat9") return list("boulder_only" = 1, "magic_stone_or_essence" = 1, "blessed_powder" = 5)
+//		if("boulder_only") return "A large boulder"
+//		if("magic_stone_or_essence") return "An enchanted stone (magic power 5+), essence of wilderness, or essence of lumber"
+//		if("blessed_powder") return "Blessed seed powder"
+
+/datum/druid_ritual/fey_weaving
+	name = "Fey Weaving"
+	experience_payout = 50
+	druid_ritual_tier = SKILL_LEVEL_EXPERT
+	specific_offerings = list(
+		list(/obj/item/magic/artifact, /obj/item/magic/leyline) = 1,
+		/obj/item/alch/blessedseedpowder = 1, // Custom handling, has to be exact type here
+	)
+//		if("cat3") return list("runed_or_leyline" = 1, "blessed_powder_alt" = 4)
+//		if("runed_or_leyline") return "Runed artifact OR leyline shard"
+//		if("blessed_powder_alt") return "Blessed seed powder"
+//		if("runed_or_leyline")
+//			return istype(held, ) || istype(held, )
+//		if("blessed_powder_alt")
+//			return held.type == 
+
+/datum/druid_ritual/natures_temper
+	name = "Nature's Temper"
+	unique_tree_rite = TRUE // Gives an armor set, can't mass print these
+	experience_payout = 200
+	druid_ritual_tier = SKILL_LEVEL_MASTER
+	specific_offerings = list(
+		/obj/item/reagent_containers/food/snacks/zizo_bane = 5,
+		/obj/item/magic/artifact = 2,
+		/obj/item/clothing/suit/roguetown/armor/leather/druid = 1,
+		/obj/item/natural/head/volf = 1,
+		list(/obj/item/natural/head/honeyspider, /obj/item/natural/head/mirespider) = 1,
+		/obj/item/seeds/treesap = 1,
+		/obj/item/alch/blessedseedpowder = 1,
+	)
+//		if("holy_water_container")
+//			if(!(istype(held, /obj/item/reagent_containers/glass/mortar) || istype(held, /obj/item/reagent_containers/glass/bucket)))
+//				return FALSE
+//			if(!held.reagents)
+//				return FALSE
+//			return held.reagents.get_reagent_amount(/datum/reagent/water/blessed) >= 30
+//
+//		if("cat6") return list("zizobane" = 5, "runed_artifact" = 2, "druid_armor" = 1, "volf_head" = 1, "spider_head" = 1, "tree_seed" = 1, "blessed_seed_powder" = 1, "holy_water_container" = 1)
+//
+//		if("enchanted_stone_or_boulder") return "Enchanted stone (magic power 5+) OR boulder"
+//		if("enchanted_stone_or_boulder")
+//			if(istype(held, /obj/item/natural/stone))
+//				var/obj/item/natural/stone/stone = held
+//				return stone.magic_power >= 5
+//			return istype(held, /obj/item/natural/rock)
+
+/datum/druid_ritual/winged_rebirth
+	name = "Winged Rebirth"
+	unique_tree_rite = TRUE // One unlocked form per tree
+	experience_payout = 0 // Need legendary so we don't even bother
+	druid_ritual_tier = SKILL_LEVEL_LEGENDARY
+	specific_offerings = list(
+		/obj/item/natural/feather = 10,
+		/obj/item/alch/bonemeal = 10,
+		/obj/item/natural/cured/essence = 1,
+		/obj/item/alch/bloomstone = 1,
+	)
+//		if("cat11") return list("feather" = 10, "bonedust" = 10, "essence_of_wilderness" = 1, "bloomstone" = 1)
+//		if("feather") return "Feather"
+//		if("bonedust") return "Bone meal"
+//		if("essence_of_wilderness") return "Essence of wilderness"
+//		if("bloomstone") return "Harvest bloomstone"
+
+
+
+
 
 //==============================================================================
 // Ritual Rewards
@@ -784,7 +863,7 @@
 /// Reward (berry special case, all 5 berries): 1 wild bush seed + 50% chance flower seed.
 /obj/structure/flora/roguetree/wise/sanctified/proc/reward_cat1(mob/living/user)
 	var/turf/T = get_turf(user)
-	if(tree_data.cat1_all_berries)
+	if(tree_data.harvest_all_berries)
 		// Berry special case: all 5 were berries → wild thorny berry hedge seed + possible flower
 		new /obj/item/seeds/bush(T)
 		if(prob(50))
@@ -1221,17 +1300,20 @@
 	var/mob/living/carbon/human/thebride = null
 	for(var/bite_name in A.bitten_names)
 		var/found = FALSE
-		for(var/mob/M in viewers(src, 7))
-			if(!ishuman(M)) continue
-			var/mob/living/carbon/human/C = M
-			if(C.stat == DEAD) continue
-			if(!C.client) continue
-			if(C.marriedto) continue
-			if(C.real_name == bite_name)
+		for(var/mob/living/carbon/human/viewer in viewers(src, 7))
+			if(!ishuman(viewer))
+				continue
+			if(viewer.stat == DEAD)
+				continue
+			if(!viewer.client)
+				continue
+			if(viewer.marriedto)
+				continue
+			if(viewer.real_name == bite_name)
 				if(!thegroom)
-					thegroom = C
+					thegroom = viewer
 				else if(!thebride)
-					thebride = C
+					thebride = viewer
 				found = TRUE
 				break
 		if(found && thegroom && thebride)
@@ -1307,15 +1389,8 @@
 		. += span_notice("Alternatively, touch-intent with an empty hand while wearing the amulet opens the ritual menu.")
 		. += span_notice("To offer while a bounty is active, click the tree with the required item in-hand.")
 	if(show_ritual_hints && tree_data?.active_ritual)
-		. += span_notice("Active bounty: [get_ritual_display_name(tree_data.active_ritual)]")
-		var/list/req = get_required_offerings(tree_data.active_ritual)
-		for(var/key in req)
-			var/current = tree_data.ritual_progress[key] || 0
-			var/needed = req[key]
-			if(current >= needed)
-				. += span_notice("  [get_offering_desc(key)]: [current]/[needed] (fulfilled)")
-			else
-				. += span_warning("  [get_offering_desc(key)]: [current]/[needed]")
+		. += span_notice("Active bounty: [tree_data.active_ritual.name]")
+		. += span_notice("[tree_data.active_ritual.get_ritual_examine()]")
 	if(tree_data?.has_slow_aura)
 		. += span_info("A guardian ward repels those who would defile this grove.")
 	if(tree_data?.has_heal_aura)
