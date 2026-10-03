@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - balance: "Magician's Brick spell power scaling is now curved; int deviation both above and below 10 buffs the bricks' force. (i.e. 1 int & 19 int both = +9 brick)"
