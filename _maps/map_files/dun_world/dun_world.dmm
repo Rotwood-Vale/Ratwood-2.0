@@ -101064,6 +101064,8 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
+/obj/item/rogueweapon/greatsword/iron,
+/obj/item/rogueweapon/greatsword/iron,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell/warden)
 "srq" = (
