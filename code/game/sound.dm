@@ -598,8 +598,12 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
  * For a Master or Sound Effects change. Both price by those sliders on each send, but re-send only
  * on their own triggers: a token when either side moves, the weather when its loop replays or its
  * severity is applied. This reaches a listener standing still in between.
+ *
+ * Never blocks its caller: the weather re-price goes through SoundQuery, which waits on the
+ * client, and the menu close that calls this is a signal handler
  */
 /client/proc/resend_effect_sounds()
+	set waitfor = FALSE
 	if(!prefs || !mob)
 		return
 	for(var/datum/sound_token/token as anything in mob.sound_tokens)

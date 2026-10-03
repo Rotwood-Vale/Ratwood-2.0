@@ -337,8 +337,9 @@
 		muffled = (opacity_between(listener_turf, source_turf, range, TRUE) != OCCLUSION_CLEAR) ? SOUND_MUFFLE_WALL : SOUND_MUFFLE_NONE
 
 	set_listener_status(listener_mob, should_be_muted ? SOUND_MUTE : NONE)
+	// Async, since this runs from signal handlers and the callback is the caller's code
 	if(!should_be_muted && was_muted && on_listener_audible)
-		on_listener_audible.Invoke(listener_mob)
+		on_listener_audible.InvokeAsync(listener_mob)
 	send_listener_sound(listener_mob, update_sound, effective_volume, muffled)
 
 /datum/sound_token/proc/send_listener_sound(mob/listener_mob, update_sound, effective_volume, muffled = FALSE)
