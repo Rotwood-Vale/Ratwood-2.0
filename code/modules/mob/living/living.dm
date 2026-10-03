@@ -1222,14 +1222,15 @@
 					riding_datum.force_dismount(M)
 			return
 
-/mob/living/proc/submit()
+/mob/living/proc/submit(instant = FALSE)
 	set name = "Yield"
 	set category = "IC"
 	set hidden = 1
 	if(surrendering || stat == DEAD)
 		return
-	if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
-		return
+	if(!instant)
+		if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
+			return
 	surrendering = 1
 	record_round_statistic(STATS_YIELDS)
 	toggle_cmode()
