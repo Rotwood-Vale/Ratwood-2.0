@@ -320,12 +320,12 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 			M.add_nausea(5.5)
 			M.adjustToxLoss(7.5)
 			to_chat(M, span_userdanger("MY HEART! I'VE BEEN POISONED."))
-			M.playsound_local('sound/magic/heartbeat.ogg', 50)
+			M.playsound_local(M, 'sound/magic/heartbeat.ogg', 50)
 		else
 			M.add_nausea(6.5)
 			M.adjustToxLoss(8.5)
 			to_chat(M, span_userdanger("MY HEART! I'VE BEEN POISONED."))
-			M.playsound_local('sound/magic/heartbeat.ogg', 50)
+			M.playsound_local(M, 'sound/magic/heartbeat.ogg', 50)
 	return ..()
 
 /datum/reagent/organpoison

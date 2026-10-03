@@ -37,4 +37,6 @@ SUBSYSTEM_DEF(rivers)
 
 /turf/open/water/river/Destroy()
 	STOP_PROCESSING(SSrivers, src)
+	if(river_fill_source)
+		SSpoint_ambience.river_fill_tile_removed(src)
 	return ..()

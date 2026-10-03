@@ -24,6 +24,7 @@
 
 /datum/emote/living/carbon/human/sexmoanlight
 	key = "sexmoanlight"
+	cross_z_audible = FALSE // Read only when typed. emote_erp's classes never cross a floor
 	emote_type = EMOTE_AUDIBLE
 	nomsg = TRUE
 	needs_emotion = TRUE
@@ -37,6 +38,7 @@
 
 /datum/emote/living/carbon/human/sexmoanhvy
 	key = "sexmoanhvy"
+	cross_z_audible = FALSE // Read only when typed. emote_erp's classes never cross a floor
 	emote_type = EMOTE_AUDIBLE
 	nomsg = TRUE
 	needs_emotion = TRUE

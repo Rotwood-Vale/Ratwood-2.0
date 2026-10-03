@@ -267,17 +267,40 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/widescreenpref = TRUE
 
 	var/musicvol = 50
+	/// What an admin plays on CHANNEL_ADMIN, on its own slider so a global track can be turned down
+	/// without taking the game's own music with it
+	var/adminmusicvol = 50
+	/**
+	 * The chat panel's browser player, which streams a URL rather than a file.
+	 *
+	 * Separate because it is a separate audio system: it needs the player's own connection and can
+	 * fail on its own. Pushed to the panel scaled, since nothing over there knows about Master.
+	 */
+	var/streamedmusicvol = 50
 	var/combatmusicvol = 50
 	var/lobbymusicvol = 50
 	var/ambiencevol = 50
+	/// Point ambience only, optionally scaled by overallvol and never by mastervol
+	var/pointambiencevol = 100
+	/// Keeps point ambience on its own slider instead of scaling it by overallvol
+	var/pointambience_independent = TRUE
+	/// SOUND_DISABLE_POINT_AMBIENCE and SOUND_DISABLE_TORCH_AMBIENCE, inverted so that unset is on
+	var/point_ambience_toggles = 0
+	/// Instruments, the music box and the wax music device, which play at this in place of Sound Effects
+	var/instrumentvol = 50
+	/// The Sound Effects slider: everything sent through playsound_local but instruments, which read
+	/// instrumentvol. Named mastervol for its savefile key
 	var/mastervol = 50
+	/// The Master slider, which scales every other one, point ambience only while
+	/// pointambience_independent is off. 100 plays each at its own value
+	var/overallvol = 100
 
 	var/anonymize = TRUE
 	var/masked_examine = FALSE
 	var/top_examine = FALSE
 	var/show_mouseover_role = FALSE
 	var/nsfw_examine_always = FALSE
-	var/mute_animal_emotes = FALSE
+	var/mute_anthro_noises = FALSE
 	var/autoconsume = FALSE
 	var/autowoodcut = TRUE
 	var/autopicking = TRUE
@@ -3255,7 +3278,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		// For gnolls spawning from a non-gnoll base slot, we must not apply any base-slot state.
 		// Set species to gnoll immediately so advclass check_requirements can read dna.species.type.
 		character.set_species(/datum/species/gnoll, icon_update = FALSE)
-		// Set gender to MALE as a neutral default; gnoll pronouns override the displayed pronoun.
+		// Set gender to MALE as a neutral default. Gnoll pronouns override the displayed pronoun
 		character.gender = MALE
 		if(gnoll_prefs?.gnoll_pronouns)
 			character.pronouns = gnoll_prefs.gnoll_pronouns

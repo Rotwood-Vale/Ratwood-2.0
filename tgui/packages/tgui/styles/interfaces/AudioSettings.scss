@@ -1,0 +1,33 @@
+.AudioSettings {
+  display: flow-root;
+}
+
+.AudioSettings__panel {
+  border: 1px solid var(--section-separator-color);
+}
+
+.AudioSettings__tabs {
+  gap: 0.5rem;
+
+  .Tab {
+    --tab-color: var(--color-text);
+    --tab-background: var(--button-background-default);
+    --tab-background-selected: var(--button-background-selected);
+
+    border: 1px solid var(--section-separator-color);
+  }
+
+  .Tab--selected {
+    font-weight: bold;
+  }
+}
+
+.AudioSettings__muteNote {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.85em;
+  line-height: 1.4;
+  color: var(--color-text);
+  background: var(--color-section, var(--color-base));
+  border: 1px solid var(--section-separator-color);
+}

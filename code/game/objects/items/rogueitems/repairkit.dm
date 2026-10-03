@@ -41,7 +41,8 @@
 				playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 				doorrepair.icon_state = "[doorrepair.base_state]"
 				doorrepair.density = TRUE
-				doorrepair.opacity = TRUE
+				// A barred or windowed door never shuts solid, so its repair must not make it
+				doorrepair.set_opacity(!doorrepair.windowed)
 				doorrepair.brokenstate = FALSE
 				doorrepair.obj_broken = FALSE
 				doorrepair.obj_integrity = doorrepair.max_integrity

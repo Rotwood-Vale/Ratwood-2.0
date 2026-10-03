@@ -32,9 +32,9 @@
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
-			var/user_vol = M.client.prefs.musicvol
-			if(user_vol)
-				admin_sound.volume = vol * (user_vol / 100)
+			// Set for every player, since the one sound is shared and a skipped assignment would carry
+			// the previous player's volume over
+			admin_sound.volume = vol * M.client.prefs.at_overall(M.client.prefs.adminmusicvol) * 0.01
 			SEND_SOUND(M, admin_sound)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Play Global Sound") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -62,12 +62,12 @@
 		prefs.musicvol = vol
 		prefs.save_preferences()
 
-		mob.update_music_volume(CHANNEL_MUSIC, prefs.musicvol)
-		mob.update_music_volume(CHANNEL_ADMIN, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_MUSIC, prefs.at_overall(prefs.musicvol))
+		mob.update_music_volume(CHANNEL_ADMIN, prefs.at_overall(prefs.adminmusicvol))
 
 /client/verb/volume_power_menu()
 	set category = "Options"
-	set name = "Volume Power"
+	set name = "Audio Settings"
 
 	if(!prefs)
 		return
@@ -77,6 +77,15 @@
 
 	volume_power_menu.ui_interact(mob)
 
+/**
+ * Applies one Audio Settings slider live and schedules the save.
+ *
+ * A change to a slider point ambience reads goes through listener_prefs_changed(), which decides for
+ * itself whether anything flipped: zero and the cutoff unhook, and any other value reaches the next
+ * service without cutting what is playing. Only the file write waits, so a run of changes collapses
+ * into one, whether that is a held arrow key or a client sending the action in a loop. The menu also
+ * writes when it closes, for a client that leaves inside the window.
+ */
 /client/proc/apply_volume_power_setting(setting_id, volume_value)
 	if(!prefs)
 		return
@@ -84,34 +93,59 @@
 	var/vol = clamp(round(volume_value), 0, 100)
 	switch(setting_id)
 		if("master")
+			prefs.overallvol = vol
+			update_slider_channels()
+			if(volume_power_menu)
+				volume_power_menu.effects_changed = TRUE
+		if("effects")
 			prefs.mastervol = vol
+			if(volume_power_menu)
+				volume_power_menu.effects_changed = TRUE
+		if("instruments")
+			prefs.instrumentvol = vol
+			sync_instrument_volume()
 		if("music")
 			prefs.musicvol = vol
-			mob?.update_music_volume(CHANNEL_MUSIC, prefs.musicvol)
-			mob?.update_music_volume(CHANNEL_ADMIN, prefs.musicvol)
+			mob?.update_music_volume(CHANNEL_MUSIC, prefs.at_overall(prefs.musicvol))
+		if("adminmusic")
+			prefs.adminmusicvol = vol
+			mob?.update_music_volume(CHANNEL_ADMIN, prefs.at_overall(prefs.adminmusicvol))
+		if("streamedmusic")
+			prefs.streamedmusicvol = vol
+			tgui_panel?.set_streamed_volume()
 		if("combat")
 			prefs.combatmusicvol = vol
 			if(mob?.cmode)
-				mob.update_music_volume(CHANNEL_BUZZ, prefs.combatmusicvol)
-				mob.update_music_volume(CHANNEL_CMUSIC1, prefs.combatmusicvol)
-				mob.update_music_volume(CHANNEL_CMUSIC2, prefs.combatmusicvol)
-				mob.update_music_volume(CHANNEL_CMUSIC3, prefs.combatmusicvol)
-				mob.update_music_volume(CHANNEL_CMUSIC4, prefs.combatmusicvol)
+				var/combat_volume = prefs.at_overall(prefs.combatmusicvol)
+				mob.update_music_volume(CHANNEL_BUZZ, combat_volume)
+				mob.update_music_volume(CHANNEL_CMUSIC1, combat_volume)
+				mob.update_music_volume(CHANNEL_CMUSIC2, combat_volume)
+				mob.update_music_volume(CHANNEL_CMUSIC3, combat_volume)
+				mob.update_music_volume(CHANNEL_CMUSIC4, combat_volume)
 		if("ambience")
 			prefs.ambiencevol = vol
-			mob?.update_channel_volume(CHANNEL_AMBIENCE, prefs.ambiencevol)
-			mob?.update_channel_volume(CHANNEL_RAIN, prefs.ambiencevol)
+			mob?.update_channel_volume(CHANNEL_AMBIENCE, prefs.at_overall(prefs.ambiencevol))
+			mob?.update_channel_volume(CHANNEL_RAIN, prefs.at_overall(prefs.ambiencevol))
 		if("lobby")
 			prefs.lobbymusicvol = vol
 			if(isnewplayer(mob))
-				mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.lobbymusicvol)
+				mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.at_overall(prefs.lobbymusicvol))
+		if("point_ambience_volume")
+			prefs.pointambiencevol = vol
 		else
 			return
 
-	prefs.save_preferences()
+	// The sliders point ambience reads. It decides for itself whether anything flipped
+	if(setting_id == "point_ambience_volume" || setting_id == "master")
+		SSpoint_ambience.listener_prefs_changed(src)
+	// The setting is already live above. Only the file write waits, see the proc doc
+	addtimer(CALLBACK(prefs, TYPE_PROC_REF(/datum/preferences, save_preferences)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/volume_power_menu
 	var/client/owner
+	/// Master or Sound Effects moved while the menu was open, so the sounds priced by them are
+	/// re-sent once when it closes rather than on every step of the slider
+	var/effects_changed = FALSE
 
 /datum/volume_power_menu/New(client/C)
 	. = ..()
@@ -123,10 +157,19 @@
 	owner = null
 	return ..()
 
+/datum/volume_power_menu/ui_close(mob/user)
+	// The write is deferred while the menu is open, so a close that beats the timer would otherwise
+	// lose the last change
+	owner?.prefs?.save_preferences()
+	if(effects_changed)
+		effects_changed = FALSE
+		owner?.resend_effect_sounds()
+	return ..()
+
 /datum/volume_power_menu/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "VolumePowerMenu", "Volume Power")
+		ui = new(user, src, "VolumePowerMenu", "Audio Settings")
 		ui.set_state(GLOB.always_state)
 		ui.open()
 
@@ -135,11 +178,22 @@
 	if(!owner?.prefs)
 		return data
 
-	data["master"] = isnum(owner.prefs.mastervol) ? owner.prefs.mastervol : initial(owner.prefs.mastervol)
+	data["master"] = isnum(owner.prefs.overallvol) ? owner.prefs.overallvol : initial(owner.prefs.overallvol)
+	data["effects"] = isnum(owner.prefs.mastervol) ? owner.prefs.mastervol : initial(owner.prefs.mastervol)
+	data["instruments"] = isnum(owner.prefs.instrumentvol) ? owner.prefs.instrumentvol : initial(owner.prefs.instrumentvol)
+	data["replace_uploaded_songs"] = !(owner.prefs.toggles & SOUND_UPLOADED_SONGS)
 	data["music"] = isnum(owner.prefs.musicvol) ? owner.prefs.musicvol : initial(owner.prefs.musicvol)
+	data["adminmusic"] = isnum(owner.prefs.adminmusicvol) ? owner.prefs.adminmusicvol : initial(owner.prefs.adminmusicvol)
+	data["streamedmusic"] = isnum(owner.prefs.streamedmusicvol) ? owner.prefs.streamedmusicvol : initial(owner.prefs.streamedmusicvol)
 	data["combat"] = isnum(owner.prefs.combatmusicvol) ? owner.prefs.combatmusicvol : initial(owner.prefs.combatmusicvol)
 	data["ambience"] = isnum(owner.prefs.ambiencevol) ? owner.prefs.ambiencevol : initial(owner.prefs.ambiencevol)
 	data["lobby"] = isnum(owner.prefs.lobbymusicvol) ? owner.prefs.lobbymusicvol : initial(owner.prefs.lobbymusicvol)
+	data["point_ambience_volume"] = isnum(owner.prefs.pointambiencevol) ? owner.prefs.pointambiencevol : initial(owner.prefs.pointambiencevol)
+	data["point_ambience_independent"] = owner.prefs.pointambience_independent
+	// Sent the way round the player thinks about it: these two are stored inverted so that an
+	// existing savefile without them reads as on
+	data["point_ambience"] = !(owner.prefs.point_ambience_toggles & SOUND_DISABLE_POINT_AMBIENCE)
+	data["point_ambience_torch"] = !(owner.prefs.point_ambience_toggles & SOUND_DISABLE_TORCH_AMBIENCE)
 	return data
 
 /datum/volume_power_menu/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -153,6 +207,36 @@
 		var/setting_id = params["id"]
 		var/volume_value = text2num(params["value"])
 		owner.apply_volume_power_setting(setting_id, volume_value)
+		SStgui.update_uis(src)
+		return TRUE
+
+	if(action == "toggle")
+		if(params["id"] == "replace_uploaded_songs")
+			owner.prefs.toggles ^= SOUND_UPLOADED_SONGS
+			owner.prefs.save_preferences()
+			// Swaps what is already playing, since nothing else re-sends to a listener standing still
+			owner.sync_uploaded_songs()
+			SStgui.update_uis(src)
+			return TRUE
+		if(params["id"] == "point_ambience_independent")
+			owner.prefs.pointambience_independent = !owner.prefs.pointambience_independent
+			owner.prefs.save_preferences()
+			SSpoint_ambience.listener_prefs_changed(owner)
+			SStgui.update_uis(src)
+			return TRUE
+		var/flag
+		switch(params["id"])
+			if("point_ambience")
+				flag = SOUND_DISABLE_POINT_AMBIENCE
+			if("point_ambience_torch")
+				flag = SOUND_DISABLE_TORCH_AMBIENCE
+			else
+				return FALSE
+		owner.prefs.point_ambience_toggles ^= flag
+		owner.prefs.save_preferences()
+		// Either direction, and it has to happen here: nothing else will service them again to stop
+		// what is playing, and a listener standing still would not pick a re-enabled category up
+		SSpoint_ambience.listener_prefs_changed(owner)
 		SStgui.update_uis(src)
 		return TRUE
 
@@ -178,7 +262,7 @@
 	set hidden = 1
 
 	if(prefs)
-		var/vol = input(usr, "Current master volume power (affects all sounds except music and ambience): [prefs.mastervol]",, 100) as null|num
+		var/vol = input(usr, "Current sound effects power (every sound but music and ambience, under Master): [prefs.mastervol]",, 100) as null|num
 		if(!vol)
 			if(vol != 0)
 				return
@@ -200,8 +284,8 @@
 		prefs.ambiencevol = vol
 		prefs.save_preferences()
 
-		mob.update_channel_volume(CHANNEL_AMBIENCE, prefs.ambiencevol)
-		mob.update_channel_volume(CHANNEL_RAIN, prefs.ambiencevol)
+		mob.update_channel_volume(CHANNEL_AMBIENCE, prefs.at_overall(prefs.ambiencevol))
+		mob.update_channel_volume(CHANNEL_RAIN, prefs.at_overall(prefs.ambiencevol))
 
 /client/verb/change_lobby_music_vol()
 	set category = "Options"
@@ -218,7 +302,8 @@
 		prefs.save_preferences()
 
 		if(isnewplayer(mob))
-			mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.lobbymusicvol)
+			mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.at_overall(prefs.lobbymusicvol))
+
 /*
 /client/verb/help_rpguide()
 	set category = "Options"

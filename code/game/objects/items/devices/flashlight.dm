@@ -139,8 +139,8 @@
 	flags_1 = null
 	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
 	slot_flags = ITEM_SLOT_HIP
-	//remove the = null to re-add the torch crackle sounds. (???? what the fuck)
-	var/datum/looping_sound/torchloop/soundloop = null
+	/// The mob whose self source this torch is, so it can be cleared when the torch leaves them
+	var/mob/last_carrier
 	//added for torch burnout
 	var/should_self_destruct = TRUE
 	max_integrity = 50
@@ -159,15 +159,31 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/flashlight/flare/torch/Initialize(mapload)
-//	GLOB.weather_act_upon_list += src
-	. = ..()
-	if(soundloop)
-		soundloop = new(src, FALSE)
-
 /obj/item/flashlight/flare/torch/Destroy()
-//	GLOB.weather_act_upon_list -= src
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/torch)
 	. = ..()
+
+/**
+ * Keeps this torch's sound in step with where it is.
+ *
+ * A lit torch in a hand is heard by its carrier alone, through the mob's self source. It never
+ * enters the index, on the ground or in a sconce, where the sconce is the source.
+ */
+/obj/item/flashlight/flare/torch/proc/update_point_ambience()
+	var/lit = on && !QDELETED(src)
+	var/mob/carrier = (lit && ismob(loc)) ? loc : null
+	if(last_carrier && last_carrier != carrier)
+		SSpoint_ambience.clear_self_source(last_carrier, src, lit)
+	last_carrier = carrier
+	if(carrier)
+		SSpoint_ambience.set_self_source(carrier, src)
+	// Never indexed, a sconce holding one being the source others hear. A loose torch in the index
+	// would cost a map-wide cache invalidation on every drop, pick-up and throw
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/torch)
+
+/obj/item/flashlight/flare/torch/Moved(atom/OldLoc, Dir)
+	. = ..()
+	update_point_ambience()
 
 /obj/item/flashlight/flare/torch/process()
 	open_flame(heat)
@@ -221,10 +237,9 @@
 
 /obj/item/flashlight/flare/torch/turn_off()
 	playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
-	if(soundloop)
-		soundloop.stop()
 	STOP_PROCESSING(SSobj, src)
 	..()
+	update_point_ambience()
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_hands()
@@ -239,8 +254,7 @@
 			damtype = BURN
 			update_brightness()
 			force = on_damage
-			if(soundloop)
-				soundloop.start()
+			update_point_ambience()
 			if(ismob(loc))
 				var/mob/M = loc
 				M.update_inv_hands()
@@ -418,6 +432,12 @@
 	weather_resistant = TRUE
 	metalizer_result = null
 	dropshrink = 0.8
+
+/// Lampterns do not use the torch crackle when lit or carried
+/obj/item/flashlight/flare/torch/lantern/update_point_ambience()
+	if(last_carrier)
+		SSpoint_ambience.clear_self_source(last_carrier, src)
+		last_carrier = null
 
 /obj/item/flashlight/flare/torch/lantern/afterattack(atom/movable/A, mob/user, proximity)
 	. = ..()

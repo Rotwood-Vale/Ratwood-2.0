@@ -34,6 +34,22 @@
 /**
  * public
  *
+ * Sends the streamed music volume to the browser player.
+ *
+ * The panel keeps its own settings store, so this writes into it rather than being read from prefs.
+ * Master is applied HERE because nothing on the browser side knows about it, and the element wants
+ * 0 to 1 where the slider is 0 to 100
+ */
+/datum/tgui_panel/proc/set_streamed_volume()
+	if(!is_ready() || !client?.prefs)
+		return
+	window.send_message("settings/update", list(
+		"adminMusicVolume" = client.prefs.at_overall(client.prefs.streamedmusicvol) / 100,
+	))
+
+/**
+ * public
+ *
  * Stops playing music through the browser.
  */
 /datum/tgui_panel/proc/stop_music()

@@ -108,7 +108,9 @@
 						span_userdanger("[src] grabs me!"), span_hear("I hear shuffling."), null, src)
 		to_chat(src, span_danger("I grab [target]."))
 
-	if(used_limb && target.client && target.hud_used && target.hud_used.zone_select)
+	// Guard on I, not on used_limb: used_limb defaults to the chest and so is truthy even when no
+	// grab item is in hand, and I.sublimb_grabbed below needs one
+	if(I && target.client && target.hud_used && target.hud_used.zone_select)
 		var/atom/movable/screen/zone_sel/zone_sel = target.hud_used.zone_select
 		zone_sel.flash_limb(I.sublimb_grabbed, "#d19e13") // grab = orange
 

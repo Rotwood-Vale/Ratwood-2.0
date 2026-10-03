@@ -240,20 +240,20 @@
 					// still causes a CBT wound but stops short of full avulsion.
 					if(prob(20) && H.client?.prefs?.extreme_erp)
 						H.visible_message(span_userdanger("As the lock finally gives, [user]'s chisel catches [H.p_their()] trapped prick on the way out — the edge tears through flesh and root, ripping it free alongside the falling device."))
-						playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamMale1.ogg', 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'), 85, FALSE, 2)
+						playsound_erp(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamMale1.ogg', 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'), 85, FALSE, 2, travel = SOUND_TRAVEL_LEAKING)
 						H.add_splatter_floor(drop_turf)
 						penis_organ.Remove(H)
 						penis_organ.forceMove(drop_turf)
 					else if(chest && !chest.has_wound(/datum/wound/cbt))
 						// Slip causes crushing/tearing internal groin injury but no avulsion.
 						H.visible_message(span_userdanger("As the lock gives, [user]'s chisel bites into [H.p_their()] stones — the sudden jolt of metal twisting through [H.p_their()] groin as the device drops free."))
-						playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamMale1.ogg', 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'), 85, FALSE, 2)
+						playsound_erp(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamMale1.ogg', 'modular/sound/masomoans/agony/CBTScreamMale2.ogg'), 85, FALSE, 2, travel = SOUND_TRAVEL_LEAKING)
 						H.add_splatter_floor(drop_turf)
 						chest.add_wound(/datum/wound/cbt)
 				else if(vagina_organ && chest && !chest.has_wound(/datum/wound/cbt))
 					// Slip rakes across exposed softer anatomy; no organ removal but severe tearing.
 					H.visible_message(span_userdanger("As the lock gives, the chisel catches [H.p_their()] exposed slit — the device's sudden release dragging the edge through tender flesh and leaving a ragged wound."))
-					playsound(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamFemale1.ogg', 'modular/sound/masomoans/agony/CBTScreamFemale2.ogg'), 85, FALSE, 2)
+					playsound_erp(drop_turf, pick('modular/sound/masomoans/agony/CBTScreamFemale1.ogg', 'modular/sound/masomoans/agony/CBTScreamFemale2.ogg'), 85, FALSE, 2, travel = SOUND_TRAVEL_LEAKING)
 					H.add_splatter_floor(drop_turf)
 					chest.add_wound(/datum/wound/cbt)
 

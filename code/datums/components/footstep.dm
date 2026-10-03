@@ -128,8 +128,16 @@
 		used_volume = step_data[2]
 		used_extra_range = step_data[3]
 		do_vary = !feet_covered // only barefoot gets the pitch variation
-	// this is fine without an explicit copy because it doesn't mutate the existing list
-	used_sound = pick(used_footsteps - last_sound) || last_sound
+	// Skips the last sound by index, since subtracting it builds a new list on every footstep of every
+	// mob. The rest stay equally likely, and a last sound from another floor's list excludes nothing
+	var/count = length(used_footsteps)
+	if(!count)
+		return
+	var/last_index = (count > 1) ? used_footsteps.Find(last_sound) : 0
+	var/index = rand(1, last_index ? count - 1 : count)
+	if(last_index && index >= last_index)
+		index++
+	used_sound = used_footsteps[index]
 	last_sound = used_sound
 	playsound(step_location, used_sound,
 		volume * used_volume,

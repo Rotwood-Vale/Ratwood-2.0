@@ -116,14 +116,12 @@
 	layer = BELOW_OBJ_LAYER
 	var/list/haunts = list()
 	var/maxhaunts = 1
-	var/datum/looping_sound/boneloop/soundloop
 	var/spawning = FALSE
 	attacked_sound = 'sound/vo/mobs/ghost/skullpile_hit.ogg'
 
 /obj/structure/bonepile/Initialize(mapload)
 	. = ..()
-	soundloop = new(src, FALSE)
-	soundloop.start()
+	SSpoint_ambience.register_source(src, /datum/point_ambience_category/misc)
 //	for(var/i in 1 to maxhaunts)
 	spawn_haunt()
 
@@ -156,7 +154,7 @@
 	addtimer(CALLBACK(src, PROC_REF(createhaunt)), 4 SECONDS)
 
 /obj/structure/bonepile/Destroy()
-	QDEL_NULL(soundloop)
+	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/misc)
 	spawning = FALSE
 	for(var/mob/living/simple_animal/hostile/rogue/haunt/ghost in haunts)
 		INVOKE_ASYNC(ghost, TYPE_PROC_REF(/mob/living/simple_animal/hostile/rogue/haunt, death))

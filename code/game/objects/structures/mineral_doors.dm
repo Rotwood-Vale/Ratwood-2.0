@@ -6,6 +6,8 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = TRUE
+	sound_door = TRUE
+	sound_opening = TRUE
 	layer = CLOSED_DOOR_LAYER
 
 	icon = 'icons/roguetown/misc/doors.dmi'
@@ -463,7 +465,8 @@
 						playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 						icon_state = "[base_state]"
 						density = TRUE
-						opacity = TRUE
+						// A barred or windowed door never shuts solid, so its repair must not make it
+						set_opacity(!windowed)
 						brokenstate = FALSE
 						obj_broken = FALSE
 						obj_integrity = max_integrity
@@ -763,7 +766,7 @@
 	if(!brokenstate)
 		icon_state = "[base_state]br"
 		density = FALSE
-		opacity = FALSE
+		set_opacity(FALSE)
 		brokenstate = TRUE
 	..()
 
@@ -1104,12 +1107,10 @@
 	set_opacity(window_closed)
 	playsound(src, 'sound/foley/doors/windowup.ogg', 100, FALSE)
 
+/// Keeps it see-through while the viewport is open, the door shut or not. One parent call with the
+/// final value, so the change is reported and counted once
 /obj/structure/mineral_door/wood/donjon/set_opacity(setter)
-	..()
-	if(!window_closed) //Keeps it non-opaque when the door shuts.
-		opacity = FALSE
-	else
-		opacity = setter
+	return ..(window_closed && setter)
 
 /obj/structure/mineral_door/wood/donjon/stone/broken
 	desc = "A broken stone door from an era bygone. A new one must be constructed in its place."

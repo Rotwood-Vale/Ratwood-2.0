@@ -195,6 +195,13 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(list(/area/rogue/indoors
 /area/rogue/under
 	name = "basement"
 	icon_state = "under"
+	/**
+	 * No river point sources underground unless an area opts back in.
+	 *
+	 * Keeps decorative water in basements and dungeons quiet by default. Cave, wet-cave, Underdark
+	 * and sewer areas opt back in for their river tiles; their area ambience remains a separate layer.
+	 */
+	river_ambience = FALSE
 	droning_sound = 'sound/music/area/towngen.ogg'
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	droning_sound_night = 'sound/music/area/sleeping.ogg'

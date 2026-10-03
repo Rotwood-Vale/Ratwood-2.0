@@ -416,9 +416,6 @@
 			returned -= 1
 	return max(returned, 0.5)
 
-//turf/open/water/Initialize()
-//	dir = pick(NORTH,SOUTH,WEST,EAST)
-//	. = ..()
 
 
 /turf/open/water/bath
@@ -602,6 +599,8 @@
 	wash_in = TRUE
 	swim_skill = TRUE
 	swimdir = TRUE
+	/// Whether this turf seeds river ambience, so Destroy removes it again
+	var/river_fill_source = FALSE
 
 /turf/open/water/river/muddy
 	water_color = "#705a43"
@@ -634,7 +633,12 @@
 
 /turf/open/water/river/Initialize(mapload)
 	icon_state = "rock"
-	.  = ..()
+	. = ..()
+	// Scenery water can opt out by area. Other water types do not seed this fill
+	var/area/our_area = loc
+	if(our_area?.river_ambience)
+		river_fill_source = TRUE
+		SSpoint_ambience.river_fill_tile_added(src)
 
 /turf/open/water/river/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()

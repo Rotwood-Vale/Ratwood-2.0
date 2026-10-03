@@ -7,6 +7,7 @@
 	base_state = "oven"
 	density = FALSE
 	on = FALSE
+	point_ambience_category = /datum/point_ambience_category/fire
 	var/list/food = list()
 	var/maxfood = 5
 	var/donefoods = FALSE

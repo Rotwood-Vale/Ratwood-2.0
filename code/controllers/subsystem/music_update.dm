@@ -48,7 +48,9 @@ SUBSYSTEM_DEF(ambience)
 	if(!sexy_ambience)
 		return
 
-	SEND_SOUND(to_process.mob, sound(sexy_ambience, repeat = 0, wait = 0, volume = to_process.prefs.ambiencevol * 0.2, channel = CHANNEL_AMBIENCE))
+	// Not CHANNEL_AMBIENCE, where it would replace the area's loop, which nothing restarts while the
+	// listener stays in the area
+	SEND_SOUND(to_process.mob, sound(sexy_ambience, repeat = 0, wait = 0, volume = to_process.prefs.at_overall(to_process.prefs.ambiencevol) * 0.2, channel = SSsounds.random_available_channel()))
 
 	ambience_listening_clients[to_process] = world.time + rand(current_area.min_ambience_cooldown, current_area.max_ambience_cooldown)
 

@@ -37,7 +37,7 @@
 	if(!ticking)
 		return
 	time_left--
-	soundloop2.mid_length = max(0.5, time_left - 5) //beepbeepbeepbeepbeep
+	soundloop2.set_mid_length(max(0.5, time_left - 5)) // Beepbeepbeepbeepbeep. set_mid_length reschedules the live timer, so the beeps accelerate
 	if(!time_left || !isliving(loc))
 		playsound(src, 'sound/blank.ogg', 100, FALSE)
 		soundloop.stop()
@@ -127,6 +127,6 @@
 	time_left = initial(time_left)
 	ADD_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
 	soundloop.start()
-	soundloop2.mid_length = initial(soundloop2.mid_length)
+	soundloop2.set_mid_length(initial(soundloop2.mid_length))
 	soundloop2.start()
 	START_PROCESSING(SSprocessing, src)

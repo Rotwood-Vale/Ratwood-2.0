@@ -1,19 +1,37 @@
+/// The wax music device's OLDSCHOOL list, name to file. The dwarven music box plays one in place of
+/// an upload for a listener who turned uploaded songs off
+GLOBAL_LIST_INIT(oldschool_songs, list(
+	"Autumn Voyage" = 'sound/music/jukeboxes/oldschool/Autumn_Voyage.ogg',
+	"Fanfare" = 'sound/music/jukeboxes/oldschool/Fanfare.ogg',
+	"Greatness" = 'sound/music/jukeboxes/oldschool/Greatness.ogg',
+	"Medieval" = 'sound/music/jukeboxes/oldschool/Medieval.ogg',
+	"Sea Shanty2" = 'sound/music/jukeboxes/oldschool/Sea_Shanty2.ogg',
+	"Shine" = 'sound/music/jukeboxes/oldschool/Shine.ogg',
+	"Spirit" = 'sound/music/jukeboxes/oldschool/Spirit.ogg',
+	"Still Night" = 'sound/music/jukeboxes/oldschool/Still_Night.ogg',
+	"Venture" = 'sound/music/jukeboxes/oldschool/Venture.ogg',
+	"Yesteryear" = 'sound/music/jukeboxes/oldschool/Yesteryear.ogg',
+))
+
 /datum/looping_sound/musloop
 	mid_sounds = list()
-	mid_length = 2400 // Whoever wrote this is giving me an aneurism
+	mid_length = 2400
 	volume = 70
 	extra_range = 8
-	falloff = 0
-	persistent_loop = TRUE
+	/// Played through a sound token, so the song repeats natively client side and follows listeners as they move
+	use_sound_tokens = TRUE
 	var/stress2give = /datum/stressevent/music
-	channel = CHANNEL_JUKEBOX
 
-/datum/looping_sound/musloop/on_hear_sound(mob/M)
-	. = ..()
-	if(stress2give)
-		if(isliving(M))
-			var/mob/living/carbon/L = M
-			L.add_stress(stress2give)
+/datum/looping_sound/musloop/configure_token(datum/sound_token/token)
+	token.respect_instrument_pref = TRUE
+	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
+	// Stress lands when a listener first comes into earshot, not on every replay of the track
+	token.on_listener_audible = CALLBACK(src, PROC_REF(give_stress))
+
+/datum/looping_sound/musloop/proc/give_stress(mob/M)
+	if(stress2give && isliving(M))
+		var/mob/living/carbon/L = M
+		L.add_stress(stress2give)
 
 /obj/structure/roguemachine/musicbox
 	name = "wax music device"
@@ -24,7 +42,20 @@
 	anchored = TRUE
 	max_integrity = 0
 	var/datum/looping_sound/musloop/soundloop
-	var/list/init_curfile = list('sound/music/jukeboxes/gen/tavern1.ogg') // A list of songs that curfile is set to on init. MUST BE IN ONE OF THE MUSIC_TAVCAT_'s.
+	/// Rolled once per device in Initialize(), so boxes across a map are not all playing the same thing
+	/// MUST BE IN ONE OF THE MUSIC_TAVCAT_'s.
+	var/list/init_curfile = list(
+		'sound/music/jukeboxes/oldschool/Autumn_Voyage.ogg',
+		'sound/music/jukeboxes/oldschool/Fanfare.ogg',
+		'sound/music/jukeboxes/oldschool/Greatness.ogg',
+		'sound/music/jukeboxes/oldschool/Medieval.ogg',
+		'sound/music/jukeboxes/oldschool/Sea_Shanty2.ogg',
+		'sound/music/jukeboxes/oldschool/Shine.ogg',
+		'sound/music/jukeboxes/oldschool/Spirit.ogg',
+		'sound/music/jukeboxes/oldschool/Still_Night.ogg',
+		'sound/music/jukeboxes/oldschool/Venture.ogg',
+		'sound/music/jukeboxes/oldschool/Yesteryear.ogg',
+	)
 	var/curfile // The current track that is playing right now
 	var/playing = FALSE // If music is playing or not. playmusic() deals with this don't mess with it.
 	var/curvol = 50 // The current volume at which audio is played. MAPPERS MAY TOUCH THIS.
@@ -47,29 +78,19 @@
 		"Song 2" = 'sound/music/jukeboxes/gen/tavern2.ogg',
 		"Song 3" = 'sound/music/jukeboxes/gen/tavern3.ogg'
 	)
-	var/list/static/songlist_oldschool = list(\
-		"Autumn Voyage" = 'sound/music/jukeboxes/oldschool/Autumn_Voyage.ogg',
-		"Fanfare" = 'sound/music/jukeboxes/oldschool/Fanfare.ogg',
-		"Greatness" = 'sound/music/jukeboxes/oldschool/Greatness.ogg',
-		"Medieval" = 'sound/music/jukeboxes/oldschool/Medieval.ogg',
-		"Sea Shanty2" = 'sound/music/jukeboxes/oldschool/Sea_Shanty2.ogg',
-		"Shine" = 'sound/music/jukeboxes/oldschool/Shine.ogg',
-		"Spirit" = 'sound/music/jukeboxes/oldschool/Spirit.ogg',
-		"Still Night" = 'sound/music/jukeboxes/oldschool/Still_Night.ogg',
-		"Venture" = 'sound/music/jukeboxes/oldschool/Venture.ogg',
-		"Yesteryear" = 'sound/music/jukeboxes/oldschool/Yesteryear.ogg'
-	)
 
 /obj/structure/roguemachine/musicbox/Initialize(mapload)
 	. = ..()
+	// Once per device. Rotating mid-track would need a timer and a real track length, and changing
+	// file restarts the token, an audible cut for everyone in range
 	curfile = pick(init_curfile)
 	soundloop = new(src, FALSE)
 	if(playuponspawn)
 		start_playing()
 
 /obj/structure/roguemachine/musicbox/Destroy()
-	. = ..()
-	qdel(soundloop) //jesus fuck who is using hard dels in this day and age
+	QDEL_NULL(soundloop) // Before ..(), so the loop stops while this box is still whole
+	return ..()
 
 /obj/structure/roguemachine/musicbox/update_icon()
 	icon_state = "music[playing]"
@@ -85,7 +106,6 @@
 	soundloop.set_mid_sounds(list(curfile))
 	soundloop.volume = curvol
 	soundloop.start()
-	testing("Music: V[soundloop.volume] C[soundloop.cursound] T[soundloop.thingshearing]")
 	update_icon()
 
 /obj/structure/roguemachine/musicbox/proc/stop_playing()
@@ -123,7 +143,7 @@
 			if("GENERIC")
 				chosen_songlists_selection = songlist_generic
 			if("OLDSCHOOL")
-				chosen_songlists_selection = songlist_oldschool
+				chosen_songlists_selection = GLOB.oldschool_songs
 		var/song_selection = input(user, "Which song do I play?", "\The [src]") as null | anything in chosen_songlists_selection
 		if(!Adjacent(user))
 			return

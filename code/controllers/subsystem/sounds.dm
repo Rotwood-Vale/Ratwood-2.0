@@ -29,6 +29,8 @@ SUBSYSTEM_DEF(sounds)
 	var/list/all_music_sounds = list()
 
 /datum/controller/subsystem/sounds/Initialize()
+	// Read at boot only. See GLOB.sound_storey_tiles
+	GLOB.sound_storey_tiles = CONFIG_GET(number/sound_storey_tiles)
 	setup_available_channels()
 	find_all_available_sounds()
 	. = ..()
@@ -77,10 +79,13 @@ SUBSYSTEM_DEF(sounds)
 	var/text_channel = num2text(channel)
 	var/using = using_channels[text_channel]
 	using_channels -= text_channel
-	if(using != TRUE)		// datum channel
+	if(using != DATUMLESS) // datum channel
 		using_channels_by_datum[using] -= channel
 		if(!length(using_channels_by_datum[using]))
-			using_channels_by_datum -= using
+			stop_tracking_datum(using)
+	else
+		// Deviation from TG, which leaves the entry behind. No stop_tracking_datum, as DATUMLESS has no signal
+		using_channels_by_datum[DATUMLESS] -= channel
 	free_channel(channel)
 
 /// Frees all the channels a datum is using.
@@ -91,14 +96,14 @@ SUBSYSTEM_DEF(sounds)
 	for(var/channel in L)
 		using_channels -= num2text(channel)
 		free_channel(channel)
-	using_channels_by_datum -= D
+	stop_tracking_datum(D)
 
 /// Frees all datumless channels
 /datum/controller/subsystem/sounds/proc/free_datumless_channels()
 	free_datum_channels(DATUMLESS)
 
-/// NO AUTOMATIC CLEANUP - If you use this, you better manually free it later! Returns an integer for channel.
-/datum/controller/subsystem/sounds/proc/reserve_sound_channel_datumless()
+/// Reserve a sound channel. NO AUTOMATIC CLEANUP, free it later with free_sound_channel(). Returns an integer for channel
+/datum/controller/subsystem/sounds/proc/reserve_sound_channel()
 	. = reserve_channel()
 	if(!.)		//oh no..
 		return FALSE
@@ -107,17 +112,41 @@ SUBSYSTEM_DEF(sounds)
 	LAZYINITLIST(using_channels_by_datum[DATUMLESS])
 	using_channels_by_datum[DATUMLESS] += .
 
-/// Reserves a channel for a datum. Automatic cleanup only when the datum is deleted. Returns an integer for channel.
-/datum/controller/subsystem/sounds/proc/reserve_sound_channel(datum/D)
+/// Reserves a channel for a datum. Automatic cleanup when the datum is deleted. Returns an integer for channel
+/datum/controller/subsystem/sounds/proc/reserve_sound_channel_for_datum(datum/D)
 	if(!D)		//i don't like typechecks but someone will fuck it up
 		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
 	.= reserve_channel()
 	if(!.)
+		// Deviation from TG, which CRASHes here: instruments need a polite refusal path
+		// so a full pool reads as "no sound channels" to the player instead of aborting the caller
 		return FALSE
 	var/text_channel = num2text(.)
 	using_channels[text_channel] = D
 	LAZYINITLIST(using_channels_by_datum[D])
 	using_channels_by_datum[D] += .
+
+	RegisterSignal(D, COMSIG_QDELETING, PROC_REF(tracked_datum_deleted))
+
+/// Stops tracking a datum's channels. Private proc
+/datum/controller/subsystem/sounds/proc/stop_tracking_datum(datum/D)
+	PRIVATE_PROC(TRUE)
+
+	using_channels_by_datum -= D
+	if(isdatum(D)) // DATUMLESS is a string key with nothing to unregister
+		UnregisterSignal(D, COMSIG_QDELETING)
+
+/**
+ * Handles a tracked datum being deleted, automatically freeing the channels.
+ *
+ * So a reservation does not keep its datum alive: the deletion itself clears the hard refs out of
+ * using_channels and using_channels_by_datum.
+ */
+/datum/controller/subsystem/sounds/proc/tracked_datum_deleted(datum/source)
+	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
+
+	free_datum_channels(source)
 
 /**
  * Reserves a channel and updates the datastructure. Private proc.
@@ -166,5 +195,22 @@ SUBSYSTEM_DEF(sounds)
 /// How many channels we have left.
 /datum/controller/subsystem/sounds/proc/available_channels_left()
 	return length(channel_list) - random_channels_min
+
+/**
+ * Returns the duration of a sound file in deciseconds, cached.
+ *
+ * Keeps TG's SSsounds.get_sound_length() call surface, the cache being rustg_sound_length()'s
+ * static list. A /sound datum is measured by its file, a value rustg cannot take answers 0, and so
+ * does a length rustg reads as no number.
+ */
+/datum/controller/subsystem/sounds/proc/get_sound_length(file_path)
+	if(istype(file_path, /sound))
+		var/sound/as_datum = file_path
+		file_path = as_datum.file
+	// rustg_sound_length() CRASHes on anything but a path or a file that names one, which a runtime
+	// file reference does not. It still CRASHes when the library itself returns nothing
+	if(!istext(file_path) && !(isfile(file_path) && length("[file_path]")))
+		return 0
+	return rustg_sound_length(file_path) || 0
 
 #undef DATUMLESS

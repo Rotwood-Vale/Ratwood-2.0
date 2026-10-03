@@ -95,6 +95,10 @@
 #define COMSIG_GLOB_MOB_CREATED "!mob_created"
 /// mob died somewhere : (mob , gibbed)
 #define COMSIG_GLOB_MOB_DEATH "!mob_death"
+/// from base of /mob/Login(): (mob)
+#define COMSIG_GLOB_PLAYER_LOGIN "!player_login"
+/// from base of /mob/Logout(): (mob)
+#define COMSIG_GLOB_PLAYER_LOGOUT "!player_logout"
 /// global living say plug - use sparingly: (mob/speaker , message)
 #define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"
 /// job subystem has spawned and equipped a new mob

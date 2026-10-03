@@ -8,7 +8,8 @@
 /datum/component/rot
 	var/amount = 0
 	var/last_process = 0
-	var/datum/looping_sound/fliesloop/soundloop
+	/// Whether this corpse has flies. Heard only while it lies on a turf, see place_flies()
+	var/flies_playing = FALSE
 
 /datum/component/rot/Initialize(new_amount)
 	..()
@@ -18,14 +19,66 @@
 	if(new_amount)
 		amount = new_amount
 
-	soundloop = new(parent, FALSE)
-
 	START_PROCESSING(SSroguerot, src)
 
 /datum/component/rot/Destroy()
-	if(soundloop)
-		QDEL_NULL(soundloop)
+	set_flies(FALSE)
 	. = ..()
+
+/**
+ * Registers or drops this corpse as the buzzing-flies ambience source.
+ *
+ * POINT AMBIENCE, not a sound token. A token re-sends every listener for every source whenever
+ * either moves, so ten bodies at a battle site with ten people among them is a hundred pairs per
+ * step, measured at ~30x this and landing on the ticks a fight already loads. Point ambience serves
+ * only the nearest, so ten corpses are one send and nine range rejects.
+ *
+ * Gated on SIZE, not biotype: a rat earns flies and a butterfly does not. `rot_type` defaults to
+ * /rot/simple on every /mob/living that does not set its own, so without that gate every dead
+ * cockroach becomes a registered source. A non-mob parent falls through, though nothing attaches
+ * rot to one.
+ *
+ * Arguments:
+ * * state - TRUE registers the source, FALSE drops it. TRUE is downgraded to FALSE for a mob at or
+ *   under MOB_SIZE_TINY, so a caller cannot force flies onto a butterfly.
+ */
+/datum/component/rot/proc/set_flies(state)
+	if(state)
+		var/mob/living/rotting_mob = parent
+		if(istype(rotting_mob) && rotting_mob.mob_size <= MOB_SIZE_TINY)
+			state = FALSE
+	// The rot poll asks every process, so only a change of state does anything here
+	if(!state == !flies_playing)
+		return
+	flies_playing = state
+	if(!state)
+		UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+		SSpoint_ambience.unregister_source(parent, /datum/point_ambience_category/rot)
+		return
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_body_moved))
+	place_flies()
+
+/datum/component/rot/proc/on_body_moved(datum/source)
+	SIGNAL_HANDLER
+	place_flies()
+
+/**
+ * Where the flies are heard, from the body's own moves.
+ *
+ * A body lying on a turf is heard from it, and the step it is dragged or carried moves the sound
+ * with it.
+ *
+ * A body inside something, a cart or a sack, is silent. Moving the container fires no Moved on the
+ * body, so its position could not be kept, and a sealed container is a fair reason for no flies.
+ * The body's own Moved fires on the way in and on the way out, so it is heard again once it lies on
+ * a turf, with nothing polled in between
+ */
+/datum/component/rot/proc/place_flies()
+	var/atom/movable/body = parent
+	if(isturf(body.loc))
+		SSpoint_ambience.register_source(parent, /datum/point_ambience_category/rot)
+	else
+		SSpoint_ambience.unregister_source(parent, /datum/point_ambience_category/rot)
 
 /datum/component/rot/process()
 
@@ -67,9 +120,7 @@
 			return
 
 	var/area/A = get_area(C)
-	if (istype(A, /area/rogue/indoors/town))	//Stops rotting inside town buildings; will stop your zombification such as at church or appothocary.
-		return
-	if (istype(A, /area/rogue/indoors/deathsedge))	//Stops rotting inside Death's Edge (Death's Door spell area)
+	if(istype(A, /area/rogue/indoors/town) || istype(A, /area/rogue/indoors/deathsedge))
 		return
 
 
@@ -120,21 +171,17 @@
 		var/turf/open/T = C.loc
 		if(istype(T))
 			T.pollute_turf(/datum/pollutant/rot, 5)
-			if(soundloop && soundloop.stopped && !is_zombie)
-				soundloop.start()
+			set_flies(!is_zombie)
 		else
-			if(soundloop && !soundloop.stopped)
-				soundloop.stop()
+			set_flies(FALSE)
 	else
-		if(soundloop && !soundloop.stopped)
-			soundloop.stop()
+		set_flies(FALSE)
 	if(shouldupdate)
 		if(findonerotten)
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				H.skin_tone = "878f79" //elf ears
-			if(soundloop && soundloop.stopped && !is_zombie)
-				soundloop.start()
+			set_flies(!is_zombie)
 		C.update_body()
 
 /datum/component/rot/simple
@@ -148,9 +195,9 @@
 		qdel(src)
 		return
 	if(amount > rot_start)
-		if(soundloop && soundloop.stopped)
-			soundloop.start()
 		var/turf/open/T = get_turf(L)
+		// Gated on an open turf like /rot/corpse, since nothing else in this branch turns the flies off
+		set_flies(istype(T))
 		if(istype(T))
 			T.pollute_turf(/datum/pollutant/rot, 5)
 	if(amount > dust_time)
@@ -163,12 +210,6 @@
 
 /datum/component/rot/gibs
 	amount = MIASMA_GIBS_MOLES
-
-/datum/looping_sound/fliesloop
-	mid_sounds = list('sound/misc/fliesloop.ogg')
-	mid_length = 60
-	volume = 50
-	extra_range = 0
 
 #undef SIMPLE_CORPSE_ROT_START
 #undef SIMPLE_CORPSE_DUST_TIME

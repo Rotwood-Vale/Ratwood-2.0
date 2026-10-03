@@ -122,7 +122,9 @@
 	)
 
 /datum/intent/Destroy()
-	if(chargedloop)
+	// chargedloop holds a typepath until update_chargeloop() or on_charge_start() instantiates it,
+	// so istype rather than a truthiness check
+	if(istype(chargedloop, /datum/looping_sound))
 		QDEL_NULL(chargedloop)
 	if(mob_light)
 		QDEL_NULL(mob_light)
@@ -359,35 +361,44 @@
 	noaa = TRUE
 	pointer = 'icons/effects/mousemice/human_give.dmi'
 
+// The spell charge loops below are token driven, so they re-pan and fade as the listener moves.
+// on_charge_start() starts one and on_mouse_up() stops it, so a token lives only while a charge is
+// held. Native repeat keeps a charge that outlasts its file from falling silent
+
 /datum/looping_sound/invokegen
 	mid_sounds = list('sound/magic/charging.ogg')
 	mid_length = 130
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokefire
 	mid_sounds = list('sound/magic/charging_fire.ogg')
 	mid_length = 130
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokelightning
 	mid_sounds = list('sound/magic/charging_lightning.ogg')
 	mid_length = 130
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokeholy
 	mid_sounds = list('sound/magic/holycharging.ogg')
 	mid_length = 320
 	volume = 100
 	extra_range = 3
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/invokeascendant
 	mid_sounds = list('sound/magic/chargingold.ogg')
 	mid_length = 320
 	volume = 100
 	extra_range = 5
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/flailswing
 	mid_sounds = list('sound/combat/wooshes/flail_swing.ogg')

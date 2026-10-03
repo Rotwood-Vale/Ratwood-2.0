@@ -76,9 +76,12 @@
 		if(HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M
 			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
-		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+		if(!M.client)
 			continue
-		M.playsound_local(source, null, 100, falloff = 5, S = music_played)
+		// max_distance matches the get_hearers_in_view(15) gather above. Without it the note
+		// plays at flat volume to everyone in that 15-tile radius
+		var/datum/preferences/prefs = M.client.prefs
+		M.playsound_local(source, null, 100, S = music_played, max_distance = 15, volume_pref = prefs ? prefs.at_overall(prefs.instrumentvol) : null)
 
 /datum/song/proc/updateDialog(mob/user)
 	instrumentObj.updateDialog()		// assumes it's an object in world, override if otherwise

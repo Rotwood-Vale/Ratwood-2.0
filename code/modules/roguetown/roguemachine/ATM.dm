@@ -159,7 +159,7 @@
 	if(SStreasury.discretionary_fund.balance <50)
 		new /obj/item/coveter(loc)
 		loc.visible_message(span_warning("The Crown grinds to a halt as the last of the treasury spills from the Nervelock!"))
-		playsound(src, 'sound/misc/DrillDone.ogg', 70, TRUE)
+		playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE)
 		icon_state = "atm"
 		drilling = FALSE
 		has_reported = FALSE
@@ -167,7 +167,7 @@
 	if(mammonsiphoned >199) // The cap variable for siphoning.
 		new /obj/item/coveter(loc)
 		loc.visible_message(span_warning("Maximum withdrawal reached! The Nervelock weeps."))
-		playsound(src, 'sound/misc/DrillDone.ogg', 70, TRUE)
+		playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE)
 		icon_state = "atm_broken"
 		drilled = TRUE
 		drilling = FALSE
@@ -178,7 +178,7 @@
 		if(!has_reported)
 			send_ooc_note("A parasite of the Freefolk is draining a Nervelock! Location: [location_tag ? location_tag : "Unknown"]", job = list("Grand Duke", "Steward", "Clerk"))
 			has_reported = TRUE
-		playsound(src, 'sound/misc/TheDrill.ogg', 70, TRUE)
+		playsoundtoken(src, 'sound/misc/TheDrill.ogg', 70, SOUND_RANGE + 1, vary = TRUE)
 		addtimer(CALLBACK(src, PROC_REF(drill_payout)), 100) // The time it takes to complete an interval. If you adjust this, please adjust the sound too. It's 'about' perfect at 100. Anything less It'll start overlapping.
 
 /obj/structure/roguemachine/atm/proc/drill_payout()
@@ -259,7 +259,7 @@
 						needed_cycles = 1
 					user.visible_message(span_warn("[user] hastily shoves \the [src] into [H]'s forehead!"))
 					playsound(H, 'sound/combat/hits/pick/genpick (1).ogg', 100)
-					playsound(src, 'sound/misc/TheDrill.ogg', 70, TRUE)
+					playsoundtoken(src, 'sound/misc/TheDrill.ogg', 70, SOUND_RANGE + 1, vary = TRUE)
 					to_chat(H,span_info("<font color ='red'>Sharp claws dig into your skull. There's a warmth trickling down your head.</font>"))
 					for(var/i = 1,i<=needed_cycles,i++)
 						if(do_after(user, 25))
@@ -276,7 +276,7 @@
 							if(prob(needed_cycles*2))
 								drain_effect_fast(H)
 							if(i == needed_cycles)	//Last cycle.
-								playsound(src, 'sound/misc/DrillDone.ogg', 70, TRUE)
+								playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE)
 								is_active = FALSE
 								to_chat(H,span_info("<font color ='red'>You feel very drained.</font>"))
 								send_ooc_note("A parasite of the Freefolk has siphoned [H.real_name] of [sum] from the Nervemaster's veins.", job = list("Grand Duke", "Steward", "Clerk"))

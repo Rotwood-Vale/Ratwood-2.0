@@ -57,12 +57,26 @@ SUBSYSTEM_DEF(memory_stats)
 	var/delta = (isnull(rss_after) || isnull(rss_before)) ? "unknown" : round((rss_after - rss_before) / (1024 * 1024), 0.1)
 	WRITE_LOG(GLOB.world_mem_log, "MEMMAP: [stage] [map_path] delta_mb=[delta] time_s=[(REALTIMEOFDAY - start_time) / 10]")
 
+/**
+ * Writes one sample of memory and list sizes to the memory log.
+ *
+ * On Windows rss is not one server's footprint: it is the summed working set of every dd and
+ * dreamdaemon process on the host, written by tools/memory_stats/mem_writer.ps1 and read here each
+ * fire. A second server or a leftover process is inside it, and a delta can be theirs, so rss_scope
+ * says which it is.
+ *
+ * The point ambience tile cache keeps an invalidated tile's key with a null value, so pa_tile_keys is
+ * what the list costs and pa_tile_live is what it answers from. Reading them apart is the only way to
+ * tell a cache holding answers from one holding holes.
+ */
 /datum/controller/subsystem/memory_stats/proc/log_memory_stats()
 	var/list/out = list()
 
 	var/rss_bytes = get_process_rss_bytes()
 	if(!isnull(rss_bytes))
 		var/rss = round(rss_bytes / (1024 * 1024), 0.1)
+		// On Windows rss covers every Dream Daemon on the host, see the proc doc
+		out += "rss_scope=[world.system_type == UNIX ? "this_process" : "all_dd_processes"]"
 		out += "rss_mb=[rss]"
 		out += "rss_bytes=[num2text(rss_bytes, 12)]"
 		if(last_rss_mb && rss - last_rss_mb > 250)
@@ -90,6 +104,18 @@ SUBSYSTEM_DEF(memory_stats)
 	out += "gc_totalgcs=[SSgarbage.totalgcs]"
 	for(var/i in 1 to length(SSgarbage.queues))
 		out += "gc_queue[i]=[length(SSgarbage.queues[i])]"
+
+	// Point ambience derived state. Tile keys and live tiles differ by the holes, see the proc doc
+	out += "pa_tile_keys=[length(SSpoint_ambience.tile_cache)]"
+	out += "pa_tile_live=[SSpoint_ambience.tile_cache_entries]"
+	out += "pa_history_fields=[length(SSpoint_ambience.source_change_history)]"
+	out += "pa_fading=[length(SSpoint_ambience.fading)]"
+	out += "pa_dirty_clients=[length(SSpoint_ambience.dirty_clients)]"
+	var/pa_index_cells = 0
+	for(var/list/floor_buckets as anything in SSpoint_ambience.buckets_by_z)
+		if(islist(floor_buckets))
+			pa_index_cells += length(floor_buckets)
+	out += "pa_index_cells=[pa_index_cells]"
 
 	// timers
 	out += "timer_buckets=[SStimer.bucket_count]"

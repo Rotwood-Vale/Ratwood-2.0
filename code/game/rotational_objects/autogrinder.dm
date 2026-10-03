@@ -225,10 +225,10 @@
 	if(!soundloop)
 		return
 	if(show_working())
-		if(soundloop.stopped)
+		if(!soundloop.is_active())
 			soundloop.start()
 		return
-	if(!soundloop.stopped)
+	if(soundloop.is_active())
 		soundloop.stop()
 
 /obj/structure/autogrinder/set_rotations_per_minute(speed)

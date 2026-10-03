@@ -20,9 +20,12 @@
 	return
 
 /datum/round_event/lightsout/start()
+	// Point ambience clears its rankings and stops what went quiet once for the whole omen, not per fire
+	SSpoint_ambience.begin_bulk_source_update("lights out")
 	if(LAZYLEN(GLOB.fires_list))
 		for(var/obj/i in GLOB.fires_list)
 			i.extinguish()
+	SSpoint_ambience.end_bulk_source_update()
 	if(LAZYLEN(GLOB.streetlamp_list))
 		for(var/obj/machinery/light/roguestreet/i in GLOB.streetlamp_list)
 			i.lights_out()

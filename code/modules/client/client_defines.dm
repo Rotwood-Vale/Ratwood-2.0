@@ -43,6 +43,86 @@
 	var/datum/toggle_options_menu/toggles_menu = null
 	/// Single-instance Volume Power TGUI menu
 	var/datum/volume_power_menu/volume_power_menu = null
+	/// Nearest ambient source this client hears per category (category datum -> atom), driven
+	/// by SSpoint_ambience. Always a list, so the hot path indexes it without a null check
+	var/list/point_ambience_sources = list()
+	/**
+	 * Per category send state, indexed by category.index, as the POINT_AMBIENCE_SLOT_* fields in sound.dm.
+	 *
+	 * The source turf, the file and pitch playback began with, the volume and environment last sent, the
+	 * runner-up the pan leans toward, fade state and the clip timer. The turf is rewritten on every send.
+	 */
+	var/list/point_ambience_slots = list()
+	/// Inputs of the last clear river send. Null cost prevents reuse after muffling or a stop
+	var/point_ambience_river_cost
+	var/point_ambience_river_scale
+	var/point_ambience_river_version
+	/// At least one category slot has an expired clip for the next point ambience service to advance
+	var/point_ambience_clip_due = FALSE
+	/// One /sound datum per category, indexed by category.index, reused for every send to this client.
+	/// File, channel and falloff are written when playback starts, and a handoff rewrites only the pitch
+	var/list/point_ambience_sounds = list()
+	/// The self source the last category loop was served with, so a standing listener whose
+	/// torch state changed still gets the loop
+	var/atom/point_ambience_cache_self
+	/**
+	 * Whether the mob can hear, held until point_ambience_profile_until: can_hear() is three user
+	 * procs and an organ walk on a carbon. Refreshed only by a service that walks or sends, never
+	 * by the standing shortcut, so a listener standing still keeps the last answer until they step
+	 */
+	var/point_ambience_hearing = FALSE
+	/**
+	 * Where this listener hears from when it is not their own turf: a headless dullahan's head,
+	 * wherever it has been carried to. Null for everyone else, and kept current by the watch below
+	 * rather than by the service, which reads one var instead of resolving a species
+	 */
+	var/atom/movable/point_ambience_ear
+	/// Follows the head and whatever carries it, one per dullahan client and nothing for anyone else
+	var/datum/point_ambience_head_watch/point_ambience_head_watch
+	var/point_ambience_profile_until = 0
+	/// world.time before which the move hook will not service this client again, when
+	/// SSpoint_ambience.move_service_interval is set
+	var/point_ambience_next_service = 0
+	/// world.time the move hook or the queue last served this client, queued clip and door services
+	/// included. The standing walk passes over anyone served within SSpoint_ambience.standing_skip of now
+	var/point_ambience_last_service = 0
+	var/point_ambience_last_move
+	/// world.time of the last move, forced or not, made at a step delay faster than a natural run. Null
+	/// once a natural step ends the silence or a service finds it older than POINT_AMBIENCE_SPEED_STILL
+	var/point_ambience_speed_moved
+	/// Everything but a torch in hand faded for moving too fast, until a service finds them slowed
+	var/point_ambience_speed_silenced = FALSE
+	/// world.time before which a forced move or a floor change waits for the interval like a step
+	var/point_ambience_jump_next = 0
+	/// Nothing to hear from point ambience: off, its volume at zero or under the cutoff, or every
+	/// category muted. Set at login and by the volume menu, never per step
+	var/point_ambience_silenced = FALSE
+	/// The categories this listener has muted, by their mask bits, set beside the flag above
+	var/point_ambience_muted_mask = 0
+	/**
+	 * The last full ambience scan, reused while the client stands still and no index change reached them.
+	 *
+	 * This var and the three below hold the turf, SSpoint_ambience.static_version and effective point
+	 * ambience volume it was taken at, and in point_ambience_cache_static the source served per category,
+	 * which occlusion may have swapped for the runner-up. The walk ranks straight into that list, so it
+	 * allocates nothing.
+	 */
+	var/turf/point_ambience_cache_turf
+	var/point_ambience_cache_version
+	var/point_ambience_cache_volume
+	var/list/point_ambience_cache_static
+	/**
+	 * Every source the own-floor walk could reach from anywhere in the client's current index cell.
+	 *
+	 * Stored as the flat x, y, category index, source the buckets already store. Used only with the tile
+	 * cache off, where a step inside the same cell ranks this instead of probing nine buckets. Rebuilt
+	 * on a cell change or a static_version change, which for a straight walk is one step in
+	 * SSpoint_ambience.cell_size.
+	 */
+	var/list/point_ambience_cell_candidates
+	var/point_ambience_cell_index
+	var/point_ambience_cell_z
+	var/point_ambience_cell_version
 	///Move delay of controlled mob, related to input handling
 	var/move_delay = 0
 	///Current area of the controlled mob

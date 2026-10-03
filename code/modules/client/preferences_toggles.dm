@@ -133,11 +133,10 @@
 
 	var/list/audio_entries = list(
 		list("id" = "lobby_music", "label" = "Lobby Music", "enabled" = !!(owner.prefs.toggles & SOUND_LOBBY), "desc" = "Play music while in the lobby."),
-		list("id" = "hear_instruments", "label" = "Hear Instruments", "enabled" = !!(owner.prefs.toggles & SOUND_INSTRUMENTS), "desc" = "Hear bard instruments, jukeboxes, and boomboxes."),
 	)
 
 	var/list/content_entries = list(
-		list("id" = "animal_emotes", "label" = "Animal Noise Emotes", "enabled" = !!(!owner.prefs.mute_animal_emotes), "desc" = "Play animal emote sound effects."),
+		list("id" = "anthro_noises", "label" = "Anthro Noise Emotes", "enabled" = !!(!owner.prefs.mute_anthro_noises), "desc" = "Play anthro noise emote sound effects."),
 		list("id" = "erp_panel", "label" = "Enable ERP Panel Interactions", "enabled" = !!owner.prefs.sexable, "desc" = "Allow others to use ERP panel interactions on you."),
 		list("id" = "erp_visuals", "label" = "Enable ERP Visual Effects", "enabled" = !!owner.prefs.erp_visuals, "desc" = "Enable visual effects like hearts and screen overlays during ERP."),
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
@@ -235,15 +234,8 @@
 				owner.toggle_roleplay_ads()
 			if("lobby_music")
 				owner.toggle_lobby_music()
-			if("hear_instruments")
-				owner.prefs.toggles ^= SOUND_INSTRUMENTS
-				owner.prefs.save_preferences()
-				for(var/datum/looping_sound/persistent_loop in GLOB.persistent_sound_loops)
-					owner.update_persistent_sound_loop(persistent_loop)
-				owner.update_sounds()
-				owner.sync_instrument_audio_toggle()
-			if("animal_emotes")
-				owner.mute_animal_emotes()
+			if("anthro_noises")
+				owner.mute_anthro_noises()
 			if("erp_panel")
 				owner.toggle_ERP()
 			if("erp_visuals")
@@ -368,17 +360,17 @@
 		else
 			to_chat(src, "Your character NSFW information will only be visible when nude.")
 
-/client/verb/mute_animal_emotes()
+/client/verb/mute_anthro_noises()
 	set category = "Options"
-	set name = "Toggle Animal Noise Emotes"
+	set name = "Toggle Anthro Noise Emotes"
 	set hidden = 1
 	if(prefs)
-		prefs.mute_animal_emotes = !prefs.mute_animal_emotes
+		prefs.mute_anthro_noises = !prefs.mute_anthro_noises
 		prefs.save_preferences()
-		if(prefs.mute_animal_emotes)
-			to_chat(src, "You can no longer hear animal sound emotes.")
+		if(prefs.mute_anthro_noises)
+			to_chat(src, "You can no longer hear anthro noise emotes.")
 		else
-			to_chat(src, "You will now hear animal sound emotes.")
+			to_chat(src, "You will now hear anthro noise emotes.")
 
 /client/verb/autoconsume()
 	set category = "Options"
@@ -987,24 +979,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglemidis)()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Hearing Midis", "[usr.client.prefs.toggles & SOUND_MIDI ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/Settings/Sound/togglemidis/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_MIDI
-
-
-TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_instruments)()
-	set name = "Hear/Silence Instruments"
-	set category = "Preferences"
-	set desc = ""
-	set hidden = 1
-	usr.client.prefs.toggles ^= SOUND_INSTRUMENTS
-	usr.client.prefs.save_preferences()
-	usr.client.update_sounds()
-	usr.client.sync_instrument_audio_toggle()
-	if(usr.client.prefs.toggles & SOUND_INSTRUMENTS)
-		to_chat(usr, "You will now hear people playing musical instruments.")
-	else
-		to_chat(usr, "You will no longer hear musical instruments.")
-	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Instruments", "[usr.client.prefs.toggles & SOUND_INSTRUMENTS ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-/datum/verbs/menu/Settings/Sound/toggle_instruments/Get_checked(client/C)
-	return C.prefs.toggles & SOUND_INSTRUMENTS
 
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, Toggle_Soundscape)()

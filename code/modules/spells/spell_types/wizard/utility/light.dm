@@ -58,7 +58,6 @@
 	flags_1 = null
 	possible_item_intents = list(/datum/intent/use)
 	slot_flags = ITEM_SLOT_HIP
-	var/datum/looping_sound/torchloop/soundloop
 	max_integrity = 200
 	fuel = 10 MINUTES
 
@@ -73,13 +72,11 @@
 
 /obj/item/flashlight/flare/light/Initialize(mapload)
 	. = ..()
-	soundloop = new(src, FALSE)
 	on = TRUE
 	START_PROCESSING(SSobj, src)
 
 /obj/item/flashlight/flare/light/Destroy(force)
 	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/item/flashlight/flare/light/update_brightness(mob/user = null)
@@ -106,7 +103,6 @@
 
 /obj/item/flashlight/flare/light/turn_off()
 	playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
-	soundloop.stop()
 	STOP_PROCESSING(SSobj, src)
 	..()
 	if(ismob(loc))

@@ -208,7 +208,7 @@
 	if(drilltime >= drillgoal)
 		new /obj/item/coveter(loc)
 		loc.visible_message(span_warning("The [src] hisses open, <b>finally broken.</b>"))
-		playsound(src, 'sound/misc/DrillDone.ogg', 70, TRUE)
+		playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE)
 		icon_state = "[initial(icon_state)]_empty"
 		var/full_drain = F.balance
 		budget2change(full_drain, null)
@@ -240,7 +240,7 @@
 			send_ooc_note("A parasite of the Freefolk is breaking [src]! Location: [alert_location]", job = alert_jobs)
 			has_reported = TRUE
 
-	playsound(src, 'sound/misc/TheDrill.ogg', 50, TRUE)
+	playsoundtoken(src, 'sound/misc/TheDrill.ogg', 50, SOUND_RANGE + 1, vary = TRUE)
 	addtimer(CALLBACK(src, PROC_REF(drill_payout)), 100)
 
 /obj/structure/roguemachine/vaultbank/proc/drill_payout()
