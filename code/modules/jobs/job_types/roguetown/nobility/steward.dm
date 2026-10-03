@@ -34,13 +34,8 @@
 	outfit = /datum/outfit/job/roguetown/steward/basic
 
 	category_tags = list(CTAG_STEWARD)
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_PER = 2,
-		STATKEY_SPD = 2,
-		STATKEY_CON = 1,
-		STATKEY_STR = -2
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_STR = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,

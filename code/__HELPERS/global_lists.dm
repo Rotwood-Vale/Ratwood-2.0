@@ -17,7 +17,6 @@
 	init_faiths()
 	init_patrons()
 
-	init_statpacks()
 
 	init_combat_music()
 
@@ -102,13 +101,6 @@
 		GLOB.species_list[species.name] = species_path
 		qdel(species)
 	sortList(GLOB.species_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
-
-// Ported from Lethalstone
-/proc/init_statpacks()
-	. = list()
-	for (var/path in subtypesof(/datum/statpack))
-		.[path] = new path()
-	sortList(., GLOBAL_PROC_REF(cmp_text_dsc))
 
 /proc/init_combat_music()
 	// Combat Music Overrides

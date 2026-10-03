@@ -17,7 +17,7 @@
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
-	quirk_restrictions = list(/datum/quirk/noble)//Hmm. I duno, they're PRETTY noble-like.
+	virtue_restrictions = list(/datum/virtue/nobility)//Hmm. I duno, they're PRETTY noble-like.
 	job_traits = list(TRAIT_EMPATH, TRAIT_STEELHEARTED, TRAIT_SOUL_EXAMINE)
 	cmode_music = 'sound/music/combat_desert2.ogg'
 	advclass_cat_rolls = list(CTAG_DTCHAPLAIN = 2)
@@ -31,12 +31,8 @@
 	outfit = /datum/outfit/job/roguetown/dtchaplain
 	subclass_languages = list(/datum/language/otavan, /datum/language/celestial)
 	category_tags = list(CTAG_DTCHAPLAIN)
-	subclass_stats = list(
-		STATKEY_INT = 2,//court knowledge
-		STATKEY_WIL = 2,
-		STATKEY_PER = 2,//eye for intrigue
-		STATKEY_CON = -1,//scrawny pencil-pusher
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_CON = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,

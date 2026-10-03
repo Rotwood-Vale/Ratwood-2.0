@@ -16,13 +16,9 @@
 
 	traits_applied = list(TRAIT_SEEPRICES, TRAIT_NOBLE, TRAIT_NUTCRACKER, TRAIT_HEARTFELT)
 
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_WIL = 3,
-		STATKEY_SPD = 2,
-		STATKEY_PER = 2,
-		STATKEY_LCK = 5,
-	)
+	stat_budget = STAT_BUDGET_PEAK
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 5)
 
 	subclass_skills = list(
 	/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,

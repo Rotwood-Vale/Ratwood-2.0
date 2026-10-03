@@ -9,12 +9,8 @@
 	applies_post_equipment = FALSE
 	traits_applied = list(TRAIT_HEAVYARMOR) // Flavoring
 
-	subclass_stats = list(
-		STATKEY_WIL = 5,
-		STATKEY_CON = 5,
-		STATKEY_SPD = 2,
-		STATKEY_INT = 1
-	)
+	stat_budget = STAT_BUDGET_MAX
+	favored_stats = STATS_BULWARK
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,

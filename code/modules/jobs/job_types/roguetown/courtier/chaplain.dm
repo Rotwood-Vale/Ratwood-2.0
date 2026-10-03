@@ -23,7 +23,7 @@
 	max_pq = null
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
-	quirk_restrictions = list(/datum/quirk/noble)//Hmm. I duno, they're PRETTY noble-like.
+	virtue_restrictions = list(/datum/virtue/nobility)//Hmm. I duno, they're PRETTY noble-like.
 	job_traits = list(TRAIT_EMPATH)//no homestead expert because we want them doing intrigue intead of gardening?
 	advclass_cat_rolls = list(CTAG_CHAPLAIN = 2)
 	job_subclasses = list(
@@ -37,12 +37,8 @@
 	outfit = /datum/outfit/job/roguetown/chaplain
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	category_tags = list(CTAG_CHAPLAIN)
-	subclass_stats = list(
-		STATKEY_INT = 2,//court knowledge
-		STATKEY_WIL = 2,
-		STATKEY_PER = 2,//eye for intrigue
-		STATKEY_CON = -1,//scrawny pencil-pusher
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_CLERIC
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,

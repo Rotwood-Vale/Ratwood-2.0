@@ -51,13 +51,8 @@
 	outfit = /datum/outfit/job/roguetown/watchcaptain/watchcaptain
 
 	category_tags = list(CTAG_SHERIFF)
-	subclass_stats = list(
-		STATKEY_STR = 1,//will people accept a combat roll with less than +2 in strength? Who knows
-		STATKEY_INT = 1,
-		STATKEY_CON = 1,
-		STATKEY_PER = 2, //eye for Crime
-		STATKEY_WIL = 2,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_FIGHTER
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,

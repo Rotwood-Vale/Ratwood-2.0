@@ -56,13 +56,9 @@
 	outfit = /datum/outfit/job/roguetown/baron/shrewd_nobleman
 	category_tags = list(CTAG_BARON)
 	traits_applied = list(TRAIT_NOBLE, TRAIT_SEEPRICES)
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_PER = 2,
-		STATKEY_SPD = 1,
-		STATKEY_WIL = 2,
-		STATKEY_LCK = 2,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_NOVICE,
@@ -88,12 +84,8 @@
 	outfit = /datum/outfit/job/roguetown/baron/landed_knight
 	category_tags = list(CTAG_BARON)
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR)
-	subclass_stats = list(
-		STATKEY_INT = 1,
-		STATKEY_STR = 2,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,

@@ -17,12 +17,8 @@
 		TRAIT_SLEUTH,
 		TRAIT_PURITAN_ADVENTURER,//For fluff.
 	)
-	subclass_stats = list(//+9
-		STATKEY_SPD = 3,
-		STATKEY_WIL = 3,
-		STATKEY_PER = 2,
-		STATKEY_STR = -1
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, //Should rely on the seizing garrote to properly subdue foes.
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,

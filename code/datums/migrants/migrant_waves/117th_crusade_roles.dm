@@ -16,13 +16,9 @@
 	traits_applied = list(TRAIT_NOBLE, TRAIT_DECEIVING_MEEKNESS, TRAIT_BREADY, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_CRUSADE)
 
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 3,
-		STATKEY_PER = 2,
-		STATKEY_LCK = 3,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 3)
 
 	subclass_languages = list(
 		/datum/language/grenzelhoftian,
@@ -90,13 +86,8 @@
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_CRUSADE)
 
-	subclass_stats = list(
-		STATKEY_STR = 1,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_INT = 2,
-		STATKEY_SPD = 1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_CLERIC
 
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
@@ -161,13 +152,8 @@
 	outfit = /datum/outfit/job/roguetown/crusader/paladin
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_CRUSADE)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_INT = 1,
-		STATKEY_PER = 1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED)
 
 	subclass_languages = list(
 		/datum/language/grenzelhoftian,
@@ -235,12 +221,8 @@
 	outfit = /datum/outfit/job/roguetown/crusader/footman
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_CRUSADE)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_PER = 2,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
@@ -297,13 +279,8 @@
 	outfit = /datum/outfit/job/roguetown/crusader/marksman
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_CRUSADE)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_PER = 2,
-		STATKEY_SPD = 2,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_STR = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_MASTER,

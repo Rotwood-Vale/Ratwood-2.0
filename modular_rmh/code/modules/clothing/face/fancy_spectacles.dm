@@ -17,9 +17,7 @@
 /datum/loadout_item/fancy_spectacles
 	name = "fancy spectacles"
 	path = /obj/item/clothing/mask/rogue/spectacles/fancy
-	triumph_cost = 2
 
 /datum/loadout_item/fancy_spectaclesd
 	name = "fancy spectacles (alt)"
 	path = /obj/item/clothing/mask/rogue/spectacles/fancy_dark
-	triumph_cost = 2

@@ -9,13 +9,9 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	subclass_spellpoints = 21
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_WIL = 2,
-		STATKEY_PER = 2, // Adv mage get 2 perception so whatever. It is useful for aiming body parts but have no direct synergy with spells.
-		STATKEY_LCK = 2,
-		STATKEY_CON = 1,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = STATS_ROGUE
+	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN, // Jman Polearms, for better parrying without making them bandit level
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE, // They get apprentice in a wide spread of weapons for synergy with conjuration, especially if they take virtues

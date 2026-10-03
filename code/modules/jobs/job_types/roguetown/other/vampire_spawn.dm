@@ -29,14 +29,8 @@
 	category_tags = list(CTAG_VAMPIRE_SPAWN)
 
 	traits_applied = list(TRAIT_HEAVYARMOR)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_INT = 1,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_PER = 3,
-		STATKEY_SPD = 1,
-	)
+	stat_budget = STAT_BUDGET_PEAK
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_STR = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,

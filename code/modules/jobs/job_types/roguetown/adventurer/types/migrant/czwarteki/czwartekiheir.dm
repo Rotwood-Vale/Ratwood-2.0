@@ -13,13 +13,9 @@
 		/datum/language/aavnic,
 	)
 
-	subclass_stats = list(
-	STATKEY_STR = 2,
-	STATKEY_WIL = 2,
-	STATKEY_INT = 1,
-	STATKEY_SPD = 1,
-	STATKEY_LCK = 3,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 3)
 
 	subclass_skills = list(
 		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,

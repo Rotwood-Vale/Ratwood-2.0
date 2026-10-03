@@ -12,14 +12,9 @@
 	pickprob = 5
 	category_tags = list(CTAG_TOWNER)
 	traits_applied = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT)
-	subclass_stats = list(
-		STATKEY_LCK = 4,
-		STATKEY_STR = 2,
-		STATKEY_INT = 2,
-		STATKEY_WIL = 2,
-		STATKEY_CON = 1,
-		STATKEY_PER = 1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 4)
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,

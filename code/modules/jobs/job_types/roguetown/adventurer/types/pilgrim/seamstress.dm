@@ -8,12 +8,8 @@
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	traits_applied = list(TRAIT_SEWING_EXPERT,TRAIT_DYES)
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
-	subclass_stats = list(
-		STATKEY_SPD = 2,
-		STATKEY_INT = 2,
-		STATKEY_PER = 1,
-		STATKEY_STR = -1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/craft/sewing = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,

@@ -35,13 +35,8 @@
 	tutorial = "It is a simple life you live, your basic understanding of life is something many would be envious of if they knew just how perfect it was. You know a good day's work, the sweat on your brow is yours: Famines and plague may take their toll, but you know how to celebrate life well. Till the soil and produce fresh food for those around you, and maybe you'll be more than an unsung hero someday."
 	outfit = /datum/outfit/job/roguetown/farmer/basic
 	category_tags = list(CTAG_SOILBRIDE)
-	subclass_stats = list(
-		STATKEY_WIL = 2,
-		STATKEY_STR = 1,
-		STATKEY_CON = 2,
-		STATKEY_SPD = 1,
-		STATKEY_INT = -1,//simple and honest
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_STR = STAT_FAVORED, STATKEY_INT = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_NOVICE,

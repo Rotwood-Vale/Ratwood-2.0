@@ -22,7 +22,7 @@
 	social_rank = SOCIAL_RANK_PEASANT
 
 	//You've given up your life for the Church. Why would you be noble?
-	quirk_restrictions = list(/datum/quirk/noble)
+	virtue_restrictions = list(/datum/virtue/nobility)
 
 	advclass_cat_rolls = list(CTAG_CHURCHLING = 20)
 	job_subclasses = list(
@@ -37,10 +37,8 @@
 	cmode_music = 'sound/music/combat_holy.ogg'
 	category_tags = list(CTAG_CHURCHLING)
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
-	subclass_stats = list(
-		STATKEY_SPD = 2,
-		STATKEY_PER = 1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
@@ -107,11 +105,8 @@
 	outfit = /datum/outfit/job/roguetown/churchling/neophyte
 	category_tags = list(CTAG_CHURCHLING)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SQUIRE_REPAIR)
-	subclass_stats = list(
-		STATKEY_CON = 2,
-		STATKEY_STR = 1,
-		STATKEY_WIL = 1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/holy = SKILL_LEVEL_NOVICE,

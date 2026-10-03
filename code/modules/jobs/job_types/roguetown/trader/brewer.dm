@@ -6,12 +6,8 @@
 	traits_applied = list(TRAIT_CICERONE, TRAIT_HOMESTEAD_EXPERT)
 	class_select_category = CLASS_CAT_TRADER
 	category_tags = list(CTAG_PILGRIM, CTAG_COURTAGENT, CTAG_LICKER_WRETCH)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_PER = 1,
-		STATKEY_CON = 1,
-		STATKEY_STR = 1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,

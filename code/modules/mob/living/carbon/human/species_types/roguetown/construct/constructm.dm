@@ -4,6 +4,7 @@
 
 /datum/species/construct/metal
 	name = "Metal Construct"
+	origin_stats_allowed = FALSE
 	id = "constructm"
 	desc = "<b>Metallic Construct</b><br>\
 	Masterworks of artifice, metal constructs are as the name implies- entirely constructed by mortal hands. They are beings not of flesh and blood, but cold metal and the arcyne. Constructs are said to originate from works of Zizo, and they hail from the far-off lands of the Southern Empty- a great city of artifice, where the only artificers capable of understanding what is necessary to create the constructs live. For some reason, they have found themselves travelling out of the empty, as of late. Children of the Resonator Siphon.<br>\
@@ -118,8 +119,7 @@
 		/datum/body_marking/stripes,
 	)
 
-	restricted_virtues = list(/datum/virtue/utility/deathless)
-	restricted_quirks = list(/datum/quirk/noble)
+	restricted_virtues = list(/datum/virtue/utility/deathless, /datum/virtue/nobility)
 
 /datum/species/construct/metal/check_roundstart_eligible()
 	return TRUE

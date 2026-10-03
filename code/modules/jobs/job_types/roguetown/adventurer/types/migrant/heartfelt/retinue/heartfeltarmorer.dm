@@ -14,14 +14,9 @@
 // Master Smith role for Heartfelt
 
 	traits_applied = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT, TRAIT_MEDIUMARMOR, TRAIT_HEARTFELT)
-	subclass_stats = list(
-		STATKEY_LCK = 1,
-		STATKEY_STR = 2,
-		STATKEY_INT = 1,
-		STATKEY_PER = 2,
-		STATKEY_WIL = 2,
-		STATKEY_CON = 2,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 1)
 
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,

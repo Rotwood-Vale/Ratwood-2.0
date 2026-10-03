@@ -13,8 +13,6 @@ import { Window } from '../layouts';
 type LoadoutItem = {
   name: string;
   desc: string;
-  triumph_cost: string;
-  nobility_check: boolean;
   donoritem: boolean;
   ref: string;
   icon: string;
@@ -51,7 +49,7 @@ export const ItemDisplay = (props) => {
 
   const availableItems = loadout_items
     .filter((item) => {
-      return item.nobility_check && item.donoritem;
+      return item.donoritem;
     })
     .filter((item) => {
       if (search) {
@@ -79,7 +77,7 @@ export const ItemDisplay = (props) => {
              <Box className={item.icon} mr={2} inline />
             </Stack.Item>
             <Stack.Item>
-             {item.name} - {item.triumph_cost}
+             {item.name}
             </Stack.Item>
           </Stack>
           <Stack align="center">

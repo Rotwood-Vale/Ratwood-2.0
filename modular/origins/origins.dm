@@ -6,6 +6,8 @@
 	var/map_x = 0
 	var/map_y = 0
 	var/origin_language = null
+	var/list/stat_bonuses = list()
+	var/choose_stat = FALSE
 
 GLOBAL_LIST_INIT(origins, build_origins())
 
@@ -16,6 +18,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/otava
 	name = "Otava"
+	stat_bonuses = list(STATKEY_WIL = 1, STATKEY_PER = 1)
 	desc = "An unforgivingly cold alpine clime, said to be the birthplace of the Psydonic faith. The Orthodoxist Inquisition operates from the capital of Otava's old monarchy."
 	origin_title = "Otava"
 	origin_language = /datum/language/otavan
@@ -24,6 +27,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/zybantine
 	name = "Zybantine"
+	choose_stat = TRUE
 	desc = "The Zybantine Empire spans across many countries, encompassing many of the deserts of Ferentia. The Empire favours strength and wealth; though rumours are abound \
 	that the opulent empire gathers its wealth through unsavoury means."
 	origin_title = "Zybantine"
@@ -33,6 +37,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/naledi
 	name = "Naledi"
+	stat_bonuses = list(STATKEY_WIL = 1, STATKEY_INT = 1)
 	desc = "Once a thriving empire in its own right, the Naledi people have warred against demons (or djinn in the local tongue) on their island for centuries. Their homeland \
 	was sundered by Zizo and all but finished off by the Ascension of Baotha about 100 yils ago. It is said that the first magics were born here."
 	origin_title = "Naledi"
@@ -42,6 +47,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/ferentia
 	name = "Ferentia"
+	choose_stat = TRUE
 	desc = "An island kingdom off of the western coast of Grenzelhoft and Etrusca. The Ferentian people are a hardworking sort, eager to drink and revel after a dae's worth \
 	of toil. In the past, the kingdom has had to defend against Otava and Grenzelhoft, but now it acts as a mediator between the two nations."
 	origin_title = "Ferentia"
@@ -50,6 +56,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/underdark
 	name = "The Underdark"
+	choose_stat = TRUE
 	desc = "Said to be an immense network of caves and tunnels located all throughout the crust of Grimoria, the Underdark is home to the Dark Elves and the Kobolds, as well \
 	as the elusive Fluvian city-state of Mercuriam. The caverns of the Underdark are filled with many threats from rivers of acid to man-eating spiders; and even exaggerated \
 	reports of dragons beneath."
@@ -59,6 +66,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/hammerhold
 	name = "Hammerhold"
+	stat_bonuses = list(STATKEY_CON = 1, STATKEY_INT = 1)
 	desc = "The Hammerhold Peninsula and Isles are home to a myriad of peoples, from the Abyssor-loving Witan of the peninsula, the red-heads of Ru-Yermon, or the isles that \
 	once made up the see of seasons. Within it lies the Platinum Dwarf Fortress, the ruins of a glorious cathedral that was once the seat of northern tennite faith, and various \
 	petty kingdoms, or Jarldoms, all loosely agreeing to the will of the Ringbearer, Lord of the Witan."
@@ -69,6 +77,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/grenzelhoft
 	name = "Grenzelhoft"
+	stat_bonuses = list(STATKEY_WIL = 1, STATKEY_INT = 1)
 	desc = "The Grenzelhoft Empire is the seat of the Holy See of the Dieci, the main Ten-worshipping religion of Grimoria. Due to the unfathomable hordes of deadites plaguing \
 	the Empire, many of the grand cities and artisan towns have been abandoned in favour of a lyfe across the seas or within the capital city. Despite all, Grenzelhoft still \
 	stands tall."
@@ -79,6 +88,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/avar
 	name = "Avar"
+	stat_bonuses = list(STATKEY_CON = 1, STATKEY_PER = 1)
 	desc = "Avar is a land divided between the great Northern mountain ranges, the rolling grasslands of the Steppe, and the thick forests of the oncoming Taiga. It is home \
 	to the second greatest Psydonic kingdom behind Otava, the finest martial force of the Eastern ranges, and the most ethnically and culturally diverse peoples in Grimoria."
 	origin_title = "Avar"
@@ -88,6 +98,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/gronn
 	name = "Gronn"
+	stat_bonuses = list(STATKEY_STR = 1)
 	desc = "The steppes of Gronn are a place of bloodshed and war; Graggarite warbands laying waste to the people of Gronn and vying for dominance over Avar to the south. \
 	Not all is lost in the steppes, however, with many towns and nomad families eking out an existence fraught with danger despite the ravagers' conquest."
 	origin_title = "Gronn"
@@ -97,6 +108,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/etrusca
 	name = "Etrusca"
+	stat_bonuses = list(STATKEY_SPD = 1)
 	desc = "A sunny trade nation comprised mostly of beautiful archipelagos. Etrusca prides itself on its martial and culinary traditions, with people all across Grimoria \
 	striving to learn the ways of the vaqueros and duellists of the trader state. "
 	origin_title = "Etrusca"
@@ -106,6 +118,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/kazengun
 	name = "Kazengun"
+	stat_bonuses = list(STATKEY_LCK = 1)
 	desc = "Kazengun is not but one nation, but three dynasties that have been in stand-still for centuries. The Kazengun Shogunate to the west of the island, the \
 	Pui-Maen Dynasty to the east, and the Clan Xinyi to the north. Kazengun is oft travelled by the people of the west, but those who visit recount (mostly tall) \
 	tales of the warriors and monsters within. Kazengunese imports are particularly expensive considering the vast ocean between the dynasties and the western world."

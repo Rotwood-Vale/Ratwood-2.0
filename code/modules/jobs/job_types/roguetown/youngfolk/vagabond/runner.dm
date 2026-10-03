@@ -7,11 +7,7 @@
 	outfit = /datum/outfit/job/roguetown/vagabond/runner
 	category_tags = list(CTAG_VAGABOND)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	subclass_stats = list(
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1,
-		STATKEY_INT = -2
-	)
+	stat_budget = STAT_BUDGET_FRAIL
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,

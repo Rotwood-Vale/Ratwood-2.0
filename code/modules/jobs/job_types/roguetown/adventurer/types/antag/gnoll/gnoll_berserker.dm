@@ -8,14 +8,8 @@
 	category_tags = list(CTAG_GNOLL)
 	applies_post_equipment = FALSE
 	traits_applied = list()
-	subclass_stats = list(
-		STATKEY_STR = 3,
-		STATKEY_CON = 4,
-		STATKEY_WIL = 3,
-		STATKEY_SPD = 4,
-		STATKEY_INT = -3,
-		STATKEY_PER = -1
-	)
+	stat_budget = STAT_BUDGET_MAX
+	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_STR = STAT_FAVORED, STATKEY_PER = STAT_DISFAVORED, STATKEY_INT = STAT_VERY_DISFAVORED)
 	// Messy butchers, alright hunters
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,

@@ -8,14 +8,9 @@
 	category_tags = list(CTAG_BANDIT)
 	maximum_possible_slots = 1//They're limited because these guys can LEVEL THE TOWN. RAAAAAAAAAA!!!!!!
 	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_WEBWALK, TRAIT_FUSILIER, TRAIT_BOMBER_EXPERT, TRAIT_SQUIRE_REPAIR, TRAIT_LEGENDARY_MINER) //Added bomber expert as it was an oversight not to have it, and squire repair because brigands just buy stuff anyway, makes sense for the 'support' class to fix shit
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_PER = 2,
-		STATKEY_WIL = 2,
-		STATKEY_STR = 1,
-		STATKEY_CON = 1,
-		STATKEY_LCK = 1,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/combat/firearms = SKILL_LEVEL_EXPERT,//He works with explosives. And firearms are otherwise unobtanium. Just fluff.
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,//Bare minimum for dedicated classes. Here because handyman Joe wrastling is funny.

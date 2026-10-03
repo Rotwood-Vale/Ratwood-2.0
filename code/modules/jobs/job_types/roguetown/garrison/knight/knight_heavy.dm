@@ -6,13 +6,8 @@
 
 	category_tags = list(CTAG_ROYALGUARD)
 	traits_applied = list(TRAIT_HEAVYARMOR)
-	subclass_stats = list(
-		STATKEY_STR = 3,//Heavy hitters. Less con/end, high strength.
-		STATKEY_INT = 1,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = -1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_TANK
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,

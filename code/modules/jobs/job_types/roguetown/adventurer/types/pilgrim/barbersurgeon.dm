@@ -9,10 +9,9 @@
 	traits_applied = list(TRAIT_EMPATH, TRAIT_NOSTINK, TRAIT_MEDICINE_EXPERT, TRAIT_ALCHEMY_EXPERT)
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	cmode_music = 'sound/music/combat_physician.ogg'
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_LCK = 1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,

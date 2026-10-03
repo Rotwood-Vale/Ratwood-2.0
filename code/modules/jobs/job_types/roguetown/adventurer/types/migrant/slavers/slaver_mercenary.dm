@@ -12,14 +12,8 @@
 	traits_applied = list(TRAIT_XENOPHOBIC, TRAIT_SLEUTH, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_MERC)
 
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1,
-		STATKEY_PER = 1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_INT = STAT_FAVORED)
 
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
@@ -88,14 +82,8 @@
 	traits_applied = list(TRAIT_XENOPHOBIC, TRAIT_SLEUTH, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_MERC)
 
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1,
-		STATKEY_PER = 1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_INT = STAT_FAVORED)
 
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
@@ -164,13 +152,8 @@
 	traits_applied = list(TRAIT_XENOPHOBIC, TRAIT_SLEUTH, TRAIT_DODGEEXPERT, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_MERC)
 
-	subclass_stats = list(
-		STATKEY_STR = 1,
-		STATKEY_INT = 3,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 2,
-		STATKEY_PER = 3,
-	)
+	stat_budget = STAT_BUDGET_PEAK
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
 
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,

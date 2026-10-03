@@ -7,14 +7,9 @@
 	traits_applied = list(TRAIT_XENOPHOBIC, TRAIT_PERFECT_TRACKER, TRAIT_SLEUTH, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_MASTER)
 
-	subclass_stats = list(
-		STATKEY_STR = 3,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 2,
-		STATKEY_PER = 1,
-		STATKEY_LCK = 1, // Small boon
-	)
+	stat_budget = STAT_BUDGET_PEAK
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 1)
 
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,

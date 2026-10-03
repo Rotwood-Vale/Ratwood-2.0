@@ -7,12 +7,8 @@
 	outfit = /datum/outfit/job/roguetown/vagabond/busker
 	category_tags = list(CTAG_VAGABOND)
 	traits_applied = list(TRAIT_EMPATH)
-	subclass_stats = list(
-		STATKEY_SPD = 2,
-		STATKEY_PER = 1,
-		STATKEY_CON = -2,
-		STATKEY_STR = -1,
-	)
+	stat_budget = STAT_BUDGET_FRAIL
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED, STATKEY_CON = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/music = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,

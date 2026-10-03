@@ -9,11 +9,8 @@
 	category_tags = list(CTAG_WRETCH)
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_DODGEEXPERT)
-	subclass_stats = list(
-		STATKEY_SPD = 3,
-		STATKEY_WIL = 2,
-		STATKEY_PER = 1
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
@@ -93,13 +90,8 @@
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_MEDIUMARMOR)	//let us Try giving them medium armor. What can go wrong?!
 	//Still a bit quick but sturdier. A bit more stupid, though.	
-	subclass_stats = list(
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 1,
-		STATKEY_STR = 2,
-		STATKEY_INT = -1
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_INT = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,		//Fear the man who robs at a distance. Somehow.

@@ -14,12 +14,9 @@
 
 	traits_applied = list(TRAIT_HEARTFELT, TRAIT_NOSTINK, TRAIT_EMPATH, TRAIT_HEARTFELT)
 
-	subclass_stats = list(
-		STATKEY_INT = 4,
-		STATKEY_WIL = 1,
-		STATKEY_LCK = 1,
-		STATKEY_SPD = 2,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 1)
 
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,

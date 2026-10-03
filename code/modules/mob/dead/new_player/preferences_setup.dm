@@ -75,6 +75,7 @@
 	mannequin.update_body()
 	mannequin.update_hair()
 	mannequin.rebuild_obscured_flags()
+	mannequin.process_pending_icon_updates()
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 

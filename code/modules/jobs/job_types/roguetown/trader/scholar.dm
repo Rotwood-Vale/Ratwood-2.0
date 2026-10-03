@@ -24,12 +24,8 @@
 		/datum/language/draconic,
 		/datum/language/aavnic, // All but beast, which is associated with werewolves.
 	)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_SPD = 2,
-		STATKEY_CON = -1,
-		STATKEY_STR = -1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_SCHOLAR
 	subclass_spellpoints = 12
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,

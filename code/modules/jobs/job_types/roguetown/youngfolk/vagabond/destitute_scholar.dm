@@ -8,11 +8,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	category_tags = list(CTAG_VAGABOND)
 	traits_applied = list(TRAIT_INTELLECTUAL, TRAIT_CICERONE, TRAIT_SEEDKNOW)
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_CON = -1,
-		STATKEY_WIL = -1
-	)
+	stat_budget = STAT_BUDGET_FRAIL
 	subclass_skills = list(
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
