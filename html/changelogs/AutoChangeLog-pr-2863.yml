@@ -1,0 +1,5 @@
+author: "EvenInDeathIStillServe"
+delete-after: True
+changes:
+  - rscadd: "Opening a package containing explosives will detonate its payload on the spot."
+  - rscadd: "Using a knife to open a package has a mere 20% chance to detonate any explosive within."
