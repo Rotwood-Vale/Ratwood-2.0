@@ -1,0 +1,4 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - balance: "stamina poison and its strong version no longer metabolise near instantly, and shoudl be much more effective when used"
