@@ -99,6 +99,7 @@ GLOBAL_LIST_INIT(stat_pref_costs, list("++" = 1, "+" = 1, "-" = 0, "--" = 0))
 
 /mob/living/carbon/human/proc/apply_role_stats(budget, list/favored_stats)
 	var/list/values = calculate_role_stats(stat_prefs, budget, favored_stats)
+	var/list/flat = stat_bonuses
 	if(isnull(flat))
 		flat = dna.species.race_bonus
 	var/list/age_bonuses = GLOB.age_stat_bonuses[age]
