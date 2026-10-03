@@ -7,7 +7,7 @@
 	maximum_possible_slots = 10 // Should never fill, for the purpose of players to know what types towners are in round at the menu
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
-	stat_budget = STAT_BUDGET_MID - 2
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_DISFAVORED)
 
 

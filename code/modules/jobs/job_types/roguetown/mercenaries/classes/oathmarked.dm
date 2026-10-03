@@ -23,7 +23,7 @@
 	traits_applied = list(TRAIT_XENOPHOBIC, TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_SCALEARMOR)
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	cmode_music = 'sound/music/cmode/nobility/combat_courtmage.ogg'
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_SPD = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
@@ -72,7 +72,7 @@
 	name = "Oathmarked Executor"
 	tutorial = "You're an executor of the Oathmarked. Trained in use of your order's unique swords and plate wearing."
 	outfit = /datum/outfit/job/roguetown/mercenary/oathmarked/executor
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_STR = STAT_FAVORED, STATKEY_SPD = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,

@@ -10,7 +10,7 @@
 
 	category_tags = list(CTAG_MENATARMS)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	stat_budget = STAT_BUDGET_MID - 1
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_INT = STAT_VERY_DISFAVORED, STATKEY_SPD = STAT_VERY_DISFAVORED)
 	subclass_skills = list(//You get no reading, m'lord. Go smack a dummy with a book, if you don't like soul.
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,

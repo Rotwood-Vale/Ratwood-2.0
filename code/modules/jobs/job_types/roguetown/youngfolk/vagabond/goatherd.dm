@@ -8,7 +8,7 @@
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
 	category_tags = list(CTAG_VAGABOND)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	stat_budget = STAT_BUDGET_BASE
+	stat_budget = STAT_BUDGET_LOW
 	subclass_skills = list(
 		/datum/skill/misc/riding = SKILL_LEVEL_NOVICE,
 		/datum/skill/labor/farming = SKILL_LEVEL_JOURNEYMAN,

@@ -37,7 +37,7 @@
 	cmode_music = 'sound/music/combat_holy.ogg'
 	category_tags = list(CTAG_CHURCHLING)
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
@@ -105,7 +105,7 @@
 	outfit = /datum/outfit/job/roguetown/churchling/neophyte
 	category_tags = list(CTAG_CHURCHLING)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_SQUIRE_REPAIR)
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,

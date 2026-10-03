@@ -29,7 +29,7 @@
 	tutorial = "You have worked sleepless nights on honing your craft. From sacks, to tapestry and luxurious clothing, there is little you cannot sew into existence. Use your storefront to turn even the ugliest peasant into a proper gentleman; who knows, even the nobility may pay you a visit."
 	outfit = /datum/outfit/job/roguetown/tailor/basic
 	category_tags = list(CTAG_TAILOR)
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,

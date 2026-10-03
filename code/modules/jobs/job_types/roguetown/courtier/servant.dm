@@ -35,7 +35,7 @@
 	outfit = /datum/outfit/job/roguetown/servant/servant
 	category_tags = list(CTAG_SERVANT)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_ROYAL_SUBSIDY)
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
@@ -76,7 +76,7 @@
 	tutorial = "Not one really mentions how hard it is to do yardwork in a dress and stockings, but at least you still look really good."
 	outfit = /datum/outfit/job/roguetown/servant/maid
 	category_tags = list(CTAG_SERVANT)
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_ROYAL_SUBSIDY)
 	subclass_skills = list(
@@ -117,7 +117,7 @@
 	tutorial = "An impeccable appearance is your core being. You still dig through the mud, though, you just do the laundry more."
 	outfit = /datum/outfit/job/roguetown/servant/butler
 	category_tags = list(CTAG_SERVANT)
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_ROYAL_SUBSIDY)
 	subclass_skills = list(

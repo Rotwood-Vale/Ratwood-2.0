@@ -5,7 +5,7 @@
 	outfit = /datum/outfit/job/roguetown/janissary/zephyr
 
 	category_tags = list(CTAG_JANISSARY)
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = STATS_ARCHER
 
 	subclass_skills = list(

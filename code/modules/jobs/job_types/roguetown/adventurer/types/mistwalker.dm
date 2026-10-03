@@ -13,7 +13,7 @@
 	maximum_possible_slots = 2 //you probably don't want many of these
 
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
-	stat_budget = STAT_BUDGET_MID - 2
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_FIGHTER
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,

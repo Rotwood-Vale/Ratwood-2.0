@@ -24,7 +24,7 @@
 		/datum/language/draconic,
 		/datum/language/aavnic, // All but beast, which is associated with werewolves.
 	)
-	stat_budget = STAT_BUDGET_MID - 0.5
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_SCHOLAR
 	subclass_spellpoints = 12
 	subclass_skills = list(

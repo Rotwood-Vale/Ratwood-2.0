@@ -5,7 +5,7 @@
 	outfit = /datum/outfit/job/roguetown/janissary/flagbearer
 	category_tags = list(CTAG_JANISSARY)
 	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_STANDARD_BEARER)
-	stat_budget = STAT_BUDGET_LOW
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,

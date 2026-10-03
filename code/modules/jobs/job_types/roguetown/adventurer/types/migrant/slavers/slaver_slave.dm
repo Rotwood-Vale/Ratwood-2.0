@@ -63,7 +63,7 @@
 	traits_applied = list(TRAIT_GOODLOVER, TRAIT_BREADY, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_SLAVE)
 
-	stat_budget = STAT_BUDGET_MID - 3.5
+	stat_budget = STAT_BUDGET_LOW
 	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED)
 	subclass_stats = list(STATKEY_LCK = -1)
 

@@ -13,7 +13,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/bluthund
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	subclass_languages = list(/datum/language/grenzelhoftian)
-	stat_budget = STAT_BUDGET_MID - 0.5
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,

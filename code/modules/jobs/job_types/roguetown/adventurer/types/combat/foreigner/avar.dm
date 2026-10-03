@@ -11,7 +11,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/aavnik
 	cmode_music = 'sound/music/combat_league.ogg'
 	subclass_languages = list(/datum/language/aavnic)
-	stat_budget = STAT_BUDGET_MID - 1.5
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_ARCHER
 	subclass_skills = list(
 	//Universal skills

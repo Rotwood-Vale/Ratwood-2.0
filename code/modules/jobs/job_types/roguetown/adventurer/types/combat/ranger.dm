@@ -162,7 +162,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/bwanderer
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander4.ogg'
 	traits_applied = list(TRAIT_OUTDOORSMAN)
-	stat_budget = STAT_BUDGET_MID - 3
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_INT = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,

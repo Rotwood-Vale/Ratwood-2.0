@@ -17,7 +17,7 @@
 		TRAIT_SLEUTH,
 		TRAIT_PURITAN_ADVENTURER,//For fluff.
 	)
-	stat_budget = STAT_BUDGET_ELITE - 1
+	stat_budget = STAT_BUDGET_ELITE
 	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN, //Should rely on the seizing garrote to properly subdue foes.

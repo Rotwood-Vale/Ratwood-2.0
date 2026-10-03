@@ -115,7 +115,7 @@
 	class_select_category = CLASS_CAT_HFT_GUARD
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED, TRAIT_HEARTFELT) // Medium Armor Forced - Heavier 'Defensive' Class
-	stat_budget = STAT_BUDGET_HIGH - 1
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
 
 	subclass_skills = list(

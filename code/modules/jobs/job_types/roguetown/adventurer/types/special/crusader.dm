@@ -14,7 +14,7 @@
 	The 451st crusade is sure to be the last."
 
 	category_tags = list(CTAG_DISABLED)
-	stat_budget = STAT_BUDGET_HIGH - 1
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,

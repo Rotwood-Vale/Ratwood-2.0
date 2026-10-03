@@ -8,7 +8,7 @@
 
 	category_tags = list(CTAG_JANISSARY)
 	//Garrison ranged/speed class. Time to go wild
-	stat_budget = STAT_BUDGET_MID
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_INT = STAT_FAVORED)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_FUSILIER)
 

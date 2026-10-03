@@ -9,7 +9,7 @@
 	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
 	traits_applied = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT, TRAIT_ARCYNE_T1) // same as the guildsman variant
 	maximum_possible_slots = 5 // We don't need a bunch of nerds running around, five will do, perhaps less, not everyone should be an artificer after all
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_CLERIC
 	
 	subclass_skills = list(

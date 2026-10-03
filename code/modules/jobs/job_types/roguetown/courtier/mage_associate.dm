@@ -47,7 +47,7 @@
 
 	category_tags = list(CTAG_WASSOCIATE)
 	traits_applied = list(TRAIT_ARCYNE_T3)
-	stat_budget = STAT_BUDGET_HIGH - 0.5
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_CASTER
 	subclass_spellpoints = 21
 	subclass_skills = list(
@@ -93,7 +93,7 @@
 
 	category_tags = list(CTAG_WASSOCIATE)
 	traits_applied = list(TRAIT_SEEDKNOW, TRAIT_ALCHEMY_EXPERT)
-	stat_budget = STAT_BUDGET_HIGH - 0.5
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_CLERIC
 	subclass_spellpoints = 18
 	subclass_skills = list(
