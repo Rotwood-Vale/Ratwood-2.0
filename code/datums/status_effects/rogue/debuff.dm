@@ -651,6 +651,49 @@
 	desc = "I was on the sermon. My patron is not proud of me."
 	icon_state = "debuff"
 	color ="#af9f9f"
+//Stavemaster status effects below. Do note that monks usually have LOW perception, and all of these require precise limbs.
+
+/datum/status_effect/debuff/dazed/stavetackle
+	id = "stackle"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavetackle
+	effectedstats = list(STATKEY_SPD = -5)
+	duration = 8 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/stavetackle
+	name = "Stave Tackled"
+	desc = "My footing is ruined-- damned Monks."
+	icon_state = "mstrike"
+
+/datum/status_effect/debuff/dazed/stavesweepv
+	id = "sweep skull"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavesweepv
+	effectedstats = list(STATKEY_CON = -2, STATKEY_WIL = -1)
+	duration = 8 SECONDS
+
+/datum/status_effect/debuff/dazed/stavesweepv/on_apply()
+	. = ..()
+	if(iscarbon(owner))
+		var/mob/living/carbon/C = owner
+		var/msg = pick("gasp")
+		C.emote(msg, forced = TRUE)
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/stavesweepv
+	name = "MY RIBS!"
+	desc = "OUGH!-- MY RIBS! WHAT THE FUCK?!"
+	icon_state = "mstrike"
+
+/datum/status_effect/debuff/dazed/stavesweeph
+	id = "sweep ribs"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/dazed/stavesweeph
+	effectedstats = list(STATKEY_INT = -1, STATKEY_PER = -3)
+	duration = 6 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/dazed/stavesweeph
+	name = "GAH! MY HEAD!"
+	desc = "GHH-- FUCKING MONK! MY HEAD!"
+	icon_state = "mstrike"
+
+//Master staves done
 
 /datum/status_effect/debuff/necrandeathdoorwilloss
 	id = "Necran Deathly calm!"

@@ -394,6 +394,11 @@
 	mid_length = 7
 	volume = 100
 
+/datum/looping_sound/stavecharge
+	mid_sounds = list('sound/combat/wooshes/stave_swing.ogg')
+	mid_length = 4 SECONDS
+	volume = 100
+
 
 /datum/intent/hit
 	name = "hit"

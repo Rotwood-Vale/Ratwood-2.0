@@ -315,6 +315,121 @@
 	damfactor = 4 // 25% less damage
 	cleave = /datum/cleave_pattern/lance
 
+#define QUARTERSTAFF_STOCK_INTENTS list(SPEAR_BASH)
+#define QUARTERSTAFF_STOCK_GRIPPED_INTENTS list(/datum/intent/spear/bash/ranged/quarterstaff,/datum/intent/spear/thrust/quarterstaff)
+//staff monk, you want? I give. One-handed is where you have your reach. Gripped is where you have more defense.
+/datum/intent/effect/quarterstaff/hsweep //Area control. Less damage, multiple targets.
+	name = "horizontal sweep"
+	icon_state = "incrush"
+	blade_class = BCLASS_BLUNT
+	attack_verb = list("sweeps across", "sweeps above")
+	damfactor = 0.6
+	clickcd = CLICK_CD_CHARGED
+	cleave = /datum/cleave_pattern/stavehsweep
+	chargedloop = /datum/looping_sound/stavecharge
+	chargetime = 1 SECONDS
+	keep_looping = TRUE
+	desc = "Sweep your staff horizontally; extending your arm to hit your opponent's skull."
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
+	target_parts = list(BODY_ZONE_PRECISE_SKULL)
+	intent_effect = /datum/status_effect/debuff/dazed/stavesweeph
+	chargedrain = 3 //if you hold it for too long, you will stamcrit and die.
+	misscost = 10
+
+/datum/intent/effect/quarterstaff/vsweep //Area control. Less damage, multiple targets.
+	name = "vertical sweep"
+	icon_state = "insweep"
+	blade_class = BCLASS_BLUNT
+	attack_verb = list("vertically strikes", "sweeps through")
+	clickcd = CLICK_CD_CHARGED
+	chargetime = 1 SECONDS
+	chargedloop = /datum/looping_sound/stavecharge
+	keep_looping = TRUE
+	damfactor = 0.6
+	desc = "Sweep your staff vertically by aiming at their hipbone or waist, masterfully punishing their ribcage."
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	cleave = /datum/cleave_pattern/stavevsweep
+	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg')
+	target_parts = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_STOMACH)
+	intent_effect = /datum/status_effect/debuff/dazed/stavesweepv
+	chargedrain = 3 //if you hold it for too long, you will stamcrit and die.
+	misscost = 10
+
+/datum/intent/effect/hookfeet
+	name = "tackle feet"
+	icon_state = "intackle"
+	desc = "Extend your staff forth; tackling and disbalancing your opponents."
+	clickcd = CLICK_CD_HEAVY
+	blade_class = BCLASS_BLUNT
+	attack_verb = list("tackles", "masterfully disbalances")
+	intent_effect = /datum/status_effect/debuff/dazed/stavetackle
+	target_parts = list(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT)
+	effective_range = 2
+	effective_range_type = EFF_RANGE_EXACT
+	damfactor = 0.2
+
+/datum/intent/effect/hookfeet/spec_on_apply_effect(mob/living/H, mob/living/user, params)
+	if(H.has_status_effect(/datum/status_effect/debuff/exposed))
+		H.Knockdown(1 SECONDS)
+	else
+
+/datum/intent/spear/bash/ranged/quarterstaff/strikeplus
+	name = "strike"
+	icon_state = "instrike"
+	desc = "Powerfully swing your staff; breaking spirit and bones alike."
+	blade_class = BCLASS_BLUNT
+	attack_verb = list("powerfully strikes", "powerfully hits", "masterfully attacks")
+	reach = 1
+	damfactor = 1.1
+	intent_intdamage_factor = 0.4
+	penfactor = 15
+
+/datum/intent/spear/thrust/quarterstaff/thrustplus
+	name = "thrust"
+	icon_state = "instab"
+	desc = "Quickly extend your staff forth; striking people at a greater range to knock the air out of them."
+	blade_class = BCLASS_BLUNT
+	attack_verb = list("masterfully thrusts", "quickly thrusts", "powerfully jabs")
+	reach = 2
+	damfactor = 1.4
+	intent_intdamage_factor = 0.8
+	effective_range = 2
+	effective_range_type = EFF_RANGE_EXACT
+
+/datum/intent/woodstaff/quarterstaff/push
+	name = "push"
+	icon_state = "inshove"
+	desc = "Push your enemy forth; with the help of a palm and the tip of your staff."
+	hitsound = list('sound/combat/hits/blunt/woodblunt (1).ogg', 'sound/combat/hits/blunt/woodblunt (1).ogg')
+	damfactor = 0.6
+	intent_intdamage_factor = 0.8
+	penfactor = 20
+
+/datum/intent/woodstaff/quarterstaff/push/spec_on_apply_effect(mob/living/H, mob/living/user, params)
+	var/chungus_khan_str = user.STASTR
+	if(H.has_status_effect(/datum/status_effect/debuff/yeetcdstave))
+		return // Recently knocked back, cannot be knocked back again yet
+	if(chungus_khan_str < 10)
+		return // Too weak to have any effect
+	var/scaling = CLAMP((chungus_khan_str - 10), 1, 4)
+	H.apply_status_effect(/datum/status_effect/debuff/yeetcdstave)
+	H.Slowdown(scaling)
+	// Copypasta from knockback proc cuz I don't want the math there
+	var/knockback_tiles = scaling // 1 to 4 tiles based on strength
+	if(H.resting)
+		knockback_tiles = max(1, knockback_tiles / 2)
+	if(user?.client?.chargedprog < 100)
+		knockback_tiles = 1 // Minimal knockback on non-charged smash.
+	var/turf/edge_target_turf = get_edge_target_turf(H, get_dir(user, H))
+	if(istype(edge_target_turf))
+		H.safe_throw_at(edge_target_turf, \
+		knockback_tiles, \
+		scaling, \
+		user, \
+		spin = FALSE, \
+		force = H.move_force)	
+
 //polearm objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/woodstaff
@@ -1682,16 +1797,71 @@
 	desc = "A staff that makes any journey easier. Durable and swift, capable of bludgeoning stray volves and ruffians alike. Its length allow it to be used for a thrusting attack."
 	force = 15
 	force_wielded = 20
-	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
+	possible_item_intents = QUARTERSTAFF_STOCK_INTENTS
+	gripped_intents = QUARTERSTAFF_STOCK_GRIPPED_INTENTS
 	icon_state = "quarterstaff"
+	can_parry = TRUE
 	max_integrity = 150
+	/// One-handed intents a TRAIT_STAVEMASTER fights with.
+	var/list/master_item_intents = list(/datum/intent/effect/quarterstaff/vsweep, /datum/intent/effect/quarterstaff/hsweep,)
+	/// Two-handed intents a TRAIT_STAVEMASTER fights with.
+	var/list/master_gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff/strikeplus, /datum/intent/spear/thrust/quarterstaff/thrustplus, /datum/intent/woodstaff/quarterstaff/push, /datum/intent/effect/hookfeet)
+	/// Whether this sword is valid for TRAIT_STAVEMASTER
+	var/master_trainable = FALSE
+	/// Flag for if the master intents are active, e.g., this is being held by someone with TRAIT_STAVEMASTER.
+	var/master_training_active = FALSE
+
+/obj/item/rogueweapon/woodstaff/quarterstaff/Initialize(mapload)
+	. = ..(mapload)
+	master_trainable = uses_stock_woodstaff_kit()
+	// The master's skill and the master's intents go together. No master skill unless using master intents.
+	if(master_trainable)
+		AddComponent(/datum/component/skill_blessed, TRAIT_STAVEMASTER, /datum/skill/combat/polearms, SKILL_LEVEL_MASTER)
+
+/// Whether this staff is still a plain quarterstaff. Special staffs like the sojourner staff don't count.
+/obj/item/rogueweapon/woodstaff/quarterstaff/proc/uses_stock_woodstaff_kit()
+	if(!length(master_item_intents) || !length(master_gripped_intents))
+		return FALSE
+	if(!compare_list(possible_item_intents, QUARTERSTAFF_STOCK_INTENTS))
+		return FALSE
+	if(!compare_list(gripped_intents, QUARTERSTAFF_STOCK_GRIPPED_INTENTS))
+		return FALSE
+	return TRUE
+
+/obj/item/rogueweapon/woodstaff/quarterstaff/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	update_master_training(user, slot == ITEM_SLOT_HANDS)
+
+/obj/item/rogueweapon/woodstaff/quarterstaff/dropped(mob/user, silent = FALSE)
+	. = ..()
+	if(QDELETED(src))
+		return
+	update_master_training(user, FALSE)
+
+/// Swaps the master kit in while a TRAIT_STAVEMASTER has the sword in hand, and back out the moment
+/// it leaves their hands - the staff is not special in any way, the monk is.
+/obj/item/rogueweapon/woodstaff/quarterstaff/proc/update_master_training(mob/user, held)
+	if(!master_trainable)
+		return
+	var/should_train = (held && user && HAS_TRAIT(user, TRAIT_STAVEMASTER)) ? TRUE : FALSE
+	if(should_train == master_training_active)
+		return
+	if(altgripped || wielded)
+		ungrip(iscarbon(user) ? user : null, FALSE)
+	if(should_train)
+		possible_item_intents = master_item_intents.Copy()
+		gripped_intents = master_gripped_intents.Copy()
+	else
+		// master_trainable is only ever set on a staff  still carrying the stock kit so we give it the stock back.
+		possible_item_intents = QUARTERSTAFF_STOCK_INTENTS
+		gripped_intents = QUARTERSTAFF_STOCK_GRIPPED_INTENTS
+	master_training_active = should_train
 
 /obj/item/rogueweapon/woodstaff/quarterstaff/iron
 	name = "iron quarterstaff"
 	desc = "A quarterstaff reinforced with iron tips. It is capable of dealing more damage than a wooden one, and its blunt ends make for a decent blunt thrusting weapon. Can be used to bash down your opponents weapons."
 	force = 16
 	force_wielded = 22
-	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_iron"
 	max_integrity = 200
 
@@ -1700,7 +1870,6 @@
 	desc = "A quarterstaff reinforced with steel tips and steel rings, blurring the line between a light polehammer and a reinforced quarterstaff. Extremely durable, and more than capable of bludgeoning brigands to death. Durable enough to break your opponents weapons."
 	force = 18
 	force_wielded = 25
-	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_steel"
 	max_integrity = 200
 
@@ -1721,7 +1890,6 @@
 	desc = "A quarterstaff reinforced with silver tips. A relatively new design, purportedly inspired by the warstaffs oft-carried by Naledian warscholars. Durable enough to catch avantyne to the shaft, without so much as a splinter - or so, they say."
 	force = 20
 	force_wielded = 27
-	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_silver"
 	max_integrity = 250
 	is_silver = TRUE
@@ -1742,7 +1910,6 @@
 	desc = "A quarterstaff reinforced with silver tips. A relatively new design, purportedly inspired by the warstaffs oft-carried by Naledian warscholars. Durable enough to catch avantyne to the shaft, without so much as a splinter - or so, they say."
 	force = 20
 	force_wielded = 27
-	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff_silver"
 	max_integrity = 250
 	is_silver = TRUE
@@ -2180,3 +2347,6 @@
 	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/spear/cut/naginata, PARTIZAN_PEEL, SPEAR_BASH) // Better peeling than a Naginata
 	max_blade_int = 200 // Elven design makes it sharper than Kazengunese stuff
 	sellprice = 60
+
+#undef QUARTERSTAFF_STOCK_INTENTS
+#undef QUARTERSTAFF_STOCK_GRIPPED_INTENTS
