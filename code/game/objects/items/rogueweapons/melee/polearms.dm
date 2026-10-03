@@ -2187,7 +2187,7 @@
 	force = 30
 	force_wielded = 35
 	possible_item_intents = list(/datum/intent/sword/thrust/long, /datum/intent/sword/cut/long, /datum/intent/sword/strike, /datum/intent/sword/thrust/heavy)
-	gripped_intents = list(SPEAR_THRUST, /datum/intent/spear/cut, PARTIZAN_REND, /datum/intent/spear/cut/glaive/sweep)
+	gripped_intents = list(SPEAR_THRUST, /datum/intent/spear/cut, /datum/intent/spear/cut/baotha/rend, /datum/intent/spear/cut/glaive/sweep)
 	icon_state = "swordstaff"
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	parrysound = list(
@@ -2222,3 +2222,17 @@
 		switch(tag)
 			if("gen") return list("shrink" = 0.7, "sx" = -14, "sy" = -8, "nx" = 9, "ny" = -6, "wx" = -6, "wy" = -6, "ex" = -1, "ey" = -4, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0, "nturn" = -10, "sturn" = 108, "wturn" = -72, "eturn" = -10, "nflip" = 1, "sflip" = 1, "wflip" = 8, "eflip" = 1)
 			if("wielded") return list("shrink" = 0.75, "sx" = 5, "sy" = -3, "nx" = -5, "ny" = -3, "wx" = -5, "wy" = -3, "ex" = 3, "ey" = -4, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0, "nturn" = 6, "sturn" = -8, "wturn" = 10, "eturn"= -10, "nflip" = 8, "sflip" = 0, "wflip" = 8, "eflip" = 0)
+
+/datum/intent/spear/cut/baotha/rend
+	name = "rending slash"
+	icon_state = "inrend"
+	attack_verb = list("rends")
+	desc = "A viscious slash that tears through flesh."
+	clickcd = CLICK_CD_HEAVY
+	reach = 2
+	damfactor = 1.8
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	misscost = 10
+	intent_intdamage_factor = 0.25
+	sharpness_penalty = 2
+	accuracy_modifier = -15
