@@ -98,7 +98,6 @@
 	icon = 'modular_azurepeak/icons/obj/items/mundanities.dmi'
 	icon_state = "grimace_box"
 	var/fluff_desc = null
-	var/list/finished_ckeys = list()
 	var/dice_roll = null
 	sellprice = 150
 
@@ -112,10 +111,6 @@
 	desc += "[fluff_desc]"
 
 /obj/item/mundane/puzzlebox/impossible/attack_self(mob/living/user)
-	var/ckey = user.ckey
-	if(ckey in finished_ckeys)
-		to_chat(user, span_warning("I've already tried my hand at [src]."))
-		return
 	playsound(src.loc, 'sound/items/wood_sharpen.ogg', 75, TRUE)
 	playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
 	if (alert(user, "My fingers trace the outside of this box. It looks nearly impossible. Do I try to solve it?", "ROGUETOWN", "Yes", "No") != "Yes")
@@ -124,7 +119,6 @@
 		if((dice_roll) + 4 <= user.STAINT)
 			to_chat(user, span_notice("After much deliberation, I solve \the [src]!"))
 			user.add_stress(/datum/stressevent/puzzle_impossible)
-			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lockrattle.ogg', 75, TRUE)
 			to_chat(user, span_notice("As I pop open \the [src], I feel a tingling wave run from my head to my feet. A piece of an azure crystal tumbles out. When I grab it, it's gone- and I suddenly feel invigorated."))
 			user.STAINT += rand(1,5)
@@ -132,13 +126,13 @@
 			user.STASPD += rand(1,5)
 			user.STACON += rand(1,5)
 			user.STAWIL += rand(1,5)
-			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lock.ogg', 75, TRUE)
 			playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
+			src.visible_message(span_warning("\The [src] crumbles to dust."))
+			qdel(src) //one solve per box, no passing it around the keep
 		else
 			to_chat(user, span_warning("I can't even start to solve [src]. Feeling like an absolute fool, I put it aside."))
 			user.add_stress(/datum/stressevent/puzzle_fail)
-			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lockrattle.ogg', 75, TRUE)
 
 
