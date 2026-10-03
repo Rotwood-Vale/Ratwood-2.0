@@ -103,8 +103,6 @@
 	H.invisibility = INVISIBILITY_MAXIMUM
 	H.become_blind("advsetup")
 
-	addtimer(CALLBACK(src, PROC_REF(_delayed_path_choice), H), 50)
-
 /datum/job/roguetown/druid/proc/grant_old_path(mob/living/carbon/human/H)
 	if(!H || !H.mind || !H.patron)
 		return
