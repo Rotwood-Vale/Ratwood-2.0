@@ -152,6 +152,17 @@
 	cast_time_reduction = EMERALD_CAST_TIME_REDUCTION
 	resistance_flags = FIRE_PROOF
 
+/obj/item/rogueweapon/woodstaff/gefechtsgelehrter
+	name = "Celestial Zauberer Staff"
+	desc = "A Blacksteel wrought wooden staff granted to the Mages whomst have graduated from the Celestial Academy, with a shining Dorpel at its head that reminds the caster; There is nothing that cannot be solved with time & innovation."
+	icon = 'modular_azurepeak/icons/obj/items/grenzstaff.dmi'
+	icon_state = "celestialstaffbase"
+	cast_time_reduction = DIAMOND_CAST_TIME_REDUCTION
+	resistance_flags = FIRE_PROOF
+	max_integrity = 300
+	sellprice = 170
+
+
 //crafting datums
 
 /datum/crafting_recipe/gemstaff
