@@ -38,6 +38,7 @@
 #define XYLIX_LUCK_TRAIT "xylixluck"
 #define POULTICE_TRAIT "poultice"
 #define TRAIT_SOURCE_CHASTITY "chastity" //source for chastity device traits
+#define TRAIT_NECRACON "necracon"
 
 // unique trait sources, still defines
 #define TRAIT_GUIDANCE "Guidance"
