@@ -84,7 +84,8 @@
 
 /datum/intent/axe/cut/long
 	reach = 2
-	swingdelay = 0.4 SECONDS
+	damfactor = 1
+	demolition_mod = 1
 
 /datum/intent/axe/cut/long/bronze
 	damfactor = 1.1
@@ -93,8 +94,7 @@
 /datum/intent/axe/chop/long
 	reach = 2
 	damfactor = 1.2
-	demolition_mod = 2
-	swingdelay = 1.2 SECONDS
+	demolition_mod = 1.5
 
 /datum/intent/axe/bash
 	name = "bash"

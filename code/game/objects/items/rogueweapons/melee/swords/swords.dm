@@ -1587,11 +1587,12 @@
 	damfactor = 1.3
 	penfactor = PEN_BSTEEL
 
-	swingdelay_type = SWINGDELAY_CANCEL
+	swingdelay_type = SWINGDELAY_CANCELSLOW
 	parriable_intent = FALSE
 	dodgeable_intent = FALSE
 
 	swingdelay = 0.8 SECONDS
+	clickcd = 1.5 SECONDS
 
 /obj/item/rogueweapon/sword/rapier/dec
 	no_loot_taint = TRUE

@@ -197,6 +197,13 @@
 	if(has_status_effect(/datum/status_effect/debuff/exposed))
 		balloon_alert(src, "<font color = '#ffffff'>Can't guard while exposed!</font>")
 		return FALSE
+
+	if(is_swinging(disrupt_only = TRUE))
+		return FALSE
+
+	if(has_status_effect(/datum/status_effect/debuff/exposed))
+		return FALSE
+
 	apply_status_effect(/datum/status_effect/buff/clash)
 	return TRUE
 
