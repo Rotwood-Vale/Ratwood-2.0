@@ -202,6 +202,13 @@
 		return
 	update_master_training(user, FALSE)
 
+// The trait can be granted after the sword was equipped (e.g. outfits equip before traits are applied),
+// so re-check on every alt grip attempt to make sure the master alt grips are the ones being cycled.
+/obj/item/rogueweapon/sword/long/cycle_altgrip(mob/living/carbon/user, direction = 1)
+	if(user)
+		update_master_training(user, TRUE)
+	return ..()
+
 /// Swaps the master kit in while a TRAIT_LONGSWORDSMAN has the sword in hand, and back out the moment
 /// it leaves their hands - the sword is not special in any way, the fencer is.
 /obj/item/rogueweapon/sword/long/proc/update_master_training(mob/user, held)

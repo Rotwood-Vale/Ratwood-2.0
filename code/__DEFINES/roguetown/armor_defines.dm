@@ -44,7 +44,8 @@
 #define ARMOR_DBLOCK_TYPES list("slash", "stab", "piercing")
 
 // Penetration passthrough fractions
-#define PEN_PASSTHROUGH_RATIO	0.1		// How much damage will go through per pen point (+ per relevant stat above 10). 0.1 = 10%
+#define PEN_PASSTHROUGH_MINIMUM 0.4
+#define PEN_PASSTHROUGH_RATIO	0.05		// How much damage will go through per pen point (+ per relevant stat above 10). 0.1 = 10%
 #define PEN_PASSTHROUGH_PROJ_EQUAL 0.2
 #define PEN_PASSTHROUGH_PROJ_MORE 0.8
 #define PEN_PASSTHROUGH_CAP	8			// How many "dots" maximum (pen vs armor, + 1 dot per relevant stat above 10)
