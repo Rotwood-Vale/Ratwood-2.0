@@ -688,8 +688,8 @@ SPECIALS START HERE
 	desc = "Raise your shield to protect a limb. You will deflect projectiles and anyone striking that limb will be severely penalized. \n\
 		You cannot regain stamina while this is active. It can be cancelled by jumping, kicking or by using MMB again with the same shield out."
 	respect_adjacency = FALSE
-	cooldown = 30 SECONDS
-	stamcost = 30
+	cooldown = 60 SECONDS
+	stamcost = 25
 
 
 //apply_cost is called before anything else, so it works here for the toggle checks, but it's kind of a bad example -- don't do this.
