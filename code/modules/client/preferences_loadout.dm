@@ -16,34 +16,36 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 /datum/preferences/proc/open_loadout_slots(mob/user)
 	if(!user || !user.client)
 		return
-	user << browse(get_loadout_slots_html(user), "window=loadout_slots;size=750x600")
+	var/datum/browser/popup = new(user, "loadout_slots", "<div align='center'>Loadout</div>", 760, 640)
+	popup.set_content(get_loadout_slots_html(user))
+	popup.open(FALSE)
 
 /datum/preferences/proc/get_loadout_slots_html(mob/user)
-	var/html = {"
-		<style>
-			body { font-family: Verdana, Arial, sans-serif; background: #100000; color: #aa8f8f; }
-			.slot { border: 1px solid #7b5353; background: #00000044; padding: 6px; margin: 3px; }
-			a { color: #aa8f8f; border: 1px solid #7b5353; padding: 1px 4px; text-decoration: none; font-size: 0.8em; }
-			a:hover { background: rgba(123, 83, 83, 0.3); }
-		</style>
-		<h2>Loadout</h2>
-		<hr>
-		<table width='100%'><tr>"}
+	var/html = {"<style>
+		body { font-size: 15px; }
+		.slot { border: 1px solid #7b5353; background: #00000044; padding: 6px; margin: 3px; min-height: 130px; }
+		.icon { border: 1px solid #7b5353; background: #00000066; width: 64px; height: 64px; text-align: center; }
+		.sub { border-bottom: 1px dotted #7b5353; margin: 5px 0 1px 0; font-size: 15px; font-weight: bold; color: #c9a96e; }
+		.small { font-size: 13px; color: #aa8f8f; }
+		.name { font-weight: bold; color: #e3c06f; }
+		</style>"}
+	html += "<div class='small'>Loadout items sell for nothing. Armor is reduced to light protection with no crit protection, and weapons lose 30% damage and half their defense.</div>"
+	html += "<table width='100%'><tr>"
 	for(var/i in 1 to LOADOUT_SLOTS)
 		var/datum/loadout_item/current_item = vars[loadout_var(i)]
-		html += "<td width='50%' valign='top'><div class='slot'><b>Slot [i]</b>"
+		html += "<td width='50%' valign='top'><div class='slot'><div class='sub'>Slot [i]</div>"
 		if(current_item)
-			html += "<br>[get_loadout_item_html(user, i, current_item)]"
+			html += get_loadout_item_html(user, i, current_item)
 			html += "<br>[loadout_link("Change", "item", i)] [loadout_link("Rename", "rename", i)] [loadout_link("Description", "describe", i)] [loadout_link("Color", "color", i)] [loadout_link("Clear", "clear", i)]"
 		else
-			html += "<br>Empty<br>[loadout_link("Select Item", "item", i)]"
+			html += "<div class='small'>Empty</div>[loadout_link("Select Item", "item", i)]"
 		html += "</div></td>"
 		if(i % 2 == 0)
 			html += "</tr><tr>"
-	html += "</tr></table><hr><table width='100%'><tr>"
+	html += "</tr></table><div class='sub'>Presets</div><table width='100%'><tr>"
 	for(var/i in 1 to PRESET_SLOTS)
-		html += "<td valign='top'><b>Preset [i]</b><br><small>[get_preset_summary(i)]</small><br>"
-		html += "[preset_link("Save", "save", i)] [preset_link("Load", "load", i)] [preset_link("Clear", "clear", i)]</td>"
+		html += "<td valign='top'><div class='slot'><b>Preset [i]</b><br><span class='small'>[get_preset_summary(i)]</span><br>"
+		html += "[preset_link("Save", "save", i)] [preset_link("Load", "load", i)] [preset_link("Clear", "clear", i)]</div></td>"
 	html += "</tr></table>"
 	return html
 
@@ -58,7 +60,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	var/icon_file = initial(sample.icon)
 	var/icon_state = initial(sample.icon_state)
 	var/item_desc = initial(sample.desc)
-	var/html = ""
+	var/custom_name = vars["loadout_[slot]_name"]
+	var/custom_desc = vars["loadout_[slot]_desc"]
+	var/item_color = vars["loadout_[slot]_hex"]
+	var/html = "<table><tr><td valign='top'><div class='icon'>"
 	if(icon_file && icon_state)
 		var/cache_key = "[icon_file]_[icon_state]"
 		if(!(cache_key in GLOB.cached_loadout_icons))
@@ -66,11 +71,14 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				GLOB.cached_loadout_icons.Cut(1, 50)
 			GLOB.cached_loadout_icons[cache_key] = icon(icon_file, icon_state)
 		user << browse_rsc(GLOB.cached_loadout_icons[cache_key], "loadout_icon_[slot].png")
-		html += "<img src='loadout_icon_[slot].png' width='32' height='32'> "
-	html += "<b>[vars["loadout_[slot]_name"] || current_item.name]</b><br>[vars["loadout_[slot]_desc"] || item_desc || current_item.desc]"
-	var/item_color = vars["loadout_[slot]_hex"]
+		html += "<img src='loadout_icon_[slot].png' width='60' height='60'>"
+	html += "</div></td><td valign='top'><div class='name'>[custom_name || current_item.name]</div>"
+	html += "<div class='small'>[custom_desc || item_desc || current_item.desc]</div>"
+	if(custom_name || custom_desc)
+		html += "<div class='small'>Customized</div>"
 	if(item_color)
-		html += "<br><span style='color: [clothing_color2hex(item_color)];'>●</span> Color: [item_color]"
+		html += "<div><span style='border: 1px solid #161616; background-color: [item_color];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class='small'>[item_color]</span></div>"
+	html += "</td></tr></table>"
 	return html
 
 /datum/preferences/proc/process_loadout_link(mob/user, list/href_list)

@@ -75,6 +75,9 @@
 					prefs.open_loadout_slots(user)
 					return TRUE
 			// apply item to loadout
+			if(prefs.vars[prefs.loadout_var(current_slot)] != item)
+				for(var/suffix in list("name", "desc", "hex"))
+					prefs.vars["loadout_[current_slot]_[suffix]"] = null
 			prefs.vars[prefs.loadout_var(current_slot)] = item
 			to_chat(usr, span_notice("Selected [item.name] for slot [current_slot]."))
 			ui.close()
