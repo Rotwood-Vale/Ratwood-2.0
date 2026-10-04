@@ -614,6 +614,8 @@
 		var/datum/inspiration/I = new /datum/inspiration(H)
 		I.grant_inspiration(H, bard_tier = BARD_T2)
 	backl = /obj/item/storage/backpack/rogue/satchel
+	cloak = /obj/item/clothing/suit/roguetown/shirt/robe //Anyone who doesn't have cool patron drip sprites just gets generic robes
+	head = /obj/item/clothing/head/roguetown/roguehood
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	shoes = /obj/item/clothing/shoes/roguetown/boots
@@ -630,49 +632,73 @@
 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/old_god)
+			neck = /obj/item/clothing/neck/roguetown/psicross
 			cloak = /obj/item/clothing/cloak/psydontabard
 			head = /obj/item/clothing/head/roguetown/roguehood/psydon
 		if(/datum/patron/divine/astrata)
+			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
+			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
 			head = /obj/item/clothing/head/roguetown/roguehood/astrata
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/astrata
 		if(/datum/patron/divine/noc)
+			neck = /obj/item/clothing/neck/roguetown/psicross/noc
 			head =  /obj/item/clothing/head/roguetown/nochood
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/noc
 		if(/datum/patron/divine/abyssor)
+			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
 			head = /obj/item/clothing/head/roguetown/roguehood/abyssor
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor
 		if(/datum/patron/divine/dendor)
+			neck = /obj/item/clothing/neck/roguetown/psicross/dendor
+			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // see: druid.dm
 			head = /obj/item/clothing/head/roguetown/dendormask
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
 			H.adjust_skillrank(/datum/skill/labor/farming, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/hunting, SKILL_LEVEL_NOVICE, TRUE)
 			ADD_TRAIT(H, TRAIT_EXPERT_HUNTER, TRAIT_GENERIC)
 		if(/datum/patron/divine/necra)
+			neck = /obj/item/clothing/neck/roguetown/psicross/necra
+			H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
 			head = /obj/item/clothing/head/roguetown/necrahood
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/necra
 		if (/datum/patron/divine/malum)
-			head = /obj/item/clothing/head/roguetown/roguehood //placeholder
+			neck = /obj/item/clothing/neck/roguetown/psicross/malum
 			cloak = /obj/item/clothing/cloak/templar/malumite
 		if (/datum/patron/divine/eora)
+			neck = /obj/item/clothing/neck/roguetown/psicross/eora
+			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/eora
 			head = /obj/item/clothing/head/roguetown/eoramask
 			beltl = /obj/item/rogueweapon/huntingknife/scissors
 			backpack_contents[/obj/item/reagent_containers/eoran_seed] = 1
 			ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
 		if (/datum/patron/divine/xylix)
+			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
+			H.cmode_music = 'sound/music/combat_jester.ogg'
 			cloak = /obj/item/clothing/cloak/templar/xylix
 			mask = /obj/item/clothing/mask/rogue/xylixmask
 			if(HAS_TRAIT(H, TRAIT_PERMAMUTE))
 				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall)
 				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair)
+		if(/datum/patron/divine/pestra)
+			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
+		if(/datum/patron/divine/ravox)
+			neck = /obj/item/clothing/neck/roguetown/psicross/ravox
 		if(/datum/patron/inhumen/zizo)
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe
-			head = /obj/item/clothing/head/roguetown/roguehood
+			H.cmode_music = 'sound/music/combat_heretic.ogg'
+			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
 			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
 			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
-		else
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe //placeholder, anyone who doesn't have cool patron drip sprites just gets generic robes
-			head = /obj/item/clothing/head/roguetown/roguehood
+		if(/datum/patron/inhumen/matthios)
+			H.cmode_music = 'sound/music/combat_matthios.ogg'
+			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+		if(/datum/patron/inhumen/graggar)
+			H.cmode_music = 'sound/music/combat_graggar.ogg'
+			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+		if(/datum/patron/inhumen/baotha)
+			H.cmode_music = 'sound/music/combat_baotha.ogg'
+			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+		
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)//Only T4 NOT to start maxed, with a devotion cap.
 	C.update_devotion(C.max_devotion / 4 - 50, C.max_devotion / 4 - 50, silent = TRUE) // Start at ~25% of devotion cap
@@ -696,47 +722,6 @@
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
 	if(istype(H.patron, /datum/patron/inhumen))
 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
-
-	switch(H.patron?.type)
-		if(/datum/patron/old_god)
-			neck = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/astrata)
-			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
-			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
-		if(/datum/patron/divine/noc)
-			neck = /obj/item/clothing/neck/roguetown/psicross/noc
-		if(/datum/patron/divine/abyssor)
-			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
-		if(/datum/patron/divine/dendor)
-			neck = /obj/item/clothing/neck/roguetown/psicross/dendor
-			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // see: druid.dm
-		if(/datum/patron/divine/necra)
-			neck = /obj/item/clothing/neck/roguetown/psicross/necra
-			H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
-		if(/datum/patron/divine/pestra)
-			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
-		if(/datum/patron/divine/ravox)
-			neck = /obj/item/clothing/neck/roguetown/psicross/ravox
-		if(/datum/patron/divine/malum)
-			neck = /obj/item/clothing/neck/roguetown/psicross/malum
-		if(/datum/patron/divine/eora)
-			neck = /obj/item/clothing/neck/roguetown/psicross/eora
-			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
-		if(/datum/patron/inhumen/zizo)
-			H.cmode_music = 'sound/music/combat_heretic.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/matthios)
-			H.cmode_music = 'sound/music/combat_matthios.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/graggar)
-			H.cmode_music = 'sound/music/combat_graggar.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/baotha)
-			H.cmode_music = 'sound/music/combat_baotha.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/divine/xylix)
-			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
-			H.cmode_music = 'sound/music/combat_jester.ogg'
 
 /datum/advclass/cleric/stigmata
 	name = "Stigmata"
