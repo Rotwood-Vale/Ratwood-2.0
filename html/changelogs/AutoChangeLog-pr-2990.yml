@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - bugfix: "joining as jester will no longer break joining as a advclass"

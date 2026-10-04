@@ -1,4 +1,0 @@
-author: "chemistrymain3"
-delete-after: True
-changes:
-  - rscadd: "Fixes no-thirst traits still letting you be thirsty."
