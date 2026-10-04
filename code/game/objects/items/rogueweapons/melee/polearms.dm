@@ -1034,8 +1034,8 @@
 	name = "Stigmata"
 	desc = "Christened in the Siege of a heretical city, these silver-tipped poleaxes - wielded by a lonesome contingent of Saint Eora's paladins - kept the horrors at bay for forty daes-and-nites. Long-since-recovered from the rubble, this relic now serve as a bulwark for the defenseless."
 	icon_state = "psyhalberd"
-	force = 25
-	force_wielded = 25
+	force = 30
+	force_wielded = 35
 
 /obj/item/rogueweapon/halberd/psyhalberd/relic/ComponentInitialize()
 	AddComponent(\
@@ -1053,7 +1053,7 @@
 	desc = "A reliable design that has served humenkind to fell the enemy and defend Psydon's flock - now fitted with a lengthier blade and twin, silver-tipped beaks."
 	icon_state = "silverhalberd"
 	force = 15
-	force_wielded = 25
+	force_wielded = 30
 	minstr = 11
 	wdefense = 7
 	is_silver = TRUE
@@ -1509,7 +1509,7 @@
 	desc = "'Let His name be naught but forgot'n.'"
 	icon_state = "oldpsybroadsword"
 	force = 20
-	force_wielded = 25
+	force_wielded = 30
 	minstr = 11
 	wdefense = 6
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop, /datum/intent/sword/thrust, /datum/intent/rend/krieg)
@@ -1534,7 +1534,7 @@
 	desc = "Psydonian prayers and Tennite smiths, working as one to craft a weapon to slay the Four. A heavy and large blade, favored by Saint Ravox, to lay waste to those who threaten His flock. The crossguard's psycross reflects even the faintest of Noc's light. You're the light - show them the way."
 	icon_state = "psybroadsword"
 	force = 25
-	force_wielded = 25
+	force_wielded = 30
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 
