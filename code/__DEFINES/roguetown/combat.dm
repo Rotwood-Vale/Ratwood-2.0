@@ -9,11 +9,13 @@
 #define BASE_RCLICK_CD 30 SECONDS
 #define FEINT_RCLICK_CD 20 SECONDS
 
-#define BIND_HANDS 1
-#define BIND_FEET 2
-#define BIND_HEAD 3
-#define BIND_TORSO 4
-#define BIND_NECK 5
+#define BIND_HAND_L 1
+#define BIND_HAND_R 2
+#define BIND_FOOT_L 3
+#define BIND_FOOT_R 4
+#define BIND_HEAD 5
+#define BIND_TORSO 6
+#define BIND_NECK 7
 
 /* SWIFT BALANCE DEFINES */
 #define SWIFTCAP_CHEST 10
