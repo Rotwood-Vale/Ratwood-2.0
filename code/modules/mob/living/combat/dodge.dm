@@ -202,6 +202,10 @@
 		
 		if(!is_in_cone)
 			ignore_DE_bonus = TRUE
+
+		if(human_dodger.STASPD <= 9)
+			ignore_DE_bonus = TRUE
+
 		if(attacking_item && IL)	//Skilldiff applies extra stamloss, tentative
 			drained += (attacker.get_skill_level(attacking_item.associated_skill) - human_dodger.get_skill_level(IL.associated_skill)) * 2
 
@@ -212,11 +216,12 @@
 				if(dodgetime <= CLICK_CD_FAST)
 					drained += (abs(round((CLICK_CD_HEAVY - dodgetime) / 2)))
 
-		if(has_trait && human_dodger.mind && !ignore_DE_bonus && human_dodger.STASPD > 10)
+		if(has_trait && human_dodger.mind && !ignore_DE_bonus)
 			prob2defend = 90	//We cap it out if we have Dodge Expert as a Player.
 
-		if(human_dodger.STASPD < attacker.STASPD && IL && IL.wbalance != WBALANCE_HEAVY)
-			drained += (attacker.STASPD - human_dodger.STASPD)
+		if(human_dodger.STASPD < STASPD)
+			if(IL && IL.wbalance != WBALANCE_HEAVY)
+				drained += (STASPD - human_dodger.STASPD)
 
 		if(dodgetime <= CLICK_CD_DODGE && !ignore_DE_bonus && has_trait && human_dodger.mind)
 			if(istype(mainh, /obj/item/rogueweapon/shield) || istype(offh, /obj/item/rogueweapon/shield))	//why do I have to pre-empt the worst of you
