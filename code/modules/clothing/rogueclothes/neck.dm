@@ -316,7 +316,7 @@
 
 /obj/item/clothing/neck/roguetown/bevor/zizo
 	name = "avantyne bevor"
-	desc = "An avantyne neckguard cut for the medium rite, still protective without becoming impossible to remove."
+	desc = "<font color='A50021'>Near them, on the sand, half sunk, a shattered visage lies.</font>"
 	icon_state = "zizobevor"
 	item_state = "zizobevor"
 	max_integrity = ARMOR_INT_SIDE_ANTAG

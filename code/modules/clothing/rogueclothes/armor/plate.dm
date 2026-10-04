@@ -320,7 +320,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/zizo
 	name = "avantyne fullplate"
-	desc = "Full plate. Called forth from the edge of what should be known. In Her name."
+	desc = "<font color='A50021'>Whose frown, and wrinkled lip, and sneer of cold command, tell that its sculptor well those passions read.</font>"
 	icon_state = "zizoplate"
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	armor = ARMOR_PLATE_BSTEEL
@@ -339,8 +339,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo
 	name = "avantyne-threaded maille"
-	desc = "Pauldrons lyke that of fire, crested atop a veil of otherworldly maille - impossibly tough, warm to the touch, \
-and crackling with insidious energies."
+	desc = "<font color='A50021'>Whose frown, and wrinkled lip, and sneer of cold command, tell that its sculptor well those passions read.</font>"
 	armor_class = ARMOR_CLASS_MEDIUM
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // We are probably one of the best medium armor sets. At higher integ than most.
 	armor = ARMOR_PLATE_BSTEEL

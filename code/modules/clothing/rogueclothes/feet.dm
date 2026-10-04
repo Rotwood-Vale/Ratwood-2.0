@@ -412,7 +412,7 @@
 /obj/item/clothing/shoes/roguetown/boots/armor/zizo
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	name = "avantyne boots"
-	desc = "Plate boots. Called forth from the edge of what should be known. In Her name."
+	desc = "<font color='A50021'>The lone and level sands stretch far away.</font> </br>‎<font color='FF0000'>March forth to the edge of reality, leaving behind its corpse.</font>"
 	icon_state = "zizoboots"
 	armor = ARMOR_PLATE_BSTEEL
 	chunkcolor = "#363030"
@@ -430,8 +430,7 @@
 
 /obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo
 	name = "avantyne-threaded sabatons"
-	desc = "Marrow, flesh, ash; the bedrock of a new reality, fated to suffer until the final breath. It is this prognosis that commands Her disciples to \
-	work towards ascensionism - for no sacrifice is too great, in the pursuit of bringing lyfe back to this dying world."
+	desc = "<font color='A50021'>The lone and level sands stretch far away.</font> </br>‎<font color='FF0000'>March forth to the edge of reality, leaving behind its corpse.</font>"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	armor = ARMOR_PLATE_BSTEEL
 	icon_state = "zizoboots"
