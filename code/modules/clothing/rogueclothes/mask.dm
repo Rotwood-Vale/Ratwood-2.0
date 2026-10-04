@@ -17,6 +17,10 @@
 	experimental_onhip = FALSE
 	var/overarmor = TRUE
 
+/obj/item/clothing/mask/rogue/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_NALEDI, "naledi_mask")
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+
 /obj/item/clothing/mask/rogue/AltRightClick(mob/user)
 	if(!istype(loc, /mob/living/carbon))
 		return
@@ -198,6 +202,9 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	sewrepair = FALSE
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/mask/rogue/lordmask/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/mask/rogue/lordmask/l
 	icon_state = "lmask_l"
@@ -687,6 +694,9 @@
 	flags_inv = HIDEFACE|HIDESNOUT
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/sojourner/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/mask/rogue/lordmask/zizite
 	name = "fateful visage"
