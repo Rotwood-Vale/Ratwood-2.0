@@ -10,7 +10,7 @@
 	traits_applied = list(TRAIT_STRONGBITE, TRAIT_CRITICAL_RESISTANCE, TRAIT_NOPAINSTUN)
 	// Literally same stat spread as Atgervi Shaman
 	stat_budget = STAT_BUDGET_ELITE
-	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_PER = STAT_DISFAVORED, STATKEY_INT = STAT_DISFAVORED)
+	favored_stats = STATS_BERSERKER
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,

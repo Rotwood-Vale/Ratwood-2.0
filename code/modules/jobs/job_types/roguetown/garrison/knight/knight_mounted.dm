@@ -9,7 +9,7 @@
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_EQUESTRIAN)
 	//Decent all-around stats. Nothing spectacular. Ranged/melee hybrid class on horseback.
 	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
+	favored_stats = STATS_CAVALRY
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,

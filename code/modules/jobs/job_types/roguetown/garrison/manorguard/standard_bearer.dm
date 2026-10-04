@@ -11,7 +11,7 @@
 	category_tags = list(CTAG_MENATARMS)
 	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_STANDARD_BEARER)
 	stat_budget = STAT_BUDGET_MID
-	favored_stats = STATS_ZEALOT
+	favored_stats = STATS_BULWARK
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,//SWING THAT THING.
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,//OR THOSE ARMS, I GUESS.

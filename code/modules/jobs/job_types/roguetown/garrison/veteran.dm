@@ -55,7 +55,7 @@
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_HEAVYARMOR)
 	stat_budget = STAT_BUDGET_ELITE
-	favored_stats = STATS_FIGHTER
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/maces = SKILL_LEVEL_MASTER,
@@ -157,7 +157,7 @@
 	category_tags = list(CTAG_VETERAN)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	stat_budget = STAT_BUDGET_ELITE
-	favored_stats = STATS_FIGHTER
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_STR = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/maces = SKILL_LEVEL_MASTER,

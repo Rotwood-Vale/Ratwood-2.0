@@ -10,7 +10,7 @@
 	cmode_music = 'sound/music/warscholar.ogg'
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_NALEDI)
 	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_CON = STAT_DISFAVORED)
+	favored_stats = STATS_CASTER
 	subclass_spellpoints = 15
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,

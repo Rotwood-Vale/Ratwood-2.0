@@ -52,7 +52,7 @@
 
 	category_tags = list(CTAG_SHERIFF)
 	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = STATS_FIGHTER
+	favored_stats = STATS_SWASHBUCKLER
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,

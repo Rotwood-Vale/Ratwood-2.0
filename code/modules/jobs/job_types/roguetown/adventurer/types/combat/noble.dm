@@ -12,7 +12,7 @@
 
 	cmode_music = 'sound/music/combat_knight.ogg'
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
+	favored_stats = STATS_SKIRMISHER
 	subclass_skills = list(
 		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
@@ -63,7 +63,7 @@
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED)
+	favored_stats = STATS_FIGHTER
 	subclass_skills = list(
 		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
@@ -178,7 +178,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_SQUIRE_REPAIR)
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
+	favored_stats = STATS_FIGHTER
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,

@@ -19,7 +19,7 @@
 		TRAIT_ARCYNE_T1,//They're not meant to get more spellpoints. If they do, via Arcyne virtue, for example, T1 only.
 		TRAIT_NALEDI,
 	)
-	stat_budget = STAT_BUDGET_HIGH
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_CASTER
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,

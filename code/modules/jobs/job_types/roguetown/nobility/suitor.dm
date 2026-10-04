@@ -32,8 +32,8 @@
 	outfit = /datum/outfit/job/roguetown/suitor/envoy
 	category_tags = list(CTAG_SUITOR)
 	traits_applied = list(TRAIT_SEEPRICES, TRAIT_NUTCRACKER, TRAIT_GOODLOVER)
-	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_ROGUE
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/misc/music = SKILL_LEVEL_MASTER,
@@ -85,8 +85,8 @@
 	outfit = /datum/outfit/job/roguetown/suitor/schemer
 	traits_applied = list(TRAIT_ALCHEMY_EXPERT)
 	category_tags = list(CTAG_SUITOR)
-	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_ROGUE
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
@@ -133,8 +133,8 @@
 	outfit = /datum/outfit/job/roguetown/suitor/gallant
 	category_tags = list(CTAG_SUITOR)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_FIGHTER
 	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,

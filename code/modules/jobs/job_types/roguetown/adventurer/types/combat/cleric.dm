@@ -11,7 +11,7 @@
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = STATS_CLERIC
+	favored_stats = STATS_ZEALOT
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
@@ -455,7 +455,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/cantor
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_EMPATH)
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_STR = STAT_FAVORED)
+	favored_stats = STATS_SWASHBUCKLER
 	subclass_skills = list(
 		/datum/skill/misc/music = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,

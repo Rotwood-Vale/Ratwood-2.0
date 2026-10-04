@@ -14,7 +14,7 @@
 		TRAIT_CICERONE,//brewer monks and such, lets them see the booze they make.
 	)
 	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_INT = STAT_DISFAVORED, STATKEY_SPD = STAT_DISFAVORED)
+	favored_stats = STATS_BERSERKER
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,

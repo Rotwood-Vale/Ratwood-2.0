@@ -63,7 +63,7 @@
 	category_tags = list(CTAG_VANGUARD)
 	traits_applied = list(TRAIT_DODGEEXPERT)
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
+	favored_stats = STATS_ARCHER
 	subclass_skills = list(
 		/datum/skill/combat/bows = 4,
 		/datum/skill/combat/slings = 4,
@@ -111,7 +111,7 @@
 	category_tags = list(CTAG_VANGUARD)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_PER = STAT_FAVORED)
+	favored_stats = STATS_FIGHTER
 	subclass_skills = list(
 		/datum/skill/combat/axes = 3,
 		/datum/skill/combat/polearms = 3,

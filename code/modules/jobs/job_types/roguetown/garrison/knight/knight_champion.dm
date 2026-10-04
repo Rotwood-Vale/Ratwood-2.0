@@ -8,7 +8,7 @@
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT)
 	category_tags = list(CTAG_ROYALGUARD)
 	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED)
+	favored_stats = STATS_SKIRMISHER
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,

@@ -9,7 +9,7 @@
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_EQUESTRIAN)
 	//Garrison mounted class; charge and charge often.
 	stat_budget = STAT_BUDGET_MID
-	favored_stats = STATS_SKIRMISHER
+	favored_stats = STATS_CAVALRY
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,

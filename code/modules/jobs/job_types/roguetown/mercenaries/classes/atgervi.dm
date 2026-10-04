@@ -10,7 +10,7 @@
 	category_tags = list(CTAG_MERCENARY)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	stat_budget = STAT_BUDGET_HIGH
-	favored_stats = STATS_TANK
+	favored_stats = STATS_BERSERKER
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,

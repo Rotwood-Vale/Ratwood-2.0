@@ -6,8 +6,8 @@
 	allowed_ages = list(AGE_OLD)
 	category_tags = list(CTAG_MENATARMS)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	stat_budget = STAT_BUDGET_MID
-	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_FIGHTER
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
