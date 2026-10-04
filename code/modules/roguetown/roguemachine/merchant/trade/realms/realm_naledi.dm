@@ -100,7 +100,7 @@
 		/datum/supply_pack/rogue/naledi/glassen_decanters,
 		/datum/supply_pack/rogue/naledi/glass_statue,
 		/datum/supply_pack/rogue/naledi/gold_finery,
-		/datum/supply_pack/rogue/naledi/ring_swiftness,
+//		/datum/supply_pack/rogue/naledi/ring_swiftness,
 	)
 	hail_lines = list(
 		"Peace upon the Company. Naledi greets the factor, in Psydon's name, with the respect owed between honest houses.",

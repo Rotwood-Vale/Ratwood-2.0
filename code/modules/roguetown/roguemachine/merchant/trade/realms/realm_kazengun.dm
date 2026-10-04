@@ -97,7 +97,7 @@
 		/datum/supply_pack/rogue/kazengun/kouken_kit,
 		/datum/supply_pack/rogue/kazengun/puzzlebox_easy,
 		/datum/supply_pack/rogue/kazengun/puzzlebox_medium,
-		/datum/supply_pack/rogue/kazengun/puzzlebox_royal,
+//		/datum/supply_pack/rogue/kazengun/puzzlebox_royal,
 		/datum/supply_pack/rogue/luxury/fancyteaset,
 		/datum/supply_pack/rogue/alcohol/kgunplum,
 		/datum/supply_pack/rogue/alcohol/kgunsake,

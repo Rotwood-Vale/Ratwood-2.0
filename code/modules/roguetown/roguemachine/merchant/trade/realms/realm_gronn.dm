@@ -98,7 +98,7 @@
 		/datum/supply_pack/rogue/gronn/gronnic_norsii_helm,
 		/datum/supply_pack/rogue/gronn/gronnic_brigandine,
 		/datum/supply_pack/rogue/gronn/norsii_kit,
-		/datum/supply_pack/rogue/gronn/ring_courage,
+//		/datum/supply_pack/rogue/gronn/ring_courage,
 		/datum/supply_pack/rogue/alcohol/gronnmead,
 	)
 	hail_lines = list(
