@@ -114,7 +114,7 @@
 		/datum/supply_pack/rogue/otava/chevalier_kit,
 		/datum/supply_pack/rogue/otava/sergent_kit,
 		/datum/supply_pack/rogue/otava/cheese,
-//		/datum/supply_pack/rogue/otava/ring_wisdom,
+		/datum/supply_pack/rogue/otava/ring_wisdom,
 		/datum/supply_pack/rogue/alcohol/winevalorred,
 		/datum/supply_pack/rogue/alcohol/winevalorwhite,
 	)

@@ -91,7 +91,7 @@
 		/datum/supply_pack/rogue/grenzelhoft/coppiette,
 		/datum/supply_pack/rogue/grenzelhoft/salami,
 		/datum/supply_pack/rogue/grenzelhoft/hardybread,
-//		/datum/supply_pack/rogue/grenzelhoft/ring_vitality,
+		/datum/supply_pack/rogue/grenzelhoft/ring_vitality,
 		/datum/supply_pack/rogue/alcohol/grenzelbeer,
 		/datum/supply_pack/rogue/alcohol/winegrenzel,
 		/datum/supply_pack/rogue/alcohol/apfelweinheim,
