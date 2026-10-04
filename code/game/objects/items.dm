@@ -279,6 +279,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/nudist_approved = FALSE
 	/// This is predominantly for items WITHOUT A RECIPE. Recipes will hold display_category's otherwise
 	var/display_category
+	var/list/runes = list()
 
 /obj/item/Initialize(mapload)
 	if (attack_verb)
@@ -373,6 +374,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				dismember_blade_int = max_blade_int
 		else
 			blade_int = max_blade_int
+	setup_alchemical_runes()
 
 /obj/item/proc/update_transform()
 	transform = null
