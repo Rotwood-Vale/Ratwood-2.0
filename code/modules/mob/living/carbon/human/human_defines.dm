@@ -161,7 +161,7 @@
 	rot_type = /datum/component/rot/corpse
 
 	var/voice_type = null // LETHALSTONE EDIT: defines what sound pack we use. keep this null so mobs resort to their typical gender typing - preferences set this
-	var/list/stat_prefs
+	var/list/stat_caps
 	var/list/stat_bonuses
 	var/second_voice	// Virtue-specific. Can be swapped to / from and changed.
 	var/original_voice

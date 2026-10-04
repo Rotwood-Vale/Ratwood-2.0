@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/pronouns = HE_HIM				// LETHALSTONE EDIT: character's pronouns (well duh)
 	var/voice_pack = "Default"
 	var/voice_type = VOICE_TYPE_MASC	// LETHALSTONE EDIT: the type of soundpack the mob should use
-	var/list/stat_prefs = list()
+	var/list/stat_caps = list()
 	var/stat_source = "race"
 	var/origin_bonus_stat
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	return STAT_PREF_POINTS + get_quirk_points_earned()
 
 /datum/preferences/proc/get_points_remaining()
-	return get_points_total() - stat_pref_points_used(stat_prefs) - get_quirk_points_spent()
+	return get_points_total() - stat_pref_points_used(stat_caps) - get_quirk_points_spent()
 
 /datum/preferences/proc/get_quirk_typepaths()
 	var/list/types = list()
@@ -3054,7 +3054,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.origin = origin ? origin.name : "Unknown"
 
 	validate_background()
-	character.stat_prefs = stat_prefs.Copy()
+	character.stat_caps = stat_caps.Copy()
 	character.stat_bonuses = get_stat_bonuses()
 
 	character.flavortext = flavortext

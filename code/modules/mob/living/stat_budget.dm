@@ -1,18 +1,15 @@
 GLOBAL_LIST_INIT(budget_stats, list(STATKEY_STR, STATKEY_PER, STATKEY_INT, STATKEY_CON, STATKEY_WIL, STATKEY_SPD))
-GLOBAL_LIST_INIT(stat_pref_levels, list("++" = 2, "+" = 1, "-" = 0, "--" = -0.5))
 
 // the weights choose where 'spare' points go, Generally.
 GLOBAL_LIST_INIT(stat_weight_mults, list(STATKEY_STR = 1.3, STATKEY_PER = 1.1, STATKEY_INT = 1.15, STATKEY_CON = 1.1, STATKEY_WIL = 1.15, STATKEY_SPD = 1.25))
 // the costs are based off my own analysis of the stats. I think it's good ??
 GLOBAL_LIST_INIT(stat_cost_factors, list(STATKEY_STR = 1.5, STATKEY_PER = 1, STATKEY_INT = 1.25, STATKEY_CON = 1, STATKEY_WIL = 1, STATKEY_SPD = 1.5))
-GLOBAL_LIST_INIT(stat_pref_symbols, list("++" = "++", "+" = "+", "-" = "=", "--" = "-"))
 
-GLOBAL_LIST_INIT(stat_pref_costs, list("++" = 1, "+" = 1, "-" = 0, "--" = 0))
-
-/proc/stat_pref_points_used(list/stat_prefs)
+/proc/stat_pref_points_used(list/stat_caps)
 	var/used = 0
-	for(var/stat in stat_prefs)
-		used += GLOB.stat_pref_costs[stat_prefs[stat]]
+	for(var/stat in GLOB.budget_stats)
+		if(stat_caps[stat])
+			used++
 	return used
 
 // attributes are more expensive when stacked.
@@ -23,6 +20,13 @@ GLOBAL_LIST_INIT(stat_pref_costs, list("++" = 1, "+" = 1, "-" = 0, "--" = 0))
 	else if(level <= STAT_COST_MID_MAX)
 		cost = 2
 	return cost * GLOB.stat_cost_factors[stat]
+
+/proc/stat_values_cost(list/values)
+	var/used = 0
+	for(var/stat in values)
+		for(var/level in 9 to values[stat])
+			used += stat_level_cost(stat, level)
+	return used
 
 /proc/stat_cap_shift(stat, list/favored_stats)
 	return LAZYACCESS(favored_stats, stat) || 0
@@ -40,26 +44,22 @@ GLOBAL_LIST_INIT(stat_pref_costs, list("++" = 1, "+" = 1, "-" = 0, "--" = 0))
 	return STAT_WEIGHT_NEUTRAL
 
 // the ALGORITHM ! it spends points to bring everything up 2 baseline / pref / favored, & then spends what's leftover according to weight.
-/proc/calculate_role_stats(list/stat_prefs, budget, list/favored_stats)
+/proc/calculate_role_stats(budget, list/favored_stats, list/stat_caps, spend_spare = TRUE)
 	var/list/values = list()
 	var/list/caps = list()
 	var/list/baselines = list()
 	var/list/weights = list()
 	var/list/spent = list()
 	for(var/stat in GLOB.budget_stats)
-		var/pick = "-"
-		if(stat_prefs && stat_prefs[stat])
-			pick = stat_prefs[stat]
 		var/shift = stat_cap_shift(stat, favored_stats)
 		values[stat] = 8
 		caps[stat] = STAT_BASE_MAX + shift
 		baselines[stat] = STAT_BASELINE + min(shift, 0)
-		if(pick == "--" && shift > 0)
-			caps[stat]--
-		else if(pick == "--")
-			caps[stat] = 8
-			baselines[stat] = 8
-		weights[stat] = (max(STAT_MIN_WEIGHT, stat_role_weight(stat, favored_stats) + GLOB.stat_pref_levels[pick]) ** STAT_FOCUS) * GLOB.stat_weight_mults[stat]
+		if(stat_caps && stat_caps[stat])
+			caps[stat] = max(8 + shift, min(caps[stat], stat_caps[stat] + shift))
+			baselines[stat] = min(baselines[stat], caps[stat])
+			values[stat] = min(values[stat], caps[stat])
+		weights[stat] = (max(STAT_MIN_WEIGHT, stat_role_weight(stat, favored_stats)) ** STAT_FOCUS) * GLOB.stat_weight_mults[stat]
 		spent[stat] = 0
 	var/progress = TRUE
 	while(progress && budget > 0)
@@ -70,6 +70,17 @@ GLOBAL_LIST_INIT(stat_pref_costs, list("++" = 1, "+" = 1, "-" = 0, "--" = 0))
 			budget -= stat_level_cost(stat, values[stat] + 1)
 			values[stat]++
 			progress = TRUE
+	progress = TRUE
+	while(progress && budget > 0)
+		progress = FALSE
+		for(var/stat in GLOB.budget_stats)
+			if(!stat_caps || !stat_caps[stat] || values[stat] >= caps[stat] || stat_level_cost(stat, values[stat] + 1) > budget)
+				continue
+			budget -= stat_level_cost(stat, values[stat] + 1)
+			values[stat]++
+			progress = TRUE
+	if(!spend_spare)
+		return values
 	while(budget > 0)
 		var/total_weight = 0
 		var/virtual_budget = budget
@@ -98,7 +109,7 @@ GLOBAL_LIST_INIT(stat_pref_costs, list("++" = 1, "+" = 1, "-" = 0, "--" = 0))
 	return values
 
 /mob/living/carbon/human/proc/apply_role_stats(budget, list/favored_stats)
-	var/list/values = calculate_role_stats(stat_prefs, budget, favored_stats)
+	var/list/values = calculate_role_stats(budget, favored_stats, stat_caps)
 	var/list/flat = stat_bonuses
 	if(isnull(flat))
 		flat = dna.species.race_bonus

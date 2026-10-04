@@ -138,16 +138,19 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 
 // ppl can choose between your RACIAL stat bonus or one from your ORIGIN.
 /datum/preferences/proc/get_stat_bonuses()
-	if(stat_source == "virtue")
-		return list()
+	if(stat_source == "race")
+		return pref_species.race_bonus
+	var/list/bonuses = list()
+	for(var/stat in pref_species.race_bonus)
+		if(pref_species.race_bonus[stat] < 0)
+			bonuses[stat] = pref_species.race_bonus[stat]
 	if(stat_source == "origin" && pref_species.origin_stats_allowed && origin)
 		if(!origin.choose_stat)
-			return origin.stat_bonuses
-		var/list/chosen = list()
-		if(origin_bonus_stat in (GLOB.budget_stats + STATKEY_LCK))
-			chosen[origin_bonus_stat] = 1
-		return chosen
-	return pref_species.race_bonus
+			for(var/stat in origin.stat_bonuses)
+				bonuses[stat] += origin.stat_bonuses[stat]
+		else if(origin_bonus_stat in (GLOB.budget_stats + STATKEY_LCK))
+			bonuses[origin_bonus_stat] += 1
+	return bonuses
 
 /datum/preferences/proc/second_virtue_allowed()
 	return stat_source == "virtue"
@@ -181,7 +184,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	if(!second_virtue_allowed())
 		virtuetwo = GLOB.virtues[/datum/virtue/none]
 	if(get_points_remaining() < 0)
-		stat_prefs = list()
+		stat_caps = list()
 
 /datum/preferences/proc/page_identity(mob/user)
 	var/html = ""
@@ -257,7 +260,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		favored_stats = preview_subclass.favored_stats
 		preview_label = " - [preview_subclass.name]"
 	// subclass preview shows stats for that role!
-	var/list/final_stats = calculate_role_stats(stat_prefs, budget, favored_stats)
+	var/list/final_stats = calculate_role_stats(budget, favored_stats, stat_caps)
 	var/list/forced_stats = preview_subclass?.forced_stats
 	if(forced_stats)
 		final_stats = forced_stats
@@ -276,12 +279,14 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	var/list/age_bonuses = GLOB.age_stat_bonuses[age]
 	var/list/stat_items = list()
 	for(var/stat in GLOB.budget_stats)
+		var/list/others = stat_caps.Copy()
+		others -= stat
+		var/natural = calculate_role_stats(budget, favored_stats, others)[stat]
 		var/color = "#d9d9d9"
-		if(LAZYACCESS(favored_stats, stat) > 0)
+		if(stat_caps[stat] && stat_caps[stat] + stat_cap_shift(stat, favored_stats) > natural)
 			color = "#91cf68"
-		if(LAZYACCESS(favored_stats, stat) < 0)
+		if(stat_caps[stat] && stat_caps[stat] + stat_cap_shift(stat, favored_stats) < natural)
 			color = "#cf2a2a"
-		var/current_level = stat_prefs[stat] || "-"
 		var/race_value = stat_bonuses_list[stat] || 0
 		var/shown_stat = min(final_stats[stat] + race_value + LAZYACCESS(age_bonuses, stat), max(final_stats[stat], STAT_BASE_MAX + stat_cap_shift(stat, favored_stats) + STAT_MODIFIER_OVERCAP))
 		if(forced_stats)
@@ -289,12 +294,17 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		var/boost_mark = ""
 		if(race_value > 0)
 			boost_mark = "<font color='#91cf68'>^</font>"
-		var/symbol_color = "#d9d9d9"
-		if(current_level == "++" || current_level == "+")
-			symbol_color = "#91cf68"
-		if(current_level == "--")
-			symbol_color = "#cf2a2a"
-		stat_items += "<b>[uppertext(copytext(stat, 1, 4))]</b> <font color='[symbol_color]'>[GLOB.stat_pref_symbols[current_level]]</font> <a href='?_src_=prefs;preference=background;bg=stat;stat=[stat]'><font color='[color]'>[shown_stat]</font></a>[boost_mark]"
+		var/label_color = "#d9d9d9"
+		var/tier = LAZYACCESS(favored_stats, stat)
+		if(tier == STAT_VERY_FAVORED)
+			label_color = "#4fd64f"
+		if(tier == STAT_FAVORED)
+			label_color = "#91cf68"
+		if(tier == STAT_DISFAVORED)
+			label_color = "#e07070"
+		if(tier == STAT_VERY_DISFAVORED)
+			label_color = "#cf2a2a"
+		stat_items += "<b><font color='[label_color]'>[uppertext(copytext(stat, 1, 4))]</font></b> <a href='?_src_=prefs;preference=background;bg=stat;stat=[stat]'><font color='[color]'>[shown_stat]</font></a>[boost_mark]"
 		if(length(stat_items) == 3)
 			html += pref_line(stat_items)
 			stat_items = list()
@@ -450,16 +460,55 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 			var/stat = href_list["stat"]
 			if(!(stat in GLOB.budget_stats))
 				return
-			var/list/options = list("Max (1 point)" = "++", "High (1 point)" = "+", "Equal" = "-", "Low" = "--")
-			var/choice = tgui_input_list(user, "How much do you want [stat]?", "Stat Preference", options)
-			if(!choice)
+			if(preview_subclass?.forced_stats)
 				return
-			var/list/new_prefs = stat_prefs.Copy()
-			new_prefs[stat] = options[choice]
-			if(stat_pref_points_used(new_prefs) + get_quirk_points_spent() > get_points_total())
+			var/shift = stat_cap_shift(stat, preview_subclass?.favored_stats)
+			var/list/others = stat_caps.Copy()
+			others -= stat
+			var/natural = calculate_role_stats(preview_subclass?.stat_budget || STAT_BUDGET_BASE, preview_subclass?.favored_stats, others)[stat]
+			var/bonus = get_stat_bonuses()[stat] + LAZYACCESS(GLOB.age_stat_bonuses[age], stat)
+			var/min_shown = 8 + shift + bonus
+			var/max_shown = min(STAT_BASE_MAX + shift + bonus, STAT_BASE_MAX + shift + STAT_MODIFIER_OVERCAP)
+			if(min_shown >= max_shown)
+				return
+			var/target_budget = preview_subclass?.stat_budget || STAT_BUDGET_BASE
+			var/default_shown = clamp(calculate_role_stats(target_budget, preview_subclass?.favored_stats, list())[stat] + bonus, min_shown, max_shown)
+			var/list/step_values = list(min_shown, round((min_shown + default_shown) / 2), default_shown, round((default_shown + max_shown) / 2), max_shown)
+			var/list/step_labels = list("Min", "Low", "Default", "High", "Max")
+			var/list/steps = list()
+			var/list/current_spread = calculate_role_stats(target_budget, preview_subclass?.favored_stats, stat_caps)
+			for(var/i in 1 to 5)
+				var/list/test = others.Copy()
+				if(i != 3)
+					test[stat] = clamp(step_values[i] - bonus, 8 + shift, STAT_BASE_MAX + shift) - shift
+				var/list/free_test = test.Copy()
+				if(i == 3)
+					free_test[stat] = clamp(natural, 8 + shift, STAT_BASE_MAX + shift) - shift
+				var/list/spread = calculate_role_stats(target_budget, preview_subclass?.favored_stats, free_test, FALSE)
+				var/list/full_spread = calculate_role_stats(target_budget, preview_subclass?.favored_stats, test)
+				var/reached = full_spread[stat]
+				var/list/changes = list()
+				for(var/other in GLOB.budget_stats)
+					if(other != stat && full_spread[other] != current_spread[other])
+						changes += list(list("stat" = uppertext(copytext(other, 1, 4)), "amount" = full_spread[other] - current_spread[other]))
+				var/warn = ""
+				if(i != 3 && reached < clamp(step_values[i] - bonus, 8 + shift, STAT_BASE_MAX + shift))
+					warn = "Too expensive! (Highest Possible: [reached + bonus])"
+				steps += list(list("label" = step_labels[i], "target" = step_values[i], "actual" = reached + bonus, "free" = round(target_budget - stat_values_cost(spread), 0.1), "warn" = warn, "changes" = changes))
+			var/new_step = tgui_input_number(user, "", capitalize(stat), 2, 4, 0, slider = TRUE, steps = steps)
+			if(isnull(new_step))
+				return
+			var/list/new_caps = stat_caps.Copy()
+			if(new_step == 2)
+				new_caps -= stat
+			else
+				new_caps[stat] = clamp(step_values[new_step + 1] - bonus, 8 + shift, STAT_BASE_MAX + shift) - shift
+				if(new_caps[stat] + shift == natural)
+					new_caps -= stat
+			if(stat_pref_points_used(new_caps) + get_quirk_points_spent() > get_points_total())
 				to_chat(user, span_warning("Not enough points!"))
 				return
-			stat_prefs = new_prefs
+			stat_caps = new_caps
 		if("stat_source")
 			var/list/sources = list("Racial" = "race", "Second Virtue" = "virtue")
 			if(pref_species.origin_stats_allowed)

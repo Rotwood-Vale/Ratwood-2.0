@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   RestrictedInput,
+  Slider,
   Section,
   Stack,
 } from 'tgui-core/components';
@@ -21,6 +22,15 @@ type Data = {
   message: string;
   min_value: number;
   round_value: BooleanLike;
+  slider: BooleanLike;
+  steps?: {
+    label: string;
+    target: number;
+    actual: number;
+    free: number;
+    warn: string;
+    changes: { stat: string; amount: number }[];
+  }[];
   timeout: number;
   title: string;
 };
@@ -34,6 +44,8 @@ export function NumberInputModal(props) {
     message = '',
     min_value = 0,
     round_value,
+    slider,
+    steps,
     timeout,
     title,
   } = data;
@@ -45,7 +57,9 @@ export function NumberInputModal(props) {
   const windowHeight =
     140 +
     (message.length > 30 ? Math.ceil(message.length / 3) : 0) +
-    (message.length && large_buttons ? 5 : 0);
+    (message.length && large_buttons ? 5 : 0) +
+    (slider ? 40 : 0) +
+    (steps ? 35 : 0);
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
     if (event.key === KEY.Enter && isValid) {
@@ -57,7 +71,7 @@ export function NumberInputModal(props) {
   }
 
   return (
-    <Window title={title} width={270} height={windowHeight}>
+    <Window title={title} width={slider ? 360 : 270} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
       <Window.Content onKeyDown={handleKeyDown}>
         <Section fill>
@@ -65,6 +79,59 @@ export function NumberInputModal(props) {
             <Stack.Item grow>
               <Box color="label">{message}</Box>
             </Stack.Item>
+            {!!slider && (
+              <Stack.Item>
+                <Slider
+                  minValue={min_value}
+                  maxValue={max_value}
+                  step={1}
+                  stepPixelSize={40}
+                  value={value}
+                  onChange={(e, v) => setValue(v)}
+                />
+                {!!steps && (
+                  <>
+                    <Stack justify="space-between" mt={1}>
+                      {steps.map((step, i) => (
+                        <Stack.Item key={i}>
+                          <Box
+                            bold={i === value}
+                            color={i === value ? 'good' : 'label'}
+                          >
+                            {step.label}
+                          </Box>
+                        </Stack.Item>
+                      ))}
+                    </Stack>
+                    <Box mt={1}>
+                      Target: {steps[value]?.target} | Actual:{' '}
+                      {steps[value]?.actual} | Free points:{' '}
+                      {steps[value]?.free}
+                    </Box>
+                    {!!steps[value]?.warn && (
+                      <Box color="bad">{steps[value].warn}</Box>
+                    )}
+                    {!!steps[value]?.changes?.length && (
+                      <Box mt={1}>
+                        {' '}
+                        {steps[value].changes.map((change, i) => (
+                          <Box
+                            key={i}
+                            inline
+                            mr={1}
+                            color={change.amount > 0 ? 'good' : 'bad'}
+                          >
+                            {change.stat} {change.amount > 0 ? '+' : ''}
+                            {change.amount}
+                          </Box>
+                        ))}
+                      </Box>
+                    )}
+                  </>
+                )}
+              </Stack.Item>
+            )}
+            {!slider && (
             <Stack.Item>
               <Stack fill>
                 <Stack.Item>
@@ -128,6 +195,7 @@ export function NumberInputModal(props) {
                 </Stack.Item>
               </Stack>
             </Stack.Item>
+            )}
             <Stack.Item>
               <InputButtons input={value} disabled={!isValid} />
             </Stack.Item>

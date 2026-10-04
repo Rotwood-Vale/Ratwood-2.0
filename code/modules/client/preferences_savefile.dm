@@ -596,18 +596,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		reset_culinary_preferences()
 
 /datum/preferences/proc/_load_stat_prefs(S)
-	var/list/loaded_prefs
 	S["stat_source"] >> stat_source
 	S["origin_bonus_stat"] >> origin_bonus_stat
 	if(stat_source != "origin" && stat_source != "virtue")
 		stat_source = "race"
-	S["stat_prefs"] >> loaded_prefs
-	stat_prefs = list()
-	if(!islist(loaded_prefs))
-		return
-	for(var/stat in GLOB.budget_stats)
-		if(loaded_prefs[stat] in GLOB.stat_pref_levels)
-			stat_prefs[stat] = loaded_prefs[stat]
+	stat_caps = list()
+	var/list/loaded_caps
+	S["stat_caps"] >> loaded_caps
+	if(islist(loaded_caps))
+		for(var/stat in GLOB.budget_stats)
+			if(isnum(loaded_caps[stat]))
+				stat_caps[stat] = clamp(loaded_caps[stat], 8, STAT_BASE_MAX)
 
 /datum/preferences/proc/_load_virtue(S)
 	var/virtue_type
@@ -1226,7 +1225,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["voice_type"] , voice_type)
 	WRITE_FILE(S["voice_pack"] , voice_pack)
 	WRITE_FILE(S["pronouns"] , pronouns)
-	WRITE_FILE(S["stat_prefs"] , stat_prefs)
+	WRITE_FILE(S["stat_caps"] , stat_caps)
 	WRITE_FILE(S["stat_source"] , stat_source)
 	WRITE_FILE(S["origin_bonus_stat"] , origin_bonus_stat)
 	// Save virtues with explicit null-safety

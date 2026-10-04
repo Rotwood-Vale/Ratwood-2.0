@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 // presets :(
 /datum/preferences/proc/save_preset(preset_slot)
 	var/list/preset = list(
-		"stat_prefs" = stat_prefs,
+		"stat_caps" = stat_caps.Copy(),
 		"virtue" = virtue?.type,
 		"virtuetwo" = virtuetwo?.type,
 		"quirks" = get_quirk_typepaths(),
@@ -161,12 +161,12 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	var/list/preset = vars["loadout_preset_[preset_slot]"]
 	if(!islist(preset) || !preset.len)
 		return FALSE
-	stat_prefs = list()
-	var/list/preset_stats = preset["stat_prefs"]
-	if(islist(preset_stats))
+	stat_caps = list()
+	var/list/preset_caps = preset["stat_caps"]
+	if(islist(preset_caps))
 		for(var/stat in GLOB.budget_stats)
-			if(preset_stats[stat] in GLOB.stat_pref_levels)
-				stat_prefs[stat] = preset_stats[stat]
+			if(isnum(preset_caps[stat]))
+				stat_caps[stat] = clamp(preset_caps[stat], 8, STAT_BASE_MAX)
 	var/virtue_type = string_to_typepath(preset["virtue"])
 	if(ispath(virtue_type, /datum/virtue))
 		virtue = new virtue_type()
