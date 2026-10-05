@@ -185,23 +185,22 @@
 
 	return TRUE
 
-//Bloodrage T0 -- Uncapped STR buff.
-/obj/effect/proc_holder/spell/self/graggar_bloodrage
-	name = "Bloodrage"
-	desc = "Grants you unbound strength for a short while."
+//Bloodrage T0 -- Adrenaline and Stamina
+/obj/effect/proc_holder/spell/self/graggar_bloodrush
+	name = "Blood Rush"
+	desc = "Undergo an adrenaline rush to restore stamina, clear stuns and become tougher to kill. With increased miracle skill (Journeyman) gain ability to snap out of any restraints and (Master) become immune to grabs and pain for 30 seconds."
 	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	overlay_state = "bloodrage"
-	recharge_time = 5 MINUTES
-	invocations = list("GRAGGAR!! GRAGGAR!! GRAGGAR!!",
-		"GRAGGAR! BREAK MY CHAINS!",
+	recharge_time = 2 MINUTES
+	invocations = list(""GRAGGAR! BREAK MY CHAINS!",
 		"GRAGGAR! SHATTER MY BINDS!"
 	)
 	invocation_type = "shout"
-	sound = 'sound/magic/bloodrage.ogg'
-	releasedrain = 30
+	sound = 'sound/magic/graggar_bloodrush.ogg'
+	releasedrain = 5
 	miracle = TRUE
-	devotion_cost = 80
+	devotion_cost = 30
 	antimagic_allowed = FALSE
 	var/static/list/purged_effects = list(
 	/datum/status_effect/incapacitating/immobilized,
@@ -209,7 +208,7 @@
 	/datum/status_effect/incapacitating/stun,
 	/datum/status_effect/incapacitating/knockdown,)
 
-/obj/effect/proc_holder/spell/self/graggar_bloodrage/cast(list/targets, mob/user)
+/obj/effect/proc_holder/spell/self/graggar_bloodrush/cast(list/targets, mob/user)
 	. = ..()
 	if(!ishuman(user))
 		revert_cast()
@@ -220,7 +219,7 @@
 	human.emote("warcry")
 	for(var/effect in purged_effects)
 		human.remove_status_effect(effect)
-	human.apply_status_effect(/datum/status_effect/buff/bloodrage)
+	human.apply_status_effect(/datum/status_effect/buff/adrenaline_rush/graggar)
 	human.visible_message(span_danger("[human] rises upward, boiling with immense rage!"))
 	return TRUE
 
@@ -389,6 +388,84 @@
 		var/obj/item/bodypart/bodypart = coward.get_bodypart(zone)
 		if(bodypart)
 			bodypart.add_wound(/datum/wound/fracture/no_bleed)
+
+//////////////////////////
+// T4 - Avatar of Rage	//
+//////////////////////////
+
+/obj/effect/proc_holder/spell/invoked/graggar_avatar
+	name = "Avatar of Rage"
+	desc = "Unleash your true rage for an entire MINUTE, making you immune to slowdown from pain, uncapping strength and granting +3 on top. Removes stun-adjacent & stun effects as well can be cast while incapacitated."
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	overlay_state = "avatar"
+	clothes_req = FALSE
+	releasedrain = 5
+	chargedrain = 0
+	chargetime = 1 SECONDS
+	recharge_time = 5 MINUTES
+	invocations = list("I WILL TEAR YOU LIMB FROM LIMB!!")
+	sound = 'sound/magic/graggar_rage.ogg'
+	chargedloop = /datum/looping_sound/invokeascendant
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = TRUE
+	miracle = TRUE
+	devotion_cost = 100
+	var/static/list/purged_effects = list(
+	/datum/status_effect/incapacitating/off_balanced,
+	/datum/status_effect/incapacitating/immobilized,
+	/datum/status_effect/incapacitating/paralyzed,
+	/datum/status_effect/incapacitating/stun,
+	/datum/status_effect/incapacitating/knockdown
+	)
+
+/obj/effect/proc_holder/spell/invoked/graggar_avatar/cast(list/targets, mob/user)
+	. = ..()
+	var/mob/living/carbon/human/caster = user
+	if(!isliving(user))
+		return FALSE
+	for(var/effect in purged_effects)
+		caster.remove_status_effect(effect)
+	caster.apply_status_effect(/datum/status_effect/buff/bloodrage)
+	caster.emote("warcry")
+	return TRUE
+
+#define BLOODRAGE_FILTER "bloodrage"
+
+/atom/movable/screen/alert/status_effect/buff/graggar_bloodrage
+	name = "SLAUGHTER INCARNATE"
+	desc = "GRAGGAR! GRAGGAR! GRAGGAR!"
+	icon_state = "bloodrage"
+
+/datum/status_effect/buff/bloodrage
+	id = "bloodrage"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/graggar_bloodrage
+	var/outline_color = GLOW_COLOR_GRAGGAR
+	duration = 2 MINUTES
+	effectedstats = list(STATKEY_STR = 3)
+
+/datum/status_effect/buff/bloodrage/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_MIRACLE)
+	shake_camera(owner, 5, 2) //Aura
+	to_chat(owner, span_userdanger(pick("KILL, FUCKING KILL! SLAUGHTER THEM!", "BLOOD, FUCKING SPILL THE BLOOD!", "BLOOD AND FURY, SPLITTING MY SKULL!", "I'LL KILL ANYTHING THAT MOVES!", "I'M FUCKING UNSTOPPABLE, I'LL BREAK THEM!")))
+	var/filter = owner.get_filter(BLOODRAGE_FILTER)
+	if(!filter)
+		owner.add_filter(BLOODRAGE_FILTER, 2, list("type" = "outline", "color" = outline_color, "alpha" = 60, "size" = 2))
+	return TRUE
+
+/datum/status_effect/buff/bloodrage/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
+	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_MIRACLE)
+	owner.visible_message(span_warning("[owner] wavers, their rage simmering down."))
+	owner.OffBalance(3 SECONDS)
+	owner.remove_filter(BLOODRAGE_FILTER)
+	owner.emote("breathgasp", forced = TRUE)
+	owner.Slowdown(3)
+
+#undef BLOODRAGE_FILTER
 
 /// Helper spell
 
