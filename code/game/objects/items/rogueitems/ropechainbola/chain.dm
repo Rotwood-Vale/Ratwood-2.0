@@ -33,4 +33,3 @@
 	dropshrink = null
 	force = 10
 	swingsound = BLUNTWOOSH_MED
-	
