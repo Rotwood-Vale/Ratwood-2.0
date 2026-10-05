@@ -193,7 +193,7 @@
 	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	overlay_state = "bloodrage"
 	recharge_time = 2 MINUTES
-	invocations = list(""GRAGGAR! BREAK MY CHAINS!",
+	invocations = list("GRAGGAR! BREAK MY CHAINS!",
 		"GRAGGAR! SHATTER MY BINDS!"
 	)
 	invocation_type = "shout"
