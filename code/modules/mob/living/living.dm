@@ -916,7 +916,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check (Pestrians to now, go forth flesh abominations!)
+	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check (Pestrians too now, go forth flesh abominations!)
 		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair brimming with elixir under a master's hand or a power of the fleshtwisting pestrian could bind it."))
 		return FALSE
 

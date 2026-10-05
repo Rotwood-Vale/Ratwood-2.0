@@ -26,7 +26,6 @@
 	var/harms_undead = TRUE
 	priest_excluded = TRUE
 	var/pestrian_freaks = FALSE
-	
 
 /obj/effect/proc_holder/spell/invoked/resurrect/start_recharge()
 	var/old_recharge = recharge_time
