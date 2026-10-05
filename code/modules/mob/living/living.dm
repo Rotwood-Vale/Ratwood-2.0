@@ -284,22 +284,15 @@
 		if(HAS_TRAIT(L, TRAIT_PUSHIMMUNE))
 			return TRUE
 
-		//stat checking block
-		if(!(world.time % 5))
-			var/statchance = 50
-
-			if(STASTR > L.STASTR)
-				statchance = 50 + (STASTR - L.STASTR * 10)
-
-			else if(STASTR < L.STASTR)
-				statchance = 50 - (L.STASTR - STASTR * 10)
-			if(statchance < 10)
-				statchance = 10
-			if(prob(statchance))
-				visible_message(span_info("[src] pushes [M]."))
-			else
-				visible_message(span_warning("[src] pushes [M]."))
-				return TRUE
+		if(!cmode || L.buckled || L.pulledby)
+			return TRUE
+		if(!prob(clamp(50 + (STASTR - L.STASTR) * 10, 10, 90)))
+			return TRUE
+		var/turf/vacated = L.loc
+		if(L.Move(get_step(L, get_dir(src, L)), get_dir(src, L)))
+			visible_message(span_info("[src] shoves [L]."))
+			Move(vacated, get_dir(src, L))
+		return TRUE
 
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
