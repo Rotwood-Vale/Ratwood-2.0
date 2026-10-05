@@ -25,6 +25,9 @@ with light edits to work with roguecode */
 	var/sound_falloff_exponent = 5
 	///when sounds start falling off for the rustle rustle.
 	var/sound_falloff_distance = 1
+	/// just to make the stupid heels work more seamlessly.
+	var/is_overridden = FALSE
+
 
 /datum/component/item_equipped_movement_rustle/Initialize(custom_sounds, move_delay_override, volume_override, extrarange, falloff_exponent, falloff_distance)
 	if(!isitem(parent))
@@ -48,6 +51,8 @@ with light edits to work with roguecode */
 
 /datum/component/item_equipped_movement_rustle/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
+	if(slot == ITEM_SLOT_HANDS)
+		return
 	RegisterSignal(equipper, COMSIG_MOVABLE_MOVED, PROC_REF(try_step), override = TRUE)
 
 
@@ -65,8 +70,12 @@ with light edits to work with roguecode */
 		return*/
 	move_counter++
 	if(move_counter >= move_delay)
-		play_rustle_sound(source)
+		if(!is_overridden)
+			play_rustle_sound(source)
 		move_counter = 0
 
 /datum/component/item_equipped_movement_rustle/proc/play_rustle_sound(obj/item/clothing/source)//(mob/source)
 	playsound(source, rustle_sounds, volume, sound_vary, sound_extra_range, sound_falloff_exponent, falloff = sound_falloff_distance)
+
+/datum/component/item_equipped_movement_rustle/proc/set_override(state)
+	is_overridden = state

@@ -158,3 +158,4 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 // walking noise related flags
 #define STEPNOISE_ALL (1<<0)
 #define STEPNOISE_HEELS (1<<1)
+#define STEPNOISE_NONE (1<<2)
