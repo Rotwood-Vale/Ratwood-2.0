@@ -6,3 +6,87 @@
   - bugfix: images are no longer qdeled on the hunting trackers
   sippykot:
   - bugfix: adds the new drow gear to the vendor, it was not added properly
+2026-10-02:
+  Kroto-Ker:
+  - rscadd: Pecs breast option.
+  UntoldTactics:
+  - rscadd: Avantyne luxplate armor pieces have had their flavor text reworked into
+      a poem.
+  Yuckuza:
+  - balance: Amazon adventurers now get the bed breaker trait by default
+  chemistrymain3:
+  - bugfix: Fixed a missing crafting recipe for skysugar.
+2026-10-03:
+  EvenInDeathIStillServe:
+  - rscadd: Opening a package containing explosives will detonate its payload on the
+      spot.
+  - rscadd: Using a knife to open a package has a mere 20% chance to detonate any
+      explosive within.
+  IronDragoon:
+  - bugfix: fixed the 'secrets of the throat' command to not be incorrect in the info
+      it gives
+  KurobaKetsukane:
+  - rscadd: Grenzelhoft, Gronn, Otava and Naledi ships have a rare chance to carry
+      a Ring of Vitality, Courage, Wisdom or Swiftness.
+  - rscadd: Kazengun ships sell wooden and ebony puzzle-boxes, with a rare chance
+      of a royal puzzle-box.
+  - qol: Rare ship cargo is marked "(rare)" in the Harbor tab's realm list.
+  - balance: Royal puzzle-boxes can be retried after a failed attempt, but crumble
+      to dust once solved.
+  - code_imp: Supply packs have a ship_chance var for cargo that only shows up on
+      some ships.
+  MarioTheShiba:
+  - rscadd: The Soldier of Future
+  Yuckuza:
+  - balance: Magician's Brick spell power scaling is now curved; int deviation both
+      above and below 10 buffs the bricks' force. (i.e. 1 int & 19 int both = +9 brick)
+  chemistrymain3:
+  - rscadd: Mage summons now inform you who the summoner is and what mob is being
+      bound.
+  - rscadd: Pestran divine bolt now removes medicine in you.
+  - rscadd: Teacups and other cookware can be sold again.
+  ophaq:
+  - qol: Implemented a clear search 'X' button to the crafting menu's search bar.
+  wikimody:
+  - balance: stamina poison and its strong version no longer metabolise near instantly,
+      and shoudl be much more effective when used
+  zeroisthebiggay:
+  - bugfix: Fixed the unholy grasp miracle not cleansing its debuff when you remove
+      the net.
+  - balance: Reworked the unholy grasp miracle. It now just summons a net made of
+      gore in your hands that will splatter into blood if you miss it, and can't be
+      reused, rather than shooting a projectile.
+  - balance: The unholy grasp miracle loses its knockdown capabilities.
+  - sound: Added throw and attach sound effects to nets.
+2026-10-04:
+  AlucardHellsingChapel:
+  - balance: Pulling a net out of your bag takes 4 second.
+  Arturlang:
+  - bugfix: joining as jester will no longer break joining as a advclass
+  SirSwagmeyer:
+  - balance: Graggarite miracles now use EYES instead of a HEART to revive their targets.
+  Xander3359:
+  - bugfix: The throat no longer tells you how to set laws twice, or lie to you about
+      being able to ascend when that's not a thing.
+  chemistrymain3:
+  - rscadd: Fixes no-thirst traits still letting you be thirsty.
+  coffeecoffeecoffee:
+  - balance: returns a little Cleave to greatswords in the form of making Cleave intent
+      good
+  john-pawson:
+  - rscadd: Added two new states of sleep depravation, Fatigued and Exhausted, they
+      slow you down and lower your stamina regeneration if you stay awake for more
+      than one day
+  - rscadd: Acorn coffee and baths need more quantity and time to remove the more
+      advanced states of sleep depravation
+  - rscadd: Regular coffee and tea are now able to remove sleep depravation
+  - balance: Being very sleep deprived makes it easier to fall asleep, at Fatigued
+      meaning less time lying down on a bed, and at Exhausted meaning you can sleep
+      with your armor on
+  - balance: Now that there's three sleep depravation states, you can spend 3 days
+      without sleep and not miss out on skill points and inspirations
+  - bugfix: People on lux or unremovable armor can now sleep while wearing it, as
+      long as they remove any removable armor first.
+  - qol: Sleeping on beds now takes 3 seconds less
+  mushy:
+  - bugfix: TRAIT_MAGEARMOR will now properly regenerate.
