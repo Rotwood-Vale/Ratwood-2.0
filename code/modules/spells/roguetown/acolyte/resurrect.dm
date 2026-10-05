@@ -287,7 +287,7 @@
 		/obj/item/heart_blood_vial/filled = 2
 	)
 	pestrian_freaks = TRUE
-	harms_undead = FALSE   // cough, cough, there is a reson pestrians are looked at with suspicion
+	harms_undead = FALSE   // cough, cough, there is a reason pestrians are looked at with suspicion
 
 /obj/effect/proc_holder/spell/invoked/resurrect/eora
 	//Does heartfelt even exist?
