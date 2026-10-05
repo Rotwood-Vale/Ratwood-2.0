@@ -50,58 +50,13 @@
 		return
 	var/should_update = FALSE
 	var/force_bodypart_update = FALSE
-	var/list/choices = list("reset appearance", "penis type", "penis color", "penis color 2", "testicles", "testicles color", "penis size", "testicle size")
+	var/list/choices = list("penis type", "penis color", "penis color 2", "testicles", "testicles color", "penis size", "testicle size")
 	var/chosen = input(H, "Change what?", "Appearance") as null|anything in choices
 
 	if(!chosen)
 		return
-
+		
 	switch(chosen)
-		if("reset appearance")
-			if(!H.client || !H.client.prefs)
-				to_chat(H, span_warning("You don't have character preferences saved!"))
-				return
-			
-			// Verify this is the same character by checking if the preference slot's name matches
-			if(H.client.prefs.real_name != H.real_name)
-				to_chat(H, span_warning("You can only reset to the appearance of the character you are currently playing!"))
-				return
-			
-			var/confirm = alert(H, "Reset your appearance to match your character preferences? This will reapply all physical features, colors, and descriptors but won't change your name, skills, or abilities.", "Reset Appearance", "Yes", "No")
-			if(confirm != "Yes")
-				return
-			
-			if(!H.client || !H.client.prefs)
-				return
-			
-			// Double-check after the alert (in case player switched slots)
-			if(H.client.prefs.real_name != H.real_name)
-				to_chat(H, span_warning("You can only reset to the appearance of the character you are currently playing!"))
-				return
-			
-			// Store the original name, age, and other non-physical attributes
-			var/original_name = H.real_name
-			var/original_age = H.age
-			
-			// Apply preferences but only physical appearance
-			// We'll manually restore what we don't want changed
-			H.client.prefs.copy_to(H, icon_updates = FALSE, roundstart_checks = FALSE, character_setup = TRUE)
-			
-			// Restore non-physical attributes
-			H.real_name = original_name
-			H.name = original_name
-			H.dna.real_name = original_name
-			if(H.mind)
-				H.mind.name = original_name
-			H.age = original_age
-			
-			// Update visuals
-			H.update_body()
-			H.update_hair()
-			H.update_body_parts(TRUE)
-			
-			to_chat(H, span_notice("Your appearance has been reset to match your character preferences."))
-			should_update = TRUE
 		if("penis type")
 			var/list/valid_penis_types = list("none")
 			for(var/choice_path in subtypesof(/datum/customizer_choice/organ/penis))
