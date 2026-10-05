@@ -939,7 +939,7 @@
 	return TRUE // death() already re-swapped the lists if the updatehealth above re-killed us
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller (Pestrians to now, go forth flesh abominations!)
+/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller (Pestrians too now, go forth flesh abominations!)
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
