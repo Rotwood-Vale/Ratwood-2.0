@@ -793,7 +793,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 ///mob/living/simple_animal/extinguish_mob()
 //	return
 
-/mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	if(..()) //successfully ressuscitated from death
 		icon = initial(icon)
 		icon_state = icon_living
