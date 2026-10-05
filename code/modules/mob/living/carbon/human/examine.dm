@@ -666,6 +666,10 @@
 				msg += "[capitalize(m2)] eyes are closed."
 			else if(has_status_effect(/datum/status_effect/debuff/sleepytime))
 				msg += "[m1] looking a little tired."
+			else if(has_status_effect(/datum/status_effect/debuff/sleepytime/t2))
+				msg += "[m1] looking pretty tired."
+			else if(has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+				msg += "[m1] looking ridiculously tired."
 	else
 		msg += "[m1] unconscious."
 //		else
@@ -1060,11 +1064,11 @@
 					. += span_aiprivradio("[capitalize(m2)] body is [!external.has_dried_up ? "covered in cum" : "covered in dried cum"]!")
 				if(facial)
 					. += span_aiprivradio("[capitalize(m2)] face is [!facial.has_dried_up ? "glazed with cum" : "plastered with dried cum"]!")
-				if(creampie && !drip)
+				if(creampie && (!drip || !(drip.orifice & ~SEX_PART_TAIL_MAW)))
 					. += span_aiprivradio("[capitalize(m2)] crotch is [!creampie.has_dried_up ? "a cummy mess" : "stained with dried cum"]!")
-				if(drip)
+				if(drip && drip.orifice != SEX_PART_TAIL_MAW)
 					var/is_long = istype(drip, /datum/status_effect/creampie_leak/long)
-					switch(drip.orifice)
+					switch(drip.orifice & ~SEX_PART_TAIL_MAW)
 						if(SEX_PART_CUNT)
 							. += span_aiprivradio("[m1] [is_long ? "gushing cum from [m2] sex" : "trickling cum from [m2] sex"]!")
 						if(SEX_PART_ANUS)

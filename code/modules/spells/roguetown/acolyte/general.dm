@@ -245,7 +245,6 @@
 	miracle = TRUE
 	devotion_cost = 50
 	var/blood_price = 5
-	var/blood_vol_restore = 7.5 //30 every 2 seconds.
 	var/vol_per_skill = 1	//54 with legendary
 	var/delay = 0.5 SECONDS
 
@@ -284,6 +283,7 @@
 		playsound(UH, 'sound/magic/bloodheal_start.ogg', 100, TRUE)
 		var/user_skill = UH.get_skill_level(associated_skill)
 		var/user_informed = FALSE
+		var/blood_vol_restore = 7.5
 		switch(user_skill)	//Bleeding happens every life(), which is every 2 seconds. Multiply these numbers by 4 to get the "bleedrate" equivalent values.
 			if(SKILL_LEVEL_APPRENTICE)
 				blood_price = 3.75

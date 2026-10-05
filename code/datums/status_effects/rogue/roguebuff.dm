@@ -249,8 +249,9 @@
 	owner.add_stress(/datum/stressevent/starsugar)
 	ADD_TRAIT(owner, TRAIT_DODGEEXPERT, TRAIT_STATUS_EFFECT(id))
 	ADD_TRAIT(owner, TRAIT_DARKVISION, TRAIT_STATUS_EFFECT(id))
-	if(owner.has_status_effect(/datum/status_effect/debuff/sleepytime))
-		owner.remove_status_effect(/datum/status_effect/debuff/sleepytime)
+	if(owner.has_status_effect(/datum/status_effect/debuff/sleepytime) || owner.has_status_effect(/datum/status_effect/debuff/sleepytime/t2) || owner.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+		var/mob/living/carbon/human/H = owner
+		H.remove_sleep_depravation(TRUE)
 	originalcmode = owner.cmode_music
 	owner.cmode_music = 'sound/music/combat_starsugar.ogg'
 
@@ -466,7 +467,7 @@
 	. = ..()
 	to_chat(owner, span_warning("My magical barrier reforms."))
 	playsound(owner, 'sound/magic/magearmorup.ogg', 75, FALSE)
-	owner.scalearmor = 0
+	owner.magearmor = 0
 
 /atom/movable/screen/alert/status_effect/buff/scalearmor
 	name = "Scale Struck"
@@ -1633,28 +1634,29 @@
 	id = "journey_ending"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_ending
 	effectedstats = list(STATKEY_SPD = 2, STATKEY_WIL = 2)
+	examine_text = "<font color= 'blue'>SUBJECTPRONOUN coughs out a portion of blood. They appear to be quicker..</font>"
 	duration = -1
 
 /datum/status_effect/buff/journey_end
 	id = "journey_end"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end
 	effectedstats = list(STATKEY_STR = 2, STATKEY_SPD = 3, STATKEY_WIL = 2, STATKEY_CON = 2)
+	examine_text = "<font color= 'blue'>SUBJECTPRONOUN is infused with an unatural determination to fight! Their muscles have seemed to have hardened.</font>"
 	duration = -1
 
 /datum/status_effect/buff/journey_end_final //takes ages for them to die to bloodloss, but they *do* die to it
 	id = "journey_end_final"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/journey_end_final
 	effectedstats = list(STATKEY_STR = 3, STATKEY_SPD = 4, STATKEY_WIL = 4, STATKEY_CON = 4)
+	examine_text = "<font color= 'blue'>SUBJECTPRONOUN appears to have a final burst of strength! You dont think you will be able to hold them down..</font>"
 	duration = -1
 
 /datum/status_effect/buff/journey_end_final/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_warning("You feel a wave of calming tides throughout your body... Are you truly free?"))
 
 /datum/status_effect/buff/journey_end_final/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_warning("The tides of your failures were too strong.. It seems your freedom will have to wait another dae.."))
 
 /datum/status_effect/buff/journey_end/on_apply()

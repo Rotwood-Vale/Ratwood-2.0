@@ -101,8 +101,10 @@ SUBSYSTEM_DEF(role_class_handler)
 		//XTRA_MEATY.PQ_boost_divider = 10
 	else
 		var/datum/job/roguetown/RT_JOB = SSjob.GetJob(H.job)
-		if(length(RT_JOB?.advclass_cat_rolls))
-			XTRA_MEATY.class_cat_alloc_attempts = RT_JOB.advclass_cat_rolls
+		if(!length(RT_JOB?.advclass_cat_rolls))
+			qdel(XTRA_MEATY)
+			return // Job has no subclasses
+		XTRA_MEATY.class_cat_alloc_attempts = RT_JOB.advclass_cat_rolls
 
 		//if(RT_JOB.PQ_boost_divider)
 			//XTRA_MEATY.PQ_boost_divider = RT_JOB.PQ_boost_divider
@@ -119,6 +121,14 @@ SUBSYSTEM_DEF(role_class_handler)
 		return // There was just one advclass that got automatically selected
 	class_select_handlers[client_ckey] = XTRA_MEATY
 
+/datum/controller/subsystem/role_class_handler/proc/cancel_class_handler(client_ckey)
+	if(!client_ckey)
+		return
+	var/datum/class_select_handler/GOT_IT = class_select_handlers[client_ckey]
+	if(!GOT_IT)
+		return
+	class_select_handlers -= client_ckey
+	qdel(GOT_IT)
 
 /*
 	Attempt to finish the class handling ordeal, aka they picked something
