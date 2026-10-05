@@ -1924,6 +1924,16 @@
 	desc = span_notice("I am on guard, and ready to clash. If I am hit, I will successfully defend. Attacking will make me lose my focus.")
 	icon_state = "clash"
 
+/datum/status_effect/buff/psydonic_endurance
+	id = "psydonic_endurance"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
+	effectedstats = list(STATKEY_CON = 1,STATKEY_WIL = 1)
+
+/atom/movable/screen/alert/status_effect/buff/psydonic_endurance
+	name = "Psydonic Endurance"
+	desc = "I am protected by blessed Psydonian plate armor."
+	icon_state = "buff"
+
 #define EORANAURA_FILTER "eoranaura"
 
 /datum/status_effect/eoranaura
