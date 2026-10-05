@@ -42,11 +42,8 @@
 /obj/item/reagent_containers/lux_impure/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/coal_construct_fuel, 700, 'sound/magic/cosmic_expansion.ogg')
-	return .
-
 
 /obj/item/reagent_containers/lux/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/coal_construct_fuel, 1000, 'sound/magic/cosmic_expansion.ogg')
-	return .
 

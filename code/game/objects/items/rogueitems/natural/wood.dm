@@ -52,7 +52,6 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
 	AddComponent(/datum/component/coal_construct_fuel, 100, 'sound/items/flint.ogg')
-	return .
 
 /obj/item/grown/log/tree/attacked_by(obj/item/I, mob/living/user) //This serves to reward woodcutting
 	user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -162,7 +161,6 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
 	AddComponent(/datum/component/coal_construct_fuel, 50, 'sound/items/flint.ogg')
-	return .
 
 /obj/item/grown/log/tree/small/attackby(obj/item/I, mob/living/user, params)
 	if(item_flags & IN_STORAGE)
