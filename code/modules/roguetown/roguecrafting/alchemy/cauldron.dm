@@ -207,7 +207,7 @@
 /obj/machinery/light/rogue/cauldron/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "AlchemyCauldron", "Алхимическая лаборатория")
+		ui = new(user, src, "AlchemyCauldron", "Alchemical laboratory")
 		ui.open()
 
 
@@ -314,7 +314,7 @@
 				to_chat(user, span_warning("You don't have an alchemical ingredient in your active hand!"))
 				return TRUE
 			if(!isnull(locate(I.type) in ingredients))
-				to_chat(user, span_warning("В котле уже есть [I.name]!"))
+				to_chat(user, span_warning("There is already some [I.name] in the pot."))
 				return TRUE
 			if(!user.transferItemToLoc(I, src))
 				return TRUE
@@ -338,9 +338,9 @@
 				ingredients -= found_item
 				if(!user.put_in_hands(found_item))
 					found_item.forceMove(get_turf(user))
-					to_chat(user, span_notice("Руки полны, [found_item.name] падает на пол."))
+					to_chat(user, span_notice("Your hands are full, [found_item.name] falls to the floor."))
 				else
-					to_chat(user, span_notice("Вы достаете [found_item.name] из котла."))
+					to_chat(user, span_notice("You take [found_item.name] out of the cauldron."))
 				brewing = 0
 				update_icon()
 			return TRUE
@@ -370,11 +370,11 @@
 		if("toggle_fire")
 			if(on)
 				burn_out()
-				to_chat(user, span_notice("Вы гасите огонь под котлом."))
+				to_chat(user, span_notice("You extinguish the fire under the cauldron.."))
 			else
 				on = TRUE
 				update_icon()
-				to_chat(user, span_notice("Вы разжигаете пламя под котлом."))
+				to_chat(user, span_notice("You are stoking the flames under the cauldron."))
 			return TRUE
 
 /obj/machinery/light/rogue/cauldron/onkick(mob/user)

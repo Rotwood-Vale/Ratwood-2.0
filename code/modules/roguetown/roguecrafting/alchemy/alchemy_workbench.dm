@@ -288,7 +288,7 @@
 				to_chat(user, span_warning("You don't have an alchemical ingredient in your active hand!"))
 				return TRUE
 			if(!isnull(locate(I.type) in ingredients))
-				to_chat(user, span_warning("В лаборатории уже установлен [I.name]!"))
+				to_chat(user, span_warning("[I.name] has already been installed in the laboratory."))
 				return TRUE
 			if(!user.transferItemToLoc(I, src))
 				return TRUE
