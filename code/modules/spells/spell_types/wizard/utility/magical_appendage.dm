@@ -33,10 +33,8 @@
 		H.visible_message(span_notice("You already have a penis!"))
 		return
 
-	//ADD_TRAIT(H, TRAIT_MIRROR_MAGIC, TRAIT_GENERIC)
 	H.visible_message(span_notice("[H]'s groin glows bright for a moment."), span_notice("You feel a stirring in your groin."))
 	perform_magical_appendage(H)
-	//addtimer(CALLBACK(src, PROC_REF(remove_mirror_magic), H), 5 MINUTES)
 	return TRUE  // Return TRUE for successful cast
 
 /obj/effect/proc_holder/spell/invoked/magical_appendage/proc/remove_mirror_magic(mob/living/carbon/human/H)
