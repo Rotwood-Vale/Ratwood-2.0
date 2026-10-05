@@ -66992,6 +66992,8 @@
 	pixel_y = 34
 	},
 /obj/item/natural/cloth,
+/obj/item/storage/roguebag,
+/obj/item/storage/roguebag,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/inq/basement)
 "nUn" = (
@@ -100919,10 +100921,6 @@
 /area/rogue/outdoors/town/church)
 "vfg" = (
 /obj/structure/rack/rogue,
-/obj/item/storage/roguebag,
-/obj/item/storage/roguebag,
-/obj/item/storage/roguebag,
-/obj/item/storage/roguebag,
 /obj/machinery/light/rogue/candle/blue/l,
 /obj/structure/rack/rogue/shelf,
 /obj/item/flashlight/flare/torch/metal{
@@ -100937,6 +100935,10 @@
 /obj/item/flashlight/flare/torch/metal{
 	pixel_y = 32
 	},
+/obj/item/clothing/head/inqarticles/blackbag,
+/obj/item/clothing/head/inqarticles/blackbag,
+/obj/item/clothing/head/inqarticles/blackbag,
+/obj/item/clothing/head/inqarticles/blackbag,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/inq/basement)
 "vfk" = (

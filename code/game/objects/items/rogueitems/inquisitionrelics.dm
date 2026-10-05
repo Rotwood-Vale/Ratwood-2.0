@@ -1139,6 +1139,9 @@ Inquisitorial armory down here
 	headgear = M.get_item_by_slot(SLOT_HEAD)
 	var/trained = FALSE
 	var/timetobag = 8 SECONDS
+	if(HAS_TRAIT(user, TRAIT_INQUISITION))
+		trained = TRUE
+		timetobag = 6 SECONDS // didnt want to make it 4 seconds because disciples and adjudicators can wrestle rly easily
 	if(HAS_TRAIT(user, TRAIT_BLACKBAGGER))
 		trained = TRUE
 		timetobag = 4 SECONDS
