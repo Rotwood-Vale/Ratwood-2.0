@@ -2331,6 +2331,69 @@
 	desc = "My body feels better than ever!"
 	icon_state = "buff"
 
+/datum/status_effect/buff/ravox_vow
+	id = "ravox_vow"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/ravox_vow
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 30 MINUTES
+	tick_interval = -1
+
+/datum/status_effect/buff/ravox_vow/proc/on_life()
+	SIGNAL_HANDLER
+
+	owner.heal_wounds(0.2)
+
+/datum/status_effect/buff/ravox_vow/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
+	RegisterSignal(owner, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(on_item_attack))
+	RegisterSignal(owner, COMSIG_LIVING_LIFE, PROC_REF(on_life))
+
+/datum/status_effect/buff/ravox_vow/proc/on_unarmed_attack(mob/living/user, mob/living/carbon/human/target)
+	SIGNAL_HANDLER
+
+	if(!istype(target))
+		return
+
+	if(!HAS_TRAIT(target, TRAIT_OUTLAW) || (!(target.name in user.mind.known_people)))
+		return
+
+	var/armor_block = target.run_armor_check(user.zone_selected, "blunt")
+	if(armor_block > 0)
+		return
+
+	apply_effects(target)
+
+/datum/status_effect/buff/ravox_vow/proc/on_item_attack(mob/living/user, mob/living/carbon/human/target, obj/item/item)
+	SIGNAL_HANDLER
+
+	if(!istype(target))
+		return
+
+	if(!HAS_TRAIT(target, TRAIT_OUTLAW) || (!(target.name in user.mind.known_people)))
+		return
+
+	var/armor_block = target.run_armor_check(user.zone_selected, item.d_type, armor_penetration = 0, damage = 1)
+	if(armor_block > 0)
+		return
+
+	apply_effects(target)
+
+/datum/status_effect/buff/ravox_vow/proc/apply_effects(mob/living/carbon/human/target)
+	if(target.fire_stacks >= 3)
+		return
+
+	target.adjust_fire_stacks(1, /datum/status_effect/fire_handler/fire_stacks/divine)
+	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob/living, ignite_mob))
+
+/datum/status_effect/buff/ravox_vow/on_remove()
+	. = ..()
+	UnregisterSignal(owner, list(COMSIG_MOB_ITEM_AFTERATTACK, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, COMSIG_LIVING_LIFE))
+
+/atom/movable/screen/alert/status_effect/buff/ravox_vow
+	name = "Ravox Vow"
+	desc = "I vowed to Ravox. I shall bring justice to Grimoria."
+
 
 /datum/status_effect/buff/refocus
 	id = "refocus"
