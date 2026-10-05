@@ -90,3 +90,6 @@
   - qol: Sleeping on beds now takes 3 seconds less
   mushy:
   - bugfix: TRAIT_MAGEARMOR will now properly regenerate.
+2026-10-05:
+  0-the-fool:
+  - rscadd: Once-per-day attempt limit to the royal puzzle-box
