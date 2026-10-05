@@ -72,6 +72,14 @@
 		)
 	inherent_traits = list(TRAIT_WEBWALK, TRAIT_DARKVISION) // They come from the Underdark, makes sense they should be able to see in it.
 	race_bonus = list(STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1)
+		if(gender == FEMALE)
+			H.change_stat("strength", 1)
+			H.change_stat("perception", 1)
+			H.change_stat("intelligence", 1)
+			H.change_stat("constitution", 1)
+			H.change_stat("willpower", 1)
+			H.change_stat("speed", 1)
+			H.change_stat("fortune", 1)
 	enflamed_icon = "widefire"
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
