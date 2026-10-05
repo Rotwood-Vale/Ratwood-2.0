@@ -523,7 +523,7 @@ export const AlchemyCauldron = () => {
   );
 
   return (
-    <Window title="Alchemy Laboratory (Cauldron)" width={860} height={640}>
+    <Window title="Alchemy Laboratory (Cauldron)" width={1024} height={720}>
       <Window.Content>
         <style>
           {`
@@ -710,7 +710,7 @@ export const AlchemyCauldron = () => {
                 <div
                   className="alchemy-scroll-area"
                   style={{
-                    height: '470px',
+                    height: '530px',
                     overflowY: 'scroll',
                     overflowX: 'hidden',
                     display: 'flex',

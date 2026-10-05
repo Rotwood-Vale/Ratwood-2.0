@@ -740,7 +740,7 @@ export const AlchemyWorkbench = () => {
   );
 
   return (
-    <Window title="Great Alchemical Laboratory" width={920} height={670}>
+    <Window title="Great Alchemical Laboratory" width={1024} height={720}>
       <Window.Content>
         <style>
           {`
@@ -928,7 +928,7 @@ export const AlchemyWorkbench = () => {
                       <div
                         className="alchemy-scroll-area"
                         style={{
-                          height: '500px',
+                          height: '530px',
                           overflowY: 'scroll',
                           overflowX: 'hidden',
                           display: 'flex',

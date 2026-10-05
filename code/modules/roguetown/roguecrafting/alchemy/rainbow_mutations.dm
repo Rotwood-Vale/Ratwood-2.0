@@ -7,7 +7,6 @@ GLOBAL_LIST_EMPTY(recall_cooldowns)
 	metabolization_rate = REAGENTS_METABOLISM * 0.1
 	var/potency_tier = 1
 
-
 /datum/reagent/medicine/mythic/New()
 	..()
 	if(!islist(data))
@@ -858,67 +857,3 @@ GLOBAL_LIST_EMPTY(recall_cooldowns)
 
 /datum/status_effect/buff/alch/fire_resist/mythic
 	id = "mythic_fire_resist"
-
-/client/verb/debug_spawn_mythic_potion()
-	set name = "Spawn Mythic Potion"
-	set category = "Debug"
-	set desc = "Spawns a vial containing a mythic potion of chosen potency tier."
-
-	if(!holder || !check_rights(R_ADMIN|R_DEBUG))
-		to_chat(usr, span_warning("You do not have permission to use this."))
-		return
-
-	var/list/potion_choices = list(
-		"Elixir of Life III (Health)"          = /datum/reagent/medicine/mythic/health,
-		"Archon's Surge III (Mana)"            = /datum/reagent/medicine/mythic/mana,
-		"Endless Wind III (Stamina)"           = /datum/reagent/medicine/mythic/stamina,
-		"Pestra's Cleansing III (Antidote)"    = /datum/reagent/medicine/mythic/antidote,
-		"Titan's Might III (Strength)"         = /datum/reagent/medicine/mythic/strength,
-		"Phantom Celerity III (Speed)"         = /datum/reagent/medicine/mythic/speed,
-		"Adamantine Flesh III (Constitution)"  = /datum/reagent/medicine/mythic/constitution,
-		"All-Seeing Eye III (Perception)"      = /datum/reagent/medicine/mythic/perception,
-		"Arcane Omniscience III (Intelligence)"= /datum/reagent/medicine/mythic/intelligence,
-		"Fortune's Chosen III (Fortune)"       = /datum/reagent/medicine/mythic/fortune,
-		"Infernal Sovereign III (Fire Resist)" = /datum/reagent/medicine/mythic/fire_resist,
-		"Venom of the Void III (Poison)"       = /datum/reagent/medicine/mythic/strong_poison,
-		"Chronowarp Tincture (Recall)"         = /datum/reagent/magic/recall,
-		"Beastblood Transmutagen (Wildshape)"  = /datum/reagent/magic/transmutation,
-		"Mirage Draught (Mimicry)"             = /datum/reagent/magic/mimicry
-	)
-
-	var/chosen_name = input(usr, "Select a potion to spawn:", "Mythic Alchemy Spawner") as null|anything in potion_choices
-	if(!chosen_name)
-		return
-
-	var/reagent_type = potion_choices[chosen_name]
-
-	var/chosen_tier = input(usr, "Select Potency Tier (1 - 3):", "Potion Tier", 3) as null|num
-	if(!chosen_tier)
-		return
-	chosen_tier = CLAMP(round(chosen_tier), 1, 3)
-	var/amount = input(usr, "Enter volume (drams):", "Potion Volume", 30) as null|num
-
-	if(!amount || amount <= 0)
-		return
-
-	var/obj/item/reagent_containers/glass/bottle/bottle = new /obj/item/reagent_containers/glass/bottle(get_turf(usr))
-	bottle.name = "vial of [chosen_name] (Tier [chosen_tier])"
-	bottle.desc = "An alchemical vial shimmering with condensed arcana."
-
-	var/list/reagent_data = list("potency_tier" = chosen_tier)
-	bottle.reagents.add_reagent(reagent_type, amount, reagent_data)
-
-	var/datum/reagent/medicine/mythic/M = bottle.reagents.get_reagent(reagent_type)
-	if(istype(M))
-		M.potency_tier = chosen_tier
-		if(!islist(M.data))
-			M.data = list()
-		M.data["potency_tier"] = chosen_tier
-
-	if(!usr.put_in_hands(bottle))
-		bottle.forceMove(get_turf(usr))
-		to_chat(usr, span_notice("Spawned [bottle.name] at your feet."))
-	else
-		to_chat(usr, span_notice("Spawned [bottle.name] in your hands."))
-
-	log_admin("[key_name(usr)] spawned [chosen_name] (Tier [chosen_tier], [amount]u).")

@@ -173,6 +173,13 @@
 	required_runes = list(ALCH_RUNE_BLUE = 4, ALCH_RUNE_GREEN = 3, ALCH_RUNE_RED = 1)
 	output_reagents = list(/datum/reagent/magic/mimicry = 30)
 
+/datum/alch_cauldron_recipe/frankenbrew
+	name = "Reanimation Elixir"
+	skill_required = SKILL_LEVEL_MASTER
+	required_base = /datum/reagent/water
+	required_runes = list(ALCH_RUNE_BLUE = 3, ALCH_RUNE_GREEN = 3, ALCH_RUNE_RED = 4)
+	output_reagents = list(/datum/reagent/frankenbrew  = 48)
+
 /datum/alch_cauldron_recipe/mythic_health
 	name = "Elixir of Life III"
 	skill_required = SKILL_LEVEL_MASTER
