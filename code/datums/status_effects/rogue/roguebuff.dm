@@ -2341,7 +2341,7 @@
 /datum/status_effect/buff/ravox_vow/proc/on_life()
 	SIGNAL_HANDLER
 
-	owner.heal_wounds(0.2)
+	owner.heal_wounds(0.6)
 
 /datum/status_effect/buff/ravox_vow/on_apply()
 	. = ..()
