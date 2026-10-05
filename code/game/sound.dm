@@ -593,14 +593,14 @@ GLOBAL_VAR_INIT(sound_storey_tiles, 0)
 			token.update_listener(mob)
 
 /**
- * Re-prices every sound token this mob hears and the weather it stands in.
+ * Refreshes this listener's sound tokens and active weather loop after a Master or Sound Effects change.
  *
- * For a Master or Sound Effects change. Both price by those sliders on each send, but re-send only
- * on their own triggers: a token when either side moves, the weather when its loop replays or its
- * severity is applied. This reaches a listener standing still in between.
+ * These sounds apply volume preferences when sent, so a stationary listener can otherwise keep
+ * hearing the old volume until another update or replay. Instrument tokens retain their separate
+ * Instruments setting under Master. The weather loop retains its current severity-adjusted volume.
  *
- * Never blocks its caller: the weather re-price goes through SoundQuery, which waits on the
- * client, and the menu close that calls this is a signal handler
+ * Does not make the caller wait for SoundQuery(), which the weather volume update can call.
+ * This matters because ui_close() is marked SIGNAL_HANDLER and must not sleep.
  */
 /client/proc/resend_effect_sounds()
 	set waitfor = FALSE
