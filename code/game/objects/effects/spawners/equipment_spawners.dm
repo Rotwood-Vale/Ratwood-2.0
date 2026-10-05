@@ -441,13 +441,11 @@
 		/obj/effect/spawner/lootdrop/potion_poisons = 10,
 		/obj/effect/spawner/lootdrop/decrepit_equipment_spawner = 10,
 		/obj/effect/spawner/lootdrop/ancient_equipment_spawner = 10,
-		/obj/item/reagent_containers/glass/bottle/alchemical/spdpot = 10,
 		/obj/item/book/granter/spell/blackstone/bonechill = 10,
 		/obj/item/book/granter/spell/blackstone/skeleton = 1,//super powerful lich-style player skeleton spawner
 		/obj/item/book/granter/spell/blackstone/skeleton/lesser = 15,
 		/obj/item/reagent_containers/glass/bottle/rogue/emberwine = 10,
 		/obj/item/reagent_containers/glass/bottle/alchemical/spidervenom_paralytic = 5,
-		/obj/item/reagent_containers/glass/bottle/alchemical/strpot = 10,
 	)
 
 /obj/effect/spawner/lootdrop/zizo
@@ -468,7 +466,6 @@
 		/obj/item/clothing/mask/rogue/facemask/carved/onyxamask = 1,
 		/obj/item/spellbook_unfinished/pre_arcyne = 10,
 		/obj/effect/spawner/lootdrop/potion_poisons = 10,
-		/obj/item/reagent_containers/glass/bottle/alchemical/intpot = 5,
 		/obj/item/book/granter/spell/blackstone/bonechill = 10,
 		/obj/item/book/granter/spell/blackstone/skeleton = 1,//super powerful lich-style player skeleton spawner
 		/obj/item/book/granter/spell/blackstone/skeleton/lesser = 15,
@@ -488,7 +485,6 @@
 		/obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar = 10,
 		/obj/item/clothing/under/roguetown/platelegs/graggar = 10,
 		/obj/item/rogueweapon/greataxe/steel/doublehead/graggar = 15,
-		/obj/item/reagent_containers/glass/bottle/alchemical/strpot = 10,
 		/obj/item/bomb = 10,
 		/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar = 5,
 		/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/bronze = 5,
@@ -506,7 +502,6 @@
 		/obj/item/rogueweapon/flail/peasantwarflail/matthios = 10,
 		/obj/effect/spawner/lootdrop/potion_poisons = 5,
 		/obj/item/roguestatue/gold/loot = 10,
-		/obj/item/reagent_containers/glass/bottle/alchemical/spdpot = 10,
 		/obj/item/mattcoin = 10,
 		/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios = 10,
 	)
@@ -552,10 +547,8 @@
 		/obj/item/roguestatue/gold/loot = 5,
 		/obj/item/rogueweapon/woodstaff/ruby = 5,
 		/obj/effect/spawner/lootdrop/potion_poisons = 10,
-		/obj/item/reagent_containers/glass/bottle/alchemical/spdpot = 2,
 		/obj/item/reagent_containers/glass/bottle/rogue/emberwine = 5,
 		/obj/item/reagent_containers/glass/bottle/alchemical/spidervenom_paralytic = 1,
-		/obj/item/reagent_containers/glass/bottle/alchemical/strpot = 5,
 		/obj/item/bmbstrap = 2,
 		/obj/item/restraints/legcuffs/beartrap = 5,
 		/obj/item/reagent_containers/powder/ozium = 5,
