@@ -37,25 +37,35 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.adjust_hydration(hydration)
+		if(metabolized_acoffee >= metabolization_rate && M.has_status_effect(/datum/status_effect/debuff/sleepytime)) // Remove the sleepytime status effect after consumption
+			H.remove_sleep_depravation()
+			to_chat(M, span_green("I feel more focused from that coffee!"))
+			M.visible_message(span_info("[M] gains a look of focus in their eyes, the weary expression lifting from [M.p_them()]."))
+			M.adjust_triumphs(1)
+			if(M.mind?.sleep_adv)
+				M.mind.sleep_adv.sleep_adv_points += 3
+				M.mind.sleep_adv.advance_cycle()
+		else if(M.has_status_effect(/datum/status_effect/debuff/sleepytime/t2) && metabolized_acoffee >= 20)
+			H.remove_sleep_depravation(TRUE)
+			to_chat(M, span_green("I feel SO much more focused from that coffee!"))
+			M.visible_message(span_info("[M] visibly wakes up, their eyes opening fully and the weary tired expression lifting from [M.p_them()]."))
+			M.adjust_triumphs(2)
+			if(M.mind?.sleep_adv)
+				M.mind.sleep_adv.sleep_adv_points += 5
+				M.mind.sleep_adv.advance_cycle()
+		else if(M.has_status_effect(/datum/status_effect/debuff/sleepytime/t2) && metabolized_acoffee >= 40)
+			H.remove_sleep_depravation(TRUE)
+			to_chat(M, span_green("That coffee hit the spot, I can think and move again without my eyelids weighing the same as my entire body."))
+			M.visible_message(span_info("[M] suddenly looks like [M.p_they()] aren't about to collapse anymore, blinking a couple of times as some conciousness comes back to [M.p_them()]."))
+			if(M.mind?.sleep_adv)
+				M.mind.sleep_adv.sleep_adv_points += 7
+				M.mind.sleep_adv.advance_cycle()
 		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			M.set_blood_volume(min(M.get_blood_volume()+10, BLOOD_VOLUME_NORMAL))
 	M.energy_add(8)
 	M.dizziness = max(0, M.dizziness - 5)
 	M.drowsyness = max(0, M.drowsyness - 3)
 	M.SetSleeping(0, FALSE)
-
-	// Remove the sleepytime status effect after consumption
-	if(metabolized_acoffee >= metabolization_rate)
-		if(M.has_status_effect(/datum/status_effect/debuff/sleepytime))
-			M.remove_status_effect(/datum/status_effect/debuff/sleepytime)
-			M.remove_stress(/datum/stressevent/sleepytime)
-			to_chat(M, span_green("I feel much more focused from that coffee!"))
-			M.visible_message(span_info("[M] gains a look of focus in their eyes, the weary expression lifting from [M.p_them()]."))
-			M.adjust_triumphs(1)
-			if(M.mind?.sleep_adv)
-				M.mind.sleep_adv.sleep_adv_points += 3
-				M.mind.sleep_adv.advance_cycle()
-
 	..()
 
 /datum/chemical_reaction/alch/acoffee
