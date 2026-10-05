@@ -74,32 +74,43 @@
 	smeltresult = /obj/item/rogueore/coal
 	sellprice = 1
 
-//Dolls/Constructs eating coal for fuel.
-/obj/item/rogueore/coal/attack(mob/living/M, mob/user)
-	testing("attack")
-	if(!user.cmode)
-
-		if(M.construct)//This is slop. Why do we use this?
-			if(M == user)
-				user.visible_message(span_notice("[user] puts [src] against [user.p_their()] frame and absorbs it."), span_notice("I absorb [src], feeling my energy return."))
-			else
-				user.visible_message(span_notice("[user] attempts to press [src] to [M]."), span_notice("I attempt to press [src] to [M]."))
-				if(!do_mob(user, M, 30))
-					return
-				user.visible_message(span_notice("[user] presses [src] against [M]."), span_notice("I press [src] against [M]."))
-				to_chat(M, span_notice("I absorb [src], feeling my energy return."))
-			M.energy_add(250)
-			playsound(M.loc,'sound/items/flint.ogg', rand(30,60), TRUE)
-			qdel(src)
-
-		else
-			return ..()
-	else
-		return ..()
-
 /obj/item/rogueore/coal/Initialize(mapload)
 	icon_state = "orecoal[rand(1,3)]"
-	return ..()
+	. = ..()
+	AddComponent(/datum/component/coal_construct_fuel, 250, 'sound/items/flint.ogg')
+	return .
+
+/datum/component/coal_construct_fuel
+	var/energy_amount = 250
+	var/fuel_sound = 'sound/items/flint.ogg'
+
+/datum/component/coal_construct_fuel/Initialize(amount = 250, sound = 'sound/items/flint.ogg')
+	if(!isitem(parent))
+		return 
+		
+	energy_amount = amount
+	fuel_sound = sound
+
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
+
+/datum/component/coal_construct_fuel/proc/on_attack(datum/source, mob/living/M, mob/living/user)
+	testing("attack")
+	if(user.cmode || !M.construct)
+		return
+
+	if(M == user)
+		user.visible_message(span_notice("[user] puts [source] against [user.p_their()] frame and absorbs it."), span_notice("I absorb [source], feeling my energy return."))
+	else
+		user.visible_message(span_notice("[user] attempts to press [source] to [M]."), span_notice("I attempt to press [source] to [M]."))
+		if(!do_mob(user, M, 30))
+			return COMPONENT_ITEM_NO_ATTACK
+		user.visible_message(span_notice("[user] presses [source] against [M]."), span_notice("I press [source] against [M]."))
+		to_chat(M, span_notice("I absorb [source], feeling my energy return."))
+
+	M.energy_add(energy_amount)
+	playsound(M.loc, fuel_sound, rand(30,60), TRUE)
+	qdel(source)
+	return COMPONENT_ITEM_NO_ATTACK
 
 /obj/item/rogueore/coal/charcoal
 	name = "charcoal"
@@ -111,27 +122,10 @@
 	smeltresult = /obj/item/rogueore/coal/charcoal
 	sellprice = 1
 
-/obj/item/rogueore/coal/charcoal/attack(mob/living/M, mob/user)
-	testing("attack")
-	if(!user.cmode)
-
-		if(M.construct)
-			if(M == user)
-				user.visible_message(span_notice("[user] puts [src] against [user.p_their()] frame and absorbs it."), span_notice("I absorb [src], feeling my energy return."))
-			else
-				user.visible_message(span_notice("[user] attempts to press [src] to [M]."), span_notice("I attempt to press [src] to [M]."))
-				if(!do_mob(user, M, 30))
-					return
-				user.visible_message(span_notice("[user] presses [src] against [M]."), span_notice("I press [src] against [M]."))
-				to_chat(M, span_notice("I absorb [src], feeling my energy return."))
-			M.energy_add(250)
-			playsound(M.loc,'sound/items/flint.ogg', rand(30,60), TRUE)
-			qdel(src)
-
-		else
-			return ..()
-	else
-		return ..()
+/obj/item/rogueore/coal/charcoal/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/coal_construct_fuel, 250, 'sound/items/flint.ogg')
+	return .
 
 /obj/item/rogueore/cinnabar
 	name = "cinnabar"

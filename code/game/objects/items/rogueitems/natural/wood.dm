@@ -21,28 +21,6 @@
 	metalizer_result = /obj/item/rogueore/iron
 	var/blessed = FALSE
 
-/obj/item/grown/log/tree/attack(mob/living/M, mob/user)
-	testing("attack")
-	if(!user.cmode)
-
-		if(M.construct)
-			if(M == user)
-				user.visible_message(span_notice("[user] puts [src] against [user.p_their()] frame and absorbs it."), span_notice("I absorb [src], feeling my energy return."))
-			else
-				user.visible_message(span_notice("[user] attempts to press [src] to [M]."), span_notice("I attempt to press [src] to [M]."))
-				if(!do_mob(user, M, 30))
-					return
-				user.visible_message(span_notice("[user] presses [src] against [M]."), span_notice("I press [src] against [M]."))
-				to_chat(M, span_notice("I absorb [src], feeling my energy return."))
-			M.energy_add(100)
-			playsound(M.loc,'sound/items/flint.ogg', rand(30,60), TRUE)
-			qdel(src)
-
-		else
-			return ..()
-	else
-		return ..()
-
 /obj/item/grown/log/tree/proc/bless_log()
 	if(blessed)
 		return FALSE
@@ -73,6 +51,8 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
+	AddComponent(/datum/component/coal_construct_fuel, 100, 'sound/items/flint.ogg')
+	return .
 
 /obj/item/grown/log/tree/attacked_by(obj/item/I, mob/living/user) //This serves to reward woodcutting
 	user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -146,28 +126,6 @@
 	lumber_amount = 0
 	metalizer_result = /obj/item/rogueore/copper
 
-/obj/item/grown/log/tree/small/attack(mob/living/M, mob/user)
-	testing("attack")
-	if(!user.cmode)
-
-		if(M.construct)
-			if(M == user)
-				user.visible_message(span_notice("[user] puts [src] against [user.p_their()] frame and absorbs it."), span_notice("I absorb [src], feeling my energy return."))
-			else
-				user.visible_message(span_notice("[user] attempts to press [src] to [M]."), span_notice("I attempt to press [src] to [M]."))
-				if(!do_mob(user, M, 30))
-					return
-				user.visible_message(span_notice("[user] presses [src] against [M]."), span_notice("I press [src] against [M]."))
-				to_chat(M, span_notice("I absorb [src], feeling my energy return."))
-			M.energy_add(50)
-			playsound(M.loc,'sound/items/flint.ogg', rand(30,60), TRUE)
-			qdel(src)
-
-		else
-			return ..()
-	else
-		return ..()
-
 /obj/item/grown/log/tree/small/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
@@ -203,6 +161,8 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
+	AddComponent(/datum/component/coal_construct_fuel, 50, 'sound/items/flint.ogg')
+	return .
 
 /obj/item/grown/log/tree/small/attackby(obj/item/I, mob/living/user, params)
 	if(item_flags & IN_STORAGE)
