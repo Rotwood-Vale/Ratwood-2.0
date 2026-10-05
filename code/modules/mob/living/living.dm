@@ -290,7 +290,7 @@
 			return TRUE
 		var/turf/vacated = L.loc
 		if(L.Move(get_step(L, get_dir(src, L)), get_dir(src, L)))
-			visible_message(span_info("[src] shoves [L]."))
+			visible_message(span_info("[src] pushes [L]."))
 			Move(vacated, get_dir(src, L))
 		return TRUE
 
