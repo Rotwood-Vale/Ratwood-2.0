@@ -1,5 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - balance: "gave keeper major devotion regen instead of minor"
-  - bugfix: "fixed keepers double devotion bar"

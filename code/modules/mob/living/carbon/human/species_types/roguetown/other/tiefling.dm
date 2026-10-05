@@ -148,7 +148,8 @@
 		"Krizzsha" = SKIN_COLOR_KRIZZSHA,
 		"Tosiz" = SKIN_COLOR_TOSIZ,
 		"Velothel" = SKIN_COLOR_VELOTHEL,
-		"Ashol" = SKIN_COLOR_ASHOL
+		"Ashol" = SKIN_COLOR_ASHOL,
+		"Pyris" = SKIN_COLOR_PYRIS
 	)
 
 /datum/species/tieberian/get_hairc_list()

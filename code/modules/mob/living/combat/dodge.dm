@@ -127,6 +127,7 @@
 	if(human_dodger)
 		if(!human_dodger?.check_armor_skill() || human_dodger?.legcuffed)
 			human_dodger.Knockdown(1)
+			human_dodger.drop_all_held_items()
 			return FALSE
 		if(attacking_item) //the enemy attacked us with a weapon
 			if(!attacking_item.associated_skill) //the enemy weapon doesn't have a skill because its improvised, so penalty to attack
@@ -146,6 +147,10 @@
 
 		if(HAS_TRAIT(attacker, TRAIT_CURSE_RAVOX))
 			prob2defend -= 40
+
+		var/datum/status_effect/debuff/magical_blindness/magic_blind = human_dodger.has_status_effect(/datum/status_effect/debuff/magical_blindness)
+		if (magic_blind)
+			prob2defend -= magic_blind.effect_strength * 5 // 5% dodge chance loss per level
 
 		// dodging while knocked down sucks ass
 		if(!(mobility_flags & MOBILITY_STAND))

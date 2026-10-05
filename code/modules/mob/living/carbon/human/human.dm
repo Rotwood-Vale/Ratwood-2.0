@@ -204,7 +204,9 @@
 			if(F)
 				F.remove_pending_invite(real_name)
 		incoming_fellowship_invites.Cut()
-	return ..()
+	. = ..()
+	// after the parent chain, or damage overlay updates during it put us straight back in
+	STOP_PROCESSING(SSdamoverlays, src)
 
 /mob/living/carbon/human/Stat()
 	..()

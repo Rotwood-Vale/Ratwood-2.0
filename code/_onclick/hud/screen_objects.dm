@@ -1773,6 +1773,18 @@
 	screen_loc = ui_backhudl
 	layer = SPLASHSCREEN_LAYER
 	plane = SPLASHSCREEN_PLANE
+	var/client/holder
+
+/atom/movable/screen/gameover/New(client/C)
+	. = ..()
+	holder = C
+	holder?.screen += src
+
+/atom/movable/screen/gameover/Destroy()
+	if(holder)
+		holder.screen -= src
+		holder = null
+	return ..()
 
 /atom/movable/screen/gameover/proc/Fade(out = FALSE, qdel_after = FALSE)
 	if(QDELETED(src))

@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - qol: "Gossip and rumor character limit increased from 400 -> 750"

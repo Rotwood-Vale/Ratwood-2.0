@@ -8,13 +8,17 @@
 	mob_traits = list(TRAIT_CABAL, TRAIT_ZIZOSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/zizo_snuff						= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/lesser_heal 					= CLERIC_T1,
+					/obj/effect/proc_holder/spell/invoked/tame_undead/miracle			= CLERIC_T0, //No idea why this was T3.
+					/obj/effect/proc_holder/spell/invoked/lesser_heal					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/profane/miracle 	= CLERIC_T1,
+					/obj/effect/proc_holder/spell/invoked/projectile/profane/miracle	= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/tame_undead/miracle			= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/rituos/miracle 				= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance		= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/silence/miracle/zizo			= CLERIC_T2, //A bone. 
+					/obj/effect/proc_holder/spell/invoked/raise_spirit_respite			= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/rituos/miracle				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/targeted/touch/lacrima				= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/cascade						= CLERIC_T4,
 	)
 	confess_lines = list(
 		"PRAISE ZIZO THE IMMORTAL!",
@@ -37,10 +41,10 @@
 	// Allows prayer in the Zzzzzzzurch(!)
 	if(istype(get_area(follower), /area/rogue/indoors/shelter/mountains))
 		return TRUE
-	// Allows prayer near EEEVIL psycross
-	for(var/obj/structure/fluff/psycross/zizocross/cross in view(4, get_turf(follower)))
+	// Allows prayer at any heretical cross, but interrupts it when near holy ones.
+	for(var/obj/structure/fluff/psycross/cross in view(4, get_turf(follower)))
 		if(cross.divine == TRUE)
-			to_chat(follower, span_danger("That acursed cross interupts my prayers!"))
+			to_chat(follower, span_danger("That accursed cross interupts my prayers!"))
 			return FALSE
 		return TRUE
 	// Allows prayer near a grave.
@@ -52,7 +56,7 @@
 	// Allows praying atop ritual chalk of the god.
 	for(var/obj/structure/ritualcircle/zizo in view(1, get_turf(follower)))
 		return TRUE
-	to_chat(follower, span_danger("For Zizo to hear my prayers I must either be in the church of the abandoned, near an inverted psycross, atop a drawn Zizite symbol, or while the sun is blotted from the sky!"))
+	to_chat(follower, span_danger("For Zizo to hear my prayers I must either be in the church of the abandoned, near an unholy cross, near a dirt grave, atop a drawn Zizite symbol, or under the sky while the sun is blotted out!"))
 	return FALSE
 
 /datum/patron/inhumen/zizo/on_lesser_heal(

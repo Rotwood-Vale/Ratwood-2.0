@@ -50,9 +50,14 @@
 	desc = span_red("Smells like death here.")
 
 /datum/stressevent/stinky_aura
-	timer = 20 SECONDS
+	timer = 1 MINUTES
 	stressadd = 2
 	desc = span_red("Something nearby reeks.")
+
+/datum/stressevent/prominent_scent
+	timer = 1 MINUTES
+	stressadd = 1
+	desc = span_red("There's a prominent scent in the air.")
 
 /datum/stressevent/herald_progress_music
 	timer = 2 MINUTES
@@ -440,13 +445,13 @@
 	timer = INFINITY
 
 /datum/stressevent/excommunicated
-	stressadd = 5
+	stressadd = 10
 	desc = span_boldred("The Ten have forsaken me!")
 	timer = INFINITY
 
 /datum/stressevent/apostasy
-	stressadd = 3
-	desc = span_boldred("The apostasy's mark is upon me!")
+	stressadd = 15
+	desc = span_boldred("I have been decreed an apostate! My connection to the Divine is SEVERED!")
 	timer = INFINITY
 
 /datum/stressevent/heretic_on_sermon
