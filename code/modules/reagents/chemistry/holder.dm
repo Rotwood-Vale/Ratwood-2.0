@@ -708,7 +708,19 @@
 		var/amt = list_reagents[r_id]
 		add_reagent(r_id, amt, data)
 
-/datum/reagents/proc/remove_reagent(reagent, amount, safety)//Added a safety check for the trans_id_to
+/**
+ * Removes a specific reagent. can supress reactions if needed
+ * Arguments
+ *
+ * * [reagent_type][datum/reagent] - the type of reagent
+ * * amount - the volume to remove
+ * * include_subtypes - if TRUE will remove the specified amount from all subtypes of reagent_type as well
+ */
+/datum/reagents/proc/remove_reagent(datum/reagent/reagent_type, amount, safety)//Added a safety check for the trans_id_to
+	if(!ispath(reagent_type))
+		stack_trace("invalid reagent passed to remove reagent [reagent_type]")
+		return FALSE
+
 	if(isnull(amount))
 		amount = 0
 		. = FALSE
@@ -717,26 +729,30 @@
 	if(!isnum(amount))
 		return FALSE
 
-	if(amount < 0)
+	if(amount <= 0)
 		return FALSE
 
+	var/total_removed_amount = 0
+	var/remove_amount = 0
 	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/cached_reagent in cached_reagents)
+		if(cached_reagent.type != reagent_type)
+			continue
 
-	for(var/A in cached_reagents)
-		var/datum/reagent/R = A
-		if (R.type == reagent)
-			//clamp the removal amount to be between current reagent amount
-			//and zero, to prevent removing more than the holder has stored
-			amount = CLAMP(amount, 0, R.volume)
-			R.volume -= amount
-			update_total()
-			if(!safety)//So it does not handle reactions when it need not to
-				handle_reactions()
-			if(my_atom)
-				my_atom.on_reagent_change(REM_REAGENT)
-			return TRUE
+		//reduce the volume
+		remove_amount = min(cached_reagent.volume, amount)
+		cached_reagent.volume -= amount
 
-	return FALSE
+		total_removed_amount += remove_amount
+		if(!safety)//So it does not handle reactions when it need not to
+			handle_reactions()
+		if(my_atom)
+			my_atom.on_reagent_change(REM_REAGENT)
+
+	//update the holder & handle reactions
+	update_total()
+
+	return total_removed_amount
 
 /datum/reagents/proc/has_reagent(reagent, amount = -1, needs_metabolizing = FALSE)
 	var/list/cached_reagents = reagent_list
