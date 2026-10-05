@@ -23,6 +23,7 @@ GLOBAL_LIST_INIT(character_accents, list("No accent",
 	"Xinyi accent",
 	"Pui-Maen accent",
 	"Avar accent",
+	"Avar accent(light)",
 	"Pirate accent",
 	"Low-Town accent"))
 
