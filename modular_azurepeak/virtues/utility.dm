@@ -366,10 +366,3 @@
 		list(/datum/skill/combat/knives, 1, 2)
 	)
 
-/datum/virtue/utility/magical_appendage
-	name = "Magical Appendage"
-	desc = "I've discovered the arcyne knowledge required to give myself a magical penis. It works just like a real one!"
-	custom_text = "If you already have a penis upon spawning, the spell will be unusable. Be warned!"
-
-/datum/virtue/utility/magical_appendage/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/magical_appendage)
