@@ -163,6 +163,8 @@
 	if(!rolled_classes.len)
 		linked_client.mob.returntolobby()
 		message_admins("CLASS_SELECT_HANDLER HAD PERSON WITH 0 CLASS SELECT OPTIONS. THIS IS REALLY BAD! RETURNED THEM TO LOBBY")
+		qdel(src)
+		return FALSE
 
 	if(rolled_classes.len == 1)
 		SSrole_class_handler.finish_class_handler(linked_client.mob, pick(rolled_classes), src, plus_power, special_selected)
