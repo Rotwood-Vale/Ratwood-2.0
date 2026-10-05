@@ -159,6 +159,8 @@
 	icon_state = "celestialstaffbase"
 	cast_time_reduction = DIAMOND_CAST_TIME_REDUCTION
 	resistance_flags = FIRE_PROOF
+	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)
+	gripped_intents = list(SPEAR_BASH, /datum/intent/special/magicarc, /datum/intent/mace/smash/wood)
 	max_integrity = 300
 	sellprice = 170
 

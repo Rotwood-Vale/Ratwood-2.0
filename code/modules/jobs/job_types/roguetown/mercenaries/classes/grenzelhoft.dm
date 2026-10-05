@@ -251,7 +251,9 @@
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/spellbook_unfinished/pre_arcyne = 1,
+		/obj/item/roguegem/amethyst = 1,
 		)
 	if(H.mind) // State mandated spells c:
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
