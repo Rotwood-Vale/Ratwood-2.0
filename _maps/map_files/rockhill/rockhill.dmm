@@ -8700,10 +8700,6 @@
 "bMj" = (
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/under/cave)
-"bMk" = (
-/obj/structure/table/wood/poor,
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/town)
 "bMm" = (
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/rogue/ruinedwood,
@@ -10231,6 +10227,10 @@
 /obj/structure/chair/wood/rogue/fancy,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/church/chapel)
+"cbt" = (
+/obj/structure/table/wood/poor,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/town)
 "cbu" = (
 /turf/open/floor/rogue/rooftop/green/east,
 /area/rogue/outdoors/rtfield/rockhill/above)
@@ -20498,11 +20498,6 @@
 "edP" = (
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/basement/keep)
-"edS" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/broom,
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/town/engineerworkshop)
 "edT" = (
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/outdoors/mountains/decap/rockhill)
@@ -30280,46 +30275,10 @@
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/church)
 "geb" = (
-/obj/structure/closet/crate/chest{
-	locked = 1;
-	lockid = "crafterguild"
+/obj/effect/decal/shadow_floor,
+/turf/open/floor/rogue/concrete{
+	dir = 4
 	},
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/tin,
-/obj/item/ingot/tin,
-/obj/item/ingot/tin,
-/obj/item/ingot/copper,
-/obj/item/ingot/copper,
-/obj/item/ingot/copper,
-/obj/item/ingot/copper,
-/obj/item/ingot/copper,
-/obj/item/ingot/copper,
-/obj/item/roguegear/bronze,
-/obj/item/roguegear/bronze,
-/obj/item/roguegear/bronze,
-/obj/item/roguegear/bronze,
-/obj/effect/decal/shadow_floor{
-	dir = 8
-	},
-/obj/effect/decal/shadow_floor{
-	dir = 8
-	},
-/obj/effect/decal/shadow_floor{
-	dir = 1
-	},
-/obj/effect/decal/shadow_floor{
-	dir = 1
-	},
-/turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/engineerworkshop)
 "ged" = (
 /obj/structure/bookcase/random,
@@ -34166,15 +34125,46 @@
 	},
 /area/rogue/under/dungeon/tricksntraps)
 "gTF" = (
+/obj/structure/closet/crate/chest{
+	locked = 1;
+	lockid = "crafterguild"
+	},
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/tin,
+/obj/item/ingot/tin,
+/obj/item/ingot/tin,
+/obj/item/ingot/copper,
+/obj/item/ingot/copper,
+/obj/item/ingot/copper,
+/obj/item/ingot/copper,
+/obj/item/ingot/copper,
+/obj/item/ingot/copper,
+/obj/item/roguegear/bronze,
+/obj/item/roguegear/bronze,
+/obj/item/roguegear/bronze,
+/obj/item/roguegear/bronze,
 /obj/effect/decal/shadow_floor{
 	dir = 8
 	},
 /obj/effect/decal/shadow_floor{
 	dir = 8
 	},
-/turf/open/floor/rogue/concrete{
-	dir = 4
+/obj/effect/decal/shadow_floor{
+	dir = 1
 	},
+/obj/effect/decal/shadow_floor{
+	dir = 1
+	},
+/turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/engineerworkshop)
 "gTI" = (
 /obj/structure/closet/crate/roguecloset,
@@ -39954,11 +39944,16 @@
 /turf/closed/wall/mineral/rogue/decostone/mossy/long,
 /area/rogue/indoors/town/church)
 "ibj" = (
-/obj/structure/fluff/railing/border{
-	dir = 9
+/obj/effect/decal/shadow_floor{
+	dir = 8
 	},
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/outdoors/town/rockhill)
+/obj/effect/decal/shadow_floor{
+	dir = 8
+	},
+/turf/open/floor/rogue/concrete{
+	dir = 4
+	},
+/area/rogue/indoors/town/engineerworkshop)
 "ibo" = (
 /obj/structure/table/wood{
 	icon_state = "longtable"
@@ -42749,9 +42744,14 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/town/grove)
 "iHb" = (
-/obj/structure/closet/crate/roguecloset,
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town)
+/obj/structure/lever/wall{
+	pixel_y = 0;
+	redstone_id = "engineer_workshop";
+	name = "shutters";
+	pixel_x = -32
+	},
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/town/engineerworkshop)
 "iHh" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rogue/ruinedwood/turned,
@@ -57174,7 +57174,9 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/under/town/basement/keep)
 "lHi" = (
-/turf/closed/wall/mineral/rogue/pipe/joint/four,
+/obj/structure/rack/rogue/shelf/biggest,
+/obj/item/broom,
+/turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/engineerworkshop)
 "lHm" = (
 /obj/structure/fluff/walldeco/customflag/barony,
@@ -78021,17 +78023,15 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/church)
 "pRz" = (
-/obj/effect/decal/shadow_floor{
-	dir = 1
+/obj/structure/fluff/signage{
+	name = "Engineer's Shop Below";
+	pixel_y = 31;
+	dir = 4;
+	pixel_x = 1;
+	desc = "If closed check the workshop!"
 	},
-/obj/effect/decal/shadow_floor{
-	dir = 1
-	},
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 1
-	},
-/turf/open/floor/rogue/metal/barograte,
-/area/rogue/indoors/town/engineerworkshop)
+/turf/closed/wall/mineral/rogue/craftstone,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "pRB" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -78712,15 +78712,11 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/town/rockhill)
 "pYT" = (
-/obj/structure/fluff/signage{
-	name = "Engineer's Shop Below";
-	pixel_y = 31;
-	dir = 4;
-	pixel_x = 1;
-	desc = "If closed check the workshop!"
+/obj/structure/fluff/railing/border{
+	dir = 9
 	},
-/turf/closed/wall/mineral/rogue/craftstone,
-/area/rogue/indoors/town/dwarfin/rockhill)
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/town/rockhill)
 "pZa" = (
 /obj/machinery/light/roguestreet/walllamp{
 	dir = 4
@@ -84524,10 +84520,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/town/grove)
 "rmq" = (
-/obj/effect/decal/shadow_floor,
-/turf/open/floor/rogue/concrete{
-	dir = 4
-	},
+/turf/closed/wall/mineral/rogue/pipe/joint/four,
 /area/rogue/indoors/town/engineerworkshop)
 "rmt" = (
 /obj/structure/fluff/walldeco/church/line{
@@ -96969,12 +96962,10 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/under/town/sewer)
 "tRo" = (
-/obj/structure/mineral_door/wood/deadbolt{
-	dir = 4
-	},
-/obj/structure/curtain/black,
-/turf/open/floor/rogue/cobblerock,
-/area/rogue/under/town/basement/tavern)
+/obj/structure/table/wood/poor,
+/obj/item/millstone,
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/town)
 "tRr" = (
 /obj/structure/chair/bench/couch{
 	icon_state = "redcouch2";
@@ -107629,11 +107620,17 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/eora)
 "wdH" = (
+/obj/effect/decal/shadow_floor{
+	dir = 1
+	},
+/obj/effect/decal/shadow_floor{
+	dir = 1
+	},
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 1
 	},
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/town/dwarfin/rockhill)
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/indoors/town/engineerworkshop)
 "wdK" = (
 /obj/structure/mineral_door/wood/deadbolt{
 	locked = 1
@@ -108720,10 +108717,47 @@
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/town/tailor)
 "woQ" = (
-/obj/structure/table/wood/poor,
-/obj/item/millstone,
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/town)
+/obj/structure/closet/crate/chest{
+	locked = 1;
+	lockid = "crafterguild"
+	},
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/bronze,
+/obj/item/ingot/tin,
+/obj/item/ingot/tin,
+/obj/item/ingot/tin,
+/obj/item/ingot/copper,
+/obj/item/ingot/copper,
+/obj/item/ingot/copper,
+/obj/item/ingot/copper,
+/obj/item/ingot/copper,
+/obj/item/ingot/copper,
+/obj/item/roguegear/bronze,
+/obj/item/roguegear/bronze,
+/obj/item/roguegear/bronze,
+/obj/item/roguegear/bronze,
+/obj/effect/decal/shadow_floor{
+	dir = 1
+	},
+/obj/effect/decal/shadow_floor{
+	dir = 1
+	},
+/obj/effect/decal/shadow_floor{
+	dir = 4
+	},
+/obj/effect/decal/shadow_floor{
+	dir = 4
+	},
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/indoors/town/engineerworkshop)
 "woR" = (
 /obj/structure/flora/roguegrass/water/reeds,
 /turf/open/water/ocean,
@@ -109122,14 +109156,12 @@
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/indoors/town/manor/rockhill)
 "wtJ" = (
-/obj/structure/lever/wall{
-	pixel_y = 0;
-	redstone_id = "engineer_workshop";
-	name = "shutters";
-	pixel_x = -32
+/obj/structure/mineral_door/wood/deadbolt{
+	dir = 4
 	},
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/town/engineerworkshop)
+/obj/structure/curtain/black,
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/under/town/basement/tavern)
 "wtL" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/item/roguecoin/gold/pile,
@@ -111657,47 +111689,11 @@
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/indoors/town/church/chapel)
 "wTk" = (
-/obj/structure/closet/crate/chest{
-	locked = 1;
-	lockid = "crafterguild"
-	},
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/bronze,
-/obj/item/ingot/tin,
-/obj/item/ingot/tin,
-/obj/item/ingot/tin,
-/obj/item/ingot/copper,
-/obj/item/ingot/copper,
-/obj/item/ingot/copper,
-/obj/item/ingot/copper,
-/obj/item/ingot/copper,
-/obj/item/ingot/copper,
-/obj/item/roguegear/bronze,
-/obj/item/roguegear/bronze,
-/obj/item/roguegear/bronze,
-/obj/item/roguegear/bronze,
-/obj/effect/decal/shadow_floor{
+/obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 1
 	},
-/obj/effect/decal/shadow_floor{
-	dir = 1
-	},
-/obj/effect/decal/shadow_floor{
-	dir = 4
-	},
-/obj/effect/decal/shadow_floor{
-	dir = 4
-	},
-/turf/open/floor/rogue/metal/barograte,
-/area/rogue/indoors/town/engineerworkshop)
+/turf/open/floor/rogue/tile,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "wTn" = (
 /obj/structure/mineral_door/wood/donjon{
 	locked = 1;
@@ -112339,6 +112335,10 @@
 	},
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/church/chapel)
+"xan" = (
+/obj/structure/closet/crate/roguecloset,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town)
 "xao" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -196273,7 +196273,7 @@ whb
 whb
 sSG
 pWD
-gTF
+ibj
 imn
 dtQ
 dtQ
@@ -196706,7 +196706,7 @@ whb
 gRs
 pWD
 iKM
-rmq
+geb
 dtQ
 kgb
 kgb
@@ -200165,7 +200165,7 @@ gRs
 rjK
 lzK
 mPl
-edS
+lHi
 ixb
 wjy
 xdG
@@ -201027,7 +201027,7 @@ gUT
 boa
 boa
 boa
-tRo
+wtJ
 boa
 chk
 fTC
@@ -201037,7 +201037,7 @@ nIQ
 pXb
 fIb
 wjy
-wtJ
+iHb
 gPZ
 fRa
 pWD
@@ -202768,7 +202768,7 @@ lzK
 bIa
 nOp
 lzK
-lHi
+rmq
 tGT
 uHA
 uHA
@@ -203199,7 +203199,7 @@ pWD
 eFE
 aIP
 sXF
-wTk
+woQ
 pWD
 tGT
 uHA
@@ -203631,7 +203631,7 @@ pWD
 rxt
 bCw
 wjy
-pRz
+wdH
 pWD
 uHA
 uHA
@@ -204063,7 +204063,7 @@ pWD
 jLR
 npB
 uCK
-geb
+gTF
 pWD
 uHA
 uHA
@@ -417894,7 +417894,7 @@ xif
 kqC
 bHd
 aOv
-pYT
+pRz
 sco
 sco
 jsn
@@ -420906,7 +420906,7 @@ fnA
 xFN
 oVa
 nJR
-bMk
+cbt
 iiK
 dEL
 iiK
@@ -420938,7 +420938,7 @@ aOv
 wbg
 fnA
 fnA
-ibj
+pYT
 fnA
 ieN
 xZg
@@ -421338,7 +421338,7 @@ wbg
 evo
 lRz
 bKn
-woQ
+tRo
 iiK
 gui
 iiK
@@ -423066,7 +423066,7 @@ wbg
 evo
 fCS
 taP
-iHb
+xan
 iiK
 lEA
 wCx
@@ -423083,7 +423083,7 @@ lhn
 bgO
 gMo
 jeU
-wdH
+wTk
 sco
 mJj
 pqE
@@ -640805,9 +640805,9 @@ xaT
 xaT
 xaT
 xaT
-lVX
-fZJ
-hox
+xaT
+xaT
+xaT
 xaT
 xaT
 xaT
@@ -641237,9 +641237,9 @@ krf
 rZi
 rZi
 rZi
-hKm
-xaT
-dld
+rZi
+rZi
+rZi
 xxf
 dOk
 oKO
