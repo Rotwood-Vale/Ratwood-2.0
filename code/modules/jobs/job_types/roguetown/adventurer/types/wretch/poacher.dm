@@ -77,7 +77,7 @@
 			if("Disgraced Warden") //Warden's antlered shroud and warden's cloak. Marginally better protection but makes you look a lot more suspicious.
 				head = /obj/item/clothing/head/roguetown/roguehood/poacher
 				cloak = /obj/item/clothing/cloak/poachercloak
-		var/weapons = list("Dagger","Axe", "Cudgel", "My Bow Is Enough")
+		var/weapons = list("Dagger","Axe", "Sling", "My Bow Is Enough")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -88,9 +88,10 @@
 			if("Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 				beltr = /obj/item/rogueweapon/stoneaxe/woodcut
-			if ("Cudgel")
-				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
-				beltr = /obj/item/rogueweapon/mace/cudgel
+			if ("Sling")
+				H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_MASTER, TRUE)
+				beltr = /obj/item/quiver/sling/steel
+				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
 			if ("My Bow Is Enough")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_LEGENDARY, TRUE)
 				head = /obj/item/clothing/head/roguetown/helmet/kettle
