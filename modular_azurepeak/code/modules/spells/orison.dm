@@ -293,6 +293,57 @@
 		// Does NOT heal brute or fire damage
 		M.stamina_add(1*REM)
 
+
+/datum/reagent/medicine/pestra_lesser
+	name = "Pestras Medicine"
+	description = ""
+	taste_mult = 3 // Bitter medicine
+	color = "#008145"
+	taste_description = "terible bitterness"
+	metabolization_rate = REAGENTS_METABOLISM
+
+/datum/reagent/medicine/pestra_lesser/on_mob_life(mob/living/carbon/M)
+	if(volume >= 60)
+		M.reagents.remove_reagent(/datum/reagent/medicine/pestra_lesser, 2) //No overhealing.
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			M.set_blood_volume(min(M.get_blood_volume()+10, BLOOD_VOLUME_NORMAL))
+	for(var/datum/wound/wound as anything in M.get_wounds())
+		wound.heal_wound(1.5)
+	if(volume > 0.99)
+		M.adjustBruteLoss(-1*REM, 0)
+		M.adjustFireLoss(-1*REM, 0)
+		M.adjustToxLoss(-3*REM, 0)
+		M.adjustOxyLoss(-3*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
+		M.adjustCloneLoss(-3*REM, 0)
+	..()
+
+
+/datum/reagent/medicine/pestra_grander
+	name = "Pestras Sacred Medicine"
+	description = ""
+	taste_mult = 5 // Bitter medicine
+	color = "#002e18"
+	taste_description = "terible bitterness and a taste of blood"
+	metabolization_rate = REAGENTS_METABOLISM
+
+/datum/reagent/medicine/pestra_grander/on_mob_life(mob/living/carbon/M)
+	if(volume >= 60)
+		M.reagents.remove_reagent(/datum/reagent/medicine/pestra_grander, 2) //No overhealing.
+	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			M.set_blood_volume(min(M.get_blood_volume()+20, BLOOD_VOLUME_NORMAL))
+	for(var/datum/wound/wound as anything in M.get_wounds())
+		wound.heal_wound(3)
+	if(volume > 0.99)
+		M.adjustBruteLoss(-2*REM, 0)
+		M.adjustFireLoss(-2*REM, 0)
+		M.adjustToxLoss(-5*REM, 0)
+		M.adjustOxyLoss(-5*REM, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
+		M.adjustCloneLoss(-5*REM, 0)
+	..()
+
+
 /obj/item/melee/touch_attack/orison/proc/lay_hands(atom/thing, mob/living/carbon/human/user)
 	var/holy_skill = user.get_skill_level(attached_spell.associated_skill)
 	var/cast_time = 40 - (holy_skill * 4)
