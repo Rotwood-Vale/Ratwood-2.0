@@ -106,6 +106,8 @@
 			to_chat(user, span_info("[parent] fits me well. ([required_trait])"))
 			if(HAS_TRAIT(user, TRAIT_ARMOUR_LIKED) && !additive)
 				to_chat(user, span_info("..yet another piece of my armour is on my mind."))
+				// Id-specific boons (e.g. clearing the lost mask debuff) must still apply.
+				trait_boon_equip(user, filter_id)
 				return
 			ADD_TRAIT(user, TRAIT_ARMOUR_LIKED, TRAIT_GENERIC)
 		trait_boon_equip(user, filter_id)
@@ -129,19 +131,10 @@ TRAIT UNIQUE PROCS
 
 
 /datum/component/armour_filtering/proc/trait_boon_equip(mob/living/carbon/human/user, id)
-	if(HAS_TRAIT(user, TRAIT_FENCERDEXTERITY))
-		if(!positive)
-			user.dropItemToGround(parent, TRUE, TRUE)
-			if(!HAS_TRAIT(user, TRAIT_ARMOUR_DISLIKED))
-				return
-			REMOVE_TRAIT(user, TRAIT_ARMOUR_DISLIKED, TRAIT_GENERIC)
-		return
-
-	if(HAS_TRAIT(user, TRAIT_MAGEDEXTERITY))
-		if(!positive)
-			user.dropItemToGround(parent, TRUE, TRUE)
-			if(!HAS_TRAIT(user, TRAIT_ARMOUR_DISLIKED))
-				return
+	// Dexterity users reject disliked armour; liked armour must still reach the id-specific boons below.
+	if(!positive && (HAS_TRAIT(user, TRAIT_FENCERDEXTERITY) || HAS_TRAIT(user, TRAIT_MAGEDEXTERITY)))
+		user.dropItemToGround(parent, TRUE, TRUE)
+		if(HAS_TRAIT(user, TRAIT_ARMOUR_DISLIKED))
 			REMOVE_TRAIT(user, TRAIT_ARMOUR_DISLIKED, TRAIT_GENERIC)
 		return
 

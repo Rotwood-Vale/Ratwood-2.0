@@ -17,10 +17,6 @@
 	experimental_onhip = FALSE
 	var/overarmor = TRUE
 
-/obj/item/clothing/mask/rogue/ComponentInitialize()
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_NALEDI, "naledi_mask")
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
-
 /obj/item/clothing/mask/rogue/AltRightClick(mob/user)
 	if(!istype(loc, /mob/living/carbon))
 		return
@@ -694,9 +690,6 @@
 	flags_inv = HIDEFACE|HIDESNOUT
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
-
-/obj/item/clothing/mask/rogue/lordmask/naledi/sojourner/ComponentInitialize()
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/mask/rogue/lordmask/zizite
 	name = "fateful visage"
