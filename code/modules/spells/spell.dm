@@ -352,7 +352,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		newtime = base + (base * (diff2 * COOLDOWN_REDUCTION_PER_INT))
 	else
 		newtime = base
-	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
+	if(user && HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
 		newtime *= 0.75
 	return newtime
 
@@ -624,7 +624,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		else if(user.STAINT < SPELL_SCALING_THRESHOLD)
 			var/diff2 = SPELL_SCALING_THRESHOLD - user.STAINT
 			recharge_time = initial(recharge_time) + (initial(recharge_time) * (diff2 * COOLDOWN_REDUCTION_PER_INT))
-	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
+	if(user && HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
 		recharge_time *= 0.75
 	// If the spell was fully charged before recalculation, keep it fully charged
 	if(charge_counter >= old_recharge && old_recharge > 0)
