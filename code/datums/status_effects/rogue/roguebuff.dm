@@ -1927,7 +1927,7 @@
 #define BLOODRAGE_FILTER "bloodrage"
 
 /atom/movable/screen/alert/status_effect/buff/graggar_bloodrage
-	name = "BLOODRAGE"
+	name = "BLOODRUSH!"
 	desc = "GRAGGAR! GRAGGAR! GRAGGAR!"
 	icon_state = "bloodrage"
 
@@ -1943,9 +1943,9 @@
 	var/filter = owner.get_filter(BLOODRAGE_FILTER)
 	if(!filter)
 		owner.add_filter(BLOODRAGE_FILTER, 2, list("type" = "outline", "color" = outline_color, "alpha" = 60, "size" = 2))
-	var/datum/status_effect/buff/adrenaline_rush/rush = owner.has_status_effect(/datum/status_effect/buff/adrenaline_rush)
+	var/datum/status_effect/buff/adrenaline_rush/rush = owner.apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
 	if(!rush)
-		rush = owner.apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
+		rush = owner.has_status_effect(/datum/status_effect/buff/adrenaline_rush)
 	if(rush && rush.duration != -1)
 		rush.duration = max(rush.duration, world.time + duration)
 	. = ..()
@@ -1967,6 +1967,16 @@
 	name = "Psydonic Endurance"
 	desc = "I am protected by blessed Psydonian plate armor."
 	icon_state = "buff"
+
+/datum/status_effect/buff/motive
+	id = "motive"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/motive
+	effectedstats = list(STATKEY_STR = 1,STATKEY_CON = 1)
+
+/atom/movable/screen/alert/status_effect/buff/motive
+	name = "Motive"
+	desc = span_bloody("GRAGGAR'S ARMAMENTS CALL ME TO SLAUGHTER!! KILL!! RIP!! CONSUME!!")
+	icon_state = "call_to_slaughter"
 
 #undef BLOODRAGE_FILTER
 

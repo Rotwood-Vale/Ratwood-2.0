@@ -192,6 +192,18 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
 
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot != SLOT_ARMOR)
+		return
+
+	user.apply_status_effect(/datum/status_effect/buff/motive)
+
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(istype(user) && user.wear_armor == src)
+		user.remove_status_effect(/datum/status_effect/buff/motive)
+
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/ornate
 	name = "psydonic half-plate"
 	desc = "A beautiful steel cuirass, fitted with tassets and pauldrons for additional coverage. Lesser clerics of Psydon oft-decorate these sets with dyed cloths, so that those who're wounded can still find salvation in the madness of battle. </br>'..the thrumbing of madness, to think that your suffering was all-for-naught to Adonai's sacrificial lamb..' </br>... </br>With some blessed silver and a blacksmith's assistance, I can turn this half-plate into a set of full-plate armor."
