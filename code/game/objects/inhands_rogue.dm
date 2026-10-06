@@ -101,7 +101,7 @@
 	if(prob(10))	
 		turnangle = 0 //Right back at thee
 	var/turndir = turn(deflector.dir, turnangle)
-	var/dist = rand(3, 7)
+	var/dist = rand(1, 6)
 	var/turf/current_turf = get_turf(src)
 	var/turf/target_turf = get_ranged_target_turf(current_turf, turndir, dist)
 	var/soundin = pick(list('sound/combat/parry/deflect_1.ogg','sound/combat/parry/deflect_2.ogg','sound/combat/parry/deflect_3.ogg','sound/combat/parry/deflect_4.ogg','sound/combat/parry/deflect_5.ogg','sound/combat/parry/deflect_6.ogg'))
