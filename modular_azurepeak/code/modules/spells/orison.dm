@@ -314,8 +314,8 @@
 		should_pain = TRUE
 	if(M.bruteloss > 0 || M.fireloss > 0)
 		should_pain = TRUE
-		M.adjustBruteLoss(-2*REM, 0)
-		M.adjustFireLoss(-2*REM, 0)
+		M.adjustBruteLoss(-1*REM, 0)
+		M.adjustFireLoss(-1*REM, 0)
 	M.adjustBruteLoss(-1*REM, 0)
 	M.adjustFireLoss(-1*REM, 0)
 	M.adjustToxLoss(-3*REM, 0)
