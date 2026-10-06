@@ -420,3 +420,87 @@
 	rift.target = user
 	summoned = TRUE
 	return TRUE
+
+//////////////////////////
+// T4 - Avatar of Rage	//
+//////////////////////////
+
+/obj/effect/proc_holder/spell/invoked/graggar_avatar
+	name = "Avatar of Rage"
+	desc = "Unleash your true rage for two minutes, granting pain immunity, infinite stamina, immunity to grabs, uncapped strength, and +2 strength. Removes stun-adjacent and stun effects, and can be cast while incapacitated."
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	overlay_state = "avatar"
+	clothes_req = FALSE
+	releasedrain = 5
+	chargedrain = 0
+	chargetime = 1 SECONDS
+	recharge_time = 10 MINUTES
+	invocations = list("I WILL TEAR YOU LIMB FROM LIMB!!")
+	sound = 'sound/magic/graggar_rage.ogg'
+	chargedloop = /datum/looping_sound/invokeascendant
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = TRUE
+	miracle = TRUE
+	devotion_cost = 100
+	var/static/list/purged_effects = list(
+	/datum/status_effect/incapacitating/off_balanced,
+	/datum/status_effect/incapacitating/immobilized,
+	/datum/status_effect/incapacitating/paralyzed,
+	/datum/status_effect/incapacitating/stun,
+	/datum/status_effect/incapacitating/knockdown
+	)
+
+/obj/effect/proc_holder/spell/invoked/graggar_avatar/cast(list/targets, mob/user)
+	. = ..()
+	var/mob/living/carbon/human/caster = user
+	if(!isliving(user))
+		return FALSE
+	for(var/effect in purged_effects)
+		caster.remove_status_effect(effect)
+	caster.apply_status_effect(/datum/status_effect/buff/avatar)
+	caster.emote("warcry")
+	return TRUE
+
+#define AVATAR_FILTER "avatar"
+
+/atom/movable/screen/alert/status_effect/buff/avatar
+	name = "SLAUGHTER INCARNATE"
+	desc = "GRAGGAR! GRAGGAR! GRAGGAR!"
+	icon_state = "bloodrage"
+
+/datum/status_effect/buff/avatar
+	id = "avatar"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/avatar
+	var/outline_color = "#DC143C"
+	duration = 2 MINUTES
+	effectedstats = list(STATKEY_STR = 2)
+
+/datum/status_effect/buff/avatar/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_NOPAIN, TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_INFINITE_STAMINA, TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_MIRACLE)
+	shake_camera(owner, 5, 2) //Aura
+	to_chat(owner, span_userdanger(pick("KILL, FUCKING KILL! SLAUGHTER THEM!", "BLOOD, FUCKING SPILL THE BLOOD!", "BLOOD AND FURY, SPLITTING MY SKULL!", "I'LL KILL ANYTHING THAT MOVES!", "I'M FUCKING UNSTOPPABLE, I'LL BREAK THEM!")))
+	var/filter = owner.get_filter(AVATAR_FILTER)
+	if(!filter)
+		owner.add_filter(AVATAR_FILTER, 2, list("type" = "outline", "color" = outline_color, "alpha" = 60, "size" = 2))
+	return TRUE
+
+/datum/status_effect/buff/avatar/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
+	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_MIRACLE)
+	REMOVE_TRAIT(owner, TRAIT_NOPAIN, TRAIT_MIRACLE)
+	REMOVE_TRAIT(owner, TRAIT_INFINITE_STAMINA, TRAIT_MIRACLE)
+	REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_MIRACLE)
+	owner.visible_message(span_warning("[owner] wavers, their rage simmering down."))
+	owner.OffBalance(3 SECONDS)
+	owner.remove_filter(AVATAR_FILTER)
+	owner.emote("breathgasp", forced = TRUE)
+	owner.Slowdown(3)
+
+#undef AVATAR_FILTER
