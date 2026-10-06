@@ -67,6 +67,8 @@
 	if(!owner)
 		qdel(src)
 		return
+	if(QDELETED(src) || !owner)
+		return
 
 	if(mob_effect_icon_state)
 		if(!mob_effect_dur)

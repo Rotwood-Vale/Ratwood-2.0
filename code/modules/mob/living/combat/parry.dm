@@ -2,7 +2,7 @@
 /mob/living/proc/attempt_parry(datum/intent/intenty, mob/living/attacker)
 	if(!intenty.parriable_intent) // If the intent is unparriable whatsoever just skip all the math
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) || HAS_TRAIT(src, TRAIT_NODEF) || !mob_can_parry)
+	if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) || HAS_TRAIT(src, TRAIT_NODEF) || !mob_can_parry || !length(held_items))
 		return FALSE
 	if(pulledby || pulling)
 		return FALSE

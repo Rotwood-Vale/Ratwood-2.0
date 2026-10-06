@@ -847,6 +847,13 @@
 	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel
 	display_category = ITEM_CAT_WEAPONS_AXES
 
+/datum/anvil_recipe/weapons/steel/woodcutter
+	name = "Woodcutter's Axe, Steel (+1 Steel, +1 Small Log)"
+	req_blade = /obj/item/blade/steel_axe
+	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
+	display_category = ITEM_CAT_WEAPONS_AXES
+
 /datum/anvil_recipe/weapons/steel/pulaski
 	name = "Pulaski axe (+1 Stick)"
 	additional_items = list(/obj/item/grown/log/tree/stick)

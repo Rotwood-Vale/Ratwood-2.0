@@ -1191,6 +1191,8 @@
 	H.heatstroke_timer_id = null
 	var/def_zone = BODY_ZONE_HEAD
 	var/obj/item/bodypart/BP = H.get_bodypart(def_zone)
+	if(!BP)
+		return
 	for(var/datum/wound/W in BP.wounds)
 		if(istype(W, /datum/wound/heatexhaustion)||istype(W, /datum/wound/heatstroke))
 			return

@@ -24,6 +24,8 @@
 
 
 /mob/Login()
+	if(!client) // sleeping code can result in the client being already gone
+		return FALSE
 	GLOB.player_list |= src
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id
@@ -77,6 +79,9 @@
 
 		if(client.player_details.player_actions.len)
 			for(var/datum/action/A in client.player_details.player_actions)
+				if(QDELETED(A))
+					client.player_details.player_actions -= A
+					continue
 				A.Grant(src)
 
 		for(var/foo in client.player_details.post_login_callbacks)
