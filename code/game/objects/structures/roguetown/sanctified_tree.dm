@@ -319,10 +319,12 @@
 // Integrity Bonus
 //==============================================================================
 
-/// Recounts living trees within 10 tiles and updates max_integrity.
-/// Qualifying trees: /obj/structure/flora/newtree (not burnt) and
-/// /obj/structure/flora/roguetree (not wise, burnt, or stump subtypes).
-/// Each tree contributes +10 integrity, capped at +200 (20 trees).
+/*
+ * Recounts living trees within 10 tiles and updates max_integrity.
+ * Qualifying trees: /obj/structure/flora/newtree (not burnt) and
+ * /obj/structure/flora/roguetree (not wise, burnt, or stump subtypes).
+ * Each tree contributes +10 integrity, capped at +200 (20 trees).
+ */
 /obj/structure/flora/roguetree/wise/sanctified/proc/recalculate_integrity_bonus()
 	var/tree_count = 0
 	for(var/obj/structure/flora/newtree/counted_tree in range(10, src))
@@ -456,28 +458,6 @@
 		tree_data.active_ritual.check_ritual_complete(user)
 		return TRUE
 	return FALSE
-
-
-
-/*
-/obj/structure/flora/roguetree/wise/sanctified/proc/consume_offering(key, obj/item/held, mob/living/user)
-	switch(key)
-		if("druid_armor")
-			// Move armor to tree's turf and store reference for transmutation.
-			held.forceMove(get_turf(src))
-			tree_data.ritual_armor = held
-		if("holy_water_container")
-			// Drain blessed water but leave the container.
-			held.reagents.remove_reagent(/datum/reagent/water/blessed, 30)
-		if("bloomstone")
-			// Force the bloomstone to drain all charges so Destroy() actually deletes it.
-			held.forceMove(get_turf(src))
-			var/obj/item/alch/bloomstone/offered = held
-			offered.charges = 1
-			qdel(offered)
-		else
-			qdel(held)
-*/
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/cancel_ritual(mob/living/user)
 	if(!tree_data?.active_ritual)
