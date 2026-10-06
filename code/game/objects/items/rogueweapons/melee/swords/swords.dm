@@ -1403,6 +1403,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	wbalance = WBALANCE_NORMAL
+	wlength = WLENGTH_LONG
 
 /obj/item/rogueweapon/sword/sabre/freifechter/Initialize(mapload)
 	. = ..(mapload)
