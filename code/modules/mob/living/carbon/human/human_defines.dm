@@ -162,6 +162,7 @@
 
 	var/voice_type = null // LETHALSTONE EDIT: defines what sound pack we use. keep this null so mobs resort to their typical gender typing - preferences set this
 	var/list/stat_caps
+	var/stat_pack
 	var/list/stat_bonuses
 	var/second_voice	// Virtue-specific. Can be swapped to / from and changed.
 	var/original_voice

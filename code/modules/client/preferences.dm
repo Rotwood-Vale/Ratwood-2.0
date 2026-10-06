@@ -3056,6 +3056,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	validate_background()
 	character.stat_caps = stat_caps.Copy()
+	character.stat_pack = stat_pack
 	character.stat_bonuses = get_stat_bonuses()
 
 	character.flavortext = flavortext

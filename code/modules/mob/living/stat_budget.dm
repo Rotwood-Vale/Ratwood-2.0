@@ -75,7 +75,12 @@ GLOBAL_LIST_INIT(free_stat_packs, list("Austere", "Frail"))
 	return STAT_WEIGHT_NEUTRAL
 
 // the ALGORITHM ! it spends points to bring everything up 2 baseline / pref / favored, & then spends what's leftover according to weight.
-/proc/calculate_role_stats(budget, list/favored_stats, list/stat_caps, spend_spare = TRUE)
+/proc/calculate_role_stats(budget, list/favored_stats, list/stat_caps, spend_spare = TRUE, list/pack)
+	if(pack)
+		var/list/natural = calculate_role_stats(budget, favored_stats)
+		stat_caps = list()
+		for(var/stat in pack)
+			stat_caps[stat] = natural[stat] + pack[stat] - stat_cap_shift(stat, favored_stats)
 	var/list/values = list()
 	var/list/caps = list()
 	var/list/baselines = list()
@@ -140,7 +145,7 @@ GLOBAL_LIST_INIT(free_stat_packs, list("Austere", "Frail"))
 	return values
 
 /mob/living/carbon/human/proc/apply_role_stats(budget, list/favored_stats)
-	var/list/values = calculate_role_stats(budget, favored_stats, stat_caps)
+	var/list/values = calculate_role_stats(budget, favored_stats, stat_caps, TRUE, GLOB.stat_packs[stat_pack])
 	var/list/flat = stat_bonuses
 	if(isnull(flat))
 		flat = dna.species.race_bonus

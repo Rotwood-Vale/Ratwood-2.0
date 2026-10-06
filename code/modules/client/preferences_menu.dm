@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		favored_stats = preview_subclass.favored_stats
 		preview_label = " - [preview_subclass.name]"
 	// subclass preview shows stats for that role!
-	var/list/final_stats = calculate_role_stats(budget, favored_stats, stat_caps)
+	var/list/final_stats = calculate_role_stats(budget, favored_stats, stat_caps, TRUE, GLOB.stat_packs[stat_pack])
 	var/list/forced_stats = preview_subclass?.forced_stats
 	if(forced_stats)
 		final_stats = forced_stats
@@ -542,8 +542,6 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 				return
 			stat_pack = new_pack
 			stat_caps = list()
-			for(var/pack_stat in GLOB.stat_packs[new_pack])
-				stat_caps[pack_stat] = STAT_BASELINE + GLOB.stat_packs[new_pack][pack_stat]
 		if("stat_source")
 			var/list/sources = list("Racial" = "race", "Second Virtue" = "virtue")
 			if(pref_species.origin_stats_allowed)
