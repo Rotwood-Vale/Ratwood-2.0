@@ -56,6 +56,9 @@ SUBSYSTEM_DEF(vote)
 	current_vote?.reset()
 	current_vote = null
 
+	for(var/ckey in GLOB.player_details)
+		var/datum/player_details/details = GLOB.player_details[ckey]
+		details.player_actions -= generated_actions
 	QDEL_LIST(generated_actions)
 
 	SStgui.update_uis(src)
@@ -237,6 +240,8 @@ SUBSYSTEM_DEF(vote)
 	
 	// And now that it's going, give everyone a voter action
 	for(var/client/new_voter as anything in GLOB.clients)
+		if(!new_voter?.mob)
+			continue
 		var/datum/action/vote/voting_action = new()
 		voting_action.name = "Vote: [current_vote.override_question || current_vote.name]"
 		voting_action.Grant(new_voter.mob)

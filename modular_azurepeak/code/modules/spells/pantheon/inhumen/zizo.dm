@@ -250,6 +250,8 @@
 	var/break_time = 100
 	var/tear_time = 50
 
+	if(!iscarbon(target))
+		return
 	if(target == user)
 		to_chat(user, span_alert("I shouldn't rip out my own lux! I need that."))
 		return
