@@ -466,7 +466,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/avatar
 	name = "SLAUGHTER INCARNATE"
-	desc = "GRAGGAR! GRAGGAR! GRAGGAR!"
+	desc = span_bloody("GRAGGAR! GRAGGAR! GRAGGAR!")
 	icon_state = "bloodrage"
 
 /datum/status_effect/buff/avatar
