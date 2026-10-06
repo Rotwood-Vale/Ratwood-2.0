@@ -742,10 +742,12 @@
 	name = "vicious greataxe"
 	desc = "A greataxe who's edge thrums with the motive force, violence, oh, sweet violence!"
 	icon_state = "graggargaxe"
+	unenchantable = TRUE
 	force = 20
 	force_wielded = 40
 	max_blade_int = 250
 	icon = 'icons/roguetown/weapons/64.dmi'
+	special = /datum/special_intent/graggar_break_the_ranks
 
 /obj/item/rogueweapon/greataxe/steel/doublehead/graggar/Initialize(mapload)
 	. = ..()
