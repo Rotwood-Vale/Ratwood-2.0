@@ -108,7 +108,7 @@
 
 /obj/effect/proc_holder/spell/invoked/rituos
 	name = "Rituos"
-	desc = "Perform the Lesser Work for she of Z in two rituals, resting between them. The first skeletonises two limbs and bestows upon you arcyne magycks. The second skeletonises your remaining limbs and chest, completing your transformation and granting the rest of your arcyne power."
+	desc = "Perform the Lesser Work for she of Z, resting between rituals. The first skeletonises two limbs and bestows upon you arcyne magycks. The second skeletonises your remaining limbs and chest, granting further arcyne power. A third and final ritual skeletonises your head and grants one additional spell point."
 	clothes_req = FALSE
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -123,7 +123,7 @@
 	recharge_time = 2 MINUTES
 	hide_charge_effect = TRUE
 	/// List of limbs that don't get skeletonized. Chest has special handling once you are at that point
-var/static/list/excluded_bodyparts = list(/obj/item/bodypart/head, /obj/item/bodypart/chest)
+	var/static/list/excluded_bodyparts = list(/obj/item/bodypart/head, /obj/item/bodypart/chest)
 	/// How many times Rituos has been casted
 	var/rituos_counter = 0
 
@@ -134,7 +134,7 @@ var/static/list/excluded_bodyparts = list(/obj/item/bodypart/head, /obj/item/bod
 
 /obj/effect/proc_holder/spell/invoked/rituos/cast(list/targets, mob/living/carbon/user)
 	. = ..()
-	if(!user || !user.mind)
+	if(!user || !user.mind || rituos_counter >= 3)
 		return FALSE
 
 	if(user.mind.has_rituos)
@@ -159,13 +159,19 @@ var/static/list/excluded_bodyparts = list(/obj/item/bodypart/head, /obj/item/bod
 		var/limbs_to_bonify = min(2, length(potential_bodyparts))
 		for(var/i in 1 to limbs_to_bonify)
 			bodyparts_to_bonify += pick_n_take(potential_bodyparts)
-	else
+	else if(rituos_counter == 1)
 		var/obj/item/bodypart/chest/chest = locate(/obj/item/bodypart/chest) in user.bodyparts
 		if(!chest)
 			to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
 			return FALSE
 		bodyparts_to_bonify = potential_bodyparts
 		bodyparts_to_bonify += chest
+	else
+		var/obj/item/bodypart/head/head = locate(/obj/item/bodypart/head) in user.bodyparts
+		if(!head)
+			to_chat(user, span_warning("I have no head to offer to the ritual!"))
+			return FALSE
+		bodyparts_to_bonify += head
 
 	if(!(user.mob_biotypes & MOB_UNDEAD))
 		user.visible_message(span_warning("The pallor of the grave descends across [user]'s skin in a wave of arcyne energy..."), span_boldwarning("A deathly chill overtakes my body at my first culmination of the Lesser Work! I feel my heart slow down in my chest..."))
@@ -175,7 +181,7 @@ var/static/list/excluded_bodyparts = list(/obj/item/bodypart/head, /obj/item/bod
 	for(var/obj/item/bodypart/part_to_bonify as anything in bodyparts_to_bonify)
 		part_to_bonify.skeletonize(FALSE)
 		user.visible_message(span_warning("Faint runes flare beneath [user]'s skin before [user.p_their()] flesh suddenly slides away from [user.p_their()] [part_to_bonify.name]!"), span_notice("I feel arcyne power surge throughout my frail mortal form, as the Rituos takes its terrible price from my [part_to_bonify.name]."))
-	user.update_body_parts()
+	user.update_body()
 
 	user.mind.has_rituos = TRUE
 	rituos_counter++
@@ -194,6 +200,9 @@ var/static/list/excluded_bodyparts = list(/obj/item/bodypart/head, /obj/item/bod
 			ADD_TRAIT(user, TRAIT_OVERTHERETIC, "[type]")
 			if(prob(66)) // We Fucked Up, Dude.
 				to_chat(user, span_small("...what have I done?"))
+		if(3)
+			to_chat(user, span_small("My body may have gone, but I am still here. I lyve, I march, I thrive, in her name.")) // holy psyst. holy psyst. there's nothing left.
+			user.mind?.adjust_spellpoints(1)
 			user.mind?.RemoveSpell(src)
 
 // T3 Lacrima (plunge your hand into someone's ribs to rip out their impure lux for your diabolical uses)
