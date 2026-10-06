@@ -332,7 +332,9 @@
 		else
 			pain = M.STAWIL * 2.5 // quater of the pain treshold
 			if(prob(3))
-				M.to_chat(span_infection("Your flesh moves on its own, causing some pain."))
+				M.to_chat(span_infection("Your flesh moves on its own volition causing pain!"))
+	else
+		pain = 0
 	..()
 
 
@@ -373,6 +375,8 @@
 			pain = M.STAWIL * 5 // half of the pain treshold
 			if(prob(3))
 				M.to_chat(span_infection("Your flesh shifts and writhes causing immense suffering!"))
+	else
+		pain = 0
 	..()
 
 
@@ -470,7 +474,16 @@
 			var/water_qty = max(1, holy_skill) + 1
 			var/list/water_contents = list(/datum/reagent/water/cursed = water_qty)
 			if(user.patron.undead_hater == TRUE)
-				water_contents = list(/datum/reagent/water/blessed = water_qty)
+				water_contents = list(/datum/reagent/water/ = water_qty)
+			
+			if(istype(user.patron, /datum/patron/divine/pesta))
+				if(istype(user.rmb_intent, /datum/rmb_intent/weak)|| holy_skill < SKILL_LEVEL_APRENTICE)
+					water_contents = list(/datum/reagent/water/blessed = water_qty)
+				else
+					if(holy_skill >= SKILL_LEVEL_MASTER)
+						water_contents = list(/datum/reagent/medicine/pestra_grander = water_qty)
+					else
+						water_contents = list(/datum/reagent/medicine/pestra_lesser = water_qty)
 
 			var/datum/reagents/reagents_to_add = new()
 			reagents_to_add.add_reagent_list(water_contents)
