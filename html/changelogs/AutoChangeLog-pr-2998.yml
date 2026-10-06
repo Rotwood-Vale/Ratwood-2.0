@@ -1,0 +1,4 @@
+author: "SirSwagmeyer"
+delete-after: True
+changes:
+  - rscdel: "Removed a variety of nonheretical spellscrolls and stat potions from the \"heretical\" lootpool."
