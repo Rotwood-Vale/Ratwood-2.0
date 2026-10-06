@@ -620,12 +620,68 @@
 		popup.open(FALSE)
 		if(winexists(usr, "classhelp"))
 			winset(usr, "classhelp", "focus=true")
+	if(href_list["jobsubclassinfo"])
+		var/list/dat = list()
+		for(var/adv in get_all_subclass_types())
+			var/datum/advclass/advpath = adv
+			var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(advpath.name))
+			if(subclass.maximum_possible_slots != -1)
+				dat += "[subclass.name] — <b>"
+				if(subclass.total_slots_occupied >= subclass.maximum_possible_slots)
+					dat += "FULL!"
+				else
+					dat += "[subclass.total_slots_occupied] / [subclass.maximum_possible_slots]"
+				dat += "</b><br>"
+		var/datum/browser/popup = new(usr, "subclassslots", "<div style='text-align: center'>[title]</div>", nwidth = 200, nheight = 300)
+		popup.set_content(dat.Join())
+		popup.open(FALSE)
+		if(winexists(usr, "subclassslots"))
+			winset(usr, "subclassslots", "focus=true")
+	if(href_list["jobadvincomp"])
+		var/mob/dead/D = usr
+		if(!isdead(D) || !D.client)
+			return
+		var/list/dat = list()
+		var/list/blocked = get_blocked_subclasses(D.client)
+		for(var/subname in blocked)
+			dat += "<font color = '#e4e1e1'><b>[subname]</b></font><br>"
+			for(var/pick in blocked[subname])
+				dat += "[pick]<br>"
+		var/datum/browser/popup = new(usr, "subclassslots", "<div style='text-align: center'>Subclass Incompatibilities</div>", nwidth = 200, nheight = 300)
+		popup.set_content(dat.Join())
+		popup.open(FALSE)
+		if(winexists(usr, "subclassslots"))
+			winset(usr, "subclassslots", "focus=true")
 	. = ..()
 
+/datum/job/proc/get_blocked_subclasses(client/player)
+	. = list()
+	var/datum/preferences/prefs = player?.prefs
+	if(!prefs)
+		return
+	var/list/picks = list(prefs.virtue, prefs.virtuetwo)
+	for(var/adv in get_all_subclass_types())
+		var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(adv:name))
+		if(!subclass || !length(subclass.virtue_restrictions))
+			continue
+		var/list/hits = list()
+		for(var/datum/virtue/virtue as anything in picks)
+			for(var/restricted in subclass.virtue_restrictions)
+				if(istype(virtue, restricted))
+					hits |= virtue.name
+		if(length(hits))
+			.[subclass.name] = hits
+
+/datum/job/proc/get_all_subclass_types()
+	if(length(job_subclasses))
+		return job_subclasses
+	. = list()
+	for(var/ctag in advclass_cat_rolls)
+		for(var/datum/advclass/ctag_class as anything in SSrole_class_handler.sorted_class_categories[ctag])
+			. += ctag_class.type
+
 /datum/job/proc/has_limited_subclasses()
-	if(length(job_subclasses) <= 0)
-		return FALSE
-	for(var/adv in job_subclasses)
+	for(var/adv in get_all_subclass_types())
 		var/datum/advclass/subclass = adv
 		if(initial(subclass.maximum_possible_slots) != -1)
 			return TRUE
