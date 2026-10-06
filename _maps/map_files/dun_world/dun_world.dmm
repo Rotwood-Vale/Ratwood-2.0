@@ -6706,6 +6706,12 @@
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/beach)
+"bta" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4
+	},
+/turf/open/floor/rogue/tile/bath,
+/area/rogue/indoors/town/magician)
 "btc" = (
 /obj/structure/stairs{
 	dir = 8
@@ -9552,7 +9558,7 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
 	},
-/turf/open/floor/rogue/dirt/road,
+/turf/open/floor/rogue/tile/bath,
 /area/rogue/indoors/town/magician)
 "bWJ" = (
 /obj/effect/spawner/lootdrop/roguetown/sewers,
@@ -23439,10 +23445,8 @@
 /turf/closed/wall/mineral/rogue/wood,
 /area/rogue/indoors/town/grove)
 "eTk" = (
-/obj/structure/fluff/walldeco/church/line{
-	dir = 4
-	},
-/turf/open/floor/rogue/dirt/road,
+/obj/structure/fluff/railing/border,
+/turf/open/floor/rogue/tile/bath,
 /area/rogue/indoors/town/magician)
 "eTm" = (
 /obj/effect/decal/mossy{
@@ -44643,6 +44647,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/rogue/candle/l,
+/obj/structure/flora/roguegrass/herb/manabloom,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/magician)
 "joE" = (
@@ -68394,12 +68399,9 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town)
 "oiN" = (
-/obj/item/rogueweapon/shovel,
-/obj/item/clothing/mask/cigarette/pipe/westman,
-/obj/item/rogueweapon/hoe,
-/obj/structure/rack/rogue/shelf/biggest,
-/turf/open/floor/rogue/wood,
-/area/rogue/indoors/town/physician)
+/obj/machinery/alch_workbench,
+/turf/open/floor/rogue/tile/bath,
+/area/rogue/indoors/town/magician)
 "oiQ" = (
 /obj/effect/decal/edge{
 	color = "#3f3f3f";
@@ -82533,11 +82535,7 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/beach/forest/south)
 "rcG" = (
-/obj/item/natural/bundle/stick,
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/natural/bundle/stick,
-/obj/item/natural/bundle/stick,
-/obj/item/natural/bundle/stick,
+/obj/structure/fluff/alch,
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/physician)
 "rcH" = (
@@ -97642,7 +97640,7 @@
 	dir = 9
 	},
 /obj/structure/roguemachine/scomm,
-/obj/structure/fluff/alch,
+/obj/machinery/alch_workbench,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/physician)
 "ulp" = (
@@ -99721,6 +99719,13 @@
 	pixel_x = 6;
 	pixel_y = 4
 	},
+/obj/item/natural/bundle/stick,
+/obj/item/natural/bundle/stick,
+/obj/item/natural/bundle/stick,
+/obj/item/natural/bundle/stick,
+/obj/item/rogueweapon/shovel,
+/obj/item/rogueweapon/hoe,
+/obj/item/clothing/mask/cigarette/pipe/westman,
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/physician)
 "uHu" = (
@@ -101531,10 +101536,10 @@
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bog/south)
 "vat" = (
-/obj/structure/flora/roguegrass/herb/manabloom,
 /obj/machinery/light/rogue/candle,
 /obj/machinery/light/rogue/candle/l,
-/turf/open/floor/rogue/dirt/road,
+/obj/structure/rack/rogue/shelf/biggest,
+/turf/open/floor/rogue/tile/bath,
 /area/rogue/indoors/town/magician)
 "vaw" = (
 /obj/structure/closet/crate/chest/crate,
@@ -323488,7 +323493,7 @@ uVv
 raI
 iSm
 vat
-qLd
+eTk
 qLd
 qLd
 qLd
@@ -323939,8 +323944,8 @@ afY
 uVv
 qTd
 oSt
-qLd
-qLd
+oiN
+eTk
 qLd
 qLd
 qLd
@@ -324391,12 +324396,12 @@ afY
 uVv
 tfP
 iSm
-gzz
+bta
 bWC
 pOI
 pOI
 vWZ
-eTk
+gzz
 iSm
 oqE
 rkH
@@ -422460,7 +422465,7 @@ iyP
 pbq
 iQx
 iIy
-oiN
+pbq
 pbq
 tSO
 ihT
