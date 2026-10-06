@@ -269,10 +269,9 @@
 	// Touch intent with empty hand while wearing the Dendor amulet opens the ritual menu.
 	if(!user.get_active_held_item())
 		var/has_dendor_amulet = FALSE
-		for(var/slot in user.get_all_slots())
-			if(istype(user.get_item_by_slot(slot), /obj/item/clothing/neck/roguetown/psicross/dendor))
-				has_dendor_amulet = TRUE
-				break
+		var/list/worn_items = user.get_all_slots() // This proc actually returns a list of items worn
+		if(locate(/obj/item/clothing/neck/roguetown/psicross/dendor) in worn_items)
+			has_dendor_amulet = TRUE
 		if(!has_dendor_amulet)
 			return
 		if(!show_ritual_hints)
