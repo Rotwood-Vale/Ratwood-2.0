@@ -1,0 +1,10 @@
+author: "Wesreidau"
+delete-after: True
+changes:
+  - qol: "Corrected erroneous flavor text on bronze kilts. Now in line with other kilts."
+  - qol: "Corrected bronze kilt anvil recipe name."
+  - balance: "Chain skirts and steel tassets now protect legs but not groin."
+  - balance: "Steel tassets are now medium armor and not light."
+  - balance: "Bronze skirts now protect legs and not groin."
+  - bugfix: "Removed duplicate and misleading bronze skirt/kilt purchases from Merchant."
+  - refactor: "Refactored the bronze skirt to skirt/bronzeskirt from being in hardened_leather."
