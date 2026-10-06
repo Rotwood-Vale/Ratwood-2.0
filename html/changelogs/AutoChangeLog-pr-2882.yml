@@ -1,0 +1,7 @@
+author: "TheMysteriousDragon"
+delete-after: True
+changes:
+  - rscdel: "Removed brigandine, steel bracers, iron gorget & blacksteel staff and replaced with leather comparables as well as unique staff"
+  - balance: "removed poor spell choices [eg; fetch. Why would a backliner artillery focused mage want to pull people into them?] as well as minor skill increases [polearms > jman | magic > expert | etc] as well as stat adjustments [+3 int | +3 wil | -1 str | +2 per | +2 spd] and increased to t3 arcyne [Why would a specialised graduate of a dedicated magic academy be shit at magick] and added +3 spellpoints."
+  - image: "added \"Celestial Zauberer Staff\" a new custom item given on roundstart with class-specific flavour."
+  - code_imp: "See above"
