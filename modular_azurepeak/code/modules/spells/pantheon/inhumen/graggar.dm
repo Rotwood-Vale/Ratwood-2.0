@@ -185,14 +185,14 @@
 
 	return TRUE
 
-//Bloodrage T0 -- Uncapped STR buff.
+//Bloodrage T0 -- Adrenaline buff.
 /obj/effect/proc_holder/spell/self/graggar_bloodrage
-	name = "Bloodrage"
-	desc = "Grants you unbound strength for a short while."
+	name = "Bloodrrush"
+	desc = "Fills you with an adrenaline rush for a short while."
 	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	overlay_state = "bloodrage"
-	recharge_time = 5 MINUTES
+	recharge_time =2 MINUTES
 	invocations = list("GRAGGAR!! GRAGGAR!! GRAGGAR!!",
 		"GRAGGAR! BREAK MY CHAINS!",
 		"GRAGGAR! SHATTER MY BINDS!"
@@ -201,7 +201,7 @@
 	sound = 'sound/magic/bloodrage.ogg'
 	releasedrain = 30
 	miracle = TRUE
-	devotion_cost = 80
+	devotion_cost = 30
 	antimagic_allowed = FALSE
 	var/static/list/purged_effects = list(
 	/datum/status_effect/incapacitating/immobilized,

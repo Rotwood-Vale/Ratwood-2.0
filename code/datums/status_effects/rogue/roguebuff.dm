@@ -1938,29 +1938,22 @@
 	duration = 15 SECONDS
 
 /datum/status_effect/buff/bloodrage/on_apply()
-	ADD_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_STATUS_EFFECT(id))
 	var/holyskill = owner.get_skill_level(/datum/skill/magic/holy)
 	duration = ((15 SECONDS) * holyskill)
 	var/filter = owner.get_filter(BLOODRAGE_FILTER)
 	if(!filter)
 		owner.add_filter(BLOODRAGE_FILTER, 2, list("type" = "outline", "color" = outline_color, "alpha" = 60, "size" = 2))
-	if(!HAS_TRAIT(owner, TRAIT_DODGEEXPERT))
-		if(owner.STASTR < STRENGTH_SOFTCAP)
-			effectedstats = list(STATKEY_STR = (STRENGTH_SOFTCAP - owner.STASTR))
-			. = ..()
-			return TRUE
-	if(holyskill >= SKILL_LEVEL_APPRENTICE)
-		effectedstats = list(STATKEY_STR = 2)
-	else
-		effectedstats = list(STATKEY_STR = 1)
+	var/datum/status_effect/buff/adrenaline_rush/rush = owner.has_status_effect(/datum/status_effect/buff/adrenaline_rush)
+	if(!rush)
+		rush = owner.apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
+	if(rush && rush.duration != -1)
+		rush.duration = max(rush.duration, world.time + duration)
 	. = ..()
 	return TRUE
 
 /datum/status_effect/buff/bloodrage/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_STATUS_EFFECT(id))
 	owner.visible_message(span_warning("[owner] wavers, their rage simmering down."))
-	owner.OffBalance(3 SECONDS)
 	owner.remove_filter(BLOODRAGE_FILTER)
 	owner.emote("breathgasp", forced = TRUE)
 	owner.Slowdown(3)
