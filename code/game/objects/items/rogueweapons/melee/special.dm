@@ -832,6 +832,30 @@
 	equip_delay_self = 2 SECONDS
 	unequip_delay_self = 2 SECONDS
 	inv_storage_delay = 1 SECONDS
+	var/used = FALSE
+	var/list/selection = list(
+		/datum/special_intent/polearm_backstep,
+		/datum/special_intent/axe_swing,
+		/datum/special_intent/greatsword_swing,
+		/datum/special_intent/ground_smash
+		)
+
+/obj/item/rogueweapon/spear/keep_standard/poleaxe/attack_right(mob/user)
+	. = ..()
+	if(used)
+		return
+
+	var/list/special_options = list()
+	for(var/intent in selection)
+		var/datum/special_intent/S = intent // Hate this DM quirk.
+		special_options[S::name] = S
+
+	var/choice = input(user, "Choose the Manoeuvre", "MANOEUVRE") as anything in special_options
+	if(choice)
+		qdel(special)
+		var/datum/special_intent/S = special_options[choice]
+		special = new S()
+		used = TRUE
 
 /obj/item/rogueweapon/spear/keep_standard/equipped(mob/living/user)
 	. = ..()
