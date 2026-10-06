@@ -600,6 +600,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["origin_bonus_stat"] >> origin_bonus_stat
 	if(stat_source != "origin" && stat_source != "virtue")
 		stat_source = "race"
+	S["stat_pack"] >> stat_pack
+	if(!(stat_pack in GLOB.stat_packs))
+		stat_pack = null
 	stat_caps = list()
 	var/list/loaded_caps
 	S["stat_caps"] >> loaded_caps
@@ -1226,6 +1229,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["voice_pack"] , voice_pack)
 	WRITE_FILE(S["pronouns"] , pronouns)
 	WRITE_FILE(S["stat_caps"] , stat_caps)
+	WRITE_FILE(S["stat_pack"] , stat_pack)
 	WRITE_FILE(S["stat_source"] , stat_source)
 	WRITE_FILE(S["origin_bonus_stat"] , origin_bonus_stat)
 	// Save virtues with explicit null-safety

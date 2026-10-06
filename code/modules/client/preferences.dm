@@ -85,6 +85,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/voice_pack = "Default"
 	var/voice_type = VOICE_TYPE_MASC	// LETHALSTONE EDIT: the type of soundpack the mob should use
 	var/list/stat_caps = list()
+	var/stat_pack
 	var/stat_source = "race"
 	var/origin_bonus_stat
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
@@ -190,7 +191,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	return STAT_PREF_POINTS + get_quirk_points_earned()
 
 /datum/preferences/proc/get_points_remaining()
-	return get_points_total() - stat_pref_points_used(stat_caps) - get_quirk_points_spent()
+	return get_points_total() - stat_pref_points_used(stat_caps, stat_pack) - get_quirk_points_spent()
 
 /datum/preferences/proc/get_quirk_typepaths()
 	var/list/types = list()

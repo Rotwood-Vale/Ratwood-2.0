@@ -4,8 +4,39 @@ GLOBAL_LIST_INIT(budget_stats, list(STATKEY_STR, STATKEY_PER, STATKEY_INT, STATK
 GLOBAL_LIST_INIT(stat_weight_mults, list(STATKEY_STR = 1.3, STATKEY_PER = 1.1, STATKEY_INT = 1.15, STATKEY_CON = 1.1, STATKEY_WIL = 1.15, STATKEY_SPD = 1.25))
 // the costs are based off my own analysis of the stats. I think it's good ??
 GLOBAL_LIST_INIT(stat_cost_factors, list(STATKEY_STR = 1.5, STATKEY_PER = 1, STATKEY_INT = 1.25, STATKEY_CON = 1, STATKEY_WIL = 1, STATKEY_SPD = 1.5))
+// so these are like just presets, they're not Actual statpacks they are Fake & False.
+GLOBAL_LIST_INIT(stat_packs, list(
+	"Muscular" = list(STATKEY_STR = 2, STATKEY_CON = 1, STATKEY_PER = -1, STATKEY_SPD = -2, STATKEY_INT = -2),
+	"Adept" = list(STATKEY_PER = 1, STATKEY_INT = 1, STATKEY_SPD = 1, STATKEY_STR = -2, STATKEY_CON = -1),
+	"Alert" = list(STATKEY_STR = 1, STATKEY_PER = 1, STATKEY_INT = 1, STATKEY_CON = -1, STATKEY_WIL = -1, STATKEY_SPD = -2),
+	"Austere" = list(),
+	"Aware" = list(STATKEY_PER = 2, STATKEY_SPD = 1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_STR = -2),
+	"Deft" = list(STATKEY_PER = 1, STATKEY_SPD = 1, STATKEY_WIL = 1, STATKEY_STR = -1, STATKEY_INT = -2),
+	"Dextrous" = list(STATKEY_SPD = 2, STATKEY_PER = 1, STATKEY_CON = -2, STATKEY_INT = -1, STATKEY_STR = -2),
+	"Diligent" = list(STATKEY_INT = 2, STATKEY_WIL = 1, STATKEY_SPD = -1, STATKEY_STR = -2, STATKEY_PER = -1),
+	"Foresighted" = list(STATKEY_PER = 2, STATKEY_INT = 1, STATKEY_STR = -1, STATKEY_WIL = -1, STATKEY_CON = -2),
+	"Frail" = list(STATKEY_STR = -2, STATKEY_PER = -2, STATKEY_INT = -2, STATKEY_CON = -2, STATKEY_WIL = -2, STATKEY_SPD = -2),
+	"Hardy" = list(STATKEY_CON = 2, STATKEY_WIL = 2, STATKEY_STR = -2, STATKEY_SPD = -2),
+	"Industrious" = list(STATKEY_INT = 2, STATKEY_SPD = 1, STATKEY_CON = -1, STATKEY_PER = -2, STATKEY_STR = -2),
+	"Precise" = list(STATKEY_PER = 2, STATKEY_STR = 1, STATKEY_WIL = -1, STATKEY_CON = -1, STATKEY_INT = -2),
+	"Resolute" = list(STATKEY_INT = 1, STATKEY_CON = 1, STATKEY_WIL = 1, STATKEY_PER = -1, STATKEY_STR = -2),
+	"Studious" = list(STATKEY_INT = 2, STATKEY_PER = 1, STATKEY_STR = -1, STATKEY_WIL = -1, STATKEY_SPD = -2),
+	"Swift" = list(STATKEY_SPD = 2, STATKEY_WIL = 1, STATKEY_STR = -2, STATKEY_CON = -1, STATKEY_PER = -2),
+	"Taut" = list(STATKEY_STR = 1, STATKEY_WIL = 1, STATKEY_SPD = 1, STATKEY_PER = -2, STATKEY_CON = -1, STATKEY_INT = -1),
+	"Thuggish" = list(STATKEY_STR = 2, STATKEY_PER = 1, STATKEY_CON = -1, STATKEY_WIL = -1, STATKEY_SPD = -1, STATKEY_INT = -2),
+	"Toil-harded" = list(STATKEY_WIL = 2, STATKEY_CON = 1, STATKEY_PER = -1, STATKEY_INT = -1, STATKEY_SPD = -2),
+	"Trained" = list(STATKEY_STR = 1, STATKEY_CON = 1, STATKEY_WIL = 1, STATKEY_PER = -1, STATKEY_INT = -2),
+	"Tricky" = list(STATKEY_PER = 1, STATKEY_INT = 1, STATKEY_SPD = 1, STATKEY_WIL = -1, STATKEY_STR = -2),
+	"Wary" = list(STATKEY_PER = 2, STATKEY_INT = 2, STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_WIL = -2),
+	"Zealous" = list(STATKEY_STR = 1, STATKEY_INT = 1, STATKEY_WIL = 1, STATKEY_PER = -1, STATKEY_SPD = -2),
+))
+GLOBAL_LIST_INIT(free_stat_packs, list("Austere", "Frail"))
 
-/proc/stat_pref_points_used(list/stat_caps)
+/proc/stat_pref_points_used(list/stat_caps, pack_name)
+	if(pack_name in GLOB.free_stat_packs)
+		return 0
+	if(pack_name)
+		return STAT_PACK_COST
 	var/used = 0
 	for(var/stat in GLOB.budget_stats)
 		if(stat_caps[stat])

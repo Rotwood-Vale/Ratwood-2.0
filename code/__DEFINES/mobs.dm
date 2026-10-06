@@ -663,6 +663,7 @@
 // if u touch this it'll fuck up the formula
 #define STAT_BASE_MAX 12
 #define STAT_PREF_POINTS 3
+#define STAT_PACK_COST 3
 #define STAT_FOCUS 1.6
 #define STAT_MIN_WEIGHT 0.2
 #define STAT_WEIGHT_VERY_FAVORED 3

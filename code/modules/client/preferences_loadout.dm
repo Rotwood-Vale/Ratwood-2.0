@@ -148,6 +148,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 /datum/preferences/proc/save_preset(preset_slot)
 	var/list/preset = list(
 		"stat_caps" = stat_caps.Copy(),
+		"stat_pack" = stat_pack,
 		"virtue" = virtue?.type,
 		"virtuetwo" = virtuetwo?.type,
 		"quirks" = get_quirk_typepaths(),
@@ -169,6 +170,9 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	var/list/preset = vars["loadout_preset_[preset_slot]"]
 	if(!islist(preset) || !preset.len)
 		return FALSE
+	stat_pack = null
+	if(preset["stat_pack"] in GLOB.stat_packs)
+		stat_pack = preset["stat_pack"]
 	stat_caps = list()
 	var/list/preset_caps = preset["stat_caps"]
 	if(islist(preset_caps))

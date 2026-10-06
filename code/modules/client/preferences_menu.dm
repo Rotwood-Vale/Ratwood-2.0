@@ -184,6 +184,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	if(!second_virtue_allowed())
 		virtuetwo = GLOB.virtues[/datum/virtue/none]
 	if(get_points_remaining() < 0)
+		stat_pack = null
 		stat_caps = list()
 
 /datum/preferences/proc/page_identity(mob/user)
@@ -266,6 +267,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		final_stats = forced_stats
 	html += pref_sub("Stats[preview_label]")
 	html += "<div class='r'><font size='4' color='#e3c06f'><b>Points: [get_points_remaining()]</b></font></div>"
+	html += pref_line(list(pref_item("Statpack", bg_link(stat_pack || "Custom", "statpack"))))
 	var/source_name = "Racial"
 	if(stat_source == "origin")
 		source_name = "Origin"
@@ -304,7 +306,15 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 			label_color = "#e07070"
 		if(tier == STAT_VERY_DISFAVORED)
 			label_color = "#cf2a2a"
-		stat_items += "<b><font color='[label_color]'>[uppertext(copytext(stat, 1, 4))]</font></b> <a href='?_src_=prefs;preference=background;bg=stat;stat=[stat]'><font color='[color]'>[shown_stat]</font></a>[boost_mark]"
+		var/pack_level = LAZYACCESS(GLOB.stat_packs[stat_pack], stat)
+		if(pack_level > 0)
+			color = "#91cf68"
+		if(pack_level < 0)
+			color = "#cf2a2a"
+		var/stat_text = "<font color='[color]'>[shown_stat]</font>"
+		if(!stat_pack)
+			stat_text = "<a href='?_src_=prefs;preference=background;bg=stat;stat=[stat]'>[stat_text]</a>"
+		stat_items += "<b><font color='[label_color]'>[uppertext(copytext(stat, 1, 4))]</font></b> [stat_text][boost_mark]"
 		if(length(stat_items) == 3)
 			html += pref_line(stat_items)
 			stat_items = list()
@@ -462,6 +472,8 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 				return
 			if(preview_subclass?.forced_stats)
 				return
+			if(stat_pack)
+				return
 			var/shift = stat_cap_shift(stat, preview_subclass?.favored_stats)
 			var/list/others = stat_caps.Copy()
 			others -= stat
@@ -509,6 +521,29 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 				to_chat(user, span_warning("Not enough points!"))
 				return
 			stat_caps = new_caps
+		if("statpack")
+			var/list/options = list("Custom" = "")
+			var/list/symbols = list("2" = "++", "1" = "+", "-1" = "-", "-2" = "--")
+			for(var/pack_name in GLOB.stat_packs)
+				var/list/pack_stats = GLOB.stat_packs[pack_name]
+				var/label = pack_name
+				if(length(pack_stats))
+					label += " ("
+					for(var/pack_stat in pack_stats)
+						label += "[uppertext(copytext(pack_stat, 1, 4))][symbols["[pack_stats[pack_stat]]"]] "
+					label = "[copytext(label, 1, length(label))])"
+				options[label] = pack_name
+			var/choice = tgui_input_list(user, "Choosing a statpack costs 3 points! Stats are distributed via class budget.", "Statpack", options)
+			if(!choice)
+				return
+			var/new_pack = options[choice]
+			if(stat_pref_points_used(list(), new_pack) > get_points_remaining() + stat_pref_points_used(stat_caps, stat_pack))
+				to_chat(user, span_warning("Not enough points!"))
+				return
+			stat_pack = new_pack
+			stat_caps = list()
+			for(var/pack_stat in GLOB.stat_packs[new_pack])
+				stat_caps[pack_stat] = STAT_BASELINE + GLOB.stat_packs[new_pack][pack_stat]
 		if("stat_source")
 			var/list/sources = list("Racial" = "race", "Second Virtue" = "virtue")
 			if(pref_species.origin_stats_allowed)
