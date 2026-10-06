@@ -341,7 +341,7 @@
 	description = ""
 	taste_mult = 5 // Bitter medicine
 	color = "#002e18"
-	taste_description = "terible bitterness and a taste of blood"
+	taste_description = "terible bitterness and a taste of suffering"
 	metabolization_rate = REAGENTS_METABOLISM
 	pain = 0
 
