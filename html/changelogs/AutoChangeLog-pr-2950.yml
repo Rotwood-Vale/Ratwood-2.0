@@ -1,6 +1,0 @@
-author: "SSix"
-delete-after: True
-changes:
-  - bugfix: "A fogbeast summoned with Choose Mount uses the coat color you picked"
-  - bugfix: "A fogbeast keeps that coat color when facing south"
-  - bugfix: "A dead fogbeast shows its corpse sprite"
