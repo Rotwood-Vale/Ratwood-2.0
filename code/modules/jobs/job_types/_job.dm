@@ -661,8 +661,8 @@
 		return
 	var/list/picks = list(prefs.virtue, prefs.virtuetwo)
 	for(var/adv in get_all_subclass_types())
-		var/datum/advclass/subclass = SSrole_class_handler.get_advclass_by_name(initial(adv:name))
-		if(!subclass || !length(subclass.virtue_restrictions))
+		var/datum/advclass/subclass = SSrole_class_handler.classes_by_type[adv]
+		if(!length(subclass?.virtue_restrictions))
 			continue
 		var/list/hits = list()
 		for(var/datum/virtue/virtue as anything in picks)
