@@ -301,21 +301,38 @@
 	color = "#008145"
 	taste_description = "terible bitterness"
 	metabolization_rate = REAGENTS_METABOLISM
+	pain = 0
 
 /datum/reagent/medicine/pestra_lesser/on_mob_life(mob/living/carbon/M)
 	if(volume >= 60)
 		M.reagents.remove_reagent(/datum/reagent/medicine/pestra_lesser, 2) //No overhealing.
+	var/should_pain = FALSE
 	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-			M.set_blood_volume(min(M.get_blood_volume()+10, BLOOD_VOLUME_NORMAL))
+		M.set_blood_volume(min(M.get_blood_volume()+10, BLOOD_VOLUME_NORMAL))
 	for(var/datum/wound/wound as anything in M.get_wounds())
 		wound.heal_wound(1.5)
-	if(volume > 0.99)
-		M.adjustBruteLoss(-1*REM, 0)
-		M.adjustFireLoss(-1*REM, 0)
-		M.adjustToxLoss(-3*REM, 0)
-		M.adjustOxyLoss(-3*REM, 0)
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
-		M.adjustCloneLoss(-3*REM, 0)
+		should_pain = TRUE
+	if(M.bruteloss > 0 || M.fireloss > 0)
+		should_pain = TRUE
+		M.adjustBruteLoss(-2*REM, 0)
+		M.adjustFireLoss(-2*REM, 0)
+	M.adjustBruteLoss(-1*REM, 0)
+	M.adjustFireLoss(-1*REM, 0)
+	M.adjustToxLoss(-3*REM, 0)
+	M.adjustOxyLoss(-3*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
+	M.adjustCloneLoss(-3*REM, 0)
+	if(HAS_TRAIT(src, TRAIT_NOPAIN))
+		should_pain = FALSE
+	if(should_pain)
+		if(istype(M.patron, /datum/patron/divine/pesta) || M.skills.get_effective_skill_cap(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
+			pain = 0
+			if(prob(3))
+				M.to_chat(span_green("Your wounds stich, as if under the hands of a competent surgeon."))
+		else
+			pain = M.STAWIL * 2.5 // quater of the pain treshold
+			if(prob(3))
+				M.to_chat(span_infection("Your flesh moves on its own, causing some pain."))
 	..()
 
 
@@ -326,21 +343,36 @@
 	color = "#002e18"
 	taste_description = "terible bitterness and a taste of blood"
 	metabolization_rate = REAGENTS_METABOLISM
+	pain = 0
 
 /datum/reagent/medicine/pestra_grander/on_mob_life(mob/living/carbon/M)
 	if(volume >= 60)
 		M.reagents.remove_reagent(/datum/reagent/medicine/pestra_grander, 2) //No overhealing.
 	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-			M.set_blood_volume(min(M.get_blood_volume()+20, BLOOD_VOLUME_NORMAL))
+		M.set_blood_volume(min(M.get_blood_volume()+20, BLOOD_VOLUME_NORMAL))
+	var/should_pain = FALSE
 	for(var/datum/wound/wound as anything in M.get_wounds())
 		wound.heal_wound(3)
-	if(volume > 0.99)
+		should_pain = TRUE
+	if(M.bruteloss > 0 || M.fireloss > 0)
+		should_pain = TRUE
 		M.adjustBruteLoss(-2*REM, 0)
 		M.adjustFireLoss(-2*REM, 0)
-		M.adjustToxLoss(-5*REM, 0)
-		M.adjustOxyLoss(-5*REM, 0)
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
-		M.adjustCloneLoss(-5*REM, 0)
+	M.adjustToxLoss(-5*REM, 0)
+	M.adjustOxyLoss(-5*REM, 0)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
+	M.adjustCloneLoss(-5*REM, 0)
+	if(HAS_TRAIT(src, TRAIT_NOPAIN))
+		should_pain = FALSE
+	if(should_pain)
+		if(istype(M.patron, /datum/patron/divine/pesta) || M.skills.get_effective_skill_cap(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
+			pain = 0
+			if(prob(3))
+				M.to_chat(span_green("Your wounds stich, as if under the hands of a master surgeon."))
+		else
+			pain = M.STAWIL * 5 // half of the pain treshold
+			if(prob(3))
+				M.to_chat(span_infection("Your flesh shifts and writhes causing immense suffering!"))
 	..()
 
 
