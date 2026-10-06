@@ -100,6 +100,20 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
 
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/graggar
+	name = "vicious hauberk"
+	desc = "The blessing of a Martyr is nothing, when put before the Sinistar's rage."
+	icon_state = "graggarhauberk"
+	item_state = "graggarhauberk"
+	armor = ARMOR_ASCENDANT
+	armor_class = ARMOR_CLASS_MEDIUM
+	peel_threshold = 5
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/graggar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR")
+
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient
 	name = "ancient hauberk"
 	desc = "Polished gilbranze rings and silk, woven together to form a sleeved maille-atekon. To bring the lyfeless back from decrepity, to elevate them to heights once thought unsurmountable; that is the will of Zizo, made manifest."

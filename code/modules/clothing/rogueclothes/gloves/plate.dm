@@ -54,6 +54,17 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
 
+/obj/item/clothing/gloves/roguetown/plate/graggar/heavy
+	name = "vicious plated gauntlets"
+	desc = "Steel plated gauntlets overlaid by an ornamental imagery of fractured bone and entrails. The violet smears; a tether to the lyfe that once was - and now, a stinging reminder of what could've been."
+	icon_state = "graggarplategloves_heavy"
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_ASCENDANT
+
+/obj/item/clothing/gloves/roguetown/plate/graggar/heavy/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
+
 /obj/item/clothing/gloves/roguetown/plate/matthios
 	name = "gilded gauntlets"
 	desc = "Many a man his life hath sold,"

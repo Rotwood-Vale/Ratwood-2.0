@@ -1092,6 +1092,35 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "VISAGE")
 
+/obj/item/clothing/head/roguetown/helmet/heavy/graggar/skull
+	name = "vicious skullhelm"
+	desc = "Nigh lyke a crushed skull worn with pride; as sturdy as one that has seen fractures.. and survived them, too. Godliness \
+	was never meant to be tainted with minds so fragile and passionate."
+	icon_state = "graggarplatehelm_heavy"
+	max_integrity = ARMOR_INT_HELMET_ANTAG
+	armor = ARMOR_ASCENDANT
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/head/roguetown/helmet/heavy/graggar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "HELM", "RENDERED ASUNDER")
+
+/obj/item/clothing/head/roguetown/helmet/heavy/graggar/equipped(mob/living/user, slot)
+	. = ..()
+	if(active_item)
+		return
+	if(slot == SLOT_HEAD)
+		active_item = TRUE
+		ADD_TRAIT(user, TRAIT_BITERHELM, TRAIT_GENERIC)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/graggar/dropped(mob/living/user)
+	..()
+	if(!active_item)
+		return
+	active_item = FALSE
+	REMOVE_TRAIT(user, TRAIT_BITERHELM, TRAIT_GENERIC)
+
+
 /obj/item/clothing/head/roguetown/helmet/heavy/zizo
 	name = "avantyne barbute"
 	desc = "<font color='A50021'>In an antique land, two vast and trunkless legs of stone stand in the desert.</font>"

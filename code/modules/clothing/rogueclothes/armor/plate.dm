@@ -192,6 +192,10 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
 
+/obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
+
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot != SLOT_ARMOR)
@@ -199,7 +203,31 @@
 
 	user.apply_status_effect(/datum/status_effect/buff/motive)
 
-/obj/item/clothing/suit/roguetown/armor/plate/fluted/graggar/dropped(mob/living/carbon/human/user)
+/obj/item/clothing/suit/roguetown/armor/plate/full/graggar
+	name = "vicious full-plate"
+	desc = "Shorn together plate, curated from hand-crafted bones and ligaments - combined under an unholy spirit of violence. It \
+	drools with the distilled essence of worldlux; the afterbirth of ascensionism."
+	icon_state = "graggarplate_heavy"
+	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
+	peel_threshold = 5	//-Any- weapon will require 5 peel hits to peel coverage off of this armor.
+	armor = ARMOR_ASCENDANT
+
+/obj/item/clothing/suit/roguetown/armor/plate/full/graggar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
+
+/obj/item/clothing/suit/roguetown/armor/plate/full/graggar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR", "RENDERED ASUNDER")
+
+/obj/item/clothing/suit/roguetown/armor/plate/full/graggar/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot != SLOT_ARMOR)
+		return
+
+	user.apply_status_effect(/datum/status_effect/buff/motive)
+
+/obj/item/clothing/suit/roguetown/armor/plate/full/graggar/dropped(mob/living/carbon/human/user)
 	. = ..()
 	if(istype(user) && user.wear_armor == src)
 		user.remove_status_effect(/datum/status_effect/buff/motive)
