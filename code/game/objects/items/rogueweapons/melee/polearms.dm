@@ -896,6 +896,11 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
+/obj/item/rogueweapon/halberd/pestran
+	name = "\"Lance of Boils\""
+	desc = "For when a scalpel is too short, and you still need to perform Pestra's holy work."
+	icon_state = "pestranhalberd"
+
 /obj/item/rogueweapon/spear/holysee
 	name = "see spear"
 	desc = "A blessed spear, wielded by the Holy See's templars to keep the forces of evil at bay. The design is remarkably well-balanced, allowing it for effective off-handed use with a shield. The prongs seem to catch even the tiniest glimmer of daelight, magnifying it into a blinding glare. </br>'I fear no evil, my Gods, for thou art with me!'"
@@ -1455,6 +1460,15 @@
 	max_blade_int = 240
 	wdefense = 7//You are truly unique, m'lord.
 
+/obj/item/rogueweapon/greatsword/grenz/flamberge/malum
+	name = "forgefiend flamberge"
+	desc = "This sword's creation took a riddle in its own making. A great sacrifice was made for a blade of perfect quality."
+	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon_state = "malumflamberge"
+	max_integrity = 240
+	max_blade_int = 240
+	wdefense = 7 //Same stats as Ravox
+
 /obj/item/rogueweapon/greatsword/grenz/flamberge/blacksteel
 	name = "blacksteel flamberge"
 	desc = "An uncommon kind of sword with a characteristically undulating style of blade, made with an equally rare metal. \
@@ -1708,6 +1722,20 @@
 	icon_state = "quarterstaff_steel"
 	max_integrity = 200
 
+/obj/item/rogueweapon/woodstaff/quarterstaff/steel/astrata
+	name = "solar scepter"
+	desc = "A quarterstaff bearing the symbol of Astrata, Her rule given form in a scepter atop a reinforced shaft."
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon_state = "quarterstaff_astrata"
+	max_integrity = 230
+
+/obj/item/rogueweapon/woodstaff/quarterstaff/steel/noc
+	name = "lunar crescent"
+	desc = "A quarterstaff bearing the symbol of Noc, His moonlight taken form atop a reinforced shaft."
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon_state = "quarterstaff_noc"
+	max_integrity = 230
+
 /obj/item/rogueweapon/woodstaff/quarterstaff/blacksteel
 	name = "blacksteel quarterstaff"
 	desc = "A quarterstaff reinforced with blacksteel tips. One might imagine that the elegance of such a design hardly befits the people \
@@ -1801,6 +1829,12 @@
 	wdefense = 6 // A little bit extra
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/steel
+
+/obj/item/rogueweapon/spear/boar/noc
+	name = "moonlight spear"
+	desc = "A spear with a wide head and a pair of wings below the head. The wings are designed to prevent a boar from charging past the spearhead. \
+	It is also useful for parrying and stopping a charging opponent. This one in particular is made of blued steel."
+	icon_state = "nocspear"
 
 /obj/item/rogueweapon/spear/blacksteel
 	name = "blacksteel spear"
