@@ -123112,10 +123112,6 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/shop)
 "wcD" = (
-/obj/effect/decal/carpet{
-	pixel_y = 21;
-	pixel_x = 16
-	},
 /obj/structure/roguemachine/ministry_bureau,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor)
