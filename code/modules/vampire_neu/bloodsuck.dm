@@ -157,3 +157,4 @@
 	var/datum/antagonist/vampire/new_antag = new /datum/antagonist/vampire(incoming_clan = sire.clan, forced_clan = TRUE, generation = VDrinker.generation-1)
 	mind?.add_antag_datum(new_antag)
 	adjust_bloodpool(500)
+	remove_sleep_depravation(TRUE)

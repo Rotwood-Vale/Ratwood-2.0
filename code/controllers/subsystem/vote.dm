@@ -56,6 +56,9 @@ SUBSYSTEM_DEF(vote)
 	current_vote?.reset()
 	current_vote = null
 
+	for(var/ckey in GLOB.player_details)
+		var/datum/player_details/details = GLOB.player_details[ckey]
+		details.player_actions -= generated_actions
 	QDEL_LIST(generated_actions)
 
 	SStgui.update_uis(src)
@@ -234,22 +237,26 @@ SUBSYSTEM_DEF(vote)
 	to_chat(world, span_infoplain(vote_font("\n[span_bold(to_display)]\n\
 		Type <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\n\
 		You have [DisplayTimeText(duration)] to vote.")))
-	
+
 	// And now that it's going, give everyone a voter action
 	for(var/client/new_voter as anything in GLOB.clients)
+		if(!new_voter?.mob)
+			continue
+		if(current_vote != to_vote)
+			break
 		var/datum/action/vote/voting_action = new()
-		voting_action.name = "Vote: [current_vote.override_question || current_vote.name]"
+		voting_action.name = "Vote: [to_vote.override_question || to_vote.name]"
 		voting_action.Grant(new_voter.mob)
 
 		new_voter.player_details.player_actions += voting_action
 		generated_actions += voting_action
-		
-		if(current_vote.vote_sound)
-			SEND_SOUND(new_voter, sound(current_vote.vote_sound))
 
-		if(SSvote.initialized && new_voter.prefs.voting_popup)
-			SSvote.ui_interact(new_voter.mob)
-			
+		if(to_vote.vote_sound)
+			SEND_SOUND(new_voter, sound(to_vote.vote_sound))
+
+		if(initialized && new_voter.prefs?.voting_popup)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/controller/subsystem/vote, ui_interact), new_voter.mob)
+
 	return TRUE
 
 /**
