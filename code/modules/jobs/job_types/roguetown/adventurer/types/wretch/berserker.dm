@@ -7,7 +7,8 @@
 	cmode_music = 'sound/music/cmode/antag/combat_darkstar.ogg'
 	class_select_category = CLASS_CAT_WARRIOR
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_STRONGBITE, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_RAGE)
+	traits_applied = list(TRAIT_STRONGBITE, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_NOPAINSTUN, TRAIT_RAGE)
+	maximum_possible_slots = 2 //Obligatory people-pleasing slot limitation. Master skills is scawwy. 
 	// Literally same stat spread as Atgervi Shaman
 	subclass_stats = list(
 		STATKEY_STR = 3,
@@ -64,35 +65,36 @@
 		switch(armor_choice)
 			if("Light Armor")
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
+				ADD_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC)
 			if("Unstoppable Skin")
 				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berzerker
 				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berzerker
+				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+				REMOVE_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC) //Can't have both.
 		var/list/main_choices = list("Unarmed Master", "Martial Expert") // Unarmed focuses on master punching and wrestling moves, Martial gives you two expert weapon skills to be flexible
 		var/category_choice = input(H, "Choose your MEANS OF VIOLENCE.", "SMASH OR SLASH!!") as anything in main_choices
 		switch(category_choice)
 			if("Unarmed Master")
-				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist // apperantly normal barb gets em so for consistency sake
 				var/list/unarmed_options = list("Katar", "Knuckledusters", "Punch Dagger", "FISTS ONLY, NO WEAPONS EVER")
 				var/weapon_choice = input(H, "Choose how you PUNCH!", "BREAK THEIR BONES.") as anything in unarmed_options
 				switch(weapon_choice)
 					if("Katar")
-						H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 						beltr = /obj/item/rogueweapon/katar
 					if("Knuckledusters")
-						H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 						beltr = /obj/item/rogueweapon/knuckles/ancient
 					if("Punch Dagger")
-						H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 						beltr = /obj/item/rogueweapon/katar/punchdagger
 					if("FISTS ONLY, NO WEAPONS EVER")
-						H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 						H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_MASTER, TRUE)
 						ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 						H.change_stat(STATKEY_INT, 2)//no stat malus for pure unarmed
 						H.change_stat(STATKEY_WIL, 1)//nice little bonus for our fist only chuds
 						H.change_stat(STATKEY_CON, 1)
+						if(armor_choice == "Unstoppable Skin")
+							ADD_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC)//you'll need it if you're going pure unarmed.
 				var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff") // cool wrestling moves
 				var/technique_choice = input(H,"Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
 				switch(technique_choice)
@@ -105,27 +107,31 @@
 					if("Headbutt - Vulnerable Debuff")
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 			if("Martial Expert") // designed to compete with unarmed by giving you alternatives to approaching fights- only expert
-				var/list/martial_options = list("Greatsword", "Battle Axe", "Grand Mace", "Grand Maul, 15 STR MIN", "Berserker's Sword, 14 STR MIN")
+				var/list/martial_options = list("Greatsword", "HUNK OF IRON", "Battle Axe", "Grand Mace", "Grand Maul, 15 STR MIN", "Broadsword")
 				var/weapon_choice = input(H, "Choose your WEAPONS of WAR!", "SPILL THEIR ENTRAILS.") as anything in martial_options
 				switch(weapon_choice)
 					if("Greatsword")
-						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 						r_hand = /obj/item/rogueweapon/greatsword/ancient
 						backl = /obj/item/rogueweapon/scabbard/gwstrap
+					if("HUNK OF IRON") //Actually not a meme anymore
+						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+						r_hand = /obj/item/rogueweapon/sword/long/exe/berserk //not as strong as people think
 					if("Battle Axe")
-						H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
+						H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
 						beltr = /obj/item/rogueweapon/stoneaxe/battle
 					if("Grand Mace")
-						H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+						H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 						r_hand = /obj/item/rogueweapon/mace/goden/steel
 						backl = /obj/item/rogueweapon/scabbard/gwstrap
 					if("Grand Maul, 15 STR MIN")
-						H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+						H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 						r_hand = /obj/item/rogueweapon/mace/maul/grand
 						backl = /obj/item/rogueweapon/scabbard/gwstrap
-					if("Berserker's Sword, 14 STR MIN") //Swapped out the falx for this, it's a primary weapon afterall
-						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-						r_hand = /obj/item/rogueweapon/sword/long/exe/berserk//if you have the guts
+					if("Broadsword") //Swapped out the falx for this, it's a primary weapon afterall
+						H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+						beltr = /obj/item/rogueweapon/scabbard/sword
+						r_hand = /obj/item/rogueweapon/sword/long/broadsword/steel
 				var/list/sidearm_options = list("An Arming Sword", "An Axe", "Mace")
 				var/sidearm_choice = input(H, "Choose your secondary WEAPON!", "SPILL THEIR ENTRAILS.") as anything in sidearm_options
 				switch(sidearm_choice)
