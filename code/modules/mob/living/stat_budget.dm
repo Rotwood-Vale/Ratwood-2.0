@@ -96,6 +96,10 @@ GLOBAL_LIST_INIT(free_stat_packs, list("Austere", "Frail"))
 			baselines[stat] = min(baselines[stat], caps[stat])
 			values[stat] = min(values[stat], caps[stat])
 		weights[stat] = (max(STAT_MIN_WEIGHT, stat_role_weight(stat, favored_stats)) ** STAT_FOCUS) * GLOB.stat_weight_mults[stat]
+		if(stat == STATKEY_SPD && LAZYACCESS(favored_stats, STATKEY_STR) > 0)
+			weights[stat] *= STAT_OPPOSED_WEIGHT
+		if(stat == STATKEY_STR && LAZYACCESS(favored_stats, STATKEY_SPD) > 0)
+			weights[stat] *= STAT_OPPOSED_WEIGHT
 		spent[stat] = 0
 	var/progress = TRUE
 	while(progress && budget > 0)
