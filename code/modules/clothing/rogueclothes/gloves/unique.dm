@@ -149,7 +149,7 @@
 /obj/item/clothing/gloves/roguetown/knuckles/blacksteel
 	name = "blacksteel knuckles"
 	desc = "Take that, taste the pain!"
-	icon_state = "bsknuckle"
+	icon_state = "bsknuckledusters"
 	max_integrity = 200
 	unarmed_bonus = 12
 	smeltresult = /obj/item/ingot/blacksteel
