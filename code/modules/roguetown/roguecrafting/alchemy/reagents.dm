@@ -386,6 +386,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	metabolization_rate = 0.1
 	toxpwr = 0
 	harmful = TRUE
+	pain = 500
 
 /datum/reagent/toxin/killersice/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(20, 0)
