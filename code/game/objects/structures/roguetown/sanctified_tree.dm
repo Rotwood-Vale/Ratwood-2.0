@@ -374,7 +374,7 @@
 
 	if(tree_data.wedding_active)
 		// Nature's Union ceremony is active — offer cancellation.
-		var/choice = tgui_alert(user, "A Nature's Union wedding ceremony is active at this tree. The Treefather's blessing currently joins two souls.\n\nCancel the wedding ceremony?", "Sanctified Tree", list("Keep Ceremony", "Cancel Ceremony"))
+		var/choice = tgui_alert(user, "A Nature's Union wedding ceremony is active at this tree. The Treefather's blessing currently joins two souls. Cancel the wedding ceremony?", "Sanctified Tree", list("Keep Ceremony", "Cancel Ceremony"))
 		if(choice == "Cancel Ceremony" && !QDELETED(src) && !QDELETED(user))
 			tree_data.wedding_active = FALSE
 			tree_data.wedding_officiant_ckey = null
@@ -385,9 +385,9 @@
 		// Show progress and only allow cancellation from the amulet menu.
 		var/text = "[tree_data.active_ritual.name] is active.\n\nOffer items by clicking the tree while holding them."
 		for(var/line in tree_data.active_ritual.get_plaintext_examine())
-			text += "[line]"
-		text += "<br>Cancel this ritual?"
-		var/choice = tgui_alert(user, text, "Sanctified Tree", list("Keep Ritual", "Cancel Ritual"))
+			text += "\n[line]"
+		text += "\n\nCancel this ritual?"
+		var/choice = alert(user, text, "Sanctified Tree", "Keep Ritual", "Cancel Ritual")
 		if(choice != "Cancel Ritual" || QDELETED(src) || QDELETED(user))
 			return
 		cancel_ritual(user)
@@ -425,7 +425,7 @@
 	var/text = "Begin [selected_ritual.name]?\n\nRequired offerings:"
 	for(var/line in selected_ritual.get_plaintext_examine())
 		text += "\n[line]"
-	var/choice = tgui_alert(user, text, "Sanctified Tree Bounty", list("Begin", "Cancel"))
+	var/choice = alert(user, text, "Sanctified Tree Bounty", "Begin", "Cancel")
 	return (choice == "Begin")
 
 /obj/structure/flora/roguetree/wise/sanctified/proc/offer_item(mob/living/user)
