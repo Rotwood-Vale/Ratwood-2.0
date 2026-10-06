@@ -620,7 +620,7 @@
 	force = 22 // 10% - This is a 8 clickCD weapon
 	max_integrity = 200
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/noc_twilight
+/obj/item/rogueweapon/huntingknife/idagger/steel/noc
 	name = "twilight fang"
 	desc = "A large blade with the profile of a rondel dagger. A rondel is not oft thrown, but this blade is unnaturally light when hurled, yet heavy and stiff when wielded.\
 	Noc's faithful find it suits them well."
