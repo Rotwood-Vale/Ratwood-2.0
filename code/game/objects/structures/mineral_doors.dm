@@ -442,10 +442,10 @@
 		else
 			return ..()
 
-/obj/structure/mineral_door/attacked_by(obj/item/I, mob/living/user)
+/obj/structure/mineral_door/attacked_by(obj/item/item, mob/living/user)
 	var/turf/hit_turf = get_turf(src)
 	if(..())
-		log_breakin(user, "struck the door with \a [I.name]")
+		log_breakin(user, "struck the door with \a [item.name]")
 	if(obj_broken || obj_destroyed)
 		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, hit_turf)
 		new_track.handle_creation(user)

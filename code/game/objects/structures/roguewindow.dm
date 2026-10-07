@@ -36,12 +36,12 @@
 /obj/structure/roguewindow/obj_destruction(damage_flag)
 	..()
 
-/obj/structure/roguewindow/attacked_by(obj/item/I, mob/living/user)
+/obj/structure/roguewindow/attacked_by(obj/item/item, mob/living/user)
 	if(..())
-		log_breakin(user, "struck the window with \a [I.name]")
+		log_breakin(user, "struck the window with \a [item.name]")
 	if(obj_broken || obj_destroyed)
 		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
-		message_admins("Window [obj_destroyed ? "destroyed" : "broken"] by [user?.real_name] using [I] [ADMIN_JMP(src)]")
+		message_admins("Window [obj_destroyed ? "destroyed" : "broken"] by [user?.real_name] using [item] [ADMIN_JMP(src)]")
 		log_admin("Window [obj_destroyed ? "destroyed" : "broken"] by [user?.real_name] at X:[src.x] Y:[src.y] Z:[src.z] in area: [get_area(src)]")
 		new_track.handle_creation(user)
 

@@ -292,10 +292,18 @@
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status
-	if(LAZYLEN(breakin_log) && isAdminObserver(user))
+	var/breakin_count = LAZYLEN(breakin_log)
+	if(breakin_count && isAdminObserver(user))
 		. += span_boldnotice("\[ADMIN\] Break-in log:")
-		for(var/line in breakin_log)
-			. += span_notice(line)
+		for(var/i in max(1, breakin_count - 4) to breakin_count)
+			. += span_notice(breakin_log[i])
+		if(breakin_count > 5)
+			. += span_notice("<a href='?src=[REF(src)];show_breakin_log=1'>Show all [breakin_count]</a>")
+
+/obj/structure/Topic(href, href_list)
+	. = ..()
+	if(href_list["show_breakin_log"] && isAdminObserver(usr))
+		usr << browse("<html><body>[jointext(breakin_log, "<br>")]</body></html>", "window=breakin_log;size=500x400")
 
 /// Records a forced-entry attempt for admin persual
 /obj/structure/proc/log_breakin(mob/user, action)
