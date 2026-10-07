@@ -37,8 +37,10 @@
 	// "m" = mammalian (canine, feline, tempest, kitsune, venard, skunk)
 	// "r" = reptilian (drake, noodle, sloog)
 	// "d" = deer
+	// "s" = saiga
 	// null = no taur-specific clothing support
 	var/taur_clothing_category = null
+	var/has_barding_tassets = TRUE
 	// Customizable colors for plate tasset overlays (like detail_color on clothing)
 	var/tasset1_color = null
 	var/tasset2_color = null
@@ -60,6 +62,46 @@
 		clip_mask = icon(icon = (clip_mask_icon || icon), icon_state = clip_mask_state)
 	if(clip_mask_legs_state)
 		clip_mask_legs = icon(icon = (clip_mask_icon || icon), icon_state = clip_mask_legs_state)
+
+/obj/item/bodypart/taur/proc/get_barding_state(obj/item/clothing/clothing)
+	if(!taur_clothing_category || !clothing)
+		return null
+	if(taur_clothing_category == "s")
+		if(istype(clothing, /obj/item/clothing/cloak/psydontabard) || istype(clothing, /obj/item/clothing/cloak/templar/psydon) || istype(clothing, /obj/item/clothing/cloak/tabard/crusader/psydon))
+			return "psydon"
+		if(istype(clothing, /obj/item/clothing/cloak/templar/astrata) || istype(clothing, /obj/item/clothing/cloak/tabard/crusader/astrata))
+			return "astrata"
+	if(istype(clothing, /obj/item/clothing/cloak/tabard))
+		return taur_clothing_category == "s" ? "caparison" : "caparison-tabard"
+	if(istype(clothing, /obj/item/clothing/cloak/stabard))
+		return "caparison"
+	switch(clothing.armor_class)
+		if(ARMOR_CLASS_LIGHT)
+			if(istype(clothing, /obj/item/clothing/suit/roguetown/armor/chainmail))
+				return "chainmail"
+			if(taur_clothing_category == "s" && istype(clothing, /obj/item/clothing/suit/roguetown/armor/gambeson))
+				return "padded"
+			return "leather"
+		if(ARMOR_CLASS_MEDIUM)
+			return "chainmail"
+		if(ARMOR_CLASS_HEAVY)
+			return "plate"
+	return null
+
+/obj/item/bodypart/taur/proc/get_barding_overlay(obj/item/clothing/clothing, worn_layer)
+	var/taur_state = get_barding_state(clothing)
+	if(!taur_state)
+		return null
+	var/mutable_appearance/barding = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "[taur_state]_[taur_clothing_category]", -worn_layer)
+	barding.pixel_x = offset_x
+	if(clothing.color && (taur_state == "padded" || istype(clothing, /obj/item/clothing/cloak)))
+		barding.color = clothing.color
+	if(taur_clothing_category == "s" && taur_state == "caparison")
+		var/mutable_appearance/detail = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "caparison-tabard_s")
+		detail.appearance_flags = RESET_COLOR
+		detail.color = clothing.get_detail_color()
+		barding.overlays += detail
+	return barding
 
 /obj/item/bodypart/taur/generate_limb_cache_key(dropped, hideaux)
 	. = ..()
@@ -243,6 +285,8 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	name = "Saiga Body"
 	offset_x = -16
 	taur_icon_state = "saiga_s"
+	taur_clothing_category = "s"
+	has_barding_tassets = FALSE
 	clip_mask_state = "clip_mask_saiga"
 
 	has_taur_color = TRUE

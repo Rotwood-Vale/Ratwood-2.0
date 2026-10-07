@@ -213,7 +213,7 @@
 	STASTR = 2
 	STASPD = 2
 
-/mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	var/obj/shapeshift_holder/ooze_death/H = locate() in src
 	if(H)
 		H.restore()

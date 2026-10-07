@@ -352,7 +352,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		newtime = base + (base * (diff2 * COOLDOWN_REDUCTION_PER_INT))
 	else
 		newtime = base
-	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
+	if(user && HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
 		newtime *= 0.75
 	return newtime
 
@@ -438,7 +438,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if((invocation_type == "whisper" || invocation_type == "shout") && ((!H.can_speak_vocal() && !(mute_allowed && HAS_TRAIT(H, TRAIT_PERMAMUTE) && !H.check_mouth_grabbed())) || !H.getorganslot(ORGAN_SLOT_TONGUE)))
+		if((invocation_type == "whisper" || invocation_type == "shout") && (((!H.can_speak_vocal() || HAS_TRAIT(H, TRAIT_GARGLE_SPEECH)) && !(mute_allowed && HAS_TRAIT(H, TRAIT_PERMAMUTE) && !H.check_mouth_grabbed())) || !H.getorganslot(ORGAN_SLOT_TONGUE)))
 			to_chat(user, span_warning("I can't get the words out!"))
 			return FALSE
 		// Spells cannot be cast using sign language (check specifically for SIGNLANG flag)
@@ -624,7 +624,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		else if(user.STAINT < SPELL_SCALING_THRESHOLD)
 			var/diff2 = SPELL_SCALING_THRESHOLD - user.STAINT
 			recharge_time = initial(recharge_time) + (initial(recharge_time) * (diff2 * COOLDOWN_REDUCTION_PER_INT))
-	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
+	if(user && HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens CD by 25%.
 		recharge_time *= 0.75
 	// If the spell was fully charged before recalculation, keep it fully charged
 	if(charge_counter >= old_recharge && old_recharge > 0)
@@ -968,7 +968,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	if((invocation_type == "whisper" || invocation_type == "shout") && isliving(user))
 		var/mob/living/living_user = user
-		if(!living_user.can_speak_vocal())
+		if(!living_user.can_speak_vocal() || HAS_TRAIT(living_user, TRAIT_GARGLE_SPEECH))
 			if(!(mute_allowed && HAS_TRAIT(user, TRAIT_PERMAMUTE)))
 				return FALSE
 			if(ishuman(user))

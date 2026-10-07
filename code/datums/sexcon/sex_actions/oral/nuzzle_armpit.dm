@@ -7,7 +7,8 @@
 	user.visible_message(span_warning("[user] moves [user.p_their()] head against [target]'s armpit..."))
 
 /datum/sex_action/armpit_nuzzle/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] nuzzles [target]'s armpit..."))
+	var/armpit_description = user.sexcon.get_armpit_description(target)
+	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] nuzzles and huffs [target]'s [armpit_description]..."))
 
 /datum/sex_action/armpit_nuzzle/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] stops nuzzling [target]'s armpit..."))
