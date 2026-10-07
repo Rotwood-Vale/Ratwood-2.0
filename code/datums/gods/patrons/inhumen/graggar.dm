@@ -12,7 +12,7 @@
 					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/call_to_slaughter 				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/blood_net 						= CLERIC_T2,
-					/obj/effect/proc_holder/spell/self/graggar_roar					= CLERIC_T2,
+					/obj/effect/proc_holder/spell/self/graggar_roar						= CLERIC_T2,
 					/obj/effect/proc_holder/spell/self/graggar_regenerate				= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/revel_in_slaughter 			= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/graggar_avatar				= CLERIC_T4,
