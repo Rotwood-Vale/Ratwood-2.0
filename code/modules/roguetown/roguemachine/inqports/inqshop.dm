@@ -83,12 +83,12 @@
 /datum/inqports/supplies/blessedbolts
 	name = "1 Quiver of Holy Water Bolts"
 	item_type = /obj/item/quiver/holybolts
-	marquescost = 1
+	marquescost = 2
 
 /datum/inqports/supplies/skullcrackerbolts
 	name = "1 Quiver of Heavy Blunt Bolts (Not for the sauterelle)"
 	item_type = /obj/item/quiver/bluntbolts
-	marquescost = 2
+	marquescost = 4
 
 /datum/inqports/supplies/heavyholybolts
 	name = "5 Blessed Heavy Bolts"
@@ -132,7 +132,7 @@
 /datum/inqports/supplies/redpotions
 	name = "3 Bottles of Red"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/redpots
-	marquescost = 1
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/redpots/Initialize(mapload)
 	. = ..()
@@ -143,7 +143,7 @@
 /datum/inqports/supplies/lifebloodvials
 	name = "3 Vials of Strong Red"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/sredvials
-	marquescost = 3
+	marquescost = 6
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/sredvials/Initialize(mapload)
 	. = ..()
@@ -154,7 +154,7 @@
 /datum/inqports/supplies/bluepotions
 	name = "3 Bottles of Blue"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/bluepots
-	marquescost = 1
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/bluepots/Initialize(mapload)
 	. = ..()
@@ -165,7 +165,7 @@
 /datum/inqports/supplies/strongbluevials
 	name = "3 Vials of Strong Blue"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials
-	marquescost = 3
+	marquescost = 6
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials/Initialize(mapload)
 	. = ..()
@@ -181,7 +181,7 @@
 /datum/inqports/supplies/smokes
 	name = "4 Smokebombs"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/smokes
-	marquescost = 2
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/smokes/Initialize(mapload)
 	. = ..()
