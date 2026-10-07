@@ -226,11 +226,19 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /turf/closed/wall/mineral/rogue/stone/unbreakable/space
 	name = "???"
 	desc = "???"
-	icon = 'icons/turf/roguefloor.dmi'
-	icon_state = "undervoid"
+	icon = 'icons/roguetown/cult/cultsprites.dmi'
+	icon_state = "cultwall"
+	smooth = SMOOTH_FALSE
 
 /turf/open/floor/rogue/underworld/space/quiet/cult
+	icon = 'icons/roguetown/cult/cultsprites.dmi'
+	icon_state = "cultfloor"
+	smooth = SMOOTH_FALSE
 	slowdown = 0
+
+/turf/open/floor/rogue/underworld/space/quiet/cult/Initialize(mapload)
+	. = ..()
+	dir = pick(GLOB.cardinals)
 
 /obj/structure/reality_rend/Initialize(mapload)
 	. = ..()

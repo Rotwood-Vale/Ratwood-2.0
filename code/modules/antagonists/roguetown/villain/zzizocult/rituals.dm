@@ -997,8 +997,8 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /obj/structure/pylon
 	name = "pylon"
 	desc = "Herein is proven the false customs of the others."
-	icon = 'icons/roguetown/maniac/creations.dmi'
-	icon_state = "creation2"
+	icon = 'icons/roguetown/cult/cultsprites.dmi'
+	icon_state = "cult_pylon"
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 250
@@ -1011,7 +1011,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	fuge = linked_fuge
 	if(fuge)
 		LAZYADD(fuge.pylons, src)
-		beam = fuge.Beam(src, time = INFINITY)
+		beam = fuge.Beam(src, "blood", 'icons/roguetown/cult/cultsprites.dmi', time = INFINITY)
 
 /obj/structure/pylon/Destroy()
 	beam?.End()
@@ -1134,7 +1134,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	fuge = linked_fuge
 	if(fuge)
 		LAZYADD(fuge.ravers, src)
-		beam = fuge.Beam(src, time = INFINITY)
+		beam = fuge.Beam(src, "blood", 'icons/roguetown/cult/cultsprites.dmi', time = INFINITY)
 
 /obj/structure/raver/Destroy()
 	beam?.End()
@@ -1200,8 +1200,9 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /turf/closed/wall/mineral/rogue/stone/space
 	name = "???"
 	desc = "???"
-	icon = 'icons/turf/roguefloor.dmi'
-	icon_state = "undervoid"
+	icon = 'icons/roguetown/cult/cultsprites.dmi'
+	icon_state = "cultwall"
+	smooth = SMOOTH_FALSE
 
 /obj/item/cultbrick
 	name = "dark shards"
@@ -1286,6 +1287,11 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	var/choice = input(user, "BUILD", "ZIZO") as null|anything in list("Wall", "Door")
 	if(!choice || !amount)
 		return
+	if(choice == "Door")
+		for(var/obj/structure/mineral_door/wood/donjon/stone/cult/D in range(2, T))
+			if(get_turf(D) != T)
+				to_chat(user, span_warning("ANOTHER DOOR IS TOO CLOSE!"))
+				return
 	if(!do_after(user, 10 SECONDS, target = T))
 		return
 	if(!amount)
@@ -1310,6 +1316,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /obj/structure/mineral_door/wood/donjon/stone/cult
 	name = "strange door"
 	desc = "What is this...? A door?"
+	icon = 'icons/roguetown/cult/cultsprites.dmi'
 	icon_state = "cult"
 	base_state = "cult"
 	over_state = "cultopen"
