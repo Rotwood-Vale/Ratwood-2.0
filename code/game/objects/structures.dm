@@ -297,7 +297,7 @@
 		for(var/line in breakin_log)
 			. += span_notice(line)
 
-/// Records a forced-entry attempt to the doors investigate log, hidden prints and the structure itself
+/// Records a forced-entry attempt for admin persual
 /obj/structure/proc/log_breakin(mob/user, action)
 	add_hiddenprint(user)
 	var/line = "[user ? key_name(user) : "something"] [action]"
