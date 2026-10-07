@@ -1,0 +1,6 @@
+author: "ophaq"
+delete-after: True
+changes:
+  - rscadd: "Tieflings get new tailmaw variants of their tails, plus the ones wild kin got."
+  - rscadd: "Tieflings can now use the mutant skin color option."
+  - rscadd: "Two new masturbation verbs for tail maws."
