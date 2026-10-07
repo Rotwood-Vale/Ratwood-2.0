@@ -2019,7 +2019,7 @@
 	else
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
 	addtimer(CALLBACK(src, PROC_REF(baothaarmor_stage2), target), 20)
-//TIME FOR THE ONE. Exclusive to ABSOLVERS NO LONGER!. Allowing conversion, deconversion and removal of rite armour. Only LUX FREAKS aka absolver and sigmata have acces to the deconversion and striping
+//TIME FOR THE ONE. Exclusive to ABSOLVERS NO LONGER!. Allows conversion, deconversion and removal of rite armour. Only LUX FREAKS aka absolver and sigmata have access to the deconversion and stripping.
 //'Lesser' expenditure allows us to have a stopgap to this, while not entirely making poultice farming useless.
 
 
@@ -2072,7 +2072,7 @@
 							psydonconversion(target, luxshield)
 		if("Admonishment")//Deconvert WWs/Vampires.
 			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
-				to_chat(user, "How am I suposed to do that? I would have to manipulate lux of another!")
+				to_chat(user, span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
 				return
 			if(!Adjacent(user))
 				return
@@ -2100,7 +2100,7 @@
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
 		if("Freedom")//Strip folks in rite armour.
 			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
-				to_chat(user, "How am I suposed to do that? I would have to manipulate lux of another!")
+				to_chat(user, span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
 				return
 			if(!Adjacent(user))
 				return
@@ -2142,7 +2142,7 @@
 			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but something stops their wrath from hurting me.")) // absolver doing the legwork
 			loc.visible_message(span_cult("The silver tears boil and evaporate but [target] stays safe in their new conviction."))
 		else
-			to_chat(target, span_danger("My former patron doesn't aprove of my conversion, but I shall ENDURE their wrath.")) // no unnatural lux abomination to save you here!
+			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but I shall ENDURE their wrath.")) // no unnatural lux abomination to save you here!
 			target.Knockdown(60)
 			to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
 			target.emote("Agony")

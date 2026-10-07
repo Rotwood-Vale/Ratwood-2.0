@@ -98,7 +98,7 @@
 	if(HAS_TRAIT(H, TRAIT_INQUISITION))
 		to_chat(H, span_notice("Your wounds are being removed by the silver string."))
 	else
-		to_chat(H, span_danger("You feel somthing grabing at your Lux, stealing parts of it!"))
+		to_chat(H, span_danger("You feel somthing grabbing at your Lux, stealing parts of it!"))
 		to_chat(H, span_notice("Your wounds seem to be vanishing."))
 	return TRUE
 
@@ -433,8 +433,8 @@
 	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
 		to_chat(user, span_notice("You feel pull on your soul as [user], ABSOLVES you of your suferring."))
 	else
-		to_chat(H, span_danger("You feel terible tear as a parts of your soul is torn away by silver threads!")) // somone just torn away somthing from your lux, that isnt calm
-
+		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // Someone just tore away something from your lux, that isn't calm  
+		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burderns to lighten."))
 	return TRUE
 
 // Weaker absolve for the Stigmata adventurer
@@ -518,6 +518,7 @@
 	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
 		to_chat(user, span_notice("You feel pull on your soul as [user], AMENDS your suferring."))
 	else
-		to_chat(H, span_danger("You feel terible tear as a part of your soul is torn away by silver thread!")) // somone just torn away somthing from your lux, that isnt calm
+		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // someone just torn away something from your lux, that isn't calm
+		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burdens to lighten."))
 	
 	return TRUE
