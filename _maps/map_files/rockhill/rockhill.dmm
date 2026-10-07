@@ -31660,12 +31660,6 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/eora)
-"gtr" = (
-/obj/structure/chair/wood/rogue/fancy{
-	pixel_y = -8
-	},
-/turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "gts" = (
 /obj/structure/table/wood{
 	icon_state = "longtable";
@@ -32674,8 +32668,7 @@
 	dir = 4
 	},
 /obj/structure/chair/wood/rogue/fancy{
-	dir = 4;
-	pixel_x = 5
+	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -68002,15 +67995,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/under/cave/goblinfort)
 "nPA" = (
-/obj/structure/closet/crate/drawer{
-	keylock = 1;
-	locked = 1;
-	lockid = "crafterguild"
-	},
-/obj/item/roguekey/crafterguild,
-/obj/item/roguekey/crafterguild,
-/obj/item/roguekey/tailor,
-/obj/item/roguekey/tailor,
+/obj/structure/fluff/clock,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "nPD" = (
@@ -71244,11 +71229,11 @@
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/under/town/basement)
 "oxS" = (
-/obj/structure/stairs{
-	dir = 1
+/obj/structure/chair/wood/rogue/fancy{
+	pixel_x = 2
 	},
-/turf/closed/wall/mineral/rogue/stonebrick/stonebricklight,
-/area/rogue/under/town/sewer)
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "oxT" = (
 /obj/structure/closet/crate/chest/crate,
 /obj/item/rogueweapon/stoneaxe/woodcut,
@@ -102898,8 +102883,7 @@
 /area/rogue/indoors/town/tavern)
 "veu" = (
 /obj/structure/chair/wood/rogue/fancy{
-	dir = 4;
-	pixel_x = 5
+	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -117132,6 +117116,8 @@
 /obj/machinery/light/roguestreet/walllamp,
 /obj/item/ingot/gold,
 /obj/item/ingot/gold,
+/obj/item/ingot/silver,
+/obj/item/ingot/silver,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "xYG" = (
@@ -117940,8 +117926,10 @@
 	locked = 1;
 	lockid = "craftermaster"
 	},
-/obj/item/ingot/silver,
-/obj/item/ingot/silver,
+/obj/item/roguekey/tailor,
+/obj/item/roguekey/tailor,
+/obj/item/roguekey/crafterguild,
+/obj/item/roguekey/crafterguild,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "ygq" = (
@@ -312097,7 +312085,7 @@ rRb
 cfF
 hpk
 rRb
-oxS
+tkl
 rRb
 nIe
 ouf
@@ -526811,10 +526799,10 @@ xHV
 dMk
 qpe
 dMk
-eie
+oxS
 haz
 lRl
-gtr
+lUI
 sco
 vnZ
 dMk
@@ -527243,10 +527231,10 @@ bzX
 hsR
 sco
 rkH
-suK
+eie
 xDO
 vka
-suK
+lUI
 sco
 ydE
 sRP
@@ -527675,10 +527663,10 @@ sco
 sco
 gAm
 hTf
-eie
+oxS
 hNH
 fpo
-gtr
+lUI
 sco
 jDY
 dMk
