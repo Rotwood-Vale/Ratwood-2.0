@@ -1,4 +1,0 @@
-author: "PPooch"
-delete-after: True
-changes:
-  - bugfix: "Grapple twisting limbs no longer rolls for crit twice."

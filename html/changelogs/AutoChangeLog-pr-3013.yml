@@ -1,4 +1,0 @@
-author: "PPooch"
-delete-after: True
-changes:
-  - bugfix: "fixed the subclass slot display, the (!) menu, and the (!!) virtue incompatibility warning, on the late join job select screen."
