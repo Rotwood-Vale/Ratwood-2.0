@@ -136,17 +136,12 @@
 	icon = 'icons/roguetown/clothing/feet.dmi'
 	icon_state = "anklets"
 	color = "#9c7373"
+	item_flags = DROPDEL
 	mob_overlay_icon = null
 
 /obj/item/storage/belt/rogue/leather/plaquegold/baotha/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-
-/obj/item/storage/belt/rogue/leather/plaquegold/baotha/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
 
 /obj/item/clothing/gloves/roguetown/chain/baotha
 	name = "baothan bracelets"
@@ -154,6 +149,7 @@
 	icon = 'icons/roguetown/clothing/feet.dmi'
 	icon_state = "anklets"
 	color = "#9c7373"
+	item_flags = DROPDEL
 	mob_overlay_icon = null
 	armor = ARMOR_ASCENDANT
 	max_integrity = ARMOR_INT_SIDE_ANTAG
@@ -163,12 +159,6 @@
 /obj/item/clothing/gloves/roguetown/chain/baotha/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-
-/obj/item/clothing/gloves/roguetown/chain/baotha/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
 
 // /obj/item/clothing/shoes/roguetown/boots/armor/baotha
 // 	name = "baothan anklets"
@@ -194,6 +184,7 @@
 	name = "baothan anklets"
 	desc = "Powerful baothan magicks protect the exposed flesh beneath."
 	color = "#9c7373"
+	item_flags = DROPDEL
 // 	mob_overlay_icon = null
 	armor = ARMOR_ASCENDANT
 	max_integrity = ARMOR_INT_SIDE_ANTAG
@@ -208,28 +199,17 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
-/obj/item/clothing/shoes/roguetown/anklets/baotha/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
-
 /obj/item/clothing/neck/roguetown/gorget/boatha
 	name = "blacksteel collar"
 	desc = "Submission to darkness."
 	icon_state = "iwolfcollaralt"
+	item_flags = DROPDEL
 	armor = ARMOR_ASCENDANT
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 
 /obj/item/clothing/neck/roguetown/gorget/boatha/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-
-/obj/item/clothing/neck/roguetown/gorget/boatha/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
 
 /obj/item/rogueweapon/whip/baotha
 	name = "Perfect Agony"
@@ -263,6 +243,7 @@
 	desc = "Submission to darkness.."
 	icon_state = "baothacoif"
 	item_state = "baothacoif"
+	item_flags = DROPDEL
 	armor = ARMOR_PADDED_GOOD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
 	body_parts_covered = NECK | HAIR | EARS | HEAD | NOSE
@@ -279,12 +260,6 @@
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "VEIL")
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/cloth_wipe (1).ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK))
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-
-/obj/item/clothing/neck/roguetown/coif/baotha/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
 
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/baotha
 	name = "Saccharine Plate Armor"
@@ -308,6 +283,7 @@
 	armor_class = ARMOR_CLASS_LIGHT
 	armor = ARMOR_PADDED_GOOD
 	color = null
+	item_flags = DROPDEL
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
 	armor_class = ARMOR_CLASS_LIGHT
 	resistance_flags = FIRE_PROOF
@@ -322,11 +298,6 @@
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "VESTMENTS")
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
-/obj/item/clothing/suit/roguetown/armor/gambeson/baotha/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	qdel(src)
 
 /obj/item/clothing/wrists/roguetown/bracers/leather/baotha
 	name = "Saccharine Cuffs"
