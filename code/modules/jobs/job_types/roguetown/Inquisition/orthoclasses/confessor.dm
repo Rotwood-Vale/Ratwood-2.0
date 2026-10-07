@@ -86,7 +86,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	cloak = /obj/item/storage/backpack/rogue/satchel/beltpack
-	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
+	wrists = /obj/item/clothing/wrists/roguetown/sheathebracers
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
@@ -95,7 +95,7 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	mask = /obj/item/clothing/mask/rogue/facemask/steel/confessor
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/neck/roguetown/psicross/silver
 	backpack_contents = list(
 		/obj/item/roguekey/inquisition = 1,
 		/obj/item/rope/inqarticles/inquirycord = 1,
@@ -103,7 +103,8 @@
 		/obj/item/clothing/head/inqarticles/blackbag = 1,
 		/obj/item/inqarticles/garrote = 1,
 		/obj/item/grapplinghook = 1,
-		/obj/item/paper/inqslip/arrival/ortho = 1
+		/obj/item/paper/inqslip/arrival/ortho = 1,
+		/obj/item/clothing/ring/signet/silver = 1
 		)
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
