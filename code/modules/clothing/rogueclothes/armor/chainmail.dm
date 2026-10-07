@@ -100,6 +100,20 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
 
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/matthios
+	name = "gilded hauberk"
+	desc = "All that glimmers is gold; yet only shining stars shalt break the mold.."
+	icon_state = "matthioshauberk"
+	item_state = "matthioshauberk"
+	armor = ARMOR_ASCENDANT
+	armor_class = ARMOR_CLASS_MEDIUM
+	peel_threshold = 5
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/matthios/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "ARMOR")
+
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient
 	name = "ancient hauberk"
 	desc = "Polished gilbranze rings and silk, woven together to form a sleeved maille-atekon. To bring the lyfeless back from decrepity, to elevate them to heights once thought unsurmountable; that is the will of Zizo, made manifest."

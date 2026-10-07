@@ -332,6 +332,19 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
 
+/obj/item/clothing/neck/roguetown/chaincoif/chainmantle/matthios
+	name = "gilded chain mantle"
+	desc = "The world is yours, as they say - yet, why doth the Gods still led us astray?"
+	icon_state = "matthioschainmantle"
+	item_state = "matthioschainmantle"
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	peel_threshold = 5
+	armor = ARMOR_ASCENDANT
+
+/obj/item/clothing/neck/roguetown/chaincoif/chainmantle/matthios/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "ARMOR")
+
 /obj/item/clothing/neck/roguetown/bevor/iron
 	name = "iron bevor"
 	desc = "A series of iron plates designed to protect the neck."

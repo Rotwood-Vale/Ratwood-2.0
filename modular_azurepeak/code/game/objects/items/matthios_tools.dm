@@ -517,10 +517,8 @@ GLOBAL_LIST_INIT(da_bubbles, list(
 	var/is_vampire = target.mind?.has_antag_datum(/datum/antagonist/vampire)
 	var/is_blood_drinker = is_vampire || HAS_TRAIT(target, TRAIT_HEMOPHAGE) || HAS_TRAIT(target, TRAIT_ORGAN_EATER)
 	if(target == user && user.zone_selected == BODY_ZONE_PRECISE_MOUTH && is_blood_drinker)
-		if(!do_after(user, 2 SECONDS, target = target))
-			return TRUE
 		if(is_vampire)
-			target.adjust_bloodpool(75)
+			target.adjust_bloodpool(100)
 			target.apply_status_effect(/datum/status_effect/buff/vitae)
 		for(var/datum/wound/wound as anything in target.get_wounds())
 			if(wound && wound.bleed_rate > 0)
@@ -529,8 +527,6 @@ GLOBAL_LIST_INIT(da_bubbles, list(
 	else
 		if(!target.get_bleed_rate())
 			to_chat(user, span_warning("[target] is not bleeding."))
-			return TRUE
-		if(!do_after(user, 2 SECONDS, target = target))
 			return TRUE
 		for(var/datum/wound/wound as anything in target.get_wounds())
 			if(wound && wound.bleed_rate > 0)
@@ -575,14 +571,16 @@ GLOBAL_LIST_INIT(da_bubbles, list(
 	required_herbs = required_herbs.Copy()
 
 /obj/item/matthios_canister/lyfestruth/freeman_truth()
-	return "The draught can be completed through herbs, mammon, or Lux, but its first offering fixes the path."
+	return "Choose one path: provide all required herbs (blood can replace at most five), offer 500 mammon, or offer one Lux. If using impure Lux, offer two and temper them with five offerings of heartblood. The first offering fixes the path."
 
 /obj/item/matthios_canister/lyfestruth/freeman_progress(mob/user)
 	if(route == "coin")
 		return "Mammon bound: [coin_value]/500."
 	if(route == "lux")
 		return "Lux: [lux_count]/1 purified; impure Lux: [impure_lux_count]/2; heartblood: [lux_blood]/5."
-	return "Herbs remaining: [required_herbs.len]. Blood can replace up to [5 - blood_uses] missing herbs."
+	if(route == "herb")
+		return "Herbs remaining: [required_herbs.len]. Blood substitutions: [blood_uses]/5."
+	return "Choose a path: herbs ([required_herbs.len] required; up to 5 can be replaced with blood), 500 mammon, or Lux (1 purified, or 2 impure plus 5 heartblood)."
 
 /obj/item/matthios_canister/lyfestruth/proc/set_route(new_route, mob/user)
 	if(route && route != new_route)
