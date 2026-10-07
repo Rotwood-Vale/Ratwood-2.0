@@ -174,13 +174,14 @@
 	outfit = /datum/outfit/job/roguetown/hand/advisor
 
 	category_tags = list(CTAG_HAND)
-	traits_applied = list(TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3)
+	traits_applied = list(TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_MAGEDEXTERITY)
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 3,
 		STATKEY_WIL = 2,
 		STATKEY_LCK = 2,
 	)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_spellpoints = 15
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
