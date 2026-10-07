@@ -339,7 +339,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	var/mob/favorite = special_person.resolve()
 	if(!istype(favorite))
-		user>.client?.verbs |= /client/proc/declare_clingy_person
+		user?.client?.verbs |= /client/proc/declare_clingy_person
 		// So we set our mark, but they are gone? They either despawned or shenanigans ensued.
 		if(!COOLDOWN_STARTED(src, lost_person))
 			COOLDOWN_START(src, lost_person, 5 MINUTES) // Enough time for you to realize you need to find a new person to cling to
