@@ -85,15 +85,15 @@
 	item_type = /obj/item/quiver/holybolts
 	marquescost = 1
 
-/datum/inqport/supplies/skullcrackerbolts
+/datum/inqports/supplies/skullcrackerbolts
 	name = "1 Quiver of Heavy Blunt Bolts (Not for the sauterelle)"
 	item_type = /obj/item/quiver/bluntbolts
 	marquescost = 2
 
-/datum/inqport/supplies/heavyholybolts
+/datum/inqports/supplies/heavyholybolts
 	name = "5 Blessed Heavy Bolts"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/heavyholybolts
-	marquescost = 3
+	marquescost = 5
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/heavyholybolts/Initialize(mapload)
 	. = ..()
@@ -103,10 +103,10 @@
 	new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy(src)
 	new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy(src)
 
-/datum/inqport/supplies/silverblessedslingbullet
+/datum/inqports/supplies/silverblessedslingbullet
 	name = "10 Silver Blessed Psysling Bullets & Sling"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/silverblessedslingbullet
-	marquescost = 4 //this shit hurts a surprising amount
+	marquescost = 5 //this shit hurts a surprising amount
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/silverblessedslingbullet/Initialize(mapload)
 	. = ..()
@@ -247,9 +247,9 @@
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/mutegas/Initialize(mapload)
 	. = ..()
-	new obj/item/impact_grenade/smoke/mute_gas(src)
-	new obj/item/impact_grenade/smoke/mute_gas(src)
-	new obj/item/impact_grenade/smoke/mute_gas(src)
+	new /obj/item/impact_grenade/smoke/mute_gas(src)
+	new /obj/item/impact_grenade/smoke/mute_gas(src)
+	new /obj/item/impact_grenade/smoke/mute_gas(src)
 
 /datum/inqports/supplies/bullion
 	name = "6 Blessed Silver Bullion"
