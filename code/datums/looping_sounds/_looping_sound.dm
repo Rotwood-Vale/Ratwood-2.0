@@ -71,12 +71,14 @@
 	var/use_sound_tokens = FALSE
 	///The sound token instance for this looping sound.
 	var/datum/sound_token/sound_token_instance
+	/// Last successful direct mob send, reused for volume updates without querying the client
+	var/sound/direct_sound
 	///Opt-out of native sound repeat even if this loop would otherwise qualify for it. Relevant if you need to know timings about when the loop ends for example.
 	var/never_native_repeat = FALSE
 	///Whether we're currently using native sound.repeat instead of re-firing on the SSsound_loops timer.
 	var/native_repeat_active = FALSE
 
-/// Deviation from TG's argument order: _channel stays in slot 4, where weather passes CHANNEL_WEATHER positionally
+/// Keeps _channel as the fourth positional argument for existing weather callers
 /datum/looping_sound/New(
 	_parent,
 	start_immediately = FALSE,
@@ -132,6 +134,7 @@
 		timer_id = null
 	loop_started = FALSE
 	native_repeat_active = FALSE
+	direct_sound = null
 
 	if(reserved_channel)
 		sound_channel = null
@@ -141,9 +144,9 @@
 /**
  * The proc that handles starting the actual core sound loop.
  *
- * The first sound_loop() call gets world.time, where TG passes nothing. With start_time null the
- * max_loops guard reads world.time >= the loop duration, true in any round past that many
- * deciseconds, so a max_loops loop such as rat_alarm would stop before playing once.
+ * The initial sound_loop() call needs REALTIMEOFDAY: a null start time makes max_loops compare the
+ * current clock against the duration alone and can stop before the first sound. Use the same clock
+ * as the client-time timers.
  */
 /datum/looping_sound/proc/start_sound_loop()
 	loop_started = TRUE
@@ -153,9 +156,8 @@
 		if(max_loops)
 			timer_id = addtimer(CALLBACK(src, PROC_REF(stop)), mid_length * max_loops, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
 		return
-	// world.time on this first call too. See the proc doc
-	sound_loop(world.time)
-	timer_id = addtimer(CALLBACK(src, PROC_REF(sound_loop), world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
+	sound_loop(REALTIMEOFDAY)
+	timer_id = addtimer(CALLBACK(src, PROC_REF(sound_loop), REALTIMEOFDAY), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
 
 /**
  * A simple proc handling the looping of the sound itself.
@@ -164,7 +166,7 @@
  * * start_time - The time at which the `mid_sounds` started being played (so we know when to stop looping).
  */
 /datum/looping_sound/proc/sound_loop(start_time)
-	if(max_loops && world.time >= start_time + mid_length * max_loops)
+	if(max_loops && REALTIMEOFDAY >= start_time + mid_length * max_loops)
 		stop()
 		return
 	// If we have a timer, we're varying mid length, and this is happening while we're runnin mid_sounds
@@ -192,22 +194,30 @@
 	audio_index = 0
 
 /**
- * Sets the loop's volume mid-flight, for weather severity and for re-pricing after a slider change.
+ * Changes the loop's volume and updates active token or direct-mob playback.
  *
- * Token loops re-send at the new volume. Direct mob loops adjust their channel in place. Any other
- * loop takes it on its next play.
+ * Direct mob loops reuse their last sound datum, preserving pitch and spatial settings without
+ * SoundQuery(). Stopping or changing the parent clears that datum. Other loops apply the volume on
+ * their next play.
  */
 /datum/looping_sound/proc/set_volume(new_volume)
 	volume = new_volume
 	if(sound_token_instance)
 		sound_token_instance.set_volume(new_volume)
 		return
-	if(direct && ismob(parent) && sound_channel)
+	if(direct && ismob(parent) && sound_channel && direct_sound?.channel == sound_channel)
 		var/mob/mob_parent = parent
 		var/datum/preferences/listener_prefs = mob_parent.client?.prefs
-		// The first send went through playsound_local, its sliders and its cap of 100, so the update
-		// has to as well
-		mob_parent.update_channel_volume(sound_channel, min(listener_prefs ? listener_prefs.at_overall(new_volume * listener_prefs.mastervol * 0.01) : new_volume, 100))
+		// Match the sliders and volume cap used by the initial playsound_local() send
+		var/sent_volume = min(listener_prefs ? listener_prefs.at_overall(new_volume * listener_prefs.mastervol * 0.01) : new_volume, 100)
+		direct_sound.volume = sent_volume
+		direct_sound.status |= SOUND_UPDATE
+		if(sent_volume)
+			direct_sound.status &= ~SOUND_MUTE
+		else
+			direct_sound.status |= SOUND_MUTE
+		if(mob_parent.client)
+			SEND_SOUND(mob_parent, direct_sound)
 
 /**
  * The proc that handles actually playing the sound.
@@ -227,11 +237,10 @@
 			sound_token_instance.update_sound(soundfile, TRUE, repeat_sound)
 		else
 			sound_token_instance = new /datum/sound_token(parent, soundfile, SOUND_RANGE + extra_range, volume_override || volume, falloff_exponent, falloff_distance || SOUND_DEFAULT_FALLOFF_DISTANCE, _delete_on_end = delete_when_finished, _repeating = repeat_sound)
-			if(QDELETED(sound_token_instance)) // The channel pool ran dry and refused politely
+			if(QDELETED(sound_token_instance))
 				sound_token_instance = null
 			else
-				// Configure BEFORE listeners are gathered: start_tracking() is what sends the
-				// sound out, so anything set after it would arrive a beat late (and re-send)
+				// Configure before start_tracking(), which immediately sends to initial listeners
 				configure_token(sound_token_instance)
 				sound_token_instance.start_tracking()
 		return
@@ -241,15 +250,14 @@
 	sound_to_play.channel = sound_channel || SSsounds.random_available_channel()
 	sound_to_play.volume = volume_override || volume //Use volume as fallback if theres no override
 	if(direct)
-		// Mob-directed loops go through playsound_local rather than TG's bare SEND_SOUND, so the
-		// volume sliders and the listener's area environment apply
+		// Mob-directed loops need playsound_local() to apply preferences and the area environment
 		if(ismob(parent))
 			var/mob/mob_parent = parent
-			mob_parent.playsound_local(null, null, volume_override || volume, vary, frequency, channel = sound_to_play.channel, S = sound_to_play)
+			if(mob_parent.playsound_local(null, null, volume_override || volume, vary, frequency, channel = sound_to_play.channel, S = sound_to_play))
+				direct_sound = sound_to_play
 		else
 			SEND_SOUND(parent, sound_to_play)
 	else
-		// A loop out of every client's earshot skips playsound() on a grid probe
 		if(!any_possible_listeners())
 			return
 		playsound(
@@ -272,19 +280,17 @@
 	return
 
 /**
- * Over-approximate test for "could playsound() possibly reach anyone from here".
+ * Returns whether a spatial-grid cell within playback range contains a possible listener.
  *
- * Answers at spatial-grid-cell granularity and skips the per-turf distance filter, so
- * anyone actually in range always passes. The range is SOUND_RANGE plus extra_range, what
- * playsound() reaches.
+ * The check includes whole cells, so false positives are allowed. playsound() performs the exact
+ * range check.
  */
 /datum/looping_sound/proc/any_possible_listeners()
 	var/turf/source_turf = get_turf(parent)
 	if(!source_turf)
 		return FALSE
 
-	// playsound() treats an omitted extrarange as 1 and keeps 0 as 0, so match that or we probe a
-	// different box than it reaches
+	// Match playsound(): omitted extra_range defaults to one. Explicit zero stays zero
 	var/probe_range = SOUND_RANGE + (isnull(extra_range) ? 1 : extra_range)
 
 	if(SSspatial_grid.any_client_in_range(source_turf, probe_range))
@@ -344,7 +350,7 @@
 		tree[i - 1] -= list(branch) // Remove the empty list
 	return .
 
-/// TG stops descending on isfile(), but several subtypes here hold /sound datums too
+/// Accepts both file resources and sound datums as leaves in mid_sounds
 /datum/looping_sound/proc/is_playable_sound(candidate)
 	return isfile(candidate) || istype(candidate, /sound)
 
@@ -362,7 +368,8 @@
 /datum/looping_sound/proc/can_native_repeat()
 	if(!use_sound_tokens || never_native_repeat)
 		return FALSE
-	if(chance || mid_length_vary || each_once || in_order)
+	var/varies_per_play = chance || mid_length_vary || each_once || in_order
+	if(varies_per_play)
 		return FALSE
 	return !!resolve_single_sound()
 
@@ -379,6 +386,7 @@
 
 /// Stops sound playing on current channel, if specified
 /datum/looping_sound/proc/stop_current()
+	direct_sound = null
 	QDEL_NULL(sound_token_instance)
 	if(!sound_channel || !ismob(parent))
 		return
@@ -392,6 +400,8 @@
 
 /// A simple proc to change who our parent is set to, also handling registering and unregistering the QDELETING signals on the parent.
 /datum/looping_sound/proc/set_parent(new_parent)
+	if(parent != new_parent)
+		direct_sound = null
 	if(parent)
 		UnregisterSignal(parent, COMSIG_QDELETING)
 	parent = new_parent
@@ -406,6 +416,5 @@
 /datum/looping_sound/proc/handle_parent_del(datum/source)
 	SIGNAL_HANDLER
 	set_parent(null)
-	// Deviation from TG, which leaves an orphaned loop idling on its timer with play()
-	// bailing every fire: a loop whose source is gone has nothing left to say
+	// Stop the timer when its source is deleted. There is nothing left to play
 	stop()

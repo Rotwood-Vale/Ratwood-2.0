@@ -208,7 +208,7 @@
 	if(drilltime >= drillgoal)
 		new /obj/item/coveter(loc)
 		loc.visible_message(span_warning("The [src] hisses open, <b>finally broken.</b>"))
-		playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE)
+		playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE, sample_rate = 48000)
 		icon_state = "[initial(icon_state)]_empty"
 		var/full_drain = F.balance
 		budget2change(full_drain, null)

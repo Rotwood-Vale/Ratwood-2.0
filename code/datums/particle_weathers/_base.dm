@@ -312,9 +312,11 @@
 /datum/particle_weather/proc/weather_sound_effect(mob/living/L, outside = TRUE)
 	var/datum/looping_sound/currentSound = currentSounds[L]
 	if(currentSound)
-		// SET VOLUME, through the setter, so a severity change reaches the playing channel
+		// Only changed severity needs a channel update. This runs every pass for every listener
 		if(scale_vol_with_severity)
-			currentSound.set_volume(initial(currentSound.volume) * severityMod())
+			var/severity_volume = initial(currentSound.volume) * severityMod()
+			if(severity_volume != currentSound.volume)
+				currentSound.set_volume(severity_volume)
 		if(!currentSound.is_active()) //don't restart already playing sounds
 			currentSound.start()
 		return
@@ -329,7 +331,7 @@
 	if(tempSound)
 		currentSound = new tempSound(L, FALSE, TRUE, CHANNEL_WEATHER)
 		currentSounds[L] = currentSound
-		// SET VOLUME, plain assignment is fine here, nothing is playing yet
+		// Nothing is playing yet, so initial volume needs no channel update
 		if(scale_vol_with_severity)
 			currentSound.volume = initial(currentSound.volume) * severityMod()
 		currentSound.start()
@@ -337,8 +339,8 @@
 /datum/particle_weather/proc/stop_weather_sound_effect(mob/living/L)
 	var/datum/looping_sound/currentSound = currentSounds[L]
 	if(currentSound)
-		currentSounds -= L // Removes the key, since a nulled one stays as a dead entry per mob
-		qdel(currentSound) // Destroy() stops it
+		currentSounds -= L // Remove the key as well as deleting the loop, so the map retains no dead listener entry
+		qdel(currentSound)
 
 /datum/particle_weather/proc/weather_message(mob/living/L)
 	messagedMobs[L] = world.time + 30 SECONDS //Chunky delay - this spams otherwise - Severity changes and going indoors resets this timer

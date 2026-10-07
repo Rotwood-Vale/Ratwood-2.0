@@ -122,9 +122,7 @@
 	)
 
 /datum/intent/Destroy()
-	// chargedloop holds a typepath until update_chargeloop() or on_charge_start() instantiates it,
-	// so istype rather than a truthiness check
-	if(istype(chargedloop, /datum/looping_sound))
+	if(istype(chargedloop))
 		QDEL_NULL(chargedloop)
 	if(mob_light)
 		QDEL_NULL(mob_light)
@@ -361,9 +359,12 @@
 	noaa = TRUE
 	pointer = 'icons/effects/mousemice/human_give.dmi'
 
-// The spell charge loops below are token driven, so they re-pan and fade as the listener moves.
-// on_charge_start() starts one and on_mouse_up() stops it, so a token lives only while a charge is
-// held. Native repeat keeps a charge that outlasts its file from falling silent
+/**
+ * Positional spell-charge loops, active from on_charge_start() until on_mouse_up().
+ *
+ * Tokens track movement during a charge. Native repeat keeps playback active when the charge
+ * outlasts its clip.
+ */
 
 /datum/looping_sound/invokegen
 	mid_sounds = list('sound/magic/charging.ogg')

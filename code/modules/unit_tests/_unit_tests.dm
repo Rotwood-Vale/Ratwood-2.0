@@ -98,6 +98,7 @@
 #include "point_ambience_tile_cache.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
+#include "sound_playback.dm"
 #include "spawn_humans.dm"
 #include "species_whitelists.dm"
 #include "subsystem_init.dm"

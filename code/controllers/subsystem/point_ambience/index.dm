@@ -158,6 +158,17 @@
 	bucket += source
 
 /**
+ * Registers a source only while active, on a turf and not being deleted. Otherwise unregisters it.
+ *
+ * Safe to call from repeated state changes and Moved(), including movement during deletion.
+ */
+/atom/movable/proc/update_point_ambience_source(category_path, active, volume_scale)
+	if(active && !QDELETED(src) && isturf(loc))
+		SSpoint_ambience.register_source(src, category_path, volume_scale = volume_scale)
+	else
+		SSpoint_ambience.unregister_source(src, category_path)
+
+/**
  * Takes a source out of the index and silences it for anyone currently hearing it.
  *
  * Safe on something never registered, the common case for a mapped emitter that was never lit.

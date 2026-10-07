@@ -159,7 +159,7 @@
 	if(SStreasury.discretionary_fund.balance <50)
 		new /obj/item/coveter(loc)
 		loc.visible_message(span_warning("The Crown grinds to a halt as the last of the treasury spills from the Nervelock!"))
-		playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE)
+		playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE, sample_rate = 48000)
 		icon_state = "atm"
 		drilling = FALSE
 		has_reported = FALSE
@@ -167,7 +167,7 @@
 	if(mammonsiphoned >199) // The cap variable for siphoning.
 		new /obj/item/coveter(loc)
 		loc.visible_message(span_warning("Maximum withdrawal reached! The Nervelock weeps."))
-		playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE)
+		playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE, sample_rate = 48000)
 		icon_state = "atm_broken"
 		drilled = TRUE
 		drilling = FALSE
@@ -276,7 +276,7 @@
 							if(prob(needed_cycles*2))
 								drain_effect_fast(H)
 							if(i == needed_cycles)	//Last cycle.
-								playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE)
+								playsoundtoken(src, 'sound/misc/DrillDone.ogg', 70, SOUND_RANGE + 1, vary = TRUE, sample_rate = 48000)
 								is_active = FALSE
 								to_chat(H,span_info("<font color ='red'>You feel very drained.</font>"))
 								send_ooc_note("A parasite of the Freefolk has siphoned [H.real_name] of [sum] from the Nervemaster's veins.", job = list("Grand Duke", "Steward", "Clerk"))

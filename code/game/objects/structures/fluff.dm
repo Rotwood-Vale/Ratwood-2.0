@@ -603,7 +603,6 @@
 
 /obj/structure/fluff/clock/Initialize(mapload)
 	. = ..()
-	// Point ambience, so the tick fades as you cross the room and a wall stops it
 	SSpoint_ambience.register_source(src, /datum/point_ambience_category/clock)
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -614,16 +613,14 @@
 
 /obj/structure/fluff/clock/obj_break(damage_flag)
 	icon_state = "b[initial(icon_state)]"
-	// A broken clock does not tick
 	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/clock)
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 	..()
 
-/// Dragged, so the index learns the new turf, as the lights do. A broken clock stays silent
+/// Updates the clock's indexed position after movement, keeping broken clocks silent
 /obj/structure/fluff/clock/Moved(atom/OldLoc, Dir)
 	. = ..()
-	if(!obj_broken)
-		SSpoint_ambience.register_source(src, /datum/point_ambience_category/clock)
+	update_point_ambience_source(/datum/point_ambience_category/clock, !obj_broken)
 
 /obj/structure/fluff/clock/attack_right(mob/user)
 	handle_special_items_retrieval(user, src)
@@ -734,7 +731,6 @@
 
 /obj/structure/fluff/wallclock/Initialize(mapload)
 	. = ..()
-	// As the grandfather clock above. The /l, /r and /vampire subtypes inherit this
 	SSpoint_ambience.register_source(src, /datum/point_ambience_category/clock)
 
 /obj/structure/fluff/wallclock/obj_break(damage_flag)

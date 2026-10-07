@@ -10,7 +10,6 @@
 #define MEMBER_PUBLIC			(1<<4)
 #define INTENT_STYLE			(1<<5)
 #define MIDROUND_ANTAG			(1<<6)
-// Keep at bit 7, existing savefiles already have it set for most players
 #define SOUND_UPLOADED_SONGS	(1<<7)
 #define SOUND_SHIP_AMBIENCE		(1<<8)
 #define SOUND_PRAYERS			(1<<9)
@@ -36,21 +35,12 @@
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_UPLOADED_SONGS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|SOUND_DEATH_ALARM|TOGGLE_FULLSCREEN|ROLEPLAY_ADS)
 
 /**
- * Point ambience, per listener: hearths, fountains, rivers, sconces.
+ * Point ambience preferences stored separately from the main preference flags.
  *
- * Bits of prefs.point_ambience_toggles, a var of their own since `toggles` has no bit to spare.
- *
- * INVERTED, like the rattles in `toggles`, because the var loads straight out of the savefile with no
- * migration: a bit meaning "enabled" reads as 0 for everyone who already has a savefile, which would
- * mute every one of them. Unset is on, which is what every existing player and every new one gets.
+ * These flags disable features when set, so existing saves with a zero value keep ambience enabled.
  */
 #define SOUND_DISABLE_POINT_AMBIENCE	(1<<0)
-/**
- * Just the torch category: wall sconces, STANDING firebowls and a torch in your own hand.
- *
- * Not hearths, campfires or floor firebowls, which are the fire category and keep playing. It is the
- * most numerous kind and the one most likely to be found grating, so it turns off alone.
- */
+/// Disables ambience from sconces, standing torches and held torches
 #define SOUND_DISABLE_TORCH_AMBIENCE	(1<<1)
 
 //Chat toggles

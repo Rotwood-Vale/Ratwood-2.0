@@ -5,7 +5,7 @@
 	fueluse = 60 MINUTES
 	bulb_colour = "#f9ad80"
 	bulb_power = 1
-	var/datum/looping_sound/soundloop = null // No rogue light sets a type here, point_ambience_category below is their sound
+	var/datum/looping_sound/soundloop = null
 	pass_flags = LETPASSTHROW
 	flags_1 = NODECONSTRUCT_1
 	var/no_refuel = FALSE // For special holder that don't actually refuel
@@ -13,30 +13,17 @@
 	var/crossfire = TRUE
 	var/can_damage = FALSE
 	var/heat_level = 0
-	/**
-	 * The point ambience category this light sounds as while lit, a typepath. Null is silent.
-	 *
-	 * While lit, the light sits in SSpoint_ambience's index for that category and sounds to nearby
-	 * clients. It owns no loop, timer or channel of its own.
-	 */
+	/// Point ambience category type path used while lit, or null for silence
 	var/point_ambience_category
-	/**
-	 * A MULTIPLE of the category's volume, where a kind of fire is not the size of the default.
-	 *
-	 * Null or 1 takes the category's. A multiple rather than a number, so the offset survives the
-	 * category being retuned and the floor stays a share of what this resolves to.
-	 */
+	/// Category-volume multiplier for this light. null or one leaves volume unchanged.
+	/// Relative scaling preserves its level and proportional volume floor when the category is retuned
 	var/point_ambience_volume_scale
 
-/// Membership in SSpoint_ambience's index tracks (on && a category && on a turf). Called
-/// from every site that changes one of those. Safe to call redundantly
+/// Registers lit, categorized lights directly on a turf. Unregisters all others. Safe to call
+/// repeatedly
 /obj/machinery/light/rogue/proc/update_point_ambience()
-	if(!point_ambience_category)
-		return
-	if(on && !QDELETED(src) && isturf(loc))
-		SSpoint_ambience.register_source(src, point_ambience_category, volume_scale = point_ambience_volume_scale)
-	else
-		SSpoint_ambience.unregister_source(src, point_ambience_category)
+	if(point_ambience_category)
+		update_point_ambience_source(point_ambience_category, on, point_ambience_volume_scale)
 
 /obj/machinery/light/rogue/proc/update_turf_heat()
 	if(!heat_level)
@@ -110,8 +97,8 @@
 		playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
 	..()
 	update_icon()
-	// The base burn_out() flips on without ever reaching update(), so the index needs its own poke
-	// here. Covers fuel running out, rain and every extinguish() path
+	// burn_out() changes the light state without calling update(), so refresh index membership
+	// here
 	update_point_ambience()
 
 /obj/machinery/light/rogue/update_icon()
@@ -245,7 +232,7 @@
 				set_light(0)
 				update_icon()
 				update_turf_heat()
-				// This path snuffs without going through update(), so the index needs its own poke
+				// This extinguishing path bypasses update(). Refresh index membership explicitly
 				update_point_ambience()
 				if(soundloop)
 					soundloop.stop()
