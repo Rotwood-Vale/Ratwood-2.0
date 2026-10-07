@@ -63,7 +63,6 @@
 	//a door name a skilled artisan can make
 	var/doorname = null
 
-/// Catches the break itself, so fire and simple mobs leave a line too. The strike above it names the culprit
 /obj/structure/mineral_door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
 	var/was_broken = obj_broken
 	. = ..()
