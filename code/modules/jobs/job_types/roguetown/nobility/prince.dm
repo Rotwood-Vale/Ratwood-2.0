@@ -103,6 +103,7 @@
 	outfit = /datum/outfit/job/roguetown/heir/bookworm
 	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_MAGEARMOR, TRAIT_GOODWRITER, TRAIT_MAGEDEXTERITY) //As it turns out, Battlemage Princess DID become a prevalent problem.
 	category_tags = list(CTAG_HEIR)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_stats = list(
 		STATKEY_STR = -1,
 		STATKEY_INT = 2,
