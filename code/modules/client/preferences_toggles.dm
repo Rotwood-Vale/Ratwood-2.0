@@ -144,6 +144,7 @@
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
+		list("id" = "oviposition", "label" = "Enable Oviposition Content", "enabled" = !!owner.prefs.oviposition, "desc" = "Others can lay eggs inside you! Also allows you to see egg-bellies."),
 		list("id" = "free_use_default", "label" = "Toggle Free Use Default", "enabled" = !!owner.prefs.free_use_default, "desc" = "Start with Free Use enabled by default. You can manually disable it at any point in the ERP panel."),
 		list("id" = "facial_branding", "label" = "Enable Facial Branding", "enabled" = !!owner.prefs.facial_brands, "desc" = "Allow others to brand your face."),
 		list("id" = "sensitive_branding", "label" = "Enable Sensitive Branding", "enabled" = !!owner.prefs.sensitive_brands, "desc" = "Allow others to brand your genital & breast organs (if present)."),
@@ -256,6 +257,8 @@
 				owner.toggle_extreme_ERP()
 			if("edging")
 				owner.toggle_edging()
+			if("oviposition")
+				owner.toggle_oviposition()
 			if("free_use_default")
 				owner.toggle_free_use_default()
 			if("facial_branding")
@@ -614,6 +617,18 @@
 			to_chat(src, "Genital and body hair descriptor colors are now visible.")
 		else
 			to_chat(src, "Genital and body hair descriptor colors are no longer visible.")
+
+/client/verb/toggle_oviposition()
+	set category = "Options"
+	set name = "Toggle Oviposition Content"
+	set hidden = 1
+	if(prefs)
+		prefs.oviposition = !prefs.oviposition
+		prefs.save_preferences()
+		if(prefs.oviposition)
+			to_chat(src, "Oviposition content enabled.")
+		else
+			to_chat(src, "Oviposition content disabled.")
 
 /client/verb/toggle_edging() // Toggles edging content in the ERP panel, for psydonites who clearly can't ENDURE.
 	set category = "Options"

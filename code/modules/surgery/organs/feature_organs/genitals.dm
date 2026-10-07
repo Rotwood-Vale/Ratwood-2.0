@@ -162,6 +162,16 @@
 	//TODO add a way to trigger lactating when pregnancy happens
 	return TRUE
 
+/obj/item/organ/eggs
+	name = "eggs"
+	desc = "Horrible, slimy eggs."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "ovieggs"
+	dropshrink = 0.8
+	zone = BODY_ZONE_PRECISE_GROIN
+	slot = ORGAN_SLOT_EGGS
+	var/quantity = 1
+
 /obj/item/organ/breasts
 	name = "breasts"
 	icon_state = "breasts"

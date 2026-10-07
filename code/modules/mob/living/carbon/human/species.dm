@@ -858,6 +858,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(I.blocksound)
 					if(I.blocksound == H.wear_armor.blocksound)
 						return FALSE
+			var/obj/item/organ/eggs/eggs = H.getorganslot(ORGAN_SLOT_EGGS) // don't question what this is for...!
+			if(eggs && eggs.quantity >= 10)
+				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_SHIRT) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
