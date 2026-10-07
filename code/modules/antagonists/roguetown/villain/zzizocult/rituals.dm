@@ -867,7 +867,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	for(var/obj/structure/reality_rend/R as anything in GLOB.zizo_reality_rends)
 		if(R.z != center.z)
 			continue
-		if(get_dist(R, center) <= 25)
+		if(get_dist(R, center) <= 50)
 			near_rend = TRUE
 			break
 	if(!near_rend)

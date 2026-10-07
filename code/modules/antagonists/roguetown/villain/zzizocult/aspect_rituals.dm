@@ -253,7 +253,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	playsound(src, 'sound/foley/breaksound.ogg', 50, TRUE)
 	return ..()
 
-#define ZIZO_GATE_PULL_RANGE 25
+#define ZIZO_GATE_PULL_RANGE 50
 
 /datum/status_effect/buff/zizo_gate_sense
 	id = "zizo_gate_sense"
