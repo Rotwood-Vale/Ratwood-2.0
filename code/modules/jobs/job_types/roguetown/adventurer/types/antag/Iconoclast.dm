@@ -73,6 +73,7 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)	//Starts off maxed out.
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raze)
 
 /datum/outfit/job/roguetown/bandit/iconoclast/post_equip(mob/living/carbon/human/H)
 	. = ..()

@@ -210,6 +210,8 @@
 #define TRAIT_HORDE "Anointed" //Graggarites also recognize each other
 #define TRAIT_DEPRAVED "Fallen" //Baothans also recognize each other
 #define TRAIT_MATTHIOS_EYES	"Eyes of Matthios" //Examine to see the most expensive item someone has (Replaces shitty-appraisal)
+#define TRAIT_GILDED_SIGHT "gilded_sight"
+#define TRAIT_SILENT_LOCKPICK "silent_lockpick"
 
 //ASCENDANT GOD CURSES
 

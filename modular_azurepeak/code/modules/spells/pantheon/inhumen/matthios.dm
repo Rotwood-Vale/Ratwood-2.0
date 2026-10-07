@@ -454,6 +454,118 @@
 	stressadd = 3
 	desc = span_red("That horrid sigil! How dare they?!")
 
+// Granted directly to the Iconoclast; this is not part of Matthios' general miracle list.
+/obj/effect/proc_holder/spell/invoked/raze
+	name = "Raze"
+	desc = "Exhale a cone of stolen fyre before you, scorching enemies and igniting the ground. Damage increases with Holy skill. These flames can turn unworthy corpses to ash."
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	overlay_state = "breath"
+	sound = 'sound/misc/bamf.ogg'
+	chargedloop = /datum/looping_sound/invokefire
+	recharge_time = 2 MINUTES
+	chargedrain = 0
+	chargetime = 1 SECONDS
+	releasedrain = 30
+	no_early_release = TRUE
+	movement_interrupt = TRUE
+	charging_slowdown = 1
+	invocation_type = "none"
+	associated_skill = /datum/skill/magic/holy
+	devotion_cost = 90
+	miracle = TRUE
+	range = 3
+	var/delay = 12
+	var/strike_delay = 2
+	var/damage = 20
+	var/cone_range = 3
+
+/obj/effect/proc_holder/spell/invoked/raze/cast(list/targets, mob/living/user = usr)
+	. = ..()
+	var/turf/target_turf = get_turf(targets[1])
+	var/turf/source_turf = get_turf(user)
+	if(!target_turf || !source_turf || target_turf.z != source_turf.z || target_turf == source_turf)
+		return FALSE
+
+	var/direction = get_dir(source_turf, target_turf)
+	if(!direction)
+		return FALSE
+	var/left_dir
+	var/right_dir
+	switch(direction)
+		if(NORTH, SOUTH)
+			left_dir = WEST
+			right_dir = EAST
+		if(EAST, WEST)
+			left_dir = NORTH
+			right_dir = SOUTH
+		if(NORTHEAST, SOUTHWEST)
+			left_dir = NORTHWEST
+			right_dir = SOUTHEAST
+		if(NORTHWEST, SOUTHEAST)
+			left_dir = NORTHEAST
+			right_dir = SOUTHWEST
+
+	for(var/distance in 1 to cone_range)
+		var/turf/center = source_turf
+		for(var/i in 1 to distance)
+			center = get_step(center, direction)
+		if(!center)
+			continue
+
+		var/list/current_wave = list(center)
+		for(var/offset in 1 to distance - 1)
+			var/turf/left_turf = center
+			var/turf/right_turf = center
+			for(var/j in 1 to offset)
+				left_turf = get_step(left_turf, left_dir)
+				right_turf = get_step(right_turf, right_dir)
+			if(left_turf)
+				current_wave |= left_turf
+			if(right_turf)
+				current_wave |= right_turf
+
+		var/tile_delay = delay + (strike_delay * (distance - 1))
+		for(var/turf/affected_turf in current_wave)
+			if(!(affected_turf in view(source_turf)))
+				continue
+			new /obj/effect/temp_visual/trap/firebreath(affected_turf, tile_delay)
+			addtimer(CALLBACK(src, PROC_REF(ignite), affected_turf, user), tile_delay)
+
+	user.visible_message(span_yellow("[user] sharply exhales, breathing out a cloud of fyre!"))
+	user.Immobilize(15)
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/raze/proc/ignite(turf/damage_turf, mob/living/caster)
+	if(!damage_turf)
+		return
+	new /obj/effect/temp_visual/firebreath_actual(damage_turf)
+	playsound(damage_turf, 'sound/magic/fireball.ogg', 50, TRUE)
+
+	var/total_damage = damage + caster.get_skill_level(associated_skill)
+	for(var/mob/living/target in damage_turf)
+		if(target == caster)
+			continue
+		target.adjustFireLoss(total_damage)
+		to_chat(target, span_userdanger("You're scorched by flames!"))
+		if(target.stat == DEAD && (!target.mind || (!target.key && !target.get_ghost(FALSE, TRUE))))
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, dust)), 2 SECONDS)
+
+	new /obj/effect/hotspot(damage_turf)
+
+/obj/effect/temp_visual/trap/firebreath
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "impact_bullet"
+	duration = 10 SECONDS
+	layer = MASSIVE_OBJ_LAYER
+
+/obj/effect/temp_visual/firebreath_actual
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "2"
+	light_outer_range = 2
+	light_color = "#FF6A00"
+	duration = 1 SECONDS
+
 // T4: The Free-God's draconic wrath
 
 /obj/effect/proc_holder/spell/self/wingsoffreedom

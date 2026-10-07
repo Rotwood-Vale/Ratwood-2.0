@@ -810,6 +810,7 @@
 #include "code\datums\gods\patrons\inhumen\_inhumen.dm"
 #include "code\datums\gods\patrons\inhumen\baotha.dm"
 #include "code\datums\gods\patrons\inhumen\graggar.dm"
+#include "modular_azurepeak\code\game\objects\items\matthios_tools.dm"
 #include "code\datums\gods\patrons\inhumen\matthios.dm"
 #include "code\datums\gods\patrons\inhumen\zizo.dm"
 #include "code\datums\helper_datums\events.dm"
