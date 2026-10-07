@@ -304,6 +304,156 @@
 
 			return
 
+// T3: Rally Matthios' followers around the People's Banner
+
+/obj/effect/proc_holder/spell/invoked/twilight_commieflag
+	name = "The People's Banner"
+	desc = "Summon a Matthian banner and rally your comrades. While the banner is held, you and nearby allies resist slowdown and gain the will to fight."
+	clothes_req = FALSE
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	overlay_state = "peoplesbanner"
+	invocations = list(
+		"Comrades, rally around the standard of the Father of Freedom!",
+		"We will wrest our freedom from their cold hands!",
+	)
+	invocation_type = "shout"
+	chargedrain = 0
+	chargetime = 2 SECONDS
+	releasedrain = 30
+	chargedloop = /datum/looping_sound/invokeascendant
+	associated_skill = /datum/skill/magic/holy
+	devotion_cost = 90
+	miracle = TRUE
+	recharge_time = 5 MINUTES
+	sound = list('sound/magic/whiteflame.ogg')
+	no_early_release = TRUE
+	movement_interrupt = TRUE
+	antimagic_allowed = TRUE
+	charging_slowdown = 3
+	glow_color = "#FFD700"
+	glow_intensity = GLOW_INTENSITY_LOW
+	conjured_item_glow = "#FFD700"
+
+/obj/effect/proc_holder/spell/invoked/twilight_commieflag/cast(list/targets, mob/living/user = usr)
+	if(user.get_num_arms(FALSE) < 1 || (user.get_inactive_held_item() && user.get_active_held_item()))
+		to_chat(user, span_notice("I need a free hand to hold the People's Banner!"))
+		revert_cast(user)
+		return FALSE
+
+	dispel_conjured_item()
+	var/obj/item/rogueweapon/spear/matthios_standard/banner = new(user.drop_location())
+	user.put_in_hands(banner)
+	ADD_TRAIT(banner, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	var/skill = user.get_skill_level(/datum/skill/magic/holy)
+	banner.wdefense += skill
+	banner.wdefense_dynamic += skill
+	banner.force = min(5 * skill, 20)
+	banner.update_force_dynamic()
+	set_conjured_item(banner)
+	return TRUE
+
+/obj/item/rogueweapon/spear/matthios_standard
+	name = "people's banner"
+	desc = "The banner of those who stand against tyranny and oppression, bearing the sigil of Matthios, Father of Freedom."
+	force = 0
+	force_wielded = 0
+	wdefense = 1
+	possible_item_intents = list(/datum/intent/spear/thrust)
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon_state = "standard"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/rogueweapon/spear/matthios_standard/Initialize(mapload)
+	. = ..()
+	for(var/mob/living/carbon/human/H as anything in SSspatial_grid.orthogonal_range_search(src, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 7))
+		if(get_dist(src, H) > 7)
+			continue
+		if(istype(H.patron, /datum/patron/inhumen/matthios))
+			H.apply_status_effect(/datum/status_effect/buff/twilight_peoplesbanner)
+		else
+			H.apply_status_effect(/datum/status_effect/debuff/twilight_peoplesbanner)
+
+/obj/item/rogueweapon/spear/matthios_standard/attack_self(mob/living/user)
+	to_chat(user, span_notice("You begin dispelling the [src.name]..."))
+	if(do_after(user, 3 SECONDS, src))
+		qdel(src)
+
+/atom/movable/screen/alert/status_effect/buff/twilight_peoplesbanner
+	name = "The People's Banner"
+	desc = "The sigil of Matthios inspires me to fight on!"
+	icon_state = "peoplesbanner_buff"
+	icon = 'icons/mob/actions/matthiosmiracles.dmi'
+
+/datum/status_effect/buff/twilight_peoplesbanner
+	id = "twilight_peoplesbanner"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/twilight_peoplesbanner
+	effectedstats = list(STATKEY_WIL = 3, STATKEY_SPD = 2)
+	tick_interval = 5 SECONDS
+
+/datum/status_effect/buff/twilight_peoplesbanner/process()
+	. = ..()
+	var/preserve = FALSE
+	for(var/mob/living/carbon/human/H as anything in SSspatial_grid.orthogonal_range_search(owner, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 7))
+		if(get_dist(owner, H) > 7)
+			continue
+		if(istype(H.get_inactive_held_item(), /obj/item/rogueweapon/spear/matthios_standard) || istype(H.get_active_held_item(), /obj/item/rogueweapon/spear/matthios_standard))
+			preserve = TRUE
+			break
+	if(!preserve)
+		owner.remove_status_effect(/datum/status_effect/buff/twilight_peoplesbanner)
+
+/datum/status_effect/buff/twilight_peoplesbanner/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, id)
+	owner.add_stress(/datum/stressevent/twilight_peoplesbanner_good)
+
+/datum/status_effect/buff/twilight_peoplesbanner/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, id)
+	owner.remove_stress(/datum/stressevent/twilight_peoplesbanner_good)
+
+/atom/movable/screen/alert/status_effect/debuff/twilight_peoplesbanner
+	name = "The People's Banner"
+	desc = "That horrid sigil! How dare they?!"
+	icon_state = "peoplesbanner_debuff"
+	icon = 'icons/mob/actions/matthiosmiracles.dmi'
+
+/datum/status_effect/debuff/twilight_peoplesbanner
+	id = "twilight_peoplesbanner_debuff"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/twilight_peoplesbanner
+	tick_interval = 5 SECONDS
+
+/datum/status_effect/debuff/twilight_peoplesbanner/process()
+	. = ..()
+	var/preserve = FALSE
+	for(var/mob/living/carbon/human/H as anything in SSspatial_grid.orthogonal_range_search(owner, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 7))
+		if(get_dist(owner, H) > 7)
+			continue
+		if(istype(H.get_inactive_held_item(), /obj/item/rogueweapon/spear/matthios_standard) || istype(H.get_active_held_item(), /obj/item/rogueweapon/spear/matthios_standard))
+			preserve = TRUE
+			break
+	if(!preserve)
+		owner.remove_status_effect(/datum/status_effect/debuff/twilight_peoplesbanner)
+
+/datum/status_effect/debuff/twilight_peoplesbanner/on_apply()
+	. = ..()
+	owner.add_stress(/datum/stressevent/twilight_peoplesbanner_bad)
+
+/datum/status_effect/debuff/twilight_peoplesbanner/on_remove()
+	. = ..()
+	owner.remove_stress(/datum/stressevent/twilight_peoplesbanner_bad)
+
+/datum/stressevent/twilight_peoplesbanner_good
+	timer = 999 MINUTES
+	stressadd = -3
+	desc = span_green("The sigil of Matthios inspires me to fight on!")
+
+/datum/stressevent/twilight_peoplesbanner_bad
+	timer = 999 MINUTES
+	stressadd = 3
+	desc = span_red("That horrid sigil! How dare they?!")
+
 // T4: The Free-God's draconic wrath
 
 /obj/effect/proc_holder/spell/self/wingsoffreedom
