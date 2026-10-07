@@ -48,6 +48,8 @@
 	var/mindless_attach = TRUE
 	// Whether it makes a visible message / has a do_after.
 	var/suppressed = FALSE
+	var/pierce_armor = FALSE
+	var/instant_apply = FALSE
 
 /obj/item/natural/worms/leech/Initialize(mapload)
 	. = ..()
@@ -55,6 +57,15 @@
 	leech_lore()
 	if(drainage)
 		START_PROCESSING(SSobj, src)
+
+/obj/item/natural/worms/leech/proc/fall_off()
+	if(QDELETED(src) || !is_embedded)
+		return
+	var/obj/item/bodypart/bp = loc
+	if(istype(bp))
+		bp.remove_embedded_object(src)
+	else if(host)
+		host.simple_remove_embedded_object(src)
 
 /obj/item/natural/worms/leech/update_icon()
 	. = ..()
@@ -170,11 +181,11 @@
 		var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting)
 			return
-		if(!get_location_accessible(H, check_zone(user.zone_selected)))
+		if(!pierce_armor && !get_location_accessible(H, check_zone(user.zone_selected)))
 			to_chat(user, span_warning("Something in the way."))
 			return
 		var/used_time = (70 - (user.get_skill_level(/datum/skill/misc/medicine) * 10))/2
-		if(!suppressed)
+		if(!instant_apply)
 			if(!do_mob(user, H, used_time))
 				return
 		if(!H)

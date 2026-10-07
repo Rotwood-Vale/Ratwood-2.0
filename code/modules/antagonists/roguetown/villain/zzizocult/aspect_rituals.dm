@@ -1,6 +1,8 @@
 GLOBAL_LIST_EMPTY(zizo_portals)
 GLOBAL_LIST_EMPTY(gate_targets)
 GLOBAL_LIST_EMPTY(cult_robes)
+GLOBAL_LIST_EMPTY(zizo_reality_rends)
+GLOBAL_LIST_EMPTY(zizo_fuges)
 
 GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/servantry/convert, /datum/ritual/servantry/sacrifice,
@@ -13,7 +15,6 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/fleshcrafting/fleshmend/greater, /datum/ritual/fleshcrafting/darkeyes,
 	/datum/ritual/fleshcrafting/nopain, /datum/ritual/fleshcrafting/immortality,
 	/datum/ritual/transmutation/summonarmor, /datum/ritual/transmutation/summonweapon,
-	/datum/ritual/transmutation/summonfuge,
 	/datum/ritual/transmutation/summonpylon, /datum/ritual/transmutation/summonraver,
 	/datum/ritual/transmutation/propaganda, /datum/ritual/servantry/sleepcurse,
 	/datum/ritual/strand/dream_jaunt, /datum/ritual/strand/strandsend,
@@ -233,6 +234,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /obj/structure/reality_rend/Initialize(mapload)
 	. = ..()
+	GLOB.zizo_reality_rends += src
 	var/turf/center = get_turf(src)
 	for(var/turf/T in range(radius, center))
 		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
@@ -243,12 +245,88 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 			T.ChangeTurf(/turf/open/floor/rogue/underworld/space/quiet/cult, flags = CHANGETURF_IGNORE_AIR)
 
 /obj/structure/reality_rend/Destroy()
+	GLOB.zizo_reality_rends -= src
 	for(var/turf/T in turf_data)
 		T.ChangeTurf(turf_data[T], flags = CHANGETURF_IGNORE_AIR)
 	turf_data.Cut()
 	visible_message(span_danger("Lux fills the barren stone and returns lyfe to the land!"))
 	playsound(src, 'sound/foley/breaksound.ogg', 50, TRUE)
 	return ..()
+
+#define ZIZO_GATE_PULL_RANGE 25
+
+/datum/status_effect/buff/zizo_gate_sense
+	id = "zizo_gate_sense"
+	duration = -1
+	tick_interval = 15 SECONDS
+	alert_type = null
+
+/datum/status_effect/buff/zizo_gate_sense/tick()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/obj/structure/reality_rend/nearest_rend
+	var/nearest_rend_dist = ZIZO_GATE_PULL_RANGE
+	for(var/obj/structure/reality_rend/R as anything in GLOB.zizo_reality_rends)
+		if(R.z != H.z)
+			continue
+		var/d = get_dist(H, R)
+		if(d <= nearest_rend_dist)
+			nearest_rend = R
+			nearest_rend_dist = d
+	if(!nearest_rend)
+		H.remove_status_effect(/datum/status_effect/buff/zizo_gate_pull)
+		return
+	var/datum/status_effect/buff/zizo_gate_pull/pull = H.has_status_effect(/datum/status_effect/buff/zizo_gate_pull)
+	if(!pull)
+		pull = H.apply_status_effect(/datum/status_effect/buff/zizo_gate_pull)
+	pull.target_rend = nearest_rend
+
+/datum/status_effect/buff/zizo_gate_pull
+	id = "zizo_gate_pull"
+	duration = -1
+	needs_processing = FALSE
+	alert_type = /atom/movable/screen/alert/status_effect/buff/zizo_gate_pull
+	var/obj/structure/reality_rend/target_rend
+
+/atom/movable/screen/alert/status_effect/buff/zizo_gate_pull
+	name = "UNREAL WORLD"
+	desc = "THE REALMS BLEED."
+
+/atom/movable/screen/alert/status_effect/buff/zizo_gate_pull/handle_click(location, control, params)
+	. = ..()
+	var/datum/status_effect/buff/zizo_gate_pull/pull = attached_effect
+	if(!pull || QDELETED(pull.target_rend))
+		return
+	var/obj/structure/reality_rend/rend = pull.target_rend
+	var/atom/dest = rend
+	if(GLOB.zizo_fuges.len)
+		var/choice = tgui_input_list(mob_viewer, "TRANSPORT?", "THE PATH BACK", list("Reality Rend", "Fuge"))
+		if(!choice)
+			return
+		if(choice == "Fuge")
+			dest = GLOB.zizo_fuges[1]
+	to_chat(mob_viewer, span_notice("I AM TRANSPORTING! ANYONE I GRAB SHALL COME WITH!"))
+	var/poo = new /obj/effect/temp_visual/opengate/fivesec(get_turf(mob_viewer))
+	playsound(mob_viewer, 'sound/villain/littlescary2.ogg', 60, TRUE)
+	if(!do_after(mob_viewer, 10 SECONDS, target = mob_viewer))
+		qdel(poo)
+		return
+	if(QDELETED(dest) || QDELETED(rend) || QDELETED(mob_viewer) || !isliving(mob_viewer))
+		return
+	if(mob_viewer.z != rend.z || get_dist(mob_viewer, rend) > ZIZO_GATE_PULL_RANGE)
+		to_chat(mob_viewer, span_warning("TOO FAR!"))
+		return
+	var/mob/living/L = mob_viewer
+	var/mob/living/grabbed = L.pulling
+	if(!isliving(grabbed) || !grabbed.Adjacent(L))
+		grabbed = null
+	do_teleport(L, get_turf(dest), 1, asoundin = 'sound/magic/blink.ogg')
+	to_chat(L, span_notice("Reality folds around me."))
+	if(grabbed)
+		do_teleport(grabbed, get_turf(L), 1, asoundin = 'sound/magic/blink.ogg')
+
+#undef ZIZO_GATE_PULL_RANGE
 
 /datum/ritual/servantry/aspect
 	name = "Open Gate"
@@ -346,6 +424,10 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	if(gate_count == 1)
 		to_chat(user, span_userdanger("SHE DEMANDS A SACRIFICE FOR THE NEXT GATE."))
 		print_gate_sacrifice_info(user)
+		GLOB.zizo_researchable |= /datum/ritual/transmutation/summonfuge
+		if(user.mind)
+			user.mind.zizo_researched |= /datum/ritual/transmutation/summonfuge
+			to_chat(user, span_boldnotice("I CAN NOW TRANSMUTE A FUGE."))
 
 	if(target && !is_zizo(target))
 		absorb_lux(target, get_turf(target), FALSE)

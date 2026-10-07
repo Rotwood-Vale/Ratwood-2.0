@@ -690,6 +690,8 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	drainage = 0
 	blood_sucking = 0
 	suppressed = TRUE
+	pierce_armor = TRUE
+	instant_apply = TRUE
 	embedding = list(
 		"embed_chance" = 100,
 		"embedded_unsafe_removal_time" = 0,
@@ -697,6 +699,10 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		"embedded_fall_chance" = 0,
 		"embedded_bloodloss"= 0,
 	)
+
+/obj/item/natural/worms/leech/propaganda/on_embed(obj/item/bodypart/bp)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(fall_off)), 30 SECONDS)
 
 /obj/item/natural/worms/leech/propaganda/on_embed_life(mob/living/user, obj/item/bodypart/bodypart)
 	. = ..()
@@ -727,6 +733,52 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 				"I will butcher the Ten like Necra butchered Psydon!", \
 				"Snuff out the beating hearts of Eora!"))
 		V.add_stress(/datum/stressevent/leechcult)
+
+/datum/ritual/transmutation/silencerleech
+	name = "Silencing Leech"
+	desc = "Transmute a leech to silence the voice of whoever you attach it to."
+	center_requirement = /obj/item/natural/worms/leech
+	n_req = /obj/item/paper
+	s_req = /obj/item/natural/feather
+	research_cost = 2
+
+/datum/ritual/transmutation/silencerleech/invoke(mob/living/user, turf/center)
+	new /obj/item/natural/worms/leech/silencer(center)
+	to_chat(user, span_notice("A leech to steal their voice."))
+
+/obj/item/natural/worms/leech/silencer
+	name = "muzzling leech"
+	icon_state = "leech"
+	drainage = 0
+	blood_sucking = 0
+	pierce_armor = TRUE
+	instant_apply = TRUE
+	embedding = list(
+		"embed_chance" = 100,
+		"embedded_unsafe_removal_time" = 5 SECONDS,
+		"embedded_pain_chance" = 0,
+		"embedded_fall_chance" = 0,
+		"embedded_bloodloss"= 0,
+	)
+
+/obj/item/natural/worms/leech/silencer/on_embed(obj/item/bodypart/bp)
+	. = ..()
+	if(host)
+		ADD_TRAIT(host, TRAIT_MUTE, "silencer_leech")
+		to_chat(host, span_userdanger("MY VOICE GOES STILL!"))
+	addtimer(CALLBACK(src, PROC_REF(fall_off)), 2 MINUTES)
+
+/obj/item/natural/worms/leech/silencer/forceMove(atom/newloc)
+	. = ..()
+	if(!is_embedded && host)
+		REMOVE_TRAIT(host, TRAIT_MUTE, "silencer_leech")
+		host = null
+
+/obj/item/natural/worms/leech/silencer/Destroy()
+	if(host)
+		REMOVE_TRAIT(host, TRAIT_MUTE, "silencer_leech")
+		host = null
+	return ..()
 
 /datum/ritual/transmutation/invademind
 	name = "Invade Mind"
@@ -803,13 +855,33 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/transmutation/summonfuge
 	name = "Summon Fuge"
-	desc = "Conjure a machine to pull items in from other realms. Requires a dark crystal."
-	center_requirement = /obj/item/necro_relics/necro_crystal
-	center_desc = "a dark crystal"
+	desc = "Conjure a machine to pull items in from other realms. Must be raised near an opened gate."
 	is_cultist_ritual = TRUE
-	research_cost = 5
+	research_cost = 0
 
 /datum/ritual/transmutation/summonfuge/invoke(mob/living/user, turf/center)
+	if(GLOB.zizo_fuges.len)
+		to_chat(user, span_warning("THERE CAN ONLY BE ONE."))
+		return
+	var/near_rend = FALSE
+	for(var/obj/structure/reality_rend/R as anything in GLOB.zizo_reality_rends)
+		if(R.z != center.z)
+			continue
+		if(get_dist(R, center) <= 25)
+			near_rend = TRUE
+			break
+	if(!near_rend)
+		to_chat(user, span_warning("MUST BE CLOSER TO A GATE."))
+		return
+	to_chat(user, span_notice("The rite begins. Remain still."))
+	var/poo = new /obj/effect/temp_visual/opengate(center)
+	playsound(user, 'sound/villain/littlescary.ogg', 100, TRUE)
+	if(!do_after(user, 10 SECONDS))
+		qdel(poo)
+		return
+	if(GLOB.zizo_fuges.len)
+		to_chat(user, span_warning("THERE CAN ONLY BE ONE."))
+		return
 	var/datum/effect_system/spark_spread/S = new(center)
 	S.set_up(1, 1, center)
 	S.start()
@@ -839,6 +911,8 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		list("Madman Blade (Noise)", /obj/item/rogueweapon/sword/long/noise, 90 SECONDS, "noise", TRUE),
 		list("Slave Knife (Blood)", /obj/item/rogueweapon/huntingknife/idagger/steel/blood, 90 SECONDS, "blood", TRUE),
 		list("Astrata-Touched Dagger (Pitch)", /obj/item/rogueweapon/huntingknife/idagger/steel/pitch, 90 SECONDS, "pitch", TRUE),
+		list("Accursed Leech", /obj/item/natural/worms/leech/propaganda, 40 SECONDS, null, FALSE),
+		list("Muzzling Leech", /obj/item/natural/worms/leech/silencer, 40 SECONDS, null, FALSE),
 	)
 
 /obj/structure/fuge/attack_hand(mob/living/user)
@@ -877,6 +951,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /obj/structure/fuge/Initialize(mapload)
 	. = ..()
+	GLOB.zizo_fuges += src
 	var/turf/center = get_turf(src)
 	for(var/turf/T in range(radius, center))
 		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
@@ -887,6 +962,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 			T.ChangeTurf(/turf/open/floor/rogue/underworld/space/quiet/cult, flags = CHANGETURF_IGNORE_AIR)
 
 /obj/structure/fuge/Destroy()
+	GLOB.zizo_fuges -= src
 	for(var/obj/structure/pylon/P as anything in pylons.Copy())
 		qdel(P)
 	pylons = null
@@ -944,12 +1020,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	fuge = null
 	return ..()
 
-/obj/structure/pylon/proc/pick_target()
-	var/list/weighted = get_zizo_weighted_targets()
-	if(!weighted.len)
-		return
-	return pickweight(weighted)
-
 /obj/structure/pylon/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -959,10 +1029,15 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(busy)
 		to_chat(user, span_warning("WORKING! WAIT!!!"))
 		return
-	var/mob/living/carbon/human/target = pick_target()
-	if(!target)
+	var/obj/item/natural/worms/leech/remnant = user.get_active_held_item()
+	if(!istype(remnant) || !remnant.fed_from)
+		to_chat(user, span_warning("I NEED A LEECH THAT HAS FED ON SOMEONE."))
+		return
+	var/mob/living/carbon/human/target = remnant.fed_from
+	if(QDELETED(target) || target.stat == DEAD)
 		to_chat(user, span_warning("CAN'T FIND ANYONE."))
 		return
+	qdel(remnant)
 	busy = TRUE
 	var/datum/status_effect/debuff/pylon_drain/drain = target.apply_status_effect(/datum/status_effect/debuff/pylon_drain)
 	drain.pylon = src

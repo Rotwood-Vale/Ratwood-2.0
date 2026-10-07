@@ -34,11 +34,14 @@
 	var/mob/living/M = mob_override || owner.current
 	for(var/trait in innate_traits)
 		ADD_TRAIT(M, trait, "zizocultist")
+	M.apply_status_effect(/datum/status_effect/buff/zizo_gate_sense)
 
 /datum/antagonist/zizocultist/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	for(var/trait in innate_traits)
 		REMOVE_TRAIT(M, trait, "zizocultist")
+	M.remove_status_effect(/datum/status_effect/buff/zizo_gate_sense)
+	M.remove_status_effect(/datum/status_effect/buff/zizo_gate_pull)
 
 /datum/antagonist/zizocultist/on_gain()
 	. = ..()
