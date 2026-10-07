@@ -28,6 +28,152 @@
 		target.apply_status_effect(/datum/status_effect/debuff/call_to_slaughter)	//Debuffs non-inhumens/psydonians
 	return TRUE
 
+//Roar of the Gorebound Star - frightens nearby enemies, making their dodges unsteady.
+/obj/effect/proc_holder/spell/self/graggar_roar
+	name = "Roar of the Gorebound Star"
+	desc = "Unleash a terrifying warcry that weakens nearby enemies' will. Those who dodge while afraid are knocked to the ground."
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	overlay_state = "fear"
+	recharge_time = 3 MINUTES
+	invocations = list("COWER BEFORE THE GOREBOUND STAR!")
+	invocation_type = "shout"
+	sound = 'sound/magic/graggar_rage.ogg'
+	releasedrain = 30
+	miracle = TRUE
+	devotion_cost = 50
+	cast_without_targets = TRUE
+
+/obj/effect/proc_holder/spell/self/graggar_roar/cast(list/targets, mob/living/user = usr)
+	for(var/mob/living/carbon/target in view(3, get_turf(user)))
+		if(target == user)
+			continue
+		target.apply_status_effect(STATUS_EFFECT_GRAGGAR_FEAR)
+	return TRUE
+
+#define GRAGGAR_FEAR_FILTER "graggar_fear"
+
+/atom/movable/screen/alert/status_effect/debuff/graggar_fear
+	name = "Graggar's Terror"
+	desc = "A primal fear saps your will. Dodging an attack will send you sprawling."
+	icon_state = "fear"
+
+/datum/status_effect/debuff/graggar_fear
+	id = "graggar_fear"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/graggar_fear
+	effectedstats = list(STATKEY_WIL = -2)
+	duration = 15 SECONDS
+	tick_interval = 5 SECONDS
+
+/datum/status_effect/debuff/graggar_fear/tick()
+	if(prob(20))
+		owner.emote("scream")
+
+/datum/status_effect/debuff/graggar_fear/on_apply()
+	. = ..()
+	owner.add_filter(GRAGGAR_FEAR_FILTER, 2, list("type" = "outline", "color" = "#8B0000", "alpha" = 120, "size" = 2))
+
+/datum/status_effect/debuff/graggar_fear/on_remove()
+	owner.remove_filter(GRAGGAR_FEAR_FILTER)
+	return ..()
+
+#undef GRAGGAR_FEAR_FILTER
+
+//Berserk Body - trade strength and will for repeated healing.
+/obj/effect/proc_holder/spell/self/graggar_regenerate
+	name = "Berserk Body"
+	desc = "Grants temporary health regeneration at the cost of strength, will, and devotion."
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	overlay_state = "regenerate"
+	glow_color = COLOR_PATRON_GRAGGAR
+	glow_intensity = GLOW_INTENSITY_LOW
+	releasedrain = 10
+	chargedrain = 0
+	chargetime = 0
+	chargedloop = /datum/looping_sound/invokeascendant
+	sound = 'sound/foley/gross.ogg'
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = FALSE
+	invocation_type = "none"
+	recharge_time = 1 MINUTES
+	devotion_cost = 0
+	miracle = TRUE
+	human_req = TRUE
+
+/obj/effect/proc_holder/spell/self/graggar_regenerate/cast(list/targets, mob/living/carbon/human/user = usr)
+	. = ..()
+	playsound(get_turf(user), 'sound/magic/haste.ogg', 80, TRUE, soundping = TRUE)
+	if(user.has_status_effect(STATUS_EFFECT_GRAGGAR_REGENERATE))
+		user.remove_status_effect(STATUS_EFFECT_GRAGGAR_REGENERATE)
+		return TRUE
+
+	user.emote("warcry")
+	user.visible_message(span_danger("[user] mutters an incantation as their skin begins to regenerate."))
+	user.apply_status_effect(STATUS_EFFECT_GRAGGAR_REGENERATE)
+	return TRUE
+
+/obj/effect/proc_holder/spell/self/graggar_regenerate/start_recharge()
+	var/mob/living/user = ranged_ability_user || action?.owner
+	if(user?.has_status_effect(STATUS_EFFECT_GRAGGAR_REGENERATE))
+		recharge_time = 0
+		charge_counter = 0
+		last_process_time = world.time
+		START_PROCESSING(SSfastprocess, src)
+		return
+
+	recharge_time = initial(recharge_time)
+	return ..()
+
+/atom/movable/screen/alert/status_effect/buff/graggar_regenerate
+	name = "Berserk Body"
+	desc = "My flesh regrows, my bones mend, and my muscles recover at the cost of strength and will."
+	icon_state = "fire"
+
+/datum/status_effect/buff/graggar_regenerate
+	id = "graggar_regenerate"
+	examine_text = "<font color='red'>SUBJECTPRONOUN flesh regrows!</font>"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/graggar_regenerate
+	effectedstats = list(STATKEY_WIL = -3, STATKEY_STR = -3)
+	duration = 6 SECONDS
+	tick_interval = 5 SECONDS
+	var/last_water = 0
+
+/datum/status_effect/buff/graggar_regenerate/tick()
+	var/mob/living/carbon/human/user = owner
+	var/skill = user.get_skill_level(/datum/skill/magic/holy)
+	var/cost = 50
+	switch(skill)
+		if(6)
+			cost = 45
+		if(5)
+			cost = 40
+		if(4)
+			cost = 35
+		if(3)
+			cost = 30
+		if(2)
+			cost = 25
+
+	if(!user.devotion || user.devotion.devotion < cost)
+		to_chat(user, span_warning("I do not have enough devotion to sustain this regeneration!"))
+		return
+
+	user.devotion.update_devotion(-cost)
+	to_chat(user, span_purple("I lose [cost] devotion!"))
+	user.adjustBruteLoss(-5 * skill)
+	user.adjustFireLoss(-5 * skill)
+	user.heal_wounds(3 * skill)
+	if(last_water + 10 SECONDS <= world.time)
+		last_water = world.time
+		if(skill >= 3)
+			user.reagents.add_reagent(/datum/reagent/water, 3 * skill)
+	for(var/i in 1 to 3)
+		var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal_blood(get_turf(user))
+		heal_effect.color = "#bc0909"
+
+	user.apply_status_effect(STATUS_EFFECT_GRAGGAR_REGENERATE)
+
 //Unholy Grasp - Turns the viscera in your hand into a net made of gore.
 /obj/effect/proc_holder/spell/self/blood_net
 	name = "Unholy Grasp"

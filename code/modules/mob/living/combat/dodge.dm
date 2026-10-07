@@ -57,6 +57,8 @@
 	if(do_dodge(attacker, turfy))
 		flash_fullscreen("blackflash2")
 		attacker.aftermiss()
+		if(has_status_effect(STATUS_EFFECT_GRAGGAR_FEAR))
+			Knockdown(20)
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_MAGEARMOR))
 		if(magearmor == 0)
