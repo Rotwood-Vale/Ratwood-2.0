@@ -13,6 +13,8 @@
 	var/climb_offset = 0 //offset up when climbed
 	var/mob/living/structureclimber
 	var/hammer_repair
+	/// Forced-entry lines shown to admins on examine, oldest first
+	var/list/breakin_log
 //	move_resist = MOVE_FORCE_STRONG
 
 /obj/structure/Initialize(mapload)
@@ -180,9 +182,9 @@
 		if(EXPLODE_HEAVY)
 			hard_cap = min(round(max_integrity * 0.25), 20) //some shit has 50 hps and some shit like doors 1500. I dont want one bomb to nuke 10000 windows around coz its annoying
 		if(EXPLODE_LIGHT)
-			hard_cap = min(round(max_integrity * 0.10), 10) 
+			hard_cap = min(round(max_integrity * 0.10), 10)
 
-	var/total_damage = round(CLAMP(brute_loss + extra_integrity, 0, hard_cap)) 
+	var/total_damage = round(CLAMP(brute_loss + extra_integrity, 0, hard_cap))
 	if(total_damage > 0 && !QDELETED(src))
 		take_damage(total_damage, BRUTE, "blunt", 0)
 
@@ -290,6 +292,17 @@
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status
+	if(LAZYLEN(breakin_log) && isAdminObserver(user))
+		. += span_boldnotice("\[ADMIN\] Break-in log:")
+		for(var/line in breakin_log)
+			. += span_notice(line)
+
+/// Records a forced-entry attempt to the doors investigate log, hidden prints and the structure itself
+/obj/structure/proc/log_breakin(mob/user, action)
+	add_hiddenprint(user)
+	var/line = "[user ? key_name(user) : "something"] [action]"
+	investigate_log(line, INVESTIGATE_DOORS)
+	LAZYADD(breakin_log, "[station_time_timestamp()] - [line]")
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	if(max_integrity)

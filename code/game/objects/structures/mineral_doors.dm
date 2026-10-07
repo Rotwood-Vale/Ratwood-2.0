@@ -1,9 +1,6 @@
 //NOT using the existing /obj/machinery/door type, since that has some complications on its own, mainly based on its
 //machineryness
 
-/// How many break-in lines a door keeps for admin examine before the oldest is dropped
-#define DOOR_BREAKIN_LOG_MAX 30
-
 /obj/structure/mineral_door
 	name = "metal door"
 	density = TRUE
@@ -65,8 +62,6 @@
 	var/list/resident_advclass
 	//a door name a skilled artisan can make
 	var/doorname = null
-	/// Forced-entry lines shown to admins on examine, oldest first
-	var/list/breakin_log
 
 /// Catches the break itself, so fire and simple mobs leave a line too. The strike above it names the culprit
 /obj/structure/mineral_door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
@@ -74,15 +69,6 @@
 	. = ..()
 	if(obj_broken && !was_broken)
 		log_breakin(null, "was broken open")
-
-/// Records a forced-entry attempt to the door investigate log, the door's hidden prints and the door itself
-/obj/structure/mineral_door/proc/log_breakin(mob/user, action)
-	add_hiddenprint(user)
-	var/line = "[user ? key_name(user) : "something"] [action]"
-	investigate_log(line, INVESTIGATE_DOORS)
-	LAZYADD(breakin_log, "[station_time_timestamp()] - [line]")
-	if(length(breakin_log) > DOOR_BREAKIN_LOG_MAX)
-		breakin_log.Cut(1, 2)
 
 /obj/structure/mineral_door/onkick(mob/user)
 	if(isSwitchingStates)
@@ -398,10 +384,6 @@
 				. += span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish repairs.")
 		if(repair_state == 1)
 			. += span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish repairs.")
-	if(LAZYLEN(breakin_log) && isAdminObserver(user))
-		. += span_boldnotice("\[ADMIN\] Break-in log:")
-		for(var/line in breakin_log)
-			. += span_notice(line)
 
 
 
