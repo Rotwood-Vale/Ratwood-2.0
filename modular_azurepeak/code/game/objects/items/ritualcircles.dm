@@ -2033,9 +2033,6 @@
 			target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)	
 		if("Saccharine Plate Armor")
 			target.equipOutfit(/datum/outfit/job/roguetown/baothalightarmor)
-			if(HAS_TRAIT(target, TRAIT_RITUALIST))
-				ADD_TRAIT(target, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-				REMOVE_TRAIT(target, TRAIT_HEAVYARMOR, null)
 	if(!weapon_choice)
 		weapon_choice = "Perfect Agony"
 	switch(weapon_choice)
