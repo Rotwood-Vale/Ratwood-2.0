@@ -65,7 +65,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raze)
-			if("Golden Serpent")
+			if("Golden Serpent") // Pure Pugilist no dodge expert, and unable to use any and all kind of weapons PURE UNARMED.
 				head = /obj/item/clothing/head/roguetown/headband/monk
 				mask = /obj/item/clothing/mask/rogue/eyepatch
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
