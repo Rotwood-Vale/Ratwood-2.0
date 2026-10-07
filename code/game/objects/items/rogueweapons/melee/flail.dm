@@ -361,6 +361,7 @@
 	wdefense = 7 //on par with blacksteel version, i've seen this thing get broken far to often
 	max_integrity = 350 // 50+ compared to steel, on par with silver blessed
 	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
+	unenchantable = TRUE
 
 /obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
 	. = ..()
