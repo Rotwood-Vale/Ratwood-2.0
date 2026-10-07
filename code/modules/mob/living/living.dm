@@ -585,7 +585,8 @@
 	if(M.buckled)
 		return //don't make them change direction or offset them if they're buckled into something.
 	if(M.dir != turn(get_dir(M,src), 180))
-		M.setDir(get_dir(M, src))
+		if(!((cmode || M.cmode) && M.grab_state < GRAB_AGGRESSIVE))
+			M.setDir(get_dir(M, src))
 	var/offset = 0
 	switch(grab_state)
 		if(GRAB_PASSIVE)
@@ -596,19 +597,34 @@
 			offset = GRAB_PIXEL_SHIFT_NECK
 		if(GRAB_KILL)
 			offset = GRAB_PIXEL_SHIFT_NECK
-	switch(get_dir(M, src))
-		if(NORTH)
-			M.set_mob_offsets("pulledby", 0, 0+offset)
-			M.layer = MOB_LAYER+0.05
-		if(SOUTH)
-			M.set_mob_offsets("pulledby", 0, 0-offset)
-			M.layer = MOB_LAYER-0.05
-		if(EAST)
-			M.set_mob_offsets("pulledby", 0+offset, 0)
-			M.layer = MOB_LAYER
-		if(WEST)
-			M.set_mob_offsets("pulledby", 0-offset, 0)
-			M.layer = MOB_LAYER
+	if((cmode || M.cmode) && M.grab_state < GRAB_AGGRESSIVE)
+		switch(get_dir(src, M))
+			if(NORTH)
+				set_mob_offsets("pulledby", 0, 0+offset)
+				layer = MOB_LAYER+0.05
+			if(SOUTH)
+				set_mob_offsets("pulledby", 0, 0-offset)
+				layer = MOB_LAYER-0.05
+			if(EAST)
+				set_mob_offsets("pulledby", 0+offset, 0)
+				layer = MOB_LAYER
+			if(WEST)
+				set_mob_offsets("pulledby", 0-offset, 0)
+				layer = MOB_LAYER
+	else
+		switch(get_dir(M, src))
+			if(NORTH)
+				M.set_mob_offsets("pulledby", 0, 0+offset)
+				M.layer = MOB_LAYER+0.05
+			if(SOUTH)
+				M.set_mob_offsets("pulledby", 0, 0-offset)
+				M.layer = MOB_LAYER-0.05
+			if(EAST)
+				M.set_mob_offsets("pulledby", 0+offset, 0)
+				M.layer = MOB_LAYER
+			if(WEST)
+				M.set_mob_offsets("pulledby", 0-offset, 0)
+				M.layer = MOB_LAYER
 
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
 	if(!override && M.buckled)
@@ -653,6 +669,8 @@
 	if(pulling)
 		if(ismob(pulling))
 			var/mob/living/M = pulling
+			if(pulledby && pulledby == pulling)
+				reset_offsets("pulledby")
 			M.reset_offsets("pulledby")
 			if(!M.is_shifted)
 				reset_pull_offsets(pulling)
@@ -671,7 +689,9 @@
 				var/obj/item/grabbing/I = get_inactive_held_item()
 				if(I.grabbed == pulling)
 					dropItemToGround(I, silent = FALSE)
-
+	reset_offsets("pulledby")
+	reset_pull_offsets(src)
+	
 	. = ..()
 
 	update_pull_movespeed()
