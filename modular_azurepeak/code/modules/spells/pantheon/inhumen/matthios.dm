@@ -735,7 +735,7 @@
 /datum/status_effect/buff/twilight_dragon_form
 	id = "twilight_dragon_form"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/twilight_dragon_form
-	duration = 4 MINUTES
+	duration = 5 MINUTES
 
 /datum/status_effect/buff/twilight_dragon_form/short
 	id = "twilight_dragon_form_short"
