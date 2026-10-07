@@ -674,7 +674,7 @@
 			accuracy = max(5, accuracy * BUCKLE_PENALTY)
 			bonus_accuracy = max(0, bonus_accuracy * BUCKLE_PENALTY)
 
-	if(targloc || !params)
+	if(targloc)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
 		setAngle(Get_Angle(src, targloc) + spread)

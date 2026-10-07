@@ -16,6 +16,7 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/ComponentInitialize()
 	..()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bronze
 	name = "bronze barbute"
@@ -1068,6 +1069,7 @@
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/puritan
 	name = "volfskulle bascinet"
@@ -1272,7 +1274,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo
 	name = "avantyne froggemund"
-	desc = "A heavy frogmouth helmet, forged from avantyne. A wide slit allows for a practical amount of visibility considered unusual for this style of helmet. Called forth from the edge of what should be known. In Her name."
+	desc = "<font color='A50021'>In an antique land, two vast and trunkless legs of stone stand in the desert.</font>"
 	icon_state = "zizofrogmouth"
 	item_state = "zizofrogmouth"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
@@ -1332,7 +1334,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/zizo
 	name = "avantyne barbute"
-	desc = "A avantyne barbute. This one has an adjustable visor. Called forth from the edge of what should be known. In Her name."
+	desc = "<font color='A50021'>In an antique land, two vast and trunkless legs of stone stand in the desert.</font>"
 	adjustable = CAN_CADJUST
 	icon_state = "zizobarbute"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
@@ -1408,8 +1410,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/zizo
 	name = "avantyne bascinet"
-	desc = "A darksteeled bascinet, perpetually backlit with an eerie crimson haze. Glimpse into the abyss for too \
-	long..</br>‎<font color='FF0000'>..and something will look back.</font>"
+	desc = "<font color='A50021'>In an antique land, two vast and trunkless legs of stone stand in the desert.</font>"
 	adjustable = CANT_CADJUST
 	icon_state = "zizobascinet"
 	item_state = "zizobascinet"
@@ -1427,8 +1428,7 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/zizo
 	name = "avantyne volf-face bascinet"
-	desc = "A terminal prognosis, a lethal parasite; unholy strands of avantyne, worming their way through the steel to make something \
-	greater. Progress is an agonising process, both unto flesh and metal."
+	desc = "<font color='A50021'>In an antique land, two vast and trunkless legs of stone stand in the desert.</font>"
 	adjustable = CAN_CADJUST
 	icon_state = "volfplate_avantyne"
 	item_state = "volfplate_avantyne"

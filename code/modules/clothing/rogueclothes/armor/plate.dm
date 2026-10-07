@@ -26,6 +26,7 @@
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/plate/iron
 	name = "iron half-plate"
@@ -65,6 +66,9 @@
 /obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/Initialize(mapload)
 	.=..()
 	update_description()
+
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/tongs))
@@ -319,7 +323,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/zizo
 	name = "avantyne fullplate"
-	desc = "Full plate. Called forth from the edge of what should be known. In Her name."
+	desc = "<font color='A50021'>Whose frown, and wrinkled lip, and sneer of cold command, tell that its sculptor well those passions read.</font>"
 	icon_state = "zizoplate"
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	peel_threshold = 5	//-Any- weapon will require 5 peel hits to peel coverage off of this armor.
@@ -337,8 +341,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo
 	name = "avantyne-threaded maille"
-	desc = "Pauldrons lyke that of fire, crested atop a veil of otherworldly maille - impossibly tough, warm to the touch, \
-and crackling with insidious energies."
+	desc = "<font color='A50021'>Whose frown, and wrinkled lip, and sneer of cold command, tell that its sculptor well those passions read.</font>"
 	armor_class = ARMOR_CLASS_MEDIUM
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // We are probably one of the best medium armor sets. At higher integ than most.
 	peel_threshold = 5	//-Any- weapon will require 5 peel hits to peel coverage off of this armor.
