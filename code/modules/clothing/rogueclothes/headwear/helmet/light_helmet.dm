@@ -164,6 +164,9 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
+/obj/item/clothing/head/roguetown/grenzelhofthat/ComponentInitialize() //they could already use this, this just makes the examine say so.
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+
 /obj/item/clothing/head/roguetown/grenzelhofthat/attack_right(mob/user)
 	..()
 	if(!picked)

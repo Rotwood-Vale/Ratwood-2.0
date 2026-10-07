@@ -93,6 +93,10 @@
 	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	min_cold_protection_temperature = 50
 
+/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY) //If every mage starts rushing these pants at roundstart, this is going away.
+
 /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants/attack_right(mob/user)
 	..()
 	if(!picked)
