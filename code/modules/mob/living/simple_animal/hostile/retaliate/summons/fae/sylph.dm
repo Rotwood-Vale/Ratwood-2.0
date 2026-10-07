@@ -46,13 +46,14 @@
 	rapid = 3
 	projectiletype = /obj/projectile/magic/frostbolt/greater
 	ranged_message = "throws icy magick"
+	ranged_cooldown_time = 6 SECONDS
 	var/shroom_cd = 0
 	var/summon_cd = 0
 	inherent_spells = list(/obj/effect/proc_holder/spell/invoked/create_shrooms)
 
 /obj/projectile/magic/frostbolt/greater
 	name = "greater frostbolt"
-	damage = 25
+	damage = 15 // Lower damage, but it shoots in a wave of 3, so it totals out to 45 damage every 6 seconds, bypassing your armor
 	range = 6
 	speed = 6 //higher is slower
 

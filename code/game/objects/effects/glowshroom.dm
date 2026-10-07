@@ -133,7 +133,7 @@
 	qdel(src)
 
 /obj/structure/glowshroom/dendorite
-	var/timeleft = 10 MINUTES
+	var/timeleft = 10 SECONDS
 
 /obj/structure/glowshroom/dendorite/Initialize(mapload)
 	. = ..()
