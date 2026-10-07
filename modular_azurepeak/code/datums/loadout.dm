@@ -9,6 +9,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	var/triumph_cost
 	var/keep_loadout_stats = FALSE	// If TRUE, item keeps default values (not nerfed)
 	var/requires_nobility = FALSE	// If TRUE, it will check whether the player has the nobility quirk or noble job preference on high
+
 /datum/loadout_item/New()
 	if(isnull(donoritem))
 		if(ckeywhitelist)
