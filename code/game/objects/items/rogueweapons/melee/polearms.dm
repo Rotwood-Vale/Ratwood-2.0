@@ -422,7 +422,7 @@
 			var/mob/living/carbon/human/H = target
 			var/area/target_area = get_area(H)
 
-			if(!istype(target_area, /area/rogue/outdoors/town/church || /area/rogue/indoors/town/church))
+			if(!istype(target_area, && target_area.holy_area))
 				to_chat(user, span_danger("The staff cannot be used on targets outside of the church!"))
 				return
 
