@@ -93,7 +93,6 @@
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack))
 
 /datum/component/coal_construct_fuel/proc/on_attack(datum/source, mob/living/target, mob/living/user)
-	testing("attack")
 	if(user.cmode || !target.construct)
 		return
 
