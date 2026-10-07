@@ -51,7 +51,6 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
-	AddComponent(/datum/component/coal_construct_fuel, 100)
 
 /obj/item/grown/log/tree/attacked_by(obj/item/I, mob/living/user) //This serves to reward woodcutting
 	user.changeNext_move(CLICK_CD_INTENTCAP)
@@ -160,7 +159,7 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
-	AddComponent(/datum/component/coal_construct_fuel, 50)
+	AddComponent(/datum/component/construct_refueling, 50)
 
 /obj/item/grown/log/tree/small/attackby(obj/item/I, mob/living/user, params)
 	if(item_flags & IN_STORAGE)
