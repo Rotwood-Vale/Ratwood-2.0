@@ -329,7 +329,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	. = ..()
 	// So our person is either gone, or not set, so let's start our grace period before we start losing our shit
 	if(isnull(special_person))
-		user.client.verbs |= /client/proc/declare_clingy_person
+		user?.client?.verbs |= /client/proc/declare_clingy_person
 		if(!COOLDOWN_STARTED(src, lost_person))
 			COOLDOWN_START(src, lost_person, 10 MINUTES) // Enough time for you to spawn in, grab your shit, mark your person
 			to_chat(user, span_warning("I need to find someone to cling to before I start to panic. (Choose preferred person in IC tab)"))
@@ -339,7 +339,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	var/mob/favorite = special_person.resolve()
 	if(!istype(favorite))
-		user.client.verbs |= /client/proc/declare_clingy_person
+		user>.client?.verbs |= /client/proc/declare_clingy_person
 		// So we set our mark, but they are gone? They either despawned or shenanigans ensued.
 		if(!COOLDOWN_STARTED(src, lost_person))
 			COOLDOWN_START(src, lost_person, 5 MINUTES) // Enough time for you to realize you need to find a new person to cling to
@@ -429,7 +429,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		return
 	clingy_flaw.special_person = WEAKREF(selection)
 	clingy_flaw.soothe_meltdown(clingy_person)
-	selection.client.verbs |= /client/proc/reject_clingy_people
+	selection?.client?.verbs |= /client/proc/reject_clingy_people
 	to_chat(clingy_person, span_boldnotice("I've selected [selection.real_name] as my preferred person."))
 	to_chat(selection, span_big(span_warn("[clingy_person] has selected me as the person they cling to <a href='byond://?src=[REF(clingy_flaw)];deny_cling=[REF(selection)];clingy_person=[REF(clingy_person)]'>REJECT?</a>")))
 	LAZYADD(selection.list_of_people_who_are_clinging_onto_me, WEAKREF(clingy_person))
