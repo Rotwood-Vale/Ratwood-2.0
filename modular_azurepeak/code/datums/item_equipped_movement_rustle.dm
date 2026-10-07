@@ -51,7 +51,7 @@ with light edits to work with roguecode */
 
 /datum/component/item_equipped_movement_rustle/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
-	if(slot == ITEM_SLOT_HANDS)
+	if(slot == ITEM_SLOT_HANDS && rustle_sounds == SFX_HEELS)
 		return
 	RegisterSignal(equipper, COMSIG_MOVABLE_MOVED, PROC_REF(try_step), override = TRUE)
 

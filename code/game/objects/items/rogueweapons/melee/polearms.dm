@@ -2261,11 +2261,7 @@
 	gripped_intents = list(SPEAR_THRUST, /datum/intent/spear/cut, /datum/intent/spear/cut/baotha/rend, /datum/intent/spear/cut/glaive/sweep)
 	icon_state = "swordstaff"
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
-	parrysound = list(
-	'sound/combat/parry/bladed/bladedmedium (1).ogg',
-	'sound/combat/parry/bladed/bladedmedium (2).ogg',
-	'sound/combat/parry/bladed/bladedmedium (3).ogg',
-	)
+	parrysound = list('sound/combat/parry/bladed/bladedmedium (1).ogg', 'sound/combat/parry/bladed/bladedmedium (2).ogg', 'sound/combat/parry/bladed/bladedmedium (3).ogg',)
 	pickup_sound = 'sound/foley/equip/swordlarge1.ogg'
 	minstr = 4
 	thrown_bclass = BCLASS_PIERCE

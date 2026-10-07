@@ -1944,7 +1944,7 @@
 			)
 			var/armor_choice = show_radial_menu(user, src, armor_options, require_near = TRUE, tooltips = TRUE)
 			if(!armor_choice)
-				armor_choice = "Baothan Cuirass"
+				return
 
 			var/list/weapon_options = list(
 				"Perfect Agony" = image(icon = 'icons/roguetown/weapons/whips32.dmi', icon_state = "baotha_whip"),
@@ -1963,11 +1963,10 @@
 			user.say("Let all those who look upon me see thy beauty and despair!!")
 			if(!do_after(user, 5 SECONDS))
 				return
-			icon_state = "baotha_active"
+			icon_state = "baotha_chalky"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			baothaarmor(target, armor_choice, weapon_choice)
-			spawn(120)
-				icon_state = "baotha_active"
+			addtimer(VARSET_CALLBACK(src, icon_state, "pestra_chalky"), 120)
 
 /obj/structure/ritualcircle/baotha/proc/baothaconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)

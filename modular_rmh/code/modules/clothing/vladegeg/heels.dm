@@ -16,12 +16,7 @@
 	icon_state = "heels_color"
 	item_state = "heels_color"
 
-/obj/item/clothing/shoes/roguetown/heels/color/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_HEELS, 2)
-	stepnoise_flag = STEPNOISE_HEELS // This will prevent default footstep noise from being made by the heels (sounds odd)
 //CRAFTING
-
 /datum/crafting_recipe/roguetown/leather/footwear/boots/heels
 	name = "black heels"
 	result = /obj/item/clothing/shoes/roguetown/heels
