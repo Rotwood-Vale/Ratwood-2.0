@@ -62,7 +62,7 @@
 	id = "graggar_fear"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/graggar_fear
 	effectedstats = list(STATKEY_WIL = -2)
-	duration = 15 SECONDS
+	duration = 10 SECONDS
 	tick_interval = 5 SECONDS
 
 /datum/status_effect/debuff/graggar_fear/tick()
@@ -366,7 +366,7 @@
 	human.emote("warcry")
 	for(var/effect in purged_effects)
 		human.remove_status_effect(effect)
-	human.apply_status_effect(/datum/status_effect/buff/bloodrage)
+	human.apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
 	human.visible_message(span_danger("[human] rises upward, boiling with immense rage!"))
 	return TRUE
 

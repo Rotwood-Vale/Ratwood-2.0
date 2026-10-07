@@ -1924,40 +1924,6 @@
 	desc = span_notice("I am on guard, and ready to clash. If I am hit, I will successfully defend. Attacking will make me lose my focus.")
 	icon_state = "clash"
 
-#define BLOODRAGE_FILTER "bloodrage"
-
-/atom/movable/screen/alert/status_effect/buff/graggar_bloodrage
-	name = "BLOODRUSH!"
-	desc = "GRAGGAR! GRAGGAR! GRAGGAR!"
-	icon_state = "bloodrage"
-
-/datum/status_effect/buff/bloodrage
-	id = "bloodrage"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/graggar_bloodrage
-	var/outline_color = "#ad0202"
-	duration = 15 SECONDS
-
-/datum/status_effect/buff/bloodrage/on_apply()
-	var/holyskill = owner.get_skill_level(/datum/skill/magic/holy)
-	duration = ((15 SECONDS) * holyskill)
-	var/filter = owner.get_filter(BLOODRAGE_FILTER)
-	if(!filter)
-		owner.add_filter(BLOODRAGE_FILTER, 2, list("type" = "outline", "color" = outline_color, "alpha" = 60, "size" = 2))
-	var/datum/status_effect/buff/adrenaline_rush/rush = owner.apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
-	if(!rush)
-		rush = owner.has_status_effect(/datum/status_effect/buff/adrenaline_rush)
-	if(rush && rush.duration != -1)
-		rush.duration = max(rush.duration, world.time + duration)
-	. = ..()
-	return TRUE
-
-/datum/status_effect/buff/bloodrage/on_remove()
-	. = ..()
-	owner.visible_message(span_warning("[owner] wavers, their rage simmering down."))
-	owner.remove_filter(BLOODRAGE_FILTER)
-	owner.emote("breathgasp", forced = TRUE)
-	owner.Slowdown(3)
-
 /datum/status_effect/buff/psydonic_endurance
 	id = "psydonic_endurance"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/psydonic_endurance
@@ -1977,8 +1943,6 @@
 	name = "Motive"
 	desc = span_bloody("GRAGGAR'S ARMAMENTS CALL ME TO SLAUGHTER!! KILL!! RIP!! CONSUME!!")
 	icon_state = "call_to_slaughter"
-
-#undef BLOODRAGE_FILTER
 
 #define EORANAURA_FILTER "eoranaura"
 
