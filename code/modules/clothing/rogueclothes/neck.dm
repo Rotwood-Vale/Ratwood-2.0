@@ -115,6 +115,9 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/roguetown/coif/padded/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/neck/roguetown/coif/heavypadding
 	name = "heavy padded coif"
 	desc = "A heavier padded coif meant to be worn on its own or under a helmet. Layered properly, it can last through even the busiest of daes."
@@ -317,7 +320,7 @@
 
 /obj/item/clothing/neck/roguetown/bevor/zizo
 	name = "avantyne bevor"
-	desc = "An avantyne neckguard cut for the medium rite, still protective without becoming impossible to remove."
+	desc = "<font color='A50021'>Near them, on the sand, half sunk, a shattered visage lies.</font>"
 	icon_state = "zizobevor"
 	item_state = "zizobevor"
 	peel_threshold = 5
@@ -361,6 +364,9 @@
 	body_parts_covered = NECK
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
+
+/obj/item/clothing/neck/roguetown/gorget/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
 
 /obj/item/clothing/neck/roguetown/gorget/steel
 	name = "steel gorget"
@@ -461,6 +467,10 @@
 /obj/item/clothing/neck/roguetown/fencerguard/Initialize(mapload)
 	. = ..()
 	update_icon()
+
+/obj/item/clothing/neck/roguetown/fencerguard/generic
+	color = "#FFFFFF"
+	detail_color = "#5E4440"
 
 /obj/item/clothing/neck/roguetown/gorget/forlorncollar
 	name = "vreccale"
@@ -689,7 +699,7 @@
 
 /obj/item/clothing/neck/roguetown/psicross/reform
 	name = "reformist psycross"
-	desc = "A psycross with its prongs bent inward. God is dead, but this world HE left is beautiful and worth of loving. ENDURE with every broken bone in your body."
+	desc = "'It occured to me that our God had left us, but not our ability to endure hardship. We shall make something out of this world, I said, before we pass onto the next.'"
 	sellprice = 0
 	icon_state = "psycross_reform"
 

@@ -419,6 +419,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 		if(L.m_intent == MOVE_INTENT_RUN)
 			L.visible_message(span_warning("[L] trips over the boulder!"),span_warning("I trip over the boulder!"))
 			L.Knockdown(10)
+			L.drop_all_held_items()
 			L.consider_ambush(always = TRUE)
 	..()
 
@@ -628,7 +629,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	w_class = WEIGHT_CLASS_NORMAL
 	stackname = "stone blocks"
 	stacktype = /obj/item/natural/stoneblock
-	maxamount = 4
+	maxamount = 12
 	icon1 = "stoneblockbundle2"
 	icon1step = 3
 	icon2 = "stoneblockbundle3"

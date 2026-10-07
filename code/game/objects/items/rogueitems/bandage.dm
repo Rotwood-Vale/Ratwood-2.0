@@ -4,7 +4,7 @@
 	icon_state = "bandageroll"
 	desc = "A fabric treated and specially made to help with bleeding wounds. Better and faster at stopping bleeding than your regular piece of cloth."
 	bundletype = /obj/item/natural/bundle/cloth/bandage
-	bandage_effectiveness = 0.25
+	bandage_effectiveness = 0.5
 	bandage_health = 300 //High HP so it can last some time on more serious wounds like arteries, total of 225 blood soaked
 	bandage_speed = 4 SECONDS
 

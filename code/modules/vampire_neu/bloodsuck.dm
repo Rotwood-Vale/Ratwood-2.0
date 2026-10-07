@@ -107,7 +107,7 @@
 			to_chat(src, span_danger("I have... Consumed my kindred!"))
 			if(VVictim.generation > VDrinker.generation)
 				VDrinker.generation = VVictim.generation
-			VDrinker.research_points += VVictim.research_points
+			VDrinker.research_points += VVictim.research_points + VVictim.research_spent
 			victim.death()
 			victim.adjustBruteLoss(-50, TRUE)
 			victim.adjustFireLoss(-50, TRUE)
@@ -157,3 +157,4 @@
 	var/datum/antagonist/vampire/new_antag = new /datum/antagonist/vampire(incoming_clan = sire.clan, forced_clan = TRUE, generation = VDrinker.generation-1)
 	mind?.add_antag_datum(new_antag)
 	adjust_bloodpool(500)
+	remove_sleep_depravation(TRUE)

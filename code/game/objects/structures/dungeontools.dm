@@ -22,7 +22,7 @@
 
 /obj/structure/dungeontool/trigger/proc/triggerquiet()
 	for(var/obj/structure/O in redstone_attached)
-		spawn(0) O.redstone_triggered()
+		addtimer(CALLBACK(O, TYPE_PROC_REF(/obj/structure, redstone_triggered)), 0)
 
 /obj/structure/dungeontool/triggered // A simple obj that does a thing when activated by redstone. Create subtypes, do not use this parent obj
 	name = "triggered obj"

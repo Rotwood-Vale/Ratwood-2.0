@@ -16,6 +16,10 @@
 	smeltresult = /obj/item/ingot/steel
 	armor_class = ARMOR_CLASS_LIGHT //Experimental change; leave unlisted for now? Offers a weight-class advantage over the otherwise-superior hauberk. We'll see how it goes.
 
+/obj/item/clothing/suit/roguetown/armor/chainmail/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/suit/roguetown/armor/chainmail/iron
 	icon_state = "ihaubergeon"
 	name = "iron haubergeon"
@@ -84,7 +88,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
 	name = "avantyne hauberk"
-	desc = "The rings crackle softly with avantynic power, yet this lighter weave can still be taken off without being lost to the rite."
+	desc = "<font color='A50021'>And on the pedestal these words appear: <i>\"My name is ZIZO, Queen of Queens:\"</i></font>"
 	icon_state = "zizohauberk"
 	item_state = "zizohauberk"
 	armor = ARMOR_ASCENDANT

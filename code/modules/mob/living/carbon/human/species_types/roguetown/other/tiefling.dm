@@ -72,6 +72,7 @@
 		/datum/customizer/bodypart_feature/legwear,
 		/datum/customizer/organ/horns/anthro,
 		/datum/customizer/organ/tail/tiefling,
+		/datum/customizer/organ/tail/manticore,
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
@@ -94,6 +95,7 @@
 		/datum/body_marking/tall_eyes,
 		/datum/body_marking/outer_tall_eyes,
 		/datum/body_marking/blank_face,
+		/datum/body_marking/face_paint,
 		/datum/body_marking/tonage,
 		/datum/body_marking/bangs,
 		/datum/body_marking/bun,
@@ -148,7 +150,8 @@
 		"Krizzsha" = SKIN_COLOR_KRIZZSHA,
 		"Tosiz" = SKIN_COLOR_TOSIZ,
 		"Velothel" = SKIN_COLOR_VELOTHEL,
-		"Ashol" = SKIN_COLOR_ASHOL
+		"Ashol" = SKIN_COLOR_ASHOL,
+		"Pyris" = SKIN_COLOR_PYRIS
 	)
 
 /datum/species/tieberian/get_hairc_list()

@@ -282,7 +282,7 @@
 
 /obj/item/clothing/wrists/roguetown/bracers/zizo
 	name = "avantyne bracers"
-	desc = "Clasped yet practical, these avantyne wristguards are reinforced for the rite without binding themselves to the wearer forever."
+	desc = "<font color='A50021'>Which yet survive, stamped on these lifeless things, the hand that mocked them and the heart that fed:</font>"
 	icon_state = "zizobracers"
 	item_state = "zizobracers"
 	max_integrity = ARMOR_INT_SIDE_ANTAG

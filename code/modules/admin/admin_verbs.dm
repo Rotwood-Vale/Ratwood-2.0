@@ -46,6 +46,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/open_bounty_menu,
 	/client/proc/remove_bounty,
 	/client/proc/agevet_player,
+	/client/proc/list_severed_heads,
 	// RATWOOD MODULAR START
 	/client/proc/bunker_bypass,
 	// RATWOOD MODULAR END
@@ -198,6 +199,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 /world/proc/AVerbsDebug()
 	return list(
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+	/client/proc/check_timer_sources,
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,

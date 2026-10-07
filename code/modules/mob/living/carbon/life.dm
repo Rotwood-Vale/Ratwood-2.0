@@ -97,11 +97,7 @@
 							emote("painmoan")
 							return
 					if(prob(probby) && !HAS_TRAIT(src, TRAIT_NOPAINSTUN) && !has_status_effect(/datum/status_effect/buff/psyhealing))
-						Immobilize(10)
-						emote("painscream")
-						stuttering += 5
-						addtimer(CALLBACK(src, PROC_REF(Stun), 110), 10)
-						addtimer(CALLBACK(src, PROC_REF(Knockdown), 110), 10)
+						paincrit()
 						mob_timers["painstun"] = world.time + 160
 					else
 						emote("painmoan")
@@ -113,6 +109,61 @@
 
 		if(painpercent >= 100)
 			add_stress(/datum/stressevent/painmax)
+
+/mob/living/carbon/proc/paincrit()
+	Immobilize(10)
+	emote("paincrit", forced = TRUE)
+	stuttering += 5
+	addtimer(CALLBACK(src, PROC_REF(Stun), 110), 10)
+	addtimer(CALLBACK(src, PROC_REF(Knockdown), 110), 10)
+
+// Odds of not getting painstunned by your limbs getting ripped off.
+// Scales linearly off WIL and CON. Intentionally harsh, this is supposed to be cinematic both ways.
+// 10 CON 10 WIL has 20 percent to avoid paincrit, 15 CON 15 WIL has 40 percent exactly.
+/mob/living/carbon/proc/get_delimb_survival_chance()
+	var/con_wil = STACON + STAWIL
+	var/base_chance = (con_wil - 10) * 2
+	// Psydonian grit gives you a flat twenty percent extra to resist limbcrit.
+	// If you succeed the roll with psydonian grit you get a protagonist moment with an adrenaline rush and some cool flavor text.
+	if(HAS_TRAIT(src, TRAIT_PSYDONIAN_GRIT))
+		base_chance += 20
+	return max(base_chance, 0)
+
+/mob/living/carbon/proc/delimb_pain()
+	if(!client)
+		return
+	if(stat)
+		return
+	if(HAS_TRAIT(src, TRAIT_NOPAIN)) // You don't feel shit.
+		return
+	if(HAS_TRAIT(src, TRAIT_NUMBED_LIMBS))
+		return
+	var/survived = HAS_TRAIT(src, TRAIT_NOPAINSTUN) ? TRUE : prob(get_delimb_survival_chance()) // NOPAINSTUN guys simply always succeed the roll.
+	if(!survived)
+		paincrit()
+		return
+	if(HAS_TRAIT(src, TRAIT_PSYDONIAN_GRIT))
+		emote("warcry", forced = TRUE)
+		var/hiswill = pick(
+			"THROUGH HIM, I ENDURE!!",
+			"THE BELLS TOLL MY NAME, BUT I CAN STILL FIGHT!!",
+			"ENDURE!!",
+			"IF I AM TO FALL, THEN THEY SHALL FALL WITH ME!!",
+		)
+		visible_message(span_reallybig(span_danger("[src] ROARS through the pain, teeth bared in defiant fury!")), span_extremelybig(span_userdanger(hiswill)))
+		playsound(src, 'sound/magic/PSYDONE.ogg', 100, FALSE)
+		playsound(src, 'sound/combat/clash_struck.ogg', 100) // Kino
+		var/datum/status_effect/buff/adrenaline_rush/rush = apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
+		if(rush) // These are actually enough to kinda stabilize you, but let's be real you're probably not winning.
+			rush.duration += 4 SECONDS
+		var/datum/status_effect/buff/psyhealing/stirring = apply_status_effect(/datum/status_effect/buff/psyhealing, 3)
+		if(stirring)
+			stirring.duration += 4 SECONDS
+	else
+		emote("painscream", forced = TRUE)
+		visible_message(span_danger("[src] staggers back from the shock, but holds fast with fire in their eyes!"), span_reallybig(span_danger("I can still fight!")))
+		if(STAWIL > 14)
+			apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
 
 /mob/living/carbon/proc/handle_roguebreath()
 	return
@@ -659,11 +710,17 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				if(ishuman(src) && stat == CONSCIOUS)
 					var/mob/living/carbon/human/H = src
 					if(H.head && H.head.armor?.stab > 70)
-						armor_blocked = TRUE
+						var/obj/item/clothing/nodrop_check = H.head
+						if(!HAS_TRAIT(nodrop_check, TRAIT_NODROP))
+							armor_blocked = TRUE
 					if(H.wear_armor && (H.wear_armor.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM)))
-						armor_blocked = TRUE
+						var/obj/item/clothing/nodrop_check = H.wear_armor
+						if(!HAS_TRAIT(nodrop_check, TRAIT_NODROP))
+							armor_blocked = TRUE
+					if(H.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+						armor_blocked = FALSE
 					// Check nude sleeper trait
-					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
+					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER) && !H.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
 						var/list/worn_items = H.get_equipped_items()
 						for(var/obj/item/I in worn_items)
 							// Skip abstract items
@@ -690,7 +747,12 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					fallingas++
 					if(HAS_TRAIT(src, TRAIT_FASTSLEEP))
 						fallingas++
-					if(fallingas > 15)
+					if(has_status_effect(/datum/status_effect/debuff/sleepytime/t2)) //about time...
+						fallingas++
+					if(has_status_effect(/datum/status_effect/debuff/sleepytime/t3)) //falling immidiately unconcious after 3 days just makes sense
+						fallingas++
+						fallingas++
+					if(fallingas > 12)
 						teleport_to_dream(src, 10000, 2)
 						Sleeping(300)
 			else
@@ -703,12 +765,19 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				if(ishuman(src) && stat == CONSCIOUS)
 					var/mob/living/carbon/human/H = src
 					if(H.head && H.head.armor?.stab > 70)
-						armor_blocked = TRUE
+						var/obj/item/clothing/nodrop_check = H.head
+						if(!HAS_TRAIT(nodrop_check, TRAIT_NODROP))
+							armor_blocked = TRUE
 					if(H.wear_armor && (H.wear_armor.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM)))
-						armor_blocked = TRUE
+						var/obj/item/clothing/nodrop_check = H.wear_armor
+						if(!HAS_TRAIT(nodrop_check, TRAIT_NODROP))
+							armor_blocked = TRUE
 					// Nude sleepers are forbidden from sleeping uncomfortably.
 					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
 						trait_blocked = TRUE
+					if(H.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+						armor_blocked = FALSE
+						trait_blocked = FALSE
 					if(trait_blocked && !fallingas)
 						to_chat(src, span_warning("I need to rest on something more comfortable!"))
 						fallingas = TRUE
@@ -721,6 +790,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					fallingas++
 					if(HAS_TRAIT(src, TRAIT_FASTSLEEP))
 						fallingas++
+					if(has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+						fallingas++ //at this point it's hard not to fall asleep
 					if(fallingas > 25)
 						teleport_to_dream(src, 10000, 2)
 						Sleeping(300)
