@@ -78,8 +78,7 @@
 			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
 		if(!M.client)
 			continue
-		// max_distance matches the get_hearers_in_view(15) gather above. Without it the note
-		// plays at flat volume to everyone in that 15-tile radius
+		// max_distance applies attenuation across the same range used to gather listeners
 		var/datum/preferences/prefs = M.client.prefs
 		M.playsound_local(source, null, 100, S = music_played, max_distance = 15, volume_pref = prefs ? prefs.at_overall(prefs.instrumentvol) : null)
 

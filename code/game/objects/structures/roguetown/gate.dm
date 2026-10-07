@@ -54,8 +54,7 @@ GLOBAL_LIST_EMPTY(biggates)
 	density = TRUE
 	mouse_opacity = 0
 	opacity = TRUE
-	/// A gate spans several tiles and these stand on each, so they are what point ambience and ERP
-	/// audio read there
+	/// Each gate blocker reports sound barriers on its own tile of the gate's footprint
 	sound_door = TRUE
 	sound_opening = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -101,8 +100,7 @@ GLOBAL_LIST_EMPTY(biggates)
 	if(isSwitchingStates || !density)
 		return
 	isSwitchingStates = TRUE
-	// A token, not a one-shot, since people are often walking through a gate while it plays and
-	// playsound fixes pan and volume when it fires. Range is what playsound gave it
+	// A token updates volume and pan while listeners pass through the moving gate
 	playsoundtoken(src, 'sound/misc/gate.ogg', 100, SOUND_RANGE + 5)
 	flick("[base_state]_opening",src)
 	layer = initial(layer)
@@ -122,8 +120,7 @@ GLOBAL_LIST_EMPTY(biggates)
 	isSwitchingStates = TRUE
 	update_icon()
 	layer = ABOVE_MOB_LAYER
-	// A token, not a one-shot, since people are often walking through a gate while it plays and
-	// playsound fixes pan and volume when it fires. Range is what playsound gave it
+	// A token updates volume and pan while listeners pass through the moving gate
 	playsoundtoken(src, 'sound/misc/gate.ogg', 100, SOUND_RANGE + 5)
 	flick("[base_state]_closing",src)
 	sleep(10)

@@ -13,25 +13,13 @@ GLOBAL_LIST_INIT(oldschool_songs, list(
 	"Yesteryear" = 'sound/music/jukeboxes/oldschool/Yesteryear.ogg',
 ))
 
-/datum/looping_sound/musloop
+/datum/looping_sound/music/musloop
 	mid_sounds = list()
 	mid_length = 2400
 	volume = 70
 	extra_range = 8
-	/// Played through a sound token, so the song repeats natively client side and follows listeners as they move
+	/// Uses a sound token for native repeating playback and listener tracking
 	use_sound_tokens = TRUE
-	var/stress2give = /datum/stressevent/music
-
-/datum/looping_sound/musloop/configure_token(datum/sound_token/token)
-	token.respect_instrument_pref = TRUE
-	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
-	// Stress lands when a listener first comes into earshot, not on every replay of the track
-	token.on_listener_audible = CALLBACK(src, PROC_REF(give_stress))
-
-/datum/looping_sound/musloop/proc/give_stress(mob/M)
-	if(stress2give && isliving(M))
-		var/mob/living/carbon/L = M
-		L.add_stress(stress2give)
 
 /obj/structure/roguemachine/musicbox
 	name = "wax music device"
@@ -41,9 +29,8 @@ GLOBAL_LIST_INIT(oldschool_songs, list(
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 0
-	var/datum/looping_sound/musloop/soundloop
-	/// Rolled once per device in Initialize(), so boxes across a map are not all playing the same thing
-	/// MUST BE IN ONE OF THE MUSIC_TAVCAT_'s.
+	var/datum/looping_sound/music/musloop/soundloop
+	/// Recording selected once in Initialize(). Must belong to a MUSIC_TAVCAT_* set
 	var/list/init_curfile = list(
 		'sound/music/jukeboxes/oldschool/Autumn_Voyage.ogg',
 		'sound/music/jukeboxes/oldschool/Fanfare.ogg',
@@ -81,15 +68,14 @@ GLOBAL_LIST_INIT(oldschool_songs, list(
 
 /obj/structure/roguemachine/musicbox/Initialize(mapload)
 	. = ..()
-	// Once per device. Rotating mid-track would need a timer and a real track length, and changing
-	// file restarts the token, an audible cut for everyone in range
+	// Choose once per device. Changing the file during playback would restart the token
 	curfile = pick(init_curfile)
 	soundloop = new(src, FALSE)
 	if(playuponspawn)
 		start_playing()
 
 /obj/structure/roguemachine/musicbox/Destroy()
-	QDEL_NULL(soundloop) // Before ..(), so the loop stops while this box is still whole
+	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/structure/roguemachine/musicbox/update_icon()

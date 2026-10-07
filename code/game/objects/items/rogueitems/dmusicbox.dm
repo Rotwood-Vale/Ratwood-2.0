@@ -2,26 +2,16 @@ GLOBAL_LIST_EMPTY(musicboxes) //list of all music boxes
 GLOBAL_VAR_INIT(musicboxes_last_upload, 0) //last time of the last upload, to prevent multiple uploads within seconds of eachother
 GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, to prevent spamming clients too often with play/stop
 
-/datum/looping_sound/dmusloop
+/datum/looping_sound/music/dmusloop
 	mid_sounds = list()
 	mid_length = 12000 // 20 minutes to force a loop. File size determines server load, not audio length. Low bitrate .ogg files can run long and have their uses as ambient sound.
 	volume = 100
-	extra_range = 10	// Up from 5, fill a room.
-	/// Played through a sound token, so each box reserves its own channel and the upload repeats
-	/// natively client side, following listeners as they move
+	extra_range = 10	/// Uses a reserved token channel for positional updates and native repeating playback
 	use_sound_tokens = TRUE
-	var/stress2give = /datum/stressevent/music
 
-/datum/looping_sound/dmusloop/configure_token(datum/sound_token/token)
-	token.respect_instrument_pref = TRUE
-	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
+/datum/looping_sound/music/dmusloop/configure_token(datum/sound_token/token)
+	..()
 	token.stand_in_songs = GLOB.oldschool_songs
-	token.on_listener_audible = CALLBACK(src, PROC_REF(give_stress))
-
-/datum/looping_sound/dmusloop/proc/give_stress(mob/M)
-	if(stress2give && isliving(M))
-		var/mob/living/carbon/L = M
-		L.add_stress(stress2give)
 
 /obj/item/dmusicbox
 	name = "dwarven music box"
@@ -34,7 +24,7 @@ GLOBAL_VAR_INIT(musicboxes_last_play, 0) //last time of the last played track, t
 	force = 20
 	throwforce = 20
 	throw_range = 2
-	var/datum/looping_sound/dmusloop/soundloop
+	var/datum/looping_sound/music/dmusloop/soundloop
 	var/curfile
 	var/playing = FALSE
 	var/loaded = TRUE

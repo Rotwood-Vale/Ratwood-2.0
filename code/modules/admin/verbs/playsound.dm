@@ -32,8 +32,8 @@
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.client.prefs.toggles & SOUND_MIDI)
-			// Set for every player, since the one sound is shared and a skipped assignment would carry
-			// the previous player's volume over
+			// Set volume for every listener so the shared sound cannot retain another player's
+			// preference
 			admin_sound.volume = vol * M.client.prefs.at_overall(M.client.prefs.adminmusicvol) * 0.01
 			SEND_SOUND(M, admin_sound)
 
@@ -78,13 +78,10 @@
 	volume_power_menu.ui_interact(mob)
 
 /**
- * Applies one Audio Settings slider live and schedules the save.
+ * Applies an Audio Settings slider and schedules a preference save.
  *
- * A change to a slider point ambience reads goes through listener_prefs_changed(), which decides for
- * itself whether anything flipped: zero and the cutoff unhook, and any other value reaches the next
- * service without cutting what is playing. Only the file write waits, so a run of changes collapses
- * into one, whether that is a held arrow key or a client sending the action in a loop. The menu also
- * writes when it closes, for a client that leaves inside the window.
+ * Point ambience changes notify listener_prefs_changed(), which handles muting and registration.
+ * Repeated changes share one deferred save. Closing the menu also saves the final value.
  */
 /client/proc/apply_volume_power_setting(setting_id, volume_value)
 	if(!prefs)
@@ -135,16 +132,15 @@
 		else
 			return
 
-	// The sliders point ambience reads. It decides for itself whether anything flipped
 	if(setting_id == "point_ambience_volume" || setting_id == "master")
 		SSpoint_ambience.listener_prefs_changed(src)
-	// The setting is already live above. Only the file write waits, see the proc doc
+	// Coalesce repeated slider changes into one disk write
 	addtimer(CALLBACK(prefs, TYPE_PROC_REF(/datum/preferences, save_preferences)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /datum/volume_power_menu
 	var/client/owner
-	/// Master or Sound Effects moved while the menu was open, so the sounds priced by them are
-	/// re-sent once when it closes rather than on every step of the slider
+	/// Whether Master or Sound Effects changed, requiring one token and weather refresh when the
+	/// menu closes
 	var/effects_changed = FALSE
 
 /datum/volume_power_menu/New(client/C)
@@ -158,8 +154,7 @@
 	return ..()
 
 /datum/volume_power_menu/ui_close(mob/user)
-	// The write is deferred while the menu is open, so a close that beats the timer would otherwise
-	// lose the last change
+	// Save before closing so disconnecting before the deferred write cannot lose the last change
 	owner?.prefs?.save_preferences()
 	if(effects_changed)
 		effects_changed = FALSE
@@ -190,8 +185,7 @@
 	data["lobby"] = isnum(owner.prefs.lobbymusicvol) ? owner.prefs.lobbymusicvol : initial(owner.prefs.lobbymusicvol)
 	data["point_ambience_volume"] = isnum(owner.prefs.pointambiencevol) ? owner.prefs.pointambiencevol : initial(owner.prefs.pointambiencevol)
 	data["point_ambience_independent"] = owner.prefs.pointambience_independent
-	// Sent the way round the player thinks about it: these two are stored inverted so that an
-	// existing savefile without them reads as on
+	// Stored flags disable features. Expose positive enabled values to the UI
 	data["point_ambience"] = !(owner.prefs.point_ambience_toggles & SOUND_DISABLE_POINT_AMBIENCE)
 	data["point_ambience_torch"] = !(owner.prefs.point_ambience_toggles & SOUND_DISABLE_TORCH_AMBIENCE)
 	return data
@@ -214,7 +208,7 @@
 		if(params["id"] == "replace_uploaded_songs")
 			owner.prefs.toggles ^= SOUND_UPLOADED_SONGS
 			owner.prefs.save_preferences()
-			// Swaps what is already playing, since nothing else re-sends to a listener standing still
+			// Refresh stationary listeners immediately when their selected file changes
 			owner.sync_uploaded_songs()
 			SStgui.update_uis(src)
 			return TRUE
@@ -234,8 +228,8 @@
 				return FALSE
 		owner.prefs.point_ambience_toggles ^= flag
 		owner.prefs.save_preferences()
-		// Either direction, and it has to happen here: nothing else will service them again to stop
-		// what is playing, and a listener standing still would not pick a re-enabled category up
+		// Handle both stopping disabled categories and starting re-enabled ones for stationary
+		// listeners
 		SSpoint_ambience.listener_prefs_changed(owner)
 		SStgui.update_uis(src)
 		return TRUE

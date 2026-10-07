@@ -20,9 +20,9 @@ type DragSliderProps = {
 };
 
 /**
- * A slider that follows the pointer while it is held and commits on release. Arrow keys, Page
- * Up/Down, Home and End move it from the keyboard, and the number beside it can be typed into.
- * The same control the volume menu uses, made general so other windows can share it.
+ * Slider with live pointer dragging and a committed value on release.
+ *
+ * Supports arrow keys, Page Up/Down, Home, End and direct numeric input.
  */
 export const DragSlider = (props: DragSliderProps) => {
   const {
@@ -151,7 +151,6 @@ export const DragSlider = (props: DragSliderProps) => {
                 if (typed !== displayedValue) commit(typed);
               }}
               onKeyDown={(event) => {
-                // Escape puts the old number back, so a half-typed value can be abandoned
                 if (event.key === 'Escape') {
                   event.currentTarget.value = String(displayedValue);
                 }

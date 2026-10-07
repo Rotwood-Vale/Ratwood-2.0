@@ -21,13 +21,8 @@ with light edits to work with roguecode */
 	var/sound_vary = TRUE
 	///extra-range for this component's sound.
 	var/sound_extra_range = -1
-	/**
-	 * Sound exponent for the rustle. Null, so sound_falloff_for_range() picks the band.
-	 *
-	 * Upstream hardcodes 5, tuned against TG's SOUND_RANGE of 15 and default exponent of 2.5, where
-	 * it meant twice as steep as normal. Unscaled it is steeper than any band here, full volume for a
-	 * tile and then a cliff, so the band picks the curve instead.
-	 */
+	/// Optional rustle falloff override. Null selects Ratwood's range-based curve instead of a
+	/// fixed exponent
 	var/sound_falloff_exponent = null
 	///when sounds start falling off for the rustle rustle.
 	var/sound_falloff_distance = 1

@@ -1,8 +1,7 @@
 /**
- * Prints the area facts that decide how sound leaves where you are standing.
+ * Reports the current area's sound settings and the listener's active point ambience.
  *
- * The soundproof line reads the area at runtime, the test playsound() makes for ERP audio, rather
- * than the area's definition, so a converted area or a var edited after mapload shows its real value.
+ * Reads runtime area values, including soundproofing changed after map initialization.
  */
 /client/proc/check_sound_area()
 	set category = "Debug"
@@ -10,7 +9,7 @@
 	if(!check_rights(R_DEBUG))
 		return
 	// The ear, not the body: a headless dullahan's sound is decided where the head is
-	var/turf/here = get_turf(point_ambience_ear || mob)
+	var/turf/here = get_turf(point_ambience.ear || mob)
 	if(!here)
 		to_chat(usr, span_warning("You are not standing anywhere."))
 		return
@@ -30,21 +29,20 @@
 		var/area/other = get_area(T)
 		msg += "[T == above ? "above" : "below"]: [other ? "[other.name], soundproof [other.soundproof]" : "nothing"]"
 
-	var/river_mark = SSpoint_ambience.river_fill_marks[here]
+	var/river_mark = SSpoint_ambience.river_fill.marks[here]
 	var/fill_state = "unmarked, no river reach"
 	if(!isnull(river_mark))
 		fill_state = RIVER_FILL_AUDIBLE(river_mark) ? "reachable, [RIVER_FILL_COST(river_mark) * 0.5] tiles by path" : "blocked, silent"
-	msg += "river fill: [SSpoint_ambience.river_fill_done ? fill_state : "pending initial fill"] | area river_ambience [A.river_ambience ? "TRUE" : "FALSE"]"
+	msg += "river fill: [SSpoint_ambience.river_fill.done ? fill_state : "pending initial fill"] | area river_ambience [A.river_ambience ? "TRUE" : "FALSE"]"
 
-	// What point ambience is sending you, one voice per category. The volume is the last one sent
-	// rather than one recomputed for the readout, so it is what your client plays now
+	// Report the last sent volume rather than recomputing playback for the diagnostic
 	var/list/playing = list()
 	for(var/datum/point_ambience_category/category as anything in SSpoint_ambience.categories)
-		var/atom/source = point_ambience_sources[category]
+		var/atom/source = point_ambience.sources[category]
 		if(!source)
 			continue
-		var/list/slot = (length(point_ambience_slots) >= category.index) ? point_ambience_slots[category.index] : null
-		var/vol = slot ? slot[POINT_AMBIENCE_SLOT_LAST_VOLUME] : null
+		var/datum/point_ambience_slot/slot = LAZYACCESS(point_ambience.slots, category.index)
+		var/vol = slot ? slot.last_volume : null
 		var/turf/source_turf = SSpoint_ambience.source_turfs[source] || get_turf(source)
 		var/where = "position unknown"
 		if(category == SSpoint_ambience.river_category)
@@ -54,14 +52,12 @@
 			var/dy = source_turf.y - here.y
 			var/distsq = dx * dx + dy * dy
 			where = "[round(sqrt(distsq), 0.1)] tiles"
-			// Nothing should ever be playing from outside its own range, so say so loudly here
-			// rather than leaving it to be read off the distance
 			if(distsq > category.range_sq)
 				where += ", PAST its range of [category.range], which is a BUG"
 			if(source_turf.z != here.z)
 				where += ", [abs(source_turf.z - here.z)] floor away"
-			// A muffled send also carries a dead-room environment and the occlusion low-pass, so two
-			// sources reading the same volume are not equally audible
+			// Muffling also changes filtering and environment, so equal volumes can sound
+			// different
 			switch(SSpoint_ambience.source_occluded(source_turf, here, category))
 				if(OCCLUSION_MUFFLED)
 					where += ", <b>MUFFLED</b> (dead room + occlusion low-pass, not just quieter)"

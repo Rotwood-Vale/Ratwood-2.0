@@ -14,7 +14,7 @@
 	var/initialized_at
 	/// Each client notifies on protected playback, so this prevents spamming admins.
 	var/static/admins_warned = FALSE
-	/// Opening the settings window is client driven, so it is rate limited against a client sending it in a loop
+	/// Rate limit for client requests to open Audio Settings
 	COOLDOWN_DECLARE(open_settings_cooldown)
 
 /datum/tgui_panel/New(client/client, id)
@@ -90,8 +90,7 @@
 				),
 			),
 		))
-		// The panel starts on its own stored default, so a player who set this last round would hear
-		// the first track at the wrong volume without this
+		// Replace the browser's stored default before its first track starts
 		set_streamed_volume()
 		return TRUE
 	if(type == "audio/openSettings")

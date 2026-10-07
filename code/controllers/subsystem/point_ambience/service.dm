@@ -1,279 +1,231 @@
 /**
- * Finds and sends the nearest audible source in each category for one client.
+ * Selects and services the audible source in each category for one client.
  *
- * Queued movement, periodic standing walks and clip timers can call service_client().
- * POINT_AMBIENCE_STANDING_UNCHANGED lets a listener reuse point_ambience_cache_static instead of
- * ranking again. A due clip in a category without occlusion can take the clip_only path and update
- * just that category when the cached source and room still match.
+ * Consumes due clips, rejects muted listeners, resolves the hearing turf and self source, then
+ * checks cached selection. An unchanged listener with no pending playback work returns before
+ * preparing serving_* or clearing scratch state.
  *
- * Occlusion runs before slim_send() because a wall can change the winning source. The resolved
- * winner is written back to point_ambience_cache_static for standing services, which still grade
- * it against the current walls.
+ * Remaining services prepare listener context, resolve river reach and rank or reuse indexed
+ * sources. single_clip_refresh limits work to one due non-occluded category when its source and
+ * room still match. Otherwise categories handle mute, source loss, occlusion, handoffs and sends in
+ * sequence.
+ *
+ * Occlusion may replace a winner with its runner-up in the listener's cache. That selection is
+ * separate from the shared tile ranking and does not establish current acoustic validity. Losing
+ * the hearing turf must still reach playback cleanup. River anchors update before send shortcuts,
+ * and re-entry can resume an ordinary loop during its exit fade.
  */
 /datum/controller/subsystem/point_ambience/proc/service_client(client/listener_client)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
-	var/list/clip_advances = listener_client.point_ambience_clip_due ? collect_due_clips(listener_client) : null
-	// Before the count, so they stay out of the rates. With no move hook and the walk passing them,
-	// only a listener queued just before muting arrives here
-	if(listener_client.point_ambience_silenced)
-		muted_services_refused++
+	var/datum/point_ambience_listener/listener_state = listener_client.point_ambience
+	var/list/due_clip_categories = listener_state.clip_due ? collect_due_clips(listener_client) : null
+	// Reject muted clients before counting a service, including requests queued before they muted
+	if(listener_state.silenced)
+		metrics.muted_services_refused++
 		return
-	services_total++
-	sends_this_service = 0
-	rebuilt_this_service = FALSE
-	ranked_candidates_this_service = null
-	occlusion_checks_this_service = 0
-	occlusion_tiles_this_service = 0
+	metrics.services_total++
+
 	var/mob/listener = listener_client.mob
 	var/turf/listener_turf
-	// A headless dullahan hears from the head, kept current by the watch, null for everyone else
-	var/atom/movable/ear = listener_client.point_ambience_ear
-	// Observers are skipped by the tick and stopped at login. This catches any that arrive
-	// another way
+	var/atom/movable/ear = listener_state.ear
 	if(listener && !isnewplayer(listener) && !isobserver(listener))
 		listener_turf = get_turf(ear || listener)
-	// The mob's own lit torch, served ahead of what the walk found. It is in the body's hand, so
-	// it is only theirs to hear while the ear is on that turf
+	// A held torch belongs to the body and is audible only when the hearing anchor shares its turf
 	var/atom/self_source = null
 	if(listener_turf && (!ear || listener_turf == get_turf(listener)))
 		self_source = listener.point_ambience_self_source
-	// Still moving faster than a natural run, so everything fades where it plays. The service that
-	// finds the stamp gone old clears the silence and serves them as normal
-	if(!isnull(listener_client.point_ambience_speed_moved))
-		if(world.time - listener_client.point_ambience_speed_moved < POINT_AMBIENCE_SPEED_STILL)
+	// Restore ambience once the fast-movement timestamp expires
+	if(!isnull(listener_state.speed_moved))
+		if(world.time - listener_state.speed_moved < POINT_AMBIENCE_SPEED_STILL)
 			speed_silence(listener_client, listener_turf, self_source)
 			return
-		listener_client.point_ambience_speed_moved = null
-	listener_client.point_ambience_speed_silenced = FALSE
+		listener_state.speed_moved = null
+	listener_state.speed_silenced = FALSE
+
 	var/list/nearest_by_category
-	var/standing = FALSE
-	var/clip_only = FALSE
-	var/datum/point_ambience_category/clip_category = (length(clip_advances) == 1) ? clip_advances[1] : null
+	var/reuse_cached_sources = FALSE
+	var/single_clip_refresh = FALSE
+	var/datum/point_ambience_category/due_clip_category = (length(due_clip_categories) == 1) ? due_clip_categories[1] : null
 	var/ambience_volume = null
 	if(listener_turf)
 		var/datum/preferences/prefs = listener_client.prefs
 		ambience_volume = prefs ? POINT_AMBIENCE_VOLUME(prefs) : null
-		if(POINT_AMBIENCE_STANDING_UNCHANGED(listener_client, listener_turf, ambience_volume))
-			standing = TRUE
-			listener_client.point_ambience_cache_version = static_version
-			// Every category below would return unchanged, so skip the loop. Returns WITHOUT preparing,
-			// so the serving_* vars still describe the last client served and nothing may read them
-			if(self_source == listener_client.point_ambience_cache_self)
-				if(!length(clip_advances))
-					shortcut_hits++
+		if(POINT_AMBIENCE_STANDING_UNCHANGED(listener_state, listener_turf, ambience_volume))
+			reuse_cached_sources = TRUE
+			listener_state.cache_version = static_version
+			// Unchanged categories need no work. serving_* is unprepared and may describe another client
+			if(self_source == listener_state.cache_self)
+				if(!length(due_clip_categories))
+					metrics.shortcut_hits++
 					return
-				if(clip_category)
-					var/atom/current_source = listener_client.point_ambience_sources[clip_category]
-					clip_only = !clip_category.occlude && !ear && current_source \
-						&& (clip_category == river_category ? current_source == listener_turf : listener_client.point_ambience_cache_static?[clip_category] == current_source)
+				if(due_clip_category)
+					var/atom/current_source = listener_state.sources[due_clip_category]
+					single_clip_refresh = !due_clip_category.occlude && !ear && current_source \
+						&& (due_clip_category == river_category ? current_source == listener_turf : listener_state.cache_static?[due_clip_category] == current_source)
 		// Per service, not per walk: later paths may otherwise read another turf or client's runner-up
 		runner_up_by_category.Cut()
-		// After the shortcut, so an unchanged listener prepares only for a due clip or a changed
-		// torch. One who cannot be served counts as having no turf, which stops everything playing
+		// A failed hearing preparation must reach category cleanup to stop existing playback
 		if(!prepare_serving(listener_client, listener, listener_turf, ambience_volume))
 			listener_turf = null
 			self_source = null
-			clip_only = FALSE
-	var/muted_mask = listener_client.point_ambience_muted_mask
+			single_clip_refresh = FALSE
+
+	var/muted_mask = listener_state.muted_mask
 	var/river_cost
 	if(listener_turf)
-		// After the standing shortcut: unchanged listeners do not need even this one fill lookup
 		if(!river_category.silenced && !(muted_mask & river_category.mask))
-			var/river_mark = river_fill_marks[listener_turf]
+			var/river_mark = river_fill.marks[listener_turf]
 			if(RIVER_FILL_AUDIBLE(river_mark))
 				river_cost = RIVER_FILL_COST(river_mark)
-		if(clip_only)
-			var/list/clip_slot = listener_client.point_ambience_slots[clip_category.index]
-			clip_only = clip_slot && clip_slot[POINT_AMBIENCE_SLOT_ENVIRONMENT] == serving_environment
-			if(clip_category == river_category && isnull(river_cost))
-				clip_only = FALSE
-		// A due clip walks a standing listener afresh, which is not a shortcut miss and is not counted as one
-		var/clip_forced_walk = FALSE
-		if(length(clip_advances) && !clip_only)
-			clip_forced_walk = standing
-			standing = FALSE
-		if(standing)
-			nearest_by_category = listener_client.point_ambience_cache_static
+		if(single_clip_refresh)
+			var/datum/point_ambience_slot/clip_slot = listener_state.slots[due_clip_category.index]
+			single_clip_refresh = clip_slot && clip_slot.environment == serving_environment
+			if(due_clip_category == river_category && isnull(river_cost))
+				single_clip_refresh = FALSE
+		// A due clip can force ranking without counting as a standing-cache miss
+		var/clip_forced_ranking = FALSE
+		if(length(due_clip_categories) && !single_clip_refresh)
+			clip_forced_ranking = reuse_cached_sources
+			reuse_cached_sources = FALSE
+		if(reuse_cached_sources)
+			nearest_by_category = listener_state.cache_static
 		else
-			if(in_standing_walk && !clip_forced_walk)
+			if(in_standing_walk && !clip_forced_ranking)
 				count_standing_walk_miss(listener_client, listener_turf)
-			services_ranked++
+			metrics.services_ranked++
 			nearest_by_category = nearest_sources(listener_turf, listener_client)
-			listener_client.point_ambience_cache_turf = listener_turf
-			listener_client.point_ambience_cache_version = static_version
-			listener_client.point_ambience_cache_volume = ambience_volume
-	if(length(clip_advances))
-		if(clip_only)
-			clip_refresh_fast += length(clip_advances)
-		else
-			clip_refresh_full += length(clip_advances)
+			listener_state.cache_turf = listener_turf
+			listener_state.cache_version = static_version
+			listener_state.cache_volume = ambience_volume
 	if(!listener_turf)
-		listener_client.point_ambience_cache_turf = null
-	listener_client.point_ambience_cache_self = self_source
-	var/list/sources = listener_client.point_ambience_sources
-	// Nothing answered, nothing playing and no torch in hand leaves the loop below nothing to do
-	if(!self_source && isnull(river_cost) && !length(nearest_by_category) && !length(sources))
+		listener_state.cache_turf = null
+	listener_state.cache_self = self_source
+	var/list/selected_sources = listener_state.sources
+	var/nothing_answered = isnull(river_cost) && !length(nearest_by_category)
+	if(nothing_answered && !length(selected_sources) && !self_source)
 		if(!in_standing_walk)
-			moving_silent++
+			metrics.moving_silent++
 		return
-	var/list/fade_slots = listener_client.point_ambience_slots
+
+	var/list/category_slots = listener_state.slots
 	for(var/datum/point_ambience_category/category as anything in categories)
-		if(clip_only && category != clip_category)
+		if(single_clip_refresh && category != due_clip_category)
 			continue
-		var/clip_advance = clip_advances && (category in clip_advances)
-		var/atom/nearest
-		var/by_wall = FALSE
+		var/clip_advance = due_clip_categories && (category in due_clip_categories)
+		var/atom/selected_source
 		serving_muffle_wall = FALSE
-		// A category switched off, or one whose due clip has no source, stops at once. Any other loss
-		// is the listener having moved out of range or behind a wall, and that fades
-		var/switched_off = category.silenced || (muted_mask & category.mask)
+		// Mute and expired-clip source loss stop immediately. Ordinary range or occlusion loss
+		// fades
+		var/category_muted = category.silenced || (muted_mask & category.mask)
 		var/is_river = category == river_category
-		if(switched_off)
-			nearest = null
+		if(category_muted)
+			selected_source = null
 		else if(is_river)
 			// The hearing turf carries playback state, since river water is not in the source index
-			nearest = isnull(river_cost) ? null : listener_turf
+			selected_source = isnull(river_cost) ? null : listener_turf
 		else if(self_source && category == self_category)
-			nearest = self_source
+			selected_source = self_source
 		else
-			nearest = nearest_by_category?[category]
-			// Occlusion changes WHICH source is served, so it runs before the send. Written back
-			// because a later standing service re-reads this list without walking
-			if(nearest && occlude_sources)
-				var/atom/clear_source = unoccluded_source(nearest, category)
-				if(!clear_source)
+			selected_source = nearest_by_category?[category]
+			// Store the occlusion-selected winner for later standing services
+			if(selected_source)
+				var/atom/audible_source = unoccluded_source(selected_source, category)
+				if(!audible_source)
 					nearest_by_category -= category
-					by_wall = TRUE
-				else if(clear_source != nearest)
-					nearest_by_category[category] = clear_source
-				nearest = clear_source
-		var/atom/previous = sources[category]
-		if(!nearest)
-			if(previous)
-				if(switched_off || clip_advance || (is_river && previous.z != listener_turf?.z))
-					stop_for(listener_client, category)
-				else
-					fade_out(listener_client, category, listener_turf, by_wall)
+				else if(audible_source != selected_source)
+					nearest_by_category[category] = audible_source
+				selected_source = audible_source
+
+		var/atom/previous_source = selected_sources[category]
+		if(!selected_source)
+			if(!previous_source)
+				continue
+			if(category_muted || clip_advance || (is_river && previous_source.z != listener_turf?.z))
+				stop_for(listener_client, category)
+			else
+				fade_out(listener_client, category, listener_turf)
 			continue
-		if(is_river && previous && previous.z != listener_turf.z)
+		if(is_river && previous_source && previous_source.z != listener_turf.z)
 			// A floor change ends this stretch before starting the destination floor's river
 			stop_for(listener_client, category)
-			previous = null
-		var/had_previous = !!previous
-		var/fresh = is_river ? !had_previous : (nearest != previous)
-		var/centre = FALSE
-		var/list/slot
+			previous_source = null
+		var/had_previous = !!previous_source
+		var/source_changed = is_river ? !had_previous : (selected_source != previous_source)
+		var/centre_handoff = FALSE
+		var/datum/point_ambience_slot/slot
 		if(is_river)
 			slot = slot_for(listener_client, category.index)
 			// Update before either shortcut. Otherwise a long bank walk leaves a distant fade anchor
-			sources[category] = nearest
-			slot[POINT_AMBIENCE_SLOT_TURF] = listener_turf
-			if(had_previous && !clip_advance && !slot[POINT_AMBIENCE_SLOT_FADE_NEXT] && !serving_muffle_head \
-				&& !isnull(listener_client.point_ambience_river_cost) && listener_client.point_ambience_river_cost == river_cost \
-				&& listener_client.point_ambience_river_scale == serving_volume_scale && listener_client.point_ambience_river_version == static_version \
-				&& slot[POINT_AMBIENCE_SLOT_ENVIRONMENT] == serving_environment)
+			selected_sources[category] = selected_source
+			slot.source_turf = listener_turf
+			var/river_playback_is_steady = had_previous && !clip_advance && !slot.fade_next && !serving_muffle_head
+			var/river_inputs_unchanged = river_playback_is_steady && !isnull(listener_state.river_cost) && listener_state.river_cost == river_cost \
+				&& listener_state.river_scale == serving_volume_scale && listener_state.river_version == static_version \
+				&& slot.environment == serving_environment
+			if(river_inputs_unchanged)
 				continue
-		if(fresh)
-			sources[category] = nearest
-			if(previous)
-				category.handoffs++
-				centre = category.centre_handoff
-			// Back in earshot mid fade out, so the send carries on with the playing clip rather than
-			// restarting it, which matters past pillars. A clip set restarts
-			if(!had_previous && !category.files && length(fade_slots) >= category.index)
-				var/list/fade_slot = fade_slots[category.index]
-				if(fade_slot?[POINT_AMBIENCE_SLOT_FADE_NEXT] && isnull(fade_slot[POINT_AMBIENCE_SLOT_FADE_TARGET]))
+		if(source_changed)
+			selected_sources[category] = selected_source
+			if(previous_source)
+				centre_handoff = category.centre_handoff
+			// Resume a still-playing exit fade without restarting an ordinary loop. Clip sets
+			// restart
+			if(!had_previous && !category.files)
+				var/datum/point_ambience_slot/fade_slot = LAZYACCESS(category_slots, category.index)
+				if(fade_slot?.fade_next && isnull(fade_slot.fade_target))
 					had_previous = TRUE
-					fade_takeovers++
-		// A standing listener's unchanged source would get the same numbers as last time. Nothing
-		// reaches here having moved: a move within a listener's reach ends their standing
-		else if(!is_river && standing && !clip_advance)
+		else if(!is_river && reuse_cached_sources && !clip_advance)
 			continue
 		// A torch in hand is at distance 0 and centred, so only the room, muffle and volume change it
-		else if(!clip_advance && nearest == self_source && self_send_unchanged(listener_client, category, nearest))
+		else if(!clip_advance && selected_source == self_source && self_send_unchanged(listener_client, category, selected_source))
 			continue
-		// Who this category would fall to, BEFORE the send: the pan blend reads it during one and
-		// would otherwise lean on the last service's. A failed send drops the category from sources
+
+		// Set the current runner-up before pan_lean() reads it during the send
 		if(!slot)
 			slot = slot_for(listener_client, category.index)
-		if(!clip_only)
-			slot[POINT_AMBIENCE_SLOT_RUNNER_UP] = runner_up_by_category[category]
-		var/sent
-		sends_this_service++
-		sends_total++
-		sent = slim_send(listener, listener_client, category, nearest, fresh, had_previous, FALSE, slot, clip_advance, centre, river_cost)
+		if(!single_clip_refresh)
+			slot.runner_up = runner_up_by_category[category]
+		metrics.sends_total++
+		var/target_volume = slim_send(listener, listener_client, category, selected_source, source_changed, had_previous, FALSE, slot, clip_advance, centre_handoff, river_cost)
 		if(is_river)
-			listener_client.point_ambience_river_cost = serving_muffle_head ? null : river_cost
-			listener_client.point_ambience_river_scale = serving_volume_scale
-			listener_client.point_ambience_river_version = static_version
-		// Nothing usable was sent, so null what was playing or it repeats client-side at a stale
-		// volume. Keyed on what was playing, not fresh: a failed switch must still silence it
-		if(!sent)
+			listener_state.river_cost = serving_muffle_head ? null : river_cost
+			listener_state.river_scale = serving_volume_scale
+			listener_state.river_version = static_version
+		// A refused send must stop existing playback, including a failed source handoff
+		if(!target_volume)
 			stop_for(listener_client, category, send_null = had_previous)
 
-/**
- * Takes every clip that came due off the client's slots, returning the categories still playing
- * whose clip must advance, or null.
- *
- * A deferred timer still waiting on one is cancelled, this service being the one it waited for.
- */
-/datum/controller/subsystem/point_ambience/proc/collect_due_clips(client/listener_client)
-	PRIVATE_PROC(TRUE)
-	var/list/due
-	listener_client.point_ambience_clip_due = FALSE
-	var/list/slots = listener_client.point_ambience_slots
-	for(var/datum/point_ambience_category/due_category as anything in categories)
-		var/list/due_slot = (length(slots) >= due_category.index) ? slots[due_category.index] : null
-		if(!due_slot?[POINT_AMBIENCE_SLOT_CLIP_DUE])
-			continue
-		due_slot[POINT_AMBIENCE_SLOT_CLIP_DUE] = null
-		if(due_slot[POINT_AMBIENCE_SLOT_TIMER])
-			deltimer(due_slot[POINT_AMBIENCE_SLOT_TIMER])
-			due_slot[POINT_AMBIENCE_SLOT_TIMER] = null
-			clip_refresh_coalesced++
-		if(listener_client.point_ambience_sources[due_category])
-			LAZYADD(due, due_category)
-	return due
-
-/// Counts why a standing walk visit missed the shortcut and walked: its turf, the index or its
-/// volume changed
+/// Counts a standing-cache miss caused by changed hearing turf, source revision or volume
 /datum/controller/subsystem/point_ambience/proc/count_standing_walk_miss(client/listener_client, turf/listener_turf)
 	PRIVATE_PROC(TRUE)
-	if(listener_turf != listener_client.point_ambience_cache_turf)
-		standing_walk_miss_turf++
-	else if(static_version != listener_client.point_ambience_cache_version)
-		standing_walk_miss_version++
+	if(listener_turf != listener_client.point_ambience.cache_turf)
+		metrics.standing_walk_miss_turf++
+	else if(static_version != listener_client.point_ambience.cache_version)
+		metrics.standing_walk_miss_version++
 	else
-		standing_walk_miss_volume++
+		metrics.standing_walk_miss_volume++
 
 /**
- * Resolves what every send in one service needs from the listener, once.
+ * Prepares hearing, environment, volume and enclosure state for one listener's sends.
  *
- * Whether they can hear at all, a chain of procs and an organ slot read on a carbon, is held on the
- * client for one standing_walk_interval. Turf, area environment, whether their ear is shut inside
- * something and their point ambience volume are per service, and a caller that already has the turf
- * passes it.
+ * Returns TRUE with usable serving_* fields, or FALSE without a valid context. Call only after the
+ * standing shortcut, and consume the context before preparing another listener. service_client()
+ * resets wall muffling for each category.
  *
- * Runs after the standing shortcut, never before it: a listener standing still pays nothing here,
- * and one who goes deaf while standing keeps what is playing until a service passes the shortcut
- * after the hearing cache expires. A step, index change or volume change before expiry can still
- * reuse the old hearing result.
- *
- * Returns TRUE with serving_turf, serving_environment, serving_volume_scale and
- * the muffle flags prepared for this listener. FALSE leaves no usable context, even if fields still
- * hold values from a previous call. A caller must consume the context before preparing another
- * listener. service_client() resets serving_muffle_wall before grading each category.
+ * can_hear() is cached until profile_until. Unchanged standing listeners do not refresh it. An
+ * active service refreshes an expired profile. Turf, area, enclosure and volume are resolved for
+ * each prepared service. A null volume means no preference scaling. Zero prevents playback.
  */
 /datum/controller/subsystem/point_ambience/proc/prepare_serving(client/listener_client, mob/listener, turf/listener_turf, ambience_volume = null)
 	SHOULD_NOT_SLEEP(TRUE)
-	if(world.time >= listener_client.point_ambience_profile_until)
-		listener_client.point_ambience_profile_until = world.time + standing_walk_interval
-		listener_client.point_ambience_hearing = listener.can_hear()
-	if(!listener_client.point_ambience_hearing)
+	var/datum/point_ambience_listener/listener_state = listener_client.point_ambience
+	if(world.time >= listener_state.profile_until)
+		listener_state.profile_until = world.time + standing_walk_interval
+		listener_state.hearing = listener.can_hear()
+	if(!listener_state.hearing)
 		return FALSE
-	// Checked here so nothing below works for a muted listener. ZERO only, never "low", and null is
-	// not zero: no prefs means no scaling rather than silence
+	// Null means no supplied volume. Explicit zero means muted
 	if(isnull(ambience_volume) && listener_client.prefs)
 		ambience_volume = listener_client.prefs.point_ambience_volume()
 	var/volume_scale = isnull(ambience_volume) ? null : ambience_volume * 0.01
@@ -284,12 +236,11 @@
 		if(!listener_turf)
 			return FALSE
 	serving_turf = listener_turf
-	// Both muffle flags start clear for every service. The wall one is set per category by the
-	// grade, and a caller that grades nothing must not inherit the last service's answer
+	// Reset per-service muffling so a previous listener's state cannot carry over
 	serving_muffle_wall = FALSE
-	// Only a dullahan has an ear that can be inside anything, so nobody else walks a loc chain
+	// Only detached hearing needs the enclosure chain checked
 	serving_muffle_head = FALSE
-	var/atom/movable/ear = listener_client.point_ambience_ear
+	var/atom/movable/ear = listener_state.ear
 	if(ear)
 		var/atom/holder = ear.loc
 		while(holder && !isturf(holder))
@@ -297,9 +248,9 @@
 				serving_muffle_head = TRUE
 				break
 			holder = holder.loc
-	var/area/A = listener_turf.loc
-	serving_environment = (A && A.soundenv && A.soundenv != SOUND_ENVIRONMENT_NONE) ? A.soundenv : SOUND_DEFAULT_ENVIRONMENT
-	// No prefs leaves this null, so no scaling. A zero never gets here, having returned above
+	var/area/listener_area = listener_turf.loc
+	var/area_environment = listener_area?.soundenv
+	serving_environment = (area_environment && area_environment != SOUND_ENVIRONMENT_NONE) ? area_environment : SOUND_DEFAULT_ENVIRONMENT
 	serving_volume_scale = volume_scale
 	return TRUE
 
@@ -308,87 +259,53 @@
 /datum/controller/subsystem/point_ambience/proc/self_send_unchanged(client/listener_client, datum/point_ambience_category/category, atom/source)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
-	var/list/slots = listener_client.point_ambience_slots
-	if(length(slots) < category.index)
-		return FALSE
-	var/list/slot = slots[category.index]
-	if(!slot || slot[POINT_AMBIENCE_SLOT_ENVIRONMENT] != serving_environment)
+	var/list/slots = listener_client.point_ambience.slots
+	var/datum/point_ambience_slot/slot = LAZYACCESS(slots, category.index)
+	if(!slot || slot.environment != serving_environment)
 		return FALSE
 	if(serving_muffle_wall || serving_muffle_head)
 		return FALSE
-	var/vol = category.volume * (category.source_volumes[source] || 1)
+	var/target_volume = category.volume * (category.source_volumes[source] || 1)
 	if(!isnull(serving_volume_scale))
-		vol *= serving_volume_scale
-	return slot[POINT_AMBIENCE_SLOT_LAST_VOLUME] == min(vol, 100)
+		target_volume *= serving_volume_scale
+	return slot.last_volume == min(target_volume, 100)
 
 /**
- * How a wall between source and listener grades a send, as an OCCLUSION_* value.
+ * Returns a source's OCCLUSION_* grade for diagnostics, optionally recording the traced turfs.
  *
- * OCCLUSION_CLEAR, OCCLUSION_MUFFLED round a corner, or OCCLUSION_SOLID. For check_sound_area. The
- * live path grades through unoccluded_source(), which shares the walk and these
- * guards, occlude_sources aside, and leaves out the trace.
- *
- * A cut-down can_see(), reading turf opacity and doors, plus under FLANKS every opaque object on a
- * corner probe's first tile. Doors are objects where
- * walls are turfs, so a turf's contents are looped only where its sound_door_count says one may
- * stand. A listener standing still never re-sends an unchanged static source, so a door's state
- * would freeze into the sound until they moved. recheck_doors() serves them again when one changes.
+ * Uses the same guards and corner grading as live selection in unoccluded_source(). Door policy
+ * controls live contents checks. Nearby door changes invalidate stationary listener selections.
  *
  * Arguments:
- * * trace - filled with the turfs the line crossed, for a caller to print
+ * * trace - receives the turfs crossed by the direct line
  */
 /datum/controller/subsystem/point_ambience/proc/source_occluded(turf/source_turf, turf/listener_turf, datum/point_ambience_category/category, list/trace)
-	if(!occlude_sources || !category.occlude || source_turf == listener_turf || source_turf.z != listener_turf.z)
+	if(!category.occlude || source_turf == listener_turf || source_turf.z != listener_turf.z)
 		return OCCLUSION_CLEAR
-	// Graded rather than a bare walk, or this reports SOLID for a source the service is serving muffled
 	. = sound_occlusion_grade(listener_turf, source_turf, category.range, FALSE, trace, door_mode)
 	count_occlusion_walk()
 
-/**
- * Folds what the last sound_occlusion_grade() cost into this service's totals.
- *
- * That is one direct walk plus however many probes it needed. The walk and its probes are plain
- * procs shared with the one-shot path, and the walk with the token too, so they cannot count into
- * a service themselves.
- */
+/// Adds the last direct trace and its corner-probe count to point-ambience metrics
 /datum/controller/subsystem/point_ambience/proc/count_occlusion_walk()
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
-	var/walks = 1 + GLOB.occlusion_probe_walks
-	occlusion_checks_this_service += walks
-	occlusion_checks_total += walks
-	occlusion_tiles_this_service += GLOB.opacity_walk_tiles + GLOB.occlusion_probe_tiles
+	metrics.occlusion_checks_total += 1 + GLOB.occlusion_probe_walks
 
 /**
- * The nearest source of a category that is not behind a wall, or null.
+ * Returns the nearest audible winner or runner-up, or null if neither has an open path.
  *
- * The winner where it is clear, the walk's runner-up where the winner is blocked and the runner-up
- * is not, and null where both are. Null fades the category out, which is the point, a wall stopping
- * the sound rather than dulling it.
+ * Grades after distance ranking, limiting checks to at most two sources per category. A blocked
+ * winner must not hide an audible runner-up. Same-turf sources and categories without occlusion
+ * bypass tracing. Cross-floor sends use the separate storey rule.
  *
- * Runs ONCE per category per service, on the source that already won, never during the walk, whose
- * inner loop runs once per candidate. Checking after selection means a blocked source would hold
- * the channel and cut off a campfire you can see, so this falls through to the walk's runner-up,
- * stopping at one. A different floor is never graded: the walk is 2D and returns CLEAR across
- * floors, and the send's storey rule muffles those sources instead.
- *
- * NO LEAK HERE, DELIBERATELY. playsound's SOUND_TRAVEL_LEAKING lets an enclosed listener hear a
- * one-shot faintly just past a window or door, and that is right for a one-shot and wrong for a
- * loop. A hearth leaking at a fixed volume past every window in a town is a permanent drone, and
- * since only the nearest source per category is served it would be a GHOST of a fire nobody can
- * reach, displacing the runner-up below, which is a real one with a real path to it. It would also
- * turn silence into a send on the one system billed per moving listener.
- *
- * The two states a category actually wants both exist: walls stop it, or `occlude = FALSE` and
- * direct source traces do not apply. River barriers are handled by its fill. If one ever wants
- * the third, it is a `category.leak` flag evaluated AFTER the runner-up fails, so a clear source
- * always wins. Wait for a category to ask.
+ * Enclosed point ambience does not use one-shot leakage. A leaking nearest loop could occupy the
+ * category's single channel indefinitely and displace another source with an audible path. River
+ * barriers are resolved by the fill instead.
  */
 /datum/controller/subsystem/point_ambience/proc/unoccluded_source(atom/nearest, datum/point_ambience_category/category)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	RETURN_TYPE(/atom)
-	// The same guards as source_occluded(), except occlude_sources, which the caller checks
 	if(!category.occlude)
 		return nearest
 	var/turf/source_turf = source_turfs[nearest] || get_turf(nearest)
@@ -396,33 +313,29 @@
 		return nearest
 	if(grade_from_listener(source_turf, category.range) != OCCLUSION_SOLID)
 		return nearest
-	runner_up_offered++
 	var/atom/runner_up = runner_up_by_category[category]
 	if(!runner_up || runner_up == nearest)
-		runner_up_silenced++
+		metrics.runner_up_silenced++
 		return null
-	var/turf/runner_turf = source_turfs[runner_up] || get_turf(runner_up)
-	if(!runner_turf)
-		runner_up_silenced++
+	var/turf/runner_up_turf = source_turfs[runner_up] || get_turf(runner_up)
+	if(!runner_up_turf)
+		metrics.runner_up_silenced++
 		return null
-	// On the listener's own turf, or a floor away: nothing can stand between, so it is served
-	if(runner_turf == serving_turf || runner_turf.z != serving_turf.z)
-		runner_up_served++
+	// Same-turf sources need no trace. Cross-floor attenuation is handled by the send path
+	if(runner_up_turf == serving_turf || runner_up_turf.z != serving_turf.z)
 		return runner_up
-	if(grade_from_listener(runner_turf, category.range) == OCCLUSION_SOLID)
-		runner_up_silenced++
+	if(grade_from_listener(runner_up_turf, category.range) == OCCLUSION_SOLID)
+		metrics.runner_up_silenced++
 		return null
-	runner_up_served++
 	return runner_up
 
-/// Grades one line from the listener, folds its cost into the service and sets the corner muffle,
-/// so the winner and the runner-up are held to one rule
+/// Grades a source from serving_turf, records trace counts and sets the category's corner-muffle
+/// flag
 /datum/controller/subsystem/point_ambience/proc/grade_from_listener(turf/source_turf, range)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	. = sound_occlusion_grade(serving_turf, source_turf, range, FALSE, null, door_mode)
-	// Counted before another walk overwrites what this one cost
+	// Read probe counters before another trace overwrites them
 	count_occlusion_walk()
 	if(. == OCCLUSION_MUFFLED)
-		occlusion_corners++
 		serving_muffle_wall = TRUE

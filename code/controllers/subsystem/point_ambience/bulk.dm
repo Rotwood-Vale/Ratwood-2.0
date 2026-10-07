@@ -1,17 +1,12 @@
 /**
- * Opens a scope for changing many point ambience sources together.
+ * Begins a batch of point-ambience source changes.
  *
- * Each register_source() and unregister_source() still updates the index, counts, overrides,
- * fallback loops and static_version. The outermost finish_bulk() combines the repeated ranking
- * invalidation, source-change history update and walk over clients.
- * In a local one-client test, removing indexed lights one by one took 38.4 ms in one tick under
- * ideal conditions. That figure may change with the map or implementation.
- *
- * Open and close in the same proc and tick, without sleeping between them. close_leaked_bulk()
- * runs on the next fire or scope if a caller fails partway, limiting how long rankings stay stale.
+ * Registration and removal still update the source index, overrides and fallback loops immediately.
+ * The outermost close combines cache invalidation and listener cleanup. Open and close the scope in
+ * the same proc and tick without sleeping. A later fire or scope closes a leaked batch.
  *
  * Arguments:
- * * label - names the caller if its scope leaks
+ * * label - identifies the caller when reporting an unclosed scope
  */
 /datum/controller/subsystem/point_ambience/proc/begin_bulk_source_update(label)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -39,7 +34,7 @@
  *
  * One clear_tile_cache() resets source_change_history and bumps static_version, so no listener
  * reuses an answer from before the scope. Then bulk_affected sources are checked against each
- * client's point_ambience_sources. A source restored to the same category keeps playing. One
+ * client's point_ambience.sources. A source restored to the same category keeps playing. One
  * removed or moved to another category stops, even if it was indexed during the scope. A held
  * torch stays alone unless the scope removed it, and an existing fade finishes normally.
  *
@@ -50,23 +45,19 @@
 /datum/controller/subsystem/point_ambience/proc/finish_bulk()
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
-	// Taken and reset before the work, so a runtime below cannot hand this scope's state to the next
+	// Detach batch state before cleanup so a runtime cannot leave it attached to the next batch
 	var/list/affected = bulk_affected
 	var/changed = bulk_changes
 	bulk_affected = list()
 	bulk_changes = 0
 	bulk_label = null
-	bulk_scopes++
+	metrics.bulk_scopes++
 	if(!changed)
 		return
-	bulk_changes_total += changed
-	var/timing = !isnull(GLOB.point_ambience_counters)
-	if(timing)
-		rustg_time_reset("pa_bulk")
 	clear_tile_cache()
 	if(length(affected))
 		for(var/client/listener_client in GLOB.clients)
-			var/list/playing = listener_client.point_ambience_sources
+			var/list/playing = listener_client.point_ambience.sources
 			if(!length(playing))
 				continue
 			// The loop walks a copy, so stop_for() may remove from the list
@@ -74,41 +65,31 @@
 				var/atom/source = playing[category]
 				if(affected[source] && source_categories[source] != category)
 					stop_for(listener_client, category)
-					bulk_stops++
-	if(timing)
-		var/took = rustg_time_microseconds("pa_bulk") / 1000
-		bulk_close_ms += took
-		bulk_close_worst_ms = max(bulk_close_worst_ms, took)
 
 /// Closes a scope whose caller never did. A scope cannot span ticks, so one open on a later tick leaked
 /datum/controller/subsystem/point_ambience/proc/close_leaked_bulk()
 	PRIVATE_PROC(TRUE)
-	bulk_leaks++
+	metrics.bulk_leaks++
 	var/label = bulk_label
 	bulk_depth = 0
 	finish_bulk()
 	log_world("Point ambience: bulk update [label] was still open a tick later and has been closed. Reached from [call_chain()]")
 
 /**
- * Logs a burst of unbatched index changes, at most once every five minutes.
+ * Reports a tick that reaches POINT_AMBIENCE_BULK_BURST without a bulk-update scope.
  *
- * Called when one tick of index changes outside any bulk update reaches POINT_AMBIENCE_BULK_BURST,
- * and names the caller so it can be moved into a scope. Diagnostic only: the changes keep the
- * ordinary path, which stays correct, only slower
+ * Reports are rate-limited. This is diagnostic only. Source changes continue through normal
+ * invalidation.
  */
 /datum/controller/subsystem/point_ambience/proc/report_unbatched_burst()
 	PRIVATE_PROC(TRUE)
-	unbatched_bursts++
+	metrics.unbatched_bursts++
 	if(world.time < burst_quiet_until)
 		return
 	burst_quiet_until = world.time + 5 MINUTES
 	log_world("Point ambience: [POINT_AMBIENCE_BULK_BURST] source changes in one tick outside a bulk update. Wrap the caller in begin_bulk_source_update(). Reached from [call_chain()]")
 
-/**
- * The procs leading here, innermost first, for a report that must not raise a runtime.
- *
- * A runtime fails whichever unit test is running, and create_and_destroy changes sources in bulk
- */
+/// Returns the current proc call chain, innermost first, without raising a runtime
 /datum/controller/subsystem/point_ambience/proc/call_chain()
 	PRIVATE_PROC(TRUE)
 	var/list/chain = list()

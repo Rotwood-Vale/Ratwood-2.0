@@ -599,7 +599,7 @@
 	wash_in = TRUE
 	swim_skill = TRUE
 	swimdir = TRUE
-	/// Whether this turf seeds river ambience, so Destroy removes it again
+	/// Whether this turf is registered as a river ambience seed
 	var/river_fill_source = FALSE
 
 /turf/open/water/river/muddy
@@ -638,7 +638,7 @@
 	var/area/our_area = loc
 	if(our_area?.river_ambience)
 		river_fill_source = TRUE
-		SSpoint_ambience.river_fill_tile_added(src)
+		SSpoint_ambience.river_fill.tile_added(src)
 
 /turf/open/water/river/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()

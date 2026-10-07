@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(sounds)
 		if(!length(using_channels_by_datum[using]))
 			stop_tracking_datum(using)
 	else
-		// Deviation from TG, which leaves the entry behind. No stop_tracking_datum, as DATUMLESS has no signal
+		// DATUMLESS has no deletion signal. Remove its channel entry directly
 		using_channels_by_datum[DATUMLESS] -= channel
 	free_channel(channel)
 
@@ -118,8 +118,7 @@ SUBSYSTEM_DEF(sounds)
 		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
 	.= reserve_channel()
 	if(!.)
-		// Deviation from TG, which CRASHes here: instruments need a polite refusal path
-		// so a full pool reads as "no sound channels" to the player instead of aborting the caller
+		// Let instrument callers report an exhausted channel pool without aborting playback setup
 		return FALSE
 	var/text_channel = num2text(.)
 	using_channels[text_channel] = D
@@ -137,10 +136,7 @@ SUBSYSTEM_DEF(sounds)
 		UnregisterSignal(D, COMSIG_QDELETING)
 
 /**
- * Handles a tracked datum being deleted, automatically freeing the channels.
- *
- * So a reservation does not keep its datum alive: the deletion itself clears the hard refs out of
- * using_channels and using_channels_by_datum.
+ * Frees channels when their owning datum is deleted and removes the registry references.
  */
 /datum/controller/subsystem/sounds/proc/tracked_datum_deleted(datum/source)
 	SIGNAL_HANDLER
@@ -197,18 +193,16 @@ SUBSYSTEM_DEF(sounds)
 	return length(channel_list) - random_channels_min
 
 /**
- * Returns the duration of a sound file in deciseconds, cached.
+ * Returns a sound file's duration in deciseconds using rustg_sound_length()'s cache.
  *
- * Keeps TG's SSsounds.get_sound_length() call surface, the cache being rustg_sound_length()'s
- * static list. A /sound datum is measured by its file, a value rustg cannot take answers 0, and so
- * does a length rustg reads as no number.
+ * Accepts a file path or a sound datum. Unsupported file values and nonnumeric durations return
+ * zero.
  */
 /datum/controller/subsystem/sounds/proc/get_sound_length(file_path)
 	if(istype(file_path, /sound))
 		var/sound/as_datum = file_path
 		file_path = as_datum.file
-	// rustg_sound_length() CRASHes on anything but a path or a file that names one, which a runtime
-	// file reference does not. It still CRASHes when the library itself returns nothing
+	// Reject values rustg_sound_length() cannot accept before calling it
 	if(!istext(file_path) && !(isfile(file_path) && length("[file_path]")))
 		return 0
 	return rustg_sound_length(file_path) || 0

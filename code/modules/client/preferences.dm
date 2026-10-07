@@ -267,15 +267,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/widescreenpref = TRUE
 
 	var/musicvol = 50
-	/// What an admin plays on CHANNEL_ADMIN, on its own slider so a global track can be turned down
-	/// without taking the game's own music with it
+	/// Volume of admin-played files on CHANNEL_ADMIN, independent of world music
 	var/adminmusicvol = 50
-	/**
-	 * The chat panel's browser player, which streams a URL rather than a file.
-	 *
-	 * Separate because it is a separate audio system: it needs the player's own connection and can
-	 * fail on its own. Pushed to the panel scaled, since nothing over there knows about Master.
-	 */
+	/// Volume of streamed browser music. Sent to the panel after Master scaling because the browser
+	/// stores its own level
 	var/streamedmusicvol = 50
 	var/combatmusicvol = 50
 	var/lobbymusicvol = 50

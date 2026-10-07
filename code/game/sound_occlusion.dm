@@ -1,57 +1,53 @@
 /*
- * SOUND OCCLUSION: whether anything stands between a listener and what they are hearing.
+ * Sound occlusion checks the path between a listener and a source.
  *
- * The callers, deliberately not identical:
- *   SSpoint_ambience  turf opacity and doors, graded, and an enclosed source fades out. A door is
- *                     read only where a turf's door count says one may stand, and a listener
- *                     standing still never re-sends, so a door that changes has the listeners near
- *                     it served again
- *   /datum/sound_token turf CONTENTS too, so doors count. It re-evaluates whenever either side
- *                     moves, so a door that changes while both stand still is heard as it was
- *                     until one of them moves.
- *   playsound()       a class per call (SOUND_TRAVEL_*), turf CONTENTS read, recomputed on every
- *                     shot. occlusion_muffle_for() below is its whole decision.
+ * Callers use different policies:
+ *   SSpoint_ambience   grades turf opacity and configured door checks. Enclosed sources fade out.
+ *                     Door counts avoid contents scans on empty tiles. A door change queues nearby
+ *                     listeners because the standing shortcut could otherwise reuse an old answer.
+ *   /datum/sound_token checks turf contents too, including doors, when either side moves. Door
+ *                     changes alone do not refresh a token whose source and listener stay still.
+ *   playsound()       selects a SOUND_TRAVEL_* class per call and checks contents for each shot.
+ *                     occlusion_muffle_for() chooses the muffling policy for that class.
  *
- * WHAT DOES the muffling stays where it is applied, in playsound_local and slim_send. Those two are
- * hand-maintained mirrors and nothing in the repo checks that they agree, so change them together.
- * A shared proc would put a call on every listener of every sound in the game to save duplicating
- * a few lines.
+ * Volume changes stay in playsound_local and slim_send. Keep their corresponding muffling rules
+ * aligned when editing either. The small calculation stays inline to avoid an extra call for each
+ * listener receiving a sound.
  */
 
-/// Tiles the last opacity_between() walked, for callers pricing the walk. Valid only until the
-/// NEXT call from anywhere, so read it straight after the call that set it and never across one
-GLOBAL_VAR_INIT(opacity_walk_tiles, 0)
-
 /**
- * Where the last opacity_between() was blocked, and the tile it stepped from to get there.
+ * Coordinates of the last direct obstruction and the tile immediately preceding it.
  *
- * Written ONLY on OCCLUSION_SOLID, so read them only when that is what came back. A caller looking
- * for a way round needs the obstruction's position, not the listener's: the two tiles a DIAGONAL
- * step cut between are where a corner opens, and they are derived from these four numbers.
+ * Valid only after opacity_between() returns OCCLUSION_SOLID. Corner probes use these coordinates
+ * to find flanks beside the blocking step. Copy them before another trace overwrites them.
  */
 GLOBAL_VAR_INIT(opacity_block_x, 0)
 GLOBAL_VAR_INIT(opacity_block_y, 0)
 GLOBAL_VAR_INIT(opacity_block_from_x, 0)
 GLOBAL_VAR_INIT(opacity_block_from_y, 0)
 
-/// What the last has_open_path() cost, since opacity_walk_tiles is per CALL and that proc makes up
-/// to two. Reset on entry to it, so read them straight after and never across another
+/// Walks made by the last has_open_path(), up to two. Read before another probe overwrites it
 GLOBAL_VAR_INIT(occlusion_probe_walks, 0)
-GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
 
 /**
- * Whether anything opaque stands between two turfs, for sound occlusion.
+ * Traces a straight line between two turfs and returns OCCLUSION_CLEAR or OCCLUSION_SOLID.
  *
- * OCCLUSION_CLEAR or OCCLUSION_SOLID: any opaque tile on the line blocks it, and the walk stops
- * there. This says only whether THIS line is clear, which cannot distinguish a source enclosed
- * behind a wall from one round a corner with an open path to it. Callers that care ask again from a
- * tile to the side. That is has_open_path() below, and sound_occlusion_grade() does both.
+ * Stops at the first opaque intermediate tile. This tests only the direct line. A blocked line
+ * cannot distinguish an enclosed source from one audible around a corner. has_open_path() probes
+ * the obstruction's flanks, and sound_occlusion_grade() combines both checks.
  *
- * A REAL LINE, unlike can_see(), which walks with get_step_towards: that goes through get_dir,
+ * Uses Bresenham stepping rather than can_see()'s get_step_towards: that goes through get_dir,
  * which returns a compound direction whenever both deltas are non-zero, so it steps diagonally until
  * one axis runs out and then straight along the other. From (0,0) to (5,1) it walks y=1 the whole
  * way and never touches (2,0) or (3,0), which is where a wall between the two actually stands.
- * Shallow angles are the worst case and the common one indoors.
+ * Shallow angles expose this difference and are common indoors.
+ *
+ * walk_x and walk_y track the current tile. delta_x is the absolute X span. negative_delta_y is
+ * the negated Y span used by this form of Bresenham's algorithm. line_error accumulates how far
+ * the walk deviates from the line. Both axis decisions use the same doubled_error before either
+ * changes line_error, so do not combine them into an if/else or recalculate between them.
+ * Neither endpoint is tested. previous_x and previous_y identify the approach to an obstruction
+ * so corner probes can choose the correct flank tiles.
  *
  * erp_muffle_for() uses the same stepping for ERP audio, kept apart so no other sound pays for
  * its opening checks. Change the stepping in both.
@@ -69,73 +65,70 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
  *   its sound_door_count says one may stand. Blind to every other opaque object, which is the
  *   point: trees, reeds and fences do not stop sound
  *
- * On the give-up path the block position is written as well, or a caller reading it after a SOLID
- * gets the PREVIOUS call's block. Giving up is a block, and where the walk stopped is the honest
- * answer for it. from == block leaves has_open_path on its straight-on branch, which is the right
- * guess when there is no step to have been diagonal
+ * Exceeding steps_allowed also records a block position. Otherwise a SOLID result would expose
+ * coordinates left by an earlier call. It records the current tile as both the block and its
+ * approach, so has_open_path() uses perpendicular flanks when no blocking step was taken.
  */
 /proc/opacity_between(turf/start, turf/target, steps_allowed, check_contents = FALSE, list/trace, doors = SOUND_DOORS_NONE)
-	// Cleared before either early return, or a caller reads the previous call's count
-	GLOB.opacity_walk_tiles = 0
 	if(!start || !target || start.z != target.z)
 		return OCCLUSION_CLEAR
-	var/x = start.x
-	var/y = start.y
-	var/z = start.z
+	var/walk_x = start.x
+	var/walk_y = start.y
+	var/walk_z = start.z
 	var/target_x = target.x
 	var/target_y = target.y
-	var/dx = abs(target_x - x)
-	var/dy = -abs(target_y - y)
-	if(!dx && !dy)
+	var/delta_x = abs(target_x - walk_x)
+	var/negative_delta_y = -abs(target_y - walk_y)
+	if(!delta_x && !negative_delta_y)
 		return OCCLUSION_CLEAR
-	var/step_x = (x < target_x) ? 1 : -1
-	var/step_y = (y < target_y) ? 1 : -1
-	var/err = dx + dy
-	var/steps = 0
-	var/door_walk = doors >= SOUND_DOORS_LIVE
-	// Every break lands on the one write after the loop
+	var/step_x = (walk_x < target_x) ? 1 : -1
+	var/step_y = (walk_y < target_y) ? 1 : -1
+	var/line_error = delta_x + negative_delta_y
+	var/steps_taken = 0
+	var/check_doors = doors >= SOUND_DOORS_LIVE
 	. = OCCLUSION_CLEAR
 	while(TRUE)
-		steps++
-		if(steps > steps_allowed)
-			GLOB.opacity_block_x = x
-			GLOB.opacity_block_y = y
-			GLOB.opacity_block_from_x = x
-			GLOB.opacity_block_from_y = y
+		steps_taken++
+		if(steps_taken > steps_allowed)
+			GLOB.opacity_block_x = walk_x
+			GLOB.opacity_block_y = walk_y
+			GLOB.opacity_block_from_x = walk_x
+			GLOB.opacity_block_from_y = walk_y
 			. = OCCLUSION_SOLID
 			break
-		var/e2 = err * 2
-		var/from_x = x
-		var/from_y = y
-		if(e2 >= dy)
-			err += dy
-			x += step_x
-		if(e2 <= dx)
-			err += dx
-			y += step_y
-		if(x == target_x && y == target_y)
+
+		var/doubled_error = line_error * 2
+		var/previous_x = walk_x
+		var/previous_y = walk_y
+		if(doubled_error >= negative_delta_y)
+			line_error += negative_delta_y
+			walk_x += step_x
+		if(doubled_error <= delta_x)
+			line_error += delta_x
+			walk_y += step_y
+		if(walk_x == target_x && walk_y == target_y)
 			break
-		var/turf/current = locate(x, y, z)
-		if(!current)
+
+		var/turf/checked_turf = locate(walk_x, walk_y, walk_z)
+		if(!checked_turf)
 			break
 		if(trace)
-			trace += current
-		var/opaque = current.opacity
-		if(!opaque && check_contents)
-			for(var/atom/thing as anything in current)
-				if(thing.opacity)
-					opaque = TRUE
+			trace += checked_turf
+		var/blocks_line = checked_turf.opacity
+		if(!blocks_line && check_contents)
+			for(var/atom/obstacle as anything in checked_turf)
+				if(obstacle.opacity)
+					blocks_line = TRUE
 					break
-		else if(!opaque && door_walk && current.sound_door_count > 0)
-			opaque = door_blocks_sound(current, doors)
-		if(opaque)
-			GLOB.opacity_block_x = x
-			GLOB.opacity_block_y = y
-			GLOB.opacity_block_from_x = from_x
-			GLOB.opacity_block_from_y = from_y
+		else if(!blocks_line && check_doors && checked_turf.sound_door_count > 0)
+			blocks_line = door_blocks_sound(checked_turf, doors)
+		if(blocks_line)
+			GLOB.opacity_block_x = walk_x
+			GLOB.opacity_block_y = walk_y
+			GLOB.opacity_block_from_x = previous_x
+			GLOB.opacity_block_from_y = previous_y
 			. = OCCLUSION_SOLID
 			break
-	GLOB.opacity_walk_tiles = steps
 
 /**
  * Whether a door on this turf stops sound, a door being any object with sound_door set.
@@ -154,22 +147,24 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
 		if(doors != SOUND_DOORS_ALWAYS || !istype(door, /obj/structure/mineral_door))
 			continue
 		var/obj/structure/mineral_door/mineral = door
-		if((mineral.door_opened || mineral.isSwitchingStates) && !mineral.windowed && !mineral.brokenstate && initial(mineral.opacity))
+		var/open_or_opening = mineral.door_opened || mineral.isSwitchingStates
+		var/shuts_solid = !mineral.windowed && !mineral.brokenstate && initial(mineral.opacity)
+		if(open_or_opening && shuts_solid)
 			return TRUE
 	return FALSE
 
 /**
  * Whether a blocked line has a way round it, which is what separates a corner from an enclosure.
  *
- * BESIDE THE OBSTRUCTION, not beside the listener. Where a diagonal step lands on a wall, the two
- * tiles it cut between are where the corner opens, and they can be nowhere near the listener. Probing
+ * Probes beside the obstruction. Where a diagonal step lands on a wall, the two tiles it cut
+ * between are where the corner opens, and they can be nowhere near the listener. Probing
  * beside the listener misses a fire in plain view round a corner. Where the step was straight on,
  * the sideways neighbours of the blocking tile stand in: a lone pillar has open ground either side,
  * a wall run does not.
  *
- * Testing the flanks for openness alone is NOT enough, and is why each one is walked. The flank on
- * the listener's side of a wall is open by definition, since they are standing next to it, so a
- * straight wall approached diagonally would carry sound straight through.
+ * Each open flank still needs a trace to the source. An open tile on the listener's side of a wall
+ * does not establish a path to the other side. Accepting it without tracing would let sound cross
+ * a straight wall approached diagonally.
  *
  * Costs up to two walks, and only ever runs on a line already known to be blocked.
  *
@@ -182,100 +177,83 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
 /proc/has_open_path(turf/target, steps_allowed, check_contents = FALSE, doors = SOUND_DOORS_NONE)
 	SHOULD_NOT_SLEEP(TRUE)
 	GLOB.occlusion_probe_walks = 0
-	GLOB.occlusion_probe_tiles = 0
 	var/block_x = GLOB.opacity_block_x
 	var/block_y = GLOB.opacity_block_y
-	var/from_x = GLOB.opacity_block_from_x
-	var/from_y = GLOB.opacity_block_from_y
-	var/z = target.z
-	if(block_x != from_x && block_y != from_y)
-		if(probe_open_path(locate(block_x, from_y, z), target, steps_allowed, check_contents, doors))
+	var/approach_x = GLOB.opacity_block_from_x
+	var/approach_y = GLOB.opacity_block_from_y
+	var/source_z = target.z
+	if(block_x != approach_x && block_y != approach_y)
+		if(probe_open_path(locate(block_x, approach_y, source_z), target, steps_allowed, check_contents, doors))
 			return TRUE
-		return probe_open_path(locate(from_x, block_y, z), target, steps_allowed, check_contents, doors)
+		return probe_open_path(locate(approach_x, block_y, source_z), target, steps_allowed, check_contents, doors)
+
 	// Straight on, so step sideways past the obstruction
-	var/side_x = (block_y == from_y) ? 0 : 1
-	var/side_y = (block_y == from_y) ? 1 : 0
-	if(probe_open_path(locate(block_x + side_x, block_y + side_y, z), target, steps_allowed, check_contents, doors))
+	var/flank_dx = (block_y == approach_y) ? 0 : 1
+	var/flank_dy = (block_y == approach_y) ? 1 : 0
+	if(probe_open_path(locate(block_x + flank_dx, block_y + flank_dy, source_z), target, steps_allowed, check_contents, doors))
 		return TRUE
-	return probe_open_path(locate(block_x - side_x, block_y - side_y, z), target, steps_allowed, check_contents, doors)
+	return probe_open_path(locate(block_x - flank_dx, block_y - flank_dy, source_z), target, steps_allowed, check_contents, doors)
 
 /**
- * One origin for has_open_path(). Separate so neither side allocates a list to iterate over.
+ * Checks a flank tile and traces from it to the source for has_open_path().
  *
- * The gap beside a wall is very often a doorway, and a shut door is a wall, but the walk never tests
- * the tile it starts from, so what this tile holds is read here, by doors mode. NONE reads only the
- * turf's own opacity, even when check_contents is set, which is how playsound calls it. FLANKS
- * reads every opaque object on the tile, about 1 us on 5% of checks, the contents read measured at
- * 0.4 to 1.7 us. That was a bench, run warm under ideal conditions, which understates a cold live
- * read and may be out of date. LIVE and ALWAYS read the door count and loop only where it says a
- * door may stand.
+ * The trace excludes its origin, so the flank needs a separate obstruction check. NONE checks turf
+ * opacity only. FLANKS also checks opaque contents. LIVE and ALWAYS inspect doors only where the
+ * turf's door count is nonzero.
+ *
+ * Each flank is passed separately to avoid allocating a list of probe origins.
  */
 /proc/probe_open_path(turf/beside, turf/target, steps_allowed, check_contents = FALSE, doors = SOUND_DOORS_NONE)
 	SHOULD_NOT_SLEEP(TRUE)
-	// A wall to the side is not somewhere the sound could have come through either
 	if(!beside || beside.opacity)
 		return FALSE
 	if(doors == SOUND_DOORS_FLANKS)
-		for(var/atom/movable/thing as anything in beside)
-			if(thing.opacity)
+		for(var/atom/movable/obstacle as anything in beside)
+			if(obstacle.opacity)
 				return FALSE
 	else if(doors >= SOUND_DOORS_LIVE && beside.sound_door_count > 0 && door_blocks_sound(beside, doors))
 		return FALSE
 	GLOB.occlusion_probe_walks++
 	. = opacity_between(beside, target, steps_allowed, check_contents, null, doors) == OCCLUSION_CLEAR
-	GLOB.occlusion_probe_tiles += GLOB.opacity_walk_tiles
 
 /**
- * The full three-state answer: CLEAR, MUFFLED round a corner, or SOLID and properly enclosed.
+ * Returns CLEAR for a direct path, MUFFLED for an open corner probe, or SOLID if neither passes.
  *
  * One walk when the line is clear, and up to two more when it is not. A caller wanting only "is
  * anything in the way" should call opacity_between() directly and save the probes. This is for
  * callers that treat a corner differently from a wall.
  *
- * Leaves GLOB.opacity_walk_tiles holding the DIRECT walk and the probe accumulators holding the
- * probes, so a caller pricing the work reads all three straight after rather than timing around it.
- * The direct count is restored deliberately, and the block position with it: the probes overwrite
- * both on their way past, and a caller measuring a leak wants the direct walk's block.
+ * Leaves occlusion_probe_walks holding the number of extra walks. The direct block position is
+ * restored after probing, since the probes overwrite it and callers can still need that obstruction.
  */
 /proc/sound_occlusion_grade(turf/listener_turf, turf/source_turf, steps_allowed, check_contents = FALSE, list/trace, doors = SOUND_DOORS_NONE)
 	SHOULD_NOT_SLEEP(TRUE)
 	GLOB.occlusion_probe_walks = 0
-	GLOB.occlusion_probe_tiles = 0
 	. = opacity_between(listener_turf, source_turf, steps_allowed, check_contents, trace, doors)
 	if(. != OCCLUSION_SOLID)
 		return
-	// The probes overwrite the direct walk's result. See the proc doc
-	var/direct_tiles = GLOB.opacity_walk_tiles
-	var/block_x = GLOB.opacity_block_x
-	var/block_y = GLOB.opacity_block_y
-	var/from_x = GLOB.opacity_block_from_x
-	var/from_y = GLOB.opacity_block_from_y
+	var/direct_block_x = GLOB.opacity_block_x
+	var/direct_block_y = GLOB.opacity_block_y
+	var/direct_previous_x = GLOB.opacity_block_from_x
+	var/direct_previous_y = GLOB.opacity_block_from_y
 	if(has_open_path(source_turf, steps_allowed, check_contents, doors))
 		. = OCCLUSION_MUFFLED
-	GLOB.opacity_walk_tiles = direct_tiles
-	GLOB.opacity_block_x = block_x
-	GLOB.opacity_block_y = block_y
-	GLOB.opacity_block_from_x = from_x
-	GLOB.opacity_block_from_y = from_y
+	GLOB.opacity_block_x = direct_block_x
+	GLOB.opacity_block_y = direct_block_y
+	GLOB.opacity_block_from_x = direct_previous_x
+	GLOB.opacity_block_from_y = direct_previous_y
 
 /**
- * What playsound_local should be told about one listener, from the caller's SOUND_TRAVEL_* class.
+ * Returns the muffling level for a travel class, or null when sound must not be sent.
  *
- * SOUND_MUFFLE_NONE, SOFT or ENCLOSED, or NULL for "do not send". CARRYING is one opacity_between()
- * and anything on the line is SOFT. CONTAINED and LEAKING are ERP's and walk their own way, see
+ * CARRYING uses a direct opacity trace and returns SOFT when blocked. CONTAINED and LEAKING use
  * erp_muffle_for().
  *
- * The caller has already decided this listener is worth walking to: same floor, more than one
- * orthogonal step away, class not SOUND_TRAVEL_UNRESTRICTED. A diagonal neighbour passes that gate
- * and reads clear, the walk landing on the target at its first step, unless ERP audio has a window
- * or door on either tile, see erp_muffle_for(). Those gates stay in
- * playsound so the common case costs no proc call at all. Contents are read on the line, since a
- * one-shot recomputes from scratch and a door's state cannot freeze into it.
- *
- * The GLOB walk counters belong to the shared walkers; ERP does not update them.
+ * Callers handle the unrestricted, adjacent and cross-floor cases before entering this proc. ERP
+ * tracing does not update the shared opacity-walk counters.
  *
  * Arguments:
- * * seal_openings - soundproof ERP containment, including open doors and windows
+ * * seal_openings - Treats open doors and windows as barriers for soundproof ERP containment.
  */
 /proc/occlusion_muffle_for(turf/listener_turf, turf/source_turf, occlusion, steps_allowed, list/trace, seal_openings = FALSE)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -300,6 +278,9 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
  * The stepping matches opacity_between(), but the walks stay separate to keep ERP's opening
  * policy off every tile checked by point ambience and sound tokens. Only counted opening tiles
  * need a live state lookup; an open window can override a transparent window-wall frame.
+ * As in opacity_between(), both axis tests use doubled_error from before either axis advances.
+ * muffle_level records whether the single permitted leak has already been used, so a second
+ * shut opening must reject the listener even if the first was on an endpoint.
  *
  * Arguments:
  * * leaking - SOUND_TRAVEL_LEAKING rather than CONTAINED
@@ -311,7 +292,7 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
 		return null
 	if(seal_openings)
 		leaking = FALSE
-	var/muffled = SOUND_MUFFLE_NONE
+	var/muffle_level = SOUND_MUFFLE_NONE
 	if(source_turf.sound_opening_count || listener_turf.sound_opening_count)
 		var/source_blocked = source_turf.sound_opening_count && (seal_openings || sound_opening_blocks(source_turf))
 		var/listener_blocked = listener_turf.sound_opening_count && (seal_openings || sound_opening_blocks(listener_turf))
@@ -320,51 +301,55 @@ GLOBAL_VAR_INIT(occlusion_probe_tiles, 0)
 				return leaking ? SOUND_MUFFLE_ENCLOSED : SOUND_MUFFLE_NONE
 			if(!leaking || source_blocked)
 				return null
-			muffled = SOUND_MUFFLE_ENCLOSED
-	var/x = listener_turf.x
-	var/y = listener_turf.y
-	var/z = listener_turf.z
+			muffle_level = SOUND_MUFFLE_ENCLOSED
+
+	var/walk_x = listener_turf.x
+	var/walk_y = listener_turf.y
+	var/walk_z = listener_turf.z
 	var/target_x = source_turf.x
 	var/target_y = source_turf.y
-	var/dx = abs(target_x - x)
-	var/dy = -abs(target_y - y)
-	if(!dx && !dy)
-		return muffled
-	var/step_x = (x < target_x) ? 1 : -1
-	var/step_y = (y < target_y) ? 1 : -1
-	var/err = dx + dy
-	var/steps = 0
+	var/delta_x = abs(target_x - walk_x)
+	var/negative_delta_y = -abs(target_y - walk_y)
+	if(!delta_x && !negative_delta_y)
+		return muffle_level
+	var/step_x = (walk_x < target_x) ? 1 : -1
+	var/step_y = (walk_y < target_y) ? 1 : -1
+	var/line_error = delta_x + negative_delta_y
+	var/steps_taken = 0
 	while(TRUE)
-		steps++
-		if(steps > steps_allowed)
+		steps_taken++
+		if(steps_taken > steps_allowed)
 			return null
-		var/e2 = err * 2
-		if(e2 >= dy)
-			err += dy
-			x += step_x
-		if(e2 <= dx)
-			err += dx
-			y += step_y
-		if(x == target_x && y == target_y)
-			return muffled
-		var/turf/current = locate(x, y, z)
-		if(!current || current.opacity)
+
+		var/doubled_error = line_error * 2
+		if(doubled_error >= negative_delta_y)
+			line_error += negative_delta_y
+			walk_x += step_x
+		if(doubled_error <= delta_x)
+			line_error += delta_x
+			walk_y += step_y
+		if(walk_x == target_x && walk_y == target_y)
+			return muffle_level
+
+		var/turf/checked_turf = locate(walk_x, walk_y, walk_z)
+		if(!checked_turf || checked_turf.opacity)
 			return null
-		var/has_opening = current.sound_opening_count
+		var/has_opening = checked_turf.sound_opening_count
 		if(seal_openings && has_opening)
 			return null
-		var/shut_opening = has_opening ? sound_opening_blocks(current) : isclosedturf(current)
+		var/shut_opening = has_opening ? sound_opening_blocks(checked_turf) : isclosedturf(checked_turf)
 		if(shut_opening)
-			if(!leaking || steps != 1 || muffled == SOUND_MUFFLE_ENCLOSED)
+			if(!leaking || steps_taken != 1 || muffle_level == SOUND_MUFFLE_ENCLOSED)
 				return null
-			muffled = SOUND_MUFFLE_ENCLOSED
-		for(var/atom/thing as anything in current)
-			if(!thing.opacity)
+			muffle_level = SOUND_MUFFLE_ENCLOSED
+
+		for(var/atom/obstacle as anything in checked_turf)
+			if(!obstacle.opacity)
 				continue
-			if(!shut_opening || !isobj(thing))
+			if(!shut_opening || !isobj(obstacle))
 				return null
 			// Only the crossed opening may be opaque; other contents must still block the line.
-			var/obj/opening = thing
+			var/obj/opening = obstacle
 			if(!opening.sound_opening)
 				return null
 

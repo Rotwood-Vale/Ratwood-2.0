@@ -7,19 +7,22 @@
  * * location - the door or an affected turf. Movement reports both the old and new turf.
  */
 /datum/controller/subsystem/point_ambience/proc/door_changed(atom/location)
-	door_changes++
+	metrics.door_changes++
 	// Before login hooks exist, no listener has a cached answer to refresh
-	if(!hooked_logins || !door_recheck || door_mode == SOUND_DOORS_NONE || mode != POINT_AMBIENCE_LIVE)
+	var/can_recheck_doors = hooked_logins && mode == POINT_AMBIENCE_LIVE \
+		&& door_recheck && door_mode != SOUND_DOORS_NONE
+	if(!can_recheck_doors)
 		return
 	var/turf/door_turf = get_turf(location)
 	if(door_turf)
 		changed_doors[door_turf] = TRUE
 
 /**
- * Serves again every listener a changed door could stand between and one of their sources.
+ * Schedules a refresh for listeners whose source paths could be affected by a changed door.
  *
- * The spatial grid finds who is in reach, the box filter drops those whose sources lie elsewhere,
- * and mark_listener() sends the rest past the standing shortcut, through the queue when it is on.
+ * The spatial grid gathers nearby bodies. The square-range check removes whole-cell overreach.
+ * door_may_affect_listener() then checks their cached source paths. mark_listener() sends the remaining
+ * listeners past the standing shortcut, through the queue when it is on.
  *
  * The grid follows bodies, so a detached head near the door is not found. Its listener catches up
  * when the head or the body next moves
@@ -28,68 +31,69 @@
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	next_door_recheck = world.time + door_recheck_period
-	var/timing = !isnull(GLOB.point_ambience_counters)
-	if(timing)
-		rustg_time_reset("pa_door_recheck")
-	// Taken before the loop, so a runtime part way cannot leave the set to fail again every period
-	var/list/doors = changed_doors
+	// Detach the pending set before processing so a runtime cannot replay the same batch
+	// indefinitely
+	var/list/pending_doors = changed_doors
 	changed_doors = list()
-	for(var/turf/door_turf as anything in doors)
-		// A floor the spatial grid was never told about has no cells to search
+	for(var/turf/door_turf as anything in pending_doors)
 		if(door_turf.z > length(SSspatial_grid.grids_by_z_level))
 			continue
-		door_gathers++
 		for(var/mob/listener as anything in SSspatial_grid.orthogonal_range_search(door_turf, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, max_range))
 			var/client/listener_client = listener.client
 			if(!listener_client || isobserver(listener))
 				continue
-			// The ear is the head, somewhere else, so the body's position says nothing
-			if(listener_client.point_ambience_ear)
+			// Detached hearing uses the head's position, which this body-based gather cannot
+			// locate
+			if(listener_client.point_ambience.ear)
 				mark_listener(listener_client)
 				continue
 			var/turf/listener_turf = get_turf(listener)
-			// The grid answers in whole SPATIAL_GRID_CELLSIZE cells, so this is the actual reach
-			if(!listener_turf || listener_turf.z != door_turf.z \
-				|| abs(listener_turf.x - door_turf.x) > max_range || abs(listener_turf.y - door_turf.y) > max_range)
+			if(listener_turf?.z != door_turf.z)
 				continue
-			door_listeners_found++
-			if(door_recheck_filter && !door_in_reach(listener_turf, door_turf))
+			var/listener_outside_reach = abs(listener_turf.x - door_turf.x) > max_range \
+				|| abs(listener_turf.y - door_turf.y) > max_range
+			if(listener_outside_reach)
 				continue
-			door_listeners_marked++
+			if(!door_may_affect_listener(listener_turf, door_turf))
+				continue
+			metrics.door_listeners_marked++
 			mark_listener(listener_client)
-	if(timing)
-		door_gather_ms += rustg_time_microseconds("pa_door_recheck") / 1000
 
 /**
- * Whether a door could stand on a line a service walks from this turf.
+ * Checks whether a door could affect a cached winner or runner-up in a category that uses occlusion.
  *
- * That is inside the box between the listener and the winner or runner-up of a category walls can
- * block, widened by one tile for the corner probes. Reads the tile cache's ranking, which is taken
- * before occlusion. A service writes its occlusion answer into the listener's own list, so a source
- * a shut door stopped is gone from there and opening the door would never bring it back. No ranking
- * to read means no way to rule the door out
+ * door_near_source_path() is a conservative box filter, not an occlusion trace. Read the shared
+ * tile ranking before occlusion: the listener's own selection can omit a source blocked by a shut
+ * door, and using that selection would prevent opening the door from bringing the source back.
+ * An unknown ranking requires a refresh. A known empty ranking has nothing for a door to block.
  */
-/datum/controller/subsystem/point_ambience/proc/door_in_reach(turf/listener_turf, turf/door_turf)
+/datum/controller/subsystem/point_ambience/proc/door_may_affect_listener(turf/listener_turf, turf/door_turf)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(!use_tile_cache)
 		return TRUE
-	var/entry = tile_cache[listener_turf]
-	if(isnull(entry))
+	var/ranking_entry = tile_cache[listener_turf]
+	if(isnull(ranking_entry))
 		return TRUE
 	// TRUE is an empty ranking, nothing in range to block
-	if(!islist(entry))
+	if(!islist(ranking_entry))
 		return FALSE
-	var/list/ranking = entry
-	for(var/i = 1, i <= length(ranking), i += 5)
-		var/datum/point_ambience_category/category = ranking[i]
+	var/list/ranking = ranking_entry
+	for(var/rank_index = 1, rank_index <= length(ranking), rank_index += POINT_AMBIENCE_RANK_SIZE)
+		var/datum/point_ambience_category/category = ranking[rank_index]
 		if(!category.occlude)
 			continue
-		if(door_in_box(listener_turf, ranking[i + 1], door_turf) || door_in_box(listener_turf, ranking[i + 3], door_turf))
+		if(door_near_source_path(listener_turf, ranking[rank_index + POINT_AMBIENCE_RANK_SOURCE], door_turf) || door_near_source_path(listener_turf, ranking[rank_index + POINT_AMBIENCE_RANK_RUNNER_UP], door_turf))
 			return TRUE
 	return FALSE
 
-/datum/controller/subsystem/point_ambience/proc/door_in_box(turf/listener_turf, atom/source, turf/door_turf)
+/**
+ * Tests whether a door lies in the listener/source bounding box widened for corner probes.
+ *
+ * Both axes include a one-tile margin. Passing this filter means the source needs rechecking.
+ * It does not establish that the door blocks sound. A missing source or source turf cannot qualify.
+ */
+/datum/controller/subsystem/point_ambience/proc/door_near_source_path(turf/listener_turf, atom/source, turf/door_turf)
 	PRIVATE_PROC(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	if(!source)
@@ -97,5 +101,11 @@
 	var/turf/source_turf = source_turfs[source] || get_turf(source)
 	if(!source_turf)
 		return FALSE
-	return door_turf.x >= min(listener_turf.x, source_turf.x) - 1 && door_turf.x <= max(listener_turf.x, source_turf.x) + 1 \
-		&& door_turf.y >= min(listener_turf.y, source_turf.y) - 1 && door_turf.y <= max(listener_turf.y, source_turf.y) + 1
+
+	var/within_path_x_bounds = door_turf.x >= min(listener_turf.x, source_turf.x) - 1 \
+		&& door_turf.x <= max(listener_turf.x, source_turf.x) + 1
+	if(!within_path_x_bounds)
+		return FALSE
+	var/within_path_y_bounds = door_turf.y >= min(listener_turf.y, source_turf.y) - 1 \
+		&& door_turf.y <= max(listener_turf.y, source_turf.y) + 1
+	return within_path_y_bounds

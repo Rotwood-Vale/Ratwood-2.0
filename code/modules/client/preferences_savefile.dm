@@ -372,8 +372,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_islist(key_bindings, list())
 	musicvol = sanitize_integer(musicvol, 0, 100, initial(musicvol))
-	// Carried off the shared slider the first time it is read, or a player who had music turned
-	// down would meet admin tracks at the default instead of where they left them
+	// Initialize the new admin slider from the saved shared music level to preserve the listener's
+	// volume
 	if(!isnum(adminmusicvol))
 		adminmusicvol = musicvol
 	adminmusicvol = sanitize_integer(adminmusicvol, 0, 100, initial(adminmusicvol))

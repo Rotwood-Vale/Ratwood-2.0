@@ -6,12 +6,11 @@
 	/// This Var ensures the object ignores all object flags, which is extremely important for contraptions (which are supposed ot interact with all objects even if it does not produce a result)
 	var/obj_flags_ignore = FALSE
 	var/set_obj_flags // ONLY FOR MAPPING: Sets flags from a string list, handled in Initialize. Usage: set_obj_flags = "EMAGGED;!CAN_BE_HIT" to set EMAGGED and clear CAN_BE_HIT.
-	/// An openable barrier point ambience treats as a door: counted on its turf, read as it stands,
-	/// and reported when it opens or shuts. Its opacity must only ever change through set_opacity()
+	/// Marks an openable barrier for point ambience. Change its opacity through set_opacity()
+	/// so nearby listeners are refreshed when it opens or closes
 	var/sound_door = FALSE
-	/// A window or door to ERP audio, counted on its turf so the ERP walk finds one without a search.
-	/// Kept apart from sound_door, which point ambience reads, so a false wall can be a door to point
-	/// ambience and a wall to ERP audio
+	/// Marks doors and windows for ERP containment. Separate from sound_door so false walls can
+	/// retain a different ERP policy
 	var/sound_opening = FALSE
 
 	var/damtype = BRUTE
@@ -107,8 +106,8 @@
 	// if the turf is uninitialized it'll just call Entered on us
 	if(our_turf && (our_turf.flags_1 & INITIALIZED_1) && (obj_flags & BLOCK_Z_OUT_DOWN))
 		our_turf.platform_atom_count++
-	// Creating an object calls no Entered, so a door or window counts itself here, and a door built
-	// shut in play has point ambience serve the listeners near it again
+	// Object creation does not call Entered(), so register new openings and notify nearby listeners
+	// here
 	if(sound_door && isturf(loc))
 		var/turf/door_turf = loc
 		door_turf.recount_sound_doors()

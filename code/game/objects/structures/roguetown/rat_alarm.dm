@@ -6,12 +6,9 @@
 	max_loops = 1
 	volume = 80
 	extra_range = 7
-	// Token-driven: this is a single long positional blast, so on the plain playsound
-	// path its volume is fixed at the instant it starts and never changes. Walking toward
-	// or away from the lever does nothing. A token re-pans and re-attenuates as you move
+	// Update the alarm's volume and pan as listeners move during its long clip
 	use_sound_tokens = TRUE
-	// ...but not natively repeating: the max_loops timer is what plays it once and then
-	// calls on_stop() -> alarm_ended(), and native repeat would restart the file instead
+	// Keep the finite-loop timer so playback ends through on_stop() and alarm_ended()
 	never_native_repeat = TRUE
 
 /datum/looping_sound/rat_alarm/on_stop()

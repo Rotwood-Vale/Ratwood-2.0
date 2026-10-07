@@ -139,7 +139,7 @@
 	flags_1 = null
 	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
 	slot_flags = ITEM_SLOT_HIP
-	/// The mob whose self source this torch is, so it can be cleared when the torch leaves them
+	/// Mob receiving this torch's carried ambience
 	var/mob/last_carrier
 	//added for torch burnout
 	var/should_self_destruct = TRUE
@@ -164,10 +164,10 @@
 	. = ..()
 
 /**
- * Keeps this torch's sound in step with where it is.
+ * Updates the torch's private ambience source for its carrier.
  *
- * A lit torch in a hand is heard by its carrier alone, through the mob's self source. It never
- * enters the index, on the ground or in a sconce, where the sconce is the source.
+ * Loose torches are never indexed. A torch placed in a sconce is heard through the sconce's source
+ * instead.
  */
 /obj/item/flashlight/flare/torch/proc/update_point_ambience()
 	var/lit = on && !QDELETED(src)
@@ -177,8 +177,8 @@
 	last_carrier = carrier
 	if(carrier)
 		SSpoint_ambience.set_self_source(carrier, src)
-	// Never indexed, a sconce holding one being the source others hear. A loose torch in the index
-	// would cost a map-wide cache invalidation on every drop, pick-up and throw
+	// The carrier or sconce supplies the sound. The torch itself must not remain in the source
+	// index
 	SSpoint_ambience.unregister_source(src, /datum/point_ambience_category/torch)
 
 /obj/item/flashlight/flare/torch/Moved(atom/OldLoc, Dir)

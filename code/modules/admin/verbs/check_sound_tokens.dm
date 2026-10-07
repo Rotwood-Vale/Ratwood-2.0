@@ -1,10 +1,8 @@
 /**
- * Live view of the sound token system and the channel pool it draws from.
+ * Reports active sound tokens and sound-channel reservations.
  *
- * Shows how many tokens are live, what holds channels, and how close the pool is to running dry.
- * Tokens are enumerated from SSsounds.using_channels_by_datum rather than a global list, since
- * every token reserves its channel through reserve_sound_channel_for_datum() and is listed there
- * for exactly as long as it is alive.
+ * Uses SSsounds.using_channels_by_datum, where every token registers its reserved channel, so no
+ * separate token registry is needed.
  */
 /client/proc/check_sound_tokens()
 	set category = "Debug"

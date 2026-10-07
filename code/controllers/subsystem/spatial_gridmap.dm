@@ -248,19 +248,17 @@ SUBSYSTEM_DEF(spatial_grid)
 	return .
 
 /**
- * Whether any grid cell intersecting the search box around center holds a client mob.
+ * Returns whether any spatial-grid cell in the search box contains a client mob.
  *
- * Allocation free and returns on the first hit, where orthogonal_range_search() builds the full
- * contents list. Answers at whole-cell granularity, so it over-reports: TRUE means "maybe in
- * range", FALSE means "definitely nobody in range". Only use it to skip work, never as the range
- * check itself.
+ * Stops on the first occupied cell without collecting its contents. A hit may be outside the exact
+ * range, so callers must still perform their normal range check.
  */
 /datum/controller/subsystem/spatial_grid/proc/any_client_in_range(atom/center, range)
 	var/turf/center_turf = get_turf(center)
 	if(!center_turf)
 		return FALSE
 
-	// Loops can start playing while the map is still being brought up, before every z has a grid
+	// Sounds can start before every z-level has a spatial grid
 	if(center_turf.z > length(grids_by_z_level))
 		return FALSE
 

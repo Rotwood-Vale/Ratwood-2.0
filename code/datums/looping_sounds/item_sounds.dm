@@ -9,9 +9,6 @@
 	mid_length = 60
 	volume = 10
 
-// Fire crackle, bone rattle and torch crackle have no loop type here. SSpoint_ambience serves each
-// client the nearest source per /datum/point_ambience_category, and its FALLBACK mode gives each
-// source a point_ambience_fallback loop
 
 /datum/looping_sound/boilloop
 	mid_sounds = list('sound/misc/boiling.ogg')
@@ -19,28 +16,20 @@
 	volume = 70
 	extra_range = 0
 	vary = TRUE
-	// Token-driven: a plain loop would freeze its volume for each 9.8s mid_length across its whole
-	// range. Native repeat also makes it seamless, and leaves vary above with no effect
+	// Tokens update volume during playback. Native repeat keeps the single clip continuous
 	use_sound_tokens = TRUE
 
-/**
- * Muffles a cauldron behind walls.
- *
- * A kitchen sound meets a wall almost at once, the cheap end of this check, and nothing tactical
- * rides on hearing a pot. No config gate: disable_music_wall_muffle is about music, and this is not.
- */
+/// Enables wall muffling for cauldrons independently of the music muffling preference
 /datum/looping_sound/boilloop/configure_token(datum/sound_token/token)
 	token.muffle_behind_walls = TRUE
 
 
 /**
- * The boat bell's ambient loop, a plain timer loop rather than a token.
+ * Timer-driven boat ambience, started when the bell initializes.
  *
- * boatbell starts it in Initialize() and never stops it, so tokens would hold a channel and grid
- * registrations all round for docks that are usually empty. With two mid_sounds it cannot
- * native-repeat, so it would keep its timer as well and pay both costs. Volume therefore updates
- * only when the loop replays, and building the token only while a client is in range may be
- * revisited later. The bell's audible ring is a separate playsound.
+ * The loop stays active all round and alternates clips, so token playback would retain a channel
+ * and spatial tracking without removing the timer. Volume updates when each clip plays. The bell's
+ * ring uses a separate playsound() call.
  */
 /datum/looping_sound/boatloop
 	mid_sounds = list('sound/ambience/boat (1).ogg','sound/ambience/boat (2).ogg')
@@ -49,14 +38,11 @@
 	extra_range = -1
 
 /**
- * The Psydon music box's tune, token-driven like the other two music boxes.
+ * Positional playback for the carried Psydon music box.
  *
- * It is carried: a player cranks it and walks, so both sides move during the track, and a plain
- * loop would freeze the volume when each play started. Native repeat plays the file back to back,
- * where the 320 mid_length would leave a silent gap after it.
- *
- * Deliberately NOT respect_instrument_pref: this relic drives stress and status effects, and the
- * Instruments slider pricing it would let a player silence a gameplay cue.
+ * Tokens update the sound as the carrier or listeners move, and native repeat avoids gaps between
+ * plays. Uses Sound Effects rather than Instruments because the music accompanies stress and status
+ * effects.
  */
 /datum/looping_sound/psydonmusicboxsound
 	mid_sounds = list('sound/magic/psydonmusicbox.ogg')
@@ -65,13 +51,12 @@
 	extra_range = 10
 	use_sound_tokens = TRUE
 
-/// Wall muffle only. The Instruments slider stays off it, see above, since a muffled cue is still a cue
+/// Enables wall muffling while retaining Sound Effects volume control
 /datum/looping_sound/psydonmusicboxsound/configure_token(datum/sound_token/token)
 	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
 
 
-/// Pestra's charge loop. Held for seconds while the caster and everyone near them move, one per
-/// caster mid-cast, so a token like the other charge loops
+/// Positional charge loop that follows Pestra's caster and nearby listeners during the cast
 /datum/looping_sound/fliesloop
 	mid_sounds = list('sound/misc/fliesloop.ogg')
 	mid_length = 60
@@ -84,6 +69,6 @@
 	mid_length = 30
 	volume = 100
 	extra_range = -3
-	// Token-driven: a plain loop would freeze its volume for each 3s mid_length
+	// Tokens update volume during the charge rather than waiting for the next clip
 	use_sound_tokens = TRUE
 

@@ -746,16 +746,14 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	changing_state = TRUE
 	openn = !openn
 	if(openn)
-		// A token: the sound outlasts the animation, and it is a maw opening under people, so
-		// everyone in earshot is moving. Range is what playsound gave it
+		// Track listener movement while the opening sound continues past the animation
 		playsoundtoken(src, 'sound/misc/kybraxorop.ogg', 100, SOUND_RANGE + 1)
 		flick("kybraxoropening",src)
 		sleep(40)
 		icon_state = "kybraxor0"
 		changing_state = FALSE
 	else
-		// Same treatment as the opening above. Shorter, but it is the same maw and the same people
-		// moving around it, and a matched pair is one thing to reason about
+		// Track listener movement during the closing sound
 		playsoundtoken(src, 'sound/misc/kybraxor.ogg', 100, SOUND_RANGE + 1)
 		flick("kybraxorclosing",src)
 		sleep(40)

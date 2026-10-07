@@ -1,10 +1,8 @@
 /**
- * Point ambience's load settings, live, from one menu that lists each with its current value.
+ * Edits point ambience load settings at runtime and logs each change.
  *
- * Pick one to change it and the menu comes back until cancelled. Every change is logged on its own.
- * The POINT_AMBIENCE_* config entries seed the same values at boot and say what each costs. Only
- * settings that change load are here. Walls and how doors count change what players hear, so they
- * are VV only.
+ * The menu repeats until cancelled and displays current values. Configuration supplies startup
+ * defaults. Acoustic wall and door policies remain available through variable editing.
  */
 /client/proc/point_ambience_mode()
 	set category = "Debug"
@@ -72,8 +70,8 @@
 					point_ambience_setting_changed("services per tick", cap, value)
 					ambience.max_services_per_tick = value
 			if("queue")
-				// Turning it off strands nobody: fire() drains whatever is still marked whether or not
-				// the queue is on, so the set empties on the next tick and only new steps go inline
+				// fire() drains existing marks even when queueing is disabled. Only new movement
+				// runs inline
 				var/value = point_ambience_toggle("On: a step marks the client, and the subsystem serves everyone marked on its next fire, oldest first, up to the cap and inside its own tick budget. Off: each step is served inline inside Move(), at the end of a tick after everything else has spent its share, where the only rail refuses services once the tick is half spent. Off makes a loaded server worse, not cheaper.", "Queue", ambience.use_queue)
 				if(!isnull(value))
 					point_ambience_setting_changed("queue", ambience.use_queue ? "on" : "off", value ? "on" : "off")
@@ -121,7 +119,7 @@
 	value = CONFIG_GET(number/point_ambience_standing_skip)
 	point_ambience_setting_changed("standing skip", ambience.standing_skip, value)
 	ambience.standing_skip = value
-	// Not in the menu, but the config seeds them, and each drops what its old value decided
+	// Reset configured acoustic settings too, invalidating their previous results
 	value = CONFIG_GET(number/point_ambience_falloff_hardness)
 	if(value != ambience.falloff_hardness)
 		point_ambience_setting_changed("falloff hardness", ambience.falloff_hardness, value)

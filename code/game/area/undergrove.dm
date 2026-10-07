@@ -80,8 +80,7 @@
 /**
  * Flowing cave water, including Rockhill's moat below High Town.
  *
- * Inherits river ambience from the wet-cave area. Keeps the parent's AMB_CAVEWATER bed instead of
- * the surface area recordings, which include birds
+ * Uses wet-cave river ambience and retains AMB_CAVEWATER instead of surface recordings with birds.
  */
 /area/rogue/under/cavewet/river
 	name = "Cave River"

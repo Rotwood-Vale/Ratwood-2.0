@@ -1,4 +1,4 @@
-/// The door count a sound occlusion walk trusts, and what a walk makes of a door shut, open and gone
+/// Checks door counts and sound obstruction through closed, open and removed doors
 /datum/unit_test/point_ambience_doors
 	var/saved_mode
 	var/saved_door_mode
@@ -13,7 +13,7 @@
 	saved_door_mode = ambience.door_mode
 	saved_door_recheck = ambience.door_recheck
 	saved_hooked_logins = ambience.hooked_logins
-	saved_door_changes = ambience.door_changes
+	saved_door_changes = ambience.metrics.door_changes
 	saved_changed_doors = ambience.changed_doors
 	ambience.mode = POINT_AMBIENCE_LIVE
 	ambience.door_mode = SOUND_DOORS_LIVE
@@ -79,16 +79,16 @@
 	SSpoint_ambience.door_mode = saved_door_mode
 	SSpoint_ambience.door_recheck = saved_door_recheck
 	SSpoint_ambience.hooked_logins = saved_hooked_logins
-	SSpoint_ambience.door_changes = saved_door_changes
+	SSpoint_ambience.metrics.door_changes = saved_door_changes
 	SSpoint_ambience.changed_doors = saved_changed_doors
 
-/// A gate spans three tiles and stands a blocker on each, and the blockers are what a walk reads there
+/// Checks sound-door counts across a multi-tile gate and its blockers
 /datum/unit_test/point_ambience_gate
 	var/saved_door_changes
 	var/list/saved_changed_doors
 
 /datum/unit_test/point_ambience_gate/Run()
-	saved_door_changes = SSpoint_ambience.door_changes
+	saved_door_changes = SSpoint_ambience.metrics.door_changes
 	saved_changed_doors = SSpoint_ambience.changed_doors
 	SSpoint_ambience.changed_doors = list()
 	var/turf/gate_turf = locate(run_loc_floor_bottom_left.x + 1, run_loc_floor_bottom_left.y + 2, run_loc_floor_bottom_left.z)
@@ -111,6 +111,6 @@
 
 /datum/unit_test/point_ambience_gate/Destroy()
 	. = ..()
-	// The opacity changes above report the gate, and nothing a test did should be gathered
-	SSpoint_ambience.door_changes = saved_door_changes
+	// Restore diagnostic counters changed by the test's opacity updates
+	SSpoint_ambience.metrics.door_changes = saved_door_changes
 	SSpoint_ambience.changed_doors = saved_changed_doors

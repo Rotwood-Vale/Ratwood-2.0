@@ -22,16 +22,9 @@
 	var/nomsg = FALSE
 	var/soundping = TRUE
 	var/ignore_silent = FALSE
-	/// Whether this emote's sound reaches the floors above and below. TRUE for almost everything, since
-	/// hearing a scream through a ceiling matters. Read only when the caller names no travel class
+	/// Whether this emote reaches adjacent floors when the caller supplies no travel class
 	var/cross_z_audible = TRUE
-	/**
-	 * How this emote's sound gets past a barrier, a SOUND_TRAVEL_* class.
-	 *
-	 * UNRESTRICTED, so an emote's sound ignores walls and costs no walk. Only ERP gives an emote a
-	 * class, naming it at the call through emote_erp(), see run_emote(). Floors are cross_z_audible
-	 * above.
-	 */
+	/// Default SOUND_TRAVEL_* barrier policy, used when the caller supplies no travel class
 	var/snd_travel = SOUND_TRAVEL_UNRESTRICTED
 	var/snd_vol = 100
 	var/snd_range = -1
@@ -42,7 +35,7 @@
 	var/runechat_msg = null
 	// If this is true, we skip setting the base runechat message and instead use whatever our at-emote-runtime message is. Useful for things like kiss/lick which change message based on conditions.
 	var/use_params_for_runechat = FALSE
-	/// An anthro noise, so its sound is not sent to players who mute anthro noise emotes
+	/// Whether the Anthro Noise Emotes preference controls this sound
 	var/anthro_noise = FALSE
 	var/needs_emotion = FALSE //If true, emote will check for detached trait and not run if the user has it and the emote wasn't intentional. Used for emotes that require emotional investment to make sense, like crying or laughing.
 
@@ -69,16 +62,15 @@
 	return
 
 /**
- * Runs this emote for user, its message and its sound.
+ * Displays the emote and plays its sound using the selected travel policy.
  *
- * The message goes through audible_message() or visible_message(), so walls already stop it. The
- * sound follows snd_travel at walls and cross_z_audible at floors unless the caller names a class.
+ * Messages use audible_message() or visible_message(). Sound uses snd_travel and cross_z_audible
+ * unless the caller supplies a travel class.
  *
  * Arguments:
- * * travel - a SOUND_TRAVEL_* class for this call alone, which also picks the floor cap through
- *   SOUND_TRAVEL_FLOOR. Null keeps snd_travel. The caller decides because groan, painmoan and scream
- *   are shared between combat and ERP, and only the caller knows which this is.
- * * erp - ERP audio, passed through to playsound
+ * * travel - Optional SOUND_TRAVEL_* override for this call, including its default floor cap. Null
+ *   preserves the emote's defaults.
+ * * erp - Whether the sound should use ERP audio handling.
  */
 /datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE, targetted = FALSE, anthro_noise = FALSE, travel = null, erp = FALSE)
 	. = TRUE
@@ -141,8 +133,7 @@
 			else// if(!vision.viewing_head)
 				emotelocation = user
 
-		// A caller naming a class sets the floor cap with it. Otherwise snd_travel decides walls and
-		// cross_z_audible decides floors
+		// An explicit travel class supplies both barrier handling and the floor cap
 		var/sound_travel = isnull(travel) ? snd_travel : travel
 		var/floor_volume = isnull(travel) ? (cross_z_audible ? null : SOUND_FLOOR_NEVER) : SOUND_TRAVEL_FLOOR(travel)
 		playsound(emotelocation, tmp_sound, snd_vol, FALSE, snd_range, soundping = soundping, anthro_noise = anthro_noise, travel = sound_travel, floor_volume = floor_volume, erp = erp)

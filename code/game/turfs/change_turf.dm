@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/list/old_signal_procs = signal_procs?.Copy()
 	var/turf/W = new path(src)
 	// Boundary blockers are marked too, so removing one can extend river reach
-	SSpoint_ambience?.river_fill_turf_changed(W)
+	SSpoint_ambience?.river_fill?.turf_changed(W)
 
 	// WARNING WARNING
 	// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS

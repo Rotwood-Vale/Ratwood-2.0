@@ -69,7 +69,7 @@
 	plane = GAME_PLANE_UPPER
 	pixel_x = -15
 
-/// Always running, unlike the lights, so it registers once rather than on a state change
+/// Registers the fountain's continuous water ambience when initialized
 /obj/structure/well/fountain/Initialize(mapload)
 	. = ..()
 	SSpoint_ambience.register_source(src, /datum/point_ambience_category/water)
@@ -133,7 +133,7 @@
 	plane = GAME_PLANE_UPPER
 	pixel_x = -15
 
-/// A sibling of the fountain rather than a subtype, so it registers itself the same way
+/// Registers the swamp fountain's water ambience
 /obj/structure/well/fountainswamp/Initialize(mapload)
 	. = ..()
 	SSpoint_ambience.register_source(src, /datum/point_ambience_category/water)

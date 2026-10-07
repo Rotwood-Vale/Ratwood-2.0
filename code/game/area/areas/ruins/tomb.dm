@@ -10,13 +10,7 @@
 	soundenv = 5
 	ambientsounds = AMB_BASEMENT
 	ambientnight = AMB_BASEMENT
-	/**
-	 * Already FALSE from /area/rogue/under, restated for this tree.
-	 *
-	 * These rooms are generated dungeon pieces and each one already chooses the sound it wants, beach
-	 * for the lake, cave water for the sewer, basement here. River ambience would layer under all of it
-	 * rather than replace it, and none of these rivers is one anyone came to listen to.
-	 */
+	// Keep generated dungeon water on its existing area ambience
 	river_ambience = FALSE
 	spookysounds = SPOOKY_DUNGEON
 	spookynight = SPOOKY_DUNGEON

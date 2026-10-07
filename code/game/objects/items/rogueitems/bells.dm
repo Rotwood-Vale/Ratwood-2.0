@@ -84,7 +84,7 @@
 	if(ringing)
 		return
 	if(istype(used_item, /obj/item/rogueweapon/mace/church))
-		ring_bell()	// Sound effect for players within 150 tiles, near and far alike
+		ring_bell()
 		loud_message("The [src] rings, echoing solemnly", hearing_distance = 150)
 		visible_message(span_notice("[user] uses the [used_item] to ring the [src]."))
 		ringing = TRUE
@@ -95,18 +95,16 @@
 		return ..()
 
 /**
- * Rings the bell for every living player and observer within 150 tiles, on one curve.
+ * Plays the bell to living players and observers within 150 tiles.
  *
- * playsound_local gets the bell's turf, so it does the falloff and panning, and walking the player
- * list keeps a sound this long-ranged off the spatial grid a playsound would sweep. No falloff
- * arguments, so the range puts it in the long-carry band and retuning that band retunes the bell.
- * A near positional sound beside a flat far one makes the bell louder past the boundary, which is
- * why it is one send. The volume matches /obj/structure/standingbell's.
+ * Uses the player list rather than a large spatial-grid search. Every listener receives one
+ * positional send using the long-range falloff curve. Separate near and far sounds would overlap or
+ * change volume abruptly at their boundary.
  */
 /obj/structure/stationary_bell/proc/ring_bell()
 	var/turf/origin_turf = get_turf(src)
-	// One pitch for the whole ring. playsound() picks it once internally, but vary alone on
-	// playsound_local would roll a different one per listener
+	// Share one pitch for the ring. playsound_local() would otherwise roll separately for each
+	// listener
 	var/ring_frequency = get_rand_frequency()
 
 	for(var/mob/player in GLOB.player_list)
@@ -119,7 +117,6 @@
 
 		var/distance = get_dist(player, origin_turf)
 		if(distance <= 150)
-			// One curve across the whole carry. See the proc doc before splitting it near and far
 			player.playsound_local(origin_turf, 'sound/misc/bell.ogg', 100, TRUE, ring_frequency, max_distance = 150, pressure_affected = FALSE)
 
 /obj/item/jingle_bells

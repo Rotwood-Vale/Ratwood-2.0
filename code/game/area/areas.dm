@@ -68,14 +68,8 @@
 	var/list/ambientrain = null
 	var/list/ambientnight = null
 
-	/**
-	 * Whether river tiles here seed the river ambience fill.
-	 *
-	 * Off where the water is set dressing in a built or generated space rather than a river anyone
-	 * expects to hear, and especially where the area already sets an ambientsounds of its own that the
-	 * river would play on top of rather than replace. Inherited, so it silences a whole area tree at
-	 * once.
-	 */
+	/// Allows river water in this area to seed positional ambience. Inherited by subareas.
+	/// Disable where decorative water or existing area ambience should supply the sound
 	var/river_ambience = TRUE
 
 	var/min_ambience_cooldown = 70 SECONDS

@@ -26,28 +26,20 @@
 	. = ..()
 
 /**
- * Registers or drops this corpse as the buzzing-flies ambience source.
+ * Enables or removes this corpse's point ambience source.
  *
- * POINT AMBIENCE, not a sound token. A token re-sends every listener for every source whenever
- * either moves, so ten bodies at a battle site with ten people among them is a hundred pairs per
- * step, measured at ~30x this and landing on the ticks a fight already loads. Point ambience serves
- * only the nearest, so ten corpses are one send and nine range rejects.
- *
- * Gated on SIZE, not biotype: a rat earns flies and a butterfly does not. `rot_type` defaults to
- * /rot/simple on every /mob/living that does not set its own, so without that gate every dead
- * cockroach becomes a registered source. A non-mob parent falls through, though nothing attaches
- * rot to one.
+ * Mobs at or below MOB_SIZE_TINY cannot produce flies. Source placement is handled by place_flies()
+ * so corpses inside containers remain silent.
  *
  * Arguments:
- * * state - TRUE registers the source, FALSE drops it. TRUE is downgraded to FALSE for a mob at or
- *   under MOB_SIZE_TINY, so a caller cannot force flies onto a butterfly.
+ * * state - TRUE enables flies for an eligible parent. FALSE removes them.
  */
 /datum/component/rot/proc/set_flies(state)
 	if(state)
 		var/mob/living/rotting_mob = parent
 		if(istype(rotting_mob) && rotting_mob.mob_size <= MOB_SIZE_TINY)
 			state = FALSE
-	// The rot poll asks every process, so only a change of state does anything here
+	// The rot process polls this state repeatedly. Only transitions need registration work
 	if(!state == !flies_playing)
 		return
 	flies_playing = state
@@ -63,15 +55,10 @@
 	place_flies()
 
 /**
- * Where the flies are heard, from the body's own moves.
+ * Updates fly ambience when the corpse moves.
  *
- * A body lying on a turf is heard from it, and the step it is dragged or carried moves the sound
- * with it.
- *
- * A body inside something, a cart or a sack, is silent. Moving the container fires no Moved on the
- * body, so its position could not be kept, and a sealed container is a fair reason for no flies.
- * The body's own Moved fires on the way in and on the way out, so it is heard again once it lies on
- * a turf, with nothing polled in between
+ * Only corpses directly on a turf produce sound. Container movement does not move the corpse
+ * itself, so contained corpses are unregistered until placed back on a turf.
  */
 /datum/component/rot/proc/place_flies()
 	var/atom/movable/body = parent

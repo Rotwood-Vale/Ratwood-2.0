@@ -128,8 +128,7 @@
 		used_volume = step_data[2]
 		used_extra_range = step_data[3]
 		do_vary = !feet_covered // only barefoot gets the pitch variation
-	// Skips the last sound by index, since subtracting it builds a new list on every footstep of every
-	// mob. The rest stay equally likely, and a last sound from another floor's list excludes nothing
+	// Exclude the previous footstep by index, avoiding a temporary list while keeping other choices equally likely
 	var/count = length(used_footsteps)
 	if(!count)
 		return

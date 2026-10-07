@@ -9,17 +9,16 @@ GLOBAL_DATUM(point_ambience_server_window, /datum/point_ambience_server_window)
 /datum/point_ambience_server_window/New()
 	time = world.time
 	counts = point_ambience_server_counts()
-	SSpoint_ambience.queue_wait_window_max = 0
+	SSpoint_ambience.metrics.queue_wait_window_max = 0
 
 /**
- * Point ambience on a live server: what it costs and what it does across every player.
+ * Reports point ambience activity and timed work since the selected window began.
  *
- * Read from counts the subsystem keeps anyway. Nothing here times, observes or switches anything on,
- * so an open window costs nothing and opening it changes nothing it reports. The first run marks a
- * start. Each later run reports the stretch since it, then offers Keep, Restart or Clear.
+ * Reads existing subsystem counters without enabling additional instrumentation. The first
+ * invocation starts a window. Later reports can keep, restart or clear it.
  *
- * Cost is world.tick_usage summed over each phase of fire(). Outside it, and not counted, are inline
- * services with the queue off, and the move hook's marks and index changes.
+ * Timing covers phases of fire(). Inline movement services, movement-hook bookkeeping and
+ * source-index changes outside fire() are not included.
  */
 /client/proc/point_ambience_server()
 	set category = "Debug"
@@ -54,38 +53,38 @@ GLOBAL_DATUM(point_ambience_server_window, /datum/point_ambience_server_window)
 /proc/point_ambience_server_counts()
 	var/datum/controller/subsystem/point_ambience/ambience = SSpoint_ambience
 	return list(
-		"drain_usage" = ambience.drain_usage,
-		"walk_usage" = ambience.walk_usage,
-		"fade_usage" = ambience.fade_usage,
-		"door_usage" = ambience.door_usage,
-		"steps" = ambience.moves_total,
-		"moving" = ambience.drain_services + ambience.move_services,
-		"drains" = ambience.drains,
-		"skipped" = ambience.standing_skipped,
-		"cached" = ambience.standing_walk_hits,
-		"walked" = ambience.standing_walk_miss_turf + ambience.standing_walk_miss_version + ambience.standing_walk_miss_volume,
-		"ranked" = ambience.services_ranked,
-		"silent" = ambience.moving_silent,
-		"sends" = ambience.sends_total,
-		"checks" = ambience.occlusion_checks_total,
-		"blocked" = ambience.runner_up_silenced,
-		"waited" = ambience.queue_wait_total,
-		"served" = ambience.queue_served,
-		"deferred" = ambience.queue_deferred_ticks,
-		"paused" = ambience.drain_paused,
-		"dropped" = ambience.services_dropped_tick_usage + ambience.services_dropped_budget,
-		"fade_packets" = ambience.fade_packets,
-		"hits" = ambience.tile_cache_hits,
-		"misses" = ambience.tile_cache_misses,
-		"index" = ambience.index_changes,
-		"doors" = ambience.door_changes,
-		"reserved" = ambience.door_listeners_marked,
-		"speed" = ambience.speed_silences,
-		"muted_refused" = ambience.muted_services_refused,
-		"river_fill_rebuilds" = ambience.river_fill_rebuilds,
-		"river_fill_usage" = ambience.river_fill_usage,
-		"drain_size_drains" = ambience.drain_size_drains.Copy(),
-		"drain_size_services_total" = ambience.drain_size_services_total.Copy(),
+		"drain_usage" = ambience.metrics.drain_usage,
+		"walk_usage" = ambience.metrics.walk_usage,
+		"fade_usage" = ambience.metrics.fade_usage,
+		"door_usage" = ambience.metrics.door_usage,
+		"steps" = ambience.metrics.moves_total,
+		"moving" = ambience.metrics.drain_services + ambience.metrics.move_services,
+		"drains" = ambience.metrics.drains,
+		"skipped" = ambience.metrics.standing_skipped,
+		"cached" = ambience.metrics.standing_walk_hits,
+		"walked" = ambience.metrics.standing_walk_miss_turf + ambience.metrics.standing_walk_miss_version + ambience.metrics.standing_walk_miss_volume,
+		"ranked" = ambience.metrics.services_ranked,
+		"silent" = ambience.metrics.moving_silent,
+		"sends" = ambience.metrics.sends_total,
+		"checks" = ambience.metrics.occlusion_checks_total,
+		"blocked" = ambience.metrics.runner_up_silenced,
+		"waited" = ambience.metrics.queue_wait_total,
+		"served" = ambience.metrics.queue_served,
+		"deferred" = ambience.metrics.queue_deferred_ticks,
+		"paused" = ambience.metrics.drain_paused,
+		"dropped" = ambience.metrics.services_dropped_tick_usage + ambience.metrics.services_dropped_budget,
+		"fade_packets" = ambience.metrics.fade_packets,
+		"hits" = ambience.metrics.tile_cache_hits,
+		"misses" = ambience.metrics.tile_cache_misses,
+		"index" = ambience.metrics.index_changes,
+		"doors" = ambience.metrics.door_changes,
+		"reserved" = ambience.metrics.door_listeners_marked,
+		"speed" = ambience.metrics.speed_silences,
+		"muted_refused" = ambience.metrics.muted_services_refused,
+		"river_fill_rebuilds" = ambience.river_fill.rebuilds,
+		"river_fill_usage" = ambience.metrics.river_fill_usage,
+		"drain_size_drains" = ambience.metrics.drain_size_drains.Copy(),
+		"drain_size_services_total" = ambience.metrics.drain_size_services_total.Copy(),
 	)
 
 /proc/point_ambience_server_report(datum/point_ambience_server_window/window)
@@ -103,11 +102,11 @@ GLOBAL_DATUM(point_ambience_server_window, /datum/point_ambience_server_window)
 	for(var/client/listener_client as anything in GLOB.clients)
 		if(!listener_client.mob || isobserver(listener_client.mob) || isnewplayer(listener_client.mob))
 			continue
-		if(listener_client.point_ambience_silenced)
+		if(listener_client.point_ambience.silenced)
 			muted++
 			continue
 		listening++
-		if(!isnull(listener_client.point_ambience_last_move) && world.time - listener_client.point_ambience_last_move < 2 SECONDS)
+		if(!isnull(listener_client.point_ambience.last_move) && world.time - listener_client.point_ambience.last_move < 2 SECONDS)
 			moving_now++
 	var/drain_ms = TICK_DELTA_TO_MS(delta["drain_usage"]) / seconds
 	var/walk_ms = TICK_DELTA_TO_MS(delta["walk_usage"]) / seconds
@@ -139,7 +138,7 @@ GLOBAL_DATUM(point_ambience_server_window, /datum/point_ambience_server_window)
 	lines += "moving silent: [round(delta["silent"] / max(delta["moving"], 1) * 100, 0.1)]%, [round(delta["silent"] / seconds, 0.01)]/s"
 	lines += "per ranked service: sends [round(delta["sends"] / max(ranked, 1), 0.01)] | wall checks [round(checks / max(ranked, 1), 0.01)] | blocked [round(delta["blocked"] / max(checks, 1) * 100, 0.1)]%"
 	lines += "batching: drains/s [round(delta["drains"] / seconds, 0.01)] | services a drain [round(batched_services / max(batch_drain_total, 1), 0.01)] | services by batch size: [shares.Join(", ")]"
-	lines += "queue: wait avg [round(delta["waited"] / max(delta["served"], 1) / world.tick_lag, 0.01)] ticks, max [round(ambience.queue_wait_window_max / world.tick_lag)] | budget hit [round(delta["deferred"] / max(delta["drains"], 1) * 100, 0.1)]% of drains | paused [delta["paused"]] | dropped [delta["dropped"]]"
+	lines += "queue: wait avg [round(delta["waited"] / max(delta["served"], 1) / world.tick_lag, 0.01)] ticks, max [round(ambience.metrics.queue_wait_window_max / world.tick_lag)] | budget hit [round(delta["deferred"] / max(delta["drains"], 1) * 100, 0.1)]% of drains | paused [delta["paused"]] | dropped [delta["dropped"]]"
 	lines += "fades/s [round(delta["fade_packets"] / seconds, 0.01)] | tile cache hit [round(delta["hits"] / max(lookups, 1) * 100, 0.1)]% | index changes/min [round(delta["index"] / seconds * 60, 0.1)] | door tile changes/s [round(delta["doors"] / seconds, 0.01)], re-served/s [round(delta["reserved"] / seconds, 0.01)] | speed silenced/s [round(delta["speed"] / seconds, 0.01)]"
-	lines += "river fill: [ambience.river_fill_done ? "[ambience.river_fill_marked_tiles] tiles marked from [length(ambience.river_fill_seeds)] water seeds, boot [round(ambience.river_fill_boot_ms, 0.1)] ms | boxes rebuilt [delta["river_fill_rebuilds"]]" : "pending initial fill"]"
+	lines += "river fill: [ambience.river_fill.done ? "[ambience.river_fill.marked_tiles] tiles marked from [length(ambience.river_fill.seeds)] water seeds, boot [round(ambience.river_fill.boot_ms, 0.1)] ms | boxes rebuilt [delta["river_fill_rebuilds"]]" : "pending initial fill"]"
 	return lines.Join("<br>")

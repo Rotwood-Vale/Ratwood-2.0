@@ -1,23 +1,17 @@
-/datum/looping_sound/instrument
+/datum/looping_sound/music/instrument
 	mid_length = 120000 // Unused, start_sound_loop() sets no re-fire timer and the song plays or repeats natively
 	volume = 100
 	extra_range = 2
-	/// Played through a sound token, so each playing instrument reserves its own channel from the general pool
+	/// Uses a sound token with an allocated playback channel
 	use_sound_tokens = TRUE
-	var/stress2give = /datum/stressevent/music
-	/// The player's song-loop toggle, which becomes the token's native sound.repeat
+	/// Player-selected song repetition, applied through sound.repeat
 	var/loop_song = FALSE
 	/// Shared REALTIMEOFDAY anchor for band starts. Identical stamps keep members in lockstep
 	var/sync_start_time
-	/// The instrument's stock songs, name to file, which stand in for an upload
+	/// Stock replacement songs for uploads, keyed by song name
 	var/list/stand_in_songs
-	/**
-	 * Suppresses separate replacement songs for the other members of a band.
-	 *
-	 * Band starts try the leader first. After one member starts successfully, followers get no
-	 * stand in, so listeners with uploads off hear one stock song rather than several.
-	 * Cleared after start() so later solo plays can use their own replacement
-	 */
+	/// Suppresses replacement songs after another band member has claimed the band's stock song.
+	/// Clear after start() so later solo playback can use a replacement
 	var/band_follower = FALSE
 
 GLOBAL_LIST_EMPTY(instrument_band_lobbies)
@@ -158,28 +152,27 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 			if(instrument.not_held)
 				holder.remove_status_effect(/datum/status_effect/buff/harpy_sing)
 
-/datum/looping_sound/instrument/configure_token(datum/sound_token/token)
-	token.respect_instrument_pref = TRUE
-	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
+/datum/looping_sound/music/instrument/configure_token(datum/sound_token/token)
+	..()
 	token.same_floor_only = TRUE
 	token.stand_in_songs = band_follower ? null : stand_in_songs
-	token.on_listener_audible = CALLBACK(src, PROC_REF(give_stress))
 	if(sync_start_time)
 		token.start_time = sync_start_time
 
-/datum/looping_sound/instrument/proc/give_stress(mob/M)
-	if(stress2give && isliving(M))
-		var/mob/living/carbon/L = M
-		L.add_stress(stress2give)
-
 /// One token per song and no re-fire timer. The song repeats natively when loop_song is set, or
 /// ends and sits silent until stopped
-/datum/looping_sound/instrument/start_sound_loop()
+/datum/looping_sound/music/instrument/start_sound_loop()
 	loop_started = TRUE
 	play(resolve_single_sound() || get_sound(), repeat_sound = loop_song)
 
-/// Returns FALSE when no channel could be had, and the caller should tell the player
-/datum/looping_sound/instrument/start(atom/on_behalf_of, sync_anchor)
+/**
+ * Starts instrument playback. Returns FALSE if no sound channel is available.
+ *
+ * For bands, callers try the leader first and assign the stock replacement song to the first member
+ * that starts successfully. Set band_follower for later members, then clear it after this call so
+ * subsequent solo playback can use a replacement song.
+ */
+/datum/looping_sound/music/instrument/start(atom/on_behalf_of, sync_anchor)
 	sync_start_time = sync_anchor
 	..(on_behalf_of)
 	if(!sound_token_instance)
@@ -199,7 +192,7 @@ GLOBAL_LIST_EMPTY(instrument_band_lobbies)
 	throw_range = 4
 	var/lastfilechange = 0
 	var/curvol = 100
-	var/datum/looping_sound/instrument/soundloop
+	var/datum/looping_sound/music/instrument/soundloop
 	var/list/song_list = list()
 	var/note_color = "#7f7f7f"
 	var/groupplaying = FALSE

@@ -37,12 +37,12 @@
 		next_emote = world.time + mute_time
 
 /**
- * Vocalisation made by ERP, or caused by it. CONTAINED by default, stopping at walls and shut
- * openings. SOUND_TRAVEL_LEAKING is also heard one tile past a shut window or door on the direct
- * line. Open ones pass both classes unless the source area is soundproof.
+ * Runs an emote with ERP containment rules for this call.
  *
- * A call of its own rather than a setting on the emote, because groan, painmoan, scream and paincrit
- * are shared with combat, surgery and wounds, where carrying through a ceiling is the point.
+ * CONTAINED blocks walls and closed openings. LEAKING permits muffled sound one tile beyond a
+ * single closed opening. Soundproof areas also block open openings.
+ *
+ * The policy belongs to the call because these emotes are also used by combat, surgery and wounds.
  */
 /mob/proc/emote_erp(act, bypass_cooldown = TRUE, travel = SOUND_TRAVEL_CONTAINED)
 	return emote(act, forced = bypass_cooldown, travel = travel, erp = TRUE)

@@ -3,7 +3,7 @@
 ## can change most load settings live and reset them to the loaded config values.
 ##
 ## CURRENT DEFAULTS
-## This file starts point ambience OFF (MODE 0). Set MODE 1 to use LIVE sound. In LIVE, eligible
+## This file starts point ambience in LIVE mode (MODE 1). Set MODE 0 to disable it. In LIVE, eligible
 ## movement can request service on every step (MOVE_INTERVAL 0). The running override and step
 ## limit are also 0, so neither changes that schedule. QUEUE 1 handles requests, up to 8 per run.
 ## A separate walk visits clients about once a second; STANDING_SKIP 0 does not skip recent movers.
@@ -54,8 +54,7 @@ DISABLE_MUSIC_WALL_MUFFLE 0
 ## Add one active line per category to silence it, for example:
 ##   SILENCE_POINT_AMBIENCE torch
 ## Available names below. No active lines means all categories remain enabled.
-## A silenced category sends no point ambience and its sources are
-## removed from the index. Using the verb in-game will still keep its
+## A silenced category sends no point ambience and its sources are removed from the index.
 ##
 ##   fire   hearths, campfires, braziers, forges, smelters and ovens
 ##   torch  wall sconces, standing fires and the listener's own carried torch
