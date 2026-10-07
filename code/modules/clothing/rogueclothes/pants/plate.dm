@@ -106,6 +106,7 @@
 /obj/item/clothing/under/roguetown/platelegs/medium/zizo
 	name = "avantyne vestments"
 	desc = "<font color='A50021'>Nothing beside remains. Round the decay of that colossal wreck, boundless and bare.</font>"
+	icon_state = "zizoplatelegs_med"
 	armor = ARMOR_ASCENDANT
 	max_integrity = ARMOR_INT_LEG_ANTAG
 	peel_threshold = 5
@@ -122,6 +123,6 @@
 	gender = PLURAL
 	icon_state = "plate_skirt"
 	item_state = "plate_skirt"
-	body_parts_covered = GROIN
-	armor_class = ARMOR_CLASS_LIGHT
+	body_parts_covered = LEGS
+	armor_class = ARMOR_CLASS_MEDIUM
 	dropshrink = null

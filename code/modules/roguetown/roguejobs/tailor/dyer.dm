@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 		if(clothing_check.armor_class == ARMOR_CLASS_HEAVY && ishuman(user))
 			var/mob/living/carbon/human/H = user
 			var/obj/item/bodypart/taur/taur = H.get_taur_tail()
-			if(taur?.taur_clothing_category)
+			if(taur?.taur_clothing_category && taur.has_barding_tassets)
 				dat += "<b>Taur Barding Tassets</b><BR>"
 
 				var/icon/tasset1_preview = new /icon()
@@ -655,7 +655,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 			return
 		var/mob/living/carbon/human/H = usr
 		var/obj/item/bodypart/taur/taur = H.get_taur_tail()
-		if(!taur?.taur_clothing_category)
+		if(!taur?.taur_clothing_category || !taur.has_barding_tassets)
 			return
 		if(href_list["paint_tasset1"])
 			taur.tasset1_color = activecolor_detail
@@ -674,7 +674,7 @@ GLOBAL_LIST_INIT(pridelist, list(
 			return
 		var/mob/living/carbon/human/H = usr
 		var/obj/item/bodypart/taur/taur = H.get_taur_tail()
-		if(!taur?.taur_clothing_category)
+		if(!taur?.taur_clothing_category || !taur.has_barding_tassets)
 			return
 		if(href_list["clear_tasset1"])
 			taur.tasset1_color = null
