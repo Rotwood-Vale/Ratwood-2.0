@@ -46,7 +46,7 @@
 /obj/item/clothing/gloves/roguetown/plate/graggar
 	name = "vicious gauntlets"
 	desc = "Plate gauntlets which carry the motive force of this world, violence."
-	max_integrity = ARMOR_INT_SIDE_ANTAG
+	max_integrity = ARMOR_INT_SIDE_ANTAG - 100
 	armor = ARMOR_ASCENDANT
 	icon_state = "graggarplategloves"
 

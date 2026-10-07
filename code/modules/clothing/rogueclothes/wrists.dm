@@ -298,7 +298,7 @@
 	desc = "Oh, to plunge hands into cold water; to play a melody upon an ivory-keyed piano; to watch steam rise from boiling, twisting entrails.."
 	icon_state = "graggarbracers"
 	item_state = "graggarbracers"
-	max_integrity = ARMOR_INT_SIDE_ANTAG
+	max_integrity = ARMOR_INT_SIDE_ANTAG - 100
 	peel_threshold = 5
 	armor = ARMOR_ASCENDANT
 
