@@ -64,6 +64,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raze)
 			if("Golden Serpent")
 				head = /obj/item/clothing/head/roguetown/headband/monk
 				mask = /obj/item/clothing/mask/rogue/eyepatch
@@ -71,7 +72,9 @@
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
 				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/iconoclast
 				shirt = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy
+				shoes = /obj/item/clothing/shoes/roguetown/shortboots
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/skulduggery)
 				ADD_TRAIT(H, TRAIT_CYCLOPS_RIGHT, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)

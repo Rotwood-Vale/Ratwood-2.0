@@ -569,8 +569,8 @@
 // T4: The Free-God's draconic wrath
 
 /obj/effect/proc_holder/spell/self/wingsoffreedom
-	name = "Matthios' Freedom"
-	desc = "Choose between the draconic wrath of Wings of Freedom and the combat mastery of Skulduggery."
+	name = "Wings of Freedom"
+	desc = "Transform into the strongest form of Matthios' own - a dragon. A mere mortal can't sustain this form for long, yet with the power Matthios grants you, you shall burn this world of tyranny to the ground."
 	overlay_state = "wingsoffreedom"
 	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
@@ -582,7 +582,8 @@
 	chargetime = 0
 	recharge_time = 30 MINUTES
 	cooldown_min = 30 MINUTES
-	invocation_type = "none"
+	invocations = list("I WILL BURN THE WORLD OF TYRANNY TO THE GROUND!")
+	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 200
 	miracle = TRUE
@@ -590,14 +591,6 @@
 
 /obj/effect/proc_holder/spell/self/wingsoffreedom/cast(list/targets, mob/living/carbon/human/user = usr)
 	. = ..()
-	var/choice = tgui_input_list(user, "Choose your miracle.", name, list("Wings of Freedom (Dragon Form)", "Skulduggery"))
-	if(!choice)
-		revert_cast(user)
-		return FALSE
-	if(choice == "Skulduggery")
-		user.apply_status_effect(/datum/status_effect/buff/skulduggery)
-		return TRUE
-
 	if(user.has_status_effect(/datum/status_effect/debuff/submissive))
 		to_chat(user, span_warning("Your will is too broken to change form."))
 		revert_cast(user)
@@ -873,6 +866,197 @@
 		if(H.stat != DEAD)
 			H.wildshape_untransform_twilight_dragon(FALSE)
 
+#define TRAIT_SOURCE_WILDSHAPE "wildshape_transform"
+
+/mob/living/carbon/human/species/wildshape/dragon_matthios/death(gibbed, nocutscene = FALSE)
+	wildshape_untransform_twilight_dragon(TRUE, gibbed)
+
+/mob/living/carbon/human/proc/wildshape_transformation_twilight_dragon(shapepath)
+	if(!mind)
+		log_runtime("NO MIND ON [src.name] WHEN TRANSFORMING")
+	Paralyze(1, ignore_canstun = TRUE)
+	regenerate_icons()
+	icon = null
+	var/oldinv = invisibility
+	invisibility = INVISIBILITY_MAXIMUM
+	cmode = FALSE
+	if(client)
+		SSdroning.play_area_sound(get_area(src), client)
+
+	var/mob/living/carbon/human/species/wildshape/dragon_matthios/W = new shapepath(loc)
+
+	W.set_patron(src.patron)
+	W.gender = gender
+	W.regenerate_icons()
+	W.stored_mob = src
+	playsound(W.loc, 'sound/body/shapeshift-start.ogg', 100, FALSE, 3)
+	src.forceMove(W)
+	W.after_creation()
+	W.stored_language = new
+	W.stored_language.copy_known_languages_from(src)
+	W.stored_skills = ensure_skills().known_skills.Copy()
+	W.stored_experience = ensure_skills().skill_experience.Copy()
+	W.stored_spells = list()
+	W.voice_color = voice_color
+	W.cmode_music_override = cmode_music_override
+	W.cmode_music_override_name = cmode_music_override_name
+
+	W.bleedsuppress = bleedsuppress
+	bleed_rate = 0
+	bleedsuppress = TRUE
+	W.set_nutrition(nutrition)
+	W.set_hydration(hydration)
+
+	mind.transfer_to(W)
+	for(var/obj/effect/proc_holder/S in W.mind.spell_list)
+		if(!istype(S, /obj/effect/proc_holder/spell/self/wingsoffreedom))
+			W.stored_spells += list(S.type)
+			W.mind.RemoveSpell(S)
+	skills?.known_skills = list()
+	skills?.skill_experience = list()
+	W.grant_language(/datum/language/draconic)
+	W.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
+	W.update_a_intents()
+
+	if(getorganslot(ORGAN_SLOT_PENIS))
+		W.internal_organs_slot[ORGAN_SLOT_PENIS] = /obj/item/organ/penis/knotted/big
+	if(getorganslot(ORGAN_SLOT_TESTICLES))
+		W.internal_organs_slot[ORGAN_SLOT_TESTICLES] = /obj/item/organ/testicles
+	if(getorganslot(ORGAN_SLOT_BREASTS))
+		W.internal_organs_slot[ORGAN_SLOT_BREASTS] = /obj/item/organ/breasts
+	if(getorganslot(ORGAN_SLOT_VAGINA))
+		W.internal_organs_slot[ORGAN_SLOT_VAGINA] = /obj/item/organ/vagina
+
+	ADD_TRAIT(src, TRAIT_NOSLEEP, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_SOURCE_WILDSHAPE)
+	src.status_flags |= GODMODE
+	invisibility = oldinv
+
+	playsound(W.loc, 'sound/vo/mobs/vdragon/drgnroar.ogg', 100, FALSE, 3)
+	W.gain_inherent_skills()
+	addtimer(CALLBACK(W, PROC_REF(energy_add), 1000), 3 SECONDS)
+
+/mob/living/carbon/human/proc/wildshape_untransform_twilight_dragon(dead, gibbed)
+	if(!stored_mob)
+		return
+	if(!mind)
+		if(has_status_effect(/datum/status_effect/buff/twilight_dragon_form))
+			remove_status_effect(/datum/status_effect/buff/twilight_dragon_form)
+		apply_status_effect(/datum/status_effect/buff/twilight_dragon_form/short)
+		return
+	if(istype(get_area(src), /area/rogue/indoors/ravoxarena))
+		to_chat(src, span_userdanger("I reach for my normal form, but something rebukes me! Ravox is too strong in this dimension!"))
+		if(has_status_effect(/datum/status_effect/buff/twilight_dragon_form))
+			remove_status_effect(/datum/status_effect/buff/twilight_dragon_form)
+		apply_status_effect(/datum/status_effect/buff/twilight_dragon_form/short)
+		return
+
+	for(var/obj/item/W in src)
+		dropItemToGround(W)
+	icon = null
+	invisibility = INVISIBILITY_MAXIMUM
+	var/mob/living/carbon/human/species/wildshape/dragon_matthios/WA = src
+	var/mob/living/carbon/human/W = WA.stored_mob
+	WA.stored_mob = null
+	REMOVE_TRAIT(W, TRAIT_NOSLEEP, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_NOBREATH, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_NOPAIN, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_TOXIMMUNE, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_NOHUNGER, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_NOMOOD, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_PACIFISM, TRAIT_SOURCE_WILDSHAPE)
+	if(dead)
+		W.death(gibbed)
+
+	W.forceMove(get_turf(src))
+	mind.transfer_to(W)
+	for(var/S in WA.stored_spells)
+		if(S)
+			W.mind.AddSpell(new S, W)
+	if(dead)
+		W.Unconscious(30 SECONDS, TRUE, TRUE)
+		W.visible_message(span_boldwarning("[W] twists and shifts back into human guise in a sickening lurch of flesh and bone, and promptly passes out!"), span_userdanger("I quickly flee the waning vitality of my former shape, but the strain is too much--"))
+		to_chat(W, span_crit("...DARKNESS..."))
+	W.copy_known_languages_from(WA.stored_language)
+	W.skills?.known_skills = WA.stored_skills.Copy()
+	W.skills?.skill_experience = WA.stored_experience.Copy()
+
+	playsound(W.loc, 'sound/body/shapeshift-end.ogg', 100, FALSE, 3)
+	for(var/origin_spell_type in WA.stored_spells)
+		for(var/obj/effect/proc_holder/spell/wildspell in W.mind.spell_list)
+			if((wildspell.type != origin_spell_type) && !istype(wildspell, /obj/effect/proc_holder/spell/self/wingsoffreedom))
+				W.RemoveSpell(wildspell)
+
+	W.regenerate_icons()
+	if(!dead)
+		to_chat(W, span_userdanger("I return to my old form."))
+
+	qdel(src)
+
+#undef TRAIT_SOURCE_WILDSHAPE
+
+/obj/effect/proc_holder/spell/invoked/projectile/fireball/matthios_dragon
+	glow_color = "#FFD700"
+	glow_intensity = GLOW_INTENSITY_LOW
+	invocation_type = "none"
+
+/obj/effect/proc_holder/spell/invoked/projectile/spitfire/matthios_dragon
+	glow_color = "#FFD700"
+	glow_intensity = GLOW_INTENSITY_LOW
+	invocation_type = "none"
+
+// Golden-Serpent-exclusive T4: Skulduggery
+//Skulduggery, lets you slip behind people who attack you
+// number of times scales from your miracle tier, then once those "free" dodges are spent, it takes enem skill vs miracle chance
+// can grapple attackers by having throw intent on, if attacked again by your target or someone else, either slam them down, or slam them on the attacker
+/obj/effect/proc_holder/spell/self/skulduggery
+	name = "Skulduggery"
+	desc = "Imbue your mind and eyes with the cunning of Matthios, reading strikes before they land and punishing them with brutal efficiency.<br><br>Toggle Throw mode to actively intercept and grapple attacks, otherwise, you'll try to avoid them however you can."
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	overlay_state = "liberate"
+	recharge_time = 2 MINUTES
+	sound = 'sound/magic/haste.ogg'
+	releasedrain = 10
+	miracle = TRUE
+	devotion_cost = 70
+	antimagic_allowed = FALSE
+	range = 0
+
+/obj/effect/proc_holder/spell/self/skulduggery/cast(list/targets, mob/user)
+	. = ..()
+	if(!ishuman(user))
+		revert_cast()
+		return FALSE
+
+	var/mob/living/carbon/human/H = user
+
+	if(!H.cmode)
+		to_chat(H, span_warning("I need some adrenaline pumping for this, my good sire!"))
+		revert_cast()
+		return FALSE
+
+	if(H.resting)
+		H.set_resting(FALSE, FALSE)
+		H.visible_message(
+			span_warning("[H] kips up!"),
+			span_warning("No rest for the wicked!")
+		)
+
+	H.visible_message(
+		span_notice("[H] shifts their stance into something more relaxed and open! Their eyes glow golden..."),
+		span_notice("My gaze is grafted with truth, my mind wanders in freedom...")
+	)
+	H.apply_status_effect(/datum/status_effect/buff/skulduggery)
+	H.OffBalance(30)
+	return TRUE
+
+
 /atom/movable/screen/alert/status_effect/buff/skulduggery
 	name = "Skulduggery"
 	desc = span_notice("I prepare to slip inside attacks and punish aggressors, like a true Free Man would.")
@@ -888,6 +1072,7 @@
 	var/waiting_followup = FALSE
 	var/list/grapple_counts = list()
 	var/parries_left = 0
+	var/refreshes_used = 0
 
 /datum/status_effect/buff/skulduggery/on_creation(mob/living/new_owner, ...)
 	RegisterSignal(new_owner, COMSIG_MOB_ITEM_ATTACK, PROC_REF(process_Wattack))
@@ -929,7 +1114,6 @@
 	. = ..()
 	if(!owner)
 		return
-	var/mob/living/carbon/human/human = owner
 	if(prob(40))
 		trigger_afterimage(2)
 		owner.Jitter(1)
@@ -953,7 +1137,11 @@
 	var/datum/status_effect/buff/skulduggery/skulduggery = has_status_effect(/datum/status_effect/buff/skulduggery)
 	if(!skulduggery)
 		return FALSE
-	return skulduggery.process_skd(attacker, item)
+	var/success = skulduggery.process_skd(attacker, item)
+	if(success && skulduggery.refreshes_used < 3)
+		skulduggery.duration += initial(skulduggery.duration)
+		skulduggery.refreshes_used++
+	return success
 
 /datum/status_effect/buff/skulduggery/proc/process_skd(mob/living/carbon/human/attacker, obj/item/item)
 	if(!owner || !ishuman(owner) || !ishuman(attacker) || owner.IsKnockdown() || owner.lying || owner.IsParalyzed() || owner.IsStun() || owner.stat != CONSCIOUS || !(owner.mobility_flags & MOBILITY_STAND))
@@ -1204,150 +1392,6 @@
 		animate(src, pixel_x = amp, time = 1)
 		amp = round(amp * 0.6)
 	animate(src, pixel_x = 0, time = 2)
-
-#define TRAIT_SOURCE_WILDSHAPE "wildshape_transform"
-
-/mob/living/carbon/human/species/wildshape/dragon_matthios/death(gibbed, nocutscene = FALSE)
-	wildshape_untransform_twilight_dragon(TRUE, gibbed)
-
-/mob/living/carbon/human/proc/wildshape_transformation_twilight_dragon(shapepath)
-	if(!mind)
-		log_runtime("NO MIND ON [src.name] WHEN TRANSFORMING")
-	Paralyze(1, ignore_canstun = TRUE)
-	regenerate_icons()
-	icon = null
-	var/oldinv = invisibility
-	invisibility = INVISIBILITY_MAXIMUM
-	cmode = FALSE
-	if(client)
-		SSdroning.play_area_sound(get_area(src), client)
-
-	var/mob/living/carbon/human/species/wildshape/dragon_matthios/W = new shapepath(loc)
-
-	W.set_patron(src.patron)
-	W.gender = gender
-	W.regenerate_icons()
-	W.stored_mob = src
-	playsound(W.loc, 'sound/body/shapeshift-start.ogg', 100, FALSE, 3)
-	src.forceMove(W)
-	W.after_creation()
-	W.stored_language = new
-	W.stored_language.copy_known_languages_from(src)
-	W.stored_skills = ensure_skills().known_skills.Copy()
-	W.stored_experience = ensure_skills().skill_experience.Copy()
-	W.stored_spells = list()
-	W.voice_color = voice_color
-	W.cmode_music_override = cmode_music_override
-	W.cmode_music_override_name = cmode_music_override_name
-
-	W.bleedsuppress = bleedsuppress
-	bleed_rate = 0
-	bleedsuppress = TRUE
-	W.set_nutrition(nutrition)
-	W.set_hydration(hydration)
-
-	mind.transfer_to(W)
-	for(var/obj/effect/proc_holder/S in W.mind.spell_list)
-		if(!istype(S, /obj/effect/proc_holder/spell/self/wingsoffreedom))
-			W.stored_spells += list(S.type)
-			W.mind.RemoveSpell(S)
-	skills?.known_skills = list()
-	skills?.skill_experience = list()
-	W.grant_language(/datum/language/draconic)
-	W.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
-	W.update_a_intents()
-
-	if(getorganslot(ORGAN_SLOT_PENIS))
-		W.internal_organs_slot[ORGAN_SLOT_PENIS] = /obj/item/organ/penis/knotted/big
-	if(getorganslot(ORGAN_SLOT_TESTICLES))
-		W.internal_organs_slot[ORGAN_SLOT_TESTICLES] = /obj/item/organ/testicles
-	if(getorganslot(ORGAN_SLOT_BREASTS))
-		W.internal_organs_slot[ORGAN_SLOT_BREASTS] = /obj/item/organ/breasts
-	if(getorganslot(ORGAN_SLOT_VAGINA))
-		W.internal_organs_slot[ORGAN_SLOT_VAGINA] = /obj/item/organ/vagina
-
-	ADD_TRAIT(src, TRAIT_NOSLEEP, TRAIT_SOURCE_WILDSHAPE)
-	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_SOURCE_WILDSHAPE)
-	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_SOURCE_WILDSHAPE)
-	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_SOURCE_WILDSHAPE)
-	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_SOURCE_WILDSHAPE)
-	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_SOURCE_WILDSHAPE)
-	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_SOURCE_WILDSHAPE)
-	src.status_flags |= GODMODE
-	invisibility = oldinv
-
-	playsound(W.loc, 'sound/vo/mobs/vdragon/drgnroar.ogg', 100, FALSE, 3)
-	W.gain_inherent_skills()
-	addtimer(CALLBACK(W, PROC_REF(energy_add), 1000), 3 SECONDS)
-
-/mob/living/carbon/human/proc/wildshape_untransform_twilight_dragon(dead, gibbed)
-	if(!stored_mob)
-		return
-	if(!mind)
-		if(has_status_effect(/datum/status_effect/buff/twilight_dragon_form))
-			remove_status_effect(/datum/status_effect/buff/twilight_dragon_form)
-		apply_status_effect(/datum/status_effect/buff/twilight_dragon_form/short)
-		return
-	if(istype(get_area(src), /area/rogue/indoors/ravoxarena))
-		to_chat(src, span_userdanger("I reach for my normal form, but something rebukes me! Ravox is too strong in this dimension!"))
-		if(has_status_effect(/datum/status_effect/buff/twilight_dragon_form))
-			remove_status_effect(/datum/status_effect/buff/twilight_dragon_form)
-		apply_status_effect(/datum/status_effect/buff/twilight_dragon_form/short)
-		return
-
-	for(var/obj/item/W in src)
-		dropItemToGround(W)
-	icon = null
-	invisibility = INVISIBILITY_MAXIMUM
-	var/mob/living/carbon/human/species/wildshape/dragon_matthios/WA = src
-	var/mob/living/carbon/human/W = WA.stored_mob
-	WA.stored_mob = null
-	REMOVE_TRAIT(W, TRAIT_NOSLEEP, TRAIT_SOURCE_WILDSHAPE)
-	REMOVE_TRAIT(W, TRAIT_NOBREATH, TRAIT_SOURCE_WILDSHAPE)
-	REMOVE_TRAIT(W, TRAIT_NOPAIN, TRAIT_SOURCE_WILDSHAPE)
-	REMOVE_TRAIT(W, TRAIT_TOXIMMUNE, TRAIT_SOURCE_WILDSHAPE)
-	REMOVE_TRAIT(W, TRAIT_NOHUNGER, TRAIT_SOURCE_WILDSHAPE)
-	REMOVE_TRAIT(W, TRAIT_NOMOOD, TRAIT_SOURCE_WILDSHAPE)
-	REMOVE_TRAIT(W, TRAIT_PACIFISM, TRAIT_SOURCE_WILDSHAPE)
-	if(dead)
-		W.death(gibbed)
-
-	W.forceMove(get_turf(src))
-	mind.transfer_to(W)
-	for(var/S in WA.stored_spells)
-		if(S)
-			W.mind.AddSpell(new S, W)
-	if(dead)
-		W.Unconscious(30 SECONDS, TRUE, TRUE)
-		W.visible_message(span_boldwarning("[W] twists and shifts back into human guise in a sickening lurch of flesh and bone, and promptly passes out!"), span_userdanger("I quickly flee the waning vitality of my former shape, but the strain is too much--"))
-		to_chat(W, span_crit("...DARKNESS..."))
-	W.copy_known_languages_from(WA.stored_language)
-	W.skills?.known_skills = WA.stored_skills.Copy()
-	W.skills?.skill_experience = WA.stored_experience.Copy()
-
-	playsound(W.loc, 'sound/body/shapeshift-end.ogg', 100, FALSE, 3)
-	for(var/origin_spell_type in WA.stored_spells)
-		for(var/obj/effect/proc_holder/spell/wildspell in W.mind.spell_list)
-			if((wildspell.type != origin_spell_type) && !istype(wildspell, /obj/effect/proc_holder/spell/self/wingsoffreedom))
-				W.RemoveSpell(wildspell)
-
-	W.regenerate_icons()
-	if(!dead)
-		to_chat(W, span_userdanger("I return to my old form."))
-
-	qdel(src)
-
-#undef TRAIT_SOURCE_WILDSHAPE
-
-/obj/effect/proc_holder/spell/invoked/projectile/fireball/matthios_dragon
-	glow_color = "#FFD700"
-	glow_intensity = GLOW_INTENSITY_LOW
-	invocation_type = "none"
-
-/obj/effect/proc_holder/spell/invoked/projectile/spitfire/matthios_dragon
-	glow_color = "#FFD700"
-	glow_intensity = GLOW_INTENSITY_LOW
-	invocation_type = "none"
 
 /// - MATTHIOS REVIVAL - ///
 
