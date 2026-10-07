@@ -793,7 +793,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 ///mob/living/simple_animal/extinguish_mob()
 //	return
 
-/mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	if(..()) //successfully ressuscitated from death
 		icon = initial(icon)
 		icon_state = icon_living
@@ -1056,7 +1056,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		return ..()
 	if(ishuman(M) && buckled_mobs && buckled_mobs.len < max_buckled_mobs)
 		var/mob/living/carbon/human/primary_rider = M
-		for(var/mob/living/passenger in primary_rider.buckled_mobs.Copy())
+		for(var/mob/living/passenger in primary_rider.buckled_mobs?.Copy())
 			if(buckled_mobs.len >= max_buckled_mobs)
 				break
 			if(!ishuman(passenger) || passenger.stat != CONSCIOUS)

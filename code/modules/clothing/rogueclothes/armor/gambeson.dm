@@ -175,6 +175,7 @@
 		add_overlay(pic)
 
 /obj/item/clothing/suit/roguetown/shirt/freifechter
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	name = "padded fencing shirt"
 	desc = "A strong loosely worn quilted shirt that places little weight on the arms, usually worn underneath a flexible leather vest. It won't cover your legs."
 	icon = 'icons/roguetown/clothing/armor.dmi'
