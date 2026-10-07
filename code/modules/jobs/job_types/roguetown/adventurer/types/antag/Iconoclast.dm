@@ -72,9 +72,9 @@
 				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/iconoclast
 				shirt = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
-				ADD_TRAIT(H, TRAIT_GNARLYDIGITS, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_CYCLOPS_RIGHT, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_LEGENDARY, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_LEGENDARY, TRUE)
 				H.change_stat(STATKEY_CON, 2)
