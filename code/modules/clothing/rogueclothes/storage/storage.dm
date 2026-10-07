@@ -48,6 +48,42 @@
 	sellprice = 10
 	resistance_flags = FIRE_PROOF
 	dropshrink = 0.8
+	force = 10
+	associated_skill = /datum/skill/combat/whipsflails
+	sewrepair = TRUE
+	wbalance = WBALANCE_SWIFT
+	wdefense = 0
+	swingsound = WHIPWOOSH
+	possible_item_intents = list(
+		/datum/intent/whip/belt/tip,
+		/datum/intent/whip/belt/buckle,
+	)
+
+/datum/intent/whip/belt/tip
+	name = "belt lash"
+	blade_class = BCLASS_BLUNT
+	attack_verb = list("lashes", "cracks")
+	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
+	chargetime = 0
+	recovery = 5
+	damfactor = 0.5
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	reach = 1
+	icon_state = "inlash"
+	item_d_type = "slash"
+
+/datum/intent/whip/belt/buckle
+	name = "buckle strike"
+	blade_class = BCLASS_BLUNT
+	attack_verb = list("lashes", "cracks")
+	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
+	chargetime = 0
+	recovery = 5
+	damfactor = 1
+	penfactor = BLUNT_DEFAULT_PENFACTOR		
+	reach = 1								
+	icon_state = "instrike"
+	item_d_type = "slash"
 
 /obj/item/storage/belt/rogue/leather/plaquegold
 	name = "plaque belt"

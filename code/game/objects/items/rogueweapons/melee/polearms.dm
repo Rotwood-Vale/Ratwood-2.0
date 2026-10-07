@@ -1,5 +1,19 @@
 //intent datums ฅ^•ﻌ•^ฅ
 
+/datum/intent/priest_smite
+	name = "electrocute"
+	blade_class = null
+	icon_state = "inuse"
+	tranged = TRUE
+	noaa = TRUE
+
+/datum/intent/priest_silence
+	name = "silence"
+	blade_class = null
+	icon_state = "inuse"
+	tranged = TRUE
+	noaa = TRUE
+
 /datum/intent/spear/thrust
 	name = "thrust"
 	blade_class = BCLASS_STAB
@@ -374,18 +388,71 @@
 
 /obj/item/rogueweapon/woodstaff/aries
 	name = "staff of the shepherd"
-	desc = "This staff makes you look important to any peasant."
+	desc = "The flock is best led by firm hand. Firm, electricity-shooting hand. Works only inside the Church."
 	force = 25
 	force_wielded = 28
 	icon_state = "aries"
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	pixel_y = 0
 	pixel_x = 0
+	possible_item_intents = list(SPEAR_BASH, /datum/intent/priest_smite, /datum/intent/priest_silence)
+	gripped_intents = list(SPEAR_BASH, /datum/intent/mace/smash/wood, /datum/intent/priest_smite, /datum/intent/priest_silence)
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	bigboy = FALSE
 	gripsprite = FALSE
 	gripped_intents = null
+	COOLDOWN_DECLARE(scepter)
+
+/obj/item/rogueweapon/woodstaff/aries/afterattack(atom/target, mob/user, flag)
+	. = ..()
+	if(get_dist(user, target) > 7)
+		return
+
+	user.changeNext_move(CLICK_CD_MELEE)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/HU = user
+
+		if(HU.job != "Bishop")
+			to_chat(user, "<font color='yellow'>THIS IS NOT YOURS.</font>")
+			return
+
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			var/area/target_area = get_area(H)
+
+			if(!istype(target_area, /area/rogue/outdoors/town/church || /area/rogue/indoors/town/church))
+				to_chat(user, span_danger("The staff cannot be used on targets outside of the church!"))
+				return
+
+			if(H == HU)
+				return
+
+			if(!COOLDOWN_FINISHED(src, scepter))
+				to_chat(user, span_danger("The [src] is not ready yet! [round(COOLDOWN_TIMELEFT(src, scepter) / 10, 1)] seconds left!"))
+				return
+
+			if(!(H in SStreasury.bank_accounts))
+				to_chat(user, span_danger("The target must have a Nervelock account!")) //no stunlocking antags sorry buddy
+				return
+
+			if(istype(user.used_intent, /datum/intent/priest_smite))
+				HU.visible_message(span_warning("[HU] smites [H] with the [src]!"))
+				user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
+				H.electrocute_act(5, src)
+				COOLDOWN_START(src, scepter, 10 SECONDS)
+				H.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+				H.ignite_mob()
+				to_chat(H, span_danger("I'm smote by divine power!"))
+				return
+
+			if(istype(user.used_intent, /datum/intent/priest_silence))
+				HU.visible_message("<span class='warning'>[HU] silences [H] with \the [src].</span>")
+				H.set_silence(20 SECONDS)
+				COOLDOWN_START(src, scepter, 5 SECONDS)
+				to_chat(H, "<span class='danger'>I'm silenced by divine power!</span>")
+				return
 
 /obj/item/rogueweapon/woodstaff/aries/getonmobprop(tag)
 	. = ..()

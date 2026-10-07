@@ -123,6 +123,6 @@
 	gender = PLURAL
 	icon_state = "plate_skirt"
 	item_state = "plate_skirt"
-	body_parts_covered = GROIN
-	armor_class = ARMOR_CLASS_LIGHT
+	body_parts_covered = LEGS
+	armor_class = ARMOR_CLASS_MEDIUM
 	dropshrink = null
