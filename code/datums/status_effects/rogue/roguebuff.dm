@@ -2334,7 +2334,7 @@
 /datum/status_effect/buff/ravox_vow
 	id = "ravox_vow"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/ravox_vow
-	efectedstats = list(STATKEY_WIL = 1)
+	effectedstats = list(STATKEY_WIL = 1)
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 30 MINUTES
 	tick_interval = -1
