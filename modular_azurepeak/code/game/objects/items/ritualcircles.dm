@@ -1840,6 +1840,7 @@
 			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/graggar
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/graggar
 			neck = /obj/item/clothing/neck/roguetown/gorget/steel/graggar
+			mask = /obj/item/clothing/mask/rogue/facemask/steel/graggar
 		if("HEAVY ARMOR")
 			armor = /obj/item/clothing/suit/roguetown/armor/plate/full/graggar
 			pants = /obj/item/clothing/under/roguetown/platelegs/graggar
@@ -1848,6 +1849,7 @@
 			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/graggar
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/graggar/heavy
 			neck = /obj/item/clothing/neck/roguetown/gorget/steel/graggar
+			mask = /obj/item/clothing/mask/rogue/facemask/steel/graggar
 
 	var/weapons = list("Sanguis - (tomahawk and targe)", "Carnifex - (two-handed greataxe)")
 	var/weapon_choice = input(H, "Choose your ARMS.", "ARMS OF VIOLENCE") as anything in weapons
