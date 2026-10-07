@@ -55,7 +55,7 @@
 /datum/inqports/supplies/medical
 	name = "5 Rolls of Cloth and Needles"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/medical
-	marquescost = 4
+	marquescost = 1
 
 /obj/item/natural/bundle/cloth/roll/Initialize(mapload)
 	. = ..()
@@ -78,12 +78,51 @@
 /datum/inqports/supplies/chains
 	name = "2 Lengths of Chain"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/chains
-	marquescost = 2
+	marquescost = 1
 
 /datum/inqports/supplies/blessedbolts
 	name = "1 Quiver of Holy Water Bolts"
 	item_type = /obj/item/quiver/holybolts
+	marquescost = 1
+
+/datum/inqport/supplies/skullcrackerbolts
+	name = "1 Quiver of Heavy Blunt Bolts (Not for the sauterelle)"
+	item_type = /obj/item/quiver/bluntbolts
 	marquescost = 2
+
+/datum/inqport/supplies/heavyholybolts
+	name = "5 Blessed Heavy Bolts"
+	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/heavyholybolts
+	marquescost = 3
+
+/obj/structure/closet/crate/chest/inqcrate/supplies/heavyholybolts/Initialize(mapload)
+	. = ..()
+	new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy(src)
+	new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy(src)
+	new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy(src)
+	new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy(src)
+	new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy(src)
+
+/datum/inqport/supplies/silverblessedslingbullet
+	name = "10 Silver Blessed Psysling Bullets & Sling"
+	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/silverblessedslingbullet
+	marquescost = 4 //this shit hurts a surprising amount
+
+/obj/structure/closet/crate/chest/inqcrate/supplies/silverblessedslingbullet/Initialize(mapload)
+	. = ..()
+	new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+	new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+	new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+	new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+	new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+	new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+	new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+	new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+	new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+	new /obj/item/ammo_casing/caseless/rogue/sling_bullet/silverblessed(src)
+	new /obj/item/quiver/sling(src)
+	new /obj/item/gun/ballistic/revolver/grenadelauncher/sling(src)
+
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/chains/Initialize(mapload)
 	. = ..()
@@ -93,7 +132,7 @@
 /datum/inqports/supplies/redpotions
 	name = "3 Bottles of Red"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/redpots
-	marquescost = 3
+	marquescost = 1
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/redpots/Initialize(mapload)
 	. = ..()
@@ -104,7 +143,7 @@
 /datum/inqports/supplies/lifebloodvials
 	name = "3 Vials of Strong Red"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/sredvials
-	marquescost = 6
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/sredvials/Initialize(mapload)
 	. = ..()
@@ -115,7 +154,7 @@
 /datum/inqports/supplies/bluepotions
 	name = "3 Bottles of Blue"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/bluepots
-	marquescost = 3
+	marquescost = 1
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/bluepots/Initialize(mapload)
 	. = ..()
@@ -126,7 +165,7 @@
 /datum/inqports/supplies/strongbluevials
 	name = "3 Vials of Strong Blue"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials
-	marquescost = 6
+	marquescost = 3
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/sbluevials/Initialize(mapload)
 	. = ..()
@@ -134,10 +173,15 @@
 	new /obj/item/reagent_containers/glass/bottle/alchemical/strongmanapot(src)
 	new /obj/item/reagent_containers/glass/bottle/alchemical/strongmanapot(src)
 
+/datum/inqports/supplies/revivalpotion
+	name = "Saint Eora's Elixr of Lyfe"
+	item_type = /obj/item/reagent_containers/glass/bottle/revival
+	marquescost = 10
+
 /datum/inqports/supplies/smokes
 	name = "4 Smokebombs"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/smokes
-	marquescost = 4
+	marquescost = 2
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/smokes/Initialize(mapload)
 	. = ..()
@@ -149,11 +193,11 @@
 /datum/inqports/supplies/psybuns
 	name = "The Otavan Bakery Special"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/psybuns
-	marquescost = 4
+	marquescost = 1
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/psybuns/Initialize(mapload)
 	. = ..()
-	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun(src)
+	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun_jamtallowed(src)
 	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun(src)
 	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun(src)
 	new /obj/item/reagent_containers/food/snacks/rogue/psycrossbun(src)
@@ -177,13 +221,35 @@
 /datum/inqports/supplies/bottlebombs
 	name = "3 Bottlebombs"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs
+	marquescost = 3
+
+/datum/inqports/supplies/blastsandsticks
+	name = "3 Blastsand Sticks"
+	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/tntstick
 	marquescost = 6
+
+/obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs/Initialize(mapload)
+	. = ..()
+	new /obj/item/tntstick(src)
+	new /obj/item/tntstick(src)
+	new /obj/item/tntstick(src)
 
 /obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs/Initialize(mapload)
 	. = ..()
 	new /obj/item/bomb(src)
 	new /obj/item/bomb(src)
 	new /obj/item/bomb(src)
+
+/datum/inqports/supplies/mutegas
+	name = "3 Silencing Gas Bombs"
+	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/mutegas
+	marquescost = 6
+
+/obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs/Initialize(mapload)
+	. = ..()
+	new obj/item/impact_grenade/smoke/mute_gas(src)
+	new obj/item/impact_grenade/smoke/mute_gas(src)
+	new obj/item/impact_grenade/smoke/mute_gas(src)
 
 /datum/inqports/supplies/bullion
 	name = "6 Blessed Silver Bullion"
@@ -271,6 +337,11 @@
 
 
 // ✤ EQUIPMENT ✤ BELONGS HERE! JUST BELOW!
+
+/datum/inqports/equipment/holymonkrobes
+	name = " 1 Holy Monk Robes"
+	item_type = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy
+	marquescost = 8
 
 /datum/inqports/equipment/psydonthorns
 	name = "1 Psydonian Thorns"
