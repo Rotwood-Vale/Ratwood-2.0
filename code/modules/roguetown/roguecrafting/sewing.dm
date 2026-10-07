@@ -572,7 +572,7 @@
 	result = list(/obj/item/clothing/suit/roguetown/armor/basiceast)
 	reqs = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 2)
-	craftdiff = 3
+	craftdiff = 6
 
 /datum/crafting_recipe/roguetown/sewing/decorative_mentorsuit
 	name = "decorative mentor robe"
