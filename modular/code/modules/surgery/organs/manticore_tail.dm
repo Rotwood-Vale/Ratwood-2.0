@@ -5,6 +5,7 @@
 // because it occupies the standard ORGAN_SLOT_TAIL.
 
 GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
+	/datum/sprite_accessory/tail/tailmaw,
 	/datum/sprite_accessory/tail/tailmaw2,
 	/datum/sprite_accessory/tail/tailmaw2_head,
 	/datum/sprite_accessory/tail/tailmaw2_stripes,
@@ -107,7 +108,7 @@ GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
 	if(new_state == maw_engorged)
 		return
 	maw_engorged = new_state
-	if(accessory_type != /datum/sprite_accessory/tail/manticore)
+	if(is_plain_tailmaw())
 		return
 	wagging = maw_engorged
 	if(ishuman(owner))

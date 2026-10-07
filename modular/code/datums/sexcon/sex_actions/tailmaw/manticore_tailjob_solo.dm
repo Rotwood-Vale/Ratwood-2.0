@@ -1,4 +1,5 @@
 /datum/sex_action/manticore_tailjob_solo
+	parent_type = /datum/sex_action/tailmaw
 	name = "Jerk off with tail maw"
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_COCK | SEX_PART_TAIL_MAW // only user part to avoid self-targeting restrictions
