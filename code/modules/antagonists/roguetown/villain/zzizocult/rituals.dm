@@ -1358,8 +1358,8 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /obj/item/clothing/head/hooded/cultrobehood
 	name = "hood"
 	desc = "Evil ass ZIZO hood."
-	icon = 'modular_deserttown/icons/clothing/head.dmi'
-	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/head.dmi'
+	icon = 'modular_deserttown/icons/clothing/shadowcloak.dmi'
+	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shadowcloak.dmi'
 	icon_state = "warlockhood"
 	item_state = "warlockhood"
 	slot_flags = ITEM_SLOT_HEAD
@@ -1367,8 +1367,12 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	body_parts_covered = HEAD
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	block2add = FOV_BEHIND
+	armor = ARMOR_LEATHER_GOOD
+	max_integrity = 200
 
 /obj/item/clothing/head/hooded/cultrobehood/empowered
+	armor = ARMOR_ASCENDANT
+	max_integrity = 400
 	icon_state = "ewarlockhood"
 	item_state = "ewarlockhood"
 
