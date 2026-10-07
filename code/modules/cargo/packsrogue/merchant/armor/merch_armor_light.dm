@@ -46,15 +46,40 @@
 	cost = 20 // Base sellprice of 10
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers/leather/heavy)
 
+/datum/supply_pack/rogue/light_armor/basic_leather_bracers
+	name = "Leather Bracers"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/leather)
+
 /datum/supply_pack/rogue/light_armor/heavy_leather_pants
 	name = "Hardened Leather Pants"
 	cost = 30 // Base sellprice of 20
 	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants)
 
+/datum/supply_pack/rogue/light_armor/leather_trousers
+	name = "Leather Trousers"
+	cost = 15
+	contains = list(/obj/item/clothing/under/roguetown/trou/leather)
+
 /datum/supply_pack/rogue/light_armor/hide_armor
 	name = "Hide Armor"
 	cost = 30 // Base sellprice of 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/hide)
+
+/datum/supply_pack/rogue/light_armor/leather_cuirass
+	name = "Leather Cuirass"
+	cost = 15
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/cuirass)
+
+/datum/supply_pack/rogue/light_armor/leather_armor
+	name = "Leather Armor"
+	cost = 15
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather)
+
+/datum/supply_pack/rogue/light_armor/leather_helmet
+	name = "Leather Helmet"
+	cost = 20
+	contains = list(/obj/item/clothing/head/roguetown/helmet/leather)
 
 /datum/supply_pack/rogue/light_armor/heavy_leather_armor
 	name = "Hardened Leather Armor"
@@ -80,6 +105,21 @@
 	name = "Heavy Leather Gloves"
 	cost = 20 // No one buying this lmao it costs 1 fur
 	contains = list(/obj/item/clothing/gloves/roguetown/angle)
+
+/datum/supply_pack/rogue/light_armor/fingerless_leather_gloves
+	name = "Fingerless Leather Gloves"
+	cost = 20
+	contains = list(/obj/item/clothing/gloves/roguetown/fingerless_leather)
+
+/datum/supply_pack/rogue/light_armor/leather_gloves
+	name = "Leather Gloves"
+	cost = 15
+	contains = list(/obj/item/clothing/gloves/roguetown/leather)
+
+/datum/supply_pack/rogue/light_armor/padded_arming_cap
+	name = "Padded Arming Cap"
+	cost = 15
+	contains = list(/obj/item/clothing/head/roguetown/paddedcap)
 
 /datum/supply_pack/rogue/light_armor/heavy_padded_coif
 	name = "Heavy Padded Coif"

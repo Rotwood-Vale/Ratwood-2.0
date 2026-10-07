@@ -308,7 +308,7 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 
 		belt = /obj/item/storage/belt/rogue/leather/battleskirt/barbarian
-		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
+		pants = /obj/item/clothing/under/roguetown/chainlegs/skirt/bronze
 		shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
 		wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	if(should_wear_masc_clothes(H))
@@ -639,7 +639,7 @@
 	name = "Amazon"
 	tutorial = "Fierce warrior women from distant lands, Amazons choose their armor based on their preferred fighting style - from light and agile to heavily protected."
 	outfit = /datum/outfit/job/adventurer/amazon
-	traits_applied = list(TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_DEATHBYSNUSNU)
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	subclass_stats = list()
 	subclass_social_rank = SOCIAL_RANK_DIRT

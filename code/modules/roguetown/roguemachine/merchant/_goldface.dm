@@ -574,7 +574,11 @@
 		return result
 	for(var/path in pack_paths)
 		var/datum/supply_pack/PA = SSmerchant.supply_packs[path]
-		if(PA)
+		if(!PA)
+			continue
+		if(PA.ship_chance < 100)
+			result += "[PA.name] (rare)"
+		else
 			result += PA.name
 	return result
 

@@ -54,12 +54,44 @@
 	description = "Why are you seeing this?"
 	hydration_factor = 5
 	overdose_threshold = 60
+	var/metabolized_caffeine = 0 
+
+/datum/reagent/consumable/caffeine/on_mob_add(mob/living/L)
+	metabolized_caffeine = 0
+	
 
 /datum/reagent/consumable/caffeine/on_mob_life(mob/living/carbon/M)
 	. = ..()
 	M.energy_add(5) // 1/6th of mana pot
 	M.apply_status_effect(/datum/status_effect/buff/vigorized)
 	M.sate_addiction(/datum/charflaw/addiction/caffiend)
+
+	metabolized_caffeine += metabolization_rate
+
+	// Sleep depravation code, 1u clears t1, 20u clears t2, 40u clears t3
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(metabolized_caffeine >= metabolization_rate && M.has_status_effect(/datum/status_effect/debuff/sleepytime)) // Remove the sleepytime status effect after consumption
+			H.remove_sleep_depravation()
+			to_chat(M, span_green("I feel more focused from that coffee!"))
+			M.visible_message(span_info("[M] gains a look of focus in their eyes, the weary expression lifting from [M.p_them()]."))
+			if(M.mind?.sleep_adv)
+				M.mind.sleep_adv.sleep_adv_points += 2
+				M.mind.sleep_adv.advance_cycle()
+		else if(M.has_status_effect(/datum/status_effect/debuff/sleepytime/t2) && metabolized_caffeine >= 20)
+			H.remove_sleep_depravation(TRUE)
+			to_chat(M, span_green("I feel SO much more focused from that coffee!"))
+			M.visible_message(span_info("[M] visibly wakes up, their eyes opening fully and the weary tired expression lifting from [M.p_them()]."))
+			if(M.mind?.sleep_adv)
+				M.mind.sleep_adv.sleep_adv_points += 4
+				M.mind.sleep_adv.advance_cycle()
+		else if(M.has_status_effect(/datum/status_effect/debuff/sleepytime/t2) && metabolized_caffeine >= 40)
+			H.remove_sleep_depravation(TRUE)
+			to_chat(M, span_green("That coffee hit the spot, I can think and move again without my eyelids weighing the same as my entire body."))
+			M.visible_message(span_info("[M] suddenly looks like [M.p_they()] aren't about to collapse anymore, blinking a couple of times as some conciousness comes back to [M.p_them()]."))
+			if(M.mind?.sleep_adv)
+				M.mind.sleep_adv.sleep_adv_points += 6
+				M.mind.sleep_adv.advance_cycle()
 
 /datum/reagent/consumable/caffeine/overdose_process(mob/living/carbon/M)
 	. = ..()
