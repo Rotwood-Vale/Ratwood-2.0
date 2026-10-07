@@ -299,6 +299,16 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 
+/obj/item/clothing/shoes/roguetown/grenzelhoft/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+
+/obj/item/clothing/shoes/roguetown/boots/grenzelhoft/freifechter
+	name = "fencing boots"
+	desc = "A pair of lightweight snugly fitting boots. They're reinforced along the toes and ankles and offer a measure of protection against missteps and glancing blows during close exchanges, often favoured by duelists and other itinerant swordsmen."
+	icon_state = "freiboots"
+	item_state = "freiboots"
+	max_integrity = ARMOR_INT_SIDE_HARDLEATHER + 50
+
 /obj/item/clothing/shoes/roguetown/boots/elven_boots
 	name = "woad elven boots"
 	desc = "The living trunks still blossom in the spring. They let water through, but it is never cold."
@@ -409,7 +419,7 @@
 /obj/item/clothing/shoes/roguetown/boots/armor/zizo
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	name = "avantyne boots"
-	desc = "Plate boots. Called forth from the edge of what should be known. In Her name."
+	desc = "<font color='A50021'>The lone and level sands stretch far away.</font> </br>‎<font color='FF0000'>March forth to the edge of reality, leaving behind its corpse.</font>"
 	icon_state = "zizoboots"
 	armor = ARMOR_ASCENDANT
 
@@ -425,8 +435,7 @@
 
 /obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo
 	name = "avantyne-threaded sabatons"
-	desc = "Marrow, flesh, ash; the bedrock of a new reality, fated to suffer until the final breath. It is this prognosis that commands Her disciples to \
-	work towards ascensionism - for no sacrifice is too great, in the pursuit of bringing lyfe back to this dying world."
+	desc = "<font color='A50021'>The lone and level sands stretch far away.</font> </br>‎<font color='FF0000'>March forth to the edge of reality, leaving behind its corpse.</font>"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	armor = ARMOR_ASCENDANT
 	icon_state = "zizoboots"
@@ -504,6 +513,9 @@
 	cold_protection = FOOT_LEFT | FOOT_RIGHT // These are still mostly leather, also at least ONE reason to wear them compared to their full steel counterparts
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
+/obj/item/clothing/shoes/roguetown/boots/maille/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+
 /obj/item/clothing/shoes/roguetown/boots/maille/iron
 	name = "iron maille boots"
 	desc = "A pair of leather boots, reinforced with smaller iron plates along the feet and ankles. A thick layer of chainmail has been woven across \
@@ -530,6 +542,8 @@
 	desc = "Leather sandals, with steel ankle-protectors and socks of sturdy cloth."
 	icon_state = "kazengunboots"
 	item_state = "kazengunboots"
+	max_integrity = ARMOR_INT_SIDE_STEEL
+	armor = ARMOR_PLATE
 	detail_tag = "_detail"
 	color = "#FFFFFF"
 	detail_color = "#FFFFFF"

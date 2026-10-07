@@ -1,0 +1,5 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - code_imp: "Removed duplicated taur clothing logic. Shared proc lives in taur.dm"
+  - image: "New taur clothing sprites for saiga taurs. Includes special sprites for psydonic and astratan tabards."

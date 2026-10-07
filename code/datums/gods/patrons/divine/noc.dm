@@ -8,14 +8,16 @@
 	mob_traits = list(TRAIT_NIGHT_OWL, TRAIT_NOCSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/targeted/touch/prestidigitation	= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/silence/miracle			= CLERIC_T0,//wisdom is knowing when to shut up, or to make someone shut up.
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/invisibility/miracle		= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blindness					= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/magicshield				= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/silence/miracle			= CLERIC_T3,//We are NOT letting Noc templars, or paladins, or GOD FORBID MONKS spamcast silence.
 					/obj/effect/proc_holder/spell/self/noc_spell_bundle				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/noc				= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_NOC
 	confess_lines = list(
 		"NOC IS NIGHT!",
 		"NOC SEES ALL!",

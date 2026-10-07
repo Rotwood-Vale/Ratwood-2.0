@@ -30,6 +30,14 @@
 	verbage = "sews"
 	craftdiff = 0
 
+/datum/crafting_recipe/roguetown/survival/clothblindfold
+	name = "blindfold"
+	result = list(/obj/item/clothing/mask/rogue/blindfold)
+	reqs = list(/obj/item/natural/cloth = 1)
+	craftdiff = 0
+	verbage_simple = "tie"
+	verbage = "ties"
+
 /datum/crafting_recipe/roguetown/survival/clothbelt
 	name = "cloth belt"
 	result = /obj/item/storage/belt/rogue/leather/cloth
@@ -139,42 +147,6 @@
 		)
 	tools = list(/obj/item/needle)
 	skillcraft = /datum/skill/craft/sewing
-
-/datum/crafting_recipe/roguetown/survival/bait
-	name = "bait"
-	result = /obj/item/bait
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/grown/wheat = 2,
-		)
-	subtype_reqs = TRUE
-
-/datum/crafting_recipe/roguetown/survival/sbaita
-	name = "sweetbait (apple)"
-	result = /obj/item/bait/sweet
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/grown/apple = 2,
-		)
-	subtype_reqs = TRUE
-
-/datum/crafting_recipe/roguetown/survival/sbait
-	name = "sweetbait (berry)"
-	result = /obj/item/bait/sweet
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/grown/berries/rogue = 2,
-		)
-	subtype_reqs = TRUE
-
-/datum/crafting_recipe/roguetown/survival/bloodbait
-	name = "bloodbait"
-	result = /obj/item/bait/bloody
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/rogue/meat = 2,
-		)
-	subtype_reqs = TRUE
 
 /datum/crafting_recipe/roguetown/survival/pipe
 	name = "wood pipe"

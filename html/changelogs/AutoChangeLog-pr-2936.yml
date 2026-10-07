@@ -1,0 +1,5 @@
+author: "chemistrymain3"
+delete-after: True
+changes:
+  - rscadd: "The Prelate's staff now functions like the Duke's master rod."
+  - rscadd: "Added 1 templar slot and 2 churchling slots."

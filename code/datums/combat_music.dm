@@ -419,7 +419,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_nitecreecher.ogg')
 
 /datum/combat_music/noble
-	name = "Noble (Merchant/Freifechter)"
+	name = "Noble (Merchant)"
 	desc = ""
 	shortname = "Noble"
 	musicpath = list('sound/music/combat_noble.ogg')
@@ -628,8 +628,56 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('sound/music/combat_ancient.ogg')
 
 /datum/combat_music/herald
-	name = "Herad of Progress"
+	name = "Herald of Progress"
 	desc = "You cannot stop change."
-	shortname = "Ancient"
+	shortname = "Herald"
 	credits = "Bathory - Call from the Grave"
 	musicpath = list('sound/music/combatheraldprogress.ogg')
+
+/datum/combat_music/delf
+	name = "Crocs de l'araignée"
+	desc = "Oh, I know very well. How the secrets beckon so sweetly."
+	shortname = "Crocs"
+	credits = "Tsukasa Saitoh - Bloodborne (Original Soundtrack) - Darkbeast"
+	musicpath = list('sound/music/combat_delf.ogg')
+
+/datum/combat_music/delfclassic
+	name = "Drow Classic"
+	desc = "The right to own slaves is the greatest freedom a woman could ask for."
+	shortname = "Drow"
+	musicpath = list('sound/music/combat_delfclassic.ogg')
+
+/datum/combat_music/freifechter
+	name = "Freifechter"
+	desc = "'It occured to me that our God had left us, but not our ability to endure hardship. We shall make something out of this world, I said, before we pass onto the next.'"
+	shortname = "Freifechter - Default"
+	credits = "MusicImaginary - Old Church"
+	musicpath = list('sound/music/combat_fencer.ogg')
+
+/datum/combat_music/freifencer
+	name = "Freifechter, Fencer"
+	desc = "God is dead, yet I follow his word! No fire made by any man will snuff out the Reformation! Paradise awaits!"
+	shortname = "Fencer"
+	credits = "MusicImaginary - Old Church"
+	musicpath = list('sound/music/frei_fencer.ogg')
+
+/datum/combat_music/freilancer
+	name = "Freifechter, Lancer"
+	desc = "Etruscan pike companies are some of Psydonia's most sought-after mercenaries - but you're not one of those. You're a master."
+	shortname = "Lancer"
+	credits = "Lucas Gitano - The Mask of Zorro (Fingerstyle Acoustic Cover)"
+	musicpath = list('sound/music/frei_lancer.ogg')
+
+/datum/combat_music/freisabrist
+	name = "Freifechter, Sabrist"
+	desc = "So long as we still lyve, what the foreign powers have seized from us, we shall recapture with a sabre in hand."
+	shortname = "Sabrist"
+	credits = "MusicImaginary - Lyra"
+	musicpath = list('sound/music/frei_sabre.ogg')
+
+/datum/combat_music/aavshepherd
+	name = "Aavnic Shepherd"
+	desc = "\"No saber in hand, they crush bones with their fokos!\""
+	shortname = "Shepherd"
+	credits = "MusicImaginary - Yendrek"
+	musicpath = list('sound/music/frei_shepherd.ogg')

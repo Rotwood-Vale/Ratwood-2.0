@@ -37,8 +37,12 @@
 	if(!ishuman(targets[1]))
 		to_chat(caster, span_warning("You need living human flesh to reshape."))
 		return FALSE
-
+	
 	var/mob/living/carbon/human/target = targets[1]
+
+	if(istype(target.dna?.species,  /datum/species/gnoll) || istype(target.dna?.species, /datum/species/werewolf))
+		to_chat(caster, span_warning("The mad god's hold over this flesh is unbreakable, any changes will be undone the instant I stop shaping."))
+		return FALSE
 
 	if(get_dist(caster, target) > 1)
 		to_chat(caster, span_warning("They are too far away."))
@@ -346,19 +350,11 @@
 		to_chat(chooser, span_warning("They do not have character preferences saved."))
 		return FALSE
 
-	if(H.client.prefs.real_name != H.real_name)
-		to_chat(chooser, span_warning("You can only reset someone to the appearance of the character they are currently playing."))
-		return FALSE
-
 	var/confirm = alert(chooser, "Reset [H]'s appearance to match their character preferences? This will reapply physical features, colors, and descriptors but will not change name, skills, or abilities.", "Reset Appearance", "Yes", "No")
 	if(confirm != "Yes")
 		return FALSE
 
 	if(!H.client || !H.client.prefs)
-		return FALSE
-
-	if(H.client.prefs.real_name != H.real_name)
-		to_chat(chooser, span_warning("You can only reset someone to the appearance of the character they are currently playing."))
 		return FALSE
 
 	var/original_name = H.real_name
@@ -737,11 +733,18 @@
 		return FALSE
 
 	var/obj/item/organ/O = H.getorganslot(organ_slot)
-	if(!O)
+	var/new_accessory_type = valid_types[new_style]
+	var/replace_tail = FALSE
+	if(organ_slot == ORGAN_SLOT_TAIL)
+		var/wants_tail_maw = new_accessory_type == /datum/sprite_accessory/tail/manticore
+		if(wants_tail_maw)
+			organ_path = /obj/item/organ/tail/manticore
+		replace_tail = wants_tail_maw != istype(O, /obj/item/organ/tail/manticore)
+	if(!O || replace_tail)
 		O = new organ_path()
 		O.Insert(H, TRUE, FALSE)
 
-	O.accessory_type = valid_types[new_style]
+	O.accessory_type = new_accessory_type
 	O.build_colors_for_accessory(null)
 	H.update_body()
 	return TRUE

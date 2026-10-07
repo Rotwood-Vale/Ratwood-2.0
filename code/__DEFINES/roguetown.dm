@@ -108,6 +108,32 @@ Balloon Alert / Floating Text defines
 #define RACES_OOZE \
 	/datum/species/ooze,\
 
+#define RACES_BREATHE list(\
+	/datum/species/human/northern,\
+	/datum/species/human/halfelf,\
+	/datum/species/elf/dark,\
+	/datum/species/elf/wood,\
+	/datum/species/dwarf/mountain,\
+	/datum/species/tieberian,\
+	/datum/species/aasimar,\
+	/datum/species/lizardfolk,\
+	/datum/species/lupian,\
+	/datum/species/tabaxi,\
+	/datum/species/vulpkanin,\
+	/datum/species/akula,\
+	/datum/species/moth,\
+	/datum/species/dracon,\
+	/datum/species/anthromorph,\
+	/datum/species/anthromorphsmall,\
+	/datum/species/demihuman,\
+	/datum/species/halforc,\
+	/datum/species/kobold,\
+	/datum/species/goblinp,\
+	/datum/species/lamia,\
+	/datum/species/dwarf/gnome,\
+	/datum/species/harpy,\
+	/datum/species/arachnid,\
+)
 #define ALL_BUT_BLOODLESS list(\
 	/datum/species/human/northern,\
 	/datum/species/human/halfelf,\
@@ -404,7 +430,8 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define CTAG_SERGEANT		"CAT_SERGEANT"		// Sergeant class - Handles Sergeant class selector (weapons selection)
 #define CTAG_RETAINER		"CAT_RETAINER"		// Retainer class - Handles Retainer class selector
 #define CTAG_ROYALGUARD		"CAT_ROYALGUARD"	// Royal Guard class - Handles Royal Guard class selector
-#define CTAG_CONSORT		"CAT_CONSORT"		// Consort/Suitor subclasses
+#define CTAG_CONSORT		"CAT_CONSORT"		// Consort subclasses.
+#define CTAG_SUITOR			"CAT_SUITOR"		// Suitor subclasses. Unmerged from CTAG_CONSORT
 #define CTAG_MERCENARY		"CAT_MERCENARY"		// Mercenary class - Handles Mercenary class selector
 #define CTAG_HAND			"CAT_HAND"			// Hand class - Handles Hand class selector
 #define CTAG_TEMPLAR		"CAT_TEMPLAR"		// Templar class - Handles Templar class selector

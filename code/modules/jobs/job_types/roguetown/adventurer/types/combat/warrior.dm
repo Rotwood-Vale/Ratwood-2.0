@@ -140,7 +140,7 @@
 	to_chat(H, span_warning("You are an esteemed swordsman who foregoes armor in exchange for a more nimble fighting style."))
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Rapier & Parrying Dagger","Sabre & Buckler","Messer & Buckler","Dagger & Parrying Dagger","Dual Wield Shortswords","Heavy Dagger & +1 Unarmed")
+		var/weapons = list("Rapier & Parrying Dagger","Sabre & Buckler","Messer & Buckler","Dagger & Parrying Dagger","Dual Wield Shortswords","Heavy Dagger & +1 Unarmed", "Dual Wield Urumi")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Rapier & Parrying Dagger")
@@ -176,6 +176,11 @@
 				r_hand = /obj/item/rogueweapon/sword/short
 				beltr = /obj/item/rogueweapon/scabbard/sword
 				beltl = /obj/item/rogueweapon/scabbard/sword
+			if("Dual Wield Urumi")
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+				ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+				l_hand = /obj/item/rogueweapon/whip/urumi
+				r_hand = /obj/item/rogueweapon/whip/urumi
 	armor = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 	head = /obj/item/clothing/head/roguetown/duelisthat
 	mask = /obj/item/clothing/mask/rogue/duelmask
@@ -238,7 +243,7 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 	H.set_blindness(0)
 	if(H.mind)
-		var/weapons = list("Bronze Pata","Bronze Sword","Bronze Axe","Bronze Mace","Bronze Spear","Discipline - Whiphunter","Discipline - Unarmed")
+		var/weapons = list("Bronze Pata","Bronze Sword","Bronze Axe","Bronze Mace","Bronze Spear","Discipline - Whiphunter","Discipline - Urumi","Discipline - Unarmed")
 		var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP ARMS.") as anything in weapons
 		switch(weapon_choice)
 			if("Bronze Pata")
@@ -264,6 +269,8 @@
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 			if("Bronze Spear")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank(/datum/skill/misc/hunting, SKILL_LEVEL_NOVICE, TRUE)
+				ADD_TRAIT(H, TRAIT_EXPERT_HUNTER, TRAIT_GENERIC)
 				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 				r_hand = /obj/item/rogueweapon/spear/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
@@ -275,13 +282,34 @@
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
 				H.change_stat(STATKEY_SPD, -1) //Little more protection, little less speed.
 				H.change_stat(STATKEY_PER, 1) //Allows for more critical usage of the Whip's strengths.
+			if("Discipline - Urumi")
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				head = /obj/item/clothing/head/roguetown/headband/monk/barbarian
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/hide
+				r_hand = /obj/item/rogueweapon/whip/urumi/bronze
+				gloves = /obj/item/clothing/gloves/roguetown/bandages
+				H.change_stat(STATKEY_SPD, -1) //Little more protection, little less speed.
+				H.change_stat(STATKEY_PER, 1) //Allows for more critical usage of the Whip's strengths.
 			if ("Discipline - Unarmed")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
+
+		var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff") // cool wrestling moves for non-magic guys.
+		var/technique_choice = input(H,"Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
+		switch(technique_choice)
+			if("Dropkick - Pushback + Extra Damage")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick)
+			if("Chokeslam - Stamina Damage")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)
+			if("Stunner - Dazed Debuff")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
+			if("Headbutt - Vulnerable Debuff")
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
+
 		belt = /obj/item/storage/belt/rogue/leather/battleskirt/barbarian
-		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
+		pants = /obj/item/clothing/under/roguetown/chainlegs/skirt/bronze
 		shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
 		wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	if(should_wear_masc_clothes(H))
@@ -329,9 +357,14 @@
 		var/helmets = list(
 			"Sallet"			= /obj/item/clothing/head/roguetown/helmet/sallet/iron,
 			"Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored/iron,
+			"Snouted Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored/iron/snouted,
+			"Roundface Bascinet"		= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron,
+			"Snouted Roundface Bascinet"		= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron/snouted,
 			"Kettle Helmet"		= /obj/item/clothing/head/roguetown/helmet/kettle/iron,
 			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket/iron,
 			"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/iron,
+			"Armet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron,
+			"Snouted Armet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron/snouted,
 			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
 			"None"
 			)
@@ -410,7 +443,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/mhunter
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander2.ogg'
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
-	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_PURITAN_ADVENTURER, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_PURITAN_ADVENTURER, TRAIT_ALCHEMY_EXPERT, TRAIT_EXPERT_HUNTER)
 	maximum_possible_slots = 5 //Not a Wretch or Towner, but still conditionally lethal for an Adventurer - especially with steel coverage and round-start access to silver weapons. Adjust the amount of available slots as needed.
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -426,6 +459,7 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 		)
 	extra_context = "This subclass can choose a silver weapon to spawn with, and has three disciplines to pick from: each one provides a different level of armor training, a unique trait, and a minor one-point boon to certain stats. 'Old' characters are more proficient in this subclass."
 
@@ -436,7 +470,7 @@
 	H.verbs |= /mob/living/carbon/human/proc/faith_test //Allows the Exorcist to interrogate others for their faith. Trait's agnostically worded, to allow more flexiable usage by Pantheoneers and Ascendants in this role.
 	H.verbs |= /mob/living/carbon/human/proc/torture_victim //Not as scary as it sounds. Mostly. Okay, just a little bit.
 	if(H.mind)
-		var/silver = list("Silver Dagger","Silver Shortsword","Silver Arming Sword","Silver Rapier","Silver Longsword","Silver Broadsword","Silver Executioner Sword","Silver Mace","Silver Warhammer","Silver Morningstar","Silver Greatflail, 13 STR MIN","Silver Whip","Silver War Axe","Silver Poleaxe","Silver Spear","Silver Quarterstaff")
+		var/silver = list("Silver Dagger","Silver Shortsword","Silver Arming Sword","Silver Rapier","Silver Longsword","Silver Broadsword","Silver Executioner Sword","Silver Mace","Silver Warhammer","Silver Morningstar","Silver Greatflail, 13 STR MIN","Silver Whip","Silver Urumi","Silver War Axe","Silver Poleaxe","Silver Spear","Silver Quarterstaff")
 		var/silver_choice = input(H, "Choose your WEAPON.", "PREPARE YOUR ARMS.") as anything in silver //Trim down to five or six choices, later? See what's the most popular, first. Gives people a chance to experiment with all of the new silver weapons.
 		switch(silver_choice)
 			if("Silver Dagger")
@@ -482,6 +516,9 @@
 			if("Silver Whip")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/whip/silver
+			if("Silver Urumi")
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				r_hand = /obj/item/rogueweapon/whip/urumi/silver
 			if("Silver War Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/stoneaxe/woodcut/silver
@@ -603,7 +640,7 @@
 	name = "Amazon"
 	tutorial = "Fierce warrior women from distant lands, Amazons choose their armor based on their preferred fighting style - from light and agile to heavily protected."
 	outfit = /datum/outfit/job/adventurer/amazon
-	traits_applied = list(TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_DEATHBYSNUSNU)
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	subclass_stats = list()
 	subclass_social_rank = SOCIAL_RANK_DIRT
@@ -644,7 +681,7 @@
 			belt = /obj/item/storage/belt/rogue/leather
 			neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 			backpack_contents = list(/obj/item/flashlight/flare/torch = 1, /obj/item/rogueweapon/huntingknife = 1)
-			var/weapons = list("Steel Knuckles","Axe","Sword","Whip","Spear","MY BARE HANDS!!!")
+			var/weapons = list("Steel Knuckles","Axe","Sword","Whip","Urumi","Spear","MY BARE HANDS!!!")
 			var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 			switch(weapon_choice)
 				if ("Steel Knuckles")
@@ -660,6 +697,9 @@
 				if("Whip")
 					H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					beltr = /obj/item/rogueweapon/whip
+				if("Urumi")
+					H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+					beltr = /obj/item/rogueweapon/whip/urumi/iron
 				if("Spear")
 					H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/spear/bonespear
@@ -698,7 +738,7 @@
 			belt = /obj/item/storage/belt/rogue/leather
 			neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 			backpack_contents = list(/obj/item/flashlight/flare/torch = 1, /obj/item/rogueweapon/huntingknife = 1)
-			var/weapons = list("Steel Knuckles","Axe","Sword","Whip","Spear","MY BARE HANDS!!!")
+			var/weapons = list("Steel Knuckles","Axe","Sword","Whip","Urumi","Spear","MY BARE HANDS!!!")
 			var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 			switch(weapon_choice)
 				if ("Steel Knuckles")
@@ -714,6 +754,9 @@
 				if("Whip")
 					H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					beltr = /obj/item/rogueweapon/whip
+				if("Urumi")
+					H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+					beltr = /obj/item/rogueweapon/whip/urumi/iron
 				if("Spear")
 					H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/spear/bonespear
@@ -751,7 +794,7 @@
 			belt = /obj/item/storage/belt/rogue/leather
 			neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 			backpack_contents = list(/obj/item/flashlight/flare/torch = 1, /obj/item/rogueweapon/huntingknife/idagger/steel = 1)
-			var/weapons = list("Katar","Rapier","Whip","Billhook","MY BARE HANDS!!!")
+			var/weapons = list("Katar","Rapier","Whip","Urumi","Billhook","MY BARE HANDS!!!")
 			var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 			switch(weapon_choice)
 				if ("Katar")
@@ -763,6 +806,9 @@
 				if("Whip")
 					H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					beltr = /obj/item/rogueweapon/whip
+				if("Urumi")
+					H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+					beltr = /obj/item/rogueweapon/whip/urumi/iron
 				if("Billhook")
 					H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/spear/billhook

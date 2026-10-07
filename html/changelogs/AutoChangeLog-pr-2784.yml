@@ -1,0 +1,4 @@
+author: "Randumb-Phantomb"
+delete-after: True
+changes:
+  - rscadd: "You can now whip people with your belt, it does like ten damage.\nAlso chains too."

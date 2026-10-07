@@ -20,12 +20,14 @@
 					/obj/effect/proc_holder/spell/invoked/cure_rot				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/pestra		= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_PESTRA
 	confess_lines = list(
 		"PESTRA SOOTHES ALL ILLS!",
 		"DECAY IS A CONTINUATION OF LIFE!",
 		"MY AFFLICTION IS MY TESTAMENT!",
 	)
 	storyteller = /datum/storyteller/pestra
+	undead_hater = FALSE // cough, cough, there is a reason pestrians are looked at with suspicion
 
 // Near a well, cross, within the physicians, or within the church
 /datum/patron/divine/pesta/can_pray(mob/living/follower)

@@ -64,7 +64,8 @@
 
 /mob/living/proc/update_vampire_sight()
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
-	eyes?.update_vampire_sight()
+	if(istype(eyes))
+		eyes.update_vampire_sight()
 
 GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 
@@ -73,8 +74,6 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 
 /mob/living/carbon/can_be_blood_drunk()
 	if(stat == DEAD)
-		return FALSE
-	if(clan || mind?.has_antag_datum(/datum/antagonist/vampire))
 		return FALSE
 	if(dna?.species && (NOBLOOD in dna.species.species_traits))
 		return FALSE
@@ -428,7 +427,7 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 	beast_shake()
 	update_vampire_sight()
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if(!eyes)
+	if(!istype(eyes))
 		return
 	eyes.vampire_sight?.show_frenzy_tunnel()
 	eyes.vampire_sight?.refresh_pulse()
@@ -436,8 +435,9 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 
 /mob/living/proc/beast_release()
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
-	eyes?.vampire_sight?.stop_beat()
-	eyes?.vampire_sight?.refresh_pulse()
+	if(istype(eyes))
+		eyes.vampire_sight?.stop_beat()
+		eyes.vampire_sight?.refresh_pulse()
 	clear_fullscreen("frenzy", 25)
 	update_vampire_sight()
 
@@ -447,7 +447,8 @@ GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 		animate(vignette, alpha = 60, time = 4, easing = SINE_EASING)
 		animate(alpha = VAMPIRE_SIGHT_VIGNETTE_ALPHA, time = 9)
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
-	eyes?.vampire_sight?.feed_surge()
+	if(istype(eyes))
+		eyes.vampire_sight?.feed_surge()
 
 /mob/living/proc/beast_world_shake(scale = 1.12, time = 2)
 	if(isnull(client) || !hud_used)

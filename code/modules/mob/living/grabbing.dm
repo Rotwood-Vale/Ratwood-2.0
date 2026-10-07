@@ -99,6 +99,14 @@
 				D.grabdropped(src)
 		handaction = null
 
+/obj/item/grabbing/proc/update_grabbed_spell_hud()
+	if(sublimb_grabbed != BODY_ZONE_PRECISE_MOUTH)
+		return
+	if(!iscarbon(grabbed))
+		return
+	var/mob/living/carbon/C = grabbed
+	C.update_action_buttons_icon()
+
 /obj/item/grabbing/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	if(isobj(grabbed))
@@ -119,6 +127,7 @@
 			if(part)
 				var/released_held_index = part.held_index
 				LAZYREMOVE(part.grabbedby, src)
+				update_grabbed_spell_hud()
 				carbonmob.update_hud_hand_slot(released_held_index)
 				carbonmob.mark_zone_selector_hud_dirty()
 				part = null
@@ -130,6 +139,7 @@
 			grabbee.l_grab = null
 		if(grabbee.mouth == src)
 			grabbee.mouth = null
+			grabbee.update_action_buttons_icon()
 		grabbee = null
 	for(var/datum/D in dependents)
 		D.grabdropped(src)
@@ -582,7 +592,7 @@
 		L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class) //It hurts to rip it out, get surgery you dingus.
 		user.dropItemToGround(src) // this will unset vars like limb_grabbed
 		user.put_in_hands(I)
-		C.emote("paincrit", TRUE)
+		C.emote("paincrit", forced = TRUE)
 		playsound(C, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
 		if(usr == src)
 			user.visible_message(span_notice("[user] rips [I] out of [user.p_their()] [L.name]!"), span_notice("I rip [I] from my [L.name]."))
@@ -595,7 +605,7 @@
 		M.apply_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class, BRUTE) //It hurts to rip it out, get surgery you dingus.
 		user.dropItemToGround(src) // this will unset vars like limb_grabbed
 		user.put_in_hands(I)
-		M.emote("paincrit", TRUE)
+		M.emote("paincrit", forced = TRUE)
 		playsound(M, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
 		if(user == M)
 			user.visible_message(span_notice("[user] rips [I] out of [user.p_them()]self!"), span_notice("I remove [I] from myself."))

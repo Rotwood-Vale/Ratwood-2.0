@@ -42,6 +42,12 @@
 	cold_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
+/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/shepherd
+	name = "shepherd's pants"
+	desc = "A pair of white pants decorated with red stripes and traditional patterning."
+	icon_state = "shepherdpants"
+	color = "#FFFFFF"
+
 /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
 	name = "fencing breeches"
 	desc = "A pair of loose breeches with leather reinforcements on the waist and legs. Worn with a cup."
@@ -143,19 +149,16 @@
 	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = 600
 
-/obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
-	name = "bronze chain skirt"
-	desc = "A knee-length maille skirt, made with hundreds of small bronze rings. It wards cuts against the thighs without slowing the feet."
-	icon_state = "chain_skirt"
-	item_state = "chain_skirt"
-	color = "#f9d690"
+/obj/item/clothing/under/roguetown/heavy_leather_pants/shadowpants/maille
+	name = "silk-wreathed maille tights"
+	desc = "Form-fitting silk tights layered over fine drowsmithed maille."
+	armor = ARMOR_MAILLE
+	armor_class = ARMOR_CLASS_MEDIUM
+	max_integrity = ARMOR_INT_LEG_HARDLEATHER + 25//slight boost cause it's maille or something
 	blocksound = CHAINHIT
+	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
+	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
+	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
+	sewrepair = FALSE//only the silk part is sewable, sire.
 	resistance_flags = FIRE_PROOF
-	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ingot/bronze
-	armor = ARMOR_BRONZE
-	max_integrity = ARMOR_INT_LEG_BRONZE
-	cold_protection = null
-	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
-	dropshrink = null

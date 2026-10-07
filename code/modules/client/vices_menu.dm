@@ -247,6 +247,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"vice4" = vice4,
 		"vice5" = vice5,
 		"vice6" = vice6,
+		"redolent_type" = redolent_type,
+		"redolent_scent" = redolent_scent,
 		"loadout" = loadout,
 		"loadout2" = loadout2,
 		"loadout3" = loadout3,
@@ -318,6 +320,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	vice4 = snapshot["vice4"]
 	vice5 = snapshot["vice5"]
 	vice6 = snapshot["vice6"]
+	redolent_type = snapshot["redolent_type"]
+	redolent_scent = snapshot["redolent_scent"]
 	loadout = snapshot["loadout"]
 	loadout2 = snapshot["loadout2"]
 	loadout3 = snapshot["loadout3"]
@@ -382,6 +386,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"vice4" = vice4?.type,
 		"vice5" = vice5?.type,
 		"vice6" = vice6?.type,
+		"redolent_type" = redolent_type,
+		"redolent_scent" = redolent_scent,
 		"loadout" = loadout?.type,
 		"loadout2" = loadout2?.type,
 		"loadout3" = loadout3?.type,
@@ -498,13 +504,14 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		vice5 = new vice5_type()
 	else
 		vice5 = null
-
 	var/vice6_type = string_to_typepath(preset["vice6"])
 	if(vice6_type && ispath(vice6_type, /datum/charflaw))
 		vice6 = new vice6_type()
 	else
 		vice6 = null
-
+	redolent_type = preset["redolent_type"] || "Neutral"
+	redolent_scent = preset["redolent_scent"] || ""
+	
 	// Load loadout types and instantiate them if valid
 	var/loadout_type = string_to_typepath(preset["loadout"])
 	if(loadout_type && ispath(loadout_type, /datum/loadout_item))
@@ -1116,7 +1123,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	html += {"
 			</div>
 		</div>
-
 		<div class="statpack-section">
 			<h2>Quirk Selection</h2>
 	"}
@@ -1144,6 +1150,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		html += i == 1 ? "<div class=\"statpack-current\">" : "<div class=\"statpack-current\" style='margin-top: 10px;'>"
 		html += "<div class='statpack-name'>[current_quirk.name]</div>"
 		html += "<div class='statpack-desc'>[current_quirk.desc]</div>"
+
+		if(istype(current_quirk, /datum/quirk/redolent))
+			var/scent_display = redolent_scent || get_default_redolent_scent(redolent_type)
+			html += "<div class='statpack-stats' style='margin-top: 4px;'><b>[redolent_type]</b>: [scent_display]</div>"
 
 		if(current_quirk.custom_text)
 			html += "<div class='statpack-stats' style='margin-top: 4px;'>" + current_quirk.custom_text + "</div>"
@@ -1178,6 +1188,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			html += "</div>"
 
 		html += "<div class='actions'>"
+		if(istype(current_quirk, /datum/quirk/redolent))
+			html += "<a class='btn btn-customize' href='byond://?src=\ref[src];redolent_action=configure'>Configure Scent</a>"
 		html += "<a class='btn btn-clear' href='byond://?src=\ref[src];quirk_action=remove;index=[i]'>Remove</a>"
 		html += "</div>"
 		html += "</div>"
@@ -1187,11 +1199,11 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				<a class='btn btn-select' href='byond://?src=\ref[src];quirk_action=add'>Add a Quirk</a>
 			</div>
 		</div>
-
+		
 		<h2 style='color: [theme["text"]]; padding: 0 20px; margin: 20px 0 10px 0; border-bottom: 1px solid [theme["border"]]; padding-bottom: 10px;'>Vice Selection</h2>
 		<p style='color: [theme["label"]]; padding: 0 20px; margin: 0 0 15px 0; font-size: 0.9em;'>Select up to 6 vices. Each selected vice grants +1 loadout point <span style='color: #4CAF50;'>(you have [get_total_points()] total)</span>.<br>Your <b>first</b> vice is required but grants no Q-Points.<br>Additional vices after it grant at least one each.</p>			<div class="vices-grid">
 	"}
-
+	
 	// Generate 6 vice slots
 	var/no_flaw_active = istype(vice1, /datum/charflaw/noflaw)
 	var/other_vices_populated = (vice2 || vice3 || vice4 || vice5 || vice6)
@@ -1788,6 +1800,44 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				open_vices_menu(usr)
 			return
 	
+	if(href_list["redolent_action"])
+		if(href_list["redolent_action"] != "configure")
+			return
+		if(!has_quirk(/datum/quirk/redolent))
+			return
+
+		var/list/scent_types = list(
+			"Gross" = "Gross",
+			"Neutral" = "Neutral",
+			"Pleasant" = "Pleasant"
+		)
+		var/type_choice = tgui_input_list(usr, "Choose how others perceive your scent:", "Redolent", scent_types)
+		if(!type_choice)
+			return
+		var/new_scent_type = scent_types[type_choice]
+		var/list/scent_actions = list("Describe scent", "Use default")
+		var/scent_action = tgui_input_list(usr, "Describe the scent:", "Redolent", scent_actions)
+		if(!scent_action)
+			return
+		var/new_scent
+		if(scent_action == "Use default")
+			new_scent = get_default_redolent_scent(new_scent_type)
+		else
+			var/scent_leadin = redolent_scent_leadin(new_scent_type)
+			var/scent_prompt = "Describe the scent - a preview of the output in game is shown below:"
+			new_scent = tgui_input_text(usr, scent_prompt, "Redolent", redolent_scent, max_length = 100, multiline = TRUE, preview_leadin = scent_leadin)
+			if(isnull(new_scent))
+				return
+			if(!length(trim(new_scent)))
+				new_scent = get_default_redolent_scent(new_scent_type)
+
+		save_to_history()
+		redolent_type = new_scent_type
+		redolent_scent = new_scent
+		to_chat(usr, span_notice("Set my Redolent scent to [redolent_type]."))
+		open_vices_menu(usr)
+		return
+
 	if(href_list["vice_action"])
 		var/action = href_list["vice_action"]
 		var/slot = text2num(href_list["slot"])
@@ -1830,7 +1880,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					// Check for conflicting vices (eye-related)
 					if(check_vice_vice_conflict(vice_type, selected_vices, TRUE, usr))
 						continue
-
+					
 					vices_available[vice_name] = vice_type
 				
 				vices_available = sort_list(vices_available)

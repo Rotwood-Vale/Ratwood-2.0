@@ -76,8 +76,8 @@
 		/datum/skill/combat/knives = 3,
 		/datum/skill/combat/axes = 2,
 		/datum/skill/combat/swords = 2,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/climbing = 3,
+		/datum/skill/misc/athletics = 3,
+		/datum/skill/misc/climbing = 4,
 		/datum/skill/misc/sneaking = 4,
 		/datum/skill/misc/swimming = 2,
 		/datum/skill/misc/medicine = 1,
@@ -114,10 +114,10 @@
 	category_tags = list(CTAG_VANGUARD)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	subclass_stats = list(
-		STATKEY_STR = 2,//No special superbuffs!
+		STATKEY_STR = 1, //I do not think that a 4 slot role specifically meant to be for scrappy fodder should be able to hit the STR softcap.
 		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_PER = 1,
+		STATKEY_WIL = 2, //A force of sheer will
+		STATKEY_PER = 2, //Stab 'em in the pintle!
 		STATKEY_SPD = 1
 	)
 	subclass_skills = list(
@@ -126,7 +126,7 @@
 		/datum/skill/combat/swords = 3,
 		/datum/skill/combat/maces = 3,
 		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/wrestling = 4,
+		/datum/skill/combat/wrestling = 3,
 		/datum/skill/combat/unarmed = 3,
 		/datum/skill/combat/shields = 3,
 		/datum/skill/combat/slings = 2,

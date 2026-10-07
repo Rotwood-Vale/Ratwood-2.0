@@ -1,5 +1,19 @@
 //intent datums ฅ^•ﻌ•^ฅ
 
+/datum/intent/priest_smite
+	name = "electrocute"
+	blade_class = null
+	icon_state = "inuse"
+	tranged = TRUE
+	noaa = TRUE
+
+/datum/intent/priest_silence
+	name = "silence"
+	blade_class = null
+	icon_state = "inuse"
+	tranged = TRUE
+	noaa = TRUE
+
 /datum/intent/spear/thrust
 	name = "thrust"
 	blade_class = BCLASS_STAB
@@ -27,6 +41,28 @@
 
 /datum/intent/spear/thrust/militia
 	penfactor = 40
+
+/datum/intent/spear/thrust/pike		//EXPERIMENTAL
+	name = "pike thrust"
+	desc = "Thrust your pike forward from its furthest end to reach farther ahead than any spear ever could. Only effective at three paces."
+	damfactor = 1.15
+	reach = 3
+	effective_range = 3
+	clickcd = CLICK_CD_CHARGED + 1
+	swingdelay = 1.5
+
+/datum/intent/spear/thrust/pike/skewer		//EXPERIMENTAL
+	name = "pike lance"
+	desc = "Grab your pike from a closer end and charge forward with your whole body for devastating damage."
+	clickcd = CLICK_CD_HEAVY + 4
+	swingdelay = 6
+	damfactor = 1.5
+	penfactor = 35
+	reach = 2
+	effective_range = 2
+	icon_state = "inlance"
+	attack_verb = list("lances", "runs through", "skewers")
+
 
 /datum/intent/spear/thrust/blunted
 	penfactor = BLUNT_DEFAULT_PENFACTOR
@@ -87,6 +123,15 @@
 	cleave = /datum/cleave_pattern/forward_cleave
 	desc = "A cleave that cuts through a second target behind the first."
 
+/datum/intent/spear/cut/bardiche/cleave/chop
+	name = "cleaving chop"
+	blade_class = BCLASS_CHOP
+	attack_verb = list("chops", "hacks")
+	animname = "chop"
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	penfactor = 35
+	item_d_type = "slash"
+
 /datum/intent/spear/cut/bardiche
 	damfactor = 1.2
 	chargetime = 0
@@ -130,15 +175,19 @@
 	reach = 2
 
 /datum/intent/sword/cut/zwei/cleave
-	name = "cleaving cut"
+	name = "rending cleave"
 	icon_state = "incleave"
-	desc = "A cleave that cuts through a second target behind the first."
+	desc = "A vicious cut that rends through a second target behind the first."
 	attack_verb = list("cleaves", "carves through")
 	clickcd = CLICK_CD_HEAVY
-	damfactor = 1.0
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	damfactor = 2.5
 	reach = 1 // No!!
 	cleave = /datum/cleave_pattern/forward_cleave
-
+	misscost = 10
+	intent_intdamage_factor = 0.25
+	sharpness_penalty = 2
+	accuracy_modifier = -15
 /datum/intent/sword/cut/zwei/sweep
 	name = "sweeping cut"
 	icon_state = "insweep"
@@ -339,18 +388,71 @@
 
 /obj/item/rogueweapon/woodstaff/aries
 	name = "staff of the shepherd"
-	desc = "This staff makes you look important to any peasant."
+	desc = "The flock is best led by firm hand. Firm, electricity-shooting hand. Works only inside the Church."
 	force = 25
 	force_wielded = 28
 	icon_state = "aries"
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	pixel_y = 0
 	pixel_x = 0
+	possible_item_intents = list(SPEAR_BASH, /datum/intent/priest_smite, /datum/intent/priest_silence)
+	gripped_intents = list(SPEAR_BASH, /datum/intent/mace/smash/wood, /datum/intent/priest_smite, /datum/intent/priest_silence)
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	bigboy = FALSE
 	gripsprite = FALSE
 	gripped_intents = null
+	COOLDOWN_DECLARE(scepter)
+
+/obj/item/rogueweapon/woodstaff/aries/afterattack(atom/target, mob/user, flag)
+	. = ..()
+	if(get_dist(user, target) > 7)
+		return
+
+	user.changeNext_move(CLICK_CD_MELEE)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/HU = user
+
+		if(HU.job != "Bishop")
+			to_chat(user, "<font color='yellow'>THIS IS NOT YOURS.</font>")
+			return
+
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			var/area/target_area = get_area(H)
+
+			if(!istype(target_area, /area/rogue/outdoors/town/church || /area/rogue/indoors/town/church))
+				to_chat(user, span_danger("The staff cannot be used on targets outside of the church!"))
+				return
+
+			if(H == HU)
+				return
+
+			if(!COOLDOWN_FINISHED(src, scepter))
+				to_chat(user, span_danger("The [src] is not ready yet! [round(COOLDOWN_TIMELEFT(src, scepter) / 10, 1)] seconds left!"))
+				return
+
+			if(!(H in SStreasury.bank_accounts))
+				to_chat(user, span_danger("The target must have a Nervelock account!")) //no stunlocking antags sorry buddy
+				return
+
+			if(istype(user.used_intent, /datum/intent/priest_smite))
+				HU.visible_message(span_warning("[HU] smites [H] with the [src]!"))
+				user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
+				H.electrocute_act(5, src)
+				COOLDOWN_START(src, scepter, 10 SECONDS)
+				H.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+				H.ignite_mob()
+				to_chat(H, span_danger("I'm smote by divine power!"))
+				return
+
+			if(istype(user.used_intent, /datum/intent/priest_silence))
+				HU.visible_message("<span class='warning'>[HU] silences [H] with \the [src].</span>")
+				H.set_silence(20 SECONDS)
+				COOLDOWN_START(src, scepter, 5 SECONDS)
+				to_chat(H, "<span class='danger'>I'm silenced by divine power!</span>")
+				return
 
 /obj/item/rogueweapon/woodstaff/aries/getonmobprop(tag)
 	. = ..()
@@ -896,6 +998,34 @@
 	anvilrepair = null
 	randomize_blade_int_on_init = TRUE
 
+/obj/item/rogueweapon/halberd/bardiche/stalker
+	name = "drow bardiche"
+	desc = "While similar to the iron bardiche wielded by petty drow raiders, this elegant polearm cut a far more striking image. \
+	Finely forged and superbly balanced, the bardiche of a drow cavalier can cleave through enemy chaff both one-handed on spiderback \
+	& two-handed on foot."
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon_state = "drowbardiche"
+	force = 25
+	force_wielded = 28//-2 force
+	possible_item_intents = list(SPEAR_THRUST, /datum/intent/spear/cut/glaive, /datum/intent/axe/chop/scythe, /datum/intent/dagger/sucker_punch)
+	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive/sweep, /datum/intent/spear/cut/bardiche/cleave/chop, /datum/intent/dagger/sucker_punch)
+	wdefense = 4//-2 def given how good it's intents are
+	max_blade_int = 160//-40 blade integ
+	smeltresult = /obj/item/ingot/steel
+	slot_flags = ITEM_SLOT_BACK //Option-unique, uncraftable. Ensures the loadout doesn't implode on itself.
+	equip_delay_self = 2 SECONDS
+	unequip_delay_self = 2 SECONDS
+	inv_storage_delay = 1 SECONDS
+
+/obj/item/rogueweapon/halberd/bardiche/stalker/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -6,"sy" = 2,"nx" = 8,"ny" = 2,"wx" = -4,"wy" = 2,"ex" = 1,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 300,"wturn" = 32,"eturn" = -23,"nflip" = 0,"sflip" = 100,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 4,"sy" = -2,"nx" = -3,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+
 /obj/item/rogueweapon/halberd/blacksteel
 	name = "blacksteel halberd"
 	desc = "A magnificent halberd of blacksteel. It is the finest arm-of-war that a sixteenth-century knight could ask for, especially \
@@ -1356,6 +1486,16 @@
 	wdefense = 6
 	force = 14
 	force_wielded = 35
+/obj/item/rogueweapon/greatsword/grenz/flamberge/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -6,"sy" = 6,"nx" = 6,"ny" = 7,"wx" = 0,"wy" = 5,"ex" = -1,"ey" = 7,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -50,"sturn" = 40,"wturn" = 50,"eturn" = -50,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 9,"sy" = -4,"nx" = -7,"ny" = 1,"wx" = -9,"wy" = 2,"ex" = 10,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 5,"sturn" = -190,"wturn" = -170,"eturn" = -10,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.6,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 /obj/item/rogueweapon/greatsword/zizo
 	name = "avantyne greatsword"
@@ -1544,53 +1684,11 @@
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list(
-					"shrink" = 0.6,
-					"sx" = -6,
-					"sy" = 7,
-					"nx" = 6,
-					"ny" = 8,
-					"wx" = 0,
-					"wy" = 6,
-					"ex" = -1,
-					"ey" = 8,
-					"northabove" = 0,
-					"southabove" = 1,
-					"eastabove" = 1,
-					"westabove" = 0,
-					"nturn" = -50,
-					"sturn" = 40,
-					"wturn" = 50,
-					"eturn" = -50,
-					"nflip" = 0,
-					"sflip" = 8,
-					"wflip" = 8,
-					"eflip" = 0,
-					)
+				return list("shrink" = 0.6, "sx" = -6, "sy" = 7, "nx" = 6, "ny" = 8, "wx" = 0, "wy" = 6, "ex" = -1, "ey" = 8, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0, "nturn" = -50, "sturn" = 40, "wturn" = 50, "eturn" = -50, "nflip" = 0, "sflip" = 8, "wflip" = 8, "eflip" = 0)
 			if("wielded")
-				return list(
-					"shrink" = 0.6,
-					"sx" = 3,
-					"sy" = 5,
-					"nx" = -3,
-					"ny" = 5,
-					"wx" = -9,
-					"wy" = 4,
-					"ex" = 9,
-					"ey" = 1,
-					"northabove" = 0,
-					"southabove" = 1,
-					"eastabove" = 1,
-					"westabove" = 0,
-					"nturn" = 0,
-					"sturn" = 0,
-					"wturn" = 0,
-					"eturn" = 15,
-					"nflip" = 8,
-					"sflip" = 0,
-					"wflip" = 8,
-					"eflip" = 0,
-					)
+				return list("shrink" = 0.6,"sx" = 9,"sy" = -4,"nx" = -7,"ny" = 1,"wx" = -9,"wy" = 2,"ex" = 10,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 5,"sturn" = -190,"wturn" = -170,"eturn" = -10,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.6,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 /obj/item/rogueweapon/woodstaff/naledi
 	name = "naledian warstaff"
@@ -1823,9 +1921,26 @@
 	return ..()
 
 /obj/item/rogueweapon/spear/boar/frei
-	name = "Aavnic lándzsa"
+	name = "Czwarteki lándzsa"
 	desc = "A regional earspoon lance with a carved handle, adorned with the colours of the Freifechters. These are smithed by the legendary armourers of Vyšvou and given to distinguished lancers upon their graduation."
-	icon_state = "praguespear"
+	icon_state = "cityspear"
+	icon = 'icons/roguetown/weapons/special/freifechter.dmi'
+	max_blade_int = 300	//You're gonna parry a lot. You need it.
+	max_integrity = 235
+
+/obj/item/rogueweapon/spear/boar/frei/pike
+	name = "banner of Szöréndnížina"
+	desc = "A steel pike with a white and red banner made to spend the time flowing proudly in the wind. A city founded by the free. A State made from the disciplined. Snowy peaks surround her strong walls, her gates make any attack a suicide. Fight, Szöréndnížina. Fight to lyve in a world that rejects you."
+	icon_state = "citybanner"
+	force = 18
+	force_wielded = 33
+	possible_item_intents = list(/datum/intent/dagger/sucker_punch, /datum/intent/sword/bash)
+	gripped_intents = list(/datum/intent/spear/thrust/pike, /datum/intent/spear/thrust/pike/skewer)
+
+/obj/item/rogueweapon/spear/boar/frei/pike/reformist
+	name = "banner of Psydonic Reformism"
+	desc = "A steel pike with an altered Psydonic cross representing the order of Primo Reformatio, crossed by a black stripe that symbolizes mourning. Mammukhus sum, qui castellum onere fero. Numquam genua flecto aut gradum amitto."
+	icon_state = "reformistbanner"
 
 /obj/item/rogueweapon/spear/boar/aav
 	name = "Aavnic lándzsa"//I'm creatively bankrupt.
