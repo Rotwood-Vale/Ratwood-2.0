@@ -361,7 +361,7 @@
 	wdefense = 1
 	possible_item_intents = list(/datum/intent/spear/thrust)
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
-	icon_state = "standard"
+	icon_state = "matthios_standard"
 	resistance_flags = FIRE_PROOF
 
 /obj/item/rogueweapon/spear/matthios_standard/Initialize(mapload)
