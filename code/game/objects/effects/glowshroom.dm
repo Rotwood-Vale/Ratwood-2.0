@@ -132,6 +132,20 @@
 	I.desc = ""
 	qdel(src)
 
+/obj/effect/temp_visual/glowshroom_dendorite
+	icon = 'icons/roguetown/misc/foliage.dmi'
+	icon_state = "glowshroom1" //replaced in New
+	duration = 5 SECONDS
+	alpha = 0
+
+/obj/effect/temp_visual/glowshroom_dendorite/Initialize(mapload)
+	. = ..()
+	animate(src, 5 SECONDS, alpha = 255)
+
+/obj/effect/temp_visual/glowshroom_dendorite/timed_out()
+	new /obj/structure/glowshroom/dendorite(get_turf(src))
+	return ..()
+
 /obj/structure/glowshroom/dendorite
 	var/timeleft = 10 SECONDS
 

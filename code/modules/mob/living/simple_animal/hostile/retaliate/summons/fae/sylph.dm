@@ -91,7 +91,7 @@
 		target_turf = target.loc
 	for(var/turf/turf as anything in RANGE_TURFS(3,target_turf))
 		if(prob(30))
-			new /obj/structure/glowshroom/dendorite(turf)
+			new /obj/effect/temp_visual/glowshroom_dendorite(turf)
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fae/sylph/death(gibbed)
