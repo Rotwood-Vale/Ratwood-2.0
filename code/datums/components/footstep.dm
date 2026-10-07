@@ -145,7 +145,7 @@
 		if(override_sound)
 			used_sound = 'sound/blank.ogg'
 		if(RSTL)
-			RSTL.set_override(override_sound ? FALSE : TRUE)
+			RSTL.set_override(override_sound)
 			
 	playsound(step_location, used_sound,
 		volume * used_volume,
