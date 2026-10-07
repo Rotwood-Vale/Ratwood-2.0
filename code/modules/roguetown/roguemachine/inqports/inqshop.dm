@@ -228,7 +228,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/tntstick
 	marquescost = 6
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs/Initialize(mapload)
+/obj/structure/closet/crate/chest/inqcrate/supplies/tntstick/Initialize(mapload)
 	. = ..()
 	new /obj/item/tntstick(src)
 	new /obj/item/tntstick(src)
@@ -245,7 +245,7 @@
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/mutegas
 	marquescost = 6
 
-/obj/structure/closet/crate/chest/inqcrate/supplies/bottlebombs/Initialize(mapload)
+/obj/structure/closet/crate/chest/inqcrate/supplies/mutegas/Initialize(mapload)
 	. = ..()
 	new obj/item/impact_grenade/smoke/mute_gas(src)
 	new obj/item/impact_grenade/smoke/mute_gas(src)
