@@ -569,8 +569,8 @@
 // T4: The Free-God's draconic wrath
 
 /obj/effect/proc_holder/spell/self/wingsoffreedom
-	name = "Wings of Freedom"
-	desc = "Transform into the strongest form of Matthios' own - a dragon. A mere mortal can't sustain this form for long, yet with the power Matthios grants you, you shall burn this world of tyranny to the ground."
+	name = "Matthios' Freedom"
+	desc = "Choose between the draconic wrath of Wings of Freedom and the combat mastery of Skulduggery."
 	overlay_state = "wingsoffreedom"
 	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
@@ -582,8 +582,7 @@
 	chargetime = 0
 	recharge_time = 30 MINUTES
 	cooldown_min = 30 MINUTES
-	invocations = list("I WILL BURN THE WORLD OF TYRANNY TO THE GROUND!")
-	invocation_type = "shout"
+	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 200
 	miracle = TRUE
@@ -591,6 +590,13 @@
 
 /obj/effect/proc_holder/spell/self/wingsoffreedom/cast(list/targets, mob/living/carbon/human/user = usr)
 	. = ..()
+	var/choice = tgui_input_list(user, "Choose your miracle.", name, list("Wings of Freedom (Dragon Form)", "Skulduggery"))
+	if(!choice)
+		revert_cast(user)
+		return FALSE
+	if(choice == "Skulduggery")
+		user.apply_status_effect(/datum/status_effect/buff/skulduggery)
+		return TRUE
 
 	if(user.has_status_effect(/datum/status_effect/debuff/submissive))
 		to_chat(user, span_warning("Your will is too broken to change form."))
@@ -866,6 +872,338 @@
 		var/mob/living/carbon/human/H = owner
 		if(H.stat != DEAD)
 			H.wildshape_untransform_twilight_dragon(FALSE)
+
+/atom/movable/screen/alert/status_effect/buff/skulduggery
+	name = "Skulduggery"
+	desc = span_notice("I prepare to slip inside attacks and punish aggressors, like a true Free Man would.")
+	icon_state = "clash"
+
+/datum/status_effect/buff/skulduggery
+	id = "skulduggery"
+	duration = 15 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/buff/skulduggery
+	status_type = STATUS_EFFECT_REFRESH
+	tick_interval = 1 SECONDS
+	var/mob/living/carbon/human/grappled
+	var/waiting_followup = FALSE
+	var/list/grapple_counts = list()
+	var/parries_left = 0
+
+/datum/status_effect/buff/skulduggery/on_creation(mob/living/new_owner, ...)
+	RegisterSignal(new_owner, COMSIG_MOB_ITEM_ATTACK, PROC_REF(process_Wattack))
+	RegisterSignal(new_owner, COMSIG_MOB_ITEM_BEING_ATTACKED, PROC_REF(process_Wattack))
+	RegisterSignal(new_owner, COMSIG_MOB_ITEM_ATTACK_POST_SWINGDELAY, PROC_REF(process_Wattack))
+	RegisterSignal(new_owner, COMSIG_MOB_ATTACKED_BY_HAND, PROC_REF(process_Wfist))
+	RegisterSignal(new_owner, COMSIG_LIVING_STATUS_STUN, PROC_REF(on_incapacitate))
+	RegisterSignal(new_owner, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(on_incapacitate))
+	parries_left = new_owner.get_skill_level(/datum/skill/magic/holy)
+	return ..()
+
+/datum/status_effect/buff/skulduggery/on_remove()
+	UnregisterSignal(owner, COMSIG_LIVING_STATUS_STUN)
+	UnregisterSignal(owner, COMSIG_LIVING_STATUS_KNOCKDOWN)
+	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK)
+	UnregisterSignal(owner, COMSIG_MOB_ITEM_BEING_ATTACKED)
+	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK_POST_SWINGDELAY)
+	UnregisterSignal(owner, COMSIG_MOB_ATTACKED_BY_HAND)
+	owner.stop_pulling()
+	waiting_followup = FALSE
+	return ..()
+
+/datum/status_effect/buff/skulduggery/proc/trigger_afterimage(duration = 2)
+	if(!owner || owner.GetComponent(/datum/component/after_image))
+		return
+	var/datum/component/after_image/after_image = owner.AddComponent(/datum/component/after_image)
+	spawn(duration)
+		if(after_image)
+			qdel(after_image)
+
+/datum/status_effect/buff/skulduggery/proc/on_incapacitate()
+	SIGNAL_HANDLER
+	if(!owner || (!owner.IsKnockdown() && !owner.IsStun()))
+		return
+	to_chat(owner, span_warning("My footing falters! Carkin'--!"))
+	qdel(src)
+
+/datum/status_effect/buff/skulduggery/tick()
+	. = ..()
+	if(!owner)
+		return
+	var/mob/living/carbon/human/human = owner
+	if(prob(40))
+		trigger_afterimage(2)
+		owner.Jitter(1)
+	if(waiting_followup && grappled && owner.pulling != grappled)
+		waiting_followup = FALSE
+		grappled = null
+
+/datum/status_effect/buff/skulduggery/proc/process_Wfist(mob/living/carbon/human/parent, mob/living/carbon/human/attacker, mob/living/carbon/human/defender)
+	if(!ishuman(defender))
+		return
+	if(defender.process_skd(attacker, null))
+		return COMPONENT_HAND_NO_ATTACK
+
+/datum/status_effect/buff/skulduggery/proc/process_Wattack(mob/living/parent, mob/living/target, mob/user, obj/item/item)
+	if(ishuman(target))
+		var/mob/living/carbon/human/human = target
+		if(human.process_skd(user, item))
+			return COMPONENT_NO_ATTACK
+
+/mob/living/carbon/human/proc/process_skd(mob/living/carbon/human/attacker, obj/item/item)
+	var/datum/status_effect/buff/skulduggery/skulduggery = has_status_effect(/datum/status_effect/buff/skulduggery)
+	if(!skulduggery)
+		return FALSE
+	return skulduggery.process_skd(attacker, item)
+
+/datum/status_effect/buff/skulduggery/proc/process_skd(mob/living/carbon/human/attacker, obj/item/item)
+	if(!owner || !ishuman(owner) || !ishuman(attacker) || owner.IsKnockdown() || owner.lying || owner.IsParalyzed() || owner.IsStun() || owner.stat != CONSCIOUS || !(owner.mobility_flags & MOBILITY_STAND))
+		return FALSE
+	var/mob/living/carbon/human/human = owner
+	var/mob/living/carbon/human/assailant = attacker
+	if(waiting_followup)
+		if(assailant == grappled)
+			slam_target(assailant)
+		else
+			slam_into(assailant)
+		return TRUE
+	if(assailant.IsKnockdown() || assailant.lying)
+		return stomp_prone(assailant)
+	if(human.in_throw_mode)
+		return attempt_grapple(human, assailant)
+	if(!assailant.mind)
+		return auto_flank_move(human, assailant)
+	return attempt_parry(human, assailant, item)
+
+/datum/status_effect/buff/skulduggery/proc/attempt_grapple(mob/living/carbon/human/human, mob/living/carbon/human/assailant)
+	if(assailant.mind)
+		if(!grapple_counts[assailant])
+			grapple_counts[assailant] = 0
+		if(grapple_counts[assailant] >= 2)
+			human.visible_message(
+				span_warning("[human] reaches for [assailant], but they anticipate it!"),
+				span_notice("They've adapted... I can't grab them again!")
+			)
+			return FALSE
+		grapple_counts[assailant]++
+	human.start_pulling(assailant)
+	human.setDir(get_dir(human, assailant))
+	playsound(human, 'sound/combat/riposte.ogg', 100, TRUE)
+	human.visible_message(
+		span_boldwarning("[human] intercepts [assailant] and seizes them!"),
+		span_notice("Got them!")
+	)
+	human.balloon_alert_to_viewers("SKD!!", "SKD!!", 10)
+	grappled = assailant
+	waiting_followup = TRUE
+	return TRUE
+
+/datum/status_effect/buff/skulduggery/proc/attempt_parry(mob/living/carbon/human/human, mob/living/carbon/human/assailant, obj/item/item)
+	if(!item?.associated_skill)
+		return FALSE
+	var/my_skill = human.get_skill_level(/datum/skill/magic/holy)
+	var/enemy_skill = assailant.get_skill_level(item.associated_skill)
+	var/skill_diff = my_skill - enemy_skill
+	var/base_chance = skill_diff * 10
+	var/parry_bonus = parries_left * 20
+	var/success_chance = clamp(base_chance + parry_bonus, 0, 90)
+	if(!prob(success_chance))
+		human.visible_message(
+			span_warning("[human] tries to read [assailant]'s attack, but fails!"),
+			span_notice("Gah, I can't keep up!")
+		)
+		parries_left--
+		to_chat(owner, span_warning("Failed, [parries_left] left. ([success_chance]%)"))
+		return FALSE
+	if(parries_left > 0)
+		parries_left--
+	to_chat(owner, span_warning("Success, [parries_left] left. ([success_chance]%)"))
+	auto_flank_move(human, assailant)
+	return TRUE
+
+/datum/status_effect/buff/skulduggery/proc/is_valid_step(mob/living/carbon/human/human, turf/destination)
+	if(!destination || arcyne_validate_blink_dest(destination, human) || istransparentturf(destination))
+		return FALSE
+	return TRUE
+
+/datum/status_effect/buff/skulduggery/proc/auto_flank_move(mob/living/carbon/human/human, mob/living/carbon/human/assailant)
+	if(!human || !assailant)
+		return FALSE
+	var/original_dir = assailant.dir
+	var/turf/left = get_step(assailant, turn(original_dir, 90))
+	var/turf/right = get_step(assailant, turn(original_dir, -90))
+	var/turf/behind = get_step(assailant, turn(original_dir, 180))
+	var/dx = human.x - assailant.x
+	var/dy = human.y - assailant.y
+	var/turf/side = (dx * dy >= 0) ? left : right
+	var/turf/alternate_side = (side == left) ? right : left
+	if(!is_valid_step(human, side) || !is_valid_step(human, behind))
+		side = alternate_side
+		if(!is_valid_step(human, side) || !is_valid_step(human, behind))
+			if(!is_valid_step(human, behind))
+				return FALSE
+			trigger_afterimage(3)
+			human.forceMove(behind)
+		else
+			trigger_afterimage(3)
+			human.forceMove(side)
+			sleep(1)
+			trigger_afterimage(3)
+			human.forceMove(behind)
+	else
+		trigger_afterimage(3)
+		human.forceMove(side)
+		sleep(1)
+		human.forceMove(behind)
+		trigger_afterimage(3)
+	human.setDir(get_dir(human, assailant))
+	if(!assailant.mind)
+		assailant.Immobilize(8 SECONDS)
+		assailant.OffBalance(8 SECONDS)
+		assailant.apply_status_effect(/datum/status_effect/debuff/clickcd, 8 SECONDS)
+		if(assailant.mob_biotypes != MOB_UNDEAD && prob(25))
+			assailant.emote("huh")
+	else
+		assailant.apply_status_effect(/datum/status_effect/debuff/clickcd, 2 SECONDS)
+	human.visible_message(
+		span_boldwarning("[human] slips past [assailant] in a blur and appears at their back!"),
+		span_notice("Too slow.")
+	)
+	return TRUE
+
+/datum/status_effect/buff/skulduggery/proc/stomp_prone(mob/living/carbon/human/target)
+	if(!target)
+		return FALSE
+	var/mob/living/carbon/human/human = owner
+	human.visible_message(
+		span_boldwarning("[human] delivers their foot onto [target] while they try to swing!"),
+		span_notice("Deserved kick for trying that, fool!")
+	)
+	human.do_attack_animation(target)
+	target.adjustBruteLoss(8)
+	target.stamina_add(8)
+	human.setDir(get_dir(human, target))
+	if(!target.mind)
+		target.stamina_add(12)
+		target.apply_status_effect(/datum/status_effect/debuff/clickcd, 2 SECONDS)
+	addtimer(CALLBACK(target, /mob/proc/slamdunked), 1)
+	return TRUE
+
+/datum/status_effect/buff/skulduggery/proc/slam_target(mob/living/carbon/human/target)
+	if(!target)
+		return FALSE
+	var/mob/living/carbon/human/human = owner
+	var/power = human.get_skill_level(/datum/skill/combat/unarmed) + (human.get_skill_level(/datum/skill/magic/holy) / 2)
+	var/resist = target.get_stat(STAT_CONSTITUTION) + (target.get_stat(STAT_SPEED) / 4)
+	var/chance = clamp(50 + (power - resist), 10, 90)
+	if(prob(chance))
+		human.stop_pulling()
+		waiting_followup = FALSE
+		grappled = null
+		human.visible_message(
+			span_boldwarning("[human] turns [target] upside their head and slams them into the ground!"),
+			span_notice("<i>I drive them into the floor with sheer skill!</i>")
+		)
+		human.setDir(get_dir(human, target))
+		human.balloon_alert_to_viewers("SKD Slam!!", "SKD Slam!!", 10)
+		playsound(get_turf(target), 'sound/combat/wooshes/blunt/wooshhuge (2).ogg', 100, FALSE)
+		target.Knockdown(4 SECONDS)
+		sleep(3)
+		target.apply_status_effect(/datum/status_effect/debuff/clickcd, 4 SECONDS)
+		target.adjustBruteLoss(40)
+		target.stamina_add(60)
+		shake_camera(human, 2, 1)
+		shake_camera(target, 2, 1)
+		var/da_slam = pick('sound/combat/hits/blunt/genblunt (1).ogg', 'sound/combat/hits/blunt/genblunt (2).ogg', 'sound/combat/hits/blunt/genblunt (3).ogg', 'sound/combat/hits/blunt/flailhit.ogg')
+		playsound(target, da_slam, 100, TRUE)
+		playsound(target, 'sound/combat/tf2crit.ogg', 100, TRUE)
+		if(!target.mind && target.mob_biotypes != MOB_UNDEAD && prob(50))
+			target.Unconscious(800)
+	else
+		human.visible_message(
+			span_warning("[target] resists the slam, forcing [human] to kick them away!"),
+			span_notice("They resist my attempt to slam! I have to kick them off!")
+		)
+		human.balloon_alert_to_viewers("SKD Kick!!", "SKD Kick!!", 10)
+		human.setDir(get_dir(human, target))
+		playsound(target, 'sound/combat/hits/punch/punch_hard (2).ogg', 100, TRUE)
+		target.Knockdown(1 SECONDS)
+		var/dir = turn(get_dir(target, human), 180)
+		if(dir & (NORTH|SOUTH))
+			dir = (dir & NORTH) ? NORTH : SOUTH
+		else
+			dir = (dir & EAST) ? EAST : WEST
+		var/turf/current = get_turf(target)
+		for(var/i in 1 to 3)
+			var/turf/next = get_step(current, dir)
+			if(!next || next.density)
+				break
+			current = next
+		target.throw_at(current, 2, 4)
+		waiting_followup = FALSE
+	addtimer(CALLBACK(target, /mob/proc/slamdunked), 1)
+	grappled = null
+	waiting_followup = FALSE
+
+/datum/status_effect/buff/skulduggery/proc/slam_into(mob/living/carbon/human/other)
+	if(!other || !grappled)
+		return FALSE
+	var/mob/living/carbon/human/human = owner
+	var/mob/living/carbon/human/grappled_mob = grappled
+	human.visible_message(
+		span_boldwarning("[human] redirects [grappled_mob] full force into [other]!"),
+		span_notice("<i>Consecutive Skulduggery! Hells yae! Bring me more!</i>")
+	)
+	human.balloon_alert_to_viewers("Consecutive SKD!!", "Consecutive SKD!!", 10)
+	human.setDir(get_dir(human, other))
+	var/attack_sound = pick('sound/combat/hits/blunt/genblunt (1).ogg', 'sound/combat/hits/blunt/genblunt (2).ogg', 'sound/combat/hits/blunt/genblunt (3).ogg', 'sound/combat/hits/blunt/flailhit.ogg')
+	playsound(other, attack_sound, 100, TRUE)
+	grappled_mob.forceMove(get_turf(other))
+	grappled_mob.adjustBruteLoss(30)
+	other.adjustBruteLoss(30)
+	other.stamina_add(25)
+	grappled_mob.Knockdown(1 SECONDS)
+	other.Knockdown(1 SECONDS)
+	shake_camera(human, 2, 1)
+	shake_camera(grappled_mob, 2, 1)
+	shake_camera(other, 2, 1)
+	var/dir = turn(get_dir(other, human), 180)
+	if(dir & (NORTH|SOUTH))
+		dir = (dir & NORTH) ? NORTH : SOUTH
+	else
+		dir = (dir & EAST) ? EAST : WEST
+	var/turf/current = get_turf(other)
+	for(var/i in 1 to 3)
+		var/turf/next = get_step(current, dir)
+		if(!next || next.density)
+			break
+		current = next
+	other.throw_at(current, 1, 4)
+	waiting_followup = FALSE
+	addtimer(CALLBACK(src, PROC_REF(_slam_followup), other, grappled_mob), 0.5)
+	grappled = null
+	waiting_followup = FALSE
+
+/datum/status_effect/buff/skulduggery/proc/_slam_followup(mob/living/carbon/human/other, mob/living/carbon/human/grappled_mob)
+	if(!other || !grappled_mob)
+		return
+	grappled_mob.forceMove(get_turf(other))
+	var/list/directions = list(NORTH, SOUTH, EAST, WEST)
+	var/turf/step = get_step(grappled_mob, pick(directions))
+	if(step && !step.density)
+		grappled_mob.forceMove(step)
+	addtimer(CALLBACK(grappled_mob, /mob/proc/slamdunked), 1)
+	addtimer(CALLBACK(other, /mob/proc/slamdunked), 1)
+	if(!grappled_mob.mind && grappled_mob.mob_biotypes != MOB_UNDEAD && prob(50))
+		grappled_mob.Unconscious(800)
+
+/mob/proc/slamdunked()
+	var/amp = 6
+	animate(src, pixel_x = 0, time = 0)
+	for(var/i in 1 to 5)
+		animate(src, pixel_x = -amp, time = 1)
+		animate(src, pixel_x = amp, time = 1)
+		amp = round(amp * 0.6)
+	animate(src, pixel_x = 0, time = 2)
 
 #define TRAIT_SOURCE_WILDSHAPE "wildshape_transform"
 
