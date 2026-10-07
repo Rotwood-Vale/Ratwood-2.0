@@ -1,0 +1,4 @@
+author: "loleo14"
+delete-after: True
+changes:
+  - bugfix: "Singular letter added."
