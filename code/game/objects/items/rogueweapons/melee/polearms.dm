@@ -2298,7 +2298,7 @@
 	name = "rending slash"
 	icon_state = "inrend"
 	attack_verb = list("rends")
-	desc = "A viscious slash that tears through flesh."
+	desc = "A vicious slash that tears through flesh."
 	clickcd = CLICK_CD_HEAVY
 	reach = 2
 	damfactor = 1.8
