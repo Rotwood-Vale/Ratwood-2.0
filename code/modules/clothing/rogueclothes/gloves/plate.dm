@@ -74,7 +74,7 @@
 
 /obj/item/clothing/gloves/roguetown/plate/zizo
 	name = "avantyne plate gauntlets"
-	desc = "avantyne plate gauntlets. Called forth from the edge of what should be known. In Her name."
+	desc = "<font color='A50021'><i>\"Look on HIS works, ye Mighty, and despair!\"</i></font>"
 	icon_state = "zizogauntlets"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	armor = ARMOR_ASCENDANT
@@ -91,8 +91,7 @@
 
 /obj/item/clothing/gloves/roguetown/plate/medium/zizo
 	name = "avantyne gauntlets"
-	desc = "A razor-tipped finger was all it took to splay the divine fillament; now, it is time to bring down the wrath of God's hand in full. </br> Do mind the forearm's guards, however - they \
-	tend to leave a stinging bruise, whenever used to parry an incoming strike."
+	desc = "<font color='A50021'><i>\"Look on HIS works, ye Mighty, and despair!\"</i></font>"
 	armor_class = ARMOR_CLASS_MEDIUM
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	armor = ARMOR_ASCENDANT

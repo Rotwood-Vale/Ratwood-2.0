@@ -916,8 +916,8 @@
 	. = ..()
 	if(!.)
 		return
-	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check
-		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair, brimming with elixir under a master's hand, could bind it."))
+	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check (Pestrians too now, go forth flesh abominations!)
+		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair brimming with elixir under a master's hand or a power of the fleshtwisting pestrian could bind it."))
 		return FALSE
 
 /// The single DEAD-to-alive transition, every revival and rise routes through it.
@@ -939,7 +939,7 @@
 	return TRUE // death() already re-swapped the lists if the updatehealth above re-killed us
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller
+/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller (Pestrians too now, go forth flesh abominations!)
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
@@ -2231,7 +2231,41 @@
 			found_ping(get_turf(potential_track), client, "hidden")
 			potential_track.handle_revealing(src)
 		//Hearthstone end.
+		// Hunting Tracks Logic
+		check_nearby_hunting_tracks()
 
+///Finds the closest nearby hunting track visible to our party and reports its distance/direction.
+/mob/living/proc/check_nearby_hunting_tracks()
+	var/obj/effect/hunting_track/closest_track
+	var/min_dist = 8
+	for(var/obj/effect/hunting_track/nearby_track in range(7, src))
+		// Check if we are part of the party that can see this track
+		var/can_see_track = FALSE
+		for(var/datum/weakref/party_weakref in nearby_track.party_refs)
+			if(party_weakref.resolve() == src)
+				can_see_track = TRUE
+				break
+		if(!can_see_track)
+			continue
+		found_ping(get_turf(nearby_track), client, "paws")
+		var/dist = get_dist(src, nearby_track)
+		if(dist < min_dist)
+			min_dist = dist
+			closest_track = nearby_track
+	if(!closest_track)
+		return
+	var/dir_text = dir2text(get_dir(src, closest_track))
+	var/dist_text = ""
+	switch(min_dist)
+		if(0 to 1)
+			dist_text = "right beneath your feet"
+		if(2 to 3)
+			dist_text = "very close by"
+		if(4 to 5)
+			dist_text = "a few paces away"
+		else
+			dist_text = "in the distance"
+	to_chat(src, span_notice("You spot a faint trail [dist_text] to the [dir_text]."))
 
 /proc/found_ping(atom/A, client/C, state)
 	if(!A || !C || !state)
