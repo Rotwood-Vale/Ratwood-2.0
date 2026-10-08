@@ -3,6 +3,7 @@ GLOBAL_LIST_EMPTY(gate_targets)
 GLOBAL_LIST_EMPTY(cult_robes)
 GLOBAL_LIST_EMPTY(zizo_reality_rends)
 GLOBAL_LIST_EMPTY(zizo_fuges)
+GLOBAL_LIST_EMPTY(zizo_marks)
 
 GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/servantry/convert, /datum/ritual/servantry/sacrifice,
@@ -119,6 +120,48 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 				return FALSE
 			return L
 	to_chat(user, span_warning("Empty."))
+
+/proc/zizo_target_error(mob/living/user, mob/living/carbon/human/target, list/wanted)
+	if(!target || target == user)
+		to_chat(user, span_warning("PLACE A SACRIFICE ON THE CENTER."))
+		return TRUE
+	if(is_zizo(target))
+		to_chat(user, span_warning("CAN'T SACRIFICE CULTIST."))
+		return TRUE
+	if(!(target in wanted))
+		to_chat(user, span_warning("SHE DOESN'T WANT THIS ONE. CHECK YOUR TARGETS."))
+		return TRUE
+	if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+		to_chat(user, span_warning("SILVER REPELS THE DARK MAGICK!"))
+		return TRUE
+	return FALSE
+
+/proc/refresh_zizo_marks()
+	for(var/image/old in GLOB.zizo_marks)
+		for(var/client/C in GLOB.clients)
+			C.images -= old
+	GLOB.zizo_marks.Cut()
+	for(var/mob/living/carbon/human/T in (GLOB.zizo_targets | GLOB.gate_targets))
+		if(QDELETED(T) || T.stat == DEAD)
+			continue
+		var/image/mark = image('icons/effects/eldritch.dmi', T, "eye_open", ABOVE_ALL_MOB_LAYER)
+		if(T in GLOB.gate_targets)
+			mark.icon_state = "eye_pulse" // cool eye stolen from heretic
+		mark.pixel_y = 30
+		GLOB.zizo_marks += mark
+		for(var/datum/mind/M in SSmapping.retainer.cultists)
+			var/client/C = M.current?.client
+			if(C)
+				C.images += mark
+
+/proc/zizo_roll_start()
+	refill_bestow_areas()
+	if(length(GLOB.zizo_targets))
+		return
+	for(var/datum/mind/M in SSmapping.retainer.cultists)
+		if(ishuman(M.current))
+			reroll_targets(M.current)
+			return
 
 /datum/status_effect/buff/curse_immunity
 	id = "curse_immunity"
@@ -498,21 +541,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/ritual/servantry/aspect/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(gate_count > 0)
-		if(!target || target == user)
-			to_chat(user, span_warning("A sacrifice must lie in the center."))
+		if(zizo_target_error(user, target, GLOB.gate_targets))
 			print_gate_sacrifice_info(user)
-			new /obj/item/necro_relics/necro_crystal(center)
-			return
-		if(is_zizo(target))
-			to_chat(user, span_warning("This is a cultist."))
-			new /obj/item/necro_relics/necro_crystal(center)
-			return
-		if(!(target in GLOB.gate_targets))
-			to_chat(user, span_warning("She does not want this one."))
-			new /obj/item/necro_relics/necro_crystal(center)
-			return
-		if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
-			to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
 			new /obj/item/necro_relics/necro_crystal(center)
 			return
 	refill_bestow_areas()

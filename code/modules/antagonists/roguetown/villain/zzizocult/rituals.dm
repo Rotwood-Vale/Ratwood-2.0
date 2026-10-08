@@ -187,6 +187,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 			var/mob/living/carbon/human/chosen = pickweight(weighted)
 			user.zizo_targets += chosen
 			weighted -= chosen
+	refresh_zizo_marks()
 
 /proc/reroll_gate_targets(gate_count)
 	if(gate_count <= 0)
@@ -275,18 +276,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/convert/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
-	if(!target || target == user)
-		to_chat(user, span_warning("A sacrifice must lie in the center. The sacrifice must be desired by ZIZO, which can be tracked by heartaches. If you have more than 2 lackeys, you require an assistant cultist on the sigil to perform this rite."))
-		return
-	if(is_zizocultist(target.mind) || is_zizolackey(target.mind))
-		return
-	if(!target.client)
-		return
-	if(!(target in GLOB.zizo_targets))
-		to_chat(user, span_warning("She does not want this one."))
-		return
-	if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
-		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
+	if(zizo_target_error(user, target, GLOB.zizo_targets))
 		return
 	var/datum/antagonist/zizocultist/PR = user.mind.has_antag_datum(/datum/antagonist/zizocultist, TRUE)
 	var/lackeys = 0
@@ -348,27 +338,13 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/sacrifice/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
-	if(!target || target == user)
-		to_chat(user, span_warning("A sacrifice must lie in the center. I also need another cultist on the rune with a knife in their hand. The sacrifice must be desired by ZIZO, which can be tracked by heartaches."))
-		return
-	if(is_zizo(target))
-		to_chat(user, span_warning("This is a cultist."))
-		return
-	if(!target.client)
-		return
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/cultist = user
+	var/list/wanted = cultist.zizo_targets
 	if(is_zizo(user))
-		if(!(target in GLOB.zizo_targets))
-			to_chat(user, span_warning("She does not want this one."))
-			return
-	else
-		if(!(target in cultist.zizo_targets))
-			to_chat(user, span_warning("She does not want this one."))
-			return
-	if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
-		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
+		wanted = GLOB.zizo_targets
+	if(zizo_target_error(user, target, wanted))
 		return
 	var/mob/living/carbon/human/assistant
 	for(var/mob/living/carbon/human/H in range(1, center))

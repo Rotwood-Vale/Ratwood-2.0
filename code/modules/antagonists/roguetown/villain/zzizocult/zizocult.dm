@@ -47,6 +47,8 @@
 	. = ..()
 	var/mob/living/carbon/human/H = owner.current
 	SSmapping.retainer.cultists |= owner
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(refresh_zizo_marks)), 15 SECONDS, TIMER_UNIQUE | TIMER_LOOP)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(zizo_roll_start)), 1 MINUTES, TIMER_UNIQUE)
 	H.set_patron(/datum/patron/inhumen/zizo)
 	H.cmode_music = 'sound/music/cmode/antag/combat_cult.ogg'
 	H.playsound_local(get_turf(H), 'sound/music/maniac.ogg', 80, FALSE, pressure_affected = FALSE)
@@ -55,6 +57,7 @@
 	H.verbs |= /mob/living/carbon/human/proc/draw_sigil
 	H.verbs |= /mob/living/carbon/human/proc/zizo_lore
 	H.verbs |= /mob/living/carbon/human/proc/zizo_objectives
+	H.verbs |= /mob/living/carbon/human/proc/zizo_targets_list
 	H.purity = FALSE
 
 	H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN)
@@ -136,6 +139,26 @@
 			to_chat(src, "<B>[gl.name]:</B> [gl.desc]<BR><B>COMPLETED.</B><BR>")
 		else
 			to_chat(src, "<B>[gl.name]:</B> [gl.desc]<BR><B>[gl.reward] SECRETS.</B><BR>")
+
+/mob/living/carbon/human/proc/zizo_targets_list()
+	set name = "Targets"
+	set category = "ZIZO"
+
+	var/list/lines = list("<B>SACRIFICE / CONVERSION TARGETS:</B>")
+	for(var/mob/living/carbon/human/T in GLOB.zizo_targets)
+		lines += "- [T.real_name] ([T.mind?.assigned_role])"
+	if(!length(GLOB.zizo_targets))
+		lines += "Found no one! Perform Divine Sacrifices to find targets."
+	if(length(GLOB.gate_targets))
+		lines += "<B>GATE TARGETS:</B>"
+		for(var/mob/living/carbon/human/T in GLOB.gate_targets)
+			lines += "- [T.real_name] ([T.mind?.assigned_role])"
+		for(var/atype in GLOB.zizo_bestow_areas)
+			var/area/A = atype
+			lines += "GATE RITE LOCATION: [initial(A.name)]"
+	lines += "Divine Sacrifices ready in [round(max(GLOB.zizo_target_cd - world.time, 0) / 600)] minutes."
+	lines += "<B>GUIDE:</B> Place the sacrifice in the center of a servantry sigil. Sacrifice requires a fellow cultist holding a knife & standing upon the sigil. Conversion requires a fellow cultist on the sigil, if there is more than 3 members in the cult. Targets have a dark eye above them. Use heartaches to seek them."
+	to_chat(src, jointext(lines, "<BR>"))
 
 /mob/living/carbon/human/proc/communicate()
 	set name = "Communicate with Cult"
