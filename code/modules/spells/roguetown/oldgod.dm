@@ -67,7 +67,7 @@
 						if(HAS_TRAIT(H, TRAIT_INQUISITION))
 							to_chat(H, span_notice("You feel your wounds slipping away."))
 						else
-							to_chat(H, span_danger("You feel a tear as fragment of your lux is replaced!"))
+							to_chat(H, span_danger("You feel a tear as a fragment of your lux is replaced!"))
 						C_caster.visible_message(span_danger("Twisting threads of silvery lux blossom upon [C_caster]'s flesh, conveying [targetwound] upon [C_caster.p_their()] [c_BP.name]!"), span_boldwarning("You shudder in pain as a [targetwound] violently weeps into being upon your [c_BP.name]!"))
 					new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
 					new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
@@ -98,7 +98,7 @@
 	if(HAS_TRAIT(H, TRAIT_INQUISITION))
 		to_chat(H, span_notice("Your wounds are being removed by the silver string."))
 	else
-		to_chat(H, span_danger("You feel somthing grabbing at your Lux, stealing parts of it!"))
+		to_chat(H, span_danger("You feel something grabbing at your Lux, stealing parts of it!"))
 		to_chat(H, span_notice("Your wounds seem to be vanishing."))
 	return TRUE
 
@@ -434,7 +434,7 @@
 		to_chat(user, span_notice("You feel pull on your soul as [user], ABSOLVES you of your suferring."))
 	else
 		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // Someone just tore away something from your lux, that isn't calm  
-		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burderns to lighten."))
+		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burderns lighten."))
 	return TRUE
 
 // Weaker absolve for the Stigmata adventurer
@@ -519,6 +519,6 @@
 		to_chat(user, span_notice("You feel pull on your soul as [user], AMENDS your suferring."))
 	else
 		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // someone just torn away something from your lux, that isn't calm
-		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burdens to lighten."))
+		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burdens lighten."))
 	
 	return TRUE

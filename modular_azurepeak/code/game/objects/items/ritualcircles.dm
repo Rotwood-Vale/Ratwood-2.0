@@ -2253,7 +2253,7 @@
 	H.drop_all_held_items()
 	var/obj/item/chastity/device = H.chastity_device
 	if(device)
-		device.remove_chastity(H) // because ritual name is FREDOM and i find it funny
+		device.remove_chastity(H) // because ritual name is FREEDOM and I find it funny
 		if(!QDELETED(device))
 			device.forceMove(get_turf(H))
 
