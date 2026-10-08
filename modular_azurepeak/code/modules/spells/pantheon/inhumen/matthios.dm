@@ -480,6 +480,9 @@
 	var/damage = 20
 	var/cone_range = 3
 
+/obj/effect/proc_holder/spell/invoked/raze/gilded_dragon
+	devotion_cost = 0
+
 /obj/effect/proc_holder/spell/invoked/raze/cast(list/targets, mob/living/user = usr)
 	. = ..()
 	var/turf/target_turf = get_turf(targets[1])
@@ -628,6 +631,7 @@
 	wildshape_icon_state = "dragon_cool"
 	pixel_x = -32
 	pixel_y = -16
+	var/swooping = NONE
 
 /mob/living/carbon/human/species/wildshape/dragon_matthios/gain_inherent_skills()
 	if(mind)
@@ -645,14 +649,161 @@
 		STAINT = 15
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/twilight_dragonclaws)
-		AddSpell(new /obj/effect/proc_holder/spell/invoked/dragon_swoop)
+		AddSpell(new /obj/effect/proc_holder/spell/invoked/gilded_swoop)
 		AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/matthios_dragon)
 		AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire/matthios_dragon)
-
+		AddSpell(new /obj/effect/proc_holder/spell/invoked/raze/gilded_dragon)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
 		src.apply_status_effect(/datum/status_effect/buff/twilight_dragon_form)
 
 		real_name = "Gilded Dragon"
+
+#define GILDED_SWOOP_DAMAGEABLE 1
+#define GILDED_SWOOP_INVULNERABLE 2
+#define GILDED_SWOOP_HEIGHT 270
+#define GILDED_SWOOP_DIRECTION_CHANGE_RANGE 5
+
+/obj/effect/proc_holder/spell/invoked/gilded_swoop
+	name = "Gilded Swoop"
+	recharge_time = 30 SECONDS
+	overlay_state = "dendor"
+	chargetime = 0
+	range = 15
+	antimagic_allowed = TRUE
+
+/obj/effect/proc_holder/spell/invoked/gilded_swoop/cast(list/targets, mob/living/user = usr)
+	if(!istype(user, /mob/living/carbon/human/species/wildshape/dragon_matthios))
+		return FALSE
+	var/mob/living/carbon/human/species/wildshape/dragon_matthios/dragon = user
+	return dragon.gilded_swoop(targets[1])
+
+/obj/effect/temp_visual/gilded_dragon_flight
+	icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
+	icon_state = "dragon_cool"
+	layer = ABOVE_ALL_MOB_LAYER
+	pixel_x = -32
+	duration = 10
+	randomdir = FALSE
+
+/obj/effect/temp_visual/gilded_dragon_flight/Initialize(mapload, negative)
+	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(flight), negative)
+
+/obj/effect/temp_visual/gilded_dragon_flight/proc/flight(negative)
+	if(negative)
+		animate(src, pixel_x = -GILDED_SWOOP_HEIGHT*0.1, pixel_z = GILDED_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
+	else
+		animate(src, pixel_x = GILDED_SWOOP_HEIGHT*0.1, pixel_z = GILDED_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
+	sleep(3)
+	icon_state = "dragon_cool"
+	if(negative)
+		animate(src, pixel_x = -GILDED_SWOOP_HEIGHT, pixel_z = GILDED_SWOOP_HEIGHT, time = 7)
+	else
+		animate(src, pixel_x = GILDED_SWOOP_HEIGHT, pixel_z = GILDED_SWOOP_HEIGHT, time = 7)
+
+/obj/effect/temp_visual/gilded_dragon_flight/end
+	pixel_x = GILDED_SWOOP_HEIGHT
+	pixel_z = GILDED_SWOOP_HEIGHT
+	duration = 10
+
+/obj/effect/temp_visual/gilded_dragon_flight/end/flight(negative)
+	if(negative)
+		pixel_x = -GILDED_SWOOP_HEIGHT
+		animate(src, pixel_x = -32, pixel_z = 0, time = 5)
+	else
+		animate(src, pixel_x = -32, pixel_z = 0, time = 5)
+
+/obj/effect/temp_visual/gilded_dragon_flight/end
+	icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
+	icon_state = "dragon_cool"
+
+/mob/living/carbon/human/species/wildshape/dragon_matthios/proc/gilded_swoop(atom/movable/manual_target)
+	if(stat || swooping || !manual_target || QDELETED(manual_target))
+		return FALSE
+	var/turf/target_turf = get_turf(manual_target)
+	if(!target_turf || target_turf.z != z)
+		return FALSE
+
+	playsound(loc, 'sound/vo/mobs/vdragon/drgnroar.ogg', 50, TRUE, -1)
+	swooping |= GILDED_SWOOP_DAMAGEABLE
+	movement_type = FLYING
+	density = FALSE
+	visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
+
+	var/negative
+	var/initial_x = x
+	if(target_turf.x < initial_x)
+		negative = TRUE
+	else if(target_turf.x > initial_x)
+		negative = FALSE
+	else
+		negative = prob(50)
+	var/obj/effect/temp_visual/gilded_dragon_flight/F = new(loc, negative)
+
+	negative = !negative
+	var/oldtransform = transform
+	alpha = 255
+	animate(src, alpha = 204, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
+	for(var/i in 1 to 3)
+		sleep(1)
+		if(QDELETED(src) || stat == DEAD)
+			qdel(F)
+			if(stat == DEAD)
+				swooping &= ~GILDED_SWOOP_DAMAGEABLE
+				animate(src, alpha = 255, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW)
+			return FALSE
+	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
+	swooping |= GILDED_SWOOP_INVULNERABLE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	SLEEP_CHECK_DEATH(7)
+
+	while(manual_target && !QDELETED(manual_target) && loc != get_turf(manual_target))
+		forceMove(get_step(src, get_dir(src, manual_target)))
+		SLEEP_CHECK_DEATH(0.5)
+
+	var/descent_time = 10
+	if(negative)
+		if(ISINRANGE(x, initial_x + 1, initial_x + GILDED_SWOOP_DIRECTION_CHANGE_RANGE))
+			negative = FALSE
+	else if(ISINRANGE(x, initial_x - GILDED_SWOOP_DIRECTION_CHANGE_RANGE, initial_x - 1))
+		negative = TRUE
+	new /obj/effect/temp_visual/gilded_dragon_flight/end(loc, negative)
+	new /obj/effect/temp_visual/dragon_swoop(loc)
+	animate(src, alpha = 255, transform = oldtransform, descent_time)
+	SLEEP_CHECK_DEATH(descent_time)
+	swooping &= ~GILDED_SWOOP_INVULNERABLE
+	mouse_opacity = initial(mouse_opacity)
+	playsound(loc, 'sound/misc/meteorimpact.ogg', 200, TRUE)
+	for(var/mob/living/L in orange(1, src))
+		if(L.stat)
+			visible_message(span_warning("[src] slams down on [L], crushing [L.p_them()]!"))
+			L.gib()
+		else
+			L.adjustBruteLoss(75)
+			if(L && !QDELETED(L))
+				var/throw_dir = get_dir(src, L)
+				if(L.loc == loc)
+					throw_dir = pick(GLOB.alldirs)
+				var/throwtarget = get_edge_target_turf(src, throw_dir)
+				L.throw_at(throwtarget, 3)
+				visible_message(span_warning("[L] is thrown clear of [src]!</span>"))
+	for(var/mob/M in range(7, src))
+		shake_camera(M, 15, 1)
+	movement_type = GROUND
+	density = TRUE
+	SLEEP_CHECK_DEATH(1)
+	swooping &= ~GILDED_SWOOP_DAMAGEABLE
+	return TRUE
+
+/mob/living/carbon/human/species/wildshape/dragon_matthios/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
+	if(swooping & GILDED_SWOOP_INVULNERABLE)
+		return FALSE
+	return ..()
+
+#undef GILDED_SWOOP_DAMAGEABLE
+#undef GILDED_SWOOP_INVULNERABLE
+#undef GILDED_SWOOP_HEIGHT
+#undef GILDED_SWOOP_DIRECTION_CHANGE_RANGE
 
 /datum/species/dragon_matthios
 	name = "Gilded Dragon"
@@ -667,7 +818,6 @@
 		TRAIT_BASHDOORS,
 		TRAIT_STRONGBITE,
 		TRAIT_STEELHEARTED,
-		TRAIT_BREADY,
 		TRAIT_ORGAN_EATER,
 		TRAIT_WILD_EATER,
 		TRAIT_HARDDISMEMBER,
@@ -729,6 +879,7 @@
 	sewrepair = FALSE
 	max_integrity = 600
 	item_flags = DROPDEL
+	combat_taggable = TRUE
 
 /datum/intent/simple/twilight_dragon_cut
 	name = "claw"
