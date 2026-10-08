@@ -5,14 +5,14 @@
 	xp_gain = TRUE
 	releasedrain = 50
 	chargedrain = 1
-	chargetime = 5
+	chargetime = 15
 	recharge_time = 35 SECONDS
 	human_req = TRUE
 	ignore_los = TRUE
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	movement_interrupt = FALSE
-	charging_slowdown = 2
+	charging_slowdown = 3
 	chargedloop = /datum/looping_sound/invokegen
 	associated_skill = /datum/skill/magic/arcane
 	overlay_state = "repulse"
@@ -59,7 +59,15 @@
 			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
-				M.set_resting(TRUE, TRUE)
+				M.Immobilize(2 SECONDS)
 				to_chat(M, "<span class='danger'>You're thrown back by [user]!</span>")
-			AM.safe_throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
+				RegisterSignal(M, COMSIG_MOVABLE_IMPACT, PROC_REF(wall_slam), override = TRUE)
+			if(!AM.safe_throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force) && isliving(AM))//So stuff gets tossed around at the same time.
+				UnregisterSignal(AM, COMSIG_MOVABLE_IMPACT)
 	return TRUE
+
+// fucky but it should let it knock ppl over, if they hit a wall
+/obj/effect/proc_holder/spell/invoked/repulse/proc/wall_slam(mob/living/source, atom/hit_atom)
+	UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
+	if(hit_atom.density && !ismob(hit_atom))
+		source.Knockdown(2 SECONDS)

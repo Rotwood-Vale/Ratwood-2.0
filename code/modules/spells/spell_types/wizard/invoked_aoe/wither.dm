@@ -1,5 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/wither
 	name = "Wither"
+	concentration = TRUE
 	desc = "Lashes out a delayed line of dark magic, lowering the physical prowess of all in it's path."
 	cost = 3
 	releasedrain = 50

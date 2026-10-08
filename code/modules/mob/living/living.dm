@@ -1279,6 +1279,13 @@
 			to_chat(src, span_info("I will allow all grabs and resistance attempts by others."))
 
 
+/mob/living/proc/lose_concentration()
+	if(client?.charging && istype(used_intent, /datum/intent/spell))
+		stop_attack()
+		to_chat(src, span_warning("I lose my concentration!"))
+		playsound(src, 'sound/magic/magic_nulled.ogg', 50)
+		return TRUE
+
 /mob/proc/stop_attack(message = FALSE)
 	if(atkswinging)
 		atkswinging = FALSE
@@ -1894,6 +1901,7 @@
 			if(buckled.buckle_lying != -1)
 				lying = buckled.buckle_lying
 		if(!lying) //force them on the ground
+			lose_concentration()
 			lying = 90
 	else
 		mobility_flags |= MOBILITY_STAND

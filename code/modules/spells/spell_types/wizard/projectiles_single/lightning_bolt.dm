@@ -18,6 +18,7 @@
 	charging_slowdown = 3
 	chargedloop = /datum/looping_sound/invokelightning
 	associated_skill = /datum/skill/magic/arcane
+	concentration = TRUE
 	glow_color = GLOW_COLOR_LIGHTNING
 	glow_intensity = GLOW_INTENSITY_MEDIUM
 	spell_tier = 2

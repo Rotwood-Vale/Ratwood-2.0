@@ -87,6 +87,7 @@
 	var/mob_light = null
 	/// The effect to be added (on top) of the mob while it is charging.
 	var/obj/effect/mob_charge_effect = null
+	var/concentration = FALSE
 	/// Custom icon for its swingdelay.
 	var/custom_swingdelay = null
 
@@ -320,6 +321,8 @@
 		mob_light = mastermob.mob_light(glow_color, glow_intensity, FLASH_LIGHT_SPELLGLOW)
 	if(mob_charge_effect)
 		mastermob.vis_contents += mob_charge_effect
+	if(concentration)
+		mastermob.start_spell_visual_effects(glow_color)
 
 /datum/intent/proc/on_mouse_up()
 	if(chargedloop)
@@ -330,6 +333,8 @@
 		qdel(mob_light)
 	if(mob_charge_effect)
 		mastermob?.vis_contents -= mob_charge_effect
+	if(concentration)
+		mastermob?.cancel_spell_visual_effects()
 
 /datum/intent/proc/on_mmb(atom/target, mob/living/user, params)
 	return

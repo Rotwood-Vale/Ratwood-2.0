@@ -1,5 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/meteor_storm
 	name = "Meteor Storm"
+	concentration = TRUE
 	desc = "Summons forth dangerous meteors from the sky to scatter and smash foes."
 	overlay_state = "meteor_storm"
 	cost = 9

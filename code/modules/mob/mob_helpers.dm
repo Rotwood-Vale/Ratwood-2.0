@@ -618,6 +618,7 @@
 			mmb_intent.glow_intensity = ranged_ability.glow_intensity
 			mmb_intent.glow_color = ranged_ability.glow_color
 			mmb_intent.mob_charge_effect = ranged_ability.mob_charge_effect
+			mmb_intent.concentration = ranged_ability.concentration
 			mmb_intent.update_chargeloop()
 
 	if(hud_used)

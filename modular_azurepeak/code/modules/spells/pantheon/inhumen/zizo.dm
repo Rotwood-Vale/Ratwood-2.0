@@ -432,6 +432,121 @@
 			AM.safe_throw_at(throwtarget, ((CLAMP((maxthrow - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user, force = repulse_force)//So stuff gets tossed around at the same time.
 	return TRUE
 
+// accessible by ascendant-worshipping mages !
+/obj/effect/proc_holder/spell/invoked/churnliving/lesser
+	name = "Lesser Churn Lyving"
+	cost = 3
+	push_range = 1
+
+/obj/effect/temp_visual/shadow_puff
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "smoke"
+	color = "#0b0612"
+	randomdir = FALSE
+	duration = 1 SECONDS
+	fade_time = 0.5 SECONDS
+	layer = ABOVE_ALL_MOB_LAYER
+
+/obj/effect/temp_visual/shadow_puff/Initialize(mapload)
+	. = ..()
+	MakeParticleEmitter(/particles/smoke/steam/mild, TRUE, 1 SECONDS, "#1a0a26")
+
+// copied jaunt code
+/obj/effect/dummy/phased_mob/short_jaunt
+	name = "blink"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "nothing"
+	density = FALSE
+	anchored = TRUE
+	invisibility = 60
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/steps = 4
+	var/movedelay = 0
+	var/turf/start_turf
+
+/obj/effect/dummy/phased_mob/short_jaunt/Initialize(mapload)
+	. = ..()
+	start_turf = get_turf(src)
+	addtimer(CALLBACK(src, PROC_REF(exit)), 3 SECONDS)
+
+/obj/effect/dummy/phased_mob/short_jaunt/proc/can_enter(turf/T)
+	if(T.flags_1 & NOJAUNT_1)
+		return FALSE
+	return !T.density
+
+/obj/effect/dummy/phased_mob/short_jaunt/proc/can_stand(turf/T)
+	if(T.density)
+		return FALSE
+	for(var/atom/movable/A in T)
+		if(A.density)
+			return FALSE
+	return TRUE
+
+/obj/effect/dummy/phased_mob/short_jaunt/relaymove(mob/user, direction)
+	if(!direction || steps <= 0 || movedelay > world.time)
+		return
+	var/turf/T = get_step(src, direction)
+	if(!T || !can_enter(T))
+		return
+	movedelay = world.time + 3
+	steps--
+	new /obj/effect/temp_visual/shadow_puff(get_turf(src))
+	forceMove(T)
+	if(steps <= 0)
+		addtimer(CALLBACK(src, PROC_REF(exit)), 3)
+
+/obj/effect/dummy/phased_mob/short_jaunt/proc/exit()
+	if(QDELETED(src))
+		return
+	var/turf/T = get_turf(src)
+	if(!can_stand(T))
+		var/turf/found = start_turf
+		for(var/turf/N in orange(1, T))
+			if(can_stand(N))
+				found = N
+				break
+		T = found
+	for(var/mob/living/L in src)
+		L.forceMove(T)
+		L.reset_perspective()
+		new /obj/effect/temp_visual/shadow_puff(T)
+	qdel(src)
+
+/obj/effect/dummy/phased_mob/short_jaunt/ex_act()
+	return
+
+/obj/effect/dummy/phased_mob/short_jaunt/bullet_act()
+	return BULLET_ACT_FORCE_PIERCE
+
+/obj/effect/proc_holder/spell/self/short_jaunt
+	name = "Scadu Jaunt"
+	desc = "Transmute yourself into a dark cloud that can move through windows, barns, and underneath doors."
+	cost = 3
+	releasedrain = 30
+	chargetime = 0
+	recharge_time = 20 SECONDS
+	human_req = TRUE
+	warnie = "spellwarning"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "zizocloud"
+	spell_tier = 2
+	invocations = list("Burzum!")
+	invocation_type = "shout"
+	glow_color = GLOW_COLOR_DISPLACEMENT
+	glow_intensity = GLOW_INTENSITY_MEDIUM
+	chargedloop = /datum/looping_sound/invokegen
+	associated_skill = /datum/skill/magic/arcane
+	zizo_spell = TRUE
+
+/obj/effect/proc_holder/spell/self/short_jaunt/cast(list/targets, mob/user)
+	var/mob/living/L = user
+	var/obj/effect/dummy/phased_mob/short_jaunt/holder = new(get_turf(L))
+	new /obj/effect/temp_visual/shadow_puff(get_turf(L))
+	L.extinguish_mob()
+	L.forceMove(holder)
+	L.reset_perspective(holder)
+	return TRUE
 
 // Heresiarch-exclusive: Perfect Reanimation. Anastasis but evil. Requires a heart and a zizocross structure to revive somebody.
 

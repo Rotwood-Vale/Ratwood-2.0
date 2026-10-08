@@ -287,7 +287,7 @@
 	var/atom/throw_target = get_step(firer, get_dir(firer, target))
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.anti_magic_check() || !firer)
+		if(L.anti_magic_check() || !firer || L.pulling == firer)
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		L.throw_at(throw_target, 200, 4)

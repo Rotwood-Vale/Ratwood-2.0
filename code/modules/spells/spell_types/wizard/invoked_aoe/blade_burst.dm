@@ -1,6 +1,7 @@
 
 /obj/effect/proc_holder/spell/invoked/blade_burst
 	name = "Blade Burst"
+	concentration = TRUE
 	desc = "Summon a storm of arcyne force in an area, wounding anything in that location after a delay."
 	cost = 3
 	range = 7

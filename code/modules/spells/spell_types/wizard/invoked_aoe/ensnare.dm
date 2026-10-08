@@ -1,5 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/ensnare
 	name = "Ensnare"
+	concentration = TRUE
 	desc = "Tendrils of arcyne force hold anyone in a small area in place for a short while."
 	cost = 3
 	xp_gain = TRUE

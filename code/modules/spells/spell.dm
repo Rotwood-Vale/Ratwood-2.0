@@ -39,6 +39,7 @@
 	var/ignore_los = TRUE
 	var/glow_intensity = 0 // How much does the user glow when using the ability
 	var/glow_color = null // The color of the glow
+	var/concentration = FALSE
 	var/hide_charge_effect = FALSE // If true, will not show the spell's icon when charging
 	/// This spell holder's cooldown does not scale with any stat
 	var/is_cdr_exempt = FALSE
@@ -534,17 +535,20 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(!invocations || !invocations.len)
 		return
 	var/chosen_invocation = pick(invocations)
+	var/chant_language = null
+	if(zizo_spell)
+		chant_language = /datum/language/undead
 	switch(invocation_type)
 		if("shout")
 			if(prob(50))//Auto-mute? Fuck that noise
-				user.say(chosen_invocation, forced = "spell")
+				user.say(chosen_invocation, language = chant_language, forced = "spell")
 			else
-				user.say(chosen_invocation, forced = "spell")
+				user.say(chosen_invocation, language = chant_language, forced = "spell")
 		if("whisper")
 			if(prob(50))
-				user.whisper(chosen_invocation)
+				user.whisper(chosen_invocation, language = chant_language)
 			else
-				user.whisper(chosen_invocation)
+				user.whisper(chosen_invocation, language = chant_language)
 		if("emote")
 			var/emote_incantation = "<b>[usr.real_name]</b> [chosen_invocation]"
 			user.visible_message(emote_incantation, emote_incantation) //this is stupid, but it works.
@@ -724,6 +728,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/proc/after_cast(list/targets, mob/user = usr)
 	user.stop_attack() // Clear lingering spell effects after it is successfully cast
+	if(concentration)
+		user.finish_spell_visual_effects(glow_color)
 	for(var/atom/target in targets)
 		var/location
 		if(isliving(target))

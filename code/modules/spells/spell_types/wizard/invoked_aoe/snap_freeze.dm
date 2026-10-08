@@ -1,5 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/snap_freeze // to do: get scroll icon
 	name = "Snap Freeze"
+	concentration = TRUE
 	desc = "Freeze the air in a small area in an instant, slowing and mildly damaging those affected."
 	cost = 6
 	xp_gain = TRUE
