@@ -829,6 +829,7 @@
 /datum/species/dragon_matthios
 	name = "Gilded Dragon"
 	id = "dragon_matthios"
+	changesource_flags = NONE 
 	species_traits = list(NO_UNDERWEAR, NO_ORGAN_FEATURES, NO_BODYPART_FEATURES)
 	inherent_traits = list(
 		TRAIT_TOXIMMUNE,
