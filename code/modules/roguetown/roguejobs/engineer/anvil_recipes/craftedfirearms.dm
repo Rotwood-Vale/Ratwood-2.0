@@ -38,7 +38,7 @@
 	additional_items = list(/obj/item/flint, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/natural/wood/plank, /obj/item/natural/wood/plank, /obj/item/natural/wood/plank)
 	created_item = /obj/item/gun/ballistic/firearm/jaeger_rifle
 	createditem_num = 1
-	craftdiff = 4
+	craftdiff = 4 
 
 /datum/anvil_recipe/firearms/engineeredpistol
 	name = "Jaeger Pistol"
@@ -46,4 +46,4 @@
 	additional_items = list(/obj/item/flint, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/natural/wood/plank, /obj/item/natural/wood/plank, /obj/item/natural/wood/plank)
 	created_item = /obj/item/gun/ballistic/firearm/jaeger_pistol
 	createditem_num = 1
-	craftdiff = 4
+	craftdiff = 4 */
