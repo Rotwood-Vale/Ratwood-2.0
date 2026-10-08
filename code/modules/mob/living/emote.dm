@@ -1573,7 +1573,7 @@
 		/mob/living/carbon/human/verb/emote_dgrowl,
 		/mob/living/carbon/human/verb/emote_dwhine,
 		/mob/living/carbon/human/verb/emote_flutter,
-		/mob/living/carbon/human/verb/emote_hneigh,
+		/mob/living/carbon/human/verb/emote_neigh,
 	)
 	var/static/list/wild_tongue_noise_verbs = list(
 		/mob/living/carbon/human/verb/emote_meow,
@@ -1604,7 +1604,7 @@
 		/mob/living/carbon/human/verb/emote_dcomplain,
 		/mob/living/carbon/human/verb/emote_dgrowl,
 		/mob/living/carbon/human/verb/emote_dwhine,
-		/mob/living/carbon/human/verb/emote_hneigh,
+		/mob/living/carbon/human/verb/emote_neigh,
 	)
 	var/static/list/harpy_tongue_noise_verbs = list(
 		/mob/living/carbon/human/verb/emote_caw,
@@ -1624,7 +1624,7 @@
 		/mob/living/carbon/human/verb/emote_dcomplain,
 		/mob/living/carbon/human/verb/emote_dgrowl,
 		/mob/living/carbon/human/verb/emote_dwhine,
-		/mob/living/carbon/human/verb/emote_hneigh,
+		/mob/living/carbon/human/verb/emote_neigh,
 	)
 	var/static/list/lizard_tongue_noise_verbs = list(
 		/mob/living/carbon/human/verb/emote_hiss,
@@ -2860,8 +2860,8 @@
 		show_tongue_noise_warning()
 		return
 
-/datum/emote/living/hneigh
-	key = "hneigh"
+/datum/emote/living/neigh
+	key = "neigh"
 	key_third_person = "neighs!"
 	message = "neighs!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE

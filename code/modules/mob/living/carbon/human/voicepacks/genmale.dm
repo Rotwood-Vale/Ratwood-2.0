@@ -184,6 +184,6 @@
 			if("dwhine")
 				used = list('sound/vo/mobs/vw/dwhine.ogg','sound/vo/mobs/vw/dwhine2.ogg','sound/vo/mobs/vw/dwhine3.ogg','sound/vo/mobs/vw/dwhine4.ogg','sound/vo/mobs/vw/dwhine5.ogg')
 			//jokes on you, I'm adding horse sounds too! - Randumb
-			if("hneigh")
+			if("neigh")
 				used = list('sound/vo/mobs/saiga/idle (1).ogg','sound/vo/mobs/saiga/idle (2).ogg','sound/vo/mobs/saiga/idle (3).ogg','sound/vo/mobs/saiga/idle (4).ogg','sound/vo/mobs/saiga/idle (5).ogg','sound/vo/mobs/saiga/idle (6).ogg')
 	return used
