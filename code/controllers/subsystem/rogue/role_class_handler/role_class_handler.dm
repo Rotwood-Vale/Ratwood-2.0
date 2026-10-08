@@ -36,6 +36,8 @@ SUBSYSTEM_DEF(role_class_handler)
 		CTAG_ALLCLASS = list(every single class datum that exists outside of the parent)
 */
 	var/list/sorted_class_categories = list()
+	/// advclass type -> instance
+	var/list/classes_by_type = list()
 
 
 	/// Whether bandits have been injected in the game
@@ -66,6 +68,7 @@ SUBSYSTEM_DEF(role_class_handler)
 
 	//Time to sort these classes, and sort them we shall.
 	for(var/datum/advclass/class in all_classes)
+		classes_by_type[class.type] = class
 		for(var/ctag in class.category_tags)
 			if(!sorted_class_categories[ctag]) // New cat
 				sorted_class_categories[ctag] = list()
