@@ -1709,10 +1709,26 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	invisibility = INVISIBILITY_OBSERVER
 	density = FALSE
 	incorporeal_move = TRUE
+	movement_type = FLYING
 	health = 500
 	maxHealth = 500
 	AIStatus = AI_OFF
 	can_have_ai = FALSE
+
+/mob/living/simple_animal/spook_spirit/canZMove(direction, turf/target)
+	return TRUE
+
+/mob/living/simple_animal/spook_spirit/verb/spirit_up()
+	set category = "Spook"
+	set name = "Move Up"
+	if(zMove(UP, TRUE))
+		to_chat(src, span_notice("I drift upwards."))
+
+/mob/living/simple_animal/spook_spirit/verb/spirit_down()
+	set category = "Spook"
+	set name = "Move Down"
+	if(zMove(DOWN, TRUE))
+		to_chat(src, span_notice("I drift downwards."))
 
 /mob/living/simple_animal/spook_spirit/ex_act()
 	return
