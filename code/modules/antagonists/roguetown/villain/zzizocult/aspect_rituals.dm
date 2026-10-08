@@ -633,15 +633,57 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/mob/living/carbon/human/H = user
 	var/obj/item/weapon = parent
 	if(!owner_ref)
+		for(var/obj/effect/proc_holder/spell/self/recall_bound/old in H.mind?.spell_list)
+			if(!QDELETED(old.weapon))
+				to_chat(H, span_danger("[uppertext(weapon)] REFUSES ME. I AM ALREADY BOUND TO ANOTHER!"))
+				H.dropItemToGround(weapon)
+				return
 		owner_ref = WEAKREF(H)
 		if(skill_path)
 			H.adjust_skillrank_up_to(skill_path, SKILL_LEVEL_MASTER)
 		to_chat(H, span_danger("I feel [weapon] bind itself to me!"))
+		var/obj/effect/proc_holder/spell/self/recall_bound/recall = new
+		recall.weapon = weapon
+		recall.name = "Recall [weapon.name]"
+		H.mind?.AddSpell(recall)
 		return
 	if(owner_ref.resolve() == H)
 		return
 	to_chat(H, span_danger("[uppertext(weapon)] HATES ME!"))
 	H.dropItemToGround(weapon)
+
+/obj/effect/proc_holder/spell/self/recall_bound
+	name = "Recall Weapon"
+	desc = "Call your bound weapon to your hand."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "ZIZO"
+	recharge_time = 30 SECONDS
+	chargedloop = null
+	var/obj/item/weapon
+
+/obj/effect/proc_holder/spell/self/recall_bound/cast(list/targets, mob/user = usr)
+	. = ..()
+	if(QDELETED(weapon))
+		to_chat(user, span_warning("MY WEAPON IS GONE."))
+		revert_cast()
+		return FALSE
+	if(weapon in user.held_items)
+		to_chat(user, span_warning("I'M ALREADY HOLDING IT."))
+		revert_cast()
+		return FALSE
+	var/obj/item/bodypart/part = weapon.loc
+	if(istype(part))
+		part.remove_embedded_object(weapon)
+	else if(ismob(weapon.loc))
+		var/mob/M = weapon.loc
+		M.dropItemToGround(weapon)
+	weapon.forceMove(get_turf(weapon))
+	weapon.visible_message(span_warning("[weapon] suddenly disappears!"))
+	if(!user.put_in_hands(weapon))
+		weapon.forceMove(user.drop_location())
+	user.visible_message(span_warning("[weapon] suddenly appears in [user]'s hand!"))
+	return TRUE
 
 /datum/intent/dagger/thrust/cult
 	penfactor = 100
