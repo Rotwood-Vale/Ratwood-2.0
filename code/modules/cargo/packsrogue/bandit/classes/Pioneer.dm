@@ -341,7 +341,7 @@
 	cost = 20
 	contains = list(/obj/item/quiver/bolts)
 
-// contruction suplies
+// construction supplies
 
 /datum/supply_pack/rogue/Pioneer/iron
 	name = "Iron bar"
@@ -385,7 +385,7 @@
 	contains = list(/obj/structure/handcart)
 
 
-/datum/supply_pack/rogue/Pioneer/riddle_steel // if they somhow get this much, they deserve it
+/datum/supply_pack/rogue/Pioneer/riddle_steel // if they somehow get this much, they deserve it
 	name = "Riddle of steel"
 	cost = 2000
 	contains = list(/obj/item/riddleofsteel)

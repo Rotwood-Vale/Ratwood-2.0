@@ -496,7 +496,7 @@
 	if(HAS_TRAIT(H, TRAIT_HEAVYARMOR))  return TRUE
 	if(HAS_TRAIT(H, TRAIT_DODGEEXPERT)) return TRUE 
 	if(HAS_TRAIT(H, TRAIT_CRITICAL_RESISTANCE)) return TRUE
-	if(HAS_TRAIT(H, TRAIT_MAGEARMOR)) return TRUE // all mages are dangerus
+	if(HAS_TRAIT(H, TRAIT_MAGEARMOR)) return TRUE // all mages are dangerous
 	if(HAS_TRAIT(H, TRAIT_BLOOD_RESISTANCE)) return TRUE
 	return FALSE
 
