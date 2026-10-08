@@ -90913,8 +90913,7 @@
 	pixel_y = -32
 	},
 /obj/structure/lever{
-	redstone_id = "tavern_front_shutter";
-	opacity = 1
+	redstone_id = "tavern_front_shutter"
 	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/tavern)
