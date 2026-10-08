@@ -92,12 +92,12 @@
 		"MY KIND IS THE ONLY THING WORTHY OF WORSHIP!!",
 	)
 
-/datum/patron/godless/nerd/can_pray(mob/living/follower)
+/datum/patron/godless/can_pray(mob/living/follower)
 	. = ..()
-	to_chat(follower, span_danger("Pfft, why would I pray? Erm, ackshually, the deities are unworthy of worship because they're mortal."))
+	to_chat(follower, span_danger("There are no deities who would heed my call."))
 	return FALSE	//heathen
 
-/datum/patron/godless/nerd/on_lesser_heal(
+/datum/patron/godless/on_lesser_heal(
 	mob/living/user,
 	mob/living/target,
 	message_out,
