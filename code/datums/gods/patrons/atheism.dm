@@ -6,6 +6,7 @@
 	virtues = "None"
 	sins = "None"
 	associated_faith = /datum/faith/godless
+	undead_hater = FALSE
 	confess_lines = list(
 		"I HAVE NO FAITH!!",
 		"THERE IS NO FAITH TO BE FOUND IN ME!!",
