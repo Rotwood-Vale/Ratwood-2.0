@@ -25,6 +25,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/councillor
 	color = "#646464"

@@ -513,6 +513,10 @@
 	salvage_amount = 1
 	sewrepair = TRUE
 
+/obj/item/clothing/head/roguetown/helmet/tricorn/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+
 /obj/item/clothing/head/roguetown/helmet/tricorn/skull
 	icon_state = "tricorn_skull"
 	desc = "It has a skull sewn onto it. A clear sign of piracy"

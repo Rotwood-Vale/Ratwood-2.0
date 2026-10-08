@@ -17,6 +17,7 @@
 
 /obj/item/clothing/gloves/roguetown/leather/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/gloves/roguetown/leather/black
 	color = CLOTHING_BLACK
@@ -50,8 +51,7 @@
 
 /obj/item/clothing/gloves/roguetown/fingerless_leather
 	name = "fingerless leather gloves"
-	desc = "A pair of protective gloves favored by lockshimmers, laborers, and smokers for maintaining \
-	manual dexterity over regular gloves."
+	desc = "A pair of protective gloves favored by learned mages, lockshimmers, laborers, and smokers for maintaining manual dexterity over regular gloves."
 	icon_state = "roguegloves"
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
@@ -60,6 +60,10 @@
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	salvage_result = /obj/item/natural/hide/cured
+
+/obj/item/clothing/gloves/roguetown/fingerless_leather/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/gloves/roguetown/otavan
 	name = "otavan leather gloves"

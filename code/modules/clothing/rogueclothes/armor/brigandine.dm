@@ -23,6 +23,10 @@
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_COAT_STEP)
 
+/obj/item/clothing/suit/roguetown/armor/brigandine/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
+
 /obj/item/clothing/suit/roguetown/armor/brigandine/attack_right(mob/user)
 	if(detail_tag)
 		return
@@ -166,6 +170,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/light/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/light/attack_right(mob/user)
 	if(detail_tag)
