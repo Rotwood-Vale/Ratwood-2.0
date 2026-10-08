@@ -61734,6 +61734,16 @@
 /obj/item/folding_table_stored,
 /obj/item/folding_table_stored,
 /obj/item/folding_table_stored,
+/obj/item/reagent_containers/glass/bucket/pot/teapot/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/bucket/pot/teapot/fancy,
 /turf/open/floor/rogue/blocks/flipped,
 /area/rogue/under/town/basement/keep)
 "lhK" = (
@@ -90903,7 +90913,8 @@
 	pixel_y = -32
 	},
 /obj/structure/lever{
-	redstone_id = "tavern_front_shutter"
+	redstone_id = "tavern_front_shutter";
+	opacity = 1
 	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/tavern)
