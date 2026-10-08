@@ -1366,7 +1366,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /obj/item/clothing/head/hooded/cultrobehood
 	name = "hood"
 	desc = "Evil ass ZIZO hood."
-	icon = 'icons/roguetown/clothing/head.dmi'
+	icon = 'icons/roguetown/clothing/onmob/head.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
 	icon_state = "warlockhood"
 	item_state = "warlockhood"
@@ -2081,10 +2081,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		if(!found)
 			ritual_ok = FALSE
 	if(!ritual_ok)
-		var/oldcolor = color
-		color = "#000000"
-		animate(src, color = oldcolor, time = 8)
-		new /obj/effect/temp_visual/cult/turf/floor(loc)
 		to_chat(user, span_danger("Ritual requires: [pickritual.hugbox()]"))
 		to_chat(user, span_danger("That's not how you do it, fool."))
 		user.electrocute_act(1, src, 1, SHOCK_NOSTUN)
