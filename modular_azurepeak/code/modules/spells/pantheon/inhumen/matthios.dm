@@ -348,7 +348,7 @@
 	var/skill = user.get_skill_level(/datum/skill/magic/holy)
 	banner.wdefense += skill
 	banner.wdefense_dynamic += skill
-	banner.force = min(5 * skill, 20)
+	banner.force = min(5 * skill, 30)
 	banner.update_force_dynamic()
 	set_conjured_item(banner)
 	return TRUE
@@ -363,12 +363,28 @@
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	icon_state = "matthios_standard"
 	resistance_flags = FIRE_PROOF
+	var/next_aura_update = 0
 
 /obj/item/rogueweapon/spear/matthios_standard/Initialize(mapload)
 	. = ..()
-	for(var/mob/living/carbon/human/H as anything in SSspatial_grid.orthogonal_range_search(src, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 7))
-		if(get_dist(src, H) > 7)
-			continue
+	update_aura()
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/rogueweapon/spear/matthios_standard/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/obj/item/rogueweapon/spear/matthios_standard/process()
+	if(world.time < next_aura_update)
+		return
+	next_aura_update = world.time + 5 SECONDS
+	update_aura()
+
+/obj/item/rogueweapon/spear/matthios_standard/proc/update_aura()
+	var/turf/banner_turf = get_turf(src)
+	if(!banner_turf)
+		return
+	for(var/mob/living/carbon/human/H in range(7, banner_turf))
 		if(istype(H.patron, /datum/patron/inhumen/matthios))
 			H.apply_status_effect(/datum/status_effect/buff/twilight_peoplesbanner)
 		else
@@ -391,16 +407,23 @@
 	effectedstats = list(STATKEY_WIL = 3, STATKEY_SPD = 2)
 	tick_interval = 5 SECONDS
 
-/datum/status_effect/buff/twilight_peoplesbanner/process()
-	. = ..()
-	var/preserve = FALSE
-	for(var/mob/living/carbon/human/H as anything in SSspatial_grid.orthogonal_range_search(owner, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 7))
+/datum/status_effect/proc/has_matthios_banner_in_range()
+	var/turf/owner_turf = get_turf(owner)
+	if(!owner_turf)
+		return FALSE
+	for(var/obj/item/rogueweapon/spear/matthios_standard/banner in range(7, owner_turf))
+		if(get_dist(owner, banner) <= 7)
+			return TRUE
+	for(var/mob/living/carbon/human/H in range(7, owner_turf))
 		if(get_dist(owner, H) > 7)
 			continue
 		if(istype(H.get_inactive_held_item(), /obj/item/rogueweapon/spear/matthios_standard) || istype(H.get_active_held_item(), /obj/item/rogueweapon/spear/matthios_standard))
-			preserve = TRUE
-			break
-	if(!preserve)
+			return TRUE
+	return FALSE
+
+/datum/status_effect/buff/twilight_peoplesbanner/process()
+	. = ..()
+	if(!has_matthios_banner_in_range())
 		owner.remove_status_effect(/datum/status_effect/buff/twilight_peoplesbanner)
 
 /datum/status_effect/buff/twilight_peoplesbanner/on_apply()
@@ -426,14 +449,7 @@
 
 /datum/status_effect/debuff/twilight_peoplesbanner/process()
 	. = ..()
-	var/preserve = FALSE
-	for(var/mob/living/carbon/human/H as anything in SSspatial_grid.orthogonal_range_search(owner, SPATIAL_GRID_CONTENTS_TYPE_CLIENTS, 7))
-		if(get_dist(owner, H) > 7)
-			continue
-		if(istype(H.get_inactive_held_item(), /obj/item/rogueweapon/spear/matthios_standard) || istype(H.get_active_held_item(), /obj/item/rogueweapon/spear/matthios_standard))
-			preserve = TRUE
-			break
-	if(!preserve)
+	if(!has_matthios_banner_in_range())
 		owner.remove_status_effect(/datum/status_effect/debuff/twilight_peoplesbanner)
 
 /datum/status_effect/debuff/twilight_peoplesbanner/on_apply()
