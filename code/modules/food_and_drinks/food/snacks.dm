@@ -87,6 +87,7 @@ All foods are distributed among various categories. Use common sense.
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
 	var/cooked_smell
+	var/can_soak = null
 
 
 /datum/intent/food
@@ -580,6 +581,54 @@ All foods are distributed among various categories. Use common sense.
 	. += span_smallnotice("[rotprocess_to_text()]")
 
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
+
+	if(istype(W, /obj/item/reagent_containers) && !istype(W, /obj/item/reagent_containers/food/snacks))
+		var/obj/item/reagent_containers/RC = W
+
+		if(!src.can_absorb_liquid())
+			to_chat(user, span_warning("[src] cannot absorb liquids! It must be a prepared meal or pastry."))
+			return TRUE
+
+		if(!RC.reagents || !RC.reagents.total_volume)
+			to_chat(user, span_warning("[RC] is empty!"))
+			return TRUE
+
+		if(istype(RC, /obj/item/reagent_containers/glass))
+			var/obj/item/reagent_containers/glass/G = RC
+			if(G.closed)
+				to_chat(user, span_warning("[G] is corked! Uncork it first."))
+				return TRUE
+
+		if(!src.reagents)
+			src.create_reagents(src.volume || 30)
+
+		var/max_soak_volume = initial(src.volume) + 15
+		if(src.reagents.maximum_volume < max_soak_volume)
+			src.reagents.maximum_volume = max_soak_volume
+
+		if(src.reagents.total_volume >= src.reagents.maximum_volume)
+			to_chat(user, span_warning("[src] is completely soaked and cannot absorb any more liquid!"))
+			return TRUE
+
+		var/transfer_amount = RC.amount_per_transfer_from_this ? RC.amount_per_transfer_from_this : 5
+		var/space_left = src.reagents.maximum_volume - src.reagents.total_volume
+		var/actual_transfer = min(transfer_amount, space_left)
+
+		var/sneaking = (user.m_intent == MOVE_INTENT_SNEAK)
+
+		if(sneaking)
+			to_chat(user, span_notice("You discreetly drizzle some liquid from [RC] over [src]..."))
+		else
+			user.visible_message(
+				span_notice("[user] pours a little of [RC] onto [src]."),
+				span_notice("I pour a little of [RC] onto [src].")
+			)
+			if(RC.poursounds)
+				playsound(src.loc, pick(RC.poursounds), 80, TRUE)
+
+		RC.reagents.trans_to(src, actual_transfer, transfered_by = user)
+		return TRUE
+
 	if(istype(W, /obj/item/kitchen/fork))
 		if(do_after(user, 0.5 SECONDS))
 			attack(user, user, user.zone_selected)
@@ -821,3 +870,16 @@ All foods are distributed among various categories. Use common sense.
 	foodtype = GROSS
 	burntime = 0
 	cooktime = 0
+
+/obj/item/reagent_containers/food/snacks/proc/can_absorb_liquid()
+	if(!isnull(can_soak))
+		return can_soak
+
+	if(istype(src, /obj/item/reagent_containers/food/snacks/grown))
+		return FALSE
+
+	if(istype(src, /obj/item/reagent_containers/food/snacks/rogue/meat))
+		if(cooked_type || fried_type || eat_effect == /datum/status_effect/debuff/uncookedfood)
+			return FALSE
+
+	return TRUE
