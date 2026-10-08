@@ -94,6 +94,8 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 		return FALSE
 	target.apply_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped)
+	new /obj/effect/temp_visual/cult/sac(get_turf(target))
+	new /obj/effect/temp_visual/cult/sparks(get_turf(target))
 	target.Unconscious(4 MINUTES)
 	target.Jitter(4)
 	target.emote("scream")
@@ -127,7 +129,15 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 	if(!target || target.has_status_effect(/datum/status_effect/buff/curse_immunity))
 		return FALSE
 	target.apply_status_effect(/datum/status_effect/buff/curse_immunity, 30 MINUTES)
+	if(target.client)
+		var/image/eye = image('icons/effects/eldritch.dmi', target, "eye_open", ABOVE_ALL_MOB_LAYER)
+		eye.pixel_y = 32
+		target.client.images += eye
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clear_curse_eye), target.client, eye), 4 SECONDS)
 	return TRUE
+
+/proc/clear_curse_eye(client/C, image/eye)
+	C?.images -= eye
 
 /proc/recolor_accessory(accessory_type, hex)
 	var/datum/sprite_accessory/A = SPRITE_ACCESSORY(accessory_type)
@@ -240,19 +250,119 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
+/particles/zizo_void
+	icon = 'icons/effects/particles/particle.dmi'
+	icon_state = "puff"
+	width = 160
+	height = 160
+	count = 30
+	spawning = 0.5
+	lifespan = 3 SECONDS
+	fade = 1 SECONDS
+	color = "#2a0a3a"
+	scale = 0.6
+	position = generator("circle", 20, 36, UNIFORM_RAND)
+	drift = generator("circle", 0, 0.3)
+
+// light flickers for rituals. Might b too obvious ?
+/proc/zizo_flicker(atom/A)
+	set waitfor = FALSE
+	for(var/i in 1 to 4)
+		A.set_light_on(FALSE)
+		A.update_light()
+		sleep(rand(1, 3))
+		if(QDELETED(A))
+			return
+		A.set_light_on(TRUE)
+		A.update_light()
+		sleep(rand(1, 3))
+		if(QDELETED(A))
+			return
+
+/particles/zizo_burst
+	icon = 'icons/effects/particles/particle.dmi'
+	icon_state = "puff"
+	width = 160
+	height = 160
+	count = 12
+	spawning = 12
+	lifespan = 1.4 SECONDS
+	fade = 0.8 SECONDS
+	color = "#2a0a3a"
+	scale = 0.6
+	grow = 0.03
+	velocity = generator("circle", 1, 3)
+
+// scaduform aura
+/particles/zizo_shadow
+	icon = 'icons/effects/particles/smoke.dmi'
+	icon_state = list("smoke_1" = 1, "smoke_2" = 1, "smoke_3" = 1)
+	count = 20
+	spawning = 0.4
+	lifespan = 1.5 SECONDS
+	fade = 1 SECONDS
+	color = "#1a0a2a"
+	position = generator("box", list(-8, -8, 0), list(8, 8, 0), UNIFORM_RAND)
+	velocity = list(0, 0.4, 0)
+	grow = 0.03
+
+// evil gassy aura for blight & rot
+/particles/zizo_rot
+	icon = 'icons/effects/particles/smoke.dmi'
+	icon_state = list("smoke_1" = 1, "smoke_2" = 1, "ash_1" = 1)
+	count = 40
+	spawning = 0.4
+	lifespan = 2 SECONDS
+	fade = 1 SECONDS
+	color = "#7a2a2a"
+	position = generator("box", list(-24, -16, 0), list(24, 16, 0), UNIFORM_RAND)
+	velocity = list(0, 0.3, 0)
+	grow = 0.02
+
+/obj/effect/temp_visual/cult/rune_spawn/rune7/wide
+	start_scale = 3.5
+
+/obj/effect/temp_visual/zizo_crack
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "realitycrack"
+	duration = 3.2 SECONDS
+
+/obj/effect/temp_visual/zizo_ring
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "cosmic_ring"
+	color = "#ff4040"
+	duration = 1 SECONDS
+
+/obj/effect/temp_visual/zizo_ring/Initialize(mapload)
+	. = ..()
+	transform = matrix() * 0.5
+	animate(src, transform = matrix() * 3, alpha = 0, time = duration)
+
 /obj/structure/reality_rend/Initialize(mapload)
 	. = ..()
 	GLOB.zizo_reality_rends += src
+	add_filter("rend_ripple", 1, list(type = "ripple", size = 2, radius = 0, falloff = 1, repeat = 8))
+	animate(get_filter("rend_ripple"), radius = 80, time = 4 SECONDS, loop = -1)
+	animate(radius = 0, time = 0)
+	new /obj/effect/abstract/particle_holder(src, /particles/zizo_void)
+	START_PROCESSING(SSobj, src)
 	var/turf/center = get_turf(src)
 	for(var/turf/T in range(radius, center))
 		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
 			turf_data[T] = T.type
 			T.ChangeTurf(/turf/closed/wall/mineral/rogue/stone/unbreakable/space, flags = CHANGETURF_IGNORE_AIR)
+			new /obj/effect/temp_visual/cult/turf(T)
 		else if(isopenturf(T) && !istype(T, /turf/open/floor/rogue/underworld/space/quiet/cult))
 			turf_data[T] = T.type
 			T.ChangeTurf(/turf/open/floor/rogue/underworld/space/quiet/cult, flags = CHANGETURF_IGNORE_AIR)
+			new /obj/effect/temp_visual/cult/turf/floor(T)
+
+/obj/structure/reality_rend/process()
+	if(length(turf_data) && prob(20))
+		new /obj/effect/temp_visual/zizo_crack(pick(turf_data))
 
 /obj/structure/reality_rend/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	GLOB.zizo_reality_rends -= src
 	for(var/turf/T in turf_data)
 		T.ChangeTurf(turf_data[T], flags = CHANGETURF_IGNORE_AIR)
@@ -300,6 +410,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /atom/movable/screen/alert/status_effect/buff/zizo_gate_pull
 	name = "UNREAL WORLD"
 	desc = "THE REALMS BLEED."
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "eye_pulse"
 
 /atom/movable/screen/alert/status_effect/buff/zizo_gate_pull/handle_click(location, control, params)
 	. = ..()
@@ -315,7 +427,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		if(choice == "Fuge")
 			dest = GLOB.zizo_fuges[1]
 	to_chat(mob_viewer, span_notice("I AM TRANSPORTING! ANYONE I GRAB SHALL COME WITH!"))
-	var/poo = new /obj/effect/temp_visual/opengate/fivesec(get_turf(mob_viewer))
+	var/turf/origin = get_turf(mob_viewer)
+	var/poo = new /obj/effect/temp_visual/opengate(origin, 10 SECONDS)
 	playsound(mob_viewer, 'sound/villain/littlescary2.ogg', 60, TRUE)
 	if(!do_after(mob_viewer, 10 SECONDS, target = mob_viewer))
 		qdel(poo)
@@ -329,7 +442,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/mob/living/grabbed = L.pulling
 	if(!isliving(grabbed) || !grabbed.Adjacent(L))
 		grabbed = null
+	new /obj/effect/temp_visual/dir_setting/cult/phase/out(origin, L.dir)
 	do_teleport(L, get_turf(dest), 1, asoundin = 'sound/magic/blink.ogg')
+	new /obj/effect/temp_visual/dir_setting/cult/phase(get_turf(L), L.dir)
 	to_chat(L, span_notice("Reality folds around me."))
 	if(grabbed)
 		do_teleport(grabbed, get_turf(L), 1, asoundin = 'sound/magic/blink.ogg')
@@ -350,6 +465,17 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	randomdir = FALSE
 	duration = 15 SECONDS
 	layer = MASSIVE_OBJ_LAYER
+	var/list/runes = list()
+
+/obj/effect/temp_visual/opengate/Initialize(mapload, set_duration)
+	if(set_duration)
+		duration = set_duration
+	. = ..()
+	runes += new /obj/effect/temp_visual/cult/rune_spawn/rune7/wide(loc, duration, "#cc1010")
+
+/obj/effect/temp_visual/opengate/Destroy()
+	QDEL_LIST(runes)
+	return ..()
 
 /obj/effect/temp_visual/opengate/fivesec
 	duration = 5 SECONDS
@@ -1307,28 +1433,88 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	return
 
 /turf/open/floor/rogue/naturalstone/rot
-	color = "#30c307"
+	name = "nerve threads"
+	desc = "A pulsing mass of flesh. It shivers and writhes at any touch."
+	icon = 'icons/roguetown/cult/blightfloor.dmi'
+	icon_state = "flesh_tile-0"
+	transform = matrix(1, 0, -16, 0, 1, -16)
+	layer = HIGH_TURF_LAYER
+	color = "#bf5252"
+	smooth = SMOOTH_FALSE
+
+/turf/open/floor/rogue/naturalstone/rot/Initialize(mapload)
+	. = ..()
+	underlays += mutable_appearance('icons/turf/roguefloor.dmi', "digstone")
+	update_flesh()
+	for(var/d in GLOB.cardinals)
+		var/turf/open/floor/rogue/naturalstone/rot/N = get_step(src, d)
+		if(istype(N))
+			N.update_flesh()
+
+/turf/open/floor/rogue/naturalstone/rot/proc/update_flesh()
+	var/mask = 0
+	for(var/d in GLOB.cardinals)
+		if(istype(get_step(src, d), /turf/open/floor/rogue/naturalstone/rot))
+			mask |= d
+	icon_state = "flesh_tile-[mask]"
+
+/turf/closed/mineral/rogue/blight
+	name = "flesh wall"
+	icon = 'icons/roguetown/cult/blightwall.dmi'
+	smooth_icon = 'icons/roguetown/cult/blightwall.dmi'
+	icon_state = "blightwall"
+	color = "#bf5252"
+	smooth = SMOOTH_FALSE
 
 /turf/open/floor/rogue/naturalstone/rot/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
-	if(!ishuman(AM) || is_zizo(AM))
+	if(!ishuman(AM))
 		return
 	var/mob/living/carbon/human/H = AM
 	H.apply_status_effect(/datum/status_effect/debuff/rotground)
+	var/obj/effect/temp_visual/small_smoke/puff = new(src)
+	puff.color = "#7a2a2a"
 
 /datum/status_effect/debuff/rotground
 	id = "rotground"
 	duration = -1
 	tick_interval = 3 SECONDS
 	alert_type = null
+	var/elapsed = 0
+	var/obj/effect/abstract/particle_holder/aura
+
+/datum/status_effect/debuff/rotground/on_apply()
+	. = ..()
+	if(!is_zizo(owner))
+		aura = new(owner, /particles/zizo_rot, PARTICLE_ATTACH_MOB)
+
+/datum/status_effect/debuff/rotground/on_remove()
+	. = ..()
+	QDEL_NULL(aura)
 
 /datum/status_effect/debuff/rotground/tick()
 	var/mob/living/carbon/human/H = owner
-	if(!ishuman(H) || is_zizo(H) || !istype(get_turf(H), /turf/open/floor/rogue/naturalstone/rot))
+	var/turf/T = get_turf(H)
+	if(!ishuman(H) || !istype(T, /turf/open/floor/rogue/naturalstone/rot))
 		qdel(src)
 		return
-	H.adjustToxLoss(5)
-	H.adjustStaminaLoss(10)
+	new /obj/effect/temp_visual/cult/turf/floor(T)
+	if(is_zizo(H))
+		H.heal_overall_damage(2, 2)
+		H.heal_wounds(2)
+		H.adjustStaminaLoss(-5)
+		H.energy_add(20)
+		new /obj/effect/temp_visual/heal(T, "#bf5252")
+		if(prob(10))
+			to_chat(H, span_notice("THE ROT'S AROMA REJUVENATES ME!"))
+		return
+	elapsed += 3
+	H.adjustOxyLoss(3)
+	H.adjustStaminaLoss(5)
+	if(prob(10))
+		to_chat(H, span_danger("IT SMELLS HORRIBLE! I CAN'T BREATHE!"))
+	if(elapsed > 30 && prob(10))
+		H.vomit(50)
 
 /obj/structure/blight_pillar
 	name = "rotting pillar"
@@ -1343,14 +1529,23 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /obj/structure/blight_pillar/Initialize(mapload)
 	. = ..()
-	var/turf/center = get_turf(src)
-	for(var/turf/T in range(radius, center))
-		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
-			turf_data[T] = T.type
-			T.ChangeTurf(/turf/closed/mineral/rogue, flags = CHANGETURF_IGNORE_AIR)
-		else if(isopenturf(T) && !istype(T, /turf/open/floor/rogue/naturalstone/rot))
-			turf_data[T] = T.type
-			T.ChangeTurf(/turf/open/floor/rogue/naturalstone/rot, flags = CHANGETURF_IGNORE_AIR)
+	new /obj/effect/abstract/particle_holder(src, /particles/zizo_rot)
+	for(var/turf/T in range(radius, get_turf(src)))
+		addtimer(CALLBACK(src, PROC_REF(blight_turf), T), get_dist(src, T) * 8)
+
+/obj/structure/blight_pillar/proc/blight_turf(turf/T)
+	if(QDELETED(src))
+		return
+	if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
+		turf_data[T] = T.type
+		T.ChangeTurf(/turf/closed/mineral/rogue/blight, flags = CHANGETURF_IGNORE_AIR)
+	else if(isopenturf(T) && !istype(T, /turf/open/floor/rogue/naturalstone/rot))
+		turf_data[T] = T.type
+		T.ChangeTurf(/turf/open/floor/rogue/naturalstone/rot, flags = CHANGETURF_IGNORE_AIR)
+	else
+		return
+	var/obj/effect/temp_visual/small_smoke/puff = new(T)
+	puff.color = "#7a2a2a"
 
 /obj/structure/blight_pillar/Destroy()
 	for(var/turf/T in turf_data)
@@ -1399,6 +1594,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	if(QDELETED(holder))
 		return
 	forceMove(return_turf || get_turf(holder))
+	var/obj/effect/temp_visual/dir_setting/cult/phase/P = new(get_turf(src), dir)
+	P.color = "#2b0a3d"
 	qdel(holder)
 
 /mob/living/simple_animal/spook_spirit
@@ -1557,6 +1754,17 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	duration = -1
 	tick_interval = 2 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/shadowform
+	var/obj/effect/abstract/particle_holder/shadow_particles
+
+/datum/status_effect/shadowform/on_apply()
+	. = ..()
+	owner.add_filter("shadowform", 2, list(type = "outline", color = "#2b0a3d", size = 1))
+	shadow_particles = new(owner, /particles/zizo_shadow, PARTICLE_ATTACH_MOB)
+
+/datum/status_effect/shadowform/on_remove()
+	. = ..()
+	owner.remove_filter("shadowform")
+	QDEL_NULL(shadow_particles)
 
 /datum/status_effect/shadowform/tick()
 	var/turf/T = get_turf(owner)
@@ -1625,6 +1833,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		revert_cast()
 		return FALSE
 	var/obj/effect/dummy/phased_mob/slaughter/shadow/holder = new(T)
+	var/obj/effect/temp_visual/dir_setting/cult/phase/out/P = new(T, user.dir)
+	P.color = "#2b0a3d"
+	new /obj/effect/temp_visual/decoy/fading/halfsecond(T, user)
 	user.visible_message(span_warning("[user] melts into the shadows."))
 	user.forceMove(holder)
 	addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living, end_jaunt), holder), 5 SECONDS)
@@ -1736,6 +1947,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	. = ..()
 
 /obj/structure/trap/zizo/trap_effect(mob/living/L)
+	new /obj/effect/temp_visual/cult/sparks(get_turf(L))
 	switch(effect)
 		if("poison")
 			if(L.reagents)
@@ -1781,6 +1993,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		qdel(I)
 	for(var/obj/effect/decal/cleanable/sigil/sig in range(1, center))
 		qdel(sig)
+	new /obj/effect/temp_visual/opengate(center, 1.5 SECONDS)
 	var/obj/structure/trap/zizo/T = new(center)
 	T.effect = effect
 	to_chat(user, span_notice("THE SIGIL FADES. IT IS READY."))

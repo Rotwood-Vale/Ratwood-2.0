@@ -385,8 +385,10 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		return
 	to_chat(user, span_notice("You and [assistant] begin the sacrifice..."))
 	assistant.Immobilize(10 SECONDS)
+	var/poo = new /obj/effect/temp_visual/opengate(center, 10 SECONDS)
 	if(!do_after(user, 10 SECONDS, target = target))
 		assistant.SetImmobilized(0)
+		qdel(poo)
 		return
 	if(QDELETED(target) || !(target in center.contents) || QDELETED(assistant))
 		return
@@ -700,11 +702,12 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		"embedded_bloodloss"= 0,
 	)
 
-/obj/item/natural/worms/leech/propaganda/on_embed(obj/item/bodypart/bp)
-	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(fall_off)), 30 SECONDS)
-
 /obj/item/natural/worms/leech/propaganda/on_embed_life(mob/living/user, obj/item/bodypart/bodypart)
+	if(!host && user)
+		host = user
+		if(ishuman(user))
+			fed_from = user
+		addtimer(CALLBACK(src, PROC_REF(fall_off)), 30 SECONDS)
 	. = ..()
 	if(!user)
 		return
@@ -761,11 +764,14 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		"embedded_bloodloss"= 0,
 	)
 
-/obj/item/natural/worms/leech/silencer/on_embed(obj/item/bodypart/bp)
-	. = ..()
-	if(host)
-		ADD_TRAIT(host, TRAIT_MUTE, "silencer_leech")
-		to_chat(host, span_userdanger("MY VOICE GOES STILL!"))
+/obj/item/natural/worms/leech/silencer/on_embed_life(mob/living/user, obj/item/bodypart/bodypart)
+	if(host || !user)
+		return
+	host = user
+	if(ishuman(user))
+		fed_from = user
+	ADD_TRAIT(user, TRAIT_MUTE, "silencer_leech")
+	to_chat(user, span_userdanger("MY VOICE GOES STILL!"))
 	addtimer(CALLBACK(src, PROC_REF(fall_off)), 2 MINUTES)
 
 /obj/item/natural/worms/leech/silencer/forceMove(atom/newloc)
@@ -953,9 +959,11 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		if(isclosedturf(T) && !istype(T, /turf/closed/indestructible))
 			turf_data[T] = T.type
 			T.ChangeTurf(/turf/closed/wall/mineral/rogue/stone/space, flags = CHANGETURF_IGNORE_AIR)
+			new /obj/effect/temp_visual/cult/turf(T)
 		else if(isopenturf(T) && !istype(T, /turf/open/floor/rogue/underworld/space/quiet/cult))
 			turf_data[T] = T.type
 			T.ChangeTurf(/turf/open/floor/rogue/underworld/space/quiet/cult, flags = CHANGETURF_IGNORE_AIR)
+			new /obj/effect/temp_visual/cult/turf/floor(T)
 
 /obj/structure/fuge/Destroy()
 	GLOB.zizo_fuges -= src
@@ -1300,8 +1308,10 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	switch(choice)
 		if("Wall")
 			T.ChangeTurf(/turf/closed/wall/mineral/rogue/stone/space)
+			new /obj/effect/temp_visual/cult/turf(T)
 		if("Door")
 			new /obj/structure/mineral_door/wood/donjon/stone/cult(T)
+			new /obj/effect/temp_visual/cult/door(T)
 	playsound(T, 'sound/foley/breaksound.ogg', 50, TRUE)
 	amount--
 	if(amount <= 0)
@@ -1321,7 +1331,8 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(!is_zizo(user))
 		to_chat(user, span_warning("[src] won't budge, no matter how I push."))
 		return FALSE
-	return ..()
+	. = ..()
+	new /obj/effect/temp_visual/cult/door(loc)
 
 /obj/item/clothing/cloak/cultrobe
 	name = "zizo robe"
@@ -1334,6 +1345,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	body_parts_covered = CHEST|GROIN|ARM_LEFT|ARM_RIGHT|LEG_LEFT|LEG_RIGHT
 	armor = ARMOR_LEATHER_GOOD
 	max_integrity = 200
+	resistance_flags = FIRE_PROOF
 	hoodtype = /obj/item/clothing/head/hooded/cultrobehood
 	toggle_icon_state = FALSE
 	var/empowered = FALSE
@@ -1354,8 +1366,8 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 /obj/item/clothing/head/hooded/cultrobehood
 	name = "hood"
 	desc = "Evil ass ZIZO hood."
-	icon = 'modular_deserttown/icons/clothing/shadowcloak.dmi'
-	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shadowcloak.dmi'
+	icon = 'icons/roguetown/clothing/head.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
 	icon_state = "warlockhood"
 	item_state = "warlockhood"
 	slot_flags = ITEM_SLOT_HEAD
@@ -1365,11 +1377,11 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	block2add = FOV_BEHIND
 	armor = ARMOR_LEATHER_GOOD
 	max_integrity = 200
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/hooded/cultrobehood/empowered
 	armor = ARMOR_ASCENDANT
 	max_integrity = 400
-	icon_state = "ewarlockhood"
 	item_state = "ewarlockhood"
 
 /obj/item/clothing/cloak/cultrobe/equipped(mob/living/user, slot)
@@ -1398,7 +1410,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(empowered)
 		return
 	empowered = TRUE
-	armor = ARMOR_ASCENDANT
+	armor = getArmor(arglist(ARMOR_ASCENDANT))
 	max_integrity = 400
 	obj_integrity = max_integrity
 	icon_state = "ewarlock"
@@ -1981,22 +1993,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 			playsound(src, 'sound/foley/flesh_rem2.ogg', 30)
 			qdel(A)
 
-/obj/effect/temp_visual/teleportcult
-	icon = 'icons/effects/clan.dmi'
-	icon_state = "teleport"
-	dir = SOUTH
-	randomdir = FALSE
-	duration = 2 SECONDS
-	layer = MASSIVE_OBJ_LAYER
-
-/obj/effect/temp_visual/teleportcult1
-	icon = 'icons/effects/clan.dmi'
-	icon_state = "teleport_trigger"
-	dir = SOUTH
-	randomdir = FALSE
-	duration = 0.5 SECONDS
-	layer = MASSIVE_OBJ_LAYER
-
 /obj/effect/decal/cleanable/sigil/attack_hand(mob/living/user)
 	. = ..()
 	if(!istype(user.patron, /datum/patron/inhumen/zizo))
@@ -2012,13 +2008,16 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 			to_chat(user, span_warning("Nothing connected."))
 			return
 		var/turf/effect_turf = get_turf(user)
-		var/poo = new /obj/effect/temp_visual/teleportcult(effect_turf)
+		var/poo = new /obj/effect/temp_visual/opengate(effect_turf, 2 SECONDS)
 		playsound(user, 'sound/villain/newheart.ogg', 60, TRUE)
 		if(!do_after(user, 2 SECONDS))
 			qdel(poo)
 			return
 		var/turf/T = get_turf(dest)
-		new /obj/effect/temp_visual/teleportcult1(effect_turf)
+		new /obj/effect/temp_visual/cult/blood/out(effect_turf)
+		new /obj/effect/temp_visual/cult/blood(T)
+		new /obj/effect/temp_visual/zizo_ring(effect_turf)
+		new /obj/effect/temp_visual/zizo_ring(T)
 		for(var/mob/living/L in range(1, src))
 			do_teleport(L, T)
 		return
@@ -2082,12 +2081,21 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		if(!found)
 			ritual_ok = FALSE
 	if(!ritual_ok)
+		var/oldcolor = color
+		color = "#000000"
+		animate(src, color = oldcolor, time = 8)
+		new /obj/effect/temp_visual/cult/turf/floor(loc)
 		to_chat(user, span_danger("Ritual requires: [pickritual.hugbox()]"))
 		to_chat(user, span_danger("That's not how you do it, fool."))
 		user.electrocute_act(1, src, 1, SHOCK_NOSTUN)
 		return
 
 	consume_ingredients(pickritual)
+	var/obj/effect/abstract/particle_holder/burst = new(src, /particles/zizo_burst)
+	QDEL_IN(burst, 1.4 SECONDS)
+	for(var/atom/A in range(7, src))
+		if(A.light_on && A.light_outer_range)
+			zizo_flicker(A)
 	user.playsound_local(user, 'sound/vo/cult/tesa.ogg', 25)
 	user.whisper("O'vena tesa...")
 	pickritual.invoke(user, loc)
