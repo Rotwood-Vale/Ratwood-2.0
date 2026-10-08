@@ -90,98 +90,146 @@
 	added_traits = list(TRAIT_REDOLENT)
 
 /datum/quirk/redolent/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.redolent_scent_type = recipient.client?.prefs?.redolent_type || "Neutral"
-	recipient.redolent_scent = recipient.client?.prefs?.redolent_scent || ""
+	var/datum/status_effect/redolent/strong_smell = recipient.apply_status_effect(/datum/status_effect/redolent)
+	strong_smell.redolent_scent_type = recipient.client?.prefs?.redolent_type || "Neutral"
+	strong_smell.redolent_scent = recipient.client?.prefs?.redolent_scent || ""
 
-// Redolent scent state and behavior. This is purely quirk-driven now: the quirk applies
-// TRAIT_REDOLENT, the mob holds the scent state, and life.dm drives handle_redolent_scent().
-/mob/living/carbon/human
-	/// How others perceive our scent: "Gross", "Neutral" or "Pleasant".
-	var/redolent_scent_type = "Neutral"
+/datum/status_effect/redolent
+	id = "redolent"
+	duration = 999 MINUTES
+	alert_type = null
+
+	/// How others perceive our scent
+	var/redolent_scent_type = REDOLENT_SMELL_NEUTRAL
 	/// Player-written description of our scent.
-	var/redolent_scent = ""
-	/// Bathing suppresses our scent until this world.time.
-	var/redolent_suppressed_until = 0
-	/// The last time our scent aura pulsed.
-	var/redolent_last_aura_tick = 0
+	var/redolent_scent = null
+	/// If the smell is currently suppressed
+	COOLDOWN_DECLARE(smell_suppressed)
+	/// Cooldown before we emit another scent to people around
+	COOLDOWN_DECLARE(emit_scent)
 
-/mob/living/carbon/human/proc/is_redolent_reeking()
-	return HAS_TRAIT(src, TRAIT_REDOLENT) && world.time >= redolent_suppressed_until
+/datum/status_effect/redolent/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_wash))
 
-/mob/living/carbon/human/proc/redolent_on_bath()
-	redolent_suppressed_until = world.time + 30 MINUTES
-	remove_status_effect(/datum/status_effect/debuff/redolent_stink)
-	to_chat(src, span_notice("I scrub the stink away. I should stay fresh for a while."))
+/datum/status_effect/redolent/on_remove()
+	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT)
+	return ..()
 
-/mob/living/carbon/human/proc/redolent_apply_contact_stink(mob/living/carbon/human/target)
-	target.apply_status_effect(/datum/status_effect/debuff/stinky_contact, redolent_scent_type, redolent_scent)
-
-/mob/living/carbon/human/proc/handle_redolent_scent()
-	var/should_reek = is_redolent_reeking() && can_smell()
-
-	if(should_reek && mind?.antag_datums)
-		for(var/datum/antagonist/D in mind.antag_datums)
-			if(istype(D, /datum/antagonist/vampire/lord) || istype(D, /datum/antagonist/werewolf) || istype(D, /datum/antagonist/skeleton) || istype(D, /datum/antagonist/zombie) || istype(D, /datum/antagonist/lich))
-				should_reek = FALSE
-				break
-
-	if(should_reek && redolent_scent_type != "Pleasant")
-		apply_status_effect(/datum/status_effect/debuff/redolent_stink)
-	else
-		remove_status_effect(/datum/status_effect/debuff/redolent_stink)
-
-	if(!should_reek)
+/datum/status_effect/redolent/process(wait)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, smell_suppressed))
 		return
-	if(world.time < redolent_last_aura_tick + redolent_aura_tick_delay(redolent_scent_type))
+	emit_smell()
+
+/// Temporarily suppressed the status and particle effects for a time after being cleaned
+/datum/status_effect/redolent/proc/on_wash(datum/source, clean)
+	SIGNAL_HANDLER
+	if(clean < CLEAN_MEDIUM) // Weak cleaning won't wash it away
 		return
-	redolent_last_aura_tick = world.time
-	redolent_visual_effect(src, redolent_scent_type)
-	redolent_stink_aura(src, redolent_scent_type)
+	to_chat(owner, span_notice("I scrub the stink away. I should stay fresh for a while."))
+	COOLDOWN_START(src, smell_suppressed, 30 MINUTES)
 
-/proc/redolent_aura_tick_delay(scent_type)
-	return 30 SECONDS
-
-/proc/redolent_examine_text(scent_type, scent)
-	var/scent_text = html_encode(scent || "an unusual scent")
-	switch(scent_type)
-		if("Gross")
-			return span_greentext("They reek of [scent_text].")
-		if("Pleasant")
+/datum/status_effect/redolent/proc/get_examine_text()
+	if(!COOLDOWN_FINISHED(src, smell_suppressed)) // Means they have been washed so not currently stinky
+		return
+	var/scent_text = "an unusual scent"
+	if(!isnull(redolent_scent))
+		scent_text = html_encode(redolent_scent)
+	switch(redolent_scent_type)
+		if(REDOLENT_SMELL_GOOD)
 			return "<span style='color:#FFB6C1'>They smell of [scent_text].</span>"
-	return "<span style='color:#d8cf8a'>They smell of [scent_text].</span>"
+		if(REDOLENT_SMELL_NEUTRAL)
+			return "<span style='color:#d8cf8a'>They smell of [scent_text].</span>"
+		if(REDOLENT_SMELL_BAD)
+			return span_greentext("They reek of [scent_text].")
 
-/proc/redolent_visual_effect(mob/living/carbon/human/H, scent_type)
-	switch(scent_type)
-		if("Gross")
-			new /obj/effect/temp_visual/flies(get_turf(H))
-		if("Pleasant")
-			new /obj/effect/temp_visual/pleasant_scent(get_turf(H))
+/// Called by process, emits our scent
+/datum/status_effect/redolent/proc/emit_smell()
+	if(!COOLDOWN_FINISHED(src, emit_scent))
+		return
+	COOLDOWN_START(src, emit_scent, 30 SECONDS)
 
-/proc/redolent_stink_aura(mob/living/carbon/human/H, scent_type)
-	for(var/mob/living/nearby in view(2, H))
-		if(nearby == H)
+	// Emits the visual effect
+	switch(redolent_scent_type)
+		if(REDOLENT_SMELL_GOOD)
+			new /obj/effect/temp_visual/pleasant_scent(get_turf(owner))
+		if(REDOLENT_SMELL_BAD)
+			new /obj/effect/temp_visual/flies(get_turf(owner))
+
+	// Emits a stench in an AOE
+	for(var/mob/living/nearby in view(2, owner))
+		if(nearby == owner) // Immune to your own stench
 			continue
-		if(nearby.stat)
+		if(nearby.stat) // Unconscious can't smell
 			continue
-		if(!nearby.can_smell())
+		if(HAS_TRAIT(nearby, TRAIT_MISSING_NOSE)) // No nose
 			continue
-		if(HAS_TRAIT(nearby, TRAIT_NOSTINK))
+		if(HAS_TRAIT(nearby, TRAIT_NOSTINK)) // Numb to smells
 			continue
-		if(HAS_TRAIT(nearby, TRAIT_NOBREATH))
+		if(HAS_TRAIT(nearby, TRAIT_NOBREATH)) // Can't breath / Holding breath
 			continue
-		switch(scent_type)
-			if("Gross")
-				if(!nearby.has_stress_event(/datum/stressevent/stinky_aura))
-					to_chat(nearby, "<span class='warning' style='color:#48c75a'>Something nearby reeks.</span>")
-					nearby.add_stress(/datum/stressevent/stinky_aura)
-			if("Neutral")
-				if(!nearby.has_stress_event(/datum/stressevent/prominent_scent))
-					to_chat(nearby, "<span class='warning' style='color:#d8cf8a'>There's a prominent scent in the air.</span>")
-					nearby.add_stress(/datum/stressevent/prominent_scent)
-			if("Pleasant")
+		switch(redolent_scent_type)
+			if(REDOLENT_SMELL_GOOD)
 				if(!nearby.has_stress_event(/datum/stressevent/pleasant_scent))
 					to_chat(nearby, "<span class='warning' style='color:#ffb6c1'>A pleasant scent drifts through the air.</span>")
 					nearby.add_stress(/datum/stressevent/pleasant_scent)
+			if(REDOLENT_SMELL_NEUTRAL)
+				if(!nearby.has_stress_event(/datum/stressevent/prominent_scent))
+					to_chat(nearby, "<span class='warning' style='color:#d8cf8a'>There's a prominent scent in the air.</span>")
+					nearby.add_stress(/datum/stressevent/prominent_scent)
+			if(REDOLENT_SMELL_BAD)
+				if(!nearby.has_stress_event(/datum/stressevent/stinky_aura))
+					to_chat(nearby, "<span class='warning' style='color:#48c75a'>Something nearby reeks.</span>")
+					nearby.add_stress(/datum/stressevent/stinky_aura)
+
+/// Applies our stench to someone else
+/datum/status_effect/redolent/proc/apply_on_contact(mob/living/carbon/human/target)
+	// Step 1: Check to see if they have OUR smell
+	for(var/datum/status_effect/redolent/stinky_contact/stink_to_check in target.has_status_effect_list(/datum/status_effect/redolent/stinky_contact))
+		if(stink_to_check.redolent_scent == redolent_scent) // Check if they have our custom string
+			// If they do, we refresh their smell
+			stink_to_check.refresh()
+			return
+
+	// Step 2: Apply our smell if they don't already have ours
+	var/datum/status_effect/redolent/stinky_contact/applied_smell = target.apply_status_effect(/datum/status_effect/redolent/stinky_contact)
+	applied_smell.redolent_scent_type = redolent_scent_type
+	applied_smell.redolent_scent = redolent_scent
+	applied_smell.notify_new_stinker()
+	// Yes, this means a person can smell of many things at once
+
+/datum/status_effect/redolent/stinky_contact // Temporary subtype. Works the same as normal, except it can be washed away and expire
+	id = "stinky_contact"
+	duration = 15 MINUTES
+	tick_interval = 5 SECONDS
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/stinky_contact // Fancy alert letting you know you've become a stinker
+
+/// Lets the smelly person that they have now become smelly
+/datum/status_effect/redolent/stinky_contact/proc/notify_new_stinker()
+	switch(redolent_scent_type)
+		if(REDOLENT_SMELL_GOOD)
+			to_chat(owner, span_notice("I share someone else's pleasant scent now!"))
+		if(REDOLENT_SMELL_NEUTRAL)
+			to_chat(owner, span_notice("I stink of someone else now..."))
+		if(REDOLENT_SMELL_BAD)
+			to_chat(owner, span_warning("I reek of someone else's stench now...ew..."))
+
+/datum/status_effect/redolent/stinky_contact/on_wash(datum/source, clean)
+	if(clean < CLEAN_MEDIUM) // Weak cleaning won't wash it away
+		return
+	to_chat(owner, span_notice("I scrub the smell away..."))
+	qdel(src)
+
+/datum/status_effect/redolent/stinky_contact/on_remove()
+	to_chat(owner, span_notice("The lingering scent finally fades off me."))
+	return ..()
+
+/atom/movable/screen/alert/status_effect/debuff/stinky_contact
+	name = "Musked"
+	desc = "Someone's stench rubbed off on me. I should be able to wash it off, or wait it out."
+	icon_state = "debuff"
 
 /datum/quirk/hunted
 	name = "Marked by Gnolls"

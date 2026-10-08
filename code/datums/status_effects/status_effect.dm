@@ -269,17 +269,24 @@
 	var/effect_id = initial(checked_effect.id)
 	return status_effects_by_id[effect_id]
 
-/mob/living/proc/has_status_effect_list(datum/status_effect/checked_effect)
+/**
+ * Returns a list of all status effects that share the passed effect type's ID
+ *
+ * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not its typepath
+ *
+ * Returns a list
+ */
+/mob/proc/has_status_effect_list(datum/status_effect/checked_effect)
+	// See [/mob/proc/has_status_effect] for reason behind having this on the mob level
+	return null
+
+/mob/living/has_status_effect_list(datum/status_effect/checked_effect)
 	RETURN_TYPE(/list)
 
 	var/list/effects_found = list()
-	if(!status_effects_by_id)
-		return effects_found
-
-	var/effect_id = initial(checked_effect.id)
-	var/datum/status_effect/S = status_effects_by_id[effect_id]
-	if(S)
-		effects_found += S
+	for(var/datum/status_effect/present_effect as anything in status_effects)
+		if(present_effect.id == initial(checked_effect.id))
+			effects_found += present_effect
 
 	return effects_found
 

@@ -85,12 +85,12 @@
 	if(thrownthing.target_zone != BODY_ZONE_PRECISE_NOSE)
 		return
 	if(iscarbon(hit_atom))
-		var/mob/living/carbon/C = hit_atom
-		if(canconsume(C, silent = TRUE))
+		var/mob/living/carbon/hit_carbon = hit_atom
+		if(canconsume(hit_carbon, silent = TRUE))
 			if(reagents.total_volume)
-				playsound(C, 'sound/items/sniff.ogg', 100, FALSE)
+				playsound(hit_carbon, 'sound/items/sniff.ogg', 100, FALSE)
 				record_round_statistic(STATS_DRUGS_SNORTED)
-				reagents.trans_to(C, 1, transfered_by = thrownthing.thrower, method = "swallow")
+				reagents.trans_to(hit_carbon, 1, transfered_by = thrownthing.thrower, method = "swallow")
 	qdel(src)
 
 /obj/item/reagent_containers/powder/attack(mob/M, mob/user, def_zone)
@@ -100,23 +100,23 @@
 		M.visible_message(span_notice("[user] sniffs [src]."))
 	else
 		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			var/obj/item/bodypart/CH = C.get_bodypart(BODY_ZONE_HEAD)
+			var/mob/living/carbon/carbon_mob = M
+			var/obj/item/bodypart/CH = carbon_mob.get_bodypart(BODY_ZONE_HEAD)
 			if(!CH)
-				to_chat(user, span_warning("[C.p_theyre(TRUE)] missing something."))
-			if(!C.can_smell())
-				to_chat(user, span_warning("[C.p_theyre(TRUE)] has no nose!"))
-			for(var/obj/item/clothing/CL in C.get_equipped_items())
+				to_chat(user, span_warning("[carbon_mob.p_theyre(TRUE)] missing something."))
+			if(HAS_TRAIT(carbon_mob, TRAIT_MISSING_NOSE))
+				to_chat(user, span_warning("[carbon_mob.p_theyre(TRUE)] has no nose!"))
+			for(var/obj/item/clothing/CL in carbon_mob.get_equipped_items())
 				if(CL.body_parts_covered & NOSE)
-					to_chat(user, span_warning("[C.p_theyre(TRUE)] has something covering [C.p_their()] nose."))
+					to_chat(user, span_warning("[carbon_mob.p_theyre(TRUE)] has something covering [carbon_mob.p_their()] nose."))
 					return FALSE
 			
-			user.visible_message(span_danger("[user] attempts to force [C] to inhale [src]."), \
-								span_danger("I attempt to force [C] to inhale [src]!"))
+			user.visible_message(span_danger("[user] attempts to force [carbon_mob] to inhale [src]."), \
+								span_danger("I attempt to force [carbon_mob] to inhale [src]!"))
 		
-			if(C.cmode)
+			if(carbon_mob.cmode)
 				if(!CH.grabbedby)
-					to_chat(user, span_info("[C.p_they(TRUE)] steals [C.p_their()] face from it."))
+					to_chat(user, span_info("[carbon_mob.p_they(TRUE)] steals [carbon_mob.p_their()] face from it."))
 					return FALSE
 			if(!do_mob(user, M, 5 SECONDS))
 				return FALSE
