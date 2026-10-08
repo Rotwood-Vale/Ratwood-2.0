@@ -1724,8 +1724,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				if(length(pref_species.restricted_quirks))
 					if(Q.type in pref_species.restricted_quirks)
 						continue
-				if(length(Q.allowed_species) && !(pref_species.type in Q.allowed_species))
-					continue
 				// Check for conflicting virtues
 				if(check_quirk_virtue_conflict(Q.type, TRUE, usr))
 					continue

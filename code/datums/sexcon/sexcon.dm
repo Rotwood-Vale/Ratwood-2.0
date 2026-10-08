@@ -478,15 +478,7 @@
 		effective_target.sate_addiction(/datum/charflaw/addiction/lovefiend)
 	if(effective_target?.has_flaw(/datum/charflaw/addiction/baothamarked))
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
-	drop_egg(get_turf(effective_target || user))
 	after_ejaculation()
-
-/datum/sex_controller/proc/drop_egg(turf/dropspot)
-	if(!HAS_TRAIT(user, TRAIT_OVIPOSITOR) || !user.getorganslot(ORGAN_SLOT_PENIS))
-		return
-	var/obj/item/organ/eggs/egg = new(dropspot)
-	egg.color = "#[user.voice_color]"
-	egg.name = "[user.dna.species.name] eggs"
 
 /datum/sex_controller/proc/cum_into(oral = FALSE, mob/living/carbon/human/splashed_user = null, datum/sex_action/knot_action = null, knot_swap_roles = FALSE, mob/living/carbon/human/knot_btm = null, orifice = SEX_PART_NULL, skip_knot_try = FALSE, consume_charge = TRUE, source_part = SEX_PART_NULL)
 	// splashed_user is the bottom receiving; for top-initiated actions it matches target, for riding/blowjob it is the rider/sucker while target may be null
@@ -544,17 +536,6 @@
 		effective_target.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	if(!oral && (orifice & SEX_PART_TAIL_MAW) && !(source_part & SEX_PART_TAIL_MAW))
 		user.try_impregnate(effective_target, SEX_PART_TAIL_MAW)
-	if(effective_target?.client?.prefs?.oviposition && HAS_TRAIT(user, TRAIT_OVIPOSITOR) && user.getorganslot(ORGAN_SLOT_PENIS))
-		var/obj/item/organ/eggs/eggs = effective_target.getorganslot(ORGAN_SLOT_EGGS)
-		if(eggs)
-			eggs.quantity++
-		else
-			eggs = new /obj/item/organ/eggs()
-			eggs.Insert(effective_target)
-		eggs.color = "#[user.voice_color]"
-		eggs.name = "[user.dna.species.name] eggs"
-		effective_target.apply_status_effect(/datum/status_effect/debuff/parasitized)
-		to_chat(effective_target, span_love("I feel bloated. Something is inside my stomach..."))
 	after_ejaculation(consume_charge)
 	if(consume_charge)
 		after_intimate_climax(oral, splashed_user)
@@ -741,7 +722,6 @@
 	var/semen_vol = get_semen_volume()
 	var/obj/item/organ/testicles/testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 	add_cum_floor(get_turf(user), do_big_puddle = testes?.ball_size > DEFAULT_TESTICLES_SIZE)
-	drop_egg(get_turf(user))
 	after_ejaculation()
 
 	var/cur_loc = get_turf(user)

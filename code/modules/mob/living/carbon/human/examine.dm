@@ -1079,8 +1079,6 @@
 							. += span_aiprivradio("[m1] [is_long ? "leaking heavily from both [m2] holes" : "dripping cum from both [m2] holes"]!")
 						else
 							. += span_aiprivradio("[m1] [is_long ? "leaking a heavy load" : "dripping cum from [m2] nethers"]!")
-		if(user.client?.prefs?.oviposition && getorganslot(ORGAN_SLOT_EGGS) && get_location_accessible(src, BODY_ZONE_PRECISE_STOMACH))
-			. += span_aiprivradio("[capitalize(m2)] belly is bloated and bumpy!")
 		var/list/modular_lines = human_modular_examine_lines(user, observer_privilege, m1, m2, m3)
 		if(length(modular_lines))
 			. += modular_lines
