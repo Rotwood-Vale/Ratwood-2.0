@@ -154,6 +154,9 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 			if(C)
 				C.images += mark
 
+/proc/zizo_dist(atom/A, atom/B)
+	return max(abs(A.x - B.x), abs(A.y - B.y)) + abs(A.z - B.z)
+
 /proc/zizo_roll_start()
 	refill_bestow_areas()
 	if(length(GLOB.zizo_targets))
@@ -431,9 +434,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/obj/structure/reality_rend/nearest_rend
 	var/nearest_rend_dist = ZIZO_GATE_PULL_RANGE
 	for(var/obj/structure/reality_rend/R as anything in GLOB.zizo_reality_rends)
-		if(R.z != H.z)
-			continue
-		var/d = get_dist(H, R)
+		var/d = zizo_dist(H, R)
 		if(d <= nearest_rend_dist)
 			nearest_rend = R
 			nearest_rend_dist = d
@@ -480,7 +481,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		return
 	if(QDELETED(dest) || QDELETED(rend) || QDELETED(mob_viewer) || !isliving(mob_viewer))
 		return
-	if(mob_viewer.z != rend.z || get_dist(mob_viewer, rend) > ZIZO_GATE_PULL_RANGE)
+	if(zizo_dist(mob_viewer, rend) > ZIZO_GATE_PULL_RANGE)
 		to_chat(mob_viewer, span_warning("TOO FAR!"))
 		return
 	var/mob/living/L = mob_viewer

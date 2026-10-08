@@ -833,7 +833,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/transmutation/summonfuge
 	name = "Summon Fuge"
-	desc = "Conjure a machine to pull items in from other realms. Must be raised near an opened gate."
+	desc = "Conjure a machine to pull items in from other realms. Must be raised where the WORLD feels UNREAL."
 	is_cultist_ritual = TRUE
 	research_cost = 0
 
@@ -843,13 +843,11 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		return
 	var/near_rend = FALSE
 	for(var/obj/structure/reality_rend/R as anything in GLOB.zizo_reality_rends)
-		if(R.z != center.z)
-			continue
-		if(get_dist(R, center) <= 50)
+		if(zizo_dist(R, center) <= 50)
 			near_rend = TRUE
 			break
 	if(!near_rend)
-		to_chat(user, span_warning("MUST BE CLOSER TO A GATE."))
+		to_chat(user, span_warning(" MUST BE PLACED WHERE THE WORLD MUST FEEL UNREAL."))
 		return
 	to_chat(user, span_notice("The rite begins. Remain still."))
 	var/poo = new /obj/effect/temp_visual/opengate(center)
@@ -883,12 +881,12 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	var/static/list/recipes = list(
 		list("Dark Shards", /obj/item/cultbrick, 40 SECONDS, null, FALSE),
 		list("Zizo Robe", /obj/item/clothing/cloak/cultrobe, 90 SECONDS, null, FALSE),
-		list("Snow Scythe (Bite)", /obj/item/rogueweapon/spear/bite, 90 SECONDS, "bite", TRUE),
-		list("Mortal Blade (Rot)", /obj/item/rogueweapon/sword/sabre/rot, 90 SECONDS, "rot", TRUE),
-		list("Forgotten Tool (Toil)", /obj/item/rogueweapon/mace/maul/toil, 90 SECONDS, "toil", TRUE),
-		list("Madman Blade (Noise)", /obj/item/rogueweapon/sword/long/noise, 90 SECONDS, "noise", TRUE),
-		list("Slave Knife (Blood)", /obj/item/rogueweapon/huntingknife/idagger/steel/blood, 90 SECONDS, "blood", TRUE),
-		list("Astrata-Touched Dagger (Pitch)", /obj/item/rogueweapon/huntingknife/idagger/steel/pitch, 90 SECONDS, "pitch", TRUE),
+		list("Snow Scythe (Bite)", /obj/item/rogueweapon/spear/bite, 90 SECONDS, "BITE", TRUE),
+		list("Mortal Blade (Rot)", /obj/item/rogueweapon/sword/sabre/rot, 90 SECONDS, "ROT", TRUE),
+		list("Forgotten Tool (Toil)", /obj/item/rogueweapon/mace/maul/toil, 90 SECONDS, "TOIL", TRUE),
+		list("Madman Blade (Noise)", /obj/item/rogueweapon/sword/long/noise, 90 SECONDS, "NOISE", TRUE),
+		list("Slave Knife (Blood)", /obj/item/rogueweapon/huntingknife/idagger/steel/blood, 90 SECONDS, "BLOOD", TRUE),
+		list("Astrata-Touched Dagger (Pitch)", /obj/item/rogueweapon/huntingknife/idagger/steel/pitch, 90 SECONDS, "PITCH", TRUE),
 		list("Accursed Leech", /obj/item/natural/worms/leech/propaganda, 40 SECONDS, null, FALSE),
 		list("Muzzling Leech", /obj/item/natural/worms/leech/silencer, 40 SECONDS, null, FALSE),
 	)
@@ -1002,16 +1000,18 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /obj/structure/pylon/attack_hand(mob/living/user)
 	. = ..()
-	if(.)
-		return
-	if(!is_zizo(user))
-		return
+	if(!. && is_zizo(user))
+		to_chat(user, span_warning("USE A LEECH THAT HAS FED ON SOMEONE ON ME."))
+
+/obj/structure/pylon/attackby(obj/item/I, mob/living/user)
+	var/obj/item/natural/worms/leech/remnant = I
+	if(!istype(remnant) || !is_zizo(user))
+		return ..()
 	if(busy)
 		to_chat(user, span_warning("WORKING! WAIT!!!"))
 		return
-	var/obj/item/natural/worms/leech/remnant = user.get_active_held_item()
-	if(!istype(remnant) || !remnant.fed_from)
-		to_chat(user, span_warning("I NEED A LEECH THAT HAS FED ON SOMEONE."))
+	if(!remnant.fed_from)
+		to_chat(user, span_warning("THIS LEECH HASN'T FED ON ANYONE."))
 		return
 	var/mob/living/carbon/human/target = remnant.fed_from
 	if(QDELETED(target) || target.stat == DEAD || target.has_status_effect(/datum/status_effect/debuff/pylon_drain))
