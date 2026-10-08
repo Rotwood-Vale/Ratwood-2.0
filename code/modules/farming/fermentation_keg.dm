@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	if(length(overlays))
 		overlays.Cut()
 
-	if(!reagents.total_volume)
+	if(!reagents?.total_volume)
 		return
 	if(icon_state != open_icon_state)
 		return

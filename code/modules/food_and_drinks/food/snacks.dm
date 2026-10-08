@@ -514,7 +514,8 @@ All foods are distributed among various categories. Use common sense.
 	var/rot_text = ""
 	if(!rotprocess)
 		return "This food does not rot."
-	switch(initial(rotprocess))
+	var/shelf_life = initial(rotprocess) || rotprocess
+	switch(shelf_life)
 		if(0 to SHELFLIFE_TINY)
 			rot_text = "This food will rot in less than a third of a dae."
 		if(SHELFLIFE_TINY to SHELFLIFE_SHORT)
@@ -525,7 +526,7 @@ All foods are distributed among various categories. Use common sense.
 			rot_text = "This food will last a dae and a half."
 		if(SHELFLIFE_LONG to SHELFLIFE_EXTREME)
 			rot_text = "This food will last three daes."
-	switch(-1 * warming / initial(rotprocess))
+	switch(-1 * warming / shelf_life)
 		if(-INFINITY to 0.25)
 			rot_text += " It is very fresh."
 		if(0.25 to 0.5)

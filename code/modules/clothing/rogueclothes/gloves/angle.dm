@@ -20,6 +20,7 @@
 
 /obj/item/clothing/gloves/roguetown/angle/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
 	name = "grenzelhoft gloves"
@@ -28,6 +29,9 @@
 	item_state = "grenzelgloves"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
 	color = "#ffffff"
+
+/obj/item/clothing/gloves/roguetown/angle/grenzelgloves/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY) //Once again, if I see non-grenzelhoftian mages start running this every round, this is going away.
 
 /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 	name = "forge gauntlets"
@@ -48,3 +52,7 @@
 	icon_state = "clothwraps"
 	item_state = "clothwraps"
 	color = "#ffffff"
+
+/obj/item/clothing/gloves/roguetown/angle/pontifex/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)

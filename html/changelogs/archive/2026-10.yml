@@ -90,3 +90,81 @@
   - qol: Sleeping on beds now takes 3 seconds less
   mushy:
   - bugfix: TRAIT_MAGEARMOR will now properly regenerate.
+2026-10-05:
+  0-the-fool:
+  - rscadd: Once-per-day attempt limit to the royal puzzle-box
+2026-10-06:
+  SSix:
+  - bugfix: A fogbeast summoned with Choose Mount uses the coat color you picked
+  - bugfix: A fogbeast keeps that coat color when facing south
+  - bugfix: A dead fogbeast shows its corpse sprite
+  SirSwagmeyer:
+  - rscdel: Removed a variety of nonheretical spellscrolls and stat potions from the
+      "heretical" lootpool.
+  TheMysteriousDragon:
+  - rscdel: Removed brigandine, steel bracers, iron gorget & blacksteel staff and
+      replaced with leather comparables as well as unique staff
+  - balance: removed poor spell choices [eg; fetch. Why would a backliner artillery
+      focused mage want to pull people into them?] as well as minor skill increases
+      [polearms > jman | magic > expert | etc] as well as stat adjustments [+3 int
+      | +3 wil | -1 str | +2 per | +2 spd] and increased to t3 arcyne [Why would a
+      specialised graduate of a dedicated magic academy be shit at magick] and added
+      +3 spellpoints.
+  - image: added "Celestial Zauberer Staff" a new custom item given on roundstart
+      with class-specific flavour.
+  - code_imp: See above
+  Wesreidau:
+  - qol: Corrected erroneous flavor text on bronze kilts. Now in line with other kilts.
+  - qol: Corrected bronze kilt anvil recipe name.
+  - balance: Chain skirts and steel tassets now protect legs but not groin.
+  - balance: Steel tassets are now medium armor and not light.
+  - balance: Bronze skirts now protect legs and not groin.
+  - bugfix: Removed duplicate and misleading bronze skirt/kilt purchases from Merchant.
+  - refactor: Refactored the bronze skirt to skirt/bronzeskirt from being in hardened_leather.
+  wikimody:
+  - rscadd: Pestrian revive now also allows for reviving people with swaped heads
+  - rscadd: Pestra also stoped being a hipocrite and extends her "medical care for
+      everyone" commandment to undead (pestrian miracle no longer burns them, and
+      revive no longer explodes them)
+2026-10-07:
+  Arturlang:
+  - bugfix: hopefully fix game getting stuck in lobby
+  PPooch:
+  - bugfix: Grapple twisting limbs no longer rolls for crit twice.
+  - bugfix: fixed the subclass slot display, the (!) menu, and the (!!) virtue incompatibility
+      warning, on the late join job select screen.
+  Randumb-Phantomb:
+  - rscadd: 'You can now whip people with your belt, it does like ten damage.
+
+      Also chains too.'
+  Yuckuza:
+  - code_imp: Removed duplicated taur clothing logic. Shared proc lives in taur.dm
+  - image: New taur clothing sprites for saiga taurs. Includes special sprites for
+      psydonic and astratan tabards.
+  chemistrymain3:
+  - rscadd: The Prelate's staff now functions like the Duke's master rod.
+  - rscadd: Added 1 templar slot and 2 churchling slots.
+  loleo14:
+  - bugfix: Singular letter added.
+2026-10-08:
+  Bxnny:
+  - balance: removed Gronnic Ittinerant, Naledian Refugee and Dunewell Nomad from
+      the licker class selection.
+  CloverIsLucky:
+  - qol: Increasing Medicine from sewing wounds has been doubled up.(thank me).
+  SirSwagmeyer:
+  - rscadd: Added Mage Dexterity - an armor filtering trait to prevent full Mages
+      from stacking armor protection.
+  - balance: Made tough skin unenchantable, and blacklisted it from magedex roles.
+  - rscadd: Added basic leather armor to the silverface.
+  UntoldTactics:
+  - bugfix: Fixes avantyne vestments lacking a sprite and defaulting to regular plate
+      chausses.
+  ophaq:
+  - rscadd: Tieflings get new tailmaw variants of their tails, plus the ones wild
+      kin got.
+  - rscadd: Tieflings can now use the mutant skin color option.
+  - rscadd: Two new masturbation verbs for tail maws.
+  - rscadd: Adds the tailcoat and ornate tailcoat to the loadout.
+  - bugfix: Fixes up code in the loadout for nobility check so there is less copy
+      pasta.

@@ -35,7 +35,8 @@
 	// but the rest of the logic is pretty much mob-only
 	if(ismob(A) && mmb_intent)
 		var/mob/living/M = A
-		sleep(mmb_intent.swingdelay)
+		var/datum/intent/kick_intent = mmb_intent
+		sleep(kick_intent.swingdelay)
 		if(M.has_status_effect(/datum/status_effect/buff/clash) && ishuman(M))
 			var/mob/living/carbon/human/HT = M
 			HT.bad_guard(span_warning("The kick throws my stance off!"))
@@ -47,7 +48,7 @@
 			return FALSE
 		if(M.checkmiss(src))
 			return FALSE
-		if(M.checkdefense(mmb_intent, src))
+		if(M.checkdefense(kick_intent, src))
 			return FALSE
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
