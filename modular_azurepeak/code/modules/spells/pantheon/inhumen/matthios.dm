@@ -1179,7 +1179,7 @@
 	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	overlay_state = "liberate"
-	recharge_time = 2 MINUTES
+	recharge_time = 4 MINUTES
 	sound = 'sound/magic/haste.ogg'
 	releasedrain = 10
 	miracle = TRUE
