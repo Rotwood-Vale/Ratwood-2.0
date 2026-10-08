@@ -8,7 +8,7 @@
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_DECEIVING_MEEKNESS, TRAIT_OVERTHERETIC)
-	maximum_possible_slots = 1 // only one frontman
+	maximum_possible_slots = 2 // WAKE THE FUCK UP Z
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN, 
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT, 

@@ -22,7 +22,7 @@
 		STATKEY_WIL = 2,
 		STATKEY_SPD = 2,
 	)
-	maximum_possible_slots = 1//THERE CAN BE ONLY ONE GOD HAND.
+	maximum_possible_slots = 2//THERE CAN BE ONLY ONE GOD HAND... AND ONE DEVIL HAND
 	subclass_skills = list(//Has Expert in two comparatively bad weapon types, otherwise supposed to be a support rather than a frontliner.
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT, //For self-defence, no STR so can't grab well, only resist

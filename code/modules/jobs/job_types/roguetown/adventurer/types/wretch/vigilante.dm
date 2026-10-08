@@ -11,7 +11,6 @@
 	subclass_virtues = list(
 		/datum/virtue/combat/guarded
 	)
-	maximum_possible_slots = 1 // There can only be one.
 	extra_context = "This class is best experienced without preparation."
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT, //To make a clean getaway from the constables
