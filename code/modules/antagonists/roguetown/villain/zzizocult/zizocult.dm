@@ -93,13 +93,9 @@
 
 /datum/antagonist/zizocultist/proc/add_cultist(datum/mind/cult_mind)
 	cult_mind.add_antag_datum(/datum/antagonist/zizocultist)
-	return TRUE
 
 /datum/antagonist/zizocultist/proc/add_objective(datum/objective/O)
 	objectives += new O
-
-/datum/antagonist/zizocultist/proc/remove_objective(datum/objective/O)
-	objectives -= O
 
 /datum/objective/zizo
 	name = "ASCEND"
@@ -108,16 +104,6 @@
 	triumph_count = 5
 
 /datum/objective/zizo/check_completion()
-	if(SSmapping.retainer.cult_ascended)
-		return TRUE
-
-/datum/objective/zizoserve
-	name = "Serve your Leader"
-	explanation_text = "Ensure that a member of the cult ASCENDS. You can look at your research menu to familiarize myself with your rituals."
-	team_explanation_text = "Ensure that a member of the cult ASCENDS. You can look at your research menu to familiarize myself with your rituals."
-	triumph_count = 3
-
-/datum/objective/zizoserve/check_completion()
 	if(SSmapping.retainer.cult_ascended)
 		return TRUE
 
@@ -130,45 +116,26 @@
 	say(pick(LIST_PRAISE_ZIZO), spans = list("god_zizo"), sanitize = FALSE, language = /datum/language/undead)
 	playsound(src, 'sound/vo/cult/praise.ogg', 45, 1)
 	log_say("[src] has praised zizo! (zizo cultist verb)")
-	if(!ishuman(src))
-		return
-	var/mob/living/carbon/human/cultist = src
-	var/area/churchcheck = get_area(cultist)
-	if(istype(churchcheck, /area/rogue/indoors/town/church))
-		complete_zgoal(cultist, /datum/zizogoal/worshipzizo_church)
+	if(istype(get_area(src), /area/rogue/indoors/town/church))
+		complete_zgoal(src, /datum/zizogoal/worshipzizo_church)
 	var/observers = 0
-	var/complete = FALSE
-	for(var/mob/living/carbon/human/L in hearers(7, cultist))
-		if(observers > 2)
-			complete = TRUE
-			break
-		if(L == cultist)
-			continue
-		if(L.stat == DEAD)
-			continue
-		if(!L.mind)
-			continue
-		if(is_zizo(L))
-			continue
-		observers++
-	if(complete == TRUE)
-		complete_zgoal(cultist, /datum/zizogoal/worshipzizo)
+	for(var/mob/living/carbon/human/L in hearers(7, src))
+		if(L != src && L.stat != DEAD && L.mind && !is_zizo(L))
+			observers++
+	if(observers > 2)
+		complete_zgoal(src, /datum/zizogoal/worshipzizo)
 
 /mob/living/carbon/human/proc/zizo_objectives()
 	set name = "Secret Objectives"
 	set category = "ZIZO"
 
-	if(!ishuman(src))
-		return
-	var/mob/living/carbon/human/cultist = src
-	if(!length(cultist.zizo_goals))
-		reroll_goals(user = cultist)
-	for(var/item in cultist.zizo_goals)
-		var/datum/zizogoal/gl = item
+	if(!length(zizo_goals))
+		reroll_goals(src)
+	for(var/datum/zizogoal/gl in zizo_goals)
 		if(gl.complete)
-			to_chat(cultist, "<B>[gl.name]:</B> [gl.desc]<BR><B>COMPLETED.</B><BR>")
+			to_chat(src, "<B>[gl.name]:</B> [gl.desc]<BR><B>COMPLETED.</B><BR>")
 		else
-			to_chat(cultist, "<B>[gl.name]:</B> [gl.desc]<BR><B>[gl.reward] SECRETS.</B><BR>")
+			to_chat(src, "<B>[gl.name]:</B> [gl.desc]<BR><B>[gl.reward] SECRETS.</B><BR>")
 
 /mob/living/carbon/human/proc/communicate()
 	set name = "Communicate with Cult"

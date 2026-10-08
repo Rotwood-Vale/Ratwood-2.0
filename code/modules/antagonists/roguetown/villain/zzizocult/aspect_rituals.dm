@@ -1286,8 +1286,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	. = ..()
 	var/obj/item/grabbing/G = user.get_active_held_item()
 	if(!istype(G) || !isliving(G.grabbed))
-		return FALSE
-	if(!G)
 		to_chat(user, span_warning("I need to be grabbing someone."))
 		revert_cast()
 		return FALSE

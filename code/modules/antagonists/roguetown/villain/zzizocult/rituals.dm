@@ -846,11 +846,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	var/datum/effect_system/spark_spread/S = new(center)
 	S.set_up(1, 1, center)
 	S.start()
-	switch(target.aspect)
-		if("bite")
-			target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
-		else
-			target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
+	target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
 	playsound(center, pick('sound/items/bsmith1.ogg','sound/items/bsmith2.ogg','sound/items/bsmith3.ogg','sound/items/bsmith4.ogg'), 100, FALSE)
 
 /datum/ritual/transmutation/summonfuge
@@ -1384,13 +1380,8 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	H.change_stat(STATKEY_STR, 2)
-	H.change_stat(STATKEY_PER, 2)
-	H.change_stat(STATKEY_INT, 2)
-	H.change_stat(STATKEY_CON, 2)
-	H.change_stat(STATKEY_WIL, 2)
-	H.change_stat(STATKEY_SPD, 2)
-	H.change_stat(STATKEY_LCK, 2)
+	for(var/stat in MOBSTATS)
+		H.change_stat(stat, 2)
 
 /obj/item/clothing/cloak/cultrobe/dropped(mob/living/user)
 	..()
@@ -1399,13 +1390,8 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	H.change_stat(STATKEY_STR, -2)
-	H.change_stat(STATKEY_PER, -2)
-	H.change_stat(STATKEY_INT, -2)
-	H.change_stat(STATKEY_CON, -2)
-	H.change_stat(STATKEY_WIL, -2)
-	H.change_stat(STATKEY_SPD, -2)
-	H.change_stat(STATKEY_LCK, -2)
+	for(var/stat in MOBSTATS)
+		H.change_stat(stat, -2)
 	active_item = FALSE
 
 /obj/item/clothing/cloak/cultrobe/proc/empower()
@@ -1421,13 +1407,8 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		var/mob/living/carbon/human/H = loc
 		if(!active_item)
 			active_item = TRUE
-			H.change_stat(STATKEY_STR, 2)
-			H.change_stat(STATKEY_PER, 2)
-			H.change_stat(STATKEY_INT, 2)
-			H.change_stat(STATKEY_CON, 2)
-			H.change_stat(STATKEY_WIL, 2)
-			H.change_stat(STATKEY_SPD, 2)
-			H.change_stat(STATKEY_LCK, 2)
+			for(var/stat in MOBSTATS)
+				H.change_stat(stat, 2)
 		to_chat(H, span_userdanger("MY ROBE THRUMS WITH DARK POWER!"))
 		H.update_inv_cloak()
 	regen()
@@ -1602,13 +1583,8 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	var/datum/effect_system/spark_spread/S = new(center)
 	S.set_up(1, 1, center)
 	S.start()
-	switch(target.aspect)
-		if("bite")
-			new /obj/item/rogueweapon/sword/long/zizo(center)
-			target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
-		else
-			new /obj/item/rogueweapon/sword/long/zizo(center)
-			target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
+	new /obj/item/rogueweapon/sword/long/zizo(center)
+	target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
 	playsound(center, pick('sound/items/bsmith1.ogg','sound/items/bsmith2.ogg','sound/items/bsmith3.ogg','sound/items/bsmith4.ogg'), 100, FALSE)
 
 // FLESH CRAFTING
@@ -1992,22 +1968,12 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	return ..()
 
 /obj/effect/decal/cleanable/sigil/proc/consume_ingredients(datum/ritual/R)
-	for(var/atom/A in get_step(src, NORTH))
-		if(istype(A, R.n_req) && !ishuman(A))
-			playsound(src, 'sound/foley/flesh_rem2.ogg', 30)
-			qdel(A)
-	for(var/atom/A in get_step(src, SOUTH))
-		if(istype(A, R.s_req) && !ishuman(A))
-			playsound(src, 'sound/foley/flesh_rem2.ogg', 30)
-			qdel(A)
-	for(var/atom/A in get_step(src, EAST))
-		if(istype(A, R.e_req) && !ishuman(A))
-			playsound(src, 'sound/foley/flesh_rem2.ogg', 30)
-			qdel(A)
-	for(var/atom/A in get_step(src, WEST))
-		if(istype(A, R.w_req) && !ishuman(A))
-			playsound(src, 'sound/foley/flesh_rem2.ogg', 30)
-			qdel(A)
+	var/list/reqs = list("[NORTH]" = R.n_req, "[SOUTH]" = R.s_req, "[EAST]" = R.e_req, "[WEST]" = R.w_req)
+	for(var/dir_req in reqs)
+		for(var/atom/A in get_step(src, text2num(dir_req)))
+			if(istype(A, reqs[dir_req]) && !ishuman(A))
+				playsound(src, 'sound/foley/flesh_rem2.ogg', 30)
+				qdel(A)
 	for(var/atom/A in loc.contents)
 		if(istype(A, R.center_requirement) && !ishuman(A))
 			if(R.keep_center)
@@ -2095,56 +2061,27 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	if(!pickritual)
 		return
 
-	var/cardinal_success = FALSE
-	var/center_success = FALSE
-	var/dews = 0
-
-	if(pickritual.e_req)
-		for(var/atom/A in get_step(src, EAST))
-			if(istype(A, pickritual.e_req))
-				dews++
+	var/list/reqs = list("[EAST]" = pickritual.e_req, "[SOUTH]" = pickritual.s_req, "[WEST]" = pickritual.w_req, "[NORTH]" = pickritual.n_req)
+	var/ritual_ok = TRUE
+	for(var/dir_req in reqs)
+		if(!reqs[dir_req])
+			continue
+		var/found = FALSE
+		for(var/atom/A in get_step(src, text2num(dir_req)))
+			if(istype(A, reqs[dir_req]))
+				found = TRUE
 				break
-	else
-		dews++
-	if(pickritual.s_req)
-		for(var/atom/A in get_step(src, SOUTH))
-			if(istype(A, pickritual.s_req))
-				dews++
-				break
-	else
-		dews++
-	if(pickritual.w_req)
-		for(var/atom/A in get_step(src, WEST))
-			if(istype(A, pickritual.w_req))
-				dews++
-				break
-	else
-		dews++
-	if(pickritual.n_req)
-		for(var/atom/A in get_step(src, NORTH))
-			if(istype(A, pickritual.n_req))
-				dews++
-				break
-	else
-		dews++
-
-	if(dews >= 4)
-		cardinal_success = TRUE
-
-	if(!pickritual.center_requirement)
-		center_success = TRUE
-	else
+		if(!found)
+			ritual_ok = FALSE
+	if(pickritual.center_requirement)
+		var/found = FALSE
 		for(var/atom/A in loc.contents)
 			if(istype(A, pickritual.center_requirement))
-				center_success = TRUE
+				found = TRUE
 				break
-
-	if(!cardinal_success)
-		to_chat(user, span_danger("Ritual requires: [pickritual.hugbox()]"))
-		to_chat(user, span_danger("That's not how you do it, fool."))
-		user.electrocute_act(1, src, 1, SHOCK_NOSTUN)
-		return
-	if(!center_success)
+		if(!found)
+			ritual_ok = FALSE
+	if(!ritual_ok)
 		to_chat(user, span_danger("Ritual requires: [pickritual.hugbox()]"))
 		to_chat(user, span_danger("That's not how you do it, fool."))
 		user.electrocute_act(1, src, 1, SHOCK_NOSTUN)
