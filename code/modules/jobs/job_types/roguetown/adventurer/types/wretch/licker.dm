@@ -10,7 +10,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_SILVER_WEAK,
 	)
-	maximum_possible_slots = 2
+	maximum_possible_slots = 1 // as a part of the 'wretches may as well be hero units' PR. one vampire can turn everyone else. it's a problem.
 	applies_post_equipment = FALSE
 
 /datum/outfit/job/roguetown/wretch/licker/pre_equip(mob/living/carbon/human/H)

@@ -9,7 +9,7 @@
 	class_select_category = CLASS_CAT_WARRIOR
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END, TRAIT_DODGEEXPERT) //no armour, literally made to bleed
-	maximum_possible_slots = 2 //you probably don't want many of these
+	maximum_possible_slots = 1 // as a part of the 'wretches may as well be hero units' PR. this guy has been the hot topic of nerfs lately, for good reason.
 
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
 	subclass_stats = list(
