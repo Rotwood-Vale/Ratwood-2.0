@@ -479,7 +479,7 @@ GLOBAL_LIST_INIT(da_bubbles, list(
 	path = "blood"
 	current_liquid++
 	current_color = "#5c0a0a"
-	victim.blood_volume -= round(BLOOD_VOLUME_NORMAL * 0.05)
+	victim.adjust_blood_volume(-round(BLOOD_VOLUME_NORMAL * 0.05))
 	update_icon()
 	if(current_liquid >= needed_liquid)
 		finish_recipe(user, /obj/item/alchserum/matthios_kingsblood)
@@ -531,7 +531,9 @@ GLOBAL_LIST_INIT(da_bubbles, list(
 		for(var/datum/wound/wound as anything in target.get_wounds())
 			if(wound && wound.bleed_rate > 0)
 				wound.set_bleed_rate(0)
-		target.blood_volume = min(target.blood_volume + round(BLOOD_VOLUME_NORMAL * 0.2), BLOOD_VOLUME_NORMAL)
+		var/current_blood = target.get_blood_volume()
+		var/new_blood = min(current_blood + round(BLOOD_VOLUME_NORMAL * 0.2), BLOOD_VOLUME_NORMAL)
+		target.adjust_blood_volume(new_blood - current_blood)
 	uses--
 	if(uses <= 0)
 		qdel(src)
@@ -645,7 +647,7 @@ GLOBAL_LIST_INIT(da_bubbles, list(
 		lux_blood++
 	else
 		return
-	victim.blood_volume -= round(BLOOD_VOLUME_NORMAL * 0.05)
+	victim.adjust_blood_volume(-round(BLOOD_VOLUME_NORMAL * 0.05))
 	check_completion(user)
 
 /obj/item/alchserum/matthios_lyfestruth
