@@ -286,6 +286,14 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 
+/datum/crafting_recipe/roguetown/engineering/bulletpouch
+	name = "Lead Ball Pouch"
+	result = /obj/item/quiver/bullet
+	reqs = list(/obj/item/natural/hide/cured = 2, /obj/item/natural/fibers = 1)
+	craftdiff = 2
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+
 /datum/crafting_recipe/roguetown/engineering/minershelmet
 	name = "reinforced miners helmet"
 	result = /obj/item/clothing/head/roguetown/helmet/kettle/minershelm
