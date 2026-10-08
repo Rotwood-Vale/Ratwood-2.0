@@ -134,6 +134,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/descriptor_color = FALSE
 	/// If a cursed collar can be equipped to them at all
 	var/cursed_collarable = FALSE
+	/// If we are lactating, can others milk us via reagent containers (not for sex actions, but the stuff in milking.dm)
+	var/milkable = FALSE
 	var/voting_popup = TRUE
 	var/compliance_notifs = TRUE
 	var/skillcap_notifs = TRUE
