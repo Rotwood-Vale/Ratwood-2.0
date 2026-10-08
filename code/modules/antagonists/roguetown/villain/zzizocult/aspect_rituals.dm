@@ -196,11 +196,13 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		GLOB.zizo_bestow_areas += chosen
 		pool -= chosen
 
-/proc/zizo_bestow_alert(area/where)
+/proc/zizo_bestow_alert(area/where, final)
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
 		if(H.mind && H.get_skill_level(/datum/skill/magic/arcane) > 0)
 			to_chat(H, span_userdanger("Vile magick ripples out from [where.name]! Something evil has happened!"))
-	priority_announce("An inhumen ritual has been completed! Vile cultists seek the power of the Gods!", title = "Omen", sound = 'sound/villain/dreamer_warning.ogg')
+	if(!final)
+		return
+	priority_announce("THE GODS WEEP. ASCENSION IS NIGH.", title = "Omen", sound = 'sound/villain/dreamer_warning.ogg')
 	var/datum/particle_weather/gentle = new /datum/particle_weather/blood_rain_gentle
 	SSParticleWeather.runningWeather = gentle
 	gentle.start()
@@ -577,7 +579,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	new /obj/structure/reality_rend(center)
 	GLOB.zizo_bestow_areas -= here.type
 	refill_bestow_areas()
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(zizo_bestow_alert), here), 30 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(zizo_bestow_alert), here, gate_count >= 3), 30 SECONDS)
 
 // WEAPONS
 
@@ -1422,13 +1424,14 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	return TRUE
 
 /datum/ritual/rot/transfuse
-	name = "Transfuse"
-	desc = "Learn a spell to transfuse all reagents in your bloodstream to whoever you're grabbing. Makes you immune to poison."
+	name = "Rot Initiate"
+	desc = "Learn to transfuse reagents into whoever you grab. Learn lesser blight. Makes you immune to poison."
 	passive = TRUE
 	research_cost = 3
 
 /datum/ritual/rot/transfuse/apply_passive(mob/living/carbon/human/H)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/rot_transfuse)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_blight)
 	ADD_TRAIT(H, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
 	return
 
@@ -1554,6 +1557,33 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	visible_message(span_danger("Lux fills the barren stone and returns lyfe to the land!"))
 	playsound(src, 'sound/foley/breaksound.ogg', 50, TRUE)
 	return ..()
+
+/obj/structure/blight_pillar/lesser
+	name = "lesser rotting pillar"
+	icon_state = "creation3"
+	max_integrity = 150
+	radius = 1
+
+// weaker version of blight as spell, meant 2 emulate Rust heretic off TG. IDK if players will spam the terrain.
+/obj/effect/proc_holder/spell/self/lesser_blight
+	name = "Lesser Blight"
+	desc = "Raise a VILE totem before you to blight the land! The rotten flesh will harm any non-believers, yet strengthen fellow cultists."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "profane"
+	recharge_time = 2 MINUTES
+	chargedloop = null
+
+/obj/effect/proc_holder/spell/self/lesser_blight/cast(list/targets, mob/user = usr)
+	. = ..()
+	var/turf/T = get_step(user, user.dir)
+	if(!T || T.density)
+		to_chat(user, span_warning("No space."))
+		revert_cast()
+		return FALSE
+	new /obj/structure/blight_pillar/lesser(T)
+	to_chat(user, span_notice("THE LAND ROTS."))
+	return TRUE
 
 /datum/ritual/rot/blight
 	name = "Blight"
