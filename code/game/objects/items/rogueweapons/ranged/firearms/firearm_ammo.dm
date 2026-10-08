@@ -14,7 +14,7 @@
 
 /obj/projectile/bullet/firearm
 	name = "PARENT SMOKEPOWDER PROJECTILE"
-	damage = 80//Do you see how infrequently these things fire...
+	damage = 100//Do you see how infrequently these things fire...30 over a crossbow bolt, 20 over a heavy bolt
 	armor_penetration = 90//... and yet I need to explain?
 	range = 30//We want this to go a few screens. Regardless.
 	embedchance = 100//Yessir.
@@ -30,7 +30,6 @@
 	ammo_type = /obj/item/ammo_casing/caseless/bullet
 	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
 	var/stumble_strength = 4
-
 /**
  * Generic ammo used by handgonnes and arquebuses
  */
@@ -41,9 +40,23 @@
 	projectile_type = /obj/projectile/bullet/firearm/lead
 	caliber = "lead_sphere"
 
+/* /obj/item/ammo_casing/caseless/bullet/jaegerod
+	name = "jaegerod"
+	desc = "A small steel rod. This should go well with smokepowder."
+	projectile_type = /obj/projectile/bullet/firearm/jaegerod
+	caliber = "jaegerod" */
+
 /obj/projectile/bullet/firearm/lead
 	name = "lead sphere"
 	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead
+
+/*/obj/projectile/bullet/firearm/jaegerod
+	damage = 75 // five more than a crossbow but 5 less than an arquebus,does less immediate damage in favor of movement damage
+	armor_penetration = 120 // it is esentially a crossbow bolt but fired from a rifle, going to go through armor easily
+	range = 25 // less range than an arquebus
+	icon_state = "jaegerod_proj"
+	var/stumble_strength = 8 // hurts like a bitch 
+*/
 
 /obj/projectile/bullet/firearm/lead/on_hit(atom/target)
 	. = ..()
