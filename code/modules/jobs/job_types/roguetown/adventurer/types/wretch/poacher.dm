@@ -9,7 +9,7 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_WOODSMAN, TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_EXPERT_HUNTER)
 	// No straight upgrade to perception / speed to not stack one stat too high, but still stronger than MAA Skirm out of town.
- 	maximum_possible_slots = 2 // as a part of the 'wretches may as well be hero units' PR, but this one isn't as unique so we can have two as a treat
+	maximum_possible_slots = 2 // as a part of the 'wretches may as well be hero units' PR, but this one isn't as unique so we can have two as a treat
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_SPD = 2,
