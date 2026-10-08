@@ -72406,8 +72406,7 @@
 /area/rogue/indoors)
 "mYe" = (
 /obj/structure/table/wood/poor,
-/obj/effect/spawner/lootdrop/drow_equipment_spawner,
-/obj/effect/spawner/lootdrop/drow_equipment_spawner,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/armor,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/underdark/north)
 "mYf" = (
