@@ -16,6 +16,7 @@
 					/obj/effect/proc_holder/spell/invoked/equalize						= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/twilight_commieflag			= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/churnwealthy					= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/raze							= CLERIC_T4,
 					/obj/effect/proc_holder/spell/self/wingsoffreedom					= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/resurrect/matthios			= CLERIC_T3, // Counterpart to anastasis
 	)

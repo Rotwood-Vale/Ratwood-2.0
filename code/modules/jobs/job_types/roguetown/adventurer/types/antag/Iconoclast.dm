@@ -73,6 +73,7 @@
 				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/iconoclast
 				shirt = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy
 				shoes = /obj/item/clothing/shoes/roguetown/shortboots
+				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/raze)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/skulduggery)
 				ADD_TRAIT(H, TRAIT_CYCLOPS_RIGHT, TRAIT_GENERIC)

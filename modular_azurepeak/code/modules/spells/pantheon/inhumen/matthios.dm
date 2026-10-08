@@ -645,7 +645,7 @@
 		STAINT = 15
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/twilight_dragonclaws)
-
+		AddSpell(new /obj/effect/proc_holder/spell/invoked/dragon_swoop)
 		AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/matthios_dragon)
 		AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire/matthios_dragon)
 
@@ -674,6 +674,7 @@
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_LONGSTRIDER,
 		TRAIT_NOFALLDAMAGE1,
+		TRAIT_KNEESTINGER_IMMUNITY
 	)
 	inherent_biotypes = MOB_HUMANOID
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_R, SLOT_BACK_L, SLOT_S_STORE, SLOT_RING, SLOT_NECK)
@@ -722,7 +723,7 @@
 	icon_state = null
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
-	armor = ARMOR_PLATE
+	armor = list("blunt" = 10, "slash" = 100, "stab" = 80, "piercing" = 80, "fire" = 50, "acid" = 0)
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	sewrepair = FALSE
