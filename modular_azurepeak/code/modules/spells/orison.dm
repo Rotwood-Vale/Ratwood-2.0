@@ -295,11 +295,11 @@
 
 
 /datum/reagent/medicine/pestra_lesser
-	name = "Pestras Medicine"
+	name = "Pestra's Medicine"
 	description = ""
 	taste_mult = 3 // Bitter medicine
 	color = "#008145"
-	taste_description = "terible bitterness"
+	taste_description = "terrible bitterness"
 	metabolization_rate = REAGENTS_METABOLISM
 	pain = 0
 
@@ -328,7 +328,7 @@
 		if(istype(M.patron, /datum/patron/divine/pesta) || M.skills.get_effective_skill_cap(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
 			pain = 0
 			if(prob(3))
-				to_chat(M, span_green("Your wounds stich, as if under the hands of a competent surgeon."))
+				to_chat(M, span_green("Your wounds stitch together, as if under the hands of a competent surgeon."))
 		else
 			pain = M.STAWIL * 2.5 // quater of the pain treshold
 			if(prob(3))
@@ -338,18 +338,18 @@
 	..()
 
 
-/datum/reagent/medicine/pestra_grander
-	name = "Pestras Sacred Medicine"
+/datum/reagent/medicine/pestra_greater
+	name = "Pestra's Sacred Medicine"
 	description = ""
 	taste_mult = 5 // Bitter medicine
 	color = "#002e18"
-	taste_description = "terible bitterness and a taste of suffering"
+	taste_description = "terrible bitterness and a hint of suffering"
 	metabolization_rate = REAGENTS_METABOLISM
 	pain = 0
 
-/datum/reagent/medicine/pestra_grander/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/pestra_greater/on_mob_life(mob/living/carbon/M)
 	if(volume >= 60)
-		M.reagents.remove_reagent(/datum/reagent/medicine/pestra_grander, 2) //No overhealing.
+		M.reagents.remove_reagent(/datum/reagent/medicine/pestra_greater, 2) //No overhealing.
 	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		M.set_blood_volume(min(M.get_blood_volume()+20, BLOOD_VOLUME_NORMAL))
 	var/should_pain = FALSE
@@ -370,7 +370,7 @@
 		if(istype(M.patron, /datum/patron/divine/pesta) || M.skills.get_effective_skill_cap(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
 			pain = 0
 			if(prob(3))
-				to_chat(M, span_green("Your wounds stich, as if under the hands of a master surgeon."))
+				to_chat(M, span_green("Your wounds stitch together, as if under the hands of a master surgeon."))
 		else
 			pain = M.STAWIL * 5 // half of the pain treshold
 			if(prob(3))
@@ -481,7 +481,7 @@
 					water_contents = list(/datum/reagent/water/blessed = water_qty)
 				else
 					if(holy_skill >= SKILL_LEVEL_MASTER)
-						water_contents = list(/datum/reagent/medicine/pestra_grander = water_qty)
+						water_contents = list(/datum/reagent/medicine/pestra_greater = water_qty)
 					else
 						water_contents = list(/datum/reagent/medicine/pestra_lesser = water_qty)
 
