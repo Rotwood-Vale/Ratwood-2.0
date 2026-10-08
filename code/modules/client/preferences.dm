@@ -125,6 +125,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/chastenable = FALSE
 	var/chastity_hardmode = CHASTITY_HARDMODE_DISABLED
 	var/extreme_erp = FALSE
+	/// Can we have genital wounds/genital removal occur to our character
+	var/cbt = FALSE
 	var/edging = FALSE
 	var/free_use_default = FALSE
 	var/sensitive_brands = FALSE

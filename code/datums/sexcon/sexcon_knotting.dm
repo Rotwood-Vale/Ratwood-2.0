@@ -149,6 +149,8 @@
 		GLOB.azure_round_stats[STATS_KNOTTED_NOT_LUPIANS]++
 
 /datum/sex_controller/proc/knot_movement_mods_remove_his_knot_ty(mob/living/carbon/human/top, mob/living/carbon/human/btm)
+	if(!top?.client?.prefs?.cbt)
+		return FALSE
 	var/obj/item/organ/penis/penor = top.getorganslot(ORGAN_SLOT_PENIS)
 	if(!penor)
 		return FALSE
