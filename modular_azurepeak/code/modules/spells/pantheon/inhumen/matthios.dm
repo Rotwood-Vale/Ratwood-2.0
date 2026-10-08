@@ -482,6 +482,7 @@
 
 /obj/effect/proc_holder/spell/invoked/raze/gilded_dragon
 	devotion_cost = 0
+	miracle = FALSE
 
 /obj/effect/proc_holder/spell/invoked/raze/cast(list/targets, mob/living/user = usr)
 	. = ..()
@@ -626,7 +627,7 @@
 	race = /datum/species/dragon_matthios
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	ambushable = FALSE
-	skin_armor = new /obj/item/clothing/suit/roguetown/armor/skin_armor/twilight_dragon_skin
+	skin_armor = new /obj/item/clothing/suit/roguetown/armor/regenerating/twilight_dragon_skin
 	wildshape_icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
 	wildshape_icon_state = "dragon_cool"
 	pixel_x = -32
@@ -695,7 +696,7 @@
 	else
 		animate(src, pixel_x = GILDED_SWOOP_HEIGHT*0.1, pixel_z = GILDED_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
 	sleep(3)
-	icon_state = "dragon_cool"
+	icon_state = "dragon_swoop"
 	if(negative)
 		animate(src, pixel_x = -GILDED_SWOOP_HEIGHT, pixel_z = GILDED_SWOOP_HEIGHT, time = 7)
 	else
@@ -728,6 +729,8 @@
 	swooping |= GILDED_SWOOP_DAMAGEABLE
 	movement_type = FLYING
 	density = FALSE
+	var/old_icon_state = icon_state
+	icon_state = "shadow"
 	visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
 
 	var/negative
@@ -742,6 +745,7 @@
 
 	negative = !negative
 	var/oldtransform = transform
+	var/oldalpha = alpha
 	alpha = 255
 	animate(src, alpha = 204, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
 	for(var/i in 1 to 3)
@@ -750,7 +754,7 @@
 			qdel(F)
 			if(stat == DEAD)
 				swooping &= ~GILDED_SWOOP_DAMAGEABLE
-				animate(src, alpha = 255, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW)
+				animate(src, alpha = oldalpha, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW)
 			return FALSE
 	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= GILDED_SWOOP_INVULNERABLE
@@ -771,6 +775,7 @@
 	new /obj/effect/temp_visual/dragon_swoop(loc)
 	animate(src, alpha = 255, transform = oldtransform, descent_time)
 	SLEEP_CHECK_DEATH(descent_time)
+	icon_state = old_icon_state
 	swooping &= ~GILDED_SWOOP_INVULNERABLE
 	mouse_opacity = initial(mouse_opacity)
 	playsound(loc, 'sound/misc/meteorimpact.ogg', 200, TRUE)
@@ -818,13 +823,15 @@
 		TRAIT_BASHDOORS,
 		TRAIT_STRONGBITE,
 		TRAIT_STEELHEARTED,
+		TRAIT_DEATHBYSNUSNU,
 		TRAIT_ORGAN_EATER,
 		TRAIT_WILD_EATER,
 		TRAIT_HARDDISMEMBER,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_LONGSTRIDER,
 		TRAIT_NOFALLDAMAGE1,
-		TRAIT_KNEESTINGER_IMMUNITY
+		TRAIT_KNEESTINGER_IMMUNITY,
+		TRAIT_PONYGIRL_RIDEABLE
 	)
 	inherent_biotypes = MOB_HUMANOID
 	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_R, SLOT_BACK_L, SLOT_S_STORE, SLOT_RING, SLOT_NECK)
@@ -865,21 +872,6 @@
 /datum/species/dragon_matthios/update_damage_overlays(mob/living/carbon/human/human)
 	human.remove_overlay(DAMAGE_LAYER)
 	return TRUE
-
-/obj/item/clothing/suit/roguetown/armor/skin_armor/twilight_dragon_skin
-	slot_flags = null
-	name = "draconic scales"
-	desc = "All but impenetrable."
-	icon_state = null
-	body_parts_covered = FULL_BODY
-	body_parts_inherent = FULL_BODY
-	armor = list("blunt" = 10, "slash" = 100, "stab" = 80, "piercing" = 80, "fire" = 50, "acid" = 0)
-	blocksound = SOFTHIT
-	blade_dulling = DULLING_BASHCHOP
-	sewrepair = FALSE
-	max_integrity = 600
-	item_flags = DROPDEL
-	combat_taggable = TRUE
 
 /datum/intent/simple/twilight_dragon_cut
 	name = "claw"

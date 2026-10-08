@@ -154,3 +154,18 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	max_integrity = 450
 	repair_time = 20 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/twilight_dragon_skin
+	slot_flags = null
+	name = "draconic scales"
+	desc = "All but impenetrable."
+	icon_state = null
+	body_parts_covered = FULL_BODY
+	body_parts_inherent = FULL_BODY
+	armor = list("blunt" = 10, "slash" = 100, "stab" = 80, "piercing" = 80, "fire" = 50, "acid" = 0)
+	blocksound = SOFTHIT
+	blade_dulling = DULLING_BASHCHOP
+	sewrepair = FALSE
+	max_integrity = 600
+	item_flags = DROPDEL
+	combat_taggable = TRUE
