@@ -136,6 +136,30 @@
 	else
 		added_skills = list(list(/datum/skill/combat/crossbows, 1, 6))
 
+/datum/virtue/combat/firearmstrained
+	name = "Smokepowder Trained (-3 TRI)"
+	desc = "Firearms are rather simple, if a bit explosive. I've always kept a pouch of lead bullets and a ramrod hidden, just in case."
+	triumph_cost = 3
+	custom_text = "Gauranteed Apprentice for Firearms."
+	added_stashed_items = list("Pouch of Lead Bullets" = /obj/item/quiver/bullet, 
+								"Ramrod" = /obj/item/ramrod)
+
+/datum/virtue/combat/firearmstrained/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_APPRENTICE, silent = TRUE)
+
+/datum/virtue/combat/arquebustrained
+	name = "Arquebus Training (-25 TRI)"
+	desc = "I've had training in using Arquebus's and other smokepowder weapons. I've always kept an Arquebus Pistol, a pouch of bullets and smokepowder hidden, just in case."
+	triumph_cost = 25
+	custom_text = "Guaranteed Journeyman for Firearms and stashed Arquebus Pistol"
+	added_stashed_items = list("Pouch of Lead Bullets" = /obj/item/quiver/bullet,
+								"Arquebus Pistol" = /obj/item/gun/ballistic/firearm/arquebus_pistol,
+								"Smokepowder Flask" = /obj/item/powderflask
+	)
+
+/datum/virtue/combat/arquebustrained/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
+
 /datum/virtue/combat/shepherd
 	name = "Capable Shepherd"
 	desc = "Years of protecting my herd from brigands and thieves have taught me how to use the simplest of weapons in self-defense."

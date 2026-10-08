@@ -1,7 +1,7 @@
 /datum/advclass/hunter
 	townie_contract_gate_exempt = TRUE
-	name = "Bow-Hunter"
-	tutorial = "You are a hunter. With your bow you hunt the fauna of the glade, skinning what you kill and cooking any meat left over. The job is dangerous but important in the circulation of clothing and light armor."
+	name = "Hunter"
+	tutorial = "You are a hunter. With your weapon you hunt the fauna of the glade, skinning what you kill and cooking any meat left over. The job is dangerous but important in the circulation of clothing and light armor."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/adventurer/hunter
@@ -73,7 +73,7 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/huntersyell)
 		H.set_blindness(0)
-		var/ranged_weapons = list("Longbow", "Recurve Bow")
+		var/ranged_weapons = list("Longbow", "Recurve Bow", "Arquebus")
 		var/ranged_choice = input(H, "Choose your ranged weapon.", "PREPARE FOR THE HUNT") as anything in ranged_weapons
 		switch(ranged_choice)
 			if("Longbow")
@@ -82,6 +82,10 @@
 			if("Recurve Bow")
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltr = /obj/item/quiver/arrows
+			if("Arquebus")
+				H.adjust_skillrank_up_to(/datum/skill/combat/firearms, 3, TRUE)
+				backr = /obj/item/gun/ballistic/firearm/arquebus
+				beltr = /obj/item/quiver/bullet
 
 		var/sidearms = list("Machete", "Hatchet")
 		var/sidearm_choice = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in sidearms
