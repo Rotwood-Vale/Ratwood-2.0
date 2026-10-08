@@ -404,7 +404,7 @@
 /datum/status_effect/buff/twilight_peoplesbanner
 	id = "twilight_peoplesbanner"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/twilight_peoplesbanner
-	effectedstats = list(STATKEY_WIL = 3, STATKEY_SPD = 2)
+	effectedstats = list(STATKEY_WIL = 3)
 	tick_interval = 5 SECONDS
 
 /datum/status_effect/proc/has_matthios_banner_in_range()
