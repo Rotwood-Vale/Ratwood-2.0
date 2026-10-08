@@ -79,6 +79,7 @@
 				ADD_TRAIT(H, TRAIT_CYCLOPS_RIGHT, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_BADTRAINER, TRAIT_GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_LEGENDARY, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_LEGENDARY, TRUE)
 				H.change_stat(STATKEY_CON, 2)
