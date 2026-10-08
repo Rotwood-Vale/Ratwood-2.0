@@ -98,6 +98,11 @@
 	cost = 60
 	contains = list(/obj/item/alch/transisdust)
 
+/datum/supply_pack/rogue/drugs/suisalve
+	name = "Sui Salve, Genital Restorative"
+	cost = 25
+	contains = list(/obj/item/alch/suisalve)
+
 /datum/supply_pack/rogue/drugs/swampleaf
 	name = "Swampweeed leaf (dried)"
 	cost = 5

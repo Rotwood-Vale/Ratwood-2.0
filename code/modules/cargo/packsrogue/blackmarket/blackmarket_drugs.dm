@@ -8,6 +8,11 @@
 	cost = 25
 	contains = list(/obj/item/reagent_containers/powder/ozium)
 
+/datum/supply_pack/rogue/blackmarket_drugs/suisalve
+	name = "Sui Salve, Genital Restorative"
+	cost = 25
+	contains = list(/obj/item/alch/suisalve)
+
 /datum/supply_pack/rogue/blackmarket_drugs/moondust
 	name = "Moon Dust"
 	cost = 40

@@ -84,6 +84,13 @@
 	reqs = list(/obj/item/herbseed/taraxacum = 1, /obj/item/herbseed/euphrasia = 1, /obj/item/herbseed/hypericum = 1, /obj/item/herbseed/salvia = 1)
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/alchemy/suisalve
+	name = "sui salve"
+	category = "Table"
+	result = list(/obj/item/alch/suisalve = 1)
+	reqs = list(/obj/item/alch/transisdust = 1, /datum/reagent/medicine/healthpot = 5, /obj/item/natural/clay = 1)
+	craftdiff = 0//this is something we want doable by a player in an empty server using ingredients crafted or purchased since its an IC way to resolve OOC pref issues
+
 /datum/crafting_recipe/roguetown/alchemy/menthazig
 	name = "handmade mentha zig"
 	category = "Table"

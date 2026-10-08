@@ -348,10 +348,10 @@
 	if(user && dam)
 		if(user.goodluck(2))
 			dam += 10
+	var/cbt_multiplier = 1
+	if(user && HAS_TRAIT(user, TRAIT_NUTCRACKER))
+		cbt_multiplier = 2
 	if((bclass in GLOB.cbt_classes) && (zone_precise == BODY_ZONE_PRECISE_GROIN))
-		var/cbt_multiplier = 1
-		if(user && HAS_TRAIT(user, TRAIT_NUTCRACKER))
-			cbt_multiplier = 2
 		if(owner.client?.prefs?.cbt && prob(round(dam/5) * cbt_multiplier))
 			attempted_wounds += /datum/wound/cbt
 		if(prob(dam * cbt_multiplier))
@@ -368,7 +368,7 @@
 				var/datum/wound/candidate = GLOB.primordial_wounds[wound_type]
 				if(candidate.can_apply_to_bodypart(src))
 					eligible_wounds += wound_type
-			if(length(eligible_wounds) && prob(round(dam / 5)))
+			if(length(eligible_wounds) && prob(round(dam / 5) * cbt_multiplier))
 				attempted_wounds += pick(eligible_wounds)
 	if((bclass in GLOB.fracture_bclasses) && (zone_precise != BODY_ZONE_PRECISE_STOMACH))
 		used = round(damage_dividend * 20 + (dam / 3))
