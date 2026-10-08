@@ -1,7 +1,7 @@
 /datum/patron/godless //for the generic godless sorts.
 	name = "Apostasy"
 	domain = "Abandonment of faith"
-	desc = "You used to pray, you used to have faith. No longer. In a state of limbo, you remain. You know they exist, you know they're powerful, but you don't pray to any of them. Why would you pray to any deity who had a hand in the creation of this terrible world?"
+	desc = "The gods exist, but you don't pray to any of them. Why would you pray to any deity who had a hand in the creation of this terrible world?"
 	worshippers = "The disillusioned, the neutral, the lost"
 	virtues = "None"
 	sins = "None"
@@ -15,7 +15,7 @@
 /datum/patron/godless/nerd //for nerds
 	name = "Rationalism"
 	domain = "Scientific Justification"
-	desc = "The world operates on reason, on evidence! The world does not change out of the deignings of these far-off beings! Sure, the ''deities'' of this world exist, and are powerful, but they are not intrinsic parts of it! Without them, the world would keep on going, surely!"
+	desc = "The world operates on reason, on evidence! The gods may exist, but they aren't what the actions of mortals should be based off of."
 	worshippers = "The questioning, studious, and ''free-thinking''"
 	virtues = "Pushing up your glasses"
 	sins = "Illogical reasoning"
@@ -29,7 +29,7 @@
 /datum/patron/godless/unshackled //for the rebellious sort.
 	name = "Defiance"
 	domain = "Refusal to submit to the divine"
-	desc = "You defy the divine. They exist, they're powerful, but you refuse to shackle yourself to a deity, like some slave! If they want to do anything about it, they can come strike you down personally."
+	desc = "The divine exist, but even the most lenient of them are still reality warping tyrants! You refuse!"
 	worshippers = "The anarchic, rebellious, and defiant"
 	virtues = "Freedom"
 	sins = "Submission"
@@ -43,7 +43,7 @@
 /datum/patron/godless/nuhuh //for the incredibly stubborn types.
 	name = "Ignorance"
 	domain = "Refusal to admit the divine exist"
-	desc = "Oho, MIRACLES? Those are just phenomena! There's no such thing as an Astrata, or a Noc, these are just pretend things, they don't exist. You've never seen them, why would you believe in these silly far-off things that are so powerful they warp the world? Bull, shit."
+	desc = "Magic giant beings exist a thousand miles away, and they magically made the entire world? Bull, shit."
 	worshippers = "The stubborn, the ignorant, the foolhardy"
 	virtues = "Brushing off the existence of the divine"
 	sins = "Admitting the existence of the divine"
@@ -69,7 +69,7 @@
 /datum/patron/godless/unknowing //for constructs and particularly dumb kobolds
 	name = "Unknowing"
 	domain = "Indifference"
-	desc = "In all your time here, you haven't found out what a god is, let alone chosen one to worship. Whether due to brain damage, being woefully uninformed, sheltered or simply stupid, you have no idea what a god is."
+	desc = "Blissfully unaware of what a deity is, whether from a newly formed being, or an idiot, you've never learned what a god is, let alone worshiped one."
 	worshippers = "The newly created, ignoramouses, fools"
 	virtues = "Huh?"
 	sins = "What?"
@@ -82,8 +82,8 @@
 /datum/patron/godless/tribe //for black-oaks, and dwarves
 	name = "Tribalism"
 	domain = "Elevation of one's tribe to a divine status"
-	desc = "There is no purpose worshiping a god. They have done nothing for you. Your home, your people, your roots, your tribe, however, is everything to you, to the point of reverence on the level of a deity."
-	worshippers = "The patriotic, the nationalistic, the xenophobic"
+	desc = "These gods only care about themselves. What about your people? You'll bow to no god that demands you co-exist with |them|."
+	worshippers = "Black-oaks, dwarves, the close-minded"
 	virtues = "Membership of your tribe"
 	sins = "Being an outsider of your tribe"
 	confess_lines = list(
