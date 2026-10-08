@@ -1,5 +1,0 @@
-author: "ophaq"
-delete-after: True
-changes:
-  - rscadd: "Adds the tailcoat and ornate tailcoat to the loadout."
-  - bugfix: "Fixes up code in the loadout for nobility check so there is less copy pasta."
