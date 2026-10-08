@@ -146,11 +146,16 @@
 	cost = 30
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat)
 
+/datum/supply_pack/rogue/Sawbones/brigandine
+	name = "Brigandine"
+	cost = 60
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine)
+
 ///////////////////
 // WRISTS/GLOVES //
 ///////////////////
 
-/datum/supply_pack/rogue/Sawbones/leather/Lbracers
+/datum/supply_pack/rogue/Sawbones/leather/lbracers
 	name = "Leather Bracers"
 	cost = 5
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers/leather)
@@ -159,6 +164,31 @@
 	name = "Hardened Leather Bracers"
 	cost = 10
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers/leather/heavy)
+
+/datum/supply_pack/rogue/Sawbones/bracers
+	name = "Steel Bracers"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers)
+
+/datum/supply_pack/rogue/Sawbones/bracers/chain
+	name = "Steel Chainsleeves"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/chain)
+
+/datum/supply_pack/rogue/Sawbones/bracers/bronze
+	name = "Bronze Wristguards"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/bronze)
+
+/datum/supply_pack/rogue/Sawbones/splintbracers
+	name = "Brigandine Rerebraces"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/splintarms)
+
+/datum/supply_pack/rogue/Sawbones/jackchain
+	name = "Jack Chains"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/jackchain)
 
 /datum/supply_pack/rogue/Sawbones/leather/lgloves
 	name = "Leather Gloves"
@@ -174,6 +204,16 @@
 	name = "Fingerless Leather Gloves"
 	cost = 10
 	contains = list(/obj/item/clothing/gloves/roguetown/fingerless_leather)
+
+/datum/supply_pack/rogue/Sawbones/chaingauntlets
+	name = "Steel Chain Gauntlets"
+	cost = 10
+	contains = list(/obj/item/clothing/gloves/roguetown/chain)
+
+/datum/supply_pack/rogue/Sawbones/plategaunt
+	name = "Plate Gauntlets"
+	cost = 25
+	contains = list(/obj/item/clothing/gloves/roguetown/plate)
 
 ///////////////
 // LEGS/FEET //

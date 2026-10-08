@@ -33,6 +33,26 @@
 	cost = 20
 	contains = list(/obj/item/clothing/head/roguetown/helmet/sallet)
 
+/datum/supply_pack/rogue/Brigand/barbute
+	name = "Barbute"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy)
+
+/datum/supply_pack/rogue/Brigand/Bbarbute
+	name = "Bronze Barbute"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bronze)
+
+/datum/supply_pack/rogue/Brigand/illyria
+	name = "Bronze Illyriahelm"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bronze)
+
+/datum/supply_pack/rogue/Brigand/murmillo
+	name = "Bronze Murmillo"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bronzegladiator)
+
 /datum/supply_pack/rogue/Brigand/visoredsallet
 	name = "Visored Sallet"
 	cost = 30
@@ -71,6 +91,21 @@
 //////////
 // NECK //
 //////////
+
+/datum/supply_pack/rogue/Brigand/coif/bronze
+	name = "Bronze Coif"
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/chaincoif/bronze)
+
+/datum/supply_pack/rogue/Brigand/gorgette
+	name = "Bronze Gorgette"
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/bevor/bronze)
+
+/datum/supply_pack/rogue/Brigand/bgorget
+	name = "Bronze Neckguard"
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/gorget/bronze)
 
 /datum/supply_pack/rogue/Brigand/coif/steel
 	name = "Steel Coif"
@@ -185,6 +220,11 @@
 	name = "Hauberk, Bronze"
 	cost = 25
 	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/bronze)
+
+/datum/supply_pack/rogue/Brigand/bcuirass
+	name = "Bronze Cuirass"
+	cost = 15
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/bronze)
 
 /datum/supply_pack/rogue/Brigand/steelcuirass
 	name = "Steel Cuirass"
@@ -328,6 +368,11 @@
 	name = "Steel Boots"
 	cost = 15
 	contains = list(/obj/item/clothing/shoes/roguetown/boots/armor)
+
+/datum/supply_pack/rogue/Brigand/Bgreaves
+	name = "Bronze Greaves"
+	cost = 10
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/armor/bronze)
 
 /datum/supply_pack/rogue/Brigand/boots/maille
 	name = "Maille Boots"
@@ -677,6 +722,11 @@
 	cost = 10
 	contains = list(/obj/item/rogueweapon/shield/tower)
 
+/datum/supply_pack/rogue/Brigand/kiteshield
+	name = "Hoplon Shield"
+	cost = 15
+	contains = list(/obj/item/rogueweapon/shield/bronze)
+
 /datum/supply_pack/rogue/Brigand/heatshield
 	name = "Iron Shield"
 	cost = 10
@@ -686,3 +736,8 @@
 	name = "Kite Shield"
 	cost = 20
 	contains = list(/obj/item/rogueweapon/shield/tower/metal)
+
+/datum/supply_pack/rogue/Brigand/kiteshield
+	name = "Hoplon Greatshield"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/shield/bronze/great)

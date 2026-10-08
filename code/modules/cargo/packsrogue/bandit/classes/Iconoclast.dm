@@ -38,6 +38,36 @@
 	cost = 40
 	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/knight/armet)
 
+/datum/supply_pack/rogue/Iconoclast/pigface
+	name = "Pigface Bascinet"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface)
+
+/datum/supply_pack/rogue/Iconoclast/hbascinet
+	name = "Hounskull Bascinet"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull)
+
+/datum/supply_pack/rogue/Iconoclast/roundface
+	name = "Roundface Bascinet"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface)
+
+/datum/supply_pack/rogue/Iconoclast/roundface
+	name = "Roundface Bascinet, Snouted"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted)
+
+/datum/supply_pack/rogue/Iconoclast/bhelm
+	name = "Bucket Helm"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bucket)
+
+/datum/supply_pack/rogue/Iconoclast/froggy
+	name = "Froggemund Helm"
+	cost = 60
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/frogmouth)
+
 //////////
 // NECK //
 //////////
