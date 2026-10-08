@@ -18,7 +18,7 @@
 	class_select_category = CLASS_CAT_ZYBANTU
 	subclass_languages = list(/datum/language/celestial)
 	category_tags = list(CTAG_MERCENARY)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_MAGEDEXTERITY)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_MAGEDEXTERITY, TRAIT_COMPLIANT)
 	subclass_spellpoints = 8//We'll focus on this being a combination spellblade.
 	subclass_stats = list(
 		STATKEY_INT = 3,

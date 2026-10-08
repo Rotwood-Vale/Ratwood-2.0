@@ -18,7 +18,8 @@
 		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_ARCYNE_T1,//They're not meant to get more spellpoints. If they do, via Arcyne virtue, for example, T1 only.
 		TRAIT_NALEDI,
-		TRAIT_MAGEDEXTERITY, //THEY NEED THIS MORE THAN ANY OTHER MAGE IN THE GAME. 
+		TRAIT_MAGEDEXTERITY, //THEY NEED THIS MORE THAN ANY OTHER MAGE IN THE GAME.
+		TRAIT_COMPLIANT,
 	)
 	subclass_stats = list(// This does not follow the typical 8 stat setup. Do not increase this.
 		STATKEY_INT = 3,

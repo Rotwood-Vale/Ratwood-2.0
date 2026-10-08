@@ -9,7 +9,7 @@
 	class_select_category = CLASS_CAT_MAGE
 	category_tags = list(CTAG_WRETCH)
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY, TRAIT_COMPLIANT)
 	// Same stat spread as necromancer, same reasoning
 	subclass_stats = list(
 		STATKEY_INT = 4,
