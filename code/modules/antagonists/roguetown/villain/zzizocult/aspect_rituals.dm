@@ -404,6 +404,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		return
 	var/list/choices = list("PITCH", "TOIL", "STRAND", "ROT", "BLOOD", "NOISE", "BITE")
 	var/choice = tgui_input_list(user, "CHOOSE AN ASPECT TO BRING FORTH.","ZIZO", choices)
+	if(!choice)
+		new /obj/item/necro_relics/necro_crystal(center)
+		return
 	to_chat(user, span_notice("The rite begins. Remain still.<BR>Some may be alerted to your location after it is complete."))
 	var/poo = new /obj/effect/temp_visual/opengate(center)
 	playsound(user, 'sound/villain/littlescary.ogg', 100, TRUE)
@@ -533,6 +536,10 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 			addtimer(CALLBACK(L, TYPE_PROC_REF(/mob/living/carbon, exit_frenzymod)), frenzy_duration)
 	..()
 
+/obj/item/rogueweapon/huntingknife/idagger/steel
+	var/active_intents =	list(/datum/intent/dagger/thrust/cult,/datum/intent/dagger/cut/cult)
+	var/inactive_intents = list()
+
 /obj/item/rogueweapon/huntingknife/idagger/steel/blood
 	name = "slave knife"
 	desc = "A blade wielded by blood-pit slaves in the chaotic age after PSYDON's death. This one is permanently wet with blood."
@@ -559,8 +566,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	max_blade_int = 9999
 	smeltresult = null
 	special = /datum/special_intent/ignite_dagger
-	var/active_intents =	list(/datum/intent/dagger/thrust/cult,/datum/intent/dagger/cut/cult)
-	var/inactive_intents = list()
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/pitch/Initialize(mapload)
 	. = ..()
@@ -575,10 +580,11 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/special_intent/ignite_dagger/on_create()
 	. = ..()
 	howner.visible_message(span_warning("[iparent]'s blade begins to glow intensely in [howner]'s grasp!"))
-	var/obj/item/rogueweapon/huntingknife/idagger/steel/pitch/W = iparent
+	var/obj/item/rogueweapon/huntingknife/idagger/steel/W = iparent
 	active_timer = addtimer(CALLBACK(src, PROC_REF(effect_expire)), 30 SECONDS, TIMER_STOPPABLE)
 	W.damtype = BURN
-	W.icon_state = "fdagger_active"
+	if("[W.icon_state]_active" in icon_states(W.icon))
+		W.icon_state = "[W.icon_state]_active"
 	W.inactive_intents = W.possible_item_intents
 	W.possible_item_intents = W.active_intents
 	howner.update_a_intents()
@@ -587,9 +593,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/special_intent/ignite_dagger/proc/effect_expire()
 	howner.visible_message(span_warning("[iparent]'s blade cools down!"))
-	var/obj/item/rogueweapon/huntingknife/idagger/steel/pitch/W = iparent
+	var/obj/item/rogueweapon/huntingknife/idagger/steel/W = iparent
 	W.damtype = BRUTE
-	W.icon_state = "fdagger"
+	W.icon_state = initial(W.icon_state)
 	W.possible_item_intents = W.inactive_intents
 	howner.update_a_intents()
 	howner.regenerate_icons()

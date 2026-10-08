@@ -574,7 +574,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	to_chat(victim, span_userdanger("I FEEL A TERRIBLE EXHAUSTION COME UPON ME. I HAVE 30 SECONDS TO PREPARE BEFORE IT CLAIMS ME. SOMEONE WILL COME FOR ME IN MY SLUMBER."))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sleepcurse), victim), 30 SECONDS)
 
-/proc/sleepcurse(mob/living/user, mob/living/victim)
+/proc/sleepcurse(mob/living/victim)
 	if(QDELETED(victim) || !ishuman(victim))
 		return
 	victim.Unconscious(2 MINUTES)
@@ -1034,7 +1034,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		to_chat(user, span_warning("I NEED A LEECH THAT HAS FED ON SOMEONE."))
 		return
 	var/mob/living/carbon/human/target = remnant.fed_from
-	if(QDELETED(target) || target.stat == DEAD)
+	if(QDELETED(target) || target.stat == DEAD || target.has_status_effect(/datum/status_effect/debuff/pylon_drain))
 		to_chat(user, span_warning("CAN'T FIND ANYONE."))
 		return
 	qdel(remnant)
@@ -1383,7 +1383,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	active_item = TRUE
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/H = loc
+	var/mob/living/carbon/human/H = user
 	H.change_stat(STATKEY_STR, 2)
 	H.change_stat(STATKEY_PER, 2)
 	H.change_stat(STATKEY_INT, 2)
@@ -1398,7 +1398,7 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		return
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/H = loc
+	var/mob/living/carbon/human/H = user
 	H.change_stat(STATKEY_STR, -2)
 	H.change_stat(STATKEY_PER, -2)
 	H.change_stat(STATKEY_INT, -2)
