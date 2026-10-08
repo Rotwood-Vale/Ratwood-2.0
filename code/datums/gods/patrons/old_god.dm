@@ -99,8 +99,8 @@
 	to_chat(H, span_info("A coin in my boot? Psydon smiles upon me!"))
 	H.put_in_hands(found_thing, FALSE)
 	if(prob(H.STALUC + H.get_skill_level(associated_skill)))
-		var/obj/item/extra_thing = pick(lootpool)
-		new extra_thing(get_turf(user))
+		var/extra_path = pick(lootpool)
+		var/obj/item/extra_thing = new extra_path(get_turf(user))
 		to_chat(H, span_info("Ah, of course! I almost forgot I had this stashed away for a perfect occasion."))
 		H.put_in_hands(extra_thing, FALSE)
 	return TRUE

@@ -1407,8 +1407,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			span_danger("[attack_message_local][target.next_attack_msg.Join()]"), null, COMBAT_MESSAGE_RANGE)
 		target.next_attack_msg.Cut()
 
-		target.retaliate(user)
-
 /*		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
 			target.visible_message(span_danger("[user] knocks [target] down!"), \
 							span_danger("You're knocked down by [user]!"), span_hear("I hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, user)
@@ -1939,8 +1937,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/nodmg = FALSE
 
 	if(Iforce)
-		H.retaliate(user)
-
 		var/weakness = H.check_weakness(I, user)
 		H.next_attack_msg.Cut()
 		if(!apply_damage(Iforce * weakness, I.damtype, def_zone, armor_block, H))
@@ -2271,7 +2267,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 			else
 				// Residual heat damage scaling with temp
 				firemodifier = min(firemodifier, 0)
-				burn_damage = round(max(log(2-firemodifier,(H.bodytemperature-BODYTEMP_NORMAL))-5,0))
+				burn_damage = round(max(log(2-firemodifier,max(H.bodytemperature-BODYTEMP_NORMAL, 1))-5,0))
 
 		if(burn_damage > 0)
 			switch(burn_damage)
