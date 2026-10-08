@@ -20,7 +20,7 @@
 	name = "Arquebus Rifle"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/flint, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/natural/wood/plank, /obj/item/natural/wood/plank, /obj/item/natural/wood/plank)
-	created_item = /obj/item/gun/ballistic/firearm/arquebus_rifle
+	created_item = /obj/item/gun/ballistic/firearm/arquebus
 	createditem_num = 1
 	craftdiff = 4
 
@@ -32,7 +32,7 @@
 	createditem_num = 1
 	craftdiff = 4
 
-/datum/anvil_recipe/firearms/engineeredrifle
+/*/datum/anvil_recipe/firearms/engineeredrifle
 	name = "Jaeger Rifle"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/flint, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/natural/wood/plank, /obj/item/natural/wood/plank, /obj/item/natural/wood/plank)
