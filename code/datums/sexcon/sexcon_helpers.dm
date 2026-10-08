@@ -183,6 +183,8 @@
 	// Male masochists moan in pleasure rather than screaming in pure agony.
 	// Masochism is a charflaw addiction, not a trait — use has_flaw() instead of HAS_TRAIT().
 	if(action_target.has_flaw(/datum/charflaw/addiction/masochist) && action_target.gender == MALE)
+		if(!action_target.can_speak_vocal())
+			return
 		playsound(get_turf(action_target), pick('modular/sound/masomoans/masomoan1.ogg', 'modular/sound/masomoans/masomoan2.ogg', 'modular/sound/masomoans/masomoan3.ogg', 'modular/sound/masomoans/masomoan4.ogg', 'modular/sound/masomoans/masomoan5.ogg', 'modular/sound/masomoans/masomoan6.ogg'), 70, TRUE, 1)
 		return
 	action_target.emote("scream", forced = TRUE)

@@ -189,7 +189,8 @@
 			if(H.age == AGE_OLD)
 				modifier = "old"
 			if((!ignore_silent && (H.silent)) || (!ignore_silent && !is_emote_muffled(H)) || (!ignore_silent && HAS_TRAIT(H, TRAIT_MUTE)) ||  (!ignore_silent && HAS_TRAIT(H, TRAIT_BAGGED)))
-				modifier = "silenced"
+				// Some voice packs choose their own sounds without honoring modifiers.
+				return
 			if(user.gender == FEMALE && H.dna.species.soundpack_f)
 				possible_sounds = H.dna.species.soundpack_f.get_sound(key,modifier)
 			else if(H.dna.species.soundpack_m)
@@ -241,7 +242,7 @@
 			. = message_muffled
 		if(!muzzle_ignore && HAS_TRAIT(C, TRAIT_MUTE) && emote_type == EMOTE_AUDIBLE)
 			. = message_muffled
-		if(!muzzle_ignore && C.mouth?.muteinmouth && emote_type == EMOTE_AUDIBLE)
+		if(!muzzle_ignore && !is_emote_muffled(C) && emote_type == EMOTE_AUDIBLE)
 			. = message_muffled
 		if(!muzzle_ignore && emote_type == EMOTE_AUDIBLE && HAS_TRAIT(C, TRAIT_BAGGED))
 			. = message_muffled

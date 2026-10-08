@@ -294,6 +294,11 @@
 	critical = TRUE
 	var/organs_removed = FALSE
 
+/datum/wound/gelding/get_sound_effect(mob/living/affected, obj/item/bodypart/affected_bodypart)
+	if(affected && !affected.can_speak_vocal())
+		return
+	return ..()
+
 /datum/wound/gelding/can_apply_to_bodypart(obj/item/bodypart/affected)
 	if(!..())
 		return FALSE
@@ -337,6 +342,11 @@
 		ORGAN_SLOT_PENIS,
 		ORGAN_SLOT_VAGINA,
 	)
+
+/datum/wound/genital_nullification/get_sound_effect(mob/living/affected, obj/item/bodypart/affected_bodypart)
+	if(affected && !affected.can_speak_vocal())
+		return
+	return ..()
 
 /datum/wound/genital_nullification/can_apply_to_bodypart(obj/item/bodypart/affected)
 	if(!..())
