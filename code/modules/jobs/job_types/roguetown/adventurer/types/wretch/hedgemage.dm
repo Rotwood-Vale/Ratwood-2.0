@@ -11,7 +11,7 @@
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY)
 	// Same stat spread as necromancer, same reasoning
-  maximum_possible_slots = 2 // as a part of the 'wretches may as well be hero units' PR, but this one isn't as unique so we can have two as a treat
+ 	maximum_possible_slots = 2 // as a part of the 'wretches may as well be hero units' PR, but this one isn't as unique so we can have two as a treat
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 2,
