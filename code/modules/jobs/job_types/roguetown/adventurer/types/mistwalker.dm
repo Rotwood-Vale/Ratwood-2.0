@@ -10,7 +10,7 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END) //no armour, literally made to bleed
 	virtue_restrictions = list(/datum/virtue/combat/rotcured, /datum/virtue/utility/deathless)
-	maximum_possible_slots = 2 // as a part of the 'wretches may as well be hero units' PR, but this one isn't as unique so we can have two as a treat
+	maximum_possible_slots = 1 // as a part of the 'wretches may as well be hero units' PR, but this guy is problematic and i'm stupidly copy pasting shit like an IDIOT
 
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
 	subclass_stats = list(
