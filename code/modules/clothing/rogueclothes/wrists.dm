@@ -537,77 +537,21 @@
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/steel
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
-	var/atom/movable/holdingknife1
-	var/atom/movable/holdingknife2
 
-/obj/item/clothing/wrists/roguetown/artificedbracers/Destroy()
-	QDEL_NULL(holdingknife1)
-	QDEL_NULL(holdingknife2)
-	return..()
-
-/obj/item/clothing/wrists/roguetown/artificedbracers/deconstruct(disassembled)
-	if(holdingknife1)
-		holdingknife1.forceMove(get_turf(src))
-		holdingknife1 = null
-	if(holdingknife2)
-		holdingknife2.forceMove(get_turf(src))
-		holdingknife2 = null
-	return ..()
-
-/obj/item/clothing/wrists/roguetown/artificedbracers/examine(mob/user)
-	. = ..()
-	. += span_smallnotice("Daggers can be stowed inside.")
+/obj/item/clothing/wrists/roguetown/artificedbracers/ComponentInitialize()
+	AddComponent(/datum/component/hidden_blades, 'sound/misc/grapple_attach.ogg', 'sound/misc/grapple_reel.ogg', "The inner mechanisms are jammed!", "The sounds of artificed mechanisms echo from the [src]!")
 
 /obj/item/clothing/wrists/roguetown/artificedbracers/attackby(obj/item/storing_item, mob/living/carbon/user, params)
-	if(istype(storing_item,/obj/item/rogueweapon/huntingknife))
-		if(holdingknife1 && holdingknife2)
-			to_chat(user, span_warning("My bracers already have daggers slotted into them."))
-			return
-		if(obj_integrity <= 0)
-			to_chat(user, span_warning("The inner mechanisms are jammed!"))
-			return
-		to_chat(user, span_warning("I quickly slot [storing_item] into [src]!"))
-		user.transferItemToLoc(storing_item, src)
-		
-		if(isnull(holdingknife1))
-			holdingknife1 = storing_item
-		else
-			holdingknife2 = storing_item
-		playsound(user, 'sound/misc/grapple_attach.ogg')
-		return
+	var/datum/component/hidden_blades/hidden_blades = GetComponent(/datum/component/hidden_blades)
+	if(hidden_blades && hidden_blades.stow(storing_item, user))
+		return TRUE
 	return ..()
 
 /obj/item/clothing/wrists/roguetown/artificedbracers/attack_right(mob/user)
-	if(obj_integrity <= 0)
-		to_chat(user, span_warning("The inner mechanisms are jammed!"))
-		return
-
-	if(isnull(holdingknife1) && isnull(holdingknife2))
-		return
-
-	var/active_empty = !user.get_active_held_item()
-	var/inactive_empty = !user.get_inactive_held_item()
-
-	if(!active_empty && !inactive_empty)
-		to_chat(user, span_warning("I need a free hand to deploy my dagger!"))
-		return
-
-	user.visible_message(span_warning("Inner mechanisms click from [src]!"), span_warning("I flick my wrists in a swift motion.")
-	)
-	if(holdingknife1 && (active_empty || inactive_empty))
-		if(user.put_in_hands(holdingknife1))
-			holdingknife1 = null
-
-			//Checking hands again because number of free hands changed.//
-			active_empty = !user.get_active_held_item()
-			inactive_empty = !user.get_inactive_held_item()
-
-	if(holdingknife2 && (active_empty || inactive_empty))
-		if(user.put_in_hands(holdingknife2))
-			holdingknife2 = null
-
-	playsound(user, 'sound/misc/grapple_reel.ogg')
-	return TRUE
+	var/datum/component/hidden_blades/hidden_blades = GetComponent(/datum/component/hidden_blades)
+	if(hidden_blades)
+		return hidden_blades.deploy(user)
+	return ..()
 
 /obj/item/clothing/wrists/roguetown/sheathebracers
 	name = "leather bracers"
@@ -624,75 +568,18 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/steel
-	var/atom/movable/holdingknife1
-	var/atom/movable/holdingknife2
 
-/obj/item/clothing/wrists/roguetown/sheathebracers/Destroy()
-	QDEL_NULL(holdingknife1)
-	QDEL_NULL(holdingknife2)
-	return..()
-
-/obj/item/clothing/wrists/roguetown/sheathebracers/deconstruct(disassembled)
-	if(holdingknife1)
-		holdingknife1.forceMove(get_turf(src))
-		holdingknife1 = null
-	if(holdingknife2)
-		holdingknife2.forceMove(get_turf(src))
-		holdingknife2 = null
-	return ..()
-
-/obj/item/clothing/wrists/roguetown/sheathebracers/examine(mob/user)
-	. = ..()
-	. += span_smallnotice("Daggers can be stowed inside.")
+/obj/item/clothing/wrists/roguetown/sheathebracers/ComponentInitialize()
+	AddComponent(/datum/component/hidden_blades, 'sound/foley/equip/scabbard_holster.ogg', 'sound/foley/equip/swordsmall1.ogg', "The sheath is jammed!", "Sounds of unsheathing ring out from the [src]!")
 
 /obj/item/clothing/wrists/roguetown/sheathebracers/attackby(obj/item/storing_item, mob/living/carbon/user, params)
-	if(istype(storing_item,/obj/item/rogueweapon/huntingknife))
-		if(holdingknife1 && holdingknife2)
-			to_chat(user, span_warning("My bracers already have daggers slotted into them."))
-			return
-		if(obj_integrity <= 0)
-			to_chat(user, span_warning("The straps on the sheaths are broken!"))
-			return
-
-		to_chat(user, span_warning("I quickly slot [storing_item] into [src]!"))
-		user.transferItemToLoc(storing_item, src)
-		
-		if(isnull(holdingknife1))
-			holdingknife1 = storing_item
-		else
-			holdingknife2 = storing_item
-		playsound(user, 'sound/foley/equip/scabbard_holster.ogg')
-		return
+	var/datum/component/hidden_blades/hidden_blades = GetComponent(/datum/component/hidden_blades)
+	if(hidden_blades && hidden_blades.stow(storing_item, user))
+		return TRUE
 	return ..()
 
 /obj/item/clothing/wrists/roguetown/sheathebracers/attack_right(mob/user)
-	if(obj_integrity <= 0)
-		to_chat(user, span_warning("The straps on the sheaths are broken!"))
-		return
-
-	if(isnull(holdingknife1) && isnull(holdingknife2))
-		return
-
-	var/active_empty = !user.get_active_held_item()
-	var/inactive_empty = !user.get_inactive_held_item()
-
-	if(!active_empty && !inactive_empty)
-		to_chat(user, span_warning("I need a free hand to deploy my dagger!"))
-		return
-
-	user.visible_message(span_warning("Sounds of blades unsheathing ring out from the [src]!"), span_warning("I flick my wrists in a swift motion.")
-	)
-	if(holdingknife1 && (active_empty || inactive_empty))
-		if(user.put_in_hands(holdingknife1))
-			holdingknife1 = null
-
-			//Checking hands again because number of free hands changed.//
-			active_empty = !user.get_active_held_item()
-			inactive_empty = !user.get_inactive_held_item()
-
-	if(holdingknife2 && (active_empty || inactive_empty))
-		if(user.put_in_hands(holdingknife2))
-			holdingknife2 = null
-
-	playsound(user, 'sound/foley/equip/swordsmall1.ogg')
-	return TRUE
+	var/datum/component/hidden_blades/hidden_blades = GetComponent(/datum/component/hidden_blades)
+	if(hidden_blades)
+		return hidden_blades.deploy(user)
+	return ..()
