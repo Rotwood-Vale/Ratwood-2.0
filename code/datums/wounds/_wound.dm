@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		should_persist_effects = TRUE
 	if(crit_message)
 		var/message = get_crit_message(affected.owner, affected)
-		if(message)
+		if(message && affected.owner)
 			affected.owner.next_attack_msg += " [message]"
 	if(!silent)
 		var/sounding = get_sound_effect(affected.owner, affected)

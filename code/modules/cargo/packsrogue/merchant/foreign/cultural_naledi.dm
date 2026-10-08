@@ -130,3 +130,11 @@
 	)
 	ship_qty_min = 1
 	ship_qty_max = 2
+
+/datum/supply_pack/rogue/naledi/ring_swiftness
+	name = "Ring of Swiftness"
+	cost = 450
+	contains = list(/obj/item/clothing/ring/statgemerald)
+	ship_qty_min = 1
+	ship_qty_max = 1
+	ship_chance = 25
