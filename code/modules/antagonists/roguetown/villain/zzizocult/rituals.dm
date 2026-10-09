@@ -801,7 +801,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	desc = ""
 	icon = 'icons/effects/clan.dmi'
 	icon_state = "teleport"
-	density = TRUE
+	density = FALSE
 	anchored = TRUE
 	max_integrity = 300
 	var/busy = FALSE
@@ -1009,7 +1009,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /datum/ritual/transmutation/summonraver
 	name = "Summon Raver"
-	desc = "Conjure a device that slowly corrupts non-cultists buckled to it. After the corruption is finished, they are given the chance to join the cult. If they refuse, the cult is given a crystal that can summon a new cultist in their place. Must be near a Fuge."
+	desc = "Conjure a device to drain the lux of sacrifices. Buckle a victim to the raver and it shall consume their lux. Afterwards, a cultist can buckle to it and receive powerful body enhancements. Must be near a Fuge."
 	center_requirement = /obj/item/candle/candlestick/silver
 	is_cultist_ritual = TRUE
 	research_cost = 5
@@ -1029,7 +1029,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /obj/structure/raver
 	name = "raver"
-	desc = "There's sharp barbs on the squirming mass. You REALLY don't want to touch this."
+	desc = "There's sharp barbs on the squirming mass. You could put someone in it, if you're evil."
 	icon = 'icons/effects/clan.dmi'
 	icon_state = "flesh_grip"
 	density = TRUE
@@ -1041,6 +1041,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	buckleverb = "strap"
 	var/obj/structure/fuge/fuge
 	var/datum/beam/beam
+	var/material = 0
 
 /obj/structure/raver/Initialize(mapload, obj/structure/fuge/linked_fuge)
 	. = ..()
@@ -1056,11 +1057,142 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	fuge = null
 	return ..()
 
+/obj/structure/raver/mouse_buckle_handling(mob/living/M, mob/living/user)
+	return user_buckle_mob(M, user, check_loc = FALSE)
+
+/obj/structure/raver/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
+	if(!is_zizo(buckled_mob))
+		var/escape_time = 30 SECONDS
+		if(buckled_mob.restrained())
+			escape_time = 1 MINUTES
+		to_chat(user, span_warning("The raver clenches around you! It's hard to wriggle free!"))
+		if(!do_after(user, escape_time, target = src))
+			return
+	return ..()
+
+/obj/structure/raver/examine(mob/user)
+	. = ..()
+	if(is_zizo(user))
+		. += span_notice("It has enough lux for [material] grafts.")
+
 /obj/structure/raver/post_buckle_mob(mob/living/M)
 	. = ..()
 	if(is_zizo(M))
+		INVOKE_ASYNC(src, PROC_REF(graft), M)
+		return
+	if(M.has_status_effect(/datum/status_effect/debuff/devitalised) || M.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
+		visible_message(span_warning("[M] has no lux left to give."))
+		return
+	if(!M.mind?.key)
+		visible_message(span_warning("[M] has no soul."))
 		return
 	M.apply_status_effect(/datum/status_effect/raver_corruption, src)
+	playsound(src, 'sound/foley/butcher.ogg', 80, TRUE)
+
+/obj/structure/raver/proc/graft(mob/living/carbon/human/H)
+	if(!ishuman(H))
+		return
+	if(!material)
+		to_chat(H, span_warning("THE RAVER HAS NO LUX. BUCKLE A SACRIFICE ONTO IT."))
+		return
+	var/static/list/options = list(
+		"Grafted Heart (BLEED & DISMEMBER IMMUNITY)" = /obj/item/organ/zizo_graft/bleed,
+		"Grafted Brain (UNCONSCIOUS IMMUNITY)" = /obj/item/organ/zizo_graft/crit,
+		"Grafted Lungs (ENHANCED FATIGUE)" = /obj/item/organ/zizo_graft/fatigue,
+		"Grafted Liver (HEALING FACTOR)" = /obj/item/organ/zizo_graft/health,
+	)
+	var/list/menu = list()
+	for(var/name in options)
+		var/obj/item/organ/zizo_graft/G = options[name]
+		if(!H.getorganslot(initial(G.slot)))
+			menu += name
+	if(!length(menu))
+		to_chat(H, span_warning("I AM COMPLETE."))
+		return
+	var/choice = tgui_input_list(H, "RECEIVE A GRAFT", "RAVER", menu)
+	if(!choice || H.buckled != src || !material)
+		return
+	H.apply_status_effect(/datum/status_effect/raver_corruption/graft, src)
+	var/grafted = do_after(H, 10 SECONDS, target = src)
+	H.remove_status_effect(/datum/status_effect/raver_corruption)
+	if(!grafted)
+		return
+	var/organ_path = options[choice]
+	var/obj/item/organ/zizo_graft/organ = new organ_path
+	organ.Insert(H)
+	material--
+	to_chat(H, span_userdanger("THE RAVER JAMS THE GRAFT INTO MY FLESH!"))
+	H.emote("scream")
+	unbuckle_mob(H, force = TRUE)
+
+/obj/item/organ/zizo_graft
+	name = "grafted organ"
+	desc = "Unnatural! Unsightly! Zizo's touch is upon it!"
+	icon = 'icons/obj/surgery.dmi'
+	zone = BODY_ZONE_CHEST
+	var/list/graft_traits = list()
+	var/energy = 0
+	var/heal = 0
+
+/obj/item/organ/zizo_graft/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	for(var/trait in graft_traits)
+		ADD_TRAIT(M, trait, "zizo_graft")
+
+/obj/item/organ/zizo_graft/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
+	for(var/trait in graft_traits)
+		REMOVE_TRAIT(M, trait, "zizo_graft")
+	return ..()
+
+/obj/item/organ/zizo_graft/on_life()
+	. = ..()
+	if(!owner)
+		return
+	if(energy)
+		owner.energy_add(energy)
+		owner.adjustStaminaLoss(-energy / 5)
+	if(heal)
+		owner.heal_overall_damage(heal, heal)
+		owner.heal_wounds(heal)
+
+/obj/item/organ/zizo_graft/bleed
+	name = "grafted heart"
+	icon_state = "heartcon-on"
+	slot = "zizo_graft_bleed"
+	graft_traits = list(TRAIT_BLOODLOSS_IMMUNE, TRAIT_NODISMEMBER)
+
+/obj/item/organ/zizo_graft/crit
+	name = "grafted brain"
+	icon_state = "brain-con"
+	slot = "zizo_graft_crit"
+	graft_traits = list(TRAIT_NOHARDCRIT, TRAIT_NOSOFTCRIT)
+
+/obj/item/organ/zizo_graft/fatigue
+	name = "grafted lungs"
+	icon_state = "lungs-con"
+	slot = "zizo_graft_fatigue"
+	energy = 25
+
+/obj/item/organ/zizo_graft/health
+	name = "grafted liver"
+	icon_state = "liver-con"
+	slot = "zizo_graft_health"
+	heal = 1.5
+
+/datum/status_effect/zizo_regen
+	id = "zizo_regen"
+	duration = -1
+	tick_interval = 2 SECONDS
+	alert_type = null
+	var/energy = 0
+
+/datum/status_effect/zizo_regen/tick()
+	owner.energy_add(energy)
+	owner.adjustStaminaLoss(-energy / 5)
+
+/datum/status_effect/zizo_regen/robe
+	id = "zizo_robe_regen"
+	energy = 10
 
 /obj/structure/raver/post_unbuckle_mob(mob/living/M)
 	. = ..()
@@ -1069,46 +1201,92 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/status_effect/raver_corruption
 	id = "raver_corruption"
 	duration = -1
-	tick_interval = 5 SECONDS
+	tick_interval = 3 SECONDS
 	alert_type = null
 	var/obj/structure/raver/raver
 	var/elapsed = 0
+	var/graft = FALSE
+
+/datum/status_effect/raver_corruption/graft
+	graft = TRUE
 
 /datum/status_effect/raver_corruption/on_creation(mob/living/new_owner, obj/structure/raver/device)
 	raver = device
 	. = ..()
 
+// these filters r kinda funky & idk if they're working right, but I think it looks cool .
+/datum/status_effect/raver_corruption/on_apply()
+	. = ..()
+	owner.overlay_fullscreen("raver", /atom/movable/screen/fullscreen/brute, 4)
+	owner.add_filter("raver_glow", 1, list(type = "outline", color = "#8b0000", size = 1))
+	owner.add_filter("raver_warp", 2, list(type = "wave", x = 2, y = 2, size = 3, offset = 0))
+	animate(owner.get_filter("raver_warp"), offset = 6, time = 2 SECONDS, loop = -1)
+	animate(offset = 0, time = 0)
+
+/datum/status_effect/raver_corruption/on_remove()
+	. = ..()
+	owner.clear_fullscreen("raver")
+	owner.clear_fullscreen("raver_flash")
+	owner.remove_filter("raver_glow")
+	owner.remove_filter("raver_warp")
+
 /datum/status_effect/raver_corruption/tick()
-	if(QDELETED(raver) || owner.buckled != raver || owner.stat == DEAD)
+	if(QDELETED(raver) || owner.buckled != raver || owner.stat == DEAD || (is_zizo(owner) && !graft))
 		qdel(src)
 		return
-	owner.adjustStaminaLoss(5)
+	if(!graft)
+		owner.adjustStaminaLoss(5)
 	owner.Jitter(4)
+	shake_camera(owner, 6, 1)
+	owner.do_jitter_animation(300)
+	owner.overlay_fullscreen("raver_flash", /atom/movable/screen/fullscreen/painflash)
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob, clear_fullscreen), "raver_flash"), 4)
+	playsound(raver, pick('sound/gore/flesh_eat_01.ogg', 'sound/gore/flesh_eat_02.ogg', 'sound/gore/flesh_eat_03.ogg', 'sound/gore/flesh_eat_04.ogg', 'sound/gore/flesh_eat_05.ogg', 'sound/gore/flesh_eat_06.ogg'), 70, TRUE)
+	if(prob(40))
+		playsound(raver, pick('sound/combat/fracture/fracturewet (1).ogg', 'sound/combat/fracture/fracturewet (2).ogg', 'sound/combat/fracture/fracturewet (3).ogg', 'sound/foley/flesh_rem.ogg', 'sound/foley/gross.ogg', 'sound/surgery/organ1.ogg', 'sound/surgery/organ2.ogg'), 70, TRUE)
+	new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(raver), pick(GLOB.cardinals))
+	if(owner.client)
+		for(var/i in 1 to 3)
+			var/turf/start = get_turf(pick(range(3, owner)))
+			var/d = pick(GLOB.cardinals)
+			var/dx = 0
+			var/dy = 0
+			if(d == EAST)
+				dx = 32
+			else if(d == WEST)
+				dx = -32
+			else if(d == NORTH)
+				dy = 32
+			else
+				dy = -32
+			var/image/bug = image('icons/roguetown/cult/ravermeat.dmi', start, pick("bloodling_stage_1", "bloodling_stage_2"), ABOVE_MOB_LAYER)
+			bug.dir = d
+			owner.client.images += bug
+			animate(bug, pixel_x = dx, pixel_y = dy, time = 3 SECONDS) // bugs crawling around
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clear_curse_eye), owner.client, bug), 3 SECONDS)
+	if(owner.client && prob(50))
+		var/image/eye = image('icons/effects/eldritch.dmi', pick(range(3, owner)), "eye_open", ABOVE_ALL_MOB_LAYER)
+		owner.client.images += eye
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clear_curse_eye), owner.client, eye), 3 SECONDS)
 	if(prob(15))
 		owner.emote(pick("scream", "pain"))
-		to_chat(owner, span_userdanger(pick("MY MIND UNRAVELS...", "I FEEL MYSELF SLIPPING AWAY...", "THE PAIN IS UNBEARABLE...")))
-	elapsed += 5
-	if(elapsed >= 180)
+		to_chat(owner, span_userdanger(pick("THEY'RE CRAWLING ON ME...", "IT'S WRIGGLING INTO MY SKIN...", "THE BARBS SINK INTO MY FLESH...")))
+	elapsed += 3
+	if(elapsed >= 60 && !graft)
 		raver_finish_corruption(owner, raver)
 		qdel(src)
 
 /proc/raver_finish_corruption(mob/living/carbon/human/H, obj/structure/raver/R)
-	set waitfor = FALSE
-	if(QDELETED(H) || H.stat == DEAD)
+	if(QDELETED(H) || H.stat == DEAD || is_zizo(H))
 		return
 	if(!QDELETED(R))
 		R.unbuckle_mob(H, force = TRUE)
-	var/answer = tgui_alert(H, "YOU WILL BE SHOWN THE TRUTH. DO YOU RESIST?", "???", list("Yield", "Resist"))
-	if(QDELETED(H) || H.stat == DEAD)
+	if(!absorb_lux(H, get_turf(H), FALSE))
 		return
-	if(answer == "Yield")
-		if(H.mind)
-			H.mind.add_antag_datum(/datum/antagonist/zizocultist)
-			to_chat(H, span_notice("I see the truth now! It all makes so much sense! They aren't HERETICS! They want the BEST FOR US!"))
-	else
-		H.visible_message(span_danger("[H] thrashes around, unyielding!"))
-		absorb_lux(H, get_turf(H), FALSE)
-		new /obj/item/necro_relics/necro_crystal/cultist(get_turf(R || H))
+	if(!QDELETED(R))
+		R.material += 2
+		R.visible_message(span_danger("[R] drinks [H]'s lux and swells!"))
+		playsound(R, 'sound/combat/gib (1).ogg', 80, TRUE)
 
 /turf/closed/wall/mineral/rogue/stone/space
 	name = "???"
@@ -1266,6 +1444,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	GLOB.cult_robes += src
 	if(/datum/ritual/fleshcrafting/ascend in GLOB.zizo_researchable)
 		empower()
+	regen()
 
 /obj/item/clothing/cloak/cultrobe/Destroy()
 	GLOB.cult_robes -= src
@@ -1295,6 +1474,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /obj/item/clothing/cloak/cultrobe/equipped(mob/living/user, slot)
 	. = ..()
+	if(slot == SLOT_CLOAK && is_zizo(user))
+		user.apply_status_effect(/datum/status_effect/zizo_regen/robe)
 	if(slot != SLOT_CLOAK || !empowered || active_item)
 		return
 	active_item = TRUE
@@ -1306,6 +1487,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /obj/item/clothing/cloak/cultrobe/dropped(mob/living/user)
 	..()
+	user?.remove_status_effect(/datum/status_effect/zizo_regen/robe)
 	if(!active_item)
 		return
 	if(!ishuman(user))
@@ -1332,13 +1514,15 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 				H.change_stat(stat, 2)
 		to_chat(H, span_userdanger("MY ROBE THRUMS WITH DARK POWER!"))
 		H.update_inv_cloak()
-	regen()
 
 /obj/item/clothing/cloak/cultrobe/proc/regen()
-	if(QDELETED(src) || !empowered)
+	if(QDELETED(src))
 		return
+	var/amount = 5
+	if(empowered)
+		amount = 15
 	if(obj_integrity < max_integrity)
-		obj_integrity = min(obj_integrity + 15, max_integrity)
+		obj_integrity = min(obj_integrity + amount, max_integrity)
 		if(obj_broken)
 			obj_fix(full_repair = FALSE)
 	regen_timer = addtimer(CALLBACK(src, PROC_REF(regen)), 1 MINUTES, TIMER_STOPPABLE)
