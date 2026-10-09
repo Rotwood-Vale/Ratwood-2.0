@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(zizo_marks)
 
 GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/servantry/convert, /datum/ritual/servantry/sacrifice,
-	/datum/ritual/servantry/heartache, /datum/ritual/servantry/marktargets,
+	/datum/ritual/servantry/heartache,
 	/datum/ritual/servantry/gutted, /datum/ritual/transmutation/cross,
 	/datum/ritual/transmutation/criminalstool, /datum/ritual/transmutation/invademind,
 	/datum/ritual/transmutation/summonoutfit, /datum/ritual/servantry/aspect,
@@ -128,8 +128,12 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 	if(is_zizo(target))
 		to_chat(user, span_warning("CAN'T SACRIFICE CULTIST."))
 		return TRUE
-	if(!(target in wanted))
-		to_chat(user, span_warning("SHE DOESN'T WANT THIS ONE. CHECK YOUR TARGETS."))
+	var/datum/job/J = SSjob.GetJob(target.mind?.assigned_role)
+	if(!J || (J.type in list(KING_QUEEN_ROLES)) || J.type == /datum/job/roguetown/bandit || J.type == /datum/job/roguetown/wretch)
+		to_chat(user, span_warning("THIS RITUAL IS NOT FOR THEM."))
+		return TRUE
+	if(wanted && !(target in wanted))
+		to_chat(user, span_warning("THIS RITUAL IS NOT FOR THEM."))
 		return TRUE
 	if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
 		to_chat(user, span_warning("SILVER REPELS THE DARK MAGICK!"))
@@ -141,12 +145,10 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 		for(var/client/C in GLOB.clients)
 			C.images -= old
 	GLOB.zizo_marks.Cut()
-	for(var/mob/living/carbon/human/T in (GLOB.zizo_targets | GLOB.gate_targets))
+	for(var/mob/living/carbon/human/T in GLOB.gate_targets)
 		if(QDELETED(T) || T.stat == DEAD)
 			continue
-		var/image/mark = image('icons/effects/eldritch.dmi', T, "eye_open", ABOVE_ALL_MOB_LAYER)
-		if(T in GLOB.gate_targets)
-			mark.icon_state = "eye_pulse" // cool eye stolen from heretic
+		var/image/mark = image('icons/effects/eldritch.dmi', T, "eye_pulse", ABOVE_ALL_MOB_LAYER) // cool eye stolen from heretic
 		mark.pixel_y = 30
 		GLOB.zizo_marks += mark
 		for(var/datum/mind/M in SSmapping.retainer.cultists)
@@ -159,12 +161,6 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 
 /proc/zizo_roll_start()
 	refill_bestow_areas()
-	if(length(GLOB.zizo_targets))
-		return
-	for(var/datum/mind/M in SSmapping.retainer.cultists)
-		if(ishuman(M.current))
-			reroll_targets(M.current)
-			return
 
 /datum/status_effect/buff/curse_immunity
 	id = "curse_immunity"
@@ -559,6 +555,10 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		for(var/atype in GLOB.zizo_bestow_areas)
 			var/area/A = atype
 			to_chat(user, span_notice("- [initial(A.name)]"))
+		if(gate_count > 0 && tgui_alert(user, "REROLL GATE TARGETS? DARK CRYSTAL IS LOST.", "ZIZO", list("Reroll", "Cancel")) == "Reroll")
+			reroll_gate_targets(gate_count)
+			print_gate_sacrifice_info(user)
+			return
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	var/list/choices = list("PITCH", "TOIL", "STRAND", "ROT", "BLOOD", "NOISE", "BITE")

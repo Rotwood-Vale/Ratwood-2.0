@@ -41,9 +41,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		return FALSE
 	return TRUE
 
-GLOBAL_LIST_EMPTY(zizo_targets)
-GLOBAL_VAR_INIT(zizo_target_cd, 0)
-
 /proc/zizo_award(mob/M, amt)
 	if(!ishuman(M))
 		return
@@ -150,45 +147,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 	qdel(R)
 	open(user)
 
-/proc/get_zizo_weighted_targets()
-	var/list/weighted = list()
-	for(var/mob/living/carbon/human/H in GLOB.human_list)
-		if(!H.mind || H.stat == DEAD || is_zizo(H))
-			continue
-		var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
-		if(!J || (J.type in list(KING_QUEEN_ROLES)) || J.type == /datum/job/roguetown/bandit || J.type == /datum/job/roguetown/wretch)
-			continue
-		if(J.type in list(TIER_THREE_GATEROLES))
-			continue
-		if(J.type in (list(YEOMEN_ROLES) + list(MANOR_ROLES) + list(WANDERER_ROLES) + list(GARRISON_ROLES) + list(CHURCH_ROLES)))
-			weighted[H] = 5
-			if(H.purity == TRUE)
-				weighted[H] = 10
-		else if(J.type in list(PEASANT_ROLES))
-			weighted[H] = 1
-			if(H.purity == TRUE)
-				weighted[H] = 5
-	return weighted
-
-/proc/reroll_targets(mob/living/carbon/human/user)
-	var/list/weighted = get_zizo_weighted_targets()
-	if(is_zizo(user))
-		GLOB.zizo_targets = list()
-		for(var/i in 1 to 7)
-			if(!weighted.len)
-				break
-			var/mob/living/carbon/human/chosen = pickweight(weighted)
-			GLOB.zizo_targets += chosen
-			weighted -= chosen
-	else
-		for(var/i in 1 to 5)
-			if(!weighted.len)
-				break
-			var/mob/living/carbon/human/chosen = pickweight(weighted)
-			user.zizo_targets += chosen
-			weighted -= chosen
-	refresh_zizo_marks()
-
 /proc/reroll_gate_targets(gate_count)
 	if(gate_count <= 0)
 		return
@@ -269,21 +227,21 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/convert
 	name = "Convert"
-	desc = "Place a sacrifice in the middle of the rune to convert them into a lackey. Grants SECRETS. If they refuse, it sacrifices them. Requires an assistant on the rune if you have more than 2 lackeys already. Must use targets obtained by Divine Sacrifices."
+	desc = "Place a sacrifice in the middle of the rune to convert them into a lackey. Grants SECRETS. If they refuse, it sacrifices them. Requires an assistant on the rune if there are more than 3 cultists."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a sacrifice"
 	is_cultist_ritual = TRUE
 
 /datum/ritual/servantry/convert/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
-	if(zizo_target_error(user, target, GLOB.zizo_targets))
+	if(zizo_target_error(user, target))
 		return
 	var/datum/antagonist/zizocultist/PR = user.mind.has_antag_datum(/datum/antagonist/zizocultist, TRUE)
 	var/lackeys = 0
 	for(var/datum/mind/M in SSmapping.retainer.cultists)
 		if(is_zizolackey(M))
 			lackeys++
-	if(lackeys > 2)
+	if(lackeys > 3)
 		var/mob/living/carbon/human/assistant
 		for(var/mob/living/carbon/human/H in range(1, center))
 			if(H == user || H == target || !is_zizo(H))
@@ -328,23 +286,16 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 				new /obj/item/necro_relics/necro_crystal(center)
 				zizo_award(user, 3)
 			zizo_award(user, 5)
-	GLOB.zizo_targets -= target
 
 /datum/ritual/servantry/sacrifice
 	name = "Sacrifice"
-	desc = "Place a sacrifice in the middle of the rune to rip out their lux. Grants SECRETS and a dark crystal. Requires an assistant holding a knife to stand on the sigil for the rite to function. Must use targets obtained by Divine Sacrifices."
+	desc = "Place a sacrifice in the middle of the rune to rip out their lux. Grants SECRETS and a dark crystal. Requires an assistant holding a knife to stand on the sigil for the rite to function."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a sacrifice"
 
 /datum/ritual/servantry/sacrifice/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/cultist = user
-	var/list/wanted = cultist.zizo_targets
-	if(is_zizo(user))
-		wanted = GLOB.zizo_targets
-	if(zizo_target_error(user, target, wanted))
+	if(zizo_target_error(user, target))
 		return
 	var/mob/living/carbon/human/assistant
 	for(var/mob/living/carbon/human/H in range(1, center))
@@ -380,10 +331,6 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 		new /obj/item/necro_relics/necro_crystal(center)
 		zizo_award(user, 3)
 		zizo_award(assistant, 3)
-	if(is_zizo(user))
-		GLOB.zizo_targets -= target
-	else
-		cultist.zizo_targets -= target
 	zizo_award(user, 5)
 	zizo_award(assistant, 5)
 	target.visible_message(span_danger("[assistant] tears open [target]'s chest and rips free their lux!"))
@@ -391,42 +338,12 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /datum/ritual/servantry/heartache
 	name = "Heartaches"
-	desc = "Create a heart to track your sacrifice targets."
+	desc = "Create a heart to locate sacrifices."
 	center_requirement = /obj/item/organ/heart
 
 /datum/ritual/servantry/heartache/invoke(mob/user, turf/center)
 	new /obj/item/corruptedheart(center)
 	to_chat(user, span_notice("Use this item to seek your sacrifices."))
-
-/datum/ritual/servantry/marktargets
-	name = "Divine Sacrifices"
-	desc = "Locate new targets to sacrifice and convert. Can use every 20 minutes."
-	center_requirement = /obj/item/organ/eyes
-	center_desc = "eyes"
-	keep_center = TRUE
-
-/datum/ritual/servantry/marktargets/invoke(mob/living/user, turf/center)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/cultist = user
-	if(is_zizo(cultist))
-		if(world.time < GLOB.zizo_target_cd)
-			to_chat(user, span_warning("It is too soon, you must wait."))
-			return
-	else
-		if(world.time < cultist.zizo_target_cd)
-			to_chat(user, span_warning("It is too soon, you must wait."))
-			return
-	if(is_zizo(user))
-		GLOB.zizo_target_cd = world.time + 20 MINUTES
-	else
-		cultist.zizo_target_cd = world.time + 20 MINUTES
-	reroll_targets(user = cultist)
-	if(is_zizo(user))
-		var/datum/ritual/servantry/aspect/gate_ritual = LAZYACCESS(GLOB.ritualslist, "Open Gate")
-		if(gate_ritual)
-			reroll_gate_targets(gate_ritual.gate_count)
-	to_chat(user, span_notice("You feel a shiver down your spine. Seek your new sacrifices with heartaches."))
 
 /datum/ritual/servantry/guidance
 	name = "Divine Guidance"
@@ -449,45 +366,56 @@ GLOBAL_VAR_INIT(zizo_target_cd, 0)
 
 /obj/item/corruptedheart
 	name = "corrupted heart"
-	desc = "It sparkles with forbidden magic energy. Can be used to locate sacrifices."
+	desc = "It sparkles with forbidden magic energy."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "heart-on"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown
+	var/tracked_name
+
+/obj/item/corruptedheart/attack_right(mob/user)
+	if(!is_zizo(user))
+		to_chat(user, span_warning("The heart is silent."))
+		return
+	var/new_name = input(user, "WHOSE NAME DO YOU WHISPER TO THE HEART?", "ZIZO") as null|text
+	if(!new_name)
+		return
+	if(!user.mind?.do_i_know(name = new_name))
+		to_chat(user, span_warning("I don't know anyone by that name."))
+		return
+	tracked_name = new_name
+	to_chat(user, span_notice("The heart beats in time with [tracked_name]'s own'."))
 
 /obj/item/corruptedheart/attack_self(mob/user)
 	if(world.time < cooldown)
 		to_chat(user, span_warning("Too soon!"))
 		return
+	if(!is_zizo(user))
+		to_chat(user, span_warning("The heart is silent."))
+		return
+	if(!tracked_name)
+		to_chat(user, span_warning("Right-click the heart to set target."))
+		return
 	if(!do_after(user, 2 SECONDS, src))
 		return
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
 	var/mob/living/carbon/human/prey
-	if(!length(GLOB.zizo_targets) && !length(H.zizo_targets))
-		to_chat(user, span_warning("There are no targets. Divine new sacrifices."))
-		return
-	if(is_zizo(user))
-		if(!GLOB.gate_targets.len)
-			prey = input("Choose a target.") as null|anything in GLOB.zizo_targets
-		else
-			var/inputty = input("Do you see targets for the Gate?", "ZIZO", "Regular") as anything in list("Gate", "Regular")
-			if(inputty == "Gate")
-				prey = input("Choose a target.") as null|anything in GLOB.gate_targets
-			else if(inputty == "Regular")
-				prey = input("Choose a target.") as null|anything in GLOB.zizo_targets
-	else
-		if(!H.zizo_targets)
-			to_chat(user, span_warning("There are no targets. Divine new sacrifices."))
-			return
-		prey = input("Choose a target.") as null|anything in H.zizo_targets
+	for(var/mob/living/carbon/human/H in GLOB.human_list)
+		if(H.real_name == tracked_name)
+			prey = H
+			break
 	if(!prey || !prey.z)
+		to_chat(user, span_warning("The heart finds nothing."))
 		return
 	if(istype(prey.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
 		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
 		return
 	var/list/info = get_locator_info(user, prey)
+	var/beat = 'sound/health/slowbeat.ogg'
+	if(info["proximity"] == "very close")
+		beat = 'sound/health/fastbeat.ogg'
+	else if(info["proximity"] == "nearby")
+		beat = 'sound/health/heartbeat.ogg'
+	playsound(user, beat, 60, TRUE)
 	to_chat(user, span_danger("The heart beats faster toward the [info["dir"]]. [prey.real_name] feels [info["proximity"]][info["z"]]."))
 	cooldown = world.time + 10 SECONDS
 

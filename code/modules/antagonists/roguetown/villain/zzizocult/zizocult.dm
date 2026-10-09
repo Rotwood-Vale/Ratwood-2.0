@@ -141,14 +141,10 @@
 			to_chat(src, "<B>[gl.name]:</B> [gl.desc]<BR><B>[gl.reward] SECRETS.</B><BR>")
 
 /mob/living/carbon/human/proc/zizo_targets_list()
-	set name = "Targets"
+	set name = "Secrets"
 	set category = "ZIZO"
 
-	var/list/lines = list("<B>SACRIFICE / CONVERSION TARGETS:</B>")
-	for(var/mob/living/carbon/human/T in GLOB.zizo_targets)
-		lines += "- [T.real_name] ([T.mind?.assigned_role])"
-	if(!length(GLOB.zizo_targets))
-		lines += "Found no one! Perform Divine Sacrifices to find targets."
+	var/list/lines = list("<B>ANYONE CAN BE SACRIFICED OR CONVERTED</B>, except fellow cultists + bandits & wretches. The ruler may ONLY be sacrificed during the final ascension ritual.")
 	if(length(GLOB.gate_targets))
 		lines += "<B>GATE TARGETS:</B>"
 		for(var/mob/living/carbon/human/T in GLOB.gate_targets)
@@ -156,8 +152,7 @@
 		for(var/atype in GLOB.zizo_bestow_areas)
 			var/area/A = atype
 			lines += "GATE RITE LOCATION: [initial(A.name)]"
-	lines += "Divine Sacrifices ready in [round(max(GLOB.zizo_target_cd - world.time, 0) / 600)] minutes."
-	lines += "<B>GUIDE:</B> Place the sacrifice in the center of a servantry sigil. Sacrifice requires a fellow cultist holding a knife & standing upon the sigil. Conversion requires a fellow cultist on the sigil, if there is more than 3 members in the cult. Targets have a dark eye above them. Use heartaches to seek them."
+	lines += "<B>GUIDE:</B> Place the sacrifice in the center of a servantry sigil. Sacrifice requires a fellow cultist holding a knife & standing upon the sigil. Conversion requires a fellow cultist on the sigil, if there is more than 3 members in the cult. Gate targets have a dark eye above them. Use heartaches to seek them."
 	to_chat(src, jointext(lines, "<BR>"))
 
 /mob/living/carbon/human/proc/communicate()
