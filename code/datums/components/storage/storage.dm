@@ -591,7 +591,7 @@
 
 /datum/component/storage/proc/mousedrop_onto(datum/source, atom/over_object, mob/M)
 	set waitfor = FALSE
-	. = COMPONENT_NO_MOUSEDROP
+	. = COMPONENT_CANCEL_MOUSEDROP_ONTO
 	if(!ismob(M))
 		return
 	if(!over_object)
