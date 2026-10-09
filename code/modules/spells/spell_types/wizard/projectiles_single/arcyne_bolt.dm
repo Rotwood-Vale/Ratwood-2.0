@@ -48,7 +48,7 @@
 
 /obj/projectile/energy/arcynebolt/arc
 	name = "Arced Arcyne Bolt"
-	damage = 30 // You cannot modify charge and releasedrain dynamically so lower damage it is.
+	damage = 40 // We want mages to be arcing spells from the backline more
 	arcshot = TRUE
 
 /obj/projectile/energy/arcynebolt/on_hit(target)
