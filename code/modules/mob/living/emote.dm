@@ -115,7 +115,7 @@
 	key = "burp"
 	key_third_person = "burps"
 	message = "burps."
-	message_muffled = "makes a muffled noise."
+	message_muffled = "makes a muffled burp."
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
 
@@ -185,7 +185,7 @@
 	key = "cough"
 	key_third_person = "coughs"
 	message = "coughs."
-	message_muffled = "makes a muffled noise."
+	message_muffled = "makes a muffled cough."
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
 
@@ -199,7 +199,7 @@
 	key = "clearthroat"
 	key_third_person = "clearsthroat"
 	message = "clears their throat."
-	message_muffled = "makes a muffled noise."
+	message_muffled = "makes a muffled cough."
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
 
@@ -325,7 +325,7 @@
 	key = "gasp"
 	key_third_person = "gasps"
 	message = "gasps!"
-	message_muffled = "makes a muffled noise."
+	message_muffled = "makes a muffled gasp."
 	emote_type = EMOTE_AUDIBLE
 	stat_allowed = UNCONSCIOUS
 	show_runechat = FALSE
@@ -1073,7 +1073,7 @@
 /datum/emote/living/attnwhistle
 	key = "attnwhistle"
 	message = "whistles for attention!"
-	message_muffled = "makes a muffled noise."
+	message_muffled = "makes a muffled whistle."
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
 
@@ -1176,7 +1176,7 @@
 	key = "whistle"
 	key_third_person = "whistles"
 	message = "whistles."
-	message_muffled = "makes a muffled noise."
+	message_muffled = "makes a muffled whistle."
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
 
@@ -1203,7 +1203,7 @@
 /datum/emote/living/huh
 	key = "huh"
 	key_third_person = "huhs"
-	message_muffled = "makes a muffled noise."
+	message_muffled = "makes a muffled huh."
 	emote_type = EMOTE_AUDIBLE
 	nomsg = TRUE
 	show_runechat = FALSE
@@ -1573,6 +1573,7 @@
 		/mob/living/carbon/human/verb/emote_dgrowl,
 		/mob/living/carbon/human/verb/emote_dwhine,
 		/mob/living/carbon/human/verb/emote_flutter,
+		/mob/living/carbon/human/verb/emote_neigh,
 	)
 	var/static/list/wild_tongue_noise_verbs = list(
 		/mob/living/carbon/human/verb/emote_meow,
@@ -1603,6 +1604,7 @@
 		/mob/living/carbon/human/verb/emote_dcomplain,
 		/mob/living/carbon/human/verb/emote_dgrowl,
 		/mob/living/carbon/human/verb/emote_dwhine,
+		/mob/living/carbon/human/verb/emote_neigh,
 	)
 	var/static/list/harpy_tongue_noise_verbs = list(
 		/mob/living/carbon/human/verb/emote_caw,
@@ -1622,6 +1624,7 @@
 		/mob/living/carbon/human/verb/emote_dcomplain,
 		/mob/living/carbon/human/verb/emote_dgrowl,
 		/mob/living/carbon/human/verb/emote_dwhine,
+		/mob/living/carbon/human/verb/emote_neigh,
 	)
 	var/static/list/lizard_tongue_noise_verbs = list(
 		/mob/living/carbon/human/verb/emote_hiss,
@@ -2805,7 +2808,7 @@
 	key_third_person = "complains!"
 	message = "complains!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-	message_muffled = "makes a muffled sound!"
+	message_muffled = "makes a muffled complaint!"
 	vary = TRUE
 	show_runechat = FALSE
 	is_animal = TRUE
@@ -2853,6 +2856,25 @@
 		set name = "Dog Whine"
 		set category = "Noises"
 		emote("dwhine", intentional = TRUE, animal = TRUE)
+	else
+		show_tongue_noise_warning()
+		return
+
+/datum/emote/living/neigh
+	key = "neigh"
+	key_third_person = "neighs!"
+	message = "neighs!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	message_muffled = "makes a muffled neigh!"
+	vary = TRUE
+	show_runechat = FALSE
+	is_animal = TRUE
+
+/mob/living/carbon/human/verb/emote_neigh()
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
+		set name = "Neigh"
+		set category = "Noises"
+		emote("neigh", intentional = TRUE, animal = TRUE)
 	else
 		show_tongue_noise_warning()
 		return
