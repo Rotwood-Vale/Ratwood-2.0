@@ -325,7 +325,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOPAIN))
 		should_pain = FALSE
 	if(should_pain)
-		if(istype(M.patron, /datum/patron/divine/pestra) || M.skills.get_effective_skill_cap(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
+		if(istype(M.patron, /datum/patron/divine/pestra) || M.skills.get_skill_level(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
 			pain = 0
 			if(prob(3))
 				to_chat(M, span_green("Your wounds stitch together, as if under the hands of a competent surgeon."))
@@ -367,7 +367,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOPAIN))
 		should_pain = FALSE
 	if(should_pain)
-		if(istype(M.patron, /datum/patron/divine/pestra) || M.skills.get_effective_skill_cap(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
+		if(istype(M.patron, /datum/patron/divine/pestra) || M.skills.get_skill_level(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
 			pain = 0
 			if(prob(3))
 				to_chat(M, span_green("Your wounds stitch together, as if under the hands of a master surgeon."))
