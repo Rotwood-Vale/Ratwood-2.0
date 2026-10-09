@@ -3,12 +3,14 @@
 /datum/intent/priest_smite
 	name = "electrocute"
 	blade_class = null
+	desc = "Shock a target. Only works inside the Church."
 	icon_state = "inuse"
 	tranged = TRUE
 	noaa = TRUE
 
 /datum/intent/priest_silence
 	name = "silence"
+	desc = "Sometimes desperate measures are required for intelligent conversation."
 	blade_class = null
 	icon_state = "inuse"
 	tranged = TRUE
@@ -19,6 +21,7 @@
 	blade_class = BCLASS_STAB
 	attack_verb = list("thrusts")
 	animname = "stab"
+	desc = "Stab someone. Must be at a range of two tiles to penetrate properly."
 	icon_state = "instab"
 	reach = 2
 	clickcd = CLICK_CD_CHARGED
@@ -42,6 +45,7 @@
 	reach = 1
 	swingdelay = 4
 	penfactor = PEN_MEDIUM
+	desc = "Stab a target. With only one hand, you aren't using the spear to its full power."
 	clickcd = CLICK_CD_RESIST
 	effective_range = null
 	effective_range_type = EFF_RANGE_NONE
@@ -90,6 +94,7 @@
 /datum/intent/spear/bash/eaglebeak
 	name = "eagle's beak bash"
 	damfactor = 1
+	desc = "Smash someone over the head. Effective at two tiles."
 	reach = 2
 
 /datum/intent/spear/bash/ranged
@@ -101,6 +106,7 @@
 	attack_verb = list("cuts", "slashes")
 	icon_state = "incut"
 	damfactor = 0.8
+	desc = "Poorly hack at someone with your speartip. Works at two-tile range without penalty."
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	reach = 2
 	item_d_type = "slash"
@@ -112,10 +118,12 @@
 	sharpness_penalty = 2
 
 /datum/intent/spear/cut/halberd
+	desc = "Use the awe-inspiring power of a combined sharp thing and pointy thing to cut someone. Two tile range. Hurts more than a normal cut."
 	damfactor = 1.2
 
 /datum/intent/spear/cut/scythe
 	reach = 3
+	desc = "Reap. Effective at two tiles or above."
 	damfactor = 1
 	effective_range = 2
 	effective_range_type = EFF_RANGE_ABOVE
@@ -134,6 +142,7 @@
 	blade_class = BCLASS_CHOP
 	attack_verb = list("chops", "hacks")
 	animname = "chop"
+	desc = "A cleave that cuts through a second target behind the first. Weakly penetrative."
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
 	penfactor = 35
 	item_d_type = "slash"
@@ -177,6 +186,7 @@
 /datum/intent/sword/bash
 	name = "crossguard bash"
 	blade_class = BCLASS_BLUNT
+	desc = "Smash someone with the crossguard of your sword."
 	icon_state = "inbash"
 	attack_verb = list("bashes", "strikes")
 	penfactor = PEN_NONE
@@ -210,6 +220,7 @@
 	name = "long rend"
 	penfactor = PEN_NONE
 	misscost = 5
+	desc = "Rip apart exposed flesh at range. Only effective at exactly two tiles."
 	clickcd = CLICK_CD_HEAVY
 	damfactor = 2
 	reach = 2
@@ -224,6 +235,7 @@
 	name = "rending thrust"
 	attack_verb = list("skewers")
 	blade_class = BCLASS_STAB
+	desc = "Impale exposed flesh. Useless against armor."
 	damfactor = 1.8//It's a heavy stab. Not a chop.
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	item_d_type = "stab"
@@ -326,9 +338,9 @@
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
-			var/area/target_area = get_area(H)
+			var/area/rogue/target_area = get_area(H)
 
-			if(!istype(target_area, /area/rogue/outdoors/town/church || /area/rogue/indoors/town/church))
+			if(!target_area.holy_area)
 				to_chat(user, span_danger("The staff cannot be used on targets outside of the church!"))
 				return
 
