@@ -32,7 +32,7 @@
 		if("Adventurer", "Court Agent", "Mercenary", "Refugee", "Trader", "Lord of Heartfelt", "Hand of Heartfelt", "Knight of Heartfelt", "Heartfeltian Retinue")
 			return "TOWN_TRANSIENT"
 		// Common laborers of the town.
-		if("Towner", "Soilson", "Soilbride", "Vagabond", "Beggar", "Cook", "Tapster", "Bathhouse Attendant", "Bathmatron", "Shophand")
+		if("Towner", "Soilson", "Soilbride", "Vagabond", "Beggar", "Cook", "Tapster", "Thug", "Bathhouse Attendant", "Bathmatron", "Shophand")
 			return "TOWN_PEASANT"
 		// Shopkeeps, artisans and lettered professionals.
 		if("Innkeeper", "Guildsman", "Archivist", "Apothecary", "Tailor", "Jester", "Town Crier")

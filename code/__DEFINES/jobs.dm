@@ -167,6 +167,7 @@
 #define NITEMASTER	(1<<9)
 #define WENCH		(1<<10)
 #define BEGGAR		(1<<11)
+#define THUG		(1<<12)
 #define PILGRIM		(1<<13)
 #define VILLAGER	(1<<14)
 #define PRISONERR	(1<<15)
@@ -327,6 +328,7 @@
 #define JDO_GNOLL 30.5
 #define JDO_ASSASSIN 30.6
 #define JDO_TRADER 30.7
+#define JDO_THUG 30.8
 
 #define JDO_MERCENARY 31
 #define JDO_GRENZELHOFT 31.1
@@ -396,6 +398,7 @@
 
 #define PEASANT_ROLES \
 	/datum/job/roguetown/villager,\
+	/datum/job/roguetown/thug,\
 	/datum/job/roguetown/nightmaiden,\
 	/datum/job/roguetown/beggar,\
 	/datum/job/roguetown/cook,\

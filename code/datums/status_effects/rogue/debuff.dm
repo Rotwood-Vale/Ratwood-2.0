@@ -871,6 +871,28 @@
 	desc = span_warning("Their beauty is otherworldly..")
 	icon_state = "acid"
 
+/datum/status_effect/debuff/blortzterritory
+	id = "blortzterritory"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/blortzterritory
+	effectedstats = list(STATKEY_PER = 1, STATKEY_WIL = -1)
+	duration = 15 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/blortzterritory
+	name = "Blortz Territory"
+	desc = span_warning("I am in enemy territory, I must be careful..")
+	icon_state = "blortz"
+
+/datum/status_effect/debuff/rontzterritory
+	id = "rontzterritory"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/rontzterritory
+	effectedstats = list(STATKEY_PER = 1, STATKEY_WIL = -1)
+	duration = 15 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/rontzterritory
+	name = "Rontz Territory"
+	desc = span_warning("I am in enemy territory, I must be careful..")
+	icon_state = "rontz"
+
 /////////////////////////
 ///HARPY FLIGHT STUFF///
 ///////////////////////

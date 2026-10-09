@@ -321,6 +321,7 @@
 #define TRAIT_REGROW_LIMBS "Regrow Limbs" //OV ADD, regrows lost limbs at cost of nutrition
 #define TRAIT_GANG_A "Gang Rontz Ratz"
 #define TRAIT_GANG_B "Gang Blortz Volves"
+#define TRAIT_TROUBLEMAKER_KNOWER "Troublemaker Knower" //For city guards and CITY GUARDS ONLY to know thugs.
 #define TRAIT_NATURALARMOR "Tough Skin"
 #define TRAIT_CLERGYRADICAL "Radical member of Clergy"
 #define TRAIT_ON_BOAT "on_boat"
@@ -664,6 +665,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_CHASTITY_LOCKED = span_info("My chastity device is locked, it's impossible to remove without the key."),
 	TRAIT_GANG_A = span_info("I belong to the Rontz Ratz gang"),
 	TRAIT_GANG_B = span_info("I belong to the Blortz Volves gang"),
+	TRAIT_TROUBLEMAKER_KNOWER = span_info("I am aware of the usual troublemakers that live in the area."),
 	TRAIT_EXTREME_TEMPERATURE_IMMUNE = span_info("I will not suffer ills from extreme temperatures, wether hot or cold, yet fire and ice can still harm me."),
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
 	TRAIT_NATURALARMOR = span_info("Whether by natural or other means, my skin is strong enough to resist being pierced and cut."),

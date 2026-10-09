@@ -1426,6 +1426,10 @@
 			gang_text = span_notice ("My Blortz Volves gang member!")
 		else if (HAS_TRAIT(examiner, TRAIT_GANG_A))
 			gang_text = span_userdanger ("Blortz Volves scum! Enemy!")
+	//For City guards.	
+	if (HAS_TRAIT(examiner, TRAIT_TROUBLEMAKER_KNOWER))
+		if (HAS_TRAIT(src, TRAIT_GANG_A) || HAS_TRAIT(src, TRAIT_GANG_B))
+			gang_text = span_userdanger ("Troublemaker. I should watch them closely.")
 
 	return gang_text
 

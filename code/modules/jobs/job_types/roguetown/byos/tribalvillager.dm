@@ -37,7 +37,6 @@
 		/datum/advclass/peasant,
 		/datum/advclass/potter,
 		/datum/advclass/seamstress,
-		/datum/advclass/thug,
 		/datum/advclass/witch,
 		/datum/advclass/scavenger,
 		/datum/advclass/woodworker

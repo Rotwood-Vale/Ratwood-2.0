@@ -22,7 +22,7 @@
 	min_pq = 6
 	max_pq = null
 	cmode_music = 'sound/music/combat_citywatch.ogg'
-	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_PERFECT_TRACKER, TRAIT_SLEUTH) // No evil shall escape my sight
+	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_PERFECT_TRACKER, TRAIT_SLEUTH, TRAIT_TROUBLEMAKER_KNOWER) // No evil shall escape my sight
 	job_subclasses = list(
 		/datum/advclass/watchcaptain/watchcaptain
 	)

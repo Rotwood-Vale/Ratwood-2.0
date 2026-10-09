@@ -1810,3 +1810,131 @@
 	icon_state = "zaelorian_crynsaris"
 	icon = 'icons/roguetown/misc/statues/statue_zizo.dmi'
 	pixel_x = -16
+
+//Thug statues, intended for Thugs//
+
+/obj/structure/fluff/statue/gang
+	name = "unclaimed flat stone"
+	desc = "A flat, unmarked stone. It looks like a canvas. Perhaps it could be used to make a statement."
+	icon_state = "gangneutral"
+	icon = 'icons/roguetown/misc/structure.dmi'
+	var/being_captured = FALSE
+	var/capture_time = 12 SECONDS
+	var/intimidation_range = 8
+
+/obj/structure/fluff/statue/gang/attack_hand(mob/user)
+	. = ..()
+	if(!HAS_TRAIT(user, TRAIT_GANG_A) && !HAS_TRAIT(user, TRAIT_GANG_B))
+		to_chat(user, span_warning("What a smooth stone."))
+		return
+	if(being_captured)
+		to_chat(user, span_warning("This stone is already bein' claimed!"))
+		return
+	to_chat(user, span_notice("You begin claiming the stone for your gang."))
+	being_captured = TRUE
+	
+	if(do_after(user, capture_time, src))
+		
+		if(HAS_TRAIT(user, TRAIT_GANG_A))
+			new /obj/structure/fluff/statue/gang/rontz(get_turf(src))
+			qdel(src)
+			return
+		else if(HAS_TRAIT(user, TRAIT_GANG_B))
+			new /obj/structure/fluff/statue/gang/blortz(get_turf(src))
+			qdel(src)
+			return
+
+	being_captured = FALSE
+
+/obj/structure/fluff/statue/gang/rontz
+	name = "pillar with a cloth"
+	desc = "A stone pillar with a red cloth wrapped around the tip, the color of the Rontz gang."
+	icon_state = "rontzthug"
+	
+
+/obj/structure/fluff/statue/gang/rontz/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/structure/fluff/statue/gang/rontz/process()
+	for(var/mob/living/carbon/human/H in viewers(intimidation_range, src))
+		if(H.mind)
+			if(HAS_TRAIT(H, TRAIT_GANG_B))
+				if(!H.has_status_effect(/datum/status_effect/debuff/rontzterritory))
+					H.apply_status_effect(/datum/status_effect/debuff/rontzterritory)
+//below is for city guard neutralising or opposite gang CtF
+/obj/structure/fluff/statue/gang/rontz/attack_hand(mob/user)
+	if(!HAS_TRAIT(user, TRAIT_GANG_B) && !HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
+		to_chat(user, span_warning("A smooth rock with a cloth."))
+		return
+	if(being_captured)
+		to_chat(user, span_warning("This stone is already bein' claimed!"))
+		return
+	if(HAS_TRAIT(user, TRAIT_GANG_B))
+		to_chat(user, span_notice("You begin claiming the stone for your gang."))
+	else if(HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
+		to_chat(user, span_notice("Damned ruffians. Taking these places like it's their own."))
+	being_captured = TRUE
+	
+	if(do_after(user, capture_time, src))
+		
+		if(HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
+			new /obj/structure/fluff/statue/gang(get_turf(src))
+			qdel(src)
+			return
+		else if(HAS_TRAIT(user, TRAIT_GANG_B))
+			new /obj/structure/fluff/statue/gang/blortz(get_turf(src))
+			qdel(src)
+			return
+	
+	being_captured = FALSE
+
+/obj/structure/fluff/statue/gang/rontz/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/structure/fluff/statue/gang/blortz
+	name = "pillar with a cloth"
+	desc = "A stone pillar with a blue cloth wrapped around the tip, the color of the Rontz gang."
+	icon_state = "blortzthug"
+	
+/obj/structure/fluff/statue/gang/blortz/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/structure/fluff/statue/gang/blortz/process()
+	for(var/mob/living/carbon/human/H in viewers(intimidation_range, src))
+		if(H.mind)
+			if(HAS_TRAIT(H,TRAIT_GANG_A))
+				if(!H.has_status_effect(/datum/status_effect/debuff/blortzterritory))
+					H.apply_status_effect(/datum/status_effect/debuff/blortzterritory)
+					
+/obj/structure/fluff/statue/gang/blortz/attack_hand(mob/user)
+	if(!HAS_TRAIT(user, TRAIT_GANG_A) && !HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
+		to_chat(user, span_warning("A smooth rock with a cloth."))
+		return
+	if(being_captured)
+		to_chat(user, span_warning("This stone is already bein' claimed!"))
+		return
+	if(HAS_TRAIT(user, TRAIT_GANG_A))
+		to_chat(user, span_notice("You begin claiming the stone for your gang."))
+	else if(HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
+		to_chat(user, span_notice("Damned ruffians. Taking these places like it's their own."))
+	being_captured = TRUE
+	
+	if(do_after(user, capture_time, src))
+		
+		if(HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
+			new /obj/structure/fluff/statue/gang(get_turf(src))
+			qdel(src)
+			return
+		else if(HAS_TRAIT(user, TRAIT_GANG_A))
+			new /obj/structure/fluff/statue/gang/rontz(get_turf(src))
+			qdel(src)
+			return
+	
+	being_captured = FALSE
+
+/obj/structure/fluff/statue/gang/blortz/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
