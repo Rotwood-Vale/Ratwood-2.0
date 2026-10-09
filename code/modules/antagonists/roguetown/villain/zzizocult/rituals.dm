@@ -1470,6 +1470,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /obj/item/clothing/head/hooded/cultrobehood/empowered
 	armor = ARMOR_ASCENDANT
 	max_integrity = 400
+	icon_state = "ewarlockhood"
 	item_state = "ewarlockhood"
 
 /obj/item/clothing/cloak/cultrobe/equipped(mob/living/user, slot)
@@ -1514,6 +1515,9 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 				H.change_stat(stat, 2)
 		to_chat(H, span_userdanger("MY ROBE THRUMS WITH DARK POWER!"))
 		H.update_inv_cloak()
+		if(hoodtoggled)
+			ToggleHood(H)
+			ToggleHood(H)
 
 /obj/item/clothing/cloak/cultrobe/proc/regen()
 	if(QDELETED(src))
