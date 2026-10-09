@@ -369,7 +369,6 @@
 	name = "Succubus (Alt Tailmaw)"
 	icon = 'icons/mob/sprite_accessory/tails/tiefling.dmi'
 	icon_state = "spadeheart"
-	can_wag = FALSE
 
 /datum/sprite_accessory/tail/tiefling/spade/tailmaw
 	name = "Spade (Tailmaw)"
