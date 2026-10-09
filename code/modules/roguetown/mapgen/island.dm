@@ -37,7 +37,8 @@
 							/obj/structure/flora/roguegrass/swampweed = 1,
 							/obj/structure/flora/roguegrass/herb/random = 4,
 							/obj/effect/decal/remains/bear = 0.5,
-							/obj/effect/decal/remains/human = 0.2,)
+							/obj/effect/decal/remains/human = 0.2,
+							/obj/effect/landmark/hunting_spawner = 3)
 	// spawnableTurfs = list(/turf/open/floor/rogue/dirt/road=5)
 	allowed_areas = list(/area/rogue/outdoors/byos,/area/rogue/outdoors/rtfield,/area/rogue/outdoors/town/byos)
 
@@ -46,7 +47,8 @@
 	allowed_turfs = list(/turf/open/floor/rogue/desert_grass, /turf/open/floor/rogue/grass)
 	excluded_turfs = list(/turf/open/floor/rogue/dirt/road)
 	spawnableAtoms = list(/obj/structure/flora/roguegrass = 4,
-							/obj/structure/flora/roguegrass/jungle = 2,)
+							/obj/structure/flora/roguegrass/jungle = 2,
+							/obj/effect/landmark/hunting_spawner = 2)
 	allowed_areas = list(/area/rogue/outdoors/byos,/area/rogue/outdoors/rtfield,/area/rogue/outdoors/town/byos)
 	
 /datum/mapGeneratorModule/island/road

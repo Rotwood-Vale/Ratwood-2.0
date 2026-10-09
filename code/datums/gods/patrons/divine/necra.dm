@@ -18,6 +18,7 @@
 					/obj/effect/proc_holder/spell/invoked/deaths_door				= CLERIC_T3,//This was bad enough at T1. No, thanks. Cool as it is.
 					/obj/effect/proc_holder/spell/targeted/churn					= CLERIC_T4,//Priest/Acolytes only. Thanks.
 	)
+	energy_color = COLOR_PATRON_NECRA
 	confess_lines = list(
 		"ALL SOULS FIND THEIR WAY TO NECRA!",
 		"THE UNDERMAIDEN IS OUR FINAL REPOSE!",

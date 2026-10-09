@@ -1,0 +1,5 @@
+author: "Mannybrado"
+delete-after: True
+changes:
+  - code_imp: "baron pq requirement from 20 to 9"
+  - code_imp: "retainer pq requirement from 15 to 5"

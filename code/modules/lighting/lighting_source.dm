@@ -353,6 +353,7 @@
 			corners[cached_corners[2]] = 0
 			corners[cached_corners[3]] = 0
 			corners[cached_corners[4]] = 0
+		corners -= null
 		source_turf.luminosity = oldlum
 
 	LAZYINITLIST(src.effect_str)

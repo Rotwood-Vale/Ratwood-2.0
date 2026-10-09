@@ -927,3 +927,92 @@
   - admin: Character assets link regex has been hardened somewhat to more reliably
       enforce the domain whitelist, and quotes cannot be submitted to try and perform
       any sort of string-escape exploit.
+2026-09-26:
+  Yuckuza:
+  - qol: Gossip and rumor character limit increased from 400 -> 750
+  - bugfix: fixed drow urumi doing 0 damage
+  awwliedacoder:
+  - balance: changed tainted-lux debuff to 30 mins, instead of 1 hour.
+  mushy:
+  - balance: Made darkvision slightly brighter.
+  wikimody:
+  - balance: Absolver and stigmata once again bleed with 0.5 mod, instead of 0.8 they
+      had post crit resistance nerf
+  - rscadd: Master miner now spawns with lether belt and steel picaxe
+  - balance: Leveling mining is now restricted to expert outside of few selected classes
+      (indicated by trained miner trait)
+  - balance: Miners lose jurneyman axes and maces, get jurneyman slings skill instead
+  - bugfix: Master miner can now claim miners house
+  - rscdel: Miners aprientece no longer lets you level picaxes to legendary (still
+      to expert)
+  zeroisthebiggay:
+  - balance: makes short swords swift
+  zoktiik:
+  - balance: Gargled speech (gained from throat crit, broken jaw, etc. The "KHSSSHSH"
+      thing.) now blocks spells requiring a verbal component to cast, similar in nature
+      to being silenced or gagged.
+2026-09-27:
+  The-Sun-In-Splendour:
+  - bugfix: golden circlet is now fireproof & nudist approved
+  Xander3359:
+  - rscadd: Orison and Miracle now grant a glow based on the caster's selected patron
+  Yuckuza:
+  - bugfix: Fixed Crocs Armory and Rosewood/Blackoak foreign trade vessels coming
+      to trade empty-handed.
+  chemistrymain3:
+  - balance: Heretical wretches now have access to Holy/Unholy blast.
+  - balance: Holy Ground buff is gone.
+  - qol: Noticeboard posts expire in three hours now.
+  ophaq:
+  - bugfix: Xylixian masks no longer catch fire.
+  wikimody:
+  - bugfix: Pestrian ability to turn werwolfs and gnolls into horific flesh abominations
+      have been tuned down, their aility to do so to anyone with a title has been
+      tuned up (some bugfixes on fleshaping miracle)
+  zoktiik:
+  - balance: Intensity of bleeding from all types of fractures has been roughly cut
+      by half.
+2026-09-29:
+  FreeStylaLT:
+  - bugfix: Fixed a bug with blood transfer that was causing it to increase the amount
+      of blood restored every cast.
+  Kroto-Ker:
+  - rscadd: Breasts jiggle during sex.
+  Mannybrado:
+  - rscadd: Face paint marking
+  - rscadd: Light Otavan accent, like Otavan but without overt french word replacements
+  - code_imp: Renamed Dark Elf accent to Otavan
+  MarioTheShiba:
+  - rscadd: Big Beak for the Head Physician.
+  MrShibaa:
+  - rscadd: New examine texts dependent on JOURNEYS END TIER
+  - balance: People with TRAIT_JOURNEYS_END are unable to have their blood drained
+      by leeches.
+  - balance: Mistwalker no longer has dodge expert.
+  - balance: Races and virtues with BREATHLESS are forbidden from Mistwalker.
+  - balance: Removed GRAB_IMMUNE from T3 (They already get high con and wil, so nothing
+      burger at most.)
+  - code_imp: New DEFINE for all races that BREATHE
+  Randumb-Phantomb:
+  - image: Reckless hairstyle's forehead nerfed.
+  trueroguan:
+  - bugfix: Fixed the icon display for the inpeculate intent of Graggar's Assassin
+      Dagger.
+  - bugfix: Fix stat market for the vilians
+2026-09-30:
+  Guidesu:
+  - rscadd: 'Ports AP hunting rework made by Ketrai: https://github.com/Azure-Peak/Azure-Peak/pull/6761'
+  - balance: Makes Biome Wanderer a less forgotten class.
+  - balance: Gives the towner bow-hunter class options for main bow weapon.
+  Randumb-Phantomb:
+  - image: Tusks now are hidden by clothing items that hide the snout, instead of
+      being hidden by clothing items that hide the hair or ears. No longer will your
+      coif hide those cute little tusks. Or uh, maybe menacing big tusks, your choice.
+  Yuckuza:
+  - rscadd: Added manticore tailmaw sex organs + 18 new sex actions accompanying.
+  - image: Genital organ items no longer use placeholder sprites.
+  awwliedacoder:
+  - bugfix: fixed kobold snout alignment
+  wikimody:
+  - rscadd: Gave keepers extra 3 hearblood containers at roundstart
+  - bugfix: Hearbeast tentacles are no longer is beaten by a gambelson

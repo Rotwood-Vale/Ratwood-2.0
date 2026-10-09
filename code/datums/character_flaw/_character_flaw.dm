@@ -739,6 +739,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/obj/item/organ/vagina/vagina = user.getorganslot(ORGAN_SLOT_VAGINA)
 	if(vagina && !vagina.fertility)
 		vagina.fertility = TRUE
+	var/obj/item/organ/tail/manticore/tail = get_manticore_tail(user)
+	if(tail)
+		tail.fertility = TRUE
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -756,7 +759,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/hemophage
 	name = "Hemophage"
-	desc = "Whether by curse or my people, blood is the only thing to keep me alive. Normal sources of nutrition and hydration will make me ill. <br>\
+	desc = "By an unknown zizonic curse, blood is the only thing to keep me alive. Normal sources of nutrition and hydration will make me ill. <br>\
 	<small>Any element of a virtue that modifies eating will be canceled out by Hemophage.</small>"
 	point_value = 2
 
