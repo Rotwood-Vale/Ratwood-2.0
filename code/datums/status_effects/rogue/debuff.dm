@@ -307,8 +307,8 @@
 /datum/status_effect/debuff/yield_prompt/on_apply()
 	if(owner.has_flaw(/datum/charflaw/compliant))
 		var/list/screen_locs = list()
-		for(var/x_pos in 2 to 15)
-			for(var/y_pos in 2 to 15)
+		for(var/x_pos in 1 to 14)
+			for(var/y_pos in 1 to 14)
 				screen_locs += "0:[x_pos*32],0:+[y_pos*32]"
 
 		prompt_list = list()
