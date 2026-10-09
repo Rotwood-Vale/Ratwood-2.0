@@ -790,8 +790,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_SELF_AWARE
 	)
-	stat_budget = STAT_BUDGET_MID
-	favored_stats = list(STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_STR = STAT_VERY_DISFAVORED)
+	forced_stats = list(STATKEY_CON = 15, STATKEY_WIL = 12, STATKEY_SPD = 8, STATKEY_STR = 8, STATKEY_INT = 10, STATKEY_PER = 10)
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
