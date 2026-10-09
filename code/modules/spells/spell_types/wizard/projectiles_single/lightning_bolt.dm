@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt
 	name = "Bolt of Lightning"
 	desc = "Emit a bolt of lightning that burns a target, preventing them from attacking and slowing them down for 6 seconds. \n\
-	Damage is increased by 100% versus simple-minded creechurs."
+	Damage is increased by 100% versus simple-minded creechurs. Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent."
 	clothes_req = FALSE
 	overlay_state = "lightning"
 	sound = 'sound/magic/lightning.ogg'
