@@ -26,6 +26,15 @@
 	cost = 3
 	xp_gain = TRUE
 
+/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/cast(list/targets, mob/user = user)
+	var/mob/living/carbon/human/H = user
+	var/datum/intent/a_intent = H.a_intent
+	if(istype(a_intent, /datum/intent/special/magicarc))
+		projectile_type = /obj/projectile/energy/lightning/arc
+	else
+		projectile_type = /obj/projectile/energy/lightning
+	. = ..()
+
 /obj/projectile/magic/lightning
 	name = "bolt of lightning"
 	tracer_type = /obj/effect/projectile/tracer/stun
@@ -44,6 +53,11 @@
 	light_color = "#ffffff"
 	light_outer_range = 7
 	var/bypass_antimagic = FALSE
+
+/obj/projectile/energy/lightning/arc
+	name = "arced lightning"
+	damage = 40
+	arcshot = TRUE
 
 /obj/projectile/magic/lightning/on_hit(target)
 	. = ..()
