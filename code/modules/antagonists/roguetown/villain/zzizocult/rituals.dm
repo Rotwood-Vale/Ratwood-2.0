@@ -241,16 +241,15 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	for(var/datum/mind/M in SSmapping.retainer.cultists)
 		if(is_zizolackey(M))
 			lackeys++
-	if(lackeys > 3)
-		var/mob/living/carbon/human/assistant
-		for(var/mob/living/carbon/human/H in range(1, center))
-			if(H == user || H == target || !is_zizo(H))
-				continue
-			assistant = H
-			break
-		if(!assistant)
-			to_chat(user, span_warning("FOR THE CULT TO GROW LARGER, YOU MUST PERFORM THIS RITE WITH AN ASSISTANT CULTIST ON THE SIGIL."))
-			return
+	var/mob/living/carbon/human/assistant
+	for(var/mob/living/carbon/human/H in range(1, center))
+		if(H == user || H == target || !is_zizo(H))
+			continue
+		assistant = H
+		break
+	if(lackeys > 3 && !assistant)
+		to_chat(user, span_warning("FOR THE CULT TO GROW LARGER, YOU MUST PERFORM THIS RITE WITH AN ASSISTANT CULTIST ON THE SIGIL."))
+		return
 	var/alert = tgui_alert(target, "YOU WILL BE SHOWN THE TRUTH. DO YOU RESIST?", "???", list("Yield", "Resist"))
 	target.Immobilize(3 SECONDS)
 	if(alert == "Yield")
@@ -286,6 +285,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 				new /obj/item/necro_relics/necro_crystal(center)
 				zizo_award(user, 3)
 			zizo_award(user, 5)
+			if(assistant)
+				zizo_award(assistant, 5)
 
 /datum/ritual/servantry/sacrifice
 	name = "Sacrifice"
@@ -380,7 +381,11 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/new_name = input(user, "WHOSE NAME DO YOU WHISPER TO THE HEART?", "ZIZO") as null|text
 	if(!new_name)
 		return
-	if(!user.mind?.do_i_know(name = new_name))
+	var/known = user.mind?.do_i_know(name = new_name)
+	for(var/mob/living/carbon/human/T in GLOB.gate_targets)
+		if(T.real_name == new_name)
+			known = TRUE
+	if(!known)
 		to_chat(user, span_warning("I don't know anyone by that name."))
 		return
 	tracked_name = new_name
