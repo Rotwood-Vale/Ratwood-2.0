@@ -203,7 +203,9 @@
 	name = "Lacrima"
 	desc = "Wreath your hand in inhumen energies.\n \
 	USE on a mind-inhabited victim who is alyve, floored, whose lux is intact to plunge your hand into their chest, shattering their ribs and will alike in order to forcefully tear the lux from their chest.\n \
-	DISARM on a PURE lux to convert it into IMPURE lux, in order to deprive it of those who need it or to fuel your wicked necromantic relics."
+	USE intent will take it in a more gentle manner, rewarding those who yield to your will. \n \
+	PUNCH intent will severely cripple and traumatize the target; a warning to those who resist your ambition.\n \
+	DISARM on a PURE lux to profane it, rendering it IMPURE, in order to deprive it of those who need it or to fuel your wicked necromantic relics."
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "lacrima"
@@ -226,7 +228,7 @@
 	name = "\improper lux ripper"
 	desc = "ZIZO's will is to perverse the lux of the lyving. With but a mere shred of HER power, you will do exactly that."
 	catchphrase = null
-	possible_item_intents = list(/datum/intent/use, INTENT_DISARM)
+	possible_item_intents = list(/datum/intent/use, INTENT_HARM, INTENT_DISARM)
 	icon = 'icons/mob/roguehudgrabs.dmi'
 	icon_state = "pulling"
 	icon_state = "grabbing_greyscale"
@@ -239,14 +241,16 @@
 /obj/item/melee/touch_attack/lacrima/afterattack(mob/living/carbon/human/target, mob/living/carbon/human/user, proximity)
 	switch(user.used_intent.type)
 		if(/datum/intent/use)
-			lux_rip(target, user)
+			lux_rip(target, user, FALSE)
+		if(INTENT_HARM)
+			lux_rip(target, user, TRUE)
 		if(INTENT_DISARM)
 			if(istype(target, /obj/item/reagent_containers/lux))
 				perverse_lux(target, user)
 			else
 				to_chat(user, span_info("That's not pure lux."))
 
-/obj/item/melee/touch_attack/lacrima/proc/lux_rip(mob/living/carbon/human/target, mob/living/carbon/human/user)
+/obj/item/melee/touch_attack/lacrima/proc/lux_rip(mob/living/carbon/human/target, mob/living/carbon/human/user, harmful)
 	var/break_time = 100
 	var/tear_time = 50
 
@@ -286,15 +290,26 @@
 		return
 	if(!HAS_TRAIT(target, TRAIT_NOPAIN))
 		target.emote("painscream")
-		target.add_stress(/datum/stressevent/myfuckingluxman)
+		if(!harmful)
+			target.add_stress(/datum/stressevent/myluxman)
+		if(harmful)
+			target.add_stress(/datum/stressevent/myfuckingluxman)
 	playsound(src, 'sound/items/blackmirror_needle.ogg', 60, FALSE, 3)
 	user.visible_message(span_alert("[user] tears a glob of lux from [target]'s chest!"))
 	new /obj/item/reagent_containers/lux_impure(target.loc)
 	SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
 	record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 	record_round_statistic(STATS_LUX_HARVESTED)
-	target.apply_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped) // -5 omnistat. prevents harvesting lux again for much longer than regular devitalised
+	if(!harmful)
+		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	if(harmful)
+		target.apply_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped) // -5 omnistat. prevents harvesting lux again for much longer than regular devitalised
 	qdel(src)
+
+/datum/stressevent/myluxman
+	desc = span_boldred("The essence of my lyfe has been taken from me.")
+	stressadd = 7 // slightly worse than unsated vice
+	timer = 5 MINUTES
 
 /datum/stressevent/myfuckingluxman
 	desc = span_boldred("THE ESSENCE OF MY LYFE HAS BEEN DEFILED!!")
