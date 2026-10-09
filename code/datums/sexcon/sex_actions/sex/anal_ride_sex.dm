@@ -23,7 +23,7 @@
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 			user.sexcon.try_pelvis_crush(target)
 
-	target.sexcon.perform_sex_action(target, 2, 0, TRUE)
+	target.sexcon.perform_sex_action(target, 2, 0, TRUE, involved_penis = target.getorganslot(ORGAN_SLOT_PENIS))
 	if(target.sexcon.check_active_ejaculation())
 		target.visible_message(span_love("[target] cums into [user]'s butt!"))
 		for(var/i = 1; i <= target.sexcon.get_load_bursts(); i++)
@@ -34,9 +34,9 @@
 		target.virginity = FALSE
 
 	if(target.sexcon.considered_limp())
-		target.sexcon.perform_sex_action(user, 1.2, 4, FALSE)
+		target.sexcon.perform_sex_action(user, 1.2, 4, FALSE, involved_penis = target.getorganslot(ORGAN_SLOT_PENIS))
 	else
-		target.sexcon.perform_sex_action(user, 2.4, 9, FALSE)
+		target.sexcon.perform_sex_action(user, 2.4, 9, FALSE, involved_penis = target.getorganslot(ORGAN_SLOT_PENIS))
 	user.sexcon.handle_passive_ejaculation()
 
 /datum/sex_action/anal_ride_sex/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)

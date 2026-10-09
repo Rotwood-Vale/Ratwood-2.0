@@ -126,3 +126,50 @@
   - rscadd: Pestra also stoped being a hipocrite and extends her "medical care for
       everyone" commandment to undead (pestrian miracle no longer burns them, and
       revive no longer explodes them)
+2026-10-07:
+  Arturlang:
+  - bugfix: hopefully fix game getting stuck in lobby
+  PPooch:
+  - bugfix: Grapple twisting limbs no longer rolls for crit twice.
+  - bugfix: fixed the subclass slot display, the (!) menu, and the (!!) virtue incompatibility
+      warning, on the late join job select screen.
+  Randumb-Phantomb:
+  - rscadd: 'You can now whip people with your belt, it does like ten damage.
+
+      Also chains too.'
+  Yuckuza:
+  - code_imp: Removed duplicated taur clothing logic. Shared proc lives in taur.dm
+  - image: New taur clothing sprites for saiga taurs. Includes special sprites for
+      psydonic and astratan tabards.
+  chemistrymain3:
+  - rscadd: The Prelate's staff now functions like the Duke's master rod.
+  - rscadd: Added 1 templar slot and 2 churchling slots.
+  loleo14:
+  - bugfix: Singular letter added.
+2026-10-08:
+  Bxnny:
+  - balance: removed Gronnic Ittinerant, Naledian Refugee and Dunewell Nomad from
+      the licker class selection.
+  CloverIsLucky:
+  - qol: Increasing Medicine from sewing wounds has been doubled up.(thank me).
+  SirSwagmeyer:
+  - rscadd: Added Mage Dexterity - an armor filtering trait to prevent full Mages
+      from stacking armor protection.
+  - balance: Made tough skin unenchantable, and blacklisted it from magedex roles.
+  - rscadd: Added basic leather armor to the silverface.
+  UntoldTactics:
+  - bugfix: Fixes avantyne vestments lacking a sprite and defaulting to regular plate
+      chausses.
+  ophaq:
+  - rscadd: Tieflings get new tailmaw variants of their tails, plus the ones wild
+      kin got.
+  - rscadd: Tieflings can now use the mutant skin color option.
+  - rscadd: Two new masturbation verbs for tail maws.
+  - rscadd: Adds the tailcoat and ornate tailcoat to the loadout.
+  - bugfix: Fixes up code in the loadout for nobility check so there is less copy
+      pasta.
+2026-10-09:
+  IronDragoon:
+  - bugfix: a few small fixes for dunworld (and teapots/cups for the keep)
+  chemistrymain3:
+  - bugfix: Prelate staff now works in all areas of the church.

@@ -113,7 +113,7 @@
 
 /obj/item/mundane/puzzlebox/impossible/attack_self(mob/living/user)
 	if(last_attempt_day == GLOB.dayspassed)
-		to_chat(user, span_warning("An attempt has already been made.. I shoul wait a dae.."))
+		to_chat(user, span_warning("An attempt has already been made.. I should wait a dae.."))
 		return
 	playsound(src.loc, 'sound/items/wood_sharpen.ogg', 75, TRUE)
 	playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
