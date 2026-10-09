@@ -92,6 +92,8 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 	return M && (is_zizocultist(M.mind) || is_zizolackey(M.mind))
 
 /proc/absorb_lux(mob/living/carbon/human/target, turf/T, give_crystal = TRUE)
+	if(is_zizo(target))
+		return FALSE
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 		return FALSE
 	target.apply_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped)
@@ -127,6 +129,9 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 		return TRUE
 	if(is_zizo(target))
 		to_chat(user, span_warning("CAN'T SACRIFICE CULTIST."))
+		return TRUE
+	if(!target.mind?.key)
+		to_chat(user, span_warning("THIS ONE HAS NO SOUL."))
 		return TRUE
 	var/datum/job/J = SSjob.GetJob(target.mind?.assigned_role)
 	if(!J || (J.type in list(KING_QUEEN_ROLES)) || J.type == /datum/job/roguetown/bandit || J.type == /datum/job/roguetown/wretch)
