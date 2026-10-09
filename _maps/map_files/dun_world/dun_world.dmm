@@ -61734,6 +61734,16 @@
 /obj/item/folding_table_stored,
 /obj/item/folding_table_stored,
 /obj/item/folding_table_stored,
+/obj/item/reagent_containers/glass/bucket/pot/teapot/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/bucket/pot/teapot/fancy,
 /turf/open/floor/rogue/blocks/flipped,
 /area/rogue/under/town/basement/keep)
 "lhK" = (
@@ -445479,7 +445489,7 @@ aBB
 aBB
 aBB
 jWw
-eps
+iVE
 hrE
 aBB
 aBB
@@ -447287,7 +447297,7 @@ bGf
 bGf
 bGf
 jWw
-iVE
+eps
 hrE
 aBB
 aBB

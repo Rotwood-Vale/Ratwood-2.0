@@ -30,6 +30,11 @@
 	penis_dna.functional = functional
 	penis_dna.sheath_type = sheath_type
 
+/obj/item/organ/penis/proc/get_size_arousal_multiplier(mob/living/carbon/human/receiver)
+	if(penis_size != MIN_PENIS_SIZE)
+		return 1
+	return receiver == owner ? 2 : 0.5
+
 /obj/item/organ/penis/proc/update_erect_state()
 	var/oldstate = erect_state
 	var/new_state = ERECT_STATE_NONE
@@ -56,7 +61,7 @@
 	sheath_type = SHEATH_TYPE_NORMAL
 
 /obj/item/organ/penis/knotted/big
-	penis_size = 3
+	penis_size = MAX_PENIS_SIZE
 
 /obj/item/organ/penis/equine
 	name = "equine penis"
