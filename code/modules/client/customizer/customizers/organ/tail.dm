@@ -539,5 +539,6 @@
 		/datum/sprite_accessory/tail/tiefling/tailmaw,
 		/datum/sprite_accessory/tail/tiefling/heart/tailmaw,
 		/datum/sprite_accessory/tail/tiefling/spade/tailmaw,
+		/datum/sprite_accessory/tail/tiefling/spadeheart/tailmaw,
 	)
 	allows_accessory_color_customization = TRUE
