@@ -339,7 +339,7 @@
 // ✤ EQUIPMENT ✤ BELONGS HERE! JUST BELOW!
 
 /datum/inqports/equipment/holymonkrobes
-	name = " 1 Holy Monk Robes"
+	name = "1 Holy Monk Robes"
 	item_type = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy
 	marquescost = 8
 
