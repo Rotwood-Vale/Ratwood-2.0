@@ -1,0 +1,4 @@
+author: "chemistrymain3"
+delete-after: True
+changes:
+  - bugfix: "Prelate staff now works in all areas of the church."
