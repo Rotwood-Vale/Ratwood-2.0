@@ -1,0 +1,4 @@
+author: "chemistrymain3"
+delete-after: True
+changes:
+  - rscadd: "Zizobane now has additional effects, but knocks you out on the 22nd tick, instead of automatically."

@@ -168,3 +168,8 @@
   - rscadd: Adds the tailcoat and ornate tailcoat to the loadout.
   - bugfix: Fixes up code in the loadout for nobility check so there is less copy
       pasta.
+2026-10-09:
+  IronDragoon:
+  - bugfix: a few small fixes for dunworld (and teapots/cups for the keep)
+  chemistrymain3:
+  - bugfix: Prelate staff now works in all areas of the church.

@@ -1,0 +1,4 @@
+author: "UntoldTactics"
+delete-after: True
+changes:
+  - balance: "The Dreamwalker cannot be marked an apostate or cursed by the Bishop."
