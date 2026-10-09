@@ -1164,13 +1164,13 @@
 	glow_color = "#FFD700"
 	glow_intensity = GLOW_INTENSITY_LOW
 	invocation_type = "none"
-	recharge_time = 40
+	recharge_time = 40 SECONDS
 
 /obj/effect/proc_holder/spell/invoked/projectile/spitfire/matthios_dragon
 	glow_color = "#FFD700"
 	glow_intensity = GLOW_INTENSITY_LOW
 	invocation_type = "none"
-	recharge_time = 10
+	recharge_time = 10 SECONDS
 
 // Golden-Serpent-exclusive T4: Skulduggery
 //Skulduggery, lets you slip behind people who attack you
