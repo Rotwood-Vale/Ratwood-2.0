@@ -1911,6 +1911,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					var/datum/browser/popup = new(user, "Formatting Help", nwidth = 400, nheight = 350)
 					popup.set_content(dat.Join())
 					popup.open(FALSE)
+				if("statshelp")
+					var/datum/browser/popup = new(user, "Stat Help", nwidth = 400, nheight = 200)
+					popup.set_content("See a class' stats using the subclass preview!<br>Stats are calculated via class budget.<br>Statpacks / stat customization shifts weights in the budget, but does not add or remove points.")
+					popup.open(FALSE)
 				if("skin_color_ref_list")
 					var/list/dat = list()
 					dat +="Skin color codes reference list<br>"

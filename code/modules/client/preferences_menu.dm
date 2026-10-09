@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		source_name = "Origin"
 	if(stat_source == "virtue")
 		source_name = "Second Virtue"
-	var/list/source_items = list(pref_item("Stat Source", bg_link(source_name, "stat_source")))
+	var/list/source_items = list(pref_item("Stat Source", bg_link(source_name, "stat_source")), pref_link("(?)", "statshelp"))
 	if(stat_source == "origin" && origin?.choose_stat)
 		source_items += pref_item("Bonus", bg_link(capitalize(origin_bonus_stat) || "Choose", "origin_stat"))
 	html += pref_line(source_items)
