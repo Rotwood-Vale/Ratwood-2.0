@@ -108,14 +108,6 @@
 	/// Cooldown before we emit another scent to people around
 	COOLDOWN_DECLARE(emit_scent)
 
-/datum/status_effect/redolent/on_apply()
-	. = ..()
-	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_wash))
-
-/datum/status_effect/redolent/on_remove()
-	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT)
-	return ..()
-
 /datum/status_effect/redolent/process(wait)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, smell_suppressed))
@@ -123,11 +115,13 @@
 	emit_smell()
 
 /// Temporarily suppressed the status and particle effects for a time after being cleaned
-/datum/status_effect/redolent/proc/on_wash(datum/source, clean)
-	SIGNAL_HANDLER
-	if(clean < CLEAN_MEDIUM) // Weak cleaning won't wash it away
-		return
-	to_chat(owner, span_notice("I scrub the stink away. I should stay fresh for a while."))
+/datum/status_effect/redolent/proc/on_wash(mob/cleaner)
+	if(cleaner == owner)
+		to_chat(owner, span_notice("I scrub the stink away. I should stay fresh for a while."))
+	else
+		to_chat(cleaner, span_notice("I wash their stink away, but it's only a matter of time before they smell again."))
+		to_chat(owner, span_notice("[cleaner] has given me a proper bath. My scent will be suppressed for a while"))
+
 	COOLDOWN_START(src, smell_suppressed, 30 MINUTES)
 
 /datum/status_effect/redolent/proc/get_examine_text()
@@ -185,6 +179,8 @@
 
 /// Applies our stench to someone else
 /datum/status_effect/redolent/proc/apply_on_contact(mob/living/carbon/human/target)
+	if(!COOLDOWN_FINISHED(src, smell_suppressed)) // Can't spread a smell we don't have
+		return
 	// Step 1: Check to see if they have OUR smell
 	for(var/datum/status_effect/redolent/stinky_contact/stink_to_check in target.has_status_effect_list(/datum/status_effect/redolent/stinky_contact))
 		if(stink_to_check.redolent_scent == redolent_scent) // Check if they have our custom string
@@ -216,10 +212,12 @@
 		if(REDOLENT_SMELL_BAD)
 			to_chat(owner, span_warning("I reek of someone else's stench now...ew..."))
 
-/datum/status_effect/redolent/stinky_contact/on_wash(datum/source, clean)
-	if(clean < CLEAN_MEDIUM) // Weak cleaning won't wash it away
-		return
-	to_chat(owner, span_notice("I scrub the smell away..."))
+/datum/status_effect/redolent/stinky_contact/on_wash(mob/cleaner)
+	if(cleaner == owner)
+		to_chat(owner, span_notice("I scrub the smell away..."))
+	else
+		to_chat(cleaner, span_notice("I wash their smell away."))
+		to_chat(owner, span_notice("[cleaner] has given me a proper bath, I am no longer tainted by the scent."))
 	qdel(src)
 
 /datum/status_effect/redolent/stinky_contact/on_remove()
