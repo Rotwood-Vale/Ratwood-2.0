@@ -655,11 +655,11 @@
 		adjust_skillrank(/datum/skill/combat/wrestling, SKILL_LEVEL_MASTER, TRUE)
 		adjust_skillrank(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 		adjust_skillrank(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
-		adjust_skillrank(/datum/skill/misc/athletics, SKILL_LEVEL_LEGENDARY, TRUE)
+		adjust_skillrank(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
 		adjust_skillrank(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 
-		STASTR = 20
-		STACON = 20
+		STASTR = 15
+		STACON = 15
 		STAWIL = 15
 		STAPER = 12
 		STASPD = 6
@@ -1164,11 +1164,13 @@
 	glow_color = "#FFD700"
 	glow_intensity = GLOW_INTENSITY_LOW
 	invocation_type = "none"
+	recharge_time = 40
 
 /obj/effect/proc_holder/spell/invoked/projectile/spitfire/matthios_dragon
 	glow_color = "#FFD700"
 	glow_intensity = GLOW_INTENSITY_LOW
 	invocation_type = "none"
+	recharge_time = 10
 
 // Golden-Serpent-exclusive T4: Skulduggery
 //Skulduggery, lets you slip behind people who attack you
