@@ -57,6 +57,8 @@ GLOBAL_LIST_INIT(free_stat_packs, list("Austere", "Frail"))
 	for(var/stat in values)
 		for(var/level in 9 to values[stat])
 			used += stat_level_cost(stat, level)
+		if(values[stat] < 8)
+			used -= 8 - values[stat]
 	return used
 
 /proc/stat_cap_shift(stat, list/favored_stats)
@@ -101,6 +103,8 @@ GLOBAL_LIST_INIT(free_stat_packs, list("Austere", "Frail"))
 		if(stat == STATKEY_STR && LAZYACCESS(favored_stats, STATKEY_SPD) > 0)
 			weights[stat] *= STAT_OPPOSED_WEIGHT
 		spent[stat] = 0
+		if(values[stat] < 8)
+			budget += 8 - values[stat]
 	var/progress = TRUE
 	while(progress && budget > 0)
 		progress = FALSE
