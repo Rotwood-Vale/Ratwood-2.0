@@ -146,3 +146,30 @@
   - rscadd: Added 1 templar slot and 2 churchling slots.
   loleo14:
   - bugfix: Singular letter added.
+2026-10-08:
+  Bxnny:
+  - balance: removed Gronnic Ittinerant, Naledian Refugee and Dunewell Nomad from
+      the licker class selection.
+  CloverIsLucky:
+  - qol: Increasing Medicine from sewing wounds has been doubled up.(thank me).
+  SirSwagmeyer:
+  - rscadd: Added Mage Dexterity - an armor filtering trait to prevent full Mages
+      from stacking armor protection.
+  - balance: Made tough skin unenchantable, and blacklisted it from magedex roles.
+  - rscadd: Added basic leather armor to the silverface.
+  UntoldTactics:
+  - bugfix: Fixes avantyne vestments lacking a sprite and defaulting to regular plate
+      chausses.
+  ophaq:
+  - rscadd: Tieflings get new tailmaw variants of their tails, plus the ones wild
+      kin got.
+  - rscadd: Tieflings can now use the mutant skin color option.
+  - rscadd: Two new masturbation verbs for tail maws.
+  - rscadd: Adds the tailcoat and ornate tailcoat to the loadout.
+  - bugfix: Fixes up code in the loadout for nobility check so there is less copy
+      pasta.
+2026-10-09:
+  IronDragoon:
+  - bugfix: a few small fixes for dunworld (and teapots/cups for the keep)
+  chemistrymain3:
+  - bugfix: Prelate staff now works in all areas of the church.

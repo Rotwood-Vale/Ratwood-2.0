@@ -251,6 +251,18 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = "Helbrede - Sons of Tyr"
 	musicpath = list('sound/music/combat_grenzelhoft.ogg')
 
+/datum/combat_music/rogue
+	name = "Rogue Adventurer"
+	desc = "Try and die with some dignity.."
+	shortname = "Rogue Adv"
+	musicpath = list('sound/music/cmode/adventurer/CombatRogue.ogg')
+
+/datum/combat_music/monk
+	name = "Monk"
+	desc = "HOOYIAH!"
+	shortname = "Monk Adv"
+	musicpath = list('sound/music/cmode/adventurer/CombatMonk.ogg')
+
 /datum/combat_music/heretic_zizo
 	name = "Heretic - Zizo (Lich)"
 	desc = "Trust nobody, after all the power has always been within you."

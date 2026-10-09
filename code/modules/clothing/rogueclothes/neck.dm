@@ -572,6 +572,7 @@
 	name = "inverted psycross"
 	desc = "A symbol of ambition from an era that had reason to believe in it."
 	icon_state = "zcross_iron"
+	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
 	name = "ancient zcross"
