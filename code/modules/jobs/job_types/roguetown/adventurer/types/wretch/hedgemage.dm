@@ -11,7 +11,7 @@
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY)
 	// Same stat spread as necromancer, same reasoning
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
 	subclass_spellpoints = 27 // Unlike Rogue Mage, who gets 6 but DExpert, this one don't have DExpert but have more spell points than anyone but the CM.
 	subclass_skills = list(

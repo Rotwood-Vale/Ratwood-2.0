@@ -26,7 +26,7 @@
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN, 
 	)
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_ZEALOT
 	subclass_stashed_items = list(
 		"Sewing Kit" = /obj/item/repair_kit,

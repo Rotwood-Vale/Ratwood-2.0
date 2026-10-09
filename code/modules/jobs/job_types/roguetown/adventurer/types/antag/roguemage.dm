@@ -9,7 +9,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	subclass_spellpoints = 21
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_DODGEEXPERT, TRAIT_ALCHEMY_EXPERT)
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = STATS_ROGUE
 	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_skills = list(

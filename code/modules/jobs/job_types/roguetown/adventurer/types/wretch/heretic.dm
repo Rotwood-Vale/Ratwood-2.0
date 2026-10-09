@@ -9,7 +9,7 @@
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_HEAVYARMOR)
 	maximum_possible_slots = 2
 	// same stats as templar as you are essentially an antagonist aligned templar with miracles and armor
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
@@ -245,7 +245,7 @@
 	maximum_possible_slots = 2
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT)
 	//Slower than outlaw, but a bit more PER and INT
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
@@ -460,7 +460,7 @@
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_CRITICAL_RESISTANCE)
 	maximum_possible_slots = 1
 	//+9 weighted stat total. Atgervi Shaman's stats 1:1.
-	stat_budget = STAT_BUDGET_ELITE
+	stat_budget = STAT_BUDGET_MID
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_PER = STAT_DISFAVORED, STATKEY_INT = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,

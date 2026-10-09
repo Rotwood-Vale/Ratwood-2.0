@@ -12,7 +12,7 @@
 		TRAIT_CIVILIZEDBARBARIAN,// To be up to date with other unarmed classes.
 		TRAIT_RITUALIST,
 		)
-	stat_budget = STAT_BUDGET_PEAK
+	stat_budget = STAT_BUDGET_HIGH
 	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_skills = list(
