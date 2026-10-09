@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/projectile/fireball
 	name = "Fireball"
-	desc = "Shoot out a ball of fire that emits a light explosion on impact, setting the target alight."
+	desc = "Shoot out a ball of fire that emits a light explosion on impact, setting the target alight. Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent."
 	clothes_req = FALSE
 	range = 8
 	projectile_type = /obj/projectile/magic/aoe/fireball/rogue
