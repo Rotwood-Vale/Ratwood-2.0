@@ -311,7 +311,7 @@
 			should_update = fleshcraft_change_organ_color(H, chooser, ORGAN_SLOT_PENIS, "Choose secondary penis color", "Penis Color 2", 2)
 
 		if("penis size")
-			should_update = fleshcraft_change_size(H, chooser, ORGAN_SLOT_PENIS, "Choose penis size", "Penis Size", "penis_size", list("small" = 1, "average" = 2, "large" = 3))
+			should_update = fleshcraft_change_size(H, chooser, ORGAN_SLOT_PENIS, "Choose penis size", "Penis Size", "penis_size", GLOB.named_penis_sizes)
 
 		if("testicles")
 			should_update = fleshcraft_change_accessory_organ(H, chooser, ORGAN_SLOT_TESTICLES, /obj/item/organ/testicles, /datum/sprite_accessory/testicles, "Choose testicles type", "Testicles Customization")
