@@ -9,6 +9,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/dnomad
 	subclass_languages = list(/datum/language/celestial)
 	cmode_music = 'sound/music/horror.ogg'
+	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_DECEIVING_MEEKNESS)
 	stat_budget = STAT_BUDGET_LOW
 	subclass_skills = list(//Other skills handled by loadout.

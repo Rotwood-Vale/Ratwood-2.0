@@ -46,9 +46,10 @@
 	outfit = /datum/outfit/job/roguetown/wapprentice/associate
 
 	category_tags = list(CTAG_WASSOCIATE)
-	traits_applied = list(TRAIT_ARCYNE_T3)
+	traits_applied = list(TRAIT_ARCYNE_T3, TRAIT_MAGEDEXTERITY)
 	stat_budget = STAT_BUDGET_LOW
 	favored_stats = STATS_CASTER
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_spellpoints = 21
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,

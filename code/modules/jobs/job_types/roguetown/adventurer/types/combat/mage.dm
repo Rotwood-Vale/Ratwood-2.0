@@ -11,6 +11,7 @@
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
 	stat_budget = STAT_BUDGET_LOW
 	favored_stats = STATS_CASTER
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_spellpoints = 15
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
@@ -78,12 +79,14 @@
 				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 4, TRUE)
 				H.mind?.adjust_spellpoints(6)
 				ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_MAGEDEXTERITY, TRAIT_GENERIC)
 				H.change_stat("willpower", 2)
 
 /datum/advclass/mage/spellblade
 	name = "Spellblade"
 	tutorial = "You are skilled in both the arcyne art and the art of the blade. But you are not a master of either nor could you channel your magick in armor."
 	outfit = /datum/outfit/job/roguetown/adventurer/spellblade
+	virtue_restrictions = list()
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
 	stat_budget = STAT_BUDGET_LOW
 	favored_stats = STATS_SKIRMISHER
@@ -175,6 +178,7 @@
 	name = "Spellsinger"
 	tutorial = "You belong to a school of bards renowned for their study of both the arcane and the arts."
 	outfit = /datum/outfit/job/roguetown/adventurer/spellsinger
+	virtue_restrictions = list()
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_EMPATH, TRAIT_GOODLOVER)
 	stat_budget = STAT_BUDGET_LOW
@@ -263,7 +267,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
 
-	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_DODGEEXPERT, TRAIT_LIGHT_STEP) //dodge expert has the potential for being a big pain on spellcasters,  so we take away their mage armor as a trade.
+	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_DODGEEXPERT, TRAIT_LIGHT_STEP, TRAIT_MAGEDEXTERITY) //dodge expert has the potential for being a big pain on spellcasters,  so we take away their mage armor as a trade.
 	stat_budget = STAT_BUDGET_LOW
 	favored_stats = STATS_ROGUE
 

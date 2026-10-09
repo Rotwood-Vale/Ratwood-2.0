@@ -18,6 +18,7 @@
 		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_ARCYNE_T1,//They're not meant to get more spellpoints. If they do, via Arcyne virtue, for example, T1 only.
 		TRAIT_NALEDI,
+		TRAIT_MAGEDEXTERITY, //THEY NEED THIS MORE THAN ANY OTHER MAGE IN THE GAME. 
 	)
 	stat_budget = STAT_BUDGET_MID
 	favored_stats = STATS_CASTER

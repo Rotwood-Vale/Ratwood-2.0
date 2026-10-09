@@ -706,6 +706,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Fancy Coat"
 	path = /obj/item/clothing/suit/roguetown/shirt/tunic/noblecoat
 
+/datum/loadout_item/tailcoat
+	name = "Tailcoat"
+	path = /obj/item/clothing/armor/gambeson/tailcoat
+
 /datum/loadout_item/leathervest
 	name = "Leather Vest"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/vest
@@ -1675,6 +1679,18 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_newmoon_tunic
 	name = "New Moon Tunic"
 	path = /obj/item/clothing/suit/roguetown/shirt/tunic/newmoon
+
+/datum/loadout_item/tri_ornate_tailcoat
+	name = "Ornate Tailcoat"
+	path = /obj/item/clothing/suit/roguetown/shirt/coat/steward
+
+/datum/loadout_item/tri_otavan_gambeson
+	name = "Otavan Gambeson"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
+
+/datum/loadout_item/tri_padded_caftan
+	name = "Padded Caftan"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
 
 /datum/loadout_item/tri_pontifex_gambeson
 	name = "Pontifex Gambeson"

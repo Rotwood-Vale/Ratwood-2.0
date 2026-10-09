@@ -9,6 +9,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/gronnic
 	subclass_languages = list(/datum/language/gronnic)
 	cmode_music = 'sound/music/combat_gronn.ogg'
+	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	traits_applied = list(TRAIT_STEELHEARTED)
 	stat_budget = STAT_BUDGET_LOW
 	subclass_skills = list(
