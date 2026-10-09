@@ -325,7 +325,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOPAIN))
 		should_pain = FALSE
 	if(should_pain)
-		if(istype(M.patron, /datum/patron/divine/pesta) || M.skills.get_effective_skill_cap(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
+		if(istype(M.patron, /datum/patron/divine/pestra) || M.skills.get_effective_skill_cap(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
 			pain = 0
 			if(prob(3))
 				to_chat(M, span_green("Your wounds stitch together, as if under the hands of a competent surgeon."))
@@ -367,7 +367,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOPAIN))
 		should_pain = FALSE
 	if(should_pain)
-		if(istype(M.patron, /datum/patron/divine/pesta) || M.skills.get_effective_skill_cap(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
+		if(istype(M.patron, /datum/patron/divine/pestra) || M.skills.get_effective_skill_cap(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
 			pain = 0
 			if(prob(3))
 				to_chat(M, span_green("Your wounds stitch together, as if under the hands of a master surgeon."))
@@ -476,7 +476,7 @@
 			if(user.patron.undead_hater == TRUE)
 				water_contents = list(/datum/reagent/water/blessed = water_qty)
 			
-			if(istype(user.patron, /datum/patron/divine/pesta))
+			if(istype(user.patron, /datum/patron/divine/pestra))
 				if(istype(user.rmb_intent, /datum/rmb_intent/weak)|| holy_skill < SKILL_LEVEL_APPRENTICE)
 					water_contents = list(/datum/reagent/water/blessed = water_qty)
 				else
