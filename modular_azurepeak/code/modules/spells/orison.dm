@@ -312,7 +312,7 @@
 	for(var/datum/wound/wound as anything in M.get_wounds())
 		wound.heal_wound(1.5)
 		should_pain = TRUE
-	if(M.bruteloss > 0 || M.fireloss > 0)
+	if(M.getBruteLoss() > 0 || M.getFireLoss() > 0)
 		should_pain = TRUE
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
@@ -356,7 +356,7 @@
 	for(var/datum/wound/wound as anything in M.get_wounds())
 		wound.heal_wound(3)
 		should_pain = TRUE
-	if(M.bruteloss > 0 || M.fireloss > 0)
+	if(M.getBruteLoss() > 0 || M.getFireLoss() > 0)
 		should_pain = TRUE
 		M.adjustBruteLoss(-2*REM, 0)
 		M.adjustFireLoss(-2*REM, 0)
