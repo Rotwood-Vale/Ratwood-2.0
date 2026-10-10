@@ -751,11 +751,10 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "A blade wielded by blood-pit slaves in the chaotic age after PSYDON's death. This one is permanently wet with blood."
 	icon_state = "graggardagger"
 	sheathe_icon = "graggardagger"
-	force = 15
+	force = 25
 	max_integrity = 9999
 	max_blade_int = 9999
 	smeltresult = null
-	special = /datum/special_intent/ignite_dagger
 	possible_item_intents =	list(/datum/intent/dagger/thrust/cult,/datum/intent/dagger/cut/cult)
 
 /obj/item/rogueweapon/huntingknife/idagger/steel/blood/Initialize(mapload)
@@ -839,6 +838,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	W.damtype = TOX
 	W.force -= 20
 	W.update_force_dynamic()
+	W.inactive_intents = W.possible_item_intents
 	W.possible_item_intents = W.active_intents
 	howner.update_a_intents()
 	W.icon_state = "poisonsabre_active"
