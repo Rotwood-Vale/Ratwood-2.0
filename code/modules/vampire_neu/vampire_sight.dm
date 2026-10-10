@@ -64,8 +64,9 @@
 
 /mob/living/proc/update_vampire_sight()
 	var/obj/item/organ/eyes/night_vision/vampire/eyes = getorganslot(ORGAN_SLOT_EYES)
-	if(istype(eyes))
-		eyes.update_vampire_sight()
+	if(!istype(eyes))
+		return
+	eyes.update_vampire_sight()
 
 GLOBAL_VAR_INIT(blood_sight_viewers, 0)
 

@@ -86,6 +86,8 @@ This allows the devs to draw whatever shape they want at the cost of it feeling 
 
 	var/datum/skill/custom_skill
 
+	var/active_timer
+
 ///To be called by EXTERNAL SOURCES, preferably. We don't want to bog this datum down with built-in costs, but I won't stop you.
 /datum/special_intent/proc/apply_cost(mob/living/L)
 	if(L && stamcost)
