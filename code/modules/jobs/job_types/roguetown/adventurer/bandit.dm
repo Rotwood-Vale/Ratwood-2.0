@@ -21,7 +21,6 @@
 	max_pq = null
 	round_contrib_points = 5
 	quirk_restrictions = list(/datum/quirk/assassintarget)
-	allowed_patrons = list(/datum/patron/inhumen/matthios) // Bandits bro, they rob you blind
 
 	advclass_cat_rolls = list(CTAG_BANDIT = 20)
 	PQ_boost_divider = 10
