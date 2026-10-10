@@ -9,8 +9,9 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_DODGEEXPERT)//gets dodge expert but no medium armor training - gotta stay light
 	subclass_stats = list(
-		STATKEY_SPD = 2,	//It's all about speed and perception
+		STATKEY_SPD = 3,//It's all about speed and perception
 		STATKEY_PER = 2,
+		STATKEY_LCK = 2,
 		STATKEY_STR = 1,
 		STATKEY_WIL = 1,
 		STATKEY_CON = 1
@@ -30,15 +31,15 @@
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/climbing = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/misc/climbing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/sewing = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT//Skirmisher equal
 	)
 
 /datum/outfit/job/roguetown/bandit/knave/pre_equip(mob/living/carbon/human/H)
@@ -52,12 +53,12 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
 	id = /obj/item/mattcoin
 	H.adjust_blindness(-3)
-	var/weapons = list("Crossbow & Dagger", "Bow & Sword")
+	var/subtype = list("Rogue", "Poacher")
 	if(H.mind)
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/subtype_choice = input(H, "Choose your path.", "TAKE UP ARMS") as anything in subtype
 		H.set_blindness(0)
-		switch(weapon_choice)
-			if("Crossbow & Dagger") //Rogue
+		switch(subtype_choice)
+			if("Rogue") //Rogue
 				backl= /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow //we really need to make this not a grenade launcher subtype
 				beltr = /obj/item/quiver/bolts
 				cloak = /obj/item/clothing/cloak/raincloak/mortus //cool cloak
@@ -70,20 +71,25 @@
 							/obj/item/flashlight/flare/torch = 1,
 							/obj/item/rogueweapon/scabbard/sheath = 1
 							) //rogue gets lockpicks
-			if("Bow & Sword") //Poacher
-				backl= /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-				l_hand = /obj/item/rogueweapon/sword/short
-				r_hand = /obj/item/restraints/legcuffs/beartrap
-				beltl = /obj/item/rogueweapon/scabbard/sword
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_MASTER, TRUE)
+			if("Poacher") //Poacher
+				backl= /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 				beltr = /obj/item/quiver/arrows
 				head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm //cool hat
+				beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/matthios
 				backr = /obj/item/storage/backpack/rogue/satchel
 				backpack_contents = list(
 							/obj/item/needle/thorn = 1,
 							/obj/item/natural/cloth = 1,
-							/obj/item/restraints/legcuffs/beartrap = 1,
+							/obj/item/restraints/legcuffs/beartrap = 2,
 							/obj/item/flashlight/flare/torch = 1,
 							) //poacher gets mantraps
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_LEGENDARY, TRUE)
+				H.change_stat(STATKEY_PER, 2)
+				H.change_stat(STATKEY_SPD, -1)
 
 /datum/outfit/job/roguetown/bandit/knave/post_equip(mob/living/carbon/human/H)
 	. = ..()
