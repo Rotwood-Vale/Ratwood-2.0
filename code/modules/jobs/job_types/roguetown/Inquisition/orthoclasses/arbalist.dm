@@ -54,8 +54,8 @@
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
-	belt = /obj/item/storage/belt/rogue/leather/stakebelt//Because your 'crossbow' FUCKS.
-	beltr = /obj/item/quiver/heavybolts//IT REALLY DOES. You can't get more of these. Swap to a normal crossbow afterwards.
+	belt = /obj/item/storage/belt/rogue/leather/stakebelt
+	beltr = /obj/item/quiver/heavybolts
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy //Your ticket to fame, brother.
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots

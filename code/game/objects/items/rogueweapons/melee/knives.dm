@@ -779,7 +779,7 @@
 		silver_type = SILVER_PSYDONIAN,\
 		added_force = 4,\
 		added_blade_int = 100,\
-		added_int = 40,\ // minor but no longer dies in 1 hit
+		added_int = 40,\
 		added_def = 0,\
 	)
 
@@ -788,9 +788,74 @@
 	if(luxinfused)
 		. += span_info("The stake is infused with lux, ready to burst into blessed fire.")
 	
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(!luxinfused || obj_broken)
+		return
+	var/const/structure_damage = 1000
+	var/const/radius = 1
+	//Handle the mob impact, firstly.
+	var/turf/fallzone = get_turf(target)
+	if(!fallzone) // falback in case we hit somone without a turf (Harpy flying?)
+		if(ismob(target))
+			var/mob/living/carbon/human/M = target
+			if(M.mob_biotypes & MOB_UNDEAD)
+				M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
+			if(HAS_TRAIT(M, TRAIT_SILVER_WEAK))
+				M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+				M.ignite_mob()
+				visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
+				M.apply_damage(50, BRUTE, spread_damage = TRUE)
+				M.apply_damage(50, BURN, spread_damage = TRUE)
+			else
+				M.adjust_fire_stacks(12)
+				M.ignite_mob()
+				visible_message(span_warning("[target] is engulfed in flames upon being struck by [src]!"))
+				M.apply_damage(75, BRUTE, spread_damage = TRUE)
+				M.apply_damage(25, BURN, spread_damage = TRUE)
+		return
 
-
-
+	for(var/mob/living/carbon/human/M in range(radius, fallzone))
+		if(M.mob_biotypes & MOB_UNDEAD)
+			M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
+		if(HAS_TRAIT(M, TRAIT_SILVER_WEAK)) // I plaed psydonate miraclist VL. The silveweakness has to override all else
+			M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+			M.ignite_mob()
+			visible_message(span_warning("[M] erupts in divine flames originating from [src]!"))
+			M.apply_damage(50, BRUTE, spread_damage = TRUE)
+			M.apply_damage(50, BURN, spread_damage = TRUE)
+		else
+			if(HAS_TRAIT(M, TRAIT_PSYDONITE)) // only for practicing psydonites, all of inqusition qualifies. I dont want arbalist linched
+				M.adjust_fire_stacks(3)
+				M.ignite_mob()
+				visible_message(span_warning("[M] is singed by the flames originating from [src], yet the flames seem to avoid them!"))
+				M.apply_damage(20, BRUTE, spread_damage = TRUE)
+				M.apply_damage(5, BURN, spread_damage = TRUE)
+			else
+				M.adjust_fire_stacks(12)
+				M.ignite_mob()
+				visible_message(span_warning("[M] is engulfed in flames originating from [src]!"))
+				M.apply_damage(75, BRUTE, spread_damage = TRUE)
+				M.apply_damage(25, BURN, spread_damage = TRUE)
+		
+	for(var/turf/open/visual in range(radius, fallzone))
+		var/obj/effect/temp_visual/luxturf/luxspread = new /obj/effect/temp_visual/luxturf(visual)
+		var/datum/effect_system/smoke_spread/S = new /datum/effect_system/smoke_spread/fast // SMOKE EFFECT
+		animate(luxspread, alpha = 255, time = 8)
+		S.set_up(radius, fallzone)
+		S.start()
+	// Everything from this point has to do with what is damaged, additional structures can be added to the list to have different damage/effects!
+	for(var/obj/structure/damaged in range(radius, fallzone))
+		damaged.take_damage(structure_damage, BRUTE, "blunt", 1)
+	for(var/turf/closed/wall/damagedwalls in range(radius, fallzone))
+		damagedwalls.take_damage(structure_damage, BRUTE, "blunt", 1)
+	for(var/turf/closed/mineral/aoemining in range(radius, fallzone))
+		aoemining.take_damage(structure_damage, BRUTE,"blunt",1)
+	
+	luxinfused = FALSE
+	src.obj_integrity = 1	//Keeps it from being fully destroyed
+	src.obj_break()
+	visible_message(span_warning("The [src] has exploded into holy fire, breaking in the process."))
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
 	name = "psydonic dagger"

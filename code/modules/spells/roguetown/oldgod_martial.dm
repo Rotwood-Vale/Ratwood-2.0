@@ -271,12 +271,12 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	if(!isliving(user))
 		return FALSE
 
-	var/obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy/stake = user.get_active_held_item()
-	if(istype(stake) && !stake.luxinfused)
-		target.visible_message(span_notice("[user] places a palm around the [stake], leaving it awash with silvery strings."), 
-			span_userdanger("The stake is suffused with my own spark. In a moment of desperation it shall serve me well..."))
+	var/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/stake = user.get_active_held_item()
+	if(istype(stake) && !stake.luxinfused && stake.obj_broken == FALSE)
+		user.visible_message(span_notice("[user] places a palm around the [stake], leaving it awash with silvery strings.")) 
+		to_chat(user, span_userdanger("The stake is suffused with my own spark. In a moment of desperation it shall serve me well..."))
 		addtimer(CALLBACK(src, PROC_REF(lux_punish), user), wait = 12 SECONDS)
-
+		stake.luxinfused = TRUE
 		return TRUE
 
 
