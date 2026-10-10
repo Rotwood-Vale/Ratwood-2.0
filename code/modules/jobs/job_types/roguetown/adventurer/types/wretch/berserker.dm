@@ -17,6 +17,7 @@
 		STATKEY_INT = -1,
 		STATKEY_PER = -1
 	)
+	maximum_possible_slots = 1 // as a part of the 'wretches may as well be hero units' PR. this guy is THE grapplebeast evil incarnate.
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,

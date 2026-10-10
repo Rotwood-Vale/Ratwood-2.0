@@ -9,7 +9,7 @@
 	outfit = /datum/outfit/job/roguetown/wretch/lunacyembracer
 	class_select_category = CLASS_CAT_ACCURSED
 	category_tags = list(CTAG_WRETCH)
-	maximum_possible_slots = 2
+	maximum_possible_slots = 1 // as a part of the 'wretches may as well be hero units' PR. they're not as evil as they used to be, but they're still evil.
 
 	traits_applied = list(
 		TRAIT_NUDIST,
