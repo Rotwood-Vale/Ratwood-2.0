@@ -169,27 +169,27 @@
 	var/weapons = list("Longsword","Flail","Mace","Battle Axe", "Spear", "Crossbow + Shortsword")
 	switch(H.patron?.type)
 		if(/datum/patron/divine/astrata) //Unique patron weapons, more can be added here if wanted.
-			weapons += list("Solar Judgement", "Eclipsum Longsword")
-			weapons -= "Longsword"//Eclipsum Longsword takes priority.
+			weapons += list("Solar Judgement", "Eclipsum Longsword", "Absolutio", "Sunburst", "Solar Scepter")
+			weapons -= list("Longsword", "Mace")//Unique swords & Sunburst take priority.
 		if(/datum/patron/divine/noc)
-			weapons += list("Moonlight Khopesh", "Eclipsum Longsword")
-			weapons -= "Longsword"//Eclipsum Longsword takes priority.
+			weapons += list("Moonlight Khopesh", "Eclipsum Longsword", "Lunar Crescent", "Moonlight Spear", "Twilight Fang")
+			weapons -= list("Longsword", "Spear") //Eclipsum Longsword, Moonlight Spear take priority.
 		if(/datum/patron/divine/necra)
 			weapons += list("Swift End", "Respite")
 			weapons -= list("Flail", "Battle Axe")//First to have two wildly different weapons.
 		if(/datum/patron/divine/pestra)
-			weapons += "Plaguebringer Sickles"
+			weapons += list("Plaguebringer Sickles", "Lance of Boils", "Cleansing Edge")
 		if(/datum/patron/divine/malum)
-			weapons += "Kargrund Maul"
-			weapons -= "Mace"//Kargrund Maul takes priority.
+			weapons += list("Kargrund Maul", "Forgefiend")
+			weapons -= list("Longsword", "Mace")//Forgefiend & Kargrund Maul takes priority.
 		if(/datum/patron/divine/dendor)
 			weapons += "Summer Scythe"
 			weapons -= "Spear"//Scythe takes priority.
 		if(/datum/patron/divine/xylix)
 			weapons += "Cackle Lash"
 		if(/datum/patron/divine/ravox)
-			weapons += "Censure"
-			weapons -= "Longsword"//Censure takes priority.
+			weapons += list("Censure", "Arbiter", "Duel Settler")
+			weapons -= list("Longsword", "Mace")//Censure, Duel Settler take priority.
 		if(/datum/patron/divine/eora)
 			weapons += list("The Heartstring", "Close Caress", "Harp Bow (long)", "Harp Bow (short)")
 			weapons -= "Longsword"//Heartstring takes priority.
@@ -225,9 +225,31 @@
 			H.put_in_hands(new /obj/item/rogueweapon/sword/long/exe/astrata(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Absolutio")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long/absolutio(H), TRUE)
+			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Solar Scepter")
+			H.put_in_hands(new /obj/item/rogueweapon/woodstaff/quarterstaff/steel/astrata(H), TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
 		if("Moonlight Khopesh")
 			H.put_in_hands(new /obj/item/rogueweapon/sword/sabre/nockhopesh(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Lunar Crescent")
+			H.put_in_hands(new /obj/item/rogueweapon/woodstaff/quarterstaff/steel/noc(H), TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Moonlight Spear")
+			H.put_in_hands(new /obj/item/rogueweapon/spear/boar/noc(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Twilight Fang")
+			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/noc(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/parrying(H), TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE) // actually makes them usable for the templar.
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
 		if("Swift End")
 			H.put_in_hands(new /obj/item/rogueweapon/flail/sflail/necraflail(H), TRUE)
@@ -238,9 +260,27 @@
 			H.put_in_hands(new /obj/item/rogueweapon/huntingknife/idagger/steel/pestrasickle(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, 4, TRUE) // actually makes them usable for the templar.
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Lance of Boils")
+			H.put_in_hands(new /obj/item/rogueweapon/halberd/pestran(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Cleansing Edge")
+			H.put_in_hands(new /obj/item/rogueweapon/sword/long/kriegmesser/pestran(H), TRUE)
+			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
 		if("Kargrund Maul")
 			H.put_in_hands(new /obj/item/rogueweapon/mace/maul/grand/malum(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
+			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Duel Settler")
+			H.put_in_hands(new /obj/item/rogueweapon/mace/goden/steel/ravox(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
+			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Sunburst")
+			H.put_in_hands(new /obj/item/rogueweapon/mace/steel/sunburst(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/maces, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
 		if("Summer Scythe")
@@ -254,6 +294,11 @@
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
 		if("Censure")
 			H.put_in_hands(new /obj/item/rogueweapon/greatsword/grenz/flamberge/ravox(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
+			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Forgefiend")
+			H.put_in_hands(new /obj/item/rogueweapon/greatsword/grenz/flamberge/malum(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), FALSE)
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
@@ -306,6 +351,11 @@
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
 		if("Barotrauma")
 			H.put_in_hands(new /obj/item/rogueweapon/katar/abyssor(H), TRUE)
+			H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
+			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)
+		if("Arbiter")
+			H.put_in_hands(new /obj/item/rogueweapon/katar/ravox(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)

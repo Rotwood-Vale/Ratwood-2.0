@@ -152,6 +152,16 @@
 	wdefense = 3
 	smelt_bar_num = 2
 
+/obj/item/rogueweapon/mace/steel/sunburst
+	name = "sunburst"
+	desc = "A luminous steeled mace with a lengthened handle, adorned with vibrant golden trimmings along a faintly silvered polished metal edge, \
+			the spikes that protrude from its heavy edge radiate with Astrata's glow upon the points. Often issued as a heavy-reminder of divine \
+			judgement to crash against the ever-growing legions of monsters that would dare stand against the weight of Astrata's fury and judgement."
+	icon_state = "astratamace"
+	force_wielded = 35
+	max_integrity = 250
+	wdefense = 5
+
 /obj/item/rogueweapon/mace/blacksteel
 	force = 30
 	force_wielded = 35
@@ -481,6 +491,14 @@
 	blade_dulling = DULLING_SHAFT_CONJURED
 	color = "#bb9696"
 	anvilrepair = null
+
+/obj/item/rogueweapon/mace/goden/steel/ravox
+	name = "duel settler"
+	desc = "The tenets of Ravoxian duels are enscribed upon the head of this maul."
+	icon = 'icons/roguetown/weapons/blunt64.dmi'
+	icon_state = "ravoxhammer"
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/effect/daze)
+	max_integrity = 400 // I am reluctant to give a steel goden more force as it breaks weapon so durability it is.
 
 /obj/item/rogueweapon/mace/goden/deepduke
 	name = "deep duke's staff"
