@@ -58,7 +58,6 @@
 	..()
 	pants = /obj/item/clothing/under/roguetown/chainlegs
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
-	cloak = /obj/item/clothing/cloak/tabard/retinue/baronycloak
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
@@ -99,6 +98,11 @@
 				r_hand = /obj/item/rogueweapon/sword/long/exe
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+
+/datum/job/roguetown/baron_retainer/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(ishuman(L))
+		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, cloak_and_title_setup)), 50)
 
 /datum/advclass/baron_retainer/duelist
 	name = "Retired Duelist"
