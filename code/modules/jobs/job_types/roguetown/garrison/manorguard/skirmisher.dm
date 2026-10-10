@@ -59,13 +59,14 @@
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling // Both are belt slots and it's not worth setting where the cugel goes for everyone else, sad.
 
 		switch(armor_choice)
-			if("Light Armor")
+			if("Gambeson")
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
+				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-			if("Medium Armor")
+			if("Haubergeon")
 				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 		backpack_contents = list(
 			/obj/item/rogueweapon/huntingknife/combat/messer = 1,
 			/obj/item/rope/chain = 1,
