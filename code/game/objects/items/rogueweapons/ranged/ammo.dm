@@ -1056,6 +1056,7 @@
 	dropshrink = 0.8
 	max_integrity = 10
 	force = 12
+	var/rune = null // Its raining evil blood runes, HALLELUJA!
 
 //+10 damage/pen from bolt.
 //Pen increase on heavy crossbow assures these will, effectively, ALWAYS go through.
@@ -1074,6 +1075,7 @@
 	flag = "piercing"
 	speed = 0.3
 	npc_simple_damage_mult = 2
+	var/rune = null
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
 	name = "stake bolt"
