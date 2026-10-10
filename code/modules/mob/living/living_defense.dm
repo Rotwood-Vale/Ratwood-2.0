@@ -53,7 +53,10 @@
 /mob/living/bullet_act(obj/projectile/P, def_zone = BODY_ZONE_CHEST)
 	if(SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone) & COMPONENT_ATOM_BLOCK_BULLET)
 		return
-	def_zone = bullet_hit_accuracy_check(P.accuracy + P.bonus_accuracy, def_zone)
+	var/final_accuracy = P.accuracy + P.bonus_accuracy
+	if(P.check_range(get_turf(src)))
+		final_accuracy = 0
+	def_zone = bullet_hit_accuracy_check(final_accuracy, def_zone)
 	var/ap = (P.flag == "blunt") ? BLUNT_DEFAULT_PENFACTOR : P.armor_penetration
 	var/armor = run_armor_check(def_zone, P.flag, "", "",armor_penetration = ap, damage = P.damage, used_weapon = P)
 
