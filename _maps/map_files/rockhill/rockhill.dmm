@@ -3379,24 +3379,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/basement)
 "aIh" = (
-/obj/structure/table/wood/large_table/north_east,
-/obj/item/reagent_containers/glass/bottle/rogue/whitewine{
-	pixel_x = 3;
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/glass/bottle/rogue/redwine{
-	pixel_x = -9;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/glass/bottle/rogue/redwine{
-	pixel_x = -9;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/glass/bottle/rogue/whitewine{
-	pixel_x = 3;
-	pixel_y = -4
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
+/turf/closed/wall/mineral/rogue/pipe/joint/four,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "aIi" = (
 /obj/effect/decal/mossy{
@@ -14780,7 +14763,24 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/outdoors/town/grove)
 "cVv" = (
-/turf/closed/wall/mineral/rogue/pipe/corners/four,
+/obj/structure/table/wood/large_table/north_east,
+/obj/item/reagent_containers/glass/bottle/rogue/whitewine{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/redwine{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/redwine{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/whitewine{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "cVE" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -20511,7 +20511,7 @@
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors/town/tavern)
 "edI" = (
-/turf/closed/wall/mineral/rogue/pipe/joint,
+/turf/closed/wall/mineral/rogue/pipe/corners/eight,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "edJ" = (
 /obj/structure/spider/stickyweb/solo,
@@ -25739,22 +25739,17 @@
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/town/sewer)
 "fgT" = (
-/obj/structure/table/wood/large_table/north_west,
-/obj/item/reagent_containers/glass/bottle/rogue/wine/sourwine{
-	pixel_y = 12;
+/obj/structure/table/wood/large_table/south_west,
+/obj/item/reagent_containers/glass/bottle/rogue/beer/stonebeardreserve{
+	pixel_y = 5;
 	pixel_x = -4
 	},
-/obj/item/reagent_containers/glass/bottle/rogue/beer/apfelweinheim{
-	pixel_y = 10;
-	pixel_x = 9
+/obj/item/reagent_containers/glass/bottle/rogue/beer/hagwoodbitter{
+	pixel_y = 7;
+	pixel_x = 10
 	},
-/obj/item/reagent_containers/glass/bottle/rogue/wine/sourwine{
-	pixel_y = 4;
-	pixel_x = -4
-	},
-/obj/item/reagent_containers/glass/bottle/rogue/beer/apfelweinheim{
-	pixel_y = 2;
-	pixel_x = 9
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 1
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -26092,10 +26087,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/church/basement)
 "fke" = (
-/turf/closed/wall/mineral/rogue/pipe{
-	dir = 4;
-	icon_state = "iron_line"
-	},
+/turf/closed/wall/mineral/rogue/pipe/joint,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "fkk" = (
 /obj/structure/flora/roguetree/pine,
@@ -26500,18 +26492,15 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/goblinfort)
 "fpN" = (
-/obj/effect/spawner/lootdrop/roguetown/dungeon/money,
-/obj/item/roguegem/random,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/money,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/money,
-/obj/effect/spawner/lootdrop/valuable_jewelry_spawner,
 /obj/structure/closet/crate/chest/neu_fancy{
 	locked = 1;
 	lockid = "craftermaster"
 	},
-/obj/machinery/light/roguestreet/walllamp{
-	dir = 1
-	},
+/obj/item/ingot/gold,
+/obj/item/ingot/gold,
+/obj/item/ingot/silver,
+/obj/item/ingot/silver,
+/obj/machinery/light/roguestreet/walllamp,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "fqd" = (
@@ -40878,6 +40867,27 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/garrison)
+"iko" = (
+/obj/structure/closet/crate/chest{
+	lockid = "crafterguild"
+	},
+/obj/item/grown/log/tree/small,
+/obj/item/grown/log/tree/small,
+/obj/item/grown/log/tree/small,
+/obj/item/grown/log/tree/stick,
+/obj/item/natural/stone,
+/obj/item/natural/stone,
+/obj/item/natural/stone,
+/obj/item/natural/stone,
+/obj/item/natural/stone,
+/obj/item/natural/stone,
+/obj/item/natural/stone,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "iky" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grassyel,
@@ -41165,19 +41175,10 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/town/rockhill)
 "iov" = (
-/obj/structure/table/wood/large_table/south_east,
-/obj/item/reagent_containers/glass/bottle/rogue/beer/kgunplum{
-	pixel_y = 3;
-	pixel_x = -10
+/turf/closed/wall/mineral/rogue/pipe{
+	dir = 4;
+	icon_state = "iron_line"
 	},
-/obj/item/reagent_containers/glass/bottle/rogue/beer/jagdtrunk{
-	pixel_y = 2;
-	pixel_x = 4
-	},
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 1
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "ioC" = (
 /obj/effect/decal/mossy{
@@ -43034,7 +43035,17 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor/rockhill)
 "iJU" = (
-/turf/closed/wall/mineral/rogue/pipe/corners/eight,
+/obj/structure/closet/crate/roguecloset{
+	keylock = 1;
+	locked = 1;
+	lockid = "craftermaster"
+	},
+/obj/item/rogueweapon/tongs/blacksteel,
+/obj/item/rogueweapon/hammer/blacksteel,
+/obj/machinery/light/roguestreet/walllamp{
+	dir = 1
+	},
+/turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "iKe" = (
 /obj/item/candle/yellow,
@@ -45342,16 +45353,24 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/rtfield/rockhill)
 "jhU" = (
-/obj/structure/closet/crate/chest/neu_fancy{
-	locked = 1;
-	lockid = "craftermaster"
+/obj/structure/table/wood/large_table/north_west,
+/obj/item/reagent_containers/glass/bottle/rogue/wine/sourwine{
+	pixel_y = 12;
+	pixel_x = -4
 	},
-/obj/item/ingot/gold,
-/obj/item/ingot/gold,
-/obj/item/ingot/silver,
-/obj/item/ingot/silver,
-/obj/machinery/light/roguestreet/walllamp,
-/turf/open/floor/rogue/metal/barograte,
+/obj/item/reagent_containers/glass/bottle/rogue/beer/apfelweinheim{
+	pixel_y = 10;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/wine/sourwine{
+	pixel_y = 4;
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/glass/bottle/rogue/beer/apfelweinheim{
+	pixel_y = 2;
+	pixel_x = 9
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "jhV" = (
 /obj/structure/hotspring/border/twelve,
@@ -54054,17 +54073,12 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/indoors/town/church/chapel)
 "kYy" = (
-/obj/structure/closet/crate/roguecloset{
-	keylock = 1;
-	locked = 1;
-	lockid = "craftermaster"
+/obj/effect/decal/carpet{
+	dir = 4;
+	pixel_x = 3;
+	pixel_y = 16
 	},
-/obj/item/rogueweapon/tongs/blacksteel,
-/obj/item/rogueweapon/hammer/blacksteel,
-/obj/machinery/light/roguestreet/walllamp{
-	dir = 1
-	},
-/turf/open/floor/rogue/metal/barograte,
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "kYC" = (
 /obj/item/listeningdevice,
@@ -59314,24 +59328,17 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/church/chapel)
 "maO" = (
-/obj/structure/closet/crate/chest{
-	lockid = "crafterguild"
+/obj/structure/rack/rogue,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
+	loot = list(/obj/item/rogueweapon/shovel = 3, /obj/item/rogueweapon/thresher = 3, /obj/item/flint = 4, /obj/item/rogueweapon/stoneaxe/woodcut = 3, /obj/item/rogueweapon/hammer/iron = 3, /obj/item/rogueweapon/tongs = 3, /obj/item/rogueweapon/pick = 3, /obj/item/rogueweapon/sickle = 3, /obj/item/rogueweapon/huntingknife = 3, /obj/item/rogueweapon/huntingknife/scissors = 3, /obj/item/rogueweapon/hoe = 3)
 	},
-/obj/item/grown/log/tree/small,
-/obj/item/grown/log/tree/small,
-/obj/item/grown/log/tree/small,
-/obj/item/grown/log/tree/stick,
-/obj/item/natural/stone,
-/obj/item/natural/stone,
-/obj/item/natural/stone,
-/obj/item/natural/stone,
-/obj/item/natural/stone,
-/obj/item/natural/stone,
-/obj/item/natural/stone,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/materials,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
+	loot = list(/obj/item/rogueweapon/shovel = 3, /obj/item/rogueweapon/thresher = 3, /obj/item/flint = 4, /obj/item/rogueweapon/stoneaxe/woodcut = 3, /obj/item/rogueweapon/hammer/iron = 3, /obj/item/rogueweapon/tongs = 3, /obj/item/rogueweapon/pick = 3, /obj/item/rogueweapon/sickle = 3, /obj/item/rogueweapon/huntingknife = 3, /obj/item/rogueweapon/huntingknife/scissors = 3, /obj/item/rogueweapon/hoe = 3)
+	},
+/obj/item/storage/roguebag,
+/obj/item/storage/roguebag,
+/obj/item/rogueweapon/sickle,
+/obj/item/rogueweapon/hoe,
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "maQ" = (
@@ -63855,10 +63862,6 @@
 	lockid = "crafterguild";
 	name = "Engineer's Enchantment Room"
 	},
-/obj/structure/fluff/walldeco/alarm{
-	pixel_x = -32;
-	pixel_y = 0
-	},
 /turf/open/floor/rogue/greenstone,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "mTu" = (
@@ -65055,14 +65058,6 @@
 /obj/effect/wisp/green,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/bograt/sunken)
-"nhi" = (
-/obj/effect/decal/carpet{
-	dir = 4;
-	pixel_x = 3;
-	pixel_y = 16
-	},
-/turf/open/floor/rogue/ruinedwood/spiral,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "nhj" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -66220,18 +66215,19 @@
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/church/chapel)
 "ntN" = (
-/obj/structure/rack/rogue,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
-	loot = list(/obj/item/rogueweapon/shovel = 3, /obj/item/rogueweapon/thresher = 3, /obj/item/flint = 4, /obj/item/rogueweapon/stoneaxe/woodcut = 3, /obj/item/rogueweapon/hammer/iron = 3, /obj/item/rogueweapon/tongs = 3, /obj/item/rogueweapon/pick = 3, /obj/item/rogueweapon/sickle = 3, /obj/item/rogueweapon/huntingknife = 3, /obj/item/rogueweapon/huntingknife/scissors = 3, /obj/item/rogueweapon/hoe = 3)
+/obj/structure/table/wood/large_table/south_east,
+/obj/item/reagent_containers/glass/bottle/rogue/beer/kgunplum{
+	pixel_y = 3;
+	pixel_x = -10
 	},
-/obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
-	loot = list(/obj/item/rogueweapon/shovel = 3, /obj/item/rogueweapon/thresher = 3, /obj/item/flint = 4, /obj/item/rogueweapon/stoneaxe/woodcut = 3, /obj/item/rogueweapon/hammer/iron = 3, /obj/item/rogueweapon/tongs = 3, /obj/item/rogueweapon/pick = 3, /obj/item/rogueweapon/sickle = 3, /obj/item/rogueweapon/huntingknife = 3, /obj/item/rogueweapon/huntingknife/scissors = 3, /obj/item/rogueweapon/hoe = 3)
+/obj/item/reagent_containers/glass/bottle/rogue/beer/jagdtrunk{
+	pixel_y = 2;
+	pixel_x = 4
 	},
-/obj/item/storage/roguebag,
-/obj/item/storage/roguebag,
-/obj/item/rogueweapon/sickle,
-/obj/item/rogueweapon/hoe,
-/turf/open/floor/rogue/metal/barograte,
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 1
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "ntP" = (
 /obj/structure/chair/bench/couchablack,
@@ -73716,7 +73712,7 @@
 /turf/closed/wall/mineral/rogue/stone,
 /area/rogue/indoors/town/church)
 "oWO" = (
-/turf/closed/wall/mineral/rogue/pipe/joint/four,
+/turf/closed/wall/mineral/rogue/pipe/corners/four,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "oWQ" = (
 /obj/structure/flora/roguegrass/bush/wall/tall,
@@ -81008,19 +81004,19 @@
 /turf/open/floor/rogue/tile/harem2,
 /area/rogue/indoors/town/bath)
 "qyg" = (
-/obj/structure/table/wood/large_table/south_west,
-/obj/item/reagent_containers/glass/bottle/rogue/beer/stonebeardreserve{
-	pixel_y = 5;
-	pixel_x = -4
+/obj/effect/spawner/lootdrop/roguetown/dungeon/money,
+/obj/item/roguegem/random,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/money,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/money,
+/obj/effect/spawner/lootdrop/valuable_jewelry_spawner,
+/obj/structure/closet/crate/chest/neu_fancy{
+	locked = 1;
+	lockid = "craftermaster"
 	},
-/obj/item/reagent_containers/glass/bottle/rogue/beer/hagwoodbitter{
-	pixel_y = 7;
-	pixel_x = 10
-	},
-/obj/machinery/light/roguestreet/orange/walllamp{
+/obj/machinery/light/roguestreet/walllamp{
 	dir = 1
 	},
-/turf/open/floor/rogue/ruinedwood/spiral,
+/turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "qyn" = (
 /obj/structure/mineral_door/wood/donjon/stone{
@@ -100189,9 +100185,9 @@
 	lockid = "crafterguild";
 	name = "Engineer's Workshop"
 	},
-/obj/structure/bars/passage/shutter/open{
-	name = "Engineer's Workshop";
-	redstone_id = "workshop_lockdown"
+/obj/structure/bars/passage/shutter{
+	redstone_id = "workshop_lockdown";
+	name = "Engineer's Workshop"
 	},
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/engineerworkshop)
@@ -310578,7 +310574,7 @@ gRj
 rIP
 rIP
 rIP
-oWO
+aIh
 qxx
 qqj
 geK
@@ -311006,11 +311002,11 @@ ptr
 nPV
 rSC
 gLf
-fke
-jhU
+iov
+fpN
 aWw
-kYy
 iJU
+edI
 gRj
 qqj
 oik
@@ -311438,7 +311434,7 @@ fQu
 rSC
 rSC
 gLf
-fke
+iov
 ygp
 aWw
 aWw
@@ -311870,10 +311866,10 @@ nIe
 gLf
 gLf
 gLf
-fke
+iov
 pRK
 aWw
-fpN
+qyg
 gRj
 gRj
 qqj
@@ -312305,8 +312301,8 @@ ouf
 gRj
 rIP
 rIP
-edI
-cVv
+fke
+oWO
 sfu
 qqj
 wTB
@@ -312737,11 +312733,11 @@ oME
 sco
 bgO
 vtV
-fke
+iov
 knY
 sCn
 qqj
-maO
+iko
 sco
 gRj
 kdN
@@ -313169,11 +313165,11 @@ oME
 sco
 hcY
 bZh
-fke
+iov
 ukO
 sCn
 qqj
-ntN
+maO
 sco
 kdN
 kdN
@@ -527022,8 +527018,8 @@ dMk
 xoc
 dAF
 sco
-aIh
-iov
+cVv
+ntN
 sco
 xZg
 xZg
@@ -527455,7 +527451,7 @@ dMk
 dAF
 atK
 dMk
-nhi
+kYy
 sco
 xZg
 xZg
@@ -527886,8 +527882,8 @@ dMk
 eGL
 dAF
 sco
+jhU
 fgT
-qyg
 sco
 xZg
 xZg
