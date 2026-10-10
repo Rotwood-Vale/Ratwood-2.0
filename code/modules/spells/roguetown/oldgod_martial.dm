@@ -271,6 +271,15 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	if(!isliving(user))
 		return FALSE
 
+	var/obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy/stake = user.get_active_held_item()
+	if(istype(stake) && !stake.luxinfused)
+		target.visible_message(span_notice("[user] places a palm around the [stake], leaving it awash with silvery strings."), 
+			span_userdanger("The stake is suffused with my own spark. In a moment of desperation it shall serve me well..."))
+		addtimer(CALLBACK(src, PROC_REF(lux_punish), user), wait = 12 SECONDS)
+
+		return TRUE
+
+
 	dispel_conjured_item()
 	var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/R = new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/lux(user.drop_location())
 
@@ -280,19 +289,6 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	user.put_in_hands(R)
 	set_conjured_item(R)
 	addtimer(CALLBACK(src, PROC_REF(lux_punish), user), wait = 12 SECONDS)
-//For later. We'll have this multi-purpose eventually.
-/*
-	var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy/silver = user.get_active_held_item()
-	if(istype(silver)
-		target.visible_message(span_notice("[user] places a palm around the [silver], leaving it awash with crimson."), \
-			span_userdanger("The bolt is suffused with my own spark. It shall strike harder than before..."))
-		qdel(silver)
-		user.set_blood_volume(max(user.get_blood_volume()-300, 0))
-		user.handle_blood()
-		new /obj/effect/decal/cleanable/blood/puddle(user.loc)
-		user.apply_damage(50, BRUTE, spread_damage = TRUE)
-		return TRUE
-*/
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/psydonic_lux_bolt/proc/lux_punish(mob/living/carbon/target)
@@ -368,3 +364,5 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /obj/effect/temp_visual/luxturf
 	icon_state = "emppulse"//Need a proper sprite for a lux burst.
 	duration = 8//Adjust with the above, when/if we get one. Otherwise just default to emp/pulse and just delete this.
+
+

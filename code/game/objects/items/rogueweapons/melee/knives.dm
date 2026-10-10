@@ -724,7 +724,7 @@
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake
 	name = "silver-tipped stake"
-	desc = "A branch that has been broken off of a boswellia tree, sharpened to a fine point and tipped with blessed silver. It can lay most unholy creechers to rest, but only by piercing their hearts."
+	desc = "A branch that has been broken off of a holy tree, sharpened to a fine point and tipped with blessed silver. It can lay most unholy creechers to rest, but only by piercing their hearts."
 	icon_state = "stake_silver"
 	force = 20
 	throwforce = 20
@@ -760,16 +760,37 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy/ComponentInitialize()
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy
+	name = "arbalist stake"
+	desc = "A branch that has been broken off of a boswellia tree, sharpened to a fine point and tipped with blessed inqusitorial silver. Created to specyfication of the acient order, it may be infused with Arbalist lux."
+	icon_state = "stake_silver"
+	force = 20
+	throwforce = 25
+	wdefense = 0  // last resort weapon
+	max_integrity = 50
+	slot_flags = ITEM_SLOT_HIP
+	is_silver = TRUE
+	var/luxinfused = FALSE
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
-		pre_blessed = BLESSING_PSYDONIAN,\
+		pre_blessed = BLESSING_NONE,\
 		silver_type = SILVER_PSYDONIAN,\
-		added_force = 0,\
+		added_force = 4,\
 		added_blade_int = 100,\
-		added_int = 0,\
+		added_int = 40,\ // minor but no longer dies in 1 hit
 		added_def = 0,\
 	)
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/examine(mob/user)
+	. = ..()
+	if(luxinfused)
+		. += span_info("The stake is infused with lux, ready to burst into blessed fire.")
+	
+
+
+
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
 	name = "psydonic dagger"
