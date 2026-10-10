@@ -17662,6 +17662,10 @@
 	},
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/church)
+"dFY" = (
+/obj/machinery/alch_workbench,
+/turf/open/transparent/openspace,
+/area/rogue/outdoors/town/rockhill)
 "dFZ" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -20002,6 +20006,7 @@
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 1
 	},
+/obj/machinery/light/rogue/cauldron,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/magician/rockhill)
 "ecV" = (
@@ -24719,6 +24724,7 @@
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 8
 	},
+/obj/machinery/light/rogue/cauldron,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors/town/magician/rockhill)
 "fcl" = (
@@ -25023,7 +25029,6 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/church)
 "ffw" = (
-/obj/machinery/light/rogue/cauldron,
 /obj/structure/rack/rogue/shelf,
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 8
@@ -35976,6 +35981,13 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors/rtfield/eora)
+"hvp" = (
+/obj/structure/rack/rogue/shelf/biggest,
+/turf/open/water/river{
+	dir = 4;
+	icon_state = "rockwd"
+	},
+/area/rogue/under/cavewet/river)
 "hvr" = (
 /obj/effect/turf_decal/magedecal,
 /turf/open/floor/rogue/greenstone/runed,
@@ -59090,7 +59102,7 @@
 /area/rogue/under/town/basement)
 "mkZ" = (
 /obj/structure/rack/rogue/shelf,
-/obj/machinery/light/rogue/cauldron,
+/obj/machinery/alch_workbench,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town/magician/rockhill)
 "mlb" = (
@@ -110888,7 +110900,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/cell)
 "xiV" = (
-/obj/machinery/light/rogue/cauldron,
+/obj/machinery/alch_workbench,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/church/basement)
 "xiY" = (
@@ -162119,7 +162131,7 @@ swJ
 iwJ
 swJ
 iwJ
-swJ
+hvp
 iwJ
 swJ
 iwJ
@@ -326152,7 +326164,7 @@ vRu
 bOE
 boj
 nKz
-xiV
+ewf
 ewf
 fGY
 ewf
@@ -392681,7 +392693,7 @@ xAt
 xAt
 xAt
 xAt
-xAt
+dFY
 xAt
 xAt
 xAt
