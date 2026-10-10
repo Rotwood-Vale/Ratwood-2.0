@@ -369,6 +369,13 @@
 	icon_state ="scrolldarkred"
 	remarks = list("Aspectum rebis adopta..", "Fac me novum..", "Pulcher ero..")
 
+/obj/item/book/granter/spell/blackstone/magical_appendage
+	name = "Scroll of Magical Appendage"
+	spell = /obj/effect/proc_holder/spell/invoked/magical_appendage
+	spellname = "Magical Appendage"
+	icon_state ="scrolldarkred"
+	remarks = list("Penora rebis adopta..", "Fac me silum..", "Pulcher eroge..")
+
 //scroll for giving the reader 3 spell points, this should be dungeon loot
 /obj/item/book/granter/spell_points
 	name = "Arcyne Insight"

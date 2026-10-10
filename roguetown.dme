@@ -3113,6 +3113,7 @@
 #include "code\modules\spells\spell_types\wizard\projectiles_single\spitfire.dm"
 #include "code\modules\spells\spell_types\wizard\utility\create_campfire.dm"
 #include "code\modules\spells\spell_types\wizard\utility\light.dm"
+#include "code\modules\spells\spell_types\wizard\utility\magical_appendage.dm"
 #include "code\modules\spells\spell_types\wizard\utility\mending.dm"
 #include "code\modules\spells\spell_types\wizard\utility\message.dm"
 #include "code\modules\spells\spell_types\wizard\utility\mindlink.dm"
