@@ -85,7 +85,7 @@
 				r_hand = /obj/item/rogueweapon/spear/naginata/elf
 			if("Elven Curveblade")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
-				r_hand = /obj/item/rogueweapon/greatsword/elf
+				r_hand = /obj/item/rogueweapon/greatsword/elvish
 			if("Elven Recurve Bow")
 				H.change_stat(STATKEY_PER, 2)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending)

@@ -747,8 +747,7 @@
 	icon_state = "shalal"//change when I get around to it
 	item_state = "shalal"
 	color = "#d4c7bf"
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)	//Same as gloves
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 
 	

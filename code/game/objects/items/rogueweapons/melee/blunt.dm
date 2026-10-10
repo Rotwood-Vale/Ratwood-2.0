@@ -6,31 +6,25 @@
 	attack_verb = list("strikes", "hits")
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 	chargetime = 0
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	damfactor = 1.1
 	swingdelay = 0
 	icon_state = "instrike"
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-	//We want chipping, m'lord.
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_WEAK
 
 /datum/intent/mace/smash
 	name = "smash"
 	blade_class = BCLASS_SMASH
 	attack_verb = list("smashes")
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	damfactor = 1 // It now has CC effective
 	chargedrain = 1 // Slight stamina drain on use
 	chargetime = 5 // Half a second of charge for a bit of a warning.
 	icon_state = "insmash"
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-	//We want chipping, m'lord.
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_STRONG
 	desc = "A powerful, charged up strike that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 14 (1 - 4 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance. Not fully charging the attack limits knockback to 1 tile."
 
 /datum/intent/mace/smash/spec_on_apply_effect(mob/living/H, mob/living/user, params)
@@ -75,7 +69,7 @@
 	recovery = 30
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 25
+	penfactor = PEN_MEDIUM
 	damfactor = 0.9
 	item_d_type = "stab"
 	effective_range = 2
@@ -265,11 +259,11 @@
 
 /datum/intent/mace/strike/wood
 	hitsound = list('sound/combat/hits/blunt/woodblunt (1).ogg', 'sound/combat/hits/blunt/woodblunt (2).ogg')
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 
 /datum/intent/mace/smash/wood
 	hitsound = list('sound/combat/hits/blunt/woodblunt (1).ogg', 'sound/combat/hits/blunt/woodblunt (2).ogg')
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 
 /datum/intent/mace/smash/wood/ranged
 	reach = 2
@@ -666,7 +660,7 @@
 	animname = "stab"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	no_early_release = TRUE
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	damfactor = 0.8
 	item_d_type = "stab"
 
@@ -680,7 +674,7 @@
 	misscost = 1
 	swingdelay = 15
 	clickcd = 15
-	penfactor = 80
+	penfactor = PEN_BSTEEL
 	damfactor = 0.9
 	item_d_type = "stab"
 
@@ -793,7 +787,7 @@
 	attack_verb = list("sweeps through", "smashes across")
 	animname = "strike"
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	chargetime = 0
 	damfactor = 1.2
 	clickcd = CLICK_CD_GLACIAL
@@ -811,7 +805,7 @@
 	hitsound = list('sound/combat/hits/blunt/shovel_hit3.ogg')
 	swingdelay = 6
 	damfactor = 0.8
-	penfactor = MAUL_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	clickcd = CLICK_CD_HEAVY
 	item_d_type = "blunt"
 	intent_effect = /datum/status_effect/debuff/hobbled
@@ -825,13 +819,10 @@
 	chargetime = 0
 	swingdelay = 0
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-	penfactor = MAUL_DEFAULT_PENFACTOR//You're getting FULL armour damage with this.
+	penfactor = PEN_NONE
 	clickcd = CLICK_CD_HEAVY//Take a guess.
 	icon_state = "instrike"
 	item_d_type = "blunt"
-	//We want chipping, m'lord.
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_STRONG
 
 /datum/intent/maul/crush
 	name = "crush"
@@ -839,10 +830,7 @@
 	attack_verb = list("crushes")
 	chargetime = 5
 	damfactor = 1.7
-	intent_intdamage_factor = 1.5//10% more than standard.
-	//We want chipping, m'lord.
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_ABSURD
+	intent_intdamage_factor = PEN_NONE 
 	icon_state = "incrush"
 	desc = "This can throw a standing opponent and slow them down. \
 	5 second cooldown on consecutive targets. Prone targets halve the knockback distance. \

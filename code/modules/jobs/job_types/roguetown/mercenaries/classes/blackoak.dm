@@ -71,7 +71,7 @@
 			if("Elven Swordspear")
 				r_hand = /obj/item/rogueweapon/spear/naginata/elf
 			if("Elven Curveblade")
-				r_hand = /obj/item/rogueweapon/greatsword/elf
+				r_hand = /obj/item/rogueweapon/greatsword/elvish
 
 		var/sidearm = list("Elvish Longsword", "Elvish Shortsword")
 		var/sidearm_choice = input(H, "Choose your SIDEARM.", "THE HIDDEN THORN") as anything in sidearm

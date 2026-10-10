@@ -359,18 +359,24 @@
  */
 /datum/proc/GetExactComponent(datum/component/c_type)
 	RETURN_TYPE(c_type)
-	var/initial_type_mode = initial(c_type.dupe_mode)
-	if(initial_type_mode == COMPONENT_DUPE_ALLOWED || initial_type_mode == COMPONENT_DUPE_SELECTIVE)
+	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED || initial(c_type.dupe_mode) == COMPONENT_DUPE_SELECTIVE)
 		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
-	var/list/all_components = datum_components
-	if(!all_components)
+	var/list/dc = datum_components
+	if(!dc)
 		return null
-	var/datum/component/potential_component
-	if(length(all_components))
-		potential_component = all_components[c_type]
-	if(potential_component?.type == c_type)
-		return potential_component
+	var/component_entry = dc[c_type]
+	var/datum/component/C = null
+	if(islist(component_entry))
+		var/list/component_list = component_entry
+		if(length(component_list))
+			C = component_list[1]
+	else if(istype(component_entry, /datum/component))
+		C = component_entry
+	if(C)
+		if(C.type == c_type)
+			return C
 	return null
+
 
 /**
  * Get all components of a given type that are attached to this datum

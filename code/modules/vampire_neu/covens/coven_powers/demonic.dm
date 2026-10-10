@@ -187,7 +187,7 @@
 	max_integrity = 900
 	force = 11
 	wdefense = 9
-	armor_penetration = 100
+	armor_penetration = PEN_BSTEEL
 	block_chance = 20
 	associated_skill = /datum/skill/combat/unarmed
 	wlength = WLENGTH_NORMAL

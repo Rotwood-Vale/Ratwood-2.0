@@ -31,9 +31,8 @@
 	icon = 'icons/roguetown/clothing/special/baotha.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/baotha.dmi'
 	icon_state = "baotha_legs"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	body_parts_covered = LEGS|GROIN
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 
 /obj/item/clothing/under/roguetown/platelegs/baotha/Initialize(mapload)
 	. = ..()
@@ -61,7 +60,6 @@
 	item_state = "baothabracers"
 	sleeved = 'icons/roguetown/clothing/special/onmob/baotha.dmi'
 	alternate_worn_layer = WRISTS_LAYER
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	unequip_delay_self = 2 SECONDS
 
@@ -76,7 +74,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/baotha.dmi'
 	icon_state = "baothashirt"
 	item_state = "baothashirt"
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_LEATHER
 	sleeved = null
 	body_parts_covered =  CHEST | GROIN | VITALS | LEGS | ARMS |NECK | HANDS | FEET
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
@@ -156,7 +154,7 @@
 	icon_state = "anklets"
 	color = "#9c7373"
 	mob_overlay_icon = null
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	equip_delay_self = 0.5 SECONDS
 	unequip_delay_self = 2.5 SECONDS
@@ -196,9 +194,8 @@
 	desc = "Powerful baothan magicks protect the exposed flesh beneath."
 	color = "#9c7373"
 // 	mob_overlay_icon = null
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
 	resistance_flags = FIRE_PROOF
 	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
@@ -219,7 +216,7 @@
 	name = "blacksteel collar"
 	desc = "Submission to darkness."
 	icon_state = "iwolfcollaralt"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 
 /obj/item/clothing/neck/roguetown/gorget/boatha/Initialize(mapload)

@@ -2,10 +2,26 @@
 
 #define BASE_PARRY_STAMINA_DRAIN 5 // Unmodified stamina drain for parry, now a var instead of setting on simplemobs
 #define BAD_GUARD_FATIGUE_DRAIN 20 //Percentage of your green bar lost on letting a guard expire.
-#define GUARD_PEEL_REDUCTION 2	//How many Peel stacks to lose if a Guard is hit.
-#define BAIT_PEEL_REDUCTION 1	//How many Peel stacks to lose if we perfectly bait.
 #define EXPOSED_INTEG_MOD 2.5
 #define VULN_INTEG_MOD 1.5
+#define BAIT_RCLICK_CD 20 SECONDS
+#define BIND_CD 15 SECONDS
+#define BASE_RCLICK_CD 30 SECONDS
+#define FEINT_RCLICK_CD 20 SECONDS
+
+#define BIND_HAND_L 1
+#define BIND_HAND_R 2
+#define BIND_FOOT_L 3
+#define BIND_FOOT_R 4
+#define BIND_HEAD 5
+#define BIND_TORSO 6
+#define BIND_NECK 7
+
+/* SWIFT BALANCE DEFINES */
+#define SWIFTCAP_CHEST 10
+#define SWIFTCAP_LIMBS 25
+#define SWIFTCAP_PRECISE 45
+#define STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL -2
 
 /*
 Medical defines
@@ -17,7 +33,7 @@ Medical defines
 /*
 Misc. Category. Spin it out if needed
 */
-#define CRIT_DISMEMBER_DAMAGE_THRESHOLD 0.75 // 75% damage threshold for dismemberment / crit
+#define CRIT_DISMEMBER_DAMAGE_THRESHOLD 0.9 // 90% damage threshold for dismemberment / crit
 
 /*
 	Critical Resistance Defines
@@ -28,3 +44,11 @@ Misc. Category. Spin it out if needed
 #define CRIT_RESISTANCE_STACKS_OP 1 // Noblood / Revenant etc.
 #define CRIT_RESISTANCE_EFFECTIVE_BLEEDRATE 0.8 // How much CR reduce bleedrate by. Inverse values are higher. Was 0.5, now 0.8.
 #define CRIT_RESISTANCE_TIMER_CD 30 SECONDS // Cooldown between guaranteed CR procs. DOES NOT APPLY TO DISMEMBERMENT.
+
+#define PROJ_PARRY_TIMER	0.65 SECONDS	//The time after an attack (swinging in the air counts) when a thrown item would be deflected at a higher chance.
+
+//Visible message presets.
+#define VISMSG_ARMOR_BLOCKED " <span class='armoralert'>Armor stops the damage.</span>"
+#define VISMSG_ARMOR_INT_STAGEONE "<span class='armoralert'><i> Dented.</i></span>"
+#define VISMSG_ARMOR_INT_STAGETWO "<span class='armoralert'> Damaged.</span>"
+#define VISMSG_ARMOR_INT_STAGETHREE "<span class='armoralert'><b> Crumbling!</b></span>"

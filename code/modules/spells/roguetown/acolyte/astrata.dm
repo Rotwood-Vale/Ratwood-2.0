@@ -621,7 +621,7 @@
 	muzzle_type = null
 	impact_type = null
 	hitscan = TRUE
-	flag = "magic"
+	flag = "fire"
 	light_color = "#a98107"
 	light_outer_range = 7
 	tracer_type = /obj/effect/projectile/tracer/solar_beam

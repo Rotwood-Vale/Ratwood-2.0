@@ -39,7 +39,7 @@
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	chargetime = 0
 	recovery = 7
-	penfactor = 30
+	penfactor = PEN_LIGHT
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
@@ -53,7 +53,7 @@
 	chargetime = 0
 	recovery = 10
 	damfactor = 1.1
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
@@ -67,7 +67,7 @@
 	chargetime = 0
 	recovery = 5
 	damfactor = 1.2							//No range, gets bonus damage - using this even on weak SHOULD let you get perma-scars then.
-	penfactor = BLUNT_DEFAULT_PENFACTOR		//No pen cus punishment intent.
+	penfactor = PEN_NONE		//No pen cus punishment intent.
 	reach = 1								//No range, cus not meant to be a flat-out combat intent.
 	icon_state = "inpunish"
 	item_d_type = "slash"
@@ -80,16 +80,16 @@
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	chargetime = 0
 	recovery = 7
-	penfactor = 30 // Total AP potential of 53-55, discounting strength bonuses. Will likely penetrate non-slash resistant light armor, but fail to chunk through maille and plate.
+	penfactor = PEN_MEDIUM // Total AP potential of 53-55, discounting strength bonuses. Will likely penetrate non-slash resistant light armor, but fail to chunk through maille and plate.
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
 
 //Ranged mace-like mode - merc unique for Nagaika (steppesman)
 /datum/intent/whip/crack/blunt
-	name = "bludgen"
+	name = "bludgeon"
 	blade_class = BCLASS_BLUNT
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	recovery = 6
 	reach = 2			//Less range than a normal whip by 1 compared to crack.
 	icon_state = "instrike"
@@ -229,7 +229,7 @@
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	chargetime = 0.5 SECONDS
 	recovery = 7
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
@@ -241,7 +241,7 @@
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	chargetime = 0.8 SECONDS // longer charge cause heavy balance I guess
 	recovery = 7
-	penfactor = 30
+	penfactor = PEN_MEDIUM
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
@@ -254,7 +254,7 @@
 	chargetime = 0.7 SECONDS
 	recovery = 10
 	damfactor = 1.1
-	penfactor = 25
+	penfactor = PEN_MEDIUM
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
@@ -267,7 +267,7 @@
 	chargetime = 0.9 SECONDS
 	recovery = 10
 	damfactor = 1.1
-	penfactor = 15
+	penfactor = PEN_NONE
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
@@ -283,7 +283,7 @@
 	clickcd = CLICK_CD_CHARGED
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 30
+	penfactor = PEN_MEDIUM
 	item_d_type = "stab"
 	effective_range = 3
 	effective_range_type = EFF_RANGE_EXACT
@@ -295,11 +295,13 @@
 	animname = "stab"
 	icon_state = "instab"
 	reach = 3
-	chargetime = 1.2 SECONDS // can't spam
 	clickcd = CLICK_CD_CHARGED
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 40
+	penfactor = PEN_HEAVY
+	swingdelay_type = SWINGDELAY_CANCEL
+	parriable_intent = FALSE
+	dodgeable_intent = FALSE
 	item_d_type = "stab"
 	effective_range = 3
 	effective_range_type = EFF_RANGE_EXACT

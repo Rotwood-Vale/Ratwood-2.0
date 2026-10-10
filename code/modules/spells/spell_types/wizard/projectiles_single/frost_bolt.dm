@@ -48,7 +48,7 @@
 	damage = 20
 	npc_simple_damage_mult = 2
 	damage_type = BURN
-	flag = "magic"
+	flag = "fire"
 	range = 10
 	speed = 1
 	nodamage = FALSE

@@ -1,4 +1,3 @@
-#define STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL -2
 
 /mob/living/proc/attempt_parry(datum/intent/intenty, mob/living/attacker)
 	if(!intenty.parriable_intent) // If the intent is unparriable whatsoever just skip all the math
@@ -11,10 +10,16 @@
 		return FALSE
 	if(!can_see_cone(attacker))
 		return FALSE
-	if(!COOLDOWN_FINISHED(src, last_parry))
+	var/paired_swing = src?.dualwield_twoswing
+	if(!paired_swing && world.time < (last_parry + parrydelay))
 		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
 			return FALSE
-	COOLDOWN_START(src, last_parry, setparrytime)
+
+	if(!paired_swing)
+		last_parry = world.time
+		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
+			var/parrytime = setparrytime
+			changeNext_def(parrytime)
 
 	var/prob2defend = attacker.mind ? 0 : attacker.defprob
 	if(m_intent == MOVE_INTENT_RUN)
@@ -53,23 +58,60 @@
 	var/defender_skill = 0
 	var/attacker_skill = 0
 	var/obj/item/clothing/wrists/roguetown/bracers/unarmed_bracers
+	var/obj/item/clothing/gloves/roguetown/knuckles/unarmed_knuckles
 
-	if(highest_defense <= (get_skill_level(/datum/skill/combat/unarmed) * 20))
-		defender_skill = get_skill_level(/datum/skill/combat/unarmed)
-		var/obj/B = get_item_by_slot(SLOT_WRISTS)
-		if(istype(B, /obj/item/clothing/wrists/roguetown/bracers))
-			prob2defend += (defender_skill * 35)
-			unarmed_bracers = B
-		else
-			prob2defend += (defender_skill * 10)		// no bracers gonna be butts.
-		weapon_parry = FALSE
+	var/obj/item/clothing/gloves/roguetown/bandages/unarmed_bandages
+
+	// Calculate unarmed parry value from bracers/knuckles/bandages
+	var/unarmed_skill = get_skill_level(/datum/skill/combat/unarmed)
+	var/unarmed_defense = 0
+	var/obj/B = get_item_by_slot(SLOT_WRISTS)
+	var/obj/K = get_item_by_slot(SLOT_GLOVES)
+	var/is_pugilist = HAS_TRAIT(src, TRAIT_CIVILIZEDBARBARIAN) // Only expert pugilists get the generous unarmed wdef
+	if(istype(B, /obj/item/clothing/wrists/roguetown/bracers))
+		unarmed_defense = (unarmed_skill * 20) + ((is_pugilist ? UNARMED_BASE_WDEF_EQUIPPED : UNARMED_BASE_WDEF_BARE) * 10)
+		unarmed_bracers = B
+	else if(istype(K, /obj/item/clothing/gloves/roguetown/knuckles))
+		unarmed_defense = (unarmed_skill * 20) + ((is_pugilist ? UNARMED_BASE_WDEF_EQUIPPED : UNARMED_BASE_WDEF_BARE) * 10)
+		unarmed_knuckles = K
+	else if(istype(K, /obj/item/clothing/gloves/roguetown/bandages))
+		unarmed_defense = (unarmed_skill * 20) + ((is_pugilist ? UNARMED_BASE_WDEF_EQUIPPED : UNARMED_BASE_WDEF_BARE) * 10)
+		unarmed_bandages = K
 	else
+		unarmed_defense = (unarmed_skill * 20) + (UNARMED_BASE_WDEF_BARE * 10)
+
+	// If held weapon uses unarmed skill (katar, etc), allow unarmed parry fallback
+	var/allow_unarmed_fallback = FALSE
+	if(used_weapon?.associated_skill == /datum/skill/combat/unarmed)
+		allow_unarmed_fallback = TRUE
+
+	if(highest_defense > 0 && (!allow_unarmed_fallback || highest_defense >= unarmed_defense))
+		// Weapon parry wins
 		if(used_weapon)
 			defender_skill = get_skill_level(used_weapon.associated_skill)
 		else
-			defender_skill = get_skill_level(/datum/skill/combat/unarmed)
+			defender_skill = unarmed_skill
 		prob2defend += highest_defense
 		weapon_parry = TRUE
+
+	else if(allow_unarmed_fallback && unarmed_defense > highest_defense)
+		// Unarmed parry is better than the unarmed-skill weapon's own wdefense
+		defender_skill = unarmed_skill
+		prob2defend += unarmed_defense
+		weapon_parry = FALSE
+	else
+		// No parry-capable weapon - pure unarmed
+		defender_skill = unarmed_skill
+		prob2defend += unarmed_defense
+		weapon_parry = FALSE
+
+	var/att_swift_capable = attacker.check_dodge_skill(check_trait = FALSE)
+	var/def_swift_capable = src.check_dodge_skill(check_trait = FALSE)
+	
+	if(used_weapon)
+		if(used_weapon.wbalance == WBALANCE_SWIFT)
+			if(mainhand && !offhand && def_swift_capable) // We're one-handing a swift-balanced weapon (rapiers, sabers, etc). Small parry boost (1 wdef equiv.)
+				prob2defend += 10
 
 	if(intenty.masteritem)
 		attacker_skill = attacker.get_skill_level(intenty.masteritem.associated_skill)
@@ -78,10 +120,35 @@
 			intenty.masteritem.remove_bintegrity(intenty.sharpness_penalty)
 
 		prob2defend -= (attacker_skill * 20)
-		if((intenty.masteritem.wbalance == WBALANCE_SWIFT) && (attacker.STASPD > STASPD)) //enemy weapon is quick, so get a bonus based on spddiff
-			var/spdmod = ((attacker.STASPD - STASPD) * 10)
-			var/permod = ((STAPER - attacker.STAPER) * 10)
-			var/intmod = ((STAINT - attacker.STAINT) * 3)
+		if(att_swift_capable)
+			if(!has_status_effect(/datum/status_effect/buff/weapon_binded))
+				if((intenty.masteritem.wbalance == WBALANCE_SWIFT) && (attacker.STASPD > src.STASPD)) //enemy weapon is quick, so get a bonus based on spddiff
+					var/spdmod = ((attacker.STASPD - src.STASPD) * 10)
+					var/permod = ((src.STAPER - attacker.STAPER) * 5)
+					var/intmod = ((src.STAINT - attacker.STAINT) * 3)
+					var/finalmod = spdmod
+					if(mind)
+						var/ceilclamp = SWIFTCAP_CHEST
+						if(attacker.zone_selected == BODY_ZONE_CHEST)	// Attacker is targeting chest. Worst boons! INT and PER are subtracted.
+							if(permod > 0)
+								spdmod -= permod
+							if(intmod > 0)
+								spdmod -= intmod
+						else if(attacker.zone_selected != check_zone(attacker.zone_selected))	// They are targeting a precise zone. Best boons! No INT/ PER influence.
+							ceilclamp = SWIFTCAP_PRECISE
+						else if((check_zone(attacker.zone_selected) == attacker.zone_selected) && attacker.zone_selected != BODY_ZONE_CHEST)
+							ceilclamp = SWIFTCAP_LIMBS
+							if(permod > 0)
+								spdmod -= permod
+						finalmod = clamp(spdmod, 0, ceilclamp)
+					prob2defend -= finalmod
+	else
+		attacker_skill = attacker.get_skill_level(/datum/skill/combat/unarmed)
+		prob2defend -= (attacker_skill * 20)
+		if(attacker.STASPD > src.STASPD) //unarmed is inherently swift
+			var/spdmod = ((attacker.STASPD - src.STASPD) * 10)
+			var/permod = ((src.STAPER - attacker.STAPER) * 10)
+			var/intmod = ((src.STAINT - attacker.STAINT) * 3)
 			if(mind)
 				if(permod > 0)
 					spdmod -= permod
@@ -89,11 +156,31 @@
 					spdmod -= intmod
 			var/finalmod = spdmod
 			if(mind)
-				finalmod = clamp(spdmod, 0, 30)
+				var/ceilclamp = SWIFTCAP_CHEST
+				if(attacker.zone_selected == BODY_ZONE_CHEST)	// Attacker is targeting chest. Worst boons! INT and PER are subtracted.
+					if(permod > 0)
+						spdmod -= permod
+					if(intmod > 0)
+						spdmod -= intmod
+				else if(attacker.zone_selected != check_zone(attacker.zone_selected))	// They are targeting a precise zone. Best boons! No INT/ PER influence.
+					ceilclamp = SWIFTCAP_PRECISE
+				else if((check_zone(attacker.zone_selected) == attacker.zone_selected) && attacker.zone_selected != BODY_ZONE_CHEST)
+					ceilclamp = SWIFTCAP_LIMBS
+					if(permod > 0)
+						spdmod -= permod
+				finalmod = clamp(spdmod, 0, ceilclamp)
 			prob2defend -= finalmod
-	else
-		attacker_skill = attacker.get_skill_level(/datum/skill/combat/unarmed)
-		prob2defend -= (attacker_skill * 20)
+
+	// --- Weapon binding! ---
+
+	if(has_status_effect(/datum/status_effect/buff/weapon_binded))
+		prob2defend += 20
+	if(!has_status_effect(/datum/status_effect/buff/weapon_binded) && !has_status_effect(/datum/status_effect/debuff/weapon_binded))
+		var/mob/living/carbon/human/HL = src
+		if(HL.try_bind(used_weapon, attacker))
+			return TRUE	//Tentative, might be better if it only increased parry chance on the initial binding rather than a full block.
+
+	// --- Weapon Binding End! ---
 
 	if(HAS_TRAIT(src, TRAIT_GUIDANCE))
 		prob2defend += 20
@@ -114,7 +201,7 @@
 			prob2defend += 20
 
 	// parrying while knocked down sucks ass
-	if(!(mobility_flags & MOBILITY_STAND))
+	if(!(mobility_flags & MOBILITY_STAND) && !has_status_effect(/datum/status_effect/buff/weapon_binded))
 		prob2defend *= 0.65
 
 	if(HAS_TRAIT(src, TRAIT_SENTINELOFWITS))
@@ -125,7 +212,7 @@
 
 	if(HAS_TRAIT(attacker, TRAIT_ARMOUR_LIKED))
 		if(HAS_TRAIT(attacker, TRAIT_FENCERDEXTERITY))
-			prob2defend -= 5
+			prob2defend -= 20
 
 	prob2defend = clamp(prob2defend, 5, 90)
 	if(HAS_TRAIT(attacker, TRAIT_HARDSHELL) && client) //Dwarf-merc specific limitation w/ their armor on in pvp
@@ -134,35 +221,35 @@
 		prob2defend = clamp(prob2defend, 5, 75) //Caps your max parry to 75 if using armor you're not trained in. Bad dexerity.
 		stamina_drained = stamina_drained + 5 //More stamina usage for not being trained in the armor you're using.
 
-	//Dual Wielding
-	var/defender_dualw
-	var/extradefroll
-
-	//Dual Wielder defense disadvantage
-	if(HAS_TRAIT(src, TRAIT_DUALWIELDER) && (istype(offhand, mainhand) || istype(mainhand, offhand)))
-		extradefroll = prob(prob2defend)
-		defender_dualw = TRUE
-
-	if(client?.prefs.showrolls)
-		var/text = "Roll to parry... [prob2defend]%"
-		if(defender_dualw)
-			text += " Twice! Disadvantage! ([(prob2defend / 100) * (prob2defend / 100) * 100]%)"
-		to_chat(src, span_info("[text]"))
-
 	var/parry_status = FALSE
-	if(defender_dualw)
-		if(prob(prob2defend) && extradefroll)
-			parry_status = TRUE
-	else
-		if(prob(prob2defend))
-			parry_status = TRUE
+	var/text
+
+	text += "Roll to parry... [HAS_TRAIT(attacker, TRAIT_DECEIVING_MEEKNESS) ? "???" : prob2defend]%"
+
+	// Dual wield drawback (-5%)
+	var/dualwield_penalty = HAS_TRAIT(src, TRAIT_DUALWIELDER) && src.can_dualwield(mainhand, offhand)
+	if(dualwield_penalty)
+		prob2defend = clamp(prob2defend - 5, 5, 90)
+		text += " (-5%)"
+
+	if(has_status_effect(/datum/status_effect/swingdelay/penalty))
+		prob2defend -= 50
+
+	if(prob(prob2defend))
+		parry_status = TRUE
 
 	if(parry_status)
-		if(intenty.masteritem)
-			if(intenty.masteritem.wbalance < WBALANCE_NORMAL && attacker.STASTR > STASTR) //enemy weapon is heavy, so get a bonus scaling on strdiff
-				stamina_drained = stamina_drained + ( intenty.masteritem.wbalance * ((attacker.STASTR - STASTR) * STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL) )
+		if(!has_status_effect(/datum/status_effect/buff/weapon_binded))
+			if(intenty.masteritem)
+				if(intenty.masteritem.wbalance == WBALANCE_HEAVY && attacker.STASTR > src.STASTR) //enemy weapon is heavy, so get a bonus scaling on strdiff
+					stamina_drained = stamina_drained + ( intenty.masteritem.wbalance * ((attacker.STASTR - src.STASTR) * STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL) )
 	else
-		to_chat(src, span_warning("The enemy defeated my parry!"))
+		text += span_warning(" The enemy defeated my parry!")
+	if(src.client?.prefs.showrolls)
+		to_chat(src, span_info("[text]"))
+
+	// Failed parry cutoff here
+	if(!parry_status)
 		if(HAS_TRAIT(src, TRAIT_MAGEARMOR))
 			if(magearmor == 0)
 				magearmor = 1
@@ -237,26 +324,37 @@
 		else
 			flash_fullscreen("blackflash2")
 
-		var/dam2take = round((get_complex_damage(AB,attacker,used_weapon.blade_dulling)/2),1)
-		if(dam2take)
-			var/intdam = used_weapon.max_blade_int ? INTEG_PARRY_DECAY : INTEG_PARRY_DECAY_NOSHARP
-			var/sharp_loss = SHARPNESS_ONHIT_DECAY
-			if(used_weapon == offhand)
-				intdam = INTEG_PARRY_DECAY_NOSHARP
-			if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
-				sharp_loss += STRONG_SHP_BONUS
-				intdam += STRONG_INTG_BONUS
-			used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
-			used_weapon.remove_bintegrity(sharp_loss, attacker)
+		if(AB)
+			var/dam2take = round((get_complex_damage(AB,attacker,used_weapon.blade_dulling)/2),1)
+			if(dam2take)
+				var/intdam = used_weapon.max_blade_int ? INTEG_PARRY_DECAY : INTEG_PARRY_DECAY_NOSHARP
+				var/sharp_loss = SHARPNESS_ONHIT_DECAY
+				if(used_weapon == offhand)
+					intdam = INTEG_PARRY_DECAY_NOSHARP
 
-		if(mind && attacker.mind && HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
-			var/text = "[bodyzone2readablezone(attacker.zone_selected)]..."
-			if(HAS_TRAIT(attacker, TRAIT_DECEIVING_MEEKNESS))
-				if(prob(10))
-					text = "<i>Somewhere...</i>"
-					attacker.balloon_alert(src, text)
-			else
-				attacker.balloon_alert(src, text)
+				if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
+					sharp_loss += STRONG_SHP_BONUS
+					intdam += STRONG_INTG_BONUS
+
+				// Heavy weapons chew through shields — use higher of demolition_mod or intent intdamage_factor
+				if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
+					var/shield_mult = max(intenty.demolition_mod, intenty.intent_intdamage_factor)
+					intdam *= shield_mult
+
+				used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
+				used_weapon.remove_bintegrity(sharp_loss, attacker)
+		else
+			// Unarmed attacker
+			var/intdam = INTEG_PARRY_DECAY_UNARMED
+			if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
+				intdam *= intenty.intent_intdamage_factor
+
+			if(!has_status_effect(/datum/status_effect/buff/weapon_binded))
+				used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
+			if(mind)
+				dodgetime = CLAMP(dodgetime - 2, 0, CLICK_CD_DODGE)
+				changeMaxDodge(2)
+
 		return TRUE
 
 	if(weapon_parry == FALSE)
@@ -275,8 +373,28 @@
 					mind?.add_sleep_experience(/datum/skill/combat/unarmed, max(round(STAINT*exp_multi), 0), FALSE)
 
 		if(unarmed_bracers)
-			unarmed_bracers.take_damage(INTEG_PARRY_DECAY_NOSHARP, "slash", armor_penetration = 100)
+			unarmed_bracers.take_damage(INTEG_PARRY_DECAY_NOSHARP, BRUTE)
+		else if(unarmed_knuckles)
+			unarmed_knuckles.take_damage(INTEG_PARRY_DECAY_NOSHARP, BRUTE)
+		else if(unarmed_bandages)
+			unarmed_bandages.take_damage(INTEG_PARRY_DECAY_NOSHARP, "slash", armor_penetration = 100)
+		else
+			// Unarmed attacker
+			var/intdam = INTEG_PARRY_DECAY_UNARMED
+			var/sharp_loss = SHARPNESS_ONHIT_DECAY
+
+			if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
+				sharp_loss += STRONG_SHP_BONUS
+				intdam += STRONG_INTG_BONUS
+
+			if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
+				intdam *= intenty.intent_intdamage_factor
+			used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
+			used_weapon.remove_bintegrity(sharp_loss, attacker)
 		flash_fullscreen("blackflash2")
+		if(mind)
+			dodgetime = CLAMP(dodgetime - 2, 0, CLICK_CD_DODGE)
+			changeMaxDodge(2)
 		return TRUE
 
 /mob/proc/do_parry(obj/item/weapon, parrydrain as num, mob/living/attacker)
@@ -325,3 +443,15 @@
 			log_combat(src, attacker, "parried", null, defense_log_note(attacker))
 		playsound(get_turf(src), pick(parry_sound), 100, FALSE)
 		return TRUE
+
+/mob/living/proc/pick_bind_sfx(wbalance)
+	switch(wbalance)
+		if(WBALANCE_NORMAL)
+			return pick('sound/foley/binds/bind_normal1.ogg','sound/foley/binds/bind_normal2.ogg','sound/foley/binds/bind_normal3.ogg','sound/foley/binds/bind_normal4.ogg','sound/foley/binds/bind_normal5.ogg','sound/foley/binds/bind_normal6.ogg','sound/foley/binds/bind_normal7.ogg','sound/foley/binds/bind_normal8.ogg','sound/foley/binds/bind_normal9.ogg','sound/foley/binds/bind_normal10.ogg','sound/foley/binds/bind_normal11.ogg','sound/foley/binds/bind_normal12.ogg','sound/foley/binds/bind_normal13.ogg','sound/foley/binds/bind_normal14.ogg')
+		if(WBALANCE_HEAVY)
+			return pick('sound/foley/binds/bind_heavy1.ogg','sound/foley/binds/bind_heavy2.ogg','sound/foley/binds/bind_heavy3.ogg','sound/foley/binds/bind_heavy4.ogg','sound/foley/binds/bind_heavy5.ogg','sound/foley/binds/bind_heavy6.ogg','sound/foley/binds/bind_heavy7.ogg','sound/foley/binds/bind_heavy8.ogg','sound/foley/binds/bind_heavy9.ogg','sound/foley/binds/bind_heavy10.ogg','sound/foley/binds/bind_heavy11.ogg','sound/foley/binds/bind_heavy12.ogg')
+		if(WBALANCE_SWIFT)
+			return pick('sound/foley/binds/bind_swift1.ogg','sound/foley/binds/bind_swift2.ogg','sound/foley/binds/bind_swift3.ogg','sound/foley/binds/bind_swift4.ogg','sound/foley/binds/bind_swift5.ogg','sound/foley/binds/bind_swift6.ogg')
+
+#undef UNARMED_BASE_WDEF_BARE
+#undef UNARMED_BASE_WDEF_EQUIPPED

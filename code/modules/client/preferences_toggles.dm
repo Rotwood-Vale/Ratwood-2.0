@@ -823,6 +823,14 @@
 		prefs.save_preferences()
 	to_chat(src, "You will[prefs.floating_text_toggles & XP_TEXT ? "" : " not"] see XP pop ups.")
 
+/client/verb/toggle_hitzonetext() // Whether the user can see a text popup for where they got hit.
+	set category = "Options"
+	set name = "Toggle Hitzone Text"
+	if(prefs)
+		prefs.floating_text_toggles ^= HITZONE_TEXT
+		prefs.save_preferences()
+	to_chat(src, "You will[prefs.floating_text_toggles & HITZONE_TEXT ? "" : " not"] see floating text for where you were hit.")
+
 /client/verb/toggle_floatingtext() // Whether the user can see the balloon pop ups at all.
 	set category = "Options"
 	set name = "Toggle Floating Text"
@@ -1353,3 +1361,14 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.admin_chat_toggles ^= CHAT_ADMINSPAWN
 	prefs.save_preferences()
 	to_chat(src, "You will [prefs.admin_chat_toggles & CHAT_ADMINSPAWN ? "see" : "not see any"] spawn logs.")
+
+/client/verb/full_examine()
+	set category = "Options"
+	set name = "Toggle Full Examine"
+	if(prefs)
+		prefs.full_examine = !prefs.full_examine
+		prefs.save_preferences()
+		if(prefs.full_examine)
+			to_chat(src, "Examines will be fully shown.")
+		else
+			to_chat(src, "Examines will have some information behind dropdowns.")

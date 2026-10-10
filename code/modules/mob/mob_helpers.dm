@@ -45,6 +45,7 @@
 
 	return zone
 
+///Returns a TRUE / FALSE if the zone is a FACE / HEAD coverage subzone. Used mainly by accuracy_check & bait.
 /proc/check_face_subzone(zone, check_head = TRUE)
 	if(!zone)
 		return FALSE
@@ -61,7 +62,67 @@
 			return TRUE
 		if(BODY_ZONE_PRECISE_SKULL)
 			return TRUE
+		if(BODY_ZONE_HEAD)
+			if(check_head)
+				return TRUE
+		//--Optional Neck Addition--
+		//if(BODY_ZONE_PRECISE_NECK)
+		//	return TRUE
 
+	return FALSE
+
+/proc/check_bait_subzone(zone)
+	if(!zone)
+		return FALSE
+	if(check_face_subzone(zone))
+		return BODY_ZONE_HEAD
+	return zone
+
+/proc/check_bind_subzone(zone_def)
+	if(!zone_def)
+		return FALSE
+	if(check_face_subzone(zone_def))
+		return BIND_HEAD
+	switch(zone_def)
+		if(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_L_ARM)
+			return BIND_HAND_L
+		if(BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_R_ARM)
+			return BIND_HAND_R
+		if(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_L_LEG)
+			return BIND_FOOT_L
+		if(BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_R_LEG)
+			return BIND_FOOT_R
+		if(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_STOMACH, BODY_ZONE_CHEST)
+			return BIND_TORSO
+		if(BODY_ZONE_PRECISE_NECK)
+			return BIND_NECK
+	return FALSE
+
+/proc/check_bind(bindzone, attzone)
+	if(!bindzone || !attzone)
+		return FALSE
+	switch(bindzone)
+		if(BIND_HEAD)
+			return check_face_subzone(attzone, check_head = FALSE)
+		if(BIND_HAND_L)
+			if(attzone == BODY_ZONE_PRECISE_L_HAND)
+				return TRUE
+		if(BIND_HAND_R)
+			if(attzone == BODY_ZONE_PRECISE_R_HAND)
+				return TRUE
+		if(BIND_FOOT_L)
+			if(attzone == BODY_ZONE_PRECISE_L_FOOT)
+				return TRUE
+		if(BIND_FOOT_R)
+			if(attzone == BODY_ZONE_PRECISE_R_FOOT)
+				return TRUE
+		if(BIND_TORSO)
+			switch(attzone)
+				if(BODY_ZONE_PRECISE_STOMACH, BODY_ZONE_PRECISE_GROIN)
+					return TRUE
+		if(BIND_NECK)
+			if(attzone == BODY_ZONE_PRECISE_NECK)
+				return TRUE
 	return FALSE
 
 /// Returns the targeting zone equivalent of a given bodypart. Kudos to you if you find a use for this.
@@ -509,10 +570,10 @@
 	var/list/intents
 	var/obj/item/Masteritem = active ? get_active_held_item() : get_inactive_held_item()
 	if(Masteritem)
-		if(Masteritem.wielded)
+		if(Masteritem.altgripped)
+			intents = Masteritem.get_altgrip_intents()
+		else if(Masteritem.wielded)
 			intents = Masteritem.gripped_intents
-		else if(Masteritem.altgripped)
-			intents = Masteritem.alt_intents
 		else
 			intents = Masteritem.possible_item_intents
 	else
@@ -574,13 +635,13 @@
 				mmb_intent = null
 			else
 				mmb_intent = new INTENT_KICK(src)
-		if(QINTENT_STEAL)
-			if(mmb_intent?.type == INTENT_STEAL)
+		if(QINTENT_SPECIAL)
+			if(mmb_intent?.type == INTENT_SPECIAL)
 				qdel(mmb_intent)
 				input = null
 				mmb_intent = null
 			else
-				mmb_intent = new INTENT_STEAL(src)
+				mmb_intent = new INTENT_SPECIAL(src)
 		if(QINTENT_BITE)
 			if(mmb_intent?.type == INTENT_BITE)
 				qdel(mmb_intent)

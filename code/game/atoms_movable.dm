@@ -794,15 +794,8 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 /atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent = null, simplified = FALSE)
 	if(used_item || !simplified)
 		var/animation_type = item_animation_override || used_intent?.get_attack_animation_type()
-		if(used_intent?.swingdelay)
-			if(isliving(src))
-				var/mob/living/L = src
-				if(L.mind)
-					draw_swingdelay(A, used_intent.custom_swingdelay, used_intent.swingdelay)
-					addtimer(CALLBACK(src, PROC_REF(do_item_attack_animation), A, visual_effect_icon, used_item, animation_type, used_intent), used_intent.swingdelay)
-		else
-			do_item_attack_animation(A, visual_effect_icon, used_item, animation_type = animation_type, used_intent = used_intent)
-			return
+		do_item_attack_animation(A, visual_effect_icon, used_item, animation_type = animation_type, used_intent = used_intent)
+		return
 	wiggle(A)
 
 

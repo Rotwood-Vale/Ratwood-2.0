@@ -1,322 +1,20 @@
-//intent datums ฅ^•ﻌ•^ฅ
-
-/datum/intent/sword/cut
-	name = "strike"
-	icon_state = "incut"
-	attack_verb = list("cuts", "slashes")
-	animname = "cut"
-	blade_class = BCLASS_CUT
-	chargetime = 0
-	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
-	swingdelay = 0
-	damfactor = 1.1
-	item_d_type = "slash"
-
-/datum/intent/sword/cut/long
-	clickcd = CLICK_CD_QUICK // Longsword 2H cut — faster than default, no extra damage
-
-/datum/intent/sword/cut/arming
-	damfactor = 1.2
-	clickcd = CLICK_CD_QUICK // Versatile, this create 26 EDPS instead of 20. But still easily beaten by the Sabre
-
-/datum/intent/sword/cut/militia
-	penfactor = 30
-	damfactor = 1.2
-	chargetime = 0.2
-
-/datum/intent/sword/cut/short
-	clickcd = 9
-	damfactor = 1
-
-/datum/intent/sword/cut/light
-	damfactor = 0.9
-
-/datum/intent/sword/chop/militia
-	penfactor = 50
-	chargetime = 0.5
-	swingdelay = 0
-	damfactor = 1.0
-
-//this is comperable to militia chop, might swap from swing delay to charge since the latter is imo more fun to use and throttles damage output better since it prevents swift intent click reduction
-/datum/intent/sword/chop/heavy
-	penfactor = 50
-	swingdelay = 10
-	damfactor = 1.3
-
-/datum/intent/sword/thrust
-	name = "stab"
-	icon_state = "instab"
-	attack_verb = list("stabs")
-	animname = "stab"
-	blade_class = BCLASS_STAB
-	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 20
-	chargetime = 0
-	swingdelay = 0
-	item_d_type = "stab"
-
-/datum/intent/sword/thrust/short
-	clickcd = 8
-	damfactor = 1.1
-	penfactor = 30
-
-/datum/intent/sword/chop/sabre//falx chop but better, might slap a charge on this so it's like militia chop
-	damfactor = 1.15
-	penfactor = 40
-
-/datum/intent/sword/thrust/arming
-	clickcd = 10 // Less than rapier
-	penfactor = 35 // 22 + 35 = 57. Beats light leather slightly more than rapier per strike, but less strike
-
-/datum/intent/sword/thrust/heavy
-	name = "heavy thrust"
-	icon_state = "inlunge"
-	penfactor = 60//on azure this is supposed to pen blacksteel so 60 + 30 wielded comes to 90... 
-	damfactor = 1.3
-	swingdelay = 0.9 SECONDS
-
-/datum/intent/sword/thrust/long
-	penfactor = 30 // 2h Longsword already have 30 damage. This let it pierce light armor easily
-	// Their cut is actually pretty decent when 2handed and should be inferior to zwei.
-
-/datum/intent/sword/thrust/heavy
-	name = "heavy thrust"
-	icon_state = "inlunge"
-	penfactor = 50
-	damfactor = 1.3
-	swingdelay = 0.9 SECONDS
-
-/datum/intent/sword/thrust/long/deep
-	name = "deep lunge"
-	icon_state = "inlunge"
-	penfactor = 20
-	damfactor = 1.2
-	swingdelay = 1.4 SECONDS
-	misscost = 10
-	clickcd = CLICK_CD_CHARGED
-
-/datum/intent/sword/thrust/krieg
-	damfactor = 0.9
-
-// Freifechter Longsword intents //
-
 // The stock longsword fighting kit. A TRAIT_LONGSWORDSMAN only replaces these with the master intents
 // below, so any /sword/long subtype that redefines these won't work for a frei. Kept as defines so the
 // type below and uses_stock_longsword_kit() don't drift apart.
 #define LONGSWORD_STOCK_INTENTS list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, SWORD_STRIKE)
-#define LONGSWORD_STOCK_GRIPPED_INTENTS list(/datum/intent/sword/cut/long, /datum/intent/sword/thrust/long, /datum/intent/sword/chop/long, /datum/intent/sword/peel)
-
-/datum/intent/sword/cut/master
-	name = "mandritto"
-	icon_state = "incutmaster"
-	desc = "Strike the opponent with the true edge of the sword and penetrate the lightest armors. Poor at damaging armor."
-	attack_verb = list("masterfully cuts", "artfully slits", "adroitly slashes")
-	// You do more damage to exposed areas than stabbing, but your damage to armor is slightly less effective than a normal longsword.
-	// This effectively means you do 1.2x damage to flesh, but 0.9x damage to armor.
-	damfactor = 1.2
-	penfactor = 50
-	intent_intdamage_factor = 0.75
-
-/datum/intent/sword/chop/long/master
-	name = "fendente"
-	icon_state = "inchop"
-	desc = "Swing your sword in a wide arc, striking them with the true edge of the blade but exposing yourself. Damages shields more and penetrates even hardened leather."
-	attack_verb = list("furiously chops", "powerfully cleaves", "fiercely hacks")
-	// This is almost x2 slower than a regular longsword's chop, giving the opponent more time to riposte you.
-	// This however will penetrate all Light AC armor except for brigandine parts. Also does x2 damage to shields.
-	damfactor = 1.6
-	penfactor = 40
-	swingdelay = 0.8 SECONDS
-	clickcd = CLICK_CD_CHARGED
-
-/datum/intent/sword/thrust/long/master
-	name = "stoccato"
-	icon_state = "instabmaster"
-	desc = "Enter a long guard and thrust forward with your entire upper body while advancing, maximizing the effectiveness of the thrust."
-	attack_verb =  list("skillfully perforates", "artfully punctures", "deftly sticks")
-	damfactor = 1.35
-
-/datum/intent/sword/thrust/long/deep/master
-	name = "stoccato profondo"
-	icon_state = "inlunge"
-	desc = "A precise thrust over the opponent's weapon aimed for the gaps in one's armor instead of damaging the armor. Leaves you exposed during the swing."
-	attack_verb = list("carefully pierces", "precisely thrusts", "accurately impales")
-	// Stab someone directly. 50% damage to armor.
-	// Best used like an estoc.
-	penfactor = 50
-	damfactor = 1.1
-	swingdelay = 0.6 SECONDS
-	intent_intdamage_factor = 0.5
-	clickcd = CLICK_CD_MELEE
-	misscost = 0
-	blade_class = BCLASS_PICK //temporary fix until I introduce halfswording
-
-/datum/intent/effect/daze/longsword/clinch
-	name = "clinch & swipe"
-	desc = "Get up in your opponent's face and force them into a clinch, then swipe their face with the crossguard while they're distracted. Good against baited or exhausted opponents."
-	icon_state = "inpunish"
-	attack_verb = list("forcibly clinches and swipes")
-	animname = "strike"
-	target_parts = list(BODY_ZONE_HEAD, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_R_EYE)
-	blade_class = BCLASS_BLUNT
-	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	damfactor = 0.7
-	clickcd = 10
-	recovery = 6
-	item_d_type = "blunt"
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-	parriable_intent = FALSE
-	dodgeable_intent = FALSE
-	intent_effect = /datum/status_effect/debuff/dazed/swipe
-
-/datum/intent/sword/thrust/long/halfsword
-	name = "mezza spada"
-	icon_state = "inimpale"
-	desc = "Grip the dull portion of your longsword with either hand and use it as leverage to deliver precise, powerful strikes that can dig into gaps in plate and push past maille."
-	attack_verb = list("goes into a half-sword stance and skewers", "enters a half-sword stance and impales")
-	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 80
-	clickcd = 12
-	swingdelay = 16
-	damfactor = 0.9
-	blade_class = BCLASS_PICK
-
-/datum/intent/sword/thrust/long/halfsword/lesser
-	name = "halbschwert"
-	clickcd = 22
-
-/datum/intent/effect/daze/longsword
-	name = "durchlauffen"
-	desc = "Quickly flip your weapon around to the blunt end and slam an opponent in the throat, mouth, or nose, affecting their ability to breathe properly. Slow, and can be cancelled by GUARDING, but applies a long-lasting debuff."
-	attack_verb = list("masterfully pummels")
-	intent_effect = /datum/status_effect/debuff/dazed/longsword
-	target_parts = list(BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_NECK)
-	damfactor = 0.3
-	clickcd = 20
-	swingdelay = 1.3 SECONDS
-
-/datum/intent/effect/daze/longsword2h
-	name = "zorn ort"
-	desc = "Block the opponent's weapon with a strike of your own and advance into a thrust towards the eyes, affecting their vision severely. Can only be performed two-handed."
-	attack_verb = list("masterfully pokes")
-	intent_effect = /datum/status_effect/debuff/dazed/longsword2h
-	target_parts = list(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE)
-	blade_class = BCLASS_STAB
-	damfactor = 1 //they're stabbing you and it's going to hurt a little
-	clickcd = 20
-	swingdelay = 1 SECONDS
-
-/datum/intent/sword/thrust/blunt
-	blade_class = BCLASS_BLUNT
-	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	attack_verb = list("prods", "pokes")
-	penfactor = BLUNT_DEFAULT_PENFACTOR
-	item_d_type = "blunt"
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-
-/datum/intent/sword/strike
-	name = "pommel strike"
-	icon_state = "instrike"
-	attack_verb = list("bashes", "clubs")
-	animname = "strike"
-	blade_class = BCLASS_BLUNT
-	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	chargetime = 0
-	penfactor = BLUNT_DEFAULT_PENFACTOR
-	swingdelay = 0
-	damfactor = NONBLUNT_BLUNT_DAMFACTOR
-	item_d_type = "blunt"
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_MINUSCULE
-
-// A weaker strike for sword with high damage so that it don't end up becoming better than mace
-
-// A weaker strike for sword with high damage so that it don't end up becoming better than mace
-/datum/intent/sword/strike/bad
-	damfactor = 0.7
-
-/datum/intent/sword/peel
-	name = "armor peel"
-	icon_state = "inpeel"
-	attack_verb = list("<font color ='#e7e7e7'>peels</font>")
-	animname = "cut"
-	blade_class = BCLASS_PEEL
-	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	chargetime = 0
-	penfactor = BLUNT_DEFAULT_PENFACTOR
-	swingdelay = 0
-	damfactor = 0.01
-	item_d_type = "slash"
-	peel_divisor = 4
-
-/datum/intent/sword/peel/big
-	name = "big sword armor peel"
-	attack_verb = list("<font color ='#e7e7e7'>weakly peels</font>")
-	reach = 2
-	peel_divisor = 5
-
-/datum/intent/sword/peel/weak
-	name = "weak armor peel"
-	peel_divisor = 8
-
-/datum/intent/sword/chop
-	name = "chop"
-	icon_state = "inchop"
-	attack_verb = list("chops", "hacks")
-	animname = "chop"
-	blade_class = BCLASS_CHOP
-	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
-	penfactor = 30
-	swingdelay = 8
-	damfactor = 1.0
-	item_d_type = "slash"
-
-/datum/intent/sword/chop/short
-	damfactor = 0.9
-
-/datum/intent/sword/chop/long
-	damfactor = 1.2
-
-/datum/intent/sword/cut/falx
-	penfactor = 20
-
-/datum/intent/sword/chop/falx
-	penfactor = 40
-
-/datum/intent/sword/cut/krieg
-	damfactor = 1.2
-	clickcd = 10
-
-/datum/intent/sword/chop///falx chop but better, might slap a charge on this so it's like militia chop
-	damfactor = 1.15
-	penfactor = 40
-
-/datum/intent/sword/thrust/krieg
-	damfactor = 0.8
-
-/datum/intent/rend/krieg
-	intent_intdamage_factor = 0.2
-	sharpness_penalty = 2
-
-/datum/intent/rend/krieg/short
-	damfactor = 1.8
-	swingdelay = 2
-
-/datum/intent/rend/apophis
-	damfactor = 2.2//lesser damfactor than rend but lacking the sharp penantly of kriegmesser rend
-	intent_intdamage_factor = 0.2
-
+#define LONGSWORD_STOCK_GRIPPED_INTENTS list(/datum/intent/sword/cut/long, /datum/intent/sword/thrust/long, /datum/intent/sword/chop/long, /datum/intent/sword/thrust/long/deep)
+#define LONGSWORD_STOCK_ALT_GRIPS list(/datum/alt_grip/mordhau/sword, /datum/alt_grip/halfsword)
 //sword objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/sword
 	name = "arming sword"
 	desc = "A long steel blade attached to a hilt, separated by a crossguard. The arming sword has been Psydonia's implement of war by excellence for generations."
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
+	alt_grips = null
 	force = 22
 	force_wielded = 25
-	possible_item_intents = list(/datum/intent/sword/cut/arming, /datum/intent/sword/thrust/arming, /datum/intent/sword/strike, /datum/intent/sword/peel)
-	gripped_intents = list(/datum/intent/sword/cut/arming, /datum/intent/sword/thrust/arming, /datum/intent/sword/strike, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut/arming, /datum/intent/sword/thrust/arming, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/cut/arming, /datum/intent/sword/thrust/arming, /datum/intent/sword/strike)
 	damage_deflection = 14
 	icon_state = "sword1"
 	sheathe_icon = "sword1"
@@ -385,7 +83,7 @@
 	name = "falx"
 	desc = "An unusual type of curved sword that evolved from the farmer's sickle. It has an inwards edge, making it useful for cutting and chopping."
 	force = 22
-	possible_item_intents = list(/datum/intent/sword/cut/falx,  /datum/intent/sword/chop/falx, /datum/intent/sword/strike, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut/falx,  /datum/intent/sword/chop/falx, /datum/intent/sword/strike)
 	icon_state = "falx"
 	max_blade_int = 250
 	max_integrity = 125
@@ -440,7 +138,7 @@
 	force_wielded = 30
 	possible_item_intents = LONGSWORD_STOCK_INTENTS
 	gripped_intents = LONGSWORD_STOCK_GRIPPED_INTENTS
-	alt_intents = list(/datum/intent/sword/strike, /datum/intent/sword/bash, /datum/intent/effect/daze)
+	alt_grips = LONGSWORD_STOCK_ALT_GRIPS
 	icon_state = "longsword"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	item_state = "longsword"
@@ -459,7 +157,7 @@
 	associated_skill = /datum/skill/combat/swords
 	throwforce = 15
 	thrown_bclass = BCLASS_CUT
-	max_blade_int = 280
+	max_blade_int = 330
 	wdefense_wbonus = 4
 	smeltresult = /obj/item/ingot/steel
 	special = /datum/special_intent/side_sweep
@@ -468,6 +166,7 @@
 	/// Two-handed intents a TRAIT_LONGSWORDSMAN fights with.
 	var/list/master_gripped_intents = list(/datum/intent/sword/cut/master, /datum/intent/sword/thrust/long/master, /datum/intent/sword/chop/long/master, /datum/intent/sword/thrust/long/deep/master)
 	/// Alt grips a TRAIT_LONGSWORDSMAN gets.
+	var/list/master_alt_grips = list(/datum/alt_grip/mordhau/sword/frei, /datum/alt_grip/halfsword/frei)
 	/// Whether this sword is valid for TRAIT_LONGSWORDSMAN
 	var/master_trainable = FALSE
 	/// Flag for if the master intents are active, e.g., this is being held by someone with TRAIT_LONGSWORDSMAN.
@@ -489,6 +188,8 @@
 		return FALSE
 	if(!compare_list(gripped_intents, LONGSWORD_STOCK_GRIPPED_INTENTS))
 		return FALSE
+	if(!compare_list(alt_grips, LONGSWORD_STOCK_ALT_GRIPS))
+		return FALSE
 	return TRUE
 
 /obj/item/rogueweapon/sword/long/equipped(mob/user, slot, initial = FALSE)
@@ -500,6 +201,13 @@
 	if(QDELETED(src))
 		return
 	update_master_training(user, FALSE)
+
+// The trait can be granted after the sword was equipped (e.g. outfits equip before traits are applied),
+// so re-check on every alt grip attempt to make sure the master alt grips are the ones being cycled.
+/obj/item/rogueweapon/sword/long/cycle_altgrip(mob/living/carbon/user, direction = 1)
+	if(user)
+		update_master_training(user, TRUE)
+	return ..()
 
 /// Swaps the master kit in while a TRAIT_LONGSWORDSMAN has the sword in hand, and back out the moment
 /// it leaves their hands - the sword is not special in any way, the fencer is.
@@ -514,10 +222,12 @@
 	if(should_train)
 		possible_item_intents = master_item_intents.Copy()
 		gripped_intents = master_gripped_intents.Copy()
+		alt_grips = length(master_alt_grips) ? master_alt_grips.Copy() : null
 	else
 		// master_trainable is only ever set on a sword still carrying the stock kit so we give it the stock back.
 		possible_item_intents = LONGSWORD_STOCK_INTENTS
 		gripped_intents = LONGSWORD_STOCK_GRIPPED_INTENTS
+		alt_grips = LONGSWORD_STOCK_ALT_GRIPS
 	master_training_active = should_train
 
 /obj/item/rogueweapon/sword/long/broadsword
@@ -534,6 +244,7 @@
 	wdefense_wbonus = 3 // Same defense when one-handed, but slightly reduced wielded defense compared to the longsword.
 	possible_item_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/cut/light, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/cut/light, /datum/intent/sword/strike)
+	alt_grips = list(/datum/alt_grip/mordhau/broadsword)
 	smeltresult = /obj/item/ingot/iron //Sidegrade of the longswords and battle axes - non-blunt attacks hit harder, but are always telegraphed and swing-delayed.
 	special = /datum/special_intent/axe_swing//seemed appropriate
 
@@ -566,8 +277,8 @@
 	force = 5
 	force_wielded = 8
 	sharpness = IS_BLUNT
-	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/sword/thrust/blunt, /datum/intent/sword/peel/weak)
-	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/sword/thrust/blunt, /datum/intent/sword/peel/weak)
+	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/sword/thrust/blunt)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/sword/thrust/blunt, /datum/intent/sword/strike/penalty, /datum/intent/sword/strike/cancel)
 	icon_state = "feder"
 	throwforce = 5
 	thrown_bclass = BCLASS_BLUNT
@@ -839,6 +550,8 @@
 
 /obj/item/rogueweapon/sword/long/getonmobprop(tag)
 	. = ..()
+	if(tag == "altgrip" && .)
+		return .
 	if(tag)
 		switch(tag)
 			if("gen") return list("shrink" = 0.5, "sx" = -14, "sy" = -8, "nx" = 15, "ny" = -7, "wx" = -10, "wy" = -5, "ex" = 7, "ey" = -6, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 0, "nturn" = -13, "sturn" = 110, "wturn" = -60, "eturn" = -30, "nflip" = 1, "sflip" = 1, "wflip" = 8, "eflip" = 1)
@@ -983,7 +696,7 @@
 	desc = "An unholy longsword made of odd steel. A green crystalline mass covers the blade and pommel, its edges and serrations tougher and sharper than anything forged by a master swordsmith."
 	force = 40
 	force_wielded = 55
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike)
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike, /datum/intent/sword/chop)
 	icon_state = "vlord"
 	item_state = "vlord"
@@ -1011,8 +724,8 @@
 	desc = "A large yet surprisingly agile curved blade meant to be wielded in two hands. It has a similar composition to northwestern Psydonian longswords, but it's notably lighter."
 	force = 26
 	force_wielded = 31
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike, /datum/intent/sword/peel)
-	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike, /datum/intent/sword/chop, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike, /datum/intent/sword/chop)
 	icon_state = "marlin"
 	item_state = "marlin"
 	parrysound = list('sound/combat/parry/bladed/bladedthin (1).ogg', 'sound/combat/parry/bladed/bladedthin (2).ogg', 'sound/combat/parry/bladed/bladedthin (3).ogg')
@@ -1039,9 +752,9 @@
 	desc = "A heavy broadsword with a terrifyingly sharp edge, purpose-made to part heads from shoulders. Owing to its nature as a weapon of \
 	justice, it lacks the piercing tips that befit most battle-ready broadswords. If you're strong enough to wield such a weapon, however, \
 	then that probably won't stop you from finding a way."
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/exe, /datum/intent/sword/peel)
-	gripped_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/sword/cut/exe/cleave, /datum/intent/sword/cut/exe/sweep, /datum/intent/rend)
-	alt_intents = null
+	possible_item_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/cut/light, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/cut/light, /datum/intent/sword/strike)
+	alt_grips = null
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "exe"
 	minstr = 12
@@ -1054,7 +767,7 @@
 
 /datum/intent/sword/thrust/exe
 	swingdelay = 4	//Slight delay to stab; big and heavy.
-	penfactor = BLUNT_DEFAULT_PENFACTOR //Flat tip? I don't know, man. This intent is won't penetrate anything but it damages armor more.
+	penfactor = PEN_NONE //Flat tip? I don't know, man. This intent is won't penetrate anything but it damages armor more.
 	intent_intdamage_factor = 1.3 //This is basically like getting hit by a mace.
 
 /datum/intent/sword/cut/exe/cleave
@@ -1084,6 +797,8 @@
 
 /obj/item/rogueweapon/sword/long/exe/getonmobprop(tag)
 	. = ..()
+	if(tag == "altgrip" && .)
+		return .
 	if(tag)
 		switch(tag)
 			if("gen")
@@ -1183,42 +898,6 @@
 	minstr_req = TRUE
 	max_blade_int = 400
 
-/datum/intent/sword/chop/cleave
-	name = "staggering cleave"
-	icon_state = "incarve"
-	attack_verb = list("cleaves", "tears through", "carves through")
-	chargedrain = 1.8
-	chargetime = 12
-	swingdelay = 0
-	damfactor = 1.5
-	intent_intdamage_factor = 1.3
-	desc = "A powerful blow that delivers Strength-scaling knockback and slowdown to the target. The amount of inflicted knockback scales off your Strength, ranging from X (1 tile) to XIII (3 tiles). </br>Cannot inflict any knockback or slowdown if your Strength is below X. </br>Cannot be used consecutively more than every 5 seconds on the same target. </br>Prone targets halve the knockback distance. </br>Not fully charging the attack limits knockback to 1 tile."
-	var/maxrange = 3
-
-/datum/intent/sword/chop/cleave/spec_on_apply_effect(mob/living/H, mob/living/user, params)
-	var/chungus_khan_str = user.STASTR
-	if(H.has_status_effect(/datum/status_effect/debuff/yeetcd))
-		return // Recently knocked back, cannot be knocked back again yet
-	if(chungus_khan_str < 10)
-		return // Too weak to have any effect
-	var/scaling = CLAMP((chungus_khan_str - 10), 1, maxrange)
-	H.apply_status_effect(/datum/status_effect/debuff/yeetcd)
-	H.Slowdown(scaling)
-	// Copypasta from knockback proc cuz I don't want the math there
-	var/knockback_tiles = scaling // 1 to 4 tiles based on strength
-	if(H.resting)
-		knockback_tiles = max(1, knockback_tiles / 2)
-	if(user?.client?.chargedprog < 100)
-		knockback_tiles = 1 // Minimal knockback on non-charged smash.
-	var/turf/edge_target_turf = get_edge_target_turf(H, get_dir(user, H))
-	if(istype(edge_target_turf))
-		H.safe_throw_at(edge_target_turf, \
-		knockback_tiles, \
-		scaling, \
-		user, \
-		spin = FALSE, \
-		force = H.move_force)
-
 /obj/item/rogueweapon/sword/long/oldpsysword
 	name = "enduring longsword"
 	desc = "A steel longsword with an angled crossguard. The lesser clerics of the Psydonic Orders oft-carry these blades, and - though it may not carry the bite of silver - it still humbles men and monsters alike with a well-poised strike."
@@ -1295,9 +974,9 @@
 	force_wielded = 25
 	minstr = 11
 	wdefense = 6
-	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/rend/krieg, /datum/intent/sword/strike)
-	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/krieg, /datum/intent/rend/krieg, /datum/intent/sword/strike)
-	alt_intents = null // Can't mordhau this
+	possible_item_intents = list(/datum/intent/sword/cut/rend, /datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/cut/rend, /datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/strike)
+	alt_grips = null // Can't mordhau this
 	smeltresult = /obj/item/ingot/silver
 	is_silver = TRUE
 
@@ -1322,9 +1001,9 @@
 	force_wielded = 25
 	minstr = 11
 	wdefense = 6
-	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/rend/krieg, /datum/intent/sword/strike)
-	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/krieg, /datum/intent/rend/krieg, /datum/intent/sword/strike)
-	alt_intents = null // Can't mordhau this
+	possible_item_intents = list(/datum/intent/sword/cut/rend, /datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/cut/rend, /datum/intent/sword/chop/heavy, /datum/intent/sword/thrust/heavy, /datum/intent/sword/strike)
+	alt_grips = null // Can't mordhau this
 	smeltresult = /obj/item/ingot/silverblessed
 	is_silver = TRUE
 
@@ -1376,7 +1055,7 @@
 /obj/item/rogueweapon/sword/short
 	name = "steel shortsword"
 	desc = "The arming sword's shorter and much older brother. Despite being centuries older than the swords of todae, it remains in use as a cheap sidearm for shieldbearers and archers."
-	possible_item_intents = list(/datum/intent/sword/cut/short, /datum/intent/sword/thrust/short, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut/short, /datum/intent/sword/thrust/short)
 	icon_state = "swordshort"
 	sheathe_icon = "swordshort"
 	gripped_intents = null
@@ -1420,7 +1099,6 @@
 	possible_item_intents = list(
 		/datum/intent/sword/cut/short,
 		/datum/intent/sword/thrust/short,
-		/datum/intent/sword/peel,
 		/datum/intent/sword/chop/short,
 		)
 	icon_state = "eastshortsword"
@@ -1558,7 +1236,7 @@
 	icon_state = "smesser"
 	force = 24	//Hunting sword + 4
 	max_blade_int = 250	//Sword + 50
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/rend/krieg/short, /datum/intent/axe/chop, /datum/intent/sword/peel)	//1.8x rend, similar to partizan
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/axe/chop, /datum/intent/sword/strike)
 	minstr = 6	// Hunting sword +2
 	wdefense = 4	//Hunting sword +2
 
@@ -1611,7 +1289,7 @@
 	desc = "A magnificent shortsword of blacksteel. Divorced from the labors that originally warranted its creation, yet no-less-adept at cleaving \
 	whatever might trouble one's morning strolls."
 	force = 27
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/rend/krieg/short, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/axe/chop, /datum/intent/sword/cut/sabre/heavy)
 	smeltresult = /obj/item/ingot/blacksteel
 	icon_state = "bs_messer"
 	sheathe_icon = "bs_messer"
@@ -1623,7 +1301,7 @@
 	desc = "A very popular backsword made for cavalrymen that originated in Naledi and spread its influence further north, reaching Aavnr as a \"Szablya\" and notoriously cementing itself as the preferred weapon of the Potentate's Hussars."
 	icon_state = "saber"
 	sheathe_icon = "saber"
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/sword/strike)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/cut/sabre/heavy, /datum/intent/sword/thrust/sabre, /datum/intent/sword/strike)
 	gripped_intents = null
 	parrysound = list('sound/combat/parry/bladed/bladedthin (1).ogg', 'sound/combat/parry/bladed/bladedthin (2).ogg', 'sound/combat/parry/bladed/bladedthin (3).ogg')
 	swingsound = BLADEWOOSH_SMALL
@@ -1634,11 +1312,22 @@
 /datum/intent/sword/cut/sabre
 	clickcd = 8		//Faster than sword by 4
 	damfactor = 1.25	//Better than rapier (Base is 1.1 for swords)
-	penfactor = 10		//Very slight buff to pen on cut mode. Still weaker then sword-chop mode.
+	penfactor = PEN_NONE		//Very slight buff to pen on cut mode. Still weaker then sword-chop mode.
 
 /datum/intent/sword/thrust/sabre
 	clickcd = 9			//Fast but still not as fast as rapier n' shittier.
 	damfactor = 0.9		//10% worse	than base
+
+/datum/intent/sword/cut/sabre/heavy
+	name = "precise swing"
+	icon_state = "inhack"
+	blade_class = BCLASS_CHOP
+	damfactor = 1.5
+	penfactor = PEN_MEDIUM
+	swingdelay = 1 SECONDS
+	swingdelay_type = SWINGDELAY_CANCEL
+	parriable_intent = FALSE
+	dodgeable_intent = FALSE
 
 /obj/item/rogueweapon/sword/sabre/dec
 	icon_state = "decsaber"
@@ -1684,7 +1373,7 @@
 	attack_verb = list("masterfully cuts", "deftly slits", "quarts")
 	clickcd = 7
 	damfactor = 1.25
-	penfactor = 55
+	penfactor = PEN_MEDIUM
 
 /datum/intent/effect/daze/freisabre
 	name = "uszkodzić"
@@ -1714,6 +1403,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	wbalance = WBALANCE_NORMAL
+	wlength = WLENGTH_LONG
 
 /obj/item/rogueweapon/sword/sabre/freifechter/Initialize(mapload)
 	. = ..(mapload)
@@ -1725,7 +1415,7 @@
 	desc = "A sickle-shaped sword of Naledi origin that owes its design to a type of battle axe its ancient settlers once used - it represents a symbol of power and conquest. This one in particular is made of blued steel."
 	icon_state = "nockhopesh"
 	force = 25	//Base is 22
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/chop/falx, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/chop/falx)
 	max_integrity = 200
 
 /obj/item/rogueweapon/sword/sabre/elf
@@ -1749,7 +1439,7 @@
 	desc = "A once elegant blade of mythril, diminishing under the suns gaze"
 	icon_state = "spidersaber"
 	sheathe_icon = "spidersaber"
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/dagger/sucker_punch)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/dagger/sucker_punch)
 	force = 25 // same as elf sabre
 	force_wielded = 25
 	minstr = 7
@@ -1762,7 +1452,7 @@
 	wdefense = 6 // two more force than sabre so let's consider this a fair tradeoff for the damage buff
 	icon_state = "tabi"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike) // whoever gave this chop as a supposed upside is tripping because it's weaker than sabre cut
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/strike) // whoever gave this chop as a supposed upside is tripping because it's weaker than sabre cut
 	bigboy = TRUE
 	pixel_y = -16
 	pixel_x = -16
@@ -1795,7 +1485,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	dropshrink = 0.75
-	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/thrust/rapier/lunge, /datum/intent/sword/cut/rapier)
 	special = /datum/special_intent/piercing_lunge
 	gripped_intents = null
 	parrysound = list(
@@ -1891,13 +1581,26 @@
 				)
 
 /datum/intent/sword/cut/rapier
-	clickcd = 10
+	clickcd = CLICK_CD_QUICK
 	damfactor = 0.75
 
 /datum/intent/sword/thrust/rapier
 	clickcd = 8
 	damfactor = 1.1
-	penfactor = 30
+	penfactor = PEN_MEDIUM
+
+/datum/intent/sword/thrust/rapier/lunge
+	name = "deep lunge"
+	icon_state = "inlunge"
+	damfactor = 1.3
+	penfactor = PEN_BSTEEL
+
+	swingdelay_type = SWINGDELAY_CANCELSLOW
+	parriable_intent = FALSE
+	dodgeable_intent = FALSE
+
+	swingdelay = 0.8 SECONDS
+	clickcd = 1.5 SECONDS
 
 /obj/item/rogueweapon/sword/rapier/dec
 	no_loot_taint = TRUE
@@ -1916,7 +1619,7 @@
 	icon_state = "blacksteelrapier"
 	sheathe_icon = "blacksteelrapier"
 	max_blade_int = 400
-	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier)
 	wdefense = 9 //Absurdly high defense, but no added integrity; for the discerning duelmaster.
 	var/used = FALSE
 	var/list/selection = list(
@@ -2089,7 +1792,7 @@
 	desc = "The mariner's special: A short, broad sabre with a slightly curved blade optimized for slashing."
 	icon_state = "cutlass"
 	force = 23
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop)
 	gripped_intents = null
 	wdefense = 6
 	wbalance = WBALANCE_SWIFT
@@ -2226,7 +1929,7 @@
 	icon_state = "ram_dao"
 	sheathe_icon = "scabbard_decsword3"
 	force = 25
-	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/axe/bash, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/battle)
 	gripped_intents = null
 	minstr = 11
 	max_blade_int = 300
@@ -2251,7 +1954,7 @@
 	desc = "An ancient sword similar to the falx, with the key difference of its curve being less pronounced - feared for its ability to strike and thrust with precision."
 	force = 25
 	force_wielded = 30
-	possible_item_intents = list(/datum/intent/sword/cut/falx, /datum/intent/sword/strike, /datum/intent/sword/chop/falx, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut/falx, /datum/intent/sword/strike, /datum/intent/sword/chop/falx)
 	gripped_intents = list(/datum/intent/sword/cut/falx, /datum/intent/sword/strike, /datum/intent/sword/chop/falx, /datum/intent/sword/cut/zwei/sweep)
 	icon_state = "rhomphaia"
 	smeltresult = /obj/item/ingot/steel
@@ -2259,6 +1962,8 @@
 
 /obj/item/rogueweapon/sword/long/rhomphaia/getonmobprop(tag)
 	. = ..()
+	if(tag == "altgrip" && .)
+		return .
 	if(tag)
 		switch(tag)
 			if("gen") return list(
@@ -2373,6 +2078,8 @@
 
 /obj/item/rogueweapon/sword/long/oathkeeper/getonmobprop(tag)
 	. = ..()
+	if(tag == "altgrip" && .)
+		return .
 	if(tag)
 		switch(tag)
 			if("gen")
@@ -2386,8 +2093,8 @@
 	icon_state = "seeblade"
 	force = 35
 	force_wielded = 50
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike)
-	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/chop)
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/chop)
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
 	smelt_bar_num = 2
@@ -2509,9 +2216,9 @@
 	It is meant to be wielded with both hands and is a popular weapon amongst Grenzelhoftian mercenaries."
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "kriegmesser"
-	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/rend/krieg, /datum/intent/sword/strike)
-	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/krieg, /datum/intent/rend/krieg, /datum/intent/sword/strike)
-	alt_intents = null // Can't mordhau this
+	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/sword/strike, /datum/intent/rend/krieg)
+	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike, /datum/intent/rend/krieg)
+	alt_grips = null // Can't mordhau this
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/sword/long/kriegmesser/zizo
@@ -2537,7 +2244,7 @@
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "ssangsudo"
 	sheathe_icon = "ssangsudo"
-	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/rend, /datum/intent/sword/strike) // better rend by .05
+	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike, /datum/intent/rend/krieg)
 
 /obj/item/rogueweapon/sword/long/dec
 	no_loot_taint = TRUE
@@ -2675,7 +2382,7 @@
 	animname = "strike"
 	blade_class = null	//We don't use a blade class because it has on damage.
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	swingdelay = 2	//Small delay to hook
 	damfactor = 0.1	//No real damage
 	clickcd = 22	//Can't spam this; long delay.
@@ -2779,7 +2486,7 @@
 	icon = 'icons/roguetown/weapons/special/captain.dmi'
 	force = 25 // same as elvish sabre
 	max_integrity = 200 // more integrity because blacksteel, a bit less than the flamberge
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/sword/strike)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/sword/strike)
 	gripped_intents = null
 	parrysound = list('sound/combat/parry/bladed/bladedthin (1).ogg', 'sound/combat/parry/bladed/bladedthin (2).ogg', 'sound/combat/parry/bladed/bladedthin (3).ogg')
 	swingsound = BLADEWOOSH_SMALL
@@ -2864,6 +2571,8 @@
 
 /obj/item/rogueweapon/sword/long/shotel/getonmobprop(tag)
 	. = ..()
+	if(tag == "altgrip" && .)
+		return .
 	if(tag)
 		switch(tag)
 			if("gen")
@@ -2887,6 +2596,8 @@
 
 /obj/item/rogueweapon/sword/long/shotel/iron/getonmobprop(tag)
 	. = ..()
+	if(tag == "altgrip" && .)
+		return .
 	if(tag)
 		switch(tag)
 			if("gen")
@@ -2925,7 +2636,7 @@
 	max_integrity = 200//50 more than the standard rhomphaia
 	possible_item_intents = list(/datum/intent/sword/cut/falx, /datum/intent/sword/thrust/hook, /datum/intent/sword/chop/falx, /datum/intent/sword/disarm)
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/militia, /datum/intent/pick/bad, /datum/intent/sword/disarm/range)//longer range, two hands on sword makes for better chop, if slower. Shitty pick using our weird spikes
-	alt_intents = null 
+	alt_grips = null 
 	wdefense_wbonus = 4
 	bigboy = TRUE
 	special = /datum/special_intent/shin_swipe
@@ -2938,7 +2649,7 @@
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "drowshotel"
 	sheathe_icon = "drowshotel"
-	alt_intents = null 
+	alt_grips = null 
 	possible_item_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/long, /datum/intent/dagger/sucker_punch)
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop/long, /datum/intent/dagger/sucker_punch)
 	force = 27
@@ -2966,7 +2677,7 @@
 	icon_state = "spiderfalx"
 	sheathe_icon = "spidersaber"
 	wbalance = WBALANCE_SWIFT
-	possible_item_intents = list(/datum/intent/sword/cut/falx,  /datum/intent/sword/chop/falx, /datum/intent/dagger/sucker_punch, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut/falx,  /datum/intent/sword/chop/falx, /datum/intent/dagger/sucker_punch)
 	force = 25 // same as elf sabre
 	wdefense = 5//-1, use it with a shield
 
@@ -2980,9 +2691,9 @@
 	force = 25
 	force_wielded = 30
 	max_integrity = 200
-	possible_item_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/dagger/sucker_punch)// better to use your fist than dent that pretty pommel
+	possible_item_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/sword/thrust/sabre, /datum/intent/dagger/sucker_punch)// better to use your fist than dent that pretty pommel
 	gripped_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/pick/bad, /datum/intent/sword/chop/sabre, /datum/intent/dagger/sucker_punch)//shitty pick using our spiked bit.
-	alt_intents = null // nope!
+	alt_grips = null // nope!
 	bigboy = TRUE
 
 /obj/item/rogueweapon/sword/long/kriegmesser/stalker
@@ -2995,7 +2706,7 @@
 	sheathe_icon = "drowmesser"
 	possible_item_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/falx, /datum/intent/rend/krieg, /datum/intent/dagger/sucker_punch)
 	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/chop/militia, /datum/intent/rend/krieg, /datum/intent/dagger/sucker_punch)
-	alt_intents = null // Can't mordhau this
+	alt_grips = null // Can't mordhau this
 	max_integrity = 175// less integ than the real deal, not near as much as the kazen messers
 	bigboy = TRUE
 	special = /datum/special_intent/axe_swing
@@ -3011,8 +2722,8 @@
 	force = 25
 	force_wielded = 27
 	possible_item_intents = list(/datum/intent/sword/thrust/arming, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
-	gripped_intents = list(/datum/intent/sword/thrust/estoc, /datum/intent/sword/lunge/estoc, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
-	alt_intents = null // you wouldn't dare dent that gilded crossguard with a mordhau, would you?
+	gripped_intents = list(/datum/intent/sword/thrust/estoc, /datum/intent/sword/thrust/estoc/lunge, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
+	alt_grips = null // you wouldn't dare dent that gilded crossguard with a mordhau, would you?
 	bigboy = TRUE
 	special = /datum/special_intent/piercing_lunge
 
@@ -3038,3 +2749,4 @@
 
 #undef LONGSWORD_STOCK_INTENTS
 #undef LONGSWORD_STOCK_GRIPPED_INTENTS
+#undef LONGSWORD_STOCK_ALT_GRIPS

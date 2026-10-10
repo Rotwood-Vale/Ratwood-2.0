@@ -32,7 +32,6 @@
 	icon_state = "bracers"
 	item_state = "bracers"
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
 	resistance_flags = FIRE_PROOF
 	max_integrity = ARMOR_INT_SIDE_STEEL
@@ -42,11 +41,18 @@
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/steel
 
+/obj/item/clothing/wrists/roguetown/bracers/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_notice("Allows unarmed parrying. Takes integrity damage when parrying.")
+	. += span_notice("Unarmed attacks are swift-balanced: faster attackers are harder to parry and dodge.")
+
 /obj/item/clothing/wrists/roguetown/bracers/ancient
 	name = "ancient bracers"
 	desc = "Polished gilbranze cuffings, clasped around the wrists. Through ascension, the chains of mortality are broken; and only through death will the spirit be ready to embrace divinity."
 	icon_state = "ancientbracers"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/wrists/roguetown/bracers/ancient/decrepit
 	name = "decrepit bracers"
@@ -96,7 +102,6 @@
 	icon_state = "psybarbs"
 	item_state = "psybarbs"
 	armor = ARMOR_PLATE_BSTEEL
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
 	max_integrity = ARMOR_INT_SIDE_BLACKSTEEL
 	alternate_worn_layer = WRISTS_LAYER
 
@@ -129,7 +134,6 @@
 	item_state = "lbracers"
 	max_integrity = ARMOR_INT_SIDE_LEATHER
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	equip_sound = 'sound/foley/equip/rummaging-01.ogg'
@@ -154,8 +158,7 @@
 	name = "hardened leather bracers"
 	desc = "Hardened leather braces that will keep your wrists safe from bludgeoning."
 	icon_state = "albracers"
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_CHOP, BCLASS_SMASH)
+	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 	sellprice = 10
 	salvage_amount = 1
@@ -200,12 +203,11 @@
 	name = "cloth bracers"
 	desc = "This shouldn't be used in code."
 	smeltresult = null
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	blade_dulling = DULLING_BASHCHOP
 	icon_state = "nocwrappings"
 	item_state = "nocwrappings"
 	max_integrity = ARMOR_INT_SIDE_STEEL //Heavy leather-tier protection and critical resistances, steel-tier integrity. Integrity boost encourages hand-to-hand parrying. Weaker than the Psydonic Thorns. Uncraftable.
-	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = SOFTHIT
 	anvilrepair = null
 	sewrepair = TRUE
@@ -274,7 +276,6 @@
 	icon_state = "splintarms"
 	item_state = "splintarms"
 	armor = ARMOR_BRIGANDINE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_STEEL
 	anvilrepair = /datum/skill/craft/armorsmithing
@@ -293,8 +294,9 @@
 	icon_state = "zizobracers"
 	item_state = "zizobracers"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	peel_threshold = 5
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/wrists/roguetown/bracers/zizo/Initialize(mapload)
 	. = ..()
@@ -306,7 +308,7 @@
 	body_parts_covered = ARMS
 	icon_state = "ironsplintarms"
 	item_state = "ironsplintarms"
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_BRIGANDINE
 	max_integrity = ARMOR_INT_SIDE_IRON
 	smeltresult = /obj/item/ingot/iron
 
