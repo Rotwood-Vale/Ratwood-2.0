@@ -1,6 +1,6 @@
 // Tugging the cage outward. At extreme force with a spiked device this can trigger a catastrophic avulsion injury.
 // _try_spiked_catastrophe() is defined on the parent /datum/sex_action/chastityplay in cage_twist.dm;
-// it handles anatomy branching (intersex / cock-only / vagina-only) and device stripping in one place
+// it applies the genital loss wound and releases the device in one place
 // so both cage_pull and cage_twist share identical consequences for the worst-case scenario.
 /datum/sex_action/chastityplay/cage_pull
 	name = "Tug on their cage"
