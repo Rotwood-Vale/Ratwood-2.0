@@ -126,14 +126,14 @@
 		else if(HAS_TRAIT(user, TRAIT_LEGENDARY_ALCHEMIST) || alch_skill >= SKILL_LEVEL_EXPERT)
 			var/list/rune_strings = list()
 			if(runes[ALCH_RUNE_RED])
-				rune_strings += "<span style='color: #ff4d4d; font-weight: bold;'>[runes[ALCH_RUNE_RED]] Red</span>"
+				rune_strings += "[get_rune_chat_icon(ALCH_RUNE_RED)]<span style='color: #ff4d4d; font-weight: bold;'>[runes[ALCH_RUNE_RED]]</span>"
 			if(runes[ALCH_RUNE_GREEN])
-				rune_strings += "<span style='color: #5cd65c; font-weight: bold;'>[runes[ALCH_RUNE_GREEN]] Green</span>"
+				rune_strings += "[get_rune_chat_icon(ALCH_RUNE_GREEN)]<span style='color: #5cd65c; font-weight: bold;'>[runes[ALCH_RUNE_GREEN]]</span>"
 			if(runes[ALCH_RUNE_BLUE])
-				rune_strings += "<span style='color: #4da6ff; font-weight: bold;'>[runes[ALCH_RUNE_BLUE]] Blue</span>"
+				rune_strings += "[get_rune_chat_icon(ALCH_RUNE_BLUE)]<span style='color: #4da6ff; font-weight: bold;'>[runes[ALCH_RUNE_BLUE]]</span>"
 
 			if(rune_strings.len)
-				. += span_notice("Alchemical Composition: [english_list(rune_strings)].")
+				. += span_notice("Alchemical Composition: [rune_strings.Join("   ")].")
 
 		else if(alch_skill >= SKILL_LEVEL_JOURNEYMAN)
 			var/list/present_colors = list()
@@ -149,11 +149,11 @@
 
 			if(present_colors.len == 1)
 				if(dominant_color == ALCH_RUNE_RED)
-					. += span_notice("It faintly pulses with pure vital warmth (Red essence).")
+					. += span_notice("It faintly pulses with pure vital warmth ([get_rune_chat_icon(ALCH_RUNE_RED)]).")
 				else if(dominant_color == ALCH_RUNE_GREEN)
-					. += span_notice("It smells purely of rich natural juices (Green essence).")
+					. += span_notice("It smells purely of rich natural juices ([get_rune_chat_icon(ALCH_RUNE_GREEN)]).")
 				else if(dominant_color == ALCH_RUNE_BLUE)
-					. += span_notice("It carries an unmistakable arcane resonance (Blue essence).")
+					. += span_notice("It carries an unmistakable arcane resonance ([get_rune_chat_icon(ALCH_RUNE_BLUE)]).")
 
 			else if(present_colors.len > 1)
 				var/tied_count = 0

@@ -422,7 +422,7 @@
 /proc/is_alchemical_ingredient(obj/item/I)
 	if(!istype(I))
 		return FALSE
-	if(istype(I, /obj/item/alch))
+	if(I.runes && I.runes.len)
 		return TRUE
 	if(istype(I, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/food/snacks/S = I

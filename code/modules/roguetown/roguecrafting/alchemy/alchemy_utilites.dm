@@ -111,6 +111,7 @@ GLOBAL_LIST_EMPTY(alch_round_runes)
 		"alchemy_colb.png"     = 'icons/tgui/colb.png',
 		"alchemy_couldron.png" = 'icons/tgui/couldron.png',
 		"alchemy_slot.png"     = 'icons/tgui/slot.png',
+		"alchemy_slot2.png"    = 'icons/tgui/slot2.png',
 		"alchemy_layer.png"    = 'icons/tgui/layer.png'
 	)
 
@@ -295,3 +296,23 @@ GLOBAL_VAR_INIT(alch_generated_blue, 0)
 		return
 
 	runes = base_runes.Copy()
+
+/proc/get_rune_chat_icon(color)
+	var/static/list/cached_icons = list()
+	if(cached_icons[color])
+		return cached_icons[color]
+
+	var/icon/I
+	switch(color)
+		if(ALCH_RUNE_RED)
+			I = icon('icons/tgui/red.png')
+		if(ALCH_RUNE_GREEN)
+			I = icon('icons/tgui/green.png')
+		if(ALCH_RUNE_BLUE)
+			I = icon('icons/tgui/blue.png')
+
+	if(I)
+		var/b64 = "data:image/png;base64,[icon2base64(I)]"
+		cached_icons[color] = "<img src='[b64]' style='width:36px;height:36px;vertical-align:middle;image-rendering:pixelated;margin-right:4px;margin-bottom:2px;filter:drop-shadow(0 2px 3px rgba(0,0,0,0.8));'>"
+		return cached_icons[color]
+	return ""
