@@ -322,7 +322,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 			if(M.mob_biotypes & MOB_UNDEAD)
 				M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
 			if(HAS_TRAIT(M, TRAIT_SILVER_WEAK))
-				M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder)
+				M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 				M.ignite_mob()
 				visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
 				M.apply_damage(50, BRUTE, spread_damage = TRUE)
@@ -339,7 +339,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		if(M.mob_biotypes & MOB_UNDEAD)
 			M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
 		if(HAS_TRAIT(M, TRAIT_SILVER_WEAK)) // I plaed psydonate miraclist VL. The silveweakness has to override all else
-			M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder)
+			M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 			M.ignite_mob()
 			visible_message(span_warning("[M] erupts in divine flames originating from [src]!"))
 			M.apply_damage(50, BRUTE, spread_damage = TRUE)
