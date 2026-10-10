@@ -1930,11 +1930,30 @@
 			for(var/mob/living/carbon/human/persononrune in onrune)
 				if(HAS_TRAIT(persononrune, TRAIT_DEPRAVED))
 					folksonrune += persononrune
-			var/target = input(user, "Choose a host") as null|anything in folksonrune
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in folksonrune
 			if(!target)
+				return
+			if(HAS_TRAIT(target, TRAIT_NUDIST))
+				to_chat(user, "The target is a nudist and cannot wear armor!")
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
+			var/list/armor_options = list(
+				"Baothan Cuirass" = image(icon = 'icons/roguetown/clothing/special/baotha.dmi', icon_state = "baothachest"),
+				"Saccharine Plate Armor" = image(icon = 'icons/roguetown/clothing/armor.dmi', icon_state = "baothaplate"),
+			)
+			var/armor_choice = show_radial_menu(user, src, armor_options, require_near = TRUE, tooltips = TRUE)
+			if(!armor_choice)
+				return
+
+			var/list/weapon_options = list(
+				"Perfect Agony" = image(icon = 'icons/roguetown/weapons/whips32.dmi', icon_state = "baotha_whip"),
+				"Saccharine Swordspear" = image(icon = 'icons/roguetown/weapons/polearms64.dmi', icon_state = "swordstaff"),
+			)
+			var/weapon_choice = show_radial_menu(user, src, weapon_options, require_near = TRUE, tooltips = TRUE)
+			if(!weapon_choice)
+				weapon_choice = "Perfect Agony"
+
 			user.say("Lady, my Lady...")
 			if(!do_after(user, 5 SECONDS))
 				return
@@ -1944,10 +1963,10 @@
 			user.say("Let all those who look upon me see thy beauty and despair!!")
 			if(!do_after(user, 5 SECONDS))
 				return
-			icon_state = "baotha_active"
+			icon_state = "baotha_chalky"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-			baothaarmor(target)
-			addtimer(VARSET_CALLBACK(src, icon_state, "baotha_active"), 120)
+			baothaarmor(target, armor_choice, weapon_choice)
+			addtimer(VARSET_CALLBACK(src, icon_state, "pestra_chalky"), 120)
 
 /obj/structure/ritualcircle/baotha/proc/baothaconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -2002,10 +2021,30 @@
 		target.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
 		loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as they dare to defy Baotha."))
 
-/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target)
+/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target, armor_choice, weapon_choice)
 	if(!HAS_TRAIT(target, TRAIT_DEPRAVED))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE NOT OF HER LOVE"))
 		return
+	if(!armor_choice)
+		armor_choice = "Baothan Cuirass"
+	switch(armor_choice)
+		if("Baothan Cuirass")
+			target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)	
+		if("Saccharine Plate Armor")
+			target.equipOutfit(/datum/outfit/job/roguetown/baothalightarmor)
+	if(!weapon_choice)
+		weapon_choice = "Perfect Agony"
+	switch(weapon_choice)
+		if("Perfect Agony")
+			target.put_in_hands(new /obj/item/rogueweapon/whip/baotha(target), TRUE)
+			if(HAS_TRAIT(target, TRAIT_RITUALIST))
+				target.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT)
+				target.adjust_skillrank_down_to(/datum/skill/combat/polearms, SKILL_LEVEL_APPRENTICE)
+		if("Saccharine Swordspear")
+			target.put_in_hands(new /obj/item/rogueweapon/spear/partizan/baotha(target), TRUE)
+			if(HAS_TRAIT(target, TRAIT_RITUALIST))
+				target.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT)
+				target.adjust_skillrank_down_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_APPRENTICE)
 	target.Stun(60)
 	target.Knockdown(60)
 	to_chat(target, span_userdanger("DELECTABLE PAIN!"))
@@ -2016,7 +2055,14 @@
 		target.Paralyze(120)
 	else
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
-	addtimer(CALLBACK(src, PROC_REF(baothaarmor_stage2), target), 20)
+	spawn(20)
+		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+		spawn(40)
+			to_chat(target, span_purple("All will love you and despair."))
+
 //TIME FOR THE ONE. Exclusive to ABSOLVERS. Allowing conversion, deconversion and removal of rite armour.
 //'Lesser' expenditure allows us to have a stopgap to this, while not entirely making poultice farming useless.
 
