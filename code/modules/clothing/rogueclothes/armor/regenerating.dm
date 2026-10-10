@@ -265,5 +265,24 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
 	repair_time = 30 SECONDS//better armor, longer repair
 
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/ruma
+	name = "bouhoi bujeog tattoos"
+	desc = "A mystic style of tattoos adopted by the Ruma Clan, emulating a practice performed by warrior monks of the Xinyi Dynasty. They are your way of identifying fellow clan members, an sign of companionship and secretive brotherhood. These are styled into the shape of clouds, created by a mystical ink which shifts and moves in ripples like a pond to harden where your skin is struck. It's movement causes you to shudder."
+	resistance_flags = FIRE_PROOF
+	icon_state = "easttats"
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	armor = ARMOR_SPELLSINGER
+	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
+	body_parts_covered = COVERAGE_FULL
+	body_parts_inherent = COVERAGE_FULL
+	icon = 'icons/roguetown/clothing/shirts.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
+	r_sleeve_status = SLEEVE_NORMAL
+	l_sleeve_status = SLEEVE_NORMAL
+	allowed_race = NON_DWARVEN_RACE_TYPES
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	repair_time = 30 SECONDS
+
 #undef COMBAT_TAG_DURATION
 
