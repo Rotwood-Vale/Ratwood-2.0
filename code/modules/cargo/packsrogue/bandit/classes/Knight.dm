@@ -18,6 +18,26 @@
 	cost = 10
 	contains = list(/obj/item/clothing/mask/rogue/facemask/steel)
 
+/datum/supply_pack/rogue/Knight/barbute
+	name = "Barbute"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy)
+
+/datum/supply_pack/rogue/Knight/Bbarbute
+	name = "Bronze Barbute"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bronze)
+
+/datum/supply_pack/rogue/Knight/illyria
+	name = "Bronze Illyriahelm"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bronze)
+
+/datum/supply_pack/rogue/Knight/murmillo
+	name = "Bronze Murmillo"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bronzegladiator)
+
 /datum/supply_pack/rogue/Knight/wolfhelm
 	name = "Volf Plate Helm"
 	cost = 30
@@ -32,6 +52,16 @@
 	name = "Hounskull Bascinet"
 	cost = 40
 	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull)
+
+/datum/supply_pack/rogue/Knight/roundface
+	name = "Roundface Bascinet"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface)
+
+/datum/supply_pack/rogue/Knight/roundface
+	name = "Roundface Bascinet, Snouted"
+	cost = 40
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted)
 
 /datum/supply_pack/rogue/Knight/knighthelm
 	name = "Knight's Helmet"
@@ -77,6 +107,21 @@
 // NECK //
 //////////
 
+/datum/supply_pack/rogue/Knight/coif/bronze
+	name = "Bronze Coif"
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/chaincoif/bronze)
+
+/datum/supply_pack/rogue/Knight/gorgette
+	name = "Bronze Gorgette"
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/bevor/bronze)
+
+/datum/supply_pack/rogue/Knight/bgorget
+	name = "Bronze Neckguard"
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/gorget/bronze)
+
 /datum/supply_pack/rogue/Knight/coif/steel
 	name = "Steel Coif"
 	cost = 20
@@ -111,6 +156,16 @@
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail)
 
+/datum/supply_pack/rogue/Knight/chaincorslet
+	name = "Chain Corslet"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bikini)
+
+/datum/supply_pack/rogue/Knight/bhauberk
+	name = "Bronze Hauberk"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/bronze)
+
 /datum/supply_pack/rogue/Knight/hauberk
 	name = "Hauberk"
 	cost = 40
@@ -121,10 +176,35 @@
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy)
 
+/datum/supply_pack/rogue/Knight/brigandine
+	name = "Brigandine"
+	cost = 50
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine)
+
+/datum/supply_pack/rogue/Knight/bcuirass
+	name = "Bronze Cuirass"
+	cost = 25
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/bronze)
+
+/datum/supply_pack/rogue/Knight/panoply
+	name = "Bronze Panoply"
+	cost = 50
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/bronze)
+
 /datum/supply_pack/rogue/Knight/Fullplate
 	name = "Steel Full plate"
 	cost = 60
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full)
+
+/datum/supply_pack/rogue/Knight/fullcorslet
+	name = "Full Plate Corslet"
+	cost = 55
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/bikini)
+
+/datum/supply_pack/rogue/Knight/Fullplate
+	name = "Coat of Plates"
+	cost = 60
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/coatplates)
 
 /datum/supply_pack/rogue/Knight/Fullplate
 	name = "Fluted Full plate"
@@ -144,6 +224,11 @@
 ///////////////////
 // WRISTS/GLOVES //
 ///////////////////
+
+/datum/supply_pack/rogue/Knight/bracers/bronze
+	name = "Bronze Wristguards"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/bronze)
 
 /datum/supply_pack/rogue/Knight/bracers
 	name = "Steel Bracers"
@@ -174,6 +259,16 @@
 	cost = 5
 	contains = list(/obj/item/storage/belt/rogue/leather/steel)
 
+/datum/supply_pack/rogue/Knight/chainkilt
+	name = "Steel Chain Kilt"
+	cost = 30
+	contains = list(/obj/item/clothing/under/roguetown/chainlegs/kilt)
+
+/datum/supply_pack/rogue/Knight/chainkilt/bronze
+	name = "Bronze Chain Kilt"
+	cost = 15
+	contains = list(/obj/item/clothing/under/roguetown/chainlegs/kilt/bronze)
+
 /datum/supply_pack/rogue/Knight/platechausses
 	name = "Plate Chausses"
 	cost = 40
@@ -194,6 +289,11 @@
 	cost = 10
 	contains = list(/obj/item/clothing/shoes/roguetown/boots/armor)
 
+/datum/supply_pack/rogue/Knight/Bgreaves
+	name = "Bronze Greaves"
+	cost = 10
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/armor/bronze)
+
 /datum/supply_pack/rogue/Knight/mblkplateboots
 	name = "Blacksteel Plated boots"
 	cost = 500
@@ -213,10 +313,25 @@
 	cost = 20
 	contains = list(/obj/item/rogueweapon/sword/long/death)
 
+/datum/supply_pack/rogue/Knight/lsword
+	name = "Broadsword"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/long/broadsword/steel)
+
+/datum/supply_pack/rogue/Knight/exesword
+	name = "Executioner's Sword"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/sword/long/exe)
+
 /datum/supply_pack/rogue/Knight/krieg
 	name = "Kriegmesser"
 	cost = 20
 	contains = list(/obj/item/rogueweapon/sword/long/kriegmesser)
+
+/datum/supply_pack/rogue/Knight/greatkhopesh
+	name = "Great Khopesh"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/long/greatkhopesh)
 
 /datum/supply_pack/rogue/Knight/Zweihandersword
 	name = "Zweihander"
@@ -293,6 +408,11 @@
 	cost = 20
 	contains = list(/obj/item/rogueweapon/mace/warhammer/steel)
 
+/datum/supply_pack/rogue/Knight/greatflail/steel
+	name = "Steel Greatflail"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/flail/peasantwarflail/steel)
+
 /datum/supply_pack/rogue/Knight/silvermace
 	name = "Silver Mace"
 	cost = 60
@@ -326,6 +446,11 @@
 	name = "Kite Shield"
 	cost = 20
 	contains = list(/obj/item/rogueweapon/shield/tower/metal)
+
+/datum/supply_pack/rogue/Knight/kiteshield
+	name = "Hoplon Greatshield"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/shield/bronze/great)
 
 /////////////
 // UTILITY //
