@@ -73,7 +73,6 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	return "<img src='[link]' width='100px' height='100px'><br>"
 
 /datum/preferences/proc/get_character_page(mob/user)
-	validate_background()
 	var/html = {"<style>
 		body { font-size: 15px; }
 		table { table-layout: fixed; }

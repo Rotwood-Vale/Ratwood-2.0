@@ -1112,6 +1112,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			new_wing_entry.accessory_type = old_accessory_type
 
 	validate_customizer_entries()
+	validate_background()
 
 	return TRUE
 

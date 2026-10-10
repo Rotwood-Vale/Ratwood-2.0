@@ -478,7 +478,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	reset_all_customizer_accessory_colors()
 	randomize_all_customizer_accessories()
 	reset_descriptors()
-
+	validate_background()
 
 #define APPEARANCE_CATEGORY_COLUMN "<td valign='top' width='14%'>"
 #define MAX_MUTANT_ROWS 4
@@ -1246,6 +1246,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		var/chosen_type = text2path(href_list["type"])
 		if(chosen_type && (chosen_type in GLOB.origins))
 			origin = GLOB.origins[chosen_type]
+			validate_background()
 			save_character()
 			user << browse(null, "window=origin_map")
 			ShowChoices(user)
@@ -1334,6 +1335,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			open_categories += href_list["name"]
 	else if(href_list["preference"] == "background")
 		process_background_link(user, href_list)
+		validate_background()
 	else if(href_list["preference"] == "loadout")
 		if(href_list["task"] == "menu")
 			open_loadout_slots(user)
@@ -1371,6 +1373,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		var/chosen_type = text2path(href_list["type"])
 		if(chosen_type && (chosen_type in GLOB.origins))
 			origin = GLOB.origins[chosen_type]
+			validate_background()
 			save_character()
 			user << browse(null, "window=origin_map")
 			ShowChoices(user)
