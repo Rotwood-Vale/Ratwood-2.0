@@ -1086,7 +1086,7 @@
 
 /obj/projectile/bullet/reusable/heavy_bolt/holy
 	name = "stake bolt"
-	damage = 50
+	damage = 70
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
 	hitsound = 'sound/combat/hits/hi_bolt (3).ogg'
 	speed = 0.5
@@ -1097,28 +1097,83 @@
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest
 	name = "tempest bolt"
 	desc = "The warding around this feels <b>heavy</b>. A payload of some sort in the nose. \
-	What exactly is this meant for?"
-	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/tempest
+	What exactly is this meant for? \
+	Need some time to recharge after each shot."
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/tempest_discharged
 	icon_state = "tempest_bolt"//Temp sprite.
 	max_integrity = 30
 	force = 12
 	is_silver = TRUE//This is ALSO warded. Just as with the silver bolt.
 
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest/Initialize()
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(recharge)), 3 MINUTES)  // 3 minute coldown on shoting it, othherwise you get just a worse bolt
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest/examine(mob/user)
+	. = ..()
+	if(projectile_type == /obj/projectile/bullet/reusable/heavy_bolt/tempest)
+		to_chat(user, "<span class='notice'>The [src] hums with power, ready to be fired.</span>")
+	else
+		to_chat(user, "<span class='notice'>The [src] is still recharging.</span>")
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest/proc/recharge()
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/tempest
+	BB = null
+	newshot()
+	visible_message("<span class='notice'>The [src] hums with power, ready to be fired.</span>")
+
 //The super evil murderfuck bolt.
 /obj/projectile/bullet/reusable/heavy_bolt/tempest
 	name = "tempest bolt"
-	damage = 25
+	damage = 50
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest
 	hitsound = 'sound/combat/hits/hi_bolt (1).ogg'
 	speed = 0.5
 	npc_simple_damage_mult = 7
 
-/obj/projectile/bullet/reusable/heavy_bolt/tempest/on_hit(target)
+/obj/projectile/bullet/reusable/heavy_bolt/tempest/on_hit(target) // very powerfull, but its 1 per arbalist and unobtanium
 	. = ..()
-	if(ismob(target))
-		var/mob/living/M = target
-		M.apply_status_effect(/datum/status_effect/debuff/exposed)
-		M.blind_eyes(6)
+	var/const/damage = 60
+	var/const/radius = 3
+	var/turf/fallzone = get_turf(target)
+	if(!fallzone) // falback in case we hit somone without a turf (Harpy flying?)
+		if(ismob(target))
+			var/mob/living/carbon/human/M = target
+			M.adjustFireLoss(damage)
+			M.apply_status_effect(/datum/status_effect/buff/lightningstruck, 6 SECONDS)
+			M.apply_status_effect(/datum/status_effect/debuff/clickcd, 6 SECONDS)
+			M.Knockdown(2 SECONDS)
+			M.do_jitter_animation(30)
+		return
+
+	for(var/mob/living/carbon/human/M in range(radius, fallzone))
+		if(HAS_TRAIT(M, TRAIT_SILVER_WEAK)) // I plaed psydonate miraclist VL. The silveweakness has to override all else
+			M.adjustFireLoss(damage)
+			M.apply_status_effect(/datum/status_effect/buff/lightningstruck, 6 SECONDS)
+			M.apply_status_effect(/datum/status_effect/debuff/clickcd, 6 SECONDS)
+			M.Knockdown(2 SECONDS)
+			M.do_jitter_animation(30)
+			var/datum/beam/current_beam
+			current_beam = new(fallzone, M, time = 1 SECONDS, beam_icon_state = "lightning[ rand(1,12) ]", btype = /obj/effect/ebeam, maxdistance = 10)
+			INVOKE_ASYNC(current_beam, TYPE_PROC_REF(/datum/beam, Start))
+		else
+			if(!HAS_TRAIT(M, TRAIT_PSYDONITE)) // only for practicing psydonites, all of inqusition qualifies. I dont want arbalist linched
+				M.adjustFireLoss(damage)
+				M.apply_status_effect(/datum/status_effect/buff/lightningstruck, 6 SECONDS)
+				M.apply_status_effect(/datum/status_effect/debuff/clickcd, 6 SECONDS)
+				M.Knockdown(2 SECONDS)
+				M.do_jitter_animation(30)
+				var/datum/beam/current_beam
+				current_beam = new(fallzone, M, time = 1 SECONDS, beam_icon_state = "lightning[ rand(1,12) ]", btype = /obj/effect/ebeam, maxdistance = 10)
+				INVOKE_ASYNC(current_beam, TYPE_PROC_REF(/datum/beam, Start))
+
+/obj/projectile/bullet/reusable/heavy_bolt/tempest_discharged // ups you havent waited long enought
+	name = "tempest bolt"
+	damage = 30 // no energy in it
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest
+	hitsound = 'sound/combat/hits/hi_bolt (1).ogg'
+	speed = 0.5
+	npc_simple_damage_mult = 2
 
 #undef ARROW_DAMAGE
 #undef BOLT_DAMAGE
