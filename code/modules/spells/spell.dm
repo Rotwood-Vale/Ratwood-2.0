@@ -194,6 +194,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/spell_tier = 1 // Tier of the spell, used to determine whether you can learn it based on your spell. Starts at 1.
 	var/refundable = FALSE // If true, the spell can be refunded. This is modified at the point it is added to the user's mind by learnspell.
 	var/zizo_spell = FALSE // If this spell is fucked up & evil and can only be learned by heretics.
+	var/antimagic_flags = MAGIC_RESISTANCE_HOLY 
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'
