@@ -366,7 +366,7 @@
 	name = "Succubus (Tailmaw)"
 
 /datum/sprite_accessory/tail/tiefling/spadeheart/tailmaw
-	name = "Succubus (Alt Tailmaw)"
+	name = "Succubus (Alt) (Tailmaw)"
 	icon = 'icons/mob/sprite_accessory/tails/tiefling.dmi'
 	icon_state = "spadeheart"
 
