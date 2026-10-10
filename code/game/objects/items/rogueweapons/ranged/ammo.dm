@@ -1112,15 +1112,15 @@
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest/examine(mob/user)
 	. = ..()
 	if(projectile_type == /obj/projectile/bullet/reusable/heavy_bolt/tempest)
-		to_chat(user, "<span class='notice'>The [src] hums with power, ready to be fired.</span>")
+		. += span_info("The [src] seems to be charged and ready to be fired.")
 	else
-		to_chat(user, "<span class='notice'>The [src] is still recharging.</span>")
+		. += span_info("The [src] is still recharging.")
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest/proc/recharge()
 	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/tempest
 	BB = null
 	newshot()
-	visible_message("<span class='notice'>The [src] hums with power, ready to be fired.</span>")
+	visible_message("<span class='notice'>The [src] hums with power, finishing its recharge.</span>")
 
 //The super evil murderfuck bolt.
 /obj/projectile/bullet/reusable/heavy_bolt/tempest
