@@ -45,7 +45,7 @@
 	if(.)
 		if(new_owner.assigned_role in GLOB.noble_positions)
 			return FALSE
-		if(new_owner.assigned_role in GLOB.garrison_positions)
+		if(new_owner.assigned_role in GLOB.all_garrison_positions)
 			return FALSE
 		if(new_owner.unconvertable)
 			return FALSE
@@ -106,7 +106,7 @@
 		return FALSE
 	if(candidate.mind.assigned_role in GLOB.noble_positions)
 		return FALSE
-	if(candidate.mind.assigned_role in GLOB.garrison_positions)
+	if(candidate.mind.assigned_role in GLOB.all_garrison_positions)
 		return FALSE
 	var/mob/living/carbon/C = candidate //Check to see if the potential rev is implanted
 	if(!istype(C)) //Can't convert simple animals

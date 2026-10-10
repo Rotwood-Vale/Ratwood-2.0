@@ -13,7 +13,7 @@
 		for(var/X in GLOB.church_positions)
 			peopleiknow += X
 			peopleknowme += X
-		for(var/X in GLOB.garrison_positions)
+		for(var/X in GLOB.all_garrison_positions)
 			peopleiknow += X
 			peopleknowme += X
 		for(var/X in GLOB.noble_positions)

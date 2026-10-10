@@ -186,7 +186,7 @@
 					. += span_userdanger("DEFAULT DEBTOR OF THE BATHHOUSE!")
 					saw_specific = TRUE
 				if(!saw_specific && HAS_TRAIT(src, TRAIT_DEBTOR_CROWN))
-					if((debt_viewer.job in GLOB.garrison_positions) || (debt_viewer.job in GLOB.courtier_positions) || (debt_viewer.job in GLOB.noble_positions))
+					if((debt_viewer.job in GLOB.all_garrison_positions) || (debt_viewer.job in GLOB.courtier_positions) || (debt_viewer.job in GLOB.noble_positions))
 						. += span_userdanger("DEFAULT DEBTOR OF THE CROWN!")
 
 		if(HAS_TRAIT(src, TRAIT_ARREARS))
@@ -194,7 +194,7 @@
 			// only as a hint - the amount owed lives with the Steward's ledger.
 			if(ishuman(user))
 				var/mob/living/carbon/human/arrears_viewer = user
-				if((arrears_viewer.job in GLOB.garrison_positions) || (arrears_viewer.job in GLOB.courtier_positions) || (arrears_viewer.job in GLOB.noble_positions))
+				if((arrears_viewer.job in GLOB.all_garrison_positions) || (arrears_viewer.job in GLOB.courtier_positions) || (arrears_viewer.job in GLOB.noble_positions))
 					. += span_smallred("Destitute..")
 
 	if(wear_shirt && !(SLOT_SHIRT in obscured))
@@ -1137,6 +1137,9 @@
 */
 		if(name in GLOB.outlawed_players)
 			. += span_userdanger("OUTLAW!")
+
+		if(HAS_TRAIT(src, TRAIT_BARONY_OUTLAW) && HAS_TRAIT(user, TRAIT_BARONY_WATCH))
+			. += span_userdanger("OUTLAW OF THE BARONY!")
 
 		if(HAS_TRAIT(user, TRAIT_JUSTICARSIGHT) && !HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 			for(var/datum/bounty/b in GLOB.head_bounties) //I hate this.

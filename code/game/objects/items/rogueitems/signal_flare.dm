@@ -43,7 +43,7 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 	if(!user)
 		return lines
 	var/list/codebook = get_signal_flare_codebook()
-	var/static/list/can_interpret = GLOB.garrison_positions + GLOB.noble_positions
+	var/static/list/can_interpret = GLOB.all_garrison_positions + GLOB.noble_positions
 	var/static/list/townsfolk = GLOB.youngfolk_positions + GLOB.peasant_positions + GLOB.yeoman_positions + GLOB.church_positions + GLOB.courtier_positions
 	if(user.job in can_interpret)
 		lines += span_notice("You recognize the signal codes etched in cryptic shorthand markings:")
@@ -282,7 +282,7 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 
 /obj/item/signal_flare_gun/proc/build_flare_choices(mob/living/user)
 	var/list/codebook = get_signal_flare_codebook()
-	var/static/list/can_interpret = GLOB.garrison_positions + GLOB.noble_positions
+	var/static/list/can_interpret = GLOB.all_garrison_positions + GLOB.noble_positions
 	var/user_can_interpret = (user.job in can_interpret)
 	var/list/choices = list()
 
@@ -308,7 +308,7 @@ GLOBAL_LIST_EMPTY(signal_flare_codebook)
 
 /obj/item/signal_flare_gun/proc/do_fire_flare(mob/living/user)
 	var/list/codebook = get_signal_flare_codebook()
-	var/static/list/can_interpret = GLOB.garrison_positions + GLOB.noble_positions
+	var/static/list/can_interpret = GLOB.all_garrison_positions + GLOB.noble_positions
 	var/chosen_color = primed_color
 
 	// A signal primed by someone else doesn't grant their authority to fire it.

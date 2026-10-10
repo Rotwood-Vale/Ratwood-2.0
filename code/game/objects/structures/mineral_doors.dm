@@ -60,6 +60,7 @@
 	var/resident_role
 	/// The requied advclass of the resident
 	var/list/resident_advclass
+	var/barony_residence
 	//a door name a skilled artisan can make 
 	var/doorname = null
 
@@ -160,6 +161,20 @@
 				lockhash = rand(1000,9999)
 			GLOB.lockhashes += lockhash
 
+/obj/structure/mineral_door/proc/probe_barony_residence()
+	var/area/own_area = get_area(src)
+	var/heading = pick(GLOB.cardinals)
+	var/turf/probe = get_turf(src)
+	do
+		probe = get_step(probe, heading)
+	while(probe && get_area(probe) == own_area)
+	return istype(get_area(probe), /area/rogue/outdoors/rtfield/barony/rockhill)
+
+/obj/structure/mineral_door/proc/is_barony_residence()
+	if(isnull(barony_residence))
+		barony_residence = probe_barony_residence()
+	return barony_residence
+
 /obj/structure/mineral_door/proc/try_award_resident_key(mob/user)
 	if(!grant_resident_key)
 		return FALSE
@@ -170,7 +185,12 @@
 	var/mob/living/carbon/human/human = user
 	if(human.received_resident_key)
 		return FALSE
-	if(resident_role)
+	if(resident_role && is_barony_residence())
+		var/datum/job/job = SSjob.name_occupations[human.job]
+		if(job?.type != resident_role)
+			if(!HAS_TRAIT(human, TRAIT_BARONY_RESIDENT))
+				return FALSE
+	else if(resident_role)
 		var/datum/job/job = SSjob.name_occupations[human.job]
 		if(job?.type != resident_role)
 			if(!HAS_TRAIT(human, TRAIT_RESIDENT))
