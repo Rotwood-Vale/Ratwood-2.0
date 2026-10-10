@@ -699,7 +699,7 @@
 	swingsound = BLUNTWOOSH_HUGE
 	slot_flags = null//No.
 	smelt_bar_num = 2
-	minstr = 14
+	minstr = 12
 	wdefense = 4
 	wdefense_wbonus = 2//6
 	demolition_mod = 1.25//Oh, yes...

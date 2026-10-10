@@ -177,7 +177,7 @@
 	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/mace/smash/flailrange)
 	desc = "A heavy, silver flail. It follows the Grenzelhoftian design of a 'morning star', utilizing a longer chain to extend its reach. While stronger than a steel flail, it requires far more strength to effectively swing."
 	smeltresult = /obj/item/ingot/silver
-	minstr = 12
+	minstr = 11
 	is_silver = TRUE
 
 /obj/item/rogueweapon/flail/sflail/silver/ComponentInitialize()
@@ -302,7 +302,7 @@
 	desc = "The lucerne's ungaitly cousin, favoring a 'ball-and-chain' design that - once spun - can devastate anything caught in its way; a trait that makes it dearly beloved by both peasantry and knights alike."
 	icon_state = "greatflail"
 	wdefense = 6
-	minstr = 12
+	minstr = 11
 	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	max_integrity = 300//+50 over iron warflail
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -313,7 +313,7 @@
 	desc = "PSLM 81:59... AND HE COMMANDED; \"SHATTER THEM APART, LIKE A POTTER'S VESSEL AGAINST THE STONES!\" AND SO, WE STRUCK!"
 	icon_state = "silver_greatflail"
 	wdefense = 6
-	minstr = 13
+	minstr = 11
 	max_integrity = 300
 	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	is_silver = TRUE
@@ -376,7 +376,7 @@
 	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange, /datum/intent/mace/smash/flailchop, /datum/intent/flail/sweep)
 	associated_skill = /datum/skill/combat/whipsflails
 	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
-	minstr = 12
+	minstr = 11
 	wdefense = 5
 	max_integrity = 300
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -390,7 +390,7 @@
 	icon_state = "drowgreatflailb"
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/dagger/sucker_punch)//we use the better intents here since it's fully focused on blunt damage
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
-	minstr = 13// no jaluck twinks allowed!
+	minstr = 11// no jaluck twinks allowed!
 	wdefense = 4// not as scary looking so worse defense idk
 	special = /datum/special_intent/greatflail_swing// greatflail special tho!
 	bigboy = TRUE

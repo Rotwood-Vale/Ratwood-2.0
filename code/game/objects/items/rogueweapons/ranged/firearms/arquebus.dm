@@ -10,6 +10,7 @@
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol
 	name = "arquebus pistol"
+	minstr = 8
 	desc = "A small smokepowder weapon, balanced for use in a single hand. \
 	Even with great power, men squabbled until the conclave smiths of Naledi relented, producing these in limited batches. \
 	This is an incredibly rare example of such. Each tailored to its user's will."

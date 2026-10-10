@@ -1044,7 +1044,7 @@
 	alt_intents = null
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "exe"
-	minstr = 12
+	minstr = 11
 	slot_flags = ITEM_SLOT_BACK
 	swingsound = BLADEWOOSH_HUGE
 	smeltresult = /obj/item/ingot/iron

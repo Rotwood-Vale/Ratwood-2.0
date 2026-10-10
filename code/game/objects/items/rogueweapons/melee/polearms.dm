@@ -1140,7 +1140,7 @@
 	icon_state = "silverhalberd"
 	force = 15
 	force_wielded = 25
-	minstr = 11
+	minstr = 10
 	wdefense = 7
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
@@ -1858,7 +1858,7 @@
 	gripped_intents = list(SPEAR_THRUST, PARTIZAN_REND, PARTIZAN_PEEL, SPEAR_BASH)
 	icon_state = "partizan"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	minstr = 12//Easily hit by knights and other dedicated combat roles
+	minstr = 10//Easily hit by knights and other dedicated combat roles
 	max_blade_int = 200
 	wdefense = 6
 	wdefense_wbonus = 3	//9 when wielded. Identical to glaive.

@@ -812,7 +812,7 @@
 	The man who wields this is said to bring great fortune to his house, and those who keep him safe. \
 	<small>Runes glow near the head of the weapon, visible for the faintest of moments. A sure sign of the arcyne.</small>"
 	force_wielded = 30//-4. You know why. Look at the intents.
-	minstr = 12//+1 over the eagle's beak.
+	minstr = 11//+1 over the eagle's beak.
 	max_blade_int = 200//+20 over the eagle's beak. -60 from the pike.
 	max_integrity = 260//-40 from parent. No longer blacksteel, but great all the same.
 	smeltresult = /obj/item/ingot/steel
