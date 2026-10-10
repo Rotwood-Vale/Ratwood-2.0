@@ -36,11 +36,6 @@
 			"Cape" = 			/obj/item/clothing/cloak/cape/guard,
 			"Guard hood" = 		/obj/item/clothing/cloak/stabard/guardhood
 			)
-		if("Retainer")
-			name_index = "retainer's"
-			allowed_cloaks = list(
-			"Tabard" = /obj/item/clothing/cloak/tabard/retinue/baronycloak
-			)
 
 	var/choive_key = input(src, "Choose your cloak", "IDENTIFY YOURSELF") as anything in allowed_cloaks
 	var/typepath = allowed_cloaks[choive_key]
