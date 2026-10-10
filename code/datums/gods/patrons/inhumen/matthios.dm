@@ -9,12 +9,15 @@
 	mob_traits = list(TRAIT_COMMIE, TRAIT_MATTHIOS_EYES, TRAIT_SEEPRICES_SHITTY)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/appraise						= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/targeted/touch/lesserknock/miracle	= CLERIC_T0,
-					/obj/effect/proc_holder/spell/invoked/transact						= CLERIC_T0,
+					/obj/effect/proc_holder/spell/self/freemans_tools					= CLERIC_T0,
+					/obj/effect/proc_holder/spell/invoked/transact						= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/equalize						= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/twilight_commieflag			= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/churnwealthy					= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/raze							= CLERIC_T4,
+					/obj/effect/proc_holder/spell/self/wingsoffreedom					= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/resurrect/matthios			= CLERIC_T3, // Counterpart to anastasis
 	)
 	energy_color = COLOR_PATRON_MATTHIOS
