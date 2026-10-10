@@ -8,7 +8,7 @@
 	subclass_languages = list(/datum/language/thievescant)
 	category_tags = list(CTAG_VAGABOND)
 	traits_applied = list(TRAIT_NOSTINK, TRAIT_NASTY_EATER)
-	stat_budget = STAT_BUDGET_FRAIL
+	stat_budget = STAT_BUDGET_LOW
 	subclass_skills = list(
 		/datum/skill/misc/stealing = SKILL_LEVEL_EXPERT,
 	)
