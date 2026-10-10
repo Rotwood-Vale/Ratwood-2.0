@@ -647,6 +647,10 @@
 		return FALSE
 
 	var/mob/living/carbon/human/H = user
+	if(H.getOxyLoss() > 50)
+		to_chat(H, span_notice("I don't have enough breath to hold..."))
+		return
+
 	var/is_holding = HAS_TRAIT(H, TRAIT_HOLDBREATH)
 
 	if(is_holding)
@@ -657,7 +661,7 @@
 		)
 		H.log_message("stopped holding their breath.", LOG_ATTACK)
 	else
-		var/confirm = alert(H, "Are you sure you want to hold your breath? This will kill you if held long enough. You can undo it by pressing the emote again.", "Hold Breath", "Yes", "No")
+		var/confirm = alert(H, "Are you sure you want to hold your breath? This will make you pass out if held long enough. You can undo it by pressing the emote again.", "Hold Breath", "Yes", "No")
 		if(confirm != "Yes")
 			return FALSE
 		ADD_TRAIT(H, TRAIT_HOLDBREATH, "[type]")
