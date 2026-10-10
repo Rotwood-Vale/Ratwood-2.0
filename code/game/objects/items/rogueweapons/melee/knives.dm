@@ -857,6 +857,33 @@
 	src.obj_break()
 	visible_message(span_warning("The [src] has exploded into holy fire, breaking in the process."))
 
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood
+	name = "bloody stake"
+	desc = "Weirdly looking wooden stake covered somebody's blood."
+	icon_state = "blood_stake"
+	force = 20 // 25 if we count blesing
+	throwforce = 25
+	wdefense = 0  // last resort weapon
+	max_integrity = 50
+	slot_flags = ITEM_SLOT_HIP
+	is_silver = TRUE // arbalest blood is silver infused
+	integrity_failure = 0 // Meant to be used to its destruction
+	anvilrepair = null // as above ^
+	var/rune = null // aka why its here
+
+	
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/ComponentInitialize() // Lets say arbelest blood and lux alredy being... quite somthing, counts as blesing. Actualy here to work against undead
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = SILVER_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 5,\
+		added_blade_int = 0,\
+		added_int = 0,\
+		added_def = 0,\
+	)
+
 /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
 	name = "psydonic dagger"
 	desc = "An ornate dagger, plated in a ceremonial veneer of silver. The bane of vampyres and verevolves, in the hands of a faithful hunter."
