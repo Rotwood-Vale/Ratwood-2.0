@@ -5,6 +5,8 @@
 	body_parts_covered = CHEST|GROIN|VITALS
 	icon = 'modular_rmh/icons/clothing/vladegeg/skyrim_tavern.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/skyrim_tavern.dmi'
+	hiked_base_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/skyrim_tavern.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_skyrim_tavern.dmi'
 
 	icon_state = "tavern"
 	item_state = "tavern"

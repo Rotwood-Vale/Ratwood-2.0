@@ -5,6 +5,8 @@
 	icon_state = "skirt"
 	item_state = "skirt"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/pants.dmi'
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/pants.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_pants.dmi'
 	sleevetype = "skirt"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
 	alternate_worn_layer = (SHIRT_LAYER)
