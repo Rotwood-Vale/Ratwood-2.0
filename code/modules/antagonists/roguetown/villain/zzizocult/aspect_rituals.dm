@@ -137,6 +137,9 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 	if(!J || (J.type in list(KING_QUEEN_ROLES)) || J.type == /datum/job/roguetown/bandit || J.type == /datum/job/roguetown/wretch)
 		to_chat(user, span_warning("THIS RITUAL IS NOT FOR THEM."))
 		return TRUE
+	if(!wanted && (target in GLOB.gate_targets))
+		to_chat(user, span_warning("THIS RITUAL IS NOT FOR THEM."))
+		return TRUE
 	if(wanted && !(target in wanted))
 		to_chat(user, span_warning("THIS RITUAL IS NOT FOR THEM."))
 		return TRUE
