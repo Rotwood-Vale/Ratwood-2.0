@@ -880,7 +880,7 @@
 			health = 0
 	staminaloss = getStaminaLoss()
 	update_stat()
-	mark_blood_hud_dirty()
+	mark_pain_hud_dirty()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/proc/check_revive(mob/living/user, bypass_foreign_brain_check = FALSE)

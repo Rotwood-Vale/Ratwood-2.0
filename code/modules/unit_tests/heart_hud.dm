@@ -64,17 +64,21 @@
 	TEST_ASSERT(subject.blood_hud_dirty, "adjust_blood_volume() did not mark the heart.")
 
 	subject.flush_injury_huds()
-	subject.adjustToxLoss(5, FALSE)
-	TEST_ASSERT(subject.blood_hud_dirty, "adjustToxLoss() did not mark the heart.")
+	subject.updatehealth()
+	TEST_ASSERT(subject.pain_hud_dirty, "updatehealth() did not mark pain.")
+
 	subject.flush_injury_huds()
-	subject.setToxLoss(0, FALSE)
-	TEST_ASSERT(subject.blood_hud_dirty, "setToxLoss() did not mark the heart.")
+	subject.adjustToxLoss(5)
+	TEST_ASSERT(subject.pain_hud_dirty, "adjustToxLoss() did not refresh the heart through updatehealth().")
 	subject.flush_injury_huds()
-	subject.adjustOxyLoss(5, FALSE)
-	TEST_ASSERT(subject.blood_hud_dirty, "adjustOxyLoss() did not mark the heart.")
+	subject.setToxLoss(0)
+	TEST_ASSERT(subject.pain_hud_dirty, "setToxLoss() did not refresh the heart through updatehealth().")
 	subject.flush_injury_huds()
-	subject.setOxyLoss(0, FALSE)
-	TEST_ASSERT(subject.blood_hud_dirty, "setOxyLoss() did not mark the heart.")
+	subject.adjustOxyLoss(5)
+	TEST_ASSERT(subject.pain_hud_dirty, "adjustOxyLoss() did not refresh the heart through updatehealth().")
+	subject.flush_injury_huds()
+	subject.setOxyLoss(0)
+	TEST_ASSERT(subject.pain_hud_dirty, "setOxyLoss() did not refresh the heart through updatehealth().")
 
 	subject.flush_injury_huds()
 	chest.receive_damage(brute = 10)
@@ -163,3 +167,8 @@
 	ADD_TRAIT(subject, TRAIT_NOPAIN, TRAIT_SOURCE_UNIT_TESTS)
 	TEST_ASSERT_EQUAL(subject.get_pain_threshold(), 250, "The pain threshold ignored TRAIT_NOPAIN.")
 	REMOVE_TRAIT(subject, TRAIT_NOPAIN, TRAIT_SOURCE_UNIT_TESTS)
+
+	subject.STAWIL = 0
+	TEST_ASSERT_EQUAL(subject.get_pain_threshold(), 10, "Willpower below 1 dropped the pain threshold under the stat floor.")
+	subject.STAWIL = -5
+	TEST_ASSERT_EQUAL(subject.get_pain_threshold(), 10, "Negative willpower dropped the pain threshold under the stat floor.")

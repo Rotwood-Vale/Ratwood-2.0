@@ -40,7 +40,6 @@
 	if(HAS_TRAIT(src, TRAIT_HUSK)) //husked people do not pump the blood.
 		return
 
-	set_blood_volume(min(blood_volume, BLOOD_VOLUME_MAXIMUM))
 	//Effects of bloodloss - only run if we're not actually dead.
 	if (stat != DEAD)
 		if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
@@ -126,7 +125,6 @@
 	if(HAS_TRAIT(src, TRAIT_HUSK)) //husked people do not pump the blood.
 		return
 
-	set_blood_volume(min(blood_volume, BLOOD_VOLUME_MAXIMUM))
 	if(dna?.species)
 		if(NOBLOOD in dna.species.species_traits)
 			set_blood_volume(BLOOD_VOLUME_NORMAL)

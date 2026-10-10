@@ -643,10 +643,11 @@
 /mob/living/carbon/proc/get_pain_threshold()
 	if(HAS_TRAIT(src, TRAIT_NOPAIN))
 		return 250
-	. = HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH) ? ((STAWIL + 5) * 10) : (STAWIL * 10)
+	var/willpower = max(STAWIL, 1)
+	var/threshold = HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH) ? ((willpower + 5) * 10) : (willpower * 10)
 	if(has_flaw(/datum/charflaw/addiction/masochist)) // Masochists handle pain better by about 1 endurance point
-		. += 10
-	return max(., 1)
+		threshold += 10
+	return threshold
 
 /mob/living/carbon/proc/on_pain_trait_changed(datum/source)
 	SIGNAL_HANDLER
@@ -844,7 +845,7 @@
 		add_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE, multiplicative_slowdown = SOFTCRIT_ADD_SLOWDOWN)
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_CARBON_SOFTCRIT, TRUE)
-	mark_blood_hud_dirty()
+	mark_pain_hud_dirty()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
 /mob/living/carbon

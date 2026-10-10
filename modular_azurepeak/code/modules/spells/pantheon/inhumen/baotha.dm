@@ -95,7 +95,7 @@
 	devotion_cost = 75
 
 /obj/effect/proc_holder/spell/invoked/painkiller/cast(list/targets, mob/living/user)
-	if(isliving(targets[1]))
+	if(ishuman(targets[1]))
 		var/mob/living/target = targets[1]
 		var/mob/living/carbon/human/human_target = target
 		if(target.mob_biotypes & MOB_UNDEAD)
