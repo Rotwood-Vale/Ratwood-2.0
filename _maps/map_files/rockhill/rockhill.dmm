@@ -13938,12 +13938,6 @@
 "cNx" = (
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/cavewet)
-"cNy" = (
-/obj/effect/landmark/start/orphan{
-	dir = 4
-	},
-/turf/open/floor/rogue/greenstone,
-/area/rogue/under/town/sewer)
 "cNz" = (
 /obj/structure/roguewindow/openclose,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -81695,10 +81689,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/town/roofs)
-"qDn" = (
-/obj/effect/landmark/start/vagrant,
-/turf/open/floor/rogue/greenstone,
-/area/rogue/under/town/sewer)
 "qDu" = (
 /obj/structure/fluff/traveltile{
 	aportalgoesto = "gobdun2";
@@ -299367,8 +299357,8 @@ iWT
 gLf
 rSC
 gLf
-cNy
-qDn
+gLf
+gLf
 udz
 gLf
 gLf
@@ -300649,8 +300639,8 @@ gLf
 rSC
 rSC
 dPm
-cNy
-qDn
+gLf
+gLf
 iCS
 gLf
 gLf
@@ -304533,7 +304523,7 @@ dYh
 fiD
 xdp
 rRb
-cNy
+gLf
 rSC
 rSC
 gLf
@@ -304965,7 +304955,7 @@ dYh
 eXg
 xdp
 rRb
-qDn
+gLf
 rSC
 rSC
 gLf
@@ -306720,7 +306710,7 @@ mof
 gLf
 gLf
 rSC
-qDn
+gLf
 rRb
 lrs
 lrs
