@@ -884,7 +884,7 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/examine(mob/user)
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood/examine(mob/user)
 	. = ..()
 	if(user.mind)
 		if(user.mind.has_spell(/obj/effect/proc_holder/spell/self/arbalist_blood_runes))

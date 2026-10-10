@@ -35,6 +35,9 @@
 		/datum/skill/craft/tanning = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/butchering = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE, // that guy pulls his lux on regual
+		/datum/skill/labor/woodcutting = SKILL_LEVEL_APPRENTICE, // for holy stakes
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE, // for holy stakes
 	)
 	subclass_stashed_items = list(
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
@@ -49,7 +52,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/arbalest//Tool of the trade.
-	cloak = /obj/item/clothing/cloak/psydontabard/alt
+	cloak = /obj/item/storage/backpack/rogue/satchel/beltpack
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	neck = /obj/item/clothing/neck/roguetown/gorget
