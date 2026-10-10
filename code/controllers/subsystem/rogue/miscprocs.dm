@@ -47,6 +47,8 @@
 	/// Spells we have granted thus far
 	var/list/granted_spells
 	///suppress granting miracles updating from devotion level up
+	var/favorite_action_gain = 5 // devotion given per performing action a god likes
+	var/favorite_action_big_gain = 100 // same but for big impactfull acts
 	var/suppress_grants = FALSE
 
 /datum/devotion/New(mob/living/carbon/human/holder, datum/patron/patron)
@@ -214,6 +216,36 @@
 				var/obj/effect/proc_holder/spell/L = new miracle_menu_path
 				if(L)
 					H.mind.AddSpell(L, H)
+
+/datum/devotion/proc/reward_actions(mob/living/carbon/human/H, multiplier = 1, major = FALSE)
+	if(!H || !H.mind || !patron)
+		return FALSE
+	if(!passive_devotion_gain && !passive_progression_gain)
+		return FALSE
+	var/devotion_gain = major ? favorite_action_big_gain : favorite_action_gain
+	var/devotion_multiplier = 1
+	if(holder?.mind)
+		devotion_multiplier += (holder.get_skill_level(/datum/skill/magic/holy) / SKILL_LEVEL_LEGENDARY)
+	update_devotion((devotion_gain * devotion_multiplier * multiplier), silent = TRUE)
+	return TRUE
+
+/mob/living/carbon/human/reward_actions(multiplier = 1, major = FALSE, success_message = "", patrons = null) // no patron means any patron
+	if(!devotion)
+		return FALSE
+	if(patrons && !istype(patron, patrons))
+		return FALSE
+	
+	if(devotion.reward_actions(src, multiplier, major))
+		if(success_message)
+			to_chat(src, "<font color='purple'>[success_message]</font>")
+		return TRUE
+	return FALSE
+
+/mob/proc/reward_actions(multiplier = 1, major = FALSE, patrons = null, success_message = null)
+	if(!ishuman(src))
+		return FALSE
+	var/mob/living/carbon/human/H = src
+	return H.reward_actions(multiplier, major, patrons, success_message)
 
 // Debug verb
 /mob/living/carbon/human/proc/devotionchange()
