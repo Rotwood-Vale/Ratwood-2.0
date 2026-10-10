@@ -301,13 +301,52 @@
 	id = "yieldprompt"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/yield_prompt
 	duration = 20 SECONDS
+	/// List of bonus prompts. For clean up
+	var/list/prompt_list
 
 /datum/status_effect/debuff/yield_prompt/on_apply()
-	if(isliving(owner) && owner.has_flaw(/datum/charflaw/compliant))
-		var/mob/living/living_owner = owner
-		living_owner.submit(TRUE)
-		return FALSE
+	if(owner.has_flaw(/datum/charflaw/compliant))
+		var/list/screen_locs = list()
+		for(var/x_pos in 1 to 14)
+			for(var/y_pos in 1 to 14)
+				screen_locs += "0:[x_pos*32],0:+[y_pos*32]"
+
+		prompt_list = list()
+		for(var/position in screen_locs)
+			if(prob(70))
+				continue
+			var/atom/movable/screen/alert/status_effect/debuff/yield_prompt/bonus_prompt = new()
+			owner.add_screen_object(bonus_prompt)
+			bonus_prompt.alert_group = 5
+			bonus_prompt.layer = HUD_LAYER
+			bonus_prompt.plane = HUD_PLANE
+			bonus_prompt.screen_loc = position
+			prompt_list += bonus_prompt
+		RegisterSignal(owner.client, COMSIG_CLIENT_CLICK, PROC_REF(on_click))
+
 	return ..()
+
+/datum/status_effect/debuff/yield_prompt/on_remove()
+	UnregisterSignal(owner.client, COMSIG_CLIENT_CLICK)
+	if(length(prompt_list))
+		for(var/atom/alert as anything in prompt_list)
+			QDEL_NULL(alert)
+	return ..()
+
+/// When the mob clicks anywhere, move all the prompts towards the click
+/datum/status_effect/debuff/yield_prompt/proc/on_click(client/source, atom/target, atom/location, control, params, mob/user)
+	SIGNAL_HANDLER
+	// Get some click information, notably the X and Y positions
+	var/list/params_list = params2list(params)
+	var/list/click_offset = screen_loc_to_offset(params_list["screen-loc"])
+	var/click_x = click_offset[1]
+	var/click_y = click_offset[2]
+	for(var/atom/movable/screen/alert/status_effect/debuff/yield_prompt/screen_object as anything in prompt_list)
+		// Loop over every icon, determine the relative click direction and inch them closer towards the click
+		var/list/offsets = screen_loc_to_offset(screen_object.screen_loc)
+		var/x_direction = offsets[1] + ((click_x - offsets[1]) * 0.1)
+		var/y_direction = offsets[2] + ((click_y - offsets[2]) * 0.1)
+		screen_object.screen_loc = offset_to_screen_loc(x_direction, y_direction, source.view)
 
 /atom/movable/screen/alert/status_effect/debuff/yield_prompt
 	name = "Yield?"
@@ -326,8 +365,12 @@
 	var/mob/living/L = usr
 	if(!istype(L))
 		return
+	if(L.has_flaw(/datum/charflaw/compliant))
+		L.submit(TRUE)
+		L.remove_status_effect(/datum/status_effect/debuff/yield_prompt)
+		return
 	L.submit()
-	L.remove_status_effect(attached_effect)
+	L.remove_status_effect(/datum/status_effect/debuff/yield_prompt)
 
 /datum/status_effect/debuff/chilled
 	id = "chilled"
