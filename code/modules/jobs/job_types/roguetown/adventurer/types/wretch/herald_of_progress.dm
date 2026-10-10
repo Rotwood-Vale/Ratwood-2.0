@@ -27,7 +27,7 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN, 
 	)
 	stat_budget = STAT_BUDGET_MID
-	favored_stats = STATS_ZEALOT
+	favored_stats = STATS_MONK
 	subclass_stashed_items = list(
 		"Sewing Kit" = /obj/item/repair_kit,
 	)

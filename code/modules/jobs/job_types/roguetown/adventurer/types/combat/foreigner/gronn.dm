@@ -12,6 +12,7 @@
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	traits_applied = list(TRAIT_STEELHEARTED)
 	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_VANGUARD
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,

@@ -163,7 +163,7 @@
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander4.ogg'
 	traits_applied = list(TRAIT_OUTDOORSMAN)
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_INT = STAT_FAVORED)
+	favored_stats = STATS_ARCHER
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/bows = SKILL_LEVEL_NOVICE, // Base skill, if not wanted, pick another weapon.

@@ -10,7 +10,7 @@
 	maximum_possible_slots = 1 //They spawn with killer's ice lol I'm limiting this shit 
 	extra_context = "This subclass has a choice of starting with a poisonable dagger and a bow with poison arrows, a poisonable dagger and magic, or a rapier and the ability to dodge well."
 	stat_budget = STAT_BUDGET_MID
-	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_CON = STAT_FAVORED)
+	favored_stats = STATS_ROGUE
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,

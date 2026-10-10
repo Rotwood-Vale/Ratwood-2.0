@@ -11,7 +11,7 @@
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = STATS_ZEALOT
+	favored_stats = STATS_MONK
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,

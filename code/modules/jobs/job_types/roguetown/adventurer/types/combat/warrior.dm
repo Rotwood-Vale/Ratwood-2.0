@@ -626,6 +626,7 @@
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_DEATHBYSNUSNU)
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_VANGUARD
 	subclass_social_rank = SOCIAL_RANK_DIRT
 
 /datum/outfit/job/adventurer/amazon/pre_equip(mob/living/carbon/human/H, visualsOnly)

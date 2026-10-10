@@ -17,6 +17,7 @@
 	traits_applied = list(TRAIT_DARKVISION)
 	subclass_languages = list(/datum/language/otavan)
 	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_SKIRMISHER
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,//you learn to backstab early

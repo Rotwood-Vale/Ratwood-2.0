@@ -209,6 +209,7 @@
 /datum/advclass/prisoner_hunter
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_hunter
+	favored_stats = STATS_ARCHER
 	name = "Prisoner Hunter"
 	category_tags = list(CTAG_PRISONER)
 

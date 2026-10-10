@@ -178,7 +178,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_SQUIRE_REPAIR)
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = STATS_FIGHTER
+	favored_stats = STATS_VANGUARD
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,

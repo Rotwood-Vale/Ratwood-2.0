@@ -111,7 +111,7 @@
 	category_tags = list(CTAG_VANGUARD)
 	traits_applied = list(TRAIT_MEDIUMARMOR)
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = STATS_FIGHTER
+	favored_stats = STATS_VANGUARD
 	subclass_skills = list(
 		/datum/skill/combat/axes = 3,
 		/datum/skill/combat/polearms = 3,

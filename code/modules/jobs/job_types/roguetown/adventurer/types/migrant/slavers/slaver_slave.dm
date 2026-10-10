@@ -64,7 +64,7 @@
 	category_tags = list(CTAG_SLAVER_SLAVE)
 
 	stat_budget = STAT_BUDGET_LOW
-	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED)
+	favored_stats = STATS_VANGUARD
 	subclass_stats = list(STATKEY_LCK = -1)
 
 	subclass_skills = list(
