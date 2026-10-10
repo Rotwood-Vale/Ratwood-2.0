@@ -2,6 +2,7 @@
 #define INVESTIGATE_ATMOS			"atmos"
 #define INVESTIGATE_BOTANY			"botany"
 #define INVESTIGATE_CARGO			"cargo"
+#define INVESTIGATE_DOORS			"doors"
 #define INVESTIGATE_EXPERIMENTOR	"experimentor"
 #define INVESTIGATE_RECORDS			"records"
 #define INVESTIGATE_SINGULO			"singulo"

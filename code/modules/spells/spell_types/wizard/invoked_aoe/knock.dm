@@ -23,14 +23,16 @@
 	playsound(get_turf(user), 'sound/misc/chestopen.ogg', 100, TRUE, -1)
 	for(var/turf/T in range(1, usr))
 		for(var/obj/structure/mineral_door/door in T.contents)
-			INVOKE_ASYNC(src, PROC_REF(open_door), door)
+			INVOKE_ASYNC(src, PROC_REF(open_door), door, user)
 		for(var/obj/structure/closet/C in T.contents)
 			INVOKE_ASYNC(src, PROC_REF(open_closet), C)
 		for(var/obj/structure/roguewindow/openclose/W in T.contents)
-			INVOKE_ASYNC(src, PROC_REF(open_window), W)
+			INVOKE_ASYNC(src, PROC_REF(open_window), W, user)
 
-/obj/effect/proc_holder/spell/invoked/knock/proc/open_door(obj/structure/mineral_door/door)
+/obj/effect/proc_holder/spell/invoked/knock/proc/open_door(obj/structure/mineral_door/door, mob/user)
 	if(istype(door))
+		if(door.locked)
+			door.log_breakin(user, "cast knock and unlocked the door")
 		door.force_open()
 		door.locked = FALSE
 
@@ -38,6 +40,8 @@
 	C.locked = FALSE
 	C.open()
 
-/obj/effect/proc_holder/spell/invoked/knock/proc/open_window(obj/structure/roguewindow/openclose/W)
+/obj/effect/proc_holder/spell/invoked/knock/proc/open_window(obj/structure/roguewindow/openclose/W, mob/user)
 	if(istype(W))
+		if(!W.climbable && !W.brokenstate)
+			W.log_breakin(user, "cast knock and opened the window")
 		W.force_open()
