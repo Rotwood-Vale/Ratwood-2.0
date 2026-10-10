@@ -24,10 +24,12 @@
 					return "slit_2"
 
 	if(uses_size_sprites)
+		// Tiny shares sprites with small pintles, might add something later on
+		var/sprite_size = clamp(pp.penis_size, SMALL_PENIS_SIZE, DEFAULT_PENIS_SIZE)
 		if(pp.erect_state == ERECT_STATE_HARD)
-			return "[icon_state]_2_[min(pp.penis_size, 2)]"
+			return "[icon_state]_2_[sprite_size]"
 		else
-			return "[icon_state]_1_[min(pp.penis_size, 2)]"
+			return "[icon_state]_1_[sprite_size]"
 	else
 		if(pp.erect_state == ERECT_STATE_HARD)
 			return "[icon_state]_2"
@@ -175,6 +177,27 @@
 	name = "Sextuple"
 	color_key_defaults = list(KEY_CHEST_COLOR)
 	can_jiggle = TRUE
+
+/datum/sprite_accessory/breasts/pecs
+	icon_state = "pecs"
+	name = "Pecs"
+	color_key_defaults = list(KEY_CHEST_COLOR)
+	can_jiggle = TRUE
+
+/datum/sprite_accessory/breasts/pecs/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	var/obj/item/organ/breasts/badonkers = organ
+	if(can_jiggle && owner && badonkers.is_jiggling)
+		return "[icon_state]_1_jiggle"
+	return "[icon_state]_1"
+
+/datum/sprite_accessory/breasts/pecs/nippleless
+	name = "Pecs (Nippleless)"
+
+/datum/sprite_accessory/breasts/pecs/nippleless/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	var/obj/item/organ/breasts/badonkers = organ
+	if(can_jiggle && owner && badonkers.is_jiggling)
+		return "[icon_state]_2_jiggle"
+	return "[icon_state]_2"
 
 /datum/sprite_accessory/vagina
 	icon = 'icons/mob/sprite_accessory/genitals/nethers.dmi'

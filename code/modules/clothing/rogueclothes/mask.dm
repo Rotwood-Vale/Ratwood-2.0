@@ -199,6 +199,9 @@
 	sewrepair = FALSE
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/mask/rogue/lordmask/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+
 /obj/item/clothing/mask/rogue/lordmask/l
 	icon_state = "lmask_l"
 
@@ -339,6 +342,7 @@
 
 /obj/item/clothing/mask/rogue/facemask/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/mask/rogue/facemask/equipped(mob/user, slot)
 	..()
@@ -579,6 +583,12 @@
 	salvage_amount = 1
 	nudist_approved = TRUE
 
+/obj/item/clothing/mask/rogue/physician/head
+	name = "head physician's mask"
+	desc = "An important person, warrants the largest beak of them all."
+	icon_state = "head_phys" // shoutout the_hotline for allowing me to use this sprites. I love you.
+
+
 /obj/item/clothing/mask/rogue/physician/equipped(mob/living/carbon/user, slot)
 	. = ..()
 	if(slot == SLOT_WEAR_MASK)
@@ -646,6 +656,7 @@
 	sellprice = 0
 /obj/item/clothing/mask/rogue/lordmask/naledi/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_NALEDI, "naledi_mask")
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/mask/rogue/lordmask/naledi/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
 	if(default_layer == BELT_LAYER)

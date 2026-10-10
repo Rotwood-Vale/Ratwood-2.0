@@ -311,7 +311,7 @@
 			should_update = fleshcraft_change_organ_color(H, chooser, ORGAN_SLOT_PENIS, "Choose secondary penis color", "Penis Color 2", 2)
 
 		if("penis size")
-			should_update = fleshcraft_change_size(H, chooser, ORGAN_SLOT_PENIS, "Choose penis size", "Penis Size", "penis_size", list("small" = 1, "average" = 2, "large" = 3))
+			should_update = fleshcraft_change_size(H, chooser, ORGAN_SLOT_PENIS, "Choose penis size", "Penis Size", "penis_size", GLOB.named_penis_sizes)
 
 		if("testicles")
 			should_update = fleshcraft_change_accessory_organ(H, chooser, ORGAN_SLOT_TESTICLES, /obj/item/organ/testicles, /datum/sprite_accessory/testicles, "Choose testicles type", "Testicles Customization")
@@ -733,11 +733,18 @@
 		return FALSE
 
 	var/obj/item/organ/O = H.getorganslot(organ_slot)
-	if(!O)
+	var/new_accessory_type = valid_types[new_style]
+	var/replace_tail = FALSE
+	if(organ_slot == ORGAN_SLOT_TAIL)
+		var/wants_tail_maw = new_accessory_type == /datum/sprite_accessory/tail/manticore
+		if(wants_tail_maw)
+			organ_path = /obj/item/organ/tail/manticore
+		replace_tail = wants_tail_maw != istype(O, /obj/item/organ/tail/manticore)
+	if(!O || replace_tail)
 		O = new organ_path()
 		O.Insert(H, TRUE, FALSE)
 
-	O.accessory_type = valid_types[new_style]
+	O.accessory_type = new_accessory_type
 	O.build_colors_for_accessory(null)
 	H.update_body()
 	return TRUE
