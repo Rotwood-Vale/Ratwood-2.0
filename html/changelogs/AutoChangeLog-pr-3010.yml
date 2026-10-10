@@ -1,0 +1,6 @@
+author: "MrShibaa"
+delete-after: True
+changes:
+  - rscadd: "Adds the ability to light someones zig when its in their mouth."
+  - rscadd: "Zigs can be extinguished by right clicking them."
+  - rscadd: "Adds an end of round statistic that shows the top smokers."
