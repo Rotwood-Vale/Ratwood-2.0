@@ -328,6 +328,20 @@
 	REMOVE_TRAIT(owner, TRAIT_PSYCHOSIS, TRAIT_STATUS_EFFECT(id))
 	. = ..()
 
+/datum/status_effect/buff/abyssor_fire_resistance
+	id = "abyssor_fire_resistance"
+	duration = 30 SECONDS
+	alert_type = null
+
+/datum/status_effect/buff/abyssor_fire_resistance/on_apply()
+	. = ..()
+	if(.)
+		ADD_TRAIT(owner, TRAIT_NOFIRE, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/buff/abyssor_fire_resistance/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_NOFIRE, TRAIT_STATUS_EFFECT(id))
+	. = ..()
+
 /datum/status_effect/buff/fermented_crab
 	id = "fermented_crab"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/fermented_crab
