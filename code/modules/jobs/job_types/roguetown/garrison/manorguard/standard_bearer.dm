@@ -36,7 +36,6 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	wrists = /obj/item/clothing/wrists/roguetown/splintarms
 	pants = /obj/item/clothing/under/roguetown/splintlegs
-	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	beltl = /obj/item/rogueweapon/mace/cudgel
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
