@@ -151,14 +151,23 @@
 	..()
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain
 	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/storage/keyring/baronretainer = 1, /obj/item/flashlight/flare/torch/lantern = 1)
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
+	gloves = /obj/item/clothing/gloves/roguetown/plate
+	neck = /obj/item/clothing/neck/roguetown/gorget/steel
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
+	var/background_shirt
+	var/background_pants
 	var/weapon_choice = "The Ferentian (Longsword)"
 	if(H.mind)
-		var/weapons = list("La Bête (Executioner)", "The Ferentian (Longsword)", "El Zorro (Rapier)", "AAVNIK (Shishka Sabre)", "Mubarizun (Shalal)", "Der Schwertkämpfer (Kriegsmesser)", "The Vagabond (Hwando)")
+		var/weapons = list("La Bête (Executioner)", "The Ferentian (Longsword)", "El Zorro (Rapier)", "AAVNIK (Shishka Sabre)", "Mubarizun (Shalal)", "Der Schwertkämpfer (Kriegsmesser)", "Kashin (Hwando)")
 		weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-	if(weapon_choice == "The Vagabond (Hwando)")
-		armor = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
-		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
-		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun
+	if(weapon_choice == "Kashin (Hwando)")
+		armor = /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast
+		background_shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2
+		background_pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun
 		shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
 		gloves = /obj/item/clothing/gloves/roguetown/plate/kote
 		neck = /obj/item/clothing/neck/roguetown/gorget/steel/kazengun
@@ -171,58 +180,58 @@
 		l_hand = /obj/item/rogueweapon/scabbard/sword/kazengun
 		if(H.mind)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-		return
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
-	gloves = /obj/item/clothing/gloves/roguetown/plate
-	neck = /obj/item/clothing/neck/roguetown/gorget/steel
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/rondel
+	else if(H.mind)
+		switch(weapon_choice)
+			if("La Bête (Executioner)")
+				r_hand = /obj/item/rogueweapon/sword/long/exe
+				mask = /obj/item/clothing/mask/rogue/sack
+				cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
+				H.change_stat(STATKEY_STR, 2)
+				H.change_stat(STATKEY_SPD, -2)
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+			if("The Ferentian (Longsword)")
+				r_hand = /obj/item/rogueweapon/sword/long
+				cloak = /obj/item/clothing/cloak/duelistcape
+				head = /obj/item/clothing/head/roguetown/duelisthat
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+			if("El Zorro (Rapier)")
+				r_hand = /obj/item/rogueweapon/sword/rapier/vaquero
+				mask = /obj/item/clothing/mask/rogue/duelmask
+				cloak = /obj/item/clothing/cloak/duelistcape
+				head = /obj/item/clothing/head/roguetown/duelisthat
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+			if("AAVNIK (Shishka Sabre)")
+				r_hand = /obj/item/rogueweapon/sword/sabre/steppesman
+				l_hand = /obj/item/rogueweapon/shield/buckler
+				mask = /obj/item/clothing/mask/rogue/facemask/steel/steppesman
+				head = /obj/item/clothing/head/roguetown/papakha
+				cloak = /obj/item/clothing/cloak/raincloak/furcloak
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+			if("Mubarizun (Shalal)")
+				r_hand = /obj/item/rogueweapon/sword/long/marlin
+				cloak = /obj/item/clothing/cloak/cape/red
+				background_shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
+				head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
+				beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/kukri
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+			if("Der Schwertkämpfer (Kriegsmesser)")
+				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
+				head = /obj/item/clothing/head/roguetown/caplessgrenzelhofthat
+				cloak = /obj/item/clothing/cloak/stabard/grenzelhoft
+				background_shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
+				background_pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
+				shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
+				gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 	if(!H.mind)
 		return
-	switch(weapon_choice)
-		if("La Bête (Executioner)")
-			r_hand = /obj/item/rogueweapon/sword/long/exe
-			mask = /obj/item/clothing/mask/rogue/sack
-			cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
-			H.change_stat(STATKEY_STR, 2)
-			H.change_stat(STATKEY_SPD, -2)
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-		if("The Ferentian (Longsword)")
-			r_hand = /obj/item/rogueweapon/sword/long
-			cloak = /obj/item/clothing/cloak/duelistcape
-			head = /obj/item/clothing/head/roguetown/duelisthat
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-		if("El Zorro (Rapier)")
-			r_hand = /obj/item/rogueweapon/sword/rapier/vaquero
-			mask = /obj/item/clothing/mask/rogue/duelmask
-			cloak = /obj/item/clothing/cloak/duelistcape
-			head = /obj/item/clothing/head/roguetown/duelisthat
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-		if("AAVNIK (Shishka Sabre)")
-			r_hand = /obj/item/rogueweapon/sword/sabre/steppesman
-			l_hand = /obj/item/rogueweapon/shield/buckler
-			mask = /obj/item/clothing/mask/rogue/facemask/steel/steppesman
-			head = /obj/item/clothing/head/roguetown/papakha
-			cloak = /obj/item/clothing/cloak/raincloak/furcloak
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-		if("Mubarizun (Shalal)")
-			r_hand = /obj/item/rogueweapon/sword/long/marlin
-			cloak = /obj/item/clothing/cloak/cape/red
-			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/zyb
-			head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/zyb
-			beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/kukri
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-		if("Der Schwertkämpfer (Kriegsmesser)")
-			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser
-			head = /obj/item/clothing/head/roguetown/caplessgrenzelhofthat
-			cloak = /obj/item/clothing/cloak/stabard/grenzelhoft
-			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
-			pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
-			shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
-			gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+	var/clothes = list("Standard", "Background")
+	var/clothes_choice = input(H, "Choose your shirt and pants.", "DRESS THYSELF") as anything in clothes
+	if(clothes_choice == "Background")
+		if(background_shirt)
+			shirt = background_shirt
+		if(background_pants)
+			pants = background_pants
 			
 /datum/advclass/baron_retainer/greyleaf
 	name = "Greyleaf"
