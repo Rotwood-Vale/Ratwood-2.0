@@ -884,6 +884,15 @@
 		added_def = 0,\
 	)
 
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/examine(mob/user)
+	. = ..()
+	if(user.mind)
+		if(user.mind.has_spell(/obj/effect/proc_holder/spell/self/arbalist_blood_runes))
+			desc = "Stake transformed with holy blood, suitable for housing the power of runes. Such power comes at a cost, and nothing can reverse this stake deterioration."
+			if(rune)
+				desc += " A [rune] is etched into the bloody wood."
+
+
 /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
 	name = "psydonic dagger"
 	desc = "An ornate dagger, plated in a ceremonial veneer of silver. The bane of vampyres and verevolves, in the hands of a faithful hunter."

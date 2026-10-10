@@ -366,3 +366,4 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	duration = 8//Adjust with the above, when/if we get one. Otherwise just default to emp/pulse and just delete this.
 
 
+/obj/effect/proc_holder/spell/self/arbalist_blood_runes 
