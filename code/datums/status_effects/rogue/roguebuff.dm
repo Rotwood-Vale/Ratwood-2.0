@@ -2349,6 +2349,21 @@
 	desc = "My body feels better than ever!"
 	icon_state = "buff"
 
+/datum/status_effect/buff/ravox_vow
+	id = "ravox_vow"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/ravox_vow
+	effectedstats = list(STATKEY_WIL = 1)
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 30 MINUTES
+	tick_interval = -1
+
+/datum/status_effect/buff/ravox_vow/proc/on_life()
+	owner.heal_wounds(0.6)
+
+/atom/movable/screen/alert/status_effect/buff/ravox_vow
+	name = "Ravox Vow"
+	desc = "I vowed to Ravox. I shall bring justice to Grimoria."
+
 
 /datum/status_effect/buff/refocus
 	id = "refocus"
