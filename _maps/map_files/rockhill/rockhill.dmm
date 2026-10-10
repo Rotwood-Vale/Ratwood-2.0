@@ -18041,6 +18041,15 @@
 	dir = 8
 	},
 /area/rogue/outdoors/rtfield/rockhill/above)
+"dEO" = (
+/obj/structure/handcart{
+	dir = 4
+	},
+/obj/machinery/light/roguestreet/orange/walllamp{
+	dir = 1
+	},
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "dFh" = (
 /turf/open/water/bath,
 /area/rogue/indoors/inq)
@@ -18851,14 +18860,13 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/outdoors/town/rockhill)
 "dME" = (
-/obj/structure/roguewindow,
 /obj/structure/bars{
 	color = "#b0a497";
 	layer = 2
 	},
-/obj/structure/bars/passage/shutter/open{
-	name = "Harbor Entrance";
-	redstone_id = "guild_harbor"
+/obj/structure/roguewindow{
+	max_integrity = 3000;
+	name = "reinforced window"
 	},
 /turf/open/floor/rogue/metal/barograte,
 /area/rogue/indoors/town/dwarfin/rockhill)
@@ -39635,6 +39643,16 @@
 	},
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
+"hXV" = (
+/obj/structure/bars{
+	color = "#b0a497";
+	max_integrity = 2000;
+	name = "reinforced bars";
+	layer = 2;
+	plane = -6
+	},
+/turf/open/water/cleanshallow,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "hXX" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/watcher{
 	wander = 0
@@ -84003,6 +84021,13 @@
 /obj/structure/fluff/statue/gargoyle/moss,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/dungeon/wizarddungeon)
+"reU" = (
+/obj/structure/fluff/walldeco/artificerflag{
+	name = "Smithing Guild";
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the smith's guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility."
+	},
+/turf/closed/wall/mineral/rogue/pipe,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "reY" = (
 /obj/machinery/light/rogue/campfire/fireplace{
 	pixel_y = -32
@@ -91977,6 +92002,17 @@
 	},
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/bath)
+"sPQ" = (
+/obj/structure/roguewindow{
+	max_integrity = 3000;
+	name = "reinforced window"
+	},
+/obj/structure/bars{
+	color = "#b0a497";
+	layer = 2
+	},
+/turf/open/floor/rogue/metal/barograte,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "sPR" = (
 /obj/structure/hotspring/border,
 /obj/structure/glowshroom{
@@ -310147,7 +310183,7 @@ tEl
 ewm
 ewm
 tEl
-gRj
+reU
 kdN
 kdN
 oAn
@@ -311011,10 +311047,10 @@ gRj
 qqj
 oik
 rSM
-cCr
+sco
 rCh
 uDH
-rnf
+kdN
 vRu
 vRu
 vRu
@@ -311443,10 +311479,10 @@ aWw
 qqj
 oik
 rSM
-sco
+hXV
 kdN
 kdN
-rnf
+kdN
 vRu
 vRu
 vRu
@@ -311875,10 +311911,10 @@ gRj
 qqj
 oik
 rSM
-cCr
+sco
 rCh
 kdN
-rnf
+kdN
 vRu
 vRu
 vRu
@@ -312307,10 +312343,10 @@ sfu
 qqj
 wTB
 lVj
-sco
+reU
 kdN
 kdN
-rnf
+kdN
 vRu
 vRu
 vRu
@@ -312737,12 +312773,12 @@ iov
 knY
 sCn
 qqj
+qqj
 iko
 sco
-gRj
 kdN
 kdN
-rnf
+kdN
 vRu
 vRu
 liG
@@ -313169,12 +313205,12 @@ iov
 ukO
 sCn
 qqj
+qqj
 maO
-sco
+hXV
 kdN
 kdN
 kdN
-rnf
 vRu
 vRu
 liG
@@ -313601,9 +313637,9 @@ vIo
 vIo
 fcT
 qqj
+qqj
 jlY
-sco
-kdN
+hXV
 kdN
 kdN
 kdN
@@ -314033,9 +314069,9 @@ qqj
 suU
 qqj
 qqj
-jlY
+qqj
+dEO
 sco
-gMO
 kdN
 kdN
 kdN
@@ -314463,14 +314499,14 @@ dME
 dME
 sco
 sco
+sPQ
+sPQ
 sco
 sco
-sco
-sco
-gMO
+reU
 kdN
 kdN
-rnf
+kdN
 vRu
 vRu
 liG
@@ -314902,7 +314938,7 @@ gMO
 gMO
 kdN
 kdN
-rnf
+kdN
 vRu
 vRu
 vRu
@@ -315334,7 +315370,7 @@ gMO
 gMO
 kdN
 kdN
-rnf
+qSD
 vRu
 vRu
 vRu
