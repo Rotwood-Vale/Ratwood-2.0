@@ -61,6 +61,12 @@
 	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 5, TRUE) //He's batman
 	H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 5, TRUE) //I can do this all day.
 	backl = /obj/item/storage/backpack/rogue/backpack/bagpack
+	backpack_contents = list(
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
+		/obj/item/rope/chain = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
+		)
 	beltr = /obj/item/rogueweapon/stoneaxe/hurlbat
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood
 	cloak = /obj/item/clothing/cloak/thief_cloak
@@ -89,6 +95,7 @@
 
 /datum/outfit/job/roguetown/wretch/vigilante/proc/owl_equip(mob/living/carbon/human/H)
 	backl = /obj/item/rogueweapon/woodstaff/quarterstaff/steel //nonlethal takedowns
+	backr = /obj/item/storage/backpack/rogue/satchel
 	beltr = /obj/item/quiver/sling/iron
 	l_hand = /obj/item/grapplinghook
 	r_hand = /obj/item/bomb/smoke
@@ -102,6 +109,7 @@
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, 4, TRUE) //Investigations
 	H.adjust_skillrank_up_to(/datum/skill/combat/slings, 4, TRUE) // Funny as shit to use.
@@ -123,15 +131,27 @@
 	l_hand = /obj/item/rogueweapon/stoneaxe/hurlbat
 	beltl = /obj/item/quiver/javelin/steel
 	backl = /obj/item/quiver/javelin/steel
+	backr = /obj/item/storage/backpack/rogue/backpack
+	backpack_contents = list(
+		/obj/item/rogueweapon/stoneaxe/hurlbat = 6,//hurlbats are a pain to get, especially as wretch, lets throw them a bone
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
+		/obj/item/rope/chain = 1,
+		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,
+		/obj/item/impact_grenade = 4,//hehehehe
+		)
 	cloak = /obj/item/clothing/cloak/cape
 	mask = /obj/item/clothing/mask/rogue/facemask
 	H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 1, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/reading, 2, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 2, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 1, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/climbing, 5, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 5, TRUE)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick) //Trust the plan.
 	ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC) // You LITERALLY get no weapon skills. You're throwing shit at enemies.
+	ADD_TRAIT(H, TRAIT_THROWINGARM, TRAIT_GENERIC) // throw shit better
 	H.change_stat(STATKEY_SPD, 2)
 	H.change_stat(STATKEY_WIL, 1)
 	H.change_stat(STATKEY_INT, 4) //Hilarious

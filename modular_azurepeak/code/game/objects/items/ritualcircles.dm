@@ -1623,7 +1623,9 @@
 	..()
 	var/list/items = list()
 	items |= H.get_equipped_items(TRUE)
-	for(var/I in items)
+	for(var/obj/item/I in items)
+		if(istype(I, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))//dont remove nat armor
+			continue
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/full/matthios
@@ -1634,6 +1636,10 @@
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
 	backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+	if(istype(H.wear_armor, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))//prevents getting free gilded armor for your hedge knight buddy if you have natural armor
+		armor = null
+	if(istype(H.wear_shirt, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))
+		shirt = null
 
 /obj/structure/ritualcircle/matthios/proc/matthiosconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)

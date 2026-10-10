@@ -229,8 +229,8 @@
 	if(used_str >= 11)
 		var/bonus = 0
 
-		if(used_str <= 14)
-			// Normal scaling: +20% per point over 10
+		if(used_str <= 14 || HAS_TRAIT(src, TRAIT_STRENGTH_UNCAPPED))
+			// Full +20% per point above 10; uncapped strength bypasses the diminishment like with weapons.
 			bonus = (used_str - 10) * 0.2
 		else
 			// Diminishing returns after 14
