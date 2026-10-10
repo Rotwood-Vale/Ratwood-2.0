@@ -208,6 +208,7 @@
 #define TILL_INTENT			/datum/intent/till
 
 #define ROD_CAST			/datum/intent/cast
+#define ROD_AUTO			/datum/intent/auto
 #define ROD_REEL			/datum/intent/reel
 
 #define INTENT_SPLASH		/datum/intent/splash

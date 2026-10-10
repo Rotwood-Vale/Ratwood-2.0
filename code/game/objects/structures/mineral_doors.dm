@@ -1230,7 +1230,7 @@
 	lockid = "towner_blacksmith"
 
 /obj/structure/mineral_door/wood/towner/cheesemaker
-	resident_advclass = list(/datum/advclass/cheesemaker)
+	resident_advclass = list(/datum/advclass/cheesemaker,/datum/advclass/masterchef)
 	lockid = "towner_cheesemaker"
 
 /obj/structure/mineral_door/wood/towner/miner
@@ -1246,7 +1246,7 @@
 	lockid = "towner_woodworker"
 
 /obj/structure/mineral_door/wood/towner/fisher
-	resident_advclass = list(/datum/advclass/fisher)
+	resident_advclass = list(/datum/advclass/fisher,/datum/advclass/fishermaster)
 	lockid = "towner_fisher"
 
 /obj/structure/mineral_door/wood/towner/hunter

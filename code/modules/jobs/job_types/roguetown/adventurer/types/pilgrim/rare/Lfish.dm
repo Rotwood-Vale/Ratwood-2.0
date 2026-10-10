@@ -14,9 +14,9 @@
 
 	category_tags = list(CTAG_TOWNER)
 	subclass_stats = list(
-		STATKEY_CON = 2,
-		STATKEY_PER = 2,
-		STATKEY_SPD = 2
+		STATKEY_STR = 3,//strength checks for handling fish
+		STATKEY_WIL = 2,//will for larger stamina during minigame
+		STATKEY_LCK = 4//luck for rng chance
 	)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
@@ -41,7 +41,7 @@
 		backr = /obj/item/storage/backpack/rogue/satchel
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor
 		belt = /obj/item/storage/belt/rogue/leather
-		backl = /obj/item/fishingrod
+		backl = /obj/item/fishingrod/decrepit/fisher
 		beltr = /obj/item/cooking/pan
 		mouth = /obj/item/rogueweapon/huntingknife
 		beltl = /obj/item/flint
