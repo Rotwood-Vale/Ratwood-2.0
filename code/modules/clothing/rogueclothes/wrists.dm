@@ -520,3 +520,66 @@
 		user.update_inv_shirt()
 		playsound(user, 'sound/foley/equip/chain_equip.ogg', 50, TRUE)
 		wrapped = FALSE
+
+/obj/item/clothing/wrists/roguetown/artificedbracers
+	name = "bracers"
+	desc = "Steel bracers that protect the arms."
+	body_parts_covered = ARMS
+	icon_state = "artibracers"
+	item_state = "bracers"
+	armor = ARMOR_PLATE
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
+	blocksound = PLATEHIT
+	resistance_flags = FIRE_PROOF
+	max_integrity = ARMOR_INT_SIDE_STEEL
+	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
+	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
+	sewrepair = FALSE
+	smeltresult = /obj/item/ingot/steel
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+
+/obj/item/clothing/wrists/roguetown/artificedbracers/ComponentInitialize()
+	AddComponent(/datum/component/hidden_blades, 'sound/misc/grapple_attach.ogg', 'sound/misc/grapple_reel.ogg', "The inner mechanisms are jammed!", "The sounds of artificed mechanisms echo from the [src]!")
+
+/obj/item/clothing/wrists/roguetown/artificedbracers/attackby(obj/item/storing_item, mob/living/carbon/user, params)
+	var/datum/component/hidden_blades/hidden_blades = GetComponent(/datum/component/hidden_blades)
+	if(hidden_blades && hidden_blades.stow(storing_item, user))
+		return TRUE
+	return ..()
+
+/obj/item/clothing/wrists/roguetown/artificedbracers/attack_right(mob/user)
+	var/datum/component/hidden_blades/hidden_blades = GetComponent(/datum/component/hidden_blades)
+	if(hidden_blades)
+		return hidden_blades.deploy(user)
+	return ..()
+
+/obj/item/clothing/wrists/roguetown/sheathebracers
+	name = "leather bracers"
+	desc = "Standard leather bracers that offer some meager protection for the arms."
+	body_parts_covered = ARMS
+	icon_state = "hiddenbracers"
+	item_state = "bracers"
+	armor = ARMOR_LEATHER
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
+	resistance_flags = FIRE_PROOF
+	max_integrity = ARMOR_INT_SIDE_STEEL
+	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
+	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
+	anvilrepair = /datum/skill/craft/armorsmithing
+	sewrepair = FALSE
+	smeltresult = /obj/item/ingot/steel
+
+/obj/item/clothing/wrists/roguetown/sheathebracers/ComponentInitialize()
+	AddComponent(/datum/component/hidden_blades, 'sound/foley/equip/scabbard_holster.ogg', 'sound/foley/equip/swordsmall1.ogg', "The sheath is jammed!", "Sounds of unsheathing ring out from the [src]!")
+
+/obj/item/clothing/wrists/roguetown/sheathebracers/attackby(obj/item/storing_item, mob/living/carbon/user, params)
+	var/datum/component/hidden_blades/hidden_blades = GetComponent(/datum/component/hidden_blades)
+	if(hidden_blades && hidden_blades.stow(storing_item, user))
+		return TRUE
+	return ..()
+
+/obj/item/clothing/wrists/roguetown/sheathebracers/attack_right(mob/user)
+	var/datum/component/hidden_blades/hidden_blades = GetComponent(/datum/component/hidden_blades)
+	if(hidden_blades)
+		return hidden_blades.deploy(user)
+	return ..()
