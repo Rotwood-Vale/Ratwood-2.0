@@ -38,3 +38,12 @@
 	item_state = "lux_impure"
 	sellprice = 15
 	dropshrink = 0.7
+
+/obj/item/reagent_containers/lux_impure/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/construct_refueling, 700, 'sound/magic/cosmic_expansion.ogg')
+
+/obj/item/reagent_containers/lux/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/construct_refueling, 1000, 'sound/magic/cosmic_expansion.ogg')
+
