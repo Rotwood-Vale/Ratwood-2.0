@@ -14,8 +14,7 @@
 	var/list/added_languages = list()
 	/// An associative list containing any extra stats we need to add to the mob. NOTE: GENERALLY should not add stats unless it imposes serious downsides.
 	var/list/added_stats = list()
-	/// The cost of application in TRIUMPH points, if any.
-	var/triumph_cost = 0
+	var/point_cost = 0
 	/// A custom addendum explaining what it does outside of the trait / skill adjustments.
 	var/custom_text
 	/// Mutually exclusive virtues. Virtue packs are automatically considered.
@@ -26,11 +25,6 @@
 	var/list/incompatible_vices = list()
 	/// If someone already has traits deemed incompatible, don't apply the quirk at all.
 	var/list/incompatible_traits = list()
-
-/datum/customization_trait/New()
-	. = ..()
-	if(triumph_cost)
-		desc += " <b>Costs [triumph_cost] TRIUMPHS.</b>"
 
 /datum/customization_trait/proc/apply_to_human(mob/living/carbon/human/recipient)
 	return
@@ -112,17 +106,3 @@
 	if(chosen_name)
 		var/instrument_type = instruments[chosen_name]
 		recipient.mind?.special_items[chosen_name] = instrument_type
-
-/datum/customization_trait/proc/check_triumphs(mob/living/carbon/human/recipient)
-	if(!triumph_cost)
-		return TRUE
-
-	if(!recipient.mind)
-		return FALSE
-
-	var/current_triumphs = recipient.get_triumphs()
-	if(current_triumphs < triumph_cost)
-		return FALSE
-
-	recipient.adjust_triumphs(-triumph_cost, FALSE)
-	return TRUE

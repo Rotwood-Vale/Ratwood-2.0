@@ -6,6 +6,7 @@
 
 /datum/species/dullahan
 	name = "Revenant"
+	origin_stats_allowed = FALSE
 	id = "revenant"
 	desc = "<b>Revenant</b><br>\
 	Revenants are those that have died, returning from death to continue 'living' in a manner to speak. Their origins are not entirely known, yet many strongly believe them to have originated from the rot and decay of Psydonia. \

@@ -3,6 +3,7 @@
 
 /datum/species/lamia
 	name = "Lamia"
+	origin_stats_allowed = FALSE
 	id = "lamia"
 	desc = "<b>Lamia</b><br>\
 	The monstrous spawn of Abyssor, snake and humen conjoined together, the deepkin and merfolk. \

@@ -90,6 +90,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/list/learned_recipes //List of learned recipe TYPES.
 
 	var/list/special_items = list()
+	var/list/loadout_item_info = list()
 
 	var/list/areas_entered = list()
 
@@ -152,6 +153,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	squire = null
 	enslaved_to = null
 	special_items.Cut()
+	loadout_item_info.Cut()
 	special_people.Cut()
 	return ..()
 
@@ -996,24 +998,15 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 						// Check if this is a loadout item and reduce armor if applicable
 						var/is_loadout_item = FALSE
 						var/keep_stats = FALSE
-						if(user.client?.prefs)
-							var/list/loadout_slots = list(
-								"loadout", "loadout2", "loadout3", "loadout4", "loadout5",
-								"loadout6", "loadout7", "loadout8", "loadout9", "loadout10",
-							)
-							for(var/slot in loadout_slots)
-								var/datum/loadout_item/loadout_datum = user.client.prefs.vars[slot]
-								if(loadout_datum && loadout_datum.path == path2item)
-									is_loadout_item = TRUE
-									keep_stats = loadout_datum.keep_loadout_stats
-									break
+						if(path2item in user.mind.loadout_item_info)
+							is_loadout_item = TRUE
+							keep_stats = user.mind.loadout_item_info[path2item]
 
 						// Apply modifications for loadout items (unless keep_loadout_stats is TRUE)
 						if(is_loadout_item && !keep_stats)
 							// Mark as loadout item to prevent crafting usage
 							I.loadout_item = TRUE
 
-							// Add subtle examination text to indicate this is a loadout reproduction
 							if(I.desc)
 								I.desc += " The overall look and feel of the item suggests this may be a mere reproduction."
 							else

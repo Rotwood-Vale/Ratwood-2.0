@@ -11,10 +11,8 @@
 	cmode_music = 'sound/music/combat_gronn.ogg'
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	traits_applied = list(TRAIT_STEELHEARTED)
-	subclass_stats = list(
-		STATKEY_WIL = 2,
-		STATKEY_INT = -1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_VANGUARD
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,

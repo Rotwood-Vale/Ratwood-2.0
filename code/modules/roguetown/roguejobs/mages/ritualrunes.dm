@@ -402,7 +402,7 @@ GLOBAL_LIST(teleport_runes)
 	pixel_y = -32
 	invocation = "Thal'miren vek'laris un'vethar!"
 	layer = SIGIL_LAYER
-	can_be_scribed = TRUE
+	can_be_scribed = FALSE
 	ritual_number = TRUE
 
 /obj/effect/decal/cleanable/roguerune/arcyne/empowerment/invoke(list/invokers, datum/runeritual/buff/runeritual)

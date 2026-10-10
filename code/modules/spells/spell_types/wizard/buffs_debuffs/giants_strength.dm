@@ -53,7 +53,7 @@
 	var/outline_colour ="#8B0000" // Different from strength potion cuz red = strong
 	id = "giantstrength"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/giants_strength
-	effectedstats = list(STATKEY_STR = 3)
+	effectedstats = list(STATKEY_STR = 2)
 	duration = 1.5 MINUTES
 
 /datum/status_effect/buff/giants_strength/other

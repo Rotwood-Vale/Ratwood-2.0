@@ -209,6 +209,7 @@
 /datum/advclass/prisoner_hunter
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_hunter
+	favored_stats = STATS_ARCHER
 	name = "Prisoner Hunter"
 	category_tags = list(CTAG_PRISONER)
 
@@ -455,6 +456,7 @@
 /datum/advclass/prisoner_woodcutter
 	parent_type = /datum/advclass
 	outfit = /datum/outfit/job/roguetown/prisoner_woodcutter
+	stat_budget = STAT_BUDGET_LOW
 	name = "Prisoner Woodcutter"
 	category_tags = list(CTAG_PRISONER)
 

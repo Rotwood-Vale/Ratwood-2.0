@@ -20,12 +20,8 @@
 		TRAIT_NALEDI,
 		TRAIT_MAGEDEXTERITY, //THEY NEED THIS MORE THAN ANY OTHER MAGE IN THE GAME. 
 	)
-	subclass_stats = list(// This does not follow the typical 8 stat setup. Do not increase this.
-		STATKEY_INT = 3,
-		STATKEY_PER = 2,
-		STATKEY_STR = -1,
-		STATKEY_SPD = -1,
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_CASTER
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
 		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,

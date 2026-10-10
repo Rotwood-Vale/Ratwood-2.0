@@ -8,12 +8,8 @@
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_MEDIUMARMOR)
-	subclass_stats = list(
-		STATKEY_STR = 3,	//have you seen this idiot's starting gear and skill spread??
-		STATKEY_WIL = 3,	//-LCK +WIL
-		STATKEY_CON = 2,
-		STATKEY_INT = -1
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_INT = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,		//Knights will always be competent swordsmen regardless of class pick, so let's make all brigands competent axemen.

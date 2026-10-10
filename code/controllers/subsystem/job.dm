@@ -1025,7 +1025,7 @@ SUBSYSTEM_DEF(job)
 	if(istype(P.virtue, /datum/virtue/utility/resident))
 		return TRUE
 
-	if(P.statpack?.name == "Virtuous" && istype(P.virtuetwo, /datum/virtue/utility/resident))
+	if(P.second_virtue_allowed() && istype(P.virtuetwo, /datum/virtue/utility/resident))
 		return TRUE
 
 	return FALSE

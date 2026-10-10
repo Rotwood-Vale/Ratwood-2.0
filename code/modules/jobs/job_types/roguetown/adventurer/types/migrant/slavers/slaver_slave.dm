@@ -10,12 +10,8 @@
 	traits_applied = list(TRAIT_GOODLOVER, TRAIT_EMPATH, TRAIT_BEAUTIFUL, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_SLAVE)
 
-	subclass_stats = list(
-		STATKEY_STR = -1,
-		STATKEY_INT = 3,
-		STATKEY_WIL = 3,
-		STATKEY_SPD = 2,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED)
 
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
@@ -67,12 +63,9 @@
 	traits_applied = list(TRAIT_GOODLOVER, TRAIT_BREADY, TRAIT_STEELHEARTED, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_SLAVE)
 
-	subclass_stats = list(
-		STATKEY_STR = 1,
-		STATKEY_PER = 1,
-		STATKEY_WIL = 3,
-		STATKEY_LCK = -1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_VANGUARD
+	subclass_stats = list(STATKEY_LCK = -1)
 
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,

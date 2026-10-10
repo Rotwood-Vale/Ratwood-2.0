@@ -17,16 +17,8 @@
 /datum/quirk/deadnose
 	name = "Dead Nose"
 	desc = "My nose is numb to the smell of decay."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that already has a dead nose!"
 	added_traits = list(TRAIT_NOSTINK)
 	incompatible_traits = list(TRAIT_NOSTINK)
-
-/datum/quirk/disgracednoble
-	name = "Disgraced Noble"
-	desc = "I was a scion of a noble house... long ago. Now I am a commoner, and my family name is a source of shame."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a noble!"
-	added_traits = list(TRAIT_DISGRACED_NOBLE)
-	incompatible_traits = list(TRAIT_NOBLE)
 
 /datum/quirk/dwarvenchef
 	name = "Dwarven Chef"
@@ -38,7 +30,6 @@
 /datum/quirk/empath
 	name = "Empath"
 	desc = "I can notice when people are in pain."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already an empath!"
 	added_traits = list(TRAIT_EMPATH)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
 	incompatible_traits = list(TRAIT_EMPATH)
@@ -46,7 +37,6 @@
 /datum/quirk/fabledlover
 	name = "Fabled Lover"
 	desc = "It's a lucky thing to share my bed."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a fabled lover!"
 	point_cost = 2
 	added_traits = list(TRAIT_GOODLOVER)
 	incompatible_virtues = list(/datum/virtue/utility/socialite, /datum/virtue/utility/performer)
@@ -56,10 +46,10 @@
 	name = "Gossiper"
 	desc = "Despite my lowborn blood, I've made a habit out of brushing shoulders with the nobility and learning their secrets."
 	custom_text = "Lets you view noble gossip."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a noble!"
-	point_cost = 2
+	point_cost = 1
 	added_traits = list(TRAIT_GOSSIPER)
-	incompatible_virtues = list(/datum/virtue/utility/tracker)
+	incompatible_virtues = list(/datum/virtue/utility/tracker, /datum/virtue/nobility)
+	incompatible_quirks = list(/datum/quirk/defilednobility)
 	incompatible_traits = list(TRAIT_NOBLE)
 
 /datum/quirk/hobbyistmusician
@@ -75,7 +65,7 @@
 	name = "Large Frame"
 	desc = "I'm simply built bigger than most. My strength and hardiness has nothing to show for my size, though."
 	custom_text = "This quirk increases your sprite size. Incompatible with the Giant virtue."
-	point_cost = 3
+	point_cost = 1
 	incompatible_virtues = list(/datum/virtue/size/giant)
 
 /datum/quirk/largeframe/apply_to_human(mob/living/carbon/human/recipient)
@@ -86,7 +76,7 @@
 /datum/quirk/redolent
 	name = "Redolent"
 	desc = "My body odor is strong and distinct. Without regular baths, others will notice..."
-	point_cost = 1
+	point_cost = 0
 	added_traits = list(TRAIT_REDOLENT)
 
 /datum/quirk/redolent/apply_to_human(mob/living/carbon/human/recipient)
@@ -221,28 +211,6 @@
 
 // Gives minor nobility, but what is a minor noble anyways?
 // If we were being realistic then only the grand duke and baron would be real nobles.
-// I guess we're saying that real nobility is people who are recognized by Astrata??????????
-// Who fucking cares, bro.
-/datum/quirk/noble
-	name = "Noble"
-	desc = "By birth, blade or brain, I carry noble blood, if only a minor and untitled line of it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
-	custom_text = "This quirk grants you MINOR nobility, meaning you are still subjected to the Great Writ and poll tax."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a noble!"
-	point_cost = 4
-	added_traits = list(TRAIT_NOBLE)
-	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
-	added_stashed_items = list(
-	"Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
-	"Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch
-	)
-	incompatible_vices = list(/datum/charflaw/lawless)
-	incompatible_quirks = list(/datum/quirk/disgracednoble, /datum/quirk/gossiper)
-	incompatible_traits = list(TRAIT_NOBLE)
-
-/datum/quirk/noble/apply_to_human(mob/living/carbon/human/recipient)
-	SStreasury.noble_incomes[recipient] += 15
-	recipient.social_rank = max(recipient.social_rank, SOCIAL_RANK_MINOR_NOBLE)
-
 /datum/quirk/outdoorsy
 	name = "Outdoorsy"
 	desc = "My experience in the wilds allows me to fall asleep on surfaces like treebranches as if they were beds."
@@ -253,8 +221,7 @@
 /datum/quirk/pretty
 	name = "Pretty"
 	desc = "I'm no great beauty, but people seem to like looking at my face well enough."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already beautiful!"
-	point_cost = 2
+	point_cost = 1
 	added_traits = list(TRAIT_PRETTY)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
 	incompatible_quirks = list(/datum/quirk/ugly)
@@ -264,8 +231,7 @@
 	name = "Raw Diet"
 	desc = "Be it from unnatural anatomy or simply a bizarre tolerance, I can eat raw meat and uncooked food as if it were natural."
 	custom_text = "Lets you eat raw meat and uncooked food without getting poisoned. Rotten food, organs, and dirty water will still poison you."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that already possesses an unnatural metabolism!"
-	point_cost = 2
+	point_cost = 1
 	added_traits = list(TRAIT_RAW_EATER)
 	incompatible_virtues = list(/datum/virtue/utility/feral_appetite)
 	incompatible_traits = list(TRAIT_NASTY_EATER, TRAIT_ORGAN_EATER, TRAIT_WILD_EATER)
@@ -273,8 +239,7 @@
 /datum/quirk/roughlover
 	name = "Rough Lover"
 	desc = "With strong intent, I am a violent partner in bed. Breaking pelvis and spirit alike."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a bedbreaker!"
-	point_cost = 2
+	point_cost = 1
 	added_traits = list(TRAIT_DEATHBYSNUSNU)
 	incompatible_traits = list(TRAIT_DEATHBYSNUSNU)
 
@@ -319,6 +284,52 @@
 /datum/quirk/selfaware
 	name = "Self Aware"
 	desc = "I've always been conscious about how hurt my body can get."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that already has self aware!"
 	added_traits = list(TRAIT_SELF_AWARE)
 	incompatible_traits = list(TRAIT_SELF_AWARE)
+
+/datum/quirk/baothamark
+	name = "Marked by Baotha"
+	desc = "Whether through intentionally seeking out heretical ritualists or against my will, I have been marked by Baotha. I am branded visibly on my groin and am able to be impregnated regardless of physical states that would usually prevent this. I will need to sate my new urges often to avoid stress..."
+	point_cost = 0
+
+/datum/quirk/baothamark/apply_to_human(mob/living/carbon/human/recipient)
+	var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[recipient.gender == "male" ? "m" : "f"]", -BODY_LAYER)
+	if(isdwarf(recipient) || isgoblinp(recipient) || iskobold(recipient) || iscritter(recipient))
+		if(recipient.gender == MALE)
+			marking_overlay.pixel_y -= 5
+		else
+			marking_overlay.pixel_y -= 3
+	recipient.add_overlay(marking_overlay)
+	addtimer(CALLBACK(src, PROC_REF(grant_fertility_boon), recipient), 40)
+	var/obj/item/organ/vagina/vagina = recipient.getorganslot(ORGAN_SLOT_VAGINA)
+	if(vagina && !vagina.fertility)
+		vagina.fertility = TRUE
+	var/obj/item/organ/tail/manticore/tail = get_manticore_tail(recipient)
+	if(tail)
+		tail.fertility = TRUE
+	if(!HAS_TRAIT(recipient, TRAIT_DEPRAVED))
+		var/datum/charflaw/addiction/baothamarked/L = new
+		recipient.vices += L
+		L.on_mob_creation(recipient)
+
+/datum/quirk/baothamark/proc/grant_fertility_boon(mob/living/carbon/human/recipient)
+	if(QDELETED(recipient))
+		return
+	ADD_TRAIT(recipient, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
+
+/datum/quirk/defilednobility
+	name = "Disgraced Nobility"
+	desc = "I was a scion of a noble house... long ago. Now I am a commoner, and my family name is a source of shame."
+	custom_text = "Marks you as formerly noble."
+	point_cost = 1
+	added_traits = list(TRAIT_DISGRACED_NOBLE)
+	incompatible_virtues = list(/datum/virtue/nobility)
+	incompatible_quirks = list(/datum/quirk/gossiper)
+	incompatible_traits = list(TRAIT_NOBLE)
+
+/datum/quirk/loosestraps
+	name = "Loose Straps"
+	desc = "My armor never seems to fit quite right. It has a nasty habit of exploding off my body when under inordinate stress."
+	custom_text = "Armor may be flung off when you take too much damage."
+	point_cost = 0
+	added_traits = list(TRAIT_LOOSE_STRAPS)

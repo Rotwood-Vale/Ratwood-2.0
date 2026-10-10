@@ -8,12 +8,8 @@
 	cmode_music = 'sound/music/cmode/towner/combat_towner2.ogg'
 	traits_applied = list(TRAIT_SEEDKNOW, TRAIT_HOMESTEAD_EXPERT)
 	category_tags = list(CTAG_PILGRIM)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_WIL = 1,
-		STATKEY_CON = 1,
-		STATKEY_INT = 1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED)
 
 /datum/outfit/job/roguetown/refugee/harvester/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -80,13 +76,8 @@
 
 	category_tags = list(CTAG_PILGRIM)
 	traits_applied = list(TRAIT_SMITHING_EXPERT, TRAIT_TRAINED_SMITH, TRAIT_HOMESTEAD_EXPERT, TRAIT_LEGENDARY_MINER)
-	subclass_stats = list(
-		STATKEY_WIL = 2,
-		STATKEY_CON = 2,
-		STATKEY_STR = 1,
-		STATKEY_INT = 1,
-		STATKEY_SPD = -1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_DISFAVORED)
 
 /datum/outfit/job/roguetown/refugee/prospector/pre_equip(mob/living/carbon/human/H)
 	..()

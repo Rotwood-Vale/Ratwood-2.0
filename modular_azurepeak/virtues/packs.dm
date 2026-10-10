@@ -1,12 +1,9 @@
-// Virtue Packs - Triumph-cost combinations of virtues that make thematic sense together
-
 /datum/virtue/pack
 	/// List of virtue types that this pack grants
 	var/list/granted_virtues = list()
 
 /datum/virtue/pack/apply_to_human(mob/living/carbon/human/recipient)
 	. = ..()
-	// Apply all virtues in the pack without checking triumphs (pack already cost triumphs)
 	for(var/virtue_path in granted_virtues)
 		var/datum/virtue/V = GLOB.virtues[virtue_path]
 		if(V)
@@ -15,9 +12,9 @@
 // Bronze Golem Pack: Both Bronze Arms
 // For those who have replaced both arms with mechanical prosthetics
 /datum/virtue/pack/bronzegolem
-	name = "Bronze Golem (-3 TRI)"
+	name = "Bronze Golem"
 	desc = "Through wealth, misfortune, or perhaps experimentation, both of my arms have been replaced with bronze prosthetics. I am part man, part machine - a walking testament to artifice."
-	triumph_cost = 3
+	point_cost = 1
 	granted_virtues = list(
 		/datum/virtue/utility/bronzearm_r,
 		/datum/virtue/utility/bronzearm_l
@@ -30,9 +27,9 @@
 // Enchanting Performer Pack: Socialite + Performer + Second Voice
 // For entertainers, bards, and charismatic performers
 /datum/virtue/pack/enchanter
-	name = "Enchanting Performer (-6 TRI)"
+	name = "Enchanting Performer"
 	desc = "I am a master of the stage and salon alike - beautiful, talented, and charming. My performances captivate audiences, and my social graces open every door."
-	triumph_cost = 6
+	point_cost = 2
 	granted_virtues = list(
 		/datum/virtue/utility/socialite,
 		/datum/virtue/utility/performer
@@ -44,9 +41,9 @@
 // Traveling Scholar Pack: Linguist + Rich and Shrewd + Equestrian
 // For worldly scholars who have traveled extensively and accumulated wealth and knowledge
 /datum/virtue/pack/travelingscholar
-	name = "Traveling Scholar (-15 TRI)"
+	name = "Traveling Scholar"
 	desc = "My travels across distant lands have made me wealthy in both coin and wisdom. I speak many tongues, understand the value of all things, and ride with practiced ease. The world is my library, and every road teaches me something new."
-	triumph_cost = 15
+	point_cost = 3
 	granted_virtues = list(
 		/datum/virtue/utility/linguist,
 		/datum/virtue/items/rich,
@@ -59,9 +56,9 @@
 
 // Scrappy Survivor Pack: Cunning Provisioner + Forester + Feral Appetite
 /datum/virtue/pack/scrappysurvivor
-	name = "Scrappy Survivor (-10 TRI)"
+	name = "Scrappy Survivor"
 	desc = "I've lived through hard times - poverty, famine, or exile taught me to make do with what I have. I can fish, farm, forage, and most importantly, I can stomach anything. Spoiled rations? Raw meat? Doesn't matter - I'll eat it and keep going."
-	triumph_cost = 10
+	point_cost = 1
 	granted_virtues = list(
 		/datum/virtue/utility/forester,
 		/datum/virtue/utility/feral_appetite
@@ -72,9 +69,9 @@
 
 // Trusted Housekeeper Pack: Resident + Cunning Provisioner
 /datum/virtue/pack/housekeeper
-	name = "Trusted Housekeeper (-9 TRI)"
+	name = "Trusted Housekeeper"
 	desc = "I've served the households of this city for years - cooking, cleaning, and managing provisions. I know every street, have a home here, and my skills in the kitchen are unmatched. The city trusts me, and I know how to make do."
-	triumph_cost = 9
+	point_cost = 2
 	granted_virtues = list(
 		/datum/virtue/utility/resident,
 		/datum/virtue/utility/granary
@@ -85,9 +82,9 @@
 
 // Broken Soul Pack: Tolerant + Deadened
 /datum/virtue/pack/brokensoul
-	name = "Broken Soul (-2 TRI)"
+	name = "Broken Soul"
 	desc = "Life has been cruel to me. I've learned to endure what most cannot, and I've felt nothing for so long I can barely remember what emotions were like. I am a walking testament to survival through suffering."
-	triumph_cost = 2
+	point_cost = 1
 	granted_virtues = list(
 		/datum/virtue/utility/tolerant,
 		/datum/virtue/utility/deadened

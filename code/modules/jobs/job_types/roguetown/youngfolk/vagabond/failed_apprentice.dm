@@ -7,11 +7,7 @@
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_ALCHEMY_EXPERT)
 	category_tags = list(CTAG_VAGABOND)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_CON = -1,
-		STATKEY_WIL = -1
-	)
+	stat_budget = STAT_BUDGET_LOW
 	subclass_spellpoints = 9
 	subclass_skills = list(
 		/datum/skill/magic/arcane = SKILL_LEVEL_NOVICE,

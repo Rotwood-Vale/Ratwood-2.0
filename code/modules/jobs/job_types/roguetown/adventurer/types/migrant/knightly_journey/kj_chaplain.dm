@@ -9,12 +9,8 @@
 	category_tags = list(CTAG_KJ_CHAPLAIN)
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	traits_applied = list(TRAIT_EMPATH, TRAIT_RITUALIST, TRAIT_OUTLANDER)
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_PER = 2,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1,
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_PER = STAT_VERY_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
@@ -173,12 +169,7 @@
 		TRAIT_SELF_AWARE,
 		TRAIT_OUTLANDER
 	)
-	subclass_stats = list(
-		STATKEY_CON = 5,
-		STATKEY_WIL = 3,
-		STATKEY_SPD = 1,
-		STATKEY_STR = -2,
-	)
+	forced_stats = list(STATKEY_CON = 15, STATKEY_WIL = 12, STATKEY_SPD = 8, STATKEY_STR = 8, STATKEY_INT = 10, STATKEY_PER = 10)
 	subclass_skills = list(
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,

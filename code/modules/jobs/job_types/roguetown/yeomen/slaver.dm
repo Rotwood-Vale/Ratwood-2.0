@@ -37,11 +37,8 @@
 	outfit = /datum/outfit/job/roguetown/slaver/basic
 	category_tags = list(CTAG_SLAVER)
 	subclass_languages = list(/datum/language/celestial)
-	subclass_stats = list(
-		STATKEY_PER = 2,
-		STATKEY_CON = 2,
-		STATKEY_STR = 1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,

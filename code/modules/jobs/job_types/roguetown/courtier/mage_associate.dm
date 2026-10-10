@@ -47,12 +47,8 @@
 
 	category_tags = list(CTAG_WASSOCIATE)
 	traits_applied = list(TRAIT_ARCYNE_T3, TRAIT_MAGEDEXTERITY)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_CASTER
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_spellpoints = 21
 	subclass_skills = list(
@@ -98,11 +94,8 @@
 
 	category_tags = list(CTAG_WASSOCIATE)
 	traits_applied = list(TRAIT_SEEDKNOW, TRAIT_ALCHEMY_EXPERT)
-	subclass_stats = list(
-		STATKEY_INT = 4,
-		STATKEY_PER = 2,
-		STATKEY_WIL = 1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_CLERIC
 	subclass_spellpoints = 18
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
@@ -164,11 +157,8 @@
 
 	category_tags = list(CTAG_WASSOCIATE)
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)//emphasizing the "serve" part of their description
-	subclass_stats = list(
-		STATKEY_INT = 4,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_CASTER
 	subclass_spellpoints = 18
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,

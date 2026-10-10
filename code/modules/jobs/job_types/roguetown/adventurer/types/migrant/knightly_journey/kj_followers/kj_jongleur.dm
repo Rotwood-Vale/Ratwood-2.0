@@ -10,11 +10,8 @@
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_GOODLOVER, TRAIT_EMPATH, TRAIT_OUTLANDER)
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_SPD = 2,
-		STATKEY_WIL = 1,
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_SPD = STAT_VERY_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,

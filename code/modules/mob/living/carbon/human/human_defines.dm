@@ -161,7 +161,9 @@
 	rot_type = /datum/component/rot/corpse
 
 	var/voice_type = null // LETHALSTONE EDIT: defines what sound pack we use. keep this null so mobs resort to their typical gender typing - preferences set this
-	var/datum/statpack/statpack = null // Lethalstone Port - statpacks for greater customization
+	var/list/stat_caps
+	var/stat_pack
+	var/list/stat_bonuses
 	var/second_voice	// Virtue-specific. Can be swapped to / from and changed.
 	var/original_voice
 
@@ -179,7 +181,6 @@
 
 	var/datum/charflaw/charflaw  // Legacy single vice (kept for compatibility)
 	var/list/datum/charflaw/vices = list()  // Multiple vices system
-	var/unspent_quirk_points = 0  // Any leftover quirk points are turned into triumphs after the round ends
 
 	// curse list and cooldown
 	var/list/curses = list()

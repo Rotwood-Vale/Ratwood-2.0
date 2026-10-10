@@ -32,12 +32,8 @@
 	outfit = /datum/outfit/job/roguetown/knavewench/basic
 	category_tags = list(CTAG_TAPSTER)
 	// 5 points weighted
-	subclass_stats = list(
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-		STATKEY_INT = 1,
-		STATKEY_SPD = 1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_WIL = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_CON = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,

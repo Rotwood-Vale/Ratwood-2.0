@@ -3,6 +3,7 @@
 
 /datum/species/harpy
 	name = "Harpy"
+	origin_stats_allowed = FALSE
 	id = "harpy"
 	desc = "<b>Harpy</b><br>\
 	Harpies, often called \"songbirds\" or \"Magpies\" by some, resemble the half-kin in appearance at first glance. \

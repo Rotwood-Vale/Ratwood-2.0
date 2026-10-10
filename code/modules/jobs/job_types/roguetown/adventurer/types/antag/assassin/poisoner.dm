@@ -8,15 +8,9 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_NOSTINK)	// Stinky Man - You get tossed a bone around rotting corpses. Plays into the poison and stuff.
 	// Weighted 14
-	subclass_stats = list(
-		STATKEY_PER = 1,
-		STATKEY_SPD = 3,
-		STATKEY_STR = 1,
-		STATKEY_WIL = 2,
-		STATKEY_CON = 1,
-		STATKEY_INT = 1,
-		STATKEY_LCK = 1,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = STATS_ZEALOT
+	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,		// May be silly but - hey, they can pose as a doctor-type.
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,

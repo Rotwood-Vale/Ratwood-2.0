@@ -4,8 +4,6 @@ GLOBAL_LIST_INIT(virtues, init_subtypes_assoc(/datum/virtue))
 	parent_type = /datum/customization_trait
 
 /proc/apply_virtue(mob/living/carbon/human/recipient, datum/virtue/virtue_type)
-	if (!virtue_type.check_triumphs(recipient))
-		return
 	virtue_type.apply_generic_effects(recipient)
 	if(HAS_TRAIT(recipient, TRAIT_RESIDENT))
 		if(recipient in SStreasury.bank_accounts)

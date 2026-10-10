@@ -40,13 +40,9 @@
 
 	subclass_spellpoints = 36
 	category_tags = list(CTAG_COURTMAGE)
-	subclass_stats = list(
-		STATKEY_INT = 5,// Automatic advanced magic for most spells. (I.E summon weapon being upgraded to steel from iron/etc)
-		STATKEY_PER = 3,
-		STATKEY_LCK = 1,// Leadership carrot, stats weight lower than usual leadership weight due to having T4 magic.
-		STATKEY_STR = -1,
-		STATKEY_CON = -1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_CASTER
+	subclass_stats = list(STATKEY_LCK = 1)
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,

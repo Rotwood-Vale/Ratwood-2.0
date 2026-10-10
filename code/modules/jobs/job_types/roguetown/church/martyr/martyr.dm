@@ -39,9 +39,9 @@
 	//No undeath-adjacent virtues for a role that can sacrifice itself. The Ten like their sacrifices 'pure'.
 	//They get those traits during sword activation, anyway.
 	//Dual wielder is there to stand-in for ambidextrous in case they activate their sword in their off-hand.
-	virtue_restrictions = list(/datum/virtue/combat/rotcured, /datum/virtue/utility/deadened,
+	virtue_restrictions = list(/datum/virtue/nobility, /datum/virtue/combat/rotcured, /datum/virtue/utility/deadened,
 	/datum/virtue/utility/deathless, /datum/virtue/combat/dualwielder, /datum/virtue/heretic/zchurch_keyholder)
-	quirk_restrictions = list(/datum/quirk/noble, /datum/quirk/hunted)
+	quirk_restrictions = list(/datum/quirk/hunted)
 
 	advclass_cat_rolls = list(CTAG_MARTYR = 2)
 	job_subclasses = list(
@@ -57,13 +57,8 @@
 	outfit = /datum/outfit/job/roguetown/martyr/basic
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	category_tags = list(CTAG_MARTYR)
-	subclass_stats = list(
-		STATKEY_CON = 3,
-		STATKEY_WIL = 3,
-		STATKEY_STR = 2,
-		STATKEY_PER = 1,
-		STATKEY_INT = 1
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list(
 	//No, they don't get any miracles. Their miracle is being able to use their weapon at all.
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,

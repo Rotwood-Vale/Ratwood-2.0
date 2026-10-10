@@ -55,12 +55,9 @@
 
 	category_tags = list(CTAG_HAND)
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_HEAVYARMOR)
-	subclass_stats = list(
-		STATKEY_PER = 3,
-		STATKEY_INT = 3,
-		STATKEY_STR = 2,
-		STATKEY_LCK = 1,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_STR = STAT_FAVORED, STATKEY_INT = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
@@ -113,12 +110,9 @@
 	category_tags = list(CTAG_HAND)
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_KEENEARS, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER)//Spy not a royal champion
-	subclass_stats = list(
-		STATKEY_SPD = 3,
-		STATKEY_PER = 2,
-		STATKEY_INT = 2,
-		STATKEY_LCK = 1,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_PER = STAT_VERY_FAVORED, STATKEY_INT = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/bows = SKILL_LEVEL_EXPERT,
@@ -175,12 +169,9 @@
 
 	category_tags = list(CTAG_HAND)
 	traits_applied = list(TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_MAGEDEXTERITY)
-	subclass_stats = list(
-		STATKEY_INT = 4,
-		STATKEY_PER = 3,
-		STATKEY_WIL = 2,
-		STATKEY_LCK = 2,
-	)
+	stat_budget = STAT_BUDGET_ELITE
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 2)
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_spellpoints = 15
 	subclass_skills = list(

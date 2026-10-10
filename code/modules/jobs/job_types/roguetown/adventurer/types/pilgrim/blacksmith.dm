@@ -9,14 +9,9 @@
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	traits_applied = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT)
 	maximum_possible_slots = 20 // Should never fill, for the purpose of players to know what types towners are in round at the menu
-	subclass_stats = list(
-		STATKEY_WIL = 1,
-		STATKEY_CON = 1,
-		STATKEY_STR = 1,
-		STATKEY_INT = 2,
-		STATKEY_LCK = 1,
-		STATKEY_SPD = -1
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_SPD = STAT_DISFAVORED)
+	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,

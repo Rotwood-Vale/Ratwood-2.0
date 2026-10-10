@@ -8,12 +8,7 @@
 	category_tags = list(CTAG_GNOLL_IMPURE)
 	outfit = /datum/outfit/job/roguetown/gnoll_impure
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_UNLYCKERABLE)
-	subclass_stats = list(
-		STATKEY_STR = 3,
-		STATKEY_CON = 5,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 2
-	)
+	forced_stats = list(STATKEY_CON = 11, STATKEY_WIL = 13, STATKEY_SPD = 14, STATKEY_STR = 14, STATKEY_INT = 8, STATKEY_PER = 10)
 	// Despite being flavored as a blank slate, we do want them to be fun to fight
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,

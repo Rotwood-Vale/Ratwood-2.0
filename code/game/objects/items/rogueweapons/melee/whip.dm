@@ -141,7 +141,7 @@
 	is_silver = TRUE
 	force = 25
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/flail/smash/ranged/psywhip)
-	minstr = 11
+	minstr = 9
 	wdefense = 0
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/silver
@@ -164,7 +164,7 @@
 	icon_state = "silverwhip"
 	force = 23 //Experimental change - adds a +2 to force, as a bridge between handweapons and blunt weapons. Higher strength minimum. Do not raise above 25, unless you want to resurrect maille-shatterers.
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish)
-	minstr = 12 //Locks 100% effectiveness - and partially disables ranged dismemberment - unless you either have a +2 STR statpack or are a dedicated melee combatant.
+	minstr = 11 //Locks 100% effectiveness - and partially disables ranged dismemberment - unless you either have a +2 STR statpack or are a dedicated melee combatant.
 	wdefense = 0
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silver
@@ -209,14 +209,14 @@
 	icon_state = "spiderwhip"
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/dagger/sucker_punch) // sucker as a little flavor and bonus. 
 	force = 22
-	minstr = 10 //meant for a medium armor mounted soldier. With the +2 from the drow merc statspread, it should cover most statpack silliness save for Wary.  
+	minstr = 9 //meant for a medium armor mounted soldier. With the +2 from the drow merc statspread, it should cover most statpack silliness save for Wary.  
 
 /obj/item/rogueweapon/whip/bronze
 	name = "bronze whip"
 	desc = "A heavy whip, corded from thick leather and adorned with a razor-sharp bronzehead. In ancient tymes, this shepherd's weapon once repelled the gnashing teeth of bloodthirsty nitebeasts: now, it separates limb-from-trunk with thunderous claps. </br>Holding this whip imbues you with determination.. and a rather odd hankering for turkey dinners."
 	icon_state = "bronzewhip"
 	force = 21 //Same damage as the leathers.
-	minstr = 13 //Dodgemasters need-not apply. Intended for the 'Belmont'-esque archetype of Barbarians, and greatly punishes those who would try and take it for the sake of non-thematic cheesing.
+	minstr = 9 //Dodgemasters need-not apply. Intended for the 'Belmont'-esque archetype of Barbarians, and greatly punishes those who would try and take it for the sake of non-thematic cheesing.
 	wdefense = 0
 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish) //Able to dismember at range. 'Holy' is a catchall term, in this case.
 	smeltresult = /obj/item/ingot/bronze
@@ -333,7 +333,7 @@
 	desc = "A dazzling length bronze coiling outwards from a knucklebowed hilt. A heftier and ancient design for a more robustly built fighter."
 	icon_state = "b_urumi"
 	force = 30
-	minstr = 12
+	minstr = 9
 	possible_item_intents = list(/datum/intent/whip/lash/urumi/heavy, /datum/intent/whip/crack/urumi/heavy, /datum/intent/whip/thrust/heavy, /datum/intent/dagger/sucker_punch)
 	wbalance = WBALANCE_HEAVY
 	smeltresult = /obj/item/ingot/bronze
@@ -343,7 +343,7 @@
 	desc = "Two lengths of shimmering silver coiling outwards from a knucklebowed hilt. These hefty blades demand strength and dexterity from the aspiring sunderer of the unholy."
 	icon_state = "silver_urumi"
 	force = 33
-	minstr = 12
+	minstr = 11
 	possible_item_intents = list(/datum/intent/whip/lash/urumi/heavy, /datum/intent/whip/crack/urumi/heavy, /datum/intent/whip/thrust/heavy, /datum/intent/dagger/sucker_punch)
 	max_integrity = 150
 	max_blade_int = 150
@@ -368,7 +368,7 @@
 	The knuckleguarded handle betrays the weapon's grim purpose: to bring the enemies of the drow to their knees, be it through blade or bludgeon."
 	icon_state = "spider_urumi"
 	force = 31//+1, same as spider whip
-	minstr = 10
+	minstr = 9
 	max_integrity = 150
 	special = /datum/special_intent/greatsword_swing
 
@@ -377,7 +377,7 @@
 	desc = "Three lengths of shimmering silver coiling outwards from psycross wrapped handle of boswellia wood. This trio of blades, although hefty, can move with devestating speed in a trained hand."
 	icon_state = "psy_urumi"
 	force = 30//less force than tennite silver cause swift balance
-	minstr = 11//taut can reasonably reach this + make use of the swift balance
+	minstr = 9//taut can reasonably reach this + make use of the swift balance
 	possible_item_intents = list(/datum/intent/whip/lash/urumi, /datum/intent/whip/crack/urumi, /datum/intent/whip/thrust, /datum/intent/dagger/sucker_punch)
 	max_integrity = 125//more blades equals less overall integ, i guess
 	max_blade_int = 200//3 blades, more blade for your buck!

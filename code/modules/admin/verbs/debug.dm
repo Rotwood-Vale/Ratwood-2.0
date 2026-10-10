@@ -808,9 +808,9 @@ GLOBAL_LIST_EMPTY(loadout_selected_advclasses)
 		if(advclass_path)
 			advclass_datum = new advclass_path()
 			// Apply advclass stats
-			if(length(advclass_datum.subclass_stats))
-				for(var/stat in advclass_datum.subclass_stats)
-					H.change_stat(stat, advclass_datum.subclass_stats[stat])
+			H.apply_role_stats(advclass_datum.stat_budget, advclass_datum.favored_stats)
+			for(var/stat in advclass_datum.subclass_stats)
+				H.change_stat(stat, advclass_datum.subclass_stats[stat])
 			
 			// Apply advclass skills
 			if(length(advclass_datum.subclass_skills))
@@ -1022,9 +1022,9 @@ GLOBAL_LIST_EMPTY(loadout_selected_advclasses)
 	// Then apply advclass stats on top
 	if(advclass_path)
 		var/datum/advclass/advclass_datum = new advclass_path()
-		if(length(advclass_datum.subclass_stats))
-			for(var/stat in advclass_datum.subclass_stats)
-				H.change_stat(stat, advclass_datum.subclass_stats[stat])
+		H.apply_role_stats(advclass_datum.stat_budget, advclass_datum.favored_stats)
+		for(var/stat in advclass_datum.subclass_stats)
+			H.change_stat(stat, advclass_datum.subclass_stats[stat])
 	
 	to_chat(H, span_notice("Stats applied from job[advclass_path ? " and advclass" : ""]!"))
 	message_admins("[key_name_admin(usr)] applied stats from [outfit_path] to [ADMIN_LOOKUPFLW(H)].")

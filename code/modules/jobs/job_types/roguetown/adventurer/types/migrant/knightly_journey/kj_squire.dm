@@ -7,14 +7,8 @@
 	category_tags = list(CTAG_KJ_SQUIRE)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_SQUIRE_REPAIR, TRAIT_MEDIUMARMOR, TRAIT_OUTLANDER)
-	subclass_stats = list(
-		STATKEY_STR = 1,
-		STATKEY_PER = 1,
-		STATKEY_CON = 2,
-		STATKEY_INT = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_INT = STAT_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
@@ -119,14 +113,8 @@
 	category_tags = list(CTAG_KJ_SQUIRE)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_SQUIRE_REPAIR, TRAIT_MEDIUMARMOR, TRAIT_OUTLANDER)
-	subclass_stats = list(
-		STATKEY_STR = 1,
-		STATKEY_PER = 1,
-		STATKEY_CON = 1,
-		STATKEY_INT = 1,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_WIL = STAT_VERY_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
@@ -231,13 +219,8 @@
 	category_tags = list(CTAG_KJ_SQUIRE)
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_SQUIRE_REPAIR, TRAIT_DODGEEXPERT, TRAIT_OUTLANDER)
-	subclass_stats = list(
-		STATKEY_PER = 2,
-		STATKEY_CON = 1,
-		STATKEY_INT = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 2,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = list(STATKEY_PER = STAT_VERY_FAVORED, STATKEY_SPD = STAT_VERY_FAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/bows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,

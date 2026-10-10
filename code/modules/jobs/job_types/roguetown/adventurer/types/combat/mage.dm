@@ -9,11 +9,9 @@
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_CASTER
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_SPD = 1,
-	)
 	subclass_spellpoints = 15
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
@@ -90,12 +88,8 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/spellblade
 	virtue_restrictions = list()
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_INT = 1,
-		STATKEY_CON = 1,
-		STATKEY_WIL = 1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_SKIRMISHER
 	subclass_spellpoints = 12
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
@@ -187,11 +181,8 @@
 	virtue_restrictions = list()
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_EMPATH, TRAIT_GOODLOVER)
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_SPD = 2,
-		STATKEY_WIL = 1,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_ROGUE
 	subclass_spellpoints = 10
 	subclass_skills = list(
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
@@ -277,13 +268,8 @@
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
 
 	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_DODGEEXPERT, TRAIT_LIGHT_STEP, TRAIT_MAGEDEXTERITY) //dodge expert has the potential for being a big pain on spellcasters,  so we take away their mage armor as a trade.
-	subclass_stats = list(
-		STATKEY_STR = -1,
-		STATKEY_INT = 2,
-		STATKEY_PER = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 2,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	favored_stats = STATS_ROGUE
 
 	subclass_spellpoints = 12
 

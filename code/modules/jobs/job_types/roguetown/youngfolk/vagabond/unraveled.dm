@@ -7,10 +7,8 @@
 	outfit = /datum/outfit/job/roguetown/vagabond/unraveled
 	category_tags = list(CTAG_VAGABOND)
 	traits_applied = list(TRAIT_PSYCHOSIS, TRAIT_NOSTINK)
-	subclass_stats = list(
-		STATKEY_INT = -2,
-		STATKEY_LCK = -2,
-	)
+	stat_budget = STAT_BUDGET_LOW
+	subclass_stats = list(STATKEY_LCK = -2)
 	subclass_skills = list(
 		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,

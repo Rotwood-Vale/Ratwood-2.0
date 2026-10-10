@@ -30,9 +30,7 @@
 /datum/loadout_item/heels
 	name = "black heels"
 	path = /obj/item/clothing/shoes/roguetown/heels
-	triumph_cost = 2
 
 /datum/loadout_item/heels_color
 	name = "colorable heels"
 	path = /obj/item/clothing/shoes/roguetown/heels/color
-	triumph_cost = 2

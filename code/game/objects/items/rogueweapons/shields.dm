@@ -606,7 +606,7 @@
 	force = 28
 	coverage = 75//for dealing with MANY persian archers
 	wdefense = 10
-	minstr = 12 //Requires a natural +STR modifier or statpack to double as a melee weapon, for its given class. Note that it has a heavier charge time and active stamina drain, too, as.. well, it's quite heavy.
+	minstr = 11 //Requires a natural +STR modifier or statpack to double as a melee weapon, for its given class. Note that it has a heavier charge time and active stamina drain, too, as.. well, it's quite heavy.
 
 /obj/item/rogueweapon/shield/tower/metal/blacksteel
 	name = "blacksteel shield"

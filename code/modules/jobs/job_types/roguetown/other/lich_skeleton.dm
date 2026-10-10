@@ -219,6 +219,7 @@ LICH SKELETONS
 	name = "Ancient Death Bulwark"
 	tutorial = "All throughout, you've borne the brunt. And even in death, will you continue."
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/lich/bulwark
+	stat_budget = STAT_BUDGET_MID
 
 	category_tags = list(CTAG_LSKELETON)
 
@@ -615,7 +616,7 @@ LICH SKELETONS
 	wlength = WLENGTH_NORMAL
 	wdefense = 10
 	coverage = 75
-	minstr = 13
+	minstr = 11
 	max_integrity = 400
 
 /obj/item/rogueweapon/shield/gilbranze/great/getonmobprop(tag)

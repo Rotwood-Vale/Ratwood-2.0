@@ -36,13 +36,9 @@
 	outfit = /datum/outfit/job/roguetown/guildsman/blacksmith
 
 	category_tags = list(CTAG_GUILDSMEN)
-	subclass_stats = list(
-		STATKEY_STR = 3,
-		STATKEY_WIL = 2,
-		STATKEY_CON = 2,
-		STATKEY_INT = 2,
-		STATKEY_LCK = 1 // general skillbuff to bring them in line with the architech
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_VERY_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_INT = STAT_FAVORED)
+	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
@@ -110,14 +106,9 @@
 
 	category_tags = list(CTAG_GUILDSMEN)
 	traits_applied = list(TRAIT_ARCYNE_T1, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER, TRAIT_LEGENDARY_MINER)
-	subclass_stats = list( // alchemy expert upon request
-		STATKEY_INT = 3,
-		STATKEY_WIL = 2,
-		STATKEY_LCK = 2,
-		STATKEY_STR = 1,
-		STATKEY_CON = 1,
-		STATKEY_PER = 1
-	)
+	stat_budget = STAT_BUDGET_MID
+	favored_stats = STATS_CLERIC
+	subclass_stats = list(STATKEY_LCK = 2)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // woodcutting, don't want a wild venard attacking you
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,

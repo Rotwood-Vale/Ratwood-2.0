@@ -9,13 +9,8 @@
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
-	subclass_stats = list(
-		STATKEY_CON = 3,
-		STATKEY_WIL = 3,
-		STATKEY_STR = 2, //Should give minimum required stats to use Zweihander
-		STATKEY_PER = 1,
-		STATKEY_SPD = -1 //They get heavy armor now + sword option; so lower speed.
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_TANK
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
@@ -72,13 +67,8 @@
 	tutorial = "You're an experienced soldier skilled in the use of polearms and axes. Your equals make up the bulk of the mercenary guild's forces."
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft_halberdier
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_STEELHEARTED)
-	subclass_stats = list(
-		STATKEY_STR = 2,//same str, worse end, more speed - actually a good tradeoff, now.
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 1,
-		STATKEY_PER = -1
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_STR = STAT_VERY_FAVORED, STATKEY_CON = STAT_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_PER = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
@@ -135,13 +125,8 @@
 	tutorial = "You're a proved marksman with a crossbow, and learned how to set up camp and defenses in the wild. The guild needs you."
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft_crossbowman
 	traits_applied = list( TRAIT_STEELHEARTED)
-	subclass_stats = list(
-		STATKEY_SPD = 2,
-		STATKEY_WIL = 2,
-		STATKEY_PER = 2,
-		STATKEY_STR = 1,// 1 STR for the axe and crossbow reload. END for chopping trees, a bit of SPD for running, PER for shooting. -1 CON bc you aint a frontliner
-		STATKEY_CON = -1
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_SPD = STAT_VERY_FAVORED, STATKEY_STR = STAT_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_WIL = STAT_FAVORED, STATKEY_CON = STAT_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,		// gotta get to a vantage point
@@ -206,15 +191,10 @@
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	subclass_languages = list(/datum/language/grenzelhoftian)
-	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_INTELLECTUAL, TRAIT_STEELHEARTED, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_WIL = 3,
-		STATKEY_STR = -1,
-		STATKEY_PER = 3,
-		STATKEY_SPD = 1
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_PER = STAT_FAVORED, STATKEY_STR = STAT_DISFAVORED)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_skills = list(
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,

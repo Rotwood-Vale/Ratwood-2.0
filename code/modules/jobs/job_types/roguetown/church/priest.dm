@@ -38,7 +38,8 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	round_contrib_points = 5
 	social_rank = SOCIAL_RANK_ROYAL
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
-	quirk_restrictions = list(/datum/quirk/noble, /datum/quirk/hunted)
+	virtue_restrictions = list(/datum/virtue/nobility)
+	quirk_restrictions = list(/datum/quirk/hunted)
 	job_traits = list(
 		TRAIT_CHOSEN,
 		TRAIT_RITUALIST,
@@ -77,13 +78,8 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	outfit = /datum/outfit/job/roguetown/priest/basic
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	category_tags = list(CTAG_BISHOP)
-	subclass_stats = list(
-		STATKEY_INT = 4,
-		STATKEY_WIL = 2,
-		STATKEY_STR = -1,
-		STATKEY_CON = -1,
-		STATKEY_SPD = -1
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_CLERIC
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,

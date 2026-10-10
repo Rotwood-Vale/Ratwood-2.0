@@ -6,9 +6,8 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/vagabond/deprived
 	category_tags = list(CTAG_VAGABOND)
-	subclass_stats = list(
-		STATKEY_LCK = 3
-	)
+	stat_budget = STAT_BUDGET_LOW
+	subclass_stats = list(STATKEY_LCK = 3)
 	subclass_skills = list(
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/shields = SKILL_LEVEL_APPRENTICE,

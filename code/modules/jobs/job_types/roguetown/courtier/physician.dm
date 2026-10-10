@@ -36,14 +36,9 @@
 		As a member of the upper class, expect to treat nobility. You have access to accommodate this."
 	outfit = /datum/outfit/job/roguetown/physician/basic
 	category_tags = list(CTAG_COURTPHYS)
-	subclass_stats = list(
-		STATKEY_INT = 4,
-		STATKEY_WIL = 1,
-		STATKEY_LCK = 1,
-		STATKEY_SPD = 1,
-		STATKEY_STR = -1,
-		STATKEY_CON = -1,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = STATS_SCHOLAR
+	subclass_stats = list(STATKEY_LCK = 1)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN, //same tier as other yeomen

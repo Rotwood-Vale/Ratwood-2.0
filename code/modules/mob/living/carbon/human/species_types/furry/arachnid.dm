@@ -3,6 +3,7 @@
 
 /datum/species/arachnid
 	name = "Arachnid"
+	origin_stats_allowed = FALSE
 	id = "arachnid"
 	clothes_id = "lamia"
 	desc = "<b>Arachnid</b><br>\

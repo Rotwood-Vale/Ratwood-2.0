@@ -20,12 +20,8 @@
 	category_tags = list(CTAG_MERCENARY)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_MAGEDEXTERITY)
 	subclass_spellpoints = 8//We'll focus on this being a combination spellblade.
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_SPD = 2,
-		STATKEY_WIL = 2,
-		STATKEY_CON = -2,
-	)
+	stat_budget = STAT_BUDGET_HIGH
+	favored_stats = list(STATKEY_INT = STAT_VERY_FAVORED, STATKEY_WIL = STAT_VERY_FAVORED, STATKEY_SPD = STAT_FAVORED, STATKEY_CON = STAT_VERY_DISFAVORED)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,

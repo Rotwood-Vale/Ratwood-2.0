@@ -26,7 +26,7 @@
 	always_show_on_latechoices = TRUE
 	job_reopens_slots_on_death = FALSE
 	same_job_respawn_delay = 1 MINUTES
-	quirk_restrictions = list(/datum/quirk/noble) //Are you for real?
+	virtue_restrictions = list(/datum/virtue/nobility) //Are you for real?
 	job_subclasses = list(
 		/datum/advclass/gnoll/berserker,
 		/datum/advclass/gnoll/knight,
@@ -102,9 +102,6 @@
 	REMOVE_TRAIT(src, TRAIT_LAMIAN_TAIL, TRAIT_GENERIC)
 
 	var/datum/gnoll_prefs/prefs = client.prefs.gnoll_prefs
-
-	// We will be ignoring the slot's statpack in favor of what's set in our Gnoll Preferences.
-	statpack = prefs.gnoll_statpack
 
 	if(initial_setup)
 		roll_stats()
