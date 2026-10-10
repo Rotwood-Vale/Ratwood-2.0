@@ -1,4 +1,0 @@
-author: "zBxnny"
-delete-after: True
-changes:
-  - bugfix: "added recharge_time to fetch so it stops the CD from being inherit from somewhere else.\n<img width=\"251\" height=\"136\" alt=\"imagen\" src=\"https://github.com/user-attachments/assets/96ddc688-488d-45a0-901e-b3c5b0d3b62a\" />\nbalance:\nrepel stamina cost from 7 to 20\nfetch stamina cost from 5 to 20\nfetch cd went from 3 to 15 after the fix."

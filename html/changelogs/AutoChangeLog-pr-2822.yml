@@ -1,6 +1,0 @@
-author: "I_Nerf_What_Kills_Me"
-delete-after: True
-changes:
-  - rscadd: "vague references to zizo in hemophage vice description."
-  - balance: "hemophage gets more nutrients and hydration from drinking blood + slower decay."
-  - balance: "hemophage can no longer consume water or food to replenish hunger and thirst. now they are toxic to them as per the description says. (excluding alcohol for larp)"
