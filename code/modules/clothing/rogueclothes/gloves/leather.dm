@@ -162,6 +162,10 @@
 	. = ..()
 	update_icon()
 
+/obj/item/clothing/gloves/roguetown/cloth/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+
 /obj/item/clothing/gloves/roguetown/cloth/update_icon()
 	cut_overlays()
 	if(get_detail_tag())

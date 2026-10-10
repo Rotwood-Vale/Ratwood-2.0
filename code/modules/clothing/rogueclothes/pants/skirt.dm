@@ -50,6 +50,10 @@
 	var/shiftable = TRUE
 	var/shifted = FALSE
 
+/obj/item/clothing/under/roguetown/skirt/gambeson/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+
 /obj/item/clothing/under/roguetown/skirt/gambeson/attack_right(mob/user)
 	if(!shiftable)
 		return

@@ -130,6 +130,10 @@
 	detail_color = CLOTHING_WHITE
 	altdetail_color = CLOTHING_WHITE
 
+/obj/item/clothing/under/roguetown/tights/clothlegs/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+
 /obj/item/clothing/under/roguetown/tights/clothlegs/update_icon()
 	cut_overlays()
 	if(get_detail_tag())
