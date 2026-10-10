@@ -405,6 +405,7 @@
 	update_disabled()
 	if(owner && ((brute_dam != old_brute_dam) || (burn_dam != old_burn_dam)))
 		owner.mark_zone_selector_hud_dirty()
+		owner.mark_pain_hud_dirty()
 	return update_bodypart_damage_state() || .
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
@@ -433,7 +434,18 @@
 	cremation_progress = min(0, cremation_progress - ((brute_dam + burn_dam)*(100/max_damage)))
 	if(owner && ((brute_dam != old_brute_dam) || (burn_dam != old_burn_dam)))
 		owner.mark_zone_selector_hud_dirty()
+		owner.mark_pain_hud_dirty()
 	return update_bodypart_damage_state()
+
+/obj/item/bodypart/proc/set_damage(new_brute, new_burn)
+	if(brute_dam == new_brute && burn_dam == new_burn)
+		return FALSE
+	brute_dam = new_brute
+	burn_dam = new_burn
+	if(owner)
+		owner.mark_zone_selector_hud_dirty()
+		owner.mark_pain_hud_dirty()
+	return TRUE
 
 //Returns total damage.
 /obj/item/bodypart/proc/get_damage(include_stamina = FALSE)
@@ -504,8 +516,7 @@
 	status = new_limb_status
 	invalidate_limb_cache()
 	if(heal_limb)
-		burn_dam = 0
-		brute_dam = 0
+		set_damage(0, 0)
 		brutestate = 0
 		burnstate = 0
 

@@ -112,7 +112,7 @@
 
 	passive_regen_rate = CLAMP(passive_regen_rate, MIN_PASSIVE_BLOOD_HEAL, MAX_PASSIVE_BLOOD_HEAL)
 
-	blood_volume += passive_regen_rate
+	adjust_blood_volume(passive_regen_rate)
 
 	#undef MAX_PASSIVE_BLOOD_HEAL
 	#undef MIN_PASSIVE_BLOOD_HEAL
