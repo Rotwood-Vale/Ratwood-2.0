@@ -19,7 +19,6 @@
 /obj/item/clothing/head/roguetown/helmet/blacksteel/modern/armet/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/bucket
 	name = "blacksteel bucket helm"
@@ -40,7 +39,6 @@
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
 	name = "crown of psydonian thorns"
