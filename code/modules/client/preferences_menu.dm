@@ -267,6 +267,20 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	html += pref_sub("Stats[preview_label]")
 	html += "<div class='r'><font size='4' color='#e3c06f'><b>Points: [get_points_remaining()]</b></font></div>"
 	html += pref_line(list(pref_item("Statpack", bg_link(stat_pack || "Custom", "statpack"))))
+	if(!forced_stats)
+		var/list/targets = list()
+		var/list/pack = GLOB.stat_packs[stat_pack]
+		var/list/natural = calculate_role_stats(budget, favored_stats)
+		for(var/stat in GLOB.budget_stats)
+			var/shift = stat_cap_shift(stat, favored_stats)
+			targets[stat] = STAT_BASELINE + min(shift, 0)
+			if(pack)
+				if(!isnull(pack[stat]))
+					targets[stat] = natural[stat] + pack[stat]
+			else if(stat_caps[stat])
+				targets[stat] = stat_caps[stat] + shift
+			targets[stat] = min(targets[stat], final_stats[stat])
+		html += pref_line(list(pref_item("Class Budget", budget), pref_item("Free Budget", round(budget - stat_values_cost(targets), 0.1))))
 	var/source_name = "Racial"
 	if(stat_source == STAT_SOURCE_ORIGIN)
 		source_name = "Origin"

@@ -105,8 +105,7 @@ export function NumberInputModal(props) {
                     </Stack>
                     <Box mt={1}>
                       Target: {steps[value]?.target} | Actual:{' '}
-                      {steps[value]?.actual} | Free points:{' '}
-                      {steps[value]?.free}
+                      {steps[value]?.actual}
                     </Box>
                     {!!steps[value]?.warn && (
                       <Box color="bad">{steps[value].warn}</Box>
