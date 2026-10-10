@@ -102,15 +102,7 @@
 /datum/job/roguetown/baron_retainer/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
 	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(istype(H.cloak, /obj/item/clothing/cloak/tabard/retinue/baronycloak))
-			var/obj/item/clothing/S = H.cloak
-			var/index = findtext(H.real_name, " ")
-			if(index)
-				index = copytext(H.real_name, 1,index)
-			if(!index)
-				index = H.real_name
-			S.name = "tabard ([index])"
+		addtimer(CALLBACK(L, TYPE_PROC_REF(/mob, cloak_and_title_setup)), 50)
 
 /datum/advclass/baron_retainer/duelist
 	name = "Retired Duelist"
@@ -259,16 +251,3 @@
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 				beltr = /obj/item/quiver/bolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
-
-/datum/job/roguetown/baron_retainer/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
-	. = ..()
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(istype(H.cloak, /obj/item/clothing/cloak/wardencloak))
-			var/obj/item/clothing/S = H.cloak
-			var/index = findtext(H.real_name, " ")
-			if(index)
-				index = copytext(H.real_name, 1,index)
-			if(!index)
-				index = H.real_name
-			S.name = "warden cloak ([index])"
