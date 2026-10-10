@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/projectile/fireball
 	name = "Fireball"
-	desc = "Shoot out a ball of fire that emits a light explosion on impact, setting the target alight."
+	desc = "Shoot out a ball of fire that emits a light explosion on impact, setting the target alight. Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent."
 	clothes_req = FALSE
 	range = 8
 	projectile_type = /obj/projectile/magic/aoe/fireball/rogue
@@ -24,6 +24,15 @@
 	cost = 6
 	xp_gain = TRUE
 
+/obj/effect/proc_holder/spell/invoked/projectile/fireball/cast(list/targets, mob/user = user)
+	var/mob/living/carbon/human/H = user
+	var/datum/intent/a_intent = H.a_intent
+	if(istype(a_intent, /datum/intent/special/magicarc))
+		projectile_type = /obj/projectile/energy/fireball/rogue/arc
+	else
+		projectile_type = /obj/projectile/energy/fireball/rogue
+	. = ..()
+
 /obj/projectile/magic/aoe/fireball/rogue
 	name = "fireball"
 	exp_heavy = 0
@@ -39,6 +48,10 @@
 	hitsound = 'sound/blank.ogg'
 	aoe_range = 0
 
+/obj/projectile/aoe/fireball/rogue/arc
+	name = "lobbed fireball"
+	damage = 50 // Having it do less damage in arc mode makes people not wanna arc it
+	arcshot = TRUE
 
 /obj/projectile/magic/aoe/fireball/rogue/on_hit(target)
 	. = ..()

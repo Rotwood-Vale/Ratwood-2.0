@@ -17,7 +17,7 @@
 	no_early_release = TRUE
 	movement_interrupt = FALSE
 	charging_slowdown = 3
-	spell_tier = 4 // Court mage can have this as a treat
+	spell_tier = 3 // Court mage can have this as a treat, alternatively all mages can have it as a treat
 	invocations = list("Ignis Sphaera directa!")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_FIRE

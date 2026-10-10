@@ -2,7 +2,7 @@
 	name = "Arcyne Bolt"
 	desc = "Shoot out a rapid bolt of arcyne magic. Inflicts blunt damage similar to a slingstone. \n\
 	Damage is increased by 50% versus simple-minded creechurs.\n\
-	Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent. It will deals 25% less damage that way."
+	Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent."
 	clothes_req = FALSE
 	range = 12
 	projectile_type = /obj/projectile/energy/arcynebolt
@@ -48,7 +48,7 @@
 
 /obj/projectile/energy/arcynebolt/arc
 	name = "Arced Arcyne Bolt"
-	damage = 30 // You cannot modify charge and releasedrain dynamically so lower damage it is.
+	damage = 40 // We want mages to be arcing spells from the backline more
 	arcshot = TRUE
 
 /obj/projectile/energy/arcynebolt/on_hit(target)
