@@ -170,10 +170,10 @@
 	while(probe && get_area(probe) == own_area)
 	return istype(get_area(probe), /area/rogue/outdoors/rtfield/barony/rockhill)
 
-/obj/structure/mineral_door/proc/get_residence_trait()
+/obj/structure/mineral_door/proc/is_barony_residence()
 	if(isnull(barony_residence))
 		barony_residence = probe_barony_residence()
-	return barony_residence ? TRAIT_BARONY_RESIDENT : TRAIT_RESIDENT
+	return barony_residence
 
 /obj/structure/mineral_door/proc/try_award_resident_key(mob/user)
 	if(!grant_resident_key)
@@ -185,10 +185,16 @@
 	var/mob/living/carbon/human/human = user
 	if(human.received_resident_key)
 		return FALSE
-	if(resident_role)
+	if(resident_role && is_barony_residence())
 		var/datum/job/job = SSjob.name_occupations[human.job]
-		if((!job || job.type != resident_role) && !HAS_TRAIT(human, get_residence_trait()))
-			return FALSE
+		if(job?.type != resident_role)
+			if(!HAS_TRAIT(human, TRAIT_BARONY_RESIDENT))
+				return FALSE
+	else if(resident_role)
+		var/datum/job/job = SSjob.name_occupations[human.job]
+		if(job?.type != resident_role)
+			if(!HAS_TRAIT(human, TRAIT_RESIDENT))
+				return FALSE
 	if(resident_advclass)
 		if(!human.advjob)
 			return FALSE
