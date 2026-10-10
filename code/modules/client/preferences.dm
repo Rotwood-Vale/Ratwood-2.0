@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/voice_type = VOICE_TYPE_MASC	// LETHALSTONE EDIT: the type of soundpack the mob should use
 	var/list/stat_caps = list()
 	var/stat_pack
-	var/stat_source = "race"
+	var/stat_source = STAT_SOURCE_RACE
 	var/origin_bonus_stat
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
 	var/datum/virtue/virtuetwo = new /datum/virtue/none

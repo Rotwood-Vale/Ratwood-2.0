@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 		return
 	if (!player.prefs)
 		return
-	if(player.prefs.stat_source != "race")
+	if(player.prefs.stat_source != STAT_SOURCE_RACE)
 		return
 	if (!player.prefs.race_bonus || player.prefs.race_bonus == "None")
 		return

@@ -137,13 +137,13 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 
 // ppl can choose between your RACIAL stat bonus or one from your ORIGIN.
 /datum/preferences/proc/get_stat_bonuses()
-	if(stat_source == "race")
+	if(stat_source == STAT_SOURCE_RACE)
 		return pref_species.race_bonus
 	var/list/bonuses = list()
 	for(var/stat in pref_species.race_bonus)
 		if(pref_species.race_bonus[stat] < 0)
 			bonuses[stat] = pref_species.race_bonus[stat]
-	if(stat_source == "origin" && pref_species.origin_stats_allowed && origin)
+	if(stat_source == STAT_SOURCE_ORIGIN && pref_species.origin_stats_allowed && origin)
 		if(!origin.choose_stat)
 			for(var/stat in origin.stat_bonuses)
 				bonuses[stat] += origin.stat_bonuses[stat]
@@ -152,7 +152,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	return bonuses
 
 /datum/preferences/proc/second_virtue_allowed()
-	return stat_source == "virtue"
+	return stat_source == STAT_SOURCE_VIRTUE
 
 // checks for overspending & whatnot
 /datum/preferences/proc/validate_background()
@@ -165,8 +165,8 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		for(var/datum/quirk/Q in quirks.Copy())
 			if(Q.type in pref_species.restricted_quirks)
 				quirks -= Q
-	if(stat_source == "origin" && !pref_species.origin_stats_allowed)
-		stat_source = "race"
+	if(stat_source == STAT_SOURCE_ORIGIN && !pref_species.origin_stats_allowed)
+		stat_source = STAT_SOURCE_RACE
 	if(!second_virtue_allowed() || virtuetwo.type == virtue.type)
 		virtuetwo = GLOB.virtues[/datum/virtue/none]
 	var/list/seen_quirks = list()
@@ -268,12 +268,12 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	html += "<div class='r'><font size='4' color='#e3c06f'><b>Points: [get_points_remaining()]</b></font></div>"
 	html += pref_line(list(pref_item("Statpack", bg_link(stat_pack || "Custom", "statpack"))))
 	var/source_name = "Racial"
-	if(stat_source == "origin")
+	if(stat_source == STAT_SOURCE_ORIGIN)
 		source_name = "Origin"
-	if(stat_source == "virtue")
+	if(stat_source == STAT_SOURCE_VIRTUE)
 		source_name = "Second Virtue"
 	var/list/source_items = list(pref_item("Stat Source", bg_link(source_name, "stat_source")), pref_link("(?)", "statshelp"))
-	if(stat_source == "origin" && origin?.choose_stat)
+	if(stat_source == STAT_SOURCE_ORIGIN && origin?.choose_stat)
 		source_items += pref_item("Bonus", bg_link(capitalize(origin_bonus_stat) || "Choose", "origin_stat"))
 	html += pref_line(source_items)
 	var/list/stat_bonuses_list = get_stat_bonuses()
@@ -542,9 +542,9 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 			stat_pack = new_pack
 			stat_caps = list()
 		if("stat_source")
-			var/list/sources = list("Racial" = "race", "Second Virtue" = "virtue")
+			var/list/sources = list("Racial" = STAT_SOURCE_RACE, "Second Virtue" = STAT_SOURCE_VIRTUE)
 			if(pref_species.origin_stats_allowed)
-				sources["Origin"] = "origin"
+				sources["Origin"] = STAT_SOURCE_ORIGIN
 			var/choice = tgui_input_list(user, "What defines you?", "Stat Source", sources)
 			if(choice)
 				stat_source = sources[choice]

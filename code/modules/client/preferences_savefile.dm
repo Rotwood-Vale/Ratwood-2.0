@@ -598,8 +598,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/_load_stat_prefs(S)
 	S["stat_source"] >> stat_source
 	S["origin_bonus_stat"] >> origin_bonus_stat
-	if(stat_source != "origin" && stat_source != "virtue")
-		stat_source = "race"
+	if(stat_source != STAT_SOURCE_ORIGIN && stat_source != STAT_SOURCE_VIRTUE)
+		stat_source = STAT_SOURCE_RACE
 	S["stat_pack"] >> stat_pack
 	if(!(stat_pack in GLOB.stat_packs))
 		stat_pack = null

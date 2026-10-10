@@ -675,6 +675,9 @@
 #define STAT_COST_CHEAP_MAX 11
 #define STAT_COST_MID_MAX 14
 #define STAT_BASELINE 10
+#define STAT_SOURCE_RACE "race"
+#define STAT_SOURCE_ORIGIN "origin"
+#define STAT_SOURCE_VIRTUE "virtue"
 #define STAT_MODIFIER_OVERCAP 1
 
 // these define da stats on classes. A lot of them aren't used, since most classes get defined directly... But it's good for reference!
