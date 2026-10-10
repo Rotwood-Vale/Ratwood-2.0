@@ -162,7 +162,8 @@
 	if(user.has_status_effect(/datum/status_effect/debuff/feintcd))
 		return
 	var/mob/living/L = target
-	if (L.client && !L.cmode && !L.has_status_effect(/datum/status_effect/buff/clash))
+	var/concentrating = L.lose_concentration()
+	if (L.client && !L.cmode && !concentrating && !L.has_status_effect(/datum/status_effect/buff/clash))
 		playsound(user, 'sound/combat/feint.ogg', 100, TRUE)
 		user.visible_message(span_danger("[user] attempts to feint an attack at [L], but only makes a fool of themselves!"))
 		user.OffBalance(3 SECONDS)
@@ -203,6 +204,8 @@
 
 	user.apply_status_effect(/datum/status_effect/debuff/feintcd)
 	perc = CLAMP(perc, 0, 90)
+	if(concentrating)
+		perc = 100
 
 	if(!prob(perc)) //feint intent increases the immobilize duration significantly
 		playsound(user, 'sound/combat/feint.ogg', 100, TRUE)

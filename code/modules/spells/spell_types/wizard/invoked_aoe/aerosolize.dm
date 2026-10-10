@@ -50,6 +50,7 @@
 
 /obj/effect/proc_holder/spell/invoked/aerosolize/wave
 	name = "Aerosol Wave"
+	concentration = TRUE
 	desc = "Turns the reagents of a container into a wave of odious smoke traveling in the direction the caster is facing."
 	overlay_state = "aerosol_wave"
 	chargetime = 6

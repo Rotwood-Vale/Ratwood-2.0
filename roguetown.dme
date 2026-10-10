@@ -2959,6 +2959,7 @@
 #include "code\modules\round_modifier\weather.dm"
 #include "code\modules\spatial_grid\cell_tracking.dm"
 #include "code\modules\spells\spell.dm"
+#include "code\modules\spells\spell_effects.dm"
 #include "code\modules\spells\spell_defines.dm"
 #include "code\modules\spells\components\conjured_item.dm"
 #include "code\modules\spells\components\enchanted_weapon.dm"

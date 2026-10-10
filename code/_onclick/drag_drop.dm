@@ -191,6 +191,7 @@
 
 /mob
 	var/datum/intent/curplaying
+	var/obj/effect/spell_rune_under/spell_rune
 
 /client/MouseUp(object, location, control, params)
 	var/was_charging

@@ -41,13 +41,9 @@
 	var/obj/item/clothing/worn_thing = I
 	if(worn_thing.item_flags & IN_STORAGE)
 		return
-	var/list/obj/item/held_list = user.get_held_items()
-	for(var/obj/item/held_thing in held_list)
-		if(held_thing == parent)
-			return
+	if(user.is_holding(parent))
+		return
 	handle_boons(user, TRUE)
-
-	return
 
 /datum/component/armour_filtering/proc/on_drop(datum/source, mob/dropper)
 	SIGNAL_HANDLER
@@ -72,9 +68,7 @@
 		var/obj/item/clothing/worn_thing = thing
 		if(worn_thing == I)
 			continue
-		if(!(worn_thing.item_flags & IN_INVENTORY))
-			continue
-		if(worn_thing.item_flags & IN_STORAGE)
+		if(!(worn_thing.item_flags & IN_INVENTORY) || (worn_thing.item_flags & IN_STORAGE) || user.is_holding(worn_thing))
 			continue
 		var/list/datum/component/armour_filtering/comps = worn_thing.GetComponents(/datum/component/armour_filtering)
 		if(!comps)
@@ -85,7 +79,7 @@
 			if(af_comp.positive != positive)
 				continue
 			if(!af_comp.additive)
-				handle_boons(user, TRUE)
+				af_comp.handle_boons(user, TRUE)
 				return
 			if(af_comp.positive)
 				ADD_TRAIT(user, TRAIT_ARMOUR_LIKED, TRAIT_GENERIC)
@@ -141,9 +135,8 @@ TRAIT UNIQUE PROCS
 /datum/component/armour_filtering/proc/trait_boon_equip(mob/living/carbon/human/user, id)
 	// Dexterity users reject disliked armour; liked armour must still reach the id-specific boons below.
 	if(!positive && (HAS_TRAIT(user, TRAIT_FENCERDEXTERITY) || HAS_TRAIT(user, TRAIT_MAGEDEXTERITY)))
-		user.dropItemToGround(parent, TRUE, TRUE)
-		if(HAS_TRAIT(user, TRAIT_ARMOUR_DISLIKED))
-			REMOVE_TRAIT(user, TRAIT_ARMOUR_DISLIKED, TRAIT_GENERIC)
+		REMOVE_TRAIT(user, TRAIT_ARMOUR_DISLIKED, TRAIT_GENERIC)
+		addtimer(CALLBACK(user, TYPE_PROC_REF(/mob, dropItemToGround), parent, TRUE, TRUE), 0)
 		return
 
 	if(HAS_TRAIT(user, TRAIT_PSYDONIAN_GRIT) && id == "ornate_plate")

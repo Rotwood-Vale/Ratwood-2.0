@@ -1,5 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/thunderstrike
 	name = "Thunderstrike"
+	concentration = TRUE
 	desc = "Call a high-damage strike of lightning onto an area, followed by lesser aftershocks that ripple outwards in concentric layers."
 	cost = 6 // High damage AOE
 	range = 7

@@ -1,5 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/sundering_lightning
 	name = "Sundering Lightning"
+	concentration = TRUE
 	desc = "Summons forth dangerous rapid lightning strikes."
 	overlay_state = "lightning_sunder"
 	cost = 9

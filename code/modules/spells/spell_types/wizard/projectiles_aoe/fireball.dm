@@ -21,6 +21,7 @@
 	glow_intensity = GLOW_INTENSITY_HIGH
 	chargedloop = /datum/looping_sound/invokefire
 	associated_skill = /datum/skill/magic/arcane
+	concentration = TRUE
 	cost = 6
 	xp_gain = TRUE
 

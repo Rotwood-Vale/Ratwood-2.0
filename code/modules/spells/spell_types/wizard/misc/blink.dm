@@ -5,8 +5,8 @@
 	cost = 3
 	releasedrain = 30
 	chargedrain = 1
-	chargetime = 3
-	recharge_time = 16 SECONDS
+	chargetime = 5
+	recharge_time = 24 SECONDS
 	human_req = TRUE
 	warnie = "spellwarning"
 	no_early_release = TRUE
@@ -24,6 +24,8 @@
 	glow_intensity = GLOW_INTENSITY_LOW
 	var/max_range = 5
 	var/phase = /obj/effect/temp_visual/blink
+	var/phase_sound = 'sound/magic/blink.ogg'
+	var/phase_beam = "purple_lightning"
 
 /obj/effect/temp_visual/blink
 	icon = 'icons/effects/effects.dmi'
@@ -38,103 +40,71 @@
 
 /obj/effect/temp_visual/blink/Initialize(mapload, new_caster)
 	. = ..()
-	var/turf/src_turf = get_turf(src)
-	playsound(src_turf,'sound/magic/blink.ogg', 65, TRUE, -5)
 
 /obj/effect/proc_holder/spell/invoked/blink/cast(list/targets, mob/user = usr)
 	var/turf/T = get_turf(targets[1])
 	var/turf/start = get_turf(user)
-	
-	if(!T)
-		to_chat(user, span_warning("Invalid target location!"))
+
+	var/error = arcyne_validate_blink_dest(T, user)
+	if(!error && get_dist(start, T) > max_range)
+		error = "That location is too far away! I can only blink up to [max_range] tiles."
+	if(!error)
+		error = arcyne_validate_blink_path(start, T)
+	var/area/dest_area = get_area(T)
+	var/area/start_area = get_area(start)
+	if(!error && (dest_area.noteleport || start_area.noteleport))
+		error = "This area won't let me teleport!"
+	if(error)
+		to_chat(user, span_warning(error))
 		revert_cast()
 		return
 
-	if(T.teleport_restricted == TRUE)
-		to_chat(user, span_warning("I can't teleport here!"))
-
-	if(T.z != start.z)
-		to_chat(user, span_warning("I can only teleport on the same plane!"))
-
-		revert_cast()
-		return
-	
-	if(istransparentturf(T))
-		to_chat(user, span_warning("I cannot teleport to the open air!"))
-		revert_cast()
-		return
-
-	if(T.density)
-		to_chat(user, span_warning("I cannot teleport into a wall!"))
-		revert_cast()
-		return
-
-	// Check range limit
-	var/distance = get_dist(start, T)
-	if(distance > max_range)
-		to_chat(user, span_warning("That location is too far away! I can only blink up to [max_range] tiles."))
-		revert_cast()
-		return
-	
-	// Display a more obvious preparation message
-	user.visible_message(span_warning("<b>[user]'s body begins to shimmer with arcane energy as [user.p_they()] prepare[user.p_s()] to blink!</b>"), 
+	user.visible_message(span_warning("<b>[user]'s body begins to shimmer with arcane energy as [user.p_they()] prepare[user.p_s()] to blink!</b>"),
 						span_notice("<b>I focus my arcane energy, preparing to blink across space!</b>"))
-		
-	// Check if there's a wall in the way, but exclude the target turf
-	var/list/turf_list = getline(start, T)
-	// Remove the last turf (target location) from the check
-	if(length(turf_list) > 0)
-		turf_list.len--
-	
-	for(var/turf/turf in turf_list)
-		var/area/turf_area = get_area(turf)
-		if(turf_area?.noteleport)
-			to_chat(user, span_warning("This area won't let me teleport!"))
-			return
-		if(turf.density)
-			to_chat(user, span_warning("I cannot blink through walls!"))
-			revert_cast()
-			return
-			
-	// Check for doors and bars in the path
-	for(var/turf/traversal_turf in turf_list)
-		// Check for mineral doors
-		for(var/obj/structure/mineral_door/door in (traversal_turf.contents + T.contents))
-			if(door.density)
-				to_chat(user, span_warning("I cannot blink through doors!"))
-				revert_cast()
-				return
-				
-		// Check for windows
-		for(var/obj/structure/roguewindow/window in (traversal_turf.contents + T.contents))
-			if(window.density && !window.climbable)
-				to_chat(user, span_warning("I cannot blink through windows!"))
-				revert_cast()
-				return
-				
-		// Check for bars
-		for(var/obj/structure/bars/bars in (traversal_turf.contents + T.contents))
-			if(bars.density)
-				to_chat(user, span_warning("I cannot blink through bars!"))
-				revert_cast()
-				return
-
-		// Check for gates
-		for (var/obj/structure/gate/gate in (traversal_turf.contents + T.contents))
-			if(gate.density)
-				to_chat(user, span_warning("I cannot blink through gates!"))
-				revert_cast()
-				return
 
 	var/obj/spot_one = new phase(start, user.dir)
 	var/obj/spot_two = new phase(T, user.dir)
 
-	spot_one.Beam(spot_two, "purple_lightning", time = 1.5 SECONDS)
-	playsound(T, 'sound/magic/blink.ogg', 25, TRUE)
+	if(phase_beam)
+		spot_one.Beam(spot_two, phase_beam, time = 1.5 SECONDS)
+	playsound(start, phase_sound, 65, TRUE)
+	playsound(T, phase_sound, 25, TRUE)
 
 	if(user.buckled) // don't stay remote-buckled to the guillotine/pillory
 		user.buckled.unbuckle_mob(user, TRUE)
+
+	var/obj/effect/after_image/img = new(start, 0, 0, 0, 0, 0.5 SECONDS, 2 SECONDS, 0)
+	img.name = user.name
+	img.appearance = user.appearance
+	img.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	img.alpha = 120
+	animate(img, alpha = 0, time = 1.5 SECONDS, easing = LINEAR_EASING)
+	QDEL_IN(img, 1.5 SECONDS)
+
 	do_teleport(user, T, channel = TELEPORT_CHANNEL_MAGIC)
-	
+
 	user.visible_message(span_danger("<b>[user] vanishes in a mysterious purple flash!</b>"), span_notice("<b>I blink through space in an instant!</b>"))
 	return TRUE
+
+/proc/arcyne_validate_blink_path(turf/start, turf/dest)
+	var/list/turf_list = getline(start, dest)
+	if(length(turf_list) > 0)
+		turf_list.len--
+	for(var/turf/T in turf_list)
+		if(T == start)
+			continue
+		if(T.density)
+			return "I cannot teleport through walls!"
+		for(var/obj/structure/mineral_door/door in T.contents)
+			if(door.density)
+				return "I cannot teleport through doors!"
+		for(var/obj/structure/roguewindow/window in T.contents)
+			if(window.density && !window.climbable)
+				return "I cannot teleport through windows!"
+		for(var/obj/structure/bars/B in T.contents)
+			if(B.density)
+				return "I cannot teleport through bars!"
+		for(var/obj/structure/gate/G in T.contents)
+			if(G.density)
+				return "I cannot teleport through gates!"
+	return null
