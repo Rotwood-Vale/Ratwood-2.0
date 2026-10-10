@@ -34,9 +34,9 @@
 #define LEG_PART_LAYER			40
 #define LEGWEAR_LAYER			39
 #define PANTS_LAYER				38
-#define SHOES_LAYER				37
-#define LEG_DAMAGE_LAYER		36
-#define LEGSLEEVE_LAYER			35
+#define LEG_DAMAGE_LAYER		37
+#define LEGSLEEVE_LAYER			36
+#define SHOES_LAYER				35
 #define SHOESLEEVE_LAYER		34
 #define SHIRT_LAYER				33
 #define WRISTS_LAYER			32
@@ -71,7 +71,7 @@
 #define SUNDER_LAYER			3
 #define FIRE_LAYER				2		//If you're on fire
 #define TURF_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			54		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			55		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 #define BACK_CLOAK_SOUTH_LAYER		(BODY_BEHIND_LAYER+1)
 
