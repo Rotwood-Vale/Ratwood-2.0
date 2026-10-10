@@ -207,6 +207,7 @@
 	name = "Barbarian"
 	tutorial = "You are a brutal warrior, who has foregone armor in favor of pure strength. Crush your enemies, see them driven before you, and hear the lamentations of their women! Oh, and you can specialize in unarmed combat and wrestling."
 	outfit = /datum/outfit/job/roguetown/adventurer/barbarian
+	allowed_races = ALL_BUT_BLOODLESS
 	cmode_music = 'sound/music/cmode/antag/combat_darkstar.ogg'
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_CRITICAL_RESISTANCE, TRAIT_NOPAINSTUN)
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
@@ -308,7 +309,7 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 
 		belt = /obj/item/storage/belt/rogue/leather/battleskirt/barbarian
-		pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
+		pants = /obj/item/clothing/under/roguetown/chainlegs/skirt/bronze
 		shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
 		wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	if(should_wear_masc_clothes(H))
@@ -639,7 +640,7 @@
 	name = "Amazon"
 	tutorial = "Fierce warrior women from distant lands, Amazons choose their armor based on their preferred fighting style - from light and agile to heavily protected."
 	outfit = /datum/outfit/job/adventurer/amazon
-	traits_applied = list(TRAIT_STEELHEARTED)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_DEATHBYSNUSNU)
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	subclass_stats = list()
 	subclass_social_rank = SOCIAL_RANK_DIRT
@@ -845,14 +846,14 @@
 			backl = /obj/item/storage/backpack/rogue/satchel
 			belt = /obj/item/storage/belt/rogue/leather
 			neck = /obj/item/storage/belt/rogue/pouch/coins/poor
-			var/weapons = list("Great Sword","Eagle's Beak","Battle Axe","MY BARE HANDS!!!")
+			var/weapons = list("Great Sword","Lucerne","Battle Axe","MY BARE HANDS!!!")
 			var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 			switch(weapon_choice)
 				if("Great Sword")
 					H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/greatsword
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
-				if("Eagle's Beak")
+				if("Lucerne")
 					H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/eaglebeak
 					backr = /obj/item/rogueweapon/scabbard/gwstrap

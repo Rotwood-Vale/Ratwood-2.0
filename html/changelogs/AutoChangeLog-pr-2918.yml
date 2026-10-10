@@ -1,0 +1,8 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - rscadd: "Added trait luxfreak, exclusive to absolver, stigmata and gods, with is required to perform non conversion psydonic rituals"
+  - rscadd: "FREDOM (from clothes) ritual no longer requires target to have gone though luxplate ritual"
+  - qol: "Changed descriptions of absolver skills to be more reflecting of his lux abomination status"
+  - balance: "Stigmata gets ritualist and ritual chalk"
+  - bugfix: "Absolver unque quicksilver recepture is now properly locked to him and stigmata, and easier to produce"

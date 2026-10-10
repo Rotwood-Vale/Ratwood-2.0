@@ -666,6 +666,10 @@
 				msg += "[capitalize(m2)] eyes are closed."
 			else if(has_status_effect(/datum/status_effect/debuff/sleepytime))
 				msg += "[m1] looking a little tired."
+			else if(has_status_effect(/datum/status_effect/debuff/sleepytime/t2))
+				msg += "[m1] looking pretty tired."
+			else if(has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+				msg += "[m1] looking ridiculously tired."
 	else
 		msg += "[m1] unconscious."
 //		else
@@ -1312,7 +1316,7 @@
 		var/mob/living/living_examiner = examiner
 		if(HAS_TRAIT(examiner, TRAIT_DUSTRUNNER))
 			heretic_text += "Fellow runner. The dust moves."
-		else if(living_examiner?.patron?.type == /datum/patron/inhumen/matthios)
+		else if(isliving(examiner) && living_examiner.patron?.type == /datum/patron/inhumen/matthios)
 			heretic_text += "A Guild runner, by the look of them."
 		else if(examiner.job == "Bathhouse Attendant" || examiner.job == "Bathmaster")
 			heretic_text += "One of the Guild's runners. I know the signs."

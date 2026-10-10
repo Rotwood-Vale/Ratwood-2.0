@@ -72,10 +72,11 @@
 	category = "Transmutation"
 	req_table = FALSE
 	result = list(/obj/item/quicksilver/luxinfused = 1)
-	reqs = list(/obj/item/reagent_containers/food/snacks/grown/rogue/fyritius/bloodied = 1, /datum/reagent/water/blessed = 45, /obj/item/natural/cloth = 1, /obj/item/alch/silverdust = 1)
+	reqs = list(/datum/reagent/water/blessed = 45, /obj/item/alch/silverdust = 1)
 	craftdiff = 0
 	verbage_simple = "transmute"
 	structurecraft = null
+	always_availible = FALSE
 
 /datum/crafting_recipe/roguetown/alchemy/transisdust
 	name = "sui dust"
@@ -303,6 +304,24 @@
 	verbage_simple = "mix"
 	required_tech_node = "LUX_FILTRATION"
 	tech_unlocked = FALSE
+
+/datum/crafting_recipe/roguetown/alchemy/skysugarbase
+	name = "panacea of skysugar"
+	category = "Transmutation"
+	result = list(/obj/item/reagent_containers/food/snacks/grown/fruit/blackberry/skysugarbase = 1)
+	reqs = list(/obj/item/reagent_containers/food/snacks/rogue/raisins/blackberry = 1, /obj/item/reagent_containers/lux_impure = 1, /obj/item/reagent_containers/powder/starsugar = 1)
+	craftdiff = 5 //Better hope you've been practicing!
+	verbage_simple = "transmute"
+
+/datum/crafting_recipe/roguetown/alchemy/skysugar
+	name = "skysugar slab to skysugar powder (x3)"
+	category = "Transmutation"
+	result = list(/obj/item/reagent_containers/powder/starsugar/skysugar,
+					/obj/item/reagent_containers/powder/starsugar/skysugar,
+					/obj/item/reagent_containers/powder/starsugar/skysugar)
+	reqs = list(/obj/item/reagent_containers/food/snacks/grown/skysugarslab = 1)
+	craftdiff = 1 //Hard part's done. Time to break it up!
+	verbage_simple = "transmute"
 
 /datum/crafting_recipe/roguetown/alchemy/bandage
 	name = "bandages (alchemy)"

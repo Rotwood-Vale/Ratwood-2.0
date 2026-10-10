@@ -173,7 +173,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_HOLDBREATH))
-		adjustOxyLoss(10)
+		adjustOxyLoss(5)
 	if(istype(loc, /obj/structure/closet/dirthole))
 		adjustOxyLoss(5)
 	if(istype(loc, /obj/structure/closet/burial_shroud))
@@ -710,11 +710,17 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				if(ishuman(src) && stat == CONSCIOUS)
 					var/mob/living/carbon/human/H = src
 					if(H.head && H.head.armor?.stab > 70)
-						armor_blocked = TRUE
+						var/obj/item/clothing/nodrop_check = H.head
+						if(!HAS_TRAIT(nodrop_check, TRAIT_NODROP))
+							armor_blocked = TRUE
 					if(H.wear_armor && (H.wear_armor.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM)))
-						armor_blocked = TRUE
+						var/obj/item/clothing/nodrop_check = H.wear_armor
+						if(!HAS_TRAIT(nodrop_check, TRAIT_NODROP))
+							armor_blocked = TRUE
+					if(H.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+						armor_blocked = FALSE
 					// Check nude sleeper trait
-					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
+					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER) && !H.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
 						var/list/worn_items = H.get_equipped_items()
 						for(var/obj/item/I in worn_items)
 							// Skip abstract items
@@ -741,7 +747,12 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					fallingas++
 					if(HAS_TRAIT(src, TRAIT_FASTSLEEP))
 						fallingas++
-					if(fallingas > 15)
+					if(has_status_effect(/datum/status_effect/debuff/sleepytime/t2)) //about time...
+						fallingas++
+					if(has_status_effect(/datum/status_effect/debuff/sleepytime/t3)) //falling immidiately unconcious after 3 days just makes sense
+						fallingas++
+						fallingas++
+					if(fallingas > 12)
 						teleport_to_dream(src, 10000, 2)
 						Sleeping(300)
 			else
@@ -754,12 +765,19 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				if(ishuman(src) && stat == CONSCIOUS)
 					var/mob/living/carbon/human/H = src
 					if(H.head && H.head.armor?.stab > 70)
-						armor_blocked = TRUE
+						var/obj/item/clothing/nodrop_check = H.head
+						if(!HAS_TRAIT(nodrop_check, TRAIT_NODROP))
+							armor_blocked = TRUE
 					if(H.wear_armor && (H.wear_armor.armor_class in list(ARMOR_CLASS_HEAVY, ARMOR_CLASS_MEDIUM)))
-						armor_blocked = TRUE
+						var/obj/item/clothing/nodrop_check = H.wear_armor
+						if(!HAS_TRAIT(nodrop_check, TRAIT_NODROP))
+							armor_blocked = TRUE
 					// Nude sleepers are forbidden from sleeping uncomfortably.
 					if(HAS_TRAIT(H, TRAIT_NUDE_SLEEPER))
 						trait_blocked = TRUE
+					if(H.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+						armor_blocked = FALSE
+						trait_blocked = FALSE
 					if(trait_blocked && !fallingas)
 						to_chat(src, span_warning("I need to rest on something more comfortable!"))
 						fallingas = TRUE
@@ -772,6 +790,8 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 					fallingas++
 					if(HAS_TRAIT(src, TRAIT_FASTSLEEP))
 						fallingas++
+					if(has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+						fallingas++ //at this point it's hard not to fall asleep
 					if(fallingas > 25)
 						teleport_to_dream(src, 10000, 2)
 						Sleeping(300)

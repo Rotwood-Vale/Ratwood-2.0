@@ -249,8 +249,9 @@
 	owner.add_stress(/datum/stressevent/starsugar)
 	ADD_TRAIT(owner, TRAIT_DODGEEXPERT, TRAIT_STATUS_EFFECT(id))
 	ADD_TRAIT(owner, TRAIT_DARKVISION, TRAIT_STATUS_EFFECT(id))
-	if(owner.has_status_effect(/datum/status_effect/debuff/sleepytime))
-		owner.remove_status_effect(/datum/status_effect/debuff/sleepytime)
+	if(owner.has_status_effect(/datum/status_effect/debuff/sleepytime) || owner.has_status_effect(/datum/status_effect/debuff/sleepytime/t2) || owner.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+		var/mob/living/carbon/human/H = owner
+		H.remove_sleep_depravation(TRUE)
 	originalcmode = owner.cmode_music
 	owner.cmode_music = 'sound/music/combat_starsugar.ogg'
 
@@ -466,7 +467,7 @@
 	. = ..()
 	to_chat(owner, span_warning("My magical barrier reforms."))
 	playsound(owner, 'sound/magic/magearmorup.ogg', 75, FALSE)
-	owner.scalearmor = 0
+	owner.magearmor = 0
 
 /atom/movable/screen/alert/status_effect/buff/scalearmor
 	name = "Scale Struck"
@@ -983,12 +984,30 @@
 	duration = -1
 	healing_on_tick = 3
 	outline_colour = "#bbbbbb"
+	var/oh_god_it_hurts = FALSE
 
 /datum/status_effect/buff/healing/necras_vow/on_apply()
 	healing_on_tick = max(owner.get_skill_level(/datum/skill/magic/holy), 3)
 	return TRUE
 
 /datum/status_effect/buff/healing/necras_vow/tick()
+	if (owner.stat > 0 && (!owner.get_blood_volume() || owner.health < owner.crit_threshold))
+		// OH SHIT. SHE'S CASHING IN ON THE VOW!!! YOU'RE FUCKED!!!
+		if (!oh_god_it_hurts)
+			to_chat(owner, span_boldwarning("The everblack settles around you. Oblivion. Then, you hear it. You hear <i>HER</i>."))
+			to_chat(owner, span_crit("<B>\"MINE.\"</B>"))
+			owner.visible_message(span_warning("[owner]'s unconscious form suddenly arches back into a silent, rictus scream, blue motes spilling from their mouth!"))
+			oh_god_it_hurts = TRUE
+		
+		owner.adjustOxyLoss(healing_on_tick) // this is the part where she kills you.
+		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
+		H.color = "#33cabc"
+		return
+	else if (oh_god_it_hurts)
+		oh_god_it_hurts = FALSE
+		to_chat(owner, span_warning("The vice-like grip around your mortal coil eases, reluctantly. Yet, you feel hollow, all the same..."))
+		qdel(src) // clear the vow if someone somehow saves us
+		return
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#a5a5a5"
 	var/list/wCount = owner.get_wounds()

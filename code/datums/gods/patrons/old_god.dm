@@ -99,8 +99,8 @@
 	to_chat(H, span_info("A coin in my boot? Psydon smiles upon me!"))
 	H.put_in_hands(found_thing, FALSE)
 	if(prob(H.STALUC + H.get_skill_level(associated_skill)))
-		var/obj/item/extra_thing = pick(lootpool)
-		new extra_thing(get_turf(user))
+		var/extra_path = pick(lootpool)
+		var/obj/item/extra_thing = new extra_path(get_turf(user))
 		to_chat(H, span_info("Ah, of course! I almost forgot I had this stashed away for a perfect occasion."))
 		H.put_in_hands(extra_thing, FALSE)
 	return TRUE
@@ -130,6 +130,8 @@
 		return TRUE
 	// Allows prayer if holding silver psycross.
 	if(istype(follower.get_active_held_item(), /obj/item/clothing/neck/roguetown/psicross/silver))
+		return TRUE
+	if(HAS_TRAIT(follower, TRAIT_LUX_FREAK)) // the ones that became psydons temple in of themselves
 		return TRUE
 	to_chat(follower, span_danger("For Psydon to hear my prayer I must either must be near a Pantheon Cross, shed my own blood in penitence, hold one of his silver holy symbols, or bask in his rain; as Psydon weeps for his children.."))
 	return FALSE
@@ -223,6 +225,11 @@
 		target.visible_message(span_info("A strange stirring feeling pours from [target]!"), span_info("Sentimental thoughts drive away my pain..."))
 		var/psyhealing = 3
 		psyhealing += psicross_bonus
+
+		if(HAS_TRAIT(user, TRAIT_LUX_FREAK) && zcross_trigger) // LUX ABOMINATIONS WONT STOP SO EASLY!!!
+			user.visible_message(span_warning("[user] shudders as their eyes briefly wash over with a sickly shade of silver!"), span_userdanger("Ice shoots up my spine as the ARCHENEMY's laughter resonates in my skull! I will ENDURE this trial!"))
+			zcross_trigger = FALSE
+
 		if (conditional_buff & !zcross_trigger)
 			to_chat(user, "In <b>ENDURING</b> so much, become <b>EMBOLDENED</b>!")
 			psyhealing += situational_bonus

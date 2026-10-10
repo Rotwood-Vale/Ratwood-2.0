@@ -728,6 +728,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 			for(var/job in available_jobs)
 				var/datum/job/job_datum = SSjob.name_occupations[job]
 				var/do_elaborate = job_datum.has_limited_subclasses()
+				var/incompatible_href = length(job_datum.get_blocked_subclasses(client)) ? "<a href='?src=[REF(job_datum)];jobadvincomp=1'><b><font color = '#df1919'>(!!)</font></b></a>" : ""
 				if(job_datum)
 					var/command_bold = FALSE
 					if(job in GLOB.noble_positions)
@@ -738,7 +739,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 					if(job_datum in SSjob.prioritized_jobs)
 						dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[used_name] ([job_datum.current_positions])</span></a>"
 					else
-						dat += "<font size = 3>[do_elaborate ? "<a href='?src=[REF(job_datum)];jobsubclassinfo=1'><b><font color = '#6b6743'>(!)</font></b></a>" : ""]<a href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[command_bold ? "<b>" : ""][used_name] ([job_datum.current_positions]/[job_datum.total_positions])[command_bold ? "</b>" : ""]</a></font>"
+						dat += "<font size = 3>[incompatible_href][do_elaborate ? "<a href='?src=[REF(job_datum)];jobsubclassinfo=1'><b><font color = '#6b6743'>(!)</font></b></a>" : ""]<a href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[command_bold ? "<b>" : ""][used_name] ([job_datum.current_positions]/[job_datum.total_positions])[command_bold ? "</b>" : ""]</a></font>"
 						dat += "<br>"
 
 			dat += "</fieldset><br>"
