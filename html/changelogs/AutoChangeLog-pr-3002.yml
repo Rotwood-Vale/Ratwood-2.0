@@ -1,4 +1,0 @@
-author: "UntoldTactics"
-delete-after: True
-changes:
-  - bugfix: "Fixes avantyne vestments lacking a sprite and defaulting to regular plate chausses."
