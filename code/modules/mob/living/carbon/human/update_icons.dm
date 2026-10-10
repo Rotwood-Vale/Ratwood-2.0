@@ -1985,6 +1985,8 @@ generate/load female uniform sprites matching all previously decided variables
 	. += gender
 	. += age
 	. += obscured_flags
+	if(sexcon)
+		. += "hidden[jointext(sexcon.hidden_genitals, "")]"
 
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		. += BP.generate_limb_cache_key()
