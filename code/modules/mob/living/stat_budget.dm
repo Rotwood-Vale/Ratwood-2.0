@@ -125,31 +125,36 @@ GLOBAL_LIST_INIT(free_stat_packs, list("Austere", "Frail"))
 			progress = TRUE
 	if(!spend_spare)
 		return values
-	while(budget > 0)
-		var/total_weight = 0
-		var/virtual_budget = budget
-		var/list/open = list()
-		for(var/stat in GLOB.budget_stats)
-			if(values[stat] >= caps[stat])
-				continue
-			open += stat
-			total_weight += weights[stat]
-			virtual_budget += spent[stat]
-		var/best
-		var/best_deficit
-		for(var/stat in open)
-			if(stat_level_cost(stat, values[stat] + 1) > budget)
-				continue
-			var/deficit = virtual_budget * weights[stat] / total_weight - spent[stat]
-			if(isnull(best) || deficit > best_deficit)
-				best = stat
-				best_deficit = deficit
-		if(isnull(best))
-			break
-		var/cost = stat_level_cost(best, values[best] + 1)
-		values[best]++
-		spent[best] += cost
-		budget -= cost
+	for(var/pass in 1 to 2)
+		if(pass == 2)
+			for(var/stat in GLOB.budget_stats)
+				if(values[stat] >= 8)
+					caps[stat] = STAT_BASE_MAX + stat_cap_shift(stat, favored_stats)
+		while(budget > 0)
+			var/total_weight = 0
+			var/virtual_budget = budget
+			var/list/open = list()
+			for(var/stat in GLOB.budget_stats)
+				if(values[stat] >= caps[stat])
+					continue
+				open += stat
+				total_weight += weights[stat]
+				virtual_budget += spent[stat]
+			var/best
+			var/best_deficit
+			for(var/stat in open)
+				if(stat_level_cost(stat, values[stat] + 1) > budget)
+					continue
+				var/deficit = virtual_budget * weights[stat] / total_weight - spent[stat]
+				if(isnull(best) || deficit > best_deficit)
+					best = stat
+					best_deficit = deficit
+			if(isnull(best))
+				break
+			var/cost = stat_level_cost(best, values[best] + 1)
+			values[best]++
+			spent[best] += cost
+			budget -= cost
 	return values
 
 /mob/living/carbon/human/proc/apply_role_stats(budget, list/favored_stats)
