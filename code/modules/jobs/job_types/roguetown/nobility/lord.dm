@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 
 /datum/outfit/job/roguetown/lord
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
-	cloak = /obj/item/clothing/cloak/lordcloak/royal
+	cloak = /obj/item/clothing/cloak/lordcloak
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold
 	beltl = /obj/item/storage/keyring/lord
 	id = /obj/item/scomstone/garrison

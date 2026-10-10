@@ -815,10 +815,6 @@
 	GLOB.lordcolor -= src
 	return ..()
 
-/obj/item/clothing/cloak/lordcloak/royal
-	name = "royal cloak"
-	desc = "Ermine trimmed, handed down. Worn by the ruler of the realm."
-
 /obj/item/clothing/cloak/lordcloak/baronycloak
 	name = "Barony Cloak"
 	desc = "A cloak in the heraldic colors of the Lowtown Barony."
