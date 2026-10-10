@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(learnable_spells, (list(/obj/effect/proc_holder/spell/invoked/p
 //  	/obj/effect/proc_holder/spell/invoked/knock,
 		/obj/effect/proc_holder/spell/invoked/haste,
 		/obj/effect/proc_holder/spell/invoked/featherfall,
-		/obj/effect/proc_holder/spell/invoked/darkvision,
+		/obj/effect/proc_holder/spell/self/darkvision,
 		/obj/effect/proc_holder/spell/invoked/longstrider,
 		/obj/effect/proc_holder/spell/invoked/invisibility,
 		/obj/effect/proc_holder/spell/invoked/projectile/acidsplash,
