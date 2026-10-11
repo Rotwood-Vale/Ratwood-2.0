@@ -1058,6 +1058,22 @@
 	force = 12
 	var/rune = null // Its raining evil blood runes, HALLELUJA!
 
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/newshot()
+	. = ..()
+	var/obj/projectile/bullet/reusable/heavy_bolt/loaded_bolt = BB
+	loaded_bolt.rune = rune
+
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/examine(mob/user)
+	. = ..()
+	if(user.mind)
+		if(user.mind.has_spell(/obj/effect/proc_holder/spell/self/arbalist_blood_runes))
+			if(rune)
+				. += span_info(" A [rune] is drawn in blood on the bolt.")
+		else
+			if(rune)
+				. += span_info("There is a bloody sign drawn on the bolt.")
+
+
 //+10 damage/pen from bolt.
 //Pen increase on heavy crossbow assures these will, effectively, ALWAYS go through.
 /obj/projectile/bullet/reusable/heavy_bolt

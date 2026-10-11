@@ -870,10 +870,12 @@
 	is_silver = TRUE // arbalest blood is silver infused
 	integrity_failure = 0 // Meant to be used to its destruction
 	anvilrepair = null // as above ^
+	always_destroy = TRUE // needed to be destoyed
 	var/rune = null // aka why its here
+	sellprice = 0
 
 	
-/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/ComponentInitialize() // Lets say arbelest blood and lux alredy being... quite somthing, counts as blesing. Actualy here to work against undead
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood/ComponentInitialize() // Lets say arbelest blood and lux alredy being... quite somthing, counts as blesing. Actualy here to work against undead
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = SILVER_PSYDONIAN,\
@@ -887,10 +889,13 @@
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood/examine(mob/user)
 	. = ..()
 	if(user.mind)
-		if(user.mind.has_spell(/obj/effect/proc_holder/spell/self/arbalist_blood_runes))
-			desc = "Stake transformed with holy blood, suitable for housing the power of runes. Such power comes at a cost, and nothing can reverse this stake deterioration."
+		if(user.mind.has_spell(/obj/effect/proc_holder/spell/self/arbalist_blood_runes)) // only people with ability to use them recognise them
+			. += span_info("Stake transformed with holy blood, suitable for housing the power of runes. Such power comes at a cost, and nothing can reverse this stake deterioration.")
 			if(rune)
-				desc += " A [rune] is etched into the bloody wood."
+				. += span_info(" A [rune] is etched into the bloody wood.")
+		else
+			if(rune)
+				. += span_info("There is a bloody sign etched into the wood.")
 
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger

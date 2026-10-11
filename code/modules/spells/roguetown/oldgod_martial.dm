@@ -366,6 +366,14 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	duration = 8//Adjust with the above, when/if we get one. Otherwise just default to emp/pulse and just delete this.
 
 
+#define BLOODRUNE_FIRE "<span style=color:#FF8C00;>Fire Rune</span>"
+#define BLOODRUNE_WIND "<span style=color:#87CEFA;>Wind Rune</span>"
+#define BLOODRUNE_EARTH "<span style=color:#8B4513;>Earth Rune</span>"
+#define BLOODRUNE_WATER "<span style=color:#0000CD;>Water Rune</span>"
+#define BLOODRUNE_NATURE "<span style=color:#32CD32;>Nature Rune</span>"
+#define BLOODRUNE_FORCE "<span style=color:#FFFF00;>Force Rune</span>"
+
+
 /obj/effect/proc_holder/spell/self/arbalist_blood_runes 
 	name = "FUTHARK"
 	desc = "There have been a group of tribal shamans writing weird magical runes into their flesh and blood. \
@@ -387,6 +395,65 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	miracle = TRUE
 	devotion_cost = 10
 
-/obj/effect/proc_holder/spell/self/psydonic_lux_bolt/cast(mob/living/carbon/human/user)
-	if(!isliving(user))
+/obj/effect/proc_holder/spell/self/arbalist_blood_runes/cast(mob/living/carbon/human/user)
+	if(!ishuman(user))
 		return FALSE
+
+	var/item = user.get_active_held_item()
+	if(!item) // Nothing in hand, give tutorial
+		to_chat(user, span_userdanger("You must be holding a weapon to draw the runes upon!"))
+		revert_cast()
+		return FALSE
+
+	if(!(istype(item, /obj/item/grown/log/tree/stake) || istype(item, /obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood) || istype(item, /obj/item/ammo_casing/caseless/rogue/heavy_bolt)))
+		to_chat(user, span_danger("You must be holding a stake, a bloodblessed stake or a sauterelle bolt to use your runes."))
+		revert_cast()
+		return FALSE
+
+	if(istype(item, /obj/item/grown/log/tree/stake))
+		user.visible_message(span_danger("[user] stabs [item] into their flesh, covering it in their blood."), span_notice("I bind my blood to the wooden stake, it will now serve as conduit for the runes."))
+		qdel(item)
+		user.put_in_active_hand(new /obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood)
+		user.adjust_blood_volume(-100)
+		return TRUE
+	
+	var/intent = user.rmb_intent
+	var/rune = null
+	var/list/posible_intents = list(/datum/rmb_intent/riposte, /datum/rmb_intent/feint, /datum/rmb_intent/swift, /datum/rmb_intent/weak, /datum/rmb_intent/strong, /datum/rmb_intent/aimed)
+
+	if(!intent || !is_type_in_list(intent, posible_intents))
+		to_chat(span_green("This intent isnt accepted for the spell. Make a bug report")) // if you make new intends or change the old ones, add them to the list. Double up on a rune from 2 difrent intends if you need to
+		revert_cast()
+		return FALSE
+
+	if(istype(intent, /datum/rmb_intent/riposte))
+		rune = BLOODRUNE_FIRE
+	if(istype(intent, /datum/rmb_intent/swift))
+		rune = BLOODRUNE_WIND
+	if(istype(intent, /datum/rmb_intent/weak))
+		rune = BLOODRUNE_EARTH
+	if(istype(intent, /datum/rmb_intent/aimed))
+		rune = BLOODRUNE_WATER
+	if(istype(intent, /datum/rmb_intent/feint))
+		rune = BLOODRUNE_NATURE
+	if(istype(intent, /datum/rmb_intent/strong))
+		rune = BLOODRUNE_FORCE
+
+	var/obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood/stake = item
+	var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/bolt = item
+	
+	if(istype(stake))
+		stake.rune = rune
+		user.adjust_blood_volume(-50)
+		user.visible_message(span_danger("[user] draws something on [item] with their blood."), span_notice("I shape a [rune] on the surface of [item]."))
+		return TRUE
+	if(istype(bolt))
+		bolt.rune = rune
+		var/obj/projectile/bullet/reusable/heavy_bolt/loaded_bolt = bolt.BB
+		loaded_bolt.rune = rune
+		user.adjust_blood_volume(-50)
+		user.visible_message(span_danger("[user] draws something on [item] with their blood."), span_notice("I shape a [rune] on the surface of [item]."))
+		return TRUE
+		
+	revert_cast() // fallback
+	return FALSE
