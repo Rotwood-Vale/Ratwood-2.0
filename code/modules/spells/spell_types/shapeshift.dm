@@ -36,15 +36,13 @@
 	var/datum/antagonist/vampire/VD = user?.mind?.has_antag_datum(/datum/antagonist/vampire)
 	if(VD && SEND_SIGNAL(user, COMSIG_DISGUISE_STATUS))
 		to_chat(user, span_warning("My curse is hidden."))
-		return
+		return FALSE
 	if(user.restrained(ignore_grab = FALSE))
 		to_chat(user, span_warn("I am restrained, I can't shapeshift!"))
-		return
+		return FALSE
 	if(src in user.mob_spell_list)
 		user.mob_spell_list.Remove(src)
 		user.mind.AddSpell(src)
-	if(user.buckled)
-		user.buckled.unbuckle_mob(src,force=TRUE)
 	for(var/mob/living/M in targets)
 		if(!shapeshift_type)
 			var/list/animal_list = list()
@@ -52,10 +50,10 @@
 				var/mob/living/simple_animal/A = path
 				animal_list[initial(A.name)] = path
 			var/choice = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as null|anything in sortList(animal_list)
-			if(!choice)
-				return
-			if(shapeshift_type)
-				return
+			if(!choice || shapeshift_type)
+				return FALSE
+			if(QDELETED(user) || (user.stat && !stat_allowed) || user.restrained(ignore_grab = FALSE))
+				return FALSE
 			shapeshift_type = animal_list[choice]
 
 		var/obj/shapeshift_holder/S = locate() in M
@@ -65,6 +63,8 @@
 		if(shapeshift_type)
 			if(shapeshift_type == /mob/living/simple_animal/hostile/retaliate/gaseousform)
 				addtimer(CALLBACK(src, PROC_REF(Restore), M), 100)
+			if(M.buckled)
+				M.buckled.unbuckle_mob(M, force = TRUE)
 			Shapeshift(M)
 			return TRUE
 	return
