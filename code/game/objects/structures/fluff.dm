@@ -1811,7 +1811,7 @@
 	icon = 'icons/roguetown/misc/statues/statue_zizo.dmi'
 	pixel_x = -16
 
-//Thug statues, intended for Thugs//
+//Thug statues, intended for Thugs. God forgive me for the...Bloat...Please help me if its too bloated...//
 
 /obj/structure/fluff/statue/gang
 	name = "unclaimed flat stone"
@@ -1821,120 +1821,141 @@
 	var/being_captured = FALSE
 	var/capture_time = 12 SECONDS
 	var/intimidation_range = 8
+	var/belongs_to = null
+	var/list/reward_pool
+	var/next_business_cycle = 0
 
-/obj/structure/fluff/statue/gang/attack_hand(mob/user)
+/obj/structure/fluff/statue/gang/attack_hand(mob/user)	//simple structure to switch states between the three modes, relevant to user traits.
 	. = ..()
-	if(!HAS_TRAIT(user, TRAIT_GANG_A) && !HAS_TRAIT(user, TRAIT_GANG_B))
-		to_chat(user, span_warning("What a smooth stone."))
-		return
+	if(belongs_to == null)
+		if(HAS_TRAIT(user, TRAIT_GANG_A))
+			who_captures("Rontz", user)
+			return
+		else if(HAS_TRAIT(user, TRAIT_GANG_B))
+			who_captures("Blortz", user)
+			return
+	else if(belongs_to == "Blortz")
+		if(HAS_TRAIT(user, TRAIT_GANG_A))
+			who_captures("Rontz", user)
+			return
+		else if(HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
+			who_captures(null, user)
+			return
+	else if(belongs_to == "Rontz")
+		if(HAS_TRAIT(user, TRAIT_GANG_B))
+			who_captures("Blortz", user)
+			return
+		else if(HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
+			who_captures(null, user)
+			return
+
+/obj/structure/fluff/statue/gang/proc/who_captures(new_owner, mob/user)	//Is the object being captured? And when should the object transform states? Answers those.
 	if(being_captured)
 		to_chat(user, span_warning("This stone is already bein' claimed!"))
 		return
-	to_chat(user, span_notice("You begin claiming the stone for your gang."))
+
 	being_captured = TRUE
-	
+
 	if(do_after(user, capture_time, src))
-		
-		if(HAS_TRAIT(user, TRAIT_GANG_A))
-			new /obj/structure/fluff/statue/gang/rontz(get_turf(src))
-			qdel(src)
-			return
-		else if(HAS_TRAIT(user, TRAIT_GANG_B))
-			new /obj/structure/fluff/statue/gang/blortz(get_turf(src))
-			qdel(src)
-			return
+		change_ownership(new_owner)
 
 	being_captured = FALSE
 
-/obj/structure/fluff/statue/gang/rontz
-	name = "pillar with a cloth"
-	desc = "A stone pillar with a red cloth wrapped around the tip, the color of the Rontz gang."
-	icon_state = "rontzthug"
-	
+/obj/structure/fluff/statue/gang/proc/change_ownership(new_owner)	//For a more compact code. Thanks to these maptainers will have an easier time mapping the thug-areas.
+	belongs_to = new_owner
 
-/obj/structure/fluff/statue/gang/rontz/Initialize(mapload)
+	switch(belongs_to)
+		if("Rontz")
+			name = "pillar with a cloth"
+			desc = "A stone pillar with a red cloth wrapped around the tip, the color of the Rontz gang."
+			icon_state = "rontzthug"
+		if("Blortz")
+			name = "pillar with a cloth"
+			desc = "A stone pillar with a blue cloth wrapped around the tip, the color of the Rontz gang."
+			icon_state = "blortzthug"
+		if(null)
+			name = "unclaimed flat stone"
+			desc = "A flat, unmarked stone. It looks like a canvas. Perhaps it could be used to make a statement."
+			icon_state = "gangneutral"
+
+/obj/structure/fluff/statue/gang/Initialize(mapload)	//The thug-specific debuffs come in. Do the thug shake now.
 	. = ..()
+	next_business_cycle = world.time + 30 SECONDS
 	START_PROCESSING(SSobj, src)
+	
+/obj/structure/fluff/statue/gang/process()
 
-/obj/structure/fluff/statue/gang/rontz/process()
+	if(world.time >= next_business_cycle)
+		reward_spawn()
+		next_business_cycle = world.time + 30 SECONDS
+
+	if(belongs_to == null)
+		return
+
 	for(var/mob/living/carbon/human/H in viewers(intimidation_range, src))
-		if(H.mind)
+		if(belongs_to == "Blortz")
+			if(HAS_TRAIT(H, TRAIT_GANG_A))
+				if(!H.has_status_effect(/datum/status_effect/debuff/blortzterritory))
+					H.apply_status_effect(/datum/status_effect/debuff/blortzterritory)
+		else if(belongs_to == "Rontz")
 			if(HAS_TRAIT(H, TRAIT_GANG_B))
 				if(!H.has_status_effect(/datum/status_effect/debuff/rontzterritory))
 					H.apply_status_effect(/datum/status_effect/debuff/rontzterritory)
-//below is for city guard neutralising or opposite gang CtF
-/obj/structure/fluff/statue/gang/rontz/attack_hand(mob/user)
-	if(!HAS_TRAIT(user, TRAIT_GANG_B) && !HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
-		to_chat(user, span_warning("A smooth rock with a cloth."))
-		return
-	if(being_captured)
-		to_chat(user, span_warning("This stone is already bein' claimed!"))
-		return
-	if(HAS_TRAIT(user, TRAIT_GANG_B))
-		to_chat(user, span_notice("You begin claiming the stone for your gang."))
-	else if(HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
-		to_chat(user, span_notice("Damned ruffians. Taking these places like it's their own."))
-	being_captured = TRUE
-	
-	if(do_after(user, capture_time, src))
-		
-		if(HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
-			new /obj/structure/fluff/statue/gang(get_turf(src))
-			qdel(src)
-			return
-		else if(HAS_TRAIT(user, TRAIT_GANG_B))
-			new /obj/structure/fluff/statue/gang/blortz(get_turf(src))
-			qdel(src)
-			return
-	
-	being_captured = FALSE
 
-/obj/structure/fluff/statue/gang/rontz/Destroy()
+/obj/structure/fluff/statue/gang/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/structure/fluff/statue/gang/blortz
-	name = "pillar with a cloth"
-	desc = "A stone pillar with a blue cloth wrapped around the tip, the color of the Rontz gang."
-	icon_state = "blortzthug"
-	
-/obj/structure/fluff/statue/gang/blortz/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/fluff/statue/gang/blortz/process()
-	for(var/mob/living/carbon/human/H in viewers(intimidation_range, src))
-		if(H.mind)
-			if(HAS_TRAIT(H,TRAIT_GANG_A))
-				if(!H.has_status_effect(/datum/status_effect/debuff/blortzterritory))
-					H.apply_status_effect(/datum/status_effect/debuff/blortzterritory)
-					
-/obj/structure/fluff/statue/gang/blortz/attack_hand(mob/user)
-	if(!HAS_TRAIT(user, TRAIT_GANG_A) && !HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
-		to_chat(user, span_warning("A smooth rock with a cloth."))
+/obj/structure/fluff/statue/gang/proc/reward_spawn()
+	if(belongs_to == null)
 		return
-	if(being_captured)
-		to_chat(user, span_warning("This stone is already bein' claimed!"))
-		return
-	if(HAS_TRAIT(user, TRAIT_GANG_A))
-		to_chat(user, span_notice("You begin claiming the stone for your gang."))
-	else if(HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
-		to_chat(user, span_notice("Damned ruffians. Taking these places like it's their own."))
-	being_captured = TRUE
+	var/list/valid_turf = list()
+	for(var/turf/T in range(1,src))
+		if(T.density)
+			continue
+		valid_turf += T
 	
-	if(do_after(user, capture_time, src))
-		
-		if(HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
-			new /obj/structure/fluff/statue/gang(get_turf(src))
-			qdel(src)
-			return
-		else if(HAS_TRAIT(user, TRAIT_GANG_A))
-			new /obj/structure/fluff/statue/gang/rontz(get_turf(src))
-			qdel(src)
-			return
-	
-	being_captured = FALSE
+	var/turf/item_spawn_turf = pick(valid_turf)
+	for (var/i in 1 to 3)
+		var/possible_item = pick(reward_pool)
+		var/quantity = reward_pool[possible_item]
 
-/obj/structure/fluff/statue/gang/blortz/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+		for(var/j in 1 to quantity)
+			new possible_item(item_spawn_turf)
+
+/obj/structure/fluff/statue/gang/watchtower	//meant for alleyways.
+	reward_pool = list(
+		/obj/item/impact_grenade/smoke = 2,
+		/obj/item/roguecoin/gold = 1,
+		/obj/item/roguecoin/silver = 2,
+		/obj/item/roguecoin/copper/pile = 4,
+		/obj/item/impact_grenade/smoke/healing_gas = 1,
+		/obj/item/lockpick = 1,
+		/obj/item/lockpickring = 1,
+		/obj/item/rogueweapon/huntingknife/idagger = 1
+	)
+
+/obj/structure/fluff/statue/gang/bathhouse	//meant for whitevein-esque areas.
+	reward_pool = list(
+		/obj/item/roguecoin/gold = 1,
+		/obj/item/roguecoin/silver = 2,
+		/obj/item/roguecoin/copper/pile = 4,
+		/obj/item/reagent_containers/powder/ozium = 3,
+		/obj/item/reagent_containers/powder/moondust = 2,
+		/obj/item/reagent_containers/powder/spice = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/redwine = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/whitewine = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/beer = 2,
+		/obj/item/reagent_containers/glass/bottle/rogue/wine = 2
+	)
+
+/obj/structure/fluff/statue/gang/docks	//meant for dock-esque areas.
+	reward_pool = list(
+		/obj/item/roguecoin/gold = 1,
+		/obj/item/roguecoin/silver = 6,
+		/obj/item/roguecoin/copper/pile = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
+		/obj/item/rogueweapon/sword/cutlass = 1,
+		/obj/item/reagent_containers/food/snacks/fish/salmon = 5
+)

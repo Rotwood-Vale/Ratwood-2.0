@@ -167,14 +167,15 @@
 #define NITEMASTER	(1<<9)
 #define WENCH		(1<<10)
 #define BEGGAR		(1<<11)
-#define THUG		(1<<12)
-#define PILGRIM		(1<<13)
-#define VILLAGER	(1<<14)
-#define PRISONERR	(1<<15)
-#define PRISONERB	(1<<16)
-#define LUNATIC		(1<<17)
-#define MIGRANT		(1<<18)
-#define ASSASSIN	(1<<19)
+#define ATHUG		(1<<12)
+#define BTHUG		(1<<13)
+#define PILGRIM		(1<<14)
+#define VILLAGER	(1<<15)
+#define PRISONERR	(1<<16)
+#define PRISONERB	(1<<17)
+#define LUNATIC		(1<<18)
+#define MIGRANT		(1<<19)
+#define ASSASSIN	(1<<20)
 #define YOUNGFOLK	(1<<6)
 
 #define CHURCHLING	(1<<1)
@@ -328,7 +329,8 @@
 #define JDO_GNOLL 30.5
 #define JDO_ASSASSIN 30.6
 #define JDO_TRADER 30.7
-#define JDO_THUG 30.8
+#define JDO_THUGA 30.8
+#define JDO_THUGB 30.9
 
 #define JDO_MERCENARY 31
 #define JDO_GRENZELHOFT 31.1
