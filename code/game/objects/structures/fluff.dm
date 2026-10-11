@@ -1814,10 +1814,11 @@
 //Thug statues, intended for Thugs. God forgive me for the...Bloat...Please help me if its too bloated...//
 
 /obj/structure/fluff/statue/gang
-	name = "unclaimed flat stone"
-	desc = "A flat, unmarked stone. It looks like a canvas. Perhaps it could be used to make a statement."
+	name = "unclaimed flat stick"
+	desc = "A flat, unmarked stick. Perhaps it could be used to make a statement."
 	icon_state = "gangneutral"
 	icon = 'icons/roguetown/misc/structure.dmi'
+	max_integrity = 89999
 	var/being_captured = FALSE
 	var/capture_time = 12 SECONDS
 	var/intimidation_range = 8
@@ -1856,8 +1857,30 @@
 
 	being_captured = TRUE
 
+	if(new_owner == null)
+		user.visible_message(
+			span_warning("[user] begins unwrapping a cloth around the pillar!"),
+			span_warning("I start ripping the cloth around the stone.")
+		)
+	else
+		user.visible_message(
+			span_warning("[user] begins wrapping a cloth around the pillar!"),
+			span_warning("I begin wrapping my colours around the pillar!")
+		)
+
+	playsound(src, "rustle", 70, FALSE)
+	
 	if(do_after(user, capture_time, src))
 		change_ownership(new_owner)
+		user.visible_message(
+			span_warning("[user] wraps a cloth around the pillar!"),
+			span_warning("I begin wrap my colours around the pillar!")
+		)
+	else
+		user.visible_message(
+			span_warning("[user] gets interrupted whilst wrapping the cloth!"),
+			span_warning("I get interrupted whilst wrapping the cloth!")
+		)
 
 	being_captured = FALSE
 
@@ -1880,14 +1903,14 @@
 
 /obj/structure/fluff/statue/gang/Initialize(mapload)	//The thug-specific debuffs come in. Do the thug shake now.
 	. = ..()
-	next_business_cycle = world.time + 30 SECONDS
+	next_business_cycle = world.time + rand(25, 35) * 1 MINUTES
 	START_PROCESSING(SSobj, src)
 	
 /obj/structure/fluff/statue/gang/process()
 
 	if(world.time >= next_business_cycle)
 		reward_spawn()
-		next_business_cycle = world.time + 30 SECONDS
+		next_business_cycle = world.time + rand(25, 35) * 1 MINUTES
 
 	if(belongs_to == null)
 		return
@@ -1916,6 +1939,9 @@
 		valid_turf += T
 	
 	var/turf/item_spawn_turf = pick(valid_turf)
+
+	playsound(src.loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+
 	for (var/i in 1 to 3)
 		var/possible_item = pick(reward_pool)
 		var/quantity = reward_pool[possible_item]
@@ -1923,39 +1949,77 @@
 		for(var/j in 1 to quantity)
 			new possible_item(item_spawn_turf)
 
+// 20 items per pool for 5% chance of something spawning. RNGod can favor one item and it can spawn 3 times, still. Not a problem though.
+
 /obj/structure/fluff/statue/gang/watchtower	//meant for alleyways.
 	reward_pool = list(
 		/obj/item/impact_grenade/smoke = 2,
 		/obj/item/roguecoin/gold = 1,
 		/obj/item/roguecoin/silver = 2,
 		/obj/item/roguecoin/copper/pile = 4,
-		/obj/item/impact_grenade/smoke/healing_gas = 1,
 		/obj/item/lockpick = 1,
 		/obj/item/lockpickring = 1,
-		/obj/item/rogueweapon/huntingknife/idagger = 1
+		/obj/item/rogueweapon/huntingknife/idagger = 1,
+		/obj/item/quiver/sling/iron = 1,
+		/obj/item/gun/ballistic/revolver/grenadelauncher/sling = 1,
+		/obj/item/rogueweapon/flail/militia = 1,
+		/obj/item/rogueweapon/woodstaff/militia = 1,
+		/obj/item/rogueweapon/greataxe/militia = 1,
+		/obj/item/rogueweapon/spear/militia = 1,
+		/obj/item/rogueweapon/pick/militia = 1,
+		/obj/item/rogueweapon/sword/falchion/militia = 1,
+		/obj/item/rogueweapon/mace/woodclub = 1,
+		/obj/item/rope = 2,
+		/obj/item/rope/chain = 1,
+		/obj/item/storage/roguebag = 1,
+		/obj/item/flashlight/flare/torch/lantern = 1,
+		/obj/item/rogueweapon/huntingknife/throwingknife = 2
 	)
 
 /obj/structure/fluff/statue/gang/bathhouse	//meant for whitevein-esque areas.
 	reward_pool = list(
-		/obj/item/roguecoin/gold = 1,
-		/obj/item/roguecoin/silver = 2,
-		/obj/item/roguecoin/copper/pile = 4,
-		/obj/item/reagent_containers/powder/ozium = 3,
-		/obj/item/reagent_containers/powder/moondust = 2,
+		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
+		/obj/item/reagent_containers/powder/ozium = 2,
+		/obj/item/reagent_containers/powder/moondust = 1,
 		/obj/item/reagent_containers/powder/spice = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/redwine = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/whitewine = 1,
-		/obj/item/reagent_containers/glass/bottle/rogue/beer = 2,
-		/obj/item/reagent_containers/glass/bottle/rogue/wine = 2
+		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/wine = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/beer/zagul = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/beer/blackgoat = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/beer/ratkept = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/beer/hagwoodbitter = 1,
+		/obj/item/rogueweapon/whip = 1,
+		/obj/item/clothing/neck/roguetown/gorget/cursed_collar = 1,
+		/obj/item/clothing/neck/roguetown/collar/leather = 1,
+		/obj/item/reagent_containers/glass/bottle = 2,
+		/obj/item/clothing/ring/silver = 1,
+		/obj/item/clothing/neck/roguetown/psicross/shell = 1,
 	)
 
-/obj/structure/fluff/statue/gang/docks	//meant for dock-esque areas.
+/obj/structure/fluff/statue/gang/docks	//meant for dock-esque areas. General supplies, tools, anything a thug can intercept and steal form trade ships.
 	reward_pool = list(
 		/obj/item/roguecoin/gold = 1,
-		/obj/item/roguecoin/silver = 6,
+		/obj/item/roguecoin/silver = 3,
 		/obj/item/roguecoin/copper/pile = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
 		/obj/item/rogueweapon/sword/cutlass = 1,
-		/obj/item/reagent_containers/food/snacks/fish/salmon = 5
+		/obj/item/reagent_containers/food/snacks/fish/salmon = 5,
+		/obj/item/reagent_containers/food/snacks/fish/plaice = 2,
+		/obj/item/reagent_containers/food/snacks/fish/bass = 2,
+		/obj/item/reagent_containers/food/snacks/fish/eel = 1,
+		/obj/item/natural/cloth/bandage = 1,
+		/obj/item/natural/cloth = 3,
+		/obj/item/natural/fibers = 5,
+		/obj/item/natural/stone = 2,
+		/obj/item/grown/log/tree/small = 3,
+		/obj/item/natural/wood/plank = 2,
+		/obj/item/ingot/iron = 1,
+		/obj/item/rogueore/iron = 3,
+		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/wine = 1,
 )

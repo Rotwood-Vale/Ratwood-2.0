@@ -7,7 +7,13 @@
 	total_positions = 6
 	spawn_positions = 6
 	allowed_races = ACCEPTED_RACES
-	tutorial = "Maybe you've never been the smartest person in town, but you've gotten this far - whether by finding odd-jobs around town carting shit for the soilers, being the meathead that somebody needs to stand behind them and look scary, or simply shaking down the weak with the veiled-or-otherwise threat of a clobbering. You might've had some run-ins with the law for petty crimes here and there, but you're tolerated enough to have a home here."
+	tutorial = "Maybe you've never been the smartest person in town, but you've gotten this far - whether by finding odd-jobs around town carting shit for the soilers,\
+			being the meathead that somebody needs to stand behind them and look scary, or simply shaking down the weak with the veiled-or-otherwise threat of a clobbering.\
+			You might've had some run-ins with the law for petty crimes here and there, but you're still a resident; and your heart beats in these lands.\
+			\
+			You're a member of street gang Blortz Volves, a lot of time has passed and now you have to build up your power again, \
+			those bastards from Rontz Ratz will answer for this. \
+			Blortz Wolves howl - enemies cower!"
 	advclass_cat_rolls = list(CTAG_THUGB = 20)
 	outfit = null
 	outfit_female = null
@@ -25,7 +31,7 @@
 	class_setup_examine = TRUE
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
-	job_traits = list(TRAIT_GANG_B, TRAIT_HOMESTEAD_EXPERT, TRAIT_SEEPRICES_SHITTY)
+	job_traits = list(TRAIT_GANG_B, TRAIT_HOMESTEAD_EXPERT, TRAIT_SEEPRICES_SHITTY, TRAIT_DRUNK_HEALING)
 	job_subclasses = list(
 		/datum/advclass/bgoon,
 		/datum/advclass/bmiscreant,
@@ -36,7 +42,7 @@
 /datum/outfit/job/roguetown/adventurer/thugb/pre_equip(mob/living/carbon/human/H)
 	..()
 	belt = /obj/item/storage/belt/rogue/leather/rope
-	mask = /obj/item/clothing/mask/rogue/ragmask/red
+	mask = /obj/item/clothing/mask/rogue/ragmask/azure
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
 	pants = /obj/item/clothing/under/roguetown/tights/random
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
@@ -54,7 +60,7 @@
 	allowed_races = RACES_ALL_KINDS
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	category_tags = list(CTAG_THUGB)
-	outfit = /datum/outfit/job/roguetown/adventurer/thugb
+	outfit = /datum/outfit/job/roguetown/adventurer/thugb/bgoon
 	subclass_languages = list(/datum/language/thievescant)
 	subclass_stats = list(
 		STATKEY_STR = 1,
@@ -66,10 +72,10 @@
 	
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN, 
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE, 
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE, 
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN, 
+		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE, 
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE, 
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
@@ -82,6 +88,24 @@
 		/datum/skill/misc/stealing = SKILL_LEVEL_JOURNEYMAN,
 	)
 
+/datum/outfit/job/roguetown/adventurer/thugb/bgoon/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(H.mind)
+		var/options = list("The Brawler (Bronze Knuckles)", "The Cutthroat (Navaja)", "The Enforcer (Cudgel)")
+		var/option_choice = input(H, "Choose your intimidation way.", "WHAT KIND OF A GOON ARE YOU?") as anything in options
+		
+		switch(option_choice)
+			if("The Brawler (Bronze Knuckles)")
+				r_hand = /obj/item/rogueweapon/knuckles/bronzeknuckles
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if("The Cutthroat (Navaja)")
+				r_hand = /obj/item/rogueweapon/huntingknife/idagger/navaja
+				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			if("The Enforcer (Cudgel)")
+				r_hand = /obj/item/rogueweapon/mace/cudgel
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.playsound_local(get_turf(H), 'sound/music/area/spawnblortzvolves.ogg', 60, FALSE, pressure_affected = FALSE)
+
 /datum/advclass/bmiscreant
 	name = "Miscreant"
 	tutorial = "You're smarter than the rest, by a stone's throw - and you know better than to get up close and personal. Unlike most others, you can read."
@@ -90,7 +114,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	category_tags = list(CTAG_THUGB)
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
-	outfit = /datum/outfit/job/roguetown/adventurer/thugb
+	outfit = /datum/outfit/job/roguetown/adventurer/thugb/bmiscreant
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_NUTCRACKER, TRAIT_CICERONE)
 	subclass_stats = list(
@@ -138,6 +162,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_LIGHT_STEP, TRAIT_GENERIC)
 				r_hand = /obj/item/lockpickring/mundane
+	H.playsound_local(get_turf(H), 'sound/music/area/spawnblortzvolves.ogg', 60, FALSE, pressure_affected = FALSE)
 
 /datum/advclass/bmuscle
 	name = "Muscle"
@@ -147,7 +172,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	category_tags = list(CTAG_THUGB)
 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg'
-	outfit = /datum/outfit/job/roguetown/adventurer/thugb
+	outfit = /datum/outfit/job/roguetown/adventurer/thugb/bmuscle
 	subclass_languages = list(/datum/language/thievescant)
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_HARDDISMEMBER)
 
@@ -171,6 +196,7 @@
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
 		)
+
 /datum/outfit/job/roguetown/adventurer/thugb/bmuscle/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
@@ -199,6 +225,7 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
 			if("Headbutt - Vulnerable Debuff")
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
+	H.playsound_local(get_turf(H), 'sound/music/area/spawnblortzvolves.ogg', 60, FALSE, pressure_affected = FALSE)
 
 /datum/advclass/blongshoreman
 	name = "Longshoreman"
@@ -249,3 +276,4 @@
 		r_hand = /obj/item/rogueweapon/sword/cutlass
 		beltr = /obj/item/rogueweapon/scabbard/sword
 		beltl = /obj/item/rogueweapon/huntingknife/idagger
+	H.playsound_local(get_turf(H), 'sound/music/area/spawnblortzvolves.ogg', 60, FALSE, pressure_affected = FALSE)
