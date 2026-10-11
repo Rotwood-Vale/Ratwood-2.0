@@ -5,6 +5,10 @@ SUBSYSTEM_DEF(librarian)
 	var/list/books = list()
 	/// Archived player books, keyed by filename. Loaded once at init and kept in sync with the files on every change.
 	var/list/player_books = list()
+	/// Archived books already placed by random book spawners this round, so none is placed twice.
+	var/list/placed_player_books = list()
+	/// Stocking callbacks of mapped random book spawners, run in a random order once every one in their map load has initialized.
+	var/list/pending_random_books = list()
 	/// Players barred from adding books to the archive.
 	var/datum/player_archive_bans/upload_bans
 
@@ -91,15 +95,22 @@ SUBSYSTEM_DEF(librarian)
 	player_books -= filename
 	return TRUE
 
-/// Returns the filenames of archived books, limited to one category if given.
+/// Returns the filenames of archived books not yet placed by a random book spawner this round, limited to one category if given.
 /datum/controller/subsystem/librarian/proc/pull_player_book_titles(category)
-	if(!category)
-		return assoc_list_strip_value(player_books)
 	. = list()
 	for(var/file_name in player_books)
+		if(placed_player_books[file_name])
+			continue
 		var/list/book = player_books[file_name]
-		if(book["category"] == category)
+		if(!category || book["category"] == category)
 			. += file_name
+
+/// Stocks the pending random book spawners in a random order, so which shelves get the archived books differs each round.
+/datum/controller/subsystem/librarian/proc/stock_random_books()
+	var/list/stock_callbacks = shuffle(pending_random_books)
+	pending_random_books = list()
+	for(var/datum/callback/stock as anything in stock_callbacks)
+		stock.Invoke()
 
 /datum/controller/subsystem/librarian/proc/amend_player_book(filename, amend_type, amend_text)
 	if(!istext(amend_text) || !length(trim(amend_text)) || !(amend_type in list("book_title", "author", "icon", "category")))
