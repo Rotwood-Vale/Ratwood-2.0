@@ -359,6 +359,15 @@
 	icon_state = "spade"
 	color_key_defaults = list(KEY_SKIN_COLOR)
 
+/datum/sprite_accessory/tail/tiefling/tailmaw
+	name = "Tiefling (Tailmaw)"
+
+/datum/sprite_accessory/tail/tiefling/heart/tailmaw
+	name = "Succubus (Tailmaw)"
+
+/datum/sprite_accessory/tail/tiefling/spade/tailmaw
+	name = "Spade (Tailmaw)"
+
 /datum/sprite_accessory/tail/dullahan
 	name = "Revenant"
 	icon = 'icons/mob/sprite_accessory/tails/tiefling.dmi'

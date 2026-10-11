@@ -26,6 +26,7 @@
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/plate/iron
 	name = "iron half-plate"
@@ -65,6 +66,9 @@
 /obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/Initialize(mapload)
 	.=..()
 	update_description()
+
+/obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/plate/ancient/artificer/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/tongs))

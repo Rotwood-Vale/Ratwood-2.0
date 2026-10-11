@@ -984,12 +984,30 @@
 	duration = -1
 	healing_on_tick = 3
 	outline_colour = "#bbbbbb"
+	var/oh_god_it_hurts = FALSE
 
 /datum/status_effect/buff/healing/necras_vow/on_apply()
 	healing_on_tick = max(owner.get_skill_level(/datum/skill/magic/holy), 3)
 	return TRUE
 
 /datum/status_effect/buff/healing/necras_vow/tick()
+	if (owner.stat > 0 && (!owner.get_blood_volume() || owner.health < owner.crit_threshold))
+		// OH SHIT. SHE'S CASHING IN ON THE VOW!!! YOU'RE FUCKED!!!
+		if (!oh_god_it_hurts)
+			to_chat(owner, span_boldwarning("The everblack settles around you. Oblivion. Then, you hear it. You hear <i>HER</i>."))
+			to_chat(owner, span_crit("<B>\"MINE.\"</B>"))
+			owner.visible_message(span_warning("[owner]'s unconscious form suddenly arches back into a silent, rictus scream, blue motes spilling from their mouth!"))
+			oh_god_it_hurts = TRUE
+		
+		owner.adjustOxyLoss(healing_on_tick) // this is the part where she kills you.
+		var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
+		H.color = "#33cabc"
+		return
+	else if (oh_god_it_hurts)
+		oh_god_it_hurts = FALSE
+		to_chat(owner, span_warning("The vice-like grip around your mortal coil eases, reluctantly. Yet, you feel hollow, all the same..."))
+		qdel(src) // clear the vow if someone somehow saves us
+		return
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#a5a5a5"
 	var/list/wCount = owner.get_wounds()

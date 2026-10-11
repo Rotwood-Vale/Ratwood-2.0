@@ -216,13 +216,10 @@
 			var/target_points = FLOOR((L.STACON + L.STASTR)/2, 1)
 
 			switch(sprint_distance)
-				// Point blank
-				if(0 to 1)
+				// Point blank to 2 tiles
+				if(0 to 3)
 					self_points -= 99
 					instafail = TRUE
-				// One to two tile between the people
-				if(2 to 3)
-					self_points -= 2
 				// Five or above tiles between people
 				if(6 to INFINITY)
 					self_points += 1

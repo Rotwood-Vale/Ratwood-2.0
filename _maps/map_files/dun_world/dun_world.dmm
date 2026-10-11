@@ -61734,6 +61734,16 @@
 /obj/item/folding_table_stored,
 /obj/item/folding_table_stored,
 /obj/item/folding_table_stored,
+/obj/item/reagent_containers/glass/bucket/pot/teapot/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/cup/ceramic/fancy,
+/obj/item/reagent_containers/glass/bucket/pot/teapot/fancy,
 /turf/open/floor/rogue/blocks/flipped,
 /area/rogue/under/town/basement/keep)
 "lhK" = (
@@ -111092,10 +111102,13 @@
 	locked = 1;
 	lockid = "lich"
 	},
-/obj/item/book/granter/spell/blackstone/skeleton,
 /obj/item/book/granter/spell/blackstone/bonechill,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
+/obj/item/clothing/ring/sapphirebs,
+/obj/item/clothing/ring/quartzbs,
+/obj/item/clothing/ring/topazbs,
+/obj/item/clothing/ring/diamondbs,
 /turf/open/floor/rogue/carpet/lord/right,
 /area/rogue/under/cave/licharena/bossroom)
 "tSA" = (
@@ -445479,7 +445492,7 @@ aBB
 aBB
 aBB
 jWw
-eps
+iVE
 hrE
 aBB
 aBB
@@ -447287,7 +447300,7 @@ bGf
 bGf
 bGf
 jWw
-iVE
+eps
 hrE
 aBB
 aBB
