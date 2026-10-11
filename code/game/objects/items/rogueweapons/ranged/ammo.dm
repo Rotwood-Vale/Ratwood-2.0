@@ -1058,10 +1058,6 @@
 	force = 12
 	var/rune = null // Its raining evil blood runes, HALLELUJA!
 
-/obj/item/ammo_casing/caseless/rogue/heavy_bolt/newshot()
-	. = ..()
-	
-
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/examine(mob/user)
 	. = ..()
 	if(user.mind)
@@ -1072,7 +1068,7 @@
 			if(rune)
 				. += span_info("There is a bloody sign drawn on the bolt.")
 
-/obj/item/ammo_casing/caseless/rogue/heavy_bolt/Initialize()
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/Initialize(mapload)
 	. = ..()
 	var/obj/projectile/bullet/reusable/heavy_bolt/loaded_bolt = BB
 	loaded_bolt.orginal_speed = loaded_bolt.speed
@@ -1214,7 +1210,7 @@
 	force = 12
 	is_silver = TRUE//This is ALSO warded. Just as with the silver bolt.
 
-/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest/Initialize()
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(recharge)), 5 MINUTES)  // 5 minute coldown on shoting it, othherwise you get just a worse bolt
 
