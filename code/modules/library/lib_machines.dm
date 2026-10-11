@@ -98,7 +98,7 @@
 		if(choice == "Yes")
 			if(QDELETED(PB) || !user.canUseTopic(src, BE_CLOSE) || !user.Adjacent(PB))
 				return
-			if(SSlibrarian.playerbook2file(PB.player_book_text, PB.player_book_title, PB.player_book_author, PB.player_book_author_ckey, PB.player_book_icon, user, PB.player_book_date))
+			if(SSlibrarian.playerbook2file(PB.player_book_text, PB.player_book_title, PB.player_book_author, PB.player_book_author_ckey, PB.player_book_icon, user, PB.player_book_date, PB.player_book_category))
 				PB.is_in_round_player_generated = FALSE
 		else
 			to_chat(user, span_notice("You decide not to upload the book."))
@@ -286,6 +286,7 @@
 				"filename" = file_name,
 				"title" = html_decode(book["book_title"]),
 				"author" = html_decode(book["author"] || "Unknown"),
+				"category" = book["category"] || "Unknown",
 				"date" = book["ic_date"],
 			))
 	data["archive_type"] = archive_type

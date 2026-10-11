@@ -966,6 +966,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	dat += "<tr>"
 	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Title</th>"
 	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Author</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Category</th>"
 	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Written</th>"
 	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Actions</th>"
 	dat += "</tr>"
@@ -975,6 +976,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		dat += "<tr>"
 		dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(book["book_title"], file_name)]</td>"
 		dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(book["author"])] ([player_archive_display_text(book["author_ckey"])])</td>"
+		dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(book["category"])]</td>"
 		dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(book["ic_date"])]</td>"
 		dat += "<td style='padding: 12px 15px;'>"
 		dat += "<a href='byond://?_src_=holder;[HrefToken()];show_player_book=[url_encode(file_name)]' style='margin-right: 10px;'>View</a>"
@@ -984,7 +986,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		dat += "</tr>"
 
 	if(!length(SSlibrarian.player_books))
-		dat += "<tr><td colspan='4' style='padding: 20px; text-align: center;'>No books found</td></tr>"
+		dat += "<tr><td colspan='5' style='padding: 20px; text-align: center;'>No books found</td></tr>"
 
 	dat += "</table>"
 	var/datum/browser/popup = new(src, "book_management", "Book Management", 800, 700)
@@ -1000,7 +1002,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	src << browse_rsc('html/book.png')
 
 	// Book text is the formatted paper HTML that players see in-game; the metadata is escaped separately.
-	var/content = "<h3>[player_archive_display_text(book["book_title"], file_name)]</h3><p>By [player_archive_display_text(book["author"])] ([player_archive_display_text(book["author_ckey"])]), written [player_archive_display_text(book["ic_date"])]</p>[book["text"]]"
+	var/content = "<h3>[player_archive_display_text(book["book_title"], file_name)]</h3><p>By [player_archive_display_text(book["author"])] ([player_archive_display_text(book["author_ckey"])]), written [player_archive_display_text(book["ic_date"])]<br>Category: [player_archive_display_text(book["category"])]</p>[book["text"]]"
 	var/dat = {"
 	<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 	<html>

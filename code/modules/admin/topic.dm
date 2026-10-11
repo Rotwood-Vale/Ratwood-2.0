@@ -36,7 +36,7 @@
 		var/list/book = SSlibrarian.file2playerbook(file_name)
 		if(!length(book))
 			return
-		var/static/list/amend_types = list("Title" = "book_title", "Author" = "author", "Cover" = "icon")
+		var/static/list/amend_types = list("Title" = "book_title", "Author" = "author", "Cover" = "icon", "Category" = "category")
 		var/amend_choice = tgui_input_list(usr, "What do you want to amend?", "Amend Book", amend_types)
 		if(!amend_choice)
 			return
@@ -44,6 +44,8 @@
 		var/amend_text
 		if(amend_type == "icon")
 			amend_text = GLOB.player_book_icons[tgui_input_list(usr, "Choose a new cover", "Amend Book", GLOB.player_book_icons)]
+		else if(amend_type == "category")
+			amend_text = tgui_input_list(usr, "Choose a new category", "Amend Book", GLOB.player_book_categories)
 		else
 			amend_text = stripped_input(usr, "What do you want the [LOWER_TEXT(amend_choice)] to be?", "Amend Book", html_decode(book[amend_type]), MAX_NAME_LEN)
 		if(!amend_text)

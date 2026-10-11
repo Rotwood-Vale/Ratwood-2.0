@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(librarian)
 	player_books = load_player_archive(PLAYER_BOOK_DIRECTORY)
 	return ..()
 
-/datum/controller/subsystem/librarian/proc/playerbook2file(input, book_title = "Unknown", author = "Unknown", author_ckey = "Unknown", icon = "basic_book", mob/user, ic_date)
+/datum/controller/subsystem/librarian/proc/playerbook2file(input, book_title = "Unknown", author = "Unknown", author_ckey = "Unknown", icon = "basic_book", mob/user, ic_date, category = "Unknown")
 	if(!input)
 		player_archive_feedback(user, "There is no text in the book!")
 		return FALSE
@@ -46,6 +46,8 @@ SUBSYSTEM_DEF(librarian)
 	if(!(istext(input) && istext(book_title) && istext(author) && istext(author_ckey) && istext(icon) && istext(ic_date)))
 		player_archive_feedback(user, "This book is incorrectly formatted!")
 		return FALSE
+	if(!(category in GLOB.player_book_categories))
+		category = "Unknown"
 	var/file_name = player_archive_filename(book_title)
 	if(!file_name)
 		player_archive_feedback(user, "That title cannot be archived. Use a shorter title that does not begin with an underscore.")
@@ -55,7 +57,7 @@ SUBSYSTEM_DEF(librarian)
 		player_archive_feedback(user, "There is already a book by this title!")
 		return FALSE
 
-	var/list/contents = list("book_title" = "[book_title]", "author" = "[author]", "author_ckey" = "[author_ckey]", "icon" = "[icon]", "text" = "[input]", "ic_date" = "[ic_date]")
+	var/list/contents = list("book_title" = "[book_title]", "author" = "[author]", "author_ckey" = "[author_ckey]", "icon" = "[icon]", "category" = "[category]", "text" = "[input]", "ic_date" = "[ic_date]")
 	if(!write_player_archive_file("[PLAYER_BOOK_DIRECTORY][file_name].json", contents))
 		player_archive_feedback(user, "The archive could not store this book.")
 		return FALSE
@@ -84,7 +86,9 @@ SUBSYSTEM_DEF(librarian)
 	return assoc_list_strip_value(player_books)
 
 /datum/controller/subsystem/librarian/proc/amend_player_book(filename, amend_type, amend_text)
-	if(!istext(amend_text) || !length(trim(amend_text)) || !(amend_type in list("book_title", "author", "icon")))
+	if(!istext(amend_text) || !length(trim(amend_text)) || !(amend_type in list("book_title", "author", "icon", "category")))
+		return FALSE
+	if(amend_type == "category" && !(amend_text in GLOB.player_book_categories))
 		return FALSE
 	var/list/contents = player_books[filename]
 	if(!contents)

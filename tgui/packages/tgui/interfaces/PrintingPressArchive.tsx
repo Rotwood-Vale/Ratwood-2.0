@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Button,
+  Dropdown,
   Input,
   LabeledList,
   NoticeBox,
@@ -16,6 +17,7 @@ type ArchiveEntry = {
   filename: string;
   title: string;
   author: string;
+  category?: string;
   date: string;
 };
 
@@ -24,19 +26,35 @@ type Data = {
   entries: ArchiveEntry[];
 };
 
+const ALL_CATEGORIES = 'All';
+
 export const PrintingPressArchive = (props) => {
   const { act, data } = useBackend<Data>();
   const { archive_type, entries = [] } = data;
   const [titleSearch, setTitleSearch] = useState('');
   const [authorSearch, setAuthorSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState(ALL_CATEGORIES);
 
-  const noun = archive_type === 'painting' ? 'painting' : 'book';
+  const isBookArchive = archive_type !== 'painting';
+  const noun = isBookArchive ? 'book' : 'painting';
+
+  const categories = [
+    ALL_CATEGORIES,
+    ...new Set(
+      entries
+        .map((entry) => entry.category)
+        .filter((category): category is string => !!category)
+        .sort((a, b) => a.localeCompare(b)),
+    ),
+  ];
 
   const shownEntries = entries
     .filter(
       (entry) =>
         entry.title.toLowerCase().includes(titleSearch.toLowerCase()) &&
-        entry.author.toLowerCase().includes(authorSearch.toLowerCase()),
+        entry.author.toLowerCase().includes(authorSearch.toLowerCase()) &&
+        (categoryFilter === ALL_CATEGORIES ||
+          entry.category === categoryFilter),
     )
     .sort((a, b) => a.title.localeCompare(b.title));
 
@@ -63,6 +81,16 @@ export const PrintingPressArchive = (props) => {
                     onChange={setAuthorSearch}
                   />
                 </LabeledList.Item>
+                {isBookArchive && (
+                  <LabeledList.Item label="Category">
+                    <Dropdown
+                      width="100%"
+                      selected={categoryFilter}
+                      options={categories}
+                      onSelected={setCategoryFilter}
+                    />
+                  </LabeledList.Item>
+                )}
               </LabeledList>
             </Section>
           </Stack.Item>
@@ -79,6 +107,9 @@ export const PrintingPressArchive = (props) => {
                   <Table.Row header>
                     <Table.Cell>Title</Table.Cell>
                     <Table.Cell>Author</Table.Cell>
+                    {isBookArchive && (
+                      <Table.Cell collapsing>Category</Table.Cell>
+                    )}
                     <Table.Cell collapsing>Written</Table.Cell>
                     <Table.Cell collapsing />
                   </Table.Row>
@@ -86,6 +117,9 @@ export const PrintingPressArchive = (props) => {
                     <Table.Row key={entry.filename} className="candystripe">
                       <Table.Cell>{entry.title}</Table.Cell>
                       <Table.Cell>{entry.author}</Table.Cell>
+                      {isBookArchive && (
+                        <Table.Cell collapsing>{entry.category}</Table.Cell>
+                      )}
                       <Table.Cell collapsing>{entry.date}</Table.Cell>
                       <Table.Cell collapsing>
                         <Button

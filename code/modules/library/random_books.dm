@@ -54,7 +54,7 @@
 			if(!PB.written)
 				to_chat(user, span_warning("Finish authoring this book before archiving it."))
 				return
-			if(SSlibrarian.playerbook2file(PB.player_book_text, PB.player_book_title, PB.player_book_author, PB.player_book_author_ckey, PB.player_book_icon, user, PB.player_book_date))
+			if(SSlibrarian.playerbook2file(PB.player_book_text, PB.player_book_title, PB.player_book_author, PB.player_book_author_ckey, PB.player_book_icon, user, PB.player_book_date, PB.player_book_category))
 				PB.is_in_round_player_generated = FALSE
 
 	. = ..()
