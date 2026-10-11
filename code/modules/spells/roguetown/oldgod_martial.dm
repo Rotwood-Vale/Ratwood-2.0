@@ -429,7 +429,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		to_chat(user, span_notice("Defend intent creates [BLOODRUNE_FIRE], with causes the victim to burst into flames (holy flames against undead)."))
 		to_chat(user, span_notice("Swift intend creates [BLOODRUNE_WIND], with causes the victim to be slowed, and yourself to be hasten for 15 seconds. It also makes bolts fly incredibly fast."))
 		to_chat(user, span_notice("Weak intend creates [BLOODRUNE_EARTH], with causes the victim to not be able to use their weapons for 6 second. One of hard CC runes. It also makes bolt extremely effective against structures."))
-		to_chat(user, span_notice("Aimed intend creates [BLOODRUNE_WATER], with blinds the victim for 6 seconds. One of hard CC runes."))
+		to_chat(user, span_notice("Aimed intend creates [BLOODRUNE_WATER], with blinds and mutes the victim for 6 seconds. One of hard CC runes."))
 		to_chat(user, span_notice("Feint intend creates [BLOODRUNE_NATURE], with immobilizes the victim for 6 seconds. One of hard CC runes. It also makes the bolt create vines if it fails to hit a person."))
 		to_chat(user, span_notice("Strong intend creates [BLOODRUNE_FORCE], with knockbacks victim by 5 tiles. Subject to normal knockback cooldown. It also makes bolt extremely effective against structures."))
 		revert_cast()

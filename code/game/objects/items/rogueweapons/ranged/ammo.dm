@@ -1146,7 +1146,9 @@
 		if(BLOODRUNE_WATER)
 			if(victim.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
 				return ..()
-			victim.visible_message(span_warning("[src] secretes dark liquid, blinding [victim]!"))
+			ADD_TRAIT(victim, TRAIT_MUTE, "BLOOD_RUNES")
+			addtimer(CALLBACK(src, PROC_REF(remove_silence), victim), wait = 6 SECONDS)
+			victim.visible_message(span_warning("[src] secretes dark liquid, covering [victim] eyes and mouth!"))
 			victim.blind_eyes(6)			
 			victim.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
 		if(BLOODRUNE_NATURE)
@@ -1176,6 +1178,10 @@
 			victim.visible_message(span_warning("[src] errupts with a wave of force, trowing the [victim]!"))
 	..()
 
+
+/obj/projectile/bullet/reusable/heavy_bolt/proc/remove_silence(mob/living/carbon/target)
+	REMOVE_TRAIT(target, TRAIT_MUTE, "BLOOD_RUNES")
+	to_chat(target, span_warning("Black liquid leaves my mouth and eyes!"))
 
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy

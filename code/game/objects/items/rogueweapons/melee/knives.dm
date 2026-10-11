@@ -925,7 +925,9 @@
 		if(BLOODRUNE_WATER)
 			if(target.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
 				return ..()
-			user.visible_message(span_warning("[src] secretes dark liquid, blinding [target]!"))
+			ADD_TRAIT(target, TRAIT_MUTE, "BLOOD_RUNES")
+			addtimer(CALLBACK(src, PROC_REF(remove_silence), target), wait = 6 SECONDS)
+			user.visible_message(span_warning("[src] secretes dark liquid, covering [target] eyes and mouth!"))
 			target.blind_eyes(6)			
 			target.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
 			used_rune = TRUE
@@ -962,6 +964,10 @@
 	if(used_rune)
 		rune = null // Pay the blood tax
 		src.take_damage(10) // Your weapon is disposable
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood/proc/remove_silence(mob/living/carbon/target)
+	REMOVE_TRAIT(target, TRAIT_MUTE, "BLOOD_RUNES")
+	to_chat(target, span_warning("Black liquid leaves my mouth and eyes!"))
 
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
