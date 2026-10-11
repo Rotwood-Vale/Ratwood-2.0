@@ -45,3 +45,56 @@
 		message_admins("Unable to save archive file [path].")
 		return FALSE
 	return TRUE
+
+/// Returns the upload bans for an archive, either "books" or "paintings".
+/proc/get_player_archive_bans(archive)
+	switch(archive)
+		if("books")
+			return SSlibrarian.upload_bans
+		if("paintings")
+			return SSpaintings.upload_bans
+
+/// Players barred by admins from adding to one of the player archives, kept across rounds.
+/datum/player_archive_bans
+	/// The archive these bans apply to, either "books" or "paintings".
+	var/archive
+	var/file_path
+	/// Ban details keyed by ckey: the key of the admin who applied the ban and the real date it was applied.
+	var/list/bans = list()
+
+/datum/player_archive_bans/New(archive, file_path)
+	src.archive = archive
+	src.file_path = file_path
+	if(!fexists(file_path))
+		return
+	var/list/loaded = safe_json_decode(file2text(file_path))
+	if(!islist(loaded))
+		log_world("Player archive ban file [file_path] contains invalid JSON and was skipped.")
+		return
+	bans = loaded
+
+/datum/player_archive_bans/proc/is_banned(key)
+	var/banned_ckey = ckey(key)
+	return banned_ckey && bans[banned_ckey]
+
+/datum/player_archive_bans/proc/ban(key, admin_key)
+	var/banned_ckey = ckey(key)
+	if(!banned_ckey || bans[banned_ckey])
+		return FALSE
+	var/list/new_bans = bans.Copy()
+	new_bans[banned_ckey] = list("admin" = "[admin_key]", "date" = time2text(world.realtime, "YYYY-MM-DD"))
+	if(!write_player_archive_file(file_path, new_bans))
+		return FALSE
+	bans = new_bans
+	return TRUE
+
+/datum/player_archive_bans/proc/unban(key)
+	var/banned_ckey = ckey(key)
+	if(!banned_ckey || !bans[banned_ckey])
+		return FALSE
+	var/list/new_bans = bans.Copy()
+	new_bans -= banned_ckey
+	if(!write_player_archive_file(file_path, new_bans))
+		return FALSE
+	bans = new_bans
+	return TRUE

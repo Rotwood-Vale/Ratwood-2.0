@@ -12,9 +12,12 @@ SUBSYSTEM_DEF(paintings)
 	var/list/placed_paintings = list()
 	/// Mapped random paintings waiting to be hung once every one in their map load has initialized.
 	var/list/pending_random_paintings = list()
+	/// Players barred from adding paintings to the archive.
+	var/datum/player_archive_bans/upload_bans
 
 /datum/controller/subsystem/paintings/Initialize(start_timeofday)
 	paintings = load_player_archive(PLAYER_PAINTING_DIRECTORY)
+	upload_bans = new("paintings", "[PLAYER_PAINTING_DIRECTORY]_upload_bans.json")
 	return ..()
 
 /// Returns the path of the image for the archived painting stored under a filename.
@@ -32,6 +35,12 @@ SUBSYSTEM_DEF(paintings)
 		return FALSE
 	if(!(istext(painting_title) && istext(author) && istext(author_ckey)))
 		player_archive_feedback(user, "This painting is incorrectly formatted!")
+		return FALSE
+	if(upload_bans.is_banned(user?.ckey))
+		player_archive_feedback(user, "You have been barred from adding paintings to the archive.")
+		return FALSE
+	if(upload_bans.is_banned(author_ckey))
+		player_archive_feedback(user, "The painter of this painting has been barred from adding paintings to the archive.")
 		return FALSE
 	var/file_name = player_archive_filename(painting_title)
 	if(!file_name)

@@ -90,6 +90,53 @@
 		owner.manage_paintings()
 		return
 
+	if(href_list["player_archive_bans"])
+		owner.archive_bans()
+		return
+
+	if(href_list["player_archive_ban"])
+		var/archive = href_list["player_archive_ban"]
+		var/datum/player_archive_bans/archive_bans = get_player_archive_bans(archive)
+		if(!archive_bans)
+			return
+		var/banned_ckey = href_list["ckey"]
+		if(!banned_ckey)
+			banned_ckey = tgui_input_text(usr, "Enter the ckey of the player to ban from adding [archive] to the archive.", "Archive Ban", max_length = MAX_NAME_LEN)
+		banned_ckey = ckey(banned_ckey)
+		if(!banned_ckey)
+			return
+		if(archive_bans.is_banned(banned_ckey))
+			to_chat(usr, span_warning("[banned_ckey] is already banned from adding [archive] to the archive."))
+			return
+		if(tgui_alert(usr, "Are you sure you want to ban [banned_ckey] from adding [archive] to the archive?", "Confirm Ban", list("Yes", "No")) != "Yes")
+			return
+		if(!archive_bans.ban(banned_ckey, usr.key))
+			to_chat(usr, span_warning("[banned_ckey] could not be banned from adding [archive] to the archive."))
+			return
+		message_admins("[key_name_admin(usr)] has banned [banned_ckey] from adding [archive] to the archive.")
+		log_admin("[key_name(usr)] has banned [banned_ckey] from adding [archive] to the archive.")
+		if(archive == "books")
+			owner.manage_books()
+		else
+			owner.manage_paintings()
+		return
+
+	if(href_list["player_archive_unban"])
+		var/archive = href_list["player_archive_unban"]
+		var/datum/player_archive_bans/archive_bans = get_player_archive_bans(archive)
+		var/banned_ckey = ckey(href_list["ckey"])
+		if(!archive_bans?.is_banned(banned_ckey))
+			return
+		if(tgui_alert(usr, "Are you sure you want to let [banned_ckey] add [archive] to the archive again?", "Confirm Unban", list("Yes", "No")) != "Yes")
+			return
+		if(!archive_bans.unban(banned_ckey))
+			to_chat(usr, span_warning("[banned_ckey] could not be unbanned from adding [archive] to the archive."))
+			return
+		message_admins("[key_name_admin(usr)] has lifted [banned_ckey]'s ban from adding [archive] to the archive.")
+		log_admin("[key_name(usr)] has lifted [banned_ckey]'s ban from adding [archive] to the archive.")
+		owner.archive_bans()
+		return
+
 	// Open Heal Panel from Player Panel
 	if(href_list["heal_panel"])
 		var/mob/living/M = locate(href_list["heal_panel"])

@@ -5,6 +5,8 @@ SUBSYSTEM_DEF(librarian)
 	var/list/books = list()
 	/// Archived player books, keyed by filename. Loaded once at init and kept in sync with the files on every change.
 	var/list/player_books = list()
+	/// Players barred from adding books to the archive.
+	var/datum/player_archive_bans/upload_bans
 
 /datum/controller/subsystem/librarian/proc/get_book(input)
 	if(!input)
@@ -35,6 +37,7 @@ SUBSYSTEM_DEF(librarian)
 
 /datum/controller/subsystem/librarian/Initialize(start_timeofday)
 	player_books = load_player_archive(PLAYER_BOOK_DIRECTORY)
+	upload_bans = new("books", "[PLAYER_BOOK_DIRECTORY]_upload_bans.json")
 	return ..()
 
 /datum/controller/subsystem/librarian/proc/playerbook2file(input, book_title = "Unknown", author = "Unknown", author_ckey = "Unknown", icon = "basic_book", mob/user, ic_date, category = "Unknown")
@@ -45,6 +48,12 @@ SUBSYSTEM_DEF(librarian)
 		ic_date = get_ic_date_short_as_string()
 	if(!(istext(input) && istext(book_title) && istext(author) && istext(author_ckey) && istext(icon) && istext(ic_date)))
 		player_archive_feedback(user, "This book is incorrectly formatted!")
+		return FALSE
+	if(upload_bans.is_banned(user?.ckey))
+		player_archive_feedback(user, "You have been barred from adding books to the archive.")
+		return FALSE
+	if(upload_bans.is_banned(author_ckey))
+		player_archive_feedback(user, "The author of this book has been barred from adding books to the archive.")
 		return FALSE
 	if(!(category in GLOB.player_book_categories))
 		category = "Unknown"
