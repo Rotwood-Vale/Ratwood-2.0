@@ -72,11 +72,11 @@
 	var/weapon_choice = input(H, "Choose your ARMS.", "CRUSH THEM.") as anything in weapons
 	switch(weapon_choice)
 		if("Fist Weapons")//OG iconoclast
-			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
 			beltr = /obj/item/rogueweapon/katar
 		if("Flails & Greatflails")//no longer both unarmed master & flail master, pick one
-			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails = SKILL_LEVEL_MASTER, TRUE)//hand flails and the gilded flail
-			H.adjust_skillrank_up_to(/datum/skill/combat/polearms = SKILL_LEVEL_MASTER, TRUE)//greatflails, besides drow and gilded flail, count as polearms
+			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)//hand flails and the gilded flail
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)//greatflails, besides drow and gilded flail, count as polearms
 			beltr = /obj/item/rogueweapon/flail/sflail
 		if("Pure Unarmed")
 			ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
@@ -85,7 +85,7 @@
 			ADD_TRAIT(H, TRAIT_THROWINGARM, TRAIT_GENERIC)//sorta like scarp letting you toss guns at people
 			ADD_TRAIT(H, TRAIT_BIGGUY, TRAIT_GENERIC)//way to breech doors without weapons
 			H.change_stat(STATKEY_STR, 2)//pure unarmed is HIGHLY dependent on your base strength. They are weaponlocked so we reward them.
-			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed = SKILL_LEVEL_LEGENDARY, TRUE)//pure unarmed parry is kinda terrible, matthios' best boy should punch like no other
+			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_LEGENDARY, TRUE)//pure unarmed parry is kinda terrible, matthios' best boy should punch like no other
 			gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted/iconoclast
 
 	if(armor_choice == "Gilded Skin" && weapon_choice == "Pure Unarmed")//committing to pecs out billy herrington icono grants you all the funny moves.
