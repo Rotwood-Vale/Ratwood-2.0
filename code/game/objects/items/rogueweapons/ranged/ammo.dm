@@ -1147,7 +1147,7 @@
 			if(victim.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
 				return ..()
 			ADD_TRAIT(victim, TRAIT_MUTE, "BLOOD_RUNES")
-			addtimer(CALLBACK(src, PROC_REF(remove_silence), victim), wait = 6 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(remove_silence), victim), wait = 10 SECONDS)
 			victim.visible_message(span_warning("[src] secretes dark liquid, covering [victim] eyes and mouth!"))
 			victim.blind_eyes(6)			
 			victim.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
