@@ -8,6 +8,10 @@ SUBSYSTEM_DEF(paintings)
 
 	/// Archived painting metadata, keyed by filename. Loaded once at init and kept in sync with the files on every change.
 	var/list/paintings = list()
+	/// Archived paintings already hung by mapped random paintings this round, so none is hung twice.
+	var/list/placed_paintings = list()
+	/// Mapped random paintings waiting to be hung once every one in their map load has initialized.
+	var/list/pending_random_paintings = list()
 
 /datum/controller/subsystem/paintings/Initialize(start_timeofday)
 	paintings = load_player_archive(PLAYER_PAINTING_DIRECTORY)
@@ -74,17 +78,31 @@ SUBSYSTEM_DEF(paintings)
 	player_archive_feedback(user, "You have a feeling the painting will remain in the archive for a very long time...", TRUE)
 	return TRUE
 
-/// Returns the filename of a random archived painting of the given size whose image exists, or null if there are none.
-/datum/controller/subsystem/paintings/proc/get_random_painting(canvas_size)
+/// Reserves a random archived painting of the given size whose image exists and that has not been hung this round. Returns its filename, or null if there are none left.
+/datum/controller/subsystem/paintings/proc/claim_random_painting(canvas_size)
 	var/list/candidates = list()
 	for(var/file_name in paintings)
+		if(placed_paintings[file_name])
+			continue
 		var/list/painting_data = paintings[file_name]
 		if(painting_data["painting_title"] && painting_data["canvas_size"] == canvas_size)
 			candidates += file_name
 	while(length(candidates))
 		var/file_name = pick_n_take(candidates)
 		if(fexists(get_painting_image_path(file_name)))
+			placed_paintings[file_name] = TRUE
 			return file_name
+
+/// Hangs archived paintings on the pending mapped random paintings in a random order, so which spots stay empty differs each round. Deletes the spots left without a painting.
+/datum/controller/subsystem/paintings/proc/hang_random_paintings()
+	var/list/spots = shuffle(pending_random_paintings)
+	pending_random_paintings = list()
+	for(var/obj/item/canvas/random_painting/spot as anything in spots)
+		if(QDELETED(spot))
+			continue
+		var/file_name = claim_random_painting(spot.canvas_size)
+		if(!file_name || !spot.load_archived_painting(file_name))
+			qdel(spot)
 
 /datum/controller/subsystem/paintings/proc/del_player_painting(filename)
 	if(!paintings[filename])

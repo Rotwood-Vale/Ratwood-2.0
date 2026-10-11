@@ -260,20 +260,26 @@
 
 	host.update_drawing(x, y, current_color)
 
-/// Mapping helper: loads a random archived player painting, or stays a blank canvas if none are available. Spawns mounted at its mapped position.
+/// Mapping helper: hangs a random archived player painting at its mapped position, each painting at most once per round. Deletes itself if none are left, with the empty spots picked at random.
 /obj/item/canvas/random_painting
 	anchored = TRUE
 
 /obj/item/canvas/random_painting/Initialize(mapload)
 	var/mapped_pixel_x = pixel_x
 	var/mapped_pixel_y = pixel_y
-	. = ..()
+	..()
 	// /obj/item/Initialize() jitters items mapped without a pixel offset.
 	pixel_x = mapped_pixel_x
 	pixel_y = mapped_pixel_y
-	var/file_name = SSpaintings.get_random_painting(canvas_size)
-	if(file_name)
-		load_archived_painting(file_name)
+	SSpaintings.pending_random_paintings += src
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/canvas/random_painting/LateInitialize()
+	SSpaintings.hang_random_paintings()
+
+/obj/item/canvas/random_painting/Destroy()
+	SSpaintings.pending_random_paintings -= src
+	return ..()
 
 ///////////
 // EASEL //
