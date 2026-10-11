@@ -1060,8 +1060,7 @@
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/newshot()
 	. = ..()
-	var/obj/projectile/bullet/reusable/heavy_bolt/loaded_bolt = BB
-	loaded_bolt.rune = rune
+	
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/examine(mob/user)
 	. = ..()
@@ -1073,6 +1072,10 @@
 			if(rune)
 				. += span_info("There is a bloody sign drawn on the bolt.")
 
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/Initialize()
+	. = ..()
+	var/obj/projectile/bullet/reusable/heavy_bolt/loaded_bolt = BB
+	loaded_bolt.orginal_speed = loaded_bolt.speed
 
 //+10 damage/pen from bolt.
 //Pen increase on heavy crossbow assures these will, effectively, ALWAYS go through.
@@ -1092,6 +1095,89 @@
 	speed = 0.3
 	npc_simple_damage_mult = 2
 	var/rune = null
+	var/orginal_speed = 0.3
+
+
+/obj/projectile/bullet/reusable/heavy_bolt/on_hit(target)	
+	if(!rune)
+		return ..()
+
+	var/turf/vinespot = get_turf(target)
+
+	
+	if(vinespot && rune == BLOODRUNE_NATURE && !isliving(target)) // only make vines if we didnt hit a person
+		if(!locate(/obj/structure/vine) in vinespot)
+			new /obj/structure/vine(vinespot) 
+			vinespot.visible_message(span_warning("[src] errupts into vines!"))
+
+	if(isstructure(target) || iswallturf(target) || ismineralturf(target))
+		var/obj/maybe_obj = target        // BE AWARE THIS MIGHT BE A TURF! Doesnt matter here, but keep it in mind
+		if(rune == BLOODRUNE_FORCE)
+			maybe_obj.visible_message(span_warning("[src] errupts into a wave of force demolishing [target]!"))
+			maybe_obj.take_damage(1000, BRUTE, "blunt", 1) // walls and baricadees, be scared
+		if(rune == BLOODRUNE_EARTH)
+			maybe_obj.visible_message(span_warning("[src] moves earth to destroy [target]!"))
+			maybe_obj.take_damage(1000, BRUTE, "blunt", 1) // walls and baricadees, be scared
+	
+	if(!isliving(target))
+		return ..()
+
+	var/mob/living/victim = target
+	var/mob/living/user = firer
+
+	switch(rune)
+		if(BLOODRUNE_FIRE)
+			if(HAS_TRAIT(victim, TRAIT_SILVER_WEAK))
+				victim.adjust_fire_stacks(5, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+			else
+				victim.adjust_fire_stacks(5)
+			victim.ignite_mob()
+			victim.visible_message(span_warning("[src] erupts in flames, setting [victim] on fire!"))
+		if(BLOODRUNE_WIND)
+			if(istype(user))
+				user.apply_status_effect(/datum/status_effect/buff/lesser_haste, 15 SECONDS)
+			victim.apply_status_effect(/datum/status_effect/debuff/slow, 15 SECONDS)
+			victim.visible_message(span_warning("[src] emist a gust of wind, slowing [victim]!"))
+		if(BLOODRUNE_EARTH)
+			if(victim.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
+				return ..()
+			victim.apply_status_effect(/datum/status_effect/debuff/clickcd, 6 SECONDS)
+			victim.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
+			victim.visible_message(span_warning("[src] creates earthy restrains on [victim]!"))
+		if(BLOODRUNE_WATER)
+			if(victim.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
+				return ..()
+			victim.visible_message(span_warning("[src] secretes dark liquid, blinding [victim]!"))
+			victim.blind_eyes(6)			
+			victim.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
+		if(BLOODRUNE_NATURE)
+			if(victim.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
+				return ..()
+			victim.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
+			victim.Immobilize(6 SECONDS)
+			new /obj/effect/temp_visual/ensnare/long(get_turf(victim))
+			victim.visible_message(span_warning("[src] errupts into roots, immobilising [victim]!"))
+		if(BLOODRUNE_FORCE)
+			if(victim.has_status_effect(/datum/status_effect/debuff/yeetcd))
+				return ..()
+			var/scaling = 5
+			victim.apply_status_effect(/datum/status_effect/debuff/yeetcd)
+			victim.Slowdown(scaling)
+			var/knockback_tiles = scaling
+			if(victim.resting)
+				knockback_tiles = max(1, knockback_tiles / 2)
+			var/turf/edge_target_turf = get_edge_target_turf(victim, get_dir(firer, victim))
+			if(istype(edge_target_turf))
+				victim.safe_throw_at(edge_target_turf, \
+				knockback_tiles, \
+				scaling, \
+				firer, \
+				spin = FALSE, \
+				force = victim.move_force)
+			victim.visible_message(span_warning("[src] errupts with a wave of force, trowing the [victim]!"))
+	..()
+
+
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
 	name = "stake bolt"
@@ -1138,6 +1224,13 @@
 	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/tempest
 	BB = null
 	newshot()
+	var/obj/projectile/bullet/reusable/heavy_bolt/loaded_bolt = BB
+	loaded_bolt.rune = rune
+	loaded_bolt.orginal_speed = loaded_bolt.speed
+	if(rune == BLOODRUNE_WIND)
+		loaded_bolt.speed = 0.01 // almost hitscan
+	else
+		loaded_bolt.speed = loaded_bolt.orginal_speed
 	visible_message("<span class='notice'>The [src] hums with power, finishing its recharge.</span>")
 
 //The super evil murderfuck bolt.
@@ -1155,7 +1248,7 @@
 	var/const/radius = 3
 	var/turf/fallzone = get_turf(target)
 	if(!fallzone) // falback in case we hit somone without a turf (Harpy flying?)
-		if(ismob(target))
+		if(isliving(target))
 			var/mob/living/carbon/human/M = target
 			M.adjustFireLoss(damage)
 			M.apply_status_effect(/datum/status_effect/buff/lightningstruck, 6 SECONDS)

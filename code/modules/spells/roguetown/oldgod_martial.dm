@@ -451,6 +451,10 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		bolt.rune = rune
 		var/obj/projectile/bullet/reusable/heavy_bolt/loaded_bolt = bolt.BB
 		loaded_bolt.rune = rune
+		if(rune == BLOODRUNE_WIND)
+			loaded_bolt.speed = 0.01 // almost hitscan
+		else
+			loaded_bolt.speed = loaded_bolt.orginal_speed
 		user.adjust_blood_volume(-50)
 		user.visible_message(span_danger("[user] draws something on [item] with their blood."), span_notice("I shape a [rune] on the surface of [item]."))
 		return TRUE
