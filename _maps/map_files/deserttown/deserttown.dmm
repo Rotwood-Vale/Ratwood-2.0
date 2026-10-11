@@ -3132,6 +3132,7 @@
 "aRp" = (
 /obj/machinery/light/rogue/candle/blue,
 /obj/machinery/light/rogue/candle/blue/r,
+/obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/rogue/darkpath,
 /area/rogue/indoors/town/academy/desert)
 "aRq" = (
@@ -4119,11 +4120,6 @@
 	color = "#c4abff"
 	},
 /area/rogue/under/cave)
-"bdC" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/tales3,
-/turf/open/floor/rogue/sandbrick,
-/area/rogue/indoors/town/academy/desert)
 "bdD" = (
 /turf/closed/wall/mineral/rogue/pipe/joint,
 /area/rogue/indoors/inq/basement)
@@ -6788,11 +6784,6 @@
 /obj/item/natural/rock/salt,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/under/underdesert)
-"bPi" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/noc,
-/turf/open/floor/rogue/darkpath,
-/area/rogue/indoors/town/academy/desert)
 "bPk" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/candle/gold/lit{
@@ -8439,6 +8430,10 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/manor/desert)
+"cnN" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/rogue/darkpath,
+/area/rogue/indoors/town/academy/desert)
 "cnO" = (
 /obj/structure/mineral_door/wood/red{
 	locked = 1;
@@ -24175,8 +24170,7 @@
 /turf/open/floor/rogue/tile/brick,
 /area/rogue/indoors/town/manor/desert)
 "gKI" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/festus,
+/obj/structure/bookcase/random/reference,
 /turf/open/floor/rogue/darkpath,
 /area/rogue/indoors/town/academy/desert)
 "gKS" = (
@@ -26747,11 +26741,6 @@
 /obj/structure/flora/rogueshroom,
 /turf/open/floor/rogue/dirt/desert,
 /area/rogue/indoors/town/grove)
-"hwv" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/sword,
-/turf/open/floor/rogue/darkpath,
-/area/rogue/indoors/town/academy/desert)
 "hwC" = (
 /obj/item/cushion/zybantine{
 	pixel_x = 2;
@@ -27428,10 +27417,6 @@
 	},
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/shelter/desertdeep)
-"hHl" = (
-/obj/structure/bookcase/random/archive,
-/turf/open/floor/rogue/sandbrick,
-/area/rogue/indoors/town/academy/desert)
 "hHm" = (
 /obj/item/rogueweapon/sword/long/exe/cloth,
 /obj/structure/closet/crate/roguecloset{
@@ -43600,11 +43585,6 @@
 /obj/effect/landmark/start/orthodoxist,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/inq)
-"mmv" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/knowledge1,
-/turf/open/floor/rogue/sandbrick,
-/area/rogue/indoors/town/academy/desert)
 "mmy" = (
 /obj/structure/drape/desert,
 /turf/open/floor/rogue/naturalstone/sandstone,
@@ -47159,11 +47139,6 @@
 /mob/living/carbon/human/species/human/northern/bum/ambush,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/under/cavewet/bogcaves)
-"nnE" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/cardgame,
-/turf/open/floor/rogue/sandbrick,
-/area/rogue/indoors/town/academy/desert)
 "nnF" = (
 /turf/closed/wall/mineral/rogue/decostone/mossy/blue/long,
 /area/rogue/indoors/town/church)
@@ -49534,11 +49509,6 @@
 /obj/structure/vine,
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/town/grove)
-"nUM" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/necra,
-/turf/open/floor/rogue/darkpath,
-/area/rogue/indoors/town/academy/desert)
 "nUN" = (
 /turf/open/floor/rogue/desert_grass,
 /area/rogue/outdoors/town/manor/desert/roofs)
@@ -62538,11 +62508,6 @@
 /obj/structure/fluff/pillow/purple,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/bath/desert)
-"rDa" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/abyssor,
-/turf/open/floor/rogue/sandbrick,
-/area/rogue/indoors/town/academy/desert)
 "rDe" = (
 /obj/structure/roguemachine/scomm{
 	pixel_y = -32
@@ -67262,11 +67227,6 @@
 /obj/machinery/light/rogue/firebowl/church,
 /turf/open/floor/rogue/citybrick/citybrick4,
 /area/rogue/outdoors/desertdeep/above)
-"sSJ" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/nitebeast,
-/turf/open/floor/rogue/sandbrick,
-/area/rogue/indoors/town/academy/desert)
 "sSK" = (
 /obj/effect/decal/duneedge{
 	dir = 1
@@ -67358,9 +67318,8 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/bath/desert)
 "sUg" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/tales1,
-/turf/open/floor/rogue/sandbrick,
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/rogue/darkpath,
 /area/rogue/indoors/town/academy/desert)
 "sUm" = (
 /obj/structure/chair/bench/couch{
@@ -67568,11 +67527,6 @@
 	},
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/bath/desert)
-"sWs" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/cooking,
-/turf/open/floor/rogue/sandbrick,
-/area/rogue/indoors/town/academy/desert)
 "sWz" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/sandbrick,
@@ -73736,6 +73690,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/rogue/candle/blue/l,
+/obj/structure/bookcase/random/fiction,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/indoors/town/academy/desert)
 "uGN" = (
@@ -73866,11 +73821,6 @@
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/darkpath,
 /area/rogue/under/town/basement/desert)
-"uHL" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/robber,
-/turf/open/floor/rogue/darkpath,
-/area/rogue/indoors/town/academy/desert)
 "uHM" = (
 /obj/item/reagent_containers/powder/salt,
 /turf/open/floor/rogue/darkpath,
@@ -74713,11 +74663,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/underdesert)
-"uTm" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/bibble,
-/turf/open/floor/rogue/sandbrick,
-/area/rogue/indoors/town/academy/desert)
 "uTn" = (
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/sword/sabre/stalker,
@@ -75743,11 +75688,6 @@
 /obj/structure/stairs,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/outdoors/town/desert)
-"viR" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/xylix,
-/turf/open/floor/rogue/sandbrick,
-/area/rogue/indoors/town/academy/desert)
 "viZ" = (
 /obj/machinery/light/rogue/hearth{
 	pixel_y = 16
@@ -77332,9 +77272,8 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town/desert)
 "vGc" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/arcyne,
-/turf/open/floor/rogue/sandbrick,
+/obj/structure/bookcase/random/adult,
+/turf/open/floor/rogue/darkpath,
 /area/rogue/indoors/town/academy/desert)
 "vGl" = (
 /obj/effect/spawner/lootdrop/roguetown/sewers,
@@ -82866,8 +82805,7 @@
 /turf/open/floor/rogue/citybrick/citybrick1,
 /area/rogue/under/dungeon/desert_pyramid)
 "xgG" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/fishing,
+/obj/structure/bookcase/random/religion,
 /turf/open/floor/rogue/darkpath,
 /area/rogue/indoors/town/academy/desert)
 "xgH" = (
@@ -83259,6 +83197,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/rogue/candle/blue/r,
+/obj/structure/bookcase/random/reference,
 /turf/open/floor/rogue/darkpath,
 /area/rogue/indoors/town/academy/desert)
 "xlK" = (
@@ -83462,6 +83401,7 @@
 "xpl" = (
 /obj/machinery/light/rogue/candle/blue,
 /obj/machinery/light/rogue/candle/blue/l,
+/obj/structure/bookcase/random/archive,
 /turf/open/floor/rogue/sandbrick,
 /area/rogue/indoors/town/academy/desert)
 "xpq" = (
@@ -279480,13 +279420,13 @@ wPj
 fir
 fir
 xpl
-rDa
+feF
 imA
-bPi
+feF
 uXL
-hHl
+feF
 azy
-uHL
+sUg
 uGK
 fir
 fir
@@ -279792,13 +279732,13 @@ wPj
 fir
 vGc
 tLS
-nUM
 tLS
-viR
 tLS
-hwv
 tLS
-nnE
+tLS
+tLS
+tLS
+tLS
 tLS
 sUg
 fir
@@ -280102,7 +280042,7 @@ wPj
 wPj
 fir
 fir
-mmv
+vGc
 tLS
 tLS
 tLS
@@ -280112,7 +280052,7 @@ dQm
 tLS
 tLS
 tLS
-bdC
+sUg
 fir
 fir
 wPj
@@ -281984,7 +281924,7 @@ tLS
 tLS
 tLS
 tLS
-feF
+cnN
 fir
 fir
 wPj
@@ -282288,15 +282228,15 @@ wPj
 fir
 vnK
 tLS
-uTm
 tLS
-sSJ
 tLS
-sWs
 tLS
-feF
+tLS
+tLS
+tLS
+tLS
 dQm
-feF
+cnN
 fir
 wPj
 wPj
@@ -282600,9 +282540,9 @@ wPj
 fir
 fir
 aRp
-hHl
+cnN
 xbX
-feF
+xgG
 fWT
 xgG
 tno

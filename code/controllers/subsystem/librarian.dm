@@ -36,7 +36,6 @@ SUBSYSTEM_DEF(librarian)
 	testing("file4")
 	return list()
 
-
 #define PLAYER_BOOK_DIRECTORY "data/player_generated_books/"
 
 /datum/controller/subsystem/librarian/Initialize(start_timeofday)
@@ -95,13 +94,15 @@ SUBSYSTEM_DEF(librarian)
 	player_books -= filename
 	return TRUE
 
-/// Returns the filenames of archived books not yet placed by a random book spawner this round, limited to one category if given.
-/datum/controller/subsystem/librarian/proc/pull_player_book_titles(category)
+/// Returns the filenames of readable archived books, limited to one category if given. Books already placed by a random book spawner this round are left out unless include_placed is set.
+/datum/controller/subsystem/librarian/proc/pull_player_book_titles(category, include_placed = FALSE)
 	. = list()
 	for(var/file_name in player_books)
-		if(placed_player_books[file_name])
+		if(!include_placed && placed_player_books[file_name])
 			continue
 		var/list/book = player_books[file_name]
+		if(!book["book_title"] || !book["text"])
+			continue
 		if(!category || book["category"] == category)
 			. += file_name
 

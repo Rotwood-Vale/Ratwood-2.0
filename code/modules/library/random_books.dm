@@ -73,32 +73,21 @@
 
 /// Spawns random books, with archived player books limited to the given category if one is set. Each archived book is placed at most once per round.
 /proc/create_random_books_rogue(amount = 2, location, category)
-	var/list/possible_books = subtypesof(/obj/item/book/rogue/) - typesof(/obj/item/book/rogue/playerbook)
+	// Player books come from the archive, and secret books and the Verses and Acts of the Ten are never shelved at random.
+	var/static/list/possible_books = subtypesof(/obj/item/book/rogue) - typesof(/obj/item/book/rogue/playerbook, /obj/item/book/rogue/secret, /obj/item/book/rogue/bibble)
 	var/list/unused_player_titles = SSlibrarian.pull_player_book_titles(category)
 	var/player_book_chance = clamp(length(unused_player_titles), 10, 90)
 	for(var/b in 1 to amount)
 		if(prob(0.1))
 			new /obj/item/book_crafting_kit(location)
 			continue
-		var/placed_player_book = FALSE
 		if(length(unused_player_titles) && prob(player_book_chance))
-			while(length(unused_player_titles))
-				var/file_name = pick_n_take(unused_player_titles)
-				var/obj/item/book/rogue/playerbook/player_book = new(location, FALSE, null, null, file_name)
-				if(player_book.written)
-					SSlibrarian.placed_player_books[file_name] = TRUE
-					placed_player_book = TRUE
-					break
-				qdel(player_book)
-		if(!placed_player_book)
-			var/obj/item/book/rogue/addition = pick(possible_books)
-			var/obj/item/book/rogue/newbook = new addition(location)
-			if(istype(newbook, /obj/item/book/rogue/secret))
-				qdel(newbook)
-				continue
-			if(istype(newbook, /obj/item/book/rogue/bibble))
-				qdel(newbook)
-				continue
+			var/file_name = pick_n_take(unused_player_titles)
+			new /obj/item/book/rogue/playerbook(location, FALSE, null, null, file_name)
+			SSlibrarian.placed_player_books[file_name] = TRUE
+			continue
+		var/book_type = pick(possible_books)
+		new book_type(location)
 
 
 /obj/structure/bookcase/random/fiction
@@ -124,15 +113,9 @@
 
 /obj/structure/bookcase/player_archive/Initialize(mapload)
 	. = ..()
-	var/list/unused_player_titles = assoc_list_strip_value(SSlibrarian.player_books)
-	var/books_to_place = min(book_count, max_books - length(contents))
-	var/placed_books = 0
-	while(placed_books < books_to_place && length(unused_player_titles))
-		var/obj/item/book/rogue/playerbook/player_book = new(src, FALSE, null, null, pick_n_take(unused_player_titles))
-		if(player_book.written)
-			placed_books++
-		else
-			qdel(player_book)
+	var/list/player_titles = SSlibrarian.pull_player_book_titles(include_placed = TRUE)
+	for(var/i in 1 to min(book_count, max_books - length(contents), length(player_titles)))
+		new /obj/item/book/rogue/playerbook(src, FALSE, null, null, pick_n_take(player_titles))
 	update_icon()
 
 /obj/structure/bookcase/random_recipes

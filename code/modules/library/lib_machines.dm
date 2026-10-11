@@ -280,7 +280,7 @@
 	else
 		for(var/file_name in SSlibrarian.player_books)
 			var/list/book = SSlibrarian.player_books[file_name]
-			if(!book["book_title"])
+			if(!book["book_title"] || !book["text"])
 				continue
 			UNTYPED_LIST_ADD(entries, list(
 				"filename" = file_name,

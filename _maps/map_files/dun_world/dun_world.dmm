@@ -985,9 +985,7 @@
 	},
 /area/rogue/indoors/town/bath)
 "ajj" = (
-/obj/structure/bookcase/random/religion{
-	opacity = 0
-	},
+/obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/magician)
 "ajo" = (
@@ -9068,12 +9066,6 @@
 /obj/item/ingot/steel,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
-"bET" = (
-/obj/structure/bookcase/random/fiction{
-	opacity = 0
-	},
-/turf/open/floor/rogue/wood,
-/area/rogue/indoors/town/magician)
 "bEX" = (
 /obj/structure/fluff/railing/corner/north_east,
 /obj/machinery/light/rogue/candle/l,
@@ -61650,6 +61642,10 @@
 /obj/structure/mannequin,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/dwarfin)
+"lgz" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/rogue/wood,
+/area/rogue/indoors/town/magician)
 "lgF" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -67650,9 +67646,7 @@
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/physician)
 "mhI" = (
-/obj/structure/bookcase/random/archive{
-	opacity = 0
-	},
+/obj/structure/bookcase/random/adult,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/magician)
 "mhK" = (
@@ -73411,6 +73405,10 @@
 	},
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town)
+"nhs" = (
+/obj/structure/bookcase/random/reference,
+/turf/open/floor/rogue/wood,
+/area/rogue/indoors/town/magician)
 "nhv" = (
 /obj/effect/decal/cleanable/blood{
 	icon_state = "floor6-old"
@@ -93305,6 +93303,10 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/dirt/ambush,
 /area/rogue/outdoors/bog/south)
+"qHw" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/rogue/wood,
+/area/rogue/indoors/town/magician)
 "qHx" = (
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grass,
@@ -96214,12 +96216,6 @@
 /mob/living/simple_animal/hostile/rogue/mirespider_lurker/angry,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors/cave)
-"rjw" = (
-/obj/structure/bookcase/random/nonfiction{
-	opacity = 0
-	},
-/turf/open/floor/rogue/wood,
-/area/rogue/indoors/town/magician)
 "rjx" = (
 /obj/machinery/loom,
 /turf/open/floor/rogue/ruinedwood/spiral,
@@ -96901,8 +96897,11 @@
 /obj/structure/curtain/blue{
 	alpha = 200
 	},
-/obj/structure/mineral_door/wood/deadbolt{
-	dir = 4
+/obj/structure/mineral_door/wood{
+	icon_state = "wcv";
+	locked = 1;
+	lockid = "archive";
+	name = "Archivist's Study"
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/magician)
@@ -120283,12 +120282,6 @@
 	},
 /turf/open/floor/rogue/grassyel,
 /area/rogue/outdoors/exposed/church)
-"vzP" = (
-/obj/structure/bookcase/random_recipes{
-	opacity = 0
-	},
-/turf/open/floor/rogue/wood,
-/area/rogue/indoors/town/magician)
 "vzU" = (
 /obj/structure/fluff/pillow/black{
 	pixel_y = -3;
@@ -128307,9 +128300,7 @@
 /turf/open/water/cleanshallow,
 /area/rogue/outdoors/woods/southeast)
 "wXO" = (
-/obj/structure/bookcase/random/archive{
-	opacity = 0
-	},
+/obj/structure/bookcase/random/reference,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town/magician)
 "wXP" = (
@@ -133689,10 +133680,8 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/grove)
 "xYl" = (
-/obj/structure/bookcase/random/archive{
-	opacity = 0
-	},
 /obj/machinery/light/rogue/candle/blue,
+/obj/structure/bookcase/random/adult,
 /turf/open/floor/rogue/ruinedwood/herringbone,
 /area/rogue/indoors/town/magician)
 "xYo" = (
@@ -341589,9 +341578,9 @@ pSa
 tur
 xZF
 tZy
-lXF
-lXF
-lXF
+qHw
+qHw
+qHw
 lXF
 mhI
 mhI
@@ -342493,9 +342482,9 @@ pSa
 pSa
 lOD
 aUX
-bET
-mhI
-rjw
+qHw
+qHw
+qHw
 lXF
 mhI
 mhI
@@ -343397,13 +343386,13 @@ pSa
 dgb
 eSE
 bew
-vzP
-mhI
+ajj
+ajj
 ajj
 lXF
-mhI
-mhI
-mhI
+nhs
+nhs
+nhs
 iSm
 quI
 fGv
@@ -344305,9 +344294,9 @@ lXF
 lXF
 lXF
 upa
-mhI
+lgz
 lXF
-mhI
+lgz
 iSm
 aXb
 pWT
