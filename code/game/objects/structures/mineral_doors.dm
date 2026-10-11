@@ -172,7 +172,7 @@
 		return FALSE
 	if(resident_role)
 		var/datum/job/job = SSjob.name_occupations[human.job]
-		if(job.type != resident_role)
+		if(job?.type != resident_role)
 			if(!HAS_TRAIT(human, TRAIT_RESIDENT))
 				return FALSE
 	if(resident_advclass)
@@ -292,7 +292,7 @@
 		return TRUE
 	if(!anchored)
 		return FALSE
-	if(HAS_TRAIT(caller, TRAIT_BASHDOORS))
+	if(caller && HAS_TRAIT(caller, TRAIT_BASHDOORS))
 		return TRUE // bash into it!
 	// it's openable
 	return ishuman(caller) && !locked // only humantype mobs can open doors, as funny as it'd be for a volf to walk in on you ERPing

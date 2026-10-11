@@ -16,6 +16,11 @@
 /obj/item/organ/penis/Initialize(mapload)
 	. = ..()
 
+/obj/item/organ/penis/proc/get_size_arousal_multiplier(mob/living/carbon/human/receiver)
+	if(penis_size != MIN_PENIS_SIZE)
+		return 1
+	return receiver == owner ? 2 : 0.5
+
 /obj/item/organ/penis/proc/update_erect_state()
 	var/oldstate = erect_state
 	var/new_state = ERECT_STATE_NONE
@@ -42,7 +47,7 @@
 	sheath_type = SHEATH_TYPE_NORMAL
 
 /obj/item/organ/penis/knotted/big
-	penis_size = 3
+	penis_size = MAX_PENIS_SIZE
 
 /obj/item/organ/penis/equine
 	name = "equine penis"
@@ -237,6 +242,9 @@
 	H.update_body_parts(TRUE)
 	jiggle_cycle()
 	return TRUE
+
+/obj/item/organ/breasts/proc/is_pecs()
+	return ispath(accessory_type, /datum/sprite_accessory/breasts/pecs)
 
 /obj/item/organ/breasts/proc/jiggle_cycle()
 	jiggle_timerid = null

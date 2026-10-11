@@ -47,7 +47,6 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	neck = /obj/item/storage/belt/rogue/pouch/coins/poor
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
-	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 	backl = /obj/item/storage/backpack/rogue/backpack
 	belt = /obj/item/storage/belt/rogue/leather
 	r_hand = /obj/item/storage/meatbag
@@ -74,19 +73,15 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/huntersyell)
 		H.set_blindness(0)
-		var/ranged_weapons = list("Longbow", "Recurve Bow", "Crossbow")
+		var/ranged_weapons = list("Longbow", "Recurve Bow")
 		var/ranged_choice = input(H, "Choose your ranged weapon.", "PREPARE FOR THE HUNT") as anything in ranged_weapons
 		switch(ranged_choice)
 			if("Longbow")
-				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
 				beltr = /obj/item/quiver/arrows
 			if("Recurve Bow")
-				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltr = /obj/item/quiver/arrows
-			if("Crossbow")
-				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltr = /obj/item/quiver/bolts
-				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 
 		var/sidearms = list("Machete", "Hatchet")
 		var/sidearm_choice = input(H, "Choose your sidearm.", "TAKE UP ARMS") as anything in sidearms

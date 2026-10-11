@@ -373,6 +373,7 @@
 
 /obj/item/clothing/shoes/roguetown/boots/armor/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/shoes/roguetown/boots/armor/ancient
 	name = "ancient boots"
@@ -419,7 +420,7 @@
 /obj/item/clothing/shoes/roguetown/boots/armor/zizo
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	name = "avantyne boots"
-	desc = "Plate boots. Called forth from the edge of what should be known. In Her name."
+	desc = "<font color='A50021'>The lone and level sands stretch far away.</font> </br>‎<font color='FF0000'>March forth to the edge of reality, leaving behind its corpse.</font>"
 	icon_state = "zizoboots"
 	armor = ARMOR_ASCENDANT
 
@@ -435,8 +436,7 @@
 
 /obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo
 	name = "avantyne-threaded sabatons"
-	desc = "Marrow, flesh, ash; the bedrock of a new reality, fated to suffer until the final breath. It is this prognosis that commands Her disciples to \
-	work towards ascensionism - for no sacrifice is too great, in the pursuit of bringing lyfe back to this dying world."
+	desc = "<font color='A50021'>The lone and level sands stretch far away.</font> </br>‎<font color='FF0000'>March forth to the edge of reality, leaving behind its corpse.</font>"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	armor = ARMOR_ASCENDANT
 	icon_state = "zizoboots"
@@ -516,6 +516,7 @@
 
 /obj/item/clothing/shoes/roguetown/boots/maille/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/shoes/roguetown/boots/maille/iron
 	name = "iron maille boots"
@@ -671,6 +672,10 @@
 	resistance_flags = FIRE_PROOF
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+
+/obj/item/clothing/shoes/roguetown/boots/blacksteel/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/shoes/roguetown/boots/blacksteel/plateboots
 	name = "ancient blacksteel plate boots"
