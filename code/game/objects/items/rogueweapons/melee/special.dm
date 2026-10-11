@@ -569,7 +569,7 @@
 	name = "peculate"
 	hitsound = null
 	desc = "Thieve the appearance of another."
-	icon_state = "peculate"
+	icon_state = "inpeculate"
 
 //Unique assassin/antag dagger.
 /obj/item/rogueweapon/huntingknife/idagger/steel/profane

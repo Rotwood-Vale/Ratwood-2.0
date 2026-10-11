@@ -187,3 +187,11 @@
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1
+
+/datum/supply_pack/rogue/gronn/ring_courage
+	name = "Ring of Courage"
+	cost = 450
+	contains = list(/obj/item/clothing/ring/statrontz)
+	ship_qty_min = 1
+	ship_qty_max = 1
+	ship_chance = 25

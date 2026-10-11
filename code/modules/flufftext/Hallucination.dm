@@ -1270,8 +1270,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if(dreamer?.client)
 		dreamer.client.images -= appearance
 
-	qdel(appearance)
-
 /datum/hallucination/fake_heartattack
 
 /datum/hallucination/fake_heartattack/New(mob/living/carbon/victim, forced = TRUE)

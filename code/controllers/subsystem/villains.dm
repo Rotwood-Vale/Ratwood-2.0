@@ -116,7 +116,7 @@
 /datum/antag_setup/proc/statspent()
 	. = 0
 	for(var/key in stat_keys)
-		. += (stats[key] - 10) * statweight(key)
+		. += (stats[key] - defaults[key]) * statweight(key)
 
 /datum/antag_setup/proc/open_menu()
 	var/contents = "Points remaining: [budget - statspent()]</center><BR>"

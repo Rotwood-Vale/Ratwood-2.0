@@ -1,5 +1,8 @@
 /mob/living/carbon/human/species/wildshape/death(gibbed, nocutscene = FALSE)
-	werewolf_untransform(TRUE, gibbed)
+	if(untransform_on_death)
+		wildshape_untransform(TRUE, gibbed)
+	else
+		. = ..()
 
 /mob/living/carbon/human/proc/wildshape_transformation(shapepath)
 	if(!mind)

@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(valid_fogbeast_colors, list("White" = COLOR_WHITE, "Gray" = COL
 /mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/Initialize(mapload, set_fogbeast_color)
 	. = ..()
 	fogbeast_color = set_fogbeast_color
-	if(!fogbeast_color)
+	if(!(fogbeast_color in GLOB.valid_fogbeast_colors))
 		fogbeast_color = pick(GLOB.valid_fogbeast_colors)
 	// Keep atom color neutral; coat tint is rendered as a dedicated overlay in update_icon().
 	color = null
@@ -67,8 +67,8 @@ GLOBAL_LIST_INIT(valid_fogbeast_colors, list("White" = COLOR_WHITE, "Gray" = COL
 /mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/tame
 	tame = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/tame/saddled/Initialize(mapload)
-	. = ..(mapload)
+/mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/tame/saddled/Initialize(mapload, set_fogbeast_color)
+	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S
 	update_icon()
@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(valid_fogbeast_colors, list("White" = COLOR_WHITE, "Gray" = COL
 	bbarding = current_barding
 	if(stat != DEAD)
 		// Re-apply coat tint as its own body overlay so gear never inherits mount color.
-		var/mutable_appearance/coat_overlay = mutable_appearance(icon, icon_state, MOB_LAYER)
+		var/mutable_appearance/coat_overlay = mutable_appearance(icon, icon_state)
 		coat_overlay.color = coat_color
 		coat_overlay.appearance_flags = RESET_ALPHA|RESET_COLOR|NO_CLIENT_COLOR
 		add_overlay(coat_overlay)
@@ -154,7 +154,9 @@ GLOBAL_LIST_INIT(valid_fogbeast_colors, list("White" = COLOR_WHITE, "Gray" = COL
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/death()
 	unbuckle_all_mobs()
-	return ..()
+	. = ..()
+	if(!QDELETED(src))
+		update_icon()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/simple_limb_hit(zone)
 	if(!zone)
@@ -234,8 +236,8 @@ GLOBAL_LIST_INIT(valid_fogbeast_colors, list("White" = COLOR_WHITE, "Gray" = COL
 /mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/male/tame
 	tame = TRUE
 
-/mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/male/tame/saddled/Initialize(mapload)
-	. = ..(mapload)
+/mob/living/simple_animal/hostile/retaliate/rogue/fogbeast/male/tame/saddled/Initialize(mapload, set_fogbeast_color)
+	. = ..()
 	var/obj/item/natural/saddle/S = new(src)
 	ssaddle = S
 	update_icon()
