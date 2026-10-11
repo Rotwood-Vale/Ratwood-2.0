@@ -15,7 +15,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/book/random/LateInitialize()
-	create_random_books(amount, src.loc, TRUE, category)
+	create_random_books_rogue(amount, loc, category)
 	qdel(src)
 
 /obj/item/book/random/triple
@@ -58,35 +58,6 @@
 				PB.is_in_round_player_generated = FALSE
 
 	. = ..()
-
-/proc/create_random_books(amount = 2, location, fail_loud = FALSE, category = null)
-	. = list()
-	if(!isnum(amount) || amount<1)
-		return
-	if (!SSdbcore.Connect())
-		if(fail_loud || prob(5))
-			var/obj/item/paper/P = new(location)
-			P.info = "IOU - The Book Thief"
-			P.update_icon()
-		return
-	if(prob(25))
-		category = null
-	var/datum/DBQuery/query_get_random_books = SSdbcore.NewQuery({"
-		SELECT author, title, content
-		FROM [format_table_name("library")]
-		WHERE isnull(deleted) AND (:category IS NULL OR category = :category)
-		ORDER BY rand() LIMIT :limit
-	"}, list("category" = category, "limit" = amount))
-	if(query_get_random_books.Execute())
-		while(query_get_random_books.NextRow())
-			var/obj/item/book/B = new(location)
-			. += B
-			B.author	=	query_get_random_books.item[2]
-			B.title		=	query_get_random_books.item[3]
-			B.dat		=	query_get_random_books.item[4]
-			B.name		=	"Book: [B.title]"
-			B.icon_state=	"book[rand(1,8)]"
-	qdel(query_get_random_books)
 
 /// Spawns random books, with archived player books limited to the given category if one is set.
 /proc/create_random_books_rogue(amount = 2, location, category)

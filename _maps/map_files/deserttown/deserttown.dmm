@@ -35579,7 +35579,7 @@
 /turf/open/floor/rogue/dirt/road/desert,
 /area/rogue/indoors/shelter/desertdeep)
 "jZZ" = (
-/obj/item/book/rogue/playerbook,
+/obj/item/book/random,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/church)
 "kae" = (
@@ -36398,7 +36398,7 @@
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
 	},
-/obj/item/book/rogue/playerbook,
+/obj/item/book/random,
 /obj/item/natural/feather,
 /obj/item/candle/skull/lit,
 /turf/open/floor/carpet/purple,
@@ -65652,7 +65652,7 @@
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
 	},
-/obj/item/book/rogue/playerbook,
+/obj/item/book/random,
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town/manor/desert)
 "suB" = (

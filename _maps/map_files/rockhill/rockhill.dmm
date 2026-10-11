@@ -60398,7 +60398,7 @@
 /area/rogue/indoors/town/tavern)
 "mxF" = (
 /obj/structure/table/wood/poor,
-/obj/item/book/rogue/playerbook,
+/obj/item/book/random,
 /obj/item/natural/feather,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/town/basement/keep)
