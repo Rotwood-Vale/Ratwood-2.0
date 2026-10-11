@@ -1,0 +1,4 @@
+author: "john-pawson"
+delete-after: True
+changes:
+  - bugfix: "gives lich skeletons fatal insomnia, meaning they will no longer get tired or be able to sleep"
