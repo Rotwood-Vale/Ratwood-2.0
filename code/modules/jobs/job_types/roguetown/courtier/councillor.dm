@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	name = "Arcane Ministry"
 	display_title = "Minister of Magic"
 	ministry_keys = list(/obj/item/roguekey/tower)
-	archive_traits = list(TRAIT_ALCHEMY_EXPERT)
+	archive_traits = list(TRAIT_ALCHEMY_EXPERT, TRAIT_ARCYNE_T2)
 	archive_skills = list(
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE
