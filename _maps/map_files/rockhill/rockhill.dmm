@@ -393,10 +393,6 @@
 "ael" = (
 /turf/open/floor/rogue/grasspurple,
 /area/rogue/under/underdark/rockhill)
-"aes" = (
-/obj/structure/fluff/wallclock,
-/turf/open/floor/rogue/concrete,
-/area/rogue/indoors/town/engineerworkshop)
 "aet" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -5633,7 +5629,6 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/bath)
 "bfm" = (
-/obj/effect/decal/shadow_floor,
 /obj/effect/decal/shadow_floor{
 	dir = 4
 	},
@@ -20995,15 +20990,6 @@
 	dir = 9
 	},
 /area/rogue/outdoors/bograt/above)
-"eiQ" = (
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 1
-	},
-/turf/open/water/river{
-	dir = 4;
-	icon_state = "rockwd"
-	},
-/area/rogue/indoors/town/engineerworkshop)
 "eiU" = (
 /obj/structure/table/wood/poor,
 /turf/open/floor/rogue/woodturned,
@@ -31567,13 +31553,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors)
-"grH" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/grown/log/tree/small,
-/obj/item/storage/roguebag,
-/obj/item/storage/roguebag,
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/town/engineerworkshop)
 "grI" = (
 /obj/structure/flora/roguegrass/bush,
 /turf/open/floor/rogue/grassyel,
@@ -33669,10 +33648,8 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/manor/rockhill)
 "gOg" = (
-/turf/open/water/river{
-	dir = 4;
-	icon_state = "rockwd"
-	},
+/obj/structure/fluff/wallclock,
+/turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/engineerworkshop)
 "gOi" = (
 /obj/structure/bars/grille{
@@ -63987,11 +63964,22 @@
 /turf/open/floor/rogue/ruinedwood/platform,
 /area/rogue/indoors/shelter/woods)
 "mUG" = (
-/obj/structure/mineral_door/wood/window{
-	lockid = "crafterguild";
-	name = "Rockhill Guild of Crafts"
+/obj/effect/decal/shadow_floor{
+	dir = 1
 	},
-/turf/open/floor/rogue/metal/barograte,
+/obj/effect/decal/edge/desert_gray,
+/obj/effect/decal/edge/desert_gray{
+	dir = 1
+	},
+/obj/effect/decal/shadow_floor{
+	dir = 1
+	},
+/obj/effect/decal/shadow_floor{
+	dir = 1
+	},
+/obj/effect/decal/shadow_floor,
+/obj/effect/decal/shadow_floor,
+/turf/open/floor/rogue/metal,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "mUH" = (
 /obj/machinery/light/rogue/hearth,
@@ -98688,12 +98676,6 @@
 /obj/machinery/gear_painter,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/town/grove)
-"uiQ" = (
-/obj/structure/rack/rogue/shelf/biggest,
-/obj/item/grown/log/tree/small,
-/obj/item/rope,
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/town/engineerworkshop)
 "uiW" = (
 /obj/structure/curtain/directional/black{
 	dir = 1
@@ -100756,16 +100738,11 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/church/chapel)
 "uDR" = (
-/obj/effect/decal/shadow_floor,
-/obj/effect/decal/edge/desert_gray,
-/obj/effect/decal/shadow_floor{
+/obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 1
 	},
-/obj/effect/decal/shadow_floor{
-	dir = 1
-	},
-/turf/open/floor/rogue/tile/brownbrick,
-/area/rogue/indoors/town/dwarfin/rockhill)
+/turf/open/floor/rogue/cobblerock,
+/area/rogue/outdoors/town/rockhill)
 "uDV" = (
 /obj/structure/fluff/railing/fence,
 /turf/open/floor/rogue/cobblerock,
@@ -109378,6 +109355,10 @@
 	pixel_x = 1;
 	desc = "If closed check the workshop!"
 	},
+/obj/structure/fluff/walldeco/artificerflag{
+	desc = "Golden tools gleam against the blue of the oceans these craftsmen cross in their trade and works. The proud flag of the smith's guild, a collection of artisans and craftsmen who work together for shared profit and protection. In some cities their legal rights rival that of the petty nobility.";
+	name = "Smithing Guild"
+	},
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "wtL" = (
@@ -112885,12 +112866,6 @@
 	color = "#d4ffcf"
 	},
 /area/rogue/under/dungeon/tricksntraps)
-"xdG" = (
-/obj/machinery/light/roguestreet/orange/walllamp{
-	dir = 1
-	},
-/turf/open/floor/rogue/tile,
-/area/rogue/indoors/town/engineerworkshop)
 "xdH" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4;
@@ -195673,14 +195648,14 @@ whb
 whb
 whb
 gRs
+gRs
+gRs
 mrN
 lzK
 lzK
 lzK
 lzK
 lzK
-wmF
-wmF
 wmF
 wmF
 lzK
@@ -196105,14 +196080,14 @@ mle
 rqt
 rqt
 sSG
+rqt
+whb
 pWD
 nSa
 nze
 wvJ
 qHr
 aze
-pWD
-eiQ
 pWD
 eXw
 dtQ
@@ -196537,6 +196512,8 @@ rqt
 whb
 whb
 sSG
+whb
+whb
 pWD
 xan
 imn
@@ -196544,8 +196521,6 @@ dtQ
 dtQ
 imn
 rsu
-gOg
-hRY
 gWR
 dtQ
 imn
@@ -196969,14 +196944,14 @@ rqt
 whb
 whb
 gRs
+whb
+whb
 pWD
 iKM
 rmq
 dtQ
 kgb
 kgb
-nAP
-gOg
 nAP
 gWR
 qHr
@@ -197401,14 +197376,14 @@ rqt
 gRs
 gRs
 gRs
+whb
+whb
 pWD
 gbk
 hfr
 kgb
 qHr
 oZF
-nAP
-gOg
 nAP
 gWR
 dtQ
@@ -197833,14 +197808,14 @@ rqt
 rqt
 whb
 whb
+whb
+whb
 pWD
 qJT
 hfr
 kgb
 imn
 qHr
-nAP
-gOg
 nAP
 gWR
 dtQ
@@ -198265,14 +198240,14 @@ rqt
 whb
 whb
 whb
+whb
+whb
 pWD
 ett
 fCo
 dtQ
 qHr
 cvS
-hRY
-gOg
 hRY
 gWR
 dtQ
@@ -198697,14 +198672,14 @@ gRs
 whb
 whb
 whb
+whb
+whb
 pWD
 rqh
 esU
 imn
 imn
 sto
-pWD
-eiQ
 pWD
 lHf
 dtQ
@@ -199129,14 +199104,14 @@ gRs
 gRs
 whb
 whb
+whb
+whb
 rjK
 lzK
 nOp
 bIa
 bIa
 nOp
-oHC
-oHC
 oHC
 oHC
 lzK
@@ -199559,17 +199534,17 @@ rqt
 gRs
 whb
 gRs
-gRs
+rqt
+whb
+whb
 whb
 whb
 whb
 pWD
-imn
-imn
+wjy
+wjy
 wjy
 pze
-grH
-uiQ
 gPI
 uPd
 onN
@@ -199993,12 +199968,12 @@ whb
 whb
 gRs
 oxC
+whb
+whb
 gRs
 whb
 pWD
-aes
-imn
-wjy
+gOg
 wjy
 wjy
 wjy
@@ -200425,15 +200400,15 @@ whb
 whb
 whb
 gRs
+gRs
+gRs
 rqt
 gRs
 rjK
-lzK
 mPl
+wjy
 pRz
 ixb
-wjy
-xdG
 nOp
 huP
 wjy
@@ -200857,12 +200832,12 @@ yaB
 mzu
 mzu
 yaB
+rqt
+gRs
 gRs
 gRs
 rqt
-gRs
 rjK
-lzK
 lzK
 uyN
 jSn
@@ -418158,7 +418133,7 @@ jnO
 xif
 kqC
 bHd
-aOv
+uDR
 wtJ
 sco
 sco
@@ -418590,8 +418565,8 @@ ajj
 xAt
 uQS
 wVI
-etC
-cwm
+wbg
+mUG
 bfm
 nmo
 hRn
@@ -419024,7 +418999,7 @@ aOv
 aOv
 aOv
 mUG
-uDR
+cxR
 pcs
 hBW
 lYT
@@ -420318,8 +420293,8 @@ cnH
 pYS
 pYS
 xez
-etC
-cwm
+wbg
+mUG
 tGr
 tof
 tHq
@@ -420750,8 +420725,8 @@ woH
 xAt
 xAt
 kYn
-aOv
-sco
+uDR
+cwm
 sco
 sco
 nYC
