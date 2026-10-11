@@ -105,7 +105,7 @@
 	force_wielded = 32
 	gripped_intents = list(/datum/intent/spear/thrust/bad, /datum/intent/spear/bash/eaglebeak,
 	/datum/intent/mace/smash/eaglebeak, /datum/intent/mace/warhammer/pick/ranged)
-	name = "oathmarked's polehammer"
+	name = "oathmarked's lucerne"
 	desc = "A reinforced pole affixed with a head of steel. On the opposite side, a pick, intended to punch through plate. \
 	Above? A thrusting head. A weapon to kill more noble foes, evidently."
 	icon_state = "polehammerb"//Temp. A reuse, but unused elsewhere.

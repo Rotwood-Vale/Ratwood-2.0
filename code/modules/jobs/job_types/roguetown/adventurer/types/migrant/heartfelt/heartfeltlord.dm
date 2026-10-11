@@ -62,6 +62,7 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
+	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
 
 /datum/outfit/job/heartfelt/lord/lord/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -138,6 +139,7 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
+	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
 
 
 /datum/outfit/job/heartfelt/lord/archmage/pre_equip(mob/living/carbon/human/H)
@@ -225,6 +227,7 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
+	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
 
 /datum/outfit/job/heartfelt/lord/chief/pre_equip(mob/living/carbon/human/H)
 	..()

@@ -7,7 +7,7 @@
 	overlay_state = ""
 	sound = list('sound/magic/unmagnet.ogg')
 	active = FALSE
-	releasedrain = 7
+	releasedrain = 20
 	chargedrain = 0
 	chargetime = 0
 	recharge_time = 15 SECONDS

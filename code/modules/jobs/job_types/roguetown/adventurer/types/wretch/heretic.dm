@@ -460,7 +460,7 @@
 	name = "Heretic Monk"
 	tutorial = "Strong in body and spirit, you spread the truth through violence and word in equal measures. You eschew burdening armor in favor of physical prowess."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = ALL_BUT_BLOODLESS
 	outfit = /datum/outfit/job/roguetown/wretch/hereticmonk
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)

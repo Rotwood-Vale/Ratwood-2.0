@@ -1145,6 +1145,7 @@
 						visible_message(span_danger("<b>[src] collapses, [src.p_their()] flesh charred and smoking!</b>"), \
 							span_userdanger("The burning... it has taken everything from me."))
 			stat = UNCONSCIOUS
+			cure_holdbreath() // In case you passed out from holding breathe
 			if(ishuman(src))
 				var/mob/living/carbon/human/H = src
 				H.dna?.species?.stop_wagging_tail(H)
