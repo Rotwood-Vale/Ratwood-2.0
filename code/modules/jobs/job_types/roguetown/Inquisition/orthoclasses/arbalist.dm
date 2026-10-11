@@ -36,7 +36,7 @@
 		/datum/skill/labor/butchering = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
 		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE, // that guy pulls his lux on regual
-		/datum/skill/labor/woodcutting = SKILL_LEVEL_APPRENTICE, // for holy stakes
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_APPRENTICE, // for holy stakes
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE, // for holy stakes
 	)
 	subclass_stashed_items = list(
