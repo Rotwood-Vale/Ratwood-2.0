@@ -1,6 +1,6 @@
 //Sojourner exclusive. Meant to facilitate being super protected from magic. Don't hand this out readily.
 //Full anti-magic, with a unique trait to allow the user to cast under the effects of it.
-/obj/effect/proc_holder/spell/self/conjure_armor/barrier
+/obj/effect/proc_holder/spell/self/conjure_barrier
 	name = "Conjure Barrier"
 	desc = "Conjure an arcyne barrier. Granting long-lasting immunity from attacks of an arcyne nature. Your armor slot must be free to use this.\n\
 	The barrier lasts until it is broken, a new one is summoned, or the spell is forgotten."
@@ -27,10 +27,24 @@
 	cost = 3
 	spell_tier = 4
 
-	objtoequip = /obj/item/clothing/suit/roguetown/arcyne_barrier
-	slottoequip = SLOT_ARMOR
-	checkspot = "armor"
 	conjured_dispel_desc = "crackle, before shattering in a shower of sparks"
+
+/obj/effect/proc_holder/spell/self/conjure_barrier/cast(list/targets, mob/living/user = usr)
+	var/mob/living/carbon/human/H = user
+	if(H.highest_ac_worn() > 1)
+		to_chat(user, span_warning("I must be wearing lighter armor!"))
+		revert_cast()
+		return FALSE
+	dispel_conjured_item()
+	if(H.wear_armor)
+		to_chat(user, span_warning("I cannot wear this while wearing armor over my chest!"))
+		revert_cast()
+		return FALSE
+	user.visible_message("[user]'s existence briefly jitters, conjuring protection from doomed fates!")
+	var/obj/item/clothing/armor = new /obj/item/clothing/suit/roguetown/arcyne_barrier(user)
+	user.equip_to_slot_or_del(armor, SLOT_ARMOR)
+	set_conjured_item(armor)
+	return TRUE
 
 /obj/item/clothing/suit/roguetown/arcyne_barrier
 	name = "arcyne barrier"
