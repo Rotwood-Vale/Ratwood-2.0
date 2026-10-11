@@ -1210,7 +1210,7 @@
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(recharge)), 3 MINUTES)  // 3 minute coldown on shoting it, othherwise you get just a worse bolt
+	addtimer(CALLBACK(src, PROC_REF(recharge)), 5 MINUTES)  // 5 minute coldown on shoting it, othherwise you get just a worse bolt
 
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest/examine(mob/user)
 	. = ..()
