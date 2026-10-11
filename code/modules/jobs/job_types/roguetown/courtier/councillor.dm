@@ -172,19 +172,24 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	return
 
 // Duplicating some HERMES logic here for mailing the writ.
-/proc/post_to_ministry(obj/item/parcel, sender, mob/living/carbon/human/recipient, notice, turf/fallback)
-	if(!parcel || QDELETED(recipient))
-		return
-	parcel.mailer = sender
+// If the HERMES can't take it, the writ lands on the fallback turf for the councillor to deliver.
+// The calling proc already confirmed the ministry's partner exists.
+/proc/post_to_ministry(obj/item/parcel, datum/ministry/ministry, notice, turf/fallback)
+	var/mob/living/carbon/human/recipient = ministry.partner
+	parcel.mailer = "[ministry.councillor.real_name], [ministry.display_title]"
 	parcel.mailedto = recipient.real_name
 	parcel.update_icon()
 	var/obj/item/roguemachine/mastermail/master = SSroguemachine.hermailermaster
 	if(!master)
 		parcel.forceMove(fallback || get_turf(recipient))
+		to_chat(ministry.councillor, span_warning("There's no master of mails in this realm. I'll have to deliver this writ the old-fashioned way."))
 		return
 	parcel.forceMove(master.loc)
 	var/datum/component/storage/storage = master.GetComponent(/datum/component/storage)
-	storage?.handle_item_insertion(parcel, prevent_warning = TRUE)
+	if(!storage?.handle_item_insertion(parcel, prevent_warning = TRUE))
+		parcel.forceMove(fallback || get_turf(recipient))
+		to_chat(ministry.councillor, span_warning("The HERMES, for some reason, cannot deliver the writ. I will have to bring it to [recipient.mind.assigned_role] [recipient.name] myself."))
+		return
 	master.new_mail = TRUE
 	master.update_icon()
 	recipient.apply_status_effect(/datum/status_effect/ugotmail)

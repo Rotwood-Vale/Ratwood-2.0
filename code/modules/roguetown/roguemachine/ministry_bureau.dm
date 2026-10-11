@@ -61,6 +61,7 @@
 			ministry.writ.paired_ring = null
 			ministry.writ = null
 		if(ministry.ring)
+			ministry.ring.paired_writ = null
 			ministry.ring.desc = "A signet ring of a ministerial office, its mark scored through. Dead metal."
 		active_ministries.Cut(index, index + 1)
 		qdel(ministry)
@@ -92,7 +93,7 @@
 		return
 	if(!do_after(user, 5 SECONDS, target = src))
 		return
-	if(user.ministry_active != ministry || !ministry.active || QDELETED(ring) || !QDELETED(ring.paired_writ))
+	if(user.ministry_active != ministry || !ministry.active || QDELETED(ring) || !QDELETED(ring.paired_writ) || partner_gone(ministry))
 		return
 	QDEL_NULL(ministry.ring)
 	QDEL_NULL(ministry.writ)
@@ -167,20 +168,21 @@
 
 /obj/structure/roguemachine/ministry_bureau/proc/swear_in(mob/living/carbon/human/user, datum/ministry/ministry)
 	var/reforming = (user.ministry_spent == ministry.type)
-	active_ministries[ministry.type] = ministry
-	ministry.active = TRUE
-	user.ministry_active = ministry
-	user.ministry_pending = null
-	user.ministry_spent = ministry.type
-	SStreasury.noble_incomes[user] += ministry.income_bonus
-
 	var/obj/item/clothing/ring/minister/old_ring
 	if(reforming)
 		for(var/obj/item/clothing/ring/minister/candidate in user.GetAllContents())
 			if(candidate.type == ministry.ring_type && QDELETED(candidate.paired_writ))
 				old_ring = candidate
 				break
-	issue_regalia(ministry, user, old_ring)
+	if(!issue_regalia(ministry, user, old_ring))
+		return
+
+	active_ministries[ministry.type] = ministry
+	ministry.active = TRUE
+	user.ministry_active = ministry
+	user.ministry_pending = null
+	user.ministry_spent = ministry.type
+	SStreasury.noble_incomes[user] += ministry.income_bonus
 
 	if(!reforming)
 		var/turf/spawn_turf = get_turf(src)
@@ -202,7 +204,15 @@
 	to_chat(ministry.partner, span_notice("[user.real_name] has been sworn in as my [ministry.display_title]."))
 	playsound(src, 'sound/items/book_open.ogg', 60, FALSE)
 
+/obj/structure/roguemachine/ministry_bureau/proc/partner_gone(datum/ministry/ministry)
+	if(!QDELETED(ministry.partner))
+		return FALSE
+	to_chat(ministry.councillor, span_warning("That's funny. Something odd has happened to my sponsor. I can't dispatch the writ."))
+	return TRUE
+
 /obj/structure/roguemachine/ministry_bureau/proc/issue_regalia(datum/ministry/ministry, mob/living/carbon/human/receiver, obj/item/clothing/ring/minister/old_ring)
+	if(partner_gone(ministry))
+		return FALSE
 	var/obj/item/clothing/ring/minister/ring = old_ring
 	if(ring)
 		ring.desc = initial(ring.desc)
@@ -216,7 +226,8 @@
 	ministry.writ = writ
 	if(receiver)
 		receiver.put_in_hands(ring)
-	post_to_ministry(writ, "[ministry.councillor.real_name], [ministry.display_title]", ministry.partner, "My writ of ministry has been posted. I can collect it from any HERMES.", get_turf(src))
+	post_to_ministry(writ, ministry, "My writ of ministry has been posted. I can collect it from any HERMES.", get_turf(src))
+	return TRUE
 
 /obj/structure/roguemachine/ministry_bureau/proc/reissue_regalia(mob/living/carbon/human/user, obj/item/roguecoin/gold/coins)
 	var/datum/ministry/ministry = user.ministry_active
@@ -231,7 +242,7 @@
 		return
 	if(!do_after(user, 5 SECONDS, target = src))
 		return
-	if(user.ministry_active != ministry || !ministry.active || QDELETED(coins) || coins.quantity < MINISTRY_REISSUE_COST)
+	if(user.ministry_active != ministry || !ministry.active || QDELETED(coins) || coins.quantity < MINISTRY_REISSUE_COST || partner_gone(ministry))
 		return
 
 	if(coins.quantity > MINISTRY_REISSUE_COST)
