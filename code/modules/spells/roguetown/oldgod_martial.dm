@@ -454,6 +454,94 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		user.adjust_blood_volume(-50)
 		user.visible_message(span_danger("[user] draws something on [item] with their blood."), span_notice("I shape a [rune] on the surface of [item]."))
 		return TRUE
-		
+
 	revert_cast() // fallback
 	return FALSE
+
+
+
+#define HASTE_FILTER "haste_glow"
+
+/atom/movable/screen/alert/status_effect/buff/lesser_haste
+	name = "Lesser Haste"
+	desc = "I am speed up by magical means."
+	icon_state = "buff"
+
+/datum/status_effect/buff/lesser_haste
+	var/outline_colour ="#01b0bd" 
+	id = "haste_lesser"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/lesser_haste
+	effectedstats = list(STATKEY_SPD = 3)
+	duration = 15 SECONDS
+
+/datum/status_effect/buff/lesser_haste/on_creation(mob/living/new_owner, new_duration = null)
+	if(new_duration)
+		duration = new_duration
+	. = ..()
+
+/datum/status_effect/buff/lesser_haste/on_apply()
+	. = ..()
+	var/filter = owner.get_filter(HASTE_FILTER)
+	if (!filter)
+		owner.add_filter(HASTE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 25, "size" = 1))
+	to_chat(owner, span_warning("My limbs move with uncanny swiftness."))
+
+/datum/status_effect/buff/lesser_haste/on_remove()
+	. = ..()
+	owner.remove_filter(HASTE_FILTER)
+	to_chat(owner, span_warning("My body move slowly again..."))
+
+
+/datum/status_effect/buff/lesser_haste/nextmove_modifier()
+	return 0.85
+
+
+/atom/movable/screen/alert/status_effect/debuff/slow
+	name = "Slow"
+	desc = "Magic is impering my movments."
+	icon_state = "debuff"
+
+/datum/status_effect/debuff/slow
+	var/outline_colour ="#0f0058" 
+	id = "slow"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/slow
+	effectedstats = list(STATKEY_SPD = -5)
+	duration = 15 SECONDS
+
+/datum/status_effect/debuff/slow/on_creation(mob/living/new_owner, new_duration = null)
+	if(new_duration)
+		duration = new_duration
+	. = ..()
+
+/datum/status_effect/debuff/slow/on_apply()
+	. = ..()
+	var/filter = owner.get_filter(HASTE_FILTER)
+	if (!filter)
+		owner.add_filter(HASTE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 25, "size" = 1))
+	to_chat(owner, span_warning("My limbs move slowly like the air is resisting you."))
+
+/datum/status_effect/debuff/slow/on_remove()
+	. = ..()
+	owner.remove_filter(HASTE_FILTER)
+	to_chat(owner, span_warning("Your movments are free once again."))
+
+/datum/status_effect/debuff/slow/nextmove_modifier()
+	return 1.3
+
+#undef HASTE_FILTER
+
+
+/atom/movable/screen/alert/status_effect/buff/bloodrune_resistance
+	name = "Rune resistance"
+	desc = "I'm safe from the most disabling runes."
+	icon_state = "buff"
+
+/datum/status_effect/buff/bloodrune_resistance
+	id = "bloodrune_resistance"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/bloodrune_resistance
+	duration = 15 SECONDS
+
+/datum/status_effect/buff/bloodrune_resistance/on_creation(mob/living/new_owner, new_duration = null)
+	if(new_duration)
+		duration = new_duration
+	. = ..()

@@ -1259,6 +1259,8 @@
 #include "code\game\objects\items\rogueweapons\rogueweapon.dm"
 #include "code\game\objects\items\rogueweapons\shields.dm"
 #include "code\game\objects\items\rogueweapons\intents\special.dm"
+#include "code\modules\spells\roguetown\oldgod.dm"
+#include "code\modules\spells\roguetown\oldgod_martial.dm" // has to be here because of some defines in knives
 #include "code\game\objects\items\rogueweapons\melee\axes.dm"
 #include "code\game\objects\items\rogueweapons\melee\bandit.dm"
 #include "code\game\objects\items\rogueweapons\melee\blunt.dm"
@@ -2971,8 +2973,6 @@
 #include "code\modules\spells\roguetown\helper.dm"
 #include "code\modules\spells\roguetown\jester.dm"
 #include "code\modules\spells\roguetown\necromancer.dm"
-#include "code\modules\spells\roguetown\oldgod.dm"
-#include "code\modules\spells\roguetown\oldgod_martial.dm"
 #include "code\modules\spells\roguetown\ritual_butchery.dm"
 #include "code\modules\spells\roguetown\spider.dm"
 #include "code\modules\spells\roguetown\vampire.dm"

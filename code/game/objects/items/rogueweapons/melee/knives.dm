@@ -897,6 +897,72 @@
 			if(rune)
 				. += span_info("There is a bloody sign etched into the wood.")
 
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood/attack(mob/living/target, mob/living/user)
+	if(!rune)
+		return ..()
+	var/used_rune = FALSE
+	switch(rune)
+		if(BLOODRUNE_FIRE)
+			if(HAS_TRAIT(target, TRAIT_SILVER_WEAK))
+				target.adjust_fire_stacks(5, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+			else
+				target.adjust_fire_stacks(5)
+			target.ignite_mob()
+			user.visible_message(span_warning("[src] erupts in flames, setting [target] on fire!"))
+			used_rune = TRUE
+		if(BLOODRUNE_WIND)
+			user.apply_status_effect(/datum/status_effect/buff/lesser_haste, 15 SECONDS)
+			target.apply_status_effect(/datum/status_effect/debuff/slow, 15 SECONDS)
+			user.visible_message(span_warning("[src] emist a gust of wind, slowing [target] and hastening [user]!"))
+			used_rune = TRUE
+		if(BLOODRUNE_EARTH)
+			if(target.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
+				return ..()
+			target.apply_status_effect(/datum/status_effect/debuff/clickcd, 6 SECONDS)
+			target.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
+			user.visible_message(span_warning("[src] creates earthy restrains on [target]!"))
+			used_rune = TRUE
+		if(BLOODRUNE_WATER)
+			if(target.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
+				return ..()
+			user.visible_message(span_warning("[src] secretes dark liquid, blinding [target]!"))
+			target.blind_eyes(6)			
+			target.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
+			used_rune = TRUE
+		if(BLOODRUNE_NATURE)
+			if(target.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
+				return ..()
+			target.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
+			target.Immobilize(6 SECONDS)
+			new /obj/effect/temp_visual/ensnare/long(get_turf(target))
+			user.visible_message(span_warning("[src] errupts into roots, immobilising [target]!"))
+			used_rune = TRUE
+		if(BLOODRUNE_FORCE)
+			if(target.has_status_effect(/datum/status_effect/debuff/yeetcd))
+				return ..()
+			var/scaling = 5
+			target.apply_status_effect(/datum/status_effect/debuff/yeetcd)
+			target.Slowdown(scaling)
+			var/knockback_tiles = scaling
+			if(target.resting)
+				knockback_tiles = max(1, knockback_tiles / 2)
+			var/turf/edge_target_turf = get_edge_target_turf(target, get_dir(user, target))
+			if(istype(edge_target_turf))
+				target.safe_throw_at(edge_target_turf, \
+				knockback_tiles, \
+				scaling, \
+				user, \
+				spin = FALSE, \
+				force = target.move_force)
+			used_rune = TRUE
+			user.visible_message(span_warning("[src] errupts with a wave of force, trowing the [target]!"))
+
+	..()
+
+	if(used_rune)
+		rune = null // Pay the blood tax
+		src.take_damage(10) // Your weapon is disposable
+
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
 	name = "psydonic dagger"
