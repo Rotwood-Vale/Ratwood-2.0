@@ -1103,7 +1103,6 @@
 		return ..()
 
 	var/turf/vinespot = get_turf(target)
-
 	
 	if(vinespot && rune == BLOODRUNE_NATURE && !isliving(target)) // only make vines if we didnt hit a person
 		if(!locate(/obj/structure/vine) in vinespot)
