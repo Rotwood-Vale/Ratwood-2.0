@@ -1567,6 +1567,7 @@
 		/mob/living/carbon/human/verb/emote_growl,
 		/mob/living/carbon/human/verb/emote_bleat,
 		/mob/living/carbon/human/verb/emote_chitter,
+		/mob/living/carbon/human/verb/emote_msqueak,
 		/mob/living/carbon/human/verb/emote_arf,
 		/mob/living/carbon/human/verb/emote_awuff,
 		/mob/living/carbon/human/verb/emote_dcomplain,
@@ -1629,6 +1630,7 @@
 	)
 	var/static/list/moth_tongue_noise_verbs = list(
 		/mob/living/carbon/human/verb/emote_chitter,
+		/mob/living/carbon/human/verb/emote_msqueak,
 	)
 	var/static/list/moth_wing_noise_verbs = list(
 		/mob/living/carbon/human/verb/emote_flutter,
@@ -2161,6 +2163,25 @@
 		set name = "Chitter"
 		set category = "Noises"
 		emote("chitter", intentional = TRUE, animal = TRUE)
+	else
+		show_tongue_noise_warning()
+		return
+
+/datum/emote/living/msqueak
+	key = "msqueak"
+	key_third_person = "squeaks!"
+	message = "squeaks!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	message_muffled = "makes a muffled squeak!"
+	vary = TRUE
+	show_runechat = FALSE
+	is_animal = TRUE
+
+/mob/living/carbon/human/verb/emote_msqueak()
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/moth))
+		set name = "Moth Squeak"
+		set category = "Noises"
+		emote("msqueak", intentional = TRUE, animal = TRUE)
 	else
 		show_tongue_noise_warning()
 		return
