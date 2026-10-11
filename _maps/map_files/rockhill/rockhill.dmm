@@ -103562,7 +103562,7 @@
 /turf/open/floor/rogue/ruinedwood/platform,
 /area/rogue/indoors)
 "vGe" = (
-/obj/item/book/rogue/xylix,
+/obj/item/book/rogue/secret/xylix,
 /turf/open/water/cleanshallow,
 /area/rogue/under/cave)
 "vGg" = (

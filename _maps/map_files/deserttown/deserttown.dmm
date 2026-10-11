@@ -41095,7 +41095,7 @@
 /area/rogue/under/cave/spider)
 "lCz" = (
 /obj/structure/bookcase/random,
-/obj/item/book/rogue/xylix,
+/obj/item/book/rogue/secret/xylix,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/manor/desert)
 "lCD" = (
