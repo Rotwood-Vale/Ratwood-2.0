@@ -243,3 +243,26 @@
       fetch stamina cost from 5 to 20
 
       fetch cd went from 3 to 15 after the fix.'
+2026-10-11:
+  MrShibaa:
+  - rscadd: Adds the ability to light someones zig when its in their mouth.
+  - rscadd: Zigs can be extinguished by right clicking them.
+  - rscadd: Adds an end of round statistic that shows the top smokers.
+  Randumb-Phantomb:
+  - qol: the eagle's beak and blacksteel polehammer renamed to be steel lucerne and
+      blacksteel lucerne respectively, now the 3 match names. These weapons of similar
+      use now share their name.
+  - balance: lucernes of all varieties now come with a nerfed pick intent.
+  Xander3359:
+  - balance: You can no longer die from holding your breath, you can also hold your
+      breath for longer before passing out
+  wikimody:
+  - rscadd: Added trait luxfreak, exclusive to absolver, stigmata and gods, with is
+      required to perform non conversion psydonic rituals
+  - rscadd: FREDOM (from clothes) ritual no longer requires target to have gone though
+      luxplate ritual
+  - qol: Changed descriptions of absolver skills to be more reflecting of his lux
+      abomination status
+  - balance: Stigmata gets ritualist and ritual chalk
+  - bugfix: Absolver unque quicksilver recepture is now properly locked to him and
+      stigmata, and easier to produce
