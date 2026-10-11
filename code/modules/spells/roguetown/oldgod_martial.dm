@@ -367,3 +367,26 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 
 
 /obj/effect/proc_holder/spell/self/arbalist_blood_runes 
+	name = "FUTHARK"
+	desc = "There have been a group of tribal shamans writing weird magical runes into their flesh and blood. \
+	While their magics were declared heretical, your sect have realised that their magic can be used together with thier lux techniques. \
+	So the blood runes were born, never grafted onto flesh as that has been forbitten, but instead drawn on the objects of your trade with your own blood. \
+	Use it with empty hand for more information. \
+	<small><span class='bloody'>A greater miracle.</span></small>"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "DEFY"
+	recharge_time = 5 SECONDS
+	movement_interrupt = FALSE
+	associated_skill = /datum/skill/magic/holy
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	sound = 'sound/magic/woundheal_crunch.ogg'
+	invocations = list("Uzu, Fezo, Kaun.")
+	invocation_type = "whisper"
+	antimagic_allowed = TRUE
+	miracle = TRUE
+	devotion_cost = 10
+
+/obj/effect/proc_holder/spell/self/psydonic_lux_bolt/cast(mob/living/carbon/human/user)
+	if(!isliving(user))
+		return FALSE
