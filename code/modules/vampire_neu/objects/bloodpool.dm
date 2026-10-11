@@ -1,12 +1,12 @@
-#define VAMPCOST_ONE 8000
-#define VAMPCOST_TWO 10000
-#define VAMPCOST_THREE 12000
-#define VAMPCOST_FOUR 14000
-#define ARMOR_COST 5000
-#define SUN_STEAL_COST 10000
-#define SERVANT_COST 800
-#define SERVANT_T2_COST 2500
-#define SERVANT_T3_COST 4000
+#define VAMPCOST_ONE 5000
+#define VAMPCOST_TWO 6000
+#define VAMPCOST_THREE 8000
+#define VAMPCOST_FOUR 10000
+#define ARMOR_COST 2500
+#define SUN_STEAL_COST 7500
+#define SERVANT_COST 750
+#define SERVANT_T2_COST 1500
+#define SERVANT_T3_COST 3000
 
 #define INITIATE_LORDE 1
 #define INITIATE_ANYONE 2
@@ -371,6 +371,7 @@
 				subordinate_body.adjust_maxbloodpool(1000)
 				for(var/S in MOBSTATS)
 					subordinate_body.change_stat(S, 2)
+REMOVE_TRAIT(lord_body, TRAIT_SILVER_WEAK, TRAIT_GENERIC) //No silverweakness for full-powered vampire lord
 
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth_4
 			break
@@ -378,7 +379,7 @@
 /datum/vampire_project/armor_crafting
 	display_name = "Wicked Plate"
 	description = "Craft a complete set of vampiric armor from crystallized blood."
-	total_cost = 5000
+	total_cost = 2500
 	completion_sound = 'sound/misc/vcraft.ogg'
 
 /datum/vampire_project/armor_crafting/on_complete(atom/movable/creation_point)
