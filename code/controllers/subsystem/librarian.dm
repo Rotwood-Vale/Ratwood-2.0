@@ -82,8 +82,15 @@ SUBSYSTEM_DEF(librarian)
 	player_books -= filename
 	return TRUE
 
-/datum/controller/subsystem/librarian/proc/pull_player_book_titles()
-	return assoc_list_strip_value(player_books)
+/// Returns the filenames of archived books, limited to one category if given.
+/datum/controller/subsystem/librarian/proc/pull_player_book_titles(category)
+	if(!category)
+		return assoc_list_strip_value(player_books)
+	. = list()
+	for(var/file_name in player_books)
+		var/list/book = player_books[file_name]
+		if(book["category"] == category)
+			. += file_name
 
 /datum/controller/subsystem/librarian/proc/amend_player_book(filename, amend_type, amend_text)
 	if(!istext(amend_text) || !length(trim(amend_text)) || !(amend_type in list("book_title", "author", "icon", "category")))

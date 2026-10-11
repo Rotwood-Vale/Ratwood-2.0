@@ -35,7 +35,7 @@
 		. = INITIALIZE_HINT_LATELOAD
 
 /obj/structure/bookcase/random/LateInitialize()
-	create_random_books_rogue(book_count, src)
+	create_random_books_rogue(book_count, src, category)
 	update_icon()
 
 /obj/structure/bookcase/random/archive
@@ -88,10 +88,11 @@
 			B.icon_state=	"book[rand(1,8)]"
 	qdel(query_get_random_books)
 
-/proc/create_random_books_rogue(amount = 2, location)
+/// Spawns random books, with archived player books limited to the given category if one is set.
+/proc/create_random_books_rogue(amount = 2, location, category)
 	var/list/possible_books = subtypesof(/obj/item/book/rogue/) - typesof(/obj/item/book/rogue/playerbook)
 	// Each archived book can only be placed once per shelf.
-	var/list/unused_player_titles = SSlibrarian.pull_player_book_titles()
+	var/list/unused_player_titles = SSlibrarian.pull_player_book_titles(category)
 	var/player_book_chance = clamp(length(unused_player_titles), 10, 90)
 	for(var/b in 1 to amount)
 		if(prob(0.1))
