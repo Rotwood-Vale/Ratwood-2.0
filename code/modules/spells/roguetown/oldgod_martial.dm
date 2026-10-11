@@ -422,16 +422,16 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 
 	var/item = user.get_active_held_item()
 	if(!item) // Nothing in hand, give tutorial
-		to_chat(user, span_notice("A blood rune can be aplied to: Any bolt with can be fired from saletre or blooded stake."))
+		to_chat(user, span_notice("A blood rune can be applied to: Any bolt with can be fired from saletre or blooded stake."))
 		to_chat(user, span_notice("To created blooded stake use this miracle with a wooded stake in hand. They are meant to be expendable and cant be fixed."))
 		to_chat(user, span_notice("Each rune activates only once and removes itself after use. Blooded stake takes 10 damage every time it happens."))
 		to_chat(user, span_notice("What rune is made depends on your stance. Runes with hard CC give victim 15 second immunity to other hard CC runes."))
 		to_chat(user, span_notice("Defend intent creates [BLOODRUNE_FIRE], with causes the victim to burst into flames (holy flames against undead)."))
 		to_chat(user, span_notice("Swift intend creates [BLOODRUNE_WIND], with causes the victim to be slowed, and yourself to be hasten for 15 seconds. It also makes bolts fly incredibly fast."))
-		to_chat(user, span_notice("Weak intend creates [BLOODRUNE_EARTH], with causes the victim to not be able to use their weapons for 6 second. One of hard CC runes. It also makes bolt extremly effective against structures."))
+		to_chat(user, span_notice("Weak intend creates [BLOODRUNE_EARTH], with causes the victim to not be able to use their weapons for 6 second. One of hard CC runes. It also makes bolt extremely effective against structures."))
 		to_chat(user, span_notice("Aimed intend creates [BLOODRUNE_WATER], with blinds the victim for 6 seconds. One of hard CC runes."))
-		to_chat(user, span_notice("Feint intend creates [BLOODRUNE_NATURE], with immobilises the victim for 6 seconds. One of hard CC runes. It also makes the bolt create vines if it fails to hit a person."))
-		to_chat(user, span_notice("Strong intend creates [BLOODRUNE_FORCE], with knockbacks victim by 5 tiles. Subject to normal knockback cooldown. It also makes bolt extremly effective against structures."))
+		to_chat(user, span_notice("Feint intend creates [BLOODRUNE_NATURE], with immobilizes the victim for 6 seconds. One of hard CC runes. It also makes the bolt create vines if it fails to hit a person."))
+		to_chat(user, span_notice("Strong intend creates [BLOODRUNE_FORCE], with knockbacks victim by 5 tiles. Subject to normal knockback cooldown. It also makes bolt extremely effective against structures."))
 		revert_cast()
 		return FALSE
 
@@ -481,6 +481,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		bolt.rune = rune
 		var/obj/projectile/bullet/reusable/heavy_bolt/loaded_bolt = bolt.BB
 		loaded_bolt.rune = rune
+		bolt.is_silver = TRUE // silverblessed blood
 		if(rune == BLOODRUNE_WIND)
 			loaded_bolt.speed = 0.01 // almost hitscan
 		else
