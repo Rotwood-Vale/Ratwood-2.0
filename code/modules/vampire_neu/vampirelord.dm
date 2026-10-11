@@ -22,7 +22,7 @@
 	return list(
 		/datum/skill/magic/blood = 6,
 		/datum/skill/combat/wrestling = 5,
-		/datum/skill/combat/unarmed = 4,
+		/datum/skill/combat/unarmed = 5,
 		/datum/skill/combat/swords = 5,
 		/datum/skill/combat/axes = 4,
 		/datum/skill/combat/maces = 4,
@@ -30,6 +30,10 @@
 		/datum/skill/combat/whipsflails = 4,
 		/datum/skill/misc/reading = 5,
 		/datum/skill/misc/climbing = 5,
+        /datum/skill/craft/crafting = 2 
+        /datum/skill/craft/blacksmithing = 2
+        /datum/skill/craft/weaponsmithing = 2
+        /datum/skill/craft/armorsmithing = 2
 	)
 
 /datum/antagonist/vampire/lord/on_gain()
@@ -63,7 +67,7 @@
 	..()
 	H.adjust_skillrank_up_to(/datum/skill/magic/blood, 6, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 5, TRUE)
-	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 5, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/axes, 4, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
@@ -71,6 +75,12 @@
 	H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 4, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/climbing, 5, TRUE)
+    H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 2, TRUE)
+    H.adjust_skillrank_up_to(/datum/skill/craft/blacksmithing, 2, TRUE)
+    H.adjust_skillrank_up_to(/datum/skill/craft/armorsmithing, 2, TRUE)
+    H.adjust_skillrank_up_to(/datum/skill/craft/weaponsmithing, 2, TRUE)
+
+    neck = /obj/item/clothing/neck/roguetown/bevor
 	pants = /obj/item/clothing/under/roguetown/tights/black
 	shirt = /obj/item/clothing/suit/roguetown/shirt/vampire
 	belt = /obj/item/storage/belt/rogue/leather/plaquegold
