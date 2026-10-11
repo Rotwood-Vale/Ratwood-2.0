@@ -76015,8 +76015,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor/desert)
 "vnK" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/blackmountain,
+/obj/structure/bookcase/player_archive,
 /turf/open/floor/rogue/darkpath,
 /area/rogue/indoors/town/academy/desert)
 "vnM" = (

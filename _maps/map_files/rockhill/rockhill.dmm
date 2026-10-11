@@ -35941,8 +35941,7 @@
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bograt/west)
 "huG" = (
-/obj/structure/bookcase/random/archive,
-/obj/item/book/rogue/sword,
+/obj/structure/bookcase/player_archive,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/indoors/town/academy)
 "huK" = (
@@ -305033,7 +305032,7 @@ lrs
 fXe
 xdp
 nom
-dlj
+dYh
 huG
 fXe
 fXe

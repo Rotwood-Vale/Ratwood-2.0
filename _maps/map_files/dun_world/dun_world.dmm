@@ -27044,9 +27044,7 @@
 	icon_state = "borderfall"
 	},
 /obj/structure/fluff/railing/border/east,
-/obj/structure/bookcase/random/archive{
-	opacity = 0
-	},
+/obj/structure/table/wood,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/magician)
 "eSF" = (
@@ -27679,14 +27677,7 @@
 	dir = 1;
 	icon_state = "borderfall"
 	},
-/obj/structure/bookcase{
-	opacity = 0
-	},
-/obj/item/book/rogue/tales3,
-/obj/item/book/rogue/tales1,
-/obj/item/book/rogue/nitebeast,
-/obj/item/book/rogue/sword,
-/obj/item/book/rogue/arcyne,
+/obj/structure/bookcase/player_archive,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/magician)
 "eYF" = (
@@ -65515,9 +65506,7 @@
 	icon_state = "borderfall"
 	},
 /obj/structure/fluff/railing/border/west,
-/obj/structure/bookcase/random/archive{
-	opacity = 0
-	},
+/obj/structure/table/wood,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/magician)
 "lOF" = (
