@@ -1,5 +1,7 @@
 /obj/item/book/rogue
 	var/open = FALSE
+	/// Library section random bookcases shelve this book under, matching GLOB.player_book_categories. Null keeps it off category shelves.
+	var/category
 	icon = 'icons/roguetown/items/books.dmi'
 	icon_state = "basic_book_0"
 	slot_flags = ITEM_SLOT_HIP
@@ -303,6 +305,7 @@
 	icon_state ="lawtome_0"
 	base_icon_state = "lawtome"
 	bookfile = "law_2.json"
+	category = "Reference"
 
 /obj/item/book/rogue/cooking
 	name = "Tastes Fit For The Lord"
@@ -310,6 +313,7 @@
 	icon_state ="book_0"
 	base_icon_state = "book"
 	bookfile = "cooking.json"
+	category = "Reference"
 
 		//no more theif stole the books
 /obj/item/book/rogue/knowledge1
@@ -318,6 +322,7 @@
 	icon_state ="book5_0"
 	base_icon_state = "book5"
 	bookfile = "knowledge.json"
+	category = "Reference"
 
 
 /obj/item/book/rogue/secret/xylix
@@ -327,7 +332,7 @@
 	base_icon_state = "xylix"
 	bookfile = "xylix.json"
 
-/obj/item/book/rogue/xylix/attack_self(mob/user)
+/obj/item/book/rogue/secret/xylix/attack_self(mob/user)
 	if(!open)
 		attack_right(user)
 		return
@@ -349,6 +354,7 @@
 	icon_state ="book_0"
 	base_icon_state = "book"
 	bookfile = "tales1.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/festus
 	name = "Book of Festus"
@@ -356,6 +362,7 @@
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 	bookfile = "tales2.json"
+	category = "Fiction"
 
 
 /obj/item/book/rogue/tales3
@@ -364,6 +371,7 @@
 	icon_state ="book3_0"
 	base_icon_state = "book3"
 	bookfile = "tales3.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/bookofpriests
 	name = "Holy Book of Saphria"
@@ -371,6 +379,7 @@
 	icon_state ="knowledge_0"
 	base_icon_state = "knowledge"
 	bookfile = "holyguide.json"
+	category = "Religion"
 
 /obj/item/book/rogue/robber
 	name = "Reading for Robbers"
@@ -378,6 +387,7 @@
 	icon_state ="basic_book_0"
 	base_icon_state = "basic_book"
 	bookfile = "tales4.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/cardgame
 	name = "Graystone's Torment Basic Rules"
@@ -385,6 +395,7 @@
 	icon_state ="basic_book_0"
 	base_icon_state = "basic_book"
 	bookfile = "tales5.json"
+	category = "Reference"
 
 /obj/item/book/rogue/blackmountain
 	name = "Zabrekalrek, The Black Mountain Saga: Part One"
@@ -392,6 +403,7 @@
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales6.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/beardling
 	name = "Rock and Stone - ABC & Tales for Beardlings"
@@ -399,6 +411,7 @@
 	icon_state ="book8_0"
 	base_icon_state = "book8"
 	bookfile = "tales7.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/abyssor
 	name = "A Tale of Those Who Live At Sea"
@@ -406,6 +419,7 @@
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 	bookfile = "tales8.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/necra
 	name = "Burial Rites for Necra"
@@ -413,6 +427,7 @@
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales9.json"
+	category = "Religion"
 
 /obj/item/book/rogue/noc
 	name = "Dreamseeker"
@@ -420,6 +435,7 @@
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales10.json"
+	category = "Religion"
 
 /obj/item/book/rogue/fishing
 	name = "Fontaine's Advanced Guide to Fishery"
@@ -427,6 +443,7 @@
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 	bookfile = "tales11.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/sword
 	name = "The Six Follies: How To Survive by the Sword"
@@ -434,6 +451,7 @@
 	icon_state ="book5_0"
 	base_icon_state = "book5"
 	bookfile = "tales12.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/arcyne
 	name = "Latent Magicks, where does Arcyne Power come from?"
@@ -441,6 +459,7 @@
 	icon_state ="book4_0"
 	base_icon_state = "book4"
 	bookfile = "tales13.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/nitebeast
 	name = "Legend of the Nitebeast"
@@ -448,6 +467,7 @@
 	icon_state ="book8_0"
 	base_icon_state = "book8"
 	bookfile = "tales14.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/naledi1
 	name = "The Path of the War Scholar Volume 1"
@@ -455,6 +475,7 @@
 	icon_state = "knowledge_0"
 	base_icon_state = "knowledge"
 	bookfile = "naledi1.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/naledi2
 	name = "The Path of the War Scholar Volume 3"
@@ -462,6 +483,7 @@
 	icon_state = "book8_0"
 	base_icon_state = "book8"
 	bookfile = "naledi2.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/naledi3
 	name = "The Path of the War Scholar Volume 7"
@@ -469,6 +491,7 @@
 	icon_state = "book7_0"
 	base_icon_state = "book7"
 	bookfile = "naledi3.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/naledi4
 	name = "The Path of the War Scholar Volume 20"
@@ -476,6 +499,7 @@
 	icon_state = "book6_0"
 	base_icon_state = "book6"
 	bookfile = "naledi4.json"
+	category = "Non-fiction"
 
 /// Cover styles players can choose for their books, mapped to icon states.
 GLOBAL_LIST_INIT(player_book_icons, list(

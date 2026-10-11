@@ -71,22 +71,31 @@
 
 	. = ..()
 
-/// Spawns random books, with archived player books limited to the given category if one is set. Each archived book is placed at most once per round.
+/// Spawns random books, limited to the given category if one is set — premade books by their category var, archived player books by their archived category. Each archived book is placed at most once per round.
 /proc/create_random_books_rogue(amount = 2, location, category)
 	// Player books come from the archive, and secret books and the Verses and Acts of the Ten are never shelved at random.
 	var/static/list/possible_books = subtypesof(/obj/item/book/rogue) - typesof(/obj/item/book/rogue/playerbook, /obj/item/book/rogue/secret, /obj/item/book/rogue/bibble)
+	var/list/eligible_books = possible_books
+	if(category)
+		eligible_books = list()
+		for(var/obj/item/book/rogue/book_type as anything in possible_books)
+			if(initial(book_type.category) == category)
+				eligible_books += book_type
 	var/list/unused_player_titles = SSlibrarian.pull_player_book_titles(category)
 	var/player_book_chance = clamp(length(unused_player_titles), 10, 90)
 	for(var/b in 1 to amount)
 		if(prob(0.1))
 			new /obj/item/book_crafting_kit(location)
 			continue
-		if(length(unused_player_titles) && prob(player_book_chance))
+		// Categories with no premade books (like Adult) are stocked from the archive alone.
+		if(length(unused_player_titles) && (!length(eligible_books) || prob(player_book_chance)))
 			var/file_name = pick_n_take(unused_player_titles)
 			new /obj/item/book/rogue/playerbook(location, FALSE, null, null, file_name)
 			SSlibrarian.placed_player_books[file_name] = TRUE
 			continue
-		var/book_type = pick(possible_books)
+		if(!length(eligible_books))
+			continue
+		var/book_type = pick(eligible_books)
 		new book_type(location)
 
 
