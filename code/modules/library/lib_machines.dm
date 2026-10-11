@@ -247,7 +247,8 @@
 	if(!can_print(user, archive_type))
 		return
 	// Reopen rather than update, so switching archives resends the entries and window title.
-	SStgui.get_open_ui(user, src)?.close()
+	var/datum/tgui/existing_ui = SStgui.get_open_ui(user, src)
+	existing_ui?.close()
 	archive_browsers[REF(user)] = archive_type
 	ui_interact(user)
 
