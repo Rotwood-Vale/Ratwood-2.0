@@ -400,7 +400,8 @@
 
 #define PEASANT_ROLES \
 	/datum/job/roguetown/villager,\
-	/datum/job/roguetown/thug,\
+	/datum/job/roguetown/thuga,\
+	/datum/job/roguetown/thugb,\
 	/datum/job/roguetown/nightmaiden,\
 	/datum/job/roguetown/beggar,\
 	/datum/job/roguetown/cook,\
