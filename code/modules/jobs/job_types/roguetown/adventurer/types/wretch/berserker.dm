@@ -70,7 +70,6 @@
 				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berzerker
 				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berzerker
 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-				REMOVE_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC) //Can't have both.
 		var/list/main_choices = list("Unarmed Master", "Martial Expert") // Unarmed focuses on master punching and wrestling moves, Martial gives you two expert weapon skills to be flexible
 		var/category_choice = input(H, "Choose your MEANS OF VIOLENCE.", "SMASH OR SLASH!!") as anything in main_choices
 		switch(category_choice)
