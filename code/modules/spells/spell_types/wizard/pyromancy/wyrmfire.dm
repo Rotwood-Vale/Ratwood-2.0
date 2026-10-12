@@ -356,7 +356,7 @@
 		return FALSE
 	var/turf/epicenter = get_turf(cast_on)
 	if(!epicenter || !(epicenter in get_hear(cast_range, owner)))
-		owner?.balloon_alert(owner, "No clear line of sight to that spot!")
+		owner?.balloon_alert(owner, "no clear line of sight to that spot!")
 		return FALSE
 	return TRUE
 
@@ -367,7 +367,7 @@
 	var/mob/living/caster = owner
 	if(!istype(caster) || caster.energy < energy_requirement)
 		if(feedback)
-			owner?.balloon_alert(owner, "Not enough energy to chant - I need [energy_requirement]!")
+			owner?.balloon_alert(owner, "not enough energy to chant - I need [energy_requirement]!")
 		return FALSE
 	return TRUE
 

@@ -260,7 +260,7 @@
 
 	charges--
 	update_alert()
-	owner.balloon_alert(owner, "PHANTOM THRUST! ([charges] left)")
+	owner.balloon_alert(owner, "phantom thrust! ([charges] left)")
 
 	var/datum/action/cooldown/spell/gate_of_reckoning/spell = spell_ref?.resolve()
 	if(!spell)

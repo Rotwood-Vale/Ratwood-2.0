@@ -37,7 +37,7 @@
 	var/mob/living/living_owner = owner
 	if(istype(living_owner) && living_owner.has_status_effect(/datum/status_effect/debuff/slip_recovery))
 		if(feedback)
-			owner.balloon_alert(owner, "Still winded!")
+			owner.balloon_alert(owner, "still winded!")
 		return FALSE
 
 /datum/action/cooldown/spell/phase/cast(atom/cast_on)

@@ -130,7 +130,7 @@
 		return
 	if(HAS_TRAIT(owner, TRAIT_CONJURE_BACKLASH))
 		if(feedback)
-			owner.balloon_alert(owner, "The backlash still grips me!")
+			owner.balloon_alert(owner, "the backlash still grips me!")
 		return FALSE
 
 /datum/action/cooldown/spell/conjure_summon/cast(atom/cast_on)

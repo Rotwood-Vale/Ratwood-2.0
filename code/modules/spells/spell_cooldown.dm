@@ -307,11 +307,11 @@
 			if(primary_resource_type == SPELL_COST_STAMINA && iscarbon(owner))
 				var/mob/living/carbon/C = owner
 				if(C.stamina >= C.max_stamina)
-					owner.balloon_alert(owner, "Too exhausted to hold the spell!")
+					owner.balloon_alert(owner, "too exhausted to hold the spell!")
 					cancel_casting(voluntary = is_held_ready())
 					return PROCESS_KILL
 			if(!check_resource_available(primary_resource_type, ramped_drain))
-				owner.balloon_alert(owner, "I cannot hold the spell any longer!")
+				owner.balloon_alert(owner, "i cannot hold the spell any longer!")
 				cancel_casting(voluntary = is_held_ready())
 				return PROCESS_KILL
 			invoke_resource_cost(primary_resource_type, ramped_drain)
@@ -455,7 +455,7 @@
 	if(click_to_activate)
 		if(currently_charging || charged)
 			if(!cancel_casting(voluntary = refund_cooldown))
-				on_who.balloon_alert(on_who, "Channeling was interrupted!")
+				on_who.balloon_alert(on_who, "channeling was interrupted!")
 		on_deactivation(on_who, refund_cooldown = refund_cooldown)
 
 		// Clean up our own MOUSEDOWN/MOUSEUP and any lingering mob-level charge signals
@@ -709,27 +709,27 @@
 
 	if(!(spell_flags & SPELL_IGNORE_SPELLBLOCK) && (HAS_TRAIT(owner, TRAIT_SPELLBLOCK) || HAS_TRAIT(owner, TRAIT_SPELLCOCKBLOCK)))
 		if(feedback)
-			owner.balloon_alert(owner, "Can't focus on casting...")
+			owner.balloon_alert(owner, "can't focus on casting...")
 		return FALSE
 
 	if(HAS_TRAIT(owner, TRAIT_SPELL_VAMPIRE_BLOCK))
 		if(feedback)
-			owner.balloon_alert(owner, "My vitae drowns out the spell!")
+			owner.balloon_alert(owner, "my vitae drowns out the spell!")
 		return FALSE
 
 	if(HAS_TRAIT(owner, TRAIT_CURSE_NOC))
 		if(feedback)
-			owner.balloon_alert(owner, "My magicka has left me...")
+			owner.balloon_alert(owner, "my magicka has left me...")
 		return FALSE
 
 	if(owner.mind?.has_spellmiracle_block_antag())
 		if(primary_resource_type == SPELL_COST_DEVOTION || secondary_resource_type == SPELL_COST_DEVOTION)
 			if(feedback)
-				owner.balloon_alert(owner, "The gods reject what I am!")
+				owner.balloon_alert(owner, "the gods reject what I am!")
 			return FALSE
 		if(source_aspect)
 			if(feedback)
-				owner.balloon_alert(owner, "The arcyne rejects what I am!")
+				owner.balloon_alert(owner, "the arcyne rejects what I am!")
 			return FALSE
 
 	// Vampires may only use T1 and lesser miracles, for self heal and disguise, more powerful miracles are denied - If you metacheck this I'll skrill you.
@@ -737,23 +737,23 @@
 		var/vamp_miracle_tier = get_miracle_tier(type)
 		if(!isnull(vamp_miracle_tier) && vamp_miracle_tier > CLERIC_T1)
 			if(feedback)
-				owner.balloon_alert(owner, "I cannot disguise my nature to use such powers!")
+				owner.balloon_alert(owner, "i cannot disguise my nature to use such powers!")
 			return FALSE
 
 	var/mob/living/living_owner = owner
 	if(istype(living_owner) && living_owner.has_status_effect(/datum/status_effect/debuff/cast_disrupted))
 		if(feedback)
-			owner.balloon_alert(owner, "Too exposed to focus!")
+			owner.balloon_alert(owner, "too exposed to focus!")
 		return FALSE
 
 	if(!(spell_requirements & SPELL_CASTABLE_WHILE_MOUNTED) && owner.client && owner.buckled && isliving(owner.buckled))
 		if(feedback)
-			owner.balloon_alert(owner, "Too distracted riding to cast!")
+			owner.balloon_alert(owner, "too distracted riding to cast!")
 		return FALSE
 
 	if((spell_requirements & SPELL_REQUIRES_CMODE) && !owner.cmode)
 		if(feedback)
-			owner.balloon_alert(owner, "Only in combat mode!")
+			owner.balloon_alert(owner, "only in combat mode!")
 		return FALSE
 
 	for(var/datum/action/cooldown/spell/spell in owner.actions)
@@ -761,7 +761,7 @@
 			continue
 		if(spell.currently_charging)
 			if(feedback)
-				owner.balloon_alert(owner, "Already channeling!")
+				owner.balloon_alert(owner, "already channeling!")
 			return FALSE
 
 	if(!check_cost(feedback = feedback))
@@ -771,11 +771,11 @@
 	var/turf/caster_turf = owner.loc
 	if(!istype(caster_turf))
 		if(feedback)
-			owner.balloon_alert(owner, "Cannot cast here!")
+			owner.balloon_alert(owner, "cannot cast here!")
 		return FALSE // no spell casting when you're inside something please
 	if((spell_requirements & SPELL_REQUIRES_STATION) && is_centcom_level(caster_turf.z))
 		if(feedback)
-			owner.balloon_alert(owner, "Cannot cast here!")
+			owner.balloon_alert(owner, "cannot cast here!")
 		return FALSE
 
 	if((spell_requirements & SPELL_REQUIRES_MIND) && !owner.mind)
@@ -786,7 +786,7 @@
 	// that corresponds with the spell's antimagic, then they can't actually cast the spell
 	if((spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC) && owner.anti_magic_check())
 		if(feedback)
-			owner.balloon_alert(owner, "Antimagic is preventing casting!")
+			owner.balloon_alert(owner, "antimagic is preventing casting!")
 		return FALSE
 
 	if(!can_invoke(feedback = feedback))
@@ -795,7 +795,7 @@
 	if(!ishuman(owner))
 		if(spell_requirements & (SPELL_REQUIRES_HUMAN))
 			if(feedback)
-				owner.balloon_alert(owner, "Can only be cast by humans!")
+				owner.balloon_alert(owner, "can only be cast by humans!")
 			return FALSE
 
 	if(LAZYLEN(required_items))
@@ -806,7 +806,7 @@
 					found = TRUE
 					break
 			if(!found && feedback)
-				owner.balloon_alert(owner, "Missing something to cast!")
+				owner.balloon_alert(owner, "missing something to cast!")
 				return FALSE
 
 	return TRUE
@@ -820,13 +820,13 @@
 /datum/action/cooldown/spell/proc/is_valid_target(atom/cast_on)
 	if(click_to_activate && !self_cast_possible)
 		if(cast_on == owner)
-			owner.balloon_alert(owner, "Can't self cast!")
+			owner.balloon_alert(owner, "can't self cast!")
 			return FALSE
 
 	if((spell_requirements & SPELL_REQUIRES_TARGET_CMODE) && isliving(cast_on))
 		var/mob/living/living_target = cast_on
 		if(!living_target.cmode)
-			owner.balloon_alert(owner, "They aren't ready to fight!")
+			owner.balloon_alert(owner, "they aren't ready to fight!")
 			return FALSE
 
 	return TRUE
@@ -952,7 +952,7 @@
 				return sig_return | SPELL_CANCEL_CAST
 
 		if(get_dist(owner, cast_on) > cast_range)
-			owner.balloon_alert(owner, "Too far away!")
+			owner.balloon_alert(owner, "too far away!")
 			return sig_return | SPELL_CANCEL_CAST
 
 		if((primary_resource_type == SPELL_COST_DEVOTION) && HAS_TRAIT(cast_on, TRAIT_ATHEISM_CURSE))
@@ -1202,7 +1202,7 @@
 		owner.balloon_alert(owner, charge_message)
 
 	if(spell_requirements & SPELL_REQUIRES_NO_MOVE)
-		owner.balloon_alert(owner, "Be still while channelling...")
+		owner.balloon_alert(owner, "be still while channelling...")
 
 	if(owner?.mmb_intent)
 		owner.mmb_intent_change(null)
@@ -1220,7 +1220,7 @@
 		charged = TRUE
 		return
 	if(owner && !quiet)
-		owner.balloon_alert(owner, "Channeling was interrupted!")
+		owner.balloon_alert(owner, "channeling was interrupted!")
 
 /// End the charging cycle
 /datum/action/cooldown/spell/proc/end_charging()
@@ -1428,12 +1428,12 @@
 	var/mob/living/living_owner = owner
 	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
 		if(feedback)
-			owner.balloon_alert(owner, "Can't position your hands correctly to invoke!")
+			owner.balloon_alert(owner, "can't position your hands correctly to invoke!")
 		return FALSE
 
 	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !ignore_can_speak && !living_owner.can_speak_vocal())
 		if(feedback)
-			owner.balloon_alert(owner, "Can't get the words out to invoke!")
+			owner.balloon_alert(owner, "can't get the words out to invoke!")
 		return FALSE
 
 	return TRUE
@@ -1518,7 +1518,7 @@
 				return TRUE
 			if(caster.stamina + used_cost > caster.max_stamina)
 				if(feedback)
-					owner.balloon_alert(owner, "Too exhausted to cast!")
+					owner.balloon_alert(owner, "too exhausted to cast!")
 				return FALSE
 			return TRUE
 
@@ -1528,7 +1528,7 @@
 				return TRUE
 			if(caster.energy < used_cost)
 				if(feedback)
-					owner.balloon_alert(owner, "Not enough energy to cast!")
+					owner.balloon_alert(owner, "not enough energy to cast!")
 				return FALSE
 			return TRUE
 
@@ -1539,7 +1539,7 @@
 			var/mob/living/carbon/human/H = caster
 			if(!istype(H) || !H.devotion || H.devotion.devotion < base_cost)
 				if(feedback)
-					owner.balloon_alert(owner, "Devotion too weak!")
+					owner.balloon_alert(owner, "devotion too weak!")
 				return FALSE
 			return TRUE
 
@@ -1903,7 +1903,7 @@
 		RegisterSignal(source, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(cast_after_charge))
 		auto_cancel_timer = addtimer(CALLBACK(src, PROC_REF(cancel_casting)), 30 SECONDS, TIMER_STOPPABLE)
 		if(owner)
-			owner.balloon_alert(owner, "Spell ready — middle-click target!")
+			owner.balloon_alert(owner, "spell ready — middle-click target!")
 		return
 
 	var/penalised = !success && is_cancel_penalized() && past_cancel_commitment()
@@ -1984,7 +1984,7 @@
 	cancel_casting()
 	if(!owner)
 		return
-	owner.balloon_alert(owner, "Channeling was interrupted!")
+	owner.balloon_alert(owner, "channeling was interrupted!")
 
 /datum/action/cooldown/spell/proc/signal_cancel_full()
 	SIGNAL_HANDLER
