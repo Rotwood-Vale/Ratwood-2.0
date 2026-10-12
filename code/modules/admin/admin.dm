@@ -1364,7 +1364,9 @@
 
 /mob/living/carbon/human/proc/admin_send_back_to_lobby(mob/admin, delete_character = FALSE)
 	var/datum/job/mob_job
-	var/target_job = SSrole_class_handler.get_advclass_by_name(advjob)
+	// A shapeshifted form (wildshape, werewolf) carries the character's real body inside it.
+	var/mob/living/carbon/human/body = ishuman(stored_mob) ? stored_mob : src
+	var/target_job = SSrole_class_handler.get_advclass_by_name(body.advjob)
 	var/player_key = key ? key : mind?.key
 	if(mind)
 		mob_job = SSjob.GetJob(mind.assigned_role)
@@ -1376,16 +1378,31 @@
 		for(var/datum/mind/MF in get_minds())
 			mind.become_unknown_to(MF)
 		for(var/datum/bounty/removing_bounty in GLOB.head_bounties)
-			if(removing_bounty.target == real_name)
+			if(removing_bounty.target == body.real_name)
 				GLOB.head_bounties -= removing_bounty
 	else if(admin)
 		to_chat(admin, span_warning("Target has no mind!"))
-	GLOB.chosen_names -= real_name
+	GLOB.chosen_names -= body.real_name
 	if(!mob_job)
-		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(WANDERERS, FALSE)], mobid)
+		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(WANDERERS, FALSE)], body.mobid)
 	else
-		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(mob_job.department_flag, mob_job.obsfuscated_job)], mobid)
-	LAZYREMOVE(GLOB.roleplay_ads, mobid)
+		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(mob_job.department_flag, mob_job.obsfuscated_job)], body.mobid)
+	LAZYREMOVE(GLOB.roleplay_ads, body.mobid)
+	if(delete_character)
+		// Mirror the far travel structure's cleanup for a character leaving the round for good.
+		if(mind && ckey)
+			if(mind.assigned_role == "Mercenary")
+				var/obj/structure/roguemachine/talkstatue/mercenary/statue = SSroguemachine.mercenary_statue
+				if(!statue && length(SSroguemachine.mercenary_statues))
+					statue = SSroguemachine.mercenary_statues[1]
+				if(statue)
+					statue.mercenary_status -= body.real_name
+			if(mind.assigned_role == "Grand Duke" || mind.assigned_role == "Grand Duchess")
+				if(GLOB.found_lords[ckey])
+					GLOB.found_lords -= ckey
+		if(has_embedded_objects())
+			for(var/thing in get_embedded_objects())
+				QDEL_NULL(thing)
 	if(client)
 		SSdroning.kill_droning(client)
 		SSdroning.kill_loop(client)
@@ -1396,6 +1413,9 @@
 	else if(admin)
 		to_chat(admin, span_warning("[src] has no key to return to the lobby."))
 	if(delete_character)
+		if(body != src)
+			stored_mob = null
+			qdel(body)
 		qdel(src)
 	return TRUE
 

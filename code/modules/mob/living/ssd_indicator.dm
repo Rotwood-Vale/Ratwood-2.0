@@ -13,9 +13,19 @@ GLOBAL_LIST_INIT(disconnected_admin_alert_role_times, list(
 	return state
 
 /mob/living/proc/get_ssd_examine_text(m3)
-	if(client || !last_logout_time || stat == DEAD || HAS_TRAIT(src, TRAIT_NOSSDINDICATOR))
+	if(!is_disconnected_player())
 		return
 	return span_warning("[m3] been in a deep slumber for [DisplayTimeText(world.time - last_logout_time, 1)].")
+
+/// Returns TRUE if this mob's player has disconnected from the game while still in it.
+/// Bodies left behind while the player plays elsewhere (wildshape, werewolf and spell shapeshifts, ghosting)
+/// lose their key along with the player, so they are not counted.
+/mob/living/proc/is_disconnected_player()
+	if(client || !ckey || !last_logout_time || stat == DEAD)
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_NOSSDINDICATOR))
+		return FALSE
+	return TRUE
 
 /mob/living/proc/queue_disconnected_admin_alert()
 	cancel_disconnected_admin_alert()
@@ -31,7 +41,7 @@ GLOBAL_LIST_INIT(disconnected_admin_alert_role_times, list(
 
 /mob/living/proc/disconnected_admin_alert()
 	disconnected_admin_alert_timer = null
-	if(client || !last_logout_time || stat == DEAD || disconnected_admin_alert_sent || HAS_TRAIT(src, TRAIT_NOSSDINDICATOR))
+	if(disconnected_admin_alert_sent || !is_disconnected_player())
 		return
 	if(!ishuman(src))
 		return
