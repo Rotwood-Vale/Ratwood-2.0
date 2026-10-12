@@ -58,7 +58,7 @@ export const DisconnectedPlayers = () => {
           <Stack.Item grow>
             <Section fill scrollable title={`Disconnected (${players.length})`}>
               {players.length === 0 ? (
-                <NoticeBox>No players are currently disconnected.</NoticeBox>
+                <NoticeBox>No disconnected players.</NoticeBox>
               ) : (
                 <Table>
                   <Table.Row header>
