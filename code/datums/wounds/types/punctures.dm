@@ -45,7 +45,7 @@
 	sewn_bleed_rate = 0.04
 	clotting_rate = 0.01
 	sewn_clotting_rate = 0.01
-	clotting_threshold = 0.2
+	clotting_threshold = 0.15
 	sewn_clotting_threshold = 0.1
 	sew_threshold = 20
 	mob_overlay = "cut"
@@ -65,7 +65,7 @@
 #define PUNC_UPG_WHPRATE 0.5
 #define PUNC_UPG_SEWRATE 0.65
 #define PUNC_UPG_PAINRATE 0.1
-#define PUNC_UPG_CLAMP_RAW 1.3
+#define PUNC_UPG_CLAMP_RAW 2.6
 #define PUNC_ARMORED_BLEED_CLAMP 7
 
 /datum/wound/dynamic/puncture/upgrade(dam, armor, exposed, pen_info)
@@ -75,13 +75,13 @@
 	else
 		switch(pen_info)
 			if(1 to 2)
-				set_bleed_rate(bleed_rate + 0.3)
+				set_bleed_rate(bleed_rate + 0.6)
 			if(3 to 4)
-				set_bleed_rate(bleed_rate + 0.4)
+				set_bleed_rate(bleed_rate + 0.8)
 			if(5 to 6)
-				set_bleed_rate(bleed_rate + 0.5)
+				set_bleed_rate(bleed_rate + 1)
 			if(7 to 8)
-				set_bleed_rate(bleed_rate + 0.75)
+				set_bleed_rate(bleed_rate + 1.5)
 	sew_threshold += (dam * PUNC_UPG_SEWRATE)
 	woundpain += (dam * PUNC_UPG_PAINRATE)
 	armor_check(armor, PUNC_ARMORED_BLEED_CLAMP)

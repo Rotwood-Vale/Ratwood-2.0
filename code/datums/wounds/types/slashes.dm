@@ -67,8 +67,8 @@
 #define SLASH_UPG_WHPRATE 1
 #define SLASH_UPG_SEWRATE 2.5
 #define SLASH_UPG_PAINRATE 0.3
-#define SLASH_UPG_CLAMP_ARMORED 1.1
-#define SLASH_UPG_CLAMP_RAW 2.2
+#define SLASH_UPG_CLAMP_ARMORED 2.2
+#define SLASH_UPG_CLAMP_RAW 4.4
 #define SLASH_ARMORED_BLEED_CLAMP 9
 
 /datum/wound/dynamic/slash/upgrade(dam, armor, exposed, pen_info)
@@ -78,11 +78,11 @@
 	else
 		switch(pen_info)
 			if(1 to 2)
-				set_bleed_rate(bleed_rate + 0.5)
+				set_bleed_rate(bleed_rate + 1)
 			if(3 to 4)
-				set_bleed_rate(bleed_rate + 0.6)
+				set_bleed_rate(bleed_rate + 1.2)
 			if(5 to 6)
-				set_bleed_rate(bleed_rate + 0.7)
+				set_bleed_rate(bleed_rate + 1.4)
 			if(7 to 8)
 				set_bleed_rate(bleed_rate + SLASH_UPG_CLAMP_ARMORED)
 	sew_threshold += (dam * SLASH_UPG_SEWRATE)
