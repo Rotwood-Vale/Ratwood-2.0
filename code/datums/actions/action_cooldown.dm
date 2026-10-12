@@ -190,6 +190,7 @@
 
 /// Retrigger the spell after starting the cooldown if possible
 /datum/action/cooldown/proc/retrigger()
+	set waitfor = FALSE
 	if(QDELETED(src) || QDELETED(owner))
 		return
 
