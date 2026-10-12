@@ -2893,7 +2893,7 @@
 	show_runechat = FALSE
 	is_animal = TRUE
 
-/mob/living/carbon/human/verb/emote_neigh()
+/mob/living/carbon/human/verb/emote_ycackle()
 	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
 		set name = "Yeen Cackle"
 		set category = "Noises"
