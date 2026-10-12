@@ -128,7 +128,6 @@
 	neck = /obj/item/clothing/neck/roguetown/gorget/boatha
 	backr = /obj/item/storage/backpack/rogue/satchel/short
 	beltr = /obj/item/rogueweapon/whip/baotha
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 
 
 /obj/item/storage/belt/rogue/leather/plaquegold/baotha

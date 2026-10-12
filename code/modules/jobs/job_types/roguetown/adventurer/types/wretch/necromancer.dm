@@ -7,7 +7,7 @@
 	cmode_music = 'sound/music/combat_heretic.ogg'
 	class_select_category = CLASS_CAT_MAGE
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_ZOMBIE_IMMUNE, TRAIT_MAGEARMOR, TRAIT_GRAVEROBBER, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT,TRAIT_RITUALIST,TRAIT_OUTLANDER, TRAIT_MAGEDEXTERITY)
+	traits_applied = list(TRAIT_ZOMBIE_IMMUNE, TRAIT_MAGEARMOR, TRAIT_GRAVEROBBER, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT,TRAIT_RITUALIST,TRAIT_OUTLANDER, TRAIT_MAGEDEXTERITY)
 	maximum_possible_slots = 1
 	subclass_stats = list(
 		STATKEY_INT = 4,
@@ -16,7 +16,7 @@
 		STATKEY_SPD = 1
 	)
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
-	subclass_spellpoints = 16
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 4, "post_aspect_spells" = list(/datum/action/cooldown/spell/message, /datum/action/cooldown/spell/mindlink), "ward" = TRUE)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
@@ -56,7 +56,6 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_MASTER, TRUE)
-		H.mind?.adjust_spellpoints(6)
 	if(H.mind)
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"

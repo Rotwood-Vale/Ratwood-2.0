@@ -512,32 +512,6 @@
 	target.apply_status_effect(/datum/status_effect/debuff/divergence, user)
 	return TRUE
 
-/proc/arcyne_validate_blink_dest(turf/dest, mob/user)
-	if(!dest)
-		return "Invalid target location!"
-	if(dest.teleport_restricted)
-		return "I can't teleport here!"
-	var/turf/start = get_turf(user)
-	if(dest.z != start.z)
-		return "I can only teleport on the same plane!"
-	if(istransparentturf(dest))
-		return "I cannot teleport to the open air!"
-	if(dest.density)
-		return "I cannot teleport into a wall!"
-	for(var/obj/structure/roguewindow/W in dest)
-		if(W.density)
-			return "I cannot teleport through a window!"
-	for(var/obj/structure/mineral_door/door in dest)
-		if(door.density)
-			return "I cannot teleport through a door!"
-	for(var/obj/structure/bars/B in dest)
-		if(B.density)
-			return "I cannot teleport through bars!"
-	for(var/obj/structure/gate/G in dest)
-		if(G.density)
-			return "I cannot teleport through a gate!"
-	return null
-
 /datum/status_effect/debuff/divergence
 	id = "divergence"
 	duration = 20 SECONDS

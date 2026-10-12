@@ -8,7 +8,6 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 	allowed_races = ALL_RACES_TYPES
 	allowed_ages = ALL_AGES_LIST
 	social_rank = SOCIAL_RANK_YEOMAN
@@ -19,7 +18,7 @@
 	max_pq = null
 	round_contrib_points = 3
 
-	job_traits = list(TRAIT_INTELLECTUAL, TRAIT_ARCYNE_T1, TRAIT_MAGEARMOR, TRAIT_SEEPRICES_SHITTY, TRAIT_HOMESTEAD_EXPERT)
+	job_traits = list(TRAIT_INTELLECTUAL, TRAIT_MAGEARMOR, TRAIT_SEEPRICES_SHITTY, TRAIT_HOMESTEAD_EXPERT)
 
 	advclass_cat_rolls = list(CTAG_TOWNCRIER = 2)
 	job_subclasses = list(
@@ -85,8 +84,6 @@
 		/obj/item/recipe_book/alchemy,
 		/obj/item/barometer,
 	)
-	if (H && H.mind)
-		H.mind.adjust_spellpoints(6)
 	if(H.age == AGE_OLD)
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)

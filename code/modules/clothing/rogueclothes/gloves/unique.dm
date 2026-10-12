@@ -73,3 +73,5 @@
 	name = "pugilistic bandages"
 	desc = "Thickly-woven bandages that've been wrapped around the hands, fitted with alloyed knuckleweights. It soaks up the sweat from your palm, strengthens your fists, and protects your knuckles from dislodged teeth."
 	unarmed_bonus = 1.3 //Non-craftable. Restricted to Monks who've specialized in unarmed combat, and nothing else.
+
+// Knuckledusters — high damage, moderate durability gloves. +8 bonus, 200 integrity. Still inferior to bandages (armor + higher bonus options) but not disposable.

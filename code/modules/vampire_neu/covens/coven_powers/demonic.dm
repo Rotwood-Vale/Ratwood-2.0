@@ -114,7 +114,6 @@
 	. = ..()
 	if(!owner?.mind)
 		return
-	granted_spell = new /obj/effect/proc_holder/spell/invoked/projectile/fireball/baali
 	owner.mind.AddSpell(granted_spell)
 
 /datum/coven_power/demonic/psychomachia/post_lose()
@@ -123,17 +122,6 @@
 		owner?.mind?.RemoveSpell(granted_spell)
 		granted_spell = null
 
-/obj/effect/proc_holder/spell/invoked/projectile/fireball/baali
-	name = "Infernal Fireball"
-	desc = "This spell fires an explosive fireball at a target."
-	school = "evocation"
-	recharge_time = 60 SECONDS
-	invocation_type = "whisper"
-	projectile_type = /obj/projectile/magic/aoe/fireball/rogue
-	associated_skill = /datum/skill/magic/blood
-	sound = 'sound/magic/fireball.ogg'
-
-//CONDEMNTATION
 /datum/coven_power/demonic/wall_of_fire
 	name = "Wall of Fire"
 	desc = "Firebolt? Fireball? No. Wall of Fire!"

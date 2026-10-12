@@ -70,11 +70,9 @@
 			H.change_stat(STATKEY_SPD, -1)
 			H.change_stat(STATKEY_CON, -1)
 
-			ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
 
 			if(H.mind)
-				H.mind?.adjust_spellpoints(20)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ley_lines)
 
 		if("Desert Ascetic (Pontifex)")//reduced spellpoints, stats, no dodge expert. Toughened up refugee.
@@ -101,17 +99,12 @@
 			H.change_stat(STATKEY_WIL, -1)
 			H.change_stat(STATKEY_SPD, -1)
 
-			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 
 			if(H.mind)
 				var/weapons = list("Path of War","Path of Control","Path of Shadows", "Path of Survival")
 				var/weapon_choice = input(H, "Choose your path.", "WHAT UNFINISHED PATH DO YOU WALK?") as anything in weapons
 				switch(weapon_choice)
-					if("Path of War")//Weak combat stuff only
-						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt) // Standard Naledi Magic spell- Ice is more effective against djinn
-					if("Path of Control")//Battlefield control, minimal damage dealing
-						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ensnare)
 					if("Path of Shadows")//Sneaky trickster punchmage
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/invisibility)
 					if("Path of Survival")//Trade magic for skills
@@ -122,8 +115,6 @@
 						H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_JOURNEYMAN, TRUE)
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)//as a bodyguard it can be REALLY important to find where the bleed is.
 
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)//All paths get shadowstep as a minimum
-				H.mind?.adjust_spellpoints(2)
 		if("Abandoned Diviner (Vizier)")	//reduced stats/skills/spellpoints from Vizier, Not given Stasis
 			H.set_patron(/datum/patron/old_god)
 			to_chat(H, span_warning("A Vizier healer in training, your studies revolved around the esoteric Origin Magyck - The drawing of Psydon power as the origin of creation. The Fall of Naledi a hundred yils ago ensures that you are wandering in exile with only fragments of the art."))
@@ -148,7 +139,6 @@
 			H.change_stat(STATKEY_CON, -2)
 			H.change_stat(STATKEY_WIL, -1)
 
-			ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_MEDICINE_EXPERT, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
 
@@ -156,10 +146,7 @@
 			var/datum/devotion/C = new /datum/devotion(H, H.patron)
 			C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 			if(H.mind)
-				H.mind?.adjust_spellpoints(6)	//reduced from 9 the merc gets
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt) // Standard Naledi Magic spell- Ice is more effective against djinn
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/regression)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convergence)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/divergence)

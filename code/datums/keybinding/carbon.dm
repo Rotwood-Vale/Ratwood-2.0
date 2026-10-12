@@ -85,6 +85,37 @@
 	C.rog_intent_change(4)
 	return TRUE
 
+/datum/keybinding/carbon/toggle_arc_mode
+	hotkey_keys = list("ShiftG")
+	name = "toggle_arc_mode"
+	full_name = "Toggle Spell Alt Mode"
+	description = "Toggle alt mode on the currently active spell - arc mode for projectiles, ward type cycling, etc."
+	category = CATEGORY_CARBON
+
+/datum/keybinding/carbon/toggle_arc_mode/down(client/user)
+	if(!ishuman(user.mob))
+		return FALSE
+	var/mob/living/carbon/human/H = user.mob
+
+	// Check new V2 spell system first
+	var/datum/action/cooldown/spell/projectile/v2_spell = H.click_intercept
+	if(istype(v2_spell))
+		v2_spell.toggle_arc_mode(H)
+		return TRUE
+
+	// Check for generic alt mode (ward cycling, etc.)
+	var/datum/action/cooldown/spell/v2_generic = H.click_intercept
+	if(istype(v2_generic) && v2_generic.toggle_alt_mode(H))
+		return TRUE
+
+	// Fall back to old proc_holder system
+	var/obj/effect/proc_holder/spell/invoked/projectile/spell = H.ranged_ability
+	if(!istype(spell))
+		to_chat(H, span_warning("No active spell with an alt mode."))
+		return TRUE
+	spell.toggle_arc_mode(H)
+	return TRUE
+
 //****** Quad Intents ******
 /*
 /datum/keybinding/carbon/give_intent
@@ -327,93 +358,3 @@
 	var/mob/living/carbon/C = user.mob
 	C.cycle_rmb_intent()
 	return TRUE
-
-// ** Action Buttons **
-// I stopped at 6 because it is probably the maximum number you can comfortably reach on keyboard
-/datum/keybinding/carbon/actions
-	var/action_taken = 1
-/datum/keybinding/carbon/actions/down(client/user)
-	if(!iscarbon(user.mob))
-		return FALSE
-	var/mob/living/carbon/C = user.mob
-	var/list/datum/action/actions = C.actions
-	if(actions.len < action_taken) // Dodge a runtime
-		return FALSE
-	var/datum/action/action = actions[action_taken]
-	if(!action)
-		return FALSE
-	action.Trigger()
-
-/datum/keybinding/carbon/actions/action_1
-	hotkey_keys = list("Alt1")
-	name = "action_1"
-	full_name = "Action 1"
-	description = "Select the first action."
-	category = CATEGORY_CARBON
-	action_taken = 1
-
-/datum/keybinding/carbon/actions/action_2
-	hotkey_keys = list("Alt2")
-	name = "action_2"
-	full_name = "Action 2"
-	description = "Select the second action."
-	category = CATEGORY_CARBON
-	action_taken = 2
-
-/datum/keybinding/carbon/actions/action_3
-	hotkey_keys = list("Alt3")
-	name = "action_3"
-	full_name = "Action 3"
-	description = "Select the third action."
-	category = CATEGORY_CARBON
-	action_taken = 3
-
-/datum/keybinding/carbon/actions/action_4
-	hotkey_keys = list("Alt4")
-	name = "action_4"
-	full_name = "Action 4"
-	description = "Select the fourth action."
-	category = CATEGORY_CARBON
-	action_taken = 4
-
-/datum/keybinding/carbon/actions/action_5
-	hotkey_keys = list("Alt5")
-	name = "action_5"
-	full_name = "Action 5"
-	description = "Select the fifth action."
-	category = CATEGORY_CARBON
-	action_taken = 5
-
-/datum/keybinding/carbon/actions/action_6
-	hotkey_keys = list("Alt6")
-	name = "action_6"
-	full_name = "Action 6"
-	description = "Select the sixth action."
-	category = CATEGORY_CARBON
-	action_taken = 6
-
-/datum/keybinding/carbon/actions/action_7
-	hotkey_keys = list("Alt7")
-	name = "action_7"
-	full_name = "Action 7"
-	description = "Select the seventh action."
-	category = CATEGORY_CARBON
-	action_taken = 7
-
-	
-/datum/keybinding/carbon/actions/action_8
-	hotkey_keys = list("Alt8")
-	name = "action_8"
-	full_name = "Action 8"
-	description = "Select the eighth action."
-	category = CATEGORY_CARBON
-	action_taken = 8
-
-	
-/datum/keybinding/carbon/actions/action_9
-	hotkey_keys = list("Alt9")
-	name = "action_9"
-	full_name = "Action 9"
-	description = "Select the ninth action."
-	category = CATEGORY_CARBON
-	action_taken = 9

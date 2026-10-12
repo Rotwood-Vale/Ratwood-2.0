@@ -254,3 +254,12 @@
 	var/list/incoming_fellowship_invites = list() // list of /datum/weakref to /datum/fellowship; kept in sync with fellowship.pending_invites
 	/// List of enemies for the mob's AI
 	var/list/enemies = list()
+	var/list/summoned_minions
+	var/attack_relay_refs = 0
+	var/attack_relay_self_added = FALSE
+	var/pet_passive = FALSE
+	/// "In Combat" timer that is used to prevent stealth and a few other mechanics while active.
+	var/in_combat_until
+	var/rest_locked_until = 0
+	/// Whether we are in a swingdelay, used to check for disrupted swingdelays.
+	var/swing_state = FALSE

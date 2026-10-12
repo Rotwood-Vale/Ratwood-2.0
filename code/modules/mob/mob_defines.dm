@@ -311,3 +311,9 @@
 
 	/// cooldown for the next time this person can offer
 	COOLDOWN_DECLARE(offer_cooldown)
+	///Currently-channeling spell_cooldown datum, set by on_start_charge() and cleared by end_charging().
+	///Cached so checkdefense() can block parry without iterating /actions on every incoming swing.
+	var/datum/action/cooldown/spell/channeling_spell
+	var/facing_locked = FALSE
+	var/last_deflect_recoil = 0
+	var/parrydelay = 12

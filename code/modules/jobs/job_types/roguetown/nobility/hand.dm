@@ -170,24 +170,25 @@
 //Advisor Start
 /datum/advclass/hand/advisor
 	name = "Advisor"
-	tutorial = "You serve as both scholar and advisor to the Noble-Family, wielding knowledge and magicks with potent ability. Let no man forget whose ear you whisper into, your sage advice has saved more lives than any strategist's orders or spymaster's schemes could ever claim to."
+	tutorial = " You have played researcher and confidant to the Noble-Family for so long that you are a vault of knowledge, something you exploit with potent conviction. Let no man ever forget the knowledge you wield. You've read more books than any blademaster or spymaster could ever claim to."
 	outfit = /datum/outfit/job/roguetown/hand/advisor
-
 	category_tags = list(CTAG_HAND)
-	traits_applied = list(TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_MAGEDEXTERITY)
+	traits_applied = list(TRAIT_ALCHEMY_EXPERT, TRAIT_ARCYNE)
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 3,
-		STATKEY_WIL = 2,
+		STATKEY_SPD = 1,
+		STATKEY_WIL = 1,
 		STATKEY_LCK = 2,
 	)
-	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
-	subclass_spellpoints = 15
+	age_mod = /datum/class_age_mod/hand_advisor
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 2, "ward" = TRUE)
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN, //they get the whole cane sword, they should use the whole cane sword
+		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/arcyne = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
@@ -198,48 +199,23 @@
 		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
-		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
+		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 	)
 
-//Advisor start. Trades combat skills for more knowledge and skills - for older hands, hands that don't do combat - people who wanna play wizened old advisors.
 /datum/outfit/job/roguetown/hand/advisor/pre_equip(mob/living/carbon/human/H)
-	r_hand = /obj/item/rogueweapon/sword/rapier/hand
-	beltr = /obj/item/rogueweapon/scabbard/sheath/courtphysician/hand
-	head = /obj/item/clothing/head/roguetown/chaperon/noble/hand
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/hand
-	pants = /obj/item/clothing/under/roguetown/tights/black
-	if(should_wear_femme_clothes(H))
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_f
-	else if(should_wear_masc_clothes(H))
-		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/royal/hand_m
-	if(SSmapping.current_map.map_name == "Desert Town")
-		shoes = /obj/item/clothing/shoes/roguetown/shalal
-		head = /obj/item/clothing/head/roguetown/turban/fancypurple
-		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,
-		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
-		/obj/item/storage/keyring/hand = 1,
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1,
+		/obj/item/storage/keyring/lord = 1,
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,//starts with a vial of poison, like all wizened evil advisors do!
+		/obj/item/rogueweapon/spellbook = 1,
 	)
-	if(H.age == AGE_OLD)
-		H.change_stat(STATKEY_SPD, -1)
-		H.change_stat(STATKEY_STR, -1)
-		H.change_stat(STATKEY_INT, 1)
-		H.change_stat(STATKEY_PER, 1)
-		H.mind?.adjust_spellpoints(3)
-	//He gets far less spellpoints than any other equivalent caster. Give him a T4.
-	//Message, too. You'll be taking it anyways.
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/recall)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
-
 
 ////////////////////
 ///SPELLS & VERBS///
 ////////////////////
+
 
 /datum/job/roguetown/hand/proc/know_agents(mob/living/carbon/human/H)
 	if(!GLOB.court_agents.len)
@@ -273,3 +249,14 @@
 	if(!.)
 		return
 	GLOB.court_agents += recruit.real_name
+
+/datum/outfit/job/roguetown/hand/advisor
+	backr = /obj/item/storage/backpack/rogue/satchel/short
+	belt = /obj/item/storage/belt/rogue/leather/plaquegold
+	r_hand = /obj/item/rogueweapon/sword/rapier/hand
+	beltr = /obj/item/rogueweapon/scabbard/sheath/courtphysician/hand
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/dtace
+	head = /obj/item/clothing/head/roguetown/chaperon/noble/hand
+	pants = /obj/item/clothing/under/roguetown/tights/black
+
+//Advisor start. Trades combat skills for more knowledge and skills - for older hands, hands that don't do combat - people who wanna play wizened old advisors.

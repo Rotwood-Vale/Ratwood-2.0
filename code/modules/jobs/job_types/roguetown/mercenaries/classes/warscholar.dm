@@ -8,7 +8,7 @@
 	class_select_category = CLASS_CAT_NALEDI
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/warscholar.ogg'
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_NALEDI, TRAIT_MAGEDEXTERITY)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ALCHEMY_EXPERT, TRAIT_NALEDI, TRAIT_MAGEDEXTERITY)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
@@ -17,7 +17,7 @@
 		STATKEY_CON = -1
 	)
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
-	subclass_spellpoints = 15
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 6, "post_aspect_spells" = list(/datum/action/cooldown/spell/mindlink, /datum/action/cooldown/spell/mending), "ward" = TRUE)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
@@ -59,16 +59,9 @@
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 1)
-		H.mind?.adjust_spellpoints(6)
 	if(H.mind)
 		detailcolor = input("Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/giants_strength)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/longstrider)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/haste)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fortitude)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ley_lines)
 	r_hand = /obj/item/rogueweapon/woodstaff/naledi
 
@@ -100,7 +93,7 @@
 	tutorial = "You are a Naledi Pontifex, a warrior trained into a hybridized style of movement-controlling magic and hand-to-hand combat. Your chosen Path determines your specialization, though you'll never match another mage in pure magical power. Instead, you manifest an imitation of a shard of PSYDON's blade and rely on trickery and battlefield control."
 	outfit = /datum/outfit/job/roguetown/mercenary/warscholar_pontifex
 	subclass_languages = list(/datum/language/celestial)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CIVILIZEDBARBARIAN, TRAIT_ARCYNE_T1, TRAIT_NALEDI)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_CIVILIZEDBARBARIAN, TRAIT_NALEDI)
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_SPD = 2,
@@ -121,7 +114,6 @@
 		/datum/skill/misc/stealing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN,
 	)
-	subclass_spellpoints = 4 // Override inheritance
 
 /datum/outfit/job/roguetown/mercenary/warscholar_pontifex
 	var/detailcolor
@@ -147,22 +139,13 @@
 	if(H.mind)
 		detailcolor = input("Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/summonrogueweapon/bladeofpsydon)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
-		H.mind.AddSpell(new/obj/effect/proc_holder/spell/invoked/projectile/repel)
 		var/weapons = list("Path of War","Path of Control","Path of Shadows","Path of Survival")
 		var/weapon_choice = input(H, "Choose your path.", "WHAT PATH DO YOU WALK?") as anything in weapons
 		switch(weapon_choice)
 			if("Path of War")//Weak combat stuff only
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)//longer CD than arcane bolt but more versatile
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
-			if("Path of Control")//Battlefield control, minimal damage dealing
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ensnare)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
 			if("Path of Shadows")//Sneaky trickster punchmage
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/lesserknock)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/invisibility)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/blindness/warscholar)
 			if("Path of Survival")//Trade magic for skills
@@ -198,7 +181,7 @@
 	name = "Naledi Vizier"
 	tutorial = "You are a Naledi Vizier. Your research into miracles and holy incantations has lead you to esoteric magycks. Though psydonians have long struggled to channel their all-father's divinity, The Great City of Naledi came the closest with it's Origin Magic."
 	outfit = /datum/outfit/job/roguetown/mercenary/warscholar_vizier
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_NALEDI, TRAIT_MEDICINE_EXPERT, TRAIT_MAGEDEXTERITY)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ALCHEMY_EXPERT, TRAIT_NALEDI, TRAIT_MEDICINE_EXPERT, TRAIT_MAGEDEXTERITY)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 2,
@@ -221,7 +204,6 @@
 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 	)
-	subclass_spellpoints = 9
 
 /datum/outfit/job/roguetown/mercenary/warscholar_vizier
 	var/detailcolor
@@ -249,7 +231,6 @@
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 1)
-		H.mind?.adjust_spellpoints(3)
 	r_hand = /obj/item/rogueweapon/woodstaff/naledi
 	//Since we lack unique Vizier clothing, we're mixing hierophant and pontifex for Vizier
 	head = /obj/item/clothing/head/roguetown/roguehood/hierophant	//Keep this hood. It's middling armor, but the robe/gambeson combination is exceedingly good armor for the class. The vizier's head is a weak point.
@@ -276,9 +257,7 @@
 	if(H.mind)
 		detailcolor = input("Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt) // because other clerics get holy bolt and so you're not entirely pressured to take combat spells
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/regression)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convergence)	//increases heal effect,
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stasis)		//wound/injurying reversion, revive capable at a cost

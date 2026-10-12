@@ -13,7 +13,7 @@
 	class_select_category = CLASS_CAT_RACIAL
 	maximum_possible_slots = 2
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_AZURENATIVE, TRAIT_OUTDOORSMAN, TRAIT_BLACKOAK, TRAIT_DODGEEXPERT, TRAIT_ARCYNE_T2, TRAIT_WOODWALKER)
+	traits_applied = list(TRAIT_AZURENATIVE, TRAIT_OUTDOORSMAN, TRAIT_BLACKOAK, TRAIT_DODGEEXPERT, TRAIT_WOODWALKER)
 	//lower-than-avg stats for wretch but their traits are insanely good
 	subclass_stats = list(
 		STATKEY_INT = 1,
@@ -22,7 +22,6 @@
 		STATKEY_CON = 1,
 		STATKEY_WIL = 1,
 	)
-	subclass_spellpoints = 10
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
@@ -70,15 +69,12 @@
 
 	if(H.mind)
 		wretch_select_bounty(H)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/darkvision)
 
 		var/weapons = list("Elven Swordspear", "Elven Curveblade", "Elven Recurve Bow")
 		var/weapon_choice = input(H, "Choose your loadout.", "THE VISIBLE THREAT") as anything in weapons
 		H.set_blindness(0)
 		if(weapon_choice == "Elven Swordspear" || weapon_choice == "Elven Curveblade") //stuff to be shared on the non ranger variants
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 		switch(weapon_choice)
 			if("Elven Swordspear")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
@@ -88,8 +84,6 @@
 				r_hand = /obj/item/rogueweapon/greatsword/elf
 			if("Elven Recurve Bow")
 				H.change_stat(STATKEY_PER, 2)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/longstrider)
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/blackoak
 				beltl = /obj/item/quiver/arrows

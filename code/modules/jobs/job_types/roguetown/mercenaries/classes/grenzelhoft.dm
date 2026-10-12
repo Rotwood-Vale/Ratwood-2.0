@@ -256,18 +256,6 @@
 		/obj/item/spellbook_unfinished/pre_arcyne = 1,
 		/obj/item/roguegem/amethyst = 1,
 		)
-	if(H.mind) // State mandated spells c:
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/artillery)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/repel)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/rebuke)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/conjure_armor)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/counterspell)
-		H.mind?.adjust_spellpoints(6)
 	if(H.age == AGE_OLD) // FEAR the old man in a profession where men die young, or something corny like that.
 		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 5, TRUE)
 		H.change_stat(STATKEY_SPD, -1)
@@ -275,8 +263,4 @@
 		H.change_stat(STATKEY_PER, 2)
 		H.change_stat(STATKEY_INT, 2)
 		H.change_stat(STATKEY_CON, -2)
-		H.mind?.adjust_spellpoints(3)
-		ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
-	else
-		ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC) // T3 because a combat mage from Grenzelhoft shouldn't be the weakest puremage in Merc class.
 	H.merctype = 7

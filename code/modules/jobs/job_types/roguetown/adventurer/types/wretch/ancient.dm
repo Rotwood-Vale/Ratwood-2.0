@@ -9,7 +9,7 @@
 	category_tags = list(CTAG_WRETCH)
 	maximum_possible_slots = 1 //Spellcaster in Luxarmour, with Master in swords. Zizo's top skeleton.
 	applies_post_equipment = TRUE
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_OVERTHERETIC, TRAIT_ARCYNE_T2)
+	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_OVERTHERETIC)
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_INT = 2,
@@ -62,8 +62,6 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb/lesser)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic) //Voluntary conversion.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/zizo_snuff/champion) //Champion-variant of Snuff Lights. Non-miracle, static range of 7, but much longer CD.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending) //You can't take off your armour or do rites, so that's your only way of repairing your armour.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/deathgrasp) //GET OVER HERE. Fetch that also applies -4 Speed, but with a longer CD.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/churnliving) //Repulse variant. Get out of dorpels. Longer charge time and CD, but greater push range (2 tiles) and affected targets lose some stamina.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/profane) //Non-miracle version, your only way of dealing ranged damage without The Path of Magic.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonemend) //Awkward-to-use self-heal.
@@ -149,14 +147,6 @@
 				H.change_stat("fortune", 1)
 			if("The Path of Magic (More Spells)") //Silence & Raise Deadite, plus choice between Bolt of Lightning and Ensnare.
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/silence)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_deadite)
-				var/extraspell = list("Bolt of Lightning", "Ensnare")
-				var/spell_choice = input(H,"Choose your offensive spell.", "INEVITABILITY OF AMBITION") as anything in extraspell
-				switch(spell_choice)
-					if("Bolt of Lightning")
-						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt)
-					if("Ensnare")
-						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ensnare)
 
 
 /obj/effect/proc_holder/spell/invoked/bonemend

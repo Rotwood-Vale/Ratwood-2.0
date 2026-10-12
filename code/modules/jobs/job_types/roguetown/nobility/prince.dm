@@ -101,7 +101,7 @@
 	name = "Introverted Bookworm"
 	tutorial = "Despite your standing, sociability is not your strong suit, and you have kept mostly to yourself and your books. This hardly makes you a favourite among the lords and ladies of the court, and an exit from your room is often met with amusement from nobility and servants alike. At least you're always welcome in the mage's tower."
 	outfit = /datum/outfit/job/roguetown/heir/bookworm
-	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_MAGEARMOR, TRAIT_GOODWRITER, TRAIT_MAGEDEXTERITY) //As it turns out, Battlemage Princess DID become a prevalent problem.
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_GOODWRITER, TRAIT_MAGEDEXTERITY) //As it turns out, Battlemage Princess DID become a prevalent problem.
 	category_tags = list(CTAG_HEIR)
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_stats = list(
@@ -111,7 +111,7 @@
 		STATKEY_CON = -1,
 		STATKEY_LCK = 2,
 	)
-	subclass_spellpoints = 9
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 0, "minor" = 2, "utilities" = 4)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
 		/datum/skill/magic/arcane = SKILL_LEVEL_NOVICE,
@@ -147,9 +147,6 @@
 		/obj/item/recipe_book/magic = 1,
 		/obj/item/chalk = 1,
 		)
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message) // so you can order a maid to bring you lunch from your library/room/the tower. Or just broadcast your fanfiction into someone's head aggressively.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt) // So bookworms don't feel pressured to grab only spells for shenanigans / to ONLY take Arcane Potential. If battlemage princess becomes a problem, axe this.
 
 	if(SSmapping.current_map.map_name == "Desert Town")
 		cloak = /obj/item/clothing/cloak/raincloak/amir

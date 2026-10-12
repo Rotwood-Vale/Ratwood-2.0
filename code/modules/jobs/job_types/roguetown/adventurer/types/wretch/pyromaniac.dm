@@ -69,12 +69,6 @@
 			if("LET THERE BE FLAME!!!")
 				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 2, TRUE)
 				backr = /obj/item/rogueweapon/woodstaff/toper
-				if(H.mind)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/rebuke)
-					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stoneskin) // To not be instapaincritted if you accidentally hit yourself
 			if("BOMBS") //30 bombs. 18 fire, 4 tnt, 4 impacts, 4 firegas.
 				ADD_TRAIT(H, TRAIT_BOMBER_EXPERT, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_EXPLOSIVE_SUPPLY, TRAIT_GENERIC)

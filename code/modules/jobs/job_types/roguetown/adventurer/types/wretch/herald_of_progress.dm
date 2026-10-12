@@ -73,9 +73,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/command_undead)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/blink/staccato)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/the_division_bell)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/forzando)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/song/of_her_embrace)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
 		var/datum/inspiration/I = new /datum/inspiration(H)
@@ -117,43 +115,6 @@
 	miracle = TRUE
 	devotion_cost = 100
 	zizo_spell = TRUE
-
-/obj/effect/proc_holder/spell/invoked/blink/staccato
-	name = "Into The Void"
-	associated_skill = /datum/skill/misc/music
-	sound = list('sound/magic/heraldblink.ogg')
-	invocations = list("screeches a short, sharp shock of a chord.")
-	invocation_type = "emote"
-
-/obj/effect/proc_holder/spell/invoked/blink/staccato/cast(list/targets, mob/living/user = usr)
-	if(!user.has_status_effect(/datum/status_effect/buff/playing_music))
-		revert_cast()
-		to_chat(user, span_warning("I must be playing something to channel my rhythm."))
-		return FALSE
-	if(!user.is_holding_item_of_type(/obj/item/rogue/instrument))
-		revert_cast()
-		to_chat(user, span_warning("I need an instrument in hand to channel my rhythm."))
-		return FALSE
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/forzando
-	name = "Ride the Lightning"
-	associated_skill = /datum/skill/misc/music
-	projectile_type = /obj/projectile/magic/lightning/forzando
-	sound = list('sound/magic/heraldzap.ogg')
-	invocations = list("shreds an electric refrain!")
-	invocation_type = "emote"
-
-/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/forzando/cast(list/targets, mob/living/user = usr)
-	if(!user.has_status_effect(/datum/status_effect/buff/playing_music))
-		revert_cast()
-		to_chat(user, span_warning("I must be playing something to channel my rhythm."))
-		return
-	if(!user.is_holding_item_of_type(/obj/item/rogue/instrument))
-		revert_cast()
-		to_chat(user, span_warning("I need an instrument in hand to channel my rhythm."))
-		return
-	return ..()
 
 /obj/projectile/magic/lightning/forzando
 	bypass_antimagic = TRUE // it's not magic, it's music, so idc about anti magic

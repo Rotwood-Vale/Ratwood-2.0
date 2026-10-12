@@ -16,7 +16,6 @@
 	traits_applied = list(
 		TRAIT_MAGEARMOR,
 		TRAIT_ALCHEMY_EXPERT,
-		TRAIT_ARCYNE_T1,//They're not meant to get more spellpoints. If they do, via Arcyne virtue, for example, T1 only.
 		TRAIT_NALEDI,
 		TRAIT_MAGEDEXTERITY, //THEY NEED THIS MORE THAN ANY OTHER MAGE IN THE GAME. 
 	)
@@ -43,6 +42,7 @@
 	)
 	extra_context = "This subclass has multiple unique spells, including one in the form of an 'arcyne barrier'. \
 	So long as it's active, the user is immune to magic, yet still capable of casting it."
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 4, ward = TRUE, "locked_aspects" = list(/datum/magic_aspect/autowardry))
 
 /datum/outfit/job/roguetown/sojourner
 	job_bitflag = BITFLAG_HOLY_WARRIOR
@@ -57,20 +57,10 @@
 //For context, Heirophant gets 25 total, with 6 of those being liquid free spellpoints.
 	if(H.mind)
 		//Integral spells.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/conjure_armor/barrier)//Anti-magic.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
 		//Buff spells, next.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hawks_eyes)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stoneskin)
 		//Frost spells. Slowdown city. Hue city. Frigid. Or something.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/snap_freeze)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/frostbite)//Used by Sojourners only.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/ice_shard)//Used by Sojourners only.
 		//Finally, utility. Consider removing fetch, if fetch-slow is absurd. But that's the case for any mage.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
 
 	head = /obj/item/clothing/head/roguetown/roguehood/sojourner
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner

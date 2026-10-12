@@ -217,7 +217,6 @@
 
 /datum/outfit/job/roguetown/prisoner_minstrel/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return
-	if(H) to_chat(H, "DEBUG: prisoner_minstrel pre_equip called")
 	..() // Call base prisoner outfit for collar/loincloth
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
@@ -393,8 +392,6 @@
 /datum/outfit/job/roguetown/prisoner_witch/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H) return
 	..() // Call base prisoner outfit for collar/loincloth
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/alchemy, 4, TRUE)
@@ -404,7 +401,6 @@
 		H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
-		H.mind.adjust_spellpoints(6)
 		H.change_stat("intelligence", 3)
 		H.change_stat("speed", 2)
 		H.change_stat("fortune", 1)
@@ -415,7 +411,6 @@
 	ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_DEATHSIGHT, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_WITCH, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 	H.cmode_music = 'sound/music/combat_cult.ogg'
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/zizo)
