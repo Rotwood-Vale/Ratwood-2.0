@@ -42867,9 +42867,7 @@
 	max_integrity = 10000;
 	name = "reinforced window"
 	},
-/turf/open/floor/rogue/rooftop{
-	icon_state = "roofg"
-	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "iIW" = (
 /obj/machinery/light/rogue/torchholder/r{
@@ -63768,13 +63766,6 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled,
 /turf/open/floor/rogue/dirt,
 /area/rogue/indoors/town/warden)
-"mTs" = (
-/obj/structure/roguewindow/openclose/reinforced{
-	opacity = 0
-	},
-/obj/structure/curtain/directional/orange,
-/turf/closed/void,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "mTu" = (
 /obj/effect/decal/cobbleedge{
 	dir = 10
@@ -71985,6 +71976,13 @@
 	},
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/town/cell)
+"oGb" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/maple/c{
+	pixel_x = -32
+	},
+/turf/open/floor/rogue/grass,
+/area/rogue/outdoors/town/roofs)
 "oGc" = (
 /obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/rogue/grassgrey,
@@ -115681,9 +115679,7 @@
 	max_integrity = 10000;
 	name = "reinforced window"
 	},
-/turf/open/floor/rogue/rooftop{
-	icon_state = "roofg"
-	},
+/turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "xHM" = (
 /obj/structure/table/wood/poor,
@@ -641788,7 +641784,7 @@ bLQ
 iIU
 wXx
 vRM
-mTs
+aFG
 lbI
 tBf
 sco
@@ -642651,7 +642647,7 @@ bLQ
 tCv
 iIU
 wXx
-tdr
+oGb
 rVR
 pXU
 lux
@@ -643084,7 +643080,7 @@ bLQ
 iIU
 wXx
 tdr
-mTs
+aFG
 vdp
 vDT
 sco
