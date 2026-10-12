@@ -188,6 +188,11 @@
 			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
 			H.cmode_music = 'sound/music/combat_jester.ogg'
 
+           if(H.age == AGE_OLD)
+           H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick) // because old monk doing pucnh is funny
+           H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
+           C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+
 /datum/advclass/cleric/paladin
 	name = "Paladin"
 	tutorial = "You are a holy knight, clad in maille and armed with steel. \
