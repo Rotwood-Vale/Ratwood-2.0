@@ -5,7 +5,8 @@
 		mind.active = 0	//This is to stop say, a mind.transfer_to call on a corpse causing a ghost to re-enter its body.
 	last_logout_time = world.time
 	disconnected_admin_alert_sent = FALSE
-	if(key) // No key means the player moved to another mob (shapeshift, ghost) rather than disconnecting.
+	// No key means the player moved into another mob (shapeshift, scrying, ghost) rather than disconnecting.
+	if(key)
 		queue_disconnected_admin_alert()
-	if(!HAS_TRAIT(src, TRAIT_NOSSDINDICATOR))
-		set_ssd_indicator(TRUE)
+		if(!HAS_TRAIT(src, TRAIT_NOSSDINDICATOR))
+			set_ssd_indicator(TRUE)
