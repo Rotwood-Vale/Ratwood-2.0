@@ -11,7 +11,7 @@
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	sewrepair = FALSE
-	max_integrity = 475
+	max_integrity = 675
 	item_flags = DROPDEL
 	repair_time = 14 SECONDS
 	combat_taggable = TRUE
