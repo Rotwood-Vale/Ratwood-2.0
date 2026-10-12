@@ -41,6 +41,7 @@
 		OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES_F = list(0,-1), \
 		OFFSET_BREASTS_F = list(0,-1), \
 		)
+	inherent_traits = list(TRAIT_BLACKLEG)
 	race_bonus = list(STAT_SPEED = 1)//This should include fortune. RAAAAAA
 	enflamed_icon = "widefire"
 	attack_verb = "slash"
