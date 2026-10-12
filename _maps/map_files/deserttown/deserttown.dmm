@@ -52604,8 +52604,6 @@
 	locked = 1;
 	lockid = "lich"
 	},
-/obj/item/book/granter/spell/blackstone/skeleton,
-/obj/item/book/granter/spell/blackstone/bonechill,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /turf/open/floor/rogue/carpet/lord/right,
@@ -53583,7 +53581,6 @@
 	},
 /area/rogue/outdoors/town/grove)
 "oZo" = (
-/obj/item/book/granter/spell/blackstone/familiar,
 /obj/structure/closet/crate/chest/gold,
 /turf/open/floor/rogue/lightpath{
 	color = "#b3acbf"
