@@ -65,6 +65,21 @@ GLOBAL_DATUM_INIT(disconnected_players_panel, /datum/disconnected_players_panel,
 			user.client.holder.show_player_panel(H)
 			return FALSE
 
+		if("follow")
+			var/mob/living/carbon/human/H = locate(params["ref"])
+			if(!istype(H) || QDELETED(H))
+				to_chat(user, span_warning("That character no longer exists."))
+				return TRUE
+			// Mirror the behaviour of the adminplayerobservefollow href
+			var/client/C = user.client
+			if(!isobserver(user) && !C.admin_ghost())
+				return FALSE
+			var/mob/dead/observer/A = C.mob
+			if(!istype(A))
+				return FALSE
+			A.ManualFollow(H)
+			return FALSE
+
 		if("fartravel")
 			fartravel(user, list(params["ref"]))
 			return TRUE

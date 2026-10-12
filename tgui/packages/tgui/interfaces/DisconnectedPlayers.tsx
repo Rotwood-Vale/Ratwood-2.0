@@ -94,13 +94,11 @@ export const DisconnectedPlayers = () => {
                       <Table.Cell collapsing>
                         <Box nowrap>
                           <Button
-                            color="bad"
-                            icon="door-open"
-                            onClick={() =>
-                              act('fartravel', { ref: player.ref })
-                            }
+                            icon="eye"
+                            tooltip="Follow this character as a ghost"
+                            onClick={() => act('follow', { ref: player.ref })}
                           >
-                            Fartravel
+                            FLW
                           </Button>
                           <Button
                             icon="user"
@@ -110,6 +108,15 @@ export const DisconnectedPlayers = () => {
                             }
                           >
                             PP
+                          </Button>
+                          <Button
+                            color="bad"
+                            icon="door-open"
+                            onClick={() =>
+                              act('fartravel', { ref: player.ref })
+                            }
+                          >
+                            Fartravel
                           </Button>
                         </Box>
                       </Table.Cell>
