@@ -297,6 +297,7 @@
 		),
 	)
 
+/*
 /datum/magic_aspect/conjuration
 	name = "Conjuration"
 	latin_name = "Maior Aspectus Vocationis"
@@ -340,6 +341,7 @@
 		"gefechtsgelehrter" = list(
 		),
 	)
+*/
 
 /datum/magic_aspect/augmentation
 	name = "Augmentation"
