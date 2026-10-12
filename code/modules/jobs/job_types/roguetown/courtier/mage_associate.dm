@@ -36,7 +36,6 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/storage/keyring/mageapprentice
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/woodstaff
 	shoes = /obj/item/clothing/shoes/roguetown/gladiator // FANCY SANDALS
 
 /datum/advclass/wapprentice/associate
