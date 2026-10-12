@@ -31941,11 +31941,6 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/church/basement)
-"gwo" = (
-/turf/open/floor/rogue/blocks{
-	dir = 4
-	},
-/area/rogue/indoors/town/dwarfin/rockhill)
 "gwp" = (
 /obj/structure/closet/crate/roguecloset/dark{
 	keylock = 1;
@@ -39655,6 +39650,11 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/manor/rockhill)
+"hYz" = (
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/flora/ausbushes/ywflowers,
+/turf/open/floor/rogue/grass,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "hYA" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/fluff/railing/wood{
@@ -40959,6 +40959,8 @@
 	pixel_x = -42
 	},
 /obj/effect/falling_maple,
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "ilF" = (
@@ -41052,11 +41054,6 @@
 	},
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors)
-"imE" = (
-/obj/structure/flora/roguegrass,
-/obj/structure/flora/roguegrass/herb/salvia,
-/turf/open/floor/rogue/grass,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "imK" = (
 /obj/structure/flora/roguegrass,
 /obj/structure/flora/ausbushes/ppflowers,
@@ -45734,7 +45731,9 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/town/basement/tavern)
 "jlm" = (
-/obj/structure/fluff/grindwheel,
+/obj/structure/fluff/grindwheel{
+	pixel_x = -4
+	},
 /obj/effect/decal/shadow_floor{
 	dir = 8
 	},
@@ -45754,6 +45753,9 @@
 	dir = 8
 	},
 /obj/effect/decal/shadow_floor{
+	dir = 8
+	},
+/obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 8
 	},
 /turf/open/floor/rogue/blocks/stonered/tiny,
@@ -58925,11 +58927,11 @@
 /obj/structure/rack/rogue/shelf,
 /obj/item/reagent_containers/glass/bottle/rogue/wine{
 	pixel_x = -6;
-	pixel_y = 46
+	pixel_y = 32
 	},
 /obj/item/reagent_containers/glass/bottle/rogue/wine{
 	pixel_x = 6;
-	pixel_y = 46
+	pixel_y = 32
 	},
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 4
@@ -90857,10 +90859,6 @@
 /obj/structure/flora/roguegrass,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/rtfield/rockhill)
-"sDE" = (
-/obj/structure/flora/roguegrass,
-/turf/open/floor/rogue/grass,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "sDJ" = (
 /obj/structure/closet/crate/roguecloset,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/clothing,
@@ -95889,9 +95887,6 @@
 /obj/structure/closet/dirthole/grave,
 /turf/open/floor/rogue/dirt,
 /area/rogue/under/cave/goblinfort)
-"tDj" = (
-/turf/open/floor/rogue/cobble,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "tDl" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/town/church)
@@ -100571,10 +100566,6 @@
 "uBV" = (
 /turf/closed/wall/mineral/rogue/stone/red_moss,
 /area/rogue/outdoors/town/church)
-"uCa" = (
-/obj/structure/flora/roguegrass/bush,
-/turf/open/floor/rogue/grass,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "uCe" = (
 /turf/closed/wall/mineral/rogue/stone/window{
 	icon = 'icons/turf/roguewall.dmi';
@@ -112172,7 +112163,7 @@
 /area/rogue/outdoors/town/rockhill)
 "wVE" = (
 /obj/structure/flora/ausbushes/ppflowers,
-/obj/structure/flora/roguegrass,
+/obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "wVI" = (
@@ -200406,8 +200397,8 @@ rqt
 gRs
 rjK
 mPl
-wjy
 pRz
+wjy
 ixb
 nOp
 huP
@@ -415975,11 +415966,11 @@ ftG
 eRX
 wbg
 wbg
-tDj
-gwo
-tDj
-tDj
-tDj
+wbg
+bHd
+wbg
+wbg
+wbg
 sco
 sHh
 sHh
@@ -416406,8 +416397,8 @@ rdW
 gJs
 wbg
 aOv
-aOv
-teE
+cwm
+sco
 tkp
 qZh
 qZh
@@ -416838,8 +416829,8 @@ ccz
 soA
 bHd
 bHd
-wbg
-sco
+fbc
+qZh
 cMD
 kuz
 cyc
@@ -417270,7 +417261,7 @@ rLD
 bHd
 eRX
 wbg
-wbg
+fbc
 qZh
 hnD
 tyZ
@@ -417702,7 +417693,7 @@ tgg
 xez
 wbg
 wVI
-bHd
+fbc
 rKk
 jlm
 iWm
@@ -531319,7 +531310,7 @@ sMw
 cqc
 pwp
 qGV
-sDE
+glk
 iTS
 eTx
 mKC
@@ -531753,7 +531744,7 @@ pig
 wVE
 xWP
 pig
-imE
+glk
 mKC
 nYU
 hRw
@@ -532182,9 +532173,9 @@ lhm
 fFC
 cqc
 bNG
-dKU
+hYz
 bxl
-feb
+glk
 tHK
 sco
 olH
@@ -532615,7 +532606,7 @@ cqc
 dEL
 cqc
 iiK
-pig
+glk
 gYv
 dKU
 sco
@@ -533048,7 +533039,7 @@ vsJ
 sEG
 cqc
 ilD
-uCa
+feb
 glk
 nEv
 dMk
