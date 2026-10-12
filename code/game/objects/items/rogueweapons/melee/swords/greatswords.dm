@@ -357,6 +357,10 @@
 	max_blade_int = 500
 	max_integrity = 500
 
+/obj/item/rogueweapon/greatsword/avantyne/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "GREATSWORD")
+
 /obj/item/rogueweapon/estoc
 	name = "estoc"
 	desc = "A sword possessed of a quite long and tapered blade that is intended to be thrust between the \
