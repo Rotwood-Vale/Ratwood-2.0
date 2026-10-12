@@ -266,3 +266,9 @@
   - balance: Stigmata gets ritualist and ritual chalk
   - bugfix: Absolver unque quicksilver recepture is now properly locked to him and
       stigmata, and easier to produce
+2026-10-12:
+  Yuckuza:
+  - balance: Absolver's cone helmet makes them bump their head going down ladders.
+  john-pawson:
+  - bugfix: gives lich skeletons fatal insomnia, meaning they will no longer get tired
+      or be able to sleep
