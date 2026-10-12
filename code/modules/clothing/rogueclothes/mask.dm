@@ -102,6 +102,7 @@
 		lensmoved = FALSE
 
 /obj/item/clothing/mask/rogue/spectacles/golden
+	is_gold = TRUE
 	name = "golden spectacles"
 	icon_state = "goggles"
 	max_integrity = 35
@@ -191,6 +192,7 @@
 	block2add = FOV_LEFT
 
 /obj/item/clothing/mask/rogue/lordmask
+	is_gold = TRUE
 	name = "golden halfmask"
 	desc = "Half of your face turned gold."
 	icon_state = "lmask"
@@ -514,6 +516,7 @@
 	icon_state = "steppemask_snout"
 
 /obj/item/clothing/mask/rogue/facemask/goldmask
+	is_gold = TRUE
 	name = "Gold Mask"
 	icon_state = "goldmask"
 	max_integrity = ARMOR_INT_MASK_GOLD

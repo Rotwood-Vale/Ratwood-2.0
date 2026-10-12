@@ -1400,3 +1400,23 @@
 	icon_state = "dazed"
 
 
+
+/datum/status_effect/debuff/sun_blinded
+	id = "sun_blinded"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/sun_blinded
+	effectedstats = list(STATKEY_PER = -5)
+
+/atom/movable/screen/alert/status_effect/debuff/sun_blinded
+	name = "Sun Blinded"
+	desc = "The light smites my eyes!"
+	icon_state = "debuff"
+
+/datum/status_effect/debuff/sun_blinded/on_apply()
+	. = ..()
+	owner.overlay_fullscreen("sunlight", /atom/movable/screen/fullscreen/dustoverlay_light)
+	owner.update_fov_angles()
+
+/datum/status_effect/debuff/sun_blinded/on_remove()
+	. = ..()
+	owner.clear_fullscreen("sunlight")
+	owner.update_fov_angles()

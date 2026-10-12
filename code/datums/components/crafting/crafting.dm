@@ -371,6 +371,8 @@
 						var/mob/living/L = user
 						if(L.STAINT > 10)
 							prob2craft += ((10-L.STAINT)*-1)*2
+							if(HAS_TRAIT(L, TRAIT_METICULOUS))
+								prob2craft += (L.STAINT - 10) * 2
 					prob2craft = CLAMP(prob2craft, 0, 99)
 					if(!prob(prob2craft))
 						if(user.client?.prefs.showrolls)

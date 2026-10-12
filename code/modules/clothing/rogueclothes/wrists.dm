@@ -69,6 +69,7 @@
 	max_integrity = ARMOR_INT_SIDE_BRONZE
 
 /obj/item/clothing/wrists/roguetown/bracers/gold
+	is_gold = TRUE
 	name = "golden bracers"
 	desc = "A resplendant pair of golden vambraces, further padded with besilked sleeves. Each halve is marked with a holy sigil, sloped upwards to help catch-and-reflect sunlight into the eyes of unsuspecting assailants."
 	icon_state = "goldbracers"

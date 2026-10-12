@@ -466,9 +466,11 @@
 	//body temp
 	switch(bodytemperature)
 		if(0 to BODYTEMP_COLD_LEVEL_ONE_MAX)
-			msg += span_biginfo("<font color='#023E8A'> [m1] shivering uncontrollably</font>")
+			if(!HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))
+				msg += span_biginfo("<font color='#023E8A'> [m1] shivering uncontrollably</font>")
 		if(BODYTEMP_COLD_LEVEL_ONE_MAX to BODYTEMP_NORMAL_MIN)
-			msg += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
+			if(!HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))
+				msg += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
 		if(BODYTEMP_NORMAL_MAX to BODYTEMP_HEAT_LEVEL_ONE_MAX)
 			msg += span_biginfo("<font color='#ffff00'> [m1] sweating</font>")
 		if(BODYTEMP_HEAT_LEVEL_ONE_MAX to 600)
@@ -1085,6 +1087,14 @@
 
 		if((HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) || (HAS_TRAIT(user, TRAIT_BLACKOAK) && !(src.dna.species.name == "Elf" || src.dna.species.name == "Dark Elf" || src.dna.species.name == "Half Elf")))
 			. += span_phobia("A foreigner...")
+
+		if(user != src && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			for(var/type in GLOB.origins)
+				var/datum/origin/O = GLOB.origins[type]
+				if(O.name == origin && O.prejudice_stress && H.origin != origin && (!O.hated_by || (H.origin in O.hated_by)))
+					. += O.prejudice_examine
+					user.add_stress(O.prejudice_stress)
 
 		if(HAS_TRAIT(src, TRAIT_LOOSE_STRAPS))
 			. += span_phobia("[capitalize(m2)] armor hangs on by a thread...")

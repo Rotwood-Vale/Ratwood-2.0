@@ -37,6 +37,7 @@
 	icon_state = "ring_b"
 
 /obj/item/clothing/ring/gold
+	is_gold = TRUE
 	name = "gold ring"
 	icon_state = "ring_g"
 	sellprice = 45
@@ -155,6 +156,7 @@
 
 //gold rings
 /obj/item/clothing/ring/emerald
+	is_gold = TRUE
 	name = "gold gemerald ring"
 	icon_state = "g_ring_emerald"
 	desc = "A beautiful golden ring with a polished Gemerald set into it."
@@ -162,6 +164,7 @@
 	sellprice = 195
 
 /obj/item/clothing/ring/ruby
+	is_gold = TRUE
 	name = "gold rontz ring"
 	icon_state = "g_ring_ruby"
 	desc = "A beautiful golden ring with a polished Rontz set into it."
@@ -169,6 +172,7 @@
 	sellprice = 255
 
 /obj/item/clothing/ring/topaz
+	is_gold = TRUE
 	name = "gold toper ring"
 	icon_state = "g_ring_topaz"
 	desc = "A beautiful golden ring with a polished Toper set into it."
@@ -176,6 +180,7 @@
 	sellprice = 180
 
 /obj/item/clothing/ring/quartz
+	is_gold = TRUE
 	name = "gold blortz ring"
 	icon_state = "g_ring_quartz"
 	desc = "A beautiful golden ring with a polished Blortz set into it."
@@ -183,6 +188,7 @@
 	sellprice = 245
 
 /obj/item/clothing/ring/sapphire
+	is_gold = TRUE
 	name = "gold saffira ring"
 	icon_state = "g_ring_sapphire"
 	desc = "A beautiful golden ring with a polished Saffira set into it."
@@ -190,6 +196,7 @@
 	sellprice = 200
 
 /obj/item/clothing/ring/diamond
+	is_gold = TRUE
 	name = "gold dorpel ring"
 	icon_state = "g_ring_diamond"
 	desc = "A beautiful golden ring with a polished Dorpel set into it."
@@ -197,6 +204,7 @@
 	sellprice = 270
 
 /obj/item/clothing/ring/signet
+	is_gold = TRUE
 	name = "gold signet ring"
 	icon_state = "signet"
 	desc = "A ring of opulent gold, bearing the symbol of Psydon. By dipping it in melted tallow, it can seal writs of religious importance - a matter better known to the Inquisition, rather than the Church or Crown."
