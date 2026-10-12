@@ -297,6 +297,8 @@ SUBSYSTEM_DEF(job)
 			key = "Courtiers"
 		if(GARRISON)
 			key = "Garrison"
+		if(BARONY_GARRISON)
+			key = "Barony Garrison"
 		if(CHURCHMEN)
 			key = "Church"
 		if(INQUISITION)

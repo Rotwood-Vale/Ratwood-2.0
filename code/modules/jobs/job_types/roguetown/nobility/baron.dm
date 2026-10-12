@@ -23,10 +23,15 @@
 	advclass_cat_rolls = list(CTAG_BARON = 20)
 	social_rank = SOCIAL_RANK_NOBLE
 	quirk_restrictions = list(/datum/quirk/hunted)
-	job_traits = list(TRAIT_NOBLE)
+	job_traits = list(TRAIT_NOBLE, TRAIT_BARONY_WATCH)
 	job_subclasses = list(
 		/datum/advclass/baron/shrewd_nobleman,
 		/datum/advclass/baron/landed_knight
+	)
+	spells = list(
+		/obj/effect/proc_holder/spell/self/convertrole/militia,
+		/obj/effect/proc_holder/spell/self/convertrole/servant/manor,
+		/obj/effect/proc_holder/spell/self/grant_barony_residency
 	)
 
 /datum/job/roguetown/baron/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
@@ -36,7 +41,6 @@
 
 /datum/outfit/job/roguetown/baron
 	neck = /obj/item/roguekey/manor
-	id = /obj/item/scomstone/bad/garrison
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/formal
 	pants = /obj/item/clothing/under/roguetown/trou/formal
 	cloak = /obj/item/clothing/cloak/lordcloak/baronycloak
@@ -46,6 +50,10 @@
 	id = /obj/item/scomstone/garrison //Giving them a crownstone given their new position over lowtown garrison
 	belt = /obj/item/storage/belt/rogue/leather/black
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich
+
+/datum/outfit/job/roguetown/baron/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.verbs |= list(/mob/living/carbon/human/proc/declare_barony_outlaw, /mob/living/carbon/human/proc/post_barony_bounty)
 
 // Baron subclasses
 

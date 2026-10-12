@@ -377,6 +377,7 @@
 	picked = TRUE
 
 /obj/item/clothing/cloak/tabard/retinue
+	name = "lordly tabard"
 	desc = "A tabard with the lord's heraldic colors."
 	color = CLOTHING_AZURE
 	detail_tag = "_quad"
@@ -444,6 +445,7 @@
 	name = "captain's tabard"
 
 /obj/item/clothing/cloak/tabard/retinue/baronycloak
+	name = "tabard"
 	desc = "A tabard with the baron's heraldic colors."
 
 /obj/item/clothing/cloak/tabard/retinue/baronycloak/Initialize(mapload)

@@ -22,7 +22,6 @@ GLOBAL_VAR(baronsecondary)
 	if(choice)
 		sec = GLOB.colorlist[choice]
 	if(!prim || !sec)
-		GLOB.baronycolor = list()
 		return
 	GLOB.baronprimary = prim
 	GLOB.baronsecondary = sec

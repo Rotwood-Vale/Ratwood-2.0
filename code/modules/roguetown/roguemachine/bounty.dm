@@ -144,11 +144,11 @@
 	if(isnull(amount))
 		say("Invalid amount.")
 		return
-	if(amount < 100)
-		say("Insufficient amount. Bounty must be at least 100 mammon.")
+	if(amount < BOUNTY_MIN_AMOUNT)
+		say("Insufficient amount. Bounty must be at least [BOUNTY_MIN_AMOUNT] mammon.")
 		return
-	if(amount > 500)
-		say("Insufficient amount. Bounties cannot be more than 500 mammon.")
+	if(amount > BOUNTY_MAX_AMOUNT)
+		say("Insufficient amount. Bounties cannot be more than [BOUNTY_MAX_AMOUNT] mammon.")
 		return
 
 	// Has user a bank account?
@@ -173,15 +173,7 @@
 	amount = round(amount)
 	SStreasury.burn(user_account, amount, "bounty placement - [target.real_name]")
 
-	var/race = target.dna.species
-	var/gender = target.gender
-	var/list/d_list = target.get_mob_descriptors()
-	var/descriptor_height = build_coalesce_description_nofluff(d_list, target, list(MOB_DESCRIPTOR_SLOT_HEIGHT), "%DESC1%")
-	var/descriptor_body = build_coalesce_description_nofluff(d_list, target, list(MOB_DESCRIPTOR_SLOT_BODY), "%DESC1%")
-	var/descriptor_voice = build_coalesce_description_nofluff(d_list, target, list(MOB_DESCRIPTOR_SLOT_VOICE), "%DESC1%")
-
-	// Finally create bounty
-	add_bounty(target.real_name, race, gender, descriptor_height, descriptor_body, descriptor_voice, amount, FALSE, reason, user.real_name)
+	post_head_bounty(target, amount, reason, user.real_name)
 
 	//Announce it locally and on scomm
 	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
@@ -190,6 +182,13 @@
 	scom_announce(bounty_announcement)
 
 	message_admins("[ADMIN_LOOKUPFLW(user)] has set a bounty on [ADMIN_LOOKUPFLW(target)] with the reason of: '[reason]'")
+
+/proc/post_head_bounty(mob/living/carbon/human/target, amount, reason, employer_name)
+	var/list/d_list = target.get_mob_descriptors()
+	var/descriptor_height = build_coalesce_description_nofluff(d_list, target, list(MOB_DESCRIPTOR_SLOT_HEIGHT), "%DESC1%")
+	var/descriptor_body = build_coalesce_description_nofluff(d_list, target, list(MOB_DESCRIPTOR_SLOT_BODY), "%DESC1%")
+	var/descriptor_voice = build_coalesce_description_nofluff(d_list, target, list(MOB_DESCRIPTOR_SLOT_VOICE), "%DESC1%")
+	add_bounty(target.real_name, target.dna.species, target.gender, descriptor_height, descriptor_body, descriptor_voice, amount, FALSE, reason, employer_name)
 
 /proc/add_bounty(target_realname, race, gender, descriptor_height, descriptor_body, descriptor_voice, amount, bandit_status, reason, employer_name)
 	var/datum/bounty/new_bounty = new /datum/bounty

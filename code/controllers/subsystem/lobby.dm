@@ -39,6 +39,7 @@ SUBSYSTEM_DEF(lobbymenu)
 		"Noblemen" = list(), // High nobility
 		"Courtiers" = list(), // Low Nobility
 		"Garrison" = list(), // Retinue
+		"Barony Garrison" = list(), // Lowtown retinue
 		"Church" = list(), // Clergy
 		"Inquisition" = list(), // Inq
 		"Yeomen" = list(), // Workers

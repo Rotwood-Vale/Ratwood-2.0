@@ -1,7 +1,7 @@
 /datum/job/roguetown/warden
 	title = "Warden"
 	flag = BOGGUARD
-	department_flag = GARRISON
+	department_flag = BARONY_GARRISON
 	faction = "Station"
 	total_positions = 6
 	spawn_positions = 6
@@ -23,7 +23,7 @@
 	round_contrib_points = 2
 	cmode_music = 'sound/music/combat_blackoak.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
-	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_EXPERT_HUNTER)
+	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_EXPERT_HUNTER, TRAIT_BARONY_WATCH)
 	job_subclasses = list(
 		/datum/advclass/warden/ranger,
 		/datum/advclass/warden/forester

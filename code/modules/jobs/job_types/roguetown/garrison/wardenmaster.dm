@@ -1,7 +1,7 @@
 /datum/job/roguetown/wardenmaster
 	title = "Master Warden"
 	flag = BOGMASTER
-	department_flag = GARRISON
+	department_flag = BARONY_GARRISON
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
@@ -21,7 +21,7 @@
 	min_pq = 6
 	max_pq = null
 	cmode_music = 'sound/music/combat_hornofthebeast.ogg'
-	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_FUSILIER, TRAIT_PERFECT_TRACKER, TRAIT_SLEUTH)
+	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT, TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_FUSILIER, TRAIT_PERFECT_TRACKER, TRAIT_SLEUTH, TRAIT_BARONY_WATCH)
 	job_subclasses = list(
 		/datum/advclass/wardenmaster/wardenmaster
 	)
@@ -106,7 +106,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/hold)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/focustarget)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/vanguard)
-	H.verbs |= list(/mob/living/carbon/human/proc/request_outlaw, /mob/proc/haltyell, /mob/living/carbon/human/mind/proc/setorders)
+	H.verbs |= list(/mob/living/carbon/human/proc/request_barony_outlaw, /mob/proc/haltyell, /mob/living/carbon/human/mind/proc/setorders)
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
 		/obj/item/rope/chain = 1,
