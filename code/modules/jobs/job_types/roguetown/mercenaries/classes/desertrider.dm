@@ -161,7 +161,6 @@
 	name = "Desert Rider Almah"
 	tutorial = "Almah are those skilled in both magyck and swordsmanship, but excelling in nothing."
 	outfit = /datum/outfit/job/roguetown/mercenary/desert_rider_almah
-	traits_applied = list(TRAIT_MAGEARMOR)
 	subclass_stats = list(
 		STATKEY_SPD = 3,
 		STATKEY_WIL = 2,

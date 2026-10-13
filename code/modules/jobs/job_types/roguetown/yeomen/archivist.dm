@@ -20,7 +20,6 @@
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_YEOMAN
 	job_traits = list(
-		TRAIT_MAGEARMOR,
 		TRAIT_INTELLECTUAL,
 		TRAIT_SEEPRICES_SHITTY,
 		TRAIT_GOODWRITER,
