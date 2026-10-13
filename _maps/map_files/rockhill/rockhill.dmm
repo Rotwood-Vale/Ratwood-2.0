@@ -11606,6 +11606,12 @@
 /obj/item/fishingrod,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors/woodsrat/south)
+"cpL" = (
+/obj/structure/bookcase/random{
+	density = 0
+	},
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/town/dwarfin/rockhill)
 "cpM" = (
 /obj/machinery/light/rogue/candle/red,
 /obj/structure/stairs/stone{
@@ -18011,9 +18017,17 @@
 	},
 /area/rogue/outdoors/rtfield/rockhill/above)
 "dEO" = (
-/obj/structure/handcart{
-	dir = 4
+/obj/structure/rack/rogue,
+/obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
+	loot = list(/obj/item/rogueweapon/shovel = 3, /obj/item/rogueweapon/thresher = 3, /obj/item/flint = 4, /obj/item/rogueweapon/stoneaxe/woodcut = 3, /obj/item/rogueweapon/hammer/iron = 3, /obj/item/rogueweapon/tongs = 3, /obj/item/rogueweapon/pick = 3, /obj/item/rogueweapon/sickle = 3, /obj/item/rogueweapon/huntingknife = 3, /obj/item/rogueweapon/huntingknife/scissors = 3, /obj/item/rogueweapon/hoe = 3)
 	},
+/obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
+	loot = list(/obj/item/rogueweapon/shovel = 3, /obj/item/rogueweapon/thresher = 3, /obj/item/flint = 4, /obj/item/rogueweapon/stoneaxe/woodcut = 3, /obj/item/rogueweapon/hammer/iron = 3, /obj/item/rogueweapon/tongs = 3, /obj/item/rogueweapon/pick = 3, /obj/item/rogueweapon/sickle = 3, /obj/item/rogueweapon/huntingknife = 3, /obj/item/rogueweapon/huntingknife/scissors = 3, /obj/item/rogueweapon/hoe = 3)
+	},
+/obj/item/storage/roguebag,
+/obj/item/storage/roguebag,
+/obj/item/rogueweapon/sickle,
+/obj/item/rogueweapon/hoe,
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 1
 	},
@@ -39539,13 +39553,7 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "hXV" = (
-/obj/structure/bars{
-	color = "#b0a497";
-	max_integrity = 2000;
-	name = "reinforced bars";
-	layer = 2;
-	plane = -6
-	},
+/obj/structure/bars,
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hXX" = (
@@ -41384,6 +41392,12 @@
 /obj/effect/spawner/lootdrop/roguetown/sewers,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/goblinfort)
+"irA" = (
+/obj/effect/landmark/start/orphan{
+	dir = 4
+	},
+/turf/open/floor/rogue/greenstone,
+/area/rogue/under/town/sewer)
 "irC" = (
 /obj/structure/hotspring,
 /obj/structure/hotspring/border/two{
@@ -59280,20 +59294,6 @@
 /obj/structure/flora/roguegrass/herb/salvia,
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/church/chapel)
-"maO" = (
-/obj/structure/rack/rogue,
-/obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
-	loot = list(/obj/item/rogueweapon/shovel = 3, /obj/item/rogueweapon/thresher = 3, /obj/item/flint = 4, /obj/item/rogueweapon/stoneaxe/woodcut = 3, /obj/item/rogueweapon/hammer/iron = 3, /obj/item/rogueweapon/tongs = 3, /obj/item/rogueweapon/pick = 3, /obj/item/rogueweapon/sickle = 3, /obj/item/rogueweapon/huntingknife = 3, /obj/item/rogueweapon/huntingknife/scissors = 3, /obj/item/rogueweapon/hoe = 3)
-	},
-/obj/effect/spawner/lootdrop/roguetown/dungeon/tools{
-	loot = list(/obj/item/rogueweapon/shovel = 3, /obj/item/rogueweapon/thresher = 3, /obj/item/flint = 4, /obj/item/rogueweapon/stoneaxe/woodcut = 3, /obj/item/rogueweapon/hammer/iron = 3, /obj/item/rogueweapon/tongs = 3, /obj/item/rogueweapon/pick = 3, /obj/item/rogueweapon/sickle = 3, /obj/item/rogueweapon/huntingknife = 3, /obj/item/rogueweapon/huntingknife/scissors = 3, /obj/item/rogueweapon/hoe = 3)
-	},
-/obj/item/storage/roguebag,
-/obj/item/storage/roguebag,
-/obj/item/rogueweapon/sickle,
-/obj/item/rogueweapon/hoe,
-/turf/open/floor/rogue/metal/barograte,
-/area/rogue/indoors/town/dwarfin/rockhill)
 "maQ" = (
 /obj/effect/wisp{
 	pixel_x = 17;
@@ -60372,6 +60372,14 @@
 "mkv" = (
 /turf/open/floor/rogue/rooftop/green,
 /area/rogue/outdoors/woodsrat/above)
+"mkx" = (
+/obj/effect/landmark/start/orphan{
+	dir = 4
+	},
+/turf/open/floor/rogue/metal{
+	icon_state = "plating2"
+	},
+/area/rogue/under/town/sewer)
 "mkD" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -75576,6 +75584,10 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/rtfield/rockhill/above)
+"prp" = (
+/obj/effect/landmark/start/vagrant,
+/turf/open/floor/rogue/greenstone,
+/area/rogue/under/town/sewer)
 "prq" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/cobblerock,
@@ -299198,8 +299210,8 @@ iWT
 gLf
 rSC
 gLf
-gLf
-gLf
+irA
+prp
 udz
 gLf
 gLf
@@ -300480,8 +300492,8 @@ gLf
 rSC
 rSC
 dPm
-gLf
-gLf
+irA
+prp
 iCS
 gLf
 gLf
@@ -304364,7 +304376,7 @@ dYh
 fiD
 xdp
 rRb
-gLf
+irA
 rSC
 rSC
 gLf
@@ -304796,7 +304808,7 @@ dYh
 eXg
 xdp
 rRb
-gLf
+prp
 rSC
 rSC
 gLf
@@ -306551,7 +306563,7 @@ mof
 gLf
 gLf
 rSC
-gLf
+prp
 rRb
 lrs
 lrs
@@ -308273,10 +308285,10 @@ uEX
 uEX
 uEX
 rSC
-rSC
-lrs
 rRb
-lrs
+rRb
+rRb
+rRb
 gLf
 rSC
 gLf
@@ -308705,7 +308717,7 @@ uEX
 uEX
 rSC
 rSC
-rSC
+rRb
 gLf
 gLf
 gLf
@@ -309137,7 +309149,7 @@ uEX
 lrs
 rSC
 rSC
-fIL
+rRb
 gLf
 rSC
 rSC
@@ -309569,7 +309581,7 @@ lrs
 lrs
 rSC
 rSC
-uEX
+rRb
 gLf
 rSC
 gLf
@@ -309986,7 +309998,7 @@ rSC
 udz
 gLf
 gLf
-iyQ
+mkx
 iyQ
 iyQ
 gLf
@@ -310001,7 +310013,7 @@ rSC
 fIL
 rSC
 uEX
-uEX
+rRb
 gLf
 rSC
 gLf
@@ -313037,7 +313049,7 @@ ukO
 sCn
 qqj
 qqj
-maO
+jlY
 hXV
 kdN
 kdN
@@ -527315,7 +527327,7 @@ sco
 ydE
 sRP
 dMk
-dAF
+cpL
 atK
 dMk
 kYy
