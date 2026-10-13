@@ -272,3 +272,6 @@
   john-pawson:
   - bugfix: gives lich skeletons fatal insomnia, meaning they will no longer get tired
       or be able to sleep
+2026-10-13:
+  annikaRU:
+  - bugfix: fixes a void under two windows, updates flooring I forgot to do
