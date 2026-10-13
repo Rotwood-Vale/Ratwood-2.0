@@ -66,7 +66,7 @@
 	if(!linked_circle || QDELETED(linked_circle))
 		return FALSE
 	if(get_dist(user, linked_circle) > max_range)
-		user.balloon_alert(user, "Too far! Argh! My leylines!!")
+		user.balloon_alert(user, "too far! Argh! My leylines!!")
 		return FALSE
 	var/turf/T = get_turf(linked_circle)
 	if(!T)
