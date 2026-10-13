@@ -117,7 +117,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	speed = 0.3
-	flag = "fire"
+	flag = "magic"
 	light_color = "#ffffff"
 /obj/projectile/magic/baroness/lightning/on_hit(target)
 	. = ..()
