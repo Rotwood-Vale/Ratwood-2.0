@@ -9,7 +9,7 @@
 	class_select_category = CLASS_CAT_NALEDI
 	category_tags = list(CTAG_MERCENARY, CTAG_MERCPARTY_WARMAGE)
 	cmode_music = 'sound/music/warscholar.ogg'
-	traits_applied = list(TRAIT_ARCYNE, TRAIT_ALCHEMY_EXPERT, TRAIT_NALEDI)
+	traits_applied = list(TRAIT_ARCYNE, TRAIT_ALCHEMY_EXPERT, TRAIT_NALEDI, TRAIT_MAGEDEXTERITY)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
@@ -152,7 +152,7 @@
 		detailcolor = naledicolors[detailcolor]
 		H.mind.AddSpell(new /datum/action/cooldown/spell/fist_of_psydon)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/grasp_of_psydon())
-		H.mind.AddSpell(new /datum/action/cooldown/spell/blink/shadowstep)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/storm_of_psydon())
 		H.mind.AddSpell(new /datum/action/cooldown/spell/empower_weapon)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/blade_of_psydon())
@@ -208,38 +208,30 @@
 
 /datum/advclass/mercenary/warscholar/vizier
 	name = "Naledi Vizier"
-	age_mod = /datum/class_age_mod/vizier
-	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
-	tutorial = "You are a Naledi Vizier. Psydonians have long struggled to channel the All-Father's divinity, but such obstacles need not stop you. The Yogis of Naledi have long studied the nature of magick, and concluded that as Psydon is the origin of all things, a school of magick that returns a person or an item to a form it had before is the purest of all magick - and named it Origin Magic. Others say that you do not wield true miracles, merely a form of magycks. But true believers know that magyck is one of Psydon's greatest gifts, and in His name you shall wield His powers to heal His creations. A line of magyck closely guarded and trained only in the seven Great Seminary of Naledi, of which only five remain standing in this age. It is said that one must attune themselves to Psydon for ten yils in the Naledian desert. And despite foreigners' many attempts, no one has managed to bring this lineage of magyck outside without studying in Naledi itself. Perhaps it is truly divine."
-	allowed_sexes = list(MALE, FEMALE)
-
+	tutorial = "You are a Naledi Vizier. Your research into miracles and holy incantations has lead you to esoteric magycks. Though psydonians have long struggled to channel their all-father's divinity, The Great City of Naledi came the closest with its Origin Magic."
 	outfit = /datum/outfit/job/roguetown/mercenary/warscholar_vizier
-	subclass_languages = list(/datum/language/celestial)
-	class_select_category = CLASS_CAT_NALEDI
-	category_tags = list(CTAG_MERCENARY, CTAG_MERCPARTY_WARMAGE)
-	cmode_music = 'sound/music/warscholar.ogg'
-	traits_applied = list(TRAIT_ARCYNE, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT, TRAIT_NALEDI)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ALCHEMY_EXPERT, TRAIT_NALEDI, TRAIT_MEDICINE_EXPERT, TRAIT_MAGEDEXTERITY, TRAIT_ARCYNE)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 2,
 		STATKEY_WIL = 2,
 	)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/arcyne = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
+		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 	)
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 6, "locked_aspects" = list(/datum/magic_aspect/lesser_augmentation), "ward" = TRUE)
 
@@ -263,11 +255,17 @@
 		"MAROON" = "#5F1F34",
 		"BLACK" = "#242526"
 	))
-	r_hand = /obj/item/rogueweapon/woodstaff/implement/grand/naledi
-
-	head = /obj/item/clothing/head/roguetown/roguehood/hierophant
+	to_chat(H, span_warning("You are a Naledi Vizier. Your research into miracles and holy incantations has lead you to esoteric magycks. Though psydonians have long struggled to channel their all-father's divinity, The Great City of Naledi came the closest with it's Origin Magic."))
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 3, TRUE)
+		H.change_stat(STATKEY_SPD, -1)
+		H.change_stat(STATKEY_INT, 1)
+		H.change_stat(STATKEY_PER, 1)
+	r_hand = /obj/item/rogueweapon/woodstaff/naledi
+	//Since we lack unique Vizier clothing, we're mixing hierophant and pontifex for Vizier
+	head = /obj/item/clothing/head/roguetown/roguehood/hierophant	//Keep this hood. It's middling armor, but the robe/gambeson combination is exceedingly good armor for the class. The vizier's head is a weak point.
 	cloak = /obj/item/clothing/cloak/hierophant
-	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant
+	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
 	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/hierophant
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi
@@ -278,31 +276,28 @@
 	shoes = /obj/item/clothing/shoes/roguetown/sandals
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 
-	var/naledi_book = pick(/obj/item/book/rogue/naledi1, /obj/item/book/rogue/naledi2, /obj/item/book/rogue/naledi3, /obj/item/book/rogue/naledi4)
 	backpack_contents = list(
-		/obj/item/chalk = 1,
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
-		(naledi_book) = 1
+		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 
-
+	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 	if(H.mind)
 		detailcolor = input(H, "Choose a color.", "NALEDIAN COLORPLEX") as anything in naledicolors
 		detailcolor = naledicolors[detailcolor]
-		grant_poke_spell(H)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/blink/shadowstep)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diminish)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/vizier/restoration)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/vizier/reversion)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/vizier/acceleration)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/augment_buff/guidance)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/bestow_ward)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/mending)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/rimecast)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-		H.mind.AddSpell(new /datum/action/cooldown/spell/message)
-
+		H.mind.AddSpell(new /datum/action/cooldown/spell/mending)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/regression)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convergence)	//increases heal effect,
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stasis)		//wound/injurying reversion, revive capable at a cost
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/acceleration)	//speedup with a cost
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/divergence)	//potential to heal and injure targets
+		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)//Naledi Vizier spells functionally replace psydonite ones
+		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/check_boot)
+		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/psydonendure)
 	H.merctype = 14
 
 /datum/outfit/job/roguetown/mercenary/warscholar/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
