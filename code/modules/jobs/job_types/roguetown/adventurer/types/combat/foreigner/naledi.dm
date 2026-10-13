@@ -72,8 +72,11 @@
 
 			ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
 
+			ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
+
 			if(H.mind)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ley_lines)
+				H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 4))
+				H.mind.AddSpell(new /datum/action/cooldown/spell/ley_lines)
 
 		if("Desert Ascetic (Pontifex)")//reduced spellpoints, stats, no dodge expert. Toughened up refugee.
 			H.set_patron(/datum/patron/old_god)
@@ -143,15 +146,14 @@
 			ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
 
 
-			var/datum/devotion/C = new /datum/devotion(H, H.patron)
-			C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
+			ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
+
 			if(H.mind)
+				grant_poke_spell(H)
+				H.mind.AddSpell(new /datum/action/cooldown/spell/blink/shadowstep)
+				H.mind.AddSpell(new /datum/action/cooldown/spell/vizier/restoration/lesser)
+				H.mind.AddSpell(new /datum/action/cooldown/spell/vizier/acceleration)
+				H.mind.AddSpell(new /datum/action/cooldown/spell/bestow_ward)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/regression)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convergence)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/divergence)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/acceleration)
-				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)
-				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/check_boot)
-				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/psydonendure)
+				H.mind.setup_mage_aspects(list("ward" = TRUE, "mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 6, "locked_aspects" = list(/datum/magic_aspect/lesser_augmentation)))
 

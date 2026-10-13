@@ -2789,3 +2789,29 @@
 	name = "Parry"
 	desc = span_notice("A brief window of deflection lingers from my guard.")
 	icon_state = "clash"
+
+/atom/movable/screen/alert/status_effect/debuff/diminish
+	name = "Diminished"
+	desc = "Origin magick has diminished my instincts - my movements feel sluggish and predictable, and my body feels weakened."
+	icon_state = "buff"
+
+#define DIMINISH_FILTER "diminish_glow"
+/datum/status_effect/debuff/diminish
+	var/outline_colour = "#8b2fc9"
+	id = "diminish"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/diminish
+	duration = 1 MINUTES
+	effectedstats = list(STATKEY_STR = -2, STATKEY_CON = -2, STATKEY_PER = -3)
+
+/datum/status_effect/debuff/diminish/on_apply()
+	. = ..()
+	if(!.)
+		return
+	var/filter = owner.get_filter(DIMINISH_FILTER)
+	if(!filter)
+		owner.add_filter(DIMINISH_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 50, "size" = 1))
+
+/datum/status_effect/debuff/diminish/on_remove()
+	. = ..()
+	owner.remove_filter(DIMINISH_FILTER)
+#undef DIMINISH_FILTER
