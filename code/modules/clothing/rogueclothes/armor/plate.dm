@@ -282,7 +282,7 @@
 	icon_state = "ornateplate"
 	smeltresult = /obj/item/ingot/silverblessed
 
-	max_integrity = ARMOR_INT_CHEST_PLATE_PSYDON
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
 	is_silver = TRUE
 
 	/// Whether the user has the Heavy Armour Trait prior to donning.

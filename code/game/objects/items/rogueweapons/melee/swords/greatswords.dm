@@ -214,7 +214,7 @@
 	daemon preying on the Otavan farmlands. The design was retrieved, studied, and only a few replicas made - for they believe it dulls its edge."
 	icon_state = "silverexealt"
 	force = 8
-	force_wielded = 25
+	force_wielded = 30
 	minstr = 11
 	wdefense = 6
 	is_silver = TRUE
@@ -236,8 +236,8 @@
 	desc = "In Otava's grandest mosaics, Saint Ravox - bare in all but a beaked helmet and loincloth - is depicted wielding such an imposing \
 	greatweapon against the Sinistar, Graggar. Regardless of whether this relic was actually wielded by divinity-or-not, its unparallel strength \
 	will nevertheless command even the greatest foes to fall. Stand fast, childe o' God, and drive the unforgivable back to Hell."
-	force = 25
-	force_wielded = 30
+	force = 30
+	force_wielded = 35
 	icon_state = "psygsword"
 	possible_item_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/thrust/exe, /datum/intent/sword/chop/heavy, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/thrust/heavy, /datum/intent/sword/chop/cleave, /datum/intent/rend)
