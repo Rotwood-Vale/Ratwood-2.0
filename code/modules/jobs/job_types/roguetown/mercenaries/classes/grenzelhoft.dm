@@ -215,6 +215,7 @@
 		STATKEY_PER = 3,
 		STATKEY_SPD = 1
 	)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 6, "ward" = TRUE, "locked_aspects" = list(/datum/magic_aspect/pyromancy, /datum/magic_aspect/exowardry))
 	subclass_skills = list(
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
