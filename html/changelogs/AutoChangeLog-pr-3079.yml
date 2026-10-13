@@ -1,0 +1,4 @@
+author: "0-the-fool"
+delete-after: True
+changes:
+  - bugfix: "Wall clocks no longer allow players to take out loadout items will full stats."
