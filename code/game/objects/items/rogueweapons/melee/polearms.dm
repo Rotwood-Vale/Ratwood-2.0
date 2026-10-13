@@ -2279,6 +2279,7 @@
 //
 /obj/item/rogueweapon/spear/spellblade
 	name = "dory"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	icon_state = "short_spear"
 	desc = "A shortened spear, six feet long and balanced. Favored by Azurean Spellblades \
 		who found the traditional long spear ill-suited for their flashy, individualistic fighting style. \
