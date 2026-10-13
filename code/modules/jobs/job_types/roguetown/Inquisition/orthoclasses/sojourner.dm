@@ -42,7 +42,7 @@
 	)
 	extra_context = "This subclass has multiple unique spells, including one in the form of an 'arcyne barrier'. \
 	So long as it's active, the user is immune to magic, yet still capable of casting it."
-	subclass_mage_aspects = list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 4, ward = TRUE, "locked_aspects" = list(/datum/magic_aspect/autowardry))
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 4, ward = TRUE, "locked_aspects" = list(/datum/magic_aspect/autowardry, /datum/magic_aspect/cryomancy))
 
 /datum/outfit/job/roguetown/sojourner
 	job_bitflag = BITFLAG_HOLY_WARRIOR
@@ -53,14 +53,7 @@
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
 //Now we do the spells. If this turns out to be absurd, we tone it back. Simple as. But with poor stats and skills...
-//This is 26 spellpoints in total, not counting their unique barrier, normally unobtanium, at 6, which puts it to 32.
 //For context, Heirophant gets 25 total, with 6 of those being liquid free spellpoints.
-	if(H.mind)
-		//Integral spells.
-		//Buff spells, next.
-		//Frost spells. Slowdown city. Hue city. Frigid. Or something.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/frostbite)//Used by Sojourners only.
-		//Finally, utility. Consider removing fetch, if fetch-slow is absurd. But that's the case for any mage.
 
 	head = /obj/item/clothing/head/roguetown/roguehood/sojourner
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner
