@@ -70734,6 +70734,10 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
+/obj/structure/roguemachine/vaultbank/merchant{
+	density = 0;
+	pixel_x = -32
+	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/shop)
 "orm" = (
