@@ -42,7 +42,7 @@
 
 	subclass_mage_aspects = list("mastery" = TRUE, "major" = 2, "minor" = 3, "utilities" = 9, "ward" = TRUE)
 	category_tags = list(CTAG_COURTMAGE)
-	traits_applied = list(TRAIT_BADTRAINER)
+	traits_applied = list(TRAIT_BADTRAINER, TRAIT_ARCYNE)
 	subclass_stats = list(
 		STATKEY_INT = 5,// Automatic advanced magic for most spells. (I.E summon weapon being upgraded to steel from iron/etc)
 		STATKEY_PER = 3,

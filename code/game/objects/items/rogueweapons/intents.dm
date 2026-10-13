@@ -757,6 +757,12 @@
 	intent_effect = /datum/status_effect/debuff/dazed/shield
 	swingdelay = 3 */
 
+/datum/intent/hand
+	name = "hand"
+	icon_state = "inuse"
+	no_attack = TRUE
+	noaa = TRUE
+
 /datum/intent/hand/clean
 	name = "clean"
 	icon_state = "inclean"
