@@ -818,9 +818,10 @@
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		if(!(bodypart.body_zone in lethal_zones))
 			continue
-		var/my_burn = abs(bodypart.burn_dam)
+		var/hardcrit_divisor = !mind ? FIRE_HARDCRIT_DIVISOR_MINDLESS : FIRE_HARDCRIT_DIVISOR
+		var/my_burn = abs((lethal_part.burn_dam / lethal_part.max_damage) * hardcrit_divisor)
 		total_burn = max(total_burn, my_burn)
-		used_damage = max(used_damage, my_burn / 2)
+		used_damage = max(used_damage, my_burn)
 	if(used_damage < total_tox)
 		used_damage = total_tox
 	if(used_damage < total_oxy)
