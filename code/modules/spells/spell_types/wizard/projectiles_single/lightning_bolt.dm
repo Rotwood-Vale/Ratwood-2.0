@@ -40,7 +40,7 @@
 	accuracy = 40
 	nodamage = FALSE
 	speed = 0.3
-	flag = "fire"
+	flag = "magic"
 	light_color = "#ffffff"
 	light_outer_range = 7
 	var/bypass_antimagic = FALSE
