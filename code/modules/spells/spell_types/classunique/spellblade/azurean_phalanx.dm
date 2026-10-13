@@ -2,7 +2,7 @@
 
 /datum/action/cooldown/spell/azurean_phalanx
 	source_aspect = /datum/magic_aspect/pseudo/spellblade
-	name = "Azurean Phalanx"
+	name = "Ferentian Phalanx"
 	desc = "Prime your next melee strike with arcyne force. On hit, the blow pierces through, \
 		striking enemies in a line behind the target. Builds 1 momentum on hit. \
 		At 3+ momentum: consumes 3 for a deeper, more damaging pierce."
@@ -18,7 +18,7 @@
 	primary_resource_type = SPELL_COST_STAMINA
 	primary_resource_cost = SPELLCOST_SB_POKE
 
-	invocations = list("Phalanx Azurea!")
+	invocations = list("Phalanx Ferentia!")
 	invocation_type = INVOCATION_SHOUT
 
 	charge_required = FALSE
@@ -121,7 +121,7 @@
 		if(spell_guard_check(struck, FALSE, user))
 			deflected = TRUE
 		else
-			arcyne_strike(user, struck, weapon, damage, def_zone, BCLASS_STAB, spell_name = "Azurean Phalanx", skip_animation = TRUE)
+			arcyne_strike(user, struck, weapon, damage, def_zone, BCLASS_STAB, spell_name = "Ferentian Phalanx", skip_animation = TRUE)
 			hit_count++
 			already_hit += struck
 
@@ -132,7 +132,7 @@
 			if(spell_guard_check(victim, FALSE, user, punish_caster = deflected ? FALSE : null))
 				deflected = TRUE
 				continue
-			arcyne_strike(user, victim, weapon, damage, def_zone, BCLASS_STAB, spell_name = "Azurean Phalanx", skip_animation = TRUE)
+			arcyne_strike(user, victim, weapon, damage, def_zone, BCLASS_STAB, spell_name = "Ferentian Phalanx", skip_animation = TRUE)
 			hit_count++
 			already_hit += victim
 

@@ -2281,11 +2281,11 @@
 	name = "dory"
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	icon_state = "short_spear"
-	desc = "A shortened spear, six feet long and balanced. Favored by Azurean Spellblades \
+	desc = "A shortened spear, six feet long and balanced. Favored by Ferentian Spellblades \
 		who found the traditional long spear ill-suited for their flashy, individualistic fighting style. \
 		Designed to thrust quickly from one hand but maneuver nimbly in two.<BR><BR> \
 		'From this dae on, we shall name ourselves naught spearman, but phalangite, and our spear, the dory, not a shortspear. \
-		And with this measure we shall gain great respect henceforth.' - Unknown Grandmaster of the Azurean Spellblade Order, 900 AP."
+		And with this measure we shall gain great respect henceforth.' - Unknown Grandmaster of the Ferentian Spellblade Order, 900 AP."
 	force = 20
 	force_wielded = 25
 	possible_item_intents = list(/datum/intent/spear/thrust/azurean/oneh)
@@ -2303,7 +2303,7 @@
 	resistance_flags = FLAMMABLE
 	armor_penetration = PEN_NONE
 
-// ---- Azurean Shortspear intents ----
+// ---- Ferentian Shortspear intents ----
 /datum/intent/spear/thrust/azurean
 	name = "thrust"
 	desc = "A quick, nimble two-handed thrust. Keeps reach but lacks the power to pierce armor."
