@@ -3,6 +3,7 @@ GLOBAL_LIST_INIT(fracture_bclasses, list(
 	BCLASS_SMASH,
 	BCLASS_CHOP,
 	BCLASS_PUNCH,
+	BCLASS_PICK,
 ))
 
 GLOBAL_LIST_INIT(artery_bclasses, list(
@@ -33,6 +34,7 @@ GLOBAL_LIST_INIT(cbt_classes, list(
 	BCLASS_SMASH,
 	BCLASS_CHOP,
 	BCLASS_PUNCH,
+	BCLASS_PICK,
 ))
 
 GLOBAL_LIST_INIT(stab_bclasses, list(
