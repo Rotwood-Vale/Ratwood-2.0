@@ -201,13 +201,14 @@
 	tutorial = "You are a Gefechtsgelehrter - \"Combat Scholar\" - An experienced Zauberer hailing from the prestigious Celestial Academy, your fellow alumni may have pursued summoning, enchantments or similar academical ventures. But you? You studied siegecraft. And you got damn good at it too."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
+
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft_mage
 	class_select_category = CLASS_CAT_GRENZELHOFT
-	category_tags = list(CTAG_MERCENARY)
+	category_tags = list(CTAG_MERCENARY, CTAG_MERCPARTY_WARMAGE)
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	subclass_languages = list(/datum/language/grenzelhoftian)
-	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	traits_applied = list(TRAIT_INTELLECTUAL, TRAIT_STEELHEARTED, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 6, "allowed_majors" = list(/datum/magic_aspect/pyromancy, /datum/magic_aspect/geomancy, /datum/magic_aspect/ferramancy), "variants" = list(/datum/magic_aspect/pyromancy = "gefechtsgelehrter", /datum/magic_aspect/geomancy = "gefechtsgelehrter", /datum/magic_aspect/ferramancy = "gefechtsgelehrter"), "post_aspect_spells" = list(/datum/action/cooldown/spell/message, /datum/action/cooldown/spell/aetherknife), "ward" = TRUE)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
@@ -215,9 +216,11 @@
 		STATKEY_PER = 3,
 		STATKEY_SPD = 1
 	)
-	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 6, "ward" = TRUE, "locked_aspects" = list(/datum/magic_aspect/pyromancy, /datum/magic_aspect/exowardry))
+	age_mod = /datum/class_age_mod/grenzel_mage
 	subclass_skills = list(
-		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
+		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/staves = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/arcyne = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
@@ -236,32 +239,25 @@
 	..()
 	to_chat(H, span_warning("You are a Gefechtsgelehrter - \"Combat Scholar\" - An experienced Zauberer hailing from the prestigious Celestial Academy, your fellow alumni may have pursued summoning, enchantments or similar academical ventures. But you? You studied siegecraft. And you got damn good at it too."))
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
-	backl = /obj/item/rogueweapon/woodstaff/gefechtsgelehrter
+	backl = /obj/item/rogueweapon/woodstaff/implement/greater/blacksteel
 	cloak = /obj/item/clothing/cloak/stabard/grenzelmage
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/cuirass
-	//General gear regardless of class.
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
-	neck = /obj/item/clothing/neck/roguetown/coif/padded
+	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
+	neck = /obj/item/clothing/neck/roguetown/gorget
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
 	head = /obj/item/clothing/head/roguetown/grenzelhofthat
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
-	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
+	shoes = /obj/item/clothing/shoes/roguetown/grenzelhoft
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
-	backr = /obj/item/storage/backpack/rogue/satchel
+	backr = /obj/item/storage/backpack/rogue/satchel/black
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/spellbook_unfinished/pre_arcyne = 1,
-		/obj/item/roguegem/amethyst = 1,
+		/obj/item/rogueweapon/spellbook/greater = 1,
+		/obj/item/chalk = 1
 		)
-	if(H.age == AGE_OLD) // FEAR the old man in a profession where men die young, or something corny like that.
-		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 5, TRUE)
-		H.change_stat(STATKEY_SPD, -1)
-		H.change_stat(STATKEY_WIL, -1)
-		H.change_stat(STATKEY_PER, 2)
-		H.change_stat(STATKEY_INT, 2)
-		H.change_stat(STATKEY_CON, -2)
+	ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
 	H.merctype = 7
