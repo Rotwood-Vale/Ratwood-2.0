@@ -184,7 +184,7 @@
 /datum/advclass/heartfelt/hand/advisor
 	name = "Advisor of Heartfelt"
 	tutorial = "You are the Advisor of Heartfelt, trusted for your measured counsel and keen insight into matters of state. \
-	Bound once more to serve in the wake of ruin, you climb towards the Peaks."
+	Bound once more to serve in the wake of ruin, you climb towards these lands."
 	outfit = /datum/outfit/job/roguetown/heartfelt/hand/advisor
 	category_tags = list(CTAG_HFT_HAND)
 	traits_applied = list(TRAIT_ARCYNE, TRAIT_INTELLECTUAL, TRAIT_SEEPRICES_SHITTY, TRAIT_HEARTFELT, TRAIT_ALCHEMY_EXPERT)
