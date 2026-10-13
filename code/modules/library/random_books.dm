@@ -59,18 +59,6 @@
 	if(book_count && isnum(book_count))
 		book_count += pick(0,1,2,3,4,5,6,7,8,9,10)
 
-/obj/structure/bookcase/random/archive/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/book/rogue/playerbook))
-		var/obj/item/book/rogue/playerbook/PB = I
-		if(PB.is_in_round_player_generated)
-			if(!PB.written)
-				to_chat(user, span_warning("Finish authoring this book before archiving it."))
-				return
-			if(SSlibrarian.playerbook2file(PB.player_book_text, PB.player_book_title, PB.player_book_author, PB.player_book_author_ckey, PB.player_book_icon, user, PB.player_book_date, PB.player_book_category))
-				PB.is_in_round_player_generated = FALSE
-
-	. = ..()
-
 /// Spawns random books, limited to the given category if one is set — premade books by their category var, archived player books by their archived category. Each archived book is placed at most once per round.
 /proc/create_random_books_rogue(amount = 2, location, category)
 	// Player books come from the archive, and secret books and the Verses and Acts of the Ten are never shelved at random.

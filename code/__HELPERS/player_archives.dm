@@ -29,9 +29,12 @@
 
 /// Loads every archive entry in a directory, keyed by filename without the .json extension.
 /proc/load_player_archive(directory)
+	// Only the archive's own bookkeeping files are skipped. Books archived before titles were barred from starting with an underscore still load.
+	// _book_titles.json is the title index of the old book archive, which no longer reads it.
+	var/static/list/reserved_files = list("_upload_bans.json", "_book_titles.json")
 	. = list()
 	for(var/file_name in flist(directory))
-		if(copytext(file_name, 1, 2) == "_" || copytext(file_name, -5) != ".json")
+		if((file_name in reserved_files) || copytext(file_name, -5) != ".json")
 			continue
 		var/list/contents = safe_json_decode(file2text("[directory][file_name]"))
 		if(!islist(contents))
