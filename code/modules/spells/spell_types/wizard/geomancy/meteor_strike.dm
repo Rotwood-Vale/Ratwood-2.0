@@ -70,6 +70,8 @@
 
 	for(var/turf/T in range(blast_radius, center))
 		for(var/obj/structure/S in T.contents)
+			if(QDELETED(S))
+				continue
 			S.take_damage(structural_damage, BRUTE, "blunt", object_damage_multiplier = 2)
 		T.take_damage(structural_damage, BRUTE, "blunt", object_damage_multiplier = 2)
 		for(var/mob/living/L in T.contents)

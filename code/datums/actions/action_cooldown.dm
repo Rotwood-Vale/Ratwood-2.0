@@ -173,6 +173,7 @@
 	addtimer(CALLBACK(src, PROC_REF(CooldownEnded)), real_time)
 	if(retrigger_after_cooldown && click_to_activate)
 		if(real_time > 0)
+			cancel_retrigger()
 			RegisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED, PROC_REF(cancel_retrigger))
 			retrigger_timer = addtimer(CALLBACK(src, PROC_REF(retrigger)), real_time, TIMER_STOPPABLE)
 		else

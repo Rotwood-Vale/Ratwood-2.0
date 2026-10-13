@@ -104,6 +104,8 @@
 	playsound(T, 'sound/combat/hits/onstone/stonedeath.ogg', 100, TRUE, 6)
 	// Structural damage - 2x to objects on impact tile
 	for(var/obj/structure/S in T.contents)
+		if(QDELETED(S))
+			continue
 		S.take_damage(direct_damage, BRUTE, "blunt", object_damage_multiplier = 2)
 	T.take_damage(direct_damage, BRUTE, "blunt", object_damage_multiplier = 2)
 	var/mob/living/carbon/human/caster = owner

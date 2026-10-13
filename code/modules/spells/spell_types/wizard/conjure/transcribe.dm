@@ -198,7 +198,7 @@
 		if(page_index == 1)
 			first_page = transcript
 		page_index++
-	if(first_page)
+	if(first_page && user)
 		user.put_in_hands(first_page)
 	to_chat(user, span_notice("The quill magically transcribes its contents onto the parchment[pages.len > 1 ? "s" : ""] and crumbles to dust!"))
 	if(pages.len > 1)
