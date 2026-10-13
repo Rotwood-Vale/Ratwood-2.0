@@ -35,7 +35,7 @@
 	npc_simple_damage_mult = 2 // HAHAHA
 	accuracy = 40 // Base accuracy is lower for burn projectiles because they bypass armor
 	nodamage = FALSE
-	flag = "fire"
+	flag = "magic"
 	hitsound = 'sound/blank.ogg'
 	aoe_range = 0
 
