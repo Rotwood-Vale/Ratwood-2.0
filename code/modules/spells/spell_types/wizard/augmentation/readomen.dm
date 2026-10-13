@@ -109,12 +109,6 @@
 	if(!istype(user) || !user.patron || ispath(user.patron.associated_faith, /datum/faith/godless))
 		to_chat(user, "<span class='warning'>For some reason, I cannot get a good grasp of the Leylines.</span>")
 		return FALSE
-	if(ispath(user.patron.associated_faith, /datum/faith/accelerationism))
-		to_chat(user, "<span class='warningbig'>FUCK THE LEYLINES, THEY ARE A TOOL, I DON'T CARE HOW THEY FEEL. I'LL BLOW THEM THE FUCK UP TOO WHEN I'M DONE.</span>")
-		return FALSE
-	if(ispath(user.patron.associated_faith, /datum/faith/mossmother))
-		to_chat(user, "<span class='blue'>The Leylines moods are of no concern to me.</span>")
-		return FALSE
 	if(ispath(dominant_faith, /datum/faith/old_god))
 		to_chat(user, span_blue(replacetext(reign_messages[user.patron.associated_faith][dominant_faith], "$patron", get_god_name(user.patron))))
 	else if(ispath(user.patron.associated_faith, dominant_faith))

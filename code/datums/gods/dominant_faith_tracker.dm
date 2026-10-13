@@ -81,7 +81,7 @@
 		return // no announcement spam
 	for(var/mob/i in GLOB.player_list)
 		var/mob/living/carbon/human/H = i
-		if(!istype(H) || !H.patron || ispath(H.patron.associated_faith, /datum/faith/mossmother) || ispath(H.patron.associated_faith, /datum/faith/godless) || !H.devotion)
+		if(!istype(H) || !H.patron || ispath(H.patron.associated_faith, /datum/faith/godless) || !H.devotion)
 			continue
 		to_chat(H, span_info("As the balance of faith shifts, the power of miracles waxes and wanes, favoring the pantheon dominant in the region..."))
 		if(ispath(dominant_faith, /datum/faith/old_god)) // psydon messages are always 'neutral'
@@ -98,21 +98,21 @@
 /datum/dominant_faith_tracker/proc/full_recalculate()
 	for(var/mob/i in GLOB.player_list)
 		var/mob/living/carbon/human/H = i
-		if(!istype(H) || !H.patron || ispath(H.patron.associated_faith, /datum/faith/mossmother) || ispath(H.patron.associated_faith, /datum/faith/godless))
+		if(!istype(H) || !H.patron || ispath(H.patron.associated_faith, /datum/faith/godless))
 			continue
 		totals[H.patron.associated_faith] += weights[H.patron.associated_faith]
 		influence_followers[H.patron.associated_faith] += weights[H.patron.associated_faith]
 
 // helper procs. call these when someone enters/leaves the round to update the totals accordingly
 /datum/dominant_faith_tracker/proc/handle_addition(mob/living/carbon/human/H)
-	if(!istype(H) || !H.patron || ispath(H.patron.associated_faith, /datum/faith/mossmother) || ispath(H.patron.associated_faith, /datum/faith/godless))
+	if(!istype(H) || !H.patron || ispath(H.patron.associated_faith, /datum/faith/godless))
 		return
 	totals[H.patron.associated_faith] += weights[H.patron.associated_faith]
 	influence_followers[H.patron.associated_faith] += weights[H.patron.associated_faith]
 	calculate_dominant_faith()
 
 /datum/dominant_faith_tracker/proc/handle_removal(mob/living/carbon/human/H)
-	if(!istype(H) || !H.patron || ispath(H.patron.associated_faith, /datum/faith/mossmother) || ispath(H.patron.associated_faith, /datum/faith/godless))
+	if(!istype(H) || !H.patron || ispath(H.patron.associated_faith, /datum/faith/godless))
 		return
 	totals[H.patron.associated_faith] -= weights[H.patron.associated_faith]
 	influence_followers[H.patron.associated_faith] -= weights[H.patron.associated_faith]
