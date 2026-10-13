@@ -39539,13 +39539,7 @@
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "hXV" = (
-/obj/structure/bars{
-	color = "#b0a497";
-	max_integrity = 2000;
-	name = "reinforced bars";
-	layer = 2;
-	plane = -6
-	},
+/obj/structure/bars,
 /turf/open/water/cleanshallow,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "hXX" = (
@@ -41384,6 +41378,12 @@
 /obj/effect/spawner/lootdrop/roguetown/sewers,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/goblinfort)
+"irA" = (
+/obj/effect/landmark/start/orphan{
+	dir = 4
+	},
+/turf/open/floor/rogue/greenstone,
+/area/rogue/under/town/sewer)
 "irC" = (
 /obj/structure/hotspring,
 /obj/structure/hotspring/border/two{
@@ -60372,6 +60372,14 @@
 "mkv" = (
 /turf/open/floor/rogue/rooftop/green,
 /area/rogue/outdoors/woodsrat/above)
+"mkx" = (
+/obj/effect/landmark/start/orphan{
+	dir = 4
+	},
+/turf/open/floor/rogue/metal{
+	icon_state = "plating2"
+	},
+/area/rogue/under/town/sewer)
 "mkD" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -70726,10 +70734,6 @@
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/money,
-/obj/structure/roguemachine/vaultbank/merchant{
-	density = 0;
-	pixel_x = -32
-	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/shop)
 "orm" = (
@@ -75576,6 +75580,10 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors/rtfield/rockhill/above)
+"prp" = (
+/obj/effect/landmark/start/vagrant,
+/turf/open/floor/rogue/greenstone,
+/area/rogue/under/town/sewer)
 "prq" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/rogue/cobblerock,
@@ -299198,8 +299206,8 @@ iWT
 gLf
 rSC
 gLf
-gLf
-gLf
+irA
+prp
 udz
 gLf
 gLf
@@ -300480,8 +300488,8 @@ gLf
 rSC
 rSC
 dPm
-gLf
-gLf
+irA
+prp
 iCS
 gLf
 gLf
@@ -303932,15 +303940,15 @@ hOw
 xdp
 fXe
 rRb
-gLf
-rSC
-rSC
-rSC
-rSC
-rSC
-udz
 rRb
-fIL
+irA
+rSC
+rSC
+gLf
+gLf
+lrs
+udz
+lrs
 rSC
 rSC
 rSC
@@ -304364,14 +304372,14 @@ dYh
 fiD
 xdp
 rRb
-gLf
+rRb
+prp
 rSC
 rSC
 gLf
-gLf
+lrs
 lrs
 udz
-lrs
 lrs
 lrs
 lrs
@@ -304796,15 +304804,15 @@ dYh
 eXg
 xdp
 rRb
+rRb
 gLf
 rSC
 rSC
 gLf
 lrs
-lrs
+rRb
 udz
-lrs
-lrs
+rRb
 lrs
 lrs
 lrs
@@ -305228,15 +305236,15 @@ vig
 bCe
 fXe
 rRb
-gLf
+rRb
+mof
 rSC
 rSC
+aRj
 gLf
-lrs
-rRb
-udz
-rRb
-rRb
+gLf
+gLf
+gLf
 rRb
 rRb
 rRb
@@ -305660,15 +305668,15 @@ vig
 urp
 nsf
 rRb
-mof
+rRb
+gLf
+gLf
+gLf
+gLf
 rSC
 rSC
-aRj
-gLf
-gLf
-gLf
-gLf
-gLf
+rSC
+rSC
 gLf
 ueA
 gLf
@@ -306092,15 +306100,15 @@ vig
 bbI
 fXe
 rRb
-gLf
-gLf
-gLf
-gLf
+rRb
 rSC
-rSC
-rSC
-rSC
-udz
+gLf
+lrs
+lrs
+lrs
+lrs
+lrs
+lrs
 rSC
 rSC
 rSC
@@ -306524,6 +306532,7 @@ dYh
 nwA
 xdp
 rRb
+rRb
 rSC
 gLf
 lrs
@@ -306531,8 +306540,7 @@ lrs
 lrs
 lrs
 lrs
-lrs
-udz
+rSC
 rSC
 rSC
 rSC
@@ -306551,7 +306559,7 @@ mof
 gLf
 gLf
 rSC
-gLf
+prp
 rRb
 lrs
 lrs
@@ -306956,15 +306964,15 @@ dYh
 sMl
 fXe
 rRb
+rRb
 rSC
 gLf
-lrs
-lrs
-lrs
-lrs
-lrs
-rSC
-udz
+rRb
+rRb
+rRb
+nXf
+mnj
+uEX
 rSC
 lrs
 lrs
@@ -307388,15 +307396,15 @@ hEj
 fXe
 fXe
 rRb
+rRb
 rSC
 gLf
+rSC
+rSC
 rRb
 rRb
-rRb
-nXf
-mnj
-uEX
-lrs
+rSC
+rSC
 lrs
 lrs
 lrs
@@ -307820,15 +307828,15 @@ fXe
 fXe
 lrs
 rRb
-rSC
-gLf
-rSC
-rSC
 rRb
 rRb
-rSC
-rSC
 gLf
+lrs
+rSC
+rSC
+rSC
+uEX
+uEX
 lrs
 lrs
 lrs
@@ -308253,14 +308261,14 @@ lrs
 lrs
 rRb
 rRb
+aoF
 gLf
 lrs
 rSC
 rSC
-rSC
 uEX
 uEX
-gLf
+lrs
 lrs
 lrs
 lrs
@@ -308684,15 +308692,15 @@ rRb
 rRb
 rRb
 rRb
-aoF
+mVY
+udz
 gLf
-lrs
-lrs
+rSC
 lrs
 lrs
 uEX
 otg
-gLf
+lrs
 lrs
 lrs
 lrs
@@ -308706,9 +308714,9 @@ uEX
 rSC
 rSC
 rSC
-gLf
-gLf
-gLf
+lrs
+rRb
+rRb
 gLf
 rSC
 gLf
@@ -309116,15 +309124,15 @@ rSC
 rSC
 ipb
 mVY
+rRb
 udz
 gLf
-rSC
-rSC
+gLf
 rSC
 lrs
 otg
 uEX
-iyQ
+iyZ
 rRb
 rRb
 nXf
@@ -309556,7 +309564,7 @@ iCS
 uEX
 fIL
 otg
-iyQ
+ptr
 uEX
 lrs
 sBC
@@ -309986,9 +309994,9 @@ rSC
 udz
 gLf
 gLf
+mkx
 iyQ
-iyQ
-iyQ
+iyZ
 gLf
 gLf
 iyQ
