@@ -59,7 +59,7 @@
 	damage = 20
 	damage_type = BURN
 	nodamage = FALSE
-	flag = "fire"
+	flag = "magic"
 	hitsound = 'sound/blank.ogg'
 
 /obj/projectile/magic/firebolt/on_hit(target)
