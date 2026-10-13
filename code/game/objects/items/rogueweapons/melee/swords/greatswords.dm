@@ -415,7 +415,7 @@
 /datum/intent/sword/thrust/estoc/dragonslayer
 	name = "impale"
 	icon_state = "inimpale"
-	penfactor = 55
+	penfactor = PEN_HEAVY
 	attack_verb = list("impales", "runs through")
 	reach = 2
 	damfactor = 1.25
@@ -430,7 +430,7 @@
 	attack_verb = list("splits", "eviscerates")
 	animname = "chop"
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
-	penfactor = 40
+	penfactor = PEN_HEAVY
 	damfactor = 2
 	swingdelay = 15
 	reach = 2
