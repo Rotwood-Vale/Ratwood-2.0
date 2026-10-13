@@ -76,6 +76,8 @@
 	var/classchoice = input(H, "Choose your archetypes", "Available archetypes") as anything in classes
 	switch(classchoice)
 		if("MALICIOUS Mastermind")
+			ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
+			H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/lesser_augmentation), "post_aspect_spells" = list(/datum/action/cooldown/spell/message, /datum/action/cooldown/spell/mindlink)))
 			//stats
 			H.STAINT += 2
 			H.STAPER += 1
@@ -132,6 +134,8 @@
 					backr = /obj/item/rogueweapon/woodstaff/toper
 
 		if("SNIVELLING servant")
+			ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
+			H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 2, "locked_aspects" = list(/datum/magic_aspect/lesser_augmentation), "post_aspect_spells" = list(/datum/action/cooldown/spell/message, /datum/action/cooldown/spell/mindlink)))
 			//stats
 			H.STACON += 2
 			H.STAWIL += 1

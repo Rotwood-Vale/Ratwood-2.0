@@ -59,6 +59,8 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
+		ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
+		H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 2, "locked_aspects" = list(/datum/magic_aspect/artifice)))
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb/lesser)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic) //Voluntary conversion.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/zizo_snuff/champion) //Champion-variant of Snuff Lights. Non-miracle, static range of 7, but much longer CD.
@@ -147,6 +149,7 @@
 				H.change_stat("fortune", 1)
 			if("The Path of Magic (More Spells)") //Silence & Raise Deadite, plus choice between Bolt of Lightning and Ensnare.
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/silence)
+				H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 3, "locked_aspects" = list(/datum/magic_aspect/artifice)))
 
 
 /obj/effect/proc_holder/spell/invoked/bonemend
