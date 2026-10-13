@@ -1,4 +1,0 @@
-author: "annikaRU"
-delete-after: True
-changes:
-  - bugfix: "fixes a void under two windows, updates flooring I forgot to do"
