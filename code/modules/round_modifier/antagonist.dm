@@ -102,6 +102,6 @@
 	name = "Lich"
 	desc = "The dead march forward in lockstep!"
 	cost = 6
-	weight = 6
+	weight = 2
 	min_chaos = 3
 	villain_events = list(/datum/round_event_control/antagonist/solo/lich)
