@@ -1,6 +1,6 @@
 /datum/advclass/mercenary/gronnheavy
-	name = "Fjall Járnklæddur"
-	tutorial = "Even within Fjall, few bear witness to the Horned Visages of the Járnklæddur; Ironclad warriors who stand against the undead armies that rise out of the 'Red Blizzard'. Those who do not have the blessing of the Iskarn Shamans within the Northern Empty oft-seek the protection of the Járnklæddur, despite their steep costs."
+	name = "Khuyagtan"
+	tutorial = "Even within Northern Empty, few bear witness to the Horned Visages of the Khuyagtan; Ironclad warriors who stand against the undead armies that rise out of the 'Red Blizzard'. Those who do not have the blessing of the Zayran Shamans within the Northern Empty oft-seek the protection of the Khuyagtan, despite their steep costs."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
 	maximum_possible_slots = 2 //Hopefully this works.

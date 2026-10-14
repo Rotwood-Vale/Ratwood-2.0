@@ -18,6 +18,7 @@
 	var/last_eat
 	buckle_lying = FALSE
 	buckle_prevents_pull = TRUE
+	buckle_blocks_spells = TRUE
 	var/seednutrition = 0
 	var/max_seednutrition = 100
 	var/mob/planter = null

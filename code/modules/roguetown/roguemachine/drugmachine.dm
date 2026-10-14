@@ -5,6 +5,9 @@
 #define DRUGRADE_CLOTHES 	      	(1<<4)
 #define DRUGRADE_NOTAX				(1<<5)
 
+#define PURITY_CUT_A_COST			30
+#define PURITY_CUT_B_COST			105
+
 /obj/structure/roguemachine/drugmachine
 	name = "PURITY"
 	desc = "You want to destroy your life."
@@ -25,7 +28,13 @@
 	var/last_payout = 0
 	var/drugrade_flags
 	var/budget
-	
+	/// Motto displayed at the top of the TGUI interface.
+	var/motto = "PURITY - In the name of pleasure."
+	/// Running tally of Crown import tariff actually collected via this machine.
+	var/tariff_collected_here = 0
+	/// Running tally of tariff dodged via DRUGRADE_NOTAX, for the Bathmaster's audit.
+	var/tariff_evaded_here = 0
+
 /obj/structure/roguemachine/drugmachine/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/roguekey))
 		var/obj/item/roguekey/K = P
@@ -33,6 +42,9 @@
 			locked = !locked
 			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 			update_icon()
+			if(locked)
+				SStgui.close_uis(src)
+				return
 			return attack_hand(user)
 		else
 			to_chat(user, span_warning("Wrong key."))
@@ -45,6 +57,9 @@
 				locked = !locked
 				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 				update_icon()
+				if(locked)
+					SStgui.close_uis(src)
+					return
 				return attack_hand(user)
 		if(!right_key)
 			to_chat(user, span_warning("Wrong key."))
@@ -74,118 +89,25 @@
 			secret_budget += amt
 			last_payout = world.time
 
-/obj/structure/roguemachine/drugmachine/Topic(href, href_list)
-	. = ..()
-	if(!ishuman(usr))
+/obj/structure/roguemachine/drugmachine/ui_state(mob/user)
+	return GLOB.human_adjacent_state
+
+/obj/structure/roguemachine/drugmachine/ui_status(mob/user, datum/ui_state/state)
+	if(!isliving(user) || user.stat == DEAD)
+		return UI_CLOSE
+	return ..()
+
+/obj/structure/roguemachine/drugmachine/ui_interact(mob/user, datum/tgui/ui)
+	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/human_mob = usr
-	if(href_list["buy"])
-		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-			return
-		var/O = text2path(href_list["buy"])
-		if(held_items[O]["PRICE"])
-			var/tax_amt = FLOOR(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * held_items[O]["PRICE"], 1)
-			var/full_price = held_items[O]["PRICE"] + tax_amt
-			if(drugrade_flags & DRUGRADE_NOTAX)
-				full_price = held_items[O]["PRICE"]
-			if(budget >= full_price)
-				budget -= full_price
-				record_round_statistic(STATS_PURITY_VALUE_SPENT, full_price)
-				recent_payments += held_items[O]["PRICE"]
-				// AP tariff routing: PURITY is a bathhouse stew machine, so the Ordinance of
-				// the Baths diverts its tariff to the Church the same as the BRASSFACE.
-				if(drugrade_flags & DRUGRADE_NOTAX)
-					record_round_statistic(STATS_TAXES_EVADED, tax_amt)
-				else if(SStreasury.bathhouse_ordinance_active)
-					var/bathhouse_tithe = SStreasury.compute_bathhouse_tithe(held_items[O]["PRICE"], BATHHOUSE_BRASSFACE_TITHE_RATE)
-					if(bathhouse_tithe > 0)
-						SStreasury.mint(SStreasury.church_fund, bathhouse_tithe, "Ordinance of the Baths tithe ([src.name])")
-				else
-					SStreasury.mint(SStreasury.discretionary_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] ([src.name])")
-					record_featured_stat(FEATURED_STATS_TAX_PAYERS, human_mob, tax_amt)
-					record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
-					record_round_statistic(STATS_REVENUE_IMPORT_TARIFF, tax_amt)
-			else
-				say("Not enough!")
-				return
-		var/obj/item/I = new O(get_turf(src))
-		human_mob.put_in_hands(I)
-	if(href_list["change"])
-		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-			return
-		if(budget > 0)
-			budget2change(budget, usr)
-			budget = 0
-	if(href_list["secrets"])
-		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-			return
-		var/list/options = list()
-		options += "Withdraw Cut"
-		if(drugrade_flags & DRUGRADE_NOTAX)
-			options += "Enable Paying Taxes"
-		else
-			options += "Stop Paying Taxes"
-		if(!(drugrade_flags & DRUGRADE_MONEYA))
-			options += "Unlock 25% Cut (30)"
-		else
-			if(!(drugrade_flags & DRUGRADE_MONEYB))
-				options += "Unlock 50% Cut (105)"
-		var/select = input(usr, "Please select an option.", "", null) as null|anything in options
-		if(!select)
-			return
-		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-			return
-		switch(select)
-			if("Withdraw Cut")
-				if(secret_budget < 1)
-					say("There is no mammon to move, Master.")
-					return
-				options = list("To Bank (Taxed)", "Direct")
-				select = input(usr, "Please select an option.", "", null) as null|anything in options
-				if(!select)
-					return
-				if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-					return
-				if(secret_budget < 1)
-					say("There is no mammon to move, Master.")
-					return
-				switch(select)
-					if("To Bank (Taxed)")
-						var/mob/living/carbon/human/H = usr
-						if(!(SStreasury.generate_money_account(floor(secret_budget), H))) //We returned false on executing the transfer
-							say("I could not put your cut in your account, Master. My apologies.")
-							return
-						secret_budget = 0
-					if("Direct")
-						budget2change(floor(secret_budget), usr)
-						secret_budget = 0
-			if("Enable Paying Taxes")
-				drugrade_flags &= ~DRUGRADE_NOTAX
-				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-			if("Stop Paying Taxes")
-				drugrade_flags |= DRUGRADE_NOTAX
-				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-			if("Unlock 25% Cut (30)")
-				if(drugrade_flags & DRUGRADE_MONEYA)
-					return
-				if(budget < 30)
-					say("Ask again when you're serious.")
-					playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
-					return
-				budget -= 30
-				drugrade_flags |= DRUGRADE_MONEYA
-				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-			if("Unlock 50% Cut (105)")
-				if(drugrade_flags & DRUGRADE_MONEYB)
-					return
-				if(budget < 105)
-					say("Ask again when you're serious.")
-					playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
-					return
-				budget -= 105
-				drugrade_flags |= DRUGRADE_MONEYB
-				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-	return attack_hand(usr)
+	if(locked)
+		to_chat(user, span_warning("It's locked. Of course."))
+		return
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
+		ui = new(user, src, "Purity", name)
+		ui.open()
 
 /obj/structure/roguemachine/drugmachine/attack_hand(mob/living/user)
 	. = ..()
@@ -193,48 +115,202 @@
 		return
 	if(!ishuman(user))
 		return
+	user.changeNext_move(CLICK_CD_INTENTCAP)
+	ui_interact(user)
+
+/obj/structure/roguemachine/drugmachine/ui_data(mob/user)
+	var/list/data = list()
+	var/mob/living/carbon/human/H = user
+	var/can_read = istype(H) ? H.can_read(src, TRUE) : FALSE
+	var/is_proprietor = istype(H) && H.job == "Bathmaster"
+	var/dodging = (drugrade_flags & DRUGRADE_NOTAX) ? TRUE : FALSE
+	data["motto"] = motto
+	data["budget"] = budget
+	data["locked"] = locked ? TRUE : FALSE
+	data["can_read"] = can_read
+	data["is_proprietor"] = is_proprietor
+	data["dodging"] = dodging
+	data["tariff_rate_pct"] = round(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * 100)
+	data["tariff_paid"] = tariff_collected_here
+	data["tariff_evaded"] = tariff_evaded_here
+	var/cut_pct = 10
+	if(drugrade_flags & DRUGRADE_MONEYA)
+		cut_pct = 25
+	if(drugrade_flags & DRUGRADE_MONEYB)
+		cut_pct = 50
+	data["recent_payments"] = recent_payments
+	data["secret_budget"] = secret_budget
+	data["cut_pct"] = cut_pct
+	data["upgrade_a_unlocked"] = (drugrade_flags & DRUGRADE_MONEYA) ? TRUE : FALSE
+	data["upgrade_b_unlocked"] = (drugrade_flags & DRUGRADE_MONEYB) ? TRUE : FALSE
+	data["upgrade_a_cost"] = PURITY_CUT_A_COST
+	data["upgrade_b_cost"] = PURITY_CUT_B_COST
+	var/tariff_rate = SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF)
+	var/cut_floor = floor(secret_budget)
+	var/cut_tax = FLOOR(cut_floor * tariff_rate, 1)
+	data["withdraw_tax"] = cut_tax
+	data["withdraw_net"] = cut_floor - cut_tax
+	var/list/items = list()
+	for(var/I in held_items)
+		var/base = held_items[I]["PRICE"]
+		var/tariff = dodging ? 0 : FLOOR(tariff_rate * base, 1)
+		items += list(list(
+			"ref" = "[I]",
+			"name" = held_items[I]["NAME"] || "thing",
+			"category" = "Vice",
+			"qty" = 1,
+			"price_base" = base,
+			"price_tariff" = tariff,
+			"price" = base + tariff,
+		))
+	data["items"] = items
+	return data
+
+/obj/structure/roguemachine/drugmachine/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	if(!ishuman(usr))
+		return
 	if(locked)
 		return
-	user.changeNext_move(CLICK_CD_INTENTCAP)
-	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-	var/canread = user.can_read(src, TRUE)
-	var/contents
-	if(canread)
-		contents = "<center>PURITY - In the name of pleasure.<BR>"
-		contents += "<a href='?src=[REF(src)];change=1'>MAMMON LOADED:</a> [budget]<BR>"
-	else
-		contents = "<center>[stars("PURITY - In the name of pleasure.")]<BR>"
-		contents += "<a href='?src=[REF(src)];change=1'>[stars("MAMMON LOADED:")]</a> [budget]<BR>"
-
-
-	var/mob/living/carbon/human/H = user
-	if(H.job == "Bathmaster")
-		if(canread)
-			contents += "<a href='?src=[REF(src)];secrets=1'>Secrets</a><BR>"
-			contents += "Mammon Washing: [recent_payments] -- Your cut, Master! [secret_budget]<BR>"
-		else
-			contents += "<a href='?src=[REF(src)];secrets=1'>[stars("Secrets")]</a><BR>"
-			contents += "[stars("Mammon Washing:")] [recent_payments] -- [stars("Your cut, Master!")] [secret_budget]<BR>"
-
-	contents += "</center>"
-
-	for(var/I in held_items)
-		var/price = FLOOR(held_items[I]["PRICE"] + (SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * held_items[I]["PRICE"]), 1)
-		var/namer = held_items[I]["NAME"]
-		if(!price)
-			price = "0"
-		if(!namer)
-			held_items[I]["NAME"] = "thing"
-			namer = "thing"
-		if(canread)
-			contents += "[namer] + [price] <a href='?src=[REF(src)];buy=[I]'>BUY</a>"
-		else
-			contents += "[stars(namer)] + [stars(price)] <a href='?src=[REF(src)];buy=[I]'>[stars("BUY")]</a>"
-		contents += "<BR>"
-
-	var/datum/browser/popup = new(user, "VENDORTHING", "", 370, 400)
-	popup.set_content(contents)
-	popup.open()
+	var/mob/living/carbon/human/H = usr
+	switch(action)
+		if("change")
+			if(budget > 0)
+				budget2change(budget, usr)
+				budget = 0
+			return TRUE
+		if("buy")
+			var/O = text2path(params["ref"])
+			if(!ispath(O) || !(O in held_items))
+				return TRUE
+			var/base = held_items[O]["PRICE"]
+			if(!base)
+				return TRUE
+			var/tax_amt = FLOOR(SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF) * base, 1)
+			var/full_price = base
+			if(drugrade_flags & DRUGRADE_NOTAX)
+				record_round_statistic(STATS_TAXES_EVADED, tax_amt)
+				tariff_evaded_here += tax_amt
+			else
+				full_price += tax_amt
+			if(budget < full_price)
+				say("Not enough!")
+				return TRUE
+			budget -= full_price
+			record_round_statistic(STATS_PURITY_VALUE_SPENT, full_price)
+			recent_payments += base
+			playsound(loc, 'sound/misc/gold_misc.ogg', 70, FALSE, -1)
+			// AP tariff routing: PURITY is a bathhouse stew machine, so the Ordinance of
+			// the Baths diverts its tariff to the Church the same as the BRASSFACE.
+			if(!(drugrade_flags & DRUGRADE_NOTAX))
+				if(SStreasury.bathhouse_ordinance_active)
+					var/bathhouse_tithe = SStreasury.compute_bathhouse_tithe(base, BATHHOUSE_BRASSFACE_TITHE_RATE)
+					if(bathhouse_tithe > 0)
+						SStreasury.mint(SStreasury.church_fund, bathhouse_tithe, "Ordinance of the Baths tithe ([src.name])")
+					// While the Ordinance holds the Crown has no claim upon the Baths - the
+					// tariff charged on the sale is diverted to the Church instead.
+					if(tax_amt > 0)
+						SStreasury.mint(SStreasury.church_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] diverted to the Church ([src.name])")
+					tariff_collected_here += tax_amt
+				else
+					SStreasury.mint(SStreasury.discretionary_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] ([src.name])")
+					record_featured_stat(FEATURED_STATS_TAX_PAYERS, H, tax_amt)
+					record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
+					record_round_statistic(STATS_REVENUE_IMPORT_TARIFF, tax_amt)
+					tariff_collected_here += tax_amt
+			var/obj/item/I = new O(get_turf(src))
+			H.put_in_hands(I)
+			return TRUE
+		if("toggle_tax")
+			if(H.job != "Bathmaster")
+				return TRUE
+			if(drugrade_flags & DRUGRADE_NOTAX)
+				drugrade_flags &= ~DRUGRADE_NOTAX
+			else
+				drugrade_flags |= DRUGRADE_NOTAX
+			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
+			return TRUE
+		if("unlock_cut")
+			if(H.job != "Bathmaster")
+				return TRUE
+			var/level = "[params["level"]]"
+			if(level == "a")
+				if(drugrade_flags & DRUGRADE_MONEYA)
+					return TRUE
+				if(budget < PURITY_CUT_A_COST)
+					say("Ask again when you're serious.")
+					playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+					return TRUE
+				budget -= PURITY_CUT_A_COST
+				drugrade_flags |= DRUGRADE_MONEYA
+			else if(level == "b")
+				if(!(drugrade_flags & DRUGRADE_MONEYA) || (drugrade_flags & DRUGRADE_MONEYB))
+					return TRUE
+				if(budget < PURITY_CUT_B_COST)
+					say("Ask again when you're serious.")
+					playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+					return TRUE
+				budget -= PURITY_CUT_B_COST
+				drugrade_flags |= DRUGRADE_MONEYB
+			else
+				return TRUE
+			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
+			return TRUE
+		if("withdraw_cut")
+			if(H.job != "Bathmaster")
+				return TRUE
+			if(secret_budget < 1)
+				say("There is no mammon to move, Master.")
+				return TRUE
+			var/mode = "[params["mode"]]"
+			switch(mode)
+				if("bank")
+					var/cut = floor(secret_budget)
+					var/tax_amt = FLOOR(cut * SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF), 1)
+					var/deposit = cut - tax_amt
+					if(deposit < 1)
+						say("The duty would swallow your whole cut, Master. Take it in coin instead.")
+						return TRUE
+					if(!(SStreasury.generate_money_account(deposit, H))) //We returned false on executing the transfer
+						say("I could not put your cut in your account, Master. My apologies.")
+						return TRUE
+					secret_budget = 0
+					// Banking the cut launders it through the ledger, so the Crown takes its
+					// import duty off the top - diverted to the Church as a tithe while the
+					// Ordinance of the Baths is in force, same as PURITY's sales tariff.
+					if(tax_amt > 0)
+						if(SStreasury.bathhouse_ordinance_active)
+							var/bathhouse_tithe = SStreasury.compute_bathhouse_tithe(cut, BATHHOUSE_BRASSFACE_TITHE_RATE)
+							if(bathhouse_tithe > 0)
+								SStreasury.mint(SStreasury.church_fund, bathhouse_tithe, "Ordinance of the Baths tithe ([src.name])")
+							// The Crown's duty on the banked cut is diverted to the Church
+							// while the Ordinance of the Baths is in force.
+							SStreasury.mint(SStreasury.church_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] diverted to the Church ([src.name])")
+						else
+							SStreasury.mint(SStreasury.discretionary_fund, tax_amt, "[TAX_CATEGORY_IMPORT_TARIFF] ([src.name])")
+							record_featured_stat(FEATURED_STATS_TAX_PAYERS, H, tax_amt)
+							record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
+							record_round_statistic(STATS_REVENUE_IMPORT_TARIFF, tax_amt)
+						tariff_collected_here += tax_amt
+					if(SStreasury.bathhouse_ordinance_active)
+						say("[deposit]m to your account, Master. The Church keeps [tax_amt]m.")
+					else
+						say("[deposit]m to your account, Master. The Crown keeps [tax_amt]m.")
+				if("direct")
+					// The cut leaves as untraced coin, so the Crown's duty is dodged entirely.
+					var/cut = floor(secret_budget)
+					var/dodged_amt = FLOOR(cut * SStreasury.get_tax_rate(TAX_CATEGORY_IMPORT_TARIFF), 1)
+					budget2change(cut, usr)
+					secret_budget = 0
+					if(dodged_amt > 0)
+						record_round_statistic(STATS_TAXES_EVADED, dodged_amt)
+						tariff_evaded_here += dodged_amt
+				else
+					return TRUE
+			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
+			return TRUE
 
 /obj/structure/roguemachine/drugmachine/obj_break(damage_flag)
 	..()
@@ -287,3 +363,5 @@
 #undef DRUGRADE_WEAPONS
 #undef DRUGRADE_CLOTHES
 #undef DRUGRADE_NOTAX
+#undef PURITY_CUT_A_COST
+#undef PURITY_CUT_B_COST

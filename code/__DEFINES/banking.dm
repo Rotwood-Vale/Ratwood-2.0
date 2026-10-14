@@ -113,6 +113,12 @@
 #define PATRON_CAP_BATHHOUSE 5
 #define PATRON_CAP_CHURCH 20
 
+/// Default daily withdrawal cap for Bathhouse agents drawing from the bathhouse fund.
+#define BATHHOUSE_AGENT_DAILY_WITHDRAW_DEFAULT 50
+
+/// Default daily withdrawal cap for Bathhouse workers drawing from the bathhouse fund.
+#define BATHHOUSE_WORKER_DAILY_WITHDRAW_DEFAULT 50
+
 #define PATRONAGE_WRIT_COOLDOWN (30 SECONDS)
 
 #define POLL_TAX_MAX_RATE 40

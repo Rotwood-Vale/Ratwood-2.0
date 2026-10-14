@@ -5,7 +5,8 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/refugee
 	subclass_languages = list(/datum/language/celestial)
 	cmode_music = 'sound/music/warscholar.ogg'
-	traits_applied = list(TRAIT_STEELHEARTED)
+	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_NALEDI)
 	subclass_stats = list(
 		STATKEY_SPD = 2,
 		STATKEY_PER = 1,
@@ -23,9 +24,7 @@
 /datum/outfit/job/roguetown/adventurer/refugee/pre_equip(mob/living/carbon/human/H)
 	..()
 	var/list/paths = list("Refugee (Default)", "Conclave Dropout (Hierophant)", "Desert Ascetic (Pontifex)", "Abandoned Diviner (Vizier)")
-	var/list/hmm = list("I left for a reason... (Default)", "The Djinn could be anywhere! (Naledi Complex)")
 	var/path = input(H, "Choose your past.", "WHAT DID WAR TAKE FROM YOU?") as anything in paths
-	var/complex = input(H, "How tightly bound to traditions you are?", "I HATE DJINNS!") as anything in hmm
 
 	backr = /obj/item/storage/backpack/rogue/satchel
 	id = /obj/item/clothing/neck/roguetown/psicross/naledi
@@ -36,13 +35,7 @@
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	head = /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/black
 	beltr = /obj/item/flashlight/flare/torch/lantern
-
-	switch(complex)
-		if("The Djinn could be anywhere! (Naledi Complex)")
-			ADD_TRAIT(H, TRAIT_NALEDI, TRAIT_GENERIC)
-			mask = /obj/item/clothing/mask/rogue/lordmask/naledi
-		else
-			mask = /obj/item/clothing/mask/rogue/lordmask/tarnished
+	mask = /obj/item/clothing/mask/rogue/lordmask/naledi
 
 	switch(path)
 

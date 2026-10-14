@@ -324,7 +324,6 @@
 /obj/effect/proc_holder/spell/invoked/stasis/proc/clear_overhead_indicator(appearance,mob/living/carbon/target)
 	target.remove_overlay(OBJ_LAYER)
 	cut_overlay(appearance, TRUE)
-	qdel(appearance)
 	update_icon()
 	return
 
@@ -549,6 +548,7 @@
 	var/damage_per_fragment = 22
 
 	var/mob/living/caster
+	var/slow_timer
 
 /datum/status_effect/debuff/divergence/on_creation(mob/living/new_owner, mob/living/new_caster)
 	. = ..()
@@ -564,7 +564,9 @@
 
 	var/turf/center = get_turf(owner)
 
-	owner.Immobilize(2 SECONDS)
+	owner.Immobilize(0.5 SECONDS)
+	owner.add_movespeed_modifier(MOVESPEED_ID_TIMELINEDIVERGE, update=TRUE, priority=100, multiplicative_slowdown=2, movetypes=GROUND)
+	slow_timer = addtimer(CALLBACK(src, PROC_REF(remove_slow)), 3 SECONDS, TIMER_STOPPABLE)
 
 	owner.visible_message(
 		span_warning("[owner]'s timeline fractures apart!"),
@@ -573,8 +575,16 @@
 
 	spawn_fragments(center)
 
+/datum/status_effect/debuff/divergence/proc/remove_slow()
+	slow_timer = null
+	owner?.remove_movespeed_modifier(MOVESPEED_ID_TIMELINEDIVERGE, TRUE)
+
 /datum/status_effect/debuff/divergence/on_remove()
 	. = ..()
+	// If the effect ends early cancel the timer and make sure the slow is gone
+	if(slow_timer)
+		deltimer(slow_timer)
+		remove_slow()
 
 	for(var/obj/effect/divergence_fragment/F in fragments)
 		if(!QDELETED(F))

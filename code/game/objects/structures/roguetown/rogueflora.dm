@@ -530,10 +530,7 @@
 		bush_stuck[L] = TRUE
 		L.mobility_flags &= ~MOBILITY_MOVE
 
-		addtimer(
-			CALLBACK(src, PROC_REF(release_bush_stuck), L),
-			stuck_time
-		)
+		addtimer(CALLBACK(src, PROC_REF(release_bush_stuck), L), stuck_time)
 
 		if(L.m_intent == MOVE_INTENT_RUN || (L.buckled)) // running or riding brings injury since they sidestep the slowdown
 			if(!ishuman(L))

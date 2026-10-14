@@ -189,10 +189,7 @@
 		target_turfs += get_step(T, NORTH)
 		target_turfs += get_step(T, SOUTH)
 
-	for(var/i = 1 to to_spawn)
-		if(i > to_spawn)
-			i = 1
-
+	for(var/i = 1 to min(to_spawn, length(target_turfs)))
 		var/t_turf = target_turfs[i]
 
 		if(!isopenturf(t_turf))
@@ -226,7 +223,7 @@
 	Requires the target to be within four tiles. Works on undead animals, too, and they will heed your command."
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
-	overlay_state = "tame_deadite"
+	overlay_state = "deadite_tame"
 	range = 4
 	warnie = "sydwarning"
 	recharge_time = 60 SECONDS

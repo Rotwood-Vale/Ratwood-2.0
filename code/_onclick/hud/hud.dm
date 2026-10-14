@@ -330,7 +330,7 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	for(var/thing in plane_masters)
 		var/atom/movable/screen/plane_master/PM = plane_masters[thing]
 		PM.backdrop(mymob)
-		mymob.client.screen += PM
+		mymob.client?.screen += PM
 
 /datum/hud/human/show_hud(version = 0,mob/viewmob)
 	. = ..()

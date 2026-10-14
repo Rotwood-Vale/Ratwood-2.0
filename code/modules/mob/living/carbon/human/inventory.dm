@@ -194,9 +194,9 @@
 			s_store = I
 			update_inv_s_store()
 		if(SLOT_MOUTH)
-
 			mouth = I
 			update_inv_mouth()
+			update_action_buttons_icon()
 		if(SLOT_IN_BACKPACK)
 			not_handled = TRUE
 			if(beltr)
@@ -348,6 +348,7 @@
 		mouth = null
 		if(!QDELETED(src))
 			update_inv_mouth()
+			update_action_buttons_icon()
 
 	// Armor class warning - must run after slot vars are nulled so check_armor_skill() sees the correct state
 	if(!QDELETED(src) && istype(I, /obj/item/clothing))

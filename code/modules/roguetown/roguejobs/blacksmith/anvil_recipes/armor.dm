@@ -177,7 +177,7 @@
 /datum/anvil_recipe/armor/bronze/skirt
 	name = "Chainskirt, Bronze (+1 Cured Leather)"
 	additional_items = list(/obj/item/natural/hide/cured)
-	created_item = /obj/item/clothing/under/roguetown/heavy_leather_pants/bronzeskirt
+	created_item = /obj/item/clothing/under/roguetown/chainlegs/skirt/bronze
 	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/anvil_recipe/armor/bronze/mask
@@ -237,7 +237,7 @@
 	display_category = ITEM_CAT_ARMOR_CHESTPIECES
 
 /datum/anvil_recipe/armor/bronze/mailleskirt
-	name = "Chainmaille Skirt, Bronze"
+	name = "Chainmaille Kilt, Bronze"
 	created_item = /obj/item/clothing/under/roguetown/chainlegs/kilt/bronze
 	display_category = ITEM_CAT_ARMOR_LEGS
 
@@ -597,6 +597,35 @@
 	name = "Visored Sallet, Iron (+1 Iron)"
 	additional_items = list(/obj/item/ingot/iron)
 	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/visored/iron
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/iron/sallet/visor_snouted
+	name = "Visored Sallet, Snouted, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/roguetown/helmet/sallet/visored/iron/snouted
+
+/datum/anvil_recipe/armor/iron/helmetroundface
+	name = "Roundface Bascinet, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/iron/helmetroundface_snouted
+	name = "Roundface Bascinet, Snouted, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/iron/snouted
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/iron/helmetarmet
+	name = "Armet, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/armor/iron/helmetarmet_snouted
+	name = "Armet, Snouted, Iron (+1 Iron)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/iron/snouted
 	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/anvil_recipe/armor/iron/knighthelmet

@@ -97,6 +97,22 @@
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	item_d_type = "blunt"
 
+/datum/intent/mace/smash/flailchop
+	name = "pendulous chop"
+	icon_state = "inchop"
+	attack_verb = list("chops", "hacks")
+	chargetime = 1.2 SECONDS
+	recovery = 40
+	damfactor = 1.3
+	reach = 2
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	penfactor = 35
+	chargedloop = /datum/looping_sound/flailswing
+	keep_looping = TRUE
+	blade_class = BCLASS_CHOP
+	item_d_type = "slash"
+	blunt_chipping = FALSE
+
 /datum/intent/flail/sweep
 	name = "sweeping strike"
 	icon_state = "insweep"
@@ -287,6 +303,7 @@
 	icon_state = "greatflail"
 	wdefense = 6
 	minstr = 12
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	max_integrity = 300//+50 over iron warflail
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/steel
@@ -298,6 +315,7 @@
 	wdefense = 6
 	minstr = 13
 	max_integrity = 300
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	is_silver = TRUE
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/silver
@@ -322,6 +340,7 @@
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)//this having the better intents is a smaller buff than just increasing the base force, on par with things like blacksteel greataxe and flamberg being on par with antag options
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	max_integrity = 500
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/blacksteel
 	special = /datum/special_intent/greatflail_swing//snowflake version of greatsword special that does blunt
@@ -337,6 +356,7 @@
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	associated_skill = /datum/skill/combat/whipsflails
 	slot_flags = ITEM_SLOT_BACK
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	wdefense = 7 //on par with blacksteel version, i've seen this thing get broken far to often
 	max_integrity = 350 // 50+ compared to steel, on par with silver blessed
@@ -345,6 +365,35 @@
 /obj/item/rogueweapon/flail/peasantwarflail/matthios/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "FLAIL")
+
+/obj/item/rogueweapon/flail/peasantwarflail/stalker
+	name = "spined drow greatflail"
+	desc = "A pendulous, bladed, and spined orb of dark mithril hung from a thorned link of chains. For more robustly built drow caviliers, there is \
+	nothing quite as potent as these fearsome greatflails. The spikes have a nasty habit of gumming up with gore; this is intentional."
+	icon = 'icons/roguetown/weapons/blunt64.dmi'
+	icon_state = "drowgreatflail"
+	possible_item_intents = list(/datum/intent/flail/strike, /datum/intent/dagger/sucker_punch)//always be punching
+	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange, /datum/intent/mace/smash/flailchop, /datum/intent/flail/sweep)
+	associated_skill = /datum/skill/combat/whipsflails
+	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
+	minstr = 12
+	wdefense = 5
+	max_integrity = 300
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	special = /datum/special_intent/greatsword_swing// put that blade to use
+	bigboy = TRUE
+
+/obj/item/rogueweapon/flail/peasantwarflail/stalker/alt
+	name = "drow greatflail"
+	desc = "A pendulous orb of dark mithril hung from a thorned link of chains. For more robustly built drow caviliers, there is \
+	nothing quite as potent as these fearsome greatflails."
+	icon_state = "drowgreatflailb"
+	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/dagger/sucker_punch)//we use the better intents here since it's fully focused on blunt damage
+	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
+	minstr = 13// no jaluck twinks allowed!
+	wdefense = 4// not as scary looking so worse defense idk
+	special = /datum/special_intent/greatflail_swing// greatflail special tho!
+	bigboy = TRUE
 
 /obj/item/rogueweapon/flail/militia
 	name = "militia flail"

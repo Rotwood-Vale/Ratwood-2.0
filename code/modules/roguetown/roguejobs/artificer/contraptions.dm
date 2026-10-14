@@ -231,7 +231,7 @@
 	on_icon = "metalizer_flick"
 	off_icon = "metalizer_off"
 	w_class = WEIGHT_CLASS_BULKY
-	charge_per_source = 5
+	charge_per_source = 10
 
 /obj
 	/// This is the result when the wood metalizer artifact is used on this item
@@ -300,7 +300,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_power_source = /obj/item/rogueore/coal
 	misfire_chance = 0
-	charge_per_source = 6
+	charge_per_source = 12
 
 /obj/item/contraption/smelter/misfire_result()
 	misfiring = TRUE
@@ -398,7 +398,7 @@
 	off_icon = "shears"
 	w_class = WEIGHT_CLASS_BULKY
 	smeltresult = /obj/item/ingot/bronze
-	charge_per_source = 4
+	charge_per_source = 8
 
 /obj/item/contraption/shears/hammer_action(obj/item/I, mob/user)
 	return
@@ -453,8 +453,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_power_source = /obj/item/customlock
 	misfire_chance = 0
-	sneaky_misfire_chance = 20
-	charge_per_source = 2
+	sneaky_misfire_chance = 0
+	charge_per_source = 4
 	cog_accept = FALSE
 	var/list/allowed_locks = list(/obj/structure/mineral_door, /obj/structure/closet, /obj/structure/roguemachine/steward, /obj/structure/roguemachine/vendor, /obj/structure/roguemachine/goldface)
 	var/stored_lock_id = "artificer"

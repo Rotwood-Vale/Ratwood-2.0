@@ -43,6 +43,11 @@ GLOBAL_LIST_EMPTY(last_words)
 /mob/living/dust(just_ash, drop_items, force)
 	death(TRUE)
 
+	// Several simple animals delete themselves inside death(). Everything below schedules against
+	// src, so without this the ash timer is set on a mob that is already destroyed and never fires.
+	if(QDELETED(src))
+		return
+
 	spill_embedded_objects()
 
 	if(drop_items)
@@ -131,9 +136,8 @@ GLOBAL_LIST_EMPTY(last_words)
 	if(client)
 		client.move_delay = initial(client.move_delay)
 		if(!nocutscene)
-			var/atom/movable/screen/gameover/hog/H = new()
+			var/atom/movable/screen/gameover/hog/H = new(client)
 			H.layer = SPLASHSCREEN_LAYER+0.1
-			client.screen += H
 			H.Fade()
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/atom/movable/screen/gameover, Fade), TRUE), 100)
 //		flick("gameover",H)

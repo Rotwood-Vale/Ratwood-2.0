@@ -23,6 +23,7 @@
 /obj/item/clothing/suit/roguetown/shirt/undershirt
 	name = "shirt"
 	desc = "Modest and humble. It lets you walk around in public with your dignity intact."
+	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	icon_state = "undershirt"
 	item_state = "undershirt"
 	r_sleeve_status = SLEEVE_NORMAL

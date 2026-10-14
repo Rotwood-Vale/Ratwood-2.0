@@ -22,12 +22,15 @@
 	job_traits = list(
 		TRAIT_NOPAINSTUN,
 		TRAIT_PACIFISM,
+		TRAIT_LUX_FREAK,
 		TRAIT_EMPATH,
 		TRAIT_CRITICAL_RESISTANCE,
+		TRAIT_BLOOD_RESISTANCE,
 		TRAIT_SILVER_BLESSED,
 		TRAIT_STEELHEARTED,
-		TRAIT_INQUISITION,,
-		TRAIT_RITUALIST//Handles conversions, too, now.
+		TRAIT_INQUISITION,
+		TRAIT_RITUALIST, //Handles conversions, too, now.
+		TRAIT_SELF_AWARE //Shows full damage numbers on self-diagnosis, for QOL.
 	)
 
 	advclass_cat_rolls = list(CTAG_ABSOLVER = 2)
@@ -95,7 +98,7 @@
 	mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/absolver
 	id = /obj/item/clothing/ring/signet/silver
-	backpack_contents = list(
+	backpack_contents = list( // currently full
 		/obj/item/book/rogue/bibble/psy = 1,
 		/obj/item/natural/bundle/cloth/bandage/full = 2,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,

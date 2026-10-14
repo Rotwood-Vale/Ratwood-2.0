@@ -21,28 +21,22 @@
 	glow_intensity = GLOW_INTENSITY_LOW
 
 	gesture_required = TRUE // Don't really matter
-	var/obj/item/rogueweapon/conjured_brick = null
 
 /obj/effect/proc_holder/spell/self/magicians_brick/cast(list/targets, mob/living/user = usr)
-	if(src.conjured_brick)
-		qdel(conjured_brick)
+	dispel_conjured_item()
 	var/obj/item/rogueweapon/R = new /obj/item/rogueweapon/magicbrick(user.drop_location())
-	R.AddComponent(/datum/component/conjured_item)
 
-	if(user.STAINT > 10)
-		var/int_scaling = user.STAINT - 10
-		R.force = R.force + int_scaling
-		R.throwforce = R.throwforce + int_scaling * 2 // 2x scaling for throwing. Let's go.
-		R.name = "magician's brick +[int_scaling]"
+	var/int_deviation = abs(user.STAINT - 10)//scales linear in a U curve; both the trog and the archmagos understand hitting someone with a brick hurts a lot
+
+	R.force += int_deviation
+	R.throwforce += int_deviation * 2// 2x scaling for throwing. Let's go.
+	R.name = "magician's brick +[int_deviation]"
+
 	user.put_in_hands(R)
-	src.conjured_brick = R
+	set_conjured_item(R)
 	return TRUE
 
-/obj/effect/proc_holder/spell/self/magicians_brick/Destroy()
-	if(src.conjured_brick)
-		conjured_brick.visible_message(span_warning("The [conjured_brick]'s borders begin to shimmer and fade, before it vanishes entirely!"))
-		qdel(conjured_brick)
-	return ..()
+
 
 /obj/item/rogueweapon/magicbrick
 	name = "magician's brick"

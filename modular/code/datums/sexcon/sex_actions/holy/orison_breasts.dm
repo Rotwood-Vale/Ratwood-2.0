@@ -4,7 +4,6 @@
 	ranged_los_action = TRUE
 	category = SEX_CATEGORY_HANDS
 	target_sex_part = SEX_PART_BREASTS
-	subtle_supported = TRUE
 
 /datum/sex_action/holy/masturbate_other_breasts_orison/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!check_location_accessible(user, target, BODY_ZONE_CHEST, TRUE))

@@ -47,3 +47,78 @@
 	req_blade = /obj/item/blade/steel_sword
 	created_item = /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
 	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+// I do not know why the kazen craftbook is so limited, so here is some more stuff because YAAAY more kazen stuff! //
+
+/datum/anvil_recipe/kazengunite/mulyeog
+	name = "Hwando"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	i_type = "Weapons"
+	req_blade = /obj/item/blade/steel_sword
+	created_item = /obj/item/rogueweapon/sword/sabre/mulyeog
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/kazengunite/armoredsandals
+	name = "Armored Sandals (+1 Cured Leather)"
+	additional_items = list(/obj/item/natural/hide/cured)
+	created_item = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/kazengun
+	display_category = ITEM_CAT_ARMOR_BOOTS
+
+/datum/anvil_recipe/kazengunite/kabuto
+	name = "Jingasa (+1 Cloth)"
+	additional_items = list(/obj/item/natural/cloth)
+	created_item = /obj/item/clothing/head/roguetown/helmet/kettle/jingasa
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/anvil_recipe/kazengunite/tanto
+	name = "Steel Tanto"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	i_type = "Weapons"
+	req_blade = /obj/item/blade/steel_knife
+	created_item = /obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
+	display_category = ITEM_CAT_WEAPONS_DAGGERS
+
+/datum/anvil_recipe/kazengunite/haraate
+	name = "Hansimhae Cuirass (+1 Steel, +2 Cloth)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/cloth, /obj/item/natural/cloth)
+	created_item = /obj/item/clothing/suit/roguetown/armor/brigandine/haraate
+	display_category = ITEM_CAT_ARMOR_CHESTPIECES
+
+/datum/anvil_recipe/kazengunite/naginata
+	name = "Naginata (+1 Big Log)"
+	additional_items = list(/obj/item/grown/log/tree/)
+	appro_skill = /datum/skill/craft/weaponsmithing
+	i_type = "Weapons"
+	req_blade = /obj/item/blade/steel_polearm
+	created_item = /obj/item/rogueweapon/spear/naginata
+	display_category = ITEM_CAT_WEAPONS_POLEARMS
+
+/datum/anvil_recipe/kazengunite/kanabo
+	name = "Kanabo (+1 Steel, +2 Small Log)"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/, /obj/item/grown/log/tree/small)
+	i_type = "Weapons"
+	req_blade = /obj/item/blade/steel_mace
+	created_item = /obj/item/rogueweapon/mace/goden/kanabo
+	display_category = ITEM_CAT_WEAPONS_MACES	
+
+/datum/anvil_recipe/kazengunite/kodachi
+	name = "Kodachi"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	i_type = "Weapons"
+	req_blade = /obj/item/blade/steel_sword
+	created_item = /obj/item/rogueweapon/sword/short/kazengun
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/kazengunite/hook
+	name = "Hook Sword, Steel"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	i_type = "Weapons"
+	req_blade = /obj/item/blade/steel_sword
+	created_item = /obj/item/rogueweapon/sword/sabre/hook
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/kazengunite/ogremask
+	name = "Ogre Mask"
+	created_item = /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full
+	display_category = ITEM_CAT_ARMOR_MASKS

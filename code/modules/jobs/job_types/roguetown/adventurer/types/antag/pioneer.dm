@@ -7,7 +7,7 @@
 	outfit = /datum/outfit/job/roguetown/bandit/pioneer
 	category_tags = list(CTAG_BANDIT)
 	maximum_possible_slots = 1//They're limited because these guys can LEVEL THE TOWN. RAAAAAAAAAA!!!!!!
-	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_WEBWALK, TRAIT_FUSILIER, TRAIT_BOMBER_EXPERT, TRAIT_SQUIRE_REPAIR) //Added bomber expert as it was an oversight not to have it, and squire repair because brigands just buy stuff anyway, makes sense for the 'support' class to fix shit
+	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_WEBWALK, TRAIT_FUSILIER, TRAIT_BOMBER_EXPERT, TRAIT_SQUIRE_REPAIR, TRAIT_LEGENDARY_MINER) //Added bomber expert as it was an oversight not to have it, and squire repair because brigands just buy stuff anyway, makes sense for the 'support' class to fix shit
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_PER = 2,
@@ -65,6 +65,8 @@
 	)
 
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/pioneer/plant_bogtrap_delayed)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/architect_plan)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/architect_conjure)
 
 /datum/outfit/job/roguetown/bandit/pioneer/post_equip(mob/living/carbon/human/H)
 	. = ..()

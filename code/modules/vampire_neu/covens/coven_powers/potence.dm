@@ -16,6 +16,29 @@
 		/datum/coven_power/potence/five
 	)
 
+/datum/coven_power/potence/activate()
+	. = ..()
+	if(!.)
+		return
+	owner.dna.species.punch_damage += POTENCE_PUNCH_DAMAGE_PER_LEVEL * level
+	owner.apply_status_effect(/datum/status_effect/buff/potence, level)
+	if(level > 2)
+		owner.visible_message(span_warning("[owner] tenses their muscles, looking exceptionally stronger!"))
+		if(level > 3)
+			ADD_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, VAMPIRE_TRAIT)
+			ADD_TRAIT(owner, TRAIT_ZJUMP, VAMPIRE_TRAIT)
+			ADD_TRAIT(owner, TRAIT_NOFALLDAMAGE1, VAMPIRE_TRAIT)
+
+/datum/coven_power/potence/deactivate()
+	. = ..()
+	owner.dna.species.punch_damage -= POTENCE_PUNCH_DAMAGE_PER_LEVEL * level
+	owner.remove_status_effect(/datum/status_effect/buff/potence)
+	if(level > 2)
+		owner.visible_message(span_warning("[owner] relaxes their body."))
+		if(level > 3)
+			REMOVE_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, VAMPIRE_TRAIT)
+			REMOVE_TRAIT(owner, TRAIT_ZJUMP, VAMPIRE_TRAIT)
+			REMOVE_TRAIT(owner, TRAIT_NOFALLDAMAGE1, VAMPIRE_TRAIT)
 //POTENCE 1
 /datum/coven_power/potence/one
 	name = "Potence 1"
@@ -26,18 +49,6 @@
 	check_flags = COVEN_CHECK_CAPABLE
 	toggled = TRUE
 	duration_length = 2 TURNS
-
-/datum/coven_power/potence/one/activate()
-	. = ..()
-	if(!.)
-		return
-	owner.dna.species.punch_damage += 8
-	owner.potence_weapon_buff = 1
-
-/datum/coven_power/potence/one/deactivate()
-	. = ..()
-	owner.dna.species.punch_damage -= 8
-	owner.potence_weapon_buff = 0
 
 //POTENCE 2
 /datum/coven_power/potence/two
@@ -52,18 +63,6 @@
 	toggled = TRUE
 	duration_length = 2 TURNS
 
-/datum/coven_power/potence/two/activate()
-	. = ..()
-	if(!.)
-		return
-	owner.dna.species.punch_damage += 16
-	owner.potence_weapon_buff = 2
-
-/datum/coven_power/potence/two/deactivate()
-	. = ..()
-	owner.dna.species.punch_damage -= 16
-	owner.potence_weapon_buff = 0
-
 //POTENCE 3
 /datum/coven_power/potence/three
 	name = "Potence 3"
@@ -75,19 +74,6 @@
 	check_flags = COVEN_CHECK_CAPABLE
 	toggled = TRUE
 	duration_length = 2 TURNS
-
-/datum/coven_power/potence/three/activate()
-	. = ..()
-	if(!.)
-		return
-	owner.dna.species.punch_damage += 24
-	owner.potence_weapon_buff = 3
-
-
-/datum/coven_power/potence/three/deactivate()
-	. = ..()
-	owner.dna.species.punch_damage -= 24
-	owner.potence_weapon_buff = 0
 
 //POTENCE 4
 /datum/coven_power/potence/four
@@ -101,19 +87,6 @@
 	toggled = TRUE
 	duration_length = 2 TURNS
 
-/datum/coven_power/potence/four/activate()
-	. = ..()
-	if(!.)
-		return
-	owner.dna.species.punch_damage += 32
-	owner.potence_weapon_buff = 4
-
-/datum/coven_power/potence/four/deactivate()
-	. = ..()
-	owner.dna.species.punch_damage -= 32
-	owner.potence_weapon_buff = 0
-
-
 //POTENCE 5
 /datum/coven_power/potence/five
 	name = "Potence 5"
@@ -125,15 +98,3 @@
 	check_flags = COVEN_CHECK_CAPABLE
 	toggled = TRUE
 	duration_length = 2 TURNS
-
-/datum/coven_power/potence/five/activate()
-	. = ..()
-	if(!.)
-		return
-	owner.dna.species.punch_damage += 40
-	owner.potence_weapon_buff = 5
-
-/datum/coven_power/potence/five/deactivate()
-	. = ..()
-	owner.dna.species.punch_damage -= 40
-	owner.potence_weapon_buff = 0

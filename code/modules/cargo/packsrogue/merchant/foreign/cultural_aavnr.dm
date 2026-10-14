@@ -134,7 +134,7 @@
 /datum/supply_pack/rogue/aavnr/freifechter_shirt
 	name = "Padded Fencing Shirt"
 	cost = 55
-	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter)
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/freifechter)
 	ship_qty_min = 1
 	ship_qty_max = 2
 
@@ -164,7 +164,7 @@
 	no_name_quantity = TRUE
 	cost = 340
 	contains = list(
-		/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter,
+		/obj/item/clothing/suit/roguetown/shirt/freifechter,
 		/obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter,
 		/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic,
 		/obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short,

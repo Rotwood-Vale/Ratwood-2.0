@@ -74,6 +74,7 @@ GLOBAL_LIST_INIT(sex_actions, build_sex_actions())
 #define SEX_PART_BALLS (1<<9)
 #define SEX_PART_GROIN (1<<10) // requires groin exposed but no particular organ
 #define SEX_PART_TAIL (1<<11) // requires a tail we can use to penetrate with
+#define SEX_PART_TAIL_MAW (1<<12) // requires a manticore tail, works like freeuse, groin covered or uncovered
 
 #define ALL_KNOTTABLE_SEX_PARTS (SEX_PART_CUNT | SEX_PART_ANUS | SEX_PART_JAWS | SEX_PART_SLIT_SHEATH)
 

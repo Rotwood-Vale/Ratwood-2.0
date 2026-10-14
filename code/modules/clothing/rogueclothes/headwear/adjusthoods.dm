@@ -327,6 +327,7 @@
 	name = "hierophant's pashmina"
 	desc = "A thick hood that covers one's entire head, should they desire, or merely acts as a scarf otherwise. Made with spell-laced fabric to provide some protection against daemons and mortals alike."
 	max_integrity = 100
+	resistance_flags = FIRE_PROOF
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = ARMOR_SPELLSINGER
 	icon_state = "deserthood"
@@ -340,6 +341,7 @@
 	name = "pontifex's pashmina"
 	desc = "A slim hood with thin, yet dense fabric. Stretchy and malleable, allowing for full flexibility and mobility. Made with spell-laced fabric to provide some protection against daemons and mortals alike."
 	max_integrity = 100
+	resistance_flags = FIRE_PROOF
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = ARMOR_SPELLSINGER
 	icon_state = "monkhood"

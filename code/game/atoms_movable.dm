@@ -458,6 +458,8 @@
 
 	unbuckle_all_mobs(force=1)
 
+	invisibility = INVISIBILITY_ABSTRACT
+
 	. = ..()
 	if(loc)
 		//Restore air flow if we were blocking it (movables with ATMOS_PASS_PROC will need to do this manually if necessary)
@@ -472,7 +474,6 @@
 	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
 	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
 	LAZYNULL(important_recursive_contents)
-	invisibility = INVISIBILITY_ABSTRACT
 	if(pulledby)
 		pulledby.stop_pulling()
 
@@ -1121,12 +1122,12 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 	var/highest_priority
 
 	for(var/datum/language/langtype as anything in H.languages)
-		if(!can_speak_in_language(langtype.type))
+		if(!can_speak_in_language(langtype))
 			continue
 
 		var/pri = initial(langtype.default_priority)
 		if(!highest_priority || (pri > highest_priority))
-			chosen_langtype = langtype.type
+			chosen_langtype = langtype
 			highest_priority = pri
 
 	H.selected_default_language = .

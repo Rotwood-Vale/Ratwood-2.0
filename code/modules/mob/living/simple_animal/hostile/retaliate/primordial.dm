@@ -247,8 +247,7 @@
 			else if(dx < 0 && dy > 0) // NW corner
 				T.ChangeTurf(/turf/open/water/river/flow, flags = CHANGETURF_IGNORE_AIR)
 	// Auto-remove after duration
-	spawn(duration)
-		qdel(src)
+	QDEL_IN(src, duration)
 
 /obj/effect/whirlpool/Destroy()
 	// Restore saved turfs
@@ -326,17 +325,19 @@
 	var/delay = 3 // deciseconds = 0.3s between rows
 	for(var/row_index = 1, row_index <= wave_rows.len, row_index++)
 		var/list/row = wave_rows[row_index]
-		spawn(delay * (row_index - 1))
-			for(var/turf/T in row)
-				if(!T)
-					continue
-				for(var/mob/living/L in T)
-					if(L == src)
-						continue
-					knockback(L, dir_to_target, 8)
-				new /obj/effect/temp_visual/gust(T, dir_to_target)
+		addtimer(CALLBACK(src, PROC_REF(release_wave_row), row, dir_to_target), delay * (row_index - 1))
 	visible_message(span_danger("[src] exhales a violent gust of wind!"))
 	playsound(src, 'sound/weather/rain/wind_6.ogg', 100, TRUE)
+
+/mob/living/simple_animal/hostile/retaliate/rogue/primordial/air/proc/release_wave_row(list/row, dir_to_target)
+	for(var/turf/T in row)
+		if(!T)
+			continue
+		for(var/mob/living/L in T)
+			if(L == src)
+				continue
+			knockback(L, dir_to_target, 8)
+		new /obj/effect/temp_visual/gust(T, dir_to_target)
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/primordial/air/proc/knockback(mob/living/L, dir, distance)

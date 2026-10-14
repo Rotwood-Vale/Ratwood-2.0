@@ -115,6 +115,10 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/roguetown/coif/padded/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
+
 /obj/item/clothing/neck/roguetown/coif/heavypadding
 	name = "heavy padded coif"
 	desc = "A heavier padded coif meant to be worn on its own or under a helmet. Layered properly, it can last through even the busiest of daes."
@@ -164,6 +168,7 @@
 /obj/item/clothing/neck/roguetown/coif/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, null, null, (UPD_HEAD|UPD_MASK|UPD_NECK))	//Soundless coif
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/neck/roguetown/leather
 	name = "hardened leather gorget"
@@ -206,6 +211,7 @@
 /obj/item/clothing/neck/roguetown/chaincoif/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/chain_equip.ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK))	//Chain coif.
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/neck/roguetown/chaincoif/ancient
 	name = "ancient coif"
@@ -233,6 +239,7 @@
 /obj/item/clothing/neck/roguetown/chaincoif/chainmantle/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, (NECK), null, null, 'sound/foley/equip/equip_armor_chain.ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK))	//Chain coif.
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/neck/roguetown/chaincoif/iron
 	name = "iron chain coif"
@@ -314,10 +321,11 @@
 /obj/item/clothing/neck/roguetown/bevor/ComponentInitialize()
 	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/items/visor.ogg', null, (UPD_HEAD|UPD_MASK|UPD_NECK)) // adjustable falling buffe for the bevor
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/neck/roguetown/bevor/zizo
 	name = "avantyne bevor"
-	desc = "An avantyne neckguard cut for the medium rite, still protective without becoming impossible to remove."
+	desc = "<font color='A50021'>Near them, on the sand, half sunk, a shattered visage lies.</font>"
 	icon_state = "zizobevor"
 	item_state = "zizobevor"
 	peel_threshold = 5
@@ -361,6 +369,10 @@
 	body_parts_covered = NECK
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
+
+/obj/item/clothing/neck/roguetown/gorget/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/neck/roguetown/gorget/steel
 	name = "steel gorget"
@@ -462,6 +474,10 @@
 	. = ..()
 	update_icon()
 
+/obj/item/clothing/neck/roguetown/fencerguard/generic
+	color = "#FFFFFF"
+	detail_color = "#5E4440"
+
 /obj/item/clothing/neck/roguetown/gorget/forlorncollar
 	name = "vreccale"
 	desc = "Nature knows not of mercy."
@@ -543,6 +559,7 @@
 	name = "inverted psycross"
 	desc = "A symbol of ambition from an era that had reason to believe in it."
 	icon_state = "zcross_iron"
+	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_RING
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
 	name = "ancient zcross"
@@ -689,7 +706,7 @@
 
 /obj/item/clothing/neck/roguetown/psicross/reform
 	name = "reformist psycross"
-	desc = "A psycross with its prongs bent inward. God is dead, but this world HE left is beautiful and worth of loving. ENDURE with every broken bone in your body."
+	desc = "'It occured to me that our God had left us, but not our ability to endure hardship. We shall make something out of this world, I said, before we pass onto the next.'"
 	sellprice = 0
 	icon_state = "psycross_reform"
 

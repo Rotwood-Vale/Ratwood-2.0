@@ -396,13 +396,18 @@ Works together with spawning an observer, noted above.
 	return ghost
 
 /mob/living/carbon/human/ghostize(can_reenter_corpse = 1, force_respawn = FALSE, admin = FALSE, drawskip = FALSE)
+	if(admin) // Aghost is never subject to in-character restrictions
+		return ..()
 	if(mind)
 		if(mind.has_antag_datum(/datum/antagonist/zombie))
 			if(force_respawn)
 				mind.remove_antag_datum(/datum/antagonist/zombie)
 				return ..()
 			var/datum/antagonist/zombie/Z = mind.has_antag_datum(/datum/antagonist/zombie)
-			if(!Z.revived)
+			// revived means the rise finished, not that they came back to life. A rise blocked indoors in
+			// town or cured outright never comes, so it must not hold them in the body all round
+			var/rise_still_coming = Z.zombie_start && (world.time < Z.zombie_start + DEAD_TO_ZOMBIE_TIME)
+			if(!Z.revived && stat == DEAD && rise_still_coming)
 				if(!(world.time % 5))
 					to_chat(src, span_warning("I'm preparing to walk again."))
 				return
@@ -1610,7 +1615,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		list("type" = /datum/antagonist/ascendant, "group" = "major", "priority" = 60),
 		list("type" = /datum/antagonist/dreamwalker, "group" = "major", "priority" = 61),
 		list("type" = /datum/antagonist/unbound_death_knight, "group" = "major", "priority" = 62),
-		list("type" = /datum/antagonist/zizo_knight, "group" = "major", "priority" = 63),
+		list("type" = /datum/antagonist/ukj_dark_itinerant, "group" = "major", "priority" = 63),
 		list("type" = /datum/antagonist/prebel/head, "group" = "minor", "priority" = 70),
 		list("type" = /datum/antagonist/prebel, "group" = "minor", "priority" = 71),
 		list("type" = /datum/antagonist/aspirant, "group" = "minor", "priority" = 72),

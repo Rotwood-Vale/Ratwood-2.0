@@ -49,8 +49,18 @@
 	H.verbs |= /mob/living/carbon/human/proc/faith_test
 	H.verbs |= /mob/living/carbon/human/proc/torture_victim
 	if(H.mind)
+		var/stats = list("I am quick on my feet (+I SPD +I WIL)", "I am stronger than others (+I STR +I PER)") // Both add up to +9
+		var/stat_choice = input(H, "What has PSYDON made you?", "THIS IS WHO PSYDON MADE ME.") as anything in stats
+		switch(stat_choice)
+			if("I am quick on my feet (+I SPD +I WIL)")
+			//does nothing. these stats are already given by default
+			if("I am stronger than others (+I STR +I PER)")
+				H.change_stat(STATKEY_STR, 1)
+				H.change_stat(STATKEY_PER, 1)
+				H.change_stat(STATKEY_WIL, -1)
+				H.change_stat(STATKEY_SPD, -1)
 		var/weapons = list("Blessed Psydonic Dagger", "Psydonic Handmace", "Psydonic Shortsword")
-		var/weapon_choice = input(H,"Choose your WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
+		var/weapon_choice = input(H,"CHOOSE YOUR WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 		switch(weapon_choice)
 			if("Blessed Psydonic Dagger")
 				l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger

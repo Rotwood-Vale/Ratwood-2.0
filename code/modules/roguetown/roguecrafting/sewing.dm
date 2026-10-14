@@ -261,7 +261,7 @@
 	result = list(/obj/item/clothing/neck/roguetown/coif/padded)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
-	craftdiff = 4
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/sewing/woolencollar
 	name = "wool collar"
@@ -393,7 +393,7 @@
 	result = list(/obj/item/clothing/neck/roguetown/coif)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
-	craftdiff = 3
+	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/sewing/tabard
 	name = "tabard"
@@ -780,7 +780,7 @@
 /datum/crafting_recipe/roguetown/sewing/hgambeson/fencer
 	display_category = ITEM_CAT_ARMOR_LIGHT
 	name = "fencing shirt"
-	result = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/freifechter
+	result = /obj/item/clothing/suit/roguetown/shirt/freifechter
 	reqs = list(/obj/item/natural/cloth = 4,
 				/obj/item/natural/silk = 2)
 	craftdiff = 5

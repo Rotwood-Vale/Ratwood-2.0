@@ -23,11 +23,6 @@
 	cost = 120
 	contains = list(/obj/item/clothing/neck/roguetown/psicross/silver/undivided)
 
-/datum/supply_pack/rogue/luxury/silverdagger
-	name = "Silver Dagger"
-	cost = 120 //Silver weapons have been made much less powerful but much more common over time
-	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver)
-
 /datum/supply_pack/rogue/luxury/polishing_kit
 	name = "Polishing Kit"
 	no_name_quantity = TRUE

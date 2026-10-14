@@ -1,7 +1,7 @@
-// WOE: SPELLBLADE DODGE EXPERT POLEARM BUILD UPON YE.
+// spellblades spell.. archers and elves oh my
 /datum/advclass/wretch/blackoakwyrm
 	name = "Black Oak Pariah"
-	tutorial = "Carrying extreme beliefs not even befit of the Black Oaks, you have decided to secede yourself from the group and everyone else. This land was once great...and now, wave after wave of monsters and outsiders trample your home. Your people were the ones that settled these lands, and the foreign-backed Crown, deceitful and arrogant, has denied your people the rewards they deserve! Your extensive training in the Black Oaks has given you skill in both glaives and magycks. A bounty from the crown follows you, as you had already done enough to be officially condemned by the group that was not committed to the cause due to the lure of coin."
+	tutorial = "Carrying extreme beliefs not even befit of the Black Oaks, you have found yourself seceded from the group. They come in waves. Your people were the ones that settled these lands, and now you find them trampled by monster and outside alike. The foreign-backed Crown, deceitful and arrogant, has denied your people the harvest they so dutifully sowed. Your extensive training in the Black Oaks has given you skill in elven weaponry and an arcane acuity. Whether you fight openly with a blade, or stalk in the trees above with a bow, a bounty from the crown follows, and the condemned scorn of those that were once your comrades."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
 		/datum/species/human/halfelf,
@@ -11,7 +11,7 @@
 	outfit = /datum/outfit/job/roguetown/wretch/blackoak
 	cmode_music = 'sound/music/combat_blackoak.ogg'
 	class_select_category = CLASS_CAT_RACIAL
-	maximum_possible_slots = 1
+	maximum_possible_slots = 2
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_AZURENATIVE, TRAIT_OUTDOORSMAN, TRAIT_BLACKOAK, TRAIT_DODGEEXPERT, TRAIT_ARCYNE_T2, TRAIT_WOODWALKER)
 	//lower-than-avg stats for wretch but their traits are insanely good
@@ -24,8 +24,7 @@
 	)
 	subclass_spellpoints = 10
 	subclass_skills = list(
-		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
@@ -72,19 +71,34 @@
 	if(H.mind)
 		wretch_select_bounty(H)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/darkvision)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 
-		var/weapons = list("Elven Swordspear", "Elven Curveblade",)
-		var/weapon_choice = input(H, "Choose your weapon.", "THE VISIBLE THREAT") as anything in weapons
+		var/weapons = list("Elven Swordspear", "Elven Curveblade", "Elven Recurve Bow")
+		var/weapon_choice = input(H, "Choose your loadout.", "THE VISIBLE THREAT") as anything in weapons
 		H.set_blindness(0)
+		if(weapon_choice == "Elven Swordspear" || weapon_choice == "Elven Curveblade") //stuff to be shared on the non ranger variants
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
+			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 		switch(weapon_choice)
 			if("Elven Swordspear")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/spear/naginata/elf
 			if("Elven Curveblade")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 				r_hand = /obj/item/rogueweapon/greatsword/elf
+			if("Elven Recurve Bow")
+				H.change_stat(STATKEY_PER, 2)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending)
+				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/longstrider)
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/blackoak
+				beltl = /obj/item/quiver/arrows
+				backpack_contents[/obj/item/rogueweapon/huntingknife/idagger/steel/elvish] = 1
 
 		var/sidearm = list("Elvish Longsword", "Elvish Shortsword", "Elvish Saber", "Elvish Dagger")
+		if(weapon_choice == "Elven Recurve Bow") //nuh uh uh
+			sidearm -= "Elvish Longsword"
+			sidearm -= "Elvish Shortsword"
 		var/sidearm_choice = input(H, "Choose your SIDEARM.", "THE HIDDEN THORN") as anything in sidearm
 		switch(sidearm_choice)
 			if("Elvish Longsword") // It's a sharper longsword.
@@ -108,4 +122,3 @@
 		)
 		var/helmchoice = input(H, "Choose your Helm.", "TAKE UP HELMS") as anything in helmets
 		head = helmets[helmchoice]
-

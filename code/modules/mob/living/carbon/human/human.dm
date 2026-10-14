@@ -204,7 +204,9 @@
 			if(F)
 				F.remove_pending_invite(real_name)
 		incoming_fellowship_invites.Cut()
-	return ..()
+	. = ..()
+	// after the parent chain, or damage overlay updates during it put us straight back in
+	STOP_PROCESSING(SSdamoverlays, src)
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -700,6 +702,16 @@
 	if (dna && dna.species)
 		. += dna.species.check_species_weakness(weapon, attacker)
 
+/**
+ * Whether this body is a temporary shell a player is piloting rather than their own.
+ *
+ * Currently the wildshape forms and werewolf. Both roots cover every shell and new forms are
+ * subtypes, so they are caught without touching each species. The OOC card must never be captured
+ * out of one or stamped onto one, see [/datum/mind/proc/transfer_to].
+ */
+/mob/living/carbon/human/proc/is_shapeshift_shell()
+	return istype(src, /mob/living/carbon/human/species/wildshape) || istype(src, /mob/living/carbon/human/species/werewolf)
+
 /mob/living/carbon/human/is_literate()
 	if(mind)
 		if(get_skill_level(/datum/skill/misc/reading) > 0)
@@ -740,6 +752,8 @@
 			if(alert(usr,"The next prompt will not have a Nevermind option. Are you sure you want this?","ITS NOT REVERSIBLE","Yes","Nevermind") == "Yes")
 				var/choice = alert(usr,"What would you like to purge?","ITS TOO LATE NOW","Flavor","Notes","Extra")
 				if(choice)
+					var/datum/mind/purge_mind = mind || last_mind
+					purge_mind?.player_card?.vv_purge(choice)
 					switch(choice)
 						if("Flavor")
 							flavortext = null
@@ -780,6 +794,8 @@
 			return
 		if(alert(usr,"This will irreversibly purge this ENTIRE character's slot (OOC, FT, OOC Ex.)","PURGE","PURGE","Nevermind") == "PURGE")
 			if(alert(usr,"This cannot be undone. Are you sure?","DON'T FATFINGER THIS","Yes","No") == "Yes")
+				var/datum/mind/purge_mind = mind || last_mind
+				purge_mind?.player_card?.vv_purge("All")
 				flavortext = null
 				nsfwflavortext = null
 				ooc_extra_img = null
@@ -1099,9 +1115,12 @@
 	RETURN_TYPE(/obj/item/organ/breasts)
 	return getorganslot(ORGAN_SLOT_BREASTS)
 
-/mob/living/carbon/human/proc/is_fertile()
+/mob/living/carbon/human/proc/is_fertile(orifice = SEX_PART_CUNT)
+	if(orifice & SEX_PART_TAIL_MAW)
+		var/obj/item/organ/tail/manticore/tail = get_manticore_tail(src)
+		return tail?.fertility
 	var/obj/item/organ/vagina/vagina = getorganslot(ORGAN_SLOT_VAGINA)
-	return vagina.fertility
+	return vagina?.fertility
 
 /mob/living/carbon/human/proc/is_virile()
 	var/obj/item/organ/testicles/testicles = getorganslot(ORGAN_SLOT_TESTICLES)
@@ -1172,6 +1191,8 @@
 	H.heatstroke_timer_id = null
 	var/def_zone = BODY_ZONE_HEAD
 	var/obj/item/bodypart/BP = H.get_bodypart(def_zone)
+	if(!BP)
+		return
 	for(var/datum/wound/W in BP.wounds)
 		if(istype(W, /datum/wound/heatexhaustion)||istype(W, /datum/wound/heatstroke))
 			return

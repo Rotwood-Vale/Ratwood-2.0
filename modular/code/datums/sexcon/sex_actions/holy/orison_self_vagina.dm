@@ -2,7 +2,6 @@
 	name = "Rub clit with godhand"
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_CUNT
-	subtle_supported = TRUE
 	solo = TRUE
 
 /datum/sex_action/holy/masturbate_vagina_orison/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)

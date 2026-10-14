@@ -158,9 +158,14 @@ GLOBAL_LIST_EMPTY(biggates)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/winch/Destroy()
+	// LateInitialize() points every gate with a matching gid at this winch but keeps only the last
+	// one in attached_gate, and an unset gid matches every gate that also has none. Clear all of
+	// them, or the gates it did not keep hold this winch forever and it hard deletes.
+	for(var/obj/structure/gate/G in GLOB.biggates)
+		if(G.attached_to == src)
+			G.attached_to = null
 	if(attached_gate)
-		var/obj/structure/gate/W = attached_gate
-		W.attached_to = null
+		attached_gate.attached_to = null
 		attached_gate = null
 	return ..()
 

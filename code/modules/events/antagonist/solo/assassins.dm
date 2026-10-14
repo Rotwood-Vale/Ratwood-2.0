@@ -13,34 +13,21 @@
 		"Grand Duke",
 		"Grand Duchess",
 		"Consort",
-		"Dungeoneer",
-		"Sergeant",
-		"Man at Arms",
 		"Marshal",
 		"Bandit",
-		"Merchant",
 		"Bishop",
 		"Acolyte",
 		"Martyr",
 		"Templar",
-		"Councillor",
-		"Prince",
-		"Princess",
-		"Hand",
-		"Steward",
-		"Head Physician",
-		"Town Crier",
 		"Captain",
 		"Knight Captain",
 		"Watch Captain",
 		"Master Warden",
-		"Archivist",
 		"Knight",
 		"Court Magician",
 		"Inquisitor",
 		"Orthodoxist",
 		"Absolver",
-		"Warden",
 		"Vampire",
 		"Vampire Lord",
 		"Vampire Servant",
@@ -49,11 +36,8 @@
 		"Werewolf",
 		"Lich",
 		"Wretch",
-		"Squire",
 		"Veteran",
-		"Apothecary",
 		"Knight Captain",
-		"Wretch",
 		"Bandit"
 	)
 
@@ -71,7 +55,8 @@
 /datum/round_event/antagonist/solo/assassins/start()
 	for(var/datum/mind/antag_mind as anything in setup_minds)
 		var/datum/job/original_job = SSjob.GetJob(antag_mind.assigned_role)
-		antag_mind.current.unequip_everything()
+		if(antag_mind.current.client)
+			SSrole_class_handler.cancel_class_handler(antag_mind.current.client.ckey)
 		SSjob.AssignRole(antag_mind.current, "Assassin")
 		if(original_job)
 			if(original_job.total_positions == 1)

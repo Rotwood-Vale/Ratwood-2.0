@@ -57,8 +57,21 @@
 ///In most cases you want a subsystem instead, so don't use this unless you have a good reason
 #define TIMER_LOOP				(1<<5)
 
+///Delete the timer on parent datum Destroy() and when deltimer'd
+#define TIMER_DELETE_ME			(1<<6)
+
 ///Empty ID define
 #define TIMER_ID_NULL -1
+
+/**
+	Create a new timer and add it to the queue.
+	* Arguments:
+	* * callback the callback to call on timer finish
+	* * wait deciseconds to run the timer for
+	* * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+	* * timer_subsystem the subsystem to insert this timer into
+*/
+#define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
 
 //! ## Initialization subsystem
 
@@ -186,6 +199,7 @@
 #define FIRE_PRIORITY_ACID			40
 #define FIRE_PRIORITY_BURNING		40
 #define FIRE_PRIORITY_DEFAULT		50
+#define FIRE_PRIORITY_SOUND_LOOPS	55 // TG: 800
 #define FIRE_PRIORITY_PARALLAX		65
 #define FIRE_PRIORITY_MOBS			100
 #define FIRE_PRIORITY_TGUI			110

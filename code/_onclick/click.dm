@@ -301,7 +301,7 @@
 		if(CanReach(A) || CanReach(A, W))
 			if(isopenturf(A))
 				var/turf/T = A
-				if(used_intent.noaa)
+				if(used_intent.noaa && !used_intent.force_autoaim)
 					resolveAdjacentClick(A,W,params,used_hand)
 					return
 				if(T)
@@ -312,7 +312,8 @@
 						target = M
 						break
 					if(target)
-						if(target.Adjacent(src) || (CanReach(target, W) && used_intent.effective_range_type))
+						//CanReach already honours used_intent.reach, so this covers reach 2+ intents
+						if(target.Adjacent(src) || CanReach(target, W))
 							if(!used_intent.noaa)
 								if(used_intent.cleave)
 									used_intent.cleave.show_cleave_visuals(src, T)
@@ -510,10 +511,10 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 			return FALSE //here.Adjacent(there)
 		if(2 to INFINITY)
 			var/obj/dummy
-			if(GLOB.reach_dummy_pool.len)
+			while(GLOB.reach_dummy_pool.len && QDELETED(dummy))
 				dummy = GLOB.reach_dummy_pool[GLOB.reach_dummy_pool.len]
 				GLOB.reach_dummy_pool.len--
-			else
+			if(QDELETED(dummy))
 				dummy = new /obj()
 				dummy.pass_flags |= PASSTABLE
 				dummy.invisibility = INVISIBILITY_ABSTRACT
@@ -521,13 +522,19 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 			for(var/i in 1 to reach) //Limit it to that many tries
 				var/turf/T = get_step(dummy, get_dir(dummy, there))
 				if(dummy.CanReach(there))
-					GLOB.reach_dummy_pool += dummy
+					return_reach_dummy(dummy)
 					return TRUE
 				if(!dummy.Move(T)) //we're blocked!
-					GLOB.reach_dummy_pool += dummy
+					return_reach_dummy(dummy)
 					return
-			GLOB.reach_dummy_pool += dummy
+			return_reach_dummy(dummy)
 			return FALSE
+
+/proc/return_reach_dummy(obj/dummy)
+	if(QDELETED(dummy))
+		return
+	dummy.moveToNullspace()
+	GLOB.reach_dummy_pool += dummy
 
 // Default behavior: ignore double clicks (the second click that makes the doubleclick call already calls for a normal click)
 /mob/proc/DblClickOn(atom/A, params)
@@ -959,7 +966,7 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	return FALSE
 
 /mob/living/try_special_attack(atom/A, list/modifiers)
-	if(!rmb_intent || !cmode || isobj(A))
+	if(!rmb_intent || !cmode || A.loc == src || istype(A, /obj/item/clothing) || istype(A, /obj/item/quiver) || istype(A, /obj/item/storage) || istype(A, /obj/item/rogueweapon/scabbard))
 		return FALSE
 
 	if(next_move > world.time && !rmb_intent?.bypasses_click_cd)
@@ -968,7 +975,7 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	if(rmb_intent?.adjacency && !Adjacent(A))
 		return FALSE
 
-	rmb_intent.special_attack(src, ismob(A) ? A : get_foe_from_turf(get_turf(A)))
+	rmb_intent.special_attack(src, ismob(A) ? A : rmb_intent.prioritize_turfs ? get_turf(A) : get_foe_from_turf(get_turf(A)))
 	return TRUE
 
 /// Used for "directional" style rmb attacks on a turf, prioritizing standing targets

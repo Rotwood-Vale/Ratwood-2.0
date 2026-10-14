@@ -52,6 +52,20 @@
 	else
 		unconceal(source)
 
+/datum/coven_power/obfuscate/proc/true_conceal(mob/living/target)
+	if (!target)
+		return
+
+	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_concealed_death), override = TRUE)
+	target.apply_status_effect(/datum/status_effect/buff/obfuscate_veil)
+
+/datum/coven_power/obfuscate/proc/true_unconceal(mob/living/target)
+	if (!target)
+		return
+
+	UnregisterSignal(target, COMSIG_LIVING_DEATH)
+	target.remove_status_effect(/datum/status_effect/buff/obfuscate_veil)
+
 /datum/coven_power/obfuscate/proc/is_seen_check()
 	for (var/mob/living/viewer in oviewers(7, owner))
 		//cats cannot stop you from Obfuscating
@@ -94,14 +108,14 @@
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
-	conceal(owner)
+	true_conceal(owner)
 
 /datum/coven_power/obfuscate/cloak_of_shadows/deactivate()
 	. = ..()
 	UnregisterSignal(owner, aggressive_signals)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
-	unconceal(owner)
+	true_unconceal(owner)
 
 /datum/coven_power/obfuscate/cloak_of_shadows/proc/handle_move(datum/source, atom/moving_thing, dir)
 	SIGNAL_HANDLER
@@ -126,17 +140,19 @@
 
 /datum/coven_power/obfuscate/unseen_presence/activate()
 	. = ..()
+	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, TRAIT_GENERIC)
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
-	conceal(owner)
+	true_conceal(owner)
 
 /datum/coven_power/obfuscate/unseen_presence/deactivate()
 	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, TRAIT_GENERIC)
 	UnregisterSignal(owner, aggressive_signals)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
-	unconceal(owner)
+	true_unconceal(owner)
 
 /datum/coven_power/obfuscate/unseen_presence/proc/handle_move(datum/source, atom/moving_thing, dir)
 	SIGNAL_HANDLER
@@ -162,23 +178,26 @@
 
 /datum/coven_power/obfuscate/vanish_from_the_minds_eye/activate()
 	. = ..()
+	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, TRAIT_GENERIC)
 	RegisterSignal(owner, aggressive_signals, PROC_REF(on_combat_signal), override = TRUE)
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
-	conceal(owner)
+	true_conceal(owner)
 
 	// Memory wipe effect - make nearby people forget they saw you
 	for(var/mob/living/carbon/human/viewer in oviewers(7, owner))
-		if(viewer.client && viewer.stat < UNCONSCIOUS)
-			to_chat(viewer, span_hypnophrase("Wait... wasn't someone just here? No, must be my imagination..."))
+		if(viewer.client && viewer.stat < UNCONSCIOUS && !viewer.is_immune_to_vampire_domination())
+			to_chat(viewer, span_hypnophrase("<span style='font-size: 200%; text-shadow: 0 0 8px #ffffff;'>Wait... wasn't someone just here? No, must be my imagination...</span>"))
+			to_chat(viewer, span_hypnophrase("<span style='font-size: 80%; text-shadow: 0 0 6px #ffffff;'>You forget that you saw [owner].</span>"))
 			// Could add more memory effects here like removing recent chat logs mentioning the user
 
 /datum/coven_power/obfuscate/vanish_from_the_minds_eye/deactivate()
 	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, TRAIT_GENERIC)
 	UnregisterSignal(owner, aggressive_signals)
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
-	unconceal(owner)
+	true_unconceal(owner)
 
 /datum/coven_power/obfuscate/vanish_from_the_minds_eye/proc/handle_move(datum/source, atom/moving_thing, dir)
 	SIGNAL_HANDLER

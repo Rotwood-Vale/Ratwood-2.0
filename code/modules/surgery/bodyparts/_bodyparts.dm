@@ -481,6 +481,8 @@
 			H.icon_render_key = null
 		owner.queue_icon_update(PENDING_UPDATE_BODY)
 		owner.update_mobility()
+		if(held_index)
+			owner.update_action_buttons_icon()
 	return TRUE //if there was a change.
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()

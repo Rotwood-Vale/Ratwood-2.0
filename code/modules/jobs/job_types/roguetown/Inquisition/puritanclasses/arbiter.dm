@@ -6,7 +6,8 @@
 	name = "Arbiter"
 	tutorial = "Unlike Ordinators or Inspectors, Arbiters serve an entirely different purpose. \
 	Drawn from a flock of warrior-priests, they still fight to this day within rot-scoured lands. Uniquely attuned to the rot's touch. \
-	With the aid of rare and dangerous greater miracles, they sniff out the taint. One heretic at a time, to be put to a pyre."
+	Armed with the purported \"miracles\" of the LYVING GOD, arcane lux manipulations of the orders of the Saints Pestra & Noc, the Arbiter seeks \
+	the unholy, the heretic, and the rotted."
 	outfit = /datum/outfit/job/roguetown/puritan/arbiter
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/psydonite.ogg'

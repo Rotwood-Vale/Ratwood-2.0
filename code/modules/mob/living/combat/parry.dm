@@ -3,7 +3,7 @@
 /mob/living/proc/attempt_parry(datum/intent/intenty, mob/living/attacker)
 	if(!intenty.parriable_intent) // If the intent is unparriable whatsoever just skip all the math
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) || HAS_TRAIT(src, TRAIT_NODEF) || !mob_can_parry)
+	if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) || HAS_TRAIT(src, TRAIT_NODEF) || !mob_can_parry || !length(held_items))
 		return FALSE
 	if(pulledby || pulling)
 		return FALSE
@@ -103,6 +103,10 @@
 
 	if(HAS_TRAIT(attacker, TRAIT_CURSE_RAVOX))
 		prob2defend -= 40
+
+	var/datum/status_effect/debuff/magical_blindness/magic_blind = src.has_status_effect(/datum/status_effect/debuff/magical_blindness)
+	if (magic_blind)
+		prob2defend -= magic_blind.effect_strength * 5 // 5% parry chance loss per level
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/oldie = src

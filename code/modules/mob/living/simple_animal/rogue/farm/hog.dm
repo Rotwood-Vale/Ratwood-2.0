@@ -14,11 +14,28 @@
 	see_in_dark = 6
 	move_to_delay = 8
 	animal_species = /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog
-	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 2, /obj/item/alch/sinew = 2, /obj/item/natural/bone = 4, /obj/item/alch/viscera = 1)
+	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 2, 
+						/obj/item/alch/sinew = 2, 
+						/obj/item/natural/bone = 4, 
+						/obj/item/alch/viscera = 1
+						)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 4,
-						/obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+						/obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 1,
+						/obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2,
+						/obj/item/reagent_containers/food/snacks/fat = 2,
+						/obj/item/natural/bundle/bone/full = 1, 
+						/obj/item/alch/sinew = 3, 
+						/obj/item/alch/bone = 1, 
+						/obj/item/alch/viscera = 2
+						)
 	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 6,
-						/obj/item/reagent_containers/food/snacks/fat = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)//We get fat instead of hide - pig hide is terrible for much of anything.
+						/obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 2,
+						/obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2,
+						/obj/item/reagent_containers/food/snacks/fat = 4,
+						/obj/item/natural/bundle/bone/full = 1, 
+						/obj/item/alch/sinew = 4, 
+						/obj/item/alch/bone = 1, 
+						/obj/item/alch/viscera = 2)
 	
 	health = 140
 	maxHealth = 140
@@ -130,11 +147,28 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 2, /obj/item/alch/sinew = 2, /obj/item/natural/bone = 4, /obj/item/alch/viscera = 1)
+	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 2, 
+						/obj/item/alch/sinew = 2, 
+						/obj/item/natural/bone = 4, 
+						/obj/item/alch/viscera = 1
+						)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 4,
-						/obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+						/obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 1,
+						/obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2,
+						/obj/item/reagent_containers/food/snacks/fat = 2,
+						/obj/item/natural/bundle/bone/full = 1, 
+						/obj/item/alch/sinew = 3, 
+						/obj/item/alch/bone = 1, 
+						/obj/item/alch/viscera = 2
+						)
 	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 6,
-						/obj/item/reagent_containers/food/snacks/fat = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)//We get fat instead of hide - pig hide is terrible for much of anything.
+						/obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 2,
+						/obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2,
+						/obj/item/reagent_containers/food/snacks/fat = 4,
+						/obj/item/natural/bundle/bone/full = 1, 
+						/obj/item/alch/sinew = 4, 
+						/obj/item/alch/bone = 1, 
+						/obj/item/alch/viscera = 2)
 	faction = list("pigs")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	attack_same = 0

@@ -19,6 +19,7 @@
 /mob/living/carbon/human
 	var/leprosy = 2
 	var/allmig_reward = 0
+	var/last_sleep
 
 /mob/living/carbon/human/Life()
 	if (notransform)
@@ -48,11 +49,12 @@
 	handle_vamp_dreams()
 	if(IsSleeping())
 		if(health > 0)
-			if(has_status_effect(/datum/status_effect/debuff/sleepytime))
-				remove_status_effect(/datum/status_effect/debuff/sleepytime)
-				remove_stress(/datum/stressevent/sleepytime)
-				if(mind)
-					mind.sleep_adv.advance_cycle()
+			if(has_status_effect(/datum/status_effect/debuff/sleepytime) || has_status_effect(/datum/status_effect/debuff/sleepytime/t2) || has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+				if(world.time > last_sleep + 35 SECONDS) //35 seconds of delay for every progress, letting people wake up before the second sleep removal happens
+					last_sleep = world.time
+					remove_sleep_depravation()
+					if(mind)
+						mind.sleep_adv.advance_cycle()
 	if(leprosy == 1)
 		adjustToxLoss(2)
 	else if(leprosy == 2)
@@ -78,6 +80,10 @@
 	// Legacy single vice support
 	else if(charflaw && !charflaw.ephemeral && mind)
 		charflaw.flaw_on_life(src)
+
+	// Redolent quirk scent processing
+	if(mind && HAS_TRAIT(src, TRAIT_REDOLENT))
+		handle_redolent_scent()
 	
 	if(health <= 0)
 		adjustOxyLoss(0.5)
