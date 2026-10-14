@@ -1236,7 +1236,7 @@
 	icon_state = "smesser"
 	force = 24	//Hunting sword + 4
 	max_blade_int = 250	//Sword + 50
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/axe/chop, /datum/intent/sword/strike)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/axe/chop, /datum/intent/sword/cut/rend/messer, /datum/intent/sword/strike)
 	minstr = 6	// Hunting sword +2
 	wdefense = 4	//Hunting sword +2
 
