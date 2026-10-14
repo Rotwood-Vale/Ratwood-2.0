@@ -1,0 +1,5 @@
+author: "The-Sun-In-Splendour"
+delete-after: True
+changes:
+  - rscadd: "new tailmaw. Succubus (Alt) (Tailmaw)"
+  - bugfix: "spade (tailmaw) tail wagging with no animation, disappearing it"
