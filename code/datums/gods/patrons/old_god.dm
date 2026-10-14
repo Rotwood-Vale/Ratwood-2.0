@@ -11,6 +11,7 @@
 					/obj/effect/proc_holder/spell/self/check_boot				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/psydonendure			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/psydonrespite			= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/psydefy				= CLERIC_T3,
 	)
 	energy_color = COLOR_PATRON_PSYDON
 	traits_tier = list(TRAIT_PSYDONITE = CLERIC_T1)
@@ -246,3 +247,6 @@
 
 	revert_cast()
 	return FALSE
+
+
+/obj/effect/proc_holder/spell/invoked/psydefy
