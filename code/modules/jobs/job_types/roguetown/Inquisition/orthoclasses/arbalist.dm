@@ -16,6 +16,8 @@
 	traits_applied = list(
 		TRAIT_PERFECT_TRACKER,
 		TRAIT_SLEUTH,
+		TRAIT_ZOMBIE_IMMUNE,
+		TRAIT_SILVER_BLESSED,
 	)
 	subclass_stats = list(//+9, You get PER/STR for the crossbow.
 		STATKEY_PER = 3,

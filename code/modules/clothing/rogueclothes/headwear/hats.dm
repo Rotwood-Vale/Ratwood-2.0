@@ -262,21 +262,6 @@
 	//dropshrink = 0.75
 	dynamic_hair_suffix = null
 
-	///Reen's work. Should make it so that you obtain special traits when taking it on-and-off, without outright removing inherent traits.
-	var/traited = FALSE
-
-/obj/item/clothing/head/roguetown/headband/bloodied/equipped(mob/living/user, slot)
-	. = ..()
-	if(slot == SLOT_HEAD)
-		ADD_TRAIT(user, TRAIT_SILVER_BLESSED, TRAIT_GENERIC)
-		ADD_TRAIT(user, TRAIT_ZOMBIE_IMMUNE, TRAIT_GENERIC)
-
-/obj/item/clothing/head/roguetown/headband/bloodied/dropped(mob/living/carbon/human/user)
-	. = ..()
-	if(istype(user) && user?.head == src)
-		REMOVE_TRAIT(user, TRAIT_SILVER_BLESSED, TRAIT_GENERIC)
-		REMOVE_TRAIT(user, TRAIT_ZOMBIE_IMMUNE, TRAIT_GENERIC)
-
 /obj/item/clothing/head/roguetown/headband/monk
 	name = "monk's headband"
 	desc = "A winding length of cloth, meticulously lined with heavy leather strips. Errant impacts are thwarted, yet not a degree of vision is impaired; valuable traits, for the Monk who must enlighten their villains with a white-knuckled sermon. </br>'..I kick ass for the Lord!'"
