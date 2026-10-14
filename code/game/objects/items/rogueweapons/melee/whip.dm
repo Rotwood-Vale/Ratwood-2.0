@@ -272,6 +272,7 @@
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
+	no_early_release = TRUE
 
 /datum/intent/whip/thrust // elden ring nonsense, but cool
 	name = "urumi thrust"
