@@ -280,6 +280,7 @@
 	key = "flap"
 	key_third_person = "flaps"
 	message = "flaps their wings."
+	sound = 'sound/foley/footsteps/flight_sounds/wingflap1.ogg'
 	restraint_check = TRUE
 	var/wing_time = 20
 
@@ -290,6 +291,7 @@
 	key = "aflap"
 	key_third_person = "aflaps"
 	message = "flaps their wings ANGRILY!"
+	sound = 'sound/foley/footsteps/flight_sounds/wingflap2.ogg'
 	restraint_check = TRUE
 	wing_time = 10
 
