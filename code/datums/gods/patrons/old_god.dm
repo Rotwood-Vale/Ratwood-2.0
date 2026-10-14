@@ -250,3 +250,22 @@
 
 
 /obj/effect/proc_holder/spell/invoked/psydefy
+	name = "DEFY"
+	desc = "I can give a dying person or myself strength to ENDURE just a bit more longer, to leave a one last mark on the world before their flame goes out. (ONLY USABLE ON PEOPLE IN CRIT (Using it while you in crit will self cast))"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "DEFY"
+	releasedrain = 50
+	chargedrain = 0
+	chargetime = 0
+	range = 5 
+	warnie = "sydwarning"
+	movement_interrupt = FALSE
+	sound = 'sound/magic/ENDVRE.ogg'
+	invocations = list("LYVE, ENDURE!") // holy larp yelling for healing is silly
+	invocation_type = "none"
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = FALSE
+	recharge_time = 30 SECONDS
+	miracle = TRUE
+	devotion_cost = 40
