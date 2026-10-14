@@ -389,22 +389,25 @@
 	demolition_mod = 0.05
 
 /datum/intent/sword/cut/rend/messer
-	name = "rend"
-	icon_state = "inrend"
-	attack_verb = list("rends", "cleaves")
+	name = "all-out swing"
+	icon_state = "inhack"
+	desc = "Fully commit all of your strength into a singular, brutal chop of the messer's sharpened edge. Ineffective against armored opponents, and leaves you exposed during the swing. Twice as punishing to your stamina if you miss, compared to a True Strike, but doubly impossible to parry against."
+	attack_verb = list("brutishly chops", "recklessly cleaves")
 	animname = "chop"
 	blade_class = BCLASS_CHOP
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
 	reach = 1
-	swingdelay = 22
+	swingdelay = 1 SECONDS
 	penfactor = PEN_NONE
-	damfactor = 1.8
+	damfactor = 2
 	clickcd = CLICK_CD_CHARGED
 	no_early_release = TRUE
 	item_d_type = "slash"
 	misscost = 20
 	intent_intdamage_factor = 0.05
 	demolition_mod = 0.05
+	swingdelay_type = SWINGDELAY_PENALTY
+	parriable_intent = FALSE
 
 /datum/intent/sword/chop/cleave
 	name = "staggering cleave"
