@@ -288,6 +288,7 @@
 	item_d_type = "stab"
 	effective_range = 3
 	effective_range_type = EFF_RANGE_EXACT
+	no_early_release = TRUE
 
 /datum/intent/whip/thrust/heavy // elden ring nonsense, but cool
 	name = "urumi thrust"
