@@ -233,6 +233,7 @@
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
+	no_early_release = TRUE
 
 /datum/intent/whip/lash/urumi/heavy
 	name = "heavy urumi lash"//i'm a hack
