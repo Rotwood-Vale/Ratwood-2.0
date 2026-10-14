@@ -275,3 +275,11 @@
 2026-10-13:
   annikaRU:
   - bugfix: fixes a void under two windows, updates flooring I forgot to do
+2026-10-14:
+  0-the-fool:
+  - bugfix: Wall clocks no longer allow players to take out loadout items will full
+      stats.
+  I_Nerf_What_Kills_Me:
+  - rscadd: Interact with indexer on hemophages
+  annikaRU:
+  - bugfix: fixed a spawn
