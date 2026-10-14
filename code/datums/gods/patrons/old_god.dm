@@ -161,6 +161,9 @@
 	recharge_time = 30 SECONDS
 	miracle = TRUE
 	devotion_cost = 40
+	stat_allowed = 1 //i will have to exclude the dead.. somehow
+	gesture_required = FALSE
+
 
 /obj/effect/proc_holder/spell/invoked/psydonendure/cast(list/targets, mob/living/user)
 	. = ..()
@@ -266,6 +269,6 @@
 	invocation_type = "none"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
-	recharge_time = 30 SECONDS
+	recharge_time = 6 MINUTES
 	miracle = TRUE
-	devotion_cost = 40
+	devotion_cost = 150
