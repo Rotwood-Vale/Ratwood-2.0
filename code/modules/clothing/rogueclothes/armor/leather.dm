@@ -134,7 +134,7 @@
 	armor = ARMOR_LEATHER
 	nodismemsleeves = TRUE
 	body_parts_covered = COVERAGE_TORSO
-	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL//-25 compared to light brig
+	max_integrity = ARMOR_INT_CHEST_LIGHT_ELITE
 	smeltresult = /obj/item/ingot/iron
 	armor_class = ARMOR_CLASS_LIGHT
 
