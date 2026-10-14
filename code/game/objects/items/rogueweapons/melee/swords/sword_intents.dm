@@ -54,7 +54,7 @@
 /datum/intent/sword/thrust/short
 	clickcd = CLICK_CD_FAST
 	damfactor = 1.1
-	penfactor = PEN_LIGHT
+	penfactor = PEN_MEDIUM
 
 /datum/intent/sword/thrust/arming
 	clickcd = CLICK_CD_QUICK // Less than rapier
