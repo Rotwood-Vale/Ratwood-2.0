@@ -388,6 +388,24 @@
 	intent_intdamage_factor = 0.05
 	demolition_mod = 0.05
 
+/datum/intent/sword/cut/rend/messer
+	name = "rend"
+	icon_state = "inrend"
+	attack_verb = list("rends", "cleaves")
+	animname = "chop"
+	blade_class = BCLASS_CHOP
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	reach = 1
+	swingdelay = 22
+	penfactor = PEN_NONE
+	damfactor = 1.8
+	clickcd = CLICK_CD_CHARGED
+	no_early_release = TRUE
+	item_d_type = "slash"
+	misscost = 20
+	intent_intdamage_factor = 0.05
+	demolition_mod = 0.05
+
 /datum/intent/sword/chop/cleave
 	name = "staggering cleave"
 	icon_state = "incarve"
@@ -442,7 +460,7 @@
 	desc = "A cleave that cuts through a second target behind the first."
 	attack_verb = list("cleaves", "carves through")
 	clickcd = CLICK_CD_HEAVY
-	damfactor = 1.0
+	damfactor = 1.3
 	reach = 1 // No!!
 	cleave = /datum/cleave_pattern/forward_cleave
 
