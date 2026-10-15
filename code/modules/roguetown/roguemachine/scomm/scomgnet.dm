@@ -63,14 +63,21 @@
 	if(!HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(user, TRAIT_SCOMGNET_AUTHORIZED))
 		listening = FALSE
 		speaking = FALSE
-		desc = "A ring of blessed silver, bearing the Archbishop's symbol. By dipping it in melted tallow, it can seal writs of religious importance."
 	..()
+
+/obj/item/clothing/ring/signet/silver/inqscomm/examine(mob/user)
+	if(HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_SCOMGNET_AUTHORIZED))
+		desc = "The order of Saint Malum was tasked with coming up with a way for the Orthodoxy to communicate with each other, while still being able to seal missives with tallow. After three yils of restless toil, they came up with this marvel of otavan technology. May your communications endure.\n \
+		There is a button on the side. It urges you to press it."
+	else
+		desc = "A ring of blessed silver, bearing the Archbishop's symbol. By dipping it in melted tallow, it can seal writs of religious importance."
+	. = ..()
+
 
 /obj/item/clothing/ring/signet/silver/inqscomm/doStrip(mob/stripper, mob/owner)
 	if(!HAS_TRAIT(stripper, TRAIT_INQUISITION) && !HAS_TRAIT(stripper, TRAIT_SCOMGNET_AUTHORIZED))
 		listening = FALSE
 		speaking = FALSE
-		desc = "A ring of blessed silver, bearing the Archbishop's symbol. By dipping it in melted tallow, it can seal writs of religious importance."
 	. = ..()
 
 /obj/item/clothing/ring/signet/silver/inqscomm/attack(mob/living/carbon/human/target, mob/living/carbon/human/user)
@@ -92,6 +99,8 @@
 	target.fullscreen_redflash("redflash2")
 	target.set_blood_volume(max(target.get_blood_volume()-45, 0))
 	ADD_TRAIT(target, TRAIT_SCOMGNET_AUTHORIZED, TRAIT_GENERIC)
+	src.listening = TRUE
+	src.speaking = TRUE
 	target.equip_to_slot(src, SLOT_RING) // has to be unsafe otherwise won't work on unconscious people... should be fine since i already check if ring is free..?
 
 /obj/item/clothing/ring/signet/silver/inqscomm/Destroy()
@@ -138,16 +147,10 @@
 	sellprice = 195
 	is_silver = FALSE
 
-/obj/item/clothing/ring/signet/silver/inqscomm/g/pickup(mob/living/user)
-	if(!HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(user, TRAIT_SCOMGNET_AUTHORIZED))
-		listening = FALSE
-		speaking = FALSE
-		desc = "A ring of opulent gold, bearing the symbol of Psydon. By dipping it in melted tallow, it can seal writs of religious importance - a matter better known to the Inquisition, rather than the Church or Crown."
-	..()
-
-/obj/item/clothing/ring/signet/silver/inqscomm/g/doStrip(mob/stripper, mob/owner)
-	if(!HAS_TRAIT(stripper, TRAIT_INQUISITION) && !HAS_TRAIT(stripper, TRAIT_SCOMGNET_AUTHORIZED))
-		listening = FALSE
-		speaking = FALSE
+/obj/item/clothing/ring/signet/silver/inqscomm/g/examine(mob/user)
+	if(HAS_TRAIT(user, TRAIT_INQUISITION) || HAS_TRAIT(user, TRAIT_SCOMGNET_AUTHORIZED))
+		desc = "The order of Saint Malum was tasked with coming up with a way for the Orthodoxy to communicate with each other, while still being able to seal missives with tallow. After three yils of restless toil, they came up with this marvel of otavan technology. May your communications endure.\n \
+		There is a button on the side. It urges you to press it."
+	else
 		desc = "A ring of opulent gold, bearing the symbol of Psydon. By dipping it in melted tallow, it can seal writs of religious importance - a matter better known to the Inquisition, rather than the Church or Crown."
 	. = ..()
