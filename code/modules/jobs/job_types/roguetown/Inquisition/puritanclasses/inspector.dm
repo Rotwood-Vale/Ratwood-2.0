@@ -67,6 +67,7 @@
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	id = /obj/item/clothing/ring/signet/silver
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat
+	cloak = /obj/item/storage/backpack/rogue/satchel/beltpack
 	backpack_contents = list(
 		/obj/item/storage/keyring/puritan = 1,
 		/obj/item/lockpickring/mundane = 1,
