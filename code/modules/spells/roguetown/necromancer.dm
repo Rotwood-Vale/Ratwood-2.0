@@ -69,7 +69,7 @@
 	var/mob/living/carbon/target = targets[1]
 	target.visible_message(span_info("A loud crunching sound has come from [target]!"), span_userdanger("I feel arcane teeth biting into my eyes!"))
 	target.adjustBruteLoss(30)
-	target.blind_eyes(2)
+	target.apply_status_effect(/datum/status_effect/debuff/magical_blindness, user.get_skill_level(associated_skill))
 	target.blur_eyes(10)
 	return TRUE
 
