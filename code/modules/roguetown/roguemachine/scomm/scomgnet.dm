@@ -134,7 +134,7 @@
 	else
 		send_speech(message, 0, src, , spans, message_language=language)
 
-/obj/item/clothing/ring/signet/attack_self(mob/user)
+/obj/item/clothing/ring/signet/silver/inqscomm/attack_self(mob/user) // is attack self as opposed to attack right.
 	. = ..()
 	if(tallowed)
 		if(alert(user, "SCRAPE THE TALLOW OFF?", "SIGNET RING", "YES", "NO") != "NO")
