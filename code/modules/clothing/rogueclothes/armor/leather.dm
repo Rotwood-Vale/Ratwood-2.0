@@ -105,7 +105,7 @@
 	desc = "A hardened leather harness with a large pauldron worn over a tasseted brigandine, imbued with Dendor's essence."
 	icon_state = "forestbrig"
 	armor = ARMOR_BRIGANDINE
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE - 50
 	equip_delay_self = 4 SECONDS
 	smeltresult = /obj/item/ingot/iron
 
