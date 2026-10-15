@@ -202,6 +202,17 @@
 	tech_unlocked = FALSE
 	structurecraft = null
 
+/datum/crafting_recipe/roguetown/fleshcrafting/human // yea that one needs heart help. GO FORTH FRANKENSTAIN!!!
+	name = "A new life"
+	category = "Flesh"
+	result = list(/mob/living/carbon/human/species/human/northern,)
+	reqs = list(/obj/item/flesh_node = 7,
+				/obj/item/heart_blood_vial/filled = 3
+				/obj/item/reagent_containers/lux = 1)
+	craftdiff = 5
+	required_tech_node = "LIFE_CREATION"
+	tech_unlocked = FALSE
+
 /datum/crafting_recipe/roguetown/fleshcrafting/black_rose
 	name = "Black Rose"
 	category = "Flesh"
