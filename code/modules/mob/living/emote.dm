@@ -2885,3 +2885,22 @@
 	else
 		show_tongue_noise_warning()
 		return
+
+/datum/emote/living/ycackle
+	key = "ycackle"
+	key_third_person = "cackles!"
+	message = "cackles!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	message_muffled = "makes a muffled cackle!"
+	vary = TRUE
+	show_runechat = FALSE
+	is_animal = TRUE
+
+/mob/living/carbon/human/verb/emote_ycackle()
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
+		set name = "Yeen Cackle"
+		set category = "Noises"
+		emote("ycackle", intentional = TRUE, animal = TRUE)
+	else
+		show_tongue_noise_warning()
+		return

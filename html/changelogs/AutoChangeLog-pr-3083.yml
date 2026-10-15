@@ -1,0 +1,4 @@
+author: "UntoldTactics"
+delete-after: True
+changes:
+  - bugfix: "The Martyr's 2 minute ultimate now correctly sets all possibly relevant weapon skills to legendary."
