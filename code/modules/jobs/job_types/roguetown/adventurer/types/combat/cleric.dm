@@ -307,7 +307,7 @@
 			wrists = /obj/item/clothing/neck/roguetown/psicross/xylix
 			H.cmode_music = 'sound/music/combat_jester.ogg'
 			cloak = /obj/item/clothing/cloak/templar/xylix
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/xylixhelm
 		if (/datum/patron/divine/pestra)
 			wrists = /obj/item/clothing/neck/roguetown/psicross/pestra
 			cloak = /obj/item/clothing/cloak/templar/pestra
