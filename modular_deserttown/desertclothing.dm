@@ -387,8 +387,8 @@
 
 /datum/crafting_recipe/roguetown/sewing/turban/fancy
 	name = "fancy turban"
-	result = list(/obj/item/clothing/head/roguetown/turban)
-	reqs = list(/obj/item/natural/silk = 2)
+	result = list(/obj/item/clothing/head/roguetown/turban/fancypurple)
+	reqs = list(/obj/item/natural/silk = 3)
 	craftdiff = 4
 
 /obj/item/clothing/head/roguetown/tagelmust
@@ -651,8 +651,10 @@
 	icon_state = "sultbelt"
 	sellprice = 30
 
+//////Magos sash renamed for general use sorry Jafar needed the drip
+
 /obj/item/storage/belt/rogue/leather/jafar
-	name = "Zybantine magos Sash"
+	name = "Zybantine Large Sash"
 	icon = 'modular_deserttown/icons/clothing/belts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/belts.dmi'
 	icon_state = "jafar"

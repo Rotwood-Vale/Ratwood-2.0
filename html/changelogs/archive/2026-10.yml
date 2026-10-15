@@ -283,3 +283,14 @@
   - rscadd: Interact with indexer on hemophages
   annikaRU:
   - bugfix: fixed a spawn
+2026-10-15:
+  IronDragoon:
+  - rscadd: Adds Yeen Cackle voice emote
+  - rscdel: Removed one of the giggle sounds from the warrior fem pack (it was not
+      good and did not suit)
+  The-Sun-In-Splendour:
+  - rscadd: new tailmaw. Succubus (Alt) (Tailmaw)
+  - bugfix: spade (tailmaw) tail wagging with no animation, disappearing it
+  UntoldTactics:
+  - bugfix: The Martyr's 2 minute ultimate now correctly sets all possibly relevant
+      weapon skills to legendary.
