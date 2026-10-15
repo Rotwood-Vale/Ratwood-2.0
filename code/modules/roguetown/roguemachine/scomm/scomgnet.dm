@@ -29,7 +29,7 @@
 	user.set_blood_volume(max(user.get_blood_volume()-45, 0))
 	user.fullscreen_redflash("redflash1")
 	to_chat(user, span_warning("The ring pricks my finger!"))
-	if(!HAS_TRAIT(user, TRAIT_INQUISITION))
+	if(!HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(user, TRAIT_SCOMGNET_AUTHORIZED))
 		src.say("UNAUTHORIZED BLOOD!")
 		playsound(src, 'sound/items/indexer_cursed.ogg', 50, FALSE, -1)
 		return
@@ -51,11 +51,48 @@
 	if(user.restrained() || user.incapacitated())
 		to_chat(user, span_warning("I cannot use this while restrained or incapacitated!"))
 		return
+	if(!HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(user, TRAIT_SCOMGNET_AUTHORIZED))
+		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	listening = !listening
 	speaking = !speaking
 	to_chat(user, span_info("I [speaking ? "unmute" : "mute"] the SCOMgnet ring."))
+
+/obj/item/clothing/ring/signet/silver/inqscomm/pickup(mob/living/user)
+	if(!HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(user, TRAIT_SCOMGNET_AUTHORIZED))
+		listening = FALSE
+		speaking = FALSE
+		desc = "A ring of blessed silver, bearing the Archbishop's symbol. By dipping it in melted tallow, it can seal writs of religious importance."
+	..()
+
+/obj/item/clothing/ring/signet/silver/inqscomm/doStrip(mob/stripper, mob/owner)
+	if(!HAS_TRAIT(stripper, TRAIT_INQUISITION) && !HAS_TRAIT(stripper, TRAIT_SCOMGNET_AUTHORIZED))
+		listening = FALSE
+		speaking = FALSE
+		desc = "A ring of blessed silver, bearing the Archbishop's symbol. By dipping it in melted tallow, it can seal writs of religious importance."
+	. = ..()
+
+/obj/item/clothing/ring/signet/silver/inqscomm/attack(mob/living/carbon/human/target, mob/living/carbon/human/user)
+	if(!HAS_TRAIT(user, TRAIT_PURITAN))
+		return
+	if(HAS_TRAIT(target, TRAIT_INQUISITION) || HAS_TRAIT(target, TRAIT_SCOMGNET_AUTHORIZED))
+		return
+	if(target.wear_ring)
+		to_chat(user, span_warning("[target]'s ring finger must be free!"))
+		return
+	user.visible_message(span_cult("[user] presses twice on the side of the ring. It bites into their flesh, and blood wells from the wound..."))
+	if(!do_after(user, 5 SECONDS) || target.wear_ring)
+		return
+	user.set_blood_volume(max(user.get_blood_volume()-45, 0))
+	user.fullscreen_redflash("redflash2")
+	if(!do_after(user, 5 SECONDS) || target.wear_ring)
+		return
+	user.visible_message(span_cult("[user] slips the bloodied ring onto [target]'s finger, pressing twice on it once more. The ring partakes of [target]'s blood, mixing with [user]'s..."))
+	target.fullscreen_redflash("redflash2")
+	target.set_blood_volume(max(target.get_blood_volume()-45, 0))
+	ADD_TRAIT(target, TRAIT_SCOMGNET_AUTHORIZED, TRAIT_GENERIC)
+	target.equip_to_slot(src, SLOT_RING) // has to be unsafe otherwise won't work on unconscious people... should be fine since i already check if ring is free..?
 
 /obj/item/clothing/ring/signet/silver/inqscomm/Destroy()
 	lose_hearing_sensitivity()
@@ -100,3 +137,17 @@
 	icon_state = "signet"
 	sellprice = 195
 	is_silver = FALSE
+
+/obj/item/clothing/ring/signet/silver/inqscomm/g/pickup(mob/living/user)
+	if(!HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(user, TRAIT_SCOMGNET_AUTHORIZED))
+		listening = FALSE
+		speaking = FALSE
+		desc = "A ring of opulent gold, bearing the symbol of Psydon. By dipping it in melted tallow, it can seal writs of religious importance - a matter better known to the Inquisition, rather than the Church or Crown."
+	..()
+
+/obj/item/clothing/ring/signet/silver/inqscomm/g/doStrip(mob/stripper, mob/owner)
+	if(!HAS_TRAIT(stripper, TRAIT_INQUISITION) && !HAS_TRAIT(stripper, TRAIT_SCOMGNET_AUTHORIZED))
+		listening = FALSE
+		speaking = FALSE
+		desc = "A ring of opulent gold, bearing the symbol of Psydon. By dipping it in melted tallow, it can seal writs of religious importance - a matter better known to the Inquisition, rather than the Church or Crown."
+	. = ..()
