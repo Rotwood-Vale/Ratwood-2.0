@@ -365,8 +365,14 @@
 /datum/sprite_accessory/tail/tiefling/heart/tailmaw
 	name = "Succubus (Tailmaw)"
 
+/datum/sprite_accessory/tail/tiefling/spadeheart/tailmaw
+	name = "Succubus (Alt) (Tailmaw)"
+	icon = 'icons/mob/sprite_accessory/tails/tiefling.dmi'
+	icon_state = "spadeheart"
+
 /datum/sprite_accessory/tail/tiefling/spade/tailmaw
 	name = "Spade (Tailmaw)"
+	can_wag = FALSE
 
 /datum/sprite_accessory/tail/dullahan
 	name = "Revenant"
