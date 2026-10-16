@@ -395,7 +395,32 @@
 	additional_items = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/ingot/bronze, /obj/item/ingot/bronze, /obj/item/roguegem/amethyst)
 	created_item = /obj/item/dmusicbox
 	hammers_per_item = 6
-	skill_level = 6
+	skill_level = 5
+
+/datum/artificer_recipe/contraptions/mechanical_quiver_bow
+	name = "Mechanized Bow Quiver (+1 Cog, +1 Quiver)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/roguegear, /obj/item/quiver)
+	created_item = /obj/item/quiver/mechanized/bow
+	hammers_per_item = 6
+	skill_level = 4
+
+/datum/artificer_recipe/contraptions/mechanical_quiver_bolt
+	name = "Mechanized Crossbow Quiver (+1 Cog, +1 Quiver)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/roguegear, /obj/item/quiver)
+	created_item = /obj/item/quiver/mechanized/crossbow
+	hammers_per_item = 6
+	skill_level = 4
+
+/datum/artificer_recipe/contraptions/mechanical_quiver_heavybolt
+	name = "Mechanized Heavy Bolt Quiver (+1 Cog, +1 Quiver)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/roguegear, /obj/item/quiver)
+	created_item = /obj/item/quiver/mechanized/siegebow
+	hammers_per_item = 6
+	skill_level = 4
+
 
 // --------- WEAPON -----------
 
