@@ -8,7 +8,7 @@
 	var/list/hiddenprints		//assoc ckey = realname/gloves/ckey
 	var/list/blood_DNA			//assoc dna = bloodtype
 	var/list/fibers				//assoc print = print
-	/// Admin only, never wiped. Player actions oldest first, each list("time" = REALTIMEOFDAY, "ckey", "name", "action", "count")
+	/// Admin only, never wiped. Player actions oldest first, each list("time" = world.time, "ckey", "name", "action", "count")
 	var/list/actions
 
 /datum/component/forensics/InheritComponent(datum/component/forensics/F, original)		//Use of | and |= being different here is INTENTIONAL.
@@ -169,10 +169,10 @@
 /datum/component/forensics/proc/add_action(mob/user, action)
 	var/list/last = LAZYACCESS(actions, LAZYLEN(actions))
 	if(last && last["ckey"] == user.ckey && last["action"] == action)
-		last["time"] = REALTIMEOFDAY
+		last["time"] = world.time
 		last["count"]++
 		return
-	LAZYADD(actions, list(list("time" = REALTIMEOFDAY, "ckey" = user.ckey, "name" = user.real_name, "action" = action, "count" = 1)))
+	LAZYADD(actions, list(list("time" = world.time, "ckey" = user.ckey, "name" = user.real_name, "action" = action, "count" = 1)))
 	if(length(actions) > FORENSIC_ACTIONS_MAX)
 		actions.Cut(1, 2)
 
