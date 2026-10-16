@@ -651,11 +651,8 @@
 // Accept both standard bolts and light bolts
 /obj/item/quiver/mechanized/crossbow/eatarrow(obj/A)
 	if(!istype(A, /obj/item/ammo_casing/caseless/rogue/bolt))
-		return FALSE
-		A.forceMove(src)
 		update_icon()
 		return TRUE
-		return FALSE
 
 /obj/item/quiver/mechanized/crossbow/pickup_from_turf(turf/T, mob/living/user)
 	// Standard bolts
