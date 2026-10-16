@@ -29,6 +29,9 @@
 	return 3
 
 /datum/antagonist/vampire/lord/on_gain()
+	var/mob/living/carbon/human/body = owner.current
+	if(istype(body))
+		body.convert_to_antag_job()
 	. = ..()
 	addtimer(CALLBACK(owner.current, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "[name]"), 5 SECONDS)
 

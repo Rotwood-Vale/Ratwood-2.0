@@ -47,7 +47,7 @@
 	var/list/rituals = list()
 	var/rituals_done = 0
 	var/ascended = FALSE
-	var/obj/structure/dreamwalker_altar/altar = null
+	var/obj/structure/table/dreamwalker_altar/altar = null
 
 /datum/antagonist/dreamwalker/on_gain()
 	SSmapping.retainer.dreamwalkers |= owner

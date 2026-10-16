@@ -31,7 +31,7 @@
 
 /datum/objective/werewolf/lesser
 	name = "adapt"
-	explanation_text = "You were recently bitten by a beast of dendor. And you are SO, SO VERY HUNGRY. You must adapt to your new lyfe, left cursed with the call of the wilds during Astrata. Beware, at Noc beneath the moonlight, nothing will hold the feral hunger back. You must Obey your elder kin if moonlight befouls you and serve their aims."
+	explanation_text = "You were recently bitten by a beast of dendor. And you are SO, SO VERY HUNGRY. You must adapt to your new lyfe- How you react to being left cursed with the call of the wilds during Astrata is up to you. Beware, at Noc beneath the moonlight, nothing will hold the feral hunger back. You must Obey your elder kin and serve their aims if moonlight befouls you ."
 	team_explanation_text = "Lycanthropy is a terrible disease that's been recorded in scattered accounts going back hundreds of years. Whatever madness drove Dendor to create such an aberration is beyond mortal minds - and whatever the reason, he has been unwilling or unable to undo it. Nightly transformations and prodigious increses in mass drive the body into an active state of insatiable starvation, driving animalistic, rabid behavior."
 	triumph_count = 5
 

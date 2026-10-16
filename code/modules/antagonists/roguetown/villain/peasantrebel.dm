@@ -31,7 +31,7 @@
 	if(istype(examined_datum, /datum/antagonist/prebel/head))
 		return span_boldnotice("A revolution leader.")
 	if(istype(examined_datum, /datum/antagonist/prebel))
-		return span_boldnotice("My ally in revolt against the pigs.")
+		return span_boldnotice("My ally in revolt against the Tyranical pigs.")
 
 
 /datum/antagonist/prebel/on_gain()

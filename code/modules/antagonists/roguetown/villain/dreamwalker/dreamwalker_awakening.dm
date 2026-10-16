@@ -21,6 +21,20 @@
 #define DW_AREAS_TOWN list(/area/rogue/outdoors/town)
 #define DW_AREAS_CHURCH list(/area/rogue/indoors/town/church)
 
+// How long an interrupted rite waits before it unravels and loses its progress.
+#define DW_RITE_RESUME_WINDOW (40 SECONDS)
+
+// Dream crystals: the dreamwalker attunes a registered spire (see bottom of file).
+#define DW_SPIRE_FRESH 0
+#define DW_SPIRE_ATTUNING 1
+#define DW_SPIRE_SPENT 2
+#define DW_SPIRE_ATTUNE_TIME (60 SECONDS)
+#define DW_SPIRE_NOISE_RANGE 28
+// Brine pulse from spent spires.
+#define DW_BRINE_INTERVAL (3 SECONDS)
+/// Oxyloss is only applied to targets still at or above this fraction of their max health.
+#define DW_BRINE_OXY_MIN_HEALTH 0.6
+
 GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 
 /// Server-wide message + sting. Used by every rite.
@@ -123,7 +137,7 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 		S.tornado_prob = 20
 		S.lightning_strikes = 10
 
-/// The Chosen died.
+/// The DW died.
 /datum/dreamwalker_storm/proc/collapse()
 	chosen = null
 	set_stage(DW_STAGE_NONE)
@@ -131,7 +145,7 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 
 // ----------------------------------------------------------------------------
 // RITES
-// Data-driven. Tune offerings / areas / channel_time / blood_toll freely.
+// Data-driven.
 // ----------------------------------------------------------------------------
 /datum/dreamwalker_ritual
 	var/name = "ritual"
@@ -145,6 +159,8 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	var/list/offerings = list()
 	/// The altar must stand in one of these areas (subtypes match) for the rite to begin.
 	var/list/allowed_areas = DW_AREAS_OUTDOORS
+	/// Player-facing wording for allowed_areas ("outdoors", "in town", "in the church").
+	var/area_desc = "outdoors"
 	/// On completion, lay this many spire runes at premarked haunt locations (planted shards count toward it).
 	var/spires_to_seed = 0
 	/// To begin and to finish, at least this many registered spires must stand.
@@ -158,6 +174,18 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	var/lightning_on_tick = FALSE
 	/// Spell given to the dreamwalker when this rite completes.
 	var/grants_spell = null
+	/// Completed 10 second channel ticks. Survives interruptions.
+	var/progress = 0
+	/// TRUE from the first channel until the rite completes or unravels.
+	var/started = FALSE
+	var/obj/structure/table/dreamwalker_altar/progress_altar = null
+	var/resume_timer = null
+	/// Spires raised around the altar on completion (random between min and max).
+	var/nearby_spires_min = 0
+	var/nearby_spires_max = 0
+	var/nearby_spire_range = 7
+	var/nearby_spire_min_dist = 2
+	var/nearby_spire_spacing = 3
 
 /datum/dreamwalker_ritual/proc/describe_offerings()
 	var/list/parts = list()
@@ -176,16 +204,46 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	return FALSE
 
 /datum/dreamwalker_ritual/proc/describe_areas()
-	var/list/names = list()
-	for(var/path in allowed_areas)
-		var/area/A = path
-		names += "[initial(A.name)]"
-	return names.Join(" or ")
+	return area_desc
+
+/datum/dreamwalker_ritual/proc/total_ticks()
+	return max(1, round(channel_time / (10 SECONDS)))
+
+/datum/dreamwalker_ritual/proc/cancel_resume_timer()
+	if(resume_timer)
+		deltimer(resume_timer)
+	resume_timer = null
+
+/// Wipes saved progress. Silent; callers decide what to announce.
+/datum/dreamwalker_ritual/proc/reset_progress()
+	cancel_resume_timer()
+	progress = 0
+	started = FALSE
+	progress_altar = null
+
+/// The channel was interrupted: keep progress, start the countdown. No failure message.
+/datum/dreamwalker_ritual/proc/pause_progress(mob/living/carbon/human/user)
+	cancel_resume_timer()
+	resume_timer = addtimer(CALLBACK(src, PROC_REF(expire_progress), user), DW_RITE_RESUME_WINDOW, TIMER_STOPPABLE)
+	to_chat(user, span_warning("My concentration breaks, but the rite is not lost. If I do not return to the altar within [DW_RITE_RESUME_WINDOW / (1 SECONDS)] seconds, it will unravel."))
+
+/// The gap ran too long (or the altar fell). This is the actual failure.
+/datum/dreamwalker_ritual/proc/expire_progress(mob/user)
+	resume_timer = null
+	if(!started)
+		return
+	reset_progress()
+	if(user && !QDELETED(user))
+		to_chat(user, span_danger("The rite unravels. Everything I had channeled is lost."))
+	on_fail(user)
+
+/datum/dreamwalker_ritual/proc/on_channel_resume(mob/living/carbon/human/user, obj/structure/table/dreamwalker_altar/altar)
+	to_chat(user, span_notice("I lay my hands back on the altar and take up the [name] where I left off."))
 
 /// Returns the reason this rite cannot begin at this altar right now, or null if it can.
-/datum/dreamwalker_ritual/proc/start_block(mob/living/carbon/human/user, obj/structure/dreamwalker_altar/altar)
+/datum/dreamwalker_ritual/proc/start_block(mob/living/carbon/human/user, obj/structure/table/dreamwalker_altar/altar)
 	if(!area_ok(altar))
-		return "This ground is wrong for the rite. It must be spoken at: [describe_areas()]."
+		return "This ground is wrong for the rite. It must be spoken [describe_areas()]."
 	if(spires_required)
 		var/standing = GLOB.dreamwalker_storm.count_spires()
 		if(standing < spires_required)
@@ -208,12 +266,12 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 			return FALSE
 	return found
 
-/datum/dreamwalker_ritual/proc/on_channel_start(mob/living/carbon/human/user, obj/structure/dreamwalker_altar/altar)
+/datum/dreamwalker_ritual/proc/on_channel_start(mob/living/carbon/human/user, obj/structure/table/dreamwalker_altar/altar)
 	to_chat(user, span_notice("I lay my hands on the altar and begin the [name]..."))
 	if(start_message)
 		dreamwalker_announce(start_message, sfx)
 
-/datum/dreamwalker_ritual/proc/on_channel_tick(mob/living/carbon/human/user, obj/structure/dreamwalker_altar/altar, tick, total_ticks)
+/datum/dreamwalker_ritual/proc/on_channel_tick(mob/living/carbon/human/user, obj/structure/table/dreamwalker_altar/altar, tick, total_ticks)
 	if(lightning_on_tick && prob(60))
 		var/turf/T = locate(altar.x + rand(-5, 5), altar.y + rand(-5, 5), altar.z)
 		if(T && T.outdoor_effect && !T.outdoor_effect.weatherproof)
@@ -273,44 +331,68 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 			new /obj/structure/active_abyssor_rune/dreamwalker(T)
 	return length(placed)
 
-/datum/dreamwalker_ritual/proc/valid_spire_turf(turf/T, turf/origin, list/placed)
+/datum/dreamwalker_ritual/proc/valid_spire_turf(turf/T, turf/origin, list/placed, min_spacing, min_origin_dist)
+	if(isnull(min_spacing))
+		min_spacing = spire_min_spacing
+	if(isnull(min_origin_dist))
+		min_origin_dist = spire_min_origin_dist
 	if(!T || T.z != origin.z || !istype(T, /turf/open) || istype(T, /turf/open/water) || T.density || T.teleport_restricted)
 		return FALSE
 	if(T.x < 6 || T.y < 6 || T.x > world.maxx - 6 || T.y > world.maxy - 6)
 		return FALSE
-	if(get_dist(T, origin) < spire_min_origin_dist)
+	if(get_dist(T, origin) < min_origin_dist)
 		return FALSE
 	for(var/atom/movable/AM in T)
 		if(AM.density || istype(AM, /obj/structure/active_abyssor_rune))
 			return FALSE
 	for(var/turf/P in placed)
-		if(get_dist(T, P) < spire_min_spacing)
+		if(get_dist(T, P) < min_spacing)
 			return FALSE
 	for(var/obj/structure/crystal_spire/S in GLOB.dreamwalker_storm.spires)
-		if(S.z == T.z && get_dist(T, S) < spire_min_spacing)
+		if(S.z == T.z && get_dist(T, S) < min_spacing)
 			return FALSE
 	return TRUE
 
-/// Returns TRUE if the channel finished.
-/datum/dreamwalker_ritual/proc/channel(mob/living/carbon/human/user, obj/structure/dreamwalker_altar/altar)
-	var/total_ticks = max(1, round(channel_time / (10 SECONDS)))
-	for(var/i in 1 to total_ticks)
+/// Raises a handful of spire runes in sight of the origin. Unlike seed_spires(), this always lays the full amount.
+/datum/dreamwalker_ritual/proc/seed_nearby_spires(turf/origin)
+	var/to_seed = rand(nearby_spires_min, nearby_spires_max)
+	if(to_seed <= 0 || !origin)
+		return 0
+	var/list/candidates = list()
+	for(var/turf/open/T in view(nearby_spire_range, origin))
+		candidates += T
+	var/list/placed = list()
+	while(length(candidates) && length(placed) < to_seed)
+		var/turf/T = pick_n_take(candidates)
+		if(!valid_spire_turf(T, origin, placed, nearby_spire_spacing, nearby_spire_min_dist))
+			continue
+		placed += T
+		new /obj/structure/active_abyssor_rune/dreamwalker(T)
+	return length(placed)
+
+/// Returns TRUE if the channel finished. Resumes from saved progress.
+/datum/dreamwalker_ritual/proc/channel(mob/living/carbon/human/user, obj/structure/table/dreamwalker_altar/altar)
+	var/total = total_ticks()
+	while(progress < total)
 		if(!do_after(user, 10 SECONDS, target = altar))
 			return FALSE
 		if(QDELETED(altar))
 			return FALSE
-		on_channel_tick(user, altar, i, total_ticks)
+		progress++
+		on_channel_tick(user, altar, progress, total)
 	return TRUE
 
 // --- I: omen (no ingot, an easy first step) ---------------------------------
 /datum/dreamwalker_ritual/murmur
 	name = "Rite of the First Murmur"
-	desc = "Whisper the deep's name to the shore. The sky begins to listen."
+	desc = "Whisper the deep's name to the shore. The sky begins to listen, and the dream lends you a splinter of itself."
 	stage = DW_STAGE_OMEN
 	channel_time = 30 SECONDS
-	blood_toll = 30
-	offerings = list(/obj/item/reagent_containers/food/snacks/fish = 2)
+	blood_toll = 60
+	offerings = list()
 	allowed_areas = DW_AREAS_OUTDOORS
+	area_desc = "outdoors"
+	grants_spell = /obj/effect/proc_holder/spell/invoked/dream_shard
 	complete_message = "<span class='greenannounce'>A heavy hush settles over the realm. Far out to sea the horizon bruises purple-black, and the tide drags itself out too far, as though the world were drawing breath.</span>"
 
 // --- II: rain ---------------------------------------------------------------
@@ -319,22 +401,26 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	desc = "Salt the clouds with metal pulled from a waking mind."
 	stage = DW_STAGE_RAIN
 	channel_time = 45 SECONDS
-	blood_toll = 45
-	offerings = list(/obj/item/reagent_containers/food/snacks/fish = 2, /obj/item/ingot/sylveric = 1)
+	blood_toll = 60
+	offerings = list(/obj/item/ingot/sylveric = 1, /obj/item/dream_crystal = 1)
 	allowed_areas = DW_AREAS_OUTDOORS
-	grants_spell = /obj/effect/proc_holder/spell/invoked/dream_shard
+	area_desc = "outdoors"
+	grants_spell = /obj/effect/proc_holder/spell/invoked/call_dreamfiend/dreamwalker/minor
 	complete_message = "<span class='greenannounce'>Grey clouds gather up above the realm and the first cold drops begin to fall. Somewhere beneath the waves, something turns over in its sleep.</span>"
-
+	
 // --- III: rainstorm ---------------------------------------------------------
 /datum/dreamwalker_ritual/swelling
 	name = "Rite of the Swelling Tide"
 	desc = "Pay the deep again, and speak it in the open streets of the town."
 	stage = DW_STAGE_STORM
 	channel_time = 60 SECONDS
-	blood_toll = 60
-	offerings = list(/obj/item/reagent_containers/food/snacks/fish = 3, /obj/item/ingot/sylveric = 1)
+	blood_toll = 100
+	offerings = list(/obj/item/ingot/sylveric = 1, /obj/item/dream_crystal = 1)
 	allowed_areas = DW_AREAS_TOWN
+	area_desc = "in town"
+	spires_to_seed = 3
 	lightning_on_tick = TRUE
+	grants_spell = /obj/effect/proc_holder/spell/invoked/call_dreamfiend/dreamwalker
 	complete_message = "<span class='danger'>Thunder splits the sky. The rain becomes a roaring wall and the rivers climb their banks. Abyssor's dreaming is no longer quiet.</span>"
 
 // --- IV: gale (last warning, lays the spires) -------------------------------
@@ -343,11 +429,14 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	desc = "Wind the storm tight, and drive anchors into the world."
 	stage = DW_STAGE_GALE
 	channel_time = 90 SECONDS
-	blood_toll = 80
-	offerings = list(/obj/item/reagent_containers/food/snacks/fish = 4, /obj/item/ingot/sylveric = 1)
+	blood_toll = 150
+	offerings = list(/obj/item/ingot/sylveric = 1, /obj/item/dream_crystal = 2)
 	allowed_areas = DW_AREAS_TOWN
+	area_desc = "in town"
 	lightning_on_tick = TRUE
-	spires_to_seed = 3
+	spires_to_seed = 10
+	nearby_spires_min = 2
+	nearby_spires_max = 2
 	start_message = "<span class='danger'>The wind changes. Something vast is beginning to turn above the water, and the sea answers it.</span>"
 	complete_message = "<span class='danger'>The storm bends toward a single point. A great wheel of cloud spins up out of the dark, and tornadoes stalk the land beneath it. Only one rite stands between the realm and the thing beneath the sea.</span>"
 	fail_message = "<span class='greenannounce'>The turning wheel stutters and slackens. The storm holds, but the wind has lost its purpose, for now.</span>"
@@ -358,12 +447,16 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	desc = "Break the dream. Wake the Drowned God, within the church. The spires must still stand."
 	stage = DW_STAGE_ASCENDED
 	channel_time = 180 SECONDS
-	blood_toll = 120
-	offerings = list(/obj/item/reagent_containers/food/snacks/fish = 6, /obj/item/ingot/sylveric = 2)
+	blood_toll = 200
+	offerings = list(/obj/item/ingot/sylveric = 2, /obj/item/dream_crystal = 2)
 	allowed_areas = DW_AREAS_CHURCH
+	area_desc = "in the church"
 	lightning_on_tick = TRUE
 	spires_required = 2
-	start_message = "<span class='userdanger'>THE DREAMER STIRS. A deep tolling rolls up from the sea floor and the ground hums with a hymn of drowning. The ground hues purple as realityA dreamwalker is calling Abyssor out of his sleep at a drowned altar. STOP THEM BEFORE THE RITE IS DONE.</span>"
+	nearby_spires_min = 3
+	nearby_spires_max = 4
+	grants_spell = /obj/effect/proc_holder/spell/invoked/call_dreamfiend/dreamwalker/ancient
+	start_message = "<span class='userdanger'>THE DREAMER STIRS. A deep tolling rolls up from the sea floor and the ground hums with a hymn of drowning. The world warps and starts to fracture- A dreamwalker is calling Abyssor out of his sleep at a drowned altar. STOP THEM BEFORE THE RITE IS DONE.</span>"
 	fail_message = "<span class='greenannounce'>The tolling from the deep falters and falls silent. The dreamer sleeps on, for now.</span>"
 
 /datum/dreamwalker_ritual/ascension/on_channel_tick(mob/living/carbon/human/user, obj/structure/dreamwalker_altar/altar, tick, total_ticks)
@@ -376,29 +469,34 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 /datum/dreamwalker_ritual/ascension/on_complete(mob/living/carbon/human/user, datum/antagonist/dreamwalker/D)
 	..()
 	D.ascend()
-	dreamwalker_announce("<span class='userdanger'>ABYSSOR AWAKENS. The sea rises to meet the sky and the hurricane breaks over the realm. A reflection of [user.real_name] can be seen in violet hues of the dream. The world is starting to crack- End [user.real_name], and the storm ends with them.</span>", sfx)
+	dreamwalker_announce("<span class='userdanger'>ABYSSOR AWAKES. The sea rises to meet the sky and the hurricane breaks over the realm. This land will not survive it's wake. [user.real_name] is his Chosen. End the Chosen, and the storm ends with them.</span>", sfx)
 
 // ----------------------------------------------------------------------------
 // ALTAR
 // ----------------------------------------------------------------------------
-/obj/structure/dreamwalker_altar
+/obj/structure/table/dreamwalker_altar
 	name = "drowned altar"
-	desc = "A slab of salt-crusted stone that is somehow always wet. Seawater beads and runs from it, though the sea is nowhere near."
-	icon = 'icons/roguetown/misc/structure.dmi'
-	icon_state = "shitportal" // TODO: placeholder, give it a real sprite
+	desc = "A slab of salt-crusted crystal that is somehow always wet. Seawater beads and runs from it, though the sea is nowhere near."
+	icon = 'icons/roguetown/misc/rituals.dmi'
+	icon_state = "abyssal_altar"
 	anchored = TRUE
-	density = FALSE
+	density = TRUE
+	smooth = 0
 	max_integrity = 400
 	var/channeling = FALSE
 	var/datum/antagonist/dreamwalker/cult = null
 
-/obj/structure/dreamwalker_altar/Destroy()
-	if(cult && cult.altar == src)
-		cult.altar = null
+/obj/structure/table/dreamwalker_altar/Destroy()
+	if(cult)
+		for(var/datum/dreamwalker_ritual/R in cult.rituals)
+			if(R.started && R.progress_altar == src)
+				R.expire_progress(cult.owner?.current)
+		if(cult.altar == src)
+			cult.altar = null
 	cult = null
 	return ..()
 
-/obj/structure/dreamwalker_altar/examine(mob/user)
+/obj/structure/table/dreamwalker_altar/examine(mob/user)
 	. = ..()
 	var/datum/antagonist/dreamwalker/D = get_dreamwalker_datum(user)
 	if(!D)
@@ -409,9 +507,10 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 		return
 	. += span_notice("Rite [D.rituals_done + 1] of [length(D.rituals)]: [R.name]. [R.desc]")
 	. += span_notice("It demands, laid upon the stone: [R.describe_offerings()]. And blood.")
-	. += span_notice("It must be spoken at: [R.describe_areas()].")
-
-/obj/structure/dreamwalker_altar/attack_hand(mob/user)
+	. += span_notice("It must be spoken [R.describe_areas()].")
+	if(R.started)
+		. += span_notice("The rite is partly spoken ([R.progress]/[R.total_ticks()]). It will unravel if left alone too long.")
+/obj/structure/table/dreamwalker_altar/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -427,8 +526,13 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 		return
 	begin_ritual(user, D, R)
 
-/obj/structure/dreamwalker_altar/proc/begin_ritual(mob/living/carbon/human/user, datum/antagonist/dreamwalker/D, datum/dreamwalker_ritual/R)
+/obj/structure/table/dreamwalker_altar/proc/begin_ritual(mob/living/carbon/human/user, datum/antagonist/dreamwalker/D, datum/dreamwalker_ritual/R)
 	var/turf/T = get_turf(src)
+	// Progress belongs to one altar. Starting at a different one begins the rite anew.
+	if(R.started && R.progress_altar != src)
+		R.reset_progress()
+
+	// These do not cancel the countdown: a blocked resume keeps ticking toward failure.
 	var/block = R.start_block(user, src)
 	if(block)
 		to_chat(user, span_warning(block))
@@ -441,16 +545,25 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 		return
 
 	channeling = TRUE
-	R.on_channel_start(user, src)
+	if(R.started)
+		R.cancel_resume_timer()
+		R.on_channel_resume(user, src)
+	else
+		R.started = TRUE
+		R.progress_altar = src
+		R.on_channel_start(user, src)
 	var/finished = R.channel(user, src)
 	channeling = FALSE
 
 	if(!finished)
-		to_chat(user, span_warning("The rite is broken!"))
-		R.on_fail(user)
+		if(QDELETED(src))
+			R.expire_progress(user)
+		else if(R.started) // not started means the altar's destruction already unravelled it
+			R.pause_progress(user)
 		return
 
 	if(!R.can_complete(user))
+		R.reset_progress()
 		R.on_fail(user)
 		return
 
@@ -458,52 +571,16 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	var/list/items = R.gather_offerings(T)
 	if(!islist(items))
 		to_chat(user, span_warning("The offerings are gone. The rite collapses."))
+		R.reset_progress()
 		R.on_fail(user)
 		return
 	for(var/obj/item/I in items)
 		qdel(I)
 
+	R.reset_progress()
 	user.blood_volume = max(user.blood_volume - R.blood_toll, BLOOD_VOLUME_SURVIVE)
 	to_chat(user, span_danger("The altar drinks deep of my blood."))
 	D.complete_ritual(R, user)
-
-// ----------------------------------------------------------------------------
-// SPELL: raise the altar
-// ----------------------------------------------------------------------------
-/obj/effect/proc_holder/spell/invoked/tidal_altar
-	name = "Raise Drowned Altar"
-	desc = "Drag a drowned altar up out of the dream beneath your feet. Each rite must be spoken in its own kind of place, so raise a new one where it is needed. Only one may exist; raising a new one destroys the old."
-	chargedrain = 0
-	chargetime = 5 SECONDS
-	recharge_time = 2 MINUTES
-	invocation_type = "whisper"
-	invocations = list("Abyssor, drown this ground...")
-	movement_interrupt = TRUE
-	charging_slowdown = 1
-	associated_skill = /datum/skill/magic/arcane
-	overlay_state = "dream_summon" // TODO: placeholder overlay
-
-/obj/effect/proc_holder/spell/invoked/tidal_altar/cast(list/targets, mob/user)
-	var/datum/antagonist/dreamwalker/D = get_dreamwalker_datum(user)
-	if(!D)
-		revert_cast()
-		return
-	var/turf/T = get_turf(user)
-	if(!T || T.density)
-		to_chat(user, span_warning("There is no room here to raise an altar."))
-		revert_cast()
-		return
-	if(D.altar)
-		if(D.altar.channeling)
-			to_chat(user, span_warning("I cannot abandon a rite in progress."))
-			revert_cast()
-			return
-		qdel(D.altar)
-	var/obj/structure/dreamwalker_altar/A = new(T)
-	A.cult = D
-	D.altar = A
-	user.visible_message(span_warning("Seawater wells up from the ground and a salt-crusted altar heaves itself out of it!"), span_notice("A drowned altar rises beneath my hands."))
-	return TRUE
 
 // ----------------------------------------------------------------------------
 // ANTAGONIST HOOKS
@@ -533,7 +610,7 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	R.on_complete(user, src)
 	var/datum/dreamwalker_ritual/next = get_next_ritual()
 	if(next)
-		to_chat(user, span_notice("[R.name] is done. ([rituals_done]/[length(rituals)]) The next: [next.name]. It will demand [next.describe_offerings()], and blood, spoken at [next.describe_areas()]."))
+		to_chat(user, span_notice("[R.name] is done. ([rituals_done]/[length(rituals)]) The next: [next.name]. It will demand [next.describe_offerings()], and blood, spoken [next.describe_areas()]."))
 
 /datum/antagonist/dreamwalker/proc/ascend()
 	var/mob/living/carbon/human/body = owner.current
@@ -547,13 +624,16 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	GLOB.dreamwalker_storm.chosen = body
 	RegisterSignal(body, COMSIG_LIVING_DEATH, PROC_REF(on_ascended_death))
 	to_chat(body, span_userdanger("THE DREAM BREAKS. The deep is awake, and I am its voice. The storm will not touch me, and it will not outlive me."))
-
+	for(var/mob/connected_player in GLOB.player_list)
+		if(!connected_player.client)
+			continue
+		SEND_SOUND(connected_player, sound(null))
+		SEND_SOUND(connected_player, 'sound/villain/dreamer_win.ogg')
+		
 /datum/antagonist/dreamwalker/proc/on_ascended_death(datum/source, gibbed)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, COMSIG_LIVING_DEATH)
 	GLOB.dreamwalker_storm.collapse()
-
-
 
 // ----------------------------------------------------------------------------
 // SPIRES + VOLATILE SHARDS
@@ -589,33 +669,131 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	visible_message(span_warning("[src] cracks and dissolves into brine."))
 	qdel(src)
 
-/obj/effect/proc_holder/spell/invoked/dream_shard
-	name = "Wrench Dream Shard"
-	desc = "Tear a volatile abyssal marker out of the dream at the cost of your blood. Throw it to plant a rune that grows a crystal spire; it fizzles if left unused. The more the storm grows, the faster another comes."
-	chargedrain = 0
-	chargetime = 3 SECONDS
-	recharge_time = 12 MINUTES
-	invocation_type = "whisper"
-	invocations = list("Dream... shed a splinter of yourself.")
-	movement_interrupt = FALSE
-	charging_slowdown = 1
-	associated_skill = /datum/skill/magic/arcane
-	overlay_state = "dream_bind" // TODO: placeholder overlay
-	var/blood_cost = 40
-	var/base_recharge = 12 MINUTES
 
-/obj/effect/proc_holder/spell/invoked/dream_shard/cast(list/targets, mob/user)
-	var/mob/living/carbon/human/H = user
-	if(!istype(H))
-		revert_cast()
+// ----------------------------------------------------------------------------
+// DREAM CRYSTALS
+// A dreamwalker who touches one of their own spires starts a 30 second change:
+// the spire glows violet and keeps announcing itself, then goes dark red and
+// yields one dream crystal. A spent spire stops growing and spawning fiends and
+// is much easier to break, but it still stands for the final rite's condition,
+// and it pulses at anyone who comes near (stronger as the storm grows).
+// Anyone can attack the spire while it changes; if it falls, there is no crystal.
+// ----------------------------------------------------------------------------
+/obj/item/dream_crystal
+	name = "dream crystal"
+	desc = "A sliver of a dream, cold and faintly singing. It smells of brine and sleep."
+	icon = 'icons/roguetown/misc/rituals.dmi'
+	icon_state = "abyssal_marker" // TODO: placeholder, give it a real item sprite
+	w_class = WEIGHT_CLASS_SMALL
+	color = "#a259ff"
+
+/obj/structure/crystal_spire/var/dream_state = DW_SPIRE_FRESH
+/obj/structure/crystal_spire/var/mob/living/dream_attuner = null
+/// Fraction of its integrity a spire keeps once spent.
+/obj/structure/crystal_spire/var/spent_integrity_mult = 0.5
+
+/obj/structure/crystal_spire/attack_hand(mob/living/user)
+	if(!(src in GLOB.dreamwalker_storm.spires) || !get_dreamwalker_datum(user))
+		return ..()
+	switch(dream_state)
+		if(DW_SPIRE_ATTUNING)
+			to_chat(user, span_warning("The spire is already changing. I must let it finish."))
+		if(DW_SPIRE_SPENT)
+			to_chat(user, span_warning("This spire has given all it will. It is only a dark red husk now."))
+		else
+			begin_attunement(user)
+
+/obj/structure/crystal_spire/proc/begin_attunement(mob/living/user)
+	if(!awakened || converting)
+		to_chat(user, span_warning("The spire is still tearing the dream open. It will not be touched yet."))
 		return
-	if(H.blood_volume < BLOOD_VOLUME_OKAY + blood_cost)
-		to_chat(H, span_warning("I am too drained to bleed a shard out of the dream."))
-		revert_cast()
+	dream_state = DW_SPIRE_ATTUNING
+	dream_attuner = user
+	user.visible_message(span_warning("[user] lays a hand on [src], and the crystal begins to shift color!"), span_notice("I lay my palm on the spire. It answers, and the dream begins to pour through it."))
+	animate(src, color = "#a259ff", time = 3 SECONDS)
+	set_light(5, 3, "#a259ff")
+	attune_pulse(1)
+	max_fiends = 6	//Large wave while converting
+	addtimer(CALLBACK(src, PROC_REF(attune_pulse), 2), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(attune_pulse), 3), 40 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(finish_attunement)), DW_SPIRE_ATTUNE_TIME)
+
+/obj/structure/crystal_spire/proc/attune_pulse(pulse)
+	if(QDELETED(src) || dream_state != DW_SPIRE_ATTUNING)
 		return
-	H.blood_volume -= blood_cost
-	var/obj/item/abyssal_marker/volatile/dreamwalker/shard = new(get_turf(H))
-	H.put_in_hands(shard)
-	to_chat(H, span_notice("A shard of the dream bleeds out of my palm and hardens into crystal."))
-	recharge_time = dreamwalker_scale_cooldown(base_recharge)
-	return TRUE
+	var/static/list/pulse_messages = list(
+		"A violet light blooms in the distance, and faint, ethereal voices murmur just beyond hearing",
+		"The purple glow swells. Something sings, high and wordless, beneath the sound of the wind",
+		"The violet light flares blinding bright. An ethereal chorus rises, and then cuts off all at once",
+	)
+	set_light(4 + pulse * 2, 3, 1 * pulse, l_color = "#a259ff")
+	loud_message(pulse_messages[pulse], hearing_distance = DW_SPIRE_NOISE_RANGE)
+
+/obj/structure/crystal_spire/proc/finish_attunement()
+	if(QDELETED(src) || dream_state != DW_SPIRE_ATTUNING)
+		return
+	dream_state = DW_SPIRE_SPENT
+	animate(src, color = "#5a0a14", time = 3 SECONDS)
+	set_light(3, 1, 1, l_color = "#7a0c18")
+
+	// The cost: the spire stops growing, stops birthing fiends (those already out stay), and is easier to break.
+	max_fiends = 0
+	max_radius = current_radius
+	max_integrity = round(max_integrity * spent_integrity_mult)
+	obj_integrity = min(obj_integrity, max_integrity)
+	visible_message(span_danger("The spire drains to a dark, bloody red and falls silent."))
+
+	var/obj/item/dream_crystal/C = new(get_turf(src))
+	var/mob/living/user = dream_attuner
+	dream_attuner = null
+	if(user && !QDELETED(user) && user.stat != DEAD && get_dist(user, src) <= 2)
+		user.put_in_hands(C)
+		to_chat(user, span_notice("A dream crystal slips free of the spire and into my hand."))
+	addtimer(CALLBACK(src, PROC_REF(brine_pulse)), DW_BRINE_INTERVAL)
+
+// Spent spires choke the air around them. Scales with storm stage. Oxyloss is deliberately gentle:
+// it ignores armor and can drop people into crit, so it only starts at the rainstorm stage, is hard-capped
+// as a fraction of max health, and never touches anyone who is already hurt or down.
+/obj/structure/crystal_spire/proc/brine_pulse()
+	if(QDELETED(src) || dream_state != DW_SPIRE_SPENT)
+		return
+	addtimer(CALLBACK(src, PROC_REF(brine_pulse)), DW_BRINE_INTERVAL)
+
+	var/range = 4
+	var/slow = 2 SECONDS
+	var/oxy = 0
+	var/oxy_cap = 0
+	switch(GLOB.dreamwalker_storm.stage)
+		if(DW_STAGE_RAIN)
+			range = 5
+			slow = 3 SECONDS
+		if(DW_STAGE_STORM)
+			range = 6
+			slow = 4 SECONDS
+			oxy = 3
+			oxy_cap = 0.40
+		if(DW_STAGE_GALE)
+			range = 7
+			slow = 5 SECONDS
+			oxy = 5
+			oxy_cap = 0.55
+		if(DW_STAGE_ASCENDED)
+			range = 8
+			slow = 6 SECONDS
+			oxy = 8
+			oxy_cap = 0.70
+
+	for(var/mob/living/carbon/human/L in view(range, src))
+		if(L.stat == DEAD || get_dreamwalker_datum(L) || HAS_TRAIT(L, TRAIT_RAINSTORM_IMMUNE))
+			continue
+		L.apply_status_effect(/datum/status_effect/debuff/clickcd, slow)
+		var/choked = FALSE
+		if(oxy && L.stat == CONSCIOUS && L.health >= L.maxHealth * DW_BRINE_OXY_MIN_HEALTH)
+			var/room = L.maxHealth * oxy_cap - L.getOxyLoss()
+			if(room > 0)
+				L.adjustOxyLoss(min(oxy, room))
+				choked = TRUE
+		if(choked)
+			to_chat(L, span_userdanger("Brine rises in my throat. I cannot draw a full breath!"))
+		else
+			to_chat(L, span_warning("Salt water seems to fill the air. It tastes of rust and the deep."))

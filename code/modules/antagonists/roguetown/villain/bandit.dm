@@ -53,13 +53,17 @@
 */
 
 /datum/antagonist/bandit/proc/forge_objectives()
-	if(!(locate(/datum/objective/objective) in objectives))
-			var/datum/objective/bandit/objective = new
-			objective.owner = owner
-			add_objective(objective)
-			return
+	if(!(locate(/datum/objective/bandit) in objectives))
+		var/datum/objective/bandit/objective = new
+		objective.owner = owner
+		add_objective(objective)
+		return
 
-	return
+/datum/antagonist/bandit/proc/add_objective(datum/objective/O)
+	objectives += O
+
+/datum/antagonist/bandit/proc/remove_objective(datum/objective/O)
+	objectives -= O
 
 /datum/antagonist/bandit/proc/move_to_spawnpoint()
 	owner.current.forceMove(pick(GLOB.bandit_starts))

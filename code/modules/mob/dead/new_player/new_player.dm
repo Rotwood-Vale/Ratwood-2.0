@@ -301,7 +301,6 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 				client.prefs.be_special -= flag
 		else
 			client.prefs.be_special += flag
-		to_chat(src, "DEBUG [flag]: [(flag in client.prefs.be_special) ? "ON" : "OFF"] | [client.prefs.be_special.Join(", ")]") // temporary
 		VillainChoices()
 		return
 	if(href_list["manifest"])
