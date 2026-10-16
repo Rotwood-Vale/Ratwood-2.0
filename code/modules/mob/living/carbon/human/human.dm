@@ -1291,13 +1291,14 @@
 	log_admin("[key_name(admin)] refreshed the preferences of [key_name(src)].")
 	message_admins(span_adminnotice("[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)]."))
 	admin_ticket_log(src, "<font color='green'>[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)].</font>")
-	// The character's name is always in GLOB.chosen_names mid-round, so copy_to would hand them a random one.
+	// The character's name is always in GLOB.chosen_names mid-round, so copy_to would hand them a random one,
+	// and the gnoll path renames them to their gnoll name with fully_replace_character_name(), mind and records included.
 	var/old_real_name = real_name
 	var/old_name = name
 	reapply_preferences()
-	real_name = old_real_name
+	if(real_name != old_real_name)
+		fully_replace_character_name(real_name, old_real_name)
 	name = old_name
-	dna?.real_name = old_real_name
 	return TRUE
 
 /mob/living/carbon/human/proc/reapply_live_preferences()
