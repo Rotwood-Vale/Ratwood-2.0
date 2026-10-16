@@ -44,6 +44,10 @@
  * Text sanitization
  */
 
+/// Removes the \proper and \improper text macros, which show as stray characters outside BYOND's own text output, such as in tgui
+/proc/strip_improper(input_text)
+	return replacetext(replacetext(input_text, "\proper", ""), "\improper", "")
+
 //Simply removes < and > and limits the length of the message
 /proc/strip_html_simple(t,limit=MAX_MESSAGE_LEN)
 	var/list/strip_chars = list("<",">")

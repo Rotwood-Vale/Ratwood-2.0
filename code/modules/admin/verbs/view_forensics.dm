@@ -19,7 +19,7 @@
 
 /datum/forensics_viewer/New(atom/target)
 	target_ref = WEAKREF(target)
-	target_name = "[target]"
+	target_name = strip_improper("[target]")
 
 /datum/forensics_viewer/ui_state(mob/user)
 	return ADMIN_STATE(R_ADMIN)
@@ -71,6 +71,22 @@
 			C.jumptocoord(T.x, T.y, T.z)
 			return FALSE
 
+		if("follow")
+			var/target_ckey = ckey(params["ckey"])
+			var/mob/target_mob = forensics_find_mob(target_ckey)
+			if(!target_mob)
+				to_chat(user, span_warning("[target_ckey] has no mob in the round."))
+				return FALSE
+			// Mirror the behaviour of the adminplayerobservefollow href
+			var/client/C = user.client
+			if(!isobserver(user) && !C.admin_ghost())
+				return FALSE
+			var/mob/dead/observer/A = C.mob
+			if(!istype(A))
+				return FALSE
+			A.ManualFollow(target_mob)
+			return FALSE
+
 		if("pp")
 			var/target_ckey = ckey(params["ckey"])
 			var/mob/target_mob = forensics_find_mob(target_ckey)
@@ -89,17 +105,6 @@
 /// Text goes to tgui decoded, which escapes it itself. Stored text is a mix of raw and html_encoded, see log_normalize_html().
 /proc/forensics_report(atom/A)
 	var/datum/component/forensics/D = A.GetComponent(/datum/component/forensics)
-	var/list/actions = list()
-	for(var/packed_entry in forensics_actions_newest_first(D))
-		var/list/entry = forensic_action_fields(packed_entry)
-		actions += list(list(
-			// Same format as the stat panel's ROUND TIME
-			"time" = time2text(entry["time"], "hh:mm:ss", 0),
-			"ckey" = entry["ckey"],
-			"name" = html_decode(entry["name"]),
-			"action" = html_decode(entry["action"]),
-			"count" = entry["count"],
-		))
 	var/list/touches = list()
 	var/list/touches_by_ckey = forensics_touches_by_ckey(D)
 	for(var/touch_ckey in touches_by_ckey)
@@ -112,26 +117,28 @@
 	return list(
 		"generated_at" = time2text(STATION_TIME_PASSED(), "hh:mm:ss", 0),
 		"type" = "[A.type]",
-		"location" = AREACOORD(A),
-		"actions" = actions,
+		"location" = strip_improper(AREACOORD(A)),
+		"is_item" = isitem(A),
+		"evidence" = forensics_action_rows(D?.actions),
+		"routine" = forensics_action_rows(D?.routine_actions),
 		"touches" = touches,
 		"last_toucher" = A.fingerprintslast,
 	)
 
-/// Both action lists interleaved by time, newest first, still packed. Each list is already oldest first.
-/proc/forensics_actions_newest_first(datum/component/forensics/D)
-	. = list()
-	var/evidence_index = LAZYLEN(D?.actions)
-	var/routine_index = LAZYLEN(D?.routine_actions)
-	while(evidence_index || routine_index)
-		var/evidence = evidence_index ? D.actions[evidence_index] : null
-		var/routine = routine_index ? D.routine_actions[routine_index] : null
-		if(evidence && (!routine || forensic_action_time(evidence) >= forensic_action_time(routine)))
-			. += evidence
-			evidence_index--
-		else
-			. += routine
-			routine_index--
+/// Unpacks one of the component's action lists for tgui, newest first. The list is stored oldest first.
+/proc/forensics_action_rows(list/packed_entries)
+	var/list/rows = list()
+	for(var/i in LAZYLEN(packed_entries) to 1 step -1)
+		var/list/entry = forensic_action_fields(packed_entries[i])
+		rows += list(list(
+			// Same format as the stat panel's ROUND TIME
+			"time" = time2text(entry["time"], "hh:mm:ss", 0),
+			"ckey" = entry["ckey"],
+			"name" = html_decode(entry["name"]),
+			"action" = html_decode(entry["action"]),
+			"count" = entry["count"],
+		))
+	return rows
 
 /// Hidden prints grouped by ckey, each list("First" = "name time", "Last" = "name time").
 /// They are keyed by BYOND key, so one player can hold two, such as their own and an aghost's "@key".

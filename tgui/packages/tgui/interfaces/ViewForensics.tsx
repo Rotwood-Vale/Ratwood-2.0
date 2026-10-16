@@ -6,6 +6,7 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -28,7 +29,9 @@ type Report = {
   generated_at: string;
   type: string;
   location: string;
-  actions: ForensicAction[];
+  is_item: BooleanLike;
+  evidence: ForensicAction[];
+  routine: ForensicAction[];
   touches: Touch[];
   last_toucher: string | null;
 };
@@ -38,11 +41,21 @@ type Data = {
   report: Report | null;
 };
 
+// About ten rows, after which the section scrolls instead of growing
+const SCROLL_HEIGHT = '15em';
+
 const PlayerButtons = (props: { ckey: string }) => {
   const { act } = useBackend();
   const { ckey } = props;
   return (
     <Box nowrap>
+      <Button
+        icon="eye"
+        tooltip="Follow this player as a ghost"
+        onClick={() => act('follow', { ckey })}
+      >
+        FLW
+      </Button>
       <Button
         icon="user"
         tooltip="Open the player panel"
@@ -61,47 +74,48 @@ const PlayerButtons = (props: { ckey: string }) => {
   );
 };
 
-const ActionsSection = (props: { actions: ForensicAction[] }) => {
-  const { actions } = props;
+const ActionsSection = (props: {
+  title: string;
+  actions: ForensicAction[];
+}) => {
+  const { title, actions } = props;
   return (
-    <Section title={`Actions (${actions.length})`}>
+    <Section title={`${title} (${actions.length})`}>
       {actions.length === 0 ? (
         <NoticeBox>None recorded.</NoticeBox>
       ) : (
-        <Table>
-          <Table.Row header>
-            <Table.Cell collapsing>Round time</Table.Cell>
-            <Table.Cell>Ckey</Table.Cell>
-            <Table.Cell>Action</Table.Cell>
-            <Table.Cell collapsing />
-          </Table.Row>
-          {actions.map((entry, i) => (
-            <Table.Row key={i} className="candystripe">
-              <Table.Cell collapsing>
-                <Box nowrap>{entry.time}</Box>
-              </Table.Cell>
-              <Table.Cell>
-                <Box nowrap>
-                  {entry.ckey} ({entry.name})
-                </Box>
-              </Table.Cell>
-              <Table.Cell>
-                <Box nowrap>
-                  {entry.action}
-                  {entry.count > 1 && ` (x${entry.count})`}
-                </Box>
-              </Table.Cell>
-              <Table.Cell collapsing>
-                <PlayerButtons ckey={entry.ckey} />
-              </Table.Cell>
+        <Box style={{ maxHeight: SCROLL_HEIGHT, overflowY: 'auto' }}>
+          <Table>
+            <Table.Row header>
+              <Table.Cell collapsing>Round time</Table.Cell>
+              <Table.Cell>Ckey</Table.Cell>
+              <Table.Cell>Action</Table.Cell>
+              <Table.Cell collapsing />
             </Table.Row>
-          ))}
-        </Table>
+            {actions.map((entry, i) => (
+              <Table.Row key={i} className="candystripe">
+                <Table.Cell collapsing>
+                  <Box nowrap>{entry.time}</Box>
+                </Table.Cell>
+                <Table.Cell>
+                  <Box nowrap>
+                    {entry.ckey} ({entry.name})
+                  </Box>
+                </Table.Cell>
+                <Table.Cell>
+                  <Box nowrap>
+                    {entry.action}
+                    {entry.count > 1 && ` (x${entry.count})`}
+                  </Box>
+                </Table.Cell>
+                <Table.Cell collapsing>
+                  <PlayerButtons ckey={entry.ckey} />
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table>
+        </Box>
       )}
-      <Box color="label" mt={1}>
-        Latest 30 opens, closes and key locks, and latest 30 other actions.
-        Repeats in a row share one line.
-      </Box>
     </Section>
   );
 };
@@ -116,27 +130,29 @@ const TouchesSection = (props: {
       {touches.length === 0 ? (
         <NoticeBox>None recorded.</NoticeBox>
       ) : (
-        <Table>
-          <Table.Row header>
-            <Table.Cell collapsing>Ckey</Table.Cell>
-            <Table.Cell>Touch</Table.Cell>
-            <Table.Cell collapsing />
-          </Table.Row>
-          {touches.map((touch) => (
-            <Table.Row key={touch.ckey} className="candystripe">
-              <Table.Cell collapsing>
-                <Box nowrap>{touch.ckey}</Box>
-              </Table.Cell>
-              <Table.Cell>
-                <Box nowrap>First: {touch.first}</Box>
-                {touch.last && <Box nowrap>Last: {touch.last}</Box>}
-              </Table.Cell>
-              <Table.Cell collapsing>
-                <PlayerButtons ckey={touch.ckey} />
-              </Table.Cell>
+        <Box style={{ maxHeight: SCROLL_HEIGHT, overflowY: 'auto' }}>
+          <Table>
+            <Table.Row header>
+              <Table.Cell collapsing>Ckey</Table.Cell>
+              <Table.Cell>Touch</Table.Cell>
+              <Table.Cell collapsing />
             </Table.Row>
-          ))}
-        </Table>
+            {touches.map((touch) => (
+              <Table.Row key={touch.ckey} className="candystripe">
+                <Table.Cell collapsing>
+                  <Box nowrap>{touch.ckey}</Box>
+                </Table.Cell>
+                <Table.Cell>
+                  <Box nowrap>First: {touch.first}</Box>
+                  {touch.last && <Box nowrap>Last: {touch.last}</Box>}
+                </Table.Cell>
+                <Table.Cell collapsing>
+                  <PlayerButtons ckey={touch.ckey} />
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table>
+        </Box>
       )}
       <Box color="label" mt={1}>
         Touch times are server clock time.
@@ -151,7 +167,7 @@ export const ViewForensics = () => {
   const { target_name, report } = data;
 
   return (
-    <Window width={760} height={520} title={`Forensics: ${target_name}`}>
+    <Window width={780} height={700} title={`Forensics: ${target_name}`}>
       <Window.Content scrollable>
         <Section>
           <Stack align="center">
@@ -163,8 +179,9 @@ export const ViewForensics = () => {
             <Stack.Item grow>
               {report && (
                 <Box color="label">
-                  Generated at round time {report.generated_at} ·{' '}
-                  {report.type} · {report.location}
+                  <Box>Generated at round time {report.generated_at}</Box>
+                  <Box>{report.type}</Box>
+                  <Box>{report.location}</Box>
                 </Box>
               )}
             </Stack.Item>
@@ -175,18 +192,42 @@ export const ViewForensics = () => {
             </Stack.Item>
           </Stack>
         </Section>
-        {report ? (
+        {!report ? (
+          <NoticeBox>
+            Press Generate Logs to read this object&apos;s forensics.
+          </NoticeBox>
+        ) : report.is_item ? (
           <>
-            <ActionsSection actions={report.actions} />
+            <ActionsSection
+              title="Picked up and dropped"
+              actions={report.evidence}
+            />
             <TouchesSection
               touches={report.touches}
               lastToucher={report.last_toucher}
             />
           </>
         ) : (
-          <NoticeBox>
-            Press Generate Logs to read this object&apos;s forensics.
-          </NoticeBox>
+          <>
+            <ActionsSection
+              title="Opened, closed and locked"
+              actions={report.routine}
+            />
+            <ActionsSection
+              title="Suspicious actions"
+              actions={report.evidence}
+            />
+            <TouchesSection
+              touches={report.touches}
+              lastToucher={report.last_toucher}
+            />
+          </>
+        )}
+        {report && (
+          <Box color="label">
+            Each list keeps its latest 30 entries. Repeats in a row share one
+            line.
+          </Box>
         )}
       </Window.Content>
     </Window>
