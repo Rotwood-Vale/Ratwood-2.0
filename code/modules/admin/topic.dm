@@ -793,23 +793,6 @@
 			NP.ckey = M.ckey
 			qdel(M)
 
-	else if(href_list["forensics_pp"])
-		if(!check_rights(R_ADMIN))
-			return
-		// Found at click time, not when the report was built, so it follows the player to whatever mob they are in now.
-		var/target_ckey = ckey(href_list["forensics_pp"])
-		var/client/target_client = GLOB.directory[target_ckey]
-		var/mob/target_mob = target_client?.mob
-		if(!target_mob)
-			for(var/mob/candidate as anything in GLOB.mob_list)
-				if(candidate.ckey == target_ckey)
-					target_mob = candidate
-					break
-		if(!target_mob)
-			to_chat(usr, span_warning("[target_ckey] has no mob in the round."))
-			return
-		show_player_panel(target_mob)
-
 	else if(href_list["pref_refresh"])
 		if(!check_rights(R_ADMIN))
 			return

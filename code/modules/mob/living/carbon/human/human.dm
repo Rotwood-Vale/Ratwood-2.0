@@ -1278,7 +1278,7 @@
 	if(!client?.prefs)
 		to_chat(admin, span_warning("[src] has no connected player whose preferences can be reapplied."))
 		return FALSE
-	if(tgui_alert(admin, "Reapply [key_name(src)]'s saved character to [real_name]? The name is kept, but random appearance or species settings reroll, and patron, vices and limbs can be reset from the save.", "Pref Refresh", list("Yes", "No")) != "Yes")
+	if(tgui_alert(admin, "Pref refresh [ckey]?", "Pref Refresh", list("Yes", "No")) != "Yes")
 		return FALSE
 	if(QDELETED(src) || !client?.prefs)
 		to_chat(admin, span_warning("[src]'s player disconnected before their preferences could be reapplied."))
