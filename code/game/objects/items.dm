@@ -886,6 +886,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP))		//See if we're supposed to auto pickup.
 		return
 
+	// Moving it between my own hands, belt and bags is not a pickup worth recording for View Forensics
+	var/already_carried = get(src, /mob) == user
+
 
 	//If the item is in a storage item, take it out
 	if(inv_storage_delay && SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE))
@@ -906,6 +909,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 	else
+		if(!already_carried)
+			add_forensic_action(user, "picked up")
 		if(twohands_required)
 			wield(user)
 
@@ -953,6 +958,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	pixel_x = initial(pixel_x)
 	pixel_y = initial(pixel_y)
 	if(isturf(loc))
+		// Only drops that land it in the world, so swapping it between slots or into a bag records nothing
+		add_forensic_action(user, "dropped")
 		if(!ontable())
 			var/oldy = pixel_y
 			pixel_y = pixel_y+5
