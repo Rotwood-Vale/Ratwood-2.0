@@ -294,3 +294,12 @@
   UntoldTactics:
   - bugfix: The Martyr's 2 minute ultimate now correctly sets all possibly relevant
       weapon skills to legendary.
+2026-10-16:
+  Grigorix:
+  - rscadd: Added thawbs bisht, turbans, new large cloth sash to the loadout menu
+  - rscadd: Added bedroll option to the loadout menu as well
+  - bugfix: fixed fancy turban crafting recipe
+  The-Sun-In-Splendour:
+  - rscdel: ashes scattering when you walk on them
+  wikimody:
+  - bugfix: Knightly jurney stigmata is in fact a stigmata
