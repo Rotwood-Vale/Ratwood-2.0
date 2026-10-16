@@ -74,6 +74,7 @@
 		else
 			user.visible_message(span_warning("[user] kicks [src] shut!"), \
 				span_notice("I kick [src] shut!"))
+		add_forensic_action(user, "kicked shut")
 		force_closed()
 	else
 		if(locked)
@@ -89,6 +90,7 @@
 					else
 						user.visible_message(span_warning("[user] kicks open [src]!"), \
 							span_notice("I kick open [src]!"))
+					add_forensic_action(user, "kicked open, breaking the lock")
 					locked = 0
 					force_open()
 				else
@@ -99,6 +101,7 @@
 					else
 						user.visible_message(span_warning("[user] kicks [src]!"), \
 							span_notice("I kick [src]!"))
+					add_forensic_action(user, "kicked while locked")
 			//try to kick open, destroy lock
 		else
 			playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
@@ -108,6 +111,7 @@
 			else
 				user.visible_message(span_warning("[user] kicks open [src]!"), \
 					span_notice("I kick open [src]!"))
+			add_forensic_action(user, "kicked open")
 			force_open()
 
 /obj/structure/mineral_door/proc/force_open()
@@ -237,9 +241,11 @@
 			user.break_invisibility()
 			if(locked)
 				user.visible_message(span_warning("[user] bashes into [src]!"))
+				add_forensic_action(user, "bashed into while locked")
 				take_damage(200, "brute", "blunt", 1)
 			else
 				playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
+				add_forensic_action(user, "smashed through")
 				force_open()
 				user.visible_message(span_warning("[user] smashes through [src]!"))
 			return
@@ -309,6 +315,7 @@
 			return FALSE
 	else if(!user.client) // simplemobs aren't allowed to pathfind through doors, currently
 		return FALSE
+	add_forensic_action(user, door_opened ? "closed" : "opened")
 	SwitchState(user.m_intent == MOVE_INTENT_SNEAK) // silent when sneaking
 	return TRUE
 
@@ -434,7 +441,12 @@
 			return ..()
 
 /obj/structure/mineral_door/attacked_by(obj/item/I, mob/living/user)
-	..()
+	var/was_broken = obj_broken || obj_destroyed
+	. = ..()
+	if(.)
+		add_forensic_action(user, "hit with [I]")
+	if(!was_broken && (obj_broken || obj_destroyed))
+		add_forensic_action(user, "broke")
 	if(obj_broken || obj_destroyed)
 		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
 		new_track.handle_creation(user)
@@ -611,6 +623,7 @@
 			if(K.lockhash == lockhash)
 				lock_toggle(user)
 				if(autobump && !locked)
+					add_forensic_action(user, "opened")
 					src.Open()
 					addtimer(CALLBACK(src, PROC_REF(Close), FALSE, TRUE), 25)
 					src.last_bumper = user
@@ -626,6 +639,7 @@
 		if(K.lockhash == lockhash || istype(K, /obj/item/roguekey/lord)) //master key cares not for lockhashes
 			lock_toggle(user)
 			if(autobump)
+				add_forensic_action(user, "opened")
 				src.Open()
 				addtimer(CALLBACK(src, PROC_REF(Close), FALSE, TRUE), 25)
 				src.last_bumper = user
@@ -702,6 +716,7 @@
 						record_round_statistic(STATS_LOCKS_PICKED)
 						var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
 						new_track.handle_creation(user)
+					add_forensic_action(user, "lockpicked")
 					lock_toggle(user)
 					break
 				else
@@ -713,6 +728,7 @@
 				add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/4)
 				continue
 		if(!picked)
+			add_forensic_action(user, "tried to lockpick")
 			user.log_message("stopped/failed lockpicking door \"[src.name]\" (remains [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
 		return
 
@@ -730,6 +746,7 @@
 		log_admin("[H.real_name]([key_name(user)]) successfully used a skeleton key on [src.name].")
 	do_sparks(3, FALSE, src)
 	playsound(user, 'sound/items/skeleton_key.ogg', 100)
+	add_forensic_action(user, "used a skeleton key")
 	lock_toggle(user) //All That It Does.
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	return
@@ -737,6 +754,7 @@
 /obj/structure/mineral_door/proc/lock_toggle(mob/user)
 	if(isSwitchingStates || door_opened)
 		return
+	add_forensic_action(user, locked ? "unlocked" : "locked")
 	if(locked)
 		user?.visible_message(span_warning("[user] unlocks [src]."), \
 			span_notice("I unlock [src]."))

@@ -1,3 +1,6 @@
+/// Most player actions View Forensics keeps per atom. The oldest drops off first.
+#define FORENSIC_ACTIONS_MAX 30
+
 /datum/component/forensics
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	can_transfer = TRUE
@@ -5,6 +8,8 @@
 	var/list/hiddenprints		//assoc ckey = realname/gloves/ckey
 	var/list/blood_DNA			//assoc dna = bloodtype
 	var/list/fibers				//assoc print = print
+	/// Admin only, never wiped. Player actions oldest first, each list("time" = REALTIMEOFDAY, "ckey", "name", "action", "count")
+	var/list/actions
 
 /datum/component/forensics/InheritComponent(datum/component/forensics/F, original)		//Use of | and |= being different here is INTENTIONAL.
 	fingerprints = fingerprints | F.fingerprints
@@ -160,6 +165,17 @@
 	A.fingerprintslast = M.ckey
 	return TRUE
 
+/// Repeats of the same action by the same player fold into one entry, so a door walked through all round costs one row.
+/datum/component/forensics/proc/add_action(mob/user, action)
+	var/list/last = LAZYACCESS(actions, LAZYLEN(actions))
+	if(last && last["ckey"] == user.ckey && last["action"] == action)
+		last["time"] = REALTIMEOFDAY
+		last["count"]++
+		return
+	LAZYADD(actions, list(list("time" = REALTIMEOFDAY, "ckey" = user.ckey, "name" = user.real_name, "action" = action, "count" = 1)))
+	if(length(actions) > FORENSIC_ACTIONS_MAX)
+		actions.Cut(1, 2)
+
 /datum/component/forensics/proc/add_blood_DNA(list/dna)		//list(dna_enzymes = type)
 	if(!length(dna))
 		return
@@ -175,3 +191,5 @@
 	if(!length(blood_DNA))
 		return
 	parent.LoadComponent(/datum/component/decal/blood)
+
+#undef FORENSIC_ACTIONS_MAX

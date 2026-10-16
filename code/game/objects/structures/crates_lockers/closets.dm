@@ -181,6 +181,7 @@
 //	climb_time *= 0.5 //it's faster to climb onto an open thing
 	dump_contents()
 	update_icon()
+	add_forensic_action(user, "opened")
 	return 1
 
 /obj/structure/closet/proc/insert(atom/movable/AM)
@@ -241,6 +242,7 @@
 	opened = FALSE
 	density = TRUE
 	update_icon()
+	add_forensic_action(user, "closed")
 	return TRUE
 
 /obj/structure/closet/proc/toggle(mob/living/user)
@@ -258,6 +260,14 @@
 	if(!obj_broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
 	..()
+
+/obj/structure/closet/attacked_by(obj/item/I, mob/living/user)
+	var/was_broken = obj_broken || obj_destroyed
+	. = ..()
+	if(.)
+		add_forensic_action(user, "hit with [I]")
+	if(!was_broken && (obj_broken || obj_destroyed))
+		add_forensic_action(user, "smashed open")
 
 
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
@@ -370,6 +380,7 @@
 					to_chat(user, "<span class='deadsay'>The locking mechanism gives.</span>")
 					record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 					record_round_statistic(STATS_LOCKS_PICKED)
+					add_forensic_action(user, "lockpicked")
 					togglelock(user)
 					break
 				else
@@ -381,6 +392,7 @@
 				add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/4)
 				continue
 		if(!picked)
+			add_forensic_action(user, "tried to lockpick")
 			user.log_message("stopped/failed lockpicking closet \"[src.name]\" (remains [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
 		return
 
@@ -403,6 +415,7 @@
 	else
 		do_sparks(3, FALSE, src)
 		playsound(user, 'sound/items/skeleton_key.ogg', 100)
+		add_forensic_action(user, "used a skeleton key")
 		togglelock(user) //All That It Does.
 		return
 
@@ -537,6 +550,7 @@
 
 /obj/structure/closet/proc/togglelock(mob/living/user, silent)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
+	add_forensic_action(user, locked ? "unlocked" : "locked")
 	if(locked)
 		user.visible_message(span_warning("[user] unlocks [src]."), \
 			span_notice("I unlock [src]."))

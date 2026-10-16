@@ -69,6 +69,15 @@
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_hiddenprint(M)
 
+/// Notes a player opening, locking, picking or breaking this for admins' View Forensics. Mobs without a player are skipped.
+/atom/proc/add_forensic_action(mob/user, action)
+	if(!user?.ckey || QDELETED(src))
+		return
+	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
+	if(!D)
+		D = AddComponent(/datum/component/forensics)
+	D.add_action(user, action)
+
 /atom/proc/add_blood_DNA(list/dna)						//ASSOC LIST DNA = BLOODTYPE
 	return FALSE
 

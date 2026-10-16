@@ -68,6 +68,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/reload_whitelist,
 	/client/proc/reestablish_db_connection, /*reattempt a connection to the database*/
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
+	/client/proc/view_forensics,		/*right-click list of who opened, locked, picked or broke an object*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/stop_sounds,
 	/client/proc/mark_datum_mapview,
