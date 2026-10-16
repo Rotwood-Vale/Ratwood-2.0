@@ -51,6 +51,7 @@
 		/datum/sprite_accessory/accessory/warpaint,
 		/datum/sprite_accessory/accessory/eyesocket,
 		/datum/sprite_accessory/accessory/eyeliner,
+		/datum/sprite_accessory/accessory/tonsure,
 		)
 
 /datum/customizer/bodypart_feature/accessory

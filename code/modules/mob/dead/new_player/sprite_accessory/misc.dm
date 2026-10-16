@@ -183,3 +183,11 @@
 	icon_state = "eyeliner"
 	layer = BODY_FRONT_LAYER
 	color_disabled = FALSE
+
+/datum/sprite_accessory/accessory/tonsure
+	name = "Tonsure"
+	icon_state = "tonsure"
+	layer = BODY_FRONT_LAYER
+	color_disabled = FALSE
+	default_colors = null
+	color_key_defaults = list(KEY_SKIN_COLOR)
