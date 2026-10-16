@@ -65,7 +65,8 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 
 // ----------------------------------------------------------------------------
 // STORM CONTROLLER
-// Owns the weather the rites have summoned. Re-runs it if it times out naturally.
+// Owns the weather the rites have summoned. Earlier stages start their weather once and let it
+// run its course; only the gale and the hurricane are kept up (re-run if they time out).
 // ----------------------------------------------------------------------------
 /datum/dreamwalker_storm
 	var/stage = DW_STAGE_NONE
@@ -81,7 +82,7 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 
 /datum/dreamwalker_storm/proc/set_stage(new_stage)
 	stage = new_stage
-	if(stage > DW_STAGE_NONE)
+	if(stage >= DW_STAGE_GALE)
 		START_PROCESSING(SSprocessing, src)
 	else
 		STOP_PROCESSING(SSprocessing, src)
@@ -114,6 +115,10 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	return null
 
 /datum/dreamwalker_storm/proc/sync_weather(force = FALSE)
+	// Only the gale and the hurricane are kept constant. Earlier stages are started once (force)
+	// when the stage changes, then left to run their natural course.
+	if(!force && stage < DW_STAGE_GALE)
+		return
 	var/wanted = desired_weather()
 	if(!wanted)
 		// Omen stage runs no precipitation; a collapse clears what we started.

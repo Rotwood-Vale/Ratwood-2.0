@@ -1519,6 +1519,7 @@
 #include "code\modules\antagonists\roguetown\villain\ascendant\ascendant_altar.dm"
 #include "code\modules\antagonists\roguetown\villain\dreamwalker\dreamwalker_spells.dm"
 #include "code\modules\antagonists\roguetown\villain\dreamwalker\dreamwalker_trident.dm"
+#include "code\modules\antagonists\roguetown\villain\dreamwalker\dreamwalker_gear.dm"
 #include "code\modules\antagonists\roguetown\villain\dreamwalker\dreamwalker_awakening.dm"
 #include "code\modules\antagonists\roguetown\villain\gnoll\gnoll.dm"
 #include "code\modules\antagonists\roguetown\villain\gnoll\gnoll_spells.dm"
