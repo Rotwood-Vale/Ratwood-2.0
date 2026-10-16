@@ -22,25 +22,22 @@ GLOBAL_DATUM_INIT(disconnected_players_panel, /datum/disconnected_players_panel,
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/// Returns TRUE if the mob is a character whose player has disconnected (not ghosted, shapeshifted away or scrying).
-/datum/disconnected_players_panel/proc/is_disconnected(mob/living/carbon/human/H)
-	if(!istype(H) || QDELETED(H))
-		return FALSE
-	return H.is_disconnected_player()
-
 /datum/disconnected_players_panel/ui_data(mob/user)
 	var/list/players = list()
-	for(var/mob/living/carbon/human/H as anything in GLOB.human_list)
-		if(!is_disconnected(H))
+	// Not just humans: a spell shapeshift form is a simple mob carrying the caster's body.
+	for(var/mob/living/L as anything in GLOB.mob_living_list)
+		if(!L.is_disconnected_player())
 			continue
-		var/time_away = world.time - H.last_logout_time
-		var/mob/living/carbon/human/body = ishuman(H.stored_mob) ? H.stored_mob : H
+		var/mob/living/carbon/human/body = L.get_real_body()
+		if(!body)
+			continue
+		var/time_away = world.time - L.last_logout_time
 		players += list(list(
-			"ref" = REF(H),
-			"ckey" = H.ckey,
+			"ref" = REF(L),
+			"ckey" = L.ckey,
 			// Wildshape forms already name themselves "form (real name)".
-			"name" = (body == H || findtext(H.real_name, body.real_name)) ? H.real_name : "[body.real_name] (as [H.real_name])",
-			"role" = H.get_disconnected_admin_alert_job_name(),
+			"name" = (body == L || findtext(L.real_name, body.real_name)) ? L.real_name : "[body.real_name] (as [L.real_name])",
+			"role" = L.get_disconnected_admin_alert_job_name(),
 			"time_away" = time_away,
 			"time_away_text" = DisplayTimeText(time_away, 1),
 		))
@@ -50,24 +47,22 @@ GLOBAL_DATUM_INIT(disconnected_players_panel, /datum/disconnected_players_panel,
 	if(..())
 		return TRUE
 	var/mob/user = ui.user
-	if(!check_rights_for(user.client, R_ADMIN))
-		return TRUE
 
 	switch(action)
 		if("refresh")
 			return TRUE
 
 		if("player_panel")
-			var/mob/living/carbon/human/H = locate(params["ref"])
-			if(!istype(H) || QDELETED(H))
+			var/mob/living/L = locate(params["ref"])
+			if(!istype(L) || QDELETED(L))
 				to_chat(user, span_warning("That character no longer exists."))
 				return TRUE
-			user.client.holder.show_player_panel(H)
+			user.client.holder.show_player_panel(L)
 			return FALSE
 
 		if("follow")
-			var/mob/living/carbon/human/H = locate(params["ref"])
-			if(!istype(H) || QDELETED(H))
+			var/mob/living/L = locate(params["ref"])
+			if(!istype(L) || QDELETED(L))
 				to_chat(user, span_warning("That character no longer exists."))
 				return TRUE
 			// Mirror the behaviour of the adminplayerobservefollow href
@@ -77,48 +72,54 @@ GLOBAL_DATUM_INIT(disconnected_players_panel, /datum/disconnected_players_panel,
 			var/mob/dead/observer/A = C.mob
 			if(!istype(A))
 				return FALSE
-			A.ManualFollow(H)
+			A.ManualFollow(L)
 			return FALSE
 
 		if("fartravel")
-			fartravel(user, list(params["ref"]))
-			return TRUE
-
-		if("fartravel_selected")
-			var/list/refs = params["refs"]
-			if(!islist(refs) || !length(refs))
+			var/list/targets = params["targets"]
+			if(!islist(targets) || !length(targets))
 				return TRUE
-			fartravel(user, refs)
+			fartravel(user, targets)
 			return TRUE
 
 	return FALSE
 
-/// Fartravels every still-disconnected character in refs, then writes one condensed admin log line.
-/datum/disconnected_players_panel/proc/fartravel(mob/user, list/refs)
-	var/list/targets = list()
-	for(var/ref in refs)
-		var/mob/living/carbon/human/H = locate(ref)
-		if(is_disconnected(H))
-			targets |= H
-	if(!length(targets))
+/// Returns the mobs in targets (REF -> ckey) that are still in a deep slumber.
+/// The panel does not auto-update and refs are reused once a mob is deleted, so the ckey must still match.
+/datum/disconnected_players_panel/proc/resolve_targets(list/targets)
+	. = list()
+	for(var/ref in targets)
+		var/mob/living/L = locate(ref)
+		if(!istype(L) || QDELETED(L) || L.ckey != targets[ref])
+			continue
+		if(L.is_disconnected_player() && L.get_real_body())
+			. |= L
+
+/// Fartravels every character in targets (REF -> ckey) that is still in a deep slumber.
+/datum/disconnected_players_panel/proc/fartravel(mob/user, list/targets)
+	var/list/slumbering = resolve_targets(targets)
+	if(!length(slumbering))
 		to_chat(user, span_warning("None of the selected players are still in a deep slumber."))
 		return
 
-	var/prompt = length(targets) == 1 ? "Fartravel slumbering [key_name(targets[1])] and delete their character?" : "Fartravel [length(targets)] slumbering players and delete their characters?"
+	var/list/names = list()
+	for(var/mob/living/L as anything in slumbering)
+		var/mob/living/carbon/human/body = L.get_real_body()
+		names += "[L.ckey] ([body.real_name])"
+	var/prompt = length(slumbering) == 1 ? "Fartravel slumbering [names[1]] and delete their character?" : "Fartravel these [length(slumbering)] slumbering players and delete their characters? [jointext(names, ", ")]"
 	if(tgui_alert(user, prompt, "Fartravel", list("Yes", "No")) != "Yes")
 		return
 
-	var/list/log_entries = list()
-	for(var/mob/living/carbon/human/H as anything in targets)
-		// They may have reconnected or been removed while the confirmation was open.
-		if(!is_disconnected(H))
-			continue
-		log_entries += "[H.ckey] ([DisplayTimeText(world.time - H.last_logout_time, 1)])"
-		H.admin_send_back_to_lobby(user, TRUE)
-	if(!length(log_entries))
+	// They may have reconnected or been removed while the confirmation was open.
+	slumbering &= resolve_targets(targets)
+	var/list/fartraveled = list()
+	for(var/mob/living/L as anything in slumbering)
+		var/time_away = DisplayTimeText(world.time - L.last_logout_time, 1)
+		// Logged before deletion so the record survives a runtime partway through the batch.
+		log_admin("[key_name(user)] has fartraveled slumbering [key_name(L)] after [time_away] in a deep slumber.")
+		fartraveled += "[L.ckey] ([time_away])"
+		L.fartravel_disconnected(user)
+	if(!length(fartraveled))
 		to_chat(user, span_warning("None of the selected players are still in a deep slumber."))
 		return
-
-	var/entries = jointext(log_entries, ", ")
-	log_admin("[key_name(user)] fartraveled [length(log_entries)] slumbering player\s: [entries]")
-	message_admins(span_adminnotice("[key_name_admin(user)] fartraveled [length(log_entries)] slumbering player\s: [entries]"))
+	message_admins(span_adminnotice("[key_name_admin(user)] fartraveled [length(fartraveled)] slumbering player\s: [jointext(fartraveled, ", ")]"))

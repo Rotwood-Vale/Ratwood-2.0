@@ -797,21 +797,22 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		var/mob/living/carbon/human/H = locate(href_list["ssd_sendbacktolobby"])
-		if(!istype(H))
-			to_chat(usr, span_warning("This can only be used on instances of type /mob/living/carbon/human."))
+		var/mob/living/L = locate(href_list["ssd_sendbacktolobby"])
+		// The ckey guards against the ref having been reused by another mob since the alert went out.
+		if(!istype(L) || L.ckey != href_list["ssd_ckey"] || !L.get_real_body())
+			to_chat(usr, span_warning("That character no longer exists."))
 			return
-		if(!H.is_disconnected_player())
-			to_chat(usr, span_warning("[H] is no longer in a deep slumber."))
+		if(!L.is_disconnected_player())
+			to_chat(usr, span_warning("[L] is no longer in a deep slumber."))
 			return
-		if(alert(usr, "Fartravel slumbering [key_name(H)] and delete their character?", "Message", "Yes", "No") != "Yes")
+		if(alert(usr, "Fartravel slumbering [key_name(L)] and delete their character?", "Message", "Yes", "No") != "Yes")
 			return
-		if(QDELETED(H) || !H.is_disconnected_player())
-			to_chat(usr, span_warning("[H] is no longer in a deep slumber."))
+		if(QDELETED(L) || !L.is_disconnected_player())
+			to_chat(usr, span_warning("[L] is no longer in a deep slumber."))
 			return
-		log_admin("[key_name(usr)] has fartraveled slumbering [key_name(H)] after [DisplayTimeText(world.time - H.last_logout_time, 1)] in a deep slumber.")
-		message_admins(span_adminnotice("[key_name_admin(usr)] has fartraveled slumbering [key_name_admin(H)] after [DisplayTimeText(world.time - H.last_logout_time, 1)] in a deep slumber."))
-		H.admin_send_back_to_lobby(usr, TRUE)
+		log_admin("[key_name(usr)] has fartraveled slumbering [key_name(L)] after [DisplayTimeText(world.time - L.last_logout_time, 1)] in a deep slumber.")
+		message_admins(span_adminnotice("[key_name_admin(usr)] has fartraveled slumbering [key_name_admin(L)] after [DisplayTimeText(world.time - L.last_logout_time, 1)] in a deep slumber."))
+		L.fartravel_disconnected(usr)
 
 	else if(href_list["revive"])
 		if(!check_rights(R_ADMIN))

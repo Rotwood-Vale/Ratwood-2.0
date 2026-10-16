@@ -38,6 +38,17 @@ export const DisconnectedPlayers = () => {
   const allSelected =
     players.length > 0 && selectedRefs.length === players.length;
 
+  // Each ref is sent with its ckey so the server can tell if the ref now points at someone else.
+  const fartravel = (refs: string[]) =>
+    act('fartravel', {
+      targets: Object.fromEntries(
+        refs.map((ref) => [
+          ref,
+          players.find((player) => player.ref === ref)?.ckey,
+        ]),
+      ),
+    });
+
   const toggle = (ref: string) => {
     setSelected(
       selectedRefs.includes(ref)
@@ -112,9 +123,7 @@ export const DisconnectedPlayers = () => {
                           <Button
                             color="bad"
                             icon="door-open"
-                            onClick={() =>
-                              act('fartravel', { ref: player.ref })
-                            }
+                            onClick={() => fartravel([player.ref])}
                           >
                             Fartravel
                           </Button>
@@ -131,7 +140,7 @@ export const DisconnectedPlayers = () => {
               color="bad"
               icon="door-open"
               disabled={selectedRefs.length === 0}
-              onClick={() => act('fartravel_selected', { refs: selectedRefs })}
+              onClick={() => fartravel(selectedRefs)}
             >
               Fartravel Highlighted ({selectedRefs.length})
             </Button>

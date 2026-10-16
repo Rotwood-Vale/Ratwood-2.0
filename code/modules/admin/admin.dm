@@ -1365,7 +1365,7 @@
 /mob/living/carbon/human/proc/admin_send_back_to_lobby(mob/admin, delete_character = FALSE)
 	var/datum/job/mob_job
 	// A shapeshifted form (wildshape, werewolf) carries the character's real body inside it.
-	var/mob/living/carbon/human/body = ishuman(stored_mob) ? stored_mob : src
+	var/mob/living/carbon/human/body = get_real_body()
 	var/target_job = SSrole_class_handler.get_advclass_by_name(body.advjob)
 	var/player_key = key ? key : mind?.key
 	if(mind)
@@ -1389,20 +1389,9 @@
 		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(mob_job.department_flag, mob_job.obsfuscated_job)], body.mobid)
 	LAZYREMOVE(GLOB.roleplay_ads, body.mobid)
 	if(delete_character)
-		// Mirror the far travel structure's cleanup for a character leaving the round for good.
-		if(mind && ckey)
-			if(mind.assigned_role == "Mercenary")
-				var/obj/structure/roguemachine/talkstatue/mercenary/statue = SSroguemachine.mercenary_statue
-				if(!statue && length(SSroguemachine.mercenary_statues))
-					statue = SSroguemachine.mercenary_statues[1]
-				if(statue)
-					statue.mercenary_status -= body.real_name
-			if(mind.assigned_role == "Grand Duke" || mind.assigned_role == "Grand Duchess")
-				if(GLOB.found_lords[ckey])
-					GLOB.found_lords -= ckey
-		if(has_embedded_objects())
-			for(var/thing in get_embedded_objects())
-				QDEL_NULL(thing)
+		body.far_travel_cleanup(mind, player_key && ckey(player_key))
+		if(body != src)
+			far_travel_cleanup() // The form's own embedded objects.
 	if(client)
 		SSdroning.kill_droning(client)
 		SSdroning.kill_loop(client)
@@ -1418,6 +1407,37 @@
 			qdel(body)
 		qdel(src)
 	return TRUE
+
+/// Clears what outlives a character leaving the round for good: mercenary statue listings, the lord omen and embedded objects.
+/// The mind and ckey may come from the form the player is in rather than this body.
+/mob/living/carbon/human/proc/far_travel_cleanup(datum/mind/departing_mind, departing_ckey)
+	if(departing_mind && departing_ckey)
+		if(departing_mind.assigned_role == "Mercenary")
+			var/obj/structure/roguemachine/talkstatue/mercenary/statue = SSroguemachine.mercenary_statue
+			if(!statue && length(SSroguemachine.mercenary_statues))
+				statue = SSroguemachine.mercenary_statues[1]
+			if(statue)
+				statue.mercenary_status -= real_name
+		// If departure is a lord, remove them from found_lords to prevent false omen triggers
+		if(departing_mind.assigned_role == "Grand Duke" || departing_mind.assigned_role == "Grand Duchess")
+			if(GLOB.found_lords[departing_ckey])
+				GLOB.found_lords -= departing_ckey
+	if(has_embedded_objects())
+		for(var/thing in get_embedded_objects())
+			QDEL_NULL(thing)
+
+/// Sends the disconnected player in this mob back to the lobby and deletes their character. Returns FALSE if there is no character.
+/mob/living/proc/fartravel_disconnected(mob/admin)
+	var/mob/living/carbon/human/body = get_real_body()
+	if(!body)
+		return FALSE
+	var/obj/shapeshift_holder/holder = locate() in src
+	if(holder)
+		// Revert the spell shapeshift so the mind, and the slumbering player's key, are back in the caster's body.
+		holder.restore()
+	else
+		body = src
+	return body.admin_send_back_to_lobby(admin, TRUE)
 
 
 /datum/admins/proc/sleep_view()
