@@ -833,14 +833,7 @@
 			return
 		if(!client || !client.prefs)
 			return
-		//make reapply prefs work for gnolls
-		if(dna?.species?.id == "gnoll")
-			if(!apply_gnoll_preferences(FALSE))
-				reapply_live_preferences()
-			set_blindness(0)
-			regenerate_icons()
-		else
-			reapply_live_preferences()
+		reapply_preferences()
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return
@@ -1270,6 +1263,34 @@
 		verbs -= /mob/living/carbon/human/verb/commune
 		verbs -= /mob/living/carbon/human/verb/show_heretics
 		verbs -= /mob/living/carbon/human/verb/bad_omen*/
+
+/// Reapplies the player's saved preferences to this character, as the VV "Reapply Preferences" option does.
+/mob/living/carbon/human/proc/reapply_preferences()
+	//make reapply prefs work for gnolls
+	if(dna?.species?.id == "gnoll")
+		if(!apply_gnoll_preferences(FALSE))
+			reapply_live_preferences()
+		set_blindness(0)
+		regenerate_icons()
+	else
+		reapply_live_preferences()
+
+/// Admin one-click preferences refresh from the player panel and ticket window. Keeps the character's current name.
+/mob/living/carbon/human/proc/admin_pref_refresh(mob/admin)
+	if(!client?.prefs)
+		to_chat(admin, span_warning("[src] has no connected player whose preferences can be reapplied."))
+		return FALSE
+	// The character's name is always in GLOB.chosen_names mid-round, so copy_to would hand them a random one.
+	var/old_real_name = real_name
+	var/old_name = name
+	reapply_preferences()
+	real_name = old_real_name
+	name = old_name
+	dna?.real_name = old_real_name
+	log_admin("[key_name(admin)] refreshed the preferences of [key_name(src)].")
+	message_admins(span_adminnotice("[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)]."))
+	admin_ticket_log(src, "[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)].")
+	return TRUE
 
 /mob/living/carbon/human/proc/reapply_live_preferences()
 	if(!client?.prefs)

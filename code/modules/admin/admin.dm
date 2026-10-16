@@ -174,6 +174,8 @@
 	//body += "<A href='?_src_=holder;[HrefToken()];languagemenu=[REF(M)]'>Language Menu</A>"
 	body += "<br><A href='?_src_=holder;[HrefToken()];heal_panel=[REF(M)]'>Heal Panel</A> | "
 	body += "<A href='?_src_=holder;[HrefToken()];inventory_panel=[REF(M)]'>Inventory Panel</A>"
+	if(ishuman(M) && M.client)
+		body += " | <A href='?_src_=holder;[HrefToken()];pref_refresh=[REF(M)]'>Pref Refresh</A>"
 
 	body += "</div>"
 

@@ -793,6 +793,15 @@
 			NP.ckey = M.ckey
 			qdel(M)
 
+	else if(href_list["pref_refresh"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/mob/living/carbon/human/H = locate(href_list["pref_refresh"])
+		if(!istype(H))
+			to_chat(usr, span_warning("This can only be used on instances of type /mob/living/carbon/human."))
+			return
+		H.admin_pref_refresh(usr)
+
 	else if(href_list["ssd_sendbacktolobby"])
 		if(!check_rights(R_ADMIN))
 			return
