@@ -653,7 +653,6 @@
 	if(!istype(A, /obj/item/ammo_casing/caseless/rogue/bolt))
 		return FALSE
 		A.forceMove(src)
-		arrows += A
 		update_icon()
 		return TRUE
 		return FALSE
