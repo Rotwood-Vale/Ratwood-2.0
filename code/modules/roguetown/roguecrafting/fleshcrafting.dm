@@ -99,6 +99,20 @@
 	required_tech_node = "BASIC_ORGANS"
 	structurecraft = null	
 	tech_unlocked = FALSE
+	
+/datum/crafting_recipe/roguetown/fleshcrafting/ear
+	name = "Ears"
+	category = "Flesh"
+	result = list(/obj/item/organ/ears,
+				/obj/item/heart_blood_vial,)
+	reqs = list(/obj/item/flesh_node = 1,
+				/obj/item/heart_blood_vial/filled
+	)
+	craftdiff = 4
+	required_tech_node = "BASIC_ORGANS"
+	structurecraft = null	
+	tech_unlocked = FALSE
+
 
 /datum/crafting_recipe/roguetown/fleshcrafting/tongue
 	name = "Tongue"
@@ -165,23 +179,10 @@
 	tech_unlocked = FALSE
 	structurecraft = null
 
-/datum/crafting_recipe/roguetown/fleshcrafting/taur
-	name = "Taur legs"
-	category = "Flesh"
-	result = list(/obj/item/bodypart/taur,
-				/obj/item/heart_blood_vial,)
-	reqs = list(/obj/item/flesh_node = 1,
-				/obj/item/heart_blood_vial/filled
-	)
-	craftdiff = 4
-	required_tech_node = "ADVANCED_BODYPARTS"
-	tech_unlocked = FALSE
-	structurecraft = null
-
 /datum/crafting_recipe/roguetown/fleshcrafting/head // build a abomination!
 	name = "Head"
 	category = "Flesh"
-	result = list(/obj/item/bodypart/head,
+	result = list(/obj/item/bodypart/head/filled,
 				/obj/item/heart_blood_vial,)
 	reqs = list(/obj/item/flesh_node = 1,
 				/obj/item/heart_blood_vial/filled
@@ -194,7 +195,7 @@
 /datum/crafting_recipe/roguetown/fleshcrafting/chest
 	name = "Chest"
 	category = "Flesh"
-	result = list(/obj/item/bodypart/chest,
+	result = list(/mob/living/carbon/human/species/human/northern/torso,
 				/obj/item/heart_blood_vial,)
 	reqs = list(/obj/item/flesh_node = 2,
 				/obj/item/heart_blood_vial/filled
