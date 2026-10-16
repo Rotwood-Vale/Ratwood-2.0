@@ -17,6 +17,16 @@ GLOBAL_LIST_INIT(disconnected_admin_alert_role_times, list(
 		return
 	return span_warning("[m3] been in a deep slumber for [DisplayTimeText(world.time - last_logout_time, 1)].")
 
+/// Examine line for a living body whose player is looking out from a ghost they will come back from, such as scrying.
+/// Those bodies get no slumber indicator, as their player is still in the round.
+/mob/living/proc/get_away_examine_text(they)
+	if(ckey || stat == DEAD || !mind || mind.current != src)
+		return
+	// Checked last: it walks the ghost list, and examine is not a hot path
+	if(!mind.get_ghost())
+		return
+	return "[they] seem[p_s()] temporarily elsewhere..."
+
 /// Returns TRUE if this mob's player has disconnected from the game while still in it.
 /// Bodies left behind while the player plays elsewhere (wildshape, werewolf and spell shapeshifts, ghosting)
 /// lose their key along with the player, so they are not counted.

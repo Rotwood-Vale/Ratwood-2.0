@@ -99,8 +99,8 @@ const ActionsSection = (props: { actions: ForensicAction[] }) => {
         </Table>
       )}
       <Box color="label" mt={1}>
-        Latest 30 opens and closes, and latest 30 other actions. Repeats in a
-        row share one line.
+        Latest 30 opens, closes and key locks, and latest 30 other actions.
+        Repeats in a row share one line.
       </Box>
     </Section>
   );

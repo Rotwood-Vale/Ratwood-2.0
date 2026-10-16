@@ -757,7 +757,8 @@
 /obj/structure/mineral_door/proc/lock_toggle(mob/user)
 	if(isSwitchingStates || door_opened)
 		return
-	add_forensic_action(user, locked ? "unlocked" : "locked")
+	// Routine, so a keyholder coming and going cannot push lockpicks and breaks out. Picks log their own evidence entry
+	add_forensic_action(user, locked ? "unlocked" : "locked", routine = TRUE)
 	if(locked)
 		user?.visible_message(span_warning("[user] unlocks [src]."), \
 			span_notice("I unlock [src]."))

@@ -1278,11 +1278,19 @@
 	if(!client?.prefs)
 		to_chat(admin, span_warning("[src] has no connected player whose preferences can be reapplied."))
 		return FALSE
+	// copy_to would set_species the saved species onto the wildshape or werewolf form itself
+	if(is_shapeshift_shell())
+		to_chat(admin, span_warning("[src] is shapeshifted. Wait until they return to their own body."))
+		return FALSE
 	if(tgui_alert(admin, "Pref refresh [ckey]?", "Pref Refresh", list("Yes", "No")) != "Yes")
 		return FALSE
-	if(QDELETED(src) || !client?.prefs)
-		to_chat(admin, span_warning("[src]'s player disconnected before their preferences could be reapplied."))
+	if(QDELETED(src) || !client?.prefs || is_shapeshift_shell())
+		to_chat(admin, span_warning("[src] can no longer have their preferences reapplied."))
 		return FALSE
+	// Logged before acting so the record survives a runtime partway through copy_to
+	log_admin("[key_name(admin)] refreshed the preferences of [key_name(src)].")
+	message_admins(span_adminnotice("[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)]."))
+	admin_ticket_log(src, "<font color='green'>[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)].</font>")
 	// The character's name is always in GLOB.chosen_names mid-round, so copy_to would hand them a random one.
 	var/old_real_name = real_name
 	var/old_name = name
@@ -1290,9 +1298,6 @@
 	real_name = old_real_name
 	name = old_name
 	dna?.real_name = old_real_name
-	log_admin("[key_name(admin)] refreshed the preferences of [key_name(src)].")
-	message_admins(span_adminnotice("[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)]."))
-	admin_ticket_log(src, "<font color='green'>[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)].</font>")
 	return TRUE
 
 /mob/living/carbon/human/proc/reapply_live_preferences()

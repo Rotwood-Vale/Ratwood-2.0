@@ -65,6 +65,9 @@
 			var/client/C = user.client
 			if(!isobserver(user))
 				C.admin_ghost()
+			// Declining to observe from the lobby leaves them a new_player, which must not be moved onto the map
+			if(!isobserver(C.mob))
+				return FALSE
 			C.jumptocoord(T.x, T.y, T.z)
 			return FALSE
 
@@ -87,7 +90,8 @@
 /proc/forensics_report(atom/A)
 	var/datum/component/forensics/D = A.GetComponent(/datum/component/forensics)
 	var/list/actions = list()
-	for(var/list/entry as anything in forensics_actions_newest_first(D))
+	for(var/packed_entry in forensics_actions_newest_first(D))
+		var/list/entry = forensic_action_fields(packed_entry)
 		actions += list(list(
 			// Same format as the stat panel's ROUND TIME
 			"time" = time2text(entry["time"], "hh:mm:ss", 0),
@@ -114,19 +118,19 @@
 		"last_toucher" = A.fingerprintslast,
 	)
 
-/// Both action lists interleaved by time, newest first. Each list is already oldest first.
+/// Both action lists interleaved by time, newest first, still packed. Each list is already oldest first.
 /proc/forensics_actions_newest_first(datum/component/forensics/D)
 	. = list()
 	var/evidence_index = LAZYLEN(D?.actions)
 	var/routine_index = LAZYLEN(D?.routine_actions)
 	while(evidence_index || routine_index)
-		var/list/evidence = evidence_index ? D.actions[evidence_index] : null
-		var/list/routine = routine_index ? D.routine_actions[routine_index] : null
-		if(evidence && (!routine || evidence["time"] >= routine["time"]))
-			. += list(evidence)
+		var/evidence = evidence_index ? D.actions[evidence_index] : null
+		var/routine = routine_index ? D.routine_actions[routine_index] : null
+		if(evidence && (!routine || forensic_action_time(evidence) >= forensic_action_time(routine)))
+			. += evidence
 			evidence_index--
 		else
-			. += list(routine)
+			. += routine
 			routine_index--
 
 /// Hidden prints grouped by ckey, each list("First" = "name time", "Last" = "name time").

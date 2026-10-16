@@ -8,9 +8,10 @@
 	var/list/hiddenprints		//assoc ckey = realname/gloves/ckey
 	var/list/blood_DNA			//assoc dna = bloodtype
 	var/list/fibers				//assoc print = print
-	/// Admin only, never wiped. Lock, pick and break actions oldest first, each list("time" = round time, "ckey", "name", "action", "count")
+	/// Admin only, never wiped. Picks, breaks, pickups and drops oldest first, each packed as "round time|count|ckey|name|action".
+	/// Strings rather than lists, as every item players handle can hold these all round. See forensic_action_fields()
 	var/list/actions
-	/// The same for plain opening and closing, capped apart so a busy door cannot push the evidence out of actions
+	/// The same for plain opening, closing and keyed locking, capped apart so a busy door cannot push the evidence out of actions
 	var/list/routine_actions
 
 /datum/component/forensics/InheritComponent(datum/component/forensics/F, original)		//Use of | and |= being different here is INTENTIONAL.
@@ -177,26 +178,48 @@
 
 /// Repeats of the same action by the same player fold into one entry. Returns the list, which may have been created.
 /datum/component/forensics/proc/record_action(list/action_log, mob/user, action)
-	var/list/last = LAZYACCESS(action_log, LAZYLEN(action_log))
-	if(last && last["ckey"] == user.ckey && last["action"] == action)
-		last["time"] = STATION_TIME_PASSED()
-		last["count"]++
-		return action_log
-	LAZYADD(action_log, list(list("time" = STATION_TIME_PASSED(), "ckey" = user.ckey, "name" = user.real_name, "action" = action, "count" = 1)))
+	// Everything after the count, so a repeat is a suffix match with no parsing
+	var/who_and_what = "|[user.ckey]|[user.real_name]|[action]"
+	var/last_index = LAZYLEN(action_log)
+	if(last_index)
+		var/last = action_log[last_index]
+		var/suffix_start = length(last) - length(who_and_what) + 1
+		if(suffix_start > 1 && copytext(last, suffix_start) == who_and_what)
+			var/count_start = findtext(last, "|") + 1
+			var/count = text2num(copytext(last, count_start, suffix_start))
+			action_log[last_index] = "[STATION_TIME_PASSED()]|[count + 1][who_and_what]"
+			return action_log
+	LAZYADD(action_log, "[STATION_TIME_PASSED()]|1[who_and_what]")
 	if(length(action_log) > FORENSIC_ACTIONS_MAX)
 		action_log.Cut(1, 2)
 	return action_log
 
-/// Entries are copied, as a fold would otherwise change both components' history.
+/// Re-sorted by time, as the incoming entries can be older than ones already here, then the oldest trimmed past the cap.
 /datum/component/forensics/proc/merge_actions(list/action_log, list/incoming)
 	if(!length(incoming))
 		return action_log
-	LAZYINITLIST(action_log)
-	for(var/list/entry as anything in incoming)
-		action_log += list(entry.Copy())
+	action_log = LAZYLEN(action_log) ? action_log + incoming : incoming.Copy()
+	sortTim(action_log, GLOBAL_PROC_REF(cmp_forensic_action_time_asc))
 	if(length(action_log) > FORENSIC_ACTIONS_MAX)
 		action_log.Cut(1, length(action_log) - FORENSIC_ACTIONS_MAX + 1)
 	return action_log
+
+/proc/forensic_action_time(entry)
+	return text2num(copytext(entry, 1, findtext(entry, "|")))
+
+/proc/cmp_forensic_action_time_asc(a, b)
+	return forensic_action_time(a) - forensic_action_time(b)
+
+/// Unpacks an action entry into list("time", "count", "ckey", "name", "action"). The action is last, so a "|" in it survives.
+/proc/forensic_action_fields(entry)
+	var/list/fields = splittext(entry, "|")
+	return list(
+		"time" = text2num(fields[1]),
+		"count" = text2num(fields[2]),
+		"ckey" = fields[3],
+		"name" = fields[4],
+		"action" = jointext(fields.Copy(5), "|"),
+	)
 
 /datum/component/forensics/proc/add_blood_DNA(list/dna)		//list(dna_enzymes = type)
 	if(!length(dna))
