@@ -184,7 +184,7 @@
 	category = "Flesh"
 	result = list(/obj/item/bodypart/head/filled,
 				/obj/item/heart_blood_vial,)
-	reqs = list(/obj/item/flesh_node = 1,
+	reqs = list(/obj/item/flesh_node = 2,
 				/obj/item/heart_blood_vial/filled
 	)
 	craftdiff = 4
