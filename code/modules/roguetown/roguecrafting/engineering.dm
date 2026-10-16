@@ -44,7 +44,7 @@
 		/obj/item/grown/log/tree/small = 1,
 		/obj/item/ingot/iron = 1,
 		/obj/item/natural/glass = 1,
-		/obj/item/roguegear/nronze = 2,
+		/obj/item/roguegear/bronze = 2,
 	)
 	craftdiff = 4
 	skillcraft = /datum/skill/craft/engineering
