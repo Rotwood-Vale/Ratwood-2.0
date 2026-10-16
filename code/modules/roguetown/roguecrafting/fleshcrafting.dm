@@ -32,6 +32,8 @@
 	result = list(/obj/item/flesh_node)
 	reqs = list(/obj/item/reagent_containers/food/snacks/rogue/meat_rotten = 1)
 	craftdiff = 1
+	required_tech_node = "FLESH_NODE"
+	tech_unlocked = FALSE
 
 /datum/crafting_recipe/roguetown/fleshcrafting/lungs
 	name = "Lungs"
