@@ -207,8 +207,8 @@
 	category = "Flesh"
 	result = list(/mob/living/carbon/human/species/human/northern,)
 	reqs = list(/obj/item/flesh_node = 7,
-				/obj/item/heart_blood_vial/filled = 3
-				/obj/item/reagent_containers/lux = 1)
+				/obj/item/heart_blood_vial/filled = 3,
+				/obj/item/reagent_containers/lux = 1,)
 	craftdiff = 5
 	required_tech_node = "LIFE_CREATION"
 	tech_unlocked = FALSE
