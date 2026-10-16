@@ -51,7 +51,8 @@
 		TRAIT_GRABIMMUNE,
 		TRAIT_STRONGBITE,
 		TRAIT_EXTREME_TEMPERATURE_IMMUNE,
-		TRAIT_UNLYCKERABLE //Literal archenemy
+		TRAIT_UNLYCKERABLE, //Literal archenemy
+		TRAIT_ZOMBIE_IMMUNE	//We really should not have zombified werewolfs.
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	inherent_biotypes = MOB_HUMANOID

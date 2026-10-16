@@ -5,7 +5,10 @@
 	briefing_tips = list(
 		"Avoid the inquisition.",
 		"Look for opportunities to complete your bloody rituals.",
-		"Trust carefully- Fellow Abyssor worshippers are not as enlightened as you are."
+		"Trust carefully- Fellow Abyssor worshippers are not as enlightened as you are.",
+		"Retrieve dream crystals by activating crystal spires with an open hand. ",
+		"Acquire Sylveric ingots by marking targets and pulling it from either their sleeping form, or corpse.",
+		"The Sylveric ingots can be used to form a weapon of the deep. You choose whether to spend them on a weapon, or completing your next rites."
 	)
 	roundend_category = "Dreamwalker"
 	antagpanel_category = "Dreamwalker"
@@ -32,7 +35,8 @@
 		TRAIT_COUNTERCOUNTERSPELL,
 		TRAIT_RITUALIST,
 		TRAIT_STRENGTH_UNCAPPED,
-		TRAIT_DREAMWALKER
+		TRAIT_DREAMWALKER,
+		TRAIT_UNLYCKERABLE	//vampired dreamwalkers is such a bad idea, I don't even want to think about it
 		)
 
 	var/STASTR = 15
@@ -65,6 +69,56 @@
 	to_chat(owner.current, span_notice("Five rites stand between Abyssor and his waking. Raise a drowned altar beneath an open sky, lay the offerings upon it, and bleed. Each rite will stir the storm further, and the realm will see it coming. The last will call the hurricane down. The world will know what I am doing, and it will come for me."))
 	owner.announce_objectives()
 	..()
+
+/datum/antagonist/dreamwalker/proc/setup_rituals()
+	var/static/list/ritual_paths = list(
+		/datum/dreamwalker_ritual/murmur,
+		/datum/dreamwalker_ritual/weeping,
+		/datum/dreamwalker_ritual/swelling,
+		/datum/dreamwalker_ritual/gale,
+		/datum/dreamwalker_ritual/ascension,
+	)
+	rituals = list()
+	for(var/path in ritual_paths)
+		rituals += new path
+	var/datum/objective/dreamwalker_ascend/O = new
+	O.owner = owner
+	objectives += O
+
+/datum/antagonist/dreamwalker/proc/get_next_ritual()
+	if(rituals_done >= length(rituals))
+		return null
+	return rituals[rituals_done + 1]
+
+/datum/antagonist/dreamwalker/proc/complete_ritual(datum/dreamwalker_ritual/R, mob/living/carbon/human/user)
+	rituals_done++
+	R.on_complete(user, src)
+	var/datum/dreamwalker_ritual/next = get_next_ritual()
+	if(next)
+		to_chat(user, span_notice("[R.name] is done. ([rituals_done]/[length(rituals)]) The next: [next.name]. It will demand [next.describe_offerings()], and blood, spoken [next.describe_areas()]."))
+
+/datum/antagonist/dreamwalker/proc/ascend()
+	var/mob/living/carbon/human/body = owner.current
+	if(!istype(body))
+		return
+	ascended = TRUE
+	ADD_TRAIT(body, TRAIT_RAINSTORM_IMMUNE, "[type]")
+	body.change_stat(STATKEY_STR, 3)
+	body.change_stat(STATKEY_CON, 3)
+	body.change_stat(STATKEY_WIL, 3)
+	GLOB.dreamwalker_storm.chosen = body
+	RegisterSignal(body, COMSIG_LIVING_DEATH, PROC_REF(on_ascended_death))
+	to_chat(body, span_userdanger("THE DREAM BREAKS. The deep is awake, and I am its voice. The storm will not touch me, and it will not outlive me."))
+	for(var/mob/connected_player in GLOB.player_list)
+		if(!connected_player.client)
+			continue
+		SEND_SOUND(connected_player, sound(null))
+		SEND_SOUND(connected_player, 'sound/villain/dreamer_win.ogg')
+		
+/datum/antagonist/dreamwalker/proc/on_ascended_death(datum/source, gibbed)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_LIVING_DEATH)
+	GLOB.dreamwalker_storm.collapse()
 
 /datum/antagonist/dreamwalker/proc/reset_stats()
 	owner.current.STASTR = src.STASTR
