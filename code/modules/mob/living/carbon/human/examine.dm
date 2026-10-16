@@ -683,10 +683,6 @@
 //			else if(!client)
 //				msg += "[m3] a blank, absent-minded stare and appears completely unresponsive to anything. [t_He] may snap out of it soon."
 
-	var/away_text = get_away_examine_text(t_He)
-	if(away_text)
-		msg += away_text
-
 	if(length(msg))
 		. += span_warning("[msg.Join("\n")]")
 

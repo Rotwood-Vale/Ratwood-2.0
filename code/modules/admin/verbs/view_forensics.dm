@@ -19,7 +19,7 @@
 
 /datum/forensics_viewer/New(atom/target)
 	target_ref = WEAKREF(target)
-	target_name = strip_improper("[target]")
+	target_name = format_text("[target]")
 
 /datum/forensics_viewer/ui_state(mob/user)
 	return ADMIN_STATE(R_ADMIN)
@@ -117,7 +117,7 @@
 	return list(
 		"generated_at" = time2text(STATION_TIME_PASSED(), "hh:mm:ss", 0),
 		"type" = "[A.type]",
-		"location" = strip_improper(AREACOORD(A)),
+		"location" = format_text(AREACOORD(A)),
 		"is_item" = isitem(A),
 		"evidence" = forensics_action_rows(D?.actions),
 		"routine" = forensics_action_rows(D?.routine_actions),

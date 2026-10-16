@@ -445,9 +445,9 @@
 
 /obj/structure/mineral_door/attacked_by(obj/item/I, mob/living/user)
 	var/was_broken = obj_broken || obj_destroyed
-	. = ..()
-	if(.)
-		add_forensic_action(user, "hit with [I]")
+	// Not returned, as door hits have always ended the attack chain here
+	if(..())
+		add_forensic_action(user, "hit with [format_text(I.name)]")
 	if(!was_broken && (obj_broken || obj_destroyed))
 		add_forensic_action(user, "broke")
 	if(obj_broken || obj_destroyed)

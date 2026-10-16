@@ -207,9 +207,6 @@
 /proc/forensic_action_time(entry)
 	return text2num(copytext(entry, 1, findtext(entry, "|")))
 
-/proc/cmp_forensic_action_time_asc(a, b)
-	return forensic_action_time(a) - forensic_action_time(b)
-
 /// Unpacks an action entry into list("time", "count", "ckey", "name", "action"). The action is last, so a "|" in it survives.
 /proc/forensic_action_fields(entry)
 	var/list/fields = splittext(entry, "|")

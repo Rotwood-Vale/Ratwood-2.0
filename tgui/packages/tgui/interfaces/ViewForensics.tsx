@@ -196,21 +196,14 @@ export const ViewForensics = () => {
           <NoticeBox>
             Press Generate Logs to read this object&apos;s forensics.
           </NoticeBox>
-        ) : report.is_item ? (
-          <>
-            <ActionsSection
-              title="Picked up and dropped"
-              actions={report.evidence}
-            />
-            <TouchesSection
-              touches={report.touches}
-              lastToucher={report.last_toucher}
-            />
-          </>
         ) : (
           <>
             <ActionsSection
-              title="Opened, closed and locked"
+              title={
+                report.is_item
+                  ? 'Picked up and dropped'
+                  : 'Opened, closed and locked'
+              }
               actions={report.routine}
             />
             <ActionsSection

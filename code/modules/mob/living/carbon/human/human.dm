@@ -1263,15 +1263,16 @@
 		verbs -= /mob/living/carbon/human/verb/bad_omen*/
 
 /// Reapplies the player's saved preferences to this character, as the VV "Reapply Preferences" option does.
-/mob/living/carbon/human/proc/reapply_preferences()
+/// keep_name leaves the character's current name alone.
+/mob/living/carbon/human/proc/reapply_preferences(keep_name = FALSE)
 	//make reapply prefs work for gnolls
 	if(dna?.species?.id == "gnoll")
-		if(!apply_gnoll_preferences(FALSE))
-			reapply_live_preferences()
+		if(!apply_gnoll_preferences(FALSE, keep_name))
+			reapply_live_preferences(keep_name)
 		set_blindness(0)
 		regenerate_icons()
 	else
-		reapply_live_preferences()
+		reapply_live_preferences(keep_name)
 
 /// Admin preferences refresh from VV, the player panel and the ticket window. Keeps the character's current name.
 /mob/living/carbon/human/proc/admin_pref_refresh(mob/admin)
@@ -1291,17 +1292,11 @@
 	log_admin("[key_name(admin)] refreshed the preferences of [key_name(src)].")
 	message_admins(span_adminnotice("[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)]."))
 	admin_ticket_log(src, "<font color='green'>[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)].</font>")
-	// The character's name is always in GLOB.chosen_names mid-round, so copy_to would hand them a random one,
-	// and the gnoll path renames them to their gnoll name with fully_replace_character_name(), mind and records included.
-	var/old_real_name = real_name
-	var/old_name = name
-	reapply_preferences()
-	if(real_name != old_real_name)
-		fully_replace_character_name(real_name, old_real_name)
-	name = old_name
+	// Without keep_name, copy_to hands them a random name, as their own is always in GLOB.chosen_names mid-round
+	reapply_preferences(keep_name = TRUE)
 	return TRUE
 
-/mob/living/carbon/human/proc/reapply_live_preferences()
+/mob/living/carbon/human/proc/reapply_live_preferences(keep_name = FALSE)
 	if(!client?.prefs)
 		return FALSE
 
@@ -1309,7 +1304,7 @@
 	var/list/preserved_languages = language_holder?.languages?.Copy()
 	var/selected_default_language = language_holder?.selected_default_language
 
-	client.prefs.copy_to(src, TRUE, FALSE)
+	client.prefs.copy_to(src, TRUE, FALSE, keep_name = keep_name)
 	refresh_live_vocal_preferences()
 
 	if(language_holder && length(preserved_languages))

@@ -265,7 +265,7 @@
 	var/was_broken = obj_broken || obj_destroyed
 	. = ..()
 	if(.)
-		add_forensic_action(user, "hit with [I]")
+		add_forensic_action(user, "hit with [format_text(I.name)]")
 	if(!was_broken && (obj_broken || obj_destroyed))
 		add_forensic_action(user, "smashed open")
 
