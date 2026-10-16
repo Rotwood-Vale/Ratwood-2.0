@@ -272,3 +272,34 @@
   john-pawson:
   - bugfix: gives lich skeletons fatal insomnia, meaning they will no longer get tired
       or be able to sleep
+2026-10-13:
+  annikaRU:
+  - bugfix: fixes a void under two windows, updates flooring I forgot to do
+2026-10-14:
+  0-the-fool:
+  - bugfix: Wall clocks no longer allow players to take out loadout items will full
+      stats.
+  I_Nerf_What_Kills_Me:
+  - rscadd: Interact with indexer on hemophages
+  annikaRU:
+  - bugfix: fixed a spawn
+2026-10-15:
+  IronDragoon:
+  - rscadd: Adds Yeen Cackle voice emote
+  - rscdel: Removed one of the giggle sounds from the warrior fem pack (it was not
+      good and did not suit)
+  The-Sun-In-Splendour:
+  - rscadd: new tailmaw. Succubus (Alt) (Tailmaw)
+  - bugfix: spade (tailmaw) tail wagging with no animation, disappearing it
+  UntoldTactics:
+  - bugfix: The Martyr's 2 minute ultimate now correctly sets all possibly relevant
+      weapon skills to legendary.
+2026-10-16:
+  Grigorix:
+  - rscadd: Added thawbs bisht, turbans, new large cloth sash to the loadout menu
+  - rscadd: Added bedroll option to the loadout menu as well
+  - bugfix: fixed fancy turban crafting recipe
+  The-Sun-In-Splendour:
+  - rscdel: ashes scattering when you walk on them
+  wikimody:
+  - bugfix: Knightly jurney stigmata is in fact a stigmata

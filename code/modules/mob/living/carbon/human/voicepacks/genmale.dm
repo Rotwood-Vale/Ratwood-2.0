@@ -186,4 +186,7 @@
 			//jokes on you, I'm adding horse sounds too! - Randumb
 			if("neigh")
 				used = list('sound/vo/mobs/saiga/idle (1).ogg','sound/vo/mobs/saiga/idle (2).ogg','sound/vo/mobs/saiga/idle (3).ogg','sound/vo/mobs/saiga/idle (4).ogg','sound/vo/mobs/saiga/idle (5).ogg','sound/vo/mobs/saiga/idle (6).ogg')
+			//jokes on YOU, I'm adding the yeen cackle!
+			if("ycackle")
+				used = list('sound/vo/mobs/hyena/cackle.ogg')
 	return used
