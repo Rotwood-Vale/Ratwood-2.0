@@ -281,6 +281,7 @@
 /atom/movable/screen/alert/status_effect/debuff/breedable
 	name = "Obedient"
 	desc = "They won't hurt me too much..."
+	icon_state = "yielded"
 
 /datum/status_effect/debuff/submissive
 	id = "submissive"
@@ -298,6 +299,7 @@
 /atom/movable/screen/alert/status_effect/debuff/submissive
 	name = "Conformable"
 	desc = "Falling in line is my only choice."
+	icon_state = "yielded"
 
 /datum/status_effect/debuff/omegamale
 	id = "omegamale"
@@ -308,6 +310,7 @@
 /atom/movable/screen/alert/status_effect/debuff/omegamale
 	name = "Conceded"
 	desc = "I conceded and won't be fighting for some time."
+	icon_state = "yielded"
 
 /datum/status_effect/debuff/yield_prompt
 	id = "yieldprompt"
