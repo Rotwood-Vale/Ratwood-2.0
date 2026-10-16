@@ -181,7 +181,7 @@
 //	climb_time *= 0.5 //it's faster to climb onto an open thing
 	dump_contents()
 	update_icon()
-	add_forensic_action(user, "opened")
+	add_forensic_action(user, "opened", routine = TRUE)
 	return 1
 
 /obj/structure/closet/proc/insert(atom/movable/AM)
@@ -242,7 +242,7 @@
 	opened = FALSE
 	density = TRUE
 	update_icon()
-	add_forensic_action(user, "closed")
+	add_forensic_action(user, "closed", routine = TRUE)
 	return TRUE
 
 /obj/structure/closet/proc/toggle(mob/living/user)

@@ -1430,16 +1430,16 @@
 
 /// Sends the disconnected player in this mob back to the lobby and deletes their character. Returns FALSE if there is no character.
 /mob/living/proc/fartravel_disconnected(mob/admin)
-	var/mob/living/carbon/human/body = get_real_body()
-	if(!body)
-		return FALSE
-	var/obj/shapeshift_holder/holder = locate() in src
+	var/obj/shapeshift_holder/holder = get_shapeshift_holder()
 	if(holder)
+		var/mob/living/carbon/human/caster = holder.stored
 		// Revert the spell shapeshift so the mind, and the slumbering player's key, are back in the caster's body.
 		holder.restore()
-	else
-		body = src
-	return body.admin_send_back_to_lobby(admin, TRUE)
+		return caster.admin_send_back_to_lobby(admin, TRUE)
+	if(!ishuman(src))
+		return FALSE
+	var/mob/living/carbon/human/H = src
+	return H.admin_send_back_to_lobby(admin, TRUE)
 
 
 /datum/admins/proc/sleep_view()

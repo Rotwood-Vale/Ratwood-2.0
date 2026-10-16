@@ -831,9 +831,7 @@
 	if(href_list[VV_HK_REAPPLY_PREFS])
 		if(!check_rights(R_SPAWN))
 			return
-		if(!client || !client.prefs)
-			return
-		reapply_preferences()
+		admin_pref_refresh(usr)
 	if(href_list[VV_HK_SET_SPECIES])
 		if(!check_rights(R_SPAWN))
 			return
@@ -1275,10 +1273,15 @@
 	else
 		reapply_live_preferences()
 
-/// Admin one-click preferences refresh from the player panel and ticket window. Keeps the character's current name.
+/// Admin preferences refresh from VV, the player panel and the ticket window. Keeps the character's current name.
 /mob/living/carbon/human/proc/admin_pref_refresh(mob/admin)
 	if(!client?.prefs)
 		to_chat(admin, span_warning("[src] has no connected player whose preferences can be reapplied."))
+		return FALSE
+	if(tgui_alert(admin, "Reapply [key_name(src)]'s saved character to [real_name]? The name is kept, but random appearance or species settings reroll, and patron, vices and limbs can be reset from the save.", "Pref Refresh", list("Yes", "No")) != "Yes")
+		return FALSE
+	if(QDELETED(src) || !client?.prefs)
+		to_chat(admin, span_warning("[src]'s player disconnected before their preferences could be reapplied."))
 		return FALSE
 	// The character's name is always in GLOB.chosen_names mid-round, so copy_to would hand them a random one.
 	var/old_real_name = real_name
@@ -1289,7 +1292,7 @@
 	dna?.real_name = old_real_name
 	log_admin("[key_name(admin)] refreshed the preferences of [key_name(src)].")
 	message_admins(span_adminnotice("[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)]."))
-	admin_ticket_log(src, "[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)].")
+	admin_ticket_log(src, "<font color='green'>[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)].</font>")
 	return TRUE
 
 /mob/living/carbon/human/proc/reapply_live_preferences()

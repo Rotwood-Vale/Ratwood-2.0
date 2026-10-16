@@ -1,4 +1,4 @@
-/// Most player actions View Forensics keeps per atom. The oldest drops off first.
+/// Most entries View Forensics keeps in each of an atom's two action lists. The oldest drops off first.
 #define FORENSIC_ACTIONS_MAX 30
 
 /datum/component/forensics
@@ -8,14 +8,18 @@
 	var/list/hiddenprints		//assoc ckey = realname/gloves/ckey
 	var/list/blood_DNA			//assoc dna = bloodtype
 	var/list/fibers				//assoc print = print
-	/// Admin only, never wiped. Player actions oldest first, each list("time" = world.time, "ckey", "name", "action", "count")
+	/// Admin only, never wiped. Lock, pick and break actions oldest first, each list("time" = round time, "ckey", "name", "action", "count")
 	var/list/actions
+	/// The same for plain opening and closing, capped apart so a busy door cannot push the evidence out of actions
+	var/list/routine_actions
 
 /datum/component/forensics/InheritComponent(datum/component/forensics/F, original)		//Use of | and |= being different here is INTENTIONAL.
 	fingerprints = fingerprints | F.fingerprints
 	hiddenprints = hiddenprints | F.hiddenprints
 	blood_DNA = blood_DNA | F.blood_DNA
 	fibers = fibers | F.fibers
+	actions = merge_actions(actions, F.actions)
+	routine_actions = merge_actions(routine_actions, F.routine_actions)
 	check_blood()
 	return ..()
 
@@ -165,16 +169,34 @@
 	A.fingerprintslast = M.ckey
 	return TRUE
 
-/// Repeats of the same action by the same player fold into one entry, so a door walked through all round costs one row.
-/datum/component/forensics/proc/add_action(mob/user, action)
-	var/list/last = LAZYACCESS(actions, LAZYLEN(actions))
+/datum/component/forensics/proc/add_action(mob/user, action, routine = FALSE)
+	if(routine)
+		routine_actions = record_action(routine_actions, user, action)
+	else
+		actions = record_action(actions, user, action)
+
+/// Repeats of the same action by the same player fold into one entry. Returns the list, which may have been created.
+/datum/component/forensics/proc/record_action(list/action_log, mob/user, action)
+	var/list/last = LAZYACCESS(action_log, LAZYLEN(action_log))
 	if(last && last["ckey"] == user.ckey && last["action"] == action)
-		last["time"] = world.time
+		last["time"] = STATION_TIME_PASSED()
 		last["count"]++
-		return
-	LAZYADD(actions, list(list("time" = world.time, "ckey" = user.ckey, "name" = user.real_name, "action" = action, "count" = 1)))
-	if(length(actions) > FORENSIC_ACTIONS_MAX)
-		actions.Cut(1, 2)
+		return action_log
+	LAZYADD(action_log, list(list("time" = STATION_TIME_PASSED(), "ckey" = user.ckey, "name" = user.real_name, "action" = action, "count" = 1)))
+	if(length(action_log) > FORENSIC_ACTIONS_MAX)
+		action_log.Cut(1, 2)
+	return action_log
+
+/// Entries are copied, as a fold would otherwise change both components' history.
+/datum/component/forensics/proc/merge_actions(list/action_log, list/incoming)
+	if(!length(incoming))
+		return action_log
+	LAZYINITLIST(action_log)
+	for(var/list/entry as anything in incoming)
+		action_log += list(entry.Copy())
+	if(length(action_log) > FORENSIC_ACTIONS_MAX)
+		action_log.Cut(1, length(action_log) - FORENSIC_ACTIONS_MAX + 1)
+	return action_log
 
 /datum/component/forensics/proc/add_blood_DNA(list/dna)		//list(dna_enzymes = type)
 	if(!length(dna))

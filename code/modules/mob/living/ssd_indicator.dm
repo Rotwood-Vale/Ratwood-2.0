@@ -44,12 +44,17 @@ GLOBAL_LIST_INIT(disconnected_admin_alert_role_times, list(
 	cancel_disconnected_admin_alert()
 	set_ssd_indicator(FALSE)
 
+/// Returns the shapeshift holder inside this spell shapeshift form, if it carries a human caster.
+/mob/living/proc/get_shapeshift_holder()
+	var/obj/shapeshift_holder/holder = locate() in src
+	if(holder && ishuman(holder.stored))
+		return holder
+
 /// Returns the human character this mob's player would leave the round as, or null if there is none.
 /// A spell shapeshift form carries the caster's body inside its shapeshift holder.
 /mob/living/proc/get_real_body()
-	var/obj/shapeshift_holder/holder = locate() in src
-	if(holder && ishuman(holder.stored))
-		return holder.stored
+	var/obj/shapeshift_holder/holder = get_shapeshift_holder()
+	return holder?.stored
 
 /// Wildshape and werewolf forms carry the character's body in stored_mob.
 /mob/living/carbon/human/get_real_body()

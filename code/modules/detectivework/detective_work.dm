@@ -70,13 +70,14 @@
 	. = D.add_hiddenprint(M)
 
 /// Notes a player opening, locking, picking or breaking this for admins' View Forensics. Mobs without a player are skipped.
-/atom/proc/add_forensic_action(mob/user, action)
+/// Routine is plain opening and closing, kept in its own capped list.
+/atom/proc/add_forensic_action(mob/user, action, routine = FALSE)
 	if(!user?.ckey || QDELETED(src))
 		return
 	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
 	if(!D)
 		D = AddComponent(/datum/component/forensics)
-	D.add_action(user, action)
+	D.add_action(user, action, routine)
 
 /atom/proc/add_blood_DNA(list/dna)						//ASSOC LIST DNA = BLOODTYPE
 	return FALSE

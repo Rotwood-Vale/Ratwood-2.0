@@ -381,7 +381,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 			var/mob/living/slumbering = new_character
 			var/mob/living/old_living = old_current
 			slumbering.mark_disconnected(istype(old_living) && old_living.last_logout_time ? old_living.last_logout_time : world.time)
-			if(istype(old_living))
+			if(istype(old_living) && old_living != slumbering)
 				old_living.clear_disconnected()
 	new_character.update_fov_angles()
 	if(old_current)
