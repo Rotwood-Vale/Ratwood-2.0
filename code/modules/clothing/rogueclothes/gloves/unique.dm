@@ -73,3 +73,21 @@
 	name = "pugilistic bandages"
 	desc = "Thickly-woven bandages that've been wrapped around the hands, fitted with alloyed knuckleweights. It soaks up the sweat from your palm, strengthens your fists, and protects your knuckles from dislodged teeth."
 	unarmed_bonus = 1.3 //Non-craftable. Restricted to Monks who've specialized in unarmed combat, and nothing else.
+
+/obj/item/clothing/gloves/roguetown/bandages/abotteer
+	name = "abotteer's wraps"
+	desc = "NODD 6:20... We must love everyone, regardless if they love us or not; guide them to brevity with a opened palm, nary-a-clenched fist."
+	unarmed_bonus = 1.3
+	unarmed_weapon_effects = TRUE
+	is_silver = TRUE
+
+/obj/item/clothing/gloves/roguetown/bandages/abotteer/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 0,\
+		added_int = 50,\
+		added_def = 0,\
+	)
