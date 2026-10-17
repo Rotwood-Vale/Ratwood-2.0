@@ -76,7 +76,11 @@
 	var/devotion_multiplier = 1
 	if(holder?.mind)
 		devotion_multiplier += (holder.get_skill_level(/datum/skill/magic/holy) / SKILL_LEVEL_LEGENDARY)
-	update_devotion((passive_devotion_gain * devotion_multiplier), (passive_progression_gain * devotion_multiplier), silent = TRUE)
+	var/bonus_gain = 0
+	var/datum/bodypart_feature/accessory/tonsure = holder?.get_bodypart_feature_of_slot(BODYPART_FEATURE_ACCESSORY)
+	if(tonsure?.accessory_type == /datum/sprite_accessory/accessory/tonsure)
+		bonus_gain = CLERIC_REGEN_DEVOTEE
+	update_devotion(((passive_devotion_gain + bonus_gain) * devotion_multiplier), (passive_progression_gain * devotion_multiplier), silent = TRUE)
 
 /datum/devotion/proc/check_devotion(obj/effect/proc_holder/spell/spell)
 	if(devotion - spell.devotion_cost < 0)
