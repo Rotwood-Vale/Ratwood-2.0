@@ -188,6 +188,14 @@
 	additional_items = list(/obj/item/rogueweapon/pick, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/rope)
 	skill_level = 4
 
+/datum/artificer_recipe/steel/artificedbracers
+	name = "Artificed Bracers (+1 Steel Bracers)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/clothing/wrists/roguetown/bracers)
+	created_item = /obj/item/clothing/wrists/roguetown/artificedbracers
+	skill_level = 4
+	i_type = "Tools"
+
 // --------- Contraptions -----------
 
 /datum/artificer_recipe/contraptions
@@ -770,3 +778,4 @@
 						/obj/item/smokeshell)
 	skill_level = 3
 	hammers_per_item = 5
+
