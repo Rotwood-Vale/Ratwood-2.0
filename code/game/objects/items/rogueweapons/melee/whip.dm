@@ -233,6 +233,7 @@
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
+	no_early_release = TRUE
 
 /datum/intent/whip/lash/urumi/heavy
 	name = "heavy urumi lash"//i'm a hack
@@ -271,6 +272,7 @@
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
+	no_early_release = TRUE
 
 /datum/intent/whip/thrust // elden ring nonsense, but cool
 	name = "urumi thrust"
@@ -287,6 +289,7 @@
 	item_d_type = "stab"
 	effective_range = 3
 	effective_range_type = EFF_RANGE_EXACT
+	no_early_release = TRUE
 
 /datum/intent/whip/thrust/heavy // elden ring nonsense, but cool
 	name = "urumi thrust"

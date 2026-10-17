@@ -1611,7 +1611,6 @@
 	icon_state = "blacksteelrapier"
 	sheathe_icon = "blacksteelrapier"
 	max_blade_int = 400
-	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier)
 	wdefense = 9 //Absurdly high defense, but no added integrity; for the discerning duelmaster.
 	var/used = FALSE
 	var/list/selection = list(
