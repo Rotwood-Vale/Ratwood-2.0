@@ -55,6 +55,8 @@
 #define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping //the affected is asleep
 
 #define STATUS_EFFECT_PACIFY /datum/status_effect/pacify //the affected is pacified, preventing direct hostile actions
+#define STATUS_EFFECT_GRAGGAR_FEAR /datum/status_effect/debuff/graggar_fear
+#define STATUS_EFFECT_GRAGGAR_REGENERATE /datum/status_effect/buff/graggar_regenerate
 
 #define STATUS_EFFECT_BELLIGERENT /datum/status_effect/belligerent //forces the affected to walk, doing damage if they try to run
 

@@ -1215,3 +1215,47 @@ tile_coordinates = list(list(1,1), list(-1,1), list(-1,-1), list(1,-1),list(0,0)
 //Example of a sweeping line from left to right from the clicked turf. The second tile and the line will only appear after 1.1 seconds (the first delay).
 //tile_coordinates = list(list(0,0), list(1,0, 1.1 SECONDS), list(2,0, 1.2 SECONDS), list(3,0,1.3 SECONDS), list(4,0,1.4 SECONDS), list(5,0,1.5 SECONDS))
 
+#define GRAGGAR_BREAK_RANKS_WAVE2_DELAY 1 SECONDS
+
+/datum/special_intent/graggar_break_the_ranks
+	name = "Break the Ranks"
+	desc = "Two powerful swings of the axe forward in a semicircle. The second wave deals double damage."
+	tile_coordinates = list(
+		list(-1,-1), list(1,-1), list(-1,0), list(0,0), list(1,0),
+		list(-2,-1, GRAGGAR_BREAK_RANKS_WAVE2_DELAY), list(-2,0, GRAGGAR_BREAK_RANKS_WAVE2_DELAY), list(-1,1, GRAGGAR_BREAK_RANKS_WAVE2_DELAY),
+		list(0,1, GRAGGAR_BREAK_RANKS_WAVE2_DELAY), list(1,1, GRAGGAR_BREAK_RANKS_WAVE2_DELAY), list(2,0, GRAGGAR_BREAK_RANKS_WAVE2_DELAY), list(2,-1, GRAGGAR_BREAK_RANKS_WAVE2_DELAY)
+	)
+	use_clickloc = FALSE
+	respect_adjacency = TRUE
+	respect_dir = TRUE
+	delay = 0.7 SECONDS
+	fade_delay = 0.5 SECONDS
+	pre_icon_state = "trap"
+	post_icon_state = "sweep_fx"
+	sfx_pre_delay = 'sound/combat/wooshes/bladed/wooshlarge (1).ogg'
+	sfx_post_delay = 'sound/combat/sp_axe_swing1.ogg'
+	cooldown = 50 SECONDS
+	stamcost = 25
+	var/self_immob_dur = 1 SECONDS
+
+/datum/special_intent/graggar_break_the_ranks/on_create()
+	. = ..()
+	howner.Immobilize(self_immob_dur)
+	howner.say("BREAK THEIR RANKS!", forced = "Break the Ranks")
+
+/datum/special_intent/graggar_break_the_ranks/apply_hit(turf/T)
+	var/hit_damage = 75
+	if(T in affected_turfs[GRAGGAR_BREAK_RANKS_WAVE2_DELAY])
+		hit_damage = 150
+	for(var/mob/living/L in get_hearers_in_view(0, T))
+		if(L != howner)
+			if(L.mobility_flags & MOBILITY_STAND)
+				apply_generic_weapon_damage(L, hit_damage, "slash", BODY_ZONE_CHEST, bclass = BCLASS_CHOP)
+			var/turf/throwtarget = get_ranged_target_turf(get_turf(L), get_dir(howner, L), 2)
+			if(throwtarget)
+				L.safe_throw_at(throwtarget, 2, 1, howner, force = MOVE_FORCE_EXTREMELY_STRONG)
+	playsound(T, sfx_post_delay, 100, TRUE)
+	..()
+
+#undef GRAGGAR_BREAK_RANKS_WAVE2_DELAY
+
