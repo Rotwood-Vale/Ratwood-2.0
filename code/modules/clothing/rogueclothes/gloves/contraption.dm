@@ -1,4 +1,5 @@
 /obj/item/clothing/gloves/chain/roguetown/contraption
+
 var/obj/item/accepted_power_source = /obj/item/roguegear/bronze	//Bronze by default
 	//this is what we use to double power items with, this isn't for all devices
 var/obj/item/prime_power_source = /obj/item/debug
