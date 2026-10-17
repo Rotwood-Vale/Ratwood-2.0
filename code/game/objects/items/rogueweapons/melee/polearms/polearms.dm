@@ -932,7 +932,7 @@
 	force = 25
 	force_wielded = 28//-2 force
 	possible_item_intents = list(SPEAR_THRUST, /datum/intent/spear/cut/glaive, /datum/intent/axe/chop/scythe, /datum/intent/dagger/sucker_punch)
-	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive/sweep, /datum/intent/spear/cut/bardiche/cleave/chop, /datum/intent/dagger/sucker_punch)
+	gripped_intents = list(/datum/intent/spear/thrust, /datum/intent/spear/cut/glaive/sweep, /datum/intent/spear/cut/bardiche/cleave/chop, /datum/intent/dagger/sucker_punch)
 	wdefense = 4//-2 def given how good it's intents are
 	max_blade_int = 160//-40 blade integ
 	smeltresult = /obj/item/ingot/steel

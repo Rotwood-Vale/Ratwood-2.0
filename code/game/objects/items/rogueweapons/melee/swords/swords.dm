@@ -1421,7 +1421,7 @@
 	desc = "A once elegant blade of mythril, diminishing under the suns gaze"
 	icon_state = "spidersaber"
 	sheathe_icon = "spidersaber"
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/dagger/sucker_punch)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust/sabre, /datum/intent/dagger/sucker_punch)
 	force = 25 // same as elf sabre
 	force_wielded = 25
 	minstr = 7
@@ -2638,7 +2638,7 @@
 	icon_state = "spiderfalx"
 	sheathe_icon = "spidersaber"
 	wbalance = WBALANCE_SWIFT
-	possible_item_intents = list(/datum/intent/sword/cut/falx,  /datum/intent/sword/chop/falx, /datum/intent/dagger/sucker_punch, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut/falx,  /datum/intent/sword/chop/falx, /datum/intent/dagger/sucker_punch)
 	force = 25 // same as elf sabre
 	wdefense = 5//-1, use it with a shield
 
@@ -2652,7 +2652,7 @@
 	force = 25
 	force_wielded = 30
 	max_integrity = 200
-	possible_item_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/sword/thrust/sabre, /datum/intent/sword/peel, /datum/intent/dagger/sucker_punch)// better to use your fist than dent that pretty pommel
+	possible_item_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/sword/thrust/sabre, /datum/intent/dagger/sucker_punch)// better to use your fist than dent that pretty pommel
 	gripped_intents = list(/datum/intent/sword/cut/sabre/slow, /datum/intent/pick/bad, /datum/intent/sword/chop/sabre, /datum/intent/dagger/sucker_punch)//shitty pick using our spiked bit.
 	alt_intents = null // nope!
 	bigboy = TRUE
@@ -2683,7 +2683,7 @@
 	force = 25
 	force_wielded = 27
 	possible_item_intents = list(/datum/intent/sword/thrust/arming, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
-	gripped_intents = list(/datum/intent/sword/thrust/estoc, /datum/intent/sword/lunge/estoc, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
+	gripped_intents = list(/datum/intent/sword/thrust/estoc, /datum/intent/sword/thrust/estoc/lunge, /datum/intent/sword/cut/rapier, /datum/intent/dagger/sucker_punch)
 	alt_intents = null // you wouldn't dare dent that gilded crossguard with a mordhau, would you?
 	bigboy = TRUE
 	special = /datum/special_intent/piercing_lunge
