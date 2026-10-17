@@ -6,7 +6,7 @@
 	sewn_bleed_rate = 0.04
 	clotting_rate = 0.01
 	sewn_clotting_rate = 0.01
-	clotting_threshold = 0.15
+	clotting_threshold = 0.2
 	sewn_clotting_threshold = 0.1
 	sew_threshold = 75
 	mob_overlay = "cut"
