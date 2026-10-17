@@ -8,7 +8,7 @@
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_DECEIVING_MEEKNESS, TRAIT_OVERTHERETIC, TRAIT_ARCYNE)
-	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 2, "locked_aspects" = list(/datum/magic_aspect/fulgurmancy))
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 0, "utilities" = 0, "locked_aspects" = list(/datum/magic_aspect/fulgurmancy))
 	maximum_possible_slots = 1 // only one frontman
 	subclass_skills = list(
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN, 

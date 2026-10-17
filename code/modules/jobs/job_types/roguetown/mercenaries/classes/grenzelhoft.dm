@@ -239,17 +239,18 @@
 	..()
 	to_chat(H, span_warning("You are a Gefechtsgelehrter - \"Combat Scholar\" - An experienced Zauberer hailing from the prestigious Celestial Academy, your fellow alumni may have pursued summoning, enchantments or similar academical ventures. But you? You studied siegecraft. And you got damn good at it too."))
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
-	backl = /obj/item/rogueweapon/woodstaff/implement/greater/blacksteel
+	backl = /obj/item/rogueweapon/woodstaff/gefechtsgelehrter
 	cloak = /obj/item/clothing/cloak/stabard/grenzelmage
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
-	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	neck = /obj/item/clothing/neck/roguetown/gorget
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/cuirass
+	//General gear regardless of class.
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
+	neck = /obj/item/clothing/neck/roguetown/coif/padded
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft
 	head = /obj/item/clothing/head/roguetown/grenzelhofthat
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
-	shoes = /obj/item/clothing/shoes/roguetown/grenzelhoft
+	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
-	backr = /obj/item/storage/backpack/rogue/satchel/black
+	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
