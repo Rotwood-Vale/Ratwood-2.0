@@ -403,6 +403,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			testing("cast1")
 			return FALSE
 
+	if(istype(user, /mob/living/carbon/human/species/wildshape) && !(src in user.mob_spell_list) && !istype(src, /obj/effect/proc_holder/spell/self/wildshape))
+		to_chat(user, span_warning("I can't cast spells in this form!"))
+		return FALSE
+
 	var/turf/T = get_turf(user)
 	if(is_centcom_level(T.z) && !centcom_cancast) //Certain spells are not allowed on the centcom zlevel
 		to_chat(user, span_warning("I can't cast this spell here!"))
@@ -931,6 +935,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 /obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
+		return FALSE
+
+	if(istype(user, /mob/living/carbon/human/species/wildshape) && !(src in user.mob_spell_list) && !istype(src, /obj/effect/proc_holder/spell/self/wildshape))
 		return FALSE
 
 	if(user.client && user.buckled)
