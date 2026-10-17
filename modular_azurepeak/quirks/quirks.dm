@@ -322,3 +322,12 @@
 	warning_text = "This quirk costs nothing and does not apply if you are playing a role that already has self aware!"
 	added_traits = list(TRAIT_SELF_AWARE)
 	incompatible_traits = list(TRAIT_SELF_AWARE)
+
+/datum/quirk/magical_appendage
+	name = "Magical Appendage"
+	desc = "I've discovered the arcyne knowledge required to give myself a magical penis. It works just like a real one!"
+	warning_text = "If you already have a penis upon spawning, the spell will be unusable. Be warned!"
+
+/datum/quirk/magical_appendage/apply_to_human(mob/living/carbon/human/recipient)
+	recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/magical_appendage)
+
