@@ -167,7 +167,7 @@
 	reqs = list(/obj/item/ingot/steel = 2, /obj/item/natural/fibers = 1, /obj/item/natural/wood/plank = 2)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 5
+	craftdiff = 4
 	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/twentybolts
@@ -223,6 +223,11 @@
 						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
 						/obj/item/ammo_casing/caseless/rogue/bolt/bronze
 					)
+	structurecraft = /obj/machinery/artificer_table
+	craftdiff = 3
+	skillcraft = /datum/skill/craft/engineering
+	display_category = ITEM_CAT_ENG_COMBAT
+
 /datum/crafting_recipe/roguetown/engineering/heavyboltsten
 	name = "Heavy Bolts 10x"
 	reqs = list(/obj/item/natural/wood/plank = 4, /obj/item/ingot/iron = 2)
@@ -236,8 +241,12 @@
 					/obj/projectile/bullet/reusable/heavy_bolt,
 					/obj/projectile/bullet/reusable/heavy_bolt,
 					/obj/projectile/bullet/reusable/heavy_bolt
-				)
-	
+				)	structurecraft = /obj/machinery/artificer_table
+	craftdiff = 3
+	skillcraft = /datum/skill/craft/engineering
+	display_category = ITEM_CAT_ENG_COMBAT
+
+
 //pyro arrow crafting, from stonekeep
 /datum/crafting_recipe/roguetown/engineering/pyrobolt
 	name = "pyroclastic bolt"
@@ -348,6 +357,17 @@
 		/obj/item/magic/infernal/core = 1,
 		/obj/item/ingot/steel = 1,
 	)
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+
+/datum/crafting_recipe/roguetown/engineering/roller
+	name = "rollers (2x)"
+	category = "Minecarts"
+	result = list(/obj/item/rotation_contraption/roller,
+				  /obj/item/rotation_contraption/roller)
+	reqs = list(/obj/item/natural/hide/cured = 2, /obj/item/grown/log/tree/stick = 4, /obj/item/roguegear/bronze = 2)
+	verbage_simple = "engineer"
+	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
 
