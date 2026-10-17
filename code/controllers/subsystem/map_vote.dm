@@ -6,7 +6,7 @@
 
 // Hard cap on a single player's banked bonus for a single map. Stops one
 // very persistent minority from eventually forcing a win on their own.
-#define MAP_VOTE_BONUS_MAX 10
+#define MAP_VOTE_BONUS_MAX 3
 
 SUBSYSTEM_DEF(map_vote)
 	name = "Map Vote"

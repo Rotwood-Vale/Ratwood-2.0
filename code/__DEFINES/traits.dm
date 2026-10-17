@@ -157,6 +157,7 @@
 #define TRAIT_LOCAL_KNOWLEDGE "Local Knowledge"
 #define TRAIT_SOFT_FOOTED "Soft Footed"
 #define TRAIT_LIGHT_SENSITIVITY "Light Sensitivity"
+#define TRAIT_SCOMGNET_AUTHORIZED "SCOMgnet Authorized" //If the inquisitor deems someone worthy of their communications.
 
 //travel zone traits
 #define TRAIT_BANDITCAMP "banditcamp"
