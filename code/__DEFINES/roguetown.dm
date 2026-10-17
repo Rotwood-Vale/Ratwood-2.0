@@ -555,3 +555,15 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define SOCIAL_RANK_MINOR_NOBLE 4
 #define SOCIAL_RANK_NOBLE 5
 #define SOCIAL_RANK_ROYAL 6
+
+#define ORIGIN_OTAVA "Otava"
+#define ORIGIN_ZYBANTINE "Zybantine"
+#define ORIGIN_NALEDI "Naledi"
+#define ORIGIN_FERENTIA "Ferentia"
+#define ORIGIN_UNDERDARK "The Underdark"
+#define ORIGIN_HAMMERHOLD "Hammerhold"
+#define ORIGIN_GRENZELHOFT "Grenzelhoft"
+#define ORIGIN_AVAR "Avar"
+#define ORIGIN_GRONN "Gronn"
+#define ORIGIN_ETRUSCA "Etrusca"
+#define ORIGIN_KAZENGUN "Kazengun"

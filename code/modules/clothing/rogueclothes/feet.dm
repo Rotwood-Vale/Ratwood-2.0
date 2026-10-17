@@ -461,6 +461,7 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/shoes/roguetown/boots/armor/gold
+	is_gold = TRUE
 	name = "golden greaves"
 	desc = "Resplendant sabatons of pure gold, adorned with angled greaves that proudly bear the holy sigil. Its besilked cuffs have remained surprisingly bereft of debris - not even a sprig of lint remains to be criticized."
 	icon_state = "goldgreaves"
@@ -700,6 +701,7 @@
 // ----------------- BLACKSTEEL END -----------------------
 
 /obj/item/clothing/shoes/roguetown/anklets
+	is_gold = TRUE
 	name = "golden anklets"
 	desc = "Luxurious anklets made of the finest gold. They leave the feet bare while adding an exotic flair."
 	gender = PLURAL

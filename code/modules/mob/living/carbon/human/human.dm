@@ -1254,6 +1254,11 @@
 	if(protection > 0)
 		(final_delta -= (three_quarter_delta * protection))
 
+	if(base_delta < 0 && HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))
+		final_delta *= 0.75
+	else if(base_delta > 0 && HAS_TRAIT(src, TRAIT_HEAT_RESISTANCE))
+		final_delta *= 0.5
+
 	adjust_bodytemperature(final_delta)
 
 	return final_delta

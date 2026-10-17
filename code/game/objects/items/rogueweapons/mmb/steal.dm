@@ -237,6 +237,8 @@
 		victim_score = round(effective_targetperception * 0.35)
 	else
 		victim_score = effective_targetperception + round((victim.STASPD - 10) / 3)
+	if(HAS_TRAIT(victim, TRAIT_WATCHFUL))
+		victim_score += 1
 	var/margin = thief_score - victim_score
 
 	if(margin < 0)
