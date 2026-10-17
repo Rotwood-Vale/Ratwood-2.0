@@ -1945,13 +1945,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/nodmg = FALSE
 
 	if(Iforce)
-<<<<<<< HEAD
-=======
 		H.retaliate(user)
 		var/post_weakness_dmg
 		var/post_reduction_dmg
 
->>>>>>> 4405357b8e (Nothing broke when I localhosted so it must be okay)
 		var/weakness = H.check_weakness(I, user)
 		post_weakness_dmg = Iforce * ((weakness == 0) ? 1 : weakness)
 		H.next_attack_msg.Cut()
