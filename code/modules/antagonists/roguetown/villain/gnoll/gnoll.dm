@@ -225,12 +225,8 @@
 /datum/intent/simple/gnoll_cut
 	name = "chopping claw"
 	hitsound = "genslash"
-<<<<<<< HEAD
-	penfactor = PEN_MEDIUM
-=======
 	penfactor = PEN_HEAVY
 	icon_state = "inchop"
->>>>>>> f51e58ae8e (Update gnoll.dm)
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	icon_state = "inchop"
