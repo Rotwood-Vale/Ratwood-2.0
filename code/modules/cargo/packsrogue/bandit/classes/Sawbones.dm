@@ -18,6 +18,26 @@
 	cost = 5
 	contains = list(/obj/item/clothing/head/roguetown/helmet/leather)
 
+/datum/supply_pack/rogue/Sawbones/leather/hlhelmet
+	name = "Hardened Leather Helmet"
+	cost = 10
+	contains = list(/obj/item/clothing/head/roguetown/helmet/leather/advanced)
+
+/datum/supply_pack/rogue/Sawbones/kettle
+	name = "Kettle Helmet"
+	cost = 20
+	contains = list(/obj/item/clothing/head/roguetown/helmet/kettle)
+
+/datum/supply_pack/rogue/Sawbones/bascinet
+	name = "Bascinet"
+	cost = 20
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet)
+
+/datum/supply_pack/rogue/Sawbones/ebascinet
+	name = "Etruscan Bascinet"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/etruscan)
+
 //////////
 // NECK //
 //////////
@@ -31,6 +51,16 @@
 	name = "Steel Coif"
 	cost = 40
 	contains = list(/obj/item/clothing/neck/roguetown/chaincoif)
+
+/datum/supply_pack/rogue/Sawbones/coif/fullsteel
+	name = "Full Steel Coif"
+	cost = 50
+	contains = list(/obj/item/clothing/neck/roguetown/chaincoif/full)
+
+/datum/supply_pack/rogue/Sawbones/coif/hpcoif
+	name = "Heavy Padded Coif"
+	cost = 35
+	contains = list(/obj/item/clothing/neck/roguetown/coif/heavypadding)
 
 /datum/supply_pack/rogue/Sawbones/gorget
 	name = "Gorget"
@@ -66,21 +96,66 @@
 	cost = 10
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather)
 
+/datum/supply_pack/rogue/Sawbones/leather/bikini
+	name = "Leather Corslet"
+	cost = 10
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/bikini)
+
+/datum/supply_pack/rogue/Sawbones/leather/hidekini
+	name = "Hide Corslet"
+	cost = 10
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/hide/bikini)
+
 /datum/supply_pack/rogue/Sawbones/leather/studded
 	name = "Studded Leather Armor"
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded)
+
+/datum/supply_pack/rogue/Sawbones/leather/studded/bikini
+	name = "Studded Leather Corslet"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/bikini)
+
+/datum/supply_pack/rogue/Sawbones/Haubergeon
+	name = "Haubergeon"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail)
+
+/datum/supply_pack/rogue/Sawbones/Haubergeon/bronze
+	name = "Haubergeon, Bronze"
+	cost = 15
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bronze)
+
+/datum/supply_pack/rogue/Sawbones/chaincorslet
+	name = "Chain Corslet"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bikini)
+
+/datum/supply_pack/rogue/Sawbones/brigandine
+	name = "Light Brigandine"
+	cost = 30
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/light)
 
 /datum/supply_pack/rogue/Sawbones/leather/heavy
 	name = "Hardened Leather Armor"
 	cost = 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy)
 
+/datum/supply_pack/rogue/Sawbones/leather/hcoat
+	name = "Hardened Leather Coat"
+	cost = 30
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat)
+
+/datum/supply_pack/rogue/Sawbones/brigandine
+	name = "Brigandine"
+	cost = 60
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine)
+
 ///////////////////
 // WRISTS/GLOVES //
 ///////////////////
 
-/datum/supply_pack/rogue/Sawbones/leather/Lbracers
+/datum/supply_pack/rogue/Sawbones/leather/lbracers
 	name = "Leather Bracers"
 	cost = 5
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers/leather)
@@ -89,6 +164,31 @@
 	name = "Hardened Leather Bracers"
 	cost = 10
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers/leather/heavy)
+
+/datum/supply_pack/rogue/Sawbones/bracers
+	name = "Steel Bracers"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers)
+
+/datum/supply_pack/rogue/Sawbones/bracers/chain
+	name = "Steel Chainsleeves"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/chain)
+
+/datum/supply_pack/rogue/Sawbones/bracers/bronze
+	name = "Bronze Wristguards"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/bronze)
+
+/datum/supply_pack/rogue/Sawbones/splintbracers
+	name = "Brigandine Rerebraces"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/splintarms)
+
+/datum/supply_pack/rogue/Sawbones/jackchain
+	name = "Jack Chains"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/jackchain)
 
 /datum/supply_pack/rogue/Sawbones/leather/lgloves
 	name = "Leather Gloves"
@@ -105,6 +205,16 @@
 	cost = 10
 	contains = list(/obj/item/clothing/gloves/roguetown/fingerless_leather)
 
+/datum/supply_pack/rogue/Sawbones/chaingauntlets
+	name = "Steel Chain Gauntlets"
+	cost = 10
+	contains = list(/obj/item/clothing/gloves/roguetown/chain)
+
+/datum/supply_pack/rogue/Sawbones/plategaunt
+	name = "Plate Gauntlets"
+	cost = 25
+	contains = list(/obj/item/clothing/gloves/roguetown/plate)
+
 ///////////////
 // LEGS/FEET //
 ///////////////
@@ -119,6 +229,36 @@
 	cost = 20
 	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants)
 
+/datum/supply_pack/rogue/Sawbones/leather/fencingpants
+	name = "Fencing Breeches"
+	cost = 40
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic)
+
+/datum/supply_pack/rogue/Sawbones/leather/otavanpants
+	name = "Otavan Leather Trousers"
+	cost = 40
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan)
+
+/datum/supply_pack/rogue/Sawbones/boots
+	name = "Steel Boots"
+	cost = 15
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/armor)
+
+/datum/supply_pack/rogue/Sawbones/boots/maille
+	name = "Maille Boots"
+	cost = 15
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/maille)
+
+/datum/supply_pack/rogue/Sawbones/reinforcedboots
+	name = "Heavy Leather Boots"
+	cost = 10
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/leather/reinforced)
+
+/datum/supply_pack/rogue/Sawbones/boots/otavan
+	name = "Otavan Leather Boots"
+	cost = 30
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/otavan)
+
 /////////////
 // WEAPONS //
 /////////////
@@ -132,6 +272,31 @@
 	name = "Estoc"
 	cost = 40
 	contains = list(/obj/item/rogueweapon/estoc)
+
+/datum/supply_pack/rogue/Sawbones/cuprapier
+	name = "Etruscan Rapier"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/sword/rapier/vaquero)
+
+/datum/supply_pack/rogue/Sawbones/canerapier
+	name = "Cane Blade"
+	cost = 40
+	contains = list(/obj/item/rogueweapon/sword/rapier/courtphysician, /obj/item/rogueweapon/scabbard/sheath/courtphysician)
+
+/datum/supply_pack/rogue/Sawbones/sabre
+	name = "Sabre"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/sabre)
+
+/datum/supply_pack/rogue/Sawbones/messer
+	name = "Messer"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/short/messer)
+
+/datum/supply_pack/rogue/Sawbones/falchion
+	name = "Falchion"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/short/falchion)
 
 ///////////
 // BOMBS //
@@ -219,10 +384,35 @@
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/strong_antidote)
 
+/datum/supply_pack/rogue/Sawbones/fireresist
+	name = "Fire Resistance Potion"
+	cost = 50
+	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/fireresist)
+
 /datum/supply_pack/rogue/Sawbones/emberwine
 	name = "Emberwine"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/emberwine)
+
+/datum/supply_pack/rogue/Sawbones/stampoison
+	name = "Stamina Poison"
+	cost = 50
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/stampoison)
+
+/datum/supply_pack/rogue/Sawbones/strongstampoison
+	name = "Strong Stamina Poison"
+	cost = 100
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/strongstampoison)
+
+/datum/supply_pack/rogue/Sawbones/berrypoison
+	name = "Berry Poison"
+	cost = 40
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/berrypoison)
+
+/datum/supply_pack/rogue/Sawbones/killersice
+	name = "Killer's Ice"
+	cost = 3000//lol
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/poison)
 
 /datum/supply_pack/rogue/Sawbones/heartblood
 	name = "Heartblood canister"

@@ -353,7 +353,7 @@
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR", "RENDERED ASUNDER")
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/bikini
-	name = "full-plate corset"
+	name = "full-plate corslet"
 	desc = "Breastplate, pauldrons, couters, cuisses... did you forget something?"
 	icon_state = "platekini"
 	allowed_sex = list(MALE, FEMALE)
