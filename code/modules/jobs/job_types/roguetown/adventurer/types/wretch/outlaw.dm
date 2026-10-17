@@ -14,6 +14,7 @@
 		STATKEY_WIL = 2,
 		STATKEY_PER = 1
 	)
+	maximum_possible_slots = 2 // as a part of the 'wretches may as well be hero units' PR, but this guy is a generic goon. we can have two, as a treat.
 	subclass_skills = list(
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,

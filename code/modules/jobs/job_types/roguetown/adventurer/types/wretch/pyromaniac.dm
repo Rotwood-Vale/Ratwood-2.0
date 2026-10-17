@@ -13,6 +13,7 @@
 		STATKEY_CON = 3,
 		STATKEY_INT = 3
 	)
+	maximum_possible_slots = 2 // as a part of the 'wretches may as well be hero units' PR, but we've not had any issues with these guys yet so...
 	subclass_skills = list(
 		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,

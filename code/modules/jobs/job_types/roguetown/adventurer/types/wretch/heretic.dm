@@ -7,7 +7,8 @@
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_HEAVYARMOR)
-	maximum_possible_slots = 2
+	maximum_possible_slots = 1 // as a part of the 'wretches may as well be hero units' PR. 
+	// heretics and spies are two sides of a coin, so one each
 	// same stats as templar as you are essentially an antagonist aligned templar with miracles and armor
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -245,7 +246,7 @@
 	tutorial = "Nimble of dagger and foot both, you are the shadowy herald of the cabal. They will not see you coming."
 	outfit = /datum/outfit/job/roguetown/wretch/hereticspy
 	class_select_category = CLASS_CAT_ROGUE
-	maximum_possible_slots = 2
+	maximum_possible_slots = 1 // as a part of the 'wretches may as well be hero units' PR.
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT)
 	//Slower than outlaw, but a bit more PER and INT
 	subclass_stats = list(

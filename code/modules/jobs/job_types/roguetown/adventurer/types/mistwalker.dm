@@ -8,8 +8,9 @@
 	subclass_languages = list(/datum/language/kazengunese)
 	class_select_category = CLASS_CAT_WARRIOR
 	category_tags = list(CTAG_WRETCH)
+	virtue_restrictions = list(/datum/virtue/combat/rotcured, /datum/virtue/utility/deathless)
+	maximum_possible_slots = 1 // as a part of the 'wretches may as well be hero units' PR, but this guy is problematic and i'm stupidly copy pasting shit like an IDIOT
 	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END, TRAIT_OVERTHERETIC) //no armour, literally made to bleed
-	maximum_possible_slots = 2 //you probably don't want many of these
 
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
 	subclass_stats = list(
