@@ -37,17 +37,14 @@
 
 /datum/pollutant/fragrance/on_smell(parent)
 	. = ..()
-	for(var/mob/living/carbon/human/H in view(1, parent))
-		if(!H)
+	for(var/mob/living/carbon/human/smeller in view(1, parent))
+		if(!considered_alive(smeller.mind))
 			continue
-		if(!considered_alive(H.mind))
+		if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
 			continue
-		if(!H.can_smell())
+		if(smeller.has_stress_event(/datum/stressevent/perfume))
 			continue
-		if(H.has_stress_event(/datum/stressevent/perfume))
-			continue
-	
-		H.add_stress(/datum/stressevent/perfume)
+		smeller.add_stress(/datum/stressevent/perfume)
 
 ///Smoke coming from cigarettes and fires
 /datum/pollutant/smoke //and mirrors
