@@ -1,31 +1,4 @@
 
-<<<<<<< HEAD
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration, penetrated_text, damage, blade_dulling, peeldivisor, intdamfactor, used_weapon = null)
-	SEND_SIGNAL(src, COMSIG_LIVING_ARMOR_CHECKED)
-	var/armor = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor, used_weapon)
-	src.mob_timers[MT_SNEAKATTACK] = world.time //Stops sneaking after being hit. No more bullshit where you can just run away into fullstealth. Lose your tail first!
-	//the if "armor" check is because this is used for everything on /living, including humans
-	if(armor > 0 && armor_penetration)
-		armor = max(0, armor - armor_penetration)
-		if(penetrated_text)
-			to_chat(src, span_danger("[penetrated_text]"))
-//		else
-//			to_chat(src, span_danger("My armor was penetrated!"))
-	else if(armor >= 100)
-		if(absorb_text)
-			to_chat(src, span_notice("[absorb_text]"))
-		var/obj/item/blocked_weapon = used_weapon
-		if(blocked_weapon)
-			SEND_SIGNAL(blocked_weapon, COMSIG_ITEM_ARMOR_BLOCKED)
-//		else
-//			to_chat(src, span_notice("My armor absorbs the blow!"))
-	else if(armor > 0)
-		if(soften_text)
-			to_chat(src, span_warning("[soften_text]"))
-//		else
-//			to_chat(src, span_warning("My armor softens the blow!"))
-	if(mob_timers[MT_INVISIBILITY] > world.time)
-=======
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration = PEN_NONE, penetrated_text, damage, blade_dulling, intdamfactor, used_weapon = null)
 	var/armor_tier = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon)
 
@@ -69,7 +42,6 @@
 					to_chat(src, span_notice("[absorb_text]"))
 
 	if(mob_timers[MT_INVISIBILITY] > world.time)			
->>>>>>> 9587bd9ba7 (The Big One)
 		mob_timers[MT_INVISIBILITY] = world.time
 		update_sneak_invis(reset = TRUE)
 	return blocked

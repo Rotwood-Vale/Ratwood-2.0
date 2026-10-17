@@ -44,12 +44,7 @@
 	name = "one-handed thrust"
 	reach = 1
 	swingdelay = 4
-<<<<<<< HEAD:code/game/objects/items/rogueweapons/melee/polearms.dm
-	penfactor = 45
-	desc = "Stab a target. With only one hand, you aren't using the spear to its full power."
-=======
 	penfactor = PEN_MEDIUM
->>>>>>> 9587bd9ba7 (The Big One):code/game/objects/items/rogueweapons/melee/polearms/polearms.dm
 	clickcd = CLICK_CD_RESIST
 	effective_range = null
 	effective_range_type = EFF_RANGE_NONE
@@ -189,67 +184,6 @@
 	cleave = /datum/cleave_pattern/horizontal_sweep
 	desc = "A sweep that cuts through targets to the front."
 
-<<<<<<< HEAD:code/game/objects/items/rogueweapons/melee/polearms.dm
-/datum/intent/sword/cut/zwei
-	desc = "It's like cutting, but your sword is huge."
-	reach = 2
-
-/datum/intent/sword/thrust/zwei
-	desc = "Stab, but with range."
-	reach = 2
-
-/datum/intent/sword/cut/zwei/cleave
-	name = "rending cleave"
-	icon_state = "incleave"
-	desc = "A vicious cut that rends through a second target behind the first. Does enormous damage, but nothing to armor."
-	attack_verb = list("cleaves", "carves through")
-	clickcd = CLICK_CD_HEAVY
-	penfactor = BLUNT_DEFAULT_PENFACTOR
-	damfactor = 2.5
-	reach = 1 // No!!
-	cleave = /datum/cleave_pattern/forward_cleave
-	misscost = 10
-	intent_intdamage_factor = 0.25
-	sharpness_penalty = 2
-	accuracy_modifier = -15
-/datum/intent/sword/cut/zwei/sweep
-	name = "sweeping cut"
-	icon_state = "insweep"
-	desc = "A heavy sweep that cuts through targets to the front."
-	attack_verb = list("sweeps through", "cuts across")
-	reach = 1
-	clickcd = CLICK_CD_MASSIVE
-	cleave = /datum/cleave_pattern/horizontal_sweep
-
-/datum/intent/sword/thrust/estoc
-	name = "thrust"
-	desc = "Stab precisely. You'll penetrate anything that isn't made of blacksteel like this."
-	penfactor = 57	//At 57 pen + 25 base (82 total), you will always pen 80 stab armor, but you can't do it at range unlike a spear.
-	clickcd = CLICK_CD_CHARGED
-
-/datum/intent/sword/lunge
-	name = "lunge"
-	icon_state = "inimpale"
-	attack_verb = list("lunges")
-	animname = "stab"
-	blade_class = BCLASS_STAB
-	desc = "A two-tile stab. You won't penetrate armor well."
-	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	reach = 2
-	damfactor = 1.3	//Zwei will still deal ~7-10 more damage at the same range, depending on user's STR.
-	swingdelay = 8
-	effective_range = 2
-	effective_range_type = EFF_RANGE_EXACT
-
-/datum/intent/sword/lunge/estoc
-	damfactor = 1.2
-	desc = "Stab at range. You'll rip through leather, but not metal."
-	penfactor = 37//25 base, +5, at 67. More for applying bleed through armour, since it's a needle.
-	swingdelay = 0
-	clickcd = CLICK_CD_CHARGED
-
-=======
->>>>>>> 9587bd9ba7 (The Big One):code/game/objects/items/rogueweapons/melee/polearms/polearms.dm
 /datum/intent/sword/bash
 	name = "crossguard bash"
 	blade_class = BCLASS_BLUNT
@@ -272,12 +206,7 @@
 	animname = "cut"
 	blade_class = BCLASS_CHOP
 	reach = 1
-<<<<<<< HEAD:code/game/objects/items/rogueweapons/melee/polearms.dm
-	desc = "Devastate exposed flesh. Barely damages armor, and ruins your weapon's sharpness."
-	penfactor = BLUNT_DEFAULT_PENFACTOR
-=======
 	penfactor = PEN_NONE
->>>>>>> 9587bd9ba7 (The Big One):code/game/objects/items/rogueweapons/melee/polearms/polearms.dm
 	damfactor = 2.5
 	clickcd = CLICK_CD_CHARGED
 	no_early_release = TRUE
@@ -328,35 +257,6 @@
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_MINUSCULE//See above.
 
-<<<<<<< HEAD:code/game/objects/items/rogueweapons/melee/polearms.dm
-/datum/intent/spear/thrust/lance
-	damfactor = 1.5 // Turns its base damage into 30 on the 2hand thrust. It keeps the spear thrust one handed.
-
-/datum/intent/lance
-	name = "lance"
-	icon_state = "inlance"
-	desc = "For making rotisserie out of people. Useless against armor."
-	attack_verb = list("lances", "runs through", "skewers")
-	animname = "stab"
-	item_d_type = "stab"
-	penfactor = BLUNT_DEFAULT_PENFACTOR // Not a mistake, to prevent it from nuking through armor.
-	chargetime = 4 SECONDS
-	damfactor = 4 // 80 damage on hit. It is gonna hurt.
-	reach = 2// extra range comes from your cleave aoe
-	effective_range = 2
-	effective_range_type = EFF_RANGE_ABOVE
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_ABSURD // 32 damage chip at full charge, funny!
-	cleave = /datum/cleave_pattern/lance
-
-/datum/intent/lance/onehand
-	chargetime = 4 SECONDS
-	swingdelay = 1 SECONDS
-	damfactor = 4 // 25% less damage
-	cleave = /datum/cleave_pattern/lance
-
-=======
->>>>>>> 9587bd9ba7 (The Big One):code/game/objects/items/rogueweapons/melee/polearms/polearms.dm
 //polearm objs ฅ^•ﻌ•^ฅ
 
 /obj/item/rogueweapon/woodstaff
@@ -1186,17 +1086,10 @@
 /obj/item/rogueweapon/eaglebeak
 	force = 15
 	force_wielded = 30
-<<<<<<< HEAD:code/game/objects/items/rogueweapons/melee/polearms.dm
-	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh)
-	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/eaglebeak, /datum/intent/mace/warhammer/pick/ranged)
-	name = "steel lucerne"
-	desc = "A lucerne of sturdy steel. A hefty hammerhead to crack the skull, a spike to punch through helms, and a spear to thrust like any other polearm, all mounted atop a reinforced shaft. Fracture bone and dissent with righteous force. An instrument to soothe the ears of any noble with the sound of a rebel's skull shattering."
-=======
 	possible_item_intents = list(/datum/intent/spear/thrust/bad)
 	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/bad)
 	name = "eagle's beak"
 	desc = "A reinforced pole affixed with an ornate steel eagle's head, of which its beak is intended to pierce with great harm."
->>>>>>> 9587bd9ba7 (The Big One):code/game/objects/items/rogueweapons/melee/polearms/polearms.dm
 	icon_state = "eaglebeak"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	pixel_y = -16
@@ -1231,13 +1124,8 @@
 	name = "blacksteel lucerne"
 	desc = "A magnificent lucerne of blacksteel. Purpose-made for killing plate-armored opponents, it features a maillebreaker's point and a \
 	flared macehead; excellent for piercing and shattering alloys, respectively. Wrap a length of cloth around the shaft to bear your heraldry."
-<<<<<<< HEAD:code/game/objects/items/rogueweapons/melee/polearms.dm
-	possible_item_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/eaglebeak/oneh)
-	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust, /datum/intent/mace/warhammer/pick/ranged)
-=======
 	possible_item_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/bad)
 	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust)
->>>>>>> 9587bd9ba7 (The Big One):code/game/objects/items/rogueweapons/melee/polearms/polearms.dm
 	icon_state = "bs_eaglebeak"
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	smeltresult = /obj/item/ingot/blacksteel

@@ -233,7 +233,7 @@
 	icon_state = "shadowvest"
 	item_state = "shadowvest"
 	body_parts_covered = COVERAGE_FULL
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_LEATHER
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter
