@@ -369,6 +369,7 @@
 	ADD_TRAIT(owner, TRAIT_NODEATH, "death_defience") // I think it only stops oxy death?
 	ADD_TRAIT(owner, TRAIT_NOBREATH, "death_defience") // sadly needed
 
+	owner.setOxyLoss(0,TRUE)
 	owner.remove_status_effect(/datum/status_effect/debuff/crit_resistance_cd) // resets crit resistance
 	owner.remove_status_effect(STATUS_EFFECT_SLEEPING) 
 	owner.remove_status_effect(/datum/status_effect/incapacitating/knockdown)
