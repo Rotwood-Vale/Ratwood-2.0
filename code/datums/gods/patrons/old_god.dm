@@ -161,8 +161,6 @@
 	recharge_time = 30 SECONDS
 	miracle = TRUE
 	devotion_cost = 40
-	stat_allowed = 1 //i will have to exclude the dead.. somehow
-	gesture_required = FALSE
 
 
 /obj/effect/proc_holder/spell/invoked/psydonendure/cast(list/targets, mob/living/user)
@@ -261,14 +259,27 @@
 	releasedrain = 50
 	chargedrain = 0
 	chargetime = 0
-	range = 5 
+	range = 7
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
 	sound = 'sound/magic/ENDVRE.ogg'
-	invocations = list("LYVE, ENDURE!") // holy larp yelling for healing is silly
-	invocation_type = "none"
+	invocation_type = "none" // needs to be castable when uncontius
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
 	recharge_time = 6 MINUTES
 	miracle = TRUE
+	stat_allowed = 1 //i will have to exclude the dead.. somehow
+	gesture_required = FALSE
 	devotion_cost = 150
+	var/selfcast = FALSE
+
+/obj/effect/proc_holder/spell/invoked/psydefy/cast(list/targets, mob/living/user)
+	if(user.stat == DEAD)
+		to_chat(span_warning("You are dead, its to late for displays of wilpower"))
+		revert_cast()
+		return FALSE
+	if(user.stat != CONSCIOUS)
+		selfcast = TRUE
+	
+
+	
