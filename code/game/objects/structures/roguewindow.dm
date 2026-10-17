@@ -266,6 +266,8 @@
 
 		picktime -= (pickskill * 8 + perbonus * 5 + speedbonus * 5 + held_knife.picklvl * 2)
 		picktime = clamp(picktime, 20, 70)
+		if(HAS_TRAIT(user, TRAIT_GILDED_SIGHT))
+			picktime = 15
 
 		moveup += (pickskill * 6 + perbonus + speedbonus/2 + held_knife.picklvl * 2)
 		moveup = clamp(moveup, 10, 100)
@@ -298,14 +300,17 @@
 					else
 						continue
 				else
-					playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
+					if(!HAS_TRAIT(user, TRAIT_SILENT_LOCKPICK))
+						playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
 					obj_integrity = break_me
 					held_knife.take_damage(10, BRUTE, "blunt")
-					to_chat(user, "<span class='warning'>Clack. [100 - pickchance]% chance to fuck up.</span>")
+					if(!HAS_TRAIT(user, TRAIT_SILENT_LOCKPICK))
+						to_chat(user, "<span class='warning'>Clack. [100 - pickchance]% chance to fuck up.</span>")
 					add_sleep_experience(opener, /datum/skill/misc/lockpicking, opener.STAINT/4)
 					playsound(src, break_sound, 100)
 					log_admin("Window broken at X:[src.x] Y:[src.y] Z:[src.z] in area: [get_area(src)]")
-					loud_message("A loud crash of a window getting broken rings out", hearing_distance = 14)
+					if(!HAS_TRAIT(user, TRAIT_SILENT_LOCKPICK))
+						loud_message("A loud crash of a window getting broken rings out", hearing_distance = 14)
 					new /obj/item/natural/glass_shard (get_turf(src))
 					new /obj/effect/decal/cleanable/debris/glassy(get_turf(src))
 					brokenstate = TRUE

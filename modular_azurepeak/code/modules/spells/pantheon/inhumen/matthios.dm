@@ -304,6 +304,1257 @@
 
 			return
 
+// T3: Rally Matthios' followers around the People's Banner
+
+/obj/effect/proc_holder/spell/invoked/twilight_commieflag
+	name = "The People's Banner"
+	desc = "Summon a Matthian banner and rally your comrades. While the banner is held, you and nearby allies resist slowdown and gain the will to fight."
+	clothes_req = FALSE
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	overlay_state = "peoplesbanner"
+	invocations = list(
+		"Comrades, rally around the standard of the Father of Freedom!",
+		"We will wrest our freedom from their cold hands!",
+	)
+	invocation_type = "shout"
+	chargedrain = 0
+	chargetime = 2 SECONDS
+	releasedrain = 30
+	chargedloop = /datum/looping_sound/invokeascendant
+	associated_skill = /datum/skill/magic/holy
+	devotion_cost = 90
+	miracle = TRUE
+	recharge_time = 5 MINUTES
+	sound = list('sound/magic/whiteflame.ogg')
+	no_early_release = TRUE
+	movement_interrupt = TRUE
+	antimagic_allowed = TRUE
+	charging_slowdown = 3
+	glow_color = "#FFD700"
+	glow_intensity = GLOW_INTENSITY_LOW
+	conjured_item_glow = "#FFD700"
+
+/obj/effect/proc_holder/spell/invoked/twilight_commieflag/cast(list/targets, mob/living/user = usr)
+	if(user.get_num_arms(FALSE) < 1 || (user.get_inactive_held_item() && user.get_active_held_item()))
+		to_chat(user, span_notice("I need a free hand to hold the People's Banner!"))
+		revert_cast(user)
+		return FALSE
+
+	dispel_conjured_item()
+	var/obj/item/rogueweapon/spear/matthios_standard/banner = new(user.drop_location())
+	user.put_in_hands(banner)
+	ADD_TRAIT(banner, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	var/skill = user.get_skill_level(/datum/skill/magic/holy)
+	banner.wdefense += skill
+	banner.wdefense_dynamic += skill
+	banner.force = min(5 * skill, 30)
+	banner.update_force_dynamic()
+	set_conjured_item(banner)
+	return TRUE
+
+/obj/item/rogueweapon/spear/matthios_standard
+	name = "people's banner"
+	desc = "The banner of those who stand against tyranny and oppression, bearing the sigil of Matthios, Father of Freedom."
+	force = 0
+	force_wielded = 0
+	wdefense = 1
+	possible_item_intents = list(/datum/intent/spear/thrust)
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon_state = "matthios_standard"
+	resistance_flags = FIRE_PROOF
+	var/next_aura_update = 0
+
+/obj/item/rogueweapon/spear/matthios_standard/Initialize(mapload)
+	. = ..()
+	update_aura()
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/rogueweapon/spear/matthios_standard/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/obj/item/rogueweapon/spear/matthios_standard/process()
+	if(world.time < next_aura_update)
+		return
+	next_aura_update = world.time + 5 SECONDS
+	update_aura()
+
+/obj/item/rogueweapon/spear/matthios_standard/proc/update_aura()
+	var/turf/banner_turf = get_turf(src)
+	if(!banner_turf)
+		return
+	for(var/mob/living/carbon/human/H in range(7, banner_turf))
+		if(istype(H.patron, /datum/patron/inhumen/matthios))
+			H.apply_status_effect(/datum/status_effect/buff/twilight_peoplesbanner)
+		else
+			H.apply_status_effect(/datum/status_effect/debuff/twilight_peoplesbanner)
+
+/obj/item/rogueweapon/spear/matthios_standard/attack_self(mob/living/user)
+	to_chat(user, span_notice("You begin dispelling the [src.name]..."))
+	if(do_after(user, 3 SECONDS, src))
+		qdel(src)
+
+/atom/movable/screen/alert/status_effect/buff/twilight_peoplesbanner
+	name = "The People's Banner"
+	desc = "The sigil of Matthios inspires me to fight on!"
+	icon_state = "peoplesbanner_buff"
+	icon = 'icons/mob/actions/matthiosmiracles.dmi'
+
+/datum/status_effect/buff/twilight_peoplesbanner
+	id = "twilight_peoplesbanner"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/twilight_peoplesbanner
+	effectedstats = list(STATKEY_WIL = 3)
+	tick_interval = 5 SECONDS
+
+/datum/status_effect/proc/has_matthios_banner_in_range()
+	var/turf/owner_turf = get_turf(owner)
+	if(!owner_turf)
+		return FALSE
+	for(var/obj/item/rogueweapon/spear/matthios_standard/banner in range(7, owner_turf))
+		if(get_dist(owner, banner) <= 7)
+			return TRUE
+	for(var/mob/living/carbon/human/H in range(7, owner_turf))
+		if(get_dist(owner, H) > 7)
+			continue
+		if(istype(H.get_inactive_held_item(), /obj/item/rogueweapon/spear/matthios_standard) || istype(H.get_active_held_item(), /obj/item/rogueweapon/spear/matthios_standard))
+			return TRUE
+	return FALSE
+
+/datum/status_effect/buff/twilight_peoplesbanner/process()
+	. = ..()
+	if(!has_matthios_banner_in_range())
+		owner.remove_status_effect(/datum/status_effect/buff/twilight_peoplesbanner)
+
+/datum/status_effect/buff/twilight_peoplesbanner/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, id)
+	owner.add_stress(/datum/stressevent/twilight_peoplesbanner_good)
+
+/datum/status_effect/buff/twilight_peoplesbanner/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, id)
+	owner.remove_stress(/datum/stressevent/twilight_peoplesbanner_good)
+
+/atom/movable/screen/alert/status_effect/debuff/twilight_peoplesbanner
+	name = "The People's Banner"
+	desc = "That horrid sigil! How dare they?!"
+	icon_state = "peoplesbanner_debuff"
+	icon = 'icons/mob/actions/matthiosmiracles.dmi'
+
+/datum/status_effect/debuff/twilight_peoplesbanner
+	id = "twilight_peoplesbanner_debuff"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/twilight_peoplesbanner
+	tick_interval = 5 SECONDS
+
+/datum/status_effect/debuff/twilight_peoplesbanner/process()
+	. = ..()
+	if(!has_matthios_banner_in_range())
+		owner.remove_status_effect(/datum/status_effect/debuff/twilight_peoplesbanner)
+
+/datum/status_effect/debuff/twilight_peoplesbanner/on_apply()
+	. = ..()
+	owner.add_stress(/datum/stressevent/twilight_peoplesbanner_bad)
+
+/datum/status_effect/debuff/twilight_peoplesbanner/on_remove()
+	. = ..()
+	owner.remove_stress(/datum/stressevent/twilight_peoplesbanner_bad)
+
+/datum/stressevent/twilight_peoplesbanner_good
+	timer = 999 MINUTES
+	stressadd = -3
+	desc = span_green("The sigil of Matthios inspires me to fight on!")
+
+/datum/stressevent/twilight_peoplesbanner_bad
+	timer = 999 MINUTES
+	stressadd = 3
+	desc = span_red("That horrid sigil! How dare they?!")
+
+// Granted directly to the Iconoclast; this is not part of Matthios' general miracle list.
+/obj/effect/proc_holder/spell/invoked/raze
+	name = "Raze"
+	desc = "Exhale a cone of stolen fyre before you, scorching enemies and igniting the ground. Damage increases with Holy skill. These flames can turn unworthy corpses to ash."
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	overlay_state = "breath"
+	sound = 'sound/misc/bamf.ogg'
+	chargedloop = /datum/looping_sound/invokefire
+	recharge_time = 2 MINUTES
+	chargedrain = 0
+	chargetime = 1 SECONDS
+	releasedrain = 30
+	no_early_release = TRUE
+	movement_interrupt = TRUE
+	charging_slowdown = 1
+	invocation_type = "none"
+	associated_skill = /datum/skill/magic/holy
+	devotion_cost = 90
+	miracle = TRUE
+	range = 3
+	var/delay = 12
+	var/strike_delay = 2
+	var/damage = 20
+	var/cone_range = 3
+
+/obj/effect/proc_holder/spell/invoked/raze/gilded_dragon
+	devotion_cost = 0
+	miracle = FALSE
+
+/obj/effect/proc_holder/spell/invoked/raze/cast(list/targets, mob/living/user = usr)
+	. = ..()
+	var/turf/target_turf = get_turf(targets[1])
+	var/turf/source_turf = get_turf(user)
+	if(!target_turf || !source_turf || target_turf.z != source_turf.z || target_turf == source_turf)
+		return FALSE
+
+	var/direction = get_dir(source_turf, target_turf)
+	if(!direction)
+		return FALSE
+	var/left_dir
+	var/right_dir
+	switch(direction)
+		if(NORTH, SOUTH)
+			left_dir = WEST
+			right_dir = EAST
+		if(EAST, WEST)
+			left_dir = NORTH
+			right_dir = SOUTH
+		if(NORTHEAST, SOUTHWEST)
+			left_dir = NORTHWEST
+			right_dir = SOUTHEAST
+		if(NORTHWEST, SOUTHEAST)
+			left_dir = NORTHEAST
+			right_dir = SOUTHWEST
+
+	for(var/distance in 1 to cone_range)
+		var/turf/center = source_turf
+		for(var/i in 1 to distance)
+			center = get_step(center, direction)
+		if(!center)
+			continue
+
+		var/list/current_wave = list(center)
+		for(var/offset in 1 to distance - 1)
+			var/turf/left_turf = center
+			var/turf/right_turf = center
+			for(var/j in 1 to offset)
+				left_turf = get_step(left_turf, left_dir)
+				right_turf = get_step(right_turf, right_dir)
+			if(left_turf)
+				current_wave |= left_turf
+			if(right_turf)
+				current_wave |= right_turf
+
+		var/tile_delay = delay + (strike_delay * (distance - 1))
+		for(var/turf/affected_turf in current_wave)
+			if(!(affected_turf in view(source_turf)))
+				continue
+			new /obj/effect/temp_visual/trap/firebreath(affected_turf, tile_delay)
+			addtimer(CALLBACK(src, PROC_REF(ignite), affected_turf, user), tile_delay)
+
+	user.visible_message(span_yellow("[user] sharply exhales, breathing out a cloud of fyre!"))
+	user.Immobilize(15)
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/raze/proc/ignite(turf/damage_turf, mob/living/caster)
+	if(!damage_turf)
+		return
+	new /obj/effect/temp_visual/firebreath_actual(damage_turf)
+	playsound(damage_turf, 'sound/magic/fireball.ogg', 50, TRUE)
+
+	var/total_damage = damage + caster.get_skill_level(associated_skill)
+	for(var/mob/living/target in damage_turf)
+		if(target == caster)
+			continue
+		target.adjustFireLoss(total_damage)
+		to_chat(target, span_userdanger("You're scorched by flames!"))
+		if(target.stat == DEAD && (!target.mind || (!target.key && !target.get_ghost(FALSE, TRUE))))
+			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, dust)), 2 SECONDS)
+
+	new /obj/effect/hotspot(damage_turf)
+
+/obj/effect/temp_visual/trap/firebreath
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "impact_bullet"
+	duration = 10 SECONDS
+	layer = MASSIVE_OBJ_LAYER
+
+/obj/effect/temp_visual/firebreath_actual
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "2"
+	light_outer_range = 2
+	light_color = "#FF6A00"
+	duration = 1 SECONDS
+
+// T4: The Free-God's draconic wrath
+
+/obj/effect/proc_holder/spell/self/wingsoffreedom
+	name = "Wings of Freedom"
+	desc = "Transform into the strongest form of Matthios' own - a dragon. A mere mortal can't sustain this form for long, yet with the power Matthios grants you, you shall burn this world of tyranny to the ground."
+	overlay_state = "wingsoffreedom"
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	glow_color = "#FFD700"
+	glow_intensity = GLOW_INTENSITY_LOW
+	clothes_req = FALSE
+	human_req = FALSE
+	chargedrain = 0
+	chargetime = 0
+	recharge_time = 30 MINUTES
+	cooldown_min = 30 MINUTES
+	invocations = list("I WILL BURN THE WORLD OF TYRANNY TO THE GROUND!")
+	invocation_type = "shout"
+	associated_skill = /datum/skill/magic/holy
+	devotion_cost = 200
+	miracle = TRUE
+
+
+/obj/effect/proc_holder/spell/self/wingsoffreedom/cast(list/targets, mob/living/carbon/human/user = usr)
+	. = ..()
+	if(user.has_status_effect(/datum/status_effect/debuff/submissive))
+		to_chat(user, span_warning("Your will is too broken to change form."))
+		revert_cast(user)
+		return FALSE
+
+	if(istype(user, /mob/living/carbon/human/species/wildshape))
+		revert_cast(user)
+		return FALSE
+
+	if(!do_after(user, 10 SECONDS, target = user))
+		to_chat(user, span_userdanger("You are unable to concentrate enough to shapeshift!"))
+		revert_cast(user)
+		return FALSE
+
+	if(istype(get_area(user), /area/rogue/indoors/ravoxarena))
+		to_chat(user, span_userdanger("I reach for my draconic form, but something rebukes me! Ravox is too strong in this dimension!"))
+		revert_cast(user)
+		return FALSE
+
+	user.Stun(30)
+	user.Knockdown(30)
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/mob/living/carbon/human, wildshape_transformation_twilight_dragon), /mob/living/carbon/human/species/wildshape/dragon_matthios)
+
+	return TRUE
+
+// Mob itself
+/mob/living/carbon/human/species/wildshape/dragon_matthios
+	name = "Gilded Dragon"
+	desc = "It has been a very long time since the dragons ruled the skies, yet their power still remains formidable. Despite their monstrous form, ancient intelligence in their eyes betrays their sentience."
+	race = /datum/species/dragon_matthios
+	footstep_type = FOOTSTEP_MOB_HEAVY
+	ambushable = FALSE
+	skin_armor = new /obj/item/clothing/suit/roguetown/armor/regenerating/twilight_dragon_skin
+	wildshape_icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
+	wildshape_icon_state = "dragon_cool"
+	pixel_x = -32
+	pixel_y = -16
+	var/swooping = NONE
+
+/mob/living/carbon/human/species/wildshape/dragon_matthios/gain_inherent_skills()
+	if(mind)
+		adjust_skillrank(/datum/skill/combat/wrestling, SKILL_LEVEL_MASTER, TRUE)
+		adjust_skillrank(/datum/skill/combat/unarmed, SKILL_LEVEL_MASTER, TRUE)
+		adjust_skillrank(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
+		adjust_skillrank(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
+		adjust_skillrank(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
+
+		STASTR = 15
+		STACON = 15
+		STAWIL = 15
+		STAPER = 12
+		STASPD = 6
+		STAINT = 15
+
+		AddSpell(new /obj/effect/proc_holder/spell/self/twilight_dragonclaws)
+		AddSpell(new /obj/effect/proc_holder/spell/invoked/gilded_swoop)
+		AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/matthios_dragon)
+		AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire/matthios_dragon)
+		AddSpell(new /obj/effect/proc_holder/spell/invoked/raze/gilded_dragon)
+		AddSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
+		src.apply_status_effect(/datum/status_effect/buff/twilight_dragon_form)
+
+		real_name = "Gilded Dragon"
+
+#define GILDED_SWOOP_DAMAGEABLE 1
+#define GILDED_SWOOP_INVULNERABLE 2
+#define GILDED_SWOOP_HEIGHT 270
+#define GILDED_SWOOP_DIRECTION_CHANGE_RANGE 5
+
+/obj/effect/proc_holder/spell/invoked/gilded_swoop
+	name = "Gilded Swoop"
+	recharge_time = 30 SECONDS
+	overlay_state = "dendor"
+	chargetime = 0
+	range = 15
+	antimagic_allowed = TRUE
+
+/obj/effect/proc_holder/spell/invoked/gilded_swoop/cast(list/targets, mob/living/user = usr)
+	if(!istype(user, /mob/living/carbon/human/species/wildshape/dragon_matthios))
+		return FALSE
+	var/mob/living/carbon/human/species/wildshape/dragon_matthios/dragon = user
+	return dragon.gilded_swoop(targets[1])
+
+/obj/effect/temp_visual/gilded_dragon_flight
+	icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
+	icon_state = "dragon_cool"
+	layer = ABOVE_ALL_MOB_LAYER
+	pixel_x = -32
+	duration = 10
+	randomdir = FALSE
+
+/obj/effect/temp_visual/gilded_dragon_flight/Initialize(mapload, negative)
+	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(flight), negative)
+
+/obj/effect/temp_visual/gilded_dragon_flight/proc/flight(negative)
+	if(negative)
+		animate(src, pixel_x = -GILDED_SWOOP_HEIGHT*0.1, pixel_z = GILDED_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
+	else
+		animate(src, pixel_x = GILDED_SWOOP_HEIGHT*0.1, pixel_z = GILDED_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
+	sleep(3)
+	icon_state = "dragon_swoop"
+	if(negative)
+		animate(src, pixel_x = -GILDED_SWOOP_HEIGHT, pixel_z = GILDED_SWOOP_HEIGHT, time = 7)
+	else
+		animate(src, pixel_x = GILDED_SWOOP_HEIGHT, pixel_z = GILDED_SWOOP_HEIGHT, time = 7)
+
+/obj/effect/temp_visual/gilded_dragon_flight/end
+	pixel_x = GILDED_SWOOP_HEIGHT
+	pixel_z = GILDED_SWOOP_HEIGHT
+	duration = 10
+
+/obj/effect/temp_visual/gilded_dragon_flight/end/flight(negative)
+	if(negative)
+		pixel_x = -GILDED_SWOOP_HEIGHT
+		animate(src, pixel_x = -32, pixel_z = 0, time = 5)
+	else
+		animate(src, pixel_x = -32, pixel_z = 0, time = 5)
+
+/obj/effect/temp_visual/gilded_dragon_flight/end
+	icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
+	icon_state = "dragon_cool"
+
+/mob/living/carbon/human/species/wildshape/dragon_matthios/proc/gilded_swoop(atom/movable/manual_target)
+	if(stat || swooping || !manual_target || QDELETED(manual_target))
+		return FALSE
+	var/turf/target_turf = get_turf(manual_target)
+	if(!target_turf || target_turf.z != z)
+		return FALSE
+
+	playsound(loc, 'sound/vo/mobs/vdragon/drgnroar.ogg', 50, TRUE, -1)
+	swooping |= GILDED_SWOOP_DAMAGEABLE
+	movement_type = FLYING
+	density = FALSE
+	var/old_icon_state = icon_state
+	icon_state = "shadow"
+	visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
+
+	var/negative
+	var/initial_x = x
+	if(target_turf.x < initial_x)
+		negative = TRUE
+	else if(target_turf.x > initial_x)
+		negative = FALSE
+	else
+		negative = prob(50)
+	var/obj/effect/temp_visual/gilded_dragon_flight/F = new(loc, negative)
+
+	negative = !negative
+	var/oldtransform = transform
+	var/oldalpha = alpha
+	alpha = 255
+	animate(src, alpha = 204, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
+	for(var/i in 1 to 3)
+		sleep(1)
+		if(QDELETED(src) || stat == DEAD)
+			qdel(F)
+			if(stat == DEAD)
+				swooping &= ~GILDED_SWOOP_DAMAGEABLE
+				animate(src, alpha = oldalpha, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW)
+			return FALSE
+	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
+	swooping |= GILDED_SWOOP_INVULNERABLE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	SLEEP_CHECK_DEATH(7)
+
+	while(manual_target && !QDELETED(manual_target) && loc != get_turf(manual_target))
+		forceMove(get_step(src, get_dir(src, manual_target)))
+		SLEEP_CHECK_DEATH(0.5)
+
+	var/descent_time = 10
+	if(negative)
+		if(ISINRANGE(x, initial_x + 1, initial_x + GILDED_SWOOP_DIRECTION_CHANGE_RANGE))
+			negative = FALSE
+	else if(ISINRANGE(x, initial_x - GILDED_SWOOP_DIRECTION_CHANGE_RANGE, initial_x - 1))
+		negative = TRUE
+	new /obj/effect/temp_visual/gilded_dragon_flight/end(loc, negative)
+	new /obj/effect/temp_visual/dragon_swoop(loc)
+	animate(src, alpha = 255, transform = oldtransform, descent_time)
+	SLEEP_CHECK_DEATH(descent_time)
+	icon_state = old_icon_state
+	swooping &= ~GILDED_SWOOP_INVULNERABLE
+	mouse_opacity = initial(mouse_opacity)
+	playsound(loc, 'sound/misc/meteorimpact.ogg', 200, TRUE)
+	for(var/mob/living/L in orange(1, src))
+		if(L.stat)
+			visible_message(span_warning("[src] slams down on [L], crushing [L.p_them()]!"))
+			L.gib()
+		else
+			L.adjustBruteLoss(75)
+			if(L && !QDELETED(L))
+				var/throw_dir = get_dir(src, L)
+				if(L.loc == loc)
+					throw_dir = pick(GLOB.alldirs)
+				var/throwtarget = get_edge_target_turf(src, throw_dir)
+				L.throw_at(throwtarget, 3)
+				visible_message(span_warning("[L] is thrown clear of [src]!</span>"))
+	for(var/mob/M in range(7, src))
+		shake_camera(M, 15, 1)
+	movement_type = GROUND
+	density = TRUE
+	SLEEP_CHECK_DEATH(1)
+	swooping &= ~GILDED_SWOOP_DAMAGEABLE
+	return TRUE
+
+/mob/living/carbon/human/species/wildshape/dragon_matthios/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
+	if(swooping & GILDED_SWOOP_INVULNERABLE)
+		return FALSE
+	return ..()
+
+#undef GILDED_SWOOP_DAMAGEABLE
+#undef GILDED_SWOOP_INVULNERABLE
+#undef GILDED_SWOOP_HEIGHT
+#undef GILDED_SWOOP_DIRECTION_CHANGE_RANGE
+
+/datum/species/dragon_matthios
+	name = "Gilded Dragon"
+	id = "dragon_matthios"
+	changesource_flags = WABBAJACK
+	species_traits = list(NO_UNDERWEAR, NO_ORGAN_FEATURES, NO_BODYPART_FEATURES)
+	inherent_traits = list(
+		TRAIT_TOXIMMUNE,
+		TRAIT_CRITICAL_RESISTANCE,
+		TRAIT_NOPAINSTUN,
+		TRAIT_NOFIRE,
+		TRAIT_NIGHT_VISION,
+		TRAIT_BASHDOORS,
+		TRAIT_STRONGBITE,
+		TRAIT_STEELHEARTED,
+		TRAIT_DEATHBYSNUSNU,
+		TRAIT_ORGAN_EATER,
+		TRAIT_WILD_EATER,
+		TRAIT_HARDDISMEMBER,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_LONGSTRIDER,
+		TRAIT_NOFALLDAMAGE1,
+		TRAIT_KNEESTINGER_IMMUNITY
+	)
+	inherent_biotypes = MOB_HUMANOID
+	no_equip = list(SLOT_SHIRT, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_ARMOR, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_CLOAK, SLOT_BELT, SLOT_BACK_R, SLOT_BACK_L, SLOT_S_STORE, SLOT_RING, SLOT_NECK)
+	nojumpsuit = 1
+	sexes = 1
+	offset_features = list(OFFSET_HANDS = list(0,2), OFFSET_HANDS_F = list(0,2))
+	organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
+		ORGAN_SLOT_HEART = /obj/item/organ/heart,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/lungs,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes/night_vision,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/wild_tongue,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
+	)
+
+	languages = list(
+		/datum/language/draconic,
+		/datum/language/common,
+	)
+
+/datum/species/dragon_matthios/send_voice(mob/living/carbon/human/human)
+	playsound(get_turf(human), pick('sound/vo/mobs/vw/aggro (1).ogg','sound/vo/mobs/vw/aggro (2).ogg'), 80, TRUE, -1)
+
+/datum/species/dragon_matthios/regenerate_icons(mob/living/carbon/human/human)
+	human.icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
+	human.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
+	human.icon_state = "dragon_cool"
+	human.update_damage_overlays()
+	return TRUE
+
+/datum/species/dragon_matthios/on_species_gain(mob/living/carbon/carbon, datum/species/old_species)
+	. = ..()
+	RegisterSignal(carbon, COMSIG_MOB_SAY, PROC_REF(handle_speech))
+
+/datum/species/dragon_matthios/update_damage_overlays(mob/living/carbon/human/human)
+	human.remove_overlay(DAMAGE_LAYER)
+	return TRUE
+
+/datum/intent/simple/twilight_dragon_cut
+	name = "claw"
+	clickcd = 10
+	icon_state = "incut"
+	blade_class = BCLASS_CUT
+	attack_verb = list("claws", "mauls", "eviscerates")
+	animname = "cut"
+	hitsound = "genslash"
+	penfactor = 30
+	reach = 2
+	miss_text = "slashes the air!"
+	miss_sound = "bluntswoosh"
+	item_d_type = "slash"
+
+/datum/intent/simple/twilight_dragon_chop
+	name = "claw"
+	icon_state = "inchop"
+	blade_class = BCLASS_CHOP
+	attack_verb = list("claws", "mauls", "eviscerates")
+	animname = "chop"
+	hitsound = "genslash"
+	penfactor = 50
+	miss_text = "slashes the air!"
+	miss_sound = "bluntwooshlarge"
+	item_d_type = "slash"
+	damfactor = 1.2
+
+/datum/intent/mace/smash/twilight_dragon_smash
+	name = "thrash"
+	desc = "A powerful smash of dragon muscle that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown and knockback scales to your strength up to 15 (1 - 5 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance."
+	icon_state = "insmash"
+	reach = 5
+	chargetime = 1
+	penfactor = 30
+
+/datum/intent/mace/strike/twilight_dragon_strike
+	name = "armor rending strike"
+	miss_text = "strikes the air!"
+	miss_sound = "bluntwooshlarge"
+	attack_verb = list("punches", "strikes", "tears")
+
+/obj/item/rogueweapon/twilight_dragon_claw
+	name = "dragon claw"
+	desc = "It is said that true dragons used to infuse their claws with metal alloys to make them more dangerous in combat. Regardless of whether that's true, those talons, blessed by Matthios, are no less powerful."
+	item_state = null
+	lefthand_file = null
+	righthand_file = null
+	icon = 'icons/roguetown/weapons/32.dmi'
+	max_blade_int = 600
+	max_integrity = 600
+	force = 28
+	block_chance = 0
+	wdefense = 6
+	armor_penetration = 15
+	blade_dulling = DULLING_SHAFT_WOOD
+	associated_skill = /datum/skill/combat/unarmed
+	wlength = WLENGTH_NORMAL
+	wbalance = WBALANCE_NORMAL
+	w_class = WEIGHT_CLASS_NORMAL
+	can_parry = TRUE
+	sharpness = IS_SHARP
+	parrysound = "bladedmedium"
+	swingsound = list('sound/combat/hits/blunt/genblunt (1).ogg','sound/combat/hits/blunt/genblunt (2).ogg','sound/combat/hits/blunt/genblunt (3).ogg','sound/combat/hits/blunt/flailhit.ogg')
+	possible_item_intents = list(/datum/intent/simple/twilight_dragon_cut, /datum/intent/simple/twilight_dragon_chop, /datum/intent/mace/smash/twilight_dragon_smash, /datum/intent/mace/strike/twilight_dragon_strike)
+	parrysound = list('sound/combat/parry/parrygen.ogg')
+	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 0, "embedded_fall_chance" = 0)
+	item_flags = DROPDEL
+	experimental_inhand = FALSE
+
+/obj/item/rogueweapon/twilight_dragon_claw/right
+	icon_state = "claw_r"
+
+/obj/item/rogueweapon/twilight_dragon_claw/left
+	icon_state = "claw_l"
+
+/obj/item/rogueweapon/twilight_dragon_claw/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)
+
+/obj/effect/proc_holder/spell/self/twilight_dragonclaws
+	name = "Dragon Claws"
+	desc = "Extend or retract your razor-sharp claws."
+	overlay_state = "claws"
+	glow_color = "#FFD700"
+	glow_intensity = GLOW_INTENSITY_LOW
+	antimagic_allowed = TRUE
+	recharge_time = 2 SECONDS
+	var/extended = FALSE
+
+/obj/effect/proc_holder/spell/self/twilight_dragonclaws/cast(mob/user = usr)
+	..()
+	var/obj/item/rogueweapon/twilight_dragon_claw/left/left = user.get_active_held_item()
+	var/obj/item/rogueweapon/twilight_dragon_claw/right/right = user.get_inactive_held_item()
+
+	if(extended)
+		if(istype(left, /obj/item/rogueweapon/twilight_dragon_claw))
+			user.dropItemToGround(left, TRUE)
+			qdel(left)
+
+		if(istype(right, /obj/item/rogueweapon/twilight_dragon_claw))
+			user.dropItemToGround(right, TRUE)
+			qdel(right)
+
+		extended = FALSE
+		return
+
+	left = new(user, 1)
+	right = new(user, 2)
+	user.put_in_hands(left, TRUE, FALSE, TRUE)
+	user.put_in_hands(right, TRUE, FALSE, TRUE)
+	extended = TRUE
+
+
+/datum/status_effect/buff/twilight_dragon_form
+	id = "twilight_dragon_form"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/twilight_dragon_form
+	duration = 5 MINUTES
+
+/datum/status_effect/buff/twilight_dragon_form/short
+	id = "twilight_dragon_form_short"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/twilight_dragon_form
+	duration = 30 SECONDS
+
+/atom/movable/screen/alert/status_effect/buff/twilight_dragon_form
+	name = "Dragon Form"
+	desc = "Burn them! Burn them all!"
+	icon_state = "wingsoffreedom_buff"
+	icon = 'icons/mob/actions/matthiosmiracles.dmi'
+
+/datum/status_effect/buff/twilight_dragon_form/on_remove()
+	. = ..()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.stat != DEAD)
+			H.wildshape_untransform_twilight_dragon(FALSE)
+
+#define TRAIT_SOURCE_WILDSHAPE "wildshape_transform"
+
+/mob/living/carbon/human/species/wildshape/dragon_matthios/death(gibbed, nocutscene = FALSE)
+	wildshape_untransform_twilight_dragon(TRUE, gibbed)
+
+/mob/living/carbon/human/proc/wildshape_transformation_twilight_dragon(shapepath)
+	if(!mind)
+		log_runtime("NO MIND ON [src.name] WHEN TRANSFORMING")
+	Paralyze(1, ignore_canstun = TRUE)
+	regenerate_icons()
+	icon = null
+	var/oldinv = invisibility
+	invisibility = INVISIBILITY_MAXIMUM
+	cmode = FALSE
+	if(client)
+		SSdroning.play_area_sound(get_area(src), client)
+
+	var/mob/living/carbon/human/species/wildshape/dragon_matthios/W = new shapepath(loc)
+
+	W.set_patron(src.patron)
+	W.gender = gender
+	W.regenerate_icons()
+	W.stored_mob = src
+	playsound(W.loc, 'sound/body/shapeshift-start.ogg', 100, FALSE, 3)
+	src.forceMove(W)
+	W.after_creation()
+	W.stored_language = new
+	W.stored_language.copy_known_languages_from(src)
+	W.stored_skills = ensure_skills().known_skills.Copy()
+	W.stored_experience = ensure_skills().skill_experience.Copy()
+	W.stored_spells = list()
+	W.voice_color = voice_color
+	W.cmode_music_override = cmode_music_override
+	W.cmode_music_override_name = cmode_music_override_name
+
+	W.bleedsuppress = bleedsuppress
+	bleed_rate = 0
+	bleedsuppress = TRUE
+	W.set_nutrition(nutrition)
+	W.set_hydration(hydration)
+
+	mind.transfer_to(W)
+	for(var/obj/effect/proc_holder/S in W.mind.spell_list)
+		if(!istype(S, /obj/effect/proc_holder/spell/self/wingsoffreedom))
+			W.stored_spells += list(S.type)
+			W.mind.RemoveSpell(S)
+	skills?.known_skills = list()
+	skills?.skill_experience = list()
+	W.grant_language(/datum/language/draconic)
+	W.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
+	W.update_a_intents()
+
+	if(getorganslot(ORGAN_SLOT_PENIS))
+		W.internal_organs_slot[ORGAN_SLOT_PENIS] = /obj/item/organ/penis/knotted/big
+	if(getorganslot(ORGAN_SLOT_TESTICLES))
+		W.internal_organs_slot[ORGAN_SLOT_TESTICLES] = /obj/item/organ/testicles
+	if(getorganslot(ORGAN_SLOT_BREASTS))
+		W.internal_organs_slot[ORGAN_SLOT_BREASTS] = /obj/item/organ/breasts
+	if(getorganslot(ORGAN_SLOT_VAGINA))
+		W.internal_organs_slot[ORGAN_SLOT_VAGINA] = /obj/item/organ/vagina
+
+	ADD_TRAIT(src, TRAIT_NOSLEEP, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_SOURCE_WILDSHAPE)
+	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_SOURCE_WILDSHAPE)
+	src.status_flags |= GODMODE
+	invisibility = oldinv
+
+	playsound(W.loc, 'sound/vo/mobs/vdragon/drgnroar.ogg', 100, FALSE, 3)
+	W.gain_inherent_skills()
+	addtimer(CALLBACK(W, PROC_REF(energy_add), 1000), 3 SECONDS)
+
+/mob/living/carbon/human/proc/wildshape_untransform_twilight_dragon(dead, gibbed)
+	if(!stored_mob)
+		return
+	if(!mind)
+		if(has_status_effect(/datum/status_effect/buff/twilight_dragon_form))
+			remove_status_effect(/datum/status_effect/buff/twilight_dragon_form)
+		apply_status_effect(/datum/status_effect/buff/twilight_dragon_form/short)
+		return
+	if(istype(get_area(src), /area/rogue/indoors/ravoxarena))
+		to_chat(src, span_userdanger("I reach for my normal form, but something rebukes me! Ravox is too strong in this dimension!"))
+		if(has_status_effect(/datum/status_effect/buff/twilight_dragon_form))
+			remove_status_effect(/datum/status_effect/buff/twilight_dragon_form)
+		apply_status_effect(/datum/status_effect/buff/twilight_dragon_form/short)
+		return
+
+	for(var/obj/item/W in src)
+		dropItemToGround(W)
+	icon = null
+	invisibility = INVISIBILITY_MAXIMUM
+	var/mob/living/carbon/human/species/wildshape/dragon_matthios/WA = src
+	var/mob/living/carbon/human/W = WA.stored_mob
+	WA.stored_mob = null
+	REMOVE_TRAIT(W, TRAIT_NOSLEEP, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_NOBREATH, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_NOPAIN, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_TOXIMMUNE, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_NOHUNGER, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_NOMOOD, TRAIT_SOURCE_WILDSHAPE)
+	REMOVE_TRAIT(W, TRAIT_PACIFISM, TRAIT_SOURCE_WILDSHAPE)
+	if(dead)
+		W.death(gibbed)
+
+	W.forceMove(get_turf(src))
+	mind.transfer_to(W)
+	for(var/S in WA.stored_spells)
+		if(S)
+			W.mind.AddSpell(new S, W)
+	if(dead)
+		W.Unconscious(30 SECONDS, TRUE, TRUE)
+		W.visible_message(span_boldwarning("[W] twists and shifts back into human guise in a sickening lurch of flesh and bone, and promptly passes out!"), span_userdanger("I quickly flee the waning vitality of my former shape, but the strain is too much--"))
+		to_chat(W, span_crit("...DARKNESS..."))
+	W.copy_known_languages_from(WA.stored_language)
+	W.skills?.known_skills = WA.stored_skills.Copy()
+	W.skills?.skill_experience = WA.stored_experience.Copy()
+
+	playsound(W.loc, 'sound/body/shapeshift-end.ogg', 100, FALSE, 3)
+	for(var/origin_spell_type in WA.stored_spells)
+		for(var/obj/effect/proc_holder/spell/wildspell in W.mind.spell_list)
+			if((wildspell.type != origin_spell_type) && !istype(wildspell, /obj/effect/proc_holder/spell/self/wingsoffreedom))
+				W.RemoveSpell(wildspell)
+
+	W.regenerate_icons()
+	if(!dead)
+		to_chat(W, span_userdanger("I return to my old form."))
+
+	qdel(src)
+
+#undef TRAIT_SOURCE_WILDSHAPE
+
+/obj/effect/proc_holder/spell/invoked/projectile/fireball/matthios_dragon
+	glow_color = "#FFD700"
+	glow_intensity = GLOW_INTENSITY_LOW
+	invocation_type = "none"
+	recharge_time = 40 SECONDS
+
+/obj/effect/proc_holder/spell/invoked/projectile/spitfire/matthios_dragon
+	glow_color = "#FFD700"
+	glow_intensity = GLOW_INTENSITY_LOW
+	invocation_type = "none"
+	recharge_time = 10 SECONDS
+
+// Golden-Serpent-exclusive T4: Skulduggery
+//Skulduggery, lets you slip behind people who attack you
+// number of times scales from your miracle tier, then once those "free" dodges are spent, it takes enem skill vs miracle chance
+// can grapple attackers by having throw intent on, if attacked again by your target or someone else, either slam them down, or slam them on the attacker
+/obj/effect/proc_holder/spell/self/skulduggery
+	name = "Skulduggery"
+	desc = "Imbue your mind and eyes with the cunning of Matthios, reading strikes before they land and punishing them with brutal efficiency.<br><br>Toggle Throw mode to actively intercept and grapple attacks, otherwise, you'll try to avoid them however you can."
+	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
+	overlay_state = "liberate"
+	recharge_time = 4 MINUTES
+	sound = 'sound/magic/haste.ogg'
+	releasedrain = 10
+	miracle = TRUE
+	devotion_cost = 70
+	antimagic_allowed = FALSE
+	range = 0
+
+/obj/effect/proc_holder/spell/self/skulduggery/cast(list/targets, mob/user)
+	. = ..()
+	if(!ishuman(user))
+		revert_cast()
+		return FALSE
+
+	var/mob/living/carbon/human/H = user
+
+	if(!H.cmode)
+		to_chat(H, span_warning("I need some adrenaline pumping for this, my good sire!"))
+		revert_cast()
+		return FALSE
+
+	if(H.resting)
+		H.set_resting(FALSE, FALSE)
+		H.visible_message(
+			span_warning("[H] kips up!"),
+			span_warning("No rest for the wicked!")
+		)
+
+	H.visible_message(
+		span_notice("[H] shifts their stance into something more relaxed and open! Their eyes glow golden..."),
+		span_notice("My gaze is grafted with truth, my mind wanders in freedom...")
+	)
+	H.apply_status_effect(/datum/status_effect/buff/skulduggery)
+	H.OffBalance(30)
+	return TRUE
+
+
+/atom/movable/screen/alert/status_effect/buff/skulduggery
+	name = "Skulduggery"
+	desc = span_notice("I prepare to slip inside attacks and punish aggressors, like a true Free Man would.")
+	icon_state = "clash"
+
+/datum/status_effect/buff/skulduggery
+	id = "skulduggery"
+	duration = 15 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/buff/skulduggery
+	status_type = STATUS_EFFECT_REFRESH
+	tick_interval = 1 SECONDS
+	var/mob/living/carbon/human/grappled
+	var/waiting_followup = FALSE
+	var/list/grapple_counts = list()
+	var/parries_left = 0
+	var/refreshes_used = 0
+
+/datum/status_effect/buff/skulduggery/on_creation(mob/living/new_owner, ...)
+	RegisterSignal(new_owner, COMSIG_MOB_ITEM_ATTACK, PROC_REF(process_Wattack))
+	RegisterSignal(new_owner, COMSIG_MOB_ITEM_BEING_ATTACKED, PROC_REF(process_Wattack))
+	RegisterSignal(new_owner, COMSIG_MOB_ITEM_ATTACK_POST_SWINGDELAY, PROC_REF(process_Wattack))
+	RegisterSignal(new_owner, COMSIG_MOB_ATTACKED_BY_HAND, PROC_REF(process_Wfist))
+	RegisterSignal(new_owner, COMSIG_LIVING_STATUS_STUN, PROC_REF(on_incapacitate))
+	RegisterSignal(new_owner, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(on_incapacitate))
+	parries_left = new_owner.get_skill_level(/datum/skill/magic/holy)
+	return ..()
+
+/datum/status_effect/buff/skulduggery/on_remove()
+	UnregisterSignal(owner, COMSIG_LIVING_STATUS_STUN)
+	UnregisterSignal(owner, COMSIG_LIVING_STATUS_KNOCKDOWN)
+	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK)
+	UnregisterSignal(owner, COMSIG_MOB_ITEM_BEING_ATTACKED)
+	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK_POST_SWINGDELAY)
+	UnregisterSignal(owner, COMSIG_MOB_ATTACKED_BY_HAND)
+	owner.stop_pulling()
+	waiting_followup = FALSE
+	return ..()
+
+/datum/status_effect/buff/skulduggery/proc/trigger_afterimage(duration = 2)
+	if(!owner || owner.GetComponent(/datum/component/after_image))
+		return
+	var/datum/component/after_image/after_image = owner.AddComponent(/datum/component/after_image)
+	spawn(duration)
+		if(after_image)
+			qdel(after_image)
+
+/datum/status_effect/buff/skulduggery/proc/on_incapacitate()
+	SIGNAL_HANDLER
+	if(!owner || (!owner.IsKnockdown() && !owner.IsStun()))
+		return
+	to_chat(owner, span_warning("My footing falters! Carkin'--!"))
+	qdel(src)
+
+/datum/status_effect/buff/skulduggery/tick()
+	. = ..()
+	if(!owner)
+		return
+	if(prob(40))
+		trigger_afterimage(2)
+		owner.Jitter(1)
+	if(waiting_followup && grappled && owner.pulling != grappled)
+		waiting_followup = FALSE
+		grappled = null
+
+/datum/status_effect/buff/skulduggery/proc/process_Wfist(mob/living/carbon/human/parent, mob/living/carbon/human/attacker, mob/living/carbon/human/defender)
+	if(!ishuman(defender))
+		return
+	if(defender.process_skd(attacker, null))
+		return COMPONENT_HAND_NO_ATTACK
+
+/datum/status_effect/buff/skulduggery/proc/process_Wattack(mob/living/parent, mob/living/target, mob/user, obj/item/item)
+	if(ishuman(target))
+		var/mob/living/carbon/human/human = target
+		if(human.process_skd(user, item))
+			return COMPONENT_NO_ATTACK
+
+/mob/living/carbon/human/proc/process_skd(mob/living/carbon/human/attacker, obj/item/item)
+	var/datum/status_effect/buff/skulduggery/skulduggery = has_status_effect(/datum/status_effect/buff/skulduggery)
+	if(!skulduggery)
+		return FALSE
+	var/success = skulduggery.process_skd(attacker, item)
+	if(success && skulduggery.refreshes_used < 3)
+		skulduggery.duration += initial(skulduggery.duration)
+		skulduggery.refreshes_used++
+	return success
+
+/datum/status_effect/buff/skulduggery/proc/process_skd(mob/living/carbon/human/attacker, obj/item/item)
+	if(!owner || !ishuman(owner) || !ishuman(attacker) || owner.IsKnockdown() || owner.lying || owner.IsParalyzed() || owner.IsStun() || owner.stat != CONSCIOUS || !(owner.mobility_flags & MOBILITY_STAND))
+		return FALSE
+	var/mob/living/carbon/human/human = owner
+	var/mob/living/carbon/human/assailant = attacker
+	if(waiting_followup)
+		if(assailant == grappled)
+			slam_target(assailant)
+		else
+			slam_into(assailant)
+		return TRUE
+	if(assailant.IsKnockdown() || assailant.lying)
+		return stomp_prone(assailant)
+	if(human.in_throw_mode)
+		return attempt_grapple(human, assailant)
+	if(!assailant.mind)
+		return auto_flank_move(human, assailant)
+	return attempt_parry(human, assailant, item)
+
+/datum/status_effect/buff/skulduggery/proc/attempt_grapple(mob/living/carbon/human/human, mob/living/carbon/human/assailant)
+	if(assailant.mind)
+		if(!grapple_counts[assailant])
+			grapple_counts[assailant] = 0
+		if(grapple_counts[assailant] >= 2)
+			human.visible_message(
+				span_warning("[human] reaches for [assailant], but they anticipate it!"),
+				span_notice("They've adapted... I can't grab them again!")
+			)
+			return FALSE
+		grapple_counts[assailant]++
+	human.start_pulling(assailant)
+	human.setDir(get_dir(human, assailant))
+	playsound(human, 'sound/combat/riposte.ogg', 100, TRUE)
+	human.visible_message(
+		span_boldwarning("[human] intercepts [assailant] and seizes them!"),
+		span_notice("Got them!")
+	)
+	human.balloon_alert_to_viewers("SKD!!", "SKD!!", 10)
+	grappled = assailant
+	waiting_followup = TRUE
+	return TRUE
+
+/datum/status_effect/buff/skulduggery/proc/attempt_parry(mob/living/carbon/human/human, mob/living/carbon/human/assailant, obj/item/item)
+	if(!item?.associated_skill)
+		return FALSE
+	var/my_skill = human.get_skill_level(/datum/skill/magic/holy)
+	var/enemy_skill = assailant.get_skill_level(item.associated_skill)
+	var/skill_diff = my_skill - enemy_skill
+	var/base_chance = skill_diff * 10
+	var/parry_bonus = parries_left * 20
+	var/success_chance = clamp(base_chance + parry_bonus, 0, 90)
+	if(!prob(success_chance))
+		human.visible_message(
+			span_warning("[human] tries to read [assailant]'s attack, but fails!"),
+			span_notice("Gah, I can't keep up!")
+		)
+		parries_left--
+		to_chat(owner, span_warning("Failed, [parries_left] left. ([success_chance]%)"))
+		return FALSE
+	if(parries_left > 0)
+		parries_left--
+	to_chat(owner, span_warning("Success, [parries_left] left. ([success_chance]%)"))
+	auto_flank_move(human, assailant)
+	return TRUE
+
+/datum/status_effect/buff/skulduggery/proc/is_valid_step(mob/living/carbon/human/human, turf/destination)
+	if(!destination || arcyne_validate_blink_dest(destination, human) || istransparentturf(destination))
+		return FALSE
+	return TRUE
+
+/datum/status_effect/buff/skulduggery/proc/auto_flank_move(mob/living/carbon/human/human, mob/living/carbon/human/assailant)
+	if(!human || !assailant)
+		return FALSE
+	var/original_dir = assailant.dir
+	var/turf/left = get_step(assailant, turn(original_dir, 90))
+	var/turf/right = get_step(assailant, turn(original_dir, -90))
+	var/turf/behind = get_step(assailant, turn(original_dir, 180))
+	var/dx = human.x - assailant.x
+	var/dy = human.y - assailant.y
+	var/turf/side = (dx * dy >= 0) ? left : right
+	var/turf/alternate_side = (side == left) ? right : left
+	if(!is_valid_step(human, side) || !is_valid_step(human, behind))
+		side = alternate_side
+		if(!is_valid_step(human, side) || !is_valid_step(human, behind))
+			if(!is_valid_step(human, behind))
+				return FALSE
+			trigger_afterimage(3)
+			human.forceMove(behind)
+		else
+			trigger_afterimage(3)
+			human.forceMove(side)
+			sleep(1)
+			trigger_afterimage(3)
+			human.forceMove(behind)
+	else
+		trigger_afterimage(3)
+		human.forceMove(side)
+		sleep(1)
+		human.forceMove(behind)
+		trigger_afterimage(3)
+	human.setDir(get_dir(human, assailant))
+	if(!assailant.mind)
+		assailant.Immobilize(8 SECONDS)
+		assailant.OffBalance(8 SECONDS)
+		assailant.apply_status_effect(/datum/status_effect/debuff/clickcd, 8 SECONDS)
+		if(assailant.mob_biotypes != MOB_UNDEAD && prob(25))
+			assailant.emote("huh")
+	else
+		assailant.apply_status_effect(/datum/status_effect/debuff/clickcd, 2 SECONDS)
+	human.visible_message(
+		span_boldwarning("[human] slips past [assailant] in a blur and appears at their back!"),
+		span_notice("Too slow.")
+	)
+	return TRUE
+
+/datum/status_effect/buff/skulduggery/proc/stomp_prone(mob/living/carbon/human/target)
+	if(!target)
+		return FALSE
+	var/mob/living/carbon/human/human = owner
+	human.visible_message(
+		span_boldwarning("[human] delivers their foot onto [target] while they try to swing!"),
+		span_notice("Deserved kick for trying that, fool!")
+	)
+	human.do_attack_animation(target)
+	target.adjustBruteLoss(8)
+	target.stamina_add(8)
+	human.setDir(get_dir(human, target))
+	if(!target.mind)
+		target.stamina_add(12)
+		target.apply_status_effect(/datum/status_effect/debuff/clickcd, 2 SECONDS)
+	addtimer(CALLBACK(target, /mob/proc/slamdunked), 1)
+	return TRUE
+
+/datum/status_effect/buff/skulduggery/proc/slam_target(mob/living/carbon/human/target)
+	if(!target)
+		return FALSE
+	var/mob/living/carbon/human/human = owner
+	var/power = human.get_skill_level(/datum/skill/combat/unarmed) + (human.get_skill_level(/datum/skill/magic/holy) / 2)
+	var/resist = target.get_stat(STAT_CONSTITUTION) + (target.get_stat(STAT_SPEED) / 4)
+	var/chance = clamp(50 + (power - resist), 10, 90)
+	if(prob(chance))
+		human.stop_pulling()
+		waiting_followup = FALSE
+		grappled = null
+		human.visible_message(
+			span_boldwarning("[human] turns [target] upside their head and slams them into the ground!"),
+			span_notice("<i>I drive them into the floor with sheer skill!</i>")
+		)
+		human.setDir(get_dir(human, target))
+		human.balloon_alert_to_viewers("SKD Slam!!", "SKD Slam!!", 10)
+		playsound(get_turf(target), 'sound/combat/wooshes/blunt/wooshhuge (2).ogg', 100, FALSE)
+		target.Knockdown(4 SECONDS)
+		sleep(3)
+		target.apply_status_effect(/datum/status_effect/debuff/clickcd, 4 SECONDS)
+		target.adjustBruteLoss(40)
+		target.stamina_add(60)
+		shake_camera(human, 2, 1)
+		shake_camera(target, 2, 1)
+		var/da_slam = pick('sound/combat/hits/blunt/genblunt (1).ogg', 'sound/combat/hits/blunt/genblunt (2).ogg', 'sound/combat/hits/blunt/genblunt (3).ogg', 'sound/combat/hits/blunt/flailhit.ogg')
+		playsound(target, da_slam, 100, TRUE)
+		playsound(target, 'sound/combat/tf2crit.ogg', 100, TRUE)
+		if(!target.mind && target.mob_biotypes != MOB_UNDEAD && prob(50))
+			target.Unconscious(800)
+	else
+		human.visible_message(
+			span_warning("[target] resists the slam, forcing [human] to kick them away!"),
+			span_notice("They resist my attempt to slam! I have to kick them off!")
+		)
+		human.balloon_alert_to_viewers("SKD Kick!!", "SKD Kick!!", 10)
+		human.setDir(get_dir(human, target))
+		playsound(target, 'sound/combat/hits/punch/punch_hard (2).ogg', 100, TRUE)
+		target.Knockdown(1 SECONDS)
+		var/dir = turn(get_dir(target, human), 180)
+		if(dir & (NORTH|SOUTH))
+			dir = (dir & NORTH) ? NORTH : SOUTH
+		else
+			dir = (dir & EAST) ? EAST : WEST
+		var/turf/current = get_turf(target)
+		for(var/i in 1 to 3)
+			var/turf/next = get_step(current, dir)
+			if(!next || next.density)
+				break
+			current = next
+		target.throw_at(current, 2, 4)
+		waiting_followup = FALSE
+	addtimer(CALLBACK(target, /mob/proc/slamdunked), 1)
+	grappled = null
+	waiting_followup = FALSE
+
+/datum/status_effect/buff/skulduggery/proc/slam_into(mob/living/carbon/human/other)
+	if(!other || !grappled)
+		return FALSE
+	var/mob/living/carbon/human/human = owner
+	var/mob/living/carbon/human/grappled_mob = grappled
+	human.visible_message(
+		span_boldwarning("[human] redirects [grappled_mob] full force into [other]!"),
+		span_notice("<i>Consecutive Skulduggery! Hells yae! Bring me more!</i>")
+	)
+	human.balloon_alert_to_viewers("Consecutive SKD!!", "Consecutive SKD!!", 10)
+	human.setDir(get_dir(human, other))
+	var/attack_sound = pick('sound/combat/hits/blunt/genblunt (1).ogg', 'sound/combat/hits/blunt/genblunt (2).ogg', 'sound/combat/hits/blunt/genblunt (3).ogg', 'sound/combat/hits/blunt/flailhit.ogg')
+	playsound(other, attack_sound, 100, TRUE)
+	grappled_mob.forceMove(get_turf(other))
+	grappled_mob.adjustBruteLoss(30)
+	other.adjustBruteLoss(30)
+	other.stamina_add(25)
+	grappled_mob.Knockdown(1 SECONDS)
+	other.Knockdown(1 SECONDS)
+	shake_camera(human, 2, 1)
+	shake_camera(grappled_mob, 2, 1)
+	shake_camera(other, 2, 1)
+	var/dir = turn(get_dir(other, human), 180)
+	if(dir & (NORTH|SOUTH))
+		dir = (dir & NORTH) ? NORTH : SOUTH
+	else
+		dir = (dir & EAST) ? EAST : WEST
+	var/turf/current = get_turf(other)
+	for(var/i in 1 to 3)
+		var/turf/next = get_step(current, dir)
+		if(!next || next.density)
+			break
+		current = next
+	other.throw_at(current, 1, 4)
+	waiting_followup = FALSE
+	addtimer(CALLBACK(src, PROC_REF(_slam_followup), other, grappled_mob), 0.5)
+	grappled = null
+	waiting_followup = FALSE
+
+/datum/status_effect/buff/skulduggery/proc/_slam_followup(mob/living/carbon/human/other, mob/living/carbon/human/grappled_mob)
+	if(!other || !grappled_mob)
+		return
+	grappled_mob.forceMove(get_turf(other))
+	var/list/directions = list(NORTH, SOUTH, EAST, WEST)
+	var/turf/step = get_step(grappled_mob, pick(directions))
+	if(step && !step.density)
+		grappled_mob.forceMove(step)
+	addtimer(CALLBACK(grappled_mob, /mob/proc/slamdunked), 1)
+	addtimer(CALLBACK(other, /mob/proc/slamdunked), 1)
+	if(!grappled_mob.mind && grappled_mob.mob_biotypes != MOB_UNDEAD && prob(50))
+		grappled_mob.Unconscious(800)
+
+/mob/proc/slamdunked()
+	var/amp = 6
+	animate(src, pixel_x = 0, time = 0)
+	for(var/i in 1 to 5)
+		animate(src, pixel_x = -amp, time = 1)
+		animate(src, pixel_x = amp, time = 1)
+		amp = round(amp * 0.6)
+	animate(src, pixel_x = 0, time = 2)
+
 /// - MATTHIOS REVIVAL - ///
 
 

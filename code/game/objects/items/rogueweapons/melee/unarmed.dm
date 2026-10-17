@@ -472,3 +472,28 @@
 
 /datum/intent/claw/rend/steel
 	damfactor = 3
+
+/obj/item/rogueweapon/katar/drakkyrmaw
+	name = "DRAKKYRMAW"
+	desc = "Goldmaw. Infinite teeth. You know what this is. <br> <br>Do you remember your first mammon?; the becoming of the -self tied to the wealthpulse of the world. In that moment, when you became part of the living beast of economy, did you realize its weight? Do you even remember it? Or has it been yet drowned out? No matter what, there is, of course, only one way to stay as part of the beast instead of its feed. Kill. Trade or tax or blade- kill."
+	icon_state = "drakkyrfist"
+	possible_item_intents = list(/datum/intent/katar/cut, /datum/intent/katar/thrust, /datum/intent/katar/lirvasbite)
+	wdefense = 6 //lil boost
+	special = /datum/special_intent/drakkyrmaw_bite
+	max_blade_int = 300
+	max_integrity = 300
+	force = 27
+	unenchantable = TRUE
+	
+/datum/intent/katar/lirvasbite //snowflake intent
+	name = "gouge"
+	icon_state = "instrike"
+	attack_verb = list("gouges", "bites into")
+	animname = "bite"
+	blade_class = BCLASS_BITE //i really hope this shit's going to work well
+	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
+	penfactor = 25
+	swingdelay = 1 SECONDS
+	damfactor = 1.5 //bites you bites you bites yo
+	clickcd = CLICK_CD_MASSIVE
+	item_d_type = "stab"
