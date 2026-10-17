@@ -2,7 +2,7 @@
 	name = "Frost Bolt"
 	desc = "A ray of frozen energy, slowing the first thing it touches and lightly damaging it. \n\
 		Damage is increased by 100% versus simple-minded creechurs.\n\
-		Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent. It will deals 25% less damage that way."
+		Can be fired in an arc over an ally's head with a mage's staff or spellbook on arc intent."
 	range = 8
 	projectile_type = /obj/projectile/magic/frostbolt
 	overlay_state = "frost_bolt"
@@ -56,7 +56,7 @@
 
 /obj/projectile/magic/frostbolt/arc
 	name = "Arced Frost Dart"
-	damage = 15 // You cannot modify charge and releasedrain dynamically so lower damage it is.
+	damage = 20
 	arcshot = TRUE
 
 /obj/projectile/magic/frostbolt/on_hit(target)
