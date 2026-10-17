@@ -273,6 +273,11 @@
 	damfactor = 1
 	blade_class = BCLASS_PICK
 
+	// If someone feels like reworking Freifechter for the 4th time, I suggest making this a RIGID swing intent
+	dodgeable_intent = TRUE
+	parriable_intent = TRUE
+	swingdelay_type = SWINGDELAY_NORMAL
+
 /datum/intent/sword/thrust/long/halfsword/lesser
 	name = "halbschwert"
 	clickcd = CLICK_CD_CHARGED

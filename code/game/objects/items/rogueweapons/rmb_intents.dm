@@ -210,8 +210,7 @@
 		to_chat(user, span_notice("I disrupt [L.p_their()] guard!"))
 		perc = 100
 
-	user.apply_status_effect(/datum/status_effect/debuff/feintcd)
-	perc = CLAMP(perc, 0, 90)
+	perc = CLAMP(perc, 10, 90)
 
 	if(!prob(perc)) //feint intent increases the immobilize duration significantly
 		playsound(user, 'sound/combat/feint.ogg', 100, TRUE)
