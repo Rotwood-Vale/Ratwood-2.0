@@ -101,6 +101,75 @@
 		. += span_info("It is a carved item.")
 	for(var/datum/examine_effect/E in examine_effects)
 		E.trigger(user)
+	if(!runes || !runes.len)
+		setup_alchemical_runes()
+
+	if(user && user.mind && runes && runes.len)
+		var/alch_skill = user.get_skill_level(/datum/skill/craft/alchemy)
+
+		if(runes[ALCH_RUNE_RAINBOW])
+			var/lvl = runes[ALCH_RUNE_RAINBOW]
+			var/lvl_roman = "I"
+			if(lvl == 2) lvl_roman = "II"
+			if(lvl == 3) lvl_roman = "III"
+
+			var/rainbow_word = "<span style='color:#ff3333;text-shadow:0 0 3px #ff3333;'>R</span>" \
+			                 + "<span style='color:#ff9933;text-shadow:0 0 3px #ff9933;'>a</span>" \
+			                 + "<span style='color:#ffff33;text-shadow:0 0 3px #ffff33;'>i</span>" \
+			                 + "<span style='color:#33ff33;text-shadow:0 0 3px #33ff33;'>n</span>" \
+			                 + "<span style='color:#33ccff;text-shadow:0 0 3px #33ccff;'>b</span>" \
+			                 + "<span style='color:#cc33ff;text-shadow:0 0 3px #cc33ff;'>o</span>" \
+			                 + "<span style='color:#ff33cc;text-shadow:0 0 3px #ff33cc;'>w</span>"
+
+			. += "<span style='color: #ffd700;'>It shimmers with a prismatic, iridescent glow ([rainbow_word] <span style='color:#ffffff;font-weight:bold;text-shadow:0 0 4px #ff00ff;'>Rune [lvl_roman]</span>)!</span>"
+
+		else if(HAS_TRAIT(user, TRAIT_LEGENDARY_ALCHEMIST) || alch_skill >= SKILL_LEVEL_EXPERT)
+			var/list/rune_strings = list()
+			if(runes[ALCH_RUNE_RED])
+				rune_strings += "[get_rune_chat_icon(ALCH_RUNE_RED)]<span style='color: #ff4d4d; font-weight: bold;'>[runes[ALCH_RUNE_RED]]</span>"
+			if(runes[ALCH_RUNE_GREEN])
+				rune_strings += "[get_rune_chat_icon(ALCH_RUNE_GREEN)]<span style='color: #5cd65c; font-weight: bold;'>[runes[ALCH_RUNE_GREEN]]</span>"
+			if(runes[ALCH_RUNE_BLUE])
+				rune_strings += "[get_rune_chat_icon(ALCH_RUNE_BLUE)]<span style='color: #4da6ff; font-weight: bold;'>[runes[ALCH_RUNE_BLUE]]</span>"
+
+			if(rune_strings.len)
+				. += span_notice("Alchemical Composition: [rune_strings.Join("   ")].")
+
+		else if(alch_skill >= SKILL_LEVEL_JOURNEYMAN)
+			var/list/present_colors = list()
+			var/max_amt = 0
+			var/dominant_color = null
+
+			for(var/r in runes)
+				if(runes[r] > 0)
+					present_colors += r
+					if(runes[r] > max_amt)
+						max_amt = runes[r]
+						dominant_color = r
+
+			if(present_colors.len == 1)
+				if(dominant_color == ALCH_RUNE_RED)
+					. += span_notice("It faintly pulses with pure vital warmth ([get_rune_chat_icon(ALCH_RUNE_RED)]).")
+				else if(dominant_color == ALCH_RUNE_GREEN)
+					. += span_notice("It smells purely of rich natural juices ([get_rune_chat_icon(ALCH_RUNE_GREEN)]).")
+				else if(dominant_color == ALCH_RUNE_BLUE)
+					. += span_notice("It carries an unmistakable arcane resonance ([get_rune_chat_icon(ALCH_RUNE_BLUE)]).")
+
+			else if(present_colors.len > 1)
+				var/tied_count = 0
+				for(var/r in present_colors)
+					if(runes[r] == max_amt)
+						tied_count++
+
+				if(tied_count > 1)
+					. += span_notice("It possesses a harmonious equilibrium of opposing alchemical essences.")
+				else
+					var/dom_text = ""
+					if(dominant_color == ALCH_RUNE_RED) dom_text = "vital warmth"
+					if(dominant_color == ALCH_RUNE_GREEN) dom_text = "natural juices"
+					if(dominant_color == ALCH_RUNE_BLUE) dom_text = "arcane energy"
+					
+					. += span_notice("It contains a complex blend of essences, with a lingering note of [dom_text].")
 
 /obj/item/proc/integrity_check(elaborate = FALSE)
 	if(!max_integrity)

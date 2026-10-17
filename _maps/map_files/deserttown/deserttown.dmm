@@ -46722,6 +46722,11 @@
 	icon_state = "longtable"
 	},
 /obj/item/herbseed/manabloom,
+/obj/item/pestle,
+/obj/item/reagent_containers/glass/mortar{
+	pixel_x = 10;
+	pixel_y = 6
+	},
 /turf/open/floor/rogue/church,
 /area/rogue/indoors/town/physician/desert)
 "niA" = (
@@ -50120,7 +50125,6 @@
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town/church/basement)
 "odO" = (
-/obj/structure/table/vtable/v2,
 /obj/structure/rack/rogue/shelf/big{
 	pixel_y = 30
 	},
@@ -60008,18 +60012,13 @@
 /turf/open/floor/rogue/hexstone,
 /area/rogue/outdoors/mountains/decap/gunduzirak/bossarena)
 "qQb" = (
-/obj/structure/table/vtable,
-/obj/item/reagent_containers/glass/mortar{
-	pixel_x = 10;
-	pixel_y = 6
-	},
-/obj/item/pestle,
 /obj/structure/rack/rogue/shelf{
 	pixel_y = 38
 	},
 /obj/structure/rack/rogue/shelf/big{
 	pixel_y = 30
 	},
+/obj/machinery/alch_workbench,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/physician/desert)
 "qQc" = (
