@@ -192,9 +192,9 @@
 			if(new_value != null)
 				new_value = max(0, new_value)
 				if(damage_type == "brute")
-					BP.brute_dam = new_value
+					BP.set_damage(new_value, BP.burn_dam)
 				else if(damage_type == "burn")
-					BP.burn_dam = new_value
+					BP.set_damage(BP.brute_dam, new_value)
 				BP.update_limb()
 				message_admins("[key_name_admin(usr)] set [BP.name] [damage_type] damage to [new_value] on [key_name_admin(M)].")
 				log_admin("[key_name(usr)] set [BP.name] [damage_type] damage to [new_value] on [key_name(M)].")
@@ -205,8 +205,7 @@
 		var/mob/living/M = locate(href_list["heal_fix_bodypart"])
 		var/obj/item/bodypart/BP = locate(href_list["bodypart"])
 		if(M && BP && ishuman(M))
-			BP.brute_dam = 0
-			BP.burn_dam = 0
+			BP.set_damage(0, 0)
 			BP.update_limb()
 			message_admins("[key_name_admin(usr)] healed [BP.name] on [key_name_admin(M)].")
 			log_admin("[key_name(usr)] healed [BP.name] on [key_name(M)].")

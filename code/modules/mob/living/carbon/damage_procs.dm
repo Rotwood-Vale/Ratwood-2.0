@@ -84,10 +84,9 @@
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
 		amount = -amount
 		if(amount > 0)
-			blood_volume -= 5*amount
+			adjust_blood_volume(-5 * amount)
 		else
-			blood_volume -= amount
-		blood_volume = max(blood_volume, 0)
+			adjust_blood_volume(-amount)
 	if(HAS_TRAIT(src, TRAIT_TOXIMMUNE)) //Prevents toxin damage, but not healing
 		amount = min(amount, 0)
 	if(has_status_effect(/datum/status_effect/buff/fortify) && amount < 0)
