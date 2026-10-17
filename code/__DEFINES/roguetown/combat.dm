@@ -4,6 +4,16 @@
 #define BAD_GUARD_FATIGUE_DRAIN 20 //Percentage of your green bar lost on letting a guard expire.
 #define EXPOSED_INTEG_MOD 2.5
 #define VULN_INTEG_MOD 1.5
+#define BAIT_RCLICK_CD 20 SECONDS
+#define BIND_CD 15 SECONDS
+#define BASE_RCLICK_CD 30 SECONDS
+#define FEINT_RCLICK_CD 20 SECONDS
+
+#define BIND_HANDS 1
+#define BIND_FEET 2
+#define BIND_HEAD 3
+#define BIND_TORSO 4
+#define BIND_NECK 5
 
 /*
 Medical defines
