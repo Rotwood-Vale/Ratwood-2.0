@@ -259,10 +259,7 @@
 
 	// Apply visual effect
 	var/mob/living/L = parent
-	if(parent == caster)
-		L.apply_status_effect(/datum/status_effect/immolation, FALSE)
-	else
-		L.apply_status_effect(/datum/status_effect/immolation, TRUE)
+	L.apply_status_effect(/datum/status_effect/immolation, immolate)
 	return ..()
 
 /datum/component/immolation/proc/on_deletion()
@@ -357,7 +354,7 @@
 	if(partner)
 		partner.remove_status_effect(/datum/status_effect/immolation)
 		var/datum/component/immolation/other = partner.GetComponent(/datum/component/immolation)
-		if(other)
+		if(other && other != src)
 			other.partner = null
 			qdel(other)
 
@@ -392,7 +389,7 @@
 		revert_cast()
 		return FALSE
 
-	if(!istype(target, /mob/living/carbon) || target == user)
+	if(!istype(target, /mob/living/carbon))
 		revert_cast()
 		return FALSE
 
@@ -408,7 +405,8 @@
 	var/is_astrata = (istype(target.patron, /datum/patron/divine/astrata))
 
 	// Apply component
-	user.AddComponent(/datum/component/immolation, target, user, holy_skill, is_astrata)
+	if(target != user)
+		user.AddComponent(/datum/component/immolation, target, user, holy_skill, is_astrata)
 	target.AddComponent(/datum/component/immolation/partner, target, user, holy_skill, is_astrata)
 
 	// Visual feedback
