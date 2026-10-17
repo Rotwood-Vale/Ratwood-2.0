@@ -296,7 +296,7 @@
 	if(!target.stat) // this is first as all the others give you information about target
 		to_chat(span_warning("They are not in dire enought state for this miracle."))
 		fail = TRUE
-	if(target.stat == UNCONSCIOUS && !(damtotal >= 100 || wAmount > 0 || target.blood_volume < BLOOD_VOLUME_OKAY) && target.IsSleeping()) // very long way of saying NO to sleep casting
+	if(target.stat == UNCONSCIOUS && !(damtotal >= 100 || wAmount > 0 || target.get_blood_volume() < BLOOD_VOLUME_OKAY) && target.IsSleeping()) // very long way of saying NO to sleep casting
 		to_chat(span_warning("They are in peacefull sleep, they wont rise unless they feel trethened."))
 		fail = TRUE
 	if(target.stat == DEAD) // are dead
@@ -305,13 +305,16 @@
 	if(target.mob_biotypes & MOB_UNDEAD) // still dead
 		to_chat(span_warning("They are alredy dead, there is not resistance left to empower."))
 		fail = TRUE
+	if(HAS_TRAIT(target, TRAIT_PARALYSIS)) // are sculcracked
+		to_chat(span_warning("No amount of will alone will let them move."))
+		fail = TRUE
 	if(istype(target.patron, /datum/patron/divine/necra)) // worship death
 		to_chat(span_warning("They worship death, there is no will to resist their end in them."))
 		fail = TRUE
 	if(istype(target.patron, /datum/patron/inhumen/zizo)) // thinks they will get raised as undead
 		to_chat(span_warning("They dont fear death, they dont see it as an end."))
 		fail = TRUE
-	if(HAS_TRAIT(target, TRAIT_DEATHLESS)) // no avoiding oxy consequencess
+	if(HAS_TRAIT(target, TRAIT_NOBREATH)) // no avoiding oxy consequencess
 		to_chat(span_warning("They dont see themselves as dying and lack a will to resist it."))
 		fail = TRUE
 	
@@ -319,19 +322,87 @@
 		revert_cast()
 		return FALSE
 
-	target.apply_status_effect(/datum/status_effect/death_defiance)
+	var/time = 30 SECONDS
+	if(HAS_TRAIT(user, TRAIT_LUX_FREAK)) // extra bonus for absolver/stigmata for being full suports
+		time += 15 SECONDS
+	var/holy_skill = user.get_skill_level(src.associated_skill)
+	time += holy_skill * 5 SECONDS
+	target.apply_status_effect(/datum/status_effect/death_defiance, time) // max time is 1 minute 15 seconds for absolver/stigmata with legendary skill
 
+	if(!HAS_TRAIT(user, TRAIT_LUX_FREAK)) // extra bonus for absolver/stigmata for being full suports
+		user.apply_damage(100, BRUTE, spread_damage = TRUE)
+		user.adjust_blood_volume(-100)
 
-
-
-
-
-	revert_cast()
-	return FALSE
+	return TRUE
 	
 
+/atom/movable/screen/alert/status_effect/death_defiance
+	name = "Death Defience"
+	desc = "I WILL NOT GO INTO THE NIGHT QUIETLY!"
+	icon_state = "buff"
 
 /datum/status_effect/death_defiance // TLDR = you dont die from tox, oxy, you cant be crit state, get crit resistance/reset it stacks, and get some will and con. You are not immortal, but your close to that
 	id = "death_defy"
-	effectedstats = list("willpower" = 3, "constitution" = 3)
+	effectedstats = list("willpower" = 5, "constitution" = 3)
 	duration = 30 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/death_defiance
+
+/datum/status_effect/death_defiance/on_creation(mob/living/new_owner, new_duration = null)
+	if(new_duration)
+		duration = new_duration
+	. = ..()
+
+/datum/status_effect/death_defiance/on_apply() // quite similar to martyrs ult
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, "death_defience")
+	ADD_TRAIT(owner, TRAIT_NOLIMBDISABLE, "death_defience")
+	ADD_TRAIT(owner, TRAIT_NOHUNGER, "death_defience")
+	ADD_TRAIT(owner, TRAIT_NOSLEEP, "death_defience")
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "death_defience") // no 12 seconds of stun on your last moments
+	ADD_TRAIT(owner, TRAIT_NOPAIN, "death_defience") // pure adrenaline
+	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, "death_defience")
+	ADD_TRAIT(owner, TRAIT_BREADY, "death_defience")
+	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, "death_defience")
+	ADD_TRAIT(owner, TRAIT_TOXIMMUNE, "death_defience") // doesnt heal them but does prevent further damage
+	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, "death_defience")
+	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, "death_defience")
+	ADD_TRAIT(owner, TRAIT_NODEATH, "death_defience") // I think it only stops oxy death?
+	owner.remove_status_effect(/datum/status_effect/debuff/crit_resistance_cd) // resets crit resistance
+	owner.remove_status_effect(STATUS_EFFECT_SLEEPING) 
+	owner.remove_status_effect(/datum/status_effect/incapacitating/knockdown)
+	owner.remove_status_effect(/datum/status_effect/incapacitating/stun) 
+	owner.energy_add(700)
+	owner.stamina_add(-100) // rise back with full strength
+	owner.visible_message(span_boldwarning("[owner] rises back on their feet, defying death with every movement."), span_boldwarning("I feel a surge of energy as I DEFY death."))
+	owner.emote("scream", TRUE)
+	owner.set_resting(FALSE, FALSE)
+	owner.add_filter("death_defience", 2, list("type" = "outline", "color" = "#2e0000", "alpha" = 25,  "size" = 2))
+
+
+/datum/status_effect/death_defiance/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, "death_defience")
+	REMOVE_TRAIT(owner, TRAIT_NOLIMBDISABLE, "death_defience")
+	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, "death_defience")
+	REMOVE_TRAIT(owner, TRAIT_NOSLEEP, "death_defience")
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "death_defience") // no 12 seconds of stun on your last moments
+	REMOVE_TRAIT(owner, TRAIT_NOPAIN, "death_defience") // pure adrenaline
+	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, "death_defience")
+	REMOVE_TRAIT(owner, TRAIT_BREADY, "death_defience")
+	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, "death_defience")
+	REMOVE_TRAIT(owner, TRAIT_TOXIMMUNE, "death_defience") // doesnt heal them but does prevent further damage
+	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, "death_defience")
+	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, "death_defience")
+	REMOVE_TRAIT(owner, TRAIT_NODEATH, "death_defience") // I think it only stops oxy death?
+	owner.energy_add(-700)
+	owner.stamina_add(100)
+	owner.Stun(15 SECONDS)
+	owner.Knockdown(15 SECONDS)
+	if(!HAS_TRAIT(owner, TRAIT_DNR)) // last mercy to the ones without a second chance
+		owner.adjustOxyLoss(100)
+	owner.visible_message(span_boldwarning("The strange energy filling the [owner] runs out, and their bathered body falls."), span_boldwarning("I feel my newfound energy and will to resist leave me."))
+	owner.remove_filter("death_defience")
+
+
+
+	
