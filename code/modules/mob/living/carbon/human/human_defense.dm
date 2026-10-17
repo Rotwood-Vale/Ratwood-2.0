@@ -58,6 +58,7 @@
 
 		if(consume_debuff)
 			if(has_status_effect(/datum/status_effect/debuff/exposed))
+				intdamage *= EXPOSED_INTEG_MOD
 				playsound(src, 'sound/combat/exposed_pop.ogg', 100, TRUE)
 				visible_message(span_biginfo("[src] suffers a savage hit to their armor while exposed, sending them reeling!"))
 				remove_status_effect(/datum/status_effect/debuff/exposed)
