@@ -337,7 +337,7 @@
 		if(powder_loaded)
 			to_chat(user, span_warning("The gun is already loaded with gunpowder!"))
 			return
-		user.visible_message(span_notice("[user] begins to pour gunpowder into the barrel [src.name]..."))
+		user.visible_message(span_notice("[user] begins to pour gunpowder into the [src.name]..."))
 		playsound(src, 'modular_twilight_axis//sound/cannon/powder.ogg', 100, TRUE)
 		if(do_after(user, 3 SECONDS, src))
 			if(QDELETED(P) || QDELETED(src))
@@ -356,7 +356,7 @@
 
 		if(user.transferItemToLoc(used_item, src))
 			bullet_loaded = used_item
-			user.visible_message(span_notice("[user] loads a shell into the barrel [src.name]."))
+			user.visible_message(span_notice("[user] loads a shell into the [src.name]."))
 			playsound(src, 'modular_twilight_axis//sound/cannon/loading.ogg', 100, TRUE)
 		return
 
@@ -367,7 +367,7 @@
 		if(rammed)
 			to_chat(user, span_warning("The charge in the cannon has already been compacted!!"))
 			return
-		user.visible_message(span_notice("[user] begins to compress the charge in the barrel [src.name] ramrod..."))
+		user.visible_message(span_notice("[user] begins to compress the charge in the [src.name] with a ramrod..."))
 		playsound(src, 'modular_twilight_axis//sound/cannon/ramrod.ogg', 100, TRUE)
 		if(do_after(user, 4 SECONDS, src))
 			rammed = TRUE
@@ -395,7 +395,7 @@
 			if(user.transferItemToLoc(used_item, src))
 				inserted_fuse = used_item
 
-		user.visible_message(span_notice("[user] inserts the wick into the ignition hole [src.name]."))
+		user.visible_message(span_notice("[user] inserts the wick into the [src.name]."))
 		playsound(src, 'sound/foley/bandage.ogg', 100, FALSE)
 		update_icon()
 		return
@@ -495,7 +495,7 @@
 		var/mob/living/L = user
 		skill = L.get_skill_level(/datum/skill/combat/firearms)
 
-	var/misfire_chance = max(0, 15 - (skill * 5))
+	var/misfire_chance = max(10 - (skill * 5))
 
 	if(prob(misfire_chance))
 		src.visible_message(span_danger("[src] It's falling apart!"))
