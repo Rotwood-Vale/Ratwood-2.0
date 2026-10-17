@@ -400,7 +400,7 @@
 	caster.visible_message(span_boldwarning("[caster] raises [caster.p_their()] arms skyward and begins a terrible incantation!"))
 	if(!do_after(caster, chant_time, needhand = FALSE))
 		if(!QDELETED(aim))
-			aim.End()
+			qdel(aim)
 		QDEL_LIST(warnings)
 		reset_spell_cooldown()
 		if(!QDELETED(caster))
@@ -409,7 +409,7 @@
 			caster.visible_message(span_warning("The flames gathering around [caster] scatter as [caster.p_their()] chant is cut short!"))
 		return
 	if(!QDELETED(aim))
-		aim.End()
+		qdel(aim)
 	caster.say("CONFLAGRATIO!!", forced = "spell", language = /datum/language/common)
 	erupt(caster, epicenter)
 
