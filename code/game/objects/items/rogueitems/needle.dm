@@ -237,6 +237,7 @@
 			break
 		if(doctor.mind)
 			doctor.mind.add_sleep_experience(skill_used, doctor.STAINT * SEW_EXP_PER_STEP)
+		doctor.reward_actions(multiplier = 0.1,patrons = /datum/patron/divine/pestra)
 		playsound(loc, 'sound/foley/sewflesh.ogg', 100, TRUE, -2)
 		target_wound.sew_progress = min(target_wound.sew_progress + moveup, target_wound.sew_threshold)
 
@@ -257,6 +258,8 @@
 			var/exp_scale = target_wound.sew_threshold / SEW_HP_EXP_NORMALIZER
 			var/base_exp = doctor.STAINT * SEW_EXP_FINISH
 			doctor.mind.add_sleep_experience(skill_used, base_exp * exp_scale)
+		doctor.reward_actions(patrons = /datum/patron/divine/pestra, success_message = "Pestra rewards my efforts in closing wounds.")
+					
 		use(1)
 		target_wound.sew_wound()
 		if(patient == doctor)
