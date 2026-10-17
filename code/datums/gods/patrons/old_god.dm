@@ -278,7 +278,7 @@
 		to_chat(span_warning("You are dead, its to late for displays of wilpower."))
 		revert_cast()
 		return FALSE
-	var/mob/living/human/target = NULL
+	var/mob/living/carbon/human/target = null
 	if(user.stat != CONSCIOUS)
 		target = user
 	if(!target && ishuman(targets[1]))
@@ -313,6 +313,14 @@
 		return FALSE
 
 
+
+
+
+
+
+
+	revert_cast()
+	return FALSE
 	
 
 	
