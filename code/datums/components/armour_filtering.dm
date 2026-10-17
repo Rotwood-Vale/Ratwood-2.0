@@ -15,7 +15,6 @@
 
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_obj_examine))
 
 /datum/component/armour_filtering/positive
 	positive = TRUE
@@ -94,13 +93,6 @@
 
 	return
 
-/datum/component/armour_filtering/proc/on_obj_examine(datum/source, mob/M)
-	if(!HAS_TRAIT(M, required_trait))
-		return
-	if(positive)
-		to_chat(M, span_green("[parent] suits me. ([required_trait])"))
-		return
-	to_chat(M, span_red("[parent] does not suit me. ([required_trait])"))
 
 /datum/component/armour_filtering/proc/handle_boons(mob/living/carbon/human/user, equip)
 	if(equip)
@@ -114,8 +106,6 @@
 			to_chat(user, span_info("[parent] fits me well. ([required_trait])"))
 			if(HAS_TRAIT(user, TRAIT_ARMOUR_LIKED) && !additive)
 				to_chat(user, span_info("..yet another piece of my armour is on my mind."))
-				// Id-specific boons (e.g. clearing the lost mask debuff) must still apply.
-				trait_boon_equip(user, filter_id)
 				return
 			ADD_TRAIT(user, TRAIT_ARMOUR_LIKED, TRAIT_GENERIC)
 		trait_boon_equip(user, filter_id)
@@ -139,10 +129,11 @@ TRAIT UNIQUE PROCS
 
 
 /datum/component/armour_filtering/proc/trait_boon_equip(mob/living/carbon/human/user, id)
-	// Dexterity users reject disliked armour; liked armour must still reach the id-specific boons below.
-	if(!positive && (HAS_TRAIT(user, TRAIT_FENCERDEXTERITY) || HAS_TRAIT(user, TRAIT_MAGEDEXTERITY)))
-		user.dropItemToGround(parent, TRUE, TRUE)
-		if(HAS_TRAIT(user, TRAIT_ARMOUR_DISLIKED))
+	if(HAS_TRAIT(user, TRAIT_FENCERDEXTERITY))
+		if(!positive)
+			user.dropItemToGround(parent, TRUE, TRUE)
+			if(!HAS_TRAIT(user, TRAIT_ARMOUR_DISLIKED))
+				return
 			REMOVE_TRAIT(user, TRAIT_ARMOUR_DISLIKED, TRAIT_GENERIC)
 		return
 

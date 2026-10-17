@@ -206,8 +206,7 @@
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	subclass_languages = list(/datum/language/grenzelhoftian)
-	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_INTELLECTUAL, TRAIT_STEELHEARTED, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_INTELLECTUAL, TRAIT_STEELHEARTED, TRAIT_ALCHEMY_EXPERT)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
@@ -237,7 +236,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
 	backl = /obj/item/rogueweapon/woodstaff/gefechtsgelehrter
 	cloak = /obj/item/clothing/cloak/stabard/grenzelmage
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/cuirass
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
 	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	neck = /obj/item/clothing/neck/roguetown/coif/padded

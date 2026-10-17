@@ -3,7 +3,7 @@
 	tutorial = "The New Moon Spellblades of Zybantia are the remnants of a fallen Nocite monastery in an unknown region of Lalvestine, \
 	the last major stronghold of the Ten in the Zybantian Empire. \
 	Their monastic lyfestyle and devotion collapsed quickly under the weight of the Rot, and they were forced from a lyfe of devout solitude \
-	into that of a common sellsword; Nocâ€™s blessings proving rather useful when slaying monsters and men alike. \
+	into that of a common sellsword; Noc’s blessings proving rather useful when slaying monsters and men alike. \
 	For whatever reason, you find yourself in the region, offering your skills to the highest bidder. Knowledge is power."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
@@ -18,7 +18,7 @@
 	class_select_category = CLASS_CAT_ZYBANTU
 	subclass_languages = list(/datum/language/celestial)
 	category_tags = list(CTAG_MERCENARY)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_MAGEDEXTERITY)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
 	subclass_spellpoints = 8//We'll focus on this being a combination spellblade.
 	subclass_stats = list(
 		STATKEY_INT = 3,
