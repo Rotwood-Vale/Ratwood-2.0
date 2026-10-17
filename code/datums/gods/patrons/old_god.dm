@@ -289,8 +289,15 @@
 		return FALSE
 
 	var/fail = FALSE
+
+	var/wAmount = LAZYLEN(target.get_wounds())
+	var/damtotal = target.getBruteLoss() + target.getFireLoss() + target.getToxLoss()
+
 	if(!target.stat) // this is first as all the others give you information about target
 		to_chat(span_warning("They are not in dire enought state for this miracle."))
+		fail = TRUE
+	if(target.stat == UNCONSCIOUS && !(damtotal >= 100 || wAmount > 0 || target.blood_volume < BLOOD_VOLUME_OKAY) && target.IsSleeping()) // very long way of saying NO to sleep casting
+		to_chat(span_warning("They are in peacefull sleep, they wont rise unless they feel trethened."))
 		fail = TRUE
 	if(target.stat == DEAD) // are dead
 		to_chat(span_warning("They are alredy dead, you acted to late."))
@@ -312,7 +319,7 @@
 		revert_cast()
 		return FALSE
 
-
+	target.apply_status_effect(/datum/status_effect/death_defiance)
 
 
 
@@ -323,4 +330,8 @@
 	return FALSE
 	
 
-	
+
+/datum/status_effect/death_defiance // TLDR = you dont die from tox, oxy, you cant be crit state, get crit resistance/reset it stacks, and get some will and con. You are not immortal, but your close to that
+	id = "death_defy"
+	effectedstats = list("willpower" = 3, "constitution" = 3)
+	duration = 30 SECONDS
