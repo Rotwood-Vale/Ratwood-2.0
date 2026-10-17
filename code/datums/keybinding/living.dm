@@ -276,6 +276,25 @@
 	if (isliving(L))
 		L.look_around()
 
+/datum/keybinding/living/toggle_alt_cast
+	hotkey_keys = list("ShiftH")
+	name = "toggle_alt_cast"
+	full_name = "Toggle Spell Alt Cast"
+	description = "Toggle alt cast on the currently selected spell."
+
+/datum/keybinding/living/toggle_alt_cast/down(client/user)
+	if(!ishuman(user.mob))
+		return FALSE
+	var/mob/living/carbon/human/H = user.mob
+
+	var/obj/effect/proc_holder/spell/invoked/projectile/spell = H.ranged_ability
+	if(!istype(spell))
+		to_chat(H, span_warning("No active spell with an alt mode."))
+		return TRUE
+	spell.toggle_alt_cast(H)
+	return TRUE
+
+
 //layer shifting
 
 /datum/keybinding/living/pixel_shift_layerup

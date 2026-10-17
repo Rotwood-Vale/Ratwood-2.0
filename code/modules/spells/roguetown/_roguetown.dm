@@ -9,6 +9,8 @@
 	recharge_time = 30
 	charge_type = "recharge"
 	invocation_type = "shout"
+	var/alt_cast = FALSE
+	var/alt_mode = FALSE
 	var/active_sound
 
 /obj/effect/proc_holder/spell/update_icon()
@@ -116,6 +118,13 @@
 		ready_projectile(P, target, user, i)
 		P.fire()
 	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/projectile/proc/toggle_alt_cast(mob/user)
+	if(!alt_cast)
+		to_chat(user, span_warning("[name] does not have an alternative cast mode."))
+		return
+	alt_mode = !alt_mode
+	to_chat(user, span_notice("[name] alt cast mode [alt_mode ? "enabled" : "disabled"]."))
 
 /obj/effect/proc_holder/spell/invoked/projectile/get_spell_statistics(mob/living/user)
 	var/list/stats = ..(user)

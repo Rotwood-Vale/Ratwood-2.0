@@ -7,12 +7,13 @@
 	sins = "Weakness, Servility, Cowardice"
 	mob_traits = list(TRAIT_HORDE, TRAIT_ORGAN_EATER)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/self/graggar_bloodrage				= CLERIC_T0,
+					/obj/effect/proc_holder/spell/self/graggar_bloodrush				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/call_to_slaughter 				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/blood_net 						= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/revel_in_slaughter 			= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/graggar_avatar				= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/resurrect/graggar				= CLERIC_T4,
 	)
 	energy_color = COLOR_PATRON_GRAGGAR
