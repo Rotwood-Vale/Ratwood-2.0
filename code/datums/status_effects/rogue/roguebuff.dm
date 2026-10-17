@@ -1849,10 +1849,10 @@
 
 
 	RegisterSignal(new_owner, COMSIG_MOB_ATTACKED_BY_HAND, PROC_REF(process_touch))
-	RegisterSignal(new_owner, COMSIG_MOB_ON_KICK, PROC_REF(guard_disrupted))
-	RegisterSignal(new_owner, COMSIG_MOB_KICKED, PROC_REF(guard_disrupted))
+	RegisterSignal(new_owner, COMSIG_MOB_ON_KICK, PROC_REF(guard_on_kick))
+	RegisterSignal(new_owner, COMSIG_MOB_KICKED, PROC_REF(guard_kicked))
 	RegisterSignal(new_owner, COMSIG_LIVING_ONJUMP, PROC_REF(guard_disrupted))
-	RegisterSignal(new_owner, COMSIG_CARBON_SWAPHANDS, PROC_REF(guard_cancelled))
+	RegisterSignal(new_owner, COMSIG_CARBON_SWAPHANDS, PROC_REF(guard_swaphands))
 	RegisterSignal(new_owner, COMSIG_ITEM_GUN_PROCESS_FIRE, PROC_REF(guard_cancelled))
 	RegisterSignal(new_owner, COMSIG_ATOM_BULLET_ACT, PROC_REF(guard_struck_by_projectile))
 	RegisterSignal(new_owner, COMSIG_LIVING_IMPACT_ZONE, PROC_REF(guard_struck_by_projectile))
@@ -1865,6 +1865,7 @@
 /datum/status_effect/buff/clash/proc/process_touch(mob/living/carbon/human/parent, mob/living/carbon/human/attacker, mob/living/carbon/human/defender)
 	var/obj/item/I = defender.get_active_held_item()
 	defender.process_clash(attacker, I, null)
+	return COMPONENT_HAND_NO_ATTACK
 
 /datum/status_effect/buff/clash/proc/process_attack(mob/living/parent, mob/living/target, mob/user, obj/item/I)
 	var/bad_guard = FALSE
@@ -1873,7 +1874,7 @@
 	if(U.has_status_effect(/datum/status_effect/buff/clash) && !target.has_status_effect(/datum/status_effect/buff/clash))
 		if(user == parent)
 			bad_guard = TRUE
-	if(ishuman(target) && target.get_active_held_item() && !bad_guard)
+	if(ishuman(target) && (target.get_active_held_item() || target.has_status_effect(/datum/status_effect/buff/clash)) && !bad_guard)
 		var/mob/living/carbon/human/HM = target
 		var/obj/item/IM = target.get_active_held_item()
 		var/obj/item/IU
@@ -1887,6 +1888,18 @@
 //Mostly here so the child (limbguard) can have special behaviour.
 /datum/status_effect/buff/clash/proc/guard_struck_by_projectile()
 	guard_disrupted()
+
+/datum/status_effect/buff/clash/proc/guard_on_kick()
+	guard_disrupted()
+
+/datum/status_effect/buff/clash/proc/guard_kicked()
+	guard_disrupted()
+
+/datum/status_effect/buff/clash/proc/guard_swaphands()
+	guard_disrupted()
+
+/datum/status_effect/buff/clash/proc/apply_cooldown()
+	owner.apply_status_effect(/datum/status_effect/debuff/clashcd)
 
 //Our guard was disrupted by normal means. Big red balloon alert to exemplify that this was due to combatant intervention.
 /datum/status_effect/buff/clash/proc/guard_disrupted()
@@ -1911,9 +1924,14 @@
 		playsound(H, sfx_on_apply, 100, TRUE)
 
 /datum/status_effect/buff/clash/tick()
-	if(!owner.get_active_held_item() || !(owner.mobility_flags & MOBILITY_STAND))
+	if(!(owner.mobility_flags & MOBILITY_STAND))
 		var/mob/living/carbon/human/H = owner
 		H.bad_guard()
+		return
+	if(!owner.get_active_held_item())
+		if(!ishuman(owner) || owner.get_skill_level(/datum/skill/combat/unarmed) < 3)
+			var/mob/living/carbon/human/H = owner
+			H.bad_guard(span_warning("I'm not skilled enough in the art of unarmed combat to maintain my guard without a weapon!"))
 
 /datum/status_effect/buff/clash/process(wait)
 	if(duration != -1 && duration < world.time)
@@ -1922,7 +1940,7 @@
 
 /datum/status_effect/buff/clash/on_remove()
 	. = ..()
-	owner.apply_status_effect(/datum/status_effect/debuff/clashcd)
+	apply_cooldown()
 	if(expired_naturally)
 		owner.balloon_alert_to_viewers("<font color = '#ffffff'>Guard expired!</font>")
 	UnregisterSignal(owner, COMSIG_ATOM_BULLET_ACT)
@@ -1941,6 +1959,185 @@
 	name = "Ready to Clash"
 	desc = span_notice("I am on guard, and ready to clash. If I am hit, I will successfully defend. Attacking will make me lose my focus.")
 	icon_state = "clash"
+
+/atom/movable/screen/alert/status_effect/buff/clash/limbguard
+	name = "Limb Guard"
+	desc = span_notice("I have focused my attention to guarding one limb. I shall deflect projectiles and blows to that limb with ease.")
+	icon_state = "limbguard"
+
+/datum/status_effect/buff/clash/limbguard
+	id = "limbguard"
+	duration = -1
+	alert_type = /atom/movable/screen/alert/status_effect/buff/clash/limbguard
+	sfx_on_apply = 'sound/combat/limbguard.ogg'
+
+	var/protected_zone
+	var/obj/shield_origin
+	var/start_delay = 0.5 SECONDS
+	var/is_active = FALSE
+
+	mob_effect_dur = 9999 SECONDS	//It's a toggle, so we'll try to delete this manually when we can.
+	mob_effect_icon = 'icons/mob/mob_effects.dmi'
+	mob_effect_icon_state = "eff_guard"
+	mob_effect_layer = MOB_EFFECT_LAYER_LIMBGUARD
+
+/datum/status_effect/buff/clash/limbguard/on_creation(mob/living/new_owner, zone)
+	if(!zone)
+		CRASH("Guard (Defend rclick) was called with no valid zone!")
+	protected_zone = zone
+	set_offsets()
+	. = ..()
+
+/datum/status_effect/buff/clash/limbguard/on_apply()
+	. = ..()
+	if(mob_effect)
+		mob_effect.alpha = 0
+		animate(mob_effect, alpha = 100, time = start_delay)
+		addtimer(CALLBACK(src, PROC_REF(update_status)), start_delay)
+
+/datum/status_effect/buff/clash/limbguard/proc/update_status()
+	if(mob_effect && !is_active)
+		mob_effect.icon_state = initial(mob_effect_icon_state)+"_[protected_zone]"
+		mob_effect.alpha = 255
+		is_active = TRUE
+
+/datum/status_effect/buff/clash/limbguard/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	shield_origin = owner.get_active_held_item()
+
+/datum/status_effect/buff/clash/limbguard/on_apply()
+	. = ..()
+
+/datum/status_effect/buff/clash/limbguard/on_remove()
+	. = ..()
+	QDEL_NULL(mob_effect)
+
+/datum/status_effect/buff/clash/limbguard/process()
+	if(owner)	//Avoids a runtime where this is called, apparently, before it has time to assign an owner via initialization (???)
+
+		//Anti Sci main measures
+		var/datum/reagents/reag = owner.reagents
+		var/datum/reagent/medicine/stampot/stpot = reag.has_reagent(/datum/reagent/medicine/stampot)
+		var/datum/reagent/medicine/strongstam/stpotstrong = reag.has_reagent(/datum/reagent/medicine/strongstam)
+		if(stpot)
+			stpot.metabolization_rate = 20 * REAGENTS_METABOLISM
+		if(stpotstrong)
+			stpotstrong.metabolization_rate = 20 * REAGENTS_METABOLISM
+
+		if(!owner.cmode)
+			remove_self()
+		//We lost the shield we used this with from our hands.
+		if((owner.get_inactive_held_item() != shield_origin) && (owner.get_active_held_item() != shield_origin))
+			remove_self()
+		if(!owner.stamina_add(0.2))	//It essentially halts green regen. Token price so it can't be maintained forever.
+			remove_self()
+
+/datum/status_effect/buff/clash/limbguard/proc/set_offsets()
+	switch(protected_zone)
+		if(BODY_ZONE_L_ARM)
+			mob_effect_offset_x = 9
+			mob_effect_offset_y = 0
+		if(BODY_ZONE_R_ARM)
+			mob_effect_offset_x = -9
+			mob_effect_offset_y = 0
+		if(BODY_ZONE_HEAD)
+			mob_effect_offset_x = 0
+			mob_effect_offset_y = 17
+		if(BODY_ZONE_L_LEG)
+			mob_effect_offset_x = 6
+			mob_effect_offset_y = -9
+		if(BODY_ZONE_R_LEG)
+			mob_effect_offset_x = -6
+			mob_effect_offset_y = -9
+
+/datum/status_effect/buff/clash/limbguard/process_attack(mob/living/parent, mob/living/target, mob/user, obj/item/I, zone_override)
+	if(is_active)
+		if(ishuman(user) && target == owner)
+			var/mob/living/carbon/human/HM = user
+			if(check_zone(HM.zone_selected) == protected_zone || zone_override == protected_zone)	//User has struck the exact limb that was being protected. Bad!
+				if(ishuman(user))
+					apply_debuffs(HM)
+					perform_disarm(HM)
+				playsound(owner, 'sound/combat/limbguard_struck.ogg', 100, TRUE)
+				if(HM.mind)
+					owner.stamina_add(-(owner.max_stamina / 3))
+					owner.energy_add((owner.max_energy / 5))
+				remove_self()
+				return COMPONENT_NO_ATTACK	//We cancel the attack that triggered this.
+	if(user == owner && owner.get_active_held_item() == shield_origin)
+		remove_self()
+
+/datum/status_effect/buff/clash/limbguard/proc/apply_debuffs(mob/living/carbon/human/target)
+	target.Immobilize(3 SECONDS)
+	target.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS)
+	target.apply_status_effect(/datum/status_effect/debuff/exposed, 10 SECONDS)
+	target.remove_status_effect(/datum/status_effect/buff/clash/limbguard)
+	target.stamina_add((target.max_stamina / 3))
+	target.energy_add((-target.max_energy / 5))
+
+#define LGUARD_SHARPNESS_LOSS     150
+#define LGUARD_INTEG_LOSS		  100
+
+/datum/status_effect/buff/clash/limbguard/proc/perform_disarm(mob/living/carbon/human/target)
+	var/obj/item/I = target.get_active_held_item()
+	owner.visible_message(span_boldwarning("[owner] anticipated the strike, disarming [target] in a decisive guard!"))
+	owner.flash_fullscreen("whiteflash")
+	target.flash_fullscreen("whiteflash")
+	var/datum/effect_system/spark_spread/S = new()
+	var/turf/front = get_step(owner,owner.dir)
+	S.set_up(1, 1, front)
+	S.start()
+	if(I)
+		target.disarmed(I)
+		if(I.remove_bintegrity(LGUARD_SHARPNESS_LOSS))
+			if(I.obj_integrity > (LGUARD_INTEG_LOSS * 0.5))
+				I.take_damage((LGUARD_INTEG_LOSS * 0.5), BRUTE, "blunt")
+			else
+				I.take_damage((I.obj_integrity - 10), BRUTE, "blunt")
+		else
+			if(I.obj_integrity > LGUARD_INTEG_LOSS)
+				I.take_damage((LGUARD_INTEG_LOSS), BRUTE, "blunt")
+			else
+				I.take_damage((I.obj_integrity - 10), BRUTE, "blunt")	//We try not to annihilate the weapon out of existence.
+
+#undef LGUARD_SHARPNESS_LOSS
+#undef LGUARD_INTEG_LOSS
+
+/datum/status_effect/buff/clash/limbguard/proc/remove_self()
+	owner.remove_status_effect(/datum/status_effect/buff/clash/limbguard)
+
+//Projectile struck our protected limb. Unlike regular Riposte, this will deflect the projectile at no cost.
+/datum/status_effect/buff/clash/limbguard/guard_struck_by_projectile(mob/living/target, obj/P, hit_zone)
+	var/obj/IP = P
+	if(istype(P, /obj/projectile/bullet/reusable))
+		var/obj/projectile/bullet/reusable/RP = P	//This will ensure it gets dropped as an item first. Otherwise a non-reusable projectile will get poofed in a cloud of sparks.
+		IP = RP.handle_drop()
+	if(check_zone(hit_zone) == protected_zone)
+		do_sparks(2, TRUE, get_turf(IP))
+		target.visible_message(span_warning("[target] deflects \the [IP]!"))
+		if(istype(IP, /obj/item))
+			var/obj/item/I = IP
+			I.throw_at(get_step(target, get_dir(target, I)), 3, 1, target)
+		return COMPONENT_CANCEL_THROW //Also returns COMPONENT_ATOM_BLOCK_BULLET
+
+/datum/status_effect/buff/clash/limbguard/process_touch(mob/living/carbon/human/parent, mob/living/carbon/human/attacker, mob/living/carbon/human/defender)
+	if(attacker && check_zone(attacker.zone_selected) == protected_zone)
+		var/obj/item/I = defender.get_active_held_item()
+		defender.process_clash(attacker, I, null)	//This will strike at their hand, but not clear away the effect. They tried to grab the protected limb.
+		return COMPONENT_HAND_NO_ATTACK
+
+/datum/status_effect/buff/clash/limbguard/apply_cooldown()
+	owner.apply_status_effect(/datum/status_effect/debuff/specialcd, 60 SECONDS)
+	owner.apply_status_effect(/datum/status_effect/debuff/clashcd)
+
+/datum/status_effect/buff/clash/limbguard/guard_kicked()
+	return
+
+/datum/status_effect/buff/clash/limbguard/guard_swaphands()
+	return
+
+/datum/status_effect/buff/clash/limbguard/guard_on_kick()
+	return	
 
 #define BLOODRAGE_FILTER "bloodrage"
 
@@ -2427,3 +2624,75 @@
 /atom/movable/screen/alert/status_effect/buff/oath_ring
 	name = "Oathmarked"
 	desc = "The oath drives me forward, so long as the reminder is kept near."
+
+
+/atom/movable/screen/alert/status_effect/buff/dagger_dash
+	name = "Dagger Dash"
+	desc = "I'm slipping through!"
+	icon_state = "daggerdash"
+
+/atom/movable/screen/alert/status_effect/buff/dagger_boost
+	name = "Dagger Boost"
+	desc = "I'm rushing!"
+	icon_state = "daggerboost"
+
+/datum/status_effect/buff/dagger_dash
+	id = "dagger_dash"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/dagger_dash
+	effectedstats = list(STATKEY_SPD = 1)
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 3 SECONDS
+	mob_effect_icon_state = "eff_daggerboost"
+	mob_effect_layer = MOB_EFFECT_LAYER_DBOOST
+
+/datum/status_effect/buff/dagger_dash/on_creation(mob/living/new_owner)
+	if(!ishuman(new_owner))
+		return
+	var/spd_bonus = 1
+	var/highest_ac
+	var/mob/living/carbon/human/H = new_owner
+	highest_ac = H.highest_ac_worn()
+	switch(highest_ac)
+		if(ARMOR_CLASS_NONE)
+			duration = 5 SECONDS
+			spd_bonus = 4
+		if(ARMOR_CLASS_LIGHT)
+			duration = 4 SECONDS
+			spd_bonus = 3
+		if(ARMOR_CLASS_MEDIUM)
+			duration = 3 SECONDS
+			spd_bonus = 2
+		if(ARMOR_CLASS_HEAVY)
+			duration = 2 SECONDS
+			spd_bonus = 1
+	new_owner.apply_status_effect(/datum/status_effect/buff/dagger_boost, spd_bonus)
+	. = ..()
+
+/datum/status_effect/buff/dagger_dash/on_apply()
+	owner.pass_flags |= PASSMOB
+	ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
+	. = ..()
+
+/datum/status_effect/buff/dagger_dash/on_remove()
+	owner.pass_flags &= ~PASSMOB
+	REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
+	. = ..()
+
+/datum/status_effect/buff/dagger_boost
+	id = "dagger_boost"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/dagger_boost
+	effectedstats = list(STATKEY_SPD = 1)
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = 30 SECONDS
+	var/obj/item/rogueweapon/held_dagger
+
+/datum/status_effect/buff/dagger_boost/on_creation(mob/living/new_owner, spd_boost)
+	if(spd_boost)
+		effectedstats[STATKEY_SPD] = spd_boost
+	held_dagger = new_owner.get_active_held_item()
+	. = ..()
+
+/datum/status_effect/buff/dagger_boost/process()
+	. = ..()
+	if(!istype(owner.get_active_held_item(), held_dagger))
+		owner.remove_status_effect(/datum/status_effect/buff/dagger_boost)

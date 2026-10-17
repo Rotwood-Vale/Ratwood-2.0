@@ -124,9 +124,9 @@ GLOBAL_LIST_INIT(cross_training_map, list(
 		needed_xp += needed_xp_for_level(next_skill_level)
 	return needed_xp
 
-/datum/sleep_adv/proc/add_sleep_experience(skill, amt, silent = FALSE)
+/datum/sleep_adv/proc/add_sleep_experience(skill, amt, silent = FALSE, _show_xp = TRUE)
 	var/mob/living/L = mind.current
-	var/show_xp = TRUE
+	var/show_xp = _show_xp
 	if(!(L.client?.prefs.floating_text_toggles & XP_TEXT))
 		show_xp = FALSE
 	if((L.get_skill_level(skill) < SKILL_LEVEL_APPRENTICE) && !is_considered_sleeping())

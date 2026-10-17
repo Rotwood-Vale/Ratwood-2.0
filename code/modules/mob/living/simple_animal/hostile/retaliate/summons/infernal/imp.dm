@@ -59,7 +59,6 @@
 	damage = 20
 	damage_type = BURN
 	nodamage = FALSE
-	armor_penetration = 0
 	flag = "magic"
 	hitsound = 'sound/blank.ogg'
 

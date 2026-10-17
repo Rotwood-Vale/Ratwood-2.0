@@ -54,8 +54,10 @@
 #define FIRE_HARDCRIT_DIVISOR_MINDLESS 200 // 200 = 50% burn damage = hardcrit for mindless mobs
 #define STRENGTH_SOFTCAP 14	//STR value past which we get diminishing returns in our damage calculations.
 #define STRENGTH_MULT 0.1	//STR multiplier per STR point up to the softcap. Works as a %-age. 0.1 = 10% per point.
-#define STRENGTH_CAPPEDMULT 0.034	//STR multiplier per STR point past the softcap
-//Actual combat defines
+#define STRENGTH_CAPPEDMULT 0.05	//STR multiplier per STR point past the softcap
+#define RANGED_STAT_SOFTCAP 15	//PER value past which ranged damage scaling has diminishing returns.
+#define RANGED_STAT_MULT 0.1	//PER multiplier per point up to the softcap. 0.1 = 10% per point.
+#define RANGED_STAT_CAPPEDMULT 0.05	//PER multiplier per point past the softcap. 0.05 = 5% per point.//Actual combat defines
 
 //click cooldowns, in tenths of a second, used for various combat actions
 #define CLICK_CD_EXHAUSTED 60
@@ -64,6 +66,7 @@
 #define CLICK_CD_GLACIAL 20	// Tier: Glacial
 #define CLICK_CD_MASSIVE 18	// Tier: Extremely Sluggish
 #define CLICK_CD_HEAVY 16		// Tier: Very Sluggish
+#define CLICK_CD_DODGE 16
 #define CLICK_CD_CHARGED 14	// Tier: Sluggish
 #define CLICK_CD_MELEE 12		// Tier: Normal (baseline)
 #define CLICK_CD_QUICK 10		// Tier: Quick
@@ -96,6 +99,12 @@
 #define EFF_RANGE_EXACT 1
 #define EFF_RANGE_ABOVE 2
 #define EFF_RANGE_BELOW 3
+
+// Swingdelay presets
+#define SWINGDELAY_NORMAL 1	//No penalties, we just swing.
+#define SWINGDELAY_PENALTY 2 //We suffer a defensive penalty if struck during it. Otherwise, normal.
+#define SWINGDELAY_CANCEL 3 //We have -no- defense during it, and it can be interrupted if we are hit.
+#define SWINGDELAY_CANCELSLOW 4	//Same as cancel but our speed is also hardset to 10 for the delay.
 
 //Grab levels
 #define GRAB_PASSIVE				0
@@ -140,7 +149,7 @@
 
 //mmb intents
 #define INTENT_KICK		/datum/intent/kick
-#define INTENT_STEAL	/datum/intent/steal
+#define INTENT_SPECIAL	/datum/intent/special
 #define INTENT_BITE		/datum/intent/bite
 #define INTENT_JUMP		/datum/intent/jump
 #define INTENT_GIVE		/datum/intent/give
@@ -150,7 +159,7 @@
 #define QINTENT_BITE		 1
 #define QINTENT_JUMP		 2
 #define QINTENT_KICK		 3
-#define QINTENT_STEAL		 4
+#define QINTENT_SPECIAL		 4
 #define QINTENT_GIVE		 5
 #define QINTENT_SPELL		 6
 
@@ -163,7 +172,6 @@
 #define SWORD_THRUST	 /datum/intent/sword/thrust
 #define SWORD_CHOP		 /datum/intent/sword/chop //2h swords only
 #define SWORD_STRIKE	 /datum/intent/sword/strike //mordhau grip
-#define SWORD_PEEL		/datum/intent/sword/peel
 
 #define ELFSWORD_CUT		/datum/intent/sword/cut/elf
 #define ELFSWORD_THRUST		/datum/intent/sword/thrust/elf
@@ -178,8 +186,6 @@
 #define SPEAR_CUT_1H		/datum/intent/spear/cut/oneh
 #define SPEAR_CAST          /datum/intent/spear/cast
 #define PARTIZAN_REND		/datum/intent/rend/reach/partizan
-#define PARTIZAN_PEEL		/datum/intent/partizan/peel
-#define PARTIZAN_PEEL_BAD	/datum/intent/partizan/peel/nag
 
 #define MESSER_CHOP			/datum/intent/sword/chop/messer
 
@@ -227,11 +233,9 @@
 #define BCLASS_PUNCH		"punch"
 #define BCLASS_BITE			"bite"
 #define BCLASS_BURN			"charring"
-#define BCLASS_PEEL			"peel"
 #define BCLASS_PUNISH		"punish"
 #define BCLASS_EFFECT		"effect"
 #define BCLASS_SUNDER       "sunder"
-#define BCLASS_HALFSWORD	"stab"
 
 //Material class (what material is striking)
 #define MCLASS_GENERIC		1
@@ -380,30 +384,27 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_MISS				"MISS"
 
 //Weapon values
-#define BLUNT_DEFAULT_PENFACTOR		-100
 #define NONBLUNT_BLUNT_DAMFACTOR 0.8 // Damage factor when a non blunt weapon is used with blunt intent. Meant to make it worse than a real one.
 #define BLUNT_DEFAULT_INT_DAMAGEFACTOR 1.4 // Universal blunt intent integrity damage factor. Replaces Roguepen
-#define MAUL_DEFAULT_PENFACTOR		-200//So they can nuke armour without issue. A pseudo-rend setup.
 
 // Integrity & Sharpness Value
 #define INTEG_PARRY_DECAY			1	//Default integrity decay on parry.
 #define INTEG_PARRY_DECAY_NOSHARP	5	//Integrity decay on parry for weapons with no sharpness OR for off-hand parries.
+#define INTEG_PARRY_DECAY_UNARMED	5	//Integrity decay on parry when the attacker is unarmed (fists still wear down shields).
+
 #define SHARPNESS_ONHIT_DECAY		3	//Sharpness decay on parry.
 #define SHARPNESS_TIER1_THRESHOLD	0.8	//%-age threshold when damage starts to fall off -- mainly damfactor and STR factor. NOT base damage value.
 #define SHARPNESS_TIER1_FLOOR		0.45//%-age threshold when damfactors and STR factors become 0.
 #define SHARPNESS_TIER2_THRESHOLD	0.2 //%-age threshold when damage *really* falls off. Base damage value included.
 
-#define UNARMED_DAMAGE_DEFAULT		12
+#define UNARMED_DAMAGE_DEFAULT		17
+#define UNARMED_DAMAGE_CIVILBARB	5
+//Base weapon-defense for an unarmed parry. Multiplied by PARRY_PER_WDEF_POINT to become a parry percentage.
+#define UNARMED_BASE_WDEF_BARE 2		// Bare fists — still bad, but not hopeless
+#define UNARMED_BASE_WDEF_EQUIPPED 8	// Bracers / knuckles / bandages — 80 base parry for expert pugilists
 
 /// Damage multiplier of silver weapons against mobs with TRAIT_SIMPLE_WOUNDS
 #define SILVER_SIMPLEMOB_DAM_MULT 3
-
-//Damage directly applied to a mob, as a percentage, if struck with blunt against armour.
-//This is to permit beating to death full plate guys with clubs. Or making the lucerne viable again.
-#define BLUNT_CHIP_MINUSCULE 0.10	//A flat 10%, meant for oddities. Staves and the like.
-#define BLUNT_CHIP_WEAK 0.20		//A flat 20%, meant for small clubs.
-#define BLUNT_CHIP_STRONG 0.30		//A flat 30%, meant for larger weapons.
-#define BLUNT_CHIP_ABSURD 0.40		//A flat 40%, meant for mauls and hammers.
 
 //Cast time reduction
 #define TOPER_CAST_TIME_REDUCTION 0.1
@@ -422,10 +423,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define ACC_PER_PENALTY_PER_POINT 10	//Accuracy lost per PER below 10. Deliberately harsher than the bonus.
 #define ACC_SKILL_BONUS_PER_LEVEL 8		//Accuracy per level of the weapon's associated skill.
 #define ACC_STAB_BONUS 10
-#define ACC_PEEL_BONUS 25
 #define ACC_PICK_BONUS 15
 #define ACC_CUT_BONUS 6
-#define ACC_HALFSWORD_BONUS 20
 #define ACC_BLUNT_PRECISE_PENALTY 10	//Blunt and smash aimed at a precise subzone. A mace can't hit the eyes very well.
 #define ACC_SHORT_WEAPON_BONUS 10		//SHORT weapons, and unarmed, aim better.
 #define ACC_AIMED_BONUS 20				//AIMED stance.
@@ -440,3 +439,11 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 // Critical Resistance Defines //
 #define BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE 0.5
+
+#define MAX_DODGE_CEIL 5
+#define MAX_DODGE_START 0	// We start at (presumed) 90%
+#define MAX_DODGE_FLOOR -15
+#define MAX_DODGE_CLAMP -5 // at 85%. Base is 90%.
+
+#define RIPOSTE_SHARPNESS_FACTOR	0.15	//Fraction of blade_int lost on riposte (15%). Heavy weapons add +0.05.
+#define RIPOSTE_INTEG_DIVISOR		5	//max_integrity / this = integrity damage on riposte for non-bladed weapons.

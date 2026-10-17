@@ -3,7 +3,7 @@
 	tutorial = "The New Moon Spellblades of Zybantia are the remnants of a fallen Nocite monastery in an unknown region of Lalvestine, \
 	the last major stronghold of the Ten in the Zybantian Empire. \
 	Their monastic lyfestyle and devotion collapsed quickly under the weight of the Rot, and they were forced from a lyfe of devout solitude \
-	into that of a common sellsword; Noc’s blessings proving rather useful when slaying monsters and men alike. \
+	into that of a common sellsword; Noc's blessings proving rather useful when slaying monsters and men alike. \
 	For whatever reason, you find yourself in the region, offering your skills to the highest bidder. Knowledge is power."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
@@ -86,7 +86,7 @@
 	force = 22//Dropped to 14 when on. Fire damage is a hell of a thing. -8, overall.
 	max_integrity = 200//+50
 	max_blade_int = 150//-50
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 	damtype = BRUTE
 	light_color = LIGHT_COLOR_BLUE
 	var/on = FALSE
@@ -112,7 +112,7 @@
 	if(on)
 		on = FALSE
 		damtype = BRUTE
-		possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike)
+		possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 		force = 22
 	else
 		user.visible_message(span_warning("[user]'s blade lights up with a blue flame."))
@@ -134,8 +134,7 @@
 	desc = "Light, fancy, yet still fairly protective. This teal coat is a signature of the New Moon Holy Order with a noc amulet upon the middle of the chestpiece."
 	icon_state = "newmoon_jacket"
 	item_state = "newmoon_jacket"
-	armor = ARMOR_SPELLSINGER//Better than the old, but, whatever. By a bit.
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 /obj/item/clothing/head/roguetown/roguehood/reinforced/newmoon
