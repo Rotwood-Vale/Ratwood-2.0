@@ -19,6 +19,8 @@
 	equip_delay_other = 3 SECONDS
 	strip_delay = 6 SECONDS
 	smelt_bar_num = 4
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_full_plate
 	name = "ancient blacksteel plate armor"
@@ -39,6 +41,8 @@
 	equip_delay_other = 3 SECONDS
 	strip_delay = 6 SECONDS
 	smelt_bar_num = 4
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate	//This is a cuirass
 	name = "blacksteel cuirass"
@@ -53,6 +57,8 @@
 	smeltresult = /obj/item/ingot/blacksteel
 	armor_class = ARMOR_CLASS_MEDIUM
 	smelt_bar_num = 2
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_halfplate
 	slot_flags = ITEM_SLOT_ARMOR
@@ -72,9 +78,12 @@
 	equip_delay_self = 4 SECONDS
 	unequip_delay_self = 4 SECONDS
 	armor_class = ARMOR_CLASS_HEAVY
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_halfplate/ancient
 	icon = 'icons/roguetown/clothing/special/blkknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bs_halfplate"
 	item_state = "bs_halfplate"
+	chunkcolor = "#303036"

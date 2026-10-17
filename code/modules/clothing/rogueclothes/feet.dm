@@ -416,6 +416,8 @@
 	desc = "<font color='A50021'>The lone and level sands stretch far away.</font> </br>‎<font color='FF0000'>March forth to the edge of reality, leaving behind its corpse.</font>"
 	icon_state = "zizoboots"
 	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/shoes/roguetown/boots/armor/zizo/Initialize(mapload)
 	. = ..()
@@ -664,6 +666,8 @@
 	resistance_flags = FIRE_PROOF
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/shoes/roguetown/boots/blacksteel/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
@@ -687,6 +691,8 @@
 	resistance_flags = FIRE_PROOF
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 // ----------------- BLACKSTEEL END -----------------------
 

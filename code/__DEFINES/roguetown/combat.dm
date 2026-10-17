@@ -26,3 +26,12 @@ Misc. Category. Spin it out if needed
 #define CRIT_RESISTANCE_STACKS_OP 1 // Noblood / Revenant etc.
 #define CRIT_RESISTANCE_EFFECTIVE_BLEEDRATE 0.8 // How much CR reduce bleedrate by. Inverse values are higher. Was 0.5, now 0.8.
 #define CRIT_RESISTANCE_TIMER_CD 30 SECONDS // Cooldown between guaranteed CR procs. DOES NOT APPLY TO DISMEMBERMENT.
+
+#define PROJ_PARRY_TIMER	0.65 SECONDS	//The time after an attack (swinging in the air counts) when a thrown item would be deflected at a higher chance.
+#define MAX_DODGE_CLAMP -5 // at 85%. Base is 90%.
+
+//Visible message presets.
+#define VISMSG_ARMOR_BLOCKED " <span class='armoralert'>Armor stops the damage.</span>"
+#define VISMSG_ARMOR_INT_STAGEONE "<span class='armoralert'><i> Dented.</i></span>"
+#define VISMSG_ARMOR_INT_STAGETWO "<span class='armoralert'> Damaged.</span>"
+#define VISMSG_ARMOR_INT_STAGETHREE "<span class='armoralert'><b> Crumbling!</b></span>"

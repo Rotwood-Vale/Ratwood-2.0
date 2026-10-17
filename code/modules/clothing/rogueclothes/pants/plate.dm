@@ -39,6 +39,8 @@
 	desc = "Polished gilbranze plates, layered atop silken chausses. Only the few who had embraced undeath were spared from Zizo's ascension; now, they command the undying legionnaires who march forth to sunder creation in Her name."
 	icon_state = "ancientplate_legs"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/under/roguetown/platelegs/ancient/decrepit
 	name = "decrepit plate chausses"
@@ -83,6 +85,7 @@
 	desc = "<font color='A50021'>Nothing beside remains. Round the decay of that colossal wreck, boundless and bare.</font>"
 	icon_state = "zizocloth"
 	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#363030"
 
 /obj/item/clothing/under/roguetown/platelegs/zizo/Initialize(mapload)
 	. = ..()
@@ -106,6 +109,7 @@
 	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_LEG_ANTAG
 	armor_class = ARMOR_CLASS_MEDIUM
+	chunkcolor = "#363030"
 
 /obj/item/clothing/under/roguetown/platelegs/medium/zizo/Initialize(mapload)
 	. = ..()

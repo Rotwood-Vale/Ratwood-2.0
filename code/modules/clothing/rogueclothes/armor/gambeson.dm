@@ -20,6 +20,8 @@
 	armor_class = ARMOR_CLASS_LIGHT
 	cold_protection = CHEST | GROIN
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+	chunkcolor = "#978151"
+	material_category = ARMOR_MAT_LEATHER
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
