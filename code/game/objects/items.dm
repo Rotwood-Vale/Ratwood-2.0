@@ -2024,12 +2024,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(desc != initial(desc))
 		return TRUE
 	return FALSE
-<<<<<<< HEAD
-
-// The mob carrying this, through any depth of containers. Returns the innermost carrier if nested in more than one.
-=======
   
->>>>>>> 08c23b70af (Update items.dm)
 /obj/item/proc/find_items_mob_carrier()
 	if(ismob(loc))
 		return loc
