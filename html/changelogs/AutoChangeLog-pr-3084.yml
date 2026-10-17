@@ -1,6 +1,0 @@
-author: "Grigorix"
-delete-after: True
-changes:
-  - rscadd: "Added thawbs bisht, turbans, new large cloth sash to the loadout menu"
-  - rscadd: "Added bedroll option to the loadout menu as well"
-  - bugfix: "fixed fancy turban crafting recipe"
