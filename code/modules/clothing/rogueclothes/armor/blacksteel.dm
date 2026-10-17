@@ -59,7 +59,6 @@
 	name = "blacksteel half-plate"
 	desc = "An exceptionally durable set of blacksteel armor that protects the chest, arms, and groin, fitted with a set of pauldrons."
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	icon = 'icons/roguetown/clothing/armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
 	icon_state = "bhalfplate"

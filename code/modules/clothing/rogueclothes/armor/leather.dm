@@ -4,7 +4,6 @@
 	icon_state = "roguearmor"
 	body_parts_covered = COVERAGE_TORSO
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT,BCLASS_BLUNT)
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
@@ -111,7 +110,7 @@
 /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/melee
 	name = "forester's cuirass"
 	desc = "A hardened leather harness with a reinforced pauldron worn over a maille coat. Imbued with Dendor's essence, it is built sturdier for front-line fighting."
-	armor = ARMOR_CUIRASS
+	armor = ARMOR_PLATE
 	armor_class = ARMOR_CLASS_MEDIUM
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 30
 
@@ -119,7 +118,7 @@
 	name = "forester's hauberk"
 	desc = "A forester's cuirass reinforced with plates and maille rings, the result of careful smithwork."
 	icon_state = "forestbrig"
-	armor = ARMOR_CUIRASS
+	armor = ARMOR_PLATE
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 20
 	equip_delay_self = 4 SECONDS
 	smeltresult = /obj/item/ingot/steel
@@ -130,8 +129,7 @@
 	icon_state = "studleather"
 	item_state = "studleather"
 	blocksound = SOFTHIT
-	armor = ARMOR_LEATHER_STUDDED
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
+	armor = ARMOR_LEATHER
 	nodismemsleeves = TRUE
 	body_parts_covered = COVERAGE_TORSO
 	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL//-25 compared to light brig
@@ -155,8 +153,7 @@
 	for its wearer, shielding from blows and weather alike."
 	icon_state = "roguearmor_belt"
 	item_state = "roguearmor_belt"
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	cold_protection = CHEST
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -170,8 +167,7 @@
 	icon_state = "roguearmor_coat"
 	item_state = "roguearmor_coat"
 	body_parts_covered = COVERAGE_ALL_BUT_ARMS
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	cold_protection = CHEST | ARM_RIGHT | ARM_LEFT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -195,8 +191,7 @@
 	item_state = "confessorcoat"
 	body_parts_covered = COVERAGE_FULL
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
-	armor = ARMOR_LEATHER_STUDDED
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb
@@ -228,8 +223,7 @@
 	icon_state = "leatherjacketo"
 	item_state = "leatherjacketo"
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	cold_protection = CHEST | ARM_LEFT | ARM_RIGHT
 
@@ -310,8 +304,7 @@
 	icon_state = "vest"
 	item_state = "vest"
 	color = "#514339"
-	armor = ARMOR_LEATHER_BAD
-	prevent_crits = list(BCLASS_CUT)
+	armor = ARMOR_LEATHER
 	blocksound = SOFTHIT
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
 	blade_dulling = DULLING_BASHCHOP
@@ -363,9 +356,8 @@
 	resistance_flags = FIRE_PROOF
 
 	slot_flags = ITEM_SLOT_ARMOR
-	armor = ARMOR_LEATHER_GOOD
+	armor = ARMOR_LEATHER
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 	detail_tag = "_detail"
@@ -412,7 +404,7 @@
 	desc = "A heavy coat of fine, yet rugged fabric. Reinforced, because one never knows."
 	icon_state = "hand"
 	item_state = "hand"
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_LEATHER
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir

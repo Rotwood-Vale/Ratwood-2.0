@@ -7,7 +7,6 @@
 	icon_state = "haubergeon"
 	armor = ARMOR_MAILLE
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	blocksound = CHAINHIT
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
 	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
@@ -92,9 +91,8 @@
 	desc = "<font color='A50021'>And on the pedestal these words appear: <i>\"My name is ZIZO, Queen of Queens:\"</i></font>"
 	icon_state = "zizohauberk"
 	item_state = "zizohauberk"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	armor_class = ARMOR_CLASS_MEDIUM
-	peel_threshold = 5
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo/Initialize(mapload)
@@ -117,8 +115,7 @@
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate
 	slot_flags = ITEM_SLOT_ARMOR
 	armor_class = ARMOR_CLASS_HEAVY
-	peel_threshold = 4
-	armor = ARMOR_CUIRASS
+	armor = ARMOR_PLATE
 	name = "psydonic hauberk"
 	desc = "A beautiful steel cuirass, decorated with blessed silver fluting and worn atop thick chainmaille. While it falters against arrows and bolts, these interlinked layers are superb at warding off the blows of inhumen claws and axes. </br>'..the knowledge of evil, and the burden of carrying Psydonia's hope upon thine shoulders..' </br>... </br>With some blessed silver and a blacksmith's assistance, I can turn this hauberk into a set of full-plate armor."
 	icon_state = "ornatehauberk"

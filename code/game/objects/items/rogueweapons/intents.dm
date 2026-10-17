@@ -62,11 +62,14 @@
 	var/penfactor = 0
 	/// Whether the intent itself has integrity damage modifier. Used for rend.
 	var/intent_intdamage_factor = 1
+	/// Intent's demolition mod. Applied to structures / objects and shields.
+	var/demolition_mod = 1
 	/// Changes the item's attack type ("blunt" - area-pressure attack, "slash" - line-pressure attack, "stab" - point-pressure attack)
 	var/item_d_type = "blunt"
 	var/charging_slowdown = 0
 	var/warnoffset = 0
 	var/swingdelay = 0
+	var/swingdelay_type = SWINGDELAY_NORMAL
 	/// Causes a return in /attack() but still allows to be used in attackby()
 	var/no_attack = FALSE
 	/// Range in tiles for melee attacks.
@@ -77,8 +80,6 @@
 	var/miss_sound
 	/// Bool to toggle hether off-hand is required to be free or not.
 	var/allow_offhand = TRUE
-	/// How many consecutive peel hits this intent requires to peel a piece of coverage? May be overriden by armor thresholds if they're higher.
-	var/peel_divisor = 0
 	/// How much glow this intent has. Used for spells
 	var/glow_intensity = null
 	/// The color of the glow. Used for spells
@@ -156,8 +157,9 @@
 		inspec += "\n<b>Effective Range:</b> [suffix] [effective_range] paces"
 	if(damfactor != 1)
 		inspec += "\n<b>Damage:</b> [damfactor]"
-	if(penfactor)
-		inspec += "\n<b>Armor Penetration:</b> [penfactor < 0 ? "NONE" : penfactor]"
+	inspec += "\n<b>Armor Penetration:</b> [penfactor > PEN_NONE ? colorgrade_rating(uppertext(item_d_type), penfactor) : "<font color='#808080'>NONE</font>"]"
+	if(masteritem)
+		inspec += " <span class='info'><a href='?src=[REF(masteritem)];explainpenfactor=1'>{?}</a></span>"
 	if(get_chargetime())
 		inspec += "\n<b>Charge Time</b>"
 	if(movement_interrupt)
@@ -185,8 +187,6 @@
 		inspec += "<font color='#f22'>Extremely Sluggish</font>"
 	else
 		inspec += "<font color='#d11'>Glacial</font>"
-	if(blade_class == BCLASS_PEEL)
-		inspec += "\nThis intent will peel the coverage off of your target's armor in non-key areas after [peel_divisor] consecutive hits.\nSome armor may have higher thresholds."
 	if(!allow_offhand)
 		inspec += "\nThis intent requires a free off-hand."
 	if(blade_class == BCLASS_EFFECT)
@@ -199,10 +199,33 @@
 				str +="|[bodyzone2readablezone(part)]|"
 			inspec += str
 	if(intent_intdamage_factor != 1)
-		var/percstr = abs(intent_intdamage_factor - 1) * 100
-		inspec += "\nThis intent deals [percstr]% [intent_intdamage_factor > 1 ? "more" : "less"] damage to integrity."
+		inspec += "\n<b>Integrity Damage:</b> [intent_intdamage_factor * 100]%"
+		if(masteritem)
+			inspec += " <span class='info'><a href='?src=[REF(masteritem)];explaindemolitionmod=1'>{?}</a></span>"
+	if(demolition_mod != 1)
+		inspec += "\n<b>Demolition Modifier:</b> [demolition_mod * 100]%"
+		if(masteritem)
+			inspec += " <span class='info'><a href='?src=[REF(masteritem)];explaindemolitionmod=1'>{?}</a></span>"
 	if(sharpness_penalty)
 		inspec += "\nThis intent will cost some sharpness for every attack made."
+	if(swingdelay > 0)
+		inspec += "\n<b>Attack Delay:</b> "
+		if(swingdelay <= 4)
+			inspec += "<font color='#fa4'>Moderate</font>"
+		else if(swingdelay <= 8)
+			inspec += "<font color='#f44'>Significant</font>"
+		else
+			inspec += "<font color='#f22'>Heavy</font>"
+	if(swingdelay_type)
+		inspec += " | Type: "
+		switch(swingdelay_type)
+			if(SWINGDELAY_NORMAL)
+				inspec += SPAN_TOOLTIP("The swing will be without any unusual effects.", "<font color='#e6e6e6'><u>Normal</u></font>")
+			if(SWINGDELAY_PENALTY)
+				inspec += SPAN_TOOLTIP("The swing will reduce my defense by a significant amount.", "<font color='#dab141'><u>Difficult</u></font>")
+			if(SWINGDELAY_CANCEL)
+				inspec += SPAN_TOOLTIP("I will have no chance to defend while swinging, and a strike against me will interrupt it.", "<font color='#a70d0d'><u>Rigid</u></font>")
+
 	if(blunt_chipping)
 		var/chip_strength
 		switch(blunt_chip_strength)
@@ -417,14 +440,14 @@
 /datum/intent/stab/militia
 	name = "militia stab"
 	damfactor = 1.1
-	penfactor = 50
+	penfactor = PEN_HEAVY
 
 /datum/intent/pick //now like icepick intent, we really went in a circle huh
 	name = "pick"
 	icon_state = "inpick"
 	attack_verb = list("picks","impales")
 	hitsound = list('sound/combat/hits/pick/genpick (1).ogg', 'sound/combat/hits/pick/genpick (2).ogg')
-	penfactor = 80
+	penfactor = PEN_BSTEEL
 	animname = "strike"
 	item_d_type = "stab"
 	blade_class = BCLASS_PICK
@@ -437,7 +460,7 @@
 	icon_state = "inpick"
 	attack_verb = list("picks","impales")
 	hitsound = list('sound/combat/hits/pick/genpick (1).ogg', 'sound/combat/hits/pick/genpick (2).ogg')
-	penfactor = 60
+	penfactor = PEN_BSTEEL
 	animname = "strike"
 	item_d_type = "stab"
 	blade_class = BCLASS_PICK
@@ -450,7 +473,7 @@
 	icon_state = "inpick"
 	attack_verb = list("stabs", "impales")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 60
+	penfactor = PEN_BSTEEL
 	damfactor = 1.1
 	clickcd = CLICK_CD_CHARGED
 	releasedrain = 4
@@ -528,7 +551,7 @@
 	misscost = 4
 	releasedrain = 1
 	swingdelay = 0
-	clickcd = 10
+	clickcd = CLICK_CD_QUICK
 	rmb_ranged = TRUE
 	blade_class = BCLASS_PUNCH
 	miss_text = "swing a fist at the air"
@@ -573,7 +596,7 @@
 	misscost = 5
 	releasedrain = 4	//More than punch cus pen factor.
 	swingdelay = 0
-	penfactor = 10
+	penfactor = PEN_NONE
 	blade_class = BCLASS_CUT
 	miss_text = "claw at the air"
 	miss_sound = "punchwoosh"
@@ -667,7 +690,7 @@
 	blade_class = BCLASS_BLUNT
 	hitsound = "punch_hard"
 	chargetime = 0
-	penfactor = 10
+	penfactor = PEN_NONE
 	swingdelay = 0
 	item_d_type = "blunt"
 
@@ -679,7 +702,7 @@
 	blade_class = BCLASS_CUT
 	hitsound = "smallslash"
 	chargetime = 0
-	penfactor = 0
+	penfactor = PEN_NONE
 	swingdelay = 3
 	miss_text = "slash the air"
 	item_d_type = "slash"
@@ -692,7 +715,7 @@
 	blade_class = BCLASS_CUT
 	hitsound = "smallslash"
 	chargetime = 0
-	penfactor = 0
+	penfactor = PEN_NONE
 	swingdelay = 3
 	item_d_type = "stab"
 
@@ -705,7 +728,7 @@
 	blade_class = BCLASS_CUT
 	hitsound = list("genchop", "genslash")
 	chargetime = 0
-	penfactor = 0
+	penfactor = PEN_NONE
 	swingdelay = 3
 	item_d_type = "slash"
 
@@ -717,7 +740,7 @@
 	blade_class = BCLASS_CUT
 	hitsound = list("genthrust", "genstab")
 	chargetime = 0
-	penfactor = 0
+	penfactor = PEN_NONE
 	swingdelay = 3
 	item_d_type = "stab"
 
@@ -745,7 +768,7 @@
 	animname = "strike"
 	hitsound = list('sound/combat/hits/blunt/daze_hit.ogg')
 	chargetime = 0
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	swingdelay = 6
 	damfactor = 1
 	item_d_type = "blunt"

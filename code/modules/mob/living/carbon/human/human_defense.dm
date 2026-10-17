@@ -1,9 +1,9 @@
-/mob/living/carbon/human/getarmor(def_zone, type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor, used_weapon)
+/mob/living/carbon/human/getarmor(def_zone, type, damage, armor_penetration = PEN_NONE, blade_dulling, intdamfactor, used_weapon)
 	var/armorval = 0
 	var/organnum = 0
 
 	if(def_zone)
-		return checkarmor(def_zone, type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor, used_weapon)
+		return checkarmor(def_zone, type, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL my bodyparts for protection, and averages out the values
@@ -14,7 +14,7 @@
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(def_zone, d_type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor = 1, obj/item/used_weapon)
+/mob/living/carbon/human/proc/checkarmor(def_zone, d_type, damage, armor_penetration = PEN_NONE, blade_dulling, intdamfactor = 1, obj/item/used_weapon)
 	if(!d_type)
 		return 0
 	if(isbodypart(def_zone))
@@ -22,49 +22,38 @@
 		def_zone = CBP.body_zone
 	var/obj/item/clothing/used
 	var/protection = 0
-	used = get_best_worn_armor(def_zone, d_type)
-	if(used)
-		protection = used.armor.getRating(d_type)
-		if(!blade_dulling)
-			blade_dulling = BCLASS_BLUNT
-		if(blade_dulling == BCLASS_PEEL)	//Peel shouldn't be dealing any damage through armor, or to armor itself.
-			used.peel_coverage(def_zone, peeldivisor, src)
-			damage = 0
-			if(def_zone == BODY_ZONE_CHEST)
-				purge_peel(99)
-		if(used.blocksound)
-			playsound(loc, get_armor_sound(used.blocksound, blade_dulling), 100)
-		var/intdamage = damage
-		var/consume_debuff = TRUE
-		// Penetrative damage splits its total damage between armor and body,
-		// whatever damage armor protected from still lands on the armor and damages it.
-		// AP weapons will break armor slower on average, but not "five intdamage per stab" slower as before.
-		if((damage + armor_penetration) > protection && d_type != "blunt")
-			consume_debuff = FALSE
-			// WE TAUGHT THIS MONKEY ARMOR PIERCING CODE AND IT KILLED ITSELF IMMEDIATELY.
-			// I'm going to try and explain this to the best of my ability after banging my head against it.
-			// AP effectively strips away armor. Forty five AP hitting fifty armor turns that to effectively five armor.
-			// The remaining armor will reduce the damage of any incoming attack, so fifty damage is dampened to forty five.
-			// Damage that got dampened is what gets dealt to the armor as intdamage.
-			// A fifty damage attack is dampened to forty five, with five being dealt as intdamage.
-			// That's really low, so we generate a number that's forty percent of your total force.
-			intdamage = max(protection - armor_penetration, damage * 0.4) // This number serves as an intdamage floor, we use it instead if your intdamage would've otherwise been lower than it.
-			if(armor_penetration >= protection) // If you get COMPLETELY penetrated, half of the damage will be dealt to the armor as well. Your gear shouldn't stay pristine after being totally cleaved.
-				intdamage = damage / 2
-		if(intdamfactor != 1)
-			intdamage *= intdamfactor
-		if(d_type == "blunt")
-			if(used.armor?.getRating("blunt") > 0)
-				var/bluntrating = used.armor.getRating("blunt")
-				intdamage -= intdamage * ((bluntrating / 2) / 100)	//Half of the blunt rating reduces blunt damage taken by %-age.
-		if(istype(used_weapon) && used_weapon.is_silver && ((used.smeltresult in list(/obj/item/ingot/aaslag, /obj/item/ingot/decrepit, /obj/item/ingot/gilbranze)) || used.GetComponent(/datum/component/cursed_item)))
-			// Blessed silver delivers more int damage against "cursed" alloys, see component for multiplier values
-			var/datum/component/silverbless/bless = used_weapon.GetComponent(/datum/component/silverbless)
-			if(bless.is_blessed)
-				// Apply multiplier if the blessing is active.
-				intdamage = round(intdamage * bless.cursed_item_intdamage)
+	var/intdamage = damage
+	var/consume_debuff = TRUE
+	if(!(d_type in ARMOR_DR_TYPES))
+		// Penetration types: slash, stab, piercing
+		used = get_best_worn_armor(def_zone, d_type)
+		if(used)
+			protection = used.armor.getRating(d_type)
+			if(!blade_dulling)
+				blade_dulling = BCLASS_BLUNT
+			if(used.blocksound)
+				playsound(loc, get_armor_sound(used.blocksound, blade_dulling), 100)
 
-		if(consume_debuff)	//If this is FALSE, then this is a penetrative hit -- we consume these in bodypart_attacked_by.
+			// Tier-based penetration:
+			//   pen > armor  = 100% through (full penetration)
+			//   pen == armor = 20% through (partial penetration)
+			//   pen < armor  = fully blocked
+			if(armor_penetration > protection)
+				consume_debuff = FALSE
+				intdamage = damage * PEN_PASSTHROUGH_OVER
+			else if(armor_penetration == protection)
+				consume_debuff = FALSE
+				intdamage = damage * PEN_PASSTHROUGH_SAME
+
+			if(intdamfactor != 1)
+				intdamage *= intdamfactor
+
+			if(istype(used_weapon) && used_weapon.is_silver && ((used.smeltresult in list(/obj/item/ingot/aaslag, /obj/item/ingot/decrepit, /obj/item/ingot/gilbranze)) || used.GetComponent(/datum/component/cursed_item)))
+				var/datum/component/silverbless/bless = used_weapon.GetComponent(/datum/component/silverbless)
+				if(bless.is_blessed)
+					intdamage = round(intdamage * bless.cursed_item_intdamage)
+
+		if(consume_debuff)
 			if(has_status_effect(/datum/status_effect/debuff/exposed))
 				intdamage *= EXPOSED_INTEG_MOD
 				playsound(src, 'sound/combat/exposed_pop.ogg', 100, TRUE)
@@ -78,27 +67,58 @@
 				remove_status_effect(/datum/status_effect/debuff/vulnerable)
 				emote("groan", forced = TRUE)
 
-		used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
+
+			used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
+	else
+		// DR types: blunt, fire, acid
+		var/list/layers = get_best_worn_armor_layered(def_zone, d_type)
+		if(length(layers))
+			for(var/C in layers)
+				if(layers[C] > protection)
+					protection = layers[C]
+			// DR tier formula: damage * 1 / (1 + 0.2 * tier)
+			if(protection > 0)
+				var/dr_mult = 1 / (1 + 0.2 * protection)
+				if(d_type in ARMOR_DR_PIERCE_TYPES)
+					// Fire/Acid: armor takes the blocked portion (what doesn't reach HP)
+					intdamage *= (1 - dr_mult)
+				else
+					// Blunt: armor takes the DR-reduced amount
+					intdamage *= dr_mult
+			if(intdamfactor != 1)
+				intdamage *= intdamfactor
+
+			var/full_dmg
+			if(has_status_effect(/datum/status_effect/debuff/exposed))
+				full_dmg = TRUE
+				playsound(src, 'sound/combat/exposed_pop.ogg', 100, TRUE)
+				visible_message("<span class = 'combatsecondarybodypart'>[src] suffers a savage hit to their armor while exposed!</span>")
+				remove_status_effect(/datum/status_effect/debuff/exposed)
+				emote("pain", forced = TRUE)
+			else if(has_status_effect(/datum/status_effect/debuff/vulnerable))
+				playsound(src, 'sound/combat/vulnerable_pop.ogg', 100, TRUE)
+				visible_message(span_biginfo("[src] is struck into their armor while vulnerable!"))
+				remove_status_effect(/datum/status_effect/debuff/vulnerable)
+				emote("groan", forced = TRUE)
+
+			var/layers_deep = 1
+			var/played_sound = FALSE
+			for(var/obj/item/clothing/C in layers)
+				var/actualdmg = intdamage
+				if(!full_dmg)
+					actualdmg /= layers_deep
+				C.take_damage(actualdmg, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
+				if(C.blocksound && !played_sound)
+					playsound(loc, get_armor_sound(C.blocksound, blade_dulling), 100)
+					played_sound = TRUE
+				layers_deep++
+			layers.Cut()
+
 	if(physiology)
 		protection += physiology.armor.getRating(d_type)
+
 	return protection
 
-/mob/living/carbon/human/proc/checkcritarmor(def_zone, d_type)
-	if(!d_type)
-		return FALSE
-	if(isbodypart(def_zone))
-		var/obj/item/bodypart/CBP = def_zone
-		def_zone = CBP.body_zone
-	var/list/body_parts = list(head, wear_mask, wear_wrists, wear_shirt, wear_neck, cloak, wear_armor, wear_pants, backr, backl, gloves, shoes, belt, s_store, glasses, ears, wear_ring) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
-	for(var/bp in body_parts)
-		if(!bp)
-			continue
-		if(bp && istype(bp , /obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(zone2covered(def_zone, C.body_parts_covered_dynamic))
-				if(C.obj_integrity > 1)
-					if(d_type in C.prevent_crits)
-						return TRUE
 
 /*
 /mob/proc/checkwornweight()
@@ -313,8 +333,7 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
-		var/ap = (M.d_type == "blunt") ? BLUNT_DEFAULT_PENFACTOR : M.armor_penetration
-		var/armor = run_armor_check(affecting, M.d_type, armor_penetration = ap, damage = damage)
+		var/armor = run_armor_check(affecting, M.d_type, armor_penetration = M.armor_penetration, damage = damage)
 		next_attack_msg.Cut()
 
 		var/nodmg = FALSE
@@ -858,6 +877,41 @@
 	var/obj/item/clothing/used
 	if(def_zone == BODY_ZONE_TAUR)
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	else if(get_taur_tail())
+		switch(def_zone)
+			if(BODY_ZONE_PRECISE_L_FOOT)
+				def_zone = BODY_ZONE_L_LEG
+			if(BODY_ZONE_PRECISE_R_FOOT)
+				def_zone = BODY_ZONE_R_LEG
+	var/list/body_parts = list(skin_armor, head, wear_mask, wear_wrists, gloves, wear_neck, cloak, wear_armor, wear_shirt, shoes, wear_pants, backr, backl, belt, s_store, glasses, ears, wear_ring) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	for(var/bp in body_parts)
+		if(!bp)
+			continue
+		if(bp && istype(bp, /obj/item/clothing))
+			var/obj/item/clothing/C = bp
+			if(zone2covered(def_zone, C.body_parts_covered_dynamic))
+				if(C.max_integrity)
+					if(C.obj_integrity <= 0)
+						continue
+				var/val = C.armor.getRating(d_type)
+				if(val > 0)
+					if(val > protection)
+						protection = val
+						used = C
+	return used
+
+/// Helper proc that returns the worn item ref that has the highest rating covering the def_zone (targeted zone) for the d_type (damage type)
+/mob/living/carbon/human/proc/get_best_worn_armor_layered(def_zone, d_type)
+	var/protection = 0
+	var/obj/item/clothing/used
+	if(def_zone == BODY_ZONE_TAUR)
+		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	else if(get_taur_tail())
+		switch(def_zone)
+			if(BODY_ZONE_PRECISE_L_FOOT)
+				def_zone = BODY_ZONE_L_LEG
+			if(BODY_ZONE_PRECISE_R_FOOT)
+				def_zone = BODY_ZONE_R_LEG
 	var/list/body_parts = list(skin_armor, head, wear_mask, wear_wrists, gloves, wear_neck, cloak, wear_armor, wear_shirt, shoes, wear_pants, backr, backl, belt, s_store, glasses, ears, wear_ring) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/bp in body_parts)
 		if(!bp)

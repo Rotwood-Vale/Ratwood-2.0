@@ -3,7 +3,6 @@
 	desc = "Gauntlets made of interlinked steel rings. They offer decent protection against common weaponries, except for arrows."
 	icon_state = "cgloves"
 	armor = ARMOR_MAILLE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
 	resistance_flags = FIRE_PROOF
 	blocksound = CHAINHIT
 	max_integrity = ARMOR_INT_SIDE_STEEL

@@ -10,7 +10,6 @@
 	sleeved = null
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	clothing_flags = CANT_SLEEP_IN
 	dynamic_hair_suffix = "+generic"
 	bloody_icon_state = "helmetblood"
@@ -322,7 +321,7 @@
 	desc = "A helmet of bronze, older-in-design than you could possibly imagine. Mounted to its crest is a decorative sigil that has \
 	sparked scholarly debates for the better part of a millennium; is it a star, a vortex, or the Sun? </br>A notch behind the sigil \
 	allows for the joint mounting of a plume. Nock a feather into it to show off your alliegence's colors."
-	armor = ARMOR_BRONZE
+	armor = ARMOR_PLATE
 	max_integrity = ARMOR_INT_HELMET_HEAVY_BRONZE - 25 //Close, but no cigar.
 	body_parts_covered = HEAD|HAIR|EARS
 	icon_state = "bronzehelmet"
@@ -361,7 +360,7 @@
 	providing excellent coverage while ensuring one doesn't suffocate on their own adrenal huffs. </br>Out of all actorial labors, none surpass \
 	the reenactment of Ravox's duel against Graggar atop Ur-Syon's ruins - mythologized not as a tentacled star, but as a towering doppelganger-champion; \
 	sculpted by the Archdevil to be the inverse to all who stood for justice and chivalry."
-	armor = ARMOR_BRONZE
+	armor = ARMOR_PLATE
 	max_integrity = ARMOR_INT_HELMET_HEAVY_BRONZE - 100
 	armor_class = ARMOR_CLASS_LIGHT
 	body_parts_covered = FULL_HEAD
@@ -882,7 +881,6 @@
 	max_integrity = ARMOR_INT_HELMET_LEATHER
 	flags_inv = HIDEHAIR
 	body_parts_covered = HEAD|HAIR|EARS|NOSE|NECK
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_STAB)
 	max_integrity = 250
 	smeltresult = /obj/item/ingot/iron
 	dropshrink = null

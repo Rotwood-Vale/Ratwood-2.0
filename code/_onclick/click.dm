@@ -130,6 +130,11 @@
 	if(next_move > world.time)
 		return
 
+	if(isliving(src))
+		var/mob/living/clicker = src
+		if(clicker.is_swinging())
+			return
+
 	if(modifiers["middle"] && atkswinging == "middle")
 		if(mmb_intent)
 			if(mmb_intent.get_chargetime())
@@ -365,6 +370,27 @@
 
 	atkswinging = null
 	//update_warning()
+
+
+/mob/living/proc/add_swingdelay(datum/intent/used_intent)
+	if(!used_intent)
+		return FALSE
+	if(!used_intent.swingdelay || !used_intent.swingdelay_type)
+		return FALSE
+	var/delay = used_intent.swingdelay + 2	//We want the status effect to last longer than the delay itself so we'd have 2 tick overhead to check for a cancelled swingdelay.
+	switch(used_intent.swingdelay_type)
+		if(SWINGDELAY_NORMAL)
+			apply_status_effect(/datum/status_effect/swingdelay, delay)
+			return TRUE
+		if(SWINGDELAY_PENALTY)
+			apply_status_effect(/datum/status_effect/swingdelay/penalty, delay)
+			return TRUE
+		if(SWINGDELAY_CANCEL)
+			apply_status_effect(/datum/status_effect/swingdelay/disrupt, delay)
+			return TRUE
+
+/mob/living/proc/is_swinging()
+	return (has_status_effect(/datum/status_effect/swingdelay) || has_status_effect(/datum/status_effect/swingdelay/disrupt))
 
 //Branching path for Adjacent clicks with or without items
 //DOES NOT ACTUALLY KNOW IF YOU'RE ADJACENT, DO NOT CALL ON IT'S OWN

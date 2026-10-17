@@ -317,14 +317,12 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 			var/list/slash_max = list()
 			var/list/stab_max = list()
 			var/list/piercing_max = list()
-			var/list/crit_weakness = list()	//The critical damage type the zone will be weak to
 			for(var/part in body_parts)
 				if(!part)
 					continue
 				if(part && istype(part, /obj/item/clothing))
 					var/obj/item/clothing/C = part
 					var/list/readable_coverage
-					var/list/critclasses = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_SMASH, BCLASS_PICK)
 					if(C.max_integrity)
 						if(C.obj_integrity <= 0)
 							continue
@@ -338,14 +336,6 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 							continue
 					if(C.body_parts_covered_dynamic)
 						readable_coverage = body_parts_covered2organ_names(C.body_parts_covered_dynamic, verbose = TRUE)
-
-					if(length(C.prevent_crits) && (is_normal || is_smart))
-						for(var/critzone in C.prevent_crits)
-							for(var/crit in critclasses)
-								if(critzone == crit)
-									LAZYREMOVE(critclasses, crit)
-									continue
-
 					for(var/coverageflag in readable_coverage)
 						for(var/type in damtypes)
 							switch(type)			//We get the max armor  values for this coverage flag
@@ -358,13 +348,6 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 								if("piercing")
 									piercing_max[coverageflag] = max(C.armor.getRating(type), piercing_max[coverageflag])
 						coverage[coverageflag] += 1
-						if(length(critclasses) && (is_normal || is_smart))
-							var/str
-							for(var/critzone in critclasses)
-								if(critzone == BCLASS_PICK)
-									critzone = "Pick"
-								str += "| [capitalize(critzone)] | "
-							crit_weakness[coverageflag] = str
 						switch(coverageflag)		//This removes covered zones from the _exposed list. The remainder, if any, will be highlighted in red as an "exposed" zone.
 							if(READABLE_ZONE_L_ARM)
 								coverage_exposed.Remove(READABLE_ZONE_ARMS, READABLE_ZONE_L_ARM)
@@ -445,7 +428,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 							for(var/exposed in coverage_exposed)
 								str += "<b>[exposed]</b>: <font color = '#770404'><b>EXPOSED!</B></font><br>"
 					for(var/thing in coverage)
-						str += "<b>[thing]</b> LAYERS: <b>[coverage[thing]]</b> | [colorgrade_rating("", blunt_max[thing], TRUE)] | [colorgrade_rating("", slash_max[thing], TRUE)] | [colorgrade_rating("", stab_max[thing], TRUE)] | [colorgrade_rating("", piercing_max[thing], TRUE)] <br><font color = '#a35252'>[crit_weakness[thing]]</font><br>"
+						str += "<b>[thing]</b> LAYERS: <b>[coverage[thing]]</b> | [colorgrade_rating("", blunt_max[thing], TRUE)] | [colorgrade_rating("", slash_max[thing], TRUE)] | [colorgrade_rating("", stab_max[thing], TRUE)] | [colorgrade_rating("", piercing_max[thing], TRUE)]"
 					dat += str
 				else
 					dat += "<b><center>I don't know! Just hit them!</center></b>"
@@ -531,103 +514,37 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 	return ..() //end of this massive fucking chain. TODO: make the hud chain not spooky. - Yeah, great job doing that. - I made it worse sorry guys.
 
-//Sorry colorblind folks...
-/proc/colorgrade_rating(input, rating, elaborate = FALSE)
-	var/str
-	if(isnull(rating))
-		rating = 0
-	switch(rating)
-		if(0 to 9)
-			var/color = "#f81a1a"
-			str = elaborate ? "<font color = '[color]'>[input] (F)</font>" : "<font color = '[color]'>[input] (F)</font>"
-		if(10 to 19)
-			var/color = "#680d0d"
-			str = elaborate ? "<font color = '[color]'>[input] (D)</font>" : "<font color = '[color]'>[input] (D)</font>"
-		if(20 to 39)
-			var/color = "#753e11"
-			str = elaborate ? "<font color = '[color]'>[input] (D+)</font>" : "<font color = '[color]'>[input] (D+)</font>"
-		if(40 to 49)
-			var/color = "#c0a739"
-			str = elaborate ? "<font color = '[color]'>[input] (C)</font>" : "<font color = '[color]'>[input] (C to C+)</font>"
-		if(50 to 59)
-			var/color = "#e3e63c"
-			str = elaborate ? "<font color = '[color]'>[input] (C+)</font>" : "<font color = '[color]'>[input] (C to C+)</font>"
-		if(60 to 69)
-			var/color = "#425c33"
-			str = elaborate ? "<font color = '[color]'>[input] (B)</font>" : "<font color = '[color]'>[input] (B to B+)</font>"
-		if(70 to 79)
-			var/color = "#1a9c00"
-			str = elaborate ? "<font color = '[color]'>[input] (B+)</font>" : "<font color = '[color]'>[input] (B to B+)</font>"
-		if(80 to 89)
-			var/color = "#0fe021"
-			str = elaborate ? "<font color = '[color]'>[input] (A)</font>" : "<font color = '[color]'>[input] (A to A+)</font>"
-		if(90 to 99)
-			var/color = "#ffffff"
-			str = elaborate ? "<font color = '[color]'>[input] (A+)</font>" : "<font color = '[color]'>[input] (A to A+)</font>"
-		if(100)
-			var/color = "#339dff"
-			str = "<font color = '[color]'>[input] (S)</font>"
-		if(101 to 200)
-			var/color = "#c757af"
-			str = "<font color = '[color]'>[input] (S+)</font>"
+/// Renders an armor tier as colored dots.
+/// label: display name (e.g. "SLASH", "BLUNT")
+/// tier: the DBLOCK or DR tier value (0-5)
+/// max_tier: maximum dots to show (4 for DBLOCK, 5 for DR)
+/proc/colorgrade_rating(label, tier, elaborate = FALSE, max_tier = 4)
+	if(isnull(tier))
+		tier = 0
+	var/color
+	switch(tier)
+		if(0)
+			color = "#808080"
+		if(1)
+			color = "#c0a739"
+		if(2)
+			color = "#e3e63c"
+		if(3)
+			color = "#1a9c00"
+		if(4)
+			color = "#339dff"
+		if(5)
+			color = "#c757af"
 		else
-			str = "[input] (Under 0 or above 200! Contact coders.)"
-	return str
-
-/*/proc/defense_report(var/obj/item/clothing/C, var/stupid, var/normal, var/smart, var/stupid_string)
-	var/str
-
-	if(!istype(C, /obj/item/clothing))
-		str += "<br>---------------------------<br>"
-		return str
-	if(C.armor)
-		var/defense = "<u><b>ABSORPTION: </b></u><br>"
-		var/datum/armor/def_armor = C.armor
-		defense += "[colorgrade_rating("BLUNT", def_armor.blunt, smart)] | "
-		defense += "[colorgrade_rating("SLASH", def_armor.slash, smart)] | "
-		defense += "[colorgrade_rating("STAB", def_armor.stab, smart)] | "
-		defense += "[colorgrade_rating("PIERCING", def_armor.piercing, smart)] "
-		str += "[defense]<br>"
-
-	var/coverage = "<u><b>COVERS: </b></u><br>"
-	if(!stupid)
-		coverage += "<font color = '#cccccc'> | </font>"
-		for(var/zone in body_parts_covered2organ_names(C.body_parts_covered))
-			coverage += "<font color = '#cccccc'><b>[zone] | </b></font>"
-		str += "[coverage]<br>"
-	else
-		str += coverage
-		str += stupid_string
-	if(normal || smart)
-		var/list/critclasses = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_SMASH, BCLASS_PICK)
-		var/crits
-		if(C.prevent_crits || smart)
-			crits = "<b><u>PREVENTS CRITS: </u></b>"
-		if(C.prevent_crits)
-			crits += "<br>"
-			crits += "<font color = '#69a1a8'>| </font>"
-			for(var/zone in C.prevent_crits)
-				for(var/crit in critclasses)
-					if(zone == crit)
-						if(zone == BCLASS_PICK)
-							zone = "pick"		//Pick is labelled as 'Stab'
-						zone = "<font color = '#69a1a8'>[capitalize(zone)] | </font>"
-						crits += zone
-						LAZYREMOVE(critclasses, crit)
-						continue
-		if(smart)
-			crits += "<br>"
-			crits += "<font color = '#a35252'>| </font>"
-			for(var/crit in critclasses)
-				if(crit == BCLASS_PICK)
-					crit = "pick"		//Pick is labelled as 'Stab', this prevents confusion
-				crit = "<font color = '#a35252'>[capitalize(crit)] | </font>"
-				crits += crit
-
-		str += crits
-	str += "<br>---------------------------<br>"
-
-	return str*/
+			return "[label] (Invalid tier [tier]! Contact coders.)"
+	// Build dot display
+	var/dots = ""
+	for(var/i in 1 to max_tier)
+		if(i <= tier)
+			dots += "<font color='[color]'>&#9679;</font>"
+		else
+			dots += "<font color='#404040'>&#9675;</font>"
+	return "<font color='[color]'>[label]</font> [dots]"
 
 /proc/skilldiff_report(input)
 	switch (input)

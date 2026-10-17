@@ -149,6 +149,9 @@
 			text += " Twice! Disadvantage! ([(prob2defend / 100) * (prob2defend / 100) * 100]%)"
 		to_chat(src, span_info("[text]"))
 
+	if(has_status_effect(/datum/status_effect/swingdelay/penalty))
+		prob2defend -= 50
+
 	var/parry_status = FALSE
 	if(defender_dualw)
 		if(prob(prob2defend) && extradefroll)
@@ -246,6 +249,12 @@
 			if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
 				sharp_loss += STRONG_SHP_BONUS
 				intdam += STRONG_INTG_BONUS
+
+			// Heavy weapons chew through shields — use higher of demolition_mod or intent intdamage_factor
+			if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
+				var/shield_mult = max(intenty.demolition_mod, intenty.intent_intdamage_factor)
+				intdam *= shield_mult
+
 			used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
 			used_weapon.remove_bintegrity(sharp_loss, attacker)
 

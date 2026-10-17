@@ -32,6 +32,16 @@
 	accfactor = 1.1
 	damage_from_perception = FALSE
 
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Crossbows increase in accuracy with a higher <b>PERCEPTION</b>, but deal a static amount of damage \
+	regardless of character stats.")
+	. += span_info("Crossbows cannot be nocked directly from their quiver and require time to load.")
+	if(penfactor < 0)
+		. += span_info("This weapon <b>reduces</b> bolt penetration by <b>[abs(penfactor)]</b> tier(s).")
+	else if(penfactor > 0)
+		. += span_info("This weapon <b>increases</b> bolt penetration by <b>[penfactor]</b> tier(s).")
+
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/getonmobprop(tag)
 	. = ..()
 	if(tag)
@@ -231,7 +241,7 @@
 	hasloadedsprite = TRUE
 	movingreload = TRUE
 	slot_flags = ITEM_SLOT_BACK | ITEM_SLOT_HIP
-	penfactor = 0.5		//Bolts have 50 pen, this decreases to 25. Should only pen armor with less than 67 protection.
+	penfactor = -1	//Reduces bolt penetration by one tier. A PEN_MEDIUM bolt becomes PEN_LIGHT.
 	damage_from_perception = TRUE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker
@@ -362,7 +372,6 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
 	chargingspeed = 60//+20
 	reloadtime = 6 SECONDS//From 8 seconds to 6, this way it's atleast usable in a fight, otherwise Arbalist is just better switching to a normal crossbow.
-	penfactor = 1.5//We want this to go through, no matter what, effectively.
 
 /obj/item/ammo_box/magazine/internal/shot/heavy_xbow
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/heavy_bolt

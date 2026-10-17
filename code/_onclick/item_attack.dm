@@ -144,17 +144,22 @@
 //	if(force)
 //		user.emote("attackgrunt")
 	user.mob_timers[MT_SNEAKATTACK] = world.time
-	var/swingdelay = user.used_intent.swingdelay
+	var/swingdelay = user.used_intent?.swingdelay
 	var/_swingdelay_mod = SEND_SIGNAL(src, COMSIG_LIVING_SWINGDELAY_MOD)
 	if(_swingdelay_mod)
 		swingdelay += _swingdelay_mod
 
 	var/datum/intent/cached_intent = user.used_intent
-	if(swingdelay)
-		if(!user.used_intent.noaa && isnull(user.mind))
-			if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
-				user.do_attack_animation(M, user.used_intent.animname, user.used_intent.masteritem, used_intent = user.used_intent, simplified = TRUE)
-		sleep(swingdelay)
+	if(swingdelay && cached_intent.swingdelay_type)
+		if(user.add_swingdelay(cached_intent))
+			sleep(cached_intent.swingdelay)
+
+	// Getting struck w/ /disrupt swingdelay type sets our swing_state to false. 
+	// If we had the effect, but not the bool, we were interrupted. (Or something else went wrong.)
+	if(user.has_status_effect(/datum/status_effect/swingdelay) && !user.swing_state)
+		return
+
+	user.swing_state = FALSE
 	if(user.a_intent != cached_intent)
 		return
 	if(QDELETED(src) || QDELETED(M))
@@ -490,10 +495,9 @@
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_INTENTCAP)
-	var/newforce = get_complex_damage(I, user, blade_dulling)
+	var/newforce = get_complex_damage(I, user, blade_dulling) * user.used_intent.demolition_mod
 	if(isclothing(src) || istype(src, /obj/item/rogueweapon))
 		newforce = min(newforce, 5)
-	newforce *= I.demolition_mod
 	if(!newforce)
 		testing("dam33")
 		return 0
@@ -703,17 +707,6 @@
 	var/verb_appendix
 	if(!I.force_dynamic)
 		return
-	if(bladec == BCLASS_PEEL)
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			var/obj/item/used = H.get_best_worn_armor(hit_area, user.used_intent.item_d_type)
-			if(used)
-				if(used.peel_count)
-					verb_appendix =	" <font color ='#e7e7e7'>(\Roman[used.peel_count])</font>"
-				else
-					use_override = TRUE
-			else
-				use_override = TRUE
 	var/message_hit_area = ""
 	hit_area = parse_zone(hit_area, BP)
 	if(user.used_intent)

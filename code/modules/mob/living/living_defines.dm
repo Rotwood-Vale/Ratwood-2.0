@@ -252,5 +252,16 @@
 	// --- Fellowship (AP Quest 2 port) ---
 	var/datum/fellowship/current_fellowship
 	var/list/incoming_fellowship_invites = list() // list of /datum/weakref to /datum/fellowship; kept in sync with fellowship.pending_invites
+<<<<<<< HEAD
 	/// List of enemies for the mob's AI
 	var/list/enemies = list()
+=======
+
+	/// Toggle delay for Specials, or really anything else that you don't want input spam to instantly cycle through.
+	var/toggle_delay = 1 SECONDS
+	/// Toggle timer for Specials, or really anything else that you don't want input spam to instantly cycle through.
+	var/toggle_timer
+
+	/// Whether we are in a swingdelay, used to check for disrupted swingdelays.
+	var/swing_state = FALSE
+>>>>>>> 9587bd9ba7 (The Big One)

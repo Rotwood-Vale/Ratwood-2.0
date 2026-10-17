@@ -29,7 +29,6 @@
 	var/cooldown = 0
 
 	var/emote_environment = -1
-	var/list/prevent_crits
 
 	var/clothing_flags = NONE
 
@@ -654,10 +653,10 @@ BLIND     // can't see anything
 		filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, -20, y_offset)
 	. = ..()
 
-/obj/proc/generate_tooltip(examine_text, showcrits)
+/obj/proc/generate_tooltip(examine_text)
 	return examine_text
 
-/obj/item/clothing/generate_tooltip(examine_text, showcrits)
+/obj/item/clothing/generate_tooltip(examine_text)
 	if(!armor)	// No armor
 		return examine_text
 
@@ -672,24 +671,6 @@ BLIND     // can't see anything
 	str += "[colorgrade_rating("🗡️ STAB ", armor.stab, elaborate = TRUE)] | "
 	str += "[colorgrade_rating("🏹 PIERCE ", armor.piercing, elaborate = TRUE)] "
 
-	if(showcrits && prevent_crits)
-		str += "<br>———————————————<br>"
-		str += "<font color = '#afaeae'><text-align: center>STOPS CRITS: <br>"
-		var/linebreak_count = 0
-		var/index = 0
-		for(var/flag in prevent_crits)
-			index++
-			if(flag == BCLASS_PICK) //BCLASS_PICK is named "stab", and "stabbing" is its own damage class. Prevents confusion.
-				flag = "pick"
-			str += ("[capitalize(flag)] ")
-			linebreak_count++
-			if(linebreak_count >= 3)
-				str += "<br>"
-				linebreak_count = 0
-			else if(index != length(prevent_crits))
-				str += " | "
-		str += "</font>"
-
 	//This makes it appear darker than the rest of examine text. Draws the cursor to it like to a link.
 	examine_text = "<font color = '#808080'>[examine_text]</font>"
 	// Make the armor info clickable; clicking prints full details to chat
@@ -701,29 +682,11 @@ BLIND     // can't see anything
 		return get_examine_string(user)
 
 	var/str = ""
-	str += "[colorgrade_rating("🔨 BLUNT  ", armor.blunt, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🪓 SLASH  ", armor.slash, elaborate = TRUE)]"
-	str += "<br>"
-	str += "[colorgrade_rating("🗡️ STAB   ", armor.stab, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🏹 PIERCE ", armor.piercing, elaborate = TRUE)] "
-
-	if(showcrits && prevent_crits)
-		str += "<br>———————————————<br>"
-		str += "<font color = '#afaeae'><text-align: center>STOPS CRITS: <br>"
-		var/linebreak_count = 0
-		var/index = 0
-		for(var/flag in prevent_crits)
-			index++
-			if(flag == BCLASS_PICK)
-				flag = "pick"
-			str += ("[capitalize(flag)] ")
-			linebreak_count++
-			if(linebreak_count >= 3)
-				str += "<br>"
-				linebreak_count = 0
-			else if(index != length(prevent_crits))
-				str += " | "
-		str += "</font>"
+	str += "<b>ABSORPTION:</b> [colorgrade_rating("🔨 BLUNT", armor.blunt, elaborate = TRUE, max_tier = 5)]<br>"
+	str += "<b>BLOCK:</b> "
+	str += "[colorgrade_rating("🪓 SLASH", armor.slash, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🗡️ STAB", armor.stab, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🏹 PIERCE", armor.piercing, elaborate = TRUE)]"
 
 	var/examine_text = get_examine_string(user)
 	if(examine_text && length(examine_text))
@@ -753,14 +716,6 @@ BLIND     // can't see anything
 		lines += "<b>ARMOR CLASS:</b> [armor_class_text]"
 		lines += "[colorgrade_rating("🔨 BLUNT", armor.blunt, TRUE)] | [colorgrade_rating("🪓 SLASH", armor.slash, TRUE)]"
 		lines += "[colorgrade_rating("🗡️ STAB", armor.stab, TRUE)] | [colorgrade_rating("🏹 PIERCE", armor.piercing, TRUE)]"
-	if(length(prevent_crits))
-		var/list/prevents = list()
-		for(var/flag in prevent_crits)
-			var/prevent_text = "[flag]"
-			if(flag == BCLASS_PICK)
-				prevent_text = "pick"
-			prevents += capitalize(prevent_text)
-		lines += "<b>PREVENTS CRITS:</b> [prevents.Join(", ")]"
 	if(self_examine)
 		var/true_durability = get_true_durability_percent_text()
 		if(true_durability)

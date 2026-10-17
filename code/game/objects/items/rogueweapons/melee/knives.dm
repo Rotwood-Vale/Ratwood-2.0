@@ -10,17 +10,17 @@
 	animname = "cut"
 	blade_class = BCLASS_CUT
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
-	penfactor = 0
+	penfactor = PEN_NONE
 	chargetime = 0
 	swingdelay = 0
-	clickcd = 10
+	clickcd = CLICK_CD_QUICK
 	item_d_type = "slash"
 
 /// For unusually heavy daggers with a strong cutting edge.
 /datum/intent/dagger/cut/heavy
 	name = "heavy cut"
 	damfactor = 1.2
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	clickcd = 11
 
 /datum/intent/dagger/cut/light
@@ -35,22 +35,25 @@
 	animname = "stab"
 	blade_class = BCLASS_STAB
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 40
+	penfactor = PEN_MEDIUM
 	chargetime = 0
-	clickcd = 8
+	clickcd = CLICK_CD_QUICK
 	item_d_type = "stab"
 
 // A slightly weaker thrust for daggers with a curved blade, or which otherwise aren't very good at stabbing.
 /datum/intent/dagger/thrust/weak
 	name = "lopsided thrust"
 	damfactor = 0.8
+	penfactor = PEN_HEAVY // Slightly more pen, to compensate in penetration for the lower damage.
+	// You're still doing less damage than with a stabbier dagger, but your AP isn't penalised.
+	clickcd = CLICK_CD_QUICK
 
 /datum/intent/dagger/thrust/pick
 	name = "icepick stab"
 	icon_state = "inpick"
 	attack_verb = list("stabs", "impales")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 80
+	penfactor = PEN_BSTEEL
 	clickcd = 14
 	swingdelay = 12
 	damfactor = 1.1
@@ -64,7 +67,7 @@
 	blade_class = BCLASS_BLUNT
 	hitsound = list('sound/combat/hits/blunt/bluntsmall (1).ogg', 'sound/combat/hits/blunt/bluntsmall (2).ogg', 'sound/combat/hits/kick/kick.ogg')
 	damfactor = 0.6 // Less damage than a normal attack I don't want this to be better than stabbing
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	clickcd = 14
 	recovery = 10
 	item_d_type = "blunt"
@@ -79,7 +82,7 @@
 	animname = "chop"
 	blade_class = BCLASS_CHOP
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
-	penfactor = 10
+	penfactor = PEN_LIGHT
 	damfactor = 1.5
 	swingdelay = 5
 	clickcd = 10
@@ -87,7 +90,7 @@
 
 /datum/intent/dagger/chop/cleaver
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
-	penfactor = 30
+	penfactor = PEN_MEDIUM
 
 //knife and dagger objs ฅ^•ﻌ•^ฅ
 
@@ -200,7 +203,7 @@
 	icon_state = "inpick"
 	attack_verb = list("stabs", "impales")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 55
+	penfactor = PEN_MEDIUM
 	clickcd = 12
 	swingdelay = 6 //Halfway point between a 'stab' and 'pick'.
 	damfactor = 1.05
@@ -213,7 +216,7 @@
 	animname = "chop"
 	blade_class = BCLASS_CHOP
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
-	penfactor = 15
+	penfactor = PEN_LIGHT
 	damfactor = 1.3
 	swingdelay = 5
 	clickcd = 10
@@ -340,7 +343,7 @@
 	animname = "stab"
 	blade_class = BCLASS_STAB
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	damfactor = 0.9
 	chargetime = 0
 	clickcd = 8
@@ -354,7 +357,7 @@
 	blade_class = BCLASS_CHOP
 	reach = 1
 	swingdelay = 10
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	damfactor = 2
 	clickcd = CLICK_CD_CHARGED
 	no_early_release = TRUE
@@ -386,7 +389,7 @@
 /datum/intent/dagger/thrust/quick
 	name = "quick thrust"
 	attack_verb = list("thrusts", "shanks")
-	penfactor = 10
+	penfactor = PEN_LIGHT
 	intent_intdamage_factor = 0.1
 	clickcd = 4 //Halved penetration, doubled attack speed. This is either going to be extremely funny, or extremely evil.
 	misscost = 10
@@ -507,12 +510,12 @@
 *
 */
 /datum/intent/dagger/thrust/wood
-	penfactor = 15 //it is still a pointy piece of wood!
+	penfactor = PEN_NONE
 	blade_class = BCLASS_BLUNT
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 
 /datum/intent/dagger/thrust/pick/wood
-	penfactor = 35 //it is still a pointy piece of wood!
+	penfactor = PEN_NONE
 	blade_class = BCLASS_BLUNT
 	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
 

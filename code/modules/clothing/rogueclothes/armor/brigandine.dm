@@ -7,7 +7,6 @@
 	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	armor = ARMOR_BRIGANDINE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	allowed_sex = list(MALE, FEMALE)
 	nodismemsleeves = TRUE
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
@@ -77,7 +76,6 @@
 	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_FULL
 	armor = ARMOR_BRIGANDINE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	allowed_sex = list(MALE, FEMALE)
 	nodismemsleeves = TRUE
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
@@ -120,7 +118,6 @@
 	blocksound = PLATEHIT
 	smelt_bar_num = 2
 	armor_class = ARMOR_CLASS_HEAVY
-	peel_threshold = 4
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/retinue/coat
@@ -161,6 +158,7 @@
 	icon_state = "light_brigandine"
 	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_TORSO
+	armor = ARMOR_PLATE
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE - ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER
 	smeltresult = /obj/item/ingot/steel
 	equip_delay_self = 40
@@ -226,7 +224,7 @@
 	blocksound = SOFTHIT
 	equip_delay_self = 4 SECONDS
 	unequip_delay_self = 4 SECONDS
-	armor = ARMOR_CUIRASS // Unique armor, uniquely good value coverage.
+	armor = ARMOR_PLATE // Unique armor, uniquely good value coverage.
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // Makes the armor equivilient w/ darkened steel plate.
 	sellprice = 363 // On par w/ judgement and ichor fang cuz why not
 	smelt_bar_num = 2

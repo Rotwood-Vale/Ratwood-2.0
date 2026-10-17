@@ -4,7 +4,7 @@
 	blade_class = BCLASS_BLUNT
 	icon_state = "inbash"
 	attack_verb = list("bashes", "strikes")
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 	//We want chipping, m'lord.
@@ -274,7 +274,7 @@
 	desc = "Shovels have always held some manner of importance in a militiaman's lyfe. Instead of digging corpsepits, however, this poleaxe will now fill them up."
 	icon_state = "peasantwaraxe"
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
-	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/long, SPEAR_BASH)
 	force = 15
 	force_wielded = 25
 	minstr = 10
@@ -289,7 +289,7 @@
 	desc = "'Do you think Psydon stays in Heaven because He too lives in fear of what He's created?' </br>A silver shovel, improvised - perhaps, by the hands of a particularly desperate gravedigger - to fill a polearm's duty."
 	icon_state = "silvershovelwaraxe"
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
-	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/long, SPEAR_BASH)
 	force = 15
 	force_wielded = 25
 	minstr = 11
@@ -542,7 +542,7 @@
 	desc = "Fittingly coined as a 'peasant's falchion', this hunting sword's blade has been retempered to hunt the most dangerous game. Those jagged edges are perfect for tearing into flesh-and-maille."
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike)
 	icon_state = "maciejowski"
-	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/peel, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/strike)
 	force = 18
 	force_wielded = 25
 	anvilrepair = /datum/skill/craft/carpentry
@@ -816,8 +816,7 @@
 	max_blade_int = 200//+20 over the eagle's beak. -60 from the pike.
 	max_integrity = 260//-40 from parent. No longer blacksteel, but great all the same.
 	smeltresult = /obj/item/ingot/steel
-	gripped_intents = list(/datum/intent/spear/thrust/eaglebeak, /datum/intent/spear/bash/poleaxe, \
-	/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe)//You get special intents, you special guy, you...
+	gripped_intents = list(/datum/intent/spear/thrust, /datum/intent/axe/cut/long, /datum/intent/spear/bash/ranged, /datum/intent/mace/smash/eaglebeak) // GET THEM OFF OF ME!!! OOOUGH!!!
 	icon_state = "standard"
 	secondary_tag = TRUE
 

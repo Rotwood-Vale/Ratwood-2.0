@@ -201,6 +201,9 @@
 					text += " Twice! Disadvantage! ([(prob2defend / 100) * (prob2defend / 100) * 100]%)"
 			to_chat(src, span_info("[text]"))
 
+		if(src.has_status_effect(/datum/status_effect/swingdelay/penalty))
+			prob2defend -= 50
+
 		var/dodge_status = FALSE
 		if((!defender_dualw && !attacker_dualw) || (defender_dualw && attacker_dualw)) //They cancel each other out
 			if(attacker_feedback)

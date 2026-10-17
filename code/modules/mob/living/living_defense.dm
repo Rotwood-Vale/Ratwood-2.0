@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration, penetrated_text, damage, blade_dulling, peeldivisor, intdamfactor, used_weapon = null)
 	SEND_SIGNAL(src, COMSIG_LIVING_ARMOR_CHECKED)
 	var/armor = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor, used_weapon)
@@ -24,12 +25,55 @@
 //		else
 //			to_chat(src, span_warning("My armor softens the blow!"))
 	if(mob_timers[MT_INVISIBILITY] > world.time)
+=======
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration = PEN_NONE, penetrated_text, damage, blade_dulling, intdamfactor, used_weapon = null)
+	var/armor_tier = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon)
+
+	// Tier-based armor system.
+	// armor_tier and armor_penetration are both tier values (0-4).
+	// DR Absorb (blunt): damage * 1 / (1 + 0.2 * tier). All damage absorbed by armor, none to HP.
+	// DR Pierce (fire, acid): same DR formula, but reduced damage still hits HP. Armor also takes integrity damage.
+	// DBLOCK types (ARMOR_DBLOCK_TYPES):
+	//   pen > armor  = 100% through (full penetration)
+	//   pen == armor = 20% through (partial penetration)
+	//   pen < armor  = fully blocked
+	// Safety: if damage wasn't passed, blocked math would return 0 (null * anything = 0 in DM),
+	// silently making armor do nothing. Use a safe fallback for the blocked calculation only —
+	// don't feed it into checkarmor (which already ran above and handles null damage fine).
+	var/block_damage = damage || 999
+	var/blocked = 0
+	if(attack_flag in ARMOR_DR_ABSORB_TYPES)
+		// Blunt: armor absorbs all HP damage. DR reduces integrity damage to armor (in checkarmor).
+		if(armor_tier > 0)
+			blocked = block_damage
+	else if(attack_flag in ARMOR_DR_PIERCE_TYPES)
+		// Fire/Acid: DR reduces damage, but reduced damage still reaches HP.
+		if(armor_tier > 0)
+			var/dr_mult = 1 / (1 + 0.2 * armor_tier)
+			blocked = block_damage * (1 - dr_mult)
+	else
+		// Penetration: tier comparison
+		if(armor_tier > 0)
+			if(armor_penetration > armor_tier)
+				// Full penetration — all damage through
+				blocked = block_damage * (1 - PEN_PASSTHROUGH_OVER)
+				if(penetrated_text)
+					to_chat(src, span_danger("[penetrated_text]"))
+			else if(armor_penetration == armor_tier)
+				// Same tier — 20% gets through
+				blocked = block_damage * (1 - PEN_PASSTHROUGH_SAME)
+			else
+				// Fully blocked
+				blocked = block_damage * 10
+				if(absorb_text)
+					to_chat(src, span_notice("[absorb_text]"))
+
+	if(mob_timers[MT_INVISIBILITY] > world.time)			
+>>>>>>> 9587bd9ba7 (The Big One)
 		mob_timers[MT_INVISIBILITY] = world.time
 		update_sneak_invis(reset = TRUE)
-	return armor
-
-
-/mob/living/proc/getarmor(def_zone, type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor, used_weapon)
+	return blocked
+/mob/living/proc/getarmor(def_zone, type, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon)
 	return 0
 
 //this returns the mob's protection against eye damage (number between -1 and 2) from bright lights
@@ -54,8 +98,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone) & COMPONENT_ATOM_BLOCK_BULLET)
 		return
 	def_zone = bullet_hit_accuracy_check(P.accuracy + P.bonus_accuracy, def_zone)
-	var/ap = (P.flag == "blunt") ? BLUNT_DEFAULT_PENFACTOR : P.armor_penetration
-	var/armor = run_armor_check(def_zone, P.flag, "", "",armor_penetration = ap, damage = P.damage, used_weapon = P)
+	var/armor = run_armor_check(def_zone, P.flag, "", "",armor_penetration = P.armor_penetration, damage = P.damage, used_weapon = P)
 
 	next_attack_msg.Cut()
 
@@ -129,8 +172,7 @@
 		if(SEND_SIGNAL(src, COMSIG_LIVING_IMPACT_ZONE, I, zone) & COMPONENT_CANCEL_THROW)
 			return FALSE
 		if(!blocked)
-			var/ap = (damage_flag == "blunt") ? BLUNT_DEFAULT_PENFACTOR : I.armor_penetration 
-			var/armor = run_armor_check(zone, damage_flag, "", "", armor_penetration = ap, damage = effective_throwforce, used_weapon = I)
+			var/armor = run_armor_check(zone, damage_flag, "", "", armor_penetration = I.armor_penetration, damage = I.throwforce, used_weapon = I)
 			next_attack_msg.Cut()
 			var/nodmg = FALSE
 			if(!apply_damage(effective_throwforce, I.damtype, zone, armor))
@@ -432,9 +474,27 @@
 /mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	return
 
+/mob/living/proc/do_item_attack_animation_wrapper(atom/A, visual_effect_icon, obj/item/used_item, animation_type, datum/intent/used_intent)
+	if(is_swinging())
+		var/datum/status_effect/swingdelay/disrupt/SW = has_status_effect(/datum/status_effect/swingdelay/disrupt)
+		if(SW)
+			if(SW.is_disrupted())	//We don't want to play an animation on a cancelled swing delay.
+				return
+		do_item_attack_animation(A, visual_effect_icon, used_item, animation_type, used_intent)
 
 /mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent, simplified = TRUE)
 	if(!used_item)
 		used_item = get_active_held_item()
-	..()
+	if(!used_intent)
+		used_intent = src.used_intent
+	var/animation_type
+	if(used_item || !simplified)
+		animation_type = item_animation_override || used_intent?.get_attack_animation_type()
+		if(used_intent.swingdelay && used_intent.swingdelay_type)
+			addtimer(CALLBACK(src, PROC_REF(do_item_attack_animation_wrapper), A, visual_effect_icon, used_item, animation_type, used_intent), used_intent.swingdelay)
+			if(used_intent.reach < 2)	//It'll look confusing otherwise.
+				do_attack_animation_simple(get_step(src, src.dir), visual_effect_icon)
+			wiggle(A)
+		else
+			do_item_attack_animation(A, visual_effect_icon, used_item, animation_type, used_intent)
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.

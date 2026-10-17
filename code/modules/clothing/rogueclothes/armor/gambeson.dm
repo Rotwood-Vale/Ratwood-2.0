@@ -7,7 +7,6 @@
 	icon_state = "gambeson"
 	body_parts_covered = COVERAGE_FULL
 	armor = ARMOR_PADDED
-	prevent_crits = list(BCLASS_CUT,BCLASS_BLUNT)
 	blocksound = SOFTUNDERHIT
 	blade_dulling = DULLING_BASHCHOP
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
@@ -49,14 +48,12 @@
 	desc = "A thin barely-padded gambeson, typically worn by the peasantry as cheap yet fashionable armor for the whole body. May stop an arrow."
 	armor = ARMOR_PADDED_BAD
 	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
-	prevent_crits = null // It won't help, like, at all.
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	name = "padded gambeson"
 	desc = "A gambeson with additional padding layers, hardened to make it more durable. It still does not compare to leather or metal, but it will probably stop a crossbow bolt, so it's typically worn to complement proper armor."
 	icon_state = "gambesonp"
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	color = "#b49679"
 	r_sleeve_status = SLEEVE_NORMAL
@@ -191,9 +188,8 @@
 	altdetail_tag = "_detailalt"
 	var/shiftable = FALSE
 	var/picked = FALSE
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 35
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
 	sellprice = 25
 	blocksound = SOFTUNDERHIT
 	blade_dulling = DULLING_BASHCHOP
@@ -348,7 +344,6 @@
 	desc = "The finest leather tunic. Made to ENDURE, Made to Inquire, come heretic or hellfire."
 	icon_state = "leathertunic"
 	color = null
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_CHOP)
 	armor = ARMOR_PADDED
 	shiftable = FALSE
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
@@ -358,5 +353,5 @@
 	desc = "A robe-like gambeson of moth-eaten cloth and cheap purple dye. No self-respecting elf would be seen wearing this."
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	icon_state = "shadowrobe"
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM + 30 //280
