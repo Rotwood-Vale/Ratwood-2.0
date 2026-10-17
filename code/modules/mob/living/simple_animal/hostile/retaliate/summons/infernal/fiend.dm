@@ -102,8 +102,8 @@
 	name = "Meteor storm"
 	desc = "Summons forth dangerous meteors from the sky to scatter and smash foes."
 	overlay_state = "meteor_storm"
-	recharge_time = 20 SECONDS
-	chargetime = 0
+	recharge_time = 300 SECONDS
+	chargetime = 15
 	range = 15
 	antimagic_allowed = TRUE
 

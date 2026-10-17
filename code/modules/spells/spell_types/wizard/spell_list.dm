@@ -50,7 +50,6 @@ GLOBAL_LIST_INIT(learnable_spells, (list(/obj/effect/proc_holder/spell/invoked/p
 //		/obj/effect/proc_holder/spell/invoked/firewalker,
 		/obj/effect/proc_holder/spell/invoked/thunderstrike,
 		/obj/effect/proc_holder/spell/invoked/sundering_lightning,
-		/obj/effect/proc_holder/spell/invoked/meteor_storm,
 		/obj/effect/proc_holder/spell/invoked/enchant_weapon,
 		/obj/effect/proc_holder/spell/invoked/forcewall/arcyne_prison,
 		/obj/effect/proc_holder/spell/invoked/forcewall/greater,
