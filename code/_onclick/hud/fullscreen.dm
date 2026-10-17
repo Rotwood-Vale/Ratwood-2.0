@@ -207,6 +207,10 @@
 	icon_state = "inqvision"
 	layer = BLIND_LAYER
 
+/atom/movable/screen/fullscreen/darkvision
+	icon_state = "oxydamageoverlay6"
+	layer = BLIND_LAYER
+
 /atom/movable/screen/fullscreen/nearsight
 	icon_state = "inqvision"
 	layer = CRIT_LAYER

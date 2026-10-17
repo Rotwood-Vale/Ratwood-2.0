@@ -5,9 +5,10 @@
 	worshippers = "Necromancers, the undead, secretive cabals, conquerors and madmen."
 	virtues = "Ambition, Domination, Undeath"
 	sins = "Humility, Ignorance, Stagnation"
-	mob_traits = list(TRAIT_CABAL, TRAIT_ZIZOSIGHT)
+	mob_traits = list(TRAIT_CABAL, TRAIT_ZOMBIE_IMMUNE)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison					= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/zizo_snuff						= CLERIC_T0,
+					/obj/effect/proc_holder/spell/self/darkvision/miracle				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/tame_undead/miracle			= CLERIC_T0, //No idea why this was T3.
 					/obj/effect/proc_holder/spell/invoked/lesser_heal					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,

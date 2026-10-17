@@ -70,7 +70,7 @@
 
 	if(H.mind)
 		wretch_select_bounty(H)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/darkvision)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/darkvision)
 
 		var/weapons = list("Elven Swordspear", "Elven Curveblade", "Elven Recurve Bow")
 		var/weapon_choice = input(H, "Choose your loadout.", "THE VISIBLE THREAT") as anything in weapons
