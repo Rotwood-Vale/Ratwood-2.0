@@ -74,20 +74,19 @@
 			used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 	else
 		// DR types: blunt, fire, acid
-		var/list/layers = get_best_worn_armor_layered(def_zone, d_type)
+		// Blunt hits every layer covering the zone (outer first); only the highest rating among them mitigates.
+		var/list/layers = (d_type in ARMOR_DR_ABSORB_TYPES) ? get_ordered_coverage_layers(def_zone, d_type) : get_best_worn_armor_layered(def_zone, d_type)
 		if(length(layers))
 			for(var/C in layers)
 				if(layers[C] > protection)
 					protection = layers[C]
-			// DR tier formula: damage * 1 / (1 + 0.2 * tier)
 			if(protection > 0)
-				var/dr_mult = 1 / (1 + 0.2 * protection)
 				if(d_type in ARMOR_DR_PIERCE_TYPES)
-					// Fire/Acid: armor takes the blocked portion (what doesn't reach HP)
-					intdamage *= (1 - dr_mult)
+					// Fire/Acid: damage * 1 / (1 + 0.2 * tier); armor takes the blocked portion (what doesn't reach HP)
+					intdamage *= (1 - (1 / (1 + 0.2 * protection)))
 				else
-					// Blunt: armor takes the DR-reduced amount
-					intdamage *= dr_mult
+					// Blunt: damage * 1 / (1 + 0.3 * tier), i.e. up to 60% reduction at tier 5
+					intdamage *= 1 / (1 + BLUNT_DR_COEFFICIENT * protection)
 			if(intdamfactor != 1)
 				intdamage *= intdamfactor
 
@@ -106,10 +105,15 @@
 
 			var/layers_deep = 1
 			var/played_sound = FALSE
+			var/overflow = 0 // Damage an outer layer couldn't absorb, carried inward
 			for(var/obj/item/clothing/C in layers)
 				var/actualdmg = intdamage
 				if(!full_dmg)
 					actualdmg /= layers_deep
+				actualdmg += overflow
+				overflow = 0
+				if(C.max_integrity && actualdmg > C.obj_integrity)
+					overflow = actualdmg - C.obj_integrity
 				C.take_damage(actualdmg, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 				if(C.blocksound && !played_sound)
 					playsound(loc, get_armor_sound(C.blocksound, blade_dulling), 100)
@@ -904,6 +908,27 @@
 	return used
 
 /// Helper proc that returns the worn item ref that has the highest rating covering the def_zone (targeted zone) for the d_type (damage type)
+/// Returns every intact worn item covering def_zone, ordered outermost to innermost. Value is the item's rating for d_type (may be 0).
+/// Cloak and back slots are deliberately excluded: they are neither damaged nor counted for mitigation.
+/mob/living/carbon/human/proc/get_ordered_coverage_layers(def_zone, d_type)
+	var/list/layers = list()
+	if(def_zone == BODY_ZONE_TAUR)
+		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	else if(get_taur_tail())
+		switch(def_zone)
+			if(BODY_ZONE_PRECISE_L_FOOT)
+				def_zone = BODY_ZONE_L_LEG
+			if(BODY_ZONE_PRECISE_R_FOOT)
+				def_zone = BODY_ZONE_R_LEG
+	var/list/ordered_slots = list(wear_armor, head, wear_mask, glasses, ears, wear_neck, gloves, shoes, wear_wrists, wear_shirt, wear_pants, belt, s_store, wear_ring, skin_armor)
+	for(var/obj/item/clothing/C in ordered_slots)
+		if(!zone2covered(def_zone, C.body_parts_covered_dynamic))
+			continue
+		if(C.max_integrity && C.obj_integrity <= 0)
+			continue
+		layers[C] = C.armor.getRating(d_type)
+	return layers
+
 /mob/living/carbon/human/proc/get_best_worn_armor_layered(def_zone, d_type)
 	var/protection = 0
 	var/obj/item/clothing/used
