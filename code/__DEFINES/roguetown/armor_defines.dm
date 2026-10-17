@@ -38,12 +38,14 @@
 // DR Absorb: damage reduced by tier, ALL damage goes to armor integrity (none to HP). Blunt.
 // DR Pierce: damage reduced by tier, reduced damage STILL hits HP. Armor also takes integrity damage. Fire, acid.
 // DBLOCK: tier pass/fail penetration system. Slash, stab, piercing.
+#define BLUNT_DR_COEFFICIENT 0.3 // Blunt only: 1 / (1 + 0.3 * tier) = 60% reduction at tier 5
 #define ARMOR_DR_ABSORB_TYPES list("blunt")
 #define ARMOR_DR_PIERCE_TYPES list("fire", "acid")
 #define ARMOR_DR_TYPES list("blunt", "fire", "acid")
 #define ARMOR_DBLOCK_TYPES list("slash", "stab", "piercing")
 
 // Penetration passthrough fractions
+#define PEN_PASSTHROUGH_MINIMUM 0.4
 #define PEN_PASSTHROUGH_RATIO	0.1		// How much damage will go through per pen point (+ per relevant stat above 10). 0.1 = 10%
 #define PEN_PASSTHROUGH_PROJ_EQUAL 0.2
 #define PEN_PASSTHROUGH_PROJ_MORE 0.8
@@ -167,8 +169,8 @@
 // LIGHT ARMOR - Split into two sidegrades: PADDED VS LEATHER
 // PADDED: Best Blunt protection, Bodkin immune. But Axe CHOP (MEDIUM) and sword thrust (MEDIUM) get through. 
 // LEATHER: Decent Blunt DR. Axe CHOP blocked, but sword thrust (MEDIUM) and bodkin (HEAVY) get through. Better vs slash than padded, worse vs piercing.
-#define ARMOR_PADDED list("blunt" = DR_ULTRA, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_BSTEEL, "fire" = DR_MEDIUM, "acid" = DR_NONE)
-#define ARMOR_LEATHER list("blunt" = DR_HEAVY, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_HEAVY, "fire" = DR_MEDIUM, "acid" = DR_NONE)
+#define ARMOR_PADDED list("blunt" = DR_ULTRA, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_BSTEEL, "fire" = DR_HEAVY, "acid" = DR_NONE)
+#define ARMOR_LEATHER list("blunt" = DR_HEAVY, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_HEAVY, "fire" = DR_SUPER, "acid" = DR_NONE)
 
 // LIGHT ARMOR - SNOWFLAKE. Not comfortable with them, but not touching it atm.
 #define ARMOR_DRAGONSKIN list("blunt" = DR_SUPER, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_MEDIUM, "fire" = DR_HEAVY, "acid" = DR_NONE) // Iconoclast dragon skin. Fire resistant.
@@ -179,13 +181,13 @@
 
 // BRIGANDINE — Side pieces (bracers, splint arms, jack chain). Better blunt padding than plate, but arrows punch through.
 // Chest/leg brigandine uses ARMOR_PLATE with lower integrity instead.
-#define ARMOR_BRIGANDINE list("blunt" = DR_MEDIUM, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_NONE, "acid" = DR_NONE)
+#define ARMOR_BRIGANDINE list("blunt" = DR_MEDIUM, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_HEAVY, "acid" = DR_NONE)
 
 // MAILLE — Chainmail. Medium: Plate level protection but weak vs Bodkin (100% through)
-#define ARMOR_MAILLE list("blunt" = DR_LIGHT, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_NONE, "acid" = DR_NONE)
+#define ARMOR_MAILLE list("blunt" = DR_LIGHT, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_MEDIUM, "fire" = DR_LIGHT, "acid" = DR_NONE)
 
 // PLATE — Brigandine, cuirass, plate. All plate-tier items; differentiated by integrity, not rating. Spear (PEN_HEAVY) gets 20% through stab. Bodkin goes through 20% - HEAVY rating. Weak vs Blunt. 
-#define ARMOR_PLATE list("blunt" = DR_LIGHT, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_HEAVY, "fire" = DR_NONE, "acid" = DR_NONE)
+#define ARMOR_PLATE list("blunt" = DR_LIGHT, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_HEAVY, "piercing" = DBLOCK_HEAVY, "fire" = DR_LIGHT, "acid" = DR_NONE)
 
 // BSTEEL — Blacksteel, antagonist. DBLOCK_BSTEEL (4).
 // Halfsword (PEN_BSTEEL) gets 20% through. Blunt still works decently (DR_MEDIUM only).
