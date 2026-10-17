@@ -949,6 +949,18 @@
 	sellprice = 363
 	static_price = TRUE
 
+/obj/item/rogueweapon/sword/long/absolutio
+	name = "absolutio"
+	desc = "This sword remains a testament to Astrata's all-encompassing radiance, rumor has it these blades are often ritualistically \
+			burned in a funeral pyre with their former wielder. If the blade's metal survives the pyre then it is by her divine decree; \
+			\"worthy to serve yet again\"."
+	icon_state = "astratalongsword"
+	item_state = "astratalongsword"
+	sheathe_icon = "eclipsum"
+	max_integrity = 180
+	force = 28
+	force_wielded = 33
+
 /obj/item/rogueweapon/sword/long/judgement/getonmobprop(tag)
 	. = ..()
 	if(tag)
@@ -2530,6 +2542,12 @@
 /obj/item/rogueweapon/sword/long/kriegmesser/zizo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "SWORD")
+
+/obj/item/rogueweapon/sword/long/kriegmesser/pestran
+	name = "\"Cleansing Edge\""
+	desc = "A cut in time saves a life."
+	icon_state = "pestranmesser"
+	sheathe_icon = "pestranmesser"
 
 /obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
 	name = "ssangsudo"
