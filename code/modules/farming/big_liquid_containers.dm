@@ -30,6 +30,22 @@
 	. = ..()
 	reagents.add_reagent(/datum/reagent/water,900)
 
+/obj/structure/fermentation_keg/chum
+	name = "chum barrel"
+	desc = "A barrel of pungent chum slurry. Perfect for baiting fishing nets and fouling waters."
+
+/obj/structure/fermentation_keg/chum/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/chum,900)
+
+/obj/structure/fermentation_keg/fermented_crab
+	name = "fermented crab barrel"
+	desc = "A barrel filled with fermented crab. It smells rancid but it is supposedly medicinal."
+
+/obj/structure/fermentation_keg/fermented_crab/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/fermented_crab,900)
+
 /obj/structure/fermentation_keg/beer
 	desc = "A barrel containing a generic housebrewed small-beer."
 
