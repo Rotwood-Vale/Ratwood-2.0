@@ -19,7 +19,7 @@
 
 /obj/item/clothing/under/roguetown/trou/leather
 	name = "leather trousers"
-	armor = ARMOR_LEATHER
+	armor = ARMOR_LEATHER_NPC
 	icon_state = "leathertrou"
 	max_integrity = ARMOR_INT_LEG_LEATHER
 	resistance_flags = FIRE_PROOF
