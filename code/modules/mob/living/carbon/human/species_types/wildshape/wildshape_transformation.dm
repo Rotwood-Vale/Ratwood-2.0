@@ -82,8 +82,9 @@
 	bleedsuppress = TRUE
 
 	mind.transfer_to(W)
-	skills?.known_skills = list()
-	skills?.skill_experience = list()
+	var/datum/skill_holder/beast_skills = W.ensure_skills()
+	beast_skills.known_skills = list()
+	beast_skills.skill_experience = list()
 	W.grant_language(/datum/language/beast)
 	W.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
 	W.update_a_intents()
@@ -144,7 +145,8 @@
 
 	W.adjustBruteLoss(getBruteLoss())
 	W.adjustFireLoss(getFireLoss())
-	W.adjustOxyLoss(getOxyLoss())
+	if(!HAS_TRAIT(W, TRAIT_NOBREATH))
+		W.adjustOxyLoss(getOxyLoss())
 	W.set_nutrition(nutrition)
 	W.set_hydration(hydration)
 
@@ -152,8 +154,9 @@
 	src.adjustFireLoss(-src.getFireLoss())
 	src.adjustOxyLoss(-src.getOxyLoss())
 
-	W.set_blood_volume(blood_volume)
-	W.bleed_rate = bleed_rate
+	if(!HAS_TRAIT(W, TRAIT_BLOODLOSS_IMMUNE))
+		W.set_blood_volume(blood_volume)
+		W.bleed_rate = bleed_rate
 	W.bleedsuppress = bleedsuppress
 
 	W.forceMove(get_turf(src))
@@ -161,8 +164,11 @@
 
 	var/mob/living/carbon/human/species/wildshape/WA = src
 	W.copy_known_languages_from(WA.stored_language)
-	skills?.known_skills = WA.stored_skills.Copy()
-	skills?.skill_experience = WA.stored_experience.Copy()
+	var/datum/skill_holder/restored_skills = W.ensure_skills()
+	if(WA.stored_skills)
+		restored_skills.known_skills = WA.stored_skills.Copy()
+	if(WA.stored_experience)
+		restored_skills.skill_experience = WA.stored_experience.Copy()
 	playsound(W.loc, 'sound/body/shapeshift-end.ogg', 100, FALSE, 3)
 
 	//Compares the list of spells we had before transformation with those we do now. If there are any that don't match, we remove them
