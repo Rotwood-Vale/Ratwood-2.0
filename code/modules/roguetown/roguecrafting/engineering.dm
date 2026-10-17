@@ -241,8 +241,7 @@
 					/obj/projectile/bullet/reusable/heavy_bolt,
 					/obj/projectile/bullet/reusable/heavy_bolt,
 					/obj/projectile/bullet/reusable/heavy_bolt
-				)	structurecraft = /obj/structure/artificer_table
-	
+				)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
