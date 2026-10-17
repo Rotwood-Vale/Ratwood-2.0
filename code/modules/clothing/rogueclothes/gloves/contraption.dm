@@ -1,17 +1,16 @@
 /obj/item/clothing/gloves/chain/roguetown/contraption
-
-var/obj/item/accepted_power_source = /obj/item/roguegear/bronze	//Bronze by default
-	//this is what we use to double power items with, this isn't for all devices
-var/obj/item/prime_power_source = /obj/item/debug
-var/charge_per_source = 10
-var/charge_per_prime = 10
-	//allows you to store several charges
-var/max_stored_charge = 20
-var/current_charge = 0
-var/misfire_chance = 0
-var/sneaky_misfire_chance
-var/misfiring = FALSE
-var/cog_accept = TRUE
+	var/obj/item/accepted_power_source = /obj/item/roguegear/bronze	//Bronze by default
+		//this is what we use to double power items with, this isn't for all devices
+	var/obj/item/prime_power_source = /obj/item/debug
+		var/charge_per_source = 10
+	var/charge_per_prime = 10
+		//allows you to store several charges
+	var/max_stored_charge = 20
+	var/current_charge = 0
+	var/misfire_chance = 0
+	var/sneaky_misfire_chance
+	var/misfiring = FALSE
+	ar/cog_accept = TRUE
 
 /*
 /obj/item/clothing/gloves/roguetown/chain/contraption/ComponentInitialize()
