@@ -275,11 +275,44 @@
 
 /obj/effect/proc_holder/spell/invoked/psydefy/cast(list/targets, mob/living/user)
 	if(user.stat == DEAD)
-		to_chat(span_warning("You are dead, its to late for displays of wilpower"))
+		to_chat(span_warning("You are dead, its to late for displays of wilpower."))
 		revert_cast()
 		return FALSE
+	var/mob/living/human/target = NULL
 	if(user.stat != CONSCIOUS)
-		selfcast = TRUE
+		target = user
+	if(!target && ishuman(targets[1]))
+		target = targets[1]
+	else
+		to_chat(span_warning("Miracle only works on humanoids about to die and having the will to resist it."))
+		revert_cast()
+		return FALSE
+
+	var/fail = FALSE
+	if(!target.stat) // this is first as all the others give you information about target
+		to_chat(span_warning("They are not in dire enought state for this miracle."))
+		fail = TRUE
+	if(target.stat == DEAD) // are dead
+		to_chat(span_warning("They are alredy dead, you acted to late."))
+		fail = TRUE
+	if(target.mob_biotypes & MOB_UNDEAD) // still dead
+		to_chat(span_warning("They are alredy dead, there is not resistance left to empower."))
+		fail = TRUE
+	if(istype(target.patron, /datum/patron/divine/necra)) // worship death
+		to_chat(span_warning("They worship death, there is no will to resist their end in them."))
+		fail = TRUE
+	if(istype(target.patron, /datum/patron/inhumen/zizo)) // thinks they will get raised as undead
+		to_chat(span_warning("They dont fear death, they dont see it as an end."))
+		fail = TRUE
+	if(HAS_TRAIT(target, TRAIT_DEATHLESS)) // no avoiding oxy consequencess
+		to_chat(span_warning("They dont see themselves as dying and lack a will to resist it."))
+		fail = TRUE
+	
+	if(fail)
+		revert_cast()
+		return FALSE
+
+
 	
 
 	
