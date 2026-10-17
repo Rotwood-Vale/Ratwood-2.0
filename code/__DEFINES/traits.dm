@@ -144,6 +144,7 @@
 #define TRAIT_COMPLIANT "Compliant" //forced to be compliant
 #define TRAIT_MARTIAL_PROWESS "Martial Prowess" //allows mastering weapon skills
 #define TRAIT_SELF_AWARE "Self Aware" //Absolver/Stigmata trait that allows them to self-diagnose and get full damage numbers.
+#define TRAIT_SCOMGNET_AUTHORIZED "SCOMgnet Authorized" //If the inquisitor deems someone worthy of their communications.
 
 //travel zone traits
 #define TRAIT_BANDITCAMP "banditcamp"

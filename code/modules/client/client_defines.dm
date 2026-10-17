@@ -87,6 +87,7 @@
 	var/account_age = -1
 
 	preload_rsc = PRELOAD_RSC
+	var/cached_sounds = FALSE
 
 	var/atom/movable/screen/click_catcher/void
 
