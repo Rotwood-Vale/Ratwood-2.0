@@ -70,7 +70,8 @@
 				emote("groan", forced = TRUE)
 
 
-			used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
+			if(used)
+				used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 	else
 		// DR types: blunt, fire, acid
 		// Blunt hits every layer covering the zone (outer first); only the highest rating among them mitigates.

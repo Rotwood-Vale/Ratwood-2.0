@@ -3,23 +3,25 @@
 	testing("begin defense")
 	if(!intenty || !attacker)
 		CRASH("/mob/living/checkdefense called without passing a intent or attacker.")
-	if(!cmode)
-		return FALSE
 	if(stat)
-		return FALSE
-	if(!mob_can_parry && !mob_can_dodge) //mob can do neither of these
 		return FALSE
 	if(attacker == src)
 		return FALSE
-	if(!(mobility_flags & MOBILITY_MOVE))
-		return FALSE
 
+	// Rigid swings are interrupted by any hit, regardless of combat mode or parry/dodge ability.
 	var/datum/status_effect/swingdelay/disrupt/SW = has_status_effect(/datum/status_effect/swingdelay/disrupt)
 	if(SW)
 		if(!SW.is_disrupted())
 			SW.attacked()
 			swing_state = FALSE
 			return FALSE
+
+	if(!cmode)
+		return FALSE
+	if(!mob_can_parry && !mob_can_dodge) //mob can do neither of these
+		return FALSE
+	if(!(mobility_flags & MOBILITY_MOVE))
+		return FALSE
 
 	if(client && used_intent)
 		if(client.charging && used_intent.tranged && !used_intent.tshield)
