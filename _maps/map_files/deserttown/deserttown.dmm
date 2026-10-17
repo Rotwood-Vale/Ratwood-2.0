@@ -48969,6 +48969,10 @@
 /obj/structure/fluff/railing/fence,
 /turf/open/floor/rogue/dunes,
 /area/rogue/outdoors/desert/above)
+"nOo" = (
+/obj/structure/expedition_gate/departure,
+/turf/open/floor/rogue/lightpath,
+/area/rogue)
 "nOt" = (
 /obj/machinery/light/rogue/candle,
 /obj/structure/closet/crate/roguecloset/crafted,
@@ -421896,7 +421900,7 @@ eBo
 qjH
 eBo
 eBo
-aUz
+nOo
 aUz
 hDg
 ags
