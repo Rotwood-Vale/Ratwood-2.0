@@ -271,11 +271,11 @@
 	stat_allowed = 1 //i will have to exclude the dead.. somehow
 	gesture_required = FALSE
 	devotion_cost = 150
-	var/selfcast = FALSE
+	cast_without_targets = TRUE
 
 /obj/effect/proc_holder/spell/invoked/psydefy/cast(list/targets, mob/living/user)
 	if(user.stat == DEAD)
-		to_chat(span_warning("You are dead, its to late for displays of wilpower."))
+		to_chat(user, span_warning("You are dead, its to late for displays of wilpower."))
 		revert_cast()
 		return FALSE
 	var/mob/living/carbon/human/target = null
@@ -283,8 +283,8 @@
 		target = user
 	if(!target && ishuman(targets[1]))
 		target = targets[1]
-	else
-		to_chat(span_warning("Miracle only works on humanoids about to die and having the will to resist it."))
+	else if(!target)
+		to_chat(user, span_warning("Miracle only works on humanoids about to die and having the will to resist it."))
 		revert_cast()
 		return FALSE
 
@@ -294,28 +294,28 @@
 	var/damtotal = target.getBruteLoss() + target.getFireLoss() + target.getToxLoss()
 
 	if(!target.stat) // this is first as all the others give you information about target
-		to_chat(span_warning("They are not in dire enought state for this miracle."))
+		to_chat(user, span_warning("They are not in dire enought state for this miracle."))
 		fail = TRUE
 	if(target.stat == UNCONSCIOUS && !(damtotal >= 100 || wAmount > 0 || target.get_blood_volume() < BLOOD_VOLUME_OKAY) && target.IsSleeping()) // very long way of saying NO to sleep casting
-		to_chat(span_warning("They are in peacefull sleep, they wont rise unless they feel trethened."))
+		to_chat(user, span_warning("They are in peacefull sleep, they wont rise unless they feel trethened."))
 		fail = TRUE
 	if(target.stat == DEAD) // are dead
-		to_chat(span_warning("They are alredy dead, you acted to late."))
+		to_chat(user, span_warning("They are alredy dead, you acted to late."))
 		fail = TRUE
 	if(target.mob_biotypes & MOB_UNDEAD) // still dead
-		to_chat(span_warning("They are alredy dead, there is not resistance left to empower."))
+		to_chat(user, span_warning("They are alredy dead, there is not resistance left to empower."))
 		fail = TRUE
 	if(HAS_TRAIT(target, TRAIT_PARALYSIS)) // are sculcracked
-		to_chat(span_warning("No amount of will alone will let them move."))
+		to_chat(user, span_warning("No amount of will alone will let them move."))
 		fail = TRUE
 	if(istype(target.patron, /datum/patron/divine/necra)) // worship death
-		to_chat(span_warning("They worship death, there is no will to resist their end in them."))
+		to_chat(user, span_warning("They worship death, there is no will to resist their end in them."))
 		fail = TRUE
 	if(istype(target.patron, /datum/patron/inhumen/zizo)) // thinks they will get raised as undead
-		to_chat(span_warning("They dont fear death, they dont see it as an end."))
+		to_chat(user, span_warning("They dont fear death, they dont see it as an end."))
 		fail = TRUE
 	if(HAS_TRAIT(target, TRAIT_NOBREATH)) // no avoiding oxy consequencess
-		to_chat(span_warning("They dont see themselves as dying and lack a will to resist it."))
+		to_chat(user, span_warning("They dont see themselves as dying and lack a will to resist it."))
 		fail = TRUE
 	
 	if(fail)
@@ -367,11 +367,15 @@
 	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, "death_defience")
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, "death_defience")
 	ADD_TRAIT(owner, TRAIT_NODEATH, "death_defience") // I think it only stops oxy death?
+	ADD_TRAIT(owner, TRAIT_NOBREATH, "death_defience") // sadly needed
+
 	owner.remove_status_effect(/datum/status_effect/debuff/crit_resistance_cd) // resets crit resistance
 	owner.remove_status_effect(STATUS_EFFECT_SLEEPING) 
 	owner.remove_status_effect(/datum/status_effect/incapacitating/knockdown)
 	owner.remove_status_effect(/datum/status_effect/incapacitating/stun) 
 	owner.remove_status_effect(/datum/status_effect/incapacitating/unconscious)
+	owner.stat = CONSCIOUS
+	owner.update_stat()
 	owner.energy_add(700)
 	owner.stamina_add(-100) // rise back with full strength
 	owner.visible_message(span_boldwarning("[owner] rises back on their feet, defying death with every movement."), span_boldwarning("I feel a surge of energy as I DEFY death."))
@@ -395,12 +399,15 @@
 	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, "death_defience")
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, "death_defience")
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, "death_defience") // I think it only stops oxy death?
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, "death_defience") // sadly needed
+
 	owner.energy_add(-700)
 	owner.stamina_add(100)
 	owner.Stun(15 SECONDS)
 	owner.Knockdown(15 SECONDS)
 	if(!HAS_TRAIT(owner, TRAIT_DNR)) // last mercy to the ones without a second chance
-		owner.adjustOxyLoss(100)
+		owner.adjustOxyLoss(130, TRUE)
+	owner.update_stat()
 	owner.visible_message(span_boldwarning("The strange energy filling the [owner] runs out, and their bathered body falls."), span_boldwarning("I feel my newfound energy and will to resist leave me."))
 	owner.remove_filter("death_defience")
 
