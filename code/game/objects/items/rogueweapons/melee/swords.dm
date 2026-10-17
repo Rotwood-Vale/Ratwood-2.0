@@ -872,7 +872,7 @@
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/sword/thrust/long/halfsword/lesser, /datum/intent/sword/chop)
 
 /obj/item/rogueweapon/sword/long/zizo
-	name = "avantyne longsword"
+	name = "Vindicatio"
 	desc = "A wicked, unconventional, and otherworldly blade that was created by no swordsmith - a manifestation of hate for the state of this world that follows no design principles but spite and anger."
 	icon_state = "zizolongsword"
 	sheathe_icon = "zizolongsword"
@@ -889,7 +889,7 @@
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "SWORD")
 
 /obj/item/rogueweapon/sword/arming/zizo
-	name = "avantyne arming sword"
+	name = "Devotio"
 	desc = "The cardinal sin, coalesced into a crystalline crucifix. In Her name, your will shall be projected unto the worshippers of lesser gods; and by your \
 	hand, they shall bend the knee to ambition."
 	icon_state = "zizoarming"
@@ -907,7 +907,7 @@
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "SWORD")
 
 /obj/item/rogueweapon/sword/rapier/zizo
-	name = "avantyne rapier"
+	name = "Damnatio"
 	desc = "Graceful yet grotesque, a spike and weapon forged with Ambition's singular purpose, to render one in Her image: heartless. Slip between where opportunity lies and seize the moment."
 	icon_state = "zizorapier"
 	sheathe_icon = "zizorapier"
@@ -2516,7 +2516,7 @@
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/sword/long/kriegmesser/zizo
-	name = "avantyne kriegmesser"
+	name = "Perditio"
 	desc = "A wicked, cruel and otherworldly blade, it is cast in Her image, to tear away at flesh like She tore the tapestry of divinity for herself  - Carve, aspirant, for hate's unholy name."
 	icon_state = "zizosword"
 	sheathe_icon = "zizosword"

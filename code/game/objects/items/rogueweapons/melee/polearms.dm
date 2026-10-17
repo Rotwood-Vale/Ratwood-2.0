@@ -716,7 +716,7 @@
 	special = null
 
 /obj/item/rogueweapon/spear/billhook/zizo
-	name = "avantyne billhook"
+	name = "Messis"
 	desc = "A twisted implement of harvest, its hooked edge festering with crystalline malice. It is a weapon of pure upheaval, designed \
 	to drag Grimoria's false idols into the dirt."
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
@@ -1517,7 +1517,7 @@
 				return list("shrink" = 0.6,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
 /obj/item/rogueweapon/greatsword/zizo
-	name = "avantyne greatsword"
+	name = "Absolutio"
 	desc = "Malediction made manifest; the greatweapon of an otherworldly champion, unfazed by the thickest plates and the toughest flesh. Let no one stop the \
 	march of Her disciples, towards the filament's sputtering wound. Take thine birthright and ascend to the heavens beyond, or die trying."
 	icon_state = "zizogsw"
