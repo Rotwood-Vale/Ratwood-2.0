@@ -509,10 +509,10 @@
 	var/list/intents
 	var/obj/item/Masteritem = active ? get_active_held_item() : get_inactive_held_item()
 	if(Masteritem)
-		if(Masteritem.wielded)
+		if(Masteritem.altgripped)
+			intents = Masteritem.get_altgrip_intents()
+		else if(Masteritem.wielded)
 			intents = Masteritem.gripped_intents
-		else if(Masteritem.altgripped)
-			intents = Masteritem.alt_intents
 		else
 			intents = Masteritem.possible_item_intents
 	else

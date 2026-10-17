@@ -171,7 +171,8 @@
 		if(BCLASS_PICK, BCLASS_STAB, BCLASS_BITE)
 			acheck_dflag = "stab"
 		//More AP means the less effective bleed clamping is.
-	armor = owner.getarmor(zone_precise, acheck_dflag)
+	if(!armor)
+		armor = owner.run_armor_check(zone_precise, acheck_dflag, damage = 0)
 	if((owner.mind || HAS_TRAIT(owner, TRAIT_CRIT_THRESHOLD)) && (get_damage() <= (max_damage * CRIT_DISMEMBER_DAMAGE_THRESHOLD))) //No crits unless the limb is at 75%+ damage.
 		do_crit = FALSE
 	if(user)
@@ -183,7 +184,7 @@
 
 	var/datum/wound/dynwound = manage_dynamic_wound(bclass, dam, armor)
 
-	if(do_crit)
+	if(do_crit && ishuman(owner) && bclass != BCLASS_PICK) // Armor with integrity prevents crits
 		var/datum/component/silverbless/psyblessed = weapon?.GetComponent(/datum/component/silverbless)
 		var/sundering = HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && istype(weapon) && weapon?.is_silver && psyblessed?.is_blessed
 		var/crit_attempt = try_crit(sundering ? BCLASS_SUNDER : bclass, dam, user, zone_precise, silent, crit_message)

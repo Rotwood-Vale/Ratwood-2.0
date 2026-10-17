@@ -202,19 +202,22 @@
 /datum/intent/rend
 	name = "rend"
 	icon_state = "inrend"
-	attack_verb = list("rends")
-	animname = "cut"
+	attack_verb = list("rends", "cleaves")
+	animname = "chop"
 	blade_class = BCLASS_CHOP
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
 	reach = 1
+	swingdelay = 1 SECONDS
+	swingdelay_type = SWINGDELAY_PENALTY
 	penfactor = PEN_NONE
 	damfactor = 2.5
 	clickcd = CLICK_CD_CHARGED
 	no_early_release = TRUE
-	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	item_d_type = "slash"
 	misscost = 10
-	intent_intdamage_factor = 0.25
-	sharpness_penalty = 2
+	intent_intdamage_factor = 0.05
+	demolition_mod = 0.05
+
 
 /datum/intent/rend/reach
 	name = "long rend"

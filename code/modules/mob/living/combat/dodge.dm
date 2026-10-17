@@ -10,8 +10,7 @@
 	if(loc == attacker.loc)
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, last_dodge))
-		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
-			return FALSE
+		return FALSE
 	COOLDOWN_START(src, last_dodge, dodgetime)
 
 	var/list/dirry = list()
@@ -39,18 +38,16 @@
 	if(fixedeye)
 		var/dodgedir = turn(dir, 180)
 		var/turf/turfcheck = get_step(src, dodgedir)
-		if(turfcheck && !turfcheck.density)
-			turfy = turfcheck
+		if(turfcheck)
+			if(check_dodge_turf(turfcheck))
+				turfy = turfcheck
 	if(!turfy)
 		for(var/x in shuffle(dirry.Copy()))
-			turfy = get_step(src,x)
-			if(turfy)
-				if(turfy.density)
-					continue
-				for(var/atom/movable/AM in turfy)
-					if(AM.density)
-						continue
-				break
+			var/turf/turfcheck = turfy = get_step(src,x)
+			if(turfcheck)
+				if(check_dodge_turf(turfcheck))
+					turfy = turfcheck
+					break
 	if(!turfy)
 		to_chat(src, span_boldwarning("There's nowhere to dodge to!"))
 		return FALSE
@@ -65,6 +62,16 @@
 			to_chat(src, span_boldwarning("My mage armor absorbs the hit and dissipates!"))
 			return TRUE
 	return FALSE
+
+/mob/living/proc/check_dodge_turf(turf/check_turf)
+	if(!check_turf)
+		return FALSE
+	if(check_turf.density)
+		return FALSE
+	for(var/atom/movable/AM in check_turf.contents)
+		if(AM.density)
+			return FALSE
+	return TRUE
 
 /// origin is used for multi-step dodges like jukes
 /mob/living/proc/get_dodge_destinations(mob/living/attacker, atom/origin = src)
@@ -95,16 +102,29 @@
 		return FALSE
 	if(stamina >= max_stamina) // Out of stamina? Out of dodge
 		return FALSE
-	var/drained = 10
+	var/obj/item/IL
+	var/ourskill = 0
+	var/theirskill = 0
+	var/drained = 8
 	var/drained_npc = 5
 	var/obj/item/attacking_item = attacker?.used_intent?.masteritem
 
 	var/mob/living/carbon/human/human_dodger
 	if(ishuman(src))
 		human_dodger = src
+		IL = human_dodger.get_active_held_item()
+		if(IL && IL?.associated_skill)
+			ourskill = get_skill_level(IL.associated_skill)
+		else
+			ourskill = get_skill_level(/datum/skill/combat/unarmed)
 
 	var/prob2defend = attacker.defprob
-	if(check_dodge_skill())
+	var/is_in_cone = can_see_cone(src)
+	if(!is_in_cone)
+		changeNext_def(CLAMP(dodgetime + 2, 0, CLICK_CD_DODGE))
+		changeMaxDodge(-2)
+	var/has_trait = human_dodger?.check_dodge_skill()
+	if(human_dodger?.check_dodge_skill())
 		prob2defend += (STASPD * 15)
 	else
 		prob2defend += (STASPD * 10)
@@ -139,14 +159,19 @@
 				prob2defend = prob2defend - (attacker.get_skill_level(/datum/skill/combat/unarmed) * 10)
 				prob2defend = prob2defend + (human_dodger.get_skill_level(/datum/skill/combat/unarmed) * 10)
 
+		var/ignore_DE_bonus = FALSE
+
 		if(HAS_TRAIT(src, TRAIT_GUIDANCE))
 			prob2defend += 20
+			drained -= 5
 
 		if(HAS_TRAIT(attacker, TRAIT_GUIDANCE))
 			prob2defend -= 20
+			ignore_DE_bonus = TRUE
 
 		if(HAS_TRAIT(attacker, TRAIT_CURSE_RAVOX))
 			prob2defend -= 40
+			ignore_DE_bonus = TRUE
 
 		var/datum/status_effect/debuff/magical_blindness/magic_blind = human_dodger.has_status_effect(/datum/status_effect/debuff/magical_blindness)
 		if (magic_blind)
@@ -155,6 +180,7 @@
 		// dodging while knocked down sucks ass
 		if(!(mobility_flags & MOBILITY_STAND))
 			prob2defend *= 0.25
+			ignore_DE_bonus = TRUE
 
 		if(HAS_TRAIT(human_dodger, TRAIT_SENTINELOFWITS))
 			var/sentinel = human_dodger.calculate_sentinel_bonus()
@@ -163,7 +189,27 @@
 		if(HAS_TRAIT(attacker, TRAIT_ARMOUR_LIKED))
 			if(HAS_TRAIT(attacker, TRAIT_FENCERDEXTERITY))
 				prob2defend -= 10
-		prob2defend = clamp(prob2defend, 5, 90)
+				ignore_DE_bonus = TRUE
+		
+		if(!is_in_cone)
+			ignore_DE_bonus = TRUE
+		if(attacking_item && IL)	//Skilldiff applies extra stamloss, tentative
+			drained += (attacker.get_skill_level(attacking_item.associated_skill) - human_dodger.get_skill_level(IL.associated_skill))
+
+			if(istype(attacker.rmb_intent, /datum/rmb_intent/swift) && attacking_item.wbalance != WBALANCE_HEAVY)
+				drained += 3	//We drain extra stam if we're being attacked by swift stance
+
+		if(has_trait && human_dodger.mind && !ignore_DE_bonus && human_dodger.STASPD > 10)
+			prob2defend = 90	//We cap it out if we have Dodge Expert as a Player.
+
+		if(dodgetime <= CLICK_CD_DODGE && !ignore_DE_bonus && has_trait && human_dodger.mind)
+
+			var/mainh = get_active_held_item()
+			var/offh = get_inactive_held_item()
+			if(istype(mainh, /obj/item/rogueweapon/shield) || istype(offh, /obj/item/rogueweapon/shield))	//why do I have to pre-empt the worst of you
+				max_dodge = MAX_DODGE_FLOOR
+				changeNext_def(CLICK_CD_DODGE)
+		prob2defend = clamp((prob2defend + max_dodge), 5, (90 + max_dodge))
 
 		//------------Dual Wielding Checks------------
 		var/attacker_dualw
@@ -266,13 +312,14 @@
 			attacker.visible_message(span_warning("<b>[attacker]</b> clips [src]'s weapon!"))
 			playsound(attacker, 'sound/misc/weapon_clip.ogg', 100)
 
-	if(mind && attacker.mind && HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
-		var/text = "[bodyzone2readablezone(attacker.zone_selected)]..."
-		if(HAS_TRAIT(attacker, TRAIT_DECEIVING_MEEKNESS))
-			if(prob(10))
-				text = "<i>Can't tell...</i>"
-				attacker.balloon_alert(src, text)
-		else
-			attacker.balloon_alert(src, text)
+	var/ignore_penalty = FALSE
+	if(fixedeye && goodluck(5))
+		ignore_penalty = TRUE
+	if(!ignore_penalty)
+		var/max_mod = 0
+		max_mod = ourskill - theirskill
+		changeNext_def(clamp(dodgetime + 1, 0, CLICK_CD_DODGE))
+		changeMaxDodge(-1 + ((max_mod < 0) ? max_mod : 0))
+
 	dodge_sanity = FALSE
 	return TRUE

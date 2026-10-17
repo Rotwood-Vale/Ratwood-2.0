@@ -44,8 +44,8 @@
 /datum/intent/dagger/thrust/weak
 	name = "lopsided thrust"
 	damfactor = 0.8
-	penfactor = PEN_HEAVY // Slightly more pen, to compensate in penetration for the lower damage.
-	// You're still doing less damage than with a stabbier dagger, but your AP isn't penalised.
+	swingdelay = 0.5 SECONDS
+	penfactor = PEN_MEDIUM // Slightly more pen, to compensate in penetration for the lower damage.
 	clickcd = CLICK_CD_QUICK
 
 /datum/intent/dagger/thrust/pick
@@ -54,8 +54,8 @@
 	attack_verb = list("stabs", "impales")
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	penfactor = PEN_BSTEEL
-	clickcd = 14
-	swingdelay = 12
+	clickcd = 1.4 SECONDS
+	swingdelay = 1.2 SECONDS
 	damfactor = 1.1
 	blade_class = BCLASS_PICK
 
@@ -864,7 +864,8 @@
 		force = 20
 		force_dynamic = 20
 		wdefense = 6
-		wdefense_dynamic = 6
+		update_force_dynamic()
+		update_wdefense_dynamic()
 		w_class = WEIGHT_CLASS_NORMAL
 		throwforce = 23
 		icon_state = "navaja_o"
@@ -883,7 +884,7 @@
 		attack_verb = list("stubbed", "poked")
 		sharpness = IS_BLUNT
 		wdefense = 2
-		wdefense_dynamic = 2
+		update_wdefense_dynamic()
 		equip_delay_self = 0 SECONDS
 		unequip_delay_self = 0 SECONDS
 		inv_storage_delay = 0 SECONDS
@@ -904,7 +905,7 @@
 	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
 	if(extended)
 		force = 20
-		force_dynamic = 20
+		update_force_dynamic()
 		wdefense = 7
 		wdefense_dynamic = 7
 		w_class = WEIGHT_CLASS_NORMAL
@@ -918,14 +919,14 @@
 		inv_storage_delay = initial(inv_storage_delay)
 	else
 		force = 5
-		force_dynamic = 5
+		update_force_dynamic()
 		w_class = WEIGHT_CLASS_SMALL
 		throwforce = 5
 		icon_state = "mtnavaja_c"
 		attack_verb = list("stubbed", "poked")
 		sharpness = IS_BLUNT
 		wdefense = 2
-		wdefense_dynamic = 2
+		update_wdefense_dynamic()
 		equip_delay_self = 0 SECONDS
 		unequip_delay_self = 0 SECONDS
 		inv_storage_delay = 0 SECONDS

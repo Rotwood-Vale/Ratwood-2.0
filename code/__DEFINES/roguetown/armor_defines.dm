@@ -44,8 +44,10 @@
 #define ARMOR_DBLOCK_TYPES list("slash", "stab", "piercing")
 
 // Penetration passthrough fractions
-#define PEN_PASSTHROUGH_OVER	1.0		// pen > armor tier: full damage through
-#define PEN_PASSTHROUGH_SAME	0.2		// pen == armor tier: 20% damage through
+#define PEN_PASSTHROUGH_RATIO	0.1		// How much damage will go through per pen point (+ per relevant stat above 10). 0.1 = 10%
+#define PEN_PASSTHROUGH_PROJ_EQUAL 0.2
+#define PEN_PASSTHROUGH_PROJ_MORE 0.8
+#define PEN_PASSTHROUGH_CAP	8			// How many "dots" maximum (pen vs armor, + 1 dot per relevant stat above 10)
 // pen < armor tier: fully blocked (0 through)
 // 0.2 is calculated from 55 AP + 30 damage spear = 5 damage through on 80 plate (stab), 5 / 30 = 0.166, rounded up to 0.2. This somewhat matches old system behavior.
 
@@ -160,6 +162,7 @@
 // TRASH — Cloth, bad leather, NPC trash.
 #define ARMOR_CLOTHING list("blunt" = DR_NONE, "slash" = DBLOCK_NONE, "stab" = DBLOCK_NONE, "piercing" = DBLOCK_NONE, "fire" = DR_NONE, "acid" = DR_NONE)
 #define ARMOR_PADDED_BAD list("blunt" = DR_MEDIUM, "slash" = DBLOCK_LIGHT, "stab" = DBLOCK_LIGHT, "piercing" = DBLOCK_LIGHT, "fire" = DR_NONE, "acid" = DR_NONE)
+#define ARMOR_LEATHER_NPC list("blunt" = DR_HEAVY, "slash" = DBLOCK_LIGHT, "stab" = DBLOCK_LIGHT, "piercing" = DBLOCK_MEDIUM, "fire" = DR_MEDIUM, "acid" = DR_NONE)
 
 // LIGHT ARMOR - Split into two sidegrades: PADDED VS LEATHER
 // PADDED: Best Blunt protection, Bodkin immune. But Axe CHOP (MEDIUM) and sword thrust (MEDIUM) get through. 

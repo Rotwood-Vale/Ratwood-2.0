@@ -179,7 +179,9 @@
 	/// Cooldown before it's possible to dodge again
 	COOLDOWN_DECLARE(last_dodge)
 	/// Amount of time added to the cooldown before the mob can dodge again
-	var/dodgetime = 1.2 SECONDS
+	var/dodgetime = 0
+	var/max_dodge = MAX_DODGE_CEIL
+	var/parrydelay = 12
 	/// Sanity boolean. Prevents you from dodging multiple times during a single loop. Not sure if this is actually needed but I aint touching it
 	var/dodge_sanity = FALSE
 

@@ -169,6 +169,11 @@
 /datum/supply_pack/rogue/rosawood/elfcurveblade
 	name = "Elven Curveblade"
 	cost = 120
+<<<<<<< HEAD
 	contains = list(/obj/item/rogueweapon/greatsword/elf)
 	ship_qty_min = 1
 	ship_qty_max = 2
+=======
+	contains = list(/obj/item/rogueweapon/greatsword/elvish)
+
+>>>>>>> 4405357b8e (Nothing broke when I localhosted so it must be okay)

@@ -257,15 +257,10 @@
 
 			used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
 			used_weapon.remove_bintegrity(sharp_loss, attacker)
+			if(mind)
+				dodgetime = CLAMP(dodgetime - 2, 0, CLICK_CD_DODGE)
+				changeMaxDodge(2)
 
-		if(mind && attacker.mind && HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
-			var/text = "[bodyzone2readablezone(attacker.zone_selected)]..."
-			if(HAS_TRAIT(attacker, TRAIT_DECEIVING_MEEKNESS))
-				if(prob(10))
-					text = "<i>Somewhere...</i>"
-					attacker.balloon_alert(src, text)
-			else
-				attacker.balloon_alert(src, text)
 		return TRUE
 
 	if(weapon_parry == FALSE)
@@ -286,6 +281,9 @@
 		if(unarmed_bracers)
 			unarmed_bracers.take_damage(INTEG_PARRY_DECAY_NOSHARP, "slash", armor_penetration = 100)
 		flash_fullscreen("blackflash2")
+		if(mind)
+			dodgetime = CLAMP(dodgetime - 2, 0, CLICK_CD_DODGE)
+			changeMaxDodge(2)
 		return TRUE
 
 /mob/proc/do_parry(obj/item/weapon, parrydrain as num, mob/living/attacker)

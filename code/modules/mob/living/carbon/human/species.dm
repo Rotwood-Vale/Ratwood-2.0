@@ -1344,6 +1344,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			return FALSE
 */
 		var/selzone = melee_accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
+		var/selzone_real = user.zone_selected
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 
@@ -1376,9 +1377,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(affecting.body_zone == BODY_ZONE_HEAD)
 				SEND_SIGNAL(user, COMSIG_HEAD_PUNCHED, target)
 		log_combat(user, target, "punched", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
-		if(ishuman(user) && user.mind)
-			var/text = "[bodyzone2readablezone(selzone)]..."
-			user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+		if(ishuman(user))
+			var/text = "[bodyzone2readablezone(selzone_real)]..."
+			user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, show_self = FALSE)
 
 		if(!nodmg)
 			if(user.limb_destroyer)
@@ -1653,9 +1654,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.next_attack_msg.Cut()
 			log_combat(user, target, "kicked", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 
-			if(ishuman(user) && user.mind)
-				var/text = "[bodyzone2readablezone(selzone)]..."
-				user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+			if(ishuman(user))
+				var/text = "[bodyzone2readablezone(user.zone_selected)]..."
+				user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, show_self = FALSE)
 
 			user.do_attack_animation_simple(target, ATTACK_EFFECT_KICK, TRUE)
 			if(!nodmg)
@@ -1864,6 +1865,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(!affecting)
 		return
+	
+	var/datum/status_effect/buff/clash/limbguard/LG = H.has_status_effect(/datum/status_effect/buff/clash/limbguard)
+	if(LG)
+		if(LG.protected_zone == selzone && LG.is_active)	// We "missed" into limbguard's protected zone.
+			LG.process_attack(H, H, user, I)
+			return
+
+
 	var/datum/intent/effect/int = user.used_intent
 	if(istype(int, /datum/intent/effect) && selzone)
 		var/do_effect = FALSE
@@ -1923,30 +1932,46 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
 			if(prob(10))
 				text = "<i>I can't tell...</i>"
-				user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
-		else
-			user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+			else
+				text = null
+		if(text)
+			user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, show_self = FALSE)
+
+	if(H.client?.prefs.floating_text_toggles & HITZONE_TEXT)
+		H.balloon_alert(H, "[bodyzone2readablezone(selzone)]...")
 
 	var/armor_block = H.run_armor_check(selzone, I.d_type, "", "",pen, damage = Iforce, blade_dulling=bladec, intdamfactor = used_intfactor, used_weapon = I)
 
 	var/nodmg = FALSE
 
 	if(Iforce)
+<<<<<<< HEAD
+=======
+		H.retaliate(user)
+		var/post_weakness_dmg
+		var/post_reduction_dmg
+
+>>>>>>> 4405357b8e (Nothing broke when I localhosted so it must be okay)
 		var/weakness = H.check_weakness(I, user)
+		post_weakness_dmg = Iforce * ((weakness == 0) ? 1 : weakness)
 		H.next_attack_msg.Cut()
-		if(!apply_damage(Iforce * weakness, I.damtype, def_zone, armor_block, H))
+		if(!apply_damage(post_weakness_dmg, I.damtype, def_zone, armor_block, H))
 			nodmg = TRUE
 			H.next_attack_msg += " <span class='warning'>The armor yet remains...</span>"
 			if(I)
 				I.remove_bintegrity(1)
 				I.take_damage(1, BRUTE, I.d_type)
+			if(user.mind && user.goodluck(4) && user.d_intent == INTENT_DODGE)
+				user.changeNext_def(clamp(user.dodgetime - 1, 0, CLICK_CD_DODGE))
+				user.changeMaxDodge(1)
 				//Blunt chipping, no matter what. Assuming it has damage. This is done after armour damage.
 				if(user.used_intent.blunt_chipping)//We won't check for blunt. Just that it's able. For funny reasons.
 					var/blunt_chip_block = H.run_armor_check(selzone, "blunt", armor_penetration = 80)//I hate this. So much.
 					H.apply_damage(Iforce * user.used_intent.blunt_chip_strength, BRUTE, def_zone, blunt_chip_block)//, spread_damage = TRUE)
 					H.next_attack_msg += " <span class='warning'>and yet the force punches through!</span>"//But sometimes it lies!
 		if(!nodmg)
-			var/datum/wound/crit_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, (Iforce * weakness) * ((100-armor_block)/100), user, selzone, crit_message = TRUE, weapon = I)
+			post_reduction_dmg = (post_weakness_dmg - armor_block)
+			var/datum/wound/crit_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, post_reduction_dmg, user, selzone, crit_message = TRUE, weapon = I)
 			if(should_embed_weapon(crit_wound, I))
 				var/can_impale = TRUE
 				if(!affecting)
@@ -1966,6 +1991,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						playsound(H, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
 						user.visible_message(span_notice("[user] rips [I] out of [H]'s [affecting.name]!"), span_notice("I rip [I] from [H]'s [affecting.name]."))
 			I.do_special_attack_effect(user, affecting, intent, H, selzone)
+			if(user.mind)
+				user.dodgetime = (clamp(user.dodgetime - 2, 0, CLICK_CD_DODGE))
+				user.changeMaxDodge(3)
+			if(H.mind)
+				H.dodgetime = (clamp(H.dodgetime - 8, 0, CLICK_CD_DODGE))	//We reset the dodgetime after getting struck directly in the body.
+				H.changeMaxDodge(5)
 //		if(H.used_intent.blade_class == BCLASS_BLUNT && I.force >= 15 && affecting.body_zone == "chest")
 //			var/turf/target_shove_turf = get_step(H.loc, get_dir(user.loc,H.loc))
 //			H.throw_at(target_shove_turf, 1, 1, H, spin = FALSE)

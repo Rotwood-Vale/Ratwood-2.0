@@ -268,12 +268,14 @@
 	// This does the exact same damage through steel armor as a normal longsword but can crit through armor.
 	// You're going to be disappointed if you use it on anything without armor. 0.8x damage to unarmored body parts.
 	penfactor = PEN_BSTEEL
+	clickcd = CLICK_CD_MELEE
+	swingdelay = 1.2 SECONDS
+	damfactor = 1
 	blade_class = BCLASS_PICK
-	damfactor = 0.8
 
 /datum/intent/sword/thrust/long/halfsword/lesser
 	name = "halbschwert"
-	clickcd = 22
+	clickcd = CLICK_CD_CHARGED
 
 /datum/intent/effect/daze/longsword
 	name = "durchlauffen"
