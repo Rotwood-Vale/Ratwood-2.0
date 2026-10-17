@@ -174,6 +174,8 @@
 	//body += "<A href='?_src_=holder;[HrefToken()];languagemenu=[REF(M)]'>Language Menu</A>"
 	body += "<br><A href='?_src_=holder;[HrefToken()];heal_panel=[REF(M)]'>Heal Panel</A> | "
 	body += "<A href='?_src_=holder;[HrefToken()];inventory_panel=[REF(M)]'>Inventory Panel</A>"
+	if(ishuman(M) && M.client)
+		body += " | <A href='?_src_=holder;[HrefToken()];pref_refresh=[REF(M)]'>Pref Refresh</A>"
 
 	body += "</div>"
 
@@ -1364,7 +1366,9 @@
 
 /mob/living/carbon/human/proc/admin_send_back_to_lobby(mob/admin, delete_character = FALSE)
 	var/datum/job/mob_job
-	var/target_job = SSrole_class_handler.get_advclass_by_name(advjob)
+	// A shapeshifted form (wildshape, werewolf) carries the character's real body inside it.
+	var/mob/living/carbon/human/body = get_real_body()
+	var/target_job = SSrole_class_handler.get_advclass_by_name(body.advjob)
 	var/player_key = key ? key : mind?.key
 	if(mind)
 		mob_job = SSjob.GetJob(mind.assigned_role)
@@ -1376,16 +1380,20 @@
 		for(var/datum/mind/MF in get_minds())
 			mind.become_unknown_to(MF)
 		for(var/datum/bounty/removing_bounty in GLOB.head_bounties)
-			if(removing_bounty.target == real_name)
+			if(removing_bounty.target == body.real_name)
 				GLOB.head_bounties -= removing_bounty
 	else if(admin)
 		to_chat(admin, span_warning("Target has no mind!"))
-	GLOB.chosen_names -= real_name
+	GLOB.chosen_names -= body.real_name
 	if(!mob_job)
-		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(WANDERERS, FALSE)], mobid)
+		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(WANDERERS, FALSE)], body.mobid)
 	else
-		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(mob_job.department_flag, mob_job.obsfuscated_job)], mobid)
-	LAZYREMOVE(GLOB.roleplay_ads, mobid)
+		LAZYREMOVE(GLOB.actors_list[SSjob.bitflag_to_department(mob_job.department_flag, mob_job.obsfuscated_job)], body.mobid)
+	LAZYREMOVE(GLOB.roleplay_ads, body.mobid)
+	if(delete_character)
+		body.far_travel_cleanup(mind, player_key && ckey(player_key))
+		if(body != src)
+			far_travel_cleanup() // The form's own embedded objects.
 	if(client)
 		SSdroning.kill_droning(client)
 		SSdroning.kill_loop(client)
@@ -1396,8 +1404,42 @@
 	else if(admin)
 		to_chat(admin, span_warning("[src] has no key to return to the lobby."))
 	if(delete_character)
+		if(body != src)
+			stored_mob = null
+			qdel(body)
 		qdel(src)
 	return TRUE
+
+/// Clears what outlives a character leaving the round for good: mercenary statue listings, the lord omen and embedded objects.
+/// The mind and ckey may come from the form the player is in rather than this body.
+/mob/living/carbon/human/proc/far_travel_cleanup(datum/mind/departing_mind, departing_ckey)
+	if(departing_mind && departing_ckey)
+		if(departing_mind.assigned_role == "Mercenary")
+			var/obj/structure/roguemachine/talkstatue/mercenary/statue = SSroguemachine.mercenary_statue
+			if(!statue && length(SSroguemachine.mercenary_statues))
+				statue = SSroguemachine.mercenary_statues[1]
+			if(statue)
+				statue.mercenary_status -= real_name
+		// If departure is a lord, remove them from found_lords to prevent false omen triggers
+		if(departing_mind.assigned_role == "Grand Duke" || departing_mind.assigned_role == "Grand Duchess")
+			if(GLOB.found_lords[departing_ckey])
+				GLOB.found_lords -= departing_ckey
+	if(has_embedded_objects())
+		for(var/thing in get_embedded_objects())
+			QDEL_NULL(thing)
+
+/// Sends the disconnected player in this mob back to the lobby and deletes their character. Returns FALSE if there is no character.
+/mob/living/proc/fartravel_disconnected(mob/admin)
+	var/obj/shapeshift_holder/holder = get_shapeshift_holder()
+	if(holder)
+		var/mob/living/carbon/human/caster = holder.stored
+		// Revert the spell shapeshift so the mind, and the slumbering player's key, are back in the caster's body.
+		holder.restore()
+		return caster.admin_send_back_to_lobby(admin, TRUE)
+	if(!ishuman(src))
+		return FALSE
+	var/mob/living/carbon/human/H = src
+	return H.admin_send_back_to_lobby(admin, TRUE)
 
 
 /datum/admins/proc/sleep_view()

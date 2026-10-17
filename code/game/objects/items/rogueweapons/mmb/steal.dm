@@ -41,6 +41,7 @@
 
 /mob/living/carbon/human/proc/finalize_pickpocket_steal(mob/living/carbon/human/victim, obj/item/picked, exp_to_gain)
 	put_in_active_hand(picked)
+	picked.add_forensic_action(src, "pickpocketed from [victim.real_name]")
 	to_chat(src, span_green("I stole [picked]!"))
 	victim.log_message("has had \the [picked] stolen by [key_name(src)]", LOG_ATTACK, color="white", meta = list(LOG_META_ATTACKER = ckey))
 	log_message("has stolen \the [picked] from [key_name(victim)]", LOG_ATTACK, color="white", meta = list(LOG_META_TARGET = victim.ckey))
@@ -158,6 +159,7 @@
 		STR.remove_from_storage(wanted, get_turf(victim))
 	else
 		to_chat(thief, span_warning("My fingers slip off [wanted]."))
+		wanted.add_forensic_action(thief, "tried to pickpocket from [victim.real_name]")
 	thief.pickpocket_feedback(victim, margin, container)
 	if(success)
 		thief.finalize_pickpocket_steal(victim, wanted, exp_to_gain)
@@ -295,6 +297,7 @@
 			victim.dropItemToGround(target)
 		else
 			to_chat(thief, span_warning("I can't work [target] loose without them noticing."))
+			target.add_forensic_action(thief, "tried to pickpocket from [victim.real_name]")
 		thief.pickpocket_feedback(victim, margin, target)
 		if(success)
 			thief.finalize_pickpocket_steal(victim, target, exp_to_gain)

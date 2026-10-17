@@ -74,6 +74,7 @@
 		else
 			user.visible_message(span_warning("[user] kicks [src] shut!"), \
 				span_notice("I kick [src] shut!"))
+		add_forensic_action(user, "kicked shut")
 		force_closed()
 	else
 		if(locked)
@@ -89,6 +90,7 @@
 					else
 						user.visible_message(span_warning("[user] kicks open [src]!"), \
 							span_notice("I kick open [src]!"))
+					add_forensic_action(user, "kicked open, breaking the lock")
 					locked = 0
 					force_open()
 				else
@@ -99,6 +101,7 @@
 					else
 						user.visible_message(span_warning("[user] kicks [src]!"), \
 							span_notice("I kick [src]!"))
+					add_forensic_action(user, "kicked while locked")
 			//try to kick open, destroy lock
 		else
 			playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
@@ -108,6 +111,7 @@
 			else
 				user.visible_message(span_warning("[user] kicks open [src]!"), \
 					span_notice("I kick open [src]!"))
+			add_forensic_action(user, "kicked open")
 			force_open()
 
 /obj/structure/mineral_door/proc/force_open()
@@ -237,9 +241,11 @@
 			user.break_invisibility()
 			if(locked)
 				user.visible_message(span_warning("[user] bashes into [src]!"))
+				add_forensic_action(user, "bashed into while locked")
 				take_damage(200, "brute", "blunt", 1)
 			else
 				playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
+				add_forensic_action(user, "smashed through")
 				force_open()
 				user.visible_message(span_warning("[user] smashes through [src]!"))
 			return
@@ -309,7 +315,11 @@
 			return FALSE
 	else if(!user.client) // simplemobs aren't allowed to pathfind through doors, currently
 		return FALSE
+	var/was_open = door_opened
 	SwitchState(user.m_intent == MOVE_INTENT_SNEAK) // silent when sneaking
+	// Close() refuses while anyone stands in the doorway, so only log what actually happened
+	if(door_opened != was_open)
+		add_forensic_action(user, door_opened ? "opened" : "closed", routine = TRUE)
 	return TRUE
 
 /obj/structure/mineral_door/proc/SwitchState(silent = FALSE)
@@ -434,7 +444,12 @@
 			return ..()
 
 /obj/structure/mineral_door/attacked_by(obj/item/I, mob/living/user)
-	..()
+	var/was_broken = obj_broken || obj_destroyed
+	// Not returned, as door hits have always ended the attack chain here
+	if(..())
+		add_forensic_action(user, "hit with [format_text(I.name)]")
+	if(!was_broken && (obj_broken || obj_destroyed))
+		add_forensic_action(user, "broke")
 	if(obj_broken || obj_destroyed)
 		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
 		new_track.handle_creation(user)
@@ -612,6 +627,7 @@
 				lock_toggle(user)
 				if(autobump && !locked)
 					src.Open()
+					add_forensic_action(user, "opened", routine = TRUE)
 					addtimer(CALLBACK(src, PROC_REF(Close), FALSE, TRUE), 25)
 					src.last_bumper = user
 				return
@@ -627,6 +643,7 @@
 			lock_toggle(user)
 			if(autobump)
 				src.Open()
+				add_forensic_action(user, "opened", routine = TRUE)
 				addtimer(CALLBACK(src, PROC_REF(Close), FALSE, TRUE), 25)
 				src.last_bumper = user
 			return
@@ -702,6 +719,7 @@
 						record_round_statistic(STATS_LOCKS_PICKED)
 						var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
 						new_track.handle_creation(user)
+					add_forensic_action(user, "lockpicked")
 					lock_toggle(user)
 					break
 				else
@@ -713,6 +731,7 @@
 				add_sleep_experience(L, /datum/skill/misc/lockpicking, L.STAINT/4)
 				continue
 		if(!picked)
+			add_forensic_action(user, "tried to lockpick")
 			user.log_message("stopped/failed lockpicking door \"[src.name]\" (remains [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
 		return
 
@@ -730,6 +749,7 @@
 		log_admin("[H.real_name]([key_name(user)]) successfully used a skeleton key on [src.name].")
 	do_sparks(3, FALSE, src)
 	playsound(user, 'sound/items/skeleton_key.ogg', 100)
+	add_forensic_action(user, "used a skeleton key")
 	lock_toggle(user) //All That It Does.
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	return
@@ -737,6 +757,8 @@
 /obj/structure/mineral_door/proc/lock_toggle(mob/user)
 	if(isSwitchingStates || door_opened)
 		return
+	// Routine, so a keyholder coming and going cannot push lockpicks and breaks out. Picks log their own evidence entry
+	add_forensic_action(user, locked ? "unlocked" : "locked", routine = TRUE)
 	if(locked)
 		user?.visible_message(span_warning("[user] unlocks [src]."), \
 			span_notice("I unlock [src]."))

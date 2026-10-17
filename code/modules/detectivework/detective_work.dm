@@ -69,6 +69,19 @@
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_hiddenprint(M)
 
+/// Notes a player opening, locking, picking or breaking this for admins' View Forensics. Mobs without a player are skipped.
+/// Routine is everyday use (opening, closing, keyed locking, picking up, dropping), kept in its own capped list.
+/// only_if_tracked skips atoms no player has handled yet, so mass drops of untouched gear make no component.
+/atom/proc/add_forensic_action(mob/user, action, routine = FALSE, only_if_tracked = FALSE)
+	if(!user?.ckey || QDELETED(src))
+		return
+	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
+	if(!D)
+		if(only_if_tracked)
+			return
+		D = AddComponent(/datum/component/forensics)
+	D.add_action(user, action, routine)
+
 /atom/proc/add_blood_DNA(list/dna)						//ASSOC LIST DNA = BLOODTYPE
 	return FALSE
 

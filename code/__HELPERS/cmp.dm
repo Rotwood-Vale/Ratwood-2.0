@@ -122,3 +122,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_skills_for_display(datum/skill/A, datum/skill/B)
 	return sorttext("[B.abstract_type]", "[A.abstract_type]") || sorttext(B.name, A.name)
+
+/// Packed forensic action entries by round time, oldest first. Only used on the rare merge of two forensics components
+/proc/cmp_forensic_action_time_asc(a, b)
+	return forensic_action_time(a) - forensic_action_time(b)

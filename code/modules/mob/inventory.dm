@@ -166,6 +166,9 @@
 	if(get_item_for_held_index(hand_index) != null)
 		return FALSE
 //		dropItemToGround(get_item_for_held_index(hand_index), force = TRUE)
+	// For View Forensics. Every way into a hand ends here: clicking, quickdraw, telekinesis, pickpocketing.
+	// A null loc is a new item or one moved between my own slots, and nothing else is checked for mobs without a player
+	var/picked_up = ckey && I.loc && get(I, /mob) != src
 	I.forceMove(src)
 	held_items[hand_index] = I
 	I.layer = ABOVE_HUD_LAYER
@@ -184,6 +187,8 @@
 	if(hud_used)
 		hud_used.throw_icon?.update_icon()
 		hud_used.give_intent?.update_icon()
+	if(picked_up)
+		I.add_forensic_action(src, "picked up", routine = TRUE)
 	return hand_index
 
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.

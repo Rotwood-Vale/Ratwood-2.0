@@ -375,6 +375,14 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	if(active || force_key_move)
 		testing("dotransfer to [new_character]")
 		new_character.key = key		//now transfer the key to link the client to our new body
+		// A slumbering player carried into a new body (a werewolf at dawn, a shapeshift ending) gets no Login or Logout,
+		// so move the deep slumber over here or the body is never alerted on or listed.
+		if(isliving(new_character) && new_character.ckey && !new_character.client)
+			var/mob/living/slumbering = new_character
+			var/old_is_living = isliving(old_current)
+			slumbering.mark_disconnected(old_is_living && old_current.last_logout_time ? old_current.last_logout_time : world.time)
+			if(old_is_living && old_current != slumbering)
+				old_current.clear_disconnected()
 	new_character.update_fov_angles()
 	if(old_current)
 		SEND_SIGNAL(old_current, COMSIG_MIND_TRANSFER, new_character)
