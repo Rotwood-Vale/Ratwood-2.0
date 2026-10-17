@@ -10,6 +10,7 @@
 	var/bypasses_click_cd = FALSE
 
 /mob/living/carbon/human/on_cmode()
+	drop_hiked_hem()
 	if(!cmode)	//We just toggled it off.
 		addtimer(CALLBACK(src, PROC_REF(purge_bait)), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		addtimer(CALLBACK(src, PROC_REF(expire_peel)), 60 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
