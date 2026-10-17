@@ -177,11 +177,6 @@
 			sleep(delay / sprite_changes)
 
 		var/dist = get_dist(user, C)
-		if(dist <= 4)
-			if(HAS_TRAIT(C, TRAIT_SHOCKIMMUNE))
-				continue
-			else
-		var/dist = get_dist(user, C)
 		if (dist <= 4)
 			if (HAS_TRAIT(C, TRAIT_SHOCKIMMUNE))
 				continue
