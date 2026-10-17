@@ -229,7 +229,7 @@
 	damage = 90
 	damage_type = BRUTE
 	flag = "piercing"
-	armor_penetration = PEN_BSTEEL
+	armor_penetration = 200
 	speed = 2.0
 	woundclass = BCLASS_PIERCE
 	embedchance = 100
