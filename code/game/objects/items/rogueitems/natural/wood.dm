@@ -280,13 +280,13 @@
 		if(L.m_intent == MOVE_INTENT_RUN)
 			prob2break = 100
 		if(prob(prob2break))
-			if(!(HAS_TRAIT(L, TRAIT_AZURENATIVE) || HAS_TRAIT(L, TRAIT_WOODWALKER) && L.m_intent != MOVE_INTENT_RUN))
+			if(!(HAS_TRAIT(L, TRAIT_AZURENATIVE) || HAS_TRAIT(L, TRAIT_WOODWALKER) || HAS_TRAIT(L, TRAIT_BOGWALKER) && L.m_intent != MOVE_INTENT_RUN))
 				playsound(src,'sound/items/seedextract.ogg', 100, FALSE)
-			qdel(src)
-			if (L.alpha == 0 && L.rogue_sneaking) // not anymore you're not
-				L.update_sneak_invis(TRUE)
-			if(!HAS_TRAIT(L, TRAIT_WOODWALKER))
-				L.consider_ambush()
+				qdel(src)
+				if (L.alpha == 0 && L.rogue_sneaking) // not anymore you're not
+					L.update_sneak_invis(TRUE)
+				if(!HAS_TRAIT(L, TRAIT_WOODWALKER))
+					L.consider_ambush()
 
 /obj/item/grown/log/tree/stick/Initialize(mapload)
 	icon_state = "stick[rand(1,2)]"
