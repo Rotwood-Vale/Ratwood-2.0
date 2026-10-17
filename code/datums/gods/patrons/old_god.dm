@@ -371,6 +371,7 @@
 	owner.remove_status_effect(STATUS_EFFECT_SLEEPING) 
 	owner.remove_status_effect(/datum/status_effect/incapacitating/knockdown)
 	owner.remove_status_effect(/datum/status_effect/incapacitating/stun) 
+	owner.remove_status_effect(/datum/status_effect/incapacitating/unconscious)
 	owner.energy_add(700)
 	owner.stamina_add(-100) // rise back with full strength
 	owner.visible_message(span_boldwarning("[owner] rises back on their feet, defying death with every movement."), span_boldwarning("I feel a surge of energy as I DEFY death."))
