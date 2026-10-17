@@ -26,6 +26,117 @@
 		if(mass_direct_handle_topic(href_list))
 			return
 
+	// Player archive management, from Manage Books and Manage Paintings
+	if(href_list["show_player_book"])
+		owner.show_book_content(href_list["show_player_book"])
+		return
+
+	if(href_list["amend_player_book"])
+		var/file_name = href_list["amend_player_book"]
+		var/list/book = SSlibrarian.file2playerbook(file_name)
+		if(!length(book))
+			return
+		var/static/list/amend_types = list("Title" = "book_title", "Author" = "author", "Cover" = "icon", "Category" = "category")
+		var/amend_choice = tgui_input_list(usr, "What do you want to amend?", "Amend Book", amend_types)
+		if(!amend_choice)
+			return
+		var/amend_type = amend_types[amend_choice]
+		var/amend_text
+		if(amend_type == "icon")
+			amend_text = GLOB.player_book_icons[tgui_input_list(usr, "Choose a new cover", "Amend Book", GLOB.player_book_icons)]
+		else if(amend_type == "category")
+			amend_text = tgui_input_list(usr, "Choose a new category", "Amend Book", GLOB.player_book_categories)
+		else
+			amend_text = stripped_input(usr, "What do you want the [LOWER_TEXT(amend_choice)] to be?", "Amend Book", html_decode(book[amend_type]), MAX_NAME_LEN)
+		if(!amend_text)
+			return
+		if(!SSlibrarian.amend_player_book(file_name, amend_type, amend_text))
+			to_chat(usr, span_warning("The book could not be amended. Titles must be unique and must not begin with an underscore."))
+			return
+		message_admins("[key_name_admin(usr)] has amended player made book '[player_archive_display_text(book["book_title"], file_name)]': [LOWER_TEXT(amend_choice)] is now '[player_archive_display_text(amend_text)]'")
+		log_admin("[key_name(usr)] has amended player made book '[book["book_title"]]': [LOWER_TEXT(amend_choice)] is now '[amend_text]'")
+		owner.manage_books()
+		return
+
+	if(href_list["delete_player_book"])
+		var/file_name = href_list["delete_player_book"]
+		var/list/book = SSlibrarian.file2playerbook(file_name)
+		if(!length(book))
+			return
+		var/book_title = player_archive_display_text(book["book_title"], file_name)
+		if(tgui_alert(usr, "Are you sure you want to delete the book '[html_decode(book_title)]'?", "Confirm Deletion", list("Yes", "No")) != "Yes")
+			return
+		if(!SSlibrarian.del_player_book(file_name))
+			to_chat(usr, span_warning("The book could not be deleted."))
+			return
+		message_admins("[key_name_admin(usr)] has deleted player made book called: '[book_title]'")
+		log_admin("[key_name(usr)] has deleted player made book called: '[html_decode(book_title)]'")
+		owner.manage_books()
+		return
+
+	if(href_list["delete_player_painting"])
+		var/file_name = href_list["delete_player_painting"]
+		var/list/painting = SSpaintings.file2playerpainting(file_name)
+		if(!length(painting))
+			return
+		var/painting_title = player_archive_display_text(painting["painting_title"], file_name)
+		if(tgui_alert(usr, "Are you sure you want to delete the painting '[html_decode(painting_title)]'?", "Confirm Deletion", list("Yes", "No")) != "Yes")
+			return
+		if(!SSpaintings.del_player_painting(file_name))
+			to_chat(usr, span_warning("The painting could not be deleted."))
+			return
+		message_admins("[key_name_admin(usr)] has deleted player made painting called: '[painting_title]'")
+		log_admin("[key_name(usr)] has deleted player made painting called: '[html_decode(painting_title)]'")
+		owner.manage_paintings()
+		return
+
+	if(href_list["player_archive_bans"])
+		owner.archive_bans()
+		return
+
+	if(href_list["player_archive_ban"])
+		var/archive = href_list["player_archive_ban"]
+		var/datum/player_archive_bans/archive_bans = get_player_archive_bans(archive)
+		if(!archive_bans)
+			return
+		var/banned_ckey = href_list["ckey"]
+		if(!banned_ckey)
+			banned_ckey = tgui_input_text(usr, "Enter the ckey of the player to ban from adding [archive] to the archive.", "Archive Ban", max_length = MAX_NAME_LEN)
+		banned_ckey = ckey(banned_ckey)
+		if(!banned_ckey)
+			return
+		if(archive_bans.is_banned(banned_ckey))
+			to_chat(usr, span_warning("[banned_ckey] is already banned from adding [archive] to the archive."))
+			return
+		if(tgui_alert(usr, "Are you sure you want to ban [banned_ckey] from adding [archive] to the archive?", "Confirm Ban", list("Yes", "No")) != "Yes")
+			return
+		if(!archive_bans.ban(banned_ckey, usr.key))
+			to_chat(usr, span_warning("[banned_ckey] could not be banned from adding [archive] to the archive."))
+			return
+		message_admins("[key_name_admin(usr)] has banned [banned_ckey] from adding [archive] to the archive.")
+		log_admin("[key_name(usr)] has banned [banned_ckey] from adding [archive] to the archive.")
+		if(archive == "books")
+			owner.manage_books()
+		else
+			owner.manage_paintings()
+		return
+
+	if(href_list["player_archive_unban"])
+		var/archive = href_list["player_archive_unban"]
+		var/datum/player_archive_bans/archive_bans = get_player_archive_bans(archive)
+		var/banned_ckey = ckey(href_list["ckey"])
+		if(!archive_bans?.is_banned(banned_ckey))
+			return
+		if(tgui_alert(usr, "Are you sure you want to let [banned_ckey] add [archive] to the archive again?", "Confirm Unban", list("Yes", "No")) != "Yes")
+			return
+		if(!archive_bans.unban(banned_ckey))
+			to_chat(usr, span_warning("[banned_ckey] could not be unbanned from adding [archive] to the archive."))
+			return
+		message_admins("[key_name_admin(usr)] has lifted [banned_ckey]'s ban from adding [archive] to the archive.")
+		log_admin("[key_name(usr)] has lifted [banned_ckey]'s ban from adding [archive] to the archive.")
+		owner.archive_bans()
+		return
+
 	// Open Heal Panel from Player Panel
 	if(href_list["heal_panel"])
 		var/mob/living/M = locate(href_list["heal_panel"])

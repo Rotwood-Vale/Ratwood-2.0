@@ -1,5 +1,7 @@
 /obj/item/book/rogue
 	var/open = FALSE
+	/// Library section random bookcases shelve this book under, matching GLOB.player_book_categories. Null keeps it off category shelves.
+	var/category
 	icon = 'icons/roguetown/items/books.dmi'
 	icon_state = "basic_book_0"
 	slot_flags = ITEM_SLOT_HIP
@@ -303,6 +305,7 @@
 	icon_state ="lawtome_0"
 	base_icon_state = "lawtome"
 	bookfile = "law_2.json"
+	category = "Reference"
 
 /obj/item/book/rogue/cooking
 	name = "Tastes Fit For The Lord"
@@ -310,6 +313,7 @@
 	icon_state ="book_0"
 	base_icon_state = "book"
 	bookfile = "cooking.json"
+	category = "Reference"
 
 		//no more theif stole the books
 /obj/item/book/rogue/knowledge1
@@ -318,6 +322,7 @@
 	icon_state ="book5_0"
 	base_icon_state = "book5"
 	bookfile = "knowledge.json"
+	category = "Reference"
 
 
 /obj/item/book/rogue/secret/xylix
@@ -327,7 +332,7 @@
 	base_icon_state = "xylix"
 	bookfile = "xylix.json"
 
-/obj/item/book/rogue/xylix/attack_self(mob/user)
+/obj/item/book/rogue/secret/xylix/attack_self(mob/user)
 	if(!open)
 		attack_right(user)
 		return
@@ -349,6 +354,7 @@
 	icon_state ="book_0"
 	base_icon_state = "book"
 	bookfile = "tales1.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/festus
 	name = "Book of Festus"
@@ -356,6 +362,7 @@
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 	bookfile = "tales2.json"
+	category = "Fiction"
 
 
 /obj/item/book/rogue/tales3
@@ -364,6 +371,7 @@
 	icon_state ="book3_0"
 	base_icon_state = "book3"
 	bookfile = "tales3.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/bookofpriests
 	name = "Holy Book of Saphria"
@@ -371,6 +379,7 @@
 	icon_state ="knowledge_0"
 	base_icon_state = "knowledge"
 	bookfile = "holyguide.json"
+	category = "Religion"
 
 /obj/item/book/rogue/robber
 	name = "Reading for Robbers"
@@ -378,6 +387,7 @@
 	icon_state ="basic_book_0"
 	base_icon_state = "basic_book"
 	bookfile = "tales4.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/cardgame
 	name = "Graystone's Torment Basic Rules"
@@ -385,6 +395,7 @@
 	icon_state ="basic_book_0"
 	base_icon_state = "basic_book"
 	bookfile = "tales5.json"
+	category = "Reference"
 
 /obj/item/book/rogue/blackmountain
 	name = "Zabrekalrek, The Black Mountain Saga: Part One"
@@ -392,6 +403,7 @@
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales6.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/beardling
 	name = "Rock and Stone - ABC & Tales for Beardlings"
@@ -399,6 +411,7 @@
 	icon_state ="book8_0"
 	base_icon_state = "book8"
 	bookfile = "tales7.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/abyssor
 	name = "A Tale of Those Who Live At Sea"
@@ -406,6 +419,7 @@
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 	bookfile = "tales8.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/necra
 	name = "Burial Rites for Necra"
@@ -413,6 +427,7 @@
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales9.json"
+	category = "Religion"
 
 /obj/item/book/rogue/noc
 	name = "Dreamseeker"
@@ -420,6 +435,7 @@
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 	bookfile = "tales10.json"
+	category = "Religion"
 
 /obj/item/book/rogue/fishing
 	name = "Fontaine's Advanced Guide to Fishery"
@@ -427,6 +443,7 @@
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 	bookfile = "tales11.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/sword
 	name = "The Six Follies: How To Survive by the Sword"
@@ -434,6 +451,7 @@
 	icon_state ="book5_0"
 	base_icon_state = "book5"
 	bookfile = "tales12.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/arcyne
 	name = "Latent Magicks, where does Arcyne Power come from?"
@@ -441,6 +459,7 @@
 	icon_state ="book4_0"
 	base_icon_state = "book4"
 	bookfile = "tales13.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/nitebeast
 	name = "Legend of the Nitebeast"
@@ -448,6 +467,7 @@
 	icon_state ="book8_0"
 	base_icon_state = "book8"
 	bookfile = "tales14.json"
+	category = "Fiction"
 
 /obj/item/book/rogue/naledi1
 	name = "The Path of the War Scholar Volume 1"
@@ -455,6 +475,7 @@
 	icon_state = "knowledge_0"
 	base_icon_state = "knowledge"
 	bookfile = "naledi1.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/naledi2
 	name = "The Path of the War Scholar Volume 3"
@@ -462,6 +483,7 @@
 	icon_state = "book8_0"
 	base_icon_state = "book8"
 	bookfile = "naledi2.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/naledi3
 	name = "The Path of the War Scholar Volume 7"
@@ -469,6 +491,7 @@
 	icon_state = "book7_0"
 	base_icon_state = "book7"
 	bookfile = "naledi3.json"
+	category = "Non-fiction"
 
 /obj/item/book/rogue/naledi4
 	name = "The Path of the War Scholar Volume 20"
@@ -476,16 +499,10 @@
 	icon_state = "book6_0"
 	base_icon_state = "book6"
 	bookfile = "naledi4.json"
+	category = "Non-fiction"
 
-
-/obj/item/book/rogue/playerbook
-	var/player_book_text
-	var/player_book_title
-	var/player_book_author
-	var/player_book_icon
-	var/player_book_author_ckey
-	var/is_in_round_player_generated
-	var/list/book_icons = list(
+/// Cover styles players can choose for their books, mapped to icon states.
+GLOBAL_LIST_INIT(player_book_icons, list(
 	"Sickly green with embossed bronze" = "book8",
 	"Red with embossed toper" = "book7",
 	"Purple with embossed obsidian" = "book6",
@@ -494,56 +511,87 @@
 	"Blue without embossed material" = "book3",
 	"Red without embossed material" = "book2",
 	"Black without embossed material" = "book",
-	"Green without embossed material" = "basic_book")
+	"Green without embossed material" = "basic_book",
+))
+
+/// Categories players can file their books under, matching the library bookcase sections.
+GLOBAL_LIST_INIT(player_book_categories, list(
+	"Fiction",
+	"Non-fiction",
+	"Religion",
+	"Adult",
+	"Reference",
+))
+
+/obj/item/book/rogue/playerbook
+	var/player_book_text = "moisture in the air or water leaks have rendered the carefully written caligraphy of this book unreadable"
+	var/player_book_title = "unknown title"
+	var/player_book_author = "unknown author"
+	var/player_book_icon = "basic_book"
+	var/player_book_author_ckey = "unknown"
+	var/player_book_date
+	var/player_book_category = "Unknown"
+	var/is_in_round_player_generated
+	var/written = FALSE
 	name = "unknown title"
-	desc = "Penned by an unknown author."
+	desc = "by an unknown author"
 	icon_state = "basic_book_0"
 	base_icon_state = "basic_book"
 	override_find_book = TRUE
 
-/obj/item/book/rogue/playerbook/Initialize(mapload, in_round_player_generated, mob/living/in_round_player_mob, text)
+/obj/item/book/rogue/playerbook/proc/get_player_input(mob/living/in_round_player_mob, text)
+	player_book_author_ckey = in_round_player_mob?.ckey
+	player_book_text = text
+	var/new_title
+	do
+		if(QDELETED(src))
+			return
+		// input() returns immediately without a client, so stop rather than loop forever. The book stays readable but unarchivable.
+		if(!in_round_player_mob?.client)
+			update_book_data()
+			return
+		new_title = capitalize(stripped_input(in_round_player_mob, "What title do you want to give the book? (max 42 characters)", "Title", "", MAX_NAME_LEN))
+		if(!player_archive_filename(new_title))
+			to_chat(in_round_player_mob, span_warning("Choose a nonempty title of at most 42 characters that does not begin with an underscore."))
+	while(!player_archive_filename(new_title))
+	player_book_title = new_title
+	player_book_author = player_archive_author_name(in_round_player_mob)
+	var/picked_category = input(in_round_player_mob, "Choose a category to file the book under", "Book Category") as anything in GLOB.player_book_categories
+	if(picked_category)
+		player_book_category = picked_category
+	player_book_icon = GLOB.player_book_icons[input(in_round_player_mob, "Choose a book style", "Book Style") as anything in GLOB.player_book_icons] || player_book_icon
+	player_book_date = get_ic_date_short_as_string()
+	message_admins("[player_archive_display_text(player_book_author_ckey)]([player_book_author]) has generated the player book: [player_archive_display_text(player_book_title)]")
+	update_book_data()
+	written = TRUE
+
+/obj/item/book/rogue/playerbook/proc/update_book_data()
+	name = "[player_book_title]"
+	desc = "By [player_book_author][player_book_date ? ", written [player_book_date]" : ""]"
+	icon_state = "[player_book_icon]_0"
+	base_icon_state = "[player_book_icon]"
+	pages = list("<b3><h3>Title: [player_archive_display_text(player_book_title)]<br>Author: [player_archive_display_text(player_book_author)][player_book_date ? "<br>Written: [player_archive_display_text(player_book_date)]" : ""]</b><h3>[player_book_text]")
+
+/obj/item/book/rogue/playerbook/Initialize(mapload, in_round_player_generated, mob/living/in_round_player_mob, text, archive_file_name)
 	. = ..()
 	is_in_round_player_generated = in_round_player_generated
 	if(is_in_round_player_generated)
-		player_book_text = text
-		INVOKE_ASYNC(src, PROC_REF(prompt_for_contents), in_round_player_mob)
+		INVOKE_ASYNC(src, PROC_REF(get_player_input), in_round_player_mob, text)
 	else
-		pick_random_book()
-
-//Just rewrite this entirely. STRIP_HTML_SIMPLE might be insufficient, but that's just the tip of the iceberg.area
-//This needs to check if an input is valid via reject_bad_text, and if not prompt the user again.
-/obj/item/book/rogue/playerbook/proc/prompt_for_contents(mob/living/in_round_player_mob)
-	while(!player_book_author_ckey) // doesn't have to be this, but better than defining a bool.
-		player_book_title = capitalize(STRIP_HTML_SIMPLE(input(in_round_player_mob, "What title do you want to give the book? (max 42 characters)", "Title", "Unknown"), MAX_NAME_LEN))
-		player_book_author = STRIP_HTML_SIMPLE(input(in_round_player_mob, "What do you want the author text to be? (max 42 characters)", "Author", ""), MAX_NAME_LEN)
-		player_book_icon = book_icons[input(in_round_player_mob, "Choose a book style", "Book Style") as anything in book_icons]
-		player_book_author_ckey = in_round_player_mob.ckey
-		//This gives the icon_state name, not the descriptive name, i. e. "book8", instead of "Sickly green with embossed Bronze"
-		if(alert("Confirm?:\nTitle: [player_book_title]\nAuthor: [player_book_author]\nBook Cover: [player_book_icon]", "", "Yes", "No") == "No")
-			player_book_author_ckey = null
-		message_admins("[player_book_author_ckey]([in_round_player_mob.real_name]) has generated the player book: [player_book_title]")
-
-	name = "[player_book_title]"
-	desc = "By [player_book_author]"
-	icon_state = "[player_book_icon]_0"
-	base_icon_state = "[player_book_icon]"
-	pages = list("<b3><h3>Title: [player_book_title]<br>Author: [player_book_author]</b><h3>[player_book_text]")
-
-/obj/item/book/rogue/playerbook/proc/pick_random_book()
-	var/list/player_book_titles = SSlibrarian.pull_player_book_titles()
-	var/list/chosen_book = SSlibrarian.file2playerbook(pick(player_book_titles))
-
-	player_book_title = chosen_book["book_title"]
-	player_book_author = chosen_book["author"]
-	player_book_author_ckey = chosen_book["author_ckey"]
-	player_book_icon = chosen_book["icon"]
-	player_book_text = chosen_book["text"]
-
-	name = "[player_book_title]"
-	desc = "By [player_book_author]"
-	icon_state = "[player_book_icon]_0"
-	base_icon_state = "[player_book_icon]"
-	pages = list("<b3><h3>Title: [player_book_title]<br>Author: [player_book_author]</b><h3>[player_book_text]")
+		if(!archive_file_name && length(SSlibrarian.player_books))
+			archive_file_name = pick(SSlibrarian.player_books)
+		var/list/player_book_content = SSlibrarian.file2playerbook(archive_file_name)
+		// With no valid archive entry, keep the default water-damaged book.
+		if(player_book_content["book_title"] && player_book_content["text"])
+			player_book_title = player_book_content["book_title"]
+			player_book_author = player_book_content["author"] || player_book_author
+			player_book_author_ckey = player_book_content["author_ckey"] || player_book_author_ckey
+			player_book_icon = player_book_content["icon"] || player_book_icon
+			player_book_category = player_book_content["category"] || player_book_category
+			player_book_text = player_book_content["text"]
+			player_book_date = player_book_content["ic_date"]
+			written = TRUE
+		update_book_data()
 
 
 /obj/item/manuscript
@@ -563,11 +611,14 @@
 
 /obj/item/manuscript/examine()
 	. = ..()
-	. += span_info("It has [number_of_pages] pages. Use paper to add more. Finish the book with a book crafting kit.")
+	. += span_info("It has [number_of_pages] pages. Use paper to add more. Finish the book with a book crafting kit, then choose its title, category and cover before archiving it.")
 
 /obj/item/manuscript/attackby(obj/item/I, mob/living/user)
 	// why is a book crafting kit using the craft system, but crafting a book isn't? Well the crafting system for *some reason* is made in such a way as to make reworking it to allow you to put reqs vars in the crafted item near *impossible.*
 	if(istype(I, /obj/item/book_crafting_kit))
+		if(!compiled_pages)
+			to_chat(user, span_warning("Write the manuscript before binding it."))
+			return
 		qdel(I)
 		var/obj/item/book/rogue/playerbook/PB = new /obj/item/book/rogue/playerbook(get_turf(loc), TRUE, user, compiled_pages)
 		if(user.Adjacent(PB))
