@@ -143,6 +143,7 @@
 		list("id" = "chastity", "label" = "Enable Chastity Content", "enabled" = !!owner.prefs.chastenable, "desc" = "Show and allow chastity-related content."),
 		list("id" = "permanent_binding", "label" = "Enable Permanent Binding", "enabled" = (owner.prefs.chastity_hardmode == CHASTITY_HARDMODE_ENABLED), "desc" = "Enable irreversible key-only chastity lock behavior."),
 		list("id" = "extreme_erp", "label" = "Enable Extreme ERP Content", "enabled" = !!owner.prefs.extreme_erp, "desc" = "Allow extreme ERP content categories."),
+		list("id" = "cbt", "label" = "Enable CBT/Genital Wounding", "enabled" = !!owner.prefs.cbt, "desc" = "Enables nutcracker wounds (torsion, ovary breaks) and genital removal wounds."),
 		list("id" = "edging", "label" = "Enable Edging Content", "enabled" = !!owner.prefs.edging, "desc" = "Allow edging-related ERP content."),
 		list("id" = "free_use_default", "label" = "Toggle Free Use Default", "enabled" = !!owner.prefs.free_use_default, "desc" = "Start with Free Use enabled by default. You can manually disable it at any point in the ERP panel."),
 		list("id" = "facial_branding", "label" = "Enable Facial Branding", "enabled" = !!owner.prefs.facial_brands, "desc" = "Allow others to brand your face."),
@@ -254,6 +255,8 @@
 				owner.toggle_Chastity_Hardmode()
 			if("extreme_erp")
 				owner.toggle_extreme_ERP()
+			if("cbt")
+				owner.toggle_cbt()
 			if("edging")
 				owner.toggle_edging()
 			if("free_use_default")
@@ -554,6 +557,18 @@
 			if(hascall(src, "modular_handle_extreme_erp_toggle_disable"))
 				call(src, "modular_handle_extreme_erp_toggle_disable")()
 			to_chat(src, "Extreme ERP content disabled in the ERP panel.")
+
+/client/verb/toggle_cbt() // toggles specifically wounds that either injury or remove the genitals. Knot removal, chastity accidental or intentional castration, gelding wounds, nutcracker wounds, etc.
+	set category = "Options"
+	set name = "Toggle CBT & Genital Wounding"
+	set hidden = 1
+	if(prefs)
+		prefs.cbt = !prefs.cbt
+		prefs.save_preferences()
+		if(prefs.cbt)
+			to_chat(src, "Nutcracker wounds, gelding strikes, genital removal wounds, and other sources of genital injury are now enabled.")
+		else
+			to_chat(src, "You are no longer able to suffer genital injury.")
 
 /client/verb/toggle_facial_brands()
 	set category = "Options"

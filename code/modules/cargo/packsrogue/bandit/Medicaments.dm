@@ -96,6 +96,11 @@
 	cost = 20
 	contains = list(/obj/item/alch/transisdust)
 
+/datum/supply_pack/rogue/Medicaments/suisalve
+	name = "Sui Salve, Genital Restorative"
+	cost = 5
+	contains = list(/obj/item/alch/suisalve)
+
 /////////////////
 // PROSTHETICS //
 /////////////////

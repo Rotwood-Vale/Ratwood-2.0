@@ -397,7 +397,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	//what should be put in if there is no mutantorgan (brains handled seperately)
 	var/list/slot_mutantorgans = organs
 
+	// Restore wound losses from the actual removed organs, namely for the removal of ears, tails, and genitals
+	// Loading preferences or changing species should still use the newly selected anatomy
+	var/list/wounded_organ_dna = list()
+	if(!pref_load && !old_species)
+		for(var/datum/wound/wound in C.get_wounds())
+			for(var/slot in wound.missing_organ_dna)
+				if(!C.getorganslot(slot))
+					wounded_organ_dna[slot] = wound.missing_organ_dna[slot]
+
 	var/list/slots_to_iterate = list()
+	for(var/slot in wounded_organ_dna)
+		slots_to_iterate |= slot
 	for(var/slot in C.dna.organ_dna)
 		slots_to_iterate |= slot
 	for(var/slot in slot_mutantorgans)
@@ -416,8 +427,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/item/organ/oldorgan = C.getorganslot(slot) //used in removing
 		var/obj/item/organ/neworgan
 
-		if(C.dna.organ_dna[slot])
-			var/datum/organ_dna/organ_dna = C.dna.organ_dna[slot]
+		if(wounded_organ_dna[slot] || C.dna.organ_dna[slot])
+			var/datum/organ_dna/organ_dna = wounded_organ_dna[slot] || C.dna.organ_dna[slot]
 			if(organ_dna.can_create_organ())
 				neworgan = organ_dna.create_organ()
 				if(pref_load)
@@ -460,7 +471,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!used_neworgan)
 			if(neworgan)
 				qdel(neworgan)
-		else if (!C.dna.organ_dna[slot] && neworgan)
+		else if ((wounded_organ_dna[slot] || !C.dna.organ_dna[slot]) && neworgan)
 			var/datum/organ_dna/new_dna = neworgan.create_organ_dna()
 			C.dna.organ_dna[slot] = new_dna
 

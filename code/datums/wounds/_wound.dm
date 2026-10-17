@@ -82,6 +82,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/list/severity_names = list()
 	/// Whether miracles heal it.
 	var/healable_by_miracles = TRUE
+	/// Organs still missing because of this wound. Makes sure someone who loses their pintle has the same pintle when reattached
+	var/list/missing_organ_dna
 	/// Whether we're storing the on_gain effects on the owner mob and should cleanup them if we're deleted
 	var/should_persist_effects = FALSE
 	var/datum/weakref/persisted_on
@@ -102,6 +104,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	bodypart_owner = null
 	owner = null
 	persisted_on = null
+	QDEL_LIST_ASSOC_VAL(missing_organ_dna)
 	. = ..()
 	return QDEL_HINT_IWILLGC
 

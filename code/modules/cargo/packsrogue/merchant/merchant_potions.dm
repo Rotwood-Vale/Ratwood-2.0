@@ -16,6 +16,11 @@
 					/obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure,
 				)
 
+/datum/supply_pack/rogue/potions/suisalve
+	name = "Sui Salve, Genital Restorative"
+	cost = 25
+	contains = list(/obj/item/alch/suisalve)
+
 /datum/supply_pack/rogue/potions/healthpot
 	name = "Healing Potion"
 	cost = 25
