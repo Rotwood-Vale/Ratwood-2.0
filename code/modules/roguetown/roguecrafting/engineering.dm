@@ -224,8 +224,8 @@
 						/obj/item/ammo_casing/caseless/rogue/bolt/bronze
 					)
 	structurecraft = /obj/machinery/artificer_table
-	craftdiff = 3
 	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 3
 	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/heavyboltsten
@@ -241,11 +241,12 @@
 					/obj/projectile/bullet/reusable/heavy_bolt,
 					/obj/projectile/bullet/reusable/heavy_bolt,
 					/obj/projectile/bullet/reusable/heavy_bolt
-				)	structurecraft = /obj/machinery/artificer_table
-	craftdiff = 3
+				)	structurecraft = /obj/structure/artificer_table
+	
+	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 3
 	display_category = ITEM_CAT_ENG_COMBAT
-
 
 //pyro arrow crafting, from stonekeep
 /datum/crafting_recipe/roguetown/engineering/pyrobolt
