@@ -100,7 +100,7 @@
 	mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/psythorns
 	neck = /obj/item/clothing/neck/roguetown/psicross/silver
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan

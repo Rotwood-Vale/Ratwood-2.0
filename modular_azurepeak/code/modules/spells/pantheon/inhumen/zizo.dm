@@ -104,11 +104,11 @@
 	miracle = TRUE
 	devotion_cost = 100
 
-// T3: Rituos (usable once per sleep cycle, allows you to choose any 1 arcane spell to use for the duration w/ an associated devotion cost. each time you change it, 1 of your limbs is skeletonized, if all of your limbs are skeletonized, you gain access to arcane magic. continuing to use rituos after being fully skeletonized gives you additional spellpoints). Gives you the MOB_UNDEAD flag (needed for skeletonize to work) on first use.
+// T3: Rituos (needs two casts, useable once per sleep cycle. first gives 9 spell points and skeletonizes two limbs. second gives you 9 more, MOB_UNDEAD and makes you a full skeleton sans your head.)
 
 /obj/effect/proc_holder/spell/invoked/rituos
 	name = "Rituos"
-	desc = "Do a ritual for she of Z that skeletonises a part of your body and bestows upon you arcyne magycks until you next sleep. Once your whole body has become skeletonised you gain full access to the Arcyne, bolstering your knowledge of spells with each additional ritual."
+	desc = "Perform the Lesser Work for she of Z, resting between rituals. The first skeletonises two limbs and bestows upon you arcyne magycks. The second skeletonises your remaining limbs and chest, granting further arcyne power. A third and final ritual skeletonises your head and grants one additional spell point."
 	clothes_req = FALSE
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
@@ -134,7 +134,7 @@
 
 /obj/effect/proc_holder/spell/invoked/rituos/cast(list/targets, mob/living/carbon/user)
 	. = ..()
-	if(!user || !user.mind)
+	if(!user || !user.mind || rituos_counter >= 3)
 		return FALSE
 
 	if(user.mind.has_rituos)
@@ -142,36 +142,46 @@
 		return FALSE
 
 	// Find a bodypart to skeletonize
-	var/list/potential_bodypart = list()
+	var/list/potential_bodyparts = list()
 	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
 		if(limb.type in excluded_bodyparts)
 			continue
 		if(limb.skeletonized)
 			continue
-		potential_bodypart += limb
+		potential_bodyparts += limb
 
-	if(!length(potential_bodypart) && rituos_counter < 4)
+	if(!length(potential_bodyparts) && rituos_counter == 0)
 		to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
 		return FALSE
 
-	var/obj/item/bodypart/part_to_bonify
-	if(rituos_counter == 4)
-		part_to_bonify = locate(/obj/item/bodypart/chest) in user.bodyparts
+	var/list/bodyparts_to_bonify = list()
+	if(rituos_counter == 0)
+		var/limbs_to_bonify = min(2, length(potential_bodyparts))
+		for(var/i in 1 to limbs_to_bonify)
+			bodyparts_to_bonify += pick_n_take(potential_bodyparts)
+	else if(rituos_counter == 1)
+		var/obj/item/bodypart/chest/chest = locate(/obj/item/bodypart/chest) in user.bodyparts
+		if(!chest)
+			to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
+			return FALSE
+		bodyparts_to_bonify = potential_bodyparts
+		bodyparts_to_bonify += chest
 	else
-		part_to_bonify = pick(potential_bodypart)
-
-	if(!part_to_bonify)
-		to_chat(user, span_warning("I have no remaining limbs to offer to the ritual!"))
-		return FALSE
+		var/obj/item/bodypart/head/head = locate(/obj/item/bodypart/head) in user.bodyparts
+		if(!head)
+			to_chat(user, span_warning("I have no head to offer to the ritual!"))
+			return FALSE
+		bodyparts_to_bonify += head
 
 	if(!(user.mob_biotypes & MOB_UNDEAD))
 		user.visible_message(span_warning("The pallor of the grave descends across [user]'s skin in a wave of arcyne energy..."), span_boldwarning("A deathly chill overtakes my body at my first culmination of the Lesser Work! I feel my heart slow down in my chest..."))
 		user.mob_biotypes |= MOB_UNDEAD
 		to_chat(user, span_smallred("I have forsaken the living. I am now closer to a deadite than a mortal... but I still yet draw breath and bleed."))
 
-	part_to_bonify.skeletonize(FALSE)
-	user.update_body_parts()
-	user.visible_message(span_warning("Faint runes flare beneath [user]'s skin before [user.p_their()] flesh suddenly slides away from [user.p_their()] [part_to_bonify.name]!"), span_notice("I feel arcyne power surge throughout my frail mortal form, as the Rituos takes its terrible price from my [part_to_bonify.name]."))
+	for(var/obj/item/bodypart/part_to_bonify as anything in bodyparts_to_bonify)
+		part_to_bonify.skeletonize(FALSE)
+		user.visible_message(span_warning("Faint runes flare beneath [user]'s skin before [user.p_their()] flesh suddenly slides away from [user.p_their()] [part_to_bonify.name]!"), span_notice("I feel arcyne power surge throughout my frail mortal form, as the Rituos takes its terrible price from my [part_to_bonify.name]."))
+	user.update_body()
 
 	user.mind.has_rituos = TRUE
 	rituos_counter++
@@ -179,22 +189,20 @@
 		if(1)
 			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			ADD_TRAIT(user, TRAIT_ARCYNE_T3, "[type]")
-			user.mind?.adjust_spellpoints(3)
-		if(2,4)
-			user.mind?.adjust_spellpoints(3)
-		if(3)
-			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
-			user.mind?.adjust_spellpoints(3)
-		if(5)
-			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+			user.mind?.adjust_spellpoints(9)
+		if(2)
+			user.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
 			user.grant_language(/datum/language/undead)
-			user.mind?.adjust_spellpoints(6)
+			user.mind?.adjust_spellpoints(9)
 			user.visible_message(span_boldwarning("[user]'s form swells with terrible power as they cast away almost all of the remnants of their mortal flesh, arcyne runes glowing upon their exposed bones..."), span_notice("I HAVE DONE IT! I HAVE COMPLETED HER LESSER WORK! I stand at the cusp of unspeakable power, but something is yet missing..."))
 			ADD_TRAIT(user, TRAIT_NOHUNGER, "[type]")
 			ADD_TRAIT(user, TRAIT_NOBREATH, "[type]")
 			ADD_TRAIT(user, TRAIT_OVERTHERETIC, "[type]")
-			if(prob(33))
+			if(prob(66)) // We Fucked Up, Dude.
 				to_chat(user, span_small("...what have I done?"))
+		if(3)
+			to_chat(user, span_small("My body may have gone, but I am still here. I lyve, I march, I thrive, in her name.")) // holy psyst. holy psyst. there's nothing left.
+			user.mind?.adjust_spellpoints(1)
 			user.mind?.RemoveSpell(src)
 
 // T3 Lacrima (plunge your hand into someone's ribs to rip out their impure lux for your diabolical uses)

@@ -61,7 +61,7 @@
 
 /datum/devotion/Destroy(force)
 	. = ..()
-	if (patron.type == /datum/patron/inhumen/zizo || patron.type == /datum/patron/divine/necra)
+	if (holder && istype(patron) && (patron.type == /datum/patron/inhumen/zizo || patron.type == /datum/patron/divine/necra))
 		REMOVE_TRAIT(holder, TRAIT_DEATHSIGHT, "devotion")
 	holder?.hud_used?.shutdown_bloodpool()
 	holder?.devotion = null
