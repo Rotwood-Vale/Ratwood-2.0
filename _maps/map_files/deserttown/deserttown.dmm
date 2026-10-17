@@ -2324,14 +2324,8 @@
 /area/rogue/under/cave/licharena/bossroom)
 "aFN" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/rogueweapon/sword/short/iron,
-/obj/item/rogueweapon/sword/short/iron,
-/obj/item/rogueweapon/huntingknife/idagger{
-	pixel_x = 9
-	},
-/obj/item/rogueweapon/huntingknife/idagger{
-	pixel_x = 9
-	},
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
 /turf/open/floor/rogue/concrete{
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
@@ -2617,6 +2611,7 @@
 /obj/item/rogueweapon/huntingknife/chefknife,
 /obj/item/rogueweapon/huntingknife/cleaver,
 /obj/item/cooking/pan,
+/obj/item/storage/roguebag,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/inq)
 "aJK" = (
@@ -39381,6 +39376,10 @@
 /obj/item/rogueweapon/scabbard,
 /obj/item/rogueweapon/scabbard/sheath,
 /obj/item/rogueweapon/scabbard/sheath,
+/obj/item/rogueweapon/huntingknife/idagger,
+/obj/item/rogueweapon/huntingknife/idagger,
+/obj/item/rogueweapon/sword/short/iron,
+/obj/item/rogueweapon/sword/short/iron,
 /turf/open/floor/rogue/concrete{
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
@@ -46594,10 +46593,12 @@
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/bath/desert)
 "ngL" = (
-/obj/item/flashlight/flare/torch/lantern,
-/obj/item/flashlight/flare/torch/lantern,
 /obj/structure/rack/rogue/shelf/biggest,
 /obj/machinery/light/rogue/torchholder/c,
+/obj/item/clothing/head/inqarticles/blackbag,
+/obj/item/clothing/head/inqarticles/blackbag,
+/obj/item/clothing/head/inqarticles/blackbag,
+/obj/item/clothing/head/inqarticles/blackbag,
 /turf/open/floor/rogue/concrete{
 	icon = 'modular_deserttown/icons/alt/roguefloor.dmi'
 	},
