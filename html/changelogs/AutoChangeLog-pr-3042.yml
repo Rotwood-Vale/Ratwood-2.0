@@ -1,0 +1,4 @@
+author: "0-the-fool"
+delete-after: True
+changes:
+  - balance: "Max map tallies lowered to 3"
