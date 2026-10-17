@@ -87,12 +87,12 @@
 			else
 				if(painpercent >= 100)
 					if(HAS_TRAIT(src, TRAIT_PSYDONIAN_GRIT) || STAWIL >= 15)
-						if(prob(25)) // PSYDONIC WEIGHTED COINFLIP. TWEAK THIS AS THOU WILT. DON'T LET THEM BE BROKEN, PSYDON WILLING. THROW CON-MAXXERS A BONE, TOO.
+						if(prob(25)) // PSYDONIC WEIGHTED COINFLIP. TWEAK THIS AS THOU WILT. DON'T LET THEM BE BROKEN, PSYDON WILLING. THROW WILL-MAXXERS A BONE, TOO.
 							Immobilize(15) // EAT A MICROSTUN. YOU'RE AVOIDING A PAINCRIT.
 							if(HAS_TRAIT(src, TRAIT_PSYDONIAN_GRIT))
 								visible_message(span_info("[src] audibly grits their teeth. ENDURING through their pain."), span_info("Through my faith in HIM, I ENDURE."))
 							else
-								visible_message(span_info("[src] trembled for a moment, but they remain stood."), span_info("My strong constitution keeps me upright."))
+								visible_message(span_info("[src] trembled for a moment, but they remain stood."), span_info("My strong will keeps me upright."))
 							stuttering += 5
 							emote("painmoan")
 							return
@@ -227,6 +227,9 @@
 		if(has_adrenaline)
 			bodypart_pain *= 0.5
 		. += bodypart_pain
+	for(var/datum/reagent/r in reagents.reagent_list)
+		if(r.pain)
+			. += r.pain
 
 /mob/living/carbon/human/get_complex_pain()
 	. = ..()
