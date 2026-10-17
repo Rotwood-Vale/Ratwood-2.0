@@ -1,5 +1,5 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration, penetrated_text, damage, blade_dulling, peeldivisor, intdamfactor, used_weapon = null)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration, penetrated_text, damage, blade_dulling, peeldivisor, intdamfactor, used_weapon = null, no_debuff = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_ARMOR_CHECKED)
 	var/armor = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor, used_weapon)
 	src.mob_timers[MT_SNEAKATTACK] = world.time //Stops sneaking after being hit. No more bullshit where you can just run away into fullstealth. Lose your tail first!
@@ -438,3 +438,64 @@
 		used_item = get_active_held_item()
 	..()
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+
+/// Riposting Ground Effect should not punish the caster wit an expose, as you can walk into it
+/mob/living/proc/guard_deflect_spell(spell_name = "the spell", no_message = FALSE, mob/living/attacker, punish_caster = TRUE)
+	var/datum/status_effect/buff/clash/guard = has_status_effect(/datum/status_effect/buff/clash)
+	if(guard)
+		if(isarcyne(src))
+			if(!no_message)
+				visible_message(span_warning("[src] deflects [spell_name] with a reactive ward!"))
+				to_chat(src, span_notice("My ward deflects the incoming spell!"))
+			playsound(get_turf(src), pick('sound/combat/parry/shield/magicshield (1).ogg', 'sound/combat/parry/shield/magicshield (2).ogg', 'sound/combat/parry/shield/magicshield (3).ogg'), 100)
+		else
+			if(!no_message)
+				visible_message(span_warning("[src] deflects [spell_name]!"))
+				to_chat(src, span_notice("My guard deflects the incoming spell!"))
+			var/obj/item/held = get_active_held_item()
+			if(held?.parrysound)
+				playsound(get_turf(src), pick(held.parrysound), 100)
+			else
+				playsound(get_turf(src), pick(parry_sound), 100)
+		apply_status_effect(/datum/status_effect/buff/parry_buffer)
+		apply_status_effect(/datum/status_effect/buff/emberward)
+		if(attacker != src)
+			apply_status_effect(/datum/status_effect/buff/adrenaline_rush/ranged)
+		guard.deflected_spell = TRUE
+		remove_status_effect(/datum/status_effect/buff/clash)
+		if(punish_caster)
+			punish_deflected_caster(attacker)
+		return TRUE
+	if(has_status_effect(/datum/status_effect/buff/parry_buffer))
+		return TRUE
+	return FALSE
+
+/// Exposes and staggers the caster of a spell we just Guard-deflected (riposte punish).
+/// Deduped per game tick so a single AOE deflected by multiple guards only punishes once.
+/mob/living/proc/punish_deflected_caster(mob/living/attacker)
+	if(!attacker || attacker == src)
+		return
+	if(attacker.last_deflect_recoil == world.time)
+		return
+	attacker.last_deflect_recoil = world.time
+	var/obj/item/attacker_weapon = arcyne_get_weapon(attacker)
+	if(attacker_weapon?.parrysound)
+		playsound(get_turf(attacker), pick(attacker_weapon.parrysound), 100)
+	else
+		playsound(get_turf(attacker), pick(attacker.parry_sound), 100)
+	if(attacker_weapon)
+		if(attacker_weapon.max_blade_int)
+			attacker_weapon.remove_bintegrity((attacker_weapon.blade_int * RIPOSTE_SHARPNESS_FACTOR), attacker)
+		else
+			var/integdam = max((attacker_weapon.max_integrity / RIPOSTE_INTEG_DIVISOR), (INTEG_PARRY_DECAY_NOSHARP * 5))
+			attacker_weapon.take_damage(integdam, BRUTE, attacker_weapon.d_type)
+	attacker.remove_status_effect(/datum/status_effect/debuff/exposed)
+	attacker.apply_status_effect(/datum/status_effect/debuff/exposed, 5 SECONDS)
+	attacker.apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
+	attacker.Slowdown(3)
+	var/datum/status_effect/buff/arcyne_momentum/momentum = attacker.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
+	if(momentum && momentum.stacks > 0)
+		momentum.consume_all_stacks()
+		to_chat(attacker, span_danger("My spell was deflected - I'm exposed and my momentum is gone!"))
+	else
+		to_chat(attacker, span_danger("My spell was deflected - I'm exposed!"))

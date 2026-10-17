@@ -188,21 +188,18 @@
 	switch(rituos_counter)
 		if(1)
 			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
-			ADD_TRAIT(user, TRAIT_ARCYNE_T3, "[type]")
-			user.mind?.adjust_spellpoints(9)
 		if(2)
-			user.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
+			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+		if(3)
+			to_chat(user, span_small("My body may have gone, but I am still here. I lyve, I march, I thrive, in her name.")) // holy psyst. holy psyst. there's nothing left.
+			user.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			user.grant_language(/datum/language/undead)
-			user.mind?.adjust_spellpoints(9)
 			user.visible_message(span_boldwarning("[user]'s form swells with terrible power as they cast away almost all of the remnants of their mortal flesh, arcyne runes glowing upon their exposed bones..."), span_notice("I HAVE DONE IT! I HAVE COMPLETED HER LESSER WORK! I stand at the cusp of unspeakable power, but something is yet missing..."))
 			ADD_TRAIT(user, TRAIT_NOHUNGER, "[type]")
 			ADD_TRAIT(user, TRAIT_NOBREATH, "[type]")
 			ADD_TRAIT(user, TRAIT_OVERTHERETIC, "[type]")
 			if(prob(66)) // We Fucked Up, Dude.
 				to_chat(user, span_small("...what have I done?"))
-		if(3)
-			to_chat(user, span_small("My body may have gone, but I am still here. I lyve, I march, I thrive, in her name.")) // holy psyst. holy psyst. there's nothing left.
-			user.mind?.adjust_spellpoints(1)
 			user.mind?.RemoveSpell(src)
 
 // T3 Lacrima (plunge your hand into someone's ribs to rip out their impure lux for your diabolical uses)

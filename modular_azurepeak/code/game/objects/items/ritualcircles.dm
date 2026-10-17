@@ -1361,7 +1361,6 @@
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 
 	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION", "BASCINET", "VOLF-FACE - VISORED")
 	var/helmet_choice = input(H, "Choose your helmet.", "PROTECTION FROM THE LADY") as anything in helmets
@@ -1635,7 +1634,6 @@
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/matthios
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
 	backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 
 /obj/structure/ritualcircle/matthios/proc/matthiosconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)

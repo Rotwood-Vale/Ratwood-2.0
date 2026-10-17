@@ -124,9 +124,6 @@
 
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/create_campfire)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/darkvision)
 
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)

@@ -156,7 +156,7 @@
 	name = "Arcyne Slave"
 	tutorial = "An unlucky slave, captured from their home, moved to the Zybantines and trained for slave labor and obediency, for long enough to where you can only faintly remember who you were before... You are now being transported from the deserts to harsher lands to be sold."
 	outfit = /datum/outfit/job/roguetown/slaver/slave/arcyne
-	traits_applied = list(TRAIT_GOODLOVER, TRAIT_ARCYNE_T3, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_GOODLOVER, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_SLAVE)
 
 	subclass_skills = list(
@@ -194,8 +194,6 @@
 	)
 	H.virginity = TRUE
 	H.cmode_music = 'sound/music/combat_zybantine.ogg'
-	if(H.mind)
-		H?.mind.adjust_spellpoints(24)
 	var/background = list("Noble(+Reading)", "Commoner(+2 LCK)")
 	var/background_choice = input(H, "Choose your background.", "TAKE UP ARMS") as anything in background
 	switch(background_choice)
@@ -249,8 +247,6 @@
 	)
 	H.virginity = TRUE
 	H.cmode_music = 'sound/music/combat_zybantine.ogg'
-	if(H.mind)
-		H?.mind.adjust_spellpoints(24)
 	var/background = list("Noble(+Reading)", "Commoner(+2 LCK)")
 	var/background_choice = input(H, "Choose your background.", "TAKE UP ARMS") as anything in background
 	switch(background_choice)

@@ -18,14 +18,14 @@
 	class_select_category = CLASS_CAT_ZYBANTU
 	subclass_languages = list(/datum/language/celestial)
 	category_tags = list(CTAG_MERCENARY)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_MAGEDEXTERITY)
-	subclass_spellpoints = 8//We'll focus on this being a combination spellblade.
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_ARCYNE, TRAIT_MAGEDEXTERITY)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 2,
 		STATKEY_WIL = 2,
 		STATKEY_CON = -2,
 	)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 2, "minor" = 0, "utilities" = 4, "ward" = FALSE, "locked_aspects" = list(/datum/magic_aspect/ferramancy, /datum/magic_aspect/cryomancy))
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -70,11 +70,6 @@
 		/obj/item/roguegem/amethyst = 1,
 		/obj/item/lockpick = 1,
 		)
-
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonweapon)//Singular user of this, outside of scrolls.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
 
 //Their sabre. Peel capable when off. Does burn when on. OldRW rage inducing classic, returned.
 //Now properly inflicts burn wounds, on top of the burn type damage. Very painful.

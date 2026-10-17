@@ -441,9 +441,6 @@
 		/obj/effect/spawner/lootdrop/potion_poisons = 10,
 		/obj/effect/spawner/lootdrop/decrepit_equipment_spawner = 10,
 		/obj/effect/spawner/lootdrop/ancient_equipment_spawner = 10,
-		/obj/item/book/granter/spell/blackstone/bonechill = 10,
-		/obj/item/book/granter/spell/blackstone/skeleton = 1,//super powerful lich-style player skeleton spawner
-		/obj/item/book/granter/spell/blackstone/skeleton/lesser = 15,
 		/obj/item/reagent_containers/glass/bottle/rogue/emberwine = 10,
 		/obj/item/reagent_containers/glass/bottle/alchemical/spidervenom_paralytic = 5,
 	)
@@ -466,9 +463,6 @@
 		/obj/item/clothing/mask/rogue/facemask/carved/onyxamask = 1,
 		/obj/item/spellbook_unfinished/pre_arcyne = 10,
 		/obj/effect/spawner/lootdrop/potion_poisons = 10,
-		/obj/item/book/granter/spell/blackstone/bonechill = 10,
-		/obj/item/book/granter/spell/blackstone/skeleton = 1,//super powerful lich-style player skeleton spawner
-		/obj/item/book/granter/spell/blackstone/skeleton/lesser = 15,
 		/obj/item/clothing/neck/roguetown/psicross/inhumen = 5,
 		/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient = 5,
 		/obj/item/clothing/neck/roguetown/psicross/inhumen/g = 2,

@@ -301,7 +301,7 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 	name = "Arcane Ministry"
 	display_title = "Minister of Magic"
 	ministry_keys = list(/obj/item/roguekey/tower)
-	archive_traits = list(TRAIT_ALCHEMY_EXPERT, TRAIT_ARCYNE_T2)
+	archive_traits = list(TRAIT_ALCHEMY_EXPERT)
 	archive_skills = list(
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE
@@ -311,9 +311,6 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 /datum/ministry/mage/archive_bonus(mob/living/carbon/human/H)
 	if(!H.mind)
 		return
-	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation))
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation, H)
-	H.mind.adjust_spellpoints(9)
 	to_chat(H, span_notice("The archive imparts the arcyne secrets of the previous Minister. I feel a thrum of latent power."))
 
 /datum/ministry/physician

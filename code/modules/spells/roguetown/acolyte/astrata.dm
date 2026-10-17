@@ -488,20 +488,11 @@
 	. = ..()
 	var/choice = alert(user, "YOUR MARTIAL ARM, M'LORD?", "TAKE UP STRENGTH", "Lance", "Spear")
 	switch(choice)
-		if("Lance")
-			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue))//No stacking.
-				revert_cast()
-			else
-				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue)
-				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/self/astratan_spear))//No, thanks.
-					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/self/astratan_spear)
 		if("Spear")
 			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/self/astratan_spear))//No stacking. Again. As funny as a dozen of these were.
 				revert_cast()
 			else
 				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/astratan_spear)
-				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue))//Nope.
-					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue)
 		else
 			revert_cast()
 
@@ -596,22 +587,6 @@
 	sleep(10)
 	qdel(src)
 
-/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue
-	name = "Fire Lance"
-	desc = "Deals damage and ignites target, Deals extra damage to undead."
-	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
-	action_icon = 'icons/mob/actions/astratamiracles.dmi'
-	overlay_state = "sacredflame"
-	sound = 'sound/magic/bless.ogg'
-	invocations = list("By fire, be cleansed!")//Not so sacred.
-	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-	associated_skill = /datum/skill/magic/holy
-	antimagic_allowed = TRUE
-	recharge_time = 15 SECONDS
-	miracle = TRUE
-	devotion_cost = 75
-	projectile_type = /obj/projectile/magic/astratablast
-
 /obj/projectile/magic/astratablast
 	damage = 25
 	name = "lance of holy fire"
@@ -647,3 +622,21 @@
 			visible_message(span_warning("[src] ignites [target]!"))
 			M.ignite_mob()
 	return FALSE
+
+/obj/effect/temp_visual/trap/thunderstrike
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "trap"
+	light_outer_range = 2
+	duration = 4
+	layer = MASSIVE_OBJ_LAYER
+
+/obj/effect/temp_visual/trap/thunderstrike/layer_one
+	duration = 8
+
+/obj/effect/temp_visual/trap/thunderstrike/layer_two
+	duration = 12
+
+/obj/effect/temp_visual/trap/thunderstrike/Initialize(mapload, duration_override)
+	if(duration_override)
+		duration = duration_override
+	. = ..() // Call parent AFTER setting duration

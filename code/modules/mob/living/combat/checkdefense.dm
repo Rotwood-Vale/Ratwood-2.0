@@ -14,6 +14,9 @@
 	if(!(mobility_flags & MOBILITY_MOVE))
 		return FALSE
 
+	if(channeling_spell?.blocks_defense_while_channeling)
+		return FALSE
+
 	if(client && used_intent)
 		if(client.charging && used_intent.tranged && !used_intent.tshield)
 			return FALSE

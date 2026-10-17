@@ -17,6 +17,7 @@
 #define COVERAGE_HEAD			( HEAD | HAIR | EARS )
 #define COVERAGE_NASAL			( HEAD | HAIR | NOSE )
 #define COVERAGE_SKULL			( HEAD | HAIR )
+#define COVERAGE_FULL_BODY_ACTUAL	( HEAD | HAIR | EARS | EYES | NOSE | MOUTH | NECK | CHEST | GROIN | VITALS | LEGS | ARMS | HANDS | FEET)
 
 #define COVERAGE_VEST			( CHEST | VITALS )
 #define COVERAGE_SHIRT			( CHEST | VITALS | ARMS )
@@ -555,3 +556,6 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define SOCIAL_RANK_MINOR_NOBLE 4
 #define SOCIAL_RANK_NOBLE 5
 #define SOCIAL_RANK_ROYAL 6
+#define CTAG_WAPPRENTICE	"CTAG_WAPPRENTICE"	// Mage Apprentice Classes - Handles Mage Apprentices class selector
+#define CTAG_ORTHODOXIST	"CAT_ORTHODOXIST"	// For Orthodoxist subclasses
+#define CTAG_MERCPARTY_WARMAGE "CAT_MERCPARTY_WARMAGE"	// battle casters

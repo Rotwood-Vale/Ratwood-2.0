@@ -130,7 +130,6 @@ decreases charge time if held opened in hand, for pure mage build + aesthetics.
 		if(!resettable_spells.len)
 			return
 		if(user_mind.RemoveSpell(item))
-			user_mind.used_spell_points -= item.cost
 			unlearn_success = TRUE
 		resettable_spells.Remove(choice)
 		user_mind.check_learnspell()

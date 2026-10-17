@@ -1004,3 +1004,7 @@ GLOBAL_LIST_EMPTY(reach_dummy_pool)
 	if(foes.len > 1)
 		sortTim(foes, cmp = /proc/cmp_numeric_dsc, associative = TRUE)
 	return foes[1]
+
+/mob/living/proc/changeNext_inCombat(num, override = FALSE)
+	in_combat_until = world.time + num
+	hud_used?.defdelay?.mark_dirty()

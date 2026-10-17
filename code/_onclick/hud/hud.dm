@@ -112,8 +112,10 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	var/list/hand_slots // /atom/movable/screen/inventory/hand objects, assoc list of "[held_index]" = object
 	var/list/atom/movable/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
 
-	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
+	var/atom/movable/screen/action_button_toggle
 	var/action_buttons_hidden = FALSE
+	var/rearrange_mode = FALSE
+	var/next_rearrange_hint = 0
 
 	var/atom/movable/screen/healths
 	var/atom/movable/screen/bloods
@@ -137,17 +139,13 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 
 /datum/hud/New(mob/owner)
 	mymob = owner
+	action_button_toggle = new /atom/movable/screen/action_button_toggle(null, src)
 	if(ishuman(owner))
 		human_owner = owner
 
 	if (!ui_style)
 		// will fall back to the default if any of these are null
 		ui_style = ui_style2icon(owner.client && owner.client.prefs && owner.client.prefs.UI_style, owner.client?.prefs)
-
-//	hide_actions_toggle = new
-//	hide_actions_toggle.InitialiseIcon(src)
-//	if(mymob.client)
-//		hide_actions_toggle.locked = mymob.client.prefs.buttons_locked
 
 	if(!hand_slots)
 		hand_slots = list()
@@ -203,6 +201,7 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 	devilsouldisplay = null
 	blobpwrdisplay = null
 
+	QDEL_NULL(action_button_toggle)
 	QDEL_LIST_ASSOC_VAL(plane_masters)
 	QDEL_LIST(screenoverlays)
 	mymob = null
@@ -260,7 +259,8 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 			if(infodisplay.len)
 				screenmob.client.screen += infodisplay
 
-//			screenmob.client.screen += hide_actions_toggle
+			if(action_button_toggle && screenmob.actions.len)
+				screenmob.client.screen += action_button_toggle
 
 			if(action_intent)
 				action_intent.screen_loc = initial(action_intent.screen_loc) //Restore intent selection to the original position

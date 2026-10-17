@@ -136,27 +136,10 @@
 	associated_skill = /datum/skill/magic/holy
 	var/list/chosen_bundles = list() // Tracks which categories have already been granted
 	var/list/utility_bundle = list(	//Utility means exactly that. Nothing offensive and nothing that can affect another person negatively, 11 spellpoints total. (Barring Fetch, and technically Create Campfire)
-		/obj/effect/proc_holder/spell/self/message,
-		/obj/effect/proc_holder/spell/invoked/leap,
-		/obj/effect/proc_holder/spell/invoked/mending,
-		/obj/effect/proc_holder/spell/invoked/create_campfire,
-		/obj/effect/proc_holder/spell/invoked/projectile/fetch,
-		/obj/effect/proc_holder/spell/invoked/blink,
 	)
 	var/list/offensive_bundle = list(	//This is not meant to make them combat-capable. A weak offensive, and mostly defensive option. 9 spellpoints total.
-		/obj/effect/proc_holder/spell/invoked/wither/miracle,
-		/obj/effect/proc_holder/spell/self/conjure_armor/miracle,
-		/obj/effect/proc_holder/spell/invoked/conjure_weapon/miracle,
-		/obj/effect/proc_holder/spell/invoked/enchant_weapon, // Should be fine since Enchant Weapon has been nerfed over time, and Burning Blade is (sadly) no longer a thing. Some T4 clerics also don't get Arcane skill naturally, so they have to manually refresh this.
 	)
 	var/list/buff_bundle = list(	//Buffs! An Acolyte being a supportive caster is 100% what they already are, so this fits neatly. No debuffs -- every patron already has a plethora of those.
-		/obj/effect/proc_holder/spell/invoked/hawks_eyes::name 			= /obj/effect/proc_holder/spell/invoked/hawks_eyes,
-		/obj/effect/proc_holder/spell/invoked/giants_strength::name 	= /obj/effect/proc_holder/spell/invoked/giants_strength,
-		/obj/effect/proc_holder/spell/invoked/longstrider::name 		= /obj/effect/proc_holder/spell/invoked/longstrider,
-		/obj/effect/proc_holder/spell/invoked/guidance::name 			= /obj/effect/proc_holder/spell/invoked/guidance,
-		/obj/effect/proc_holder/spell/invoked/haste::name 				= /obj/effect/proc_holder/spell/invoked/haste,
-		/obj/effect/proc_holder/spell/invoked/stoneskin::name 			= /obj/effect/proc_holder/spell/invoked/stoneskin,
-		/obj/effect/proc_holder/spell/invoked/fortitude::name 			= /obj/effect/proc_holder/spell/invoked/fortitude, // Picking the most expensive options adds up to 12 points
 	)
 
 /obj/effect/proc_holder/spell/self/noc_spell_bundle/cast(list/targets, mob/user)
@@ -319,11 +302,6 @@
 		return TRUE
 
 
-/obj/effect/proc_holder/spell/invoked/silence/miracle/proc/remove_buff(mob/living/carbon/target)
-	REMOVE_TRAIT(target, TRAIT_MUTE, MAGIC_TRAIT)
-	to_chat(target, span_warning("My voice returns to me!"))
-
-
 /obj/effect/proc_holder/spell/invoked/magicshield
 	name = "Moonlit Ward"
 	desc = "Wrap a target in a ward of anti-magic."
@@ -369,3 +347,24 @@
 		return
 	REMOVE_TRAIT(target, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	to_chat(target, span_warning("The anti-magic ward fades."))
+
+/datum/status_effect/debuff/blindness
+	id = "blindness"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/blindness
+	duration = 15 SECONDS
+	effectedstats = list(STATKEY_PER = -2)
+
+/datum/status_effect/debuff/blindness/on_apply()
+	. = ..()
+
+/datum/status_effect/debuff/blindness/on_remove()
+	. = ..()
+	to_chat(owner, span_warning("My vision returns...!"))
+
+///////////////////////////
+// T3 - Arcyne Affinity. //
+///////////////////////////
+
+/atom/movable/screen/alert/status_effect/debuff/blindness
+	name = "Blindness"
+	desc = "I see naught but darkness! (-2 PER, vision cone reduced)"

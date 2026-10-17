@@ -78,6 +78,8 @@
 		if(ARMOR_CLASS_HEAVY)
 			fatiguemod = 3
 
+	HT.interrupt_spell_channel()
+
 	HT.apply_status_effect(/datum/status_effect/debuff/baited)
 	HT.apply_status_effect(/datum/status_effect/debuff/exposed)
 	HT.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS)

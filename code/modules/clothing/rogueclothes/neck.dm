@@ -1340,5 +1340,3 @@
 	desc = "Ward of silver, sigil of eternity; by the Ten, I command thee back to Hell!"
 	icon_state = "undivided_s"
 	sellprice = 50
-
-

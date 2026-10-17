@@ -1,4 +1,4 @@
-/mob/living/carbon/human/proc/process_clash(mob/user, obj/item/IM, obj/item/IU)
+/mob/living/carbon/human/proc/process_clash(mob/user, obj/item/IM, obj/item/IU, is_bite = FALSE)
 	if(!ishuman(user))
 		return
 	if(user == src)
@@ -167,6 +167,11 @@
 		return FALSE
 	if(has_status_effect(/datum/status_effect/debuff/exposed))
 		balloon_alert(src, "<font color = '#ffffff'>Can't guard while exposed!</font>")
+		return FALSE
+	// Can't guard while channeling a spell
+	var/datum/action/cooldown/spell/active_spell = click_intercept
+	if(istype(active_spell) && (active_spell.currently_charging || active_spell.charged))
+		to_chat(src, span_warning("I can't guard while channeling a spell!"))
 		return FALSE
 	apply_status_effect(/datum/status_effect/buff/clash)
 	return TRUE

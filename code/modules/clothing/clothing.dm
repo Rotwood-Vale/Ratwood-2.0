@@ -613,7 +613,7 @@ BLIND     // can't see anything
 		C.head_update(src, forced = 1)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		A.build_all_button_icons()
 	return TRUE
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
@@ -775,3 +775,17 @@ BLIND     // can't see anything
 			to_chat(user, build_examine_detail(user, TRUE))
 		return
 	..()
+
+/obj/item/clothing/proc/get_armor_integ()
+	var/eff_maxint = max_integrity - (max_integrity * integrity_failure)
+	var/eff_currint = max(obj_integrity - (max_integrity * integrity_failure), 0)
+	var/ratio =	(eff_currint / eff_maxint)
+	switch(ratio)
+		if(0.75 to 1)
+			return null
+		if(0.5 to 0.74)
+			return VISMSG_ARMOR_INT_STAGEONE
+		if(0.25 to 0.49)
+			return VISMSG_ARMOR_INT_STAGETWO
+		if(0 to 0.24)
+			return VISMSG_ARMOR_INT_STAGETHREE

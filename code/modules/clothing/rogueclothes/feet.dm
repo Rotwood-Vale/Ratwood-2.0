@@ -755,3 +755,5 @@
 	salvage_result = /obj/item/natural/hide/cured
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
+
+// horseshoes!

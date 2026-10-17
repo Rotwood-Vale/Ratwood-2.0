@@ -7,7 +7,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT // a migrant is but a peasant in foreign lands, so no yeoman like the normal one
 	category_tags = list(CTAG_PILGRIM)
 	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
-	traits_applied = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT, TRAIT_ARCYNE_T1) // same as the guildsman variant
+	traits_applied = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT) // same as the guildsman variant
 	maximum_possible_slots = 5 // We don't need a bunch of nerds running around, five will do, perhaps less, not everyone should be an artificer after all
 	subclass_stats = list(
 		STATKEY_INT = 3,
@@ -59,6 +59,3 @@
 		/obj/item/rogueweapon/handsaw = 1,
 	)
 	// Always hated the fact that they began using magic for their stuff. Yet it is needed, same as the normal one. Perhaps one day we will change it, and move towards a more steampunk vibe. I pray.
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)

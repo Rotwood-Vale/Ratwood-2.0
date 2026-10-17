@@ -7,7 +7,6 @@
 	sins = "Ignorance, Censorship, Bookburning"
 	mob_traits = list(TRAIT_NIGHT_OWL, TRAIT_NOCSIGHT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
-					/obj/effect/proc_holder/spell/targeted/touch/prestidigitation	= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/invisibility/miracle		= CLERIC_T1,

@@ -9,7 +9,7 @@
 
 	allowed_races = RACES_NO_CONSTRUCT		//Nobility, no construct
 	allowed_sexes = list(MALE, FEMALE)
-	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	spells = list()
 	display_order = JDO_MAGICIAN
 	tutorial = "Your creed is one dedicated to the conquering of the arcane arts and the constant thrill of knowledge. \
 		You owe your life to the Lord, for it was his coin that allowed you to continue your studies in these dark times. \
@@ -26,7 +26,7 @@
 	// Can't get very far as a magician if you can't chant spells now can you?
 	vice_restrictions = list(/datum/charflaw/mute)
 
-	job_traits = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T4, TRAIT_SEEPRICES, TRAIT_INTELLECTUAL, TRAIT_ALCHEMY_EXPERT, TRAIT_NOBLE, TRAIT_MAGEDEXTERITY)
+	job_traits = list(TRAIT_SEEPRICES, TRAIT_INTELLECTUAL, TRAIT_ALCHEMY_EXPERT, TRAIT_NOBLE, TRAIT_MAGEDEXTERITY, TRAIT_ARCYNE)
 	job_subclasses = list(
 		/datum/advclass/courtmage
 	)
@@ -35,11 +35,14 @@
 	name = "Court Magician"
 	tutorial = "Your creed is one dedicated to the conquering of the arcane arts and the constant thrill of knowledge. \
 		You owe your life to the Lord, for it was his coin that allowed you to continue your studies in these dark times. \
-		In return, you have proven time and time again as justicar and trusted advisor to their reign."
+		In return, you have proven time and time again as justicar and trusted advisor to their reign. You operate \
+		within the University of Ferentia, sharing authority jointly with the Head Physician; their realm is the study \
+		of the mundane body, whereas you have authority over all things arcane."
 	outfit = /datum/outfit/job/roguetown/magician/basic
 
-	subclass_spellpoints = 36
+	subclass_mage_aspects = list("mastery" = TRUE, "major" = 2, "minor" = 3, "utilities" = 9, "ward" = TRUE)
 	category_tags = list(CTAG_COURTMAGE)
+	traits_applied = list(TRAIT_BADTRAINER, TRAIT_ARCYNE)
 	subclass_stats = list(
 		STATKEY_INT = 5,// Automatic advanced magic for most spells. (I.E summon weapon being upgraded to steel from iron/etc)
 		STATKEY_PER = 3,
@@ -47,8 +50,10 @@
 		STATKEY_STR = -1,
 		STATKEY_CON = -1,
 	)
-	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
+	age_mod = /datum/class_age_mod/court_magician
 	subclass_skills = list(
+		/datum/skill/combat/staves = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/arcyne = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
@@ -59,12 +64,12 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE, // more stam for holding spells
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_MASTER,
 		/datum/skill/magic/arcane = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
 	)
+	tempo_capable = FALSE
 
 /datum/outfit/job/roguetown/magician
 	job_bitflag = BITFLAG_ROYALTY
@@ -77,7 +82,6 @@
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 1)
-		H.mind?.adjust_spellpoints(6)
 		if(ishumannorthern(H))
 			belt = /obj/item/storage/belt/rogue/leather/plaquegold
 			cloak = null
@@ -108,27 +112,14 @@
 	pants = /obj/item/clothing/under/roguetown/tights/random
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
-	beltr = /obj/item/storage/keyring/mage
 	beltl = /obj/item/storage/magebag/associate
-	id = /obj/item/scomstone/garrison
-	r_hand = /obj/item/rogueweapon/woodstaff/riddle_of_steel/magos
+	id = /obj/item/clothing/ring/gold
+	r_hand = /obj/item/rogueweapon/woodstaff/implement/grand/magos
 	backl = /obj/item/storage/backpack/rogue/satchel
-	if(SSmapping.current_map.map_name == "Desert Town")
-		cloak = null
-		head = /obj/item/clothing/head/roguetown/jafar
-		armor = /obj/item/clothing/suit/roguetown/shirt/jafar
-		belt = /obj/item/storage/belt/rogue/leather/jafar
-		pants = /obj/item/clothing/under/roguetown/sirwal
-		shoes = /obj/item/clothing/shoes/roguetown/shalal
-		r_hand = /obj/item/rogueweapon/woodstaff/riddle_of_steel/serpent
-	if(SSmapping.current_map.map_name == "Rockhill")
-		armor = /obj/item/clothing/suit/roguetown/armor/leather/newkeep/magos
-		cloak = null
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/poison,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot,
-		/obj/item/recipe_book/alchemy,
-		/obj/item/recipe_book/magic,
-		/obj/item/book/spellbook,
-		/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne
+		/obj/item/rogueweapon/spellbook/grand,
+		/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne,
+		/obj/item/chalk
 	)

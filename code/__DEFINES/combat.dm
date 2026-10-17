@@ -54,6 +54,15 @@
 #define FIRE_HARDCRIT_DIVISOR_MINDLESS 200 // 200 = 50% burn damage = hardcrit for mindless mobs
 #define STRENGTH_SOFTCAP 14	//STR value past which we get diminishing returns in our damage calculations.
 #define STRENGTH_MULT 0.1	//STR multiplier per STR point up to the softcap. Works as a %-age. 0.1 = 10% per point.
+// For archer, whose damage scales massively with PER, we make skill their main determinator of accuracy and ROF, while decoupling PER from accuracy and making it scale damage.
+#define ACC_RANGED_BASE 15
+// While for Mage, where I have made Arcyne Armament a pseudo melee skills, and INT their primary CDR and Cost scalar, we uses PER so that their build need more than one stat to function well, in place of skills. The accuracy is 10 as a baseline (15 - 10 = 5 * 15 = +75 + 15 = 90% accuracy at 15 perception, i.e. capping out vs limb)
+#define ACC_SPELL_PER_BASELINE 10
+#define ACC_SPELL_PER_STEP 15
+#define ACC_RANGED_FLOOR 0
+#define ACC_RANGED_VISUAL_REACH 7
+#define ACC_RANGED_FARSIGHT_PENALTY 10
+#define ACC_RANGED_ZCROSS_PENALTY 20
 #define STRENGTH_CAPPEDMULT 0.034	//STR multiplier per STR point past the softcap
 //Actual combat defines
 
@@ -96,6 +105,11 @@
 #define EFF_RANGE_EXACT 1
 #define EFF_RANGE_ABOVE 2
 #define EFF_RANGE_BELOW 3
+// Swingdelay presets
+#define SWINGDELAY_NORMAL 1	//No penalties, we just swing.
+#define SWINGDELAY_PENALTY 2 //We suffer a defensive penalty if struck during it. Otherwise, normal.
+#define SWINGDELAY_CANCEL 3 //We have -no- defense during it, and it can be interrupted if we are hit.
+#define SWINGDELAY_CANCELSLOW 4	//Same as cancel but our speed is also hardset to 10 for the delay.
 
 //Grab levels
 #define GRAB_PASSIVE				0
@@ -217,6 +231,7 @@
 //Intent blade class for dismember class
 #define BCLASS_BLUNT		"blunt"
 #define BCLASS_SMASH		"smashing"
+#define BCLASS_DRILL		"drilling"
 #define BCLASS_CUT			"slash"
 #define BCLASS_CHOP			"chopping"
 #define BCLASS_STAB			"stabbing"
@@ -378,6 +393,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
 #define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
 #define BULLET_ACT_MISS				"MISS"
+#define SPELL_BLUNT_INT_DAMAGEFACTOR 1.3 // Blunt integrity damage factor for spell projectiles
 
 //Weapon values
 #define BLUNT_DEFAULT_PENFACTOR		-100
@@ -389,6 +405,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define INTEG_PARRY_DECAY			1	//Default integrity decay on parry.
 #define INTEG_PARRY_DECAY_NOSHARP	5	//Integrity decay on parry for weapons with no sharpness OR for off-hand parries.
 #define SHARPNESS_ONHIT_DECAY		3	//Sharpness decay on parry.
+#define RIPOSTE_SHARPNESS_FACTOR	0.15	//Fraction of blade_int lost on riposte (15%). Heavy weapons add +0.05.
+#define RIPOSTE_INTEG_DIVISOR		5	//max_integrity / this = integrity damage on riposte for non-bladed weapons.
+#define ARCYNE_STRIKE_WARDED		-1	// If an arcyne strike got guarded, rider effects do not goes forth.
 #define SHARPNESS_TIER1_THRESHOLD	0.8	//%-age threshold when damage starts to fall off -- mainly damfactor and STR factor. NOT base damage value.
 #define SHARPNESS_TIER1_FLOOR		0.45//%-age threshold when damfactors and STR factors become 0.
 #define SHARPNESS_TIER2_THRESHOLD	0.2 //%-age threshold when damage *really* falls off. Base damage value included.
@@ -397,6 +416,24 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// Damage multiplier of silver weapons against mobs with TRAIT_SIMPLE_WOUNDS
 #define SILVER_SIMPLEMOB_DAM_MULT 3
+#define EXPOSED_CAST_LOCKOUT 4 SECONDS	// Cap on how long Exposed can deny casting
+#define BASE_RCLICK_CD 30 SECONDS
+#define TEMPO_TAG_STAMLOSS_PARRY "parry"
+#define TEMPO_TAG_STAMLOSS_DODGE "dodge"
+#define TEMPO_TAG_ARMOR_INTEGFACTOR "integ"
+#define TEMPO_TAG_NOLOS_PARRY "nolosparry"
+#define TEMPO_TAG_NOLOS_DODGE "nolosdodge"
+#define TEMPO_TAG_DEF_SHARPNESSFACTOR "sharpness"
+#define TEMPO_TAG_DEF_INTEGFACTOR "parryinteg"
+#define TEMPO_TAG_PARRYCD_BONUS	"parrycd"
+#define TEMPO_TAG_RCLICK_CD_BONUS "rclickcd"
+#define TEMPO_TAG_FEINTBAIT_FOV "feintbaitfov"
+#define TEMPO_TAG_DODGE_LOSS "dodgeloss"
+	#define TEMPO_DODGE_LOSS_NORMAL 0
+	#define TEMPO_DODGE_LOSS_LESS 1
+	#define TEMPO_DODGE_LOSS_NONE 2
+#define TEMPO_TAG_BINDABLE "defbindable"
+#define TEMPO_TAG_EQUIPTOSS "equiptoss"
 
 //Damage directly applied to a mob, as a percentage, if struck with blunt against armour.
 //This is to permit beating to death full plate guys with clubs. Or making the lucerne viable again.
@@ -437,6 +474,21 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define ACC_PRONE_ATTACKER_LEG_BONUS 5	//Attacking legs or feet while we are prone ourselves.
 #define ACC_MIN 5						//Accuracy is always clamped between these two.
 #define ACC_MAX 95
+// How long we can't use stealth & other misc. things for
+#define IN_COMBAT_DELAY 10 SECONDS
 
 // Critical Resistance Defines //
 #define BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE 0.5
+//Visible message presets.
+#define VISMSG_ARMOR_BLOCKED " <span class='armoralert'>Armor stops the damage.</span>"
+#define VISMSG_ARMOR_INT_STAGEONE "<span class='armoralert'><i> Dented.</i></span>"
+#define VISMSG_ARMOR_INT_STAGETWO "<span class='armoralert'> Damaged.</span>"
+#define VISMSG_ARMOR_INT_STAGETHREE "<span class='armoralert'><b> Crumbling!</b></span>"
+/// Alternate attack defines. Return these at the end of procs like afterattack_secondary.
+/// Calls the normal attack proc. For example, if returned in afterattack_secondary, will call afterattack.
+/// Will continue the chain depending on the return value of the non-alternate proc, like with normal attacks.
+#define SECONDARY_ATTACK_CALL_NORMAL 1
+/// Cancels the attack chain entirely.
+#define SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN 2
+/// Proceed with the attack chain, but don't call the normal methods.
+#define SECONDARY_ATTACK_CONTINUE_CHAIN 3

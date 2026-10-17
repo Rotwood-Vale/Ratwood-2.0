@@ -109,7 +109,7 @@
 	pickprob = 100
 	class_select_category = CLASS_CAT_HFT_COURT
 	subclass_social_rank = SOCIAL_RANK_NOBLE
-	traits_applied = list(TRAIT_NOBLE, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T3, TRAIT_INTELLECTUAL, TRAIT_HEARTFELT, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_INTELLECTUAL, TRAIT_HEARTFELT, TRAIT_ALCHEMY_EXPERT)
 
 	subclass_stats = list(
 		STATKEY_INT = 3,
@@ -173,15 +173,12 @@
 	id = /obj/item/scomstone
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/heartfelt)
-	if(H.mind)
-		H?.mind.adjust_spellpoints(24)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		H.change_stat("speed", -1)
 		H.change_stat("intelligence", 1)
 		H.change_stat("perception", 1)
-		H?.mind.adjust_spellpoints(6)
 
 /datum/advclass/heartfelt/lord/chief
 	name = "Chief of Heartfelt"

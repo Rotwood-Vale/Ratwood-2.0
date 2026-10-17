@@ -229,7 +229,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	tutorial = "A good ruler is backed with force. You just happen to have a keen amount of mastery over the world's strongest forces: Magic. Of course, having to manage your realm has meant that you aren't as studied as the realm's greatest wizards- but your cunning sorcery is what has you sat upon the throne."
 	outfit = /datum/outfit/job/roguetown/lord/wizard
 	category_tags = list(CTAG_LORD)
-	traits_applied = list(TRAIT_NOBLE, TRAIT_MAGEARMOR, TRAIT_DNR, TRAIT_ARCYNE_T3, TRAIT_INTELLECTUAL)
+	traits_applied = list(TRAIT_NOBLE, TRAIT_DNR, TRAIT_INTELLECTUAL, TRAIT_ARCYNE)
 	subclass_stats = list(
 		STATKEY_LCK = 5,
 		STATKEY_INT = 5,
@@ -237,7 +237,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 		STATKEY_SPD = 2,
 		STATKEY_WIL = 1,
 	)
-	subclass_spellpoints = 27
+	subclass_mage_aspects = list("mastery" = TRUE, "major" = 1, "minor" = 3, "utilities" = 9, "ward" = TRUE)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,

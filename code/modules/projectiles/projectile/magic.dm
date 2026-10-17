@@ -9,6 +9,10 @@
 	flag = "magic"
 	var/explode_sound = list('sound/misc/explode/incendiary (1).ogg','sound/misc/explode/incendiary (2).ogg')
 	var/mob/living/carbon/human/sender
+	/// Impact visual intensity. SPELL_IMPACT_NONE / SPELL_IMPACT_LOW / SPELL_IMPACT_MEDIUM / SPELL_IMPACT_HIGH
+	var/spell_impact_intensity = SPELL_IMPACT_LOW
+	/// Override color for the impact effect. If null, uses light_color.
+	var/spell_impact_color
 
 /obj/projectile/magic/death
 	name = "bolt of death"
