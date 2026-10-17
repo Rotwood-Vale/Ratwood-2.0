@@ -2898,6 +2898,7 @@
 #include "code\modules\roguetown\roguemachine\scomm\emerald_choker.dm"
 #include "code\modules\roguetown\roguemachine\scomm\listener.dm"
 #include "code\modules\roguetown\roguemachine\scomm\rontzring.dm"
+#include "code\modules\roguetown\roguemachine\scomm\scomgnet.dm"
 #include "code\modules\roguetown\roguemachine\scomm\scomm.dm"
 #include "code\modules\roguetown\roguemachine\scomm\scomstone.dm"
 #include "code\modules\roguetown\roguemachine\scomm\whisperer.dm"
