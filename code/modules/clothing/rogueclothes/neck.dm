@@ -1159,12 +1159,12 @@
 			ADD_TRAIT(user, TRAIT_DARKVISION, CULT_TRAIT)//Close enough to a cult. No duplicates beyond dreamer.
 			ADD_TRAIT(user, TRAIT_HARDDISMEMBER, CULT_TRAIT)//Too angry to lose a limb, or something.
 			ADD_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, CULT_TRAIT)//Can't tag 'em to slow 'em.
-			armor = getArmor("blunt" = 100, "slash" = 100, "stab" = 100, "piercing" = 100, "fire" = 50, "acid" = 0)
+			armor = ARMOR_PLATE_BSTEEL
 		else
 			to_chat(user, span_suicide("The necklace... I can hear a voice mocking me!"))
 			ADD_TRAIT(user, TRAIT_PSYCHOSIS, CULT_TRAIT)
 			user.hallucination = INFINITY
-			armor = getArmor("blunt" = 0, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)
+			armor = ARMOR_CLOTHING
 
 /obj/item/clothing/neck/roguetown/dragon_scale/dropped(mob/living/user)
 	..()
