@@ -2025,7 +2025,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return TRUE
 	return FALSE
 
-<<<<<<< HEAD
 // The mob carrying this, through any depth of containers. Returns the innermost carrier if nested in more than one.
 /obj/item/proc/find_items_mob_carrier()
 	if(ismob(loc))
@@ -2034,7 +2033,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(ismob(nested_loc))
 			return nested_loc
 	return null
-=======
+
 /obj/item/proc/update_wdefense_dynamic()
 	wdefense_dynamic = (wielded ? (wdefense + wdefense_wbonus) : wdefense)
->>>>>>> 4405357b8e (Nothing broke when I localhosted so it must be okay)
