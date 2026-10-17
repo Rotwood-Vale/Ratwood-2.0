@@ -94,6 +94,11 @@
 		/datum/sprite_accessory/horns/lbroken,
 		/datum/sprite_accessory/horns/drake,
 		/datum/sprite_accessory/horns/drake_wide,
+		/datum/sprite_accessory/horns/messenger,
+		/datum/sprite_accessory/horns/rmessenger,
+		/datum/sprite_accessory/horns/lmessenger,
+		/datum/sprite_accessory/horns/chiroptera,
+		/datum/sprite_accessory/horns/nightstalker,
 		/datum/sprite_accessory/horns/knight,
 		/datum/sprite_accessory/horns/antlers,
 		/datum/sprite_accessory/horns/ramalt,
@@ -154,6 +159,11 @@
 		/datum/sprite_accessory/horns/lbroken,
 		/datum/sprite_accessory/horns/drake,
 		/datum/sprite_accessory/horns/drake_wide,
+		/datum/sprite_accessory/horns/messenger,
+		/datum/sprite_accessory/horns/rmessenger,
+		/datum/sprite_accessory/horns/lmessenger,
+		/datum/sprite_accessory/horns/chiroptera,
+		/datum/sprite_accessory/horns/nightstalker,
 		/datum/sprite_accessory/horns/knight,
 		/datum/sprite_accessory/horns/antlers,
 		/datum/sprite_accessory/horns/ramalt,
@@ -203,3 +213,20 @@
 	sprite_accessories = list(
 		/datum/sprite_accessory/horns/angler,
 		)
+
+/datum/customizer/organ/horns/wings
+    name = "Headwing"
+    customizer_choices = list(/datum/customizer_choice/organ/horns/wings)
+    allows_disabling = TRUE
+    default_disabled =  TRUE
+
+/datum/customizer_choice/organ/horns/wings
+    name = "Headwing"
+    organ_type = /obj/item/organ/horns
+    sprite_accessories = list(
+        /datum/sprite_accessory/horns/messenger,
+        /datum/sprite_accessory/horns/rmessenger,
+        /datum/sprite_accessory/horns/lmessenger,
+		/datum/sprite_accessory/horns/chiroptera,
+		/datum/sprite_accessory/horns/nightstalker
+    )

@@ -271,6 +271,22 @@
 	color_keys = 2
 	color_key_names = list("Ears", "Inner")
 
+/datum/sprite_accessory/ears/wispy
+	name = "Wispy Headwings"
+	icon_state = "wispy"
+	color_keys = 2
+	color_key_names = list("Wings", "Tips")
+	default_colors = list("#EAEAEA", "#EAEAEA")
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+
+/datum/sprite_accessory/ears/small
+	name = "Small Headwings"
+	icon_state = "small"
+	color_keys = 2
+	color_key_names = list("Wings", "Tips")
+	default_colors = list("#EAEAEA", "#EAEAEA")
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+
 /datum/sprite_accessory/ears/lunasune
 	name = "Lunasune"
 	icon_state = "lunasune"
