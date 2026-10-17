@@ -295,7 +295,6 @@
 		S.set_up(1, 1, front)
 		S.start()
 		return
-		flick(on_icon, src)
 	charge_deduction(O, user, 1)
 	shake_camera(user, 1, 1)
 	playsound(src, 'sound/magic/swap.ogg', 100, TRUE)
