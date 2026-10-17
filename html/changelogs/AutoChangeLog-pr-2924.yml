@@ -1,0 +1,12 @@
+author: "trueroguan"
+delete-after: True
+changes:
+  - bugfix: "Players no longer stop hearing speech and emotes after leaving bat or mist form."
+  - bugfix: "Leaving a beast form no longer wipes the druid's skills."
+  - bugfix: "Dying in a beast form now removes the form's abilities and keeps your neck and ring items equipped."
+  - bugfix: "Beast Form can no longer be cast while in bat or mist form."
+  - bugfix: "Leaving a beast form no longer applies suffocation or blood loss to bodies that do not breathe or cannot bleed out."
+  - bugfix: "Fixed errors when day turns to night for vampires in bat form."
+  - code_imp: "Music preloading now runs once per connection instead of on every mind transfer; fixed shapeshift and devotion references that kept deleted mobs alive."
+  - bugfix: "Cancelling the animal form picker, or trying to shapeshift while restrained, no longer puts the spell on cooldown."
+  - bugfix: "You can no longer escape restraints by picking an animal form while the picker is open."
