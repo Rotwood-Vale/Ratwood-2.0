@@ -323,6 +323,64 @@
 	to_chat(user, span_notice("Tis' complete."))
 	qdel(src)
 
+// used as a fallback for players to restore lost genitals. Ideally this will stop admins having to handle "please replace my penis, it fell in lava" tickets
+/obj/item/alch/suisalve
+	name = "sui salve"
+	desc = "A curative blend of sui dust, healing potion, and clay. Apply to the groin to restore severed sensitives."
+	icon_state = "suisalve"
+	possible_item_intents = list(/datum/intent/use)
+
+/obj/item/alch/suisalve/attack(mob/living/target, mob/living/user)
+	if(!ishuman(target))
+		to_chat(user, span_warning("I cannot apply [src] to [target]."))
+		return FALSE
+	if(user.zone_selected != BODY_ZONE_PRECISE_GROIN)
+		to_chat(user, span_warning("I need to apply [src] to the groin."))
+		return FALSE
+	if(!get_location_accessible(target, BODY_ZONE_PRECISE_GROIN, skipundies = FALSE))
+		to_chat(user, span_warning("The groin must be exposed before I can apply [src]."))
+		return FALSE
+
+	var/mob/living/carbon/human/patient = target
+	var/treated = FALSE
+	var/list/missing_organs = get_missing_genital_dna(patient)
+	for(var/organ_slot in missing_organs)
+		var/datum/organ_dna/organ_dna = missing_organs[organ_slot]
+		var/obj/item/organ/organ = organ_dna.create_organ()
+		organ.Insert(patient, TRUE, FALSE)
+		if(organ.owner == patient)
+			treated = TRUE
+		else
+			qdel(organ)
+
+	for(var/datum/wound/cbt/wound in patient.get_wounds())
+		qdel(wound)
+		treated = TRUE
+
+	if(!treated)
+		to_chat(user, span_warning("There are no genital injuries or missing organs that [src] can mend."))
+		return FALSE
+
+	user.visible_message(span_notice("[user] applies [src] to [patient]'s groin."), span_notice("I apply [src] to [patient == user ? "my" : "[patient]'s"] groin."))
+	to_chat(patient, span_notice("The salve mends the damaged tissue."))
+	qdel(src)
+	return TRUE
+
+/obj/item/alch/suisalve/proc/get_missing_genital_dna(mob/living/carbon/human/patient)
+	var/list/missing_organs = list()
+	var/list/wounds = patient.get_wounds()
+	for(var/organ_slot in list(ORGAN_SLOT_PENIS, ORGAN_SLOT_VAGINA, ORGAN_SLOT_TESTICLES))
+		if(patient.getorganslot(organ_slot))
+			continue
+		var/datum/organ_dna/organ_dna = patient.dna?.organ_dna[organ_slot]
+		for(var/datum/wound/wound in wounds)
+			if(wound.missing_organ_dna?[organ_slot])
+				organ_dna = wound.missing_organ_dna[organ_slot]
+				break
+		if(organ_dna?.can_create_organ())
+			missing_organs[organ_slot] = organ_dna
+	return missing_organs
+
 /obj/item/alch/puresalt
 	name = "purified salts"
 	desc = "Salts that have been finely sifted to enhance their healing properties and to bolster their connection to the arcyne."
