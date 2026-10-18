@@ -199,6 +199,7 @@
 #define SFX_JINGLE_BELLS "jingle_bells"
 #define SFX_WOOD_ARMOR "wood_armor"
 #define SFX_TRICK "trick"
+#define SFX_HEELS	"heels"
 
 #define SFX_COLLARJINGLE list('sound/items/jinglebell1.ogg',\
 							'sound/items/jinglebell2.ogg',\

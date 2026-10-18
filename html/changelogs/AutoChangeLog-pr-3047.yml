@@ -1,4 +1,0 @@
-author: "ariaworld"
-delete-after: True
-changes:
-  - bugfix: "Fixed Navaja not doing 20 damage correctly."
