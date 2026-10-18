@@ -356,20 +356,20 @@
 
 /datum/status_effect/death_defiance/on_apply() // quite similar to martyrs ult
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, "death_defience")
-	ADD_TRAIT(owner, TRAIT_NOLIMBDISABLE, "death_defience")
-	ADD_TRAIT(owner, TRAIT_NOHUNGER, "death_defience")
-	ADD_TRAIT(owner, TRAIT_NOSLEEP, "death_defience")
-	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, "death_defience") // no 12 seconds of stun on your last moments
-	ADD_TRAIT(owner, TRAIT_NOPAIN, "death_defience") // pure adrenaline
-	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, "death_defience")
-	ADD_TRAIT(owner, TRAIT_BREADY, "death_defience")
-	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, "death_defience")
-	ADD_TRAIT(owner, TRAIT_TOXIMMUNE, "death_defience") // doesnt heal them but does prevent further damage
-	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, "death_defience")
-	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, "death_defience")
-	ADD_TRAIT(owner, TRAIT_NODEATH, "death_defience") // I think it only stops oxy death?
-	ADD_TRAIT(owner, TRAIT_NOBREATH, "death_defience") // sadly needed
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOLIMBDISABLE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOHUNGER, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOSLEEP, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, TRAIT_STATUS_EFFECT(id)) // no 12 seconds of stun on your last moments
+	ADD_TRAIT(owner, TRAIT_NOPAIN, TRAIT_STATUS_EFFECT(id)) // pure adrenaline
+	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_BREADY, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_TOXIMMUNE, TRAIT_STATUS_EFFECT(id)) // doesnt heal them but does prevent further damage
+	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NODEATH, TRAIT_STATUS_EFFECT(id)) // I think it only stops oxy death?
+	ADD_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id)) // sadly needed
 
 	owner.setOxyLoss(0,TRUE)
 	owner.remove_status_effect(/datum/status_effect/debuff/crit_resistance_cd) // resets crit resistance
@@ -389,20 +389,20 @@
 
 /datum/status_effect/death_defiance/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, "death_defience")
-	REMOVE_TRAIT(owner, TRAIT_NOLIMBDISABLE, "death_defience")
-	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, "death_defience")
-	REMOVE_TRAIT(owner, TRAIT_NOSLEEP, "death_defience")
-	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, "death_defience") // no 12 seconds of stun on your last moments
-	REMOVE_TRAIT(owner, TRAIT_NOPAIN, "death_defience") // pure adrenaline
-	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, "death_defience")
-	REMOVE_TRAIT(owner, TRAIT_BREADY, "death_defience")
-	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, "death_defience")
-	REMOVE_TRAIT(owner, TRAIT_TOXIMMUNE, "death_defience") // doesnt heal them but does prevent further damage
-	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, "death_defience")
-	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, "death_defience")
-	REMOVE_TRAIT(owner, TRAIT_NODEATH, "death_defience") // I think it only stops oxy death?
-	REMOVE_TRAIT(owner, TRAIT_NOBREATH, "death_defience") // sadly needed
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOLIMBDISABLE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOSLEEP, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, TRAIT_STATUS_EFFECT(id)) // no 12 seconds of stun on your last moments
+	REMOVE_TRAIT(owner, TRAIT_NOPAIN, TRAIT_STATUS_EFFECT(id)) // pure adrenaline
+	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_BREADY, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_TOXIMMUNE, TRAIT_STATUS_EFFECT(id)) // doesnt heal them but does prevent further damage
+	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NODEATH, TRAIT_STATUS_EFFECT(id)) // I think it only stops oxy death?
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id)) // sadly needed
 
 	owner.energy_add(-700)
 	owner.stamina_add(100)
