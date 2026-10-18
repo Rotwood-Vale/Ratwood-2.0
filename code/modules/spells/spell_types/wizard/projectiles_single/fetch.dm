@@ -7,9 +7,10 @@
 	sound = list('sound/magic/magnet.ogg')
 	active = FALSE
 	human_req = TRUE
-	releasedrain = 5
+	releasedrain = 20
 	chargedrain = 0
 	chargetime = 0
+	recharge_time = 15 SECONDS
 	warnie = "spellwarning"
 	overlay_state = "fetch"
 	no_early_release = TRUE

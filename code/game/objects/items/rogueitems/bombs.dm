@@ -16,7 +16,7 @@
 	dropshrink = 0.7
 
 /obj/item/bomb/Initialize(mapload)
-	..()
+	. = ..()
 	fuze = rand(40,60)
 
 /obj/item/bomb/spark_act()
@@ -24,6 +24,9 @@
 
 /obj/item/bomb/fire_act()
 	light()
+
+/obj/item/bomb/on_package_opened(mob/user)
+	explode(TRUE)
 
 /obj/item/bomb/ex_act()
 	if(!QDELETED(src))
@@ -137,7 +140,7 @@
 	var/list/obj/item/tripwire/wire_trigger = list()
 
 /obj/item/bomb/tripbomb/Initialize(mapload)
-	..()
+	. = ..()
 	icon_state = b_type.icon_state
 
 /obj/item/bomb/tripbomb/attackby(obj/item/I, mob/user, params)
@@ -159,11 +162,8 @@
 	..()
 
 /obj/item/bomb/tripbomb/Destroy()
-	..()
-
-	if(wire_trigger.len)
-		for(var/list/obj/item/tripwire/wire in wire_trigger)
-			QDEL_NULL(wire)
+	QDEL_LIST(wire_trigger)
+	return ..()
 
 /obj/item/bomb/tripbomb/light()
 	var/obj/item/bomb/bomb = new b_type (loc)
@@ -180,8 +180,8 @@
 	var/obj/item/bomb/tripbomb/payload
 
 /obj/item/tripwire/Destroy()
-	..()
 	new /obj/item/natural/fibers(loc)
+	. = ..()
 
 /obj/item/tripwire/attackby(obj/item/I, mob/user, params)
 	if(user.used_intent.blade_class == BCLASS_CUT && I.wlength == WLENGTH_SHORT)
@@ -285,10 +285,6 @@
 	new /obj/item/ash(T)
 	qdel(src)
 
-/obj/item/grenade/smokebomb
-	parent_type = /obj/item/bomb/smoke
-
-
 /obj/item/tntstick
 	name = "blastpowder stick"
 	desc = "A bit of blastpowder in paper shell..."
@@ -309,6 +305,10 @@
 
 /obj/item/tntstick/fire_act()
 	light()
+
+/obj/item/tntstick/on_package_opened(mob/user)
+	light()
+	explode(TRUE)
 
 /obj/item/tntstick/ex_act()
 	if(!QDELETED(src))
@@ -383,6 +383,10 @@
 /obj/item/satchel_bomb/fire_act()
 	light()
 
+/obj/item/satchel_bomb/on_package_opened(mob/user)
+	light()
+	explode(TRUE)
+
 /obj/item/satchel_bomb/ex_act()
 	if(!QDELETED(src))
 		lit = TRUE
@@ -449,13 +453,13 @@
 	grid_height = 32
 	dropshrink = 0.75
 
-/obj/item/impact_grenade/Initialize(mapload)
-	. = ..()
-
 // Define a base explodes() proc that subtypes can override because its now explodes proc
 /obj/item/impact_grenade/proc/explodes()
 	STOP_PROCESSING(SSfastprocess, src)
 	qdel(src) // Delete the grenade after use boy (ALWAYS USE IT)
+
+/obj/item/impact_grenade/on_package_opened(mob/user)
+	explodes()
 
 /obj/item/impact_grenade/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()

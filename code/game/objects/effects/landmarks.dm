@@ -58,9 +58,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/events/haunts/Initialize(mapload)
 	. = ..()
-	GLOB.hauntstart += src
+	GLOB.hauntstart += get_turf(src)
 	icon_state = ""
-
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/events/testportal
 	name = "testserverportal"
@@ -189,6 +189,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/guardsman
 	name = "City Guard"
+	icon_state = "arrow"
+
+/obj/effect/landmark/start/watchcaptain
+	name = "Watch Captain"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/rookie

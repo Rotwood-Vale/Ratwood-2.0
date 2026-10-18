@@ -1,14 +1,16 @@
 /mob/living/simple_animal/hostile/retaliate
-	var/list/enemies = list()
 	stop_automated_movement_when_pulled = TRUE
 	use_lazy_target_scan = FALSE
 
+/mob/living/simple_animal/hostile/retaliate/Destroy()
+	return ..()
+	
 /mob/living/simple_animal/hostile/retaliate/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(M.used_intent.type == INTENT_HELP)
 		if(enemies.len)
 			if(tame)
-				enemies = list()
+				clear_enemies()
 				src.visible_message(span_notice("[src] calms down."))
 				LoseTarget()
 
@@ -16,15 +18,15 @@
 	var/aggressive = 0
 
 /mob/living/simple_animal/hostile/retaliate/ListTargets()
-	if(!(AIStatus == NPC_AI_OFF))
-		if(aggressive)
-			return ..()
-		else
-			if(!enemies.len)
-				return list()
-			var/list/see = ..()
-			see &= enemies // Remove all entries that aren't in enemies
-			return see
+	if(AIStatus == NPC_AI_OFF)
+		return list()
+	if(aggressive)
+		return ..()
+	if(!LAZYLEN(enemies))
+		return list()
+	var/list/see = ..()
+	see &= enemies // Remove all entries that aren't in enemies
+	return see
 
 /mob/living/simple_animal/hostile/retaliate/proc/DismemberBody(mob/living/L)
 	//Lets keep track of this to see if we start getting wounded while eating.
@@ -71,7 +73,7 @@
 		if(bystander == src)
 			continue
 		if(attack_same || !faction_check_mob(bystander))
-			enemies |= bystander
+			add_enemy(bystander)
 
 	if(attack_same)
 		return 0 // we aren't buddies with our faction so we don't warn them about enemies
@@ -79,7 +81,7 @@
 		if(ally.attack_same)
 			continue
 		if(faction_check_mob(ally))
-			ally.enemies |= enemies
+			ally.add_enemies(enemies)
 	return 0
 
 /mob/living/simple_animal/hostile/retaliate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)

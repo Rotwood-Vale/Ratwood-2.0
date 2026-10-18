@@ -61,11 +61,11 @@
 			to_chat(src, span_warning("I'm going to puke..."))
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, vomit), 0, TRUE), rand(8 SECONDS, 15 SECONDS))
 		if(HAS_TRAIT(src, TRAIT_HEMOPHAGE) && ishuman(src))
-			var/mob/living/carbon/human/H = src
-			H.adjust_nutrition(35)
-			H.adjust_hydration(35)
+			var/mob/living/carbon/human/H = src // bumped up nutri and hydration to encourage drink from carbon instead of still blood.
+			H.adjust_nutrition(40)
+			H.adjust_hydration(40)
 			if(H.reagents)
-				H.reagents.add_reagent(/datum/reagent/medicine/vital_essence, 12)
+				H.reagents.add_reagent(/datum/reagent/medicine/vital_essence, 22)
 			if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 				H.set_blood_volume(min(H.get_blood_volume() + 35, BLOOD_VOLUME_NORMAL))
 		return
@@ -127,7 +127,7 @@
 			to_chat(src, span_danger("I have... Consumed my kindred!"))
 			if(VVictim.generation > VDrinker.generation)
 				VDrinker.generation = VVictim.generation
-			VDrinker.research_points += VVictim.research_points
+			VDrinker.research_points += VVictim.research_points + VVictim.research_spent
 			victim.death()
 			victim.adjustBruteLoss(-50, TRUE)
 			victim.adjustFireLoss(-50, TRUE)
@@ -177,3 +177,4 @@
 	var/datum/antagonist/vampire/new_antag = new /datum/antagonist/vampire(incoming_clan = sire.clan, forced_clan = TRUE, generation = VDrinker.generation-1)
 	mind?.add_antag_datum(new_antag)
 	adjust_bloodpool(500)
+	remove_sleep_depravation(TRUE)

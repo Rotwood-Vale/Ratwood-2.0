@@ -22,9 +22,13 @@ SUBSYSTEM_DEF(ParticleWeather)
 		if(runningWeather.running)
 			runningWeather.tick()
 			for(var/mob/act_on as anything in GLOB.mob_living_list) //yikes. this should probably be a client scan not all mobs. it already checks for minds
+				if(!runningWeather)
+					break
 				runningWeather.try_weather_act(act_on)
-			if(runningWeather.target_trait == PARTICLEWEATHER_RAIN)	//also a bit of a yikes- but none of our other weather needs to affect objects. No sense in running the for loop every single weather that doesn't even use it
+			if(runningWeather?.target_trait == PARTICLEWEATHER_RAIN)	//also a bit of a yikes- but none of our other weather needs to affect objects. No sense in running the for loop every single weather that doesn't even use it
 				for(var/obj/act_on as anything in GLOB.weather_act_upon_list)
+					if(!runningWeather)
+						break
 					runningWeather.weather_obj_act(act_on)
 
 
@@ -83,9 +87,9 @@ SUBSYSTEM_DEF(ParticleWeather)
 
 		// Schedule late warning 30 seconds before start
 		if(randTime > 30 SECONDS)
-			addtimer(CALLBACK(runningWeather, /datum/particle_weather/proc/send_late_warning),randTime - (30 SECONDS),TIMER_UNIQUE|TIMER_STOPPABLE)
+			addtimer(CALLBACK(runningWeather, TYPE_PROC_REF(/datum/particle_weather, send_late_warning)),randTime - (30 SECONDS),TIMER_UNIQUE|TIMER_STOPPABLE)
 		// Schedule actual start
-		addtimer(CALLBACK(runningWeather, /datum/particle_weather/proc/start),randTime,TIMER_UNIQUE|TIMER_STOPPABLE)
+		addtimer(CALLBACK(runningWeather, TYPE_PROC_REF(/datum/particle_weather, start)),randTime,TIMER_UNIQUE|TIMER_STOPPABLE)
 
 
 /datum/controller/subsystem/ParticleWeather/proc/make_eligible(possible_weather)

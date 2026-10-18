@@ -35,6 +35,9 @@
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
 	)
+	subclass_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 	extra_context = "Inhumen exclusive. No wretch bounty, for the purpose of infiltration and doomsaying. Given EVIL sermon abilities, torture, maxed out miracles of their own patron and some extra miracles from other Inhumen patrons."
 
 /datum/outfit/job/roguetown/wretch/antipope
@@ -51,7 +54,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/special
+	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/kris
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backr = /obj/item/rogueweapon/woodstaff/quarterstaff
@@ -81,6 +84,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/nondetection)//For the purposes of meeting folks.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)//See above.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/evil_resurrect)//Sacrifice a heart to bring somebody back to life.
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
 		H.verbs |= /mob/living/carbon/human/proc/completesermon_evil
 		H.verbs |= /mob/living/carbon/human/proc/revelations
 

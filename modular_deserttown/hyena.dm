@@ -42,7 +42,7 @@
 	del_on_deaggro = 44 SECONDS
 	retreat_health = 0.4
 	food = 0
-	dodgetime = 17
+	dodgetime = 1.7 SECONDS
 	aggressive = 1
 //	stat_attack = UNCONSCIOUS
 	remains_type = /obj/effect/decal/remains/hyena

@@ -2,6 +2,7 @@
 	race = /datum/species/dwarf
 
 /datum/species/dwarf
+	abstract_type = /datum/species/dwarf
 	name = "Dwarfb"
 	id = "dwarf"
 	max_age = 200

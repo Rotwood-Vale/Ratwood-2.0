@@ -21,7 +21,7 @@
 	cmode_music = 'sound/music/cmode/towner/combat_towner.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
 	job_traits = list(TRAIT_SEEPRICES)
-
+	virtue_restrictions = list(/datum/virtue/utility/blacksmith, /datum/virtue/utility/artificer, /datum/virtue/utility/tailor)
 	advclass_cat_rolls = list(CTAG_SHOPHAND = 2)
 	job_subclasses = list(
 		/datum/advclass/shophand

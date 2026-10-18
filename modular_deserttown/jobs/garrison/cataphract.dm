@@ -142,7 +142,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/shalal
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1
 	)
@@ -184,7 +184,7 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Shamshir","Whip","Warhammer","Sabre")
+		var/weapons = list("Shamshir","Whip","Urumi","Warhammer","Sabre")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -194,6 +194,9 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 			if("Whip")
 				l_hand = /obj/item/rogueweapon/whip/antique
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
+			if("Urumi")
+				l_hand = /obj/item/rogueweapon/whip/urumi
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
 			if ("Warhammer")
 				l_hand = /obj/item/rogueweapon/mace/warhammer
@@ -216,7 +219,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/shalal
 
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1
 	)
@@ -430,7 +433,7 @@
 	cloak = /obj/item/clothing/cloak/catcloak
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/shalal
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/rogueweapon/scabbard/sheath/noble = 1
 	)

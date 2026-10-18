@@ -697,6 +697,8 @@ Inquisitorial armory down here
 			M.set_blood_volume(max(M.get_blood_volume()-30, 0))
 			M.handle_blood()
 			icon_state = "indexer_used"
+			if(HAS_TRAIT(M, TRAIT_HEMOPHAGE))
+				cursedblood = 1
 			if(M.mind)
 				if(M.mind.has_antag_datum(/datum/antagonist/werewolf, FALSE))
 					cursedblood = 3

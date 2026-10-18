@@ -204,10 +204,10 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	if(chastity_feature)
 		return TRUE
 	var/datum/bodypart_feature/chastity/chastity_new = new /datum/bodypart_feature/chastity()
-	// Use the base accessory setter so we don't spawn a second hidden chastity item.
-	call(chastity_new, /datum/bodypart_feature/proc/set_accessory_type)(sprite_acc, null, H)
 	chastity_new.chastity_item = src
-	chastity_feature = chastity_new
+	// Use the base accessory setter so we don't spawn a second hidden chastity item.
+	// ^ DON'T DO THAT, IF YOU DO THAT YOU WROTE YOUR CODE WRONG
+	chastity_new.set_accessory_type(sprite_acc, null, H)
 	return TRUE
 
 // Attaches the prepared chastity bodypart feature to the chest bodypart.
@@ -225,9 +225,6 @@ GLOBAL_LIST_INIT(chastity_standard_traits, list(
 	forceMove(H)
 	H.chastity_device = src
 	chastity_victim = H
-	var/datum/component/intimate_action_guard/chastity/action_guard_component = LoadComponent(/datum/component/intimate_action_guard/chastity)
-	if(action_guard_component)
-		action_guard_component.bind_to_wearer(H)
 	var/datum/component/intimate_reaction/chastity_receive_flavor/reaction_component = LoadComponent(/datum/component/intimate_reaction/chastity_receive_flavor)
 	if(reaction_component)
 		reaction_component.bind_to_wearer(H)

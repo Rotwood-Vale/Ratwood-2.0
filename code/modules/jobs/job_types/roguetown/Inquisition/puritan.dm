@@ -24,6 +24,7 @@
 
 	//Someone who survived being turned by an Inquisitor themselves? Not a chance.
 	virtue_restrictions = list(/datum/virtue/combat/second_chance)
+	quirk_restrictions = list(/datum/quirk/hunted)
 	job_subclasses = list(
 		/datum/advclass/puritan/inspector,
 		/datum/advclass/puritan/ordinator,

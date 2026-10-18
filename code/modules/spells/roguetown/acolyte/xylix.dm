@@ -42,7 +42,7 @@
 /obj/effect/proc_holder/spell/invoked/ventriloquism/cast(list/targets, mob/user = usr)
 	if(isobj(targets[1]))
 		var/obj/target = targets[1]
-		var/input_message = input(usr, "What shall [target] say?", src) as null|text
+		var/input_message = sanitize(input(usr, "What shall [target] say?", src) as null|text)
 		target.say("[input_message]")
 		return TRUE
 	revert_cast()
@@ -97,7 +97,7 @@
 	mob_biotypes = MOB_HUMANOID
 	maxHealth = 20
 	health = 20
-	canparry = TRUE
+	mob_can_parry = TRUE
 	d_intent = INTENT_PARRY
 	defprob = 50
 	footstep_type = FOOTSTEP_MOB_BAREFOOT
@@ -272,11 +272,11 @@
 /obj/effect/proc_holder/spell/invoked/abscond/proc/reset(silent = FALSE)
 	if(tile_effect && destination_turf)
 		destination_turf.cut_overlay(tile_effect)
-		qdel(tile_effect)
+		tile_effect = null
 		destination_turf = null
 	if(user_turf && target_effect)
 		user_turf.cut_overlay(target_effect)
-		qdel(target_effect)
+		target_effect = null
 		user_turf = null
 	update_icon()
 
@@ -317,6 +317,8 @@
 //Successful teleport, complete reset.
 /obj/effect/proc_holder/spell/invoked/abscond/proc/tp(mob/user)
 	if(destination_turf)
+		if(user.buckled)
+			user.buckled.unbuckle_mob(user, TRUE)
 		if(do_teleport(user, destination_turf, no_effects=TRUE))
 			log_admin("[user.real_name]([key_name(user)] Shadowstepped from X:[user_turf.x] Y:[user_turf.y] Z:[user_turf.z] to X:[destination_turf.x] Y:[destination_turf.y] Z:[destination_turf.z] in area: [get_area(destination_turf)]")
 			if(user.m_intent == MOVE_INTENT_SNEAK)
@@ -458,7 +460,8 @@
 /obj/item/melee/touch_attack/parlor_trick/dropped()
 	..()
 	disrupt()
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/item/melee/touch_attack/parlor_trick/equipped()
 	..()
@@ -947,9 +950,9 @@
 	if(meister_balance > 0)
 		var/stolen = min(rand(1, 10), meister_balance)
 		SStreasury.bank_accounts[owner] -= stolen
-		to_chat(owner, span_warning("Matthios skims [stolen] mammon from your meister!"))
+		to_chat(owner, span_warning("Matthios skims [stolen] mammon from your nervelock!"))
 	else
-		to_chat(owner, span_notice("Matthios reaches for your meister, but finds it empty. Truly, a poor fool!"))
+		to_chat(owner, span_notice("Matthios reaches for your nervelock, but finds it empty. Truly, a poor fool!"))
 	. = ..()
 
 /datum/status_effect/matthios_favor/on_remove()
@@ -959,7 +962,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/matthios_favor
 	name = "Matthios' Favor"
-	desc = "The Free-God palms coin from your meister with a crooked grin."
+	desc = "The Free-God palms coin from your nervelock with a crooked grin."
 	icon_state = "status"
 
 /atom/movable/screen/alert/status_effect/buff/malum_favor
@@ -1215,7 +1218,7 @@
 			to_chat(user, span_danger("Graggar's fury marks your flesh!"))
 		if(MATTHIOS)
 			user.apply_status_effect(/datum/status_effect/matthios_favor)
-			to_chat(user, span_danger("Matthios steals from your meister as a lesson in greed!"))
+			to_chat(user, span_danger("Matthios steals from your nervelock as a lesson in greed!"))
 	return ..()
 
 #undef NOTHING

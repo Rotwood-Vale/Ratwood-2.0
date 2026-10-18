@@ -32,8 +32,13 @@
 	GLOB.biggates += src
 
 /obj/structure/gate_vertical/Destroy()
-	for(var/A in blockers)
-		qdel(A)
+	GLOB.biggates -= src
+	QDEL_LIST(blockers)
+	if(istype(attached_to, /obj/structure/winch))
+		var/obj/structure/winch/attached_winch = attached_to
+		if(attached_winch.attached_gate == src)
+			attached_winch.attached_gate = null
+		attached_to = null
 	return ..()
 
 /obj/structure/gate_vertical/proc/update_gate_icon()

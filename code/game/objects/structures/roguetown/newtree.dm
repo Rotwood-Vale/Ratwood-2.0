@@ -157,10 +157,12 @@
 	. = ..()
 	tree_type = rand(1,2)
 	dir = pick(GLOB.cardinals)
-	SStreesetup.initialize_me |= src
 	build_trees()
-	build_branches()
-	build_leafs()
+	if(!SStreesetup.initialized)
+		SStreesetup.initialize_me += src
+	else
+		build_branches()
+		build_leafs()
 	update_icon()
 	if(istype(loc, /turf/open/floor/rogue/grass))
 		var/turf/T = loc

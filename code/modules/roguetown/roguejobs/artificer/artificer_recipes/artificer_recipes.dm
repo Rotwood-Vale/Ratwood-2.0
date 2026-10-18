@@ -86,6 +86,13 @@
 	hammers_per_item = 10
 	skill_level = 3
 
+/datum/artificer_recipe/wood/bulk
+	name = "Bulk Wooden Cogs 3x (+2 Planks)"
+	created_item = list(/obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/basic)
+	additional_items = list(/obj/item/natural/wood/plank, /obj/item/natural/wood/plank)
+	hammers_per_item = 10
+	skill_level = 2
+
 /datum/artificer_recipe/bronze
 	name = "Bronze Cog 2x"
 	required_item = /obj/item/ingot/bronze
@@ -93,6 +100,13 @@
 	hammers_per_item = 10
 	skill_level = 1
 	i_type = "General"
+
+/datum/artificer_recipe/bronze/bulk
+	name = "Bulk Bronze Cogs 6x (+2 Bronze Bars)"
+	created_item = list(/obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze, /obj/item/roguegear/bronze)
+	additional_items = list(/obj/item/ingot/bronze, /obj/item/ingot/bronze)
+	hammers_per_item = 10
+	skill_level = 2
 
 /datum/artificer_recipe/iron
 	i_type = "General"
@@ -147,6 +161,13 @@
 	additional_items = list(/obj/item/roguegear/bronze)
 	skill_level = 0
 	hammers_per_item = 5
+
+/datum/artificer_recipe/bronze/tools/skillcore
+	name = "Golem Skill Exhibitor (+2 Cog)"
+	created_item = /obj/item/construct_skill_core
+	additional_items = list(/obj/item/roguegear, /obj/item/roguegear)
+	hammers_per_item = 10
+	skill_level = 3
 
 /datum/artificer_recipe/bronze/tools/headhook
 	name = "Headhook (+2 Fibers)"
@@ -328,18 +349,42 @@
 	hammers_per_item = 8
 	skill_level = 3
 
-/datum/artificer_recipe/contraptions/partiallyrefinedbarrel
-	name = "Partially refined barrel (5 iron ingot + rough iron barrel)"
+/datum/artificer_recipe/contraptions/roughironbarrel
+	name = "Rough Iron Barrel (+3 iron)"
 	required_item = /obj/item/ingot/iron
-	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_roughbarrel)
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron)
+	created_item = /obj/item/bombard_roughbarrel
+	hammers_per_item = 8
+	skill_level = 5
+
+/datum/artificer_recipe/contraptions/partiallyrefinedbarrel
+	name = "Partially refined barrel (3 iron ingot + rough iron barrel)"
+	required_item = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_roughbarrel)
 	created_item = /obj/item/bombard_partiallyrefinedbarrel
 	hammers_per_item = 10
 	skill_level = 5
 
-/datum/artificer_recipe/contraptions/bombardbarrel
-	name = "Bombard Barrel (+5 iron ingot + repaired sanded barrel)"
+/datum/artificer_recipe/contraptions/sandedbarrel
+	name = "Sanded Iron Barrel (+3 sand, +2 stone dust, +1 Partially Refined Iron Barrel)"
 	required_item = /obj/item/ingot/iron
-	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedrepairedbarrel, /obj/item/ingot/iron, /obj/item/ingot/iron)
+	additional_items = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/sand, /obj/item/alch/stonedust, /obj/item/alch/stonedust, /obj/item/bombard_partiallyrefinedbarrel)
+	created_item = /obj/item/bombard_sandedbarrel
+	hammers_per_item = 8
+	skill_level = 5
+
+/datum/artificer_recipe/contraptions/repairedsandedbarrel
+	name = "Repair Sanded Barrel (+3 iron, +1 Sanded Iron Barrel)"
+	required_item = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedbarrel)
+	created_item = /obj/item/bombard_sandedrepairedbarrel
+	hammers_per_item = 10
+	skill_level = 5
+
+/datum/artificer_recipe/contraptions/bombardbarrel
+	name = "Bombard Barrel (+5 iron ingot + 1 repaired sanded barrel)"
+	required_item = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/ingot/iron, /obj/item/bombard_sandedrepairedbarrel)
 	created_item = /obj/item/bombard_barrel
 	hammers_per_item = 8
 	skill_level = 5
@@ -497,6 +542,34 @@
 					)
 	hammers_per_item = 6
 	skill_level = 2
+
+/datum/artificer_recipe/ammunition/bodkinarrows
+	name = "Bodkin Arrows 20x (+2 Planks, +1 Steel)"
+	required_item = /obj/item/natural/wood/plank
+	additional_items = list(/obj/item/natural/wood/plank, /obj/item/natural/wood/plank,  /obj/item/ingot/steel)
+	created_item = list(/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel,
+						/obj/item/ammo_casing/caseless/rogue/arrow/steel
+					)
+	hammers_per_item = 6
+	skill_level = 3
 
 /datum/artificer_recipe/ammunition/bsarrows//faster way to craft blacksteel ammo, not a cheaper craft
 	name = "Blacksteel Arrows 10x (+1 Planks, +1 Silk, +2 Blacksteel)"

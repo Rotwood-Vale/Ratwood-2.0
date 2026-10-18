@@ -3,11 +3,11 @@
 // But I am not nuking it from Acolyte yet so it will be unavailable to mage.
 // I repathed it to avoid it becoming available to mages again.
 /obj/effect/proc_holder/spell/invoked/blindness
-	name = "Blindness"
-	desc = "Direct a mote of living darkness to temporarily blind another."
+	name = "Shroud of Noc"
+	desc = "Direct a mote of living darkness to temporarily blind another, restricting their combative skills relative to your faith."
 	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
 	action_icon = 'icons/mob/actions/nocmiracles.dmi'
-	overlay_state = "blindness"
+	overlay_state = "nocshroud"
 	clothes_req = FALSE
 	releasedrain = 30
 	chargedrain = 0
@@ -21,7 +21,7 @@
 	invocation_type = "shout" //can be none, whisper, emote and shout
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 15
-	recharge_time = 15 SECONDS
+	recharge_time = 30 SECONDS
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	miracle = TRUE
 	cost = 3
@@ -42,11 +42,36 @@
 		if(target.anti_magic_check(TRUE, TRUE))
 			return FALSE
 		target.visible_message(span_warning("[user] points at [target]'s eyes!"),span_warning("My eyes are covered in darkness!"))
-		var/strength = min(user.get_skill_level(associated_skill) * 4, 4)
-		target.blind_eyes(strength)
+		target.apply_status_effect(/datum/status_effect/debuff/magical_blindness, user.get_skill_level(associated_skill))
 		return TRUE
 	revert_cast()
 	return FALSE
+
+/atom/movable/screen/fullscreen/magical_blindness
+	icon_state = "oxydamageoverlay9"
+	layer = BLIND_LAYER
+	
+/datum/status_effect/debuff/magical_blindness
+	id = "magic_blind"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/magical_blindness
+	duration = 100
+	var/effect_strength = 0
+
+/datum/status_effect/debuff/magical_blindness/on_creation(mob/living/new_owner, strength)
+	if (isnum(strength))
+		effect_strength = strength
+		effectedstats = list(STATKEY_PER = -(round(strength / 2)))
+		duration = (strength * 3) SECONDS
+		new_owner.overlay_fullscreen("magical_blindness", /atom/movable/screen/fullscreen/magical_blindness)
+	return ..()
+
+/datum/status_effect/debuff/magical_blindness/on_remove()
+	owner.clear_fullscreen("magical_blindness")
+	. = ..()
+
+/atom/movable/screen/alert/status_effect/debuff/magical_blindness
+	name = "Magically Blinded"
+	desc = "A mote of darkness clouds my eyes! It's harder to see, and my weapon strikes are less accurate."
 
 /obj/effect/proc_holder/spell/invoked/invisibility
 	name = "Invisibility"
@@ -67,7 +92,7 @@
 	sound = 'sound/misc/fade.ogg'
 	associated_skill = /datum/skill/magic/arcane
 	antimagic_allowed = TRUE
-	hide_charge_effect = TRUE
+	hide_charge_effect = FALSE
 	cost = 3 // Very useful
 
 /obj/effect/proc_holder/spell/invoked/invisibility/miracle
@@ -257,3 +282,90 @@
 		return TRUE
 	revert_cast()
 	return FALSE
+
+/obj/effect/proc_holder/spell/invoked/silence/miracle
+	name = "Silence"
+	desc = "Shutter voices and empty the air of sound - naught mage-nor-man shall utter a word, be it invocation or insult."
+	overlay_state = "silencenoc"
+	clothes_req = FALSE
+	releasedrain = 30
+	chargedrain = 0
+	chargetime = 5 SECONDS
+	range = 7
+	warnie = "sydwarning"
+	movement_interrupt = FALSE
+	sound = 'sound/magic/zizo_snuff.ogg'
+	spell_tier = 0
+	invocations = list("Lunaria Silentium!")
+	invocation_type = "shout"
+	associated_skill = /datum/skill/magic/holy
+	devotion_cost = 100 //Doubled devotion cost, because it's essentitally their Ultimate Move
+	recharge_time = 30 SECONDS
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	miracle = TRUE
+
+/obj/effect/proc_holder/spell/invoked/silence/miracle/cast(list/targets, mob/user = usr)
+	if(isliving(targets[1]))
+		var/mob/living/carbon/target = targets[1]
+		if(HAS_TRAIT(target, TRAIT_COUNTERCOUNTERSPELL) || HAS_TRAIT(target, TRAIT_ANTIMAGIC) || HAS_TRAIT(target, TRAIT_MUTE))
+			to_chat(user, "<span class='warning'>The spell fizzles, it won't work on them!</span>")
+			revert_cast()
+			return
+		ADD_TRAIT(target, TRAIT_MUTE, MAGIC_TRAIT)
+		playsound(get_turf(target), 'sound/magic/zizo_snuff.ogg', 80, TRUE, soundping = TRUE)
+		to_chat(target, span_warning("The wind in my voice goes still. I can't speak!"))
+		var/dur = max((5 * (user.get_skill_level(associated_skill, 5))))
+		addtimer(CALLBACK(src, PROC_REF(remove_buff), target), wait = dur SECONDS)
+		return TRUE
+
+
+/obj/effect/proc_holder/spell/invoked/silence/miracle/proc/remove_buff(mob/living/carbon/target)
+	REMOVE_TRAIT(target, TRAIT_MUTE, MAGIC_TRAIT)
+	to_chat(target, span_warning("My voice returns to me!"))
+
+
+/obj/effect/proc_holder/spell/invoked/magicshield
+	name = "Moonlit Ward"
+	desc = "Wrap a target in a ward of anti-magic."
+	overlay_icon = 'icons/mob/actions/nocmiracles.dmi'
+	action_icon = 'icons/mob/actions/nocmiracles.dmi'
+	overlay_state = "antimagenoc"
+	clothes_req = FALSE
+	releasedrain = 30
+	chargedrain = 0
+	chargetime = 3 SECONDS
+	range = 7
+	warnie = "sydwarning"
+	movement_interrupt = FALSE
+	sound = 'sound/magic/antimagic.ogg'
+	spell_tier = 0
+	invocations = list("No spell shall touch thee!")
+	invocation_type = "shout"
+	associated_skill = /datum/skill/magic/holy
+	devotion_cost = 100
+	recharge_time = 60 SECONDS
+	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
+	miracle = TRUE
+
+/obj/effect/proc_holder/spell/invoked/magicshield/cast(list/targets, mob/user = usr)
+	if(!targets || !length(targets) || !isliving(targets[1]))
+		revert_cast()
+		return FALSE
+	var/mob/living/carbon/target = targets[1]
+	if(HAS_TRAIT(target, TRAIT_ANTIMAGIC))
+		to_chat(user, span_warning("They are already protected from magic!"))
+		revert_cast()
+		return FALSE
+	ADD_TRAIT(target, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	target.visible_message(
+		span_warning("[user] calls down a ward around [target]!"),
+		span_warning("A nullifying force settles over me!")
+	)
+	var/dur = max((5 * (user.get_skill_level(associated_skill, 5))))
+	addtimer(CALLBACK(src, PROC_REF(remove_buff), target), wait = dur SECONDS)
+	return TRUE
+/obj/effect/proc_holder/spell/invoked/magicshield/proc/remove_buff(mob/living/carbon/target)
+	if(!target)
+		return
+	REMOVE_TRAIT(target, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	to_chat(target, span_warning("The anti-magic ward fades."))

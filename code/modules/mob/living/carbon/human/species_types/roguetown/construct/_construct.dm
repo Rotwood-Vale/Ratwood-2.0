@@ -1,6 +1,7 @@
 /datum/species/construct
 	name = "Constructb"
 	id = "construct"
+	abstract_type = /datum/species/construct
 
 /datum/species/construct/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

@@ -16,7 +16,7 @@
 	if(!damage || (!forced && hit_percent <= 0))
 		testing("faildam")
 		return 0
-	clear_typing_indicator()
+	clear_typing_indicator("interrupted")
 	var/damage_amount =  forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)

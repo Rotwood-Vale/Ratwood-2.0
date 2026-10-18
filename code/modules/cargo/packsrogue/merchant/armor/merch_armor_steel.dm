@@ -111,6 +111,11 @@
 	cost = 55 // 1 Steel, 1 Leather
 	contains = list(/obj/item/clothing/wrists/roguetown/splintarms)
 
+/datum/supply_pack/rogue/armor_steel/jackchains
+	name = "Bracers, Jack Chain"
+	cost = 50 // 1 steel
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/jackchain)
+
 /datum/supply_pack/rogue/armor_steel/bracers_plate
 	name = "Bracers, Plate"
 	cost = 50 // 1 Steel

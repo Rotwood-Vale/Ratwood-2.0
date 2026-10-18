@@ -61,5 +61,5 @@
 	. = ..()
 	for(var/datum/bounty/b in GLOB.head_bounties)
 		if(b.target == H.real_name || b.target_hidden == H.real_name)
-			H.change_stat(STATKEY_INT, 1)
+			H.change_stat(STATKEY_WIL, 1)
 			H.change_stat(STATKEY_SPD, 1)

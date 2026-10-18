@@ -29,6 +29,7 @@
 
 /obj/item/clothing/under/roguetown/trou/leather/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/under/roguetown/trou/leather/mourning
 	name = "mourning trousers"
@@ -44,6 +45,7 @@
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = GROIN | LEG_RIGHT | LEG_LEFT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+	fiber_salvage = FALSE
 
 /obj/item/clothing/under/roguetown/trou/beltpants
 	name = "belt-buckled trousers"

@@ -38,6 +38,18 @@
 	else if(x < 0)
 		. += 360
 
+/// Angle between two arbitrary points and horizontal line same as [/proc/get_angle]
+/proc/get_angle_raw(start_x, start_y, start_pixel_x, start_pixel_y, end_x, end_y, end_pixel_x, end_pixel_y)
+	var/dy = (ICON_SIZE_Y * end_y + end_pixel_y) - (ICON_SIZE_Y * start_y + start_pixel_y)
+	var/dx = (ICON_SIZE_X * end_x + end_pixel_x) - (ICON_SIZE_X * start_x + start_pixel_x)
+	if(!dy)
+		return (dx >= 0) ? 90 : 270
+	. = arctan(dx/dy)
+	if(dy < 0)
+		. += 180
+	else if(dx < 0)
+		. += 360
+
 /proc/Get_Pixel_Angle(y, x)//for getting the angle when animating something's pixel_x and pixel_y
 	if(!y)
 		return (x>=0)?90:270
@@ -647,6 +659,20 @@ will handle it, but:
 
 	if(final_x || final_y)
 		return locate(final_x, final_y, T.z)
+
+/**
+ * Returns the x, y pixel shift an atom's icon gets purely from being larger than one tile.
+ * Oversized icons are drawn from the tile's corner, so anything anchored to the atom's
+ * draw origin (light masks, beam ends) needs this added to sit on the sprite's centre.
+**/
+/proc/get_icon_centering_offset(atom/checked_atom)
+	if(isnull(checked_atom.icon))
+		return list(0, 0)
+	var/list/icon_dimensions = get_icon_dimensions_pure(checked_atom.icon)
+	return list(
+		((icon_dimensions["width"] / ICON_SIZE_X) - 1) * (ICON_SIZE_X * 0.5),
+		((icon_dimensions["height"] / ICON_SIZE_Y) - 1) * (ICON_SIZE_Y * 0.5),
+	)
 
 //Finds the distance between two atoms, in pixels
 //centered = FALSE counts from turf edge to edge
@@ -1301,6 +1327,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /mob/dview/Initialize(mapload) //Properly prevents this mob from gaining huds or joining any global lists
 	SHOULD_CALL_PARENT(FALSE)
+	if(flags_1 & INITIALIZED_1)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	flags_1 |= INITIALIZED_1
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dview/Destroy(force = FALSE)

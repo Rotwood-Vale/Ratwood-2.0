@@ -31,8 +31,7 @@ GLOBAL_LIST_INIT(dwarfskeleton_aggro, world.file2list("strings/rt/dskeletonaggro
 /mob/living/carbon/human/species/dwarfskeleton/Initialize(mapload)
 	. = ..()
 	cut_overlays()
-	spawn(10)
-		after_creation()
+	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 
 /mob/living/carbon/human/species/dwarfskeleton/after_creation()
 	..()

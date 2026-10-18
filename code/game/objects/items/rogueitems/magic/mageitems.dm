@@ -173,7 +173,8 @@
 	var/is_bled = FALSE
 	var/obj/effect/decal/cleanable/roguerune/rune_to_scribe = null
 	var/chosen_keyword
-
+	smeltresult = null
+	
 /obj/item/rogueweapon/huntingknife/idagger/silver/arcyne/Initialize(mapload)
 	. = ..()
 	filter(type="drop_shadow", x=0, y=0, size=2, offset=1, color=rgb(128, 0, 128, 1))
@@ -371,23 +372,30 @@
 
 /obj/item/sendingstonesummoner/Initialize(mapload)
 	. = ..()
-	var/mob/living/user = usr
-	var/obj/item/natural/stone/sending/item1 = new /obj/item/natural/stone/sending
-	var/obj/item/natural/stone/sending/item2 = new /obj/item/natural/stone/sending
+	var/obj/item/natural/stone/sending/item1 = new /obj/item/natural/stone/sending(loc)
+	var/obj/item/natural/stone/sending/item2 = new /obj/item/natural/stone/sending(loc)
 	item1.paired_with = item2
 	item2.paired_with = item1
 	item1.icon_state = "whet"
 	item2.icon_state = "whet"
 	item1.color = "#d8aeff"
 	item2.color = "#d8aeff"
-	user.put_in_hands(item1, FALSE)
-	user.put_in_hands(item2, FALSE)
+	if(usr)
+		var/mob/living/user = usr
+		user.put_in_hands(item1, FALSE)
+		user.put_in_hands(item2, FALSE)
 	qdel(src)
 
 /obj/item/natural/stone/sending
 	name = "sending stone"
 	desc = "One of a pair of sending stones."
 	var/obj/item/natural/stone/sending/paired_with
+
+/obj/item/natural/stone/sending/Destroy()
+	if(paired_with?.paired_with == src)
+		paired_with.paired_with = null
+	paired_with = null
+	return ..()
 
 /obj/item/natural/stone/sending/attack_self(mob/user)
 	var/input_text = input(user, "Enter your message:", "Message")
@@ -480,14 +488,14 @@
 		return
 
 	var/mob/living/simple_animal/hostile/retaliate/rogue/target = captive
+	var/summoner_name = user.real_name ? user.real_name : user.name
 	target.visible_message(span_warning("[src] is trying to bind [target.real_name]"))
 	if(do_after(user, 50, target = src) && binding == FALSE)
 		if(!target.ckey) //player is not inside body or has refused, poll for candidates
 			to_chat(user, span_notice("You attempt to bind the targetted summon to this plane."))
 			binding = TRUE
 			target.visible_message(span_warning("[target.real_name]'s body is entangled by glowing chains..."), runechat_message = TRUE)
-			var/list/candidates = pollCandidatesForMob("Do you want to play as a Mage's summon?", null, null, null, 100, target, POLL_IGNORE_MAGE_SUMMON)
-
+			var/list/candidates = pollCandidatesForMob("Do you want to play as [summoner_name]'s summoned [target.real_name]?", null, null, null, 100, target, POLL_IGNORE_MAGE_SUMMON)
 			// theres at least one candidate
 			if(LAZYLEN(candidates))
 				var/mob/C = pick(candidates)

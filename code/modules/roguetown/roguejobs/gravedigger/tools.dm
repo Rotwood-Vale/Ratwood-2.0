@@ -21,6 +21,7 @@
 	max_blade_int = 300
 	grid_width = 32
 	grid_height = 96
+	is_tool = TRUE
 
 /obj/item/rogueweapon/shovel/Destroy()
 	if(heldclod)
@@ -48,7 +49,7 @@
 	icon_state = "inscoop"
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
+	dodgeable_intent = FALSE
 	misscost = 0
 	no_attack = TRUE
 

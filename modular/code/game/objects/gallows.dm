@@ -10,6 +10,7 @@
 	max_integrity = 10
 	buckle_lying = FALSE
 	buckle_prevents_pull = TRUE
+	buckle_blocks_spells = TRUE
 	max_buckled_mobs = 1
 	anchored = TRUE
 	density = FALSE

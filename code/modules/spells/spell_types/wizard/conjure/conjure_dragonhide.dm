@@ -28,17 +28,11 @@
 	slottoequip = SLOT_ARMOR
 	checkspot = "armor"
 
-/obj/effect/proc_holder/spell/self/conjure_armor/conjure_dragonhide/Destroy()
-	if(src.conjured_armor)
-		conjured_armor.visible_message(span_warning("The [conjured_armor]'s borders begin to shimmer and fade, before it vanishes entirely!"))
-		qdel(conjured_armor)
-	return ..()
-
 
 
 /obj/item/clothing/suit/roguetown/dragonhide
 	name = "dragonhide"
-	desc = "An arcyne art first mastered by the 'dragonsbreath magisters' of Lirvas. This barrier protects best against the heat."
+	desc = "An arcyne art first mastered by the 'dragonsbreath magisters'. This barrier protects best against the heat."
 	max_integrity = 200
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
@@ -108,6 +102,3 @@
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_NOFIRE, TRAIT_GENERIC)
 	owner.remove_filter(DRAGONHIDE_FILTER)
-
-
-

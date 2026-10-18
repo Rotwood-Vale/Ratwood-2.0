@@ -198,8 +198,8 @@ SUBSYSTEM_DEF(ticker)
 				if(player.ready == PLAYER_READY_TO_PLAY)
 					++totalPlayersReady
 			if(!gamemode_voted)
-				SSvote.initiate_vote("chaos", "PSYDON", null, forced = TRUE)
 				gamemode_voted = TRUE
+				SSvote.initiate_vote("chaos", "PSYDON", null, forced = TRUE)
 
 			if(start_immediately)
 				timeLeft = 0
@@ -823,11 +823,9 @@ SUBSYSTEM_DEF(ticker)
 	var/list/spawn_locs = GLOB.hauntstart.Copy()
 	if(LAZYLEN(GLOB.hauntstart))
 		for(var/i in 1 to 20)
-			var/obj/effect/landmark/events/haunts/_T = pick_n_take(spawn_locs)
-			if(_T)
-				_T = get_turf(_T)
-				if(isfloorturf(_T))
-					new /mob/living/carbon/human/species/skeleton/npc(_T)
+			var/turf/_T = pick_n_take(spawn_locs)
+			if(isfloorturf(_T))
+				new /mob/living/carbon/human/species/skeleton/npc(_T)
 
 /// Returns universe state to normal after the sunstealer has been slain
 /datum/controller/subsystem/ticker/proc/on_sunstealer_death()

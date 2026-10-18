@@ -95,7 +95,7 @@
 						H.ignite_mob()
 				if(/datum/patron/divine/pestra)
 					H.vomit(stun = 0)
-					H.adjustToxLoss(10)
+					H.reagents.remove_reagent(/datum/reagent/medicine, 10)
 					H.visible_message(span_warning("[H] expels some leeches out of them!"), span_warning("Something roils within me!"))
 					new /obj/item/natural/worms/leech(get_turf(H))
 				if(/datum/patron/divine/eora)

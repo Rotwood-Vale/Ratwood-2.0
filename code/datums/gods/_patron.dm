@@ -33,6 +33,8 @@ GLOBAL_LIST_EMPTY(prayers)
 	var/list/mob_traits
 	/// Assoc list of miracles it grants. Type = Cleric_Tier
 	var/list/miracles = list()
+	/// Energy colors assigned to this patron. Used for miracle/lay on hands color (But not the light because any other light color is awful)
+	var/energy_color = "#c42424"
 	/// List of words that this god considers profane. (Master for all faiths. Inhumen have their own list.)
 	var/list/profane_words = list("zizo","matthios","graggar","baotha","cock","dick","fuck","shit","pussy","cuck","cunt","asshole","pintle")
 

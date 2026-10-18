@@ -614,18 +614,26 @@
 
 	var/atom/target_atom = targets[1]
 	var/obj/structure/flora/newtree/target = null
+	var/obj/structure/flora/newtreealt/target2 = null
 
 	// Use for-in-list idiom: the loop var gets the correct static type regardless of source type.
 	for(var/obj/structure/flora/newtree/NT_target in list(target_atom))
 		if(!NT_target.burnt)
 			target = NT_target
 		break  // only check the first (and only) element
-	if(!target && target_atom.loc && (get_dist(user, target_atom.loc) <= 1))
+	for(var/obj/structure/flora/newtreealt/NT_target2 in list(target_atom))
+		if(!NT_target2.burnt)
+			target = NT_target2
+		break 
+	if(!target || !target2 && target_atom.loc && (get_dist(user, target_atom.loc) <= 1))
 		for(var/obj/structure/flora/newtree/NT in target_atom.loc)
 			if(!NT.burnt)
 				target = NT
 				break
-
+		for(var/obj/structure/flora/newtreealt/NT2 in target_atom.loc)
+			if(!NT2.burnt)
+				target = NT2
+				break
 	// If no living newtree found, search for an unsanctified wise tree to bless instead.
 	var/obj/structure/flora/roguetree/wise/wise_target = null
 	if(!target)
@@ -891,7 +899,7 @@
 		D.ai_controller.clear_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST)
 	// For old-style AI mobs, clear the enemies list, lose current target, and set
 	// non-aggressive so the dryad doesn't re-acquire an enemy mid-transit.
-	D.enemies = list()
+	D.clear_enemies()
 	D.target = null
 	D.LoseTarget()
 	D.aggressive = FALSE
@@ -943,7 +951,7 @@
 	switch(order_type)
 		if("goto")
 			D.follow_target = null
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.guard_turf = target_location
@@ -953,7 +961,7 @@
 				D.faction -= "neutral"
 			to_chat(caster, span_notice("[D.name] moves to guard that position."))
 		if("follow")
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.lastattacker_weakref = null
@@ -988,7 +996,7 @@
 			else
 				D.follow_target = caster
 				D.guard_turf = null
-				D.enemies = list()
+				D.clear_enemies()
 				D.target = null
 				D.LoseTarget()
 				D.lastattacker_weakref = null
@@ -1000,7 +1008,7 @@
 		if("aggressive")
 			// Clicking an ally — send dryad to their tile as a guard position.
 			D.follow_target = null
-			D.enemies = list()
+			D.clear_enemies()
 			D.target = null
 			D.LoseTarget()
 			D.guard_turf = get_turf(target)

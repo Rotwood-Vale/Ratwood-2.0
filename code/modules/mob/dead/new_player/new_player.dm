@@ -511,7 +511,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		if((client.prefs.virtue?.type in job.virtue_restrictions) || (client.prefs.virtuetwo?.type in job.virtue_restrictions))
 			return JOB_UNAVAILABLE_VIRTUESVICE
 		// Check all vices
-		for(var/datum/charflaw/vice in list(client.prefs.vice1, client.prefs.vice2, client.prefs.vice3, client.prefs.vice4, client.prefs.vice5, client.prefs.charflaw))
+		for(var/datum/charflaw/vice in list(client.prefs.vice1, client.prefs.vice2, client.prefs.vice3, client.prefs.vice4, client.prefs.vice5, client.prefs.vice6, client.prefs.charflaw))
 			if(vice?.type in job.vice_restrictions)
 				return JOB_UNAVAILABLE_VIRTUESVICE
 //	if(job.title == "Adventurer" && latejoin)
@@ -720,6 +720,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 			for(var/job in available_jobs)
 				var/datum/job/job_datum = SSjob.name_occupations[job]
 				var/do_elaborate = job_datum.has_limited_subclasses()
+				var/incompatible_href = length(job_datum.get_blocked_subclasses(client)) ? "<a href='?src=[REF(job_datum)];jobadvincomp=1'><b><font color = '#df1919'>(!!)</font></b></a>" : ""
 				if(job_datum)
 					var/command_bold = FALSE
 					if(job in GLOB.noble_positions)
@@ -730,7 +731,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 					if(job_datum in SSjob.prioritized_jobs)
 						dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[used_name] ([job_datum.current_positions])</span></a>"
 					else
-						dat += "<font size = 3>[do_elaborate ? "<a href='?src=[REF(job_datum)];jobsubclassinfo=1'><b><font color = '#6b6743'>(!)</font></b></a>" : ""]<a href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[command_bold ? "<b>" : ""][used_name] ([job_datum.current_positions]/[job_datum.total_positions])[command_bold ? "</b>" : ""]</a></font>"
+						dat += "<font size = 3>[incompatible_href][do_elaborate ? "<a href='?src=[REF(job_datum)];jobsubclassinfo=1'><b><font color = '#6b6743'>(!)</font></b></a>" : ""]<a href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[command_bold ? "<b>" : ""][used_name] ([job_datum.current_positions]/[job_datum.total_positions])[command_bold ? "</b>" : ""]</a></font>"
 						dat += "<br>"
 
 			dat += "</fieldset><br>"
@@ -827,7 +828,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	src << browse(null, "window=preferences") //closes job selection
 	src << browse(null, "window=mob_occupation")
 	src << browse(null, "window=latechoices") //closes late job selection
-	src << browse(null, "window=migration") // Closes migrant menu
+	if(client?.prefs?.migrant)
+		client.prefs.migrant.hide_ui() // Closes migrant menu
 	src << browse(null, "window=familiar_prefs") // Closes familiar prefs menu
 
 	SStriumphs.remove_triumph_buy_menu(client)

@@ -68,6 +68,11 @@
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 120)
 
+/obj/item/organ/heart/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
+	. = ..()
+	if(owner)
+		Restart()
+
 /obj/item/organ/heart/proc/stop_if_unowned()
 	if(!owner)
 		Stop()

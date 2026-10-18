@@ -149,16 +149,19 @@
 /obj/item/bodypart/head/dullahan/on_enter_storage(datum/component/storage/concrete/S)
 	. = ..()
 	var/mob/living/carbon/human/human = original_owner
-	var/obj/item/organ/dullahan_vision/vision = human.getorganslot(ORGAN_SLOT_HUD)
-	vision.become_blind()
+	var/obj/item/organ/dullahan_vision/vision = human?.getorganslot(ORGAN_SLOT_HUD)
+	vision?.become_blind()
 
 /obj/item/bodypart/head/dullahan/on_exit_storage(datum/component/storage/concrete/S)
 	. = ..()
 	var/mob/living/carbon/human/human = original_owner
-	var/obj/item/organ/dullahan_vision/vision = human.getorganslot(ORGAN_SLOT_HUD)
-	vision.cure_blind()
+	var/obj/item/organ/dullahan_vision/vision = human?.getorganslot(ORGAN_SLOT_HUD)
+	vision?.cure_blind()
 
-/obj/item/bodypart/head/dullahan/proc/update_vision_cone()
+/obj/item/bodypart/head/dullahan/proc/update_vision_cone(datum/source)
+	if(!original_owner)
+		UnregisterSignal(source, COMSIG_ATOM_DIR_CHANGE)
+		return
 	original_owner.update_fov_angles()
 	original_owner.update_vision_cone()
 
@@ -178,7 +181,7 @@
 		RegisterSignal(new_parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(update_vision_cone), override = TRUE)
 		original_owner.reset_perspective(new_parent)
 
-	var/obj/item/organ/dullahan_vision/vision = original_owner.getorganslot(ORGAN_SLOT_HUD)
+	var/obj/item/organ/dullahan_vision/vision = original_owner?.getorganslot(ORGAN_SLOT_HUD)
 	if(vision)
 		if(istype(destination, /obj/structure/closet) || istype(destination, /obj/item/storage/))
 			vision.become_blind()
@@ -188,7 +191,7 @@
 	. = ..()
 
 	if(reset_perspective)
-		if(vision.viewing_head)
+		if(vision?.viewing_head)
 			original_owner.reset_perspective(src)
 		else
 			original_owner.reset_perspective()
@@ -452,6 +455,7 @@
 			if(owner.client)
 				winset(owner.client, "outputwindow.output", "max-lines=1")
 				winset(owner.client, "outputwindow.output", "max-lines=100")
+				log_combat(user, owner, "critically knocked out[from_behind ? " from behind" : ""]", severe = TRUE)
 		var/dislocation_type
 		var/fracture_type = /datum/wound/fracture/head
 		var/necessary_damage = 0.9
@@ -519,6 +523,8 @@
 		if(applied)
 			if(user?.client)
 				GLOB.azure_round_stats[STATS_CRITS_MADE]++
+			if(owner.client)
+				log_combat(user, owner, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 
@@ -585,7 +591,9 @@
 			continue
 		listening |= M
 		the_dead[M] = TRUE
-	log_seen(src, null, listening, original_message, SEEN_LOG_SAY)
+	// the owner, not the head: log_seen keeps no entry for a non-mob, so a headless dullahan spoke with
+	// no roster at all. Reached via my_head.say() in on_say_postprocess, not by any direct call here
+	log_seen(original_owner, null, listening, message, SEEN_LOG_SAY)
 
 	var/eavesdropping
 	var/eavesrendered

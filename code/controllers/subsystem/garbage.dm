@@ -24,7 +24,7 @@ By using these methods of finding references, you can make your life far, far ea
 SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = FIRE_PRIORITY_GARBAGE
-	wait = 1//2 SECONDS
+	wait = 2 SECONDS
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 	init_order = INIT_ORDER_GARBAGE
@@ -47,8 +47,12 @@ SUBSYSTEM_DEF(garbage)
 
 	//Queue
 	var/list/queues
-	#ifdef LEGACY_REFERENCE_TRACKING
+	#ifdef REFERENCE_TRACKING
 	var/list/reference_find_on_fail = list()
+	#ifdef REFERENCE_TRACKING_DEBUG
+	//Should we save found refs. Used for unit testing
+	var/should_save_refs = FALSE
+	#endif
 	#endif
 
 
@@ -88,21 +92,23 @@ SUBSYSTEM_DEF(garbage)
 	//sort by how long it's wasted hard deleting
 	sortTim(items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
 	for(var/path in items)
-		var/datum/qdel_item/I = items[path]
+		var/datum/qdel_item/trash = items[path]
 		dellog += "Path: [path]"
-		if (I.failures)
-			dellog += "\tFailures: [I.failures]"
-		dellog += "\tqdel() Count: [I.qdels]"
-		dellog += "\tDestroy() Cost: [I.destroy_time]ms"
-		if (I.hard_deletes)
-			dellog += "\tTotal Hard Deletes [I.hard_deletes]"
-			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
-		if (I.slept_destroy)
-			dellog += "\tSleeps: [I.slept_destroy]"
-		if (I.no_respect_force)
-			dellog += "\tIgnored force: [I.no_respect_force] times"
-		if (I.no_hint)
-			dellog += "\tNo hint: [I.no_hint] times"
+		if (trash.failures)
+			dellog += "\tFailures: [trash.failures]"
+		dellog += "\tqdel() Count: [trash.qdels]"
+		dellog += "\tDestroy() Cost: [trash.destroy_time]ms"
+		if (trash.hard_deletes)
+			dellog += "\tTotal Hard Deletes [trash.hard_deletes]"
+			dellog += "\tTime Spent Hard Deleting: [trash.hard_delete_time]ms"
+		if (trash.slept_destroy)
+			dellog += "\tSleeps: [trash.slept_destroy]"
+		if (trash.no_respect_force)
+			dellog += "\tIgnored force: [trash.no_respect_force] times"
+		if (trash.no_hint)
+			dellog += "\tNo hint: [trash.no_hint] times"
+		if(LAZYLEN(trash.extra_details))
+			dellog += "\tExtra details: [trash.extra_details]"
 	log_qdel(dellog.Join("\n"))
 
 /datum/controller/subsystem/garbage/fire()
@@ -146,72 +152,85 @@ SUBSYSTEM_DEF(garbage)
 	//Normally this isn't expensive, but the gc queue can grow to 40k items, and that gets costly/causes overrun.
 	for (var/i in 1 to length(queue))
 		var/list/L = queue[i]
-		if (length(L) < 2)
+		if (length(L) < GC_QUEUE_ITEM_INDEX_COUNT)
 			count++
 			if (MC_TICK_CHECK)
-				break
+				return // do our cleanup the next tick, we're out of time on this one
 			continue
 
-		var/GCd_at_time = L[1]
+		var/GCd_at_time = L[GC_QUEUE_ITEM_QUEUE_TIME]
 		if(GCd_at_time > cut_off_time)
 			break // Everything else is newer, skip them
 		count++
-		var/refID = L[2]
-		var/datum/D
-		D = locate(refID)
-
-		if (!D || D.gc_destroyed != GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
+		var/datum/D = L[GC_QUEUE_ITEM_REF]
+// 1 from the hard reference in the queue, and 1 from the variable used before this
+#define REFS_WE_EXPECT 2
+		if(refcount(D) == REFS_WE_EXPECT) // no refs left dangling, time to go
 			++gcedlasttick
 			++totalgcs
 			pass_counts[level]++
-			#ifdef LEGACY_REFERENCE_TRACKING
-			reference_find_on_fail -= refID	//It's deleted we don't care anymore.
+			#ifdef REFERENCE_TRACKING
+			reference_find_on_fail -= text_ref(D) //It's deleted we don't care anymore.
 			#endif
 			if (MC_TICK_CHECK)
-				break
+				return
 			continue
 
 		// Something's still referring to the qdel'd object.
 		fail_counts[level]++
+
+		#ifdef REFERENCE_TRACKING
+		var/ref_searching = FALSE
+		#endif
+
 		switch (level)
 			if (GC_QUEUE_CHECK)
 				#ifdef REFERENCE_TRACKING
-				D.find_references()
-				#elif defined(LEGACY_REFERENCE_TRACKING)
-				if(reference_find_on_fail[refID])
-					D.find_references_legacy()
+				// Decides how many refs to look for (potentially)
+				// Based off the remaining and the ones we can account for
+				var/remaining_refs = refcount(D) - REFS_WE_EXPECT
+				if(reference_find_on_fail[text_ref(D)])
+					INVOKE_ASYNC(D, TYPE_PROC_REF(/datum,find_references), remaining_refs)
+					ref_searching = TRUE
 				#ifdef GC_FAILURE_HARD_LOOKUP
 				else
-					D.find_references_legacy()
+					INVOKE_ASYNC(D, TYPE_PROC_REF(/datum,find_references), remaining_refs)
+					ref_searching = TRUE
 				#endif
-				reference_find_on_fail -= refID
+				reference_find_on_fail -= text_ref(D)
 				#endif
 				var/type = D.type
-				var/datum/qdel_item/I = items[type]
+				var/datum/qdel_item/trash = items[type]
 				#ifdef TESTING
 				log_world("## TESTING: GC: -- \ref[D] | [type] was unable to be GC'd --")
+
+				var/detail = D.dump_harddel_info()
+				if(detail)
+					LAZYADD(trash.extra_details, detail)
+
 				for(var/c in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
 					var/client/admin = c
 					if(!check_rights_for(admin, R_ADMIN))
 						continue
 					to_chat(admin, "## TESTING: GC: -- [ADMIN_VV(D)] | [type] was unable to be GC'd --")
-				testing("GC: -- \ref[src] | [type] was unable to be GC'd --")
+				testing("GC: -- \ref[D] | [type] was unable to be GC'd --")
 				#endif
-				#ifdef REFERENCE_TRACKING
-				GLOB.deletion_failures += D //It should no longer be bothered by the GC, manual deletion only.
-				continue
-				#endif
-				I.failures++
+				trash.failures++
 			if (GC_QUEUE_HARDDELETE)
 				HardDelete(D)
 				if (MC_TICK_CHECK)
-					break
+					return
 				continue
 
 		Queue(D, level+1)
 
+		#ifdef REFERENCE_TRACKING
+		if(ref_searching)
+			return
+		#endif
+
 		if (MC_TICK_CHECK)
-			break
+			return
 	if (count)
 		queue.Cut(1,count+1)
 		count = 0
@@ -222,32 +241,36 @@ SUBSYSTEM_DEF(garbage)
 	if (level > GC_QUEUE_COUNT)
 		HardDelete(D)
 		return
-	var/gctime = world.time
-	var/refid = "\ref[D]"
+	var/queue_time = world.time
 
-	D.gc_destroyed = gctime
+	// should accept either GC_QUEUED_FOR_QUEUING or GC_CURRENTLY_BEING_QDELETED
+	if(D.gc_destroyed <= 0)
+		D.gc_destroyed = queue_time
 	var/list/queue = queues[level]
-
-	queue[++queue.len] = list(gctime, refid) // not += for byond reasons
+	// we add gc_destroyed so that we can rule out false matches
+	queue[++queue.len] = list(queue_time, D, D.gc_destroyed) // not += for byond reasons
 
 //this is mainly to separate things profile wise.
-/datum/controller/subsystem/garbage/proc/HardDelete(datum/D)
+/datum/controller/subsystem/garbage/proc/HardDelete(datum/to_delete)
 	var/time = world.timeofday
 	var/tick = TICK_USAGE
 	var/ticktime = world.time
 	++delslasttick
 	++totaldels
-	var/type = D.type
-	var/refID = "\ref[D]"
+	var/type = to_delete.type
+	var/refID = text_ref(to_delete)
+	var/datum/qdel_item/trash = items[type]
+	var/detail = to_delete.dump_harddel_info()
+	if(detail)
+		LAZYADD(trash.extra_details, detail)
 
-	del(D)
+	del(to_delete)
 
 	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))
 
-	var/datum/qdel_item/I = items[type]
 
-	I.hard_deletes++
-	I.hard_delete_time += TICK_DELTA_TO_MS(tick)
+	trash.hard_deletes++
+	trash.hard_delete_time += TICK_DELTA_TO_MS(tick)
 
 
 	if (tick > highest_del_tickusage)
@@ -257,9 +280,9 @@ SUBSYSTEM_DEF(garbage)
 		time = TICK_DELTA_TO_MS(tick)/100
 	if (time > highest_del_time)
 		highest_del_time = time
-	if (time > 10)
-		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
-		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
+	if (time > (1 SECONDS))
+		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/(1 SECONDS)] seconds to delete)")
+		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/(1 SECONDS)] seconds to delete).")
 		postpone(time)
 
 /datum/controller/subsystem/garbage/Recover()
@@ -278,6 +301,7 @@ SUBSYSTEM_DEF(garbage)
 	var/no_respect_force = 0//Number of times it's not respected force=TRUE
 	var/no_hint = 0			//Number of times it's not even bother to give a qdel hint
 	var/slept_destroy = 0	//Number of times it's slept in its destroy
+	var/list/extra_details //!Lazylist of string metadata about the deleted objects
 
 /datum/qdel_item/New(mytype)
 	name = "[mytype]"
@@ -330,7 +354,7 @@ SUBSYSTEM_DEF(garbage)
 		if (QDEL_HINT_IWILLGC)
 			to_delete.gc_destroyed = world.time
 			return
-		if (QDEL_HINT_LETMELIVE) //qdel should let the object live after calling destory.
+		if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
 			if(!force)
 				to_delete.gc_destroyed = null //clear the gc variable (important!)
 				return
@@ -347,17 +371,17 @@ SUBSYSTEM_DEF(garbage)
 			trash.no_respect_force++
 
 			SSgarbage.Queue(to_delete)
-		if (QDEL_HINT_HARDDEL) //qdel should assume this object won't gc, and queue a hard delete
+		if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete
 			SSgarbage.Queue(to_delete, GC_QUEUE_HARDDELETE)
-		if (QDEL_HINT_HARDDEL_NOW) //qdel should assume this object won't gc, and hard del it post haste.
+		if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
 			SSgarbage.HardDelete(to_delete)
-		#ifdef LEGACY_REFERENCE_TRACKING
-		if (QDEL_HINT_FINDREFERENCE) //qdel will, if LEGACY_REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
+		#ifdef REFERENCE_TRACKING
+		if (QDEL_HINT_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
 			SSgarbage.Queue(to_delete)
-			to_delete.find_references_legacy()
+			INVOKE_ASYNC(to_delete, TYPE_PROC_REF(/datum, find_references))
 		if (QDEL_HINT_IFFAIL_FINDREFERENCE)
 			SSgarbage.Queue(to_delete)
-			SSgarbage.reference_find_on_fail[REF(to_delete)] = TRUE
+			SSgarbage.reference_find_on_fail[text_ref(to_delete)] = TRUE
 		#endif
 		else
 			#ifdef TESTING

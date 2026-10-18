@@ -56,7 +56,7 @@
 /obj/item/paper/scroll/trade_requests/New(loc, list/trade_requests)
 	. = ..()
 	requests = trade_requests
-	writers_name = pick( world.file2list("strings/rt/names/human/humnorm.txt") )
+	writers_name = random_human_name(MALE, TRUE)
 	rebuild_info()
 
 /obj/item/paper/scroll/trade_requests/update_icon_state()
@@ -74,7 +74,7 @@
 	info += "<h2 style='color:#06080F;font-family:\"Segoe Script\"'>Trade Request</h2>"
 	info += "<hr/>"
 
-	if(requests.len)
+	if(LAZYLEN(requests))
 		info += "<ul>"
 		for(var/datum/trade_request/request in requests)
 			info += "<li style='color:#06080F;font-size:11px;font-family:\"Segoe Script\"'>[request.input_name]x[request.input_amount] for [request.output_name]x[request.output_amount]</li><br/>"

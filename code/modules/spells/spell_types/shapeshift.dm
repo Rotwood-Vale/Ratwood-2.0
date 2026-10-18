@@ -33,37 +33,38 @@
 	)
 /obj/effect/proc_holder/spell/targeted/shapeshift/cast(list/targets,mob/user = usr)
 	. = ..()
-	var/datum/antagonist/vampire/VD = usr?.mind?.has_antag_datum(/datum/antagonist/vampire)
+	var/datum/antagonist/vampire/VD = user?.mind?.has_antag_datum(/datum/antagonist/vampire)
 	if(VD && SEND_SIGNAL(user, COMSIG_DISGUISE_STATUS))
-		to_chat(usr, span_warning("My curse is hidden."))
-		return
-	if(usr.restrained(ignore_grab = FALSE))
-		to_chat(usr, span_warn("I am restrained, I can't shapeshift!"))
-		return
+		to_chat(user, span_warning("My curse is hidden."))
+		return FALSE
+	if(user.restrained(ignore_grab = FALSE))
+		to_chat(user, span_warn("I am restrained, I can't shapeshift!"))
+		return FALSE
 	if(src in user.mob_spell_list)
 		user.mob_spell_list.Remove(src)
 		user.mind.AddSpell(src)
-	if(user.buckled)
-		user.buckled.unbuckle_mob(src,force=TRUE)
 	for(var/mob/living/M in targets)
 		if(!shapeshift_type)
 			var/list/animal_list = list()
 			for(var/path in possible_shapes)
 				var/mob/living/simple_animal/A = path
 				animal_list[initial(A.name)] = path
-			var/new_shapeshift_type = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as null|anything in sortList(animal_list)
-			if(shapeshift_type)
-				return
-			shapeshift_type = new_shapeshift_type
-			shapeshift_type = animal_list[shapeshift_type]
+			var/choice = input(M, "Choose Your Animal Form!", "It's Morphing Time!", null) as null|anything in sortList(animal_list)
+			if(!choice || shapeshift_type)
+				return FALSE
+			if(QDELETED(user) || (user.stat && !stat_allowed) || user.restrained(ignore_grab = FALSE))
+				return FALSE
+			shapeshift_type = animal_list[choice]
 
 		var/obj/shapeshift_holder/S = locate() in M
 		if(S)
 			Restore(M)
-		else if(shapeshift_type)
+			continue
+		if(shapeshift_type)
 			if(shapeshift_type == /mob/living/simple_animal/hostile/retaliate/gaseousform)
-				spawn(100)
-					Restore(M)
+				addtimer(CALLBACK(src, PROC_REF(Restore), M), 100)
+			if(M.buckled)
+				M.buckled.unbuckle_mob(M, force = TRUE)
 			Shapeshift(M)
 			return TRUE
 	return

@@ -26,6 +26,7 @@
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/knight/heavy/pre_equip(mob/living/carbon/human/H)
@@ -35,7 +36,7 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Greatsword","Zweihander","Great Mace","Battle Axe","Greataxe","Estoc","Eagle's Beak","Partizan")
+		var/weapons = list("Greatsword","Zweihander","Great Mace","Battle Axe","Greataxe","Estoc","Lucerne","Partizan")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -61,7 +62,7 @@
 				r_hand = /obj/item/rogueweapon/estoc
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-			if("Eagle's Beak")
+			if("Lucerne")
 				r_hand = /obj/item/rogueweapon/eaglebeak
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
@@ -81,8 +82,12 @@
 			"Bucket Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/bucket,
 			"Knight Helmet"		= /obj/item/clothing/head/roguetown/helmet/heavy/knight,
 			"Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored,
+			"Snouted Visored Sallet"	= /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted,
 			"Armet"				= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet,
+			"Snouted Armet"	= /obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/snouted,
 			"Hounskull Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/hounskull,
+			"Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface,
+			"Snouted Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted,
 			"Etruscan Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan,
 			"Slitted Kettle" = /obj/item/clothing/head/roguetown/helmet/heavy/knight/skettle,
 			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,

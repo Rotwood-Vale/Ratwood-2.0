@@ -67,8 +67,12 @@
 	. = ..()
 
 /datum/skill_holder/proc/set_current(mob/incoming)
+	if(current && current != incoming)
+		UnregisterSignal(current, COMSIG_MIND_TRANSFER)
 	current = incoming
-	RegisterSignal(incoming, COMSIG_MIND_TRANSFER, PROC_REF(transfer_skills))
+	if(!incoming)
+		return
+	RegisterSignal(incoming, COMSIG_MIND_TRANSFER, PROC_REF(transfer_skills), override = TRUE)
 	incoming.skills = src
 
 /datum/skill_holder/proc/transfer_skills(mob/source, mob/destination)
@@ -138,7 +142,7 @@
 	var/datum/skill/S = GetSkillRef(skill)
 	var/current_level = known_skills[S] || SKILL_LEVEL_NONE
 	var/proper_amt = current_level - amt
-	if(proper_amt >= 0)
+	if(proper_amt <= 0)
 		return
 	adjust_skillrank(skill, -proper_amt, silent)
 

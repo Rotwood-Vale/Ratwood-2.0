@@ -5,7 +5,7 @@
 	var/smooth_icon = null
 	var/prettifyturf = FALSE
 	icon = 'icons/turf/roguefloor.dmi'
-	baseturfs = list(/turf/open/transparent/openspace)
+	baseturfs = /turf/baseturf_openspace
 	neighborlay = ""
 
 /turf/open/floor/rogue/break_tile()
@@ -90,7 +90,7 @@
 	name = "twig platform"
 	desc = "A destructible platform."
 	damage_deflection = 4
-	max_integrity = 100		//It's fucking twig.
+	max_integrity = 20		//It's fucking twig.
 	break_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 
@@ -1727,7 +1727,7 @@
 
 /turf/open/floor/rogue/carpet/lord/center/Initialize(mapload)
 	dir = pick(GLOB.cardinals)
-	..()
+	. = ..()
 
 /turf/open/floor/rogue/carpet/lord/left
 	icon_state = "carpet_l"

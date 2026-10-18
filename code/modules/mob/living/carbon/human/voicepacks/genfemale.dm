@@ -97,6 +97,10 @@
 				used = 'sound/vo/psst.ogg'
 			if("clap")
 				used = list('sound/body/clap (1).ogg','sound/body/clap (2).ogg','sound/body/clap (3).ogg','sound/body/clap (4).ogg')
+			if("slowclap")
+				used = list('sound/body/slowclap.ogg')
+			if("clap1")
+				used = list('sound/body/claponce.ogg')
 			if("sexmoanlight")
 				used = list('sound/vo/female/gen/se/sexlight (1).ogg','sound/vo/female/gen/se/sexlight (2).ogg','sound/vo/female/gen/se/sexlight (3).ogg','sound/vo/female/gen/se/sexlight (4).ogg','sound/vo/female/gen/se/sexlight (5).ogg','sound/vo/female/gen/se/sexlight (6).ogg','sound/vo/female/gen/se/sexlight (7).ogg')
 			if("sexmoanhvy")
@@ -178,5 +182,10 @@
 				used = list('sound/vo/mobs/vw/dgrowl.ogg','sound/vo/mobs/vw/dgrowl2.ogg','sound/vo/mobs/vw/dgrowl3.ogg','sound/vo/mobs/vw/dgrowl4.ogg','sound/vo/mobs/vw/dgrowl5.ogg')
 			if("dwhine")
 				used = list('sound/vo/mobs/vw/dwhine.ogg','sound/vo/mobs/vw/dwhine2.ogg','sound/vo/mobs/vw/dwhine3.ogg','sound/vo/mobs/vw/dwhine4.ogg','sound/vo/mobs/vw/dwhine5.ogg')
-
+			//jokes on you, I'm adding horse sounds too! - Randumb
+			if("neigh")
+				used = list('sound/vo/mobs/saiga/idle (1).ogg','sound/vo/mobs/saiga/idle (2).ogg','sound/vo/mobs/saiga/idle (3).ogg','sound/vo/mobs/saiga/idle (4).ogg','sound/vo/mobs/saiga/idle (5).ogg','sound/vo/mobs/saiga/idle (6).ogg')
+			//jokes on YOU, I'm adding the yeen cackle!
+			if("ycackle")
+				used = list('sound/vo/mobs/hyena/cackle.ogg')
 	return used

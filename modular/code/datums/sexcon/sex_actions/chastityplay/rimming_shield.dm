@@ -2,24 +2,7 @@
 	name = "Rim them behind their chastity shield"
 	user_sex_part = SEX_PART_JAWS
 	target_sex_part = SEX_PART_ANUS
-
-/datum/sex_action/chastityplay/rimming_shield/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
-	if(!target.sexcon.has_chastity_anal())
-		return FALSE
-	return TRUE
-
-/datum/sex_action/chastityplay/rimming_shield/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
-	if(!target.sexcon.has_chastity_anal())
-		return FALSE
-	if(!can_reach_target_groin(user, target))
-		return FALSE
-	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_MOUTH))
-		return FALSE
-	return TRUE
+	target_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/rimming_shield/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] ducks low and presses [user.p_their()] face to the lower edge of [target]'s anal shield, searching for an angle."))

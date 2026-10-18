@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(virtues)
+GLOBAL_LIST_INIT(virtues, init_subtypes_assoc(/datum/virtue))
 
 /datum/virtue
 	/// What the virtue's called.
@@ -148,17 +148,13 @@ GLOBAL_LIST_EMPTY(virtues)
 
 	recipient.adjust_triumphs(-total_cost, FALSE)
 	return TRUE
+	parent_type = /datum/customization_trait
 
 /proc/apply_virtue(mob/living/carbon/human/recipient, datum/virtue/virtue_type)
 	virtue_type.sanitize_choices()
 	if (!virtue_type.check_triumphs(recipient))
 		return
-	virtue_type.apply_to_human(recipient)
-	virtue_type.handle_traits(recipient)
-	virtue_type.handle_skills(recipient)
-	virtue_type.handle_stashed_items(recipient)
-	virtue_type.handle_added_languages(recipient)
-	virtue_type.handle_stats(recipient)
+	virtue_type.apply_generic_effects(recipient)
 	if(HAS_TRAIT(recipient, TRAIT_RESIDENT))
 		if(recipient in SStreasury.bank_accounts)
 			SStreasury.generate_money_account(20, recipient)
@@ -169,6 +165,7 @@ GLOBAL_LIST_EMPTY(virtues)
 		REMOVE_TRAIT(recipient, TRAIT_OUTLANDER, JOB_TRAIT)
 		REMOVE_TRAIT(recipient, TRAIT_OUTLANDER, TRAIT_GENERIC)
 	record_featured_object_stat(FEATURED_STATS_VIRTUES, virtue_type.name)
+
 /datum/virtue/none
 	name = "None"
 	desc = "Without virtue."

@@ -22,7 +22,7 @@
 		. += span_danger("The crystal lies hollow and inert, its magic drained.")
 
 /obj/item/necro_relics/necro_crystal/Initialize(mapload)
-	..()
+	. = ..()
 	set_light(2, 2, 1, l_color = "#551c1c")
 
 /obj/item/necro_relics/necro_crystal/proc/recharge(obj/item/reagent_containers/lux_impure/L, mob/user)
@@ -129,3 +129,13 @@
 	if(alert(src, "Do you wish to change your frame?", "Body Type", "Yes", "No") == "Yes")
 		src.gender = (src.gender == MALE) ? FEMALE : MALE
 	src.regenerate_icons()
+
+/obj/item/necro_relics/necro_crystal/proc/unbind_and_destroy()
+	for(var/datum/weakref/W in active_skeletons)
+		var/mob/living/carbon/human/skele = W.resolve()
+		if(skele && !QDELETED(skele) && skele.stat != DEAD)
+			skele.visible_message(span_warning("[skele] collapses into a pile of inert bones as the dark power binding it fades!"))
+			to_chat(skele, span_warning("The crystal binding your form to this world has been severed. You crumble into dust."))
+			skele.death() // kill rather then delete
+	active_skeletons.Cut()
+	qdel(src)

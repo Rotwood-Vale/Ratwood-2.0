@@ -19,6 +19,7 @@
 					/obj/effect/proc_holder/spell/invoked/resurrect/dendor		= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/sanctify_tree			= CLERIC_T4,
 					)
+	energy_color = COLOR_PATRON_DENDOR
 	confess_lines = list(
 		"DENDOR PROVIDES!",
 		"THE TREEFATHER BRINGS BOUNTY!",

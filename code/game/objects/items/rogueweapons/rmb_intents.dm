@@ -195,9 +195,10 @@
 	if(L.has_status_effect(/datum/status_effect/debuff/exposed) || L.has_status_effect(/datum/status_effect/debuff/vulnerable))
 		perc = 0
 
-	if(L.has_status_effect(/datum/status_effect/buff/clash))
-		L.remove_status_effect(/datum/status_effect/buff/clash)
-		to_chat(user, span_notice("[L.p_their(TRUE)] Guard disrupted!"))
+	var/datum/status_effect/buff/clash/guard = L.has_status_effect(/datum/status_effect/buff/clash)
+	if(guard)
+		guard.guard_disrupted()
+		to_chat(user, span_notice("I disrupt [L.p_their()] guard!"))
 		perc = 100
 
 	user.apply_status_effect(/datum/status_effect/debuff/feintcd)
@@ -230,20 +231,10 @@
 	bypasses_click_cd = TRUE
 
 /datum/rmb_intent/riposte/special_attack(mob/living/user, atom/target)	//Wish we could breakline these somehow.
-	if(!user.has_status_effect(/datum/status_effect/buff/clash) && !user.has_status_effect(/datum/status_effect/debuff/clashcd))
-		if(!user.get_active_held_item()) //Nothing in our hand to Guard with.
-			return
-		if(user.r_grab || user.l_grab || length(user.grabbedby)) //Not usable while grabs are in play.
-			return
-		if(user.IsImmobilized() || user.IsOffBalanced()) //Not usable while we're offbalanced or immobilized
-			return
-		if(user.m_intent == MOVE_INTENT_RUN)
-			to_chat(user, span_warning("I can't focus on this while running."))
-			return
-		if(user.magearmor == FALSE && HAS_TRAIT(user, TRAIT_MAGEARMOR))	//The magearmor is ACTIVE, so we can't Guard. (Yes, it's active while FALSE / 0.)
-			to_chat(user, span_warning("I'm already focusing on my mage armor!"))
-			return
-		user.apply_status_effect(/datum/status_effect/buff/clash)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	H.try_guard()
 
 /datum/rmb_intent/guard
 	name = "guarde"

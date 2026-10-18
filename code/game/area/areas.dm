@@ -580,3 +580,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	ambientsounds = SPACE
 	blob_allowed = FALSE //Eating up space doesn't count for victory as a blob.
 	flags_1 = CAN_BE_DIRTY_1
+
+/area/testroom
+	requires_power = FALSE
+	// Mobs should be able to see inside the testroom
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	name = "Test Room"
+	icon_state = "unknown"

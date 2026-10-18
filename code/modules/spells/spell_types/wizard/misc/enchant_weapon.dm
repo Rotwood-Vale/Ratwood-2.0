@@ -47,6 +47,10 @@
 
 	if(istype(target, /obj/item/rogueweapon))
 		var/obj/item/I = target
+		if(I.unenchantable)
+			to_chat(user, span_warning("You cannot enchant this item."))
+			revert_cast()
+			return FALSE  
 		var/enchant_type = input(user, "Select the type of enchantment you want to apply:", "Enchant Weapon") as anything in enchant_types
 		if(!enchant_type)
 			return

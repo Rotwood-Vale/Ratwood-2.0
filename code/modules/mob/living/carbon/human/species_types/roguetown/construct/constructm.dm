@@ -78,6 +78,7 @@
 		/datum/customizer/organ/ears/demihuman,
 		/datum/customizer/organ/horns/demihuman,
 		/datum/customizer/organ/tail/demihuman,
+		/datum/customizer/organ/tail/manticore,
 		/datum/customizer/organ/snout/anthro,
 		/datum/customizer/organ/wings/anthro,
 		/datum/customizer/organ/penis/anthro,
@@ -117,7 +118,8 @@
 		/datum/body_marking/stripes,
 	)
 
-	restricted_virtues = list(/datum/virtue/utility/noble, /datum/virtue/utility/deathless)
+	restricted_virtues = list(/datum/virtue/utility/deathless)
+	restricted_quirks = list(/datum/quirk/noble)
 
 /datum/species/construct/metal/check_roundstart_eligible()
 	return TRUE

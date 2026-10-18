@@ -26,6 +26,7 @@
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/under/roguetown/platelegs/iron
 	name = "iron plate chausses"
@@ -82,9 +83,10 @@
 /obj/item/clothing/under/roguetown/platelegs/zizo
 	max_integrity = ARMOR_INT_LEG_ANTAG
 	name = "avantyne garments"
-	desc = "Leg garments worn by true anointed of the Dame of Ambition. In Her name."
+	desc = "<font color='A50021'>Nothing beside remains. Round the decay of that colossal wreck, boundless and bare.</font>"
 	icon_state = "zizocloth"
 	armor = ARMOR_ASCENDANT
+	peel_threshold = 5
 	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 
 /obj/item/clothing/under/roguetown/platelegs/zizo/Initialize(mapload)
@@ -102,12 +104,26 @@
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 
+/obj/item/clothing/under/roguetown/platelegs/medium/zizo
+	name = "avantyne vestments"
+	desc = "<font color='A50021'>Nothing beside remains. Round the decay of that colossal wreck, boundless and bare.</font>"
+	icon_state = "zizoplatelegs_med"
+	armor = ARMOR_ASCENDANT
+	max_integrity = ARMOR_INT_LEG_ANTAG
+	peel_threshold = 5
+	armor_class = ARMOR_CLASS_MEDIUM
+	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
+
+/obj/item/clothing/under/roguetown/platelegs/medium/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR", "RENDERED ASUNDER")
+
 /obj/item/clothing/under/roguetown/platelegs/skirt
 	name = "steel plate tassets"
 	desc = "A set of hanging plates of steel to protect the hips and thighs without too much burden."
 	gender = PLURAL
 	icon_state = "plate_skirt"
 	item_state = "plate_skirt"
-	body_parts_covered = GROIN
-	armor_class = ARMOR_CLASS_LIGHT
+	body_parts_covered = LEGS
+	armor_class = ARMOR_CLASS_MEDIUM
 	dropshrink = null

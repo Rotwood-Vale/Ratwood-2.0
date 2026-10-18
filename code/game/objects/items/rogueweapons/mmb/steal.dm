@@ -42,8 +42,8 @@
 /mob/living/carbon/human/proc/finalize_pickpocket_steal(mob/living/carbon/human/victim, obj/item/picked, exp_to_gain)
 	put_in_active_hand(picked)
 	to_chat(src, span_green("I stole [picked]!"))
-	victim.log_message("has had \the [picked] stolen by [key_name(src)]", LOG_ATTACK, color="white")
-	log_message("has stolen \the [picked] from [key_name(victim)]", LOG_ATTACK, color="white")
+	victim.log_message("has had \the [picked] stolen by [key_name(src)]", LOG_ATTACK, color="white", meta = list(LOG_META_ATTACKER = ckey))
+	log_message("has stolen \the [picked] from [key_name(victim)]", LOG_ATTACK, color="white", meta = list(LOG_META_TARGET = victim.ckey))
 	if(victim.client && victim.stat != DEAD)
 		SEND_SIGNAL(src, COMSIG_ITEM_STOLEN, victim)
 		record_featured_stat(FEATURED_STATS_THIEVES, src)
@@ -165,8 +165,8 @@
 
 /datum/intent/steal
 	name = "steal"
-	candodge = FALSE
-	canparry = FALSE
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
 	chargedrain = 0
 	chargetime = 0
 	noaa = TRUE
@@ -180,7 +180,7 @@
 	if(!isnum(range_add))
 		range_add = 0
 	var/steal_radius = 1 + range_add
-	var/list/stealablezones = list("chest", "neck", "groin", "r_hand", "l_hand", "r_leg", "l_leg")
+	var/list/stealablezones = list("chest", "neck", "groin", "r_hand", "l_hand", "r_leg", "l_leg", "l_arm", "r_arm")
 	// Pickpocketting checks
 	if(get_dist(thief, victim) > steal_radius)
 		to_chat(thief, span_warning("[victim] is too far away."))
@@ -220,6 +220,8 @@
 		to_chat(thief, span_warning("What am I going to steal from there?"))
 		return
 
+	thief.break_invisibility()
+
 	// No lifting from the front - it has to be from behind, or off someone who can't see at all.
 	var/victim_unaware = victim.IsUnconscious() || victim.eyesclosed || victim.eye_blind || victim.eye_blurry || !(victim.mobility_flags & MOBILITY_STAND)
 	var/list/mobsbehind = cone(victim, list(turn(victim.dir, 180)), list(thief))
@@ -238,8 +240,8 @@
 	var/margin = thief_score - victim_score
 
 	if(margin < 0)
-		victim.log_message("has had an attempted pickpocket by [key_name(thief)]", LOG_ATTACK, color="white")
-		thief.log_message("has attempted to pickpocket [key_name(victim)]", LOG_ATTACK, color="white")
+		victim.log_message("has had an attempted pickpocket by [key_name(thief)]", LOG_ATTACK, color="white", meta = list(LOG_META_ATTACKER = thief.ckey))
+		thief.log_message("has attempted to pickpocket [key_name(victim)]", LOG_ATTACK, color="white", meta = list(LOG_META_TARGET = victim.ckey))
 		if(margin < PICKPOCKET_FUMBLE_FLOOR)
 			thief.visible_message(span_danger("[thief] is caught rummaging through [victim]'s belongings!"))
 			victim.balloon_alert(victim, "thief!")
@@ -254,8 +256,12 @@
 	var/list/stealpos = list()
 	switch(thief.zone_selected)
 		if("chest")
+			if(victim.get_item_by_slot(SLOT_CLOAK))
+				stealpos.Add(victim.get_item_by_slot(SLOT_CLOAK))
+		if("l_arm")
 			if(victim.get_item_by_slot(SLOT_BACK_L))
 				stealpos.Add(victim.get_item_by_slot(SLOT_BACK_L))
+		if("r_arm")
 			if(victim.get_item_by_slot(SLOT_BACK_R))
 				stealpos.Add(victim.get_item_by_slot(SLOT_BACK_R))
 		if("neck")
@@ -295,7 +301,7 @@
 		thief.changeNext_move(clickcd)
 		return
 
-	if(istype(target, /obj/item/storage))
+	if(istype(target, /obj/item/storage) || istype(target, /obj/item/clothing/cloak))
 		var/obj/item/storage/container = target
 		var/datum/component/storage/storage = container.GetComponent(/datum/component/storage)
 		if(!storage || !length(storage.contents()))

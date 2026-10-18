@@ -67,6 +67,7 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
+	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
 
 /datum/outfit/job/roguetown/heartfelt/hand/marshal/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -95,7 +96,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/order/heartfelt/forheartfelt)
 		H.mind.AddSpell(new/obj/effect/proc_holder/spell/invoked/order/heartfelt/focustarget)
 		H.verbs |= list(/mob/living/carbon/human/mind/proc/setordersheartfelt)
-	var/helmet = list("Etruscan Bascinet","Volf Plate Helmet","Beak Helmet","Visored Sallet",)
+	var/helmet = list("Etruscan Bascinet","Volf Plate Helmet","Beak Helmet","Visored Sallet","Snouted Visored Sallet",)
 	var/helmet_choice = input("Choose your Helm.", "TAKE UP HELMS") as anything in helmet
 	switch(helmet_choice)
 		if("Etruscan Bascinet")
@@ -104,8 +105,10 @@
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate
 		if("Beak Helmet") // GUUUUTS NO GUTS NOOOOO
 			head = /obj/item/clothing/head/roguetown/helmet/heavy/beakhelm
-		if("Visored Sallet")	
+		if("Visored Sallet")
 			head = /obj/item/clothing/head/roguetown/helmet/sallet/visored
+		if("Snouted Visored Sallet")
+			head = /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted
 		else
 			head = /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan
 
@@ -147,6 +150,7 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
+	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
 
 /datum/outfit/job/roguetown/heartfelt/hand/steward/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -213,6 +217,7 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
+	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
 
 	var/list/spells = list(
 		/obj/effect/proc_holder/spell/self/message,

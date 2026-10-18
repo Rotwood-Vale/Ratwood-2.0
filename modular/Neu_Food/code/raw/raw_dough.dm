@@ -757,7 +757,7 @@
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with chocolate!"))
 	if(I.get_sharpness())
-		if(!isdwarf(user))
+		if(!isdwarf(user) && !HAS_TRAIT(user, TRAIT_DWARVEN_CHEF))
 			to_chat(user, span_warning("You lack knowledge of dwarven pastries!"))
 			return
 		else
@@ -1059,5 +1059,5 @@
 	foodtype = GRAIN | FRUIT
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_goldapple/Initialize()
-  ..()
-  add_filter(FORCE_FILTER, 2, list("type" = "outline", "color" = GLOW_COLOR_LIGHTNING, "alpha" = 100, "size" = 1))
+	. = ..()
+	add_filter(FORCE_FILTER, 2, list("type" = "outline", "color" = GLOW_COLOR_LIGHTNING, "alpha" = 100, "size" = 1))

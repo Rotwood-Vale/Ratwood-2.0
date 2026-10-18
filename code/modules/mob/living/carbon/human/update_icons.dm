@@ -61,7 +61,7 @@ There are several things that need to be remembered:
 	var/obj/item/bodypart/head/HD = get_bodypart(BODY_ZONE_HEAD)
 	var/new_cache_key = "[HD ? HD.skeletonized : "nohead"]|[HAS_TRAIT(src, TRAIT_HUSK)]|[lip_style]|[lip_color]|[gender]|[dna?.species?.hairyness]|[hair_color]"
 	if(body_overlay_cache_key != new_cache_key)
-		dna.species.handle_body(src)
+		dna?.species?.handle_body(src)
 		body_overlay_cache_key = new_cache_key
 	..() // always do update_body_parts when we call this
 
@@ -267,11 +267,12 @@ There are several things that need to be remembered:
 /* --------------------------------------- */
 //For legacy support.
 /mob/living/carbon/human/regenerate_icons()
+	if(!dna?.species)
+		return // Huh??
 	if(!..())
 		icon_render_key = null //invalidate bodyparts cache
-		if(dna.species)
-			if(dna.species.regenerate_icons(src))
-				return
+		if(dna?.species?.regenerate_icons(src))
+			return
 		update_body()
 		update_hair()
 //		update_inv_w_uniform()
@@ -907,9 +908,9 @@ There are several things that need to be remembered:
 						mbeltoverlaydildo.pixel_y = mbeltoverlay.pixel_y
 						standing_front += mbeltoverlaydildo
 
-	var/mutable_appearance/modular_chastity_overlay = modular_chastity_attached_toy_overlay()
-	if(modular_chastity_overlay)
-		standing_front += modular_chastity_overlay
+	var/mutable_appearance/chastity_overlay = chastity_attached_toy_overlay()
+	if(chastity_overlay)
+		standing_front += chastity_overlay
 
 	overlays_standing[BELT_LAYER] = standing_front
 	overlays_standing[BELT_BEHIND_LAYER] = standing_behind
@@ -975,9 +976,9 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_wear_mask()
 	defer_overlay_vision_updates()
 	..()
+	rebuild_obscured_flags()	//outside the overlay check, or taking the mask off never clears its flags
 	var/mutable_appearance/mask_overlay = overlays_standing[MASK_LAYER]
 	if(mask_overlay)
-		rebuild_obscured_flags()
 		remove_overlay(MASK_LAYER)
 		if(gender == MALE)
 			if(OFFSET_FACEMASK in dna.species.offset_features)
@@ -1129,6 +1130,13 @@ There are several things that need to be remembered:
 		overcloaks += saddlebag_ov
 		overlays_standing[BACK_LAYER] = overcloaks
 
+	if(taur_back?.taur_clothing_category == "s" && (istype(backr, /obj/item/natural/saddle) || istype(backl, /obj/item/natural/saddle)))
+		// Keep the saddle below hair and saddlebags, but above worn clothing.
+		var/mutable_appearance/saddle_ov = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "saddle_s", -(HAIR_LAYER + 0.1))
+		saddle_ov.pixel_x = taur_back.offset_x
+		overcloaks += saddle_ov
+		overlays_standing[BACK_LAYER] = overcloaks
+
 	rebuild_obscured_flags()
 	apply_overlay(BACK_LAYER)
 	apply_overlay(BACK_BEHIND_LAYER)
@@ -1180,18 +1188,9 @@ There are several things that need to be remembered:
 					cloak_overlay.pixel_x += dna.species.offset_features[OFFSET_CLOAK_F][1]
 					cloak_overlay.pixel_y += dna.species.offset_features[OFFSET_CLOAK_F][2]
 			if(cloak.alternate_worn_layer == TABARD_LAYER)
-				if(taur?.taur_clothing_category && istype(cloak, /obj/item/clothing/cloak/tabard))
-					var/mutable_appearance/taur_tabard_ov = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "caparison-tabard_[taur.taur_clothing_category]", -TABARD_LAYER)
-					taur_tabard_ov.pixel_x = taur.offset_x
-					if(cloak.color)
-						taur_tabard_ov.color = cloak.color
+				var/mutable_appearance/taur_tabard_ov = taur?.get_barding_overlay(cloak, TABARD_LAYER)
+				if(taur_tabard_ov)
 					overlays_standing[TABARD_LAYER] = list(cloak_overlay, taur_tabard_ov)
-				else if(taur?.taur_clothing_category && istype(cloak, /obj/item/clothing/cloak/stabard))
-					var/mutable_appearance/taur_cap_ov = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "caparison_[taur.taur_clothing_category]", -TABARD_LAYER)
-					taur_cap_ov.pixel_x = taur.offset_x
-					if(cloak.color)
-						taur_cap_ov.color = cloak.color
-					overlays_standing[TABARD_LAYER] = list(cloak_overlay, taur_cap_ov)
 				else
 					overlays_standing[TABARD_LAYER] = cloak_overlay
 			if(cloak.alternate_worn_layer == UNDER_ARMOR_LAYER)
@@ -1313,22 +1312,11 @@ There are several things that need to be remembered:
 					shirt_overlay.pixel_y += dna.species.offset_features[OFFSET_SHIRT_F][2]
 			// Taur barding overlay for shirt slot
 			if(taur?.taur_clothing_category)
-				var/list/taur_shirt_states = list()
-				switch(wear_shirt.armor_class)
-					if(ARMOR_CLASS_LIGHT)
-						taur_shirt_states += "leather"
-					if(ARMOR_CLASS_MEDIUM)
-						taur_shirt_states += "chainmail"
-					if(ARMOR_CLASS_HEAVY)
-						taur_shirt_states += "plate"
-				if(taur_shirt_states.len)
-					var/list/all_shirt = list(shirt_overlay)
-					for(var/taur_state in taur_shirt_states)
-						var/mutable_appearance/taur_ov = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "[taur_state]_[taur.taur_clothing_category]", -SHIRT_LAYER)
-						taur_ov.pixel_x = taur.offset_x
-						all_shirt += taur_ov
+				var/mutable_appearance/taur_ov = taur.get_barding_overlay(wear_shirt, SHIRT_LAYER)
+				if(taur_ov)
+					var/list/all_shirt = list(shirt_overlay, taur_ov)
 					// Colorable tasset overlays for heavy armor
-					if(wear_shirt.armor_class == ARMOR_CLASS_HEAVY)
+					if(wear_shirt.armor_class == ARMOR_CLASS_HEAVY && taur.has_barding_tassets)
 						var/mutable_appearance/tasset1_ov = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "plate-tasset1_[taur.taur_clothing_category]", -SHIRT_LAYER)
 						tasset1_ov.pixel_x = taur.offset_x
 						tasset1_ov.appearance_flags = RESET_COLOR
@@ -1420,22 +1408,11 @@ There are several things that need to be remembered:
 					armor_overlay.pixel_y += dna.species.offset_features[OFFSET_ARMOR_F][2]
 			// Taur barding overlay for armor slot
 			if(taur?.taur_clothing_category)
-				var/list/taur_armor_states = list()
-				switch(wear_armor.armor_class)
-					if(ARMOR_CLASS_LIGHT)
-						taur_armor_states += "leather"
-					if(ARMOR_CLASS_MEDIUM)
-						taur_armor_states += "chainmail"
-					if(ARMOR_CLASS_HEAVY)
-						taur_armor_states += "plate"
-				if(taur_armor_states.len)
-					var/list/all_armor = list(armor_overlay)
-					for(var/taur_state in taur_armor_states)
-						var/mutable_appearance/taur_ov = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "[taur_state]_[taur.taur_clothing_category]", -ARMOR_LAYER)
-						taur_ov.pixel_x = taur.offset_x
-						all_armor += taur_ov
+				var/mutable_appearance/taur_ov = taur.get_barding_overlay(wear_armor, ARMOR_LAYER)
+				if(taur_ov)
+					var/list/all_armor = list(armor_overlay, taur_ov)
 					// Colorable tasset overlays for heavy armor
-					if(wear_armor.armor_class == ARMOR_CLASS_HEAVY)
+					if(wear_armor.armor_class == ARMOR_CLASS_HEAVY && taur.has_barding_tassets)
 						var/mutable_appearance/tasset1_ov = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "plate-tasset1_[taur.taur_clothing_category]", -ARMOR_LAYER)
 						tasset1_ov.pixel_x = taur.offset_x
 						tasset1_ov.appearance_flags = RESET_COLOR
@@ -1787,27 +1764,29 @@ generate/load female uniform sprites matching all previously decided variables
 		var/mutable_appearance/boob_overlay = mutable_appearance(file2use, "[t_state]_boob", -layer2use)
 		standing.overlays.Add(boob_overlay)
 
+	var/detail_state = get_detail_state(t_state)
+
 	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(file2use, "[t_state][get_detail_tag()]"), -layer2use)
+		var/mutable_appearance/pic = mutable_appearance(icon(file2use, "[detail_state][get_detail_tag()]"), -layer2use)
 		pic.appearance_flags = RESET_COLOR
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		standing.overlays.Add(pic)
 		if(!isinhands && boobed_overlay && boobed_detail && boobed)
-			pic = mutable_appearance(icon(file2use, "[t_state]_boob[get_detail_tag()]"), -layer2use)
+			pic = mutable_appearance(icon(file2use, "[detail_state]_boob[get_detail_tag()]"), -layer2use)
 			pic.appearance_flags = RESET_COLOR
 			if(get_detail_color())
 				pic.color = get_detail_color()
 			standing.overlays.Add(pic)
 
 	if(get_altdetail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(file2use, "[t_state][get_altdetail_tag()]"), -layer2use)
+		var/mutable_appearance/pic = mutable_appearance(icon(file2use, "[detail_state][get_altdetail_tag()]"), -layer2use)
 		pic.appearance_flags = RESET_COLOR
 		if(get_altdetail_color())
 			pic.color = get_altdetail_color()
 		standing.overlays.Add(pic)
 		if(!isinhands && boobed_overlay && boobed_detail && boobed)
-			pic = mutable_appearance(icon(file2use, "[t_state]_boob[get_altdetail_tag()]"), -layer2use)
+			pic = mutable_appearance(icon(file2use, "[detail_state]_boob[get_altdetail_tag()]"), -layer2use)
 			pic.appearance_flags = RESET_COLOR
 			if(get_altdetail_color())
 				pic.color = get_altdetail_color()
@@ -1987,9 +1966,11 @@ generate/load female uniform sprites matching all previously decided variables
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()
+	if(!dna?.species)
+		return "UNINITIALIZED"
 	. = list(dna.species.limbs_id)
 
-	if(dna.species.use_skintones)
+	if(dna.species.use_skintones && !(dna.species.mutant_skin_option && mutant_skin))
 		. += "coloured"
 		. += skin_tone
 	else if(dna.species.fixed_mut_color)
@@ -2008,6 +1989,8 @@ generate/load female uniform sprites matching all previously decided variables
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		. += BP.generate_limb_cache_key()
 
+	. += "[obscured_flags]"	//features are drawn through is_visible(), which reads this
+
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "husk"
 	return jointext(., "-")
@@ -2015,12 +1998,12 @@ generate/load female uniform sprites matching all previously decided variables
 /mob/living/carbon/human/proc/update_observer_view(obj/item/I, inventory)
 	if(observers && observers.len)
 		for(var/M in observers)
-			var/mob/dead/observe = M
+			var/mob/dead/observer/observe = M
 			if(observe.client && observe.client.eye == src)
 				if(observe.hud_used)
 					if(inventory && !observe.hud_used.inventory_shown)
 						continue
-					observe.client.screen += I
+					observe.add_observed_screen(I)
 			else
 				observers -= observe
 				if(!observers.len)

@@ -1,6 +1,7 @@
 //Parent of the foreign classes. This is gross, but some genius pathed it all to the ruma slop.
 //I'm another genius and too lazy to work around it.
 /datum/advclass/foreigner
+	townie_contract_gate_exempt = TRUE
 	name = "Eastern Warrior"
 	tutorial = "A warrior hailing from the distant land of Kazengun, far across the eastern sea."
 	allowed_sexes = list(MALE, FEMALE)

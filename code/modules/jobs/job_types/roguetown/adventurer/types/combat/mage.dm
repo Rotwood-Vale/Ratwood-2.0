@@ -1,4 +1,5 @@
 /datum/advclass/mage
+	townie_contract_gate_exempt = TRUE
 	name = "Sorcerer"
 	tutorial = "Spellslingers are mages that focus on more potent spells, greater athleticism, and the art of the staff. Arcane Alchemists instead turned their studies to mixing magic and alchemy, the basics of medicine, and rely on creativity instead of arcane might."
 	allowed_sexes = list(MALE, FEMALE)
@@ -8,6 +9,7 @@
 	subclass_social_rank = SOCIAL_RANK_YEOMAN
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 1,
@@ -79,12 +81,14 @@
 				H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 4, TRUE)
 				H.mind?.adjust_spellpoints(6)
 				ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
+				ADD_TRAIT(H, TRAIT_MAGEDEXTERITY, TRAIT_GENERIC)
 				H.change_stat("willpower", 2)
 
 /datum/advclass/mage/spellblade
 	name = "Spellblade"
 	tutorial = "You are skilled in both the arcyne art and the art of the blade. But you are not a master of either nor could you channel your magick in armor."
 	outfit = /datum/outfit/job/roguetown/adventurer/spellblade
+	virtue_restrictions = list()
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2)
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -124,7 +128,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/conjure_weapon)
 	H.cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
 	if(H.mind)
-		var/weapons = list("Longsword", "Falchion & Wooden Shield", "Messer & Wooden Shield", "Hwando", "Spear", "Whip", "Battle Axe", "Mace")
+		var/weapons = list("Longsword", "Falchion & Wooden Shield", "Messer & Wooden Shield", "Hwando", "Spear", "Whip", "Urumi", "Battle Axe", "Mace")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Longsword")
@@ -160,6 +164,10 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 				r_hand = /obj/item/rogueweapon/whip
+			if("Urumi")
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
+				r_hand = /obj/item/rogueweapon/whip/urumi
 			if("Battle Axe")
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
@@ -176,6 +184,7 @@
 	name = "Spellsinger"
 	tutorial = "You belong to a school of bards renowned for their study of both the arcane and the arts."
 	outfit = /datum/outfit/job/roguetown/adventurer/spellsinger
+	virtue_restrictions = list()
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_EMPATH, TRAIT_GOODLOVER)
 	subclass_stats = list(
@@ -267,7 +276,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	cmode_music = 'sound/music/cmode/antag/combat_cutpurse.ogg'
 
-	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_DODGEEXPERT, TRAIT_LIGHT_STEP) //dodge expert has the potential for being a big pain on spellcasters,  so we take away their mage armor as a trade.
+	traits_applied = list(TRAIT_ARCYNE_T2, TRAIT_DODGEEXPERT, TRAIT_LIGHT_STEP, TRAIT_MAGEDEXTERITY) //dodge expert has the potential for being a big pain on spellcasters,  so we take away their mage armor as a trade.
 	subclass_stats = list(
 		STATKEY_STR = -1,
 		STATKEY_INT = 2,

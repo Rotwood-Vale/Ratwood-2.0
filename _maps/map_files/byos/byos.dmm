@@ -2251,10 +2251,6 @@
 	},
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/mountains)
-"cBZ" = (
-/obj/item/enchantmentscroll/frostveil,
-/turf/open/floor/rogue/cobble/mossy,
-/area/rogue/under/cave)
 "cCt" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -3257,7 +3253,6 @@
 	name = "Door of Gluttony";
 	locked = 1;
 	lockid = "gluttony";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -3771,7 +3766,6 @@
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/item/rogueweapon/stoneaxe/battle,
-/obj/item/enchantmentscroll/lifesteal,
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave)
@@ -8244,7 +8238,6 @@
 	name = "Door of Sloth";
 	locked = 1;
 	lockid = "sloth";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -8348,7 +8341,6 @@
 /area/rogue/outdoors/beach/byos)
 "jkg" = (
 /obj/item/rogueweapon/sword/rapier,
-/obj/item/enchantmentscroll/returningweapon,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/under/cave)
 "jlc" = (
@@ -10196,7 +10188,6 @@
 	name = "Door of Pride";
 	locked = 1;
 	lockid = "pride";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -10527,7 +10518,6 @@
 	name = "Door of Lust";
 	locked = 1;
 	lockid = "lust";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -11291,7 +11281,6 @@
 	name = "Door of Envy";
 	locked = 1;
 	lockid = "envy";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -12679,7 +12668,17 @@
 /area/rogue/under/cave/tribeden)
 "nGj" = (
 /mob/living/simple_animal/hostile/retaliate/rogue/mole{
-	STAEND = 13;
+	STASTR = 24;
+	health = 500;
+	faction = list("undead")
+	},
+/obj/structure/fluff/walldeco/chains,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/mob/living/simple_animal/hostile/retaliate/rogue/mole{
+	STAWIL = 13;
 	STASTR = 24;
 	health = 500;
 	faction = list("undead")
@@ -18963,7 +18962,6 @@
 	faction = list("infernal", "tribe");
 	wander = 0
 	},
-/obj/item/enchantmentscroll/fireresist,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave)
 "tLZ" = (
@@ -20372,7 +20370,6 @@
 	name = "Door of Greed";
 	locked = 1;
 	lockid = "greed";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -21319,8 +21316,6 @@
 /obj/structure/closet/crate/chest/gold,
 /obj/item/rogueweapon/whip,
 /obj/item/rogueweapon/sword/decorated,
-/obj/item/enchantmentscroll/fireresist,
-/obj/item/enchantmentscroll/fireresist,
 /obj/item/roguekey{
 	icon_state = "eyekey";
 	lockid = "wrath";
@@ -21665,7 +21660,6 @@
 	name = "Door of Wrath";
 	locked = 1;
 	lockid = "wrath";
-	can_be_picked = 0;
 	masterkey = 0;
 	max_integrity = 999999
 	},
@@ -41812,7 +41806,7 @@ dNc
 dNc
 dNc
 dNc
-oQg
+dNc
 wXy
 wXy
 rRr
@@ -171273,7 +171267,7 @@ eWy
 eWy
 pHP
 pHP
-cBZ
+hJo
 dLa
 pHP
 eWy

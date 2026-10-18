@@ -410,7 +410,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	harmful = TRUE
 
 /datum/reagent/organpoison/on_mob_life(mob/living/carbon/M)
-	if(!HAS_TRAIT(M, TRAIT_NASTY_EATER) && !HAS_TRAIT(M, TRAIT_ORGAN_EATER))
+	if(!HAS_TRAIT(M, TRAIT_NASTY_EATER) && !HAS_TRAIT(M, TRAIT_ORGAN_EATER) && !HAS_TRAIT(M, TRAIT_WILD_EATER))
 		M.add_nausea(9)
 		M.adjustToxLoss(2)
 	return ..()
@@ -421,13 +421,15 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	reagent_state = LIQUID
 	color = "#083b1c"
 	taste_description = "breathlessness"
-	metabolization_rate = 0.1 * REAGENTS_METABOLISM * 3
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	harmful = TRUE
 
 
 /datum/reagent/stampoison/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
 		M.energy_add(-45) //Slowly leech energy
+	if(volume >= 30)
+		M.reagents.remove_reagent(/datum/reagent/stampoison, 2) //No infinite energy drain
 	return ..()
 
 /datum/reagent/strongstampoison
@@ -436,12 +438,14 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	reagent_state = LIQUID
 	color = "#041d0e"
 	taste_description = "frozen air"
-	metabolization_rate = 0.1 * REAGENTS_METABOLISM * 9
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	harmful = TRUE
 
 /datum/reagent/strongstampoison/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))
 		M.energy_add(-180) //Rapidly leech energy
+	if(volume >= 30)
+		M.reagents.remove_reagent(/datum/reagent/strongstampoison, 2) //No infinite energy drain
 	return ..()
 
 /datum/reagent/toxin/killersice

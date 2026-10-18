@@ -21,6 +21,7 @@
 
 /obj/item/clothing/gloves/roguetown/plate/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/gloves/roguetown/plate/iron
 	name = "iron plate gauntlets"
@@ -73,8 +74,8 @@
 
 
 /obj/item/clothing/gloves/roguetown/plate/zizo
-	name = "avantyne gauntlets"
-	desc = "avantyne plate gauntlets. Called forth from the edge of what should be known. In Her name."
+	name = "avantyne plate gauntlets"
+	desc = "<font color='A50021'><i>\"Look on HIS works, ye Mighty, and despair!\"</i></font>"
 	icon_state = "zizogauntlets"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	armor = ARMOR_ASCENDANT
@@ -88,6 +89,18 @@
 	if(QDELETED(src))
 		return
 	qdel(src)
+
+/obj/item/clothing/gloves/roguetown/plate/medium/zizo
+	name = "avantyne gauntlets"
+	desc = "<font color='A50021'><i>\"Look on HIS works, ye Mighty, and despair!\"</i></font>"
+	armor_class = ARMOR_CLASS_MEDIUM
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_ASCENDANT
+	icon_state = "zizoplategauntlets_med"
+
+/obj/item/clothing/gloves/roguetown/plate/medium/zizo/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR", "RENDERED ASUNDER")
 
 /obj/item/clothing/gloves/roguetown/plate/shadowgauntlets
 	name = "darkplate gauntlets"

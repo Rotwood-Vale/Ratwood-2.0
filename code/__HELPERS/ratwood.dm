@@ -88,8 +88,13 @@
 	for(var/obj/item/thing as anything in equipped_items)
 		if (thing.flags_inv)
 			new_flags |= thing.flags_inv
-	
+
+	if(new_flags == obscured_flags)
+		return
 	obscured_flags = new_flags
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.update_body_parts()
 
 /// Tries to get the mob's displayed class title, and return it as a string.
 /// This should always return a string, even an empty one. CHECK ITS length()!

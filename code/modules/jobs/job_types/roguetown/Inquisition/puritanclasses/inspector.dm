@@ -18,7 +18,8 @@
 		TRAIT_PERFECT_TRACKER,
 		TRAIT_SLEUTH,
 		TRAIT_PURITAN,
-		TRAIT_OUTLANDER
+		TRAIT_OUTLANDER,
+		TRAIT_NOBLE
 		)
 	subclass_stats = list(
 		STATKEY_WIL = 2,
@@ -64,7 +65,7 @@
 	mask = /obj/item/clothing/mask/rogue/spectacles/inq/spawnpair
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/inqcoat
 	backpack_contents = list(
 		/obj/item/storage/keyring/puritan = 1,
@@ -100,8 +101,8 @@
 		if("Daybreak (Whip)")
 			H.put_in_hands(new /obj/item/rogueweapon/whip/antique/psywhip(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, 5, TRUE)
-			H.change_stat(STATKEY_STR, 2)
-			H.change_stat(STATKEY_INT, -1)
+			H.change_stat(STATKEY_STR, 1)
+			H.change_stat(STATKEY_PER, 1)
 		if("Stigmata (Halberd)")
 			H.put_in_hands(new /obj/item/rogueweapon/halberd/psyhalberd/relic(H), TRUE)
 			H.put_in_hands(new /obj/item/rogueweapon/scabbard/gwstrap(H), TRUE)

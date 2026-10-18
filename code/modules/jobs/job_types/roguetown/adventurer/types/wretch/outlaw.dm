@@ -32,7 +32,9 @@
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,		//why did these guys not even have SOME crafting experience?
 	)
-
+	subclass_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 
 /datum/outfit/job/roguetown/wretch/outlaw/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -62,7 +64,7 @@
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		)
 	if(H.mind)
-		var/weapons = list("Rapier","Dagger", "Whip")
+		var/weapons = list("Rapier","Dagger", "Whip", "Urumi")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -77,6 +79,9 @@
 			if ("Whip")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				beltl = /obj/item/rogueweapon/whip
+			if ("Urumi")
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+				beltl = /obj/item/rogueweapon/whip/urumi
 		wretch_select_bounty(H)
 
 /datum/advclass/wretch/outlaw/marauder

@@ -6,7 +6,7 @@
 
 // Hard cap on a single player's banked bonus for a single map. Stops one
 // very persistent minority from eventually forcing a win on their own.
-#define MAP_VOTE_BONUS_MAX 10
+#define MAP_VOTE_BONUS_MAX 3
 
 SUBSYSTEM_DEF(map_vote)
 	name = "Map Vote"
@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(map_vote)
 	sanitize_cache()
 	update_tally_printout()
 
-	return SS_INIT_SUCCESS
+	return ..()
 
 /datum/controller/subsystem/map_vote/proc/write_cache()
 	rustg_file_write(json_encode(player_vote_bonus), MAP_VOTE_CACHE_LOCATION)

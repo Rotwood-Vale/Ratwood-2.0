@@ -57,8 +57,21 @@
 ///In most cases you want a subsystem instead, so don't use this unless you have a good reason
 #define TIMER_LOOP				(1<<5)
 
+///Delete the timer on parent datum Destroy() and when deltimer'd
+#define TIMER_DELETE_ME			(1<<6)
+
 ///Empty ID define
 #define TIMER_ID_NULL -1
+
+/**
+	Create a new timer and add it to the queue.
+	* Arguments:
+	* * callback the callback to call on timer finish
+	* * wait deciseconds to run the timer for
+	* * flags flags for this timer, see: code\__DEFINES\subsystems.dm
+	* * timer_subsystem the subsystem to insert this timer into
+*/
+#define addtimer(args...) _addtimer(args, file = __FILE__, line = __LINE__)
 
 //! ## Initialization subsystem
 
@@ -123,7 +136,11 @@
 #define INIT_ORDER_DUNGEON			49
 #define INIT_ORDER_NETWORKS			45
 #define INIT_ORDER_SPATIAL_GRID     43
-#define INIT_ORDER_ECONOMY			40
+// AP runs economy at -2 so roundstart_blockades() fires after SSatoms (30) and SSquestpool
+// (default) have registered the quest landmarks its per-region checks need; the ES port's 40
+// ran it before any landmark existed, so no roundstart blockade could ever roll.
+// SStreasury rides at INIT_ORDER_ECONOMY + 1 and so stays ahead of SSeconomy.
+#define INIT_ORDER_ECONOMY			-2
 #define INIT_ORDER_OUTPUTS			35
 #define INIT_ORDER_ATOMS			30
 #define INIT_ORDER_TREES			29
@@ -142,6 +159,9 @@
 #define INIT_ORDER_LIGHTING			-20
 #define INIT_ORDER_OUTDOOR_EFFECTS  -21
 #define INIT_ORDER_SHUTTLE			-22
+// AP parity: must init AFTER SSmerchant (INIT_ORDER_SHUTTLE, -22) — the day-1 trade ship pool
+// rolls cultural stock / victualling lines against SSmerchant.supply_packs at Initialize().
+#define INIT_ORDER_MERCHANT_TRADE	-23
 #define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60
@@ -179,6 +199,7 @@
 #define FIRE_PRIORITY_ACID			40
 #define FIRE_PRIORITY_BURNING		40
 #define FIRE_PRIORITY_DEFAULT		50
+#define FIRE_PRIORITY_SOUND_LOOPS	55 // TG: 800
 #define FIRE_PRIORITY_PARALLAX		65
 #define FIRE_PRIORITY_MOBS			100
 #define FIRE_PRIORITY_TGUI			110

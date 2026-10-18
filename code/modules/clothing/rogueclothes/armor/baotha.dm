@@ -127,7 +127,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/anklets/baotha
 	neck = /obj/item/clothing/neck/roguetown/gorget/boatha
 	backr = /obj/item/storage/backpack/rogue/satchel/short
-	beltr = /obj/item/rogueweapon/whip/spiderwhip/baotha
+	beltr = /obj/item/rogueweapon/whip/baotha
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 
 
@@ -232,22 +232,14 @@
 		return
 	qdel(src)
 
-// /obj/item/rogueweapon/whip/baotha//Baothan ritual is using the spiderwhip for now as a placeholder. Uncomment this if/when a baothan ritual weapon is sprited in
-// 	name = "Perfect Agony"
-// 	desc = "Wicked, wicked, wicked."
-// 	icon_state = "CHANGEME"
-// 	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/dagger/sucker_punch) // sucker as a little flavor and bonus. 
-// 	force = 22
-// 	minstr = 8
-
-// /obj/item/rogueweapon/whip/baotha/Initialize(mapload)
-// 	. = ..()
-// 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "WHIP")
-
-/obj/item/rogueweapon/whip/spiderwhip/baotha
-	desc = "This one hums faintly to you. A song from your childhood?"
+/obj/item/rogueweapon/whip/baotha
+	name = "Perfect Agony"
+	desc = "Wicked, wicked, wicked."
+	icon_state = "baotha_whip"
+	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/dagger/sucker_punch) // sucker as a little flavor and bonus. 
+	force = 22
 	minstr = 8
 
-/obj/item/rogueweapon/whip/spiderwhip/baotha/Initialize(mapload)
+/obj/item/rogueweapon/whip/baotha/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_DEPRAVED, "WHIP")

@@ -175,6 +175,7 @@
 
 /obj/structure/broadcast_horn/Destroy()
 	lose_hearing_sensitivity()
+	SSroguemachine.broadcaster_machines -= src
 	return ..()
 
 #undef TOWNER_BROADCAST_COST

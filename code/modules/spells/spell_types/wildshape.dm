@@ -36,6 +36,11 @@
 		user.wildshape_untransform()
 		return FALSE
 
+	if(!ishuman(user))
+		to_chat(user, span_warning("I cannot call upon a beast form while in this shape."))
+		revert_cast(user)
+		return FALSE
+
 	var/list/choices = list()
 
 	for(var/mob/living/carbon/human/species/wildshape/shape as anything in possible_shapes)
@@ -70,6 +75,7 @@
 	var/list/stored_spells
 	var/wildshape_icon
 	var/wildshape_icon_state
+	var/untransform_on_death = TRUE
 
 /mob/living/carbon/human/species/wildshape/proc/gain_inherent_skills()
 	if(mind)

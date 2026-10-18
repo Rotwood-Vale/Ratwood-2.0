@@ -2,6 +2,7 @@
 	abstract_type = /datum/crafting_recipe/roguetown/ceramics
 	skillcraft = /datum/skill/craft/ceramics
 	hides_from_crafting_menu = TRUE
+	display_category = ITEM_CAT_POTTERY
 
 /datum/crafting_recipe/roguetown/ceramics/clay
 	structurecraft = /obj/structure/fluff/ceramicswheel

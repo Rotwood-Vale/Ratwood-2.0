@@ -53,3 +53,6 @@ GLOBAL_LIST_INIT(vamp_generation_to_text, list(
 	"Ancillae",
 	"Methuselah",
 ))
+
+//Coven Defines
+#define POTENCE_PUNCH_DAMAGE_PER_LEVEL 5

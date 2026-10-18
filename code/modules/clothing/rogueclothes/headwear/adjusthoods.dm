@@ -56,11 +56,11 @@
 
 /obj/item/clothing/head/roguetown/roguehood/random/Initialize(mapload)
 	color = pick("#544236", "#435436", "#543836", "#79763f")
-	..()
+	return ..()
 
 /obj/item/clothing/head/roguetown/roguehood/mage/Initialize(mapload)
 	color = pick("#4756d8", "#759259", "#bf6f39", "#c1b144", "#b8252c")
-	..()
+	return ..()
 
 /obj/item/clothing/head/roguetown/roguehood/reinforced
 	name = "reinforced hood"
@@ -140,6 +140,9 @@
 	min_cold_protection_temperature = 50
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
+
+/obj/item/clothing/head/roguetown/roguehood/shalal/heavyhood/blue
+	color = CLOTHING_BLUE
 
 /obj/item/clothing/head/roguetown/roguehood/shalal/hijab/yoruku
 	name = "shadowed hood"
@@ -324,6 +327,7 @@
 	name = "hierophant's pashmina"
 	desc = "A thick hood that covers one's entire head, should they desire, or merely acts as a scarf otherwise. Made with spell-laced fabric to provide some protection against daemons and mortals alike."
 	max_integrity = 100
+	resistance_flags = FIRE_PROOF
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = ARMOR_SPELLSINGER
 	icon_state = "deserthood"
@@ -337,6 +341,7 @@
 	name = "pontifex's pashmina"
 	desc = "A slim hood with thin, yet dense fabric. Stretchy and malleable, allowing for full flexibility and mobility. Made with spell-laced fabric to provide some protection against daemons and mortals alike."
 	max_integrity = 100
+	resistance_flags = FIRE_PROOF
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = ARMOR_SPELLSINGER
 	icon_state = "monkhood"

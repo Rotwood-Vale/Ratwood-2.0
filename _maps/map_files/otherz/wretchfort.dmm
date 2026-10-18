@@ -1530,6 +1530,10 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors/wretch)
+"pB" = (
+/obj/structure/roguemachine/talkstatue/mercenary,
+/turf/open/floor/rogue/cobble/mossy,
+/area/rogue/outdoors/wretch)
 "pN" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/rogue/dirt,
@@ -9580,7 +9584,7 @@ nS
 nw
 jC
 Is
-Is
+pB
 Ov
 nS
 Is

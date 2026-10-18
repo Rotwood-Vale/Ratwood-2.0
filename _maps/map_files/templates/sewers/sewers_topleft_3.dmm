@@ -22,7 +22,7 @@
 /area/rogue/under/town/sewer)
 "e" = (
 /obj/structure/bed/rogue/shit,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/effect/landmark/start/vagrantlate{
 	dir = 8
 	},
@@ -112,7 +112,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "w" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/machinery/light/rogue/hearth,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
@@ -121,7 +121,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "y" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "z" = (
@@ -143,7 +143,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "D" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /obj/structure/closet/crate/roguecloset/crafted,
 /obj/effect/spawner/lootdrop/roguetown/sewers,
 /turf/open/floor/rogue/cobble,
@@ -234,7 +234,7 @@
 /area/rogue/under/town/sewer)
 "S" = (
 /obj/item/roguebin/crackers,
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "T" = (
@@ -250,7 +250,7 @@
 /area/rogue/under/town/sewer)
 "V" = (
 /obj/structure/bed/rogue/shit,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "W" = (

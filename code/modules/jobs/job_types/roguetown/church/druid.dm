@@ -22,8 +22,8 @@
 	cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // this was originally druid music. i think its ok to have druids share it w/ wardens.
 
 	//You're.. not REALLY a full-on church member, but being a druid implies you became a clergy-man of some sort; even if it's non-organized. So, still shouldn't be noble.
-	virtue_restrictions = list(/datum/virtue/utility/noble)
-	job_traits = list(TRAIT_SEEDKNOW, TRAIT_OUTDOORSMAN, TRAIT_RITUALIST, TRAIT_HOMESTEAD_EXPERT, TRAIT_WILDERNESSGUIDE, TRAIT_WOODWALKER)
+	quirk_restrictions = list(/datum/quirk/noble)
+	job_traits = list(TRAIT_SEEDKNOW, TRAIT_OUTDOORSMAN, TRAIT_RITUALIST, TRAIT_HOMESTEAD_EXPERT, TRAIT_WILDERNESSGUIDE, TRAIT_WOODWALKER, TRAIT_EXPERT_HUNTER)
 
 	advclass_cat_rolls = list(CTAG_DRUID = 2)
 	job_subclasses = list(
@@ -64,7 +64,9 @@
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/polearms = SKILL_LEVEL_NOVICE, //To help them defend themselves with parrying
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE
+		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/fishing = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/druid
@@ -82,7 +84,6 @@
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	beltl = /obj/item/rogueweapon/whip //The whip itself is not often associated to many jobs. Druids feel like a thematic choice to have a self-defense whip
 	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/woodstaff
 	head = /obj/item/clothing/head/roguetown/dendormask
 	id = /obj/item/clothing/neck/roguetown/psicross/dendor //Ring slot amulet for wildform so it is not dropping on the ground.
 	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
@@ -91,10 +92,6 @@
 		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/magic/druidic, 5, TRUE)
 	H.ambushable = FALSE
-
-/datum/outfit/job/roguetown/druid/basic/choose_loadout(mob/living/carbon/human/H)
-	. = ..()
-	H.put_in_hands(new /obj/item/rogueweapon/woodstaff(H)) //To encourage them to wander the forests and to help defend themselves
 
 /datum/job/roguetown/druid/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	..()
@@ -106,9 +103,7 @@
 	H.invisibility = INVISIBILITY_MAXIMUM
 	H.become_blind("advsetup")
 
-	spawn(50)
-		if(H && H.client)
-			_delayed_path_choice(H)
+	addtimer(CALLBACK(src, PROC_REF(_delayed_path_choice), H), 50)
 
 /datum/job/roguetown/druid/proc/grant_old_path(mob/living/carbon/human/H)
 	if(!H || !H.mind || !H.patron)

@@ -109,6 +109,11 @@ SUBSYSTEM_DEF(atoms)
 	if(late_loaders.len)
 		for(var/I in late_loaders)
 			var/atom/A = I
+			// An atom can be deleted between queueing and this pass, by a duplicate cull or by
+			// self-qdel in another atom's LateInitialize. Skip it: running LateInitialize on the
+			// corpse schedules timers on a qdeleted object.
+			if(QDELETED(A))
+				continue
 			A.LateInitialize()
 		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()

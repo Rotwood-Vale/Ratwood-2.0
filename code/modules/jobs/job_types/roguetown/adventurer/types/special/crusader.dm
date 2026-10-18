@@ -1,4 +1,5 @@
 /datum/advclass/crusader
+	townie_contract_gate_exempt = TRUE
 	name = "Crusader"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS

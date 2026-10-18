@@ -3,6 +3,7 @@
 	verbage_simple = "mix"
 	skillcraft = /datum/skill/labor/farming
 	subtype_reqs = TRUE
+	display_category = ITEM_CAT_RAW_MATERIAL_ORGANIC
 
 /datum/crafting_recipe/roguetown/farming/fertilizer
 	name = "fertilizer"

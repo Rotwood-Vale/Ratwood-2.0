@@ -75,6 +75,19 @@
 	if(blood_volume <= BLOOD_VOLUME_SURVIVE && stat)
 		handle_passive_blood()
 
+	/// ENDVRE AS HE DOES.
+	if(!stat && HAS_TRAIT(src, TRAIT_PSYDONITE) && !HAS_TRAIT(src, TRAIT_PARALYSIS))
+		handle_wounds()
+		//passively heal wounds, when you're in trouble..
+		if(blood_volume > BLOOD_VOLUME_SURVIVE)
+			for(var/datum/wound/wound as anything in get_wounds())
+				wound.heal_wound(0.6)
+				if(!istype(wound, /datum/wound/slash/incision))
+					wound.heal_wound(0.4)
+
+	if(blood_volume <= BLOOD_VOLUME_SURVIVE && stat)
+		handle_passive_blood()
+
 	if(QDELETED(src)) // diseases can qdel the mob via transformations
 		return
 
@@ -189,6 +202,7 @@
 					sleep(10)
 					Stun(110)
 					Knockdown(110)
+					drop_all_held_items()
 
 /mob/living/proc/handle_environment()
 	return

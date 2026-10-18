@@ -19,6 +19,7 @@ LICH SKELETONS
 
 	REMOVE_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_LICHLAIR, TRAIT_GENERIC) //Ability to leave/enter the lich's lair without being softlocked inside.
+	H.taints_loot = TRUE
 
 // Melee goon w/ throwables. All-rounder.
 /datum/advclass/greater_skeleton/lich/legionnaire
@@ -39,6 +40,7 @@ LICH SKELETONS
 	H.STAPER = 11
 
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_NOSLEEP, TRAIT_GENERIC)
 
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
@@ -122,6 +124,7 @@ LICH SKELETONS
 
 	H.energy = H.max_energy
 
+
 // Ranged goon w/ a dumb bow. Ranger, what else is there to say.
 /datum/advclass/greater_skeleton/lich/ballistiares
 	name = "Ancient Ballistiares"
@@ -141,6 +144,7 @@ LICH SKELETONS
 	H.STAPER = 15
 
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_NOSLEEP, TRAIT_GENERIC)
 
 	H.adjust_skillrank(/datum/skill/combat/bows , 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/crossbows, 3, TRUE)
@@ -183,7 +187,7 @@ LICH SKELETONS
 			beltr = /obj/item/quiver/ancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
 		if("Crossbow")
-			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+			l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/ancient
 			beltr = /obj/item/quiver/boltsancient
 			H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_MASTER, TRUE)
 		if("Sling")
@@ -229,6 +233,8 @@ LICH SKELETONS
 	H.STAWIL = 11
 	H.STAINT = 3
 	H.STAPER = 10
+
+	ADD_TRAIT(H, TRAIT_NOSLEEP, TRAIT_GENERIC)
 
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
@@ -362,6 +368,8 @@ LICH SKELETONS
 	ADD_TRAIT(H, TRAIT_SMITHING_EXPERT, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_TRAINED_SMITH, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SELF_SUSTENANCE, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_LEGENDARY_MINER, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_NOSLEEP, TRAIT_GENERIC)
 
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axes, 3, TRUE)
@@ -454,6 +462,7 @@ LICH SKELETONS
 	ADD_TRAIT(H, TRAIT_STRENGTH_UNCAPPED, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NORUN, TRAIT_GENERIC) // You can't sprint at all
 	ADD_TRAIT(H, TRAIT_SELF_SUSTENANCE, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_NOSLEEP, TRAIT_GENERIC)
 
 	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)

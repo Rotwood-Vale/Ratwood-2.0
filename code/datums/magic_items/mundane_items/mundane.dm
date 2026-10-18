@@ -2,7 +2,6 @@
 /datum/magic_item/mundane/woodcut
 	name = "woodcutting"
 	description = "It is firm like an tree."
-	var/last_used
 
 /datum/magic_item/mundane/woodcut/on_hit_structure(obj/item/i, obj/target, mob/living/user)
 	if(istype(target, /obj/structure/flora))
@@ -98,7 +97,6 @@
 /datum/magic_item/mundane/revealing
 	name = "revealing"
 	description = "It's light is painfully bright."
-	var/active = FALSE
 
 /datum/magic_item/mundane/revealing/on_apply(obj/item/i)
 	.=..()

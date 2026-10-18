@@ -70,12 +70,12 @@
 	lootroll = rand(1,4)
 
 /obj/structure/closet/dirthole/closed/loot
-	var/looted = FALSE
+	var/hole_looted = FALSE // renamed: /atom/movable now owns a `looted` var (item quality/loot-taint system)
 	var/lootroll = 0
 
 /obj/structure/closet/dirthole/closed/loot/open()
-	if(!looted)
-		looted = TRUE
+	if(!hole_looted)
+		hole_looted = TRUE
 		new /obj/item/natural/bundle/bone/rdm(src)
 		switch(lootroll)
 			if(1)

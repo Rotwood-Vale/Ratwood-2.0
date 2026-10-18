@@ -1,31 +1,9 @@
 /datum/sex_action/chastityplay/frot_cage
 	name = "Frot with their chastity device"
 	user_sex_part =	SEX_PART_COCK
+	user_needs_functional = TRUE
 	target_sex_part = SEX_PART_COCK
-
-/datum/sex_action/chastityplay/frot_cage/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!target.sexcon.has_chastity_penis())
-		return FALSE
-	return TRUE
-
-/datum/sex_action/chastityplay/frot_cage/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!requires_other_target(user, target))
-		return FALSE
-	if(!user.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!target.sexcon.has_chastity_penis())
-		return FALSE
-	if(!target.getorganslot(ORGAN_SLOT_PENIS))
-		return FALSE
-	if(!can_reach_target_groin(user, target))
-		return FALSE
-	return TRUE
+	target_needs_chastity = TRUE
 
 /datum/sex_action/chastityplay/frot_cage/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(HAS_TRAIT(target, TRAIT_CHASTITY_SPIKED))

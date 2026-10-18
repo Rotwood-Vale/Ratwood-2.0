@@ -61,6 +61,12 @@
 	armor = ARMOR_LEATHER_STUDDED 
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM
 
+/obj/item/clothing/suit/roguetown/armor/basiceast/mentorsuit/decorative
+	name = "decorative mentor robe"
+	desc = "An old dopo robe worn purely for its eastern style."
+	armor = list("blunt" = 0, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)
+	prevent_crits = null
+
 
 /obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe
 	name = "foreign robes"
@@ -71,13 +77,19 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 25 // Head Honcho gets a buff
 	sellprice = 25
 
+/obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe/decorative
+	name = "decorative flowery robe"
+	desc = "Flower-styled robes worn purely for their eastern style."
+	armor = list("blunt" = 0, "slash" = 0, "stab" = 0, "piercing" = 0, "fire" = 0, "acid" = 0)
+	prevent_crits = null
+
 // this robe spawns on a role that offers no leg protection nor further upgrades to the loadout, in exchange for better roundstart gear
 
 /obj/item/clothing/suit/roguetown/armor/plate/elven_plate
 	name = "woad elven plate"
-	desc = "Woven by song and tool of the oldest elven druids. It still creaks and weeps with forlorn reminiscence of a bygone era. It looks like only Elves can fit in it."
+	desc = "An assembly of thickly woven trunk, bound together by ancient song and tool of the oldest elven druids. It still creaks and weeps with forlorn reminiscence of a bygone era. It looks like only Elves can fit in it."
 	allowed_race = list(/datum/species/elf/wood, /datum/species/human/halfelf, /datum/species/elf/dark, /datum/species/elf)
-	armor = list("blunt" = 100, "slash" = 20, "stab" = 130, "piercing" = 40, "fire" = 0, "acid" = 0)
+	armor = ARMOR_BLACKOAK
 	prevent_crits = list(BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PICK, BCLASS_SMASH)
 	body_parts_covered = COVERAGE_FULL
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
@@ -94,6 +106,15 @@
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_WOOD_ARMOR)
 
+
+/obj/item/clothing/suit/roguetown/armor/plate/elven_plate/light
+	name = "woad elven maille"
+	desc = "An assembly of woven trunk, bound together by ancient song and tool of the oldest elven druids. It still creaks and weeps with forlorn reminiscence of a bygone era. It looks like only Elves can fit in it."
+	icon_state = "welfchestalt"
+	item_state = "welfchestalt"
+	armor_class = ARMOR_CLASS_LIGHT
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //-27 % durability hit
+	body_parts_covered = CHEST | VITALS | LEGS
 
 /obj/item/clothing/suit/roguetown/armor/leather/studded/bikini/horsey
 	name = "harness corset"

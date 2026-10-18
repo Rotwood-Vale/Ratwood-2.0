@@ -592,7 +592,7 @@
 		if(rogue_sneaking)
 			if(sneak_faded)
 				animate(src, alpha = initial(alpha), time = 25)
-				spawn(25) regenerate_icons()
+				addtimer(CALLBACK(src, PROC_REF(regenerate_icons)), 25)
 				sneak_faded = FALSE
 			rogue_sneaking = FALSE
 		return
@@ -614,7 +614,7 @@
 	if(!reset && m_intent != MOVE_INTENT_SNEAK && sneak_faded) // prevents funny bugs with getting stuck transparent
 		if(!wallpressed)
 			animate(src, alpha = initial(alpha), time = 10)
-			spawn(10) regenerate_icons()
+			addtimer(CALLBACK(src, PROC_REF(regenerate_icons)), 10)
 			invisibility = initial(invisibility) //Ditto. Stops you from getting stuck invisible.
 		else
 			animate(src, alpha = 255, time = 10)
@@ -643,7 +643,7 @@
 				if(!wallpressed) // so we can stay partially invisible if wallpressed
 					invisibility = initial(invisibility) //Prevents a super rare edge case where you would stay super invisible and evil forever. Why does this happen? SPAWN() is the beast of satan
 					animate(src, alpha = initial(alpha), time =	used_time) //sneak skill makes you reveal slower but not as drastic as disappearing speed
-					spawn(used_time) regenerate_icons()
+					addtimer(CALLBACK(src, PROC_REF(regenerate_icons)), used_time)
 				else
 					if(alpha != 255)
 						invisibility = initial(invisibility) //Ensure to set this back to type default (Always 0 for mobs). Execute BEFORE the animate so you can see them fade in.
@@ -662,12 +662,12 @@
 			if(target_alpha != alpha)
 				if(!wallpressed)
 					animate(src, alpha = target_alpha, time = used_time) //Use regular ass sneakcode here so it isn't ungodly overpowered
-					spawn(used_time + 5) regenerate_icons()
+					addtimer(CALLBACK(src, PROC_REF(regenerate_icons)), used_time + 5)
 					sneak_faded = TRUE
 			light_amount = T.get_lumcount()  // as above, this is moderately expensive, so only check it if we need to.
 			if(light_amount < light_threshold)
 				animate(src, alpha = get_lying_alpha(), time = used_time) //THIS PART CONTROLS REGULAR SNEAKING. USE INVIS HERE.
-				spawn(used_time + 5) regenerate_icons()
+				addtimer(CALLBACK(src, PROC_REF(regenerate_icons)), used_time + 5)
 				invisibility = held_invis_value //At 5 sneak, you get a total of ~24 invis - 3.75 bonus
 				sneak_faded = TRUE
 				rogue_sneaking = TRUE
@@ -700,17 +700,26 @@
 		var/mob/living/simple_animal/animal_mount = H.get_buckled_animal_mount()
 		if(animal_mount)
 			is_mounted = TRUE
+			var/riding_skill = H.get_skill_level(/datum/skill/misc/riding)
+			var/mounted_intent_swap_time = 45
+			switch(riding_skill)
+				if(SKILL_LEVEL_LEGENDARY)
+					mounted_intent_swap_time = 10
+				if(SKILL_LEVEL_EXPERT to SKILL_LEVEL_MASTER)
+					mounted_intent_swap_time = 15
+				if(SKILL_LEVEL_APPRENTICE to SKILL_LEVEL_JOURNEYMAN)
+					mounted_intent_swap_time = 30
 			switch(intent)
 				if(MOVE_INTENT_RUN)
 					if(H.m_intent != MOVE_INTENT_RUN)
 						H.visible_message(span_notice("[H] steadies atop [animal_mount], preparing to break into a run."))
 						animal_mount.emote("aggro")
-						if(do_after(H, 30))
+						if(do_after(H, mounted_intent_swap_time))
 							H.m_intent = MOVE_INTENT_RUN
 				if(MOVE_INTENT_SNEAK)
 					if(H.m_intent != MOVE_INTENT_SNEAK)
 						H.visible_message(span_notice("[H] reins in [animal_mount], slowing into a cautious gait."))
-						if(do_after(H, 30))
+						if(do_after(H, mounted_intent_swap_time))
 							H.m_intent = MOVE_INTENT_SNEAK
 							H.update_sneak_invis()
 				if(MOVE_INTENT_WALK)

@@ -4,6 +4,7 @@
 	req_table = TRUE
 	skillcraft = /datum/skill/craft/carpentry
 	category = "Tools"
+	display_category = ITEM_CAT_TOOLS_FIELD
 
 // /datum/crafting_recipe/roguetown/survival/peasantry/thresher
 // 	name = "thresher"

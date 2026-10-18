@@ -5,6 +5,8 @@
 	advclass_cat_rolls = list(CTAG_CRUSADE = 20)
 
 /datum/advclass/crusader_Captain
+	townie_contract_gate_exempt = TRUE
+	townie_contract_gate_hide_in_list = TRUE
 	name = "Crusader Captain"
 	tutorial = "Crusader Leader of the true faith, you came from Grenzelhoft on the orders of the holy see. FIND Psydon's holy chalice- and pillage your way into riches, for the glory of astrata!"
 	allowed_sexes = list(MALE, FEMALE)
@@ -77,6 +79,8 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)	//Capped to T2 miracles.
 
 /datum/advclass/crusader_cleric
+	townie_contract_gate_exempt = TRUE
+	townie_contract_gate_hide_in_list = TRUE
 	name = "Crusader Cleric"
 	tutorial = "Crusader of the true faith, you came from Grenzelhoft on the orders of the holy see. FIND Psydon's holy chalice- and pillage your way into riches, for the glory of astrata!"
 	allowed_sexes = list(MALE, FEMALE)
@@ -147,6 +151,8 @@
 // Old loadout, heavy armor, T2, but worse stats.
 
 /datum/advclass/crusader_paladin
+	townie_contract_gate_exempt = TRUE
+	townie_contract_gate_hide_in_list = TRUE
 	name = "Crusader Paladin"
 	tutorial = "Crusader of the true faith, you came from Grenzelhoft on the orders of the holy see. FIND Psydon's holy chalice- and pillage your way into riches, for the glory of astrata!"
 	allowed_sexes = list(MALE, FEMALE)
@@ -220,6 +226,8 @@
 // Footman. Heavy armor essentially old loadout. Loses T2, but gets heavy armor. 
 
 /datum/advclass/crusader_footman
+	townie_contract_gate_exempt = TRUE
+	townie_contract_gate_hide_in_list = TRUE
 	name = "Crusader Footman"
 	tutorial = "Heavily armored Crusader of the true faith, you came from Grenzelhoft on the orders of the holy see. FIND Psydon's holy chalice- and pillage your way into riches, for the glory of astrata!"
 	allowed_sexes = list(MALE, FEMALE)
@@ -280,6 +288,8 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T0, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_0)	//Capped to T0 miracles.
 
 /datum/advclass/crusader_marksman
+	townie_contract_gate_exempt = TRUE
+	townie_contract_gate_hide_in_list = TRUE
 	name = "Crusader Marksman"
 	tutorial = "Crusader of the true faith, you came from Grenzelhoft on the orders of the holy see. FIND Psydon's holy chalice- and pillage your way into riches, for the glory of astrata!"
 	allowed_sexes = list(MALE, FEMALE)

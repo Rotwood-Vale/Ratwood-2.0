@@ -115,6 +115,8 @@
 	name = "Eora's Rest"
 	desc = "Summon a sacred Eoran bed to provide sanctuary and stabilize the wounded. \
 	You may only maintain a limited amount of beds at a time depending on miracle skill. Summoning a new one will cause the oldest one to vanish."
+	overlay_icon = 'icons/mob/actions/eoramiracles.dmi'
+	action_icon = 'icons/mob/actions/eoramiracles.dmi'
 	invocations = list("Eora, provider of beauty-sleeps!")
 	sound = 'sound/magic/holyshield.ogg'
 	overlay_state = "eorabed"

@@ -1,4 +1,5 @@
 /datum/advclass/rogue
+	townie_contract_gate_exempt = TRUE
 	name = "Treasure Hunter"
 	tutorial = "You are a treasure hunter trained in hunting for valuables. Discern what is treasure or not, your fortune could be hidden anywhere."
 	allowed_sexes = list(MALE, FEMALE)

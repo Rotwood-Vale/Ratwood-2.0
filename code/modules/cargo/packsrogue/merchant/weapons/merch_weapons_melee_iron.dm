@@ -25,6 +25,13 @@
 					/obj/item/rogueweapon/sword/short/messer/iron,
 				)
 
+/datum/supply_pack/rogue/iron_weapons/broadsword
+	name = "Broadsword"
+	cost = 40 // 2 iron Ingot
+	contains = list(
+					/obj/item/rogueweapon/sword/long/broadsword,
+				)
+
 /datum/supply_pack/rogue/iron_weapons/mace
 	name = "Mace"
 	cost = 25 // 1 Iron Ingot
@@ -74,6 +81,13 @@
 					/obj/item/rogueweapon/flail,
 				)
 
+/datum/supply_pack/rogue/iron_weapons/greatflail
+	name = "Greatflail"
+	cost = 45 // 2 ingots 1 log
+	contains = list(
+					/obj/item/rogueweapon/flail/peasantwarflail,
+	)
+
 /datum/supply_pack/rogue/iron_weapons/hammer
 	name = "Warhammer"
 	cost = 25 // 1 Iron Ingot
@@ -104,7 +118,7 @@
 
 
 /datum/supply_pack/rogue/iron_weapons/lucerne
-	name = "Lucerne Hammer"
+	name = "Lucerne"
 	cost = 45 // 2 Iron Ingot, 1 Small Log
 	contains = list(
 					/obj/item/rogueweapon/eaglebeak/lucerne,

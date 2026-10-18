@@ -297,13 +297,45 @@
 			playsound(src.loc, "burn", 100, TRUE)
 
 /obj/structure/vine/Crossed(mob/crosser)
+	var/mob/living/M = crosser
+
+	if(!isliving(crosser))
+		return
+
 	if(isliving(crosser))
 		for(var/datum/vine_mutation/SM in mutations)
 			SM.on_cross(src, crosser)
-	if(prob(23) && istype(crosser) && !isvineimmune(crosser))
-		var/mob/living/M = crosser
-		M.adjustBruteLoss(5)
-		to_chat(M, "<span class='warning'>I nick myself on the thorny vines.</span>")
+
+	if(istype(crosser))
+		if(HAS_TRAIT(crosser, TRAIT_CURSE_DENDOR)) // cursed by Dendor means longer tangle and autocut. Sucks.
+			var/stuck_time = max(1, 36 - M.STASTR)
+			M.mobility_flags &= ~MOBILITY_MOVE
+			addtimer(CALLBACK(src, PROC_REF(release_vine_stuck), M), stuck_time)
+			M.adjustBruteLoss(5)
+			to_chat(M, "<span class='warning'>I nick myself on the thorny vines.</span>")
+			return
+
+		if(isvineimmune(crosser))
+			return
+
+		if(M.mob_size <= MOB_SIZE_SMALL) // tiny critters get to slip past
+			return
+
+		var/stuck_time = max(1, 18 - M.STASTR)
+		M.mobility_flags &= ~MOBILITY_MOVE
+		addtimer(CALLBACK(src, PROC_REF(release_vine_stuck), M), stuck_time)
+
+		if(prob(23) || (M.buckled) || (M.m_intent == MOVE_INTENT_RUN)) // buckled mobs & runners avoid slowdown due to how buckling works, but gets guaranteed damage instead
+			M.adjustBruteLoss(5)
+			to_chat(M, "<span class='warning'>I nick myself on the thorny vines.</span>")
+
+
+
+
+/obj/structure/vine/proc/release_vine_stuck(mob/living/M)
+	if(!M)
+		return
+	M.mobility_flags |= MOBILITY_MOVE
 
 /datum/vine_mutation/earthy
 	name = "earthy"

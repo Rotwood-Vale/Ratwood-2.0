@@ -818,8 +818,8 @@
 	tastes = list("crispy dough" = 1, "divinely fruity sweetness" = 1)
 
 /obj/item/reagent_containers/food/snacks/rogue/dot_tart/goldapple/Initialize()
-  ..()
-  add_filter(FORCE_FILTER, 2, list("type" = "outline", "color" = GLOW_COLOR_LIGHTNING, "alpha" = 155, "size" = 1))
+	. = ..()
+	add_filter(FORCE_FILTER, 2, list("type" = "outline", "color" = GLOW_COLOR_LIGHTNING, "alpha" = 155, "size" = 1))
 
 /*	.................   Bookbread   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/bookbread

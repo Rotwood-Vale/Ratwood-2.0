@@ -1,19 +1,17 @@
 /datum/sex_action/facesitting
 	name = "Sit on their face"
-
-/datum/sex_action/facesitting/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
-		return FALSE
-	return TRUE
+	user_sex_part = SEX_PART_ANUS // maybe SEX_PART_NULL?
+	target_sex_part = SEX_PART_JAWS
 
 /datum/sex_action/facesitting/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(user == target)
+	if(!(. = ..()))
 		return FALSE
 	// Need to stand up
 	if(user.resting)
 		return FALSE
-	// Target can't stand up
-	if(!target.resting)
+	// Target can't stand up unless we're a dullahan targeting our own face?
+	// Only dullahans can pass the needed part check while targeting themselves
+	if(user != target && !target.resting)
 		return FALSE
 	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
 		return FALSE

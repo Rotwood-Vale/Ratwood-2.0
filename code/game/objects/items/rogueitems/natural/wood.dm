@@ -171,21 +171,21 @@
 		if (0)
 			woodtotal = 1
 		if (1)
-			woodtotal = 1
+			woodtotal = 3
 		if (2)
-			woodtotal = pick(1,2)
+			woodtotal = pick(4,5)
 		if (3)
-			woodtotal = pick(1,2,3)
+			woodtotal = pick(6,7)
 		if (4)
-			woodtotal = pick(2,3)
+			woodtotal = pick(8,9)
 		if (5)
-			woodtotal = pick(2,3,4)
+			woodtotal = pick(10,11)
 		if (6)
-			woodtotal = pick(3,4)
+			woodtotal = pick(12)
 		else
-			woodtotal = 1
+			woodtotal = 3
 	if(HAS_TRAIT(user, TRAIT_MASTER_CARPENTER)) //we give extra to those in the role
-		woodtotal += pick(1,2)
+		woodtotal += pick(2,3)
 	if(I.tool_behaviour == TOOL_SAW)
 		playsound(get_turf(src.loc), 'sound/foley/sawing.ogg', 100)
 		user.visible_message("<span class='notice'>[user] starts sawing planks from [src].</span>")
@@ -290,7 +290,7 @@
 
 /obj/item/grown/log/tree/stick/Initialize(mapload)
 	icon_state = "stick[rand(1,2)]"
-	..()
+	. = ..()
 	var/static/list/slapcraft_recipe_list = list(
 		/datum/crafting_recipe/roguetown/survival/fishingcage,
 		/datum/crafting_recipe/roguetown/survival/woodspade,
@@ -405,6 +405,18 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
 
+/obj/item/grown/log/tree/stake/attack_obj(obj/O, mob/living/user)
+	if(!isitem(O))
+		return
+	var/obj/item/I = O
+	if(I.anvilrepair)
+		if(I.smeltresult == /obj/item/ingot/iron)
+			if(!do_after(user, 4 SECONDS, target = I))
+				return
+			to_chat(user, span_warning("The [user] breaks an [I] using stake into small parts!"))
+			new /obj/item/scrap(get_turf(I))
+			qdel(I)
+
 //................	Lumber essence	............... //
 /obj/item/grown/log/tree/small/essence
 	name = "essence of lumber"
@@ -443,6 +455,7 @@
 	sellprice = 4
 	bundletype = /obj/item/natural/bundle/plank
 	smeltresult = /obj/item/ash
+	metalizer_result = /obj/item/rogueore/tin
 
 /obj/item/natural/wood/plank/attack_right(mob/living/user)
 	if(user.get_active_held_item())
@@ -484,10 +497,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	stackname = "plank"
 	stacktype = /obj/item/natural/wood/plank
-	maxamount = 6
+	maxamount = 20
 	icon1 = "plankbundle2"
 	icon1step = 3
 	icon2 = "plankbundle3"
 	icon2step = 5
 	smeltresult = /obj/item/ash
-	metalizer_result = /obj/item/rogueore/tin

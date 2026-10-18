@@ -28,7 +28,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/combat/wooshes/punch/punchwoosh (1).ogg'
-	canparry = TRUE
+	mob_can_parry = TRUE
 	d_intent = INTENT_DODGE
 	defprob = 50
 	speak_emote = list("burbles")

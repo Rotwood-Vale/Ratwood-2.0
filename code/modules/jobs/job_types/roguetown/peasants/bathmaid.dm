@@ -25,7 +25,7 @@
 	advjob_examine = TRUE
 	cmode_music = 'sound/music/cmode/towner/combat_towner.ogg'
 	social_rank = SOCIAL_RANK_PEASANT
-	job_traits = list(TRAIT_EMPATH, TRAIT_GOODLOVER, TRAIT_HOMESTEAD_EXPERT)
+	job_traits = list(TRAIT_EMPATH, TRAIT_GOODLOVER, TRAIT_HOMESTEAD_EXPERT, TRAIT_BATHHOUSE_DANCER)
 	job_subclasses = list(
 		/datum/advclass/nightmaiden,
 		/datum/advclass/nightmaiden/concubine,

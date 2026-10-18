@@ -30,6 +30,14 @@
 	verbage = "sews"
 	craftdiff = 0
 
+/datum/crafting_recipe/roguetown/survival/clothblindfold
+	name = "blindfold"
+	result = list(/obj/item/clothing/mask/rogue/blindfold)
+	reqs = list(/obj/item/natural/cloth = 1)
+	craftdiff = 0
+	verbage_simple = "tie"
+	verbage = "ties"
+
 /datum/crafting_recipe/roguetown/survival/clothbelt
 	name = "cloth belt"
 	result = /obj/item/storage/belt/rogue/leather/cloth
@@ -139,42 +147,6 @@
 		)
 	tools = list(/obj/item/needle)
 	skillcraft = /datum/skill/craft/sewing
-
-/datum/crafting_recipe/roguetown/survival/bait
-	name = "bait"
-	result = /obj/item/bait
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/grown/wheat = 2,
-		)
-	subtype_reqs = TRUE
-
-/datum/crafting_recipe/roguetown/survival/sbaita
-	name = "sweetbait (apple)"
-	result = /obj/item/bait/sweet
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/grown/apple = 2,
-		)
-	subtype_reqs = TRUE
-
-/datum/crafting_recipe/roguetown/survival/sbait
-	name = "sweetbait (berry)"
-	result = /obj/item/bait/sweet
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/grown/berries/rogue = 2,
-		)
-	subtype_reqs = TRUE
-
-/datum/crafting_recipe/roguetown/survival/bloodbait
-	name = "bloodbait"
-	result = /obj/item/bait/bloody
-	reqs = list(
-		/obj/item/storage/roguebag = 1,
-		/obj/item/reagent_containers/food/snacks/rogue/meat = 2,
-		)
-	subtype_reqs = TRUE
 
 /datum/crafting_recipe/roguetown/survival/pipe
 	name = "wood pipe"
@@ -300,7 +272,7 @@
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/reagent_containers/food/snacks/grown/berries/rogue = 3,
 	)
-
+	display_category = ITEM_CAT_TOOLS_SUNDRIES
 // DIE
 
 /datum/crafting_recipe/roguetown/survival/d4
@@ -353,6 +325,7 @@
 		/obj/item/natural/fur = 1
 		)
 	craftdiff = 1
+	display_category = ITEM_CAT_TOOLS_SUNDRIES
 
 /datum/crafting_recipe/roguetown/survival/whetstone
 	name = "whetstone"
@@ -542,3 +515,44 @@
 	skillcraft = /datum/skill/craft/ceramics
 	req_table = TRUE
 	craftdiff = 2
+
+///Repair Kits///
+/datum/crafting_recipe/roguetown/survival/repairkitclothbad
+	name = "fabric patch" //9 fiber
+	display_category = ITEM_CAT_TOOLS_WORKSHOP
+	result = /obj/item/repair_kit/bad
+	reqs = list(
+		/obj/item/natural/cloth = 2,
+		/obj/item/natural/fibers = 2,
+		/obj/item/rope = 1,
+		)
+	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/survival/repairkitmetalingot
+	name = "empty metal repair kit (iron bar)"
+	display_category = ITEM_CAT_TOOLS_WORKSHOP
+	result = /obj/item/armorkit_empty
+	reqs = list(
+		/obj/item/ingot/iron = 1,
+		)
+	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/survival/repairkitmetalscrap
+	name = "empty metal repair kit (iron scrap)"
+	display_category = ITEM_CAT_TOOLS_WORKSHOP
+	result = /obj/item/armorkit_empty
+	reqs = list(
+		/obj/item/scrap = 3,
+		)
+	craftdiff = 1
+
+/datum/crafting_recipe/roguetown/survival/repairkitcloth
+	name = "sewing kit"
+	display_category = ITEM_CAT_TOOLS_WORKSHOP
+	result = /obj/item/repair_kit
+	reqs = list(
+		/obj/item/natural/cloth = 4,
+		/obj/item/natural/hide/cured = 2,
+		)
+	skillcraft = /datum/skill/craft/sewing
+	craftdiff = 4 //Expert

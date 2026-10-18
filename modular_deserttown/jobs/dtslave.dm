@@ -11,7 +11,7 @@
 	allowed_ages = ALL_AGES_LIST
 
 	tutorial = "Whether you were once a free soul or were born into chattel servitude, you're one of the many abused and mistreated slaves whipped by the Task Master to keep the Sultan's palace running smooth. Each day is marked by a scar on your back, and it is your back that carries the dirty, menial work required to keep the royal family content and decadent."
-	
+
 	outfit = /datum/outfit/job/roguetown/slave
 	advclass_cat_rolls = list(CTAG_PSLAVE = 20)
 	job_traits = list(TRAIT_HOMESTEAD_EXPERT)
@@ -34,7 +34,7 @@
 	tutorial = "You are a humdrum servant, dressed the part; lowly and best out of sight. It's practical, however."
 	outfit = /datum/outfit/job/roguetown/slave/servant
 	category_tags = list(CTAG_PSLAVE)
-	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND)
+	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_ROYAL_SUBSIDY)
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_INT = 1,
@@ -55,7 +55,7 @@
 
 /datum/outfit/job/roguetown/slave/servant/pre_equip(mob/living/carbon/human/H)
 	..()
-	
+
 	if(should_wear_femme_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/dress/thawb
 	else
@@ -80,7 +80,7 @@
 	tutorial = "Not one really mentions how hard it is to do yardwork in a dress and stockings, but at least you still look really good."
 	outfit = /datum/outfit/job/roguetown/slave/pleasure
 	category_tags = list(CTAG_PSLAVE)
-	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_FOOD_STIPEND)
+	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_ROYALSERVANT, TRAIT_ROYAL_SUBSIDY)
 	subclass_stats = list(
 		STATKEY_PER = 2,
 		STATKEY_INT = 1,

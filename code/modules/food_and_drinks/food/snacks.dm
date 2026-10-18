@@ -115,7 +115,7 @@ All foods are distributed among various categories. Use common sense.
 		SSticker.OnRoundstart(CALLBACK(src, PROC_REF(begin_rotting)))
 	if((cooked_type || fried_type) && !cooktime)
 		cooktime = 30 SECONDS
-	..()
+	return ..()
 
 /obj/item/reagent_containers/food/snacks/proc/begin_rotting()
 	START_PROCESSING(SSobj, src)
@@ -265,6 +265,9 @@ All foods are distributed among various categories. Use common sense.
 	if(!eater)
 		return
 
+	if(HAS_TRAIT(eater, TRAIT_HEMOPHAGE)) //trait desc states that normal food would make them ill, adjusted accordingly
+		eater.adjustToxLoss(2)
+
 	var/apply_effect = TRUE
 	// check to see if what we're eating is appropriate fare for our "social class" (aka nobles shouldn't be eating sticks of butter you troglodytes)
 	if (ishuman(eater))
@@ -318,7 +321,7 @@ All foods are distributed among various categories. Use common sense.
 					if(human_eater.add_stress(/datum/stressevent/hated_food))
 						to_chat(human_eater, span_red("Yuck! My hated food!"))
 
-		if (!HAS_TRAIT(human_eater, TRAIT_NASTY_EATER) && !HAS_TRAIT(human_eater, TRAIT_ORGAN_EATER))
+		if (!HAS_TRAIT(human_eater, TRAIT_NASTY_EATER) && !HAS_TRAIT(human_eater, TRAIT_ORGAN_EATER) && !HAS_TRAIT(human_eater, TRAIT_WILD_EATER))
 			if (human_eater.is_noble())
 				if (!portable)
 					if(!(locate(/obj/structure/table) in range(1, eater)))
@@ -465,7 +468,7 @@ All foods are distributed among various categories. Use common sense.
 			if(reagents.total_volume)
 				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
-				var/amt2take = reagents.total_volume / (bitesize - bitecount)
+				var/amt2take = reagents.total_volume / max(bitesize - bitecount, 1)
 				if((bitecount >= bitesize) || (bitesize == 1))
 					amt2take = reagents.total_volume
 				reagents.trans_to(M, amt2take, transfered_by = user, method = INGEST)
@@ -525,7 +528,8 @@ All foods are distributed among various categories. Use common sense.
 	var/rot_text = ""
 	if(!rotprocess)
 		return "This food does not rot."
-	switch(initial(rotprocess))
+	var/shelf_life = initial(rotprocess) || rotprocess
+	switch(shelf_life)
 		if(0 to SHELFLIFE_TINY)
 			rot_text = "This food will rot in less than a third of a dae."
 		if(SHELFLIFE_TINY to SHELFLIFE_SHORT)
@@ -536,7 +540,7 @@ All foods are distributed among various categories. Use common sense.
 			rot_text = "This food will last a dae and a half."
 		if(SHELFLIFE_LONG to SHELFLIFE_EXTREME)
 			rot_text = "This food will last three daes."
-	switch(-1 * warming / initial(rotprocess))
+	switch(-1 * warming / shelf_life)
 		if(-INFINITY to 0.25)
 			rot_text += " It is very fresh."
 		if(0.25 to 0.5)

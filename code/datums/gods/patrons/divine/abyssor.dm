@@ -19,6 +19,7 @@
 					/obj/effect/proc_holder/spell/invoked/abyssal_infusion		= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/resurrect/abyssor		= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_ABYSSOR
 	confess_lines = list(
 		"ABYSSOR COMMANDS THE WAVES!",
 		"THE OCEAN'S FURY IS ABYSSOR'S WILL!",

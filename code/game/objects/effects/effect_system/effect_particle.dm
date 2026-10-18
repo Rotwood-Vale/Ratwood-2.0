@@ -22,10 +22,8 @@
 	return
 
 
-/atom/movable/proc/MakeParticleEmitter(type, create_new = FALSE, time = -1)
-	var/obj/particle_emitter/pe
-	pe = new /obj/particle_emitter(loc, time)
-	pe.host = src
+/atom/movable/proc/MakeParticleEmitter(type, create_new = FALSE, time = -1, particle_color = null)
+	var/obj/particle_emitter/pe = new(loc, time, particle_color, src)
 	pe.AddParticles(type, create_new)
 	particle_emitters |= pe
 	return pe
@@ -79,9 +77,10 @@
 	appearance_flags = PIXEL_SCALE
 	var/particle_type = null
 	var/atom/movable/host
+	var/tmp/initial_owner_type // used for harddel tracking
 
 
-/obj/particle_emitter/Initialize(mapload, time, _color)
+/obj/particle_emitter/Initialize(mapload, time, _color, _host)
 	. = ..()
 	if (particle_type)
 		particles = GLOB.all_particles[particle_type]
@@ -89,11 +88,22 @@
 	if (time > 0)
 		QDEL_IN(src, time)
 	color = _color
+	host = _host
+	if(host)
+		initial_owner_type = host.type
 
 /obj/particle_emitter/Destroy(force)
 	. = ..()
-	host.particle_emitters -= src
-	host = null
+	if(host)
+		host.particle_emitters -= src
+		host = null
+
+/obj/particle_emitter/dump_harddel_info()
+	. = ..()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	return "Owner's type: [initial_owner_type]"
 
 /obj/particle_emitter/smoke
 	layer = FIRE_LAYER
