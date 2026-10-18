@@ -56,8 +56,8 @@
 		victim.adjustToxLoss(-tox_drained)
 		src.adjustToxLoss(tox_drained)
 
-	if(!(VDrinker || HAS_TRAIT(src, TRAIT_BLACKBLOOD)))
-		if(!(HAS_TRAIT(src, TRAIT_HORDE) || HAS_TRAIT(src, TRAIT_HEMOPHAGE) || HAS_TRAIT(src, TRAIT_NASTY_EATER)))
+	if(!VDrinker)
+		if(!HAS_TRAIT(src, TRAIT_HORDE) && !HAS_TRAIT(src, TRAIT_HEMOPHAGE))
 			to_chat(src, span_warning("I'm going to puke..."))
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, vomit), 0, TRUE), rand(8 SECONDS, 15 SECONDS))
 		if(HAS_TRAIT(src, TRAIT_HEMOPHAGE) && ishuman(src))
@@ -73,20 +73,6 @@
 	if(HAS_TRAIT(victim, TRAIT_BLACKBLOOD) || HAS_TRAIT(victim, TRAIT_PALLID) || victim.mind?.has_antag_datum(/datum/antagonist/werewolf) || (victim.stat != DEAD && victim.mind?.has_antag_datum(/datum/antagonist/zombie)))
 		to_chat(src, span_danger("I'm going to puke..."))
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, vomit), 0, TRUE), rand(8 SECONDS, 15 SECONDS))
-		return
-
-	// Blackbloods actually drink the blood as a reagent, rather than taking vitae like vampires do
-	if(HAS_TRAIT(src, TRAIT_BLACKBLOOD))
-		var/blood_id = victim.get_blood_id()
-		var/blood_amount = min(max(1, round(BLOOD_VOLUME_MAXIMUM * 0.01)), victim.get_blood_volume())
-		if(!blood_id || blood_amount <= 0)
-			return
-		victim.adjust_blood_volume(-blood_amount)
-		victim.handle_blood()
-		var/datum/reagents/drunk_blood = new()
-		drunk_blood.add_reagent(blood_id, blood_amount, victim.get_blood_data(blood_id))
-		drunk_blood.trans_to(src, drunk_blood.total_volume, transfered_by = src, method = INGEST)
-		qdel(drunk_blood)
 		return
 
 	if(VVictim)

@@ -70,8 +70,6 @@
 		return
 	if(HAS_TRAIT(H, TRAIT_NASTY_EATER) || HAS_TRAIT(H, TRAIT_WILD_EATER))
 		H.adjust_hydration(8)
-		if(HAS_TRAIT(H, TRAIT_BLACKBLOOD))
-			H.reagents.add_reagent(/datum/reagent/medicine/healthpot/zarum/blood, 0.5) // this is a fraction of a fraction in the end, it's more for situations where you don't have food in pve
 		return
 	H.add_nausea(12) //Over 8 units will cause puking
 
