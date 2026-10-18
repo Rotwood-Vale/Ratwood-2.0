@@ -765,7 +765,7 @@
 
 /datum/intent/hand/clean
 	name = "clean"
-	icon_state = "inclean"
+	icon_state = "intouch"
 
 /datum/intent/hand/draw
 	name = "draw"

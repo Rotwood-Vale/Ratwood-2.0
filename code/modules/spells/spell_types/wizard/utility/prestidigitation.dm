@@ -37,7 +37,10 @@
 
 	switch(caster.used_intent.type)
 		if(/datum/intent/hand/clean)
-			if(presti_hand.clean_thing(victim, caster))
+			if(istype(victim, /obj/structure/well/fountain/mana) || istype(victim, /turf/open/lava))
+				presti_hand.gather_thing(victim, caster)
+				handle_presti_cost(caster, PRESTI_CLEAN)
+			else if(presti_hand.clean_thing(victim, caster))
 				handle_presti_cost(caster, PRESTI_CLEAN)
 		if(/datum/intent/hand/spark)
 			if(presti_hand.create_spark(caster, victim))
@@ -82,6 +85,7 @@
 	var/cleanspeed = 35
 	var/motespeed = 20
 	var/sparkspeed = 30
+	var/gatherspeed = 35
 	var/spark_cd = 0
 	var/cast_range = 7
 	experimental_inhand = FALSE
@@ -104,6 +108,23 @@
 /obj/item/melee/new_touch_attack/prestidigitation/Destroy()
 	QDEL_NULL(mote)
 	return ..()
+
+/obj/item/melee/new_touch_attack/prestidigitation/proc/gather_thing(atom/target, mob/living/carbon/human/user)
+	var/skill_level = user.get_skill_level(/datum/skill/magic/arcane)
+	var/speed = initial(gatherspeed) - (skill_level * 3) // 3 speed per skill level, from 35 down to a maximum of 17 (pretty quick)
+	var/turf/Turf = get_turf(target)
+	if(istype(target, /obj/structure/well/fountain/mana))
+		user.visible_message(span_notice("[user] begins crystalizing liquid mana..."))
+		while(do_after(user, speed, target = target))
+			to_chat(user, span_notice("I mold the liquid mana in \the [target.name] with my arcane power, crystalizing it!"))
+			new /obj/item/magic/manacrystal(Turf)
+		return TRUE
+	if(istype(target, /turf/open/lava))
+		user.visible_message(span_notice("[user] begins molding the oozing lava..."))
+		while(do_after(user, speed, target = target))
+			to_chat(user, span_notice("I mold a handful of oozing lava with my arcane power, rapidly hardening it!"))
+			new /obj/item/magic/obsidian(user.loc)
+		return TRUE
 
 /obj/item/melee/new_touch_attack/prestidigitation/proc/sense_leylines(mob/living/carbon/human/user)
 	if(!length(GLOB.leyline_sites))
