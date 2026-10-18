@@ -69,5 +69,3 @@
 	/obj/item/natural/bundle/cloth/bandage/full,
 	/obj/item/reagent_containers/glass/bottle/alchemical/healthpot
 	)
-
-

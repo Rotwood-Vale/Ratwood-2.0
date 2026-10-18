@@ -682,7 +682,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
 	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
 	TRAIT_SELF_AWARE = span_info("I know my body well, and know innately what its aches mean."),
-	
+
 	//Second chance traits
 	TRAIT_ROTMAN = span_artery("I am partially undead. My heart does not beat."),
 	TRAIT_PALLID = span_artery("I was once a nite-creacher, be it lycanthrope or vampyre, but was cured by something close to divine intervention. It has left me changed: silver burns my flesh, and the open sky fills me with unease. Yet I draw no breath, and my eyes pierce the darkness. Lingering traces of the curse that once claimed me. Traces I hope will fade in time."),

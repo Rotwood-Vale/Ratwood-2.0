@@ -344,8 +344,11 @@
 		return
 	if(in_range(user, src) || isobserver(user))
 		if(waxed)
-			to_chat(user, span_notice("This writ has been signed by [signee.real_name], sealed with Inquisitorial Tallow, and can now be mailed back through the Hermes. The Archbishop will be pleased with this one."))
-		if(signed)
+			if(signed)
+				to_chat(user, span_notice("This writ has been signed by [signee.real_name], sealed with Inquisitorial Tallow, and can now be mailed back through the Hermes. The Archbishop will be pleased with this one."))
+			else
+				to_chat(user, span_notice("This writ has been sealed with Inquisitorial Tallow, and can now be mailed back through the Hermes. The Archbishop will be pleased with this one."))
+		else if(signed)
 			to_chat(user, span_notice("This writ has been signed by [signee.real_name], and can now be mailed back through the Hermes. Sealing it with Inquisitorial Tallow would garner more favor from the Archbishop."))
 		else if(signee)
 			to_chat(user, span_notice("This writ is intended to be signed by [signee.real_name]."))

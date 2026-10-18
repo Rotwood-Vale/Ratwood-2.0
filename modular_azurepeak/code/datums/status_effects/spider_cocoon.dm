@@ -31,8 +31,9 @@
 /datum/status_effect/buff/healing/spider_cocoon/tick()
 	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
 		return
+	var/heal_amount = healing_on_tick
 	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
-		healing_on_tick /= 2
+		heal_amount /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#4e4c4c00"
 	var/list/wCount = owner.get_wounds()
@@ -41,13 +42,13 @@
 			//Keeps the user alive
 			owner.set_blood_volume(min(owner.get_blood_volume()+blood_healing_on_tick, BLOOD_VOLUME_NORMAL))
 		if(wCount.len > 0)
-			owner.heal_wounds(healing_on_tick)
+			owner.heal_wounds(heal_amount)
 			owner.update_damage_overlays()
-		owner.adjustBruteLoss(-healing_on_tick, 0)
-		owner.adjustFireLoss(-healing_on_tick, 0)
-		owner.adjustOxyLoss(-healing_on_tick * 5, 0)
-		owner.adjustToxLoss(-healing_on_tick, 0)
-		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
-		owner.adjustCloneLoss(-healing_on_tick, 0)
+		owner.adjustBruteLoss(-heal_amount, 0)
+		owner.adjustFireLoss(-heal_amount, 0)
+		owner.adjustOxyLoss(-heal_amount * 5, 0)
+		owner.adjustToxLoss(-heal_amount, 0)
+		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -heal_amount)
+		owner.adjustCloneLoss(-heal_amount, 0)
 
 #undef COCOON_FILTER

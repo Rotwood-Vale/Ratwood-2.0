@@ -69,6 +69,10 @@
 	if(checkdefense(bitten, user))
 		return FALSE
 
+	if(user.pulling != src)
+		if(!lying_attack_check(user))
+			return FALSE
+
 	var/def_zone
 	if(src.cmode)
 		def_zone = melee_accuracy_check(user.zone_selected, user, src, /datum/skill/combat/unarmed, bitten, null)

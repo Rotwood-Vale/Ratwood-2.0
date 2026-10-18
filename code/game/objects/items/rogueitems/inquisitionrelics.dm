@@ -1671,7 +1671,7 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 
 	var/mistake = rand(1,80)
 	var/error_chance = "For this INDEXED sample, a false-positive chance of [mistake]% must be accounted for."
-	
+
 	report_html = ""
 	report_html += "<center><font size=4><b>HOLY OTAVAN INQUISITION</b></font></center>"
 	report_html += "<center>Grand Bureau of Haemological Affairs<br>"
@@ -1699,7 +1699,7 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 	if(HAS_TRAIT(H, TRAIT_BLACKBLOOD))
 		report_html += "<i>By decree of the Holy Otavan Inquisition, the subject is judged CURED and restored to the flock of commonfolk. Should they ever stray from the Allfather's Light and back to evil against humenkind, let His 'Final Mercy' be carried out in due diligence. <b>They shall NOT be granted another second chance</b>.</i><br>"
 	report_html += "<hr>"
-	
+
 	report_html += "<b>LYFEBLOOD-LUX RESONATOR RESULTS</b><br><br>"
 
 	if(H.patron?.type in ALL_DIVINE_PATRONS)
@@ -1745,7 +1745,7 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 			report_html += "<font color='#167733'><b>Resolved Necrotic Affliction</b></font><br><br>"
 			report_html += "<i><i>The sample exhibits extensive post-necrotic restructuring, with markedly diminished tissue vitality and abnormal cessation of ordinary respiratory humoral exchange. Sanguine response to injury is severely blunted, consistent with prior reanimation and subsequent purification; residual necrotic alteration persists without evidence of active rot.</i><br><br>"
 			found = TRUE
-		
+
 		for(var/datum/antagonist/D in H.mind.antag_datums)
 			if(istype(D, /datum/antagonist/vampire))
 				found = TRUE

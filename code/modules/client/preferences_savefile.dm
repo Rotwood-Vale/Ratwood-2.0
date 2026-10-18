@@ -624,6 +624,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		virtuetwo = new /datum/virtue/none
 
+	virtue = migrate_legacy_virtue(virtue)
+	virtuetwo = migrate_legacy_virtue(virtuetwo)
+
 	if(islist(virtue_choices))
 		virtue.picked_choices = virtue_choices.Copy()
 	virtue.sanitize_choices()

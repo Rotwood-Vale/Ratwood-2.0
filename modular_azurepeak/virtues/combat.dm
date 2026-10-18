@@ -189,7 +189,7 @@
 /datum/virtue/combat/second_chance/apply_to_human(mob/living/carbon/human/recipient)
 	// Delayed so antag datums have been handed out by the time we check them. Choices are snapshotted
 	// because src is the player's prefs virtue, which they can still edit during the delay.
-	addtimer(CALLBACK(src, .proc/apply_second_chance, recipient, picked_choices.Copy()), 8 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(apply_second_chance), recipient, picked_choices.Copy()), 8 SECONDS)
 
 /datum/virtue/combat/second_chance/proc/apply_second_chance(mob/living/carbon/human/recipient, list/chosen)
 	if(QDELETED(recipient) || !recipient.mind || !length(chosen))
@@ -240,6 +240,17 @@
 				to_chat(recipient, span_danger("DISCLAIMER: This Second Chance option exists to support roleplay and backstory continuity, not to diminish the threat or narrative weight of vampires, werewolves, or similar antagonistic entities. You are a tortured survivor of the Otavan Inquisition, and your very LUX fears them. Failure to roleplay this appropriately may result in this option's removal. Have fun and don't be cringe."))
 
 	recipient.update_sight() // sight was already set when we spawned, so darkvision needs a refresh
+
+/// Legacy virtue, replaced by Second Chance's Rotcured option. Kept nameless (so it never shows in the picker) only so old saves can be migrated.
+/datum/virtue/combat/rotcured
+
+/// Swaps a legacy virtue loaded from an old save for its current equivalent.
+/proc/migrate_legacy_virtue(datum/virtue/loaded)
+	if(!istype(loaded, /datum/virtue/combat/rotcured))
+		return loaded
+	var/datum/virtue/combat/second_chance/migrated = new()
+	migrated.picked_choices = list(SC_ROTCURED)
+	return migrated
 
 #undef SC_ROTCURED
 #undef SC_BLACKBLOOD

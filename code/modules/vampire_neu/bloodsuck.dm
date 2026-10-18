@@ -57,7 +57,7 @@
 		src.adjustToxLoss(tox_drained)
 
 	if(!(VDrinker || HAS_TRAIT(src, TRAIT_BLACKBLOOD)))
-		if(!(HAS_TRAIT(src, TRAIT_HORDE) || HAS_TRAIT(src, TRAIT_NASTY_EATER)))
+		if(!(HAS_TRAIT(src, TRAIT_HORDE) || HAS_TRAIT(src, TRAIT_HEMOPHAGE) || HAS_TRAIT(src, TRAIT_NASTY_EATER)))
 			to_chat(src, span_warning("I'm going to puke..."))
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, vomit), 0, TRUE), rand(8 SECONDS, 15 SECONDS))
 		if(HAS_TRAIT(src, TRAIT_HEMOPHAGE) && ishuman(src))
@@ -74,24 +74,24 @@
 		to_chat(src, span_danger("I'm going to puke..."))
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon, vomit), 0, TRUE), rand(8 SECONDS, 15 SECONDS))
 		return
-	
-	// some code witchcraft for blood ingest transfer, fuck sake
-	var/blood_amount = max(1, round(BLOOD_VOLUME_MAXIMUM * 0.01))
-	blood_amount = min(blood_amount, victim.get_blood_volume())
-	victim.set_blood_volume(max(victim.get_blood_volume() - blood_amount, 0))
-	victim.handle_blood()
-	var/datum/reagents/temp = new(blood_amount)
-	temp.my_atom = src
-	temp.add_reagent(/datum/reagent/blood, blood_amount)
-	var/datum/reagent/blood/B = temp.has_reagent(/datum/reagent/blood)
-	if(B)
-		B.data = victim.get_blood_data()
-	temp.trans_to(src, blood_amount, TRUE, TRUE, FALSE, src, FALSE, INGEST)
+
+	// Blackbloods actually drink the blood as a reagent, rather than taking vitae like vampires do
 	if(HAS_TRAIT(src, TRAIT_BLACKBLOOD))
+		var/blood_amount = max(1, round(BLOOD_VOLUME_MAXIMUM * 0.01))
+		blood_amount = min(blood_amount, victim.get_blood_volume())
+		victim.set_blood_volume(max(victim.get_blood_volume() - blood_amount, 0))
+		victim.handle_blood()
+		var/datum/reagents/temp = new(blood_amount)
+		temp.my_atom = src
+		temp.add_reagent(/datum/reagent/blood, blood_amount)
+		var/datum/reagent/blood/B = temp.has_reagent(/datum/reagent/blood)
+		if(B)
+			B.data = victim.get_blood_data()
+		temp.trans_to(src, blood_amount, TRUE, TRUE, FALSE, src, FALSE, INGEST)
 		return
 
 	if(VVictim)
-		to_chat(src, span_userdanger("<b>YOU TRY TO COMMIT DIABLERIE ON [uppertext(victim)].</b>"))
+		to_chat(src, span_userdanger("<b>YOU TRY TO COMMIT DIABLERIE ON [uppertext(victim.name)].</b>"))
 
 	var/blood_handle
 	if(victim.stat == DEAD)

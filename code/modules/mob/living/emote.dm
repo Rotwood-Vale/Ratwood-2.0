@@ -516,7 +516,7 @@
 		/// Blackblood hidden interactions
 		var/mob/living/carbon/carbs = target
 		if(HAS_TRAIT(carbs, TRAIT_BLACKBLOOD) && HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(carbs, TRAIT_PSYDONIAN_GRIT))
-			user.add_stress(/datum/stressevent/inq_trauma)
+			carbs.add_stress(/datum/stressevent/inq_trauma)
 			carbs.emote("whimper")
 		record_round_statistic(STATS_KISSES_MADE)
 		if(target.mind)
@@ -630,7 +630,7 @@
 		if(user.mind)
 			/// Blackblood hidden interactions
 			var/mob/living/carbon/carbs = target
-			if(HAS_TRAIT(carbs, TRAIT_BLACKBLOOD) && HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(carbs, TRAIT_PSYDONIAN_GRIT))
+			if(HAS_TRAIT(carbs, TRAIT_BLACKBLOOD) && HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(carbs, TRAIT_PSYDONIAN_GRIT) && !carbs.has_stress_event(/datum/stressevent/inq_trauma))
 				carbs.add_stress(/datum/stressevent/inq_trauma)
 				carbs.stress_freakout()
 			record_round_statistic(STATS_HUGS_MADE)
@@ -766,7 +766,7 @@
 		/// Blackblood hidden interactions
 		var/mob/living/carbon/carbs = target
 		if(HAS_TRAIT(target, TRAIT_BLACKBLOOD) && HAS_TRAIT(user, TRAIT_INQUISITION) && !HAS_TRAIT(target, TRAIT_PSYDONIAN_GRIT))
-			user.add_stress(/datum/stressevent/inq_trauma)
+			carbs.add_stress(/datum/stressevent/inq_trauma)
 			carbs.emote("whimper")
 
 /datum/emote/living/pinch

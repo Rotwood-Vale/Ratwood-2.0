@@ -2,8 +2,6 @@
 	set waitfor = FALSE
 	set invisibility = 0
 
-	// Sleep gate: skip Life() for AI-off NPCs to save cycles, but only if fully conscious.
-	// If not conscious, we must keep running Life() so wounds bleed, blood drops, and update_stat() can transition us
 	if(!client && ai_controller && ai_controller.ai_status == AI_STATUS_OFF)
 		return
 
@@ -45,38 +43,7 @@
 			heal_wounds(3) // Check how many ticks we've passed then heal them based on the amount passed. (1 tick = 1, 2 ticks = 2, etc)
 
 	/// ENDVRE AS HE DOES.
-	if(!stat && (HAS_TRAIT(src, TRAIT_PSYDONITE) && !HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS)))
-		handle_wounds()
-		//passively heal wounds, when you're in trouble..
-		if(blood_volume > BLOOD_VOLUME_SURVIVE)
-			for(var/datum/wound/wound as anything in get_wounds())
-				if(wound?.severity <= WOUND_SEVERITY_MODERATE)
-					if(!istype(wound, /datum/wound/slash/incision))
-						wound.heal_wound(0.4)
-
-	/// Should not stack with the above, hopefully.
-	if(!stat && HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS))
-		if(src.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || src.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)) // silver fire stops the regen completely
-			return
-		handle_wounds()
-		if(blood_volume > BLOOD_VOLUME_SURVIVE && nutrition > NUTRITION_LEVEL_STARVING && hydration > HYDRATION_LEVEL_DEHYDRATED) // starving is the minimal here, thirst also stops the regen now
-			for(var/datum/wound/wound as anything in get_wounds())
-				if(!istype(wound, /datum/wound/slash/incision))
-					wound.heal_wound(0.5) // roughly half of what psydonite can heal up, after some tests (the above is 0.4, because 0.6 is in life() and death())
-					if(wound.bleed_rate > 0) // but we also slowly recover from bleeding now
-						var/bleed_heal = max(wound.bleed_rate * 0.1, 0.2)
-						wound.set_bleed_rate(max(wound.bleed_rate - bleed_heal, 0))
-						if(wound.bleed_rate <= 0)
-							if(wound.sew_threshold)
-								wound.sew_progress = wound.sew_threshold
-								wound.sew_wound() // it does not heal the wound, however! another nick and you're back to bleeding like a pig.
-					nutrition = max(0, nutrition - (NUTRITION_LEVEL_FULL * 0.0025)) // drains 0.25% of your hunger to restore all of above, still
-
-	if(blood_volume <= BLOOD_VOLUME_SURVIVE && stat)
-		handle_passive_blood()
-
-	/// ENDVRE AS HE DOES.
-	if(!stat && HAS_TRAIT(src, TRAIT_PSYDONITE) && !HAS_TRAIT(src, TRAIT_PARALYSIS))
+	if(!stat && HAS_TRAIT(src, TRAIT_PSYDONITE) && !HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS))
 		handle_wounds()
 		//passively heal wounds, when you're in trouble..
 		if(blood_volume > BLOOD_VOLUME_SURVIVE)
@@ -84,6 +51,29 @@
 				wound.heal_wound(0.6)
 				if(!istype(wound, /datum/wound/slash/incision))
 					wound.heal_wound(0.4)
+
+	/// Blackblood regen. Excluded from the Psydonite regen above so the two never stack. Silver fire stops it completely.
+	if(!stat && HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS) && !has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) && !has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+		handle_wounds()
+		if(blood_volume > BLOOD_VOLUME_SURVIVE && nutrition > NUTRITION_LEVEL_STARVING && hydration > HYDRATION_LEVEL_DEHYDRATED) // starving is the minimal here, thirst also stops the regen now
+			var/regenerated = FALSE
+			for(var/datum/wound/wound as anything in get_wounds())
+				if(istype(wound, /datum/wound/slash/incision))
+					continue
+				if(wound.heal_wound(0.5)) // roughly half of what psydonite can heal up
+					regenerated = TRUE
+				if(!wound.owner) // fully healed and removed
+					continue
+				if(wound.bleed_rate > 0) // but we also slowly recover from bleeding now
+					regenerated = TRUE
+					var/bleed_heal = max(wound.bleed_rate * 0.1, 0.2)
+					wound.set_bleed_rate(max(wound.bleed_rate - bleed_heal, 0))
+					if(wound.bleed_rate <= 0)
+						if(wound.sew_threshold)
+							wound.sew_progress = wound.sew_threshold
+							wound.sew_wound() // it does not heal the wound, however! another nick and you're back to bleeding like a pig.
+			if(regenerated)
+				nutrition = max(0, nutrition - (NUTRITION_LEVEL_FULL * 0.0025)) // drains 0.25% of your hunger to restore all of above, still
 
 	if(blood_volume <= BLOOD_VOLUME_SURVIVE && stat)
 		handle_passive_blood()

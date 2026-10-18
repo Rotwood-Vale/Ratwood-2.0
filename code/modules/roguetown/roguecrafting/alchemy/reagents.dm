@@ -15,8 +15,16 @@
 	alpha = 173
 
 /datum/reagent/medicine/healthpot/on_mob_life(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_NOREGEN) || HAS_TRAIT(M, TRAIT_BLACKBLOOD))
-		return ..()
+	if(can_heal(M))
+		potion_heal(M)
+	..()
+
+/// Whether this potion has any healing effect on the drinker.
+/datum/reagent/medicine/healthpot/proc/can_heal(mob/living/carbon/M)
+	return !HAS_TRAIT(M, TRAIT_NOREGEN) && !HAS_TRAIT(M, TRAIT_BLACKBLOOD)
+
+/// The potion's per-tick healing. Subtypes override this rather than on_mob_life, so the parent's healing never stacks on top of theirs.
+/datum/reagent/medicine/healthpot/proc/potion_heal(mob/living/carbon/M)
 	if(volume >= 60)
 		M.reagents.remove_reagent(/datum/reagent/medicine/healthpot, 2) //No overhealing.
 	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
@@ -31,7 +39,6 @@
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
 		M.adjustCloneLoss(-1.75*REM, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_EYES, -1*REM)
-	..()
 
 /datum/reagent/medicine/healthpot/zarum/blood
 	name = "Blackened Sludge"
@@ -59,15 +66,17 @@
 	taste_mult = 8
 	var/hydration = 4
 
-/datum/reagent/medicine/healthpot/zarum/on_mob_life(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_NOREGEN))
-		return ..()
+// Unlike lifeblood, zarum still works on Blackbloods.
+/datum/reagent/medicine/healthpot/zarum/can_heal(mob/living/carbon/M)
+	return !HAS_TRAIT(M, TRAIT_NOREGEN)
+
+/datum/reagent/medicine/healthpot/zarum/potion_heal(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!HAS_TRAIT(H, TRAIT_NOHUNGER))
 			H.adjust_hydration(hydration)
 		if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-			M.set_blood_volume(min(M.adjust_blood_volume(10), BLOOD_VOLUME_NORMAL))
+			M.set_blood_volume(min(M.get_blood_volume() + 10, BLOOD_VOLUME_NORMAL))
 	var/list/wCount = M.get_wounds()
 	if(wCount.len > 0)
 		M.heal_wounds(4) //Better than traditional lifeblood at sealing open wounds. Slightly weaker healing potency, in turn.
@@ -78,7 +87,6 @@
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3  * REAGENTS_EFFECT_MULTIPLIER)
 		M.adjustCloneLoss(-1.5  * REAGENTS_EFFECT_MULTIPLIER, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_EYES, -1 * REAGENTS_EFFECT_MULTIPLIER)
-	..()
 
 /datum/reagent/medicine/stronghealth
 	name = "Strong Health Potion"
@@ -309,28 +317,6 @@
 	M.apply_status_effect(/datum/status_effect/buff/alch/fortunepot)
 	return ..()
 
-/* Ruined Potion
-	When two conflicting potions end up in the same container (or the same body),
-	they neutralize each other into this useless sludge.
-*/
-/datum/reagent/ruined_potion
-	name = "Odd water"
-	description = "A foul mess of conflicting alchemical essences that tried to push nature too far. Utterly useless."
-	reagent_state = LIQUID
-	color = "#6b5d4f" // muddy brownish-green
-	taste_description = "bitter failure"
-	scent_description = "rancid alchemical waste"
-	metabolization_rate = REAGENTS_METABOLISM
-	overdose_threshold = 0
-	can_synth = FALSE 
-
-/datum/reagent/ruined_potion/on_mob_life(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_NASTY_EATER))
-		return
-	if(volume > 0.99)
-		M.add_nausea(2) // Drinking ruined potions is unpleasant but not dangerous.
-	return ..()
-
 
 //Poisons
 /* Tested this quite a bit. Heres the deal. Metabolism REAGENTS_SLOW_METABOLISM is 0.1 and needs to be that so poison isnt too fast working but
@@ -356,6 +342,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 			M.add_nausea(3) // so one berry or one dose (one clunk of extracted poison, 5u) will make you really sick and a hair away from crit.
 			M.adjustToxLoss(2)
 	return ..()
+
 
 /datum/reagent/strongpoison		// Strong poison, meant to be somewhat difficult to produce using alchemy or spawned with select antags. Designed to kill in one full dose (5u) better drink antidote fast
 	name = "Strong Poison"
@@ -409,6 +396,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	harmful = TRUE
 
+
 /datum/reagent/organpoison/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M, TRAIT_NASTY_EATER) && !HAS_TRAIT(M, TRAIT_ORGAN_EATER) && !HAS_TRAIT(M, TRAIT_WILD_EATER))
 		M.add_nausea(9)
@@ -440,6 +428,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	taste_description = "frozen air"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	harmful = TRUE
+
 
 /datum/reagent/strongstampoison/on_mob_life(mob/living/carbon/M)
 	if(!HAS_TRAIT(M,TRAIT_INFINITE_STAMINA))

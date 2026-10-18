@@ -39,7 +39,8 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 	social_rank = SOCIAL_RANK_ROYAL
 	//No nobility for you, being a member of the clergy means you gave UP your nobility. It says this in many of the church tutorial texts.
 	//Someone who survived being turned by an Inquisitor themselves? Not a chance.
-	quirk_restrictions = list(/datum/quirk/noble, /datum/virtue/combat/second_chance, /datum/quirk/hunted)
+	virtue_restrictions = list(/datum/virtue/combat/second_chance)
+	quirk_restrictions = list(/datum/quirk/noble, /datum/quirk/hunted)
 	job_traits = list(
 		TRAIT_CHOSEN,
 		TRAIT_RITUALIST,
