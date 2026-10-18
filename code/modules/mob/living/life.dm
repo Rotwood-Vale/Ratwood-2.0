@@ -54,7 +54,6 @@
 
 	/// Blackblood regen. Excluded from the Psydonite regen above so the two never stack. Silver fire stops it completely.
 	if(!stat && HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS) && !has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) && !has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
-		handle_wounds()
 		if(blood_volume > BLOOD_VOLUME_SURVIVE && nutrition > NUTRITION_LEVEL_STARVING && hydration > HYDRATION_LEVEL_DEHYDRATED) // starving is the minimal here, thirst also stops the regen now
 			var/regenerated = FALSE
 			for(var/datum/wound/wound as anything in get_wounds())
@@ -64,10 +63,11 @@
 					regenerated = TRUE
 				if(!wound.owner) // fully healed and removed
 					continue
-				if(wound.bleed_rate > 0) // but we also slowly recover from bleeding now. it does not close the wound, however! another nick and you're back to bleeding like a pig.
+				// We clot faster, but only down to the wound's own clotting floor. Wounds that never clot on their own, like arteries, still need sewing or cauterising.
+				if(!isnull(wound.clotting_threshold) && wound.bleed_rate > wound.clotting_threshold)
 					regenerated = TRUE
 					var/bleed_heal = max(wound.bleed_rate * 0.1, 0.2)
-					wound.set_bleed_rate(max(wound.bleed_rate - bleed_heal, 0))
+					wound.set_bleed_rate(max(wound.bleed_rate - bleed_heal, wound.clotting_threshold))
 			if(regenerated)
 				nutrition = max(0, nutrition - (NUTRITION_LEVEL_FULL * 0.0025)) // drains 0.25% of your hunger to restore all of above, still
 
