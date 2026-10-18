@@ -59,6 +59,15 @@
 		return wound
 
 /// Loops through our list of wounds healing them until we run out of healing or all wounds are healed
+/// How much of a heal this mob actually gets. Every healing effect should go through this.
+/// Magical heals are blocked by TRAIT_NOHEAL and halved by TRAIT_HALFHEAL; natural ones are blocked by TRAIT_NOREGEN.
+/mob/living/proc/get_heal_amount(amount, magical = TRUE)
+	if(HAS_TRAIT(src, magical ? TRAIT_NOHEAL : TRAIT_NOREGEN))
+		return 0
+	if(magical && HAS_TRAIT(src, TRAIT_HALFHEAL))
+		return amount / 2
+	return amount
+
 /mob/living/proc/heal_wounds(heal_amount, list/specific_types)
 	var/healed_any = FALSE
 	if(has_status_effect(/datum/status_effect/buff/fortify))

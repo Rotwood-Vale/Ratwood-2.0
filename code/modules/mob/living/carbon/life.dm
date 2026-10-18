@@ -623,8 +623,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 	//Healing while sleeping in a bed
 	if(IsSleeping())
 		SEND_SIGNAL(src, COMSIG_CARBON_HANDLE_SLEEP)
-		if(HAS_TRAIT(src, TRAIT_NOREGEN))
-			return
+		var/can_regen = !HAS_TRAIT(src, TRAIT_NOREGEN) // still get the rest, just none of the healing
 		var/sleepy_mod = 0.5
 		var/doesnt_hunger = HAS_TRAIT(src, TRAIT_NOHUNGER)
 		if(HAS_TRAIT(src, TRAIT_BETTER_SLEEP))
@@ -636,7 +635,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			var/list/limb_list = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 			for(var/zone in limb_list)
 				var/obj/item/bodypart/limb = get_bodypart(zone)
-				if(!limb && nutrition > 250)
+				if(!limb && nutrition > 250 && can_regen)
 					regenerate_limb(zone)
 					nutrition -= 250
 		//OV edit end
@@ -656,25 +655,26 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		if(nutrition > 0 || doesnt_hunger)
 			energy_add(sleepy_mod * 15)
 		if(hydration > 0 || doesnt_hunger)
-			if(!bleed_rate)
-				blood_volume = min(blood_volume + (4 * sleepy_mod), BLOOD_VOLUME_NORMAL)
-			for (var/obj/item/bodypart/affecting in bodyparts)
-				if (!affecting)
-					continue
+			if(can_regen)
+				if(!bleed_rate)
+					blood_volume = min(blood_volume + (4 * sleepy_mod), BLOOD_VOLUME_NORMAL)
+				for (var/obj/item/bodypart/affecting in bodyparts)
+					if (!affecting)
+						continue
 
-				if (affecting.get_bleed_rate() >= 1)
-					continue
+					if (affecting.get_bleed_rate() >= 1)
+						continue
 
-				if (affecting.heal_damage(sleepy_mod, sleepy_mod, required_status = BODYPART_ORGANIC))
-					src.update_damage_overlays()
+					if (affecting.heal_damage(sleepy_mod, sleepy_mod, required_status = BODYPART_ORGANIC))
+						src.update_damage_overlays()
 
-				var/list/wlist = affecting.wounds
-				if (islist(wlist))
-					for (var/datum/wound/W in wlist)
-						var/sh = W?.sleep_healing
-						if (sh)
-							W.heal_wound(sh * sleepy_mod)
-			adjustToxLoss(-sleepy_mod)
+					var/list/wlist = affecting.wounds
+					if (islist(wlist))
+						for (var/datum/wound/W in wlist)
+							var/sh = W?.sleep_healing
+							if (sh)
+								W.heal_wound(sh * sleepy_mod)
+				adjustToxLoss(-sleepy_mod)
 			if(eyesclosed && !HAS_TRAIT(src, TRAIT_NOSLEEP))
 				teleport_to_dream(src, 10000, 2)
 				Sleeping(300)

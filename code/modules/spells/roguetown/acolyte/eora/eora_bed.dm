@@ -98,18 +98,21 @@
 /datum/status_effect/buff/healing/bed_rest/tick()
 	if(!owner || owner.stat == DEAD)
 		return
+	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	if(!heal_amount)
+		return
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = outline_colour
 
-	owner.heal_wounds(healing_on_tick)
-	owner.adjustBruteLoss(-healing_on_tick, 0)
-	owner.adjustFireLoss(-healing_on_tick, 0)
-	owner.adjustToxLoss(-healing_on_tick, 0)
+	owner.heal_wounds(heal_amount)
+	owner.adjustBruteLoss(-heal_amount, 0)
+	owner.adjustFireLoss(-heal_amount, 0)
+	owner.adjustToxLoss(-heal_amount, 0)
 
 	owner.adjustOxyLoss(-oxy_healing_on_tick, 0)
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.5)
 	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-		owner.set_blood_volume(min(owner.get_blood_volume()+healing_on_tick, BLOOD_VOLUME_NORMAL))
+		owner.set_blood_volume(min(owner.get_blood_volume()+heal_amount, BLOOD_VOLUME_NORMAL))
 
 /obj/effect/proc_holder/spell/invoked/summon_bed
 	name = "Eora's Rest"

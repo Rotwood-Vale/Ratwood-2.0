@@ -50,6 +50,8 @@
 	update_blood_color()
 
 /obj/effect/decal/cleanable/blood/proc/set_blood_color(new_blood_color)
+	if(blood_color == new_blood_color)
+		return
 	blood_color = new_blood_color
 	update_blood_color()
 
@@ -75,7 +77,8 @@
 		C.bloodiness = initial(bloodiness)
 		C.name = initial(name)
 		B.dry = FALSE
-		B.set_blood_color(blood_color)
+		B.blood_color = blood_color
+		B.update_blood_color()
 
 /obj/effect/decal/cleanable/blood/Destroy()
 	GLOB.weather_act_upon_list -= src

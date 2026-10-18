@@ -49,24 +49,27 @@
 /datum/status_effect/buff/divine_rebirth_healing/tick()
 	var/time_progress = (duration - time_left) / duration
 	time_left -= tick_interval
+	var/heal_amount = owner.get_heal_amount(healing_strength)
+	if(!heal_amount)
+		return
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = outline_colour
 	do_sprite_shake(owner, 3, 3, 15, 1)
 
 	if(!owner.construct)
 		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-			owner.set_blood_volume(min(owner.get_blood_volume() + healing_strength, BLOOD_VOLUME_NORMAL))
+			owner.set_blood_volume(min(owner.get_blood_volume() + heal_amount, BLOOD_VOLUME_NORMAL))
 
 		var/list/wounds = owner.get_wounds()
 		if(length(wounds) > 0)
-			owner.heal_wounds(healing_strength)
+			owner.heal_wounds(heal_amount)
 			owner.update_damage_overlays()
-		owner.adjustBruteLoss(-healing_strength, 0)
-		owner.adjustFireLoss(-healing_strength, 0)
-		owner.adjustOxyLoss(-healing_strength, 0)
-		owner.adjustToxLoss(-healing_strength, 0)
-		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_strength)
-		owner.adjustCloneLoss(-healing_strength, 0)
+		owner.adjustBruteLoss(-heal_amount, 0)
+		owner.adjustFireLoss(-heal_amount, 0)
+		owner.adjustOxyLoss(-heal_amount, 0)
+		owner.adjustToxLoss(-heal_amount, 0)
+		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -heal_amount)
+		owner.adjustCloneLoss(-heal_amount, 0)
 
 	if(ishuman(owner) && limbs_regenerated < max_limbs_to_regenerate)
 		var/mob/living/carbon/human/human_owner = owner
@@ -127,23 +130,26 @@
 	SEND_SIGNAL(owner, COMSIG_LIVING_MIRACLE_HEAL_APPLY, healing_strength, src)
 
 /datum/status_effect/buff/pestra_care/tick()
+	var/heal_amount = owner.get_heal_amount(healing_strength)
+	if(!heal_amount)
+		return
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = effect_colour
 
 	if(!owner.construct)
 		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-			owner.set_blood_volume(min(owner.get_blood_volume() + healing_strength, BLOOD_VOLUME_NORMAL))
+			owner.set_blood_volume(min(owner.get_blood_volume() + heal_amount, BLOOD_VOLUME_NORMAL))
 
 		var/list/wounds = owner.get_wounds()
 		if(length(wounds) > 0)
-			owner.heal_wounds(healing_strength)
+			owner.heal_wounds(heal_amount)
 			owner.update_damage_overlays()
-		owner.adjustBruteLoss(-healing_strength, 0)
-		owner.adjustFireLoss(-healing_strength, 0)
-		owner.adjustOxyLoss(-healing_strength, 0)
-		owner.adjustToxLoss(-healing_strength, 0)
-		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_strength)
-		owner.adjustCloneLoss(-healing_strength, 0)
+		owner.adjustBruteLoss(-heal_amount, 0)
+		owner.adjustFireLoss(-heal_amount, 0)
+		owner.adjustOxyLoss(-heal_amount, 0)
+		owner.adjustToxLoss(-heal_amount, 0)
+		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -heal_amount)
+		owner.adjustCloneLoss(-heal_amount, 0)
 
 /atom/movable/screen/alert/status_effect/buff/pestra_care
 	name = "Pestra's embrace"

@@ -387,12 +387,10 @@
 				else
 					if(!correct)
 						if(cursedblood)
-							bonuses = bonuses + bonuses * I.paired.cursedblood
+							bonuses = round(bonuses + bonuses * I.paired.cursedblood, 1) // cursed blood strength can be fractional
 							if(I.waxed)
 								bonuses += 2
-							budget2change(bonuses, user, "MARQUE")
-							record_round_statistic(STATS_MARQUES_MADE, bonuses)
-						if(I.paired && !indexed && !correct && !cursedblood)
+						else if(I.paired && !indexed)
 							if(I.waxed)
 								bonuses += 2
 						budget2change(bonuses, user, "MARQUE")
@@ -401,7 +399,7 @@
 						if(I.paired && !indexed && !cursedblood)
 							I.marquevalue += bonuses
 						if(cursedblood)
-							bonuses = bonuses + bonuses * I.paired.cursedblood
+							bonuses = round(bonuses + bonuses * I.paired.cursedblood, 1) // cursed blood strength can be fractional
 							I.marquevalue += bonuses
 						if(accused)
 							I.marquevalue -= 4
@@ -499,7 +497,7 @@
 
 				if(cursedblood)
 					// Uses the slip's unwaxed value, as waxing is paid for below.
-					var/sample_payout = initial(I.marquevalue) * (1 + I.paired.cursedblood)
+					var/sample_payout = round(initial(I.marquevalue) * (1 + I.paired.cursedblood), 1)
 					if(has_signature)
 						sample_payout += 2
 					if(I.waxed)

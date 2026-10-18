@@ -655,11 +655,9 @@
 	return TRUE
 
 /datum/status_effect/buff/healing/tick()
-	if(HAS_TRAIT(owner, magical ? TRAIT_NOHEAL : TRAIT_NOREGEN))
+	var/heal_amount = owner.get_heal_amount(healing_on_tick, magical)
+	if(!heal_amount)
 		return
-	var/heal_amount = healing_on_tick
-	if(magical && HAS_TRAIT(owner, TRAIT_HALFHEAL))
-		heal_amount /= 2
 	var/obj/effect/temp_visual/heal/heal_particle = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	heal_particle.color = outline_colour
 	if(heal_particle.color == COLOR_PATRON_XYLIX)
@@ -887,9 +885,9 @@
 		return
 	if(owner.construct)
 		return
-	if(HAS_TRAIT(owner, TRAIT_NOREGEN))
+	var/heal_amount = owner.get_heal_amount(healing_on_tick, FALSE)
+	if(!heal_amount)
 		return
-	var/heal_amount = healing_on_tick
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue/campfire(get_turf(owner))
 	H.color = "#c7aa5c"
 	if(owner.get_blood_volume() < BLOOD_VOLUME_OKAY)
@@ -966,6 +964,9 @@
 	return TRUE
 
 /datum/status_effect/buff/lay_hands/tick()
+	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	if(!heal_amount)
+		return
 	var/obj/effect/temp_visual/heal/heal_particle = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	heal_particle.color = outline_colour
 	if(heal_particle.color == COLOR_PATRON_XYLIX)
@@ -975,18 +976,18 @@
 	var/list/wCount = owner.get_wounds()
 	if(!owner.construct)
 		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-			owner.set_blood_volume(min(owner.get_blood_volume()+(healing_on_tick * 0.5), BLOOD_VOLUME_NORMAL))
+			owner.set_blood_volume(min(owner.get_blood_volume()+(heal_amount * 0.5), BLOOD_VOLUME_NORMAL))
 		if(wCount.len > 0)
-			owner.heal_wounds(healing_on_tick)
+			owner.heal_wounds(heal_amount)
 			owner.update_damage_overlays()
 		if(HAS_TRAIT(owner, TRAIT_SIMPLE_WOUNDS) && !length(owner.get_wounds()) && !length(owner.get_embedded_objects()))
 			owner.simple_bleeding = 0
 			owner.bleed_rate = 0
-		owner.adjustBruteLoss(-healing_on_tick, 0)
-		owner.adjustFireLoss(-healing_on_tick, 0)
-		owner.adjustOxyLoss(-healing_on_tick * 0.5, 0)
-		owner.adjustToxLoss(-healing_on_tick * 0.5, 0)
-		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick * 0.5)
+		owner.adjustBruteLoss(-heal_amount, 0)
+		owner.adjustFireLoss(-heal_amount, 0)
+		owner.adjustOxyLoss(-heal_amount * 0.5, 0)
+		owner.adjustToxLoss(-heal_amount * 0.5, 0)
+		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -heal_amount * 0.5)
 
 /datum/status_effect/buff/lay_hands/on_remove()
 	owner.remove_filter(LAY_HANDS_FILTER)
@@ -1032,11 +1033,9 @@
 	owner.remove_filter(MIRACLE_BLOODHEAL_FILTER)
 
 /datum/status_effect/buff/bloodheal/tick()
-	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	if(!heal_amount)
 		return
-	var/heal_amount = healing_on_tick
-	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
-		heal_amount /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_blood(get_turf(owner))
 	H.color = "#FF0000"
 	if(!owner.construct)
@@ -1083,11 +1082,9 @@
 		to_chat(owner, span_warning("The vice-like grip around your mortal coil eases, reluctantly. Yet, you feel hollow, all the same..."))
 		qdel(src) // clear the vow if someone somehow saves us
 		return
-	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	if(!heal_amount)
 		return
-	var/heal_amount = healing_on_tick
-	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
-		heal_amount /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#a5a5a5"
 	var/list/wCount = owner.get_wounds()
@@ -1137,11 +1134,9 @@
 	return TRUE
 
 /datum/status_effect/buff/psyhealing/tick()
-	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	if(!heal_amount)
 		return
-	var/heal_amount = healing_on_tick
-	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
-		heal_amount /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/psyheal_rogue(get_turf(owner))
 	H.color = "#d3d3d3"
 	var/list/wCount = owner.get_wounds()
@@ -1191,9 +1186,9 @@
 	return ..()
 
 /datum/status_effect/buff/rockmuncher/tick()
-	var/heal_amount = healing_on_tick
-	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
-		heal_amount /= 2
+	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	if(!heal_amount)
+		return
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#FF0000"
 	var/list/wCount = owner.get_wounds()
@@ -1221,11 +1216,9 @@
 	return ..()
 
 /datum/status_effect/buff/gemmuncher/tick()
-	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	if(!heal_amount)
 		return
-	var/heal_amount = healing_on_tick
-	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
-		heal_amount /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#FF0000"
 	var/list/wCount = owner.get_wounds()
@@ -1258,11 +1251,9 @@
 	return ..()
 
 /datum/status_effect/buff/rockmuncher_lesser/tick()
-	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	if(!heal_amount)
 		return
-	var/heal_amount = healing_on_tick
-	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
-		heal_amount /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#FF0000"
 	var/list/wCount = owner.get_wounds()
@@ -1501,9 +1492,9 @@
 	var/healing_on_tick = 40
 
 /datum/status_effect/buff/flylordstriage/tick()
-	var/heal_amount = healing_on_tick
-	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
-		heal_amount /= 2
+	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	if(!heal_amount)
+		return
 	playsound(owner, 'sound/misc/fliesloop.ogg', 100, FALSE, -1)
 	owner.fullscreen_redflash("redflash3")
 	owner.emote("agony")

@@ -521,14 +521,27 @@ GLOBAL_LIST_EMPTY(blood_colors_by_dna)
 	spawn_blood_decal(/obj/effect/decal/cleanable/blood/splatter, T)
 	T?.pollute_turf(/datum/pollutant/metallic_scent, 30)
 
-/// Spawns a decal of this mob's blood, coloured to match and carrying its blood DNA.
+/// Spawns a decal of this mob's blood, coloured to match.
 /// Returns the decal left on the turf, which may be one already there that the new one merged into.
 /mob/living/proc/spawn_blood_decal(decal_type, turf/T)
 	var/obj/effect/decal/cleanable/blood/decal = new decal_type(T, get_blood_color())
 	if(QDELETED(decal))
 		decal = locate(decal_type) in T
-	decal?.add_blood_DNA(get_blood_dna_list())
+	if(decal)
+		stain_blood_decal(decal)
 	return decal
+
+/// Marks a blood decal as this mob's blood. Custom coloured blood also leaves its DNA, so footprints tracked through it take the colour too.
+/// Ordinary blood skips the DNA, keeping the bleeding hot path as cheap as it's always been.
+/mob/living/proc/stain_blood_decal(obj/effect/decal/cleanable/blood/decal)
+	var/blood_color = get_blood_color()
+	decal.set_blood_color(blood_color)
+	if(!blood_color)
+		return
+	var/list/blood_dna = get_blood_dna_list()
+	var/list/existing_dna = decal.return_blood_DNA()
+	if(length(blood_dna) && !existing_dna?[blood_dna[1]])
+		decal.add_blood_DNA(blood_dna)
 
 
 //to add splatters of blood onto nearby walls. When provided a certain force amount, also increases the range at which blood can appear on the walls.
@@ -574,16 +587,14 @@ GLOBAL_LIST_EMPTY(blood_colors_by_dna)
 	var/obj/effect/decal/cleanable/blood/puddle/P = locate() in T
 	if(P)
 		P.blood_vol += amt
-		P.set_blood_color(get_blood_color())
-		P.add_blood_DNA(get_blood_dna_list())
+		stain_blood_decal(P)
 		P.update_icon()
 	else
 		var/obj/effect/decal/cleanable/blood/drip/D = locate() in T
 		if(D)
 			D.blood_vol += amt
 			D.drips++
-			D.set_blood_color(get_blood_color())
-			D.add_blood_DNA(get_blood_dna_list())
+			stain_blood_decal(D)
 			D.update_icon()
 		else
 			spawn_blood_decal(/obj/effect/decal/cleanable/blood/drip, T)

@@ -57,14 +57,17 @@
 	return TRUE
 
 /datum/status_effect/buff/forest_rush/tick()
+	var/heal_amount = owner.get_heal_amount(healing_per_tick, FALSE)
+	if(!heal_amount)
+		return
 	var/mob/living/carbon/human/H = owner
-	H.adjustBruteLoss(-healing_per_tick)
+	H.adjustBruteLoss(-heal_amount)
 	var/list/wCount = H.get_wounds()
 	if(length(wCount))
-		H.heal_wounds(healing_per_tick)
+		H.heal_wounds(heal_amount)
 		H.update_damage_overlays()
 	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-		owner.set_blood_volume(min(owner.get_blood_volume() + healing_per_tick, BLOOD_VOLUME_NORMAL))
+		owner.set_blood_volume(min(owner.get_blood_volume() + heal_amount, BLOOD_VOLUME_NORMAL))
 	var/obj/effect/temp_visual/heal/E = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	E.color = "#ffffff"
 

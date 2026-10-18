@@ -246,7 +246,7 @@
 	new_bounty_noface.target_body = LOWER_TEXT(descriptor_body)
 	//new_bounty_noface.target_voice = LOWER_TEXT(descriptor_voice)
 	new_bounty_noface.bandit = bandit_status
-	new_bounty_noface.reason = reason
+	new_bounty_noface.reason = html_encode(reason)
 	new_bounty_noface.employer = employer_name
 	//var/list/lines = build_cool_description(get_mob_descriptors(obscure_name, user), target)
 	compose_bounty_noface(new_bounty_noface)
@@ -278,7 +278,7 @@
 	new_bounty_obscure.target_body = LOWER_TEXT(descriptor_body)
 	//new_bounty_obscure.target_voice = LOWER_TEXT(descriptor_voice)
 	new_bounty_obscure.bandit = bandit_status
-	new_bounty_obscure.reason = reason
+	new_bounty_obscure.reason = html_encode(reason)
 	new_bounty_obscure.employer = employer_name
 	//var/list/lines = build_cool_description(get_mob_descriptors(obscure_name, user), target)
 	compose_bounty_obscure(new_bounty_obscure)

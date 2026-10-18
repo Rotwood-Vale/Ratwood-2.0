@@ -257,6 +257,9 @@
 	return TRUE
 
 /datum/status_effect/regen/soothing_bloom/tick()
+	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	if(!heal_amount)
+		return
 	var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	heal_effect.color = "#129160"
 	var/list/wound_count = owner.get_wounds()
@@ -264,14 +267,14 @@
 		if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			owner.set_blood_volume(min(owner.get_blood_volume()+2, BLOOD_VOLUME_NORMAL)) //Reduced blood replenishment compared to cleric miracle.
 		if(wound_count.len > 0)
-			owner.heal_wounds(healing_on_tick)
+			owner.heal_wounds(heal_amount)
 			owner.update_damage_overlays()
-		owner.adjustBruteLoss(-healing_on_tick, 0)
-		owner.adjustFireLoss(-healing_on_tick, 0)
-		owner.adjustOxyLoss(-healing_on_tick, 0)
-		owner.adjustToxLoss(-healing_on_tick, 0)
-		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
-		owner.adjustCloneLoss(-healing_on_tick, 0)
+		owner.adjustBruteLoss(-heal_amount, 0)
+		owner.adjustFireLoss(-heal_amount, 0)
+		owner.adjustOxyLoss(-heal_amount, 0)
+		owner.adjustToxLoss(-heal_amount, 0)
+		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -heal_amount)
+		owner.adjustCloneLoss(-heal_amount, 0)
 
 /obj/effect/proc_holder/spell/self/starseers_cry
 	name = "Starseer's Cry"

@@ -14,6 +14,7 @@
 	sewn_woundpain = 20
 	mob_overlay = "s1"
 	sewn_overlay = "cut"
+	blood_overlay = TRUE
 	can_sew = TRUE
 	can_cauterize = TRUE
 	critical = TRUE

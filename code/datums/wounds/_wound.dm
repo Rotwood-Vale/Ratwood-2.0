@@ -20,6 +20,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/mob_overlay = "w1"
 	/// Overlay to use when this wound is sewn, and is on a carbon mob
 	var/sewn_overlay = ""
+	/// If TRUE, mob_overlay is a blood sprite, retinted to match the owner's blood colour
+	var/blood_overlay = FALSE
 
 	/// Crit message(s) to append when this wound is applied in combat
 	var/crit_message
@@ -374,6 +376,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		return FALSE
 	var/old_overlay = mob_overlay
 	mob_overlay = sewn_overlay
+	blood_overlay = FALSE // the sewn overlay is stitches, not blood
 	set_bleed_rate(sewn_bleed_rate)
 	clotting_rate = sewn_clotting_rate
 	clotting_threshold = sewn_clotting_threshold

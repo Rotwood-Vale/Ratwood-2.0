@@ -209,9 +209,9 @@ There are several things that need to be remembered:
 				for(var/datum/wound/wound in BP.wounds)
 					if(wound.mob_overlay)
 						var/wound_overlay = wound.mob_overlay
-						damage_overlays += get_cached_damage_overlay(limb_icon, "[body_zone]_[wound_overlay]", DAMAGE_LAYER, offset_x, offset_y, null, blood_color)
-						legdam_overlays += get_cached_damage_overlay(limb_icon, "legdam_[body_zone]_[wound_overlay]", LEG_DAMAGE_LAYER, offset_x, offset_y, null, blood_color)
-						armdam_overlays += get_cached_damage_overlay(limb_icon, "armdam_[body_zone]_[wound_overlay]", ARM_DAMAGE_LAYER, offset_x, offset_y, null, blood_color)
+						damage_overlays += get_cached_damage_overlay(limb_icon, "[body_zone]_[wound_overlay]", DAMAGE_LAYER, offset_x, offset_y, null, wound.blood_overlay ? blood_color : null)
+						legdam_overlays += get_cached_damage_overlay(limb_icon, "legdam_[body_zone]_[wound_overlay]", LEG_DAMAGE_LAYER, offset_x, offset_y, null, wound.blood_overlay ? blood_color : null)
+						armdam_overlays += get_cached_damage_overlay(limb_icon, "armdam_[body_zone]_[wound_overlay]", ARM_DAMAGE_LAYER, offset_x, offset_y, null, wound.blood_overlay ? blood_color : null)
 
 		if(!bleed_checker && BP.bandage)
 			var/bandage_color = BP.bandage.color
@@ -239,9 +239,9 @@ There are several things that need to be remembered:
 					for(var/datum/wound/wound in BP.wounds)
 						if(wound.mob_overlay)
 							var/wound_overlay = wound.mob_overlay
-							damage_overlays += get_cached_damage_overlay(limb_icon, "[aux_zone]_[wound_overlay]", DAMAGE_LAYER, offset_x, offset_y, null, blood_color)
-							legdam_overlays += get_cached_damage_overlay(limb_icon, "legdam_[aux_zone]_[wound_overlay]", LEG_DAMAGE_LAYER, offset_x, offset_y, null, blood_color)
-							armdam_overlays += get_cached_damage_overlay(limb_icon, "armdam_[aux_zone]_[wound_overlay]", ARM_DAMAGE_LAYER, offset_x, offset_y, null, blood_color)
+							damage_overlays += get_cached_damage_overlay(limb_icon, "[aux_zone]_[wound_overlay]", DAMAGE_LAYER, offset_x, offset_y, null, wound.blood_overlay ? blood_color : null)
+							legdam_overlays += get_cached_damage_overlay(limb_icon, "legdam_[aux_zone]_[wound_overlay]", LEG_DAMAGE_LAYER, offset_x, offset_y, null, wound.blood_overlay ? blood_color : null)
+							armdam_overlays += get_cached_damage_overlay(limb_icon, "armdam_[aux_zone]_[wound_overlay]", ARM_DAMAGE_LAYER, offset_x, offset_y, null, wound.blood_overlay ? blood_color : null)
 			if(!bleed_checker && BP.bandage)
 				var/bandage_color = BP.bandage.color
 				damage_overlays += get_cached_damage_overlay(limb_icon, "[aux_zone]_b", DAMAGE_LAYER, offset_x, offset_y, bandage_color)

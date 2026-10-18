@@ -1275,8 +1275,8 @@
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb(unsettling_text)
 
-		//Blackblood Inquisition trauma
-		if(HAS_TRAIT(src, TRAIT_INQUISITION) && iscarbon(user))
+		//Blackblood Inquisition trauma. Only from a living Inquisitor they can actually recognise, so it never unmasks one.
+		if(HAS_TRAIT(src, TRAIT_INQUISITION) && stat != DEAD && !obscure_name && iscarbon(user))
 			var/mob/living/carbon/carbs = user
 			if(carbs.inquisition_trauma())
 				if(prob(20))

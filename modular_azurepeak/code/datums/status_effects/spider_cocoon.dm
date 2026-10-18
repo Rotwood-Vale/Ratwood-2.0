@@ -29,11 +29,9 @@
 	return TRUE
 
 /datum/status_effect/buff/healing/spider_cocoon/tick()
-	if(HAS_TRAIT(owner, TRAIT_NOHEAL))
+	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	if(!heal_amount)
 		return
-	var/heal_amount = healing_on_tick
-	if(HAS_TRAIT(owner, TRAIT_HALFHEAL))
-		heal_amount /= 2
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	H.color = "#4e4c4c00"
 	var/list/wCount = owner.get_wounds()

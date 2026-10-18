@@ -231,6 +231,7 @@ GLOBAL_LIST_INIT(virtue_mount_choices_noble, (list(
 
 /datum/status_effect/buff/healing/saddleborn
 	healing_on_tick = 0.25
+	magical = FALSE
 	duration = 5 MINUTES
 	examine_text = "SUBJECTPRONOUN looks well-rested!"
 	outline_colour = "#f5c2c2"

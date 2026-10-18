@@ -69,7 +69,7 @@
 					var/bleed_heal = max(wound.bleed_rate * 0.1, 0.2)
 					wound.set_bleed_rate(max(wound.bleed_rate - bleed_heal, wound.clotting_threshold))
 			if(regenerated)
-				nutrition = max(0, nutrition - (NUTRITION_LEVEL_FULL * 0.0025)) // drains 0.25% of your hunger to restore all of above, still
+				adjust_nutrition(-NUTRITION_LEVEL_FULL * 0.0025) // drains 0.25% of your hunger to restore all of above, still
 
 	if(blood_volume <= BLOOD_VOLUME_SURVIVE && stat)
 		handle_passive_blood()

@@ -352,9 +352,12 @@
 	owner.add_movespeed_modifier(MOVESPEED_ID_WHITE_RUSH, update=TRUE, priority=15, multiplicative_slowdown=-2)
 
 /datum/status_effect/buff/white_rush/tick()
+	var/heal_amount = owner.get_heal_amount(healing_per_tick, FALSE)
+	if(!heal_amount)
+		return
 	var/mob/living/carbon/human/human = owner
-	human.adjustBruteLoss(-healing_per_tick)
-	human.heal_wounds(healing_per_tick)
+	human.adjustBruteLoss(-heal_amount)
+	human.heal_wounds(heal_amount)
 	var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
 	heal_effect.color = "#FF0000"
 
