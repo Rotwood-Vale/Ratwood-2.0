@@ -386,13 +386,13 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = "Thomas Bangalter - Stress"
 	musicpath = list('sound/music/combat_maniac2.ogg')
 
-/* Unused
+// Why was this commented out in the first place? I know this is unused but the sound file was in the codebase anyways. Also a banger.
 /datum/combat_music/maniac_old
 	name = "Maniac (Old)"
-	desc = ""
+	desc = "Do what thou wilt shall be the whole of the Law."
 	shortname = "Maniac Old"
+	credits = "3TEETH - NIHIL"
 	musicpath = list('sound/music/combat_maniac.ogg')
-*/
 
 /datum/combat_music/martyr
 	name = "Martyr"
