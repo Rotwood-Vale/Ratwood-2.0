@@ -367,7 +367,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 				apply_status_effect(/datum/status_effect/buff/mount_apple_healing, 1)
 				if(istype(src, /mob/living/simple_animal/hostile/retaliate))
 					var/mob/living/simple_animal/hostile/retaliate/retaliating_mount = src
-					if(retaliating_mount.enemies.len)
+					if(LAZYLEN(retaliating_mount.enemies))
 						retaliating_mount.clear_enemies()
 						visible_message(span_notice("[src] calms down."))
 						retaliating_mount.LoseTarget()

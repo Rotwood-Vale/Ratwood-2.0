@@ -21,7 +21,6 @@
 	sewrepair = FALSE
 	armor = ARMOR_PLATE
 	blocksound = PLATEHIT
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	body_parts_covered = HEAD|HAIR
 	max_integrity = ARMOR_INT_HELMET_STEEL
 	anvilrepair = /datum/skill/craft/armorsmithing
@@ -173,8 +172,7 @@
 	desc = "A noble's chaperon made for the local Marshal. \"How terribly unfortunate you are!\""
 	color = "#641E16"
 	detail_color = "#b68e37ff"
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
-	armor = ARMOR_SPELLSINGER // spellsinger hat stats. Drip or drown.
+	armor = ARMOR_LEATHER // spellsinger hat stats. Drip or drown.
 	nudist_approved = FALSE // armored
 
 /obj/item/clothing/head/roguetown/chaperon/noble/guildmaster
@@ -203,7 +201,7 @@
 /obj/item/clothing/head/roguetown/chaperon/greyscale/shepherd
 	name = "mountaineer's chaperon"
 	desc = "A fashionable citygoer's chaperon worn around an insconspicuous iron skullcap. It has a cute little Mamük brooch on the tip of the hood. Szöréndnížine shepherds spend plenty of time in the city and have taken a liking to the chaperon's exaggerated swagger."
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_HELMET_IRON - 25
 
 /obj/item/clothing/head/roguetown/chef
@@ -255,10 +253,9 @@
 	icon_state = "headband"
 	item_state = "headband"
 	color = "#851a16"
-	armor = ARMOR_LEATHER_GOOD
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_HELMET_LEATHER
 	body_parts_covered = HEAD|HAIR|EARS
-	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_TWIST) //Themed to protect against deadites and nitebeasts. Doesn't stop blunt-, smash-, or stabbing crits.
 	//dropshrink = 0.75
 	dynamic_hair_suffix = null
 
@@ -284,10 +281,9 @@
 	color = "#bfb8a9"
 	resistance_flags = FIRE_PROOF
 	fiber_salvage = TRUE
-	armor = ARMOR_SPELLSINGER //Highest preset protection value for head armor, without leaving people unable to sleep with the headband on. Should be appropriate for the Monk's role.
+	armor = ARMOR_LEATHER //Highest preset protection value for head armor, without leaving people unable to sleep with the headband on. Should be appropriate for the Monk's role.
 	body_parts_covered = HEAD|HAIR|EARS
 	max_integrity = ARMOR_INT_SIDE_STEEL //High leather-tier protection and critical resistances, steel-tier integrity.
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = SOFTHIT
 	nudist_approved = FALSE // armored
 	//dropshrink = 0.75
@@ -304,9 +300,8 @@
 	icon_state = "inqhat"
 	item_state = "inqhat"
 	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
-	armor = ARMOR_SPELLSINGER
+	armor = ARMOR_LEATHER
 	body_parts_covered = HEAD|HAIR|EARS
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	heat_protection = HEAD
@@ -510,7 +505,6 @@
 	icon_state = "tricorn"
 	armor = ARMOR_CLOTHING
 	max_integrity = 100
-	prevent_crits = list(BCLASS_BLUNT, BCLASS_TWIST)
 	anvilrepair = null
 	smeltresult = null
 	blocksound = SOFTHIT
@@ -539,7 +533,6 @@
 	body_parts_covered = HEAD|HAIR|EARS|NOSE
 	icon_state = "bandana"
 	armor = ARMOR_CLOTHING
-	prevent_crits = list(BCLASS_TWIST)
 	anvilrepair = null
 	smeltresult = null
 	blocksound = SOFTHIT

@@ -18,13 +18,6 @@
 #define COVERAGE_NASAL			( HEAD | HAIR | NOSE )
 #define COVERAGE_SKULL			( HEAD | HAIR )
 
-#define COVERAGE_VEST			( CHEST | VITALS )
-#define COVERAGE_SHIRT			( CHEST | VITALS | ARMS )
-#define COVERAGE_TORSO			( CHEST | GROIN | VITALS )
-#define COVERAGE_ALL_BUT_ARMS	( CHEST | GROIN | VITALS | LEGS )
-#define COVERAGE_ALL_BUT_LEGS	( CHEST | GROIN | VITALS | ARMS )
-#define COVERAGE_FULL			( CHEST | GROIN | VITALS | LEGS | ARMS )
-
 #define COVERAGE_PANTS			( GROIN | LEGS )
 #define COVERAGE_FULL_LEG		( LEGS | FEET )
 
@@ -567,3 +560,8 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define ORIGIN_GRONN "Gronn"
 #define ORIGIN_ETRUSCA "Etrusca"
 #define ORIGIN_KAZENGUN "Kazengun"
+
+//Armor material categories
+#define ARMOR_MAT_PLATE 1
+#define ARMOR_MAT_LEATHER 2
+#define ARMOR_MAT_CHAINMAIL 3

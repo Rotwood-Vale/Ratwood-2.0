@@ -220,7 +220,6 @@
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	max_integrity = ARMOR_INT_MASK_CLOTH
-	prevent_crits = list(BCLASS_BLUNT)
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEEARS
 	body_parts_covered = FACE|HEAD
@@ -314,7 +313,6 @@
 	max_integrity = ARMOR_INT_MASK_IRON
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE
 	block2add = FOV_BEHIND
@@ -332,7 +330,6 @@
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE
 	block2add = FOV_BEHIND
@@ -369,6 +366,8 @@
 	max_integrity = 200
 	icon_state = "ancientmask"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/mask/rogue/facemask/ancient/decrepit
 	name = "decrepit mask"
@@ -387,7 +386,7 @@
 /obj/item/clothing/mask/rogue/facemask/bronze
 	name = "bronze mask"
 	desc = "Glimmering bronze, curved to veil its wearer's face from both judgement and harm."
-	armor = ARMOR_BRONZE
+	armor = ARMOR_PLATE
 	armor_class = ARMOR_CLASS_LIGHT
 	icon_state = "bronzemask"
 	item_state = "bronzemask"
@@ -611,7 +610,6 @@
 	drop_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_PADDED_BAD
-	prevent_crits = null
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE
 	block2add = FOV_BEHIND
@@ -655,7 +653,6 @@
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
 /obj/item/clothing/mask/rogue/lordmask/naledi/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_NALEDI, "naledi_mask")
@@ -691,7 +688,6 @@
 	max_integrity = ARMOR_INT_MASK_IRON + 50
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
 
 /obj/item/clothing/mask/rogue/lordmask/zizite
@@ -703,7 +699,6 @@
 	max_integrity = ARMOR_INT_MASK_IRON + 50
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
 
 /obj/item/clothing/mask/rogue/exoticsilkmask
@@ -769,7 +764,6 @@
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	flags_inv = HIDEFACE
 	body_parts_covered = FACE
 	block2add = FOV_BEHIND
