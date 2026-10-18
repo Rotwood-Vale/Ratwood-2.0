@@ -1566,8 +1566,9 @@ GLOBAL_LIST_EMPTY(headshot_cache)
 	)
 	return icon_html
 
-/proc/get_cached_damage_overlay(icon, icon_state, layer, pixel_x = 0, pixel_y = 0, overlay_color)
-	var/key = "[icon]|[icon_state]|[layer]|[pixel_x]|[pixel_y]|[overlay_color]"
+/// blood_color retones a blood-red overlay to that blood colour (see blood_color_matrix()). Pass overlay_color or blood_color, not both.
+/proc/get_cached_damage_overlay(icon, icon_state, layer, pixel_x = 0, pixel_y = 0, overlay_color, blood_color)
+	var/key = "[icon]|[icon_state]|[layer]|[pixel_x]|[pixel_y]|[overlay_color]|[blood_color]"
 	var/mutable_appearance/cached = GLOB.damage_overlay_cache[key]
 	if(!cached)
 		cached = mutable_appearance(icon, icon_state, -layer)
@@ -1575,5 +1576,7 @@ GLOBAL_LIST_EMPTY(headshot_cache)
 		cached.pixel_y = pixel_y
 		if(overlay_color)
 			cached.color = overlay_color
+		else if(blood_color)
+			cached.color = blood_color_matrix(blood_color)
 		GLOB.damage_overlay_cache[key] = cached
 	return cached

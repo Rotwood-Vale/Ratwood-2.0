@@ -82,6 +82,8 @@
 						FP.entered_dirs |= dir
 						FP.bloodiness = S.bloody_shoes[S.blood_state] - BLOOD_LOSS_IN_SPREAD
 						FP.add_blood_DNA(S.return_blood_DNA())
+						if(FP.blood_state == BLOOD_STATE_HUMAN)
+							FP.set_blood_color(get_blood_color_from_dna(S.return_blood_DNA()))
 						FP.update_icon()
 					update_inv_shoes()
 				//End bloody footprints

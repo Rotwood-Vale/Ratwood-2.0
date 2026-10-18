@@ -227,8 +227,7 @@
 				ADD_TRAIT(recipient, TRAIT_SILVER_WEAK, TRAIT_VIRTUE)
 				to_chat(recipient, span_notice("You are no longer one among the nite creechers, by the ingenuinity of HIS followers."))
 
-				// Want to use this in future, but out of scope of this port
-				//recipient.dna.species.blood_color = "#530000"
+				recipient.set_blood_color(BLOOD_COLOR_BLACKBLOOD)
 
 				// AP grants an "averse to Inquisition" flaw here; we have no averse flaw system, so this is just done through stress events and minor flavour
 				if(recipient.patron?.type == /datum/patron/old_god)

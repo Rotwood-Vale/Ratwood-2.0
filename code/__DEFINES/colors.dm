@@ -106,7 +106,7 @@
 // Blood colours. Custom colours are relative to pure red: "#FF0000" looks the same as ordinary blood. See blood_color_matrix().
 /// What blood darkens by once it dries.
 #define BLOOD_COLOR_DRIED "#967c69"
-/// Blackbloods' blood, all but blackened by the Otavan cure.
+/// Blackbloods' have a distinctly dark blood (obviously)
 #define BLOOD_COLOR_BLACKBLOOD "#4a1010"
 
 /proc/clothing_color2hex(input)
