@@ -1479,11 +1479,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 		input = capitalize(copytext(input, customsayverb+1))
 	return "[message_spans_start(spans)][input]</span>"
 
-/mob/living/proc/can_smell()
-	if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
-		return FALSE
-	return TRUE
-
 /mob/proc/become_uncliented()
 	if(!canon_client)
 		return

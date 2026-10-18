@@ -164,15 +164,16 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 /datum/preferences/proc/get_default_redolent_scent(scent_type)
 	switch(scent_type)
-		if("Gross")
-			return "rotting meat and sour sweat"
-		if("Pleasant")
+		if(REDOLENT_SMELL_GOOD)
 			return "wildflowers and clean rain"
-	return "earth and sweat"
+		if(REDOLENT_SMELL_NEUTRAL)
+			return "earth and sweat"
+		if(REDOLENT_SMELL_BAD)
+			return "rotting meat and sour sweat"
 
-/// The leading text shown on examine before the custom scent, matching redolent_examine_text().
+/// The leading text shown on examine before the custom scent, matching /datum/status_effect/redolent/proc/get_examine_text().
 /datum/preferences/proc/redolent_scent_leadin(scent_type)
-	return scent_type == "Gross" ? "They reek of" : "They smell of"
+	return scent_type == REDOLENT_SMELL_BAD ? "They reek of" : "They smell of"
 
 // Points gained from additional selected vices (+1 per vice after slot one)
 /datum/preferences/proc/get_vice_points()
@@ -314,7 +315,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/datum/charflaw/vice4
 	var/datum/charflaw/vice5
 	var/datum/charflaw/vice6
-	var/redolent_type = "Neutral"
+	var/redolent_type = REDOLENT_SMELL_NEUTRAL
 	var/redolent_scent = ""
 
 	var/setspouse = ""

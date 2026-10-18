@@ -74,7 +74,7 @@
 
 /// When a user smells this pollution
 /datum/pollution/proc/smell_act(mob/living/sniffer)
-	if(!sniffer.can_smell())
+	if(HAS_TRAIT(sniffer, TRAIT_MISSING_NOSE))
 		return
 	var/list/singleton_cache = SSpollution.singletons
 	var/datum/pollutant/dominant_pollutant
