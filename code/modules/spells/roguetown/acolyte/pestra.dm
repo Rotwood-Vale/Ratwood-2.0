@@ -369,7 +369,7 @@
 // Cure rot
 /obj/effect/proc_holder/spell/invoked/cure_rot
 	name = "Cure Rot"
-	desc = "Invoke Pestras will though a Psycross to cast out rot from people or regrow their flesh."
+    desc = "Invoke Pestras will though a Psycross to cast out rot from people or regrow their flesh. Additionally purges the body of all foreign substances, leaving them purified."  
 	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
 	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "rot"
@@ -427,7 +427,7 @@
 				revert_cast()
 				return FALSE
 
-		if(priest) // Pestra with flashbangs asociated is not
+		if(priest) // Pestra is not associated with flashbangs.
 			if(GLOB.tod == "night")
 				to_chat(user, span_warning("Let there be light."))
 			for(var/obj/structure/fluff/psycross/S in oview(5, user))
@@ -448,7 +448,7 @@
 			if(stinky)
 				target.apply_status_effect(/datum/status_effect/debuff/rotted)	//Perma debuff, needs cure
 			if(priest)
-				target.apply_damage(75, BRUTE, spread_damage = TRUE) // Astra is not a gentle goddes
+				target.apply_damage(75, BRUTE, spread_damage = TRUE) // Astrata is not a gentle goddess.
 			return TRUE
 		else //Attempt failed, no rot
 			target.visible_message(span_warning("The rot fails to leave [target]'s body!"), span_warning("I feel no different..."))
