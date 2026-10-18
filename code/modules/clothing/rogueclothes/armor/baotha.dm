@@ -241,7 +241,7 @@
 	icon_state = "baothacoif"
 	item_state = "baothacoif"
 	item_flags = DROPDEL
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
 	body_parts_covered = NECK | HAIR | EARS | HEAD | NOSE
 	armor_class = ARMOR_CLASS_LIGHT
@@ -278,7 +278,7 @@
 	desc = "A woven garment, imbued with Baothan Magicks, yet still exposing a vital area of the body.. A welcoming of the pain and pleasure of a blade.."
 	icon_state = "baothagamb"
 	armor_class = ARMOR_CLASS_LIGHT
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	color = null
 	item_flags = DROPDEL
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
@@ -300,7 +300,7 @@
 	name = "Saccharine Cuffs"
 	desc = "Gilded bracers that protect the arms."
 	icon_state = "baothabracers"
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	resistance_flags = FIRE_PROOF
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
 	smeltresult = null
@@ -312,7 +312,7 @@
 /obj/item/clothing/under/roguetown/baotha/skirt
 	name = "Saccharine Fauldcoat"
 	desc = "Weaved from one's lux, combined with powerful Baothan Magicks to form a fashionable, yet protective, skirt."
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	icon_state = "baothaskirt"
 	resistance_flags = FIRE_PROOF
 	armor_class = ARMOR_CLASS_LIGHT

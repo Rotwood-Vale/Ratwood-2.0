@@ -1687,7 +1687,7 @@
 	clickcd = CLICK_CD_HEAVY
 	reach = 2
 	damfactor = 1.8
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	misscost = 10
 	intent_intdamage_factor = 0.25
 	sharpness_penalty = 2
