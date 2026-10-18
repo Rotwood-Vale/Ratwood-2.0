@@ -323,6 +323,7 @@
 #define TRAIT_EORAN_CALM "Eoran Calm"
 #define TRAIT_EORAN_SERENE "Eoran Serenity"
 #define TRAIT_WARLOCK "Warlock" // Cancels out weapon w/ casting penalities, exclusive to rituos
+#define TRAIT_NOWW "Werevolf Immunity"
 #define TRAIT_EORAN_PITY "Eoran Commitment" //prevents using the eora seed pity mechanic
 #define TRAIT_NECRAS_VOW "Necra's Vow"
 #define TRAIT_PESTRAS_BLESSING "Pestra's blessing"
@@ -637,6 +638,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_MASTERFUL_HUNTER = span_greentext("To hunt well, is to know the land. I have an advantage in becoming a masterful hunter here, for I know about the various watering holes, the feeding grounds, which thickets are bent by animal flanks."),
 	TRAIT_EXPERT_HUNTER = span_greentext("I am a skilled local hunter; my hunting skill can progress to expert levels."),
 	TRAIT_DEATHLESS = span_info("I cannot truly die by ordinary means."),
+	TRAIT_NOWW = span_info("Dendor's madness shall find no hold in me."),
 	TRAIT_SILVER_WEAK = span_warning("Silver is the greatest threat to my lyfe. Blows from silver weapons will set me alight, inhibit my ability to regenerate, and - if blessed - can outright destroy my vessel."),
 	TRAIT_DYES = span_notice("I know my way around pigments and shades, and I'm able to create the exact colors I want in a dye station."),
 	TRAIT_BLACKOAK = span_warning("The Black Oaks can spot <b>any</b> foreigners and outsiders, no matter how long they've lived in the Vale. I can spot an invader at a glance."),
