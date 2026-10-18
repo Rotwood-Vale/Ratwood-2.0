@@ -369,7 +369,7 @@
 // Cure rot
 /obj/effect/proc_holder/spell/invoked/cure_rot
 	name = "Cure Rot"
-    desc = "Invoke Pestras will though a Psycross to cast out rot from people or regrow their flesh. Additionally purges the body of all foreign substances, leaving them purified."  
+	desc = "Invoke Pestras will though a Psycross to cast out rot from people or regrow their flesh. Additionally purges the body of all foreign substances, leaving them purified."
 	overlay_icon = 'icons/mob/actions/pestramiracles.dmi'
 	action_icon = 'icons/mob/actions/pestramiracles.dmi'
 	overlay_state = "rot"
