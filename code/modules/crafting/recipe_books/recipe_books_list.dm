@@ -51,7 +51,7 @@
 		/datum/crafting_recipe/roguetown/turfs/brick/wall,
 		/datum/crafting_recipe/roguetown/turfs/brick/window,
 
-		/datum/crafting_recipe/roguetown/turfs/fancywindow,		
+		/datum/crafting_recipe/roguetown/turfs/fancywindow,
 		/datum/crafting_recipe/roguetown/turfs/fancywindow/openclose,
 
 		/datum/crafting_recipe/roguetown/turfs/hay,
@@ -112,6 +112,30 @@
 		/datum/crafting_recipe/roguetown/survival,
 		/datum/crafting_recipe/roguetown/tallow,
 		)
+
+/obj/item/recipe_book/fishing
+	name = "Tides & Tackle: A Fisher's Handbook"
+	desc = "A practical guide to fishing craftwork: baits, hooks, lines, rods, nets, and cages."
+	icon_state = "book8_0"
+	base_icon_state = "book8"
+
+	types = list(
+		/datum/book_entry/fishing1,
+		/datum/book_entry/fishing2,
+		/datum/book_entry/fishing3,
+		/datum/book_entry/fishing4,
+		/datum/book_entry/fishing5,
+		/datum/book_entry/fishing6,
+		/datum/book_entry/fishing7,
+		/datum/book_entry/fishing8,
+		/datum/book_entry/fishing9,
+		/datum/book_entry/fishing10,
+		/datum/crafting_recipe/roguetown/fishing,
+		/datum/crafting_recipe/roguetown/survival/rod,
+		/datum/crafting_recipe/roguetown/survival/fishingcage,
+		/datum/brewing_recipe/chum,
+		/datum/brewing_recipe/fermentedcrab,
+	)
 
 // TBD - Cauldron Recipes
 /obj/item/recipe_book/alchemy

@@ -88,6 +88,9 @@ All foods are distributed among various categories. Use common sense.
 
 	var/cooked_smell
 
+	var/list/sizemod = null
+	var/list/raritymod = null
+	var/list/fishloot = null
 
 /datum/intent/food
 	name = "feed"
