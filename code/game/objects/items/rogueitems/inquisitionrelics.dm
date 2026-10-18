@@ -708,6 +708,8 @@ Inquisitorial armory down here
 					cursedblood = 2
 				if(M.mind.has_antag_datum(/datum/antagonist/vampire))
 					cursedblood = 3
+				if(M.mind.has_antag_datum(/datum/antagonist/gnoll))
+					cursedblood = 2
 				if(!cursedblood) // cured survivors still carry traces worth cataloguing, but nowhere near a true nite creacher
 					if(HAS_TRAIT(M, TRAIT_BLACKBLOOD))
 						cursedblood = 1
@@ -1553,6 +1555,8 @@ Inquisitorial armory down here
 	always_destroy = TRUE
 
 GLOBAL_LIST_INIT(inquisition_used_ids, list())
+/// Every haemological report mailed this round, as report ID -> list("page", "submitter", "subject", "time"). Kept so admins can read a report after the paper is gone.
+GLOBAL_LIST_EMPTY(inquisition_reports)
 
 /proc/generate_inquisition_id()
 	var/id
@@ -1585,7 +1589,11 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 	if(!report_html || !length(report_html))
 		to_chat(user, span_warning("The certificate appears to be... blank? Report this in an A-HELP or file a Bug Report, please!"))
 		return
-	var/html = {"
+	user << browse(get_report_page(), "window=inquisition_report;size=750x850;can_resize=1")
+
+/// The full browser page for this report, as shown when it's read.
+/obj/item/paper/inquisition_report/proc/get_report_page()
+	return {"
 	<html>
 	<head>
 		<title>Haemological Report</title>
@@ -1603,7 +1611,6 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 	</body>
 	</html>
 	"}
-	user << browse(html, "window=inquisition_report;size=750x850;can_resize=1")
 
 /obj/item/paper/inquisition_report/proc/fill_report(mob/living/carbon/human/H)
 	if(!H)

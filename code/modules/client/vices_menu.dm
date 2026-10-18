@@ -709,14 +709,17 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 
 	for(var/i = 1 to LAZYLEN(V.picked_choices))
 		var/choice = V.picked_choices[i]
-		html += "• <a style='color: inherit;' href='byond://?src=\ref[src];virtue_action=subvirtue;task=remove;slot=[slot];index=[i]'>[choice]</a>"
+		html += "• [choice]"
 		if(V.choice_tooltips[choice])
 			html += " <a style='color: inherit;' href='byond://?src=\ref[src];virtue_action=subvirtue;task=tooltip;slot=[slot];choice=[url_encode(choice)]'>(?)</a>"
+		if(length(V.extra_choices) > LAZYLEN(V.picked_choices))
+			html += " <a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=subvirtue;task=change;slot=[slot];index=[i]'>Change</a>"
+		html += "<a class='btn btn-clear' href='byond://?src=\ref[src];virtue_action=subvirtue;task=remove;slot=[slot];index=[i]'>Remove</a>"
 		html += "<br>"
 
 	if(LAZYLEN(V.picked_choices) < V.max_choices)
 		var/cost = V.next_choice_cost()
-		html += "<a style='color: inherit;' href='byond://?src=\ref[src];virtue_action=subvirtue;task=input;slot=[slot]'>Pick Bonus[cost ? " ([cost] TRIUMPH)" : ""]</a><br>"
+		html += "<a class='btn btn-select' href='byond://?src=\ref[src];virtue_action=subvirtue;task=input;slot=[slot]'>Pick Bonus[cost ? " ([cost] TRIUMPH)" : ""]</a><br>"
 
 	html += "</div>"
 	return html
@@ -1771,6 +1774,30 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 					return
 				save_to_history()
 				target.picked_choices.Cut(index, index + 1)
+				open_vices_menu(usr)
+				return
+
+			if(task == "change")
+				var/index = text2num(href_list["index"])
+				if(!index || index < 1 || index > length(target.picked_choices))
+					return
+				var/old_choice = target.picked_choices[index]
+				var/list/subchoices = target.extra_choices - target.picked_choices
+				if(!length(subchoices))
+					return
+				var/picked = tgui_input_list(usr, "Replace [old_choice] with:", "Virtue Bonus", subchoices)
+				// Re-validate: the input above sleeps, so the virtue or its picks may have changed meanwhile.
+				if(target != ((href_list["slot"] == "secondary") ? virtuetwo : virtue))
+					return
+				if(!picked || !(picked in target.extra_choices) || (picked in target.picked_choices))
+					return
+				if(index > length(target.picked_choices) || target.picked_choices[index] != old_choice)
+					return
+				save_to_history()
+				target.picked_choices[index] = picked
+				var/tooltip = target.choice_tooltips[picked]
+				if(tooltip)
+					to_chat(usr, span_notice(tooltip))
 				open_vices_menu(usr)
 				return
 

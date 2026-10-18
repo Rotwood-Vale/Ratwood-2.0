@@ -33,6 +33,25 @@
 			show_heal_panel(M)
 		return
 
+	// Read a haemological report from its admin log link
+	if(href_list["view_inquisition_report"])
+		var/list/report = GLOB.inquisition_reports[href_list["view_inquisition_report"]]
+		if(report)
+			usr << browse(report["page"], "window=inquisition_report;size=750x850;can_resize=1")
+		else
+			to_chat(usr, span_warning("No haemological report with that ID was found."))
+		return
+
+	// List every haemological report mailed this round, from the Inquisitorial Matters panel
+	if(href_list["view_inquisition_reports"])
+		show_inquisition_reports()
+		return
+
+	// Open or refresh the Inquisitorial Matters panel
+	if(href_list["inquisitorial_matters"])
+		show_inquisitorial_matters()
+		return
+
 	// Open Inventory Panel from Player Panel
 	if(href_list["inventory_panel"])
 		var/mob/living/M = locate(href_list["inventory_panel"])

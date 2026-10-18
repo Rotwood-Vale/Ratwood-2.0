@@ -47,6 +47,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/remove_bounty,
 	/client/proc/agevet_player,
 	/client/proc/list_severed_heads,
+	/client/proc/inquisitorial_matters,
 	// RATWOOD MODULAR START
 	/client/proc/bunker_bypass,
 	// RATWOOD MODULAR END

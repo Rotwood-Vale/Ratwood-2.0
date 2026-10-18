@@ -329,9 +329,7 @@
 				var/correct
 				if(HAS_TRAIT(I.signee, TRAIT_INQUISITION))
 					selfreport = TRUE
-				if(HAS_TRAIT(I.signee, TRAIT_CABAL) || HAS_TRAIT(I.signee, TRAIT_HORDE) || HAS_TRAIT(I.signee, TRAIT_DEPRAVED) || HAS_TRAIT(I.signee, TRAIT_COMMIE))
-					correct = TRUE
-				if(I.signee.name in GLOB.excommunicated_players)
+				if(is_inquisition_quarry(I.signee))
 					correct = TRUE
 				if(I.paired)
 					if(I.paired.subject && HAS_TRAIT(I.paired.subject, TRAIT_INQUISITION))
@@ -461,9 +459,7 @@
 			if(has_indexer)
 				if(HAS_TRAIT(I.paired.subject, TRAIT_INQUISITION))
 					selfreport = TRUE
-				if(HAS_TRAIT(I.paired.subject, TRAIT_CABAL) || HAS_TRAIT(I.paired.subject, TRAIT_HORDE) || HAS_TRAIT(I.paired.subject, TRAIT_DEPRAVED) || HAS_TRAIT(I.paired.subject, TRAIT_COMMIE))
-					correct = TRUE
-				if(I.paired.subject.name in GLOB.excommunicated_players)
+				if(is_inquisition_quarry(I.paired.subject))
 					correct = TRUE
 				if(GLOB.indexed && !selfreport)
 					if(HAS_TRAIT(I.paired.subject.mind, TRAIT_INDEXED))
@@ -546,6 +542,14 @@
 				R.name = "haemological report (#[id])"
 				R.fill_report(I.paired.subject)
 				user.put_in_hands(R)
+				GLOB.inquisition_reports[id] = list(
+					"page" = R.get_report_page(),
+					"submitter" = key_name(user),
+					"subject" = key_name(I.paired.subject),
+					"time" = worldtime2text(),
+				)
+				message_admins("[key_name_admin(user)] mailed [key_name_admin(I.paired.subject)]'s blood to the Inquisition. <a href='?_src_=holder;[HrefToken(TRUE)];view_inquisition_report=[id]'>(VIEW REPORT #[id])</a>")
+				log_admin("[key_name(user)] mailed [key_name(I.paired.subject)]'s blood to the Inquisition (report #[id]).")
 
 				qdel(I.paired)
 				qdel(I)
@@ -720,6 +724,14 @@
 /obj/structure/roguemachine/mail/examine(mob/user)
 	. = ..()
 	. += "<a href='?src=[REF(src)];directory=1'>Directory:</a> [mailtag]"
+
+/// Whether the Inquisition counts an accusation against this person as correct: a heretic by faith, or an excommunicant.
+/obj/structure/roguemachine/mail/proc/is_inquisition_quarry(mob/living/M)
+	if(HAS_TRAIT(M, TRAIT_CABAL) || HAS_TRAIT(M, TRAIT_HORDE) || HAS_TRAIT(M, TRAIT_DEPRAVED) || HAS_TRAIT(M, TRAIT_COMMIE))
+		return TRUE
+	if(M.name in GLOB.excommunicated_players)
+		return TRUE
+	return FALSE
 
 /obj/structure/roguemachine/mail/proc/view_directory(mob/user)
 	var/dat
