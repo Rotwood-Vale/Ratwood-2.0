@@ -45,7 +45,7 @@
 		if(gibamounts[i])
 			for(var/j = 1, j<= gibamounts[i], j++)
 				var/gibType = gibtypes[i]
-				gib = new gibType(loc)
+				gib = new gibType(loc, get_blood_color_from_dna(dna_to_add))
 
 				gib.add_blood_DNA(dna_to_add)
 

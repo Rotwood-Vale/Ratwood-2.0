@@ -103,6 +103,12 @@
 
 #define COLOR_PATRON_PSYDON "#FFFFFF" // Pure white, for he ENDVRES
 
+// Blood colours. Custom colours are relative to pure red: "#FF0000" looks the same as ordinary blood. See blood_color_matrix().
+/// What blood darkens by once it dries.
+#define BLOOD_COLOR_DRIED "#967c69"
+/// Blackbloods' blood, all but blackened by the Otavan cure.
+#define BLOOD_COLOR_BLACKBLOOD "#4a1010"
+
 /proc/clothing_color2hex(input)
 	switch(input)
 		if("Red")

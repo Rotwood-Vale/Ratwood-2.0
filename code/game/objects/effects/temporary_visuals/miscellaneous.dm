@@ -11,6 +11,10 @@
 	icon_state = "[splatter_type][rand(1, 6)]"
 	. = ..()
 	animate(src, alpha = 0, time = duration)
+
+/// Colours the splatter to match the blood it came from. Null for ordinary red blood.
+/obj/effect/temp_visual/dir_setting/bloodsplatter/proc/set_blood_color(new_blood_color)
+	color = blood_color_matrix(new_blood_color)
 /*
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
 	if(set_dir in GLOB.diagonals)

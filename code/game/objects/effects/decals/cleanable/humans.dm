@@ -33,8 +33,13 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = NO_CLIENT_COLOR
 	var/blood_timer
+	/// Custom colour of this blood, or null for ordinary red blood. Set through set_blood_color().
+	var/blood_color
+	/// Whether this blood has dried
+	var/dry = FALSE
 
-/obj/effect/decal/cleanable/blood/Initialize(mapload)
+/obj/effect/decal/cleanable/blood/Initialize(mapload, new_blood_color)
+	blood_color = new_blood_color // set before merging, so a decal we merge into takes our colour
 	. = ..()
 	GLOB.weather_act_upon_list += src
 	if(. == INITIALIZE_HINT_QDEL)
@@ -42,22 +47,35 @@
 	pixel_x = rand(-5,5)
 	pixel_y = rand(5,5)
 	blood_timer = addtimer(CALLBACK(src, PROC_REF(become_dry)), rand(5 MINUTES,8 MINUTES), TIMER_STOPPABLE)
+	update_blood_color()
 
+/obj/effect/decal/cleanable/blood/proc/set_blood_color(new_blood_color)
+	blood_color = new_blood_color
+	update_blood_color()
+
+/obj/effect/decal/cleanable/blood/proc/update_blood_color()
+	if(dry)
+		color = blood_color ? blood_color_matrix(blood_color, dried = TRUE) : BLOOD_COLOR_DRIED
+	else
+		color = blood_color_matrix(blood_color)
 
 /obj/effect/decal/cleanable/blood/proc/become_dry()
 	if(QDELETED(src))
 		return
 	name = "dry [initial(name)]"
-	color = "#967c69"
+	dry = TRUE
+	update_blood_color()
 	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/C)
 	. = ..()
 	if(C)
+		var/obj/effect/decal/cleanable/blood/B = C
 		C.alpha = initial(alpha)
 		C.bloodiness = initial(bloodiness)
 		C.name = initial(name)
-		C.color = initial(color)
+		B.dry = FALSE
+		B.set_blood_color(blood_color)
 
 /obj/effect/decal/cleanable/blood/Destroy()
 	GLOB.weather_act_upon_list -= src
@@ -93,7 +111,7 @@
 		if(P.drips > 2)
 			var/turf/T = loc
 			if(istype(T))
-				new /obj/effect/decal/cleanable/blood(T)
+				new /obj/effect/decal/cleanable/blood(T, blood_color)
 				qdel(P)
 		return TRUE
 
@@ -137,7 +155,7 @@
 	if(QDELETED(src))
 		return
 	name = "dry [initial(name)]"
-	color = "#967c69"
+	color = BLOOD_COLOR_DRIED
 	alpha = 100
 	bloodiness = 0
 
@@ -169,7 +187,7 @@
 	for(var/i in 0 to rand(1,3))
 		sleep(2)
 		if(i > 0)
-			new /obj/effect/decal/cleanable/blood/splatter(loc, diseases)
+			new /obj/effect/decal/cleanable/blood/splatter(loc, blood_color)
 		if(!step_to(src, get_step(src, direction), 0))
 			break
 
@@ -235,7 +253,7 @@
 		if(istype(T))
 			var/obj/effect/decal/cleanable/blood/puddle/PUD = locate() in T
 			if(!PUD)
-				PUD = new(T)
+				PUD = new(T, blood_color)
 				PUD.blood_vol = blood_vol
 
 /obj/effect/decal/cleanable/blood/drip/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
@@ -245,7 +263,7 @@
 		if(P.drips > 5)
 			var/turf/T = loc
 			if(istype(T))
-				var/obj/effect/decal/cleanable/blood/puddle/PUD = new(T)
+				var/obj/effect/decal/cleanable/blood/puddle/PUD = new(T, blood_color)
 				PUD.blood_vol = blood_vol
 				qdel(P)
 		else

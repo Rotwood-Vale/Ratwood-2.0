@@ -579,6 +579,8 @@
 	var/list/blood_dna = list()
 	if(dna)
 		blood_dna[dna.unique_enzymes] = dna.blood_type
+		if(dna.blood_color)
+			GLOB.blood_colors_by_dna[dna.unique_enzymes] = dna.blood_color
 	else
 		blood_dna["UNKNOWN DNA"] = "X*"
 	return blood_dna

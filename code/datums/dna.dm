@@ -19,6 +19,8 @@
 	var/list/list/body_markings = list()
 	///Current body size, used for proper re-sizing and keeping track of that
 	var/current_body_size = BODY_SIZE_NORMAL
+	/// Custom colour of this DNA's blood, or null for ordinary red blood. Set through /mob/living/carbon/human/proc/set_blood_color().
+	var/blood_color
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -45,6 +47,7 @@
 	destination.dna.unique_enzymes = unique_enzymes
 	destination.dna.uni_identity = uni_identity
 	destination.dna.blood_type = blood_type
+	destination.dna.blood_color = blood_color
 	destination.set_species(species.type, icon_update=0)
 	destination.dna.body_markings = deepCopyList(body_markings)
 	destination.dna.features = features.Copy()
@@ -63,6 +66,7 @@
 	new_dna.unique_enzymes = unique_enzymes
 	new_dna.uni_identity = uni_identity
 	new_dna.blood_type = blood_type
+	new_dna.blood_color = blood_color
 	new_dna.body_markings = deepCopyList(body_markings)
 	new_dna.features = features.Copy()
 	new_dna.species = new species.type

@@ -1,5 +1,7 @@
 /datum/component/decal/blood
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	/// Custom colour of the blood shown, taken from the item's blood DNA. Null for ordinary red blood.
+	var/blood_color
 
 /datum/component/decal/blood/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_STRENGTH_BLOOD, _color, _layer=ABOVE_OBJ_LAYER)
 	if(!isitem(parent))
@@ -10,6 +12,7 @@
 /datum/component/decal/blood/generate_appearance(_icon, _icon_state, _dir, _layer, _color)
 	testing("genappearance")
 	var/obj/item/I = parent
+	blood_color = get_blood_color_from_dna(I.return_blood_DNA())
 	if(I.bigboy)
 		if(!_icon)
 			_icon = 'icons/effects/bloodbig.dmi'
@@ -26,17 +29,28 @@
 	//try to find a pre-processed blood-splatter. otherwise, make a new one
 	// Use initial icon to avoid cache collisions from dynamic icon objects
 	var/base_icon = isfile(icon) ? "[icon]" : "[initial(I.icon)]"
-	var/index = "[base_icon]-[icon_state]"
+	var/index = "[base_icon]-[icon_state]-[blood_color]"
 	pic = blood_splatter_appearances[index]
 
 	if(!pic)
 		var/icon/blood_splatter_icon = icon(icon, icon_state, , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 		blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 		blood_splatter_icon.Blend(icon(_icon, _icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+		if(blood_color)
+			blood_splatter_icon.MapColors(arglist(blood_color_matrix(blood_color)))
 		pic = mutable_appearance(blood_splatter_icon, initial(icon_state))
 		blood_splatter_appearances[index] = pic
 	pic.alpha = 150
 	return TRUE
+
+/// Redraws the blood if newly added blood DNA has changed its colour.
+/datum/component/decal/blood/proc/update_blood_color()
+	var/atom/A = parent
+	if(get_blood_color_from_dna(A.return_blood_DNA()) == blood_color)
+		return
+	remove()
+	generate_appearance()
+	apply()
 
 /datum/component/decal/blood/proc/get_examine_name(datum/source, mob/user, list/override)
 	var/atom/A = parent

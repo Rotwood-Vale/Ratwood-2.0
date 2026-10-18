@@ -174,4 +174,5 @@
 		return
 	if(!length(blood_DNA))
 		return
-	parent.LoadComponent(/datum/component/decal/blood)
+	var/datum/component/decal/blood/blood_decal = parent.LoadComponent(/datum/component/decal/blood)
+	blood_decal?.update_blood_color()

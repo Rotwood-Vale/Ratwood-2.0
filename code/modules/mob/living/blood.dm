@@ -343,6 +343,54 @@
 	bleed_rate = 0
 
 /****************************************************
+				BLOOD COLOUR
+****************************************************/
+
+/// Blood DNA (unique enzymes) -> custom blood colour, for anyone whose blood isn't ordinary red.
+/// Filled in as blood DNA is handed out, so anything that gets bloodied through any route can look up the right colour.
+GLOBAL_LIST_EMPTY(blood_colors_by_dna)
+
+/// The custom colour of this mob's blood, or null for ordinary red blood.
+/mob/living/proc/get_blood_color()
+	return
+
+/mob/living/carbon/human/get_blood_color()
+	return dna?.blood_color
+
+/// Gives this mob's blood a custom colour, or pass null to make it ordinary red again.
+/mob/living/carbon/human/proc/set_blood_color(new_blood_color)
+	if(!dna)
+		return
+	if(dna.unique_enzymes)
+		GLOB.blood_colors_by_dna -= dna.unique_enzymes
+	dna.blood_color = new_blood_color
+	update_damage_overlays()
+
+/// The custom colour of the blood in a blood DNA list, going by the most recently added DNA. Null for ordinary red blood.
+/proc/get_blood_color_from_dna(list/blood_dna)
+	if(!length(blood_dna))
+		return
+	return GLOB.blood_colors_by_dna[blood_dna[length(blood_dna)]]
+
+/**
+ * A colour matrix that retones a red blood sprite to the given colour while keeping its shading.
+ * The sprite's red channel is mapped onto the colour, so "#FF0000" looks the same as ordinary blood.
+ * Null for ordinary red blood, which needs no change. If dried, the result is darkened the way dry blood normally is.
+ */
+/proc/blood_color_matrix(blood_color, dried = FALSE)
+	if(!blood_color)
+		return
+	var/list/rgb = ReadRGB(blood_color)
+	if(!rgb)
+		return
+	var/list/dry_mult = dried ? ReadRGB(BLOOD_COLOR_DRIED) : list(255, 255, 255)
+	return list(
+		(rgb[1] / 255) * (dry_mult[1] / 255), (rgb[2] / 255) * (dry_mult[2] / 255), (rgb[3] / 255) * (dry_mult[3] / 255),
+		0, 0, 0,
+		0, 0, 0,
+	)
+
+/****************************************************
 				BLOOD TRANSFERS
 ****************************************************/
 
@@ -470,8 +518,17 @@
 		W.water_volume = 10
 		W.update_icon()
 		return
-	new /obj/effect/decal/cleanable/blood/splatter(T)
+	spawn_blood_decal(/obj/effect/decal/cleanable/blood/splatter, T)
 	T?.pollute_turf(/datum/pollutant/metallic_scent, 30)
+
+/// Spawns a decal of this mob's blood, coloured to match and carrying its blood DNA.
+/// Returns the decal left on the turf, which may be one already there that the new one merged into.
+/mob/living/proc/spawn_blood_decal(decal_type, turf/T)
+	var/obj/effect/decal/cleanable/blood/decal = new decal_type(T, get_blood_color())
+	if(QDELETED(decal))
+		decal = locate(decal_type) in T
+	decal?.add_blood_DNA(get_blood_dna_list())
+	return decal
 
 
 //to add splatters of blood onto nearby walls. When provided a certain force amount, also increases the range at which blood can appear on the walls.
@@ -489,7 +546,7 @@
 		T = get_turf(src)
 	for(var/turf/closed/w in orange(abs(force_distance), T))
 		var/loc = get_step(T, M)
-		new /obj/effect/decal/cleanable/blood/splatter/walls(loc)
+		spawn_blood_decal(/obj/effect/decal/cleanable/blood/splatter/walls, loc)
 		if(spill_amount > 0)
 			spill_amount--
 			continue
@@ -517,15 +574,19 @@
 	var/obj/effect/decal/cleanable/blood/puddle/P = locate() in T
 	if(P)
 		P.blood_vol += amt
+		P.set_blood_color(get_blood_color())
+		P.add_blood_DNA(get_blood_dna_list())
 		P.update_icon()
 	else
 		var/obj/effect/decal/cleanable/blood/drip/D = locate() in T
 		if(D)
 			D.blood_vol += amt
 			D.drips++
+			D.set_blood_color(get_blood_color())
+			D.add_blood_DNA(get_blood_dna_list())
 			D.update_icon()
 		else
-			new /obj/effect/decal/cleanable/blood/drip(T)
+			spawn_blood_decal(/obj/effect/decal/cleanable/blood/drip, T)
 
 //OV edit
 /mob/living/carbon/human/add_drip_floor(turf/T, amt)

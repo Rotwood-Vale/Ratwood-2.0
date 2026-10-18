@@ -2007,7 +2007,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				bloody = 1
 				var/turf/location = H.loc
 				var/splatter_dir = get_dir(H, user)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(H.loc, splatter_dir)
+				var/obj/effect/temp_visual/dir_setting/bloodsplatter/splatter = new(H.loc, splatter_dir)
+				splatter.set_blood_color(H.get_blood_color())
 				if(istype(location))
 					H.add_splatter_floor(location)
 					H.add_splatter_wall(location, force = I.force)

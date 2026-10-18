@@ -454,6 +454,7 @@ There are several things that need to be remembered:
 			if(gender == FEMALE)
 				bloody_overlay.icon_state += "_f"
 
+		bloody_overlay.color = blood_color_matrix(get_blood_color_from_dna(return_blood_DNA()))
 		overlays_standing[GLOVESLEEVE_LAYER] = bloody_overlay
 
 	if(gloves)
@@ -1794,9 +1795,10 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 	if(!isinhands && HAS_BLOOD_DNA(src))
+		var/blood_color = get_blood_color_from_dna(return_blood_DNA())
 		var/index = "[t_state][sleeveindex]"
 		var/static/list/bloody_onmob = list()
-		var/icon/clothing_icon = bloody_onmob["[index][(boobed_overlay) ? "_boob" : ""]"]
+		var/icon/clothing_icon = bloody_onmob["[index][(boobed_overlay) ? "_boob" : ""]-[blood_color]"]
 		if(!clothing_icon)
 			if(sleeved && sleeveindex < 4) //cut out sleeves from north/south sprites
 				clothing_icon = icon(GLOB.dismembered_clothing_icons[index])
@@ -1806,7 +1808,9 @@ generate/load female uniform sprites matching all previously decided variables
 				clothing_icon.Blend(icon(file2use, "[t_state]_boob"), ICON_OVERLAY)
 			clothing_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 			clothing_icon.Blend(icon(bloody_icon, bloody_icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-			bloody_onmob["[index][(boobed_overlay) ? "_boob" : ""]"] = fcopy_rsc(clothing_icon)
+			if(blood_color)
+				clothing_icon.MapColors(arglist(blood_color_matrix(blood_color)))
+			bloody_onmob["[index][(boobed_overlay) ? "_boob" : ""]-[blood_color]"] = fcopy_rsc(clothing_icon)
 		var/mutable_appearance/pic = mutable_appearance(clothing_icon, -layer2use)
 		standing.overlays.Add(pic)
 
@@ -1907,12 +1911,15 @@ generate/load female uniform sprites matching all previously decided variables
 			sleeves += pic
 
 		if(HAS_BLOOD_DNA(I))
-			var/icon/blood_overlay = bloody_r[used]
+			var/blood_color = get_blood_color_from_dna(I.return_blood_DNA())
+			var/icon/blood_overlay = bloody_r["[used]-[blood_color]"]
 			if(!blood_overlay)
 				blood_overlay = icon(I.sleeved, used)
 				blood_overlay.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 				blood_overlay.Blend(icon(I.bloody_icon, I.bloody_icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-				bloody_r[used] = fcopy_rsc(blood_overlay)
+				if(blood_color)
+					blood_overlay.MapColors(arglist(blood_color_matrix(blood_color)))
+				bloody_r["[used]-[blood_color]"] = fcopy_rsc(blood_overlay)
 			var/mutable_appearance/pic = mutable_appearance(blood_overlay, layer=-layer2use)
 			sleeves += pic
 
@@ -1934,12 +1941,15 @@ generate/load female uniform sprites matching all previously decided variables
 			sleeves += pic
 
 		if(HAS_BLOOD_DNA(I))
-			var/icon/blood_overlay = bloody_l[used]
+			var/blood_color = get_blood_color_from_dna(I.return_blood_DNA())
+			var/icon/blood_overlay = bloody_l["[used]-[blood_color]"]
 			if(!blood_overlay)
 				blood_overlay = icon(I.sleeved, used)
 				blood_overlay.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
 				blood_overlay.Blend(icon(I.bloody_icon, I.bloody_icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-				bloody_l[used] = fcopy_rsc(blood_overlay)
+				if(blood_color)
+					blood_overlay.MapColors(arglist(blood_color_matrix(blood_color)))
+				bloody_l["[used]-[blood_color]"] = fcopy_rsc(blood_overlay)
 			var/mutable_appearance/pic = mutable_appearance(blood_overlay, layer=-layer2use)
 			sleeves += pic
 
