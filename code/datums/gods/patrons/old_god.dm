@@ -252,7 +252,7 @@
 
 /obj/effect/proc_holder/spell/invoked/psydefy
 	name = "DEFY"
-	desc = "I can give a dying person or myself strength to ENDURE just a bit more longer, to leave a one last mark on the world before their flame goes out. (ONLY USABLE ON PEOPLE IN CRIT (Using it while you in crit will self cast))"
+	desc = "I can give a dying person or myself enough strength to ENDURE just a bit longer, to have a chance to leave their mark on the world before their flame goes out. (ONLY USABLE ON PEOPLE IN CRIT / Using it while in crit will self cast)"
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "DEFY"
@@ -268,14 +268,14 @@
 	antimagic_allowed = FALSE
 	recharge_time = 6 MINUTES
 	miracle = TRUE
-	stat_allowed = 1 //i will have to exclude the dead.. somehow
+	stat_allowed = TRUE // Has a specific check for the dead, crit people can still self-cast
 	gesture_required = FALSE
 	devotion_cost = 150
 	cast_without_targets = TRUE
 
 /obj/effect/proc_holder/spell/invoked/psydefy/cast(list/targets, mob/living/user)
 	if(user.stat == DEAD)
-		to_chat(user, span_warning("You are dead, its to late for displays of wilpower."))
+		to_chat(user, span_warning("You're dead, it's to late for displays of willpower."))
 		revert_cast()
 		return FALSE
 	var/mob/living/carbon/human/target = null
@@ -284,41 +284,43 @@
 	if(!target && ishuman(targets[1]))
 		target = targets[1]
 	else if(!target)
-		to_chat(user, span_warning("Miracle only works on humanoids about to die and having the will to resist it."))
+		to_chat(user, span_warning("[name] only works on humanoids about to die that have enough will to ENDVRE!"))
 		revert_cast()
 		return FALSE
-
-	var/fail = FALSE
 
 	var/wAmount = LAZYLEN(target.get_wounds())
 	var/damtotal = target.getBruteLoss() + target.getFireLoss() + target.getToxLoss()
 
 	if(!target.stat) // this is first as all the others give you information about target
 		to_chat(user, span_warning("They are not in dire enought state for this miracle."))
-		fail = TRUE
+		revert_cast()
+		return FALSE
 	if(target.stat == UNCONSCIOUS && !(damtotal >= 100 || wAmount > 0 || target.get_blood_volume() < BLOOD_VOLUME_OKAY) && target.IsSleeping()) // very long way of saying NO to sleep casting
-		to_chat(user, span_warning("They are in peacefull sleep, they wont rise unless they feel trethened."))
-		fail = TRUE
+		to_chat(user, span_warning("They are sleeping peacefully, there is no reason for them to stir so roughly."))
+		revert_cast()
+		return FALSE
 	if(target.stat == DEAD) // are dead
-		to_chat(user, span_warning("They are alredy dead, you acted to late."))
-		fail = TRUE
+		to_chat(user, span_warning("They're already dead!"))
+		revert_cast()
+		return FALSE
 	if(target.mob_biotypes & MOB_UNDEAD) // still dead
-		to_chat(user, span_warning("They are alredy dead, there is not resistance left to empower."))
-		fail = TRUE
-	if(HAS_TRAIT(target, TRAIT_PARALYSIS)) // are sculcracked
-		to_chat(user, span_warning("No amount of will alone will let them move."))
-		fail = TRUE
+		to_chat(user, span_warning("The unlyving cannot ENDVRE!"))
+		revert_cast()
+		return FALSE
+	if(HAS_TRAIT(target, TRAIT_PARALYSIS))
+		to_chat(user, span_warning("They're paralyzed, no amount of willpower will get them to move."))
+		revert_cast()
+		return FALSE
 	if(istype(target.patron, /datum/patron/divine/necra)) // worship death
-		to_chat(user, span_warning("They worship death, there is no will to resist their end in them."))
-		fail = TRUE
+		to_chat(user, span_warning("They worship death, they do not have enough will to ENDVRE through their end."))
+		revert_cast()
+		return FALSE
 	if(istype(target.patron, /datum/patron/inhumen/zizo)) // thinks they will get raised as undead
 		to_chat(user, span_warning("They dont fear death, they dont see it as an end."))
-		fail = TRUE
+		revert_cast()
+		return FALSE
 	if(HAS_TRAIT(target, TRAIT_NOBREATH)) // no avoiding oxy consequencess
 		to_chat(user, span_warning("They dont see themselves as dying and lack a will to resist it."))
-		fail = TRUE
-	
-	if(fail)
 		revert_cast()
 		return FALSE
 
