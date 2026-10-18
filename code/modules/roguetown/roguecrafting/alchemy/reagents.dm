@@ -52,7 +52,6 @@
 	description = "A fermented sauce of fish innards and vinegar, which gradually regenerates all types of damage."
 	reagent_state = LIQUID
 	color = "#891305"
-	var/nutriment_factor = 16
 	metabolization_rate = 0.4
 	taste_description = "lip-puckeringly rich fishiness"
 	scent_description = "fermented pungence"

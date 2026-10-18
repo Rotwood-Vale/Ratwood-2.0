@@ -188,11 +188,12 @@
 
 	if(damagetype == BRUTE)
 		//Heal our buddy <3
+		var/heal_amount = partner.get_heal_amount(shared_damage)
 		var/list/wCount = partner.get_wounds()
 		if(wCount.len > 0)
-			partner.heal_wounds(shared_damage)
+			partner.heal_wounds(heal_amount)
 			partner.update_damage_overlays()
-		partner.adjustBruteLoss(-shared_damage, 0)
+		partner.adjustBruteLoss(-heal_amount, 0)
 
 		var/obj/item/bodypart/BP = null
 		BP = L.get_bodypart(check_zone(def_zone))

@@ -1,6 +1,7 @@
 GLOBAL_LIST_EMPTY(vampire_objects)
 #define INITIAL_BLOODPOOL_PERCENTAGE 40
 /datum/antagonist/vampire
+	purges_second_chance = TRUE
 	name = "Vampire"
 	roundend_category = "Vampires"
 	antagpanel_category = "Vampire"

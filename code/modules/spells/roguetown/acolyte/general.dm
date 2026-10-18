@@ -42,11 +42,6 @@
 		playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 		return FALSE
 
-	if(HAS_TRAIT(target, TRAIT_BLACKBLOOD))
-		user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-		playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-		target.emote("pain")
-
 	if(user.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD))
 		target.visible_message(span_danger("[target] is burned by holy light!"), span_userdanger("I'm burned by holy light!"))
 		target.adjustFireLoss(10)
@@ -98,6 +93,7 @@
 
 	target.apply_status_effect(/datum/status_effect/buff/healing, healing, is_inhumen, user.patron)
 	target.visible_message(message_out, message_self)
+	blackblood_miracle_pain(user, target)
 
 	return TRUE
 
@@ -135,17 +131,13 @@
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			return FALSE
 
-		if(HAS_TRAIT(target, TRAIT_BLACKBLOOD))
-			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-			target.emote("pain")
-
 		if(user.patron?.undead_hater && (target.mob_biotypes & MOB_UNDEAD)) //positive energy harms the undead
 			target.visible_message(span_danger("[target] is burned by holy light!"), span_userdanger("I'm burned by holy light!"))
 			target.adjustFireLoss(25)
 			target.fire_act(1,10)
 			return TRUE
 		target.visible_message(span_info("A wreath of gentle light passes over [target]!"), span_notice("I'm bathed in holy light!"))
+		blackblood_miracle_pain(user, target)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.apply_status_effect(/datum/status_effect/buff/fortify)
@@ -201,6 +193,11 @@
 		if(!affecting)
 			revert_cast()
 			return FALSE
+		var/heal_mult = target.get_heal_amount(1)
+		if(!heal_mult)
+			to_chat(user, span_warning("The miracle finds no purchase in [target]."))
+			revert_cast()
+			return FALSE
 		if(length(affecting.embedded_objects))
 			var/no_embeds = TRUE
 			for(var/object in affecting.embedded_objects)
@@ -218,14 +215,22 @@
 		if(length(affecting.wounds))
 			for(var/datum/wound/wound in affecting.wounds)
 				if(!isnull(wound) && wound.healable_by_miracles)
-					wound.heal_wound(wound.whp)
+					wound.heal_wound(wound.whp * heal_mult)
 					foundwound = TRUE
-					user.visible_message(("<font color = '#488f33'>[capitalize(wound.name)] oozes a clear fluid and closes shut, forming into a sore bruise!</font>"))
-					affecting.add_wound(/datum/wound/bruise/woundheal)
+					if(QDELETED(wound) || !wound.bodypart_owner)
+						user.visible_message(("<font color = '#488f33'>[capitalize(wound.name)] oozes a clear fluid and closes shut, forming into a sore bruise!</font>"))
+						affecting.add_wound(/datum/wound/bruise/woundheal)
+					else
+						user.visible_message(("<font color = '#488f33'>[capitalize(wound.name)] oozes a clear fluid, but only partly closes.</font>"))
 			if(foundwound)
 				playsound(target, 'sound/magic/woundheal_crunch.ogg', 100, TRUE)
-			affecting.change_bodypart_status(BODYPART_ORGANIC, heal_limb = TRUE)
+			if(heal_mult >= 1)
+				affecting.change_bodypart_status(BODYPART_ORGANIC, heal_limb = TRUE)
+			else
+				affecting.change_bodypart_status(BODYPART_ORGANIC)
+				affecting.heal_damage(affecting.brute_dam * heal_mult, affecting.burn_dam * heal_mult)
 			affecting.update_disabled()
+			blackblood_miracle_pain(user, target)
 			return TRUE
 		else
 			to_chat(user, span_warning("The limb is free of wounds."))
@@ -330,3 +335,11 @@
 		return TRUE
 	revert_cast()
 	return FALSE
+
+/// Healing miracles pain a Blackblood, their Lux remembering the Otavan cure. Only call once the miracle has actually taken hold.
+/proc/blackblood_miracle_pain(mob/user, mob/living/target)
+	if(!HAS_TRAIT(target, TRAIT_BLACKBLOOD) || !target.get_heal_amount(1))
+		return
+	user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+	playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+	target.emote("pain")

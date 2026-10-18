@@ -107,9 +107,17 @@
 		return FALSE
 	return TRUE
 
+/// The bleeding from this bodypart's wounds. A Blackblood's thickened blood runs from a severed artery at half the rate.
+/obj/item/bodypart/proc/get_wound_bleeding()
+	. = bleeding
+	if(!owner || !HAS_TRAIT(owner, TRAIT_BLACKBLOOD))
+		return
+	for(var/datum/wound/artery/artery in wounds)
+		. -= artery.bleed_rate * 0.5
+
 /// Returns the total bleed rate on this bodypart
 /obj/item/bodypart/proc/get_bleed_rate()
-	var/bleed_rate = bleeding
+	var/bleed_rate = get_wound_bleeding()
 	if(bandage && !HAS_BLOOD_DNA(bandage))
 		process_bandage(bleed_rate)
 		var/obj/item/natural/cloth/cloth = bandage
@@ -138,7 +146,7 @@
 
 /// Returns the bleed amount that matters for HUD visuals without mutating bandages.
 /obj/item/bodypart/proc/get_hud_bleed_rate()
-	var/hud_bleed_rate = bleeding
+	var/hud_bleed_rate = get_wound_bleeding()
 	if(bandage && !HAS_BLOOD_DNA(bandage))
 		var/obj/item/natural/cloth/cloth = bandage
 		if(istype(cloth))

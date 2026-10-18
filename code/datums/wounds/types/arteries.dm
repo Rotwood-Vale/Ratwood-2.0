@@ -36,10 +36,6 @@
 
 /datum/wound/artery/on_bodypart_gain(obj/item/bodypart/affected)
 	. = ..()
-	// A Blackblood's thickened blood runs from a severed artery at half the rate, sewn or not
-	if(HAS_TRAIT(owner, TRAIT_BLACKBLOOD))
-		set_bleed_rate(bleed_rate * 0.5)
-		sewn_bleed_rate *= 0.5
 	affected.temporary_crit_paralysis(10 SECONDS)
 
 /datum/wound/artery/neck

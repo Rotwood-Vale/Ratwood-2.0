@@ -361,9 +361,12 @@ GLOBAL_LIST_EMPTY(blood_colors_by_dna)
 /mob/living/carbon/human/proc/set_blood_color(new_blood_color)
 	if(!dna)
 		return
-	if(dna.unique_enzymes)
-		GLOB.blood_colors_by_dna -= dna.unique_enzymes
 	dna.blood_color = new_blood_color
+	if(dna.unique_enzymes)
+		if(new_blood_color)
+			GLOB.blood_colors_by_dna[dna.unique_enzymes] = new_blood_color
+		else
+			GLOB.blood_colors_by_dna -= dna.unique_enzymes
 	update_damage_overlays()
 
 /// The custom colour of the blood in a blood DNA list, going by the most recently added DNA. Null for ordinary red blood.
@@ -525,8 +528,16 @@ GLOBAL_LIST_EMPTY(blood_colors_by_dna)
 /// Returns the decal left on the turf, which may be one already there that the new one merged into.
 /mob/living/proc/spawn_blood_decal(decal_type, turf/T)
 	var/obj/effect/decal/cleanable/blood/decal = new decal_type(T, get_blood_color())
-	if(QDELETED(decal))
-		decal = locate(decal_type) in T
+	if(QDELETED(decal)) // find the decal it merged into: one of exactly its type, or the full pool splatters grow into
+		decal = null
+		for(var/obj/effect/decal/cleanable/blood/merged in T)
+			if(QDELETED(merged))
+				continue
+			if(merged.type == decal_type)
+				decal = merged
+				break
+			if(merged.type == /obj/effect/decal/cleanable/blood)
+				decal = merged
 	if(decal)
 		stain_blood_decal(decal)
 	return decal

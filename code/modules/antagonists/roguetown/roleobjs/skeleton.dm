@@ -1,5 +1,6 @@
 
 /datum/antagonist/skeleton
+	purges_second_chance = TRUE
 	name = "Skeleton"
 	increase_votepwr = FALSE
 

@@ -1,4 +1,5 @@
 /datum/antagonist/werewolf
+	purges_second_chance = TRUE
 	name = "Verevolf"
 	roundend_category = "Werewolves"
 	antagpanel_category = "Werewolf"

@@ -1,4 +1,5 @@
 /datum/antagonist/lich
+	purges_second_chance = TRUE
 	name = "Lich"
 	roundend_category = "Lich"
 	antagpanel_category = "Lich"

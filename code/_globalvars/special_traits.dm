@@ -110,6 +110,14 @@ GLOBAL_LIST_INIT(special_traits, build_special_traits())
 
 	var/datum/virtue/virtue_type = player.prefs.virtue
 	var/datum/virtue/virtuetwo_type = player.prefs.virtuetwo
+	// Re-checked here, as the species may have changed since the virtue was picked
+	var/list/species_restricted = character.dna?.species?.restricted_virtues
+	if(virtue_type?.type in species_restricted)
+		to_chat(character, "My race cannot take [virtue_type.name]. It will not be applied.")
+		virtue_type = null
+	if(virtuetwo_type?.type in species_restricted)
+		to_chat(character, "My race cannot take [virtuetwo_type.name]. It will not be applied.")
+		virtuetwo_type = null
 	if(virtue_type)
 		if(virtue_check(virtue_type, heretic))
 			apply_virtue(character, virtue_type)

@@ -11,6 +11,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/typecache_datum_blacklist = list()	//List of datums this type can't coexist with
 	var/job_rank
 	var/replace_banned = TRUE //Should replace jobbanned player with ghosts if granted.
+	/// If TRUE, the Second Chance virtue is suspended while someone is this antagonist, and returns if they stop being one. See blocks_second_chance()
+	var/purges_second_chance = FALSE
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
 	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
@@ -110,6 +112,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 //		if(!silent)
 //			greet()
 		apply_innate_effects()
+		if(blocks_second_chance() && ishuman(owner.current))
+			var/mob/living/carbon/human/human_owner = owner.current
+			human_owner.suspend_second_chance()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 		else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
@@ -138,12 +143,19 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
+		if(blocks_second_chance() && ishuman(owner.current))
+			var/mob/living/carbon/human/human_owner = owner.current
+			human_owner.restore_second_chance()
 		if(!silent && owner.current)
 			farewell()
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
 	qdel(src)
+
+/// Whether being this antagonist currently suspends the Second Chance virtue.
+/datum/antagonist/proc/blocks_second_chance()
+	return purges_second_chance
 
 /datum/antagonist/proc/greet()
 	return

@@ -1186,7 +1186,7 @@
 	return ..()
 
 /datum/status_effect/buff/rockmuncher/tick()
-	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	var/heal_amount = owner.get_heal_amount(healing_on_tick, FALSE)
 	if(!heal_amount)
 		return
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
@@ -1216,7 +1216,7 @@
 	return ..()
 
 /datum/status_effect/buff/gemmuncher/tick()
-	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	var/heal_amount = owner.get_heal_amount(healing_on_tick, FALSE)
 	if(!heal_amount)
 		return
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))
@@ -1251,7 +1251,7 @@
 	return ..()
 
 /datum/status_effect/buff/rockmuncher_lesser/tick()
-	var/heal_amount = owner.get_heal_amount(healing_on_tick)
+	var/heal_amount = owner.get_heal_amount(healing_on_tick, FALSE)
 	if(!heal_amount)
 		return
 	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal_rogue(get_turf(owner))

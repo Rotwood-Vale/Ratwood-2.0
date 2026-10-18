@@ -1747,7 +1747,7 @@ GLOBAL_LIST_EMPTY(inquisition_reports)
 			found = TRUE
 		if(HAS_TRAIT(H, TRAIT_ROTMAN))
 			report_html += "<font color='#167733'><b>Resolved Necrotic Affliction</b></font><br><br>"
-			report_html += "<i><i>The sample exhibits extensive post-necrotic restructuring, with markedly diminished tissue vitality and abnormal cessation of ordinary respiratory humoral exchange. Sanguine response to injury is severely blunted, consistent with prior reanimation and subsequent purification; residual necrotic alteration persists without evidence of active rot.</i><br><br>"
+			report_html += "<i>The sample exhibits extensive post-necrotic restructuring, with markedly diminished tissue vitality and abnormal cessation of ordinary respiratory humoral exchange. Sanguine response to injury is severely blunted, consistent with prior reanimation and subsequent purification; residual necrotic alteration persists without evidence of active rot.</i><br><br>"
 			found = TRUE
 
 		for(var/datum/antagonist/D in H.mind.antag_datums)
@@ -1774,7 +1774,7 @@ GLOBAL_LIST_EMPTY(inquisition_reports)
 	report_html += "> <b>IMPORTANT:</b> [error_chance]<br>"
 	report_html += "> [pick(sample_notes)]<br>"
 	report_html += "> [pick(archive_notes)]<br>"
-	report_html += "<i>This certificate records only the Bureau's haemological findings. Declarations of Heresy remain solely within the authority and jurisdiction of the Holy Otavan Inquisition's agents on the field.<i><br>"
+	report_html += "<i>This certificate records only the Bureau's haemological findings. Declarations of Heresy remain solely within the authority and jurisdiction of the Holy Otavan Inquisition's agents on the field.</i><br>"
 	report_html += "<hr>"
 	report_html += "<i>Certified beneath the seal of the Holy Otavan Inquisition and entered into the Grand Ledger of Prosecutions and Procurement.</i><br><br>"
 	report_html += "<font size=2>"

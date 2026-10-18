@@ -86,7 +86,7 @@
 /turf/add_blood_DNA(list/blood_dna)
 	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
 	if(!B)
-		B = new /obj/effect/decal/cleanable/blood/splatter(src, get_blood_color_from_dna(blood_dna))
+		B = new /obj/effect/decal/cleanable/blood/splatter(src)
 	B.add_blood_DNA(blood_dna) //give blood info to the blood decal.
 	return TRUE //we bloodied the floor
 

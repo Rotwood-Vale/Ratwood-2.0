@@ -53,11 +53,15 @@
 					wound.heal_wound(0.4)
 
 	/// Blackblood regen. Excluded from the Psydonite regen above so the two never stack. Silver fire stops it completely.
-	if(!stat && HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS) && !has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) && !has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+	/// Paid for with hunger, so it doesn't work for those who never hunger, nor for those who can't heal naturally.
+	if(!stat && HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS) && !HAS_TRAIT(src, TRAIT_NOREGEN) && !HAS_TRAIT(src, TRAIT_NOHUNGER) && !has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) && !has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
 		if(blood_volume > BLOOD_VOLUME_SURVIVE && nutrition > NUTRITION_LEVEL_STARVING && hydration > HYDRATION_LEVEL_DEHYDRATED) // starving is the minimal here, thirst also stops the regen now
 			var/regenerated = FALSE
 			for(var/datum/wound/wound as anything in get_wounds())
 				if(istype(wound, /datum/wound/slash/incision))
+					continue
+				// A severed artery never closes by itself. It has to be stitched first (sewing it clears can_sew)
+				if(istype(wound, /datum/wound/artery) && wound.can_sew)
 					continue
 				if(wound.heal_wound(0.5)) // roughly half of what psydonite can heal up
 					regenerated = TRUE

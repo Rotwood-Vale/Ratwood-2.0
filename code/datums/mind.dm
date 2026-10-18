@@ -34,6 +34,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind
 	var/key
+	/// The Second Chance options this character took. Permanent: their traits are only suspended while an antagonist blocks them. See /datum/antagonist/proc/blocks_second_chance()
+	var/list/second_chance_choices
 	var/name				//replaces mob/var/original_name
 	var/ghostname			//replaces name for observers name if set
 	var/mob/living/current

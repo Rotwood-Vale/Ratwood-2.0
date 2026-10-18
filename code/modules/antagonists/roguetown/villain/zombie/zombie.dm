@@ -2,6 +2,7 @@
 #define ZOMBIE_BITE_CONVERSION_TIME 1.5 MINUTES
 
 /datum/antagonist/zombie
+	purges_second_chance = TRUE
 	name = "Deadite"
 	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "zombie"
@@ -150,6 +151,10 @@
 	CHECK HERE IF ANY UN-ZOMBIFICATION ISSUES.
 */
 ///Remove zombification - cure rot, surgical rot remove
+// The datum is added on death, before the deadite rises, so it only suspends Second Chance once they've actually turned
+/datum/antagonist/zombie/blocks_second_chance()
+	return has_turned
+
 /datum/antagonist/zombie/on_removal()
 	// Restore the body we deadified, not whatever mob the mind now occupies
 	var/mob/living/carbon/human/zombie = deadite_body_ref?.resolve()
@@ -316,6 +321,7 @@
 
 	zombie.STAINT = 1
 	has_turned = TRUE
+	zombie.suspend_second_chance() // only now they've risen, so someone revived before then keeps it
 	// Drop your helm and gorgies boy you won't need it anymore!!!
 	var/static/list/removed_slots = list(
 		SLOT_HEAD,

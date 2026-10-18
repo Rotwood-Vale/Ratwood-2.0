@@ -168,10 +168,19 @@
 #define SC_PALLID "Pallid"
 #define SC_BLACKBLOOD "Blackblood"
 
+/// The traits each Second Chance option grants, under SECOND_CHANCE_TRAIT so they can be stripped again without touching other virtues' traits.
+GLOBAL_LIST_INIT(second_chance_traits, list(
+	SC_ROTCURED = list(TRAIT_ROTMAN, TRAIT_EASYDISMEMBER, TRAIT_NOPAIN, TRAIT_NOBREATH, TRAIT_NOHUNGER, TRAIT_TOXIMMUNE, TRAIT_ZOMBIE_IMMUNE, TRAIT_SILVER_WEAK),
+	SC_PALLID = list(TRAIT_PALLID, TRAIT_DARKVISION, TRAIT_NOBREATH, TRAIT_ZOMBIE_IMMUNE, TRAIT_SILVER_WEAK),
+	SC_BLACKBLOOD = list(TRAIT_BLACKBLOOD, TRAIT_HALFHEAL, TRAIT_STRONGBITE, TRAIT_NASTY_EATER, TRAIT_DARKVISION, TRAIT_SILVER_WEAK),
+))
+
 /datum/virtue/combat/second_chance
 	name = "Second Chance"
 	desc = "Not many are given second chances. Somehow, you're among the lucky bastards who were. What foul, cruel fate did you narrowly escape, changed yet still living?"
 	max_choices = 1
+	// Not hungering would make Blackblood regeneration free and endless
+	incompatible_virtues = list(/datum/virtue/utility/deathless)
 
 	extra_choices = list(
 		SC_ROTCURED,
@@ -181,7 +190,7 @@
 	choice_tooltips = list(
 		SC_ROTCURED = "<font color='#4a8d48'>I was once afflicted with the accursed rot, and was cured. It has left me changed: my limbs are weaker, but I feel no pain and have no need to breathe.<br><br><font color=red>(Grants Easy Dismember, Painless, Breathless, Deathless, Poison Immune, Deadite Immune, Silver Weakness.)<font color=white><br><br>(Additionally, you can eat brains, you don't suffer nausea, and your heart does not beat.)</font>",
 		SC_PALLID = "<font color='#8d4848'>I was once afflicted with vampirism, but was cured by something close to divine intervention. It has left me changed: silver burns my flesh, and the open sky fills me with unease. Yet I draw no breath, and my eyes pierce the darkness. Lingering traces of the curse that once claimed me. Traces I hope will fade in time.<br><br><font color=red>(Grants Darkvision, Breathless, Deadite Immunity and Silver Weakness.)<br><br><font color=white>(Additionally, being outdoors causes stress.)</font>",
-		SC_BLACKBLOOD = "<font color='#8b488d'>I was once a nite-creacher, be it lycanthrope or vampyre, before the Otavan Inquisition subdued and exported me as a test subject of an experimental \"cure\" for my Quicksilver-resistant taint. This intense therapy had me warped, inside, outside, body and mind, into something 'idealistically' humen-like for Otavan standards, even if I am now no different than a sentient, hollowed ghoul.<br><br><font color=red>(Grants Darkvision, Leaden Lux, Strong Bite, Inhumen Digestion, and Silver Weakness.)<br><br><font color=white>(Additionally, consuming any food will grant a minor healing buff. While not starving or dehydrated, you slowly mend your wounds and your bleeding clots faster, at the cost of hunger, though a severed artery still needs tending, even if it bleeds only half as fast. Silver fire halts both. Lifeblood does nothing for you, but zarum does, and healing miracles pain you while only working half as well. You will feel stressed when exposed to Sunlight, and panic while being around or interacting with members of the Inquisition. Vampyres sicken on your blood. You are somewhat resistant to Lycanthropy and the Deadite plague, but not immune.)</font>",
+		SC_BLACKBLOOD = "<font color='#8b488d'>I was once a nite-creacher, be it lycanthrope or vampyre, before the Otavan Inquisition subdued and exported me as a test subject of an experimental \"cure\" for my Quicksilver-resistant taint. This intense therapy had me warped, inside, outside, body and mind, into something 'idealistically' humen-like for Otavan standards, even if I am now no different than a sentient, hollowed ghoul.<br><br><font color=red>(Grants Darkvision, Laden Lux, Strong Bite, Inhumen Digestion, and Silver Weakness.)<br><br><font color=white>(Additionally, consuming any food will grant a minor healing buff. While not starving or dehydrated, you slowly mend your wounds and your bleeding clots faster, at the cost of hunger, though a severed artery will never close until it is stitched, even if it bleeds only half as fast. Silver fire halts both. Lifeblood does nothing for you, but zarum does, and healing miracles pain you while only working half as well. You will feel stressed when exposed to Sunlight, and panic while being around or interacting with members of the Inquisition. Vampyres sicken on your blood. You are somewhat resistant to Lycanthropy and the Deadite plague, but not immune.)</font>",
 	)
 
 /datum/virtue/combat/second_chance/apply_to_human(mob/living/carbon/human/recipient)
@@ -192,51 +201,72 @@
 /datum/virtue/combat/second_chance/proc/apply_second_chance(mob/living/carbon/human/recipient, list/chosen)
 	if(QDELETED(recipient) || !recipient.mind || !length(chosen))
 		return
-
-	if(recipient.mind.has_antag_datum(/datum/antagonist/skeleton) || recipient.mind.has_antag_datum(/datum/antagonist/lich) || recipient.mind.has_antag_datum(/datum/antagonist/vampire) || recipient.mind.has_antag_datum(/datum/antagonist/vampire/lord) || recipient.mind.has_antag_datum(/datum/antagonist/werewolf) || recipient.mind.has_antag_datum(/datum/antagonist/zombie))
-		to_chat(recipient, span_warning("Second Chance cannot be applied to your role, so it has not been applied."))
+	recipient.mind.second_chance_choices = chosen.Copy()
+	if(recipient.second_chance_blocked())
+		to_chat(recipient, span_warning("My second chance lies dormant while I am what I am. Should that ever change, it will return."))
 		return
+	recipient.grant_second_chance(announce = TRUE)
 
-	for(var/choice in chosen)
+/// Whether an antagonist this person is currently stops their Second Chance applying.
+/mob/living/carbon/human/proc/second_chance_blocked()
+	for(var/datum/antagonist/antag as anything in mind?.antag_datums)
+		if(antag.blocks_second_chance())
+			return TRUE
+	return FALSE
+
+/// Gives this person the traits and effects of the Second Chance options stored on their mind.
+/mob/living/carbon/human/proc/grant_second_chance(announce = FALSE)
+	for(var/choice in mind?.second_chance_choices)
+		for(var/trait in GLOB.second_chance_traits[choice])
+			ADD_TRAIT(src, trait, SECOND_CHANCE_TRAIT)
 		switch(choice)
 			if(SC_ROTCURED)
-				ADD_TRAIT(recipient, TRAIT_ROTMAN, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_EASYDISMEMBER, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_NOPAIN, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_NOBREATH, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_NOHUNGER, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_TOXIMMUNE, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_ZOMBIE_IMMUNE, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_SILVER_WEAK, TRAIT_VIRTUE)
-				to_chat(recipient, span_notice("You are no longer a rotting corpse, at least not a dying one."))
+				if(HAS_TRAIT(src, TRAIT_HEMOPHAGE)) // same as Deathless, the vice's thirst can't be cured away
+					REMOVE_TRAIT(src, TRAIT_NOHUNGER, SECOND_CHANCE_TRAIT)
+					if(announce)
+						to_chat(src, "My reliance on lyfeblood cannot be severed!")
+				if(announce)
+					to_chat(src, span_notice("You are no longer a rotting corpse, at least not a dying one."))
 
 			if(SC_PALLID)
-				ADD_TRAIT(recipient, TRAIT_PALLID, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_DARKVISION, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_NOBREATH, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_ZOMBIE_IMMUNE, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_SILVER_WEAK, TRAIT_VIRTUE)
-				to_chat(recipient, span_notice("You are no longer one scorned by Astrata, by the mercy of the gods."))
+				if(announce)
+					to_chat(src, span_notice("You are no longer one scorned by Astrata, by the mercy of the gods."))
 
 			if(SC_BLACKBLOOD)
-				ADD_TRAIT(recipient, TRAIT_BLACKBLOOD, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_HALFHEAL, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_STRONGBITE, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_NASTY_EATER, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_DARKVISION, TRAIT_VIRTUE)
-				ADD_TRAIT(recipient, TRAIT_SILVER_WEAK, TRAIT_VIRTUE)
-				to_chat(recipient, span_notice("You are no longer one among the nite creechers, by the ingenuinity of HIS followers."))
-
-				recipient.set_blood_color(BLOOD_COLOR_BLACKBLOOD)
-
+				set_blood_color(BLOOD_COLOR_BLACKBLOOD)
+				if(!announce)
+					continue
+				to_chat(src, span_notice("You are no longer one among the nite creechers, by the ingenuinity of HIS followers."))
 				// AP grants an "averse to Inquisition" flaw here; we have no averse flaw system, so this is just done through stress events and minor flavour
-				if(recipient.patron?.type == /datum/patron/old_god)
-					to_chat(recipient, span_blue("<i>You recall your horrid experiences with the Inquisition... But through your newfound faith in HIM, you ENDURE. You were but one wrong righted, after all.</i>"))
+				if(patron?.type == /datum/patron/old_god)
+					to_chat(src, span_blue("<i>You recall your horrid experiences with the Inquisition... But through your newfound faith in HIM, you ENDURE. You were but one wrong righted, after all.</i>"))
 				else
-					to_chat(recipient, span_blue("<i>You recall your horrid experiences with the Inquisition... It is rather traumatic. Best to avoid them.</i>"))
-				to_chat(recipient, span_danger("DISCLAIMER: This Second Chance option exists to support roleplay and backstory continuity, not to diminish the threat or narrative weight of vampires, werewolves, or similar antagonistic entities. You are a tortured survivor of the Otavan Inquisition, and your very LUX fears them. Failure to roleplay this appropriately may result in this option's removal. Have fun and don't be cringe."))
+					to_chat(src, span_blue("<i>You recall your horrid experiences with the Inquisition... It is rather traumatic. Best to avoid them.</i>"))
+				to_chat(src, span_danger("DISCLAIMER: This Second Chance option exists to support roleplay and backstory continuity, not to diminish the threat or narrative weight of vampires, werewolves, or similar antagonistic entities. You are a tortured survivor of the Otavan Inquisition, and your very LUX fears them. Failure to roleplay this appropriately may result in this option's removal. Have fun and don't be cringe."))
 
-	recipient.update_sight() // sight was already set when we spawned, so darkvision needs a refresh
+	update_sight() // sight was already set when we spawned, so darkvision needs a refresh
+
+/// Lifts Second Chance's traits while an antagonist blocks it, such as being turned into a vampire or rising as a deadite. The choice stays on the mind, so it can be restored.
+/mob/living/carbon/human/proc/suspend_second_chance()
+	var/had_second_chance = FALSE
+	for(var/choice in GLOB.second_chance_traits)
+		for(var/trait in GLOB.second_chance_traits[choice])
+			if(!HAS_TRAIT_FROM(src, trait, SECOND_CHANCE_TRAIT))
+				continue
+			had_second_chance = TRUE
+			REMOVE_TRAIT(src, trait, SECOND_CHANCE_TRAIT)
+	if(!had_second_chance)
+		return
+	set_blood_color(null)
+	update_sight()
+	to_chat(src, span_danger("Whatever second chance I was given, it slips away from me."))
+
+/// Brings back a suspended Second Chance, once nothing blocks it any more.
+/mob/living/carbon/human/proc/restore_second_chance()
+	if(!length(mind?.second_chance_choices) || second_chance_blocked())
+		return
+	grant_second_chance()
+	to_chat(src, span_notice("My second chance returns to me, as it always has."))
 
 /// Legacy virtue, replaced by Second Chance's Rotcured option. Kept nameless (so it never shows in the picker) only so old saves can be migrated.
 /datum/virtue/combat/rotcured

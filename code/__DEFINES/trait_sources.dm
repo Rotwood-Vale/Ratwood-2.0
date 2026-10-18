@@ -10,6 +10,8 @@
 // common trait sources
 #define TRAIT_GENERIC "generic"
 #define TRAIT_VIRTUE "virtue"
+/// Traits from the Second Chance virtue, kept apart from other virtues so they can be stripped again. See GLOB.second_chance_traits
+#define SECOND_CHANCE_TRAIT "second_chance"
 #define TRAIT_MIRACLE "miracle"
 #define UNCONSCIOUS_BLIND "unconscious_blind"
 #define EYE_DAMAGE "eye_damage"

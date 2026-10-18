@@ -55,6 +55,15 @@
 	blood_color = new_blood_color
 	update_blood_color()
 
+/// Blood that's custom coloured takes on that colour, however it ends up here
+/obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_dna)
+	. = ..()
+	if(blood_state != BLOOD_STATE_HUMAN)
+		return
+	var/dna_blood_color = get_blood_color_from_dna(blood_dna)
+	if(dna_blood_color)
+		set_blood_color(dna_blood_color)
+
 /obj/effect/decal/cleanable/blood/proc/update_blood_color()
 	if(dry)
 		color = blood_color ? blood_color_matrix(blood_color, dried = TRUE) : BLOOD_COLOR_DRIED

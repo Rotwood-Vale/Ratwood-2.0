@@ -24,6 +24,7 @@
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "HIDE", "#GNOLLED")/// no one should ever see this unless they spawn in gnoll skin via the game panel
 
 /datum/antagonist/gnoll
+	purges_second_chance = TRUE
 	name = "Gnoll"
 	roundend_category = "Gnolls"
 	antagpanel_category = "Gnolls"

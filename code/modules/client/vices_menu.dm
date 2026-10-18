@@ -1677,6 +1677,9 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				// Skip if already selected as secondary virtue
 				if(virtuetwo && V.type == virtuetwo.type)
 					continue
+				// Check for conflicting virtues (with secondary virtue, which only applies with Virtuous)
+				if(statpack?.name == "Virtuous" && virtuetwo && check_pick_virtue_conflict(V.type, virtuetwo.type))
+					continue
 				// Check for conflicting quirks
 				if(check_virtue_quirk_conflict(V.type, TRUE, usr))
 					continue
