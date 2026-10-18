@@ -73,7 +73,7 @@
 	var/obj/item/bodypart/BP = get_bodypart(check_zone(def_zone))
 	if(BP)
 		testing("projwound")
-		var/newdam = P.damage * (100-blocked)/100
+		var/newdam = max(0, P.damage - blocked)
 		BP.bodypart_attacked_by(P.woundclass, newdam, zone_precise = def_zone, crit_message = TRUE, weapon = P)
 		return TRUE
 
@@ -81,7 +81,7 @@
 	var/obj/item/bodypart/BP = get_bodypart(check_zone(def_zone))
 	if(!BP)
 		return FALSE
-	var/newdam = P.damage * (100-blocked)/100
+	var/newdam = max(0, P.damage - blocked)
 	if(newdam <= 8)
 		return FALSE
 	if(prob(P.embedchance) && P.dropped)

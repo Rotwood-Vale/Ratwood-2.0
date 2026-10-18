@@ -39,7 +39,7 @@
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	chargetime = 0
 	recovery = 7
-	penfactor = 30
+	penfactor = PEN_LIGHT
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
@@ -53,7 +53,7 @@
 	chargetime = 0
 	recovery = 10
 	damfactor = 1.1
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
@@ -67,7 +67,7 @@
 	chargetime = 0
 	recovery = 5
 	damfactor = 1.2							//No range, gets bonus damage - using this even on weak SHOULD let you get perma-scars then.
-	penfactor = BLUNT_DEFAULT_PENFACTOR		//No pen cus punishment intent.
+	penfactor = PEN_NONE		//No pen cus punishment intent.
 	reach = 1								//No range, cus not meant to be a flat-out combat intent.
 	icon_state = "inpunish"
 	item_d_type = "slash"
@@ -80,16 +80,16 @@
 	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 	chargetime = 0
 	recovery = 7
-	penfactor = 30 // Total AP potential of 53-55, discounting strength bonuses. Will likely penetrate non-slash resistant light armor, but fail to chunk through maille and plate.
+	penfactor = PEN_MEDIUM // Total AP potential of 53-55, discounting strength bonuses. Will likely penetrate non-slash resistant light armor, but fail to chunk through maille and plate.
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
 
 //Ranged mace-like mode - merc unique for Nagaika (steppesman)
 /datum/intent/whip/crack/blunt
-	name = "bludgen"
+	name = "bludgeon"
 	blade_class = BCLASS_BLUNT
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	recovery = 6
 	reach = 2			//Less range than a normal whip by 1 compared to crack.
 	icon_state = "instrike"
@@ -233,6 +233,7 @@
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
+	no_early_release = TRUE
 
 /datum/intent/whip/lash/urumi/heavy
 	name = "heavy urumi lash"//i'm a hack
@@ -271,6 +272,7 @@
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
+	no_early_release = TRUE
 
 /datum/intent/whip/thrust // elden ring nonsense, but cool
 	name = "urumi thrust"
@@ -287,6 +289,7 @@
 	item_d_type = "stab"
 	effective_range = 3
 	effective_range_type = EFF_RANGE_EXACT
+	no_early_release = TRUE
 
 /datum/intent/whip/thrust/heavy // elden ring nonsense, but cool
 	name = "urumi thrust"

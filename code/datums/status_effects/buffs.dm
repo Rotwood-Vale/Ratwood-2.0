@@ -387,3 +387,20 @@
 	desc = "Four on one! I am locked in. Greater boons come to me in the heat of battle."
 	icon_state = "tempo2"
 
+/datum/status_effect/buff/weapon_binded
+	id = "wep_bind_buff"
+	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/buff/weapon_bind_buff
+	mob_effect_layer = MOB_EFFECT_LAYER_BINDED
+	mob_effect_icon_state = "eff_binded"
+
+/datum/status_effect/buff/weapon_binded/on_apply()
+	. = ..()
+	owner.stamina_add(-20)
+
+/atom/movable/screen/alert/status_effect/buff/weapon_bind_buff
+	name = "Weapon Bind"
+	desc = "Our weapons binded in my favour! I knew right where they were gonna hit me! My parrying is improved for a short while!"
+	icon = 'icons/mob/combat_debuffs.dmi'
+	icon_state = "weapon_bind_buff"

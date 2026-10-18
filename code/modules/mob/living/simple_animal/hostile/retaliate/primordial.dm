@@ -40,7 +40,7 @@
 	blade_class = BCLASS_CUT
 	hitsound = "smallslash"
 	chargetime = 0
-	penfactor = 0
+	penfactor = PEN_NONE
 	miss_text = "slash the air"
 	item_d_type = "slash"
 	clickcd = 12

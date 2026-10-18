@@ -16,8 +16,9 @@
 			visible_message(span_suicide("[src] clashes into [user]'s hands with \the [IM]!"))
 		playsound(src, pick(used_intent.hitsound), 80)
 		remove_status_effect(/datum/status_effect/buff/clash)
+		apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
 		return
-	if(H.has_status_effect(/datum/status_effect/buff/clash))	//They also have Clash active. It'll trigger the special event.
+	if(H.has_status_effect(/datum/status_effect/buff/clash))	//They also have Riposte active. It'll trigger the special event.
 		clash(user, IM, IU)
 	else	//Otherwise, we just riposte them.
 		var/sharpnesspenalty = 0.15
@@ -34,11 +35,12 @@
 		playsound(src, 'sound/combat/clash_struck.ogg', 100)
 		H.apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
 		H.apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
+		if(H.mind)
+			H.dodgetime = clamp(H.dodgetime + 5, 0, CLICK_CD_HEAVY)
 		H.Slowdown(3)
 		to_chat(src, span_notice("[capitalize(H.p_theyre())] exposed!"))
 		remove_status_effect(/datum/status_effect/buff/clash)
 		apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
-		purge_peel(GUARD_PEEL_REDUCTION)
 
 //This is a gargantuan, clunky proc that is meant to tally stats and weapon properties for the potential disarm.
 //For future coders: Feel free to change this, just make sure someone like Struggler statpack doesn't get 3-fold advantage.
@@ -173,6 +175,13 @@
 	if(istype(active_spell) && (active_spell.currently_charging || active_spell.charged))
 		to_chat(src, span_warning("I can't guard while channeling a spell!"))
 		return FALSE
+
+	if(is_swinging(disrupt_only = TRUE))
+		return FALSE
+
+	if(has_status_effect(/datum/status_effect/debuff/exposed))
+		return FALSE
+
 	apply_status_effect(/datum/status_effect/buff/clash)
 	return TRUE
 
@@ -186,18 +195,7 @@
 		to_chat(src, msg)
 		emote("strain", forced = TRUE)
 	remove_status_effect(/datum/status_effect/buff/clash)
-
-///Reduces Peel by some amount. Usually called after waiting out of combat for a while or by other effects (riposte / bait)
-/mob/living/carbon/human/proc/purge_peel(amt)
-	//Equipment slots manually picked out cus we don't have a proc for this apparently
-	var/list/slots = list(wear_armor, wear_pants, wear_wrists, wear_shirt, gloves, head, shoes, wear_neck, wear_mask, wear_ring)
-	for(var/slot in slots)
-		if(isnull(slot) || !istype(slot, /obj/item/clothing))
-			slots.Remove(slot)
-
-	for(var/obj/item/clothing/C in slots)
-		if(C.peel_count > 0)
-			C.reduce_peel(amt)
+	remove_status_effect(/datum/status_effect/buff/clash/limbguard)
 
 ///Purges the singular possible bait stack after waiting for a bit out of combat.
 /mob/living/carbon/human/proc/purge_bait()
@@ -206,10 +204,10 @@
 			bait_stacks = 0
 			to_chat(src, span_info("My focus and balance returns. I won't lose my footing if I am baited again."))
 
-///Called by a timer after toggling cmode off.
-/mob/living/carbon/human/proc/expire_peel()
-	if(!cmode)
-		purge_peel(99)
+/mob/living/carbon/human/proc/reset_dodgetime()
+	if(!cmode && mind)
+		dodgetime = 0
+		max_dodge = MAX_DODGE_CEIL
 
 ///A Unique Stat comparison between src and HT.
 ///It takes the highest stats up to 14 and lowest stats 'up to' 14.
@@ -280,3 +278,60 @@
 	
 	return highest_ac
 
+/// A defensive boon from matching subzones.
+/mob/living/carbon/human/proc/try_bind(obj/item/used_weapon, mob/living/user, vuln_exception = FALSE)	//user is the attacker in this context
+	if(!used_weapon)
+		return
+	if(!user.get_active_held_item())
+		return
+	if(get_skill_level(used_weapon.associated_skill) < SKILL_LEVEL_JOURNEYMAN)
+		return
+	if(has_status_effect(/datum/status_effect/debuff/bindcd))
+		return
+	if(check_bind(check_bind_subzone(zone_selected), user.zone_selected) || (!user.mind && (check_zone(zone_selected) == check_zone(user.zone_selected))) || (vuln_exception && zone_selected != BODY_ZONE_CHEST))
+		var/chance = 100	//Only here so chest vs chest has a smaller chance to trigger a bind.
+		if(zone_selected == user.zone_selected && zone_selected == BODY_ZONE_CHEST)
+			chance = 3
+		if(prob(chance))
+			apply_status_effect(/datum/status_effect/buff/weapon_binded)
+			//!change_feint(-FEINT_PERC_DECREASE_BASE, user)
+			//user.apply_status_effect(/datum/status_effect/debuff/bindcd)
+
+			var/cd = BIND_CD
+			cd = max(cd, 10.1 SECONDS)	// This is the duration of the bind itself + 1 tick, to prevent any screwiness.
+			apply_status_effect(/datum/status_effect/debuff/bindcd, cd)
+
+			// Immob. Mostly for dramatic flair. ClickCD is to prevent instant follow-up attacks.
+			user.Immobilize(0.3 SECONDS)
+			user.changeNext_move(CLICK_CD_CHARGED)
+			user.changeNext_def(user.parrydelay)
+
+			var/obj/item/rogueweapon/RW = user.get_active_held_item()
+			if(RW)
+				RW.take_damage(RW.sharpness ? (INTEG_PARRY_DECAY) : (INTEG_PARRY_DECAY_NOSHARP), BRUTE, used_weapon.d_type)
+				RW.remove_bintegrity((SHARPNESS_ONHIT_DECAY), src)
+			
+			//if(used_weapon)
+			//	used_weapon.take_damage((used_weapon.sharpness ? (INTEG_PARRY_DECAY) : (INTEG_PARRY_DECAY_NOSHARP)), BRUTE, used_weapon.d_type)
+			//	used_weapon.remove_bintegrity((SHARPNESS_ONHIT_DECAY), src)
+
+			if(vuln_exception)	// If we triggered this via a vuln attack, we suffer an extra penalty.
+				used_weapon.take_damage((INTEG_PARRY_DECAY_NOSHARP * 3), BRUTE, used_weapon.d_type)
+				used_weapon.remove_bintegrity((SHARPNESS_ONHIT_DECAY * 3), src)
+
+			flash_fullscreen("whiteflash")
+			user.flash_fullscreen("whiteflash")
+			var/turf/front = get_turf(src)
+			do_sparks(4, FALSE, front)
+
+			var/soundcategory = WBALANCE_NORMAL
+			var/sfx
+			if(used_weapon)
+				soundcategory = used_weapon.wbalance
+			sfx = pick_bind_sfx(soundcategory)
+			if(sfx)
+				playsound(src, sfx, 100, TRUE, 2)
+			visible_message(span_notice("[src] binds their weapon with [user]'s! They saw that attack coming!"))
+			return TRUE
+		else
+			return FALSE

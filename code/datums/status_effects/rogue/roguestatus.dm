@@ -57,10 +57,34 @@
 	if(newdur)
 		duration = newdur
 	. = ..()
-
+	
 /datum/status_effect/swingdelay/on_apply()
 	. = ..()
 	owner.swing_state = TRUE
+
+/atom/movable/screen/alert/status_effect/swingdelay
+	name = "Swinging!"
+	desc = "I am swinging my weapon! Why did I have the time to read this?!"
+	icon = 'icons/mob/combat_debuffs.dmi'
+	icon_state = "swingdelay"
+
+/datum/status_effect/swingdelay/penalty
+	alert_type = /atom/movable/screen/alert/status_effect/swingdelay/penalty
+	mob_effect_icon_state = "eff_swingdelay_penalty"
+
+/datum/status_effect/swingdelay/penalty/committed
+	id = "swingdelay_committed"
+
+/datum/status_effect/swingdelay/penalty/committed/on_creation(mob/living/new_owner, newdur, apply_slow = FALSE)
+	if(apply_slow)
+		var/spd_mod = 10 - new_owner.get_true_stat(STATKEY_SPD)
+		effectedstats = list(STATKEY_SPD = spd_mod)
+	. = ..()
+
+/atom/movable/screen/alert/status_effect/swingdelay/penalty
+	name = "Swinging with a penalty!"
+	desc = "I am swinging my weapon! My guard is weaker! Pay attention to the screen, not here, you loon!"
+	icon_state = "swingdelay_penalty"
 
 /datum/status_effect/swingdelay/disrupt
 	id = "swingdelay_disrupt"
@@ -84,34 +108,7 @@
 /datum/status_effect/swingdelay/disrupt/proc/is_disrupted()
 	return is_disrupted
 
-/datum/status_effect/swingdelay/penalty
-	id = "swingdelay_penalty"
-	alert_type = /atom/movable/screen/alert/status_effect/swingdelay/penalty
-	mob_effect_icon_state = "eff_swingdelay_penalty"
-
-/datum/status_effect/swingdelay/penalty/committed
-	id = "swingdelay_committed"
-
-/datum/status_effect/swingdelay/penalty/committed/on_creation(mob/living/new_owner, newdur, apply_slow = FALSE)
-	if(apply_slow)
-		var/spd_mod = 10 - new_owner.get_true_stat(STATKEY_SPD)
-		effectedstats = list(STATKEY_SPD = spd_mod)
-	. = ..()
-
-// This is used to make sure we cannot do stealth mechanics mid-combat.
-
-/atom/movable/screen/alert/status_effect/swingdelay
-	name = "Swinging!"
-	desc = "I am swinging my weapon! Why did I have the time to read this?!"
-	icon = 'icons/mob/screen_alert_combat.dmi'
-	icon_state = "swingdelay"
-
 /atom/movable/screen/alert/status_effect/swingdelay/disrupt
 	name = "Swinging fiercely!"
 	desc = "THEY WILL JAB ME AND INTERRUPT THE ATTACK YOU GOBLINBRAINED WRETCH! LOOK AT THE ENEMY!!!"
 	icon_state = "swingdelay_disrupt"
-
-/atom/movable/screen/alert/status_effect/swingdelay/penalty
-	name = "Swinging with a penalty!"
-	desc = "I am swinging my weapon! My guard is weaker! Pay attention to the screen, not here, you loon!"
-	icon_state = "swingdelay_penalty"

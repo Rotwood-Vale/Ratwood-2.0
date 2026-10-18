@@ -148,7 +148,7 @@
 					beltr = /obj/item/rogueweapon/scabbard/sword
 					backr = /obj/item/rogueweapon/shield/wood
 				if("Elvish Curveblade")
-					r_hand = /obj/item/rogueweapon/greatsword/elf
+					r_hand = /obj/item/rogueweapon/greatsword/elvish
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
 				if("Elvish Dirk")
 					r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/elvish

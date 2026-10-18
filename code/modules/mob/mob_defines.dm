@@ -316,4 +316,3 @@
 	var/datum/action/cooldown/spell/channeling_spell
 	var/facing_locked = FALSE
 	var/last_deflect_recoil = 0
-	var/parrydelay = 12

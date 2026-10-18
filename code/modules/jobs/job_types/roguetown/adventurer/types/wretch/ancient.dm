@@ -109,7 +109,7 @@
 	var/weapons_choice = input(H, "Choose your ARMS.", "ARMS FROM THE LADY") as anything in weapons
 	switch(weapons_choice)
 		if("Absolutio - (greatsword)")
-			r_hand = /obj/item/rogueweapon/greatsword/zizo
+			r_hand = /obj/item/rogueweapon/greatsword/avantyne
 			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 		if("Vindicatio - (longsword)")

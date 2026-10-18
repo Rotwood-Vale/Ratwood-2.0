@@ -63,8 +63,10 @@
 #define ACC_RANGED_VISUAL_REACH 7
 #define ACC_RANGED_FARSIGHT_PENALTY 10
 #define ACC_RANGED_ZCROSS_PENALTY 20
-#define STRENGTH_CAPPEDMULT 0.034	//STR multiplier per STR point past the softcap
-//Actual combat defines
+#define STRENGTH_CAPPEDMULT 0.05	//STR multiplier per STR point past the softcap
+#define RANGED_STAT_SOFTCAP 15	//PER value past which ranged damage scaling has diminishing returns.
+#define RANGED_STAT_MULT 0.1	//PER multiplier per point up to the softcap. 0.1 = 10% per point.
+#define RANGED_STAT_CAPPEDMULT 0.05	//PER multiplier per point past the softcap. 0.05 = 5% per point.//Actual combat defines
 
 //click cooldowns, in tenths of a second, used for various combat actions
 #define CLICK_CD_EXHAUSTED 60
@@ -73,6 +75,7 @@
 #define CLICK_CD_GLACIAL 20	// Tier: Glacial
 #define CLICK_CD_MASSIVE 18	// Tier: Extremely Sluggish
 #define CLICK_CD_HEAVY 16		// Tier: Very Sluggish
+#define CLICK_CD_DODGE 16
 #define CLICK_CD_CHARGED 14	// Tier: Sluggish
 #define CLICK_CD_MELEE 12		// Tier: Normal (baseline)
 #define CLICK_CD_QUICK 10		// Tier: Quick
@@ -105,6 +108,12 @@
 #define EFF_RANGE_EXACT 1
 #define EFF_RANGE_ABOVE 2
 #define EFF_RANGE_BELOW 3
+// Swingdelay presets
+#define SWINGDELAY_NORMAL 1	//No penalties, we just swing.
+#define SWINGDELAY_PENALTY 2 //We suffer a defensive penalty if struck during it. Otherwise, normal.
+#define SWINGDELAY_CANCEL 3 //We have -no- defense during it, and it can be interrupted if we are hit.
+#define SWINGDELAY_CANCELSLOW 4	//Same as cancel but our speed is also hardset to 10 for the delay.
+
 // Swingdelay presets
 #define SWINGDELAY_NORMAL 1	//No penalties, we just swing.
 #define SWINGDELAY_PENALTY 2 //We suffer a defensive penalty if struck during it. Otherwise, normal.
@@ -177,7 +186,6 @@
 #define SWORD_THRUST	 /datum/intent/sword/thrust
 #define SWORD_CHOP		 /datum/intent/sword/chop //2h swords only
 #define SWORD_STRIKE	 /datum/intent/sword/strike //mordhau grip
-#define SWORD_PEEL		/datum/intent/sword/peel
 
 #define ELFSWORD_CUT		/datum/intent/sword/cut/elf
 #define ELFSWORD_THRUST		/datum/intent/sword/thrust/elf
@@ -192,8 +200,6 @@
 #define SPEAR_CUT_1H		/datum/intent/spear/cut/oneh
 #define SPEAR_CAST          /datum/intent/spear/cast
 #define PARTIZAN_REND		/datum/intent/rend/reach/partizan
-#define PARTIZAN_PEEL		/datum/intent/partizan/peel
-#define PARTIZAN_PEEL_BAD	/datum/intent/partizan/peel/nag
 
 #define MESSER_CHOP			/datum/intent/sword/chop/messer
 
@@ -242,11 +248,9 @@
 #define BCLASS_PUNCH		"punch"
 #define BCLASS_BITE			"bite"
 #define BCLASS_BURN			"charring"
-#define BCLASS_PEEL			"peel"
 #define BCLASS_PUNISH		"punish"
 #define BCLASS_EFFECT		"effect"
 #define BCLASS_SUNDER       "sunder"
-#define BCLASS_HALFSWORD	"stab"
 
 //Material class (what material is striking)
 #define MCLASS_GENERIC		1
@@ -396,10 +400,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define SPELL_BLUNT_INT_DAMAGEFACTOR 1.3 // Blunt integrity damage factor for spell projectiles
 
 //Weapon values
-#define BLUNT_DEFAULT_PENFACTOR		-100
 #define NONBLUNT_BLUNT_DAMFACTOR 0.8 // Damage factor when a non blunt weapon is used with blunt intent. Meant to make it worse than a real one.
 #define BLUNT_DEFAULT_INT_DAMAGEFACTOR 1.4 // Universal blunt intent integrity damage factor. Replaces Roguepen
-#define MAUL_DEFAULT_PENFACTOR		-200//So they can nuke armour without issue. A pseudo-rend setup.
 
 // Integrity & Sharpness Value
 #define INTEG_PARRY_DECAY			1	//Default integrity decay on parry.
@@ -459,10 +461,8 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define ACC_PER_PENALTY_PER_POINT 10	//Accuracy lost per PER below 10. Deliberately harsher than the bonus.
 #define ACC_SKILL_BONUS_PER_LEVEL 8		//Accuracy per level of the weapon's associated skill.
 #define ACC_STAB_BONUS 10
-#define ACC_PEEL_BONUS 25
 #define ACC_PICK_BONUS 15
 #define ACC_CUT_BONUS 6
-#define ACC_HALFSWORD_BONUS 20
 #define ACC_BLUNT_PRECISE_PENALTY 10	//Blunt and smash aimed at a precise subzone. A mace can't hit the eyes very well.
 #define ACC_SHORT_WEAPON_BONUS 10		//SHORT weapons, and unarmed, aim better.
 #define ACC_AIMED_BONUS 20				//AIMED stance.
@@ -492,3 +492,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN 2
 /// Proceed with the attack chain, but don't call the normal methods.
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
+
+#define MAX_DODGE_CEIL 5
+#define MAX_DODGE_FLOOR -15
