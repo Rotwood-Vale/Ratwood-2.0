@@ -61,7 +61,7 @@
 	beltl = /obj/item/quiver/bolts
 	mask = /obj/item/clothing/mask/rogue/sack/psy/arbiter
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	backpack_contents = list(
 		/obj/item/storage/keyring/puritan = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger,
