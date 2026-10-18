@@ -14,6 +14,8 @@
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list(
+	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
+
 		STATKEY_WIL = 3,
 		STATKEY_CON = 3,
 		STATKEY_STR = 2,
