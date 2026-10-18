@@ -761,7 +761,7 @@
 
 #undef REWIND_AURA
 
-//lasts shorter than magic, one chomp every 3 seconds is good enough, let's not forget food can have multiple slices. This does not heal wounds, wounds are healed automatically like psydonitian trait, but it consumes 1% hunger a tick.
+//lasts shorter than magic, one chomp every 3 seconds is good enough, let's not forget food can have multiple slices. This does not heal wounds, those are healed by the Blackblood regen in Life().
 #define CONSUME_AURA "consumehealing"
 
 /datum/status_effect/buff/foodhealing
@@ -774,9 +774,7 @@
 	var/healing_on_tick = 1
 	var/outline_colour = "#8a8a8a"
 
-/datum/status_effect/buff/foodhealing/on_creation(mob/living/new_owner, new_healing_on_tick, new_fare_power)
-	if(!isnull(new_healing_on_tick))
-		healing_on_tick = new_healing_on_tick
+/datum/status_effect/buff/foodhealing/on_creation(mob/living/new_owner, new_fare_power)
 	if(!isnull(new_fare_power))
 		fare_power = new_fare_power
 	return ..()

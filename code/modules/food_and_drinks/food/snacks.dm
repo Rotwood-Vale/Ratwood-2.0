@@ -278,11 +278,11 @@ All foods are distributed among various categories. Use common sense.
 				if(H)
 					if(faretype > H.fare_power)
 						eater.remove_status_effect(/datum/status_effect/buff/foodhealing)
-						eater.apply_status_effect(/datum/status_effect/buff/foodhealing, faretype, faretype)
+						eater.apply_status_effect(/datum/status_effect/buff/foodhealing, faretype)
 					else if(faretype == H.fare_power)
 						H.duration += 2 SECONDS
 				else
-					eater.apply_status_effect(/datum/status_effect/buff/foodhealing, faretype, faretype)
+					eater.apply_status_effect(/datum/status_effect/buff/foodhealing, faretype)
 		if(human_eater.culinary_preferences)
 			if(HAS_TRAIT(human_eater, TRAIT_ROTMAN))
 				return

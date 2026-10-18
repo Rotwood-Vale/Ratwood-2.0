@@ -58,6 +58,10 @@
 
 /datum/reagent/blood/on_mob_life(mob/living/carbon/H)//I hate you
 	..()
+	drink_effects(H)
+
+/// What drinking this blood does to the drinker each tick. Subtypes override this rather than on_mob_life, so the parent's effects never stack on top of theirs.
+/datum/reagent/blood/proc/drink_effects(mob/living/carbon/H)
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
 		H.adjust_nutrition(12)
 		H.adjust_hydration(12)
@@ -74,18 +78,17 @@
 /datum/reagent/blood/shitty/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if (method == INGEST)
 		..()
-/datum/reagent/blood/shitty/on_mob_life(mob/living/carbon/H)
-	..()
+/datum/reagent/blood/shitty/drink_effects(mob/living/carbon/H)
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE)) // this should be ass
 		H.adjust_nutrition(2)
-		H.adjust_hydration(2) 
+		H.adjust_hydration(2)
 		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			H.set_blood_volume(min(H.get_blood_volume()+2, BLOOD_VOLUME_NORMAL))//Much less effective than just water.
 		if(prob(5))
 			to_chat(H, span_red("This will hardly do... I must procure a better source of lyfeblood..."))
 		return
 	if(HAS_TRAIT(H, TRAIT_NASTY_EATER) || HAS_TRAIT(H, TRAIT_WILD_EATER))
-		H.adjust_hydration(12) // hydrates, but does not restore blood nor has any other special effect
+		H.adjust_hydration(8) // hydrates, but does not restore blood nor has any other special effect
 		return
 	H.add_nausea(18) //Do not drink dirty blood!
 	H.adjustToxLoss(4)

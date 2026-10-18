@@ -1681,8 +1681,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				if(length(pref_species.restricted_virtues))
 					if(V.type in pref_species.restricted_virtues)
 						continue
-				if(!V.can_be_picked_by(pref_species))
-					continue
 				virtues_available[V.name] = V
 			
 			virtues_available = sort_list(virtues_available)
@@ -1715,8 +1713,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				if(length(pref_species.restricted_virtues))
 					if(V.type in pref_species.restricted_virtues)
 						continue
-				if(!V.can_be_picked_by(pref_species))
-					continue
 				// Skip if already selected as primary virtue
 				if(virtue && V.type == virtue.type)
 					continue

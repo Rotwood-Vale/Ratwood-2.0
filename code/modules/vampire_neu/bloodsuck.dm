@@ -77,17 +77,16 @@
 
 	// Blackbloods actually drink the blood as a reagent, rather than taking vitae like vampires do
 	if(HAS_TRAIT(src, TRAIT_BLACKBLOOD))
-		var/blood_amount = max(1, round(BLOOD_VOLUME_MAXIMUM * 0.01))
-		blood_amount = min(blood_amount, victim.get_blood_volume())
-		victim.set_blood_volume(max(victim.get_blood_volume() - blood_amount, 0))
+		var/blood_id = victim.get_blood_id()
+		var/blood_amount = min(max(1, round(BLOOD_VOLUME_MAXIMUM * 0.01)), victim.get_blood_volume())
+		if(!blood_id || blood_amount <= 0)
+			return
+		victim.adjust_blood_volume(-blood_amount)
 		victim.handle_blood()
-		var/datum/reagents/temp = new(blood_amount)
-		temp.my_atom = src
-		temp.add_reagent(/datum/reagent/blood, blood_amount)
-		var/datum/reagent/blood/B = temp.has_reagent(/datum/reagent/blood)
-		if(B)
-			B.data = victim.get_blood_data()
-		temp.trans_to(src, blood_amount, TRUE, TRUE, FALSE, src, FALSE, INGEST)
+		var/datum/reagents/drunk_blood = new()
+		drunk_blood.add_reagent(blood_id, blood_amount, victim.get_blood_data(blood_id))
+		drunk_blood.trans_to(src, drunk_blood.total_volume, transfered_by = src, method = INGEST)
+		qdel(drunk_blood)
 		return
 
 	if(VVictim)

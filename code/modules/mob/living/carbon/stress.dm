@@ -222,6 +222,19 @@ GLOBAL_LIST_INIT(stress_messages, world.file2list("strings/rt/stress_messages.tx
 	emote("fatigue", forced = TRUE)
 	addtimer(CALLBACK(src, PROC_REF(do_stress_freakout_scream)), rand(1 SECONDS, 2 SECONDS))
 
+/// A Blackblood's trauma at an encounter with the Inquisition. Returns TRUE if it took hold, so the caller can add its own reaction on top.
+/// Only fires once per inq_trauma stress event, so it can't be spammed.
+/mob/living/carbon/proc/inquisition_trauma()
+	if(!HAS_TRAIT(src, TRAIT_BLACKBLOOD) || HAS_TRAIT(src, TRAIT_PSYDONIAN_GRIT) || HAS_TRAIT(src, TRAIT_NOMOOD))
+		return FALSE
+	if(has_stress_event(/datum/stressevent/inq_trauma))
+		return FALSE
+	add_stress(/datum/stressevent/inq_trauma)
+	if(!HAS_TRAIT(src, TRAIT_STEELHEARTED))
+		Jitter(10)
+		stuttering += 25
+	return TRUE
+
 /mob/living/carbon/proc/do_stress_freakout_scream()
 	if(stat != CONSCIOUS)
 		return

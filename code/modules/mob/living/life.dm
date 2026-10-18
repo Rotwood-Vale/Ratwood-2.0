@@ -64,14 +64,10 @@
 					regenerated = TRUE
 				if(!wound.owner) // fully healed and removed
 					continue
-				if(wound.bleed_rate > 0) // but we also slowly recover from bleeding now
+				if(wound.bleed_rate > 0) // but we also slowly recover from bleeding now. it does not close the wound, however! another nick and you're back to bleeding like a pig.
 					regenerated = TRUE
 					var/bleed_heal = max(wound.bleed_rate * 0.1, 0.2)
 					wound.set_bleed_rate(max(wound.bleed_rate - bleed_heal, 0))
-					if(wound.bleed_rate <= 0)
-						if(wound.sew_threshold)
-							wound.sew_progress = wound.sew_threshold
-							wound.sew_wound() // it does not heal the wound, however! another nick and you're back to bleeding like a pig.
 			if(regenerated)
 				nutrition = max(0, nutrition - (NUTRITION_LEVEL_FULL * 0.0025)) // drains 0.25% of your hunger to restore all of above, still
 

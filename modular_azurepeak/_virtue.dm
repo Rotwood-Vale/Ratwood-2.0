@@ -2,10 +2,6 @@ GLOBAL_LIST_INIT(virtues, init_subtypes_assoc(/datum/virtue))
 
 /datum/virtue
 	parent_type = /datum/customization_trait
-	/// If TRUE, the species listed in `races` are barred from taking this virtue.
-	var/restricted = FALSE
-	/// Species typepaths this virtue is unavailable to. Only used when `restricted` is TRUE.
-	var/list/races = list()
 	/// How many sub-choices the player may pick from `extra_choices`. 0 means this virtue has no sub-choices.
 	var/max_choices = 0
 	/// The sub-choices offered to the player, as plain strings.
@@ -29,12 +25,6 @@ GLOBAL_LIST_INIT(virtues, init_subtypes_assoc(/datum/virtue))
 		for(var/choice in choice_tooltips)
 			if(!(choice in extra_choices))
 				CRASH("[type] has a choice_tooltip for '[choice]', which is not in extra_choices!")
-
-/// Whether a character of the given species is allowed to take this virtue.
-/datum/virtue/proc/can_be_picked_by(datum/species/picker_species)
-	if(!restricted || !picker_species)
-		return TRUE
-	return !(picker_species.type in races)
 
 /// Drops any picked choices that are no longer valid and trims down to max_choices.
 /datum/virtue/proc/sanitize_choices()

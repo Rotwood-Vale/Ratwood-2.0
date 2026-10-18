@@ -47,6 +47,7 @@
 						TRAIT_REGROW_LIMBS,
 						TRAIT_NASTY_EATER,
 						)
+	restricted_virtues = list(/datum/virtue/combat/second_chance)
 	allowed_taur_types = list(
 		/obj/item/bodypart/taur/lamia,
 		/obj/item/bodypart/taur/spider,

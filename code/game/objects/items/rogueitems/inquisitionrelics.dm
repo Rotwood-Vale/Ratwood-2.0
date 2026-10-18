@@ -1570,7 +1570,6 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 	name = "haemological report"
 	desc = "An official haemological report bearing the seal of the Holy Otavan Inquisition. A crystal-clear sign that an INDEXER has been properly sent back for further investigation, and this is the result of it."
 	icon_state = "confession_signed"
-	var/mob/living/carbon/human/subject
 	var/report_html = ""
 	var/report_id
 
@@ -1606,11 +1605,9 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 	"}
 	user << browse(html, "window=inquisition_report;size=750x850;can_resize=1")
 
-/obj/item/paper/inquisition_report/proc/fill_report(mob/living/carbon/human/H, mob/writer)
+/obj/item/paper/inquisition_report/proc/fill_report(mob/living/carbon/human/H)
 	if(!H)
 		return
-
-	subject = H
 
 	var/list/examiners = list(
 		"Brother Matthieu de Clairmont", "Brother Lucien Beaumont", "Sister Eloise d'Artois", "Brother Gautier Desrosiers", "Sister Amaury de Vienne", "Sister Cecile Montfort", "Brother Renaud Charbonneau", "Brother Bastien Moreau", "Brother Lucard Belmont", "Sister Serena Eclaire", "Sister Artoria d'Dragone", "Brother Adrien de Rochefort", "Brother Thibault de Vaillant", "Sister Marguerite de Chastel", "Brother Etienne Bellamy", "Sister Roseline de Valcourt", "Brother Armand Duplessis", "Sister Genevieve Beaumont", "Brother Roland de Sancerre", "Sister Vivienne Charbonneau", "Brother Olivier de Montreuil", "Sister Ysabeau de Clairvaux", "Brother Philippe d'Aurillac", "Sister Adele de Marquette", "Brother Gaspard Delacroix", "Sister Heloise de Vaugrenier", "Brother Tristan Morel", "Sister Lucienne de Brissac", "Brother Remy de Valois", "Sister Aveline de Rougemont", "Brother Benoit de Couronne", "Brother Amaury de Castelain", "Sister Julienne d'Aubigny", "Brother Corentin de Miremont", "Sister Odette de Vaucelles", "Brother Florent de Charny", "Sister Seraphine Bellanger", "Brother Alaric de Montbard", "Sister Colette de Verrieres", "Brother Theodore de Saint-Clair", "Sister Isolde de Beaumont", "Brother Freestein D'Estyler", "Brother Hunsari D'Phorone", "Brother Ryone D'Reensvolfe", "Sister Saphir D'Eriye", "Brother Khet D'Railne"
@@ -1716,7 +1713,7 @@ GLOBAL_LIST_INIT(inquisition_used_ids, list())
 	var/list/crimes = list()
 	var/total_bounty = 0
 	for(var/datum/bounty/B in GLOB.head_bounties)
-		if(B.target == H.real_name)
+		if(B.target == H.real_name || B.target_hidden == H.real_name)
 			total_bounty += B.amount
 			crimes += "> <b>[B.amount] Mammon</b> - [B.reason]"
 	if(!crimes.len)

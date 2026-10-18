@@ -530,8 +530,7 @@
 							to_chat(user, span_notice("They've already been accused."))
 					return
 
-				if(!indexed && !correct && !cursedblood)
-					I.marquevalue += bonuses
+				if(!indexed && !correct && !cursedblood) // an innocent is only worth the slip itself
 					budget2change(I.marquevalue, user, "MARQUE")
 					record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
 
@@ -545,7 +544,7 @@
 				var/id = generate_inquisition_id()
 				R.report_id = id
 				R.name = "haemological report (#[id])"
-				R.fill_report(I.paired.subject, user)
+				R.fill_report(I.paired.subject)
 				user.put_in_hands(R)
 
 				qdel(I.paired)
