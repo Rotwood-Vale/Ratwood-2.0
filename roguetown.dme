@@ -2687,7 +2687,6 @@
 #include "code\modules\roguetown\roguecrafting\alchemy\alch_cauldron_recipes.dm"
 #include "code\modules\roguetown\roguecrafting\alchemy\alch_grind_recipe_base.dm"
 #include "code\modules\roguetown\roguecrafting\alchemy\alch_grind_recipes.dm"
-#include "code\modules\roguetown\roguecrafting\alchemy\alch_item.dm"
 #include "code\modules\roguetown\roguecrafting\alchemy\alch_items.dm"
 #include "code\modules\roguetown\roguecrafting\alchemy\alch_synthesis.dm"
 #include "code\modules\roguetown\roguecrafting\alchemy\alchemy_utilites.dm"

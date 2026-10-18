@@ -44,10 +44,8 @@ GLOBAL_LIST_EMPTY(recall_cooldowns)
 	M.adjustFireLoss(-12 * REM, 0)
 	M.adjustOxyLoss(-8, 0)
 	M.adjustToxLoss(-6, 0)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -10 * REM)
-	M.adjustCloneLoss(-10 * REM, 0)
-
 	var/list/wCount = M.get_wounds()
+
 	if(wCount.len > 0)
 		M.heal_wounds(9)
 
@@ -178,9 +176,20 @@ GLOBAL_LIST_EMPTY(recall_cooldowns)
 		holder.remove_reagent(/datum/reagent/infection, 15)
 		holder.remove_reagent(/datum/reagent/infection/minor, 15)
 		holder.remove_reagent(/datum/reagent/infection/major, 15)
-		M.set_disgust(0)
+
+		for(var/datum/reagent/consumable/ethanol/E in M.reagents.reagent_list)
+			holder.remove_reagent(E.type, 15)
+
+		M.drunkenness = 0 
+		M.slurring = 0
 		M.dizziness = 0
 		M.jitteriness = 0
+		M.confused = 0
+		M.drowsyness = 0
+
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.set_disgust(0)
 
 	if(potency_tier >= 3)
 		if(M.has_status_effect(/datum/status_effect/debuff/ritualdefiled))
@@ -307,67 +316,42 @@ GLOBAL_LIST_EMPTY(recall_cooldowns)
 	name = "All-Seeing Eye III"
 	color = "#ffff8d"
 	taste_description = "glowing embers"
-	var/old_see_in_dark = null
-	var/old_lighting_alpha = null
 
 /datum/reagent/medicine/mythic/perception/on_mob_metabolize(mob/living/L)
 	. = ..()
 
 	L.apply_status_effect(/datum/status_effect/buff/alch/mythic_per)
-
-	if(potency_tier >= 2 && ishuman(L))
-		var/mob/living/carbon/human/H = L
-		var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
-
-		ADD_TRAIT(H, TRAIT_DARKVISION, type)
-		ADD_TRAIT(H, TRAIT_NIGHT_VISION, type)
-
-		old_lighting_alpha = H.lighting_alpha
-		H.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-
-		if(E)
-			old_see_in_dark = E.see_in_dark
-			E.see_in_dark = 8
-			E.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-
-		H.update_sight()
-		H.sync_lighting_plane_alpha()
-		to_chat(H, span_notice("The shadows part as your vision adapts to the darkness!"))
+	if(potency_tier >= 2)
+		ADD_TRAIT(L, TRAIT_DARKVISION, "[type]")
+		to_chat(L, span_notice("The shadows part as your eyes adapt to the darkness!"))
 
 	if(potency_tier >= 3)
-		ADD_TRAIT(L, TRAIT_XRAY_VISION, type)
-		L.update_sight()
+		ADD_TRAIT(L, TRAIT_XRAY_VISION, "[type]")
 		to_chat(L, span_userdanger("The veil of reality dissolves! You see through stone and flesh!"))
 
+	L.update_sight()
+	L.sync_lighting_plane_alpha()
+
 /datum/reagent/medicine/mythic/perception/on_mob_end_metabolize(mob/living/L)
+
 	L.remove_status_effect(/datum/status_effect/buff/alch/mythic_per)
-
-	if(potency_tier >= 2 && ishuman(L))
-		var/mob/living/carbon/human/H = L
-		var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
-
-		REMOVE_TRAIT(H, TRAIT_DARKVISION, type)
-		REMOVE_TRAIT(H, TRAIT_NIGHT_VISION, type)
-
-		if(!isnull(old_lighting_alpha))
-			H.lighting_alpha = old_lighting_alpha
-		else
-			H.lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
-
-		if(E)
-			if(!isnull(old_see_in_dark))
-				E.see_in_dark = old_see_in_dark
-			else
-				E.see_in_dark = initial(E.see_in_dark)
-			E.lighting_alpha = initial(E.lighting_alpha)
-
-		H.update_sight()
-		H.sync_lighting_plane_alpha()
-		to_chat(H, span_warning("Your supernatural sight fades away."))
+	if(potency_tier >= 2)
+		REMOVE_TRAIT(L, TRAIT_DARKVISION, "[type]")
+		to_chat(L, span_warning("Your supernatural sight fades away."))
 
 	if(potency_tier >= 3)
-		REMOVE_TRAIT(L, TRAIT_XRAY_VISION, type)
-		L.update_sight()
+		REMOVE_TRAIT(L, TRAIT_XRAY_VISION, "[type]")
+
+	L.update_sight()
+	L.sync_lighting_plane_alpha()
+	..()
+
+/datum/reagent/medicine/mythic/perception/on_mob_life(mob/living/carbon/M)
+	if(volume <= 0.05)
+		return ..()
+
+	M.cure_nearsighted(type)
+	M.adjustOrganLoss(ORGAN_SLOT_EYES, -2 * REM)
 	..()
 
 /datum/reagent/medicine/mythic/perception/on_mob_life(mob/living/carbon/M)
@@ -387,12 +371,9 @@ GLOBAL_LIST_EMPTY(recall_cooldowns)
 	. = ..()
 
 	L.apply_status_effect(/datum/status_effect/buff/alch/mythic_int)
-
 	if(potency_tier >= 2 && L.mind)
-		L.mind.add_sleep_experience(/datum/skill/magic/arcane, 100, FALSE)
-		L.mind.add_sleep_experience(/datum/skill/craft/alchemy, 100, FALSE)
-		to_chat(L, span_notice("Esoteric revelations flood your mind with newfound understanding!"))
-
+		L.mind.adjust_spellpoints(1)
+		to_chat(L, span_nicegreen("Cosmic clarity floods your mind! You have gained a spell point!"))
 	if(potency_tier >= 3)
 		L.apply_status_effect(/datum/status_effect/buff/alch/mythic_max_int)
 		to_chat(L, span_userdanger("Your mind transcends mortal limits! Pure intellect illuminates your soul!"))
@@ -493,7 +474,8 @@ GLOBAL_LIST_EMPTY(recall_cooldowns)
 			L.blur_eyes(5)
 			L.adjustOxyLoss(12)
 			L.stamina_add(15)
-			to_chat(L, span_userdanger("Choking black ash billows from [M], searing your throat and blinding your eyes!"))
+			if(prob(25))
+				to_chat(L, span_userdanger("Choking black ash billows from [M], searing your throat and blinding your eyes!"))
 	..()
 
 
