@@ -114,12 +114,6 @@
 #define SWINGDELAY_CANCEL 3 //We have -no- defense during it, and it can be interrupted if we are hit.
 #define SWINGDELAY_CANCELSLOW 4	//Same as cancel but our speed is also hardset to 10 for the delay.
 
-// Swingdelay presets
-#define SWINGDELAY_NORMAL 1	//No penalties, we just swing.
-#define SWINGDELAY_PENALTY 2 //We suffer a defensive penalty if struck during it. Otherwise, normal.
-#define SWINGDELAY_CANCEL 3 //We have -no- defense during it, and it can be interrupted if we are hit.
-#define SWINGDELAY_CANCELSLOW 4	//Same as cancel but our speed is also hardset to 10 for the delay.
-
 //Grab levels
 #define GRAB_PASSIVE				0
 #define GRAB_AGGRESSIVE				1
@@ -419,7 +413,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 /// Damage multiplier of silver weapons against mobs with TRAIT_SIMPLE_WOUNDS
 #define SILVER_SIMPLEMOB_DAM_MULT 3
 #define EXPOSED_CAST_LOCKOUT 4 SECONDS	// Cap on how long Exposed can deny casting
-#define BASE_RCLICK_CD 30 SECONDS
 #define TEMPO_TAG_STAMLOSS_PARRY "parry"
 #define TEMPO_TAG_STAMLOSS_DODGE "dodge"
 #define TEMPO_TAG_ARMOR_INTEGFACTOR "integ"
@@ -479,11 +472,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 // Critical Resistance Defines //
 #define BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE 0.5
-//Visible message presets.
-#define VISMSG_ARMOR_BLOCKED " <span class='armoralert'>Armor stops the damage.</span>"
-#define VISMSG_ARMOR_INT_STAGEONE "<span class='armoralert'><i> Dented.</i></span>"
-#define VISMSG_ARMOR_INT_STAGETWO "<span class='armoralert'> Damaged.</span>"
-#define VISMSG_ARMOR_INT_STAGETHREE "<span class='armoralert'><b> Crumbling!</b></span>"
 /// Alternate attack defines. Return these at the end of procs like afterattack_secondary.
 /// Calls the normal attack proc. For example, if returned in afterattack_secondary, will call afterattack.
 /// Will continue the chain depending on the return value of the non-alternate proc, like with normal attacks.

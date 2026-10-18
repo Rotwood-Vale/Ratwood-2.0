@@ -414,6 +414,5 @@
 	else
 		to_chat(user, span_info("I'll need to find a container that can hold water."))
 
-// we love undivided and how much snowflake code it needs
 /proc/get_god_name(datum/patron/to_check)
-	return (istype(to_check, /datum/patron/divine/undivided) ? "the Ten" : to_check.name)
+	return to_check.name
