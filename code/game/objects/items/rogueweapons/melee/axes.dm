@@ -442,7 +442,7 @@
 	desc = "An ornate battle axe, plated in a ceremonial veneer of silver. The premiere instigator of conflict against elven attachees."
 	icon_state = "psyaxe"
 	force = 25
-	force_wielded = 25
+	force_wielded = 30
 	minstr = 11
 	wdefense = 6
 	blade_dulling = DULLING_SHAFT_METAL
