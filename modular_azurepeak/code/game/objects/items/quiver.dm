@@ -583,7 +583,7 @@
 /obj/item/quiver/mechanized/get_mechanics_examine(mob/user)
 	. = ..()
 	. += span_info("Automatically picks up compatible ammo when you walk over it.")
-	. += span_info("Middle Click with a compatible weapon to holster it.")
+	. += span_info("Left-click with a compatible weapon to holster it.")
 	. += span_info("Right-click to draw the holstered weapon to your active hand.")
 
 //this controls the overlays, you migh need to adjust the bowoverlay_x and bowoverlay_y vars in the specific quiver types depending on the graphic
@@ -637,9 +637,9 @@
 	name = "mechanized bolt quiver"
 	desc = "A mechanical bolt pouch for crossbows, slurbows, and bolts. It will suck up bolts off the ground and hold a crossbow or slurbow!"
 	icon_state = "mechboltpouch0"
-	max_storage = 20
+	max_storage = 16
 	allowed_ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt
-	valid_weapon = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow)
+	valid_weapon = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 
 /obj/item/quiver/mechanized/crossbow/update_icon()
 	icon_state = arrows.len ? "mechboltpouch1" : "mechboltpouch0"
@@ -680,7 +680,7 @@
 		to_chat(user, span_warning("I'm not holding anything to stow in [src]."))
 		return
 	if(!istype(held, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow) || \
-	   !istype(held, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow))
+	    istype(held, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow))
 		to_chat(user, span_warning("[held] doesn't fit — only crossbows and slurbows."))
 		return
 	if(user.transferItemToLoc(held, src))
