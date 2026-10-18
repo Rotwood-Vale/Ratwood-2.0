@@ -303,3 +303,46 @@
   - rscdel: ashes scattering when you walk on them
   wikimody:
   - bugfix: Knightly jurney stigmata is in fact a stigmata
+2026-10-17:
+  0-the-fool:
+  - balance: Max map tallies lowered to 3
+  EvenInDeathIStillServe:
+  - bugfix: Freifechter sabres correctly classified as long weapons.
+  Nid4259:
+  - rscadd: Added bolts for retainer crossbowman
+  - rscdel: Removed arrows for retainer crossbowman
+  Sauna38:
+  - qol: Lets Apothecaries be Old
+  SirSwagmeyer:
+  - bugfix: fixed the foreign fencer not receiving their thematically proper pants
+  The-Sun-In-Splendour:
+  - rscadd: Inquisition rings are now hidden scomstones. Right click! Beware the blood
+      toll, though!
+  Xander3359:
+  - rscadd: Leashing now has actual visuals
+  Yuckuza:
+  - bugfix: fixed hammerhold, aavnr, zybantine, and gronnic merchant vessel shop items
+      to be less misleading and sell what's advertised.
+  ariaworld:
+  - bugfix: Fixed Navaja not doing 20 damage correctly.
+  mushy:
+  - balance: Rituos now only needs two* casts to be completed.
+  trueroguan:
+  - bugfix: Players no longer stop hearing speech and emotes after leaving bat or
+      mist form.
+  - bugfix: Leaving a beast form no longer wipes the druid's skills.
+  - bugfix: Dying in a beast form now removes the form's abilities and keeps your
+      neck and ring items equipped.
+  - bugfix: Beast Form can no longer be cast while in bat or mist form.
+  - bugfix: Leaving a beast form no longer applies suffocation or blood loss to bodies
+      that do not breathe or cannot bleed out.
+  - bugfix: Fixed errors when day turns to night for vampires in bat form.
+  - code_imp: Music preloading now runs once per connection instead of on every mind
+      transfer; fixed shapeshift and devotion references that kept deleted mobs alive.
+  - bugfix: Cancelling the animal form picker, or trying to shapeshift while restrained,
+      no longer puts the spell on cooldown.
+  - bugfix: You can no longer escape restraints by picking an animal form while the
+      picker is open.
+2026-10-18:
+  Kroto-Ker:
+  - rscadd: Hyena snout to Lupians + Outer Eyes accessory.
