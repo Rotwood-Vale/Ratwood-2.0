@@ -1398,5 +1398,3 @@
 	name = "Enchantment Dormant"
 	desc = "The Enchantments you wear have activated and are temporarily Dormant!"
 	icon_state = "dazed"
-
-
