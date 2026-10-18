@@ -566,7 +566,7 @@
 					var/new_accessory_type = selection?["accessory_type"]
 
 					var/obj/item/organ/penis/old_penis = H.getorganslot(ORGAN_SLOT_PENIS)
-					var/new_size = old_penis?.penis_size || DEFAULT_PENIS_SIZE
+					var/new_size = isnull(old_penis) ? DEFAULT_PENIS_SIZE : old_penis.penis_size
 					var/new_functional = isnull(old_penis) ? TRUE : old_penis.functional
 					var/new_colors = old_penis?.accessory_colors
 
@@ -798,21 +798,11 @@
 					should_update = TRUE
 
 		if("penis size")
-			var/list/penis_sizes = list("small", "average", "large")
-			var/new_size = input(H, "Choose your penis size", "Penis Size") as null|anything in penis_sizes
+			var/new_size = input(H, "Choose your penis size", "Penis Size") as null|anything in GLOB.named_penis_sizes
 			if(new_size)
 				var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
 				if(penis)
-					var/size_num
-					switch(new_size)
-						if("small")
-							size_num = 1
-						if("average")
-							size_num = 2
-						if("large")
-							size_num = 3
-
-					penis.penis_size = size_num
+					penis.penis_size = GLOB.named_penis_sizes[new_size]
 					H.update_body()
 					should_update = TRUE
 

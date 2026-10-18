@@ -168,3 +168,181 @@
   - rscadd: Adds the tailcoat and ornate tailcoat to the loadout.
   - bugfix: Fixes up code in the loadout for nobility check so there is less copy
       pasta.
+2026-10-09:
+  IronDragoon:
+  - bugfix: a few small fixes for dunworld (and teapots/cups for the keep)
+  chemistrymain3:
+  - bugfix: Prelate staff now works in all areas of the church.
+2026-10-10:
+  I_Nerf_What_Kills_Me:
+  - rscadd: vague references to zizo in hemophage vice description.
+  - balance: hemophage gets more nutrients and hydration from drinking blood + slower
+      decay.
+  - balance: hemophage can no longer consume water or food to replenish hunger and
+      thirst. now they are toxic to them as per the description says. (excluding alcohol
+      for larp)
+  IronDragoon:
+  - balance: removed skeleton scroll from dunworld lich dungeon, replaced with some
+      expensive gems for now
+  KurobaKetsukane:
+  - rscadd: Knightly Journey knights and squires now pick a subclass (Banneret/Outrider,
+      Squire-at-Arms/Hobelar/Bidower)
+  - rscadd: The Knightly Journey can bring an optional chaplain (Sworn Missionary
+      or Sworn Stigmata) and up to two followers (Chirurgeon, Jongleur, Servitor,
+      Campwright)
+  - rscadd: The Unknightly Journey is now a proper special migrant wave, and the Dark
+      Itinerant and Varlet can serve any Ascendant
+  - rscadd: Dark Itinerants and Varlets now pick a subclass (Forsworn Knight/Knight
+      Harbinger, Blackguard/Stablehand/Harrier)
+  - rscadd: The Unknightly Journey can bring an optional Wordbearer
+  - rscadd: Dark Itinerants get minor miracles from their god
+  - rscadd: Heartfelt lords, hands and knights can take a Heartfelt caparison from
+      their stash
+  - balance: Dark Itinerants start in plain steel instead of blacksteel, and a ritualist
+      of the same god can give them their god's armor through the armor rite
+  - rscdel: Removed the Dark Itinerant's mindlink, squire recruit spell and objectives
+  - bugfix: Zizo's inverted psycross can now be worn in the ring slot like the other
+      Ascendant amulets
+  Mannybrado:
+  - code_imp: baron pq requirement from 20 to 9
+  - code_imp: retainer pq requirement from 15 to 5
+  MarioTheShiba:
+  - rscadd: Added some Vanderlin tunes.
+  Randumb-Phantomb:
+  - sound: Players can now make saiga noises using the neigh emote that exists now
+      that I added.
+  SirSwagmeyer:
+  - balance: rebalanced Mistwalker - stat caps, nerfed wrestling, but higher CON and
+      better Journey's End buffs.
+  - balance: Blacklisted ooze from the same powergamer roles as construct.
+  UntoldTactics:
+  - balance: The Dreamwalker cannot be marked an apostate or cursed by the Bishop.
+  Yuckuza:
+  - rscadd: Added new penis size "tiny" that gives doubled arousal gain on the user,
+      and halved arousal gain on the target.
+  chemistrymain3:
+  - rscadd: Added and updated items in the inquisition shop.
+  - rscadd: Necra will now claim the vowed if they begin to die.
+  - rscadd: Conchecks will autofail at a distance of 2 tiles, up from point blank.
+  - rscadd: Zizobane now has additional effects, but knocks you out on the 22nd tick,
+      instead of automatically.
+  wikimody:
+  - rscadd: Bandits are in fact HERESIATHS, they are no longer vulernable to bishop
+      curses
+  zBxnny:
+  - bugfix: 'added recharge_time to fetch so it stops the CD from being inherit from
+      somewhere else.
+
+      <img width="251" height="136" alt="imagen" src="https://github.com/user-attachments/assets/96ddc688-488d-45a0-901e-b3c5b0d3b62a"
+      />
+
+      balance:
+
+      repel stamina cost from 7 to 20
+
+      fetch stamina cost from 5 to 20
+
+      fetch cd went from 3 to 15 after the fix.'
+2026-10-11:
+  MrShibaa:
+  - rscadd: Adds the ability to light someones zig when its in their mouth.
+  - rscadd: Zigs can be extinguished by right clicking them.
+  - rscadd: Adds an end of round statistic that shows the top smokers.
+  Randumb-Phantomb:
+  - qol: the eagle's beak and blacksteel polehammer renamed to be steel lucerne and
+      blacksteel lucerne respectively, now the 3 match names. These weapons of similar
+      use now share their name.
+  - balance: lucernes of all varieties now come with a nerfed pick intent.
+  Xander3359:
+  - balance: You can no longer die from holding your breath, you can also hold your
+      breath for longer before passing out
+  wikimody:
+  - rscadd: Added trait luxfreak, exclusive to absolver, stigmata and gods, with is
+      required to perform non conversion psydonic rituals
+  - rscadd: FREDOM (from clothes) ritual no longer requires target to have gone though
+      luxplate ritual
+  - qol: Changed descriptions of absolver skills to be more reflecting of his lux
+      abomination status
+  - balance: Stigmata gets ritualist and ritual chalk
+  - bugfix: Absolver unque quicksilver recepture is now properly locked to him and
+      stigmata, and easier to produce
+2026-10-12:
+  Yuckuza:
+  - balance: Absolver's cone helmet makes them bump their head going down ladders.
+  john-pawson:
+  - bugfix: gives lich skeletons fatal insomnia, meaning they will no longer get tired
+      or be able to sleep
+2026-10-13:
+  annikaRU:
+  - bugfix: fixes a void under two windows, updates flooring I forgot to do
+2026-10-14:
+  0-the-fool:
+  - bugfix: Wall clocks no longer allow players to take out loadout items will full
+      stats.
+  I_Nerf_What_Kills_Me:
+  - rscadd: Interact with indexer on hemophages
+  annikaRU:
+  - bugfix: fixed a spawn
+2026-10-15:
+  IronDragoon:
+  - rscadd: Adds Yeen Cackle voice emote
+  - rscdel: Removed one of the giggle sounds from the warrior fem pack (it was not
+      good and did not suit)
+  The-Sun-In-Splendour:
+  - rscadd: new tailmaw. Succubus (Alt) (Tailmaw)
+  - bugfix: spade (tailmaw) tail wagging with no animation, disappearing it
+  UntoldTactics:
+  - bugfix: The Martyr's 2 minute ultimate now correctly sets all possibly relevant
+      weapon skills to legendary.
+2026-10-16:
+  Grigorix:
+  - rscadd: Added thawbs bisht, turbans, new large cloth sash to the loadout menu
+  - rscadd: Added bedroll option to the loadout menu as well
+  - bugfix: fixed fancy turban crafting recipe
+  The-Sun-In-Splendour:
+  - rscdel: ashes scattering when you walk on them
+  wikimody:
+  - bugfix: Knightly jurney stigmata is in fact a stigmata
+2026-10-17:
+  0-the-fool:
+  - balance: Max map tallies lowered to 3
+  EvenInDeathIStillServe:
+  - bugfix: Freifechter sabres correctly classified as long weapons.
+  Nid4259:
+  - rscadd: Added bolts for retainer crossbowman
+  - rscdel: Removed arrows for retainer crossbowman
+  Sauna38:
+  - qol: Lets Apothecaries be Old
+  SirSwagmeyer:
+  - bugfix: fixed the foreign fencer not receiving their thematically proper pants
+  The-Sun-In-Splendour:
+  - rscadd: Inquisition rings are now hidden scomstones. Right click! Beware the blood
+      toll, though!
+  Xander3359:
+  - rscadd: Leashing now has actual visuals
+  Yuckuza:
+  - bugfix: fixed hammerhold, aavnr, zybantine, and gronnic merchant vessel shop items
+      to be less misleading and sell what's advertised.
+  ariaworld:
+  - bugfix: Fixed Navaja not doing 20 damage correctly.
+  mushy:
+  - balance: Rituos now only needs two* casts to be completed.
+  trueroguan:
+  - bugfix: Players no longer stop hearing speech and emotes after leaving bat or
+      mist form.
+  - bugfix: Leaving a beast form no longer wipes the druid's skills.
+  - bugfix: Dying in a beast form now removes the form's abilities and keeps your
+      neck and ring items equipped.
+  - bugfix: Beast Form can no longer be cast while in bat or mist form.
+  - bugfix: Leaving a beast form no longer applies suffocation or blood loss to bodies
+      that do not breathe or cannot bleed out.
+  - bugfix: Fixed errors when day turns to night for vampires in bat form.
+  - code_imp: Music preloading now runs once per connection instead of on every mind
+      transfer; fixed shapeshift and devotion references that kept deleted mobs alive.
+  - bugfix: Cancelling the animal form picker, or trying to shapeshift while restrained,
+      no longer puts the spell on cooldown.
+  - bugfix: You can no longer escape restraints by picking an animal form while the
+      picker is open.
+2026-10-18:
+  Kroto-Ker:
+  - rscadd: Hyena snout to Lupians + Outer Eyes accessory.
