@@ -35,6 +35,85 @@
 		target.apply_status_effect(/datum/status_effect/buff/druqks/baotha) //Gets the trait temorarily, basically will just stop any active/upcoming ODs.	
 		target.visible_message("<span class='info'>[target]'s eyes appear to gloss over!</span>", "<span class='notice'>I feel.. at ease.</span>")
 
+// T1 - polls the caster's mood and vice satiety before giving a buff. as you can tell by the typepath i had an entiurely different idea for this ubt whatever
+/obj/effect/proc_holder/spell/invoked/heart_on_sleeve
+	name = "Phentis / Melancholia"
+	desc = "Give myne soul to wild joy or vicious heartbreak. In a good mood, I and those around me find calm and clarity. When suffering from the world's ails, I alone benefit- with some drawbacks. Every sated vice doubles the duration; every unsated vice doubles every attribute change. This works for up to three vices."
+	action_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_icon = 'icons/mob/actions/baothamiracles.dmi'
+	overlay_state = "powder"
+	clothes_req = FALSE
+	releasedrain = 30
+	chargedrain = 0
+	chargetime = 2 SECONDS //BIG, VERY IMPORTANT spell
+	recharge_time = 2 MINUTES
+	invocations = list("Melancholy! Mania!") //fuck dude I don't know I'm so fried
+	sound = 'sound/magic/heal.ogg'
+	chargedloop = /datum/looping_sound/invokeholy
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = TRUE
+	miracle = TRUE
+	devotion_cost = 30
+	var/spell_max_vices = 3
+	var/aura_range = 1
+
+/obj/effect/proc_holder/spell/invoked/heart_on_sleeve/cast(list/targets, mob/living/carbon/user)
+	var/stress_threshold = get_stress_threshold(user.get_stress_amount())
+	var/is_good_mood = stress_threshold == STRESS_THRESHOLD_NICE || stress_threshold == STRESS_THRESHOLD_GOOD
+	var/is_bad_mood = stress_threshold >= STRESS_THRESHOLD_STRESSED
+
+	if(!is_good_mood && !is_bad_mood)
+		to_chat(user, span_userdanger("EMPTY."))
+		revert_cast()
+		return FALSE
+
+	var/stat_multiplier = 1
+	var/effect_duration = 45 SECONDS
+	var/vices_covered = 0
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		for(var/datum/charflaw/addiction/vice in human_user.vices)
+			if (vices_covered >= spell_max_vices)
+				break
+			if(vice.sated)
+				effect_duration *= 2
+			else
+				stat_multiplier *= 2
+			vices_covered++
+
+	if(is_good_mood)
+		for(var/mob/living/nearby_soul in view(aura_range, user))
+			if(nearby_soul.stat != DEAD)
+				nearby_soul.apply_status_effect(/datum/status_effect/buff/heart_on_sleeve/phentis, stat_multiplier, effect_duration)
+		user.visible_message(span_notice("A warm, passionate haze gathers around [user]."), span_green("TAKE MYNE LOVE FOR BUT A MOTE."))
+	else
+		user.apply_status_effect(/datum/status_effect/buff/heart_on_sleeve/melancholia, stat_multiplier, effect_duration)
+		user.visible_message(span_warning("[user] draws their heartbreak inward."), span_warning("MYNE SORROW IS MINE ALONE."))
+	return TRUE
+
+/datum/status_effect/buff/heart_on_sleeve
+	id = "heart_on_sleeve"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /atom/movable/screen/alert/status_effect/buff/heart_on_sleeve
+	duration = 45 SECONDS
+
+/datum/status_effect/buff/heart_on_sleeve/on_creation(mob/living/new_owner, stat_multiplier = 1, effect_duration = 45 SECONDS)
+	duration = effect_duration
+	for(var/stat in effectedstats)
+		effectedstats[stat] *= stat_multiplier
+	return ..()
+
+/datum/status_effect/buff/heart_on_sleeve/phentis
+	effectedstats = list(STATKEY_SPD = 1, STATKEY_INT = 1)
+
+/datum/status_effect/buff/heart_on_sleeve/melancholia
+	effectedstats = list(STATKEY_STR = 1, STATKEY_SPD = 1, STATKEY_WIL = 1, STATKEY_CON = -1, STATKEY_INT = -1)
+
+/atom/movable/screen/alert/status_effect/buff/heart_on_sleeve
+	name = "HEART AND SOUL"
+	desc = ""
+	icon_state = "buff"
+
 //Enrapturing Powder - T2, basically a crackhead blowing cocaine in your face.
 
 /obj/effect/proc_holder/spell/invoked/projectile/blowingdust
@@ -52,9 +131,34 @@
 	chargedrain = 0
 	chargetime = 15
 	recharge_time = 10 SECONDS
-	invocation_type = "whisper"
-	invocations = list("Have a taste of the maiden's pure-bliss...")
+	invocation_type = "emote"
+	invocations = list("flicks their wrist, filling the air in front of them with a fine powder.")
 	devotion_cost = 30
+	alt_cast = TRUE
+
+/obj/effect/proc_holder/spell/invoked/projectile/blowingdust/fire_projectile(mob/living/user, atom/target)
+	if(!alt_mode)
+		return ..()
+	user.reagents.add_reagent(initial(projectile_type:poisontype), initial(projectile_type:poisonamount))
+	user.show_message(span_danger("You feel an intense [initial(projectile_type:poisonfeel)] sensation spreading swiftly from the area!"))
+	to_chat(user, span_warning("Gah! Something got in my eyes...!"))
+	user.blur_eyes(2)
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/projectile/blowingdust/cast(list/targets, mob/user = user)
+	switch(user.rmb_intent.name)
+		if("feint")
+			projectile_type = /obj/projectile/magic/blowingdust/spice
+		if("aimed")
+			projectile_type = /obj/projectile/magic/blowingdust/moondust
+		if("strong")
+			projectile_type = /obj/projectile/magic/blowingdust
+		if("swift")
+			projectile_type = /obj/projectile/magic/blowingdust/starsugar
+		else
+			projectile_type = /obj/projectile/magic/blowingdust
+
+	. = ..()
 
 /obj/projectile/magic/blowingdust
 	name = "unholy dust"
@@ -64,6 +168,33 @@
 	poisontype = /datum/reagent/herozium
 	poisonfeel = "burning" //Would make sense for your eyes or nose to burn, I guess.
 	poisonamount = 8 //Decent bit of high, three doses would be just above the overdose threshold if applied fast enough.
+
+/obj/projectile/magic/blowingdust/starsugar
+	name = "unholy dust"
+	icon_state = "spark"
+	nodamage = FALSE
+	damage = 1
+	poisontype = /datum/reagent/starsugar
+	poisonfeel = "burning" //Insufflation go brr.
+	poisonamount = 8 //Decent bit of high, three doses would be just above the overdose threshold if applied fast enough - in practice usually 4.
+
+/obj/projectile/magic/blowingdust/spice
+	name = "unholy dust"
+	icon_state = "spark"
+	nodamage = FALSE
+	damage = 1
+	poisontype = /datum/reagent/druqks
+	poisonfeel = "buzzing" //Insufflation go brr.
+	poisonamount = 4 //Lower than the others as it's got an OD threshold of 16 - takes 4 hits to OD if you hit it perfectly, but more like 5.
+
+/obj/projectile/magic/blowingdust/moondust
+	name = "unholy dust"
+	icon_state = "spark"
+	nodamage = FALSE
+	damage = 1
+	poisontype = /datum/reagent/moondust_purest
+	poisonfeel = "tingling" //Insufflation go brr.
+	poisonamount = 8 //Decent bit of high, three doses would be just above the overdose threshold if applied fast enough - in practice usually 4.
 
 /obj/projectile/magic/blowingdust/on_hit(target, mob/living/M)
 	. = ..()
