@@ -49,7 +49,7 @@
 	armor_class = ARMOR_CLASS_NONE
 	blade_dulling = DULLING_BASHCHOP
 	blocksound = PLATEHIT
-	armor = ARMOR_BARRIER//20 across the board, except fire and acid, get 30.
+	armor = ARMOR_PADDED_BAD
 	body_parts_covered = COVERAGE_FULL | COVERAGE_HEAD_NOSE | NECK | HANDS | FEET
 
 /obj/item/clothing/suit/roguetown/arcyne_barrier/equipped(mob/living/user)
