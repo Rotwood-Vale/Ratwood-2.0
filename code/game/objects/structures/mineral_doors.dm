@@ -452,6 +452,7 @@
 			return ..()
 
 /obj/structure/mineral_door/attacked_by(obj/item/I, mob/living/user)
+	var/turf/hit_turf = get_turf(src)
 	var/was_broken = obj_broken || obj_destroyed
 	// Not returned, as door hits have always ended the attack chain here
 	if(..())
