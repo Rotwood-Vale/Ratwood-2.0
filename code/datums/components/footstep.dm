@@ -105,6 +105,7 @@
 	var/used_volume = 0
 	var/used_extra_range = 0
 	var/do_vary = FALSE
+	var/turf_used_step
 	if(islamia(human_parent))
 		var/static/lamia_footsteps = list(
 			'sound/foley/footsteps/lamia_slither (1).ogg',
@@ -118,7 +119,7 @@
 		var/feet_covered = ((istype(humshoes) && !humshoes?.is_barefoot) || feetCover)
 		// decide between normal or bare step sounds based on shoe and armor coverage
 		var/list/used_step_list = feet_covered ? GLOB.footstep : GLOB.barefootstep
-		var/turf_used_step = feet_covered ? step_location.footstep : step_location.barefootstep
+		turf_used_step = feet_covered ? step_location.footstep : step_location.barefootstep
 		var/list/step_data = used_step_list[turf_used_step]
 		//SANITY CHECK, WILL NOT PLAY A SOUND IF THE LIST IS INVALID
 		if((LAZYLEN(step_data) < 3))
@@ -131,6 +132,21 @@
 	// this is fine without an explicit copy because it doesn't mutate the existing list
 	used_sound = pick(used_footsteps - last_sound) || last_sound
 	last_sound = used_sound
+
+	if(humshoes)
+		var/datum/component/item_equipped_movement_rustle/RSTL = humshoes.GetComponent(/datum/component/item_equipped_movement_rustle)
+		var/override_sound = FALSE
+		if(humshoes.stepnoise_flag & STEPNOISE_HEELS)	// Bit shoddy workaround, but this will still reveal all the footsteps to keen ears.
+			switch(turf_used_step)
+				if(FOOTSTEP_FLOOR, FOOTSTEP_STONE, FOOTSTEP_PLATING, FOOTSTEP_WOOD, FOOTSTEP_LAVA)
+					override_sound = TRUE
+		if(humshoes.stepnoise_flag & STEPNOISE_NONE)
+			override_sound = TRUE
+		if(override_sound)
+			used_sound = 'sound/blank.ogg'
+		if(RSTL)
+			RSTL.set_override(!override_sound)
+			
 	playsound(step_location, used_sound,
 		volume * used_volume,
 		do_vary,

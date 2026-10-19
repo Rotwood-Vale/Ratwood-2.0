@@ -7,7 +7,6 @@
 	spawn_positions = 2
 
 	allowed_races = RACES_ALL_KINDS
-	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED)
 
 	tutorial = "You are an accomplished physician, trained and practiced in the art of medicine. You answer to the Head Physician, who enables your practice. Woe betide the one who suffers your scalpel."
 
