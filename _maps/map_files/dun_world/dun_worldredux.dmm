@@ -34986,7 +34986,7 @@
 /turf/open/floor/rogue/twig,
 /area/rogue/indoors/town/church/chapel)
 "hRh" = (
-/obj/item/spellbook_unfinished,
+/obj/item/rogueweapon/spellbook,
 /turf/open/floor/rogue/church,
 /area/rogue/under/town/sewer)
 "hRi" = (
@@ -54473,7 +54473,7 @@
 /area/rogue/outdoors/mountains)
 "mgs" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/spellbook_unfinished/pre_arcyne,
+/obj/item/rogueweapon/spellbook,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/mazedungeon)
 "mgt" = (
@@ -98462,7 +98462,7 @@
 /area/rogue/indoors/town)
 "vOF" = (
 /obj/structure/bookcase,
-/obj/item/book/spellbook,
+/obj/item/rogueweapon/spellbook,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/mazedungeon)
 "vOG" = (

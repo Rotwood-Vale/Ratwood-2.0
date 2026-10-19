@@ -6330,7 +6330,7 @@
 /area/rogue/indoors/inq/basement)
 "bKx" = (
 /obj/structure/table/church/m/alt,
-/obj/item/spellbook_unfinished/pre_arcyne,
+/obj/item/rogueweapon/spellbook,
 /obj/item/roguegem/random,
 /turf/open/floor/rogue/churchrough{
 	color = "#d4ffcf"
@@ -43173,8 +43173,8 @@
 "mhR" = (
 /obj/item/chalk,
 /obj/item/chalk,
-/obj/item/spellbook_unfinished/pre_arcyne,
-/obj/item/spellbook_unfinished/pre_arcyne,
+/obj/item/rogueweapon/spellbook,
+/obj/item/rogueweapon/spellbook,
 /obj/item/roguegem/amethyst,
 /obj/item/roguegem/amethyst,
 /obj/structure/closet/crate/roguecloset/dark,
