@@ -797,7 +797,7 @@
 	name = "hammer grip"
 	two_handed = TRUE
 	grip_intents = list(
-		/datum/intent/spear/bash/polehammer,
+		/datum/intent/spear/bash/eaglebeak,
 		/datum/intent/mace/smash/eaglebeak/standard_poleaxe,
 		/datum/intent/mace/sweep,
 	)
