@@ -193,14 +193,22 @@
 		
 		if(!is_in_cone)
 			ignore_DE_bonus = TRUE
+
+		if(human_dodger.STASPD <= 9)
+			ignore_DE_bonus = TRUE
+
 		if(attacking_item && IL)	//Skilldiff applies extra stamloss, tentative
 			drained += (attacker.get_skill_level(attacking_item.associated_skill) - human_dodger.get_skill_level(IL.associated_skill))
 
 			if(istype(attacker.rmb_intent, /datum/rmb_intent/swift) && attacking_item.wbalance != WBALANCE_HEAVY)
 				drained += 3	//We drain extra stam if we're being attacked by swift stance
 
-		if(has_trait && human_dodger.mind && !ignore_DE_bonus && human_dodger.STASPD > 10)
+		if(has_trait && human_dodger.mind && !ignore_DE_bonus)
 			prob2defend = 90	//We cap it out if we have Dodge Expert as a Player.
+
+		if(human_dodger.STASPD < STASPD)
+			if(IL && IL.wbalance != WBALANCE_HEAVY)
+				drained += (STASPD - human_dodger.STASPD)
 
 		if(dodgetime <= CLICK_CD_DODGE && !ignore_DE_bonus && has_trait && human_dodger.mind)
 
