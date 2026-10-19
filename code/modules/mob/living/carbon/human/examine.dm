@@ -198,7 +198,7 @@
 					. += span_smallred("Destitute..")
 
 	if(wear_shirt && !(SLOT_SHIRT in obscured))
-		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_shirt)]. "
+		var/str = "[m3] [wear_shirt.generate_tooltip(wear_shirt.get_examine_string(user))]. "
 		str += "[wear_shirt.integrity_check(is_smart)]"
 		if(is_stupid)
 			str = "[m3] some kind of shirt!"
@@ -212,7 +212,7 @@
 			var/obj/item/clothing/under/U = wear_pants
 			if(U.attached_accessory)
 				accessory_msg += " with [icon2html(U.attached_accessory, user)] \a [U.attached_accessory]"
-		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_pants)][accessory_msg]. "
+		var/str = "[m3] [wear_pants.generate_tooltip(wear_pants.get_examine_string(user))][accessory_msg]. "
 		str += wear_pants.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] a pair of some pants! "
@@ -221,7 +221,7 @@
 
 	//head
 	if(head && !(SLOT_HEAD in obscured))
-		var/str = "[m3] [get_examine_item_name_with_hover(user, head)] on [m2] head. "
+		var/str = "[m3] [head.generate_tooltip(head.get_examine_string(user))] on [m2] head. "
 		var/head_condition = head.integrity_check(is_smart)
 		str += head_condition
 		if(is_stupid)
@@ -235,7 +235,7 @@
 
 	//suit/armor
 	if(wear_armor && !(SLOT_ARMOR in obscured))
-		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_armor)]. "
+		var/str = "[m3] [wear_armor.generate_tooltip(wear_armor.get_examine_string(user))]. "
 		var/armor_condition = wear_armor.integrity_check()
 		if(is_smart || is_normal)
 			str += armor_condition
@@ -269,7 +269,7 @@
 		var/str
 		if(istype(cloak, /obj/item/clothing))
 			var/obj/item/clothing/CL = cloak
-			str = "[m3] [get_examine_item_name_with_hover(user, CL)] on [m2] shoulders. "
+			str = "[m3] [CL.generate_tooltip(CL.get_examine_string(user))] on [m2] shoulders. "
 		else
 			str = "[m3] [get_examine_item_name_with_hover(user, cloak)] on [m2] shoulders. "
 		str += cloak.integrity_check(is_smart)
@@ -300,7 +300,7 @@
 	var/datum/component/forensics/FR = GetComponent(/datum/component/forensics)
 	//gloves
 	if(gloves && !(SLOT_GLOVES in obscured))
-		var/str = "[m3] [get_examine_item_name_with_hover(user, gloves)] on [m2] hands. "
+		var/str = "[m3] [gloves.generate_tooltip(gloves.get_examine_string(user))] on [m2] hands. "
 		str += gloves.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] a pair of gloves of some kind!"
@@ -352,7 +352,7 @@
 
 	//shoes
 	if(shoes && !(SLOT_SHOES in obscured))
-		var/str = "[m3] [get_examine_item_name_with_hover(user, shoes)] on [m2] feet. "
+		var/str = "[m3] [shoes.generate_tooltip(shoes.get_examine_string(user))] on [m2] feet. "
 		str += shoes.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] some shoes on [m2] feet!"
@@ -360,7 +360,7 @@
 
 	//mask
 	if(wear_mask && !(SLOT_WEAR_MASK in obscured))
-		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_mask)] on [m2] face. "
+		var/str = "[m3] [wear_mask.generate_tooltip(wear_mask.get_examine_string(user))] on [m2] face. "
 		str += wear_mask.integrity_check(is_smart)
 		if(is_stupid)
 			str = "[m3] some kinda thing on [m2] face!"
@@ -371,7 +371,7 @@
 		var/str
 		if(istype(mouth, /obj/item/clothing))
 			var/obj/item/clothing/CM = mouth
-			str = "[m3] [get_examine_item_name_with_hover(user, CM)] in [m2] mouth. "
+			str = "[m3] [CM.generate_tooltip(CM.get_examine_string(user))] in [m2] mouth. "
 		else
 			"[m3] [get_examine_item_name_with_hover(user, mouth)] in [m2] mouth. "
 		str += mouth.integrity_check(is_smart)
@@ -400,7 +400,7 @@
 
 	//ring
 	if(wear_ring && !(SLOT_RING in obscured) && !HAS_TRAIT(wear_ring, TRAIT_EXAMINE_SKIP))
-		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_ring)] on [m2] hands. "
+		var/str = "[m3] [wear_ring.generate_tooltip(wear_ring.get_examine_string(user))] on [m2] hands. "
 		if(is_smart && istype(wear_ring, /obj/item/clothing/ring/active))
 			var/obj/item/clothing/ring/active/AR = wear_ring
 			if(AR.cooldowny)
@@ -414,7 +414,7 @@
 
 	//wrists
 	if(wear_wrists && !(SLOT_WRISTS in obscured))
-		var/str = "[m3] [get_examine_item_name_with_hover(user, wear_wrists)] on [m2] wrists."
+		var/str = "[m3] [wear_wrists.generate_tooltip(wear_wrists.get_examine_string(user))] on [m2] wrists."
 		str += wear_wrists.integrity_check(is_smart)
 		if (is_stupid)
 			str = "[m3] something on [m2] wrists!"
@@ -1032,6 +1032,9 @@
 				. += span_notice("A fellow noble.")
 			else
 				. += span_notice("A noble!")
+
+		if(ministry_active?.active)
+			. += span_notice("[m3] the office of [ministry_active.display_title].")
 		// Leashed pet status effect message
 		if(has_status_effect(/datum/status_effect/leash_pet))
 			. += span_warning("A leash is hooked to their collar. They are being led like a pet.")

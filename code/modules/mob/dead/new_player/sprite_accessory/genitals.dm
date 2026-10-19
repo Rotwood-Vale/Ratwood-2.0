@@ -24,10 +24,12 @@
 					return "slit_2"
 
 	if(uses_size_sprites)
+		// Tiny shares sprites with small pintles, might add something later on
+		var/sprite_size = clamp(pp.penis_size, SMALL_PENIS_SIZE, DEFAULT_PENIS_SIZE)
 		if(pp.erect_state == ERECT_STATE_HARD)
-			return "[icon_state]_2_[min(pp.penis_size, 2)]"
+			return "[icon_state]_2_[sprite_size]"
 		else
-			return "[icon_state]_1_[min(pp.penis_size, 2)]"
+			return "[icon_state]_1_[sprite_size]"
 	else
 		if(pp.erect_state == ERECT_STATE_HARD)
 			return "[icon_state]_2"

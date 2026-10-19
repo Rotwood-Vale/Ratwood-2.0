@@ -58,6 +58,10 @@
 	return
 
 /obj/item/proc/getonmobprop(tag)
+	if(current_alt_grip)
+		var/list/altgrip_prop = current_alt_grip.getonmobprop(src, tag)
+		if(altgrip_prop)
+			return altgrip_prop
 	if(tag)
 		switch(tag)
 			if("gen")

@@ -101,14 +101,14 @@
 	backl = /obj/item/rogueweapon/scabbard/gwstrap
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate
 	if(H.mind)
-		var/weapons = list("Halberd", "Partizan", "Eagle's Beak")
+		var/weapons = list("Halberd", "Partizan", "Lucerne")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Halberd")
 				r_hand = /obj/item/rogueweapon/halberd
 			if("Partizan")
 				r_hand = /obj/item/rogueweapon/spear/partizan
-			if("Eagle's Beak")
+			if("Lucerne")
 				r_hand = /obj/item/rogueweapon/eaglebeak
 	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
@@ -206,7 +206,8 @@
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	subclass_languages = list(/datum/language/grenzelhoftian)
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_INTELLECTUAL, TRAIT_STEELHEARTED, TRAIT_ALCHEMY_EXPERT)
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
+	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_INTELLECTUAL, TRAIT_STEELHEARTED, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
@@ -236,7 +237,7 @@
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
 	backl = /obj/item/rogueweapon/woodstaff/gefechtsgelehrter
 	cloak = /obj/item/clothing/cloak/stabard/grenzelmage
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/cuirass
 	//General gear regardless of class.
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	neck = /obj/item/clothing/neck/roguetown/coif/padded

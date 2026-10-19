@@ -1,6 +1,8 @@
 /mob/living
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
+	/// Mobs this living mob is actively hostile toward.
+	var/list/enemies
 	/// Contract-spawned mobs get this set: their heads pay no HEADEATER bounty (the contract reward is the payment)
 	var/no_head_bounty = FALSE
 	/// Marks a mob as belonging to a contract warband; its corpse dusts itself after death.
@@ -216,13 +218,10 @@
 			var/target_points = FLOOR((L.STACON + L.STASTR)/2, 1)
 
 			switch(sprint_distance)
-				// Point blank
-				if(0 to 1)
+				// Point blank to 2 tiles
+				if(0 to 3)
 					self_points -= 99
 					instafail = TRUE
-				// One to two tile between the people
-				if(2 to 3)
-					self_points -= 2
 				// Five or above tiles between people
 				if(6 to INFINITY)
 					self_points += 1

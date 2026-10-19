@@ -4,7 +4,7 @@
 	blade_class = BCLASS_BLUNT
 	icon_state = "inbash"
 	attack_verb = list("bashes", "strikes")
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 	//We want chipping, m'lord.
@@ -274,7 +274,7 @@
 	desc = "Shovels have always held some manner of importance in a militiaman's lyfe. Instead of digging corpsepits, however, this poleaxe will now fill them up."
 	icon_state = "peasantwaraxe"
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
-	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/long, SPEAR_BASH)
 	force = 15
 	force_wielded = 25
 	minstr = 10
@@ -289,7 +289,7 @@
 	desc = "'Do you think Psydon stays in Heaven because He too lives in fear of what He's created?' </br>A silver shovel, improvised - perhaps, by the hands of a particularly desperate gravedigger - to fill a polearm's duty."
 	icon_state = "silvershovelwaraxe"
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
-	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/long, SPEAR_BASH)
 	force = 15
 	force_wielded = 25
 	minstr = 11
@@ -542,7 +542,7 @@
 	desc = "Fittingly coined as a 'peasant's falchion', this hunting sword's blade has been retempered to hunt the most dangerous game. Those jagged edges are perfect for tearing into flesh-and-maille."
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike)
 	icon_state = "maciejowski"
-	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/peel, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/strike)
 	force = 18
 	force_wielded = 25
 	anvilrepair = /datum/skill/craft/carpentry
@@ -553,7 +553,7 @@
 /obj/item/rogueweapon/sword/falchion/militia/bronze
 	name = "kopis"
 	desc = "The falchion's ancient predecessor, veiled in bronze - yet no less lethal against an awaiting trunk. The curved grip snuggly fits in the wielder's hand, allowing their will to be imposed upon assailant-and-archdevil alike with terrible force."
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike)//no peel but very fun intents. This little chopper rocks
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike)
 	icon_state = "kopis"
 	sheathe_icon = "kopis"
 	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike)
@@ -781,6 +781,28 @@
 
 //Standard of the keep.
 //Big ol' flag that they keep to give bonuses, used by the manorguard standard bearer.
+
+/datum/intent/spear/thrust/pike/skewer/standard
+	icon_state = "inimpale"
+
+/datum/intent/spear/thrust/standard_glaive
+	damfactor = 1.1
+	chargetime = 0
+
+/datum/intent/mace/smash/eaglebeak/standard_poleaxe
+	name = "poleaxe smash"
+	damfactor = 1
+
+/datum/alt_grip/standard_poleaxe
+	name = "hammer grip"
+	two_handed = TRUE
+	grip_intents = list(
+		/datum/intent/spear/bash/polehammer,
+		/datum/intent/mace/smash/eaglebeak/standard_poleaxe,
+		/datum/intent/mace/sweep,
+	)
+	var_overrides = list("sharpness" = IS_BLUNT)
+
 /obj/item/rogueweapon/spear/keep_standard
 	name = "ducal standard"
 	desc = "The local lord's banner, fashioned to a blacksteel pike and turned into a deadly instrument of war. \
@@ -791,7 +813,12 @@
 	throwforce = 32//It'll be funny. Trust.
 	thrown_bclass = BCLASS_PICK
 	possible_item_intents = list(SPEAR_BASH)
-	gripped_intents = list(/datum/intent/spear/thrust/pike, /datum/intent/spear/thrust/pike/skewer/standard, /datum/intent/lance, /datum/intent/mace/smash/eaglebeak)//GET THEM OFF OF ME!!! OOOUGH!!!
+	gripped_intents = list(
+		/datum/intent/spear/thrust/pike,
+		/datum/intent/spear/thrust/pike/skewer/standard,
+		/datum/intent/lance,
+		/datum/intent/mace/smash/eaglebeak,
+	)
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	icon_state = "standard_old"
 	detail_tag = "_det"
@@ -818,44 +845,52 @@
 	desc = "The local lord's banner, fashioned to a poleaxe and turned into a deadly instrument of war. \
 	The man who wields this is said to bring great fortune to his house, and those who keep him safe. \
 	<small>Runes glow near the head of the weapon, visible for the faintest of moments. A sure sign of the arcyne.</small>"
-	force = 30
-	force_wielded = 30//good both one and two handed, niche over the pike.
-	max_blade_int = 200//+20 over the eagle's beak. -60 from the pike.
-	max_integrity = 260//-40 from parent. No longer blacksteel, but great all the same.
-	smeltresult = /obj/item/ingot/steel
-	possible_item_intents = list(SPEAR_THRUST, /datum/intent/spear/cut/glaive, /datum/intent/axe/chop/scythe, /datum/intent/mace/smash/eaglebeak)
-	gripped_intents = list(/datum/intent/spear/thrust/glaive, /datum/intent/spear/cut/glaive/sweep, \
-	/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe)//You get special intents, you special guy, you...
-	alt_intents = list(/datum/intent/spear/bash/poleaxe, /datum/intent/mace/smash/poleaxe, /datum/intent/mace/sweep)
 	icon_state = "standard"
-	slot_flags = ITEM_SLOT_BACK
-	equip_delay_self = 2 SECONDS
-	unequip_delay_self = 2 SECONDS
-	inv_storage_delay = 1 SECONDS
-	var/used = FALSE
-	var/list/selection = list(
+	force = 30
+	force_wielded = 30
+	max_blade_int = 200
+	max_integrity = 260
+	smeltresult = /obj/item/ingot/steel
+	possible_item_intents = list(
+		SPEAR_THRUST,
+		/datum/intent/spear/cut/glaive,
+		/datum/intent/axe/chop/scythe,
+		/datum/intent/mace/smash/eaglebeak,
+	)
+	gripped_intents = list(
+		/datum/intent/spear/thrust/standard_glaive,
+		/datum/intent/spear/cut/glaive/sweep,
+		/datum/intent/axe/cut/long,
+		/datum/intent/axe/chop/long,
+	)
+	alt_grips = list(/datum/alt_grip/standard_poleaxe)
+	var/standard_manoeuvre_selected = FALSE
+	var/list/standard_manoeuvres = list(
 		/datum/special_intent/polearm_backstep,
 		/datum/special_intent/axe_swing,
 		/datum/special_intent/greatsword_swing,
-		/datum/special_intent/ground_smash
-		)
+		/datum/special_intent/ground_smash,
+	)
+
+/obj/item/rogueweapon/spear/keep_standard/poleaxe/examine(mob/user)
+	. = ..()
+	if(!standard_manoeuvre_selected)
+		. += span_notice("The Special Manoeuvre of this weapon can be changed. Right-click it with a free hand to select one. This can only be done once.")
 
 /obj/item/rogueweapon/spear/keep_standard/poleaxe/attack_right(mob/user)
 	. = ..()
-	if(used)
+	if(standard_manoeuvre_selected)
 		return
-
 	var/list/special_options = list()
-	for(var/intent in selection)
-		var/datum/special_intent/S = intent // Hate this DM quirk.
-		special_options[S::name] = S
-
-	var/choice = input(user, "Choose the Manoeuvre", "MANOEUVRE") as anything in special_options
-	if(choice)
-		qdel(special)
-		var/datum/special_intent/S = special_options[choice]
-		special = new S()
-		used = TRUE
+	for(var/datum/special_intent/manoeuvre as anything in standard_manoeuvres)
+		special_options[manoeuvre::name] = manoeuvre
+	var/choice = input(user, "Choose the Manoeuvre", "MANOEUVRE") as null|anything in special_options
+	if(!choice || QDELETED(src) || standard_manoeuvre_selected || !user.Adjacent(src))
+		return
+	qdel(special)
+	var/datum/special_intent/selected_manoeuvre = special_options[choice]
+	special = new selected_manoeuvre()
+	standard_manoeuvre_selected = TRUE
 
 /obj/item/rogueweapon/spear/keep_standard/equipped(mob/living/user)
 	. = ..()
