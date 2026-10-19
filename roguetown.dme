@@ -3134,6 +3134,8 @@
 #include "code\modules\spells\spell_types\wizard\spells_status_effects.dm"
 #include "code\modules\spells\spell_types\wizard\augmentation\_augment_buff.dm"
 #include "code\modules\spells\spell_types\wizard\augmentation\augment_defense.dm"
+#include "code\modules\spells\spell_types\wizard\augmentation\attune_giant.dm"
+#include "code\modules\spells\spell_types\wizard\augmentation\attune_haste.dm"
 #include "code\modules\spells\spell_types\wizard\augmentation\augmentation_status_effects.dm"
 #include "code\modules\spells\spell_types\wizard\augmentation\blood_rush.dm"
 #include "code\modules\spells\spell_types\wizard\augmentation\darkvision.dm"

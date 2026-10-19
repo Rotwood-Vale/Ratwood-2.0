@@ -13,7 +13,7 @@
 					/obj/effect/proc_holder/spell/invoked/blindness					= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/magicshield				= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/silence/miracle			= CLERIC_T3,//We are NOT letting Noc templars, or paladins, or GOD FORBID MONKS spamcast silence.
-					/obj/effect/proc_holder/spell/self/noc_spell_bundle				= CLERIC_T3,
+					/datum/action/cooldown/spell/noc/spellpack					= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/noc				= CLERIC_T4,
 	)
 	energy_color = COLOR_PATRON_NOC

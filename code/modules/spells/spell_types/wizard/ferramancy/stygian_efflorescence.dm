@@ -1,6 +1,62 @@
 #define MT_STYGIAN "stygian"
 #define STYGIAN_DR_DURATION 1 SECONDS
 
+/datum/action/cooldown/spell/projectile/stygian_efflorescence
+	button_icon = 'icons/mob/actions/mage_ferramancy.dmi'
+	name = "Stygian Efflorescence"
+	desc = "Charge up, then loose a volley of five sharpened obsidian shards in a wide spread, blasting out in the direction you face. The first shard can cause a critical wound, but shards on the same target deal greatly reduced damage (8 damage) and cannot crit. Projectile effectiveness decreases after 5 tiles."
+	fluff_desc = "Before the first men learned to refine metal, men fought with sharpened stones - particularly obsidian from the foot of volcanos. \
+	It is said that Mount Golgotha had the best obsidian in all the world, sharp enough to cut flesh with ease. \
+	Malice, energy, and the imagination of the Magi cutting someone apart with Obsidian. \
+	Thus was born the first spell that would lead to Ferramancy, when men could imagine themselves smelting metal and forging tools - and after it, using magyck to replicate the very same thing."
+	button_icon_state = "stygian"
+	sound = 'sound/magic/scrapeblade.ogg'
+	spell_color = GLOW_COLOR_METAL
+	glow_intensity = GLOW_INTENSITY_LOW
+
+	projectile_type = /obj/projectile/energy/stygian
+	cast_range = SPELL_RANGE_PROJECTILE
+	projectiles_per_fire = 5
+	point_cost = 3
+
+	click_to_activate = FALSE
+	cardinal_aim = TRUE
+	shared_cooldown = "ferramancy_strike"
+
+	primary_resource_type = SPELL_COST_STAMINA
+	primary_resource_cost = SPELLCOST_MAJOR_PROJECTILE // It is a big ass shotgun now
+
+	invocations = list("Golgothae Acies!")
+	invocation_type = INVOCATION_SHOUT
+
+	charge_required = TRUE
+	weapon_cast_penalized = TRUE // Use it with an arcyne armament noob 
+	charge_time = CHARGETIME_MINOR
+	charge_swingdelay_type = SWINGDELAY_CANCEL
+	hold_drain = 1
+	charge_slowdown = CHARGING_SLOWDOWN_MEDIUM
+	charge_sound = 'sound/magic/charging.ogg'
+	cooldown_time = 20 SECONDS // Not meant to be the thing you relies on for damage or a staple poke spell, it is something to be mixed in in melee
+	attunement_school = ASPECT_NAME_FERRAMANCY
+
+	associated_skill = /datum/skill/magic/arcane
+	spell_tier = 2
+	spell_impact_intensity = SPELL_IMPACT_MEDIUM
+
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN
+
+	var/spread_step = 18
+
+/datum/action/cooldown/spell/projectile/stygian_efflorescence/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
+	. = ..()
+	var/base_angle = to_fire.Angle
+	if(isnull(base_angle))
+		base_angle = Get_Angle(user, target)
+	var/center_index = (projectiles_per_fire + 1) / 2
+	to_fire.Angle = base_angle + ((iteration - center_index) * spread_step)
+
+// --- Stygian projectile ---
+
 /obj/projectile/energy/stygian
 	name = "stygian harpe"
 	guard_deflectable = TRUE
