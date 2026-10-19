@@ -1273,7 +1273,7 @@
 			M.Knockdown(2 SECONDS)
 			M.do_jitter_animation(30)
 			var/datum/beam/current_beam
-			current_beam = new(fallzone, M, time = 1 SECONDS, beam_icon_state = "lightning[ rand(1,12) ]", btype = /obj/effect/ebeam, maxdistance = 10)
+			current_beam = new(fallzone, M, 1 SECONDS, icon_state = "lightning[ rand(1,12) ]", beam_type = /obj/effect/ebeam, max_distance = 10)
 			INVOKE_ASYNC(current_beam, TYPE_PROC_REF(/datum/beam, Start))
 		else
 			if(!HAS_TRAIT(M, TRAIT_PSYDONITE)) // only for practicing psydonites, all of inqusition qualifies. I dont want arbalist linched
@@ -1283,7 +1283,7 @@
 				M.Knockdown(2 SECONDS)
 				M.do_jitter_animation(30)
 				var/datum/beam/current_beam
-				current_beam = new(fallzone, M, time = 1 SECONDS, beam_icon_state = "lightning[ rand(1,12) ]", btype = /obj/effect/ebeam, maxdistance = 10)
+				current_beam = new(fallzone, M, 1 SECONDS, icon_state = "lightning[ rand(1,12) ]", beam_type = /obj/effect/ebeam, max_distance = 10)
 				INVOKE_ASYNC(current_beam, TYPE_PROC_REF(/datum/beam, Start))
 
 /obj/projectile/bullet/reusable/heavy_bolt/tempest_discharged // ups you havent waited long enought
