@@ -244,6 +244,7 @@
 		if(/datum/patron/old_god)
 			wrists = /obj/item/clothing/neck/roguetown/psicross
 			cloak = /obj/item/clothing/cloak/psydontabard
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute // Added for Sublass Prewiew.
 			if(H.mind)
 				var/helmets = list("Barbute", "Sallet", "Armet","Buckethelm","Volfskulle Bascinet")
 				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HIS LIGHT.") as anything in helmets
@@ -262,6 +263,7 @@
 			wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
 			cloak = /obj/item/clothing/cloak/templar/astrata
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor // Added for Sublass Prewiew.
 			if(H.mind)
 				var/helmets = list("Barbute", "Visored Barbute","Buckethelm")
 				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HER LIGHT.") as anything in helmets
