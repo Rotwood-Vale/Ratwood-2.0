@@ -172,5 +172,5 @@
 	name = "heavy padded mittens"
 	desc = "A pair of heavy gloves, quilted from cloth. Warmth for the pilgrim, reassurance for the laborer, and protection for the militiaman."
 	icon_state = "paddedmitts"
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER

@@ -156,7 +156,7 @@
 	labors and pilgrimages through harsher terrain, it's also been mobilized as a cost-effective means of protecting militia-legs aplenty."
 	detail_tag = "_detail"
 	altdetail_tag = "_detailalt"
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_LEG_HARDLEATHER
 
 /obj/item/clothing/under/roguetown/tights/clothlegs/heavy/update_icon()

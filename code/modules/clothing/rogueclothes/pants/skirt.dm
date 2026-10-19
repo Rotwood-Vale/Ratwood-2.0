@@ -110,7 +110,7 @@
 	desc = "Long, flowing, and modest; thickly padded, yet surprisingly unfettered in terms of agility."
 	icon_state = "patkilt"
 	item_state = "patkilt"
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_LEG_HARDLEATHER
 	color = "#976E6B"
 
