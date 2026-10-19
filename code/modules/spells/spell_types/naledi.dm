@@ -324,7 +324,6 @@
 /obj/effect/proc_holder/spell/invoked/stasis/proc/clear_overhead_indicator(appearance,mob/living/carbon/target)
 	target.remove_overlay(OBJ_LAYER)
 	cut_overlay(appearance, TRUE)
-	qdel(appearance)
 	update_icon()
 	return
 

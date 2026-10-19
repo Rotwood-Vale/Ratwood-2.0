@@ -116,6 +116,8 @@ GLOBAL_LIST_EMPTY(explosions)
 			// Double check for client
 			var/turf/M_turf = get_turf(M)
 			var/turf/E_turf = get_turf(epicenter)
+			if(!M_turf || !E_turf)
+				continue
 			if(is_in_zweb(M_turf.z,E_turf.z))
 				var/dist = get_dist(M_turf, epicenter)
 				var/baseshakeamount

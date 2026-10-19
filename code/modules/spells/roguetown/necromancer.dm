@@ -189,10 +189,7 @@
 		target_turfs += get_step(T, NORTH)
 		target_turfs += get_step(T, SOUTH)
 
-	for(var/i = 1 to to_spawn)
-		if(i > to_spawn)
-			i = 1
-
+	for(var/i = 1 to min(to_spawn, length(target_turfs)))
 		var/t_turf = target_turfs[i]
 
 		if(!isopenturf(t_turf))

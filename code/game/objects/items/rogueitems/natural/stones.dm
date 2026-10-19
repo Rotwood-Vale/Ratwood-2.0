@@ -629,7 +629,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	w_class = WEIGHT_CLASS_NORMAL
 	stackname = "stone blocks"
 	stacktype = /obj/item/natural/stoneblock
-	maxamount = 4
+	maxamount = 12
 	icon1 = "stoneblockbundle2"
 	icon1step = 3
 	icon2 = "stoneblockbundle3"

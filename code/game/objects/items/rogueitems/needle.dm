@@ -30,8 +30,8 @@
 /// The minimum delay between automatic sewing attempts.
 #define AUTO_SEW_DELAY CLICK_CD_MELEE
 #define SEW_HP_EXP_NORMALIZER 600
-#define SEW_EXP_PER_STEP 0.05
-#define SEW_EXP_FINISH 2.5
+#define SEW_EXP_PER_STEP 0.1
+#define SEW_EXP_FINISH 5
 
 /obj/item/needle
 	name = "needle"

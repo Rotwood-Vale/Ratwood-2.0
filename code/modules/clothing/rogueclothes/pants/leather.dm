@@ -8,7 +8,6 @@
 //	adjustable = CAN_CADJUST
 	sewrepair = TRUE
 	armor = ARMOR_PADDED_BAD
-	prevent_crits = list(BCLASS_CUT)
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	r_sleeve_status = SLEEVE_NORMAL
@@ -20,15 +19,15 @@
 
 /obj/item/clothing/under/roguetown/trou/leather
 	name = "leather trousers"
-	armor = ARMOR_LEATHER
+	armor = ARMOR_LEATHER_NPC
 	icon_state = "leathertrou"
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	max_integrity = ARMOR_INT_LEG_LEATHER
 	resistance_flags = FIRE_PROOF
 	salvage_result = /obj/item/natural/hide/cured
 
 /obj/item/clothing/under/roguetown/trou/leather/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/under/roguetown/trou/leather/mourning
 	name = "mourning trousers"

@@ -26,7 +26,8 @@
 	SHOULD_NOT_SLEEP(TRUE)
 
 	var/list/hearers = get_hearers_in_view(vision_distance, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
-	hearers -= ignored_mobs
+	if(ignored_mobs)
+		hearers -= ignored_mobs
 
 	for (var/mob/hearer in hearers)
 		if (is_blind(hearer))
@@ -100,15 +101,17 @@
 #define BALLOON_Y_OFFSET_TIER3 25
 
 ///Proc for creating a balloon alert that only someone with a specific trait would see.
-/atom/proc/filtered_balloon_alert(trait, text, x_offset, y_offset)
+/atom/proc/filtered_balloon_alert(trait, text, x_offset, y_offset, show_self = TRUE)
 	var/list/candidates = get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 	if(trait)	
 		for(var/mob/living/carbon/human/H in candidates)
+			if(!show_self && H == src)
+				candidates -= H
 			if(HAS_TRAIT(H, trait))
 				candidates -= H
 	else
 		CRASH("filtered_balloon_alert called without a trait, either it's an error or use balloon_alert instead.")
-
+		
 	balloon_alert_to_viewers(text, null, DEFAULT_MESSAGE_RANGE, candidates, x_offset, y_offset)
 
 #undef BALLOON_TEXT_CHAR_LIFETIME_INCREASE_MIN
