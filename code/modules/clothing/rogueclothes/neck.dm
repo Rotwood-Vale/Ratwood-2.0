@@ -382,7 +382,7 @@
 	icon_state = "aventailbase"
 	body_parts_covered = NECK|MOUTH
 	slot_flags = ITEM_SLOT_NECK
-	max_integrity = ARMOR_INT_SIDE_STEEL + ARMOR_INT_SIDE_COVERAGE_BONUS //In essence, a chainmail gorget.
+	max_integrity = ARMOR_INT_SIDE_STEEL + 50 //In essence, a chainmail gorget.
 	armor_class = ARMOR_CLASS_MEDIUM
 	armor = ARMOR_MAILLE
 	blocksound = CHAINHIT
