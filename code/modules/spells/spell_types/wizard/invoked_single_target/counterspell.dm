@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/invoked/counterspell
 	name = "Counterspell"
 	desc = "Briefly nullify the arcyne energy surrounding a target. Either preventing magic from being used outright, or preventing most magics from affecting the subject."
-	cost = 3
+	cost = 4
 	releasedrain = 35
 	chargedrain = 1
 	chargetime = 0
@@ -12,7 +12,7 @@
 	charging_slowdown = 3
 	chargedloop = /datum/looping_sound/wind
 	associated_skill = /datum/skill/magic/arcane
-	spell_tier = 3 // Full shut down of another mage should be a full mage privilege, imo
+	spell_tier = 2 
 	invocations = list("Respondeo!")
 	invocation_type = "shout"
 	glow_color = GLOW_COLOR_ARCANE
