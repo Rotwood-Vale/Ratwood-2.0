@@ -36,6 +36,11 @@
 		user.wildshape_untransform()
 		return FALSE
 
+	if(!ishuman(user))
+		to_chat(user, span_warning("I cannot call upon a beast form while in this shape."))
+		revert_cast(user)
+		return FALSE
+
 	var/list/choices = list()
 
 	for(var/mob/living/carbon/human/species/wildshape/shape as anything in possible_shapes)

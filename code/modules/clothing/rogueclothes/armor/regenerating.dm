@@ -113,10 +113,7 @@
 	I AM LIVING ON A FUCKING CORPSE. HE IS THE WORLD, AND THE WORLD IS ROTTING AWAY. \
 	HEAVEN CLOSED ITS GATES TO US, LONG AGO.' </br>'YET, HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I. \
 	HAPPINESS MUST BE FOUGHT FOR.'"
-	body_parts_covered = COVERAGE_FULL
-	body_parts_inherent = COVERAGE_FULL
-	armor = ARMOR_LEATHER_STUDDED
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
+	armor = ARMOR_PADDED
 	repair_time = 20 SECONDS
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
 
@@ -139,14 +136,14 @@
 	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_VEST
 	body_parts_inherent = COVERAGE_VEST
-	armor = ARMOR_LEATHER_GOOD
+	armor = ARMOR_LEATHER
 	repair_time = 20 SECONDS
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak
 	name = "tough skin"
 	desc = "My skin has always been tough enough to stop most cuts and bruises, with time it will mend."
-	armor = list("blunt" = 30, "slash" = 50, "stab" = 50, "piercing" = 20, "fire" = 0, "acid" = 0)
+	armor = ARMOR_PADDED_BAD
 	max_integrity = 300
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
@@ -251,7 +248,7 @@
 	desc = "Toughened from rigorous routine and mettle. A physique that could hold up the sky."
 	body_parts_covered = COVERAGE_FULL
 	body_parts_inherent = COVERAGE_FULL
-	armor = ARMOR_LEATHER_GOOD
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //A full-body leather armor.
 	repair_time = 30 SECONDS
 
@@ -261,7 +258,7 @@
 	body_parts_covered = COVERAGE_VEST
 	body_parts_inherent = COVERAGE_VEST
 	blocksound = PLATEHIT//I HAVE BALLS OF STEEL
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
 	repair_time = 30 SECONDS//better armor, longer repair
 
@@ -271,7 +268,7 @@
 	resistance_flags = FIRE_PROOF
 	icon_state = "easttats"
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	armor = ARMOR_SPELLSINGER
+	armor = ARMOR_LEATHER
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	body_parts_covered = COVERAGE_FULL
 	body_parts_inherent = COVERAGE_FULL

@@ -97,7 +97,7 @@
 			)
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Stunmace & Greatshield","Stunmace & Crossbow","Stunmace & Polehammer")	//A better shield or an extra spare stunmace
+		var/weapons = list("Stunmace & Greatshield","Stunmace & Crossbow","Stunmace & Lucerne")	//A better shield or an extra spare stunmace
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -110,7 +110,7 @@
 				H.change_stat(STATKEY_SPD, 1)
 				H.change_stat(STATKEY_STR, -1)
 				beltr = /obj/item/rogueweapon/mace/stunmace
-			if("Stunmace & Polehammer")
+			if("Stunmace & Lucerne")
 				r_hand = /obj/item/rogueweapon/eaglebeak
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				beltr = /obj/item/rogueweapon/mace/stunmace
