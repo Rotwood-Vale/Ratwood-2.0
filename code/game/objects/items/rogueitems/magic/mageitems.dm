@@ -488,14 +488,14 @@
 		return
 
 	var/mob/living/simple_animal/hostile/retaliate/rogue/target = captive
+	var/summoner_name = user.real_name ? user.real_name : user.name
 	target.visible_message(span_warning("[src] is trying to bind [target.real_name]"))
 	if(do_after(user, 50, target = src) && binding == FALSE)
 		if(!target.ckey) //player is not inside body or has refused, poll for candidates
 			to_chat(user, span_notice("You attempt to bind the targetted summon to this plane."))
 			binding = TRUE
 			target.visible_message(span_warning("[target.real_name]'s body is entangled by glowing chains..."), runechat_message = TRUE)
-			var/list/candidates = pollCandidatesForMob("Do you want to play as a Mage's summon?", null, null, null, 100, target, POLL_IGNORE_MAGE_SUMMON)
-
+			var/list/candidates = pollCandidatesForMob("Do you want to play as [summoner_name]'s summoned [target.real_name]?", null, null, null, 100, target, POLL_IGNORE_MAGE_SUMMON)
 			// theres at least one candidate
 			if(LAZYLEN(candidates))
 				var/mob/C = pick(candidates)

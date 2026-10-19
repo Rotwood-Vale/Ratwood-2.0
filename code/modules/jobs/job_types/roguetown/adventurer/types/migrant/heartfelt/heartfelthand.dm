@@ -67,6 +67,7 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
+	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
 
 /datum/outfit/job/roguetown/heartfelt/hand/marshal/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -149,6 +150,7 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
+	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
 
 /datum/outfit/job/roguetown/heartfelt/hand/steward/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -215,6 +217,7 @@
 	subclass_virtues = list(
 		/datum/virtue/utility/riding
 	)
+	subclass_stashed_items = list("Caparison (Heartfelt)" = /obj/item/caparison/heartfelt)
 
 	var/list/spells = list(
 		/obj/effect/proc_holder/spell/self/message,

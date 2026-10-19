@@ -159,3 +159,11 @@
 	)
 	ship_qty_min = 2
 	ship_qty_max = 5
+
+/datum/supply_pack/rogue/grenzelhoft/ring_vitality
+	name = "Ring of Vitality"
+	cost = 450
+	contains = list(/obj/item/clothing/ring/statonyx)
+	ship_qty_min = 1
+	ship_qty_max = 1
+	ship_chance = 25
