@@ -290,6 +290,10 @@
 		victim?.dna?.species?.handle_fire(victim, no_protection)
 	victim.adjustFireLoss(8)
 
+/// Whether we're burning with silver fire, blessed or not.
+/mob/living/proc/has_sunder_fire()
+	return has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) || has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"
 

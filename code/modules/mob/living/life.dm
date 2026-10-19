@@ -54,7 +54,7 @@
 
 	/// Blackblood regen. Excluded from the Psydonite regen above so the two never stack. Silver fire stops it completely.
 	/// Paid for with hunger, so it doesn't work for those who never hunger, nor for those who can't heal naturally.
-	if(!stat && HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS) && !HAS_TRAIT(src, TRAIT_NOREGEN) && !HAS_TRAIT(src, TRAIT_NOHUNGER) && !has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) && !has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+	if(!stat && HAS_TRAIT(src, TRAIT_BLACKBLOOD) && !HAS_TRAIT(src, TRAIT_PARALYSIS) && !HAS_TRAIT(src, TRAIT_NOREGEN) && !HAS_TRAIT(src, TRAIT_NOHUNGER) && !has_sunder_fire())
 		if(blood_volume > BLOOD_VOLUME_SURVIVE && nutrition > NUTRITION_LEVEL_STARVING && hydration > HYDRATION_LEVEL_DEHYDRATED) // starving is the minimal here, thirst also stops the regen now
 			var/regenerated = FALSE
 			for(var/datum/wound/wound as anything in get_wounds())

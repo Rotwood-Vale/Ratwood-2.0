@@ -19,7 +19,7 @@
 	name = "Medicinal Fish Vinegar, Fermented"
 	category = "Other"
 	bottle_name = "medicinal fish vinegar"
-	bottle_desc = "Overpoweringly fishy, yet imbued with alchemical mirth. An ancient predecessor to refined lifeblood, more commonly diluted in the modern dae for use as a savory sauce. (Un)fortuantely, this batch isn't destinted for dilution."
+	bottle_desc = "Overpoweringly fishy, yet imbued with alchemical mirth. An ancient predecessor to refined lifeblood, more commonly diluted in the modern dae for use as a savory sauce. (Un)fortunately, this batch isn't destined for dilution."
 	reagent_to_brew = /datum/reagent/medicine/healthpot/zarum
 	needed_reagents = list(/datum/reagent/water = 198)
 	needed_items = list(

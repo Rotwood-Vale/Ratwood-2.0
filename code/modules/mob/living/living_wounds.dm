@@ -58,8 +58,10 @@
 			continue
 		return wound
 
-/// How much of a heal this mob actually gets. Every healing effect should go through this.
+/// How much of a heal this mob actually gets. Every miracle, spell and healing status effect should go through this.
 /// Magical heals are blocked by TRAIT_NOHEAL and halved by TRAIT_HALFHEAL; natural ones are blocked by TRAIT_NOREGEN.
+/// Food and drink reagents (stews, teas, chocolate and the like) don't, nor does healing that only ever reaches
+/// mobs who can't have Second Chance, such as vampire covens, necromancy and construct repair.
 /mob/living/proc/get_heal_amount(amount, magical = TRUE)
 	if(HAS_TRAIT(src, magical ? TRAIT_NOHEAL : TRAIT_NOREGEN))
 		return 0

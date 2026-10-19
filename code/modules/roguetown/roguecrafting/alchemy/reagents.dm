@@ -40,13 +40,6 @@
 		M.adjustCloneLoss(-1.75*REM, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_EYES, -1*REM)
 
-/datum/reagent/medicine/healthpot/zarum/bog // no changes, it's just more palatable :>
-	name = "Honeyed Zarum"
-	description = "A fermented sauce of fish innards, vinegar and honey, which gradually regenerates all types of damage while remaining surprisingly pleasant to the tastebuds."
-	color = "#dd9700"
-	taste_description = "sweet-sour fish-glazed honey"
-	scent_description = "sweet fermented pungence"
-
 /datum/reagent/medicine/healthpot/zarum
 	name = "Zarum"
 	description = "A fermented sauce of fish innards and vinegar, which gradually regenerates all types of damage."
@@ -57,6 +50,13 @@
 	scent_description = "fermented pungence"
 	taste_mult = 8
 	var/hydration = 4
+
+/datum/reagent/medicine/healthpot/zarum/bog // heals the same as zarum, it's just more palatable
+	name = "Honeyed Zarum"
+	description = "A fermented sauce of fish innards, vinegar and honey, which gradually regenerates all types of damage while remaining surprisingly pleasant to the tastebuds."
+	color = "#dd9700"
+	taste_description = "sweet-sour fish-glazed honey"
+	scent_description = "sweet fermented pungence"
 
 // Unlike lifeblood, zarum still works on Blackbloods.
 /datum/reagent/medicine/healthpot/zarum/can_heal(mob/living/carbon/M)

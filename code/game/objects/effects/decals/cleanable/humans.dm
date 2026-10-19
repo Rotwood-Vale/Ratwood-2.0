@@ -86,7 +86,8 @@
 		C.bloodiness = initial(bloodiness)
 		C.name = initial(name)
 		B.dry = FALSE
-		B.blood_color = blood_color
+		if(blood_color) // ordinary blood merging in leaves a custom colour be, as in stain_blood_decal()
+			B.blood_color = blood_color
 		B.update_blood_color()
 
 /obj/effect/decal/cleanable/blood/Destroy()

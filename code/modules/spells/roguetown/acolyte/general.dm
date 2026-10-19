@@ -93,7 +93,7 @@
 
 	target.apply_status_effect(/datum/status_effect/buff/healing, healing, is_inhumen, user.patron)
 	target.visible_message(message_out, message_self)
-	blackblood_miracle_pain(user, target)
+	target.blackblood_miracle_pain(user)
 
 	return TRUE
 
@@ -137,7 +137,7 @@
 			target.fire_act(1,10)
 			return TRUE
 		target.visible_message(span_info("A wreath of gentle light passes over [target]!"), span_notice("I'm bathed in holy light!"))
-		blackblood_miracle_pain(user, target)
+		target.blackblood_miracle_pain(user)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.apply_status_effect(/datum/status_effect/buff/fortify)
@@ -231,7 +231,7 @@
 				affecting.change_bodypart_status(BODYPART_ORGANIC)
 				affecting.heal_damage(affecting.brute_dam * heal_mult, affecting.burn_dam * heal_mult)
 			affecting.update_disabled()
-			blackblood_miracle_pain(user, target)
+			target.blackblood_miracle_pain(user)
 			return TRUE
 		else
 			to_chat(user, span_warning("The limb is free of wounds."))
@@ -338,9 +338,9 @@
 	return FALSE
 
 /// Healing miracles pain a Blackblood, their Lux remembering the Otavan cure. Only call once the miracle has actually taken hold.
-/proc/blackblood_miracle_pain(mob/user, mob/living/target)
-	if(!HAS_TRAIT(target, TRAIT_BLACKBLOOD) || !target.get_heal_amount(1))
+/mob/living/proc/blackblood_miracle_pain(mob/user)
+	if(!HAS_TRAIT(src, TRAIT_BLACKBLOOD) || !get_heal_amount(1))
 		return
 	user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-	playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
-	target.emote("pain")
+	playsound(src, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+	emote("pain")

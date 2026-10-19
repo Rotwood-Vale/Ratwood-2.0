@@ -1554,7 +1554,7 @@ Inquisitorial armory down here
 	max_integrity = 100
 	always_destroy = TRUE
 
-GLOBAL_LIST_INIT(inquisition_used_ids, list())
+GLOBAL_LIST_EMPTY(inquisition_used_ids)
 /// Every haemological report mailed this round, as report ID -> list("page", "submitter", "subject", "time"). Kept so admins can read a report after the paper is gone.
 GLOBAL_LIST_EMPTY(inquisition_reports)
 
@@ -1574,12 +1574,12 @@ GLOBAL_LIST_EMPTY(inquisition_reports)
 	name = "haemological report"
 	desc = "An official haemological report bearing the seal of the Holy Otavan Inquisition. A crystal-clear sign that an INDEXER has been properly sent back for further investigation, and this is the result of it."
 	icon_state = "confession_signed"
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
 	var/report_html = ""
 	var/report_id
 
 /obj/item/paper/inquisition_report/update_icon_state()
 	icon_state = "confession_signed"
-	slot_flags |= ITEM_SLOT_HIP
 	return
 
 /obj/item/paper/inquisition_report/attack_right(mob/user)

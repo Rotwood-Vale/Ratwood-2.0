@@ -415,7 +415,7 @@
 		update_icon()
 		return
 
-	if(sliptype == 0) // ACCUSATION do be this now
+	if(sliptype == 0) // Accusations can be sealed with either a signature or a filled INDEXER
 		if(!signed && !paired)
 			to_chat(user, span_warning("It requires either a signature or a filled INDEXER before it can be sealed."))
 			return

@@ -150,18 +150,19 @@
 	if(waiting_for_prompt)
 		return
 
-	M.adjustBruteLoss(-healing_power)
-	M.adjustFireLoss(-healing_power)
-	M.adjustToxLoss(-healing_power)
-	M.adjustOxyLoss(-healing_power)
-	M.adjustCloneLoss(-healing_power)
+	var/heal_amount = M.get_heal_amount(healing_power)
+	M.adjustBruteLoss(-heal_amount)
+	M.adjustFireLoss(-heal_amount)
+	M.adjustToxLoss(-heal_amount)
+	M.adjustOxyLoss(-heal_amount)
+	M.adjustCloneLoss(-heal_amount)
 
 	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-		M.set_blood_volume(min(M.get_blood_volume() + healing_power * 2, BLOOD_VOLUME_NORMAL))
+		M.set_blood_volume(min(M.get_blood_volume() + heal_amount * 2, BLOOD_VOLUME_NORMAL))
 
 	var/list/wounds = M.get_wounds()
 	if(length(wounds))
-		M.heal_wounds(healing_power)
+		M.heal_wounds(heal_amount)
 		M.update_damage_overlays()
 
 	if(M.getBruteLoss() < 50 && M.getFireLoss() < 50 && M.getToxLoss() < 50 && M.getOxyLoss() < 50 && M.get_blood_volume() >= BLOOD_VOLUME_SAFE)

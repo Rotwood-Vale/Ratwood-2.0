@@ -513,7 +513,7 @@
 				message_param = "kisses %t on \the [parse_zone(H.zone_selected)]."
 	playsound(target.loc, pick('sound/vo/kiss (1).ogg','sound/vo/kiss (2).ogg'), 100, FALSE, -1)
 	if(user.mind)
-		/// Blackblood hidden interactions
+		// Blackblood hidden interactions
 		if(iscarbon(target) && HAS_TRAIT(user, TRAIT_INQUISITION))
 			var/mob/living/carbon/carbs = target
 			if(carbs.inquisition_trauma())
@@ -628,7 +628,7 @@
 	if(ishuman(target))
 		playsound(target.loc, pick('sound/body/hug.ogg'), 100, FALSE, -1)
 		if(user.mind)
-			/// Blackblood hidden interactions
+			// Blackblood hidden interactions
 			var/mob/living/carbon/carbs = target
 			if(HAS_TRAIT(user, TRAIT_INQUISITION) && carbs.inquisition_trauma())
 				carbs.stress_freakout()
@@ -762,7 +762,7 @@
 		H.fullscreen_redflash("redflash3")
 		H.AdjustSleeping(-50)
 		playsound(target.loc, 'sound/foley/slap.ogg', 100, TRUE, -1)
-		/// Blackblood hidden interactions
+		// Blackblood hidden interactions
 		if(iscarbon(target) && HAS_TRAIT(user, TRAIT_INQUISITION))
 			var/mob/living/carbon/carbs = target
 			if(carbs.inquisition_trauma())

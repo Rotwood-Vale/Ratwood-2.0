@@ -10,10 +10,9 @@
 	for(var/virtue_path in granted_virtues)
 		// Fresh instance: some virtues mutate themselves on apply, and the GLOB copies are shared globally.
 		var/datum/virtue/V = new virtue_path()
-		if(V)
-			if(V.max_choices)
-				stack_trace("[type] grants [virtue_path], which has sub-choices the player can never pick.")
-			V.apply_generic_effects(recipient)
+		if(V.max_choices)
+			stack_trace("[type] grants [virtue_path], which has sub-choices the player can never pick.")
+		V.apply_generic_effects(recipient)
 
 // Bronze Golem Pack: Both Bronze Arms
 // For those who have replaced both arms with mechanical prosthetics

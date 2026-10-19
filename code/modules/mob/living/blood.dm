@@ -526,8 +526,12 @@ GLOBAL_LIST_EMPTY(blood_colors_by_dna)
 
 /// Spawns a decal of this mob's blood, coloured to match.
 /// Returns the decal left on the turf, which may be one already there that the new one merged into.
+/// Ordinary blood never restains a decal, so it returns null rather than searching for the one it merged into.
 /mob/living/proc/spawn_blood_decal(decal_type, turf/T)
-	var/obj/effect/decal/cleanable/blood/decal = new decal_type(T, get_blood_color())
+	var/blood_color = get_blood_color()
+	var/obj/effect/decal/cleanable/blood/decal = new decal_type(T, blood_color)
+	if(!blood_color) // keeps the bleeding hot path as cheap as it's always been
+		return QDELETED(decal) ? null : decal
 	if(QDELETED(decal)) // find the decal it merged into: one of exactly its type, or the full pool splatters grow into
 		decal = null
 		for(var/obj/effect/decal/cleanable/blood/merged in T)
@@ -543,12 +547,12 @@ GLOBAL_LIST_EMPTY(blood_colors_by_dna)
 	return decal
 
 /// Marks a blood decal as this mob's blood. Custom coloured blood also leaves its DNA, so footprints tracked through it take the colour too.
-/// Ordinary blood skips the DNA, keeping the bleeding hot path as cheap as it's always been.
+/// Ordinary blood leaves the decal alone, so custom coloured blood keeps its colour once spilled, the same as add_blood_DNA() does.
 /mob/living/proc/stain_blood_decal(obj/effect/decal/cleanable/blood/decal)
 	var/blood_color = get_blood_color()
-	decal.set_blood_color(blood_color)
 	if(!blood_color)
 		return
+	decal.set_blood_color(blood_color)
 	var/list/blood_dna = get_blood_dna_list()
 	var/list/existing_dna = decal.return_blood_DNA()
 	if(length(blood_dna) && !existing_dna?[blood_dna[1]])

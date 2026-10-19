@@ -763,7 +763,7 @@
 #define CONSUME_AURA "consumehealing"
 
 /datum/status_effect/buff/foodhealing
-	id = "consumehealing"
+	id = CONSUME_AURA
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing
 	duration = 4 SECONDS
@@ -771,6 +771,8 @@
 	var/fare_power = 0
 	var/healing_on_tick = 1
 	var/outline_colour = "#8a8a8a"
+	/// The longest that eating more of the same fare can stretch the remaining duration to.
+	var/max_extended_duration = 12 SECONDS
 
 /datum/status_effect/buff/foodhealing/on_creation(mob/living/new_owner, new_fare_power)
 	if(!isnull(new_fare_power))
@@ -787,34 +789,36 @@
 	. = ..()
 	owner.remove_filter(CONSUME_AURA)
 
-/datum/status_effect/buff/foodhealing/tick()
-	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/psyheal_rogue(get_turf(owner))
-	H.color = "#bdbdbd"
+/// Eating more of the same fare keeps the healing going, up to max_extended_duration from now.
+/datum/status_effect/buff/foodhealing/proc/extend(amount)
+	duration = min(duration + amount, world.time + max_extended_duration)
 
-	// Base heal.
-	var/base_heal = healing_on_tick
+/datum/status_effect/buff/foodhealing/tick()
+	if(owner.construct)
+		return
 	// Fare: +10% healing per tier
 	var/fare_mult = 1 + (fare_power * 0.10)
 	// Nutrition multiplier
 	var/effective_nutrition = clamp(owner.nutrition, 0, NUTRITION_LEVEL_FULL)
 	var/hunger_ratio = (NUTRITION_LEVEL_FULL - effective_nutrition) / NUTRITION_LEVEL_FULL
 	var/nutrition_mult = 0.75 + (hunger_ratio * 0.75)
-	// Final healing
-	var/heal_amount = base_heal * fare_mult * nutrition_mult
+	var/heal_amount = owner.get_heal_amount(healing_on_tick * fare_mult * nutrition_mult, FALSE)
+	if(!heal_amount)
+		return
+	var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/psyheal_rogue(get_turf(owner))
+	H.color = "#bdbdbd"
+
 	owner.adjustBruteLoss(-heal_amount, 0)
 	owner.adjustFireLoss(-heal_amount, 0)
-
 	owner.adjustOxyLoss(-heal_amount, 0)
 	owner.adjustToxLoss(-heal_amount, 0)
-
 	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -heal_amount)
 	owner.adjustCloneLoss(-heal_amount, 0)
+	owner.updatehealth()
 
 	owner.energy_add(10)
-	owner.update_damage_overlays()
 
 #undef CONSUME_AURA
-
 
 /atom/movable/screen/alert/status_effect/buff/healing/campfire
 	name = "Warming Respite"

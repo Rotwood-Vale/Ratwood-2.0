@@ -94,7 +94,7 @@
 
 	if(victim.get_bloodpool() > 0)
 		var/used_vitae = 150
-		victim.set_blood_volume(max(victim.get_blood_volume() - 45, 0)) // good fucking lord vampires are hungy, 50 blood per cycle?
+		victim.set_blood_volume(max(victim.get_blood_volume() - 45, 0)) // 45 blood per feeding cycle
 		if(victim.get_bloodpool() < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
 			used_vitae = victim.get_bloodpool()
 			to_chat(src, span_warning("...But alas, only leftovers..."))
