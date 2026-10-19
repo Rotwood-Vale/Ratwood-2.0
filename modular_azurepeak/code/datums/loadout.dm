@@ -268,6 +268,11 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
      name = "Yurt Tent"
      path = /obj/item/tent_kit/yurt
      triumph_cost = 8
+	
+/datum/loadout_item/bedroll
+     name = "Bedroll"
+     path = /obj/item/bedroll
+     triumph_cost = 2
 
 //HATS
 /datum/loadout_item/shalal
@@ -353,6 +358,14 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/necromhood
     name = "Necromancer Hood"
     path = /obj/item/clothing/head/roguetown/necromhood
+
+/datum/loadout_item/turban
+	name = "Turban"
+	path = /obj/item/clothing/head/roguetown/turban
+
+/datum/loadout_item/fancypurple
+	name = "Fancy Turban"
+	path = /obj/item/clothing/head/roguetown/turban/fancypurple
 
 /datum/loadout_item/hijab
 	name = "Hijab"
@@ -669,6 +682,23 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/redbra
 	name = "Red Exotic Silk Bra"
 	path = /obj/item/clothing/suit/roguetown/shirt/exoticsilkbra/red
+
+/datum/loadout_item/bisht
+	name = "Bisht"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/bisht
+
+/datum/loadout_item/bishtpurple
+	name = "Purple Bisht"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/bisht/purple
+
+/datum/loadout_item/thawb
+	name = "Thawb"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/thawb
+
+/datum/loadout_item/thawbgold
+	name = "Golden Thawb"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/thawb/gold
+	triumph_cost = 1
 
 /datum/loadout_item/bottomtunic
 	name = "Low-cut Tunic"
@@ -1086,6 +1116,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/belt_cloth
 	name = "Cloth Sash"
 	path = /obj/item/storage/belt/rogue/leather/sash
+
+/datum/loadout_item/jafar
+	name = "Large Sash"
+	path = /obj/item/storage/belt/rogue/leather/jafar
 
 /datum/loadout_item/belt_rope
 	name = "Rope Belt"
