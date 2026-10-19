@@ -2,6 +2,7 @@
 #define BLOOD_VAMPIRE "Porphylick Haemophilia (Vampire)"
 #define BLOOD_WEREWOLF "Liquid Madness Corrosion (Werewolf)"
 #define BLOOD_GNOLL "Anthropophagic Corruption (Gnoll)"
+#define BLOOD_DEADITE "Active Necrotic Affliction (Deadite)"
 #define BLOOD_HEMOPHAGE "Hemophage"
 #define BLOOD_BLACKBLOOD "Stabilized Blackblood Tincture (Blackblood)"
 #define BLOOD_PALLID "Consecrated Pallid Remnant (Pallid)"
@@ -24,6 +25,7 @@
 		BLOOD_VAMPIRE = list(),
 		BLOOD_WEREWOLF = list(),
 		BLOOD_GNOLL = list(),
+		BLOOD_DEADITE = list(),
 		BLOOD_HEMOPHAGE = list(),
 		BLOOD_BLACKBLOOD = list(),
 		BLOOD_PALLID = list(),
@@ -75,13 +77,15 @@
 			. |= BLOOD_WEREWOLF
 		else if(istype(D, /datum/antagonist/gnoll))
 			. |= BLOOD_GNOLL
+		else if(istype(D, /datum/antagonist/zombie))
+			. |= BLOOD_DEADITE
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
 		. += BLOOD_HEMOPHAGE
 	if(HAS_TRAIT(H, TRAIT_BLACKBLOOD))
 		. += BLOOD_BLACKBLOOD
 	if(HAS_TRAIT(H, TRAIT_PALLID))
 		. += BLOOD_PALLID
-	if(HAS_TRAIT(H, TRAIT_ROTMAN))
+	if(H.is_rotcured())
 		. += BLOOD_ROTCURED
 
 /datum/admins/proc/inquisitorial_ckey(datum/mind/M)
@@ -113,6 +117,7 @@
 #undef BLOOD_VAMPIRE
 #undef BLOOD_WEREWOLF
 #undef BLOOD_GNOLL
+#undef BLOOD_DEADITE
 #undef BLOOD_HEMOPHAGE
 #undef BLOOD_BLACKBLOOD
 #undef BLOOD_PALLID

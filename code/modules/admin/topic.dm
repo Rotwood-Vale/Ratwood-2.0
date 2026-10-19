@@ -35,6 +35,8 @@
 
 	// Read a haemological report from its admin log link
 	if(href_list["view_inquisition_report"])
+		if(!check_rights(R_ADMIN))
+			return
 		var/list/report = GLOB.inquisition_reports[href_list["view_inquisition_report"]]
 		if(report)
 			usr << browse(report["page"], "window=inquisition_report;size=750x850;can_resize=1")

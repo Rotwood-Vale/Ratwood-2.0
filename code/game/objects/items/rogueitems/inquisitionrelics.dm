@@ -711,12 +711,10 @@ Inquisitorial armory down here
 				if(M.mind.has_antag_datum(/datum/antagonist/gnoll))
 					cursedblood = 2
 				if(!cursedblood) // cured survivors still carry traces worth cataloguing, but nowhere near a true nite creacher
-					if(HAS_TRAIT(M, TRAIT_BLACKBLOOD))
-						cursedblood = 1
-					else if(HAS_TRAIT(M, TRAIT_PALLID))
-						cursedblood = 0.75
-					else if(HAS_TRAIT(M, TRAIT_ROTMAN))
+					if(HAS_TRAIT(M, TRAIT_BLACKBLOOD) || HAS_TRAIT(M, TRAIT_PALLID))
 						cursedblood = 0.5
+					else if(M.is_rotcured())
+						cursedblood = 0.25
 			update_icon()
 			takeblood(M, user)
 		else
@@ -1744,7 +1742,7 @@ GLOBAL_LIST_EMPTY(inquisition_reports)
 			report_html += "<font color='#8a3656'><b>Consecrated Pallid Remnant</b></font><br><br>"
 			report_html += "<i>The sample retains faint traces of the Pallid affliction, characterized by diminished pigmentation, weakened sanguine vitality, and persistent cellular pallor. No active curse-resonance is presently detectable; the abnormality is consistent with catastrophic humoral bleaching followed by restorative divine intervention.</i><br><br>"
 			found = TRUE
-		if(HAS_TRAIT(H, TRAIT_ROTMAN))
+		if(H.is_rotcured())
 			report_html += "<font color='#167733'><b>Resolved Necrotic Affliction</b></font><br><br>"
 			report_html += "<i>The sample exhibits extensive post-necrotic restructuring, with markedly diminished tissue vitality and abnormal cessation of ordinary respiratory humoral exchange. Sanguine response to injury is severely blunted, consistent with prior reanimation and subsequent purification; residual necrotic alteration persists without evidence of active rot.</i><br><br>"
 			found = TRUE
@@ -1764,6 +1762,11 @@ GLOBAL_LIST_EMPTY(inquisition_reports)
 				found = TRUE
 				report_html += "<font color='#6E4F2C'><b>Anthropophagic Corruption</b></font><br><br>"
 				report_html += "<i>The sample demonstrates irreversible haemological restructuring characterized by predatory adaptation, excessive ferric saturation, and biochemical residues consistent with prolonged consumption of human flesh. Such degeneration has historically been observed only in individuals subjected to advanced war-cults devoted to the Inhumen, whose champions abandon their humanity through ritual slaughter and cannibalism.</i><br><br>"
+				break
+			if(istype(D, /datum/antagonist/zombie))
+				found = TRUE
+				report_html += "<font color='#4B5E1A'><b>Active Necrotic Affliction</b></font><br><br>"
+				report_html += "<i>The sample is wholly necrotised and teems with living rot. Coagulation has ceased entirely, and the humours show no trace of mortal vitality. Such blood belongs not to the living but to the risen dead; the subject is to be regarded as a Deadite and purged accordingly.</i><br><br>"
 				break
 		if(!found)
 			report_html += "<font color='#2D7A42'><b>Clean</b></font><br><br>"

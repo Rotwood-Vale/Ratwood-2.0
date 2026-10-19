@@ -495,3 +495,7 @@
 		return
 	return mind.add_antag_datum(/datum/antagonist/zombie)
 
+
+/// Whether this mob's rot is cured and inert, as with the Rotcured. Deadites carry TRAIT_ROTMAN too, but their rot is still active.
+/mob/living/proc/is_rotcured()
+	return HAS_TRAIT(src, TRAIT_ROTMAN) && !mind?.has_antag_datum(/datum/antagonist/zombie)

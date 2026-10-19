@@ -387,7 +387,7 @@
 				else
 					if(!correct)
 						if(cursedblood)
-							bonuses = round(bonuses + bonuses * I.paired.cursedblood, 1) // cursed blood strength can be fractional
+							bonuses = round(bonuses * (1 + I.paired.cursedblood)) // cursed blood strength can be fractional, so round down
 							if(I.waxed)
 								bonuses += 2
 						else if(I.paired && !indexed)
@@ -399,7 +399,7 @@
 						if(I.paired && !indexed && !cursedblood)
 							I.marquevalue += bonuses
 						if(cursedblood)
-							bonuses = round(bonuses + bonuses * I.paired.cursedblood, 1) // cursed blood strength can be fractional
+							bonuses = round(bonuses * (1 + I.paired.cursedblood)) // cursed blood strength can be fractional, so round down
 							I.marquevalue += bonuses
 						if(accused)
 							I.marquevalue -= 4
@@ -446,13 +446,10 @@
 			var/specialno
 			var/stopfarming
 			var/indexed
-			var/bonuses = 0
+			var/bonuses = 2
 			var/correct
 			var/cursedblood
 			var/selfreport
-
-			if(has_signature && has_indexer)
-				bonuses = 4
 
 			if(has_indexer)
 				if(HAS_TRAIT(I.paired.subject, TRAIT_INQUISITION))
@@ -496,12 +493,10 @@
 						specialno = TRUE
 
 				if(cursedblood)
-					// Uses the slip's unwaxed value, as waxing is paid for below.
-					var/sample_payout = round(initial(I.marquevalue) * (1 + I.paired.cursedblood), 1)
-					if(has_signature)
-						sample_payout += 2
+					var/sample_payout = round(bonuses * (1 + I.paired.cursedblood)) // cursed blood strength can be fractional, so round down
 					if(I.waxed)
-						sample_payout += 4
+						sample_payout += 2
+					sample_payout = accusation_payout(sample_payout, has_signature)
 					budget2change(sample_payout, user, "MARQUE")
 					record_round_statistic(STATS_MARQUES_MADE, sample_payout)
 
@@ -524,15 +519,20 @@
 							to_chat(user, span_notice("They've already been accused."))
 					return
 
-				if(!indexed && !correct && !cursedblood) // an innocent is only worth the slip itself
-					budget2change(I.marquevalue, user, "MARQUE")
-					record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
+				if(!indexed && !correct && !cursedblood) // an innocent is only worth the base bonus
+					var/innocent_payout = bonuses
+					if(I.waxed)
+						innocent_payout += 2
+					innocent_payout = accusation_payout(innocent_payout, has_signature)
+					budget2change(innocent_payout, user, "MARQUE")
+					record_round_statistic(STATS_MARQUES_MADE, innocent_payout)
 
 				if(correct)
 					if(!indexed)
 						I.marquevalue += bonuses
-					budget2change(I.marquevalue, user, "MARQUE")
-					record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
+					var/correct_payout = accusation_payout(I.marquevalue, has_signature)
+					budget2change(correct_payout, user, "MARQUE")
+					record_round_statistic(STATS_MARQUES_MADE, correct_payout)
 
 				var/obj/item/paper/inquisition_report/R = new
 				var/id = generate_inquisition_id()
@@ -730,6 +730,12 @@
 	if(M.name in GLOB.excommunicated_players)
 		return TRUE
 	return FALSE
+
+/// An accusation backed only by an INDEXER, with no Inquisitor's blood staked on it, pays half.
+/obj/structure/roguemachine/mail/proc/accusation_payout(amount, signed)
+	if(signed)
+		return amount
+	return max(round(amount / 2), 1)
 
 /obj/structure/roguemachine/mail/proc/view_directory(mob/user)
 	var/dat

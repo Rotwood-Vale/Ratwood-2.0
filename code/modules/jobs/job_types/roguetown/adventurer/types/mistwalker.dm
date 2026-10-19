@@ -10,6 +10,7 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_NOPAINSTUN, TRAIT_BLOOD_RESISTANCE, TRAIT_JOURNEYS_END, TRAIT_OVERTHERETIC) //no armour, literally made to bleed
 	maximum_possible_slots = 2 //you probably don't want many of these
+	virtue_restrictions = list(/datum/virtue/combat/second_chance)
 
 	cmode_music = 'sound/music/combat_Kazengun_Firestorm.ogg'
 	subclass_stats = list(
