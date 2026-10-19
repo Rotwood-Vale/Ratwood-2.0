@@ -147,6 +147,9 @@
 	sound.repeat = repeating
 	if(vary)
 		sound.frequency = get_rand_frequency()
+	else if(istype(_sound, /sound))
+		var/sound/supplied_sound = _sound
+		sound.frequency = supplied_sound.frequency
 	playback_speed = abs(sound.frequency) || 1
 	if(playback_speed > 100)
 		playback_speed /= sample_rate
