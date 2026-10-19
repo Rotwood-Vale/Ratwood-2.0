@@ -1262,6 +1262,7 @@
 #include "code\game\objects\items\rogueweapons\intents\special.dm"
 #include "code\modules\spells\roguetown\oldgod.dm"
 #include "code\modules\spells\roguetown\oldgod_martial.dm" // has to be here because of some defines in knives
+#include "code\game\objects\items\rogueweapons\melee\axes.dm"
 #include "code\game\objects\items\rogueweapons\melee\alt_grip.dm"
 #include "code\game\objects\items\rogueweapons\melee\bandit.dm"
 #include "code\game\objects\items\rogueweapons\melee\blunt.dm"
