@@ -962,8 +962,13 @@
 		if(mind)
 			if(admin_revive)
 				mind.remove_antag_datum(/datum/antagonist/zombie)
-			for(var/obj/effect/proc_holder/spell/spell as anything in mind.spell_list)
-				spell.updateButtonIcon()
+			for(var/spell as anything in mind.spell_list)
+				var/obj/effect/proc_holder/spell/newspell = spell
+				var/datum/action/cooldown/spell/oldspell = spell
+				if(istype(newspell))
+					newspell.action?.build_all_button_icons()
+				else if (istype(oldspell))
+					oldspell.build_all_button_icons()
 		if(.) // A re-died corpse is a corpse again, it keeps its rot and its pending rise
 			qdel(GetComponent(/datum/component/rot))
 

@@ -120,7 +120,7 @@
 	playsound(target, 'sound/combat/hits/onstone/stonedeath.ogg', 100, TRUE, 5)
 	new /obj/effect/temp_visual/spell_impact(target, spell_color, SPELL_IMPACT_HIGH)
 	for(var/obj/structure/S in target)
-		S.take_damage(drop_damage, BRUTE, "blunt", object_damage_multiplier = 2)
+		S.take_damage(drop_damage * 2, BRUTE, "blunt")
 	for(var/mob/living/L in target)
 		strike_mob(H, L, drop_damage)
 	for(var/turf/T in range(1, target))

@@ -172,7 +172,7 @@
 
 	for(var/turf/struct_turf in get_hear(1, T))
 		for(var/obj/structure/S in struct_turf)
-			S.take_damage(erupt_direct, BRUTE, "blunt", object_damage_multiplier = 2)
+			S.take_damage(erupt_direct * 2, BRUTE, "blunt")
 
 	new /obj/effect/temp_visual/kinetic_blast(T)
 	var/obj/structure/earthen_pillar/pillar = new(T)

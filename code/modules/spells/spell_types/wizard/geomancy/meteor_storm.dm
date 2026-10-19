@@ -106,8 +106,8 @@
 	for(var/obj/structure/S in T.contents)
 		if(QDELETED(S))
 			continue
-		S.take_damage(direct_damage, BRUTE, "blunt", object_damage_multiplier = 2)
-	T.take_damage(direct_damage, BRUTE, "blunt", object_damage_multiplier = 2)
+		S.take_damage(direct_damage * 2, BRUTE, "blunt")
+	T.take_damage(direct_damage * 2, BRUTE, "blunt")
 	var/mob/living/carbon/human/caster = owner
 	var/static/list/random_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	// Direct hit on impact tile

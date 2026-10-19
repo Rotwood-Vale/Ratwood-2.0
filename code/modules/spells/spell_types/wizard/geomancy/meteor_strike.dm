@@ -72,8 +72,8 @@
 		for(var/obj/structure/S in T.contents)
 			if(QDELETED(S))
 				continue
-			S.take_damage(structural_damage, BRUTE, "blunt", object_damage_multiplier = 2)
-		T.take_damage(structural_damage, BRUTE, "blunt", object_damage_multiplier = 2)
+			S.take_damage(structural_damage * 2, BRUTE, "blunt")
+		T.take_damage(structural_damage * 2, BRUTE, "blunt")
 		for(var/mob/living/L in T.contents)
 			if(L.anti_magic_check())
 				L.visible_message(span_warning("The meteor fades away around [L]!"))
