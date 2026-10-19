@@ -171,7 +171,7 @@
 	name = "Guild Engineer"
 	tutorial = "You are an engineer, Once trained under architects and artificers you now have the experience to surpass them both. \
 	Your calling is the works of artificing and architecture, be it smithing, constructing or the arcane machinery you do it all, your experience demands respect."
-	outfit = /datum/outfit/job/roguetown/guildsman/artificer
+	outfit = /datum/outfit/job/roguetown/guildsman/engineer
 
 	category_tags = list(CTAG_GUILDSMEN)
 	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER, TRAIT_LEGENDARY_MINER)
