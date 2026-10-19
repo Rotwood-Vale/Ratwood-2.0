@@ -254,7 +254,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	..()
 	backr = /obj/item/storage/backpack/rogue/satchel
 	l_hand = /obj/item/rogueweapon/lordscepter
-	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, /obj/item/roguegem/amethyst = 1, /obj/item/spellbook_unfinished/pre_arcyne = 1)
+	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, /obj/item/roguegem/amethyst = 1, /obj/item/rogueweapon/spellbook = 1)
 
 /**
 	Inbred Lord subclass. A joke class, evolution of the Inbred Wastrel.

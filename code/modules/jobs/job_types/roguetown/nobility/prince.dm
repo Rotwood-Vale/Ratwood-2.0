@@ -142,7 +142,7 @@
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich
 	backpack_contents = list(
 		/obj/item/roguegem/amethyst = 1,
-		/obj/item/spellbook_unfinished/pre_arcyne = 1,
+		/obj/item/rogueweapon/spellbook = 1,
 		/obj/item/recipe_book/alchemy = 1,
 		/obj/item/recipe_book/magic = 1,
 		/obj/item/chalk = 1,

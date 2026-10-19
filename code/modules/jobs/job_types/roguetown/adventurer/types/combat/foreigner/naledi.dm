@@ -57,7 +57,7 @@
 			head = /obj/item/clothing/head/roguetown/roguehood/hierophant
 			cloak = /obj/item/clothing/cloak/hierophant
 			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/civilian
-			backpack_contents += list(/obj/item/book/spellbook = 1, /obj/item/chalk = 1, /obj/item/rogueweapon/huntingknife = 1)
+			backpack_contents += list(/obj/item/rogueweapon/spellbook = 1, /obj/item/chalk = 1, /obj/item/rogueweapon/huntingknife = 1)
 			H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -84,7 +84,7 @@
 			to_chat(H, span_warning("You were being being taught the ways of a Pontifex, training in body and will. The Fall of Naledi a hundred yils ago left whatever your training incomplete, whatever it's source. Shunned for your survival and left without a master, you wandered the deserts with unfinished discipline."))
 			r_hand = /obj/item/rogueweapon/katar
 			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
-			backpack_contents += list(/obj/item/book/spellbook = 1, /obj/item/rogueweapon/huntingknife = 1)
+			backpack_contents += list(/obj/item/rogueweapon/spellbook = 1, /obj/item/rogueweapon/huntingknife = 1)
 
 			H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)

@@ -163,7 +163,7 @@
 	backpack_contents = list(
 		/obj/item/recipe_book/alchemy,
 		/obj/item/roguegem/amethyst,
-		/obj/item/spellbook_unfinished/pre_arcyne,
+		/obj/item/rogueweapon/spellbook/grand,
 		/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/strongmanapot = 1,

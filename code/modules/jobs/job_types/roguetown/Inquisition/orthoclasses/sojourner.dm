@@ -71,4 +71,4 @@
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/ortho = 1,
 	/obj/item/roguegem/amethyst/naledi = 1,
-	/obj/item/spellbook_unfinished/pre_arcyne = 1)
+	/obj/item/rogueweapon/spellbook = 1)

@@ -244,10 +244,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/newtime = chargetime
 	//skill block
 	newtime = newtime - (chargetime * (user.get_skill_level(associated_skill) * CHARGE_REDUCTION_PER_SKILL))
-	//spellbook cast time reduction
-	var/obj/item/book/spellbook/sbook = user.is_holding_item_of_type(/obj/item/book/spellbook)
-	if(sbook && sbook?.open)
-		newtime = newtime - (chargetime * (sbook.get_cdr()))
 	//staff cast time reduction
 	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
 	if(staff && staff.cast_time_reduction)
@@ -293,11 +289,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		var/skill_mod = chargetime * skill_level * CHARGE_REDUCTION_PER_SKILL
 		if(skill_mod > 0)
 			breakdown += span_smallgreen("  Skill: -[DisplayTimeText(skill_mod)]")
-	var/obj/item/book/spellbook/sbook = user.is_holding_item_of_type(/obj/item/book/spellbook)
-	if(sbook && sbook?.open)
-		var/book_mod = chargetime * sbook.get_cdr()
-		if(book_mod > 0)
-			breakdown += span_smallgreen("  Spellbook: -[DisplayTimeText(book_mod)]")
 	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
 	if(staff && staff.cast_time_reduction)
 		var/staff_mod = chargetime * staff.cast_time_reduction

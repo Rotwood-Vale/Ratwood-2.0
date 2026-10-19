@@ -190,7 +190,7 @@
 		/obj/item/soap/bath = 1,
 		/obj/item/recipe_book/alchemy = 1,
 		/obj/item/roguegem/amethyst = 1, 
-		/obj/item/spellbook_unfinished/pre_arcyne = 1,
+		/obj/item/rogueweapon/spellbook = 1,
 	)
 	H.virginity = TRUE
 	H.cmode_music = 'sound/music/combat_zybantine.ogg'

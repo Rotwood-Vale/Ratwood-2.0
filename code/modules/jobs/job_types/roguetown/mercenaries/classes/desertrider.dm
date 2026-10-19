@@ -203,7 +203,7 @@
 		/obj/item/roguekey/mercenary,
 		/obj/item/rogueweapon/huntingknife/idagger/steel/kukri,
 		/obj/item/rogueweapon/scabbard/sheath,
-		/obj/item/spellbook_unfinished/pre_arcyne,
+		/obj/item/rogueweapon/spellbook,
 		/obj/item/flashlight/flare/torch,
 		/obj/item/storage/belt/rogue/pouch/coins/poor
 		)
