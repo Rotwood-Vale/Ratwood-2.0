@@ -202,21 +202,21 @@ GLOBAL_LIST_INIT(second_chance_traits, list(
 	if(QDELETED(recipient) || !recipient.mind || !length(chosen))
 		return
 	recipient.mind.second_chance_choices = chosen.Copy()
-	if(recipient.second_chance_blocked())
+	if(recipient.mind.second_chance_blocked())
 		to_chat(recipient, span_warning("My second chance lies dormant while I am what I am. Should that ever change, it will return."))
 		return
-	recipient.grant_second_chance(announce = TRUE)
+	recipient.grant_second_chance(chosen, announce = TRUE)
 
-/// Whether an antagonist this person is currently stops their Second Chance applying.
-/mob/living/carbon/human/proc/second_chance_blocked()
-	for(var/datum/antagonist/antag as anything in mind?.antag_datums)
+/// Whether an antagonist this mind currently is stops their Second Chance applying.
+/datum/mind/proc/second_chance_blocked()
+	for(var/datum/antagonist/antag as anything in antag_datums)
 		if(antag.blocks_second_chance())
 			return TRUE
 	return FALSE
 
-/// Gives this person the traits and effects of the Second Chance options stored on their mind.
-/mob/living/carbon/human/proc/grant_second_chance(announce = FALSE)
-	for(var/choice in mind?.second_chance_choices)
+/// Gives this body the traits and effects of the given Second Chance options.
+/mob/living/carbon/human/proc/grant_second_chance(list/choices, announce = FALSE)
+	for(var/choice in choices)
 		for(var/trait in GLOB.second_chance_traits[choice])
 			ADD_TRAIT(src, trait, SECOND_CHANCE_TRAIT)
 		switch(choice)
@@ -261,11 +261,11 @@ GLOBAL_LIST_INIT(second_chance_traits, list(
 	update_sight()
 	to_chat(src, span_danger("Whatever second chance I was given, it slips away from me."))
 
-/// Brings back a suspended Second Chance, once nothing blocks it any more.
-/mob/living/carbon/human/proc/restore_second_chance()
-	if(!length(mind?.second_chance_choices) || second_chance_blocked())
+/// Brings back a suspended Second Chance on this body, once nothing blocks it any more. The choices are read from source_mind, which may not be in the body right now.
+/mob/living/carbon/human/proc/restore_second_chance(datum/mind/source_mind = mind)
+	if(!length(source_mind?.second_chance_choices) || source_mind.second_chance_blocked())
 		return
-	grant_second_chance()
+	grant_second_chance(source_mind.second_chance_choices)
 	to_chat(src, span_notice("My second chance returns to me, as it always has."))
 
 /// Legacy virtue, replaced by Second Chance's Rotcured option. Kept nameless (so it never shows in the picker) only so old saves can be migrated.

@@ -1275,7 +1275,9 @@
 				if (THEY_THEM, THEY_THEM_F, IT_ITS)
 					. += span_beautiful_nb(unsettling_text)
 
-		//Blackblood Inquisition trauma. Only from a living Inquisitor they can actually recognise, so it never unmasks one.
+		//Blackblood Inquisition trauma. Only from an Inquisitor they can actually recognise, so it never unmasks one.
+		if(HAS_TRAIT(src, TRAIT_INQUISITION) && HAS_TRAIT(user, TRAIT_BLACKBLOOD) && !obscure_name && user != src)
+			. += span_red("One of the Otavan Inquisition! Stay away!")
 		if(HAS_TRAIT(src, TRAIT_INQUISITION) && stat != DEAD && !obscure_name && iscarbon(user))
 			var/mob/living/carbon/carbs = user
 			if(carbs.inquisition_trauma())

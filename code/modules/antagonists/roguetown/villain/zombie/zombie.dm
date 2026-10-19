@@ -155,6 +155,10 @@
 /datum/antagonist/zombie/blocks_second_chance()
 	return has_turned
 
+// The body we deadified, which may not be where the mind is now
+/datum/antagonist/zombie/second_chance_body()
+	return deadite_body_ref?.resolve() || owner?.current
+
 /datum/antagonist/zombie/on_removal()
 	// Restore the body we deadified, not whatever mob the mind now occupies
 	var/mob/living/carbon/human/zombie = deadite_body_ref?.resolve()

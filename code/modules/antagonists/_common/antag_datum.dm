@@ -112,9 +112,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 //		if(!silent)
 //			greet()
 		apply_innate_effects()
-		if(blocks_second_chance() && ishuman(owner.current))
-			var/mob/living/carbon/human/human_owner = owner.current
-			human_owner.suspend_second_chance()
+		if(blocks_second_chance())
+			var/mob/living/carbon/human/body = second_chance_body()
+			if(ishuman(body))
+				body.suspend_second_chance()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 		else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
@@ -143,9 +144,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
-		if(blocks_second_chance() && ishuman(owner.current))
-			var/mob/living/carbon/human/human_owner = owner.current
-			human_owner.restore_second_chance()
+		if(blocks_second_chance())
+			var/mob/living/carbon/human/body = second_chance_body()
+			if(ishuman(body))
+				body.restore_second_chance(owner)
 		if(!silent && owner.current)
 			farewell()
 	var/datum/team/team = get_team()
@@ -156,6 +158,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Whether being this antagonist currently suspends the Second Chance virtue.
 /datum/antagonist/proc/blocks_second_chance()
 	return purges_second_chance
+
+/// The body whose Second Chance this antagonist suspends and restores.
+/datum/antagonist/proc/second_chance_body()
+	return owner?.current
 
 /datum/antagonist/proc/greet()
 	return

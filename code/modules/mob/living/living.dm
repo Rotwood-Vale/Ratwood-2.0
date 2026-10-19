@@ -366,7 +366,8 @@
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/proc/lying_attack_check(mob/living/L, obj/item/I)
+/// Whether L can reach the zone they're attacking on us, given which of us is lying down. zone defaults to L's selected zone.
+/mob/living/carbon/proc/lying_attack_check(mob/living/L, obj/item/I, zone)
 	if(L == src)
 		return TRUE
 	var/CZ = FALSE
@@ -394,7 +395,7 @@
 	else
 		CZ = TRUE
 	if(CZ)
-		if( !(check_zone(L.zone_selected) in acceptable) )
+		if( !(check_zone(zone || L.zone_selected) in acceptable) )
 			to_chat(L, span_warning("I can't reach that."))
 			testing("reach2")
 			return FALSE

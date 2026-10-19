@@ -66,6 +66,7 @@
 		return FALSE
 
 	var/datum/intent/bite/bitten = new()
+	bitten.blade_class = BCLASS_BITE // just this bite's, for its accuracy roll. Bats share the intent, so its type is left alone
 	if(checkdefense(bitten, user))
 		return FALSE
 
@@ -73,38 +74,18 @@
 		if(!lying_attack_check(user))
 			return FALSE
 
-	var/def_zone
-	if(src.cmode)
-		def_zone = melee_accuracy_check(user.zone_selected, user, src, /datum/skill/combat/unarmed, bitten, null)
-	else
-		def_zone = user.zone_selected
-
-	switch(def_zone) // redirects that to where it makes sense, because I hate how soulless it is atm
-		if(BODY_ZONE_PRECISE_R_EYE)
-			def_zone = BODY_ZONE_HEAD
-
-		if(BODY_ZONE_PRECISE_L_EYE)
-			def_zone = BODY_ZONE_HEAD
-
-		if(BODY_ZONE_PRECISE_SKULL)
-			def_zone = BODY_ZONE_HEAD
-
-		if(BODY_ZONE_PRECISE_STOMACH)
-			def_zone = BODY_ZONE_CHEST
-
-	if(src.cmode) // no more hands/feet biting in combat, ser
-		switch(def_zone)
-			if(BODY_ZONE_PRECISE_R_HAND)
-				def_zone = BODY_ZONE_R_ARM
-
-			if(BODY_ZONE_PRECISE_L_HAND)
-				def_zone = BODY_ZONE_L_ARM
-
-			if(BODY_ZONE_PRECISE_R_FOOT)
-				def_zone = BODY_ZONE_R_LEG
-
-			if(BODY_ZONE_PRECISE_L_FOOT)
-				def_zone = BODY_ZONE_L_LEG
+	// Someone conscious and fighting back has to be aimed at, and they won't let you get at their hands or feet
+	var/contested = cmode && stat < UNCONSCIOUS
+	var/static/list/redirected_zones = list(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_SKULL, BODY_ZONE_PRECISE_STOMACH)
+	var/static/list/extremity_zones = list(BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT)
+	var/def_zone = user.zone_selected
+	// Spots you can't sensibly sink your teeth into go to their limb before the roll, so the roll is made for where you'll actually bite
+	if((def_zone in redirected_zones) || (contested && (def_zone in extremity_zones)))
+		def_zone = check_zone(def_zone)
+	if(contested)
+		def_zone = melee_accuracy_check(def_zone, user, src, /datum/skill/combat/unarmed, bitten, null)
+		if(user.pulling != src && !lying_attack_check(user, zone = def_zone)) // a miss can land somewhere they can't reach from the floor
+			return FALSE
 
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(!affecting)

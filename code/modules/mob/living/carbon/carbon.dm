@@ -140,7 +140,7 @@
 		return I.attack(src, user)
 	if(istype(I, /obj/item/leash))
 		return I.attack(src, user)
-	if(!user.cmode)
+	if(!user.cmode && !istype(I, /obj/item/inqarticles/indexer)) // the INDEXER is sharp, so on bare skin (always, for gnolls) it'd start surgery instead of drawing blood
 		var/try_to_fail = istype(user.rmb_intent, /datum/rmb_intent/strong)
 		var/list/possible_steps = list()
 		for(var/datum/surgery_step/surgery_step as anything in GLOB.surgery_steps)

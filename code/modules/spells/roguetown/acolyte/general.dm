@@ -215,7 +215,8 @@
 		if(length(affecting.wounds))
 			for(var/datum/wound/wound in affecting.wounds)
 				if(!isnull(wound) && wound.healable_by_miracles)
-					wound.heal_wound(wound.whp * heal_mult)
+					// Halved healing heals half the wound's starting health per cast, so most wounds still close in two
+					wound.heal_wound(heal_mult >= 1 ? wound.whp : initial(wound.whp) * heal_mult)
 					foundwound = TRUE
 					if(QDELETED(wound) || !wound.bodypart_owner)
 						user.visible_message(("<font color = '#488f33'>[capitalize(wound.name)] oozes a clear fluid and closes shut, forming into a sore bruise!</font>"))
