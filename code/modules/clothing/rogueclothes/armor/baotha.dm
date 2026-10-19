@@ -31,9 +31,8 @@
 	icon = 'icons/roguetown/clothing/special/baotha.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/baotha.dmi'
 	icon_state = "baotha_legs"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	body_parts_covered = LEGS|GROIN
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 
 /obj/item/clothing/under/roguetown/platelegs/baotha/Initialize(mapload)
 	. = ..()
@@ -61,7 +60,6 @@
 	item_state = "baothabracers"
 	sleeved = 'icons/roguetown/clothing/special/onmob/baotha.dmi'
 	alternate_worn_layer = WRISTS_LAYER
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	unequip_delay_self = 2 SECONDS
 
@@ -76,7 +74,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/baotha.dmi'
 	icon_state = "baothashirt"
 	item_state = "baothashirt"
-	armor = ARMOR_LEATHER_STUDDED
+	armor = ARMOR_LEATHER
 	sleeved = null
 	body_parts_covered =  CHEST | GROIN | VITALS | LEGS | ARMS |NECK | HANDS | FEET
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
@@ -151,7 +149,7 @@
 	color = "#9c7373"
 	item_flags = DROPDEL
 	mob_overlay_icon = null
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	equip_delay_self = 0.5 SECONDS
 	unequip_delay_self = 2.5 SECONDS
@@ -186,9 +184,8 @@
 	color = "#9c7373"
 	item_flags = DROPDEL
 // 	mob_overlay_icon = null
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
 	resistance_flags = FIRE_PROOF
 	pickup_sound = 'sound/foley/equip/equip_armor_plate.ogg'
@@ -204,7 +201,7 @@
 	desc = "Submission to darkness."
 	icon_state = "iwolfcollaralt"
 	item_flags = DROPDEL
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 
 /obj/item/clothing/neck/roguetown/gorget/boatha/Initialize(mapload)
@@ -215,7 +212,7 @@
 	name = "Perfect Agony"
 	desc = "Wicked, wicked, wicked."
 	icon_state = "baotha_whip"
-	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/dagger/sucker_punch) // sucker as a little flavor and bonus. 
+	possible_item_intents = list(/datum/intent/whip/lash/holy, /datum/intent/whip/crack, /datum/intent/whip/punish, /datum/intent/dagger/sucker_punch) // sucker as a little flavor and bonus.
 	unenchantable = TRUE
 	force = 25
 	minstr = 8
@@ -244,7 +241,7 @@
 	icon_state = "baothacoif"
 	item_state = "baothacoif"
 	item_flags = DROPDEL
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
 	body_parts_covered = NECK | HAIR | EARS | HEAD | NOSE
 	armor_class = ARMOR_CLASS_LIGHT
@@ -281,7 +278,7 @@
 	desc = "A woven garment, imbued with Baothan Magicks, yet still exposing a vital area of the body.. A welcoming of the pain and pleasure of a blade.."
 	icon_state = "baothagamb"
 	armor_class = ARMOR_CLASS_LIGHT
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	color = null
 	item_flags = DROPDEL
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
@@ -303,7 +300,7 @@
 	name = "Saccharine Cuffs"
 	desc = "Gilded bracers that protect the arms."
 	icon_state = "baothabracers"
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	resistance_flags = FIRE_PROOF
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 150
 	smeltresult = null
@@ -315,7 +312,7 @@
 /obj/item/clothing/under/roguetown/baotha/skirt
 	name = "Saccharine Fauldcoat"
 	desc = "Weaved from one's lux, combined with powerful Baothan Magicks to form a fashionable, yet protective, skirt."
-	armor = ARMOR_PADDED_GOOD
+	armor = ARMOR_PADDED
 	icon_state = "baothaskirt"
 	resistance_flags = FIRE_PROOF
 	armor_class = ARMOR_CLASS_LIGHT
