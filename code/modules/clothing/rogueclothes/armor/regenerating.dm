@@ -139,8 +139,6 @@
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
 
-#undef COMBAT_TAG_DURATION
-
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/iconoclast
 	name = "dragon's skin"
 	desc = "We passed upon the stair, we spoke of was and when.</br> \
@@ -168,3 +166,7 @@
 	max_integrity = 600
 	item_flags = DROPDEL
 	combat_taggable = TRUE
+
+#undef COMBAT_TAG_DURATION
+
+
