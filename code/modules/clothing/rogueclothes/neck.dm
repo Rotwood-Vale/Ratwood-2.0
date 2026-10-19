@@ -339,8 +339,9 @@
 	icon_state = "matthioschainmantle"
 	item_state = "matthioschainmantle"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	peel_threshold = 5
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#fff385"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/neck/roguetown/chaincoif/chainmantle/matthios/Initialize(mapload)
 	. = ..()

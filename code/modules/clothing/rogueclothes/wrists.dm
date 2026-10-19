@@ -313,8 +313,9 @@
 	icon_state = "matthiosbracers"
 	item_state = "matthiosbracers"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	peel_threshold = 5
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#fff385"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/wrists/roguetown/bracers/matthios/Initialize(mapload)
 	. = ..()

@@ -109,10 +109,11 @@
 	desc = "All that glimmers is gold; yet only shining stars shalt break the mold.."
 	icon_state = "matthioshauberk"
 	item_state = "matthioshauberk"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	armor_class = ARMOR_CLASS_MEDIUM
-	peel_threshold = 5
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
+	chunkcolor = "#fff385"
+	material_category = ARMOR_MAT_CHAINMAIL
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/matthios/Initialize(mapload)
 	. = ..()
