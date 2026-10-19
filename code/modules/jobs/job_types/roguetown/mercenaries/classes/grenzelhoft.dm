@@ -239,7 +239,7 @@
 	..()
 	to_chat(H, span_warning("You are a Gefechtsgelehrter - \"Combat Scholar\" - An experienced Zauberer hailing from the prestigious Celestial Academy, your fellow alumni may have pursued summoning, enchantments or similar academical ventures. But you? You studied siegecraft. And you got damn good at it too."))
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
-	backl = /obj/item/rogueweapon/woodstaff/gefechtsgelehrter
+	backl = /obj/item/rogueweapon/woodstaff/implement/greater/gefechtsgelehrter
 	cloak = /obj/item/clothing/cloak/stabard/grenzelmage
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/cuirass
 	//General gear regardless of class.
