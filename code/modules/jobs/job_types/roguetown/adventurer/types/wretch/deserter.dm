@@ -392,6 +392,9 @@
 
 /obj/effect/proc_holder/spell/invoked/order
 	name = ""
+	overlay_icon = 'icons/mob/actions/orders.dmi'
+	action_icon = 'icons/mob/actions/orders.dmi'
+	sound = 'sound/magic/inspire_02.ogg'
 	range = 5
 	associated_skill = /datum/skill/misc/athletics
 	devotion_cost = 0
@@ -400,15 +403,13 @@
 	releasedrain = 80
 	recharge_time = 2 MINUTES
 	miracle = FALSE
-	sound = 'sound/magic/inspire_02.ogg'
-
 
 /obj/effect/proc_holder/spell/invoked/order/retreat
 	name = "Tactical Retreat!"
 	chargedrain = 0
 	chargetime = 0
 	desc = "Gives 3 SPD for your brothers!"
-	overlay_state = "movemovemove"
+	overlay_state = "move"
 
 /obj/effect/proc_holder/spell/invoked/order/retreat/cast(list/targets, mob/living/user)
 	. = ..()
@@ -452,7 +453,7 @@
 /obj/effect/proc_holder/spell/invoked/order/bolster
 	name = "Hold the Line!"
 	desc = "Gives 2 CON and 3 WIL for your brothers!"
-	overlay_state = "takeaim"
+	overlay_state = "hold"
 	chargedrain = 0
 	chargetime = 0
 
@@ -494,7 +495,7 @@
 
 /obj/effect/proc_holder/spell/invoked/order/brotherhood
 	name = "For the Brotherhood!"
-	desc = "Your brothers won't feel any pain for a bit, also it'll help them get back on feet!"
+	desc = "Orders an underling to stand up and fight without fear or pain."
 	overlay_state = "onfeet"
 	chargedrain = 0
 	chargetime = 0

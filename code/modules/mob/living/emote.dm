@@ -280,6 +280,7 @@
 	key = "flap"
 	key_third_person = "flaps"
 	message = "flaps their wings."
+	sound = 'sound/foley/footsteps/flight_sounds/wingflap1.ogg'
 	restraint_check = TRUE
 	var/wing_time = 20
 
@@ -290,6 +291,7 @@
 	key = "aflap"
 	key_third_person = "aflaps"
 	message = "flaps their wings ANGRILY!"
+	sound = 'sound/foley/footsteps/flight_sounds/wingflap2.ogg'
 	restraint_check = TRUE
 	wing_time = 10
 
@@ -647,6 +649,10 @@
 		return FALSE
 
 	var/mob/living/carbon/human/H = user
+	if(H.getOxyLoss() > 50)
+		to_chat(H, span_notice("I don't have enough breath to hold..."))
+		return
+
 	var/is_holding = HAS_TRAIT(H, TRAIT_HOLDBREATH)
 
 	if(is_holding)
@@ -657,7 +663,7 @@
 		)
 		H.log_message("stopped holding their breath.", LOG_ATTACK)
 	else
-		var/confirm = alert(H, "Are you sure you want to hold your breath? This will kill you if held long enough. You can undo it by pressing the emote again.", "Hold Breath", "Yes", "No")
+		var/confirm = alert(H, "Are you sure you want to hold your breath? This will make you pass out if held long enough. You can undo it by pressing the emote again.", "Hold Breath", "Yes", "No")
 		if(confirm != "Yes")
 			return FALSE
 		ADD_TRAIT(H, TRAIT_HOLDBREATH, "[type]")
@@ -1567,6 +1573,7 @@
 		/mob/living/carbon/human/verb/emote_growl,
 		/mob/living/carbon/human/verb/emote_bleat,
 		/mob/living/carbon/human/verb/emote_chitter,
+		/mob/living/carbon/human/verb/emote_msqueak,
 		/mob/living/carbon/human/verb/emote_arf,
 		/mob/living/carbon/human/verb/emote_awuff,
 		/mob/living/carbon/human/verb/emote_dcomplain,
@@ -1632,6 +1639,7 @@
 	)
 	var/static/list/moth_tongue_noise_verbs = list(
 		/mob/living/carbon/human/verb/emote_chitter,
+		/mob/living/carbon/human/verb/emote_msqueak,
 	)
 	var/static/list/moth_wing_noise_verbs = list(
 		/mob/living/carbon/human/verb/emote_flutter,
@@ -2164,6 +2172,25 @@
 		set name = "Chitter"
 		set category = "Noises"
 		emote("chitter", intentional = TRUE, animal = TRUE)
+	else
+		show_tongue_noise_warning()
+		return
+
+/datum/emote/living/msqueak
+	key = "msqueak"
+	key_third_person = "squeaks!"
+	message = "squeaks!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	message_muffled = "makes a muffled squeak!"
+	vary = TRUE
+	show_runechat = FALSE
+	is_animal = TRUE
+
+/mob/living/carbon/human/verb/emote_msqueak()
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/moth))
+		set name = "Moth Squeak"
+		set category = "Noises"
+		emote("msqueak", intentional = TRUE, animal = TRUE)
 	else
 		show_tongue_noise_warning()
 		return
@@ -2875,6 +2902,25 @@
 		set name = "Neigh"
 		set category = "Noises"
 		emote("neigh", intentional = TRUE, animal = TRUE)
+	else
+		show_tongue_noise_warning()
+		return
+
+/datum/emote/living/ycackle
+	key = "ycackle"
+	key_third_person = "cackles!"
+	message = "cackles!"
+	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
+	message_muffled = "makes a muffled cackle!"
+	vary = TRUE
+	show_runechat = FALSE
+	is_animal = TRUE
+
+/mob/living/carbon/human/verb/emote_ycackle()
+	if(istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/wild_tongue) || istype(usr.getorganslot(ORGAN_SLOT_TONGUE), /obj/item/organ/tongue/harpy))
+		set name = "Yeen Cackle"
+		set category = "Noises"
+		emote("ycackle", intentional = TRUE, animal = TRUE)
 	else
 		show_tongue_noise_warning()
 		return
