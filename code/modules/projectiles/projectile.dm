@@ -86,7 +86,7 @@
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
 	var/flag = "piercing" //Defines what armor to use when it hits things. Setting this to "blunt" might result in unexpected behavior (i.e. knockout on hit, figure out the root causes and excise it)
 	///How much armor this projectile pierces.
-	var/armor_penetration = 0
+	var/armor_penetration = PEN_NONE
 	var/projectile_type = /obj/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
 	var/decayedRange			//stores original range

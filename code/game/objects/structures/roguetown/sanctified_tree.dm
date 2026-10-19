@@ -35,8 +35,7 @@
 /obj/item/clothing/suit/roguetown/armor/leather/druid/blessed
 	name = "blessed druid armor"
 	desc = "Druid armor hallowed by the Treefather's rite. The bark pulses with faint living light; it feels as though the forest itself watches over whoever wears it."
-	armor = list("blunt" = 90, "slash" = 70, "stab" = 130, "piercing" = 40, "fire" = 0, "acid" = 0)
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP)
+	armor = ARMOR_BLACKOAK
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	color = "#73c47a"
