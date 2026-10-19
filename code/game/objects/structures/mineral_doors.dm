@@ -62,8 +62,14 @@
 	var/resident_role
 	/// The requied advclass of the resident
 	var/list/resident_advclass
-	//a door name a skilled artisan can make 
+	//a door name a skilled artisan can make
 	var/doorname = null
+
+/obj/structure/mineral_door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
+	var/was_broken = obj_broken
+	. = ..()
+	if(obj_broken && !was_broken)
+		log_breakin(null, "was broken open")
 
 /obj/structure/mineral_door/onkick(mob/user)
 	if(isSwitchingStates)
@@ -92,9 +98,11 @@
 						user.visible_message(span_warning("[user] kicks open [src]!"), \
 							span_notice("I kick open [src]!"))
 					locked = 0
+					log_breakin(user, "kicked open a locked door")
 					force_open()
 				else
 					playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
+					log_breakin(user, "kicked a locked door")
 					if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
 						user.visible_message(span_warning("[user] tailslams [src]!"), \
 							span_notice("I slam [src] with my tail!"))
@@ -174,7 +182,7 @@
 		return FALSE
 	if(resident_role)
 		var/datum/job/job = SSjob.name_occupations[human.job]
-		if(job.type != resident_role)
+		if(job?.type != resident_role)
 			if(!HAS_TRAIT(human, TRAIT_RESIDENT))
 				return FALSE
 	if(resident_advclass)
@@ -216,7 +224,7 @@
 	if(human.mind && human.mind.cosmetic_class_title)
 		owner_title = human.mind.cosmetic_class_title
 	else if(human.advjob)
-		owner_title = human.advjob		
+		owner_title = human.advjob
 	name = "[user.real_name][owner_title ? " the [owner_title]" : ""]'s house"
 	return TRUE
 
@@ -239,6 +247,7 @@
 			user.break_invisibility()
 			if(locked)
 				user.visible_message(span_warning("[user] bashes into [src]!"))
+				log_breakin(user, "bashed into a locked door")
 				take_damage(200, "brute", "blunt", 1)
 			else
 				playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
@@ -294,7 +303,7 @@
 		return TRUE
 	if(!anchored)
 		return FALSE
-	if(HAS_TRAIT(caller, TRAIT_BASHDOORS))
+	if(caller && HAS_TRAIT(caller, TRAIT_BASHDOORS))
 		return TRUE // bash into it!
 	// it's openable
 	return ishuman(caller) && !locked // only humantype mobs can open doors, as funny as it'd be for a volf to walk in on you ERPing
@@ -435,10 +444,12 @@
 		else
 			return ..()
 
-/obj/structure/mineral_door/attacked_by(obj/item/I, mob/living/user)
-	..()
+/obj/structure/mineral_door/attacked_by(obj/item/item, mob/living/user)
+	var/turf/hit_turf = get_turf(src)
+	if(..())
+		log_breakin(user, "struck the door with \a [item.name]")
 	if(obj_broken || obj_destroyed)
-		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
+		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, hit_turf)
 		new_track.handle_creation(user)
 
 /obj/structure/mineral_door/proc/repairdoor(obj/item/I, mob/user)
@@ -670,7 +681,7 @@
 		pickchance += perbonus
 		pickchance *= P.picklvl
 		pickchance = clamp(pickchance, 1, 95)
-		
+
 		if (lockdifficulty > 1) //each time the difficulty goes up, the harder the lock
 			picktime = picktime+(10*lockdifficulty)//add a flat 10 per level
 			pickchance = pickchance/(lockdifficulty*0.75)//reduce the chance by .75 per level
@@ -684,6 +695,7 @@
 
 		var/picked = FALSE
 		user.log_message("attempting to lockpick door \"[src.name]\" (currently [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
+		log_breakin(user, "started picking the lock with \a [I.name]")
 
 		while(!QDELETED(I) &&(lockprogress < locktreshold))
 			if(!do_after(user, picktime, target = src))
@@ -697,6 +709,7 @@
 				if(lockprogress >= locktreshold)
 					picked = TRUE
 					to_chat(user, "<span class='deadsay'>The locking mechanism gives.</span>")
+					log_breakin(user, "picked the lock and [locked ? "unlocked" : "locked"] the door")
 					if(ishuman(user))
 						var/mob/living/carbon/human/H = user
 						message_admins("[H.real_name]([key_name(user)]) successfully lockpicked [src.name] & [locked ? "unlocked" : "locked"] it. [ADMIN_JMP(src)]")
@@ -717,6 +730,7 @@
 				continue
 		if(!picked)
 			user.log_message("stopped/failed lockpicking door \"[src.name]\" (remains [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
+			log_breakin(user, "gave up picking the lock (still [locked ? "locked" : "unlocked"])")
 		return
 
 /obj/structure/mineral_door/proc/tryskeletonlock(mob/user)
@@ -727,6 +741,7 @@
 	if(lockbroken)
 		to_chat(user, span_warning("The lock to this door is broken."))
 		return
+	log_breakin(user, "used a skeleton key and [locked ? "unlocked" : "locked"] the door")
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		message_admins("[H.real_name]([key_name(user)]) successfully skeletonkey'd [src.name] & [locked ? "unlocked" : "locked"] it. [ADMIN_JMP(src)]")

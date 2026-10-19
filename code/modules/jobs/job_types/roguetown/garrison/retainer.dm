@@ -16,7 +16,7 @@
 	outfit = /datum/outfit/job/roguetown/baron_retainer
 	advclass_cat_rolls = list(CTAG_RETAINER = 20)
 	give_bank_account = 30
-	min_pq = 15
+	min_pq = 5
 	max_pq = null
 	round_contrib_points = 3
 	cmode_music = 'sound/music/combat_ManAtArms.ogg'
@@ -229,7 +229,7 @@
 		switch(weapon_choice)
 			if("Crossbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltr = /obj/item/quiver/poisonarrows
+				beltr = /obj/item/quiver/bolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 			if("Blackhorn Longbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden

@@ -1,10 +1,27 @@
 //intent datums ฅ^•ﻌ•^ฅ
 
+/datum/intent/priest_smite
+	name = "electrocute"
+	blade_class = null
+	desc = "Shock a target. Only works inside the Church."
+	icon_state = "inuse"
+	tranged = TRUE
+	noaa = TRUE
+
+/datum/intent/priest_silence
+	name = "silence"
+	desc = "Sometimes desperate measures are required for intelligent conversation."
+	blade_class = null
+	icon_state = "inuse"
+	tranged = TRUE
+	noaa = TRUE
+
 /datum/intent/spear/thrust
 	name = "thrust"
 	blade_class = BCLASS_STAB
 	attack_verb = list("thrusts")
 	animname = "stab"
+	desc = "Stab someone. Must be at a range of two tiles to penetrate properly."
 	icon_state = "instab"
 	reach = 2
 	clickcd = CLICK_CD_CHARGED
@@ -20,6 +37,7 @@
 	reach = 1
 	swingdelay = 4
 	penfactor = 45
+	desc = "Stab a target. With only one hand, you aren't using the spear to its full power."
 	clickcd = CLICK_CD_RESIST
 	effective_range = null
 	effective_range_type = EFF_RANGE_NONE
@@ -66,8 +84,9 @@
 
 // Eaglebeak has a decent bash with range
 /datum/intent/spear/bash/eaglebeak
-	name = "eagle's beak bash"
+	name = "lucerne bash"
 	damfactor = 1
+	desc = "Smash someone over the head. Effective at two tiles."
 	reach = 2
 	blunt_chipping = TRUE
 	blunt_chip_strength = BLUNT_CHIP_STRONG
@@ -81,6 +100,7 @@
 	attack_verb = list("cuts", "slashes")
 	icon_state = "incut"
 	damfactor = 0.8
+	desc = "Poorly hack at someone with your speartip. Works at two-tile range without penalty."
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	reach = 2
 	item_d_type = "slash"
@@ -92,10 +112,12 @@
 	sharpness_penalty = 2
 
 /datum/intent/spear/cut/halberd
+	desc = "Use the awe-inspiring power of a combined sharp thing and pointy thing to cut someone. Two tile range. Hurts more than a normal cut."
 	damfactor = 1.2
 
 /datum/intent/spear/cut/scythe
 	reach = 3
+	desc = "Reap. Effective at two tiles or above."
 	damfactor = 1
 	effective_range = 2
 	effective_range_type = EFF_RANGE_ABOVE
@@ -114,6 +136,7 @@
 	blade_class = BCLASS_CHOP
 	attack_verb = list("chops", "hacks")
 	animname = "chop"
+	desc = "A cleave that cuts through a second target behind the first. Weakly penetrative."
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
 	penfactor = 35
 	item_d_type = "slash"
@@ -155,21 +178,27 @@
 	desc = "A sweep that cuts through targets to the front."
 
 /datum/intent/sword/cut/zwei
+	desc = "It's like cutting, but your sword is huge."
 	reach = 2
 
 /datum/intent/sword/thrust/zwei
+	desc = "Stab, but with range."
 	reach = 2
 
 /datum/intent/sword/cut/zwei/cleave
-	name = "cleaving cut"
+	name = "rending cleave"
 	icon_state = "incleave"
-	desc = "A cleave that cuts through a second target behind the first."
+	desc = "A vicious cut that rends through a second target behind the first. Does enormous damage, but nothing to armor."
 	attack_verb = list("cleaves", "carves through")
 	clickcd = CLICK_CD_HEAVY
-	damfactor = 1.0
+	penfactor = BLUNT_DEFAULT_PENFACTOR
+	damfactor = 2.5
 	reach = 1 // No!!
 	cleave = /datum/cleave_pattern/forward_cleave
-
+	misscost = 10
+	intent_intdamage_factor = 0.25
+	sharpness_penalty = 2
+	accuracy_modifier = -15
 /datum/intent/sword/cut/zwei/sweep
 	name = "sweeping cut"
 	icon_state = "insweep"
@@ -181,6 +210,7 @@
 
 /datum/intent/sword/thrust/estoc
 	name = "thrust"
+	desc = "Stab precisely. You'll penetrate anything that isn't made of blacksteel like this."
 	penfactor = 57	//At 57 pen + 25 base (82 total), you will always pen 80 stab armor, but you can't do it at range unlike a spear.
 	clickcd = CLICK_CD_CHARGED
 
@@ -190,6 +220,7 @@
 	attack_verb = list("lunges")
 	animname = "stab"
 	blade_class = BCLASS_STAB
+	desc = "A two-tile stab. You won't penetrate armor well."
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	reach = 2
 	damfactor = 1.3	//Zwei will still deal ~7-10 more damage at the same range, depending on user's STR.
@@ -199,6 +230,7 @@
 
 /datum/intent/sword/lunge/estoc
 	damfactor = 1.2
+	desc = "Stab at range. You'll rip through leather, but not metal."
 	penfactor = 37//25 base, +5, at 67. More for applying bleed through armour, since it's a needle.
 	swingdelay = 0
 	clickcd = CLICK_CD_CHARGED
@@ -206,6 +238,7 @@
 /datum/intent/sword/bash
 	name = "crossguard bash"
 	blade_class = BCLASS_BLUNT
+	desc = "Smash someone with the crossguard of your sword."
 	icon_state = "inbash"
 	attack_verb = list("bashes", "strikes")
 	penfactor = BLUNT_DEFAULT_PENFACTOR
@@ -224,6 +257,7 @@
 	animname = "cut"
 	blade_class = BCLASS_CHOP
 	reach = 1
+	desc = "Devastate exposed flesh. Barely damages armor, and ruins your weapon's sharpness."
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	damfactor = 2.5
 	clickcd = CLICK_CD_CHARGED
@@ -238,6 +272,7 @@
 	name = "long rend"
 	penfactor = BLUNT_DEFAULT_PENFACTOR
 	misscost = 5
+	desc = "Rip apart exposed flesh at range. Only effective at exactly two tiles."
 	clickcd = CLICK_CD_HEAVY
 	damfactor = 2
 	reach = 2
@@ -248,6 +283,7 @@
 	name = "rending thrust"
 	attack_verb = list("skewers")
 	blade_class = BCLASS_STAB
+	desc = "Impale exposed flesh. Useless against armor."
 	damfactor = 1.8//It's a heavy stab. Not a chop.
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	item_d_type = "stab"
@@ -296,6 +332,7 @@
 /datum/intent/lance
 	name = "lance"
 	icon_state = "inlance"
+	desc = "For making rotisserie out of people. Useless against armor."
 	attack_verb = list("lances", "runs through", "skewers")
 	animname = "stab"
 	item_d_type = "stab"
@@ -370,18 +407,71 @@
 
 /obj/item/rogueweapon/woodstaff/aries
 	name = "staff of the shepherd"
-	desc = "This staff makes you look important to any peasant."
+	desc = "The flock is best led by firm hand. Firm, electricity-shooting hand. Works only inside the Church."
 	force = 25
 	force_wielded = 28
 	icon_state = "aries"
 	icon = 'icons/roguetown/weapons/misc32.dmi'
 	pixel_y = 0
 	pixel_x = 0
+	possible_item_intents = list(SPEAR_BASH, /datum/intent/priest_smite, /datum/intent/priest_silence)
+	gripped_intents = list(SPEAR_BASH, /datum/intent/mace/smash/wood, /datum/intent/priest_smite, /datum/intent/priest_silence)
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	bigboy = FALSE
 	gripsprite = FALSE
 	gripped_intents = null
+	COOLDOWN_DECLARE(scepter)
+
+/obj/item/rogueweapon/woodstaff/aries/afterattack(atom/target, mob/user, flag)
+	. = ..()
+	if(get_dist(user, target) > 7)
+		return
+
+	user.changeNext_move(CLICK_CD_MELEE)
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/HU = user
+
+		if(HU.job != "Bishop")
+			to_chat(user, "<font color='yellow'>THIS IS NOT YOURS.</font>")
+			return
+
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			var/area/rogue/target_area = get_area(H)
+
+			if(!target_area.holy_area)
+				to_chat(user, span_danger("The staff cannot be used on targets outside of the church!"))
+				return
+
+			if(H == HU)
+				return
+
+			if(!COOLDOWN_FINISHED(src, scepter))
+				to_chat(user, span_danger("The [src] is not ready yet! [round(COOLDOWN_TIMELEFT(src, scepter) / 10, 1)] seconds left!"))
+				return
+
+			if(!(H in SStreasury.bank_accounts))
+				to_chat(user, span_danger("The target must have a Nervelock account!")) //no stunlocking antags sorry buddy
+				return
+
+			if(istype(user.used_intent, /datum/intent/priest_smite))
+				HU.visible_message(span_warning("[HU] smites [H] with the [src]!"))
+				user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
+				H.electrocute_act(5, src)
+				COOLDOWN_START(src, scepter, 10 SECONDS)
+				H.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+				H.ignite_mob()
+				to_chat(H, span_danger("I'm smote by divine power!"))
+				return
+
+			if(istype(user.used_intent, /datum/intent/priest_silence))
+				HU.visible_message("<span class='warning'>[HU] silences [H] with \the [src].</span>")
+				H.set_silence(20 SECONDS)
+				COOLDOWN_START(src, scepter, 5 SECONDS)
+				to_chat(H, "<span class='danger'>I'm silenced by divine power!</span>")
+				return
 
 /obj/item/rogueweapon/woodstaff/aries/getonmobprop(tag)
 	. = ..()
@@ -1092,9 +1182,9 @@
 	force = 15
 	force_wielded = 30
 	possible_item_intents = list(/datum/intent/spear/thrust/eaglebeak/oneh)
-	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/eaglebeak)
-	name = "eagle's beak"
-	desc = "A reinforced pole affixed with an ornate steel eagle's head, of which its beak is intended to pierce with great harm."
+	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/eaglebeak, /datum/intent/mace/warhammer/pick/ranged)
+	name = "steel lucerne"
+	desc = "A lucerne of sturdy steel. A hefty hammerhead to crack the skull, a spike to punch through helms, and a spear to thrust like any other polearm, all mounted atop a reinforced shaft. Fracture bone and dissent with righteous force. An instrument to soothe the ears of any noble with the sound of a rebel's skull shattering."
 	icon_state = "eaglebeak"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	pixel_y = -16
@@ -1126,11 +1216,11 @@
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/rogueweapon/eaglebeak/blacksteel
-	name = "blacksteel polehammer"
-	desc = "A magnificent polehammer of blacksteel. Purpose-made for killing plate-armored opponents, it features a maillebreaker's point and a \
+	name = "blacksteel lucerne"
+	desc = "A magnificent lucerne of blacksteel. Purpose-made for killing plate-armored opponents, it features a maillebreaker's point and a \
 	flared macehead; excellent for piercing and shattering alloys, respectively. Wrap a length of cloth around the shaft to bear your heraldry."
 	possible_item_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust/eaglebeak/oneh)
-	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust)
+	gripped_intents = list(/datum/intent/spear/bash/eaglebeak, /datum/intent/mace/smash/eaglebeak, /datum/intent/spear/thrust, /datum/intent/mace/warhammer/pick/ranged)
 	icon_state = "bs_eaglebeak"
 	icon = 'icons/roguetown/weapons/polearms64.dmi'
 	smeltresult = /obj/item/ingot/blacksteel
@@ -1192,7 +1282,7 @@
 
 /obj/item/rogueweapon/eaglebeak/lucerne
 	name = "lucerne"
-	desc = "A polehammer of simple iron. Fracture bone and dissent with simple brute force. The studding along its shaft makes for a slightly more reinforced weapon."
+	desc = "A lucerne of simple iron. A hammerhead, spike, and spear, all in one. Fracture bone and dissent with simple brute force. The studding along its shaft makes for a slightly more reinforced weapon."
 	force = 12
 	force_wielded = 25
 	icon_state = "polehammer"
@@ -1697,7 +1787,7 @@
 
 /obj/item/rogueweapon/woodstaff/quarterstaff/steel
 	name = "steel quarterstaff"
-	desc = "A quarterstaff reinforced with steel tips and steel rings, blurring the line between a light polehammer and a reinforced quarterstaff. Extremely durable, and more than capable of bludgeoning brigands to death. Durable enough to break your opponents weapons."
+	desc = "A quarterstaff reinforced with steel tips and steel rings, blurring the line between a light lucerne and a reinforced quarterstaff. Extremely durable, and more than capable of bludgeoning brigands to death. Durable enough to break your opponents weapons."
 	force = 18
 	force_wielded = 25
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)

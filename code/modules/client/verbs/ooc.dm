@@ -580,7 +580,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 /client/proc/start_combat_music_preview(track_key)
 	var/datum/combat_music/track = GLOB.cmode_tracks_by_name[track_key]
-	if(!track?.musicpath)
+	if(!length(track?.musicpath))
 		return FALSE
 
 	if(combat_music_preview_active)

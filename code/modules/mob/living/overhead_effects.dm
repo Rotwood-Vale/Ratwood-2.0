@@ -127,7 +127,6 @@
 /mob/living/proc/clear_overhead_indicator(appearance, layer = OBJ_LAYER)
 	remove_overlay(layer)
 	cut_overlay(appearance, TRUE)
-	qdel(appearance)
 	update_icon()
 	update_overlays()
 	return
