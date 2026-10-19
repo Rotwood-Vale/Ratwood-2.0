@@ -6,7 +6,6 @@
 	icon_state = "welfhand"
 	item_state = "welfhand"
 	armor = ARMOR_BLACKOAK //Resistant to blunt and stab, super weak to slash.
-	prevent_crits = list(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_IRON
@@ -47,7 +46,6 @@
 	icon_state = "clothwraps"
 	item_state = "clothwraps"
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
 	max_integrity = 50
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT

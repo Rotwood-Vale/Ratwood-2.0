@@ -17,9 +17,10 @@
 
 	skin_tone_wording = "Progenitor"
 
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY)
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY,MUTCOLORS_PARTSONLY)
 	default_features = MANDATORY_FEATURE_LIST
 	use_skintones = 1
+	mutant_skin_option = TRUE
 	disliked_food = NONE
 	liked_food = NONE
 	possible_ages = ALL_AGES_LIST

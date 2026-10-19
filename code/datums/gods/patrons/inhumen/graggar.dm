@@ -11,7 +11,7 @@
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/call_to_slaughter 				= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/blood_net 			= CLERIC_T2,
+					/obj/effect/proc_holder/spell/self/blood_net 						= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/revel_in_slaughter 			= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/graggar				= CLERIC_T4,
 	)

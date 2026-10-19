@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import {
   Button,
   Collapsible,
+  Icon,
   Input,
   LabeledList,
   Stack,
@@ -128,8 +129,17 @@ export const MiaCraft = (props, context) => {
       <Stack vertical>
           <Stack.Item style={{ 'position': 'sticky' }}>
               <Stack>
-                <Stack.Item>
-                  <Input placeholder="Search..." autoFocus value={searchText} onInput={(e) => SearchTextModify(e.target.value.toLowerCase())} />
+                <Stack.Item grow>
+                  <div style={{ position: 'relative' }}>
+                    <Input placeholder="Search..." autoFocus fluid style={{ paddingRight: '18px' }} value={searchText} onInput={(e) => SearchTextModify(e.target.value.toLowerCase())} />
+                    {!!searchText && (
+                      <Icon
+                        name="times"
+                        onClick={() => SearchTextModify("")}
+                        style={{ position: 'absolute', top: '50%', right: '6px', transform: 'translateY(-50%)', cursor: 'pointer', opacity: 0.6 }}
+                      />
+                    )}
+                  </div>
                 </Stack.Item>
                 <Stack.Item>
                   <label>Show only craftables</label>

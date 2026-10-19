@@ -1353,6 +1353,7 @@
 	else
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
 	addtimer(CALLBACK(src, PROC_REF(zizoarmaments_stage2), target), 20)
+
 /datum/outfit/job/roguetown/darksteelrite/pre_equip(mob/living/carbon/human/H)
 	..()
 	var/list/items = list()
@@ -1398,7 +1399,7 @@
 	var/weapons_choice = input(H, "Choose your ARMS.", "ARMS FROM THE LADY") as anything in weapons
 	switch(weapons_choice)
 		if("Absolutio - (greatsword)")
-			r_hand = /obj/item/rogueweapon/greatsword/zizo
+			r_hand = /obj/item/rogueweapon/greatsword/avantyne
 			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
 		if("Vindicatio - (longsword)")
 			r_hand = /obj/item/rogueweapon/sword/long/zizo
@@ -1417,6 +1418,7 @@
 		if("Devotio - (arming sword)")
 			r_hand = /obj/item/rogueweapon/sword/arming/zizo
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo	
+			
 /obj/structure/ritualcircle/zizo/proc/zizoconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Zizo's blessing.")
@@ -1930,11 +1932,30 @@
 			for(var/mob/living/carbon/human/persononrune in onrune)
 				if(HAS_TRAIT(persononrune, TRAIT_DEPRAVED))
 					folksonrune += persononrune
-			var/target = input(user, "Choose a host") as null|anything in folksonrune
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in folksonrune
 			if(!target)
+				return
+			if(HAS_TRAIT(target, TRAIT_NUDIST))
+				to_chat(user, "The target is a nudist and cannot wear armor!")
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
+			var/list/armor_options = list(
+				"Baothan Cuirass" = image(icon = 'icons/roguetown/clothing/special/baotha.dmi', icon_state = "baothachest"),
+				"Saccharine Plate Armor" = image(icon = 'icons/roguetown/clothing/armor.dmi', icon_state = "baothaplate"),
+			)
+			var/armor_choice = show_radial_menu(user, src, armor_options, require_near = TRUE, tooltips = TRUE)
+			if(!armor_choice)
+				return
+
+			var/list/weapon_options = list(
+				"Perfect Agony" = image(icon = 'icons/roguetown/weapons/whips32.dmi', icon_state = "baotha_whip"),
+				"Saccharine Swordspear" = image(icon = 'icons/roguetown/weapons/polearms64.dmi', icon_state = "swordstaff"),
+			)
+			var/weapon_choice = show_radial_menu(user, src, weapon_options, require_near = TRUE, tooltips = TRUE)
+			if(!weapon_choice)
+				weapon_choice = "Perfect Agony"
+
 			user.say("Lady, my Lady...")
 			if(!do_after(user, 5 SECONDS))
 				return
@@ -1944,10 +1965,10 @@
 			user.say("Let all those who look upon me see thy beauty and despair!!")
 			if(!do_after(user, 5 SECONDS))
 				return
-			icon_state = "baotha_active"
+			icon_state = "baotha_chalky"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-			baothaarmor(target)
-			addtimer(VARSET_CALLBACK(src, icon_state, "baotha_active"), 120)
+			baothaarmor(target, armor_choice, weapon_choice)
+			addtimer(VARSET_CALLBACK(src, icon_state, "pestra_chalky"), 120)
 
 /obj/structure/ritualcircle/baotha/proc/baothaconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -2002,10 +2023,30 @@
 		target.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
 		loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as they dare to defy Baotha."))
 
-/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target)
+/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target, armor_choice, weapon_choice)
 	if(!HAS_TRAIT(target, TRAIT_DEPRAVED))
 		loc.visible_message(span_cult("THE RITE REJECTS ONE NOT OF HER LOVE"))
 		return
+	if(!armor_choice)
+		armor_choice = "Baothan Cuirass"
+	switch(armor_choice)
+		if("Baothan Cuirass")
+			target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)	
+		if("Saccharine Plate Armor")
+			target.equipOutfit(/datum/outfit/job/roguetown/baothalightarmor)
+	if(!weapon_choice)
+		weapon_choice = "Perfect Agony"
+	switch(weapon_choice)
+		if("Perfect Agony")
+			target.put_in_hands(new /obj/item/rogueweapon/whip/baotha(target), TRUE)
+			if(HAS_TRAIT(target, TRAIT_RITUALIST))
+				target.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT)
+				target.adjust_skillrank_down_to(/datum/skill/combat/polearms, SKILL_LEVEL_APPRENTICE)
+		if("Saccharine Swordspear")
+			target.put_in_hands(new /obj/item/rogueweapon/spear/partizan/baotha(target), TRUE)
+			if(HAS_TRAIT(target, TRAIT_RITUALIST))
+				target.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT)
+				target.adjust_skillrank_down_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_APPRENTICE)
 	target.Stun(60)
 	target.Knockdown(60)
 	to_chat(target, span_userdanger("DELECTABLE PAIN!"))
@@ -2016,7 +2057,14 @@
 		target.Paralyze(120)
 	else
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
-	addtimer(CALLBACK(src, PROC_REF(baothaarmor_stage2), target), 20)
+	spawn(20)
+		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+		spawn(40)
+			to_chat(target, span_purple("All will love you and despair."))
+
 //TIME FOR THE ONE. Exclusive to ABSOLVERS. Allowing conversion, deconversion and removal of rite armour.
 //'Lesser' expenditure allows us to have a stopgap to this, while not entirely making poultice farming useless.
 
@@ -2034,17 +2082,13 @@
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
 		to_chat(user,span_smallred("I don't know the proper rites for this..."))
 		return
-	if(!HAS_TRAIT(user, TRAIT_INQUISITION))//Just in case someone OUTSIDE of the Inquisition has this combination. A converted ritualist, for example.
-		to_chat(user,span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
-		return
-	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended_lesser))//We only use lesser cooldown for this, given it's just the Absolver.
+	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended_lesser))
 		to_chat(user,span_smallred("I have done enough for the moment. I should take a brief rest."))
 		return
 	var/riteselection = input(user, "Rites of the Lost", src) as null|anything in psydonrites
 	switch(riteselection)
 		if("Conversion")//Convert non-Psydonites to Psydon.
 			if(!Adjacent(user))
-				to_chat(user, "You must stand close to the rune to understand the One's will.")
 				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
@@ -2064,10 +2108,18 @@
 					if(do_after(user, 5 SECONDS))
 						user.say("I beg of you, accept this wayward soul.")//WEEP FOR THEM, LASZLO.
 						user.emote("cry")
-						loc.visible_message(span_cult("[user] weeps."))
+						var/luxshield = FALSE
+						if(HAS_TRAIT(user, TRAIT_LUX_FREAK))
+							loc.visible_message(span_cult("[user] weeps silver tears."))
+							luxshield = TRUE
+						else
+							loc.visible_message(span_cult("[user] weeps."))
 						if(do_after(user, 5 SECONDS))
-							psydonconversion(target)
+							psydonconversion(target, luxshield)
 		if("Admonishment")//Deconvert WWs/Vampires.
+			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
+				to_chat(user, span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
+				return
 			if(!Adjacent(user))
 				return
 			var/list/valids_on_rune = list()
@@ -2088,17 +2140,18 @@
 					if(do_after(user, 5 SECONDS))
 						to_chat(user, span_warning("A blind leap, as you call upon the One to rebuke the Inhumen..."))
 						user.emote("cry")
-						loc.visible_message(span_cult("[user] weeps."))
+						loc.visible_message(span_cult("[user] weeps silver tears."))
 						if(do_after(user, 5 SECONDS))
 							psydonadmonishment(target)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
 		if("Freedom")//Strip folks in rite armour.
+			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
+				to_chat(user, span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
+				return
 			if(!Adjacent(user))
 				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
-				if(!HAS_TRAIT(peep, TRAIT_OVERTHERETIC))
-					continue
 				valids_on_rune += peep
 			if(!valids_on_rune.len)
 				to_chat(user, "No valid targets on the rune!")
@@ -2113,12 +2166,12 @@
 					if(do_after(user, 5 SECONDS))
 						to_chat(user, span_warning("A measured strike, as you attempt to sever the cords..."))
 						user.emote("cry")
-						loc.visible_message(span_cult("[user] weeps."))
+						loc.visible_message(span_cult("[user] weeps silver tears."))
 						if(do_after(user, 5 SECONDS))
 							psydonstrip(target)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
 
-/obj/structure/ritualcircle/psydon/proc/psydonconversion(mob/living/carbon/human/target)
+/obj/structure/ritualcircle/psydon/proc/psydonconversion(mob/living/carbon/human/target, luxshield = FALSE)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive the One's will.")
 		return
@@ -2131,6 +2184,16 @@
 		target.emote("cry")
 		loc.visible_message(span_cult("[target] weeps."))
 		target.Stun(80)//Keep them in place, for a bit. Until we're done.
+		if(luxshield)
+			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but something stops their wrath from hurting me.")) // absolver doing the legwork
+			loc.visible_message(span_cult("The silver tears boil and evaporate but [target] stays safe in their new conviction."))
+		else
+			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but I shall ENDURE their wrath.")) // no unnatural lux abomination to save you here!
+			target.Knockdown(60)
+			to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
+			target.emote("Agony")
+			target.apply_damage(100, BURN, BODY_ZONE_HEAD)
+			loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as their former patron punishes their defiance."))
 		addtimer(CALLBACK(src, PROC_REF(psydonconversion_stage2), target), 20)
 	if(prompt == "NAE")
 		to_chat(target, span_warning("You brace. Why do you brace? Nothing comes."))
@@ -2218,9 +2281,6 @@
 
 
 /obj/structure/ritualcircle/psydon/proc/psydonstrip(mob/living/carbon/human/target)
-	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))//A fallback. You should never see this.
-		loc.visible_message(span_cult("This one is not bound by chains upon their lux. I can do nothing more with this rite."))
-		return
 	target.Stun(20)
 	target.Knockdown(20)
 	to_chat(target, span_userdanger("IT'S INSIDE MY HEAD!"))
@@ -2228,6 +2288,7 @@
 	playsound(loc, 'sound/misc/pressurepad_up.ogg', 50)
 	loc.visible_message(span_cult("[target]'s flesh briefly warps, as some unseen force tears the equipment from their frame!"))
 	addtimer(CALLBACK(src, PROC_REF(psydonstrip_stage2), target), 20)
+
 //Dropping rite armour. Or, well, basically everything.
 /datum/outfit/job/roguetown/rite_strip/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -2236,6 +2297,11 @@
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
+	var/obj/item/chastity/device = H.chastity_device
+	if(device)
+		device.remove_chastity(H) // because ritual name is FREEDOM and I find it funny
+		if(!QDELETED(device))
+			device.forceMove(get_turf(H))
 
 /obj/structure/ritualcircle/abyssor_alt_inactive/proc/dreamarmor_stage2(mob/living/carbon/human/target)
 	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
