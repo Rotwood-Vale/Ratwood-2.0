@@ -173,6 +173,16 @@
 			return FALSE
 		bodyparts_to_bonify += head
 
+	// Blackblood regen is paid for with hunger, and the second ritual takes hunger away for good
+	if(rituos_counter == 1 && HAS_TRAIT(user, TRAIT_BLACKBLOOD) && !HAS_TRAIT(user, TRAIT_NOHUNGER))
+		var/choice = tgui_alert(user, "The second ritual WILL take away my hunger forever. With nothing left to feed it, the black ichor in my veins will no longer knit my flesh closed. Do I continue?", "The Lesser Work", list("Continue", "Stop"))
+		if(choice != "Continue")
+			to_chat(user, span_notice("I let the ritual fade, for now."))
+			return FALSE
+		// Things may have changed while we were deciding, such as casting it a second time
+		if(QDELETED(user) || user.stat || rituos_counter != 1 || user.mind?.has_rituos)
+			return FALSE
+
 	if(!(user.mob_biotypes & MOB_UNDEAD))
 		user.visible_message(span_warning("The pallor of the grave descends across [user]'s skin in a wave of arcyne energy..."), span_boldwarning("A deathly chill overtakes my body at my first culmination of the Lesser Work! I feel my heart slow down in my chest..."))
 		user.mob_biotypes |= MOB_UNDEAD

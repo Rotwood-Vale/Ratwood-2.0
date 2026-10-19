@@ -1205,11 +1205,10 @@
 		if (HAS_TRAIT(src, TRAIT_LEPROSY))
 			. += span_necrosis("A LEPER...")
 
-		if(HAS_TRAIT(src, TRAIT_ROTMAN))
-			. += span_small("Their skin is cold and clammy, the faint smell of rot follows them...")
-
 		if(HAS_TRAIT(src, TRAIT_PALLID))
-			. += span_small("Their skin is drained of colour...")
+			var/obj/item/bodypart/pallid_chest = get_bodypart(BODY_ZONE_CHEST)
+			if(!pallid_chest?.skeletonized) // no skin left to be pale, such as after Rituos
+				. += span_small("Their skin is drained of colour...")
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user

@@ -628,7 +628,8 @@
 			user.visible_message(span_notice("[user] examines [src]."), \
 				span_notice("I check [src] for injuries."))
 
-	if(stat < DEAD)
+	// Rotcured have no heartbeat, so anyone else looking them over takes them for dead, same as check_heartbeat()
+	if(stat < DEAD && !(HAS_TRAIT(src, TRAIT_ROTMAN) && user != src))
 		examination += "[m1] still alive."
 		if(stat >= UNCONSCIOUS)
 			examination += "[m1] [IsSleeping() ? "asleep" : "unconscious"]."
