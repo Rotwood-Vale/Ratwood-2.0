@@ -51,9 +51,6 @@
 	icon_state = "inpunch"
 	item_d_type = "blunt"
 	intent_intdamage_factor = 1
-	//We want chipping, m'lord.
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_WEAK
 
 /datum/intent/knuckles/smash
 	name = "smash"
@@ -65,9 +62,6 @@
 	swingdelay = 8
 	icon_state = "insmash"
 	item_d_type = "blunt"
-	//We want chipping, m'lord.
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_STRONG
 
 /datum/intent/knuckles/strike/wallop
 	name = "wallop"

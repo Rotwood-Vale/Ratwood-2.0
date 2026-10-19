@@ -931,8 +931,7 @@
 	return layers
 
 /mob/living/carbon/human/proc/get_best_worn_armor_layered(def_zone, d_type)
-	var/protection = 0
-	var/obj/item/clothing/used
+	var/list/layers = list()
 	if(def_zone == BODY_ZONE_TAUR)
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	else if(get_taur_tail())
@@ -953,10 +952,8 @@
 						continue
 				var/val = C.armor.getRating(d_type)
 				if(val > 0)
-					if(val > protection)
-						protection = val
-						used = C
-	return used
+					layers[C] = val
+	return layers
 
 /mob/living/carbon/human/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	//SEND_SIGNAL(src, COMSIG_HUMAN_BURNING)
