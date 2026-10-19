@@ -42,7 +42,6 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
  *
  * Live mode with the movement queue enabled. Playback continues between server updates.
  *
- * ```text
  * SERVER                                                      CLIENT
  * Movement -> interval/step checks -> queue client
  * Door recheck --------------------> queue client
@@ -62,7 +61,6 @@ GLOBAL_DATUM(point_ambience_counters, /datum/point_ambience_counters)
  *                                                          keep playing
  *
  * run_fades() / stop_for() ---------------------- packet ----> fade/stop
- * ```
  *
  * Selection can reuse cached rankings or refresh only a due clip. A lost source takes the fade
  * or stop path instead of slim_send(). fire() runs river refills, fades and door rechecks before
