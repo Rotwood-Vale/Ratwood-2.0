@@ -1656,7 +1656,7 @@
 	sheathe_icon = "psyrapier"
 	max_integrity = 225
 	max_blade_int = 225
-	force = 20
+	force = 24
 	force_wielded = 20
 	minstr = 8
 	wdefense = 8
@@ -1681,7 +1681,7 @@
 	sheathe_icon = "rapier"
 	max_integrity = 225
 	max_blade_int = 225
-	force = 20
+	force = 24
 	force_wielded = 20
 	minstr = 8
 	wdefense = 8
@@ -1717,7 +1717,7 @@
 	sheathe_icon = "psyrapier"
 	max_integrity = 300
 	max_blade_int = 300
-	force = 20
+	force = 25
 	force_wielded = 20
 	minstr = 8
 	wdefense = 8
