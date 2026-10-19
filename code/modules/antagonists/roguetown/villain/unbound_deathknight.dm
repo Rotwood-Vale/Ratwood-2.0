@@ -1,4 +1,5 @@
 /datum/antagonist/unbound_death_knight
+	purges_second_chance = TRUE
 	name = "Unbound Death Knight"
 	roundend_category = "Unbound Death Knight"
 	antagpanel_category = "Unbound Death Knight"

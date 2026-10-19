@@ -211,6 +211,7 @@
 		// The conversion regenerates organs and replaces the brain, so re-fetch rather than reuse a stale ref
 		var/obj/item/organ/brain/new_brain = getorganslot(ORGAN_SLOT_BRAIN)
 		new_brain?.original_body_ref = WEAKREF(src)
+		rebind_second_chance()
 	switch(job)
 		if("Grand Duke", "Grand Duchess")
 			removeomen(OMEN_NOLORD)

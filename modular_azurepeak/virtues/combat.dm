@@ -170,7 +170,7 @@
 
 /// The traits each Second Chance option grants, under SECOND_CHANCE_TRAIT so they can be stripped again without touching other virtues' traits.
 GLOBAL_LIST_INIT(second_chance_traits, list(
-	SC_ROTCURED = list(TRAIT_ROTMAN, TRAIT_EASYDISMEMBER, TRAIT_NOPAIN, TRAIT_NOBREATH, TRAIT_NOHUNGER, TRAIT_TOXIMMUNE, TRAIT_ZOMBIE_IMMUNE, TRAIT_SILVER_WEAK),
+	SC_ROTCURED = list(TRAIT_ROTMAN, TRAIT_EASYDISMEMBER, TRAIT_NOPAIN, TRAIT_NOPAINSTUN, TRAIT_NOBREATH, TRAIT_NOHUNGER, TRAIT_TOXIMMUNE, TRAIT_ZOMBIE_IMMUNE, TRAIT_SILVER_WEAK),
 	SC_PALLID = list(TRAIT_PALLID, TRAIT_DARKVISION, TRAIT_NOBREATH, TRAIT_ZOMBIE_IMMUNE, TRAIT_SILVER_WEAK),
 	SC_BLACKBLOOD = list(TRAIT_BLACKBLOOD, TRAIT_HALFHEAL, TRAIT_STRONGBITE, TRAIT_NASTY_EATER, TRAIT_DARKVISION, TRAIT_SILVER_WEAK),
 ))
@@ -188,9 +188,9 @@ GLOBAL_LIST_INIT(second_chance_traits, list(
 		SC_BLACKBLOOD,
 	)
 	choice_tooltips = list(
-		SC_ROTCURED = "<font color='#4a8d48'>I was once afflicted with the accursed rot, and was cured. It has left me changed: my limbs are weaker, but I feel no pain and have no need to breathe.<br><br><font color=red>(Grants Easy Dismember, Painless, Breathless, Deathless, Poison Immune, Deadite Immune, Silver Weakness.)<font color=white><br><br>(Additionally, you can eat brains, you don't suffer nausea, and your heart does not beat.)</font>",
-		SC_PALLID = "<font color='#8d4848'>I was once afflicted with vampirism, but was cured by something close to divine intervention. It has left me changed: silver burns my flesh, and the open sky fills me with unease. Yet I draw no breath, and my eyes pierce the darkness. Lingering traces of the curse that once claimed me. Traces I hope will fade in time.<br><br><font color=red>(Grants Darkvision, Breathless, Deadite Immunity and Silver Weakness.)<br><br><font color=white>(Additionally, being outdoors causes stress.)</font>",
-		SC_BLACKBLOOD = "<font color='#8b488d'>I was once a nite-creacher, be it lycanthrope or vampyre, before the Otavan Inquisition subdued and exported me as a test subject of an experimental \"cure\" for my Quicksilver-resistant taint. This intense therapy had me warped, inside, outside, body and mind, into something 'idealistically' humen-like for Otavan standards, even if I am now no different than a sentient, hollowed ghoul.<br><br><font color=red>(Grants Darkvision, Laden Lux, Strong Bite, Inhumen Digestion, and Silver Weakness.)<br><br><font color=white>(Additionally, consuming any food will grant a minor healing buff. While not starving or dehydrated, you slowly mend your wounds and your bleeding clots faster, at the cost of hunger, though a severed artery will never close until it is stitched, even if it bleeds only half as fast. Silver fire halts both. Lifeblood does nothing for you, but zarum does, and healing miracles pain you while only working half as well. You will feel stressed when exposed to Sunlight, and panic while being around or interacting with members of the Inquisition. Vampyres sicken on your blood. You are somewhat resistant to Lycanthropy and the Deadite plague, but not immune.)</font>",
+		SC_ROTCURED = "<font color='#4a8d48'>I was once afflicted with the accursed rot, and was cured. It has left me changed: my limbs are weaker, but I feel no pain and have no need to breathe or eat.<br><br><font color=red>(Grants Easy Dismemberment, Painless, Enduring, Breathless, Foodless, Poison Immune, Deadite Immunity and Silver Weakness.)<font color=white><br><br>(Additionally, you can eat brains and you don't suffer nausea. Food's lingering effects, good or bad, never take hold on you, and you feel nothing for your favourite or hated foods. Your heart does not beat, so anyone who checks your heartbeat or diagnoses you will find you dead. You cannot give mouth-to-mouth, and Necra refuses your vows. Hemophages still hunger, as their thirst cannot be cured away. Any silver on your person when you arrive is dropped.)</font>",
+		SC_PALLID = "<font color='#8d4848'>I was once afflicted with vampirism, but was cured by something close to divine intervention. It has left me changed: silver burns my flesh, and the open sky fills me with unease. Yet I draw no breath, and my eyes pierce the darkness. Lingering traces of the curse that once claimed me. Traces I hope will fade in time.<br><br><font color=red>(Grants Darksight, Breathless, Deadite Immunity and Silver Weakness.)<br><br><font color=white>(Additionally, being outdoors, by day or by night, causes stress. Vampyres sicken on your blood. You cannot give mouth-to-mouth, and Necra refuses your vows. Any silver on your person when you arrive is dropped.)</font>",
+		SC_BLACKBLOOD = "<font color='#8b488d'>I was once a nite-creacher, be it lycanthrope or vampyre, before the Otavan Inquisition subdued and exported me as a test subject of an experimental \"cure\" for my Quicksilver-resistant taint. This intense therapy had me warped, inside, outside, body and mind, into something 'idealistically' humen-like for Otavan standards, even if I am now no different than a sentient, hollowed ghoul.<br><br><font color=red>(Grants Darksight, Laden Lux, Strong Bite, Inhumen Digestion and Silver Weakness.)<br><br><font color=white>(Additionally, your blood runs black, and consuming any food will grant a minor healing buff. While not starving or dehydrated, you slowly mend your wounds and your bleeding clots faster, at the cost of hunger, though a severed artery will never close until it is stitched, even if it bleeds only half as fast. Silver fire halts both. This mending replaces Psydonite endurance rather than stacking with it, and anything that takes away your hunger for good, such as the Rituos, ends it. Lifeblood does nothing for you, but zarum does, and healing miracles pain you while only working half as well. You will feel stressed when exposed to Sunlight, and panic while being around or interacting with members of the Inquisition. Vampyres sicken on your blood. You will usually resist the Deadite plague and sometimes resist Lycanthropy, but you are not immune. Any silver on your person when you arrive is dropped.)</font>",
 	)
 
 /datum/virtue/combat/second_chance/apply_to_human(mob/living/carbon/human/recipient)
@@ -245,9 +245,22 @@ GLOBAL_LIST_INIT(second_chance_traits, list(
 				to_chat(src, span_danger("DISCLAIMER: This Second Chance option exists to support roleplay and backstory continuity, not to diminish the threat or narrative weight of vampires, werewolves, or similar antagonistic entities. You are a tortured survivor of the Otavan Inquisition, and your very LUX fears them. Failure to roleplay this appropriately may result in this option's removal. Have fun and don't be cringe."))
 
 	update_sight() // sight was already set when we spawned, so darkvision needs a refresh
+	if(HAS_TRAIT(src, TRAIT_SILVER_WEAK))
+		drop_worn_silver()
+
+/// Drops any silver worn or held. Silver weakness only bites when silver is picked up or equipped, so anything already on us when we gain it has to go.
+/mob/living/carbon/human/proc/drop_worn_silver()
+	var/dropped_any = FALSE
+	for(var/obj/item/worn as anything in get_equipped_items(include_pockets = TRUE) + held_items)
+		if(!worn || !(worn.is_silver || worn.smeltresult == /obj/item/ingot/silver))
+			continue
+		if(dropItemToGround(worn))
+			dropped_any = TRUE
+	if(dropped_any)
+		to_chat(src, span_warning("I cannot bear Silver on my person!"))
 
 /// Lifts Second Chance's traits while an antagonist blocks it, such as being turned into a vampire or rising as a deadite. The choice stays on the mind, so it can be restored.
-/mob/living/carbon/human/proc/suspend_second_chance()
+/mob/living/carbon/human/proc/suspend_second_chance(silent = FALSE)
 	var/had_second_chance = FALSE
 	for(var/choice in GLOB.second_chance_traits)
 		for(var/trait in GLOB.second_chance_traits[choice])
@@ -259,7 +272,17 @@ GLOBAL_LIST_INIT(second_chance_traits, list(
 		return
 	set_blood_color(null)
 	update_sight()
-	to_chat(src, span_danger("Whatever second chance I was given, it slips away from me."))
+	if(!silent)
+		to_chat(src, span_danger("Whatever second chance I was given, it slips away from me."))
+
+/// For a body remade for the soul now in it, such as a foreign brain's forced revival.
+/// Swaps the old owner's Second Chance, which lives on the flesh, for the new soul's own.
+/mob/living/carbon/human/proc/rebind_second_chance()
+	suspend_second_chance(silent = TRUE)
+	set_blood_color(null) // the remade dna brought the soul's old blood colour, so let their own choice decide it
+	if(!length(mind?.second_chance_choices) || mind.second_chance_blocked())
+		return
+	grant_second_chance(mind.second_chance_choices)
 
 /// Brings back a suspended Second Chance on this body, once nothing blocks it any more. The choices are read from source_mind, which may not be in the body right now.
 /mob/living/carbon/human/proc/restore_second_chance(datum/mind/source_mind = mind)
