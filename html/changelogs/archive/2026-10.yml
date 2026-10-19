@@ -346,3 +346,14 @@
 2026-10-18:
   Kroto-Ker:
   - rscadd: Hyena snout to Lupians + Outer Eyes accessory.
+2026-10-19:
+  Arturlang:
+  - admin: door logging, lockpicking, breaking, etc, shown via examine for adminghosts
+      or via a new investigate log option
+  CentralSmith:
+  - bugfix: Roasted squash soup can be made with cooked pumpkin mash.
+  Kroto-Ker:
+  - qol: Made genital hiding functional & allows you to choose specific parts to hide.
+  - rscadd: Bewinged trait for fluvians.
+  Sauna38:
+  - bugfix: Abyssal (language) icon fix, now shows the Fish instead of the Green Matrix
