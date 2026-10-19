@@ -27,7 +27,7 @@ Exercise Verbs
 /mob/living/carbon/human/proc/stop_pushups()
 	setDir(null)
 
-/mob/living/carbon/human/proc/execute_pushups(var/on_knees = FALSE)
+/mob/living/carbon/human/proc/execute_pushups(on_knees = FALSE)
 	if(!can_do_pushup())
 		return
 	var/target_y = -5
@@ -80,7 +80,7 @@ Exercise Verbs
 
 	return TRUE
 
-/mob/living/carbon/human/proc/calculate_stamina_loss_per_pushup(var/on_knees = FALSE)
+/mob/living/carbon/human/proc/calculate_stamina_loss_per_pushup(on_knees = FALSE)
 	var/stamina_loss = 8 - get_skill_level(/datum/skill/misc/athletics)
 	if(head)
 		if(head.armor_class == ARMOR_CLASS_HEAVY)
