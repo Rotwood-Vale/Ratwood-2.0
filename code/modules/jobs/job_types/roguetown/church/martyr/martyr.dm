@@ -34,7 +34,7 @@
 		TRAIT_DUALWIELDER,
 		TRAIT_VOTARY,
 		TRAIT_CONVICTION,
-		TRAIT_HOLYWARRIOR,
+		TRAIT_HALLOWED_WARD,
 	)
 
 	//No undeath-adjacent virtues for a role that can sacrifice itself. The Ten like their sacrifices 'pure'.
