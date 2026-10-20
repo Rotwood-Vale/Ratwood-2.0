@@ -1,26 +1,23 @@
 // Get the display names of the underlying TGUI themes
-/datum/preferences/proc/get_tgui_theme_display_name()
+/proc/get_tgui_theme_display_name()
 	var/static/list/theme_names = list(
 		"azure_default" = "Ascendant",
-		"azure_green" = "Undivided",
+		"azure_ascendant" = "New Ascendant",
+		"azure_green" = "Oaken",
 		"azure_lane" = "Cerulean",
 		"azure_purple" = "Zybantium",
+		"azure_gilbranze" = "Gilbranze",
+		"azure_psydonic" = "Psydonic",
+		"azure_lingyue" = "Cinnabar",
 		"trey_liam" = "Trey Liam"
 	)
-	return theme_names[tgui_theme] || tgui_theme
+	return theme_names
 
-// Cycle through TGUI styles
+// Open TGUI theme picker
 /datum/preferences/proc/setTguiStyle(mob/user)
-	var/static/list/styles = list("azure_default", "azure_green", "azure_lane", "azure_purple", "trey_liam")
-	var/current_index = styles.Find(tgui_theme)
-	if(!current_index)
-		current_index = 1
-	var/next_index = (current_index % styles.len) + 1
-	tgui_theme = styles[next_index]
-	to_chat(usr, "<span class='notice'>TGUI style set to [get_tgui_theme_display_name()].</span>")
-	save_preferences()
+	var/datum/theme_picker/picker = new(user)
+	picker.ui_interact(user)
 	
-
 // Parchment skin variants (AP parity): themed-parchment interfaces resolve through the
 // player's parchment_skin pref in tgui Layout - plain parchment, leatherbound, or vellum.
 /proc/get_parchment_skins()
