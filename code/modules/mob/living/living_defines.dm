@@ -269,9 +269,6 @@
 	/// Toggle timer for Specials, or really anything else that you don't want input spam to instantly cycle through.
 	var/toggle_timer
 
-	/// Whether we are in a swingdelay, used to check for disrupted swingdelays.
-	var/swing_state = FALSE
-
 	/// Parry timer for projectiles post-attack. Hooks into the attack animation, so is fairly clunky.
 	var/projectile_parry_timer
 
