@@ -141,6 +141,7 @@
 		shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/random
 		armor = /obj/item/clothing/suit/roguetown/shirt/tunic/random
 	neck = /obj/item/clothing/neck/roguetown/gorget/cursed_collar
+	H.mind?.AddSpell(new /datum/action/cooldown/spell/touch/prestidigitation)
 
 
 /datum/outfit/job/roguetown/adventurer/runaway_prisoner/commoner/pre_equip(mob/living/carbon/human/H, visualsOnly)

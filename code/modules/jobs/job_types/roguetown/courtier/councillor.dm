@@ -311,6 +311,8 @@ GLOBAL_LIST_INIT(ministry_charters, list(
 /datum/ministry/mage/archive_bonus(mob/living/carbon/human/H)
 	if(!H.mind)
 		return
+	if(!H.mind.has_spell(/datum/action/cooldown/spell/touch/prestidigitation))
+		H.mind.AddSpell(new /datum/action/cooldown/spell/touch/prestidigitation, H)
 	to_chat(H, span_notice("The archive imparts the arcyne secrets of the previous Minister. I feel a thrum of latent power."))
 
 /datum/ministry/physician

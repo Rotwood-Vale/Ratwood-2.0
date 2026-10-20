@@ -8,6 +8,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
+	spells = list(/datum/action/cooldown/spell/touch/prestidigitation)
 	allowed_races = ALL_RACES_TYPES
 	allowed_ages = ALL_AGES_LIST
 	social_rank = SOCIAL_RANK_YEOMAN
