@@ -262,7 +262,7 @@
 	range = 7
 	warnie = "sydwarning"
 	movement_interrupt = FALSE
-	sound = 'sound/magic/ENDVRE.ogg'
+	sound = 'sound/magic/psydonrespite.ogg'
 	invocation_type = "none" // needs to be castable when uncontius
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = FALSE
