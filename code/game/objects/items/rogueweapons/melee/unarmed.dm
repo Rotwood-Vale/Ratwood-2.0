@@ -6,7 +6,7 @@
 	animname = "cut"
 	blade_class = BCLASS_CUT
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	chargetime = 0
 	swingdelay = 0
 	damfactor = 1.3
@@ -20,7 +20,7 @@
 	animname = "stab"
 	blade_class = BCLASS_STAB
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 25
+	penfactor = PEN_LIGHT
 	chargetime = 0
 	clickcd = CLICK_CD_FAST
 	item_d_type = "stab"
@@ -34,7 +34,7 @@
 	clickcd = CLICK_CD_FAST //Same speed as a katar, but with reduced penetration and half-damage. Main appeal's the chopper.
 
 /datum/intent/katar/thrust/arbelos
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	damfactor = 0.8
 	clickcd = CLICK_CD_QUICK //Slower than a regular thrust, with slightly less penetration and damage. Inverse to the katar.
 
@@ -45,7 +45,7 @@
 	attack_verb = list("punches", "clocks")
 	hitsound = list('sound/combat/hits/punch/punch_hard (1).ogg', 'sound/combat/hits/punch/punch_hard (2).ogg', 'sound/combat/hits/punch/punch_hard (3).ogg')
 	chargetime = 0
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	clickcd = 8
 	swingdelay = 0
 	icon_state = "inpunch"
@@ -60,7 +60,7 @@
 	blade_class = BCLASS_SMASH
 	attack_verb = list("smashes")
 	hitsound = list('sound/combat/hits/punch/punch_hard (1).ogg', 'sound/combat/hits/punch/punch_hard (2).ogg', 'sound/combat/hits/punch/punch_hard (3).ogg')
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	clickcd = CLICK_CD_MELEE
 	swingdelay = 8
 	icon_state = "insmash"
@@ -412,19 +412,19 @@
 	damfactor = 1.2
 	swingdelay = 8
 	clickcd = CLICK_CD_MELEE
-	penfactor = 35
+	penfactor = PEN_MEDIUM
 
 /datum/intent/claw/lunge/steel
 	damfactor = 1.2
 	swingdelay = 12
 	clickcd = CLICK_CD_HEAVY
-	penfactor = 35
+	penfactor = PEN_MEDIUM
 
 /datum/intent/claw/lunge/gronn
 	damfactor = 1.1
 	swingdelay = 5
 	clickcd = 10
-	penfactor = 45
+	penfactor = PEN_MEDIUM
 
 /datum/intent/claw/cut
 	name = "cut"
@@ -434,21 +434,22 @@
 	blade_class = BCLASS_CUT
 	hitsound = list('sound/combat/hits/bladed/smallslash (1).ogg', 'sound/combat/hits/bladed/smallslash (2).ogg', 'sound/combat/hits/bladed/smallslash (3).ogg')
 	item_d_type = "slash"
+	demolition_mod = 0.05
 
 /datum/intent/claw/cut/iron
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	swingdelay = 8
 	damfactor = 1.4
 	clickcd = CLICK_CD_HEAVY
 
 /datum/intent/claw/cut/steel
-	penfactor = 10
+	penfactor = PEN_LIGHT
 	swingdelay = 4
 	damfactor = 1.3
 	clickcd = CLICK_CD_HEAVY
 
 /datum/intent/claw/cut/gronn
-	penfactor = 30
+	penfactor = PEN_LIGHT
 	swingdelay = 0
 	damfactor = 1.1
 	clickcd = CLICK_CD_MELEE
@@ -460,7 +461,7 @@
 	animname = "cut"
 	blade_class = BCLASS_CHOP
 	reach = 1
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	damfactor = 2.5
 	clickcd = CLICK_CD_HEAVY
 	no_early_release = TRUE
