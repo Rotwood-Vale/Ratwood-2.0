@@ -2109,7 +2109,7 @@
 						user.say("I beg of you, accept this wayward soul.")//WEEP FOR THEM, LASZLO.
 						user.emote("cry")
 						var/luxshield = FALSE
-						if(HAS_TRAIT(user, TRAIT_LUX_FREAK))
+						if(HAS_TRAIT(user, TRAIT_LUX_ATTUNED))
 							loc.visible_message(span_cult("[user] weeps silver tears."))
 							luxshield = TRUE
 						else
@@ -2117,7 +2117,7 @@
 						if(do_after(user, 5 SECONDS))
 							psydonconversion(target, luxshield)
 		if("Admonishment")//Deconvert WWs/Vampires.
-			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
+			if(!HAS_TRAIT(user, TRAIT_LUX_ATTUNED))
 				to_chat(user, span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
 				return
 			if(!Adjacent(user))
@@ -2145,7 +2145,7 @@
 							psydonadmonishment(target)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
 		if("Freedom")//Strip folks in rite armour.
-			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
+			if(!HAS_TRAIT(user, TRAIT_LUX_ATTUNED))
 				to_chat(user, span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
 				return
 			if(!Adjacent(user))
@@ -2185,10 +2185,10 @@
 		loc.visible_message(span_cult("[target] weeps."))
 		target.Stun(80)//Keep them in place, for a bit. Until we're done.
 		if(luxshield)
-			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but something stops their wrath from hurting me.")) // absolver doing the legwork
+			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but something stops their wrath from hurting me."))
 			loc.visible_message(span_cult("The silver tears boil and evaporate but [target] stays safe in their new conviction."))
 		else
-			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but I shall ENDURE their wrath.")) // no unnatural lux abomination to save you here!
+			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but I shall ENDURE their wrath."))
 			target.Knockdown(60)
 			to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
 			target.emote("Agony")

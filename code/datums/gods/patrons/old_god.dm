@@ -131,7 +131,7 @@
 	// Allows prayer if holding silver psycross.
 	if(istype(follower.get_active_held_item(), /obj/item/clothing/neck/roguetown/psicross/silver))
 		return TRUE
-	if(HAS_TRAIT(follower, TRAIT_LUX_FREAK)) // the ones that became psydons temple in of themselves
+	if(HAS_TRAIT(follower, TRAIT_LUX_ATTUNED))
 		return TRUE
 	to_chat(follower, span_danger("For Psydon to hear my prayer I must either must be near a Pantheon Cross, shed my own blood in penitence, hold one of his silver holy symbols, or bask in his rain; as Psydon weeps for his children.."))
 	return FALSE
@@ -226,8 +226,8 @@
 		var/psyhealing = 3
 		psyhealing += psicross_bonus
 
-		if(HAS_TRAIT(user, TRAIT_LUX_FREAK) && zcross_trigger) // LUX ABOMINATIONS WONT STOP SO EASLY!!!
-			user.visible_message(span_warning("[user] shudders as their eyes briefly wash over with a sickly shade of silver!"), span_userdanger("Ice shoots up my spine as the ARCHENEMY's laughter resonates in my skull! I will ENDURE this trial!"))
+		if(HAS_TRAIT(user, TRAIT_LUX_ATTUNED) && zcross_trigger)
+			user.visible_message(span_warning("[user] shudders as their eyes briefly shine silver!"), span_userdanger("Ice shoots up my spine as the ARCHENEMY's laughter resonates in my skull! I will ENDURE this trial!"))
 			zcross_trigger = FALSE
 
 		if (conditional_buff & !zcross_trigger)
