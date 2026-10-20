@@ -18,6 +18,11 @@
 	else if(HAS_TRAIT(src, TRAIT_PRETTY) && user != src) //Beautiful takes priority if you somehow have both
 		user.add_stress(/datum/stressevent/pretty)
 		to_chat(user, span_info("[p_they(TRUE)] [p_are()] pretty."))
+	if(HAS_TRAIT(src, TRAIT_OVERWEIGHT) && user != src)
+		if(prob(2))
+			to_chat(user, span_smallyellow("[p_they(TRUE)] [p_are()] plump and delicious looking - Like a fat little piggy. A tasty piggy."))
+		else
+			to_chat(user, span_smallyellow("[p_they(TRUE)] [p_are()] quite chubby."))
 	if(HAS_TRAIT(src, TRAIT_UNSEEMLY) && user != src)
 		if(!HAS_TRAIT(user, TRAIT_UNSEEMLY))
 			user.add_stress(/datum/stressevent/unseemly)

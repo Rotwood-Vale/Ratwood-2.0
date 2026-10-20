@@ -159,6 +159,7 @@
 #define span_taunt(str)	("<span class='taunt'>" + str + "</span>")
 #define span_warningbig(str) ("<span class='warningbig'>" + str + "</span>")
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")
+#define span_smallyellow(str) ("<span class='smallyellow'>" + str + "</span>")
 #define span_yellow(str) ("<span class = 'yellow'>" + str + "</span>")
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
 #define span_beautiful_masc(str) ("<span class='beautifulmasc'>" + str + "</span>")
