@@ -276,8 +276,9 @@
 /obj/effect/verglas/temp/proc/on_exit(turf/exited, atom/movable/exiting, atom/newloc)
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/H = exiting
-	if(ishuman(exiting) && H.has_status_effect(/datum/status_effect/verglas_concentration))
-		new /obj/effect/verglas/temp(get_turf(newloc))
+	var/turf/T = get_turf(newloc)
+	if(T && ishuman(exiting) && H.has_status_effect(/datum/status_effect/verglas_concentration) && !(locate(/obj/effect/verglas/temp) in T)) // prevents stacking so shit don't crash...!
+		new /obj/effect/verglas/temp(T)
 
 /obj/effect/verglas/temp/Destroy()
 	UnregisterSignal(get_turf(src),	COMSIG_ATOM_EXIT)
