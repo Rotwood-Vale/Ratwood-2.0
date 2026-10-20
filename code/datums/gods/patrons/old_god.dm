@@ -265,7 +265,7 @@
 	sound = 'sound/magic/psydonrespite.ogg'
 	invocation_type = "none" // needs to be castable when uncontius
 	associated_skill = /datum/skill/magic/holy
-	antimagic_allowed = FALSE
+	antimagic_allowed = TRUE
 	recharge_time = 6 MINUTES
 	miracle = TRUE
 	stat_allowed = TRUE // Has a specific check for the dead, crit people can still self-cast
