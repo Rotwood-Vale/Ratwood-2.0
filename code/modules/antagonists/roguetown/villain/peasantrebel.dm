@@ -106,6 +106,7 @@
 	. = ..()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/self/rebelconvert)
 	owner.current?.set_patron(/datum/patron/inhumen/matthios) //head rebels always love matthios, of course
+	SStreasury.queue_crisis_selection()
 
 /datum/antagonist/prebel/proc/can_be_converted(mob/living/candidate)
 	if(!candidate.mind)
