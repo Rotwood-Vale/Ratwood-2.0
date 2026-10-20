@@ -227,7 +227,7 @@
 		psyhealing += psicross_bonus
 
 		if(HAS_TRAIT(user, TRAIT_LUX_ATTUNED) && zcross_trigger)
-			user.visible_message(span_warning("[user] shudders as their eyes briefly shine silver!"), span_userdanger("Ice shoots up my spine as the ARCHENEMY's laughter resonates in my skull! I will ENDURE this trial!"))
+			user.visible_message(span_warning("[user] shudders as their eyes briefly shine silver!"), span_userdanger("Ice shoots up my spine as something laughs in my skull! I will ENDURE this trial!"))
 			zcross_trigger = FALSE
 
 		if (conditional_buff & !zcross_trigger)

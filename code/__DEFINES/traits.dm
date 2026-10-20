@@ -75,7 +75,7 @@
 #define TRAIT_ANTISCRYING "Non-Detection"
 #define TRAIT_SHOCKIMMUNE "Shock Immunity"
 #define TRAIT_PACIFISM	"Pacifism"
-#define TRAIT_LUX_ATTUNED "Lux Attunement" // Reserved for those capable of directly influencing the lux of others.
+#define TRAIT_LUX_ATTUNED "Lux Attunement" // Absolver, Stigmata and Sworn Stigmata only. Gates the Admonishment/Freedom rites, shields Psydonian conversions, lets prayers through anywhere, and resists the Z-cross. Don't give it to anyone who can't work on other people's lux.
 #define TRAIT_NOSLEEP "Fatal Insomnia"
 #define TRAIT_FASTSLEEP "Fast Sleeper"
 #define TRAIT_GOODLOVER "Fabled Lover"
@@ -438,7 +438,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_IGNOREDAMAGESLOWDOWN = span_info("Hits slow me down no longer."),
 	TRAIT_NOBLE = span_blue("I'm of noble blood."),
 	TRAIT_PACIFISM = span_info("I cannot harm another living being."),
-	TRAIT_LUX_ATTUNED = span_info("Something within my lux answers when I reach for another's."),
+	TRAIT_LUX_ATTUNED = span_info("My lux can reach into another's. My prayers need no cross, and the deeper rites of the One answer to me."),
 	TRAIT_EORAN_CONTENTED = span_info("I feel much at ease."),
 	TRAIT_DEFILED_NOBLE = span_blue("I'm of noble blood but... Something feels off!"),
 	TRAIT_DISGRACED_NOBLE = span_warning("I was a scion of a noble house... long ago."),

@@ -2065,7 +2065,7 @@
 		spawn(40)
 			to_chat(target, span_purple("All will love you and despair."))
 
-//TIME FOR THE ONE. Exclusive to ABSOLVERS. Allowing conversion, deconversion and removal of rite armour.
+//Rites of the One. Conversion is open to any Psydonian ritualist. Admonishment and Freedom need TRAIT_LUX_ATTUNED (Absolver, Stigmata, Sworn Stigmata).
 //'Lesser' expenditure allows us to have a stopgap to this, while not entirely making poultice farming useless.
 
 

@@ -204,7 +204,7 @@
 
 /obj/effect/proc_holder/spell/self/psydonpersist
 	name = "PERSIST"
-	desc = "Stand still to focus on mending your injuries. You shall PERSIST."
+	desc = "Stand still and spend devotion to mend your injuries. You shall PERSIST."
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "PERSIST"
@@ -419,7 +419,7 @@
 
 	// Notify the user and target
 	to_chat(user, span_warning("You absolve [H] of their injuries!"))
-	to_chat(H, span_notice("[user] absolves you of your injuries!"))
+	to_chat(H, span_notice("A strange pull passes through my Lux, and my wounds go with it."))
 	return TRUE
 
 // Weaker absolve for the Stigmata adventurer
@@ -499,7 +499,7 @@
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717") 
 	
 	// Notify the user and target
-	to_chat(user, span_warning("You amend [H] of their agony, taking it upon yourself!"))
-	to_chat(H, span_notice("[user] amends you of your agony!"))
+	to_chat(user, span_warning("You take [H]'s agony upon yourself, AMENDING them!"))
+	to_chat(H, span_notice("A strange pull passes through my Lux, and my agony goes with it."))
 	
 	return TRUE
