@@ -469,33 +469,6 @@
 
 #undef IMMOLATION_FILTER
 
-//Choosing between Lance/Spear
-/obj/effect/proc_holder/spell/self/astratan_path
-	name = "Path of Order"
-	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
-	action_icon = 'icons/mob/actions/astratamiracles.dmi'
-	overlay_state = "order"
-	desc = "Astrata blesses your mind, allowing you to choose <b>Her</b> method of bringing order."
-	miracle = TRUE
-	devotion_cost = 100
-	recharge_time = 10 MINUTES
-	chargetime = 0
-	chargedrain = 0
-	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-	associated_skill = /datum/skill/magic/holy
-
-/obj/effect/proc_holder/spell/self/astratan_path/cast(list/targets, mob/user)
-	. = ..()
-	var/choice = alert(user, "YOUR MARTIAL ARM, M'LORD?", "TAKE UP STRENGTH", "Lance", "Spear")
-	switch(choice)
-		if("Spear")
-			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/self/astratan_spear))//No stacking. Again. As funny as a dozen of these were.
-				revert_cast()
-			else
-				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/astratan_spear)
-		else
-			revert_cast()
-
 //Summoning the spear.
 /obj/effect/proc_holder/spell/self/astratan_spear
 	name = "Summon Spear"
