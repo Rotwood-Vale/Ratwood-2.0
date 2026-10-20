@@ -357,3 +357,28 @@
   - rscadd: Bewinged trait for fluvians.
   Sauna38:
   - bugfix: Abyssal (language) icon fix, now shows the Fish instead of the Green Matrix
+2026-10-20:
+  CloverIsLucky:
+  - code_imp: 'Filesize Optimization for Adventurer Cleric code. Also changes for
+      Paladin: Astrata Paladin and Psydon Paladin get a subclass preview, and Xylix
+      Paladin gets their funny helm back.'
+  Sauna38:
+  - bugfix: Town Crier hat no longer turns invisible when worn in the mask slot
+  SirSwagmeyer:
+  - bugfix: embedchances being inversed.
+  - bugfix: embedded projectiles sometimes disappearing
+  - rscadd: Adds the dueling messer to the blacksmith weapons list
+  - balance: Athletics XP is now gained every time you use stamina, no matter whether
+      you're in run intent or not.
+  - balance: Athletics XP is gained at one unit per tenth of stamina used. The gain
+      is modified based on your constitution.
+  - rscadd: Added mechanical pushups, which can be found under the 'Emotes' tab.
+  - refactor: Reworked Dual Wielder virtue.
+  - rscadd: Added thrown projectile deflection mechanics.
+  Yuckuza:
+  - balance: Deadite rotting protections restricted to just physician clinic & town
+      church areas. You are no longer protected from rot by being dead inside any
+      town indoor space.
+  trueroguan:
+  - rscadd: add hike emote
+  - image: add hike sprites
