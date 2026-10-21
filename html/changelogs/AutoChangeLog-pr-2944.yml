@@ -1,0 +1,4 @@
+author: "MrShibaa"
+delete-after: True
+changes:
+  - balance: "allows constructs to eat charcoal, small & big logs, lux and impure lux."

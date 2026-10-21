@@ -94,7 +94,7 @@
 	/// Allow crotch to be exposed and bypass clothes check
 	var/bottom_exposed = FALSE
 	/// If TRUE, hide genital visuals only. The organs still function but are now a True/False toggle
-	var/hide_pintle_visuals = FALSE
+	var/list/hidden_genitals = list()
 	/// Bypasses positioning and exposure checks entirely
 	var/freeuse = FALSE
 	// Moved here from proc/get_generic_force_adjective to reduce list initialization/destruction
@@ -975,7 +975,25 @@
 		return
 	action_target.adjustOxyLoss(oxyloss_amt)
 
-/datum/sex_controller/proc/perform_sex_action(mob/living/carbon/human/action_target, arousal_amt, pain_amt, giving)
+/// Used by tiny penises to halve target arousal gain while doubling the users
+/datum/sex_controller/proc/get_penis_size_arousal_multiplier(mob/living/carbon/human/action_target)
+	if(!current_action || (action_target != user && action_target != target))
+		return 1
+	var/datum/sex_action/action = SEX_ACTION(current_action)
+	if(!action)
+		return 1
+	var/multiplier = 1
+	if((action.user_sex_part & SEX_PART_COCK) || (user == target && (action.target_sex_part & SEX_PART_COCK)))
+		var/obj/item/organ/penis/user_penis = user.getorganslot(ORGAN_SLOT_PENIS)
+		if(user_penis)
+			multiplier *= user_penis.get_size_arousal_multiplier(action_target)
+	if(target != user && (action.target_sex_part & SEX_PART_COCK))
+		var/obj/item/organ/penis/target_penis = target?.getorganslot(ORGAN_SLOT_PENIS)
+		if(target_penis)
+			multiplier *= target_penis.get_size_arousal_multiplier(action_target)
+	return multiplier
+
+/datum/sex_controller/proc/perform_sex_action(mob/living/carbon/human/action_target, arousal_amt, pain_amt, giving, obj/item/organ/penis/involved_penis = null)
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
 		arousal_amt *=1.5
 		if(prob(10))
@@ -988,6 +1006,11 @@
 	if(islist(modular_adjustments) && modular_adjustments.len >= 2)
 		arousal_amt = modular_adjustments[1]
 		pain_amt = modular_adjustments[2]
+	if(arousal_amt > 0)
+		if(involved_penis)
+			arousal_amt *= involved_penis.get_size_arousal_multiplier(action_target)
+		else
+			arousal_amt *= get_penis_size_arousal_multiplier(action_target)
 	action_target.sexcon.receive_sex_action(arousal_amt, pain_amt, giving, force, speed)
 	/// modular signal to let other systems know about the sex action, currently used for chastity course to track arousal and apply pain, but can be used for other things in the future
 	modular_emit_received_sex_action_signal(action_target, arousal_amt, pain_amt, giving)
@@ -1266,7 +1289,7 @@
 	else
 		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "CROTCH EXPOSED" : "CROTCH CONCEALED"]</a>"
 	if(got_cock || got_pussy || user.getorganslot(ORGAN_SLOT_TESTICLES))
-		dat += " | <a href='?src=[REF(src)];task=toggle_hide_pintle_visuals'>[hide_pintle_visuals ? "GENITALS HIDDEN" : "GENITALS VISIBLE"]</a>"
+		dat += " | <a href='?src=[REF(src)];task=toggle_hide_pintle_visuals'>HIDE GENITALS</a>"
 	dat += " ~|~ <a href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "FREEUSE ON" : "FREEUSE OFF"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
@@ -1364,8 +1387,22 @@
 				bottom_exposed = !bottom_exposed
 				update_exposure()
 		if("toggle_hide_pintle_visuals")
-			hide_pintle_visuals = !hide_pintle_visuals
-			update_exposure()
+			var/list/options = list()
+			if(user.getorganslot(ORGAN_SLOT_PENIS))
+				options["Penis"] = ORGAN_SLOT_PENIS
+			if(user.getorganslot(ORGAN_SLOT_TESTICLES))
+				options["Testicles"] = ORGAN_SLOT_TESTICLES
+			if(user.getorganslot(ORGAN_SLOT_VAGINA))
+				options["Vagina"] = ORGAN_SLOT_VAGINA
+			var/choice = input(user, "Toggle which genital?", "Genitals") as null|anything in options
+			if(choice)
+				if(options[choice] in hidden_genitals)
+					hidden_genitals -= options[choice]
+					to_chat(user, span_notice("[choice] is now visible."))
+				else
+					hidden_genitals += options[choice]
+					to_chat(user, span_notice("[choice] is now hidden."))
+				update_exposure()
 		if("toggle_freeuse")
 			freeuse = !freeuse
 			to_chat(user, span_notice("Positioning and exposure checks are now [freeuse ? "disabled" : "enabled"]."))

@@ -95,7 +95,7 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	mask = /obj/item/clothing/mask/rogue/facemask/steel/confessor
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	backpack_contents = list(
 		/obj/item/roguekey/inquisition = 1,
 		/obj/item/rope/inqarticles/inquirycord = 1,

@@ -437,6 +437,13 @@
 	created_item = /obj/item/rogueweapon/sword/short/messer/iron
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
+/datum/anvil_recipe/weapons/iron/messer/virtue
+	name = "Dueling Messer (+1 Iron)"
+	req_blade = /obj/item/blade/iron_sword
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/sword/short/messer/iron/virtue
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
 /datum/anvil_recipe/weapons/iron/broadsword
 	name = "Broadsword, Iron (+1 Iron, 1 Small Log)"
 	req_blade = /obj/item/blade/iron_sword
@@ -847,6 +854,13 @@
 	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel
 	display_category = ITEM_CAT_WEAPONS_AXES
 
+/datum/anvil_recipe/weapons/steel/woodcutter
+	name = "Woodcutter's Axe, Steel (+1 Steel, +1 Small Log)"
+	req_blade = /obj/item/blade/steel_axe
+	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
+	display_category = ITEM_CAT_WEAPONS_AXES
+
 /datum/anvil_recipe/weapons/steel/pulaski
 	name = "Pulaski axe (+1 Stick)"
 	additional_items = list(/obj/item/grown/log/tree/stick)
@@ -882,7 +896,7 @@
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
 
 /datum/anvil_recipe/weapons/steel/eaglebeak
-	name = "Eagle's Beak (+1 Steel, +1 Small Log)"
+	name = "Lucerne, Steel (+1 Steel, +1 Small Log)"
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/eaglebeak
@@ -1532,8 +1546,8 @@
 	created_item = /obj/item/rogueweapon/halberd/blacksteel
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
 
-/datum/anvil_recipe/weapons/blacksteel/polehammer
-	name = "Blacksteel Polehammer (+3 Blacksteel, +1 Toper, +1 Small Log, +1 Silk)"
+/datum/anvil_recipe/weapons/blacksteel/Lucerne
+	name = "Blacksteel Lucerne (+3 Blacksteel, +1 Toper, +1 Small Log, +1 Silk)"
 	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/roguegem/yellow, /obj/item/grown/log/tree/small, /obj/item/natural/silk)
 	created_item = /obj/item/rogueweapon/eaglebeak/blacksteel
 	display_category = ITEM_CAT_WEAPONS_POLEARMS

@@ -4,7 +4,7 @@
 	blade_class = BCLASS_BLUNT
 	icon_state = "inbash"
 	attack_verb = list("bashes", "strikes")
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 	//We want chipping, m'lord.
@@ -344,7 +344,7 @@
 	icon_state = "peasantwaraxe"
 	militia_weapon = TRUE
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
-	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/long, SPEAR_BASH)
 	force = 15
 	force_wielded = 25
 	minstr = 10
@@ -360,7 +360,7 @@
 	icon_state = "silvershovelwaraxe"
 	militia_weapon = TRUE
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
-	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
+	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/long, SPEAR_BASH)
 	force = 15
 	force_wielded = 25
 	minstr = 11
@@ -618,7 +618,7 @@
 	militia_weapon = TRUE
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike)
 	icon_state = "maciejowski"
-	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/peel, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/strike)
 	force = 18
 	force_wielded = 25
 	anvilrepair = /datum/skill/craft/carpentry
@@ -629,7 +629,7 @@
 /obj/item/rogueweapon/sword/falchion/militia/bronze
 	name = "kopis"
 	desc = "The falchion's ancient predecessor, veiled in bronze - yet no less lethal against an awaiting trunk. The curved grip snuggly fits in the wielder's hand, allowing their will to be imposed upon assailant-and-archdevil alike with terrible force."
-	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike)//no peel but very fun intents. This little chopper rocks
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike)
 	icon_state = "kopis"
 	sheathe_icon = "kopis"
 	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike)
@@ -892,8 +892,7 @@
 	max_blade_int = 200//+20 over the eagle's beak. -60 from the pike.
 	max_integrity = 260//-40 from parent. No longer blacksteel, but great all the same.
 	smeltresult = /obj/item/ingot/steel
-	gripped_intents = list(/datum/intent/spear/thrust/eaglebeak, /datum/intent/spear/bash/poleaxe, \
-	/datum/intent/axe/cut/battle/greataxe, /datum/intent/axe/chop/battle/greataxe)//You get special intents, you special guy, you...
+	gripped_intents = list(/datum/intent/spear/thrust, /datum/intent/axe/cut/long, /datum/intent/spear/bash/ranged, /datum/intent/mace/smash/eaglebeak) // GET THEM OFF OF ME!!! OOOUGH!!!
 	icon_state = "standard"
 	secondary_tag = TRUE
 

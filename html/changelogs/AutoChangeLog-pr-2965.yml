@@ -1,4 +1,0 @@
-author: "mushy"
-delete-after: True
-changes:
-  - bugfix: "TRAIT_MAGEARMOR will now properly regenerate."

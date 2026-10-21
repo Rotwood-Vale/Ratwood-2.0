@@ -263,16 +263,16 @@
 		"window" = list(
 			"key" = window_key,
 			"size" = window_size,
-			"fancy" = user.client.prefs.tgui_fancy,
-			"locked" = user.client.prefs.tgui_lock,
-			"theme" = user.client.prefs.tgui_theme,
-			"parchment_skin" = user.client.prefs.parchment_skin,
+			"fancy" = user.client?.prefs?.tgui_fancy,
+			"locked" = user.client?.prefs?.tgui_lock,
+			"theme" = user.client?.prefs?.tgui_theme,
+			"parchment_skin" = user.client?.prefs?.parchment_skin,
 			"scale" = TRUE,
 		),
 		"client" = list(
-			"ckey" = user.client.ckey,
-			"address" = user.client.address,
-			"computer_id" = user.client.computer_id,
+			"ckey" = user.client?.ckey,
+			"address" = user.client?.address,
+			"computer_id" = user.client?.computer_id,
 		),
 		"user" = list(
 			"name" = "[user]",

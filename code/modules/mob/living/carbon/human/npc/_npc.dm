@@ -540,7 +540,7 @@
 	if(L.name in friends)
 		return FALSE
 
-	if(enemies[L])
+	if(L in enemies)
 		return TRUE
 
 	if(aggressive && !faction_check_mob(L))
@@ -567,7 +567,7 @@
 	if(L.name in friends)
 		return FALSE
 
-	if(enemies[L])
+	if(L in enemies)
 		return TRUE
 
 	if(faction_check_mob(L))

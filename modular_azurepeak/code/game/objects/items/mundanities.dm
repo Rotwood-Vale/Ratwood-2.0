@@ -99,6 +99,7 @@
 	icon_state = "grimace_box"
 	var/fluff_desc = null
 	var/dice_roll = null
+	var/last_attempt_day = -1
 	sellprice = 150
 
 	grid_width = 32
@@ -111,10 +112,16 @@
 	desc += "[fluff_desc]"
 
 /obj/item/mundane/puzzlebox/impossible/attack_self(mob/living/user)
+	if(last_attempt_day == GLOB.dayspassed)
+		to_chat(user, span_warning("An attempt has already been made.. I should wait a dae.."))
+		return
 	playsound(src.loc, 'sound/items/wood_sharpen.ogg', 75, TRUE)
 	playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
 	if (alert(user, "My fingers trace the outside of this box. It looks nearly impossible. Do I try to solve it?", "ROGUETOWN", "Yes", "No") != "Yes")
 		return
+	if(last_attempt_day == GLOB.dayspassed) // You can stack the yes/no prompts, not letting you do that
+		return
+	last_attempt_day = GLOB.dayspassed
 	if(do_after(user,100, target = src))
 		if((dice_roll) + 4 <= user.STAINT)
 			to_chat(user, span_notice("After much deliberation, I solve \the [src]!"))

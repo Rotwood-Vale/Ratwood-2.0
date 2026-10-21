@@ -36,7 +36,9 @@
 		TRAIT_RITUALIST,
 		TRAIT_STRENGTH_UNCAPPED,
 		TRAIT_DREAMWALKER,
-		TRAIT_UNLYCKERABLE	//vampired dreamwalkers is such a bad idea, I don't even want to think about it
+		TRAIT_UNLYCKERABLE,	//vampired dreamwalkers is such a bad idea, I don't even want to think about it
+		TRAIT_CURSE_RESIST,
+		TRAIT_HERESIARCH
 		)
 
 	var/STASTR = 15
