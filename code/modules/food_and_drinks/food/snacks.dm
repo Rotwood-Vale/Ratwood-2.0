@@ -271,6 +271,8 @@ All foods are distributed among various categories. Use common sense.
 		if(gluttony.bites >= gluttony.bites_needed)
 			gluttony.bites = 0
 			eater.sate_addiction(/datum/charflaw/addiction/corpulent)
+		else
+			to_chat(eater, span_warning("I need more..."))
 
 	if(HAS_TRAIT(eater, TRAIT_HEMOPHAGE)) //trait desc states that normal food would make them ill, adjusted accordingly
 		eater.adjustToxLoss(2)
