@@ -3,7 +3,7 @@
 //Expert unarmed to top it off. Make sah proud.
 /datum/advclass/manorguard/gormless
 	name = "Catchpole"
-	tutorial = "You're a catchpole, the big muscled brute sent out when intimidating some whiny shopkeep is needed, heads need crushing, or legs need breaking, the big plated juggernaut with the big weapons. Of course, it's expensive wrapping a form like yours in steel, and all that fancy shite goes to the knights, so you've been cheaped out, but you do more with less than most of your colleagues. May your lord feel safe and sound by your metal clad form."
+	tutorial = "You're a catchpole, the big muscled brute sent out when intimidating some whiny shopkeep is needed, heads need crushing, or legs need breaking, the big guy with the big weapons. Of course, it's expensive wrapping a form like yours in steel, and all that fancy shite goes to the knights, so you've been cheaped out, but you do more with less than most of your colleagues. May your lord feel safe and sound by your hardy form."
 	outfit = /datum/outfit/job/roguetown/manorguard/gormless
 	category_tags = list(CTAG_MENATARMS)
 	traits_applied = list(TRAIT_MEDIUMARMOR) 
@@ -85,12 +85,12 @@
 				r_hand = /obj/item/rogueweapon/sword/long/exe
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE) //I saw this on the ironclad adventurer and was like... Damn the catchpole should have that.
-	backpack_contents = list(//Iron dagger and ale instead of red.
+	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger = 1,
 		/obj/item/rope/chain = 1,
 		/obj/item/storage/keyring/guardcastle = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1, //I'm shocked the catchpole gets booze instead of red, and I'm keeping it because it's aura. "We gave you this fancy armor, if you get it broken then you've already fucked up." type shit.
+		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		)
 
 	H.verbs |= /mob/proc/haltyell
