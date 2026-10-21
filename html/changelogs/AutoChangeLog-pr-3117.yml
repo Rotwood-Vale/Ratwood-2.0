@@ -1,0 +1,8 @@
+author: "SirSwagmeyer"
+delete-after: True
+changes:
+  - rscadd: "Added a Dagger Special -- Dash"
+  - rscadd: "Added a plethora of new moodlet sprites and mood variations."
+  - rscdel: "Removes blunt chipping code from the game - it was already removed, but it wasn't able to be fully cleaned up until now."
+  - refactor: "Refactored STEAL --> SPECIAL button. You can now use the MMB to trigger a weapon special!"
+  - refactor: "Refactored Steal intent to be used by right clicking on weak with combat mode enabled."

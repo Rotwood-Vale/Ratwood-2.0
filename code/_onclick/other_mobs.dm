@@ -38,10 +38,15 @@
 			// src.emote("attackgrunt")
 		if(used_intent.releasedrain)
 			stamina_add(ceil(used_intent.releasedrain * rmb_stam_penalty))
+		var/dualwield_armed = FALSE
+		if(HAS_TRAIT(src, TRAIT_DUALWIELDER))
+			dualwield_armed = process_dualwield()
 		if(L.has_status_effect(/datum/status_effect/buff/clash) && L.get_active_held_item() && ishuman(L))
 			var/mob/living/carbon/human/H = L
 			var/obj/item/IM = L.get_active_held_item()
 			H.process_clash(src, IM)
+			if(dualwield_armed)
+				complete_dualwield_attack(L, params)
 			return
 		if(mob_biotypes & MOB_UNDEAD)
 			if(L.has_status_effect(/datum/status_effect/buff/necras_vow))
@@ -57,9 +62,13 @@
 				apply_status_effect(/datum/status_effect/churned, L)
 		
 		if(L.checkmiss(src))
+			if(dualwield_armed)
+				complete_dualwield_attack(L, params)
 			return
 		if(!L.checkdefense(used_intent, src))
 			L.attack_hand(src, params)
+		if(dualwield_armed)
+			complete_dualwield_attack(L, params)
 		return
 	else
 		var/item_skip = FALSE

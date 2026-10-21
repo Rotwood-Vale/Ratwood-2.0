@@ -38,9 +38,6 @@
 	damfactor = 0.8
 	clickcd = CLICK_CD_QUICK //Slower than a regular thrust, with slightly less penetration and damage. Inverse to the katar.
 
-
-/// INTENT DATUMS	^
-
 //Weaponry.
 
 /obj/item/rogueweapon/katar
