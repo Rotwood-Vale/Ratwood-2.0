@@ -8,7 +8,7 @@
 	antag_flag = ROLE_PREBEL
 	shared_occurence_type = SHARED_HIGH_THREAT
 
-	base_antags = 1
+	base_antags = 3
 	maximum_antags = 3
 
 	denominator = 50 // adds 1 possible rebel for every 50 players

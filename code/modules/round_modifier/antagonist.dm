@@ -1,3 +1,6 @@
+//Major: Vampire, Vampire & Werewolf, Werewolfs, Lich, Vampirelord, High Bandits,Peasant rebels, Rogue Count
+//Moderate: Dreamwalker, Medium bandit, High wretch, High gnoll, Assassin, Possessed
+//Minor: Thieves guild, Aspirant, Maniac
 
 /datum/round_modifier/medium_bandits
 	name = "Medium Bandits"

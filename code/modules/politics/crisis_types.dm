@@ -18,8 +18,8 @@
 #define CRISIS_FERENTIAN_INDEMNITY 0.4
 
 // A crisis is only offered when this many eligible players are online (Lord and rebels excluded).
-#define CRISIS_OTAVA_MIN_FAITHLESS 
-#define CRISIS_FERENTIAN_MIN_LEVYABLE 6
+#define CRISIS_OTAVA_MIN_FAITHLESS 4
+#define CRISIS_FERENTIAN_MIN_LEVYABLE 12
 #define CRISIS_HEARTFELT_MIN_NOBLES 5
 
 // Scutage poll-tax floor (mammon/day); POLL_TAX_MAX_RATE is 40.
@@ -98,10 +98,10 @@
 	id = DECREE_CRISIS_OTAVA
 	name = "The Otavan Sanction"
 	crisis_title = "Sanctioned by Otava"
-	duke_briefing = "The Otavan Church has sanctioned the Crown. You are bound to Psydon, and the realm's faithless must be brought into the fold. Defy the sanction early, or let it lapse, and the Holy See will dispatch the Inquisition to the duchy."
+	duke_briefing = "The Principality has sanctioned the Crown. You are bound to Psydon, and the realm's faithless must be brought into the fold. Defy the sanction early, or let it lapse, and the Holy See will dispatch the Inquisition to the duchy."
 	mechanical_text = "The Lord is bound to Psydon until enough of the realm's faithless have been converted. Defying the sanction early, or failing to make progress within the hour, brings the Inquisition to the duchy."
 	flavor_text = "Let it be known that the Holy Principality of Otava has laid its sanction upon the Crown. The %RULER% is bound to the worship of Psydon, and shall bring the faithless of the Duchy into the fold, or answer for it dearly."
-	imposed_text = "The Principality of Otava has laid a sanction upon the Crown. The Lord is bound to Psydon, and the faithless of the Vale are to be brought into the fold."
+	imposed_text = "The Principality of Otava has laid a sanction upon the Crown. The Lord is bound to Psydon, and the faithless of the Duchy are to be brought into the fold."
 	goal_complete_text = "The Principality of Otava is satisfied. The sanction upon the Crown may now be lifted."
 	revoke_text = "The %RULER% has set aside the Otavan Sanction."
 	defiance_warning = "If you defy the sanction before the faithless are converted, the Principality of Otava will not take this insult lightly and will dispatch another Inquisition expedition to the duchy."
@@ -121,10 +121,10 @@
 	if(!istype(duke) || crisis_is_psydonite(duke))
 		return
 	duke.set_patron(PSYDON_PATRON_TYPE)
-	to_chat(duke, span_boldwarning("The Otavan sanction binds me to Psydon. My faith has been set for me."))
+	to_chat(duke, span_boldwarning("The Otavan sanction binds me to Psydon. My faith has been solidified."))
 
 /datum/decree/crisis/otava_sanction/apply_defiance_penalty()
-	priority_announce("The Principality of Otava, finding the Crown's sanction unmet, has dispatched the Inquisition to the Vale. Inquisitors are to root out the faithless, and the Crown's court shall answer their inquiry.", "BY THE HOLY SEE OF OTAVA", 'sound/misc/otavanlament.ogg', "Captain")
+	priority_announce("The Principality of Otava, finding the Crown's sanction unmet, has dispatched the Inquisition to the Duchy. Inquisitors are to root out the faithless, and the Crown's court shall answer their inquiry.", "BY THE HOLY SEE OF OTAVA", 'sound/misc/otavanlament.ogg', "Captain")
 	// Open extra Inquisition slots so inquisitors can arrive.
 	// total_positions/spawn_positions is how your Inquisition jobs gain slots mid-round.
 	for(var/job_title in GLOB.inquisition_positions)
@@ -327,7 +327,9 @@
 	for(var/mob/living/carbon/human/H in crisis_eligible_humans())
 		if(crisis_is_strippable_noble(H))
 			baseline_ckeys += H.ckey
-	target = max(1, min(CLAMP(round(length(baseline_ckeys) * 0.5), 2, ), length(baseline_ckeys)))
+	var/nobles = length(baseline_ckeys)
+	target = CLAMP(round(nobles * 0.5), 2, 4)
+	target = max(1, min(target, nobles))
 	desc = "The nobility of [target] nobles must be revoked to buy the blackmailers' silence."
 	. = ..()
 

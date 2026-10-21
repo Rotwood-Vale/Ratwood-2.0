@@ -26,7 +26,8 @@
 	sharpness_penalty = 3
 
 /datum/intent/spear/thrust/militia
-	penfactor = 40
+	penfactor = 60
+	damfactor = 1.1
 
 /datum/intent/spear/thrust/pike		//EXPERIMENTAL
 	name = "pike thrust"

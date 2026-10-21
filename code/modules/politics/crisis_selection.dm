@@ -10,7 +10,7 @@
 #define CRISIS_CHOICE_TIMEOUT (3 MINUTES)
 // TRUE while testing alone: offers every crisis regardless of how many players are online.
 // (Goals can't be completed solo, but its the best testing we can do alone.)
-#define CRISIS_DEBUG_OFFER_ALL TRUE
+#define CRISIS_DEBUG_OFFER_ALL FALSE
 
 /datum/controller/subsystem/treasury
 	var/crisis_selection_started = FALSE

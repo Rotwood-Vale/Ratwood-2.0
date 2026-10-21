@@ -260,6 +260,7 @@
 	free_revocation = FALSE
 	if(penalize)
 		apply_defiance_penalty()
+		rebel_windfall(REBEL_FUNDS_CRISIS_FAIL, "The Lord has faltered before a foreign power.")
 	release_held_decree()
 	on_obligation_ended()
 
@@ -279,6 +280,7 @@
 	priority_announce("The deadline has passed with no progress upon [name]. The patience of its patrons is at an end.", "BY FOREIGN DECREE", pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain")
 	goal.stop()
 	apply_defiance_penalty()
+	rebel_windfall(REBEL_FUNDS_CRISIS_FAIL, "The Lord has failed a foreign power.")
 	free_revocation = TRUE // the penalty is already paid: on_revoke must not apply it again
 	var/saved_revoke_text = revoke_text
 	revoke_text = null
@@ -316,13 +318,13 @@
 	id = DECREE_CRISIS_GRENZELHOFT
 	name = "The Grenzelhoft Debt Covenant"
 	crisis_title = "Indebted to Grenzelhoft"
-	duke_briefing = "The Crown owes the Grenzelhoft bankers. Peasant and yeoman poll taxes are locked at a punishing rate until the Crown's Purse holds enough mammon to settle the debt. Defy the covenant early and the creditors will bankrupt the duchy."
-	mechanical_text = "Peasant and yeoman taxes cannot fall below the covenant rate until the debt is settled. Defying the covenant early throws the Crown into sequestration."
+	duke_briefing = "The Crown owes the Grenzelhoft bankers. Peasant and yeoman poll taxes are locked at a punishing rate until the Crown's Purse holds enough mammon to settle the debt. Defy the covenant early and the creditors will seize the entire treasury and bankrupt the duchy."
+	mechanical_text = "Peasant and yeoman taxes cannot fall below the covenant rate until the debt is settled. Defying the covenant early lets the creditors seize the entire treasury and throw the Crown into sequestration."
 	flavor_text = "Let it be known that the Crown stands in arrears to the bankers of the Grenzelhoft Imperiate. By this covenant the %RULER% binds the Vale's common folk to a heavy levy until the sum is made whole. Should the Crown break faith before the debt is settled, the creditors shall take their due from the Crown's own coffers."
 	imposed_text = "Agents of the Grenzelhoft Imperiate have called the Crown's debts. A heavy levy is placed upon the common folk until the sum is settled."
 	goal_complete_text = "The Crown's debt to the Grenzelhoft Imperiate has been settled. The covenant's levy may now be lifted."
 	revoke_text = "The %RULER% has set aside the Grenzelhoft Debt Covenant. The levy upon the common folk is lifted."
-	defiance_warning = "If you defy the covenant before the debt is settled, the Grenzelhoft creditors will call the Crown's debts and the treasury will be placed in sequestration."
+	defiance_warning = "If you defy the covenant before the debt is settled, the Grenzelhoft creditors will seize the entire treasury, call the Crown's debts, and place the Crown in sequestration."
 	goal_type = /datum/crisis_goal/treasury_target
 	rate_floor = CRISIS_DEBT_RATE_FLOOR
 	floor_categories = list(POLL_TAX_CAT_PEASANT, POLL_TAX_CAT_BURGHER)

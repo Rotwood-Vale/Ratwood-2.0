@@ -264,9 +264,10 @@
 /obj/item/rogueweapon/flail/peasantwarflail
 	force = 10
 	force_wielded = 35
+	militia_weapon = TRUE
 	possible_item_intents = list(/datum/intent/flail/strike)
 	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/mace/smash/flailrange, /datum/intent/flail/sweep)
-	name = "militia thresher"
+	name = "militia war flail"
 	desc = "Just like how a sling's bullet can fell a giant, so too does this great flail follow the principle of converting 'momentum' into 'plate-rupturing force'."
 	icon_state = "peasantwarflail"
 	icon = 'icons/roguetown/weapons/blunt64.dmi'
@@ -303,6 +304,7 @@
 	icon_state = "greatflail"
 	wdefense = 6
 	minstr = 12
+	militia_weapon = FALSE
 	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	max_integrity = 300//+50 over iron warflail
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -315,6 +317,7 @@
 	wdefense = 6
 	minstr = 13
 	max_integrity = 300
+	militia_weapon = FALSE
 	resistance_flags = FIRE_PROOF// weapon of war, not a thresher
 	is_silver = TRUE
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -337,6 +340,7 @@
 	icon_state = "bs_greatflail"
 	wdefense = 7
 	minstr = 12
+	militia_weapon = FALSE
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)//this having the better intents is a smaller buff than just increasing the base force, on par with things like blacksteel greataxe and flamberg being on par with antag options
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	max_integrity = 500
@@ -352,6 +356,7 @@
 	icon_state = "matthiosflail"
 	sellprice = 250
 	smeltresult = /obj/item/ingot/gold
+	militia_weapon = FALSE
 	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)
 	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/mace/smash/flail/matthiosflail, /datum/intent/flail/sweep)
 	associated_skill = /datum/skill/combat/whipsflails
@@ -379,6 +384,7 @@
 	minstr = 12
 	wdefense = 5
 	max_integrity = 300
+	militia_weapon = FALSE
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	special = /datum/special_intent/greatsword_swing// put that blade to use
 	bigboy = TRUE

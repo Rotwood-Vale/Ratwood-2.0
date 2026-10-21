@@ -1653,6 +1653,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				return
 			sharpness = IS_BLUNT
 
+
 /obj/item/proc/wield(mob/living/carbon/user, show_message = TRUE)
 	if(wielded)
 		return
@@ -1689,6 +1690,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(wielded) //Trying to unwield it. Ratwood edit. Original: (altgripped || wielded)
 		ungrip(user)
 		return
+	militia_grip_check(user) // towners/yeoman get the militia bonus
 	if(alt_intents && !gripped_intents)
 		altgrip(user)
 	if(gripped_intents)

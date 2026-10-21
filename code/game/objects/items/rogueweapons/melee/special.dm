@@ -244,10 +244,79 @@
 		playsound(src, pick('sound/items/stunmace_toggle (1).ogg','sound/items/stunmace_toggle (2).ogg','sound/items/stunmace_toggle (3).ogg'), 100, TRUE)
 
 ///Peasantry / Militia Weapon Pack///
+// Militia weapons: stronger in the hands of peasants and yeomen.
+//
+// The bonus is gated on the wielder's job, so it won't be effective for all rebels
+// peasant gets it and a converted garrison guard, noble or mercenary does not.
+//
+// It is applied when the weapon is gripped two-handed: /obj/item/attack_self calls
+// militia_grip_check(user) just before wield(user). Each grip re-checks who is holding it,
+// so a weapon passed between people always reflects its current wielder. One-handed use is
+// unchanged. Changes are applied as deltas, so other modifiers (e.g. the silver blessing's
+// added_def) are never overwritten.
+
+#define MILITIA_WFORCE_MULT 1.4 // two-handed damage multiplier for towners
+#define MILITIA_WDEF_BONUS 3 // extra weapon defense for towners
+
+/// Whether this person counts as a towner. Garrison, nobles, mercenaries and so on do not.
+/proc/is_militia_user(mob/user)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		return FALSE
+	return (H.job in GLOB.peasant_positions) || (H.job in GLOB.yeoman_positions)
+
+/obj/item/rogueweapon
+	//towners get a bonus when gripping this two-handed.
+	var/militia_weapon = FALSE
+	var/militia_wforce_mult = MILITIA_WFORCE_MULT
+	var/militia_wdef_bonus = MILITIA_WDEF_BONUS
+	// Optional gripped intents that townspeople get instead of the normal ones. Null = same intents.
+	var/list/militia_gripped_intents
+
+	//how much of each bonus is currently applied.
+	var/militia_wforce_applied = 0
+	var/militia_wdef_applied = 0
+	var/list/militia_default_gripped
+	var/list/militia_towner_gripped
+
+/// Stub on the base item so attack_self can call it on anything.
+/obj/item/proc/militia_grip_check(mob/user)
+	return
+
+/obj/item/rogueweapon/militia_grip_check(mob/user)
+	if(!militia_weapon)
+		return
+	var/towner = is_militia_user(user)
+
+	// Two-handed damage: scale whatever the weapon has right now, minus what we added before.
+	var/base_wforce = force_wielded - militia_wforce_applied
+	var/wforce_delta = towner ? round(base_wforce * (militia_wforce_mult - 1)) : 0
+	force_wielded += wforce_delta - militia_wforce_applied
+	militia_wforce_applied = wforce_delta
+
+	// Weapon defense.
+	var/wdef_delta = towner ? militia_wdef_bonus : 0
+	wdefense += wdef_delta - militia_wdef_applied
+	militia_wdef_applied = wdef_delta
+
+	// Optional towner-only grip intents. ASSUMES gripped_intents holds instantiated intents
+	// by now (item Initialize turned the typepaths into instances).
+	if(length(militia_gripped_intents))
+		if(isnull(militia_default_gripped))
+			militia_default_gripped = gripped_intents
+		if(towner)
+			if(isnull(militia_towner_gripped))
+				militia_towner_gripped = list()
+				for(var/path in militia_gripped_intents)
+					militia_towner_gripped += new path(src)
+			gripped_intents = militia_towner_gripped
+		else
+			gripped_intents = militia_default_gripped
 
 /obj/item/rogueweapon/woodstaff/militia
 	force = 20
 	force_wielded = 30
+	militia_weapon = TRUE
 	possible_item_intents = list(SPEAR_BASH, SPEAR_CUT_1H)
 	gripped_intents = list(/datum/intent/pick/ranged, /datum/intent/spear/thrust, SPEAR_BASH)
 	name = "militia goedendag"
@@ -273,6 +342,7 @@
 	name = "militia war axe"
 	desc = "Shovels have always held some manner of importance in a militiaman's lyfe. Instead of digging corpsepits, however, this poleaxe will now fill them up."
 	icon_state = "peasantwaraxe"
+	militia_weapon = TRUE
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
 	force = 15
@@ -288,6 +358,7 @@
 	name = "silver militia shovelaxe"
 	desc = "'Do you think Psydon stays in Heaven because He too lives in fear of what He's created?' </br>A silver shovel, improvised - perhaps, by the hands of a particularly desperate gravedigger - to fill a polearm's duty."
 	icon_state = "silvershovelwaraxe"
+	militia_weapon = TRUE
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, SPEAR_BASH) //bash is for nonlethal takedowns, only targets limbs
 	gripped_intents = list(/datum/intent/rend/reach, /datum/intent/axe/chop/battle/greataxe, /datum/intent/sword/peel/big, SPEAR_BASH)
 	force = 15
@@ -325,6 +396,8 @@
 /obj/item/rogueweapon/spear/militia
 	force = 18
 	force_wielded = 30
+	militia_weapon = TRUE
+	militia_gripped_intents = list(/datum/intent/spear/thrust/militia,SPEAR_CUT, SPEAR_BASH)
 	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_CUT_1H)
 	gripped_intents = list(SPEAR_THRUST, SPEAR_CUT, SPEAR_BASH)
 	name = "militia spear"
@@ -441,7 +514,7 @@
 					ignited = TRUE
 			if(isliving(target))
 				var/mob/living/M = target
-				M.adjust_fire_stacks(5)
+				M.adjust_fire_stacks(12)
 				M.ignite_mob()
 				ignited = TRUE
 			if(ignited && single_use)
@@ -505,6 +578,7 @@
 	desc = "At the end of the dae, a knight's bascinet isn't much different than a particularly large stone. After all, both tend to rupture with sobering ease when introduced to a sharpened pickend."
 	force = 20
 	force_wielded = 25
+	militia_weapon = TRUE
 	possible_item_intents = list(/datum/intent/pick/bad)
 	gripped_intents = list(/datum/intent/pick, /datum/intent/stab/militia)
 	icon_state = "milpick"
@@ -525,6 +599,7 @@
 /obj/item/rogueweapon/pick/militia/steel
 	force = 25
 	force_wielded = 30
+	militia_weapon = TRUE
 	name = "militia steel warpick"
 	desc = "At the end of the dae, a knight's bascinet isn't much different than a particularly large stone. After all, both tend to rupture with sobering ease when introduced to a sharpened pickend. This one is honed out of steel parts."
 	icon_state = "milsteelpick"
@@ -540,6 +615,7 @@
 /obj/item/rogueweapon/sword/falchion/militia
 	name = "maciejowski"
 	desc = "Fittingly coined as a 'peasant's falchion', this hunting sword's blade has been retempered to hunt the most dangerous game. Those jagged edges are perfect for tearing into flesh-and-maille."
+	militia_weapon = TRUE
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike)
 	icon_state = "maciejowski"
 	gripped_intents = list(/datum/intent/rend, /datum/intent/sword/chop/militia, /datum/intent/sword/peel, /datum/intent/sword/strike)
