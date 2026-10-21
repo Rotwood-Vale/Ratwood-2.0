@@ -611,13 +611,13 @@
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_polearm.ogg'
 
 /datum/intent/axe/cut/demolition
-	demolition_mod = 6
+	demolition_mod = 7
 
 /datum/intent/axe/chop/demolition // special intends for anti building specialised
-	demolition_mod = 6
+	demolition_mod = 7
 
 /datum/intent/pick/demolition
-	demolition_mod = 3
+	demolition_mod = 4
 
 /obj/item/rogueweapon/shovel/saperka/getonmobprop(tag)
 	. = ..()
