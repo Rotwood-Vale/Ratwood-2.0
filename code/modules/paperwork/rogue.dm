@@ -603,3 +603,22 @@
 	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity. This one bears the seal of the Principality of Otava."
 	info = "By word of the Prince Henri the Silver-Blooded, and with the Seal of Approval by High Inquisitor Archibald, does this writ gain power only given to the men and women truly blessed by PSYDON. The bearer of this writ is empowered to speak, negotiate, and act in the Principality's name, and to act with the full support of the Otavan Holy See. Furthermore, any true believer of PSYDON and HIS name shall provide any aid to its bearer, for they bring forth HIS will and carry HIS strength. Let it be known that should this edict be honored, favor and respect is forever earned. Should any individual wrong the men and women of PSYDON and the Holy See, however, will have HIS wrath driven unto their land."
 	icon_state = "contractsigned"
+
+/obj/item/paper/scroll/letter_of_claim
+	name = "Proof of Noble Claim"
+	icon_state = "contractsigned"
+	desc = "An ecclesiastical instrument attesting to the bearer's ancestral right to a noble title, authenticated beneath the sacred seal of the Grenzelhoft Holy See."
+	info = "By the grace of the Divine and under the sacred authority of the Holy See of Grenzelhoft, let this instrument stand as testimony to the lawful claim of the bearer to the noble title herein asserted.\
+	Let the archives of the faithful, the testimony of worthy witnesses, and the records of blood and inheritance be weighed before the eyes of the Church. Where such evidence is found true, \
+	let no earthly lord dismiss the bearer's claim without cause, nor deny them the right to petition for recognition of their rightful station.\
+	Yet let it be known that this writ attests to a claim, and not in itself to the granting of a title; for the rights of nobility must be established through lawful inheritance, the judgment of proper authority, and the ordinances of the realm.\
+	Under the watchful eye of the Divine Ten, and beneath the seal of the Holy See of Grenzelhoft, this proof is entered into the sacred record.\
+	Let truth prevail, and rightful lineage be remembered."
+
+/obj/item/paper/scroll/letter_of_claim/update_icon_state()
+	if(open)
+		icon_state = "contractsigned"
+		name = initial(name)
+	else
+		icon_state = "scroll_closed"
+		name = initial(name)
