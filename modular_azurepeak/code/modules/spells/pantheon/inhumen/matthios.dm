@@ -595,14 +595,13 @@
 	overlay_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	action_icon = 'icons/mob/actions/matthiosmiracles.dmi'
 	glow_color = "#FFD700"
-	glow_intensity = GLOW_INTENSITY_LOW
 	clothes_req = FALSE
 	human_req = FALSE
 	chargedrain = 0
 	chargetime = 0
 	recharge_time = 30 MINUTES
 	cooldown_min = 30 MINUTES
-	invocations = list("I WILL BURN THE WORLD OF TYRANNY TO THE GROUND!")
+	invocations = list("I WILL BURN THE WORLD OF TYRANNY TO THE GROUND!!")
 	invocation_type = "shout"
 	associated_skill = /datum/skill/magic/holy
 	devotion_cost = 200
@@ -611,6 +610,7 @@
 
 /obj/effect/proc_holder/spell/self/wingsoffreedom/cast(list/targets, mob/living/carbon/human/user = usr)
 	. = ..()
+
 	if(user.has_status_effect(/datum/status_effect/debuff/submissive))
 		to_chat(user, span_warning("Your will is too broken to change form."))
 		revert_cast(user)
@@ -639,7 +639,7 @@
 // Mob itself
 /mob/living/carbon/human/species/wildshape/dragon_matthios
 	name = "Gilded Dragon"
-	desc = "It has been a very long time since the dragons ruled the skies, yet their power still remains formidable. Despite their monstrous form, ancient intelligence in their eyes betrays their sentience."
+	desc = "It has been a very long time since the dragons ruled the skies, yet their power still remains formiddable. Despite their monstrous form, ancient intelligence in their eyes betrays their sentience."
 	race = /datum/species/dragon_matthios
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	ambushable = FALSE
@@ -681,145 +681,145 @@
 #define GILDED_SWOOP_DIRECTION_CHANGE_RANGE 5
 
 /obj/effect/proc_holder/spell/invoked/gilded_swoop
-	name = "Gilded Swoop"
-	recharge_time = 30 SECONDS
-	overlay_state = "dendor"
-	chargetime = 0
-	range = 15
-	antimagic_allowed = TRUE
+    name = "Gilded Swoop"
+    recharge_time = 30 SECONDS
+    overlay_state = "dendor"
+    chargetime = 0
+    range = 15
+    antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/invoked/gilded_swoop/cast(list/targets, mob/living/user = usr)
-	if(!istype(user, /mob/living/carbon/human/species/wildshape/dragon_matthios))
-		return FALSE
-	var/mob/living/carbon/human/species/wildshape/dragon_matthios/dragon = user
-	return dragon.gilded_swoop(targets[1])
+    if(!istype(user, /mob/living/carbon/human/species/wildshape/dragon_matthios))
+        return FALSE
+    var/mob/living/carbon/human/species/wildshape/dragon_matthios/dragon = user
+    return dragon.gilded_swoop(targets[1])
 
 /obj/effect/temp_visual/gilded_dragon_flight
-	icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
-	icon_state = "dragon_cool"
-	layer = ABOVE_ALL_MOB_LAYER
-	pixel_x = -32
-	duration = 10
-	randomdir = FALSE
+    icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
+    icon_state = "dragon_cool"
+    layer = ABOVE_ALL_MOB_LAYER
+    pixel_x = -32
+    duration = 10
+    randomdir = FALSE
 
 /obj/effect/temp_visual/gilded_dragon_flight/Initialize(mapload, negative)
-	. = ..()
-	INVOKE_ASYNC(src, PROC_REF(flight), negative)
+    . = ..()
+    INVOKE_ASYNC(src, PROC_REF(flight), negative)
 
 /obj/effect/temp_visual/gilded_dragon_flight/proc/flight(negative)
-	if(negative)
-		animate(src, pixel_x = -GILDED_SWOOP_HEIGHT*0.1, pixel_z = GILDED_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
-	else
-		animate(src, pixel_x = GILDED_SWOOP_HEIGHT*0.1, pixel_z = GILDED_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
-	sleep(3)
-	icon_state = "dragon_swoop"
-	if(negative)
-		animate(src, pixel_x = -GILDED_SWOOP_HEIGHT, pixel_z = GILDED_SWOOP_HEIGHT, time = 7)
-	else
-		animate(src, pixel_x = GILDED_SWOOP_HEIGHT, pixel_z = GILDED_SWOOP_HEIGHT, time = 7)
+    if(negative)
+        animate(src, pixel_x = -GILDED_SWOOP_HEIGHT*0.1, pixel_z = GILDED_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
+    else
+        animate(src, pixel_x = GILDED_SWOOP_HEIGHT*0.1, pixel_z = GILDED_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
+    sleep(3)
+    icon_state = "dragon_swoop"
+    if(negative)
+        animate(src, pixel_x = -GILDED_SWOOP_HEIGHT, pixel_z = GILDED_SWOOP_HEIGHT, time = 7)
+    else
+        animate(src, pixel_x = GILDED_SWOOP_HEIGHT, pixel_z = GILDED_SWOOP_HEIGHT, time = 7)
 
 /obj/effect/temp_visual/gilded_dragon_flight/end
-	pixel_x = GILDED_SWOOP_HEIGHT
-	pixel_z = GILDED_SWOOP_HEIGHT
-	duration = 10
+    pixel_x = GILDED_SWOOP_HEIGHT
+    pixel_z = GILDED_SWOOP_HEIGHT
+    duration = 10
 
 /obj/effect/temp_visual/gilded_dragon_flight/end/flight(negative)
-	if(negative)
-		pixel_x = -GILDED_SWOOP_HEIGHT
-		animate(src, pixel_x = -32, pixel_z = 0, time = 5)
-	else
-		animate(src, pixel_x = -32, pixel_z = 0, time = 5)
+    if(negative)
+        pixel_x = -GILDED_SWOOP_HEIGHT
+        animate(src, pixel_x = -32, pixel_z = 0, time = 5)
+    else
+        animate(src, pixel_x = -32, pixel_z = 0, time = 5)
 
 /obj/effect/temp_visual/gilded_dragon_flight/end
-	icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
-	icon_state = "dragon_cool"
+    icon = 'modular/icons/mob/96x96/ratwood_dragon.dmi'
+    icon_state = "dragon_cool"
 
 /mob/living/carbon/human/species/wildshape/dragon_matthios/proc/gilded_swoop(atom/movable/manual_target)
-	if(stat || swooping || !manual_target || QDELETED(manual_target))
-		return FALSE
-	var/turf/target_turf = get_turf(manual_target)
-	if(!target_turf || target_turf.z != z)
-		return FALSE
+    if(stat || swooping || !manual_target || QDELETED(manual_target))
+        return FALSE
+    var/turf/target_turf = get_turf(manual_target)
+    if(!target_turf || target_turf.z != z)
+        return FALSE
 
-	playsound(loc, 'sound/vo/mobs/vdragon/drgnroar.ogg', 50, TRUE, -1)
-	swooping |= GILDED_SWOOP_DAMAGEABLE
-	movement_type = FLYING
-	density = FALSE
-	var/old_icon_state = icon_state
-	icon_state = "shadow"
-	visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
+    playsound(loc, 'sound/vo/mobs/vdragon/drgnroar.ogg', 50, TRUE, -1)
+    swooping |= GILDED_SWOOP_DAMAGEABLE
+    movement_type = FLYING
+    density = FALSE
+    var/old_icon_state = icon_state
+    icon_state = "shadow"
+    visible_message("<span class='boldwarning'>[src] swoops up high!</span>")
 
-	var/negative
-	var/initial_x = x
-	if(target_turf.x < initial_x)
-		negative = TRUE
-	else if(target_turf.x > initial_x)
-		negative = FALSE
-	else
-		negative = prob(50)
-	var/obj/effect/temp_visual/gilded_dragon_flight/F = new(loc, negative)
+    var/negative
+    var/initial_x = x
+    if(target_turf.x < initial_x)
+        negative = TRUE
+    else if(target_turf.x > initial_x)
+        negative = FALSE
+    else
+        negative = prob(50)
+    var/obj/effect/temp_visual/gilded_dragon_flight/F = new(loc, negative)
 
-	negative = !negative
-	var/oldtransform = transform
-	var/oldalpha = alpha
-	alpha = 255
-	animate(src, alpha = 204, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
-	for(var/i in 1 to 3)
-		sleep(1)
-		if(QDELETED(src) || stat == DEAD)
-			qdel(F)
-			if(stat == DEAD)
-				swooping &= ~GILDED_SWOOP_DAMAGEABLE
-				animate(src, alpha = oldalpha, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW)
-			return FALSE
-	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
-	swooping |= GILDED_SWOOP_INVULNERABLE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	SLEEP_CHECK_DEATH(7)
+    negative = !negative
+    var/oldtransform = transform
+    var/oldalpha = alpha
+    alpha = 255
+    animate(src, alpha = 204, transform = matrix()*0.9, time = 3, easing = BOUNCE_EASING)
+    for(var/i in 1 to 3)
+        sleep(1)
+        if(QDELETED(src) || stat == DEAD)
+            qdel(F)
+            if(stat == DEAD)
+                swooping &= ~GILDED_SWOOP_DAMAGEABLE
+                animate(src, alpha = oldalpha, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW)
+            return FALSE
+    animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
+    swooping |= GILDED_SWOOP_INVULNERABLE
+    mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+    SLEEP_CHECK_DEATH(7)
 
-	while(manual_target && !QDELETED(manual_target) && loc != get_turf(manual_target))
-		forceMove(get_step(src, get_dir(src, manual_target)))
-		SLEEP_CHECK_DEATH(0.5)
+    while(manual_target && !QDELETED(manual_target) && loc != get_turf(manual_target))
+        forceMove(get_step(src, get_dir(src, manual_target)))
+        SLEEP_CHECK_DEATH(0.5)
 
-	var/descent_time = 10
-	if(negative)
-		if(ISINRANGE(x, initial_x + 1, initial_x + GILDED_SWOOP_DIRECTION_CHANGE_RANGE))
-			negative = FALSE
-	else if(ISINRANGE(x, initial_x - GILDED_SWOOP_DIRECTION_CHANGE_RANGE, initial_x - 1))
-		negative = TRUE
-	new /obj/effect/temp_visual/gilded_dragon_flight/end(loc, negative)
-	new /obj/effect/temp_visual/dragon_swoop(loc)
-	animate(src, alpha = 255, transform = oldtransform, descent_time)
-	SLEEP_CHECK_DEATH(descent_time)
-	icon_state = old_icon_state
-	swooping &= ~GILDED_SWOOP_INVULNERABLE
-	mouse_opacity = initial(mouse_opacity)
-	playsound(loc, 'sound/misc/meteorimpact.ogg', 200, TRUE)
-	for(var/mob/living/L in orange(1, src))
-		if(L.stat)
-			visible_message(span_warning("[src] slams down on [L], crushing [L.p_them()]!"))
-			L.gib()
-		else
-			L.adjustBruteLoss(75)
-			if(L && !QDELETED(L))
-				var/throw_dir = get_dir(src, L)
-				if(L.loc == loc)
-					throw_dir = pick(GLOB.alldirs)
-				var/throwtarget = get_edge_target_turf(src, throw_dir)
-				L.throw_at(throwtarget, 3)
-				visible_message(span_warning("[L] is thrown clear of [src]!</span>"))
-	for(var/mob/M in range(7, src))
-		shake_camera(M, 15, 1)
-	movement_type = GROUND
-	density = TRUE
-	SLEEP_CHECK_DEATH(1)
-	swooping &= ~GILDED_SWOOP_DAMAGEABLE
-	return TRUE
+    var/descent_time = 10
+    if(negative)
+        if(ISINRANGE(x, initial_x + 1, initial_x + GILDED_SWOOP_DIRECTION_CHANGE_RANGE))
+            negative = FALSE
+    else if(ISINRANGE(x, initial_x - GILDED_SWOOP_DIRECTION_CHANGE_RANGE, initial_x - 1))
+        negative = TRUE
+    new /obj/effect/temp_visual/gilded_dragon_flight/end(loc, negative)
+    new /obj/effect/temp_visual/dragon_swoop(loc)
+    animate(src, alpha = 255, transform = oldtransform, descent_time)
+    SLEEP_CHECK_DEATH(descent_time)
+    icon_state = old_icon_state
+    swooping &= ~GILDED_SWOOP_INVULNERABLE
+    mouse_opacity = initial(mouse_opacity)
+    playsound(loc, 'sound/misc/meteorimpact.ogg', 200, TRUE)
+    for(var/mob/living/L in orange(1, src))
+        if(L.stat)
+            visible_message(span_warning("[src] slams down on [L], crushing [L.p_them()]!"))
+            L.gib()
+        else
+            L.adjustBruteLoss(75)
+            if(L && !QDELETED(L))
+                var/throw_dir = get_dir(src, L)
+                if(L.loc == loc)
+                    throw_dir = pick(GLOB.alldirs)
+                var/throwtarget = get_edge_target_turf(src, throw_dir)
+                L.throw_at(throwtarget, 3)
+                visible_message(span_warning("[L] is thrown clear of [src]!</span>"))
+    for(var/mob/M in range(7, src))
+        shake_camera(M, 15, 1)
+    movement_type = GROUND
+    density = TRUE
+    SLEEP_CHECK_DEATH(1)
+    swooping &= ~GILDED_SWOOP_DAMAGEABLE
+    return TRUE
 
 /mob/living/carbon/human/species/wildshape/dragon_matthios/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
-	if(swooping & GILDED_SWOOP_INVULNERABLE)
-		return FALSE
-	return ..()
+    if(swooping & GILDED_SWOOP_INVULNERABLE)
+        return FALSE
+    return ..()
 
 #undef GILDED_SWOOP_DAMAGEABLE
 #undef GILDED_SWOOP_INVULNERABLE
@@ -829,7 +829,6 @@
 /datum/species/dragon_matthios
 	name = "Gilded Dragon"
 	id = "dragon_matthios"
-	changesource_flags = WABBAJACK
 	species_traits = list(NO_UNDERWEAR, NO_ORGAN_FEATURES, NO_BODYPART_FEATURES)
 	inherent_traits = list(
 		TRAIT_TOXIMMUNE,
@@ -864,7 +863,7 @@
 		ORGAN_SLOT_LIVER = /obj/item/organ/liver,
 		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
 		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
-	)
+		)
 
 	languages = list(
 		/datum/language/draconic,
@@ -937,13 +936,12 @@
 	item_state = null
 	lefthand_file = null
 	righthand_file = null
-	icon = 'icons/roguetown/weapons/32.dmi'
+	icon = 'icons/roguetown/weapons/unarmed32.dmi'
 	max_blade_int = 600
 	max_integrity = 600
 	force = 28
 	block_chance = 0
 	wdefense = 6
-	armor_penetration = 15
 	blade_dulling = DULLING_SHAFT_WOOD
 	associated_skill = /datum/skill/combat/unarmed
 	wlength = WLENGTH_NORMAL
@@ -978,6 +976,7 @@
 	glow_intensity = GLOW_INTENSITY_LOW
 	antimagic_allowed = TRUE
 	recharge_time = 2 SECONDS
+	ignore_cockblock = TRUE
 	var/extended = FALSE
 
 /obj/effect/proc_holder/spell/self/twilight_dragonclaws/cast(mob/user = usr)
@@ -1036,6 +1035,7 @@
 	if(!mind)
 		log_runtime("NO MIND ON [src.name] WHEN TRANSFORMING")
 	Paralyze(1, ignore_canstun = TRUE)
+	//before we shed our items, save our neck and ring, if we have any, so we can quickly rewear them
 	regenerate_icons()
 	icon = null
 	var/oldinv = invisibility
@@ -1044,7 +1044,7 @@
 	if(client)
 		SSdroning.play_area_sound(get_area(src), client)
 
-	var/mob/living/carbon/human/species/wildshape/dragon_matthios/W = new shapepath(loc)
+	var/mob/living/carbon/human/species/wildshape/dragon_matthios/W = new shapepath(loc) //We crate a new mob for the wildshaping player to inhabit
 
 	W.set_patron(src.patron)
 	W.gender = gender
@@ -1057,7 +1057,6 @@
 	W.stored_language.copy_known_languages_from(src)
 	W.stored_skills = ensure_skills().known_skills.Copy()
 	W.stored_experience = ensure_skills().skill_experience.Copy()
-	W.stored_spells = list()
 	W.voice_color = voice_color
 	W.cmode_music_override = cmode_music_override
 	W.cmode_music_override_name = cmode_music_override_name
@@ -1088,21 +1087,22 @@
 	if(getorganslot(ORGAN_SLOT_VAGINA))
 		W.internal_organs_slot[ORGAN_SLOT_VAGINA] = /obj/item/organ/vagina
 
+	// temporal traits so our body won't die or snore
 	ADD_TRAIT(src, TRAIT_NOSLEEP, TRAIT_SOURCE_WILDSHAPE)
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_SOURCE_WILDSHAPE)
 	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_SOURCE_WILDSHAPE)
 	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_SOURCE_WILDSHAPE)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_SOURCE_WILDSHAPE)
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_SOURCE_WILDSHAPE)
-	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_SOURCE_WILDSHAPE)
-	src.status_flags |= GODMODE
+	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_SOURCE_WILDSHAPE) // just an extra layer of protection in case something will go wrong
+	src.status_flags |= GODMODE // so they won't die by any means
 	invisibility = oldinv
 
 	playsound(W.loc, 'sound/vo/mobs/vdragon/drgnroar.ogg', 100, FALSE, 3)
 	W.gain_inherent_skills()
 	addtimer(CALLBACK(W, PROC_REF(energy_add), 1000), 3 SECONDS)
 
-/mob/living/carbon/human/proc/wildshape_untransform_twilight_dragon(dead, gibbed)
+/mob/living/carbon/human/proc/wildshape_untransform_twilight_dragon(dead)
 	if(!stored_mob)
 		return
 	if(!mind)
@@ -1116,14 +1116,16 @@
 			remove_status_effect(/datum/status_effect/buff/twilight_dragon_form)
 		apply_status_effect(/datum/status_effect/buff/twilight_dragon_form/short)
 		return
-
+	var/mob/living/carbon/human/species/wildshape/WA = src
+	Paralyze(1, ignore_canstun = TRUE)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
-	var/mob/living/carbon/human/species/wildshape/dragon_matthios/WA = src
-	var/mob/living/carbon/human/W = WA.stored_mob
-	WA.stored_mob = null
+
+	var/mob/living/carbon/human/W = stored_mob
+	stored_mob = null
+
 	REMOVE_TRAIT(W, TRAIT_NOSLEEP, TRAIT_SOURCE_WILDSHAPE)
 	REMOVE_TRAIT(W, TRAIT_NOBREATH, TRAIT_SOURCE_WILDSHAPE)
 	REMOVE_TRAIT(W, TRAIT_NOPAIN, TRAIT_SOURCE_WILDSHAPE)
@@ -1131,8 +1133,12 @@
 	REMOVE_TRAIT(W, TRAIT_NOHUNGER, TRAIT_SOURCE_WILDSHAPE)
 	REMOVE_TRAIT(W, TRAIT_NOMOOD, TRAIT_SOURCE_WILDSHAPE)
 	REMOVE_TRAIT(W, TRAIT_PACIFISM, TRAIT_SOURCE_WILDSHAPE)
-	if(dead)
-		W.death(gibbed)
+	W.status_flags &= ~GODMODE
+	// re-equip our stored neck and ring items, if we have them
+
+	W.bleedsuppress = bleedsuppress
+	W.set_nutrition(nutrition)
+	W.set_hydration(hydration)
 
 	W.forceMove(get_turf(src))
 	mind.transfer_to(W)
@@ -1141,16 +1147,17 @@
 			W.mind.AddSpell(new S, W)
 	if(dead)
 		W.Unconscious(30 SECONDS, TRUE, TRUE)
-		W.visible_message(span_boldwarning("[W] twists and shifts back into human guise in a sickening lurch of flesh and bone, and promptly passes out!"), span_userdanger("I quickly flee the waning vitality of my former shape, but the strain is too much--"))
+		W.visible_message(span_boldwarning("[W] twists and shifts back into humen guise in a sickening lurch of flesh and bone, and promptly passes out!"), span_userdanger("I quickly flee the waning vitality of my former shape, but the strain is too much--"))
 		to_chat(W, span_crit("...DARKNESS..."))
 	W.copy_known_languages_from(WA.stored_language)
-	W.skills?.known_skills = WA.stored_skills.Copy()
-	W.skills?.skill_experience = WA.stored_experience.Copy()
+	skills?.known_skills = WA.stored_skills.Copy()
+	skills?.skill_experience = WA.stored_experience.Copy()
 
 	playsound(W.loc, 'sound/body/shapeshift-end.ogg', 100, FALSE, 3)
-	for(var/origin_spell_type in WA.stored_spells)
+	//Compares the list of spells we had before transformation with those we do now. If there are any that don't match, we remove them
+	for(var/obj/effect/proc_holder/spell/originspell in WA.stored_spells)
 		for(var/obj/effect/proc_holder/spell/wildspell in W.mind.spell_list)
-			if((wildspell.type != origin_spell_type) && !istype(wildspell, /obj/effect/proc_holder/spell/self/wingsoffreedom))
+			if((wildspell != originspell) && !istype(wildspell, /obj/effect/proc_holder/spell/self/wingsoffreedom))
 				W.RemoveSpell(wildspell)
 
 	W.regenerate_icons()
@@ -1171,7 +1178,8 @@
 	glow_color = "#FFD700"
 	glow_intensity = GLOW_INTENSITY_LOW
 	invocation_type = "none"
-	recharge_time = 10 SECONDS
+	recharge_time = 15 SECONDS
+
 
 // Golden-Serpent-exclusive T4: Skulduggery
 //Skulduggery, lets you slip behind people who attack you
