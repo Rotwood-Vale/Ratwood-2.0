@@ -76,7 +76,7 @@
 	else
 		// DR types: blunt, fire, acid
 		// Blunt hits every layer covering the zone (outer first); only the highest rating among them mitigates.
-		var/list/layers = get_ordered_coverage_layers(def_zone, d_type)
+		var/list/layers = (d_type in ARMOR_DR_ABSORB_TYPES) ? get_ordered_coverage_layers(def_zone, d_type) : get_best_worn_armor_layered(def_zone, d_type)
 		if(length(layers))
 			for(var/C in layers)
 				if(layers[C] > protection)
@@ -943,6 +943,31 @@
 		if(C.max_integrity && C.obj_integrity <= 0)
 			continue
 		layers[C] = C.armor.getRating(d_type)
+	return layers
+
+/mob/living/carbon/human/proc/get_best_worn_armor_layered(def_zone, d_type)
+	var/list/layers = list()
+	if(def_zone == BODY_ZONE_TAUR)
+		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	else if(get_taur_tail())
+		switch(def_zone)
+			if(BODY_ZONE_PRECISE_L_FOOT)
+				def_zone = BODY_ZONE_L_LEG
+			if(BODY_ZONE_PRECISE_R_FOOT)
+				def_zone = BODY_ZONE_R_LEG
+	var/list/body_parts = list(skin_armor, head, wear_mask, wear_wrists, gloves, wear_neck, cloak, wear_armor, wear_shirt, shoes, wear_pants, backr, backl, belt, s_store, glasses, ears, wear_ring) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	for(var/bp in body_parts)
+		if(!bp)
+			continue
+		if(bp && istype(bp, /obj/item/clothing))
+			var/obj/item/clothing/C = bp
+			if(zone2covered(def_zone, C.body_parts_covered_dynamic))
+				if(C.max_integrity)
+					if(C.obj_integrity <= 0)
+						continue
+				var/val = C.armor.getRating(d_type)
+				if(val > 0)
+					layers[C] = val
 	return layers
 
 /mob/living/carbon/human/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)

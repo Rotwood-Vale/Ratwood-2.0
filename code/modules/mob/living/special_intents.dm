@@ -1405,3 +1405,14 @@ tile_coordinates = list(list(1,1), list(-1,1), list(-1,-1), list(1,-1),list(0,0)
 #define AXE_SWING_GRID_DEFAULT	list(list(-1,0), list(0,0, 0.2 SECONDS), list(1,0, 0.4 SECONDS))
 #define AXE_SWING_GRID_MIRROR	list(list(-1,0, 0.4 SECONDS), list(0,0, 0.2 SECONDS), list(1,0))
 
+/datum/special_intent/dagger_dash
+	name = "Dagger Dash"
+	desc = "Become quicker on your feet and pass through other beings for a short time. Boost scales with worn armor."
+	cooldown = 90 SECONDS
+	stamcost = 25
+
+/datum/special_intent/dagger_dash/process_attack()
+	SHOULD_CALL_PARENT(FALSE)
+	howner.apply_status_effect(/datum/status_effect/buff/dagger_dash)
+	playsound(howner, 'sound/combat/dagger_boost.ogg', 100, TRUE)
+	apply_cooldown()

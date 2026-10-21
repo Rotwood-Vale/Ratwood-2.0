@@ -95,8 +95,6 @@
 	damfactor = 1
 	desc = "Smash someone over the head. Effective at two tiles."
 	reach = 2
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_STRONG
 
 /datum/intent/spear/bash/ranged
 	reach = 2
@@ -196,8 +194,6 @@
 	swingdelay = 2
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_MINUSCULE
 
 /datum/intent/rend
 	name = "rend"
@@ -246,9 +242,6 @@
 
 /datum/intent/spear/bash/ranged/quarterstaff
 	damfactor = 1
-	//We want chipping, m'lord.
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_WEAK//Use this instead of thrust for chip damage.
 
 /datum/intent/spear/thrust/quarterstaff
 	blade_class = BCLASS_BLUNT
@@ -256,9 +249,6 @@
 	penfactor = PEN_NONE
 	damfactor = 1.3 // Adds up to be slightly stronger than an unenhanced ebeak strike.
 	clickcd = CLICK_CD_CHARGED
-	//We want chipping, m'lord.
-	blunt_chipping = TRUE
-	blunt_chip_strength = BLUNT_CHIP_MINUSCULE//See above.
 
 //polearm objs ฅ^•ﻌ•^ฅ
 
@@ -1199,8 +1189,6 @@
 
 /datum/intent/mace/smash/eaglebeak
 	reach = 2
-	clickcd = CLICK_CD_HEAVY // Slightly longer since it has RANGE. Don't want to increase charge time more since it is unreliable.
-	blunt_chip_strength = BLUNT_CHIP_ABSURD
 
 /obj/item/rogueweapon/spear/bronze
 	name = "bronze spear"
