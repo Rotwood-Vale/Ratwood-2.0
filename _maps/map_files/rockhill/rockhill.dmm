@@ -13953,9 +13953,15 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/tavern)
 "cNG" = (
-/obj/item/rogueweapon/spear,
-/obj/item/rogueweapon/halberd/bardiche,
-/obj/item/rogueweapon/eaglebeak/lucerne,
+/obj/item/rogueweapon/spear{
+	pixel_x = -17
+	},
+/obj/item/rogueweapon/halberd/bardiche{
+	pixel_x = -9
+	},
+/obj/item/rogueweapon/eaglebeak/lucerne{
+	pixel_x = -28
+	},
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/scabbard/gwstrap{
 	pixel_y = 16
