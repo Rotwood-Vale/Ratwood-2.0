@@ -641,6 +641,7 @@
 	name = "Gilded Dragon"
 	desc = "It has been a very long time since the dragons ruled the skies, yet their power still remains formidable. Despite their monstrous form, ancient intelligence in their eyes betrays their sentience."
 	race = /datum/species/dragon_matthios
+	changesource_flags = WABBAJACK
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	ambushable = FALSE
 	skin_armor = new /obj/item/clothing/suit/roguetown/armor/regenerating/twilight_dragon_skin
