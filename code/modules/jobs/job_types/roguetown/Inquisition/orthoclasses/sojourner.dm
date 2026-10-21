@@ -18,6 +18,7 @@
 		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_ARCYNE_T1,//They're not meant to get more spellpoints. If they do, via Arcyne virtue, for example, T1 only.
 		TRAIT_NALEDI,
+		TRAIT_MAGEDEXTERITY, //THEY NEED THIS MORE THAN ANY OTHER MAGE IN THE GAME. 
 	)
 	subclass_stats = list(// This does not follow the typical 8 stat setup. Do not increase this.
 		STATKEY_INT = 3,
@@ -75,7 +76,7 @@
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/naledi
 	neck = /obj/item/clothing/neck/roguetown/psicross/g //Naledians covet gold far more than typical Orthodoxists covet silver.
-	id = /obj/item/clothing/ring/signet
+	id = /obj/item/clothing/ring/signet/silver/inqscomm/g
 	r_hand = /obj/item/rogueweapon/woodstaff/sojourner//A very questionable spear. No pen. Middling CDR on cast.
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq

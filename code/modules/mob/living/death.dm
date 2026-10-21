@@ -136,9 +136,8 @@ GLOBAL_LIST_EMPTY(last_words)
 	if(client)
 		client.move_delay = initial(client.move_delay)
 		if(!nocutscene)
-			var/atom/movable/screen/gameover/hog/H = new()
+			var/atom/movable/screen/gameover/hog/H = new(client)
 			H.layer = SPLASHSCREEN_LAYER+0.1
-			client.screen += H
 			H.Fade()
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/atom/movable/screen/gameover, Fade), TRUE), 100)
 //		flick("gameover",H)

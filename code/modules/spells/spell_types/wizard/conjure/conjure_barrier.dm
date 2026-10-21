@@ -30,12 +30,7 @@
 	objtoequip = /obj/item/clothing/suit/roguetown/arcyne_barrier
 	slottoequip = SLOT_ARMOR
 	checkspot = "armor"
-
-/obj/effect/proc_holder/spell/self/conjure_armor/barrier/Destroy()
-	if(src.conjured_armor)
-		conjured_armor.visible_message(span_warning("The [conjured_armor]'s borders begin to crackle, before shattering in a shower of sparks!"))
-		qdel(conjured_armor)
-	return ..()
+	conjured_dispel_desc = "crackle, before shattering in a shower of sparks"
 
 /obj/item/clothing/suit/roguetown/arcyne_barrier
 	name = "arcyne barrier"
@@ -54,7 +49,7 @@
 	armor_class = ARMOR_CLASS_NONE
 	blade_dulling = DULLING_BASHCHOP
 	blocksound = PLATEHIT
-	armor = ARMOR_BARRIER//20 across the board, except fire and acid, get 30.
+	armor = ARMOR_PADDED_BAD
 	body_parts_covered = COVERAGE_FULL | COVERAGE_HEAD_NOSE | NECK | HANDS | FEET
 
 /obj/item/clothing/suit/roguetown/arcyne_barrier/equipped(mob/living/user)

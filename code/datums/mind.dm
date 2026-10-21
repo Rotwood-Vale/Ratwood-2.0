@@ -129,11 +129,30 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
+	GLOB.personal_objective_minds -= src
 	QDEL_NULL(player_card)
 	QDEL_NULL(sleep_adv)
+	QDEL_NULL(language_holder)
 	if(islist(antag_datums))
 		QDEL_LIST(antag_datums)
 	RemoveAllSpells()
+	if(current)
+		if(current.mind == src)
+			current.mind = null
+		if(iscarbon(current))
+			var/mob/living/carbon/carbon_current = current
+			if(carbon_current.last_mind == src)
+				carbon_current.last_mind = null
+	current = null
+	soulOwner = null
+	martial_art = null
+	champion = null
+	ward = null
+	knight = null
+	squire = null
+	enslaved_to = null
+	special_items.Cut()
+	special_people.Cut()
 	return ..()
 
 /proc/get_minds(role)
@@ -296,6 +315,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER
+	if(current?.mind == src)
+		current.mind = null
 	set_current(null)
 
 /datum/mind/proc/transfer_to(mob/new_character, force_key_move = 0)
@@ -347,7 +368,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
 	transfer_martial_arts(new_character)
-	if(old_current.skills)
+	if(old_current?.skills)
 		old_current.skills.set_current(new_character)
 
 	RegisterSignal(new_character, COMSIG_MOB_DEATH, PROC_REF(set_death_time))
@@ -355,7 +376,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		testing("dotransfer to [new_character]")
 		new_character.key = key		//now transfer the key to link the client to our new body
 	new_character.update_fov_angles()
-	SEND_SIGNAL(old_current, COMSIG_MIND_TRANSFER, new_character)
+	if(old_current)
+		SEND_SIGNAL(old_current, COMSIG_MIND_TRANSFER, new_character)
 
 // adjusts the amount of available spellpoints
 /datum/mind/proc/adjust_spellpoints(points)
@@ -836,9 +858,12 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	transfer_mindbound_actions(new_character)
 
 /datum/mind/proc/transfer_mindbound_actions(mob/living/new_character)
-	for(var/X in spell_list)
-		var/obj/effect/proc_holder/spell/S = X
-		S.action.Grant(new_character)
+	// a spell destroyed while its action had no owner cannot remove itself from spell_list, so drop it here
+	for(var/obj/effect/proc_holder/spell/S as anything in spell_list.Copy())
+		if(QDELETED(S))
+			spell_list -= S
+			continue
+		S.action?.Grant(new_character)
 
 /datum/mind/proc/disrupt_spells(delay, list/exceptions = new())
 	for(var/X in spell_list)
@@ -934,8 +959,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	mind.assigned_role = ROLE_PAI
 	mind.special_role = ""
 
-/datum/mind/proc/add_sleep_experience(skill, amt, silent = FALSE)
-	sleep_adv.add_sleep_experience(skill, amt, silent)
+/datum/mind/proc/add_sleep_experience(skill, amt, silent = FALSE, show_xp = TRUE)
+	sleep_adv.add_sleep_experience(skill, amt, silent, show_xp)
 
 /datum/mind/proc/add_personal_objective(datum/objective/O)
 	if(!istype(O))
@@ -1013,22 +1038,10 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 								// Only modify items that actually have armor protection
 								if(has_armor)
-									// Remove crit protection
-									C.prevent_crits = null
 									// Set armor class to LIGHT for all loadout armor
 									if(C.armor_class != ARMOR_CLASS_NONE)
 										C.armor_class = ARMOR_CLASS_LIGHT
 									// Apply ARMOR_MIND_PROTECTION with slight randomization (±10%)
-									var/list/_baseArmor = ARMOR_MIND_PROTECTION
-									var/_percent = rand(-10, 10)
-									var/_scale = 1 + (_percent / 100)
-									var/_ab = round(_baseArmor["blunt"] * _scale)
-									var/_asl = round(_baseArmor["slash"] * _scale)
-									var/_ast = round(_baseArmor["stab"] * _scale)
-									var/_ap = round(_baseArmor["piercing"] * _scale)
-									var/_af = round(_baseArmor["fire"] * _scale)
-									var/_aa = round(_baseArmor["acid"] * _scale)
-									C.armor = getArmor(_ab, _asl, _ast, _ap, _af, _aa, 0)
 									// Randomize max integrity around light base by ±10% and ensure full integrity
 									var/_base_int = ARMOR_INT_CHEST_LIGHT_BASE
 									var/_variance = round(_base_int * 0.1)

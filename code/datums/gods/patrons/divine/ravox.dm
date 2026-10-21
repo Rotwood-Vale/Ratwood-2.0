@@ -16,6 +16,7 @@
 					/obj/effect/proc_holder/spell/invoked/persistence			= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/ravox		= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_RAVOX
 	confess_lines = list(
 		"RAVOX IS JUSTICE!",
 		"THROUGH STRIFE, GRACE!",

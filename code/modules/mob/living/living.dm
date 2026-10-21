@@ -1,6 +1,8 @@
 /mob/living
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
+	/// Mobs this living mob is actively hostile toward.
+	var/list/enemies
 	/// Contract-spawned mobs get this set: their heads pay no HEADEATER bounty (the contract reward is the payment)
 	var/no_head_bounty = FALSE
 	/// Marks a mob as belonging to a contract warband; its corpse dusts itself after death.
@@ -26,8 +28,7 @@
 	cancel_disconnected_admin_alert()
 	surgeries = null
 	if(LAZYLEN(status_effects))
-		for(var/s in status_effects)
-			var/datum/status_effect/S = s
+		for(var/datum/status_effect/S as anything in status_effects.Copy())
 			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
 				qdel(S)
 			else
@@ -52,7 +53,36 @@
 	sharedSoullinks = null
 	if(craftingthing)
 		QDEL_NULL(craftingthing)
+	clear_enemies()
+	enemies = null
 	return ..()
+
+/// Adds a mob to our enemies list, dropping the reference if that mob is ever destroyed.
+/mob/living/proc/add_enemy(mob/living/new_enemy)
+	if(!new_enemy || new_enemy == src || (new_enemy in enemies))
+		return
+	LAZYSET(enemies, new_enemy, null)
+	RegisterSignal(new_enemy, COMSIG_QDELETING, PROC_REF(on_enemy_destroyed))
+
+/// As add_enemy, but stores an associated value against the mob.
+/mob/living/proc/set_enemy(mob/living/new_enemy, value)
+	if(!new_enemy || new_enemy == src)
+		return
+	add_enemy(new_enemy)
+	enemies[new_enemy] = value
+
+/mob/living/proc/add_enemies(list/new_enemies)
+	for(var/mob/living/new_enemy as anything in new_enemies)
+		add_enemy(new_enemy)
+
+/mob/living/proc/on_enemy_destroyed(datum/source)
+	SIGNAL_HANDLER
+	enemies -= source
+
+/mob/living/proc/clear_enemies()
+	for(var/mob/living/enemy as anything in enemies)
+		UnregisterSignal(enemy, COMSIG_QDELETING)
+	enemies = list()
 
 /mob/living/onZImpact(turf/T, levels)
 	if(HAS_TRAIT(src, TRAIT_NOFALLDAMAGE2))
@@ -188,13 +218,10 @@
 			var/target_points = FLOOR((L.STACON + L.STASTR)/2, 1)
 
 			switch(sprint_distance)
-				// Point blank
-				if(0 to 1)
+				// Point blank to 2 tiles
+				if(0 to 3)
 					self_points -= 99
 					instafail = TRUE
-				// One to two tile between the people
-				if(2 to 3)
-					self_points -= 2
 				// Five or above tiles between people
 				if(6 to INFINITY)
 					self_points += 1
@@ -888,8 +915,8 @@
 	. = ..()
 	if(!.)
 		return
-	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check
-		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair, brimming with elixir under a master's hand, could bind it."))
+	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check (Pestrians too now, go forth flesh abominations!)
+		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair brimming with elixir under a master's hand or a power of the fleshtwisting pestrian could bind it."))
 		return FALSE
 
 /// The single DEAD-to-alive transition, every revival and rise routes through it.
@@ -911,7 +938,7 @@
 	return TRUE // death() already re-swapped the lists if the updatehealth above re-killed us
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller
+/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller (Pestrians too now, go forth flesh abominations!)
 /mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
@@ -2168,7 +2195,7 @@
 			if(marked)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					if(H.current_mark == M && HAS_TRAIT(H, TRAIT_SLEUTH))
+					if(H.current_mark == M)
 						found_ping(get_turf(M), client, "trap")
 					else
 						found_ping(get_turf(M), client, "hidden")
@@ -2203,7 +2230,41 @@
 			found_ping(get_turf(potential_track), client, "hidden")
 			potential_track.handle_revealing(src)
 		//Hearthstone end.
+		// Hunting Tracks Logic
+		check_nearby_hunting_tracks()
 
+///Finds the closest nearby hunting track visible to our party and reports its distance/direction.
+/mob/living/proc/check_nearby_hunting_tracks()
+	var/obj/effect/hunting_track/closest_track
+	var/min_dist = 8
+	for(var/obj/effect/hunting_track/nearby_track in range(7, src))
+		// Check if we are part of the party that can see this track
+		var/can_see_track = FALSE
+		for(var/datum/weakref/party_weakref in nearby_track.party_refs)
+			if(party_weakref.resolve() == src)
+				can_see_track = TRUE
+				break
+		if(!can_see_track)
+			continue
+		found_ping(get_turf(nearby_track), client, "paws")
+		var/dist = get_dist(src, nearby_track)
+		if(dist < min_dist)
+			min_dist = dist
+			closest_track = nearby_track
+	if(!closest_track)
+		return
+	var/dir_text = dir2text(get_dir(src, closest_track))
+	var/dist_text = ""
+	switch(min_dist)
+		if(0 to 1)
+			dist_text = "right beneath your feet"
+		if(2 to 3)
+			dist_text = "very close by"
+		if(4 to 5)
+			dist_text = "a few paces away"
+		else
+			dist_text = "in the distance"
+	to_chat(src, span_notice("You spot a faint trail [dist_text] to the [dir_text]."))
 
 /proc/found_ping(atom/A, client/C, state)
 	if(!A || !C || !state)
@@ -2307,8 +2368,8 @@
 			_y = min(0,_y)
 	else if(STAPER > 11)
 		var/offset = STAPER - 10
-		if(offset > 5)	//Caps the bonus at 15 PER, which is a whole extra screen in an orthogonal direction. Anymore will get disorienting.
-			offset = 5
+		if(offset >= 5)	//Caps the bonus at 15 PER, which is a whole extra screen in an orthogonal direction. Anymore will get disorienting.
+			offset = 4
 		if(STAPER >= 12)
 			message = span_info("[src] easily peers afar.")
 		if(_x > 0)

@@ -89,7 +89,7 @@
 		STATKEY_CON = 1,
 		STATKEY_WIL = 1
 	)
-	traits_applied = list(TRAIT_HOMESTEAD_EXPERT, TRAIT_SMITHING_EXPERT)
+	traits_applied = list(TRAIT_HOMESTEAD_EXPERT, TRAIT_SMITHING_EXPERT, TRAIT_LEGENDARY_MINER)
 	subclass_skills = list(
 		/datum/skill/labor/mining = SKILL_LEVEL_EXPERT,
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_EXPERT,

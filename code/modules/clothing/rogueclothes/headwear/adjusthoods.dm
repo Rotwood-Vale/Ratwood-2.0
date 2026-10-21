@@ -64,8 +64,7 @@
 
 /obj/item/clothing/head/roguetown/roguehood/reinforced
 	name = "reinforced hood"
-	armor = ARMOR_REINFORCED_HOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	armor = ARMOR_LEATHER
 	max_integrity = 120//+20 over base. -30 from previous value.
 	blocksound = SOFTHIT
 	nudist_approved = FALSE // armored
@@ -119,9 +118,8 @@
 	name = "padded headscarf"
 	desc = "A common sight amongst those travelling the long desert routes, it offers protection from the heat and a modicum of it against the beasts that prowl its more comfortable nites."
 	max_integrity = 100
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_NECK
-	armor = ARMOR_SPELLSINGER //basically the same as a warscholar hood
+	armor = ARMOR_LEATHER //basically the same as a warscholar hood
 	item_state = "hijab"
 	icon_state = "deserthood"
 	naledicolor = TRUE
@@ -294,8 +292,7 @@
 	body_parts_covered = NECK | HEAD | HAIR
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
-	armor = ARMOR_SPELLSINGER
+	armor = ARMOR_LEATHER
 	dynamic_hair_suffix = ""
 	edelay_type = 1
 	adjustable = CAN_CADJUST
@@ -312,8 +309,7 @@
 	body_parts_covered = NECK | HEAD | HAIR
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
-	armor = ARMOR_SPELLSINGER
+	armor = ARMOR_LEATHER
 	dynamic_hair_suffix = ""
 	edelay_type = 1
 	adjustable = CAN_CADJUST
@@ -327,8 +323,7 @@
 	name = "hierophant's pashmina"
 	desc = "A thick hood that covers one's entire head, should they desire, or merely acts as a scarf otherwise. Made with spell-laced fabric to provide some protection against daemons and mortals alike."
 	max_integrity = 100
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
-	armor = ARMOR_SPELLSINGER
+	armor = ARMOR_LEATHER
 	icon_state = "deserthood"
 	item_state = "deserthood"
 	naledicolor = TRUE
@@ -340,8 +335,7 @@
 	name = "pontifex's pashmina"
 	desc = "A slim hood with thin, yet dense fabric. Stretchy and malleable, allowing for full flexibility and mobility. Made with spell-laced fabric to provide some protection against daemons and mortals alike."
 	max_integrity = 100
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
-	armor = ARMOR_SPELLSINGER
+	armor = ARMOR_LEATHER
 	icon_state = "monkhood"
 	item_state = "monkhood"
 	naledicolor = TRUE
@@ -361,10 +355,9 @@
 	item_state = "surghood"
 	color = "#a88d8d"
 	resistance_flags = FIRE_PROOF
-	armor = ARMOR_SPELLSINGER //Higher-tier protection for pugilist-centric classes. Fits the 'glass cannon' style, and prevents instant death through a glancing headshot on the intended archetype.
+	armor = ARMOR_LEATHER //Higher-tier protection for pugilist-centric classes. Fits the 'glass cannon' style, and prevents instant death through a glancing headshot on the intended archetype.
 	blade_dulling = DULLING_BASHCHOP
 	body_parts_covered = HEAD|HAIR|EARS
 	max_integrity = ARMOR_INT_SIDE_STEEL //High leather-tier protection and critical resistances, steel-tier integrity. Integrity boost encourages hand-to-hand parrying. Weaker than the Psydonic Thorns.
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = SOFTHIT
 	nudist_approved = FALSE // armored

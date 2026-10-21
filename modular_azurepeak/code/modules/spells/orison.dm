@@ -347,7 +347,7 @@
 				break
 
 			// Apply or refresh the healing effect
-			target.apply_status_effect(/datum/status_effect/buff/lay_hands, healing_power)
+			target.apply_status_effect(/datum/status_effect/buff/lay_hands, healing_power, user.patron)
 
 			// Consume devotion for this healing cycle
 			user.devotion?.update_devotion(-devotion_per_tick)

@@ -17,6 +17,7 @@
 					/obj/effect/proc_holder/spell/invoked/churnwealthy					= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/resurrect/matthios			= CLERIC_T3, // Counterpart to anastasis
 	)
+	energy_color = COLOR_PATRON_MATTHIOS
 	confess_lines = list(
 		"MATTHIOS STEALS FROM THE WORTHLESS!",
 		"MATTHIOS IS JUSTICE!",

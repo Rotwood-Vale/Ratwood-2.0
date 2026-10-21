@@ -51,11 +51,11 @@
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && prob(1))
+		if(!LAZYLEN(enemies) && prob(1))
 			Retaliate()
 
-		if(enemies.len && prob(10))
-			enemies = list()
+		if(LAZYLEN(enemies) && prob(10))
+			clear_enemies()
 			LoseTarget()
 			src.visible_message(span_notice("[src] calms down."))
 	if(stat == CONSCIOUS)

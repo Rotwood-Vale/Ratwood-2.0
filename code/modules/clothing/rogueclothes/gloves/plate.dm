@@ -3,7 +3,6 @@
 	desc = "Plate gauntlets made out of steel. Good all-around protection for the hands."
 	icon_state = "gauntlets"
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CHOP, BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	resistance_flags = FIRE_PROOF
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_SIDE_STEEL
@@ -21,6 +20,7 @@
 
 /obj/item/clothing/gloves/roguetown/plate/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/gloves/roguetown/plate/iron
 	name = "iron plate gauntlets"
@@ -34,6 +34,9 @@
 	desc = "Polished gilbranze mechanisms, meticulously interconnected to shroud splayed hands. 'Mercy' and 'innocence' are concepts paraded by the unenlightened; spill their blood without guilt, so that the world may yet be remade in Her image."
 	icon_state = "agauntlets"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/gloves/roguetown/plate/ancient/decrepit
 	name = "decrepit plate gauntlets"
@@ -47,7 +50,7 @@
 	name = "vicious gauntlets"
 	desc = "Plate gauntlets which carry the motive force of this world, violence."
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	icon_state = "graggarplategloves"
 
 /obj/item/clothing/gloves/roguetown/plate/graggar/Initialize(mapload)
@@ -59,7 +62,7 @@
 	desc = "Many a man his life hath sold,"
 	icon_state = "matthiosgloves"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/gloves/roguetown/plate/matthios/Initialize(mapload)
 	. = ..()
@@ -74,10 +77,12 @@
 
 /obj/item/clothing/gloves/roguetown/plate/zizo
 	name = "avantyne plate gauntlets"
-	desc = "avantyne plate gauntlets. Called forth from the edge of what should be known. In Her name."
+	desc = "<font color='A50021'><i>\"Look on HIS works, ye Mighty, and despair!\"</i></font>"
 	icon_state = "zizogauntlets"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/gloves/roguetown/plate/zizo/Initialize(mapload)
 	. = ..()
@@ -91,11 +96,10 @@
 
 /obj/item/clothing/gloves/roguetown/plate/medium/zizo
 	name = "avantyne gauntlets"
-	desc = "A razor-tipped finger was all it took to splay the divine fillament; now, it is time to bring down the wrath of God's hand in full. </br> Do mind the forearm's guards, however - they \
-	tend to leave a stinging bruise, whenever used to parry an incoming strike."
+	desc = "<font color='A50021'><i>\"Look on HIS works, ye Mighty, and despair!\"</i></font>"
 	armor_class = ARMOR_CLASS_MEDIUM
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	icon_state = "zizoplategauntlets_med"
 
 /obj/item/clothing/gloves/roguetown/plate/medium/zizo/Initialize(mapload)

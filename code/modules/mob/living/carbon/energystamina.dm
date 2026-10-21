@@ -27,6 +27,12 @@
 			added = round(added * 0.5, 1)
 		if(HAS_TRAIT(src, TRAIT_MONK_ROBE))
 			added = round(added * 1.25, 1)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.has_status_effect(/datum/status_effect/debuff/sleepytime/t2))
+				added = round(added * 0.8, 1)
+			else if(H.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+				added = round(added * 0.7, 1)
 		if(stamina >= 1)
 			stamina_add(added)
 		else
@@ -108,10 +114,17 @@
 /mob/living/stamina_add(added as num, emote_override, force_emote = TRUE) //call update_stamina here and set last_fatigued, return false when not enough fatigue left
 	if(HAS_TRAIT(src, TRAIT_INFINITE_STAMINA))
 		return TRUE
+
+	var/true_added = added
 	if(HAS_TRAIT(src, TRAIT_FORTITUDE) && added > 0) // 2nd check is to halve stamina SPEND, not stamina GAIN
 		added = added * 0.7
 	if(added < 0 && HAS_TRAIT(src, TRAIT_FROZEN_STAMINA))
 		added = 0
+
+	if(mind && true_added > 0)
+		// the amount of athletics skill gained is proportional to how much stamina is used
+		// using a tenth of the bar gives 1 XP point of athletics skill, multiplied by your constitution divided by 10
+		mind.add_sleep_experience(/datum/skill/misc/athletics, (STACON / 10) * ((true_added / max_stamina) * 10), show_xp = m_intent == MOVE_INTENT_RUN)
 	if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX && added >=1)	//being max heat(level 2) makes you regen half as much stamina
 		added = round(added * 1.5, 1)
 	stamina = CLAMP(stamina+added, 0, max_stamina)

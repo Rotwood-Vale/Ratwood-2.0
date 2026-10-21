@@ -7,7 +7,6 @@
 //	adjustable = CAN_CADJUST
 	sewrepair = FALSE
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_LEG_STEEL_PLATE
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
@@ -20,12 +19,12 @@
 	smelt_bar_num = 2
 	resistance_flags = FIRE_PROOF
 	armor_class = ARMOR_CLASS_HEAVY
-	peel_threshold = 4
 
 /obj/item/clothing/under/roguetown/platelegs/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/under/roguetown/platelegs/iron
 	name = "iron plate chausses"
@@ -40,6 +39,8 @@
 	desc = "Polished gilbranze plates, layered atop silken chausses. Only the few who had embraced undeath were spared from Zizo's ascension; now, they command the undying legionnaires who march forth to sunder creation in Her name."
 	icon_state = "ancientplate_legs"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/under/roguetown/platelegs/ancient/decrepit
 	name = "decrepit plate chausses"
@@ -52,7 +53,7 @@
 	name = "vicious leggings"
 	desc = "Plate chausses which stir with the innate violence driving our world"
 	icon_state = "graggarplatelegs"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_LEG_ANTAG
 
 /obj/item/clothing/under/roguetown/platelegs/graggar/Initialize(mapload)
@@ -64,8 +65,7 @@
 	name = "gilded leggings"
 	desc = "But my outside to behold:"
 	icon_state = "matthioslegs"
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/under/roguetown/platelegs/matthios/Initialize(mapload)
 	. = ..()
@@ -82,11 +82,10 @@
 /obj/item/clothing/under/roguetown/platelegs/zizo
 	max_integrity = ARMOR_INT_LEG_ANTAG
 	name = "avantyne garments"
-	desc = "Leg garments worn by true anointed of the Dame of Ambition. In Her name."
+	desc = "<font color='A50021'>Nothing beside remains. Round the decay of that colossal wreck, boundless and bare.</font>"
 	icon_state = "zizocloth"
-	armor = ARMOR_ASCENDANT
-	peel_threshold = 5
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
+	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#363030"
 
 /obj/item/clothing/under/roguetown/platelegs/zizo/Initialize(mapload)
 	. = ..()
@@ -105,15 +104,12 @@
 
 /obj/item/clothing/under/roguetown/platelegs/medium/zizo
 	name = "avantyne vestments"
-	desc = "The fossilization of a memory, damned to be forgotten by all but the divine - Her lux, crystallized into a veil impenetratable by all but the sharpest \
-	blades. If the legends are to be believed, She had worn these very garments long ago during Psydonia's darkest hour; when the Ascendants were but-two, when the \
-	Sinistar blotted out Astrata's glare, and when the ashes of Her empire were still smoldering. </br>..and to think, it was all a war without reason."
+	desc = "<font color='A50021'>Nothing beside remains. Round the decay of that colossal wreck, boundless and bare.</font>"
 	icon_state = "zizoplatelegs_med"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	max_integrity = ARMOR_INT_LEG_ANTAG
-	peel_threshold = 5
 	armor_class = ARMOR_CLASS_MEDIUM
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
+	chunkcolor = "#363030"
 
 /obj/item/clothing/under/roguetown/platelegs/medium/zizo/Initialize(mapload)
 	. = ..()
@@ -125,6 +121,6 @@
 	gender = PLURAL
 	icon_state = "plate_skirt"
 	item_state = "plate_skirt"
-	body_parts_covered = GROIN
-	armor_class = ARMOR_CLASS_LIGHT
+	body_parts_covered = LEGS
+	armor_class = ARMOR_CLASS_MEDIUM
 	dropshrink = null

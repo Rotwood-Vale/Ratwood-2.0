@@ -148,4 +148,17 @@
     text-decoration: underline;
     color: var(--p-ink);
   }
+
+  /* Native <select> dropdowns: keep the open option list on the dark theme
+     so the light ink text isn't stranded on the OS-default white popup. */
+  select option {
+    color: var(--p-ink);
+    background-color: var(--p-bg-deep);
+  }
+
+  select option:checked,
+  select option:hover {
+    color: #f0dca8;
+    background-color: var(--p-bg-shadow);
+  }
 }
