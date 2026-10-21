@@ -9825,10 +9825,6 @@
 /obj/item/grown/log/tree/stick,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/rtfield/rockhill)
-"bWi" = (
-/obj/structure/fluff/walldeco/wantedposter,
-/turf/open/floor/rogue/cobblerock,
-/area/rogue/outdoors/rtfield/rockhill)
 "bWj" = (
 /obj/structure/fluff/statue/knight/interior/r,
 /turf/open/floor/rogue/church,
@@ -297008,7 +297004,7 @@ pOX
 hGv
 xnE
 mbN
-bWi
+fxx
 fxx
 fxx
 qvR
@@ -406306,7 +406302,7 @@ okM
 wOD
 ryI
 gvX
-xlA
+auq
 xlA
 xlA
 xlA
@@ -406738,7 +406734,7 @@ xnE
 qzc
 nqU
 wsI
-xlA
+sUa
 xlA
 xlA
 xlA
@@ -407170,7 +407166,7 @@ xnE
 xnE
 okM
 llm
-xlA
+sUa
 xlA
 xlA
 xlA
@@ -407602,7 +407598,7 @@ gAC
 yhS
 vLe
 llm
-xlA
+sUa
 xlA
 xlA
 xlA
@@ -408034,7 +408030,7 @@ gjf
 nqU
 ryI
 ekj
-xlA
+jho
 xlA
 xlA
 xlA
