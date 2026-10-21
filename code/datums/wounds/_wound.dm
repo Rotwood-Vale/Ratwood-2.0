@@ -357,6 +357,13 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 				qdel(src)
 	return amount_healed
 
+/datum/wound/proc/set_woundpain(new_woundpain)
+	if(woundpain == new_woundpain)
+		return FALSE
+	woundpain = new_woundpain
+	owner?.mark_pain_hud_dirty()
+	return TRUE
+
 /// Sews the wound up, changing its properties to the sewn ones
 /datum/wound/proc/sew_wound()
 	if(!can_sew)
