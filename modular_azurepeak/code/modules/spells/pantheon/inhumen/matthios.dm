@@ -929,6 +929,7 @@
 	miss_text = "strikes the air!"
 	miss_sound = "bluntwooshlarge"
 	attack_verb = list("punches", "strikes", "tears")
+	intent_intdamage_factor = BLUNT_DRAGON_INT_DAMAGEFACTOR
 
 /obj/item/rogueweapon/twilight_dragon_claw
 	name = "dragon claw"
