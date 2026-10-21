@@ -889,6 +889,22 @@
 	human.remove_overlay(DAMAGE_LAYER)
 	return TRUE
 
+/datum/intent/simple/twilight_dragon_cut
+	name = "claw"
+	clickcd = 10
+	icon_state = "incut"
+	blade_class = BCLASS_CUT
+	attack_verb = list("claws", "mauls", "eviscerates")
+	animname = "cut"
+	hitsound = "genslash"
+	penfactor = PEN_MEDIUM
+	reach = 2
+	candodge = TRUE
+	canparry = TRUE
+	miss_text = "slashes the air!"
+	miss_sound = "bluntswoosh"
+	item_d_type = "slash"
+
 /datum/intent/simple/twilight_dragon_chop
 	name = "claw"
 	icon_state = "inchop"
