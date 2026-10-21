@@ -382,3 +382,6 @@
   trueroguan:
   - rscadd: add hike emote
   - image: add hike sprites
+2026-10-21:
+  MrShibaa:
+  - balance: allows constructs to eat charcoal, small & big logs, lux and impure lux.
