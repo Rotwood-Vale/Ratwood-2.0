@@ -3,6 +3,8 @@
 	body_parts_covered = CHEST|GROIN
 	icon = 'modular_hearthstone/icons/obj/items/clothes/dress.dmi'
 	mob_overlay_icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/dress.dmi'
+	hiked_base_icon = 'modular_hearthstone/icons/obj/items/clothes/on_mob/dress.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_hearthstone_dress.dmi'
 	name = "strapless dress"
 	desc = "A form-fitting strapless dress with a high, revealing cut. It hugs every curve and hides almost nothing."
 	flags_inv = HIDEBOOB|HIDECROTCH

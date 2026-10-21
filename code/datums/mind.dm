@@ -959,8 +959,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	mind.assigned_role = ROLE_PAI
 	mind.special_role = ""
 
-/datum/mind/proc/add_sleep_experience(skill, amt, silent = FALSE)
-	sleep_adv.add_sleep_experience(skill, amt, silent)
+/datum/mind/proc/add_sleep_experience(skill, amt, silent = FALSE, show_xp = TRUE)
+	sleep_adv.add_sleep_experience(skill, amt, silent, show_xp)
 
 /datum/mind/proc/add_personal_objective(datum/objective/O)
 	if(!istype(O))
@@ -1038,22 +1038,10 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 
 								// Only modify items that actually have armor protection
 								if(has_armor)
-									// Remove crit protection
-									C.prevent_crits = null
 									// Set armor class to LIGHT for all loadout armor
 									if(C.armor_class != ARMOR_CLASS_NONE)
 										C.armor_class = ARMOR_CLASS_LIGHT
 									// Apply ARMOR_MIND_PROTECTION with slight randomization (±10%)
-									var/list/_baseArmor = ARMOR_MIND_PROTECTION
-									var/_percent = rand(-10, 10)
-									var/_scale = 1 + (_percent / 100)
-									var/_ab = round(_baseArmor["blunt"] * _scale)
-									var/_asl = round(_baseArmor["slash"] * _scale)
-									var/_ast = round(_baseArmor["stab"] * _scale)
-									var/_ap = round(_baseArmor["piercing"] * _scale)
-									var/_af = round(_baseArmor["fire"] * _scale)
-									var/_aa = round(_baseArmor["acid"] * _scale)
-									C.armor = getArmor(_ab, _asl, _ast, _ap, _af, _aa, 0)
 									// Randomize max integrity around light base by ±10% and ensure full integrity
 									var/_base_int = ARMOR_INT_CHEST_LIGHT_BASE
 									var/_variance = round(_base_int * 0.1)

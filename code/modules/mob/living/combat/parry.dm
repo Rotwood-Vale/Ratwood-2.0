@@ -11,10 +11,16 @@
 		return FALSE
 	if(!can_see_cone(attacker))
 		return FALSE
-	if(!COOLDOWN_FINISHED(src, last_parry))
+	var/paired_swing = src?.dualwield_twoswing
+	if(!paired_swing && world.time < (last_parry + parrydelay))
 		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
 			return FALSE
-	COOLDOWN_START(src, last_parry, setparrytime)
+
+	if(!paired_swing)
+		last_parry = world.time
+		if(!istype(rmb_intent, /datum/rmb_intent/riposte))
+			var/parrytime = setparrytime
+			changeNext_def(parrytime)
 
 	var/prob2defend = attacker.mind ? 0 : attacker.defprob
 	if(m_intent == MOVE_INTENT_RUN)
@@ -78,22 +84,35 @@
 			intenty.masteritem.remove_bintegrity(intenty.sharpness_penalty)
 
 		prob2defend -= (attacker_skill * 20)
-		if((intenty.masteritem.wbalance == WBALANCE_SWIFT) && (attacker.STASPD > STASPD)) //enemy weapon is quick, so get a bonus based on spddiff
-			var/spdmod = ((attacker.STASPD - STASPD) * 10)
-			var/permod = ((STAPER - attacker.STAPER) * 10)
-			var/intmod = ((STAINT - attacker.STAINT) * 3)
-			if(mind)
-				if(permod > 0)
-					spdmod -= permod
-				if(intmod > 0)
-					spdmod -= intmod
-			var/finalmod = spdmod
-			if(mind)
-				finalmod = clamp(spdmod, 0, 30)
-			prob2defend -= finalmod
+		if(!HAS_TRAIT(attacker, TRAIT_FENCERDEXTERITY))	// Yet another Frei related clamp
+			if(!has_status_effect(/datum/status_effect/buff/weapon_binded))
+				if((intenty.masteritem.wbalance == WBALANCE_SWIFT) && (attacker.STASPD > src.STASPD)) //enemy weapon is quick, so get a bonus based on spddiff
+					var/spdmod = ((attacker.STASPD - src.STASPD) * 10)
+					var/permod = ((src.STAPER - attacker.STAPER) * 5)
+					var/intmod = ((src.STAINT - attacker.STAINT) * 3)
+					if(mind)
+						if(permod > 0)
+							spdmod -= permod
+						if(intmod > 0)
+							spdmod -= intmod
+					var/finalmod = spdmod
+					if(mind)
+						finalmod = clamp(spdmod, 0, 45)
+					prob2defend -= finalmod
 	else
 		attacker_skill = attacker.get_skill_level(/datum/skill/combat/unarmed)
 		prob2defend -= (attacker_skill * 20)
+
+	// --- Weapon binding! ---
+
+	if(has_status_effect(/datum/status_effect/buff/weapon_binded))
+		prob2defend += 20
+	if(!has_status_effect(/datum/status_effect/buff/weapon_binded) && !has_status_effect(/datum/status_effect/debuff/weapon_binded))
+		var/mob/living/carbon/human/HL = src
+		if(HL.try_bind(used_weapon, attacker))
+			return TRUE	//Tentative, might be better if it only increased parry chance on the initial binding rather than a full block.
+
+	// --- Weapon Binding End! ---
 
 	if(HAS_TRAIT(src, TRAIT_GUIDANCE))
 		prob2defend += 20
@@ -114,7 +133,7 @@
 			prob2defend += 20
 
 	// parrying while knocked down sucks ass
-	if(!(mobility_flags & MOBILITY_STAND))
+	if(!(mobility_flags & MOBILITY_STAND) && !has_status_effect(/datum/status_effect/buff/weapon_binded))
 		prob2defend *= 0.65
 
 	if(HAS_TRAIT(src, TRAIT_SENTINELOFWITS))
@@ -134,35 +153,35 @@
 		prob2defend = clamp(prob2defend, 5, 75) //Caps your max parry to 75 if using armor you're not trained in. Bad dexerity.
 		stamina_drained = stamina_drained + 5 //More stamina usage for not being trained in the armor you're using.
 
-	//Dual Wielding
-	var/defender_dualw
-	var/extradefroll
-
-	//Dual Wielder defense disadvantage
-	if(HAS_TRAIT(src, TRAIT_DUALWIELDER) && (istype(offhand, mainhand) || istype(mainhand, offhand)))
-		extradefroll = prob(prob2defend)
-		defender_dualw = TRUE
-
-	if(client?.prefs.showrolls)
-		var/text = "Roll to parry... [prob2defend]%"
-		if(defender_dualw)
-			text += " Twice! Disadvantage! ([(prob2defend / 100) * (prob2defend / 100) * 100]%)"
-		to_chat(src, span_info("[text]"))
-
 	var/parry_status = FALSE
-	if(defender_dualw)
-		if(prob(prob2defend) && extradefroll)
-			parry_status = TRUE
-	else
-		if(prob(prob2defend))
-			parry_status = TRUE
+	var/text
+
+	text += "Roll to parry... [HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS) ? "???" : prob2defend]%"
+
+	// Dual wield drawback (-5%)
+	var/dualwield_penalty = HAS_TRAIT(src, TRAIT_DUALWIELDER) && src.can_dualwield(mainhand, offhand)
+	if(dualwield_penalty)
+		prob2defend = clamp(prob2defend - 5, 5, 90)
+		text += " (-5%)"
+
+	if(has_status_effect(/datum/status_effect/swingdelay/penalty))
+		prob2defend -= 50
+
+	if(prob(prob2defend))
+		parry_status = TRUE
 
 	if(parry_status)
-		if(intenty.masteritem)
-			if(intenty.masteritem.wbalance < WBALANCE_NORMAL && attacker.STASTR > STASTR) //enemy weapon is heavy, so get a bonus scaling on strdiff
-				stamina_drained = stamina_drained + ( intenty.masteritem.wbalance * ((attacker.STASTR - STASTR) * STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL) )
+		if(!has_status_effect(/datum/status_effect/buff/weapon_binded))
+			if(intenty.masteritem)
+				if(intenty.masteritem.wbalance < WBALANCE_NORMAL && attacker.STASTR > src.STASTR) //enemy weapon is heavy, so get a bonus scaling on strdiff
+					stamina_drained = stamina_drained + ( intenty.masteritem.wbalance * ((attacker.STASTR - src.STASTR) * STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL) )
 	else
-		to_chat(src, span_warning("The enemy defeated my parry!"))
+		text += span_warning(" The enemy defeated my parry!")
+	if(src.client?.prefs.showrolls)
+		to_chat(src, span_info("[text]"))
+
+	// Failed parry cutoff here
+	if(!parry_status)
 		if(HAS_TRAIT(src, TRAIT_MAGEARMOR))
 			if(magearmor == 0)
 				magearmor = 1
@@ -246,17 +265,19 @@
 			if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
 				sharp_loss += STRONG_SHP_BONUS
 				intdam += STRONG_INTG_BONUS
-			used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
-			used_weapon.remove_bintegrity(sharp_loss, attacker)
 
-		if(mind && attacker.mind && HAS_TRAIT(src, TRAIT_COMBAT_AWARE))
-			var/text = "[bodyzone2readablezone(attacker.zone_selected)]..."
-			if(HAS_TRAIT(attacker, TRAIT_DECEIVING_MEEKNESS))
-				if(prob(10))
-					text = "<i>Somewhere...</i>"
-					attacker.balloon_alert(src, text)
-			else
-				attacker.balloon_alert(src, text)
+			// Heavy weapons chew through shields — use higher of demolition_mod or intent intdamage_factor
+			if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
+				var/shield_mult = max(intenty.demolition_mod, intenty.intent_intdamage_factor)
+				intdam *= shield_mult
+
+			if(!has_status_effect(/datum/status_effect/buff/weapon_binded))
+				used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
+				used_weapon.remove_bintegrity(sharp_loss, attacker)
+			if(mind)
+				dodgetime = CLAMP(dodgetime - 2, 0, CLICK_CD_DODGE)
+				changeMaxDodge(2)
+
 		return TRUE
 
 	if(weapon_parry == FALSE)
@@ -277,6 +298,9 @@
 		if(unarmed_bracers)
 			unarmed_bracers.take_damage(INTEG_PARRY_DECAY_NOSHARP, "slash", armor_penetration = 100)
 		flash_fullscreen("blackflash2")
+		if(mind)
+			dodgetime = CLAMP(dodgetime - 2, 0, CLICK_CD_DODGE)
+			changeMaxDodge(2)
 		return TRUE
 
 /mob/proc/do_parry(obj/item/weapon, parrydrain as num, mob/living/attacker)
@@ -325,3 +349,13 @@
 			log_combat(src, attacker, "parried", null, defense_log_note(attacker))
 		playsound(get_turf(src), pick(parry_sound), 100, FALSE)
 		return TRUE
+
+/mob/living/proc/pick_bind_sfx(wbalance)
+	switch(wbalance)
+		if(WBALANCE_NORMAL)
+			return pick('sound/foley/binds/bind_normal1.ogg','sound/foley/binds/bind_normal2.ogg','sound/foley/binds/bind_normal3.ogg','sound/foley/binds/bind_normal4.ogg','sound/foley/binds/bind_normal5.ogg','sound/foley/binds/bind_normal6.ogg','sound/foley/binds/bind_normal7.ogg','sound/foley/binds/bind_normal8.ogg','sound/foley/binds/bind_normal9.ogg','sound/foley/binds/bind_normal10.ogg','sound/foley/binds/bind_normal11.ogg','sound/foley/binds/bind_normal12.ogg','sound/foley/binds/bind_normal13.ogg','sound/foley/binds/bind_normal14.ogg')
+		if(WBALANCE_HEAVY)
+			return pick('sound/foley/binds/bind_heavy1.ogg','sound/foley/binds/bind_heavy2.ogg','sound/foley/binds/bind_heavy3.ogg','sound/foley/binds/bind_heavy4.ogg','sound/foley/binds/bind_heavy5.ogg','sound/foley/binds/bind_heavy6.ogg','sound/foley/binds/bind_heavy7.ogg','sound/foley/binds/bind_heavy8.ogg','sound/foley/binds/bind_heavy9.ogg','sound/foley/binds/bind_heavy10.ogg','sound/foley/binds/bind_heavy11.ogg','sound/foley/binds/bind_heavy12.ogg')
+		if(WBALANCE_SWIFT)
+			return pick('sound/foley/binds/bind_swift1.ogg','sound/foley/binds/bind_swift2.ogg','sound/foley/binds/bind_swift3.ogg','sound/foley/binds/bind_swift4.ogg','sound/foley/binds/bind_swift5.ogg','sound/foley/binds/bind_swift6.ogg')
+#undef STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL

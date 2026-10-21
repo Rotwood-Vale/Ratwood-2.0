@@ -36252,14 +36252,6 @@
 /mob/living/simple_animal/hostile/rogue/dreamfiend/unbound,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/underdark/north)
-"gBo" = (
-/obj/structure/chair/stool/rogue{
-	pixel_x = 1;
-	pixel_y = -5
-	},
-/obj/structure/roguemachine/lottery_roguetown,
-/turf/open/floor/rogue/churchbrick,
-/area/rogue/indoors/town/bath)
 "gBs" = (
 /obj/structure/table/wood/map/five,
 /obj/item/reagent_containers/glass/cup/silver/small{
@@ -47224,15 +47216,6 @@
 /obj/machinery/gear_painter,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/mountains)
-"izx" = (
-/obj/machinery/light/rogue/candle/r,
-/obj/structure/chair/stool/rogue{
-	pixel_x = 1;
-	pixel_y = -5
-	},
-/obj/structure/roguemachine/lottery_roguetown,
-/turf/open/floor/rogue/churchbrick,
-/area/rogue/indoors/town/bath)
 "izz" = (
 /turf/closed/mineral/random/rogue,
 /area/rogue/indoors/cave/central)
@@ -78947,6 +78930,10 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town)
+"ogJ" = (
+/obj/structure/roguemachine/ministry_bureau,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/manor)
 "ogR" = (
 /obj/structure/closet/crate/roguecloset/inn{
 	pixel_y = 17
@@ -98448,6 +98435,15 @@
 /obj/structure/stairs,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin)
+"rFY" = (
+/obj/machinery/light/rogue/candle/r,
+/obj/structure/chair/stool/rogue{
+	pixel_x = 1;
+	pixel_y = -5
+	},
+/obj/structure/roguemachine/lottery_roguetown,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/bath)
 "rGa" = (
 /obj/structure/stairs{
 	dir = 4
@@ -124081,6 +124077,14 @@
 /obj/structure/flora/newtree,
 /turf/open/water/ocean,
 /area/rogue/outdoors/woods)
+"wkr" = (
+/obj/structure/chair/stool/rogue{
+	pixel_x = 1;
+	pixel_y = -5
+	},
+/obj/structure/roguemachine/lottery_roguetown,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/bath)
 "wkz" = (
 /obj/structure/vine{
 	opacity = 1
@@ -207255,7 +207259,7 @@ myi
 myi
 wrI
 scu
-gBo
+wkr
 imS
 hYa
 adK
@@ -207707,7 +207711,7 @@ fiz
 fiz
 fiz
 scu
-gBo
+wkr
 imS
 hYa
 adK
@@ -208159,7 +208163,7 @@ fiz
 xNm
 fiz
 scu
-izx
+rFY
 imS
 ogB
 lfh
@@ -341883,7 +341887,7 @@ xHQ
 rrD
 fAA
 iJY
-xHQ
+ogJ
 xHQ
 qIt
 qIt
