@@ -889,20 +889,6 @@
 	human.remove_overlay(DAMAGE_LAYER)
 	return TRUE
 
-/datum/intent/simple/twilight_dragon_cut
-	name = "claw"
-	clickcd = 10
-	icon_state = "incut"
-	blade_class = BCLASS_CUT
-	attack_verb = list("claws", "mauls", "eviscerates")
-	animname = "cut"
-	hitsound = "genslash"
-	penfactor = 30
-	reach = 2
-	miss_text = "slashes the air!"
-	miss_sound = "bluntswoosh"
-	item_d_type = "slash"
-
 /datum/intent/simple/twilight_dragon_chop
 	name = "claw"
 	icon_state = "inchop"
@@ -910,7 +896,7 @@
 	attack_verb = list("claws", "mauls", "eviscerates")
 	animname = "chop"
 	hitsound = "genslash"
-	penfactor = 50
+	penfactor = PEN_HEAVY
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"
@@ -918,11 +904,11 @@
 
 /datum/intent/mace/smash/twilight_dragon_smash
 	name = "thrash"
-	desc = "A powerful smash of dragon muscle that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown and knockback scales to your strength up to 15 (1 - 5 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance."
+	desc = "A powerful, smash of dragon muscle that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 15 (1 - 5 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance."
 	icon_state = "insmash"
-	reach = 5
+	reach = 2
 	chargetime = 1
-	penfactor = 30
+	penfactor = PEN_LIGHT
 
 /datum/intent/mace/strike/twilight_dragon_strike
 	name = "armor rending strike"
