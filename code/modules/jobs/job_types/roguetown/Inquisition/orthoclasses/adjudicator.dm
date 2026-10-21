@@ -14,9 +14,9 @@
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list(
-		STATKEY_WIL = 3,
-		STATKEY_CON = 3,
-		STATKEY_STR = 2,
+		STATKEY_WIL = 2,
+		STATKEY_CON = 2,
+		STATKEY_STR = 1,
 		STATKEY_SPD = -1
 	)
 	subclass_skills = list(
