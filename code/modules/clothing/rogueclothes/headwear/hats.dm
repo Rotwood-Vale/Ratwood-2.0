@@ -578,6 +578,7 @@
 	item_state = "loudmouth"
 	color = CLOTHING_RED
 	nudist_approved = TRUE
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
 
 /obj/item/clothing/head/roguetown/scarf
 	name = "scarf"
