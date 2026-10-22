@@ -448,6 +448,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/race_bonus
 
+	/// Whether we can see the feint HUD bar.
+	var/feint_hud = FALSE 
+
 /datum/preferences/New(client/C)
 	parent = C
 	migrant  = new /datum/migrant_pref(src)

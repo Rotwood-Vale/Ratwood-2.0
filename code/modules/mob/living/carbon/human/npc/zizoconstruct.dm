@@ -100,8 +100,7 @@ GLOBAL_LIST_INIT(zizoconstruct_aggro, world.file2list("strings/rt/zconstructaggr
 	desc = ""
 	icon_state = null
 	body_parts_covered = FULL_BODY
-	armor = ARMOR_ZIZOCONCSTRUCT
-	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
+	armor = ARMOR_PADDED
 	blocksound = PLATEHIT
 	blade_dulling = DULLING_BASHCHOP
 	sewrepair = FALSE

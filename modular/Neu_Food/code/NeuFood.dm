@@ -106,6 +106,8 @@
 		if(current_step == 1)
 			active_recipe = null
 		return
+	if(!active_recipe || QDELETED(I))
+		return
 
 	playsound(src, 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE)
 	

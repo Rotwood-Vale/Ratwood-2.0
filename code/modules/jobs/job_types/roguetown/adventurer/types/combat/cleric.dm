@@ -799,7 +799,9 @@
 		TRAIT_CRITICAL_RESISTANCE,
 		TRAIT_BLOOD_RESISTANCE,
 		TRAIT_STEELHEARTED,
-		TRAIT_SELF_AWARE
+		TRAIT_SELF_AWARE,
+		TRAIT_LUX_FREAK,
+		TRAIT_RITUALIST
 	)
 	subclass_stats = list(
 		STATKEY_CON = 5,
@@ -841,13 +843,15 @@
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
-		/obj/item/storage/belt/rogue/pouch/medicine = 1
+		/obj/item/storage/belt/rogue/pouch/medicine = 1,
+		/obj/item/ritechalk = 1
 		)
 
 	if (H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonlux_tamper) // absolver's bleed transfer
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonamend) // nerfed no-rez version of absolver's absolve
+		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
 
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = (CLERIC_REGEN_ABSOLVER / 2), start_maxed = TRUE)
