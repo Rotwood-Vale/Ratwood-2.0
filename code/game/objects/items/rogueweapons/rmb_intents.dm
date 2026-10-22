@@ -10,9 +10,10 @@
 	var/bypasses_click_cd = FALSE
 
 /mob/living/carbon/human/on_cmode()
+	drop_hiked_hem()
 	if(!cmode)	//We just toggled it off.
 		addtimer(CALLBACK(src, PROC_REF(purge_bait)), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
-		addtimer(CALLBACK(src, PROC_REF(expire_peel)), 60 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(reset_dodgetime), 20 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE))
 	if(!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
 		filtered_balloon_alert(TRAIT_COMBAT_AWARE, (cmode ? ("<i><font color = '#831414'>Tense</font></i>") : ("<i><font color = '#c7c6c6'>Relaxed</font></i>")), y_offset = 32)
 
@@ -81,13 +82,22 @@
 	HT.apply_status_effect(/datum/status_effect/debuff/baited)
 	HT.apply_status_effect(/datum/status_effect/debuff/exposed)
 	HT.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS)
+	if(HT.d_intent == INTENT_DODGE)
+		HT.changeNext_def(clamp(HT.dodgetime + 5, 0, CLICK_CD_DODGE))
+		HT.changeMaxDodge(-5)
+	if(HU.d_intent == INTENT_DODGE)
+		HU.changeNext_def(clamp(HU.dodgetime - 5, 0, CLICK_CD_DODGE))
+		HU.changeMaxDodge(5)
 	HT.bait_stacks++
+
+	if(HT.has_status_effect(/datum/status_effect/buff/clash/limbguard))
+		HT.bad_guard()
+
 	if(HT.bait_stacks <= 1)
 		HT.Immobilize(0.5 SECONDS)
 		HT.stamina_add(HT.max_stamina / fatiguemod)
 		HT.Slowdown(3)
 		HT.emote("huh", forced = TRUE)
-		HU.purge_peel(99)
 		HU.changeNext_move(0.1 SECONDS, override = TRUE)
 		to_chat(HU, span_notice("[HT.p_they(TRUE)] fell for my bait <b>perfectly</b>! One more!"))
 		to_chat(HT, span_danger("I fall for [HU.p_their()]'s bait <b>perfectly</b>! I'm losing my footing! <b>I can't let this happen again!</b>"))
@@ -181,6 +191,7 @@
 	var/ourskill = 0
 	var/theirskill = 0
 	var/skill_factor = 0
+
 	if(I)
 		if(I.associated_skill)
 			ourskill = user.get_skill_level(I.associated_skill)
@@ -192,8 +203,16 @@
 	perc += (user.STAINT - L.STAINT)*10	//but it's also mostly a mindgame
 	skill_factor = (ourskill - theirskill)/2
 
+	var/newcd = FEINT_RCLICK_CD
+	var/special_msg
+
 	if(L.has_status_effect(/datum/status_effect/debuff/exposed) || L.has_status_effect(/datum/status_effect/debuff/vulnerable))
 		perc = 0
+
+	if(L.has_status_effect(/datum/status_effect/buff/weapon_binded))
+		perc = 0
+		special_msg = span_warning("They had my tricks figured out and are too aware!")
+		newcd = 10 SECONDS
 
 	var/datum/status_effect/buff/clash/guard = L.has_status_effect(/datum/status_effect/buff/clash)
 	if(guard)
@@ -201,13 +220,25 @@
 		to_chat(user, span_notice("I disrupt [L.p_their()] guard!"))
 		perc = 100
 
-	user.apply_status_effect(/datum/status_effect/debuff/feintcd)
 	perc = CLAMP(perc, 0, 90)
+
+	if(L.has_status_effect(/datum/status_effect/buff/clash))
+		L.remove_status_effect(/datum/status_effect/buff/clash)
+		to_chat(user, span_notice("[L.p_their(TRUE)] Guard disrupted!"))
+		newcd = ((BASE_RCLICK_CD + 10 SECONDS))
+		perc = 100
+
+	user.apply_status_effect(/datum/status_effect/debuff/feintcd, newcd)
 
 	if(!prob(perc)) //feint intent increases the immobilize duration significantly
 		playsound(user, 'sound/combat/feint.ogg', 100, TRUE)
-		if(user.client?.prefs.showrolls)
+		if(special_msg)
+			to_chat(user, special_msg)
+		else if(user.client?.prefs.showrolls)
 			to_chat(user, span_warning("[L.p_they(TRUE)] did not fall for my feint... [perc]%"))
+		if(L.d_intent == INTENT_DODGE)
+			L.changeNext_def(clamp(L.dodgetime - 2, 0, CLICK_CD_DODGE))
+			L.changeMaxDodge(-2)
 		return
 	
 	var/effect_to_apply = (L.mind ? /datum/status_effect/debuff/vulnerable : /datum/status_effect/debuff/exposed)
@@ -217,6 +248,12 @@
 	L.Immobilize(0.5 SECONDS)
 	L.stamina_add(L.stamina * 0.1)
 	L.Slowdown(2)
+	if(L.d_intent == INTENT_DODGE)
+		L.changeNext_def(clamp(L.dodgetime + 3, 0, CLICK_CD_DODGE))
+		L.changeMaxDodge(-3)
+	if(user.d_intent == INTENT_DODGE)
+		user.changeNext_def(clamp((user.dodgetime - 3), 0, CLICK_CD_DODGE))
+		user.changeMaxDodge(2)
 	user.changeNext_move(CLICK_CD_FAST)	//We don't want the feint effect to be popped instantly.
 	to_chat(user, span_notice("[L.p_they(TRUE)] fell for my feint attack!"))
 	to_chat(L, span_danger("I fall for [user.p_their()] feint attack!"))
@@ -231,10 +268,20 @@
 	bypasses_click_cd = TRUE
 
 /datum/rmb_intent/riposte/special_attack(mob/living/user, atom/target)	//Wish we could breakline these somehow.
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	H.try_guard()
+	if(!user.has_status_effect(/datum/status_effect/buff/clash) && !user.has_status_effect(/datum/status_effect/debuff/clashcd) && !user.has_status_effect(/datum/status_effect/buff/clash/limbguard))
+		if(!user.get_active_held_item()) //Nothing in our hand to Guard with.
+			return 
+		if(user.r_grab || user.l_grab || length(user.grabbedby)) //Not usable while grabs are in play.
+			return
+		if(user.IsImmobilized() || user.IsOffBalanced()) //Not usable while we're offbalanced or immobilized
+			return
+		if(user.m_intent == MOVE_INTENT_RUN)
+			to_chat(user, span_warning("I can't focus on this while running."))
+			return
+		if(user.magearmor == FALSE && HAS_TRAIT(user, TRAIT_MAGEARMOR))	//The magearmor is ACTIVE, so we can't Guard. (Yes, it's active while FALSE / 0.)
+			to_chat(user, span_warning("I'm already focusing on my mage armor!"))
+			return
+		user.apply_status_effect(/datum/status_effect/buff/clash)
 
 /datum/rmb_intent/guard
 	name = "guarde"

@@ -159,6 +159,7 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
+	AddComponent(/datum/component/construct_refueling, 50)
 
 /obj/item/grown/log/tree/small/attackby(obj/item/I, mob/living/user, params)
 	if(item_flags & IN_STORAGE)
@@ -171,21 +172,21 @@
 		if (0)
 			woodtotal = 1
 		if (1)
-			woodtotal = 1
+			woodtotal = 3
 		if (2)
-			woodtotal = pick(1,2)
+			woodtotal = pick(4,5)
 		if (3)
-			woodtotal = pick(1,2,3)
+			woodtotal = pick(6,7)
 		if (4)
-			woodtotal = pick(2,3)
+			woodtotal = pick(8,9)
 		if (5)
-			woodtotal = pick(2,3,4)
+			woodtotal = pick(10,11)
 		if (6)
-			woodtotal = pick(3,4)
+			woodtotal = pick(12)
 		else
-			woodtotal = 1
+			woodtotal = 3
 	if(HAS_TRAIT(user, TRAIT_MASTER_CARPENTER)) //we give extra to those in the role
-		woodtotal += pick(1,2)
+		woodtotal += pick(2,3)
 	if(I.tool_behaviour == TOOL_SAW)
 		playsound(get_turf(src.loc), 'sound/foley/sawing.ogg', 100)
 		user.visible_message("<span class='notice'>[user] starts sawing planks from [src].</span>")
@@ -455,6 +456,7 @@
 	sellprice = 4
 	bundletype = /obj/item/natural/bundle/plank
 	smeltresult = /obj/item/ash
+	metalizer_result = /obj/item/rogueore/tin
 
 /obj/item/natural/wood/plank/attack_right(mob/living/user)
 	if(user.get_active_held_item())
@@ -496,10 +498,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	stackname = "plank"
 	stacktype = /obj/item/natural/wood/plank
-	maxamount = 6
+	maxamount = 20
 	icon1 = "plankbundle2"
 	icon1step = 3
 	icon2 = "plankbundle3"
 	icon2step = 5
 	smeltresult = /obj/item/ash
-	metalizer_result = /obj/item/rogueore/tin

@@ -26,11 +26,12 @@
 	dispel_conjured_item()
 	var/obj/item/rogueweapon/R = new /obj/item/rogueweapon/magicbrick(user.drop_location())
 
-	if(user.STAINT > 10)
-		var/int_scaling = user.STAINT - 10
-		R.force = R.force + int_scaling
-		R.throwforce = R.throwforce + int_scaling * 2 // 2x scaling for throwing. Let's go.
-		R.name = "magician's brick +[int_scaling]"
+	var/int_deviation = abs(user.STAINT - 10)//scales linear in a U curve; both the trog and the archmagos understand hitting someone with a brick hurts a lot
+
+	R.force += int_deviation
+	R.throwforce += int_deviation * 2// 2x scaling for throwing. Let's go.
+	R.name = "magician's brick +[int_deviation]"
+
 	user.put_in_hands(R)
 	set_conjured_item(R)
 	return TRUE
@@ -46,7 +47,7 @@
 	force = 15 // Copy pasted from real brick + 1 for neat number
 	throwforce = 20 // +2 from real brick for neat scaling
 	throw_speed = 4
-	armor_penetration = 30 // From iron tossblade
+	armor_penetration = PEN_NONE // IT IS A BRICK
 	wdefense = 0
 	wbalance = WBALANCE_NORMAL
 	max_integrity = 50 // Don't parry with it lol

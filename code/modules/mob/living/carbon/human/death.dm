@@ -173,6 +173,8 @@
 
 	dizziness = 0
 	jitteriness = 0
+	if(!dna)
+		return
 	dna.species.spec_death(gibbed, src)
 
 	if(isdullahan(src))

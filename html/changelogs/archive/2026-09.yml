@@ -999,3 +999,20 @@
   - bugfix: Fixed the icon display for the inpeculate intent of Graggar's Assassin
       Dagger.
   - bugfix: Fix stat market for the vilians
+2026-09-30:
+  Guidesu:
+  - rscadd: 'Ports AP hunting rework made by Ketrai: https://github.com/Azure-Peak/Azure-Peak/pull/6761'
+  - balance: Makes Biome Wanderer a less forgotten class.
+  - balance: Gives the towner bow-hunter class options for main bow weapon.
+  Randumb-Phantomb:
+  - image: Tusks now are hidden by clothing items that hide the snout, instead of
+      being hidden by clothing items that hide the hair or ears. No longer will your
+      coif hide those cute little tusks. Or uh, maybe menacing big tusks, your choice.
+  Yuckuza:
+  - rscadd: Added manticore tailmaw sex organs + 18 new sex actions accompanying.
+  - image: Genital organ items no longer use placeholder sprites.
+  awwliedacoder:
+  - bugfix: fixed kobold snout alignment
+  wikimody:
+  - rscadd: Gave keepers extra 3 hearblood containers at roundstart
+  - bugfix: Hearbeast tentacles are no longer is beaten by a gambelson

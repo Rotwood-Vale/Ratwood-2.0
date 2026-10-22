@@ -232,7 +232,7 @@
 		QDEL_NULL(eyes)
 	eyes = new /obj/item/organ/eyes/night_vision/nightmare
 	eyes.Insert(src)
-	src.underwear = "Nude"
+	src.underwear = null
 	if(src.charflaw)
 		QDEL_NULL(src.charflaw)
 	update_body()

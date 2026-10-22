@@ -417,6 +417,9 @@
 
 				current_holder.adjust_skillrank_down_to(/datum/skill/combat/wrestling, SKILL_LEVEL_NONE, TRUE)
 				current_holder.adjust_skillrank(/datum/skill/combat/swords, 6, FALSE)
+				current_holder.adjust_skillrank(/datum/skill/combat/axes, 6, FALSE)
+				current_holder.adjust_skillrank(/datum/skill/combat/polearms, 6, FALSE)
+				current_holder.adjust_skillrank(/datum/skill/combat/maces, 6, FALSE)
 				current_holder.adjust_skillrank(/datum/skill/combat/unarmed, 6, FALSE)
 
 				ADD_TRAIT(current_holder, TRAIT_INFINITE_STAMINA, TRAIT_GENERIC)
