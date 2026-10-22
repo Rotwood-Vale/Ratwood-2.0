@@ -784,7 +784,7 @@
 
 	// If the spell requires the user has no antimagic equipped, and they're holding antimagic
 	// that corresponds with the spell's antimagic, then they can't actually cast the spell
-	if((spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC) && owner.anti_magic_check())
+	if((spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC) && owner.anti_magic_check() && !HAS_TRAIT(owner, TRAIT_SPELL_DISPERSION))
 		if(feedback)
 			owner.balloon_alert(owner, "antimagic is preventing casting!")
 		return FALSE
