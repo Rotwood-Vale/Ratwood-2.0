@@ -170,13 +170,15 @@
 	A.fingerprintslast = M.ckey
 	return TRUE
 
+/// Returns TRUE for a new entry, FALSE when it folded into the last one as a repeat.
 /datum/component/forensics/proc/add_action(mob/user, action, routine = FALSE)
 	if(routine)
-		routine_actions = record_action(routine_actions, user, action)
-	else
-		actions = record_action(actions, user, action)
+		LAZYINITLIST(routine_actions)
+		return record_action(routine_actions, user, action)
+	LAZYINITLIST(actions)
+	return record_action(actions, user, action)
 
-/// Repeats of the same action by the same player fold into one entry. Returns the list, which may have been created.
+/// Repeats of the same action by the same player fold into one entry. Returns TRUE for a new entry, FALSE for a fold.
 /datum/component/forensics/proc/record_action(list/action_log, mob/user, action)
 	// Everything after the count, so a repeat is a suffix match with no parsing
 	var/who_and_what = "|[user.ckey]|[user.real_name]|[action]"
@@ -188,11 +190,11 @@
 			var/count_start = findtext(last, "|") + 1
 			var/count = text2num(copytext(last, count_start, suffix_start))
 			action_log[last_index] = "[STATION_TIME_PASSED()]|[count + 1][who_and_what]"
-			return action_log
-	LAZYADD(action_log, "[STATION_TIME_PASSED()]|1[who_and_what]")
+			return FALSE
+	action_log += "[STATION_TIME_PASSED()]|1[who_and_what]"
 	if(length(action_log) > FORENSIC_ACTIONS_MAX)
 		action_log.Cut(1, 2)
-	return action_log
+	return TRUE
 
 /// Re-sorted by time, as the incoming entries can be older than ones already here, then the oldest trimmed past the cap.
 /datum/component/forensics/proc/merge_actions(list/action_log, list/incoming)

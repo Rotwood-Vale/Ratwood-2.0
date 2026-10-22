@@ -37,8 +37,11 @@
 	..()
 
 /obj/structure/roguewindow/attacked_by(obj/item/item, mob/living/user)
+	var/was_broken = brokenstate || obj_destroyed
 	if(..())
-		log_breakin(user, "struck the window with \a [item.name]")
+		add_forensic_action(user, "hit with [format_text(item.name)]")
+	if(!was_broken && (brokenstate || obj_destroyed))
+		add_forensic_action(user, "broke")
 	if(obj_broken || obj_destroyed)
 		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
 		message_admins("Window [obj_destroyed ? "destroyed" : "broken"] by [user?.real_name] using [item] [ADMIN_JMP(src)]")
@@ -282,7 +285,6 @@
 		else
 			if(!climbable)
 				to_chat(user, ("<span class='deadsay'>I slide [held_knife] through [src] seal...</span>"))
-			log_breakin(user, "started prying the latch with \a [held_knife.name]")
 			while(!QDELETED(held_knife) && (lockprogress < locktreshold))
 				if(!do_after(user, picktime, target = src))
 					break
@@ -302,7 +304,7 @@
 				else
 					playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
 					obj_integrity = break_me
-					log_breakin(user, "broke the window prying the latch")
+					add_forensic_action(user, "broke prying the latch")
 					held_knife.take_damage(10, BRUTE, "blunt")
 					to_chat(user, "<span class='warning'>Clack. [100 - pickchance]% chance to fuck up.</span>")
 					add_sleep_experience(opener, /datum/skill/misc/lockpicking, opener.STAINT/4)
@@ -323,11 +325,9 @@
 					return
 
 			if(!lockpicking_check_done)
-				log_breakin(user, "gave up prying the latch (still [climbable ? "open" : "closed"])")
-			else if(climbable)
-				log_breakin(user, "pried the latch and closed the window")
+				add_forensic_action(user, "tried to pry the latch")
 			else
-				log_breakin(user, "pried the latch and opened the window")
+				add_forensic_action(user, climbable ? "pried the latch shut" : "pried the latch open")
 			if(climbable && (lockpicking_check_done == 1))
 				close_up(user)
 				user.visible_message(
@@ -377,7 +377,7 @@
 	if(isliving(mover))
 		if(mover.throwing)
 			if(!climbable)
-				log_breakin(mover, "was thrown into the window")
+				add_forensic_action(mover, "thrown into it")
 				if(!iscarbon(mover))
 					take_damage(10)
 				else
@@ -421,7 +421,7 @@
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(HAS_TRAIT(user, TRAIT_BASHDOORS))
-		log_breakin(user, "bashed the window")
+		add_forensic_action(user, "bashed")
 		src.take_damage(15)
 		return
 	src.visible_message(span_info("[user] knocks on [src]."))
@@ -430,7 +430,6 @@
 
 /obj/structure/roguewindow/obj_break(damage_flag)
 	if(!brokenstate)
-		log_breakin(null, "was broken")
 		attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 		log_admin("Window broken at X:[src.x] Y:[src.y] Z:[src.z] in area: [get_area(src)]")
 		loud_message("A loud crash of a window getting broken rings out", hearing_distance = 14)
