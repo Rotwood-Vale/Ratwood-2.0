@@ -184,7 +184,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/anklets
 	mask = /obj/item/clothing/mask/rogue/exoticsilkmask
 	backl = /obj/item/storage/backpack/rogue/satchel/short
-	backr = /obj/item/rogueweapon/woodstaff/emerald
+	backr = /obj/item/rogueweapon/woodstaff/implement/greater
 	gloves = /obj/item/clothing/gloves/roguetown/nomagic
 	backpack_contents = list(
 		/obj/item/soap/bath = 1,

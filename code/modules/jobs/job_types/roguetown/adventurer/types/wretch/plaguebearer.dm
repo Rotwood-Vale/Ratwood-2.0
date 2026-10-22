@@ -76,7 +76,7 @@
 						H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 						ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
 						H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 2))
-						backr = /obj/item/rogueweapon/woodstaff/toper
+						backr = /obj/item/rogueweapon/woodstaff/implement
 			if("A Rapier and Agility")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)

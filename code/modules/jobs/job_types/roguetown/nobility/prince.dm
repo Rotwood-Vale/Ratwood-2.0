@@ -136,7 +136,7 @@
 	beltr = /obj/item/storage/keyring/heir
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel/special
 	backr = /obj/item/storage/backpack/rogue/satchel
-	backl = /obj/item/rogueweapon/woodstaff/emerald/blacksteelstaff/royal
+	backl = /obj/item/rogueweapon/woodstaff/implement/greater/blacksteel
 	shoes = /obj/item/clothing/shoes/roguetown/boots/nobleboot
 	mask = /obj/item/clothing/mask/rogue/spectacles
 	neck = /obj/item/storage/belt/rogue/pouch/coins/rich

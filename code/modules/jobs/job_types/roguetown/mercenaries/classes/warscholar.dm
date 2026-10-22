@@ -261,7 +261,7 @@
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 1)
-	r_hand = /obj/item/rogueweapon/woodstaff/naledi
+	r_hand = /obj/item/rogueweapon/woodstaff/implement/grand/naledi
 	//Since we lack unique Vizier clothing, we're mixing hierophant and pontifex for Vizier
 	head = /obj/item/clothing/head/roguetown/roguehood/hierophant	//Keep this hood. It's middling armor, but the robe/gambeson combination is exceedingly good armor for the class. The vizier's head is a weak point.
 	cloak = /obj/item/clothing/cloak/hierophant

@@ -68050,7 +68050,7 @@
 /obj/item/skull,
 /obj/item/paper,
 /obj/item/paper,
-/obj/item/rogueweapon/woodstaff/quartz,
+/obj/item/rogueweapon/woodstaff/implement/greater/quartz,
 /turf/open/floor/rogue/churchrough{
 	color = "#d4ffcf"
 	},
@@ -76257,7 +76257,7 @@
 /area/rogue/under/dungeon/sunkenchurch)
 "vsR" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/rogueweapon/woodstaff/naledi,
+/obj/item/rogueweapon/woodstaff/implement/grand/naledi,
 /obj/item/clothing/neck/roguetown/psicross/naledi,
 /obj/item/clothing/mask/rogue/lordmask/naledi,
 /turf/open/floor/rogue/church,

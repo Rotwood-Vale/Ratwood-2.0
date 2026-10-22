@@ -1280,25 +1280,6 @@
 	unequip_delay_self = 2 SECONDS
 	inv_storage_delay = 1 SECONDS
 
-/obj/item/rogueweapon/woodstaff/naledi
-	name = "naledian warstaff"
-	desc = "A staff carrying the crescent moon of Psydon's knowledge, as well as the black and gold insignia of the war scholars."
-	icon_state = "naledistaff"
-	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)
-	gripped_intents = list(/datum/intent/spear/bash/ranged, /datum/intent/special/magicarc, /datum/intent/mace/smash/wood/ranged)
-	force = 18
-	force_wielded = 22
-	max_integrity = 250
-
-/obj/item/rogueweapon/woodstaff/naledi/getonmobprop(tag)
-	. = ..()
-	if(tag)
-		switch(tag)
-			if("gen")
-				return list("shrink" = 0.8,"sx" = -9,"sy" = 5,"nx" = 9,"ny" = 5,"wx" = -4,"wy" = 4,"ex" = 4,"ey" = 4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 32,"eturn" = -23,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
-			if("wielded")
-				return list("shrink" = 0.8,"sx" = 8,"sy" = 0,"nx" = -1,"ny" = 0,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
-
 // Decorative Naledi staff for loadout - regular staff with Naledi appearance
 /obj/item/rogueweapon/woodstaff/decorative
 	name = "decorative naledian staff"
@@ -1311,7 +1292,7 @@
 	max_integrity = 150
 
 //Only a 'woodenstaff' for the purpose of CDR on spells.
-/obj/item/rogueweapon/woodstaff/sojourner
+/obj/item/rogueweapon/woodstaff/implement/greater/sojourner
 	name = "sojourner staff"
 	desc = "What remains of an old psydonic spear. The tip is blunted, with both barbs and trident-like head removed. \
 	It serves a more noble purpose, now, as a sojourner's casting implement. Though, with enough force, one may still drive the tip forward."
@@ -1327,7 +1308,7 @@
 	smeltresult = /obj/item/ingot/silverblessed
 	is_silver = TRUE
 
-/obj/item/rogueweapon/woodstaff/sojourner/ComponentInitialize()
+/obj/item/rogueweapon/woodstaff/implement/greater/sojourner/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\

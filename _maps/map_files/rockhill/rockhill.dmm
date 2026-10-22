@@ -113429,7 +113429,7 @@
 /obj/item/skull,
 /obj/item/paper,
 /obj/item/paper,
-/obj/item/rogueweapon/woodstaff/quartz,
+/obj/item/rogueweapon/woodstaff/implement/greater/quartz,
 /turf/open/floor/rogue/churchrough{
 	color = "#d4ffcf"
 	},

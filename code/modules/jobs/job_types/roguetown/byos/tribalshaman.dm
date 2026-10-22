@@ -90,7 +90,7 @@
 	beltr = /obj/item/storage/keyring/tribalchief
 	beltl = /obj/item/storage/magebag/associate
 	id = /obj/item/clothing/ring/gold
-	r_hand = /obj/item/rogueweapon/woodstaff/riddle_of_steel/serpent
+	r_hand = /obj/item/rogueweapon/woodstaff/implement/grand/riddle
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/poison,

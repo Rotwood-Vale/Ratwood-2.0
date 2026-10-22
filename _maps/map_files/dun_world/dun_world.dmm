@@ -17284,7 +17284,7 @@
 /area/rogue/under/cave/his_vault)
 "dhq" = (
 /obj/structure/table/vtable/v2,
-/obj/item/rogueweapon/woodstaff/diamond,
+/obj/item/rogueweapon/woodstaff/implement/grand,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/cave/mazedungeon)
 "dhu" = (
@@ -30877,7 +30877,7 @@
 	lockid = "baroness"
 	},
 /obj/item/roguegem/ruby,
-/obj/item/rogueweapon/woodstaff/riddle_of_steel,
+/obj/item/rogueweapon/woodstaff/implement/grand/riddle,
 /obj/item/storage/belt/rogue/pouch/coins/rich,
 /turf/open/floor/rogue/wood/herringbone,
 /area/rogue/outdoors/mountains/decap/gunduzirak/bossarena)

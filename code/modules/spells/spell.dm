@@ -244,10 +244,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/newtime = chargetime
 	//skill block
 	newtime = newtime - (chargetime * (user.get_skill_level(associated_skill) * CHARGE_REDUCTION_PER_SKILL))
-	//staff cast time reduction
-	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
-	if(staff && staff.cast_time_reduction)
-		newtime = newtime - (chargetime * (staff.cast_time_reduction))
 	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens Charge by 25%.
 		newtime *= 0.75
 	if(newtime > 0)
@@ -289,11 +285,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		var/skill_mod = chargetime * skill_level * CHARGE_REDUCTION_PER_SKILL
 		if(skill_mod > 0)
 			breakdown += span_smallgreen("  Skill: -[DisplayTimeText(skill_mod)]")
-	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
-	if(staff && staff.cast_time_reduction)
-		var/staff_mod = chargetime * staff.cast_time_reduction
-		if(staff_mod > 0)
-			breakdown += span_smallgreen("  Staff: -[DisplayTimeText(staff_mod)]")
 	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE))
 		breakdown += span_smallgreen("  <font color='#00e1ff'>Ley Lines (-25%)</font>")
 	return breakdown

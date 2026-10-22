@@ -83,17 +83,17 @@
 	var/staffchoice = input(H, H, "Choose your staff", "Available staffs") as anything in staffs
 	switch(staffchoice)
 		if("ronts-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/ruby
+			backr = /obj/item/rogueweapon/woodstaff/implement/greater/ruby
 		if("blortz-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/quartz
+			backr = /obj/item/rogueweapon/woodstaff/implement/greater/quartz
 		if("saffira-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/sapphire
+			backr = /obj/item/rogueweapon/woodstaff/implement/greater/sapphire
 		if("gemerald-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/emerald
+			backr = /obj/item/rogueweapon/woodstaff/implement/greater
 		if("amethyst-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/amethyst
+			backr = /obj/item/rogueweapon/woodstaff/implement/amethyst
 		if("toper-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/toper
+			backr = /obj/item/rogueweapon/woodstaff/implement
 
 /datum/mind
 	var/list/datum/weakref/necro_crystals = list()
