@@ -686,9 +686,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/intercept_death(mob/living/carbon/human/H, gibbed)
-	return FALSE
-
 /datum/species/proc/auto_equip(mob/living/carbon/human/H)
 	// handles the equipping of species-specific gear
 	return
@@ -1876,7 +1873,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(!affecting)
 		return
-
+	
 	var/datum/status_effect/buff/clash/limbguard/LG = H.has_status_effect(/datum/status_effect/buff/clash/limbguard)
 	if(LG)
 		if(LG.protected_zone == selzone && LG.is_active)	// We "missed" into limbguard's protected zone.
@@ -1945,8 +1942,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		user.resolve_combataware(H, "[bodyzone2readablezone(selzone)]...", aim_text)
 
 	if(H.client?.prefs.floating_text_toggles & HITZONE_TEXT)
-		H.balloon_alert(H, "[bodyzone2readablezone(selzone)]...")
-
+		H.balloon_alert(H, "[bodyzone2readablezone(selzone)]...") 
+		
 	var/pen_info_check = get_pen_info(H, user, H.get_best_worn_armor(def_zone, int.item_d_type), def_zone, int.item_d_type, int.penfactor, I)
 	var/armor_block = H.run_armor_check(selzone, I.d_type, "", "",pen, damage = Iforce, blade_dulling=bladec, intdamfactor = used_intfactor, used_weapon = I, pen_info = pen_info_check)
 
@@ -2390,9 +2387,9 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 /datum/species/proc/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	if(!Canignite_mob(H))
 		return TRUE
-
+	
 	// Stops maxing out temp from firestacks alone
-	if(H.bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)
+	if(H.bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)	
 		return
 	var/thermal_protection = H.get_thermal_protection()
 
