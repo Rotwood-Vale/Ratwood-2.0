@@ -224,9 +224,9 @@
 	name = "Headwing"
 	organ_type = /obj/item/organ/horns
 	sprite_accessories = list(
-    	/datum/sprite_accessory/horns/messenger,
-    	/datum/sprite_accessory/horns/rmessenger,
-    	/datum/sprite_accessory/horns/lmessenger,
+		/datum/sprite_accessory/horns/messenger,
+		/datum/sprite_accessory/horns/rmessenger,
+		/datum/sprite_accessory/horns/lmessenger,
 		/datum/sprite_accessory/horns/chiroptera,
 		/datum/sprite_accessory/horns/nightstalker
     )
