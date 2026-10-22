@@ -247,6 +247,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["anonymize"]			>> anonymize
 	S["ghost_protection"]	>> ghost_protection
 	S["masked_examine"]		>> masked_examine
+	S["full_examine"]		>> full_examine
 	S["top_examine"]		>> top_examine
 	S["feint_hud"]			>> feint_hud
 	S["show_mouseover_role"] >> show_mouseover_role
@@ -433,6 +434,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["anonymize"], anonymize)
 	WRITE_FILE(S["masked_examine"], masked_examine)
+	WRITE_FILE(S["full_examine"], full_examine)
 	WRITE_FILE(S["top_examine"], top_examine)
 	WRITE_FILE(S["feint_hud"], feint_hud)
 	WRITE_FILE(S["show_mouseover_role"], show_mouseover_role)

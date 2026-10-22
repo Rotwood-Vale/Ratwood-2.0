@@ -201,8 +201,9 @@
 
 /mob/living/carbon/human/get_mouseover_data(mob/viewer)
 	var/mousecolor = "#c1aaaa"
-	if(voice_color && name == real_name)
-		mousecolor = "#[voice_color]"
+	if(voice_color && show_descriptors)
+		if(name == real_name)
+			mousecolor = "#[voice_color]"
 
 	if(viewer?.client?.prefs?.show_mouseover_role && get_face_name(""))
 		var/role_text = get_mouseover_role_title()
