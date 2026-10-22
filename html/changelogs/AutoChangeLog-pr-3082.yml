@@ -1,5 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "Fix some cooking items disappearing if you did the step in your hand"
-  - qol: "Millstones no longer have 1000 years of click delay after you mill something"

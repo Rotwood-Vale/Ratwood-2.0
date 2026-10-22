@@ -720,6 +720,8 @@
 					if(H.m_intent != MOVE_INTENT_RUN)
 						H.visible_message(span_notice("[H] steadies atop [animal_mount], preparing to break into a run."))
 						animal_mount.emote("aggro")
+						if(HAS_TRAIT(H, TRAIT_STEPPE_RIDER))
+							mounted_intent_swap_time *= 0.5
 						if(do_after(H, mounted_intent_swap_time))
 							H.m_intent = MOVE_INTENT_RUN
 				if(MOVE_INTENT_SNEAK)

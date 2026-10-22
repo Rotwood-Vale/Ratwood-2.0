@@ -209,7 +209,7 @@
 	if(has_status_effect(/datum/status_effect/swingdelay/penalty))
 		prob2defend -= 50
 
-	if(prob(prob2defend))
+	if(prob(prob2defend) || ancestor_reroll(prob2defend))
 		parry_status = TRUE
 
 	if(parry_status)

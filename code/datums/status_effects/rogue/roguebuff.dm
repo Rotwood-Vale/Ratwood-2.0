@@ -2759,6 +2759,29 @@
 	desc = span_notice("A brief window of deflection lingers from my guard.")
 	icon_state = "clash"
 
+/atom/movable/screen/alert/status_effect/buff/hearty_drinker
+	name = "Hearty Drinker"
+	desc = "Dwarven blood pumps through the veins of all true Hammerholdians!"
+	icon_state = "drunk"
+
+/datum/status_effect/buff/hearty_drinker
+	id = "hearty_drinker"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/hearty_drinker
+	effectedstats = list(STATKEY_LCK = 1)
+	duration = 5 MINUTES
+	status_type = STATUS_EFFECT_REFRESH
+
+/atom/movable/screen/alert/status_effect/buff/battle_cry
+	name = "Battle Cry"
+	desc = "THE MEN OF GRONN NEVER FALTER!"
+	icon_state = "buff"
+
+/datum/status_effect/buff/battle_cry
+	id = "battle_cry"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/battle_cry
+	duration = 1 MINUTES
+	status_type = STATUS_EFFECT_REFRESH
+
 /atom/movable/screen/alert/status_effect/buff/dagger_dash
 	name = "Dagger Dash"
 	desc = "I'm slipping through!"

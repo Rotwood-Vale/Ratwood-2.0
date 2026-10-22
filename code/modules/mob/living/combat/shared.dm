@@ -1,3 +1,12 @@
+/mob/living/proc/ancestor_reroll(prob2defend)
+	if(!HAS_TRAIT(src, TRAIT_ANCESTOR_GUARDIAN) || mob_timers["ancestor_reroll"] == GLOB.dayspassed)
+		return FALSE
+	mob_timers["ancestor_reroll"] = GLOB.dayspassed
+	if(!prob(prob2defend))
+		return FALSE
+	visible_message(span_warning("[src]'s movements are supernaturally quick!"), span_notice("Ancestors guide my hand!"))
+	return TRUE
+
 /mob/living/carbon/human/proc/calculate_sentinel_bonus()
 	if(STAINT > 10)
 		var/fakeint = STAINT
