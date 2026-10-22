@@ -30,6 +30,8 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 			true_ambush_chance *= 1.5
 		else if(danger_level == DANGER_LEVEL_BLEAK)
 			true_ambush_chance *= 2
+	if(HAS_TRAIT(src, TRAIT_LOCAL_KNOWLEDGE))
+		true_ambush_chance *= 0.75
 	if(!always && prob(100 - true_ambush_chance))
 		return FALSE
 	if(!always)

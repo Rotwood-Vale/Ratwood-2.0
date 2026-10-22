@@ -836,6 +836,8 @@
 		to_chat(H, span_warning("My [BP.name] snags on a thorn."))
 		BP.receive_damage(10)
 		var/riding_level = H.get_skill_level(/datum/skill/misc/riding)
+		if(HAS_TRAIT(H, TRAIT_STEPPE_RIDER))
+			riding_level += 3
 		if(prob(100 - (riding_level * 5)))
 			to_chat(H, span_danger("My mount goes mad with pain!"))
 			H.unbuckle_mob()

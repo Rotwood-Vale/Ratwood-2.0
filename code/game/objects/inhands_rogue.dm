@@ -9,6 +9,7 @@
 	var/smelted = FALSE
 	/// Determines whether this item is silver or not.
 	var/is_silver = FALSE
+	var/is_gold = FALSE
 	var/last_used = 0
 	var/toggle_state = null
 	var/override_state = null
