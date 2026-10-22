@@ -490,20 +490,23 @@
 	switch(choice)
 		if("Lance")
 			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue))//No stacking.
-				revert_cast()
+				revert_cast(user)
+				return FALSE
 			else
 				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue)
 				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/self/astratan_spear))//No, thanks.
 					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/self/astratan_spear)
 		if("Spear")
 			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/self/astratan_spear))//No stacking. Again. As funny as a dozen of these were.
-				revert_cast()
+				revert_cast(user)
+				return FALSE
 			else
 				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/astratan_spear)
 				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue))//Nope.
 					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue)
 		else
-			revert_cast()
+			revert_cast(user)
+			return FALSE
 
 //Summoning the spear.
 /obj/effect/proc_holder/spell/self/astratan_spear
