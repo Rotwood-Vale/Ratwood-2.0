@@ -5,7 +5,7 @@
 	desc = "Composite armour made according to an Etruscan tradition. It's a high-quality arched plate cuirass sewn with dyed leather and fitted with a wide skirt at the bottom to cover the groin."
 	icon_state = "brigandine"
 	blocksound = SOFTHIT
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	armor = ARMOR_BRIGANDINE
 	allowed_sex = list(MALE, FEMALE)
 	nodismemsleeves = TRUE
@@ -77,7 +77,7 @@
 	desc = "Composite armour made according to a Heartfelt tradition. It's a high-quality arched plate cuirass sewn with dyed leather and fitted with a wide skirt at the bottom to cover the groin."
 	icon_state = "brigandine2"
 	blocksound = SOFTHIT
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	armor = ARMOR_BRIGANDINE
 	allowed_sex = list(MALE, FEMALE)
 	nodismemsleeves = TRUE
