@@ -61,9 +61,9 @@
 	refresh_comfort()
 	. = ..()
 	if(sleepy == 3)
-		. += span_notice("The surrounding webbing makes this nest as comfortable as a proper bed.")
+		. += span_notice("Sheltered by the surrounding webs, the silken nest offers a soft, snug place to rest.")
 	else
-		. += span_notice("This nest is as comfortable as a bedroll. [webbed_tiles] of [required_web_tiles] surrounding floor tiles are webbed; at least one is needed.")
+		. += span_notice("The loosely woven silk offers a simple resting place, still open to its surroundings. [webbed_tiles] of [required_web_tiles] surrounding floor tiles are webbed; at least one is needed.")
 
 /obj/structure/bed/rogue/silk/handle_layer()
 	layer = BELOW_MOB_LAYER
