@@ -87,12 +87,12 @@
 
 /datum/anvil_recipe/weapons/ancient/knuckles
 	name = "Knuckles, Ancient"
-	created_item = /obj/item/rogueweapon/knuckles/ancient
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/ancient
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/decrepit/knuckles
 	name = "Knuckles, Decrepit"
-	created_item = /obj/item/rogueweapon/knuckles/ancient/decrepit
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/decrepit
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/ancient/shortsword
@@ -281,7 +281,7 @@
 
 /datum/anvil_recipe/weapons/bronze/bronzeknuckle
 	name = "Knuckledusters, Bronze"
-	created_item = /obj/item/rogueweapon/knuckles/bronzeknuckles
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/bronze
 	display_category = ITEM_CAT_WEAPONS_MACES
 	display_category = ITEM_CAT_WEAPONS_MACES
 
@@ -435,6 +435,13 @@
 	name = "Messer, Iron"
 	req_blade = /obj/item/blade/iron_sword
 	created_item = /obj/item/rogueweapon/sword/short/messer/iron
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/weapons/iron/messer/virtue
+	name = "Dueling Messer (+1 Iron)"
+	req_blade = /obj/item/blade/iron_sword
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/sword/short/messer/iron/virtue
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
 /datum/anvil_recipe/weapons/iron/broadsword
@@ -668,7 +675,7 @@
 
 /datum/anvil_recipe/weapons/steel/steelknuckle
 	name = "Knuckles, Steel"
-	created_item = /obj/item/rogueweapon/knuckles
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/steel/hurlbat
@@ -1560,7 +1567,7 @@
 /datum/anvil_recipe/weapons/blacksteel/knuckles
 	name = "Blacksteel Knuckles (+1 Dorpel, +1 Silk)"//unarmed chuds get fucked
 	additional_items = list(/obj/item/roguegem/diamond, /obj/item/natural/silk)
-	created_item = /obj/item/rogueweapon/knuckles/blacksteel
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/blacksteel
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/blacksteel/hurlbat
@@ -1745,7 +1752,7 @@
 
 /datum/anvil_recipe/weapons/psy/knuckles
 	name = "Psydonic Knuckledusters"
-	created_item = /obj/item/rogueweapon/knuckles/psydon
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/psydon
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/psy/cudgel

@@ -1,0 +1,4 @@
+author: "The-Sun-In-Splendour"
+delete-after: True
+changes:
+  - bugfix: "soulchurner description changing based on inquisition or not"

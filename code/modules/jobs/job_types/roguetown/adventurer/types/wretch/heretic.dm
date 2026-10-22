@@ -587,9 +587,9 @@
 					if("Atgervi Shaman")
 						beltr = /obj/item/rogueweapon/handclaw/gronn
 					if("Disgraced Disciple (Natural Armor)")
-						beltr = /obj/item/rogueweapon/knuckles/psydon/old //Worse than steel or bronze knuckledusters, that's the price you pay for the drip and the natural armor.
+						beltr = /obj/item/clothing/gloves/roguetown/knuckles/psydon/old //Worse than steel or bronze knuckledusters, that's the price you pay for the drip and the natural armor.
 					else
-						beltr = /obj/item/rogueweapon/knuckles
+						beltr = /obj/item/clothing/gloves/roguetown/knuckles
 			if("True Unarmed, No Weapons")
 				ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)

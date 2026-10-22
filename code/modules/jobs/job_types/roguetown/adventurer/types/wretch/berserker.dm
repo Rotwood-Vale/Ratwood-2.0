@@ -83,7 +83,7 @@
 					if("Katar")
 						beltr = /obj/item/rogueweapon/katar
 					if("Knuckledusters")
-						beltr = /obj/item/rogueweapon/knuckles/ancient
+						beltr = /obj/item/clothing/gloves/roguetown/knuckles
 					if("Punch Dagger")
 						beltr = /obj/item/rogueweapon/katar/punchdagger
 					if("FISTS ONLY, NO WEAPONS EVER")
