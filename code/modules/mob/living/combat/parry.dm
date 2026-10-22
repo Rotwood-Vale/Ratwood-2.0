@@ -128,7 +128,19 @@
 					var/intmod = ((src.STAINT - attacker.STAINT) * 3)
 					var/finalmod = spdmod
 					if(mind)
-						finalmod = clamp(spdmod, 0, 45)
+						var/ceilclamp = SWIFTCAP_CHEST
+						if(attacker.zone_selected == BODY_ZONE_CHEST)	// Attacker is targeting chest. Worst boons! INT and PER are subtracted.
+							if(permod > 0)
+								spdmod -= permod
+							if(intmod > 0)
+								spdmod -= intmod
+						else if(attacker.zone_selected != check_zone(attacker.zone_selected))	// They are targeting a precise zone. Best boons! No INT/ PER influence.
+							ceilclamp = SWIFTCAP_PRECISE
+						else if((check_zone(attacker.zone_selected) == attacker.zone_selected) && attacker.zone_selected != BODY_ZONE_CHEST)
+							ceilclamp = SWIFTCAP_LIMBS
+							if(permod > 0)
+								spdmod -= permod
+						finalmod = clamp(spdmod, 0, ceilclamp)
 					prob2defend -= finalmod
 	else
 		attacker_skill = attacker.get_skill_level(/datum/skill/combat/unarmed)
@@ -200,7 +212,7 @@
 
 	if(HAS_TRAIT(attacker, TRAIT_ARMOUR_LIKED))
 		if(HAS_TRAIT(attacker, TRAIT_FENCERDEXTERITY))
-			prob2defend -= 5
+			prob2defend -= 20
 
 	prob2defend = clamp(prob2defend, 5, 90)
 	if(HAS_TRAIT(attacker, TRAIT_HARDSHELL) && client) //Dwarf-merc specific limitation w/ their armor on in pvp
