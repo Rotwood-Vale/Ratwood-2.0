@@ -1644,7 +1644,7 @@
 		if("Emancipator (Longsword)")
 			backr = /obj/item/rogueweapon/sword/long/matthios
 		if("Drakkyrmaw")
-			backr = /obj/item/rogueweapon/katar/drakkyrmaw
+			l_hand = /obj/item/rogueweapon/katar/drakkyrmaw
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 
 /obj/structure/ritualcircle/matthios/proc/matthiosconversion(mob/living/carbon/human/target)
