@@ -1,0 +1,4 @@
+author: "CentralSmith"
+delete-after: True
+changes:
+  - bugfix: "Bardic dirges no longer debuff their performer."

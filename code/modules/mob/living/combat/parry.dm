@@ -59,23 +59,52 @@
 	var/defender_skill = 0
 	var/attacker_skill = 0
 	var/obj/item/clothing/wrists/roguetown/bracers/unarmed_bracers
+	var/obj/item/clothing/gloves/roguetown/knuckles/unarmed_knuckles
 
-	if(highest_defense <= (get_skill_level(/datum/skill/combat/unarmed) * 20))
-		defender_skill = get_skill_level(/datum/skill/combat/unarmed)
-		var/obj/B = get_item_by_slot(SLOT_WRISTS)
-		if(istype(B, /obj/item/clothing/wrists/roguetown/bracers))
-			prob2defend += (defender_skill * 35)
-			unarmed_bracers = B
-		else
-			prob2defend += (defender_skill * 10)		// no bracers gonna be butts.
-		weapon_parry = FALSE
+	var/obj/item/clothing/gloves/roguetown/bandages/unarmed_bandages
+
+	// Calculate unarmed parry value from bracers/knuckles/bandages
+	var/unarmed_skill = get_skill_level(/datum/skill/combat/unarmed)
+	var/unarmed_defense = 0
+	var/obj/B = get_item_by_slot(SLOT_WRISTS)
+	var/obj/K = get_item_by_slot(SLOT_GLOVES)
+	var/is_pugilist = HAS_TRAIT(src, TRAIT_CIVILIZEDBARBARIAN) // Only expert pugilists get the generous unarmed wdef
+	if(istype(B, /obj/item/clothing/wrists/roguetown/bracers))
+		unarmed_defense = (unarmed_skill * 20) + ((is_pugilist ? UNARMED_BASE_WDEF_EQUIPPED : UNARMED_BASE_WDEF_BARE) * 10)
+		unarmed_bracers = B
+	else if(istype(K, /obj/item/clothing/gloves/roguetown/knuckles))
+		unarmed_defense = (unarmed_skill * 20) + ((is_pugilist ? UNARMED_BASE_WDEF_EQUIPPED : UNARMED_BASE_WDEF_BARE) * 10)
+		unarmed_knuckles = K
+	else if(istype(K, /obj/item/clothing/gloves/roguetown/bandages))
+		unarmed_defense = (unarmed_skill * 20) + ((is_pugilist ? UNARMED_BASE_WDEF_EQUIPPED : UNARMED_BASE_WDEF_BARE) * 10)
+		unarmed_bandages = K
 	else
+		unarmed_defense = (unarmed_skill * 20) + (UNARMED_BASE_WDEF_BARE * 10)
+
+	// If held weapon uses unarmed skill (katar, etc), allow unarmed parry fallback
+	var/allow_unarmed_fallback = FALSE
+	if(used_weapon?.associated_skill == /datum/skill/combat/unarmed)
+		allow_unarmed_fallback = TRUE
+
+	if(highest_defense > 0 && (!allow_unarmed_fallback || highest_defense >= unarmed_defense))
+		// Weapon parry wins
 		if(used_weapon)
 			defender_skill = get_skill_level(used_weapon.associated_skill)
 		else
-			defender_skill = get_skill_level(/datum/skill/combat/unarmed)
+			defender_skill = unarmed_skill
 		prob2defend += highest_defense
 		weapon_parry = TRUE
+
+	else if(allow_unarmed_fallback && unarmed_defense > highest_defense)
+		// Unarmed parry is better than the unarmed-skill weapon's own wdefense
+		defender_skill = unarmed_skill
+		prob2defend += unarmed_defense
+		weapon_parry = FALSE
+	else
+		// No parry-capable weapon - pure unarmed
+		defender_skill = unarmed_skill
+		prob2defend += unarmed_defense
+		weapon_parry = FALSE
 
 	if(intenty.masteritem)
 		attacker_skill = attacker.get_skill_level(intenty.masteritem.associated_skill)
@@ -102,6 +131,19 @@
 	else
 		attacker_skill = attacker.get_skill_level(/datum/skill/combat/unarmed)
 		prob2defend -= (attacker_skill * 20)
+		if(attacker.STASPD > src.STASPD) //unarmed is inherently swift
+			var/spdmod = ((attacker.STASPD - src.STASPD) * 10)
+			var/permod = ((src.STAPER - attacker.STAPER) * 10)
+			var/intmod = ((src.STAINT - attacker.STAINT) * 3)
+			if(mind)
+				if(permod > 0)
+					spdmod -= permod
+				if(intmod > 0)
+					spdmod -= intmod
+			var/finalmod = spdmod
+			if(mind)
+				finalmod = clamp(spdmod, 0, 30)
+			prob2defend -= finalmod
 
 	// --- Weapon binding! ---
 
@@ -256,24 +298,33 @@
 		else
 			flash_fullscreen("blackflash2")
 
-		var/dam2take = round((get_complex_damage(AB,attacker,used_weapon.blade_dulling)/2),1)
-		if(dam2take)
-			var/intdam = used_weapon.max_blade_int ? INTEG_PARRY_DECAY : INTEG_PARRY_DECAY_NOSHARP
-			var/sharp_loss = SHARPNESS_ONHIT_DECAY
-			if(used_weapon == offhand)
-				intdam = INTEG_PARRY_DECAY_NOSHARP
-			if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
-				sharp_loss += STRONG_SHP_BONUS
-				intdam += STRONG_INTG_BONUS
+		if(AB)
+			var/dam2take = round((get_complex_damage(AB,attacker,used_weapon.blade_dulling)/2),1)
+			if(dam2take)
+				var/intdam = used_weapon.max_blade_int ? INTEG_PARRY_DECAY : INTEG_PARRY_DECAY_NOSHARP
+				var/sharp_loss = SHARPNESS_ONHIT_DECAY
+				if(used_weapon == offhand)
+					intdam = INTEG_PARRY_DECAY_NOSHARP
 
-			// Heavy weapons chew through shields — use higher of demolition_mod or intent intdamage_factor
+				if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
+					sharp_loss += STRONG_SHP_BONUS
+					intdam += STRONG_INTG_BONUS
+
+				// Heavy weapons chew through shields — use higher of demolition_mod or intent intdamage_factor
+				if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
+					var/shield_mult = max(intenty.demolition_mod, intenty.intent_intdamage_factor)
+					intdam *= shield_mult
+
+				used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
+				used_weapon.remove_bintegrity(sharp_loss, attacker)
+		else
+			// Unarmed attacker
+			var/intdam = INTEG_PARRY_DECAY_UNARMED
 			if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
-				var/shield_mult = max(intenty.demolition_mod, intenty.intent_intdamage_factor)
-				intdam *= shield_mult
+				intdam *= intenty.intent_intdamage_factor
 
 			if(!has_status_effect(/datum/status_effect/buff/weapon_binded))
 				used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
-				used_weapon.remove_bintegrity(sharp_loss, attacker)
 			if(mind)
 				dodgetime = CLAMP(dodgetime - 2, 0, CLICK_CD_DODGE)
 				changeMaxDodge(2)
@@ -296,7 +347,24 @@
 					mind?.add_sleep_experience(/datum/skill/combat/unarmed, max(round(STAINT*exp_multi), 0), FALSE)
 
 		if(unarmed_bracers)
-			unarmed_bracers.take_damage(INTEG_PARRY_DECAY_NOSHARP, "slash", armor_penetration = 100)
+			unarmed_bracers.take_damage(INTEG_PARRY_DECAY_NOSHARP, BRUTE)
+		else if(unarmed_knuckles)
+			unarmed_knuckles.take_damage(INTEG_PARRY_DECAY_NOSHARP, BRUTE)
+		else if(unarmed_bandages)
+			unarmed_bandages.take_damage(INTEG_PARRY_DECAY_NOSHARP, "slash", armor_penetration = 100)
+		else
+			// Unarmed attacker
+			var/intdam = INTEG_PARRY_DECAY_UNARMED
+			var/sharp_loss = SHARPNESS_ONHIT_DECAY
+
+			if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
+				sharp_loss += STRONG_SHP_BONUS
+				intdam += STRONG_INTG_BONUS
+
+			if(istype(used_weapon, /obj/item/rogueweapon/shield) && intenty)
+				intdam *= intenty.intent_intdamage_factor
+			used_weapon.take_damage(intdam, BRUTE, used_weapon.d_type)
+			used_weapon.remove_bintegrity(sharp_loss, attacker)
 		flash_fullscreen("blackflash2")
 		if(mind)
 			dodgetime = CLAMP(dodgetime - 2, 0, CLICK_CD_DODGE)
@@ -359,3 +427,5 @@
 		if(WBALANCE_SWIFT)
 			return pick('sound/foley/binds/bind_swift1.ogg','sound/foley/binds/bind_swift2.ogg','sound/foley/binds/bind_swift3.ogg','sound/foley/binds/bind_swift4.ogg','sound/foley/binds/bind_swift5.ogg','sound/foley/binds/bind_swift6.ogg')
 #undef STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL
+#undef UNARMED_BASE_WDEF_BARE
+#undef UNARMED_BASE_WDEF_EQUIPPED

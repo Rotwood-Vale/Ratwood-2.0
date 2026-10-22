@@ -104,7 +104,7 @@
 
 /datum/skill/combat/unarmed
 	name = "Unarmed"
-	desc = "Increases your chance to bypass your opponent's parry by 20% with unarmed or unarmed weapons such as katars, and your chance to bypass dodge by 10%. Parrying while unarmed does not work currently."
+	desc = "Increases your chance to bypass your opponent's parry by 20% with unarmed or unarmed weapons such as katars, and your chance to bypass dodge by 10%. Unarmed attacks are swift-balanced, making them harder to parry and dodge when you are faster than your opponent. Wearing knuckles or bracers enables unarmed parrying."
 	dreams = list(
 	"...the wet and harsh sound of skin against bone and clattering teeth reaches your ears before your mind processes what just happened. You got knocked out with a mighty blow to the jaw...",
 	"...your nails are claws, your hands are weapons. A silent watcher in pale plate armor nods with approval at your ferocity..."

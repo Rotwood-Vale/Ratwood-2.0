@@ -1,0 +1,4 @@
+author: "CentralSmith"
+delete-after: True
+changes:
+  - bugfix: "Path of Order no longer consumes devotion when its choice is cancelled or already known."
