@@ -1,4 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Deflected nets no longer ensnare the defender."

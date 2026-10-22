@@ -1,7 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - rscadd: "Adds new concentrated rot potion with infects drinker with dealite rot on 3 minute timer, or can be used to instantly turn dead or crited people into dealites"
-  - rscadd: "It takes vicera, coal dust, atrophia to make, and master alchemy skill. Comes in 30u (one vial) (any amount gives full effect)"
-  - qol: "Moved around few potion ingredients to make space for it. Stone dust is no longer alchemicly innert"
-  - balance: "Dealites still get full heal if they werent dead when transformation happened, delites are now knocked down and scream when turning instead of doing so completely silently. You also dont vomit blood at the moment of infection, you still get warning mesages after"

@@ -1,4 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Jacksberries display their hue when examined again."
