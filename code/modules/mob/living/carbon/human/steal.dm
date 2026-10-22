@@ -4,6 +4,8 @@
 	var/thiefskill = user.get_skill_level(/datum/skill/misc/stealing) + (has_world_trait(/datum/world_trait/matthios_fingers) ? 1 : 0)
 	var/stealroll = roll("[thiefskill]d6")
 	var/targetperception = (target_human.STAPER)
+	if(HAS_TRAIT(target_human, TRAIT_WATCHFUL))
+		targetperception += 1
 	var/list/stealablezones = list("chest", "neck", "groin", "r_hand", "l_hand")
 	var/list/stealpos = list()
 	var/list/mobsbehind = list()
