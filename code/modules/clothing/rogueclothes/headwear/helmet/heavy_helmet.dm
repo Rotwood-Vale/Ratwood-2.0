@@ -260,6 +260,7 @@
 	smelt_bar_num = 2
 
 /obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold
+	is_gold = TRUE
 	name = "golden helmet"
 	desc = "A resplendant barbute, masterfully forged from pure gold. Its nasalguard is marked by a holy sigil, and its interior is fitted \
 	with a besilked arming cap. Even in absolute darkness, the polished surface sparkles with imbued sunlight."
@@ -473,6 +474,7 @@
 	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/gold
+	is_gold = TRUE
 	name = "golden knight's armet"
 	desc = "A resplendant armet, masterfully forged from pure gold. Hexagrammic etchings of a holy sigil line its visor, and its interior is fitted \
 	with a besilked arming cap. Even in absolute darkness, the polished surface sparkles with imbued sunlight."
@@ -621,6 +623,7 @@
 
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold
+	is_gold = TRUE
 	name = "decorated bucket helmet"
 	icon_state = "topfhelm_gold"
 	item_state = "topfhelm_gold"

@@ -58,6 +58,7 @@
 	id = /obj/item/mattcoin
 
 	r_hand = /obj/item/rogueweapon/woodstaff/diamond
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
 	if(H.age == AGE_OLD)
 		head = /obj/item/clothing/head/roguetown/wizhat/gen
 		armor = /obj/item/clothing/suit/roguetown/shirt/robe
