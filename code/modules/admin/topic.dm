@@ -821,7 +821,26 @@
 			return
 		log_admin("[key_name(usr)] has fartraveled slumbering [key_name(L)] after [DisplayTimeText(world.time - L.last_logout_time, 1)] in a deep slumber.")
 		message_admins(span_adminnotice("[key_name_admin(usr)] has fartraveled slumbering [key_name_admin(L)] after [DisplayTimeText(world.time - L.last_logout_time, 1)] in a deep slumber."))
-		L.fartravel_disconnected(usr)
+		L.admin_fartravel(usr)
+
+	else if(href_list["fartravel"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/living/L = locate(href_list["fartravel"])
+		if(!istype(L) || !L.get_real_body())
+			to_chat(usr, span_warning("That character no longer exists."))
+			return
+		var/mob/living/carbon/human/body = L.get_real_body()
+		if(alert(usr, "Fartravel [key_name(L)] as [body.real_name]? Their job slot is freed and the character is deleted with everything they carry.", "Fartravel", "Yes", "No") != "Yes")
+			return
+		if(QDELETED(L) || L.get_real_body() != body)
+			to_chat(usr, span_warning("That character no longer exists."))
+			return
+		var/departing = "[key_name(L)] as [body.real_name] ([body.job || "no job"])"
+		log_admin("[key_name(usr)] has fartraveled [departing].")
+		message_admins(span_adminnotice("[key_name_admin(usr)] has fartraveled [departing]."))
+		L.admin_fartravel(usr)
 
 	else if(href_list["revive"])
 		if(!check_rights(R_ADMIN))

@@ -118,7 +118,7 @@ GLOBAL_DATUM_INIT(disconnected_players_panel, /datum/disconnected_players_panel,
 		// Logged before deletion so the record survives a runtime partway through the batch.
 		log_admin("[key_name(user)] has fartraveled slumbering [key_name(L)] after [time_away] in a deep slumber.")
 		fartraveled += "[L.ckey] ([time_away])"
-		L.fartravel_disconnected(user)
+		L.admin_fartravel(user)
 	if(!length(fartraveled))
 		to_chat(user, span_warning("None of the selected players are still in a deep slumber."))
 		return

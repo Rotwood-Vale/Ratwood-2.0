@@ -149,6 +149,10 @@
 		body += "<A href='?_src_=holder;[HrefToken()];newbankey=[M.key]'>Ban</A> | "
 
 	body += "<A href='?_src_=holder;[HrefToken()];showmessageckey=[M.ckey]'>Notes | Messages | Watchlist</A> | "
+	if(isliving(M))
+		var/mob/living/fartravel_target = M
+		if(fartravel_target.get_real_body())
+			body += "<A href='?_src_=holder;[HrefToken()];fartravel=[REF(M)]'>Fartravel</A> | "
 	if(M.client)
 		body += "\ <A href='?_src_=holder;[HrefToken()];sendbacktolobby=[REF(M)]'>Send back to Lobby</A> | "
 		var/muted = M.client.prefs.muted
@@ -1364,12 +1368,13 @@
 	H.admin_send_back_to_lobby(usr)
 
 
-/mob/living/carbon/human/proc/admin_send_back_to_lobby(mob/admin, delete_character = FALSE)
+/// only_if_present skips the player's mind key, so a player who has left this body (ghosted, or playing someone new) is not pulled out to the lobby.
+/mob/living/carbon/human/proc/admin_send_back_to_lobby(mob/admin, delete_character = FALSE, only_if_present = FALSE)
 	var/datum/job/mob_job
 	// A shapeshifted form (wildshape, werewolf) carries the character's real body inside it.
 	var/mob/living/carbon/human/body = get_real_body()
 	var/target_job = SSrole_class_handler.get_advclass_by_name(body.advjob)
-	var/player_key = key ? key : mind?.key
+	var/player_key = key ? key : (only_if_present ? null : mind?.key)
 	if(mind)
 		mob_job = SSjob.GetJob(mind.assigned_role)
 		if(mob_job)
@@ -1401,7 +1406,7 @@
 	if(player_key)
 		var/mob/dead/new_player/NP = new()
 		NP.key = player_key
-	else if(admin)
+	else if(admin && !only_if_present)
 		to_chat(admin, span_warning("[src] has no key to return to the lobby."))
 	if(delete_character)
 		if(body != src)
@@ -1428,18 +1433,19 @@
 		for(var/thing in get_embedded_objects())
 			QDEL_NULL(thing)
 
-/// Sends the disconnected player in this mob back to the lobby and deletes their character. Returns FALSE if there is no character.
-/mob/living/proc/fartravel_disconnected(mob/admin)
+/// Removes this character from the round as far travel does: job slot freed, character and everything on it deleted.
+/// A player still in the body, connected or slumbering, goes to the lobby. Returns FALSE if there is no character.
+/mob/living/proc/admin_fartravel(mob/admin)
 	var/obj/shapeshift_holder/holder = get_shapeshift_holder()
 	if(holder)
 		var/mob/living/carbon/human/caster = holder.stored
-		// Revert the spell shapeshift so the mind, and the slumbering player's key, are back in the caster's body.
+		// Revert the spell shapeshift so the mind, and any player's key, are back in the caster's body.
 		holder.restore()
-		return caster.admin_send_back_to_lobby(admin, TRUE)
+		return caster.admin_send_back_to_lobby(admin, TRUE, TRUE)
 	if(!ishuman(src))
 		return FALSE
 	var/mob/living/carbon/human/H = src
-	return H.admin_send_back_to_lobby(admin, TRUE)
+	return H.admin_send_back_to_lobby(admin, TRUE, TRUE)
 
 
 /datum/admins/proc/sleep_view()
