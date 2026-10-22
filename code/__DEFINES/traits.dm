@@ -159,6 +159,7 @@
 #define TRAIT_LOCAL_KNOWLEDGE "Local Knowledge"
 #define TRAIT_SOFT_FOOTED "Soft Footed"
 #define TRAIT_LIGHT_SENSITIVITY "Light Sensitivity"
+#define TRAIT_ANCESTOR_GUARDIAN "Ancestor Guardian"
 #define TRAIT_SCOMGNET_AUTHORIZED "SCOMgnet Authorized" //If the inquisitor deems someone worthy of their communications.
 
 //travel zone traits
@@ -704,6 +705,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_WATCHFUL = span_info("Zybantine is known for its pickpockets and thieves, and not without cause. I am wary of slippery hands."),
 	TRAIT_LOCAL_KNOWLEDGE = span_info("I've lived in Ferentia long enough to avoid its dangers."),
 	TRAIT_SOFT_FOOTED = span_info("In the far-off land of Kazengun, it's considered impolite to walk noisily. My steps are soft and light."),
+	TRAIT_ANCESTOR_GUARDIAN = span_info("In Avar, we venerate our ancestors, and they ward us from danger. From time to time, they shall guide my hand in battle."),
 	TRAIT_LIGHT_SENSITIVITY = span_info("Living in the dim caverns of the underdark has caused my eyes to adjust. Though I can see well in the dark, bright lights are anathema to me!")
 ))
 

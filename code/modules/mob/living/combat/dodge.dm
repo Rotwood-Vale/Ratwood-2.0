@@ -235,7 +235,7 @@
 			prob2defend -= 50
 
 		var/dodge_status = FALSE
-		if(prob(prob2defend))
+		if(prob(prob2defend) || ancestor_reroll(prob2defend))
 			dodge_status = TRUE
 
 		if(!dodge_status)

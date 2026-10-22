@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	to the second greatest Psydonic kingdom behind Otava, the finest martial force of the Eastern ranges, and the most ethnically and culturally diverse peoples in Grimoria."
 	origin_title = "Avar"
 	origin_language = /datum/language/aavnic
-	origin_traits = list(TRAIT_STEPPE_RIDER)
+	origin_traits = list(TRAIT_STEPPE_RIDER, TRAIT_ANCESTOR_GUARDIAN)
 	map_x = 417
 	map_y = 189
 
