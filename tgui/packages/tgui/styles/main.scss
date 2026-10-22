@@ -28,6 +28,8 @@
 
 // Interfaces
 @include meta.load-css('./interfaces/AlertModal.scss');
+@include meta.load-css('./interfaces/AudioSettings.scss');
+@include meta.load-css('./components/DragSlider.scss');
 @include meta.load-css('./interfaces/Changelog.scss');
 @include meta.load-css('./interfaces/ContractLedger.scss');
 @include meta.load-css('./interfaces/CrewManifest.scss');

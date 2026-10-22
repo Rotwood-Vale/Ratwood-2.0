@@ -22,7 +22,6 @@
 	var/turf/user_turf
 	var/mutable_appearance/tile_effect
 	var/mutable_appearance/target_effect
-	var/datum/looping_sound/invokeshadow/shadowloop
 
 //Resets the tile and turf effects.
 /obj/effect/proc_holder/spell/invoked/shadowstep/proc/reset(silent = FALSE)

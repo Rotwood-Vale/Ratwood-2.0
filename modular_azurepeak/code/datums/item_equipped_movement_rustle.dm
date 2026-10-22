@@ -21,8 +21,9 @@ with light edits to work with roguecode */
 	var/sound_vary = TRUE
 	///extra-range for this component's sound.
 	var/sound_extra_range = -1
-	///sound exponent for the rustle.
-	var/sound_falloff_exponent = 5
+	/// Optional rustle falloff override. Null selects Ratwood's range-based curve instead of a
+	/// fixed exponent
+	var/sound_falloff_exponent = null
 	///when sounds start falling off for the rustle rustle.
 	var/sound_falloff_distance = 1
 	/// just to make the stupid heels work more seamlessly.
@@ -75,7 +76,7 @@ with light edits to work with roguecode */
 		move_counter = 0
 
 /datum/component/item_equipped_movement_rustle/proc/play_rustle_sound(obj/item/clothing/source)//(mob/source)
-	playsound(source, rustle_sounds, volume, sound_vary, sound_extra_range, sound_falloff_exponent, falloff = sound_falloff_distance)
+	playsound(source, rustle_sounds, volume, sound_vary, sound_extra_range, sound_falloff_exponent, falloff_distance = sound_falloff_distance)
 
 /datum/component/item_equipped_movement_rustle/proc/set_override(state)
 	is_overridden = state

@@ -84,8 +84,7 @@
 	if(ringing)
 		return
 	if(istype(used_item, /obj/item/rogueweapon/mace/church))
-		playsound(loc, 'sound/misc/bell.ogg', 50, 1)
-		ring_bell()	//sound effect for players within 150 tiles
+		ring_bell()
 		loud_message("The [src] rings, echoing solemnly", hearing_distance = 150)
 		visible_message(span_notice("[user] uses the [used_item] to ring the [src]."))
 		ringing = TRUE
@@ -95,21 +94,30 @@
 
 		return ..()
 
+/**
+ * Plays the bell to living players and observers within 150 tiles.
+ *
+ * Uses the player list rather than a large spatial-grid search. Every listener receives one
+ * positional send using the long-range falloff curve. Separate near and far sounds would overlap or
+ * change volume abruptly at their boundary.
+ */
 /obj/structure/stationary_bell/proc/ring_bell()
 	var/turf/origin_turf = get_turf(src)
+	// Share one pitch for the ring. playsound_local() would otherwise roll separately for each
+	// listener
+	var/ring_frequency = get_rand_frequency()
 
-	for(var/mob/living/player in GLOB.player_list)
-		if(player.stat == DEAD)
-			continue
-		if(isbrain(player))
-			continue
+	for(var/mob/player in GLOB.player_list)
+		// Observers hear it, as they hear any playsound. Dead bodies and brains do not
+		if(!isobserver(player))
+			if(player.stat == DEAD)
+				continue
+			if(isbrain(player))
+				continue
 
 		var/distance = get_dist(player, origin_turf)
-		if(distance <= 7)
-			continue
 		if(distance <= 150)
-			player.playsound_local(get_turf(player), 'sound/misc/bell.ogg', 35, FALSE, pressure_affected = FALSE)
-			continue
+			player.playsound_local(origin_turf, 'sound/misc/bell.ogg', 100, TRUE, ring_frequency, max_distance = 150, pressure_affected = FALSE)
 
 /obj/item/jingle_bells
 	name = "jingling bells"

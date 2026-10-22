@@ -307,7 +307,7 @@
 				budget2change(2, user, "MARQUE")
 				qdel(I)
 				record_round_statistic(STATS_MARQUES_MADE, 2)
-				playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
+				playsoundtoken(src, 'sound/misc/otavanlament.ogg', 100, SOUND_RANGE - 1)
 				playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 			else
 				if(!I.broken)
@@ -413,7 +413,7 @@
 						qdel(I.paired)
 					qdel(I)
 					visible_message(span_warning("[user] sends something."))
-					playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
+					playsoundtoken(src, 'sound/misc/otavanlament.ogg', 100, SOUND_RANGE - 1)
 					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 			return
 
@@ -434,7 +434,7 @@
 			record_round_statistic(STATS_MARQUES_MADE, I.marquevalue)
 			qdel(I)
 			visible_message(span_warning("[user] sends something."))
-			playsound(loc, 'sound/misc/otavasent.ogg', 100, FALSE, -1)
+			playsoundtoken(src, 'sound/misc/otavasent.ogg', 100, SOUND_RANGE - 1)
 			playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 		return
 
@@ -528,7 +528,7 @@
 					qdel(I.paired)
 					qdel(I)
 					visible_message(span_warning("[user] sends something."))
-					playsound(loc, 'sound/misc/otavanlament.ogg', 100, FALSE, -1)
+					playsoundtoken(src, 'sound/misc/otavanlament.ogg', 100, SOUND_RANGE - 1)
 					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 					return
 			else

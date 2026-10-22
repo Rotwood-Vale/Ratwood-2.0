@@ -204,7 +204,7 @@
 	set category = "Winged Form"
 	set name = "Caw"
 
-	emote("caw", intentional = TRUE, animal = TRUE)
+	emote("caw", intentional = TRUE, anthro_noise = TRUE)
 
 /datum/species/shapecrow
 	name = "crow"

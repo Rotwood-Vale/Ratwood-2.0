@@ -6,6 +6,7 @@
 	GLOB.player_list -= src
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PLAYER_LOGOUT, src)
 	..()
 
 	if(loc)

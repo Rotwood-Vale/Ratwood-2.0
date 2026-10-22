@@ -43,7 +43,7 @@
 			if(S.arousal < 51)
 				S.set_arousal(55) //Just enough to be above the frustration threshold.
 			if(prob(8))
-				C.emote("sexmoanlight", forced = TRUE)
+				C.emote_erp("sexmoanlight")
 				to_chat(C, "<span class='love_high'>[high_message]</span>")
 				if(istype(C.wear_armor, /obj/item/clothing))
 					var/obj/item/clothing/CL = C.wear_armor
@@ -66,14 +66,14 @@
 		sleep(10)
 	to_chat(C, "<span class='aphrodisiac'>The glow in your stomach spreads, rushing to your head and warming your face.</span>")
 	metabolization_rate = 0.2 //Purges faster while overdosing because this is really debilitating
-	C.emote("sexmoanhvy", forced = TRUE)
+	C.emote_erp("sexmoanhvy")
 	C.sexcon.aphrodisiac += 1
 	C.Jitter(20)
 	C.Stun(15)
 
 /datum/reagent/consumable/ethanol/beer/emberwine/overdose_process(mob/living/carbon/human/C)
 	if(prob(5))
-		C.emote("sexmoanhvy", forced = TRUE)
+		C.emote_erp("sexmoanhvy")
 		C.Stun(15)
 		C.set_blurriness(5)
 
