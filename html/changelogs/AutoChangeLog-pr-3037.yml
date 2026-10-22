@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - rscadd: "Adds \"Enable Breast Milking\" toggle which allows other players to milk your character via clicking their exposed chest with a container when enabled."

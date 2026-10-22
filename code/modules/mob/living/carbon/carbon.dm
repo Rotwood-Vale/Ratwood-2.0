@@ -886,6 +886,12 @@
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_DARKVISION)
 		see_in_dark = max(see_in_dark, 12)
 
+	if(HAS_TRAIT(src, TRAIT_LIGHT_SENSITIVITY))
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_DARKVISION)
+		see_in_dark = max(see_in_dark, 12)
+		if(HAS_TRAIT(src, TRAIT_DARKVISION))
+			lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_SENSITIVE_DARKVISION)
+
 	if(HAS_TRAIT(src, TRAIT_NOCSHADES))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_NOCSHADES)
 		see_in_dark = max(see_in_dark, 12)
