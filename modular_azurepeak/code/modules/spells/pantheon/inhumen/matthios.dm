@@ -21,6 +21,9 @@
 	miracle = TRUE
 	devotion_cost = 0
 
+/obj/effect/proc_holder/spell/invoked/appraise/free // distinct from secular appraise (bandits still use matthios to read people. soul)
+	miracle = FALSE
+
 /obj/effect/proc_holder/spell/invoked/appraise/secular
 	name = "Secular Appraise"
 	overlay_icon = 'icons/mob/actions/genericmiracles.dmi'
