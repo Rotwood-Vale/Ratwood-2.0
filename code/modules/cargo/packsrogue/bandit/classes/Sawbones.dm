@@ -10,8 +10,13 @@
 
 /datum/supply_pack/rogue/Sawbones/trustworthyhat
 	name = "Trustworthy Hat"
-	cost = 5
-	contains = list(/obj/item/clothing/head/roguetown/physician)
+	cost = 25
+	contains = list(/obj/item/clothing/head/roguetown/physician/sawbones)
+
+/datum/supply_pack/rogue/Sawbones/trustworthymask
+	name = "Trustworthy Mask"
+	cost = 25
+	contains = list(/obj/item/clothing/mask/rogue/physician/sawbones)
 
 /datum/supply_pack/rogue/Sawbones/leather/Lhelmet
 	name = "Leather Helmet"
@@ -78,8 +83,8 @@
 
 /datum/supply_pack/rogue/Sawbones/trustworthyrobes
 	name = "Trustworthy Robes"
-	cost = 5
-	contains = list(/obj/item/clothing/suit/roguetown/shirt/robe/physician)
+	cost = 25
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/robe/physician/sawbones)
 
 /datum/supply_pack/rogue/Sawbones/gambeson
 	name = "Gambeson"
