@@ -215,18 +215,18 @@
 		)
 
 /datum/customizer/organ/horns/wings
-    name = "Headwing"
-    customizer_choices = list(/datum/customizer_choice/organ/horns/wings)
-    allows_disabling = TRUE
-    default_disabled =  TRUE
+	name = "Headwing"
+	customizer_choices = list(/datum/customizer_choice/organ/horns/wings)
+	allows_disabling = TRUE
+	default_disabled =  TRUE
 
 /datum/customizer_choice/organ/horns/wings
-    name = "Headwing"
-    organ_type = /obj/item/organ/horns
-    sprite_accessories = list(
-        /datum/sprite_accessory/horns/messenger,
-        /datum/sprite_accessory/horns/rmessenger,
-        /datum/sprite_accessory/horns/lmessenger,
+	name = "Headwing"
+	organ_type = /obj/item/organ/horns
+	sprite_accessories = list(
+    	/datum/sprite_accessory/horns/messenger,
+    	/datum/sprite_accessory/horns/rmessenger,
+    	/datum/sprite_accessory/horns/lmessenger,
 		/datum/sprite_accessory/horns/chiroptera,
 		/datum/sprite_accessory/horns/nightstalker
     )
