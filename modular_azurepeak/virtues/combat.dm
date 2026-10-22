@@ -100,8 +100,8 @@
 	name = "Brawler's Apprentice"
 	desc = "I have trained under a skilled brawler, and have some experience fighting with my fists. I have a katar and some knuckledusters stashed away, too."
 	custom_text = "Guaranteed Journeyman for Unarmed & Wrestling."
-	added_stashed_items = list("Knuckles" = /obj/item/rogueweapon/knuckles/bronzeknuckles,
-								"More Knuckles" = /obj/item/rogueweapon/knuckles/bronzeknuckles)
+	added_stashed_items = list("Knuckles" = /obj/item/clothing/gloves/roguetown/knuckles/bronze,
+								"More Knuckles" = /obj/item/clothing/gloves/roguetown/knuckles/bronze)
 
 /datum/virtue/combat/brawler/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)

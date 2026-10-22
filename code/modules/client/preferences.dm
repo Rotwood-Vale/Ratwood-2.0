@@ -134,6 +134,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/descriptor_color = FALSE
 	/// If a cursed collar can be equipped to them at all
 	var/cursed_collarable = FALSE
+	/// If we are lactating, can others milk us via reagent containers (not for sex actions, but the stuff in milking.dm)
+	var/milkable = FALSE
 	var/voting_popup = TRUE
 	var/compliance_notifs = TRUE
 	var/skillcap_notifs = TRUE
@@ -3395,6 +3397,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.headshot_link = headshot_link
 
 	character.origin = origin ? origin.name : "Unknown"
+	for(var/trait in origin?.origin_traits)
+		ADD_TRAIT(character, trait, ORIGIN_TRAIT)
 
 	character.statpack = statpack
 

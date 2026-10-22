@@ -424,6 +424,7 @@
 	smeltresult = /obj/item/ingot/iron
 	picklvl = 1.0
 	is_tool = FALSE
+	special = /datum/special_intent/dagger_dash
 
 /obj/item/rogueweapon/huntingknife/idagger/virtue
 	possible_item_intents = list(/datum/intent/dagger/thrust,/datum/intent/dagger/cut, /datum/intent/dagger/thrust/pick, /datum/intent/dagger/sucker_punch)
