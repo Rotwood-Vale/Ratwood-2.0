@@ -1,4 +1,3 @@
-#define STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL -2
 
 /mob/living/proc/attempt_parry(datum/intent/intenty, mob/living/attacker)
 	if(!intenty.parriable_intent) // If the intent is unparriable whatsoever just skip all the math
@@ -106,6 +105,14 @@
 		prob2defend += unarmed_defense
 		weapon_parry = FALSE
 
+	var/att_swift_capable = attacker.check_dodge_skill(check_trait = FALSE)
+	var/def_swift_capable = src.check_dodge_skill(check_trait = FALSE)
+	
+	if(used_weapon)
+		if(used_weapon.wbalance == WBALANCE_SWIFT)
+			if(mainhand && !offhand && def_swift_capable) // We're one-handing a swift-balanced weapon (rapiers, sabers, etc). Small parry boost (1 wdef equiv.)
+				prob2defend += 10
+
 	if(intenty.masteritem)
 		attacker_skill = attacker.get_skill_level(intenty.masteritem.associated_skill)
 
@@ -113,17 +120,12 @@
 			intenty.masteritem.remove_bintegrity(intenty.sharpness_penalty)
 
 		prob2defend -= (attacker_skill * 20)
-		if(!HAS_TRAIT(attacker, TRAIT_FENCERDEXTERITY))	// Yet another Frei related clamp
+		if(att_swift_capable)
 			if(!has_status_effect(/datum/status_effect/buff/weapon_binded))
 				if((intenty.masteritem.wbalance == WBALANCE_SWIFT) && (attacker.STASPD > src.STASPD)) //enemy weapon is quick, so get a bonus based on spddiff
 					var/spdmod = ((attacker.STASPD - src.STASPD) * 10)
 					var/permod = ((src.STAPER - attacker.STAPER) * 5)
 					var/intmod = ((src.STAINT - attacker.STAINT) * 3)
-					if(mind)
-						if(permod > 0)
-							spdmod -= permod
-						if(intmod > 0)
-							spdmod -= intmod
 					var/finalmod = spdmod
 					if(mind)
 						finalmod = clamp(spdmod, 0, 45)
@@ -142,7 +144,19 @@
 					spdmod -= intmod
 			var/finalmod = spdmod
 			if(mind)
-				finalmod = clamp(spdmod, 0, 30)
+				var/ceilclamp = SWIFTCAP_CHEST
+				if(attacker.zone_selected == BODY_ZONE_CHEST)	// Attacker is targeting chest. Worst boons! INT and PER are subtracted.
+					if(permod > 0)
+						spdmod -= permod
+					if(intmod > 0)
+						spdmod -= intmod
+				else if(attacker.zone_selected != check_zone(attacker.zone_selected))	// They are targeting a precise zone. Best boons! No INT/ PER influence.
+					ceilclamp = SWIFTCAP_PRECISE
+				else if((check_zone(attacker.zone_selected) == attacker.zone_selected) && attacker.zone_selected != BODY_ZONE_CHEST)
+					ceilclamp = SWIFTCAP_LIMBS
+					if(permod > 0)
+						spdmod -= permod
+				finalmod = clamp(spdmod, 0, ceilclamp)
 			prob2defend -= finalmod
 
 	// --- Weapon binding! ---
@@ -215,7 +229,7 @@
 	if(parry_status)
 		if(!has_status_effect(/datum/status_effect/buff/weapon_binded))
 			if(intenty.masteritem)
-				if(intenty.masteritem.wbalance < WBALANCE_NORMAL && attacker.STASTR > src.STASTR) //enemy weapon is heavy, so get a bonus scaling on strdiff
+				if(intenty.masteritem.wbalance == WBALANCE_HEAVY && attacker.STASTR > src.STASTR) //enemy weapon is heavy, so get a bonus scaling on strdiff
 					stamina_drained = stamina_drained + ( intenty.masteritem.wbalance * ((attacker.STASTR - src.STASTR) * STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL) )
 	else
 		text += span_warning(" The enemy defeated my parry!")
@@ -426,6 +440,6 @@
 			return pick('sound/foley/binds/bind_heavy1.ogg','sound/foley/binds/bind_heavy2.ogg','sound/foley/binds/bind_heavy3.ogg','sound/foley/binds/bind_heavy4.ogg','sound/foley/binds/bind_heavy5.ogg','sound/foley/binds/bind_heavy6.ogg','sound/foley/binds/bind_heavy7.ogg','sound/foley/binds/bind_heavy8.ogg','sound/foley/binds/bind_heavy9.ogg','sound/foley/binds/bind_heavy10.ogg','sound/foley/binds/bind_heavy11.ogg','sound/foley/binds/bind_heavy12.ogg')
 		if(WBALANCE_SWIFT)
 			return pick('sound/foley/binds/bind_swift1.ogg','sound/foley/binds/bind_swift2.ogg','sound/foley/binds/bind_swift3.ogg','sound/foley/binds/bind_swift4.ogg','sound/foley/binds/bind_swift5.ogg','sound/foley/binds/bind_swift6.ogg')
-#undef STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL
+
 #undef UNARMED_BASE_WDEF_BARE
 #undef UNARMED_BASE_WDEF_EQUIPPED
