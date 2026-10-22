@@ -271,7 +271,7 @@
 				I.get_deflected(src)
 				do_sparks(2, TRUE, current_turf)
 				visible_message(span_warning("[src] deflects \the [I]!"))
-				return
+				return TRUE
 
 	if(I && !blocked)
 		if(((throwingdatum ? throwingdatum.speed : I.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || I.embedding.embedded_ignore_throwspeed_threshold)
@@ -678,9 +678,11 @@
 		examination += span_dead("[m1] dead.")
 	switch(bodytemperature)
 		if(0 to BODYTEMP_COLD_LEVEL_ONE_MAX)
-			examination += span_biginfo("<font color='#023E8A'> [m1] shivering greatly</font>")
+			if(!HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))
+				examination += span_biginfo("<font color='#023E8A'> [m1] shivering greatly</font>")
 		if(BODYTEMP_COLD_LEVEL_ONE_MAX to BODYTEMP_NORMAL_MIN)
-			examination += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
+			if(!HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))
+				examination += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
 		if(BODYTEMP_NORMAL_MIN to BODYTEMP_NORMAL_MAX)
 			examination += span_biginfo("<B>[m1] average temperature.</B>")
 		if(BODYTEMP_NORMAL_MAX to BODYTEMP_HEAT_LEVEL_ONE_MAX)

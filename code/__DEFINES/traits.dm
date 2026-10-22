@@ -146,6 +146,20 @@
 #define TRAIT_COMPLIANT "Compliant" //forced to be compliant
 #define TRAIT_MARTIAL_PROWESS "Martial Prowess" //allows mastering weapon skills
 #define TRAIT_SELF_AWARE "Self Aware" //Absolver/Stigmata trait that allows them to self-diagnose and get full damage numbers.
+#define TRAIT_DEADITE_RESISTANCE "Deadite Resistance"
+#define TRAIT_COLD_RESISTANCE "Cold Resistance"
+#define TRAIT_HEAT_RESISTANCE "Heat Resistance"
+#define TRAIT_STEPPE_RIDER "Steppe Rider"
+#define TRAIT_HEARTY_DRINKER "Hearty Drinker"
+#define TRAIT_BATTLE_CRY "Battle Cry"
+#define TRAIT_METICULOUS "Meticulous"
+#define TRAIT_SLOW_METABOLISM "Slow Metabolism"
+#define TRAIT_GOLD_AFFINITY "Gold Affinity"
+#define TRAIT_WATCHFUL "Watchful"
+#define TRAIT_LOCAL_KNOWLEDGE "Local Knowledge"
+#define TRAIT_SOFT_FOOTED "Soft Footed"
+#define TRAIT_LIGHT_SENSITIVITY "Light Sensitivity"
+#define TRAIT_ANCESTOR_GUARDIAN "Ancestor Guardian"
 #define TRAIT_SCOMGNET_AUTHORIZED "SCOMgnet Authorized" //If the inquisitor deems someone worthy of their communications.
 
 //travel zone traits
@@ -506,7 +520,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_PERFECT_TRACKER = span_info("I am a master at pursuing those I hunt. I can discern every last detail within a spotted track, and any attempts to hide said-tracks will fail to deceive me."),//Hearthstone port.
 	TRAIT_ZIZOSIGHT = span_info("Zizo blesses my eyes to be unburdened by the night."), //Hearthstone change.
 	TRAIT_NOCSIGHT = span_info("My nocturnal nature allows me to see during the time of Noc."),
-	TRAIT_CIVILIZEDBARBARIAN = span_info("My rigorous training in the martial arts has turned me into a living weapon. No limb is out of reach for my fists and feet, and my unarmed strikes now have a higher chance to inflict critical damage."),
+	TRAIT_CIVILIZEDBARBARIAN = span_info("My rigorous training in the martial arts has turned me into a living weapon. No limb is out of reach for my fists and feet, and my unarmed strikes are now stronger (+5 Unarmed Damage)."),
 	TRAIT_COMICSANS = span_sans("I am cursed with a odd voice."),
 	TRAIT_SQUIRE_REPAIR = span_info("Trained at my Master's side, I can restore any kind of gears with time and polish them until they gleam like new."),
 	TRAIT_WATERBREATHING = span_info("I do not drown in bodies of water."),
@@ -678,7 +692,21 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_CLERGYRADICAL = span_info("I follow the radical path of the clergy, abandoning the old road of devotion in favor of self-guided miracle study."),
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
 	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
-	TRAIT_SELF_AWARE = span_info("I know my body well, and know innately what its aches mean.")
+	TRAIT_SELF_AWARE = span_info("I know my body well, and know innately what its aches mean."),
+	TRAIT_DEADITE_RESISTANCE = span_info("I was raised in rot-infested lands. My body is more resistant to the infection."),
+	TRAIT_COLD_RESISTANCE = span_info("I've grown a tolerance to the cold, due to the climate of my homeland."),
+	TRAIT_HEAT_RESISTANCE = span_info("I've grown a tolerance to heat, due to the climate of my homeland."),
+	TRAIT_STEPPE_RIDER = span_info("During my childhood, I was often around horses and taught to ride them from a young age. "),
+	TRAIT_HEARTY_DRINKER = span_info("The blood of dwarves runs in my veins! I enjoy a hearty brew!"),
+	TRAIT_BATTLE_CRY = span_info("In the land of Gronn, no battle begins without a battle cry. A warcry is sure to give me favor in a fight!"),
+	TRAIT_METICULOUS = span_info("In Grenzelhoft, I was taught to be meticulous with what spare resources we had. Crafting is easier for me."),
+	TRAIT_SLOW_METABOLISM = span_info("Every child in Otava has suffered through at least one famine. The frigid alpines are notoriously infertile. I eat less than others."),
+	TRAIT_GOLD_AFFINITY = span_info("Hailing from the land of Naledi, I am invigorated by wearing gold. The sheen reminds me of grander times."),
+	TRAIT_WATCHFUL = span_info("Zybantine is known for its pickpockets and thieves, and not without cause. I am wary of slippery hands."),
+	TRAIT_LOCAL_KNOWLEDGE = span_info("I've lived in Ferentia long enough to avoid its dangers."),
+	TRAIT_SOFT_FOOTED = span_info("In the far-off land of Kazengun, it's considered impolite to walk noisily. My steps are soft and light."),
+	TRAIT_ANCESTOR_GUARDIAN = span_info("In Avar, we venerate our ancestors, and they ward us from danger. From time to time, they shall guide my hand in battle."),
+	TRAIT_LIGHT_SENSITIVITY = span_info("Living in the dim caverns of the underdark has caused my eyes to adjust. Though I can see well in the dark, bright lights are anathema to me!")
 ))
 
 // trait accessor defines

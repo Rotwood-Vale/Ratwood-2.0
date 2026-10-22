@@ -1048,6 +1048,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/hunger_rate = HUNGER_FACTOR
 		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
 			hunger_rate *= 0.7 // QOL for hemophages, from number of complaints.
+		if(HAS_TRAIT(H, TRAIT_SLOW_METABOLISM))
+			hunger_rate *= 0.9
 		if (H.bodytemperature < BODYTEMP_NORMAL_MIN)	//Hunger increased by 50% when cold
 			hunger_rate *= 1.5
 /*		if(H.satiety > MAX_SATIETY)
@@ -1305,6 +1307,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.process_clash(user, IM)
 			return
 
+		if(user.has_status_effect(/datum/status_effect/buff/clash) && !target.has_status_effect(/datum/status_effect/buff/clash))
+			user.bad_guard(span_suicide("I tried to strike while focused on defense whole! It drains me!"), cheesy = TRUE)
+			return
+
 		if(user.mob_biotypes & MOB_UNDEAD)
 			if(target.has_status_effect(/datum/status_effect/buff/necras_vow))
 				if(isnull(user.mind))
@@ -1420,7 +1426,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.forcesay(GLOB.hit_appends)
 		if(!nodmg)
 			playsound(target.loc, user.used_intent.hitsound, 100, FALSE)
-
+			if(user.mind)
+				user.dodgetime = (clamp(user.dodgetime - 2, 0, CLICK_CD_DODGE))
+				user.changeMaxDodge(3)
+			if(target.mind)
+				target.dodgetime = (clamp(target.dodgetime - 8, 0, CLICK_CD_DODGE))	//We reset the dodgetime after getting struck directly in the body.
+				target.changeMaxDodge(5)
 
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
@@ -1785,7 +1796,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			log_combat(user, target, "kicked", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 
 
-		var/selzone = melee_accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
+		var/selzone = user.zone_selected
 		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 		if(!affecting)
 			affecting = target.get_bodypart(BODY_ZONE_CHEST)
@@ -2221,6 +2232,14 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 	var/turf/cur_turf = get_turf(H)
 	if(!cur_turf)
 		return
+	if(HAS_TRAIT(H, TRAIT_LIGHT_SENSITIVITY))
+		var/sunlit = GLOB.tod == "day" && cur_turf.outdoor_effect?.state
+		if(sunlit)
+			H.add_stress(/datum/stressevent/sunlit)
+		if(sunlit && !(H.head?.block2add & FOV_BEHIND))
+			H.apply_status_effect(/datum/status_effect/debuff/sun_blinded)
+		else
+			H.remove_status_effect(/datum/status_effect/debuff/sun_blinded)
 	var/loc_temp = cur_turf.temperature
 
 	if(cur_turf.outdoor_effect)	//We check if our turf is outdoors before applying map/ToD modifiers
@@ -2333,7 +2352,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 				H.update_health_hud()
 			return
 		if(H.bodytemperature < BODYTEMP_COLD_LEVEL_ONE_MAX && !HAS_TRAIT(H, TRAIT_EXTREME_TEMPERATURE_IMMUNE))	//Level 2 cold - con punishment, frostbite, speed reduction
-			if(prob(15) && !(H.m_intent == MOVE_INTENT_SNEAK || H.alpha <= 120)) //if we're sneaking or invisible, no shivering
+			if(prob(15) && !HAS_TRAIT(H, TRAIT_COLD_RESISTANCE) && !(H.m_intent == MOVE_INTENT_SNEAK || H.alpha <= 120)) //if we're sneaking or invisible, no shivering
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, emote), "shiver"), (rand(2,6)SECONDS),TIMER_UNIQUE | TIMER_STOPPABLE)
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, cold_warn)),20 SECONDS,TIMER_UNIQUE)
 			if(!H.hypothermia_timer_id)
@@ -2343,7 +2362,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 			H.relieve_heatstroke_from_cold()	//if you somehow bypass level 1, straight to level 2, still fix heatstroke
 		else	//level 1 cold
 			H.remove_movespeed_modifier(MOVESPEED_ID_COLD)
-			if(prob(5) && !(H.m_intent == MOVE_INTENT_SNEAK || H.alpha <= 120)) //if we're sneaking or invisible, no shivering
+			if(prob(5) && !HAS_TRAIT(H, TRAIT_COLD_RESISTANCE) && !(H.m_intent == MOVE_INTENT_SNEAK || H.alpha <= 120)) //if we're sneaking or invisible, no shivering
 				addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, emote), "shiver"), (rand(2,6)SECONDS),TIMER_UNIQUE | TIMER_STOPPABLE)
 			H.relieve_heatstroke_from_cold()	//if has heatstroke, body chill fixes it
 			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, cold_warn)),20 SECONDS,TIMER_UNIQUE)
