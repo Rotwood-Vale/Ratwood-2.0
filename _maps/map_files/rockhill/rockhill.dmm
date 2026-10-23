@@ -4361,7 +4361,7 @@
 /area/rogue/under/town/basement/keep)
 "aRU" = (
 /obj/structure/table/church/m/alt,
-/obj/item/spellbook_unfinished/pre_arcyne,
+/obj/item/rogueweapon/spellbook,
 /obj/item/roguegem/random,
 /turf/open/floor/rogue/churchrough{
 	color = "#d4ffcf"
@@ -81015,8 +81015,8 @@
 /obj/item/paper/scroll,
 /obj/item/paper/scroll,
 /obj/item/paper/scroll,
-/obj/item/spellbook_unfinished/pre_arcyne,
-/obj/item/spellbook_unfinished/pre_arcyne,
+/obj/item/rogueweapon/spellbook,
+/obj/item/rogueweapon/spellbook,
 /obj/machinery/light/rogue/candle/blue/l,
 /turf/open/floor/rogue/greenstone,
 /area/rogue/indoors/town/magician/rockhill)
@@ -114949,7 +114949,7 @@
 /obj/item/skull,
 /obj/item/paper,
 /obj/item/paper,
-/obj/item/rogueweapon/woodstaff/quartz,
+/obj/item/rogueweapon/woodstaff/implement/greater/quartz,
 /turf/open/floor/rogue/churchrough{
 	color = "#d4ffcf"
 	},
