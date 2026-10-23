@@ -179,7 +179,9 @@
 		/datum/sprite_accessory/ears/dendorite,
 		/datum/sprite_accessory/ears/eoran,
 		/datum/sprite_accessory/ears/pestran,
-		/datum/sprite_accessory/ears/zorzor
+		/datum/sprite_accessory/ears/zorzor,
+		/datum/sprite_accessory/ears/wispy,
+		/datum/sprite_accessory/ears/small
 		)
 
 /datum/customizer/organ/ears/anthro
@@ -253,7 +255,9 @@
 		/datum/sprite_accessory/ears/shadekin/band_right,
 		/datum/sprite_accessory/ears/shadekin/fluffy,
 		/datum/sprite_accessory/ears/shadekin/smooth,
-		/datum/sprite_accessory/ears/zorzor
+		/datum/sprite_accessory/ears/zorzor,
+		/datum/sprite_accessory/ears/wispy,
+		/datum/sprite_accessory/ears/small
 		)
 
 /datum/customizer/organ/ears/lizard
@@ -380,4 +384,20 @@
 		/datum/sprite_accessory/ears/perky,
 		/datum/sprite_accessory/ears/big/sandfox_large,
 		/datum/sprite_accessory/ears/lynx,
+		/datum/sprite_accessory/ears/wispy,
+		/datum/sprite_accessory/ears/small
 	)
+
+/datum/customizer_choice/organ/ears/wings
+	name = "Aasimar Ears"
+	organ_type = /obj/item/organ/ears
+	sprite_accessories = list(
+		/datum/sprite_accessory/ears/elf,
+		/datum/sprite_accessory/ears/elfw,
+		/datum/sprite_accessory/ears/wispy,
+		/datum/sprite_accessory/ears/small,
+		)
+
+/datum/customizer/organ/ears/wings
+	customizer_choices = list(/datum/customizer_choice/organ/ears/wings)
+	allows_disabling = TRUE
