@@ -65,7 +65,7 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raze)
-			if("Golden Serpent") // Pure Pugilist no dodge expert, and unable to use any and all kind of weapons PURE UNARMED.
+		 	if("Golden Serpent") // Pure Pugilist no dodge expert, and unable to use any and all kind of weapons PURE UNARMED.
 				head = /obj/item/clothing/head/roguetown/headband/monk
 				mask = /obj/item/clothing/mask/rogue/eyepatch
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
@@ -74,7 +74,7 @@
 				shirt = /obj/item/clothing/suit/roguetown/shirt/robe/monk/holy
 				shoes = /obj/item/clothing/shoes/roguetown/shortboots
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/raze)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+				H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/skulduggery)
 				ADD_TRAIT(H, TRAIT_CYCLOPS_RIGHT, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)

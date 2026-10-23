@@ -473,7 +473,8 @@
 	stressadd = 3
 	desc = span_red("That horrid sigil! How dare they?!")
 
-// Granted directly to the Iconoclast; this is not part of Matthios' general miracle list.
+//T4 Raze 
+
 /obj/effect/proc_holder/spell/invoked/raze
 	name = "Raze"
 	desc = "Exhale a cone of stolen fyre before you, scorching enemies and igniting the ground. Damage increases with Holy skill. These flames can turn unworthy corpses to ash."
@@ -670,9 +671,13 @@
 
 		AddSpell(new /obj/effect/proc_holder/spell/self/twilight_dragonclaws)
 		AddSpell(new /obj/effect/proc_holder/spell/invoked/gilded_swoop)
-		AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/matthios_dragon)
-		AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire/matthios_dragon)
 		AddSpell(new /obj/effect/proc_holder/spell/invoked/raze/gilded_dragon)
+		var/datum/action/cooldown/spell/projectile/fireball/fireball = new /datum/action/cooldown/spell/projectile/fireball
+		var/datum/action/cooldown/spell/projectile/spitfire/spitfire = new /datum/action/cooldown/spell/projectile/spitfire
+
+		fireball.Grant(src)
+		spitfire.Grant(src)
+
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
 		src.apply_status_effect(/datum/status_effect/buff/twilight_dragon_form)
 
@@ -1173,17 +1178,16 @@
 #undef TRAIT_SOURCE_WILDSHAPE
 
 /obj/effect/proc_holder/spell/invoked/projectile/fireball/matthios_dragon
-	glow_color = "#FFD700"
+	glow_color = GLOW_COLOR_MATTHIOS
 	glow_intensity = GLOW_INTENSITY_LOW
-	invocation_type = "none"
+	invocation_type = NONE
 	recharge_time = 40 SECONDS
 
 /obj/effect/proc_holder/spell/invoked/projectile/spitfire/matthios_dragon
-	glow_color = "#FFD700"
+	glow_color = GLOW_COLOR_MATTHIOS
 	glow_intensity = GLOW_INTENSITY_LOW
-	invocation_type = "none"
+	invocation_type = NONE
 	recharge_time = 15 SECONDS
-
 
 // Golden-Serpent-exclusive T4: Skulduggery
 //Skulduggery, lets you slip behind people who attack you
