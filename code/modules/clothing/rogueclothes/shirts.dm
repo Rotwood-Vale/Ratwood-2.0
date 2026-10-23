@@ -808,6 +808,11 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
+/obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/examine(mob/user)
+	. = ..()
+	. -= span_info("This object can be repaired using <b>Sewing</b> and a needle.")
+	. += span_info("These tattoos slowly mend themselves after a minute without taking damage.")
+
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/dropped(mob/living/carbon/human/user)
 	. = ..()
 	if(QDELETED(src))
@@ -831,6 +836,8 @@
 		src.last_repair = world.time
 		src.visible_message(span_notice("The [src] begin to swirl, repairing their integrity..."), vision_distance = 1)
 		obj_integrity = min(obj_integrity + src.repair_amount, src.max_integrity)
+		if(obj_broken)
+			obj_fix(full_repair = FALSE)
 	..()
 
 //Some vanderlin ports, steward clothes and Hand coats//
