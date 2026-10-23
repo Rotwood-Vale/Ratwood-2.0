@@ -466,7 +466,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	user.changeNext_move(CLICK_CD_FAST)
 	if(istype(I, /obj/item/roguekey) || istype(I, /obj/item/storage/keyring))
 		if(!locked)
-			to_chat(user, span_warning("It won't turn this way. Try turning to the left."))
+			to_chat(user, span_warning("It won't turn this way. Try turning to the right."))
 			playsound(src, rattlesound, 100)
 			return
 		else

@@ -67,7 +67,6 @@
 
 /obj/structure/roller/LateInitialize()
 	. = ..()
-	set_connection_dir()
 	find_rotation_network()
 	build_roller_chain()
 
@@ -86,12 +85,6 @@
 		. += span_notice("RPM: [rotations_per_minute]")
 		. += span_notice("Rollers don't consume stress from the network.")
 	. += span_notice("Use a <b>wrench</b> to rotate it.")
-
-/obj/structure/roller/examine(mob/user)
-	. = ..()
-	. += span_info("Powered rollers move loose items and mobs in their facing direction.")
-	. += span_info("They accept rotation from their side connections and do not consume stress from the network.")
-	. += span_info("They can be re-aimed to change which way they move items.")
 
 /obj/structure/roller/proc/get_rotation_sides_text()
 	var/list/sides = list()
