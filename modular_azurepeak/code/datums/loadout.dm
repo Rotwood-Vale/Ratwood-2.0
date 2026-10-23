@@ -268,7 +268,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
      name = "Yurt Tent"
      path = /obj/item/tent_kit/yurt
      triumph_cost = 8
-	
+
 /datum/loadout_item/bedroll
      name = "Bedroll"
      path = /obj/item/bedroll
@@ -1049,7 +1049,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/irondildo
 	name = "Iron Dildo"
 	path = /obj/item/dildo/iron
-	
+
 /datum/loadout_item/copperdildo
 	name = "Copper Dildo"
 	path = /obj/item/dildo/copper
@@ -1337,6 +1337,18 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/kazengun_cloak
 	name = "Jinbaori"
 	path = /obj/item/clothing/cloak/kazengun
+
+/datum/loadout_item/shoulderpad_metal
+	name = "Plate spaulders"
+	path = /obj/item/clothing/cloak/volfmantle/shoulderpad
+
+/datum/loadout_item/shoulderpad_leatherheavy
+	name = "Leather spaulders"
+	path = /obj/item/clothing/cloak/volfmantle/shoulderpad/leather
+
+/datum/loadout_item/shoulderpad_leatherlight
+	name = "Light leather spaulders"
+	path = /obj/item/clothing/cloak/volfmantle/shoulderpad/lightleather
 
 // SHOES
 /datum/loadout_item/sandals
@@ -1860,6 +1872,11 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_padded_caftan
 	name = "Padded Caftan"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
+	triumph_cost = 3
+
+/datum/loadout_item/padded_kini
+	name = "Padded corslet"
+	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/bikini
 	triumph_cost = 3
 
 /datum/loadout_item/tri_pontifex_gambeson
