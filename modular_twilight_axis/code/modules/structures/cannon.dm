@@ -233,7 +233,6 @@
 	speed = 2.0
 	woundclass = BCLASS_PIERCE
 	embedchance = 100
-	var/intdamfactor = 2
 
 /obj/projectile/bullet/grapeshot_pellet/prehit(atom/target)
 	if(isliving(target))
@@ -495,7 +494,7 @@
 		var/mob/living/L = user
 		skill = L.get_skill_level(/datum/skill/combat/firearms)
 
-	var/misfire_chance = max(10 - (skill * 5))
+	var/misfire_chance = max(2 - (skill * 5))
 
 	if(prob(misfire_chance))
 		src.visible_message(span_danger("[src] It's falling apart!"))
