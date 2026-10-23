@@ -235,7 +235,6 @@
 	. = ..()
 	if(!owner?.mind)
 		return
-	granted_spell = new /obj/effect/proc_holder/spell/invoked/projectile/acidsplash/quietus
 	owner.mind.AddSpell(granted_spell)
 
 /datum/coven_power/quietus/taste_of_death/post_lose()
@@ -243,9 +242,6 @@
 	if(granted_spell)
 		owner?.mind?.RemoveSpell(granted_spell)
 		granted_spell = null
-
-/obj/effect/proc_holder/spell/invoked/projectile/acidsplash/quietus
-	projectile_type = /obj/projectile/magic/acidsplash/quietus
 
 /obj/projectile/magic/acidsplash/quietus
 	damage = 80

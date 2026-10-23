@@ -44,6 +44,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NODECONSTRUCT_1				(1<<7)
 /// item has priority to check when entering or leaving
 #define ON_BORDER_1					(1<<8)
+/// Prevent clicking things below it on the same turf eg. doors/ fulltile windows
+#define PREVENT_CLICK_UNDER_1		(1<<9)
 /// is a hologram, not a real object
 #define HOLOGRAM_1					(1<<9)
 /// TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
