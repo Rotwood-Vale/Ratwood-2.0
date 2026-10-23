@@ -229,7 +229,7 @@
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	chargetime = 0.5 SECONDS
 	recovery = 7
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
@@ -242,7 +242,7 @@
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	chargetime = 0.8 SECONDS // longer charge cause heavy balance I guess
 	recovery = 7
-	penfactor = 30
+	penfactor = PEN_MEDIUM
 	reach = 3
 	icon_state = "inlash"
 	item_d_type = "slash"
@@ -255,7 +255,7 @@
 	chargetime = 0.7 SECONDS
 	recovery = 10
 	damfactor = 1.1
-	penfactor = 25
+	penfactor = PEN_MEDIUM
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
@@ -268,7 +268,7 @@
 	chargetime = 0.9 SECONDS
 	recovery = 10
 	damfactor = 1.1
-	penfactor = 15
+	penfactor = PEN_LIGHT
 	reach = 2
 	icon_state = "incrack"
 	item_d_type = "slash"
@@ -285,7 +285,7 @@
 	clickcd = CLICK_CD_CHARGED
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 30
+	penfactor = PEN_MEDIUM
 	item_d_type = "stab"
 	effective_range = 3
 	effective_range_type = EFF_RANGE_EXACT
@@ -302,7 +302,7 @@
 	clickcd = CLICK_CD_CHARGED
 	warnie = "mobwarning"
 	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = 40
+	penfactor = PEN_HEAVY
 	item_d_type = "stab"
 	effective_range = 3
 	effective_range_type = EFF_RANGE_EXACT
