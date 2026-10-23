@@ -302,10 +302,9 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/yield_prompt
 	duration = 20 SECONDS
 
-/datum/status_effect/debuff/yield_prompt/on_apply()
-	if(isliving(owner) && owner.has_flaw(/datum/charflaw/compliant))
-		var/mob/living/living_owner = owner
-		living_owner.submit(TRUE)
+/datum/status_effect/debuff/yield_prompt/on_creation(mob/living/new_owner, message_mode)
+	if(new_owner.has_flaw(/datum/charflaw/compliant) && message_mode == MODE_WHISPER)
+		new_owner.submit(TRUE)
 		return FALSE
 	return ..()
 
