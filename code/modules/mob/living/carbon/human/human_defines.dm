@@ -215,3 +215,6 @@
 	var/hypothermia_timer_id
 
 	var/branded = FALSE // Saves time during examine if character hasn't been branded at all
+
+	/// Guarded Virtue (TRAIT_DECEIVING_MEEKNESS) exclusive variable for filtering out our descriptors from examine.
+	var/show_descriptors = TRUE
