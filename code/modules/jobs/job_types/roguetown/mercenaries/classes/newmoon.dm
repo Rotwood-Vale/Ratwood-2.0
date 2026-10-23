@@ -18,14 +18,14 @@
 	class_select_category = CLASS_CAT_ZYBANTU
 	subclass_languages = list(/datum/language/celestial)
 	category_tags = list(CTAG_MERCENARY)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_MAGEDEXTERITY)
-	subclass_spellpoints = 8//We'll focus on this being a combination spellblade.
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_ARCYNE)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 2,
 		STATKEY_WIL = 2,
 		STATKEY_CON = -2,
 	)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 0, "minor" = 0, "utilities" = 6)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -66,15 +66,26 @@
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/spellbook_unfinished/pre_arcyne = 1,
+		/obj/item/rogueweapon/spellbook = 1,
 		/obj/item/roguegem/amethyst = 1,
 		/obj/item/lockpick = 1,
 		)
 
+	to_chat(H, span_warning("You start with Bind Weapon. Remember to Bind your weapon so you can use your abilities and build up Arcyne Momentum."))
+
+	var/datum/status_effect/buff/arcyne_momentum/momentum = H.apply_status_effect(/datum/status_effect/buff/arcyne_momentum)
+	if(momentum)
+		momentum.chant = "blade"
+
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonweapon)//Singular user of this, outside of scrolls.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/caedo)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/air_strike)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/leyline_anchor)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/blade_storm)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/recall_weapon)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/empower_weapon)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/bind_weapon)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/mending)
 
 //Their sabre. Peel capable when off. Does burn when on. OldRW rage inducing classic, returned.
 //Now properly inflicts burn wounds, on top of the burn type damage. Very painful.
