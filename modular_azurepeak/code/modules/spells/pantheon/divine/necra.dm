@@ -189,7 +189,7 @@
 
 /obj/effect/proc_holder/spell/invoked/necra_vow
 	name = "Vow to Necra"
-	desc = "Make a vow to Necra. Your chances of revival or recovery of limb will be greatly reduced. You will harm undeath and heal yourself at a slow rate."
+	desc = "Make a vow to Necra. You can never be revived, and only your own limbs can be restored. You will harm undeath and slowly heal, but the healing stops while you lie in crit."
 	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	range = 1
@@ -218,7 +218,7 @@
 			to_chat(user, span_notice("They have already pledged a vow."))
 			revert_cast()
 			return FALSE
-		var/choice = alert(H, "You are being asked to pledge a vow. Your chances of revival or recovery of limb will be greatly reduced. You will harm undeath and heal yourself at a slow rate. Do you agree?", "VOW", "Yes", "No")
+		var/choice = alert(H, "You are being asked to pledge a vow. You can never be revived, and only your own limbs can be restored. You will harm undeath and slowly heal, but the healing stops while you lie in crit. Do you agree?", "VOW", "Yes", "No")
 		if(choice != "Yes")
 			to_chat(user, span_notice("They declined."))
 			return TRUE
@@ -229,7 +229,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/necras_vow
 	name = "Vow to Necra"
-	desc = "I have pledged a promise to Necra. Undeath shall be harmed or lit aflame if they strike me. Rot will not claim me. Lost limbs can only be restored if they are myne."
+	desc = "I have pledged a promise to Necra. Should I fall, She will not mend me; She waits. Undeath shall be harmed or lit aflame if they strike me. Rot will not claim me. Lost limbs can only be restored if they are myne."
 	icon_state = "necravow"
 
 #define NECRAVOW_FILTER "necravow_glow"
