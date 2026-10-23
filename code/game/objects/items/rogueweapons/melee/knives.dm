@@ -728,7 +728,7 @@
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/stake
 	name = "silver-tipped stake"
-	desc = "A branch that has been broken off of a boswellia tree, sharpened to a fine point and tipped with blessed silver. It can lay most unholy creechers to rest, but only by piercing their hearts."
+	desc = "A branch that has been broken off of a holy tree, sharpened to a fine point and tipped with blessed silver. It can lay most unholy creechers to rest, but only by piercing their hearts."
 	icon_state = "stake_silver"
 	force = 20
 	throwforce = 20
@@ -764,16 +764,215 @@
 		added_def = 0,\
 	)
 
-/obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy/ComponentInitialize()
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy
+	name = "arbalist stake"
+	desc = "A branch that has been broken off of a boswellia tree, sharpened to a fine point and tipped with blessed inqusitorial silver. Created to specyfication of the acient order, it may be infused with Arbalist lux."
+	icon_state = "stake_silver"
+	force = 20
+	throwforce = 25
+	wdefense = 0  // last resort weapon
+	max_integrity = 50
+	slot_flags = ITEM_SLOT_HIP
+	is_silver = TRUE
+	var/luxinfused = FALSE
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
-		pre_blessed = BLESSING_PSYDONIAN,\
+		pre_blessed = BLESSING_NONE,\
 		silver_type = SILVER_PSYDONIAN,\
-		added_force = 0,\
+		added_force = 4,\
 		added_blade_int = 100,\
+		added_int = 40,\
+		added_def = 0,\
+	)
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/examine(mob/user)
+	. = ..()
+	if(luxinfused)
+		. += span_info("The stake is infused with lux, ready to burst into blessed fire.")
+	
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy/attack(mob/living/target, mob/living/user)
+	. = ..()
+	if(!luxinfused || obj_broken)
+		return
+	var/const/structure_damage = 1000
+	var/const/radius = 1
+	//Handle the mob impact, firstly.
+	var/turf/fallzone = get_turf(target)
+	if(!fallzone) // falback in case we hit somone without a turf (Harpy flying?)
+		if(ismob(target))
+			var/mob/living/carbon/human/M = target
+			if(M.mob_biotypes & MOB_UNDEAD)
+				M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
+			if(HAS_TRAIT(M, TRAIT_SILVER_WEAK))
+				M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+				M.ignite_mob()
+				visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
+				M.apply_damage(50, BRUTE, spread_damage = TRUE)
+				M.apply_damage(50, BURN, spread_damage = TRUE)
+			else
+				M.adjust_fire_stacks(12)
+				M.ignite_mob()
+				visible_message(span_warning("[target] is engulfed in flames upon being struck by [src]!"))
+				M.apply_damage(75, BRUTE, spread_damage = TRUE)
+				M.apply_damage(25, BURN, spread_damage = TRUE)
+		return
+
+	for(var/mob/living/carbon/human/M in range(radius, fallzone))
+		if(M.mob_biotypes & MOB_UNDEAD)
+			M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
+		if(HAS_TRAIT(M, TRAIT_SILVER_WEAK)) // I plaed psydonate miraclist VL. The silveweakness has to override all else
+			M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+			M.ignite_mob()
+			visible_message(span_warning("[M] erupts in divine flames originating from [src]!"))
+			M.apply_damage(50, BRUTE, spread_damage = TRUE)
+			M.apply_damage(50, BURN, spread_damage = TRUE)
+		else
+			if(HAS_TRAIT(M, TRAIT_PSYDONITE)) // only for practicing psydonites, all of inqusition qualifies. I dont want arbalist linched
+				M.adjust_fire_stacks(3)
+				M.ignite_mob()
+				visible_message(span_warning("[M] is singed by the flames originating from [src], yet the flames seem to avoid them!"))
+				M.apply_damage(20, BRUTE, spread_damage = TRUE)
+				M.apply_damage(5, BURN, spread_damage = TRUE)
+			else
+				M.adjust_fire_stacks(12)
+				M.ignite_mob()
+				visible_message(span_warning("[M] is engulfed in flames originating from [src]!"))
+				M.apply_damage(75, BRUTE, spread_damage = TRUE)
+				M.apply_damage(25, BURN, spread_damage = TRUE)
+		
+	for(var/turf/open/visual in range(radius, fallzone))
+		var/obj/effect/temp_visual/luxturf/luxspread = new /obj/effect/temp_visual/luxturf(visual)
+		var/datum/effect_system/smoke_spread/S = new /datum/effect_system/smoke_spread/fast // SMOKE EFFECT
+		animate(luxspread, alpha = 255, time = 8)
+		S.set_up(radius, fallzone)
+		S.start()
+	// Everything from this point has to do with what is damaged, additional structures can be added to the list to have different damage/effects!
+	for(var/obj/structure/damaged in range(radius, fallzone))
+		damaged.take_damage(structure_damage, BRUTE, "blunt", 1)
+	for(var/turf/closed/wall/damagedwalls in range(radius, fallzone))
+		damagedwalls.take_damage(structure_damage, BRUTE, "blunt", 1)
+	for(var/turf/closed/mineral/aoemining in range(radius, fallzone))
+		aoemining.take_damage(structure_damage, BRUTE,"blunt",1)
+	
+	luxinfused = FALSE
+	src.obj_integrity = 1	//Keeps it from being fully destroyed
+	src.obj_break()
+	visible_message(span_warning("The [src] has exploded into holy fire, breaking in the process."))
+
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood
+	name = "bloody stake"
+	desc = "Weirdly looking wooden stake covered somebody's blood."
+	icon_state = "blood_stake"
+	force = 20 // 25 if we count blesing
+	throwforce = 25
+	wdefense = 0  // last resort weapon
+	max_integrity = 50
+	slot_flags = ITEM_SLOT_HIP
+	is_silver = TRUE // arbalest blood is silver infused
+	integrity_failure = 0 // Meant to be used to its destruction
+	anvilrepair = null // as above ^
+	always_destroy = TRUE // needed to be destoyed
+	var/rune = null // aka why its here
+	sellprice = 0
+
+	
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood/ComponentInitialize() // Lets say arbelest blood and lux alredy being... quite somthing, counts as blesing. Actualy here to work against undead
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = SILVER_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 5,\
+		added_blade_int = 0,\
 		added_int = 0,\
 		added_def = 0,\
 	)
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood/examine(mob/user)
+	. = ..()
+	if(user.mind)
+		if(user.mind.has_spell(/obj/effect/proc_holder/spell/self/arbalist_blood_runes)) // only people with ability to use them recognise them
+			. += span_info("Stake transformed with holy blood, suitable for housing the power of runes. Such power comes at a cost, and nothing can reverse this stake deterioration.")
+			if(rune)
+				. += span_info(" A [rune] is etched into the bloody wood.")
+		else
+			if(rune)
+				. += span_info("There is a bloody sign etched into the wood.")
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood/attack(mob/living/target, mob/living/user)
+	if(!rune)
+		return ..()
+	var/used_rune = FALSE
+	switch(rune)
+		if(BLOODRUNE_FIRE)
+			if(HAS_TRAIT(target, TRAIT_SILVER_WEAK))
+				target.adjust_fire_stacks(5, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+			else
+				target.adjust_fire_stacks(5)
+			target.ignite_mob()
+			user.visible_message(span_warning("[src] erupts in flames, setting [target] on fire!"))
+			used_rune = TRUE
+		if(BLOODRUNE_WIND)
+			user.apply_status_effect(/datum/status_effect/buff/lesser_haste, 15 SECONDS)
+			target.apply_status_effect(/datum/status_effect/debuff/slow, 15 SECONDS)
+			user.visible_message(span_warning("[src] emist a gust of wind, slowing [target] and hastening [user]!"))
+			used_rune = TRUE
+		if(BLOODRUNE_EARTH)
+			if(target.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
+				return ..()
+			target.apply_status_effect(/datum/status_effect/debuff/clickcd, 6 SECONDS)
+			target.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
+			user.visible_message(span_warning("[src] creates earthy restrains on [target]!"))
+			used_rune = TRUE
+		if(BLOODRUNE_WATER)
+			if(target.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
+				return ..()
+			ADD_TRAIT(target, TRAIT_MUTE, "BLOOD_RUNES")
+			addtimer(CALLBACK(src, PROC_REF(remove_silence), target), wait = 10 SECONDS)
+			user.visible_message(span_warning("[src] secretes dark liquid, covering [target] eyes and mouth!"))
+			target.blind_eyes(6)			
+			target.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
+			used_rune = TRUE
+		if(BLOODRUNE_NATURE)
+			if(target.has_status_effect(/datum/status_effect/buff/bloodrune_resistance))
+				return ..()
+			target.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
+			target.Immobilize(6 SECONDS)
+			new /obj/effect/temp_visual/ensnare/long(get_turf(target))
+			user.visible_message(span_warning("[src] errupts into roots, immobilising [target]!"))
+			used_rune = TRUE
+		if(BLOODRUNE_FORCE)
+			if(target.has_status_effect(/datum/status_effect/debuff/yeetcd))
+				return ..()
+			var/scaling = 5
+			target.apply_status_effect(/datum/status_effect/debuff/yeetcd)
+			target.Slowdown(scaling)
+			var/knockback_tiles = scaling
+			if(target.resting)
+				knockback_tiles = max(1, knockback_tiles / 2)
+			var/turf/edge_target_turf = get_edge_target_turf(target, get_dir(user, target))
+			if(istype(edge_target_turf))
+				target.safe_throw_at(edge_target_turf, \
+				knockback_tiles, \
+				scaling, \
+				user, \
+				spin = FALSE, \
+				force = target.move_force)
+			used_rune = TRUE
+			user.visible_message(span_warning("[src] errupts with a wave of force, trowing the [target]!"))
+
+	..()
+
+	if(used_rune)
+		rune = null // Pay the blood tax
+		src.take_damage(10) // Your weapon is disposable
+
+/obj/item/rogueweapon/huntingknife/idagger/silver/stake/blood/proc/remove_silence(mob/living/carbon/target)
+	REMOVE_TRAIT(target, TRAIT_MUTE, "BLOOD_RUNES")
+	to_chat(target, span_warning("Black liquid leaves my mouth and eyes!"))
+
 
 /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
 	name = "psydonic dagger"
