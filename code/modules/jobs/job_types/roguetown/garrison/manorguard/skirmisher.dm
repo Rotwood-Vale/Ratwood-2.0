@@ -7,6 +7,7 @@
 	outfit = /datum/outfit/job/roguetown/manorguard/skirmisher
 
 	category_tags = list(CTAG_MENATARMS)
+	traits_applied = lits(TRAIT_MEDIUMARMOR, TRAIT_DODGEEXPERT)
 	//Garrison ranged/speed class. Time to go wild
 	subclass_stats = list(
 		STATKEY_SPD = 2,// seems kinda lame but remember guardsman bonus!!
@@ -30,7 +31,7 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_NOVICE,
 	)
-	extra_context = "Chooses between Light Armor (Dodge Expert) & Medium Armor. Additionally, this subclass can set traps."
+	extra_context = "Chooses between a gambeson or haubergeon. Additionally, this subclass can set traps."
 
 /datum/outfit/job/roguetown/manorguard/skirmisher/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -61,12 +62,8 @@
 		switch(armor_choice)
 			if("Gambeson")
 				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
-				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 			if("Haubergeon")
 				shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
-				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 		backpack_contents = list(
 			/obj/item/rogueweapon/huntingknife/combat/messer = 1,
 			/obj/item/rope/chain = 1,
