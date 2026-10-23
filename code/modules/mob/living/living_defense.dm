@@ -1,5 +1,5 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration = PEN_NONE, penetrated_text, damage, blade_dulling, intdamfactor, used_weapon = null, pen_info)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration = PEN_NONE, penetrated_text, damage, blade_dulling, intdamfactor, used_weapon = null, pen_info, no_debuff = FALSE)
 	var/armor_tier = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon, pen_info)
 
 	// Tier-based armor system.
@@ -46,11 +46,11 @@
 		else	// Unfortunate special behaviour for projectiles because they are absent most data pen_info wants (attacker mob ref, weapon sharpness, intent, etc)
 			if(armor_tier > 0)
 				if(armor_penetration == armor_tier)
-					blocked = block_damage * PEN_PASSTHROUGH_PROJ_EQUAL // We block 80% of the damage, letting 20% through to body / into integ.
+					blocked = block_damage * (1 - PEN_PASSTHROUGH_PROJ_EQUAL) // We block 80% of the damage, letting 20% through to body / into integ.
 					if(penetrated_text)
 						to_chat(src, span_danger("[penetrated_text]"))
 				else if(armor_penetration > armor_tier)
-					blocked = block_damage * PEN_PASSTHROUGH_PROJ_MORE // We block 20% of the damage, letting 80% through to body / into integ.
+					blocked = block_damage * (1 - PEN_PASSTHROUGH_PROJ_EQUAL) // We block 80% of the damage, letting 20% through to body / into integ.
 					if(penetrated_text)
 						to_chat(src, span_danger("[penetrated_text]"))
 				else
@@ -253,6 +253,16 @@
 			next_attack_msg.Cut()
 			if(I.thrownby)
 				log_combat(I.thrownby, src, "threw and hit", I)
+			var/volume = I.get_volume_by_throwforce_and_or_w_class()
+			if (I.throwforce > 0)
+				if (I.mob_throw_hit_sound)
+					playsound(src, I.mob_throw_hit_sound, volume, TRUE, -1)
+				else if(I.hitsound)
+					playsound(src, pick(I.hitsound), volume, TRUE, -1)
+				else
+					playsound(src, 'sound/blank.ogg',volume, TRUE, -1)
+			else
+				playsound(src, 'sound/blank.ogg', volume, -1)
 		else
 			return 1
 
@@ -518,6 +528,8 @@
 			to_chat(src, span_warning("I'm momentarily blinded by the flash!"))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", 25), 25)
+		if(!visual && HAS_TRAIT(src, TRAIT_LIGHT_SENSITIVITY))
+			Stun(20)
 		return TRUE
 	return FALSE
 
@@ -553,3 +565,64 @@
 		else
 			do_item_attack_animation(A, visual_effect_icon, used_item, animation_type, used_intent)
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+
+/// Riposting Ground Effect should not punish the caster wit an expose, as you can walk into it
+/mob/living/proc/guard_deflect_spell(spell_name = "the spell", no_message = FALSE, mob/living/attacker, punish_caster = TRUE)
+	var/datum/status_effect/buff/clash/guard = has_status_effect(/datum/status_effect/buff/clash)
+	if(guard)
+		if(isarcyne(src))
+			if(!no_message)
+				visible_message(span_warning("[src] deflects [spell_name] with a reactive ward!"))
+				to_chat(src, span_notice("My ward deflects the incoming spell!"))
+			playsound(get_turf(src), pick('sound/combat/parry/shield/magicshield (1).ogg', 'sound/combat/parry/shield/magicshield (2).ogg', 'sound/combat/parry/shield/magicshield (3).ogg'), 100)
+		else
+			if(!no_message)
+				visible_message(span_warning("[src] deflects [spell_name]!"))
+				to_chat(src, span_notice("My guard deflects the incoming spell!"))
+			var/obj/item/held = get_active_held_item()
+			if(held?.parrysound)
+				playsound(get_turf(src), pick(held.parrysound), 100)
+			else
+				playsound(get_turf(src), pick(parry_sound), 100)
+		apply_status_effect(/datum/status_effect/buff/parry_buffer)
+		apply_status_effect(/datum/status_effect/buff/emberward)
+		if(attacker != src)
+			apply_status_effect(/datum/status_effect/buff/adrenaline_rush/ranged)
+		guard.deflected_spell = TRUE
+		remove_status_effect(/datum/status_effect/buff/clash)
+		if(punish_caster)
+			punish_deflected_caster(attacker)
+		return TRUE
+	if(has_status_effect(/datum/status_effect/buff/parry_buffer))
+		return TRUE
+	return FALSE
+
+/// Exposes and staggers the caster of a spell we just Guard-deflected (riposte punish).
+/// Deduped per game tick so a single AOE deflected by multiple guards only punishes once.
+/mob/living/proc/punish_deflected_caster(mob/living/attacker)
+	if(!attacker || attacker == src)
+		return
+	if(attacker.last_deflect_recoil == world.time)
+		return
+	attacker.last_deflect_recoil = world.time
+	var/obj/item/attacker_weapon = arcyne_get_weapon(attacker)
+	if(attacker_weapon?.parrysound)
+		playsound(get_turf(attacker), pick(attacker_weapon.parrysound), 100)
+	else
+		playsound(get_turf(attacker), pick(attacker.parry_sound), 100)
+	if(attacker_weapon)
+		if(attacker_weapon.max_blade_int)
+			attacker_weapon.remove_bintegrity((attacker_weapon.blade_int * RIPOSTE_SHARPNESS_FACTOR), attacker)
+		else
+			var/integdam = max((attacker_weapon.max_integrity / RIPOSTE_INTEG_DIVISOR), (INTEG_PARRY_DECAY_NOSHARP * 5))
+			attacker_weapon.take_damage(integdam, BRUTE, attacker_weapon.d_type)
+	attacker.remove_status_effect(/datum/status_effect/debuff/exposed)
+	attacker.apply_status_effect(/datum/status_effect/debuff/exposed, 5 SECONDS)
+	attacker.apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
+	attacker.Slowdown(3)
+	var/datum/status_effect/buff/arcyne_momentum/momentum = attacker.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
+	if(momentum && momentum.stacks > 0)
+		momentum.consume_all_stacks()
+		to_chat(attacker, span_danger("My spell was deflected - I'm exposed and my momentum is gone!"))
+	else
+		to_chat(attacker, span_danger("My spell was deflected - I'm exposed!"))

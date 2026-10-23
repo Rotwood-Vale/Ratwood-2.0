@@ -653,64 +653,6 @@
 		revert_cast()
 		return FALSE
 
-/obj/effect/proc_holder/spell/invoked/projectile/fetch/miracle
-	name = "Divine Fetch"
-	miracle = TRUE
-	devotion_cost = 10
-	invocations = list()
-	associated_skill = /datum/skill/magic/holy
-	recharge_time = 5 SECONDS
-
-/obj/effect/proc_holder/spell/invoked/projectile/fetch/miracle/cast(list/targets, mob/living/user)
-	var/turf/T = get_turf(targets[1])
-	if(T.z < user.z)
-		to_chat(user, span_warning("You cannot use Divine Fetch below your floor!"))
-		revert_cast()
-		return FALSE
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/projectile/repel/miracle
-	name = "Divine Repel"
-	miracle = TRUE
-	devotion_cost = 14
-	invocations = list()
-	associated_skill = /datum/skill/magic/holy
-
-/obj/effect/proc_holder/spell/invoked/projectile/repel/miracle/cast(list/targets, mob/living/user)
-	var/turf/T = get_turf(targets[1])
-	if(T.z < user.z)
-		to_chat(user, span_warning("You cannot use Divine Repel below your floor!"))
-		revert_cast()
-		return FALSE
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/slick_trick_small/miracle
-	name = "Xylixian Slipsquare"
-	desc = "Create a tiny divine slick patch to trip the unwary."
-	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
-	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
-	overlay_state = "slipsquare1"
-	miracle = TRUE
-	devotion_cost = 30
-	chargetime = 0.5 SECONDS
-	invocations = list()
-	associated_skill = /datum/skill/magic/holy
-	recharge_time = 30 SECONDS
-
-/obj/effect/proc_holder/spell/invoked/slick_trick/miracle
-	name = "Grand Xylixian Slipsquare"
-	desc = "Flood a wide area with divine slick patches that send victims to the floor."
-	overlay_icon = 'icons/mob/actions/xylixmiracles.dmi'
-	action_icon = 'icons/mob/actions/xylixmiracles.dmi'
-	overlay_state = "slipsquare2"
-	miracle = TRUE
-	devotion_cost = 60
-	chargetime = 1 SECONDS
-	invocations = list()
-	associated_skill = /datum/skill/magic/holy
-	recharge_time = 90 SECONDS
-	area_of_effect_radius = 1 // 1 = 3x3
-
 #define NOTHING "nothing"
 #define XYLIX "xylix"
 #define ASTRATA "astrata"
@@ -727,7 +669,6 @@
 #define GRAGGAR "graggar"
 #define MATTHIOS "matthios"
 
-//JACKPOOOOOOOT 777
 /datum/status_effect/xylix_blessed_luck
 	id = "xylix_blessed_luck"
 	status_type = STATUS_EFFECT_UNIQUE

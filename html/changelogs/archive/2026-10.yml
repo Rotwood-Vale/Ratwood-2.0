@@ -346,3 +346,114 @@
 2026-10-18:
   Kroto-Ker:
   - rscadd: Hyena snout to Lupians + Outer Eyes accessory.
+2026-10-19:
+  Arturlang:
+  - admin: door logging, lockpicking, breaking, etc, shown via examine for adminghosts
+      or via a new investigate log option
+  CentralSmith:
+  - bugfix: Roasted squash soup can be made with cooked pumpkin mash.
+  Kroto-Ker:
+  - qol: Made genital hiding functional & allows you to choose specific parts to hide.
+  - rscadd: Bewinged trait for fluvians.
+  Sauna38:
+  - bugfix: Abyssal (language) icon fix, now shows the Fish instead of the Green Matrix
+2026-10-20:
+  CloverIsLucky:
+  - code_imp: 'Filesize Optimization for Adventurer Cleric code. Also changes for
+      Paladin: Astrata Paladin and Psydon Paladin get a subclass preview, and Xylix
+      Paladin gets their funny helm back.'
+  Sauna38:
+  - bugfix: Town Crier hat no longer turns invisible when worn in the mask slot
+  SirSwagmeyer:
+  - bugfix: embedchances being inversed.
+  - bugfix: embedded projectiles sometimes disappearing
+  - rscadd: Adds the dueling messer to the blacksmith weapons list
+  - balance: Athletics XP is now gained every time you use stamina, no matter whether
+      you're in run intent or not.
+  - balance: Athletics XP is gained at one unit per tenth of stamina used. The gain
+      is modified based on your constitution.
+  - rscadd: Added mechanical pushups, which can be found under the 'Emotes' tab.
+  - refactor: Reworked Dual Wielder virtue.
+  - rscadd: Added thrown projectile deflection mechanics.
+  Yuckuza:
+  - balance: Deadite rotting protections restricted to just physician clinic & town
+      church areas. You are no longer protected from rot by being dead inside any
+      town indoor space.
+  trueroguan:
+  - rscadd: add hike emote
+  - image: add hike sprites
+2026-10-21:
+  MrShibaa:
+  - balance: allows constructs to eat charcoal, small & big logs, lux and impure lux.
+2026-10-22:
+  CentralSmith:
+  - bugfix: Deflected nets no longer ensnare the defender.
+  - bugfix: Bardic dirges no longer debuff their performer.
+  - bugfix: Path of Order no longer consumes devotion when its choice is cancelled
+      or already known.
+  - bugfix: Jacksberries display their hue when examined again.
+  SirSwagmeyer:
+  - balance: Unarmed base damage increased and now it scales linearly to your strength
+      instead of quadratically
+  - balance: Expert Pugilist now gives a flat +5 to unarmed damage. Protective gloves
+      gives +1 to +3 (Leather to Plate), whereas unarmed bandages goes from +3, +5
+      to +7.
+  - balance: All knuckles are now a type of gloves. The good knuckels give +12 unarmed
+      flat bonus, higher than bandage, but have disastrous durability and poor armor.
+      They allow you to do unarmed parrying ,however.
+  - balance: Bandages now provide some protection to the hands.
+  - balance: Punch now deals 1.0 integrity damage once again, and calculate as swift
+      balanced like unarmed weapons.
+  - bugfix: unarmed now properly lowers sharpness
+  - bugfix: strong intent now benefits unarmed
+  - bugfix: unarmed fails riposte if they punch during it
+  - bugfix: punches now give dodge back on hits to skin
+  - bugfix: fixes unarmed not pausing skinarmor regen
+  - bugfix: feint cares about unarmed now (no free +60% to being feinted)
+  - bugfix: bracers/knuckles now take damage properly when parrying with unarmed
+  - balance: stomps have 100% accuracy again
+  - balance: swift/strongcost for unarmed 1.5 -> 6
+  - balance: misscost for unarmed 3 -> 1
+  - balance: katar cut 1.3 -> 1.2. katar clickdelay for both intents 8 -> 10
+  - balance: grab cost reduced to account for swiftcost adjustment
+  - balance: riposting unarmed grants normal riposte counter
+  - rscadd: Added a Dagger Special -- Dash
+  - rscadd: Added a plethora of new moodlet sprites and mood variations.
+  - rscdel: Removes blunt chipping code from the game - it was already removed, but
+      it wasn't able to be fully cleaned up until now.
+  - refactor: Refactored STEAL --> SPECIAL button. You can now use the MMB to trigger
+      a weapon special!
+  - refactor: Refactored Steal intent to be used by right clicking on weak with combat
+      mode enabled.
+  The-Sun-In-Splendour:
+  - balance: all bandit classes start with appraise. keep your money safe!
+  Xander3359:
+  - bugfix: Fix some cooking items disappearing if you did the step in your hand
+  - qol: Millstones no longer have 1000 years of click delay after you mill something
+  Yuckuza:
+  - balance: Greataxes now have the hefty swing special.
+  wikimody:
+  - rscadd: Adds new concentrated rot potion with infects drinker with dealite rot
+      on 3 minute timer, or can be used to instantly turn dead or crited people into
+      dealites
+  - rscadd: It takes vicera, coal dust, atrophia to make, and master alchemy skill.
+      Comes in 30u (one vial) (any amount gives full effect)
+  - qol: Moved around few potion ingredients to make space for it. Stone dust is no
+      longer alchemicly innert
+  - balance: Dealites still get full heal if they werent dead when transformation
+      happened, delites are now knocked down and scream when turning instead of doing
+      so completely silently. You also dont vomit blood at the moment of infection,
+      you still get warning mesages after
+2026-10-23:
+  HelennaC:
+  - admin: slooc color change
+  Kroto-Ker:
+  - rscadd: Traits are added to all origins.
+  - balance: Hard limits capacity to craft to only 1 level above your own.
+  Randumb-Phantomb:
+  - qol: Psydonic full plate recipe clarified
+  The-Sun-In-Splendour:
+  - bugfix: soulchurner description changing based on inquisition or not
+  Yuckuza:
+  - rscadd: Adds "Enable Breast Milking" toggle which allows other players to milk
+      your character via clicking their exposed chest with a container when enabled.
