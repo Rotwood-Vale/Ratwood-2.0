@@ -141,6 +141,13 @@
 	flavor_text_nsfw = html_encode(flavor_text_nsfw)
 	flavor_text_nsfw = parsemarkdown_basic(flavor_text_nsfw, hyperlink=TRUE)
 
+	// Examine theme override — use the viewed character's preference
+	var/char_examine_theme
+	if(ishuman(holder))
+		char_examine_theme = holder.examine_theme
+	else if(pref)
+		char_examine_theme = pref.examine_theme
+
 	var/list/data = list(
 		// Identity
 		"character_name" = obscured ? "Unknown" : char_name,
@@ -160,6 +167,7 @@
 		"has_song" = has_song,
 		"is_vet" = is_vet,
 		"is_naked" = is_naked,
+		"examine_theme" = char_examine_theme,
 		"nsfw_examine_always" = nsfw_examine_always,
 		"song_title" = has_song ? song_title : null,
 		"song_artist" = has_song ? song_artist : null,

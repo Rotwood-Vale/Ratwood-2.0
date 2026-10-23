@@ -1686,6 +1686,7 @@
 #include "code\modules\client\preferences_savefile.dm"
 #include "code\modules\client\preferences_tgui.dm"
 #include "code\modules\client\preferences_toggles.dm"
+#include "code\modules\client\theme_picker.dm"
 #include "code\modules\client\round_end_panel.dm"
 #include "code\modules\client\roundendmanifest.dm"
 #include "code\modules\client\vices_menu.dm"

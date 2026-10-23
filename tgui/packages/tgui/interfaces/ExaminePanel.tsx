@@ -35,6 +35,7 @@ export const ExaminePanel = (props) => {
     has_song,
     img_gallery,
     nsfw_img_gallery,
+    examine_theme,
   } = data;
   const [currentPage, setCurrentPage] = useState(Page.FlavorText);
   const [collapsed, setCollapsed] = useState(false);
@@ -60,6 +61,7 @@ export const ExaminePanel = (props) => {
       title={character_name}
       width={DEFAULT_WIDTH}
       height={DEFAULT_HEIGHT}
+      theme={examine_theme || undefined} 
       buttons={
         <>
           {!!is_vet}

@@ -25,7 +25,6 @@
  *   link-hover      – a:hover / a:active color
  */
 
-@use 'sass:color';
 @use 'sass:map';
 
 @font-face {
@@ -34,36 +33,13 @@
 }
 
 @font-face {
-  font-family: 'Lora';
-  src: url('~roguefont/lora-regular.ttf');
-  font-weight: normal;
-  font-style: normal;
+  font-family: 'Chiseld';
+  src: url('~roguefont/chiseld.ttf');
 }
 
 @font-face {
-  font-family: 'Lora';
-  src: url('~roguefont/lora-italic.ttf');
-  font-weight: normal;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Lora';
-  src: url('~roguefont/lora-medium.ttf');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Lora';
-  src: url('~roguefont/lora-bold.ttf');
-  font-weight: bold;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'MedievalSharp';
-  src: url('~roguefont/medievalsharp.ttf');
+  font-family: 'Blackmoor';
+  src: url('~roguefont/blackmoor.ttf');
 }
 
 @mixin azure-theme($colors, $topbar-svg) {
@@ -120,7 +96,7 @@
 
   .TitleBar__title {
     padding-left: 12px;
-    font-family: 'Lora', Georgia, serif;
+    font-family: Georgia, 'Palatino Linotype', Palatino, serif;
     font-size: 15px;
     color: #{map.get($colors, 'section-title')};
     font-weight: bolder;
@@ -139,26 +115,8 @@
   }
 
   // ── Section titles — letter-spacing + uppercase (chant h2/h3 style)
-  .Section__title {
-    display: flex;
-    align-items: center;
-  }
-
   .Section__titleText {
-    flex-grow: 1;
-  }
-
-  .Section__buttons {
-    position: static;
-    margin-top: 0;
-
-    .Button {
-      margin-right: 4px;
-    }
-  }
-
-  .Section__titleText {
-    font-family: 'Lora', Georgia, serif;
+    font-family: Georgia, 'Palatino Linotype', Palatino, serif;
     letter-spacing: 2px;
     text-transform: uppercase;
   }
@@ -168,88 +126,20 @@
     color: #{map.get($colors, 'link-visited')};
   }
 
+  // ── Buttons ─────────────────────────────────────────────────────
   .Button {
-    transition: background-color 0.15s ease, border-color 0.15s ease;
+    transition: all 0.5s;
     --color-text: #{map.get($colors, 'btn-text')};
-    min-height: 1.667em;
-    line-height: 1.667em;
-    background-color: map.get($colors, 'border');
-    border: 1px solid map.get($colors, 'accent');
-    outline: none;
-    text-shadow: none;
-    box-shadow: none;
-
-    &:hover {
-      background-color: color.adjust(map.get($colors, 'border'), $lightness: 6%);
-      border-color: map.get($colors, 'accent-bright');
-    }
-
-    &:active {
-      background-color: color.adjust(map.get($colors, 'border'), $lightness: -3%);
-    }
-
-    &.Button--selected {
-      background-color: map.get($colors, 'btn-selected');
-      border-color: map.get($colors, 'accent');
-    }
   }
 
   .Button--color--transparent {
     --button-background-hover: #{map.get($colors, 'border')};
     --button-background-active: #{map.get($colors, 'border')};
     --button-background-disabled: transparent;
-    background-color: transparent;
-    border: 2px solid transparent;
-    outline: none;
-    box-shadow: none;
-    text-shadow: none;
-
-    &:hover {
-      border-color: transparent;
-      outline: none;
-      box-shadow: none;
-    }
-
-    &:active {
-      box-shadow: none;
-      outline: none;
-      transform: none;
-    }
-
-    &.Button--selected {
-      background-color: map.get($colors, 'btn-selected');
-      --button-color: #fff;
-      color: #fff !important;
-      border-color: transparent;
-      outline: none;
-      box-shadow: none;
-    }
   }
 
   .Button--color--transparent.Button--disabled {
     --button-color: #{map.get($colors, 'btn-disabled')};
-  }
-
-  // ── Input — recessed parchment slot ───────────────────────────
-  .Input {
-    min-height: 1.667em;
-    line-height: 1.667em;
-    background-color: color.adjust(map.get($colors, 'base'), $lightness: -2%);
-    border: 2px solid map.get($colors, 'accent');
-    outline: 1px solid color.adjust(map.get($colors, 'base'), $lightness: -5%);
-    outline-offset: -3px;
-    color: #{map.get($colors, 'text')};
-    box-shadow:
-      inset 2px 2px 4px rgba(0, 0, 0, 0.4),
-      inset -1px -1px 0 rgba(255, 255, 255, 0.04);
-
-    &:focus-within {
-      border-color: map.get($colors, 'accent-bright');
-      box-shadow:
-        inset 2px 2px 4px rgba(0, 0, 0, 0.4),
-        inset -1px -1px 0 rgba(255, 255, 255, 0.04),
-        0 0 3px #{map.get($colors, 'glow')};
-    }
   }
 
   // ── Input Buttons ───────────────────────────────────────────────
