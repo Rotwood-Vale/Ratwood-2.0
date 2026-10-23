@@ -41,6 +41,8 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(list(/area/rogue/indoors
 		guy.add_stress(/datum/stressevent/seeblessed)
 	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_HOLYWARRIOR))
 		guy.apply_status_effect(/datum/status_effect/debuff/holy_blessing)
+	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_HALLOWED_WARD) && !guy.has_status_effect(/datum/status_effect/buff/hallowed_ward)) // Martyr
+		guy.apply_status_effect(/datum/status_effect/buff/hallowed_ward)
 	if((src.necra_area == TRUE) && !(guy.has_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)||(guy.has_status_effect(/datum/status_effect/debuff/deathdoorwilloss)))) //Necra saps at wil
 		if(HAS_TRAIT(guy, TRAIT_SOUL_EXAMINE))
 			guy.apply_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)

@@ -201,6 +201,7 @@
 #define TRAIT_LONGSTRIDER "Longstrider"
 #define TRAIT_VOTARY "Votary"
 #define TRAIT_HOLYWARRIOR "Holy Warrior"
+#define TRAIT_HALLOWED_WARD "Hallowed Ward" // Martyr only. Smaller, defensive holy ground buff (+2 CON, +2 WIL). See /datum/status_effect/buff/hallowed_ward.
 #define TRAIT_PSYDONIAN_GRIT "Psydonian Grit" // Pain Tolerance. Through faith, ENDURE.
 #define TRAIT_PSYDONITE "Psydonite's Devotion" // Anti-Miracles on a selective basis, anastasis / cure rot still apply.
 #define TRAIT_BLACKBAGGER "Apprehension Techniques" // Capable of using Garrotes and Blackbags. Apprehension techniques.
@@ -418,6 +419,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_VOTARY = span_info("I'm of the Holy See's own. I feel most comfortable on hallowed ground."),
 	TRAIT_TAVERN_FIGHTER = span_info("I am vigilant in my duties. The Tavern is my home, none shall dare oppose me or skip out on payment."),
 	TRAIT_BATHHOUSE_DANCER = span_info("I am trained in the bathhouse arts. Within its walls I can dance and shake for a patron all night without tiring."),
+	TRAIT_HALLOWED_WARD = span_info("I am sworn to give up no hallowed ground. On holy ground, I am harder to break."),
 	TRAIT_GUARDSMAN = span_info("I am vigilant in my duties. In the town I am sworn to protect, my abilities are sharper due to my routine and familiarity."),
 	TRAIT_WOODSMAN = span_info("I am vigilant in my duties. In the outdoor wilderness I am sworn to protect, my abilities are sharper due to my routine and familiarity."),
 	TRAIT_DEATHBARGAIN = span_info("A horrible deal has been prepared in your name. May you never see it fulfilled..."),
