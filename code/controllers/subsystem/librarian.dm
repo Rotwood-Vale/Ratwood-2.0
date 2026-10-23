@@ -1,8 +1,16 @@
 SUBSYSTEM_DEF(librarian)
 	name = "Librarian"
-	init_order = INIT_ORDER_PATH
+	init_order = INIT_ORDER_PLAYER_ARCHIVES
 	flags = SS_NO_FIRE
 	var/list/books = list()
+	/// Archived player books, keyed by filename. Loaded once at init and kept in sync with the files on every change.
+	var/list/player_books = list()
+	/// Archived books already placed by random book spawners this round, so none is placed twice.
+	var/list/placed_player_books = list()
+	/// Stocking callbacks of mapped random book spawners, run in a random order once every one in their map load has initialized.
+	var/list/pending_random_books = list()
+	/// Players barred from adding books to the archive.
+	var/datum/player_archive_bans/upload_bans
 
 /datum/controller/subsystem/librarian/proc/get_book(input)
 	if(!input)
@@ -28,87 +36,106 @@ SUBSYSTEM_DEF(librarian)
 	testing("file4")
 	return list()
 
-/datum/controller/subsystem/librarian/proc/playerbook2file(input, book_title = "Unknown", author = "Unknown", author_ckey = "Unknown", icon = "basic_book")
+#define PLAYER_BOOK_DIRECTORY "data/player_generated_books/"
+
+/datum/controller/subsystem/librarian/Initialize(start_timeofday)
+	player_books = load_player_archive(PLAYER_BOOK_DIRECTORY)
+	upload_bans = new("books", "[PLAYER_BOOK_DIRECTORY]_upload_bans.json")
+	return ..()
+
+/datum/controller/subsystem/librarian/proc/playerbook2file(input, book_title = "Unknown", author = "Unknown", author_ckey = "Unknown", icon = "basic_book", mob/user, ic_date, category = "Unknown")
 	if(!input)
-		return "There is no text in the book!"
-	if(fexists("data/player_generated_books/[url_encode(book_title)].json"))
-		return "there is already a book by this title!"
-	if(!(istext(input) && istext(book_title) && istext(author) && istext(author_ckey) && istext(icon)))
-		return "This book is incorrectly formatted!"
+		player_archive_feedback(user, "There is no text in the book!")
+		return FALSE
+	if(!ic_date)
+		ic_date = get_ic_date_short_as_string()
+	if(!(istext(input) && istext(book_title) && istext(author) && istext(author_ckey) && istext(icon) && istext(ic_date)))
+		player_archive_feedback(user, "This book is incorrectly formatted!")
+		return FALSE
+	if(upload_bans.is_banned(user?.ckey))
+		player_archive_feedback(user, "You have been barred from adding books to the archive.")
+		return FALSE
+	if(upload_bans.is_banned(author_ckey))
+		player_archive_feedback(user, "The author of this book has been barred from adding books to the archive.")
+		return FALSE
+	if(!(category in GLOB.player_book_categories))
+		category = "Unknown"
+	var/file_name = player_archive_filename(book_title)
+	if(!file_name)
+		player_archive_feedback(user, "That title cannot be archived. Use a shorter title that does not begin with an underscore.")
+		return FALSE
+	// fexists also catches titles differing only in case on case-insensitive filesystems.
+	if(player_books[file_name] || fexists("[PLAYER_BOOK_DIRECTORY][file_name].json"))
+		player_archive_feedback(user, "There is already a book by this title!")
+		return FALSE
 
-	testing("playerbook2file1")
-	var/list/contents = list("book_title" = "[book_title]", "author" = "[author]", "author_ckey" = "[author_ckey]", "icon" = "[icon]",  "text" = "[input]")
-	//url_encode should escape all the characters that do not belong in a file name. If not, god help us
-	var/file_name = "data/player_generated_books/[url_encode(book_title)].json"
-	text2file(json_encode(contents), file_name)
+	var/list/contents = list("book_title" = "[book_title]", "author" = "[author]", "author_ckey" = "[author_ckey]", "icon" = "[icon]", "category" = "[category]", "text" = "[input]", "ic_date" = "[ic_date]")
+	if(!write_player_archive_file("[PLAYER_BOOK_DIRECTORY][file_name].json", contents))
+		player_archive_feedback(user, "The archive could not store this book.")
+		return FALSE
+	player_books[file_name] = contents
+	message_admins("Book [player_archive_display_text(book_title)] has been saved to the player book database by [player_archive_display_text(author_ckey)]([player_archive_display_text(author)])")
+	player_archive_feedback(user, "You have a feeling the newly written book will remain in the archive for a very long time...", TRUE)
+	return TRUE
 
-	if(fexists("data/player_generated_books/_book_titles.json"))
-		testing("playerbook2file2")
-		var/list/_book_titles_contents = json_decode(file2text("data/player_generated_books/_book_titles.json"))
-		_book_titles_contents += "[url_encode(book_title)]"
-		fdel("data/player_generated_books/_book_titles.json")
-		text2file(json_encode(_book_titles_contents), "data/player_generated_books/_book_titles.json")
-		message_admins("Book [book_title] has been saved to the player book database by [author_ckey]([author])")
-		return "You have a feeling the newly written book will remain in the archive for a very long time..."
-	else
-		message_admins("!!! _book_titles.json no longer exists, previous book title list has been lost. making a new one without old books... !!!")
-		text2file(json_encode(list(book_title)), "data/player_generated_books/_book_titles.json")
-		return "_book_titles.json no longer exists, yell at your server host that some books have been lost!"
-
+/// Returns the archived book stored under a filename, or an empty list if there is none.
 /datum/controller/subsystem/librarian/proc/file2playerbook(filename)
-	if(!filename)
-		return list()
-	var/json_file = file("data/player_generated_books/[filename].json")
-	testing("playerfilebegin")
+	var/list/contents = player_books[filename]
+	return contents ? contents : list()
+
+/datum/controller/subsystem/librarian/proc/del_player_book(filename)
+	if(!player_books[filename])
+		return FALSE
+	var/json_file = "[PLAYER_BOOK_DIRECTORY][filename].json"
+	fdel(json_file)
 	if(fexists(json_file))
-		testing("playerfile1")
-		var/list/contents = json_decode(file2text(json_file))
-		if(isnull(contents))
-			testing("playerfile2")
-			return list()
-		return contents
-	testing("playerfile4")
-	return list()
+		message_admins("Unable to delete archived book [json_file].")
+		return FALSE
+	player_books -= filename
+	return TRUE
 
-/datum/controller/subsystem/librarian/proc/del_player_book(book_title)
-	testing("delplayerbook")
-	if(!book_title)
-		return FALSE
-	var/json_file = file("data/player_generated_books/[book_title].json")
-	if(!fexists(json_file))
-		return FALSE
-	if(fexists("data/player_generated_books/_book_titles.json"))
-		fdel(json_file)
-		var/list/_book_titles_contents = json_decode(file2text("data/player_generated_books/_book_titles.json"))
-		_book_titles_contents -= "[book_title]"
-		fdel("data/player_generated_books/_book_titles.json")
-		text2file(json_encode(_book_titles_contents), "data/player_generated_books/_book_titles.json")
-		return TRUE
-	else
-		message_admins("!!! _book_titles.json no longer exists, previous book title list has been lost. !!!")
-		return FALSE
+/// Returns the filenames of readable archived books, limited to one category if given. Books already placed by a random book spawner this round are left out unless include_placed is set.
+/datum/controller/subsystem/librarian/proc/pull_player_book_titles(category, include_placed = FALSE)
+	. = list()
+	for(var/file_name in player_books)
+		if(!include_placed && placed_player_books[file_name])
+			continue
+		var/list/book = player_books[file_name]
+		if(!book["book_title"] || !book["text"])
+			continue
+		if(!category || book["category"] == category)
+			. += file_name
 
+/// Stocks the pending random book spawners in a random order, so which shelves get the archived books differs each round.
+/datum/controller/subsystem/librarian/proc/stock_random_books()
+	var/list/stock_callbacks = shuffle(pending_random_books)
+	pending_random_books = list()
+	for(var/datum/callback/stock as anything in stock_callbacks)
+		stock.Invoke()
 
-/datum/controller/subsystem/librarian/proc/pull_player_book_titles()
-	testing("pullplayerbook")
-	if(fexists(file("data/player_generated_books/_book_titles.json")))
-		var/json_file = file("data/player_generated_books/_book_titles.json")
-		var/json_list = json_decode(file2text(json_file))
-		return json_list
-	else
-		message_admins("!!! _book_titles.json no longer exists, previous book title list has been lost. !!!")
+/datum/controller/subsystem/librarian/proc/amend_player_book(filename, amend_type, amend_text)
+	if(!istext(amend_text) || !length(trim(amend_text)) || !(amend_type in list("book_title", "author", "icon", "category")))
+		return FALSE
+	if(amend_type == "category" && !(amend_text in GLOB.player_book_categories))
+		return FALSE
+	var/list/contents = player_books[filename]
+	if(!contents)
+		return FALSE
+	contents = contents.Copy()
+	contents[amend_type] = amend_text
+	var/new_file_name = filename
+	if(amend_type == "book_title")
+		new_file_name = player_archive_filename(amend_text)
+		if(!new_file_name)
+			return FALSE
+		if(new_file_name != filename && (player_books[new_file_name] || fexists("[PLAYER_BOOK_DIRECTORY][new_file_name].json")))
+			return FALSE
+	// Write the amended copy before removing the original so a failed save cannot lose the book.
+	if(!write_player_archive_file("[PLAYER_BOOK_DIRECTORY][new_file_name].json", contents))
+		return FALSE
+	player_books[new_file_name] = contents
+	if(new_file_name != filename)
+		return del_player_book(filename)
+	return TRUE
 
-/datum/controller/subsystem/librarian/proc/amend_player_book(book_title, amend_type, amend_text)
-	testing("amendplayerbook")
-	if(!book_title || !amend_type || !amend_text)
-		return FALSE
-	if(fexists("data/player_generated_books/_book_titles.json"))
-		var/list/contents = file2playerbook(book_title)
-		del_player_book(book_title)
-		contents[amend_type] = amend_text
-		if(playerbook2file(contents["text"], book_title = contents["book_title"], author = contents["author"], author_ckey = contents["author_ckey"], icon = contents["icon"]) == "You have a feeling the newly written book will remain in the archive for a very long time...")
-			return TRUE
-		return FALSE
-	else
-		message_admins("!!! _book_titles.json no longer exists, previous book title list has been lost. !!!")
-		return FALSE
+#undef PLAYER_BOOK_DIRECTORY

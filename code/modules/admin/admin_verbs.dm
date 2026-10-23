@@ -38,10 +38,10 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/cmd_admin_say,
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/set_context_menu_enabled,
-	/client/proc/delete_player_book,
-	/client/proc/amend_player_book,
+	/client/proc/manage_books,
+	/client/proc/manage_paintings,
+	/client/proc/archive_bans,
 	/client/proc/enable_browser_debug,
-	/client/proc/pull_book_file_names,
 	/client/proc/admin_spread_effect,
 	/client/proc/open_bounty_menu,
 	/client/proc/remove_bounty,
@@ -920,47 +920,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		SSticker.end_party=FALSE
 		to_chat(src, span_interface("Ending DISABLED."))
 
-/client/proc/delete_player_book()
-	set name = "Database Delete Player Book"
-	set category = "Debug"
-	set desc = ""
-	if(!holder)
-		return
-	var/player_book = input(src, "What is the book file you want to delete? (spaces and other characters are their url encode versions for the file name, so for example spaces are +)")
-	if(player_book)
-		SSlibrarian.del_player_book(player_book)
-		message_admins("[src] has deleted the player book: [player_book]")
-	else
-		to_chat(src, span_notice("Either the book file doesn't exist or you have failed to type it in properly (you can look up the file name by the verb 'database book file names'"))
-
-/client/proc/pull_book_file_names()
-	set name = "Database Book File Names"
-	set category = "Debug"
-	set desc = ""
-	if(!holder)
-		return
-	var/list/book_titles = SSlibrarian.pull_player_book_titles()
-	if(!book_titles)
-		return
-	var/dat = ""
-	for(var/I in book_titles)
-		dat += "[I]<br>"
-	src << browse(dat, "window=reading;size=250x500;can_close=1;can_minimize=1;can_maximize=1;can_resize=1;titlebar=1")
-
-/client/proc/amend_player_book()
-	set name = "Database Amend Player Book"
-	set category = "Debug"
-	set desc = ""
-	if(!holder)
-		return
-	var/book_title = input(src, "What is the book file name?")
-	var/amend_type = alert(src, "What type of text do you want to amend?", "", "book_title", "author", "icon")
-	var/amend_text = input(src, "What do you want to amend it to? (you don't have to make it in the file name format, use normal spaces)")
-	if(SSlibrarian.amend_player_book(book_title, amend_type, amend_text))
-		message_admins("[src] has amended [book_title]'s [amend_type] to [amend_text]")
-	else
-		to_chat(src, span_notice("Either the book file doesn't exist or you have failed to type something in properly (you can look up the file name by the verb 'database book file names'"))
-
 /client/proc/remove_bounty()
 	set category = "-Admin-"
 	set name = "Remove Bounty"
@@ -998,3 +957,168 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	to_chat(src, "Browser tools are now enabled.")
 	winset(src, null, "browser-options=devtools,find,byondstorage")
 
+/client/proc/manage_books()
+	set category = "-GameMaster-"
+	set name = "Manage Books"
+	if(!holder)
+		return
+
+	var/dat = "<a href='byond://?_src_=holder;[HrefToken()];player_archive_ban=books' style='margin-right: 10px;'>Ban a Player from Books</a>"
+	dat += "<a href='byond://?_src_=holder;[HrefToken()];player_archive_bans=1'>Archive Bans</a>"
+	dat += "<table style='border-collapse: separate; border-spacing: 0 10px; width: 100%;'>"
+	dat += "<tr>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Title</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Author</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Category</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Written</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Actions</th>"
+	dat += "</tr>"
+
+	for(var/file_name in SSlibrarian.player_books)
+		var/list/book = SSlibrarian.player_books[file_name]
+		dat += "<tr>"
+		dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(book["book_title"], file_name)]</td>"
+		dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(book["author"])] ([player_archive_display_text(book["author_ckey"])])</td>"
+		dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(book["category"])]</td>"
+		dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(book["ic_date"])]</td>"
+		dat += "<td style='padding: 12px 15px;'>"
+		dat += "<a href='byond://?_src_=holder;[HrefToken()];show_player_book=[url_encode(file_name)]' style='margin-right: 10px;'>View</a>"
+		dat += "<a href='byond://?_src_=holder;[HrefToken()];amend_player_book=[url_encode(file_name)]' style='margin-right: 10px;'>Amend</a>"
+		dat += "<a href='byond://?_src_=holder;[HrefToken()];delete_player_book=[url_encode(file_name)]' style='margin-right: 10px;'>Delete</a>"
+		if(SSlibrarian.upload_bans?.is_banned(book["author_ckey"]))
+			dat += "Author banned"
+		else
+			dat += "<a href='byond://?_src_=holder;[HrefToken()];player_archive_ban=books;ckey=[url_encode(book["author_ckey"])]'>Ban Author</a>"
+		dat += "</td>"
+		dat += "</tr>"
+
+	if(!length(SSlibrarian.player_books))
+		dat += "<tr><td colspan='5' style='padding: 20px; text-align: center;'>No books found</td></tr>"
+
+	dat += "</table>"
+	var/datum/browser/popup = new(src, "book_management", "Book Management", 800, 700)
+	popup.set_content(dat)
+	popup.open()
+
+/client/proc/show_book_content(file_name)
+	var/list/book = SSlibrarian.file2playerbook(file_name)
+	if(!length(book))
+		to_chat(src, span_warning("Book not found!"))
+		return
+
+	src << browse_rsc('html/book.png')
+
+	// Book text is the formatted paper HTML that players see in-game; the metadata is escaped separately.
+	var/content = "<h3>[player_archive_display_text(book["book_title"], file_name)]</h3><p>By [player_archive_display_text(book["author"])] ([player_archive_display_text(book["author_ckey"])]), written [player_archive_display_text(book["ic_date"])]<br>Category: [player_archive_display_text(book["category"])]</p>[book["text"]]"
+	var/dat = {"
+	<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+	<html>
+		<head>
+			<style type=\"text/css\">
+				body {
+					background-image:url('book.png');
+					background-repeat: repeat;
+					color: #000000;
+					font-size: 17px;
+					line-height: 1.5;
+					padding: 20px;
+					font-family: 'Times New Roman', serif;
+				}
+			</style>
+		</head>
+		<body>
+			[content]
+		</body>
+	</html>
+	"}
+
+	src << browse(dat, "window=reading;size=800x600;can_close=1;can_minimize=1;can_maximize=1;can_resize=1;border=0")
+
+/client/proc/manage_paintings()
+	set category = "-GameMaster-"
+	set name = "Manage Paintings"
+	if(!holder)
+		return
+
+	var/dat = "<a href='byond://?_src_=holder;[HrefToken()];player_archive_ban=paintings' style='margin-right: 10px;'>Ban a Player from Paintings</a>"
+	dat += "<a href='byond://?_src_=holder;[HrefToken()];player_archive_bans=1'>Archive Bans</a>"
+	dat += "<table style='border-collapse: separate; border-spacing: 0 10px; width: 100%;'>"
+	dat += "<tr>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Preview</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Title</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Author</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Painted</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Actions</th>"
+	dat += "</tr>"
+
+	for(var/file_name in SSpaintings.paintings)
+		var/list/painting = SSpaintings.paintings[file_name]
+		var/image_path = SSpaintings.get_painting_image_path(file_name)
+		// Entries whose image is missing are still listed, so they can be cleaned up.
+		var/preview = "No image"
+		if(fexists(image_path))
+			var/res_name = "painting_[md5(file_name)].png"
+			src << browse_rsc(file(image_path), res_name)
+			preview = "<img src='[res_name]' height=64 width=64 style='display: block; margin: 0 auto;'>"
+		dat += "<tr>"
+		dat += "<td style='padding: 12px 15px;'>[preview]</td>"
+		dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(painting["painting_title"], file_name)]</td>"
+		dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(painting["author"])] ([player_archive_display_text(painting["author_ckey"])])</td>"
+		dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(painting["ic_date"])]</td>"
+		dat += "<td style='padding: 12px 15px;'>"
+		dat += "<a href='byond://?_src_=holder;[HrefToken()];delete_player_painting=[url_encode(file_name)]' style='margin-right: 10px;'>Delete</a>"
+		if(SSpaintings.upload_bans?.is_banned(painting["author_ckey"]))
+			dat += "Author banned"
+		else
+			dat += "<a href='byond://?_src_=holder;[HrefToken()];player_archive_ban=paintings;ckey=[url_encode(painting["author_ckey"])]'>Ban Author</a>"
+		dat += "</td>"
+		dat += "</tr>"
+
+	if(!length(SSpaintings.paintings))
+		dat += "<tr><td colspan='5' style='padding: 20px; text-align: center;'>No paintings found</td></tr>"
+
+	dat += "</table>"
+
+	var/datum/browser/popup = new(src, "painting_management", "Painting Management", 700, 700)
+	popup.set_content(dat)
+	popup.open()
+
+/client/proc/archive_bans()
+	set category = "-GameMaster-"
+	set name = "Archive Bans"
+	if(!holder)
+		return
+
+	var/dat = "<table style='border-collapse: separate; border-spacing: 0 10px; width: 100%;'>"
+	dat += "<tr>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Player</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Banned From</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Banned By</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Date</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Actions</th>"
+	dat += "</tr>"
+
+	var/ban_count = 0
+	for(var/archive in list("books", "paintings"))
+		var/datum/player_archive_bans/archive_bans = get_player_archive_bans(archive)
+		for(var/banned_ckey in archive_bans?.bans)
+			var/list/ban = archive_bans.bans[banned_ckey]
+			ban_count++
+			dat += "<tr>"
+			dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(banned_ckey)]</td>"
+			dat += "<td style='padding: 12px 15px;'>[capitalize(archive)]</td>"
+			dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(ban["admin"])]</td>"
+			dat += "<td style='padding: 12px 15px;'>[player_archive_display_text(ban["date"])]</td>"
+			dat += "<td style='padding: 12px 15px;'>"
+			dat += "<a href='byond://?_src_=holder;[HrefToken()];player_archive_unban=[archive];ckey=[url_encode(banned_ckey)]'>Unban</a>"
+			dat += "</td>"
+			dat += "</tr>"
+
+	if(!ban_count)
+		dat += "<tr><td colspan='5' style='padding: 20px; text-align: center;'>No one is banned from the archives</td></tr>"
+
+	dat += "</table>"
+
+	var/datum/browser/popup = new(src, "archive_bans", "Archive Bans", 700, 500)
+	popup.set_content(dat)
+	popup.open()
