@@ -16,7 +16,7 @@
 					/obj/effect/proc_holder/spell/invoked/raise_spirits_vengeance		= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/silence/miracle/zizo			= CLERIC_T2, //A bone. 
 					/obj/effect/proc_holder/spell/invoked/raise_spirit_respite			= CLERIC_T3,
-					/obj/effect/proc_holder/spell/invoked/rituos/miracle				= CLERIC_T3,
+					/datum/action/cooldown/spell/zizo/rituos							= CLERIC_T3,
 					/obj/effect/proc_holder/spell/targeted/touch/lacrima				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/cascade						= CLERIC_T4,
 	)

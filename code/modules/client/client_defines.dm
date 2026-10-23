@@ -184,6 +184,8 @@
 	var/next_move_dir_add
 	/// On next move, subtract this dir from the move that would otherwise be done
 	var/next_move_dir_sub
+	/// world.time of last intercepted mouse-up, used to prevent double-clicks after signal intercept
+	var/click_intercept_time = 0
 
 /client/proc/update_weather(force)
 	if(!mob)
