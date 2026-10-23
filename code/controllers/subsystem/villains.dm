@@ -1,7 +1,49 @@
+#define ANTAG_DEPLETED_RATIO 0.5
 /datum/controller/subsystem/gamemode
 	var/list/rolled_villain_events = list()
 	var/list/queued_villains = list()
+	var/antag_window_open = FALSE
+	var/antag_window_closed = FALSE
+	var/antag_optin_required = FALSE // stays FALSE if the window never opened (force-start), so everyone counts as in
+	var/list/antag_optins = list()
+	var/list/antag_popup_shown = list()
+	var/list/antag_checkpoints = list(1 HOURS, 2 HOURS)
+	var/next_antag_checkpoint = 1
+	var/antag_baseline_taken = FALSE
+	var/list/antag_baselines = list() // modifier -> alive count at baseline
+	var/list/antag_unfilled = list(0, 0, 0) // roundstart quota slots that never filled, index = ANTAG_TIER_*
 
+
+/datum/controller/subsystem/gamemode/proc/is_opted_in(ckey)
+	if(!antag_optin_required)
+		return TRUE
+	return antag_optins[ckey]
+
+/datum/controller/subsystem/gamemode/proc/open_antag_window()
+	if(antag_window_open)
+		return
+	antag_window_open = TRUE
+	antag_optin_required = TRUE
+	to_chat(world, span_boldnotice("The antagonist draw is open! Use the Villains button in the lobby to opt in. It closes when the round starts."))
+	for(var/mob/dead/new_player/P as anything in GLOB.new_player_list)
+		if(P.client)
+			antag_popup_shown[P.ckey] = TRUE
+			P.AlertAntagWindow()
+
+/datum/controller/subsystem/gamemode/proc/close_antag_window()
+	if(antag_window_closed)
+		return
+	antag_window_closed = TRUE
+	for(var/client/C as anything in GLOB.clients)
+		C << browse(null, "window=villainchoices") // round is starting, shut everyone's popup
+	roll_antag_modifiers()
+	var/list/slot_report = list()
+	for(var/job_title in GLOB.villain_positions)
+		var/datum/job/J = SSjob.GetJob(job_title)
+		if(J)
+			slot_report += "[job_title] [J.spawn_positions]"
+	message_admins("Villain slots: [slot_report.Join(", ")]")
+	
 /datum/controller/subsystem/gamemode/proc/count_queued_villains(job_title)
 	. = 0
 	for(var/ckey in queued_villains)
@@ -12,6 +54,8 @@
 	if(current_storyteller)
 		current_storyteller.guarantees_roundstart_roleset = FALSE
 		current_storyteller.roundstart_prob = 0
+	roundstart_draw_active = TRUE
+	addtimer(VARSET_CALLBACK(src, roundstart_draw_active, FALSE), 30 SECONDS) // in case event setup() runs deferred; shrink if TriggerEvent is synchronous for you
 	for(var/datum/round_event_control/event as anything in rolled_villain_events)
 		TriggerEvent(event, TRUE)
 	rolled_villain_events = list()
@@ -27,60 +71,46 @@
 		to_chat(player, span_boldwarning("You have been chosen for villainy as a [job_title]!"))
 		player.AttemptLateSpawn(job_title)
 	queued_villains = list()
+	addtimer(CALLBACK(src, PROC_REF(capture_antag_baseline)), 3 MINUTES) // after events and queued villains have spawned
+
+/datum/controller/subsystem/gamemode/proc/capture_antag_baseline()
+	if(antag_baseline_taken)
+		return
+	antag_baseline_taken = TRUE
+	for(var/datum/round_modifier/M as anything in active_modifiers)
+		if(M.tier)
+			antag_baselines[M] = M.count_alive()
 
 /mob/dead/new_player/proc/VillainChoices()
 	var/list/dat = list()
-
-	if(!SSgamemode.modifiers_rolled)
-		dat += "Wait."
+	if(!SSgamemode.antag_window_open || SSgamemode.antag_window_closed)
+		dat += "The antagonist draw is not open."
 	else
-		dat += "<b>Greater Villains:</b><br>"
-		if(!length(SSgamemode.rolled_villain_events))
-			dat += "None.<br>"
-		for(var/datum/round_event_control/antagonist/event in SSgamemode.rolled_villain_events)
-			var/slots = 1
-			if(istype(event, /datum/round_event_control/antagonist/solo))
-				var/datum/round_event_control/antagonist/solo/solo_event = event
-				slots = solo_event.get_antag_amount()
-			dat += "<b>[event.name]</b> ([slots] slots)<br>"
-		if(length(SSgamemode.rolled_villain_events))
-			dat += "<i>These roll at roundstart from your antag preferences.</i><br>"
-
-		dat += "<br><b>Lesser Villains:</b><br>"
-		var/found = FALSE
-		for(var/job_title in GLOB.villain_positions)
-			var/datum/job/J = SSjob.GetJob(job_title)
-			if(!J || !J.total_positions)
+		var/optin = SSgamemode.is_opted_in(ckey)
+		dat += "<b>Antagonists are being drawn.</b><br>"
+		dat += "In the draw: <b>[optin ? "YES" : "NO"]</b> - <a href='byond://?src=[REF(src)];antag_optin=[optin ? 0 : 1]'>[optin ? "Opt out" : "Opt in"]</a><br><br>"
+		dat += "<b>Your antagonist roles:</b><br>"
+		SSgamemode.build_draw_roles()
+		for(var/flag in SSgamemode.draw_flags)
+			if(is_banned_from(ckey, flag))
+				dat += "[capitalize(flag)] - <font color=red>BANNED</font><br>"
 				continue
-			found = TRUE
-			if(SSticker.current_state <= GAME_STATE_PREGAME)
-				var/pref_label = "NEVER"
-				var/pref_color = "red"
-				var/next_level = 3
-				switch(client.prefs.job_preferences[J.title])
-					if(JP_HIGH)
-						pref_label = "High"
-						pref_color = "slateblue"
-						next_level = 4
-					if(JP_MEDIUM)
-						pref_label = "Medium"
-						pref_color = "green"
-						next_level = 1
-					if(JP_LOW)
-						pref_label = "Low"
-						pref_color = "orange"
-						next_level = 2
-				dat += "<a href='?src=[REF(J)];explainjob=1'><font>[J.title]</font></a>([J.total_positions] slots) - <a href='byond://?src=[REF(src)];villain_pref=[J.title];level=[next_level]'><font color=[pref_color]>[pref_label]</font></a><br>"
-			else
-				dat += "<a href='?src=[REF(J)];explainjob=1'><font>[J.title]</font></a><a href='byond://?src=[REF(src)];SelectedJob=[J.title]'>([J.current_positions]/[J.total_positions])</a><a href='?src=[REF(J)];jobsubclassinfo=1'><b><font color = '#6b6743'>(!)</font></b></a><br>"
-
-		if(!found)
-			dat += "No villain roles this round."
-
-	var/datum/browser/popup = new(src, "villainchoices", "Villains", 340, 400)
+			var/on = (flag in client.prefs.be_special)
+			dat += "[capitalize(flag)] - <a href='byond://?src=[REF(src)];antag_flag=[url_encode(flag)]'><font color=[on ? "green" : "red"]>[on ? "ON" : "OFF"]</font></a><br>"
+		dat += "<br><i>Only players who opt in can be drawn, and only for roles switched on.</i>"
+	var/datum/browser/popup = new(src, "villainchoices", "Villains", 340, 480)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(jointext(dat, ""))
 	popup.open(FALSE)
+
+/datum/controller/subsystem/gamemode/proc/get_antag_flags()
+	var/list/flags = list()
+	for(var/T in typesof(/datum/round_event_control/antagonist/solo))
+		var/datum/round_event_control/antagonist/solo/E = T
+		var/f = initial(E.antag_flag)
+		if(f)
+			flags |= f
+	return flags
 
 // this menu allows players 2 boost their stats to wretch tier (+12 weight) & choose between DE / Heavy Armor
 /mob/living/carbon/human/var/datum/antag_setup/antag_setup

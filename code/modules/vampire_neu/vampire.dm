@@ -2,6 +2,14 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 #define INITIAL_BLOODPOOL_PERCENTAGE 40
 /datum/antagonist/vampire
 	name = "Vampire"
+	briefing_title = "The Vampyre"
+	briefing_text = "The bite may have healed, but the area remains numb, cold with a deadened Thirst. The Thirst is constant; it is a struggle to keep the Desire at bay. Your heart no longer beats and Astrata's light scorns you. You are a newborn Vampyre, bearer of the an anicent curse. Satiate your Thirst, and find your place in the world."
+	briefing_tips = list(
+		"Beware Accursed Silver. It will expose your affliction and sunder your new form.",
+		"Astrata's light can harm you, be mindful walking about without a disguise during the waking hours.",
+		"You are a new predator, and the night is your hunting ground. Hunt wisely.",
+		"Sate your Blood Hunger, or it will consume you. The curse of the Beast is strong, and it will not be denied."
+	)
 	roundend_category = "Vampires"
 	antagpanel_category = "Vampire"
 	job_rank = ROLE_VAMPIRE

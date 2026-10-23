@@ -1,8 +1,14 @@
-//How often to check for promotion possibility
-#define INGAME_ROLE_HEAD_UPDATE_PERIOD 300
 
 /datum/antagonist/prebel
 	name = "Peasant Rebel"
+	briefing_title = "Peasant Rebellion"
+	briefing_text = "The Tyranny of the nobility is beyond the pale. You can no longer abide the unyielding order's command. You are a peasant rebel! It's time to depose the current ruler."
+	briefing_tips = list(
+		"The keep can be stormed, but it will be difficult. Gather your allies and make a plan.",
+		"The duchy is often at odds with other factions in town. Use this to your advantage.",
+		"Militia weapons are remarkably effective in the hands of those who have used their tools for years. Make good use of them.",
+		"Rebel Leaders can use a Hermes to contact outside support."
+	)
 	roundend_category = "peasant rebels"
 	antagpanel_category = "Peasant Rebellion"
 	job_rank = ROLE_PREBEL
@@ -23,7 +29,7 @@
 	if(istype(examined_datum, /datum/antagonist/prebel/head))
 		return span_boldnotice("A revolution leader.")
 	if(istype(examined_datum, /datum/antagonist/prebel))
-		return span_boldnotice("My ally in revolt against the pigs.")
+		return span_boldnotice("My ally in revolt against the Tyranical pigs.")
 
 
 /datum/antagonist/prebel/on_gain()
@@ -44,7 +50,8 @@
 	. = ..()
 	if(.)
 		if(new_owner.assigned_role in GLOB.noble_positions)
-			return FALSE
+			if(!rebel_can_recruit_noble(new_owner))
+				return FALSE
 		if(new_owner.assigned_role in GLOB.garrison_positions)
 			return FALSE
 		if(new_owner.unconvertable)
@@ -98,6 +105,7 @@
 	. = ..()
 	owner.AddSpell(new /obj/effect/proc_holder/spell/self/rebelconvert)
 	owner.current?.set_patron(/datum/patron/inhumen/matthios) //head rebels always love matthios, of course
+	SStreasury.queue_crisis_selection()
 
 /datum/antagonist/prebel/proc/can_be_converted(mob/living/candidate)
 	if(!candidate.mind)
@@ -105,7 +113,8 @@
 	if(!can_be_owned(candidate.mind))
 		return FALSE
 	if(candidate.mind.assigned_role in GLOB.noble_positions)
-		return FALSE
+		if(!rebel_can_recruit_noble(candidate))
+			return FALSE
 	if(candidate.mind.assigned_role in GLOB.garrison_positions)
 		return FALSE
 	var/mob/living/carbon/C = candidate //Check to see if the potential rev is implanted
@@ -129,6 +138,8 @@
 			addtimer(CALLBACK(L,TYPE_PROC_REF(/mob/living/carbon/human, rev_ask), user,PR,inputty),1)
 
 /mob/living/carbon/human/proc/rev_ask(mob/living/carbon/human/guy,datum/antagonist/prebel/mind_datum,offer)
+	if(!mind_datum.can_be_converted(src))
+		return
 	if(!guy || !mind_datum || !offer)
 		return
 	if(!mind)
@@ -161,6 +172,10 @@
 	if(!can_be_converted(rev_mind.current))
 		return FALSE
 	rev_mind.add_antag_datum(/datum/antagonist/prebel,rev_team)
+	if(rev_team)
+		if(rev_mind.assigned_role in GLOB.noble_positions)
+			rev_team.noble_slots = max(0, rev_team.noble_slots - 1)
+		rev_team.add_funds(REBEL_FUNDS_PER_RECRUIT)
 	return TRUE
 
 /datum/team/prebels
@@ -226,3 +241,7 @@
 			to_chat(world, span_redtext("The Peasant Rebellion has FAILED!"))
 		for(var/X in offers2join)
 			to_chat(world,"[X]")
+
+/obj/item/roguecoin/silver/foreignsupport/Initialize(mapload)
+	. = ..()
+	set_quantity(20)

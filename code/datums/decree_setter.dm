@@ -24,10 +24,14 @@
 	var/list/states = list()
 	for(var/id in SStreasury.decrees)
 		var/datum/decree/D = SStreasury.decrees[id]
+		if(!D.is_listed())
+			continue
 		var/cooldown_left = max(0, D.cooldown_expires - world.time)
 		states += list(list(
 			"id" = D.id,
 			"active" = D.active,
+			"locked" = D.is_goal_locked(),
+			"goal" = D.get_goal_text(),
 			"cooldown_left" = round(cooldown_left / 10),
 		))
 	return list(

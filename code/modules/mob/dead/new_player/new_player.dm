@@ -187,6 +187,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 
 			if(ready != tready)
 				ready = tready
+				if(ready == PLAYER_READY_TO_PLAY)
+					MaybeShowAntagPopup()
 		//if it's post initialisation and they're trying to observe we do the needful
 		
 		if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
@@ -278,11 +280,36 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 		client.prefs.SetJobPreferenceLevel(J, jpval)
 		VillainChoices()
 		return
+	if(href_list["antag_optin"])
+		if(!SSgamemode.antag_window_open || SSgamemode.antag_window_closed)
+			return
+		if(text2num(href_list["antag_optin"]))
+			SSgamemode.antag_optins[ckey] = TRUE
+		else
+			SSgamemode.antag_optins -= ckey
+		VillainChoices()
+		return
 
+	if(href_list["antag_flag"])
+		if(SSticker.current_state > GAME_STATE_PREGAME)
+			return
+		var/flag = href_list["antag_flag"]
+		if(!(flag in SSgamemode.draw_flags) || is_banned_from(ckey, flag))
+			return
+		if(flag in client.prefs.be_special)
+			while(flag in client.prefs.be_special) // strip every copy
+				client.prefs.be_special -= flag
+		else
+			client.prefs.be_special += flag
+		VillainChoices()
+		return
 	if(href_list["manifest"])
 		ViewManifest()
 
 	if(href_list["SelectedJob"])
+		if(href_list["SelectedJob"] in GLOB.villain_positions)
+			return 
+
 		if(!SSticker?.IsRoundInProgress())
 			to_chat(usr, span_danger("The round is either not ready, or has already finished..."))
 			return
@@ -862,3 +889,18 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 
 		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
 	return TRUE
+
+
+/mob/dead/new_player/proc/MaybeShowAntagPopup()
+	if(!client || !SSgamemode.antag_window_open || SSgamemode.antag_window_closed)
+		return
+	if(SSgamemode.antag_popup_shown[ckey])
+		return
+	SSgamemode.antag_popup_shown[ckey] = TRUE
+	AlertAntagWindow()
+
+/mob/dead/new_player/proc/AlertAntagWindow()
+	if(!client)
+		return
+	SEND_SOUND(client, sound('sound/misc/thiefobj.ogg'))
+	VillainChoices()

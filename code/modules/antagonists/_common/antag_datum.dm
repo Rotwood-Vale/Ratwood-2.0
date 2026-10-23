@@ -29,6 +29,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	///flags used by storytellers
 	var/antag_flags = NONE
+	/// Whether to automatically show a briefing when this antagonist is assigned.
+	var/show_briefing = TRUE
+	/// Optional custom title for the briefing window.
+	var/briefing_title
+	/// Main explanation of the antagonist's role.
+	var/briefing_text
+	/// Additional role-specific advice.
+	var/list/briefing_tips
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -114,7 +122,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 			replace_banned_player()
 		else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
 			owner.current.client.holder.auto_deadmin()
-
+		if(!QDELETED(src) && owner?.current?.client)
+			open_briefing(owner.current)
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
 		return FALSE
@@ -144,6 +153,44 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(team)
 		team.remove_member(owner)
 	qdel(src)
+
+/datum/antagonist/ui_interact(mob/user, datum/tgui/ui)
+	if(!user || !user.client || !owner || owner.current != user)
+		return
+
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AntagonistBriefing", briefing_title ? briefing_title : name)
+		ui.open()
+
+
+/datum/antagonist/ui_state(mob/user)
+	return GLOB.always_state
+
+
+/datum/antagonist/ui_data(mob/user)
+	var/list/data = list()
+	data["title"] = briefing_title ? briefing_title : name
+	data["description"] = briefing_text ? briefing_text : "You are playing as [name]. Review your objectives and determine how best to fulfil your role."
+	data["tips"] = briefing_tips.Copy()
+
+	var/list/objective_data = list()
+	for(var/datum/objective/objective in objectives)
+		objective_data += list(list(
+			"explanation" = objective.explanation_text
+		))
+
+	data["objectives"] = objective_data
+	return data
+
+
+/datum/antagonist/proc/open_briefing(mob/user)
+	if(!show_briefing || !user || !user.client)
+		return
+	if(!owner || owner.current != user)
+		return
+
+	ui_interact(user)
 
 /datum/antagonist/proc/greet()
 	return

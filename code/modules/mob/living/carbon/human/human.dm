@@ -1320,6 +1320,61 @@
 /mob/living/carbon/human/Topic(href, href_list)
 	..()
 
+/mob/living/carbon/human/proc/strip_job_loadout()
+	// Equipment (worn + pockets) and held items
+	for(var/obj/item/I in get_equipped_items(TRUE))
+		qdel(I)
+	for(var/obj/item/I in held_items)
+		qdel(I)
+
+	// Stats back to baseline + racial/stat-pack modifiers
+	roll_stats()
+
+	// Skills
+	for(var/skill_type in subtypesof(/datum/skill))
+		var/current_rank = get_skill_level(skill_type)
+		if(current_rank > 0)
+			adjust_skillrank(skill_type, -current_rank, TRUE)
+
+	// Job traits only, species traits stay (copy the list since we're removing as we go)
+	if(status_traits)
+		for(var/trait in status_traits.Copy())
+			if(HAS_TRAIT_FROM(src, trait, JOB_TRAIT))
+				REMOVE_TRAIT(src, trait, JOB_TRAIT)
+
+	// Spells and spell points
+	if(mind)
+		for(var/obj/effect/proc_holder/spell/S in mind.spell_list.Copy())
+			mind.RemoveSpell(S)
+		mind.spell_points = 0
+		mind.used_spell_points = 0
+
+	// Clear examine flags like "HERETIC! SHAME!" (keyed by name)
+	if(real_name)
+		GLOB.excommunicated_players -= real_name
+		GLOB.outlawed_players -= real_name
+	if(name && name != real_name)
+		GLOB.excommunicated_players -= name
+		GLOB.outlawed_players -= name
+
+	// Remove the job title from examine
+	job = null
+	advjob = null
+
+	regenerate_icons()
+
+// Converts an already-spawned player into an antag-only job: frees their old job slot,
+// wipes the old loadout, then assigns the new role. Call BEFORE applying the antag's kit.
+/mob/living/carbon/human/proc/convert_to_antag_job(new_job_title)
+	// Free the old slot first: strip_job_loadout() nulls `job`
+	var/datum/job/old_job = SSjob.GetJob(job)
+	if(old_job)
+		old_job.current_positions = max(old_job.current_positions - 1, 0)
+
+	strip_job_loadout()
+
+	if(new_job_title && SSjob.GetJob(new_job_title))
+		SSjob.AssignRole(src, new_job_title)
 /mob/living/carbon/human/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override, datum/intent/used_intent, simplified)
 	update_proj_parry_timer()
 	. = ..()

@@ -38,18 +38,21 @@
 	// Werewolf reverts to human form during the day
 	else if(transformed)
 		if(GLOB.tod != "night")
-			if(!untransforming)
-				untransforming = world.time // Start untransformation phase
+			if(isturf(H.loc))
+				var/turf/loc = H.loc
+				if(loc.can_see_sky())
+					if(!untransforming)
+						untransforming = world.time // Start untransformation phase
 
-			if (world.time >= untransforming + 30 SECONDS) // Untransform
-				H.emote("rage", forced = TRUE)
-				H.werewolf_untransform()
-				transformed = FALSE
-				untransforming = FALSE // Reset untransforming phase
+					if (world.time >= untransforming + 30 SECONDS) // Untransform
+						H.emote("rage", forced = TRUE)
+						H.werewolf_untransform()
+						transformed = FALSE
+						untransforming = FALSE // Reset untransforming phase
 
-			else if (world.time >= untransforming) // Alert player
-				H.fullscreen_redflash("redflash1")
-				to_chat(H, span_warning("Daylight shines around me... the curse begins to fade."))
+					else if (world.time >= untransforming) // Alert player
+						H.fullscreen_redflash("redflash1")
+						to_chat(H, span_warning("Daylight shines around me... the curse begins to fade."))
 
 
 /mob/living/carbon/human/species/werewolf/death(gibbed, nocutscene = FALSE)
@@ -139,7 +142,8 @@
 	W.AddSpell(new /obj/effect/proc_holder/spell/self/howl)
 	W.AddSpell(new /obj/effect/proc_holder/spell/self/claws)
 	W.AddSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
-
+	W.AddSpell(new /obj/effect/proc_holder/spell/invoked/werewolf_infect)
+	
 	ADD_TRAIT(src, TRAIT_NOSLEEP, TRAIT_GENERIC)
 	ADD_TRAIT(W, TRAIT_GRABIMMUNE, TRAIT_GENERIC) // THIS IS THE CORRECT PLACE FOR WEREWOLF TRAITS. GOD.
 	ADD_TRAIT(W, TRAIT_STRONGBITE, TRAIT_GENERIC)
@@ -200,6 +204,7 @@
 	skills?.skill_experience = WA.stored_experience.Copy()
 
 	W.RemoveSpell(new /obj/effect/proc_holder/spell/self/howl)
+	W.RemoveSpell(new /obj/effect/proc_holder/spell/invoked/werewolf_infect)
 	W.RemoveSpell(new /obj/effect/proc_holder/spell/self/claws)
 	W.RemoveSpell(new /obj/effect/proc_holder/spell/targeted/woundlick)
 	W.regenerate_icons()

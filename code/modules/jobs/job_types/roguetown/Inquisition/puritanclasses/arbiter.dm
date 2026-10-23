@@ -20,7 +20,8 @@
 		TRAIT_INQUISITION,
 		TRAIT_PURITAN,
 		TRAIT_OUTLANDER,
-		TRAIT_NOBLE
+		TRAIT_NOBLE,
+		TRAIT_ASSASSIN_TARGET
 		)//-1 stats over Ordinator/Inspector, if counting STR/SPD as 2 each. +1 over in a respective area when selecting their sect.
 	subclass_stats = list(
 		STATKEY_CON = 3,

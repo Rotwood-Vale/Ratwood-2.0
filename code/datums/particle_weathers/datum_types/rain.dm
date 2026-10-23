@@ -65,12 +65,13 @@
 	forecast_tag = "rain"
 
 	COOLDOWN_DECLARE(thunder)
+	var/lightning_strikes = 6
+	var/tornado_prob = 5
 
 /datum/particle_weather/rain_storm/proc/lightning_check()
 	if(!COOLDOWN_FINISHED(src, thunder))
 		return
 
-	var/lightning_strikes = 6
 	for(var/i = 1 to lightning_strikes)
 		var/atom/lightning_destination
 		var/list/viable_players = list()
@@ -115,12 +116,12 @@
 	var/max_spawn_distance = 20
 	var/max_attempts = 3
 	// Count active rain tornadoes
-	var/list/active_tornadoes = GLOB.active_tornadoes.len
+	var/list/active_tornadoes = GLOB.active_tornadoes
 
-	if(active_tornadoes >= max_tornadoes)
+	if(length(active_tornadoes) >= max_tornadoes)
 		return
 
-	if(!prob(5))	// Small spawn chance for tornadoes
+	if(!prob(tornado_prob))	// Small spawn chance for tornadoes
 		return
 
 	// Build viable outdoor players
@@ -226,13 +227,17 @@
 	forecast_tag = "rain"
 
 	COOLDOWN_DECLARE(thunder)
+	COOLDOWN_DECLARE(wreck)
+	var/lightning_strikes = 6
+	var/tornado_prob = 40
+	/// How many random exposed turfs get battered each pulse. Raise for more destruction.
+	var/wreck_turfs_per_pulse = 30
 
 /datum/particle_weather/hurricane/proc/lightning_check()
 	if(!COOLDOWN_FINISHED(src, thunder))
 		return
 
 
-	var/lightning_strikes = 6
 	for(var/i = 1 to lightning_strikes)
 		var/atom/lightning_destination
 		var/list/viable_players = list()
@@ -271,19 +276,19 @@
 		COOLDOWN_START(src, thunder, rand(5, 40) * 1 SECONDS)
 
 /datum/particle_weather/hurricane/proc/tornado_check()
-	var/max_tornadoes = 2
+	var/max_tornadoes = 4
 	var/min_distance_between = 30
 	var/min_spawn_distance = 8
 	var/max_spawn_distance = 20
 	var/max_attempts = 5
 	// Count active rain tornadoes
-	var/list/active_tornadoes = GLOB.active_abyssors_rage.len
+	var/list/active_tornadoes = GLOB.active_abyssors_rage
 
-	if(active_tornadoes >= max_tornadoes)
+	if(length(active_tornadoes) >= max_tornadoes)
 		return
 
 	// Small spawn chance each tick (prevents instant double spawn)
-	if(!prob(40))
+	if(!prob(tornado_prob))
 		return
 
 	// Build viable outdoor players
@@ -345,7 +350,7 @@
 	tornado_check()
 
 //Makes you a bit chilly
-/datum/particle_weather/rain_storm/weather_act(mob/living/L)
+/datum/particle_weather/hurricane/weather_act(mob/living/L)
 	if(L.bodytemperature > BODYTEMP_COLD_LEVEL_ONE_MAX + 5)
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L

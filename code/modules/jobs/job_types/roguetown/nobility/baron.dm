@@ -22,13 +22,12 @@
 	cmode_music = 'sound/music/combat_noble.ogg'
 	advclass_cat_rolls = list(CTAG_BARON = 20)
 	social_rank = SOCIAL_RANK_NOBLE
-	quirk_restrictions = list(/datum/quirk/hunted)
-	job_traits = list(TRAIT_NOBLE)
+	quirk_restrictions = list(/datum/quirk/hunted, /datum/quirk/assassintarget)
+	job_traits = list(TRAIT_NOBLE,TRAIT_ASSASSIN_TARGET)
 	job_subclasses = list(
 		/datum/advclass/baron/shrewd_nobleman,
 		/datum/advclass/baron/landed_knight
 	)
-
 /datum/job/roguetown/baron/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	. = ..()
 	if(L)

@@ -1693,6 +1693,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return cycle_altgrip(user, 1)
 
 
+
 /obj/item/proc/wield(mob/living/carbon/user, show_message = TRUE)
 	if(wielded && !altgripped)
 		return
@@ -1725,6 +1726,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(altgripped || wielded) //Trying to unwield it
 		ungrip(user)
 		return
+	militia_grip_check(user) // towners/yeoman get the militia bonus
 	if(has_altgrip_modes() && !gripped_intents)
 		altgrip(user)
 		return

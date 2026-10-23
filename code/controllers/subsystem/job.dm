@@ -421,18 +421,13 @@ SUBSYSTEM_DEF(job)
 
 	for(var/level in level_order)
 		for(var/mob/dead/new_player/player in unassigned)
-			var/hi_tier = FALSE
-			for(var/pref_title in player.client.prefs.job_preferences)
-				if(player.client.prefs.job_preferences[pref_title] > level)
-					hi_tier = TRUE
-					break
-			if(hi_tier)
+			if(!SSgamemode.is_opted_in(player.ckey))
 				continue
-			for(var/job_title in GLOB.villain_positions)
+			for(var/job_title in shuffle(GLOB.villain_positions)) // shuffled so no job is always filled first
 				var/datum/job/villain_job = GetJob(job_title)
 				if(!villain_job || villain_job.current_positions + SSgamemode.count_queued_villains(job_title) >= villain_job.spawn_positions)
 					continue
-				if(player.client.prefs.job_preferences[job_title] != level)
+				if(!(job_title in player.client.prefs.be_special))
 					continue
 				if(is_banned_from(player.ckey, job_title))
 					continue

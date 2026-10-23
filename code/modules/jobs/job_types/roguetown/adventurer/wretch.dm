@@ -4,8 +4,8 @@
 	flag = WRETCH
 	department_flag = WANDERERS
 	faction = "Station"
-	total_positions = 9
-	spawn_positions = 9
+	total_positions = 4
+	spawn_positions = 4
 	allowed_races = RACES_ALL_KINDS
 	tutorial = "Somewhere in your lyfe, you fell to the wrong side of civilization. Hounded by the consequences of your actions, you spend your daes prowling the roads for easy marks and loose purses, scraping to get by."
 	outfit = null
@@ -84,14 +84,22 @@
 		if("Harm towards lyfe (+1 FOR)")
 			bounty_total = rand(200, 300)
 			H.change_stat("fortune", 1)
-		if("Horrific atrocities (+1 ALL STATS)")
+		if("Horrific atrocities (+1 to a selected stat)")
 			bounty_total = rand(300, 400) // Let's not make it TOO profitable
-			H.change_stat("strength", 1)
-			H.change_stat("perception", 1)
-			H.change_stat("intelligence", 1)
-			H.change_stat("constitution", 1)
-			H.change_stat("willpower", 1)
-			H.change_stat("speed", 1)
+			var/skillbuff = input(H, "Your experience grants you a boon", "Choose An Attribute") as anything in list("Strength", "Perception", "Intelligence", "Constitution", "Willpower", "Speed")
+			switch(skillbuff)
+				if("Strength")
+					H.change_stat(STATKEY_STR, 1)
+				if("Perception")
+					H.change_stat(STATKEY_PER, 1)
+				if("Intelligence")
+					H.change_stat(STATKEY_INT, 1)
+				if("Constitution")
+					H.change_stat(STATKEY_CON, 1)
+				if("Willpower")
+					H.change_stat(STATKEY_WIL, 1)
+				if("Speed")
+					H.change_stat(STATKEY_SPD, 1)
 			H.change_stat("fortune", 1)
 			if(bounty_poster == "The Justiciary of [SSmapping.map_adjustment.realm_name]")
 				GLOB.outlawed_players += H.real_name

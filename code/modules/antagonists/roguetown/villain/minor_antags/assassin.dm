@@ -1,6 +1,14 @@
 // Assassin, cultist of graggar. Normally found as a drifter.
 /datum/antagonist/assassin
 	name = "Assassin"
+	briefing_title = "Assasins of the Dark Sun"
+	briefing_text = "You have blended in with the town well now, having replaced someone or ingrained yourself into the locale. You been tasked with a sacred duty. To hunt down and eliminate those of note worthy of the Dark Star's attention. You are an Assassin, a deadly foe of the night, and a bane to local leaders who would oppose Graggar's might. Eliminate those marked for death by your order, and may violence reign."
+	briefing_tips = list(
+		"Retrieve the dagger of the profane rite to begin your hunt.",
+		"Remember your targets, and eliminate them with extreme prejudice.",
+		"Let no one know your purpose, for you will be hunted if your true nature is revealed.",
+		"A mask and disguise is invaluable to escaping and making another attempt."
+	)
 	roundend_category = "assassins"
 	antagpanel_category = "Assassin"
 	antag_hud_type = ANTAG_HUD_TRAITOR

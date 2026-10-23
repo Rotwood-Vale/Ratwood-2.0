@@ -19,6 +19,7 @@
 	/// they may only restore it via the concession-pick mechanism after the Crown exits
 	/// receivership. Cleared by exit_bankruptcy or restore_charter_via_concession.
 	var/bankruptcy_suspended = FALSE
+	var/datum/decree/crisis/held_by
 
 /datum/decree/New()
 	. = ..()
@@ -87,8 +88,30 @@
 /datum/decree/proc/on_restore()
 	return
 
+/// Whether this decree appears in the Charters UI.
+/datum/decree/proc/is_listed()
+	return TRUE
+
+/// Raises the minimum tax rate. payer may be null (UI/category-level queries).
+/datum/decree/proc/apply_rate_floor(mob/living/payer, tax_category, current_floor)
+	return current_floor
+
+/datum/decree/proc/is_goal_locked()
+	return FALSE
+
+/datum/decree/proc/confirm_defiance(mob/user)
+	return TRUE
+
+/datum/decree/proc/get_goal_text()
+	return null
+
 /datum/decree/proc/can_change_state()
+	if(held_by)
+		return FALSE
 	return world.time >= cooldown_expires
+
+/datum/decree/proc/apply_poll_tax_floor(mob/living/payer, poll_category, current_rate)
+	return current_rate
 
 /datum/decree/proc/set_state(new_active)
 	if(active == new_active)

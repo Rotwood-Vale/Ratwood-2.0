@@ -1,6 +1,10 @@
 /datum/controller/subsystem/treasury/proc/init_decrees()
 	var/list/reskins = SSmapping?.map_adjustment?.decree_reskins
 	for(var/path in subtypesof(/datum/decree))
+		// Abstract base types (e.g. /datum/decree/crisis) have no id: never instantiate them.
+		var/datum/decree/proto = path
+		if(!initial(proto.id))
+			continue
 		var/datum/decree/D = new path()
 		// Per-map cultural reskin: the mechanics never change, only the parchment.
 		var/list/reskin = reskins?[path]
@@ -37,6 +41,9 @@
 	if(D.active == new_active)
 		return FALSE
 	if(!can_change_decree_state(new_active))
+		return FALSE
+	// Goal-locked crisis charters: revoking is an act of defiance and needs confirmation.
+	if(!new_active && D.is_goal_locked() && !D.confirm_defiance(usr))
 		return FALSE
 	if(!D.set_state(new_active))
 		return FALSE

@@ -1,5 +1,15 @@
 /datum/antagonist/vampire/lord
 	name = "Methuselah"
+	briefing_title = "The Vampyre"
+	briefing_text = "You are ANCIENT. You belong to a time long gone, yet you remain; Left to watch as tresspassers have taken residence in your domain. The Blood Thirst Remains an ever present friend, through the decades- Maybe even centuries. You are a Vampire Lord, a Methuselah of the night. You are one of the firstborn of your kind, and strangers have become rulers in your rightful domain. Use your gifts wisely; the Thirst is strong, and it will not be denied."
+	briefing_tips = list(
+		"Beware Accursed Silver. It will expose your affliction and sunder your new form.",
+		"Astrata's light can harm you, be mindful walking about without a disguise during the waking hours.",
+		"Holy ground may well scorn you. Avoid it if you can.",
+		"Gathering a coven of loyal subordinates will help you to maintain your power and influence.",
+		"Sate your Blood Hunger, or it will consume you. The curse of the Beast is strong, and it will not be denied.",
+		"This land Belongs to you rightfully- yet few will agree. Trust no one, and take what is yours by force if necessary.",
+	)
 	roundend_category = "Vampires"
 	antagpanel_category = "Vampire"
 	job_rank = ROLE_VAMPIRE
@@ -19,6 +29,9 @@
 	return 3
 
 /datum/antagonist/vampire/lord/on_gain()
+	var/mob/living/carbon/human/body = owner.current
+	if(istype(body))
+		body.convert_to_antag_job()
 	. = ..()
 	addtimer(CALLBACK(owner.current, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "[name]"), 5 SECONDS)
 

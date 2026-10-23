@@ -13,8 +13,8 @@
 
 	denominator = 80
 
-	base_antags = 2
-	maximum_antags = 4
+	base_antags = 5
+	maximum_antags = 8
 
 	earliest_start = 0 SECONDS
 

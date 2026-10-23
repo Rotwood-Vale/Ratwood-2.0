@@ -1,5 +1,14 @@
 /datum/antagonist/bandit
 	name = "Bandit"
+	briefing_title = "The Freemen of Matthios"
+	briefing_text = "Long ago, you committed a crime worthy of your bounty being hung on the wall outside of the local inn. You live now with fellow free men in reverence to MATTHIOS, whose idol grants us boons and wishes when fed the money, treasures, and metals of the civilized wretches that cast you out. As a member of the free men, you worship MATTHIOS first and foremost - Other Ascendants are not to be trusted. You are a Bandit, a free man who will not live under the walls of the city. Use your gifts wisely; your band must steal and pillage to sate your patron's hunger. The world is not kind to those who do not follow its rules."
+	briefing_tips = list(
+		"Show the wretched nobles their rightful place.",
+		"Wealth belongs to those who can take it.",
+		"Beware Guardsmen who will see you castificoed.",
+		"Two bandits is better then one.",
+		"Trust other Freemen of Matthios, but be wary of the other ascendants."
+	)
 	roundend_category = "bandits"
 	antagpanel_category = "Bandit"
 	job_rank = ROLE_BANDIT
@@ -44,7 +53,17 @@
 */
 
 /datum/antagonist/bandit/proc/forge_objectives()
-	return
+	if(!(locate(/datum/objective/bandit) in objectives))
+		var/datum/objective/bandit/objective = new
+		objective.owner = owner
+		add_objective(objective)
+		return
+
+/datum/antagonist/bandit/proc/add_objective(datum/objective/O)
+	objectives += O
+
+/datum/antagonist/bandit/proc/remove_objective(datum/objective/O)
+	objectives -= O
 
 /datum/antagonist/bandit/proc/move_to_spawnpoint()
 	owner.current.forceMove(pick(GLOB.bandit_starts))

@@ -24,7 +24,7 @@ import {
   titleStyle,
 } from './common/parchment';
 
-type DecreeCategory = 'ancient' | 'new';
+type DecreeCategory = 'ancient' | 'new' | 'crisis';
 
 type Decree = {
   id: string;
@@ -39,6 +39,8 @@ type DecreeState = {
   id: string;
   active: BooleanLike;
   cooldown_left: number;
+  locked: BooleanLike;
+  goal: string | null;
 };
 
 type Data = {
@@ -59,6 +61,7 @@ const formatCooldown = (seconds: number): string => {
 const CATEGORY_LABELS: Record<DecreeCategory, string> = {
   ancient: 'Ancient Charters',
   new: 'New Charters',
+  crisis: 'Imposed Charters',
 };
 
 const cardHeaderStyle: React.CSSProperties = {
@@ -106,6 +109,13 @@ const flavorBodyStyle: React.CSSProperties = {
   lineHeight: 1.55,
 };
 
+const goalStyle: React.CSSProperties = {
+  fontSize: FONT_BODY,
+  fontWeight: 'bold',
+  color: SEAL_AMBER,
+  margin: '4px 0 6px',
+};
+
 const proclamationNoteStyle: React.CSSProperties = {
   textAlign: 'center',
   fontSize: FONT_BODY,
@@ -129,6 +139,10 @@ const DecreeCard = (props: DecreeCardProps) => {
   const [armed, setArmed] = useState(false);
   const armedTimerRef = useRef<number | null>(null);
   const active = !!state?.active;
+  const locked = !!state?.locked;
+  const isCrisis = decree.category === 'crisis';
+  // An imposed charter that has been lifted cannot be restored.
+  const restorable = !(isCrisis && !active);
   const cooldownLeft = state?.cooldown_left ?? 0;
   const onCooldown = cooldownLeft > 0;
   const slotUsed = active ? revokeUsed : restoreUsed;
@@ -141,13 +155,23 @@ const DecreeCard = (props: DecreeCardProps) => {
         : 'A restoration has already been proclaimed today.'
       : armed
         ? 'Click again to confirm. Auto-cancels in 3 seconds.'
-        : active
-          ? 'Suspend this decree'
-          : 'Restore this decree';
+        : locked
+          ? 'Defying this charter before its obligation is met carries a penalty.'
+          : active
+            ? 'Suspend this decree'
+            : 'Restore this decree';
 
-  const statusColor = active ? SEAL_GREEN : SEAL_RED;
-  const statusLabel = active ? 'In force' : 'Suspended';
-  const baseLabel = active ? 'Suspend' : 'Restore';
+  const statusColor = locked ? SEAL_AMBER : active ? SEAL_GREEN : SEAL_RED;
+  const statusLabel = isCrisis
+    ? active
+      ? locked
+        ? 'Imposed'
+        : 'Obligation met'
+      : 'Lifted'
+    : active
+      ? 'In force'
+      : 'Suspended';
+  const baseLabel = locked ? 'Defy' : active ? 'Suspend' : 'Restore';
   const buttonLabel = armed ? `Confirm ${baseLabel}?` : baseLabel;
   const buttonColor = active ? SEAL_RED : SEAL_GREEN;
 
@@ -192,19 +216,22 @@ const DecreeCard = (props: DecreeCardProps) => {
         <span style={cardTitleStyle}>{decree.name}</span>
         <span style={cardYearStyle}>of {decree.year}</span>
         <span style={badgeStyle(statusColor)}>{statusLabel}</span>
-        <button
-          type="button"
-          style={inkButtonStyle({ color: buttonColor, disabled })}
-          disabled={disabled}
-          title={tooltip}
-          onClick={handleClick}
-        >
-          {buttonLabel}
-        </button>
+        {restorable && (
+          <button
+            type="button"
+            style={inkButtonStyle({ color: buttonColor, disabled })}
+            disabled={disabled}
+            title={tooltip}
+            onClick={handleClick}
+          >
+            {buttonLabel}
+          </button>
+        )}
       </div>
       {decree.mechanical && (
         <div style={mechanicalStyle}>{decree.mechanical}</div>
       )}
+      {state?.goal && <div style={goalStyle}>Obligation: {state.goal}</div>}
       {onCooldown && (
         <div style={{ fontSize: FONT_BODY, color: SEAL_AMBER }}>
           Cooldown: {formatCooldown(cooldownLeft)}
@@ -238,7 +265,9 @@ export const DecreeSetter = () => {
   const decrees = data.decrees ?? [];
   const ancient = decrees.filter((d) => d.category === 'ancient');
   const newer = decrees.filter((d) => d.category === 'new');
-  const visible = tab === 'ancient' ? ancient : newer;
+  const crisis = decrees.filter((d) => d.category === 'crisis');
+  const visible =
+    tab === 'ancient' ? ancient : tab === 'crisis' ? crisis : newer;
 
   return (
     <Window
@@ -270,6 +299,14 @@ export const DecreeSetter = () => {
             <div style={tabStyle(tab === 'new')} onClick={() => setTab('new')}>
               {CATEGORY_LABELS.new} ({newer.length})
             </div>
+            {crisis.length > 0 && (
+              <div
+                style={tabStyle(tab === 'crisis')}
+                onClick={() => setTab('crisis')}
+              >
+                {CATEGORY_LABELS.crisis} ({crisis.length})
+              </div>
+            )}
           </div>
 
           {visible.length === 0 ? (

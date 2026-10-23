@@ -1,5 +1,13 @@
 /datum/antagonist/werewolf
 	name = "Verevolf"
+	briefing_title = "Beasts of Dendor"
+	briefing_text = "Since a bite long, long ago, Dendor's Madness has welled within you. The Hunger is hallowed, and it will not be denied. Under the Moonlight you must sate it—hunt, feast, and let the wild claim what it will. You are a Werewolf, bearer of the old curse. Your flesh remembers the forest, your blood remembers the howl. Use your gifts of the night wisely; the Madness grows stronger with every moon. The Hunger must be sated. It must be."
+	briefing_tips = list(
+		"Beware silver- It will sunder your true form.",
+		"You are a predator, and the world is your hunting ground. Hunt wisely.",
+		"You are not a friendly puppy, and the world will not willing join your pack.",
+		"Sate your Hunger, or it will consume you. The Madness is strong, and it will not be denied."
+	)
 	roundend_category = "Werewolves"
 	antagpanel_category = "Werewolf"
 	job_rank = ROLE_WEREWOLF
@@ -18,7 +26,15 @@
 /datum/antagonist/werewolf/lesser
 	name = "Lesser Verevolf"
 	increase_votepwr = FALSE
-
+	briefing_title = "Lesser Beasts of Dendor"
+	briefing_text = "The bite may have healed, but it still BURNS with a wild hunger. The Hunger is constant, It is a struggle to keep Dendor's Madness at bay. By dae, you must fight the urge to hunt, to feed, to let the wild claim what it will. You are a Lesser Werewolf, bearer of the old curse. Come Noc, no such restraint will be possible when the touch of the Moonlight awakens the beast within."
+	briefing_tips = list(
+		"Beware silver- It will sunder your new form.",
+		"You may resist the call of the wild during the day and indoors at noc. But under the Moonlight, you will be a predator.",
+		"You are not a friendly puppy, and the world will not willing join your pack.",
+		"You are a new predator, and the world is your hunting ground. Hunt wisely.",
+		"Sate your Feral Hunger, or it will consume you. The Madness is strong, and it will not be denied."
+	)
 /datum/antagonist/werewolf/lesser/roundend_report()
 	return
 
@@ -27,8 +43,18 @@
 		return span_boldnotice("A young lupine kin.")
 	if(istype(examined_datum, /datum/antagonist/werewolf))
 		return span_boldnotice("An elder lupine kin.")
+	if(istype(examined_datum, /datum/antagonist/maniac))
+		return span_boldnotice("A fool.")
+	if(istype(examined_datum, /datum/antagonist/dreamwalker))
+		return span_boldnotice("The dreamer has this one in his grasp.")
+	if(istype(examined_datum, /datum/antagonist/gnoll))
+		return span_boldnotice("An abomination.")
 	if(examiner.Adjacent(examined))
+		if(istype(examined_datum, /datum/antagonist/lich))
+			return span_boldnotice("A deadite freek.")
 		if(istype(examined_datum, /datum/antagonist/vampire))
+			return span_boldnotice("A putrid vampyr, I should watch my back.")
+		if(istype(examined_datum, /datum/antagonist/vampire/lord))
 			if(transformed)
 				return span_boldwarning("An Ancient Vampire. I must be careful!")
 
@@ -37,7 +63,8 @@
 	owner.special_role = name
 	if(increase_votepwr)
 		forge_werewolf_objectives()
-
+	else
+		forge_lesser_werewolf_objectives()
 	wolfname = "[pick(GLOB.wolf_prefixes)] [pick(GLOB.wolf_suffixes)]"
 	return ..()
 
@@ -56,6 +83,12 @@
 /datum/antagonist/werewolf/proc/forge_werewolf_objectives()
 	if(!(locate(/datum/objective/escape) in objectives))
 		var/datum/objective/werewolf/escape_objective = new
+		escape_objective.owner = owner
+		add_objective(escape_objective)
+		return
+/datum/antagonist/werewolf/proc/forge_lesser_werewolf_objectives()
+	if(!(locate(/datum/objective/escape) in objectives))
+		var/datum/objective/werewolf/lesser/escape_objective = new
 		escape_objective.owner = owner
 		add_objective(escape_objective)
 		return

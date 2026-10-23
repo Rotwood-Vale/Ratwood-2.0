@@ -12,7 +12,7 @@
 	denominator = 80
 
 	base_antags = 1
-	maximum_antags = 2
+	maximum_antags = 1
 
 	weight = 3	//i love you
 	max_occurrences = 0 //temp back to migrant wave only
@@ -24,4 +24,9 @@
 
 	restricted_roles = DEFAULT_ANTAG_BLACKLISTED_ROLES
 
-/datum/round_event/antagonist/solo/lich
+/datum/round_event/antagonist/solo/lich/add_datum_to_mind(datum/mind/antag_mind)
+	var/mob/living/carbon/human/body = antag_mind.current
+	if(istype(body))
+		body.convert_to_antag_job()
+	return ..()
+

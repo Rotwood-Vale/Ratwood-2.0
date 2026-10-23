@@ -44,8 +44,8 @@
 		"Apothecary"
 	)
 
-	base_antags = 1
-	maximum_antags = 5
+	base_antags = 5
+	maximum_antags = 10
 	max_occurrences = 1 // fuck you
 	earliest_start = 0 SECONDS
 

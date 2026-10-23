@@ -122,12 +122,16 @@
 
 		. += span_info("You can send arrival slips, accusation slips, fully loaded INDEXERs or confessions here.")
 		. += span_info("Properly sign them. Include an INDEXER where needed. Stamp them for two additional Marques.")
-
+	if(is_rebel_head(user))
+		. += span_info("A loose panel hides a line to outside support. Right-click the HERMES with no coin loaded.")
 /obj/structure/roguemachine/mail/attack_right(mob/user)
 	. = ..()
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
+	if(!coin_loaded && is_rebel_head(user))
+		display_rebel_support(user)
+		return
 	if(!coin_loaded)
 		to_chat(user, span_warning("The machine doesn't respond. It needs a coin."))
 		return
@@ -855,6 +859,8 @@
 	..()
 	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
+	if(href_list["rebel_buy"])
+		return rebel_support_buy(usr, href_list["rebel_buy"])
 	if(href_list["directory"])
 		view_directory(usr)
 		return

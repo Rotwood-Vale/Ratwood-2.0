@@ -7,7 +7,7 @@
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_HEAVYARMOR)
-	maximum_possible_slots = 2
+	maximum_possible_slots = 1
 	// same stats as templar as you are essentially an antagonist aligned templar with miracles and armor
 	subclass_stats = list(
 		STATKEY_STR = 2,
@@ -246,7 +246,7 @@
 	outfit = /datum/outfit/job/roguetown/wretch/hereticspy
 	class_select_category = CLASS_CAT_ROGUE
 	maximum_possible_slots = 2
-	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT)
+	traits_applied = list(TRAIT_DODGEEXPERT)
 	//Slower than outlaw, but a bit more PER and INT
 	subclass_stats = list(
 		STATKEY_PER = 2,

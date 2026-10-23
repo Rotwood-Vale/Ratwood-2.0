@@ -80,6 +80,8 @@
 		to_chat(user, span_warning("[user] traces a glowing symbol in the air marking [marked_target.real_name]."), 
 							span_notice("You mark [marked_target.real_name] for pursuit."))
 
+	// Ingots pay for the rites, so the hunt speeds up as the storm grows (see dreamwalker_awakening.dm).
+	recharge_time = dreamwalker_scale_cooldown(25 MINUTES)
 	return TRUE
 
 /obj/effect/proc_holder/spell/invoked/mark_target/proc/get_valid_targets(mob/user)
@@ -356,7 +358,7 @@
 //Dream meditation
 /obj/effect/proc_holder/spell/invoked/dream_trance
 	name = "Dream Trance"
-	desc = "Draw dream energy into your being to banish any fatigue."
+	desc = "Draw dream energy into your being to banish any fatigue. Spawns shards that can be picked up with a weapon or by walking over them to repair your armor."
 	chargedrain = 0
 	chargetime = 0
 	recharge_time = 10 SECONDS
@@ -369,12 +371,160 @@
 
 /obj/effect/proc_holder/spell/invoked/dream_trance/cast(list/targets, mob/user)
 	var/mob/living/carbon/human/H = user
+	var/datum/component/dreamwalker_repair/DR = H.GetComponent(/datum/component/dreamwalker_repair)
 
 	to_chat(user, span_info("I begin meditating."))
 	while(TRUE)
 		if(do_after(H, 15 SECONDS, FALSE, H))
 			H.energy_add(0.2 * H.max_energy)
 			H.apply_status_effect(/datum/status_effect/buff/healing, 5)
+			if(DR)
+				DR.spawn_shard(2 MINUTES, 250)
+				to_chat(H, span_nicegreen("A massive fragment of regenerative dream metal crystallizes nearby!"))
 		else
 			to_chat(user, span_info("I must remain still to focus energies and recover."))
 			break
+
+/obj/effect/proc_holder/spell/invoked/dream_shard
+	name = "Wrench Dream Shard"
+	desc = "Tear a volatile abyssal marker out of the dream at the cost of your blood. Throw it to plant a rune that grows a crystal spire; it fizzles if left unused. The more the storm grows, the faster another comes."
+	chargedrain = 0
+	chargetime = 3 SECONDS
+	recharge_time = 12 MINUTES
+	invocation_type = "whisper"
+	invocations = list("Dream... shed a splinter of yourself.")
+	movement_interrupt = FALSE
+	charging_slowdown = 1
+	associated_skill = /datum/skill/magic/arcane
+	overlay_state = "dream_bind" // TODO: placeholder overlay
+	var/blood_cost = 40
+	var/base_recharge = 12 MINUTES
+
+/obj/effect/proc_holder/spell/invoked/dream_shard/cast(list/targets, mob/user)
+	var/mob/living/carbon/human/H = user
+	if(!istype(H))
+		revert_cast()
+		return
+	if(H.blood_volume < BLOOD_VOLUME_OKAY + blood_cost)
+		to_chat(H, span_warning("I am too drained to bleed a shard out of the dream."))
+		revert_cast()
+		return
+	H.blood_volume -= blood_cost
+	var/obj/item/abyssal_marker/volatile/dreamwalker/shard = new(get_turf(H))
+	H.put_in_hands(shard)
+	to_chat(H, span_notice("A shard of the dream bleeds out of my palm and hardens into crystal."))
+	recharge_time = dreamwalker_scale_cooldown(base_recharge)
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/tidal_altar
+	name = "Raise Drowned Altar"
+	desc = "Drag a drowned altar up out of the dream beneath your feet. Each rite must be spoken in its own kind of place, so raise a new one where it is needed. Only one may exist; raising a new one destroys the old."
+	chargedrain = 0
+	chargetime = 5 SECONDS
+	recharge_time = 2 MINUTES
+	invocation_type = "whisper"
+	invocations = list("Abyssor, drown this ground...")
+	movement_interrupt = TRUE
+	charging_slowdown = 1
+	associated_skill = /datum/skill/magic/arcane
+	overlay_state = "dream_summon" // TODO: placeholder overlay
+	sound = 'sound/villain/newheart.ogg'
+	
+/obj/effect/proc_holder/spell/invoked/tidal_altar/cast(list/targets, mob/user)
+	var/datum/antagonist/dreamwalker/D = get_dreamwalker_datum(user)
+	if(!D)
+		revert_cast()
+		return
+	var/turf/T = get_turf(user)
+	if(!T || T.density)
+		to_chat(user, span_warning("There is no room here to raise an altar."))
+		revert_cast()
+		return
+	if(D.altar)
+		if(D.altar.channeling)
+			to_chat(user, span_warning("I cannot abandon a rite in progress."))
+			revert_cast()
+			return
+		qdel(D.altar)
+	var/obj/structure/table/dreamwalker_altar/A = new(T)
+	A.cult = D
+	D.altar = A
+	user.visible_message(span_warning("Seawater wells up from the ground and a salt-crusted altar heaves itself out of it!"), span_notice("A drowned altar rises beneath my hands."))
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/call_dreamfiend/dreamwalker
+	recharge_time = 15 SECONDS
+	miracle = FALSE
+	devotion_cost = 0
+
+
+// ============================================================================
+// SUMMON DREAMFIEND VARIANTS
+// Same behaviour as /obj/effect/proc_holder/spell/invoked/call_dreamfiend, but
+// the fiend that is summoned is set by `fiend_type`. The parent's cast() has the
+// fiend type hardcoded, so these override cast() and pass their own type to the
+// existing summon_dreamfiend() proc.
+//
+// Defaults assume a dreamwalker caster: no devotion cost, not a miracle, and the
+// cooldown shrinks as the storm grows (dreamwalker_scale_cooldown).
+// ============================================================================
+
+/obj/effect/proc_holder/spell/invoked/call_dreamfiend/dreamwalker
+	name = "Summon Greater Dreamfiend"
+	desc = "Tears a greater dreamfiend out of the dream to hound your target."
+	invocations = list("From the deep, devour!")
+	recharge_time = 45 SECONDS
+	miracle = FALSE
+	devotion_cost = 0
+	/// Which fiend answers the call. Bound variants only, so it hunts the target and not everyone.
+	var/fiend_type = /mob/living/simple_animal/hostile/rogue/dreamfiend/major
+	var/base_recharge = 45 SECONDS
+
+/obj/effect/proc_holder/spell/invoked/call_dreamfiend/dreamwalker/cast(list/targets, mob/living/user)
+	var/mob/living/carbon/target = targets[1]
+
+	if(!istype(target))
+		to_chat(user, span_warning("This spell only works on creatures capable of dreaming!"))
+		revert_cast()
+		return FALSE
+
+	if(target == user || get_dreamwalker_datum(target))
+		to_chat(user, span_warning("The dream will not turn on its own."))
+		revert_cast()
+		return FALSE
+
+	if(!summon_dreamfiend(
+		target = target,
+		user = user,
+		F = fiend_type,
+		outer_tele_radius = outer_tele_radius,
+		inner_tele_radius = inner_tele_radius,
+		include_dense = include_dense,
+		include_teleport_restricted = include_teleport_restricted
+	))
+		to_chat(user, span_warning("No valid space to manifest the dreamfiend!"))
+		revert_cast()
+		return FALSE
+
+	recharge_time = dreamwalker_scale_cooldown(base_recharge)
+	return TRUE
+
+/// The heaviest hound. reward for the final rite.
+/obj/effect/proc_holder/spell/invoked/call_dreamfiend/dreamwalker/ancient
+	name = "Summon Ancient Dreamfiend"
+	desc = "Wakes an ancient dreamfiend and sets it on your target."
+	invocations = list("Ancient dreamer, wake and feast!")
+	recharge_time = 90 SECONDS
+	chargetime = 2.5 SECONDS
+	fiend_type = /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient
+	base_recharge = 90 SECONDS
+
+/// earliest summonable critter
+/obj/effect/proc_holder/spell/invoked/call_dreamfiend/dreamwalker/minor
+	name = "Summon Minor Dreamfiend"
+	desc = "Wakes an minor dreamfiend and sets it on your target."
+	invocations = list("From the deep, devour!")
+	recharge_time = 30 SECONDS
+	chargetime = 2.5 SECONDS
+	fiend_type = /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient
+	base_recharge = 30 SECONDS

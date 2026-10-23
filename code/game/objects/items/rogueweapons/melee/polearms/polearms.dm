@@ -51,8 +51,9 @@
 	sharpness_penalty = 3
 
 /datum/intent/spear/thrust/militia
-	penfactor = PEN_MEDIUM
-
+	penfactor = PEN_HEAVY
+	damfactor = 1.15
+	
 /datum/intent/spear/thrust/pike		//EXPERIMENTAL
 	name = "pike thrust"
 	desc = "Thrust your pike forward from its furthest end to reach farther ahead than any spear ever could. Only effective at three paces."

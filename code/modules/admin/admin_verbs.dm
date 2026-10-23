@@ -35,6 +35,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/check_antagonists,
 	/client/proc/admin_force_next_migrant_wave,
+	/client/proc/admin_force_antag_wave,
 	/client/proc/cmd_admin_say,
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/set_context_menu_enabled,

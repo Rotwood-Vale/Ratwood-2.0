@@ -101,7 +101,7 @@
 		/datum/migrant_role/bandit = 1,
 	)
 	optional_roles = list(
-		/datum/migrant_role/bandit = 2,
+		/datum/migrant_role/bandit = 5,
 	)
 
 /datum/migrant_wave/assassin
@@ -114,7 +114,7 @@
 		/datum/migrant_role/assassin = 1,
 	)
 	optional_roles = list(
-		/datum/migrant_role/assassin = 3,
+		/datum/migrant_role/assassin = 2,
 	)
 
 /datum/migrant_wave/gnolls
@@ -127,5 +127,48 @@
 		/datum/migrant_role/gnoll = 1,
 	)
 	optional_roles = list(
-		/datum/migrant_role/gnoll = 3,
+		/datum/migrant_role/gnoll = 2,
 	)
+	greet_text = "Blessed be the Gorestar, The hunt begins!"
+
+/datum/migrant_wave/wretches
+	name = "Wretch Exodus"
+	track = MIGRANT_TRACK_SPECIAL
+	weight = 0
+	min_round_time = 300 MINUTES // never rolls naturally, same as the other antag waves
+	is_raid = TRUE
+	required_roles = list(
+		/datum/migrant_role/wretch = 1,
+	)
+	optional_roles = list(
+		/datum/migrant_role/wretch = 2,
+	)
+	greet_text = "Hunted and out of options, you slip into the realm with others of your kind."
+
+/datum/migrant_wave/werewolf
+	name = "Exiled Adventurer (Verevolf)"
+	track = MIGRANT_TRACK_EVENT
+	weight = 0
+	min_round_time = 300 MINUTES // never rolls naturally, same as the other antag waves
+	is_raid = TRUE
+	required_roles = list(
+		/datum/migrant_role/werewolf = 1,
+	)
+	optional_roles = list(
+		/datum/migrant_role/werewolf = 2,
+	)
+	can_roll = FALSE
+
+/datum/migrant_wave/vampire
+	name = "Exiled Adventurer (Vampire)"
+	track = MIGRANT_TRACK_EVENT
+	weight = 0
+	min_round_time = 300 MINUTES // never rolls naturally, same as the other antag waves
+	is_raid = TRUE
+	required_roles = list(
+		/datum/migrant_role/vampire = 1,
+	)
+	optional_roles = list(
+		/datum/migrant_role/vampire = 2,
+	)
+	can_roll = FALSE

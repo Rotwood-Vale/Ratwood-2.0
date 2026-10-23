@@ -1,6 +1,7 @@
 #define FILE_ANTAG_REP "data/AntagReputation.json"
 #define FILE_RECENT_MAPS "data/RecentMaps.json"
 #define KEEP_ROUNDS_MAP 3
+#define FILE_CHAOS_HISTORY "data/ChaosHistory.json"
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -15,11 +16,13 @@ SUBSYSTEM_DEF(persistence)
 	var/list/picture_logging_information = list()
 	var/list/saved_maps = list()
 	var/list/blocked_maps = list()
+	var/last_chaos_level = 0
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadTrophies()
 	LoadRecentModes()
 	Load_Recent_Maps()
+	LoadChaosHistory()
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
@@ -63,6 +66,20 @@ SUBSYSTEM_DEF(persistence)
 		return
 	antag_rep = json_decode(json)
 
+/datum/controller/subsystem/persistence/proc/LoadChaosHistory()
+	if(!fexists(FILE_CHAOS_HISTORY))
+		return
+	var/list/json = json_decode(file2text(FILE_CHAOS_HISTORY))
+	if(!json)
+		return
+	last_chaos_level = json["last_level"] || 0
+/// Writes this round's level for the NEXT round to read. Deliberately leaves last_chaos_level alone,
+/// so it keeps meaning "the previous round" for the rest of this round.
+/datum/controller/subsystem/persistence/proc/SaveChaosLevel(lvl)
+	var/list/file_data = list("last_level" = lvl)
+	fdel(FILE_CHAOS_HISTORY)
+	WRITE_FILE(FILE_CHAOS_HISTORY, json_encode(file_data))
+	
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
 		var/obj/structure/displaycase/trophy/T = A

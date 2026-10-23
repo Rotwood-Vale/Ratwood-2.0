@@ -25,6 +25,15 @@
 
 /datum/antagonist/gnoll
 	name = "Gnoll"
+	briefing_title = "Beasts of Graggar"
+	briefing_text = "You have proven yourself worthy to Graggar, and he's granted you his blessing most divine. To hunt and dominate worthy prey. You are a Gnoll, a dreaded beast of Graggar and a blight upon the lands in his name. You hunt for worthy opponents, seeking out those strong enough to make you bleed. Avoid working with non-gnolls, for they are weak and unworthy of your time. Use your gifts wisely."
+	briefing_tips = list(
+		"Beware silver weapons- they will do more damage to your thicker skin.",
+		"You are a predator, and the world is your hunting ground. Hunt wisely.",
+		"You are not a friendly puppy, and the world hates you.",
+		"Bring Glory to the Gorestar. Hunt those marked as worthy by graggar.",
+		"Feeding on pools of blood or limbs will heal you.",
+	)
 	roundend_category = "Gnolls"
 	antagpanel_category = "Gnolls"
 	job_rank = ROLE_GNOLL

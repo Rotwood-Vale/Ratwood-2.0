@@ -49,6 +49,9 @@
 	return 3
 
 /datum/antagonist/lich/on_gain()
+	var/mob/living/carbon/human/body = owner.current
+	if(istype(body))
+		body.convert_to_antag_job()
 	SSmapping.retainer.liches |= owner
 	. = ..()
 	owner.special_role = name

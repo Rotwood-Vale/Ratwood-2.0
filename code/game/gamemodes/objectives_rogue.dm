@@ -1,6 +1,6 @@
 /datum/objective/bandit
 	name = "bandit"
-	explanation_text = "Feed valuables to the idol."
+	explanation_text = "Rob and pillage. Gather valuable loot by any means, and offer it to the gilded god in sacrifice."
 
 /datum/objective/bandit/check_completion()
 	if(SSmapping.retainer.bandit_contribute >= SSmapping.retainer.bandit_goal)
@@ -29,6 +29,12 @@
 	team_explanation_text = "Lycanthropy is a terrible disease that's been recorded in scattered accounts going back hundreds of years. Whatever madness drove Dendor to create such an aberration is beyond mortal minds - and whatever the reason, he has been unwilling or unable to undo it. Nightly transformations and prodigious increses in mass drive the body into an active state of insatiable starvation, driving animalistic, rabid behavior."
 	triumph_count = 5
 
+/datum/objective/werewolf/lesser
+	name = "adapt"
+	explanation_text = "You were recently bitten by a beast of dendor. And you are SO, SO VERY HUNGRY. You must adapt to your new lyfe- How you react to being left cursed with the call of the wilds during Astrata is up to you. Beware, at Noc beneath the moonlight, nothing will hold the feral hunger back. You must Obey your elder kin and serve their aims if moonlight befouls you ."
+	team_explanation_text = "Lycanthropy is a terrible disease that's been recorded in scattered accounts going back hundreds of years. Whatever madness drove Dendor to create such an aberration is beyond mortal minds - and whatever the reason, he has been unwilling or unable to undo it. Nightly transformations and prodigious increses in mass drive the body into an active state of insatiable starvation, driving animalistic, rabid behavior."
+	triumph_count = 5
+
 /datum/objective/werewolf/check_completion()
 	if(vampire_werewolf() == "werewolf")
 		return TRUE
@@ -42,3 +48,13 @@
 /datum/objective/vampire/check_completion()
 	if(vampire_werewolf() == "vampire")
 		return TRUE
+
+/datum/objective/dreamwalker_ascend
+	name = "awaken abyssor"
+	explanation_text = "Complete the five rites and wake Abyssor from his dream, no matter the cost."
+
+/datum/objective/dreamwalker_ascend/check_completion()
+	if(!owner)
+		return FALSE
+	var/datum/antagonist/dreamwalker/D = owner.has_antag_datum(/datum/antagonist/dreamwalker)
+	return D ? D.ascended : FALSE

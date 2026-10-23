@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	social_rank = SOCIAL_RANK_ROYAL
 	// Can't use the Throat when you can't talk properly or.. at all for that matter.
 	vice_restrictions = list(/datum/charflaw/mute, /datum/charflaw/unintelligible)
-	quirk_restrictions = list(/datum/quirk/hunted)
+	quirk_restrictions = list(/datum/quirk/hunted,/datum/quirk/assassintarget)
 
 	job_subclasses = list(
 		/datum/advclass/lord/warrior,
@@ -130,7 +130,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 			qdel(H.wear_mask)
 			mask = /obj/item/clothing/mask/rogue/lordmask/l
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
-
+	ADD_TRAIT(H, TRAIT_ASSASSIN_TARGET, TRAIT_GENERIC)
 //	SSticker.rulermob = H
 /**
 	Warrior Lord subclass. An evolution from the Daring Twit. This is the original Lord Class.

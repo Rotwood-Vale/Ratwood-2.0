@@ -21,7 +21,7 @@
 	max_pq = null
 	round_contrib_points = 2
 	social_rank = SOCIAL_RANK_NOBLE
-	quirk_restrictions = list(/datum/quirk/hunted)
+	quirk_restrictions = list(/datum/quirk/hunted,/datum/quirk/assassintarget)
 	job_subclasses = list(
 		/datum/advclass/puritan/inspector,
 		/datum/advclass/puritan/ordinator,

@@ -382,6 +382,11 @@ SUBSYSTEM_DEF(migrants)
 		return FALSE
 	if(role.allowed_ages && !(prefs.age in role.allowed_ages))
 		return FALSE
+	if(role.antag_datum)
+		if(is_banned_from(player.ckey, role.name))
+			return FALSE
+		if(!(role.name in player.prefs.be_special))
+			return FALSE
 	return TRUE
 
 /datum/controller/subsystem/migrants/proc/wave_eligible(datum/migrant_wave/wave)
@@ -636,6 +641,16 @@ SUBSYSTEM_DEF(migrants)
 	log_game("Admin [key_name_admin(user)] forced next migrant wave: [picked_wave_type]")
 	var/datum/migrant_wave/wave = MIGRANT_WAVE(picked_wave_type)
 	SSmigrants.begin_forming(wave.track, picked_wave_type, forced = TRUE)
+
+/client/proc/admin_force_antag_wave()
+	set category = "-Server-"
+	set name = "Force Antag Wave"
+	if(!holder)
+		return
+	if(!SSgamemode.antag_baseline_taken)
+		SSgamemode.capture_antag_baseline()
+	message_admins("Admin [key_name_admin(usr)] forced an antag wave.")
+	SSgamemode.run_antag_checkpoint(forced = TRUE)
 
 /proc/get_spawn_turf_for_job(jobname)
 	var/list/landmarks = list()

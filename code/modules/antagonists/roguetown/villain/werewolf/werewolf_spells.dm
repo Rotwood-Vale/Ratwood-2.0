@@ -138,3 +138,47 @@
 	var/claw_index = extended_claw_record.Find(source)
 	if(claw_index)
 		extended_claw_record[claw_index] = FALSE
+
+/obj/effect/proc_holder/spell/invoked/werewolf_infect
+	name = "Bestial Bite"
+	desc = "Hold a victim still and pass the curse of Dendor into them. Requires several seconds of uninterrupted contact."
+	overlay_state = "claws"
+	antimagic_allowed = TRUE
+	recharge_time = 60 SECONDS
+	ignore_cockblock = TRUE
+	range = 1
+	/// How long both of us must stay put
+	var/infect_time = 4 SECONDS
+
+/obj/effect/proc_holder/spell/invoked/werewolf_infect/cast(list/targets, mob/living/user)
+	. = ..()
+	var/mob/living/carbon/human/target = targets[1]
+	if(!istype(target) || target == user)
+		revert_cast()
+		return FALSE
+	if(target.stat >= DEAD)
+		to_chat(user, span_warning("[target] is beyond infecting."))
+		revert_cast()
+		return FALSE
+	if(!target.can_werewolf())
+		to_chat(user, span_warning("The curse will not take hold of [target]."))
+		revert_cast()
+		return FALSE
+
+	user.visible_message(
+		span_danger("[user] sinks [user.p_their()] teeth in an exposed spot of [target]!"),
+		span_notice("I begin to pass the curse into [target]...")
+	)
+	if(!do_after(user, infect_time, target = target))
+		to_chat(user, span_warning("I was interrupted!"))
+		revert_cast()
+		return FALSE
+	if(!user.Adjacent(target) || target.stat >= DEAD || !target.can_werewolf())
+		revert_cast()
+		return FALSE
+
+	if(!target.werewolf_infect_attempt())
+		revert_cast()
+		return FALSE
+	user.log_message("infected [key_name(target)] with werewolf via Bestial Bite", LOG_GAME)
+	return TRUE

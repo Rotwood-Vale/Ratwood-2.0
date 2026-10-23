@@ -208,13 +208,13 @@ SUBSYSTEM_DEF(ticker)
 			if(timeLeft < 0)
 				return
 			timeLeft -= wait
-
 			if(timeLeft <= 300 && !tipped)
 #ifdef MATURESERVER
 				send_tip_of_the_round()
 #endif
 				tipped = TRUE
-
+			if(timeLeft <= 120 SECONDS && !start_immediately)
+				SSgamemode.open_antag_window()
 			if(timeLeft <= 0)
 				if(!checkreqroles())
 					current_state = GAME_STATE_STARTUP
@@ -321,7 +321,7 @@ SUBSYSTEM_DEF(ticker)
 	var/can_continue = 0
 
 	CHECK_TICK
-
+	SSgamemode.close_antag_window()
 	can_continue =	SSgamemode.pre_setup()
 
 	CHECK_TICK
