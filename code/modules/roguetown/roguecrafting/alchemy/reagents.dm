@@ -311,7 +311,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	reagent_state = LIQUID
 	color = "#000000"
 	taste_description = "sour meat"
-	metabolization_rate = 1000000 // handled by on add, any amount is dangerous
+	metabolization_rate = 1 // handled by on add, any amount is dangerous
 	harmful = TRUE
 	self_consuming = TRUE // shouldn't matter, but yes, its liver independent
 

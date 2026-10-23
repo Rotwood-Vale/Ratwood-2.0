@@ -98,7 +98,7 @@
 		H.update_inv_head()
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon(force = TRUE)
+		A.build_all_button_icons(ALL, TRUE)
 	..()
 
 //Detpack. I'm sure you can imagine use cases, outside of carrying it.

@@ -1,0 +1,5 @@
+author: "0-the-fool"
+delete-after: True
+changes:
+  - rscdel: "Disabled lich modifier"
+  - rscdel: "Disabled lich skeleton naming"

@@ -444,3 +444,16 @@
       happened, delites are now knocked down and scream when turning instead of doing
       so completely silently. You also dont vomit blood at the moment of infection,
       you still get warning mesages after
+2026-10-23:
+  HelennaC:
+  - admin: slooc color change
+  Kroto-Ker:
+  - rscadd: Traits are added to all origins.
+  - balance: Hard limits capacity to craft to only 1 level above your own.
+  Randumb-Phantomb:
+  - qol: Psydonic full plate recipe clarified
+  The-Sun-In-Splendour:
+  - bugfix: soulchurner description changing based on inquisition or not
+  Yuckuza:
+  - rscadd: Adds "Enable Breast Milking" toggle which allows other players to milk
+      your character via clicking their exposed chest with a container when enabled.
