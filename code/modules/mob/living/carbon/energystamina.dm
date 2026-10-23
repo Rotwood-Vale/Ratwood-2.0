@@ -25,6 +25,8 @@
 			added = round(added * 0.5, 1)
 		if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
 			added = round(added * 0.5, 1)
+		if(has_status_effect(/datum/status_effect/debuff/addiction/corpulent))
+			added = round(added * 0.5, 1)
 		if(HAS_TRAIT(src, TRAIT_MONK_ROBE))
 			added = round(added * 1.25, 1)
 		if(ishuman(src))
@@ -33,6 +35,8 @@
 				added = round(added * 0.8, 1)
 			else if(H.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
 				added = round(added * 0.7, 1)
+		if(HAS_TRAIT(src, TRAIT_OVERWEIGHT) && stamina > max_stamina * 0.5 && m_intent != MOVE_INTENT_SNEAK && !HAS_TRAIT(src, TRAIT_NOBREATH) && prob(25))
+			emote("pant")
 		if(stamina >= 1)
 			stamina_add(added)
 		else
