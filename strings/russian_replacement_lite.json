@@ -1,0 +1,48 @@
+{
+    "full": {
+		"bitch": "cyка",
+		"vagina": "pizda",
+		"cunt": "pizda",
+		"penis": "khuy",
+		"cock": "khuy",
+		"dickhead": "khuylo",
+		"fucking": "blyat",
+		"fuck": "ebat",
+		"whore": "kurwa",
+		"asshole": "muдaк",
+		"jerk": "muдaк",
+		"soldier": "soldat",
+		"cavalry": "kavaleriya",
+		"grenzelhoft": "grenzeliya",
+		"otava": "otavaiya",
+		"dame": "dama",
+		"orc": "ork",
+		"water": "woda",
+		"wine": "wino",
+		"priest": "patriarkh",
+		"priestess": "matriarkh",
+		"um": "vot",
+		"uh": "vot"
+	
+    },
+    "start": {
+
+    },
+    "end": {
+
+    },
+	"multiword": {
+		"fucking bitch": "cyка blyat",
+		"fucking hell": "cyка blyat",
+		"go fuck yourself": "idi na khuy",
+		"fuck you": "poshol na khuy"
+
+	},
+    "syllable": {
+		"h": "н",
+		"t": "т",
+		"k": "к",
+		"w": "ш",
+		"r": "я"
+    }
+}
