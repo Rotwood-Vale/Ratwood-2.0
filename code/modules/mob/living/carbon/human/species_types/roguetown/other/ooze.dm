@@ -192,7 +192,6 @@
 	shape.color = "#[human.dna.features["mcolor"]]"
 	new /obj/shapeshift_holder/ooze_death(shape, human)
 	shape.name = "[human]"
-	shape.mind?.RemoveSpell(/obj/effect/proc_holder/spell/targeted/shapeshift/ooze)
 	return TRUE
 
 //SLIME FORM WOOO
@@ -314,7 +313,6 @@
 		shape.mind?.transfer_to(stored)
 	stored.revive(full_heal = TRUE, admin_revive = FALSE)
 	to_chat(stored, span_notice("Bug notice: If you can no longer see emotes, move to a different z level and back (up/down a level). This is a known bug."))
-	stored.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/ooze)
 	stored.Knockdown(200)
 	stored.Stun(200)
 	stored.apply_status_effect(/datum/status_effect/debuff/revived)
