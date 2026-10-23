@@ -99,7 +99,7 @@
 	outfit = /datum/outfit/job/roguetown/wapprentice/apprentice
 
 	category_tags = list(CTAG_WAPPRENTICE)
-	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)//emphasizing the "serve" part of their description
+	traits_applied = list(TRAIT_ARCYNE, TRAIT_HOMESTEAD_EXPERT)//emphasizing the "serve" part of their description
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_WIL = 2,
