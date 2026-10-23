@@ -249,7 +249,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * deaf_message (optional) is what deaf people will see.
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
  */
-/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null, list/ignored_mobs)
+/atom/proc/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null, list/ignored_mobs, custom_spans = list("emote"))
 	var/list/hearers = hearers(hearing_distance, src) // get_hearers_in_view is slower because we don't care about SCOMs and etc here
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
@@ -259,7 +259,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	for(var/mob/M in hearers)
 		M.show_message(message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 		if(runechat_message && M.can_see_runechat(src) && M.can_hear())
-			M.create_chat_message(src, raw_message = runechat_message, spans = list("emote"))
+			M.create_chat_message(src, raw_message = runechat_message, spans = custom_spans)
 	if(log_seen)
 		log_seen(src, null, hearers, (log_seen_msg ? log_seen_msg : message), log_seen)
 
