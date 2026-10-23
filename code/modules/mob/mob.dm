@@ -333,8 +333,8 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * deaf_message (optional) is what deaf people will see.
  * * hearing_distance (optional) is the range, how many tiles away the message can be heard.
  */
-/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null, list/ignored_mobs)
-	. = ..(message, deaf_message, hearing_distance, self_message, runechat_message, log_seen, log_seen_msg, ignored_mobs)
+/mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null, log_seen = NONE, log_seen_msg = null, list/ignored_mobs, custom_spans = list("emote"))
+	. = ..(message, deaf_message, hearing_distance, self_message, runechat_message, log_seen, log_seen_msg, ignored_mobs, custom_spans)
 	if(self_message)
 		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 
