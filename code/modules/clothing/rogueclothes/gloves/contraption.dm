@@ -60,7 +60,7 @@
 	var/activate_sound = 'sound/items/stunmace_gen (2).ogg'
 	var/cdtime = 15 SECONDS
 	var/activetime = 5 SECONDS
-	var/delay = 5 SECONDS
+	var/delay = 3 SECONDS
 	var/sprite_changes = 10
 	var/datum/beam/current_beam = null
 	var/active = FALSE
@@ -182,8 +182,8 @@
 				continue
 			else
 				C.Immobilize(3 SECONDS)
-				C.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS)
-				C.electrocute_act(3, src, 3, SHOCK_NOSTUN)
+				C.apply_status_effect(/datum/status_effect/debuff/clickcd, 8 SECONDS)
+				C.electrocute_act(5, src, 5, SHOCK_NOSTUN)
 				C.apply_status_effect(/datum/status_effect/buff/lightningstruck, 8 SECONDS)
 		else
 			playsound(user, 'sound/items/stunmace_toggle (3).ogg', 100)
