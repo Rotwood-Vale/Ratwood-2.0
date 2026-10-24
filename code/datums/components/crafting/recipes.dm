@@ -186,13 +186,6 @@
 			for(var/zone in body_parts_covered2organ_names(body_parts_covered2organ_names(C.body_parts_covered)))
 				html += "<b>[capitalize(zone)]</b> | "
 			html += "<br>"
-		if(C.prevent_crits)
-			if(length(C.prevent_crits))
-				html += "\n<b>PREVENTS CRITS:</b>"
-				for(var/X in C.prevent_crits)
-					if(X == BCLASS_PICK)	//BCLASS_PICK is named "stab", and "stabbing" is its own damage class. Prevents confusion.
-						X = "pick"
-					html += ("\n<b>[capitalize(X)]</b><br>")
 		html += "INTEGRITY: [bookarmor.max_integrity]<br>"
 		if(bookarmor.armor_class == ARMOR_CLASS_HEAVY)
 			html += "<b>AC: </b>HEAVY<br>"
@@ -229,8 +222,12 @@
 				if(WLENGTH_GREAT)
 					html += "Great<br>"
 
-		if(bookweapon.alt_intents)
-			html += "\n<b>GRIP: ALT-GRIP (right click while in hand)</b><br>"
+		if(bookweapon.has_altgrip_modes())
+			html += "\n<b>GRIP: ALT-GRIP (RCLICK/HOTKEY(B)/CTRL+SCRLWHL)</b><br>"
+			var/list/alt_grip_lines = bookweapon.get_altgrip_lines(src, user)
+			if(length(alt_grip_lines))
+				for(var/alt_grip_line in alt_grip_lines)
+					html += "[alt_grip_line]<br>"
 		if(bookweapon.gripped_intents)
 			html += "\n<b>TWO-HANDED: Yes</b><br>"
 
@@ -327,6 +324,31 @@
 	</html>
 	"}
 	return html
+
+/datum/crafting_recipe/proc/get_altgrip_preview_item()
+	var/result_path
+	if(islist(result))
+		var/list/result_list = result
+		if(result_list.len)
+			result_path = result_list[1]
+	else
+		result_path = result
+	if(!ispath(result_path, /obj/item))
+		return null
+	var/obj/item/preview_item = new result_path()
+	if(!preview_item.has_altgrip_modes())
+		qdel(preview_item)
+		return null
+	return preview_item
+
+/datum/crafting_recipe/Topic(href, href_list)
+	. = ..()
+	if(href_list["showaltgrip"])
+		var/obj/item/preview_item = get_altgrip_preview_item()
+		if(!preview_item)
+			return
+		preview_item.show_altgrip(usr, href_list["showaltgrip"])
+		qdel(preview_item)
 
 /datum/crafting_recipe/proc/show_menu(mob/user)
 	user << browse(generate_html(user),"window=new_recipe;size=500x810")

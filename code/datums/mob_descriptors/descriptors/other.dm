@@ -32,6 +32,8 @@
 	var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
 	if(!penis)
 		return FALSE
+	if(H.sexcon && (ORGAN_SLOT_PENIS in H.sexcon.hidden_genitals))
+		return FALSE
 	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
 		return TRUE
 	if(H.underwear)
@@ -49,11 +51,13 @@
 	var/adjective
 	var/arousal_modifier
 	switch(penis.penis_size)
-		if(1)
+		if(MIN_PENIS_SIZE)
+			adjective = pick("a tiny","a pathetic","a micro","a worthless","an ornamental","a laughably small","a uselessly small")
+		if(SMALL_PENIS_SIZE)
 			adjective = "a small"
-		if(2)
+		if(DEFAULT_PENIS_SIZE)
 			adjective = "an average"
-		if(3)
+		if(MAX_PENIS_SIZE)
 			adjective = "a large"
 	if(H.sexcon)
 		switch(H.sexcon.arousal)
@@ -71,9 +75,11 @@
 	if(penis.erect_state != ERECT_STATE_HARD && penis.sheath_type != SHEATH_TYPE_NONE)
 		switch(penis.sheath_type)
 			if(SHEATH_TYPE_NORMAL)
-				if(penis.penis_size == 3)
+				if(penis.penis_size == MAX_PENIS_SIZE)
 					used_name = "a fat sheath"
-				else if(penis.penis_size == 1)
+				else if(penis.penis_size == MIN_PENIS_SIZE)
+					used_name = "a tiny sheath"
+				else if(penis.penis_size == SMALL_PENIS_SIZE)
 					used_name = "a meager sheath"
 				else
 					used_name = "a sheath"
@@ -115,6 +121,8 @@
 	if(penis && penis.sheath_type == SHEATH_TYPE_SLIT) //If our penis hides in a slit, dont describe testicles
 		return FALSE
 	if(!testes)
+		return FALSE
+	if(H.sexcon && (ORGAN_SLOT_TESTICLES in H.sexcon.hidden_genitals))
 		return FALSE
 	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
 		return TRUE
@@ -166,6 +174,8 @@
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/vagina/vagina = H.getorganslot(ORGAN_SLOT_VAGINA)
 	if(!vagina)
+		return FALSE
+	if(H.sexcon && (ORGAN_SLOT_VAGINA in H.sexcon.hidden_genitals))
 		return FALSE
 	if(H.sexcon && H.sexcon.bottom_exposed == TRUE)
 		return TRUE

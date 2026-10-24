@@ -6,7 +6,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	spells = list()
 	vice_restrictions = list(/datum/charflaw/unintelligible)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = ALL_AGES_LIST
@@ -20,8 +20,6 @@
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_YEOMAN
 	job_traits = list(
-		TRAIT_ARCYNE_T2,
-		TRAIT_MAGEARMOR,
 		TRAIT_INTELLECTUAL,
 		TRAIT_SEEPRICES_SHITTY,
 		TRAIT_GOODWRITER,
@@ -52,13 +50,9 @@
 		/datum/language/otavan,
 		/datum/language/etruscan,
 		/datum/language/gronnic,
-		/datum/language/hammerholdian,
 		/datum/language/kazengunese,
 		/datum/language/draconic,
-		/datum/language/aavnic,
-		/datum/language/canilunzt,
-		/datum/language/merar,
-		/datum/language/thievescant/signlanguage, // All but Beastish, Zizo Chant (unless Zizoist) and true Thieves' Cant (unless Matthiosite or Xylixian).
+		/datum/language/aavnic, // All but beast, which is associated with werewolves.
 	)
 	category_tags = list(CTAG_ARCHIVIST)
 	subclass_stats = list(
@@ -66,17 +60,20 @@
 		STATKEY_CON = -1,
 		STATKEY_STR = -1
 	)
-	subclass_spellpoints = 12
+	age_mod = /datum/class_age_mod/archivist
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 2, "ward" = TRUE)
 	subclass_skills = list(
+		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/arcyne = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/tanning = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/archivist/basic/pre_equip(mob/living/carbon/human/H)
@@ -84,22 +81,18 @@
 	H.adjust_blindness(-3)
 	if(should_wear_femme_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/archivist
-		head  = /obj/item/clothing/head/roguetown/roguehood/black
+		head	= /obj/item/clothing/head/roguetown/roguehood/black
 	else
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/archivist
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor/nightman
 		pants = /obj/item/clothing/under/roguetown/tights/black
 		head = /obj/item/clothing/head/roguetown/nightman
-	backl = /obj/item/storage/backpack/rogue/satchel
+	backr = /obj/item/storage/backpack/rogue/satchel
 	shoes = /obj/item/clothing/shoes/roguetown/shortboots
-	wrists = /obj/item/storage/keyring/archivist
 	belt = /obj/item/storage/belt/rogue/leather/plaquesilver
-	beltl = /obj/item/rogueweapon/huntingknife
+	beltl = /obj/item/storage/keyring/archivist
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
 	mask = /obj/item/clothing/mask/rogue/spectacles
-	if(SSmapping.current_map.map_name == "Desert Town")
-		head = /obj/item/clothing/head/roguetown/tagelmust
-		shoes = /obj/item/clothing/shoes/roguetown/gladiator
 	id = /obj/item/scomstone/bad
 	backpack_contents = list(
 		/obj/item/recipe_book/alchemy,
@@ -108,16 +101,12 @@
 		/obj/item/paper,
 		/obj/item/paper,
 		/obj/item/paper,
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/spellbook
 	)
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/teach)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/learn)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/refocusstudies)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/takeapprentice)
-		if(H.patron.type == /datum/patron/inhumen/zizo)
-			H.grant_language(/datum/language/undead)
-	if(H.age == AGE_OLD)
-		H.change_stat(STATKEY_SPD, -1)
-		H.change_stat(STATKEY_INT, 1)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/learn)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/silence/archivist_silence)

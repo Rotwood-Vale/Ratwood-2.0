@@ -413,3 +413,6 @@
 		return water_moisten
 	else
 		to_chat(user, span_info("I'll need to find a container that can hold water."))
+
+/proc/get_god_name(datum/patron/to_check)
+	return to_check.name
