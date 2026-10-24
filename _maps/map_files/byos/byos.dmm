@@ -3449,7 +3449,7 @@
 	faction = list("infernal", "tribe");
 	wander = 0
 	},
-/obj/item/spellbook_unfinished/pre_arcyne,
+/obj/item/rogueweapon/spellbook,
 /obj/item/roguegem/ruby,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/under/cave)

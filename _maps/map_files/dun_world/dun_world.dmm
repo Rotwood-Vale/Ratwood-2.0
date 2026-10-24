@@ -17284,7 +17284,7 @@
 /area/rogue/under/cave/his_vault)
 "dhq" = (
 /obj/structure/table/vtable/v2,
-/obj/item/rogueweapon/woodstaff/diamond,
+/obj/item/rogueweapon/woodstaff/implement/grand,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/cave/mazedungeon)
 "dhu" = (
@@ -30877,8 +30877,7 @@
 	lockid = "baroness"
 	},
 /obj/item/roguegem/ruby,
-/obj/item/book/granter/spell/blackstone/frostbolt,
-/obj/item/rogueweapon/woodstaff/riddle_of_steel,
+/obj/item/rogueweapon/woodstaff/implement/grand/riddle,
 /obj/item/storage/belt/rogue/pouch/coins/rich,
 /turf/open/floor/rogue/wood/herringbone,
 /area/rogue/outdoors/mountains/decap/gunduzirak/bossarena)
@@ -45994,7 +45993,7 @@
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/town/bath)
 "imU" = (
-/obj/item/spellbook_unfinished,
+/obj/item/rogueweapon/spellbook,
 /turf/open/floor/rogue/church,
 /area/rogue/under/town/sewer)
 "imX" = (
@@ -60317,7 +60316,7 @@
 /area/rogue/indoors/town)
 "kSX" = (
 /obj/structure/bookcase,
-/obj/item/book/spellbook,
+/obj/item/rogueweapon/spellbook,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/mazedungeon)
 "kTb" = (
@@ -94106,7 +94105,7 @@
 /area/rogue/indoors/town/manor)
 "qPo" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/spellbook_unfinished/pre_arcyne,
+/obj/item/rogueweapon/spellbook,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/mazedungeon)
 "qPp" = (
@@ -111102,7 +111101,6 @@
 	locked = 1;
 	lockid = "lich"
 	},
-/obj/item/book/granter/spell/blackstone/bonechill,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /obj/item/clothing/ring/sapphirebs,
@@ -123124,6 +123122,10 @@
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/shop)
+"wcD" = (
+/obj/structure/roguemachine/ministry_bureau,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/manor)
 "wcF" = (
 /obj/structure/deadbodyrandom/med,
 /turf/open/floor/rogue/naturalstone,
@@ -341892,7 +341894,7 @@ xHQ
 rrD
 fAA
 iJY
-xHQ
+wcD
 xHQ
 qIt
 qIt

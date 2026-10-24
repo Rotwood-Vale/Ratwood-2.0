@@ -118,6 +118,7 @@
 	var/can_saddle = FALSE
 	var/obj/item/ssaddle
 	var/simple_detect_bonus = 0 // A flat percentage bonus to our ability to detect sneaking people only. Use in lieu of giving mobs huge STAPER bonuses if you want them to be observant.
+	var/list/broken_parts
 
 /obj/item/natural/bone
 	name = "bone"
