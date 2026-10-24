@@ -1,4 +1,0 @@
-author: "Sauna38"
-delete-after: True
-changes:
-  - bugfix: "Town Crier hat no longer turns invisible when worn in the mask slot"

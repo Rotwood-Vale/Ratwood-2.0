@@ -129,6 +129,9 @@
 		used_volume = step_data[2]
 		used_extra_range = step_data[3]
 		do_vary = !feet_covered // only barefoot gets the pitch variation
+	if(HAS_TRAIT(human_parent, TRAIT_SOFT_FOOTED))
+		used_volume *= 0.7
+		used_extra_range -= 1
 	// Exclude the previous footstep by index, avoiding a temporary list while keeping other choices equally likely
 	var/count = length(used_footsteps)
 	if(!count)

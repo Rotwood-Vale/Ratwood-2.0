@@ -1,5 +1,0 @@
-author: "SirSwagmeyer"
-delete-after: True
-changes:
-  - refactor: "Reworked Dual Wielder virtue."
-  - rscadd: "Added thrown projectile deflection mechanics."

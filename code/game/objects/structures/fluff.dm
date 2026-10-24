@@ -1241,7 +1241,7 @@
 		/obj/item/candle/candlestick/silver,
 		/obj/item/rogueweapon/sword/long/judgement, // various unique weapons around from a few roles follows. Don't lose your fancy toys....
 		/obj/item/rogueweapon/sword/long/oathkeeper,
-		/obj/item/rogueweapon/woodstaff/riddle_of_steel/magos, //bit dumb for a bandit mage to toss this toy away but whatever
+		/obj/item/rogueweapon/woodstaff/implement/grand/magos, //bit dumb for a bandit mage to toss this toy away but whatever
 		/obj/item/clothing/head/roguetown/circlet,
 		/obj/item/carvedgem,  //Some of these aren't particularly worth much, but it'd be REALLY unintuitive for "valuables" to not actually be offerings
 		/obj/item/rogueweapon/huntingknife/stoneknife/kukri,

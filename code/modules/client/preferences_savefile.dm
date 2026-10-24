@@ -7,7 +7,7 @@
 //	where you would want the updater procs below to run
 
 //	This also works with decimals.
-#define SAVEFILE_VERSION_MAX 38
+#define SAVEFILE_VERSION_MAX 39
 
 /// Safely extract a type path from datums or type values. Returns null if unset or invalid
 /proc/preferences_typepath_or_null(value)
@@ -79,6 +79,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 35)
 		patreon_say_color = "ff7a05"
 		patreon_say_color_enabled = FALSE
+	if(current_version < 39 && islist(key_bindings["ShiftG"]))
+		key_bindings["ShiftG"] = list("toggle_arc_mode")
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 19)
@@ -284,6 +286,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["pits"]				>> pits
 	S["descriptor_color"]	>> descriptor_color
 	S["cursed_collarable"] 	>> cursed_collarable
+	S["milkable"]			>> milkable
 	S["shake"]				>> shake
 	S["no_redflash"] 		>> no_redflash
 	S["mastervol"]			>> mastervol
@@ -487,6 +490,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pits"], pits)
 	WRITE_FILE(S["descriptor_color"], descriptor_color)
 	WRITE_FILE(S["cursed_collarable"], cursed_collarable)
+	WRITE_FILE(S["milkable"], milkable)
 	WRITE_FILE(S["shake"], shake)
 	WRITE_FILE(S["no_redflash"], no_redflash)
 	WRITE_FILE(S["lastclass"], lastclass)

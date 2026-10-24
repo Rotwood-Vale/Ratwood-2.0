@@ -214,43 +214,33 @@
 
 /mob/living/carbon/human/get_punch_dmg()
 
-	var/damage
-	if(STASTR > UNARMED_DAMAGE_DEFAULT || STASTR < 10)
-		damage = STASTR
-	else
-		damage = UNARMED_DAMAGE_DEFAULT
+	var/damage = UNARMED_DAMAGE_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_CIVILIZEDBARBARIAN))
+		damage += UNARMED_DAMAGE_CIVILBARB
 
 	var/used_str = STASTR
 
-	var/obj/G = get_item_by_slot(SLOT_GLOVES)
 	if(domhand)
 		used_str = get_str_arms(used_hand)
 
 	if(used_str >= 11)
-		var/bonus = 0
-
-		if(used_str <= 14)
-			// Normal scaling: +20% per point over 10
-			bonus = (used_str - 10) * 0.2
+		var/strmod
+		if(used_str > STRENGTH_SOFTCAP && !HAS_TRAIT(src, TRAIT_STRENGTH_UNCAPPED))
+			strmod = ((STRENGTH_SOFTCAP - 10) * STRENGTH_MULT)
+			strmod += ((used_str - STRENGTH_SOFTCAP) * STRENGTH_CAPPEDMULT)
 		else
-			// Diminishing returns after 14
-			// Start with the full +0.8 from 14 STR
-			bonus = 0.8
-			var/extra = used_str - 14
-			// Each point beyond 14 gives a smaller bonus than the last:
-			// e.g., +0.1, +0.075, +0.05625, etc.
-			var/next_bonus = 0.1
-			for(var/i = 1, i <= extra, i++)
-				bonus += next_bonus
-				next_bonus *= 0.75 // reduces 25% each time
-		damage = max(damage + (damage * bonus), 1)
+			strmod = ((used_str - 10) * STRENGTH_MULT)
+		damage = damage + (damage * strmod)
+	else if(used_str <= 9)
+		damage = max(damage + (damage * ((10 - used_str) * 0.1)), 1)
 
 	if(used_str <= 9)
 		damage = max(damage - (damage * ((10 - used_str) * 0.1)), 1)
 
+	var/obj/G = get_item_by_slot(SLOT_GLOVES)
 	if(istype(G, /obj/item/clothing/gloves/roguetown))
 		var/obj/item/clothing/gloves/roguetown/GL = G
-		damage = (damage * GL.unarmed_bonus)
+		damage += GL.unarmed_bonus
 
 	if(mind)
 		if(mind.has_antag_datum(/datum/antagonist/werewolf))

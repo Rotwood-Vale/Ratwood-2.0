@@ -169,11 +169,26 @@
 	//I am not putting in a NASTY_EATER check for this. He's the god of bloodshed, not the god of coprophagia.
 	M.adjustToxLoss(4) //Horrible day for poop drinkers
 	M.add_nausea(20)
+
 /datum/chemical_reaction/grosswaterboil //boiling water purifies it
 	name = "gross water purification"
 	id = /datum/reagent/water
 	results = list(/datum/reagent/water = 1)
 	required_reagents = list(/datum/reagent/water/gross = 1)
+	required_temp = 375
+
+/datum/chemical_reaction/holywaterboil //boiling holy water mundanifies it
+	name = "holy water mundanification"
+	id = /datum/reagent/water
+	results = list(/datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/water/blessed = 1)
+	required_temp = 375
+
+/datum/chemical_reaction/cursedwaterboil //boiling cursed water mundanifies it
+	name = "cursed water mundanification"
+	id = /datum/reagent/water
+	results = list(/datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/water/cursed = 1)
 	required_temp = 375
 
 /datum/reagent/water/bathwater

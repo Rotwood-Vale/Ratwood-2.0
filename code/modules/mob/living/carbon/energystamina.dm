@@ -64,6 +64,12 @@
 	if(m_intent == MOVE_INTENT_RUN && (mobility_flags & MOBILITY_STAND))
 		if(isnull(buckled))
 			mind && mind.add_sleep_experience(/datum/skill/misc/athletics, (STAINT*0.02))
+	if(added < 0 && HAS_TRAIT(src, TRAIT_GOLD_AFFINITY))
+		var/gold = 0
+		for(var/obj/item/I in get_equipped_items())
+			if(I.is_gold)
+				gold++
+		added *= 1 - (min(gold, 5) * 0.02)
 	energy += added
 	if(energy > max_energy)
 		energy = max_energy

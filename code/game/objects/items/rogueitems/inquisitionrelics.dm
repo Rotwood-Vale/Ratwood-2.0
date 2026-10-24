@@ -65,11 +65,11 @@
 	var/datum/looping_sound/psydonmusicboxsound/soundloop
 
 /obj/item/psydonmusicbox/examine(mob/user)
-	. = ..()
-	if(HAS_TRAIT(usr, TRAIT_INQUISITION))
+	if(HAS_TRAIT(user, TRAIT_INQUISITION))
 		desc = "A relic from the bowels of the Otavan cathedral's thaumaturgical workshops. Fourteen souls of heretics, all bound together, they will scream and protect us from magicks. It would be wise to not teach the heretics of its true nature, to only bring it to bear in dire circumstances."
 	else
 		desc = "A cranked music box, it has the seal of the Otavan Inquisition on the side. It carries a somber feeling to it..."
+	. = ..()
 
 /obj/item/psydonmusicbox/attack_self(mob/living/user)
 	. = ..()

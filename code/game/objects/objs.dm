@@ -62,6 +62,8 @@
 	var/icon_state_preview
 
 	vis_flags = VIS_INHERIT_PLANE
+	/// Extra AI pathfinding cost for this object. Higher values make NPCs avoid this tile.
+	var/ai_path_weight = 0
 
 /obj/vv_edit_var(vname, vval)
 	switch(vname)

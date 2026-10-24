@@ -420,6 +420,14 @@
 			str = "[m3] something on [m2] wrists!"
 		. += str
 
+	if(istype(skin_armor, /obj/item/clothing/suit/roguetown/armor/manual/arcyne_ward))
+		var/obj/item/clothing/suit/roguetown/armor/manual/arcyne_ward/ward = skin_armor
+		var/str = "[m3] <font color='[ward.ward_color]'>[ward.generate_tooltip(ward.get_examine_string(user))] shimmering around [user == src ? "me" : p_them()].</font>"
+		str += ward.integrity_check(is_smart)
+		if (is_stupid)
+			str = "[m3] some weird shiny thing!"
+		. += str
+
 	//handcuffed?
 	if(handcuffed)
 		if(user == src)
@@ -466,9 +474,11 @@
 	//body temp
 	switch(bodytemperature)
 		if(0 to BODYTEMP_COLD_LEVEL_ONE_MAX)
-			msg += span_biginfo("<font color='#023E8A'> [m1] shivering uncontrollably</font>")
+			if(!HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))
+				msg += span_biginfo("<font color='#023E8A'> [m1] shivering uncontrollably</font>")
 		if(BODYTEMP_COLD_LEVEL_ONE_MAX to BODYTEMP_NORMAL_MIN)
-			msg += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
+			if(!HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))
+				msg += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
 		if(BODYTEMP_NORMAL_MAX to BODYTEMP_HEAT_LEVEL_ONE_MAX)
 			msg += span_biginfo("<font color='#ffff00'> [m1] sweating</font>")
 		if(BODYTEMP_HEAT_LEVEL_ONE_MAX to 600)
@@ -600,6 +610,17 @@
 		for(var/i in stun_absorption)
 			if(stun_absorption[i]["end_time"] > world.time && stun_absorption[i]["examine_message"])
 				msg += "[m1][stun_absorption[i]["examine_message"]]"
+
+	if(src.skin_armor && istype(src.skin_armor, /obj/item/clothing/suit/roguetown/armor/manual/arcyne_ward/bestowed))
+		var/obj/item/clothing/suit/roguetown/armor/manual/arcyne_ward/bestowed/W = src.skin_armor
+		var/time_remaining = max(0, W.expires_at - world.time)
+		var/total_seconds = round(time_remaining / 10)
+		var/minutes = floor(total_seconds / 60)
+		var/seconds = total_seconds % 60
+		if(minutes > 0)
+			msg += "<font color='#ffbd09'>A temporary ward surrounds them. It will last for [minutes] minute[minutes == 1 ? "" : "s"], [seconds] second[seconds == 1 ? "" : "s"].</font>"
+		else
+			msg += "<font color='#ffbd09'>A temporary ward surrounds them. It will last for [seconds] second[seconds == 1 ? "" : "s"].</font>"
 
 	if(!appears_dead)
 		if(!skipface)
@@ -1088,6 +1109,14 @@
 
 		if((HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) || (HAS_TRAIT(user, TRAIT_BLACKOAK) && !(src.dna.species.name == "Elf" || src.dna.species.name == "Dark Elf" || src.dna.species.name == "Half Elf")))
 			. += span_phobia("A foreigner...")
+
+		if(user != src && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			for(var/type in GLOB.origins)
+				var/datum/origin/O = GLOB.origins[type]
+				if(O.name == origin && O.prejudice_stress && H.origin != origin && (!O.hated_by || (H.origin in O.hated_by)))
+					. += O.prejudice_examine
+					user.add_stress(O.prejudice_stress)
 
 		if(HAS_TRAIT(src, TRAIT_LOOSE_STRAPS))
 			. += span_phobia("[capitalize(m2)] armor hangs on by a thread...")

@@ -79,6 +79,8 @@
 		if(ARMOR_CLASS_HEAVY)
 			fatiguemod = 3
 
+	HT.interrupt_spell_channel()
+
 	HT.apply_status_effect(/datum/status_effect/debuff/baited)
 	HT.apply_status_effect(/datum/status_effect/debuff/exposed)
 	HT.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS)
@@ -192,13 +194,16 @@
 	var/theirskill = 0
 	var/skill_factor = 0
 
-	if(I)
-		if(I.associated_skill)
-			ourskill = user.get_skill_level(I.associated_skill)
-		if(L.skills)
-			I = L.get_active_held_item()
-			if(I && I?.associated_skill)
-				theirskill = L.get_skill_level(I.associated_skill)
+	if(I?.associated_skill)
+		ourskill = user.get_skill_level(I.associated_skill)
+	else
+		ourskill = user.get_skill_level(/datum/skill/combat/unarmed)
+	if(L.mind)
+		I = L.get_active_held_item()
+		if(I?.associated_skill)
+			theirskill = L.get_skill_level(I.associated_skill)
+		else
+			theirskill = L.get_skill_level(/datum/skill/combat/unarmed)
 	perc += (ourskill - theirskill)*15 	//skill is of the essence
 	perc += (user.STAINT - L.STAINT)*10	//but it's also mostly a mindgame
 	skill_factor = (ourskill - theirskill)/2
@@ -290,5 +295,14 @@
 
 /datum/rmb_intent/weak
 	name = "weak"
-	desc = "Your attacks have -1 strength and will never critically-hit. Useful for longer punishments, play-fighting, and bloodletting."
+	desc = "Your attacks have -1 strength and will never critically-hit. Useful for longer punishments, play-fighting, and bloodletting.\nRight click will attempt to steal from the target."
 	icon_state = "rmbweak"
+
+/datum/rmb_intent/weak/special_attack(mob/living/user, atom/target)
+	if(!target.Adjacent(user))
+		return
+	if(!ishuman(user) || !ishuman(target))
+		return
+	var/mob/living/carbon/human/H = user
+	H.attempt_steal(user, target)
+	. = ..()

@@ -69,6 +69,8 @@
 	var/sound_opening_count = 0
 
 	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID
+	/// Cached sum of ai_path_weight from objs on this turf
+	var/ai_path_weight = 0
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")

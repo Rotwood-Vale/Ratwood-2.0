@@ -109,6 +109,7 @@
 #define CHANNEL_BUZZ 1017
 #define CHANNEL_RAIN 1015
 #define CHANNEL_MUSIC 1014
+#define CHANNEL_CHARGED_SPELL 1011
 #define CHANNEL_WEATHER 1013
 #define CHANNEL_CMUSIC4 1012
 #define CHANNEL_CMUSIC3 1011
@@ -658,6 +659,7 @@
 #define SFX_PLATE_COAT_STEP "plate_coat_step"
 #define SFX_JINGLE_BELLS "jingle_bells"
 #define SFX_WOOD_ARMOR "wood_armor"
+#define SFX_TRICK "trick"
 #define SFX_HEELS	"heels"
 
 #define SFX_COLLARJINGLE list('sound/items/jinglebell1.ogg',\

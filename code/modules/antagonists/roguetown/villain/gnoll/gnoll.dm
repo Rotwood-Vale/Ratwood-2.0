@@ -221,6 +221,7 @@
 	icon_state = "insmash"
 	chargetime = 1
 	penfactor = PEN_NONE
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
 /datum/intent/simple/gnoll_cut
 	name = "chopping claw"
@@ -241,6 +242,7 @@
 
 /datum/intent/mace/strike/gnoll
 	name = "armor rending strike"
+	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 	miss_text = "strikes the air!"
 	miss_sound = "bluntwooshlarge"
 	attack_verb = list("punches", "strikes", "tears")

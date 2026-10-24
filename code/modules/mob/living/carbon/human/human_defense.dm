@@ -271,7 +271,7 @@
 				I.get_deflected(src)
 				do_sparks(2, TRUE, current_turf)
 				visible_message(span_warning("[src] deflects \the [I]!"))
-				return
+				return TRUE
 
 	if(I && !blocked)
 		if(((throwingdatum ? throwingdatum.speed : I.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || I.embedding.embedded_ignore_throwspeed_threshold)
@@ -678,9 +678,11 @@
 		examination += span_dead("[m1] dead.")
 	switch(bodytemperature)
 		if(0 to BODYTEMP_COLD_LEVEL_ONE_MAX)
-			examination += span_biginfo("<font color='#023E8A'> [m1] shivering greatly</font>")
+			if(!HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))
+				examination += span_biginfo("<font color='#023E8A'> [m1] shivering greatly</font>")
 		if(BODYTEMP_COLD_LEVEL_ONE_MAX to BODYTEMP_NORMAL_MIN)
-			examination += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
+			if(!HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))
+				examination += span_biginfo("<font color='#99e6ff'> [m1] shivering</font>")
 		if(BODYTEMP_NORMAL_MIN to BODYTEMP_NORMAL_MAX)
 			examination += span_biginfo("<B>[m1] average temperature.</B>")
 		if(BODYTEMP_NORMAL_MAX to BODYTEMP_HEAT_LEVEL_ONE_MAX)
@@ -946,8 +948,7 @@
 	return layers
 
 /mob/living/carbon/human/proc/get_best_worn_armor_layered(def_zone, d_type)
-	var/protection = 0
-	var/obj/item/clothing/used
+	var/list/layers = list()
 	if(def_zone == BODY_ZONE_TAUR)
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	else if(get_taur_tail())
@@ -968,10 +969,8 @@
 						continue
 				var/val = C.armor.getRating(d_type)
 				if(val > 0)
-					if(val > protection)
-						protection = val
-						used = C
-	return used
+					layers[C] = val
+	return layers
 
 /mob/living/carbon/human/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	//SEND_SIGNAL(src, COMSIG_HUMAN_BURNING)
