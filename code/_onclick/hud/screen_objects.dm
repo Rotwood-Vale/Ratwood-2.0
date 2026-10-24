@@ -1519,7 +1519,9 @@
 		if(H.get_bodypart(BODY_ZONE_TAUR))
 			missing_bodyparts_zones -= BODY_ZONE_L_LEG
 			missing_bodyparts_zones -= BODY_ZONE_R_LEG
-		var/nopain = HAS_TRAIT(H, TRAIT_NOPAIN)
+		var/nopain = HAS_TRAIT(H, TRAIT_NOPAIN) \
+			&& !H.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder) \
+			&& !H.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 		for(var/X in H.bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(BP.body_zone in missing_bodyparts_zones)
