@@ -78,6 +78,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	remove_innate_effects(old_body)
 	apply_innate_effects(new_body)
+	// The mind (and every antag datum on it) moves together, so just move the verb
+	if(old_body)
+		old_body.verbs -= /mob/living/proc/antag_briefing
+	grant_briefing_verb(new_body)
 
 //This handles the application of antag huds/special abilities
 /datum/antagonist/proc/apply_innate_effects(mob/living/mob_override)
@@ -118,6 +122,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 //		if(!silent)
 //			greet()
 		apply_innate_effects()
+		grant_briefing_verb(owner.current)
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 		else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
@@ -147,6 +152,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
+		revoke_briefing_verb(owner.current)
 		if(!silent && owner.current)
 			farewell()
 	var/datum/team/team = get_team()
@@ -172,16 +178,19 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/data = list()
 	data["title"] = briefing_title ? briefing_title : name
 	data["description"] = briefing_text ? briefing_text : "You are playing as [name]. Review your objectives and determine how best to fulfil your role."
-	data["tips"] = briefing_tips.Copy()
+	data["tips"] = briefing_tips ? briefing_tips.Copy() : list()
 
 	var/list/objective_data = list()
 	for(var/datum/objective/objective in objectives)
-		objective_data += list(list(
-			"explanation" = objective.explanation_text
-		))
+		objective_data += list(objective.get_briefing_entry())
 
 	data["objectives"] = objective_data
 	return data
+
+/// What the briefing UI receives for one objective. Base objectives only send their text;
+/// subtypes override this to add live progress. Must stay side-effect free, ui_data runs on every UI update.
+/datum/objective/proc/get_briefing_entry()
+	return list("explanation" = explanation_text)
 
 
 /datum/antagonist/proc/open_briefing(mob/user)
@@ -191,6 +200,56 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 
 	ui_interact(user)
+
+/// Gives the mob the IC tab verb for reopening the briefing. Safe to call repeatedly.
+/datum/antagonist/proc/grant_briefing_verb(mob/living/M)
+	if(!show_briefing || !istype(M))
+		return
+	M.verbs |= /mob/living/proc/antag_briefing
+
+/// Takes the verb away again, unless the mind still holds another antag datum with a briefing.
+/// Call after this datum has already been removed from owner.antag_datums.
+/datum/antagonist/proc/revoke_briefing_verb(mob/living/M)
+	if(!istype(M))
+		return
+	if(M.mind)
+		for(var/datum/antagonist/other in M.mind.antag_datums)
+			if(other != src && other.show_briefing)
+				return
+	M.verbs -= /mob/living/proc/antag_briefing
+
+/// IC tab verb. Added/removed per mob by the antagonist datum, so non-antagonists never see it.
+/mob/living/proc/antag_briefing()
+	set name = "Antagonist Briefing"
+	set desc = "Reopen the briefing for your antagonist role."
+	set category = "IC"
+
+	if(!mind)
+		return
+	var/list/briefable = list()
+	for(var/datum/antagonist/A in mind.antag_datums)
+		if(!A.show_briefing)
+			continue
+		// Key by name, suffix duplicates so the picker never collapses two entries
+		var/key_name = A.briefing_title ? A.briefing_title : A.name
+		if(briefable[key_name])
+			key_name = "[key_name] ([length(briefable) + 1])"
+		briefable[key_name] = A
+
+	if(!length(briefable))
+		to_chat(src, span_warning("You have no antagonist briefing to review."))
+		verbs -= /mob/living/proc/antag_briefing
+		return
+
+	var/datum/antagonist/chosen
+	if(length(briefable) == 1)
+		chosen = briefable[briefable[1]]
+	else
+		var/choice = input(src, "Which briefing would you like to review?", "Antagonist Briefing") as null|anything in briefable
+		if(!choice)
+			return
+		chosen = briefable[choice]
+	chosen?.open_briefing(src)
 
 /datum/antagonist/proc/greet()
 	return

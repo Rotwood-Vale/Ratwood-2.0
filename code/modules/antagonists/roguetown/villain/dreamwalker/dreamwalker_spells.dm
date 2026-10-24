@@ -405,11 +405,11 @@
 	if(!istype(H))
 		revert_cast()
 		return
-	if(H.blood_volume < BLOOD_VOLUME_OKAY + blood_cost)
+	if(H.get_blood_volume() < BLOOD_VOLUME_OKAY + blood_cost)
 		to_chat(H, span_warning("I am too drained to bleed a shard out of the dream."))
 		revert_cast()
 		return
-	H.blood_volume -= blood_cost
+	H.adjust_blood_volume(-blood_cost)
 	var/obj/item/abyssal_marker/volatile/dreamwalker/shard = new(get_turf(H))
 	H.put_in_hands(shard)
 	to_chat(H, span_notice("A shard of the dream bleeds out of my palm and hardens into crystal."))

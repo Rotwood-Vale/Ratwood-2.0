@@ -19,7 +19,23 @@ import {
 
 type Objective = {
   explanation: string;
+  // Optional live status, currently only sent by Thieves' Guild objectives
+  kind?: string;
+  progress?: string;
+  completed?: boolean;
 };
+
+const COMPLETE_GREEN = '#4a6b2f';
+
+// Objective text rendered bold
+const renderExplanation = (text: string) =>
+  (text || '').split(/(<b>.*?<\/b>)/g).map((part, i) =>
+    part.startsWith('<b>') && part.endsWith('</b>') ? (
+      <b key={i}>{part.slice(3, -4)}</b>
+    ) : (
+      part
+    ),
+  );
 
 type Data = {
   title: string;
@@ -94,15 +110,34 @@ export const AntagonistBriefing = () => {
                   color: INK,
                   lineHeight: '1.5',
                   marginBottom: '6px',
-                  borderLeft: `3px solid ${SEAL_AMBER}`,
+                  borderLeft: `3px solid ${
+                  objective.completed ? COMPLETE_GREEN : SEAL_AMBER
+                }`,
                 }}
               >
                 <b style={{ color: SEAL_AMBER }}>
                   {index + 1}.
                 </b>
-                <span style={{ whiteSpace: 'pre-wrap' }}>
-                  {objective.explanation}
-                </span>
+                <div style={{ flex: 1 }}>
+                  <span style={{ whiteSpace: 'pre-wrap' }}>
+                    {renderExplanation(objective.explanation)}
+                  </span>
+                  {!!objective.progress && (
+                    <div
+                      style={{
+                        marginTop: '4px',
+                        fontSize: '0.9em',
+                        fontStyle: 'italic',
+                        color: objective.completed
+                          ? COMPLETE_GREEN
+                          : INK_SOFT,
+                      }}
+                    >
+                      {objective.completed ? '\u2713 ' : '\u2022 '}
+                      {objective.progress}
+                    </div>
+                  )}
+                </div>
               </div>
             ))
           )}

@@ -246,7 +246,7 @@
 	outfit = /datum/outfit/job/roguetown/wretch/hereticspy
 	class_select_category = CLASS_CAT_ROGUE
 	maximum_possible_slots = 2
-	traits_applied = list(TRAIT_DODGEEXPERT)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_RITUALIST)
 	//Slower than outlaw, but a bit more PER and INT
 	subclass_stats = list(
 		STATKEY_PER = 2,

@@ -58,3 +58,8 @@
 		return FALSE
 	var/datum/antagonist/dreamwalker/D = owner.has_antag_datum(/datum/antagonist/dreamwalker)
 	return D ? D.ascended : FALSE
+
+/datum/objective/gnoll
+	name = "dominate"
+	explanation_text = "Seek out those marked by graggar and dominate them."
+	triumph_count = 5

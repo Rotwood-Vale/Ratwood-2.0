@@ -18,11 +18,10 @@
 		list("Crown of the Realm", /obj/item/clothing/head/roguetown/crown/serpcrown),
 		list("Bell Ringer", /obj/item/rogueweapon/mace/church),
 		list("Pepper Mill", /obj/item/reagent_containers/peppermill),
-		list("Sword of the Mad Duke", /obj/item/rogueweapon/sword/rapier/lord),
+		list("Sword of the Marshal", /obj/item/rogueweapon/sword/long/oathkeeper),
 		list("Judgement", /obj/item/rogueweapon/sword/long/judgement),
 		list("Holy Book", /obj/item/book/rogue/bookofpriests),
 		list("The Master Key", /obj/item/roguekey/lord),
-		list("Book of Law", /obj/item/book/rogue/law),
 		list("Garrison houndstone", /obj/item/scomstone/bad/garrison)
 	)
 	var/selected
@@ -123,6 +122,45 @@
 			return TRUE
 	return FALSE
 
+/// "steal", "mammon" or "assassinate" - lets the briefing UI pick an icon/label
+/datum/objective/thieves_guild_objective/proc/get_objective_kind()
+	if(is_assassinate)
+		return "assassinate"
+	if(is_mammon)
+		return "mammon"
+	return "steal"
+
+/// Short live status line for the briefing UI (no chat output, safe to call repeatedly)
+/datum/objective/thieves_guild_objective/proc/get_progress_text()
+	switch(get_objective_kind())
+		if("assassinate")
+			return is_target_dead() ? "Target is dead" : "Target is still alive"
+		if("mammon")
+			var/held = owner?.current ? get_mammons_in_atom(owner.current) : 0
+			return "[held] / [mammon_amount] mammon"
+		else
+			return check_steal_completion() ? "In your possession" : "Not in your possession"
+
+/// Same as the base entry, plus kind, progress text and whether it is currently satisfied
+/datum/objective/thieves_guild_objective/get_briefing_entry()
+	var/list/entry = ..()
+	entry["kind"] = get_objective_kind()
+	entry["progress"] = get_progress_text()
+	entry["completed"] = check_progress_complete()
+	return entry
+
+/// Completion check without the chat spam that check_completion() does
+/datum/objective/thieves_guild_objective/proc/check_progress_complete()
+	if(!owner?.current)
+		return FALSE
+	switch(get_objective_kind())
+		if("assassinate")
+			return check_assassinate_completion()
+		if("mammon")
+			return get_mammons_in_atom(owner.current) >= mammon_amount
+		else
+			return check_steal_completion()
+
 /datum/objective/thieves_guild_objective/proc/check_assassinate_completion()
 	if(src.is_target_dead())
 		return TRUE
@@ -161,10 +199,7 @@
 	if(is_assassinate)
 		return src.check_assassinate_completion()
 	if(is_mammon)
-		var/total_mammon = get_mammons_in_atom(owner.current)
-		if(owner.current && owner.current.client)
-			to_chat(owner.current, "[span_notice("Mammon objective check: you have [total_mammon] mammon counted in all containers.")]")
-		return total_mammon >= mammon_amount
+		return get_mammons_in_atom(owner.current) >= mammon_amount
 	if(target_item_path)
 		for(var/obj/item/I in get_all_mob_items(owner.current))
 			if(istype(I, target_item_path))

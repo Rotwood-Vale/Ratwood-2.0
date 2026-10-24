@@ -464,7 +464,7 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	start_message = "<span class='userdanger'>THE DREAMER STIRS. A deep tolling rolls up from the sea floor and the ground hums with a hymn of drowning. The world warps and starts to fracture- A dreamwalker is calling Abyssor out of his sleep at a drowned altar. STOP THEM BEFORE THE RITE IS DONE.</span>"
 	fail_message = "<span class='greenannounce'>The tolling from the deep falters and falls silent. The dreamer sleeps on, for now.</span>"
 
-/datum/dreamwalker_ritual/ascension/on_channel_tick(mob/living/carbon/human/user, obj/structure/dreamwalker_altar/altar, tick, total_ticks)
+/datum/dreamwalker_ritual/ascension/on_channel_tick(mob/living/carbon/human/user, obj/structure/table/dreamwalker_altar/altar, tick, total_ticks)
 	..()
 	if(tick % 6 == 0 && tick < total_ticks)
 		var/minutes_left = round((total_ticks - tick) / 6)
@@ -545,7 +545,7 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 	if(!islist(R.gather_offerings(T)))
 		to_chat(user, span_warning("The altar is not satisfied. It demands: [R.describe_offerings()]."))
 		return
-	if(user.blood_volume < BLOOD_VOLUME_OKAY + R.blood_toll)
+	if(user.adjust_blood_volume(R.blood_toll))
 		to_chat(user, span_warning("I am too drained to bleed for this rite. I must recover first."))
 		return
 
@@ -583,7 +583,9 @@ GLOBAL_DATUM_INIT(dreamwalker_storm, /datum/dreamwalker_storm, new)
 		qdel(I)
 
 	R.reset_progress()
-	user.blood_volume = max(user.blood_volume - R.blood_toll, BLOOD_VOLUME_SURVIVE)
+	var/currentbloodlevel = user.get_blood_volume()
+	var/bloodchange = max(currentbloodlevel  - R.blood_toll, BLOOD_VOLUME_SURVIVE)
+	user.set_blood_volume(bloodchange)
 	to_chat(user, span_danger("The altar drinks deep of my blood."))
 	D.complete_ritual(R, user)
 

@@ -64,9 +64,14 @@
 /datum/antagonist/gnoll/on_gain()
 	greet()
 	owner.special_role = "Gnoll"
-
+	forge_objectives()
 	return ..()
-
+/datum/antagonist/gnoll/proc/forge_objectives()
+	if(!(locate(/datum/objective/gnoll) in objectives))
+		var/datum/objective/gnoll/objective = new
+		objective.owner = owner
+		objectives += objective
+		return
 /datum/antagonist/gnoll/on_removal()
 	. = ..()
 	if(owner)

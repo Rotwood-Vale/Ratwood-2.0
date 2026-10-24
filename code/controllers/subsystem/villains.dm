@@ -1,4 +1,3 @@
-#define ANTAG_DEPLETED_RATIO 0.5
 /datum/controller/subsystem/gamemode
 	var/list/rolled_villain_events = list()
 	var/list/queued_villains = list()
