@@ -1282,8 +1282,15 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			origin = GLOB.origins[chosen_type]
 			save_character()
 			user << browse(null, "window=origin_map")
+			user << browse(null, "window=origin_info")
 			ShowChoices(user)
 			return
+	if(href_list["preference"] == "origin_cancel")
+		usr << browse(null, "window=origin_info")
+	if(href_list["preference"] == "origin_view")
+		var/chosen_type = text2path(href_list["type"])
+		if(chosen_type && (chosen_type in GLOB.origins))
+			open_origin_info(usr, GLOB.origins[chosen_type])
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	skip_preview = (href_list["preference"] in GLOB.no_preview_prefs)

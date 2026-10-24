@@ -73,7 +73,7 @@
 
 /datum/quirk/linguist
 	name = "Trilingual"
-	desc = "You know a third language, you smart cookie!"
+	desc = "Through education, travel, or circumstance, I have picked up a third language"
 	custom_text = "Start with a third language of your choice."
 	configurable = TRUE
 	var/language
