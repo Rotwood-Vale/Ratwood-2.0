@@ -25,7 +25,6 @@
 	advjob_examine = TRUE // So that everyone know which subjob they have picked
 	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
 	job_subclasses = list(
-		/datum/advclass/guildsman/artificer,
 		/datum/advclass/guildsman/blacksmith,
 		/datum/advclass/guildsman/engineer,
 	)
@@ -103,78 +102,15 @@
 		head = /obj/item/clothing/head/roguetown/turban/random
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 
-/datum/advclass/guildsman/artificer
-	name = "Artificer"
-	tutorial = "You are an Artificer, oft known by the longer name of Artificer-Enchanter. You have basic training in the arts of smithing, and can substitute for a blacksmith's work if needed.\
-	But your true calling is the creation and enchantment of magical items, alongside feats of engineering, creating mechanical and magical wonders whose art of creation has been passed down\
-	from a certain elven Artificer..."
-	outfit = /datum/outfit/job/roguetown/guildsman/artificer
-	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/battlewardry, /datum/magic_aspect/artifice), "post_aspect_spells" = list(/obj/effect/proc_holder/spell/invoked/takeapprentice), "ward" = TRUE)
-
-	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_ARCYNE, TRAIT_ALCHEMY_EXPERT)
-	subclass_stats = list(
-		STATKEY_INT = 3,
-		STATKEY_WIL = 2,
-		STATKEY_STR = 1,
-		STATKEY_CON = 1,
-		STATKEY_PER = 1
-	)
-	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE, //reduced for tradeoff
-		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE, //they are builders, but not as good as craftsmen
-		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER, //raising so they don't need to early week grind to get items out, in parity to a smith's armor or weapon skill
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_APPRENTICE, // Artificer makes for a crappy substitute blacksmith but have the same spread
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,	//For the Alchemical mortar only, which is required for explosives. Feel free to remove if the recipe changes.
-		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,	//Just for basic pottery/glass stuff.
-	)
-
-/datum/outfit/job/roguetown/guildsman/artificer/pre_equip(mob/living/carbon/human/H)
-	..()
-	head = /obj/item/clothing/head/roguetown/articap
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket
-	cloak = /obj/item/clothing/cloak/apron/waist/brown
-	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
-	id = /obj/item/scomstone/bad
-	pants = /obj/item/clothing/under/roguetown/trou/artipants
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
-	beltl = /obj/item/roguekey/crafterguild
-	backl = /obj/item/storage/backpack/rogue/backpack
-	backpack_contents = list(
-						/obj/item/rogueweapon/hammer/steel = 1,
-						/obj/item/lockpickring/mundane = 1,
-						/obj/item/recipe_book/blacksmithing = 1,
-						/obj/item/recipe_book/engineering = 1,
-						/obj/item/recipe_book/ceramics = 1,
-						/obj/item/recipe_book/builder = 1,
-						/obj/item/clothing/mask/rogue/spectacles/golden = 1, //putting them in the bag because bad eye sight virtue strips these
-						/obj/item/mini_flagpole/artificer = 1,
-						/obj/item/rogueweapon/spellbook = 1,
-						)
-
 /datum/advclass/guildsman/engineer
 	name = "Guild Engineer"
 	tutorial = "You are an engineer, Once trained under architects and artificers you now have the experience to surpass them both. \
 	Your calling is the works of artificing and architecture, be it smithing, constructing or the arcane machinery you do it all, your experience demands respect."
 	outfit = /datum/outfit/job/roguetown/guildsman/engineer
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/battlewardry, /datum/magic_aspect/artifice), "post_aspect_spells" = list(/obj/effect/proc_holder/spell/invoked/takeapprentice), "ward" = TRUE)
 
 	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER, TRAIT_LEGENDARY_MINER)
+	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER, TRAIT_GUNSMITH, TRAIT_ARCYNE, TRAIT_LEGENDARY_MINER)
 	subclass_stats = list( // alchemy expert upon request
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,

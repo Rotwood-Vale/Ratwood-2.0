@@ -456,6 +456,7 @@
 #include "code\controllers\subsystem\vote.dm"
 #include "code\controllers\subsystem\weather.dm"
 #include "code\controllers\subsystem\movement\minecarts.dm"
+#include "code\controllers\subsystem\movement\conveyors.dm"
 #include "code\controllers\subsystem\movement\move_manager.dm"
 #include "code\controllers\subsystem\movement\movement_loop.dm"
 #include "code\controllers\subsystem\movement\movement_types.dm"
@@ -1420,6 +1421,7 @@
 #include "code\game\rotational_objects\horizontal_gearbox.dm"
 #include "code\game\rotational_objects\infernaleengine.dm"
 #include "code\game\rotational_objects\item_rotation_contraption.dm"
+#include "code\game\rotational_objects\roller.dm"
 #include "code\game\rotational_objects\rotation_shaft.dm"
 #include "code\game\rotational_objects\rotational_speed_data.dm"
 #include "code\game\rotational_objects\vertical_gearbox.dm"
@@ -3736,4 +3738,5 @@
 #include "modular_rmh\code\modules\mob\dead\body_markings\body_markings.dm"
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
 #include "modular_twilight_axis\code\modules\bildings\blueprint_planner.dm"
+#include "modular_twilight_axis\code\modules\structures\cannon.dm"
 // END_INCLUDE
