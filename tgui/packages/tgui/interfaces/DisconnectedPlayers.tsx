@@ -16,8 +16,21 @@ type DisconnectedPlayer = {
   ckey: string;
   name: string;
   role: string;
+  slots_open: number | null;
+  slots_total: number | null;
   time_away: number;
   time_away_text: string;
+};
+
+// A total of -1 means the job has unlimited slots.
+const slotsText = (player: DisconnectedPlayer) => {
+  if (player.slots_total === null || player.slots_open === null) {
+    return '-';
+  }
+  if (player.slots_total < 0) {
+    return '∞';
+  }
+  return `${Math.max(player.slots_open, 0)}/${player.slots_total}`;
 };
 
 type Data = {
@@ -87,6 +100,7 @@ export const DisconnectedPlayers = () => {
                     <Table.Cell>Ckey</Table.Cell>
                     <Table.Cell>Character</Table.Cell>
                     <Table.Cell>Role</Table.Cell>
+                    <Table.Cell collapsing>Open Slots</Table.Cell>
                     <Table.Cell>Disconnected For</Table.Cell>
                     <Table.Cell collapsing />
                   </Table.Row>
@@ -101,6 +115,9 @@ export const DisconnectedPlayers = () => {
                       <Table.Cell>{player.ckey}</Table.Cell>
                       <Table.Cell>{player.name}</Table.Cell>
                       <Table.Cell>{player.role}</Table.Cell>
+                      <Table.Cell collapsing textAlign="center">
+                        {slotsText(player)}
+                      </Table.Cell>
                       <Table.Cell>{player.time_away_text}</Table.Cell>
                       <Table.Cell collapsing>
                         <Box nowrap>

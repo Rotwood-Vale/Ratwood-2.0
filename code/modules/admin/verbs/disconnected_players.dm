@@ -32,12 +32,16 @@ GLOBAL_DATUM_INIT(disconnected_players_panel, /datum/disconnected_players_panel,
 		if(!body)
 			continue
 		var/time_away = world.time - L.last_logout_time
+		var/datum/job/job = SSjob.GetJob(L.get_disconnected_admin_alert_role_name())
 		players += list(list(
 			"ref" = REF(L),
 			"ckey" = L.ckey,
 			// Wildshape forms already name themselves "form (real name)".
 			"name" = (body == L || findtext(L.real_name, body.real_name)) ? L.real_name : "[body.real_name] (as [L.real_name])",
 			"role" = L.get_disconnected_admin_alert_job_name(),
+			// Null without a job. A total of -1 means the job has unlimited slots.
+			"slots_open" = job ? job.total_positions - job.current_positions : null,
+			"slots_total" = job?.total_positions,
 			"time_away" = time_away,
 			"time_away_text" = DisplayTimeText(time_away, 1),
 		))
