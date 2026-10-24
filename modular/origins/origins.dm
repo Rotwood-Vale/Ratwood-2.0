@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	origin_traits = list(TRAIT_COLD_RESISTANCE, TRAIT_BATTLE_CRY)
 	hated_by = list(ORIGIN_AVAR)
 	prejudice_stress = /datum/stressevent/prejudice/gronn
-	prejudice_examine = span_red("Barbaric Gronnite! Pah!")
+	prejudice_examine = span_red("Inhumen Gronnite! Pah!")
 	map_x = 445
 	map_y = 116
 
