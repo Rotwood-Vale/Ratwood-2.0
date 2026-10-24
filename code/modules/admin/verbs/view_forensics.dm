@@ -123,6 +123,36 @@
 		"routine" = forensics_action_rows(D?.routine_actions),
 		"touches" = touches,
 		"last_toucher" = A.fingerprintslast,
+		"contents" = forensics_contents(A),
+	)
+
+/// What food, drink or another reagent holder has in it right now, or null for anything without reagents.
+/proc/forensics_contents(atom/A)
+	if(!isobj(A) || !A.reagents)
+		return null
+	var/list/reagent_rows = list()
+	for(var/datum/reagent/reagent as anything in A.reagents.reagent_list)
+		reagent_rows += list(list(
+			"name" = reagent.name,
+			"volume" = round(reagent.volume, 0.1),
+			"poison" = reagent.is_poison(),
+		))
+	// The next sip of a spiked drink draws from its first reagent. That is the sprinkled one unless the drink already held it,
+	// in which case it merged in place, so the Suspicious actions entry is the record of what was sprinkled.
+	var/rim
+	var/obj/item/reagent_containers/glass/drink = A
+	if(istype(drink) && drink.spiked && length(drink.reagents.reagent_list))
+		var/datum/reagent/rim_reagent = drink.reagents.reagent_list[1]
+		rim = rim_reagent.name
+	var/list/items = list()
+	for(var/atom/movable/inside as anything in A.contents)
+		items += format_text("[inside]")
+	return list(
+		"reagents" = reagent_rows,
+		"total_volume" = round(A.reagents.total_volume, 0.1),
+		"maximum_volume" = A.reagents.maximum_volume,
+		"rim" = rim,
+		"items" = items,
 	)
 
 /// One of the component's action lists for tgui, newest first. The list is stored oldest first.

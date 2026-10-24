@@ -472,7 +472,12 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/new_name = input(src, "Choose the name your admin ghost takes instead of your character's. Leave it blank to keep your character's name.", "Set Ghost Name", prefs.admin_ghost_name) as text|null
 	if(isnull(new_name))
 		return
-	new_name = trim(sanitize(new_name), MAX_NAME_LEN)
+	new_name = trim(new_name)
+	if(new_name)
+		new_name = reject_bad_name(new_name, allow_numbers = TRUE)
+		if(!new_name)
+			to_chat(src, span_warning("That name isn't allowed. Use at most [MAX_NAME_LEN] letters, numbers, spaces and simple punctuation."))
+			return
 	prefs.admin_ghost_name = new_name || null
 	prefs.save_preferences()
 	var/mob/dead/observer/admin/admin_ghost = mob

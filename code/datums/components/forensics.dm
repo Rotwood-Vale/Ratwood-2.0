@@ -157,7 +157,8 @@
 		var/mob/living/carbon/human/H = M
 		if(H.gloves)
 			hasgloves = "(gloves)"
-	var/current_time = time_stamp()
+	// Round time, like the action logs, so View Forensics shows one clock
+	var/current_time = time2text(STATION_TIME_PASSED(), "hh:mm:ss", 0)
 	if(!LAZYACCESS(hiddenprints, M.key))
 		LAZYSET(hiddenprints, M.key, "First: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]")
 	else

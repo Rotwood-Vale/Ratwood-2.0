@@ -1,10 +1,12 @@
 import {
   Box,
   Button,
+  Icon,
   NoticeBox,
   Section,
   Stack,
   Table,
+  Tooltip,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
@@ -25,6 +27,21 @@ type Touch = {
   last: string | null;
 };
 
+type Reagent = {
+  name: string;
+  volume: number;
+  poison: BooleanLike;
+};
+
+type Contents = {
+  reagents: Reagent[];
+  total_volume: number;
+  maximum_volume: number;
+  // For a spiked drink, the reagent its next sip draws from first
+  rim: string | null;
+  items: string[];
+};
+
 type Report = {
   generated_at: string;
   type: string;
@@ -34,6 +51,7 @@ type Report = {
   routine: ForensicAction[];
   touches: Touch[];
   last_toucher: string | null;
+  contents: Contents | null;
 };
 
 type Data = {
@@ -87,7 +105,7 @@ const ActionsSection = (props: {
         <Box style={{ maxHeight: SCROLL_HEIGHT, overflowY: 'auto' }}>
           <Table>
             <Table.Row header>
-              <Table.Cell collapsing>Round time</Table.Cell>
+              <Table.Cell collapsing>Time</Table.Cell>
               <Table.Cell>Ckey</Table.Cell>
               <Table.Cell>Action</Table.Cell>
               <Table.Cell collapsing />
@@ -154,10 +172,56 @@ const TouchesSection = (props: {
           </Table>
         </Box>
       )}
-      <Box color="label" mt={1}>
-        Touch times are server clock time.
-        {lastToucher && ` Last touched by ${lastToucher}.`}
-      </Box>
+      {lastToucher && (
+        <Box color="label" mt={1}>
+          Last touched by {lastToucher}.
+        </Box>
+      )}
+    </Section>
+  );
+};
+
+const ContentsSection = (props: { contents: Contents }) => {
+  const { reagents, total_volume, maximum_volume, rim, items } = props.contents;
+  return (
+    <Section title={`Contents (${total_volume}/${maximum_volume}u)`}>
+      {rim && (
+        <NoticeBox danger>
+          Spiked on the rim. The next sip draws {rim} first. See Suspicious
+          actions for what was sprinkled.
+        </NoticeBox>
+      )}
+      {reagents.length === 0 ? (
+        <NoticeBox>Empty.</NoticeBox>
+      ) : (
+        <Table>
+          <Table.Row header>
+            <Table.Cell>Reagent</Table.Cell>
+            <Table.Cell collapsing>Amount</Table.Cell>
+            <Table.Cell collapsing />
+          </Table.Row>
+          {reagents.map((reagent, i) => (
+            <Table.Row key={i} className="candystripe">
+              <Table.Cell>{reagent.name}</Table.Cell>
+              <Table.Cell collapsing>
+                <Box nowrap>{reagent.volume}u</Box>
+              </Table.Cell>
+              <Table.Cell collapsing>
+                {!!reagent.poison && (
+                  <Box nowrap bold color="bad">
+                    Poison
+                  </Box>
+                )}
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table>
+      )}
+      {items.length > 0 && (
+        <Box color="label" mt={1}>
+          Items inside: {items.join(', ')}
+        </Box>
+      )}
     </Section>
   );
 };
@@ -179,11 +243,19 @@ export const ViewForensics = () => {
             <Stack.Item grow>
               {report && (
                 <Box color="label">
-                  <Box>Generated at round time {report.generated_at}</Box>
+                  <Box>Generated at {report.generated_at}</Box>
                   <Box>{report.type}</Box>
                   <Box>{report.location}</Box>
                 </Box>
               )}
+            </Stack.Item>
+            <Stack.Item>
+              <Tooltip content="All times shown are round time, counted from the start of the round.">
+                <Box color="label" nowrap>
+                  <Icon name="clock" mr={0.5} />
+                  Round time
+                </Box>
+              </Tooltip>
             </Stack.Item>
             <Stack.Item>
               <Button icon="location-arrow" onClick={() => act('jump')}>
@@ -198,6 +270,7 @@ export const ViewForensics = () => {
           </NoticeBox>
         ) : (
           <>
+            {report.contents && <ContentsSection contents={report.contents} />}
             <ActionsSection
               title={
                 report.is_item
