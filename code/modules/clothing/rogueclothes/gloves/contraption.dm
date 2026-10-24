@@ -17,25 +17,25 @@
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_HONORBOUND)
 */
 // === CONTRAPTION CORE BEHAVIOR ===
-/obj/item/clothing/gloves/roguetown/chain/contraption/proc/battery_collapse(obj/O, mob/living/user)
+/obj/item/clothing/gloves/roguetown/chain/contraption/proc/battery_collapse(obj/USER, mob/living/user)
 	to_chat(user, span_info("The [accepted_power_source.name] powering [src] fizzles into nothing!"))
 	playsound(src, pick('sound/combat/hits/onmetal/grille (1).ogg','sound/combat/hits/onmetal/grille (2).ogg'), 100, FALSE)
-	O.take_damage(400, BRUTE, "blunt", 1)
+	USER.take_damage(400, BRUTE, "blunt", 1)
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/proc/misfire(obj/O, mob/living/user)
+/obj/item/clothing/gloves/roguetown/chain/contraption/proc/misfire(obj/USER, mob/living/user)
 	to_chat(user, span_danger("[src] spark violently in your hands!"))
 	playsound(src, 'sound/misc/bell.ogg', 100)
-	addtimer(CALLBACK(src, PROC_REF(misfire_result), O, user), rand(5, 30))
+	addtimer(CALLBACK(src, PROC_REF(misfire_result), USER, user), rand(5, 30))
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/proc/misfire_result(obj/O, mob/living/user)
+/obj/item/clothing/gloves/roguetown/chain/contraption/proc/misfire_result(obj/USER, mob/living/user)
 	misfiring = TRUE
 	explosion(src, light_impact_range = 2, flame_range = 2, smoke = TRUE)
-	O.take_damage(400, BRUTE, "blunt", 1)
+	USER.take_damage(400, BRUTE, "blunt", 1)
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/proc/charge_deduction(obj/O, mob/living/user, deduction)
+/obj/item/clothing/gloves/roguetown/chain/contraption/proc/charge_deduction(obj/USER, mob/living/user, deduction)
 	current_charge -= deduction
 	if(current_charge <= 0)
-		addtimer(CALLBACK(src, PROC_REF(battery_collapse), O, user), 5)
+		addtimer(CALLBACK(src, PROC_REF(battery_collapse), USER, user), 5)
 
 
 /obj/item/clothing/gloves/roguetown/chain/contraption/voltic
@@ -58,7 +58,7 @@
 	unarmed_bonus = 1.2
 	misfire_chance = 0
 	var/activate_sound = 'sound/items/stunmace_gen (2).ogg'
-	var/cdtime = 1.5 MINUTES
+	var/cdtime = 15 SECONDS
 	var/activetime = 5 SECONDS
 	var/delay = 5 SECONDS
 	var/sprite_changes = 10
@@ -68,29 +68,29 @@
 
 
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/voltic/attackby(obj/item/I, mob/user, params)
+/obj/item/clothing/gloves/roguetown/chain/contraption/voltic/attackby(obj/item/GAUNT, mob/user, params)
 	var/datum/effect_system/spark_spread/S = new()
 	var/turf/front = get_turf(src)
-	if(istype(I, accepted_power_source))
+	if(istype(GAUNT, accepted_power_source))
 		user.changeNext_move(CLICK_CD_FAST)
 		S.set_up(1, 1, front)
 		S.start()
 		if((max_stored_charge - current_charge) < charge_per_source) //checking if there's too much charge
-			to_chat(user, span_info("I try to insert the [I.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
+			to_chat(user, span_info("I try to insert the [GAUNT.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 			shake_camera(user, 1, 1)
 		else
-			to_chat(user, span_info("I insert the [I.name] and the [name] starts ticking."))
+			to_chat(user, span_info("I insert the [GAUNT.name] and the [name] starts ticking."))
 			current_charge += charge_per_source
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 			qdel(I)
-	if(istype(I, prime_power_source))
+	if(istype(GAUNT, prime_power_source))
 		user.changeNext_move(CLICK_CD_FAST)
 		S.set_up(1, 1, front)
 		S.start()
 		if((max_stored_charge - current_charge) < charge_per_prime) //checking if there's too much charge with a prime source
 			if((max_stored_charge - current_charge) < charge_per_source) //if there's too much for prime, we give it the standard charge
-				to_chat(user, span_info("I try to insert the [I.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
+				to_chat(user, span_info("I try to insert the [GAUNT.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
 				playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 				shake_camera(user, 1, 1)
 			else
