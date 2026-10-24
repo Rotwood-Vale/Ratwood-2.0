@@ -1935,7 +1935,7 @@
 			state2use = "mood_drunkorhigh"
 		if(H.has_status_effect(/datum/status_effect/buff/starsugar))
 			state2use = "mood_starsugar"
-		if(H.has_status_effect(/datum/status_effect/buff/bloodrage))
+		if(H.has_status_effect(/datum/status_effect/buff/avatar))
 			state2use = "mood_ult"
 
 		//We go down a janky list of exceptions for total overrides
