@@ -17,14 +17,12 @@
 /datum/quirk/deadnose
 	name = "Dead Nose"
 	desc = "My nose is numb to the smell of decay."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that already has a dead nose!"
 	added_traits = list(TRAIT_NOSTINK)
 	incompatible_traits = list(TRAIT_NOSTINK)
 
 /datum/quirk/disgracednoble
 	name = "Disgraced Noble"
 	desc = "I was a scion of a noble house... long ago. Now I am a commoner, and my family name is a source of shame."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a noble!"
 	added_traits = list(TRAIT_DISGRACED_NOBLE)
 	incompatible_traits = list(TRAIT_NOBLE)
 
@@ -38,7 +36,6 @@
 /datum/quirk/empath
 	name = "Empath"
 	desc = "I can notice when people are in pain."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already an empath!"
 	added_traits = list(TRAIT_EMPATH)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
 	incompatible_traits = list(TRAIT_EMPATH)
@@ -46,7 +43,6 @@
 /datum/quirk/fabledlover
 	name = "Fabled Lover"
 	desc = "It's a lucky thing to share my bed."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a fabled lover!"
 	point_cost = 2
 	added_traits = list(TRAIT_GOODLOVER)
 	incompatible_virtues = list(/datum/virtue/utility/socialite, /datum/virtue/utility/performer)
@@ -56,7 +52,6 @@
 	name = "Gossiper"
 	desc = "Despite my lowborn blood, I've made a habit out of brushing shoulders with the nobility and learning their secrets."
 	custom_text = "Lets you view noble gossip."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a noble!"
 	point_cost = 2
 	added_traits = list(TRAIT_GOSSIPER)
 	incompatible_virtues = list(/datum/virtue/utility/tracker)
@@ -368,7 +363,6 @@
 	name = "Noble"
 	desc = "By birth, blade or brain, I carry noble blood, if only a minor and untitled line of it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
 	custom_text = "This quirk grants you MINOR nobility, meaning you are still subjected to the Great Writ and poll tax."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a noble!"
 	point_cost = 4
 	added_traits = list(TRAIT_NOBLE)
 	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
@@ -394,7 +388,6 @@
 /datum/quirk/pretty
 	name = "Pretty"
 	desc = "I'm no great beauty, but people seem to like looking at my face well enough."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already beautiful!"
 	point_cost = 2
 	added_traits = list(TRAIT_PRETTY)
 	incompatible_virtues = list(/datum/virtue/utility/socialite)
@@ -405,7 +398,6 @@
 	name = "Raw Diet"
 	desc = "Be it from unnatural anatomy or simply a bizarre tolerance, I can eat raw meat and uncooked food as if it were natural."
 	custom_text = "Lets you eat raw meat and uncooked food without getting poisoned. Rotten food, organs, and dirty water will still poison you."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that already possesses an unnatural metabolism!"
 	point_cost = 2
 	added_traits = list(TRAIT_RAW_EATER)
 	incompatible_virtues = list(/datum/virtue/utility/feral_appetite)
@@ -414,7 +406,6 @@
 /datum/quirk/roughlover
 	name = "Rough Lover"
 	desc = "With strong intent, I am a violent partner in bed. Breaking pelvis and spirit alike."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that is already a bedbreaker!"
 	point_cost = 2
 	added_traits = list(TRAIT_DEATHBYSNUSNU)
 	incompatible_traits = list(TRAIT_DEATHBYSNUSNU)
@@ -460,6 +451,5 @@
 /datum/quirk/selfaware
 	name = "Self Aware"
 	desc = "I've always been conscious about how hurt my body can get."
-	warning_text = "This quirk costs nothing and does not apply if you are playing a role that already has self aware!"
 	added_traits = list(TRAIT_SELF_AWARE)
 	incompatible_traits = list(TRAIT_SELF_AWARE)
