@@ -68928,7 +68928,9 @@
 	icon_state = "borderfall"
 	},
 /obj/structure/fluff/railing/border/east,
-/obj/structure/table/wood,
+/obj/structure/bookcase/random/misc{
+	pixel_x = -4
+	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/magician)
 "muA" = (
@@ -125704,7 +125706,9 @@
 	icon_state = "borderfall"
 	},
 /obj/structure/fluff/railing/border/west,
-/obj/structure/table/wood,
+/obj/structure/bookcase/random/misc{
+	pixel_x = 4
+	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/magician)
 "wzD" = (
