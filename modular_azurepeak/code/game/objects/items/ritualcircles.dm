@@ -1632,11 +1632,21 @@
 	H.drop_all_held_items()
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/full/matthios
 	pants = /obj/item/clothing/under/roguetown/platelegs/matthios
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/matthios
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/matthios
 	gloves = /obj/item/clothing/gloves/roguetown/plate/matthios
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/matthios
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/matthios
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
-	backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle/matthios
+	var/weapons = list("Gilded Warflail", "Emancipator (Longsword)", "Drakkyrmaw")
+	var/weapon_choice = input(H, "Choose your weapon.", "ARMS OF MATTHIOS") as anything in weapons
+	switch(weapon_choice)
+		if("Gilded Warflail")
+			backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
+		if("Emancipator (Longsword)")
+			backr = /obj/item/rogueweapon/sword/long/matthios
+		if("Drakkyrmaw")
+			l_hand = /obj/item/rogueweapon/katar/drakkyrmaw
 
 	H.mind.RemoveSpell(/datum/action/cooldown/spell/mending)
 	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)

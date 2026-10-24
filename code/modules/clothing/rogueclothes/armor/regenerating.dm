@@ -139,5 +139,34 @@
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
 
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/iconoclast
+	name = "dragon's skin"
+	desc = "We passed upon the stair, we spoke of was and when.</br> \
+	Although I wasn't there, he said I was his friend.</br> \
+	Which came as some surprise. I spoke into his eyes.</br> \
+	I thought you died alone, a long, long time ago.</br> \
+	Oh no, not me, I never lost control.</br> \
+	You're face to face, with the man who sold the world."
+	armor = ARMOR_DRAGONSKIN
+	combat_taggable = TRUE
+	max_integrity = 450
+	repair_time = 20 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/twilight_dragon_skin
+	slot_flags = null
+	name = "draconic scales"
+	desc = "All but impenetrable."
+	icon_state = null
+	body_parts_covered = COVERAGE_FULL
+	body_parts_inherent = COVERAGE_FULL
+	armor = ARMOR_PLATE
+	blocksound = SOFTHIT
+	blade_dulling = DULLING_BASHCHOP
+	sewrepair = FALSE
+	max_integrity = 600
+	item_flags = DROPDEL
+	combat_taggable = TRUE
+
 #undef COMBAT_TAG_DURATION
+
 

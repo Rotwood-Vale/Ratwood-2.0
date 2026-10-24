@@ -313,6 +313,20 @@
 	max_integrity = ARMOR_INT_SIDE_IRON
 	smeltresult = /obj/item/ingot/iron
 
+/obj/item/clothing/wrists/roguetown/bracers/matthios
+	name = "gilded bracers"
+	desc = "Away with you, vile beggar!"
+	icon_state = "matthiosbracers"
+	item_state = "matthiosbracers"
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#fff385"
+	material_category = ARMOR_MAT_PLATE
+
+/obj/item/clothing/wrists/roguetown/bracers/matthios/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "ARMOR")
+
 /obj/item/clothing/wrists/roguetown/bracers/iron
 	name = "iron bracers"
 	desc = "Iron bracers that protect the arms."
