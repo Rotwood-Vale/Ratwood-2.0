@@ -1,7 +1,7 @@
 /obj/item/clothing/gloves/roguetown/chain/contraption
 	var/obj/item/accepted_power_source = /obj/item/roguegear/bronze	//Bronze by default
 	//this is what we use to double power items with, this isn't for all devices
-	var/obj/item/prime_power_source = /obj/item/roguegear/bronze
+	var/obj/item/prime_power_source = /obj/item/roguegear/wood/reliable
 	var/charge_per_source = 5
 	var/charge_per_prime = 10
 	//allows you to store several charges
@@ -68,41 +68,41 @@
 
 
 
-/obj/item/clothing/gloves/roguetown/chain/contraption/voltic/attackby(obj/item/GAUNT, mob/user, params)
+/obj/item/clothing/gloves/roguetown/chain/contraption/voltic/attackby(obj/item/GEAR, mob/user, params)
 	var/datum/effect_system/spark_spread/S = new()
 	var/turf/front = get_turf(src)
-	if(istype(GAUNT, accepted_power_source))
+	if(istype(GEAR, accepted_power_source))
 		user.changeNext_move(CLICK_CD_FAST)
 		S.set_up(1, 1, front)
 		S.start()
 		if((max_stored_charge - current_charge) < charge_per_source) //checking if there's too much charge
-			to_chat(user, span_info("I try to insert the [GAUNT.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
+			to_chat(user, span_info("I try to insert the [GEAR.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 			shake_camera(user, 1, 1)
 		else
-			to_chat(user, span_info("I insert the [GAUNT.name] and the [name] starts ticking."))
+			to_chat(user, span_info("I insert the [GEAR.name] and the [name] starts ticking."))
 			current_charge += charge_per_source
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
-			qdel(I)
-	if(istype(GAUNT, prime_power_source))
+			qdel(GEAR)
+	if(istype(GEAR, prime_power_source))
 		user.changeNext_move(CLICK_CD_FAST)
 		S.set_up(1, 1, front)
 		S.start()
 		if((max_stored_charge - current_charge) < charge_per_prime) //checking if there's too much charge with a prime source
 			if((max_stored_charge - current_charge) < charge_per_source) //if there's too much for prime, we give it the standard charge
-				to_chat(user, span_info("I try to insert the [GAUNT.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
+				to_chat(user, span_info("I try to insert the [GEAR.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
 				playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
 				shake_camera(user, 1, 1)
 			else
-				to_chat(user, span_info("I insert the [I.name] and the [name] starts ticking. I feel I reached capacity before it was fully used"))
+				to_chat(user, span_info("I insert the [GEAR.name] and the [name] starts ticking. I feel I reached capacity before it was fully used"))
 				current_charge = max_stored_charge
 				playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
-				qdel(I)
+				qdel(GEAR)
 		else
-			to_chat(user, span_info("I insert the [I.name] and the [name] starts ticking. It gets a big boost"))
+			to_chat(user, span_info("I insert the [GEAR.name] and the [name] starts ticking. It gets a big boost"))
 			current_charge += charge_per_prime
 			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
-			qdel(I)
+			qdel(GEAR)
 
 
 /obj/item/clothing/gloves/roguetown/chain/contraption/voltic/attack_right(mob/user)
