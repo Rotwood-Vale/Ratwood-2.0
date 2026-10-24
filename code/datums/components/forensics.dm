@@ -1,3 +1,6 @@
+/// Most entries View Forensics keeps in each of an atom's two action lists. The oldest drops off first.
+#define FORENSIC_ACTIONS_MAX 30
+
 /datum/component/forensics
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	can_transfer = TRUE
@@ -5,12 +8,18 @@
 	var/list/hiddenprints		//assoc ckey = realname/gloves/ckey
 	var/list/blood_DNA			//assoc dna = bloodtype
 	var/list/fibers				//assoc print = print
+	/// Admin only, never wiped. /datum/forensic_action for picks, breaks and hits, oldest first.
+	var/list/actions
+	/// The same for everyday use (opening, closing, keyed locking, pickups and drops), capped apart so a busy door cannot push the evidence out of actions
+	var/list/routine_actions
 
 /datum/component/forensics/InheritComponent(datum/component/forensics/F, original)		//Use of | and |= being different here is INTENTIONAL.
 	fingerprints = fingerprints | F.fingerprints
 	hiddenprints = hiddenprints | F.hiddenprints
 	blood_DNA = blood_DNA | F.blood_DNA
 	fibers = fibers | F.fibers
+	actions = merge_actions(actions, F.actions)
+	routine_actions = merge_actions(routine_actions, F.routine_actions)
 	check_blood()
 	return ..()
 
@@ -160,6 +169,59 @@
 	A.fingerprintslast = M.ckey
 	return TRUE
 
+/// Returns TRUE for a new entry, FALSE when it folded into the last one as a repeat.
+/datum/component/forensics/proc/add_action(mob/user, action, routine = FALSE)
+	if(routine)
+		LAZYINITLIST(routine_actions)
+		return record_action(routine_actions, user, action)
+	LAZYINITLIST(actions)
+	return record_action(actions, user, action)
+
+/// Repeats of the same action by the same player fold into one entry. Returns TRUE for a new entry, FALSE for a fold.
+/datum/component/forensics/proc/record_action(list/action_log, mob/user, action)
+	var/datum/forensic_action/last = LAZYACCESS(action_log, LAZYLEN(action_log))
+	if(last?.is_repeat(user, action))
+		last.count++
+		last.time = STATION_TIME_PASSED()
+		return FALSE
+	action_log += new /datum/forensic_action(user, action)
+	if(length(action_log) > FORENSIC_ACTIONS_MAX)
+		action_log.Cut(1, 2)
+	return TRUE
+
+/// Re-sorted by time, as the incoming entries can be older than ones already here, then the oldest trimmed past the cap.
+/datum/component/forensics/proc/merge_actions(list/action_log, list/incoming)
+	if(!length(incoming))
+		return action_log
+	action_log = LAZYLEN(action_log) ? action_log + incoming : incoming.Copy()
+	sortTim(action_log, GLOBAL_PROC_REF(cmp_forensic_action_time_asc))
+	if(length(action_log) > FORENSIC_ACTIONS_MAX)
+		action_log.Cut(1, length(action_log) - FORENSIC_ACTIONS_MAX + 1)
+	return action_log
+
+/// One line of a forensics component's action log: who did what, when, and how many times in a row.
+/datum/forensic_action
+	/// Round time of the latest repeat
+	var/time
+	var/count = 1
+	var/ckey
+	/// The character's real name at the time
+	var/name
+	var/action
+
+/datum/forensic_action/New(mob/user, action)
+	time = STATION_TIME_PASSED()
+	ckey = user.ckey
+	name = user.real_name
+	src.action = action
+
+/datum/forensic_action/proc/is_repeat(mob/user, action)
+	return ckey == user.ckey && name == user.real_name && src.action == action
+
+/// Forensic actions by round time, oldest first. Only used on the rare merge of two forensics components
+/proc/cmp_forensic_action_time_asc(datum/forensic_action/a, datum/forensic_action/b)
+	return a.time - b.time
+
 /datum/component/forensics/proc/add_blood_DNA(list/dna)		//list(dna_enzymes = type)
 	if(!length(dna))
 		return
@@ -175,3 +237,5 @@
 	if(!length(blood_DNA))
 		return
 	parent.LoadComponent(/datum/component/decal/blood)
+
+#undef FORENSIC_ACTIONS_MAX

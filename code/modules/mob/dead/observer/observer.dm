@@ -111,6 +111,25 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /mob/dead/observer/screye/Move(n, direct)
 	return
 
+/mob/dead/observer/screye/reenter_corpse()
+	if(client)
+		return ..()
+	// The scry ended while its player was disconnected. Send the key home anyway, or they would reconnect stranded in an eye
+	// that cannot move, leaving their body keyless and hidden from the deep slumber alert and the Disconnected Players panel
+	if(!key || !can_reenter_corpse || !mind)
+		return
+	var/mob/living/body = mind.current
+	// An aghosted admin's body keeps a placeholder "@key", so it is never taken
+	if(!isliving(body) || QDELETED(body) || body.key)
+		return
+	body.key = key
+	// Cleared when the key left the body, and transfer_to only carries the key of an active mind
+	mind.active = TRUE
+	body.mark_disconnected()
+	// No client means no Logout, which would otherwise delete this
+	qdel(src)
+	return TRUE
+
 
 
 /mob/dead/observer/Initialize(mapload)
