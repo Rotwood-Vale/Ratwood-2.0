@@ -808,6 +808,11 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
+/obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/examine(mob/user)
+	. = ..()
+	. -= span_info("This object can be repaired using <b>Sewing</b> and a needle.")
+	. += span_info("These tattoos slowly mend themselves after a minute without taking damage.")
+
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/dropped(mob/living/carbon/human/user)
 	. = ..()
 	if(QDELETED(src))
@@ -824,6 +829,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/process()
 	if(obj_integrity >= max_integrity)
+		if(obj_broken)
+			obj_fix()
 		STOP_PROCESSING(SSobj, src)
 		src.visible_message(span_notice("The [src] flow more calmly, as they finish resting and regain their strength."), vision_distance = 1)
 		return
