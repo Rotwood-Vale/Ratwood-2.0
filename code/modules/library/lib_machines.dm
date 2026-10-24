@@ -1,7 +1,5 @@
 #define PRINTER_COOLDOWN (60 SECONDS)
 #define PRINTING_TIME (25 SECONDS)
-#define PRESS_ARCHIVE_BOOK "book"
-#define PRESS_ARCHIVE_PAINTING "painting"
 
 /obj/machinery/printingpress
 	name = "printing press"
@@ -13,7 +11,7 @@
 	/// Blank paper for printing books, or a blank canvas for printing paintings.
 	var/obj/item/loaded_medium
 	var/obj/item/output_item
-	/// Which archive each user has open in the archive UI, keyed by REF(user).
+	/// Which archive each user has open in the archive UI, PLAYER_ARCHIVE_BOOKS or PLAYER_ARCHIVE_PAINTINGS, keyed by REF(user).
 	var/list/archive_browsers = list()
 
 	var/static/list/manual_name_to_path = list()
@@ -98,7 +96,7 @@
 		if(choice == "Yes")
 			if(QDELETED(PB) || !user.canUseTopic(src, BE_CLOSE) || !user.Adjacent(PB))
 				return
-			if(SSlibrarian.playerbook2file(PB.player_book_text, PB.player_book_title, PB.player_book_author, PB.player_book_author_ckey, PB.player_book_icon, user, PB.player_book_date, PB.player_book_category))
+			if(SSlibrarian.playerbook2file(PB, user))
 				PB.is_in_round_player_generated = FALSE
 		else
 			to_chat(user, span_notice("You decide not to upload the book."))
@@ -160,9 +158,9 @@
 		if("Print a Tome of Justice")
 			start_printing(user, /obj/item/book/rogue/law)
 		if("Print a book from the archive")
-			open_archive(user, PRESS_ARCHIVE_BOOK)
+			open_archive(user, PLAYER_ARCHIVE_BOOKS)
 		if("Print a painting from the archive")
-			open_archive(user, PRESS_ARCHIVE_PAINTING)
+			open_archive(user, PLAYER_ARCHIVE_PAINTINGS)
 		if("Profession Manual")
 			if(!length(manual_name_to_path))
 				for(var/obj/item/recipe_book/book as anything in subtypesof(/obj/item/recipe_book))
@@ -175,9 +173,9 @@
 
 /// Returns the blank material needed to print the given type, or null if the type cannot be printed.
 /obj/machinery/printingpress/proc/get_print_medium(print_type)
-	if(print_type == PRESS_ARCHIVE_PAINTING)
+	if(print_type == PLAYER_ARCHIVE_PAINTINGS)
 		return /obj/item/canvas
-	if(print_type == PRESS_ARCHIVE_BOOK || print_type == /obj/item/book/rogue/bibble || print_type == /obj/item/book/rogue/law || ispath(print_type, /obj/item/recipe_book))
+	if(print_type == PLAYER_ARCHIVE_BOOKS || print_type == /obj/item/book/rogue/bibble || print_type == /obj/item/book/rogue/law || ispath(print_type, /obj/item/recipe_book))
 		return /obj/item/paper
 
 /// Returns TRUE if the press is ready to print the given type.
@@ -208,13 +206,12 @@
 		return FALSE
 	// Load the archive entry before waiting, so deletion during printing cannot produce a damaged print.
 	switch(print_type)
-		if(PRESS_ARCHIVE_BOOK)
-			var/list/book = SSlibrarian.file2playerbook(id)
-			if(!book["book_title"] || !book["text"])
+		if(PLAYER_ARCHIVE_BOOKS)
+			if(!SSlibrarian.archive.is_usable(id))
 				to_chat(user, span_warning("This book is no longer in the archive."))
 				return FALSE
 			output_item = new /obj/item/book/rogue/playerbook(src, FALSE, null, null, id)
-		if(PRESS_ARCHIVE_PAINTING)
+		if(PLAYER_ARCHIVE_PAINTINGS)
 			var/obj/item/canvas/print = new /obj/item/canvas(src)
 			if(!print.load_archived_painting(id))
 				qdel(print)
@@ -255,7 +252,8 @@
 /obj/machinery/printingpress/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "PrintingPressArchive", "[archive_browsers[REF(user)] == PRESS_ARCHIVE_PAINTING ? "Painting" : "Book"] Archive")
+		var/datum/player_archive/archive = get_player_archive(archive_browsers[REF(user)])
+		ui = new(user, src, "PrintingPressArchive", "[capitalize(archive?.entry_noun)] Archive")
 		ui.open()
 
 /obj/machinery/printingpress/ui_close(mob/user)
@@ -264,33 +262,9 @@
 
 /obj/machinery/printingpress/ui_static_data(mob/user)
 	var/list/data = ..()
-	var/archive_type = archive_browsers[REF(user)]
-	var/list/entries = list()
-	if(archive_type == PRESS_ARCHIVE_PAINTING)
-		for(var/file_name in SSpaintings.paintings)
-			var/list/painting = SSpaintings.paintings[file_name]
-			if(!painting["painting_title"] || !fexists(SSpaintings.get_painting_image_path(file_name)))
-				continue
-			UNTYPED_LIST_ADD(entries, list(
-				"filename" = file_name,
-				"title" = html_decode(painting["painting_title"]),
-				"author" = html_decode(painting["author"] || "Unknown"),
-				"date" = painting["ic_date"],
-			))
-	else
-		for(var/file_name in SSlibrarian.player_books)
-			var/list/book = SSlibrarian.player_books[file_name]
-			if(!book["book_title"] || !book["text"])
-				continue
-			UNTYPED_LIST_ADD(entries, list(
-				"filename" = file_name,
-				"title" = html_decode(book["book_title"]),
-				"author" = html_decode(book["author"] || "Unknown"),
-				"category" = book["category"] || "Unknown",
-				"date" = book["ic_date"],
-			))
-	data["archive_type"] = archive_type
-	data["entries"] = entries
+	var/datum/player_archive/archive = get_player_archive(archive_browsers[REF(user)])
+	data["archive_type"] = archive?.entry_noun
+	data["entries"] = archive ? archive.get_ui_entries() : list()
 	return data
 
 /obj/machinery/printingpress/ui_act(action, list/params, datum/tgui/ui)
@@ -305,5 +279,3 @@
 
 #undef PRINTER_COOLDOWN
 #undef PRINTING_TIME
-#undef PRESS_ARCHIVE_BOOK
-#undef PRESS_ARCHIVE_PAINTING

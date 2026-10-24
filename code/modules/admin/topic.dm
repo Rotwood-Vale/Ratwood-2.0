@@ -33,7 +33,7 @@
 
 	if(href_list["amend_player_book"])
 		var/file_name = href_list["amend_player_book"]
-		var/list/book = SSlibrarian.file2playerbook(file_name)
+		var/list/book = SSlibrarian.archive.get_entry(file_name)
 		if(!length(book))
 			return
 		var/static/list/amend_types = list("Title" = "book_title", "Author" = "author", "Cover" = "icon", "Category" = "category")
@@ -55,39 +55,23 @@
 			return
 		message_admins("[key_name_admin(usr)] has amended player made book '[player_archive_display_text(book["book_title"], file_name)]': [LOWER_TEXT(amend_choice)] is now '[player_archive_display_text(amend_text)]'")
 		log_admin("[key_name(usr)] has amended player made book '[book["book_title"]]': [LOWER_TEXT(amend_choice)] is now '[amend_text]'")
-		owner.manage_books()
+		owner.manage_player_archive(PLAYER_ARCHIVE_BOOKS)
 		return
 
-	if(href_list["delete_player_book"])
-		var/file_name = href_list["delete_player_book"]
-		var/list/book = SSlibrarian.file2playerbook(file_name)
-		if(!length(book))
+	if(href_list["delete_player_archive_entry"])
+		var/datum/player_archive/archive = get_player_archive(href_list["delete_player_archive_entry"])
+		var/file_name = href_list["file"]
+		if(!archive?.entries[file_name])
 			return
-		var/book_title = player_archive_display_text(book["book_title"], file_name)
-		if(tgui_alert(usr, "Are you sure you want to delete the book '[html_decode(book_title)]'?", "Confirm Deletion", list("Yes", "No")) != "Yes")
+		var/entry_title = archive.get_display_title(file_name)
+		if(tgui_alert(usr, "Are you sure you want to delete the [archive.entry_noun] '[html_decode(entry_title)]'?", "Confirm Deletion", list("Yes", "No")) != "Yes")
 			return
-		if(!SSlibrarian.del_player_book(file_name))
-			to_chat(usr, span_warning("The book could not be deleted."))
+		if(!archive.delete_entry(file_name))
+			to_chat(usr, span_warning("The [archive.entry_noun] could not be deleted."))
 			return
-		message_admins("[key_name_admin(usr)] has deleted player made book called: '[book_title]'")
-		log_admin("[key_name(usr)] has deleted player made book called: '[html_decode(book_title)]'")
-		owner.manage_books()
-		return
-
-	if(href_list["delete_player_painting"])
-		var/file_name = href_list["delete_player_painting"]
-		var/list/painting = SSpaintings.file2playerpainting(file_name)
-		if(!length(painting))
-			return
-		var/painting_title = player_archive_display_text(painting["painting_title"], file_name)
-		if(tgui_alert(usr, "Are you sure you want to delete the painting '[html_decode(painting_title)]'?", "Confirm Deletion", list("Yes", "No")) != "Yes")
-			return
-		if(!SSpaintings.del_player_painting(file_name))
-			to_chat(usr, span_warning("The painting could not be deleted."))
-			return
-		message_admins("[key_name_admin(usr)] has deleted player made painting called: '[painting_title]'")
-		log_admin("[key_name(usr)] has deleted player made painting called: '[html_decode(painting_title)]'")
-		owner.manage_paintings()
+		message_admins("[key_name_admin(usr)] has deleted player made [archive.entry_noun] called: '[entry_title]'")
+		log_admin("[key_name(usr)] has deleted player made [archive.entry_noun] called: '[html_decode(entry_title)]'")
+		owner.manage_player_archive(archive.kind)
 		return
 
 	if(href_list["player_archive_bans"])
@@ -95,45 +79,42 @@
 		return
 
 	if(href_list["player_archive_ban"])
-		var/archive = href_list["player_archive_ban"]
-		var/datum/player_archive_bans/archive_bans = get_player_archive_bans(archive)
-		if(!archive_bans)
+		var/datum/player_archive/archive = get_player_archive(href_list["player_archive_ban"])
+		if(!archive)
 			return
+		var/kind = archive.kind
 		var/banned_ckey = href_list["ckey"]
 		if(!banned_ckey)
-			banned_ckey = tgui_input_text(usr, "Enter the ckey of the player to ban from adding [archive] to the archive.", "Archive Ban", max_length = MAX_NAME_LEN)
+			banned_ckey = tgui_input_text(usr, "Enter the ckey of the player to ban from adding [kind] to the archive.", "Archive Ban", max_length = MAX_NAME_LEN)
 		banned_ckey = ckey(banned_ckey)
 		if(!banned_ckey)
 			return
-		if(archive_bans.is_banned(banned_ckey))
-			to_chat(usr, span_warning("[banned_ckey] is already banned from adding [archive] to the archive."))
+		if(archive.is_banned(banned_ckey))
+			to_chat(usr, span_warning("[banned_ckey] is already banned from adding [kind] to the archive."))
 			return
-		if(tgui_alert(usr, "Are you sure you want to ban [banned_ckey] from adding [archive] to the archive?", "Confirm Ban", list("Yes", "No")) != "Yes")
+		if(tgui_alert(usr, "Are you sure you want to ban [banned_ckey] from adding [kind] to the archive?", "Confirm Ban", list("Yes", "No")) != "Yes")
 			return
-		if(!archive_bans.ban(banned_ckey, usr.key))
-			to_chat(usr, span_warning("[banned_ckey] could not be banned from adding [archive] to the archive."))
+		if(!archive.ban(banned_ckey, usr.key))
+			to_chat(usr, span_warning("[banned_ckey] could not be banned from adding [kind] to the archive."))
 			return
-		message_admins("[key_name_admin(usr)] has banned [banned_ckey] from adding [archive] to the archive.")
-		log_admin("[key_name(usr)] has banned [banned_ckey] from adding [archive] to the archive.")
-		if(archive == "books")
-			owner.manage_books()
-		else
-			owner.manage_paintings()
+		message_admins("[key_name_admin(usr)] has banned [banned_ckey] from adding [kind] to the archive.")
+		log_admin("[key_name(usr)] has banned [banned_ckey] from adding [kind] to the archive.")
+		owner.manage_player_archive(kind)
 		return
 
 	if(href_list["player_archive_unban"])
-		var/archive = href_list["player_archive_unban"]
-		var/datum/player_archive_bans/archive_bans = get_player_archive_bans(archive)
+		var/datum/player_archive/archive = get_player_archive(href_list["player_archive_unban"])
 		var/banned_ckey = ckey(href_list["ckey"])
-		if(!archive_bans?.is_banned(banned_ckey))
+		if(!archive?.is_banned(banned_ckey))
 			return
-		if(tgui_alert(usr, "Are you sure you want to let [banned_ckey] add [archive] to the archive again?", "Confirm Unban", list("Yes", "No")) != "Yes")
+		var/kind = archive.kind
+		if(tgui_alert(usr, "Are you sure you want to let [banned_ckey] add [kind] to the archive again?", "Confirm Unban", list("Yes", "No")) != "Yes")
 			return
-		if(!archive_bans.unban(banned_ckey))
-			to_chat(usr, span_warning("[banned_ckey] could not be unbanned from adding [archive] to the archive."))
+		if(!archive.unban(banned_ckey))
+			to_chat(usr, span_warning("[banned_ckey] could not be unbanned from adding [kind] to the archive."))
 			return
-		message_admins("[key_name_admin(usr)] has lifted [banned_ckey]'s ban from adding [archive] to the archive.")
-		log_admin("[key_name(usr)] has lifted [banned_ckey]'s ban from adding [archive] to the archive.")
+		message_admins("[key_name_admin(usr)] has lifted [banned_ckey]'s ban from adding [kind] to the archive.")
+		log_admin("[key_name(usr)] has lifted [banned_ckey]'s ban from adding [kind] to the archive.")
 		owner.archive_bans()
 		return
 

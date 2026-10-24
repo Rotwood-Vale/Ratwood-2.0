@@ -22,8 +22,10 @@
 	var/reject = FALSE
 	/// Whether anything has been painted on this canvas.
 	var/painted = FALSE
-	/// Whether this canvas displays a painting loaded from the archive, which cannot be signed or archived again.
+	/// Whether this canvas's painting is in the archive, either printed from it or uploaded to it. It cannot be signed or archived again.
 	var/archived = FALSE
+	/// Ckeys of everyone who painted on this canvas.
+	var/list/painter_ckeys
 
 	var/canvas_icon = 'icons/roguetown/items/paint_supplies/canvas_32x32.dmi'
 	var/canvas_icon_state = "canvas"
@@ -92,6 +94,12 @@
 		if(archived)
 			to_chat(user, span_warning("This painting has already been signed."))
 			return
+		if(title && author_ckey != user.ckey)
+			to_chat(user, span_warning("This painting has already been signed by someone else."))
+			return
+		if(!(user.ckey in painter_ckeys))
+			to_chat(user, span_warning("I can only sign a painting I worked on."))
+			return
 		var/new_title = stripped_input(user, "What's the title of this painting?", "Title", "", MAX_NAME_LEN)
 		if(!new_title)
 			to_chat(user, span_warning("A painting needs a title to be signed."))
@@ -137,6 +145,7 @@
 
 /obj/item/canvas/proc/update_drawing(x, y, current_color)
 	painted = TRUE
+	LAZYOR(painter_ckeys, usr.ckey)
 	if("[x][y]" in overlay_to_index)
 		cut_overlay(overlay_to_index["[x][y]"])
 		overlay_to_index -= "[x][y]"
@@ -160,10 +169,11 @@
 
 /// Displays the archived painting stored under a filename on this canvas. Returns FALSE if it is missing or a different size.
 /obj/item/canvas/proc/load_archived_painting(file_name)
-	var/list/painting_data = SSpaintings.file2playerpainting(file_name)
-	var/image_path = SSpaintings.get_painting_image_path(file_name)
-	if(!painting_data["painting_title"] || painting_data["canvas_size"] != canvas_size || !fexists(image_path))
+	var/datum/player_archive/paintings/archive = SSpaintings.archive
+	var/list/painting_data = archive.get_entry(file_name)
+	if(!archive.is_usable(file_name) || painting_data["canvas_size"] != canvas_size)
 		return FALSE
+	var/image_path = archive.get_image_path(file_name)
 	icon = icon(file(image_path))
 	name = painting_data["painting_title"]
 	if(painting_data["author"])
@@ -183,9 +193,16 @@
 	if(!rendered)
 		player_archive_feedback(user, "The painting could not be rendered for the archive.")
 		return FALSE
-	cut_overlays()
-	icon = rendered
-	return SSpaintings.playerpainting2file(icon, title, author, author_ckey, canvas_size, src, user)
+	if(!SSpaintings.playerpainting2file(src, rendered, user))
+		return FALSE
+	archived = TRUE
+	return TRUE
+
+/// Returns the ckeys of everyone who worked on this painting, all of whom must be allowed to add paintings to the archive for it to be archived.
+/obj/item/canvas/proc/get_contributor_ckeys()
+	. = list(author_ckey)
+	if(painter_ckeys)
+		. |= painter_ckeys
 
 /atom/movable/screen/canvas
 	icon = 'icons/roguetown/items/paint_supplies/canvas_32x32.dmi'

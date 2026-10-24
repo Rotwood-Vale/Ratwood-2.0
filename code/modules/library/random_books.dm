@@ -59,7 +59,7 @@
 	if(book_count && isnum(book_count))
 		book_count += pick(0,1,2,3,4,5,6,7,8,9,10)
 
-/// Spawns random books, limited to the given category if one is set — premade books by their category var, archived player books by their archived category. Each archived book is placed at most once per round.
+/// Spawns random books, limited to the given category if one is set — premade books by their category var, archived player books by their archived category. Archived player books are only placed in a category, each at most once per round.
 /proc/create_random_books_rogue(amount = 2, location, category)
 	// Player books come from the archive, and secret books and the Verses and Acts of the Ten are never shelved at random.
 	var/static/list/possible_books = subtypesof(/obj/item/book/rogue) - typesof(/obj/item/book/rogue/playerbook, /obj/item/book/rogue/secret, /obj/item/book/rogue/bibble)
@@ -69,7 +69,8 @@
 		for(var/obj/item/book/rogue/book_type as anything in possible_books)
 			if(initial(book_type.category) == category)
 				eligible_books += book_type
-	var/list/unused_player_titles = SSlibrarian.pull_player_book_titles(category)
+	// Uncategorised shelves hold premade books only, so no player book, Adult ones included, turns up unsorted.
+	var/list/unused_player_titles = category ? SSlibrarian.pull_player_book_titles(category) : list()
 	var/player_book_chance = clamp(length(unused_player_titles), 10, 90)
 	for(var/b in 1 to amount)
 		if(prob(0.1))
@@ -79,7 +80,7 @@
 		if(length(unused_player_titles) && (!length(eligible_books) || prob(player_book_chance)))
 			var/file_name = pick_n_take(unused_player_titles)
 			new /obj/item/book/rogue/playerbook(location, FALSE, null, null, file_name)
-			SSlibrarian.placed_player_books[file_name] = TRUE
+			SSlibrarian.archive.placed[file_name] = TRUE
 			continue
 		if(!length(eligible_books))
 			continue
@@ -95,6 +96,10 @@
 	category = "Religion"
 /obj/structure/bookcase/random/adult
 	category = "Adult"
+
+/// No premade books are filed under Misc, so this is stocked from the archive alone.
+/obj/structure/bookcase/random/misc
+	category = PLAYER_BOOK_DEFAULT_CATEGORY
 
 /obj/structure/bookcase/random/reference
 	category = "Reference"

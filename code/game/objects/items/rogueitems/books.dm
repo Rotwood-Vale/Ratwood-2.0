@@ -521,6 +521,7 @@ GLOBAL_LIST_INIT(player_book_categories, list(
 	"Religion",
 	"Adult",
 	"Reference",
+	PLAYER_BOOK_DEFAULT_CATEGORY,
 ))
 
 /obj/item/book/rogue/playerbook
@@ -530,8 +531,10 @@ GLOBAL_LIST_INIT(player_book_categories, list(
 	var/player_book_icon = "basic_book"
 	var/player_book_author_ckey = "unknown"
 	var/player_book_date
-	var/player_book_category = "Unknown"
+	var/player_book_category = PLAYER_BOOK_DEFAULT_CATEGORY
 	var/is_in_round_player_generated
+	/// Ckeys of everyone who wrote on the pages bound into this book.
+	var/list/writer_ckeys
 	var/written = FALSE
 	name = "unknown title"
 	desc = "by an unknown author"
@@ -565,6 +568,12 @@ GLOBAL_LIST_INIT(player_book_categories, list(
 	update_book_data()
 	written = TRUE
 
+/// Returns the ckeys of everyone who worked on this book, all of whom must be allowed to add books to the archive for it to be archived.
+/obj/item/book/rogue/playerbook/proc/get_contributor_ckeys()
+	. = list(player_book_author_ckey)
+	if(writer_ckeys)
+		. |= writer_ckeys
+
 /obj/item/book/rogue/playerbook/proc/update_book_data()
 	name = "[player_book_title]"
 	desc = "By [player_book_author][player_book_date ? ", written [player_book_date]" : ""]"
@@ -578,9 +587,9 @@ GLOBAL_LIST_INIT(player_book_categories, list(
 	if(is_in_round_player_generated)
 		INVOKE_ASYNC(src, PROC_REF(get_player_input), in_round_player_mob, text)
 	else
-		if(!archive_file_name && length(SSlibrarian.player_books))
-			archive_file_name = pick(SSlibrarian.player_books)
-		var/list/player_book_content = SSlibrarian.file2playerbook(archive_file_name)
+		if(!archive_file_name && length(SSlibrarian.archive.entries))
+			archive_file_name = pick(SSlibrarian.archive.entries)
+		var/list/player_book_content = SSlibrarian.archive.get_entry(archive_file_name)
 		// With no valid archive entry, keep the default water-damaged book.
 		if(player_book_content["book_title"] && player_book_content["text"])
 			player_book_title = player_book_content["book_title"]
@@ -607,6 +616,8 @@ GLOBAL_LIST_INIT(player_book_categories, list(
 	var/number_of_pages = 2
 	var/compiled_pages = null
 	var/list/page_texts = list()
+	/// Ckeys of everyone who wrote on the pages, passed on to the bound book and to pages taken back off.
+	var/list/writer_ckeys
 	var/qdel_source = FALSE
 
 /obj/item/manuscript/examine()
@@ -621,6 +632,7 @@ GLOBAL_LIST_INIT(player_book_categories, list(
 			return
 		qdel(I)
 		var/obj/item/book/rogue/playerbook/PB = new /obj/item/book/rogue/playerbook(get_turf(loc), TRUE, user, compiled_pages)
+		PB.writer_ckeys = writer_ckeys?.Copy()
 		if(user.Adjacent(PB))
 			PB.add_fingerprint(user)
 			user.put_in_hands(PB)
@@ -641,6 +653,8 @@ GLOBAL_LIST_INIT(player_book_categories, list(
 	desc = "A [number_of_pages] page written piece aspiring to one dae become a book."
 	page_texts += P.info
 	compiled_pages += "<p>[P.info]</p>"
+	if(P.writer_ckeys)
+		LAZYOR(writer_ckeys, P.writer_ckeys)
 	qdel(P)
 
 	update_icon()
@@ -725,12 +739,15 @@ GLOBAL_LIST_INIT(player_book_categories, list(
 		L.put_in_inactive_hand(src)
 		P.icon_state = "paperwrite"
 		P.info = page_texts[length(page_texts)]
+		// Which page each writer wrote is not kept, so every page taken off counts all of them.
+		P.writer_ckeys = writer_ckeys?.Copy()
 		page_texts -= page_texts[length(page_texts)]
 		--number_of_pages
 		if(number_of_pages == 1)
 			var/obj/item/paper/P_two = new /obj/item/paper(get_turf(src.loc))
 			P_two.icon_state = "paperwrite"
 			P_two.info = page_texts[length(page_texts)]
+			P_two.writer_ckeys = writer_ckeys?.Copy()
 			qdel_source = TRUE
 			. = ..()
 			src.loc = get_turf(src.loc)

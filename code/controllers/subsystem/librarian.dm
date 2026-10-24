@@ -3,14 +3,10 @@ SUBSYSTEM_DEF(librarian)
 	init_order = INIT_ORDER_PLAYER_ARCHIVES
 	flags = SS_NO_FIRE
 	var/list/books = list()
-	/// Archived player books, keyed by filename. Loaded once at init and kept in sync with the files on every change.
-	var/list/player_books = list()
-	/// Archived books already placed by random book spawners this round, so none is placed twice.
-	var/list/placed_player_books = list()
+	/// The archive of player books, kept across rounds.
+	var/datum/player_archive/books/archive
 	/// Stocking callbacks of mapped random book spawners, run in a random order once every one in their map load has initialized.
 	var/list/pending_random_books = list()
-	/// Players barred from adding books to the archive.
-	var/datum/player_archive_bans/upload_bans
 
 /datum/controller/subsystem/librarian/proc/get_book(input)
 	if(!input)
@@ -36,74 +32,40 @@ SUBSYSTEM_DEF(librarian)
 	testing("file4")
 	return list()
 
-#define PLAYER_BOOK_DIRECTORY "data/player_generated_books/"
-
 /datum/controller/subsystem/librarian/Initialize(start_timeofday)
-	player_books = load_player_archive(PLAYER_BOOK_DIRECTORY)
-	upload_bans = new("books", "[PLAYER_BOOK_DIRECTORY]_upload_bans.json")
+	archive = new
 	return ..()
 
-/datum/controller/subsystem/librarian/proc/playerbook2file(input, book_title = "Unknown", author = "Unknown", author_ckey = "Unknown", icon = "basic_book", mob/user, ic_date, category = "Unknown")
-	if(!input)
+/// Adds a newly bound player book to the archive. Returns TRUE on success.
+/datum/controller/subsystem/librarian/proc/playerbook2file(obj/item/book/rogue/playerbook/book, mob/user)
+	if(!book.player_book_text)
 		player_archive_feedback(user, "There is no text in the book!")
 		return FALSE
-	if(!ic_date)
-		ic_date = get_ic_date_short_as_string()
-	if(!(istext(input) && istext(book_title) && istext(author) && istext(author_ckey) && istext(icon) && istext(ic_date)))
-		player_archive_feedback(user, "This book is incorrectly formatted!")
-		return FALSE
-	if(upload_bans.is_banned(user?.ckey))
-		player_archive_feedback(user, "You have been barred from adding books to the archive.")
-		return FALSE
-	if(upload_bans.is_banned(author_ckey))
-		player_archive_feedback(user, "The author of this book has been barred from adding books to the archive.")
-		return FALSE
-	if(!(category in GLOB.player_book_categories))
-		category = "Unknown"
-	var/file_name = player_archive_filename(book_title)
+	var/file_name = archive.check_upload(user, book.player_book_title, book.get_contributor_ckeys())
 	if(!file_name)
-		player_archive_feedback(user, "That title cannot be archived. Use a shorter title that does not begin with an underscore.")
 		return FALSE
-	// fexists also catches titles differing only in case on case-insensitive filesystems.
-	if(player_books[file_name] || fexists("[PLAYER_BOOK_DIRECTORY][file_name].json"))
+	if(archive.is_title_taken(file_name))
 		player_archive_feedback(user, "There is already a book by this title!")
 		return FALSE
+	var/category = book.player_book_category
+	if(!(category in GLOB.player_book_categories))
+		category = PLAYER_BOOK_DEFAULT_CATEGORY
+	var/list/contents = list(
+		"book_title" = "[book.player_book_title]",
+		"author" = "[book.player_book_author]",
+		"author_ckey" = "[book.player_book_author_ckey]",
+		"icon" = "[book.player_book_icon]",
+		"category" = "[category]",
+		"text" = "[book.player_book_text]",
+		"ic_date" = "[book.player_book_date || get_ic_date_short_as_string()]",
+	)
+	return archive.add_entry(file_name, contents, user)
 
-	var/list/contents = list("book_title" = "[book_title]", "author" = "[author]", "author_ckey" = "[author_ckey]", "icon" = "[icon]", "category" = "[category]", "text" = "[input]", "ic_date" = "[ic_date]")
-	if(!write_player_archive_file("[PLAYER_BOOK_DIRECTORY][file_name].json", contents))
-		player_archive_feedback(user, "The archive could not store this book.")
-		return FALSE
-	player_books[file_name] = contents
-	message_admins("Book [player_archive_display_text(book_title)] has been saved to the player book database by [player_archive_display_text(author_ckey)]([player_archive_display_text(author)])")
-	player_archive_feedback(user, "You have a feeling the newly written book will remain in the archive for a very long time...", TRUE)
-	return TRUE
-
-/// Returns the archived book stored under a filename, or an empty list if there is none.
-/datum/controller/subsystem/librarian/proc/file2playerbook(filename)
-	var/list/contents = player_books[filename]
-	return contents ? contents : list()
-
-/datum/controller/subsystem/librarian/proc/del_player_book(filename)
-	if(!player_books[filename])
-		return FALSE
-	var/json_file = "[PLAYER_BOOK_DIRECTORY][filename].json"
-	fdel(json_file)
-	if(fexists(json_file))
-		message_admins("Unable to delete archived book [json_file].")
-		return FALSE
-	player_books -= filename
-	return TRUE
-
-/// Returns the filenames of readable archived books, limited to one category if given. Books already placed by a random book spawner this round are left out unless include_placed is set.
+/// Returns the filenames of usable archived books, limited to one category if given. Books already placed by a random book spawner this round are left out unless include_placed is set.
 /datum/controller/subsystem/librarian/proc/pull_player_book_titles(category, include_placed = FALSE)
 	. = list()
-	for(var/file_name in player_books)
-		if(!include_placed && placed_player_books[file_name])
-			continue
-		var/list/book = player_books[file_name]
-		if(!book["book_title"] || !book["text"])
-			continue
-		if(!category || book["category"] == category)
+	for(var/file_name in archive.get_usable_entries(include_placed))
+		if(!category || archive.entries[file_name]["category"] == category)
 			. += file_name
 
 /// Stocks the pending random book spawners in a random order, so which shelves get the archived books differs each round.
@@ -118,7 +80,7 @@ SUBSYSTEM_DEF(librarian)
 		return FALSE
 	if(amend_type == "category" && !(amend_text in GLOB.player_book_categories))
 		return FALSE
-	var/list/contents = player_books[filename]
+	var/list/contents = archive.entries[filename]
 	if(!contents)
 		return FALSE
 	contents = contents.Copy()
@@ -128,14 +90,11 @@ SUBSYSTEM_DEF(librarian)
 		new_file_name = player_archive_filename(amend_text)
 		if(!new_file_name)
 			return FALSE
-		if(new_file_name != filename && (player_books[new_file_name] || fexists("[PLAYER_BOOK_DIRECTORY][new_file_name].json")))
+		if(new_file_name != filename && archive.is_title_taken(new_file_name))
 			return FALSE
 	// Write the amended copy before removing the original so a failed save cannot lose the book.
-	if(!write_player_archive_file("[PLAYER_BOOK_DIRECTORY][new_file_name].json", contents))
+	if(!archive.save_entry(new_file_name, contents))
 		return FALSE
-	player_books[new_file_name] = contents
 	if(new_file_name != filename)
-		return del_player_book(filename)
+		return archive.delete_entry(filename)
 	return TRUE
-
-#undef PLAYER_BOOK_DIRECTORY
