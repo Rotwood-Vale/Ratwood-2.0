@@ -13,6 +13,11 @@
 	cost = 30
 	contains = list(/obj/item/clothing/head/roguetown/helmet/sallet/visored)
 
+/datum/supply_pack/rogue/Sellsword/visoredsalletsnouted
+	name = "Visored Sallet, Snouted"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted)
+
 //////////
 // NECK //
 //////////
@@ -154,15 +159,35 @@
 	cost = 20
 	contains = list(/obj/item/clothing/under/roguetown/chainlegs)
 
+/datum/supply_pack/rogue/Sellsword/leather/fencingpants
+	name = "Fencing Breeches"
+	cost = 40
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic)
+
+/datum/supply_pack/rogue/Sellsword/leather/otavanpants
+	name = "Otavan Leather Trousers"
+	cost = 40
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan)
+
 /datum/supply_pack/rogue/Sellsword/boots
 	name = "Steel Boots"
-	cost = 20
+	cost = 15
 	contains = list(/obj/item/clothing/shoes/roguetown/boots/armor)
+
+/datum/supply_pack/rogue/Sellsword/boots/maille
+	name = "Maille Boots"
+	cost = 15
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/maille)
 
 /datum/supply_pack/rogue/Sellsword/reinforcedboots
 	name = "Heavy Leather Boots"
 	cost = 10
 	contains = list(/obj/item/clothing/shoes/roguetown/boots/leather/reinforced)
+
+/datum/supply_pack/rogue/Sellsword/boots/otavan
+	name = "Otavan Leather Boots"
+	cost = 30
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/otavan)
 
 /////////////////////
 // WEAPONS - MELEE //
@@ -202,6 +227,11 @@
 	name = "Maciejowski"
 	cost = 25
 	contains = list(/obj/item/rogueweapon/sword/falchion/militia)
+
+/datum/supply_pack/rogue/Sellsword/kopis
+	name = "Kopis"
+	cost = 35
+	contains = list(/obj/item/rogueweapon/sword/falchion/militia/bronze)
 
 /datum/supply_pack/rogue/Sellsword/militiapick
 	name = "Steel Warpick"
@@ -289,6 +319,16 @@
 	cost = 40
 	contains = list(/obj/item/rogueweapon/sword/long/rhomphaia)
 
+/datum/supply_pack/rogue/Sellsword/hooksword
+	name = "Hook Sword"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/sword/sabre/hook)
+
+/datum/supply_pack/rogue/Sellsword/shotel
+	name = "Shotel"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/sword/long/shotel)
+
 /datum/supply_pack/rogue/Sellsword/silverasword
 	name = "Silver Arming Sword"
 	cost = 60
@@ -337,6 +377,11 @@
 	cost = 20
 	contains = list(/obj/item/quiver/arrows)
 
+/datum/supply_pack/rogue/Sellsword/bronzearrows
+	name = "Quiver of Bronze Arrows"
+	cost = 20
+	contains = list(/obj/item/quiver/bronzearrows)
+
 /////////////
 // SHIELDS //
 /////////////
@@ -359,6 +404,11 @@
 	name = "Grenzel Hat"
 	cost = 15
 	contains = list(/obj/item/clothing/head/roguetown/grenzelhofthat)
+
+/datum/supply_pack/rogue/Sellsword/Grenzelhelm
+	name = "Klappviser Helm"
+	cost = 20
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/etruscan)
 
 /datum/supply_pack/rogue/Sellsword/bsteelcuirass
 	name = "Blacksteel Cuirass"
@@ -472,3 +522,315 @@
 	name = "Heater Shield"
 	cost = 20
 	contains = list(/obj/item/rogueweapon/shield/heater)
+
+//////////////////////////////
+// LIGA STEPPESMEN //
+//////////////////////////////
+
+/datum/supply_pack/rogue/Sellsword/liga_helm
+	name = "Steel Shishak"
+	cost = 50
+	contains = list(/obj/item/clothing/head/roguetown/helmet/sallet/shishak)
+
+/datum/supply_pack/rogue/Sellsword/liga_papakha
+	name = "Papakha"
+	cost = 10
+	contains = list(/obj/item/clothing/head/roguetown/papakha)
+
+/datum/supply_pack/rogue/Sellsword/liga_caftan
+	name = "Padded Caftan"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah)
+
+/datum/supply_pack/rogue/Sellsword/liga_lamellar
+	name = "Steel Heavy Lamellar"
+	cost = 50
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/scale/steppe)
+
+/datum/supply_pack/rogue/Sellsword/liga_coat
+	name = "Fur-Woven Chargah Coat"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/steppe)
+
+/datum/supply_pack/rogue/Sellsword/liga_bikini
+	name = "Studded Leather Bikini"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/bikini)
+
+/datum/supply_pack/rogue/Sellsword/liga_volfmantle
+	name = "Volf Mantle"
+	cost = 15
+	contains = list(/obj/item/clothing/cloak/volfmantle)
+
+/datum/supply_pack/rogue/Sellsword/liga_boots
+	name = "Aavnic Riding Boots"
+	cost = 15
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/nobleboot/steppesman)
+
+/datum/supply_pack/rogue/Sellsword/liga_shield
+	name = "Steppesman Shield"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/shield/iron/steppesman)
+
+/datum/supply_pack/rogue/Sellsword/liga_shashka
+	name = "Aavnic Shashka"
+	cost = 40
+	contains = list(/obj/item/rogueweapon/sword/sabre/steppesman)
+
+/datum/supply_pack/rogue/Sellsword/liga_valashka
+	name = "Aavnic Valashka"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/stoneaxe/battle/steppesman)
+
+/datum/supply_pack/rogue/Sellsword/liga_lance
+	name = "Aavnic Landzsa"
+	cost = 40
+	contains = list(/obj/item/rogueweapon/spear/boar/aav)
+
+/datum/supply_pack/rogue/Sellsword/liga_punchdagger
+	name = "Aavnic Punchdagger"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/katar/punchdagger/aav)
+
+//////////////////////////////
+// THESPIAN-ERRANT //
+//////////////////////////////
+
+/datum/supply_pack/rogue/Sellsword/thespian_mask
+	name = "Bronze Mask"
+	cost = 10
+	contains = list(/obj/item/clothing/mask/rogue/facemask/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_murmillo
+	name = "Bronze Murmillo"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bronzegladiator)
+
+/datum/supply_pack/rogue/Sellsword/thespian_barbute
+	name = "Bronze Barbute"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_illyriahelm
+	name = "Bronze Illyriahelm"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_neckguard
+	name = "Bronze Neckguard"
+	cost = 20
+	contains = list(/obj/item/clothing/neck/roguetown/gorget/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_gorgette
+	name = "Bronze Gorgette"
+	cost = 20
+	contains = list(/obj/item/clothing/neck/roguetown/bevor/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_cardiophylax
+	name = "Bronze Cardiophylax"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/bronze/light)
+
+/datum/supply_pack/rogue/Sellsword/thespian_cuirass
+	name = "Bronze Cuirass"
+	cost = 30
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_wristguards
+	name = "Bronze Wristguards"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_greaves
+	name = "Bronze Greaves"
+	cost = 15
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/armor/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_spatha
+	name = "Spatha"
+	cost = 40
+	contains = list(/obj/item/rogueweapon/sword/long/broadsword/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_trident
+	name = "Trident"
+	cost = 35
+	contains = list(/obj/item/rogueweapon/spear/trident)
+
+/datum/supply_pack/rogue/Sellsword/thespian_greataxe
+	name = "Bronze Greataxe"
+	cost = 40
+	contains = list(/obj/item/rogueweapon/greataxe/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_dolabra
+	name = "Dolabra"
+	cost = 25
+	contains = list(/obj/item/rogueweapon/pick/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_wingedspear
+	name = "Bronze Winged Spear"
+	cost = 40
+	contains = list(/obj/item/rogueweapon/spear/bronze/winged/strapless)
+
+/datum/supply_pack/rogue/Sellsword/thespian_apophis
+	name = "Apophis"
+	cost = 45
+	contains = list(/obj/item/rogueweapon/sword/long/greatkhopesh)
+
+/datum/supply_pack/rogue/Sellsword/thespian_gladius
+	name = "Gladius"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/sword/short/gladius)
+
+/datum/supply_pack/rogue/Sellsword/thespian_makhaira
+	name = "Makhaira"
+	cost = 25
+	contains = list(/obj/item/rogueweapon/sword/short/messer/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_khopesh
+	name = "Khopesh"
+	cost = 25
+	contains = list(/obj/item/rogueweapon/sword/sabre/bronzekhopesh)
+
+/datum/supply_pack/rogue/Sellsword/thespian_axe
+	name = "Bronze War Axe"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/bronzebattleaxe)
+
+/datum/supply_pack/rogue/Sellsword/thespian_warclub
+	name = "Bronze Warclub"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/mace/warhammer/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_flail
+	name = "Bronze Flail"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/flail/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_spear
+	name = "Bronze Spear"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/spear/bronze/strapless)
+
+/datum/supply_pack/rogue/Sellsword/thespian_knife
+	name = "Bronze Sydearmme"
+	cost = 15
+	contains = list(/obj/item/rogueweapon/huntingknife/combat/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_hoplon
+	name = "Hoplon Shield"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/shield/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_greatshield
+	name = "Hoplon Greatshield"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/shield/bronze/great)
+
+/datum/supply_pack/rogue/Sellsword/thespian_sling
+	name = "Sling"
+	cost = 10
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/sling)
+
+/datum/supply_pack/rogue/Sellsword/thespian_javelins
+	name = "Quiver of Bronze Javelins"
+	cost = 20
+	contains = list(/obj/item/quiver/javelin/bronze)
+
+/datum/supply_pack/rogue/Sellsword/thespian_pellets
+	name = "Pouch of Bronze Sling Pellets"
+	cost = 20
+	contains = list(/obj/item/quiver/sling/bronze)
+
+
+//////////////////////////////
+// GRONNIC BA'ATUR //
+//////////////////////////////
+
+/datum/supply_pack/rogue/Sellsword/baatur_helmet
+	name = "Owl Helmet"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/atgervi)
+
+/datum/supply_pack/rogue/Sellsword/baatur_gloves
+	name = "Fur-Lined Leather Gloves"
+	cost = 10
+	contains = list(/obj/item/clothing/gloves/roguetown/angle/atgervi)
+
+/datum/supply_pack/rogue/Sellsword/baatur_hauberk
+	name = "Nokud's Hauberk"
+	cost = 30
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/atgervi)
+
+/datum/supply_pack/rogue/Sellsword/baatur_brigandine
+	name = "Byrine Hauberk"
+	cost = 60
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/gronn)
+
+/datum/supply_pack/rogue/Sellsword/baatur_pants
+	name = "Fur Pants"
+	cost = 10
+	contains = list(/obj/item/clothing/under/roguetown/trou/leather/atgervi)
+
+/datum/supply_pack/rogue/Sellsword/baatur_boots
+	name = "Ba'atur Leather Boots"
+	cost = 15
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/leather/atgervi)
+
+/datum/supply_pack/rogue/Sellsword/baatur_mantle
+	name = "Chain Mantle"
+	cost = 25
+	contains = list(/obj/item/clothing/neck/roguetown/chaincoif/chainmantle)
+
+/datum/supply_pack/rogue/Sellsword/baatur_shield
+	name = "Ba'atur Kite Shield"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/shield/atgervi)
+
+/datum/supply_pack/rogue/Sellsword/baatur_axe
+	name = "Bearded Axe"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi)
+
+//////////////////////////////
+// CZWARTEKI SHEPHERD //
+//////////////////////////////
+
+/datum/supply_pack/rogue/Sellsword/shepherd_paddedcap
+	name = "Padded Cap"
+	cost = 5
+	contains = list(/obj/item/clothing/head/roguetown/paddedcap)
+
+/datum/supply_pack/rogue/Sellsword/shepherd_chaperon
+	name = "Shepherd's Chaperon"
+	cost = 30
+	contains = list(/obj/item/clothing/head/roguetown/chaperon/greyscale/shepherd)
+
+/datum/supply_pack/rogue/Sellsword/shepherd_vest
+	name = "Shepherd's Vest"
+	cost = 20
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/shepherd)
+
+/datum/supply_pack/rogue/Sellsword/shepherd_shirt
+	name = "Shepherd's Shirt"
+	cost = 15
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/freifechter/shepherd)
+
+/datum/supply_pack/rogue/Sellsword/shepherd_axe
+	name = "Czwarteki Ciupaga"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/stoneaxe/battle/steppesman/chupa)
+
+/datum/supply_pack/rogue/Sellsword/shepherd_navaja
+	name = "Fencing Navaja"
+	cost = 15
+	contains = list(/obj/item/rogueweapon/huntingknife/idagger/navaja/freifechter)
+
+/datum/supply_pack/rogue/Sellsword/shepherd_pants
+	name = "Shepherd's Pants"
+	cost = 40
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/shepherd)
+
+/datum/supply_pack/rogue/Sellsword/shepherd_boots
+	name = "Fencing Boots"
+	cost = 15
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/grenzelhoft/freifechter)

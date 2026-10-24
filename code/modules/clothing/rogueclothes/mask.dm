@@ -585,6 +585,10 @@
 	salvage_amount = 1
 	nudist_approved = TRUE
 
+/obj/item/clothing/mask/rogue/physician/sawbones
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_MASK_LEATHER
+
 /obj/item/clothing/mask/rogue/physician/head
 	name = "head physician's mask"
 	desc = "An important person, warrants the largest beak of them all."
