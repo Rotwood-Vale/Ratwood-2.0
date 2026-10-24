@@ -829,6 +829,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/process()
 	if(obj_integrity >= max_integrity)
+		if(obj_broken)
+			obj_fix()
 		STOP_PROCESSING(SSobj, src)
 		src.visible_message(span_notice("The [src] flow more calmly, as they finish resting and regain their strength."), vision_distance = 1)
 		return
@@ -836,8 +838,6 @@
 		src.last_repair = world.time
 		src.visible_message(span_notice("The [src] begin to swirl, repairing their integrity..."), vision_distance = 1)
 		obj_integrity = min(obj_integrity + src.repair_amount, src.max_integrity)
-		if(obj_broken)
-			obj_fix(full_repair = FALSE)
 	..()
 
 //Some vanderlin ports, steward clothes and Hand coats//
