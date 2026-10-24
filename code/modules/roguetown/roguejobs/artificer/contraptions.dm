@@ -1,5 +1,4 @@
 #define TRY_MISFIRE(target_mob) if(prob(misfire_chance)) misfire(target_mob)
-#define TRY_misfire(target_mob) if(prob(misfire_chance)) misfire(target_mob)
 
 /obj/item/contraption
 	name = "random piece of machinery"
@@ -443,50 +442,6 @@
 		to_chat(user, span_warning("[patient] is already missing that limb, what more do you want?"))
 		return
 	
-	var/agreementone
-	var/agreementtwo
-	if(patient.mind)
-		if(patient == user)
-			switch(alert(user,"Do I want to cut off my [limb_snip_candidate.name]?", "Do you want amputate?","No","Yes"))
-				if("Yes")
-					to_chat(user, span_warning("I prepare the device...")) //make sure this is who we want to amputate
-					agreementone = TRUE
-				if("No")
-					to_chat(user, span_warning("I decided not to"))
-					return
-				else
-					to_chat(user, span_warning("I decided not to"))
-					return
-		else if(patient in range(1, user))
-			switch(alert(user,"Are you sure you want amputate [patient.name] [limb_snip_candidate.name]?", "Do you want amputate?","No","Yes"))
-				if("Yes")
-					to_chat(user, span_warning("I prepare the device...")) //make sure this is who we want to amputate
-					agreementone = TRUE
-				if("No")
-					to_chat(user, span_warning("I decided not to"))
-					return
-				else
-					to_chat(user, span_warning("I decided not to"))
-					return
-			if((patient.mobility_flags & MOBILITY_STAND))
-				to_chat(user, span_warning("My patient must be laying down."))
-				return
-			switch(alert(patient, "Do you agree to have your [limb_snip_candidate.name] amputated by [user.name]?", "Do you agree to an amputation?", "Resist", "Accept"))
-				if("Resist")
-					to_chat(user, span_warning("the device fails, the patient is not willing"))
-					return
-				if("Accept")
-					to_chat(user, span_warning("They agree, we can proceed")) //make sure they consent to the amputation
-					agreementtwo = TRUE
-				else
-					to_chat(user, span_warning("the device fails, the patient is not willing"))
-					return
-			if (agreementone && agreementtwo)
-				//we can proceed, they weren't afk
-			else
-				to_chat(user, span_warning("They can't agree right now")) //a final catch all
-		return
-
 	var/amputation_speed_mod = 1
 
 	patient.visible_message(span_danger("[user] begins to secure [src] around [patient]'s [limb_snip_candidate.name]."), span_userdanger("[user] begins to secure [src] around your [limb_snip_candidate.name]!"))
