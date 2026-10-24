@@ -582,15 +582,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vice4 = (vice4_type && ispath(vice4_type)) ? new vice4_type() : null
 	vice5 = (vice5_type && ispath(vice5_type)) ? new vice5_type() : null
 	vice6 = (vice6_type && ispath(vice6_type)) ? new vice6_type() : null
-	S["redolent_type"] >> redolent_type
-	S["redolent_scent"] >> redolent_scent
-	if(isnull(redolent_type)) // legacy savefile key from when this was named malodorous
-		S["malodorous_type"] >> redolent_type
-		S["malodorous_scent"] >> redolent_scent
-	if(redolent_type == "Positive")
-		redolent_type = "Pleasant"
-	if(!(redolent_type in list("Gross", "Neutral", "Pleasant")))
-		redolent_type = "Neutral"
 
 /datum/preferences/proc/_load_culinary_preferences(S)
 	var/list/loaded_culinary_preferences
@@ -636,6 +627,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	for(var/quirk_type in quirk_types)
 		if(ispath(quirk_type, /datum/quirk))
 			quirks += new quirk_type()
+	// passing S so redolent shit don't get lost
+	var/list/configs
+	S["quirk_configs"] >> configs
+	if(!islist(configs))
+		configs = list()
+	for(var/datum/quirk/Q in quirks)
+		Q.load_config(configs["[Q.type]"], S)
 
 /datum/preferences/proc/_load_loadout(S)
 	var/loadout_type
@@ -823,8 +821,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["extra_language"]		>> extra_language
 	S["origin"]				>> origin
 	S["selected_title"]		>> selected_title
-	S["extra_language_1"]	>> extra_language_1
-	S["extra_language_2"]	>> extra_language_2
 	S["voice_color"]		>> voice_color
 	S["voice_pitch"]		>> voice_pitch
 	if (!voice_pitch)
@@ -1138,8 +1134,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["extra_language"]		, extra_language)
 	WRITE_FILE(S["origin"]				, origin)
 	WRITE_FILE(S["selected_title"]		, selected_title)
-	WRITE_FILE(S["extra_language_1"]	, extra_language_1)
-	WRITE_FILE(S["extra_language_2"]	, extra_language_2)
 	WRITE_FILE(S["voice_color"]			, voice_color)
 	WRITE_FILE(S["voice_pitch"]			, voice_pitch)
 	WRITE_FILE(S["skin_tone"]			, skin_tone)
@@ -1166,8 +1160,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vice4"], preferences_typepath_or_null(vice4))
 	WRITE_FILE(S["vice5"], preferences_typepath_or_null(vice5))
 	WRITE_FILE(S["vice6"], preferences_typepath_or_null(vice6))
-	WRITE_FILE(S["redolent_type"], redolent_type)
-	WRITE_FILE(S["redolent_scent"], redolent_scent)
 	WRITE_FILE(S["feature_mcolor"]		, features["mcolor"])
 	WRITE_FILE(S["feature_mcolor2"]		, features["mcolor2"])
 	WRITE_FILE(S["feature_mcolor3"]		, features["mcolor3"])
@@ -1240,6 +1232,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		virtue2_typepath = /datum/virtue/none
 	WRITE_FILE(S["virtuetwo"], virtue2_typepath)
 	WRITE_FILE(S["quirks"], get_quirk_typepaths())
+	WRITE_FILE(S["quirk_configs"], get_quirk_configs())
 	WRITE_FILE(S["race_bonus"], race_bonus)
 	WRITE_FILE(S["combat_music"], preferences_typepath_or_null(combat_music))
 	WRITE_FILE(S["body_size"] , features["body_size"])

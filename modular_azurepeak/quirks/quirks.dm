@@ -71,6 +71,40 @@
 /datum/quirk/hobbyistmusician/apply_to_human(mob/living/carbon/human/recipient)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
 
+/datum/quirk/linguist
+	name = "Trilingual"
+	desc = "You know a third language, you smart cookie!"
+	custom_text = "Start with a third language of your choice."
+	configurable = TRUE
+	var/language
+
+/datum/quirk/linguist/apply_to_human(mob/living/carbon/human/recipient)
+	if(ispath(language, /datum/language))
+		recipient.grant_language(language)
+
+/datum/quirk/linguist/config_summary()
+	if(!ispath(language, /datum/language))
+		return "<b>Language</b>: None chosen"
+	var/datum/language/L = language
+	return "<b>Language</b>: [initial(L.name)]"
+
+/datum/quirk/linguist/save_config()
+	return list("language" = language)
+
+/datum/quirk/linguist/load_config(list/data, savefile/S)
+	if(islist(data))
+		language = string_to_typepath(data["language"])
+
+/datum/quirk/linguist/configure(mob/user)
+	var/datum/preferences/prefs = user.client?.prefs
+	if(!prefs)
+		return
+	var/list/choices = prefs.get_language_choices()
+	choices -= "None"
+	var/choice = tgui_input_list(user, "Choose Language:", "Linguist", choices)
+	if(choice)
+		language = choices[choice]
+
 /datum/quirk/largeframe
 	name = "Large Frame"
 	desc = "I'm simply built bigger than most. My strength and hardiness has nothing to show for my size, though."
@@ -88,10 +122,66 @@
 	desc = "My body odor is strong and distinct. Without regular baths, others will notice..."
 	point_cost = 1
 	added_traits = list(TRAIT_REDOLENT)
+	configurable = TRUE
+	var/scent_type = "Neutral"
+	var/scent = ""
 
 /datum/quirk/redolent/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.redolent_scent_type = recipient.client?.prefs?.redolent_type || "Neutral"
-	recipient.redolent_scent = recipient.client?.prefs?.redolent_scent || ""
+	recipient.redolent_scent_type = scent_type
+	recipient.redolent_scent = scent
+
+/datum/quirk/redolent/proc/default_scent(type)
+	switch(type)
+		if("Gross")
+			return "rotting meat and sour sweat"
+		if("Pleasant")
+			return "wildflowers and clean rain"
+	return "earth and sweat"
+
+/datum/quirk/redolent/config_summary()
+	return "<b>[scent_type]</b>: [scent || default_scent(scent_type)]"
+
+/datum/quirk/redolent/save_config()
+	return list("type" = scent_type, "scent" = scent)
+
+/datum/quirk/redolent/load_config(list/data, savefile/S)
+	if(islist(data))
+		scent_type = data["type"]
+		scent = data["scent"]
+	// ppl will get pissed if they have 2 rewrite their stink text
+	else if(S)
+		S["redolent_type"] >> scent_type
+		S["redolent_scent"] >> scent
+		if(isnull(scent_type))
+			S["malodorous_type"] >> scent_type
+			S["malodorous_scent"] >> scent
+	if(scent_type == "Positive")
+		scent_type = "Pleasant"
+	if(!(scent_type in list("Gross", "Neutral", "Pleasant")))
+		scent_type = "Neutral"
+	if(isnull(scent))
+		scent = ""
+
+/datum/quirk/redolent/configure(mob/user)
+	var/new_scent_type = tgui_input_list(user, "Choose how others perceive your scent:", "Redolent", list("Gross", "Neutral", "Pleasant"))
+	if(!new_scent_type)
+		return
+	var/scent_action = tgui_input_list(user, "Describe the scent:", "Redolent", list("Describe scent", "Use default"))
+	if(!scent_action)
+		return
+	var/new_scent = default_scent(new_scent_type)
+	if(scent_action == "Describe scent")
+		var/leadin = "They smell of"
+		if(new_scent_type == "Gross")
+			leadin = "They reek of"
+		new_scent = tgui_input_text(user, "Describe the scent:", "Redolent", scent, max_length = 100, multiline = TRUE, preview_leadin = leadin)
+		if(isnull(new_scent))
+			return
+		if(!length(trim(new_scent)))
+			new_scent = default_scent(new_scent_type)
+	scent_type = new_scent_type
+	scent = new_scent
+	to_chat(user, span_notice("Set my Redolent scent to [scent_type]."))
 
 // Redolent scent state and behavior. This is purely quirk-driven now: the quirk applies
 // TRAIT_REDOLENT, the mob holds the scent state, and life.dm drives handle_redolent_scent().

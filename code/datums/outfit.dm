@@ -17,6 +17,9 @@
 	///Name of the outfit (shows up in the equip admin verb)
 	var/name = "Naked"
 
+	// for dummy without mind so it don't runtime
+	var/skip_pre_equip = FALSE
+
 	/// Type path of item to go in uniform slot
 	var/uniform = null
 
@@ -174,7 +177,8 @@
  * If visualsOnly is true, you can omit any work that doesn't visually appear on the character sprite
  */
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	pre_equip(H, visualsOnly)
+	if(!skip_pre_equip)
+		pre_equip(H, visualsOnly)
 
 	// Replace silver items with non-silver alternatives for characters with silver weakness
 	handle_silver_weakness(H)

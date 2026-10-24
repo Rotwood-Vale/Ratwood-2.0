@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/gronn
 	name = ORIGIN_GRONN
-	desc = "The steppes of Gronn are a place of bloodshed and war; Graggarite warbands laying waste to the people of Gronn and vying for dominance over Avar to the south. \
+	desc = "The steppes of Gronn are a place of bloodshed and war; Graggarite warbands lay waste to the people of Gronn and vie for dominance over Avar to the south. \
 	Not all is lost in the steppes, however, with many towns and nomad families eking out an existence fraught with danger despite the ravagers' conquest."
 	origin_title = "Gronn"
 	origin_language = /datum/language/gronnic
