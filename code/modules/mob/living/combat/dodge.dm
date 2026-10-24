@@ -62,10 +62,9 @@
 			if(do_dodge(user, dodge_turf))
 				flash_fullscreen("blackflash2")
 				user.aftermiss()
+				if(has_status_effect(STATUS_EFFECT_GRAGGAR_FEAR))
+					Knockdown(20)
 				return TRUE
-		if(has_status_effect(STATUS_EFFECT_GRAGGAR_FEAR))
-			Knockdown(20)
-		return TRUE
 			else
 				return FALSE
 	else

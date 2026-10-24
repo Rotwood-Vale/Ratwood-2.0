@@ -309,8 +309,7 @@
 	icon_state = "graggarbracers"
 	item_state = "graggarbracers"
 	max_integrity = ARMOR_INT_SIDE_ANTAG - 100
-	peel_threshold = 5
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/wrists/roguetown/bracers/graggar/Initialize(mapload)
 	. = ..()
@@ -324,8 +323,7 @@
 	for if He would not be loved, then He would settle for hatred instead."
 	icon_state = "graggarplatebracer_heavy"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	peel_threshold = 5
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/wrists/roguetown/bracers/graggar/heavy/Initialize(mapload)
 	. = ..()

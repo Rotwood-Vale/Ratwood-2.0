@@ -109,9 +109,8 @@
 	desc = "The blessing of a Martyr is nothing, when put before the Sinistar's rage."
 	icon_state = "graggarhauberk"
 	item_state = "graggarhauberk"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	armor_class = ARMOR_CLASS_MEDIUM
-	peel_threshold = 5
 	max_integrity = ARMOR_INT_CHEST_MEDIUM_STEEL + 50
 
 /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/graggar/Initialize(mapload)

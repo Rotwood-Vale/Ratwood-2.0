@@ -1104,7 +1104,7 @@
 	was never meant to be tainted with minds so fragile and passionate."
 	icon_state = "graggarplatehelm_heavy"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/roguetown/helmet/heavy/graggar/Initialize(mapload)

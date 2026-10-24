@@ -339,7 +339,7 @@
 	icon_state = "graggargorget"
 	item_state = "graggargorget"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	armor = ARMOR_ASCENDANT	
+	armor = ARMOR_PLATE_BSTEEL	
 
 /obj/item/clothing/neck/roguetown/gorget/steel/graggar/Initialize(mapload)
 	. = ..()

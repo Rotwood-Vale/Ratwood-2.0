@@ -215,8 +215,7 @@
 	drools with the distilled essence of worldlux; the afterbirth of ascensionism."
 	icon_state = "graggarplate_heavy"
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
-	peel_threshold = 5	//-Any- weapon will require 5 peel hits to peel coverage off of this armor.
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/suit/roguetown/armor/plate/full/graggar/Initialize(mapload)
 	. = ..()
