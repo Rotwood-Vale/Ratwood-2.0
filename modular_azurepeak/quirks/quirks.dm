@@ -73,9 +73,10 @@
 
 /datum/quirk/linguist
 	name = "Trilingual"
-	desc = "Through education, travel, or circumstance, I have picked up a third language"
-	custom_text = "Start with a third language of your choice."
+	desc = "Through education, travel, or circumstance, I have picked up a third language."
+	custom_text = "Start with one extra language of your choice."
 	configurable = TRUE
+	incompatible_quirks = list(/datum/quirk/quadrilingual)
 	var/language
 
 /datum/quirk/linguist/apply_to_human(mob/living/carbon/human/recipient)
@@ -104,6 +105,56 @@
 	var/choice = tgui_input_list(user, "Choose Language:", "Linguist", choices)
 	if(choice)
 		language = choices[choice]
+
+/datum/quirk/quadrilingual
+	name = "Quadrilingual"
+	desc = "I have an abundance of experience with different languages!"
+	custom_text = "Start with two extra languages of your choice."
+	point_cost = 2
+	configurable = TRUE
+	incompatible_quirks = list(/datum/quirk/linguist)
+	var/list/languages = list()
+
+/datum/quirk/quadrilingual/apply_to_human(mob/living/carbon/human/recipient)
+	for(var/language in languages)
+		recipient.grant_language(language)
+
+/datum/quirk/quadrilingual/config_summary()
+	var/list/names = list()
+	for(var/datum/language/L as anything in languages)
+		names += initial(L.name)
+	if(!length(names))
+		return "<b>Languages</b>: None chosen"
+	return "<b>Languages</b>: [names.Join(", ")]"
+
+/datum/quirk/quadrilingual/save_config()
+	return list("languages" = languages)
+
+/datum/quirk/quadrilingual/load_config(list/data, savefile/S)
+	languages = list()
+	if(!islist(data) || !islist(data["languages"]))
+		return
+	for(var/language in data["languages"])
+		var/language_path = string_to_typepath(language)
+		if(ispath(language_path, /datum/language) && !(language_path in languages))
+			languages += language_path
+
+/datum/quirk/quadrilingual/configure(mob/user)
+	var/datum/preferences/prefs = user.client?.prefs
+	if(!prefs)
+		return
+	var/list/chosen = list()
+	for(var/i in 1 to 2)
+		var/list/choices = prefs.get_language_choices()
+		choices -= "None"
+		for(var/language_name in choices.Copy())
+			if(choices[language_name] in chosen)
+				choices -= language_name
+		var/choice = tgui_input_list(user, "Choose language [i] of 2:", "Quadrilingual", choices)
+		if(!choice)
+			return
+		chosen += choices[choice]
+	languages = chosen
 
 /datum/quirk/largeframe
 	name = "Large Frame"
