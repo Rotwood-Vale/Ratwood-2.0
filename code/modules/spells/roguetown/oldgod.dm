@@ -88,7 +88,7 @@
 
 	// Notify the user and target
 	to_chat(user, span_notice("You purify their Lux with the merging of theirs and your own, for a mote."))
-	to_chat(H, span_info("You feel a strange stirring sensation pour over your Lux, stealing your wounds."))
+	to_chat(H, span_warning("Cold silver threads tug at my Lux, and my wounds begin to vanish."))
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/psydonrespite
@@ -408,7 +408,7 @@
 	user.adjustCloneLoss(clone_transfer)
 
 	// Visual effects
-	user.visible_message(span_danger("[user] absolves [H]'s suffering!"))
+	user.visible_message(span_danger("Silver threads lash from [user] into [H], drawing their suffering away!"))
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
@@ -419,7 +419,7 @@
 
 	// Notify the user and target
 	to_chat(user, span_warning("You absolve [H] of their injuries!"))
-	to_chat(H, span_notice("A strange pull passes through my Lux, and my wounds go with it."))
+	to_chat(H, span_warning("Cold threads pull at my Lux, and my wounds follow them away."))
 	return TRUE
 
 // Weaker absolve for the Stigmata adventurer
@@ -489,7 +489,7 @@
 	user.adjustCloneLoss(clone_transfer)
 
 	// Visual effects
-	user.visible_message(span_danger("[user] takes [H]'s suffering upon themselves!"))
+	user.visible_message(span_danger("Silver threads reach from [user] into [H], drawing their agony away!"))
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
@@ -500,6 +500,6 @@
 	
 	// Notify the user and target
 	to_chat(user, span_warning("You take [H]'s agony upon yourself, AMENDING them!"))
-	to_chat(H, span_notice("A strange pull passes through my Lux, and my agony goes with it."))
+	to_chat(H, span_warning("Cold threads pull at my Lux, and my agony follows them away."))
 	
 	return TRUE
