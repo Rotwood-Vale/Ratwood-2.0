@@ -165,6 +165,8 @@
 			if(attacker?.used_intent?.unarmed)
 				prob2defend = prob2defend - (attacker.get_skill_level(/datum/skill/combat/unarmed) * 10)
 				prob2defend = prob2defend + (human_dodger.get_skill_level(/datum/skill/combat/unarmed) * 10)
+				if(attacker.STASPD > STASPD) //unarmed is inherently swift
+					prob2defend = prob2defend - ((attacker.STASPD - STASPD) * 10)
 
 		var/ignore_DE_bonus = FALSE
 
@@ -200,6 +202,7 @@
 		
 		if(!is_in_cone)
 			ignore_DE_bonus = TRUE
+
 		if(attacking_item && IL)	//Skilldiff applies extra stamloss, tentative
 			drained += (attacker.get_skill_level(attacking_item.associated_skill) - human_dodger.get_skill_level(IL.associated_skill))
 
@@ -232,7 +235,7 @@
 			prob2defend -= 50
 
 		var/dodge_status = FALSE
-		if(prob(prob2defend))
+		if(prob(prob2defend) || ancestor_reroll(prob2defend))
 			dodge_status = TRUE
 
 		if(!dodge_status)

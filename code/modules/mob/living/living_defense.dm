@@ -528,6 +528,8 @@
 			to_chat(src, span_warning("I'm momentarily blinded by the flash!"))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, PROC_REF(clear_fullscreen), "flash", 25), 25)
+		if(!visual && HAS_TRAIT(src, TRAIT_LIGHT_SENSITIVITY))
+			Stun(20)
 		return TRUE
 	return FALSE
 

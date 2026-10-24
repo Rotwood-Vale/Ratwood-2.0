@@ -1241,3 +1241,14 @@ tile_coordinates = list(list(1,1), list(-1,1), list(-1,-1), list(1,-1),list(0,0)
 //Example of a sweeping line from left to right from the clicked turf. The second tile and the line will only appear after 1.1 seconds (the first delay).
 //tile_coordinates = list(list(0,0), list(1,0, 1.1 SECONDS), list(2,0, 1.2 SECONDS), list(3,0,1.3 SECONDS), list(4,0,1.4 SECONDS), list(5,0,1.5 SECONDS))
 
+/datum/special_intent/dagger_dash
+	name = "Dagger Dash"
+	desc = "Become quicker on your feet and pass through other beings for a short time. Boost scales with worn armor."
+	cooldown = 90 SECONDS
+	stamcost = 25
+
+/datum/special_intent/dagger_dash/process_attack()
+	SHOULD_CALL_PARENT(FALSE)
+	howner.apply_status_effect(/datum/status_effect/buff/dagger_dash)
+	playsound(howner, 'sound/combat/dagger_boost.ogg', 100, TRUE)
+	apply_cooldown()
