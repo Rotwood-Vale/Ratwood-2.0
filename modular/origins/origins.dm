@@ -112,6 +112,9 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	origin_title = "Avar"
 	origin_language = /datum/language/aavnic
 	origin_traits = list(TRAIT_STEPPE_RIDER, TRAIT_ANCESTOR_GUARDIAN)
+	hated_by = list(ORIGIN_GRONN)
+	prejudice_stress = /datum/stressevent/prejudice/avar
+	prejudice_examine = span_red("Humourless Aavnic! Pah!")
 	map_x = 417
 	map_y = 189
 
@@ -123,6 +126,9 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	origin_title = "Gronn"
 	origin_language = /datum/language/gronnic
 	origin_traits = list(TRAIT_COLD_RESISTANCE, TRAIT_BATTLE_CRY)
+	hated_by = list(ORIGIN_AVAR)
+	prejudice_stress = /datum/stressevent/prejudice/gronn
+	prejudice_examine = span_red("Barbaric Gronnite! Pah!")
 	map_x = 445
 	map_y = 116
 
