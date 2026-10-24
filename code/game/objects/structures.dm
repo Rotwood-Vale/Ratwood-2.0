@@ -13,6 +13,8 @@
 	var/climb_offset = 0 //offset up when climbed
 	var/mob/living/structureclimber
 	var/hammer_repair
+	/// The player whose attack is landing right now, so on_forced_break() can name them. take_damage carries no attacker
+	var/mob/forcing_user
 //	move_resist = MOVE_FORCE_STRONG
 
 /obj/structure/Initialize(mapload)
@@ -290,6 +292,22 @@
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status
+
+/obj/structure/attacked_by(obj/item/I, mob/living/user)
+	forcing_user = user
+	. = ..()
+	forcing_user = null
+
+/// take_damage() as a player's doing, so a break it causes is put to them by on_forced_break()
+/obj/structure/proc/take_damage_from(mob/user, damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE)
+	forcing_user = user
+	. = take_damage(damage_amount, damage_type, damage_flag, sound_effect)
+	forcing_user = null
+
+/// Run by doors, windows and closets the moment they break, however it happened, for View Forensics.
+/// Only a break from attacked_by() or take_damage_from() has a player to record.
+/obj/structure/proc/on_forced_break(action = "broke")
+	add_forensic_action(forcing_user, action)
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	if(max_integrity)

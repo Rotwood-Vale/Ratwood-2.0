@@ -242,7 +242,7 @@
 			if(locked)
 				user.visible_message(span_warning("[user] bashes into [src]!"))
 				add_forensic_action(user, "bashed into while locked")
-				take_damage(200, "brute", "blunt", 1)
+				take_damage_from(user, 200, "brute", "blunt", 1)
 			else
 				playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
 				add_forensic_action(user, "smashed through")
@@ -445,12 +445,9 @@
 
 /obj/structure/mineral_door/attacked_by(obj/item/I, mob/living/user)
 	var/turf/hit_turf = get_turf(src)
-	var/was_broken = obj_broken || obj_destroyed
 	// Not returned, as door hits have always ended the attack chain here
 	if(..())
 		add_forensic_action(user, "hit with [format_text(I.name)]")
-	if(!was_broken && (obj_broken || obj_destroyed))
-		add_forensic_action(user, "broke")
 	if(obj_broken || obj_destroyed)
 		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, hit_turf)
 		new_track.handle_creation(user)
@@ -788,6 +785,7 @@
 		density = FALSE
 		opacity = FALSE
 		brokenstate = TRUE
+		on_forced_break()
 	..()
 
 /obj/structure/mineral_door/OnCrafted(dirin, user)

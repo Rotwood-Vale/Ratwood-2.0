@@ -73,7 +73,7 @@
 
 		if("follow")
 			var/target_ckey = ckey(params["ckey"])
-			var/mob/target_mob = forensics_find_mob(target_ckey)
+			var/mob/target_mob = get_mob_by_ckey(target_ckey)
 			if(!target_mob)
 				to_chat(user, span_warning("[target_ckey] has no mob in the round."))
 				return FALSE
@@ -89,7 +89,7 @@
 
 		if("pp")
 			var/target_ckey = ckey(params["ckey"])
-			var/mob/target_mob = forensics_find_mob(target_ckey)
+			var/mob/target_mob = get_mob_by_ckey(target_ckey)
 			if(!target_mob)
 				to_chat(user, span_warning("[target_ckey] has no mob in the round."))
 				return FALSE
@@ -125,18 +125,18 @@
 		"last_toucher" = A.fingerprintslast,
 	)
 
-/// Unpacks one of the component's action lists for tgui, newest first. The list is stored oldest first.
-/proc/forensics_action_rows(list/packed_entries)
+/// One of the component's action lists for tgui, newest first. The list is stored oldest first.
+/proc/forensics_action_rows(list/entries)
 	var/list/rows = list()
-	for(var/i in LAZYLEN(packed_entries) to 1 step -1)
-		var/list/entry = forensic_action_fields(packed_entries[i])
+	for(var/i in LAZYLEN(entries) to 1 step -1)
+		var/datum/forensic_action/entry = entries[i]
 		rows += list(list(
 			// Same format as the stat panel's ROUND TIME
-			"time" = time2text(entry["time"], "hh:mm:ss", 0),
-			"ckey" = entry["ckey"],
-			"name" = html_decode(entry["name"]),
-			"action" = html_decode(entry["action"]),
-			"count" = entry["count"],
+			"time" = time2text(entry.time, "hh:mm:ss", 0),
+			"ckey" = entry.ckey,
+			"name" = html_decode(entry.name),
+			"action" = html_decode(entry.action),
+			"count" = entry.count,
 		))
 	return rows
 
@@ -169,12 +169,3 @@
 	if(!length(parsed))
 		parsed["First"] = print_text
 	return parsed
-
-/// Looked up when PP is pressed, not when the logs were generated, so it follows the player to whatever mob they are in now.
-/proc/forensics_find_mob(target_ckey)
-	var/client/target_client = GLOB.directory[target_ckey]
-	if(target_client?.mob)
-		return target_client.mob
-	for(var/mob/candidate as anything in GLOB.mob_list)
-		if(candidate.ckey == target_ckey)
-			return candidate

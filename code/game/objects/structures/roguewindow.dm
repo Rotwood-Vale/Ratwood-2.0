@@ -37,11 +37,8 @@
 	..()
 
 /obj/structure/roguewindow/attacked_by(obj/item/item, mob/living/user)
-	var/was_broken = brokenstate || obj_destroyed
 	if(..())
 		add_forensic_action(user, "hit with [format_text(item.name)]")
-	if(!was_broken && (brokenstate || obj_destroyed))
-		add_forensic_action(user, "broke")
 	if(obj_broken || obj_destroyed)
 		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
 		message_admins("Window [obj_destroyed ? "destroyed" : "broken"] by [user?.real_name] using [item] [ADMIN_JMP(src)]")
@@ -378,12 +375,14 @@
 		if(mover.throwing)
 			if(!climbable)
 				add_forensic_action(mover, "thrown into it")
+				// The thrower breaks it, or the mover themselves on a jump
+				var/mob/thrower = mover.throwing.thrower || mover
 				if(!iscarbon(mover))
-					take_damage(10)
+					take_damage_from(thrower, 10)
 				else
 					var/mob/living/carbon/dude = mover
 					var/base_damage = 20
-					take_damage(base_damage * (dude.STASTR / 10))
+					take_damage_from(thrower, base_damage * (dude.STASTR / 10))
 			if(brokenstate || climbable)
 				if(ishuman(mover))
 					var/mob/living/carbon/human/dude = mover
@@ -400,7 +399,7 @@
 	else if(isitem(mover))
 		var/obj/item/I = mover
 		if(I.throwforce >= 10)
-			take_damage(I.throwforce)
+			take_damage_from(I.throwing?.thrower, I.throwforce)
 			if(brokenstate)
 				return 1
 		else
@@ -422,7 +421,7 @@
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(HAS_TRAIT(user, TRAIT_BASHDOORS))
 		add_forensic_action(user, "bashed")
-		src.take_damage(15)
+		take_damage_from(user, 15)
 		return
 	src.visible_message(span_info("[user] knocks on [src]."))
 	add_fingerprint(user)
@@ -438,6 +437,7 @@
 		set_climbable(TRUE)
 		brokenstate = TRUE
 		opacity = FALSE
+		on_forced_break()
 	update_icon()
 	..()
 

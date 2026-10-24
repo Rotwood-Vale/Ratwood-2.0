@@ -112,6 +112,7 @@
 
 	if(!keep_name)
 		fully_replace_character_name(real_name, prefs.ensure_gnoll_name())
+		pref_base_name = real_name
 
 	if(prefs.gnoll_pronouns)
 		pronouns = prefs.gnoll_pronouns

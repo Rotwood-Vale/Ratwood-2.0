@@ -1269,18 +1269,98 @@
 		verbs -= /mob/living/carbon/human/verb/bad_omen*/
 
 /// Reapplies the player's saved preferences to this character, as the VV "Reapply Preferences" option does.
-/// keep_name leaves the character's current name alone.
-/mob/living/carbon/human/proc/reapply_preferences(keep_name = FALSE)
+/// admin is told if their saved name could not be applied.
+/mob/living/carbon/human/proc/reapply_preferences(mob/admin)
+	if(!client?.prefs)
+		return FALSE
+	var/saved_name = get_saved_name()
 	//make reapply prefs work for gnolls
 	if(dna?.species?.id == "gnoll")
-		if(!apply_gnoll_preferences(FALSE, keep_name))
-			reapply_live_preferences(keep_name)
+		if(!apply_gnoll_preferences(FALSE, keep_name = TRUE))
+			reapply_live_preferences()
 		set_blindness(0)
 		regenerate_icons()
 	else
-		reapply_live_preferences(keep_name)
+		reapply_live_preferences()
+	take_saved_name(saved_name, admin)
+	return TRUE
 
-/// Admin preferences refresh from VV, the player panel and the ticket window. Keeps the character's current name.
+/// The name this character's player has saved for them: their gnoll name as a gnoll, otherwise their slot's name.
+/mob/living/carbon/human/proc/get_saved_name()
+	if(dna?.species?.id == "gnoll" && client.prefs.gnoll_prefs)
+		return client.prefs.gnoll_prefs.ensure_gnoll_name()
+	return client.prefs.real_name
+
+/// real_name with saved_name in place of the saved name it was built from, keeping what roles added around it,
+/// so "Ser John" becomes "Ser Jon". Null if the name was replaced outright, as by a villain's chosen name or a marriage.
+/mob/living/carbon/human/proc/get_refreshed_name(saved_name)
+	// Padded so the old name only matches as whole words
+	var/base_at = findtextEx(" [real_name] ", " [pref_base_name] ")
+	if(!base_at)
+		return null
+	return copytext(real_name, 1, base_at) + saved_name + copytext(real_name, base_at + length(pref_base_name))
+
+/// Renames a character already in the round to their saved name, keeping any title or surname a role gave them. Returns TRUE if it did.
+/mob/living/carbon/human/proc/take_saved_name(saved_name, mob/admin)
+	if(!saved_name || saved_name == pref_base_name)
+		return FALSE
+	// Not spawned from their preferences, such as an admin-made character, so the name is not theirs to replace
+	if(!pref_base_name)
+		to_chat(admin, span_warning("[real_name] was not spawned from a saved character, so they keep their name."))
+		return FALSE
+	var/list/randomise = client.prefs.randomise
+	if(randomise[RANDOM_NAME] || (randomise[RANDOM_NAME_ANTAG] && mind?.special_role))
+		to_chat(admin, span_warning("[ckey] has random names on, so [real_name] keeps their name."))
+		return FALSE
+	var/new_name = get_refreshed_name(saved_name)
+	if(!new_name)
+		to_chat(admin, span_warning("[real_name] was renamed in the round, so they keep that name rather than their saved [saved_name]."))
+		return FALSE
+	// Spawning refuses a saved name already in the round, so this does too
+	if((new_name in GLOB.chosen_names) || (saved_name in GLOB.chosen_names))
+		to_chat(admin, span_warning("Another character is already named [saved_name], so [real_name] keeps their name."))
+		return FALSE
+	var/old_name = real_name
+	// Roles that add a title do not all update this, so it holds either the full name or the saved name it was built from
+	var/name_index = GLOB.chosen_names.Find(old_name)
+	if(name_index)
+		GLOB.chosen_names[name_index] = new_name
+	else
+		name_index = GLOB.chosen_names.Find(pref_base_name)
+		if(name_index)
+			GLOB.chosen_names[name_index] = saved_name
+	fully_replace_character_name(old_name, new_name)
+	pref_base_name = saved_name
+	rename_character_records(old_name, new_name)
+	log_admin("[key_name(admin)]'s preferences refresh renamed [old_name] to [new_name].")
+	to_chat(admin, span_notice("[old_name] now goes by [new_name]."))
+	return TRUE
+
+/// Moves everything kept under a character's name over to their new one, so a rename cannot lift an outlawry,
+/// excommunication or bounty, or make everyone who knew them forget them.
+/proc/rename_character_records(old_name, new_name)
+	for(var/list/names as anything in list(GLOB.outlawed_players, GLOB.excommunicated_players, GLOB.apostasy_players, GLOB.court_agents))
+		var/index = names.Find(old_name)
+		if(index)
+			names[index] = new_name
+	if(old_name in GLOB.lord_titles)
+		GLOB.lord_titles[new_name] = GLOB.lord_titles[old_name]
+		GLOB.lord_titles -= old_name
+	// Kept under both, as logs from before the rename name them the old way
+	if(old_name in GLOB.character_ckey_list)
+		GLOB.character_ckey_list[new_name] = GLOB.character_ckey_list[old_name]
+	for(var/datum/bounty/bounty as anything in GLOB.head_bounties)
+		if(bounty.target == old_name)
+			bounty.target = new_name
+		if(bounty.target_hidden == old_name)
+			bounty.target_hidden = new_name
+	for(var/datum/mind/knower as anything in SSticker.minds)
+		var/list/known = knower.known_people
+		if(known && (old_name in known))
+			known[new_name] = known[old_name]
+			known -= old_name
+
+/// Admin preferences refresh from VV, the player panel and the ticket window.
 /mob/living/carbon/human/proc/admin_pref_refresh(mob/admin)
 	if(!client?.prefs)
 		to_chat(admin, span_warning("[src] has no connected player whose preferences can be reapplied."))
@@ -1289,20 +1369,15 @@
 	if(is_shapeshift_shell())
 		to_chat(admin, span_warning("[src] is shapeshifted. Wait until they return to their own body."))
 		return FALSE
-	if(tgui_alert(admin, "Pref refresh [ckey]?", "Pref Refresh", list("Yes", "No")) != "Yes")
-		return FALSE
-	if(QDELETED(src) || !client?.prefs || is_shapeshift_shell())
-		to_chat(admin, span_warning("[src] can no longer have their preferences reapplied."))
-		return FALSE
 	// Logged before acting so the record survives a runtime partway through copy_to
 	log_admin("[key_name(admin)] refreshed the preferences of [key_name(src)].")
 	message_admins(span_adminnotice("[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)]."))
 	admin_ticket_log(src, "<font color='green'>[key_name_admin(admin)] refreshed the preferences of [key_name_admin(src)].</font>")
-	// Without keep_name, copy_to hands them a random name, as their own is always in GLOB.chosen_names mid-round
-	reapply_preferences(keep_name = TRUE)
+	reapply_preferences(admin)
 	return TRUE
 
-/mob/living/carbon/human/proc/reapply_live_preferences(keep_name = FALSE)
+/// Everything but the name, which reapply_preferences() sets. copy_to would hand them a random one, as theirs is always in GLOB.chosen_names mid-round
+/mob/living/carbon/human/proc/reapply_live_preferences()
 	if(!client?.prefs)
 		return FALSE
 
@@ -1310,7 +1385,7 @@
 	var/list/preserved_languages = language_holder?.languages?.Copy()
 	var/selected_default_language = language_holder?.selected_default_language
 
-	client.prefs.copy_to(src, TRUE, FALSE, keep_name = keep_name)
+	client.prefs.copy_to(src, TRUE, FALSE, keep_name = TRUE)
 	refresh_live_vocal_preferences()
 
 	if(language_holder && length(preserved_languages))

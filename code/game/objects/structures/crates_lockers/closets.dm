@@ -259,15 +259,13 @@
 /obj/structure/closet/obj_break(damage_flag)
 	if(!obj_broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
+		on_forced_break("smashed open")
 	..()
 
 /obj/structure/closet/attacked_by(obj/item/I, mob/living/user)
-	var/was_broken = obj_broken || obj_destroyed
 	. = ..()
 	if(.)
 		add_forensic_action(user, "hit with [format_text(I.name)]")
-	if(!was_broken && (obj_broken || obj_destroyed))
-		add_forensic_action(user, "smashed open")
 
 
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)

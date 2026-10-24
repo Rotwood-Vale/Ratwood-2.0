@@ -3268,6 +3268,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		character.real_name = gnoll_name
 		character.name = gnoll_name
 		character.dna.real_name = gnoll_name
+		character.pref_base_name = gnoll_name
 		return
 
 	if(randomise[RANDOM_SPECIES] && !character_setup)
@@ -3307,7 +3308,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = src)
 	character.dna.update_body_size()
 
-	// keep_name is a live refresh of a character already in the round, whose own name is always in GLOB.chosen_names
+	// keep_name is a live refresh of a character already in the round, whose own name is always in GLOB.chosen_names.
+	// /mob/living/carbon/human/proc/reapply_preferences() renames them itself
 	if(!keep_name)
 		if((randomise[RANDOM_NAME] || randomise[RANDOM_NAME_ANTAG] && antagonist) && !character_setup)
 			slot_randomized = TRUE
@@ -3327,6 +3329,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		else
 			character.real_name = real_name
 		character.name = character.real_name
+		character.pref_base_name = character.real_name
 
 	if((selected_title != "None" && pref_species.use_titles) && selected_title != null)
 		character.dna.species.name = selected_title
