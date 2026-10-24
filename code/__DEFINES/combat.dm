@@ -472,4 +472,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define SECONDARY_ATTACK_CONTINUE_CHAIN 3
 
 #define MAX_DODGE_CEIL 5
+#define MAX_DODGE_START 0	// We start at (presumed) 90%
 #define MAX_DODGE_FLOOR -15
+#define MAX_DODGE_CLAMP -5 // at 85%. Base is 90%.
+
+#define RIPOSTE_SHARPNESS_FACTOR	0.15	//Fraction of blade_int lost on riposte (15%). Heavy weapons add +0.05.
+#define RIPOSTE_INTEG_DIVISOR		5	//max_integrity / this = integrity damage on riposte for non-bladed weapons.
