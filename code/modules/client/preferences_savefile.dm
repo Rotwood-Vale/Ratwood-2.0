@@ -297,6 +297,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_accs"]			>> ghost_accs
 	S["ghost_others"]		>> ghost_others
 	S["admin_ghost_icon"]	>> admin_ghost_icon
+	S["admin_ghost_name"]	>> admin_ghost_name
 	S["preferred_map"]		>> preferred_map
 	S["ignoring"]			>> ignoring
 	S["ghost_hud"]			>> ghost_hud
@@ -361,6 +362,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 	if(admin_ghost_icon && !isicon(admin_ghost_icon))
 		admin_ghost_icon = null
+	if(admin_ghost_name && !istext(admin_ghost_name))
+		admin_ghost_name = null
 	menuoptions		= SANITIZE_LIST(menuoptions)
 	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
@@ -496,6 +499,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ghost_accs"], ghost_accs)
 	WRITE_FILE(S["ghost_others"], ghost_others)
 	WRITE_FILE(S["admin_ghost_icon"], admin_ghost_icon)
+	WRITE_FILE(S["admin_ghost_name"], admin_ghost_name)
 	WRITE_FILE(S["preferred_map"], preferred_map)
 	WRITE_FILE(S["ignoring"], ignoring)
 	WRITE_FILE(S["ghost_hud"], ghost_hud)

@@ -75,6 +75,18 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /mob/dead/observer/admin
 	hud_type = /datum/hud/adminghost
 
+/mob/dead/observer/admin/Login()
+	. = ..()
+	apply_admin_ghost_name()
+
+/// Renames this admin ghost to its admin's preferred ghost name, if they have set one.
+/mob/dead/observer/admin/proc/apply_admin_ghost_name()
+	var/preferred_name = client?.prefs?.admin_ghost_name
+	if(!client?.holder || !preferred_name)
+		return
+	name = preferred_name
+	real_name = preferred_name
+
 /mob/dead/observer/proc/apply_admin_ghost_image()
 	if(!client?.holder)
 		return
