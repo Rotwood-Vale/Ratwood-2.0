@@ -25,7 +25,7 @@
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	armor = ARMOR_LEATHER
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
@@ -86,7 +86,7 @@
 	desc = "An assembly of thickly woven trunk, bound together by ancient song and tool of the oldest elven druids. It still creaks and weeps with forlorn reminiscence of a bygone era. It looks like only Elves can fit in it."
 	allowed_race = list(/datum/species/elf/wood, /datum/species/human/halfelf, /datum/species/elf/dark, /datum/species/elf)
 	armor = ARMOR_BLACKOAK
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
 	icon_state = "welfchest"
@@ -125,7 +125,7 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "Kurche"
 	desc = "Pieces of Iron Plates and Leathers that protect the vitals."
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	icon_state = "kurche"
 	armor = ARMOR_PLATE	//Essentially really good stab/slash prot, some prot against projectiles too
 	blocksound = CHAINHIT
@@ -144,7 +144,7 @@
 	blocksound = SOFTHIT
 	slot_flags = ITEM_SLOT_ARMOR
 	blade_dulling = DULLING_BASHCHOP
-	body_parts_covered = CHEST|GROIN|LEGS|VITALS
+	body_parts_covered = COVERAGE_ALL_BUT_ARMFEET
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
