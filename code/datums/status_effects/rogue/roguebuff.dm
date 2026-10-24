@@ -2782,6 +2782,14 @@
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REFRESH
 
+/datum/status_effect/buff/battle_cry/on_apply()
+	. = ..()
+	owner.mark_pain_hud_dirty()
+
+/datum/status_effect/buff/battle_cry/on_remove()
+	. = ..()
+	owner.mark_pain_hud_dirty()
+
 /atom/movable/screen/alert/status_effect/buff/dagger_dash
 	name = "Dagger Dash"
 	desc = "I'm slipping through!"

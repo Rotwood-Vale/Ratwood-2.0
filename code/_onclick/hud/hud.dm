@@ -14,7 +14,8 @@
 		limb damage    bodypart receive_damage() / heal_damage() / set_damage()
 		wound pain     wound set_woundpain()
 		pain modifier  human adjust_pain_mod()
-	TRAIT_ADRENALINE_RUSH and TRAIT_NOPAIN are tracked automatically.
+	TRAIT_ADRENALINE_RUSH, TRAIT_NOPAIN and the battle cry buff are tracked automatically.
+	Read the pain threshold only through get_pain_threshold(), never a local formula.
 	Willpower changed through change_stat() is tracked too.
 	Wrote STAWIL directly, or changed anything else pain depends on? Call mark_pain_hud_dirty().
 */

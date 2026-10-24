@@ -1,4 +1,4 @@
-# Prints every write to a heart HUD input that bypasses its setter.
+# Prints every write to a heart HUD input that bypasses its setter, and every pain threshold not taken from get_pain_threshold().
 # Allowed: a type-level default (one tab under a type path) and the body of a proc listed for that var.
 
 BEGIN {
@@ -13,7 +13,8 @@ BEGIN {
 	names_re = ""
 	for (r = 1; r <= rules; r++)
 		names_re = names_re (r > 1 ? "|" : "") rule_var[r]
-	names_re = "(" names_re ")"
+	names_re = "(" names_re "|pain_threshold)"
+	threshold_re = "(^|[^_a-zA-Z0-9])pain_threshold([^_a-zA-Z0-9]|$)"
 }
 
 function add_rule(var_name, allowed, use) {
@@ -67,6 +68,11 @@ function report(r) {
 	printf("%s:%d: %s -> use %s: %s\n", FILENAME, FNR, rule_var[r], rule_use[r], raw)
 }
 
+function check_threshold(code) {
+	if (code ~ threshold_re)
+		printf("%s:%d: pain_threshold -> use get_pain_threshold(): %s\n", FILENAME, FNR, raw)
+}
+
 function check_line(code, anywhere,    r) {
 	for (r = 1; r <= rules; r++) {
 		if (!index(raw, rule_var[r]))
@@ -107,11 +113,13 @@ FNR == 1 {
 	code = strip(raw)
 	if (macro_line) {
 		check_line(code, 1)
+		check_threshold(code)
 		next
 	}
 	if (col0) {
 		if (code ~ /^[ \t]*$/)
 			next
+		check_threshold(code)
 		split("", local)
 		in_proc = index(code, "(") > 0
 		proc_name = ""
@@ -127,6 +135,8 @@ FNR == 1 {
 		}
 		next
 	}
-	if (raw ~ names_re)
+	if (raw ~ names_re) {
 		check_line(code, 0)
+		check_threshold(code)
+	}
 }

@@ -85,6 +85,18 @@ cat > "$fixture" <<'EOF'
 	proc/old_style_nested()
 		blood_volume = 0 //BAD
 
+/mob/living/carbon/handle_random_events()
+	var/pain_threshold = STAWIL * 10 //BAD
+	var/painpercent = get_complex_pain() / pain_threshold //BAD
+	var/fine = get_complex_pain() / get_pain_threshold()
+	// pain_threshold in a comment is fine
+
+/mob/living/carbon
+	var/pain_threshold = 0 //BAD
+
+/datum/unit_test/pain_threshold_is_live
+
+#define PAIN_PERCENT(mob) (mob.get_complex_pain() / mob.pain_threshold) //BAD
 #define DRAIN_BLOOD(mob) mob.blood_volume -= 1 //BAD
 #define POISON(mob) \
 	mob.toxloss += 2 //BAD
@@ -104,6 +116,6 @@ if [ -n "$hits" ]; then
 	echo "$hits"
 	echo
 	echo -e "${RED}ERROR: a heart HUD input is written directly. Use the setter named on each line above.${NC}"
-	echo -e "${RED}A direct write never refreshes the heart HUD, so the player sees stale blood, poison, suffocation or pain. See the header of code/_onclick/hud/hud.dm.${NC}"
+	echo -e "${RED}A direct write never refreshes the heart HUD, so the player sees stale blood, poison, suffocation or pain, and a pain threshold computed outside get_pain_threshold() drifts from the one pain stuns use. See the header of code/_onclick/hud/hud.dm.${NC}"
 	exit 1
 fi

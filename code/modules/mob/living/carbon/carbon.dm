@@ -647,6 +647,8 @@
 	var/threshold = HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH) ? ((willpower + 5) * 10) : (willpower * 10)
 	if(has_flaw(/datum/charflaw/addiction/masochist)) // Masochists handle pain better by about 1 endurance point
 		threshold += 10
+	if(has_status_effect(/datum/status_effect/buff/battle_cry))
+		threshold += 10
 	return threshold
 
 /mob/living/carbon/proc/on_pain_trait_changed(datum/source)
@@ -1072,7 +1074,7 @@
 		clear_fullscreen("oxy")
 
 	var/flash_pain = FALSE
-	var/hurtdamage = ((get_complex_pain() / (STAWIL * 10)) * 100) //what percent out of 100 to max pain
+	var/hurtdamage = ((get_complex_pain() / get_pain_threshold()) * 100) //what percent out of 100 to max pain
 	var/severity = 0
 	switch(hurtdamage)
 		if(-INFINITY to 5)
