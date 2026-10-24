@@ -1640,7 +1640,7 @@
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
 	backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
   H.mind.RemoveSpell(/datum/action/cooldown/spell/mending)
-  H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser
+  H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
 	if(istype(H.wear_armor, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))//prevents getting free gilded armor for your hedge knight buddy if you have natural armor
 		armor = null
 	if(istype(H.wear_shirt, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))
