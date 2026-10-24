@@ -2085,7 +2085,6 @@
 #include "code\modules\jobs\job_types\roguetown\garrison\knight\knight.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\knight\knight_champion.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\knight\knight_foot.dm"
-#include "code\modules\jobs\job_types\roguetown\garrison\knight\knight_heavy.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\knight\knight_mounted.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\manorguard\cavalry.dm"
 #include "code\modules\jobs\job_types\roguetown\garrison\manorguard\footman.dm"

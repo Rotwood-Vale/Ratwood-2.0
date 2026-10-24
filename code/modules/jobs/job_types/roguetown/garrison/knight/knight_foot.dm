@@ -1,24 +1,28 @@
 /datum/advclass/knight/footknight
 	name = "Foot Knight"
-	tutorial = "You are accustomed to traditional foot-soldiery, masterfully proficient in swords, flails, or maces. \
-	Your fortitude and mastery with the versatile combination of a shield and weapon makes you a fearsome opponent to take down!"
+	tutorial = "You are accustomed to traditional foot-soldiery, masterfully proficient in your weapon of choice. \
+	Your fortitude and versatile expertise in all manner of weapons makes you a fearsome opponent to take down! \
+	A knight of the land, usually on foot, but able to ride if need be."
 	outfit = /datum/outfit/job/roguetown/knight/footknight
 
 	category_tags = list(CTAG_ROYALGUARD)
 	traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list(
-		STATKEY_STR = 1,//Tanky, less strength, but high con/end.
+		STATKEY_STR = 2,
 		STATKEY_INT = 1,
-		STATKEY_CON = 3,
-		STATKEY_WIL = 3,
+		STATKEY_CON = 2,
+		STATKEY_WIL = 2,
+		STATKEY_SPD = -1,
 	)
 	subclass_skills = list(
+		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/whipsflails = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/shields = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/axes = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
@@ -35,28 +39,72 @@
 
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Longsword","Flail","Warhammer","Sabre")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		var/stats = list("Strength (+1STR)","Endurance (+1CON/WIL)","Speed (+1SPD)")
+		var/stats_choice = input(H, "Choose your prowess.", "HONE YOUR BODY") as anything in stats
 		H.set_blindness(0)
+		switch(stats_choice)
+			if("Strength (+1STR)")
+				H.change_stat(STATKEY_STR, 1)
+			if("Endurance (+1CON/WIL)")
+				H.change_stat(STATKEY_CON, 1)
+				H.change_stat(STATKEY_WIL, 1)
+			if("Speed (+1SPD)")
+				H.change_stat(STATKEY_SPD, 1)
+		var/weapons = list("Longsword","Flail","Warhammer","Sabre","Greatsword","Zweihander","Great Mace","Battle Axe","Greataxe","Estoc","Lucerne","Partizan")
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Longsword")
 				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				l_hand = /obj/item/rogueweapon/sword/long
+				backl = /obj/item/rogueweapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 			if("Flail")
 				l_hand = /obj/item/rogueweapon/flail/sflail
+				backl = /obj/item/rogueweapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)
 			if ("Warhammer")
 				beltr = /obj/item/rogueweapon/mace/warhammer/steel
+				backl = /obj/item/rogueweapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
 			if("Sabre")
 				beltl = /obj/item/rogueweapon/scabbard/sword/noble
 				l_hand = /obj/item/rogueweapon/sword/sabre
+				backl = /obj/item/rogueweapon/shield/tower/metal
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+			if("Battle Axe")
+				r_hand = /obj/item/rogueweapon/stoneaxe/battle
+				backl = /obj/item/rogueweapon/shield/tower/metal
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
+			if("Greatsword")
+				r_hand = /obj/item/rogueweapon/greatsword
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+			if("Zweihander")
+				r_hand = /obj/item/rogueweapon/greatsword/grenz
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+			if("Great Mace")
+				r_hand = /obj/item/rogueweapon/mace/goden/steel
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
+			if("Greataxe")
+				r_hand = /obj/item/rogueweapon/greataxe/steel
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)
+			if("Estoc")
+				r_hand = /obj/item/rogueweapon/estoc
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+			if("Lucerne")
+				r_hand = /obj/item/rogueweapon/eaglebeak
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
+			if("Partizan")
+				r_hand = /obj/item/rogueweapon/spear/partizan
+				backl = /obj/item/rogueweapon/scabbard/gwstrap
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
 
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	pants = /obj/item/clothing/under/roguetown/chainlegs
-	backl = /obj/item/rogueweapon/shield/tower/metal
 	if(H.mind)
 		var/helmets = list(
 			"Pigface Bascinet" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,

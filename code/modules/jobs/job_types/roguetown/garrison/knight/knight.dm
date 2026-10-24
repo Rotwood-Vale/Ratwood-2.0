@@ -25,7 +25,6 @@
 	cmode_music = 'sound/music/combat_knight.ogg'
 	social_rank = SOCIAL_RANK_MINOR_NOBLE
 	job_subclasses = list(
-		/datum/advclass/knight/heavy,
 		/datum/advclass/knight/footknight,
 		/datum/advclass/knight/mountedknight,
 		/datum/advclass/knight/irregularknight
