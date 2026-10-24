@@ -46666,6 +46666,10 @@
 	},
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/town/basement/tavern)
+"jnA" = (
+/obj/structure/bookcase/random/misc,
+/turf/open/floor/rogue/hexstone,
+/area/rogue/indoors/town/academy)
 "jnD" = (
 /obj/structure/rack/rogue/shelf,
 /obj/item/reagent_containers/glass/cup/wooden{
@@ -50365,6 +50369,10 @@
 	},
 /turf/open/floor/rogue/church,
 /area/rogue/under/town/basement/keep)
+"kcq" = (
+/obj/item/canvas/random_painting,
+/turf/closed/wall/mineral/rogue/decowood,
+/area/rogue/indoors/town/academy)
 "kcr" = (
 /turf/closed/mineral/random/rogue,
 /area/rogue/under/underdark/rockhill/west)
@@ -69089,6 +69097,8 @@
 	pixel_y = 3
 	},
 /obj/item/flint,
+/obj/item/roguekey/archive,
+/obj/item/roguekey/archive,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/academy)
 "nQg" = (
@@ -89640,6 +89650,9 @@
 /obj/item/paper/scroll,
 /obj/item/natural/feather,
 /obj/item/natural/feather,
+/obj/structure/roguemachine/mail/r{
+	mailtag = "Archivist"
+	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/academy)
 "sbL" = (
@@ -96360,25 +96373,13 @@
 /turf/open/floor/rogue/grass,
 /area/rogue/indoors/town/bath)
 "tvz" = (
-/obj/structure/bookcase/random/archive{
-	pixel_x = 4
-	},
 /obj/machinery/light/rogue/candle/r,
 /obj/structure/fluff/railing/border{
 	dir = 8
 	},
-/obj/item/recipe_book/alchemy,
-/obj/item/recipe_book/blacksmithing,
-/obj/item/recipe_book/builder,
-/obj/item/recipe_book/ceramics,
-/obj/item/recipe_book/cooking,
-/obj/item/recipe_book/engineering,
-/obj/item/recipe_book/leatherworking,
-/obj/item/recipe_book/magic,
-/obj/item/recipe_book/sewing,
-/obj/item/recipe_book/survival,
-/obj/item/book/rogue/cardgame,
-/obj/item/book/rogue/cooking,
+/obj/structure/bookcase/random/reference{
+	pixel_x = 5
+	},
 /turf/open/floor/rogue/herringbone,
 /area/rogue/indoors/town/academy)
 "tvA" = (
@@ -107766,6 +107767,10 @@
 /obj/structure/glowshroom,
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/town/grove)
+"vMS" = (
+/obj/structure/bookcase/player_archive,
+/turf/open/floor/rogue/ruinedwood/chevron,
+/area/rogue/indoors/town/academy)
 "vMU" = (
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors/bograt/sunken)
@@ -309015,7 +309020,7 @@ lrs
 fXe
 xdp
 uqU
-dYh
+jnA
 nDG
 fXe
 fXe
@@ -529342,8 +529347,8 @@ icG
 pVg
 dVm
 pVg
-sIt
-sIt
+kcq
+kcq
 sIt
 mDW
 sIt
@@ -531502,7 +531507,7 @@ fZJ
 bfZ
 sIt
 sIt
-dJZ
+vMS
 dJZ
 nQc
 luM
