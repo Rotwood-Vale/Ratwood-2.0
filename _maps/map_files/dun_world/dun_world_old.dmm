@@ -11898,7 +11898,7 @@
 /area/rogue/outdoors/mountains)
 "dhq" = (
 /obj/structure/table/vtable/v2,
-/obj/item/rogueweapon/woodstaff/diamond,
+/obj/item/rogueweapon/woodstaff/implement/grand,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/under/cave/mazedungeon)
 "dhz" = (
@@ -21539,8 +21539,7 @@
 	lockid = "baroness"
 	},
 /obj/item/roguegem/ruby,
-/obj/item/book/granter/spell/blackstone/frostbolt,
-/obj/item/rogueweapon/woodstaff/riddle_of_steel,
+/obj/item/rogueweapon/woodstaff/implement/grand/riddle,
 /obj/item/storage/belt/rogue/pouch/coins/rich,
 /turf/open/floor/rogue/wood/herringbone,
 /area/rogue/outdoors/mountains/decap/gunduzirak/bossarena)
@@ -31874,7 +31873,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/shelter/woods)
 "imU" = (
-/obj/item/spellbook_unfinished,
+/obj/item/rogueweapon/spellbook,
 /turf/open/floor/rogue/church,
 /area/rogue/under/town/sewer)
 "imY" = (
@@ -42516,7 +42515,7 @@
 /area/rogue/indoors)
 "kSX" = (
 /obj/structure/bookcase,
-/obj/item/book/spellbook,
+/obj/item/rogueweapon/spellbook,
 /turf/open/floor/rogue/blocks,
 /area/rogue/under/cave/mazedungeon)
 "kTb" = (
@@ -64522,7 +64521,6 @@
 "qvs" = (
 /obj/structure/closet/crate/coffin,
 /obj/item/reagent_containers/glass/bottle/rogue/manapot,
-/obj/item/book/granter/spell/blackstone/sicknessray,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/under/cave/scarymaze)
 "qvy" = (
@@ -66152,7 +66150,7 @@
 /area/rogue/indoors/town/manor)
 "qPo" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/spellbook_unfinished/pre_arcyne,
+/obj/item/rogueweapon/spellbook,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/cave/mazedungeon)
 "qPr" = (
@@ -78105,8 +78103,6 @@
 	locked = 1;
 	lockid = "lich"
 	},
-/obj/item/book/granter/spell/blackstone/skeleton,
-/obj/item/book/granter/spell/blackstone/bonechill,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /turf/open/floor/rogue/carpet/lord/right,

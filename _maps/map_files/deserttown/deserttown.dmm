@@ -6330,7 +6330,7 @@
 /area/rogue/indoors/inq/basement)
 "bKx" = (
 /obj/structure/table/church/m/alt,
-/obj/item/spellbook_unfinished/pre_arcyne,
+/obj/item/rogueweapon/spellbook,
 /obj/item/roguegem/random,
 /turf/open/floor/rogue/churchrough{
 	color = "#d4ffcf"
@@ -43173,8 +43173,8 @@
 "mhR" = (
 /obj/item/chalk,
 /obj/item/chalk,
-/obj/item/spellbook_unfinished/pre_arcyne,
-/obj/item/spellbook_unfinished/pre_arcyne,
+/obj/item/rogueweapon/spellbook,
+/obj/item/rogueweapon/spellbook,
 /obj/item/roguegem/amethyst,
 /obj/item/roguegem/amethyst,
 /obj/structure/closet/crate/roguecloset/dark,
@@ -52604,8 +52604,6 @@
 	locked = 1;
 	lockid = "lich"
 	},
-/obj/item/book/granter/spell/blackstone/skeleton,
-/obj/item/book/granter/spell/blackstone/bonechill,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /obj/effect/spawner/lootdrop/roguetown/dungeon/spells,
 /turf/open/floor/rogue/carpet/lord/right,
@@ -53583,7 +53581,6 @@
 	},
 /area/rogue/outdoors/town/grove)
 "oZo" = (
-/obj/item/book/granter/spell/blackstone/familiar,
 /obj/structure/closet/crate/chest/gold,
 /turf/open/floor/rogue/lightpath{
 	color = "#b3acbf"
@@ -68053,7 +68050,7 @@
 /obj/item/skull,
 /obj/item/paper,
 /obj/item/paper,
-/obj/item/rogueweapon/woodstaff/quartz,
+/obj/item/rogueweapon/woodstaff/implement/greater/quartz,
 /turf/open/floor/rogue/churchrough{
 	color = "#d4ffcf"
 	},
@@ -76260,7 +76257,7 @@
 /area/rogue/under/dungeon/sunkenchurch)
 "vsR" = (
 /obj/structure/rack/rogue/shelf/biggest,
-/obj/item/rogueweapon/woodstaff/naledi,
+/obj/item/rogueweapon/woodstaff/implement/grand/naledi,
 /obj/item/clothing/neck/roguetown/psicross/naledi,
 /obj/item/clothing/mask/rogue/lordmask/naledi,
 /turf/open/floor/rogue/church,
