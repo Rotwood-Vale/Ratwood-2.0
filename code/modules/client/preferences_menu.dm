@@ -239,6 +239,17 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	if(second_virtue_allowed())
 		html += get_virtue_html("Second Virtue", virtuetwo, 2)
 	html += pref_sub("Quirks")
+	var/triumph_gain = get_quirk_points_remaining()
+	var/gain_color = "#e3c06f"
+	var/gain_text = "[triumph_gain]"
+	if(triumph_gain > 0)
+		gain_color = "#91cf68"
+		gain_text = "+[triumph_gain]"
+	if(triumph_gain < 0)
+		triumph_gain = -get_triumph_collateral()
+		gain_color = "#cf2a2a"
+		gain_text = "[triumph_gain]"
+	html += "<div class='r'><font color='#c9a96e'><b>Triumph Gain: <font color='[gain_color]'>[gain_text]</font></b></font></div>"
 	for(var/i in 1 to length(quirks))
 		var/datum/quirk/current_quirk = quirks[i]
 		html += "<b>[current_quirk.name]</b> ([current_quirk.point_cost]) [bg_link("\[Remove\]", "quirk_remove", i)]"
