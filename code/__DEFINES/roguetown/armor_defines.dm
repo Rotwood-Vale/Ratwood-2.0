@@ -23,10 +23,10 @@
 #define DBLOCK_HEAVY		3	// Brigandine, mail, cuirass, plate.
 #define DBLOCK_BSTEEL		4	// Blacksteel, antagonist.
 
-// Damage reduction tiers (0-5). Used by blunt (absorb), fire, acid (pierce).
+// Damage reduction tiers (0-5). Used by blunt and fire (all DR Absorb).
 // Note that blunt by default have 1.6x Integrity Multiplier.
 // Damage multiplier = 1 / (1 + 0.2 * tier)
-// Blunt: all damage absorbed by armor. Fire/Acid: reduced damage still hits HP.
+// All damage absorbed by armor (none to HP); armor takes the DR-reduced amount.
 #define DR_NONE				0	// Nothing. 100% damage. EDPS: 160%
 #define DR_LIGHT			1	// Plate / Metal. 20% EHP increase. EDPS: 133%
 #define DR_MEDIUM			2	// Mail. 40% EHP increase. EDPS: 114%
@@ -35,13 +35,15 @@
 #define DR_ULTRA			5	// Best quality light armor. 100% EHP increase. EDPS: 80%
 
 // Armor damage type categories
-// DR Absorb: damage reduced by tier, ALL damage goes to armor integrity (none to HP). Blunt.
-// DR Pierce: damage reduced by tier, reduced damage STILL hits HP. Armor also takes integrity damage. Fire, acid.
+// DR Absorb: damage reduced by tier, ALL damage goes to armor integrity (none to HP). Blunt, fire.
 // DBLOCK: tier pass/fail penetration system. Slash, stab, piercing.
 #define BLUNT_DR_COEFFICIENT 0.3 // Blunt only: 1 / (1 + 0.3 * tier) = 60% reduction at tier 5
 #define ARMOR_DR_ABSORB_TYPES list("blunt")
-#define ARMOR_DR_PIERCE_TYPES list("fire", "acid")
-#define ARMOR_DR_TYPES list("blunt", "fire", "acid")
+#define ARMOR_DR_TYPES list("blunt", "fire")
+// Resist DR types: worn real armor absorbs these even at a 0 rating (metal shows no fire pips but still
+#define ARMOR_DR_RESIST_TYPES list("fire")
+// DR types that land on a single armor layer instead of distributing across every worn layer. Blunt still distributes.
+#define ARMOR_DR_SINGLE_LAYER_TYPES list("fire")
 #define ARMOR_DBLOCK_TYPES list("slash", "stab", "piercing")
 
 // Penetration passthrough fractions

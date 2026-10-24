@@ -1,6 +1,6 @@
 
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = "blunt", absorb_text = null, soften_text = null, armor_penetration = PEN_NONE, penetrated_text, damage, blade_dulling, intdamfactor, used_weapon = null, pen_info, no_debuff = FALSE)
-	var/armor_tier = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon, pen_info)
+	var/armor_tier = getarmor(def_zone, attack_flag, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon, pen_info, no_debuff)
 
 	// Tier-based armor system.
 	// armor_tier and armor_penetration are both tier values (0-4).
@@ -15,15 +15,10 @@
 	// don't feed it into checkarmor (which already ran above and handles null damage fine).
 	var/block_damage = damage || 999
 	var/blocked = 0
-	if(attack_flag in ARMOR_DR_ABSORB_TYPES)
-		// Blunt: armor absorbs all HP damage. DR reduces integrity damage to armor (in checkarmor).
+	if(attack_flag in ARMOR_DR_TYPES)
+		// Blunt/Fire: armor absorbs all HP damage. DR reduces integrity damage to armor (in checkarmor).
 		if(armor_tier > 0)
 			blocked = block_damage
-	else if(attack_flag in ARMOR_DR_PIERCE_TYPES)
-		// Fire/Acid: DR reduces damage, but reduced damage still reaches HP.
-		if(armor_tier > 0)
-			var/dr_mult = 1 / (1 + 0.2 * armor_tier)
-			blocked = block_damage * (1 - dr_mult)
 	else
 		// Penetration: tier comparison
 		if(attack_flag != "piercing")
@@ -62,7 +57,7 @@
 	if(used_weapon)
 		if(isitem(used_weapon))
 			var/obj/item/I = used_weapon
-			if(I.sharpness && I.max_blade_int && !(attack_flag in ARMOR_DR_ABSORB_TYPES))
+			if(I.sharpness && I.max_blade_int && !(attack_flag in ARMOR_DR_TYPES))
 				var/dullness_ratio = I.blade_int / I.max_blade_int
 				if(dullness_ratio <= SHARPNESS_TIER2_THRESHOLD)	//Our weapon is CHUNKED. What are we PENNING WITH.
 					blocked = block_damage * 10
