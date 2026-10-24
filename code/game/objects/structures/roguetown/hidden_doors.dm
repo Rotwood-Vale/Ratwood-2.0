@@ -57,8 +57,12 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 	var/floor_replaced = FALSE
 	/// Pending close attempt
 	var/close_timer
-	/// Weakrefs to things that sat on the tile while it was a wall. They don't block closing
+	/// Wait before retrying a blocked close
+	var/close_retry_delay = 5 SECONDS
+	/// Weakrefs to non-living things that sat on the tile while it was a wall. They don't block closing
 	var/list/resident_refs
+	/// world.time the group last handled the phrase, so one utterance heard by several walls acts once
+	var/phrase_handled_time = -1
 
 /obj/structure/secret_wall_controller/Initialize(mapload, _redstone_id, _open_phrase, list/_vip, _auto_close_delay, _slide_dir, _floor_turf, _override_floor)
 	// set before the parent call so redstone linkage happens in the normal LateInitialize pass
@@ -121,28 +125,47 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 /obj/structure/secret_wall_controller/redstone_triggered(mob/user)
 	trigger(user)
 
+/// Returns "opened" or "closed" when it did either, for logging
 /obj/structure/secret_wall_controller/proc/trigger(mob/user)
 	if(switching)
 		return
 	if(!is_open)
-		open_wall(user)
+		return open_wall(user) ? "opened" : null
+	if(auto_close_delay) // auto mode ignores triggers while open
 		return
-	if(auto_close_delay || close_timer) // auto mode ignores triggers, and a close is already pending
+	if(close_timer) // a blocked close is pending, cancel it and stay open
+		deltimer(close_timer)
+		close_timer = null
 		return
-	try_close(user)
+	return try_close(user) ? "closed" : null
+
+/obj/structure/secret_wall_controller/proc/schedule_close(delay)
+	close_timer = addtimer(CALLBACK(src, PROC_REF(try_close)), delay, TIMER_STOPPABLE)
+
+/// Our own ChangeTurf, which on_turf_change() ignores
+/obj/structure/secret_wall_controller/proc/change_own_turf(turf/T, new_type)
+	self_changing = TRUE
+	. = T.ChangeTurf(new_type)
+	self_changing = FALSE
+
+/// Someone replaced our floor while open
+/obj/structure/secret_wall_controller/proc/is_floor_replaced(turf/T)
+	return floor_replaced || T.type != placed_floor_type
 
 /obj/structure/secret_wall_controller/proc/open_wall(mob/user)
 	var/turf/closed/T = get_turf(src)
 	if(!isclosedturf(T))
-		return
+		return FALSE
 	wall_type = T.type
 	wall_integrity = T.turf_integrity
 	wall_dir = T.dir
 	wall_icon_state = T.icon_state
 	resident_refs = list()
 	for(var/atom/movable/AM in T)
+		if(AM == src || isliving(AM))
+			continue
 		var/datum/weakref/ref = WEAKREF(AM)
-		if(AM != src && ref)
+		if(ref)
 			resident_refs += ref
 
 	var/turf/open/new_floor = floor_turf
@@ -153,9 +176,7 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 
 	wall_appearance = T.appearance
 	var/dir_to_slide = get_slide_dir()
-	self_changing = TRUE
-	var/turf/new_turf = T.ChangeTurf(new_floor)
-	self_changing = FALSE
+	var/turf/new_turf = change_own_turf(T, new_floor)
 	placed_floor_type = new_turf.type
 	floor_replaced = FALSE
 	is_open = TRUE
@@ -163,45 +184,49 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 	switching = TRUE
 	new /obj/effect/secret_wall_slide(new_turf, wall_appearance, dir_to_slide, FALSE, slide_time)
 	play_grind_sound(user)
-	addtimer(VARSET_CALLBACK(src, switching, FALSE), slide_time)
+	addtimer(CALLBACK(src, PROC_REF(finish_open)), slide_time)
 	if(auto_close_delay)
-		close_timer = addtimer(CALLBACK(src, PROC_REF(try_close)), auto_close_delay, TIMER_STOPPABLE)
+		schedule_close(auto_close_delay)
+	return TRUE
 
+/obj/structure/secret_wall_controller/proc/finish_open()
+	switching = FALSE
+
+/// Returns TRUE if it started sliding shut
 /obj/structure/secret_wall_controller/proc/try_close(mob/user)
 	close_timer = null
 	if(!is_open)
-		return
+		return FALSE
 	if(switching) // still sliding open, try again once it's done
-		close_timer = addtimer(CALLBACK(src, PROC_REF(try_close)), slide_time, TIMER_STOPPABLE)
-		return
+		schedule_close(slide_time)
+		return FALSE
 	var/turf/T = get_turf(src)
-	if(floor_replaced || T.type != placed_floor_type)
+	if(is_floor_replaced(T))
 		qdel(src)
-		return
+		return FALSE
 	if(is_blocked(T))
-		close_timer = addtimer(CALLBACK(src, PROC_REF(try_close)), 5 SECONDS, TIMER_STOPPABLE)
-		return
+		schedule_close(close_retry_delay)
+		return FALSE
 	switching = TRUE
 	density = TRUE // nobody steps in while it slides shut
 	var/obj/effect/secret_wall_slide/slide = new(T, wall_appearance, get_slide_dir(), TRUE, slide_time)
 	play_grind_sound(user)
 	addtimer(CALLBACK(src, PROC_REF(finish_close), slide), slide_time)
+	return TRUE
 
 /obj/structure/secret_wall_controller/proc/finish_close(obj/effect/secret_wall_slide/slide)
 	switching = FALSE
 	density = FALSE
 	var/turf/T = get_turf(src)
-	if(floor_replaced || T.type != placed_floor_type)
+	if(is_floor_replaced(T))
 		qdel(slide)
 		qdel(src)
 		return
 	if(is_blocked(T)) // something got in anyway, back off and retry
 		qdel(slide)
-		close_timer = addtimer(CALLBACK(src, PROC_REF(try_close)), 5 SECONDS, TIMER_STOPPABLE)
+		schedule_close(close_retry_delay)
 		return
-	self_changing = TRUE
-	var/turf/closed/wall = T.ChangeTurf(wall_type)
-	self_changing = FALSE
+	var/turf/closed/wall = change_own_turf(T, wall_type)
 	is_open = FALSE
 	resident_refs = null
 	if(!isnull(wall_integrity))
@@ -212,7 +237,7 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 		wall.icon_state = wall_icon_state
 	qdel(slide)
 
-/// Any living mob, item or structure on the tile that wasn't already in the wall
+/// Any living mob on the tile, or any item or structure that wasn't already in the wall
 /obj/structure/secret_wall_controller/proc/is_blocked(turf/T)
 	var/list/residents = list()
 	for(var/datum/weakref/ref as anything in resident_refs)
@@ -220,10 +245,12 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 		if(AM)
 			residents += AM
 	for(var/atom/movable/AM in T)
-		if(AM == src || (AM in residents))
+		if(AM == src)
 			continue
-		if(isliving(AM))
+		if(isliving(AM)) // living mobs always block, even ones already there when it opened
 			return TRUE
+		if(AM in residents)
+			continue
 		if(isobj(AM) && !iseffect(AM))
 			return TRUE
 	return FALSE
@@ -245,6 +272,7 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 	playsound(src, 'sound/foley/stone_scrape.ogg', 80, TRUE, -3)
 
 /obj/structure/secret_wall_controller/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
+	. = ..()
 	if(speaker == src)
 		return FALSE
 	if(!ishuman(speaker) || !original_message) // no original_message means an emote
@@ -268,8 +296,25 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 	var/phrase = open_phrase ? sanitize_hear_message(open_phrase) : null
 	if(!length(phrase) || !findtext(message2recognize, phrase))
 		return FALSE
-	log_game("[key_name(H)] spoke the phrase of the secret wall with redstone id \"[redstone_id]\" at [AREACOORD(src)]")
-	trigger(H)
+	if(phrase_handled_time == world.time) // another wall of the group heard it first and handled it
+		return TRUE
+	var/list/group = list(src)
+	if(redstone_id)
+		for(var/obj/structure/secret_wall_controller/W in GLOB.redstone_objs)
+			if(W != src && W.redstone_id == redstone_id)
+				group += W
+	var/opened = FALSE
+	var/closed = FALSE
+	for(var/obj/structure/secret_wall_controller/W as anything in group)
+		W.phrase_handled_time = world.time
+		switch(W.trigger(H))
+			if("opened")
+				opened = TRUE
+			if("closed")
+				closed = TRUE
+	if(opened || closed)
+		var/action = opened ? (closed ? "opened and closed" : "opened") : "closed"
+		log_game("[key_name(H)] [action] the secret walls with redstone id \"[redstone_id]\" by phrase at [AREACOORD(src)]")
 	return TRUE
 
 /// "set phrase" changes the phrase for the whole redstone_id group
