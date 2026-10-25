@@ -1,10 +1,9 @@
 /datum/advclass/templar/noc_spellblade
 	name = "Noccite Azurcaephan"
-	tutorial = "You are a Noccite Azurcaephan - A devotee of the Ferentian Church\
-	Other templars clad themselves in heavy armor and relies on their miracles and their cone\
-	But you know Noc's true teaching - he granted knowledge so we, humen, may seize upon it and uses magyck\
-	to seize our own destiny. With steel in one hand, sorcery in the other, and Noc's blessing in your heart\
-	None can stand against you. Protect the Church, its myriad acolytes, and further the pursuit of enlightenment, knowledge and mastery."
+	tutorial = "You are a Noccite Azurcaephan - A devotee of the Holy Church\
+	While other templars don blessed heavy armor and clerical teachings, you chose a different path\
+	Wielder of both Blessed Blades and Magycks, you are an Azurcaephan, the Will of the Tutor-God\
+	You swore a sacred covenant, to Protect the Church and it's acolytes. Be a reminder that the night is full of stars and that fear is a blade dulled by knowledge."
 	outfit = /datum/outfit/job/roguetown/templar/noc_spellblade
 	category_tags = list(CTAG_TEMPLAR)
 	allowed_patrons = list(/datum/patron/divine/noc)
