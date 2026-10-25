@@ -271,6 +271,8 @@
 		))
 	data["tanks"] = tank_data
 
+	// always sent: tgui merges updates, so an omitted key would keep showing the old container
+	data["container"] = null
 	if(inserted)
 		data["container"] = list(
 			"name" = inserted.name,
