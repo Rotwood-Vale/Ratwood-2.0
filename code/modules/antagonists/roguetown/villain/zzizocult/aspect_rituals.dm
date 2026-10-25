@@ -497,7 +497,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	new /obj/effect/temp_visual/dir_setting/cult/phase/out(origin, L.dir)
 	do_teleport(L, get_turf(dest), 1, asoundin = 'sound/magic/blink.ogg')
 	new /obj/effect/temp_visual/dir_setting/cult/phase(get_turf(L), L.dir)
-	to_chat(L, span_notice("Reality folds around me."))
 	if(grabbed)
 		do_teleport(grabbed, get_turf(L), 1, asoundin = 'sound/magic/blink.ogg')
 
