@@ -2070,6 +2070,8 @@
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\berserker.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\blackoak.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\deserter.dm"
+#include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\heretic_spellblade.dm"
+#include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\heretic_spellfist.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\roguemage.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\herald_of_progress.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\heretic.dm"

@@ -120,7 +120,7 @@
 						H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
 						H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_JOURNEYMAN, TRUE)
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)//as a bodyguard it can be REALLY important to find where the bleed is.
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)//All paths get shadowstep as a minimum
+				H.mind.AddSpell(new /datum/action/cooldown/spell/blink/shadowstep)//All paths get shadowstep as a minimum
 
 		if("Abandoned Diviner (Vizier)")	//reduced stats/skills/spellpoints from Vizier, Not given Stasis
 			H.set_patron(/datum/patron/old_god)
