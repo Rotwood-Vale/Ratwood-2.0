@@ -551,7 +551,7 @@
 
 /// Binds the cart to a new key and returns it
 /obj/structure/roguemachine/vendor/mobile/proc/make_key(atom/destination)
-	var/obj/item/roguekey/key = new_cart_key(destination, "peddler cart key")
+	var/obj/item/roguekey/key = new_cart_key(destination, "peddler cart key", "brownkey")
 	keycontrol = key.lockid
 	return key
 

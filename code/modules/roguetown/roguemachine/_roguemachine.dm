@@ -5,10 +5,12 @@
 	max_integrity = 0
 
 /// A plain key with a fresh random lock, for shop carts that make their own
-/proc/new_cart_key(atom/destination, key_name)
+/proc/new_cart_key(atom/destination, key_name, key_icon_state)
 	var/obj/item/roguekey/key = new(destination)
 	key.lockid = "cart_key_[world.time]_[rand(1, 9999999)]"
 	key.name = key_name
+	// the base key's "iron" state isn't in keys.dmi
+	key.icon_state = key_icon_state
 	return key
 
 /obj/structure/roguemachine/proc/budget2change(budget, mob/user, specify)

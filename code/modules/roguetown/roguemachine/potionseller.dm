@@ -549,7 +549,7 @@
 	is_crafted = TRUE
 
 /obj/structure/roguemachine/potionseller/mobile/make_key(atom/destination)
-	var/obj/item/roguekey/key = new_cart_key(destination, "potion cart key")
+	var/obj/item/roguekey/key = new_cart_key(destination, "potion cart key", "greenkey")
 	keycontrol = key.lockid
 	return key
 
