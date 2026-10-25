@@ -27,6 +27,19 @@
 	craftdiff = 4
 	display_category = ITEM_CAT_ENG_MACHINERY
 
+/datum/crafting_recipe/roguetown/engineering/peddlercart
+	name = "peddler cart"
+	result = /obj/structure/roguemachine/vendor/mobile/crafted
+	reqs = list(/obj/item/grown/log/tree/small = 1,
+				/obj/item/ingot/iron = 1,
+				/obj/item/natural/glass = 1,
+				/obj/item/roguegear/bronze = 2)
+	verbage_simple = "engineer"
+	verbage = "engineers"
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 4
+	display_category = ITEM_CAT_ENG_MACHINERY
+
 /datum/crafting_recipe/roguetown/engineering/lever
 	name = "lever"
 	result = /obj/structure/lever

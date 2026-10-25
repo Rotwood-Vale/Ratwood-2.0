@@ -21,6 +21,8 @@
 	var/will_hawk = TRUE
 	var/max_items = 60
 	var/budget = 0
+	/// icon states are this plus 1 (locked) or 0 (open or broken)
+	var/icon_prefix = "streetvendor"
 	/// base64 icons per product group key, so the UI doesn't flatten icons every update
 	var/list/icon_cache = list()
 
@@ -341,7 +343,7 @@
 	budget2change(budget)
 	set_light(0)
 	update_icon()
-	icon_state = "streetvendor0"
+	icon_state = "[icon_prefix]0"
 
 /obj/structure/roguemachine/vendor/Initialize(mapload)
 	. = ..()
@@ -354,10 +356,10 @@
 		set_light(0)
 		return
 	if(!locked)
-		icon_state = "streetvendor0"
+		icon_state = "[icon_prefix]0"
 		return
 	else
-		icon_state = "streetvendor1"
+		icon_state = "[icon_prefix]1"
 	if(held_items.len)
 		set_light(1, 1, 1, l_color = "#1b7bf1")
 		add_overlay(mutable_appearance(icon, "vendor-gen"))
@@ -523,5 +525,109 @@
 		held_items[P]["NAME"] = P.name
 		held_items[P]["PRICE"] = 30
 	update_icon()
+
+// PEDDLER CARTS
+
+/obj/structure/roguemachine/vendor/mobile
+	name = "peddler cart"
+	desc = "A smaller, wheeled PEDDLER that can be moved around."
+	icon_state = "svendorcart1"
+	icon_prefix = "svendorcart"
+	anchored = FALSE
+	max_items = 20
+	max_integrity = 400
+	climbable = TRUE
+	// no owner until it's claimed, or crafted with its key
+	keycontrol = null
+	var/is_crafted = FALSE
+
+/obj/structure/roguemachine/vendor/mobile/crafted
+	is_crafted = TRUE
+
+/obj/structure/roguemachine/vendor/mobile/Initialize(mapload)
+	. = ..()
+	if(is_crafted)
+		make_key(get_turf(src))
+
+/// Binds the cart to a new key and returns it
+/obj/structure/roguemachine/vendor/mobile/proc/make_key(atom/destination)
+	var/obj/item/roguekey/key = new(destination)
+	key.lockid = "peddler_cart_[world.time]_[rand(1, 9999999)]"
+	key.name = "peddler cart key"
+	keycontrol = key.lockid
+	return key
+
+/obj/structure/roguemachine/vendor/mobile/proc/offer_ownership(mob/living/carbon/human/user)
+	if(tgui_alert(user, "This cart has no owner. Take ownership?", "Peddler Cart", list("Yes", "No")) != "Yes")
+		return
+	// someone else may have claimed it, or the user wandered off, while the prompt was up
+	if(keycontrol || obj_broken || QDELETED(src) || !user.Adjacent(src) || user.incapacitated())
+		return
+	user.put_in_hands(make_key(get_turf(user)))
+	to_chat(user, span_notice("You take ownership of \the [src]. Its key is yours."))
+	if(locked)
+		toggle_lock()
+	ui_interact(user)
+
+/obj/structure/roguemachine/vendor/mobile/proc/try_claim(mob/user)
+	if(keycontrol || obj_broken || !ishuman(user))
+		return FALSE
+	user.changeNext_move(CLICK_CD_INTENTCAP)
+	INVOKE_ASYNC(src, PROC_REF(offer_ownership), user)
+	return TRUE
+
+/obj/structure/roguemachine/vendor/mobile/attack_hand(mob/living/user)
+	if(try_claim(user))
+		return TRUE
+	return ..()
+
+/obj/structure/roguemachine/vendor/mobile/attack_right(mob/user)
+	if(try_claim(user))
+		return TRUE
+	return ..()
+
+/obj/structure/roguemachine/vendor/mobile/attackby(obj/item/P, mob/user, params)
+	if(!keycontrol && !obj_broken && (istype(P, /obj/item/roguekey) || istype(P, /obj/item/storage/keyring) || istype(P, /obj/item/roguecoin)))
+		to_chat(user, span_warning("\The [src] has no owner yet."))
+		return
+	return ..()
+
+/obj/structure/roguemachine/vendor/mobile/Move() // secured wheels keep it from being shoved around by explosions and such
+	if(anchored)
+		return FALSE
+	return ..()
+
+/obj/structure/roguemachine/vendor/mobile/can_be_pulled(user, grab_state, force)
+	if(anchored)
+		return FALSE
+	return ..()
+
+/obj/structure/roguemachine/vendor/mobile/examine(mob/user)
+	. = ..()
+	if(!keycontrol)
+		. += span_info("It has no owner. Anyone could take ownership of it.")
+	if(anchored)
+		. += span_info("Its wheels are secured.")
+
+/obj/structure/roguemachine/vendor/mobile/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Left-clicking an unowned PEDDLER CART offers to make you its owner and hands you its key. Keys can be passed on to whoever you like.")
+	. += span_info("Left-clicking a PEDDLER CART with an open hand lets you browse and purchase its wares.")
+	. += span_info("Owners can UNLOCK it with its key to restock wares, withdraw profits, and secure or free its wheels. Secured wheels can't be pulled or pushed.")
+
+/obj/structure/roguemachine/vendor/mobile/ui_data(mob/user)
+	. = ..()
+	.["is_cart"] = TRUE
+	.["wheels_secured"] = anchored ? TRUE : FALSE
+
+/obj/structure/roguemachine/vendor/mobile/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	if(action == "toggle_wheels" && !locked)
+		anchored = !anchored
+		playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
+		to_chat(usr, span_notice("You [anchored ? "secure" : "free"] the wheels."))
+		return TRUE
 
 #undef PEDDLER_MAX_PRICE
