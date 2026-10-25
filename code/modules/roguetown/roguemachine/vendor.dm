@@ -1,3 +1,5 @@
+#define PEDDLER_MAX_PRICE 9999
+
 /obj/structure/roguemachine/vendor
 	name = "PEDDLER"
 	desc = "The stomach of this thing can been stuffed with fun things for you to buy."
@@ -18,9 +20,13 @@
 	var/next_hawk = 0
 	var/will_hawk = TRUE
 	var/max_items = 60
-	var/budget
+	var/budget = 0
 	/// base64 icons per product group key, so the UI doesn't flatten icons every update
 	var/list/icon_cache = list()
+
+/obj/structure/roguemachine/vendor/Exited(atom/movable/gone, atom/newLoc)
+	. = ..()
+	held_items -= gone
 
 /obj/structure/roguemachine/vendor/proc/group_key(obj/item/I)
 	return "[I.type]_[held_items[I]["NAME"] || I.name]"
@@ -118,6 +124,8 @@
 	SStgui.update_uis(src)
 
 /obj/structure/roguemachine/vendor/attackby(obj/item/P, mob/user, params)
+	if(obj_broken)
+		return ..()
 	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
@@ -152,7 +160,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!ishuman(user))
+	if(!ishuman(user) || obj_broken)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	ui_interact(user)
@@ -161,7 +169,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!ishuman(user))
+	if(!ishuman(user) || obj_broken)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(locked)
@@ -182,7 +190,7 @@
 	return GLOB.human_adjacent_state
 
 /obj/structure/roguemachine/vendor/ui_status(mob/user, datum/ui_state/state)
-	if(!isliving(user) || user.stat == DEAD)
+	if(obj_broken || !isliving(user) || user.stat == DEAD)
 		return UI_CLOSE
 	return ..()
 
@@ -204,11 +212,11 @@
 
 	var/list/groups = list()
 	var/list/group_order = list()
+	var/list/icons = list()
 	for(var/obj/item/I in held_items)
 		var/key = group_key(I)
 		if(!groups[key])
-			if(!icon_cache[key])
-				icon_cache[key] = icon2base64(getFlatIcon(I, no_anim = TRUE))
+			icons[key] = icon_cache[key] || icon2base64(getFlatIcon(I, no_anim = TRUE))
 			groups[key] = list(
 				"key" = key,
 				// names are stored html-encoded for hawking; tgui escapes text itself
@@ -216,10 +224,12 @@
 				"price" = held_items[I]["PRICE"] || 0,
 				"count" = 0,
 				"desc" = I.desc,
-				"icon" = icon_cache[key],
+				"icon" = icons[key],
 			)
 			group_order += key
 		groups[key]["count"] += 1
+	// rebuilt each update so emptied or renamed groups drop out
+	icon_cache = icons
 
 	var/list/group_data = list()
 	for(var/key in group_order)
@@ -293,14 +303,21 @@
 			return TRUE
 
 		if("set_name")
-			if(locked)
+			if(locked || !user.can_read(src, TRUE))
 				return
 			var/list/matches = get_group_items(params["key"])
-			var/newname = copytext(trim(sanitize("[params["name"]]")), 1, MAX_NAME_LEN + 1)
+			var/newname = sanitize(copytext(trim("[params["name"]]"), 1, MAX_NAME_LEN + 1))
 			if(!length(matches) || !length(newname))
 				return
+			// renaming into an existing group merges with it, so take that group's price
+			var/obj/item/first = matches[1]
+			var/price = held_items[first]["PRICE"]
+			var/list/joining = get_group_items("[first.type]_[newname]") - matches
+			if(length(joining))
+				price = held_items[joining[1]]["PRICE"]
 			for(var/obj/item/I in matches)
 				held_items[I]["NAME"] = newname
+				held_items[I]["PRICE"] = price
 			return TRUE
 
 		if("set_price")
@@ -311,6 +328,7 @@
 			// no negative prices, no decimals
 			if(!length(matches) || isnull(newprice) || newprice < 0 || newprice != round(newprice))
 				return
+			newprice = min(newprice, PEDDLER_MAX_PRICE)
 			for(var/obj/item/I in matches)
 				held_items[I]["PRICE"] = newprice
 			return TRUE
@@ -505,3 +523,5 @@
 		held_items[P]["NAME"] = P.name
 		held_items[P]["PRICE"] = 30
 	update_icon()
+
+#undef PEDDLER_MAX_PRICE

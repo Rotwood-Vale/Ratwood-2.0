@@ -267,6 +267,10 @@
 /obj/item/cooking/pan,
 /turf/open/floor/rogue/churchrough,
 /area/rogue/indoors)
+"jk" = (
+/obj/structure/roguemachine/vendor,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors)
 "jr" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
@@ -1676,6 +1680,10 @@
 /obj/item/rogueweapon/huntingknife/idagger/silver,
 /obj/item/rogueweapon/huntingknife/idagger/silver,
 /obj/item/rogueweapon/huntingknife/idagger/silver,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors)
+"Wd" = (
+/obj/structure/roguemachine/potionseller,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
 "Wh" = (
@@ -3546,7 +3554,7 @@ CZ
 CZ
 SE
 CZ
-CZ
+jk
 CZ
 AX
 rT
@@ -3598,7 +3606,7 @@ AX
 AX
 FP
 CZ
-CZ
+Wd
 CZ
 AX
 vq

@@ -1,5 +1,6 @@
 #define POTIONSELLER_TANKS 3
 #define POTIONSELLER_TANK_VOLUME 500
+#define POTIONSELLER_MAX_PRICE 9999
 
 /obj/structure/roguemachine/potionseller
 	name = "POTION SELLER"
@@ -160,6 +161,8 @@
 	SStgui.update_uis(src)
 
 /obj/structure/roguemachine/potionseller/attackby(obj/item/P, mob/user, params)
+	if(obj_broken)
+		return ..()
 	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
@@ -208,7 +211,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!ishuman(user))
+	if(!ishuman(user) || obj_broken)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	ui_interact(user)
@@ -217,7 +220,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!ishuman(user))
+	if(!ishuman(user) || obj_broken)
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	var/obj/item/held = user.get_active_held_item()
@@ -235,7 +238,7 @@
 	return GLOB.human_adjacent_state
 
 /obj/structure/roguemachine/potionseller/ui_status(mob/user, datum/ui_state/state)
-	if(!isliving(user) || user.stat == DEAD)
+	if(obj_broken || !isliving(user) || user.stat == DEAD)
 		return UI_CLOSE
 	return ..()
 
@@ -275,7 +278,7 @@
 	data["container"] = null
 	if(inserted)
 		data["container"] = list(
-			"name" = inserted.name,
+			"name" = html_decode(inserted.name),
 			"volume" = round(inserted.reagents.total_volume, 0.1),
 			"max" = inserted.reagents.maximum_volume,
 			"color" = inserted.reagents.total_volume ? mix_color_from_reagents(inserted.reagents.reagent_list) : null,
@@ -384,9 +387,13 @@
 			var/index = tank_index(params["tank"])
 			if(!index)
 				return
-			var/amount =params["amount"] ? round(text2num("[params["amount"]]")) : inserted.reagents.total_volume
+			var/amount = params["amount"] ? round(text2num("[params["amount"]]")) : inserted.reagents.total_volume
 			if(amount <= 0)
 				return
+			var/datum/reagents/tank = tanks[index]
+			if(tank.total_volume >= tank.maximum_volume)
+				to_chat(user, span_warning("[tank_label(index)] is full."))
+				return TRUE
 			if(!pour_into_tank(inserted, index, amount, user))
 				return TRUE
 			playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
@@ -412,12 +419,12 @@
 			return TRUE
 
 		if("set_label")
-			if(locked)
+			if(locked || !user.can_read(src, TRUE))
 				return
 			var/index = tank_index(params["tank"])
 			if(!index)
 				return
-			var/newlabel = copytext(trim(sanitize("[params["label"]]")), 1, MAX_NAME_LEN + 1)
+			var/newlabel = sanitize(copytext(trim("[params["label"]]"), 1, MAX_NAME_LEN + 1))
 			tank_labels[index] = length(newlabel) ? newlabel : null
 			return TRUE
 
@@ -428,7 +435,7 @@
 			var/newprice = text2num("[params["price"]]")
 			if(!index || isnull(newprice) || newprice < 0)
 				return
-			tank_prices[index] = round(newprice, 0.1)
+			tank_prices[index] = round(min(newprice, POTIONSELLER_MAX_PRICE), 0.1)
 			return TRUE
 
 		if("set_bottle_price")
@@ -437,7 +444,7 @@
 			var/newprice = text2num("[params["price"]]")
 			if(isnull(newprice) || newprice < 0)
 				return
-			bottle_price = round(newprice)
+			bottle_price = round(min(newprice, POTIONSELLER_MAX_PRICE))
 			return TRUE
 
 /obj/structure/roguemachine/potionseller/proc/splash_tank(datum/reagents/tank)
@@ -476,6 +483,9 @@
 	if(inserted)
 		inserted.forceMove(drop_location())
 		inserted = null
+	for(var/obj/item/B in bottle_stock.Copy())
+		B.forceMove(drop_location())
+	bottle_stock.Cut()
 	if(budget > 0)
 		budget2change(budget)
 		budget = 0
@@ -502,3 +512,4 @@
 
 #undef POTIONSELLER_TANKS
 #undef POTIONSELLER_TANK_VOLUME
+#undef POTIONSELLER_MAX_PRICE

@@ -6,8 +6,6 @@ import { Window } from '../layouts';
 import {
   cardStyle,
   compactButtonStyle,
-  fieldRowStyle,
-  fieldValueStyle,
   FONT_BODY,
   FONT_LEAD,
   FONT_SMALL,
@@ -26,6 +24,7 @@ import {
   SERIF,
   titleStyle,
 } from './common/parchment';
+import { CommitField, MoneyRow, parseWholeNumber } from './common/ShopControls';
 import { starsIfIlliterate } from './Goldface/util';
 
 type Tank = {
@@ -102,39 +101,12 @@ const drawCost = (tanks: Tank[], draws: number[]) => {
   return Math.ceil(Math.round(raw * 10) / 10 - 1e-9);
 };
 
-/** Text input that keeps a local draft and only sends it on Enter or blur. */
-const CommitField = (props: {
-  value: string;
-  numeric?: boolean;
-  step?: number;
-  width: string;
-  onCommit: (value: string) => void;
-}) => {
-  const { value, numeric, step, width, onCommit } = props;
-  const [draft, setDraft] = useState(value);
-
-  useEffect(() => {
-    setDraft(value);
-  }, [value]);
-
-  const commit = () => {
-    if (draft !== value) onCommit(draft);
-  };
-
-  return (
-    <input
-      type={numeric ? 'number' : 'text'}
-      min={numeric ? 0 : undefined}
-      step={numeric ? (step ?? 1) : undefined}
-      value={draft}
-      onChange={(e) => setDraft(e.target.value)}
-      onBlur={commit}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') commit();
-      }}
-      style={{ ...inkInputStyle, width }}
-    />
-  );
+/** Price >= 0 in 0.1 steps, or null if the draft isn't one. */
+const parseDramPrice = (draft: string) => {
+  const n = Number(draft);
+  return draft.trim() !== '' && Number.isFinite(n) && n >= 0
+    ? String(Math.round(n * 10) / 10)
+    : null;
 };
 
 const TankColumn = (props: {
@@ -147,6 +119,7 @@ const TankColumn = (props: {
   canDraw: boolean;
   isLoading: boolean;
   hasSource: boolean;
+  pourAmount: number;
   onDraw: (amount: number) => void;
   act: ActFn;
 }) => {
@@ -160,6 +133,7 @@ const TankColumn = (props: {
     canDraw,
     isLoading,
     hasSource,
+    pourAmount,
     onDraw,
     act,
   } = props;
@@ -208,6 +182,8 @@ const TankColumn = (props: {
         <CommitField
           value={tank.label}
           width="100%"
+          // a blank label resets to the default name
+          parse={(draft) => draft.trim() || `Tank ${tankNumber}`}
           onCommit={(label) => act('set_label', { tank: tankNumber, label })}
         />
       ) : (
@@ -232,9 +208,12 @@ const TankColumn = (props: {
             numeric
             step={0.1}
             width="64px"
+            parse={parseDramPrice}
             onCommit={(price) => act('set_price', { tank: tankNumber, price })}
           />
-          <span style={{ color: INK_SOFT, fontSize: FONT_SMALL }}>m/dram</span>
+          <span style={{ color: INK_SOFT, fontSize: FONT_SMALL }}>
+            {starsIfIlliterate('m/dram', canRead)}
+          </span>
         </div>
       ) : (
         <div style={{ color: INK_SOFT, fontSize: FONT_LEAD }}>
@@ -315,7 +294,7 @@ const TankColumn = (props: {
             -
           </button>
           <span style={{ minWidth: '56px', textAlign: 'center' }}>
-            {draw} dram{draw === 1 ? '' : 's'}
+            {starsIfIlliterate(`${draw} dram${draw === 1 ? '' : 's'}`, canRead)}
           </span>
           <button
             type="button"
@@ -340,10 +319,22 @@ const TankColumn = (props: {
             type="button"
             style={compactButtonStyle({ disabled: !hasSource })}
             disabled={!hasSource}
-            onClick={() => act('pour_in', { tank: tankNumber })}
-            title="Pour the container into this tank"
+            onClick={() =>
+              act(
+                'pour_in',
+                pourAmount
+                  ? { tank: tankNumber, amount: pourAmount }
+                  : { tank: tankNumber },
+              )
+            }
+            title={starsIfIlliterate(
+              pourAmount
+                ? `Pour ${pourAmount} drams of the container into this tank`
+                : 'Pour the container into this tank',
+              canRead,
+            )}
           >
-            Pour in
+            {starsIfIlliterate('Pour in', canRead)}
           </button>
           <button
             type="button"
@@ -362,7 +353,7 @@ const TankColumn = (props: {
             }}
             onMouseLeave={() => setConfirmFlush(false)}
           >
-            {confirmFlush ? 'Sure?' : 'Flush'}
+            {starsIfIlliterate(confirmFlush ? 'Sure?' : 'Flush', canRead)}
           </button>
           <button
             type="button"
@@ -370,9 +361,12 @@ const TankColumn = (props: {
               color: isLoading ? SEAL_AMBER : undefined,
             })}
             onClick={() => act('set_loading_tank', { tank: tankNumber })}
-            title="Bags emptied into the machine pour into this tank"
+            title={starsIfIlliterate(
+              'Bags emptied into the machine pour into this tank',
+              canRead,
+            )}
           >
-            {isLoading ? 'Loading' : 'Load here'}
+            {starsIfIlliterate(isLoading ? 'Loading' : 'Load here', canRead)}
           </button>
         </div>
       )}
@@ -390,6 +384,8 @@ const VesselColumn = (props: {
   maxBottles: number;
   bottlePrice: number;
   budget: number;
+  pourAmount: string;
+  setPourAmount: (amount: string) => void;
   act: ActFn;
 }) => {
   const {
@@ -402,6 +398,8 @@ const VesselColumn = (props: {
     maxBottles,
     bottlePrice,
     budget,
+    pourAmount,
+    setPourAmount,
     act,
   } = props;
   const cantAffordBottle = !owner && bottlePrice > budget;
@@ -428,9 +426,9 @@ const VesselColumn = (props: {
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
             }}
-            title={container.name}
+            title={starsIfIlliterate(container.name, canRead)}
           >
-            {container.name}
+            {starsIfIlliterate(container.name, canRead)}
           </div>
           <div
             style={{
@@ -479,6 +477,22 @@ const VesselColumn = (props: {
           >
             {starsIfIlliterate('Eject', canRead)}
           </button>
+          {owner && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span style={{ color: INK_SOFT, fontSize: FONT_SMALL }}>
+                {starsIfIlliterate('Pour in', canRead)}
+              </span>
+              <input
+                type="number"
+                min={1}
+                step={1}
+                value={pourAmount}
+                placeholder={starsIfIlliterate('all', canRead)}
+                onChange={(e) => setPourAmount(e.target.value)}
+                style={{ ...inkInputStyle, width: '52px' }}
+              />
+            </div>
+          )}
         </>
       ) : (
         <div
@@ -502,10 +516,11 @@ const VesselColumn = (props: {
             value={String(bottlePrice)}
             numeric
             width="52px"
+            parse={parseWholeNumber}
             onCommit={(price) => act('set_bottle_price', { price })}
           />
           <span style={{ color: INK_SOFT, fontSize: FONT_SMALL }}>
-            m/bottle
+            {starsIfIlliterate('m/bottle', canRead)}
           </span>
         </div>
       )}
@@ -535,28 +550,38 @@ export const PotionSeller = () => {
   const canRead = !!data.can_read;
   const { tanks, container } = data;
   const [draws, setDraws] = useState<number[]>(tanks.map(() => 0));
+  const [pourAmount, setPourAmount] = useState('');
+  const pourDrams = Math.max(0, Math.floor(Number(pourAmount)) || 0);
 
-  // Clamp every draw against the tank, the container's space and the purse
+  // Most a tank can give, given the space and mammon left after other draws
   const space = container ? Math.floor(container.max - container.volume) : 0;
-  const clamped: number[] = [];
-  const maxDraws: number[] = [];
-  tanks.forEach((tank, i) => {
-    const others = clamped.reduce((sum, d) => sum + d, 0);
-    let max = Math.min(tank.drawable, Math.max(0, space - others));
+  const drawLimit = (tank: Tank, room: number, purse: number) => {
+    let max = Math.min(tank.drawable, room);
     if (locked && tank.price > 0) {
-      const othersRaw = clamped.reduce(
-        (sum, d, j) => sum + tanks[j].price * d,
-        0,
-      );
-      max = Math.min(
-        max,
-        Math.max(0, Math.floor((data.budget - othersRaw) / tank.price + 1e-6)),
-      );
+      max = Math.min(max, Math.floor(purse / tank.price + 1e-6));
     }
-    maxDraws.push(max);
-    clamped.push(Math.min(draws[i] || 0, max));
+    return Math.max(0, max);
+  };
+
+  // Clamp the draws in order, so they stay valid if the tanks or purse shrink
+  const clamped: number[] = [];
+  let totalDraw = 0;
+  let rawCost = 0;
+  tanks.forEach((tank, i) => {
+    const max = drawLimit(tank, space - totalDraw, data.budget - rawCost);
+    const draw = Math.min(draws[i] || 0, max);
+    clamped.push(draw);
+    totalDraw += draw;
+    rawCost += tank.price * draw;
   });
-  const totalDraw = clamped.reduce((sum, d) => sum + d, 0);
+  // Each tank can then take whatever the other draws leave free
+  const maxDraws = tanks.map((tank, i) =>
+    drawLimit(
+      tank,
+      space - (totalDraw - clamped[i]),
+      data.budget - (rawCost - tank.price * clamped[i]),
+    ),
+  );
   const cost = locked ? drawCost(tanks, clamped) : 0;
   const previewColor = blendColors(
     tanks.map((tank, i) => ({ color: tank.color, amount: clamped[i] })),
@@ -577,34 +602,23 @@ export const PotionSeller = () => {
             {starsIfIlliterate('Potion Seller', canRead)}
           </div>
           <div style={rulerStyle} />
-          <div style={{ ...fieldRowStyle, alignItems: 'center' }}>
-            <div
-              style={{
-                flex: '0 0 auto',
-                fontFamily: SERIF,
-                color: SEAL_AMBER,
-                marginRight: '12px',
-              }}
-            >
-              {starsIfIlliterate(
-                locked ? 'Stored Mammon' : 'Stored Profits',
-                canRead,
-              )}
-            </div>
-            <div style={{ ...fieldValueStyle, fontWeight: 'bold' }}>
-              {locked ? data.budget : data.profits}m
-            </div>
-            <button
-              type="button"
-              style={inkButtonStyle({
-                disabled: (locked ? data.budget : data.profits) <= 0,
-              })}
-              disabled={(locked ? data.budget : data.profits) <= 0}
-              onClick={() => act(locked ? 'change' : 'withdraw_profits')}
-            >
-              {starsIfIlliterate(locked ? 'Change' : 'Withdraw', canRead)}
-            </button>
-          </div>
+          {locked ? (
+            <MoneyRow
+              label="Stored Mammon"
+              amount={data.budget}
+              button="Change"
+              canRead={canRead}
+              onClick={() => act('change')}
+            />
+          ) : (
+            <MoneyRow
+              label="Stored Profits"
+              amount={data.profits}
+              button="Withdraw"
+              canRead={canRead}
+              onClick={() => act('withdraw_profits')}
+            />
+          )}
           <div
             style={{
               display: 'flex',
@@ -625,6 +639,7 @@ export const PotionSeller = () => {
                 canDraw={canDraw}
                 isLoading={data.loading_tank === i + 1}
                 hasSource={!!container && container.volume > 0}
+                pourAmount={pourDrams}
                 onDraw={(amount) => setDraw(i, amount)}
                 act={act}
               />
@@ -639,6 +654,8 @@ export const PotionSeller = () => {
               maxBottles={data.max_bottles}
               bottlePrice={data.bottle_price}
               budget={data.budget}
+              pourAmount={pourAmount}
+              setPourAmount={setPourAmount}
               act={act}
             />
           </div>

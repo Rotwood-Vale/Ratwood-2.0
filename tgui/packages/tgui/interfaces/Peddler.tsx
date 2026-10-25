@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Input } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
@@ -9,8 +9,6 @@ import {
   compactButtonStyle,
   denseRowStyle,
   ellipsisCellStyle,
-  fieldRowStyle,
-  fieldValueStyle,
   FONT_BODY,
   FONT_LEAD,
   FONT_SMALL,
@@ -23,10 +21,9 @@ import {
   pageStyle,
   PriceTag,
   rulerStyle,
-  SEAL_AMBER,
-  SERIF,
   titleStyle,
 } from './common/parchment';
+import { CommitField, MoneyRow, parseWholeNumber } from './common/ShopControls';
 import { starsIfIlliterate } from './Goldface/util';
 
 type ProductGroup = {
@@ -67,40 +64,6 @@ const CountTag = (props: { count: number }) => (
     x{props.count}
   </span>
 );
-
-/** Text input that keeps a local draft and only sends it on Enter or blur. */
-const CommitField = (props: {
-  value: string;
-  numeric?: boolean;
-  width: string;
-  onCommit: (value: string) => void;
-}) => {
-  const { value, numeric, width, onCommit } = props;
-  const [draft, setDraft] = useState(value);
-
-  useEffect(() => {
-    setDraft(value);
-  }, [value]);
-
-  const commit = () => {
-    if (draft !== value) onCommit(draft);
-  };
-
-  return (
-    <input
-      type={numeric ? 'number' : 'text'}
-      min={numeric ? 0 : undefined}
-      step={numeric ? 1 : undefined}
-      value={draft}
-      onChange={(e) => setDraft(e.target.value)}
-      onBlur={commit}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') commit();
-      }}
-      style={{ ...inkInputStyle, width }}
-    />
-  );
-};
 
 const ShopperRow = (props: {
   group: ProductGroup;
@@ -167,6 +130,7 @@ const OwnerRow = (props: {
           <CommitField
             value={group.name}
             width="100%"
+            parse={(draft) => draft.trim() || null}
             onCommit={(name) => act('set_name', { key: group.key, name })}
           />
         ) : (
@@ -180,6 +144,7 @@ const OwnerRow = (props: {
         value={String(group.price)}
         numeric
         width="64px"
+        parse={parseWholeNumber}
         onCommit={(price) => act('set_price', { key: group.key, price })}
       />
       <span style={{ color: INK_SOFT, fontSize: FONT_SMALL }}>m</span>
@@ -203,45 +168,13 @@ const OwnerRow = (props: {
   );
 };
 
-const MoneyRow = (props: {
-  label: string;
-  amount: number;
-  button: string;
-  canRead: boolean;
-  onClick: () => void;
-}) => {
-  const { label, amount, button, canRead, onClick } = props;
-  return (
-    <div style={{ ...fieldRowStyle, alignItems: 'center' }}>
-      <div
-        style={{
-          flex: '0 0 auto',
-          fontFamily: SERIF,
-          color: SEAL_AMBER,
-          marginRight: '12px',
-        }}
-      >
-        {starsIfIlliterate(label, canRead)}
-      </div>
-      <div style={{ ...fieldValueStyle, fontWeight: 'bold' }}>{amount}m</div>
-      <button
-        type="button"
-        style={inkButtonStyle({ disabled: amount <= 0 })}
-        disabled={amount <= 0}
-        onClick={onClick}
-      >
-        {starsIfIlliterate(button, canRead)}
-      </button>
-    </div>
-  );
-};
-
 export const Peddler = () => {
   const { act, data } = useBackend<PeddlerData>();
   const [search, setSearch] = useState('');
   const locked = !!data.locked;
   const canRead = !!data.can_read;
-  const needle = search.trim().toLowerCase();
+  // illiterate users get no search, since they can't read what it matches
+  const needle = canRead ? search.trim().toLowerCase() : '';
   const groups = needle
     ? data.groups.filter((g) => g.name.toLowerCase().includes(needle))
     : data.groups;
@@ -279,13 +212,15 @@ export const Peddler = () => {
               margin: '8px 0',
             }}
           >
-            <Input
-              value={search}
-              onChange={setSearch}
-              placeholder="Search wares..."
-              width="240px"
-            />
-            {!!search && (
+            {canRead && (
+              <Input
+                value={search}
+                onChange={setSearch}
+                placeholder="Search wares..."
+                width="240px"
+              />
+            )}
+            {!!needle && (
               <button
                 type="button"
                 style={inkButtonStyle()}
@@ -315,7 +250,7 @@ export const Peddler = () => {
             >
               {needle
                 ? `Nothing matches "${search}".`
-                : 'Its stomach is empty.'}
+                : starsIfIlliterate('Its stomach is empty.', canRead)}
             </div>
           ) : (
             groups.map((group) =>
