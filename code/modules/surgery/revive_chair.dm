@@ -18,7 +18,7 @@
 	var/charge = 0
 	var/max_charge = 100
 	var/brew_required = 50
-	var/current_brew = 0
+	var/current_brew = 100
 	var/max_brew = 100
 	var/chair_skill_level = 4
 
