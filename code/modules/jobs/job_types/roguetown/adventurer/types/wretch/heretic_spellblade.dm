@@ -157,7 +157,7 @@
 				if("Steel Dagger")
 					beltr = granted_weapon = /obj/item/rogueweapon/huntingknife/idagger/steel
 		if("phalangite")
-			var/polearm_weapons = list("Halberd", "Bardiche", "Boar Spear", "Dory", "Naginata")
+			var/polearm_weapons = list("Halberd", "Bardiche", "Boar Spear", "Dory", "Naginata", "Avantyne Billhook")
 			var/polearm_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in polearm_weapons
 			backr = /obj/item/rogueweapon/scabbard/gwstrap
 			switch(polearm_choice)
@@ -173,6 +173,8 @@
 				if("Naginata")
 					r_hand = granted_weapon = /obj/item/rogueweapon/spear/naginata
 					eastern = TRUE
+				if("Avantyne Billhook")
+					r_hand = granted_weapon = /obj/item/rogueweapon/spear/billhook/zizo
 		if("macebearer")
 			var/mace_weapons = list("Steel Mace", "Steel Warhammer", "Grand Mace", "Battle Axe", "Steel Greataxe")
 			var/mace_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in mace_weapons
