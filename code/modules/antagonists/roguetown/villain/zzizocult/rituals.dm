@@ -111,15 +111,15 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/contents = "SECRETS UNVEILED: [user.mind.zizo_points]<BR>--------------<BR>"
 	var/any = FALSE
 	for(var/ritualtype in GLOB.zizo_researchable)
-		any = TRUE
 		var/datum/ritual/R = ritualtype
+		if((R.is_cultist_ritual || !R.lesser) && !is_zizo(user))
+			continue
+		any = TRUE
 		if(ritualtype in user.mind.zizo_researched)
 			contents += "<B>[initial(R.name)]</B> - LEARNED<BR>'<I>[R.desc]</I>'<BR>"
 			continue
 		if(R.needs_aspect && !(R.needs_aspect in GLOB.zizo_bestowed))
 			contents += "<B>[initial(R.name)]</B> - LOCKED - <B>OPEN [R.needs_aspect] GATE.</B><BR>'<I>[R.desc]</I>'<BR>"
-			continue
-		if((R.is_cultist_ritual || !R.lesser) && !is_zizo(user))
 			continue
 		contents += "<a href='?src=[REF(src)];buy=[ritualtype]'>[initial(R.name)]</a> - [initial(R.research_cost)] SECRETS<BR>'<I>[R.desc]</I>'<BR>"
 	if(!any)
