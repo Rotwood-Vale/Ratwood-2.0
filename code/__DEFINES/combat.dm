@@ -54,6 +54,15 @@
 #define FIRE_HARDCRIT_DIVISOR_MINDLESS 200 // 200 = 50% burn damage = hardcrit for mindless mobs
 #define STRENGTH_SOFTCAP 14	//STR value past which we get diminishing returns in our damage calculations.
 #define STRENGTH_MULT 0.1	//STR multiplier per STR point up to the softcap. Works as a %-age. 0.1 = 10% per point.
+// For archer, whose damage scales massively with PER, we make skill their main determinator of accuracy and ROF, while decoupling PER from accuracy and making it scale damage.
+#define ACC_RANGED_BASE 15
+// While for Mage, where I have made Arcyne Armament a pseudo melee skills, and INT their primary CDR and Cost scalar, we uses PER so that their build need more than one stat to function well, in place of skills. The accuracy is 10 as a baseline (15 - 10 = 5 * 15 = +75 + 15 = 90% accuracy at 15 perception, i.e. capping out vs limb)
+#define ACC_SPELL_PER_BASELINE 10
+#define ACC_SPELL_PER_STEP 15
+#define ACC_RANGED_FLOOR 0
+#define ACC_RANGED_VISUAL_REACH 7
+#define ACC_RANGED_FARSIGHT_PENALTY 10
+#define ACC_RANGED_ZCROSS_PENALTY 20
 #define STRENGTH_CAPPEDMULT 0.05	//STR multiplier per STR point past the softcap
 #define RANGED_STAT_SOFTCAP 15	//PER value past which ranged damage scaling has diminishing returns.
 #define RANGED_STAT_MULT 0.1	//PER multiplier per point up to the softcap. 0.1 = 10% per point.
@@ -99,7 +108,6 @@
 #define EFF_RANGE_EXACT 1
 #define EFF_RANGE_ABOVE 2
 #define EFF_RANGE_BELOW 3
-
 // Swingdelay presets
 #define SWINGDELAY_NORMAL 1	//No penalties, we just swing.
 #define SWINGDELAY_PENALTY 2 //We suffer a defensive penalty if struck during it. Otherwise, normal.
@@ -223,6 +231,7 @@
 //Intent blade class for dismember class
 #define BCLASS_BLUNT		"blunt"
 #define BCLASS_SMASH		"smashing"
+#define BCLASS_DRILL		"drilling"
 #define BCLASS_CUT			"slash"
 #define BCLASS_CHOP			"chopping"
 #define BCLASS_STAB			"stabbing"
@@ -382,6 +391,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
 #define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
 #define BULLET_ACT_MISS				"MISS"
+#define SPELL_BLUNT_INT_DAMAGEFACTOR 1.3 // Blunt integrity damage factor for spell projectiles
 
 //Weapon values
 #define NONBLUNT_BLUNT_DAMFACTOR 0.8 // Damage factor when a non blunt weapon is used with blunt intent. Meant to make it worse than a real one.
@@ -393,6 +403,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define INTEG_PARRY_DECAY_UNARMED	5	//Integrity decay on parry when the attacker is unarmed (fists still wear down shields).
 
 #define SHARPNESS_ONHIT_DECAY		3	//Sharpness decay on parry.
+#define RIPOSTE_SHARPNESS_FACTOR	0.15	//Fraction of blade_int lost on riposte (15%). Heavy weapons add +0.05.
+#define RIPOSTE_INTEG_DIVISOR		5	//max_integrity / this = integrity damage on riposte for non-bladed weapons.
+#define ARCYNE_STRIKE_WARDED		-1	// If an arcyne strike got guarded, rider effects do not goes forth.
 #define SHARPNESS_TIER1_THRESHOLD	0.8	//%-age threshold when damage starts to fall off -- mainly damfactor and STR factor. NOT base damage value.
 #define SHARPNESS_TIER1_FLOOR		0.45//%-age threshold when damfactors and STR factors become 0.
 #define SHARPNESS_TIER2_THRESHOLD	0.2 //%-age threshold when damage *really* falls off. Base damage value included.
@@ -405,15 +418,23 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// Damage multiplier of silver weapons against mobs with TRAIT_SIMPLE_WOUNDS
 #define SILVER_SIMPLEMOB_DAM_MULT 3
-
-//Cast time reduction
-#define TOPER_CAST_TIME_REDUCTION 0.1
-#define EMERALD_CAST_TIME_REDUCTION 0.15
-#define SAPPHIRE_CAST_TIME_REDUCTION 0.2
-#define QUARTZ_CAST_TIME_REDUCTION 0.25
-#define RUBY_CAST_TIME_REDUCTION 0.3
-#define DIAMOND_CAST_TIME_REDUCTION 0.35
-#define RIDDLE_OF_STEEL_CAST_TIME_REDUCTION 0.4
+#define EXPOSED_CAST_LOCKOUT 4 SECONDS	// Cap on how long Exposed can deny casting
+#define TEMPO_TAG_STAMLOSS_PARRY "parry"
+#define TEMPO_TAG_STAMLOSS_DODGE "dodge"
+#define TEMPO_TAG_ARMOR_INTEGFACTOR "integ"
+#define TEMPO_TAG_NOLOS_PARRY "nolosparry"
+#define TEMPO_TAG_NOLOS_DODGE "nolosdodge"
+#define TEMPO_TAG_DEF_SHARPNESSFACTOR "sharpness"
+#define TEMPO_TAG_DEF_INTEGFACTOR "parryinteg"
+#define TEMPO_TAG_PARRYCD_BONUS	"parrycd"
+#define TEMPO_TAG_RCLICK_CD_BONUS "rclickcd"
+#define TEMPO_TAG_FEINTBAIT_FOV "feintbaitfov"
+#define TEMPO_TAG_DODGE_LOSS "dodgeloss"
+	#define TEMPO_DODGE_LOSS_NORMAL 0
+	#define TEMPO_DODGE_LOSS_LESS 1
+	#define TEMPO_DODGE_LOSS_NONE 2
+#define TEMPO_TAG_BINDABLE "defbindable"
+#define TEMPO_TAG_EQUIPTOSS "equiptoss"
 
 //melee accuracy bonus and penlties used by melee_accuracy_check() and resolve_aimed_zone() in accuracy_checks.dm
 #define ACC_MAJOR_ZONE_BONUS 10			//Aiming at a major limb rather than one of its precise subzones.
@@ -436,12 +457,19 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define ACC_PRONE_ATTACKER_LEG_BONUS 5	//Attacking legs or feet while we are prone ourselves.
 #define ACC_MIN 5						//Accuracy is always clamped between these two.
 #define ACC_MAX 95
+// How long we can't use stealth & other misc. things for
+#define IN_COMBAT_DELAY 10 SECONDS
 
 // Critical Resistance Defines //
 #define BLOOD_RESISTANCE_EFFECTIVE_BLEEDRATE 0.5
+/// Alternate attack defines. Return these at the end of procs like afterattack_secondary.
+/// Calls the normal attack proc. For example, if returned in afterattack_secondary, will call afterattack.
+/// Will continue the chain depending on the return value of the non-alternate proc, like with normal attacks.
+#define SECONDARY_ATTACK_CALL_NORMAL 1
+/// Cancels the attack chain entirely.
+#define SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN 2
+/// Proceed with the attack chain, but don't call the normal methods.
+#define SECONDARY_ATTACK_CONTINUE_CHAIN 3
 
 #define MAX_DODGE_CEIL 5
 #define MAX_DODGE_FLOOR -15
-
-#define RIPOSTE_SHARPNESS_FACTOR	0.15	//Fraction of blade_int lost on riposte (15%). Heavy weapons add +0.05.
-#define RIPOSTE_INTEG_DIVISOR		5	//max_integrity / this = integrity damage on riposte for non-bladed weapons.

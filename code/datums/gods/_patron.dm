@@ -45,6 +45,8 @@ GLOBAL_LIST_EMPTY(prayers)
 	var/list/added_verbs
 
 	var/datum/storyteller/storyteller
+	/// Common titles of the god - used for prayers
+	var/list/titles = list()
 
 /datum/patron/proc/on_gain(mob/living/pious)
 	for(var/trait in mob_traits)

@@ -57,7 +57,7 @@
 			head = /obj/item/clothing/head/roguetown/roguehood/hierophant
 			cloak = /obj/item/clothing/cloak/hierophant
 			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant/civilian
-			backpack_contents += list(/obj/item/book/spellbook = 1, /obj/item/chalk = 1, /obj/item/rogueweapon/huntingknife = 1)
+			backpack_contents += list(/obj/item/rogueweapon/spellbook = 1, /obj/item/chalk = 1, /obj/item/rogueweapon/huntingknife = 1)
 			H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -70,19 +70,21 @@
 			H.change_stat(STATKEY_SPD, -1)
 			H.change_stat(STATKEY_CON, -1)
 
-			ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
 
+			ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
+
 			if(H.mind)
-				H.mind?.adjust_spellpoints(20)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ley_lines)
+				H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 4))
+				H.mind.AddSpell(new /datum/action/cooldown/spell/ley_lines)
+				H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/rimecast)
 
 		if("Desert Ascetic (Pontifex)")//reduced spellpoints, stats, no dodge expert. Toughened up refugee.
 			H.set_patron(/datum/patron/old_god)
 			to_chat(H, span_warning("You were being being taught the ways of a Pontifex, training in body and will. The Fall of Naledi a hundred yils ago left whatever your training incomplete, whatever it's source. Shunned for your survival and left without a master, you wandered the deserts with unfinished discipline."))
 			r_hand = /obj/item/rogueweapon/katar
 			shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
-			backpack_contents += list(/obj/item/book/spellbook = 1, /obj/item/rogueweapon/huntingknife = 1)
+			backpack_contents += list(/obj/item/rogueweapon/spellbook = 1, /obj/item/rogueweapon/huntingknife = 1)
 
 			H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
@@ -103,17 +105,14 @@
 
 			H.virginity = TRUE
 
-			ADD_TRAIT(H, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 
 			if(H.mind)
-				var/weapons = list("Path of War","Path of Control","Path of Shadows", "Path of Survival")
+				var/weapons = list("Path of War","Path of Shadows", "Path of Survival")
 				var/weapon_choice = input(H, "Choose your path.", "WHAT UNFINISHED PATH DO YOU WALK?") as anything in weapons
 				switch(weapon_choice)
 					if("Path of War")//Weak combat stuff only
-						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt) // Standard Naledi Magic spell- Ice is more effective against djinn
-					if("Path of Control")//Battlefield control, minimal damage dealing
-						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/ensnare)
+						H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/rimecast)
 					if("Path of Shadows")//Sneaky trickster punchmage
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/invisibility)
 					if("Path of Survival")//Trade magic for skills
@@ -123,9 +122,8 @@
 						H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_EXPERT, TRUE)
 						H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_JOURNEYMAN, TRUE)
 						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)//as a bodyguard it can be REALLY important to find where the bleed is.
-
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/shadowstep)//All paths get shadowstep as a minimum
-				H.mind?.adjust_spellpoints(2)
+
 		if("Abandoned Diviner (Vizier)")	//reduced stats/skills/spellpoints from Vizier, Not given Stasis
 			H.set_patron(/datum/patron/old_god)
 			to_chat(H, span_warning("A Vizier healer in training, your studies revolved around the esoteric Origin Magyck - The drawing of Psydon power as the origin of creation. The Fall of Naledi a hundred yils ago ensures that you are wandering in exile with only fragments of the art."))
@@ -152,18 +150,18 @@
 
 			H.virginity = TRUE
 
-			ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_MEDICINE_EXPERT, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
+
+			ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
 
 
 			var/datum/devotion/C = new /datum/devotion(H, H.patron)
 			C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)	//Starts off maxed out.
 			if(H.mind)
-				H.mind?.adjust_spellpoints(6)	//reduced from 9 the merc gets
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt) // Standard Naledi Magic spell- Ice is more effective against djinn
+				H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/rimecast)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending)
+				H.mind.AddSpell(new /datum/action/cooldown/spell/mending)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/regression)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convergence)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/divergence)
@@ -171,4 +169,5 @@
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/check_boot)
 				H.mind.RemoveSpell(/obj/effect/proc_holder/spell/invoked/psydonendure)
+				H.mind.setup_mage_aspects(list("ward" = TRUE, "mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 6, "locked_aspects" = list(/datum/magic_aspect/lesser_augmentation)))
 
