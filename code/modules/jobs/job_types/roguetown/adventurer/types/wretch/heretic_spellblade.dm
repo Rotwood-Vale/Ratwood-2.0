@@ -6,8 +6,8 @@
 // Keep it thematically consistent - Only Patron lock Noc / Zizo
 // Don't let any other patrons have it
 /datum/advclass/wretch/heretic_spellblade
-    name = "Heretic Azurcaephan"
-    tutorial = "Branded a heretic for your unorthodox beliefs, you turned to an ancient art native to Azurea — the way of the Azurcaephan, a Spellblade. You combined your patron's gifts with martial discipline, forging yourself into a warrior-mage unlike any other. Unlike other spellblades, you know how to wield such terrifying power together with armor. The Church brands you a heretic, the Necromancers call you a fool, the Oaks see only deviation. Let them. One cut at a time, you shall carve your mark upon this world."
+    name = "Heretic Spellblade"
+    tutorial = "Branded a heretic for your unorthodox beliefs, you turned to an ancient art native to Battlemages. You combined your patron's gifts with martial discipline, forging yourself into a warrior-mage unlike any other. Unlike other spellblades, you know how to wield such terrifying power together with armor. The Church brands you a heretic, the Necromancers call you a fool, the Oaks see only deviation. Let them. One cut at a time, you shall carve your mark upon this world."
     allowed_sexes = list(MALE, FEMALE)
 
     allowed_patrons = list(/datum/patron/inhumen/zizo, /datum/patron/divine/noc)
