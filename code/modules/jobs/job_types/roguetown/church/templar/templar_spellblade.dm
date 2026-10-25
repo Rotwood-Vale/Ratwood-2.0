@@ -154,7 +154,7 @@
 				if("Steel Dagger")
 					granted_weapon = new /obj/item/rogueweapon/huntingknife/idagger/steel(H)
 		if("phalangite")
-			var/polearm_weapons = list("Halberd", "Bardiche", "Dory", "Naginata")
+			var/polearm_weapons = list("Halberd", "Bardiche", "Dory")
 			var/polearm_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in polearm_weapons
 			switch(polearm_choice)
 				if("Halberd")
@@ -167,10 +167,6 @@
 					H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap(H), SLOT_BACK_R, TRUE)
 				if("Dory")
 					granted_weapon = new /obj/item/rogueweapon/spear/spellblade(H)
-				if("Naginata")
-					granted_weapon = new /obj/item/rogueweapon/spear/naginata(H)
-					qdel(H.get_item_by_slot(SLOT_BACK_R))
-					H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/gwstrap(H), SLOT_BACK_R, TRUE)
 		if("macebearer")
 			var/mace_weapons = list("Steel Mace", "Steel Warhammer", "Grand Mace", "Battle Axe", "Steel Greataxe")
 			var/mace_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in mace_weapons
