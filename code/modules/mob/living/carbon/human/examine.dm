@@ -1114,10 +1114,7 @@
 
 
 		if(HAS_TRAIT(src, TRAIT_OVERWEIGHT))
-			if(prob(2))
-				. += span_info(span_yellow("[m1] plump and delicious looking - Like a fat little piggy. A tasty piggy."))
-			else
-				. += span_info(span_yellow("[m1] quite chubby."))
+			. += span_info(span_yellow("[m1] quite chubby."))
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
