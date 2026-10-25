@@ -1,8 +1,8 @@
 /datum/advclass/templar/noc_spellblade
-	name = "Noccite Azurcaephan"
-	tutorial = "You are a Noccite Azurcaephan - A devotee of the Holy Church\
+	name = "Noccite Warmage"
+	tutorial = "You are a Noccite Warmage - A devotee of the Holy Church\
 	While other templars don blessed heavy armor and clerical teachings, you chose a different path\
-	Wielder of both Blessed Blades and Magycks, you are an Azurcaephan, the Will of the Tutor-God\
+	Wielder of both Blessed Blades and Magycks, you are an Warmage, the Will of the Tutor-God\
 	You swore a sacred covenant, to Protect the Church and it's acolytes. Be a reminder that the night is full of stars and that fear is a blade dulled by knowledge."
 	outfit = /datum/outfit/job/roguetown/templar/noc_spellblade
 	category_tags = list(CTAG_TEMPLAR)
