@@ -67,26 +67,26 @@
 	var/cooldowny
 
 /obj/item/clothing/gloves/roguetown/chain/contraption/voltic/attackby(obj/item/gear, mob/user, params)
-    var/charge = 0
-    if(istype(gear, prime_power_source))
-        charge = charge_per_prime
-    else if(istype(gear, accepted_power_source))
-        charge = charge_per_source
-    if(!charge)
-        return ..()
-    user.changeNext_move(CLICK_CD_FAST)
-    var/datum/effect_system/spark_spread/sparks = new()
-    sparks.set_up(1, 1, get_turf(src))
-    sparks.start()
-    playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
-    if((max_stored_charge - current_charge) < charge_per_source)
-        to_chat(user, span_info("I try to insert [gear], but [src] can't hold any more charge!"))
-        shake_camera(user, 1, 1)
-        return TRUE
-    to_chat(user, span_info("I insert [gear] and [src] starts ticking."))
-    current_charge = min(current_charge + charge, max_stored_charge)
-    qdel(gear)
-    return TRUE
+	var/charge = 0
+	if(istype(gear, prime_power_source))
+		charge = charge_per_prime
+	else if(istype(gear, accepted_power_source))
+		charge = charge_per_source
+	if(!charge)
+		return ..()
+	user.changeNext_move(CLICK_CD_FAST)
+	var/datum/effect_system/spark_spread/sparks = new()
+	sparks.set_up(1, 1, get_turf(src))
+	sparks.start()
+	playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
+	if((max_stored_charge - current_charge) < charge_per_source)
+		to_chat(user, span_info("I try to insert [gear], but [src] can't hold any more charge!"))
+		shake_camera(user, 1, 1)
+		return TRUE
+	to_chat(user, span_info("I insert [gear] and [src] starts ticking."))
+	current_charge = min(current_charge + charge, max_stored_charge)
+	qdel(gear)
+	return TRUE
 
 /obj/item/clothing/gloves/roguetown/chain/contraption/voltic/attack_right(mob/user)
 	if(loc != user)
