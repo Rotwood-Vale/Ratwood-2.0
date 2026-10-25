@@ -117,6 +117,10 @@
 	log_say("[src] has praised zizo! (zizo cultist verb)")
 	if(istype(get_area(src), /area/rogue/indoors/town/church))
 		complete_zgoal(src, /datum/zizogoal/worshipzizo_church)
+	if(istype(get_area(src), /area/rogue/indoors/town/garrison))
+		complete_zgoal(src, /datum/zizogoal/worshipzizo_garrison)
+	if(istype(get_area(src), /area/rogue/indoors/town/warden))
+		complete_zgoal(src, /datum/zizogoal/worshipzizo_warden)
 	var/observers = 0
 	for(var/mob/living/carbon/human/L in hearers(7, src))
 		if(L != src && L.stat != DEAD && L.mind && !is_zizo(L))

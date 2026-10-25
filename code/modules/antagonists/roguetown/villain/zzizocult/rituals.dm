@@ -63,6 +63,23 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	name = "Worship Zizo at Church"
 	desc = "Worship Zizo inside of the Church."
 
+/datum/zizogoal/drinklux
+	name = "Drink Lux"
+	desc = "Consume a globule of lux."
+	reward = 3
+
+/datum/zizogoal/robgrave
+	name = "Grave Robbery"
+	desc = "Dig up a grave."
+
+/datum/zizogoal/worshipzizo_garrison
+	name = "Worship Zizo at Garrison"
+	desc = "Worship Zizo inside of the Garrison."
+
+/datum/zizogoal/worshipzizo_warden
+	name = "Worship Zizo at Warden Fort"
+	desc = "Worship Zizo inside of the Warden Fort."
+
 /datum/zizogoal/profaneshrine_church
 	name = "Create Shrine in Church"
 	desc = "Use the 'Raise Profane Shrine' rite inside of the church."

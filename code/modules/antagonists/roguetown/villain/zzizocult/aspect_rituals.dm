@@ -36,6 +36,8 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 
 GLOBAL_LIST_INIT(zizo_goals, list(
 	/datum/zizogoal/worshipzizo, /datum/zizogoal/worshipzizo_church,
+	/datum/zizogoal/worshipzizo_garrison, /datum/zizogoal/worshipzizo_warden, /datum/zizogoal/robgrave,
+	/datum/zizogoal/drinklux,
 	/datum/zizogoal/profaneshrine_church, /datum/zizogoal/profaneshrine_tavern,
 	/datum/zizogoal/profaneshrine_bath, /datum/zizogoal/profaneshrine_academy,
 	/datum/zizogoal/profaneshrine_graveyard,

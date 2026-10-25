@@ -224,6 +224,8 @@
 				user.log_message("robbed a marked grave (destroying [G])", LOG_ATTACK)
 				record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 				record_round_statistic(STATS_GRAVES_ROBBED)
+				if(ishuman(user))
+					complete_zgoal(user, /datum/zizogoal/robgrave)
 				qdel(G)
 				if(isliving(user))
 					var/mob/living/L = user
