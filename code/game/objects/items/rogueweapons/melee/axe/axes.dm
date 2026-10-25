@@ -462,7 +462,7 @@
 	name = "ćiupaga lunge"
 	desc = "Grip your ćiupaga by the tail-end of the handle and swing in a circular motion to reach further ahead. It will deal extra damage if perfectly positioned, otherwise you'll just hit them with the handle."
 	damfactor = 1.75
-	penfactor = 42
+	penfactor = PEN_HEAVY
 	effective_range = 2
 	effective_range_type = EFF_RANGE_EXACT
 	sharpness_penalty = 2
