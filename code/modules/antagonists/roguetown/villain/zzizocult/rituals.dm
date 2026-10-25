@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		return FALSE
 	if(!(ritual in user.mind.zizo_researched))
 		return FALSE
-	if(initial(ritual.is_cultist_ritual) && !is_zizo(user))
+	if((initial(ritual.is_cultist_ritual) || !initial(ritual.lesser)) && !is_zizo(user))
 		return FALSE
 	if(ritual.passive == TRUE)
 		return FALSE
@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		if(R.needs_aspect && !(R.needs_aspect in GLOB.zizo_bestowed))
 			contents += "<B>[initial(R.name)]</B> - LOCKED - <B>OPEN [R.needs_aspect] GATE.</B><BR>'<I>[R.desc]</I>'<BR>"
 			continue
-		if(R.is_cultist_ritual && !is_zizo(user))
+		if((R.is_cultist_ritual || !R.lesser) && !is_zizo(user))
 			continue
 		contents += "<a href='?src=[REF(src)];buy=[ritualtype]'>[initial(R.name)]</a> - [initial(R.research_cost)] SECRETS<BR>'<I>[R.desc]</I>'<BR>"
 	if(!any)
@@ -136,6 +136,9 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(!ritualtype || (ritualtype in user.mind.zizo_researched) || !(ritualtype in GLOB.zizo_researchable))
 		return
 	var/datum/ritual/R = new ritualtype
+	if((R.is_cultist_ritual || !R.lesser) && !is_zizo(user))
+		qdel(R)
+		return
 	if(user.mind.zizo_points < initial(R.research_cost))
 		to_chat(user, span_warning("NOT ENOUGH SECRETS."))
 		return
@@ -192,6 +195,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/s_desc
 	var/w_desc
 	var/passive = FALSE
+	var/lesser = FALSE
 
 /datum/ritual/proc/invoke(mob/living/user, turf/center)
 	return
@@ -289,6 +293,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 				zizo_award(assistant, 5)
 
 /datum/ritual/servantry/sacrifice
+	lesser = TRUE
 	name = "Sacrifice"
 	desc = "Place a sacrifice in the middle of the rune to rip out their lux. Grants SECRETS and a dark crystal. Requires an assistant holding a knife to stand on the sigil for the rite to function."
 	center_requirement = /mob/living/carbon/human
@@ -338,6 +343,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	to_chat(user, span_notice("The sacrifice is accepted!"))
 
 /datum/ritual/servantry/heartache
+	lesser = TRUE
 	name = "Heartaches"
 	desc = "Create a heart to locate sacrifices."
 	center_requirement = /obj/item/organ/heart
@@ -347,6 +353,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	to_chat(user, span_notice("Use this item to seek your sacrifices."))
 
 /datum/ritual/servantry/guidance
+	lesser = TRUE
 	name = "Divine Guidance"
 	desc = "Obtain guidance from ZIZO to receive SECRETS. Can use every 20 minutes."
 	center_requirement = /obj/item/organ/eyes
@@ -443,6 +450,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	return info
 
 /datum/ritual/servantry/gutted
+	lesser = TRUE
 	name = "Gutted Fish"
 	desc = "Place a dead and mindless humanoid in the center of the sigil to rip out its organs."
 	center_requirement = /mob/living/carbon/human // One to be gutted.human
@@ -465,6 +473,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		part.drop_limb()
 
 /datum/ritual/servantry/sleepcurse
+	lesser = TRUE
 	name = "Curse of Sleep"
 	desc = "Curse your target to fall asleep after thirty seconds. They are warned. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
@@ -492,6 +501,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		
 
 /datum/ritual/servantry/darksunmark
+	lesser = TRUE
 	name = "Dark Sun's Mark"
 	desc = "Mark someone for death by Graggar Assassins."
 	center_requirement = /obj/item/rogueweapon/huntingknife/idagger
@@ -537,6 +547,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	to_chat(user, span_notice("The All-seeing Eye. To see beyond sight."))
 
 /datum/ritual/transmutation/cross
+	lesser = TRUE
 	name = "Summon Amulet of Zizo"
 	desc = "Create a Zizo Amulet."
 	center_requirement = /obj/item/clothing/neck/roguetown/psicross
@@ -546,6 +557,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	to_chat(user, span_notice("The psycross is transmuted into an amulet of Zizo."))
 
 /datum/ritual/transmutation/raiseshrine
+	lesser = TRUE
 	name = "Raise Profane Shrine"
 	desc = "Raise an inverted cross as a shrine to ZIZO. Used in completing objectives."
 	center_requirement = /obj/item/grown/log/tree/small
@@ -569,6 +581,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		complete_zgoal(cultist, /datum/zizogoal/profaneshrine_graveyard)
 
 /datum/ritual/transmutation/criminalstool
+	lesser = TRUE
 	name = "Criminal's Tool"
 	desc = "Create soap to clean runes with."
 	center_requirement = /obj/item/natural/cloth
@@ -583,6 +596,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	color = LIGHT_COLOR_BLOOD_MAGIC
 
 /datum/ritual/transmutation/propaganda
+	lesser = TRUE
 	name = "Remnant Leech"
 	desc = "Create a leech that attaches silently onto targets. Used for curses."
 	center_requirement = /obj/item/natural/worms/leech
@@ -647,6 +661,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		V.add_stress(/datum/stressevent/leechcult)
 
 /datum/ritual/transmutation/silencerleech
+	lesser = TRUE
 	name = "Silencing Leech"
 	desc = "Transmute a leech to silence the voice of whoever you attach it to."
 	center_requirement = /obj/item/natural/worms/leech
@@ -696,6 +711,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	return ..()
 
 /datum/ritual/transmutation/invademind
+	lesser = TRUE
 	name = "Invade Mind"
 	desc = "Send an anonymous message into someone's head."
 	center_requirement = /obj/item/natural/feather
@@ -710,6 +726,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 			to_chat(HL, "<i>You hear a voice in your head... <b>[info]</i></b>")
 
 /datum/ritual/transmutation/summonoutfit
+	lesser = TRUE
 	name = "Summon Cult Outfit"
 	desc = "Conjure an ominous outfit that provides some defense."
 	center_requirement = /obj/item/natural/cloth
@@ -743,6 +760,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	body_parts_covered = ARMS|CHEST
 
 /datum/ritual/transmutation/summonarmor
+	lesser = TRUE
 	name = "Summon Darksteel Armor"
 	desc = "Conjure a set of unremovable darksteel plate. Trains you in heavy armor and grants mending. Requires a dark crystal."
 	center_requirement = /mob/living/carbon/human
@@ -1678,6 +1696,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		to_chat(user, span_notice("[src] pulls towards the [info["dir"]]. The scent feels [info["proximity"]][info["z"]]."))
 
 /datum/ritual/transmutation/summonweapon
+	lesser = TRUE
 	name = "Summon Weapons"
 	desc = "Conjure an avantyne blade. Teaches you expert swordsmanship. Requires a dark crystal."
 	center_requirement = /mob/living/carbon/human
@@ -1715,6 +1734,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	to_chat(target, span_notice("I feel like my legs have become stronger."))
 
 /datum/ritual/fleshcrafting/fleshmend
+	lesser = TRUE
 	name = "Fleshmend"
 	desc = "Use a piece of raw meat to heal yourself."
 	n_req = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
@@ -1723,6 +1743,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	research_cost = 2
 
 /datum/ritual/fleshcrafting/fleshmend/greater
+	lesser = FALSE
 	name = "Greater Fleshmend"
 	desc = "Use a piece of raw meat to heal yourself, but better."
 	is_cultist_ritual = TRUE
@@ -1738,6 +1759,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	to_chat(target, span_notice("Zizo empowers me."))
 
 /datum/ritual/fleshcrafting/darkeyes
+	lesser = TRUE
 	name = "Darkened Eyes"
 	desc = "Use a pair of eyes to permanently see in the dark."
 	center_requirement = /mob/living/carbon/human
@@ -1758,6 +1780,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	to_chat(target, span_notice("I no longer fear the dark."))
 
 /datum/ritual/fleshcrafting/nopain
+	lesser = TRUE
 	name = "Painless Battle"
 	desc = "Use a heart and a brain to become immune to pain. Requires a dark crystal."
 	research_cost = 3
@@ -1774,6 +1797,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	to_chat(target, span_notice("I no longer feel pain."))
 
 /datum/ritual/fleshcrafting/immortality
+	lesser = TRUE
 	name = "Flawed Immortality"
 	desc = "Sacrifice an Aasimar to obtain a flawed version of immortality. Not as useful as you might expect."
 	center_requirement = /mob/living/carbon/human
@@ -2057,7 +2081,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/sigil_type
 	var/portal_id
 	var/obj/effect/decal/cleanable/sigil/portal_link
-	var/static/list/sigil_states = list("Portal" = "strand2", "Strand" = "strand", "Toil" = "toil", "Bite" = "bite", "Pitch" = "pitch", "Noise" = "noise", "Blood" = "blood", "Rot" = "rot")
+	var/static/list/sigil_states = list("Lesser" = "lesser", "Portal" = "strand2", "Strand" = "strand", "Toil" = "toil", "Bite" = "bite", "Pitch" = "pitch", "Noise" = "noise", "Blood" = "blood", "Rot" = "rot")
 
 /obj/effect/decal/cleanable/sigil/examine(mob/user)
 	. = ..()
@@ -2141,6 +2165,9 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	. = ..()
 	if(!istype(user.patron, /datum/patron/inhumen/zizo))
 		return
+	if(sigil_type == "Greater" && !is_zizo(user))
+		to_chat(user, span_warning("THIS SIGIL IS BEYOND ME."))
+		return
 	if(sigil_type == "Portal")
 		var/obj/effect/decal/cleanable/sigil/dest = portal_link
 		if(QDELETED(dest))
@@ -2162,12 +2189,10 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		return
 	var/list/rituals_pre = list()
 	switch(sigil_type)
-		if("Transmutation")
-			rituals_pre = subtypesof(/datum/ritual/transmutation)
-		if("Fleshcrafting")
-			rituals_pre = subtypesof(/datum/ritual/fleshcrafting)
-		if("Servantry")
-			rituals_pre = subtypesof(/datum/ritual/servantry)
+		if("Lesser", "Greater")
+			for(var/datum/ritual/ritual_type as anything in subtypesof(/datum/ritual/servantry) + subtypesof(/datum/ritual/transmutation) + subtypesof(/datum/ritual/fleshcrafting))
+				if(initial(ritual_type.lesser) == (sigil_type == "Lesser"))
+					rituals_pre += ritual_type
 		if("Strand")
 			rituals_pre = subtypesof(/datum/ritual/strand)
 		if("Pitch")
@@ -2265,6 +2290,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/draw_time = 5 SECONDS
 	if(HAS_TRAIT(M, TRAIT_BLOODBOUND))
 		draw_time = 1 SECONDS
+	if(sigiltype == "Greater")
+		draw_time *= 2
 	if(do_after(M, draw_time))
 		if(!isblood)
 			M.bloody_hands--
@@ -2273,6 +2300,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		C.set_sigil_type(sigiltype)
 		C.add_mob_blood(M)
 		playsound(M, 'sound/items/write.ogg', 100)
+		if(sigiltype == "Lesser")
+			return
 		var/list/sigilsPath = list(
 			/obj/effect/decal/cleanable/sigil/N,
 			/obj/effect/decal/cleanable/sigil/S,
@@ -2297,8 +2326,15 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(!HAS_TRAIT(src, TRAIT_BLOODBOUND) && !bloody_hands && !get_bleed_rate())
 		to_chat(src, span_danger("My hands aren't bloody enough."))
 		return
-	var/static/list/cats = list("Servantry" = /datum/ritual/servantry, "Transmutation" = /datum/ritual/transmutation, "Fleshcrafting" = /datum/ritual/fleshcrafting, "Strand" = /datum/ritual/strand, "Pitch" = /datum/ritual/pitch, "Toil" = /datum/ritual/toil, "Bite" = /datum/ritual/bite, "Rot" = /datum/ritual/rot, "Blood" = /datum/ritual/blood, "Noise" = /datum/ritual/noise)
+	var/static/list/cats = list("Strand" = /datum/ritual/strand, "Pitch" = /datum/ritual/pitch, "Toil" = /datum/ritual/toil, "Bite" = /datum/ritual/bite, "Rot" = /datum/ritual/rot, "Blood" = /datum/ritual/blood, "Noise" = /datum/ritual/noise)
 	var/list/runes = list()
+	for(var/datum/ritual/ritual_type as anything in subtypesof(/datum/ritual/servantry) + subtypesof(/datum/ritual/transmutation) + subtypesof(/datum/ritual/fleshcrafting))
+		if(!ritual_available(src, ritual_type))
+			continue
+		if(initial(ritual_type.lesser))
+			runes |= "Lesser"
+		else if(is_zizo(src))
+			runes |= "Greater"
 	for(var/cat in cats)
 		for(var/datum/ritual/ritual as anything in subtypesof(cats[cat]))
 			if(ritual_available(src, ritual))

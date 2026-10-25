@@ -52,11 +52,7 @@
 	H.set_patron(/datum/patron/inhumen/zizo)
 	H.cmode_music = 'sound/music/cmode/antag/combat_cult.ogg'
 	H.playsound_local(get_turf(H), 'sound/music/maniac.ogg', 80, FALSE, pressure_affected = FALSE)
-	H.verbs |= /mob/living/carbon/human/proc/praise
 	H.verbs |= /mob/living/carbon/human/proc/communicate
-	H.verbs |= /mob/living/carbon/human/proc/draw_sigil
-	H.verbs |= /mob/living/carbon/human/proc/zizo_lore
-	H.verbs |= /mob/living/carbon/human/proc/zizo_objectives
 	H.verbs |= /mob/living/carbon/human/proc/zizo_targets_list
 	H.purity = FALSE
 

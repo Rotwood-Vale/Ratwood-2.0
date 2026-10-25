@@ -19,6 +19,7 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/transmutation/summonarmor, /datum/ritual/transmutation/summonweapon,
 	/datum/ritual/transmutation/summonpylon, /datum/ritual/transmutation/summonraver,
 	/datum/ritual/transmutation/propaganda, /datum/ritual/servantry/sleepcurse,
+	/datum/ritual/transmutation/silencerleech, /datum/ritual/servantry/darksunmark,
 	/datum/ritual/strand/dream_jaunt, /datum/ritual/strand/strandsend,
 	/datum/ritual/strand/strandrecall, /datum/ritual/toil/progress,
 	/datum/ritual/toil/summonysis, /datum/ritual/toil/fulmenor,
