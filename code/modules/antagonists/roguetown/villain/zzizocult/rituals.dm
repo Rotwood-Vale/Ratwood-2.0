@@ -398,8 +398,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/cooldown
 	var/tracked_name
 
-/obj/item/corruptedheart/attack_right(mob/user)
-	if(!is_zizo(user))
+/obj/item/corruptedheart/attack_right(mob/living/user)
+	if(!istype(user.patron, /datum/patron/inhumen/zizo))
 		to_chat(user, span_warning("The heart is silent."))
 		return
 	var/new_name = input(user, "WHOSE NAME DO YOU WHISPER TO THE HEART?", "ZIZO") as null|text
@@ -415,11 +415,11 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	tracked_name = new_name
 	to_chat(user, span_notice("The heart beats in time with [tracked_name]'s own'."))
 
-/obj/item/corruptedheart/attack_self(mob/user)
+/obj/item/corruptedheart/attack_self(mob/living/user)
 	if(world.time < cooldown)
 		to_chat(user, span_warning("Too soon!"))
 		return
-	if(!is_zizo(user))
+	if(!istype(user.patron, /datum/patron/inhumen/zizo))
 		to_chat(user, span_warning("The heart is silent."))
 		return
 	if(!tracked_name)
