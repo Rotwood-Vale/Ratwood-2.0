@@ -1285,7 +1285,7 @@
 #include "code\game\objects\items\rogueweapons\intents.dm"
 #include "code\game\objects\items\rogueweapons\rmb_intents.dm"
 #include "code\game\objects\items\rogueweapons\rogueweapon.dm"
-#include "code\modules\spells\roguetown\oldgod.dm"
+#include "code\modules\spells\roguetown\oldgod.dm" // Those 2 have to be before knives as knives use rune defines from oldgod_martial
 #include "code\modules\spells\roguetown\oldgod_martial.dm"
 #include "code\game\objects\items\rogueweapons\shields.dm"
 #include "code\game\objects\items\rogueweapons\intents\special.dm"
