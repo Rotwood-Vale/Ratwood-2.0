@@ -1103,8 +1103,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	)
 	var/list/menu = list()
 	for(var/name in options)
-		var/obj/item/organ/zizo_graft/G = options[name]
-		if(!H.getorganslot(initial(G.slot)))
+		var/obj/item/organ/zizo_graft/graft_type = options[name]
+		if(!H.getorganslot(initial(graft_type.slot)))
 			menu += name
 	if(!length(menu))
 		to_chat(H, span_warning("I AM COMPLETE."))
@@ -1810,17 +1810,13 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /datum/ritual/fleshcrafting/ascend
 	name = "ASCEND!"
-	desc = "Sacrifice the ruler on the north side, a person with pure lux on the south side, and have a pair of fellow cultists on the east and west side. Must be performed inside the keep. Keep the ruler on the sigil for 5 minutes to Ascend. Alerts everyone."
+	desc = "Sacrifice the ruler on the north side and a person with pure lux on the south side. Must be performed inside the keep. The ruler must be kept on the profane altar for 5 minutes to Ascend. Alerts everyone."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "the one to ascend"
 	n_req = /mob/living/carbon/human
 	n_desc = "the ruler"
 	s_req = /mob/living/carbon/human
 	s_desc = "one of pure lux"
-	e_req = /mob/living/carbon/human
-	e_desc = "a cultist"
-	w_req = /mob/living/carbon/human
-	w_desc = "a cultist"
 	is_cultist_ritual = TRUE
 
 /obj/effect/proc_holder/spell/bloodcrawl/ascendant
@@ -1830,24 +1826,20 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	gesture_required = TRUE
 
 /datum/ritual/fleshcrafting/ascend/invoke(mob/living/user, turf/center)
-	if(!istype(get_area(center), /area/rogue/indoors/town/manor))
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side. Two fellow cultists must stand on the east and west side."))
+	var/area/rogue/ritual_area = get_area(center)
+	if(!istype(ritual_area) || !ritual_area.keep_area)
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side."))
 		return
 	var/mob/living/carbon/human/cultist = locate() in center.contents
 	if(!cultist || cultist != user || !is_zizo(cultist))
 		return
-	var/mob/living/carbon/human/RULER = locate() in get_step(center, NORTH)
-	if(RULER != SSticker.rulermob)
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side. Two fellow cultists must stand on the east and west side."))
+	var/mob/living/carbon/human/RULER = SSticker.rulermob
+	if(!RULER || RULER.loc != get_step(center, NORTH))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side."))
 		return
 	var/mob/living/carbon/human/cleric = locate() in get_step(center, SOUTH)
 	if(!cleric || cleric.purity == FALSE || cleric.stat == DEAD)
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side. Two fellow cultists must stand on the east and west side."))
-		return
-	var/mob/living/carbon/human/east = locate() in get_step(center, EAST)
-	var/mob/living/carbon/human/west = locate() in get_step(center, WEST)
-	if(!is_zizo(east) || !is_zizo(west))
-		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side. Two fellow cultists must stand on the east and west side."))
+		to_chat(user, span_warning("The ascension must be performed within the keep. The ruler must lie on the north side. A person with pure lux must lie on the south side."))
 		return
 	cleric.visible_message(span_danger("[cleric] withers and dies!"))
 	cleric.death()
@@ -1856,38 +1848,49 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/datum/particle_weather/storm = new /datum/particle_weather/blood_rain_storm
 	SSParticleWeather.runningWeather = storm
 	storm.start()
-	RULER.apply_status_effect(/datum/status_effect/zizo_ascension, cultist)
-	to_chat(user, span_boldnotice("The ruler must remain upon the rune for five minutes. Guard them, do not move them from the rune."))
+	var/obj/structure/raver/altar/altar = new(RULER.loc)
+	altar.buckle_mob(RULER, TRUE, FALSE)
+	RULER.apply_status_effect(/datum/status_effect/zizo_ascension, cultist, altar)
+	to_chat(user, span_boldnotice("THE RULER MUST REMAIN UPON THE ALTAR AT ALL COSTS!"))
+
+/obj/structure/raver/altar
+	name = "profane altar"
+	desc = "HELL'S GORGE HATH BROKEN!"
+	max_integrity = 600
+
+/obj/structure/raver/altar/post_buckle_mob(mob/living/M)
+	return
+
+/obj/structure/raver/altar/examine(mob/user)
+	return list("[name]. [desc]")
 
 /datum/status_effect/zizo_ascension
 	id = "zizo_ascension"
 	duration = -1
 	tick_interval = 5 SECONDS
 	var/mob/living/carbon/human/cultist
+	var/obj/structure/raver/altar/altar
 	var/elapsed = 0
 
-/datum/status_effect/zizo_ascension/on_creation(mob/living/new_owner, mob/living/carbon/human/leader)
+/datum/status_effect/zizo_ascension/on_creation(mob/living/new_owner, mob/living/carbon/human/leader, obj/structure/raver/altar/device)
 	cultist = leader
+	altar = device
 	. = ..()
 
 /datum/status_effect/zizo_ascension/tick()
-	if(QDELETED(cultist) || cultist.stat == DEAD)
-		ascension_fail()
-		return
-	if(!istype(get_area(owner), /area/rogue/indoors/town/manor))
-		ascension_fail()
-		return
-	if(!(locate(/obj/effect/decal/cleanable/sigil) in get_turf(owner)))
+	if(QDELETED(cultist) || cultist.stat == DEAD || QDELETED(altar) || owner.buckled != altar || owner.stat == DEAD)
 		ascension_fail()
 		return
 	elapsed += 5
 	if(elapsed >= 300)
 		zizo_ascend(cultist)
 		owner.gib()
+		qdel(altar)
 		qdel(src)
 
 /datum/status_effect/zizo_ascension/proc/ascension_fail()
 	priority_announce("The sky brightens! The ritual is foiled!", title = "PEACE", sound = 'sound/misc/triumph.ogg')
+	qdel(altar)
 	qdel(src)
 
 /proc/zizo_ascend(mob/living/carbon/human/cultist)
@@ -2052,6 +2055,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	icon_state = "center"
 	icon = 'icons/obj/sigils.dmi'
 	var/sigil_type
+	var/portal_id
+	var/obj/effect/decal/cleanable/sigil/portal_link
 	var/static/list/sigil_states = list("Portal" = "strand2", "Strand" = "strand", "Toil" = "toil", "Bite" = "bite", "Pitch" = "pitch", "Noise" = "noise", "Blood" = "blood", "Rot" = "rot")
 
 /obj/effect/decal/cleanable/sigil/examine(mob/user)
@@ -2062,6 +2067,15 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		var/mob/living/living_user = user
 		if(istype(living_user.patron, /datum/patron/inhumen/zizo))
 			to_chat(user, "It is of the [sigil_type] circle.")
+			if(sigil_type == "Portal")
+				var/area/current_area = get_area(src)
+				var/info = "Passage #[portal_id] ([current_area.name])."
+				if(portal_link)
+					var/area/destination_area = get_area(portal_link)
+					info += " Connected to #[portal_link.portal_id] ([destination_area.name])."
+				else
+					info += " Not connected."
+				to_chat(user, info)
 
 /obj/effect/decal/cleanable/sigil/proc/set_sigil_type(newtype)
 	sigil_type = newtype
@@ -2069,11 +2083,44 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		icon_state = sigil_states[newtype] || "center"
 	if(newtype == "Portal")
 		GLOB.zizo_portals |= src
+		if(!portal_id)
+			portal_id = ++GLOB.zizo_portal_count
 		icon_state = "strand2"
 		update_icon()
 
+/obj/effect/decal/cleanable/sigil/proc/choose_link(mob/user)
+	var/list/choices = list()
+	for(var/obj/effect/decal/cleanable/sigil/passage in GLOB.zizo_portals)
+		if(passage != src)
+			var/area/passage_area = get_area(passage)
+			choices["#[passage.portal_id], [passage_area.name]"] = passage
+	if(!length(choices))
+		to_chat(user, span_notice("MAKE ANOTHER PASSAGE!"))
+		return
+	var/choice = tgui_input_list(user, "CONNECT TO ANOTHER PASSAGE", "ZIZO", choices)
+	if(!choice)
+		return
+	var/obj/effect/decal/cleanable/sigil/connectee = choices[choice]
+	if(QDELETED(connectee) || QDELETED(src))
+		return
+	if(portal_link)
+		portal_link.portal_link = null
+	if(connectee.portal_link)
+		connectee.portal_link.portal_link = null
+	portal_link = connectee
+	connectee.portal_link = src
+	to_chat(user, span_notice("PASSAGE #[portal_id] CONNECTED TO #[connectee.portal_id]."))
+
+/obj/effect/decal/cleanable/sigil/attack_right(mob/user)
+	. = ..()
+	if(sigil_type == "Portal" && is_zizo(user))
+		choose_link(user)
+
 /obj/effect/decal/cleanable/sigil/Destroy()
 	GLOB.zizo_portals -= src
+	if(portal_link)
+		portal_link.portal_link = null
+		portal_link = null
 	return ..()
 
 /obj/effect/decal/cleanable/sigil/proc/consume_ingredients(datum/ritual/R)
@@ -2095,14 +2142,9 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(!istype(user.patron, /datum/patron/inhumen/zizo))
 		return
 	if(sigil_type == "Portal")
-		var/obj/effect/decal/cleanable/sigil/dest
-		for(var/obj/effect/decal/cleanable/sigil/S in GLOB.zizo_portals)
-			if(S == src)
-				continue
-			dest = S
-			break
-		if(!dest)
-			to_chat(user, span_warning("Nothing connected."))
+		var/obj/effect/decal/cleanable/sigil/dest = portal_link
+		if(QDELETED(dest))
+			to_chat(user, span_warning("Nothing connected. Right-click the sigil."))
 			return
 		var/turf/effect_turf = get_turf(user)
 		var/poo = new /obj/effect/temp_visual/opengate(effect_turf, 2 SECONDS)

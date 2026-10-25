@@ -1,4 +1,5 @@
 GLOBAL_LIST_EMPTY(zizo_portals)
+GLOBAL_VAR_INIT(zizo_portal_count, 0)
 GLOBAL_LIST_EMPTY(gate_targets)
 GLOBAL_LIST_EMPTY(cult_robes)
 GLOBAL_LIST_EMPTY(zizo_reality_rends)
@@ -1214,6 +1215,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		return
 	S.set_sigil_type("Portal")
 	to_chat(user, span_notice("AN EYE IS A PASSAGE."))
+	S.choose_link(user)
 
 /datum/ritual/strand/strandrecall
 	name = "Curse of Recall"
