@@ -374,16 +374,12 @@ const TankColumn = (props: {
   );
 };
 
-const VesselColumn = (props: {
+const Vessel = (props: {
   container: Container | null;
   previewColor: string | null;
   totalDraw: number;
   owner: boolean;
   canRead: boolean;
-  bottles: number;
-  maxBottles: number;
-  bottlePrice: number;
-  budget: number;
   pourAmount: string;
   setPourAmount: (amount: string) => void;
   act: ActFn;
@@ -394,25 +390,19 @@ const VesselColumn = (props: {
     totalDraw,
     owner,
     canRead,
-    bottles,
-    maxBottles,
-    bottlePrice,
-    budget,
     pourAmount,
     setPourAmount,
     act,
   } = props;
-  const cantAffordBottle = !owner && bottlePrice > budget;
 
   return (
     <div
       style={{
-        flex: '0 0 150px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         gap: '6px',
-        alignSelf: 'flex-end',
+        marginTop: '10px',
       }}
     >
       {container ? (
@@ -507,9 +497,39 @@ const VesselColumn = (props: {
           {starsIfIlliterate('Insert a container to fill.', canRead)}
         </div>
       )}
-      <div style={{ color: INK_SOFT, fontSize: FONT_SMALL }}>
-        {starsIfIlliterate(`Bottles: ${bottles}/${maxBottles}`, canRead)}
-      </div>
+    </div>
+  );
+};
+
+const BottleRow = (props: {
+  owner: boolean;
+  canRead: boolean;
+  bottles: number;
+  maxBottles: number;
+  bottlePrice: number;
+  budget: number;
+  act: ActFn;
+}) => {
+  const { owner, canRead, bottles, maxBottles, bottlePrice, budget, act } =
+    props;
+  const cantAffordBottle = !owner && bottlePrice > budget;
+
+  return (
+    <div
+      style={{
+        ...cardStyle,
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        marginTop: '8px',
+      }}
+    >
+      <span style={{ color: SEAL_AMBER, fontFamily: SERIF }}>
+        {starsIfIlliterate('Bottles', canRead)}
+      </span>
+      <span style={{ flex: 1, fontSize: FONT_TITLE, fontWeight: 'bold' }}>
+        {bottles} / {maxBottles}
+      </span>
       {owner && (
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
           <CommitField
@@ -526,7 +546,7 @@ const VesselColumn = (props: {
       )}
       <button
         type="button"
-        style={compactButtonStyle({ disabled: !bottles || cantAffordBottle })}
+        style={inkButtonStyle({ disabled: !bottles || cantAffordBottle })}
         disabled={!bottles || cantAffordBottle}
         onClick={() => act('buy_bottle')}
       >
@@ -595,7 +615,7 @@ export const PotionSeller = () => {
   };
 
   return (
-    <Window width={680} height={660} theme="parchment">
+    <Window width={560} height={900} theme="parchment">
       <Window.Content scrollable>
         <div style={pageStyle}>
           <div style={titleStyle}>
@@ -644,21 +664,18 @@ export const PotionSeller = () => {
                 act={act}
               />
             ))}
-            <VesselColumn
-              container={container}
-              previewColor={previewColor}
-              totalDraw={totalDraw}
-              owner={owner}
-              canRead={canRead}
-              bottles={data.bottles}
-              maxBottles={data.max_bottles}
-              bottlePrice={data.bottle_price}
-              budget={data.budget}
-              pourAmount={pourAmount}
-              setPourAmount={setPourAmount}
-              act={act}
-            />
           </div>
+          <div style={{ ...rulerStyle, marginTop: '16px' }} />
+          <Vessel
+            container={container}
+            previewColor={previewColor}
+            totalDraw={totalDraw}
+            owner={owner}
+            canRead={canRead}
+            pourAmount={pourAmount}
+            setPourAmount={setPourAmount}
+            act={act}
+          />
           <div style={{ ...rulerStyle, marginTop: '16px' }} />
           <div
             style={{
@@ -702,6 +719,15 @@ export const PotionSeller = () => {
               {starsIfIlliterate('Pour', canRead)}
             </button>
           </div>
+          <BottleRow
+            owner={owner}
+            canRead={canRead}
+            bottles={data.bottles}
+            maxBottles={data.max_bottles}
+            bottlePrice={data.bottle_price}
+            budget={data.budget}
+            act={act}
+          />
         </div>
       </Window.Content>
     </Window>
