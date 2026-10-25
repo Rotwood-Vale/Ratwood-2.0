@@ -1,0 +1,4 @@
+author: "Kaolin1234"
+delete-after: True
+changes:
+  - rscadd: "Arachnids can now select the Weaver Spider Body, with customizable body, abdomen-marking, and leg-band colors."
