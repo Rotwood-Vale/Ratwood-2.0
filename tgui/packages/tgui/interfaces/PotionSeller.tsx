@@ -21,6 +21,7 @@ import {
   PARCHMENT_DEEP,
   rulerStyle,
   SEAL_AMBER,
+  SEAL_GREEN,
   SEAL_RED,
   SERIF,
   titleStyle,
@@ -641,16 +642,19 @@ export const PotionSeller = () => {
               act={act}
             />
           </div>
+          <div style={{ ...rulerStyle, marginTop: '16px' }} />
           <div
             style={{
+              ...cardStyle,
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'flex-end',
               gap: '10px',
-              marginTop: '16px',
             }}
           >
-            <span style={{ fontSize: FONT_LEAD }}>
+            <span style={{ color: SEAL_AMBER, fontFamily: SERIF }}>
+              {starsIfIlliterate('Your draw', canRead)}
+            </span>
+            <span style={{ flex: 1, fontSize: FONT_TITLE, fontWeight: 'bold' }}>
               {starsIfIlliterate(
                 `${totalDraw} dram${totalDraw === 1 ? '' : 's'}${
                   locked ? ` for ${cost}m` : ''
@@ -668,7 +672,10 @@ export const PotionSeller = () => {
             </button>
             <button
               type="button"
-              style={inkButtonStyle({ disabled: !totalDraw })}
+              style={inkButtonStyle({
+                color: SEAL_GREEN,
+                disabled: !totalDraw,
+              })}
               disabled={!totalDraw}
               onClick={() => {
                 act('pour', { draws: clamped });
