@@ -54,6 +54,9 @@ type PotionSellerData = {
   loading_tank: number;
   tanks: Tank[];
   container: Container | null;
+  // only sent by potion carts
+  is_cart?: BooleanLike;
+  wheels_secured?: BooleanLike;
 };
 
 type ActFn = (action: string, payload?: Record<string, unknown>) => void;
@@ -631,13 +634,37 @@ export const PotionSeller = () => {
               onClick={() => act('change')}
             />
           ) : (
-            <MoneyRow
-              label="Stored Profits"
-              amount={data.profits}
-              button="Withdraw"
-              canRead={canRead}
-              onClick={() => act('withdraw_profits')}
-            />
+            <div
+              style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+            >
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <MoneyRow
+                  label="Stored Profits"
+                  amount={data.profits}
+                  button="Withdraw"
+                  canRead={canRead}
+                  onClick={() => act('withdraw_profits')}
+                />
+              </div>
+              {!!data.is_cart && (
+                <button
+                  type="button"
+                  style={inkButtonStyle()}
+                  onClick={() => act('toggle_wheels')}
+                  title={starsIfIlliterate(
+                    data.wheels_secured
+                      ? 'The cart can be pulled once its wheels are free'
+                      : 'Secured wheels keep the cart from being moved',
+                    canRead,
+                  )}
+                >
+                  {starsIfIlliterate(
+                    data.wheels_secured ? 'Free wheels' : 'Secure wheels',
+                    canRead,
+                  )}
+                </button>
+              )}
+            </div>
           )}
           <div
             style={{

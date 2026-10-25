@@ -528,6 +528,13 @@
 
 // PEDDLER CARTS
 
+/// A plain key with a fresh random lock, for carts that make their own
+/proc/new_cart_key(atom/destination, key_name)
+	var/obj/item/roguekey/key = new(destination)
+	key.lockid = "cart_key_[world.time]_[rand(1, 9999999)]"
+	key.name = key_name
+	return key
+
 /obj/structure/roguemachine/vendor/mobile
 	name = "peddler cart"
 	desc = "A smaller, wheeled PEDDLER that can be moved around."
@@ -551,9 +558,7 @@
 
 /// Binds the cart to a new key and returns it
 /obj/structure/roguemachine/vendor/mobile/proc/make_key(atom/destination)
-	var/obj/item/roguekey/key = new(destination)
-	key.lockid = "peddler_cart_[world.time]_[rand(1, 9999999)]"
-	key.name = "peddler cart key"
+	var/obj/item/roguekey/key = new_cart_key(destination, "peddler cart key")
 	keycontrol = key.lockid
 	return key
 
