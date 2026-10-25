@@ -4,6 +4,13 @@
 	anchored = TRUE
 	max_integrity = 0
 
+/// A plain key with a fresh random lock, for shop carts that make their own
+/proc/new_cart_key(atom/destination, key_name)
+	var/obj/item/roguekey/key = new(destination)
+	key.lockid = "cart_key_[world.time]_[rand(1, 9999999)]"
+	key.name = key_name
+	return key
+
 /obj/structure/roguemachine/proc/budget2change(budget, mob/user, specify)
 	var/turf/T
 	if(!user || (!ismob(user)))

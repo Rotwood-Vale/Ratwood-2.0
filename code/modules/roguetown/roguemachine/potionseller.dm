@@ -17,7 +17,7 @@
 	// No INTERACT_ATOM_UI_INTERACT: the UI is opened explicitly so right-click loading doesn't pop it
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	locked = TRUE
-	var/wgain = 0
+	var/profits = 0
 	var/is_crafted = FALSE
 	var/keycontrol = "merchant"
 	/// The container in the slot, bought into or poured from
@@ -129,20 +129,26 @@
 	SStgui.update_uis(src)
 	return TRUE
 
-/// Pours every liquid container in a bag into the loading tank, and shelves empty bottles
+/// Pours every liquid container in a bag into the loading tank, and shelves bottles that were already empty
 /obj/structure/roguemachine/potionseller/proc/load_from_storage(datum/component/storage/STR, mob/living/user)
 	var/poured = 0
 	var/shelved = 0
 	var/tank_full = FALSE
+	var/shelf_full = FALSE
 	for(var/obj/item/I in STR.contents())
 		if(!is_liquid_container(I))
 			continue
 		var/obj/item/reagent_containers/C = I
+		// bottles emptied by this pour stay in the bag until the next right-click
 		if(C.reagents.total_volume)
 			poured += pour_into_tank(C, loading_tank, C.reagents.total_volume, user)
 			if(C.reagents.total_volume)
 				tank_full = TRUE
-		if(!C.reagents.total_volume && is_stock_bottle(C) && length(bottle_stock) < max_bottles)
+			continue
+		if(is_stock_bottle(C))
+			if(length(bottle_stock) >= max_bottles)
+				shelf_full = TRUE
+				continue
 			STR.remove_from_storage(C, src)
 			bottle_stock += C
 			shelved++
@@ -159,7 +165,9 @@
 		SStgui.update_uis(src)
 	if(tank_full)
 		to_chat(user, span_warning("[tank_label(loading_tank)] is full."))
-	else if(!poured && !shelved)
+	if(shelf_full)
+		to_chat(user, span_warning("The bottle shelf is full."))
+	if(!poured && !shelved && !tank_full && !shelf_full)
 		to_chat(user, span_warning("There is nothing \the [src] can take."))
 
 /obj/structure/roguemachine/potionseller/proc/toggle_lock()
@@ -262,7 +270,7 @@
 	data["locked"] = locked ? TRUE : FALSE
 	data["can_read"] = user.can_read(src, TRUE) ? TRUE : FALSE
 	data["budget"] = budget
-	data["profits"] = wgain
+	data["profits"] = profits
 	data["bottle_price"] = bottle_price
 	data["bottles"] = length(bottle_stock)
 	data["max_bottles"] = max_bottles
@@ -343,7 +351,7 @@
 					say("MY POTIONS ARE TOO EXPENSIVE FOR YOU, TRAVELER")
 					return TRUE
 				budget -= cost
-				wgain += cost
+				profits += cost
 				record_round_statistic(STATS_PEDDLER_REVENUE, cost)
 			for(var/i in 1 to length(tanks))
 				if(draws[i])
@@ -358,12 +366,16 @@
 			if(!length(bottle_stock))
 				say("MY BOTTLES ARE ALL SOLD OUT, TRAVELER")
 				return TRUE
+			// a bought bottle goes into the slot, so it has to be free
+			if(locked && inserted)
+				say("TAKE YOUR CONTAINER FIRST, TRAVELER")
+				return TRUE
 			if(locked && bottle_price > 0)
 				if(budget < bottle_price)
 					say("MY BOTTLES ARE TOO EXPENSIVE FOR YOU, TRAVELER")
 					return TRUE
 				budget -= bottle_price
-				wgain += bottle_price
+				profits += bottle_price
 				record_round_statistic(STATS_PEDDLER_REVENUE, bottle_price)
 			var/obj/item/B = bottle_stock[length(bottle_stock)]
 			bottle_stock -= B
@@ -384,9 +396,9 @@
 		if("withdraw_profits")
 			if(locked)
 				return
-			if(wgain > 0)
-				budget2change(wgain, user)
-				wgain = 0
+			if(profits > 0)
+				budget2change(profits, user)
+				profits = 0
 			return TRUE
 
 		if("pour_in")

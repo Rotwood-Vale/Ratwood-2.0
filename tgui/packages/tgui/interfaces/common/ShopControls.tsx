@@ -96,3 +96,27 @@ export const MoneyRow = (props: {
     </div>
   );
 };
+
+/** Owner toggle for a shop cart's wheels. */
+export const WheelsButton = (props: {
+  secured: boolean;
+  canRead: boolean;
+  onClick: () => void;
+}) => {
+  const { secured, canRead, onClick } = props;
+  return (
+    <button
+      type="button"
+      style={inkButtonStyle()}
+      onClick={onClick}
+      title={starsIfIlliterate(
+        secured
+          ? 'The cart can be pulled once its wheels are free'
+          : 'Secured wheels keep the cart from being moved',
+        canRead,
+      )}
+    >
+      {starsIfIlliterate(secured ? 'Free wheels' : 'Secure wheels', canRead)}
+    </button>
+  );
+};

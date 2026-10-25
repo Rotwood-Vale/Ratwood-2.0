@@ -23,7 +23,13 @@ import {
   rulerStyle,
   titleStyle,
 } from './common/parchment';
-import { CommitField, MoneyRow, parseWholeNumber } from './common/ShopControls';
+import {
+  CommitField,
+  MoneyRow,
+  parseWholeNumber,
+  WheelsButton,
+} from './common/ShopControls';
+import type { ActFn } from './Goldface/types';
 import { starsIfIlliterate } from './Goldface/util';
 
 type ProductGroup = {
@@ -47,8 +53,6 @@ type PeddlerData = {
   is_cart?: BooleanLike;
   wheels_secured?: BooleanLike;
 };
-
-type ActFn = (action: string, payload?: Record<string, unknown>) => void;
 
 const ProductIcon = (props: { icon: string }) => (
   <img
@@ -85,7 +89,7 @@ const ShopperRow = (props: {
       <ProductIcon icon={group.icon} />
       <div
         style={{ ...ellipsisCellStyle, fontSize: FONT_TITLE, color: INK }}
-        title={group.desc}
+        title={starsIfIlliterate(group.desc || '', canRead)}
       >
         {starsIfIlliterate(group.name, canRead)}
       </div>
@@ -128,7 +132,10 @@ const OwnerRow = (props: {
   return (
     <div style={denseRowStyle}>
       <ProductIcon icon={group.icon} />
-      <div style={{ flex: 1, minWidth: 0 }} title={group.desc}>
+      <div
+        style={{ flex: 1, minWidth: 0 }}
+        title={starsIfIlliterate(group.desc || '', canRead)}
+      >
         {canRead ? (
           <CommitField
             value={group.name}
@@ -233,22 +240,11 @@ export const Peddler = () => {
               </button>
             )}
             {!locked && !!data.is_cart && (
-              <button
-                type="button"
-                style={inkButtonStyle()}
+              <WheelsButton
+                secured={!!data.wheels_secured}
+                canRead={canRead}
                 onClick={() => act('toggle_wheels')}
-                title={starsIfIlliterate(
-                  data.wheels_secured
-                    ? 'The cart can be pulled once its wheels are free'
-                    : 'Secured wheels keep the cart from being moved',
-                  canRead,
-                )}
-              >
-                {starsIfIlliterate(
-                  data.wheels_secured ? 'Free wheels' : 'Secure wheels',
-                  canRead,
-                )}
-              </button>
+              />
             )}
             <div
               style={{

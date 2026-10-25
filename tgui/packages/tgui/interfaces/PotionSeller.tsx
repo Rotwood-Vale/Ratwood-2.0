@@ -24,7 +24,13 @@ import {
   SERIF,
   titleStyle,
 } from './common/parchment';
-import { CommitField, MoneyRow, parseWholeNumber } from './common/ShopControls';
+import {
+  CommitField,
+  MoneyRow,
+  parseWholeNumber,
+  WheelsButton,
+} from './common/ShopControls';
+import type { ActFn } from './Goldface/types';
 import { starsIfIlliterate } from './Goldface/util';
 
 type Tank = {
@@ -58,8 +64,6 @@ type PotionSellerData = {
   is_cart?: BooleanLike;
   wheels_secured?: BooleanLike;
 };
-
-type ActFn = (action: string, payload?: Record<string, unknown>) => void;
 
 const TANK_HEIGHT = 280;
 const VESSEL_HEIGHT = 160;
@@ -511,11 +515,23 @@ const BottleRow = (props: {
   maxBottles: number;
   bottlePrice: number;
   budget: number;
+  slotFull: boolean;
   act: ActFn;
 }) => {
-  const { owner, canRead, bottles, maxBottles, bottlePrice, budget, act } =
-    props;
+  const {
+    owner,
+    canRead,
+    bottles,
+    maxBottles,
+    bottlePrice,
+    budget,
+    slotFull,
+    act,
+  } = props;
   const cantAffordBottle = !owner && bottlePrice > budget;
+  // a bought bottle goes into the slot
+  const blocked = !owner && slotFull;
+  const disabled = !bottles || cantAffordBottle || blocked;
 
   return (
     <div
@@ -549,9 +565,14 @@ const BottleRow = (props: {
       )}
       <button
         type="button"
-        style={inkButtonStyle({ disabled: !bottles || cantAffordBottle })}
-        disabled={!bottles || cantAffordBottle}
+        style={inkButtonStyle({ disabled })}
+        disabled={disabled}
         onClick={() => act('buy_bottle')}
+        title={
+          blocked
+            ? starsIfIlliterate('Take your container out first', canRead)
+            : undefined
+        }
       >
         {starsIfIlliterate(
           owner
@@ -634,9 +655,7 @@ export const PotionSeller = () => {
               onClick={() => act('change')}
             />
           ) : (
-            <div
-              style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-            >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <MoneyRow
                   label="Stored Profits"
@@ -647,22 +666,11 @@ export const PotionSeller = () => {
                 />
               </div>
               {!!data.is_cart && (
-                <button
-                  type="button"
-                  style={inkButtonStyle()}
+                <WheelsButton
+                  secured={!!data.wheels_secured}
+                  canRead={canRead}
                   onClick={() => act('toggle_wheels')}
-                  title={starsIfIlliterate(
-                    data.wheels_secured
-                      ? 'The cart can be pulled once its wheels are free'
-                      : 'Secured wheels keep the cart from being moved',
-                    canRead,
-                  )}
-                >
-                  {starsIfIlliterate(
-                    data.wheels_secured ? 'Free wheels' : 'Secure wheels',
-                    canRead,
-                  )}
-                </button>
+                />
               )}
             </div>
           )}
@@ -753,6 +761,7 @@ export const PotionSeller = () => {
             maxBottles={data.max_bottles}
             bottlePrice={data.bottle_price}
             budget={data.budget}
+            slotFull={!!container}
             act={act}
           />
         </div>

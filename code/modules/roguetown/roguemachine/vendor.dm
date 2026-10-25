@@ -15,7 +15,7 @@
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	var/list/held_items = list()
 	locked = TRUE
-	var/wgain = 0
+	var/profits = 0
 	var/keycontrol = "merchant"
 	var/next_hawk = 0
 	var/will_hawk = TRUE
@@ -208,7 +208,7 @@
 	data["locked"] = locked ? TRUE : FALSE
 	data["can_read"] = user.can_read(src, TRUE) ? TRUE : FALSE
 	data["budget"] = budget || 0
-	data["profits"] = wgain
+	data["profits"] = profits
 	data["stored"] = length(held_items)
 	data["capacity"] = max_items
 
@@ -273,7 +273,7 @@
 					say("NO MONEY NO HONEY!")
 					return TRUE
 				budget -= total
-				wgain += total
+				profits += total
 			record_round_statistic(STATS_PEDDLER_REVENUE, total)
 			dispense(matches.Copy(1, amount + 1), user)
 			return TRUE
@@ -299,9 +299,9 @@
 		if("withdraw_profits")
 			if(locked)
 				return
-			if(wgain > 0)
-				budget2change(wgain, user)
-				wgain = 0
+			if(profits > 0)
+				budget2change(profits, user)
+				profits = 0
 			return TRUE
 
 		if("set_name")
@@ -527,13 +527,6 @@
 	update_icon()
 
 // PEDDLER CARTS
-
-/// A plain key with a fresh random lock, for carts that make their own
-/proc/new_cart_key(atom/destination, key_name)
-	var/obj/item/roguekey/key = new(destination)
-	key.lockid = "cart_key_[world.time]_[rand(1, 9999999)]"
-	key.name = key_name
-	return key
 
 /obj/structure/roguemachine/vendor/mobile
 	name = "peddler cart"
