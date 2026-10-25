@@ -940,7 +940,7 @@
 				return ..()
 			target.apply_status_effect(/datum/status_effect/buff/bloodrune_resistance, 15 SECONDS)
 			target.Immobilize(6 SECONDS)
-			new /obj/effect/temp_visual/ensnare/long(get_turf(target))
+			new /obj/effect/temp_visual/geas/long(get_turf(target))
 			user.visible_message(span_warning("[src] errupts into roots, immobilising [target]!"))
 			used_rune = TRUE
 		if(BLOODRUNE_FORCE)
