@@ -93,6 +93,7 @@
 		I.max_integrity += round(added_int * blessing_divisor)
 		I.obj_integrity = I.max_integrity
 		I.wdefense += round(added_def * blessing_divisor)
+		I.update_wdefense_dynamic()
 		I.name = "blessed [I.name]"
 		I.AddComponent(/datum/component/metal_glint)
 
@@ -100,7 +101,7 @@
 /datum/component/silverbless/proc/on_fix()
 	if(!is_blessed)
 		return
-	var/obj/item/rogueweapon/I = parent
+	var/obj/item/I = parent
 	I.force += added_force
 	if(I.force_wielded)
 		I.force_wielded += added_force

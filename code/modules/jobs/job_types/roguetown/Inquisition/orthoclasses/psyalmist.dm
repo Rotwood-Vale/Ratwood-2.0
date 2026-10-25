@@ -48,7 +48,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/black/psydon
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/mid
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)	//Capped to T2 miracles.//Capped to T2 miracles.
 	var/datum/inspiration/I = new /datum/inspiration(H)

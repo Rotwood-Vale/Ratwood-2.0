@@ -943,7 +943,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		beam = fuge.Beam(src, "blood", 'icons/roguetown/cult/cultsprites.dmi', time = INFINITY)
 
 /obj/structure/pylon/Destroy()
-	beam?.End()
+	qdel(beam)
 	beam = null
 	fuge?.pylons -= src
 	fuge = null
@@ -1069,7 +1069,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		beam = fuge.Beam(src, "blood", 'icons/roguetown/cult/cultsprites.dmi', time = INFINITY)
 
 /obj/structure/raver/Destroy()
-	beam?.End()
+	qdel(beam)
 	beam = null
 	fuge?.ravers -= src
 	fuge = null
@@ -1448,7 +1448,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	sleeved = 'modular_deserttown/icons/clothing/onmob/shadowcloak.dmi'
 	color = null
 	body_parts_covered = CHEST|GROIN|ARM_LEFT|ARM_RIGHT|LEG_LEFT|LEG_RIGHT
-	armor = ARMOR_LEATHER_GOOD
+	armor = ARMOR_LEATHER
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 	hoodtype = /obj/item/clothing/head/hooded/cultrobehood
@@ -1481,12 +1481,12 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	body_parts_covered = HEAD
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	block2add = FOV_BEHIND
-	armor = ARMOR_LEATHER_GOOD
+	armor = ARMOR_LEATHER
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/hooded/cultrobehood/empowered
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE
 	max_integrity = 400
 	icon_state = "ewarlockhood"
 	item_state = "ewarlockhood"
@@ -1520,7 +1520,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(empowered)
 		return
 	empowered = TRUE
-	armor = getArmor(arglist(ARMOR_ASCENDANT))
+	armor = getArmor(arglist(ARMOR_PLATE))
 	max_integrity = 400
 	obj_integrity = max_integrity
 	icon_state = "ewarlock"

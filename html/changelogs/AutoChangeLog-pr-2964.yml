@@ -1,6 +1,0 @@
-author: "SirSwagmeyer"
-delete-after: True
-changes:
-  - rscadd: "Added Mage Dexterity - an armor filtering trait to prevent full Mages from stacking armor protection."
-  - balance: "Made tough skin unenchantable, and blacklisted it from magedex roles."
-  - rscadd: "Added basic leather armor to the silverface."

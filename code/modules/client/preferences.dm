@@ -448,6 +448,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/race_bonus
 
+	/// Whether we can see the feint HUD bar.
+	var/feint_hud = FALSE 
+
 /datum/preferences/New(client/C)
 	parent = C
 	migrant  = new /datum/migrant_pref(src)
@@ -3390,6 +3393,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.headshot_link = headshot_link
 
 	character.origin = origin ? origin.name : "Unknown"
+	for(var/trait in origin?.origin_traits)
+		ADD_TRAIT(character, trait, ORIGIN_TRAIT)
 
 	character.statpack = statpack
 
