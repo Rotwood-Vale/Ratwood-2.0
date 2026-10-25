@@ -17,8 +17,6 @@
 	strip_delay = 20
 	var/max_storage = 20
 	var/list/arrows = list()
-	var/preferred_ammo_type
-	var/allowed_ammo_type = /obj/item/ammo_casing/caseless/rogue/arrow
 	sewrepair = TRUE
 	dropshrink = 0.9
 
