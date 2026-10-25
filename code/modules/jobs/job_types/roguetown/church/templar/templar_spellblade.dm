@@ -1,6 +1,6 @@
 /datum/advclass/templar/noc_spellblade
 	name = "Noccite Azurcaephan"
-	tutorial = "You are a Noccite Azurcaephan - A devotee of the Azurean Church\
+	tutorial = "You are a Noccite Azurcaephan - A devotee of the Ferentian Church\
 	Other templars clad themselves in heavy armor and relies on their miracles and their cone\
 	But you know Noc's true teaching - he granted knowledge so we, humen, may seize upon it and uses magyck\
 	to seize our own destiny. With steel in one hand, sorcery in the other, and Noc's blessing in your heart\
@@ -11,7 +11,6 @@
 	maximum_possible_slots = 2
 	subclass_languages = list(/datum/language/grenzelhoftian)
 	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_ARCYNE, TRAIT_UNCONVERTIBLE)
-	tempo_capable = FALSE
 	subclass_stats = list(
 		STATKEY_STR = 1,
 		STATKEY_INT = 1,
@@ -47,7 +46,7 @@
 /datum/outfit/job/roguetown/templar/noc_spellblade/pre_equip(mob/living/carbon/human/H)
 	..()
 	cloak = /obj/item/clothing/cloak/tabard/crusader/noc
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/half
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/jackchain
 	gloves = /obj/item/clothing/gloves/roguetown/chain
