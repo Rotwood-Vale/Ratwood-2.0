@@ -30,8 +30,12 @@
 	. = ..()
 	held_items -= gone
 
+/// Items of the same type sold under the same name are one product group
+/obj/structure/roguemachine/vendor/proc/make_group_key(item_type, item_name)
+	return "[item_type]_[item_name]"
+
 /obj/structure/roguemachine/vendor/proc/group_key(obj/item/I)
-	return "[I.type]_[held_items[I]["NAME"] || I.name]"
+	return make_group_key(I.type, held_items[I]["NAME"] || I.name)
 
 /// Returns the held_items keys (actual obj/item refs) belonging to the given group key
 /obj/structure/roguemachine/vendor/proc/get_group_items(key)
@@ -314,7 +318,7 @@
 			// renaming into an existing group merges with it, so take that group's price
 			var/obj/item/first = matches[1]
 			var/price = held_items[first]["PRICE"]
-			var/list/joining = get_group_items("[first.type]_[newname]") - matches
+			var/list/joining = get_group_items(make_group_key(first.type, newname)) - matches
 			if(length(joining))
 				price = held_items[joining[1]]["PRICE"]
 			for(var/obj/item/I in matches)
@@ -551,7 +555,7 @@
 
 /// Binds the cart to a new key and returns it
 /obj/structure/roguemachine/vendor/mobile/proc/make_key(atom/destination)
-	var/obj/item/roguekey/key = new_cart_key(destination, "peddler cart key", "brownkey")
+	var/obj/item/roguekey/key = new_shop_key(destination, "peddler cart key", "brownkey")
 	keycontrol = key.lockid
 	return key
 

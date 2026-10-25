@@ -96,7 +96,7 @@ const ShopperRow = (props: {
       <CountTag count={group.count} />
       <PriceTag
         price={group.price}
-        cantAfford={group.price > budget}
+        cantAfford={cantAfford}
         title={qty > 1 ? `${qty} for ${total}m` : `${group.price}m`}
       />
       {group.count > 1 && (

@@ -20,6 +20,8 @@
 	var/profits = 0
 	var/is_crafted = FALSE
 	var/keycontrol = "merchant"
+	/// Name of the key made for crafted or claimed machines
+	var/key_name = "potion seller key"
 	/// The container in the slot, bought into or poured from
 	var/obj/item/reagent_containers/inserted
 	var/bottle_price = 10
@@ -62,9 +64,7 @@
 
 /// Binds the machine to a new key and returns it
 /obj/structure/roguemachine/potionseller/proc/make_key(atom/destination)
-	var/obj/item/roguekey/key = new /obj/item/roguekey/physician(destination)
-	key.lockid = "random_potion_peddler_id_[rand(1,9999999)]" // I know, not foolproof
-	key.name = "potion seller key"
+	var/obj/item/roguekey/key = new_shop_key(destination, key_name, "greenkey")
 	keycontrol = key.lockid
 	return key
 
@@ -89,8 +89,11 @@
 		inserted = null
 	bottle_stock -= gone
 
+/obj/structure/roguemachine/potionseller/proc/default_tank_label(index)
+	return "Tank [index]"
+
 /obj/structure/roguemachine/potionseller/proc/tank_label(index)
-	return tank_labels[index] || "Tank [index]"
+	return tank_labels[index] || default_tank_label(index)
 
 /// Parses a tank number from ui params, or null if it isn't a valid tank
 /obj/structure/roguemachine/potionseller/proc/tank_index(param)
@@ -445,7 +448,8 @@
 			if(!index)
 				return
 			var/newlabel = sanitize(copytext(trim("[params["label"]]"), 1, MAX_NAME_LEN + 1))
-			tank_labels[index] = length(newlabel) ? newlabel : null
+			// blank or the default name means no label, so the tank keeps the default
+			tank_labels[index] = (length(newlabel) && newlabel != default_tank_label(index)) ? newlabel : null
 			return TRUE
 
 		if("set_price")
@@ -544,14 +548,10 @@
 	max_bottles = 10
 	// no owner until it's claimed, or crafted with its key
 	keycontrol = null
+	key_name = "potion cart key"
 
 /obj/structure/roguemachine/potionseller/mobile/crafted
 	is_crafted = TRUE
-
-/obj/structure/roguemachine/potionseller/mobile/make_key(atom/destination)
-	var/obj/item/roguekey/key = new_cart_key(destination, "potion cart key", "greenkey")
-	keycontrol = key.lockid
-	return key
 
 /obj/structure/roguemachine/potionseller/mobile/proc/offer_ownership(mob/living/carbon/human/user)
 	if(tgui_alert(user, "This cart has no owner. Take ownership?", "Potion Cart", list("Yes", "No")) != "Yes")
