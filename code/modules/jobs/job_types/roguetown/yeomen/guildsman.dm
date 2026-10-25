@@ -155,10 +155,9 @@
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/pick/steel
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
+	backr = /obj/item/rogueweapon/stoneaxe/woodcut/blacksteel/engineer
 	backpack_contents = list(
 								/obj/item/rogueweapon/hammer/steel = 1,
 								/obj/item/rogueweapon/chisel = 1,
