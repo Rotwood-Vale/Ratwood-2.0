@@ -1,4 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - code_imp: "Recodes most of the druid loop stuff so that it's no longer AI slop 9000"
