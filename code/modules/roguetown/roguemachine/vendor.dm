@@ -45,27 +45,24 @@
 			matches += O
 	return matches
 
-/obj/structure/roguemachine/vendor/proc/can_store(obj/item/P)
-	return P.w_class <= WEIGHT_CLASS_BULKY && length(held_items) < max_items
+/obj/structure/roguemachine/vendor/proc/is_full()
+	return length(held_items) >= max_items
 
+/// Records an item that is already inside, priced like the group it joins
 /obj/structure/roguemachine/vendor/proc/store_item(obj/item/P)
-	var/price_to_set = 0
-	for(var/obj/item/I in held_items)
-		if(I.name == P.name)
-			price_to_set = held_items[I]["PRICE"]
-			break
-
+	var/list/group = get_group_items(make_group_key(P.type, P.name))
 	held_items[P] = list()
 	held_items[P]["NAME"] = P.name
-	held_items[P]["PRICE"] = price_to_set
-
-	P.forceMove(src)
+	held_items[P]["PRICE"] = length(group) ? held_items[group[1]]["PRICE"] : 0
 
 /obj/structure/roguemachine/vendor/proc/insert(obj/item/P, mob/living/user)
 	if(P.w_class > WEIGHT_CLASS_BULKY)
 		return
-	if(length(held_items) >= max_items)
+	if(is_full())
 		to_chat(user, span_warning("Full."))
+		return
+	if(!user.transferItemToLoc(P, src))
+		to_chat(user, span_warning("[P] is stuck to your hand!"))
 		return
 	store_item(P)
 	playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
@@ -79,11 +76,13 @@
 	for(var/obj/item/I as anything in items)
 		if(I.w_class > WEIGHT_CLASS_BULKY)
 			continue
-		if(!can_store(I))
+		if(is_full())
 			full = TRUE
 			break
 		if(from_storage)
 			from_storage.remove_from_storage(I, src)
+		else
+			I.forceMove(src)
 		store_item(I)
 		stored++
 
@@ -211,7 +210,7 @@
 	var/list/data = list()
 	data["locked"] = locked ? TRUE : FALSE
 	data["can_read"] = user.can_read(src, TRUE) ? TRUE : FALSE
-	data["budget"] = budget || 0
+	data["budget"] = budget
 	data["profits"] = profits
 	data["stored"] = length(held_items)
 	data["capacity"] = max_items
@@ -278,7 +277,7 @@
 					return TRUE
 				budget -= total
 				profits += total
-			record_round_statistic(STATS_PEDDLER_REVENUE, total)
+				record_round_statistic(STATS_PEDDLER_REVENUE, total)
 			dispense(matches.Copy(1, amount + 1), user)
 			return TRUE
 
@@ -343,11 +342,9 @@
 	..()
 	for(var/obj/item/I in held_items)
 		I.forceMove(src.loc)
-		held_items -= I
 	budget2change(budget)
-	set_light(0)
+	budget = 0
 	update_icon()
-	icon_state = "[icon_prefix]0"
 
 /obj/structure/roguemachine/vendor/Initialize(mapload)
 	. = ..()
@@ -356,15 +353,10 @@
 
 /obj/structure/roguemachine/vendor/update_icon()
 	cut_overlays()
-	if(obj_broken)
-		set_light(0)
-		return
-	if(!locked)
-		icon_state = "[icon_prefix]0"
-		return
-	else
-		icon_state = "[icon_prefix]1"
-	if(held_items.len)
+	set_light(0)
+	var/open = !locked || obj_broken
+	icon_state = "[icon_prefix][open ? 0 : 1]"
+	if(!open && length(held_items))
 		set_light(1, 1, 1, l_color = "#1b7bf1")
 		add_overlay(mutable_appearance(icon, "vendor-gen"))
 
@@ -372,7 +364,6 @@
 	STOP_PROCESSING(SSroguemachine, src)
 	for(var/obj/item/I in held_items)
 		I.forceMove(src.loc)
-		held_items -= I
 	set_light(0)
 	return ..()
 

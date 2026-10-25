@@ -7,7 +7,7 @@
 /// A plain key with a fresh random lock, for shop machines that make their own
 /proc/new_shop_key(atom/destination, key_name, key_icon_state)
 	var/obj/item/roguekey/key = new(destination)
-	key.lockid = "cart_key_[world.time]_[rand(1, 9999999)]"
+	key.lockid = "shop_key_[world.time]_[rand(1, 9999999)]"
 	key.name = key_name
 	// the base key's "iron" state isn't in keys.dmi
 	key.icon_state = key_icon_state

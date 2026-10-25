@@ -132,21 +132,22 @@
 	SStgui.update_uis(src)
 	return TRUE
 
-/// Pours every liquid container in a bag into the loading tank, and shelves bottles that were already empty
+/// Empties the filled liquid containers in a bag into the loading tank, as far as it has room,
+/// and moves empty stock bottles from the bag onto the bottle shelf
 /obj/structure/roguemachine/potionseller/proc/load_from_storage(datum/component/storage/STR, mob/living/user)
 	var/poured = 0
 	var/shelved = 0
 	var/tank_full = FALSE
 	var/shelf_full = FALSE
-	for(var/obj/item/I in STR.contents())
-		if(!is_liquid_container(I))
+	for(var/obj/item/reagent_containers/C in STR.contents())
+		if(!is_liquid_container(C))
 			continue
-		var/obj/item/reagent_containers/C = I
-		// bottles emptied by this pour stay in the bag until the next right-click
 		if(C.reagents.total_volume)
 			poured += pour_into_tank(C, loading_tank, C.reagents.total_volume, user)
+			// anything left over didn't fit
 			if(C.reagents.total_volume)
 				tank_full = TRUE
+			// a bottle emptied here isn't shelved until the next right-click
 			continue
 		if(is_stock_bottle(C))
 			if(length(bottle_stock) >= max_bottles)
@@ -513,26 +514,20 @@
 	if(budget > 0)
 		budget2change(budget)
 		budget = 0
-	set_light(0)
 	update_icon()
-	icon_state = "[icon_prefix]0"
 
 /obj/structure/roguemachine/potionseller/update_icon()
 	cut_overlays()
-	if(obj_broken)
-		set_light(0)
+	set_light(0)
+	var/open = !locked || obj_broken
+	icon_state = "[icon_prefix][open ? 0 : 1]"
+	if(open)
 		return
-	if(!locked)
-		icon_state = "[icon_prefix]0"
-		return
-	else
-		icon_state = "[icon_prefix]1"
 	for(var/datum/reagents/tank as anything in tanks)
 		if(tank.total_volume >= 1)
 			set_light(1, 1, 1, l_color = "#1b7bf1")
 			add_overlay(mutable_appearance(icon, "vendor-gen"))
 			return
-	set_light(0)
 
 // POTION CARTS
 

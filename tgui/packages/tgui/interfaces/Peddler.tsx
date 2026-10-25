@@ -79,8 +79,9 @@ const ShopperRow = (props: {
   act: ActFn;
 }) => {
   const { group, budget, canRead, act } = props;
-  const [amount, setAmount] = useState(1);
-  const qty = Math.min(Math.max(amount, 1), group.count);
+  // kept as typed, so the box can be cleared while entering a new amount
+  const [amount, setAmount] = useState('1');
+  const qty = Math.min(Math.max(parseInt(amount, 10) || 1, 1), group.count);
   const total = group.price * qty;
   const cantAfford = total > budget;
 
@@ -105,7 +106,7 @@ const ShopperRow = (props: {
           min={1}
           max={group.count}
           value={amount}
-          onChange={(e) => setAmount(parseInt(e.target.value, 10) || 1)}
+          onChange={(e) => setAmount(e.target.value)}
           style={{ ...inkInputStyle, width: '48px' }}
         />
       )}

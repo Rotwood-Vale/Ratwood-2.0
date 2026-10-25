@@ -158,6 +158,7 @@ const TankColumn = (props: {
     onDraw(Math.max(0, Math.min(maxDraw, wanted)));
   };
 
+  // no deps: rebinds each render so the handlers see the current tank and limits
   useEffect(() => {
     if (!dragging) return;
     const move = (e: MouseEvent) => drawFromPointer(e.clientY);

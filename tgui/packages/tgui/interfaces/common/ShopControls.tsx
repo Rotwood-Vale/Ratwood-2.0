@@ -56,7 +56,8 @@ export const CommitField = (props: {
       onChange={(e) => setDraft(e.target.value)}
       onBlur={commit}
       onKeyDown={(e) => {
-        if (e.key === 'Enter') commit();
+        // blurring commits, so Enter doesn't send the value twice
+        if (e.key === 'Enter') e.currentTarget.blur();
       }}
       style={{ ...inkInputStyle, width }}
     />
