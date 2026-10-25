@@ -2095,6 +2095,7 @@
 #include "code\modules\jobs\job_types\roguetown\church\martyr\martyr.dm"
 #include "code\modules\jobs\job_types\roguetown\church\martyr\martyr_component.dm"
 #include "code\modules\jobs\job_types\roguetown\church\martyr\martyr_items.dm"
+#include "code\modules\jobs\job_types\roguetown\church\templar\templar_spellblade.dm"
 #include "code\modules\jobs\job_types\roguetown\courtier\apothecary.dm"
 #include "code\modules\jobs\job_types\roguetown\courtier\butler.dm"
 #include "code\modules\jobs\job_types\roguetown\courtier\chaplain.dm"
