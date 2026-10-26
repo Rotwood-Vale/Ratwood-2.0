@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/bite/thanatophobia,
 	/datum/ritual/rot/transfuse, /datum/ritual/rot/blight,
 	/datum/ritual/rot/plague, /datum/ritual/noise/thermalvis,
-	/datum/ritual/noise/forgettongue, /datum/ritual/noise/witchery,
+	/datum/ritual/noise/forgettongue, /datum/ritual/noise/reflection, /datum/ritual/servantry/witchery,
 	/datum/ritual/pitch/fireresist, /datum/ritual/pitch/shadowform,
 	/datum/ritual/pitch/lightcurse, /datum/ritual/blood/transfuse,
 	/datum/ritual/blood/bloodsnare, /datum/ritual/blood/bloodbond,
@@ -1828,15 +1828,119 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	H.mind.transfer_to(cat)
 	return TRUE
 
-/datum/ritual/noise/witchery
+/datum/ritual/servantry/witchery
 	name = "Witchery"
-	desc = "Summon a black cat. You are able to remotely possess it at any time and see through its eyes."
+	desc = "Learn to summon a black cat. You are able to remotely possess it at any time and see through its eyes."
 	passive = TRUE
+	lesser = TRUE
 	research_cost = 3
 
-/datum/ritual/noise/witchery/apply_passive(mob/living/carbon/human/H)
+/datum/ritual/servantry/witchery/apply_passive(mob/living/carbon/human/H)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/witch_possess)
 	return
+
+/obj/structure/mirror/profane
+	name = "profane mirror"
+	desc = "Shapes shift behind its twisted glass! It looks evil."
+	color = "#4a2a5c"
+	pixel_y = 0
+	var/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/ghost
+	var/datum/mind/owner
+
+/obj/structure/mirror/profane/obj_break(damage_flag, mapload)
+	. = ..()
+	qdel(src)
+
+/obj/structure/mirror/profane/Destroy()
+	qdel(ghost)
+	owner?.RemoveSpell(/obj/effect/proc_holder/spell/self/mirror_possess)
+	return ..()
+
+/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost
+	name = "reflection"
+	desc = "UNNATURAL. WHAT IS THIS?!"
+	alpha = 170
+	density = FALSE
+	incorporeal_move = TRUE
+	status_flags = GODMODE
+	speed = 4
+	maxHealth = 50
+	health = 50
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	ai_controller = null
+	faction = list("zizo")
+	var/mob/living/carbon/human/body
+
+/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/Destroy()
+	if(mind && body && !QDELETED(body))
+		mind.transfer_to(body)
+	return ..()
+
+/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/examine(mob/user)
+	. = ..()
+	if(user == src || !isliving(user) || is_zizo(user))
+		return
+	adjustBruteLoss(10, forced = TRUE)
+	to_chat(src, span_danger("[user] GAZES AT ME! IT BURNS!"))
+	if(health <= 0)
+		qdel(src)
+
+/obj/effect/proc_holder/spell/self/mirror_possess
+	name = "Conjure Hynt"
+	desc = "Conjure a hynt at the profane mirror."
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "tame_deadite"
+	recharge_time = 30 SECONDS
+	chargedloop = null
+	var/obj/structure/mirror/profane/mirror
+	var/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/ghost
+
+/obj/effect/proc_holder/spell/self/mirror_possess/charge_check(mob/user, feedback = TRUE)
+	if(user == ghost)
+		return TRUE
+	return ..()
+
+/obj/effect/proc_holder/spell/self/mirror_possess/cast(list/targets, mob/user = usr)
+	. = ..()
+	if(user == ghost)
+		qdel(ghost)
+		return TRUE
+	if(!ishuman(user) || !user.mind || QDELETED(mirror) || mirror.obj_broken)
+		to_chat(user, span_warning("NO MIRROR."))
+		revert_cast()
+		return FALSE
+	if(!QDELETED(mirror.ghost))
+		to_chat(user, span_warning("A HYNT IS ALREADY CONJURED!"))
+		revert_cast()
+		return FALSE
+	ghost = new(get_turf(mirror))
+	ghost.body = user
+	mirror.ghost = ghost
+	user.visible_message(span_warning("[user] falls limp!"))
+	user.mind.transfer_to(ghost)
+	QDEL_IN(ghost, 90 SECONDS)
+	return TRUE
+
+/datum/ritual/noise/reflection
+	name = "Reflection"
+	desc = "Consume a hand mirror to raise a profane mirror. You are able to conjure a hynt through its twisted glass. You control the hynt, and it is a spectral entity that moves through walls and harm mortal flesh. Yet a mortal's gaze destroys it."
+	is_cultist_ritual = TRUE
+	center_requirement = /obj/item/handmirror
+	research_cost = 5
+
+/datum/ritual/noise/reflection/invoke(mob/living/user, turf/center)
+	if(!user.mind)
+		return
+	var/obj/effect/proc_holder/spell/self/mirror_possess/spell = locate() in user.mind.spell_list
+	if(spell)
+		qdel(spell.mirror)
+	spell = new
+	user.mind.AddSpell(spell)
+	spell.mirror = new /obj/structure/mirror/profane(center)
+	spell.mirror.owner = user.mind
+	to_chat(user, span_notice("IN THE NOISE, IT IS ALL MIRRORS."))
 
 /datum/ritual/noise/forgettongue
 	name = "Curse of Babel"
