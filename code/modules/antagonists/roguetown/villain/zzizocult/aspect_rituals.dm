@@ -742,8 +742,10 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/special_intent/madman_delusion/apply_hit(turf/T)
 	for(var/mob/living/carbon/human/L in get_hearers_in_view(0, T))
-		if(L != howner)
+		if(L != howner && L.stat != DEAD)
 			apply_generic_weapon_damage(L, dam, "slash", BODY_ZONE_HEAD, bclass = BCLASS_CUT)
+			if(HAS_TRAIT(L, TRAIT_IN_FRENZY))
+				continue
 			L.enter_frenzymod()
 			addtimer(CALLBACK(L, TYPE_PROC_REF(/mob/living/carbon, exit_frenzymod)), frenzy_duration)
 	..()

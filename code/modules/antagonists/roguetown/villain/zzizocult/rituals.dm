@@ -1155,6 +1155,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/organ_path = options[choice]
 	var/obj/item/organ/zizo_graft/organ = new organ_path
 	organ.Insert(H)
+	ADD_TRAIT(H, TRAIT_MONSTROUS, TRAIT_GENERIC)
 	material--
 	to_chat(H, span_userdanger("THE RAVER JAMS THE GRAFT INTO MY FLESH!"))
 	H.emote("scream")
