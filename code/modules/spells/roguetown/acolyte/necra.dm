@@ -631,7 +631,7 @@
 	icon_state = "subtle"
 	plane = GAME_PLANE_UPPER
 	layer = ABOVE_MOB_LAYER
-	alpha = 90
+	alpha = 120
 	duration = 2 MINUTES
 
 /obj/effect/temp_visual/necra_consecrate/Initialize(mapload, new_duration)
