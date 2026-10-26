@@ -592,8 +592,8 @@
 	unenchantable = TRUE
 	force = 30
 	force_wielded = 35
-	max_blade_int = 400
-	max_integrity = 500
+	max_blade_int = 350
+	max_integrity = 400
 	equip_delay_self = 0
 	unequip_delay_self = 0
 
@@ -2228,8 +2228,8 @@
 	unenchantable = TRUE
 	force = 30
 	force_wielded = 35
-	max_blade_int = 300
-	max_integrity = 400
+	max_blade_int = 250
+	max_integrity = 300
 	equip_delay_self = 0
 	unequip_delay_self = 0
 
