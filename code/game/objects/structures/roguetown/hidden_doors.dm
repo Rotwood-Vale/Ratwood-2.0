@@ -1,11 +1,15 @@
-/// Random open phrases shared by every secret wall with the same redstone_id, keyed by "[redstone_id]"
+/// Open phrases shared by every secret wall with the same secret_door_access, keyed by secret_door_access_key()
 GLOBAL_LIST_EMPTY(secret_wall_phrases)
+/// Phrases a mapper fixed with open_phrase, keyed like secret_wall_phrases. The first one set wins
+GLOBAL_LIST_EMPTY(secret_wall_fixed_phrases)
+/// Secret walls that tell some roles their phrase
+GLOBAL_LIST_EMPTY(secret_walls_with_access)
 
 /*
  * Secret wall controller. Sits invisibly on a real wall tile, which stays untouched while closed,
  * so the look, smoothing, examine, climbing and damage are all the wall's own.
  * Opening swaps the tile for a floor and closing puts the recorded wall back.
- * Triggered by linked levers (redstone_id) or by a human speaking open_phrase next to it.
+ * Triggered by linked levers (redstone_id) or by a human speaking its phrase next to it.
  */
 /obj/structure/secret_wall_controller
 	name = "wall"
@@ -22,10 +26,14 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 	interaction_flags_atom = NONE
 	obj_flags = NONE
 
-	/// Spoken next to the wall to open it. Left empty, a random phrase is picked (shared by the redstone_id group)
+	/// Spoken next to the wall to open it. Left empty, a random phrase is picked. With secret_door_access set, it is the whole access group's phrase
 	var/open_phrase
-	/// Role types allowed to ask the wall for "help", "say phrase" and "set phrase"
-	var/list/vip
+	/// Job types told the phrase through Recall Passphrases. Walls with the same list share one phrase
+	var/list/secret_door_access
+	/// Rough description of where the wall is, shown by Recall Passphrases. Falls back to the area name
+	var/secret_door_locale
+	/// secret_door_access_key() of our secret_door_access, null without one
+	var/access_key
 	/// How long it stays open before trying to close. 0 means a trigger while open closes it instead
 	var/auto_close_delay = 5 SECONDS
 	/// Direction the wall slides when opening. Null picks a neighbouring closed turf
@@ -35,7 +43,6 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 	/// Use floor_turf instead of the wall's first baseturf
 	var/override_floor = TRUE
 	var/speaking_distance = 1
-	var/lang = /datum/language/common
 	/// How long the slide visual takes
 	var/slide_time = 1 SECONDS
 
@@ -61,17 +68,17 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 	var/close_retry_delay = 5 SECONDS
 	/// Weakrefs to non-living things that sat on the tile while it was a wall. They don't block closing
 	var/list/resident_refs
-	/// world.time the group last handled the phrase, so one utterance heard by several walls acts once
-	var/phrase_handled_time = -1
 
-/obj/structure/secret_wall_controller/Initialize(mapload, _redstone_id, _open_phrase, list/_vip, _auto_close_delay, _slide_dir, _floor_turf, _override_floor)
+/obj/structure/secret_wall_controller/Initialize(mapload, _redstone_id, _open_phrase, list/_secret_door_access, _secret_door_locale, _auto_close_delay, _slide_dir, _floor_turf, _override_floor)
 	// set before the parent call so redstone linkage happens in the normal LateInitialize pass
 	if(_redstone_id)
 		redstone_id = _redstone_id
 	if(_open_phrase)
 		open_phrase = _open_phrase
-	if(_vip)
-		vip = _vip
+	if(_secret_door_access)
+		secret_door_access = _secret_door_access
+	if(_secret_door_locale)
+		secret_door_locale = _secret_door_locale
 	if(!isnull(_auto_close_delay))
 		auto_close_delay = _auto_close_delay
 	if(_slide_dir)
@@ -88,12 +95,18 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 	icon = null
 	wall_type = T.type
 	name = T.name
-	if(!length(open_phrase))
-		open_phrase = get_shared_phrase()
+	if(length(secret_door_access))
+		access_key = secret_door_access_key(secret_door_access)
+	setup_phrase()
 	become_hearing_sensitive()
 	RegisterSignal(T, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
+	if(access_key)
+		GLOB.secret_walls_with_access += src
+		for(var/mob/living/carbon/human/H as anything in GLOB.human_list) // walls loaded mid-round still reach those already playing
+			H.check_secret_passphrases()
 
 /obj/structure/secret_wall_controller/Destroy()
+	GLOB.secret_walls_with_access -= src
 	lose_hearing_sensitivity()
 	var/turf/T = get_turf(src)
 	if(T)
@@ -104,14 +117,28 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 	resident_refs = null
 	return ..()
 
-/// The random phrase for our redstone_id group, made on first use
-/obj/structure/secret_wall_controller/proc/get_shared_phrase()
-	if(!redstone_id)
-		return open_word() + " " + magic_word()
-	var/key = "[redstone_id]"
-	if(!GLOB.secret_wall_phrases[key])
-		GLOB.secret_wall_phrases[key] = open_word() + " " + magic_word()
-	return GLOB.secret_wall_phrases[key]
+/// Picks our phrase, or our access group's phrase which a mapper-set open_phrase overrides
+/obj/structure/secret_wall_controller/proc/setup_phrase()
+	if(!access_key)
+		if(!length(open_phrase))
+			open_phrase = random_open_phrase()
+		return
+	if(!length(open_phrase))
+		if(!GLOB.secret_wall_phrases[access_key])
+			GLOB.secret_wall_phrases[access_key] = random_open_phrase()
+		return
+	var/fixed_phrase = GLOB.secret_wall_fixed_phrases[access_key]
+	if(fixed_phrase && fixed_phrase != open_phrase)
+		log_mapping("[src] at [AREACOORD(src)] sets open_phrase \"[open_phrase]\" but its access group already uses \"[fixed_phrase]\"")
+		return
+	GLOB.secret_wall_fixed_phrases[access_key] = open_phrase
+	GLOB.secret_wall_phrases[access_key] = open_phrase
+
+/// The phrase that opens this wall
+/obj/structure/secret_wall_controller/proc/get_phrase()
+	if(access_key)
+		return GLOB.secret_wall_phrases[access_key]
+	return open_phrase
 
 /obj/structure/secret_wall_controller/proc/on_turf_change(datum/source, path, list/new_baseturfs, flags, list/post_change_callbacks)
 	SIGNAL_HANDLER
@@ -273,63 +300,18 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 
 /obj/structure/secret_wall_controller/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
 	. = ..()
-	if(speaker == src)
-		return FALSE
 	if(!ishuman(speaker) || !original_message) // no original_message means an emote
 		return FALSE
 	if(get_dist(speaker, src) > speaking_distance)
 		return FALSE
-	var/mob/living/carbon/human/H = speaker
-	var/message2recognize = sanitize_hear_message(original_message)
-
-	if(is_type_in_list(H.mind?.assigned_role, vip)) //are they a VIP?
-		if(findtext(message2recognize, "help"))
-			send_speech(span_purple("'say phrase'... 'set phrase'..."), speaking_distance, src, message_language = lang, message_mode = MODE_WHISPER)
-			return TRUE
-		if(findtext(message2recognize, "say phrase"))
-			send_speech(span_purple("[open_phrase]..."), speaking_distance, src, message_language = lang, message_mode = MODE_WHISPER)
-			return TRUE
-		if(findtext(message2recognize, "set phrase"))
-			INVOKE_ASYNC(src, PROC_REF(prompt_new_phrase), H)
-			return TRUE
-
-	var/phrase = open_phrase ? sanitize_hear_message(open_phrase) : null
-	if(!length(phrase) || !findtext(message2recognize, phrase))
+	var/phrase = get_phrase()
+	if(!length(phrase) || !findtext(sanitize_hear_message(original_message), sanitize_hear_message(phrase)))
 		return FALSE
-	if(phrase_handled_time == world.time) // another wall of the group heard it first and handled it
-		return TRUE
-	var/list/group = list(src)
-	if(redstone_id)
-		for(var/obj/structure/secret_wall_controller/W in GLOB.redstone_objs)
-			if(W != src && W.redstone_id == redstone_id)
-				group += W
-	var/opened = FALSE
-	var/closed = FALSE
-	for(var/obj/structure/secret_wall_controller/W as anything in group)
-		W.phrase_handled_time = world.time
-		switch(W.trigger(H))
-			if("opened")
-				opened = TRUE
-			if("closed")
-				closed = TRUE
-	if(opened || closed)
-		var/action = opened ? (closed ? "opened and closed" : "opened") : "closed"
-		log_game("[key_name(H)] [action] the secret walls with redstone id \"[redstone_id]\" by phrase at [AREACOORD(src)]")
+	// only this wall acts, any other wall in range that heard its phrase acts on its own
+	var/action = trigger(speaker)
+	if(action)
+		log_game("[key_name(speaker)] [action] a secret wall by phrase at [AREACOORD(src)]")
 	return TRUE
-
-/// "set phrase" changes the phrase for the whole redstone_id group
-/obj/structure/secret_wall_controller/proc/prompt_new_phrase(mob/living/carbon/human/H)
-	var/new_pass = stripped_input(H, "What should the new open phrase be?")
-	if(!length(new_pass) || QDELETED(src) || QDELETED(H))
-		return
-	if(redstone_id)
-		GLOB.secret_wall_phrases["[redstone_id]"] = new_pass
-		for(var/obj/structure/secret_wall_controller/W in GLOB.redstone_objs)
-			if(W.redstone_id == redstone_id)
-				W.open_phrase = new_pass
-	open_phrase = new_pass
-	log_game("[key_name(H)] set the phrase of secret walls with redstone id \"[redstone_id]\" to \"[new_pass]\" at [AREACOORD(src)]")
-	send_speech(span_purple("It is done, [flavor_name()]..."), speaking_distance, src, message_language = lang, message_mode = MODE_WHISPER)
 
 /// The wall's look sliding into (or out of) a neighbouring wall
 /obj/effect/secret_wall_slide
@@ -382,24 +364,6 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 		)
 	return pick(open_word)
 
-/proc/close_word()
-	var/list/close_word = list(
-		"close",
-		"seal",
-		"still",
-		"fade",
-		"retreat",
-		"consume",
-		"envelope",
-		"hide",
-		"halt",
-		"cease",
-		"vanish",
-		"end"
-		)
-	return pick(close_word)
-
-
 /proc/magic_word()
 	var/list/magic_word = list(
 		"sesame",
@@ -438,20 +402,53 @@ GLOBAL_LIST_EMPTY(secret_wall_phrases)
 		)
 	return pick(magic_word)
 
-/proc/flavor_name()
-	var/list/flavor_name = list(
-		"my friend",
-		"love",
-		"my love",
-		"honey",
-		"darling",
-		"stranger",
-		"companion",
-		"mate",
-		"you harlot",
-		"comrade",
-		"fellow",
-		"chum",
-		"bafoon"
-		)
-	return pick(flavor_name)
+/proc/random_open_phrase()
+	return open_word() + " " + magic_word()
+
+/// Same for any two lists holding the same job types, whatever their order
+/proc/secret_door_access_key(list/access)
+	var/list/paths = list()
+	for(var/path in access)
+		paths |= "[path]"
+	return jointext(sortList(paths), ";")
+
+/// The secret walls whose phrase our current role is told
+/mob/living/carbon/human/proc/known_secret_walls()
+	. = list()
+	if(!mind?.assigned_role)
+		return
+	var/datum/job/job = SSjob.GetJob(mind.assigned_role)
+	if(!job)
+		return
+	for(var/obj/structure/secret_wall_controller/W as anything in GLOB.secret_walls_with_access)
+		if(is_type_in_list(job, W.secret_door_access))
+			. += W
+
+/// Gives Recall Passphrases, with a one-time note, once any secret wall tells our role its phrase. notify gets the note if we have no key yet
+/mob/living/carbon/human/proc/check_secret_passphrases(mob/notify)
+	if((/mob/living/carbon/human/proc/recall_passphrases in verbs) || !length(known_secret_walls()))
+		return
+	verbs |= /mob/living/carbon/human/proc/recall_passphrases
+	to_chat(notify || src, span_notice("I know of hidden passages. I can <i>Recall Passphrases</i>."))
+
+/mob/living/carbon/human/proc/recall_passphrases()
+	set name = "Recall Passphrases"
+	set category = "IC"
+	var/list/locales_by_phrase = list()
+	var/list/area_by_phrase = list() // fallback when no wall sharing the phrase has a locale
+	for(var/obj/structure/secret_wall_controller/W as anything in known_secret_walls())
+		var/phrase = W.get_phrase()
+		if(!locales_by_phrase[phrase])
+			locales_by_phrase[phrase] = list()
+			var/area/A = get_area(W)
+			area_by_phrase[phrase] = A?.name
+		if(W.secret_door_locale)
+			locales_by_phrase[phrase] |= W.secret_door_locale
+	if(!length(locales_by_phrase))
+		to_chat(src, span_notice("I can't recall any passphrases."))
+		return
+	var/list/lines = list(span_notice("I recall these passphrases:"))
+	for(var/phrase in locales_by_phrase)
+		var/list/locales = locales_by_phrase[phrase]
+		lines += "\"[phrase]\": [length(locales) ? jointext(locales, ", ") : area_by_phrase[phrase]]"
+	to_chat(src, lines.Join("\n"))
