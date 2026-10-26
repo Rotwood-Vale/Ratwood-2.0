@@ -203,6 +203,13 @@ GLOBAL_VAR(moneymaster)
 		return UI_CLOSE
 	return ..()
 
+// The ui_status guard above still lets ghosts reach ui_interact, which plays each machine's open
+// sound before the window closes. Skip /obj/attack_ghost entirely; right click falls through here too.
+/obj/structure/roguemachine/attack_ghost(mob/dead/observer/user)
+	if(user.client?.prefs.inquisitive_ghost)
+		user.examinate(src)
+	return TRUE
+
 /obj/structure/roguemachine/proc/withdrawbudget(mob/user)
 	var/amt = budget
 	if(!amt)
