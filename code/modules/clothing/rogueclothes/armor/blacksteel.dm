@@ -52,6 +52,7 @@
 	item_state = "grenzelcuirass"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
 	allowed_race = CLOTHED_RACES_TYPES
+	armor = ARMOR_PLATE_BSTEEL
 	blocking_behavior = null
 	max_integrity = ARMOR_INT_CHEST_PLATE_BLACKSTEEL
 	smeltresult = /obj/item/ingot/blacksteel
