@@ -16,7 +16,7 @@
 	outfit = /datum/outfit/job/roguetown/adventurer/underdweller
 	class_select_category = CLASS_CAT_RACIAL
 	category_tags = list(CTAG_ADVENTURER)
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WEBWALK, TRAIT_EXPLOSIVE_SUPPLY, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_WEBWALK, TRAIT_EXPLOSIVE_SUPPLY, TRAIT_ALCHEMY_EXPERT, TRAIT_LEGENDARY_MINER)
 	subclass_stats = list(
 		STATKEY_CON = 1,
 		STATKEY_WIL = 2,
@@ -98,7 +98,7 @@
 		H.update_inv_head()
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon(force = TRUE)
+		A.build_all_button_icons(ALL, TRUE)
 	..()
 
 //Detpack. I'm sure you can imagine use cases, outside of carrying it.

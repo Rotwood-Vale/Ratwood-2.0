@@ -18,6 +18,7 @@
 	max_buckled_mobs = 1
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
+	buckle_blocks_spells = TRUE
 
 	max_integrity = 250
 	resistance_flags = NONE

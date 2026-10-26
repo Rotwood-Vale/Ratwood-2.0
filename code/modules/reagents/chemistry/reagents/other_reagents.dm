@@ -59,10 +59,10 @@
 /datum/reagent/blood/on_mob_life(mob/living/carbon/H)//I hate you
 	..()
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-		H.adjust_nutrition(10)
-		H.adjust_hydration(10)
+		H.adjust_nutrition(12)
+		H.adjust_hydration(12)
 		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-			H.set_blood_volume(min(H.get_blood_volume()+4, BLOOD_VOLUME_NORMAL))//Less effective than just water.
+			H.set_blood_volume(min(H.get_blood_volume()+5, BLOOD_VOLUME_NORMAL)) //water should be toxic to hemophages, increasing it so it becomes a water replacement
 		return
 	if(HAS_TRAIT(H, TRAIT_NASTY_EATER))
 		return
@@ -73,9 +73,9 @@
 		..()
 /datum/reagent/blood/shitty/on_mob_life(mob/living/carbon/H)
 	..()
-	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-		H.adjust_nutrition(3)
-		H.adjust_hydration(3)
+	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE)) // this should be ass
+		H.adjust_nutrition(2)
+		H.adjust_hydration(2) 
 		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 			H.set_blood_volume(min(H.get_blood_volume()+2, BLOOD_VOLUME_NORMAL))//Much less effective than just water.
 		if(prob(5))
@@ -134,7 +134,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-			M.add_nausea(2)
+			M.add_nausea(12) //should instant puke for clearification
 		else
 			H.adjust_hydration(hydration)
 			if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
@@ -169,11 +169,26 @@
 	//I am not putting in a NASTY_EATER check for this. He's the god of bloodshed, not the god of coprophagia.
 	M.adjustToxLoss(4) //Horrible day for poop drinkers
 	M.add_nausea(20)
+
 /datum/chemical_reaction/grosswaterboil //boiling water purifies it
 	name = "gross water purification"
 	id = /datum/reagent/water
 	results = list(/datum/reagent/water = 1)
 	required_reagents = list(/datum/reagent/water/gross = 1)
+	required_temp = 375
+
+/datum/chemical_reaction/holywaterboil //boiling holy water mundanifies it
+	name = "holy water mundanification"
+	id = /datum/reagent/water
+	results = list(/datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/water/blessed = 1)
+	required_temp = 375
+
+/datum/chemical_reaction/cursedwaterboil //boiling cursed water mundanifies it
+	name = "cursed water mundanification"
+	id = /datum/reagent/water
+	results = list(/datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/water/cursed = 1)
 	required_temp = 375
 
 /datum/reagent/water/bathwater

@@ -26,6 +26,7 @@
 		return FALSE
 	changeNext_move(mmb_intent.clickcd)
 	face_atom(A)
+	break_invisibility()
 	SEND_SIGNAL(src, COMSIG_MOB_ON_KICK)
 	playsound(src, pick(PUNCHWOOSH), 100, FALSE, -1)
 	// play the attack animation even when kicking non-mobs
@@ -35,9 +36,6 @@
 	if(ismob(A) && mmb_intent)
 		var/mob/living/M = A
 		sleep(mmb_intent.swingdelay)
-		if(M.has_status_effect(/datum/status_effect/buff/clash) && ishuman(M))
-			var/mob/living/carbon/human/HT = M
-			HT.bad_guard(span_warning("The kick throws my stance off!"))
 		if(QDELETED(src) || QDELETED(M))
 			return FALSE
 		if(!M.Adjacent(src))
@@ -46,6 +44,7 @@
 			return FALSE
 		if(M.checkmiss(src))
 			return FALSE
+		SEND_SIGNAL(M, COMSIG_MOB_KICKED)
 		if(M.checkdefense(mmb_intent, src))
 			return FALSE
 		if(ishuman(M))

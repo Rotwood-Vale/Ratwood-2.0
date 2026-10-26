@@ -18,13 +18,6 @@
 #define COVERAGE_NASAL			( HEAD | HAIR | NOSE )
 #define COVERAGE_SKULL			( HEAD | HAIR )
 
-#define COVERAGE_VEST			( CHEST | VITALS )
-#define COVERAGE_SHIRT			( CHEST | VITALS | ARMS )
-#define COVERAGE_TORSO			( CHEST | GROIN | VITALS )
-#define COVERAGE_ALL_BUT_ARMS	( CHEST | GROIN | VITALS | LEGS )
-#define COVERAGE_ALL_BUT_LEGS	( CHEST | GROIN | VITALS | ARMS )
-#define COVERAGE_FULL			( CHEST | GROIN | VITALS | LEGS | ARMS )
-
 #define COVERAGE_PANTS			( GROIN | LEGS )
 #define COVERAGE_FULL_LEG		( LEGS | FEET )
 
@@ -107,6 +100,85 @@ Balloon Alert / Floating Text defines
 
 #define RACES_OOZE \
 	/datum/species/ooze,\
+
+#define RACES_BREATHE list(\
+	/datum/species/human/northern,\
+	/datum/species/human/halfelf,\
+	/datum/species/elf/dark,\
+	/datum/species/elf/wood,\
+	/datum/species/dwarf/mountain,\
+	/datum/species/tieberian,\
+	/datum/species/aasimar,\
+	/datum/species/lizardfolk,\
+	/datum/species/lupian,\
+	/datum/species/tabaxi,\
+	/datum/species/vulpkanin,\
+	/datum/species/akula,\
+	/datum/species/moth,\
+	/datum/species/dracon,\
+	/datum/species/anthromorph,\
+	/datum/species/anthromorphsmall,\
+	/datum/species/demihuman,\
+	/datum/species/halforc,\
+	/datum/species/kobold,\
+	/datum/species/goblinp,\
+	/datum/species/lamia,\
+	/datum/species/dwarf/gnome,\
+	/datum/species/harpy,\
+	/datum/species/arachnid,\
+)
+#define ALL_BUT_BLOODLESS list(\
+	/datum/species/human/northern,\
+	/datum/species/human/halfelf,\
+	/datum/species/elf/dark,\
+	/datum/species/elf/wood,\
+	/datum/species/dwarf/mountain,\
+	/datum/species/tieberian,\
+	/datum/species/aasimar,\
+	/datum/species/lizardfolk,\
+	/datum/species/lupian,\
+	/datum/species/tabaxi,\
+	/datum/species/vulpkanin,\
+	/datum/species/akula,\
+	/datum/species/moth,\
+	/datum/species/dracon,\
+	/datum/species/anthromorph,\
+	/datum/species/anthromorphsmall,\
+	/datum/species/demihuman,\
+	/datum/species/halforc,\
+	/datum/species/kobold,\
+	/datum/species/goblinp,\
+	/datum/species/dullahan,\
+	/datum/species/lamia,\
+	/datum/species/dwarf/gnome,\
+	/datum/species/harpy,\
+	/datum/species/arachnid\
+)
+
+#define ALL_BUT_BLOODLESS_DWARF list(\
+	/datum/species/human/northern,\
+	/datum/species/human/halfelf,\
+	/datum/species/elf/dark,\
+	/datum/species/elf/wood,\
+	/datum/species/tieberian,\
+	/datum/species/aasimar,\
+	/datum/species/lizardfolk,\
+	/datum/species/lupian,\
+	/datum/species/tabaxi,\
+	/datum/species/vulpkanin,\
+	/datum/species/akula,\
+	/datum/species/moth,\
+	/datum/species/dracon,\
+	/datum/species/anthromorph,\
+	/datum/species/demihuman,\
+	/datum/species/halforc,\
+	/datum/species/harpy,\
+	/datum/species/construct/metal,\
+	/datum/species/construct/metal/porcelain,\
+	/datum/species/dullahan,\
+	/datum/species/lamia,\
+	/datum/species/arachnid,\
+)
 
 #define RACES_ALL_KINDS list(RACES_DESPISED, RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE)	//Truely no restrictions
 
@@ -476,3 +548,23 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define SOCIAL_RANK_MINOR_NOBLE 4
 #define SOCIAL_RANK_NOBLE 5
 #define SOCIAL_RANK_ROYAL 6
+#define CTAG_WAPPRENTICE	"CTAG_WAPPRENTICE"	// Mage Apprentice Classes - Handles Mage Apprentices class selector
+#define CTAG_ORTHODOXIST	"CAT_ORTHODOXIST"	// For Orthodoxist subclasses
+#define CTAG_MERCPARTY_WARMAGE "CAT_MERCPARTY_WARMAGE"	// battle casters
+
+#define ORIGIN_OTAVA "Otava"
+#define ORIGIN_ZYBANTINE "Zybantine"
+#define ORIGIN_NALEDI "Naledi"
+#define ORIGIN_FERENTIA "Ferentia"
+#define ORIGIN_UNDERDARK "The Underdark"
+#define ORIGIN_HAMMERHOLD "Hammerhold"
+#define ORIGIN_GRENZELHOFT "Grenzelhoft"
+#define ORIGIN_AVAR "Avar"
+#define ORIGIN_GRONN "Gronn"
+#define ORIGIN_ETRUSCA "Etrusca"
+#define ORIGIN_KAZENGUN "Kazengun"
+
+//Armor material categories
+#define ARMOR_MAT_PLATE 1
+#define ARMOR_MAT_LEATHER 2
+#define ARMOR_MAT_CHAINMAIL 3

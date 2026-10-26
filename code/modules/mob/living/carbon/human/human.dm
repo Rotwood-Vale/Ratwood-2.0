@@ -194,6 +194,7 @@
 	STOP_PROCESSING(SShumannpc, src)
 	QDEL_NULL(physiology)
 	QDEL_NULL(sunder_light_obj)
+	QDEL_NULL(devotion)
 	GLOB.human_list -= src
 	if(current_fellowship)
 		current_fellowship.remove_member(src, reason = FELLOWSHIP_REASON_DESTROYED)
@@ -1115,9 +1116,12 @@
 	RETURN_TYPE(/obj/item/organ/breasts)
 	return getorganslot(ORGAN_SLOT_BREASTS)
 
-/mob/living/carbon/human/proc/is_fertile()
+/mob/living/carbon/human/proc/is_fertile(orifice = SEX_PART_CUNT)
+	if(orifice & SEX_PART_TAIL_MAW)
+		var/obj/item/organ/tail/manticore/tail = get_manticore_tail(src)
+		return tail?.fertility
 	var/obj/item/organ/vagina/vagina = getorganslot(ORGAN_SLOT_VAGINA)
-	return vagina.fertility
+	return vagina?.fertility
 
 /mob/living/carbon/human/proc/is_virile()
 	var/obj/item/organ/testicles/testicles = getorganslot(ORGAN_SLOT_TESTICLES)
@@ -1188,6 +1192,8 @@
 	H.heatstroke_timer_id = null
 	var/def_zone = BODY_ZONE_HEAD
 	var/obj/item/bodypart/BP = H.get_bodypart(def_zone)
+	if(!BP)
+		return
 	for(var/datum/wound/W in BP.wounds)
 		if(istype(W, /datum/wound/heatexhaustion)||istype(W, /datum/wound/heatstroke))
 			return
@@ -1247,6 +1253,11 @@
 	var/three_quarter_delta = (base_delta * 0.75)
 	if(protection > 0)
 		(final_delta -= (three_quarter_delta * protection))
+
+	if(base_delta < 0 && HAS_TRAIT(src, TRAIT_COLD_RESISTANCE))
+		final_delta *= 0.75
+	else if(base_delta > 0 && HAS_TRAIT(src, TRAIT_HEAT_RESISTANCE))
+		final_delta *= 0.5
 
 	adjust_bodytemperature(final_delta)
 
@@ -1308,3 +1319,11 @@
 
 /mob/living/carbon/human/Topic(href, href_list)
 	..()
+
+/mob/living/carbon/human/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override, datum/intent/used_intent, simplified)
+	update_proj_parry_timer()
+	. = ..()
+
+///This is used to allow the thrown item "deflect". Minor and mostly just for aurafarming. Hooks into do_attack_animation because it's the most reliable access to a "valid" attack.
+/mob/living/carbon/human/proc/update_proj_parry_timer()
+	projectile_parry_timer = (world.time + PROJ_PARRY_TIMER)

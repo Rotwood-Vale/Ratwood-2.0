@@ -484,7 +484,7 @@ SUBSYSTEM_DEF(gamemode)
 	holy_warrior = 0
 	garrison = 0
 	for(var/mob/player_mob as anything in GLOB.player_list)
-		if(!player_mob.client)
+		if(!player_mob?.client)
 			continue
 		if(player_mob.stat) //If they're alive
 			continue

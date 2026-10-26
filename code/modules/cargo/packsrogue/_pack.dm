@@ -5,6 +5,7 @@
 	/// roll_cultural_stock reads these off packs listed in a realm's cultural_stock_pool).
 	var/ship_qty_min = 0
 	var/ship_qty_max = 0
+	var/ship_chance = 100 // percent chance a ship carries this at all. for the rare stuff
 	var/hidden = FALSE
 	var/contraband = FALSE
 	var/cost = 700 // Minimum cost, or infinite points are possible.

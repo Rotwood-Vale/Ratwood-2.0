@@ -77,6 +77,7 @@
 
 #define ORGAN_SLOT_FRILLS "frills"
 #define ORGAN_SLOT_HORNS "horns"
+#define ORGAN_SLOT_TUSKS "tusks"
 #define ORGAN_SLOT_ANTENNAS "antennas"
 #define ORGAN_SLOT_NECK_FEATURE "neck_feature"
 #define ORGAN_SLOT_SOUL "soul"
@@ -166,3 +167,9 @@
 #define WOUND_SEVERITY_FATAL 5
 /// This wound has a zombie or werewolf infection
 #define WOUND_SEVERITY_BIOHAZARD 6
+/// Wound severity is determined by bleed rate (default)
+#define SEVERITY_TYPE_BLEED "bleed"
+/// Wound severity is determined by the wound's hp (alternative)
+#define SEVERITY_TYPE_WHP "whp"
+/// Wound severity is determined by how burnt the host limb is (burn_dam as a percent of max_damage)
+#define SEVERITY_TYPE_BURN "burn"

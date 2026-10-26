@@ -198,8 +198,8 @@ SUBSYSTEM_DEF(ticker)
 				if(player.ready == PLAYER_READY_TO_PLAY)
 					++totalPlayersReady
 			if(!gamemode_voted)
-				SSvote.initiate_vote("chaos", "PSYDON", null, forced = TRUE)
 				gamemode_voted = TRUE
+				SSvote.initiate_vote("chaos", "PSYDON", null, forced = TRUE)
 
 			if(start_immediately)
 				timeLeft = 0

@@ -16,7 +16,7 @@
 		/obj/item/clothing/mask/rogue/lordmask/naledi,
 		/obj/item/clothing/neck/roguetown/psicross/naledi,
 		/obj/item/clothing/shoes/roguetown/sandals,
-		/obj/item/rogueweapon/woodstaff/naledi,
+		/obj/item/rogueweapon/woodstaff/implement/grand/naledi,
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1
@@ -130,3 +130,11 @@
 	)
 	ship_qty_min = 1
 	ship_qty_max = 2
+
+/datum/supply_pack/rogue/naledi/ring_swiftness
+	name = "Ring of Swiftness"
+	cost = 450
+	contains = list(/obj/item/clothing/ring/statgemerald)
+	ship_qty_min = 1
+	ship_qty_max = 1
+	ship_chance = 25

@@ -134,20 +134,13 @@ GLOBAL_VAR_INIT(date_override_offset, 0)
 		var/time_change_tips_random = pick(GLOB.time_change_tips)
 		to_chat(client, span_notice("<b>[time_change_tips_random]</b>"))
 		var/mob/living/carbon/human/H = src
-		if(H)
+		if(ishuman(H))
 			H.time_flags &= ~(TIME_OF_DAY_BIT_DAY | TIME_OF_DAY_BIT_NIGHT)	//temperature bitflag clear
 			H.time_flags |= TIME_OF_DAY_BIT_DAY								//not actually day, but gives 'dawn, day, and dusk' as warmer time periods, given day is short
 		if(HAS_TRAIT(mind.current, TRAIT_NOSLEEP)) // new hackslop to allow anything that cannot sleep to do their daily stuff
 			if(mind.has_changed_spell)
 				mind.has_changed_spell = FALSE
 				to_chat(mind.current, span_smallnotice("I feel like I can change my spells again."))
-			if(mind.has_rituos)
-				mind.has_rituos = FALSE
-				to_chat(mind.current, span_smallnotice("The toil of invoking Her Lesser Work has fled my feeble form. I can continue my transfiguration..."))
-			if (mind.rituos_spell)
-				to_chat(mind.current, span_warning("My glimpse of [mind.rituos_spell.name] flees my mind as the new dae dawns..."))
-				mind.RemoveSpell(mind.rituos_spell)
-				mind.rituos_spell = null
 			if(HAS_TRAIT(mind.current, TRAIT_STUDENT))//golems can learn, too!
 				REMOVE_TRAIT(mind.current, TRAIT_STUDENT, null)
 				to_chat(mind.current, span_nicegreen("I feel that I can be educated in a skill once more."))
@@ -158,7 +151,7 @@ GLOBAL_VAR_INIT(date_override_offset, 0)
 	else if(GLOB.tod == "night")
 		playsound_local(src, 'sound/misc/nightfall.ogg', 100, FALSE)
 		var/mob/living/carbon/human/H = src
-		if(H)
+		if(ishuman(H))
 			H.time_flags &= ~(TIME_OF_DAY_BIT_DAY | TIME_OF_DAY_BIT_NIGHT)
 			H.time_flags |= TIME_OF_DAY_BIT_NIGHT
 	var/atom/movable/screen/daynight/D = new()

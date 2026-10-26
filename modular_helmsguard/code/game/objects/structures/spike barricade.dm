@@ -18,6 +18,7 @@
 	canSmoothWith = list(/obj/structure/barricade/wood_spike, /turf/closed/wall)
 	resistance_flags = FLAMMABLE
 	buckle_lying = 0
+	buckle_blocks_spells = TRUE
 	var/contact_dir
 	var/obj/item/bodypart/BP
 

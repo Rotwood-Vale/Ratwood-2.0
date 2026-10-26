@@ -207,7 +207,7 @@
 	animname = "cut"
 	blade_class = BCLASS_CHOP
 	hitsound = list('modular_azurepeak/sound/mobs/abyssal/abyssal_attack.ogg','modular_azurepeak/sound/mobs/abyssal/abyssal_attack2.ogg')
-	penfactor = 30
+	penfactor = PEN_MEDIUM
 
 // EVENT mobs and mappable mobs. (USE SPARINGLY)
 /mob/living/simple_animal/hostile/rogue/dreamfiend/unbound

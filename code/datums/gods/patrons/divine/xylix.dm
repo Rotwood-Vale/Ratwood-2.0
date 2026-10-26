@@ -11,17 +11,14 @@
 					/obj/effect/proc_holder/spell/invoked/ventriloquism				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/xylixlian_luck        	= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 				= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/fetch/miracle 	= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/repel/miracle 	= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/mockery					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal				= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/mimicry					= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/mastersillusion			= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/slick_trick_small/miracle	= CLERIC_T2,
-					/obj/effect/proc_holder/spell/invoked/slick_trick/miracle		= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/abscond					= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/wound_heal				= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_XYLIX
 	traits_tier = list(TRAIT_XYLIX_DEVOTEE = CLERIC_T0) //Requires a minimal holy skill or the 'Devotee' virtue to unlock. Rerolls luck events
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",

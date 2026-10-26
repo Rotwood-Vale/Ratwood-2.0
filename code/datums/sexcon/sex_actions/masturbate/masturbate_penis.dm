@@ -2,7 +2,6 @@
 	name = "Jerk off"
 	category = SEX_CATEGORY_HANDS
 	user_sex_part = SEX_PART_COCK // only user part to avoid self-targeting restrictions
-	subtle_supported = TRUE
 	solo = TRUE
 
 /datum/sex_action/masturbate_penis/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)

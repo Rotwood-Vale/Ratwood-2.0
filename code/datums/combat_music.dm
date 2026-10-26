@@ -251,6 +251,18 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = "Helbrede - Sons of Tyr"
 	musicpath = list('sound/music/combat_grenzelhoft.ogg')
 
+/datum/combat_music/rogue
+	name = "Rogue Adventurer"
+	desc = "Try and die with some dignity.."
+	shortname = "Rogue Adv"
+	musicpath = list('sound/music/cmode/adventurer/CombatRogue.ogg')
+
+/datum/combat_music/monk
+	name = "Monk"
+	desc = "HOOYIAH!"
+	shortname = "Monk Adv"
+	musicpath = list('sound/music/cmode/adventurer/CombatMonk.ogg')
+
 /datum/combat_music/heretic_zizo
 	name = "Heretic - Zizo (Lich)"
 	desc = "Trust nobody, after all the power has always been within you."
@@ -633,6 +645,19 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Herald"
 	credits = "Bathory - Call from the Grave"
 	musicpath = list('sound/music/combatheraldprogress.ogg')
+
+/datum/combat_music/delf
+	name = "Crocs de l'araignée"
+	desc = "Oh, I know very well. How the secrets beckon so sweetly."
+	shortname = "Crocs"
+	credits = "Tsukasa Saitoh - Bloodborne (Original Soundtrack) - Darkbeast"
+	musicpath = list('sound/music/combat_delf.ogg')
+
+/datum/combat_music/delfclassic
+	name = "Drow Classic"
+	desc = "The right to own slaves is the greatest freedom a woman could ask for."
+	shortname = "Drow"
+	musicpath = list('sound/music/combat_delfclassic.ogg')
 
 /datum/combat_music/freifechter
 	name = "Freifechter"
