@@ -1722,10 +1722,15 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	density = FALSE
 	incorporeal_move = TRUE
 	movement_type = FLYING
+	base_intents = list(INTENT_HELP)
 	health = 500
 	maxHealth = 500
 	AIStatus = AI_OFF
 	can_have_ai = FALSE
+
+/mob/living/simple_animal/spook_spirit/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
 
 /mob/living/simple_animal/spook_spirit/canZMove(direction, turf/target)
 	return TRUE
@@ -1857,33 +1862,49 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	return ..()
 
 /mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost
-	name = "reflection"
+	name = "hynt"
 	desc = "UNNATURAL. WHAT IS THIS?!"
-	alpha = 170
+	alpha = 70
 	density = FALSE
 	incorporeal_move = TRUE
 	status_flags = GODMODE
-	speed = 4
-	maxHealth = 50
-	health = 50
+	maxHealth = 100
+	health = 100
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	ai_controller = null
 	faction = list("zizo")
 	var/mob/living/carbon/human/body
+	var/obj/structure/mirror/profane/mirror
+	var/datum/beam/leash
+	var/looks = 0
+	var/next_step = 0
 
 /mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/Destroy()
-	if(mind && body && !QDELETED(body))
-		mind.transfer_to(body)
+	qdel(leash)
+	if(mind)
+		if(QDELETED(body))
+			ghostize()
+		else
+			mind.transfer_to(body)
+	return ..()
+
+/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/forceMove(atom/destination)
+	if(isturf(destination) && (world.time < next_step || destination.z != z || get_dist(destination, mirror) > 15))
+		return FALSE
+	next_step = world.time + 8
 	return ..()
 
 /mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/examine(mob/user)
 	. = ..()
 	if(user == src || !isliving(user) || is_zizo(user))
 		return
-	adjustBruteLoss(10, forced = TRUE)
+	looks++
+	adjustBruteLoss(20, forced = TRUE)
 	to_chat(src, span_danger("[user] GAZES AT ME! IT BURNS!"))
-	if(health <= 0)
+	to_chat(user, span_warning("The hynt shrieks and writhes under my gaze!"))
+	visible_message(span_danger("[src] shrieks and writhes, burned by [user]'s gaze!"), ignored_mobs = list(src, user))
+	if(looks >= 5)
 		qdel(src)
 
 /obj/effect/proc_holder/spell/self/mirror_possess
@@ -1917,6 +1938,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		return FALSE
 	ghost = new(get_turf(mirror))
 	ghost.body = user
+	ghost.mirror = mirror
+	ghost.leash = mirror.Beam(ghost, "blood", 'icons/roguetown/cult/cultsprites.dmi')
+	ghost.leash.alpha = 70
 	mirror.ghost = ghost
 	user.visible_message(span_warning("[user] falls limp!"))
 	user.mind.transfer_to(ghost)
