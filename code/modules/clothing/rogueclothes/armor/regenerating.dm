@@ -150,7 +150,7 @@
 	icon_state = "salve"
 
 /obj/item/skin_hardener/attack_obj(obj/O, mob/living/user)
-	if(!istype(O, /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak))
+	if(!istype(O, /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak) || istype(O, /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak/reinforced))
 		return
 
 	var/obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak/S = O
