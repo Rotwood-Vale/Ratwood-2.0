@@ -537,8 +537,8 @@
 	miracle = TRUE
 	devotion_cost = 120
 	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
-	overlay_state = "necracrossclothspell"
-	action_icon_state = "necracrossclothspell"
+	overlay_state = "necracrosstemporary"
+	action_icon_state = "necracrosstemporary"
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	associated_skill = /datum/skill/magic/holy
 
@@ -699,8 +699,8 @@
 	recharge_time = 2 MINUTES
 	chargetime = 1 SECONDS
 	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
-	overlay_state = "necracrosstemporary"
-	action_icon_state = "necracrosstemporary"
+	overlay_state = "necracrossclothspell"
+	action_icon_state = "necracrossclothspell"
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	associated_skill = /datum/skill/magic/holy
 
