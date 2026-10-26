@@ -11,7 +11,7 @@
 	var/intimidation_range = 8
 	var/belongs_to = null
 	var/list/reward_pool
-	var/next_business_cycle = 0
+	var/dropcycle = 0
 
 /obj/structure/fluff/statue/gang/attack_hand(mob/user)	//simple structure to switch states between the three modes, relevant to user traits.
 	. = ..()
@@ -39,7 +39,7 @@
 
 /obj/structure/fluff/statue/gang/proc/who_captures(new_owner, mob/user)	//Is the object being captured? And when should the object transform states? Answers those.
 	if(being_captured)
-		to_chat(user, span_warning("This stone is already bein' claimed!"))
+		to_chat(user, span_warning("This stone is already bein' claimed!"))//to prevent two people clicking at the same time
 		return
 
 	being_captured = TRUE
@@ -65,13 +65,13 @@
 		)
 	else
 		user.visible_message(
-			span_warning("[user] gets interrupted whilst fiddling with  the cloth!"),
+			span_warning("[user] gets interrupted whilst fiddling with the cloth!"),
 			span_warning("I get interrupted whilst fiddling with the cloth!")
 		)
 
 	being_captured = FALSE
 
-/obj/structure/fluff/statue/gang/proc/change_ownership(new_owner)	//For a more compact code. Thanks to these maptainers will have an easier time mapping the thug-areas.
+/obj/structure/fluff/statue/gang/proc/change_ownership(new_owner)	//Now we tell the code how to handle the territory changes in an easy, compact way.
 	belongs_to = new_owner
 
 	switch(belongs_to)
@@ -90,14 +90,14 @@
 
 /obj/structure/fluff/statue/gang/Initialize(mapload)	//The thug-specific debuffs come in. Do the thug shake now.
 	. = ..()
-	next_business_cycle = world.time + 10 SECONDS
+	dropcycle = world.time + rand(20,30)* 1 MINUTES
 	START_PROCESSING(SSobj, src)
 	
-/obj/structure/fluff/statue/gang/process()
+/obj/structure/fluff/statue/gang/process()	//If the object sees you, you get debuffed. Not if you see the object. It felt better this way.
 
-	if(world.time >= next_business_cycle)
+	if(world.time >= dropcycle)
 		reward_spawn()
-		next_business_cycle = world.time + 7 SECONDS
+		dropcycle = world.time + rand(20,30)* 1 MINUTES
 
 	if(belongs_to == null)
 		return
@@ -133,18 +133,23 @@
 	
 	var/turf/item_spawn_turf = pick(valid_turf)
 	src.visible_message(span_warning("Freshly found goods are gathered around the stick!"))
-	playsound(src.loc, 'sound/foley/cartdump.ogg', 100, FALSE, -1)
 
-	for (var/i in 1 to 3)
+	playsound(src.loc, 'sound/foley/cartdump.ogg', 100, FALSE, -1)	//sound clue, just in case.
+
+	for (var/i in 1 to 5)
 		var/possible_item = pick(reward_pool)
 		var/quantity = reward_pool[possible_item]
 
 		for(var/j in 1 to quantity)
 			new possible_item(item_spawn_turf)
 
-// 20 items per pool for 5% chance of something spawning. RNGod can favor one item and it can spawn 3 times, still. Not a problem though.
+// 20 items per pool. RNGod can favor one item and it can spawn over and over. Not an oversight, I like it more this way.
+// Easily modifiable. Mappers, if they see this; do not place /statue/gang object, it doesnt have a reward pool, place the child objects that is located below.
+// Again, easily modifiable, it's literally just a list.
+// [object name in the code] = [how many of the selected object will spawn]
+// For example, in pseudocode terms; [firebombs] = 5, will, if it rolls the firebomb, spawn five firebombs.
 
-/obj/structure/fluff/statue/gang/watchtower	//meant for alleyways.
+/obj/structure/fluff/statue/gang/alleyway	//meant for alleyways.
 	reward_pool = list(
 		/obj/item/impact_grenade/smoke = 2,
 		/obj/item/roguecoin/gold = 1,
@@ -195,9 +200,9 @@
 
 /obj/structure/fluff/statue/gang/docks	//meant for dock-esque areas. General supplies, tools, anything a thug can intercept and steal form trade ships.
 	reward_pool = list(
-		/obj/item/roguecoin/gold = 1,
-		/obj/item/roguecoin/silver = 3,
-		/obj/item/roguecoin/copper/pile = 1,
+		/obj/item/roguecoin/gold = 3,
+		/obj/item/roguecoin/silver = 5,
+		/obj/item/roguecoin/copper/pile = 3,
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
 		/obj/item/rogueweapon/sword/cutlass = 1,

@@ -130,9 +130,9 @@
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_WIL = 3,
-		STATKEY_CON = 4,
+		STATKEY_CON = 5,
 		STATKEY_SPD = -5,
-		STATKEY_INT = -6,
+		STATKEY_INT = -5,
 		STATKEY_PER = -4,
 		)
 	
