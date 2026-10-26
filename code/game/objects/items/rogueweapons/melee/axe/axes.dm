@@ -322,25 +322,28 @@
 	inhand_y_dimension = 64
 	bigboy = TRUE
 
-/obj/item/rogueweapon/stoneaxe/woodcut/blacksteel/pioneerdolabra
-	name = "pioneer's dolabra"
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/blacksteel/pioneer
+	name = "pioneer's dolabra" // you get worse force and integrity in exchange for the best demolition tool there is
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "pdolabra"
 	desc = "A long handled axe with a carved grip made of hardened maple wood. This one has an axe-blade of frayed blacksteel, having lost its varnish long ago with a long pick-head behind the blade, this dolabra is decorated with golden reinforced bracers along the shaft and a heavy gold mace head at the top."
 	dropshrink = 0.75
-	force = 26
-	force_wielded = 30
+	force = 22
+	force_wielded = 26
 	max_integrity = 650
-	wdefense = 8
+	wdefense = 6
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash, /datum/intent/pick)
-	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long/woodcutter, /datum/intent/axe/bash, /datum/intent/pick/ranged/dolabra)
+	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long/woodcutter/pioneer, /datum/intent/axe/bash, /datum/intent/pick/ranged/dolabra/pioneer)
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = TRUE
 	smeltresult = /obj/item/ingot/gold
 
-/obj/item/rogueweapon/stoneaxe/woodcut/blacksteel/engineer
-	name = "sapper's dolabra"
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/blacksteel/engineer
+	name = "engineer's dolabra"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "edolabra"
 	desc = "A long-handled axe with a carved grip made of hardened maple wood. Fitted with an axe-blade of polished blacksteel and a long pick-head behind the blade."
@@ -354,20 +357,21 @@
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = TRUE
 	smeltresult = /obj/item/ingot/blacksteel
 
-/obj/item/rogueweapon/stoneaxe/woodcut/blacksteel/getonmobprop(tag)
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/blacksteel/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list("shrink" = 0.3,"sx" = -9,"sy" = -8,"nx" = 9,"ny" = -7,"wx" = -7,"wy" = -8,"ex" = 3,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+				return list("shrink" = 0.5,"sx" = -9,"sy" = -8,"nx" = 9,"ny" = -7,"wx" = -7,"wy" = -8,"ex" = 3,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("wielded")
 				return list("shrink" = 0.5,"sx" = 4,"sy" = -4,"nx" = -6,"ny" = -3,"wx" = -4,"wy" = -4,"ex" = 4,"ey" = -3,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -44,"sturn" = 45,"wturn" = -33,"eturn" = 33,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
-				return list("shrink" = 0.1,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
-
-
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/rogueweapon/stoneaxe/woodcut/getonmobprop(tag)
 	. = ..()
