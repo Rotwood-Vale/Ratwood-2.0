@@ -45550,7 +45550,7 @@
 /area/rogue/under/dungeon/wizarddungeon)
 "jdk" = (
 /obj/structure/rack/rogue,
-/obj/item/rogueweapon/shield/tower/spidershield,
+/obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /turf/open/floor/rogue/hexstone,
 /area/rogue/under/dungeon/drowfort)
 "jdl" = (
@@ -54892,11 +54892,6 @@
 /obj/structure/fermentation_keg,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/town/cell/warden)
-"kZn" = (
-/obj/structure/rack/rogue,
-/obj/item/rogueweapon/whip/spiderwhip,
-/turf/open/floor/rogue/hexstone,
-/area/rogue/under/dungeon/drowfort)
 "kZo" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/rogue/cobble,
@@ -64597,6 +64592,7 @@
 	},
 /obj/item/rogueweapon/huntingknife/idagger/silver/elvish/drow,
 /obj/item/roguegem/random,
+/obj/effect/spawner/lootdrop/drow_equipment_spawner,
 /turf/open/floor/rogue/grasscold,
 /area/rogue/under/dungeon/drowfort)
 "mSL" = (
@@ -98547,11 +98543,6 @@
 	},
 /turf/open/floor/rogue/tile/brick,
 /area/rogue/indoors/town/bath)
-"tTi" = (
-/obj/structure/rack/rogue,
-/obj/item/rogueweapon/sword/sabre/stalker,
-/turf/open/floor/rogue/hexstone,
-/area/rogue/under/dungeon/drowfort)
 "tTj" = (
 /obj/item/natural/rock,
 /turf/open/water/swamp,
@@ -191765,7 +191756,7 @@ skD
 bQF
 fiS
 gnG
-tTi
+jdk
 bQF
 feS
 feS
@@ -193493,7 +193484,7 @@ abU
 bQF
 lxT
 gnG
-kZn
+jdk
 bQF
 mJE
 mJE
