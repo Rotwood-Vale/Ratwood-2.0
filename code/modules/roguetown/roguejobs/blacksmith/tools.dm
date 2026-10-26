@@ -202,12 +202,12 @@
 		return
 	if(user.doing)
 		return
-	if(M.construct)
-		var/mob/living/carbon/human/H = M
-		var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-		if(!affecting)
-			return
-
+	var/mob/living/carbon/human/H = M
+	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
+	if(!affecting)
+		return
+	var/is_repairable_limb = (affecting.status == BODYPART_ROBOTIC || M.construct)
+	if(is_repairable_limb)
 		while(affecting.get_damage() != 0 || length(affecting.wounds))
 			var/used_time = 7 SECONDS
 			if(M == user)
