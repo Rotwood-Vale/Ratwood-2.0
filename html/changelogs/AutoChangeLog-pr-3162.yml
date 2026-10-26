@@ -1,5 +1,0 @@
-author: "SirSwagmeyer"
-delete-after: True
-changes:
-  - qol: "Woodcutter axe chop now chops trees more efficiently than other axes"
-  - bugfix: "removed a stray demolition modifier in the Saperka shovel."
