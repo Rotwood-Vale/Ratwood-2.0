@@ -96,38 +96,42 @@
 /obj/item/reagent_containers/powder/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
 		return FALSE
-	if(M == user)
-		M.visible_message(span_notice("[user] sniffs [src]."))
+	try_consume(M, user)
+
+/obj/item/reagent_containers/powder/try_consume(mob/consumer, mob/feeder)
+	. = ..()
+	if(consumer == feeder)
+		consumer.visible_message(span_notice("[feeder] sniffs [src]."))
 	else
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
+		if(iscarbon(consumer))
+			var/mob/living/carbon/C = consumer
 			var/obj/item/bodypart/CH = C.get_bodypart(BODY_ZONE_HEAD)
 			if(!CH)
-				to_chat(user, span_warning("[C.p_theyre(TRUE)] missing something."))
+				to_chat(feeder, span_warning("[C.p_theyre(TRUE)] missing something."))
 			if(!C.can_smell())
-				to_chat(user, span_warning("[C.p_theyre(TRUE)] has no nose!"))
+				to_chat(feeder, span_warning("[C.p_theyre(TRUE)] has no nose!"))
 			for(var/obj/item/clothing/CL in C.get_equipped_items())
 				if(CL.body_parts_covered & NOSE)
-					to_chat(user, span_warning("[C.p_theyre(TRUE)] has something covering [C.p_their()] nose."))
+					to_chat(feeder, span_warning("[C.p_theyre(TRUE)] has something covering [C.p_their()] nose."))
 					return FALSE
 			
-			user.visible_message(span_danger("[user] attempts to force [C] to inhale [src]."), \
+			feeder.visible_message(span_danger("[feeder] attempts to force [C] to inhale [src]."), \
 								span_danger("I attempt to force [C] to inhale [src]!"))
 		
 			if(C.cmode)
 				if(!CH.grabbedby)
-					to_chat(user, span_info("[C.p_they(TRUE)] steals [C.p_their()] face from it."))
+					to_chat(feeder, span_info("[C.p_they(TRUE)] steals [C.p_their()] face from it."))
 					return FALSE
-			if(!do_mob(user, M, 5 SECONDS))
+			if(!do_mob(feeder, consumer, 5 SECONDS))
 				return FALSE
 
-	playsound(M, 'sound/items/sniff.ogg', 100, FALSE)
+	playsound(consumer, 'sound/items/sniff.ogg', 100, FALSE)
 	record_round_statistic(STATS_DRUGS_SNORTED)
 
 	if(reagents.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transfered_by = user, method = "swallow")
-		SEND_SIGNAL(M, COMSIG_DRUG_SNIFFED, user)
-		record_featured_stat(FEATURED_STATS_CRIMINALS, user)
+		reagents.trans_to(consumer, reagents.total_volume, transfered_by = feeder, method = "swallow")
+		SEND_SIGNAL(consumer, COMSIG_DRUG_SNIFFED, feeder)
+		record_featured_stat(FEATURED_STATS_CRIMINALS, feeder)
 		record_round_statistic(STATS_DRUGS_SNORTED)
 	qdel(src)
 	return TRUE
