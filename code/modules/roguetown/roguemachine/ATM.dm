@@ -11,6 +11,10 @@
 	var/drilled = FALSE
 	var/has_reported = FALSE
 	var/location_tag
+	var/extraction_time = 15 SECONDS
+	var/extraction_start
+	var/extraction_cooldown = 0 MINUTES
+
 
 /obj/structure/roguemachine/atm/attack_hand(mob/user)
 	if(!ishuman(user))
@@ -200,8 +204,10 @@
 			user.visible_message(span_warning("[user] dismounts the Crown!"))
 			icon_state = "atm"
 			drilling = !drilling
-	else
 		return
+
+	if(HAS_TRAIT(user,TRAIT_GANG_A) || HAS_TRAIT(user, TRAIT_GANG_B))
+		beginthugextraction(user)
 
 /obj/item/coveter
 	name = "Covetous Crown"
@@ -364,3 +370,25 @@
 			return
 		else
 			return
+
+/obj/structure/roguemachine/atm/proc/beginthugextraction(mob/user)
+	if(extraction_start == TRUE)
+		to_chat(user,span_warning("Someone is already doin' this!"))
+		return
+	else
+		if(world.time < extraction_cooldown)
+			to_chat(user,span_warning("It's too early to do that!"))
+			return
+		else
+			to_chat(user,span_notice("I begin scraping off materials from the nervelock!"))
+			extraction_start = TRUE
+			send_ooc_note("I feel a weird sensation...Something warns me from: [location_tag ? location_tag : "Unknown"]", job = list("Steward"))
+			playsound(src, 'sound/misc/machinelong.ogg', 70, TRUE)
+			if(!do_after(user, extraction_time, src))
+				to_chat(user,span_notice("Fuck! I got interrupted!"))
+				extraction_start = FALSE
+				return
+			var/obj/item/thugmark/mark = new /obj/item/thugmark(get_turf(user))
+			user.put_in_hands(mark)
+			extraction_cooldown = world.time + 10 MINUTES
+			extraction_start = FALSE

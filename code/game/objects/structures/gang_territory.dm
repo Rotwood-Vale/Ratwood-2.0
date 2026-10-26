@@ -1,5 +1,3 @@
-//Thug statues, intended for Thugs. God forgive me for the...Bloat...Please help me if its too bloated...//
-
 /obj/structure/fluff/statue/gang
 	name = "unclaimed flat stick"
 	desc = "A flat, unmarked stick. Perhaps it could be used to make a statement."
@@ -120,7 +118,19 @@
 	. = ..()
 	if (HAS_TRAIT(user, TRAIT_GANG_A) || HAS_TRAIT(user, TRAIT_GANG_B) || HAS_TRAIT(user, TRAIT_TROUBLEMAKER_KNOWER))
 		if(!belongs_to == null)
-			to_chat(user, span_notice("This area is claimed by [belongs_to]"))
+			. += span_notice("This area is claimed by [belongs_to]")
+
+/obj/structure/fluff/statue/gang/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/thugmark))
+		if(HAS_TRAIT(user, TRAIT_GANG_A) || HAS_TRAIT(user, TRAIT_GANG_B))
+			if(dropcycle - world.time >= 6 MINUTES)
+				playsound(src.loc, 'sound/foley/coinphy (2).ogg', 100, -1)	//clink
+				dropcycle -= 5 MINUTES
+				qdel(I)
+			else
+				playsound(src.loc, 'sound/foley/coinphy (2).ogg', 100, -1)	//clink
+				dropcycle = world.time + 10 SECONDS
+				qdel(I)
 
 /obj/structure/fluff/statue/gang/proc/reward_spawn()
 	if(belongs_to == null)
