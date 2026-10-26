@@ -669,7 +669,7 @@
 			if(!(H in checked_dudes))
 				var/datum/beam/B = affected_mobs[H]
 				if(B)
-					B.End()
+					qdel(B)
 				H.remove_status_effect(/datum/status_effect/buff/necran_consecration)
 				LAZYREMOVE(affected_mobs, H)
 
@@ -681,7 +681,7 @@
 			L.remove_status_effect(/datum/status_effect/buff/necran_consecration)
 			var/datum/beam/B = affected_mobs[L]
 			if(istype(B))
-				B.End()
+				qdel(B)
 	playsound(src, 'sound/effects/necracon_destroy.ogg', 100, TRUE)
 	if(!QDELETED(src))
 		qdel(src)
