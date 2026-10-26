@@ -526,7 +526,6 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	var/glass_name
 	var/glass_desc
 	var/sealed = TRUE
-	glass_on_impact = FALSE // Prevent duping glass
 
 /obj/item/reagent_containers/glass/bottle/brewing_bottle/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
