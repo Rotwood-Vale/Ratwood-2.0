@@ -57,6 +57,12 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	shatter(get_turf(src))
 	..()
 
+/obj/item/reagent_containers/glass/bottle/bullet_act(obj/projectile/P)
+	. = ..()
+	if(P.damage <= 0)
+		return
+	shatter(get_turf(src))
+
 /obj/item/reagent_containers/glass/bottle/proc/shatter(turf/T)
 	if(istransparentturf(T))
 		shatter(GET_TURF_BELOW(T))
