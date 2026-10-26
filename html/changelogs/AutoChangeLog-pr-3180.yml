@@ -1,0 +1,5 @@
+author: "CentralSmith"
+delete-after: True
+changes:
+  - bugfix: "Pipes no longer stay packed and lit after burning out on the ground or inside containers."
+  - bugfix: "Already-stuck pipes can be emptied by activating them while unlit."
