@@ -391,6 +391,7 @@
 	anvilrepair = null
 
 /obj/item/clothing/neck/roguetown/gorget/gold
+	is_gold = TRUE
 	name = "golden gorget"
 	desc = "A series of resplendant golden plates designed to protect the neck, traditionally worn atop a jacket or cuirass. The holy sigil between its buckled halves promises to carry the flame of its wearer, no matter what strike's poised its way."
 	icon_state = "goldgorget"
@@ -697,6 +698,7 @@
 		REMOVE_TRAIT(user, TRAIT_WORN_SILVER_PSICROSS, REF(src))
 
 /obj/item/clothing/neck/roguetown/psicross/g
+	is_gold = TRUE
 	name = "golden psycross"
 	desc = "'Purity afloat, for paradise awaits!'"
 	icon_state = "psycross_g"
@@ -1289,6 +1291,7 @@
 // AP port.
 
 /obj/item/clothing/neck/roguetown/psicross/inhumen/g
+	is_gold = TRUE
 	name = "golden inverted psycross"
 	desc = "'Doth thee wish to live deliciously? Mortality is but a shackle; and if you wish to break free from its steely grasp, all you need to do.. is put thine faith in me.'"
 	icon_state = "zcross_g"
@@ -1337,5 +1340,3 @@
 	desc = "Ward of silver, sigil of eternity; by the Ten, I command thee back to Hell!"
 	icon_state = "undivided_s"
 	sellprice = 50
-
-

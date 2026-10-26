@@ -57,29 +57,11 @@
 	sellprice = SELLPRICE_GEMERALD
 	desc = "Glints with verdant brilliance."
 
-/obj/item/roguegem/green/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/emerald_staff,)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
-
 /obj/item/roguegem/blue
 	name = "blortz"
 	icon_state = "quartz_cut"
 	sellprice = SELLPRICE_BLORTZ
 	desc = "Pale blue, like a frozen tear."
-
-/obj/item/roguegem/blue/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/quartz_staff,)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
 
 /obj/item/roguegem/houndgem
 	name = "houndstone gem"
@@ -93,44 +75,17 @@
 	sellprice = SELLPRICE_TOPER
 	desc = "Its amber hues remind you of the sunset."
 
-/obj/item/roguegem/yellow/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/toper_staff,)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
-
 /obj/item/roguegem/violet
 	name = "saffira"
 	icon_state = "sapphire_cut"
 	sellprice = SELLPRICE_SAFFIRA
 	desc = "This gem is admired by many wizards."
 
-/obj/item/roguegem/violet/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/sapphire_staff,)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
-
 /obj/item/roguegem/ruby
 	name = "rontz"
 	icon_state = "ruby_cut"
 	sellprice = 100
 	desc = "Its facets shine so brightly..."
-
-/obj/item/roguegem/ruby/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/ruby_staff,)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
 
 /obj/item/roguegem/diamond
 	name = "dorpel"
@@ -195,15 +150,6 @@
 	color = "#7B8C5E"
 	sellprice = 15
 
-/obj/item/roguegem/diamond/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/diamond_staff,)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
-
 // Do NOT add these to the stockpile treasures list, they have other uses.
 /obj/item/roguegem/blood_diamond
 	name = "glut"
@@ -225,15 +171,6 @@
 	name = "amythortz"
 	icon_state = "amethyst"
 	desc = "A deep lavender crystal, it surges with magical energy, yet it's artificial nature means it is worth little."
-
-/obj/item/roguegem/amethyst/Initialize(mapload)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/amethyst_staff,)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
 
 /obj/item/roguegem/amethyst/naledi
 	name = "naledic amythortz"
@@ -281,13 +218,6 @@
 /obj/item/riddleofsteel/Initialize(mapload)
 	. = ..()
 	set_light(2, 2, 1, l_color = "#ff0d0d")
-
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gemstaff/quartz_staff,)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
 
 //Kobolds eating RIDDLES. PSYDON WEPT.
 /obj/item/riddleofsteel/attack(mob/living/M, mob/user)

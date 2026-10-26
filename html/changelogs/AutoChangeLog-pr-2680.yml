@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - admin: "door logging, lockpicking, breaking, etc, shown via examine for adminghosts or via a new investigate log option"

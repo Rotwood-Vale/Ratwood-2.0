@@ -102,6 +102,7 @@
 		lensmoved = FALSE
 
 /obj/item/clothing/mask/rogue/spectacles/golden
+	is_gold = TRUE
 	name = "golden spectacles"
 	icon_state = "goggles"
 	max_integrity = 35
@@ -191,6 +192,7 @@
 	block2add = FOV_LEFT
 
 /obj/item/clothing/mask/rogue/lordmask
+	is_gold = TRUE
 	name = "golden halfmask"
 	desc = "Half of your face turned gold."
 	icon_state = "lmask"
@@ -513,6 +515,7 @@
 	icon_state = "steppemask_snout"
 
 /obj/item/clothing/mask/rogue/facemask/goldmask
+	is_gold = TRUE
 	name = "Gold Mask"
 	icon_state = "goldmask"
 	max_integrity = ARMOR_INT_MASK_GOLD
@@ -968,3 +971,17 @@
 	icon_state = "bduelist"
 	armor = ARMOR_BRONZE
 	max_integrity = ARMOR_INT_MASK_BRONZE + 50//worse protection than iron goggles so it gets a slight buff
+
+/obj/item/clothing/mask/rogue/spectacles/fancy/dark
+	name = "fancy tinted spectacles"
+	desc = "Delicate, thin-lensed spectacles of foreign make, their craft finer than most local wares. This variant has a darker tint to its lenses."
+	icon_state = "glassesb_dark"
+
+/obj/item/clothing/mask/rogue/spectacles/monocle
+	name = "silver monocle"
+	icon_state = "monocle"
+	max_integrity = 35
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/lesser
+	name = "naledian runed mask"
+	desc = "Runes and wards, meant for daemons; the gold has somehow rusted in unnatural, impossible agony. The most prominent of these etchings is in the shape of the Naledian psycross. Lightly armored to protect the wearer's face."

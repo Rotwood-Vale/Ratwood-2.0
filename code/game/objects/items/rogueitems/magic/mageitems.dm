@@ -533,3 +533,6 @@
 		to_chat(awakener, span_warning("Your summon did not select a valid name! Please wait as they try again.")) // more verbose than what sanitize_name might pass in it's error message
 		return custom_name(awakener, iteration++)
 	return chosen_name
+
+/obj/item/storage/magebag/starter
+	populate_contents = list()
