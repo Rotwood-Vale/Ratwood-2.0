@@ -622,7 +622,7 @@
 	unenchantable = TRUE
 	possible_item_intents = list(SPEAR_THRUST_1H, SPEAR_CUT_1H)
 	gripped_intents = list(SPEAR_THRUST, SPEAR_CUT, /datum/intent/spear/cut/bardiche/cleave, /datum/intent/spear/cut/glaive/sweep)
-	max_blade_int = 230
+	max_blade_int = 250
 	max_integrity = 300
 	force = 30
 	force_wielded = 35
