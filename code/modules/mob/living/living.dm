@@ -1307,6 +1307,16 @@
 /mob/proc/resist_grab(moving_resist)
 	return TRUE //returning 0 means we successfully broke free
 
+/mob/living/proc/grapple_str()
+	if(HAS_TRAIT(src, TRAIT_PEAK_GRAPPLER))
+		return 20
+	return STASTR
+
+/mob/living/proc/grapple_con()
+	if(HAS_TRAIT(src, TRAIT_PEAK_GRAPPLER))
+		return 20
+	return STACON
+
 /mob/living/resist_grab(moving_resist, freeresist = FALSE)
 	. = TRUE
 
@@ -1349,9 +1359,9 @@
 
 	resist_chance += max((wrestling_diff * 10), -20)
 	if(HAS_TRAIT(src, TRAIT_GARROTED))
-		resist_chance += (STACON - L.STASPD) * 5
+		resist_chance += (grapple_con() - L.STASPD) * 5
 	else
-		resist_chance += (STACON - (agg_grab ? L.STASTR : L.STAWIL)) * 5
+		resist_chance += (grapple_con() - (agg_grab ? L.grapple_str() : L.STAWIL)) * 5
 	resist_chance *= combat_modifier
 	resist_chance = clamp(resist_chance, 5, 95)
 
@@ -1714,6 +1724,10 @@
 	if(!blessed_sunder?.on_fire)
 		blessed_sunder?.ignite(silent)
 
+	var/datum/status_effect/fire_handler/fire_stacks/dark/dark_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
+	if(!dark_status?.on_fire)
+		dark_status?.ignite(silent)
+
 /mob/living/proc/SoakMob(locations)
 	if(locations & CHEST)
 		extinguish_mob()
@@ -1734,6 +1748,9 @@
 	var/datum/status_effect/fire_handler/fire_stacks/sunder/blessed/blessed_sunder = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 	if(blessed_sunder?.on_fire)
 		remove_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+	var/datum/status_effect/fire_handler/fire_stacks/dark/dark_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
+	if(dark_status?.on_fire)
+		remove_status_effect(/datum/status_effect/fire_handler/fire_stacks/dark)
 
 /**
  * Handles effects happening when mob is on normal fire
