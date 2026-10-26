@@ -122,6 +122,10 @@
 	body_parts_inherent = FULL_BODY
 	combat_taggable = TRUE
 
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak/reinforced
+	name = "tough skin"
+	armor = ARMOR_LEATHER
+
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/gladiator
 	name = "pit-hardened chest"//pit? hnnnnhhhffgggg
 	desc = "Are you not entertained?!"
@@ -138,6 +142,52 @@
 	body_parts_inherent = COVERAGE_FULL
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
+
+/obj/item/skin_hardener
+	name = "fibrous skin salve"
+	desc = "A thick cream made from finely ground cloth and natural fibers. When worked into already thick skin, its strange fibrous paste binds to the surface, leaving it denser and more resilient."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state = "salve"
+
+/obj/item/skin_hardener/attack_obj(obj/O, mob/living/user)
+	if(!istype(O, /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak))
+		return
+
+	var/obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak/S = O
+	if(!do_after(user, 50 - user.STASPD * 2, target = S))
+		return
+	if(QDELETED(src) || QDELETED(S))
+		return
+
+	var/old_name = S.name
+	var/atom/old_loc = S.loc
+	var/turf/T = get_turf(S)
+	var/mob/living/carbon/human/wearer
+	var/slot
+	if(ishuman(old_loc))
+		wearer = old_loc
+		if(wearer.get_item_by_slot(SLOT_ARMOR) == S)
+			slot = SLOT_ARMOR
+		else if(wearer.get_item_by_slot(SLOT_SHIRT) == S)
+			slot = SLOT_SHIRT
+	var/obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak/reinforced/R = new(T)
+	R.name = old_name
+
+	if(wearer && slot)
+		REMOVE_TRAIT(S, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+		if(!wearer.temporarilyRemoveItemFromInventory(S))
+			ADD_TRAIT(S, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+			qdel(R)
+			return
+		if(!QDELETED(S))
+			qdel(S)
+		if(!wearer.equip_to_slot_if_possible(R, slot, disable_warning = TRUE, bypass_equip_delay_self = TRUE))
+			R.forceMove(T)
+	else
+		qdel(S)
+		R.forceMove(old_loc)
+	to_chat(user, span_notice("I work the salve into my skin, reinforcing its surface."))
+	qdel(src)
 
 #undef COMBAT_TAG_DURATION
 

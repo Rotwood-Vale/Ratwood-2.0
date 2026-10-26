@@ -756,6 +756,17 @@
 				/obj/item/natural/fibers = 4)
 	craftdiff = 5
 
+/datum/crafting_recipe/roguetown/sewing/skin_hardener
+	display_category = ITEM_CAT_ARMOR_LIGHT
+	name = "fibrous skin salve"
+	result = list(/obj/item/skin_hardener)
+	reqs = list(
+		/obj/item/natural/cloth = 6,
+		/obj/item/natural/fibers = 4
+	)
+	tools = list(/obj/item/needle)
+	craftdiff = 5
+
 /datum/crafting_recipe/roguetown/sewing/monkwraps
 	name = "padded arm wrappings"
 	result = list(/obj/item/clothing/wrists/roguetown/bracers/cloth/monk)

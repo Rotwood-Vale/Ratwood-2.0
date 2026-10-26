@@ -11,6 +11,11 @@
 	cost = 40 // Base sellprice of 25
 	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy)
 
+/datum/supply_pack/rogue/light_armor/skin_hardener
+	name = "Fibrous Skin Salve"
+	cost = 40
+	contains = list(/obj/item/skin_hardener)
+
 /datum/supply_pack/rogue/light_armor/leather_gorget
 	name = "Leather Gorget"
 	cost = 20 // Base sellprice of 10
