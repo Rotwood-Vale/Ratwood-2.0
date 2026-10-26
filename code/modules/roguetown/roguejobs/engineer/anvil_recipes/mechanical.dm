@@ -35,3 +35,19 @@
 	created_item = /obj/item/rope/chain
 	createditem_num = 1
 	craftdiff = 0
+
+/datum/anvil_recipe/engineeredsmithing
+	i_type = "Engineering"
+	appro_skill = /datum/skill/craft/engineering
+	craftdiff = 4
+	req_trait = TRAIT_ENGINEER
+	hides_from_books = TRUE
+	req_bar = /obj/item/ingot/blacksteel
+
+/datum/anvil_recipe/engineeredsmithing/dolabra //exists solely to replace a stolen dolabra
+	name = "Blacksteel Dolabra"
+	req_bar = /obj/item/ingot/blacksteel
+	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/rogueweapon/woodstaff/quarterstaff)
+	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/blacksteel/engineer
+	createditem_num = 1
+	craftdiff = 4

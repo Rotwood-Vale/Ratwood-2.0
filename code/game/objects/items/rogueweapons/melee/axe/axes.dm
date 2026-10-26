@@ -329,13 +329,13 @@
 	desc = "A long-handled axe with a carved grip made of high-quality maple wood. Fitted with an axe-blade of polished blacksteel and a long pick-head behind the blade."
 	force = 28
 	force_wielded = 32
-	max_integrity = 750
+	max_integrity = 750 // fifty less than the blacksteel pickaxe
 	wdefense = 8
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash, /datum/intent/pick)
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long/woodcutter, /datum/intent/axe/bash, /datum/intent/pick/ranged/dolabra)
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK		//Needs to go on back.
+	slot_flags = ITEM_SLOT_BACK
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	bigboy = TRUE

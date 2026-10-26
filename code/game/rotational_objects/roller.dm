@@ -220,9 +220,11 @@
 	return TRUE
 
 /obj/structure/roller/proc/rotate_roller(mob/user)
+	for(var/obj/structure/roller/connected in connected_rollers)
+		connected.connected_rollers -= src
+	connected_rollers = list()
 	setDir(turn(dir, 90))
 	to_chat(user, span_notice("You rotate [src]."))
-	connected_rollers = list()
 	build_roller_chain()
 
 /obj/structure/roller/vand_update_appearance()

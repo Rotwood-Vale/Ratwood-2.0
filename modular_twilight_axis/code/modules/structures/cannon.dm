@@ -4,7 +4,7 @@
 	i_type = "Engineering"
 	abstract_type = /datum/anvil_recipe/cannon
 	appro_skill = /datum/skill/craft/engineering
-	req_trait = TRAIT_GUNSMITH
+	req_trait = TRAIT_ENGINEER
 	craftdiff = 4
 	hides_from_books = TRUE
 
