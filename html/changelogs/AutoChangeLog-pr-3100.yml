@@ -1,0 +1,4 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - balance: "Yielding now drops STR, PER, SPD, and LCK by -15 for 5 minutes. Yielding now grants critical resistance and thick blooded for a full minute."
