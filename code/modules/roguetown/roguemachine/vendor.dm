@@ -166,8 +166,8 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/carbon/human/user = usr
-	if(!istype(user))
+	var/mob/living/carbon/human/H = usr
+	if(!istype(H))
 		return
 
 	switch(action)
@@ -187,7 +187,7 @@
 				budget -= total
 				profits += total
 				record_round_statistic(STATS_PEDDLER_REVENUE, total)
-			dispense(matches.Copy(1, amount + 1), user)
+			dispense(matches.Copy(1, amount + 1), H)
 			return TRUE
 
 		if("take")
@@ -197,11 +197,11 @@
 			if(!length(matches))
 				return
 			var/amount = params["all"] ? length(matches) : 1
-			dispense(matches.Copy(1, amount + 1), user)
+			dispense(matches.Copy(1, amount + 1), H)
 			return TRUE
 
 		if("set_name")
-			if(locked || !user.can_read(src, TRUE))
+			if(locked || !H.can_read(src, TRUE))
 				return
 			var/list/matches = get_group_items(params["key"])
 			var/newname = sanitize(copytext(trim("[params["name"]]"), 1, MAX_NAME_LEN + 1))

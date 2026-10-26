@@ -195,22 +195,22 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/carbon/human/user = usr
-	if(!istype(user))
+	var/mob/living/carbon/human/H = usr
+	if(!istype(H))
 		return
 
 	switch(action)
 		if("change")
 			if(!locked)
 				return
-			refund_budget(user)
+			refund_budget(H)
 			return TRUE
 
 		if("withdraw_profits")
 			if(locked)
 				return
 			if(profits > 0)
-				budget2change(profits, user)
+				budget2change(profits, H)
 				profits = 0
 			return TRUE
 
@@ -219,7 +219,7 @@
 				return
 			anchored = !anchored
 			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-			to_chat(user, span_notice("You [anchored ? "secure" : "free"] the wheels."))
+			to_chat(H, span_notice("You [anchored ? "secure" : "free"] the wheels."))
 			return TRUE
 
 /obj/structure/roguemachine/shop/process()

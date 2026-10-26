@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Input } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -193,12 +194,11 @@ export const Peddler = () => {
             }}
           >
             {canRead && (
-              <input
-                type="text"
+              <Input
                 value={search}
+                onChange={setSearch}
                 placeholder="Search wares..."
-                onChange={(e) => setSearch(e.target.value)}
-                style={{ ...inkInputStyle, width: '240px' }}
+                width="240px"
               />
             )}
             {!!needle && (

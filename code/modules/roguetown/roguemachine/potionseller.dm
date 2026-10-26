@@ -222,8 +222,8 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/carbon/human/user = usr
-	if(!istype(user))
+	var/mob/living/carbon/human/H = usr
+	if(!istype(H))
 		return
 
 	switch(action)
@@ -232,7 +232,7 @@
 				return
 			var/obj/item/I = inserted
 			inserted = null
-			give_to(I, user)
+			give_to(I, H)
 			return TRUE
 
 		if("pour")
@@ -269,7 +269,7 @@
 			for(var/i in 1 to length(tanks))
 				if(draws[i])
 					var/datum/reagents/tank = tanks[i]
-					tank.trans_to(inserted, draws[i], no_react = TRUE, transfered_by = user)
+					tank.trans_to(inserted, draws[i], no_react = TRUE, transfered_by = H)
 			inserted.reagents.handle_reactions()
 			playsound(loc, 'sound/misc/potionseller.ogg', 100, TRUE, -1)
 			update_icon()
@@ -293,7 +293,7 @@
 			var/obj/item/B = bottle_stock[length(bottle_stock)]
 			bottle_stock -= B
 			if(inserted)
-				give_to(B, user)
+				give_to(B, H)
 			else
 				inserted = B
 			return TRUE
@@ -309,9 +309,9 @@
 				return
 			var/datum/reagents/tank = tanks[index]
 			if(tank.total_volume >= tank.maximum_volume)
-				to_chat(user, span_warning("[tank_label(index)] is full."))
+				to_chat(H, span_warning("[tank_label(index)] is full."))
 				return TRUE
-			if(!pour_into_tank(inserted, index, amount, user))
+			if(!pour_into_tank(inserted, index, amount, H))
 				return TRUE
 			playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 			update_icon()
@@ -336,7 +336,7 @@
 			return TRUE
 
 		if("set_label")
-			if(locked || !user.can_read(src, TRUE))
+			if(locked || !H.can_read(src, TRUE))
 				return
 			var/index = tank_index(params["tank"])
 			if(!index)

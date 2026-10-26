@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useBackend } from 'tgui/backend';
 import type { BooleanLike } from 'tgui-core/react';
 
+import { useBackend } from '../../backend';
 import { starsIfIlliterate } from '../Goldface/util';
 import {
   fieldRowStyle,
