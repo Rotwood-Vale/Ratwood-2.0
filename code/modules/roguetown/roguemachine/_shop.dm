@@ -179,6 +179,8 @@
 	if(!ui)
 		playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 		ui = new(user, src, tgui_id, name)
+		// everything that changes the shop pushes its own update, so skip the per-tick rebuild
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /obj/structure/roguemachine/shop/ui_data(mob/user)

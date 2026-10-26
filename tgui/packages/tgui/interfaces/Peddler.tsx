@@ -35,7 +35,8 @@ type ProductGroup = {
   price: number;
   count: number;
   desc: string;
-  icon: string;
+  // null while the machine is still drawing it
+  icon: string | null;
 };
 
 type PeddlerData = ShopData & {
@@ -44,17 +45,21 @@ type PeddlerData = ShopData & {
   groups: ProductGroup[];
 };
 
-const ProductIcon = (props: { icon: string }) => (
-  <img
-    src={`data:image/png;base64,${props.icon}`}
-    style={{
-      width: '32px',
-      height: '32px',
-      flexShrink: 0,
-      imageRendering: 'pixelated',
-    }}
-  />
-);
+const iconStyle = {
+  width: '32px',
+  height: '32px',
+  flexShrink: 0,
+} as const;
+
+const ProductIcon = (props: { icon: string | null }) =>
+  props.icon ? (
+    <img
+      src={`data:image/png;base64,${props.icon}`}
+      style={{ ...iconStyle, imageRendering: 'pixelated' }}
+    />
+  ) : (
+    <div style={iconStyle} />
+  );
 
 const CountTag = (props: { count: number }) => (
   <span style={{ color: INK_SOFT, fontSize: FONT_LEAD, flexShrink: 0 }}>

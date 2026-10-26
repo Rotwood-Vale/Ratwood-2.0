@@ -5,12 +5,14 @@
 	tgui_id = "Peddler"
 	var/list/held_items = list()
 	var/max_items = 60
-	/// base64 icons per product group key, so the UI doesn't flatten icons every update
-	var/list/icon_cache = list()
+	/// Items still waiting on a UI icon, flattened a few per tick so bulk loads don't lag
+	var/list/icon_queue = list()
+	var/generating_icons = FALSE
 
 /obj/structure/roguemachine/vendor/Exited(atom/movable/gone, atom/newLoc)
 	. = ..()
 	held_items -= gone
+	icon_queue -= gone
 
 /// Items of the same type sold under the same name are one product group
 /obj/structure/roguemachine/vendor/proc/make_group_key(item_type, item_name)
@@ -32,10 +34,35 @@
 
 /// Records an item that is already inside, priced like the group it joins unless a price is given
 /obj/structure/roguemachine/vendor/proc/store_item(obj/item/P, price)
+	var/list/group = get_group_items(make_group_key(P.type, P.name))
 	if(isnull(price))
-		var/list/group = get_group_items(make_group_key(P.type, P.name))
 		price = length(group) ? held_items[group[1]]["PRICE"] : 0
-	held_items[P] = list("NAME" = P.name, "PRICE" = price)
+	// joining a group shares its icon; kept per item so renaming the group doesn't lose it
+	var/icon_data = length(group) ? held_items[group[1]]["ICON"] : null
+	held_items[P] = list("NAME" = P.name, "PRICE" = price, "ICON" = icon_data)
+	if(!icon_data)
+		icon_queue += P
+		if(!generating_icons)
+			INVOKE_ASYNC(src, PROC_REF(generate_icons))
+
+/// Flattens the queued items' icons for the UI, spread across ticks
+/obj/structure/roguemachine/vendor/proc/generate_icons()
+	generating_icons = TRUE
+	while(length(icon_queue))
+		var/obj/item/I = icon_queue[1]
+		icon_queue.Cut(1, 2)
+		// gone, or given its group's icon while it waited
+		if(!held_items[I] || held_items[I]["ICON"])
+			continue
+		var/icon_data = icon2base64(getFlatIcon(I, no_anim = TRUE))
+		for(var/obj/item/O as anything in get_group_items(group_key(I)))
+			if(!held_items[O]["ICON"])
+				held_items[O]["ICON"] = icon_data
+		CHECK_TICK
+		if(QDELETED(src))
+			return
+	generating_icons = FALSE
+	SStgui.update_uis(src)
 
 /// Stocks a new item of each type at the given price
 /obj/structure/roguemachine/vendor/proc/stock_new(list/item_types, price)
@@ -126,11 +153,9 @@
 
 	var/list/groups = list()
 	var/list/group_order = list()
-	var/list/icons = list()
 	for(var/obj/item/I in held_items)
 		var/key = group_key(I)
 		if(!groups[key])
-			icons[key] = icon_cache[key] || icon2base64(getFlatIcon(I, no_anim = TRUE))
 			groups[key] = list(
 				"key" = key,
 				// names are stored html-encoded for hawking; tgui escapes text itself
@@ -138,12 +163,14 @@
 				"price" = held_items[I]["PRICE"] || 0,
 				"count" = 0,
 				"desc" = I.desc,
-				"icon" = icons[key],
+				// null until generate_icons gets to it
+				"icon" = null,
 			)
 			group_order += key
 		groups[key]["count"] += 1
-	// rebuilt each update so emptied or renamed groups drop out
-	icon_cache = icons
+		// a merged group can have members with and without an icon yet
+		if(!groups[key]["icon"])
+			groups[key]["icon"] = held_items[I]["ICON"]
 
 	var/list/group_data = list()
 	for(var/key in group_order)
