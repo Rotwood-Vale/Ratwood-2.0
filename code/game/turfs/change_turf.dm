@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/turf/newT
 	if(!length(baseturfs))
 		baseturfs = list(baseturfs)
-	
+
 	var/list/old_baseturfs = baseturfs.Copy()
 	if(!isclosedturf(src))
 		old_baseturfs += type
@@ -250,7 +250,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/list/turf/new_baseturfs = list()
 	new_baseturfs.Add(baseturfs)
 	if(isopenturf(src))
-		new_baseturfs.Add(type)
+		var/top_baseturf = islist(baseturfs) ? baseturfs[length(baseturfs)] : baseturfs
+		if(!(ispath(added_turf, /turf/open) && ispath(top_baseturf, /turf/open/floor)))
+			new_baseturfs.Add(type)
 	var/area/turf_area = loc
 	flags = turf_area.PlaceOnTopReact(new_baseturfs, added_turf, flags) // A hook so areas can modify the incoming args
 	return ChangeTurf(added_turf, new_baseturfs, flags)
