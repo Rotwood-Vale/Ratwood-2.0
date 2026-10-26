@@ -18646,15 +18646,6 @@
 /obj/machinery/light/rogue/candle/l,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/cell)
-"dsY" = (
-/obj/structure/chair/bench/couchamagenta{
-	pixel_y = 4
-	},
-/obj/structure/fluff/walldeco/bigpainting{
-	pixel_x = -32
-	},
-/turf/open/floor/rogue/churchbrick,
-/area/rogue/indoors/town/bath)
 "dsZ" = (
 /obj/machinery/light/rogue/candle/l,
 /turf/open/transparent/openspace,
@@ -26434,16 +26425,6 @@
 /obj/structure/flora/roguegrass/bush/wall,
 /turf/open/floor/rogue/grassred,
 /area/rogue/outdoors/mountains)
-"eNk" = (
-/obj/structure/roguewindow/harem2{
-	max_integrity = 1000;
-	density = 0
-	},
-/obj/structure/curtain/magenta{
-	alpha = 200
-	},
-/turf/closed/wall/mineral/rogue/craftstone,
-/area/rogue/indoors/town/bath)
 "eNm" = (
 /obj/structure/fluff/railing/corner,
 /obj/structure/fluff/railing/corner/south_west,
@@ -47234,13 +47215,6 @@
 /obj/machinery/gear_painter,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors/mountains)
-"izx" = (
-/obj/structure/chair/bench/couchamagenta/r{
-	pixel_y = 4
-	},
-/obj/machinery/light/rogue/candle/r,
-/turf/open/floor/rogue/churchbrick,
-/area/rogue/indoors/town/bath)
 "izz" = (
 /turf/closed/mineral/random/rogue,
 /area/rogue/indoors/cave/central)
@@ -78955,6 +78929,10 @@
 /obj/structure/fluff/railing/border/west,
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town)
+"ogJ" = (
+/obj/structure/roguemachine/ministry_bureau,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town/manor)
 "ogR" = (
 /obj/structure/closet/crate/roguecloset/inn{
 	pixel_y = 17
@@ -98456,6 +98434,15 @@
 /obj/structure/stairs,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/town/dwarfin)
+"rFY" = (
+/obj/machinery/light/rogue/candle/r,
+/obj/structure/chair/stool/rogue{
+	pixel_x = 1;
+	pixel_y = -5
+	},
+/obj/structure/roguemachine/lottery_roguetown,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/bath)
 "rGa" = (
 /obj/structure/stairs{
 	dir = 4
@@ -123122,10 +123109,6 @@
 	},
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/shop)
-"wcD" = (
-/obj/structure/roguemachine/ministry_bureau,
-/turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/town/manor)
 "wcF" = (
 /obj/structure/deadbodyrandom/med,
 /turf/open/floor/rogue/naturalstone,
@@ -124092,6 +124075,14 @@
 /obj/structure/flora/newtree,
 /turf/open/water/ocean,
 /area/rogue/outdoors/woods)
+"wkr" = (
+/obj/structure/chair/stool/rogue{
+	pixel_x = 1;
+	pixel_y = -5
+	},
+/obj/structure/roguemachine/lottery_roguetown,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/bath)
 "wkz" = (
 /obj/structure/vine{
 	opacity = 1
@@ -207266,7 +207257,7 @@ myi
 myi
 wrI
 scu
-joy
+wkr
 imS
 hYa
 adK
@@ -207718,7 +207709,7 @@ fiz
 fiz
 fiz
 scu
-dsY
+wkr
 imS
 hYa
 adK
@@ -208169,8 +208160,8 @@ poL
 fiz
 xNm
 fiz
-eNk
-izx
+scu
+rFY
 imS
 ogB
 lfh
@@ -341894,7 +341885,7 @@ xHQ
 rrD
 fAA
 iJY
-wcD
+ogJ
 xHQ
 qIt
 qIt
