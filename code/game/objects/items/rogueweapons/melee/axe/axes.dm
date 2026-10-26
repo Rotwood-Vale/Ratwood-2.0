@@ -325,7 +325,7 @@
 /obj/item/rogueweapon/stoneaxe/woodcut/steel/pioneerdolabra
 	name = "pioneer's dolabra"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	icon_state = "woodcutter" // placeholder until I get the axe sprite
+	icon_state = "pdolabra"
 	desc = "A long handled axe with a carved grip made of hardened maple wood. This one has an axe-blade of frayed blacksteel, having lost its varnish long ago with a long pick-head behind the blade, this dolabra is decorated with golden reinforced bracers along the shaft and a heavy gold mace head at the top."
 	force = 26
 	force_wielded = 30
@@ -344,7 +344,7 @@
 /obj/item/rogueweapon/stoneaxe/woodcut/blacksteel/engineer
 	name = "sapper's dolabra"
 	icon = 'icons/roguetown/weapons/64.dmi'
-	icon_state = "woodcutter" // placeholder until I get the axe sprite
+	icon_state = "edolabra"
 	desc = "A long-handled axe with a carved grip made of hardened maple wood. Fitted with an axe-blade of polished blacksteel and a long pick-head behind the blade."
 	force = 28
 	force_wielded = 32
