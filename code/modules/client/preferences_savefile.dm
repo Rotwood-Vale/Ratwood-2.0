@@ -240,7 +240,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parchment_skin"]		>> parchment_skin
 	S["buttons_locked"]		>> buttons_locked
 	S["windowflash"]		>> windowflashing
-	S["be_special"] 		>> be_special
 	S["triumphs"]			>> triumphs
 	S["musicvol"]			>> musicvol
 	S["combatmusicvol"]		>> combatmusicvol
@@ -364,7 +363,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(admin_ghost_icon && !isicon(admin_ghost_icon))
 		admin_ghost_icon = null
 	menuoptions		= SANITIZE_LIST(menuoptions)
-	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(pda_style, GLOB.pda_styles, initial(pda_style))
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 	key_bindings 	= sanitize_islist(key_bindings, list())
@@ -486,7 +484,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["parchment_skin"], parchment_skin)
 	WRITE_FILE(S["buttons_locked"], buttons_locked)
 	WRITE_FILE(S["windowflash"], windowflashing)
-	WRITE_FILE(S["be_special"], be_special)
 	WRITE_FILE(S["default_slot"], default_slot)
 	WRITE_FILE(S["toggles"], toggles)
 	WRITE_FILE(S["chat_toggles"], chat_toggles)
@@ -882,6 +879,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_quirks(S)
 	_load_flaw(S)
 
+	S["be_special"] >> be_special
+	be_special = SANITIZE_LIST(be_special)
+
 	_load_culinary_preferences(S)
 
 	// LETHALSTONE edit: jank-ass load our statpack choice
@@ -1154,6 +1154,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["randomise"]			, randomise)
 	WRITE_FILE(S["species"]				, pref_species?.name)
 	WRITE_FILE(S["charflaw"]				, preferences_typepath_or_null(charflaw))
+	WRITE_FILE(S["be_special"], be_special)
 	WRITE_FILE(S["family"], family)
 	WRITE_FILE(S["gender_choice"], gender_choice)
 	WRITE_FILE(S["setspouse"], setspouse)
