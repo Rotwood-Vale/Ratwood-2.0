@@ -309,8 +309,8 @@
 	invocation_type = "whisper"
 	invocations = list("Undermaiden guide my gaze...")
 	associated_skill = /datum/skill/magic/holy
-	overlay_state = "necraeye"
-	action_icon_state = "necraeye"
+	overlay_state = "necraeyealt"
+	action_icon_state = "necraeyealt"
 	miracle = TRUE
 	devotion_cost = 30
 	range = 1

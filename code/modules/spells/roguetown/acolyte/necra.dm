@@ -101,8 +101,8 @@
 	range = 6
 	no_early_release = TRUE
 	chargedrain = 0
-	overlay_state = "necraportal"
-	action_icon_state = "necraportal"
+	overlay_state = "necraworldportal"
+	action_icon_state = "necraworldportal"
 	charging_slowdown = 1
 	chargetime = 2 SECONDS
 	recharge_time = 30 SECONDS
@@ -387,8 +387,8 @@
 	desc = "Call upon the Undermaiden to guide you to a lost soul."
 	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
-	overlay_state = "locatecorpse"
-	action_icon_state = "locatecorpse"
+	overlay_state = "findcorpse"
+	action_icon_state = "findcorpse"
 	sound = 'sound/magic/whiteflame.ogg'
 	releasedrain = 30
 	chargedrain = 0.5
@@ -537,8 +537,8 @@
 	miracle = TRUE
 	devotion_cost = 120
 	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
-	overlay_state = "consecrate_ground"
-	action_icon_state = "consecrate_ground"
+	overlay_state = "necracrossclothspell"
+	action_icon_state = "necracrossclothspell"
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	associated_skill = /datum/skill/magic/holy
 
@@ -699,8 +699,8 @@
 	recharge_time = 2 MINUTES
 	chargetime = 1 SECONDS
 	overlay_icon = 'icons/mob/actions/necramiracles.dmi'
-	overlay_state = "bless_cross"
-	action_icon_state = "bless_cross"
+	overlay_state = "necracrosstemporary"
+	action_icon_state = "necracrosstemporary"
 	action_icon = 'icons/mob/actions/necramiracles.dmi'
 	associated_skill = /datum/skill/magic/holy
 
