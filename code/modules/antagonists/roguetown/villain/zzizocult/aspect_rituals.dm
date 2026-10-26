@@ -663,6 +663,34 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	to_chat(H, span_danger("[uppertext(weapon)] HATES ME!"))
 	H.dropItemToGround(weapon)
 
+/datum/action/cooldown/spell/form_blade/avantyne
+	name = "Avantyne Blade"
+	desc = "Conjure an avantyne dagger or sword. Cycle the form with Shift+G. Cast again to dispel it."
+	button_icon = 'icons/mob/actions/zizomiracles.dmi'
+	button_icon_state = "ZIZO"
+	attunement_school = null
+	primary_resource_type = SPELL_COST_NONE
+	invocation_type = INVOCATION_NONE
+	shared_cooldown = "avantyne_blade"
+	outline_color = "#2b0a3d"
+	cooldown_time = 10 SECONDS
+	associated_stat = null
+	weapon_cast_penalized = FALSE
+	ignore_armor_penalty = TRUE
+	spell_requirements = SPELL_REQUIRES_HUMAN
+	forms = list(
+		list("label" = "Dagger", "weapon" = /obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo),
+		list("label" = "Sword", "weapon" = /obj/item/rogueweapon/sword/long/zizo),
+	)
+
+/datum/action/cooldown/spell/form_blade/avantyne/cast(atom/cast_on)
+	if(QDELETED(conjured_weapon))
+		return ..()
+	conjured_weapon.visible_message(span_warning("[conjured_weapon] crumbles away!"))
+	qdel(conjured_weapon)
+	conjured_weapon = null
+	return TRUE
+
 /obj/effect/proc_holder/spell/self/recall_bound
 	name = "Recall Weapon"
 	desc = "Call your bound weapon to your hand."

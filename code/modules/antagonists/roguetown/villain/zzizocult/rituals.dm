@@ -138,7 +138,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		if(R.needs_aspect && !(R.needs_aspect in GLOB.zizo_bestowed))
 			contents += "<B>[initial(R.name)]</B> - LOCKED - <B>OPEN [R.needs_aspect] GATE.</B><BR>'<I>[R.desc]</I>'<BR>"
 			continue
-		contents += "<a href='?src=[REF(src)];buy=[ritualtype]'>[initial(R.name)]</a> - [initial(R.research_cost)] SECRETS<BR>'<I>[R.desc]</I>'<BR>"
+		var/obj/item/needed = initial(R.research_item)
+		contents += "<a href='?src=[REF(src)];buy=[ritualtype]'>[initial(R.name)]</a> - [initial(R.research_cost)] SECRETS[needed ? " AND A HELD [uppertext(initial(needed.name))]" : ""]<BR>'<I>[R.desc]</I>'<BR>"
 	if(!any)
 		contents += "There is nothing left to uncover.<BR>"
 	var/datum/browser/popup = new(user, "zizoresearch", "ZIZO", 500, 500)
@@ -159,6 +160,14 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(user.mind.zizo_points < initial(R.research_cost))
 		to_chat(user, span_warning("NOT ENOUGH SECRETS."))
 		return
+	var/obj/item/needed = R.research_item
+	if(needed)
+		var/obj/item/held = locate(needed) in user.held_items
+		if(!held)
+			to_chat(user, span_warning("I MUST HOLD A [uppertext(initial(needed.name))] TO DISCOVER THIS."))
+			qdel(R)
+			return
+		qdel(held)
 	user.mind.zizo_points -= initial(R.research_cost)
 	user.mind.zizo_researched |= ritualtype
 	if(R.passive)
@@ -213,6 +222,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/w_desc
 	var/passive = FALSE
 	var/lesser = FALSE
+	var/research_item
 
 /datum/ritual/proc/invoke(mob/living/user, turf/center)
 	return
@@ -777,7 +787,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	body_parts_covered = ARMS|CHEST
 
 /datum/ritual/transmutation/summonarmor
-	lesser = TRUE
 	name = "Summon Darksteel Armor"
 	desc = "Conjure a set of unremovable darksteel plate. Trains you in heavy armor and grants mending. Requires a dark crystal."
 	center_requirement = /mob/living/carbon/human
@@ -1716,22 +1725,14 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/transmutation/summonweapon
 	lesser = TRUE
 	name = "Summon Weapons"
-	desc = "Conjure an avantyne blade. Teaches you expert swordsmanship. Requires a dark crystal."
-	center_requirement = /mob/living/carbon/human
-	n_req = /obj/item/necro_relics/necro_crystal
-	s_req = /obj/item/ingot/steel
+	desc = "Learn a spell to conjure an avantyne dagger or sword. Consumes a dark crystal to learn."
+	passive = TRUE
+	research_item = /obj/item/necro_relics/necro_crystal
 	research_cost = 3
 
-/datum/ritual/transmutation/summonweapon/invoke(mob/living/user, turf/center)
-	var/mob/living/carbon/human/target = locate() in center.contents
-	if(!target)
-		return
-	var/datum/effect_system/spark_spread/S = new(center)
-	S.set_up(1, 1, center)
-	S.start()
-	new /obj/item/rogueweapon/sword/long/zizo(center)
-	target.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT)
-	playsound(center, pick('sound/items/bsmith1.ogg','sound/items/bsmith2.ogg','sound/items/bsmith3.ogg','sound/items/bsmith4.ogg'), 100, FALSE)
+/datum/ritual/transmutation/summonweapon/apply_passive(mob/living/carbon/human/H)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/form_blade/avantyne)
+	return
 
 // FLESH CRAFTING
 /datum/ritual/fleshcrafting
@@ -1798,7 +1799,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	to_chat(target, span_notice("I no longer fear the dark."))
 
 /datum/ritual/fleshcrafting/nopain
-	lesser = TRUE
 	name = "Painless Battle"
 	desc = "Use a heart and a brain to become immune to pain. Requires a dark crystal."
 	research_cost = 3
