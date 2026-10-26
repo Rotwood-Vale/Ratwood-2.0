@@ -47,7 +47,7 @@
 /datum/anvil_recipe/engineeredsmithing/dolabra //exists solely to replace a stolen dolabra
 	name = "Blacksteel Dolabra"
 	req_bar = /obj/item/ingot/blacksteel
-	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/rogueweapon/woodstaff/quarterstaff)
+	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/rogueweapon/woodstaff/quarterstaff)
 	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/blacksteel/engineer
 	createditem_num = 1
 	craftdiff = 4

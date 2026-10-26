@@ -110,6 +110,11 @@
 	cost = 25
 	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/pick)
 
+/datum/supply_pack/rogue/Pioneer/dolabra
+	name = "Pioneer's Dolabra"
+	cost = 100
+	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel/pioneerdolabra)
+
 /datum/supply_pack/rogue/Pioneer/
 
 //Tools of the trade.

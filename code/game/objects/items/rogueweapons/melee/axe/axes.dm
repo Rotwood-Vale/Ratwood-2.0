@@ -322,11 +322,30 @@
 	inhand_y_dimension = 64
 	bigboy = TRUE
 
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/pioneerdolabra
+	name = "pioneer's dolabra"
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "woodcutter" // placeholder until I get the axe sprite
+	desc = "A long handled axe with a carved grip made of hardened maple wood. This one has an axe-blade of frayed blacksteel, having lost its varnish long ago with a long pick-head behind the blade, this dolabra is decorated with golden reinforced bracers along the shaft and a heavy gold mace head at the top."
+	force = 26
+	force_wielded = 30
+	max_integrity = 650
+	wdefense = 8
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash, /datum/intent/pick)
+	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long/woodcutter, /datum/intent/axe/bash, /datum/intent/pick/ranged/dolabra)
+	wlength = WLENGTH_LONG
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = TRUE	
+	smeltresult = /obj/item/ingot/gold
+
 /obj/item/rogueweapon/stoneaxe/woodcut/blacksteel/engineer
 	name = "sapper's dolabra"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "woodcutter" // placeholder until I get the axe sprite
-	desc = "A long-handled axe with a carved grip made of high-quality maple wood. Fitted with an axe-blade of polished blacksteel and a long pick-head behind the blade."
+	desc = "A long-handled axe with a carved grip made of hardened maple wood. Fitted with an axe-blade of polished blacksteel and a long pick-head behind the blade."
 	force = 28
 	force_wielded = 32
 	max_integrity = 750 // fifty less than the blacksteel pickaxe
