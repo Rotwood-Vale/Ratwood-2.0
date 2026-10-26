@@ -2176,7 +2176,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	else
 		target.adjust_fire_stacks(8, /datum/status_effect/fire_handler/fire_stacks/dark)
 		target.ignite_mob()
-		target.apply_damage(60, BURN, user.zone_selected || BODY_ZONE_CHEST)
+		target.apply_damage(40, BURN, user.zone_selected || BODY_ZONE_CHEST)
 		playsound(user, 'sound/combat/tf2crit.ogg', 100, TRUE)
 	tracker.channeling_throw = FALSE
 	return TRUE

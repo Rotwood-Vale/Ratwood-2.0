@@ -1054,7 +1054,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/transmutation/summonraver
 	name = "Summon Raver"
 	desc = "Conjure a device to drain the lux of sacrifices. Buckle a victim to the raver and it shall consume their lux. Afterwards, a cultist can buckle to it and receive powerful body enhancements. Must be near a Fuge."
-	center_requirement = /obj/item/candle/candlestick/silver
+	center_requirement = /obj/item/natural/worms
 	is_cultist_ritual = TRUE
 	research_cost = 5
 
