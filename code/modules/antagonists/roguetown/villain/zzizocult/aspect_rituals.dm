@@ -1833,7 +1833,21 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	qdel(spirit)
 
 /mob/living/simple_animal/pet/cat/rogue/black/witch
+	base_intents = list(/datum/intent/simple/claw/witch_cat)
+	melee_damage_lower = 2
+	melee_damage_upper = 5
 	var/mob/living/carbon/human/body
+	var/list/bitten = list()
+
+/mob/living/simple_animal/pet/cat/rogue/black/witch/UnarmedAttack(atom/A, proximity)
+	var/mob/living/carbon/human/victim = A
+	var/bleed_before = 0
+	if(istype(victim))
+		bleed_before = victim.get_bleed_rate()
+	. = ..()
+	if(istype(victim) && !is_zizo(victim) && victim.get_bleed_rate() > bleed_before && !(victim in bitten))
+		bitten += victim
+		to_chat(src, span_notice("I collect [victim]'s blood! The cat will drop a remnant leech after the spell ends."))
 
 /mob/living/simple_animal/pet/cat/rogue/black/witch/Destroy()
 	if(mind)
@@ -1841,6 +1855,11 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 			ghostize()
 		else
 			mind.transfer_to(body)
+	for(var/mob/living/carbon/human/victim in bitten)
+		var/obj/item/natural/worms/leech/remnant = new(get_turf(src))
+		remnant.fed_from = victim
+		remnant.blood_storage = remnant.blood_maximum
+		remnant.update_icon()
 	return ..()
 
 /mob/living/simple_animal/pet/cat/rogue/black/witch/death(gibbed)
@@ -1848,7 +1867,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /obj/effect/proc_holder/spell/self/witch_possess
 	name = "Witchery"
-	desc = "Possess cat, or return to body."
+	desc = "Possess cat, or return to body. Biting people collects their blood for remnants."
 	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
 	action_icon = 'icons/mob/actions/zizomiracles.dmi'
 	overlay_state = "tame_deadite"
@@ -1877,7 +1896,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/servantry/witchery
 	name = "Witchery"
-	desc = "Learn to summon a black cat. You are able to remotely possess it at any time and see through its eyes."
+	desc = "Learn to summon a black cat. You are able to remotely possess it at any time and see through its eyes. Biting people collects their blood for remnants."
 	passive = TRUE
 	lesser = TRUE
 	research_cost = 3
