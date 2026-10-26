@@ -323,15 +323,15 @@
 	bigboy = TRUE
 
 /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/blacksteel/pioneer
-	name = "pioneer's dolabra" // you get worse force and integrity in exchange for the best demolition tool there is
+	name = "pioneer's dolabra"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "pdolabra"
 	desc = "A long handled axe with a carved grip made of hardened maple wood. This one has an axe-blade of frayed blacksteel, having lost its varnish long ago with a long pick-head behind the blade, this dolabra is decorated with golden reinforced bracers along the shaft and a heavy gold mace head at the top."
 	dropshrink = 0.75
-	force = 22
-	force_wielded = 26
-	max_integrity = 650
-	wdefense = 6
+	force = 30
+	force_wielded = 34
+	max_integrity = 750
+	wdefense = 8
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash, /datum/intent/pick)
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long/woodcutter/pioneer, /datum/intent/axe/bash, /datum/intent/pick/ranged/dolabra/pioneer)
 	wlength = WLENGTH_LONG
@@ -340,6 +340,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	bigboy = TRUE
+	special = /datum/special_intent/greatsword_swing
 	smeltresult = /obj/item/ingot/gold
 
 /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/blacksteel/engineer
@@ -360,6 +361,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	bigboy = TRUE
+	special = /datum/special_intent/greatsword_swing
 	smeltresult = /obj/item/ingot/blacksteel
 
 /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/blacksteel/getonmobprop(tag)
