@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useBackend } from 'tgui/backend';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { starsIfIlliterate } from '../Goldface/util';
 import {
@@ -6,9 +8,21 @@ import {
   fieldValueStyle,
   inkButtonStyle,
   inkInputStyle,
+  rulerStyle,
   SEAL_AMBER,
   SERIF,
+  titleStyle,
 } from './parchment';
+
+/** Data every shop machine sends. */
+export type ShopData = {
+  locked: BooleanLike;
+  can_read: BooleanLike;
+  budget: number;
+  profits: number;
+  is_cart: BooleanLike;
+  wheels_secured: BooleanLike;
+};
 
 /** Whole number >= 0, or null if the draft isn't one. */
 export const parseWholeNumber = (draft: string) => {
@@ -65,7 +79,7 @@ export const CommitField = (props: {
 };
 
 /** Labelled mammon amount with a button to pay it out. */
-export const MoneyRow = (props: {
+const MoneyRow = (props: {
   label: string;
   amount: number;
   button: string;
@@ -99,7 +113,7 @@ export const MoneyRow = (props: {
 };
 
 /** Owner toggle for a shop cart's wheels. */
-export const WheelsButton = (props: {
+const WheelsButton = (props: {
   secured: boolean;
   canRead: boolean;
   onClick: () => void;
@@ -119,5 +133,49 @@ export const WheelsButton = (props: {
     >
       {starsIfIlliterate(secured ? 'Free wheels' : 'Secure wheels', canRead)}
     </button>
+  );
+};
+
+/**
+ * Shop title, then the shopper's coin or the owner's profits,
+ * with the wheels toggle beside the profits on carts.
+ */
+export const ShopHeader = (props: { title: string }) => {
+  const { act, data } = useBackend<ShopData>();
+  const canRead = !!data.can_read;
+
+  return (
+    <>
+      <div style={titleStyle}>{starsIfIlliterate(props.title, canRead)}</div>
+      <div style={rulerStyle} />
+      {data.locked ? (
+        <MoneyRow
+          label="Stored Mammon"
+          amount={data.budget}
+          button="Change"
+          canRead={canRead}
+          onClick={() => act('change')}
+        />
+      ) : (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <MoneyRow
+              label="Stored Profits"
+              amount={data.profits}
+              button="Withdraw"
+              canRead={canRead}
+              onClick={() => act('withdraw_profits')}
+            />
+          </div>
+          {!!data.is_cart && (
+            <WheelsButton
+              secured={!!data.wheels_secured}
+              canRead={canRead}
+              onClick={() => act('toggle_wheels')}
+            />
+          )}
+        </div>
+      )}
+    </>
   );
 };

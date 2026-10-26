@@ -1,34 +1,20 @@
 #define POTIONSELLER_TANKS 3
 #define POTIONSELLER_TANK_VOLUME 500
-#define POTIONSELLER_MAX_PRICE 9999
 
 /obj/structure/roguemachine/potionseller
+	parent_type = /obj/structure/roguemachine/shop
 	name = "POTION SELLER"
 	desc = "The stomach of this thing can been stuffed with fluids for you to buy."
-	icon = 'icons/roguetown/misc/machines.dmi'
-	icon_state = "streetvendor1"
-	density = TRUE
-	blade_dulling = DULLING_BASH
-	integrity_failure = 0.1
-	max_integrity = 0
 	debris = list(/obj/item/grown/log/tree/small, /obj/item/roguegear, /obj/item/natural/glass)
-	anchored = TRUE
-	layer = BELOW_OBJ_LAYER
-	// No INTERACT_ATOM_UI_INTERACT: the UI is opened explicitly so right-click loading doesn't pop it
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
-	locked = TRUE
-	var/profits = 0
-	var/is_crafted = FALSE
-	var/keycontrol = "merchant"
-	/// Name of the key made for crafted or claimed machines
-	var/key_name = "potion seller key"
+	tgui_id = "PotionSeller"
+	key_name = "potion seller key"
+	key_icon_state = "greenkey"
 	/// The container in the slot, bought into or poured from
 	var/obj/item/reagent_containers/inserted
 	var/bottle_price = 10
 	var/max_bottles = 20
 	/// Empty bottles for sale
 	var/list/bottle_stock = list()
-	var/budget = 0
 	/// One reagent holder per tank, each holding any mixture
 	var/list/tanks = list()
 	var/list/tank_labels = list()
@@ -36,11 +22,7 @@
 	var/list/tank_prices = list()
 	/// Which tank right-click bag loading pours into
 	var/loading_tank = 1
-	var/next_hawk = 0
-	var/will_hawk = TRUE
 	var/tank_volume = POTIONSELLER_TANK_VOLUME
-	/// icon states are this plus 1 (locked) or 0 (open or broken)
-	var/icon_prefix = "streetvendor"
 
 /obj/structure/roguemachine/potionseller/crafted
 	is_crafted = TRUE
@@ -54,34 +36,29 @@
 		tanks += tank
 		tank_labels += null
 		tank_prices += 0
-	if(is_crafted)
-		make_key(get_turf(src))
-	else
+	if(!is_crafted)
 		for(var/i in 1 to 10)
 			bottle_stock += new /obj/item/reagent_containers/glass/bottle/rogue(src)
-	update_icon()
-	START_PROCESSING(SSroguemachine, src)
-
-/// Binds the machine to a new key and returns it
-/obj/structure/roguemachine/potionseller/proc/make_key(atom/destination)
-	var/obj/item/roguekey/key = new_shop_key(destination, key_name, "greenkey")
-	keycontrol = key.lockid
-	return key
 
 /obj/structure/roguemachine/potionseller/Destroy()
-	STOP_PROCESSING(SSroguemachine, src)
+	drop_bottles()
+	QDEL_LIST(tanks)
+	return ..()
+
+/obj/structure/roguemachine/potionseller/obj_break(damage_flag)
+	..()
+	for(var/datum/reagents/tank as anything in tanks)
+		splash_tank(tank)
+	drop_bottles()
+
+/// Drops the container in the slot and the bottle shelf
+/obj/structure/roguemachine/potionseller/proc/drop_bottles()
 	if(inserted)
 		inserted.forceMove(drop_location())
 		inserted = null
 	for(var/obj/item/B in bottle_stock.Copy())
 		B.forceMove(drop_location())
 	bottle_stock.Cut()
-	if(budget > 0)
-		budget2change(budget)
-		budget = 0
-	QDEL_LIST(tanks)
-	set_light(0)
-	return ..()
 
 /obj/structure/roguemachine/potionseller/Exited(atom/movable/gone, atom/newLoc)
 	. = ..()
@@ -134,7 +111,7 @@
 
 /// Empties the filled liquid containers in a bag into the loading tank, as far as it has room,
 /// and moves empty stock bottles from the bag onto the bottle shelf
-/obj/structure/roguemachine/potionseller/proc/load_from_storage(datum/component/storage/STR, mob/living/user)
+/obj/structure/roguemachine/potionseller/load_from_storage(datum/component/storage/STR, mob/living/user)
 	var/poured = 0
 	var/shelved = 0
 	var/tank_full = FALSE
@@ -174,107 +151,37 @@
 	if(!poured && !shelved && !tank_full && !shelf_full)
 		to_chat(user, span_warning("There is nothing \the [src] can take."))
 
-/obj/structure/roguemachine/potionseller/proc/toggle_lock()
-	locked = !locked
-	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-	update_icon()
-	SStgui.update_uis(src)
+/obj/structure/roguemachine/potionseller/refuses_unowned(obj/item/I)
+	return ..() || is_liquid_container(I)
 
-/obj/structure/roguemachine/potionseller/attackby(obj/item/P, mob/user, params)
-	if(obj_broken)
-		return ..()
-	if(istype(P, /obj/item/roguecoin/gilbranze))
-		return
-	if(istype(P, /obj/item/roguecoin/inqcoin))
-		return
-	if(istype(P, /obj/item/roguecoin))
-		budget += P.get_real_price()
-		qdel(P)
-		update_icon()
-		playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
-		SStgui.update_uis(src)
-		return
-	if(istype(P, /obj/item/roguekey))
-		var/obj/item/roguekey/K = P
-		if(K.lockid == keycontrol)
-			toggle_lock()
-			return
-		to_chat(user, span_warning("Wrong key."))
-		return
-	if(istype(P, /obj/item/storage/keyring))
-		for(var/obj/item/roguekey/KE in P)
-			if(KE.lockid == keycontrol)
-				toggle_lock()
-				return
-		to_chat(user, span_warning("Wrong key."))
-		return
-	if(is_liquid_container(P))
-		if(!locked && is_stock_bottle(P) && !P.reagents.total_volume)
-			stock_bottle(P, user)
-			return
+/obj/structure/roguemachine/potionseller/handle_item(obj/item/I, mob/user)
+	if(is_liquid_container(I))
+		if(!locked && is_stock_bottle(I) && !I.reagents.total_volume)
+			stock_bottle(I, user)
+			return TRUE
 		if(inserted)
 			to_chat(user, span_warning("Something is already inside!"))
-			return
-		if(!user.transferItemToLoc(P, src))
-			to_chat(user, span_warning("[P] is stuck to your hand!"))
-			return
-		inserted = P
+			return TRUE
+		if(!user.transferItemToLoc(I, src))
+			to_chat(user, span_warning("[I] is stuck to your hand!"))
+			return TRUE
+		inserted = I
 		playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 		SStgui.update_uis(src)
-		return
+		return TRUE
 	if(!locked)
 		to_chat(user, span_warning("Not a container."))
-		return
-	..()
+		return TRUE
+	return FALSE
 
-/obj/structure/roguemachine/potionseller/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	if(!ishuman(user) || obj_broken)
-		return
-	user.changeNext_move(CLICK_CD_INTENTCAP)
-	ui_interact(user)
-
-/obj/structure/roguemachine/potionseller/attack_right(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(!ishuman(user) || obj_broken)
-		return
-	user.changeNext_move(CLICK_CD_INTENTCAP)
-	var/obj/item/held = user.get_active_held_item()
-	if(locked || !held)
-		ui_interact(user)
-		return
-	if(!istype(held, /obj/item/storage/keyring))
-		var/datum/component/storage/STR = held.GetComponent(/datum/component/storage)
-		if(STR && length(STR.contents()))
-			load_from_storage(STR, user)
-			return
-	attackby(held, user)
-
-/obj/structure/roguemachine/potionseller/ui_state(mob/user)
-	return GLOB.human_adjacent_state
-
-/obj/structure/roguemachine/potionseller/ui_status(mob/user, datum/ui_state/state)
-	if(obj_broken || !isliving(user) || user.stat == DEAD)
-		return UI_CLOSE
-	return ..()
-
-/obj/structure/roguemachine/potionseller/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-		ui = new(user, src, "PotionSeller", name)
-		ui.open()
+/obj/structure/roguemachine/potionseller/has_stock()
+	for(var/datum/reagents/tank as anything in tanks)
+		if(tank.total_volume >= 1)
+			return TRUE
+	return FALSE
 
 /obj/structure/roguemachine/potionseller/ui_data(mob/user)
-	var/list/data = list()
-	data["locked"] = locked ? TRUE : FALSE
-	data["can_read"] = user.can_read(src, TRUE) ? TRUE : FALSE
-	data["budget"] = budget
-	data["profits"] = profits
+	var/list/data = ..()
 	data["bottle_price"] = bottle_price
 	data["bottles"] = length(bottle_stock)
 	data["max_bottles"] = max_bottles
@@ -286,6 +193,7 @@
 		tank_data += list(list(
 			// labels are stored html-encoded for hawking; tgui escapes text itself
 			"label" = html_decode(tank_label(i)),
+			"default_label" = default_tank_label(i),
 			"price" = tank_prices[i],
 			"volume" = round(tank.total_volume, 0.1),
 			"drawable" = floor(tank.total_volume),
@@ -342,7 +250,8 @@
 				if(!amount)
 					draws[i] = 0
 					continue
-				if(amount < 0 || amount > tank.total_volume)
+				// !(x >= 0) rather than x < 0 so NaN is rejected too
+				if(!(amount >= 0) || amount > tank.total_volume)
 					return
 				draws[i] = amount
 				total_drams += amount
@@ -389,30 +298,14 @@
 				inserted = B
 			return TRUE
 
-		if("change")
-			if(!locked)
-				return
-			if(budget > 0)
-				budget2change(budget, user)
-				budget = 0
-			return TRUE
-
-		if("withdraw_profits")
-			if(locked)
-				return
-			if(profits > 0)
-				budget2change(profits, user)
-				profits = 0
-			return TRUE
-
 		if("pour_in")
 			if(locked || !inserted)
 				return
 			var/index = tank_index(params["tank"])
 			if(!index)
 				return
-			var/amount = params["amount"] ? round(text2num("[params["amount"]]")) : inserted.reagents.total_volume
-			if(amount <= 0)
+			var/amount = isnull(params["amount"]) ? inserted.reagents.total_volume : round(text2num("[params["amount"]]"))
+			if(!(amount > 0))
 				return
 			var/datum/reagents/tank = tanks[index]
 			if(tank.total_volume >= tank.maximum_volume)
@@ -458,18 +351,18 @@
 				return
 			var/index = tank_index(params["tank"])
 			var/newprice = text2num("[params["price"]]")
-			if(!index || isnull(newprice) || newprice < 0)
+			if(!index || isnull(newprice) || !(newprice >= 0))
 				return
-			tank_prices[index] = round(min(newprice, POTIONSELLER_MAX_PRICE), 0.1)
+			tank_prices[index] = round(min(newprice, SHOP_MAX_PRICE), 0.1)
 			return TRUE
 
 		if("set_bottle_price")
 			if(locked)
 				return
 			var/newprice = text2num("[params["price"]]")
-			if(isnull(newprice) || newprice < 0)
+			if(isnull(newprice) || !(newprice >= 0))
 				return
-			bottle_price = round(min(newprice, POTIONSELLER_MAX_PRICE))
+			bottle_price = round(min(newprice, SHOP_MAX_PRICE))
 			return TRUE
 
 /obj/structure/roguemachine/potionseller/proc/splash_tank(datum/reagents/tank)
@@ -481,12 +374,7 @@
 	tank.reaction(T, TOUCH)
 	tank.clear_reagents()
 
-/obj/structure/roguemachine/potionseller/process()
-	if(obj_broken || !will_hawk)
-		return
-	if(world.time < next_hawk)
-		return
-	next_hawk = world.time + rand(1 MINUTES, 2 MINUTES)
+/obj/structure/roguemachine/potionseller/hawk()
 	var/list/stocked = list()
 	for(var/i in 1 to length(tanks))
 		var/datum/reagents/tank = tanks[i]
@@ -501,34 +389,6 @@
 	else
 		say("Free [label]! Bring a bottle!")
 
-/obj/structure/roguemachine/potionseller/obj_break(damage_flag)
-	..()
-	for(var/datum/reagents/tank as anything in tanks)
-		splash_tank(tank)
-	if(inserted)
-		inserted.forceMove(drop_location())
-		inserted = null
-	for(var/obj/item/B in bottle_stock.Copy())
-		B.forceMove(drop_location())
-	bottle_stock.Cut()
-	if(budget > 0)
-		budget2change(budget)
-		budget = 0
-	update_icon()
-
-/obj/structure/roguemachine/potionseller/update_icon()
-	cut_overlays()
-	set_light(0)
-	var/open = !locked || obj_broken
-	icon_state = "[icon_prefix][open ? 0 : 1]"
-	if(open)
-		return
-	for(var/datum/reagents/tank as anything in tanks)
-		if(tank.total_volume >= 1)
-			set_light(1, 1, 1, l_color = "#1b7bf1")
-			add_overlay(mutable_appearance(icon, "vendor-gen"))
-			return
-
 // POTION CARTS
 
 /obj/structure/roguemachine/potionseller/mobile
@@ -537,6 +397,7 @@
 	icon_state = "svendorcart1"
 	icon_prefix = "svendorcart"
 	anchored = FALSE
+	is_cart = TRUE
 	max_integrity = 400
 	climbable = TRUE
 	tank_volume = 250
@@ -548,79 +409,11 @@
 /obj/structure/roguemachine/potionseller/mobile/crafted
 	is_crafted = TRUE
 
-/obj/structure/roguemachine/potionseller/mobile/proc/offer_ownership(mob/living/carbon/human/user)
-	if(tgui_alert(user, "This cart has no owner. Take ownership?", "Potion Cart", list("Yes", "No")) != "Yes")
-		return
-	// someone else may have claimed it, or the user wandered off, while the prompt was up
-	if(keycontrol || obj_broken || QDELETED(src) || !user.Adjacent(src) || user.incapacitated())
-		return
-	user.put_in_hands(make_key(get_turf(user)))
-	to_chat(user, span_notice("You take ownership of \the [src]. Its key is yours."))
-	if(locked)
-		toggle_lock()
-	ui_interact(user)
-
-/obj/structure/roguemachine/potionseller/mobile/proc/try_claim(mob/user)
-	if(keycontrol || obj_broken || !ishuman(user))
-		return FALSE
-	user.changeNext_move(CLICK_CD_INTENTCAP)
-	INVOKE_ASYNC(src, PROC_REF(offer_ownership), user)
-	return TRUE
-
-/obj/structure/roguemachine/potionseller/mobile/attack_hand(mob/living/user)
-	if(try_claim(user))
-		return TRUE
-	return ..()
-
-/obj/structure/roguemachine/potionseller/mobile/attack_right(mob/user)
-	if(try_claim(user))
-		return TRUE
-	return ..()
-
-/obj/structure/roguemachine/potionseller/mobile/attackby(obj/item/P, mob/user, params)
-	if(!keycontrol && !obj_broken && (istype(P, /obj/item/roguekey) || istype(P, /obj/item/storage/keyring) || istype(P, /obj/item/roguecoin) || is_liquid_container(P)))
-		to_chat(user, span_warning("\The [src] has no owner yet."))
-		return
-	return ..()
-
-/obj/structure/roguemachine/potionseller/mobile/Move() // secured wheels keep it from being shoved around by explosions and such
-	if(anchored)
-		return FALSE
-	return ..()
-
-/obj/structure/roguemachine/potionseller/mobile/can_be_pulled(user, grab_state, force)
-	if(anchored)
-		return FALSE
-	return ..()
-
-/obj/structure/roguemachine/potionseller/mobile/examine(mob/user)
-	. = ..()
-	if(!keycontrol)
-		. += span_info("It has no owner. Anyone could take ownership of it.")
-	if(anchored)
-		. += span_info("Its wheels are secured.")
-
 /obj/structure/roguemachine/potionseller/mobile/get_mechanics_examine(mob/user)
 	. = ..()
 	. += span_info("Left-clicking an unowned POTION CART offers to make you its owner and hands you its key. Keys can be passed on to whoever you like.")
 	. += span_info("Left-clicking a POTION CART with an open hand lets you buy from its tanks and its bottle shelf.")
 	. += span_info("Owners can UNLOCK it with its key to fill tanks, withdraw profits, and secure or free its wheels. Secured wheels can't be pulled or pushed.")
 
-/obj/structure/roguemachine/potionseller/mobile/ui_data(mob/user)
-	. = ..()
-	.["is_cart"] = TRUE
-	.["wheels_secured"] = anchored ? TRUE : FALSE
-
-/obj/structure/roguemachine/potionseller/mobile/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-	if(action == "toggle_wheels" && !locked)
-		anchored = !anchored
-		playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-		to_chat(usr, span_notice("You [anchored ? "secure" : "free"] the wheels."))
-		return TRUE
-
 #undef POTIONSELLER_TANKS
 #undef POTIONSELLER_TANK_VOLUME
-#undef POTIONSELLER_MAX_PRICE

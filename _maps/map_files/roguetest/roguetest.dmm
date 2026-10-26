@@ -1200,6 +1200,10 @@
 /obj/structure/fluff/nest,
 /turf/open/floor/rogue/hay,
 /area/rogue/indoors)
+"HU" = (
+/obj/structure/roguemachine/vendor/mobile,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/indoors)
 "Ie" = (
 /obj/item/flashlight/flare/torch/lantern,
 /turf/open/floor/rogue/cobblerock,
@@ -1222,6 +1226,10 @@
 "JD" = (
 /obj/item/rogueweapon/pick/blacksteel,
 /turf/open/floor/rogue/ruinedwood,
+/area/rogue/indoors)
+"JZ" = (
+/obj/structure/roguemachine/potionseller/mobile,
+/turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
 "Kn" = (
 /obj/structure/table/wood{
@@ -3659,8 +3667,8 @@ AX
 xY
 CZ
 CZ
-CZ
-CZ
+HU
+JZ
 AX
 AX
 eg

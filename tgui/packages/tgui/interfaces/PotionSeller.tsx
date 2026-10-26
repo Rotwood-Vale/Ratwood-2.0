@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import {
   cardStyle,
   compactButtonStyle,
+  ellipsisCellStyle,
   FONT_BODY,
   FONT_LEAD,
   FONT_SMALL,
@@ -22,19 +22,19 @@ import {
   SEAL_GREEN,
   SEAL_RED,
   SERIF,
-  titleStyle,
 } from './common/parchment';
 import {
   CommitField,
-  MoneyRow,
   parseWholeNumber,
-  WheelsButton,
+  type ShopData,
+  ShopHeader,
 } from './common/ShopControls';
 import type { ActFn } from './Goldface/types';
 import { starsIfIlliterate } from './Goldface/util';
 
 type Tank = {
   label: string;
+  default_label: string;
   price: number;
   volume: number;
   drawable: number;
@@ -49,20 +49,13 @@ type Container = {
   color: string | null;
 };
 
-type PotionSellerData = {
-  locked: BooleanLike;
-  can_read: BooleanLike;
-  budget: number;
-  profits: number;
+type PotionSellerData = ShopData & {
   bottle_price: number;
   bottles: number;
   max_bottles: number;
   loading_tank: number;
   tanks: Tank[];
   container: Container | null;
-  // only sent by potion carts
-  is_cart?: BooleanLike;
-  wheels_secured?: BooleanLike;
 };
 
 const TANK_HEIGHT = 280;
@@ -191,19 +184,18 @@ const TankColumn = (props: {
           value={tank.label}
           width="100%"
           // a blank label resets to the default name
-          parse={(draft) => draft.trim() || `Tank ${tankNumber}`}
+          parse={(draft) => draft.trim() || tank.default_label}
           onCommit={(label) => act('set_label', { tank: tankNumber, label })}
         />
       ) : (
         <div
           style={{
+            ...ellipsisCellStyle,
+            flex: 'none',
+            maxWidth: '100%',
             fontSize: FONT_TITLE,
             fontWeight: 'bold',
             textAlign: 'center',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            maxWidth: '100%',
           }}
         >
           {starsIfIlliterate(tank.label, canRead)}
@@ -417,12 +409,11 @@ const Vessel = (props: {
         <>
           <div
             style={{
+              ...ellipsisCellStyle,
+              flex: 'none',
+              maxWidth: '100%',
               fontSize: FONT_LEAD,
               textAlign: 'center',
-              maxWidth: '100%',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
             }}
             title={starsIfIlliterate(container.name, canRead)}
           >
@@ -643,38 +634,7 @@ export const PotionSeller = () => {
     <Window width={560} height={900} theme="parchment">
       <Window.Content scrollable>
         <div style={pageStyle}>
-          <div style={titleStyle}>
-            {starsIfIlliterate('Potion Seller', canRead)}
-          </div>
-          <div style={rulerStyle} />
-          {locked ? (
-            <MoneyRow
-              label="Stored Mammon"
-              amount={data.budget}
-              button="Change"
-              canRead={canRead}
-              onClick={() => act('change')}
-            />
-          ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <MoneyRow
-                  label="Stored Profits"
-                  amount={data.profits}
-                  button="Withdraw"
-                  canRead={canRead}
-                  onClick={() => act('withdraw_profits')}
-                />
-              </div>
-              {!!data.is_cart && (
-                <WheelsButton
-                  secured={!!data.wheels_secured}
-                  canRead={canRead}
-                  onClick={() => act('toggle_wheels')}
-                />
-              )}
-            </div>
-          )}
+          <ShopHeader title="Potion Seller" />
           <div
             style={{
               display: 'flex',

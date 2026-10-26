@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { Input } from 'tgui-core/components';
-import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -20,14 +18,12 @@ import {
   inkInputStyle,
   pageStyle,
   PriceTag,
-  rulerStyle,
-  titleStyle,
 } from './common/parchment';
 import {
   CommitField,
-  MoneyRow,
   parseWholeNumber,
-  WheelsButton,
+  type ShopData,
+  ShopHeader,
 } from './common/ShopControls';
 import type { ActFn } from './Goldface/types';
 import { starsIfIlliterate } from './Goldface/util';
@@ -41,17 +37,10 @@ type ProductGroup = {
   icon: string;
 };
 
-type PeddlerData = {
-  locked: BooleanLike;
-  can_read: BooleanLike;
-  budget: number;
-  profits: number;
+type PeddlerData = ShopData & {
   stored: number;
   capacity: number;
   groups: ProductGroup[];
-  // only sent by peddler carts
-  is_cart?: BooleanLike;
-  wheels_secured?: BooleanLike;
 };
 
 const ProductIcon = (props: { icon: string }) => (
@@ -194,27 +183,7 @@ export const Peddler = () => {
     <Window width={560} height={620} theme="parchment">
       <Window.Content scrollable>
         <div style={pageStyle}>
-          <div style={titleStyle}>
-            {starsIfIlliterate('The Peddler, Third Iteration', canRead)}
-          </div>
-          <div style={rulerStyle} />
-          {locked ? (
-            <MoneyRow
-              label="Stored Mammon"
-              amount={data.budget}
-              button="Change"
-              canRead={canRead}
-              onClick={() => act('change')}
-            />
-          ) : (
-            <MoneyRow
-              label="Stored Profits"
-              amount={data.profits}
-              button="Withdraw"
-              canRead={canRead}
-              onClick={() => act('withdraw_profits')}
-            />
-          )}
+          <ShopHeader title="The Peddler, Third Iteration" />
           <div
             style={{
               display: 'flex',
@@ -224,11 +193,12 @@ export const Peddler = () => {
             }}
           >
             {canRead && (
-              <Input
+              <input
+                type="text"
                 value={search}
-                onChange={setSearch}
                 placeholder="Search wares..."
-                width="240px"
+                onChange={(e) => setSearch(e.target.value)}
+                style={{ ...inkInputStyle, width: '240px' }}
               />
             )}
             {!!needle && (
@@ -239,13 +209,6 @@ export const Peddler = () => {
               >
                 Clear
               </button>
-            )}
-            {!locked && !!data.is_cart && (
-              <WheelsButton
-                secured={!!data.wheels_secured}
-                canRead={canRead}
-                onClick={() => act('toggle_wheels')}
-              />
             )}
             <div
               style={{
