@@ -1441,3 +1441,42 @@
 	name = "Eora's Calm"
 	desc = "A refreshing calm. All your troubles have washed away. Why can't it always be like this?"
 	icon_state = "eora_bless"
+
+/atom/movable/screen/alert/status_effect/buff/haste
+	name = "Haste"
+	desc = "I am magically hastened."
+	icon_state = "buff"
+
+#define HASTE_FILTER "haste_glow"
+
+/datum/status_effect/buff/haste
+	var/outline_colour ="#F0E68C" // Hopefully not TOO yellow
+	id = "haste"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/haste
+	effectedstats = list(STATKEY_SPD = 5)
+	duration = 1.5 MINUTES
+
+/datum/status_effect/buff/haste/other
+	duration = 3 MINUTES
+
+/datum/status_effect/buff/haste/on_creation(mob/living/new_owner, new_duration = null)
+	if(new_duration)
+		duration = new_duration
+	. = ..()
+
+/datum/status_effect/buff/haste/on_apply()
+	. = ..()
+	var/filter = owner.get_filter(HASTE_FILTER)
+	if (!filter)
+		owner.add_filter(HASTE_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 25, "size" = 1))
+	to_chat(owner, span_warning("My limbs move with uncanny swiftness."))
+
+/datum/status_effect/buff/haste/on_remove()
+	. = ..()
+	owner.remove_filter(HASTE_FILTER)
+	to_chat(owner, span_warning("My body move slowly again..."))
+
+#undef HASTE_FILTER
+
+/datum/status_effect/buff/haste/nextmove_modifier()
+	return 0.85

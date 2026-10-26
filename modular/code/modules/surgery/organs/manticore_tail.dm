@@ -13,6 +13,7 @@ GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
 	/datum/sprite_accessory/tail/tiefling/tailmaw,
 	/datum/sprite_accessory/tail/tiefling/heart/tailmaw,
 	/datum/sprite_accessory/tail/tiefling/spade/tailmaw,
+	/datum/sprite_accessory/tail/tiefling/spadeheart/tailmaw,
 ))
 
 /obj/item/organ/tail/manticore

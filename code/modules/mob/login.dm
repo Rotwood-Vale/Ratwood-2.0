@@ -42,6 +42,11 @@
 		hud_used.show_hud(hud_used.hud_version)
 		hud_used.update_ui_style(ui_style2icon(client.prefs.UI_style))
 
+	// Re-show any actions that were granted before the hud existed (e.g. during mind transfer)
+	for(var/datum/action/action as anything in actions)
+		if(!action.viewers[hud_used])
+			action.ShowTo(src)
+
 	next_move = 1
 
 	..()
@@ -97,8 +102,7 @@
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
 	enable_client_mobs_in_contents(client)
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
-	if(client)
-		client.preload_music()
+	client?.preload_music()
 
 	// Re-apply per-client noise verb filtering after a client attaches to a human body.
 	// Human Initialize() runs before client prefs are available, so this keeps

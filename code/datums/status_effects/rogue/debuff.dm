@@ -266,19 +266,22 @@
 /datum/status_effect/debuff/breedable
 	id = "breedable"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/breedable
-	duration = 30 SECONDS
+	duration = 60 SECONDS
 
 /datum/status_effect/debuff/breedable/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_BLOOD_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/debuff/breedable/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_BLOOD_RESISTANCE, TRAIT_STATUS_EFFECT(id))
 
 /atom/movable/screen/alert/status_effect/debuff/breedable
 	name = "Obedient"
 	desc = "They won't hurt me too much..."
+	icon_state = "yielded"
 
 /datum/status_effect/debuff/submissive
 	id = "submissive"
@@ -296,16 +299,27 @@
 /atom/movable/screen/alert/status_effect/debuff/submissive
 	name = "Conformable"
 	desc = "Falling in line is my only choice."
+	icon_state = "yielded"
+
+/datum/status_effect/debuff/omegamale
+	id = "omegamale"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/omegamale
+	effectedstats = list(STATKEY_STR = -15, STATKEY_PER = -15, STATKEY_SPD = -15, STATKEY_LCK = -15)//everything but CON & WIL since these keep you alive
+	duration = 5 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/omegamale
+	name = "Conceded"
+	desc = "I conceded and won't be fighting for some time."
+	icon_state = "yielded"
 
 /datum/status_effect/debuff/yield_prompt
 	id = "yieldprompt"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/yield_prompt
 	duration = 20 SECONDS
 
-/datum/status_effect/debuff/yield_prompt/on_apply()
-	if(isliving(owner) && owner.has_flaw(/datum/charflaw/compliant))
-		var/mob/living/living_owner = owner
-		living_owner.submit(TRUE)
+/datum/status_effect/debuff/yield_prompt/on_creation(mob/living/new_owner, message_mode)
+	if(new_owner.has_flaw(/datum/charflaw/compliant) && message_mode == MODE_WHISPER)
+		new_owner.submit(TRUE)
 		return FALSE
 	return ..()
 
@@ -1398,3 +1412,52 @@
 	name = "Enchantment Dormant"
 	desc = "The Enchantments you wear have activated and are temporarily Dormant!"
 	icon_state = "dazed"
+
+/datum/status_effect/debuff/slip_recovery
+	id = "slip_recovery"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/slip_recovery
+	duration = 30 SECONDS // Lower than the CD
+
+/atom/movable/screen/alert/status_effect/debuff/slip_recovery
+	name = "Winded"
+	desc = "I am too winded to slip between spaces again!"
+	icon_state = "debuff"
+
+/// RITUOS DEBUFFS
+
+/datum/status_effect/debuff/weapon_binded
+	id = "wep_bind_debuff"
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/weapon_bind_debuff
+
+/datum/status_effect/debuff/weapon_binded/on_apply()
+	. = ..()
+	owner.stamina_add(10)
+
+
+/datum/status_effect/debuff/sun_blinded
+	id = "sun_blinded"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/sun_blinded
+	effectedstats = list(STATKEY_PER = -5)
+
+/atom/movable/screen/alert/status_effect/debuff/sun_blinded
+	name = "Sun Blinded"
+	desc = "The light smites my eyes!"
+	icon_state = "debuff"
+
+/datum/status_effect/debuff/sun_blinded/on_apply()
+	. = ..()
+	owner.overlay_fullscreen("sunlight", /atom/movable/screen/fullscreen/dustoverlay_light)
+	owner.update_fov_angles()
+
+/datum/status_effect/debuff/sun_blinded/on_remove()
+	. = ..()
+	owner.clear_fullscreen("sunlight")
+	owner.update_fov_angles()
+
+/atom/movable/screen/alert/status_effect/debuff/weapon_bind_debuff
+	name = "Weapon Binded"
+	desc = "Our weapons binded! That conniving sod knew right where I was aiming! I can't benefit from a weapon bind!"
+	icon = 'icons/mob/combat_debuffs.dmi'
+	icon_state = "weapon_bind_debuff"

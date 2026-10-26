@@ -115,11 +115,11 @@
 /obj/effect/proc_holder/spell/self/rhythm/update_icon()
 	if(!action)
 		return
-	action.icon_icon = action_icon
+	action.button_icon = action_icon
 	action.button_icon_state = action_icon_state
 	action.background_icon_state = action_background_icon_state
 	action.name = name
-	action.UpdateButtonIcon(force = TRUE)
+	action.build_all_button_icons(ALL, TRUE)
 
 /obj/effect/proc_holder/spell/self/rhythm/cast(list/targets, mob/living/carbon/human/user)
 	if(!user?.inspiration || user.inspiration.level < BARD_T2)
@@ -312,11 +312,11 @@
 /obj/effect/proc_holder/spell/self/crescendo/update_icon()
 	if(!action)
 		return
-	action.icon_icon = action_icon
+	action.button_icon = action_icon
 	action.button_icon_state = action_icon_state
 	action.background_icon_state = action_background_icon_state
 	action.name = name
-	action.UpdateButtonIcon(force = TRUE)
+	action.build_all_button_icons(ALL, TRUE)
 
 /obj/effect/proc_holder/spell/self/crescendo/cast(list/targets, mob/living/carbon/human/user)
 	if(!user?.inspiration || user.inspiration.level < BARD_T3)
