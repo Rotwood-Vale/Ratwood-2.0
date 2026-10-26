@@ -995,10 +995,12 @@
 
 /datum/sex_controller/proc/perform_sex_action(mob/living/carbon/human/action_target, arousal_amt, pain_amt, giving, obj/item/organ/penis/involved_penis = null)
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
-		arousal_amt *=1.5
+		arousal_amt *= 1.5
 		if(prob(10))
-			var/lovermessage = pick("This feels so good!","I am in heaven!","This is too good to be possible!","By the ten!","I can't stop, too good!")
-			to_chat(action_target, span_love(lovermessage))
+			var/list/lover_list = list("This feels so good!","I am in heaven!","This is too good to be possible!","By the ten!","I can't stop, too good!")
+			if(action_target.patron?.type == /datum/patron/old_god)
+				lover_list = list("This feels so good!","I am in heaven!","This is too good to be possible!","By PSYDON!","I can't stop, too good!")
+			to_chat(action_target, span_love(pick(lover_list)))
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 			pain_amt *= 2
