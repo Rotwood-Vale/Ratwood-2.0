@@ -1000,6 +1000,8 @@
 			var/list/lover_list = list("This feels so good!","I am in heaven!","This is too good to be possible!","By the ten!","I can't stop, too good!")
 			if(action_target.patron?.type == /datum/patron/old_god)
 				lover_list = list("This feels so good!","I am in heaven!","This is too good to be possible!","By PSYDON!","I can't stop, too good!")
+			else if(is_type_in_list(action_target.patron?.type, ALL_INHUMEN_PATRONS))
+				lover_list = list("This feels so good!","I am in heaven!","This is too good to be possible!","By the four!","I can't stop, too good!")
 			to_chat(action_target, span_love(pick(lover_list)))
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
