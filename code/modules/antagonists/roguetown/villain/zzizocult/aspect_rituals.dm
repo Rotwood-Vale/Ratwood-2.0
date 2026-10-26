@@ -1832,6 +1832,20 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		spirit.mind.transfer_to(H)
 	qdel(spirit)
 
+/mob/living/simple_animal/pet/cat/rogue/black/witch
+	var/mob/living/carbon/human/body
+
+/mob/living/simple_animal/pet/cat/rogue/black/witch/Destroy()
+	if(mind)
+		if(QDELETED(body))
+			ghostize()
+		else
+			mind.transfer_to(body)
+	return ..()
+
+/mob/living/simple_animal/pet/cat/rogue/black/witch/death(gibbed)
+	qdel(src)
+
 /obj/effect/proc_holder/spell/self/witch_possess
 	name = "Witchery"
 	desc = "Possess cat, or return to body."
@@ -1840,27 +1854,25 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	overlay_state = "tame_deadite"
 	recharge_time = 10 SECONDS
 	chargedloop = null
-	var/mob/living/simple_animal/pet/cat/rogue/black/cat
-	var/mob/living/carbon/human/body
+	var/mob/living/simple_animal/pet/cat/rogue/black/witch/cat
+
+/obj/effect/proc_holder/spell/self/witch_possess/charge_check(mob/user, feedback = TRUE)
+	if(user == cat)
+		return TRUE
+	return ..()
 
 /obj/effect/proc_holder/spell/self/witch_possess/cast(list/targets, mob/user = usr)
 	. = ..()
 	if(user == cat)
-		if(body && cat.mind)
-			cat.mind.transfer_to(body)
+		qdel(cat)
 		return TRUE
-	if(!ishuman(user))
+	if(!ishuman(user) || !user.mind)
 		revert_cast()
 		return FALSE
-	if(!cat || QDELETED(cat))
-		cat = new(get_turf(user))
-	if(cat.mind)
-		to_chat(user, span_warning("NOT WORKING."))
-		revert_cast()
-		return FALSE
-	var/mob/living/carbon/human/H = user
-	body = H
-	H.mind.transfer_to(cat)
+	cat = new(get_turf(user))
+	cat.body = user
+	user.visible_message(span_warning("[user] falls limp!"))
+	user.mind.transfer_to(cat)
 	return TRUE
 
 /datum/ritual/servantry/witchery

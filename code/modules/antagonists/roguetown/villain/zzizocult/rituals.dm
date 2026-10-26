@@ -1794,7 +1794,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(old_eyes)
 		old_eyes.Remove(target, 1)
 		QDEL_NULL(old_eyes)
-	var/obj/item/organ/eyes/night_vision/zombie/new_eyes = new
+	var/obj/item/organ/eyes/night_vision/new_eyes = new
+	new_eyes.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 	new_eyes.Insert(target)
 	to_chat(target, span_notice("I no longer fear the dark."))
 
