@@ -1,6 +1,0 @@
-author: "wikimody"
-delete-after: True
-changes:
-  - rscadd: "Arbalist lux bolt now deals its damage in 3*3 area"
-  - rscadd: "Psydonian miraclists take reduced damage from it (no lynching the arbalist please)"
-  - balance: "The lux bolt now deal same anti structure damage as the malums hammer, with is a lot"

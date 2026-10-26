@@ -471,3 +471,26 @@
   - bugfix: Fix hypnotext not cycling through the colors
   wikimody:
   - bugfix: No, concetntraded rot isnt more drunk then water
+2026-10-25:
+  SirSwagmeyer:
+  - bugfix: Fixed a bug in which mauls and gnoll claws weren't applied their respective
+      blunt damage integrity modifiers.
+  Xander3359:
+  - code_imp: Recodes most of the druid loop stuff so that it's no longer AI slop
+      9000
+  wikimody:
+  - rscadd: Arbalist lux bolt now deals its damage in 3*3 area
+  - rscadd: Psydonian miraclists take reduced damage from it (no lynching the arbalist
+      please)
+  - balance: The lux bolt now deal same anti structure damage as the malums hammer,
+      with is a lot
+2026-10-26:
+  Kaolin1234:
+  - rscadd: Arachnids can now select the Weaver Spider Body, with customizable body,
+      abdomen-marking, and leg-band colors.
+  SirSwagmeyer:
+  - qol: Woodcutter axe chop now chops trees more efficiently than other axes
+  - bugfix: removed a stray demolition modifier in the Saperka shovel.
+  Yuckuza:
+  - balance: Yielding now drops STR, PER, SPD, and LCK by -15 for 5 minutes. Yielding
+      now grants critical resistance and thick blooded for a full minute.
