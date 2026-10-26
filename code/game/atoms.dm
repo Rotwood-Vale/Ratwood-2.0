@@ -157,8 +157,7 @@
  * * /turf/Initialize
  * * /turf/open/space/Initialize
  */
-/// Mechanics help lines for the extended examine of machines (ported roguemachines override this).
-/// Not yet surfaced anywhere in Ratwood's examine flow; overrides compile and can be wired later.
+/// Mechanics help lines, shown in a collapsible "Mechanics" dropdown under the examine text (see /mob/verb/examinate).
 /atom/proc/get_mechanics_examine(mob/user)
 	return list()
 

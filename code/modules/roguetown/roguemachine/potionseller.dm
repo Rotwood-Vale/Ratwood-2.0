@@ -389,6 +389,14 @@
 	else
 		say("Free [label]! Bring a bottle!")
 
+/obj/structure/roguemachine/potionseller/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Strike it with a container to put it in the slot. Drag a tank's level, or use + and -, to draw from as many tanks as you like, then POUR. Prices are per dram.")
+	. += span_info("A bottle bought from its shelf goes straight into the slot, so take your own container out first.")
+	. += span_info("While it's UNLOCKED, pour the slotted container into a tank, flush a tank onto the floor, or set a tank's label and price. Empty bottles struck into it go on the shelf.")
+	. += span_info("While it's UNLOCKED, right-click with a bag to empty its filled containers into the loading tank and shelve its empty bottles.")
+	. += span_info("If it breaks, its tanks spill across the floor.")
+
 // POTION CARTS
 
 /obj/structure/roguemachine/potionseller/mobile
@@ -408,12 +416,6 @@
 
 /obj/structure/roguemachine/potionseller/mobile/crafted
 	is_crafted = TRUE
-
-/obj/structure/roguemachine/potionseller/mobile/get_mechanics_examine(mob/user)
-	. = ..()
-	. += span_info("Left-clicking an unowned POTION CART offers to make you its owner and hands you its key. Keys can be passed on to whoever you like.")
-	. += span_info("Left-clicking a POTION CART with an open hand lets you buy from its tanks and its bottle shelf.")
-	. += span_info("Owners can UNLOCK it with its key to fill tanks, withdraw profits, and secure or free its wheels. Secured wheels can't be pulled or pushed.")
 
 #undef POTIONSELLER_TANKS
 #undef POTIONSELLER_TANK_VOLUME

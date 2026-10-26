@@ -285,6 +285,12 @@
 
 	say("[namer] for sale! [held_items[I]["PRICE"]] mammons!")
 
+/obj/structure/roguemachine/vendor/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Left-click with an open hand to browse its wares. Several of one ware can be bought at once.")
+	. += span_info("While it's UNLOCKED, strike it with an item to stock it. Right-click with a bag to load what's inside, or with an open hand to load everything on the floor in front of it.")
+	. += span_info("Wares of the same kind and name are sold together at one price. Renaming wares to match another's name merges them at that ware's price.")
+
 /obj/structure/roguemachine/vendor/centcom
 	name = "LANDLORD"
 	desc = "Give this thing money, and you will immediately buy a neat property in the capital."
@@ -292,6 +298,9 @@
 	icon_state = "streetvendor1"
 	keycontrol = "dhjlashfdg"
 	var/list/cachey = list()
+
+/obj/structure/roguemachine/vendor/centcom/get_mechanics_examine(mob/user)
+	return list()
 
 /obj/structure/roguemachine/vendor/centcom/attack_hand(mob/living/user)
 	return
@@ -407,9 +416,3 @@
 
 /obj/structure/roguemachine/vendor/mobile/crafted
 	is_crafted = TRUE
-
-/obj/structure/roguemachine/vendor/mobile/get_mechanics_examine(mob/user)
-	. = ..()
-	. += span_info("Left-clicking an unowned PEDDLER CART offers to make you its owner and hands you its key. Keys can be passed on to whoever you like.")
-	. += span_info("Left-clicking a PEDDLER CART with an open hand lets you browse and purchase its wares.")
-	. += span_info("Owners can UNLOCK it with its key to restock wares, withdraw profits, and secure or free its wheels. Secured wheels can't be pulled or pushed.")

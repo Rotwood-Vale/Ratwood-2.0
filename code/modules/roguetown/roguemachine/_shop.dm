@@ -246,6 +246,14 @@
 	if(is_cart && anchored)
 		. += span_info("Its wheels are secured.")
 
+/obj/structure/roguemachine/shop/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Strike it with coin to pay for what you buy. Whatever isn't spent comes back as CHANGE.")
+	. += span_info("Its owner can UNLOCK it with its key, or a keyring holding it, to restock it and withdraw the profits.")
+	if(is_cart)
+		. += span_info("An unowned cart offers itself to the first to lay a hand on it, along with a fresh key. Keys can be passed on to whoever you like.")
+		. += span_info("While it's UNLOCKED, its owner can secure or free its wheels. Secured wheels can't be pulled or pushed.")
+
 // OWNERLESS SHOPS
 
 /obj/structure/roguemachine/shop/proc/try_claim(mob/user)
