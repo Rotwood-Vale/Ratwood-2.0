@@ -697,16 +697,16 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	return TRUE
 
 /datum/intent/dagger/thrust/cult
-	penfactor = 100
+	penfactor = PEN_BSTEEL
 
 /datum/intent/dagger/cut/cult
-	penfactor = 100
+	penfactor = PEN_BSTEEL
 
 /datum/intent/sword/cut/sabre/cult
-	penfactor = 100
+	penfactor = PEN_BSTEEL
 
 /datum/intent/sword/thrust/sabre/cult
-	penfactor = 100
+	penfactor = PEN_BSTEEL
 
 /obj/item/rogueweapon/sword/long/noise
 	name = "madman blade"
