@@ -141,7 +141,7 @@
 /datum/status_effect/churned
 	id = "necra_churned"
 	alert_type = /atom/movable/screen/alert/status_effect/churned
-	duration = 45 SECONDS
+	duration = 30 SECONDS
 	examine_text = "<b>SUBJECTPRONOUN is wreathed in a wild frenzy of ghostly motes!</b>"
 	status_type = STATUS_EFFECT_REFRESH
 	var/datum/weakref/debuffer
@@ -161,9 +161,11 @@
 
 /datum/status_effect/churned/on_apply()
 	var/filter = owner.get_filter(CHURN_FILTER)
-	to_chat(owner, span_warning("Wisps leap from the cloying mists to surround me! I should get away before they begin disrupting my body!"))
+	to_chat(owner, span_warning("Wisps leap from the cloying mists to surround me! I should get away before they overwhelm my body!"))
 	if (!filter)
 		owner.add_filter(CHURN_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 200, "size" = 1))
+	owner.apply_status_effect(/datum/status_effect/churned_debuff/weak)
+	debuff_stage = 1
 	return TRUE
 
 /datum/status_effect/churned/refresh()
@@ -187,28 +189,17 @@
 
 	var/time_inside = world.time - start_time
 
-	if (time_inside < 15 SECONDS)
-		return
+	if (time_inside >= 15 SECONDS && debuff_stage != 2)
+		owner.remove_status_effect(/datum/status_effect/churned_debuff/weak)
+		owner.apply_status_effect(/datum/status_effect/churned_debuff/strong)
+		debuff_stage = 2
+		to_chat(owner, span_boldwarning("The mists overwhelm my form, violently disrupting my body!"))
 
-	if (time_inside < 30 SECONDS)
-		if (debuff_stage != 1)
-			owner.remove_status_effect(/datum/status_effect/churned_debuff/strong)
-			owner.apply_status_effect(/datum/status_effect/churned_debuff/weak)
-			debuff_stage = 1
-			to_chat(owner, span_warning("The mists begin to sap my strength!"))
-
-		if (prob(33))
-			owner.adjustFireLoss(base_tick * intensity)
-
-	else
-		if (debuff_stage != 2)
-			owner.remove_status_effect(/datum/status_effect/churned_debuff/weak)
-			owner.apply_status_effect(/datum/status_effect/churned_debuff/strong)
-			debuff_stage = 2
-			to_chat(owner, span_boldwarning("The mists overwhelm my form, violently disrupting my body!"))
-
-		if (prob(33))
+	if (prob(33))
+		if (debuff_stage == 2)
 			owner.adjustFireLoss(base_tick * (intensity + 1))
+		else
+			owner.adjustFireLoss(base_tick * intensity)
 
 	if (prob(10))
 		to_chat(owner, span_warning("A frenzy of ghostly motes assail my form!"))
@@ -323,7 +314,7 @@
 	miracle = TRUE
 	devotion_cost = 30
 	range = 1
-	var/static/list/whitelisted_objects = list(/obj/structure/gravemarker, /obj/structure/fluff/psycross, /obj/structure/fluff/psycross/copper, /obj/structure/fluff/psycross/crafted)
+	var/static/list/whitelisted_objects = list(/obj/structure/gravemarker, /obj/structure/fluff/psycross, /obj/structure/fluff/psycross/copper, /obj/structure/fluff/psycross/crafted, /obj/structure/fluff/psycross/necra/cloth, /obj/structure/fluff/psycross/necra)
 	var/list/marked_objects = list()
 	var/outline_color = "#4ea1e6"
 	var/last_index = 1

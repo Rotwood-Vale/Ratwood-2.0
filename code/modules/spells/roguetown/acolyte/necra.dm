@@ -786,6 +786,7 @@
 	var/list/mob/living/affected_mobs = list()
 	/// Time when the cross was last activated
 	var/last_activation_time = 0
+	var/last_undead_seen = 0
 	/// Cooldown between activations
 	var/activation_cooldown = 5 SECONDS
 	/// Time before auto-deactivation when no undead are detected
@@ -820,6 +821,7 @@
 	// Activate the cross
 	cross_active = TRUE
 	last_activation_time = world.time
+	last_undead_seen = world.time
 	set_light(3, 2, LIGHT_COLOR_HOLY_MAGIC)
 	icon_state = "cross_necra_cloth_active"
 	visible_message(span_notice("The Necran cross begins to glow with a pale, holy light!"))
@@ -861,11 +863,13 @@
 	if(!cross_active)
 		return
 
-	if(!undead_found && last_activation_time + auto_deactivate_time < world.time)
+	if(undead_found)
+		last_undead_seen = world.time
+		return
+
+	if(last_undead_seen + auto_deactivate_time < world.time)
 		visible_message(span_notice("With no undead to purify, the cross's glow fades away."))
 		deactivate_cross()
-	else
-		last_activation_time = world.time
 
 /obj/structure/fluff/psycross/necra/cloth/process(delta_time)
 	if(!cross_active)
@@ -895,8 +899,7 @@
 				remove_necran_buff(L)
 			affected_mobs -= L
 
-	if(!length(affected_mobs))
-		check_auto_deactivate()
+	check_auto_deactivate()
 
 /obj/structure/fluff/psycross/necra/cloth/proc/is_necran_follower(mob/living/L)
 	if(!iscarbon(L))
@@ -912,6 +915,16 @@
 		return TRUE
 	if(L.mind?.has_antag_datum(/datum/antagonist/zombie))
 		return TRUE
+	return FALSE
+
+/obj/structure/fluff/psycross/necra/cloth/proc/has_other_active_cross(mob/living/target)
+	for(var/obj/structure/fluff/psycross/necra/cloth/C in view(7, target))
+		if(C == src)
+			continue
+		if(!C.cross_active)
+			continue
+		if(target in view(C.aura_range, C))
+			return TRUE
 	return FALSE
 
 /obj/structure/fluff/psycross/necra/cloth/proc/apply_necran_buff(mob/living/carbon/human/H)
@@ -950,11 +963,15 @@
 /obj/structure/fluff/psycross/necra/cloth/proc/remove_undead_debuff(mob/living/target)
 	if(!target)
 		return
+	if(has_other_active_cross(target))
+		return
 	target.remove_status_effect(/datum/status_effect/debuff/necran_cross)
 	target.remove_status_effect(/datum/status_effect/debuff/necran_cross/strong)
 
 /obj/structure/fluff/psycross/necra/cloth/proc/remove_necran_buff(mob/living/carbon/human/H)
 	if(!istype(H))
+		return
+	if(has_other_active_cross(H))
 		return
 
 	H.remove_status_effect(/datum/status_effect/buff/necran_mists)
