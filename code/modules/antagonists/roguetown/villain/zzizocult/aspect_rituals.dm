@@ -2308,38 +2308,50 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 // BLOOD
 
-/obj/structure/trap/zizo
+/obj/structure/rune_ward/zizo
 	name = "bloody sigil"
 	desc = "Strange runics smeared in blood."
 	icon = 'icons/obj/sigils.dmi'
-	icon_state = "center"
+	icon_state = "lesser"
 	alpha = 45
-	charges = 3
+	max_integrity = 500
+	checks_antimagic = FALSE
+	var/charges = 3
 	var/effect = "bleed"
+	var/snare_damage = 120
 
-/obj/structure/trap/zizo/Crossed(atom/movable/AM)
-	if(is_zizo(AM))
-		return
-	. = ..()
+/obj/structure/rune_ward/zizo/is_ally(mob/M)
+	return is_zizo(M)
 
-/obj/structure/trap/zizo/trap_effect(mob/living/L)
-	new /obj/effect/temp_visual/cult/sparks(get_turf(L))
+/obj/structure/rune_ward/zizo/consume()
+	charges--
+	if(charges <= 0)
+		qdel(src)
+
+/obj/structure/rune_ward/zizo/trigger_visual()
+	new /obj/effect/temp_visual/cult/sparks(get_turf(src))
+
+/obj/structure/rune_ward/zizo/rune_effect(mob/living/L)
+	playsound(src, 'sound/magic/blade_burst.ogg', 80, TRUE)
+	L.Slowdown(6)
+	L.emote("scream")
 	switch(effect)
 		if("poison")
-			if(L.reagents)
-				L.reagents.add_reagent(/datum/reagent/berrypoison, 15)
-			L.emote("scream")
+			L.reagents?.add_reagent(/datum/reagent/berrypoison, 25)
 			L.Jitter(4)
-			L.visible_message(span_danger("THE SIGIL SPRAYS [L] WITH FOUL BLOOD!"))
+			to_chat(L, span_danger("<B>THE SIGIL SPRAYS FOUL BLOOD OVER ME!</B>"))
 		if("stun")
+			to_chat(L, span_danger("<B>THE SIGIL CRACKLES AND SEIZES MY LIMBS!</B>"))
 			L.electrocute_act(20, src)
 			L.Paralyze(60)
-			L.emote("scream")
 		else
-			L.adjustBruteLoss(125)
-			L.emote("scream")
-			L.Jitter(4)
-			L.visible_message(span_danger("BLOODY BLADES RISE FROM THE GROUND AND REND [L]!"))
+			to_chat(L, span_danger("<B>BLOODY BLADES RISE FROM THE GROUND AND REND ME!</B>"))
+			new /obj/effect/temp_visual/blade_burst(get_turf(src))
+			var/mob/living/carbon/human/owner = owner_ref?.resolve()
+			if(ishuman(owner) && ishuman(L))
+				arcyne_strike(owner, L, null, snare_damage, BODY_ZONE_CHEST, 					BCLASS_STAB, armor_penetration = PEN_HEAVY, spell_name = "Blood Snare", 					damage_type = BRUTE, skip_animation = TRUE)
+			else
+				L.adjustBruteLoss(snare_damage)
 
 /datum/ritual/blood/transfuse
 	name = "Sigil Expertise"
@@ -2359,7 +2371,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/blood/bloodsnare/invoke(mob/living/user, turf/center)
 	var/effect = "bleed"
-	if(locate(/obj/structure/trap/zizo) in center)
+	if(locate(/obj/structure/rune_ward/zizo) in center)
 		return FALSE
 	if(locate(/obj/item/organ) in center)
 		effect = "poison"
@@ -2370,8 +2382,11 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	for(var/obj/effect/decal/cleanable/sigil/sig in range(1, center))
 		qdel(sig)
 	new /obj/effect/temp_visual/opengate(center, 1.5 SECONDS)
-	var/obj/structure/trap/zizo/T = new(center)
+	var/obj/structure/rune_ward/zizo/T = new(center)
 	T.effect = effect
+	T.owner_ref = WEAKREF(user)
+	T.owner_name = user.real_name
+	T.owner_ckey = user.ckey || "no ckey"
 	to_chat(user, span_notice("THE SIGIL FADES. IT IS READY."))
 
 /datum/status_effect/bloodlink
