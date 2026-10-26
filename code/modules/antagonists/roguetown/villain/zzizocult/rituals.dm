@@ -1459,6 +1459,9 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	base_state = "cult"
 	over_state = "cultopen"
 
+/obj/structure/mineral_door/wood/donjon/stone/cult/onkick(mob/user)
+	to_chat(user, span_warning("[src] doesn't budge, no matter how hard I kick."))
+
 /obj/structure/mineral_door/wood/donjon/stone/cult/TryToSwitchState(mob/living/user)
 	if(!is_zizo(user))
 		to_chat(user, span_warning("[src] won't budge, no matter how I push."))
