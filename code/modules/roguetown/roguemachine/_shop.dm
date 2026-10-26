@@ -80,6 +80,18 @@
 		budget2change(budget, user)
 	budget = 0
 
+/// Moves the cost from the shopper's coin to the profits. If they're short, says the refusal and returns FALSE.
+/obj/structure/roguemachine/shop/proc/charge(cost, refusal)
+	if(cost <= 0)
+		return TRUE
+	if(budget < cost)
+		say(refusal)
+		return FALSE
+	budget -= cost
+	profits += cost
+	record_round_statistic(STATS_PEDDLER_REVENUE, cost)
+	return TRUE
+
 /// Whether there's anything for sale, which lights it up while locked
 /obj/structure/roguemachine/shop/proc/has_stock()
 	return FALSE

@@ -260,12 +260,8 @@
 				return
 			if(locked)
 				cost = CEILING(round(cost, 0.1), 1)
-				if(cost > budget)
-					say("MY POTIONS ARE TOO EXPENSIVE FOR YOU, TRAVELER")
+				if(!charge(cost, "MY POTIONS ARE TOO EXPENSIVE FOR YOU, TRAVELER"))
 					return TRUE
-				budget -= cost
-				profits += cost
-				record_round_statistic(STATS_PEDDLER_REVENUE, cost)
 			for(var/i in 1 to length(tanks))
 				if(draws[i])
 					var/datum/reagents/tank = tanks[i]
@@ -283,13 +279,8 @@
 			if(locked && inserted)
 				say("TAKE YOUR CONTAINER FIRST, TRAVELER")
 				return TRUE
-			if(locked && bottle_price > 0)
-				if(budget < bottle_price)
-					say("MY BOTTLES ARE TOO EXPENSIVE FOR YOU, TRAVELER")
-					return TRUE
-				budget -= bottle_price
-				profits += bottle_price
-				record_round_statistic(STATS_PEDDLER_REVENUE, bottle_price)
+			if(locked && !charge(bottle_price, "MY BOTTLES ARE TOO EXPENSIVE FOR YOU, TRAVELER"))
+				return TRUE
 			var/obj/item/B = bottle_stock[length(bottle_stock)]
 			bottle_stock -= B
 			if(inserted)

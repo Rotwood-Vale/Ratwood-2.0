@@ -26,6 +26,7 @@ import {
 import {
   CommitField,
   parseWholeNumber,
+  PriceField,
   type ShopData,
   ShopHeader,
 } from './common/ShopControls';
@@ -202,19 +203,15 @@ const TankColumn = (props: {
         </div>
       )}
       {owner ? (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <CommitField
-            value={String(tank.price)}
-            numeric
-            step={0.1}
-            width="64px"
-            parse={parseDramPrice}
-            onCommit={(price) => act('set_price', { tank: tankNumber, price })}
-          />
-          <span style={{ color: INK_SOFT, fontSize: FONT_SMALL }}>
-            {starsIfIlliterate('m/dram', canRead)}
-          </span>
-        </div>
+        <PriceField
+          value={tank.price}
+          unit="m/dram"
+          canRead={canRead}
+          step={0.1}
+          width="64px"
+          parse={parseDramPrice}
+          onCommit={(price) => act('set_price', { tank: tankNumber, price })}
+        />
       ) : (
         <div style={{ color: INK_SOFT, fontSize: FONT_LEAD }}>
           {starsIfIlliterate(
@@ -542,18 +539,14 @@ const BottleRow = (props: {
         {bottles} / {maxBottles}
       </span>
       {owner && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-          <CommitField
-            value={String(bottlePrice)}
-            numeric
-            width="52px"
-            parse={parseWholeNumber}
-            onCommit={(price) => act('set_bottle_price', { price })}
-          />
-          <span style={{ color: INK_SOFT, fontSize: FONT_SMALL }}>
-            {starsIfIlliterate('m/bottle', canRead)}
-          </span>
-        </div>
+        <PriceField
+          value={bottlePrice}
+          unit="m/bottle"
+          canRead={canRead}
+          width="52px"
+          parse={parseWholeNumber}
+          onCommit={(price) => act('set_bottle_price', { price })}
+        />
       )}
       <button
         type="button"

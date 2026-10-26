@@ -206,14 +206,8 @@
 				return
 			var/amount = clamp(round(text2num("[params["amount"]]")), 1, length(matches))
 			var/price = held_items[matches[1]]["PRICE"] || 0
-			var/total = price * amount
-			if(total > 0)
-				if(budget < total)
-					say("NO MONEY NO HONEY!")
-					return TRUE
-				budget -= total
-				profits += total
-				record_round_statistic(STATS_PEDDLER_REVENUE, total)
+			if(!charge(price * amount, "NO MONEY NO HONEY!"))
+				return TRUE
 			dispense(matches.Copy(1, amount + 1), H)
 			return TRUE
 

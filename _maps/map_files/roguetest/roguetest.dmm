@@ -271,6 +271,11 @@
 /obj/structure/roguemachine/vendor,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
+"jo" = (
+/obj/structure/roguemachine/potionseller,
+/obj/structure/roguewindow,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "jr" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
@@ -460,6 +465,11 @@
 /obj/item/seeds/wheat/oat,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors)
+"oK" = (
+/obj/structure/roguemachine/ministry_bureau,
+/obj/machinery/light/rogue/candle/r,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "pa" = (
 /obj/machinery/loom,
 /obj/item/needle,
@@ -1105,10 +1115,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/rogue/tile/harem,
 /area/rogue/indoors)
-"DO" = (
-/obj/structure/roguemachine/ministry_bureau,
-/turf/open/floor/rogue/tile/harem,
-/area/rogue/indoors)
 "Ef" = (
 /obj/effect/decal/mossy{
 	dir = 8
@@ -1123,6 +1129,12 @@
 /obj/item/storage/roguebag,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors)
+"El" = (
+/obj/machinery/light/rogue/candle/l,
+/obj/structure/roguemachine/vendor,
+/obj/structure/roguewindow,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "Eu" = (
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/under/cave)
@@ -1204,6 +1216,10 @@
 /obj/structure/roguemachine/vendor/mobile,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors)
+"HY" = (
+/obj/structure/roguemachine/potionseller/mobile,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "Ie" = (
 /obj/item/flashlight/flare/torch/lantern,
 /turf/open/floor/rogue/cobblerock,
@@ -1223,6 +1239,11 @@
 /obj/item/rogueweapon/thresher,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors)
+"JC" = (
+/obj/structure/roguemachine/vendor/mobile,
+/obj/machinery/light/rogue/candle/l,
+/turf/open/floor/rogue/tile/harem,
+/area/rogue/indoors)
 "JD" = (
 /obj/item/rogueweapon/pick/blacksteel,
 /turf/open/floor/rogue/ruinedwood,
@@ -1856,7 +1877,7 @@ zo
 zo
 zo
 zo
-AO
+zo
 dB
 dB
 dB
@@ -1905,10 +1926,10 @@ Ey
 Ey
 tc
 Ey
-tc
+El
 Ey
+JC
 zo
-AO
 dB
 dB
 dB
@@ -1957,10 +1978,10 @@ Br
 Ey
 mm
 Ey
+jo
 Ey
-Ey
+HY
 zo
-AO
 dB
 dB
 dB
@@ -2011,8 +2032,8 @@ ca
 Ey
 Ey
 Ey
+Ey
 zo
-AO
 dB
 dB
 dB
@@ -2062,9 +2083,9 @@ Ey
 bm
 Ey
 fE
-DO
+Ey
+oK
 zo
-AO
 AO
 AO
 AO

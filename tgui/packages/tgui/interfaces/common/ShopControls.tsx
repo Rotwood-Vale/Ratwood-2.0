@@ -6,6 +6,8 @@ import { starsIfIlliterate } from '../Goldface/util';
 import {
   fieldRowStyle,
   fieldValueStyle,
+  FONT_SMALL,
+  INK_SOFT,
   inkButtonStyle,
   inkInputStyle,
   rulerStyle,
@@ -75,6 +77,27 @@ export const CommitField = (props: {
       }}
       style={{ ...inkInputStyle, width }}
     />
+  );
+};
+
+/** Owner's price box, with its unit after it. */
+export const PriceField = (props: {
+  value: number;
+  unit: string;
+  canRead: boolean;
+  width: string;
+  step?: number;
+  parse: (draft: string) => string | null;
+  onCommit: (price: string) => void;
+}) => {
+  const { value, unit, canRead, ...field } = props;
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+      <CommitField value={String(value)} numeric {...field} />
+      <span style={{ color: INK_SOFT, fontSize: FONT_SMALL }}>
+        {starsIfIlliterate(unit, canRead)}
+      </span>
+    </div>
   );
 };
 

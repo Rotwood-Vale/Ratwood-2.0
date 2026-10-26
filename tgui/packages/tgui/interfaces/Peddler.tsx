@@ -10,7 +10,6 @@ import {
   ellipsisCellStyle,
   FONT_BODY,
   FONT_LEAD,
-  FONT_SMALL,
   FONT_TITLE,
   INK,
   INK_FAINT,
@@ -23,6 +22,7 @@ import {
 import {
   CommitField,
   parseWholeNumber,
+  PriceField,
   type ShopData,
   ShopHeader,
 } from './common/ShopControls';
@@ -146,14 +146,14 @@ const OwnerRow = (props: {
         )}
       </div>
       <CountTag count={group.count} />
-      <CommitField
-        value={String(group.price)}
-        numeric
+      <PriceField
+        value={group.price}
+        unit="m"
+        canRead={canRead}
         width="64px"
         parse={parseWholeNumber}
         onCommit={(price) => act('set_price', { key: group.key, price })}
       />
-      <span style={{ color: INK_SOFT, fontSize: FONT_SMALL }}>m</span>
       <button
         type="button"
         style={compactButtonStyle()}
