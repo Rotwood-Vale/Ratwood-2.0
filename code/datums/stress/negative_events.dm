@@ -587,20 +587,4 @@
 	stressadd = 2
 	desc = span_red("IT'S TOO BRIGHT!")
 
-/datum/stressevent/prejudice
-	timer = 2 MINUTES
-	stressadd = 2
-
-/datum/stressevent/prejudice/otava
-	desc = span_red("There's too many Otavans around here!")
-
-/datum/stressevent/prejudice/grenzelhoft
-	desc = span_red("There's too many Grenzels around here!")
-
-/datum/stressevent/prejudice/kazengun
-	desc = span_red("Who invited Kazengunites to Ferentia?")
-
-/datum/stressevent/prejudice/underdark
-	desc = span_red("That underdweller should be underground, where it belongs.")
-
 // this generally only happens if you're below 10 FOR, this is a little nudge to work on your luck stat

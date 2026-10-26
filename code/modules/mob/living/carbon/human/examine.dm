@@ -1110,14 +1110,6 @@
 		if((HAS_TRAIT(src, TRAIT_OUTLANDER) && !HAS_TRAIT(user, TRAIT_OUTLANDER)) || (HAS_TRAIT(user, TRAIT_BLACKOAK) && !(src.dna.species.name == "Elf" || src.dna.species.name == "Dark Elf" || src.dna.species.name == "Half Elf")))
 			. += span_phobia("A foreigner...")
 
-		if(user != src && ishuman(user))
-			var/mob/living/carbon/human/H = user
-			for(var/type in GLOB.origins)
-				var/datum/origin/O = GLOB.origins[type]
-				if(O.name == origin && O.prejudice_stress && H.origin != origin && (!O.hated_by || (H.origin in O.hated_by)))
-					. += O.prejudice_examine
-					user.add_stress(O.prejudice_stress)
-
 		if(HAS_TRAIT(src, TRAIT_LOOSE_STRAPS))
 			. += span_phobia("[capitalize(m2)] armor hangs on by a thread...")
 
