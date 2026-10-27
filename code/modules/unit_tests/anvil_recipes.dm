@@ -2,7 +2,7 @@
 /datum/unit_test/anvil_recipe_validity
 
 /datum/unit_test/anvil_recipe_validity/Run()
-	for(var/recipe_path in subtypesof(/datum/anvil_recipe))
+	for(var/datum/anvil_recipe/recipe_path as anything in subtypesof(/datum/anvil_recipe))
 		if(IS_ABSTRACT(recipe_path))
 			continue
 		var/datum/anvil_recipe/recipe = allocate(recipe_path)
