@@ -195,13 +195,6 @@
 	update_icon()
 
 //RUNELOCK
-
-#define MIN_BULLET_RANGE		0
-#define MAX_BULLET_RANGE		20 // overriden by firearm in all cases
-
-#define AP_FALLOFF_BULLET		0.5
-#define DMG_FALLOFF_BULLET		0.5
-
 /obj/projectile
 	var/secondary_damage
 	var/secondary_damage_type
