@@ -49,6 +49,10 @@
 	screen_max_columns = 2
 	max_w_class = WEIGHT_CLASS_SMALL
 
+/datum/component/storage/concrete/roguetown/belt/holster_belt
+    screen_max_rows = 2
+    screen_max_columns = 2
+
 /datum/component/storage/concrete/roguetown/coin_pouch
 	screen_max_rows = 4
 	screen_max_columns = 1
