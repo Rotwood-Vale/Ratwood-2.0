@@ -58,9 +58,10 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 
 /obj/item/reagent_containers/glass/bottle/bullet_act(obj/projectile/P)
 	. = ..()
+	glass_shot(P)
+
+/obj/item/reagent_containers/glass/bottle/proc/glass_shot(obj/projectile/P)
 	if(P.damage <= 0)
-		return
-	if(istype(src, /obj/item/reagent_containers/glass/bottle/waterskin)) // Better to make this either not a bottle or have a var, problem for future coder
 		return
 	shatter(get_turf(src))
 
