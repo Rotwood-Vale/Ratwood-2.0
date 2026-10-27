@@ -20,7 +20,7 @@
 	"Donkeyvolk", "Hyenavolk", "Deervolk", "Bearvolk", "Pandavolk", "Coyotevolk", "Moosevolk", "Rakunvolk",
 	"Jackalvolk", "Panthervolk", "Lynxvolk", "Leopardvolk", "Monkeyvolk", "Birdvolk", "Sealvolk", "Frogvolk",
 	"Batvolk", "Ottervolk", "Cowvolk", "Bullvolk", "Beevolk", "Drakianvolk", "Dragonvolk", "Monstervolk", "Chimeravolk", "Zebravolk",
-	"Pegasus", "Alicorn", "Griffon", "Unicorn", "Jackalope", "Chupacabra"
+	"Pegasusvolk", "Alicornvolk", "Griffonvolk", "Unicornvolk", "Jackalopevolk", "Chupacabravolk"
 	)
 
 	species_traits = list(
