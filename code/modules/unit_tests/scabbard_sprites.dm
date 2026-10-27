@@ -21,7 +21,5 @@
 			scabbard.update_icon()
 			if(!icon_exists(scabbard.icon, scabbard.icon_state))
 				TEST_FAIL("[scabbard_type] accepts [blade_type] but [scabbard.icon] has no \"[scabbard.icon_state]\" state, and no fallback")
-			else if(scabbard.icon_state != "[initial(scabbard.icon_state)]_[blade.sheathe_icon]")
-				TEST_NOTICE(src, "[scabbard_type] shows fallback \"[scabbard.icon_state]\" for [blade_type]")
 			scabbard.sheathed = null
 			scabbard.update_icon()
