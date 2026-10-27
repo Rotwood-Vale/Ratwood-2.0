@@ -653,6 +653,94 @@
 		revert_cast()
 		return FALSE
 
+/datum/action/cooldown/spell/projectile/fetch/greater/miracle
+	name = "Divine Fetch"
+	primary_resource_type = SPELL_COST_DEVOTION
+	primary_resource_cost = 10
+	invocations = list()
+	cooldown_time = 5 SECONDS
+	attunement_school = null
+	ignore_armor_penalty = TRUE
+	associated_stat = null
+	associated_skill = /datum/skill/magic/holy
+	spell_tier = 0
+	point_cost = 0
+
+/datum/action/cooldown/spell/projectile/repel/greater/miracle
+	name = "Divine Repel"
+	primary_resource_type = SPELL_COST_DEVOTION
+	primary_resource_cost = 14
+	invocations = list()
+	cooldown_time = 15 SECONDS
+	attunement_school = null
+	ignore_armor_penalty = TRUE
+	associated_stat = null
+	associated_skill = /datum/skill/magic/holy
+	spell_tier = 0
+	point_cost = 0
+
+/datum/action/cooldown/spell/slick_trick
+	abstract_type = /datum/action/cooldown/spell/slick_trick
+	background_icon = 'icons/mob/actions/xylixmiracles.dmi'
+	button_icon = 'icons/mob/actions/xylixmiracles.dmi'
+	sound = 'sound/foley/waterenter.ogg'
+
+	click_to_activate = TRUE
+
+	primary_resource_type = SPELL_COST_DEVOTION
+
+	invocations = list()
+
+	ignore_armor_penalty = TRUE
+	associated_stat = null
+	associated_skill = /datum/skill/magic/holy
+	spell_tier = 0
+
+	var/slip_radius
+
+/datum/action/cooldown/spell/slick_trick/cast(atom/cast_on)
+	..()
+	var/turf/center = get_turf(cast_on)
+	if(!(center in get_hear(cast_range, get_turf(owner))))
+		to_chat(owner, span_warning("I can't cast where I can't see!"))
+		return FALSE
+	if(slip_radius)
+		owner.visible_message(span_warning("[owner] creates slick patches on the floor!"))
+	for(var/turf/open/slick_turf in range(slip_radius, center))
+		new /obj/effect/temp_visual/slick_warning(slick_turf)
+		addtimer(CALLBACK(slick_turf, TYPE_PROC_REF(/turf/open, MakeSlippery), TURF_WET_LUBE, 10 SECONDS, 0, 10 SECONDS), 0.5 SECONDS)
+	return TRUE
+
+/datum/action/cooldown/spell/slick_trick/small
+	name = "Xylixian Slipsquare"
+	desc = "Create a tiny divine slick patch to trip the unwary."
+	button_icon_state = "slipsquare1"
+	cast_range = 6
+	primary_resource_cost = SPELLCOST_MIRACLE
+	charge_time = 0.5 SECONDS
+	cooldown_time = 30 SECONDS
+	slip_radius = 0
+
+/datum/action/cooldown/spell/slick_trick/grand
+	name = "Grand Xylixian Slipsquare"
+	desc = "Flood a wide area with divine slick patches that send victims to the floor."
+	button_icon_state = "slipsquare2"
+	cast_range = 4
+	primary_resource_cost = SPELLCOST_MIRACLE_MAJOR
+	charge_time = 1 SECONDS
+	cooldown_time = 90 SECONDS
+	slip_radius = 1 // 1 = 3x3
+
+/obj/effect/temp_visual/slick_warning
+	name = "slippery patch"
+	desc = "Watch your step!"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "purplesparkles"
+	color = "#0099FF" // Blue tint for water-like appearance
+	randomdir = FALSE
+	layer = MASSIVE_OBJ_LAYER
+	duration = 13 SECONDS //add a couple seconds because the slip lasts longer than intended for some freaking reason
+
 #define NOTHING "nothing"
 #define XYLIX "xylix"
 #define ASTRATA "astrata"

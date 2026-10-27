@@ -181,6 +181,8 @@
 		/datum/action/cooldown/spell/crush,
 		/datum/action/cooldown/spell/gravity,
 		/datum/action/cooldown/spell/telegraphed_strike/kinetic_burst,
+		/datum/action/cooldown/spell/projectile/fetch/greater,
+		/datum/action/cooldown/spell/projectile/repel/greater,
 		/datum/action/cooldown/spell/arcyne_forge,
 		/datum/action/cooldown/spell/levitation,
 	)

@@ -15,6 +15,10 @@
 					/obj/effect/proc_holder/spell/invoked/blood_heal				= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/mimicry					= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/mastersillusion			= CLERIC_T2,
+					/datum/action/cooldown/spell/projectile/fetch/greater/miracle 	= CLERIC_T3,
+					/datum/action/cooldown/spell/projectile/repel/greater/miracle 	= CLERIC_T3,
+					/datum/action/cooldown/spell/slick_trick/small					= CLERIC_T3,
+					/datum/action/cooldown/spell/slick_trick/grand					= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/abscond					= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/wound_heal				= CLERIC_T4,
 	)
