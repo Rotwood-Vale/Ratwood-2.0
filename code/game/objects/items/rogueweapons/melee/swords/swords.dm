@@ -2757,6 +2757,7 @@
 	max_integrity = 250
 	max_blade_int = 250
 	var/extended = FALSE
+	special = /datum/special_intent/shin_swipe
 	bigboy = TRUE
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "psyfoldingblade_on"
