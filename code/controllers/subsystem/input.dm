@@ -22,6 +22,9 @@ SUBSYSTEM_DEF(input)
 	/// currentrun list of clients
 	var/list/client/currentrun
 
+	///running average of how many movement iterations from player input the server processes every second. used for the subsystem stat entry
+	var/movements_per_second = 0
+
 /datum/controller/subsystem/input/Initialize()
 	setup_macrosets()
 	refresh_client_macro_sets()
@@ -90,10 +93,11 @@ SUBSYSTEM_DEF(input)
 		user.update_movement_keys()
 
 /datum/controller/subsystem/input/fire()
-	var/list/clients = GLOB.clients // Let's sing the list cache song
-	for(var/i in 1 to clients.len)
-		var/client/C = clients[i]
-		C.keyLoop()
+	var/moves_this_run = 0
+	for(var/mob/user in GLOB.player_list)
+		moves_this_run += user.focus?.keyLoop(user.client)//only increments if a player moves due to their own input
+
+	movements_per_second = MC_AVG_SECONDS(movements_per_second, moves_this_run, wait TICKS)
 
 #define NONSENSICAL_VERB "NONSENSICAL_VERB_THAT_DOES_NOTHING"
 /// A verb that does nothing, used for clearing keybinds faster.

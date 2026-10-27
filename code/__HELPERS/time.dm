@@ -29,6 +29,12 @@ GLOBAL_VAR_INIT(forecast, FALSE)
 GLOBAL_VAR_INIT(todoverride, FALSE)
 GLOBAL_VAR_INIT(dayspassed, FALSE)
 
+// IC calendar admin override (see __HELPERS/calendar.dm + admin/verbs/set_date.dm)
+GLOBAL_VAR_INIT(date_override_enabled, FALSE)
+GLOBAL_VAR_INIT(date_override_day, 1)
+GLOBAL_VAR_INIT(date_override_month, 1)
+GLOBAL_VAR_INIT(date_override_offset, 0)
+
 /proc/settod()
 	var/time = station_time()
 	var/oldtod = GLOB.tod
@@ -46,45 +52,28 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 //		testing("set [tod]")
 	if(GLOB.todoverride)
 		GLOB.tod = GLOB.todoverride
-	if((GLOB.tod != oldtod) && !GLOB.todoverride && (GLOB.dayspassed>1)) //weather check on tod changes
-		if(!GLOB.forecast)
-			switch(GLOB.tod)
-				if("dawn")
-					if(prob(25))
-						GLOB.forecast = "rain"
-				if("day")
-					if(prob(5))
-						GLOB.forecast = "rain"
-				if("dusk")
-					if(prob(33))
-						GLOB.forecast = "rain"
-				if("night")
-					if(prob(40))
-						GLOB.forecast = "rain"
-
-			if(GLOB.forecast == "rain")
-				var/foundnd
-				if(SSParticleWeather?.runningWeather?.target_trait == PARTICLEWEATHER_RAIN)
-					foundnd = TRUE
-				if(!foundnd)
-					SSParticleWeather?.run_weather(pick(/datum/particle_weather/rain_gentle, /datum/particle_weather/rain_storm))
-		else
-			switch(GLOB.forecast) //end the weather now
-				if("rain")
-					if(GLOB.tod == "day")
-						GLOB.forecast = "rainbow"
-					else
-						GLOB.forecast = null
-				if("rainbow")
-					GLOB.forecast = null
+	if((GLOB.tod != oldtod) && !GLOB.todoverride) //&& (GLOB.dayspassed>1)) //weather check on tod changes, disabled first day weather block
+		SSParticleWeather.check_forecast(GLOB.tod)
 
 	if(GLOB.tod != oldtod)
 		if(GLOB.tod == "dawn")
+			if(GLOB.mirage_controller)
+				GLOB.mirage_controller.MoveOasis()
 			GLOB.dayspassed++
 			if(GLOB.dayspassed == 8)
 				GLOB.dayspassed = 1
+			scom_announce_new_dawn() // IC calendar: announce active feast/holy daes
+			SStreasury.tick_rural_tax()
 			SStreasury.distribute_estate_incomes()
+			SStreasury.evaluate_payroll_solvency() // Crown insolvency ladder: arrears -> sequestration at payroll
 			SStreasury.distribute_daily_payments()
+			SStreasury.tick_loans()
+			SStreasury.tick_burgher_pledge() // Item 6 decrees: burghers' Golden Bull tribute
+			SStreasury.tick_poll_tax() // Taxation 2: collect per-class poll tax / pay subsidies
+			SStreasury.tick_rumor_points() // Quest 2: refill innkeeper rumor points for the day
+			if(SSeconomy)
+				SSeconomy.daily_tick()
+			SScity_assembly?.on_day_tick()
 		for(var/mob/living/player in GLOB.mob_list)
 			if(player.stat != DEAD && player.client)
 				player.do_time_change()
@@ -120,6 +109,12 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 				text_to_show = "DAWN OF THE SEVENTH DAE\nSUN'S DAE"
 		if(!text_to_show)
 			return
+		// IC calendar: stamp the date and any active feast daes onto the dawn splash. Also makes the
+		// dedup key date-unique, so rounds running past a week still get their splash each dawn.
+		text_to_show += "\n[uppertext(get_ic_date_short_as_string())]"
+		var/list/active_titles = get_active_calendar_event_titles()
+		if(length(active_titles))
+			text_to_show += "\n- [uppertext(active_titles.Join(" & "))] -"
 		if(text_to_show in mind.areas_entered)
 			return
 		mind.areas_entered += text_to_show
@@ -138,20 +133,16 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 		addtimer(CALLBACK(src, PROC_REF(clear_area_text), T), 35)
 		var/time_change_tips_random = pick(GLOB.time_change_tips)
 		to_chat(client, span_notice("<b>[time_change_tips_random]</b>"))
-
-		if(HAS_TRAIT(mind.current, TRAIT_NOSLEEP)) // new hackslop to allow anything that cannot sleep to do their daily stuff 
+		var/mob/living/carbon/human/H = src
+		if(ishuman(H))
+			H.time_flags &= ~(TIME_OF_DAY_BIT_DAY | TIME_OF_DAY_BIT_NIGHT)	//temperature bitflag clear
+			H.time_flags |= TIME_OF_DAY_BIT_DAY								//not actually day, but gives 'dawn, day, and dusk' as warmer time periods, given day is short
+		if(HAS_TRAIT(mind.current, TRAIT_NOSLEEP)) // new hackslop to allow anything that cannot sleep to do their daily stuff
 			if(mind.has_changed_spell)
 				mind.has_changed_spell = FALSE
 				to_chat(mind.current, span_smallnotice("I feel like I can change my spells again."))
-			if(mind.has_rituos)
-				mind.has_rituos = FALSE
-				to_chat(mind.current, span_smallnotice("The toil of invoking Her Lesser Work has fled my feeble form. I can continue my transfiguration..."))
-			if (mind.rituos_spell)
-				to_chat(mind.current, span_warning("My glimpse of [mind.rituos_spell.name] flees my mind as the new dae dawns..."))
-				mind.RemoveSpell(mind.rituos_spell)
-				mind.rituos_spell = null
 			if(HAS_TRAIT(mind.current, TRAIT_STUDENT))//golems can learn, too!
-				REMOVE_TRAIT(mind.current, TRAIT_STUDENT, TRAIT_GENERIC)
+				REMOVE_TRAIT(mind.current, TRAIT_STUDENT, null)
 				to_chat(mind.current, span_nicegreen("I feel that I can be educated in a skill once more."))
 
 
@@ -159,7 +150,10 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 		playsound_local(src, 'sound/misc/midday.ogg', 100, FALSE)
 	else if(GLOB.tod == "night")
 		playsound_local(src, 'sound/misc/nightfall.ogg', 100, FALSE)
-
+		var/mob/living/carbon/human/H = src
+		if(ishuman(H))
+			H.time_flags &= ~(TIME_OF_DAY_BIT_DAY | TIME_OF_DAY_BIT_NIGHT)
+			H.time_flags |= TIME_OF_DAY_BIT_NIGHT
 	var/atom/movable/screen/daynight/D = new()
 	D.alpha = 0
 	client.screen += D
@@ -184,9 +178,19 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 
 GLOBAL_VAR_INIT(midnight_rollovers, 0)
 GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
+/**
+ * Updates the midnight rollover count and records the current time of day.
+ *
+ * Record the last observed time on every call so the next call can detect midnight.
+ * Without that assignment, the value stays at 0 and REALTIMEOFDAY resets at midnight.
+ * Elapsed-time calculations spanning midnight then become negative, and pending client-time
+ * timers can stall or never fire. Increment the rollover count before returning it so the
+ * first call after midnight includes the new day.
+ */
 /proc/update_midnight_rollover()
 	if (world.timeofday < GLOB.rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
-		return GLOB.midnight_rollovers++
+		GLOB.midnight_rollovers++
+	GLOB.rollovercheck_last_timeofday = world.timeofday
 	return GLOB.midnight_rollovers
 
 /proc/weekdayofthemonth()

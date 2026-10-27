@@ -29,6 +29,8 @@
 	grid_height = 32
 	grid_width = 96
 	experimental_onhip = TRUE
+	pixel_x = 0
+	pixel_y = 0
 
 /obj/item/gun/ballistic/firearm/arquebus_pistol/getonmobprop(tag)
 	. = ..()

@@ -33,13 +33,13 @@
 	pooptype = null
 	simple_detect_bonus = 20
 	deaggroprob = 0
-	canparry = TRUE
+	mob_can_parry = TRUE
 	defprob = 40
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
 	attack_sound = 'sound/combat/hits/onstone/wallhit.ogg'
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	aggressive = 1
 
 	STACON = 17
@@ -50,7 +50,7 @@
 	var/rock_cd
 	inherent_spells = list(/obj/effect/proc_holder/spell/invoked/ele_quake)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth/Initialize(mapload)
 	src.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
 	. = ..()
 

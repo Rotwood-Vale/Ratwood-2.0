@@ -78,6 +78,7 @@
 #define span_icon(str) ("<span class='icon'>" + str + "</span>")
 #define span_infection(str) ("<span class='infection'>" + str + "</span>")
 #define span_info(str) ("<span class='info'>" + str + "</span>")
+#define span_infoplain(str) ("<span class='infoplain'>" + str + "</span>")
 #define span_interface(str) ("<span class='interface'>" + str + "</span>")
 #define span_italics(str) ("<span class='italics'>" + str + "</span>")
 #define span_linkoff(str) ("<span class='linkOff'>" + str + "</span>")
@@ -155,12 +156,17 @@
 #define span_userdanger(str) ("<span class='userdanger'>" + str + "</span>")
 #define span_warn(str) ("<span class='warn'>" + str + "</span>")
 #define span_warning(str) ("<span class='warning'>" + str + "</span>")
+#define span_taunt(str)	("<span class='taunt'>" + str + "</span>")
 #define span_warningbig(str) ("<span class='warningbig'>" + str + "</span>")
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")
+#define span_yellow(str) ("<span class = 'yellow'>" + str + "</span>")
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
 #define span_beautiful_masc(str) ("<span class='beautifulmasc'>" + str + "</span>")
 #define span_beautiful_fem(str) ("<span class='beautifulfem'>" + str + "</span>")
 #define span_beautiful_nb(str) ("<span class='beautifulnb'>" + str + "</span>")
+#define span_pretty_masc(str) ("<span class='prettymasc'>" + str + "</span>")
+#define span_pretty_fem(str) ("<span class='prettyfem'>" + str + "</span>")
+#define span_pretty_nb(str) ("<span class='prettynb'>" + str + "</span>")
 #define span_orator(str) ("<span class='orator'>" + str + "</span>")
 
 /// Displays a tooltip. Tooltip is text-only, and HTML will be ignored.
@@ -169,3 +175,4 @@
 /// Displays a tooltip. Accepts HTML. For the love of all that is holy, ensure input is trusted.
 /// * SPAN_LINKIFY doesn't work here.
 #define SPAN_TOOLTIP_DANGEROUS_HTML(tip, str) ("<span data-component=\"TooltipHTML\" data-html=\"[html_encode(tip)]\" class=\"tooltip\">[str]</span>")
+#define span_combatsecondarybp(str) ("<span class='combatsecondarybodypart'>" + (str) + "</span>")

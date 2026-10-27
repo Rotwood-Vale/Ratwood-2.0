@@ -43,8 +43,10 @@
 	/// Subclass languages.
 	var/list/subclass_languages
 
+	/// Subclass virtues.
+	var/list/subclass_virtues
+
 	/// Spellpoints. If More than 0, Gives Prestidigitation & the Learning Spell.
-	var/subclass_spellpoints = 0
 
 	/// Subclass social rank, used to overwrite the job social rank
 	var/subclass_social_rank
@@ -55,8 +57,26 @@
 	/// Extra fluff added to the role explanation in class selection.
 	var/extra_context
 
+	/// Virtues this subclass cannot take.
+	var/list/virtue_restrictions
+	/// Vices this subclass cannot take.
+	var/list/vice_restrictions
+
 	/// Set to FALSE to skip apply_character_post_equipment() which applies virtue, flaw, loadout
 	var/applies_post_equipment = TRUE
+	/// Mage aspect system config. If set, opens the Grimoire on learnspell.
+	/// Keys: "mastery" (bool), "major" (int), "minor" (int), "utilities" (int)
+	var/list/subclass_mage_aspects
+
+	var/datum/class_age_mod/age_mod = null
+
+	var/tempo_capable = TRUE
+
+/datum/advclass/New()
+	if(ispath(age_mod) && !istype(age_mod))
+		var/datum/class_age_mod/newmod = new age_mod()
+		age_mod = newmod
+	. = ..()
 
 /datum/advclass/proc/equipme(mob/living/carbon/human/H, dummy = FALSE)
 	// input sleeps....
@@ -83,9 +103,13 @@
 		if(trait in H.dna.species.banned_traits)
 			continue
 		ADD_TRAIT(H, trait, ADVENTURER_TRAIT)
+	if(H.client && (HAS_TRAIT(H, TRAIT_MEDIUMARMOR) || HAS_TRAIT(H, TRAIT_HEAVYARMOR)))
+		H.def_intent_change(INTENT_PARRY)
 
 	if(noble_income)
+		var/already_has_income = (H in SStreasury.noble_incomes)
 		SStreasury.noble_incomes[H] = noble_income
+		SStreasury.grant_estate_income(H, noble_income, !already_has_income)
 
 	if(adaptive_name)
 		H.adaptive_name = TRUE
@@ -107,21 +131,39 @@
 			return
 		for(var/stashed_item in subclass_stashed_items)
 			H.mind?.special_items[stashed_item] = subclass_stashed_items[stashed_item]
-	if(subclass_spellpoints > 0)
-		H.mind?.adjust_spellpoints(subclass_spellpoints)
+	// Set up spell systems before virtues so Arcyne Potential can detect and add to them
+	if(LAZYLEN(subclass_mage_aspects))
+		H.mind?.setup_mage_aspects(subclass_mage_aspects.Copy())
 
 	if(subclass_social_rank)
 		H.social_rank = subclass_social_rank
 
 	// After the end of adv class equipping, apply a SPECIAL trait if able
 
+	if(length(subclass_virtues))
+		for(var/virtue in subclass_virtues)
+			apply_virtue(H, new virtue)
+
+	if(age_mod)
+		if(istype(age_mod))
+			age_mod.apply_age_mod(H)
+
 	if(applies_post_equipment)
-		apply_character_post_equipment(H)
+		if(H.dna?.species?.id == "gnoll")
+			// Gnolls should be built only from gnoll-specific prefs, not base-slot virtue/flaw/race bonus state.
+			H.apply_gnoll_preferences(FALSE)
+		else
+			apply_character_post_equipment(H)
 
 /datum/advclass/proc/post_equip(mob/living/carbon/human/H)
 	addtimer(CALLBACK(H,TYPE_PROC_REF(/mob/living/carbon/human, add_credit), TRUE), 20)
 	if(cmode_music)
 		H.cmode_music = cmode_music
+
+	//OV edit
+	if(isooze(H))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/ooze)
+	//OV edit end
 
 /*
 	Whoa! we are checking requirements here!
@@ -152,12 +194,17 @@
 	if(length(allowed_ages) && !(H.age in allowed_ages))
 		return FALSE
 
-	if(length(allowed_patrons) && !(H.patron in allowed_patrons))
+	if(length(allowed_patrons) && !(H.patron.type in allowed_patrons))
 		return FALSE
 
 	if(maximum_possible_slots > -1)
 		if(total_slots_occupied >= maximum_possible_slots)
 			return FALSE
+
+	if(length(virtue_restrictions) && H.client)
+		for(var/virtuetype in virtue_restrictions)
+			if(istype(H.client.prefs?.virtue, virtuetype) || istype(H.client.prefs?.virtuetwo, virtuetype))
+				return FALSE
 
 	#ifdef USES_PQ
 	if(min_pq != -100) // If someone sets this we actually do the check.

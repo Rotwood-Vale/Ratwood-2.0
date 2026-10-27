@@ -29,6 +29,10 @@
 #define MOVE_INTENT_RUN  "run"
 #define MOVE_INTENT_SNEAK "sneak"
 
+//time of day bitflags for mobs
+#define TIME_OF_DAY_BIT_DAY		(1 << 0)
+#define TIME_OF_DAY_BIT_NIGHT	(1 << 1)
+
 //resist
 #define RESIST_INTENT 0
 #define SUBMIT_INTENT 1
@@ -42,7 +46,7 @@
 #define BLOOD_VOLUME_BAD 224
 #define BLOOD_VOLUME_SURVIVE 122
 
-/// Blood pool regeneration in non-vampiric living mobs per SSmobs tick. 
+/// Blood pool regeneration in non-vampiric living mobs per SSmobs tick.
 #define BLOODPOL_REGEN 2
 
 //Sizes of mobs, used by mob/living/var/mob_size
@@ -61,16 +65,17 @@
 #define BLOODCRAWL_EAT 2
 
 //Mob bio-types flags
-#define MOB_ORGANIC 	1 << 0
-#define MOB_MINERAL		1 << 1
-#define MOB_ROBOTIC 	1 << 2
-#define MOB_UNDEAD		1 << 3
-#define MOB_HUMANOID 	1 << 4
-#define MOB_BUG 		1 << 5
-#define MOB_BEAST		1 << 6
-#define MOB_EPIC		1 << 7 //megafauna
-#define MOB_REPTILE		1 << 8
-#define MOB_SPIRIT		1 << 9
+// Parenthesised because unary ~ binds tighter than <<, so a bare 1 << N clears every lower bit too
+#define MOB_ORGANIC 	(1 << 0)
+#define MOB_MINERAL		(1 << 1)
+#define MOB_ROBOTIC 	(1 << 2)
+#define MOB_UNDEAD		(1 << 3)
+#define MOB_HUMANOID 	(1 << 4)
+#define MOB_BUG 		(1 << 5)
+#define MOB_BEAST		(1 << 6)
+#define MOB_EPIC		(1 << 7) //megafauna
+#define MOB_REPTILE		(1 << 8)
+#define MOB_SPIRIT		(1 << 9)
 
 //Organ defines for carbon mobs
 #define ORGAN_ORGANIC   1
@@ -89,8 +94,6 @@
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
-#define MONKEY_BODYPART "monkey"
-#define DEVIL_BODYPART "devil"
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
 // Health/damage defines for carbon mobs
@@ -281,18 +284,12 @@
 #define SHOCK_ILLUSION (1 << 2)
 ///The shock doesn't stun.
 #define SHOCK_NOSTUN (1 << 3)
+///Visual and sound effects only, no damage applied.
+#define SHOCK_VISUAL_ONLY (1 << 4)
 
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
 #define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
-
-//Secbot and ED209 judgement criteria bitflag values
-#define JUDGE_EMAGGED		(1<<0)
-#define JUDGE_IDCHECK		(1<<1)
-#define JUDGE_WEAPONCHECK	(1<<2)
-#define JUDGE_RECORDCHECK	(1<<3)
-//ED209's ignore monkeys
-#define JUDGE_IGNOREMONKEYS	(1<<4)
 
 #define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
 
@@ -431,6 +428,8 @@
 #define SKIN_COLOR_IRON "d9a284"
 #define SKIN_COLOR_MALACHITE "c69b83"
 #define SKIN_COLOR_OBSIDIAN "3b2e27"
+#define SKIN_COLOR_TUSCAN "7e4e4a"
+#define SKIN_COLOR_SMOKY_QUARTZ "452516"
 #define SKIN_COLOR_BRIMSTONE "271f1a"
 #define SKIN_COLOR_JADE "d6bea9"
 #define SKIN_COLOR_CERAGYRITE "4c4a4f"
@@ -494,6 +493,7 @@
 
 //AASIMAR SKIN TONES
 #define SKIN_COLOR_CULTOR "b5a4a4"
+#define SKIN_COLOR_ARCHON "feddcd"
 #define SKIN_COLOR_SPIRITUS "f0eded"
 #define SKIN_COLOR_PLANETAR "ffd859"
 #define SKIN_COLOR_DEVA "b6f1f2"
@@ -548,6 +548,13 @@
 #define SKIN_COLOR_DREMA "D16A51"
 #define SKIN_COLOR_CHIR "549ab6"
 #define SKIN_COLOR_VESYL "7A2525"
+#define SKIN_COLOR_ASZA "7a5497"
+#define SKIN_COLOR_KRIZZSHA "a191cc"
+#define SKIN_COLOR_TOSIZ "5b7343"
+#define SKIN_COLOR_VELOTHEL "87a665"
+#define SKIN_COLOR_KROSEC "f9f9f9"
+#define SKIN_COLOR_ASHOL "9D807A"
+#define SKIN_COLOR_PYRIS "BDE5ED"
 
 //GOBLIN SKIN TONES
 #define SKIN_COLOR_OCHRE "968127"
@@ -563,6 +570,7 @@
 #define SKIN_COLOR_ABYSS "2a6986"
 #define SKIN_COLOR_HADAL "24353d"
 #define SKIN_COLOR_BONE "e3dac9"
+#define SKIN_COLOR_PALE "c9c9c9"
 
 //ARGONIAN SKIN TONES
 #define SKIN_COLOR_AQUARELA "ffff88"
@@ -632,6 +640,11 @@
 #define PIXEL_SHIFT_PASSABLE_THRESHOLD 8
 
 #define TYPING_INDICATOR_TIMEOUT 20 MINUTES
+#ifdef NPC_THINK_DEBUG
+#define AI_THINK(pawn, message) pawn.visible_message(message, runechat_message = message)
+#else
+#define AI_THINK(pawn, message)
+#endif
 
 // NPC Debugging
 #ifdef NPC_THINK_DEBUG
@@ -639,3 +652,7 @@
 #else
 #define NPC_THINK(message)
 #endif
+
+/// Rot accumulated before a corpse rises as a deadite. Lives here rather than in rotting.dm because
+/// the ghost lock in observer.dm uses it too
+#define DEAD_TO_ZOMBIE_TIME (5 MINUTES)

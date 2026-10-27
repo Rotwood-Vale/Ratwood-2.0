@@ -6,7 +6,7 @@
 
 /obj/item/roguekey/sund/clockwork
 	name = "Clockwork Key"
-	desc = "A marvelous Dwarven key crafted with ingenius mechanisms, able to unlock nearly any door or chest by some contrivance of springs and clockwork."
+	desc = "A marvelous Dwarven key crafted with ingenious mechanisms, able to unlock nearly any door or chest by some contrivance of springs and clockwork."
 	icon_state = "bosskey"
 	lockid = "sund_clockwork"
 

@@ -62,7 +62,7 @@
 	var/next_summon = 0
 	var/list/minions = list( /mob/living/carbon/human/species/dwarfskeleton/ambush/knight/summoned = 100)
 
-/mob/living/simple_animal/hostile/boss/baroness/Initialize()
+/mob/living/simple_animal/hostile/boss/baroness/Initialize(mapload)
 	. = ..()
 	//REMOVE_TRAIT(src, TRAIT_SIMPLE_WOUNDS, TRAIT_GENERIC) //Increased damage malus from silver. Minor over-time damage increase from bleeding wounds. Un-// if it's too easy.
 	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
@@ -117,7 +117,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	speed = 0.3
-	flag = "magic"
+	flag = "fire"
 	light_color = "#ffffff"
 /obj/projectile/magic/baroness/lightning/on_hit(target)
 	. = ..()
@@ -174,7 +174,7 @@
 	duration = 10
 	randomdir = FALSE
 
-/obj/effect/temp_visual/baroness_dying/Initialize()
+/obj/effect/temp_visual/baroness_dying/Initialize(mapload)
 	. = ..()
 	visible_message(span_boldannounce("The Baroness' staff shatters and she crumples to the floor."))
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Mistress!...", null, list("colossus", "yell"))
@@ -238,10 +238,8 @@
 	blade_class = BCLASS_CUT
 	hitsound = 'sound/combat/hits/bladed/genchop (1).ogg'
 	chargetime = 15
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	swingdelay = 3
-	candodge = TRUE
-	canparry = TRUE
 	item_d_type = "stab"
 
 /mob/living/carbon/human/species/dwarfskeleton/ambush/knight/summoned

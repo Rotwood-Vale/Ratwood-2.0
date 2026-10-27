@@ -15,10 +15,11 @@
 
 
 /datum/particle_weather/blood_rain_gentle
-	name = "Rain"
+	name = "Strange Rain"
 	desc = "Gentle Rain, la la description."
 	particleEffectType = /particles/weather/blood_rain
-
+	warning_message = span_greenannounce("The air grows heavy- something is very wrong.")
+	late_warning_message = span_userdanger("A metallic scent fills the air. Something is wrong with the sky...")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/rain)
 	indoor_weather_sounds = list(/datum/looping_sound/indoor_rain)
@@ -28,18 +29,27 @@
 	maxSeverityChange = 2
 	severitySteps = 5
 	immunity_type = TRAIT_RAINSTORM_IMMUNE
-	probability = 1
+	probability = 10
 	target_trait = PARTICLEWEATHER_BLOODRAIN
 
 /datum/particle_weather/blood_rain_gentle/weather_act(mob/living/L)
 	L.adjust_fire_stacks(-100)
 	L.SoakMob(FULL_BODY)
+	if(issimple(L))
+		return
+	if(ishuman(L))
+		var/mob/living/carbon/human/M = L
+		if(M.patron && (istype(M.patron, /datum/patron/inhumen/graggar)||istype(M.patron, /datum/patron/inhumen/zizo)))
+			M.add_stress(/datum/stressevent/bloodrevel)
+		else
+			M.add_stress(/datum/stressevent/bloodrain)
 
 /datum/particle_weather/blood_rain_storm
-	name = "Rain"
+	name = "Strange Rainstorm"
 	desc = "Gentle Rain, la la description."
 	particleEffectType = /particles/weather/blood_rain
-
+	warning_message = span_greenannounce("The air grows heavy- something is very wrong.")
+	late_warning_message = span_greenannounce("A metallic scent fills the air. Something is wrong with the sky...")
 	scale_vol_with_severity = TRUE
 	weather_sounds = list(/datum/looping_sound/storm)
 	indoor_weather_sounds = list(/datum/looping_sound/indoor_rain)
@@ -49,10 +59,17 @@
 	maxSeverityChange = 50
 	severitySteps = 50
 	immunity_type = TRAIT_RAINSTORM_IMMUNE
-	probability = 1
+	probability = 10
 	target_trait = PARTICLEWEATHER_BLOODRAIN
 
-//Makes you a bit chilly
 /datum/particle_weather/blood_rain_storm/weather_act(mob/living/L)
 	L.adjust_fire_stacks(-100)
 	L.SoakMob(FULL_BODY)
+	if(issimple(L))
+		return
+	if(ishuman(L))
+		var/mob/living/carbon/human/M = L
+		if(M.patron && (istype(M.patron, /datum/patron/inhumen/graggar)||istype(M.patron, /datum/patron/inhumen/zizo)))
+			M.add_stress(/datum/stressevent/bloodrevel)
+		else
+			M.add_stress(/datum/stressevent/bloodrain)

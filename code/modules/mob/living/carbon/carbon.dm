@@ -1,5 +1,5 @@
-/mob/living/carbon/Initialize()
-	..()
+/mob/living/carbon/Initialize(mapload)
+	. = ..()
 
 	pain_threshold = HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH) ? ((STAWIL + 5) * 10) : (STAWIL * 10)
 	if(has_flaw(/datum/charflaw/addiction/masochist)) // Masochists handle pain better by about 1 endurance point
@@ -10,17 +10,43 @@
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
 	GLOB.carbon_list += src
+	if(GLOB.blood_sight_viewers)
+		AddComponent(/datum/component/blood_glow)
+	RegisterSignal(src, list(
+		SIGNAL_ADDTRAIT(TRAIT_PARALYSIS),
+		SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS),
+		SIGNAL_ADDTRAIT(TRAIT_SPELLCOCKBLOCK),
+		SIGNAL_REMOVETRAIT(TRAIT_SPELLCOCKBLOCK),
+		SIGNAL_ADDTRAIT(TRAIT_MUTE),
+		SIGNAL_REMOVETRAIT(TRAIT_MUTE),
+		SIGNAL_ADDTRAIT(TRAIT_BAGGED),
+		SIGNAL_REMOVETRAIT(TRAIT_BAGGED),
+		SIGNAL_ADDTRAIT(TRAIT_GARGLE_SPEECH),
+		SIGNAL_REMOVETRAIT(TRAIT_GARGLE_SPEECH),
+	), PROC_REF(on_spell_availability_trait_changed))
+
+/mob/living/carbon/proc/on_spell_availability_trait_changed(datum/source, trait)
+	SIGNAL_HANDLER
+	update_mob_action_buttons()
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. =  ..()
 
-	QDEL_LIST(hand_bodyparts)
-	QDEL_LIST(internal_organs)
-	QDEL_LIST(bodyparts)
-	QDEL_LIST(implants)
-	QDEL_NULL(dna)
-	QDEL_NULL(underwear)
+	if(hand_bodyparts)
+		QDEL_LIST(hand_bodyparts)
+	if(internal_organs)
+		QDEL_LIST(internal_organs)
+	if(bodyparts)
+		QDEL_LIST(bodyparts)
+	if(implants)
+		QDEL_LIST(implants)
+	if(dna)
+		QDEL_NULL(dna)
+	if(underwear)
+		QDEL_NULL(underwear)
+	last_mind = null
+	STOP_PROCESSING(SSiconupdates, src)
 	GLOB.carbon_list -= src
 
 /mob/living/carbon/ZImpactDamage(turf/T, levels)
@@ -79,11 +105,10 @@
 		var/atom/movable/screen/inventory/hand/H
 		H = hud_used.hand_slots["[oindex]"]
 		if(H)
-			H.update_icon()
+			H.update_hand_vis()
 		H = hud_used.hand_slots["[held_index]"]
 		if(H)
-			H.update_icon()
-		H = hud_used.action_intent
+			H.update_hand_vis()
 	oactive = FALSE
 	update_a_intents()
 
@@ -99,7 +124,7 @@
 		selhand = (active_hand_index % held_items.len)+1
 
 	if(istext(selhand))
-		selhand = lowertext(selhand)
+		selhand = LOWER_TEXT(selhand)
 		if(selhand == "right" || selhand == "r")
 			selhand = 2
 		if(selhand == "left" || selhand == "l")
@@ -160,8 +185,6 @@
 		if(hurt)
 			victim.take_bodypart_damage(10,check_armor = TRUE)
 			take_bodypart_damage(10,check_armor = TRUE)
-			if(victim.IsOffBalanced())
-				victim.Knockdown(30)
 			visible_message("<span class='danger'>[src] crashes into [victim]!",\
 				"<span class='danger'>I violently crash into [victim]!</span>")
 		playsound(src,"genblunt",100,TRUE)
@@ -254,6 +277,9 @@
 
 
 	if(thrown_thing)
+		if(src in thrown_thing.buckled_mobs) //Buckling to a chair and then grab-throwing the chair
+			to_chat(src, span_notice("I am not tricky enough to throw [thrown_thing] while I am buckled to it."))
+			return
 		// Admin alert for coin throws
 		if(istype(thrown_thing, /obj/item/roguecoin))
 			var/obj/item/roguecoin/coin = thrown_thing
@@ -361,6 +387,8 @@
 				buckle_cd += 10 SECONDS
 			else
 				buckle_cd += S.breakoutextra
+			if(istype(S, /obj/structure/bondage/torture_table) && !handcuffed)
+				buckle_cd = 3 MINUTES
 		visible_message("<span class='warning'>[src] attempts to struggle free!</span>", \
 					"<span class='notice'>I attempt to struggle free...</span>")
 		if(do_after(src, buckle_cd, 0, target = src))
@@ -429,18 +457,37 @@
 		cuff_resist(I)
 
 
+/mob/living/carbon/cancel_restraint_struggle()
+	if(!doing) //without this the fast path could START a struggle, skipping the breakout cooldown
+		return FALSE
+	for(var/obj/item/I in list(handcuffed, legcuffed))
+		if(I.item_flags & BEING_REMOVED)
+			cuff_resist(I)
+			return TRUE
+	return FALSE
+
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
-	if(I.item_flags & BEING_REMOVED)
-		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
+	//resisting again gives up, do_after breaks out once doing clears. A flag set with nothing running
+	//outlived its attempt, so fall through and start fresh rather than lock the item forever
+	if((I.item_flags & BEING_REMOVED) && doing)
+		doing = FALSE
+		visible_message("<span class='warning'>[src] stops struggling with [I].</span>", \
+						"<span class='warning'>I stop struggling with [I].</span>")
+		log_message("stopped struggling out of [I]", LOG_ATTACK, color = "orange")
 		return
 	I.item_flags |= BEING_REMOVED
-	breakouttime = I.slipouttime
+	log_message("began struggling out of [I]", LOG_ATTACK, color = "orange")
+	//with free hands you untie your own legs at the speed someone else could untie them for you.
+	//min() so this can never be slower than struggling out, nets slip faster than they strip
+	var/untying = (I == legcuffed && !handcuffed && has_active_hand())
+	breakouttime = untying ? min(I.strip_delay, I.slipouttime) : I.slipouttime
+	//0.1 per point above 10, so the scale runs the full way to 20 rather than bottoming out at 15
 	if((STASTR > 10))
-		var/time_mod = breakouttime * (STASTR - 10) * 0.2
+		var/time_mod = breakouttime * (STASTR - 10) * 0.1
 		breakouttime = max(0, breakouttime - time_mod)
-	if(mind && mind.has_antag_datum(/datum/antagonist/zombie))
+	if(!untying && mind && mind.has_antag_datum(/datum/antagonist/zombie))
 		breakouttime = 10 SECONDS
-	if(STASTR > 15)
+	if(STASTR >= 20 && !untying)
 		cuff_break = INSTANT_CUFFBREAK
 		breakouttime = I.breakouttime
 	if(!cuff_break)
@@ -461,6 +508,8 @@
 		clear_cuffs(I, cuff_break)
 	I.item_flags &= ~BEING_REMOVED
 
+//drops both cuffs to the floor. This is from SS13, not Roguetown.
+//predates nets, so it needs netted status cleanup before anything calls it again
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
 		var/obj/item/W = handcuffed
@@ -479,8 +528,7 @@
 		changeNext_move(0, override = TRUE)
 	if (legcuffed)
 		var/obj/item/W = legcuffed
-		legcuffed = null
-		update_inv_legcuffed()
+		set_legcuffed(null)
 		if (client)
 			client.screen -= W
 		if (W)
@@ -496,6 +544,9 @@
 		return FALSE
 	if(I != handcuffed && I != legcuffed)
 		return FALSE
+	//getting free clears the breakout cooldown, or a fast escape leaves you locked out of everything
+	//for the remainder of the 10 seconds resist_restraints charged up front. Same as uncuff() does
+	changeNext_move(0, override = TRUE)
 	visible_message("[cuff_break ? "<span class='danger'>" : "<span class='warning'>"][src] manages to [cuff_break ? "break" : "slip"] out of [I]!</span>")
 	if(cuff_break)
 		playsound(src, 'sound/misc/chain_snap.ogg', 100, FALSE, 10)
@@ -520,10 +571,9 @@
 			update_handcuffed()
 			return TRUE
 		if(I == legcuffed)
-			legcuffed.forceMove(drop_location())
-			legcuffed.dropped()
-			legcuffed = null
-			update_inv_legcuffed()
+			set_legcuffed(null)
+			I.forceMove(drop_location())
+			I.dropped(src)
 			return TRUE
 
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
@@ -673,7 +723,7 @@
 					var/mob/living/carbon/C = src
 					C.add_stress(/datum/stressevent/vomit)
 	else
-		if(NOBLOOD in dna?.species?.species_traits)
+		if(NOBLOOD in dna?.species?.species_traits || (INVISBLOOD in dna.species.species_traits)) //OV EDIT
 			return TRUE
 		if(message)
 			visible_message("<span class='danger'>[vomit_source] coughs up blood!</span>", "<span class='danger'>I cough up blood!</span>")
@@ -758,7 +808,6 @@
 	if(status_flags & GODMODE)
 		return
 	var/total_burn	= 0
-//	var/total_brute	= 0
 	var/total_stamina = 0
 	var/total_tox = getToxLoss()
 	var/total_oxy = getOxyLoss()
@@ -767,11 +816,12 @@
 		BODY_ZONE_HEAD,
 		BODY_ZONE_CHEST,
 	)
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts) //hardcoded to streamline things a bit
-		if(!(bodypart.body_zone in lethal_zones))
+	for(var/lethal_zone in lethal_zones)
+		var/obj/item/bodypart/lethal_part = get_bodypart(lethal_zone)
+		if(!lethal_part)
 			continue
 		var/hardcrit_divisor = !mind ? FIRE_HARDCRIT_DIVISOR_MINDLESS : FIRE_HARDCRIT_DIVISOR
-		var/my_burn = abs((bodypart.burn_dam / bodypart.max_damage) * hardcrit_divisor)
+		var/my_burn = abs((lethal_part.burn_dam / lethal_part.max_damage) * hardcrit_divisor)
 		total_burn = max(total_burn, my_burn)
 		used_damage = max(used_damage, my_burn)
 	if(used_damage < total_tox)
@@ -834,6 +884,12 @@
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_DARKVISION)
 		see_in_dark = max(see_in_dark, 12)
 
+	if(HAS_TRAIT(src, TRAIT_LIGHT_SENSITIVITY))
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_DARKVISION)
+		see_in_dark = max(see_in_dark, 12)
+		if(HAS_TRAIT(src, TRAIT_DARKVISION))
+			lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_SENSITIVE_DARKVISION)
+
 	if(HAS_TRAIT(src, TRAIT_NOCSHADES))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_NOCSHADES)
 		see_in_dark = max(see_in_dark, 12)
@@ -843,6 +899,18 @@
 		remove_client_colour(/datum/client_colour/nocshaded)
 		clear_fullscreen("inqvision")
 
+	if(HAS_TRAIT(src, TRAIT_SANDSTORMED))
+		if(!HAS_TRAIT(src, TRAIT_SANDSTORM_GOGGLES))
+			overlay_fullscreen("nearsighted", /atom/movable/screen/fullscreen/nearsight)
+		else
+			clear_fullscreen("nearsighted")
+		if(HAS_TRAIT(src, TRAIT_SANDSTORM_GOGGLES))
+			overlay_fullscreen("dust", /atom/movable/screen/fullscreen/dustoverlay_light)
+		else
+			overlay_fullscreen("dust", /atom/movable/screen/fullscreen/dustoverlay)
+	else
+		clear_fullscreen("nearsighted")
+		clear_fullscreen("dust")
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		sight |= (SEE_MOBS)
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
@@ -991,55 +1059,42 @@
 		overlay_fullscreen("oxy", /atom/movable/screen/fullscreen/oxy, severity)
 	else
 		clear_fullscreen("oxy")
-/*
-	//Fire and Brute damage overlay (BSSR)
-	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
-	if(hurtdamage)
-		var/severity = 0
-		switch(hurtdamage)
-			if(5 to 15)
-				severity = 1
-			if(15 to 30)
-				severity = 2
-			if(30 to 45)
-				severity = 3
-			if(45 to 70)
-				severity = 4
-			if(70 to 85)
-				severity = 5
-			if(85 to INFINITY)
-				severity = 6
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
-	else
-		clear_fullscreen("brute")*/
 
+	var/flash_pain = FALSE
 	var/hurtdamage = ((get_complex_pain() / (STAWIL * 10)) * 100) //what percent out of 100 to max pain
-	if(hurtdamage > 5) //float
-		var/severity = 0
-		switch(hurtdamage)
-			if(5 to 20)
-				severity = 1
-			if(20 to 40)
-				severity = 2
-			if(40 to 60)
-				severity = 3
-				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
-			if(60 to 80)
-				severity = 4
-				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
-			if(80 to 99)
-				severity = 5
-				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
-			if(99 to INFINITY)
-				severity = 6
-				overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
-		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
+	var/severity = 0
+	switch(hurtdamage)
+		if(-INFINITY to 5)
+			clear_fullscreen("brute")
+			clear_fullscreen("brute_alt")
+			clear_fullscreen("painflash")
+		if(5 to 20)
+			severity = 1
+			clear_fullscreen("painflash")
+		if(20 to 40)
+			severity = 2
+			clear_fullscreen("painflash")
+		if(40 to 60)
+			severity = 3
+			flash_pain = TRUE
+		if(60 to 80)
+			severity = 4
+			flash_pain = TRUE
+		if(80 to 99)
+			severity = 5
+			flash_pain = TRUE
+		if(99 to INFINITY)
+			severity = 6
+			flash_pain = TRUE
+	if(no_redflash)
+		overlay_fullscreen("brute_alt", /atom/movable/screen/fullscreen/brute_alt, severity)
 	else
-		clear_fullscreen("brute")
-		clear_fullscreen("painflash")
+		if(flash_pain)
+			overlay_fullscreen("painflash", /atom/movable/screen/fullscreen/painflash)
+		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
-	if(!client || !hud_used)
+	if(!hud_used)
 		return
 	if(hud_used.healths)
 		if(stat != DEAD)
@@ -1070,6 +1125,7 @@
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
 		return
+	var/old_stat = stat
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_NEARDEATH && HAS_TRAIT(src, TRAIT_DEATHBARGAIN))
 			src.apply_status_effect(/datum/status_effect/buff/undermaidenbargainheal)
@@ -1080,7 +1136,22 @@
 			cure_blind(UNCONSCIOUS_BLIND)
 			return
 		if(((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE)) || IsUnconscious() || IsSleeping() || getOxyLoss() > 75 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
+			if(stat != UNCONSCIOUS) // Transition into hardcrit — announce once
+				if((blood_volume in -INFINITY to BLOOD_VOLUME_SURVIVE) && !HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
+					visible_message(span_danger("<b>[src] collapses, [src.p_their()] skin pale as parchment!</b>"), \
+						span_userdanger("My blood... there is nothing left. I cannot feel my limbs."))
+				else if(getOxyLoss() > 75)
+					visible_message(span_danger("<b>[src] collapses, [src.p_their()] lips turning blue!</b>"), \
+						span_userdanger("I cannot breathe... the world grows dark."))
+				else if(health <= HEALTH_THRESHOLD_FULLCRIT)
+					if(getBruteLoss() >= getFireLoss())
+						visible_message(span_danger("<b>[src] collapses, broken and bloodied!</b>"), \
+							span_userdanger("My bones are shattered... I cannot go on."))
+					else
+						visible_message(span_danger("<b>[src] collapses, [src.p_their()] flesh charred and smoking!</b>"), \
+							span_userdanger("The burning... it has taken everything from me."))
 			stat = UNCONSCIOUS
+			cure_holdbreath() // In case you passed out from holding breathe
 			if(ishuman(src))
 				var/mob/living/carbon/human/H = src
 				H.dna?.species?.stop_wagging_tail(H)
@@ -1101,6 +1172,8 @@
 	update_health_hud()
 //	update_tod_hud()
 	update_spd()
+	if(stat != old_stat)
+		update_mob_action_buttons()
 
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()
@@ -1110,10 +1183,34 @@
 		throw_alert("handcuffed", /atom/movable/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 	else
 		clear_alert("handcuffed")
-	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
+	update_mob_action_buttons() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 	update_mobility()
+
+// sole owner of legcuffed, every path that changes the slot comes through here
+// There are three states that must be maintained consistently with the slot:
+// the movespeed slowdown, the alert, and the overlay!
+// Otherwise, it will keep breaking. If we know it's always true,
+// encapsulate instead of writing it directly every time you need itz`
+/mob/living/carbon/proc/set_legcuffed(obj/item/cuffs, mob/user)
+	if(legcuffed == cuffs)
+		return
+	var/obj/item/old_cuffs = legcuffed
+	legcuffed = cuffs
+	//must hold: the movespeed slowdown is applied exactly when the slot holds a slowing item
+	remove_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN)
+	if(legcuffed)
+		if(legcuffed.legcuff_slowdown)
+			add_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN, update=TRUE, priority=100, multiplicative_slowdown=legcuffed.legcuff_slowdown, movetypes=GROUND)
+		//must hold: the alert shows exactly when the slot is occupied, this branch and the else are its halves
+		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = legcuffed)
+		log_combat(user || src, src, "legcuffed", legcuffed)
+	else
+		clear_alert("legcuffed")
+		log_combat(user || src, src, "removed legcuffs from", old_cuffs)
+	//must hold: the overlay matches the slot
+	update_inv_legcuffed()
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE, break_restraints = FALSE)
 	if(reagents)
@@ -1199,6 +1296,7 @@
 		O.owner = src
 		bodyparts.Remove(X)
 		bodyparts.Add(O)
+		bodyparts_by_zone[O.body_zone] = O
 		if(O.body_part == ARM_LEFT)
 			l_arm_index_next += 2
 			O.held_index = l_arm_index_next //1, 3, 5, 7...
@@ -1368,4 +1466,3 @@
 	if((cmode) && (mind) && (!handcuffed) && (stat == CONSCIOUS))
 		return 0
 	. = ..()
-

@@ -265,7 +265,6 @@
 
 /datum/plant_def/garlick
 	name = "garlick sprouts"
-	icon = 'icons/roguetown/misc/crops.dmi'
 	icon_state = "onion"
 	produce_type = /obj/item/reagent_containers/food/snacks/grown/garlick/rogue
 	produce_amount_min = 2
@@ -282,7 +281,6 @@
 
 /datum/plant_def/nut
 	name = "rocknut tree"
-	icon = 'icons/roguetown/misc/crops.dmi'
 	icon_state = "nuts"
 	produce_type = /obj/item/reagent_containers/food/snacks/grown/nut
 	uproot_loot = list(/obj/item/grown/log/tree/small)
@@ -296,16 +294,13 @@
 
 /datum/plant_def/coffee
 	name = "coffee bush"
-	icon = 'icons/roguetown/misc/crops.dmi'
 	icon_state = "coffee"
 	produce_type = /obj/item/reagent_containers/food/snacks/grown/coffee
 	produce_amount_min = 2
 	produce_amount_max = 3
 
-
 /datum/plant_def/tea
 	name = "tea bush"
-	icon = 'icons/roguetown/misc/crops.dmi'
 	icon_state = "tea"
 	produce_type = /obj/item/reagent_containers/food/snacks/grown/tea
 	produce_amount_min = 2
@@ -321,6 +316,30 @@
 	maturation_nutrition = HUNGRINESS_DEMANDING
 	maturation_time = SLOW_GROWING
 	produce_time = 3 MINUTES
+
+/datum/plant_def/carrot
+	name = "carrot tops"
+	icon_state = "carrot"
+	produce_type = /obj/item/reagent_containers/food/snacks/grown/carrot
+	produce_amount_min = 1
+	produce_amount_max = 3
+	maturation_nutrition = HUNGRINESS_TINY
+	maturation_time = SLOW_GROWING
+
+/datum/plant_def/cucumber
+	name = "cucumber vines"
+	icon_state = "cucumber"
+	produce_type = /obj/item/reagent_containers/food/snacks/grown/cucumber
+	produce_amount_min = 2
+	produce_amount_max = 3
+
+/datum/plant_def/eggplant
+	name = "eggplant stalk"
+	icon_state = "eggplant"
+	produce_type = /obj/item/reagent_containers/food/snacks/grown/eggplant
+	produce_amount_min = 2
+	produce_amount_max = 4
+	maturation_nutrition = HUNGRINESS_DEMANDING
 
 #undef SLOW_GROWING
 #undef FAST_GROWING

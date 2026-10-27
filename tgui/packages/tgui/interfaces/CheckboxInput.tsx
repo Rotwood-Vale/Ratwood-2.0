@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Window } from 'tgui/layouts';
 import {
+  Box,
   Button,
   Icon,
   Input,
@@ -18,11 +19,15 @@ import { Loader } from './common/Loader';
 
 type Data = {
   items: string[];
+  descriptions: Record<string, string> | null;
+  default_checked: string[];
   message: string;
   title: string;
   timeout: number;
   min_checked: number;
   max_checked: number;
+  window_width: number;
+  window_height: number;
 };
 
 /** Renders a list of checkboxes per items for input. */
@@ -30,17 +35,27 @@ export const CheckboxInput = (props) => {
   const { data } = useBackend<Data>();
   const {
     items = [],
+    descriptions,
+    default_checked = [],
     min_checked,
     max_checked,
     message,
     timeout,
     title,
+    window_width = 425,
+    window_height = 300,
   } = data;
 
-  const [selections, setSelections] = useState<string[]>([]);
+  const [selections, setSelections] = useState<string[]>(
+    default_checked.filter((item) => items.includes(item)),
+  );
 
   const [searchQuery, setSearchQuery] = useState('');
-  const search = createSearch(searchQuery, (item: string) => item);
+  // descriptions are searchable too, they hold the trait defines
+  const search = createSearch(
+    searchQuery,
+    (item: string) => `${item} ${descriptions?.[item] || ''}`,
+  );
   const toDisplay = items.filter(search);
 
   const selectItem = (name: string) => {
@@ -52,7 +67,7 @@ export const CheckboxInput = (props) => {
   };
 
   return (
-    <Window title={title} width={425} height={300}>
+    <Window title={title} width={window_width} height={window_height}>
       {!!timeout && <Loader value={timeout} />}
       <Window.Content>
         <Stack fill vertical g={0}>
@@ -80,6 +95,17 @@ export const CheckboxInput = (props) => {
                       >
                         {item}
                       </Button.Checkbox>
+                      {!!descriptions?.[item] && (
+                        <Box
+                          color="label"
+                          fontSize="0.9em"
+                          mb={0.5}
+                          ml={2}
+                          style={{ whiteSpace: 'normal' }}
+                        >
+                          {decodeHtmlEntities(descriptions[item])}
+                        </Box>
+                      )}
                     </Table.Cell>
                   </Table.Row>
                 ))}

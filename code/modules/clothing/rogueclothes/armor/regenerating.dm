@@ -1,10 +1,13 @@
 // REGENERATING ARMOUR
 
+#define COMBAT_TAG_DURATION 30 SECONDS
+
 /obj/item/clothing/suit/roguetown/armor/regenerating
 	name = "regenerating armour"
 	desc = "Abstract parent. Contact developer if you see this."
 	icon_state = null
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
+	unenchantable = TRUE
 
 	/// Feedback messages
 	var/repairmsg_begin = "My armour begins to slowly mend its abuse.."
@@ -12,52 +15,57 @@
 	var/repairmsg_stop = "My armour stops mending from the onslaught!"
 	var/repairmsg_end = "My armour has become taut with newfound vigor!"
 
-	/// Time taken for regeneration
-	var/repair_time
-	/// Holder for timer
+	/// Combat timer that prevents you from healing while taking damage
+	var/combat_timer
+	/// Recursive timer that slowly regenerates the armor
 	var/reptimer
+	/// Time taken for regeneration
+	var/repair_time = 10 SECONDS
+	/// If the armor regen is stopped by a combat tag
+	var/combat_taggable = FALSE
 
-	/// Regen interrupt vars
-	var/interrupt_damount
-	var/interrupt_dtype
-	var/interrupt_dflag
-	var/interrupt_ddir
+/obj/item/clothing/suit/roguetown/armor/regenerating/equipped(mob/user, slot)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE))
+	if(slot == SLOT_SHIRT || slot == SLOT_ARMOR)
+		RegisterSignal(user, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE), PROC_REF(on_attacked_by))
 
-/obj/item/clothing/suit/roguetown/armor/regenerating/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
-	..()
-	if(reptimer)
-		if(!regen_interrupt(damage_amount, damage_type, damage_flag, attack_dir))
-			return
-		to_chat(loc, span_notice(repairmsg_stop))
-		deltimer(reptimer)
-
-	to_chat(loc, span_notice(repairmsg_begin))
-	reptimer = addtimer(CALLBACK(src, PROC_REF(armour_regen)), repair_time, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
-
-/obj/item/clothing/suit/roguetown/armor/regenerating/proc/armour_regen(var/repair_percent = 0.2 * max_integrity)
-	if(obj_integrity >= max_integrity)
-		to_chat(loc, span_notice(repairmsg_end))
-		if(reptimer)
-			deltimer(reptimer)
+/// Combat tag system, makes your skin stop regenning if you are attacked by anything
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/on_attacked_by(datum/source)
+	SIGNAL_HANDLER
+	if(!combat_taggable) // This means constant in-combat regen
+		if(!reptimer && obj_integrity < max_integrity)
+			reptimer = addtimer(CALLBACK(src, PROC_REF(begin_repair)), repair_time, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
 		return
 
-	to_chat(loc, span_notice(repairmsg_continue))
+	combat_timer = addtimer(CALLBACK(src, PROC_REF(begin_repair)), COMBAT_TAG_DURATION, TIMER_UNIQUE|TIMER_OVERRIDE)
+	if(timeleft(reptimer))
+		to_chat(loc, span_notice(repairmsg_stop))
+	deltimer(reptimer)
+	reptimer = null
+	return
+
+/// Start repairing the armor
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/begin_repair()
+	to_chat(loc, span_notice(repairmsg_begin))
+	armour_regen(skip_message = TRUE)
+
+/// Recursive loop that fixes the armor
+/obj/item/clothing/suit/roguetown/armor/regenerating/proc/armour_regen(repair_percent = 0.2 * max_integrity, skip_message = FALSE)
 	obj_integrity = min(obj_integrity + repair_percent, max_integrity)
 	if(obj_broken)
 		obj_fix(full_repair = FALSE)
+
+	if(obj_integrity >= max_integrity)
+		to_chat(loc, span_notice(repairmsg_end))
+		deltimer(reptimer)
+		reptimer = null
+		return
+
+	if(!skip_message)
+		to_chat(loc, span_notice(repairmsg_continue))
+
 	reptimer = addtimer(CALLBACK(src, PROC_REF(armour_regen)), repair_time, TIMER_OVERRIDE|TIMER_UNIQUE|TIMER_STOPPABLE)
-
-/obj/item/clothing/suit/roguetown/armor/regenerating/proc/regen_interrupt(damage_amount, damage_type, damage_flag, attack_dir)
-	if(interrupt_damount && interrupt_damount > damage_amount)
-		return FALSE
-	if(interrupt_dtype && interrupt_dtype != damage_type)
-		return FALSE
-	if(interrupt_dflag && interrupt_dflag != damage_flag)
-		return FALSE
-	if(interrupt_ddir && interrupt_ddir != attack_dir)
-		return FALSE
-	return TRUE
-
 
 // SKIN ARMOUR
 
@@ -77,6 +85,7 @@
 	blocksound = SOFTUNDERHIT
 	blade_dulling = DULLING_BASHCHOP
 	armor = ARMOR_PADDED
+	nudist_approved = TRUE
 
 	repairmsg_begin = "My skin begins to slowly mend its abuse.."
 	repairmsg_continue = "My skin mends some of its abuse.."
@@ -84,7 +93,7 @@
 	repairmsg_end = "My skin has become taut with newfound vigor!"
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/Initialize(mapload)
-	..()
+	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/dropped(mob/living/carbon/human/user)
@@ -93,7 +102,6 @@
 		return
 	qdel(src)
 
-
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/disciple
 	name = "disciple's skin"
 	desc = "It's far more than just an oath. </br>'AEON, PSYDON, ADONAI - ENTROPY, HUMENITY, DIVINITY. A TRINITY THAT IS ONE, \
@@ -101,17 +109,35 @@
 	I AM LIVING ON A FUCKING CORPSE. HE IS THE WORLD, AND THE WORLD IS ROTTING AWAY. \
 	HEAVEN CLOSED ITS GATES TO US, LONG AGO.' </br>'YET, HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I. \
 	HAPPINESS MUST BE FOUGHT FOR.'"
-	armor = list("blunt" = 30, "slash" = 50, "stab" = 50, "piercing" = 20, "fire" = 0, "acid" = 0) //Custom value; padded gambeson's slash- and stab- armor.
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
-	max_integrity = 300
+	armor = ARMOR_PADDED
 	repair_time = 20 SECONDS
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak
 	name = "tough skin"
 	desc = "My skin has always been tough enough to stop most cuts and bruises, with time it will mend."
-	armor = list("blunt" = 30, "slash" = 50, "stab" = 50, "piercing" = 20, "fire" = 0, "acid" = 0)
+	armor = ARMOR_PADDED_BAD
 	max_integrity = 300
-	repair_time = 20 SECONDS
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
+	combat_taggable = TRUE
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/gladiator
+	name = "pit-hardened chest"//pit? hnnnnhhhffgggg
+	desc = "Are you not entertained?!"
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	blocksound = SOFTHIT
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/gladiator
+	name = "pit-hardened skin"
+	desc = "Are you not entertained?!"
+	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
+	body_parts_inherent = COVERAGE_FULL
+	armor = ARMOR_PADDED
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
+
+#undef COMBAT_TAG_DURATION
 

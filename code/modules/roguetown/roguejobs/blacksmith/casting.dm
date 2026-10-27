@@ -20,7 +20,7 @@
 	var/duplication_threshold = 4 // Every 4 ingots deposited will duplicate the last one
 	var/list/ingots_added_total = list()
 
-/obj/item/reagent_containers/glass/crucible/proc/add_ingot(var/ingot_type, var/mob/user)
+/obj/item/reagent_containers/glass/crucible/proc/add_ingot(ingot_type, mob/user)
 	// Initialize counters if they don't exist
 	if(!ingots[ingot_type])
 		ingots[ingot_type] = 0

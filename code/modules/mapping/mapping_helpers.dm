@@ -12,7 +12,7 @@
 
 	layer = POINT_LAYER
 
-/obj/effect/baseturf_helper/Initialize()
+/obj/effect/baseturf_helper/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -34,19 +34,20 @@
 	qdel(src)
 
 /obj/effect/baseturf_helper/proc/replace_baseturf(turf/thing)
-	var/list/baseturf_cache = thing.baseturfs
-	if(length(baseturf_cache))
+	if(length(thing.baseturfs))
+		var/list/baseturf_cache = thing.baseturfs.Copy()
 		for(var/i in baseturf_cache)
 			if(baseturf_to_replace[i])
 				baseturf_cache -= i
+		thing.baseturfs = baseturfs_string_list(baseturf_cache, thing)
 		if(!baseturf_cache.len)
 			thing.assemble_baseturfs(baseturf)
 		else
-			thing.PlaceOnBottom(null, baseturf)
+			thing.PlaceOnBottom(baseturf)
 	else if(baseturf_to_replace[thing.baseturfs])
 		thing.assemble_baseturfs(baseturf)
 	else
-		thing.PlaceOnBottom(null, baseturf)
+		thing.PlaceOnBottom(baseturf)
 
 /obj/effect/baseturf_helper/lava
 	name = "lava baseturf editor"
@@ -62,7 +63,7 @@
 	icon_state = ""
 	var/late = FALSE
 
-/obj/effect/mapping_helpers/Initialize()
+/obj/effect/mapping_helpers/Initialize(mapload)
 	..()
 	return late ? INITIALIZE_HINT_LATELOAD : INITIALIZE_HINT_QDEL
 
@@ -73,7 +74,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/no_lava
 	icon_state = "no_lava"
 
-/obj/effect/mapping_helpers/no_lava/Initialize()
+/obj/effect/mapping_helpers/no_lava/Initialize(mapload)
 	. = ..()
 	var/turf/T = get_turf(src)
 	T.flags_1 |= NO_LAVA_GEN_1
@@ -134,9 +135,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	name = "map loader landmark"
 	var/list/templates //List of templates we're trying to pick from (must be a list, even if there's only one entry)
 
-/obj/effect/landmark/map_load_mark/Initialize()
+/obj/effect/landmark/map_load_mark/Initialize(mapload)
 	. = ..()
-	LAZYADD(SSmapping.map_load_marks,src)
+	if(!SSminor_mapping.initialized) // the var is on SSmapping but it's done in SSminor_mapping init
+		LAZYADD(SSmapping.map_load_marks,src)
+	else
+		CRASH("Attempted to spawn map load landmark after SSminor_mapping init!")
 
 /obj/effect/mapping_helpers/access
 	name = "access helper parent"
@@ -190,7 +194,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/override_floor = TRUE //Will only use the below as the floor tile if true. Source turf have at least 1 baseturf to use false
 	var/turf/open/floor_turf = /turf/open/floor/rogue/blocks
 
-/obj/effect/mapping_helpers/secret_door_creator/Initialize()
+/obj/effect/mapping_helpers/secret_door_creator/Initialize(mapload)
 	if(!isclosedturf(get_turf(src)))
 		return ..()
 	var/turf/closed/source_turf = get_turf(src)

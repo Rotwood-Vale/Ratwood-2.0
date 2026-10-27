@@ -32,7 +32,7 @@
 	should_regenerate = TRUE
 	var/obj/item/rogue/instrument/vocals/harpy_vocals/vocals
 
-/obj/item/organ/vocal_cords/harpy/Initialize()
+/obj/item/organ/vocal_cords/harpy/Initialize(mapload)
 	. = ..()
 	vocals = new(src)  //okay, i think it'll be tied to the organ
 
@@ -115,13 +115,9 @@
 
 /datum/action/item_action/organ_action/colossus
 	name = "Voice of God"
-	var/obj/item/organ/vocal_cords/colossus/cords = null
-
-/datum/action/item_action/organ_action/colossus/New()
-	..()
-	cords = target
 
 /datum/action/item_action/organ_action/colossus/IsAvailable()
+	var/obj/item/organ/vocal_cords/colossus/cords = target
 	if(world.time < cords.next_command)
 		return FALSE
 	if(!owner)
@@ -136,6 +132,7 @@
 /datum/action/item_action/organ_action/colossus/Trigger()
 	. = ..()
 	if(!IsAvailable())
+		var/obj/item/organ/vocal_cords/colossus/cords = target
 		if(world.time < cords.next_command)
 			to_chat(owner, "<span class='notice'>I must wait [DisplayTimeText(cords.next_command - world.time)] before Speaking again.</span>")
 		return
@@ -181,7 +178,7 @@
 
 	user.say(message, spans = span_list, sanitize = FALSE)
 
-	message = lowertext(message)
+	message = LOWER_TEXT(message)
 	var/list/mob/living/listeners = list()
 	for(var/mob/living/L in get_hearers_in_view(8, user))
 		if(L.can_hear() && !L.anti_magic_check(FALSE, TRUE) && L.stat != DEAD)

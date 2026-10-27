@@ -1,4 +1,5 @@
 /datum/advclass/thug
+	townie_contract_gate_exempt = TRUE
 	name = "Thug"
 	tutorial = "Maybe you've never been the smartest person in town, but you've gotten this far - whether by finding odd-jobs around town carting shit for the soilers, being the meathead that somebody needs to stand behind them and look scary, or simply shaking down the weak with the veiled-or-otherwise threat of a clobbering. You might've had some run-ins with the law for petty crimes here and there, but you're tolerated enough to have a home here."
 	allowed_sexes = list(MALE, FEMALE)
@@ -24,12 +25,15 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
 	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/rogue/beer = 1)
 
-	var/classes = list("Goon", "Miscreant", "Big Man", "Longshoreman")
+	H.adjust_skillrank_up_to(/datum/skill/misc/hunting, SKILL_LEVEL_NOVICE, TRUE)
+
+	var/classes = list("Goon", "Miscreant", "Big Man", "Muscle", "Longshoreman")
 	var/classchoice = input(H, "What kind of thug are you?", "TAKE UP ARMS") as anything in classes
 
 	switch(classchoice)
 
 		if("Goon")
+			H.mind.cosmetic_class_title = "Goon"
 			to_chat(H, span_warning("You're a goon, a low-lyfe thug in a painful world - not good enough for war, not smart enough for peace. What you lack in station you make up for in daring."))
 			H.set_blindness(0)
 
@@ -63,19 +67,19 @@
 					r_hand = /obj/item/cooking/pan
 				if("Knuckles")
 					H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
-					r_hand = /obj/item/rogueweapon/knuckles
+					r_hand = /obj/item/clothing/gloves/roguetown/knuckles
 				if("Navaja")
-					H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_APPRENTICE, TRUE)
+					H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 					r_hand = /obj/item/rogueweapon/huntingknife/idagger/navaja
 				if("Bare Hands")
 					H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 					ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 
 		if("Miscreant")
+			H.mind.cosmetic_class_title = "Miscreant"
 			to_chat(H, span_warning("You're smarter than the rest, by a stone's throw - and you know better than to get up close and personal. Unlike most others, you can read."))
 			H.set_blindness(0)
 
-			H.change_stat(STATKEY_WIL, -2)
 			H.change_stat(STATKEY_CON, -2)
 			H.change_stat(STATKEY_SPD, 2)
 			H.change_stat(STATKEY_INT, 2)
@@ -85,13 +89,14 @@
 
 			H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_NOVICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_NOVICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/crafting, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/weaponsmithing, SKILL_LEVEL_NOVICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/armorsmithing, SKILL_LEVEL_NOVICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_APPRENTICE, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_APPRENTICE, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/farming, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_APPRENTICE, TRUE)
@@ -108,15 +113,15 @@
 					l_hand = /obj/item/quiver/sling
 				if("Magic Bricks")
 					H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
-					H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick)
 				if("Lockpicking Equipment")
 					H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_EXPERT, TRUE)
 					H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_EXPERT, TRUE)
-					H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_JOURNEYMAN, TRUE)
+					H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_EXPERT, TRUE)
 					ADD_TRAIT(H, TRAIT_LIGHT_STEP, TRAIT_GENERIC)
 					r_hand = /obj/item/lockpickring/mundane
 
-		if("Big Man")
+		if("Muscle")
+			H.mind.cosmetic_class_title = "Muscle"
 			to_chat(H, span_warning("More akin to a corn-fed monster than a normal man, your size and strength are your greatest weapons; though they hardly supplement what's missing of your brains."))
 			H.set_blindness(0)
 
@@ -140,12 +145,12 @@
 			H.adjust_skillrank_up_to(/datum/skill/labor/mining, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/labor/lumberjacking, SKILL_LEVEL_JOURNEYMAN, TRUE)
 
-			var/options = list("Hands-On", "Big Axe")
+			var/options = list("Hands-On", "Big Axe", "Big Stick")
 			var/option_choice = input(H, "Choose your means.", "TAKE UP ARMS") as anything in options
 
 			switch(option_choice)
 				if("Hands-On")
-					ADD_TRAIT(H, TRAIT_BASHDOORS, TRAIT_GENERIC)
+					ADD_TRAIT(H, TRAIT_BIGGUY, TRAIT_GENERIC)
 					ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 				if("Big Axe")
 					H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -153,14 +158,24 @@
 				if("Big Stick")
 					H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/mace
-
+			var/techniques = list("Dropkick - Pushback + Extra Damage", "Chokeslam - Stamina Damage", "Stunner - Dazed Debuff", "Headbutt - Vulnerable Debuff") // cool wrestling moves
+			var/technique_choice = input(H,"Choose your TECHNIQUE.", "TOSS THEM.") as anything in techniques
+			switch(technique_choice)
+				if("Dropkick - Pushback + Extra Damage")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick)
+				if("Chokeslam - Stamina Damage")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)
+				if("Stunner - Dazed Debuff")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
+				if("Headbutt - Vulnerable Debuff")
+					H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 		if("Longshoreman")
+			H.mind.cosmetic_class_title = "Longshoreman"
 			to_chat(H, span_warning("You answered Abyssor's call when you were young, though in troublesome ways, \
 	pilaging for treasury from anyone who'd cross your path. Now your captain retires from a life of crime, \
 	settling down as do you. Still, there is coin to be made on land."))
 			H.set_blindness(0)
 
-	
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
 			H.change_stat(STATKEY_STR, 2)
@@ -177,7 +192,6 @@
 			r_hand = /obj/item/rogueweapon/sword/cutlass
 			beltr = /obj/item/rogueweapon/scabbard/sword
 			beltl = /obj/item/rogueweapon/huntingknife/idagger
-	
 
 			H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -193,3 +207,22 @@
 			H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_APPRENTICE, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_JOURNEYMAN, TRUE)
+
+	var/gang = list("Gang Rontz Ratz", "Gang Blortz Volves", "Neverminde")
+	var/gang_choice = input(H, "Want to become a gang member?") as anything in gang
+
+	switch(gang_choice)
+		if("Gang Rontz Ratz")
+			to_chat(H, span_warning("I'm a member of street gang Rontz Ratz, a lot of time has passed and now we have to build up our power again,\
+			those bastards from Blortz Volves will answer for this.\
+			Rontz Rats bite - feel the fight!"))
+			ADD_TRAIT(H, TRAIT_GANG_A, TRAIT_GENERIC)
+			mask = /obj/item/clothing/mask/rogue/ragmask/red
+		if("Gang Blortz Volves")
+			to_chat(H, span_warning("I'm a member of street gang Blortz Volves, a lot of time has passed and now we have to build up our power again, \
+			those bastards from Rontz Ratz will answer for this. \
+			Blortz Wolves howl - enemies cower!"))
+			ADD_TRAIT(H, TRAIT_GANG_B, TRAIT_GENERIC)
+			mask = /obj/item/clothing/mask/rogue/ragmask/azure
+		if("Neverminde")
+			return null

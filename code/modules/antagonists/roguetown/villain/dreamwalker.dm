@@ -25,7 +25,9 @@
 		TRAIT_COUNTERCOUNTERSPELL,
 		TRAIT_RITUALIST,
 		TRAIT_STRENGTH_UNCAPPED,
-		TRAIT_DREAMWALKER
+		TRAIT_DREAMWALKER,
+		TRAIT_CURSE_RESIST,
+		TRAIT_HERESIARCH
 		)
 
 	var/STASTR = 15
@@ -66,7 +68,6 @@
 		ADD_TRAIT(body, trait, "[type]")
 	if(body.mind)
 		body.mind.RemoveAllSpells()
-		body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/blink)
 		body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mark_target)
 		body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/jaunt)
 		body.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dream_bind)
@@ -77,10 +78,6 @@
 	var/obj/item/ritechalk/chalk = new()
 	body.put_in_hands(chalk)
 	to_chat(body, span_danger("I feel my connection to the arcyne and divine weaken as dream energies assert themselves..."))
-	REMOVE_TRAIT(body, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
-	REMOVE_TRAIT(body, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
-	REMOVE_TRAIT(body, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
-	REMOVE_TRAIT(body, TRAIT_ARCYNE_T4, TRAIT_GENERIC)
 	body.devotion = null
 
 /datum/outfit/job/roguetown/dreamwalker/pre_equip(mob/living/carbon/human/H) //Equipment is located below
@@ -104,8 +101,6 @@
 	H.change_stat(STATKEY_SPD, 2)
 	H.change_stat(STATKEY_WIL, 2)
 
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/blink)
 	H.ambushable = FALSE
 
 /datum/component/dreamwalker_repair
@@ -118,15 +113,13 @@
 	var/process_interval = 5 SECONDS
 	/// Time of last processing
 	var/last_process = 0
-	var/next_armor_peel_process = 0
-	var/next_armor_peel_interval = 1 MINUTES
 
 /datum/component/dreamwalker_repair/Initialize()
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
 	to_chat(parent, span_userdanger("Your body pulses with strange dream energies."))
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_item_equipped)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_item_dropped)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_item_equipped))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_item_dropped))
 	// Register for processing
 	START_PROCESSING(SSprocessing, src)
 
@@ -156,32 +149,23 @@
 		if(I.blade_int < I.max_blade_int)
 			I.add_bintegrity(min(I.blade_int + I.max_blade_int * 0.01, I.max_blade_int), src.parent) // Sharpen 1% of max sharpness
 
-	if(world.time >= next_armor_peel_process)
-		next_armor_peel_process = world.time + next_armor_peel_interval
-
-		for(var/obj/item/I in repairing_items)
-			if(istype(I, /obj/item/clothing) && I.peel_count > 0)
-				I.peel_count--
-				I.visible_message(span_notice("The dream energies snap a peeled layer of [I] back in place."))
-				break
-
 /datum/component/dreamwalker_repair/proc/on_item_equipped(mob/user, obj/item/source, slot)
 	SIGNAL_HANDLER
 	if(source.item_flags & DREAM_ITEM)
-		to_chat(parent, span_notice("the [source] pulses in your hands, dream energies passively repairing it."))
+		to_chat(parent, span_notice("[source] pulses in your hands, dream energies passively repairing it."))
 		add_item(source)
 
 /datum/component/dreamwalker_repair/proc/on_item_dropped(mob/user, obj/item/source)
 	SIGNAL_HANDLER
 	if(source.item_flags & DREAM_ITEM)
-		to_chat(parent, span_notice("the [source] stops pulsing as it leaves your person."))
+		to_chat(parent, span_notice("[source] stops pulsing as it leaves your person."))
 		remove_item(source)
 
 /datum/component/dreamwalker_repair/proc/add_item(obj/item/I)
 	if(I in repairing_items)
 		return
 	repairing_items += I
-	RegisterSignal(I, COMSIG_ITEM_BROKEN, .proc/on_item_broken)
+	RegisterSignal(I, COMSIG_ITEM_BROKEN, PROC_REF(on_item_broken))
 
 	// If item is already broken, start full repair process
 	if(I.obj_broken)
@@ -208,7 +192,7 @@
 		deltimer(repair_timers[I])
 
 	// Set a timer to fully repair after 1 minute
-	repair_timers[I] = addtimer(CALLBACK(src, .proc/finish_full_repair, I), 1 MINUTES, TIMER_STOPPABLE)
+	repair_timers[I] = addtimer(CALLBACK(src, PROC_REF(finish_full_repair), I), 1 MINUTES, TIMER_STOPPABLE)
 
 /datum/component/dreamwalker_repair/proc/finish_full_repair(obj/item/I)
 	// Check if the item is still in our inventory and broken
@@ -232,8 +216,9 @@
 	var/uses = 0
 	var/max_uses = 3
 	var/turf/linked_turf
+	var/safe_passage = FALSE
 
-/obj/structure/portal_jaunt/Initialize()
+/obj/structure/portal_jaunt/Initialize(mapload)
 	. = ..()
 	cooldown = world.time + 4 SECONDS
 	visible_message(span_warning("[src] shimmers into existence!"))
@@ -293,7 +278,7 @@
 /datum/component/dreamwalker_mark/Initialize()
 	if(!ishuman(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOB_ITEM_ATTACK, .proc/on_attack)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_ATTACK, PROC_REF(on_attack))
 
 /datum/component/dreamwalker_mark/Destroy()
 	if(marked_target)
@@ -318,8 +303,8 @@
 	mark_start_time = 0
 
 	if(marked_target)
-		RegisterSignal(marked_target, COMSIG_LIVING_DEATH, .proc/on_target_death)
-		to_chat(parent, span_notice("You begin focusing your dream energy on [marked_target]."))
+		RegisterSignal(marked_target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
+		to_chat(parent, span_notice("You begin focusing your dream energy on [marked_target.real_name]."))
 
 		// Remove any existing summon spell
 		if(summon_spell && ishuman(parent))
@@ -478,8 +463,8 @@
 	src.effect_type = effect_type
 	src.cooldown_time = cooldown_time
 
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SUCCESS, .proc/on_attack)
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SUCCESS, PROC_REF(on_attack))
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 
 
 /datum/component/dream_weapon/proc/on_attack(obj/item/source, mob/living/target, mob/living/user)
@@ -500,8 +485,7 @@
 	switch(effect_type)
 		if("fire")
 			H.adjust_fire_stacks(4)
-			spawn(0)
-				H.ignite_mob()
+			addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living, ignite_mob)), 0)
 			target.visible_message(span_warning("[source] ignites [target] with strange flame!"))
 		if("frost")
 			H.apply_status_effect(/datum/status_effect/buff/frostbite)
@@ -526,10 +510,12 @@
 	// Apply some damage or negative effect
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		spawn(0)
-			H.apply_damage(10, BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-			H.adjust_fire_stacks(2)
-			H.ignite_mob()
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(dreamscape_backfire), H), 0)
+
+/proc/dreamscape_backfire(mob/living/carbon/human/H)
+	H.apply_damage(10, BURN, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+	H.adjust_fire_stacks(2)
+	H.ignite_mob()
 
 /obj/item/rogueweapon/halberd/glaive/dreamscape
 	name = "otherworldly spear"
@@ -561,9 +547,9 @@
 	item_flags = DREAM_ITEM
 	wbalance = WBALANCE_HEAVY
 	wdefense = 4
-	possible_item_intents = list(/datum/intent/sword/cut,/datum/intent/sword/chop,/datum/intent/stab, /datum/intent/sword/peel)
+	possible_item_intents = list(/datum/intent/sword/cut,/datum/intent/sword/chop,/datum/intent/stab, /datum/intent/stab)
 	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/chop, /datum/intent/sword/lunge, /datum/intent/sword/thrust/estoc)
-	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
+	alt_grips = list(/datum/alt_grip/mordhau/broadsword/dream_broadsword)
 
 /obj/item/rogueweapon/greatsword/bsword/dreamscape/active
 	name = "otherworldly sword"
@@ -605,19 +591,19 @@
 	shockwave_damage = TRUE
 
 // Update weapon initializations with specific effects
-/obj/item/rogueweapon/greataxe/dreamscape/active/Initialize()
+/obj/item/rogueweapon/greataxe/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "fire", 20 SECONDS)
 
-/obj/item/rogueweapon/halberd/glaive/dreamscape/active/Initialize()
+/obj/item/rogueweapon/halberd/glaive/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "frost", 40 SECONDS)
 
-/obj/item/rogueweapon/greatsword/bsword/dreamscape/active/Initialize()
+/obj/item/rogueweapon/greatsword/bsword/dreamscape/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, "poison", 20 SECONDS)
 
-/obj/item/rogueweapon/spear/dreamscape_trident/active/Initialize()
+/obj/item/rogueweapon/spear/dreamscape_trident/active/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -641,9 +627,8 @@
 	icon_state = "dreamplate"
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	item_flags = DREAM_ITEM
-	peel_threshold = 5
 
-/obj/item/clothing/suit/roguetown/armor/plate/full/dreamwalker/Initialize()
+/obj/item/clothing/suit/roguetown/armor/plate/full/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -652,11 +637,10 @@
 	name = "otherworldly legplate"
 	desc = "Strange iridescent leg plate. It reflects light as if covered in shiny oil."
 	icon_state = "dreamlegs"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	item_flags = DREAM_ITEM
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_PICK)
 
-/obj/item/clothing/under/roguetown/platelegs/dreamwalker/Initialize()
+/obj/item/clothing/under/roguetown/platelegs/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -665,10 +649,10 @@
 	name = "otherworldly boots"
 	desc = "Strange iridescent plated boots. It reflects light as if covered in shiny oil."
 	icon_state = "dreamboots"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	item_flags = DREAM_ITEM
 
-/obj/item/clothing/shoes/roguetown/boots/armor/dreamwalker/Initialize()
+/obj/item/clothing/shoes/roguetown/boots/armor/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -679,7 +663,7 @@
 	max_integrity = ARMOR_INT_SIDE_ANTAG
 	item_flags = DREAM_ITEM
 
-/obj/item/clothing/gloves/roguetown/plate/dreamwalker/Initialize()
+/obj/item/clothing/gloves/roguetown/plate/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)
 
@@ -689,7 +673,6 @@
 	adjustable = CAN_CADJUST
 	icon_state = "dreamsquidhelm"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
-	peel_threshold = 4
 	item_flags = DREAM_ITEM
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/32x48/head.dmi'
 	block2add = null
@@ -699,6 +682,6 @@
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
-/obj/item/clothing/head/roguetown/helmet/bascinet/dreamwalker/Initialize()
+/obj/item/clothing/head/roguetown/helmet/bascinet/dreamwalker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/dream_weapon, null, 20 SECONDS)

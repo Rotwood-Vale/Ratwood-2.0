@@ -16,7 +16,7 @@
 	bypass_jobban = FALSE
 	min_pq = 100 //the magic of an allowlist server.
 	max_pq = null
-	tutorial = "The Lunatic, shunned by society and a magnet for misfortune. Your task is simple yet perilous: survive by any means, though your very existence invites danger from every corner. It is said that the vale drives those most familiar with it, the most insane."
+	tutorial = "The Lunatic, shunned by society and a magnet for misfortune. Your task is simple yet perilous: survive by any means, though your very existence invites danger from every corner. It is said that these lands drive those most familiar with it, the most insane."
 	display_order = JDO_LUNATIC
 	social_rank = SOCIAL_RANK_PEASANT
 	cmode_music = 'sound/music/combat_bum.ogg'
@@ -30,7 +30,7 @@
 
 /datum/advclass/lunatic
 	name = "Lunatic"
-	tutorial = "The Lunatic, shunned by society and a magnet for misfortune. Your task is simple yet perilous: survive by any means, though your very existence invites danger from every corner. It is said that The Vale drives those most familiar with it, the most insane."
+	tutorial = "The Lunatic, shunned by society and a magnet for misfortune. Your task is simple yet perilous: survive by any means, though your very existence invites danger from every corner. It is said that these lands drive those most familiar with it, the most insane."
 	outfit = /datum/outfit/job/roguetown/lunatic/basic
 	category_tags = list(CTAG_LUNATIC)
 	subclass_stats = list(

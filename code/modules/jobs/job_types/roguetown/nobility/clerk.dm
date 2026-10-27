@@ -20,7 +20,8 @@
 	round_contrib_points = 2
 	advclass_cat_rolls = list(CTAG_CLERK = 2)
 	social_rank = SOCIAL_RANK_YEOMAN
-	job_traits = list(TRAIT_SEEPRICES)
+	job_traits = list(TRAIT_SEEPRICES, TRAIT_ROYAL_SUBSIDY)
+	virtue_restrictions = list(/datum/virtue/utility/blacksmith, /datum/virtue/utility/artificer, /datum/virtue/utility/tailor)
 	job_subclasses = list(
 		/datum/advclass/clerk
 	)
@@ -67,4 +68,7 @@
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
 	beltl = /obj/item/storage/keyring/steward //serously doubt this is gonna be an issue, but if it is, i'll change it
 	backr = /obj/item/storage/backpack/rogue/satchel
+	backpack_contents = list(
+		/obj/item/mini_flagpole/steward = 1,
+	)
 	id = /obj/item/scomstone/bad

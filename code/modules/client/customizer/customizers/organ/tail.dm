@@ -6,7 +6,34 @@
 	name = "Tail"
 	organ_type = /obj/item/organ/tail
 	organ_slot = ORGAN_SLOT_TAIL
+	organ_dna_type = /datum/organ_dna/tail
+	customizer_entry_type = /datum/customizer_entry/organ/tail
 	abstract_type = /datum/customizer_choice/organ/tail
+
+/datum/customizer_choice/organ/tail/imprint_organ_dna(datum/organ_dna/organ_dna, datum/customizer_entry/entry, datum/preferences/prefs)
+	..()
+	if(entry.accessory_type == /datum/sprite_accessory/tail/manticore)
+		organ_dna.organ_type = /obj/item/organ/tail/manticore
+	var/datum/organ_dna/tail/tail_dna = organ_dna
+	var/datum/customizer_entry/organ/tail/tail_entry = entry
+	tail_dna.fertility = tail_entry.fertility
+
+/datum/customizer_entry/organ/tail
+	var/fertility = TRUE
+
+/datum/customizer_choice/organ/tail/generate_pref_choices(list/dat, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
+	..()
+	if(organ_type != /obj/item/organ/tail/manticore && entry.accessory_type != /datum/sprite_accessory/tail/manticore)
+		return
+	var/datum/customizer_entry/organ/tail/tail_entry = entry
+	dat += "<br>Fertile: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=fertile'>[tail_entry.fertility ? "Fertile" : "Sterile"]</a>"
+
+/datum/customizer_choice/organ/tail/handle_topic(mob/user, list/href_list, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
+	..()
+	if((organ_type != /obj/item/organ/tail/manticore && entry.accessory_type != /datum/sprite_accessory/tail/manticore) || href_list["customizer_task"] != "fertile")
+		return
+	var/datum/customizer_entry/organ/tail/tail_entry = entry
+	tail_entry.fertility = !tail_entry.fertility
 
 /datum/customizer/organ/tail/vulpkanin
 	customizer_choices = list(/datum/customizer_choice/organ/tail/vulpkanin)
@@ -120,6 +147,7 @@
 		/datum/sprite_accessory/tail/rattlesnake,
 		/datum/sprite_accessory/tail/lynx,
 		/datum/sprite_accessory/tail/pinecone,
+		/datum/sprite_accessory/tail/manticore,
 		/datum/sprite_accessory/tail/large_snake,
 		/datum/sprite_accessory/tail/large_snake_plain
 	)
@@ -206,7 +234,14 @@
 		/datum/sprite_accessory/tail/lizard/spikes,
 		/datum/sprite_accessory/tail/rattlesnake,
 		/datum/sprite_accessory/tail/lynx,
-		/datum/sprite_accessory/tail/pinecone
+		/datum/sprite_accessory/tail/pinecone,
+		/datum/sprite_accessory/tail/scorpian,
+		/datum/sprite_accessory/tail/manticore,
+		/datum/sprite_accessory/tail/tailmaw,
+		/datum/sprite_accessory/tail/tailmaw2,
+		/datum/sprite_accessory/tail/tailmaw2_head,
+		/datum/sprite_accessory/tail/tailmaw2_stripes,
+		/datum/sprite_accessory/tail/tailmaw2_headstripes
 		)
 	allows_accessory_color_customization = TRUE
 
@@ -292,8 +327,15 @@
 		/datum/sprite_accessory/tail/haven,
 		/datum/sprite_accessory/tail/swallow,
 		/datum/sprite_accessory/tail/zorzor,
+		/datum/sprite_accessory/tail/manticore,
+		/datum/sprite_accessory/tail/scorpian,
 		/datum/sprite_accessory/tail/large_snake,
-		/datum/sprite_accessory/tail/large_snake_plain
+		/datum/sprite_accessory/tail/large_snake_plain,
+		/datum/sprite_accessory/tail/tailmaw,
+		/datum/sprite_accessory/tail/tailmaw2,
+		/datum/sprite_accessory/tail/tailmaw2_head,
+		/datum/sprite_accessory/tail/tailmaw2_stripes,
+		/datum/sprite_accessory/tail/tailmaw2_headstripes
 		)
 
 /datum/customizer/organ/tail/anthro
@@ -368,8 +410,17 @@
 		/datum/sprite_accessory/tail/haven,
 		/datum/sprite_accessory/tail/swallow,
 		/datum/sprite_accessory/tail/zorzor,
+		/datum/sprite_accessory/tail/manticore,
+		/datum/sprite_accessory/tail/scorpian,
 		/datum/sprite_accessory/tail/large_snake,
-		/datum/sprite_accessory/tail/large_snake_plain
+		/datum/sprite_accessory/tail/large_snake_plain,
+		/datum/sprite_accessory/tail/tailmaw,
+		/datum/sprite_accessory/tail/tailmaw2,
+		/datum/sprite_accessory/tail/tailmaw2_head,
+		/datum/sprite_accessory/tail/tailmaw2_stripes,
+		/datum/sprite_accessory/tail/tailmaw2_headstripes,
+		/datum/sprite_accessory/tail/shadekin,
+		/datum/sprite_accessory/tail/shadekin/short,
 		)
 
 /datum/customizer/organ/tail/dullahan
@@ -438,7 +489,14 @@
 		/datum/sprite_accessory/tail/lizard/ltiger,
 		/datum/sprite_accessory/tail/lizard/spikes,
 		/datum/sprite_accessory/tail/rattlesnake,
-		/datum/sprite_accessory/tail/lynx
+		/datum/sprite_accessory/tail/manticore,
+		/datum/sprite_accessory/tail/scorpian,
+		/datum/sprite_accessory/tail/lynx,
+		/datum/sprite_accessory/tail/tailmaw,
+		/datum/sprite_accessory/tail/tailmaw2,
+		/datum/sprite_accessory/tail/tailmaw2_head,
+		/datum/sprite_accessory/tail/tailmaw2_stripes,
+		/datum/sprite_accessory/tail/tailmaw2_headstripes
 		)
 	allows_accessory_color_customization = TRUE
 
@@ -461,3 +519,26 @@
 		/datum/sprite_accessory/tail/swallow,
 		/datum/sprite_accessory/tail/pinecone
 	)
+
+/datum/customizer/organ/tail/manticore
+	name = "Tail Maw"
+	customizer_choices = list(/datum/customizer_choice/organ/tail/manticore)
+	allows_disabling = TRUE
+	default_disabled = TRUE
+
+/datum/customizer_choice/organ/tail/manticore
+	name = "Manticore Tail"
+	organ_type = /obj/item/organ/tail/manticore
+	sprite_accessories = list(
+		/datum/sprite_accessory/tail/manticore,
+		/datum/sprite_accessory/tail/tailmaw,
+		/datum/sprite_accessory/tail/tailmaw2,
+		/datum/sprite_accessory/tail/tailmaw2_head,
+		/datum/sprite_accessory/tail/tailmaw2_stripes,
+		/datum/sprite_accessory/tail/tailmaw2_headstripes,
+		/datum/sprite_accessory/tail/tiefling/tailmaw,
+		/datum/sprite_accessory/tail/tiefling/heart/tailmaw,
+		/datum/sprite_accessory/tail/tiefling/spadeheart/tailmaw,
+		/datum/sprite_accessory/tail/tiefling/spade/tailmaw,
+	)
+	allows_accessory_color_customization = TRUE

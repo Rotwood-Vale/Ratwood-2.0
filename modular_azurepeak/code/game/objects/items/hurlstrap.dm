@@ -71,5 +71,5 @@
 		else
 			icon_state = "hbstrap0"
 
-/obj/item/hurlstrap/Initialize()
+/obj/item/hurlstrap/Initialize(mapload)
 	. = ..()

@@ -2,10 +2,10 @@
 	var/current_slot
 
 /datum/loadout_menu/New()
-    . = ..()
+	. = ..()
 
 /datum/loadout_menu/Destroy()
-    // clean up any vars first
+	// clean up any vars first
 	current_slot = null
 	. = ..()
 

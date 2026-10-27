@@ -1,0 +1,237 @@
+/datum/job/roguetown/warden
+	title = "Warden"
+	flag = BOGGUARD
+	department_flag = GARRISON
+	faction = "Station"
+	total_positions = 6
+	spawn_positions = 6
+	selection_color = JCOLOR_SOLDIER
+
+	allowed_sexes = list(MALE, FEMALE)
+	allowed_races = ACCEPTED_RACES
+	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
+	tutorial = "Having proven yourself through years of scouting, skirmishing and survival in the vanguard, you have been initiated into the Wardens - an elite fraternity of ranger types who keep a vigil over the untamed wilderness. Trusted to venture deep into the uncivilised darkness south of lowtown, you act as a scout, soldier, sentinel and guide, performing long-range reconnaissance, culling dangerous wildlife, and protecting lowtown alongside the vanguard. You are subordinate to the Master Warden, whom in turn serves the baron and may be called upon as members of the garrison by the Marshal and Crown. Serve the baron's will as the first line of defence from threats beyond the borders of civilisation, keep the roads safe, and hold the vanguard fortress. The Crown is counting on you."
+	display_order = JDO_TOWNGUARD
+	whitelist_req = TRUE
+
+	outfit = /datum/outfit/job/roguetown/warden
+	advclass_cat_rolls = list(CTAG_WARDEN = 20)
+
+	give_bank_account = 16
+	min_pq = 0
+	max_pq = null
+	round_contrib_points = 2
+	cmode_music = 'sound/music/combat_blackoak.ogg'
+	social_rank = SOCIAL_RANK_PEASANT
+	job_traits = list(TRAIT_OUTDOORSMAN, TRAIT_WOODSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_EXPERT_HUNTER)
+	job_subclasses = list(
+		/datum/advclass/warden/ranger,
+		/datum/advclass/warden/forester
+	)
+
+/datum/job/roguetown/warden/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	. = ..()
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(istype(H.cloak, /obj/item/clothing/cloak/wardencloak))
+			var/obj/item/clothing/S = H.cloak
+			var/index = findtext(H.real_name, " ")
+			if(index)
+				index = copytext(H.real_name, 1,index)
+			if(!index)
+				index = H.real_name
+			S.name = "warden cloak ([index])"
+
+/datum/outfit/job/roguetown/warden
+	cloak = /obj/item/clothing/cloak/wardencloak
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+	belt = /obj/item/storage/belt/rogue/leather
+	backr = /obj/item/storage/backpack/rogue/satchel
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
+	id = /obj/item/scomstone/bad/garrison
+	job_bitflag = BITFLAG_GARRISON
+
+/datum/outfit/job/roguetown/warden/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	if(istype(H.belt, /obj/item/storage/belt/rogue/leather))
+		if(locate(/obj/item/signal_flare_gun) in H.belt)
+			return
+		var/obj/item/signal_flare_gun/loaded/gun = new(H.belt.loc)
+		if(!SEND_SIGNAL(H.belt, COMSIG_TRY_STORAGE_INSERT, gun, null, TRUE, TRUE))
+			gun.forceMove(get_turf(H))
+		var/obj/item/signal_flare/spare = new(H.belt.loc)
+		if(!SEND_SIGNAL(H.belt, COMSIG_TRY_STORAGE_INSERT, spare, null, TRUE, TRUE))
+			spare.forceMove(get_turf(H))
+
+/datum/advclass/warden/ranger
+	name = "Ranger"
+	tutorial = "You are a ranger, a hunter who volunteered to become a part of the wardens. You have great experience using bows."
+	outfit = /datum/outfit/job/roguetown/warden/ranger
+	category_tags = list(CTAG_WARDEN)
+	traits_applied = list(TRAIT_DODGEEXPERT)
+	subclass_stats = list(
+		STATKEY_PER = 2,//7 points weighted, same as MAA. They get temp buffs in the woods instead of in the city.
+		STATKEY_SPD = 2,
+		STATKEY_WIL = 1
+	)
+	subclass_skills = list(
+		/datum/skill/combat/bows = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/slings = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE, // This should let them fry meat on fires.
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
+	)
+
+/datum/outfit/job/roguetown/warden/ranger/pre_equip(mob/living/carbon/human/H)
+	..()
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden
+	neck = /obj/item/clothing/neck/roguetown/coif
+	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+	pants = /obj/item/clothing/under/roguetown/trou/leather
+	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/warden
+	beltr = /obj/item/quiver/arrows
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/warden_machete
+	backpack_contents = list(
+		/obj/item/storage/keyring/guard = 1,
+		/obj/item/flashlight/flare/torch/lantern = 1,
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
+		/obj/item/signal_horn = 1,
+		/obj/item/hunting_map/boars = 1,
+		)
+	H.verbs |= /mob/proc/haltyell
+	H.set_blindness(0)
+
+	if(H.mind)
+		var/helmets = list(
+			"Antlers of the Antelope" 	= /obj/item/clothing/head/roguetown/helmet/bascinet/antler,
+			"Skull of the Volf"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf,
+			"Skull of the Ram"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat,
+			"Skull of the Bear"		= /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear,
+			"None"
+		)
+		var/helmchoice = input(H, "Choose your Path.", "HELMET SELECTION") as anything in helmets
+		if(helmchoice != "None")
+			head = helmets[helmchoice]
+
+		var/hoods = list(
+			"Common Shroud" 	= /obj/item/clothing/head/roguetown/roguehood/warden,
+			"Antlered Shroud"		= /obj/item/clothing/head/roguetown/roguehood/warden/antler,
+			"None"
+		)
+		var/hoodchoice = input(H, "Choose your Shroud.", "HOOD SELECTION") as anything in hoods
+		if(helmchoice != "None")
+			mask = hoods[hoodchoice]
+
+/datum/advclass/warden/forester
+	name = "Forester"
+	tutorial = "You are a forester, a woodsman who volunteered to become a part of the wardens. You have experience in the axe and the spear."
+	outfit = /datum/outfit/job/roguetown/warden/forester
+	category_tags = list(CTAG_WARDEN)
+	traits_applied = list(TRAIT_MEDIUMARMOR)
+	subclass_stats = list(
+		STATKEY_STR = 2,//7 points weighted, same as MAA. They get temp buffs in the woods instead of in the city.
+		STATKEY_CON = 1,
+		STATKEY_WIL = 1,
+		STATKEY_PER = 1
+	)
+	subclass_skills = list(
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/slings = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE, // This should let them fry meat on fires.
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
+	)
+
+/datum/outfit/job/roguetown/warden/forester/pre_equip(mob/living/carbon/human/H)
+	..()
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/warden/melee
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
+	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
+	pants = /obj/item/clothing/under/roguetown/chainlegs/iron
+	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	beltr = /obj/item/rogueweapon/stoneaxe/woodcut/wardenpick
+	beltl = /obj/item/rogueweapon/huntingknife
+	r_hand = /obj/item/rogueweapon/spear
+	backpack_contents = list(
+		/obj/item/storage/keyring/guard = 1,
+		/obj/item/flashlight/flare/torch/lantern = 1,
+		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/signal_horn = 1
+		)
+	H.verbs |= /mob/proc/haltyell
+	H.set_blindness(0)
+
+	if(H.mind)
+		var/weapons = list("Axe", "Sword & Shield")
+		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+		switch(weapon_choice)
+			if("Axe")
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
+			if("Sword & Shield")
+				backl = /obj/item/rogueweapon/shield/iron
+				beltl = /obj/item/rogueweapon/scabbard/sword
+				r_hand = /obj/item/rogueweapon/sword/short/messer
+				backpack_contents = list(
+					/obj/item/storage/keyring/guard = 1,
+					/obj/item/flashlight/flare/torch/lantern = 1,
+					/obj/item/rogueweapon/scabbard/sheath = 1,
+					/obj/item/rogueweapon/huntingknife/idagger/warden_machete = 1,
+					/obj/item/signal_horn = 1
+					)
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+
+		var/helmets = list(
+			"Antlers of the Antelope"   = /obj/item/clothing/head/roguetown/helmet/bascinet/antler/melee,
+			"Skull of the Volf"         = /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf/melee,
+			"Skull of the Ram"          = /obj/item/clothing/head/roguetown/helmet/sallet/warden/goat/melee,
+			"Skull of the Bear"         = /obj/item/clothing/head/roguetown/helmet/sallet/warden/bear/melee,
+			"None"
+		)
+		var/helmchoice = input(H, "Choose your Path.", "HELMET SELECTION") as anything in helmets
+		if(helmchoice != "None")
+			head = helmets[helmchoice]
+
+		var/hoods = list(
+			"Common Shroud" 	= /obj/item/clothing/head/roguetown/roguehood/warden,
+			"Antlered Shroud"		= /obj/item/clothing/head/roguetown/roguehood/warden/antler,
+			"None"
+		)
+		var/hoodchoice = input(H, "Choose your Shroud.", "HOOD SELECTION") as anything in hoods
+		if(helmchoice != "None")
+			mask = hoods[hoodchoice]

@@ -1,3 +1,11 @@
+/// Refreshes the stamina HUD bar. Overridden by mobs that have one.
+/mob/living/proc/update_stamina_hud()
+	return FALSE
+
+/// Refreshes the energy HUD bar. Overridden by mobs that have one.
+/mob/living/proc/update_energy_hud()
+	return FALSE
+
 /mob/living/proc/update_stamina() //update hud and regen after last_fatigued delay on taking
 	max_stamina = max_energy / 10
 
@@ -13,16 +21,24 @@
 		added = round(-10 + (added * - 40))
 		if(src.climbing) // no stam regen while climbing guh
 			added = 0
+		if (bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)	//being max heat(level 2) makes you regen half as much stamina
+			added = round(added * 0.5, 1)
 		if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
 			added = round(added * 0.5, 1)
 		if(HAS_TRAIT(src, TRAIT_MONK_ROBE))
 			added = round(added * 1.25, 1)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.has_status_effect(/datum/status_effect/debuff/sleepytime/t2))
+				added = round(added * 0.8, 1)
+			else if(H.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+				added = round(added * 0.7, 1)
 		if(stamina >= 1)
 			stamina_add(added)
 		else
 			stamina = 0
 
-	update_health_hud()
+	update_stamina_hud()
 
 /mob/living/proc/update_energy()
 	var/athletics_skill = 0
@@ -48,17 +64,23 @@
 	if(m_intent == MOVE_INTENT_RUN && (mobility_flags & MOBILITY_STAND))
 		if(isnull(buckled))
 			mind && mind.add_sleep_experience(/datum/skill/misc/athletics, (STAINT*0.02))
+	if(added < 0 && HAS_TRAIT(src, TRAIT_GOLD_AFFINITY))
+		var/gold = 0
+		for(var/obj/item/I in get_equipped_items())
+			if(I.is_gold)
+				gold++
+		added *= 1 - (min(gold, 5) * 0.02)
 	energy += added
 	if(energy > max_energy)
 		energy = max_energy
-		update_health_hud()
+		update_energy_hud()
 		return FALSE
 	else
 		if(energy <= 0)
 			energy = 0
 			if(m_intent == MOVE_INTENT_RUN) //can't sprint at zero stamina
 				toggle_rogmove_intent(MOVE_INTENT_WALK)
-		update_health_hud()
+		update_energy_hud()
 		return TRUE
 
 /mob/proc/stamina_add(added as num)
@@ -66,15 +88,16 @@
 
 /mob/living/proc/stamina_nutrition_mod(amt)
 	// to simulate exertion, we deduct a mob's nutrition whenever it takes an action that would give us fatigue.
-	var/nutrition_amount = amt * 0.15 // nutrition goes up to 1k at max (but constantly ticks down) so we need to work at a slightly bigger scale
-	var/athletics_skill = get_skill_level(/datum/skill/misc/athletics)
-	var/chip_amt = 2 + ceil(athletics_skill / 2)
+	var/nutrition_amount = amt * 0.075 // flat 1/2 of the old 0.15 rate
 
-	if (amt <= chip_amt)
-		if (athletics_skill && prob(athletics_skill * 16)) // 16% chance per athletics skill to straight up negate nutrition loss
-			return 0
+	if (amt <= 2)
 		if (amt == 2 && prob(STACON * 5)) // only sprinting knocks off 2 stamina at a time, so test this vs our con to see if we drop it
 			return 0
+
+	//Temperature effects- cold makes you hungrier
+	if (ishuman(src))
+		if (bodytemperature < 250)
+			nutrition_amount *= 1.3
 
 	var/tox_damage = getToxLoss()
 	if (tox_damage >= (maxHealth * 0.2)) // if we have over 20% of our health as toxin damage, add 10% of our toxin damage as base loss
@@ -82,18 +105,9 @@
 
 	if (stamina >= (max_stamina * 0.7)) // if you've spent 70% of your max fatigue, the base amount you lose is doubled
 		nutrition_amount *= 2
-	if (STACON <= 9) // 10% extra nutrition loss for every CON below 9
-		var/low_end_malus = (10 - STACON) * 0.1
-		nutrition_amount *= (1 + low_end_malus)
-	if (STACON >= 11) // 5% less nutrition loss for every CON above 11
-		var/high_end_buff = (STACON - 10) * 0.05
-		nutrition_amount *= (1 - high_end_buff)
-	if (STASTR >= 11) // 7.5% increased nutrition loss for every STR above 11. the gainz don't come cheap
-		var/swole_malus = (10 - STASTR) * 0.075
+	if (STASTR >= 11) // 5% increased nutrition loss for every STR above 11. the gainz don't come cheap
+		var/swole_malus = (10 - STASTR) * 0.05
 		nutrition_amount *= (1 + swole_malus)
-	if (athletics_skill)
-		var/athletics_bonus = athletics_skill * 0.05 //each rank of athletics gives us 5% less nutrition loss
-		nutrition_amount *= (1 - athletics_bonus)
 
 	if (nutrition >= NUTRITION_LEVEL_WELL_FED) // we've only just eaten recently so just flat out reduce the total loss by half
 		nutrition_amount *= 0.5
@@ -106,10 +120,19 @@
 /mob/living/stamina_add(added as num, emote_override, force_emote = TRUE) //call update_stamina here and set last_fatigued, return false when not enough fatigue left
 	if(HAS_TRAIT(src, TRAIT_INFINITE_STAMINA))
 		return TRUE
-	if(HAS_TRAIT(src, TRAIT_FORTITUDE))
-		added = added * 0.5
+
+	var/true_added = added
+	if(HAS_TRAIT(src, TRAIT_FORTITUDE) && added > 0) // 2nd check is to halve stamina SPEND, not stamina GAIN
+		added = added * 0.7
 	if(added < 0 && HAS_TRAIT(src, TRAIT_FROZEN_STAMINA))
 		added = 0
+
+	if(mind && true_added > 0)
+		// the amount of athletics skill gained is proportional to how much stamina is used
+		// using a tenth of the bar gives 1 XP point of athletics skill, multiplied by your constitution divided by 10
+		mind.add_sleep_experience(/datum/skill/misc/athletics, (STACON / 10) * ((true_added / max_stamina) * 10), show_xp = m_intent == MOVE_INTENT_RUN)
+	if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX && added >=1)	//being max heat(level 2) makes you regen half as much stamina
+		added = round(added * 1.5, 1)
 	stamina = CLAMP(stamina+added, 0, max_stamina)
 	if(added > 0)
 		energy_add(added * -1)
@@ -149,7 +172,7 @@
 
 	if(stamina >= max_stamina)
 		stamina = max_stamina
-		update_health_hud()
+		update_stamina_hud()
 		if(m_intent == MOVE_INTENT_RUN) //can't sprint at full fatigue
 			toggle_rogmove_intent(MOVE_INTENT_WALK, TRUE)
 		if(!emote_override)
@@ -170,7 +193,7 @@
 		if(energy <= 0)
 			addtimer(CALLBACK(src, PROC_REF(Knockdown), 30), 1 SECONDS)
 			var/area/rogue/our_area = get_area(src)
-			if(our_area.necra_area)
+			if(istype(our_area) && our_area.necra_area)
 				src.extract_from_deaths_edge()
 
 		addtimer(CALLBACK(src, PROC_REF(Immobilize), 30), 1 SECONDS)
@@ -185,7 +208,7 @@
 		return FALSE
 	else
 		last_fatigued = world.time
-		update_health_hud()
+		update_stamina_hud()
 		return TRUE
 
 /mob/living/carbon

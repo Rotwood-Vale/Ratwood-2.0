@@ -23,7 +23,7 @@
 /obj/item/clothing/head/roguetown/helmet/skullcap{
 	pixel_y = 10
 	},
-/obj/item/clothing/cloak/half/shadowcloak,
+/obj/item/clothing/cloak/shadowcloak,
 /obj/item/rogueweapon/mace/warhammer/steel,
 /obj/item/clothing/suit/roguetown/armor/gambeson,
 /obj/item/clothing/gloves/roguetown/chain/iron,
@@ -885,7 +885,7 @@
 /obj/item/clothing/head/roguetown/helmet/skullcap{
 	pixel_y = 10
 	},
-/obj/item/clothing/cloak/half/shadowcloak,
+/obj/item/clothing/cloak/shadowcloak,
 /obj/item/rogueweapon/greatsword/grenz,
 /obj/item/clothing/suit/roguetown/armor/gambeson,
 /obj/item/clothing/gloves/roguetown/chain/iron,
@@ -940,7 +940,7 @@
 /area/rogue/under/tomb)
 "KS" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/rogueweapon/huntingknife/idagger/steel/padagger,
+/obj/item/rogueweapon/huntingknife/idagger/steel/ancient,
 /obj/effect/decal/cleanable/sigil,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb/indoors/church)

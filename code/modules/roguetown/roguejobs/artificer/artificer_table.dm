@@ -48,6 +48,7 @@
 				new material.artrecipe.created_item(get_turf(src))
 			var/obj/item/created_item_instance = new(material.artrecipe.created_item)
 			user.visible_message(span_info("[user] creates \a [created_item_instance.name]."))
+			user.log_message("crafted [english_list(islist(material.artrecipe.created_item) ? material.artrecipe.created_item : list(material.artrecipe.created_item))] at [src] ([material.artrecipe.type])", LOG_GAME)
 			user.mind.add_sleep_experience(material.artrecipe.appro_skill, (user.STAINT * (material.artrecipe.skill_level * 5))) //may need to be adjusted
 			qdel(material)
 			material = null

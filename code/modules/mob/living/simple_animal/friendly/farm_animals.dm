@@ -38,7 +38,7 @@
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
-/mob/living/simple_animal/hostile/retaliate/goat/Initialize()
+/mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload)
 	udder = new()
 	. = ..()
 
@@ -51,11 +51,11 @@
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && prob(1))
+		if(!LAZYLEN(enemies) && prob(1))
 			Retaliate()
 
-		if(enemies.len && prob(10))
-			enemies = list()
+		if(LAZYLEN(enemies) && prob(10))
+			clear_enemies()
 			LoseTarget()
 			src.visible_message(span_notice("[src] calms down."))
 	if(stat == CONSCIOUS)
@@ -117,7 +117,7 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 	pooptype = /obj/item/natural/poo/cow
 
-/mob/living/simple_animal/cow/Initialize()
+/mob/living/simple_animal/cow/Initialize(mapload)
 	if(gender == FEMALE)
 		udder = new()
 	. = ..()
@@ -141,6 +141,7 @@
 	buckle_lying = FALSE
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
+	D.set_riding_offsets(2, list(TEXT_NORTH = list(0, 0), TEXT_SOUTH = list(0, 16), TEXT_EAST = list(-10, 8), TEXT_WEST = list(10, 8)))
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -158,24 +159,26 @@
 		to_chat(src, span_danger("I am tipped over by [M]!"))
 		Paralyze(60, ignore_canstun = TRUE)
 		icon_state = "[initial(icon_state)]_tip"
-		spawn(rand(20,50))
-			if(!stat && M)
-				icon_state = icon_living
-				var/external
-				var/internal
-				switch(pick(1,2,3,4))
-					if(1,2,3)
-						var/text = pick("imploringly.", "pleadingly.",
-							"with a resigned expression.")
-						external = "[src] looks at [M] [text]"
-						internal = "You look at [M] [text]"
-					if(4)
-						external = "[src] seems resigned to its fate."
-						internal = "You resign myself to your fate."
-				visible_message(span_notice("[external]"),
-					span_revennotice("[internal]"))
+		addtimer(CALLBACK(src, PROC_REF(untip_check), M), rand(20,50))
 	else
 		..()
+
+/mob/living/simple_animal/cow/proc/untip_check(mob/living/carbon/M)
+	if(!stat && M)
+		icon_state = icon_living
+		var/external
+		var/internal
+		switch(pick(1,2,3,4))
+			if(1,2,3)
+				var/text = pick("imploringly.", "pleadingly.",
+					"with a resigned expression.")
+				external = "[src] looks at [M] [text]"
+				internal = "You look at [M] [text]"
+			if(4)
+				external = "[src] seems resigned to its fate."
+				internal = "You resign myself to your fate."
+		visible_message(span_notice("[external]"),
+			span_revennotice("[internal]"))
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"
@@ -213,7 +216,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/chick/Initialize()
+/mob/living/simple_animal/chick/Initialize(mapload)
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
@@ -275,7 +278,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/chicken/Initialize()
+/mob/living/simple_animal/chicken/Initialize(mapload)
 	. = ..()
 	if(!body_color)
 		body_color = pick(validColors)
@@ -291,7 +294,7 @@
 	return ..()
 
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
-	if(is_type_in_list(O, food_type)) //feedin' dem chickens
+	if(food_typecache?[O.type]) //feedin' dem chickens
 		if(!stat && eggsleft < 8)
 			var/feedmsg = "[user] feeds [O] to [name]! [pick(feedMessages)]"
 			user.visible_message(feedmsg)
@@ -333,7 +336,7 @@
 	name = "udder"
 	var/in_use // so you can't spam milking sounds
 
-/obj/item/udder/Initialize()
+/obj/item/udder/Initialize(mapload)
 	create_reagents(100)
 	reagents.add_reagent(/datum/reagent/consumable/milk, rand(0,20))
 	. = ..()

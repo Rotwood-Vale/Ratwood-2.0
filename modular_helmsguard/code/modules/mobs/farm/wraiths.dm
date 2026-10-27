@@ -35,7 +35,6 @@
 	melee_damage_upper = 25
 	attack_same = FALSE
 	attack_sound = 'sound/combat/wooshes/bladed/wooshmed (1).ogg'
-	dodge_sound = 'sound/combat/dodge.ogg'
 	parry_sound = "bladedmedium"
 	d_intent = INTENT_DODGE
 	speak_emote = list("laments", "cries", "whimpers")
@@ -49,14 +48,14 @@
 	footstep_type = null
 	defprob = 20 //ghost attack
 //	defdrain = 8
-	dodgetime = 10
-	canparry = TRUE
+	dodgetime = 1 SECONDS
+	parriable_intent = TRUE
 	retreat_health = null
 	can_buckle = TRUE
 	patron = /datum/patron/inhumen/zizo		//So they can be hurt by holy fire/healing
 
 
-/mob/living/simple_animal/hostile/rogue/ghost/wraith/Initialize()
+/mob/living/simple_animal/hostile/rogue/ghost/wraith/Initialize(mapload)
 	. = ..()
 	icon_state = "wraith[rand(1, 3)]"
 
@@ -98,7 +97,7 @@
 			return
 
 
-/mob/living/simple_animal/hostile/rogue/ghost/wraith/bullet_act(var/obj/projectile/P)
+/mob/living/simple_animal/hostile/rogue/ghost/wraith/bullet_act(obj/projectile/P)
 	if(P)
 		P.visible_message(span_danger("\The [P.name] passes through the [src.name]!"))
 		return FALSE // Ignore projectiles
@@ -231,7 +230,7 @@
 
 
 
-/mob/living/simple_animal/hostile/rogue/ghost/wraith/proc/grapples(var/mob/living/carbon/C)
+/mob/living/simple_animal/hostile/rogue/ghost/wraith/proc/grapples(mob/living/carbon/C)
 	C.buckle_mob(src, TRUE, TRUE, FALSE, 0, 0) // Buckle the wraith to the target
 	C.visible_message(span_danger("\The [src] strangles \the [C]'s with its cold ghostly hands!"), \
 	span_danger("\The [src] is strangling me with its cold ghostly hands!"))

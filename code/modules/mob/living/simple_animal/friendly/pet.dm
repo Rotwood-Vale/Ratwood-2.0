@@ -30,7 +30,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/pet/Initialize()
+/mob/living/simple_animal/pet/Initialize(mapload)
 	. = ..()
 	if(pcollar)
 		pcollar = new(src)
@@ -40,7 +40,7 @@
 	QDEL_NULL(pcollar)
 	return ..()
 
-/mob/living/simple_animal/pet/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/simple_animal/pet/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	. = ..()
 	if(.)
 		if(collar_type)

@@ -18,7 +18,7 @@
 		"Consort",
 		"Dungeoneer",
 		"Sergeant",
-		"Men-at-arms",
+		"Man at Arms",
 		"Marshal",
 		"Merchant",
 		"Priest",

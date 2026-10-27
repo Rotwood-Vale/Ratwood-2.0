@@ -30,6 +30,8 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 			true_ambush_chance *= 1.5
 		else if(danger_level == DANGER_LEVEL_BLEAK)
 			true_ambush_chance *= 2
+	if(HAS_TRAIT(src, TRAIT_LOCAL_KNOWLEDGE))
+		true_ambush_chance *= 0.75
 	if(!always && prob(100 - true_ambush_chance))
 		return FALSE
 	if(!always)
@@ -136,7 +138,8 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 				if(istype(spawnedmob, /mob/living/simple_animal/hostile))
 					var/mob/living/simple_animal/hostile/M = spawnedmob
 					M.attack_same = FALSE
-					M.del_on_deaggro = 44 SECONDS
+					if(!istype(M, /mob/living/simple_animal/hostile/retaliate/rogue/drider))//only way to tame driders is finding them via ambush, so dont delete them
+						M.del_on_deaggro = 44 SECONDS
 					M.faction += "ambush"
 					M.GiveTarget(src)
 				if(istype(spawnedmob, /mob/living/carbon/human))
@@ -185,6 +188,9 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 	for(var/obj/structure/flora/rogueshroom/RX in orange(max_dist, src))
 		if(isturf(RX.loc) && !get_dist(RX.loc, src) < min_dist)
 			possible_targets += get_adjacent_ambush_turfs(RX.loc)
+	for(var/obj/structure/roguesand/dune/D in orange(max_dist, src))
+		if(isturf(D.loc) && get_dist(D.loc, src) >= min_dist)
+			possible_targets += get_adjacent_ambush_turfs(D.loc)
 	for(var/obj/structure/flora/newtree/RS in orange(max_dist, src))
 		if(!RS.density)
 			continue

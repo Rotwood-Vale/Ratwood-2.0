@@ -12,14 +12,14 @@
 	ambushable = FALSE
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, /datum/intent/unarmed/claw)
 	a_intent = INTENT_HELP
-	possible_mmb_intents = list(INTENT_STEAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE)
+	possible_mmb_intents = list(INTENT_SPECIAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE)
 	possible_rmb_intents = list(/datum/rmb_intent/feint, /datum/rmb_intent/swift, /datum/rmb_intent/riposte, /datum/rmb_intent/weak)
 	flee_in_pain = TRUE
 
 /mob/living/carbon/human/species/goblin/npc
 	aggressive=1
 	mode = NPC_AI_IDLE
-	dodgetime = 30 //they can dodge easily, but have a cooldown on it
+	dodgetime = 3 SECONDS //they can dodge easily, but have a cooldown on it
 	flee_in_pain = TRUE
 	npc_jump_chance = 60
 	npc_jump_distance = 3 // this might make them concheck more often, but it'll also mean it's easier to kick their legs out from under them
@@ -204,7 +204,7 @@
 /datum/species/goblin/update_damage_overlays(mob/living/carbon/human/H)
 	return
 
-/mob/living/carbon/human/species/goblin/Initialize()
+/mob/living/carbon/human/species/goblin/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 
@@ -232,7 +232,7 @@
 		QDEL_NULL(eyes)
 	eyes = new /obj/item/organ/eyes/night_vision/nightmare
 	eyes.Insert(src)
-	src.underwear = "Nude"
+	src.underwear = null
 	if(src.charflaw)
 		QDEL_NULL(src.charflaw)
 	update_body()
@@ -369,7 +369,7 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE) // Trash mob
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-        
+
 //////////////////   INVADER ZIM	//////////////////
 
 /obj/structure/gob_portal
@@ -387,7 +387,7 @@
 	var/moon_goblins = 0
 	attacked_sound = 'sound/vo/mobs/ghost/skullpile_hit.ogg'
 
-/obj/structure/gob_portal/Initialize()
+/obj/structure/gob_portal/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, FALSE)
 	soundloop.start()
@@ -440,5 +440,86 @@
 	addtimer(CALLBACK(src, PROC_REF(creategob)), 2 SECONDS)
 
 /obj/structure/gob_portal/Destroy()
-	soundloop.stop()
+	QDEL_NULL(soundloop)
 	. = ..()
+GLOBAL_LIST_INIT(large_goblin_aggro, list(
+	"ME BIGGEST GOBLIN!",
+	"CRUSH TINY HUMAN!",
+	"YOU SMALL! ME BIG!",
+	"GOBLIN KING SEND ME!",
+	"HAHA! YOU SCARED!",
+	"ME SMASH!",
+	"BIG GOBLIN EAT YOU!",
+	"NO RUN! COME BACK!",
+	"ME NOT LIKE OTHER GOBLIN! ME BETTER!",
+	"WHY YOU HIT ME?! NOW ME HIT YOU HARDER!",
+))
+
+/mob/living/carbon/human/species/goblin/npc/large
+	threat_point = THREAT_ELITE
+	name = "unusually large goblin"
+	gob_outfit = /datum/outfit/job/roguetown/npc/mini_boss/large_goblin
+	dodgetime = 20
+	d_intent = INTENT_PARRY
+
+/mob/living/carbon/human/species/goblin/npc/large/after_creation()
+	..()
+	ADD_TRAIT(src, TRAIT_BIGGUY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_LEECHIMMUNE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_BREADY, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
+	src.transform = src.transform.Scale(1.25, 1.25)
+	src.pixel_y += round(0.25 * 16)
+
+/mob/living/carbon/human/species/goblin/npc/large/death(gibbed, nocutscene = FALSE)
+	. = ..()
+
+/mob/living/carbon/human/species/goblin/npc/large/hell
+	race = /datum/species/goblin/hell
+
+/mob/living/carbon/human/species/goblin/npc/large/moon
+	race = /datum/species/goblin/moon
+
+/mob/living/carbon/human/species/goblin/npc/large/cave
+	race = /datum/species/goblin/cave
+
+/mob/living/carbon/human/species/goblin/npc/large/sea
+	race = /datum/species/goblin/sea
+
+/datum/outfit/job/roguetown/npc/mini_boss/large_goblin/pre_equip(mob/living/carbon/human/H)
+	..()
+	H.STASTR = 16
+	H.STASPD = 12
+	H.STACON = 20
+	H.STAWIL = 12
+	H.STAPER = 6
+	H.STAINT = 8 // I am Evil
+	H.STALUC = 4
+	// Gives it armor for some much needed buff
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron/goblin
+	head = /obj/item/clothing/head/roguetown/helmet/goblin
+	belt = /obj/item/storage/belt/rogue/leather
+	var/loadout = rand(1, 4)
+	switch(loadout)
+		if(1) // mace brute
+			r_hand = /obj/item/rogueweapon/mace/steel
+			l_hand = /obj/item/rogueweapon/shield/heater
+		if(2) // greataxe berserker
+			r_hand = /obj/item/rogueweapon/greataxe
+			backl = /obj/item/rogueweapon/scabbard/gwstrap
+		if(3) // flail and shield
+			r_hand = /obj/item/rogueweapon/flail
+			l_hand = /obj/item/rogueweapon/shield/heater
+		if(4) // bottle bomber
+			r_hand = /obj/item/rogueweapon/mace/steel
+	H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
+	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)

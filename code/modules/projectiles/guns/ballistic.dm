@@ -90,7 +90,7 @@
 	var/tac_reloads = TRUE //Snowflake mechanic no more.
 	var/verbage = "load"
 
-/obj/item/gun/ballistic/Initialize()
+/obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
 	if (!spawnwithmagazine)
 		bolt_locked = TRUE

@@ -5,13 +5,13 @@
 	pixel_y = 32
 	var/datum/reagent/water_reagent = /datum/reagent/water
 
-/obj/effect/waterfall/Initialize()
+/obj/effect/waterfall/Initialize(mapload)
 	. = ..()
 	var/turf/open = get_turf(src)
 	if(istransparentturf(open))
 		return
-	color = initial(water_reagent.color)
-	var/obj/particle_emitter/effect = MakeParticleEmitter(/particles/mist/waterfall)
+	color = water_reagent::color
+	var/obj/particle_emitter/effect = MakeParticleEmitter(/particles/mist/waterfall, particle_color = color)
 	effect.layer = 5
 	effect.alpha = 175
 

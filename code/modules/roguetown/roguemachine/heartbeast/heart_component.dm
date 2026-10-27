@@ -1,3 +1,4 @@
+// why does this use a component, it should be on the heart beast type, this is dumb
 /datum/component/chimeric_heart_beast
 	var/obj/structure/roguemachine/chimeric_heart_beast/heart_beast
 	var/base_blood_output = 1
@@ -48,13 +49,13 @@
 
 	last_happiness_decay = world.time
 
-	RegisterSignal(heart_beast, COMSIG_HEART_BEAST_HEAR, .proc/on_hear)
-	RegisterSignal(heart_beast, COMSIG_ATOM_ATTACK_HAND, .proc/on_interact)
-	RegisterSignal(heart_beast, COMSIG_PARENT_ATTACKBY, .proc/on_item_interact)
+	RegisterSignal(heart_beast, COMSIG_HEART_BEAST_HEAR, PROC_REF(on_hear))
+	RegisterSignal(heart_beast, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_interact))
+	RegisterSignal(heart_beast, COMSIG_PARENT_ATTACKBY, PROC_REF(on_item_interact))
 
 	initialize_quirks()
 	setup_heartbeast_turfs()
-	addtimer(CALLBACK(src, .proc/link_to_racks), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(link_to_racks)), 5 SECONDS)
 
 /datum/component/chimeric_heart_beast/proc/setup_heartbeast_turfs()
 	var/turf/center_turf = get_turf(heart_beast)
@@ -147,11 +148,13 @@
 		if(!valid_turfs.len)
 			break
 
-		spawn(rand(1, 5) SECONDS)
-			var/turf/target_turf = pick(valid_turfs)
-			valid_turfs -= target_turf
-			playsound(heart_beast, 'sound/misc/machinevomit.ogg', 75, TRUE)
-			create_discharge_projectile(target_turf)
+		addtimer(CALLBACK(src, PROC_REF(delayed_discharge), valid_turfs), rand(1, 5) SECONDS)
+
+/datum/component/chimeric_heart_beast/proc/delayed_discharge(list/valid_turfs)
+	var/turf/target_turf = pick(valid_turfs)
+	valid_turfs -= target_turf
+	playsound(heart_beast, 'sound/misc/machinevomit.ogg', 75, TRUE)
+	create_discharge_projectile(target_turf)
 
 /datum/component/chimeric_heart_beast/proc/process_environment_quirks()
 	if(!environment_quirks.len)
@@ -199,7 +202,7 @@
 
 /datum/component/chimeric_heart_beast/proc/update_blood_overlay()
 	var/blood_percent = blood_pool / max_blood_pool
-	heart_beast.cut_overlay("blood_pool")
+	heart_beast.cut_overlays()
 
 	var/chunk = round(blood_percent * 5) // This gives us 0-5
 	if(chunk >= 1)
@@ -235,12 +238,10 @@
 	SIGNAL_HANDLER
 
 	if(istype(I, /obj/item/heart_blood_canister))
-		spawn(0)
-			try_fill_blood_container(I, user, (max_blood_pool / 10), /obj/item/heart_blood_canister/filled)
+		INVOKE_ASYNC(src, PROC_REF(try_fill_blood_container), I, user, (max_blood_pool / 10), /obj/item/heart_blood_canister/filled)
 		return
 	else if(istype(I, /obj/item/heart_blood_vial))
-		spawn(0)
-			try_fill_blood_container(I, user, (max_blood_pool / 30), /obj/item/heart_blood_vial/filled)
+		INVOKE_ASYNC(src, PROC_REF(try_fill_blood_container), I, user, (max_blood_pool / 30), /obj/item/heart_blood_vial/filled)
 		return
 
 	if(!item_interaction_quirks.len)
@@ -249,7 +250,7 @@
 	for(var/datum/flesh_quirk/quirk in item_interaction_quirks)
 		quirk.apply_item_interaction_quirk(I, user, src)
 
-/datum/component/chimeric_heart_beast/proc/try_fill_blood_container(obj/item/empty_container, mob/user, var/amount, var/filled_type)
+/datum/component/chimeric_heart_beast/proc/try_fill_blood_container(obj/item/empty_container, mob/user, amount, filled_type)
 	if(blood_pool < amount)
 		to_chat(user, span_warning("The blood pool is too low to fill [empty_container]."))
 		return FALSE
@@ -315,7 +316,7 @@
 	// Check for keywords (up to 2)
 	var/keywords_found = 0
 	for(var/keyword in task.answer_keywords)
-		if(findtext(lowertext(message), lowertext(keyword)))
+		if(findtext(LOWER_TEXT(message), LOWER_TEXT(keyword)))
 			keywords_found++
 			if(keywords_found >= 2)
 				break
@@ -468,7 +469,7 @@
 /datum/flesh_task/knowledge
 	var/datum/flesh_concept/concept
 
-/datum/flesh_task/knowledge/New(language_tier, var/obj/structure/roguemachine/chimeric_heart_beast/heart_beast)
+/datum/flesh_task/knowledge/New(language_tier, obj/structure/roguemachine/chimeric_heart_beast/heart_beast)
 	. = ..()
 	var/list/possible_concepts = list()
 	for(var/datum/flesh_trait/trait in heart_beast.traits)

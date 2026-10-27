@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ad" = (
-/turf/closed,
+/turf/closed/void,
 /area/rogue/under/tomb/sewer)
 "ai" = (
 /obj/effect/dungeon_directional_helper/west,
@@ -66,7 +66,8 @@
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb/sewer)
 "JG" = (
-/obj/structure/bars/pipe/left{
+/obj/structure/bars/pipe{
+	dir = 9;
 	pixel_x = 1;
 	pixel_y = 14
 	},

@@ -97,7 +97,7 @@
 /datum/status_effect/blooddrunk/on_apply()
 	. = ..()
 	if(.)
-		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk")
+		ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 		owner.maxHealth *= 10
 		owner.bruteloss *= 10
 		owner.fireloss *= 10
@@ -198,7 +198,7 @@
 	owner.staminaloss *= 0.1
 	owner.updatehealth()
 	owner.log_message("lost blood-drunk stun immunity", LOG_ATTACK)
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id));
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
@@ -294,7 +294,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
 
 /datum/status_effect/regenerative_core/on_apply()
-	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
+	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
 	owner.remove_CC()
@@ -302,7 +302,7 @@
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
+	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/antimagic
 	id = "antimagic"
@@ -311,12 +311,96 @@
 
 /datum/status_effect/antimagic/on_apply()
 	owner.visible_message("<span class='notice'>[owner] is coated with a dull aura!</span>")
-	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	ADD_TRAIT(owner, TRAIT_ANTIMAGIC, TRAIT_STATUS_EFFECT(id))
 	//glowing wings overlay
 	playsound(owner, 'sound/blank.ogg', 75, FALSE)
 	return ..()
 
 /datum/status_effect/antimagic/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, TRAIT_STATUS_EFFECT(id))
 	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
 
+/datum/status_effect/buff/tempo_one
+	id = "tempo_1"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/tempo_one
+
+/datum/status_effect/buff/tempo_one/on_apply()
+	. = ..()
+	if(owner)
+		owner.stamina = max((owner.stamina - owner.max_stamina / 3), 0)
+		to_chat(owner, span_info("Tempo!"))
+
+#define TEMPO_MAX_FILTER "tempo_max_glow"
+
+/datum/status_effect/buff/tempo_three
+	id = "tempo_3"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/tempo_three
+	var/outline_color = "#d3aa25"
+
+/datum/status_effect/buff/tempo_three/on_apply()
+	. = ..()
+	if(owner)
+		var/filter = owner.get_filter(TEMPO_MAX_FILTER)
+		if (!filter)
+			owner.add_filter(TEMPO_MAX_FILTER, 2, list("type" = "outline", "color" = outline_color, "alpha" = 80, "size" = 1))
+		owner.playsound_local(owner, 'sound/combat/tempo_max.ogg', 85, TRUE)
+		to_chat(owner, span_notice("<b>TEMPO!!!</b>"))
+		owner.stamina = 0
+		ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/buff/tempo_three/on_remove()
+	. = ..()
+	owner.remove_filter(TEMPO_MAX_FILTER)
+	REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_STATUS_EFFECT(id))
+#undef TEMPO_MAX_FILTER
+
+/datum/status_effect/buff/tempo_two
+	id = "tempo_2"
+	duration = 30 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/tempo_two
+
+/datum/status_effect/buff/tempo_two/on_apply()
+	. = ..()
+	if(owner)
+		owner.stamina = max((owner.stamina - owner.max_stamina / 2), 0)
+		to_chat(owner, span_notice("Tempo!!"))
+
+#define TEMPO_MAX_FILTER "tempo_max_glow"
+
+/atom/movable/screen/alert/status_effect/tempo_one
+	name = "Tempo One"
+	desc = "Three cowardly foes are attacking me. The need to focus has given me some light boons."
+	icon_state = "tempo1"
+
+/atom/movable/screen/alert/status_effect/tempo_three
+	name = "Full Tempo"
+	desc = "FIVE AND MORE! COME AND GET ME! I WILL NOT GO DOWN LIKE A KNAVE!"
+	icon_state = "tempo3"
+
+/atom/movable/screen/alert/status_effect/tempo_two
+	name = "Tempo Two"
+	desc = "Four on one! I am locked in. Greater boons come to me in the heat of battle."
+	icon_state = "tempo2"
+
+/datum/status_effect/buff/weapon_binded
+	id = "wep_bind_buff"
+	duration = 10 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/buff/weapon_bind_buff
+	mob_effect_layer = MOB_EFFECT_LAYER_BINDED
+	mob_effect_icon_state = "eff_binded"
+
+/datum/status_effect/buff/weapon_binded/on_apply()
+	. = ..()
+	owner.stamina_add(-20)
+
+/atom/movable/screen/alert/status_effect/buff/weapon_bind_buff
+	name = "Weapon Bind"
+	desc = "Our weapons binded in my favour! I knew right where they were gonna hit me! My parrying is improved for a short while!"
+	icon = 'icons/mob/combat_debuffs.dmi'
+	icon_state = "weapon_bind_buff"

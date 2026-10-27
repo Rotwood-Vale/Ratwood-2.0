@@ -1,0 +1,38 @@
+{
+	"chastity_front_close": [
+		"The front panel seals itself shut with a sound like a drawer locking. I've been closed off.",
+		"A faint mechanical grind, then nothing — the front is sealed. Touching myself through the slit is off the table.",
+		"The access slot clicks shut. Closed. I can stop trying.",
+		"Something shifts at the front and locks down. I press against it just to make sure. Yes, that's locked."
+	],
+	"chastity_front_open": [
+		"The front panel pops open just slightly — a gap where there wasn't one. An invitation, or a trap.",
+		"Something inside gives way and I feel a faint rush of cooler air at the front. The slit is open.",
+		"The access panel clicks loose and settles open. I'm accessible again, for whatever that's worth.",
+		"There's a small, quiet release at the front. I can feel the change in the fit. Open."
+	],
+	"chastity_rear_close": [
+		"The back plate draws itself down and clicks flush. My rear is sealed off now.",
+		"The rear shield locks into place with a sound like a small bolt being drawn. Closed.",
+		"The back end seals shut, cold metal flush against me. That's that.",
+		"A click at the back — not painful, just final. The rear is locked away."
+	],
+	"chastity_rear_open": [
+		"The rear shield releases with a dull clunk and I feel the pressure ease. Open.",
+		"Something clicks at my back and the plate shifts, giving way a little. The rear is accessible.",
+		"The back panel releases — I feel the metal separate from my skin slightly. Open again.",
+		"A soft mechanical release at my rear and the shield eases back. There's a gap now."
+	],
+	"chastity_flat_enable": [
+		"The cage compresses slowly and steadily, flattening everything beneath it. There is no comfortable position for this.",
+		"Pressure builds at the front of the device as it tightens down, crushing me smooth. I feel terribly small.",
+		"The cage forces itself flat and takes everything with it, squeezing my bits into nothing. Mortifying.",
+		"Something tightens incrementally — I'm being pressed flat. The device doesn't care how wrong it feels."
+	],
+	"chastity_flat_disable": [
+		"The cage loosens and the compression eases. I feel myself slip back to normal, blood returning to places it wasn't.",
+		"The device releases its grip, slowly. The flattening pressure fades and I fill the space again.",
+		"Something unclicks and the cage relaxes its hold. I stop being pressed into nothing. Relief is complicated.",
+		"The crushing pressure releases. My bits remember how to exist again, sore and grateful."
+	]
+}

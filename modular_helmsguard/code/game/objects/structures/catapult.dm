@@ -44,16 +44,16 @@
 	return 0
 
 /obj/structure/catapult/attack_hand(mob/living/carbon/user)
-    // Check if the catapult is loaded
+	// Check if the catapult is loaded
 	if (packed) // Check if the catapult is packed
-        // Provide a message indicating it cannot be used
+		// Provide a message indicating it cannot be used
 		user.visible_message("<span class='notice'>The catapult is currently packed and cannot be used.</span>")
 		return // Exit the proc early since no further action can be taken
 
 	if(busy)
 		to_chat(user, "<span class='warning'>Someone else is currently using this equipment.</span>")
 		return
-    // Provide choices to the user
+	// Provide choices to the user
 	if(!ready)
 		user.visible_message("<span class='notice'>[user] cranks the catapult's arm back into position.</span>")
 		playsound(src, "modular_helmsguard/sound/catapult/adjusting.ogg", 100)
@@ -184,34 +184,36 @@
 		return*/
 	if (ready)
 		playsound(src, pick(launchsound), 100)
-		spawn(10)
-			var/obj/item/boulder/P = /obj/item/boulder
-//			var/atom/target = get_edge_target_turf(src, dir)
-			user.visible_message("<span class='notice'>You fire the catapult!</span>")
-			loaded = 0
-			ready = 0
-		// Adjust `distance_input` with a random variation
-		//	var/random_distance = distance_input + rand(-5, 5)
-			var/z_position = src.z + 1 // Start one level above the catapult
-			// Apply random offsets to target position for x and y directions
+		addtimer(CALLBACK(src, PROC_REF(launch_payload), user, T), 10)
 
-/*			if (!isturf(locate(src.x, src.y, z_position)))
-			z_position = src.z // If no z-level above, stay on the current z-level
-			if (!target) // Confirm target validity
-			to_chat(user, "<span class='warning'>No valid target found!</span>")
-			return*/
-			for(var/atom/movable/AM in src)
-				qdel(AM)
-			new P(locate(src.x, src.y, z_position))
+/obj/structure/catapult/proc/launch_payload(mob/user, turf/T)
+	var/obj/item/boulder/P = /obj/item/boulder
+//	var/atom/target = get_edge_target_turf(src, dir)
+	user.visible_message("<span class='notice'>You fire the catapult!</span>")
+	loaded = 0
+	ready = 0
+	// Adjust `distance_input` with a random variation
+	//	var/random_distance = distance_input + rand(-5, 5)
+	var/z_position = src.z + 1 // Start one level above the catapult
+	// Apply random offsets to target position for x and y directions
 
-			for(P in (locate(src.x, src.y, z_position)))
-				P.launched = TRUE
-				P.throw_at(get_turf(T), get_dist(src, T), 3)
-				P.travel_time = get_dist(P, src)
+/*	if (!isturf(locate(src.x, src.y, z_position)))
+	z_position = src.z // If no z-level above, stay on the current z-level
+	if (!target) // Confirm target validity
+	to_chat(user, "<span class='warning'>No valid target found!</span>")
+	return*/
+	for(var/atom/movable/AM in src)
+		qdel(AM)
+	new P(locate(src.x, src.y, z_position))
 
-			cut_overlays()
-			update_icon()
-			update_overlays()
+	for(P in (locate(src.x, src.y, z_position)))
+		P.launched = TRUE
+		P.throw_at(get_turf(T), get_dist(src, T), 3)
+		P.travel_time = get_dist(P, src)
+
+	cut_overlays()
+	update_icon()
+	update_overlays()
 
 /obj/structure/catapult/attack_right(mob/user)
 	. = ..()
@@ -223,7 +225,7 @@
 		update_icon()
 
 /obj/structure/catapult/proc/unload_projectile(mob/living/carbon/user)
-    // Code to handle unloading logic
+	// Code to handle unloading logic
 
 	var/atom/L = drop_location()
 	var/atom/movable/AM
@@ -231,7 +233,7 @@
 		AM.forceMove(L)
 	playsound(src, 'sound/foley/hit_rock.ogg', 100)
 	src.loaded = 0
-    // Additional unloading logic...
+	// Additional unloading logic...
 
 /obj/item/boulder
 	name = "boulder"
@@ -243,7 +245,7 @@
 	var/incoming = list('modular_helmsguard/sound/catapult/incoming.ogg', 'modular_helmsguard/sound/catapult/incoming2.ogg', 'modular_helmsguard/sound/catapult/incoming3.ogg')
 
 
-/obj/item/boulder/Initialize()
+/obj/item/boulder/Initialize(mapload)
 	. = ..()
 	icon_state = "b-[rand(1,3)]"
 
@@ -254,34 +256,29 @@
 	icon_state = "boulder"*/
 
 
+/obj/item/boulder/proc/delayed_burst()
+	explosion(get_turf(src), 1, -1, 2, 0)
+	do_shrapnel_effect(get_turf(src))
+	qdel(src)
+
 /obj/item/boulder/Bump(atom/A)
 	if(launched)
 		playsound(get_turf(src), pick(incoming), 100, FALSE)
-		spawn(travel_time * 6)
-			explosion(get_turf(src), 1, -1, 2, 0)
-			do_shrapnel_effect(get_turf(src))
-			qdel(src)
+		addtimer(CALLBACK(src, PROC_REF(delayed_burst)), travel_time * 6)
 
 /obj/item/boulder/onZImpact(turf/T, levels)
 	if(launched)
 		playsound(get_turf(src), pick(incoming), 100, FALSE)
-		spawn(travel_time * 6)
-			explosion(get_turf(src), 1, -1, 2, 0)
-			do_shrapnel_effect(get_turf(src))
-
-			qdel(src)
+		addtimer(CALLBACK(src, PROC_REF(delayed_burst)), travel_time * 6)
 
 /obj/item/boulder/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(launched)
 		if(!istype(hit_atom, /turf/open/space))
 			playsound(get_turf(src), pick(incoming), 100, FALSE)
-			spawn(travel_time * 6)
-				explosion(get_turf(src), 1, -1, 2, 0)
-				do_shrapnel_effect(get_turf(src))
-				qdel(src)
+			addtimer(CALLBACK(src, PROC_REF(delayed_burst)), travel_time * 6)
 
 /obj/item/boulder/proc/do_shrapnel_effect(atom/target)
-    // Create a shrapnel component for this instance of the boulder
+	// Create a shrapnel component for this instance of the boulder
 	var/datum/component/shrapnel/shrapnel_effect = new /datum/component/shrapnel()
 	var/turf/origin_turf = get_turf(src)
 	var/boomchannel = SSsounds.random_available_channel()

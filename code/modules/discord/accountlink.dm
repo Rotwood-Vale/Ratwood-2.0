@@ -3,7 +3,7 @@
 	set category = "OOC"
 	set name = "Link Discord Account"
 	set desc = ""
-	set hidden = FALSE // Set TRUE to hide option
+	set hidden = 1
 	// Safety checks
 	if(!CONFIG_GET(flag/sql_enabled))
 		to_chat(src, span_warning("This feature requires the SQL backend to be running."))
@@ -25,7 +25,7 @@
 		if(know_how == "Cancel Linking")
 			return
 		var/entered_id = input("Please enter your Discord ID (18-ish digits)", "Enter Discord ID", null, null) as text|null
-		SSdiscord.account_link_cache[replacetext(lowertext(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
+		SSdiscord.account_link_cache[replacetext(LOWER_TEXT(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
 		alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, followed by \"verify [usr.ckey]\" in Discord to successfully verify your account (Example: @The Herald verify [usr.ckey])")
 
 	else // Account is already linked
@@ -39,7 +39,7 @@
 				return
 
 			var/entered_id = input("Please enter your Discord ID (18-ish digits)", "Enter Discord ID", null, null) as text|null
-			SSdiscord.account_link_cache[replacetext(lowertext(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
+			SSdiscord.account_link_cache[replacetext(LOWER_TEXT(usr.ckey), " ", "")] = "[entered_id]" // Prepares for TGS-side verification, also fuck spaces
 			alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, followed by \"verify [usr.ckey]\" in Discord to successfully verify your account (Example: @Mr_Terry verify [usr.ckey])")
 			// This is so people cant fill the notify list with a fuckload of ckeys
 			SSdiscord.notify_members -= "[stored_id]" // The list uses strings because BYOND cannot handle a 17 digit integer

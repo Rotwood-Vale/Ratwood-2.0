@@ -17,7 +17,7 @@
 	var/used_time = 14 // interaction time for disabling traps, scales down with trap skill
 
 
-	var/list/static/ignore_typecache
+	var/static/list/ignore_typecache
 	var/list/mob/immune_minds = list() //unused and a bit weird, helpful for making mobs immune to the traps without TRAIT_LIGHT_STEP
 
 	var/sparks = TRUE
@@ -61,13 +61,13 @@
 	if(iscarbon(user) && armed && isturf(loc))
 		if(!BP)
 			return FALSE
-		if(C.get_skill_level(/datum/skill/craft/traps) < 1)
+		if(C.get_skill_level(/datum/skill/craft/crafting) < 1)
 			C.visible_message(span_notice("I don't know how to disarm \the [src]."))
 			return FALSE
 		else
 			used_time = 14 SECONDS
 			if(C.mind)
-				used_time -= max((C.get_skill_level(/datum/skill/craft/traps) * 2 SECONDS), 2 SECONDS)
+				used_time -= max((C.get_skill_level(/datum/skill/craft/crafting) * 2 SECONDS), 2 SECONDS)
 				C.visible_message(span_notice("[C] begins disarming \the [src]."), \
 						span_notice("I start disarming \the [src]."))
 			if(do_after(user, used_time, target = src))
@@ -80,13 +80,13 @@
 	if(iscarbon(user) && !armed && isturf(loc))
 		if(!BP)
 			return FALSE
-		if(C.get_skill_level(/datum/skill/craft/traps) < 1)
+		if(C.get_skill_level(/datum/skill/craft/crafting) < 1)
 			C.visible_message(span_notice("I don't know how to arm \the [src]."))
 			return FALSE
 		else
 			used_time = 8 SECONDS
 			if(C.mind)
-				used_time -= max((C.get_skill_level(/datum/skill/craft/traps) * 2 SECONDS), 2 SECONDS)
+				used_time -= max((C.get_skill_level(/datum/skill/craft/crafting) * 2 SECONDS), 2 SECONDS)
 			if(do_after(user, used_time, target = src))
 				armed = TRUE
 				update_icon()
@@ -160,6 +160,12 @@
 	time_between_triggers = 10
 	flare_message = span_warning("[src] snaps shut!")
 
+/obj/structure/trap/stun/hunter/Destroy()
+	if(stored_item && !QDELING(stored_item))
+		qdel(stored_item)
+	stored_item = null
+	return ..()
+
 /obj/structure/trap/stun/hunter/Crossed(atom/movable/AM)
 	caught = TRUE
 	. = ..()
@@ -203,7 +209,9 @@
 	forceMove(stored_trap)//moves item into trap
 
 /obj/item/bountytrap/Destroy()
-	qdel(stored_trap)
+	if(stored_trap && !QDELING(stored_trap))
+		qdel(stored_trap)
+	stored_trap = null
 	QDEL_NULL(spark_system)
 	. = ..()
 
@@ -225,7 +233,7 @@
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>You're frozen solid!</B>"))
 	L.Paralyze(20)
-	L.adjust_bodytemperature(-400)
+	L.adjust_bodytemperature(-100)
 	L.apply_status_effect(/datum/status_effect/freon)
 
 /obj/structure/trap/damage
@@ -247,7 +255,7 @@
 	density = TRUE
 	time_between_triggers = 1200 //Exists for 2 minutes
 
-/obj/structure/trap/ward/Initialize()
+/obj/structure/trap/ward/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, time_between_triggers)
 
@@ -261,7 +269,7 @@
 /obj/structure/trap/saw_blades/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>A whirling blade erupts from beneath your feet!</B>"))
 	def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	L.apply_damage(trap_damage, BRUTE, def_zone, L.run_armor_check(def_zone, "stab", damage = trap_damage))
+	L.apply_damage(trap_damage, BRUTE, def_zone, L.run_armor_check(def_zone, "stab", armor_penetration = PEN_NONE, damage = trap_damage))
 	playsound(src, 'sound/gore/flesh_eat_01.ogg', 70, TRUE)
 	var/obj/structure/sawblade_trap/saw = new(get_turf(src))
 	last_trigger = 0 // override to keep slicing you every time you step onto the trap
@@ -356,7 +364,7 @@
 /obj/projectile/magic/frostbolt/wall_projectile
 	speed = 6
 	damage = 20
-	armor_penetration = 5
+	armor_penetration = PEN_NONE
 
 /obj/structure/trap/wall_projectile/acidsplash
 	name = "acid plate trap"
@@ -375,7 +383,7 @@
 /obj/structure/trap/rock_fall/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>The ground above you shakes violently!</B>"))
 	def_zone = BODY_ZONE_HEAD
-	L.apply_damage(trap_damage, BRUTE, def_zone, L.run_armor_check(def_zone, "stab", damage = trap_damage))
+	L.apply_damage(trap_damage, BRUTE, def_zone, L.run_armor_check(def_zone, "stab", armor_penetration = PEN_NONE, damage = trap_damage))
 	playsound(src, 'sound/foley/smash_rock.ogg', 70, TRUE)
 	L.set_blurriness(10)
 	var/obj/structure/flora/rock/giant_rock = new(get_turf(src))
@@ -463,8 +471,8 @@
 	if(!H || !H.mind)
 		return FALSE
 
-	var/assigned = lowertext("[H.mind.assigned_role]")
-	var/special  = lowertext("[H.mind.special_role]")
+	var/assigned = LOWER_TEXT("[H.mind.assigned_role]")
+	var/special  = LOWER_TEXT("[H.mind.special_role]")
 
 //We don't care about anyone but the MAAs/Wardens.
 	if(retinue_planted)
@@ -511,8 +519,8 @@
 /obj/structure/trap/bogtrap/proc/is_exempt_viewer(mob/living/H)
 	if(!H || !H.mind)
 		return FALSE
-	var/assigned = lowertext("[H.mind.assigned_role]")
-	var/special  = lowertext("[H.mind.special_role]")
+	var/assigned = LOWER_TEXT("[H.mind.assigned_role]")
+	var/special  = LOWER_TEXT("[H.mind.special_role]")
 
 //Is this hacky? Yeah. Does it work? I guess.
 	if(retinue_planted)
@@ -570,7 +578,7 @@
 /obj/structure/trap/bogtrap/freeze/trap_effect(mob/living/L)
 	to_chat(L, span_danger("<B>You're frozen solid!</B>"))
 	L.Paralyze(50)
-	L.adjust_bodytemperature(-300)
+	L.adjust_bodytemperature(-100)
 	playsound(src, 'sound/misc/explode/bottlebomb (1).ogg', 60, TRUE)
 
 

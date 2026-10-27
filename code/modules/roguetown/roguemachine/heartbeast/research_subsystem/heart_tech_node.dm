@@ -82,7 +82,7 @@
 
 /datum/chimeric_tech_node/black_rose
 	name = "Black Rose Synthesis"
-	description = "Allows crafting of black roses from corrupted flesh and beast blood. It is believed heartbeasts were in part created by Pestra herself to control the black rot that lingers withing these roses."
+	description = "Allows crafting of black roses from corrupted flesh and beast blood. It is believed heartbeasts were in part created by Pestra herself to control the black rot that lingers within these roses."
 	string_id = "BLACK_ROSE"
 	required_tier = 4
 	cost = 100
@@ -153,7 +153,7 @@
 
 /datum/chimeric_tech_node/infestation_attack_vector
 	name = "Virulent blade"
-	description = "Pestilent blade now has a small chance to trigger when landing a succesful blow, even whilst the target isn't infected."
+	description = "Pestilent blade now has a small chance to trigger when landing a successful blow, even whilst the target isn't infected."
 	string_id = "INFESTATION_ATTACK_VECTOR"
 	required_tier = 1
 	cost = 5

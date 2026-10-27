@@ -45,6 +45,78 @@
 
 	return zone
 
+///Returns a TRUE / FALSE if the zone is a FACE / HEAD coverage subzone. Used mainly by accuracy_check & bait.
+/proc/check_face_subzone(zone, check_head = TRUE)
+	if(!zone)
+		return FALSE
+	switch(zone)
+		if(BODY_ZONE_PRECISE_R_EYE)
+			return TRUE
+		if(BODY_ZONE_PRECISE_L_EYE)
+			return TRUE
+		if(BODY_ZONE_PRECISE_NOSE)
+			return TRUE
+		if(BODY_ZONE_PRECISE_MOUTH)
+			return TRUE
+		if(BODY_ZONE_PRECISE_EARS)
+			return TRUE
+		if(BODY_ZONE_PRECISE_SKULL)
+			return TRUE
+		if(BODY_ZONE_HEAD)
+			if(check_head)
+				return TRUE
+		//--Optional Neck Addition--
+		//if(BODY_ZONE_PRECISE_NECK)
+		//	return TRUE
+
+	return FALSE
+
+/proc/check_bait_subzone(zone)
+	if(!zone)
+		return FALSE
+	if(check_face_subzone(zone))
+		return BODY_ZONE_HEAD
+	return zone
+
+/proc/check_bind_subzone(zone_def)
+	if(!zone_def)
+		return FALSE
+	if(check_face_subzone(zone_def))
+		return BIND_HEAD
+	switch(zone_def)
+		if(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+			return BIND_HANDS
+		if(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+			return BIND_FEET
+		if(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_STOMACH, BODY_ZONE_CHEST)
+			return BIND_TORSO
+		if(BODY_ZONE_PRECISE_NECK)
+			return BIND_NECK
+	return FALSE
+
+/proc/check_bind(bindzone, attzone)
+	if(!bindzone || !attzone)
+		return FALSE
+	switch(bindzone)
+		if(BIND_HEAD)
+			return check_face_subzone(attzone, check_head = FALSE)
+		if(BIND_HANDS)
+			switch(attzone)
+				if(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
+					return TRUE
+		if(BIND_FEET)
+			switch(attzone)
+				if(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT)
+					return TRUE
+		if(BIND_TORSO)
+			switch(attzone)
+				if(BODY_ZONE_PRECISE_STOMACH, BODY_ZONE_PRECISE_GROIN)
+					return TRUE
+		if(BIND_NECK)
+			if(attzone == BODY_ZONE_PRECISE_NECK)
+				return TRUE
+	return FALSE
+
 /// Returns the targeting zone equivalent of a given bodypart. Kudos to you if you find a use for this.
 /proc/bodypart_to_zone(part)
 	var/obj/item/bodypart/B = part
@@ -65,11 +137,11 @@
 			return BODY_ZONE_CHEST
 
 /**
-  * Return the zone or randomly, another valid zone
-  *
-  * probability controls the chance it chooses the passed in zone, or another random zone
-  * defaults to 80
-  */
+ * Return the zone or randomly, another valid zone
+ *
+ * probability controls the chance it chooses the passed in zone, or another random zone
+ * defaults to 80
+ */
 /proc/ran_zone(zone, probability = 80)
 	if(prob(probability))
 		zone = check_zone(zone)
@@ -84,13 +156,13 @@
 			return TRUE
 	return FALSE
 /**
-  * Convert random parts of a passed in message to stars
-  *
-  * * n - the string to convert
-  * * pr - probability any character gets changed
-  *
-  * This proc is dangerously laggy, avoid it or die
-  */
+ * Convert random parts of a passed in message to stars
+ *
+ * * n - the string to convert
+ * * pr - probability any character gets changed
+ *
+ * This proc is dangerously laggy, avoid it or die
+ */
 /proc/stars(n, pr)
 	n = STRIP_HTML_SIMPLE(n, MAX_MESSAGE_LEN)
 	if (pr == null)
@@ -113,8 +185,8 @@
 		t += "..." //signals missing text
 	return t
 /**
-  * Makes you speak like you're drunk
-  */
+ * Makes you speak like you're drunk
+ */
 /proc/slur(n)
 	var/phrase = STRIP_HTML_SIMPLE(n, MAX_MESSAGE_LEN)
 	var/leng = length_char(phrase)
@@ -124,15 +196,15 @@
 	while(counter>=1)
 		newletter=copytext_char(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")
+			if(LOWER_TEXT(newletter)=="o")
 				newletter="u"
-			if(lowertext(newletter)=="s")
+			if(LOWER_TEXT(newletter)=="s")
 				newletter="ch"
-			if(lowertext(newletter)=="a")
+			if(LOWER_TEXT(newletter)=="a")
 				newletter="ah"
-			if(lowertext(newletter)=="u")
+			if(LOWER_TEXT(newletter)=="u")
 				newletter="oo"
-			if(lowertext(newletter)=="c")
+			if(LOWER_TEXT(newletter)=="c")
 				newletter="k"
 		if(rand(1,20)==20)
 			if(newletter==" ")
@@ -161,17 +233,17 @@
 	while(counter>=1)
 		newletter=copytext_char(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(prob(50))
-			if(lowertext(newletter)=="o")
+			if(LOWER_TEXT(newletter)=="o")
 				newletter="u"
-			if(lowertext(newletter)=="t")
+			if(LOWER_TEXT(newletter)=="t")
 				newletter="ch"
-			if(lowertext(newletter)=="a")
+			if(LOWER_TEXT(newletter)=="a")
 				newletter="ah"
-			if(lowertext(newletter)=="u")
+			if(LOWER_TEXT(newletter)=="u")
 				newletter="oo"
-			if(lowertext(newletter)=="c")
+			if(LOWER_TEXT(newletter)=="c")
 				newletter=" NAR "
-			if(lowertext(newletter)=="s")
+			if(LOWER_TEXT(newletter)=="s")
 				newletter=" SIE "
 		if(prob(25))
 			if(newletter==" ")
@@ -260,7 +332,7 @@
 			word = copytext(word, first_letter, last_letter + 1)
 
 			// Common words or words of three or fewer characters don't need replacing.
-			if((lowertext(word) in common_words) || length(word) <= 3)
+			if((LOWER_TEXT(word) in common_words) || length(word) <= 3)
 				new_message += prefix + word + suffix
 			else
 				var/chance = rand(0, 99)
@@ -292,10 +364,10 @@
 	return trim(message)
 
 /**
-  * Turn text into complete gibberish!
-  *
-  * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
-  */
+ * Turn text into complete gibberish!
+ *
+ * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
+ */
 /proc/Gibberish(text, replace_characters = FALSE, chance = 50)
 	. = ""
 	for(var/i in 1 to length_char(text))
@@ -309,14 +381,14 @@
 
 
 /**
-  * Convert a message into leet non gaijin speak
-  *
-  * The difference with stutter is that this proc can stutter more than 1 letter
-  *
-  * The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
-  *
-  * It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
-  */
+ * Convert a message into leet non gaijin speak
+ *
+ * The difference with stutter is that this proc can stutter more than 1 letter
+ *
+ * The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
+ *
+ * It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
+ */
 /proc/ninjaspeak(n) //NINJACODE
 	var/te = html_decode(n)
 	var/t = ""
@@ -359,6 +431,12 @@
 			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
 	animate(pixel_x=oldx, pixel_y=oldy, time=1)
 
+/// refreshes vision of everyone visible 2 update icon_state changes ! Usually not needed
+/proc/refresh_viewers(atom/source)
+	for(var/mob/M in viewers(7, source))
+		if(M.client)
+			M.update_vision_cone()
+
 
 ///Find if the message has the real name of any user mob in the mob_list
 /proc/findname(msg)
@@ -378,10 +456,10 @@
 
 
 /**
-  * change a mob's act-intent.
-  *
-  * Input the intent as a string such as "help" or use "right"/"left
-  */
+ * change a mob's act-intent.
+ *
+ * Input the intent as a string such as "help" or use "right"/"left
+ */
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
 	set hidden = 1
@@ -480,47 +558,36 @@
 	if(hud_used?.action_intent)
 		hud_used.action_intent.switch_intent(r_index,l_index,oactive)
 
+/mob/proc/update_hand_intent(active = TRUE)
+	var/list/intents
+	var/obj/item/Masteritem = active ? get_active_held_item() : get_inactive_held_item()
+	if(Masteritem)
+		if(Masteritem.altgripped)
+			intents = Masteritem.get_altgrip_intents()
+		else if(Masteritem.wielded)
+			intents = Masteritem.gripped_intents
+		else
+			intents = Masteritem.possible_item_intents
+	else
+		// If active = TRUE, index 1 is left and 2 is right. If active == FALSE, index 1 is right and 2 is left.
+		var/do_left = (active_hand_index == 1) ^ active
+		if(do_left)
+			l_index = l_ua_index
+		else
+			r_index = r_ua_index
+		intents = base_intents
+	. = list()
+	for(var/defintent in intents)
+		. += new defintent(src, Masteritem)
+	
 /mob/proc/update_a_intents()
 	stop_attack()
 	QDEL_LIST(possible_a_intents)
 	QDEL_LIST(possible_offhand_intents)
-	var/list/intents = list()
-	var/obj/item/Masteritem = get_active_held_item()
-	if(Masteritem)
-		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
-			intents = Masteritem.gripped_intents
-		if(Masteritem.altgripped)
-			intents = Masteritem.alt_intents
-	else
-		if(active_hand_index == 1)
-			r_index = r_ua_index
-		else
-			l_index = l_ua_index
-		intents = base_intents.Copy()
-	for(var/defintent in intents)
-		if(Masteritem)
-			possible_a_intents += new defintent(src, Masteritem)
-		else
-			possible_a_intents += new defintent(src)
-	Masteritem = get_inactive_held_item()
-	if(Masteritem)
-		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
-			intents = Masteritem.gripped_intents
-		if(Masteritem.altgripped)
-			intents = Masteritem.alt_intents
-	else
-		if(active_hand_index == 1)
-			l_index = l_ua_index
-		else
-			r_index = r_ua_index
-		intents = base_intents.Copy()
-	for(var/defintent in intents)
-		if(Masteritem)
-			possible_offhand_intents += new defintent(src, Masteritem)
-		else
-			possible_offhand_intents += new defintent(src)
+	if(QDELETED(src))
+		return
+	possible_a_intents = update_hand_intent(active = TRUE)
+	possible_offhand_intents = update_hand_intent(active = FALSE)
 	if(hud_used?.action_intent)
 		if(active_hand_index == 1)
 			hud_used.action_intent.update_icon(possible_a_intents,possible_offhand_intents,oactive)
@@ -552,6 +619,10 @@
 	if(input != QINTENT_SPELL)
 		if(ranged_ability)
 			ranged_ability.deactivate()
+		// Also clear new-style cooldown spells set on click_intercept
+		var/datum/action/cooldown/active_cooldown = click_intercept
+		if(istype(active_cooldown))
+			active_cooldown.unset_click_ability(src, refund_cooldown = TRUE)
 	switch(input)
 		if(QINTENT_KICK)
 			if(mmb_intent?.type == INTENT_KICK)
@@ -559,20 +630,23 @@
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_KICK(src)
-		if(QINTENT_STEAL)
-			if(mmb_intent?.type == INTENT_STEAL)
+		if(QINTENT_SPECIAL)
+			if(mmb_intent?.type == INTENT_SPECIAL)
 				qdel(mmb_intent)
 				input = null
 				mmb_intent = null
 			else
-				mmb_intent = new INTENT_STEAL(src)
+				qdel(mmb_intent)
+				mmb_intent = new INTENT_SPECIAL(src)
 		if(QINTENT_BITE)
 			if(mmb_intent?.type == INTENT_BITE)
 				qdel(mmb_intent)
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_BITE(src)
 		if(QINTENT_JUMP)
 			if(mmb_intent?.type == INTENT_JUMP)
@@ -580,6 +654,7 @@
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_JUMP(src)
 		if(QINTENT_GIVE)
 			if(mmb_intent?.type == INTENT_GIVE)
@@ -587,13 +662,13 @@
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_GIVE(src)
 		if(QINTENT_SPELL)
 			if(mmb_intent)
 				qdel(mmb_intent)
 			testing("spellselect [ranged_ability]")
 			mmb_intent = new INTENT_SPELL(src)
-			mmb_intent.releasedrain = ranged_ability.get_fatigue_drain()
 			mmb_intent.chargedrain = ranged_ability.chargedrain
 			mmb_intent.chargetime = ranged_ability.get_chargetime()
 			mmb_intent.warnie = ranged_ability.warnie
@@ -639,16 +714,19 @@
 	if(L.IsSleeping() || L.surrendering)
 		if(cmode)
 			playsound_local(src, 'sound/misc/comboff.ogg', 100)
-			SSdroning.play_area_sound(get_area(src), client)
 			cmode = FALSE
+			SSdroning.kill_droning(client)
+			SSdroning.play_area_sound(get_area(src), client)
 		if(hud_used)
 			if(hud_used.cmode_button)
 				hud_used.cmode_button.update_icon()
 		return
 	if(cmode)
 		playsound_local(src, 'sound/misc/comboff.ogg', 100)
-		SSdroning.play_area_sound(get_area(src), client)
 		cmode = FALSE
+		SSdroning.kill_droning(client)
+		SSdroning.play_area_sound(get_area(src), client)
+		clear_fullscreen("CMODE")
 		if(client && HAS_TRAIT(src, TRAIT_SCREENSHAKE))
 			animate(client, pixel_y)
 	else
@@ -658,6 +736,7 @@
 			SSdroning.play_combat_music(L.cmode_music_override, client)
 		else if(L.cmode_music)
 			SSdroning.play_combat_music(L.cmode_music, client)
+		overlay_fullscreen("CMODE", /atom/movable/screen/fullscreen/crit/cmode)
 		if(client && HAS_TRAIT(src, TRAIT_PSYCHOSIS))
 			animate(client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)
 			animate(pixel_y = -1, time = 1, flags = ANIMATION_RELATIVE)
@@ -730,9 +809,11 @@
 
 	if(zone_selected != old_zone)
 		playsound_local(src, 'sound/misc/click.ogg', 50, TRUE)
-		if(hud_used)
-			if(hud_used.zone_select)
-				hud_used.zone_select.update_icon()
+		if(isliving(src))
+			var/mob/living/L = src
+			L.update_zone_selector_hud()
+		else if(hud_used?.zone_select)
+			hud_used.zone_select.update_zone_layers()
 
 /mob/proc/select_organ_slot(choice)
 	organ_slot_selected = choice
@@ -795,11 +876,11 @@
 
 // moved out of admins.dm because things other than admin procs were calling this.
 /**
-  * Is this mob special to the gamemode?
-  *
-  * returns 1 for special characters and 2 for heroes of gamemode
-  *
-  */
+ * Is this mob special to the gamemode?
+ *
+ * returns 1 for special characters and 2 for heroes of gamemode
+ *
+ */
 /proc/is_special_character(mob/M)
 	if(!SSticker.HasRoundStarted())
 		return FALSE
@@ -817,23 +898,23 @@
 
 
 /**
-  * Fancy notifications for ghosts
-  *
-  * The kitchen sink of notification procs
-  *
-  * Arguments:
-  * * message
-  * * ghost_sound sound to play
-  * * enter_link Href link to enter the ghost role being notified for
-  * * source The source of the notification
-  * * alert_overlay The alert overlay to show in the alert message
-  * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
-  * * flashwindow Flash the byond client window
-  * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
-  * * header The header of the notifiaction
-  * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
-  * * notify_volume How loud the sound should be to spook the user
-  */
+ * Fancy notifications for ghosts
+ *
+ * The kitchen sink of notification procs
+ *
+ * Arguments:
+ * * message
+ * * ghost_sound sound to play
+ * * enter_link Href link to enter the ghost role being notified for
+ * * source The source of the notification
+ * * alert_overlay The alert overlay to show in the alert message
+ * * action What action to take upon the ghost interacting with the notification, defaults to NOTIFY_JUMP
+ * * flashwindow Flash the byond client window
+ * * ignore_key  Ignore keys if they're in the GLOB.poll_ignore list
+ * * header The header of the notifiaction
+ * * notify_suiciders If it should notify suiciders (who do not qualify for many ghost roles)
+ * * notify_volume How loud the sound should be to spook the user
+ */
 /proc/notify_ghosts(message, ghost_sound = null, enter_link = null, atom/source = null, mutable_appearance/alert_overlay = null, action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header = null, notify_suiciders = TRUE, notify_volume = 100) //Easy notification of ghosts.
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
@@ -867,8 +948,8 @@
 				A.add_overlay(alert_overlay)
 
 /**
-  * Heal a robotic body part on a mob
-  */
+ * Heal a robotic body part on a mob
+ */
 /proc/item_heal_robotic(mob/living/carbon/human/H, mob/user, brute_heal, burn_heal)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 	if(affecting && affecting.status == BODYPART_ROBOTIC)
@@ -901,10 +982,10 @@
 	return TRUE
 
 /**
-  * Offer control of the passed in mob to dead player
-  *
-  * Automatic logging and uses pollCandidatesForMob, how convenient
-  */
+ * Offer control of the passed in mob to dead player
+ *
+ * Automatic logging and uses pollCandidatesForMob, how convenient
+ */
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
@@ -952,8 +1033,12 @@
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-/// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
-/mob/log_message(message, message_type, color=null, log_globally = TRUE)
+/// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true.
+/// Values store as dicts: "msg", "time", "color", then whatever metadata the writer put in meta, copied
+/// key for key so readers match fields instead of parsing prose. Adding a field is a writer-side key and
+/// nothing else; no signature anywhere changes. The parent writes disk logs from the raw message argument,
+/// so none of the metadata reaches them.
+/mob/log_message(message, message_type, color=null, log_globally = TRUE, list/meta = null)
 	if(!LAZYLEN(message))
 		stack_trace("Empty message")
 		return
@@ -968,15 +1053,22 @@
 	if(!islist(logging[smessage_type]))
 		logging[smessage_type] = list()
 
-	var/colored_message = message
+	// colour rides as its own field: the renderer normalizes "msg" then wraps, so tags baked in here
+	// would show as literal text
+	var/list/entry_value = list("msg" = message, "time" = world.time)
+	// every writer registers itself, and either party of a fielded line writes a line of their own soon enough.
+	// src.key over the directory, so an SSD party still resolves
+	pov_remember_key(ckey, key)
 	if(color)
-		if(color[1] == "#")
-			colored_message = "<font color=[color]>[message]</font>"
-		else
-			colored_message = "<font color='[color]'>[message]</font>"
+		entry_value["color"] = color
+	// isnull, not truthy: an absent party is a null ckey the writer may still name the key of, while an
+	// empty witness roster is a real answer and must survive the copy
+	for(var/field in meta)
+		if(!isnull(meta[field]))
+			entry_value[field] = meta[field]
 
-    //Removed sorting by message type, now sorts by timestamp regardless of message type
-	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (LOG #[LAZYLEN(logging[smessage_type])])" = colored_message)
+	//Removed sorting by message type, now sorts by timestamp regardless of message type
+	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (LOG #[LAZYLEN(logging[smessage_type])])" = entry_value)
 
 	logging[smessage_type] += timestamped_message
 
@@ -990,10 +1082,10 @@
 	. = TRUE
 
 /**
-  * Examine text for traits shared by multiple types.
-  *
-  * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
-  */
+ * Examine text for traits shared by multiple types.
+ *
+ * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
+ */
 /mob/proc/common_trait_examine()
 	if(HAS_TRAIT(src, TRAIT_DISSECTED))
 		var/dissectionmsg = ""
@@ -1006,11 +1098,11 @@
 		. += "<span class='notice'>This body has been dissected and analyzed[dissectionmsg].</span><br>"
 
 /**
-  * Get the list of keywords for policy config
-  *
-  * This gets the type, mind assigned roles and antag datums as a list, these are later used
-  * to send the user relevant headadmin policy config
-  */
+ * Get the list of keywords for policy config
+ *
+ * This gets the type, mind assigned roles and antag datums as a list, these are later used
+ * to send the user relevant headadmin policy config
+ */
 /mob/proc/get_policy_keywords()
 	. = list()
 	. += "[type]"

@@ -10,14 +10,14 @@ SUBSYSTEM_DEF(treesetup)
 	return ..()
 
 /datum/controller/subsystem/treesetup/proc/InitializeTrees()
-	for(var/A in initialize_me)
-		var/obj/structure/flora/newtree/T = A
+	// some of these are actually newtreealt, which has the same procs
+	// i hate this so much
+	for(var/obj/structure/flora/newtree/T as anything in initialize_me)
 		T.build_branches()
 		CHECK_TICK
 
-	for(var/A in initialize_me)
-		var/obj/structure/flora/newtree/T = A
+	for(var/obj/structure/flora/newtree/T as anything in initialize_me)
 		T.build_leafs()
 		CHECK_TICK
 
-	initialize_me = list()
+	initialize_me.Cut()

@@ -122,6 +122,25 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
+	// Adminhelp ticket shortcuts
+	// Open the current adminhelp ticket chat window
+	if(href_list["viewticket"])
+		get_adminhelp()
+		return
+
+	// Quick reply to the current ticket using the adminhelp system
+	if(href_list["replyticket"])
+		if(!current_ticket)
+			to_chat(src, span_notice("You don't have an active admin help ticket to reply to."))
+			return
+		var/msg = input(src, "Reply to the admin team:", "Adminhelp reply") as message|null
+		if(!msg)
+			return
+		// Route through the normal adminhelp flow so spam checks and
+		// ticket reuse logic continue to apply.
+		adminhelp(msg)
+		return
+
 	if(href_list["playerlistrogue"])
 		if(SSticker.current_state != GAME_STATE_FINISHED)
 			return
@@ -139,6 +158,11 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	// Schizohelp
 	if(href_list["schizohelp"])
 		answer_schizohelp(locate(href_list["schizohelp"]))
+		return
+
+	if(href_list["vieweconomics"])
+		var/datum/economic_chronicle/chronicle = get_economic_chronicle()
+		chronicle.ui_interact(mob)
 		return
 
 	if(href_list["viewchronicle"])
@@ -173,6 +197,13 @@ GLOBAL_LIST_EMPTY(respawncounts)
 			. = prefs.familiar_prefs.fam_process_link(usr,href_list)
 			inprefs = FALSE
 			return
+		if("gnoll_prefs")
+			if (inprefs)
+				return
+			inprefs = TRUE
+			. = prefs.gnoll_prefs.gnoll_process_link(usr,href_list)
+			inprefs = FALSE
+			return
 
 	switch(href_list["action"])
 		if("openLink")
@@ -195,6 +226,15 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href=\"https://secure.byond.com/membership\">Click Here to find out more</a>.")
 		return 0
 	return 1
+
+/client/proc/is_localhost()
+	var/static/localhost_addresses = list(
+		"127.0.0.1",
+		"::1",
+		null,
+	)
+	return address in localhost_addresses
+
 /*
  * Call back proc that should be checked in all paths where a client can send messages
  *
@@ -296,11 +336,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				to_chat(world, "Autoadmin rank not found")
 			else
 				new /datum/admins(autorank, ckey)
-	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
-		var/localhost_addresses = list("127.0.0.1", "::1")
-		if(isnull(address) || (address in localhost_addresses))
-			var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
-			new /datum/admins(localhost_rank, ckey, 1, 1)
+	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin && is_localhost())
+		var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
+		if(QDELETED(localhost_rank))
+			to_chat(world, "Local admin rank creation failed, somehow?")
+			return
+		new /datum/admins(localhost_rank, ckey, 1, 1)
+		CONFIG_SET(number/movedelay/walk_delay, 3)
+		CONFIG_SET(number/movedelay/run_delay, 2)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(prefs)
@@ -486,14 +529,12 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	generate_clickcatcher()
 	apply_clickcatcher()
 
-	// deez people removed the winset changelog window so i might as well comment it out JTGSZ 4/12/2024
-
-	//if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
-	//	//to_chat(src, span_info("I have unread updates in the changelog."))
-	//	if(CONFIG_GET(flag/aggressive_changelog))
-	//		changelog()
-	//	else
-	//		winset(src, "infowindow.changelog", "font-style=bold")
+	if(prefs.lastchangelog != GLOB.changelog_hash) //bolds the changelog button on the interface so we know there are updates.
+		to_chat(src, span_info("You have unread updates in the changelog."))
+		if(CONFIG_GET(flag/aggressive_changelog))
+			changelog()
+		else
+			winset(src, "infobuttons.changelog", "font-style=bold")
 
 	if(prefs.toggles & TOGGLE_FULLSCREEN)
 		toggle_fullscreeny(TRUE)
@@ -545,6 +586,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	Master.UpdateTickRate()
 
+	fullscreen()
+	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
+		winset(src, null, "browser-options=find,byondstorage")
+	// byondstorage,devtools <- other options
+
 //////////////
 //DISCONNECT//
 //////////////
@@ -587,7 +633,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
 	GLOB.clients -= src
-	QDEL_NULL(tgui_panel)
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
@@ -825,7 +870,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 			sleep(15 SECONDS) //Longer sleep here since this would trigger if a client tries to reconnect manually because the inital reconnect failed
 
-			 //we sleep after telling the client to reconnect, so if we still exist something is up
+			//we sleep after telling the client to reconnect, so if we still exist something is up
 			log_access("Forced disconnect: [key] [computer_id] [address] - CID randomizer check")
 
 			qdel(src)
@@ -1157,13 +1202,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/fullscreen()
 	winset(src, "mainwindow", "statusbar=false")
 
-/client/New()
-	..()
-	fullscreen()
-	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
-		winset(src, null, "browser-options=find,byondstorage")
-	// byondstorage,devtools <- other options
-
 /client/proc/give_award(achievement_type, mob/user)
 	return	player_details.achievements.unlock(achievement_type, mob/user)
 
@@ -1207,7 +1245,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return FALSE
 	return TRUE
 
-/client/proc/commendsomeone(var/forced = FALSE)
+/client/proc/commendsomeone(forced = FALSE)
 	if(!can_commend(forced))
 		return
 	if(alert(src,"Was there a character during this round that you would like to anonymously commend?", "Commendation", "YES", "NO") != "YES")
@@ -1233,6 +1271,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	return
 
 /client/proc/preload_music()
-	if(SSsounds.initialized == TRUE)
-		for(var/sound_path as anything in SSsounds.all_music_sounds)
-			src << load_resource(sound_path, -1)
+	if(cached_sounds || !SSsounds.initialized)
+		return
+	cached_sounds = TRUE
+	for(var/sound_path as anything in SSsounds.all_music_sounds)
+		src << load_resource(sound_path, 0)

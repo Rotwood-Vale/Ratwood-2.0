@@ -24,7 +24,7 @@ At least, it should. Fingers crossed.
 	name = "powderflask"
 	icon = 'modular_helmsguard/icons/obj/items/arquebus_items.dmi'
 	desc = "For the layman, smokepowder is an arcyne bit of trickery. \
-	Its creation is an art lost within most of Grimoria, only seen in the likes of Zybantu. \
+	Its creation is an art lost within most of Grimoria, only seen in the likes of Zybantium. \
 	And yet? You've a flask of it. Guard it well."
 	icon_state = "powderflask"
 	item_state = "powderflask"
@@ -32,6 +32,7 @@ At least, it should. Fingers crossed.
 	w_class = WEIGHT_CLASS_SMALL
 	grid_height = 64
 	grid_width = 32
+	dropshrink = 0.6
 
 /obj/item/gun/ballistic/firearm
 	name = "PARENT FIREARM"
@@ -63,7 +64,7 @@ At least, it should. Fingers crossed.
 	cartridge_wording = "musketball"
 	load_sound = list('modular_helmsguard/sound/arquebus/musketload.ogg')
 	fire_sound = list('modular_helmsguard/sound/arquebus/arquefire.ogg')
-	anvilrepair = /datum/skill/craft/blacksmithing
+	anvilrepair = /datum/skill/craft/engineering
 	smeltresult = /obj/item/ingot/steel
 	bolt_type = BOLT_TYPE_NO_BOLT
 	casing_ejector = FALSE
@@ -74,6 +75,16 @@ At least, it should. Fingers crossed.
 	var/load_time = 50
 	var/gunpowder = FALSE
 	var/obj/item/ramrod/myrod = null
+
+/**
+ * Creates an arquebus smoke puff along the shooter's current facing.
+ *
+ * Resolve the direction when the timer fires so turning during the delay moves the smoke trail.
+ */
+/obj/item/gun/ballistic/firearm/proc/spawn_arquebus_smoke(mob/user, dist)
+	if(QDELETED(user))
+		return
+	new /obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, dist))
 
 /obj/item/gun/ballistic/firearm/getonmobprop(tag)
 	. = ..()
@@ -86,7 +97,7 @@ At least, it should. Fingers crossed.
 			if("onback")
 				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/gun/ballistic/firearm/Initialize()
+/obj/item/gun/ballistic/firearm/Initialize(mapload)
 	. = ..()
 	myrod = new /obj/item/ramrod(src)
 
@@ -171,8 +182,6 @@ At least, it should. Fingers crossed.
 	if(altgripped || wielded) //Trying to unwield it
 		ungrip(user)
 		return
-	if(alt_intents)
-		altgrip(user)
 	if(gripped_intents)
 		wield(user)
 	update_icon()
@@ -263,18 +272,15 @@ At least, it should. Fingers crossed.
 	for(var/obj/item/ammo_casing/MB in get_ammo_list(FALSE, TRUE))
 		qdel(MB)
 
-	spawn (5)
-		new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
-	spawn (10)
-		new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 2))
-	spawn (16)
-		new/obj/effect/particle_effect/smoke/arquebus(get_ranged_target_turf(user, user.dir, 1))
+	addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 5)
+	addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 2), 10)
+	addtimer(CALLBACK(src, PROC_REF(spawn_arquebus_smoke), user, 1), 16)
 	for(var/mob/M in range(5, user))
 		if(!M.stat)
 			shake_camera(M, 3, 1)
 
 	if(prob(accident_chance))
-		user.flash_fullscreen("whiteflash")
+		user.fullscreen_redflash("whiteflash")
 		user.apply_damage(rand(5,15), BURN, pick(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE, BODY_ZONE_PRECISE_NOSE, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND))
 		user.visible_message("<span class='danger'>[user] accidentally burnt themselves while firing the [src].</span>")
 		user.emote("painscream")

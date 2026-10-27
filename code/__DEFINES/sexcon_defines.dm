@@ -24,17 +24,19 @@ GLOBAL_LIST_INIT(sex_actions, build_sex_actions())
 #define SEX_SPEED_MID 2
 #define SEX_SPEED_HIGH 3
 #define SEX_SPEED_EXTREME 4
+#define SEX_SPEED_LUDICROUS 5
 
 #define SEX_SPEED_MIN 1
-#define SEX_SPEED_MAX 4
+#define SEX_SPEED_MAX 5
 
 #define SEX_FORCE_LOW 1
 #define SEX_FORCE_MID 2
 #define SEX_FORCE_HIGH 3
 #define SEX_FORCE_EXTREME 4
+#define SEX_FORCE_LUDICROUS 5
 
 #define SEX_FORCE_MIN 1
-#define SEX_FORCE_MAX 4
+#define SEX_FORCE_MAX 5
 
 #define SEX_MANUAL_AROUSAL_DEFAULT 1
 #define SEX_MANUAL_AROUSAL_UNAROUSED 2
@@ -65,6 +67,21 @@ GLOBAL_LIST_INIT(sex_actions, build_sex_actions())
 #define SEX_PART_ANUS (1<<2)
 #define SEX_PART_JAWS (1<<3)
 #define SEX_PART_SLIT_SHEATH (1<<4)
+#define SEX_PART_BREASTS (1<<5)
+#define SEX_PART_FOOT (1<<6) // any foot
+#define SEX_PART_FEET (1<<7) // BOTH feet
+#define SEX_PART_CHEST (1<<8) // distinct from SEX_PART_BREASTS, which checks for breasts as opposed to just the chest being exposed
+#define SEX_PART_BALLS (1<<9)
+#define SEX_PART_GROIN (1<<10) // requires groin exposed but no particular organ
+#define SEX_PART_TAIL (1<<11) // requires a tail we can use to penetrate with
+#define SEX_PART_TAIL_MAW (1<<12) // requires a manticore tail, works like freeuse, groin covered or uncovered
+
+#define ALL_KNOTTABLE_SEX_PARTS (SEX_PART_CUNT | SEX_PART_ANUS | SEX_PART_JAWS | SEX_PART_SLIT_SHEATH)
+
+#define SEX_ACTION_INTIMATE_CHECK_NONE 0
+#define SEX_ACTION_INTIMATE_CHECK_USER (1<<0)
+#define SEX_ACTION_INTIMATE_CHECK_TARGET (1<<1)
+#define SEX_ACTION_INTIMATE_CHECK_BOTH (SEX_ACTION_INTIMATE_CHECK_USER|SEX_ACTION_INTIMATE_CHECK_TARGET)
 
 #define KNOTTED_NULL 0
 #define KNOTTED_AS_TOP 1

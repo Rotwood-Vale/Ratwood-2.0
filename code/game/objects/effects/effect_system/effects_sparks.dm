@@ -24,8 +24,9 @@
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "sparks"
 	anchored = TRUE
-	light_power = 1.3
-	light_outer_range =  MINIMUM_USEFUL_LIGHT_RANGE
+	light_system = MOVABLE_LIGHT
+	light_power = 0.25
+	light_outer_range = 1
 	light_color = LIGHT_COLOR_FIRE
 	pixel_x = -16
 	pixel_y = -16
@@ -33,7 +34,7 @@
 	plane = ABOVE_LIGHTING_PLANE
 
 
-/obj/effect/particle_effect/sparks/Initialize()
+/obj/effect/particle_effect/sparks/Initialize(mapload)
 	..()
 	dir = pick(GLOB.cardinals)
 	return INITIALIZE_HINT_LATELOAD

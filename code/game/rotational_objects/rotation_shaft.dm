@@ -22,7 +22,7 @@
 	cog_size = COG_LARGE
 	stress_use = 6
 
-/obj/structure/rotation_piece/cog/large/Initialize()
+/obj/structure/rotation_piece/cog/large/Initialize(mapload)
 	. = ..()
 	var/matrix/skew = matrix()
 	skew.Scale(1.5, 1.5)

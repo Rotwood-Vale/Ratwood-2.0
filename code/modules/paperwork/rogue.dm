@@ -1,7 +1,8 @@
+// Shared scroll state must be declared before any procs use it.
 /obj/item/paper/scroll
-	name = "papyrus"
-	icon_state = "scroll"
 	var/open = FALSE
+	name = "scroll"
+	icon_state = "scroll"
 	slot_flags = null
 	dropshrink = 0.6
 	firefuel = 30 SECONDS
@@ -9,7 +10,18 @@
 	textper = 108
 	maxlen = 5000
 	throw_range = 3
+	open_empty_icon_state = "scroll"
+	open_written_icon_state = "scrollwrite"
+	folded_icon_state = "scroll_folded"
+	sealed_icon_state = "scroll_sealed"
+	sealed_tint_icon_state = "scroll_sealed_tint"
 
+// Only show the 'Read' prompt if the scroll is open and has info
+/obj/item/paper/scroll/examine(mob/user)
+	. = ..()
+	if(!isobserver(user) || !IsAdminGhost(user))
+		if(info && open)
+			. += "<a href='?src=[REF(src)];read=1'>Read</a>"
 
 /obj/item/paper/scroll/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(istype(P, /obj/item/natural/thorn) || istype(P, /obj/item/natural/feather))
@@ -47,22 +59,25 @@
 		mailedto = null
 		update_icon()
 		return
+	if(seal_label && !seal_broken)
+		seal_broken = TRUE
+		update_icon_state()
+		to_chat(user, span_notice("I break the wax seal on [src]."))
+		return
 	if(!open)
 		attack_right(user)
 		return
 	..()
 	user.update_inv_hands()
 
-/obj/item/paper/scroll/Initialize()
-	open = FALSE
-	update_icon_state()
-	..()
-
 /obj/item/paper/scroll/rmb_self(mob/user)
 	attack_right(user)
 	return
 
 /obj/item/paper/scroll/attack_right(mob/user)
+	if(seal_label && !seal_broken)
+		to_chat(user, span_warning("The wax seal is still intact. I need to unseal it first."))
+		return
 	if(open)
 		slot_flags |= ITEM_SLOT_HIP
 		open = FALSE
@@ -76,27 +91,36 @@
 
 /obj/item/paper/scroll/update_icon_state()
 	if(mailer)
-		icon_state = "scroll_prep"
+		icon_state = sealed_icon_state
 		open = FALSE
 		name = "missive"
 		slot_flags |= ITEM_SLOT_HIP
 		throw_range = 7
+		apply_seal_tint()
 		return
 	throw_range = initial(throw_range)
+	if(seal_label && !seal_broken)
+		icon_state = sealed_icon_state
+		open = FALSE
+		name = "sealed scroll"
+		slot_flags |= ITEM_SLOT_HIP
+		apply_seal_tint()
+		return
+	clear_seal_tint()
 	if(open)
 		if(info)
-			icon_state = "scrollwrite"
+			icon_state = open_written_icon_state
 		else
-			icon_state = "scroll"
+			icon_state = open_empty_icon_state
 		name = initial(name)
 	else
-		icon_state = "scroll_closed"
-		name = "scroll"
+		icon_state = folded_icon_state
+		name = "folded scroll"
 
 //Fake reskin of a scroll for the dwarf mercs -- just a fluffy toy
 /obj/item/paper/scroll/grudge
 	name = "Book of Grudges"
-	desc = "A copy you've taken with you. Unfortunately the dampness of the vale made it unreadable. You can still add new entries, however. It looks bulky enough to act as a mild blunt weapon."
+	desc = "A copy you've taken with you. Unfortunately the dampness of your travels made it unreadable. You can still add new entries, however. It looks bulky enough to act as a mild blunt weapon."
 	icon_state ="grudge_closed"
 	drop_sound = 'sound/foley/dropsound/book_drop.ogg'
 	grid_width = 32
@@ -125,6 +149,79 @@
 	update_icon_state()
 	user.update_inv_hands()
 
+/obj/item/paper/scroll/custom
+	name = "custom book"
+	desc = "A writable book appearance. Use in hand to customize."
+	icon = 'icons/roguetown/items/books.dmi'
+	icon_state = "book_0"
+	maxlen = 10000
+	var/stage = 0
+	var/base_icon_state = "book"
+	var/customized = FALSE
+
+/obj/item/paper/scroll/custom/attack_self(mob/user)
+	if(stage == 0)
+		var/name_input = stripped_input(user, "Name your book - Leave empty for default.", "Book", max_length = MAX_NAME_LEN)
+		if(name_input)
+			name = name_input
+		stage++
+		return
+
+	if(stage == 1)
+		var/desc_input = stripped_input(user, "Describe your book - Leave empty for default.", "Book", max_length = MAX_BROADCAST_LEN)
+		if(desc_input)
+			desc = desc_input
+		stage++
+		return
+
+	if(stage == 2)
+		var/icon/J = new('icons/roguetown/items/books.dmi')
+		var/list/istates = J.IconStates()
+		var/list/icon_choice = list()
+		for(var/icon_s in istates)
+			if(icon_s == icon_state)
+				continue
+			if(!findtext(icon_s, "_0"))
+				continue
+			icon_choice += list(
+				"[icon_s]" = icon(icon = 'icons/roguetown/items/books.dmi', icon_state = icon_s)
+			)
+
+		var/icon_input = show_radial_menu(user, src, icon_choice, require_near = TRUE, tooltips = FALSE)
+		if(icon_input)
+			icon_state = icon_input
+			base_icon_state = replacetextEx(icon_input, regex(@"_[0-1]"), "")
+			if(alert(user, "Are you happy with this?", "Book Cover", "Yes", "No") != "Yes")
+				icon_state = initial(icon_state)
+				base_icon_state = initial(base_icon_state)
+				return
+		stage++
+		customized = TRUE
+		to_chat(user, span_notice("The book is ready. Right-click to open, use a feather to write."))
+		return
+
+	..()
+
+/obj/item/paper/scroll/custom/update_icon_state()
+	if(!customized)
+		return
+	if(open)
+		icon_state = "[base_icon_state]_1"
+	else
+		icon_state = "[base_icon_state]_0"
+
+/obj/item/paper/scroll/custom/attack_right(mob/user)
+	if(open)
+		slot_flags |= ITEM_SLOT_HIP
+		open = FALSE
+		playsound(src, 'sound/items/book_close.ogg', 100, FALSE)
+	else
+		slot_flags &= ~ITEM_SLOT_HIP
+		open = TRUE
+		playsound(src, 'sound/items/book_open.ogg', 100, FALSE)
+	update_icon_state()
+	user.update_inv_hands()
+
 
 /obj/item/paper/scroll/cargo
 	name = "shipping order"
@@ -142,10 +239,7 @@
 
 /obj/item/paper/scroll/cargo/examine(mob/user)
 	. = ..()
-//	if(signedname)
-//		. += "It was signed by [signedname] the [signedjob]."
-
-	//for each order, add up total price and display orders
+	. += span_notice(desc)
 
 /obj/item/paper/scroll/cargo/update_icon_state()
 	if(open)
@@ -183,6 +277,7 @@
 	info = null
 	info += "<h2>Shipping Order</h2>"
 	info += "<hr/>"
+	var/realmname = SSmapping.map_adjustment.realm_name
 
 	if(orders.len)
 		info += "Orders: <br/>"
@@ -195,7 +290,7 @@
 
 	if(signedname)
 		info += "SIGNED,<br/>"
-		info += "<font face=\"[FOUNTAIN_PEN_FONT]\" color=#27293f>[signedname] the [signedjob] of Rotwood Vale</font>"
+		info += "<font face=\"[FOUNTAIN_PEN_FONT]\" color=#27293f>[signedname] the [signedjob] of [realmname]</font>"
 
 /obj/item/paper/inqslip
 	name = "inquisition slip"
@@ -210,23 +305,6 @@
 	var/waxed
 	var/sliptype = 1
 	var/obj/item/inqarticles/indexer/paired
-
-/obj/item/paper/inqslip/read(mob/user)
-	if(!user.client || !user.hud_used)
-		return
-	if(!user.hud_used.reads)
-		return
-	if(!user.can_read(src))
-		return
-	if(in_range(user, src) || isobserver(user))
-		if(waxed)
-			to_chat(user, span_notice("This writ has been signed by [signee.real_name], sealed with redtallow, and can now be mailed back through the Hermes. The Archbishop will be pleased with this one."))
-		if(signed)
-			to_chat(user, span_notice("This writ has been signed by [signee.real_name], and can now be mailed back through the Hermes. Sealing it with redtallow would garner more favor from the Archbishop."))
-		else if(signee)
-			to_chat(user, span_notice("This writ is intended to be signed by [signee.real_name]."))
-		else
-			to_chat(user, span_notice("This writ has not yet been signed."))
 
 /obj/item/paper/inqslip/accusation
 	name = "accusation"
@@ -256,6 +334,24 @@
 
 /obj/item/paper/inqslip/arrival/abso
 	marquevalue = 6
+
+/obj/item/paper/inqslip/read(mob/user)
+	if(!user.client || !user.hud_used)
+		return
+	if(!user.hud_used.reads)
+		return
+	if(!user.can_read(src))
+		return
+	if(in_range(user, src) || isobserver(user))
+		if(waxed)
+			to_chat(user, span_notice("This writ has been signed by [signee.real_name], sealed with Inquisitorial Tallow, and can now be mailed back through the Hermes. The Archbishop will be pleased with this one."))
+		if(signed)
+			to_chat(user, span_notice("This writ has been signed by [signee.real_name], and can now be mailed back through the Hermes. Sealing it with Inquisitorial Tallow would garner more favor from the Archbishop."))
+		else if(signee)
+			to_chat(user, span_notice("This writ is intended to be signed by [signee.real_name]."))
+		else
+			to_chat(user, span_notice("This writ has not yet been signed."))
+
 
 /obj/item/paper/inqslip/proc/attemptsign(mob/user, mob/living/carbon/human/M)
 	if(sliptype == 2)
@@ -321,13 +417,13 @@
 		update_icon()
 
 /obj/item/paper/inqslip/attack_right(mob/user)
-	. = ..()
-	if(paired)
-		if(!user.get_active_held_item())
-			user.put_in_active_hand(paired, user.active_hand_index)
-			paired = null
-			update_icon()
+	if(paired && !user.get_active_held_item())
+		user.put_in_active_hand(paired, user.active_hand_index)
+		paired = null
+		update_icon()
 		return TRUE
+	attack_self(user)
+	return TRUE
 
 /obj/item/paper/inqslip/update_icon_state()
 	. = ..()
@@ -354,7 +450,11 @@
 	if(!signee)
 		signee = user
 
-/obj/item/paper/inqslip/attacked_by(obj/item/I, mob/living/user)
+/obj/item/paper/inqslip/attackby(obj/item/I, mob/living/carbon/human/user, params)
+	if(istype(I, /obj/item/seal))
+		to_chat(user, span_warning("I must use a Signet Ring for Inquisitorial Missives"))
+		return
+
 	if(istype(I, /obj/item/clothing/ring/signet))
 		var/obj/item/clothing/ring/signet/S = I
 		if(waxed)
@@ -367,10 +467,13 @@
 			S.update_icon()
 			playsound(src, 'sound/items/inqslip_sealed.ogg', 75, TRUE, 4)
 			marquevalue += 2
+			return
 		else if(S.tallowed && !sealed)
 			to_chat(user,  span_warning("I need to fold the [src] first."))
+			return
 		else
 			to_chat(user,  span_warning("The ring hasn't been waxed."))
+			return
 
 	if(sliptype != 1)
 		if(istype(I, /obj/item/inqarticles/indexer))
@@ -403,9 +506,9 @@
 					update_icon()
 			else
 				to_chat(user,  span_warning("[Q] isn't completely full."))
+			return
 
-/obj/item/paper/inqslip/attack_right(mob/user)
-	. = ..()
+	return ..()
 
 /obj/item/paper/scroll/sell_price_changes
 	name = "updated purchasing prices"
@@ -415,9 +518,8 @@
 	var/writers_name
 	var/faction
 
-/obj/item/paper/scroll/sell_price_changes/New(loc, list/prices, faction_name)
+/obj/item/paper/scroll/sell_price_changes/Initialize(mapload, list/prices, faction_name)
 	. = ..()
-
 	faction = faction_name
 	if(!faction)
 		faction = pick("Heartfelt", "Hammerhold", "Grenzelhoft", "Kingsfield")		//add more as time goes, idk
@@ -425,7 +527,7 @@
 	sell_prices = prices
 	if(!length(sell_prices))
 		sell_prices = generated_test_data()
-	writers_name = pick( world.file2list("strings/rt/names/human/humnorm.txt") )
+	writers_name = random_human_name(MALE, TRUE)
 	rebuild_info()
 
 /obj/item/paper/scroll/sell_price_changes/update_icon_state()
@@ -443,7 +545,7 @@
 	info += "<h2 style='color:#06080F;font-family:\"Segoe Script\"'>Purchasing Prices</h2>"
 	info += "<hr/>"
 
-	if(sell_prices.len)
+	if(LAZYLEN(sell_prices))
 		info += "<ul>"
 		for(var/atom/type_path as anything in sell_prices)
 			var/list/prices = sell_prices[type_path]
@@ -485,16 +587,16 @@
 /obj/item/paper/scroll/writ_of_esteem/zybantine
 	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity. This one bears the signet of the Zybantine Empress."
 	info = "By Imperial Decree of the Calipha, Empress Sayjit Al-Halruik, Premier of Zybantium, Lady of the Gypsum Rose, in the name of PSYDON, the Most Gracious, the Most Merciful.\
-	 I, Empress of the Zybantine Empire, sovereign of desert and court, issue this edict. Bearer, my appointed commander of the journey, holds full covenant and safe-conduct to treat,\
-	 levy, pledge, and seal on behalf of my dominion and community. Let all governors and lords honor this writ, valid beneath my seal, witnessed by my vizier and scribe. Defiance \
-	 invites reckoning; assistance earns favor. Thus is spoken and decreed from the Court of the Empire of Zybantium."
+	I, Empress of the Zybantine Empire, sovereign of desert and court, issue this edict. Bearer, my appointed commander of the journey, holds full covenant and safe-conduct to treat,\
+	levy, pledge, and seal on behalf of my dominion and community. Let all governors and lords honor this writ, valid beneath my seal, witnessed by my vizier and scribe. Defiance \
+	invites reckoning; assistance earns favor. Thus is spoken and decreed from the Court of the Empire of Zybantium."
 	icon_state = "contractsigned"
 
 /obj/item/paper/scroll/writ_of_esteem/grenzel
 	desc = "A formal Writ of Esteem used to showcase an envoy's authenticity.This one bears the signet of the Grenzelhoft Holy See."
 	info = "By the command of his Imperial Majesty, through the Council of Electors, does bestow this writ. Let it be known that the bearer of this writ is empowered to negotiate,\
-	 speak, and act in the Emperor’s stead as if it were His Majesty’s own words. None shall gainsay this authority, under seal and witness of the Electors assembled.\
-	 Verdinand III, Emperor of The Holy See of Grenzelhoft."
+	speak, and act in the Emperor's stead as if it were His Majesty's own words. None shall gainsay this authority, under seal and witness of the Electors assembled.\
+	Verdinand III, Emperor of The Holy See of Grenzelhoft."
 	icon_state = "contractsigned"
 
 /obj/item/paper/scroll/writ_of_esteem/otavan

@@ -23,13 +23,16 @@
 	max_pq = null
 	round_contrib_points = 5
 
-	job_traits = list(TRAIT_MEDICINE_EXPERT, TRAIT_HOMESTEAD_EXPERT,
-						  TRAIT_ALCHEMY_EXPERT, TRAIT_SEWING_EXPERT,
-						  TRAIT_SURVIVAL_EXPERT, TRAIT_NOSTINK,
-						  TRAIT_STEELHEARTED)
+	job_traits = list(
+		TRAIT_MEDICINE_EXPERT, TRAIT_HOMESTEAD_EXPERT,
+		TRAIT_ALCHEMY_EXPERT, TRAIT_SEWING_EXPERT,
+		TRAIT_SURVIVAL_EXPERT, TRAIT_NOSTINK,
+		TRAIT_STEELHEARTED, TRAIT_RITUALIST,
+		TRAIT_NUMBED_LIMBS,
+	)
 
 	//You're part of a Pestran sect. Not nobility.
-	virtue_restrictions = list(/datum/virtue/utility/noble)
+	quirk_restrictions = list(/datum/quirk/noble)
 
 	advclass_cat_rolls = list(CTAG_KEEPER = 2)
 	job_subclasses = list(
@@ -77,6 +80,26 @@
 	)
 	adv_stat_ceiling = list(STAT_STRENGTH = 6)
 
+/datum/job/roguetown/keeper/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+	..()
+	if(!ishuman(L))
+		return
+
+	var/mob/living/carbon/human/H = L
+
+	addtimer(CALLBACK(src, PROC_REF(_delayed_path_choice), H), 50)
+
+/datum/job/roguetown/keeper/proc/_delayed_path_choice(mob/living/carbon/human/H)
+	if(!H || !H.client || !H.mind)
+		return
+
+	var/choice = alert(H, "Choose your path.", "Keeper Doctrine", "Loyalist", "Radical")
+
+	if(choice == "Radical")
+		grant_radical_path(H)
+	else
+		grant_old_path(H)
+
 /datum/outfit/job/roguetown/keeper/basic/pre_equip(mob/living/carbon/human/H)
 	..()
 	neck = /obj/item/clothing/neck/roguetown/psicross/pestra
@@ -91,17 +114,49 @@
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-							 /obj/item/storage/belt/rogue/pouch/coins/mid = 1,
-							 /obj/item/heart_canister = 2,
-							 /obj/item/heart_blood_vial/filled = 2,
-							 /obj/item/heart_blood_canister/filled = 1,
-							 /obj/item/heart_blood_vial = 5,
-							 /obj/item/heart_blood_canister = 1,
-							 /obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
-							 /obj/item/roguekey/keeper = 1,
-							 /obj/item/roguekey/keeper_inner = 1,
-							 /obj/item/storage/keyring/churchie = 1,
-							 /obj/item/rogueweapon/scabbard/sheath = 2)
+							/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+							/obj/item/heart_canister = 2,
+							/obj/item/heart_blood_vial/filled = 2,
+							/obj/item/heart_blood_canister/filled = 1,
+							/obj/item/heart_blood_vial = 5,
+							/obj/item/heart_blood_canister = 4,
+							/obj/item/rogueweapon/huntingknife/idagger/steel/parrying = 1,
+							/obj/item/roguekey/keeper = 1,
+							/obj/item/roguekey/keeper_inner = 1,
+							/obj/item/storage/keyring/churchie = 1,
+							/obj/item/ritechalk = 1,
+							/obj/item/rogueweapon/scabbard/sheath = 2)
 	H.put_in_hands(new /obj/item/storage/belt/rogue/surgery_bag/full/physician(H), TRUE)
+
+
+/datum/job/roguetown/keeper/proc/grant_old_path(mob/living/carbon/human/H)
+	if(!H || !H.mind || !H.patron)
+		return
+
+	REMOVE_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
+
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MINOR, start_maxed = TRUE)
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)
+
+	to_chat(H, span_notice("I remain on the old path of Pestra's devotion."))
+
+
+/datum/job/roguetown/keeper/proc/grant_radical_path(mob/living/carbon/human/H)
+	if(!H || !H.mind || !H.patron)
+		return
+
+	ADD_TRAIT(H, TRAIT_CLERGYRADICAL, "job")
+
+	H.miracle_points += 3
+	H.church_favor += 1500
+
+	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE)
+
+	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/self/learnmiracle))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/learnmiracle, H)
+	if(!H.mind.has_spell(/obj/effect/proc_holder/spell/invoked/resurrect/pestra))
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/resurrect/pestra, H)
+
+	to_chat(H, span_notice("I embrace Pestra's radical doctrine."))
+

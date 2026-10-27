@@ -46,7 +46,6 @@
 /obj/item/roguegear/bronze
 	name = "cog"
 	desc = "A cog with teeth meticulously crafted for tight interlocking."
-	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/roguegear/wood
 	var/cart_capacity = 0
@@ -70,7 +69,7 @@
 	name_prefix = "stable"
 	ulevel = 1
 
-/obj/item/roguegear/wood/reliable/Initialize()
+/obj/item/roguegear/wood/reliable/Initialize(mapload)
 	.=..()
 	filters += filter(type="drop_shadow", x=0, y=0, size=0.5, offset=1, color=rgb(32, 196, 218, 200))
 
@@ -81,6 +80,6 @@
 	cart_capacity = 140
 	misfire_modification = 100
 	ulevel = 2
-/obj/item/roguegear/wood/unstable/Initialize()
+/obj/item/roguegear/wood/unstable/Initialize(mapload)
 	.=..()
 	filters += filter(type="drop_shadow", x=0, y=0, size=0.5, offset=1, color=rgb(167, 17, 17, 200))

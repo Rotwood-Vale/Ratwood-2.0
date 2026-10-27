@@ -1,7 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/song/intellectual_interval
 	name = "Intellectual Interval"
 	desc = "A song for thinkers, +3 INT"
-	song_tier = 1
 	warnie = "spellwarning"
 	no_early_release = TRUE
 	movement_interrupt = FALSE
@@ -25,6 +24,11 @@
 /datum/status_effect/buff/playing_melody/intellectual_interval
 	effect = /obj/effect/temp_visual/songs/inspiration_melodyt1
 	buff_to_apply = /datum/status_effect/buff/song/intellectual_interval
+	buffs_to_apply_by_level = list(
+		/datum/status_effect/buff/song/intellectual_interval,
+		/datum/status_effect/buff/song/intellectual_interval/t2,
+		/datum/status_effect/buff/song/intellectual_interval/t3,
+	)
 
 
 /atom/movable/screen/alert/status_effect/buff/song/intellectual_interval
@@ -37,4 +41,10 @@
 	id = "intellectualinterval"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/song/intellectual_interval
 	duration = 15 SECONDS
+	effectedstats = list(STATKEY_INT = 2)
+
+/datum/status_effect/buff/song/intellectual_interval/t2
 	effectedstats = list(STATKEY_INT = 3)
+
+/datum/status_effect/buff/song/intellectual_interval/t3
+	effectedstats = list(STATKEY_INT = 4)

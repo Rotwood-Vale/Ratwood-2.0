@@ -91,6 +91,9 @@
 	aggressive=1
 	rude = TRUE
 	mode = NPC_AI_IDLE
+	//Well trained soldiers.
+	smart_combatant = TRUE
+	special_attacker = TRUE
 	faction = list("viking", "station")
 	ambushable = FALSE
 	cmode = 1
@@ -98,7 +101,7 @@
 	flee_in_pain = TRUE
 	a_intent = INTENT_HELP
 	d_intent = INTENT_PARRY
-	possible_mmb_intents = list(INTENT_BITE, INTENT_JUMP, INTENT_KICK, INTENT_STEAL)
+	possible_mmb_intents = list(INTENT_BITE, INTENT_JUMP, INTENT_KICK, INTENT_SPECIAL)
 	possible_rmb_intents = list(
 		/datum/rmb_intent/feint,\
 		/datum/rmb_intent/aimed,\
@@ -129,7 +132,7 @@
 		return FALSE
 	. = ..()
 
-/mob/living/carbon/human/species/human/northern/bog_deserters/Initialize()
+/mob/living/carbon/human/species/human/northern/bog_deserters/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/human/northern)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
@@ -235,7 +238,7 @@
 	flee_in_pain = TRUE
 	a_intent = INTENT_HELP
 	d_intent = INTENT_PARRY
-	possible_mmb_intents = list(INTENT_BITE, INTENT_JUMP, INTENT_KICK, INTENT_STEAL)
+	possible_mmb_intents = list(INTENT_BITE, INTENT_JUMP, INTENT_KICK, INTENT_SPECIAL)
 	possible_rmb_intents = list(
 		/datum/rmb_intent/feint,\
 		/datum/rmb_intent/aimed,\

@@ -13,9 +13,11 @@
 	var/climb_offset = 0 //offset up when climbed
 	var/mob/living/structureclimber
 	var/hammer_repair
+	/// Forced-entry lines shown to admins on examine, oldest first
+	var/list/breakin_log
 //	move_resist = MOVE_FORCE_STRONG
 
-/obj/structure/Initialize()
+/obj/structure/Initialize(mapload)
 	if (!armor)
 		armor = ARMOR_STRUCTURE
 	. = ..()
@@ -111,6 +113,10 @@
 /obj/structure/MouseDrop_T(atom/movable/O, mob/user)
 	. = ..()
 	if(!climbable)
+		if(can_wallpress() && user == O && isliving(O))
+			var/mob/living/presser = O
+			if(presser.mobility_flags & MOBILITY_MOVE)
+				wallpress(presser)
 		return
 	if(user == O && isliving(O))
 		var/mob/living/L = O
@@ -134,7 +140,7 @@
 		density = FALSE
 		. = step(A,get_dir(A,src.loc))
 		density = TRUE
-		
+
 /obj/structure/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	if(QDELETED(src))
 		return
@@ -176,9 +182,9 @@
 		if(EXPLODE_HEAVY)
 			hard_cap = min(round(max_integrity * 0.25), 20) //some shit has 50 hps and some shit like doors 1500. I dont want one bomb to nuke 10000 windows around coz its annoying
 		if(EXPLODE_LIGHT)
-			hard_cap = min(round(max_integrity * 0.10), 10) 
+			hard_cap = min(round(max_integrity * 0.10), 10)
 
-	var/total_damage = round(CLAMP(brute_loss + extra_integrity, 0, hard_cap)) 
+	var/total_damage = round(CLAMP(brute_loss + extra_integrity, 0, hard_cap))
 	if(total_damage > 0 && !QDELETED(src))
 		take_damage(total_damage, BRUTE, "blunt", 0)
 
@@ -286,6 +292,25 @@
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status
+	var/breakin_count = LAZYLEN(breakin_log)
+	if(breakin_count && isAdminObserver(user))
+		. += span_boldnotice("\[ADMIN\] Break-in log:")
+		for(var/i in max(1, breakin_count - 4) to breakin_count)
+			. += span_notice(breakin_log[i])
+		if(breakin_count > 5)
+			. += span_notice("<a href='?src=[REF(src)];show_breakin_log=1'>Show all [breakin_count]</a>")
+
+/obj/structure/Topic(href, href_list)
+	. = ..()
+	if(href_list["show_breakin_log"] && isAdminObserver(usr))
+		usr << browse("<html><body>[jointext(breakin_log, "<br>")]</body></html>", "window=breakin_log;size=500x400")
+
+/// Records a forced-entry attempt for admin persual
+/obj/structure/proc/log_breakin(mob/user, action)
+	add_hiddenprint(user)
+	var/line = "[user ? key_name(user) : "something"] [action]"
+	investigate_log(line, INVESTIGATE_DOORS)
+	LAZYADD(breakin_log, "[station_time_timestamp()] - [line]")
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	if(max_integrity)
@@ -297,3 +322,13 @@
 				return  "It appears heavily damaged."
 			if(1 to 25)
 				return  span_warning("It's falling apart!")
+
+/obj/structure/proc/set_climbable(new_climbable)
+	if(new_climbable == climbable)
+		return
+	var/turf/our_turf = get_turf(src)
+	climbable = new_climbable
+	if(climbable)
+		our_turf.climbable_atom_count++
+	else
+		our_turf.climbable_atom_count--

@@ -3,6 +3,8 @@
 	domain = "Death, The Afterlife, Rebirth"
 	desc = "The Undermaiden is the custodian of the Afterlife, where all souls must eventually go. She tasks the lost with the Trials of the Forgotten, where they must ruminate on their lyfe to be reborn. Her followers find resurrection to be abhorrent, choosing to isolate themselves to their graveyards."
 	worshippers = "Gravediggers, Morticians, Disgraced Physicians, Loners"
+	virtues = "Respecting the Dead, Sloth, Fatalism"
+	sins = "Undeath, Humor, Revival"
 	mob_traits = list(TRAIT_SOUL_EXAMINE, TRAIT_NOSTINK)	//No stink is generic but they deal with dead bodies so.. makes sense, I suppose?
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/invoked/necras_sight				= CLERIC_T0,
@@ -12,10 +14,11 @@
 					/obj/effect/proc_holder/spell/invoked/avert						= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/speakwithdead				= CLERIC_T1,
 					/obj/effect/proc_holder/spell/targeted/abrogation				= CLERIC_T2,
-					/obj/effect/proc_holder/spell/self/necra_spirits				= CLERIC_T3,
+					/obj/effect/proc_holder/spell/invoked/necra_crows				= CLERIC_T3,
 					/obj/effect/proc_holder/spell/invoked/deaths_door				= CLERIC_T3,//This was bad enough at T1. No, thanks. Cool as it is.
 					/obj/effect/proc_holder/spell/targeted/churn					= CLERIC_T4,//Priest/Acolytes only. Thanks.
 	)
+	energy_color = COLOR_PATRON_NECRA
 	confess_lines = list(
 		"ALL SOULS FIND THEIR WAY TO NECRA!",
 		"THE UNDERMAIDEN IS OUR FINAL REPOSE!",
@@ -42,12 +45,12 @@
 	return FALSE
 
 /datum/patron/divine/necra/on_lesser_heal(
-    mob/living/user,
-    mob/living/target,
-    message_out,
-    message_self,
-    conditional_buff,
-    situational_bonus
+	mob/living/user,
+	mob/living/target,
+	message_out,
+	message_self,
+	conditional_buff,
+	situational_bonus
 )
 	*message_out = span_info("A sense of quiet respite radiates from [target]!")
 	*message_self = span_notice("I feel the Undermaiden's gaze turn from me for now!")

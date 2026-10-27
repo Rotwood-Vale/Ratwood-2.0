@@ -7,6 +7,9 @@
 	max_integrity = 200
 	integrity_failure = 0.1
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
+	sewrepair = TRUE
+	dropshrink = 0.85
+	has_item_quality = TRUE
 	///What level of bright light protection item has.
 	var/flash_protect = FLASH_PROTECTION_NONE
 	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
@@ -26,7 +29,6 @@
 	var/cooldown = 0
 
 	var/emote_environment = -1
-	var/list/prevent_crits
 
 	var/clothing_flags = NONE
 
@@ -54,11 +56,26 @@
 	var/immune_to_genderswap = FALSE
 	var/armor_class = ARMOR_CLASS_NONE
 
-	sellprice = 1
 	var/naledicolor = FALSE
+	var/chunkcolor = "#5e5e5e"
+	var/material_category = ARMOR_MAT_LEATHER
 
-	var/cansnout = FALSE //for masks - can we MMB this to change it into a snouty sprite?
 	var/snouting = FALSE //do we have the snout-snug sprite toggled?
+	var/adjusted_inv_mask = NONE
+	var/adjusted_inv_value = NONE
+	var/snoutable_for
+	var/snoutable_cached = FALSE
+
+	var/hiked = FALSE
+	var/hiked_overlay_icon
+	var/hiked_base_icon
+	var/hikeable_for
+	var/hikeable_cached = FALSE
+	var/hem_overlay_restore
+	var/hem_flags_restore
+	var/hem_coverage_restore
+	var/mob/hem_holder
+	var/list/hem_grips
 
 /obj/item
 	var/blocking_behavior
@@ -74,6 +91,10 @@
 	var/ducal_primary = FALSE // Uses duchy primary color for base color
 	var/ducal_detail = FALSE // Uses duchy secondary color for detail_color
 	var/ducal_altdetail = FALSE // Uses duchy secondary color for altdetail_color
+	var/barony_primary = FALSE // Uses barony primary color for base color
+	var/barony_detail = FALSE // Uses barony secondary color for detail_color
+	var/barony_altdetail = FALSE // Uses barony secondary color for altdetail_color
+	var/shoddy_repair = FALSE // if we've been field repaired by an unskilled person, set this to true
 
 /obj/item/clothing/New()
 	..()
@@ -97,6 +118,189 @@
 			. += span_notice("It has one torn sleeve.")
 		else
 			. += span_notice("Both its sleeves have been torn!")
+
+///Remembers that the wearer set these flags_inv bits by hand, so re-equipping doesn't undo it.
+/obj/item/clothing/proc/persist_inv_flags(flag)
+	adjusted_inv_mask |= flag
+	adjusted_inv_value &= ~flag
+	adjusted_inv_value |= (flags_inv & flag)
+
+///Reapplies any remembered manual toggles on top of a fresh flags_inv value.
+/obj/item/clothing/proc/adjust_inv_flags(base)
+	if(!adjusted_inv_mask)
+		return base
+	return (base & ~adjusted_inv_mask) | (adjusted_inv_value & adjusted_inv_mask)
+
+///The state the _snout suffix hangs off. Override where an item has more than one base look.
+/obj/item/clothing/proc/snout_base_state()
+	return initial(icon_state)
+
+///Runs after the swap, before the wearer is redrawn, so coverage changes land in the same refresh.
+/obj/item/clothing/proc/on_snout_toggled()
+	return
+
+/obj/item/clothing/proc/is_snoutable()
+	var/base = snout_base_state()
+	var/key = "[base]|[mob_overlay_icon]"	//some items swap mob_overlay_icon by slot
+	if(snoutable_for == key)	//building an icon just to read its states is expensive
+		return snoutable_cached
+	snoutable_for = key
+	snoutable_cached = FALSE
+	if(mob_overlay_icon)
+		var/icon/worn = new(mob_overlay_icon)
+		snoutable_cached = ("[base]_snout" in worn.IconStates())
+	return snoutable_cached
+
+/obj/item/clothing/proc/toggle_snout()
+	if(snouting)
+		snouting = FALSE
+		icon_state = snout_base_state()
+	else
+		if(!is_snoutable())
+			return FALSE
+		snouting = TRUE
+		icon_state = "[snout_base_state()]_snout"
+	update_icon()
+	on_snout_toggled()
+	if(isliving(loc))
+		var/mob/living/L = loc
+		L.rebuild_obscured_flags()
+	return TRUE
+
+/obj/item/clothing/proc/restore_snout()
+	if(!snouting)
+		return
+	if(!is_snoutable())	//base look changed under us and has no snouted cut
+		snouting = FALSE
+		return
+	icon_state = "[snout_base_state()]_snout"
+
+/obj/item/clothing/proc/is_hikeable()
+	if(hiked)
+		return TRUE
+	if(!hiked_overlay_icon || mob_overlay_icon != hiked_base_icon)
+		return FALSE
+	var/key = "[icon_state]|[hiked_overlay_icon]"
+	if(hikeable_for == key)
+		return hikeable_cached
+	hikeable_for = key
+	var/icon/worn = new(hiked_overlay_icon)
+	hikeable_cached = (icon_state in worn.IconStates())
+	return hikeable_cached
+
+/obj/item/clothing/proc/free_hands_for_hem(mob/living/carbon/user)
+	var/left
+	var/right
+	for(var/index in 1 to length(user.held_items))
+		if(user.held_items[index])
+			continue
+		if(!user.has_hand_for_held_index(index))
+			continue
+		if(index % 2)
+			if(!left)
+				left = index
+		else
+			if(!right)
+				right = index
+	if(!left || !right)
+		return null
+	return list(left, right)
+
+/obj/item/clothing/proc/toggle_hike(mob/living/carbon/user, skip_hands = FALSE)
+	if(hiked)
+		lower_hem()
+		return TRUE
+	if(!istype(user) || loc != user || user.is_holding(src))
+		return FALSE
+	if(!is_hikeable())
+		return FALSE
+	if(!skip_hands)
+		var/list/free = free_hands_for_hem(user)
+		if(length(free) < 2)
+			to_chat(user, span_warning("I need both hands free to hold up \the [src]."))
+			return FALSE
+		var/list/grips = list()
+		for(var/i in 1 to 2)
+			var/obj/item/hem_grip/grip = new(user)
+			grip.wearer = user
+			if(!user.put_in_hand(grip, free[i]))
+				grip.wearer = null
+				qdel(grip)
+				for(var/obj/item/hem_grip/placed in grips)
+					placed.wearer = null
+					qdel(placed)
+				return FALSE
+			grips += grip
+		hem_grips = grips
+	hiked = TRUE
+	hem_holder = user
+	hem_overlay_restore = mob_overlay_icon
+	mob_overlay_icon = hiked_overlay_icon
+	hem_flags_restore = flags_inv
+	flags_inv &= ~HIDECROTCH
+	hem_coverage_restore = body_parts_covered_dynamic & GROIN
+	body_parts_covered_dynamic &= ~GROIN
+	RegisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND), PROC_REF(on_hem_interrupt))
+	update_icon()
+	refresh_hem_visuals(user)
+	return TRUE
+
+/obj/item/clothing/proc/refresh_hem_visuals(mob/living/carbon/wearer)
+	if(!iscarbon(wearer) || QDELETED(wearer))
+		return
+	wearer.rebuild_obscured_flags()
+	wearer.update_inv_armor_real()
+	wearer.update_inv_shirt_real()
+	wearer.update_inv_pants_real()
+	wearer.update_inv_cloak_real()
+	wearer.update_inv_belt()
+	wearer.update_body_parts(TRUE)
+
+/obj/item/clothing/proc/lower_hem()
+	if(!hiked)
+		return
+	var/mob/living/carbon/wearer = hem_holder
+	if(!iscarbon(wearer))
+		wearer = loc
+	hiked = FALSE
+	mob_overlay_icon = hem_overlay_restore
+	hem_overlay_restore = null
+	if(!isnull(hem_flags_restore))
+		flags_inv = hem_flags_restore
+		hem_flags_restore = null
+	if(hem_coverage_restore)
+		body_parts_covered_dynamic |= hem_coverage_restore
+		hem_coverage_restore = null
+	if(hem_holder)
+		if(!QDELETED(hem_holder))
+			UnregisterSignal(hem_holder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_APPLY_DAMGE, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOB_ITEM_BEING_ATTACKED, COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ATTACKED_BY_HAND))
+		hem_holder = null
+	var/list/grips = hem_grips
+	hem_grips = null
+	for(var/obj/item/hem_grip/grip in grips)
+		grip.wearer = null
+		qdel(grip)
+	update_icon()
+	refresh_hem_visuals(wearer)
+
+/obj/item/clothing/proc/on_hem_interrupt(datum/source)
+	SIGNAL_HANDLER
+	lower_hem()
+
+/obj/item/clothing/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	. = ..()
+	if(hiked && loc != OldLoc)
+		lower_hem()
+
+/mob/living/proc/drop_hiked_hem()
+	for(var/obj/item/clothing/worn in get_equipped_items())
+		if(worn.hiked)
+			worn.lower_hem()
+
+
+///Maps a worn state back onto the plain state its detail overlays are drawn for.
+/obj/item/proc/get_detail_state(base_state)
+	return base_state
 
 /obj/item/proc/get_detail_tag() //this is for extra layers on clothes
 	return detail_tag
@@ -229,7 +433,7 @@
 			return TRUE
 		return FALSE
 
-/obj/item/clothing/Initialize()
+/obj/item/clothing/Initialize(mapload)
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
 		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
@@ -307,6 +511,28 @@
 				if(variable in user.vars)
 					LAZYSET(user_vars_remembered, variable, user.vars[variable])
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
+		warn_armor_class(user)
+
+/obj/item/clothing/proc/warn_armor_class(mob/living/carbon/human/user, removed = FALSE)
+	if(armor_class <= ARMOR_CLASS_NONE)
+		return
+	if(!ishuman(user))
+		return
+	// Was this item's armor class actually beyond the user's training?
+	var/dominated = FALSE
+	if(armor_class == ARMOR_CLASS_HEAVY && !HAS_TRAIT(user, TRAIT_HEAVYARMOR))
+		dominated = TRUE
+	else if(armor_class == ARMOR_CLASS_MEDIUM && !HAS_TRAIT(user, TRAIT_HEAVYARMOR) && !HAS_TRAIT(user, TRAIT_MEDIUMARMOR))
+		dominated = TRUE
+	if(!dominated)
+		return
+	if(removed)
+		if(user.check_armor_skill())
+			to_chat(user, span_info("I feel lighter and more agile without that armor weighing me down."))
+		else
+			to_chat(user, span_info("I feel the weight lessens, but another piece of armor is still impairing my movements."))
+		return
+	to_chat(user, span_warning("I'm not trained to wear armor of this weight. My ability to parry, dodge, run and cast spells will be greatly impaired."))
 
 /obj/item/clothing/examine(mob/user)
 	. = ..()
@@ -337,6 +563,38 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 */
+/obj/item/clothing/proc/get_flung_off()
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/H = loc
+	var/max_range = (H.mind ? 2 : 3)
+	var/throwprob = (H.mind ? 8 : 80) + ((10 - H.STALUC))    // More FOR we have the less likely it is to happen.
+	if(!prob(throwprob))
+		return
+	perform_fling(H, max_range)
+
+/// Proc mostly for admins to use that omits probabilities. We could use an arg in the proc above, but navigating proccall is simpler without them.
+/obj/item/clothing/proc/get_flung_off_forced()
+	if(!ishuman(loc))
+		return
+	var/mob/living/carbon/human/H = loc
+	var/max_range = rand(2, 3)
+	perform_fling(H, max_range)
+
+/// Actual proc for flinging the item off. This shouldn't really 'fail' if it is getting called.
+/obj/item/clothing/proc/perform_fling(mob/living/carbon/human/H, max_range)
+	if(!H.dropItemToGround(src, silent = TRUE))
+		return
+	H.update_fov_angles()
+	if(istype(src, /obj/item/clothing/suit/roguetown/armor/chainmail) || istype(src, /obj/item/clothing/suit/roguetown/armor/plate))
+		do_sparks(2, TRUE, get_turf(H))
+	var/turnangle = (prob(10) ? 180 : prob(50) ? 270 : 90)
+	var/turndir = turn(H.dir, turnangle)
+	var/dist = rand(1, max_range)
+	var/current_turf = get_turf(H)
+	var/target_turf = get_ranged_target_turf(current_turf, turndir, dist)
+	playsound(get_turf(H), 'sound/misc/obj_toss.ogg', 100, TRUE)
+	throw_at(target_turf, dist, 6, H, FALSE)
 
 /obj/item/clothing/obj_break(damage_flag)
 	original_armor = armor
@@ -344,6 +602,11 @@
 	for(var/x in armorlist)
 		if(armorlist[x] > 0)
 			armorlist[x] = 0
+	var/mob/living/carbon/human/wearer = loc
+	if(istype(wearer))
+		if(HAS_TRAIT(wearer, TRAIT_LOOSE_STRAPS) && !HAS_TRAIT(src, TRAIT_NODROP))
+			wearer.visible_message(span_danger("[src] gets flung off!"))
+			get_flung_off_forced()
 	..()
 
 /obj/item/clothing/obj_fix(mob/user, full_repair = TRUE)
@@ -356,7 +619,7 @@ SEE_MOBS  // can see all mobs, no matter what
 SEE_OBJS  // can see all objs, no matter what
 SEE_TURFS // can see all turfs (and areas), no matter what
 SEE_PIXELS// if an object is located on an unlit area, but some of its pixels are
-          // in a lit area (via pixel_x,y or smooth movement), can see those pixels
+		  // in a lit area (via pixel_x,y or smooth movement), can see those pixels
 BLIND     // can't see anything
 */
 
@@ -428,7 +691,7 @@ BLIND     // can't see anything
 	if(..())
 		return 1
 
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	else
 		if(attached_accessory)
@@ -485,7 +748,7 @@ BLIND     // can't see anything
 		C.head_update(src, forced = 1)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		A.build_all_button_icons()
 	return TRUE
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
@@ -499,24 +762,40 @@ BLIND     // can't see anything
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
 
-/obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
-	up = !up
-	clothing_flags ^= visor_flags
-	flags_inv ^= visor_flags_inv
-	icon_state = "[initial(icon_state)]"
-	if(visor_vars_to_toggle & VISOR_FLASHPROTECT)
-		flash_protect ^= initial(flash_protect)
-	if(visor_vars_to_toggle & VISOR_TINT)
-		tint ^= initial(tint)
-
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
 		if(!user.incapacitated())
 			return 1
 	return 0
 
-/obj/item/clothing/proc/step_action() //this was made to rewrite clown shoes squeaking
-	SEND_SIGNAL(src, COMSIG_CLOTHING_STEP_ACTION)
+/obj/item/clothing/proc/pick_damage_sound(tier)
+	var/picked_sound
+	switch(material_category)
+		if(ARMOR_MAT_PLATE)
+			switch(tier)
+				if(1)
+					picked_sound = 'sound/combat/armor_degrade_plate1.ogg'
+				if(2)
+					picked_sound = 'sound/combat/armor_degrade_plate2.ogg'
+				if(3)
+					picked_sound = 'sound/combat/armor_degrade_plate3.ogg'
+		if(ARMOR_MAT_CHAINMAIL)
+			switch(tier)
+				if(1)
+					picked_sound = 'sound/combat/armor_degrade_chain1.ogg'
+				if(2)
+					picked_sound = 'sound/combat/armor_degrade_chain2.ogg'
+				if(3)
+					picked_sound = 'sound/combat/armor_degrade_chain3.ogg'
+		if(ARMOR_MAT_LEATHER)
+			switch(tier)
+				if(1)
+					picked_sound = 'sound/combat/armor_degrade_leather1.ogg'
+				if(2)
+					picked_sound = 'sound/combat/armor_degrade_leather2.ogg'
+				if(3)
+					picked_sound = 'sound/combat/armor_degrade_leather3.ogg'
+	return (picked_sound ? picked_sound : FALSE)
 
 /obj/item/clothing/take_damage(damage_amount, damage_type = BRUTE, damage_flag, sound_effect, attack_dir, armor_penetration)
 	var/newdam = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armor_penetration)
@@ -526,100 +805,60 @@ BLIND     // can't see anything
 	var/ratio_newinteg = (eff_currint - newdam) / eff_maxint
 	var/text
 	var/y_offset
+	var/chunkicon
+	var/sfx
 	if(ratio > 0.75 && ratio_newinteg < 0.75)
 		text = "Armor <br><font color = '#8aaa4d'>marred</font>"
 		y_offset = -5
+		sfx = pick_damage_sound(1)
+		chunkicon = "chunkfall1"
 	if(ratio > 0.5 && ratio_newinteg < 0.5)
 		text = "Armor <br><font color = '#d4d36c'>damaged</font>"
 		y_offset = 15
+		sfx = pick_damage_sound(2)
+		chunkicon = "chunkfall2"
 	if(ratio > 0.25 && ratio_newinteg < 0.25)
 		text = "Armor <br><font color = '#a8705a'>sundered</font>"
 		y_offset = 30
+		sfx = pick_damage_sound(3)
+		chunkicon = "chunkfall3"
 	if(text)
+		new /obj/effect/temp_visual/armor_chunk(get_turf(src), 0.7 SECONDS, chunkcolor, chunkicon)
+		playsound(src, sfx, 100, TRUE)
 		filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, -20, y_offset)
 	. = ..()
 
-/obj/proc/generate_tooltip(examine_text, showcrits)
+/obj/proc/generate_tooltip(examine_text)
 	return examine_text
 
-/obj/item/clothing/generate_tooltip(examine_text, showcrits)
+/obj/item/clothing/generate_tooltip(examine_text)
 	if(!armor)	// No armor
 		return examine_text
-	
+
 	// Fake armor
 	if(armor.getRating("slash") == 0 && armor.getRating("stab") == 0 && armor.getRating("blunt") == 0 && armor.getRating("piercing") == 0)
 		return examine_text
 
-	var/str = ""
-	str += "[colorgrade_rating("🔨 BLUNT ", armor.blunt, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🪓 SLASH ", armor.slash, elaborate = TRUE)]"
-	str += "<br>"
-	str += "[colorgrade_rating("🗡️ STAB ", armor.stab, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🏹 PIERCE ", armor.piercing, elaborate = TRUE)] "
+	var/str
+	str += "<b>ABSORPTION:</b> [colorgrade_rating("🔨 BLUNT", armor.blunt, elaborate = TRUE, max_tier = 5)]<br>"
+	str += "<b>BLOCK:</b> "
+	str += "[colorgrade_rating("🪓 SLASH", armor.slash, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🗡️ STAB", armor.stab, elaborate = TRUE)] | "
+	str += "[colorgrade_rating("🏹 PIERCE", armor.piercing, elaborate = TRUE)]"
+	str += "<br><b>RESIST:</b> [colorgrade_rating("🔥 FIRE", armor.fire, elaborate = TRUE)]"
+	examine_text = "<font color = '#ffffff'>[examine_text]</font>"
+	return SPAN_TOOLTIP_DANGEROUS_HTML(str, examine_text)
 
-	if(showcrits && prevent_crits)
-		str += "<br>———————————————<br>"
-		str += "<font color = '#afaeae'><text-align: center>STOPS CRITS: <br>"
-		var/linebreak_count = 0
-		var/index = 0
-		for(var/flag in prevent_crits)
-			index++
-			if(flag == BCLASS_PICK) //BCLASS_PICK is named "stab", and "stabbing" is its own damage class. Prevents confusion.
-				flag = "pick"
-			str += ("[capitalize(flag)] ")
-			linebreak_count++
-			if(linebreak_count >= 3)
-				str += "<br>"
-				linebreak_count = 0
-			else if(index != length(prevent_crits))
-				str += " | "
-		str += "</font>"
-
-	//This makes it appear darker than the rest of examine text. Draws the cursor to it like to a link.
-	examine_text = "<font color = '#808080'>[examine_text]</font>"
-	// Make the armor info clickable; clicking prints full details to chat
-	return "<a href='byond://?src=\ref[src];show_examine=1'>[str]</a>"
-
-// Build the detailed examine string for chat output
-/obj/item/clothing/proc/build_examine_detail(mob/user, showcrits)
-	if(!armor) // No armor
-		return get_examine_string(user)
-
-	var/str = ""
-	str += "[colorgrade_rating("🔨 BLUNT  ", armor.blunt, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🪓 SLASH  ", armor.slash, elaborate = TRUE)]"
-	str += "<br>"
-	str += "[colorgrade_rating("🗡️ STAB   ", armor.stab, elaborate = TRUE)] | "
-	str += "[colorgrade_rating("🏹 PIERCE ", armor.piercing, elaborate = TRUE)] "
-
-	if(showcrits && prevent_crits)
-		str += "<br>———————————————<br>"
-		str += "<font color = '#afaeae'><text-align: center>STOPS CRITS: <br>"
-		var/linebreak_count = 0
-		var/index = 0
-		for(var/flag in prevent_crits)
-			index++
-			if(flag == BCLASS_PICK)
-				flag = "pick"
-			str += ("[capitalize(flag)] ")
-			linebreak_count++
-			if(linebreak_count >= 3)
-				str += "<br>"
-				linebreak_count = 0
-			else if(index != length(prevent_crits))
-				str += " | "
-		str += "</font>"
-
-	var/examine_text = get_examine_string(user)
-	if(examine_text && length(examine_text))
-		str += "<br><font color = '#808080'>[examine_text]</font>"
-	return str
-
-// Handle clicks from chat to show the examine details
-/obj/item/clothing/Topic(href, href_list)
-	if(href_list["show_examine"]) 
-		var/mob/user = usr
-		if(user)
-			to_chat(user, build_examine_detail(user, TRUE))
-		return
-	..()
+/obj/item/clothing/proc/get_armor_integ()
+	var/eff_maxint = max_integrity - (max_integrity * integrity_failure)
+	var/eff_currint = max(obj_integrity - (max_integrity * integrity_failure), 0)
+	var/ratio =	(eff_currint / eff_maxint)
+	switch(ratio)
+		if(0.75 to 1)
+			return null
+		if(0.5 to 0.74)
+			return VISMSG_ARMOR_INT_STAGEONE
+		if(0.25 to 0.49)
+			return VISMSG_ARMOR_INT_STAGETWO
+		if(0 to 0.24)
+			return VISMSG_ARMOR_INT_STAGETHREE

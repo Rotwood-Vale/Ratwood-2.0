@@ -363,7 +363,7 @@ GLOBAL_LIST_EMPTY(loadout_selected_advclasses)
 				// Filter by search term
 				var/list/matching_jobs = list()
 				for(var/job_title in searchable_jobs)
-					if(findtext(lowertext(job_title), lowertext(search_term)))
+					if(findtext(LOWER_TEXT(job_title), LOWER_TEXT(search_term)))
 						matching_jobs[job_title] = searchable_jobs[job_title]
 				
 				if(!matching_jobs.len)
@@ -700,7 +700,7 @@ GLOBAL_LIST_EMPTY(loadout_selected_advclasses)
 		for(var/path in roguejob_paths)
 			var/datum/outfit/O = path
 			var/path_string = "[path]"
-			if(findtext(lowertext(path_string), lowertext(search_term)))
+			if(findtext(LOWER_TEXT(path_string), LOWER_TEXT(search_term)))
 				if(initial(O.can_be_admin_equipped))
 					matching_jobs["[path]"] = path
 		
@@ -816,10 +816,6 @@ GLOBAL_LIST_EMPTY(loadout_selected_advclasses)
 			if(length(advclass_datum.subclass_skills))
 				for(var/skill in advclass_datum.subclass_skills)
 					H.adjust_skillrank(skill, advclass_datum.subclass_skills[skill], TRUE)
-			
-			// Apply advclass spell points
-			if(advclass_datum.subclass_spellpoints > 0 && H.mind)
-				H.mind.adjust_spellpoints(advclass_datum.subclass_spellpoints)
 			
 			// Apply advclass traits
 			if(advclass_datum.traits_applied)
@@ -954,8 +950,6 @@ GLOBAL_LIST_EMPTY(loadout_selected_advclasses)
 		// Clear spells and spell points
 		for(var/obj/effect/proc_holder/spell/S in H.mind.spell_list)
 			H.mind.RemoveSpell(S)
-		H.mind.spell_points = 0
-		H.mind.used_spell_points = 0
 	
 	// Equip the outfit if available - equipOutfit handles pre_equip and post_equip internally
 	// Note: pre_equip hooks may grant spells as part of the equipment process
@@ -978,12 +972,6 @@ GLOBAL_LIST_EMPTY(loadout_selected_advclasses)
 		if(job_datum && job_datum.spells)
 			for(var/S in job_datum.spells)
 				H.mind.AddSpell(new S)
-	
-		// Apply spell points from advclass if available
-		if(advclass_path)
-			var/datum/advclass/advclass_datum = new advclass_path()
-			if(advclass_datum.subclass_spellpoints > 0)
-				H.mind.adjust_spellpoints(advclass_datum.subclass_spellpoints)
 	
 	if(actual_outfit)
 		to_chat(H, span_notice("Equipment and spells applied[is_migrant ? " from migrant role" : ""]!"))
@@ -1200,8 +1188,6 @@ GLOBAL_LIST_EMPTY(loadout_selected_advclasses)
 		for(var/obj/effect/proc_holder/spell/S in H.mind.spell_list)
 			H.mind.RemoveSpell(S)
 		// Reset spell points
-		H.mind.spell_points = 0
-		H.mind.used_spell_points = 0
 	
 	// Remove from excommunicated and outlawed lists (clears examine text like "HERETIC! SHAME!")
 	// Check both real_name and name to be thorough

@@ -1,7 +1,7 @@
 /datum/intent/jump
 	name = "jump"
-	candodge = FALSE
-	canparry = FALSE
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
 	chargedrain = 0
 	chargetime = 0
 	noaa = TRUE
@@ -45,6 +45,15 @@
 			to_chat(src, span_warning("That's too high for me..."))
 			return FALSE
 
+	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
+	if(animal_mount && animal_mount.has_buckled_mobs() && animal_mount.buckled_mobs.len > 1)
+		to_chat(src, span_warning("[animal_mount] is carrying too much weight to jump."))
+		return FALSE
+
+	if(has_status_effect(/datum/status_effect/debuff/exposed))
+		to_chat(src, span_warning("I'm exposed and lost my footing! I can't jump!"))
+		return FALSE
+
 	SEND_SIGNAL(src, COMSIG_LIVING_ONJUMP, A)
 
 	changeNext_move(mmb_intent.clickcd)
@@ -56,7 +65,12 @@
 	var/jextra = FALSE
 
 	if(m_intent == MOVE_INTENT_RUN)
-		emote("leap", forced = TRUE)
+		if(animal_mount)
+			animal_mount.emote("leap", forced = TRUE)
+		else if(HAS_TRAIT(src, TRAIT_BEWINGED))
+			emote("flutter", forced = TRUE)
+		else
+			emote("leap", forced = TRUE)
 		OffBalance(30)
 		jadded = 45
 		jrange = 3
@@ -64,10 +78,18 @@
 		if(!HAS_TRAIT(src, TRAIT_LEAPER))// The Jester lands where the Jester wants.
 			jextra = TRUE
 	else
-		emote("jump", forced = TRUE)
+		if(animal_mount)
+			animal_mount.emote("jump", forced = TRUE)
+		if(HAS_TRAIT(src, TRAIT_BEWINGED))
+			emote("flutter", forced = TRUE)
+		else
+			emote("jump", forced = TRUE)
 		OffBalance(20)
 		jadded = 20
 		jrange = 2
+
+	if(HAS_TRAIT(src, TRAIT_BEWINGED))
+		jrange += 1
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -83,6 +105,23 @@
 #define FLIP_DIRECTION_ANTICLOCKWISE 0
 
 /mob/living/proc/jump_action_resolve(atom/A, jadded, jrange, jextra)
+	var/atom/movable/jump_movable = src
+	var/mob/living/simple_animal/animal_mount = get_buckled_animal_mount()
+	var/was_mounted = FALSE
+	var/mount_prev_pixel_z
+	var/mount_prev_pass_flags
+	var/prev_layer
+	if(animal_mount)
+		mount_prev_pixel_z = animal_mount.pixel_z
+		mount_prev_pass_flags = animal_mount.pass_flags
+		prev_layer = layer
+		layer = animal_mount.layer + 0.1
+		var/datum/component/riding/mount_riding = animal_mount.GetComponent(/datum/component/riding)
+		if(mount_riding && mount_riding.driver == src)
+			mount_riding.driver = null
+		animal_mount.unbuckle_mob(src, TRUE)
+		was_mounted = TRUE
+
 	var/do_a_flip
 	var/flip_direction = FLIP_DIRECTION_CLOCKWISE
 	var/prev_pixel_z = pixel_z
@@ -92,44 +131,99 @@
 		if((dir & SOUTH) || (dir & WEST))
 			flip_direction = FLIP_DIRECTION_ANTICLOCKWISE
 
-	if(stamina_add(min(jadded,100)))
+	if(was_mounted || stamina_add(min(jadded,100)))
 		if(do_a_flip)
 			var/flip_angle = flip_direction ? 120 : -120
-			animate(src, pixel_z = pixel_z + 6, transform = turn(transform, flip_angle), time = 1)
+			if(was_mounted && animal_mount && !QDELETED(animal_mount))
+				animate(animal_mount, pixel_z = animal_mount.pixel_z + 6, time = 1)
+				animate(pixel_z = mount_prev_pixel_z, time = 2)
+			animate(src, pixel_z = pixel_z + (was_mounted ? 10 : 6), transform = turn(transform, flip_angle), time = 1)
 			animate(transform = turn(transform, flip_angle), time=1)
 			animate(pixel_z = prev_pixel_z, transform = turn(transform, flip_angle), time=1)
 			animate(transform = prev_transform, time = 0)
 		else
-			animate(src, pixel_z = pixel_z + 6, time = 1)
+			if(was_mounted && animal_mount && !QDELETED(animal_mount))
+				animate(animal_mount, pixel_z = animal_mount.pixel_z + 6, time = 1)
+				animate(pixel_z = mount_prev_pixel_z, time = 2)
+			animate(src, pixel_z = pixel_z + (was_mounted ? 10 : 6), time = 1)
 			animate(pixel_z = prev_pixel_z, transform = turn(transform, pick(-12, 0, 12)), time=2)
 			animate(transform = prev_transform, time = 0)
 
 		if(jextra)
-			throw_at(A, jrange, 1, src, spin = FALSE)
-			while(src.throwing)
+			jump_movable.throw_at(A, jrange, 1, jump_movable, spin = FALSE)
+			while(jump_movable.throwing)
+				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
+					var/turf/current_jump_turf = get_turf(src)
+					var/mount_was_zfalling = animal_mount.zfalling
+					animal_mount.pass_flags = mount_prev_pass_flags
+					if(istype(current_jump_turf, /turf/open/transparent/openspace))
+						animal_mount.pass_flags |= LETPASSTHROW
+						animal_mount.zfalling = TRUE
+					animal_mount.forceMove(current_jump_turf)
+					animal_mount.step_x = step_x
+					animal_mount.step_y = step_y
+					animal_mount.zfalling = mount_was_zfalling
 				sleep(1)
-			throw_at(get_step(src, src.dir), 1, 1, src, spin = FALSE)
+			jump_movable.throw_at(get_step(jump_movable, jump_movable.dir), 1, 1, jump_movable, spin = FALSE)
+			while(jump_movable.throwing)
+				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
+					var/turf/current_jump_turf = get_turf(src)
+					var/mount_was_zfalling = animal_mount.zfalling
+					animal_mount.pass_flags = mount_prev_pass_flags
+					if(istype(current_jump_turf, /turf/open/transparent/openspace))
+						animal_mount.pass_flags |= LETPASSTHROW
+						animal_mount.zfalling = TRUE
+					animal_mount.forceMove(current_jump_turf)
+					animal_mount.step_x = step_x
+					animal_mount.step_y = step_y
+					animal_mount.zfalling = mount_was_zfalling
+				sleep(1)
 		else
-			throw_at(A, jrange, 1, src, spin = FALSE)
-			while(src.throwing)
+			jump_movable.throw_at(A, jrange, 1, jump_movable, spin = FALSE)
+			while(jump_movable.throwing)
+				if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
+					var/turf/current_jump_turf = get_turf(src)
+					var/mount_was_zfalling = animal_mount.zfalling
+					animal_mount.pass_flags = mount_prev_pass_flags
+					if(istype(current_jump_turf, /turf/open/transparent/openspace))
+						animal_mount.pass_flags |= LETPASSTHROW
+						animal_mount.zfalling = TRUE
+					animal_mount.forceMove(current_jump_turf)
+					animal_mount.step_x = step_x
+					animal_mount.step_y = step_y
+					animal_mount.zfalling = mount_was_zfalling
 				sleep(1)
 		if(!HAS_TRAIT(src, TRAIT_ZJUMP) && (m_intent == MOVE_INTENT_RUN))	//Jesters and werewolves don't get immobilized at all
 			Immobilize((HAS_TRAIT(src, TRAIT_LEAPER) ? 5 : 10))	//Acrobatics get half the time
-		if(isopenturf(src.loc))
-			var/turf/open/T = src.loc
+		if(isopenturf(jump_movable.loc))
+			var/turf/open/T = jump_movable.loc
 			if(T.landsound)
 				playsound(T, T.landsound, 100, FALSE)
-			T.Entered(src)
+			T.Entered(jump_movable)
 	else
 		animate(src, pixel_z = pixel_z + 6, time = 1)
 		animate(pixel_z = prev_pixel_z, transform = turn(transform, pick(-12, 0, 12)), time=2)
 		animate(transform = prev_transform, time = 0)
-		throw_at(A, 1, 1, src, spin = FALSE)
+		jump_movable.throw_at(A, 1, 1, jump_movable, spin = FALSE)
 
 	if(mob_offsets)
 		for(var/o in mob_offsets)
 			if(mob_offsets[o])
 				reset_offsets(o)
+
+	if(was_mounted && !isnull(prev_layer))
+		layer = prev_layer
+	if(was_mounted && animal_mount && !QDELETED(animal_mount))
+		animal_mount.pass_flags = mount_prev_pass_flags
+
+	if(was_mounted && animal_mount && !QDELETED(animal_mount) && isturf(src.loc))
+		animal_mount.forceMove(get_turf(src))
+		animal_mount.buckle_mob(src, TRUE, FALSE)
+		var/datum/component/riding/mount_riding_after = animal_mount.GetComponent(/datum/component/riding)
+		if(mount_riding_after)
+			mount_riding_after.driver = src
+			mount_riding_after.handle_vehicle_layer()
+			mount_riding_after.handle_vehicle_offsets()
 
 #undef FLIP_DIRECTION_CLOCKWISE
 #undef FLIP_DIRECTION_ANTICLOCKWISE

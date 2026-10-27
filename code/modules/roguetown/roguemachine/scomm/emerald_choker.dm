@@ -45,11 +45,14 @@
 	else
 		icon_state = "listenstone_act"
 
-/obj/item/listenstone/Initialize()
+/obj/item/listenstone/Initialize(mapload)
 	. = ..()
 	update_icon()
 	SSroguemachine.scomm_machines += src
 
+/obj/item/listenstone/Destroy(force)
+	SSroguemachine.scomm_machines -= src
+	return ..()
 
 /obj/item/listenstone/proc/repeat_message(message, atom/A, tcolor, message_language)
 	if(A == src)

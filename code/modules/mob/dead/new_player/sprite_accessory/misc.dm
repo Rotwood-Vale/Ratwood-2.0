@@ -171,3 +171,21 @@
 	icon_state = "warpaint"
 	layer = BODY_FRONT_LAYER
 	color_disabled = FALSE
+
+/datum/sprite_accessory/accessory/eyesocket
+	name = "Eye Sockets"
+	icon_state = "eyesocket"
+	layer = BODY_FRONT_LAYER
+	color_disabled = FALSE
+
+/datum/sprite_accessory/accessory/eyeliner
+	name = "Eyeliner"
+	icon_state = "eyeliner"
+	layer = BODY_FRONT_LAYER
+	color_disabled = FALSE
+
+/datum/sprite_accessory/accessory/outereye
+	name = "Outer Eyes"
+	icon_state = "outereye"
+	layer = BODY_FRONT_LAYER
+	color_disabled = FALSE

@@ -1,7 +1,7 @@
 GLOBAL_VAR(king_throne)
 
 /obj/structure/roguethrone
-	name = "throne of Rotwood Vale"
+	name = "throne of The Realm"
 	desc = "A big throne, to hold the Lord's giant personality. Say 'secrets of the throat' with the crown on your head if you are confused."
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	icon_state = "throne"
@@ -24,7 +24,7 @@ GLOBAL_VAR(king_throne)
 	density = FALSE
 	M.reset_offsets("bed_buckle")
 
-/obj/structure/roguethrone/Initialize()
+/obj/structure/roguethrone/Initialize(mapload)
 	. = ..()
 	if(GLOB.king_throne == null)
 		GLOB.king_throne = src

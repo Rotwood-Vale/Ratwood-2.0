@@ -10,14 +10,15 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/sojourner
 	subclass_languages = list(/datum/language/otavan, /datum/language/celestial)//You're still Naledi. A learned one, atop that.
+	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_INQUISITION)
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(
-		TRAIT_MAGEARMOR,
 		TRAIT_ALCHEMY_EXPERT,
-		TRAIT_ARCYNE_T1,//They're not meant to get more spellpoints. If they do, via Arcyne virtue, for example, T1 only.
+		TRAIT_NALEDI,
+		TRAIT_MAGEDEXTERITY, //THEY NEED THIS MORE THAN ANY OTHER MAGE IN THE GAME. 
 	)
-	subclass_stats = list(//This does not follow the typical 8 stat setup.
+	subclass_stats = list(// This does not follow the typical 8 stat setup. Do not increase this.
 		STATKEY_INT = 3,
 		STATKEY_PER = 2,
 		STATKEY_STR = -1,
@@ -40,6 +41,7 @@
 	)
 	extra_context = "This subclass has multiple unique spells, including one in the form of an 'arcyne barrier'. \
 	So long as it's active, the user is immune to magic, yet still capable of casting it."
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 0, "utilities" = 4, ward = FALSE, "locked_aspects" = list(/datum/magic_aspect/cryomancy), "post_aspect_spells" = list(/datum/action/cooldown/spell/conjure_arcyne_ward/barrier))
 
 /datum/outfit/job/roguetown/sojourner
 	job_bitflag = BITFLAG_HOLY_WARRIOR
@@ -50,31 +52,14 @@
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
 //Now we do the spells. If this turns out to be absurd, we tone it back. Simple as. But with poor stats and skills...
-//This is 26 spellpoints in total, not counting their unique barrier, normally unobtanium, at 6, which puts it to 32.
 //For context, Heirophant gets 25 total, with 6 of those being liquid free spellpoints.
-	if(H.mind)
-		//Integral spells.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/conjure_armor/barrier)//Anti-magic.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		//Buff spells, next.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hawks_eyes)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stoneskin)
-		//Frost spells. Slowdown city. Hue city. Frigid. Or something.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/snap_freeze)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/frostbite)//Used by Sojourners only.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/ice_shard)//Used by Sojourners only.
-		//Finally, utility. Consider removing fetch, if fetch-slow is absurd. But that's the case for any mage.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
 
 	head = /obj/item/clothing/head/roguetown/roguehood/sojourner
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/naledi
 	neck = /obj/item/clothing/neck/roguetown/psicross/g //Naledians covet gold far more than typical Orthodoxists covet silver.
-	id = /obj/item/clothing/ring/signet
-	r_hand = /obj/item/rogueweapon/woodstaff/sojourner//A very questionable spear. No pen. Middling CDR on cast.
+	id = /obj/item/clothing/ring/signet/silver/inqscomm/g
+	r_hand = /obj/item/rogueweapon/woodstaff/implement/greater/sojourner//A very questionable spear. No pen. Middling CDR on cast.
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
@@ -86,4 +71,4 @@
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/ortho = 1,
 	/obj/item/roguegem/amethyst/naledi = 1,
-	/obj/item/spellbook_unfinished/pre_arcyne = 1)
+	/obj/item/rogueweapon/spellbook = 1)

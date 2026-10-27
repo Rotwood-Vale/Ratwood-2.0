@@ -27,7 +27,7 @@
 	attack_verb_continuous = "hacks"
 	attack_verb_simple = "hack"
 	attack_sound = 'sound/blank.ogg'
-	canparry = TRUE
+	mob_can_parry = TRUE
 	d_intent = INTENT_PARRY
 	defprob = 50
 	speak_emote = list("grunts")
@@ -57,7 +57,7 @@
 	icon_state = "skeleton_axe"
 	icon_living = "skeleton_axe"
 	icon_dead = ""
-	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone,	/obj/item/rogueweapon/stoneaxe/woodcut, /obj/item/skull)
+	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone, /obj/item/skull)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/spear
 	name = "Skeleton"
@@ -68,7 +68,7 @@
 	icon_living = "skeleton_spear"
 	icon_dead = ""
 	attack_sound = 'sound/foley/pierce.ogg'
-	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone,	/obj/item/rogueweapon/spear, /obj/item/skull)
+	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone, /obj/item/skull)
 	ai_controller = /datum/ai_controller/skeleton_spear
 
 /mob/living/simple_animal/hostile/rogue/skeleton/guard
@@ -79,7 +79,7 @@
 	icon_state = "skeleton_guard"
 	icon_living = "skeleton_guard"
 	icon_dead = ""
-	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone,	/obj/item/rogueweapon/sword/iron, /obj/item/skull)
+	loot = list(/obj/item/natural/bone,	/obj/item/natural/bone, /obj/item/natural/bone, /obj/item/skull)
 	maxHealth = 200
 	health = 200
 
@@ -102,10 +102,9 @@
 			/obj/item/natural/bone,
 			/obj/item/natural/bone,
 			/obj/item/skull,
-			/obj/item/gun/ballistic/revolver/grenadelauncher/bow,
-			/obj/item/ammo_casing/caseless/rogue/arrow/iron,
-			/obj/item/ammo_casing/caseless/rogue/arrow/iron,
-			/obj/item/ammo_casing/caseless/rogue/arrow/iron,
+			/obj/item/ammo_casing/caseless/rogue/arrow/stone,
+			/obj/item/ammo_casing/caseless/rogue/arrow/stone,
+			/obj/item/ammo_casing/caseless/rogue/arrow/stone,
 			)
 	ai_controller = /datum/ai_controller/skeleton_ranged
 
@@ -192,7 +191,7 @@
 	animname = "cut"
 	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
 	chargetime = 2
-	penfactor = 5
+	penfactor = PEN_NONE
 	swingdelay = 8
 
 /obj/item/skull
@@ -226,14 +225,14 @@
 	ai_controller = /datum/ai_controller/skeleton_ranged/event
 
 /mob/living/simple_animal/hostile/rogue/skeleton/axe/Initialize(mapload, mob/user, cabal_affine = FALSE, is_summoned = FALSE)
-    . = ..(mapload, user, cabal_affine, is_summoned)
+	. = ..(mapload, user, cabal_affine, is_summoned)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/spear/Initialize(mapload, mob/user, cabal_affine = FALSE, is_summoned = FALSE)
-    . = ..(mapload, user, cabal_affine, is_summoned)
+	. = ..(mapload, user, cabal_affine, is_summoned)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/guard/Initialize(mapload, mob/user, cabal_affine = FALSE, is_summoned = FALSE)
-    . = ..(mapload, user, cabal_affine, is_summoned)
+	. = ..(mapload, user, cabal_affine, is_summoned)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/bow/Initialize(mapload, mob/user, cabal_affine = FALSE, is_summoned = FALSE)
-    . = ..(mapload, user, cabal_affine, is_summoned)
+	. = ..(mapload, user, cabal_affine, is_summoned)
 

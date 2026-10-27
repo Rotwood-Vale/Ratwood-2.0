@@ -4,11 +4,15 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = TRUE
-	armor_penetration = 100
+	armor_penetration = PEN_NONE // We shouldn't allow any projectile that forget to set to pen all
 	pass_flags = PASSTABLE | PASSGRILLE
 	flag = "magic"
 	var/explode_sound = list('sound/misc/explode/incendiary (1).ogg','sound/misc/explode/incendiary (2).ogg')
 	var/mob/living/carbon/human/sender
+	/// Impact visual intensity. SPELL_IMPACT_NONE / SPELL_IMPACT_LOW / SPELL_IMPACT_MEDIUM / SPELL_IMPACT_HIGH
+	var/spell_impact_intensity = SPELL_IMPACT_LOW
+	/// Override color for the impact effect. If null, uses light_color.
+	var/spell_impact_color
 
 /obj/projectile/magic/death
 	name = "bolt of death"
@@ -119,7 +123,7 @@
 	icon_state = "lavastaff"
 	damage = 15
 	damage_type = BURN
-	flag = "magic"
+	flag = "fire"
 	dismemberment = 50
 	nodamage = FALSE
 
@@ -138,8 +142,8 @@
 	damage = 20
 	damage_type = BURN
 	nodamage = FALSE
-	armor_penetration = 0
-	flag = "magic"
+	armor_penetration = PEN_NONE
+	flag = "fire"
 	hitsound = 'sound/blank.ogg'
 
 /obj/projectile/magic/arcane_barrage/on_hit(target)
@@ -162,7 +166,7 @@
 	var/locker_suck = TRUE
 	var/obj/structure/closet/locker_temp_instance = /obj/structure/closet/decay
 
-/obj/projectile/magic/locker/Initialize()
+/obj/projectile/magic/locker/Initialize(mapload)
 	. = ..()
 	locker_temp_instance = new(src)
 
@@ -203,7 +207,7 @@
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
 
-/obj/structure/closet/decay/Initialize()
+/obj/structure/closet/decay/Initialize(mapload)
 	. = ..()
 	if(auto_destroy)
 		addtimer(CALLBACK(src, PROC_REF(bust_open)), 5 MINUTES)
@@ -291,6 +295,7 @@
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		L.throw_at(throw_target, 200, 4)
+		new /datum/magic_throw_slip_watcher(L)
 	else
 		if(isitem(target))
 			var/obj/item/I = target
@@ -301,12 +306,71 @@
 					throw_target = get_turf(firer)
 			I.throw_at(throw_target, 200, 3)
 
+/// One-shot watcher for fetch/repel throws:
+/// 1) Checks every moved tile while being thrown, so crossing a slick square can trigger a slip.
+/// 2) Falls back to impact check for landing on a slick tile.
+/datum/magic_throw_slip_watcher
+	var/datum/weakref/mob_ref
+
+/datum/magic_throw_slip_watcher/New(mob/living/L)
+	mob_ref = WEAKREF(L)
+	RegisterSignal(L, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(L, COMSIG_MOVABLE_IMPACT, PROC_REF(on_impact))
+	addtimer(CALLBACK(src, PROC_REF(poll_for_slip)), 0)
+
+/datum/magic_throw_slip_watcher/proc/try_apply_slip(mob/living/L)
+	var/turf/open/T = get_turf(L)
+	var/datum/component/slippery/slippy = T?.GetComponent(/datum/component/slippery)
+	if(!slippy)
+		return FALSE
+	if(L.throwing)
+		QDEL_NULL(L.throwing)
+	return L.slip(slippy.knockdown_time, T, slippy.lube_flags, slippy.paralyze_time, slippy.force_drop_items)
+
+/datum/magic_throw_slip_watcher/proc/on_moved(atom/movable/AM, atom/last_loc, dir)
+	var/mob/living/L = mob_ref?.resolve()
+	if(!L)
+		qdel(src)
+		return
+	if(!L.throwing)
+		qdel(src)
+		return
+	if(try_apply_slip(L))
+		qdel(src)
+
+/datum/magic_throw_slip_watcher/proc/poll_for_slip()
+	var/mob/living/L = mob_ref?.resolve()
+	if(!L)
+		qdel(src)
+		return
+	if(try_apply_slip(L))
+		qdel(src)
+		return
+	if(!L.throwing)
+		qdel(src)
+		return
+	addtimer(CALLBACK(src, PROC_REF(poll_for_slip)), 1)
+
+/datum/magic_throw_slip_watcher/proc/on_impact(datum/source)
+	var/mob/living/L = mob_ref?.resolve()
+	if(L)
+		try_apply_slip(L)
+	qdel(src)
+
+/datum/magic_throw_slip_watcher/Destroy()
+	var/mob/living/L = mob_ref?.resolve()
+	if(L)
+		UnregisterSignal(L, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(L, COMSIG_MOVABLE_IMPACT)
+	mob_ref = null
+	return ..()
+
 /obj/projectile/magic/sickness
 	name = "Bolt of Sickness"
 	icon_state = "xray"
 	damage = 10
 	damage_type = BURN
-	flag = "magic"
+	flag = "fire"
 	range = 15
 
 /obj/projectile/magic/sickness/on_hit(atom/target, blocked = FALSE)

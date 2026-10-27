@@ -21,7 +21,7 @@
 	/// a string of dice to use when rolling number of contents.
 	var/loot_spawn_dice_string = "1d3+1"
 
-/obj/structure/closet/crate/chest/loot_chest/Initialize()
+/obj/structure/closet/crate/chest/loot_chest/Initialize(mapload)
 	. = ..()
 	var/random_loot_amount = roll(loot_spawn_dice_string)
 	for(var/loot_spawn in 1 to random_loot_amount)

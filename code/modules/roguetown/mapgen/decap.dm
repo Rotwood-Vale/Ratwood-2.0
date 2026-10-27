@@ -13,7 +13,7 @@
 
 /datum/mapGeneratorModule/decapsnow
 	clusterCheckFlags = CLUSTER_CHECK_DIFFERENT_ATOMS
-	allowed_turfs = list(/turf/open/floor/rogue/snow)
+	allowed_turfs = list(/turf/open/floor/rogue/snow, /turf/open/floor/rogue/snowrough, /turf/open/floor/rogue/snowpatchy)
 	excluded_turfs = list(/turf/open/floor/rogue/dirt/road)
 	spawnableAtoms = list(/obj/structure/flora/grass/both = 15,
 	/obj/structure/flora/grass/brown = 20,
@@ -21,7 +21,8 @@
 	/obj/item/grown/log/tree/stick = 16,
 	/obj/structure/flora/roguegrass/pyroclasticflowers = 3,
 	/obj/structure/flora/roguegrass/maneater/real/juvenile=3,
-	/obj/structure/flora/roguegrass/herb/random = 5)
+	/obj/structure/flora/roguegrass/herb/random = 5,
+	/obj/effect/landmark/hunting_spawner = 3)
 	spawnableTurfs = list(/turf/open/floor/rogue/snowpatchy=15)
 	allowed_areas = list(/area/rogue/outdoors/mountains/decap)
 

@@ -11,6 +11,7 @@
 	throwforce = 0
 	lockhash = 0
 	lockid = null
+	var/hardmode_indestructible = FALSE
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH|ITEM_SLOT_NECK
 	drop_sound = 'sound/items/gems (1).ogg'
 	anvilrepair = /datum/skill/craft/blacksmithing
@@ -20,7 +21,7 @@
 	grid_height = 32
 	grid_width = 32
 
-/obj/item/roguekey/Initialize()
+/obj/item/roguekey/Initialize(mapload)
 	. = ..()
 	if(lockid)
 		if(GLOB.lockids[lockid])
@@ -106,7 +107,7 @@
 	lockid = "lord"
 	visual_replacement = /obj/item/roguekey/royal
 
-/obj/item/roguekey/lord/Initialize()
+/obj/item/roguekey/lord/Initialize(mapload)
 	. = ..()
 	if(SSroguemachine.key)
 		qdel(src)
@@ -114,7 +115,7 @@
 		SSroguemachine.key = src
 
 /obj/item/roguekey/lord/proc/anti_stall()
-	src.visible_message(span_warning("The Key of the vale crumbles to dust, the ashes spiriting away in the direction of the Keep."))
+	src.visible_message(span_warning("The Key of the realm crumbles to dust, the ashes spiriting away in the direction of the Keep."))
 	SSroguemachine.key = null //Do not harddel.
 	qdel(src) //Anti-stall
 
@@ -140,6 +141,42 @@
 	desc = "This key will open any manor doors."
 	icon_state = "mazekey"
 	lockid = "manor"
+
+/obj/item/roguekey/manor/guestroom/i
+	name = "Manor Guestroom I Key"
+	desc = "This key will open the manor first guestroom."
+	icon_state = "mazekey"
+	lockid = "guestroom1"
+
+/obj/item/roguekey/manor/guestroom/ii
+	name = "Manor Guestroom II Key"
+	desc = "This key will open the manor second guestroom."
+	icon_state = "mazekey"
+	lockid = "guestroom2"
+
+/obj/item/roguekey/manor/guestroom/iii
+	name = "Manor Guestroom III Key"
+	desc = "This key will open the manor third guestroom."
+	icon_state = "mazekey"
+	lockid = "guestroom3"
+
+/obj/item/roguekey/manor/counsilroom/i
+	name = "Counsillor's Room I Key"
+	desc = "This key will open the manor first councilroom."
+	icon_state = "mazekey"
+	lockid = "counsil1"
+
+/obj/item/roguekey/manor/counsilroom/ii
+	name = "Counsillor's Room II Key"
+	desc = "This key will open the manor second councilroom."
+	icon_state = "mazekey"
+	lockid = "counsil2"
+
+/obj/item/roguekey/manor/counsilroom/iii
+	name = "Counsillor's Room III Key"
+	desc = "This key will open the manor third councilroom."
+	icon_state = "mazekey"
+	lockid = "counsil3"
 
 /obj/item/roguekey/heir
 	name = "heir room key"
@@ -320,9 +357,21 @@
 
 /obj/item/roguekey/roomviii
 	name = "room VIII key"
-	desc = "The key to the eight room."
+	desc = "The key to the eighth room."
 	icon_state = "brownkey"
 	lockid = "roomviii"
+
+/obj/item/roguekey/roomix
+	name = "room IX key"
+	desc = "The key to the ninth room."
+	icon_state = "brownkey"
+	lockid = "roomix"
+
+/obj/item/roguekey/roomx
+	name = "room X key"
+	desc = "The key to the tenth room."
+	icon_state = "brownkey"
+	lockid = "roomx"
 
 /obj/item/roguekey/roomhunt
 	name = "HUNT room key"
@@ -464,6 +513,48 @@
 	icon_state = "bathkey"
 	lockid = "nightmaiden"
 
+/obj/item/roguekey/nightmaiden/rooms/i
+	name = "baths room I key"
+	desc = "This regal key opens the baths first room."
+	icon_state = "bathkey"
+	lockid = "lux1"
+
+/obj/item/roguekey/nightmaiden/rooms/ii
+	name = "baths room II key"
+	desc = "This regal key opens the baths second room."
+	icon_state = "bathkey"
+	lockid = "lux2"
+
+/obj/item/roguekey/nightmaiden/rooms/iii
+	name = "baths room III key"
+	desc = "This regal key opens the baths third room."
+	icon_state = "bathkey"
+	lockid = "lux3"
+
+/obj/item/roguekey/nightmaiden/rooms/iv
+	name = "baths room IV key"
+	desc = "This regal key opens the baths fourth room."
+	icon_state = "bathkey"
+	lockid = "lux4"
+
+/obj/item/roguekey/nightmaiden/rooms/v
+	name = "baths room V key"
+	desc = "This regal key opens the baths fifth room."
+	icon_state = "bathkey"
+	lockid = "lux5"
+
+/obj/item/roguekey/nightmaiden/rooms/punish
+	name = "baths punishment room  key"
+	desc = "This regal key opens the baths punishment room."
+	icon_state = "spikekey"
+	lockid = "punishroom"
+
+/obj/item/roguekey/nightmaiden/rooms/steam
+	name = "baths steam room key"
+	desc = "This regal key opens the baths steam room."
+	icon_state = "bathkey"
+	lockid = "steam"
+
 /obj/item/roguekey/mercenary
 	name = "mercenary key"
 	desc = "Why, a mercenary would not kick doors down."
@@ -483,7 +574,6 @@
 /obj/item/roguekey/mercenary/bedrooms/iii
 	name = "mercenary bunk iii key"
 	lockid = "merc_bunk_iii"
-
 
 /obj/item/roguekey/mercenary/bedrooms/iv
 	name = "mercenary bunk iv key"
@@ -552,6 +642,12 @@
 	desc = "This key looks barely used."
 	icon_state = "ekey"
 	lockid = "archive"
+
+/obj/item/roguekey/servant
+	name = "servant key"
+	desc = "A key of the ducal servants. Hope it's not lost..."
+	icon_state = "brownkey"
+	lockid = "servant"
 
 //grenchensnacker
 /obj/item/roguekey/porta
@@ -646,6 +742,88 @@
 	icon_state = "brownkey"
 	lockid = "stablemaster"
 
+//bathhouse lockers
+
+/obj/item/roguekey/bathlocker1
+	name = "locker I key"
+	desc = "The key to the first locker."
+	icon_state = "brownkey"
+	lockid = "bathlocker1"
+
+/obj/item/roguekey/bathlocker2
+	name = "locker II key"
+	desc = "The key to the second locker."
+	icon_state = "brownkey"
+	lockid = "bathlocker2"
+
+/obj/item/roguekey/bathlocker3
+	name = "locker III key"
+	desc = "The key to the third locker."
+	icon_state = "brownkey"
+	lockid = "bathlocker3"
+
+/obj/item/roguekey/bathlocker4
+	name = "locker IV key"
+	desc = "The key to the fourth locker."
+	icon_state = "brownkey"
+	lockid = "bathlocker4"
+
+/obj/item/roguekey/bathlocker5
+	name = "locker V key"
+	desc = "The key to the fifth locker."
+	icon_state = "brownkey"
+	lockid = "bathlocker5"
+
+/obj/item/roguekey/bathlocker6
+	name = "locker VI key"
+	desc = "The key to the sixth locker."
+	icon_state = "brownkey"
+	lockid = "bathlocker6"
+
+//BYOS keys
+/obj/item/roguekey/tribal
+	name = "tribal key"
+	desc = "A ancient, rusty key, well-worn but well-preserved."
+	icon_state = "rustkey"
+	lockid = "tribal"
+
+/obj/item/roguekey/tribalchief
+	name = "chieftain's key"
+	desc = "A ancient, rusty key, well-worn but well-preserved. Fancier than the others"
+	icon_state = "bosskey"
+	lockid = "tribalchief"
+
+//Rockhill Slaver/Baron and Related Keys
+/obj/item/roguekey/baron
+	name = "Lowtown Manor Key"
+	desc = "A key to the Lowtown Manor, home of the Baron"
+	icon_state = "brownkey"
+	lockid = "BaronManor"
+
+/obj/item/roguekey/baronguest
+	name = "Lowtown Manor Guest Key"
+	desc = "A key to the guest rooms of the Lowtown Manor."
+	icon_state = "brownkey"
+	lockid = "BaronManorGuest"
+
+/obj/item/roguekey/slaverhouse
+	name = "Slaver's Office Key"
+	desc = "A key to the Slaver Office in Lowtown"
+	icon_state = "brownkey"
+	lockid = "SlaverHome"
+
+/obj/item/roguekey/slaverdungeon
+	name = "Slaver's Dungeon Key"
+	desc = "A key to the Slaver Dungeon in Lowtown"
+	icon_state = "spikekey"
+	lockid = "DTManorCells"
+
+/obj/item/roguekey/slaverpillory
+	name = "Auction Pillory Key"
+	desc = "A key to the Slaver Pillories in Lowtown"
+	icon_state = "brownkey"
+	lockid = "SlaveAuction"
+
 //custom key
 /obj/item/roguekey/custom
 	name = "custom key"
@@ -654,10 +832,32 @@
 
 /obj/item/roguekey/custom/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		var/input = (input(user, "What would you name this key?", "", "") as text)
+		var/input = stripped_input(user, "What would you name this key?", "", "", MAX_NAME_LEN)
 		if(input)
 			name = input + " key"
 			to_chat(user, span_notice("You rename the key to [name]."))
+
+/obj/item/roguekey/lord/attack(mob/M, mob/user, def_zone) // lord's key opens any chastity device without checks and never breaks, because the lord is merciful like that. Petition the duke to have your cage unlocked unlucky squire! 
+	var/handled = chastity_attack(M, user, def_zone)
+	if(!isnull(handled))
+		return handled
+	return ..()
+
+/obj/item/lockpick/attack(mob/M, mob/user, def_zone) // handles lockpicking code for chastity devices. Yes, this is intentionally separate from the roguekey/chastity attack proc, because it has a chance to fail and break the pick, and lord's key can bypass the checks and never break.
+	var/handled = chastity_attack(M, user, def_zone)
+	if(!isnull(handled))
+		return handled
+	return ..()
+
+// Spectral lockpick from the Lesser Knock spell: attempt chastity picking first.
+// If the target has no chastity device (or isn't human), fall through to ..() which triggers the
+// touch_attack dispel logic — so the spell still cancels correctly on non-device targets.
+/obj/item/melee/touch_attack/lesserknock/attack(mob/M, mob/user, def_zone)
+	var/handled = chastity_attack(M, user, def_zone)
+	if(!isnull(handled))
+		return handled
+	return ..()
+
 
 //custom key blank
 /obj/item/customblank //i'd prefer not to make a seperate item for this honestly
@@ -744,7 +944,7 @@
 
 /obj/item/customlock/finished/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/hammer))
-		src.holdname = input(user, "What would you like to name this?", "", "") as text
+		src.holdname = stripped_input(user, "What would you like to name this?", "", "", MAX_NAME_LEN)
 		if(holdname)
 			to_chat(user, span_notice("You label the [name] with [holdname]."))
 	else

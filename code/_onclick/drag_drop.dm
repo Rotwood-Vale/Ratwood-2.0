@@ -38,6 +38,10 @@
 	return
 
 /atom/proc/MiddleMouseDrop_T(atom/dropping, mob/user)
+	if(dropping == user && isliving(user))
+		var/mob/living/L = user
+		if(L.try_handle_middle_targeted_spell(src))
+			return
 	SEND_SIGNAL(src, COMSIG_MOUSEDROPPED_ONTO, dropping, user)
 	return
 
@@ -69,9 +73,6 @@
 /atom
 	var/blockscharging = FALSE
 
-/atom/movable/screen
-	blockscharging = TRUE
-
 /client/MouseDown(object, location, control, params)
 	charge_was_blocked_by_cooldown = FALSE
 	var/list/modifiers = params2list(params)
@@ -79,11 +80,17 @@
 	if(mob.incapacitated())
 		return
 
+	var/signal_result = SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
+
 	if(mob.stat != CONSCIOUS)
 		mob.atkswinging = null
 		charging = null
 		STOP_PROCESSING(SSmousecharge, src)
 		mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
+		return
+
+	// New spell system intercepted this click — skip old cursor/intent handling
+	if(signal_result & COMPONENT_CLIENT_MOUSEDOWN_INTERCEPT)
 		return
 
 	tcompare = object
@@ -190,10 +197,20 @@
 
 /mob
 	var/datum/intent/curplaying
+	var/obj/effect/spell_rune_under/spell_rune
 
 /client/MouseUp(object, location, control, params)
+	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
+		click_intercept_time = world.time
+
+	if(mob?.channeling_spell?.currently_charging)
+		charging = 0
+		return
+
+	var/was_charging
 	if(charging && isliving(mob))
 		update_to_mob(mob, 0)
+		was_charging = TRUE
 
 	charging = 0
 
@@ -202,9 +219,11 @@
 	if(mob.curplaying)
 		mob.curplaying.on_mouse_up()
 
-	if(!mob.fixedeye)
+	if(mob.tempfixeye)
 		mob.tempfixeye = FALSE
-		mob.nodirchange = FALSE
+
+		if(!mob.fixedeye)
+			mob.nodirchange = FALSE
 
 	if(mob.hud_used)
 		for(var/atom/movable/screen/eye_intent/eyet in mob.hud_used.static_inventory)
@@ -236,7 +255,7 @@
 
 	if(tcompare)
 		var/atom/target_atom = object
-		if(istype(target_atom) && tcompare != mob && (mob.atkswinging == "middle" || (mob.atkswinging && object != tcompare)))
+		if(istype(target_atom) && tcompare != mob && (mob.atkswinging == "middle" || mob.used_intent?.tranged || (mob.atkswinging && object != tcompare)))
 			target_atom.Click(location, control, params)
 		tcompare = null
 
@@ -244,8 +263,8 @@
 		active_mousedown_item.onMouseUp(object, location, params, mob)
 		active_mousedown_item = null
 
-	if(!isliving(mob))
-		return
+	if(was_charging)
+		mob.stop_attack()
 
 /client/proc/updateprogbar(atom/clicked_object)
 	if(!mob)
@@ -389,6 +408,7 @@
 		selected_target[2] = params
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
+	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
 
 
 /obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)

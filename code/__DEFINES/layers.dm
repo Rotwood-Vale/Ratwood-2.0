@@ -26,6 +26,7 @@
 #define GAME_PLANE_HIGHEST -2
 #define WEATHER_EFFECT_PLANE -1
 #define BLACKNESS_PLANE 0
+#define BLOOD_GLOW_PLANE 12
 
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
@@ -84,11 +85,17 @@
 #define SPACEVINE_LAYER 4.8
 #define SPACEVINE_MOB_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define MOB_EFFECT_LAYER_DBOOST 5.005
 #define MOB_EFFECT_LAYER_FEINT 5.01
+#define MOB_EFFECT_LAYER_SWINGDELAY 5.015
+#define MOB_EFFECT_LAYER_VULNERABLE 5.016
+#define MOB_EFFECT_LAYER_BINDED 5.017
 #define MOB_EFFECT_LAYER_EXPOSED 5.02	//For some INEXPLICABLE reason 4.0x gets wiped on MMB intent updates and 3.0x go under the mob (bad).
 #define MOB_EFFECT_LAYER_OFFBALANCED 5.03
 #define MOB_EFFECT_LAYER_GUARD 5.04
+#define MOB_EFFECT_LAYER_FEINTED 5.05
 #define GASFIRE_LAYER 5.05
+#define MOB_EFFECT_LAYER_LIMBGUARD 5.06
 #define RIPPLE_LAYER 5.1
 
 #define GHOST_LAYER 6
@@ -159,6 +166,9 @@
 #define HUD_LAYER 24
 #define ABOVE_HUD_PLANE 26
 #define ABOVE_HUD_LAYER 25
+
+#define SENSORY_PLANE 25.5
+#define SENSORY_LAYER 25.5
 
 #define SPLASHSCREEN_LAYER 26
 #define SPLASHSCREEN_PLANE 27

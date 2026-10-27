@@ -51,8 +51,8 @@
 	ADD_TRAIT(L, TRAIT_NOSLEEP, TRAIT_GENERIC)
 	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, TRAIT_GENERIC)
 	ADD_TRAIT(L, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(L, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
 	ADD_TRAIT(L, TRAIT_SELF_SUSTENANCE, TRAIT_GENERIC)
+	ADD_TRAIT(L, TRAIT_EXTREME_TEMPERATURE_IMMUNE, TRAIT_GENERIC)
 
 /datum/antagonist/unbound_death_knight/proc/equip_knight()
 	owner.unknow_all_people()
@@ -146,10 +146,9 @@
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
-	H.mind.adjust_spellpoints(9)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill)
 
-	beltl = /obj/item/rogueweapon/scabbard/sword
+	beltl = /obj/item/rogueweapon/scabbard/sword/noble
 	belt = /obj/item/storage/belt/rogue/leather
 	pants = /obj/item/clothing/under/roguetown/platelegs/blk/death
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/blkknight
@@ -187,7 +186,7 @@
 	var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in list("Longsword", "Warhammer", "Halberd")
 	switch(weapon_choice)
 		if("Longsword")
-			beltl = /obj/item/rogueweapon/scabbard/sword
+			beltl = /obj/item/rogueweapon/scabbard/sword/noble
 			l_hand = /obj/item/rogueweapon/sword/long/death
 			backl = /obj/item/rogueweapon/shield/tower/metal
 			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
@@ -202,7 +201,7 @@
 
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1, 
-		/obj/item/rogueweapon/scabbard/sheath = 1
+		/obj/item/rogueweapon/scabbard/sheath/noble = 1
 	)
 	H.set_blindness(0)
 

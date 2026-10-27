@@ -1,3 +1,55 @@
+GLOBAL_LIST_INIT(cross_training_map, list(
+	//skill name then list cross trained skills at their multiplier
+	"lumberjacking" = list("axes" = 0.25, "athletics" = 0.05),
+	"crafting" = list("carpentry" = 0.1, "masonry" = 0.1),
+	"weaponsmithing" = list("armorsmithing" = 0.25, "blacksmithing" = 0.25),
+	"armorsmithing" = list("weaponsmithing" = 0.25, "blacksmithing" = 0.25),
+	"blacksmithing" = list("armorsmithing" = 0.25, "weaponsmithing" = 0.25, "smelting" = 0.1),
+	//"smelting" = (),
+	"carpentry" = list("crafting" = 0.25, "masonry" = 0.1),
+	"masonry" = list("crafting" = 0.25, "carpentry" = 0.1),
+	"traps" = list("tracking" = 0.25, "engineering" = 0.25),
+	//"cooking" = list("alchemy" = 0.1),
+	"engineering" = list("traps" = 0.5, "crafting" = 0.1),
+	"tanning" = list("sewing" = 0.5, "butchering" = 0.1),
+	"alchemy" = list("cooking" = 0.1),
+
+	"knives" = list("swords" = 0.25, "unarmed" = 0.1),
+	"swords" = list("knives" = 0.25),
+	"polearms" = list("axes" = 0.25),
+	"maces" = list("whipsflails" = 0.25),
+	"axes" = list("lumberjacking" = 0.5, "polearms" = 0.25),
+	"whipsflails" = list("maces" = 0.25),
+	"bows" = list("crossbows" = 0.25),
+	"crossbows" = list("bows" = 0.25),
+	"wrestling" = list("unarmed" = 0.25),
+	"unarmed" = list("wrestling" = 0.25),
+	//"shields" = (),
+	//"slings" = (),
+
+	//"farming" = (),
+	"mining" = list("axes" = 0.1, "maces" = 0.1, "athletics" = 0.1),
+	//"fishing" = (),
+	"butchering" = list("tanning" = 0.25, "medicine" = 0.25, "knives" = 0.25),
+	"lumberjacking" = list("axes" = 0.25, "unarmed" = 0.05, "athletics" = 0.1),
+
+	"athletics" = list("swimming" = 1, "climbing" = 1),
+	"climbing" = list("athletics" = 0.25, "swimming" = 0.25),
+	//"reading" = (),
+	"swimming" = list("athletics" = 0.1, "climbing" = 0.1),
+	//"stealing" = (),
+	//"sneaking" = (),
+	//"lockpicking" = (),
+	//"riding" = (),
+	//"music" = (),
+	"medicine" = list("sewing" = 0.25, "butchering" = 0.1),
+	"sewing" = list("sewing" = 0.5, "medicine" = 0.1),
+	"tracking" = list("traps" = 0.25, "sneaking" = 0.25),
+	//"ceramics" = (),
+))
+#define STOCKPILE_COMMUNITY_CONTRIBUTION_THRESHOLD 40
+#define STOCKPILE_COMMUNITY_CONTRIBUTION_DREAM_BONUS 3
+
 /datum/sleep_adv
 	var/sleep_adv_cycle = 0
 	var/sleep_adv_points = 0
@@ -9,6 +61,10 @@
 	var/datum/mind/mind = null
 	COOLDOWN_DECLARE(xp_show)
 	COOLDOWN_DECLARE(level_up)
+	var/community_contribution_count = 0
+	var/community_status_points = 0
+	var/pending_community_bonus = 0
+	var/woke_up = TRUE
 
 /datum/sleep_adv/New(datum/mind/passed_mind)
 	. = ..()
@@ -69,9 +125,9 @@
 		needed_xp += needed_xp_for_level(next_skill_level)
 	return needed_xp
 
-/datum/sleep_adv/proc/add_sleep_experience(skill, amt, silent = FALSE)
+/datum/sleep_adv/proc/add_sleep_experience(skill, amt, silent = FALSE, _show_xp = TRUE)
 	var/mob/living/L = mind.current
-	var/show_xp = TRUE
+	var/show_xp = _show_xp
 	if(!(L.client?.prefs.floating_text_toggles & XP_TEXT))
 		show_xp = FALSE
 	if((L.get_skill_level(skill) < SKILL_LEVEL_APPRENTICE) && !is_considered_sleeping())
@@ -100,6 +156,17 @@
 	if(trait_capped_level && enough_sleep_xp_to_advance(skill, trait_capped_level - mind.current.get_skill_level(skill)))
 		amt = 0
 
+		if(L.client?.prefs.skillcap_notifs)
+			// Notifying you on a cooldown if you actually hit the cap
+			var/skillname = skillref.name ? skillref.name : "ERROR"
+			var/captimer = LAZYACCESS(L.mob_timers, "skillcap_[skillname]")
+
+			if(!captimer || world.time > (captimer + SKILLCAP_NOTIF_COOLDOWN))
+				L.mob_timers["skillcap_[skillname]"] = world.time
+				to_chat(L, span_warning("I can't learn anything more about [skillname]."))
+				if(show_xp)
+					L.balloon_alert(L, "<font color = '#bb2b2b'>Skill cap!</font>")
+
 	var/capped_pre = enough_sleep_xp_to_advance(skill, 2)
 	var/can_advance_pre = enough_sleep_xp_to_advance(skill, 1)
 
@@ -113,8 +180,8 @@
 		show_xp = FALSE
 	if(!can_advance_pre && can_advance_post && !silent)
 		to_chat(mind.current, span_nicegreen(pick(list(
-			"I'm getting a better grasp at [lowertext(skillref.name)]...",
-			"With some rest, I feel like I can get better at [lowertext(skillref.name)]...",
+			"I'm getting a better grasp at [LOWER_TEXT(skillref.name)]...",
+			"With some rest, I feel like I can get better at [LOWER_TEXT(skillref.name)]...",
 			"[skillref.name] starts making more sense to me...",
 		))))
 		if(!COOLDOWN_FINISHED(src, level_up))
@@ -124,9 +191,10 @@
 			COOLDOWN_START(src, level_up, XP_SHOW_COOLDOWN)
 		show_xp = FALSE
 	if(!capped_pre && capped_post && !silent)
-		to_chat(mind.current, span_nicegreen(pick(list(
-			"My [lowertext(skillref.name)] can no longer improve without some rest and meditation...",
-		))))
+		if(mind.current.construct)
+			to_chat(mind.current, span_nicegreen("My [LOWER_TEXT(skillref.name)] cannot improve without a skill exhibitor."))
+			return
+		to_chat(mind.current, span_nicegreen("My [LOWER_TEXT(skillref.name)] can no longer improve without some rest and meditation..."))
 		if(!COOLDOWN_FINISHED(src, level_up))
 			if((L.client?.prefs.floating_text_toggles & XP_TEXT))
 				L.balloon_alert(L, "<font color = '#9BCCD0'>Level up...</font>")
@@ -137,16 +205,49 @@
 		if(amt && show_xp && (L.client?.prefs.floating_text_toggles & XP_TEXT))
 			L.balloon_alert(L, "[amt] XP")
 			COOLDOWN_START(src, xp_show, XP_SHOW_COOLDOWN)
+//Combat roles don't get to use community points,
+/proc/is_community_contribution_eligible(mob/living/carbon/human/Human)
+	if(!Human)
+		return FALSE
+	if(Human.job in GLOB.peasant_positions)
+		return TRUE
+	if(Human.job in GLOB.yeoman_positions)
+		return TRUE
+	if(Human.job in GLOB.youngfolk_positions)
+		return TRUE
+	return FALSE
+
+// Called when a deposit lands in the town stockpile. Accumulates toward the next
+// community status point; may roll over more than once on a large bundle deposit.
+/datum/sleep_adv/proc/add_community_contribution(amount)
+	if(!amount || amount <= 0)
+		return
+	community_contribution_count += amount
+	while(community_contribution_count >= STOCKPILE_COMMUNITY_CONTRIBUTION_THRESHOLD)
+		community_contribution_count -= STOCKPILE_COMMUNITY_CONTRIBUTION_THRESHOLD
+		community_status_points++
+		pending_community_bonus += STOCKPILE_COMMUNITY_CONTRIBUTION_DREAM_BONUS
+		if(mind?.current)
+			to_chat(mind.current, span_nicegreen("Word of my hard work to the town spreads. I can rest a bit easier with a sense of community."))
+
+// Called when stock is withdrawn from the town stockpile. Reduces progress toward the
+// next community status point; Withdrawing to free up room shouldn't let a subsequent
+// deposit farm credit for stock the town already had. Never revokes status points already
+// banked or a bonus already pending payout only current progress toward the next one.
+/datum/sleep_adv/proc/remove_community_contribution(amount)
+	if(!amount || amount <= 0)
+		return
+	community_contribution_count = max(0, community_contribution_count - amount)
 
 /datum/sleep_adv/proc/add_cross_training_experience(primary_skill, amt)
-	if(!amt || !(primary_skill in CROSS_TRAINING_MAP))
+	if(!amt || !(primary_skill in GLOB.cross_training_map))
 		return
 
 	var/mob/living/L = mind.current
 	if(!L) return
 
-	for(var/secondary_skill in CROSS_TRAINING_MAP[primary_skill])
-		var/multiplier = CROSS_TRAINING_MAP[primary_skill][secondary_skill]
+	for(var/secondary_skill in GLOB.cross_training_map[primary_skill])
+		var/multiplier = GLOB.cross_training_map[primary_skill][secondary_skill]
 		if(!multiplier || multiplier <= 0)
 			continue
 
@@ -155,57 +256,6 @@
 			continue
 
 		adjust_sleep_xp(secondary_skill, sec_amt)
-
-var/global/list/CROSS_TRAINING_MAP = list(
-	//skill name then list cross trained skills at their multiplier
-	"lumberjacking" = list("axes" = 0.25, "athletics" = 0.05),
-	"crafting" = list("carpentry" = 0.1, "masonry" = 0.1),
-	"weaponsmithing" = list("armorsmithing" = 0.25, "blacksmithing" = 0.25),
-	"armorsmithing" = list("weaponsmithing" = 0.25, "blacksmithing" = 0.25),
-	"blacksmithing" = list("armorsmithing" = 0.25, "weaponsmithing" = 0.25, "smelting" = 0.1),
-	//"smelting" = (),
-	"carpentry" = list("crafting" = 0.25, "masonry" = 0.1),
-	"masonry" = list("crafting" = 0.25, "carpentry" = 0.1),
-	"traps" = list("tracking" = 0.25, "engineering" = 0.25),
-	//"cooking" = list("alchemy" = 0.1),
-	"engineering" = list("traps" = 0.5, "crafting" = 0.1),
-	"tanning" = list("sewing" = 0.5, "butchering" = 0.1),
-	"alchemy" = list("cooking" = 0.1),
-
-	"knives" = list("swords" = 0.25, "unarmed" = 0.1),
-	"swords" = list("knives" = 0.25),
-	"polearms" = list("axes" = 0.25),
-	"maces" = list("whipsflails" = 0.25),
-	"axes" = list("lumberjacking" = 0.5, "polearms" = 0.25),
-	"whipsflails" = list("maces" = 0.25),
-	"bows" = list("crossbows" = 0.25),
-	"crossbows" = list("bows" = 0.25),
-	"wrestling" = list("unarmed" = 0.25),
-	"unarmed" = list("wrestling" = 0.25),
-	//"shields" = (),
-	//"slings" = (),
-
-	//"farming" = (),
-	"mining" = list("axes" = 0.1, "maces" = 0.1, "athletics" = 0.1),
-	//"fishing" = (),
-	"butchering" = list("tanning" = 0.25, "medicine" = 0.25, "knives" = 0.25),
-	"lumberjacking" = list("axes" = 0.25, "unarmed" = 0.05, "athletics" = 0.1),
-
-	"athletics" = list("swimming" = 1, "climbing" = 1),
-	"climbing" = list("athletics" = 0.25, "swimming" = 0.25),
-	//"reading" = (),
-	"swimming" = list("athletics" = 0.1, "climbing" = 0.1),
-	//"stealing" = (),
-	//"sneaking" = (),
-	//"lockpicking" = (),
-	//"riding" = (),
-	//"music" = (),
-	"medicine" = list("sewing" = 0.25, "butchering" = 0.1),
-	"sewing" = list("sewing" = 0.5, "medicine" = 0.1),
-	"tracking" = list("traps" = 0.25, "sneaking" = 0.25),
-	//"ceramics" = (),
-)
-
 
 /datum/sleep_adv/proc/advance_cycle()
 	// Stuff
@@ -252,6 +302,10 @@ var/global/list/CROSS_TRAINING_MAP = list(
 	retained_dust = dream_dust_modulo
 
 	sleep_adv_points += dream_points + 1 //Have a dream point. Because you're awesome.
+	if(pending_community_bonus > 0)
+		to_chat(mind.current, span_notice("My good standing with the town enriches my dreams..."))
+		sleep_adv_points += pending_community_bonus
+		pending_community_bonus = 0
 	sleep_adv_cycle++
 
 	show_ui(mind.current)
@@ -287,8 +341,21 @@ var/global/list/CROSS_TRAINING_MAP = list(
 
 /datum/sleep_adv/proc/process_sleep()
 	if(is_considered_sleeping())
+		woke_up = FALSE // Reset flag while sleeping so on_wake can fire on next transition
 		return
+	if(mind.current.eyesclosed)
+		return
+	on_wake()
 	close_ui()
+
+/// Called when the player wakes up, whether voluntarily (clicking continue) or involuntarily (being woken).
+/// Guarded by woke_up flag to ensure it only fires once per sleep session.
+/datum/sleep_adv/proc/on_wake()
+	if(woke_up)
+		return
+	woke_up = TRUE
+	if(mind.aspect_resets_used > 0)
+		mind.aspect_resets_used = 0
 
 /datum/sleep_adv/proc/is_considered_sleeping()
 	if(!mind.current)
@@ -378,7 +445,7 @@ var/global/list/CROSS_TRAINING_MAP = list(
 			skill_string += " and "
 		else if(i != 1)
 			skill_string += ", "
-		skill_string += lowertext(skill_name)
+		skill_string += LOWER_TEXT(skill_name)
 	to_chat(mind.current, span_notice("I feel inspired about [skill_string]..."))
 
 
@@ -386,26 +453,29 @@ var/global/list/CROSS_TRAINING_MAP = list(
 	if(!can_buy_special())
 		return
 	// Apply special here
-	 //TODO SLEEP ADV SPECIALS
+	//TODO SLEEP ADV SPECIALS
 	sleep_adv_points -= get_special_cost()
 
 /datum/sleep_adv/proc/finish()
 	if(!mind.current)
 		return
+	on_wake()
 	if(mind.has_changed_spell)
 		mind.has_changed_spell = FALSE
 		to_chat(mind.current, span_smallnotice("I feel like I can change my spells again."))
-	if(mind.has_rituos)
-		mind.has_rituos = FALSE
-		to_chat(mind.current, span_smallnotice("The toil of invoking Her Lesser Work has fled my feeble form. I can continue my transfiguration..."))
-	if (mind.rituos_spell)
-		to_chat(mind.current, span_warning("My glimpse of [mind.rituos_spell.name] flees my slumbering mind..."))
-		mind.RemoveSpell(mind.rituos_spell)
-		mind.rituos_spell = null
 	to_chat(mind.current, span_notice("...and that's all I dreamt of."))
 	if(HAS_TRAIT(mind.current, TRAIT_STUDENT))
-		REMOVE_TRAIT(mind.current, TRAIT_STUDENT, TRAIT_GENERIC)
+		REMOVE_TRAIT(mind.current, TRAIT_STUDENT, null)
 		to_chat(mind.current, span_nicegreen("I feel that I can be educated in a skill once more."))
+	if(HAS_TRAIT(mind.current, TRAIT_EXPLOSIVE_SUPPLY))
+		mind.has_bomb = TRUE
+		to_chat(mind.current, span_smallnotice("I need to check on HERMES. I think a new package has arrived."))
+	if(HAS_TRAIT(mind.current, TRAIT_DRUG_SUPPLY))
+		mind.has_drug_delivery = TRUE
+		to_chat(mind.current, span_smallnotice("The Guild left something for me. I should check HERMES for my delivery."))
+	for(var/obj/effect/proc_holder/spell/self/martial_prowess/martialspell in mind.spell_list)
+		to_chat(mind.current, span_nicegreen("My old body feels rested and renewed. I can take on another protegé."))
+		martialspell.charges++
 	close_ui()
 
 /datum/sleep_adv/Topic(href, list/href_list)

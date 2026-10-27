@@ -17,9 +17,9 @@
 	STAWIL = 15
 
 	defprob = 30
-	dodgetime = 15
+	dodgetime = 1.5 SECONDS
 
-/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/troll/bog/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_GENERIC)	// bogtroll does not mind kneestingers
 

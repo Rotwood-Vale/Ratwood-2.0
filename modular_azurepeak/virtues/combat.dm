@@ -1,20 +1,27 @@
-// Arcyne Potential now gives 3 Spellpoints instead of 6 spellpoints so it is less of a "must take" for caster.
 /datum/virtue/combat/magical_potential
 	name = "Arcyne Potential"
 	desc = "I am talented in the Arcyne arts, expanding my capacity for magic. I have become more intelligent from its studies. Other effects depends on what training I chose to focus on at a later age."
-	custom_text = "Classes that has a combat trait (Medium / Heavy Armor Training, Dodge Expert or Critical Resistance) get only prestidigitation. Everyone else get +3 spellpoints and T1 Arcyne Potential if they don't have any Arcyne."
-	added_skills = list(list(/datum/skill/magic/arcane, 1, 6))
+	custom_text = "Classes that has a combat trait (Medium / Heavy Armor Training, Dodge Expert, Critical Resistance, Thick Blooded, Painless or Enduring) get only prestidigitation. Everyone else get +3 utility points and Arcyne Training if they don't have any Arcyne."
+	added_skills = list(list(/datum/skill/magic/arcane, 1, 6), list(/datum/skill/misc/reading, 1, 6))
 
 /datum/virtue/combat/magical_potential/apply_to_human(mob/living/carbon/human/recipient)
-	if (!recipient.get_skill_level(/datum/skill/magic/arcane)) // we can do this because apply_to is always called first
-		if (!recipient.mind?.has_spell(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation))
-			recipient.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		if (!HAS_TRAIT(recipient, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(recipient, TRAIT_HEAVYARMOR) && !HAS_TRAIT(recipient, TRAIT_DODGEEXPERT) && !HAS_TRAIT(recipient, TRAIT_CRITICAL_RESISTANCE))
-			ADD_TRAIT(recipient, TRAIT_ARCYNE_T1, TRAIT_GENERIC)
-			recipient.mind?.adjust_spellpoints(3)
+	if (!recipient.get_skill_level(/datum/skill/magic/arcane))
+		if (!recipient.mind?.has_spell(/datum/action/cooldown/spell/touch/prestidigitation))
+			recipient.mind?.AddSpell(new /datum/action/cooldown/spell/touch/prestidigitation)
+		if (!HAS_TRAIT(recipient, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(recipient, TRAIT_HEAVYARMOR) && !HAS_TRAIT(recipient, TRAIT_DODGEEXPERT) && !HAS_TRAIT(recipient, TRAIT_CRITICAL_RESISTANCE) && !HAS_TRAIT(recipient, TRAIT_BLOOD_RESISTANCE) && !HAS_TRAIT(recipient, TRAIT_NOPAIN) && !HAS_TRAIT(recipient, TRAIT_NOPAINSTUN))
+			ADD_TRAIT(recipient, TRAIT_ARCYNE, TRAIT_GENERIC)
+			add_arcyne_potential_utilities(recipient, 3)
 	else
-		recipient.mind?.adjust_spellpoints(3) // 3 extra spellpoints since you don't get any spell point from the skill anymore
-	
+		add_arcyne_potential_utilities(recipient, 3)
+
+/datum/virtue/combat/magical_potential/proc/add_arcyne_potential_utilities(mob/living/carbon/human/recipient, amount)
+	if(!recipient.mind)
+		return
+	if(!LAZYLEN(recipient.mind.mage_aspect_config))
+		recipient.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 0, "utilities" = 0), grant_attunement = FALSE)
+	recipient.mind.mage_aspect_config["utilities"] += amount
+	recipient.mind.check_learnspell()
+
 /datum/virtue/combat/devotee
 	name = "Devotee"
 	desc = "Though not officially of the Church, my relationship with my chosen Patron is strong enough to grant me the most minor of their blessings. I've also kept a psycross of my deity."
@@ -100,8 +107,8 @@
 	name = "Brawler's Apprentice"
 	desc = "I have trained under a skilled brawler, and have some experience fighting with my fists. I have a katar and some knuckledusters stashed away, too."
 	custom_text = "Guaranteed Journeyman for Unarmed & Wrestling."
-	added_stashed_items = list("Knuckles" = /obj/item/rogueweapon/knuckles/bronzeknuckles,
-								"More Knuckles" = /obj/item/rogueweapon/knuckles/bronzeknuckles)
+	added_stashed_items = list("Knuckles" = /obj/item/clothing/gloves/roguetown/knuckles/bronze,
+								"More Knuckles" = /obj/item/clothing/gloves/roguetown/knuckles/bronze)
 
 /datum/virtue/combat/brawler/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
@@ -122,6 +129,20 @@
 	else
 		added_skills = list(list(/datum/skill/combat/bows, 1, 6))
 
+/datum/virtue/combat/crossbowman
+	name = "Crossbow Levy"
+	desc = "A crossbow is a simple weapon to use, but that's what makes it so effective. I've always kept a crossbow and some bolts around, just in case."
+	custom_text = "+1 to Crossbows, Up to Legendary, Minimum Apprentice"
+	added_stashed_items = list("Crossbow" = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
+								"Quiver (Bolts)" = /obj/item/quiver/bolts
+	)
+
+/datum/virtue/combat/crossbowman/apply_to_human(mob/living/carbon/human/recipient)
+	if(recipient.get_skill_level(/datum/skill/combat/crossbows) < SKILL_LEVEL_APPRENTICE)
+		recipient.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_APPRENTICE, silent = TRUE)
+	else
+		added_skills = list(list(/datum/skill/combat/crossbows, 1, 6))
+
 /datum/virtue/combat/shepherd
 	name = "Capable Shepherd"
 	desc = "Years of protecting my herd from brigands and thieves have taught me how to use the simplest of weapons in self-defense."
@@ -131,7 +152,7 @@
 								"Pouch of Iron Sling Bullets" = /obj/item/quiver/sling/iron)
 
 /datum/virtue/combat/shepherd/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
+	recipient.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 	recipient.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_JOURNEYMAN, silent = TRUE)
 
 /*/datum/virtue/combat/tavern_brawler
@@ -183,15 +204,12 @@
 	name = "Natural Armor"
 	desc = "Whether by natural means or other means, my skin is strong enough to resist being pierced and cut."
 	custom_text = "This will replace your SHIRT slot with a regenerating, unremoveable armor."
+	added_traits = list(TRAIT_NATURALARMOR)
 
 /datum/virtue/combat/tough_hide/apply_to_human(mob/living/carbon/human/recipient)
 	. = ..()
 	if(!recipient)
 		return
-
-	var/was_nudist = HAS_TRAIT(recipient, TRAIT_NUDIST)
-	if(was_nudist)
-		REMOVE_TRAIT(recipient, TRAIT_NUDIST, TRAIT_GENERIC)
 
 	// Remove whatever shirt they spawned with
 	var/obj/item/clothing/shirt = recipient.wear_shirt
@@ -204,19 +222,29 @@
 		SLOT_SHIRT,
 		TRUE
 	)
-	if(was_nudist)
-		ADD_TRAIT(recipient, TRAIT_NUDIST, TRAIT_GENERIC)
 	
 	if(alert(recipient, "Would you like to change the name or description of your skin?", "TOUGH HIDE", "MAKE IT SO", "I RESCIND") == "MAKE IT SO") // Query user
-		addtimer(CALLBACK(src, .proc/customize_skin, recipient), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(customize_skin), recipient), 1 SECONDS)
 
 /datum/virtue/combat/tough_hide/proc/customize_skin(mob/living/carbon/human/recipient)
 	var/obj/item/clothing/hide = recipient.wear_shirt
-	var/inputty = stripped_input(recipient, "What would you like to name your hide?", "TOUGH HIDE", null, 200)
-	if(inputty)
-		hide.name = inputty
-	inputty = stripped_input(recipient, "How would you describe your hide?", "TOUGH HIDE", null, 200)
-	if(inputty)
-		hide.desc = inputty
+	var/vanished_hide = FALSE
+	if(!QDELETED(hide))
+		var/inputty = stripped_input(recipient, "What would you like to name your hide?", "TOUGH HIDE", null, 200)
+		if(!QDELETED(hide))
+			if(inputty)
+				hide.name = inputty
+		else
+			vanished_hide = TRUE
+		inputty = stripped_input(recipient, "How would you describe your hide?", "TOUGH HIDE", null, 200)
+		if(!QDELETED(hide))
+			if(inputty)
+				hide.desc = inputty
+		else
+			vanished_hide = TRUE
+	else
+		vanished_hide = TRUE
 
+	if(vanished_hide) //failsafe
+		to_chat(recipient, span_warning("My natural armor vanished! Perhaps some divine intervention might sort things out..."))
 

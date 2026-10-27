@@ -44,7 +44,7 @@
 	del_on_deaggro = 999 SECONDS
 	retreat_health = 0.1
 	food = 0
-	dodgetime = 15
+	dodgetime = 1.5 SECONDS
 	aggressive = 1
 	remains_type = null
 	var/sneaking = FALSE
@@ -53,7 +53,7 @@
 	var/sneak_cooldown = 0
 	var/sneak_cooldown_delay = 30 SECONDS
 
-/mob/living/simple_animal/hostile/retaliate/rogue/lamia/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/lamia/Initialize(mapload)
 	. = ..()
 	if(prob(20))
 		gender = MALE

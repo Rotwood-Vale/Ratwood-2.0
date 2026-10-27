@@ -75,6 +75,20 @@
 /mob/living/proc/can_do_sex()
 	return TRUE
 
+/// Shared helper to describe pits, load bearing code (worst proc in the codebase)
+/datum/sex_controller/proc/get_armpit_description(mob/living/carbon/human/described)
+	var/datum/bodypart_feature/pits/pit_hair = described?.get_bodypart_feature_of_slot(BODYPART_FEATURE_PITS)
+	switch(pit_hair?.accessory_type)
+		if(/datum/sprite_accessory/pits/trim)
+			return pick("trimmed armpit", "stubbly armpit", "prickly armpit")
+		if(/datum/sprite_accessory/pits/moderate)
+			return pick("fluffy pit", "wispy-haired armpit", "downy armpit")
+		if(/datum/sprite_accessory/pits/hairy)
+			return pick("hairy pit", "unshaved pit", "bushy armpit")
+		if(/datum/sprite_accessory/pits/extreme)
+			return pick("jungle-bushed pit", "unkempt pit", "overgrown armpit")
+	return "armpit"
+
 /datum/sex_controller/proc/make_sucking_noise()
 	if (!user || QDELETED(user) || !istype(user))
 		return
@@ -98,19 +112,19 @@
 			playsound(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 10, TRUE, -2, ignore_walls = FALSE)
 			playsound(target, pick('sound/misc/mat/intercourse/firm (1).ogg','sound/misc/mat/intercourse/firm (2).ogg','sound/misc/mat/intercourse/firm (3).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
 		if(SEX_FORCE_HIGH)
-			playsound(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 25, TRUE, -2, ignore_walls = FALSE)
+			playsound(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 30, TRUE, -2, ignore_walls = FALSE)
 			var/datum/sex_action/action = SEX_ACTION(current_action)
 			if(do_knot_action && action?.knot_on_finish)
-				playsound(target, pick('sound/misc/mat/intercourse/knotfuck (1).ogg','sound/misc/mat/intercourse/knotfuck (2).ogg','sound/misc/mat/intercourse/knotfuck (3).ogg','sound/misc/mat/intercourse/knotfuck (4).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
+				playsound(target, pick('sound/misc/mat/intercourse/knotfuck (1).ogg','sound/misc/mat/intercourse/knotfuck (2).ogg','sound/misc/mat/intercourse/knotfuck (3).ogg','sound/misc/mat/intercourse/knotfuck (4).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
 			else
-				playsound(target, pick('sound/misc/mat/intercourse/rough (1).ogg','sound/misc/mat/intercourse/rough (2).ogg','sound/misc/mat/intercourse/rough (3).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
-		if(SEX_FORCE_EXTREME)
-			playsound(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
+				playsound(target, pick('sound/misc/mat/intercourse/rough (1).ogg','sound/misc/mat/intercourse/rough (2).ogg','sound/misc/mat/intercourse/rough (3).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
+		if(SEX_FORCE_EXTREME, SEX_FORCE_LUDICROUS)
+			playsound(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
 			var/datum/sex_action/action = SEX_ACTION(current_action)
 			if(do_knot_action && action?.knot_on_finish)
-				playsound(target, pick('sound/misc/mat/intercourse/knotfuck (1).ogg','sound/misc/mat/intercourse/knotfuck (2).ogg','sound/misc/mat/intercourse/knotfuck (3).ogg','sound/misc/mat/intercourse/knotfuck (4).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
+				playsound(target, pick('sound/misc/mat/intercourse/knotfuck (1).ogg','sound/misc/mat/intercourse/knotfuck (2).ogg','sound/misc/mat/intercourse/knotfuck (3).ogg','sound/misc/mat/intercourse/knotfuck (4).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
 			else
-				playsound(target, pick('sound/misc/mat/intercourse/brutal (1).ogg','sound/misc/mat/intercourse/brutal (2).ogg','sound/misc/mat/intercourse/brutal (3).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
+				playsound(target, pick('sound/misc/mat/intercourse/brutal (1).ogg','sound/misc/mat/intercourse/brutal (2).ogg','sound/misc/mat/intercourse/brutal (3).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
 		else
 			playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
 
@@ -123,16 +137,16 @@
 		if(SEX_FORCE_MID)
 			if(wetness_layer)
 				playsound(target, pick('sound/misc/mat/outercourse/wetness (1).ogg','sound/misc/mat/outercourse/wetness (2).ogg','sound/misc/mat/outercourse/wetness (3).ogg'), 10, TRUE, -2, ignore_walls = FALSE)
-			playsound(target, pick('sound/misc/mat/outercourse/firm (1).ogg','sound/misc/mat/outercourse/firm (2).ogg','sound/misc/mat/outercourse/firm (3).ogg'), 20, TRUE, -2, ignore_walls = FALSE)
+			playsound(target, pick('sound/misc/mat/outercourse/firm (1).ogg','sound/misc/mat/outercourse/firm (2).ogg','sound/misc/mat/outercourse/firm (3).ogg'), 30, TRUE, -2, ignore_walls = FALSE)
 		if(SEX_FORCE_HIGH)
 			if(wetness_layer)
 				playsound(target, pick('sound/misc/mat/outercourse/wetness (1).ogg','sound/misc/mat/outercourse/wetness (2).ogg','sound/misc/mat/outercourse/wetness (3).ogg'), 20, TRUE, -2, ignore_walls = FALSE)
-			playsound(target, pick('sound/misc/mat/outercourse/rough (1).ogg','sound/misc/mat/outercourse/rough (2).ogg','sound/misc/mat/outercourse/rough (3).ogg'), 40, TRUE, -2, ignore_walls = FALSE)
-		if(SEX_FORCE_EXTREME)
+			playsound(target, pick('sound/misc/mat/outercourse/rough (1).ogg','sound/misc/mat/outercourse/rough (2).ogg','sound/misc/mat/outercourse/rough (3).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
+		if(SEX_FORCE_EXTREME, SEX_FORCE_LUDICROUS)
 			if(wetness_layer)
-				playsound(target, pick('sound/misc/mat/outercourse/wetness (1).ogg','sound/misc/mat/outercourse/wetness (2).ogg','sound/misc/mat/outercourse/wetness (3).ogg'), 25, TRUE, -2, ignore_walls = FALSE)
-			playsound(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 20, TRUE, -2, ignore_walls = FALSE)
-			playsound(target, pick('sound/misc/mat/outercourse/brutal (1).ogg','sound/misc/mat/outercourse/brutal (2).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
+				playsound(target, pick('sound/misc/mat/outercourse/wetness (1).ogg','sound/misc/mat/outercourse/wetness (2).ogg','sound/misc/mat/outercourse/wetness (3).ogg'), 30, TRUE, -2, ignore_walls = FALSE)
+			playsound(target, pick('sound/misc/mat/intercourse/plap layer (1).ogg','sound/misc/mat/intercourse/plap layer (2).ogg','sound/misc/mat/intercourse/plap layer (3).ogg','sound/misc/mat/intercourse/plap layer (4).ogg'), 30, TRUE, -2, ignore_walls = FALSE)
+			playsound(target, pick('sound/misc/mat/outercourse/brutal (1).ogg','sound/misc/mat/outercourse/brutal (2).ogg'), 60, TRUE, -2, ignore_walls = FALSE)
 		else
 			playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
 
@@ -146,33 +160,47 @@
 			return
 		if(SEX_FORCE_HIGH)
 			volume_layer = 2
-		if(SEX_FORCE_EXTREME)
+		if(SEX_FORCE_EXTREME, SEX_FORCE_LUDICROUS)
 			volume_layer = 3
-	volume_layer *= speed // speed is always between 1-4 (SEX_SPEED_MIN-SEX_SPEED_MAX)
+	volume_layer *= speed // speed is always between 1-5 (SEX_SPEED_MIN-SEX_SPEED_MAX)
 	playsound(target, pick('sound/misc/mat/saliva (1).ogg','sound/misc/mat/saliva (2).ogg','sound/misc/mat/saliva (3).ogg'), volume_layer, TRUE, -2, ignore_walls = FALSE)
 
-/mob/living/carbon/human/proc/try_impregnate(mob/living/carbon/human/wife)
+/datum/sex_controller/proc/try_do_pain_scream(mob/living/carbon/human/action_target, pain_amt) // for spiked chastity and other high-pain actions, try to make the target scream in pain. Chance increases with pain amount and action force.
+	if(!action_target || QDELETED(action_target))
+		return
+	if(action_target.stat != CONSCIOUS)
+		return
+	if(action_target.sexcon?.suppress_moan)
+		return
+	if(action_target.sexcon.last_moan + MOAN_COOLDOWN >= world.time)
+		return
+
+	var/scream_chance = min(max((pain_amt * 5) + (force * 5), 15), 75)
+	if(!prob(scream_chance))
+		return
+
+	action_target.sexcon.last_moan = world.time
+	// Male masochists moan in pleasure rather than screaming in pure agony.
+	// Masochism is a charflaw addiction, not a trait — use has_flaw() instead of HAS_TRAIT().
+	if(action_target.has_flaw(/datum/charflaw/addiction/masochist) && action_target.gender == MALE)
+		playsound(get_turf(action_target), pick('modular/sound/masomoans/masomoan1.ogg', 'modular/sound/masomoans/masomoan2.ogg', 'modular/sound/masomoans/masomoan3.ogg', 'modular/sound/masomoans/masomoan4.ogg', 'modular/sound/masomoans/masomoan5.ogg', 'modular/sound/masomoans/masomoan6.ogg'), 70, TRUE, 1)
+		return
+	action_target.emote("scream", forced = TRUE)
+	
+/mob/living/carbon/human/proc/try_impregnate(mob/living/carbon/human/wife, orifice = SEX_PART_CUNT)
 	var/obj/item/organ/testicles/testes = getorganslot(ORGAN_SLOT_TESTICLES)
-	if(!testes)
+	if(!testes || !wife || !is_virile())
+		return
+	if(orifice & SEX_PART_TAIL_MAW)
+		var/obj/item/organ/tail/manticore/tail = get_manticore_tail(wife)
+		if(tail)
+			tail.impregnation_probability = roll_organ_impregnation(tail, tail.fertility, tail.impregnation_probability)
 		return
 	var/obj/item/organ/vagina/vag = wife.getorganslot(ORGAN_SLOT_VAGINA)
 	if(!vag && !HAS_TRAIT(wife, TRAIT_BAOTHA_FERTILITY_BOON))
 		return
-	if(!is_virile())
-		return
 	if(vag)
-		if(!wife.is_fertile())
-			return
-		var/prob_for_impreg = vag.impregnation_probability
-		if(wife.sexcon.knotted_status) // if they're knotted, increased by two factor for dramatic impact
-			prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX)
-		if(HAS_TRAIT(wife, TRAIT_BAOTHA_FERTILITY_BOON))
-			prob_for_impreg =  min(prob_for_impreg * 2, IMPREG_PROB_MAX) //if female has baotha boon increase chances
-		if(prob(prob_for_impreg))
-			vag.be_impregnated(src)
-			vag.impregnation_probability = IMPREG_PROB_DEFAULT // Reset on success
-		else
-			vag.impregnation_probability = min(prob_for_impreg + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
+		vag.impregnation_probability = roll_organ_impregnation(vag, wife.is_fertile(SEX_PART_CUNT), vag.impregnation_probability)
 	else
 		var/prob_for_impreg = wife.mpreg_chance
 		if(wife.sexcon.knotted_status)
@@ -183,8 +211,25 @@
 				return
 			to_chat(wife, span_love("I feel a strange surge of warmth inside me... Am I pregnant?.."))
 			wife.mpreg = TRUE
+			record_round_statistic(STATS_IMPREGNATIONS)
 		else
 			wife.mpreg_chance = min(prob_for_impreg + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
+
+/// Both reproductive organs use the same math
+/mob/living/carbon/human/proc/roll_organ_impregnation(obj/item/organ/reproductive_organ, fertile, current_probability)
+	if(!fertile || !ishuman(reproductive_organ?.owner))
+		return current_probability
+	var/mob/living/carbon/human/receiver = reproductive_organ.owner
+	var/chance = current_probability
+	if(receiver.sexcon.knotted_status)
+		chance = min(chance * 2, IMPREG_PROB_MAX)
+	if(HAS_TRAIT(receiver, TRAIT_BAOTHA_FERTILITY_BOON))
+		chance = min(chance * 2, IMPREG_PROB_MAX)
+	if(prob(chance))
+		if(reproductive_organ.be_impregnated(src))
+			record_round_statistic(STATS_IMPREGNATIONS)
+		return IMPREG_PROB_DEFAULT
+	return min(chance + IMPREG_PROB_INCREMENT, IMPREG_PROB_MAX)
 
 /mob/living/carbon/human/proc/get_highest_grab_state_on(mob/living/carbon/human/victim)
 	var/grabstate = null
@@ -196,7 +241,40 @@
 			grabstate = l_grab.grab_state
 	return grabstate
 
-/proc/add_cum_floor(turfu)
+//Used only for the rub ears action currently, changes messaging/arousal if target has nonhuman ears
+/mob/living/carbon/human/proc/has_nonhuman_ears()
+	if(HAS_TRAIT(src, TRAIT_KEENEARS))
+		return TRUE
+
+	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
+	if(!ears)
+		return FALSE
+
+	if(!ears.accessory_type)
+		return iself(src) || ishalfelf(src) || isdarkelf(src) || iswoodelf(src) || isgoblinp(src) || istabaxi(src) || iskobold(src) || isvulp(src) || islupian(src)
+
+	if(!ispath(ears.accessory_type, /datum/sprite_accessory/ears))
+		return FALSE
+
+	return TRUE
+
+/mob/living/carbon/human/proc/get_chest_word()
+	var/obj/item/organ/breasts/chest = getorganslot(ORGAN_SLOT_BREASTS)
+	if(chest?.is_pecs())
+		return "pecs"
+	return "breasts"
+
+/datum/sex_controller/proc/Adjacent_Or_Closet(atom/neighbor)
+	if(istype(user.loc, /obj/structure/closet) || istype(user.loc, /obj/structure/handcart) || istype(neighbor.loc, /obj/structure/closet) || istype(neighbor.loc, /obj/structure/handcart)) // within container
+		return user.loc == neighbor.loc
+	return user.Adjacent(neighbor)
+
+/proc/add_cum_floor(turfu, do_big_puddle = FALSE)
 	if(!turfu || !isturf(turfu))
 		return
-	new /obj/effect/decal/cleanable/coom(turfu)
+	var/obj/effect/decal/cleanable/coom/puddle = new /obj/effect/decal/cleanable/coom(turfu)
+	if(do_big_puddle)
+		var/obj/effect/decal/cleanable/coom/puddle_big = new /obj/effect/decal/cleanable/coom(turfu)
+		if(puddle_big && puddle) // inherit pixel offset from first puddle
+			puddle_big.pixel_x = puddle.pixel_x
+			puddle_big.pixel_y = puddle.pixel_y

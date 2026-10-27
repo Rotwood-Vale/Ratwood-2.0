@@ -65,11 +65,11 @@
 	var/datum/looping_sound/psydonmusicboxsound/soundloop
 
 /obj/item/psydonmusicbox/examine(mob/user)
-	. = ..()
-	if(HAS_TRAIT(usr, TRAIT_INQUISITION))
+	if(HAS_TRAIT(user, TRAIT_INQUISITION))
 		desc = "A relic from the bowels of the Otavan cathedral's thaumaturgical workshops. Fourteen souls of heretics, all bound together, they will scream and protect us from magicks. It would be wise to not teach the heretics of its true nature, to only bring it to bear in dire circumstances."
 	else
 		desc = "A cranked music box, it has the seal of the Otavan Inquisition on the side. It carries a somber feeling to it..."
+	. = ..()
 
 /obj/item/psydonmusicbox/attack_self(mob/living/user)
 	. = ..()
@@ -79,7 +79,12 @@
 	cranking = !cranking
 	update_icon()
 	if(cranking)
-		user.apply_status_effect(/datum/status_effect/buff/cranking_soulchurner)
+		if(!HAS_TRAIT(user, INSPIRING_MUSICIAN))
+			user.apply_status_effect(/datum/status_effect/buff/cranking_soulchurner)
+		else if(alert(user, "Harmonize the voices or let them scream?", "Soul Churner", "Harmonize", "Scream") != "Scream")
+			user.apply_status_effect(/datum/status_effect/buff/quelling_soulchurner)
+		else
+			user.apply_status_effect(/datum/status_effect/buff/cranking_soulchurner)
 		soundloop.start()
 		var/songhearers = view(7, user)
 		for(var/mob/living/carbon/human/target in songhearers)
@@ -87,8 +92,9 @@
 	if(!cranking)
 		soundloop.stop()
 		user.remove_status_effect(/datum/status_effect/buff/cranking_soulchurner)
+		user.remove_status_effect(/datum/status_effect/buff/quelling_soulchurner)
 
-/obj/item/psydonmusicbox/Initialize()
+/obj/item/psydonmusicbox/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	. = ..()
 
@@ -111,6 +117,7 @@
 	if(soundloop)
 		soundloop.stop()
 		user.remove_status_effect(/datum/status_effect/buff/cranking_soulchurner)
+		user.remove_status_effect(/datum/status_effect/buff/quelling_soulchurner)
 
 /obj/item/psydonmusicbox/getonmobprop(tag)
 	. = ..()
@@ -253,6 +260,36 @@
 						H.add_stress(/datum/stressevent/soulchurner)
 						if(!H.has_status_effect(/datum/status_effect/buff/churnernegative))
 							H.apply_status_effect(/datum/status_effect/buff/churnernegative)
+
+/atom/movable/screen/alert/status_effect/buff/quelling_soulchurner
+	name = "Quelling Soulchurner"
+	desc = "I am bringing the twisted device to life, quelling the voices..."
+	icon_state = "buff"
+
+/datum/status_effect/buff/quelling_soulchurner
+	id = "quellchurner"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/quelling_soulchurner
+	var/effect_color
+	var/pulse = 0
+	var/ticks_to_apply = 10
+
+/datum/status_effect/buff/quelling_soulchurner/on_creation(mob/living/new_owner, stress, colour)
+	effect_color = "#800000"
+	return ..()
+
+/datum/status_effect/buff/quelling_soulchurner/tick()
+	var/obj/effect/temp_visual/music_rogue/M = new /obj/effect/temp_visual/music_rogue(get_turf(owner))
+	M.color = "#800000"
+	pulse += 1
+	if (pulse >= ticks_to_apply)
+		pulse = 0
+		if(!HAS_TRAIT(owner, TRAIT_INQUISITION))
+			owner.add_stress(/datum/stressevent/soulchurnerhorror)
+		for (var/mob/living/carbon/human/H in hearers(7, owner))
+			if(!H.client)
+				continue
+			if(HAS_TRAIT(H, TRAIT_INQUISITION))
+				H.apply_status_effect(/datum/status_effect/buff/churnerprotection)
 /*
 Inquisitorial armory down here
 
@@ -267,7 +304,7 @@ Inquisitorial armory down here
 	new /obj/item/rogueweapon/flail/sflail/psyflail
 	new /obj/item/rogueweapon/spear/psyspear(src)
 	new /obj/item/rogueweapon/sword/long/psysword(src)
-	new /obj/item/rogueweapon/mace/goden/psymace(src)
+	new /obj/item/rogueweapon/mace/goden/psy(src)
 	new /obj/item/rogueweapon/stoneaxe/battle/psyaxe(src)
 	*/
 
@@ -310,7 +347,7 @@ Inquisitorial armory down here
 			user.update_a_intents()
 		else
 			playsound(src.loc, 'sound/items/censer_on.ogg', 100)
-			possible_item_intents = list(/datum/intent/mace/smash/flail/golgotha, /datum/intent/bless)
+			possible_item_intents = list(/datum/intent/bless, /datum/intent/mace/smash/flail/golgotha)
 			user.update_a_intents()
 			on = TRUE
 			update_brightness()
@@ -383,7 +420,7 @@ Inquisitorial armory down here
 					playsound(H, 'sound/magic/holyshield.ogg', 100)
 					new /obj/effect/temp_visual/censer_dust(get_turf(H))
 			else
-				to_chat(span_warning("They've already been blessed."))
+				to_chat(user, span_warning("They've already been blessed."))
 
 		else
 			to_chat(user, span_warning("They do not share our faith."))
@@ -619,7 +656,7 @@ Inquisitorial armory down here
 	playsound(src, 'sound/items/indexer_working.ogg', 75, FALSE, 3)
 	if(active && working && !full)
 		if(do_after(user, 20, FALSE, M))
-			M.flash_fullscreen("redflash3")
+			M.fullscreen_redflash("redflash3")
 			subject = M
 			if(!HAS_TRAIT(M, TRAIT_NOPAIN) || !HAS_TRAIT(M, TRAIT_NOPAINSTUN))
 				if(prob(15))
@@ -631,9 +668,11 @@ Inquisitorial armory down here
 			visible_message(span_warning("[src] draws from [M]!"))
 			playsound(M, 'sound/combat/hits/bladed/genstab (1).ogg', 30, FALSE, -1)
 			timestaken++
-			M.blood_volume = max(M.blood_volume-30, 0)
+			M.set_blood_volume(max(M.get_blood_volume()-30, 0))
 			M.handle_blood()
 			icon_state = "indexer_used"
+			if(HAS_TRAIT(M, TRAIT_HEMOPHAGE))
+				cursedblood = 1
 			if(M.mind)
 				if(M.mind.has_antag_datum(/datum/antagonist/werewolf, FALSE))
 					cursedblood = 3
@@ -678,7 +717,7 @@ Inquisitorial armory down here
 
 /obj/item/inqarticles/tallowpot
 	name = "tallowpot"
-	desc = "A small metal pot meant for holding waxes or melted redtallow. Convenient for coating signet rings and making an imprint. The warmth of a torch, lamptern, or candle should be enough to melt the redtallow for stamping writs."
+	desc = "A small metal pot meant for holding waxes or melted tallow. Convenient for coating signet rings or seals and making an imprint. The warmth of a torch, lamptern, or candle should be enough to melt the contained tallow."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "tallowpot"
 	item_state = "tallowpot"
@@ -694,7 +733,8 @@ Inquisitorial armory down here
 	w_class = WEIGHT_CLASS_SMALL
 	intdamage_factor = 0
 	embedding = null
-	var/tallow
+	var/obj/item/reagent_containers/food/snacks/tallow/loaded_tallow
+	var/loaded_inquisitorial_tallow = FALSE
 	var/remaining
 	var/heatedup
 	var/messageshown = 1
@@ -705,36 +745,46 @@ Inquisitorial armory down here
 	START_PROCESSING(SSobj, src)	// For making sure it melts.
 
 /obj/item/inqarticles/tallowpot/Destroy()
+	loaded_tallow = null
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/inqarticles/tallowpot/process()
+	if(loaded_tallow && QDELETED(loaded_tallow))
+		loaded_tallow = null
+		loaded_inquisitorial_tallow = FALSE
+		remaining = 0
+		update_icon()
+
 	if(heatedup > 0)
 		heatedup -= 4
 		remaining = max(remaining - -20, 0)
 		messageshown = 0
 	else
-		if(tallow)
+		if(loaded_tallow)
 			if(!messageshown)
-				visible_message(span_info("The redtallow in [src] hardens again."))
+				visible_message(span_info("The [loaded_tallow] in [src] hardens again."))
 				messageshown = 1
 			update_icon()
 	if(remaining == 0)
-		qdel(tallow)
-		tallow = initial(tallow)
+		if(loaded_tallow && !QDELETED(loaded_tallow))
+			QDEL_NULL(loaded_tallow)
+		else
+			loaded_tallow = null
+		loaded_inquisitorial_tallow = FALSE
 		update_icon()
 
 /obj/item/inqarticles/tallowpot/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	if(istype(I, /obj/item/reagent_containers/food/snacks/tallow/red))
-		if(!tallow)
-			var/obj/item/reagent_containers/food/snacks/tallow/red/Q = I
-			tallow = Q
-			user.transferItemToLoc(Q, src, TRUE)
-			remaining = 300
-			update_icon()
+	if(istype(I, /obj/item/reagent_containers/food/snacks/tallow))
+		if(!loaded_tallow)
+			if(user.transferItemToLoc(I, src, TRUE))
+				loaded_tallow = I
+				loaded_inquisitorial_tallow = istype(I, /obj/item/reagent_containers/food/snacks/tallow/red)
+				remaining = 300
+				update_icon()
 		else
-			to_chat(user, span_info("The [src] already has redtallow in it."))
+			to_chat(user, span_info("The [src] already has [loaded_tallow] in it."))
 
 	if(istype(I, /obj/item/flashlight/flare/torch/))
 		heatedup = 28
@@ -746,19 +796,49 @@ Inquisitorial armory down here
 		visible_message(span_info("[user] warms [src] with [I]."))
 		update_icon()
 
-	if(istype(I, /obj/item/clothing/ring/signet))	
-		if(tallow && heatedup)	
+	if(istype(I, /obj/item/clothing/ring/signet))
+		if(loaded_tallow && !loaded_inquisitorial_tallow)
+			to_chat(user, span_warning("I must use Inquisitorial Tallow for official missives."))
+			return
+		if(heatedup)
 			var/obj/item/clothing/ring/signet/ring = I
 			ring.tallowed = TRUE
 			ring.update_icon()
 
+	if(istype(I, /obj/item/seal))
+		if(loaded_tallow && heatedup)
+			var/obj/item/seal/seal = I
+			seal.tallowed = TRUE
+			seal.update_icon()
+
+/obj/item/inqarticles/tallowpot/examine(mob/user)
+	. = ..()
+	if(!loaded_tallow || QDELETED(loaded_tallow))
+		. += span_info("It is empty.")
+		return
+	if(loaded_inquisitorial_tallow)
+		. += span_info("It currently contains Inquisitorial Tallow.")
+	else if(istype(loaded_tallow, /obj/item/reagent_containers/food/snacks/tallow/soft))
+		. += span_info("It currently contains soft tallow.")
+	else
+		. += span_info("It currently contains tallow.")
+	if(heatedup)
+		. += span_notice("The tallow is melted and ready for stamping.")
+	else
+		. += span_warning("The tallow is hardened and must be reheated before stamping.")
+
 
 /obj/item/inqarticles/tallowpot/update_icon()
 	. = ..()
-	if(tallow)
-		icon_state = "[initial(icon_state)]_filled"
-		if(heatedup)
-			icon_state = "[initial(icon_state)]_melted"
+	if(loaded_tallow && !QDELETED(loaded_tallow))
+		if(istype(loaded_tallow, /obj/item/reagent_containers/food/snacks/tallow/soft))
+			icon_state = "tallowpot_filled_soft"
+			if(heatedup)
+				icon_state = "tallowpot_melted_soft"
+		else
+			icon_state = "[initial(icon_state)]_filled"
+			if(heatedup)
+				icon_state = "[initial(icon_state)]_melted"
 	else
 		icon_state = "[initial(icon_state)]"
 
@@ -888,7 +968,7 @@ Inquisitorial armory down here
 /obj/item/inqarticles/garrote/attack_self(mob/user)
 	if(obj_broken)
 		to_chat(user, span_warning("It's useless now, although.."))
-		to_chat(user, span_notice("I could rethread it with more cordage."))
+		to_chat(user, span_notice("I could rethread it with more cordage or rope."))
 		return
 	if(wielded)
 		ungrip(user, FALSE)
@@ -934,8 +1014,8 @@ Inquisitorial armory down here
 
 /obj/item/inqarticles/garrote/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	if(istype(I, /obj/item/rope/inqarticles/inquirycord))
-		user.visible_message(span_warning("[user] starts to rethread the [src] using the [I]."))
+	if(istype(I, /obj/item/rope/inqarticles/inquirycord) || (istype(I, /obj/item/rope) && !istype(I, /obj/item/rope/chain)))
+		user.visible_message(span_warning("[user] starts to rethread the [src] using [I]."))
 		if(do_after(user, 8 SECONDS))
 			qdel(I)
 			obj_broken = FALSE
@@ -1020,7 +1100,6 @@ Inquisitorial armory down here
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	armor = ARMOR_BLACKBAG
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PEEL, BCLASS_PIERCE, BCLASS_CHOP, BCLASS_LASHING, BCLASS_STAB)
 	unequip_delay_self = 45
 	equip_delay_other = 360 SECONDS // No getting around it. Cheater. LEFT CLICK THEM!!!
 	equip_delay_self = 360 SECONDS
@@ -1296,9 +1375,9 @@ Inquisitorial armory down here
 			user.visible_message(span_notice("[user] presses upon [src]'s needle."))
 			if(do_after(user, 30))
 				playsound(src, 'sound/items/blackmirror_needle.ogg', 95, FALSE, 3)
-				user.flash_fullscreen("redflash3")
+				user.fullscreen_redflash("redflash3")
 				user.adjustBruteLoss(40)
-				user.blood_volume = max(user.blood_volume-240, 0)
+				user.set_blood_volume(max(user.get_blood_volume()-240, 0))
 				user.handle_blood()
 				whofedme = user
 				openstate = "bloody"
@@ -1309,8 +1388,8 @@ Inquisitorial armory down here
 			user.visible_message(span_notice("[user] goes to press [M] with [src]'s needle."))
 			if(do_after(user, 60, target = M))
 				playsound(M, 'sound/items/blackmirror_needle.ogg', 95, FALSE, 3)
-				M.flash_fullscreen("redflash3")
-				M.blood_volume = max(user.blood_volume-240, 0)
+				M.fullscreen_redflash("redflash3")
+				M.set_blood_volume(max(user.get_blood_volume()-240, 0))
 				M.adjustBruteLoss(40)
 				M.handle_blood()
 				whofedme = M
@@ -1379,7 +1458,7 @@ Inquisitorial armory down here
 		icon_state = "[initial(icon_state)]"
 	update_icon_state()
 
-/obj/item/inqarticles/bmirror/Initialize()
+/obj/item/inqarticles/bmirror/Initialize(mapload)
 	soundloop = new(src, FALSE)
 	. = ..()
 
@@ -1395,7 +1474,7 @@ Inquisitorial armory down here
 	icon_state = "blackeye"
 	var/obj/item/inqarticles/bmirror/source
 
-/atom/movable/screen/alert/blackmirror/Click()
+/atom/movable/screen/alert/blackmirror/handle_click()
 	var/mob/living/L = usr
 	var/lookat = null
 

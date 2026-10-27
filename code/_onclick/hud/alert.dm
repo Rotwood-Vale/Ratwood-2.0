@@ -5,14 +5,15 @@
 
 /mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
 
-/* Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
- category is a text string. Each mob may only have one alert per category; the previous one will be replaced
- path is a type path of the actual alert type to throw
- severity is an optional number that will be placed at the end of the icon_state for this alert
- For example, high pressure's icon_state is "highpressure" and can be serverity 1 or 2 to get "highpressure1" or "highpressure2"
- new_master is optional and sets the alert's icon state to "template" in the ui_style icons with the master as an overlay.
- Clicks are forwarded to master
- Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
+/* 
+ * Proc to create or update an alert. Returns the alert if the alert is new or updated, 0 if it was thrown already
+ * category is a text string. Each mob may only have one alert per category; the previous one will be replaced
+ * path is a type path of the actual alert type to throw
+ * severity is an optional number that will be placed at the end of the icon_state for this alert
+ * For example, high pressure's icon_state is "highpressure" and can be serverity 1 or 2 to get "highpressure1" or "highpressure2"
+ * new_master is optional and sets the alert's icon state to "template" in the ui_style icons with the master as an overlay.
+ * Clicks are forwarded to master
+ * Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
 
 	if(!category || QDELETED(src))
@@ -84,6 +85,7 @@
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
 		client.screen -= alert
+	push_screen_to_observers(alert, TRUE)
 	qdel(alert)
 
 #define ALERT_STATUS	0
@@ -103,6 +105,49 @@
 	var/mob/mob_viewer //the mob viewing this alert
 	var/alert_group = ALERT_STATUS //decides where on the screen the alert shows up, if it's a debuff, status effect, or buff
 	nomouseover = FALSE
+	var/atom/movable/screen/maptext_holder/maptext_holder
+	var/last_countdown_text //Cached countdown string so we don't rewrite maptext every fast-process tick
+
+// Alerts track their owner via mob_viewer rather than hud; an observer seeing someone else's alert can't act on it.
+/atom/movable/screen/alert/allow_click_from(mob/user)
+	return !(mob_viewer && mob_viewer != user)
+
+//At or above this, the countdown shows whole minutes ("27m"); below it, M:SS or Ns
+#define ALERT_COUNTDOWN_CUTOFF (3 MINUTES)
+
+/atom/movable/screen/alert/proc/update_countdown(remaining_deciseconds)
+	if(remaining_deciseconds <= 0)
+		if(istype(maptext_holder))
+			maptext_holder.maptext = null
+		last_countdown_text = null
+		return
+
+	var/countdown_text
+	if(remaining_deciseconds >= ALERT_COUNTDOWN_CUTOFF)
+		var/mins_left = max(round(remaining_deciseconds / (1 MINUTES), 1), 1)
+		countdown_text = "[mins_left]m"
+	else
+		var/seconds_left = round(remaining_deciseconds / (1 SECONDS), 0.1)
+		if(seconds_left >= 60)
+			var/mins = round(seconds_left / 60)
+			var/secs = round(seconds_left) % 60
+			countdown_text = "[mins]:[secs < 10 ? "0[secs]" : "[secs]"]"
+		else
+			countdown_text = "[seconds_left]s"
+
+	if(countdown_text == last_countdown_text)
+		return
+	last_countdown_text = countdown_text
+
+	if(!istype(maptext_holder))
+		maptext_holder = new(src)
+		maptext_holder.x = 4
+		maptext_holder.y = 0
+		maptext_holder.color = "#800000"
+		vis_contents.Add(maptext_holder)
+	maptext_holder.maptext = MAPTEXT(countdown_text)
+
+#undef ALERT_COUNTDOWN_CUTOFF
 
 //Gas alerts
 /atom/movable/screen/alert/not_enough_oxy
@@ -219,7 +264,7 @@
 	icon_state = "mind_control"
 	var/command
 
-/atom/movable/screen/alert/mind_control/Click()
+/atom/movable/screen/alert/mind_control/handle_click()
 	..()
 	var/mob/living/L = usr
 	to_chat(L, span_mind_control("[command]"))
@@ -234,7 +279,7 @@
 	desc = ""
 	icon_state = "embeddedobject"
 
-/atom/movable/screen/alert/embeddedobject/Click()
+/atom/movable/screen/alert/embeddedobject/handle_click()
 	if(!..())
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
@@ -255,7 +300,7 @@
 	desc = ""
 	icon_state = "fire"
 
-/atom/movable/screen/alert/fire/Click()
+/atom/movable/screen/alert/fire/handle_click()
 	..()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
@@ -317,7 +362,7 @@
 	icon_state = "template"
 	timeout = 300
 
-/atom/movable/screen/alert/notify_cloning/Click()
+/atom/movable/screen/alert/notify_cloning/handle_click()
 	if(!usr || !usr.client)
 		return
 	var/mob/dead/observer/G = usr
@@ -331,7 +376,7 @@
 	var/atom/target = null
 	var/action = NOTIFY_JUMP
 
-/atom/movable/screen/alert/notify_action/Click()
+/atom/movable/screen/alert/notify_action/handle_click()
 	..()
 	if(!usr || !usr.client)
 		return
@@ -367,7 +412,7 @@
 	desc = ""
 	icon_state = "restrained"
 
-/atom/movable/screen/alert/restrained/Click()
+/atom/movable/screen/alert/restrained/handle_click()
 	..()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
@@ -376,7 +421,7 @@
 	if((L.mobility_flags & MOBILITY_MOVE) && (L.last_special <= world.time))
 		return L.resist_restraints()
 
-/atom/movable/screen/alert/restrained/buckled/Click()
+/atom/movable/screen/alert/restrained/buckled/handle_click()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
 		return
@@ -392,7 +437,8 @@
 	var/list/alerts = mymob.alerts
 	if(!hud_shown)
 		for(var/i = 1, i <= alerts.len, i++)
-			mymob.client.screen -= alerts[alerts[i]]
+			mymob.client?.screen -= alerts[alerts[i]]
+			mymob.push_screen_to_observers(alerts[alerts[i]], TRUE)
 		return 1
 	var/list/buffs = list()
 	var/list/debuffs = list()
@@ -478,10 +524,12 @@
 					else
 						. = ""
 		alert.screen_loc = .
-		mymob.client.screen |= alert
+		mymob.client?.screen |= alert
+		mymob.push_screen_to_observers(alert)
 	return 1
 
 /atom/movable/screen/alert/Destroy()
+	QDEL_NULL(maptext_holder)
 	severity = 0
 	master = null
 	mob_viewer = null

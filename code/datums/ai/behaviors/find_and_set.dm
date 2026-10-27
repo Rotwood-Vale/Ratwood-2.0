@@ -81,10 +81,11 @@
 	for(var/mob/living/mob in oview(search_range, controller.pawn))
 		if(mob.stat != DEAD) 
 			continue
-		 if(istype(mob, /mob/living/carbon)) //hopefully not too taxing
-		 	var/mob/living/carbon/carbon_mob = mob
-		 	if(carbon_mob.mind || carbon_mob.last_mind) //Avoid eating people with minds
-		 		continue
+		if(!iscarbon(mob)) //hopefully not too taxing
+			continue
+		var/mob/living/carbon/carbon_mob = mob
+		if(carbon_mob.mind || carbon_mob.last_mind) //Avoid eating people with minds
+			continue
 		found |= mob
 	if(!length(found))
 		return null

@@ -9,14 +9,14 @@
 	// Use shared point pool
 	var/total_points = get_total_points()
 	var/spent_points = 0
-    
+	
 	// Calculate spent points from languages (1 each)
 	var/purchased_count = 0
 	if(extra_language_1 && extra_language_1 != "None")
 		purchased_count++
 	if(extra_language_2 && extra_language_2 != "None")
 		purchased_count++
-    
+	
 	spent_points = purchased_count * 1
 	// Also subtract loadout spent to reflect shared pool
 	var/remaining_points = total_points - (spent_points + get_loadout_points_spent())

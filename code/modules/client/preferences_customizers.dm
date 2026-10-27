@@ -5,6 +5,16 @@
 	var/list/customizers = species.customizers
 	/// Check if we have any customizer entries that don't match.
 	for(var/datum/customizer_entry/entry as anything in customizer_entries)
+		// Preserve saved tail choices and colors when adding the fertility setting.
+		if(entry.type == /datum/customizer_entry && ispath(entry.customizer_choice_type, /datum/customizer_choice/organ/tail))
+			var/datum/customizer_entry/organ/tail/tail_entry = new
+			tail_entry.customizer_type = entry.customizer_type
+			tail_entry.customizer_choice_type = entry.customizer_choice_type
+			tail_entry.accessory_type = entry.accessory_type
+			tail_entry.accessory_colors = entry.accessory_colors
+			tail_entry.disabled = entry.disabled
+			customizer_entries[customizer_entries.Find(entry)] = tail_entry
+			entry = tail_entry
 		var/validated = FALSE
 		for(var/customizer_type as anything in customizers)
 			if(customizer_type != entry.customizer_type)
@@ -157,7 +167,7 @@
 			for(var/choice_type in customizer.customizer_choices)
 				var/datum/customizer_choice/iter_choice = CUSTOMIZER_CHOICE(choice_type)
 				choice_list[iter_choice.name] = choice_type
-			var/chosen_input = tgui_input_list(user, "Choose your [lowertext(customizer.name)]:", "Character Preference", choice_list)
+			var/chosen_input = tgui_input_list(user, "Choose your [LOWER_TEXT(customizer.name)]:", "Character Preference", choice_list)
 			if(!chosen_input)
 				return
 			var/choice_type = choice_list[chosen_input]

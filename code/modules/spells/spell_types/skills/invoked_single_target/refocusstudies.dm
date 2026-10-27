@@ -8,6 +8,7 @@
 	chargetime = 0
 	recharge_time = 30 SECONDS
 	antimagic_allowed = TRUE
+	range = 2
 
 /obj/effect/proc_holder/spell/invoked/refocusstudies/cast(list/targets, mob/user = usr)
 	. = ..()
@@ -22,7 +23,6 @@
 	/datum/skill/craft/smelting,
 	/datum/skill/craft/carpentry,
 	/datum/skill/craft/masonry,
-	/datum/skill/craft/traps,
 	/datum/skill/craft/cooking,
 	/datum/skill/craft/engineering,
 	/datum/skill/craft/tanning,
@@ -62,7 +62,7 @@
 	/datum/skill/misc/music,
 	/datum/skill/misc/medicine,
 	/datum/skill/misc/tracking,
-    )
+	)
 	for(var/i = 1, i <= skill_choices.len, i++)
 		var/datum/skill/learn_item = skill_choices[i]
 		if((L.get_skill_level(learn_item) < SKILL_LEVEL_JOURNEYMAN))

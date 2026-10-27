@@ -28,20 +28,22 @@
 	friendly_verb_continuous = "pinches"
 	friendly_verb_simple = "pinch"
 	ventcrawler = VENTCRAWLER_ALWAYS
+	mob_size = MOB_SIZE_SMALL
+	density = FALSE
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = FRIENDLY_SPAWN
-	
+	minbodytemp = 0
 
 	can_have_ai = FALSE //disable native ai
 	AIStatus = AI_OFF
 	ai_controller = /datum/ai_controller/mudcrab
 	
-/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/Initialize()
-	..()
+/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/Initialize(mapload)
+	. = ..()
 	AddElement(/datum/element/ai_retaliate)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_type)
-	
+
 /mob/living/simple_animal/mudcrabcrab/Life()
 	..()
 	//CRAB movement
@@ -69,7 +71,7 @@
 	var/spawning = FALSE
 	attacked_sound = null
 
-/obj/structure/crabnest/Initialize()
+/obj/structure/crabnest/Initialize(mapload)
 	. = ..()
 	spawn_crab()
 
@@ -92,6 +94,5 @@
 		return
 	spawning = TRUE
 	update_icon()
-	spawn(2 SECONDS)
-		createcrab()
+	addtimer(CALLBACK(src, PROC_REF(createcrab)), 2 SECONDS)
 	//addtimer(CALLBACK(src, PROC_REF(creategob)), 4 SECONDS)

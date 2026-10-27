@@ -21,16 +21,16 @@
 	//show the miners what rock turfs are valuable
 	var/checkrange = (range + user.get_skill_level(/datum/skill/labor/mining)) //+1 range per mining skill up to a potential of 7.
 	for(var/turf/closed/mineral/rockturfs in view(checkrange,get_turf(user)))
-		if(istype(rockturfs, /turf/closed/mineral/random/rogue/med) || istype(rockturfs, /turf/closed/mineral/rogue/copper) || istype(rockturfs, /turf/closed/mineral/rogue/tin) || istype(rockturfs, /turf/closed/mineral/rogue/coal))
+		if(istype(rockturfs, /turf/closed/mineral/random/rogue/med) || istype(rockturfs, /turf/closed/mineral/rogue/copper) || istype(rockturfs, /turf/closed/mineral/rogue/tin) || istype(rockturfs, /turf/closed/mineral/rogue/coal) || istype(rockturfs, /turf/closed/mineral/random/rogue/sandstone/med) || istype(rockturfs, /turf/closed/mineral/rogue/sandstone/copper) || istype(rockturfs, /turf/closed/mineral/rogue/sandstone/tin) || istype(rockturfs, /turf/closed/mineral/rogue/sandstone/coal))
 			found_ore(get_turf(rockturfs), user.client, "shieldsparkles")
 			//to_chat(user, span_warning("I see some medium quality stone"))
-		if(istype(rockturfs, /turf/closed/mineral/random/rogue/high) || istype(rockturfs, /turf/closed/mineral/rogue/cinnabar) || istype(rockturfs, /turf/closed/mineral/rogue/iron))
+		if(istype(rockturfs, /turf/closed/mineral/random/rogue/high) || istype(rockturfs, /turf/closed/mineral/rogue/cinnabar) || istype(rockturfs, /turf/closed/mineral/random/rogue/sandstone/high) || istype(rockturfs, /turf/closed/mineral/rogue/sandstone/iron) || istype(rockturfs, /turf/closed/mineral/rogue/iron) || istype(rockturfs, /turf/closed/mineral/rogue/sandstone/iron))
 			found_ore(get_turf(rockturfs), user.client, "sparks")
 			//to_chat(user, span_warning("I see some high quality stone"))
-		if(istype(rockturfs, /turf/closed/mineral/rogue/gold) || istype(rockturfs, /turf/closed/mineral/rogue/silver) || istype(rockturfs, /turf/closed/mineral/rogue/gem))
+		if(istype(rockturfs, /turf/closed/mineral/rogue/gold) || istype(rockturfs, /turf/closed/mineral/rogue/silver) || istype(rockturfs, /turf/closed/mineral/rogue/gem) || istype(rockturfs, /turf/closed/mineral/rogue/sandstone/gold) || istype(rockturfs, /turf/closed/mineral/rogue/sandstone/silver) || istype(rockturfs, /turf/closed/mineral/rogue/sandstone/gem))
 			found_ore(get_turf(rockturfs), user.client, "quantum_sparks")
 			//to_chat(user, span_warning("I see some GREAT quality stone"))
-		if(istype(rockturfs, /turf/closed/mineral/rogue/bedrock))
+		if(istype(rockturfs, /turf/closed/mineral/rogue/bedrock) || istype(rockturfs, /turf/closed/mineral/rogue/bedrock/sandstone))
 			found_ore(get_turf(rockturfs), user.client, "purplesparkles")
 			//to_chat(user, span_warning("I see stone too hard to hit"))
 

@@ -11,31 +11,31 @@
  */
 /datum/component
 	/**
-	  * Defines how duplicate existing components are handled when added to a datum
-	  *
-	  * See [COMPONENT_DUPE_*][COMPONENT_DUPE_ALLOWED] definitions for available options
-	  */
+	 * Defines how duplicate existing components are handled when added to a datum
+	 *
+	 * See [COMPONENT_DUPE_*][COMPONENT_DUPE_ALLOWED] definitions for available options
+	 */
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 
 	/**
-	  * The type to check for duplication
-	  *
-	  * `null` means exact match on `type` (default)
-	  *
-	  * Any other type means that and all subtypes
-	  */
+	 * The type to check for duplication
+	 *
+	 * `null` means exact match on `type` (default)
+	 *
+	 * Any other type means that and all subtypes
+	 */
 	var/dupe_type
 
 	/// The datum this components belongs to
 	var/datum/parent
 
 	/**
-	  * Only set to true if you are able to properly transfer this component
-	  *
-	  * At a minimum [RegisterWithParent][/datum/component/proc/RegisterWithParent] and [UnregisterFromParent][/datum/component/proc/UnregisterFromParent] should be used
-	  *
-	  * Make sure you also implement [PostTransfer][/datum/component/proc/PostTransfer] for any post transfer handling
-	  */
+	 * Only set to true if you are able to properly transfer this component
+	 *
+	 * At a minimum [RegisterWithParent][/datum/component/proc/RegisterWithParent] and [UnregisterFromParent][/datum/component/proc/UnregisterFromParent] should be used
+	 *
+	 * Make sure you also implement [PostTransfer][/datum/component/proc/PostTransfer] for any post transfer handling
+	 */
 	var/can_transfer = FALSE
 
 /**
@@ -364,13 +364,19 @@
 	var/list/dc = datum_components
 	if(!dc)
 		return null
-	var/datum/component/C = dc[c_type]
+	var/component_entry = dc[c_type]
+	var/datum/component/C = null
+	if(islist(component_entry))
+		var/list/component_list = component_entry
+		if(length(component_list))
+			C = component_list[1]
+	else if(istype(component_entry, /datum/component))
+		C = component_entry
 	if(C)
-		if(length(C))
-			C = C[1]
 		if(C.type == c_type)
 			return C
 	return null
+
 
 /**
  * Get all components of a given type that are attached to this datum
@@ -541,3 +547,8 @@
  */
 /datum/component/ui_host()
 	return parent
+
+/// Registers multiple signals to the same proc.
+/datum/proc/RegisterSignals(datum/target, list/signal_types, proctype, override = FALSE)
+	for(var/signal_type in signal_types)
+		RegisterSignal(target, signal_type, proctype, override)

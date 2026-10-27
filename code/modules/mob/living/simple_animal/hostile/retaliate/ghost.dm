@@ -37,7 +37,7 @@
 	var/mutable_appearance/ghost_facial_hair
 	var/random = TRUE //if you want random names for ghosts or not
 
-/mob/living/simple_animal/hostile/retaliate/ghost/Initialize()
+/mob/living/simple_animal/hostile/retaliate/ghost/Initialize(mapload)
 	. = ..()
 	give_hair()
 	set_light(1, 1, 2) // same glowing as visible player ghosts
@@ -96,7 +96,7 @@
 	gold_core_spawnable = NO_SPAWN //too spooky for science
 	var/random = TRUE //if you want random names for ghosts or not
 
-/mob/living/simple_animal/hostile/retaliate/gaseousform/Initialize()
+/mob/living/simple_animal/hostile/retaliate/gaseousform/Initialize(mapload)
 	. = ..()
 	set_light(1, 1, 2)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/simple_animal/hostile/retaliate/gaseousform, revert), "VAMPIRE LORD"), 10 SECONDS)
@@ -114,7 +114,6 @@
 		if(istype(NewLocTurf, /turf/closed/wall)) // gas can go through doors/windows but not walls
 			return
 		forceMove(NewLoc)
-		update_parallax_contents()
 	else
 		forceMove(get_turf(src))  //Get out of closets and such as a ghost
 		if((direct & NORTH) && y < world.maxy)

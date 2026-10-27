@@ -19,7 +19,7 @@
 	if(user.get_vampire_generation() < GENERATION_METHUSELAH)
 		return
 
-	if(user.bloodpool < 500)
+	if(user.get_bloodpool() < 500)
 		to_chat(user, span_warning("You need 500 vitae to summon your sword."))
 		return
 

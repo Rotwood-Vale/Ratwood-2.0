@@ -5,6 +5,7 @@
 	hud_possible = list(ANTAG_HUD)
 	has_limbs = 1
 	held_items = list(null, null)
+	var/keen_ears_disabled = FALSE
 	///List of /obj/item/organ in the mob. They don't go in the contents for some reason I don't want to know.
 	var/list/internal_organs = list()
 	///Same as above, but stores "slot ID" - "organ" pairs for easy access.
@@ -43,7 +44,7 @@
 
 	var/obj/item/undies/underwear = null	//Underwear item
 	var/obj/item/legwears/legwear_socks = null	//legwear item
-
+	var/obj/item/chastity/chastity_device = null // Chastity item reference.
 
 	var/datum/dna/dna = null //Carbon
 	///last mind to control this mob, for blood-based cloning

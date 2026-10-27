@@ -1,3 +1,19 @@
+/// Applies a pin's hold, returning how far it actually pushed the stun and immobilise timers out.
+/mob/living/proc/apply_pin_hold(stun_amount, immobilize_amount)
+	var/stun_before = AmountStun()
+	var/immobilize_before = AmountImmobilized()
+	Stun(stun_amount)
+	Immobilize(immobilize_amount)
+	return list(AmountStun() - stun_before, AmountImmobilized() - immobilize_before)
+
+/mob/living/proc/release_pin_hold(list/held)
+	if(!held)
+		return
+	if(held[1] > 0)
+		SetStun(max(0, AmountStun() - held[1]))
+	if(held[2] > 0)
+		SetImmobilized(max(0, AmountImmobilized() - held[2]))
+
 ///////////OFFHAND///////////////
 /obj/item/grabbing
 	name = "pulling"
@@ -27,16 +43,13 @@
 	var/grab_held_by
 
 /obj/item/grabbing/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
-    . = ..()
-    . |= FALL_NO_MESSAGE
+	. = ..()
+	. |= FALL_NO_MESSAGE
 
 /atom/movable //reference to all obj/item/grabbing
-	var/list/grabbedby = list()
+	var/list/grabbedby
 
-/turf
-	var/list/grabbedby = list()
-
-/obj/item/grabbing/Initialize()
+/obj/item/grabbing/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -44,7 +57,9 @@
 	valid_check()
 
 /obj/item/grabbing/proc/valid_check()
-	// We require adjacency to count the grab as valid
+	if(!grabbee || !grabbed)
+		qdel(src)
+		return FALSE
 	if(grabbee.Adjacent(grabbed))
 		return TRUE
 	grabbee.stop_pulling(FALSE)
@@ -90,30 +105,41 @@
 				D.grabdropped(src)
 		handaction = null
 
+/obj/item/grabbing/proc/update_grabbed_spell_hud()
+	if(sublimb_grabbed != BODY_ZONE_PRECISE_MOUTH)
+		return
+	if(!iscarbon(grabbed))
+		return
+	var/mob/living/carbon/C = grabbed
+	C.update_mob_action_buttons()
+
 /obj/item/grabbing/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	if(isobj(grabbed))
 		var/obj/I = grabbed
-		I.grabbedby -= src
+		LAZYREMOVE(I.grabbedby, src)
 	if(ismob(grabbed))
 		var/mob/M = grabbed
-		M.grabbedby -= src
-		if(iscarbon(M) && sublimb_grabbed)
+		LAZYREMOVE(M.grabbedby, src)
+		if(iscarbon(M))
 			var/mob/living/carbon/carbonmob = M
-			var/obj/item/bodypart/part = carbonmob.get_bodypart(sublimb_grabbed)
+			var/obj/item/bodypart/part = limb_grabbed
+			if(!part && sublimb_grabbed)
+				part = carbonmob.get_bodypart(sublimb_grabbed)
 
 			// Edge case: if a weapon becomes embedded in a mob, our "grab" will be destroyed...
 			// In this case, grabbed will be the mob, and sublimb_grabbed will be the weapon, rather than a bodypart
 			// This means we should skip any further processing for the bodypart
 			if(part)
-				part.grabbedby -= src
+				var/released_held_index = part.held_index
+				LAZYREMOVE(part.grabbedby, src)
+				update_grabbed_spell_hud()
+				carbonmob.update_hud_hand_slot(released_held_index)
+				carbonmob.mark_zone_selector_hud_dirty()
 				part = null
 				sublimb_grabbed = null
 		M.handholding = null
 		grabbee.handholding = null
-	if(isturf(grabbed))
-		var/turf/T = grabbed
-		T.grabbedby -= src
 	if(grabbee)
 		if(grabbee.r_grab == src)
 			grabbee.r_grab = null
@@ -121,6 +147,8 @@
 			grabbee.l_grab = null
 		if(grabbee.mouth == src)
 			grabbee.mouth = null
+			grabbee.update_mob_action_buttons()
+		grabbee = null
 	for(var/datum/D in dependents)
 		D.grabdropped(src)
 	return ..()
@@ -216,6 +244,9 @@
 			if(M.grippedby(user))			//Aggro grip
 				bleed_suppressing = 0.5		//Better bleed suppression
 		if(/datum/intent/grab/choke)
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				to_chat(user, span_warning("I don't want to harm [src]!"))
+				return FALSE
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE
@@ -294,6 +325,9 @@
 						else
 							to_chat(user, span_warning("[H]'s neck is covered!"))
 		if(/datum/intent/grab/twist)
+			if(HAS_TRAIT(user, TRAIT_PACIFISM))
+				to_chat(user, span_warning("I don't want to harm [src]!"))
+				return FALSE
 			if(user.buckled)
 				to_chat(user, span_warning("I can't do this while buckled!"))
 				return FALSE
@@ -347,29 +381,24 @@
 					return
 				var/stun_dur = max(((65 + (skill_diff * 10) + (user.STASTR * 5) - (M.STASTR * 5)) * combat_modifier), 20)
 				var/pincount = 0
+				var/list/pin_hold
 				user.stamina_add(rand(1,3))
 				while(M == grabbed && !(M.mobility_flags & MOBILITY_STAND) && (src in M.grabbedby))
 					if(M.IsStun())
-						if(!do_after(user, stun_dur + 1, needhand = 0, target = M))
-							pincount = 0
+						if(!do_after(user, stun_dur + 1, needhand = 0, target = M) || !(src in M.grabbedby))
 							qdel(src)
 							break
-						if(!(src in M.grabbedby))
-							pincount = 0
-							qdel(src)
-							break
-						M.Stun(stun_dur - pincount * 2)
-						M.Immobilize(stun_dur)	//Made immobile for the whole do_after duration, though
+						pin_hold = M.apply_pin_hold(stun_dur - pincount * 2, stun_dur)	//Made immobile for the whole do_after duration, though
 						user.stamina_add(rand(1,3) + abs(skill_diff) + stun_dur / 1.5)
 						M.visible_message(span_danger("[user] keeps [M] pinned to the ground!"))
 						pincount += 2
 					else if(src in M.grabbedby)
-						M.Stun(stun_dur - 10)
-						M.Immobilize(stun_dur)
+						pin_hold = M.apply_pin_hold(stun_dur - 10, stun_dur)
 						user.stamina_add(rand(1,3) + abs(skill_diff) + stun_dur / 1.5)
 						pincount += 2
 						M.visible_message(span_danger("[user] pins [M] to the ground!"), \
 							span_userdanger("[user] pins me to the ground!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
+				M.release_pin_hold(pin_hold)
 			else
 				if(user.badluck(4))
 					badluckmessage(user)
@@ -434,8 +463,8 @@
 		user.stop_pulling()
 		return
 	var/mob/living/carbon/C = grabbed
-	var/armor_block = C.run_armor_check(limb_grabbed, "slash")
 	var/damage = user.get_punch_dmg()
+	var/armor_block = C.run_armor_check(limb_grabbed, "slash", armor_penetration = PEN_NONE, damage = damage)
 	if(grabbed == user && limb_grabbed.status == BODYPART_ROBOTIC)	//removing ones own prosthetic should not be violent, nor damaging
 		C.visible_message(span_notice("[user] starts twisting [limb_grabbed] of [C], twisting it out of its socket!"), span_notice("I start twisting [limb_grabbed] from [src]."))
 		playsound(user, 'sound/misc/blackbag2.ogg', 100)
@@ -445,14 +474,13 @@
 			return
 	playsound(C.loc, "genblunt", 100, FALSE, -1)
 	C.next_attack_msg.Cut()
-	if(isdoll(C)) 
+	if(isdoll(C))
 		armor_block = C.getarmor(sublimb_grabbed, "blunt")
 		if(armor_block > 1)
 			C.apply_damage(damage, BRUTE, limb_grabbed, armor_block)
-	else 
+	else
 		armor_block = C.run_armor_check(limb_grabbed, "blunt")
 		C.apply_damage(damage, BRUTE, limb_grabbed, armor_block)
-	limb_grabbed.bodypart_attacked_by(BCLASS_TWIST, damage, user, sublimb_grabbed, crit_message = TRUE)
 	limb_grabbed.bodypart_attacked_by(BCLASS_TWIST, damage, user, sublimb_grabbed, crit_message = TRUE)
 	C.visible_message(span_danger("[user] twists [C]'s [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]"), \
 					span_userdanger("[user] twists my [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE, user)
@@ -466,12 +494,12 @@
 		limb_grabbed.drop_limb(TRUE)
 	if(ishuman(user) && user.mind)
 		var/text = "[bodyzone2readablezone(user.zone_selected)]..."
-		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, show_self = FALSE)
 
 	if(limb_grabbed.body_zone == sublimb_grabbed && isdoll(C))
 		var/mob/living/carbon/human/target = C
 		armor_block = target.getarmor(sublimb_grabbed, "slash")
-		
+
 		if(armor_block >= 1)
 			target.visible_message(span_danger("[target]'s [parse_zone(sublimb_grabbed)] fails to be twisted off!"), \
 				span_danger("[user] tries to twist my [parse_zone(sublimb_grabbed)] out of it's socket but the armor keeps it in place!"))
@@ -483,7 +511,7 @@
 		to_chat(user, span_warning("I begin popping [target]'s [parse_zone(sublimb_grabbed)] out of socket."))
 
 		var/delay = (sublimb_grabbed == BODY_ZONE_HEAD) ? 100 : 6
-		
+
 		if(do_after(user, delay, target = target))
 			target.visible_message(span_danger("[target]'s [parse_zone(sublimb_grabbed)] has been popped out of socket!"), \
 				span_userdanger("My [parse_zone(sublimb_grabbed)] has been popped out of socket!"))
@@ -496,7 +524,7 @@
 
 			qdel(src)
 			user.put_in_active_hand(limb_grabbed)
-      
+
 	// Dealing damage to the head beforehand is intentional.
 	if(limb_grabbed.body_zone == BODY_ZONE_HEAD && isdullahan(C))
 		var/mob/living/carbon/human/target = C
@@ -571,7 +599,7 @@
 		L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class) //It hurts to rip it out, get surgery you dingus.
 		user.dropItemToGround(src) // this will unset vars like limb_grabbed
 		user.put_in_hands(I)
-		C.emote("paincrit", TRUE)
+		C.emote("paincrit", forced = TRUE)
 		playsound(C, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
 		if(usr == src)
 			user.visible_message(span_notice("[user] rips [I] out of [user.p_their()] [L.name]!"), span_notice("I rip [I] from my [L.name]."))
@@ -584,7 +612,7 @@
 		M.apply_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class, BRUTE) //It hurts to rip it out, get surgery you dingus.
 		user.dropItemToGround(src) // this will unset vars like limb_grabbed
 		user.put_in_hands(I)
-		M.emote("paincrit", TRUE)
+		M.emote("paincrit", forced = TRUE)
 		playsound(M, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
 		if(user == M)
 			user.visible_message(span_notice("[user] rips [I] out of [user.p_them()]self!"), span_notice("I remove [I] from myself."))
@@ -657,7 +685,7 @@
 		user.stop_pulling()
 		return
 	var/mob/living/carbon/C = grabbed
-	var/armor_block = C.run_armor_check(limb_grabbed, d_type, armor_penetration = BLUNT_DEFAULT_PENFACTOR)
+	var/armor_block = C.run_armor_check(limb_grabbed, d_type, armor_penetration = PEN_NONE)
 	var/damage = user.get_punch_dmg()
 	var/unarmed_skill = user.get_skill_level(/datum/skill/combat/unarmed)
 	damage *= (1 + (unarmed_skill / 10))	//1.X multiplier where X is the unarmed skill.
@@ -666,7 +694,7 @@
 		limb_grabbed.bodypart_attacked_by(BCLASS_BLUNT, damage, user, sublimb_grabbed, crit_message = TRUE)
 		playsound(C.loc, "smashlimb", 100, FALSE, -1)
 	else
-		C.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+		C.next_attack_msg += VISMSG_ARMOR_BLOCKED
 	C.visible_message(span_danger("[user] smashes [C]'s [limb_grabbed] into [A]![C.next_attack_msg.Join()]"), \
 					span_userdanger("[user] smashes my [limb_grabbed] into [A]![C.next_attack_msg.Join()]"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_warning("I smash [C]'s [limb_grabbed] against [A].[C.next_attack_msg.Join()]"))
@@ -674,14 +702,14 @@
 	log_combat(user, C, "limbsmashed [limb_grabbed] ")
 	if(ishuman(user) && user.mind)
 		var/text = "[bodyzone2readablezone(user.zone_selected)]..."
-		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, show_self = FALSE)
 
 /datum/intent/grab
 	unarmed = TRUE
 	chargetime = 0
 	noaa = TRUE
-	candodge = FALSE
-	canparry = FALSE
+	dodgeable_intent = FALSE
+	parriable_intent = FALSE
 	no_attack = TRUE
 	misscost = 2
 	releasedrain = 2
@@ -735,32 +763,6 @@
 	name = "disarm"
 	desc = ""
 	icon_state = "intake"
-
-/obj/item/grabbing/bite
-	name = "bite"
-	icon_state = "bite"
-	d_type = "stab"
-	slot_flags = ITEM_SLOT_MOUTH
-	bleed_suppressing = 1
-
-/obj/item/grabbing/bite/Click(location, control, params)
-	var/list/modifiers = params2list(params)
-	if(!valid_check())
-		return
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		if(C != grabbee || C.incapacitated() || C.stat == DEAD)
-			qdel(src)
-			return 1
-		if(modifiers["right"])
-			qdel(src)
-			return 1
-		var/_y = text2num(params2list(params)["icon-y"])
-		if(_y>=17)
-			bitelimb(C)
-		else
-			drinklimb(C)
-	return 1
 
 /datum/status_effect/buff/oiled
 	id = "oiled"

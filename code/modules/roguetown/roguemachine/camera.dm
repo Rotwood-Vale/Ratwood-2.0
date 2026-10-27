@@ -1,6 +1,6 @@
 /obj/structure/roguemachine/camera
-	name = "face"
-	desc = ""
+	name = "eerie face"
+	desc = "these eerie trinkets dangle from awnings, etched into the shape of a leering face. Hung above protected areas, to give interlopers a forboding sense of Being Watched..."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "camera-mid"
 	density = FALSE
@@ -26,7 +26,7 @@
 	icon_state = "camera-br"
 	SSroguemachine.cameras -= src
 
-/obj/structure/roguemachine/camera/Initialize()
+/obj/structure/roguemachine/camera/Initialize(mapload)
 	. = ..()
 	set_light(1, 1, 1, l_color = "#ff0d0d")
 	SSroguemachine.cameras += src

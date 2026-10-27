@@ -22,6 +22,12 @@
 							/obj/item/natural/fur/rabbit = 1,
 							/obj/item/natural/rabbitsfoot = 1)	//Rare rabbits foot for luck charm.
 
+/mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/cabbit/start_pulling(atom/movable/AM, state, force, supress_message, obj/item/item_override)
+	if(client)
+		to_chat(src, span_warning("My tiny paws can't grab anything."))
+		return FALSE
+	return ..()
+
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/cabbit/get_sound(input)
 	switch(input)
 		if("aggro")

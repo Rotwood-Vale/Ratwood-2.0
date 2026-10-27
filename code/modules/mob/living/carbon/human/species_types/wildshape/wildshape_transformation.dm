@@ -1,5 +1,8 @@
 /mob/living/carbon/human/species/wildshape/death(gibbed, nocutscene = FALSE)
-	werewolf_untransform(TRUE, gibbed)
+	if(untransform_on_death)
+		wildshape_untransform(TRUE, gibbed)
+	else
+		. = ..()
 
 /mob/living/carbon/human/proc/wildshape_transformation(shapepath)
 	if(!mind)
@@ -10,9 +13,6 @@
 	var/obj/item/stored_neck = wear_neck
 	var/obj/item/stored_ring = wear_ring
 
-	for(var/obj/item/I in src)
-		if (I != underwear && I != cloak && I != backr && I != backl && I != legwear_socks) // keep underwear, socks, back and cloak on, even if said cloak or back clothing remains inaccessible.
-			dropItemToGround(I)
 	regenerate_icons()
 	icon = null
 	var/oldinv = invisibility
@@ -74,7 +74,7 @@
 	src.adjustFireLoss(-src.getFireLoss())
 	src.adjustOxyLoss(-src.getOxyLoss())
 
-	W.blood_volume = blood_volume
+	W.set_blood_volume(blood_volume)
 	W.bleed_rate = bleed_rate
 	W.bleedsuppress = bleedsuppress
 
@@ -82,8 +82,9 @@
 	bleedsuppress = TRUE
 
 	mind.transfer_to(W)
-	skills?.known_skills = list()
-	skills?.skill_experience = list()
+	var/datum/skill_holder/beast_skills = W.ensure_skills()
+	beast_skills.known_skills = list()
+	beast_skills.skill_experience = list()
 	W.grant_language(/datum/language/beast)
 	W.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
 	W.update_a_intents()
@@ -93,6 +94,12 @@
 	invisibility = oldinv
 
 	W.gain_inherent_skills()
+
+	// Share devotion bar: beast form inherits the human's current devotion amount.
+	if(devotion && W.devotion)
+		W.devotion.max_devotion = devotion.max_devotion
+		W.devotion.devotion = devotion.devotion
+		W.devotion.update_devotion(0)
 
 /mob/living/carbon/human/proc/wildshape_untransform(dead,gibbed)
 	if(!stored_mob)
@@ -138,7 +145,8 @@
 
 	W.adjustBruteLoss(getBruteLoss())
 	W.adjustFireLoss(getFireLoss())
-	W.adjustOxyLoss(getOxyLoss())
+	if(!HAS_TRAIT(W, TRAIT_NOBREATH))
+		W.adjustOxyLoss(getOxyLoss())
 	W.set_nutrition(nutrition)
 	W.set_hydration(hydration)
 
@@ -146,8 +154,9 @@
 	src.adjustFireLoss(-src.getFireLoss())
 	src.adjustOxyLoss(-src.getOxyLoss())
 
-	W.blood_volume = blood_volume
-	W.bleed_rate = bleed_rate
+	if(!HAS_TRAIT(W, TRAIT_BLOODLOSS_IMMUNE))
+		W.set_blood_volume(blood_volume)
+		W.bleed_rate = bleed_rate
 	W.bleedsuppress = bleedsuppress
 
 	W.forceMove(get_turf(src))
@@ -155,8 +164,11 @@
 
 	var/mob/living/carbon/human/species/wildshape/WA = src
 	W.copy_known_languages_from(WA.stored_language)
-	skills?.known_skills = WA.stored_skills.Copy()
-	skills?.skill_experience = WA.stored_experience.Copy()
+	var/datum/skill_holder/restored_skills = W.ensure_skills()
+	if(WA.stored_skills)
+		restored_skills.known_skills = WA.stored_skills.Copy()
+	if(WA.stored_experience)
+		restored_skills.skill_experience = WA.stored_experience.Copy()
 	playsound(W.loc, 'sound/body/shapeshift-end.ogg', 100, FALSE, 3)
 
 	//Compares the list of spells we had before transformation with those we do now. If there are any that don't match, we remove them
@@ -167,5 +179,10 @@
 
 	W.regenerate_icons()
 	to_chat(W, span_userdanger("I return to my old form."))
+
+	// Share devotion bar: return beast form's current devotion amount to human form.
+	if(devotion && W.devotion)
+		W.devotion.devotion = clamp(devotion.devotion, 0, W.devotion.max_devotion)
+		W.devotion.update_devotion(0)
 
 	qdel(src)

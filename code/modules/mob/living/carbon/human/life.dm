@@ -1,5 +1,3 @@
-
-
 //NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
 
 // bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
@@ -21,6 +19,7 @@
 /mob/living/carbon/human
 	var/leprosy = 2
 	var/allmig_reward = 0
+	var/last_sleep
 
 /mob/living/carbon/human/Life()
 	if (notransform)
@@ -50,12 +49,12 @@
 	handle_vamp_dreams()
 	if(IsSleeping())
 		if(health > 0)
-			if(has_status_effect(/datum/status_effect/debuff/sleepytime))
-				remove_status_effect(/datum/status_effect/debuff/sleepytime)
-				remove_stress(/datum/stressevent/sleepytime)
-				if(mind)
-					mind.sleep_adv.advance_cycle()
-					handle_sleep_triumphs()
+			if(has_status_effect(/datum/status_effect/debuff/sleepytime) || has_status_effect(/datum/status_effect/debuff/sleepytime/t2) || has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
+				if(world.time > last_sleep + 35 SECONDS) //35 seconds of delay for every progress, letting people wake up before the second sleep removal happens
+					last_sleep = world.time
+					remove_sleep_depravation()
+					if(mind)
+						mind.sleep_adv.advance_cycle()
 	if(leprosy == 1)
 		adjustToxLoss(2)
 	else if(leprosy == 2)
@@ -81,6 +80,10 @@
 	// Legacy single vice support
 	else if(charflaw && !charflaw.ephemeral && mind)
 		charflaw.flaw_on_life(src)
+
+	// Redolent quirk scent processing
+	if(mind && HAS_TRAIT(src, TRAIT_REDOLENT))
+		handle_redolent_scent()
 	
 	if(health <= 0)
 		adjustOxyLoss(0.5)
@@ -214,7 +217,7 @@
 			mask_sound = pick('sound/items/confessormask1.ogg', 'sound/items/confessormask2.ogg', 'sound/items/confessormask3.ogg',
 							'sound/items/confessormask4.ogg', 'sound/items/confessormask5.ogg', 'sound/items/confessormask6.ogg',
 							'sound/items/confessormask7.ogg', 'sound/items/confessormask8.ogg', 'sound/items/confessormask9.ogg',
-					 		'sound/items/confessormask10.ogg')
+							'sound/items/confessormask10.ogg')
 			playsound(src, mask_sound, 90, FALSE, 4, 0)
 			return
 
@@ -230,18 +233,27 @@
 	if(wear_armor)
 		if(wear_armor.max_heat_protection_temperature && wear_armor.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= wear_armor.heat_protection
+	if(wear_shirt)
+		if(wear_shirt.max_heat_protection_temperature && wear_shirt.max_heat_protection_temperature >= temperature)
+			thermal_protection_flags |= wear_shirt.heat_protection
 	if(wear_pants)
 		if(wear_pants.max_heat_protection_temperature && wear_pants.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= wear_pants.heat_protection
 	if(shoes)
 		if(shoes.max_heat_protection_temperature && shoes.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= shoes.heat_protection
+	if(wear_wrists)
+		if(wear_wrists.max_heat_protection_temperature && wear_wrists.max_heat_protection_temperature >= temperature)
+			thermal_protection_flags |= wear_wrists.heat_protection
 	if(gloves)
 		if(gloves.max_heat_protection_temperature && gloves.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= gloves.heat_protection
 	if(wear_mask)
 		if(wear_mask.max_heat_protection_temperature && wear_mask.max_heat_protection_temperature >= temperature)
 			thermal_protection_flags |= wear_mask.heat_protection
+	if(cloak)
+		if(cloak.max_heat_protection_temperature && cloak.max_heat_protection_temperature >= temperature)
+			thermal_protection_flags |= cloak.heat_protection
 
 	return thermal_protection_flags
 
@@ -287,18 +299,27 @@
 	if(wear_armor)
 		if(wear_armor.min_cold_protection_temperature && wear_armor.min_cold_protection_temperature <= temperature)
 			thermal_protection_flags |= wear_armor.cold_protection
+	if(wear_shirt)
+		if(wear_shirt.min_cold_protection_temperature && wear_shirt.min_cold_protection_temperature <= temperature)
+			thermal_protection_flags |= wear_shirt.cold_protection
 	if(wear_pants)
 		if(wear_pants.min_cold_protection_temperature && wear_pants.min_cold_protection_temperature <= temperature)
 			thermal_protection_flags |= wear_pants.cold_protection
 	if(shoes)
 		if(shoes.min_cold_protection_temperature && shoes.min_cold_protection_temperature <= temperature)
 			thermal_protection_flags |= shoes.cold_protection
+	if(wear_wrists)
+		if(wear_wrists.min_cold_protection_temperature && wear_wrists.min_cold_protection_temperature <= temperature)
+			thermal_protection_flags |= wear_wrists.cold_protection
 	if(gloves)
 		if(gloves.min_cold_protection_temperature && gloves.min_cold_protection_temperature <= temperature)
 			thermal_protection_flags |= gloves.cold_protection
 	if(wear_mask)
 		if(wear_mask.min_cold_protection_temperature && wear_mask.min_cold_protection_temperature <= temperature)
 			thermal_protection_flags |= wear_mask.cold_protection
+	if(cloak)
+		if(cloak.min_cold_protection_temperature && cloak.min_cold_protection_temperature <= temperature)
+			thermal_protection_flags |= cloak.cold_protection
 
 	return thermal_protection_flags
 

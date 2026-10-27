@@ -37,16 +37,16 @@
 	simple_detect_bonus = 20
 	deaggroprob = 0
 	defprob = 40
-	candodge = TRUE
+	mob_can_dodge = TRUE
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
 	attack_sound = 'sound/blank.ogg'
-	dodgetime = 40
+	dodgetime = 4 SECONDS
 	aggressive = 1
 	var/drug_cd
 
-/mob/living/simple_animal/hostile/retaliate/rogue/fae/glimmerwing/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/fae/glimmerwing/Initialize(mapload)
 	src.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 	. = ..()
 

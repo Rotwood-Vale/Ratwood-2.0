@@ -9,7 +9,7 @@
 	dynamic_hair_suffix = ""
 	sewrepair = TRUE
 
-/obj/item/clothing/head/roguetown/priestmask/Initialize()
+/obj/item/clothing/head/roguetown/priestmask/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CHOSEN, "VISAGE")
 
@@ -34,11 +34,16 @@
 /obj/item/clothing/head/roguetown/eoramask/equipped(mob/living/carbon/human/user, slot) //Copying Eora bud pacifism
 	. = ..()
 	if(slot == SLOT_HEAD)
-		ADD_TRAIT(user, TRAIT_PACIFISM, "eoramask_[REF(src)]")
+		var/trait_given = user?.patron?.type == /datum/patron/divine/eora ? TRAIT_EORAN_CONTENTED : TRAIT_PACIFISM
+		ADD_TRAIT(user, trait_given, "eoramask_[REF(src)]")
+		user.apply_status_effect(/datum/status_effect/buff/peaceflower)
 
 /obj/item/clothing/head/roguetown/eoramask/dropped(mob/living/carbon/human/user)
-	..()
-	REMOVE_TRAIT(user, TRAIT_PACIFISM, "eoramask_[REF(src)]")
+	var/trait_given = user?.patron?.type == /datum/patron/divine/eora ? TRAIT_EORAN_CONTENTED : TRAIT_PACIFISM
+	REMOVE_TRAIT(user, trait_given, "eoramask_[REF(src)]")
+	if(istype(user) && user?.head == src)
+		user.remove_status_effect(/datum/status_effect/buff/peaceflower)
+	return ..()
 
 /obj/item/clothing/head/roguetown/eoramask/attack_hand(mob/user)
 	if(iscarbon(user))

@@ -51,7 +51,21 @@
 			if(5)
 				shown_patreon_level = "Lord"
 		to_chat(src, span_info("Donator Level: [shown_patreon_level]"))
-	client.recent_changelog()
+	client.changelog()
+
+	var/primary_server = "byond://ratwood.rip:22096"
+	var/secondary_server = "byond://ratwood.rip:22099"
+	var/link_style = "color:#638500;text-decoration:underline;"
+
+	if(world.port == 22096)
+		to_chat(src, "<span style='color:#638500;'>Secondary Server: [secondary_server] <a href='?src=[REF(src)];join_server=secondary' style='[link_style]'><b>(JOIN)</b></a></span>")
+	else if(world.port == 22099)
+		to_chat(src, "<span style='color:#638500;'>Primary Server: [primary_server] <a href='?src=[REF(src)];join_server=primary' style='[link_style]'><b>(JOIN)</b></a></span>")
+	else
+		to_chat(src, "<span style='color:#638500;'>Primary Server: [primary_server] <a href='?src=[REF(src)];join_server=primary' style='[link_style]'><b>(JOIN)</b></a></span>")
+		to_chat(src, "<span style='color:#638500;'>Secondary Server: [secondary_server] <a href='?src=[REF(src)];join_server=secondary' style='[link_style]'><b>(JOIN)</b></a></span>")
+
+	to_chat(src, "<a href='?src=[REF(src)];open_changelog=1' style='color:#638500;text-decoration:underline;'><b>Open Changelog</b></a>")
 
 	if(GLOB.admin_notice)
 		to_chat(src, span_notice("<b>Admin Notice:</b>\n \t [GLOB.admin_notice]"))
@@ -69,7 +83,7 @@
 			postfix = "soon"
 		to_chat(src, "The game will start [postfix].")
 
-		SSvote.send_vote(client)
+		SSvote.on_client_login(client)
 		var/usedkey = ckey(key)
 		var/list/thinz = list("takes a seat.", "settles in.", "joins the session", "joins the table.", "becomes a player.")
 		SEND_TEXT(world, span_notice("[usedkey] [pick(thinz)]"))

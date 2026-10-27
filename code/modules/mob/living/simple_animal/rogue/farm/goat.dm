@@ -1,11 +1,11 @@
-/mob/living/simple_animal/hostile/retaliate/rogue/goat/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/goat/Initialize(mapload)
 	. = ..()
 	GLOB.farm_animals++
 	if(tame)
 		tamed()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goat/Destroy()
-	GLOB.farm_animals = max(GLOB.farm_animals - 1, 0)
+	GLOB.farm_animals--
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goat/find_food()
@@ -21,6 +21,7 @@
 	if(can_buckle)
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-2, 6), TEXT_WEST = list(2, 6)))
+		D.set_riding_offsets(2, list(TEXT_NORTH = list(0, -2), TEXT_SOUTH = list(0, 14), TEXT_EAST = list(-10, 6), TEXT_WEST = list(10, 6)))
 		D.set_vehicle_dir_layer(SOUTH, MOB_LAYER+0.1)
 		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -270,20 +271,21 @@
 	if(can_buckle)
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-2, 6), TEXT_WEST = list(2, 6)))
+		D.set_riding_offsets(2, list(TEXT_NORTH = list(0, -2), TEXT_SOUTH = list(0, 14), TEXT_EAST = list(-10, 6), TEXT_WEST = list(10, 6)))
 		D.set_vehicle_dir_layer(SOUTH, MOB_LAYER+0.1)
 		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
 		D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
 
-/mob/living/simple_animal/hostile/retaliate/rogue/goatmale/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/goatmale/Initialize(mapload)
 	. = ..()
 	GLOB.farm_animals++
 	if(tame)
 		tamed()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goatmale/Destroy()
-	..()
-	GLOB.farm_animals = max(GLOB.farm_animals - 1, 0)
+	GLOB.farm_animals--
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goatmale/get_sound(input)
 	switch(input)

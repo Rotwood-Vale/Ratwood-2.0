@@ -17,6 +17,7 @@
 	smeltresult = /obj/item/ingot/iron
 	grid_width = 64
 	grid_height = 64
+	is_tool = TRUE
 
 /obj/item/rogueweapon/pick/getonmobprop(tag)
 	. = ..()
@@ -40,17 +41,30 @@
 	max_integrity = 600
 	smeltresult = /obj/item/ingot/steel
 
+/obj/item/rogueweapon/pick/bronze
+	name = "dolabra"
+	desc = "A so-called 'legionnaire's tool'; antiquated, but nevertheless beloved by many for its versatility. It offers an answer for labors both above-and-below, courtesy of its bronze axhead-and-picktip."
+	force = 20
+	force_wielded = 25
+	icon_state = "bronzepick"
+	possible_item_intents = list(/datum/intent/pick/bad, /datum/intent/axe/chop, /datum/intent/axe/cut, MACE_STRIKE)
+	gripped_intents = list(/datum/intent/pick, /datum/intent/axe/chop, /datum/intent/till, /datum/intent/flailthresh)
+	max_integrity = 500
+	max_blade_int = 225
+	sharpness = IS_SHARP
+	smeltresult = /obj/item/ingot/bronze
+
 /obj/item/rogueweapon/pick/blacksteel
 	name = "blacksteel pick"
-	desc = "Glimmering with silver-y black, this is a pretigious tool for miners delving in the darkness."
-	force_wielded = 30
+	desc = "Glimmering with silvered blackness, this is a pretigious tool for miners delving into the darkness. It looks like it will strike hard enough to shatter any boulders within a rocky surface instantly."
+	possible_item_intents = list(/datum/intent/pick/bad)
+	gripped_intents = list(/datum/intent/pick)
+	force = 25
+	force_wielded = 32
 	icon_state = "blacksteelpick1"
 	item_state = "blacksteelpick1"
-	possible_item_intents = list(/datum/intent/pick)
-	gripped_intents = list(/datum/intent/pick)
 	max_integrity = 800
 	smeltresult = /obj/item/ingot/blacksteel
-
 
 /obj/item/rogueweapon/pick/stone
 	name = "stone pick"
@@ -63,7 +77,7 @@
 	max_integrity = 250
 	smeltresult = null
 
-/obj/item/rogueweapon/pick/aalloy
+/obj/item/rogueweapon/pick/decrepit
 	name = "decrepit pick"
 	desc = "A chisel of wrought bronze, which once labored to gather the ores necessary for an ancient alloy; such was lost in the aftermath of Her ascension."
 	force = 12

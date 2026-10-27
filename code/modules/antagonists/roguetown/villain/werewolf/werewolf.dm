@@ -77,7 +77,10 @@
 		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/skeleton))
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
+	//No cross species pollination!!!
+	if(mind.has_antag_datum(/datum/antagonist/gnoll))
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED) || HAS_TRAIT(src, TRAIT_NOWW))
 		return FALSE
 	return TRUE
 
@@ -130,12 +133,15 @@
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
 	armor = ARMOR_WWOLF
-	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	sewrepair = FALSE
 	max_integrity = 550
 	item_flags = DROPDEL
+
+/obj/item/clothing/suit/roguetown/armor/skin_armor/werewolf_skin/Initialize(mapload)///makes blessed silver do extra damage
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_GRABIMMUNE, "HIDE", "#VOLFED")/// no one should ever see this unless they spawn in werewolf skin via the game panel. TRAIT_GRABIMMUNE is only on werewolves and the matyr during their super saiyan, should be fine.
 
 /datum/intent/simple/werewolf
 	name = "claw"
@@ -145,16 +151,22 @@
 	animname = "chop"
 	hitsound = "genslash"
 	penfactor = 50
-	candodge = TRUE
-	canparry = TRUE
 	miss_text = "slashes the air!"
 	miss_sound = "bluntwooshlarge"
 	item_d_type = "slash"
+
+/datum/intent/mace/smash/werewolf
+	name = "thrash"
+	desc = "A powerful, smash of lycan muscle that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 15 (1 - 5 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance."
+	icon_state = "insmash"
+	chargetime = 1
+	penfactor = 60
 
 /obj/item/rogueweapon/werewolf_claw
 	name = "Verevolf Claw"
 	desc = ""
 	item_state = null
+	experimental_inhand = FALSE
 	lefthand_file = null
 	righthand_file = null
 	icon = 'icons/roguetown/weapons/unarmed32.dmi'
@@ -176,6 +188,7 @@
 	parrysound = list('sound/combat/parry/parrygen.ogg')
 	embedding = list("embedded_pain_multiplier" = 0, "embed_chance" = 0, "embedded_fall_chance" = 0)
 	item_flags = DROPDEL
+	special = /datum/special_intent/axe_swing	//Good pairing for area denial for WW's.
 
 /obj/item/rogueweapon/werewolf_claw/right
 	icon_state = "claw_r"
@@ -183,6 +196,6 @@
 /obj/item/rogueweapon/werewolf_claw/left
 	icon_state = "claw_l"
 
-/obj/item/rogueweapon/werewolf_claw/Initialize()
+/obj/item/rogueweapon/werewolf_claw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOEMBED, TRAIT_GENERIC)

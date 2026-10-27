@@ -24,6 +24,7 @@
 	cmode_music = 'sound/music/combat_knight.ogg'
 	advclass_cat_rolls = list (CTAG_MARSHAL = 20)
 	social_rank = SOCIAL_RANK_NOBLE
+	quirk_restrictions = list(/datum/quirk/hunted)
 	job_traits = list(TRAIT_NOBLE, TRAIT_HEAVYARMOR, TRAIT_PERFECT_TRACKER)
 	job_subclasses = list(
 		/datum/advclass/marshal/classic,
@@ -44,7 +45,7 @@
 	id = /obj/item/scomstone/garrison
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
+		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
 		)
 	H.verbs |= /mob/proc/haltyell
@@ -200,7 +201,7 @@
 	var/choice = alert(lord, "The sheriff requests a new law!\n[requested_law]", "SHERIFF LAW REQUEST", "Yes", "No")
 	if(choice != "Yes" || QDELETED(lord) || lord.stat > CONSCIOUS)
 		if(bailiff)
-			to_chat(span_warning("The lord has denied the request for a new law!"))
+			to_chat(bailiff, span_warning("The lord has denied the request for a new law!"))
 		return
 	make_law(requested_law)
 
@@ -210,7 +211,7 @@
 	var/choice = alert(lord, "The sheriff requests the removal of a law!\n[GLOB.laws_of_the_land[requested_law]]", "SHERIFF LAW REQUEST", "Yes", "No")
 	if(choice != "Yes" || QDELETED(lord) || lord.stat > CONSCIOUS)
 		if(bailiff)
-			to_chat(span_warning("The lord has denied the request for a law removal!"))
+			to_chat(bailiff, span_warning("The lord has denied the request for a law removal!"))
 		return
 	remove_law(requested_law)
 
@@ -218,7 +219,7 @@
 	var/choice = alert(lord, "The sheriff requests a purge of all laws!", "SHERIFF PURGE REQUEST", "Yes", "No")
 	if(choice != "Yes" || QDELETED(lord) || lord.stat > CONSCIOUS)
 		if(bailiff)
-			to_chat(span_warning("The lord has denied the request for a purge of all laws!"))
+			to_chat(bailiff, span_warning("The lord has denied the request for a purge of all laws!"))
 		return
 	purge_laws()
 
@@ -226,7 +227,7 @@
 	var/choice = alert(lord, "The sheriff requests to outlaw someone!\n[requested_outlaw]", "SHERIFF OUTLAW REQUEST", "Yes", "No")
 	if(choice != "Yes" || QDELETED(lord) || lord.stat > CONSCIOUS)
 		if(bailiff)
-			to_chat(span_warning("The lord has denied the request for declaring an outlaw!"))
+			to_chat(bailiff, span_warning("The lord has denied the request for declaring an outlaw!"))
 		return
 	make_outlaw(requested_outlaw)
 

@@ -6,10 +6,13 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 	mode = NPC_AI_IDLE
 	faction = list("drow")
 	ambushable = FALSE
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	flee_in_pain = TRUE
 	possible_rmb_intents = list()
 	var/is_silent = FALSE /// Determines whether or not we will scream our funny lines at people.
+
+	//Whilst smart, they prefer to not take risks and instead will utilize their weapons for special means of attack.
+	special_attacker = TRUE
 
 /mob/living/carbon/human/species/elf/dark/drowraider/ambush
 	aggressive = 1
@@ -31,7 +34,7 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 		return FALSE
 	. = ..()
 
-/mob/living/carbon/human/species/elf/dark/drowraider/Initialize()
+/mob/living/carbon/human/species/elf/dark/drowraider/Initialize(mapload)
 	. = ..()
 	set_species(/datum/species/elf/dark)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
@@ -57,7 +60,7 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 						/datum/sprite_accessory/hair/head/countryponytailalt, 
 						/datum/sprite_accessory/hair/head/stacy, 
 						/datum/sprite_accessory/hair/head/kusanagi_alt))
-	var/hairm = pick(list(/datum/sprite_accessory/hair/head/ponytailyeager, 
+	var/hairm = pick(list(/datum/sprite_accessory/hair/head/ponytailwitcher, 
 						/datum/sprite_accessory/hair/head/dave, 
 						/datum/sprite_accessory/hair/head/emo, 
 						/datum/sprite_accessory/hair/head/sabitsuki,
@@ -130,13 +133,15 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 	belt = /obj/item/storage/belt/rogue/leather/black
 	if(prob(5))
 		beltl = /obj/item/storage/belt/rogue/pouch/medicine
-	if(prob(50))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	else
-		if(prob(20))
-			beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
-		else
+	switch(rand(1, 100))
+		if(1 to 50)
+			beltr = null
+		if(51 to 85)
 			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if(86 to 95)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
+		if(96 to 100)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/lucky
 	if(prob(60))
 		id = /obj/item/clothing/ring/silver
 	gloves = /obj/item/clothing/gloves/roguetown/chain/iron
@@ -161,3 +166,35 @@ GLOBAL_LIST_INIT(drowraider_aggro, world.file2list("strings/rt/drowaggrolines.tx
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+
+/mob/living/carbon/human/species/elf/dark/drowraider/scourge
+	threat_point = THREAT_ELITE
+	dodgetime = 20
+
+/mob/living/carbon/human/species/elf/dark/drowraider/scourge/after_creation()
+	..()
+	job = "Drow Scourge"
+	real_name = "[real_name] [pick("the Scourge", "the Lasher", "the Venomed", "the Spiderkin", "the Flenser")]"
+	name = real_name
+	ADD_TRAIT(src, TRAIT_BADTRAINER, TRAIT_GENERIC)
+	equipOutfit(new /datum/outfit/job/roguetown/human/species/elf/dark/drowraider)
+
+/mob/living/carbon/human/species/elf/dark/drowraider/scourge/death(gibbed, nocutscene = FALSE)
+	. = ..()
+
+/datum/outfit/job/roguetown/human/species/elf/dark/drowraider/scourge/pre_equip(mob/living/carbon/human/H)
+	..()
+	head = /obj/item/clothing/head/roguetown/helmet/kettle/iron
+	neck = /obj/item/clothing/neck/roguetown/gorget
+	mask = /obj/item/clothing/mask/rogue/shepherd/shadowmask/delf
+	belt = /obj/item/storage/belt/rogue/leather/black
+	r_hand = /obj/item/rogueweapon/whip/spiderwhip
+	l_hand = null
+	H.STASTR = 13
+	H.STASPD = 13
+	H.STACON = 13
+	H.STAWIL = 11
+	H.STAPER = 12
+	H.STAINT = 10
+	H.STALUC = 10
+	H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_MASTER, TRUE)

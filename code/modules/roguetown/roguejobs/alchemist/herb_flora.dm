@@ -3,6 +3,7 @@
 	desc = "A bush,for an herb. This shouldn't show up."
 	icon = 'icons/roguetown/misc/herbfoliage.dmi'
 	icon_state = "spritemeplz"
+	layer = BELOW_OBJ_LAYER+0.01
 	var/res_replenish
 	max_integrity = 10
 	climbable = FALSE
@@ -13,7 +14,7 @@
 	var/timerid
 	var/harvested = FALSE
 
-/obj/structure/flora/roguegrass/herb/Initialize()
+/obj/structure/flora/roguegrass/herb/Initialize(mapload)
 	. = ..()
 	desc = "An herb. This one looks like [name]."
 	GLOB.herb_locations |= src
@@ -65,7 +66,7 @@
 	name = "random herb"
 	desc = "Haha, im in danger."
 
-/obj/structure/flora/roguegrass/herb/random/Initialize()
+/obj/structure/flora/roguegrass/herb/random/Initialize(mapload)
 	var/type = pick(list(/obj/structure/flora/roguegrass/herb/atropa,
 	/obj/structure/flora/roguegrass/herb/matricaria,
 	/obj/structure/flora/roguegrass/herb/symphitum,

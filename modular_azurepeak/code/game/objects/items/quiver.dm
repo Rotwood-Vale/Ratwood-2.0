@@ -11,7 +11,6 @@
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK
 	resistance_flags = FIRE_PROOF
 	max_integrity = 0
-	sellprice = 2 // Shouldn't have added value lmao
 	equip_sound = 'sound/blank.ogg'
 	bloody_icon_state = "bodyblood"
 	alternate_worn_layer = UNDER_CLOAK_LAYER
@@ -19,6 +18,7 @@
 	var/max_storage = 20
 	var/list/arrows = list()
 	sewrepair = TRUE
+	dropshrink = 0.9
 
 /obj/item/quiver/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
@@ -106,56 +106,70 @@
 	else
 		icon_state = "quiver0"
 
-/obj/item/quiver/arrows/Initialize()
-	..()
+/obj/item/quiver/arrows/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/arrow/iron/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/bluntarrows/Initialize()
-	..()
+/obj/item/quiver/bluntarrows/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/arrow/blunt/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/bolts/Initialize()
-	..()
+/obj/item/quiver/bolts/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/bluntbolts/Initialize()
-	..()
+/obj/item/quiver/bolt/bronze/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/bolt/bronze/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bluntbolts/Initialize(mapload)
+	. = ..()
 	for(var/i in  1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/blunt/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/holybolts/Initialize()
-	..()
+/obj/item/quiver/heavybluntbolts/Initialize(mapload)
+	. = ..()
+	for(var/i in  1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/bolt/heavyblunt/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/holybolts/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/holy/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/heavybolts/Initialize()
-	..()
+/obj/item/quiver/heavybolts/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/Wbolts/Initialize()
-	..()
+/obj/item/quiver/Wbolts/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/water/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/pyrobolts/Initialize()
+/obj/item/quiver/pyrobolts/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/bolt/pyro/A = new()
@@ -163,48 +177,55 @@
 	update_icon()
 
 
-/obj/item/quiver/poisonarrows/Initialize()
+/obj/item/quiver/poisonarrows/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/arrow/poison/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/pyroarrows/Initialize()
+/obj/item/quiver/pyroarrows/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/arrow/pyro/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/Parrows/Initialize()
+/obj/item/quiver/Parrows/Initialize(mapload)
 	. = ..()
 
-/obj/item/quiver/bolts/paalloy/Initialize()
-	..()
+/obj/item/quiver/boltsancient/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/bolt/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/bolt/ancient/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/Warrows/Initialize()
-	..()
+/obj/item/quiver/Warrows/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/arrow/water/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/bodkin/Initialize()
-	..()
+/obj/item/quiver/bodkin/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/arrow/steel/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/paalloy/Initialize()
-	..()
+/obj/item/quiver/ancient/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/arrow/steel/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/arrow/steel/ancient/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/bronzearrows/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/arrow/bronze/A = new()
 		arrows += A
 	update_icon()
 
@@ -214,7 +235,7 @@
 	icon_state = "javelinbag0"
 	item_state = "javelinbag"
 	max_storage = 4
-	sellprice = 10
+	dropshrink = 0.85
 
 /obj/item/quiver/javelin/attack_turf(turf/T, mob/living/user)
 	if(arrows.len >= max_storage)
@@ -261,24 +282,31 @@
 	else
 		icon_state = "javelinbag0"
 
-/obj/item/quiver/javelin/iron/Initialize()
-	..()
+/obj/item/quiver/javelin/iron/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/javelin/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/javelin/steel/Initialize()
-	..()
+/obj/item/quiver/javelin/steel/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/javelin/steel/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/javelin/paalloy/Initialize()
-	..()
+/obj/item/quiver/javelin/ancient/Initialize(mapload)
+	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/javelin/steel/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/javelin/steel/ancient/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/javelin/bronze/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to 4)
+		var/obj/item/ammo_casing/caseless/rogue/javelin/bronze/A = new()
 		arrows += A
 	update_icon()
 
@@ -340,17 +368,31 @@
 /obj/item/quiver/sling/update_icon()
 	return
 
-/obj/item/quiver/sling/iron/Initialize()
+/obj/item/quiver/sling/iron/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/iron/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/sling/paalloy/Initialize()
+/obj/item/quiver/sling/steel/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/paalloy/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/steel/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/sling/ancient/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/ancient/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/sling/bronze/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/sling_bullet/bronze/A = new()
 		arrows += A
 	update_icon()
 
@@ -365,6 +407,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	grid_height = 64
 	grid_width = 32
+	dropshrink = 0.5
 
 /obj/item/quiver/zigs/attackby(obj/A, loc, params)
 	if(A.type in subtypesof(/obj/item/clothing/mask/cigarette/rollie))
@@ -392,21 +435,21 @@
 /obj/item/quiver/zigs/update_icon()
 	return
 
-/obj/item/quiver/zigs/nicotine/Initialize()
+/obj/item/quiver/zigs/nicotine/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/clothing/mask/cigarette/rollie/nicotine/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/zigs/trippy/Initialize()
+/obj/item/quiver/zigs/trippy/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/clothing/mask/cigarette/rollie/trippy/A = new()
 		arrows += A
 	update_icon()
 
-/obj/item/quiver/zigs/cannabis/Initialize()
+/obj/item/quiver/zigs/cannabis/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
 		var/obj/item/clothing/mask/cigarette/rollie/cannabis/A = new()

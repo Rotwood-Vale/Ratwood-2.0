@@ -108,7 +108,7 @@
 			return "wing"
 	return ..()
 
-/mob/living/simple_animal/hostile/retaliate/rogue/chicken/Initialize()
+/mob/living/simple_animal/hostile/retaliate/rogue/chicken/Initialize(mapload)
 	. = ..()
 	if(!body_color)
 		body_color = pick(validColors)
@@ -125,7 +125,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/chicken/Life()
 	..()
-	if(!stat && (production > 29) && egg_type && isturf(loc) && !enemies.len)
+	if(!stat && (production > 29) && egg_type && isturf(loc) && !LAZYLEN(enemies))
 		testing("laying egg with [production] production")
 		if(locate(/obj/structure/fluff/nest) in loc)
 			visible_message(span_alertalien("[src] [pick(layMessage)]"))

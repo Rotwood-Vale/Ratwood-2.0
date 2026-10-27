@@ -44,6 +44,15 @@
 	smeltresult = /obj/item/ingot/steel
 	smelt_bar_num = 2
 
+/obj/item/clothing/head/roguetown/helmet/heavy/pestran/equipped(mob/living/carbon/user, slot)
+	. = ..()
+	if(slot == SLOT_HEAD)
+		ADD_TRAIT(user, TRAIT_NOSTINK, "[type]")
+
+/obj/item/clothing/head/roguetown/helmet/heavy/pestran/dropped(mob/living/carbon/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_NOSTINK, "[type]")
+
 /obj/item/clothing/head/roguetown/helmet/heavy/eoran
 	name = "eoran helmet"
 	desc = "A visage of beauty, this helm made in soft pink and beige reminds one of the grace of Eora."

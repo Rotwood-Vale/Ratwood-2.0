@@ -25,7 +25,7 @@
 //
 //	assignments			:	assignment [',' assignments]
 //	assignment			:	<variable name> '=' expression
-//	variable			:	<variable name> | variable '.' variable | variable '[' <list index> ']' | '{' <ref as hex number> '}' | '(' expression ')' | call_function
+//	variable			:	<variable name> | variable '.' variable | variable '[' <list index> ']' [more list indexes] | '{' <ref as hex number> '}' | '(' expression ')' | call_function
 //
 //	bool_expression		:	expression comparitor expression  [bool_operator bool_expression]
 //	expression			:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
@@ -90,7 +90,7 @@
 		return null
 
 /datum/SDQL_parser/proc/tokenl(i)
-	return lowertext(token(i))
+	return LOWER_TEXT(token(i))
 
 /datum/SDQL_parser/proc/query_options(i, list/node)
 	var/list/options = list()
@@ -340,7 +340,7 @@
 	return i
 
 
-//variable:	<variable name> | variable '.' variable | variable '[' <list index> ']' | '{' <ref as hex number> '}' | '(' expression ')' | call_function
+//variable:	<variable name> | variable '.' variable | variable '[' <list index> ']' [more list indexes] | '{' <ref as hex number> '}' | '(' expression ')' | call_function
 /datum/SDQL_parser/proc/variable(i, list/node)
 	var/list/L = list(token(i))
 	node[++node.len] = L
@@ -362,30 +362,31 @@
 
 		L[++L.len] = sub_expression
 
-	if(token(i + 1) == ".")
-		L += "."
-		i = variable(i + 2, L)
+	var/indexed = FALSE
+	while(TRUE)
+		if(token(i + 1) == "\[")
+			var/list/index_expression = list()
+			i = expression(i + 2, index_expression)
+			if(token(i) != "]")
+				return parse_error("Missing ] at the end of list access.")
 
-	else if (token(i + 1) == "(") // OH BOY PROC
-		var/list/arguments = list()
-		i = call_function(i, null, arguments)
-		L += ":"
-		L[++L.len] = arguments
+			L += "\["
+			L[++L.len] = index_expression
+			indexed = TRUE
+			continue
 
-	else if (token(i + 1) == "\[")
-		var/list/expression = list()
-		i = expression(i + 2, expression)
-		if (token(i) != "]")
-			parse_error("Missing ] at the end of list access.")
+		if(token(i + 1) == ".")
+			L += "."
+			return variable(i + 2, L)
 
-		L += "\["
-		L[++L.len] = expression
-		i++
+		if(!indexed && token(i + 1) == "(") // OH BOY PROC
+			var/list/arguments = list()
+			i = call_function(i, null, arguments)
+			L += ":"
+			L[++L.len] = arguments
+			return i
 
-	else
-		i++
-
-	return i
+		return i + 1
 
 
 //object_type:	<type path>
@@ -605,7 +606,7 @@
 		node += "null"
 		i++
 
-	else if(lowertext(copytext(token(i), 1, 3)) == "0x" && isnum(hex2num(copytext(token(i), 3))))
+	else if(LOWER_TEXT(copytext(token(i), 1, 3)) == "0x" && isnum(hex2num(copytext(token(i), 3))))
 		node += hex2num(copytext(token(i), 3))
 		i++
 

@@ -1,58 +1,9 @@
-/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue
-	name = "Fire Lance"
-	desc = "Deals damage and ignites target, Deals extra damage to undead."
-	overlay_state = "sacredflame"
-	sound = 'sound/magic/bless.ogg'
-	invocations = list("By fire, be cleansed!")//Not so sacred.
-	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-	associated_skill = /datum/skill/magic/holy
-	antimagic_allowed = TRUE
-	recharge_time = 15 SECONDS
-	miracle = TRUE
-	devotion_cost = 75
-	projectile_type = /obj/projectile/magic/astratablast
-
-
-/obj/projectile/magic/astratablast
-	damage = 25
-	name = "lance of holy fire"
-	nodamage = FALSE
-	damage_type = BURN
-	speed = 0.3
-	muzzle_type = null
-	impact_type = null
-	hitscan = TRUE
-	flag = "magic"
-	light_color = "#a98107"
-	light_outer_range = 7
-	tracer_type = /obj/effect/projectile/tracer/solar_beam
-	var/fuck_that_guy_multiplier = 1.6//On par with divine blast against undead, more-or-less.
-	var/biotype_we_look_for = MOB_UNDEAD
-
-/obj/projectile/magic/astratablast/on_hit(target)
-	. = ..()
-	if(ismob(target))
-		var/mob/living/M = target
-		if(M.anti_magic_check())
-			visible_message(span_warning("[src] fizzles on contact with [target]!"))
-			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
-			qdel(src)
-			return BULLET_ACT_BLOCK
-		if(M.mob_biotypes & biotype_we_look_for || istype(M, /mob/living/simple_animal/hostile/rogue/skeleton))
-			damage *= fuck_that_guy_multiplier
-			M.adjust_fire_stacks(10)
-			visible_message(span_warning("[target] erupts in flame upon being struck by [src]!"))
-			M.ignite_mob()
-		else
-			M.adjust_fire_stacks(4)
-			visible_message(span_warning("[src] ignites [target]!"))
-			M.ignite_mob()
-	return FALSE
-
 /obj/effect/proc_holder/spell/invoked/ignition
 	name = "Ignition"
 	desc = "Ignite a flammable object at range."
-	overlay_state = "sacredflame"
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_state = "ignite"
 	releasedrain = 30
 	chargedrain = 0
 	chargetime = 0
@@ -84,7 +35,9 @@
 /obj/effect/proc_holder/spell/invoked/revive
 	name = "Anastasis"
 	desc = "Focus Astratas energy though a stationary psycross, reviving the target from death."
-	overlay_state = "revive"
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_state = "resurrect"
 	releasedrain = 90
 	chargedrain = 0
 	chargetime = 50
@@ -104,11 +57,18 @@
 	var/revive_pq = PQ_GAIN_REVIVE
 
 /obj/effect/proc_holder/spell/invoked/revive/start_recharge()
+	var/old_recharge = recharge_time
 	// Because the cooldown for anastasis is so incredibly low, not having tech impacts them more heavily than other faiths
 	var/tech_resurrection_modifier = SSchimeric_tech.get_resurrection_multiplier()
+
 	if(tech_resurrection_modifier > 1)
-		recharge_time = initial(recharge_time) * (tech_resurrection_modifier * 2.5)
+		recharge_time = initial(recharge_time) * (tech_resurrection_modifier * 1.25)
+	else
+		recharge_time = initial(recharge_time)
+	if(charge_counter >= old_recharge && old_recharge > 0)
+		charge_counter = recharge_time
 	. = ..()
+
 
 /obj/effect/proc_holder/spell/invoked/revive/cast(list/targets, mob/living/user)
 	..()
@@ -118,6 +78,11 @@
 		return FALSE
 	testing("revived1")
 	var/mob/living/target = targets[1]
+	//OV edit
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering))
+		target.revive()
+		return TRUE
+	//OV edit end
 	if(!target.check_revive(user))
 		revert_cast()
 		return FALSE
@@ -162,7 +127,7 @@
 	target.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
 	return TRUE
 
-/obj/effect/proc_holder/spell/invoked/revive/cast_check(skipcharge = 0,mob/user = usr)
+/obj/effect/proc_holder/spell/invoked/revive/cast_check(skipcharge,mob/user = usr)
 	if(!..())
 		return FALSE
 	var/found = null
@@ -177,7 +142,9 @@
 /obj/effect/proc_holder/spell/self/astrata_gaze
 	name = "Astratan Gaze"
 	desc = "Removes the limit on your vision, letting you see behind you for a time, lasts longer during the dae and gives a perception bonus to those skilled and holy arts."
-	overlay_state = "astrata_gaze"
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_state = "gaze"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
@@ -261,7 +228,7 @@
 	ispartner = TRUE
 	immolate = TRUE
 
-/datum/component/immolation/Initialize(mob/living/partner_mob, mob/living/carbon/caster_mob, var/holy_skill, var/is_astrata)
+/datum/component/immolation/Initialize(mob/living/partner_mob, mob/living/carbon/caster_mob, holy_skill, is_astrata)
 	if(!isliving(parent) || !iscarbon(partner_mob))
 		return COMPONENT_INCOMPATIBLE
 
@@ -287,8 +254,8 @@
 	// Set up processing and expiration
 	START_PROCESSING(SSprocessing, src)
 	RegisterSignal(parent, COMSIG_LIVING_MIRACLE_HEAL_APPLY, PROC_REF(on_heal))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_deletion))
-	addtimer(CALLBACK(src, .proc/remove_immolation), duration)
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_deletion))
+	addtimer(CALLBACK(src, PROC_REF(remove_immolation)), duration)
 
 	// Apply visual effect
 	var/mob/living/L = parent
@@ -384,7 +351,7 @@
 		L.remove_status_effect(/datum/status_effect/immolation)
 		UnregisterSignal(L, list(
 			COMSIG_LIVING_MIRACLE_HEAL_APPLY,
-			COMSIG_PARENT_QDELETING
+			COMSIG_QDELETING
 		))
 
 	if(partner)
@@ -404,6 +371,8 @@
 /obj/effect/proc_holder/spell/invoked/immolation
 	name = "Immolation"
 	desc = "Ignite a target in holy flames, burning those that surround them. Fire burns brighter within devout Astratans."
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
 	overlay_state = "immolation"
 	range = 2
 	chargetime = 0.5 SECONDS
@@ -500,44 +469,12 @@
 
 #undef IMMOLATION_FILTER
 
-//Choosing between Lance/Spear
-/obj/effect/proc_holder/spell/self/astratan_path
-	name = "Path of Order"
-	overlay_state = "order"//Temp.
-	desc = "Astrata blesses your mind, allowing you to choose <b>Her</b> method of bringing order."
-	miracle = TRUE
-	devotion_cost = 100
-	recharge_time = 10 MINUTES
-	chargetime = 0
-	chargedrain = 0
-	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
-	associated_skill = /datum/skill/magic/holy
-
-/obj/effect/proc_holder/spell/self/astratan_path/cast(list/targets, mob/user)
-	. = ..()
-	var/choice = alert(user, "YOUR MARTIAL ARM, M'LORD?", "TAKE UP STRENGTH", "Lance", "Spear")
-	switch(choice)
-		if("Lance")
-			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue))//No stacking.
-				revert_cast()
-			else
-				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue)
-				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/self/astratan_spear))//No, thanks.
-					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/self/astratan_spear)
-		if("Spear")
-			if(user.mind?.has_spell(/obj/effect/proc_holder/spell/self/astratan_spear))//No stacking. Again. As funny as a dozen of these were.
-				revert_cast()
-			else
-				user.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/astratan_spear)
-				if(user.mind?.has_spell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue))//Nope.
-					user.mind?.RemoveSpell(/obj/effect/proc_holder/spell/invoked/projectile/lightningbolt/sacred_flame_rogue)
-		else
-			revert_cast()
-
 //Summoning the spear.
 /obj/effect/proc_holder/spell/self/astratan_spear
 	name = "Summon Spear"
-	overlay_state = "astra_spear"//Temp.
+	overlay_icon = 'icons/mob/actions/astratamiracles.dmi'
+	action_icon = 'icons/mob/actions/astratamiracles.dmi'
+	overlay_state = "spear"
 	desc = "An ancient miracle, honed by those who'd served as Astrata's martial arm in the second era. \
 	With such, you may beseech Astrata for a mote of Her power."
 	clothes_req = FALSE
@@ -549,18 +486,15 @@
 	chargetime = 0
 	releasedrain = 5
 	miracle = TRUE
-	devotion_cost = 100//See below as to why. Slowdown and funny damage.
+	devotion_cost = 50//See below as to why. Slowdown and funny damage.
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	associated_skill = /datum/skill/magic/holy
-	var/obj/item/rogueweapon/conjured_spear = null
 
 /obj/effect/proc_holder/spell/self/astratan_spear/cast(list/targets, mob/living/user = usr)
-	if(src.conjured_spear)
-		qdel(conjured_spear)
+	dispel_conjured_item()
 	var/obj/item/rogueweapon/R = new /obj/item/rogueweapon/light_spear(user.drop_location())
-	R.AddComponent(/datum/component/conjured_item)
 	user.put_in_hands(R)
-	src.conjured_spear = R
+	set_conjured_item(R)
 	return TRUE
 
 //The spear itself. A summoned weapon you charge(throw for now) for an AoE effect.
@@ -615,7 +549,7 @@
 
 	return TRUE
 
-/obj/item/rogueweapon/light_spear/proc/astratan_spear_damage(var/turf/effect_layer, damage_mod)
+/obj/item/rogueweapon/light_spear/proc/astratan_spear_damage(turf/effect_layer, damage_mod)
 	new /obj/effect/temp_visual/thunderstrike_actual(effect_layer)
 	playsound(effect_layer, 'sound/magic/lightning.ogg', 50)
 	for(var/mob/living/L in effect_layer.contents)
@@ -625,3 +559,57 @@
 		L.apply_status_effect(/datum/status_effect/buff/lightningstruck, 3 SECONDS)
 	sleep(10)
 	qdel(src)
+
+/obj/projectile/magic/astratablast
+	damage = 25
+	name = "lance of holy fire"
+	nodamage = FALSE
+	damage_type = BURN
+	speed = 0.3
+	muzzle_type = null
+	impact_type = null
+	hitscan = TRUE
+	flag = "fire"
+	light_color = "#a98107"
+	light_outer_range = 7
+	tracer_type = /obj/effect/projectile/tracer/solar_beam
+	var/fuck_that_guy_multiplier = 1.6//On par with divine blast against undead, more-or-less.
+	var/biotype_we_look_for = MOB_UNDEAD
+
+/obj/projectile/magic/astratablast/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		if(M.anti_magic_check())
+			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
+			qdel(src)
+			return BULLET_ACT_BLOCK
+		if(M.mob_biotypes & biotype_we_look_for || istype(M, /mob/living/simple_animal/hostile/rogue/skeleton))
+			damage *= fuck_that_guy_multiplier
+			M.adjust_fire_stacks(10)
+			visible_message(span_warning("[target] erupts in flame upon being struck by [src]!"))
+			M.ignite_mob()
+		else
+			M.adjust_fire_stacks(4)
+			visible_message(span_warning("[src] ignites [target]!"))
+			M.ignite_mob()
+	return FALSE
+
+/obj/effect/temp_visual/trap/thunderstrike
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "trap"
+	light_outer_range = 2
+	duration = 4
+	layer = MASSIVE_OBJ_LAYER
+
+/obj/effect/temp_visual/trap/thunderstrike/layer_one
+	duration = 8
+
+/obj/effect/temp_visual/trap/thunderstrike/layer_two
+	duration = 12
+
+/obj/effect/temp_visual/trap/thunderstrike/Initialize(mapload, duration_override)
+	if(duration_override)
+		duration = duration_override
+	. = ..() // Call parent AFTER setting duration

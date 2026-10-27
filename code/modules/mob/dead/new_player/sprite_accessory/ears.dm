@@ -3,6 +3,16 @@
 	icon = 'icons/mob/sprite_accessory/ears/ears.dmi'
 	color_key_name = "Ears"
 	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	var/can_flick = FALSE
+
+/datum/sprite_accessory/ears/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	if(!can_flick)
+		return ..()
+	var/obj/item/organ/ears/ear_organ = organ
+	if(!owner || !ear_organ.is_flicking)
+		return ..()
+	if(ear_organ.is_flicking && can_flick)
+		return "[icon_state]_flick"
 
 /datum/sprite_accessory/ears/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	return is_human_part_visible(owner, HIDEEARS)
@@ -92,6 +102,7 @@
 /datum/sprite_accessory/ears/elf
 	name = "Elf"
 	icon_state = "elf"
+	can_flick = TRUE
 
 /datum/sprite_accessory/ears/elephant
 	name = "Elephant"
@@ -296,12 +307,14 @@
 	icon = 'icons/mob/sprite_accessory/elf.dmi'
 	icon_state = "elf"
 	color_key_defaults = list(KEY_SKIN_COLOR)
+	can_flick = TRUE
 
 /datum/sprite_accessory/ears/elfw
 	name = "Elf (Wood)"
 	icon = 'icons/mob/sprite_accessory/elf.dmi'
 	icon_state = "elfw"
 	color_key_defaults = list(KEY_SKIN_COLOR)
+	can_flick = TRUE
 
 /datum/sprite_accessory/ears/halforc
 	name = "Half Orc"
@@ -364,6 +377,36 @@
 	color_keys = 3
 	color_key_names = list("Ears", "Inner", "Tips")
 	relevant_layers = list(BODY_BEHIND_LAYER, BODY_FRONT_LAYER, BODY_ADJ_LAYER)
+
+/datum/sprite_accessory/ears/shadekin
+	name = "Shadekin"
+	icon_state = "m_ears_shadekin"
+	color_keys = 2
+	color_key_names = list("Ears", "Inner")
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+
+/datum/sprite_accessory/ears/four_ears
+	name = "Four Ears"
+	icon_state = "four_ears"
+	color_keys = 2
+	color_key_names = list("Ears", "Details")
+	relevant_layers = list(BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+
+/datum/sprite_accessory/ears/shadekin/band_left
+	name = "Shadekin (Band Left)"
+	icon_state = "m_ears_shadekinbandleft"
+
+/datum/sprite_accessory/ears/shadekin/band_right
+	name = "Shadekin (Band Right)"
+	icon_state = "m_ears_shadekinbandright"
+
+/datum/sprite_accessory/ears/shadekin/fluffy
+	name = "Shadekin (Fluffy)"
+	icon_state = "m_ears_shadekinfluffy"
+
+/datum/sprite_accessory/ears/shadekin/smooth
+	name = "Shadekin (Smooth)"
+	icon_state = "m_ears_shadekinsmooth"
 
 ///CONSTRUCT-GOLEM ACCESORIES, MADE OF METAL///
 /datum/sprite_accessory/ears/dendorite

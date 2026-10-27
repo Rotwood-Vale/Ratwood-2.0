@@ -32,7 +32,7 @@
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity)
 	var/rmb_stam_penalty = 1
 	if(istype(rmb_intent, /datum/rmb_intent/strong) || istype(rmb_intent, /datum/rmb_intent/swift))
-		rmb_stam_penalty = 1.5	// Uses a modifer instead of a flat addition, less than weapons no matter what rn. 50% extra stam cost basically.
+		rmb_stam_penalty = 6	//Uses a modifer instead of a flat addition. 6 swiftstam vs 10
 	if(isliving(A))
 		var/mob/living/L = A
 		if(!used_intent.noaa)
@@ -40,10 +40,15 @@
 			// src.emote("attackgrunt")
 		if(used_intent.releasedrain)
 			stamina_add(ceil(used_intent.releasedrain * rmb_stam_penalty))
+		var/dualwield_armed = FALSE
+		if(HAS_TRAIT(src, TRAIT_DUALWIELDER))
+			dualwield_armed = process_dualwield()
 		if(L.has_status_effect(/datum/status_effect/buff/clash) && L.get_active_held_item() && ishuman(L))
 			var/mob/living/carbon/human/H = L
 			var/obj/item/IM = L.get_active_held_item()
 			H.process_clash(src, IM)
+			if(dualwield_armed)
+				complete_dualwield_attack(L, params)
 			return
 		if(mob_biotypes & MOB_UNDEAD)
 			if(L.has_status_effect(/datum/status_effect/buff/necras_vow))
@@ -59,9 +64,13 @@
 				apply_status_effect(/datum/status_effect/churned, L)
 		
 		if(L.checkmiss(src))
+			if(dualwield_armed)
+				complete_dualwield_attack(L, params)
 			return
 		if(!L.checkdefense(used_intent, src))
 			L.attack_hand(src, params)
+		if(dualwield_armed)
+			complete_dualwield_attack(L, params)
 		return
 	else
 		var/item_skip = FALSE
@@ -133,7 +142,13 @@
 	src.attack_hand(user, params)
 
 /mob/living/ongive(mob/living/carbon/human/user, params)
-	if(!ishuman(user) || src == user)
+	if(!ishuman(user))
+		return
+
+	if(src == user)
+		var/obj/item/melee/touch_attack/parlor_trick/P = user.get_active_held_item()
+		if(istype(P))
+			P.toggle(user)
 		return
 
 	var/obj/item/item_to_offer = user.get_active_held_item()
@@ -282,51 +297,6 @@
 
 /mob/living/RestrainedClickOn(atom/A)
 	return
-
-/*
-	Monkeys
-*/
-/mob/living/carbon/monkey/UnarmedAttack(atom/A)
-	A.attack_paw(src)
-
-/atom/proc/attack_paw(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_NO_ATTACK_HAND)
-		return TRUE
-	return FALSE
-
-/*
-	Monkey RestrainedClickOn() was apparently the
-	one and only use of all of the restrained click code
-	(except to stop you from doing things while handcuffed);
-	moving it here instead of various hand_p's has simplified
-	things considerably
-*/
-/mob/living/carbon/monkey/RestrainedClickOn(atom/A)
-	if(..())
-		return
-	if(used_intent.type != INTENT_HARM || !ismob(A))
-		return
-	if(is_muzzled())
-		return
-	var/mob/living/carbon/ML = A
-	if(istype(ML))
-		var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-		var/obj/item/bodypart/affecting = null
-		if(ishuman(ML))
-			var/mob/living/carbon/human/H = ML
-			affecting = H.get_bodypart(ran_zone(dam_zone))
-		var/armor = ML.run_armor_check(affecting, "stab")
-		if(prob(75))
-			ML.apply_damage(rand(1,3), BRUTE, affecting, armor)
-			ML.visible_message(span_danger("[name] bites [ML]!"), \
-							span_danger("[name] bites you!"), span_hear("I hear a chomp!"), COMBAT_MESSAGE_RANGE, name)
-			to_chat(name, span_danger("I bite [ML]!"))
-			if(armor >= 2)
-				return
-		else
-			ML.visible_message(span_danger("[src]'s bite misses [ML]!"), \
-							span_danger("I avoid [src]'s bite!"), span_hear("I hear jaws snapping shut!"), COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, span_danger("My bite misses [ML]!"))
 
 /*
 	Brain

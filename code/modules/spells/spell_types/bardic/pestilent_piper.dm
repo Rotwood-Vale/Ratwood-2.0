@@ -3,10 +3,9 @@
 	desc = "Play a dirge inspired by Pestra. Leaving the droning of insects in their ears! (-1 WIL -2 CON non-audience members)"
 	overlay_state = "dirge_t2_base"
 	action_icon_state = "dirge_t2_base"
-	song_tier = 2
 	warnie = "spellwarning"
-	invocations = list("A festering performance!") 
-	invocation_type = "shout"
+	invocations = list("plays a droning, shrill dirge! The world around them dries and crackles!") 
+	invocation_type = "emote"
 	sound = list('sound/magic/debuffroll.ogg')
 
 
@@ -30,11 +29,16 @@
 /datum/status_effect/buff/playing_dirge/pestilent_piedpiper
 	effect = /obj/effect/temp_visual/songs/inspiration_dirget2
 	debuff_to_apply = /datum/status_effect/debuff/song/pestilentpiper
+	debuffs_to_apply_by_level = list(
+		/datum/status_effect/debuff/song/pestilentpiper,
+		/datum/status_effect/debuff/song/pestilentpiper/t2,
+		/datum/status_effect/debuff/song/pestilentpiper/t3,
+	)
 
 
 /atom/movable/screen/alert/status_effect/debuff/song/pestilentpiper
 	name = "Musical Droning!"
-	desc = "I am weakened by the song!"
+	desc = "This music is terrifying! My heart catches in my throat as I am magically weakened!"
 	icon_state = "debuff"
 
 /datum/status_effect/debuff/song/pestilentpiper
@@ -42,3 +46,9 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/song/pestilentpiper
 	duration = 15 SECONDS
 	effectedstats = list(STATKEY_WIL = -1, STATKEY_CON = -2)
+
+/datum/status_effect/debuff/song/pestilentpiper/t2
+	effectedstats = list(STATKEY_WIL = -1, STATKEY_CON = -3)
+
+/datum/status_effect/debuff/song/pestilentpiper/t3
+	effectedstats = list(STATKEY_WIL = -2, STATKEY_CON = -3)

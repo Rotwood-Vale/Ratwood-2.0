@@ -22,6 +22,9 @@
 	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 
+	//Medium Skills, smart.
+	H.smart_combatant = TRUE
+
 /mob/living/carbon/human/species/skeleton/npc/hard/noequip
 	skel_outfit = /datum/outfit/job/roguetown/skeleton/npc/hard_skills_only
 
@@ -42,3 +45,7 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
+
+	//Hard skills. Capable of a LOT.
+	H.smart_combatant = TRUE
+	H.special_attacker = TRUE

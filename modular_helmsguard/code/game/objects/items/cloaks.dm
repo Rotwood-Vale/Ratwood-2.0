@@ -6,7 +6,7 @@
 	detail_color = "#ecf4ff"
 	boobed_detail = FALSE
 
-/obj/item/clothing/cloak/stabard/hospitaler/Initialize()
+/obj/item/clothing/cloak/stabard/hospitaler/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -53,7 +53,7 @@
 	boobed_detail = FALSE
 
 
-/obj/item/clothing/cloak/tabard/hospitaler/Initialize()
+/obj/item/clothing/cloak/tabard/hospitaler/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -102,7 +102,7 @@
 	boobed_detail = FALSE
 
 
-/obj/item/clothing/cloak/stabard/crusaders/Initialize()
+/obj/item/clothing/cloak/stabard/crusaders/Initialize(mapload)
 	. = ..()
 	update_icon()
 

@@ -1,29 +1,31 @@
 /**
-  * Run when a client is put in this mob or reconnects to byond and their client was on this mob
-  *
-  * Things it does:
-  * * Adds player to player_list
-  * * sets lastKnownIP
-  * * sets computer_id
-  * * logs the login
-  * * tells the world to update it's status (for player count)
-  * * create mob huds for the mob if needed
-  * * reset next_move to 1
-  * * parent call
-  * * if the client exists set the perspective to the mob loc
-  * * call on_log on the loc (sigh)
-  * * reload the huds for the mob
-  * * reload all full screen huds attached to this mob
-  * * load any global alternate apperances
-  * * sync the mind datum via sync_mind()
-  * * call any client login callbacks that exist
-  * * grant any actions the mob has to the client
-  * * calls [auto_deadmin_on_login](mob.html#proc/auto_deadmin_on_login)
-  * * send signal COMSIG_MOB_CLIENT_LOGIN
-  */
+ * Run when a client is put in this mob or reconnects to byond and their client was on this mob
+ *
+ * Things it does:
+ * * Adds player to player_list
+ * * sets lastKnownIP
+ * * sets computer_id
+ * * logs the login
+ * * tells the world to update it's status (for player count)
+ * * create mob huds for the mob if needed
+ * * reset next_move to 1
+ * * parent call
+ * * if the client exists set the perspective to the mob loc
+ * * call on_log on the loc (sigh)
+ * * reload the huds for the mob
+ * * reload all full screen huds attached to this mob
+ * * load any global alternate apperances
+ * * sync the mind datum via sync_mind()
+ * * call any client login callbacks that exist
+ * * grant any actions the mob has to the client
+ * * calls [auto_deadmin_on_login](mob.html#proc/auto_deadmin_on_login)
+ * * send signal COMSIG_MOB_CLIENT_LOGIN
+ */
 
 
 /mob/Login()
+	if(!client) // sleeping code can result in the client being already gone
+		return FALSE
 	GLOB.player_list |= src
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id
@@ -39,6 +41,11 @@
 	if(hud_used && client && client.prefs)
 		hud_used.show_hud(hud_used.hud_version)
 		hud_used.update_ui_style(ui_style2icon(client.prefs.UI_style))
+
+	// Re-show any actions that were granted before the hud existed (e.g. during mind transfer)
+	for(var/datum/action/action as anything in actions)
+		if(!action.viewers[hud_used])
+			action.ShowTo(src)
 
 	next_move = 1
 
@@ -77,6 +84,9 @@
 
 		if(client.player_details.player_actions.len)
 			for(var/datum/action/A in client.player_details.player_actions)
+				if(QDELETED(A))
+					client.player_details.player_actions -= A
+					continue
 				A.Grant(src)
 
 		for(var/foo in client.player_details.post_login_callbacks)
@@ -92,20 +102,27 @@
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
 	enable_client_mobs_in_contents(client)
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
-	if(client)
-		client.preload_music()
+	client?.preload_music()
+
+	// Re-apply per-client noise verb filtering after a client attaches to a human body.
+	// Human Initialize() runs before client prefs are available, so this keeps
+	// "Hide Unavailable Noises" consistent on login/reconnect/body transfer.
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.update_tongue_noise_verbs()
+		H.update_keen_ears_verb()
 
 /**
-  * Checks if the attached client is an admin and may deadmin them
-  *
-  * Configs:
-  * * flag/auto_deadmin_players
-  * * client.prefs?.toggles & DEADMIN_ALWAYS
-  * * User is antag and flag/auto_deadmin_antagonists or client.prefs?.toggles & DEADMIN_ANTAGONIST
-  * * or if their job demands a deadminning SSjob.handle_auto_deadmin_roles()
-  *
-  * Called from [login](mob.html#proc/Login)
-  */
+ * Checks if the attached client is an admin and may deadmin them
+ *
+ * Configs:
+ * * flag/auto_deadmin_players
+ * * client.prefs?.toggles & DEADMIN_ALWAYS
+ * * User is antag and flag/auto_deadmin_antagonists or client.prefs?.toggles & DEADMIN_ANTAGONIST
+ * * or if their job demands a deadminning SSjob.handle_auto_deadmin_roles()
+ *
+ * Called from [login](mob.html#proc/Login)
+ */
 /mob/proc/auto_deadmin_on_login() //return true if they're not an admin at the end.
 	if(!client?.holder)
 		return TRUE

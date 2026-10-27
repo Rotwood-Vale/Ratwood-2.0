@@ -7,10 +7,13 @@
 	hud_possible = list(ANTAG_HUD)
 	hud_type = /datum/hud/human
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
-	possible_mmb_intents = list(INTENT_STEAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE, INTENT_GIVE)
+	possible_mmb_intents = list(INTENT_SPECIAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE, INTENT_GIVE)
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	/// When TRUE, gear equipped via outfits gets marked as looted (sells at LOOTED_SELL_MULT).
+	/// Set automatically for clientless/mindless mobs, or explicitly on jobs whose gear shouldn't be farmed.
+	var/taints_loot = FALSE
 
 	ambushable = 1
 
@@ -37,6 +40,7 @@
 	var/detail_color = "000"
 
 	var/skin_tone = "caucasian1"	//Skin tone
+	var/mutant_skin = FALSE	//If TRUE, use mutant color as skin color instead of skin_tone
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"
@@ -88,15 +92,11 @@
 	var/last_fire_update
 	var/account_id
 
-	canparry = TRUE
-	candodge = TRUE
-
-	dodgecd = FALSE
+	mob_can_parry = TRUE
+	mob_can_dodge = TRUE
 	dodgetime = 0
 
 	var/list/possibleclass
-	var/advsetup = 0
-
 
 //	var/alignment = ALIGNMENT_TN
 
@@ -129,6 +129,7 @@
 	var/datum/inspiration/inspiration = null
 
 	var/headshot_link = null
+	var/origin = "Unknown"
 	var/flavortext = null
 	var/ooc_notes = null
 	var/ooc_extra
@@ -136,6 +137,7 @@
 	var/ooc_extra_img_link
 	var/rumour = null
 	var/noble_gossip = null
+	var/has_gnoll_scent_this_round = FALSE
 	var/song_title
 	var/song_artist
 	var/received_resident_key = FALSE
@@ -177,6 +179,9 @@
 
 	var/datum/charflaw/charflaw  // Legacy single vice (kept for compatibility)
 	var/list/datum/charflaw/vices = list()  // Multiple vices system
+	var/unspent_quirk_points = 0  // Any leftover quirk points are turned into triumphs after the round ends
+
+	var/list/feint_list = list()
 
 	// curse list and cooldown
 	var/list/curses = list()
@@ -205,3 +210,8 @@
 	var/ritual_skeletonization = FALSE // ritualcircles.dm path of rituos, prevents the ritual target's name always being unknown ingame. used in human_helpers.dm if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || !real_name || (O.skeletonized && !ritual_skeletonization && !mind?.has_antag_datum(/datum/antagonist/lich)))
 
 	var/already_converted_once = FALSE // ritualcircles.dm , used to make it so players can't switch around between inhumen gods to stack buffs with conversion rites
+	var/time_flags = 0
+	var/heatstroke_timer_id
+	var/hypothermia_timer_id
+
+	var/branded = FALSE // Saves time during examine if character hasn't been branded at all

@@ -68,8 +68,6 @@
 	if(amount > 0)
 		take_overall_damage(amount, 0, 0, updating_health, required_status)
 	else
-		if(has_status_effect(/datum/status_effect/buff/fortify))
-			amount *= 1.5
 		heal_overall_damage(abs(amount), 0, 0, required_status ? required_status : BODYPART_ORGANIC, updating_health)
 	return amount
 
@@ -79,8 +77,6 @@
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health, required_status)
 	else
-		if(has_status_effect(/datum/status_effect/buff/fortify))
-			amount *= 1.5
 		heal_overall_damage(0, abs(amount), 0, required_status ? required_status : BODYPART_ORGANIC, updating_health)
 	return amount
 
@@ -121,31 +117,31 @@
 	adjustStaminaLoss(diff, updating_health, forced)
 
 /** adjustOrganLoss
-  * inputs: slot (organ slot, like ORGAN_SLOT_HEART), amount (damage to be done), and maximum (currently an arbitrarily large number, can be set so as to limit damage)
-  * outputs:
-  * description: If an organ exists in the slot requested, and we are capable of taking damage (we don't have GODMODE on), call the damage proc on that organ.
-  */
+ * inputs: slot (organ slot, like ORGAN_SLOT_HEART), amount (damage to be done), and maximum (currently an arbitrarily large number, can be set so as to limit damage)
+ * outputs:
+ * description: If an organ exists in the slot requested, and we are capable of taking damage (we don't have GODMODE on), call the damage proc on that organ.
+ */
 /mob/living/carbon/adjustOrganLoss(slot, amount, maximum)
 	var/obj/item/organ/O = getorganslot(slot)
 	if(O && !(status_flags & GODMODE))
 		O.applyOrganDamage(amount, maximum)
 
 /** setOrganLoss
-  * inputs: slot (organ slot, like ORGAN_SLOT_HEART), amount(damage to be set to)
-  * outputs:
-  * description: If an organ exists in the slot requested, and we are capable of taking damage (we don't have GODMODE on), call the set damage proc on that organ, which can
-  *				 set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjustOrganLoss.
-  */
+ * inputs: slot (organ slot, like ORGAN_SLOT_HEART), amount(damage to be set to)
+ * outputs:
+ * description: If an organ exists in the slot requested, and we are capable of taking damage (we don't have GODMODE on), call the set damage proc on that organ, which can
+ *				 set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjustOrganLoss.
+ */
 /mob/living/carbon/setOrganLoss(slot, amount)
 	var/obj/item/organ/O = getorganslot(slot)
 	if(O && !(status_flags & GODMODE))
 		O.setOrganDamage(amount)
 
 /** getOrganLoss
-  * inputs: slot (organ slot, like ORGAN_SLOT_HEART)
-  * outputs: organ damage
-  * description: If an organ exists in the slot requested, return the amount of damage that organ has
-  */
+ * inputs: slot (organ slot, like ORGAN_SLOT_HEART)
+ * outputs: organ damage
+ * description: If an organ exists in the slot requested, return the amount of damage that organ has
+ */
 /mob/living/carbon/getOrganLoss(slot)
 	var/obj/item/organ/O = getorganslot(slot)
 	if(O)
@@ -182,7 +178,7 @@
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.heal_damage(brute, burn, stamina, required_status))
+	if(picked.heal_damage(brute, burn, stamina, required_status, updating_health))
 		update_damage_overlays()
 
 //Damages ONE bodypart randomly selected from damagable ones.
@@ -193,7 +189,7 @@
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.receive_damage(brute, burn, stamina,check_armor ? run_armor_check(picked, (brute ? "blunt" : burn ? "fire" : stamina ? "bullet" : null)) : FALSE))
+	if(picked.receive_damage(brute, burn, stamina, check_armor ? run_armor_check(picked, (brute ? "blunt" : burn ? "fire" : stamina ? "bullet" : null)) : FALSE, updating_health, required_status))
 		update_damage_overlays()
 
 //Heal MANY bodyparts, in random order
@@ -253,7 +249,7 @@
 			var/stamina_was = picked.stamina_dam
 
 
-			update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE, required_status)
+			update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE, FALSE, required_status)
 
 			brute	= round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
 			burn	= round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)

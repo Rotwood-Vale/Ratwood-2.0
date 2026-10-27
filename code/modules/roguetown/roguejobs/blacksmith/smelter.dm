@@ -253,7 +253,7 @@
 		alloy = /obj/item/ingot/bronze
 	else if(purifiedalloy == 11)
 		max_contained_items = 4
-		alloy = /obj/item/ingot/purifiedaalloy // 3 aaslag, 1 gold, makes 4 purified alloy, 2 is too few to be worth doing anything with
+		alloy = /obj/item/ingot/gilbranze // 3 aaslag, 1 gold, makes 4 gilbranze, 2 is too few to be worth doing anything with
 	else if(blacksteelalloy == 7)
 		max_contained_items = 2 // 1 ingot is too few to do anything meaningful with and makes prices too high to sell anything
 		alloy = /obj/item/ingot/blacksteel
@@ -343,7 +343,7 @@
 /obj/machinery/light/rogue/smelter/hiron
 	icon = 'icons/roguetown/misc/forge.dmi'
 	name = "iron bloomery"
-	desc = "An object of humen make, this furnace is capable of making high quanities of iron."
+	desc = "An object of humen make, this furnace is capable of making high quantities of iron."
 	icon_state = "hironsmelter0"
 	base_state = "hironsmelter"
 	anchored = TRUE

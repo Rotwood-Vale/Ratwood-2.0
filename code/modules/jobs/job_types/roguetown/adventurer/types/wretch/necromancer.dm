@@ -5,16 +5,18 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/wretch/necromancer
 	cmode_music = 'sound/music/combat_heretic.ogg'
+	class_select_category = CLASS_CAT_MAGE
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_ZOMBIE_IMMUNE, TRAIT_MAGEARMOR, TRAIT_GRAVEROBBER, TRAIT_ARCYNE_T3, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT,TRAIT_RITUALIST,TRAIT_OUTLANDER,)
-	maximum_possible_slots = 2 // Going from 1 to 2, because skeleton that are summoned count AGAINST antagonist cap and they don't always shows up
+	traits_applied = list(TRAIT_ZOMBIE_IMMUNE, TRAIT_GRAVEROBBER, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT,TRAIT_RITUALIST,TRAIT_OUTLANDER, TRAIT_MAGEDEXTERITY, TRAIT_ARCYNE)
+	maximum_possible_slots = 1
 	subclass_stats = list(
 		STATKEY_INT = 4,
 		STATKEY_PER = 2,
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1
 	)
-	subclass_spellpoints = 16
+	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/hex), "post_aspect_spells" = list(/datum/action/cooldown/spell/message, /datum/action/cooldown/spell/mindlink), "ward" = TRUE)
 	subclass_skills = list(
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
@@ -22,30 +24,31 @@
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
-		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE, // Have to grind a bit, but can use the ZRONK chair right away
 		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
 		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN, //For lux extractions.
 	)
-
+	subclass_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 /datum/outfit/job/roguetown/wretch/necromancer/pre_equip(mob/living/carbon/human/H)
-	head = /obj/item/clothing/head/roguetown/roguehood/black
+	head = /obj/item/clothing/head/roguetown/necromhood
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/black
+	armor = /obj/item/clothing/suit/roguetown/shirt/robe/necromancer
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/reagent_containers/glass/bottle/rogue/manapot
 	neck = /obj/item/clothing/neck/roguetown/gorget
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen
 	beltl = /obj/item/rogueweapon/huntingknife
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
-		/obj/item/spellbook_unfinished/pre_arcyne = 1,
+		/obj/item/rogueweapon/spellbook/greater = 1,
 		/obj/item/roguegem/amethyst = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
-		/obj/item/necro_relics/necro_crystal = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
 		/obj/item/ritechalk = 1
@@ -53,7 +56,6 @@
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_MASTER, TRUE)
-		H.mind?.adjust_spellpoints(6)
 	if(H.mind)
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"
@@ -65,6 +67,7 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/tame_undead)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_guard)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/lacrima/free)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 		wretch_select_bounty(H)
 	H.grant_language(/datum/language/undead)
@@ -80,14 +83,50 @@
 	var/staffchoice = input(H, H, "Choose your staff", "Available staffs") as anything in staffs
 	switch(staffchoice)
 		if("ronts-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/ruby
+			backr = /obj/item/rogueweapon/woodstaff/implement/greater/ruby
 		if("blortz-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/quartz
+			backr = /obj/item/rogueweapon/woodstaff/implement/greater/quartz
 		if("saffira-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/sapphire
+			backr = /obj/item/rogueweapon/woodstaff/implement/greater/sapphire
 		if("gemerald-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/emerald
+			backr = /obj/item/rogueweapon/woodstaff/implement/greater
 		if("amethyst-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/amethyst
+			backr = /obj/item/rogueweapon/woodstaff/implement/amethyst
 		if("toper-focused staff")
-			backr = /obj/item/rogueweapon/woodstaff/toper
+			backr = /obj/item/rogueweapon/woodstaff/implement
+
+/datum/mind
+	var/list/datum/weakref/necro_crystals = list()
+
+/datum/mind/proc/necro_crystal_cap()
+	if(has_necromancer_kit())	//necromancers get a cap of 1
+		return 1
+	if(has_lich_kit())			//proper liches get a cap of 6
+		return 6
+	return 0					//nonnecromancer/lich heretics get 0
+
+/datum/mind/proc/has_necromancer_kit()
+	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
+
+/datum/mind/proc/has_lich_kit()
+	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation)
+
+/datum/mind/proc/necro_crystal_count()
+	for(var/datum/weakref/W in necro_crystals)
+		if(!W.resolve())
+			necro_crystals -= W
+	return length(necro_crystals)
+
+/datum/mind/proc/necro_register_crystal(obj/item/necro_relics/necro_crystal/C)
+	necro_crystals += WEAKREF(C)
+
+/datum/mind/proc/necro_retire_oldest_crystal()
+	necro_crystal_count() // prunes dead weakrefs first
+	if(!length(necro_crystals))
+		return FALSE
+	var/datum/weakref/oldest = necro_crystals[1] // list order = insertion order
+	var/obj/item/necro_relics/necro_crystal/C = oldest.resolve()
+	necro_crystals -= oldest
+	if(C && !QDELETED(C))
+		C.unbind_and_destroy()
+	return TRUE

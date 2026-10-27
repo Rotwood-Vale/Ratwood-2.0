@@ -21,6 +21,10 @@
 	crossfire = TRUE
 	fueluse = 0
 	no_refuel = TRUE
+	max_integrity = 200
+	can_damage = TRUE
+	flags_1 = NONE
+	heat_level = 4
 
 /obj/machinery/light/rogue/firebowl/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -36,26 +40,25 @@
 	if(.)
 		return
 
-	if(on)
-		var/mob/living/carbon/human/H = user
+	if(!on)
 
-		if(istype(H))
-			H.visible_message("<span class='info'>[H] warms [user.p_their()] hand over the fire.</span>")
-
-			if(do_after(H, 15, target = src))
-				var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-				to_chat(H, "<span class='warning'>HOT!</span>")
-				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
-					H.update_damage_overlays()
-		return TRUE //fires that are on always have this interaction with lmb unless its a torch
-
-	else
 		if(icon_state == "[base_state]over")
 			user.visible_message("<span class='notice'>[user] starts to pick up [src]...</span>", \
 				"<span class='notice'>I start to pick up [src]...</span>")
 			if(do_after(user, 30, target = src))
 				icon_state = "[base_state]0"
 			return
+
+/obj/machinery/light/rogue/firebowl/attack_right(mob/user)	// warm your hands a little at a more accessible spot than fireplaces
+	if(isliving(user))
+		var/mob/living/L = user
+		if(on)
+			L.visible_message(span_info("[user] starts to warm their hands."), span_info("You warm your hands."))
+			if(do_after(L, 4 SECONDS, target = src))
+				if(L.bodytemperature < BODYTEMP_NORMAL_MIN)
+					L.adjust_bodytemperature(10)
+		return
+
 
 /obj/machinery/light/rogue/firebowl/off
 	icon_state = "stonefire0"
@@ -67,11 +70,13 @@
 	icon_state = "stumpfire1"
 	base_state = "stumpfire"
 	desc = "Somewhat crude, but it lights the long winding paths throughout the land."
+	max_integrity = 100
 
 /obj/machinery/light/rogue/firebowl/church
 	desc = "A wide metal bowl mounted on a stand for a healthy roaring flame."
 	icon_state = "churchfire1"
 	base_state = "churchfire"
+	max_integrity = 100
 
 /obj/machinery/light/rogue/firebowl/church/off
 	icon_state = "churchfire0"
@@ -88,6 +93,9 @@
 	bulb_colour = "#ff9648"
 	cookonme = FALSE
 	crossfire = FALSE
+	density = FALSE
+	max_integrity = 100
+	heat_level = 3
 
 
 /obj/machinery/light/rogue/firebowl/standing/blue
@@ -144,20 +152,61 @@
 				user.visible_message("<span class='warning'>[user] slams [src] with [user.p_their()] tail!</span>", \
 					"<span class='warning'>I tailslam [src]!</span>")
 
-/obj/machinery/light/rogue/wallfire
+/obj/machinery/light/rogue/campfire/fireplace
 	name = "fireplace"
 	desc = "A warm fire dances between a pile of half-burnt logs upon a bed of glowing embers."
 	icon_state = "wallfire1"
 	base_state = "wallfire"
 	light_outer_range = 4 //slightly weaker than a torch
 	bulb_colour = "#ffa35c"
-	density = FALSE
 	fueluse = 0
 	no_refuel = TRUE
 	crossfire = FALSE
+	healing_range = 2
+	stamina_status_effect = /datum/status_effect/buff/campfire_stamina/fireplace
+	heat_level = 6
+
+/obj/machinery/light/rogue/campfire/fireplace/attack_right(mob/user)
+	if(isliving(user) && on)
+		user.visible_message(span_warning("[user] snuffs [src]."))
+		burn_out()
+		return TRUE
+	return ..()
+/obj/machinery/light/rogue/campfire/fireplace/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(!on)
+		return
+	var/mob/living/carbon/human/H = user
+
+	if(istype(H))
+		H.visible_message("<span class='info'>[H] warms [user.p_their()] hand over the fire.</span>")
+
+		if(do_after(H, 15, target = src) && H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
+			H.adjust_bodytemperature(75)
+	return TRUE //fires that are on always have this interaction with lmb unless its a torch
+
+/obj/machinery/light/rogue/campfire/fireplace/inn
+	name = "grand fireplace"
+	healing_range = 6
+
+/obj/machinery/light/rogue/campfire/fireplace/crafted
+	density = FALSE
+	pixel_y = 32
 	cookonme = TRUE
 
-/obj/machinery/light/rogue/wallfire/candle
+/obj/machinery/light/rogue/campfire/fireplace/crafted/blue
+	desc = "A curious cool fire dances upon a bed of mysteriously glowing embers."
+	icon = 'icons/roguetown/misc/wallfireblue.dmi'
+	bulb_colour = "#6e90ff"
+
+/obj/machinery/light/rogue/campfire/fireplace/blue
+	desc = "A curious cool fire dances upon a bed of mysteriously glowing embers."
+	icon = 'icons/roguetown/misc/wallfireblue.dmi'
+	bulb_colour = "#6e90ff"
+
+/obj/machinery/light/rogue/candle
 	name = "candles"
 	desc = "Tiny flames flicker to the slightest breeze and offer enough light to see."
 	icon_state = "wallcandle1"
@@ -166,8 +215,9 @@
 	cookonme = FALSE
 	pixel_y = 32
 	soundloop = null
+	fueluse = 0
 
-/obj/machinery/light/rogue/wallfire/candle/off
+/obj/machinery/light/rogue/candle/off
 	name = "candles"
 	desc = "Cold wax sticks in sad half-melted repose. All they need is a spark."
 	icon_state = "wallcandle0"
@@ -179,14 +229,14 @@
 	soundloop = null
 	status = LIGHT_BURNED
 
-/obj/machinery/light/rogue/wallfire/candle/off/r
+/obj/machinery/light/rogue/candle/off/r
 	pixel_y = 0
 	pixel_x = 32
-/obj/machinery/light/rogue/wallfire/candle/off/l
+/obj/machinery/light/rogue/candle/off/l
 	pixel_y = 0
 	pixel_x = -32
 
-/obj/machinery/light/rogue/wallfire/candle/OnCrafted(dirin)
+/obj/machinery/light/rogue/candle/OnCrafted(dirin)
 	pixel_x = 0
 	pixel_y = 0
 	switch(dirin)
@@ -200,73 +250,73 @@
 			pixel_x = -32
 	. = ..()
 
-/obj/machinery/light/rogue/wallfire/candle/attack_hand(mob/user)
+/obj/machinery/light/rogue/candle/attack_hand(mob/user)
 	if(isliving(user) && on)
 		user.visible_message(span_warning("[user] snuffs [src]."))
 		burn_out()
 		return TRUE //fires that are on always have this interaction with lmb unless its a torch
 	. = ..()
 
-/obj/machinery/light/rogue/wallfire/candle/r
+/obj/machinery/light/rogue/candle/r
 	pixel_y = 0
 	pixel_x = 32
-/obj/machinery/light/rogue/wallfire/candle/l
+/obj/machinery/light/rogue/candle/l
 	pixel_y = 0
 	pixel_x = -32
 
-/obj/machinery/light/rogue/wallfire/candle/blue
+/obj/machinery/light/rogue/candle/blue
 	bulb_colour = "#7b60f3"
 	icon_state = "wallcandleb1"
 	base_state = "wallcandleb"
 	desc = "Tiny bluish flames flicker gently like the stars themselves."
 
-/obj/machinery/light/rogue/wallfire/candle/blue/r
+/obj/machinery/light/rogue/candle/blue/r
 	pixel_y = 0
 	pixel_x = 32
-/obj/machinery/light/rogue/wallfire/candle/blue/l
+/obj/machinery/light/rogue/candle/blue/l
 	pixel_y = 0
 	pixel_x = -32
 
 //GREEN!
-/obj/machinery/light/rogue/wallfire/candle/green
+/obj/machinery/light/rogue/candle/green
 	bulb_colour = "#60f382"
 	icon_state = "wallcandleg1"
 	base_state = "wallcandleg"
 	desc = "Tiny greenish flames flicker with unearthly warmth."
 
-/obj/machinery/light/rogue/wallfire/candle/green/r
+/obj/machinery/light/rogue/candle/green/r
 	pixel_y = 0
 	pixel_x = 32
-/obj/machinery/light/rogue/wallfire/candle/green/l
+/obj/machinery/light/rogue/candle/green/l
 	pixel_y = 0
 	pixel_x = -32
 
 //RED!
-/obj/machinery/light/rogue/wallfire/candle/red
+/obj/machinery/light/rogue/candle/red
 	bulb_colour = "#f02929"
 	icon_state = "wallcandler1"
 	base_state = "wallcandler"
 	desc = "Tiny red flames flicker hatefully in the dark."
 
-/obj/machinery/light/rogue/wallfire/candle/red/r
+/obj/machinery/light/rogue/candle/red/r
 	pixel_y = 0
 	pixel_x = 32
-/obj/machinery/light/rogue/wallfire/candle/red/l
+/obj/machinery/light/rogue/candle/red/l
 	pixel_y = 0
 	pixel_x = -32
 
 
-/obj/machinery/light/rogue/wallfire/candle/weak
+/obj/machinery/light/rogue/candle/weak
 	light_power = 0.9
 	light_outer_range =  4
-/obj/machinery/light/rogue/wallfire/candle/weak/l
+/obj/machinery/light/rogue/candle/weak/l
 	pixel_x = -32
 	pixel_y = 0
-/obj/machinery/light/rogue/wallfire/candle/weak/r
+/obj/machinery/light/rogue/candle/weak/r
 	pixel_x = 32
 	pixel_y = 0
 
-/obj/machinery/light/rogue/wallfire/candle/floorcandle
+/obj/machinery/light/rogue/candle/floorcandle
 	name = "candles"
 	icon = 'icons/roguetown/items/lighting.dmi'
 	icon_state = "floorcandle1"
@@ -275,15 +325,20 @@
 	layer = TABLE_LAYER
 	cookonme = FALSE
 
-/obj/machinery/light/rogue/wallfire/candle/floorcandle/alt
+/obj/machinery/light/rogue/candle/floorcandle/OnCrafted(dirin)
+	..() // Base candles offset via pixel x/y, which doesn't handle nicely with floor candles - this resets the offset, so they are placed next the the crafter.
+	pixel_x = 0
+	pixel_y = 0
+
+/obj/machinery/light/rogue/candle/floorcandle/alt
 	icon_state = "floorcandlee1"
 	base_state = "floorcandlee"
 
-/obj/machinery/light/rogue/wallfire/candle/floorcandle/pink
+/obj/machinery/light/rogue/candle/floorcandle/pink
 	color = "#f858b5ff"
 	bulb_colour = "#ff13d8ff"
 
-/obj/machinery/light/rogue/wallfire/candle/floorcandle/alt/pink
+/obj/machinery/light/rogue/candle/floorcandle/alt/pink
 	color = "#f858b5ff"
 	bulb_colour = "#ff13d8ff"
 
@@ -326,17 +381,26 @@
 				addtimer(CALLBACK(src, PROC_REF(trigger_weather)), rand(5,20))
 				return TRUE
 
-/obj/machinery/light/rogue/torchholder/Initialize()
+/obj/machinery/light/rogue/torchholder/Initialize(mapload)
 	torchy = new /obj/item/flashlight/flare/torch(src)
 	torchy.spark_act()
 	torchy.weather_resistant = TRUE
 	. = ..()
+
+/obj/machinery/light/rogue/torchholder/Destroy()
+	if(torchy)
+		QDEL_NULL(torchy)
+	return ..()
 
 /obj/machinery/light/rogue/torchholder/OnCrafted(dirin, user)
 	dirin = turn(dirin, 180)
 	QDEL_NULL(torchy)
 	on = FALSE
 	set_light(0)
+	pixel_x = 0
+	pixel_y = 0
+	if(dirin == SOUTH)
+		pixel_y = 32
 	update_icon()
 
 	..(dirin, user)
@@ -460,12 +524,13 @@
 	on = FALSE
 	cookonme = TRUE
 	soundloop = /datum/looping_sound/fireloop
+	heat_level = 3
 	var/obj/item/attachment = null
 	var/obj/item/food = null
 	var/mob/living/carbon/human/lastuser
 	var/datum/looping_sound/boilloop/boilloop
 
-/obj/machinery/light/rogue/hearth/Initialize()
+/obj/machinery/light/rogue/hearth/Initialize(mapload)
 	boilloop = new(src, FALSE)
 	. = ..()
 
@@ -498,10 +563,9 @@
 /obj/machinery/light/rogue/hearth/attack_right(mob/user)
 	var/datum/skill/craft/cooking/cs = user?.get_skill_level(/datum/skill/craft/cooking)
 	var/cooktime_divisor = get_cooktime_divisor(cs)
-	if(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
+	while(do_after(user, 2 SECONDS / cooktime_divisor, target = src))
 		to_chat(user, span_info("I fan the flame on [src].")) // Until line combine is on by default gotta do this to avoid spam
 		try_cook(cooktime_divisor)
-		attack_right(user)
 
 /obj/machinery/light/rogue/hearth/attackby(obj/item/W, mob/living/user, params)
 	lastuser = user // For processing food
@@ -653,13 +717,11 @@
 		if(on)
 			var/mob/living/carbon/human/H = user
 			if(istype(H))
-				H.visible_message(span_info("[H] warms [user.p_their()] hand over the embers."))
-				if(do_after(H, 50, target = src))
-					var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-					to_chat(H, span_warning("HOT!"))
-					if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
-						H.update_damage_overlays()
-			return TRUE
+				H.visible_message("<span class='info'>[H] warms [user.p_their()] hand over the fire.</span>")
+
+				if(do_after(H, 15, target = src) && H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
+					H.adjust_bodytemperature(75)
+			return TRUE //fires that are on always have this interaction with lmb unless its a torch
 
 /obj/machinery/light/rogue/hearth/process()
 	// Edge case is that this depends on the last person to put the pan on the hearth and not the last person to put the food on the pan
@@ -673,7 +735,7 @@
 	if(on)
 		try_cook(cooktime_divisor)
 
-/obj/machinery/light/rogue/hearth/proc/try_cook(var/cooktime_divisor)
+/obj/machinery/light/rogue/hearth/proc/try_cook(cooktime_divisor)
 	if(initial(fueluse) > 0)
 		if(fueluse > 0)
 			fueluse = max(fueluse - 10, 0)
@@ -695,7 +757,7 @@
 		if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 			if(attachment.reagents)
 				attachment.reagents.expose_temperature(400, 0.033)
-				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE)
+				if(attachment.reagents.chem_temp > MIN_STEW_TEMPERATURE && !boilloop.loop_started)
 					boilloop.start()
 				else
 					boilloop.stop()
@@ -821,6 +883,10 @@
 	cookonme = TRUE
 	max_integrity = 30
 	soundloop = /datum/looping_sound/fireloop
+	heat_level = 5
+	var/healing_range = 1
+	var/static/list/acceptable_beds = list(/obj/structure/bed, /obj/structure/flora/roguetree/stump, /obj/item/bedsheet)
+	var/datum/status_effect/buff/stamina_status_effect = /datum/status_effect/buff/campfire_stamina
 
 /obj/machinery/light/rogue/campfire/process()
 	..()
@@ -828,6 +894,31 @@
 		var/turf/open/O = loc
 		if(IS_WET_OPEN_TURF(O))
 			extinguish()
+
+	if(on)
+		var/list/hearers_in_range = get_hearers_in_LOS(healing_range, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
+		for(var/mob/living/carbon/human/human in hearers_in_range)
+			var/distance = get_dist(src, human)
+			if(distance > healing_range || human.construct)
+				continue
+			if(!human.has_status_effect(stamina_status_effect))
+				to_chat(human, span_info("The warmth of the fire comforts me, affording me a short rest. I would need to lie down on a bed to get a better rest."))
+			human.apply_status_effect(stamina_status_effect)
+			human.add_stress(/datum/stressevent/campfire)
+			if(human.resting && !human.cmode)
+				var/valid_bed = FALSE
+				var/turf/T = get_turf(human)
+				for(var/obj/O in T.contents)
+					for(var/path in acceptable_beds)
+						if(ispath(O.type, path))
+							valid_bed = TRUE
+							break
+					if(valid_bed)
+						break
+				if(valid_bed)
+					if(!human.has_status_effect(/datum/status_effect/buff/campfire))
+						to_chat(human, span_info("Settling in by the flames lifts the burdens of the week."))
+					human.apply_status_effect(/datum/status_effect/buff/campfire)
 
 /obj/machinery/light/rogue/campfire/onkick(mob/user)
 	if(isliving(user) && on)
@@ -844,6 +935,8 @@
 		var/mob/living/carbon/human/H = user
 		if(ishuman(H))
 			H.visible_message("<span class='info'>[H] warms [user.p_their()] hand near the fire.</span>")
+			if(H.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT - 75)
+				H.adjust_bodytemperature(75)
 			var/first_go = TRUE
 			while(do_after(H, 105, target = src) && on)
 				// Astrata followers get enhanced fire healing
@@ -870,6 +963,7 @@
 	pass_flags = LETPASSTHROW
 	bulb_colour = "#eea96a"
 	max_integrity = 60
+	heat_level = 5
 
 /obj/machinery/light/rogue/campfire/densefire/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -897,6 +991,8 @@
 	dir = NORTH
 	buckle_requires_restraints = 1
 	buckle_prevents_pull = 1
+	buckle_blocks_spells = TRUE
+	heat_level = 5
 
 
 /obj/machinery/light/rogue/campfire/pyre/post_buckle_mob(mob/living/M)
@@ -914,3 +1010,37 @@
 #undef MIN_STEW_TEMPERATURE
 #undef VOLUME_PER_STEW_COOK
 #undef VOLUME_PER_STEW_COOK_AFTER
+
+//Prestidigitation wisps are fun to decorate with!
+
+/obj/effect/wisp
+	name = "will-o'-the-wisp"
+	desc = "A small, fiery ball of light made up of mystical energy."
+	light_outer_range =  4
+	light_color = "#3FBAFD"
+	icon = 'icons/roguetown/items/lighting.dmi'
+	icon_state = "wisp"
+
+/obj/effect/wisp/infernal
+	name = "Infernal Wisp"
+	desc = "An ominous manifestation of latent ambient magick"
+	light_color = "#ff0008"
+	color = "#ff0008"
+
+/obj/effect/wisp/geothermal
+	name = "Odd Wisp"
+	desc = "A peculiar natural phenomena, seemingly related to the roiling lava below"
+	light_color = "#ff5630"
+	color = "#ff5630"
+
+/obj/effect/wisp/green
+	light_color = "#ffff00"
+	color = "#33ff00"
+
+/obj/effect/wisp/bluegreen
+	light_color = "#33ff00"
+	color = "#59ff93"
+
+/obj/effect/wisp/purple
+	light_color = "#ae00ff"
+	color = "#ff767d"

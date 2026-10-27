@@ -11,14 +11,14 @@
 	layer = BELOW_OBJ_LAYER
 	var/list/held_items = list()
 	locked = TRUE
-	var/budget = 0
 	var/wgain = 0
 	var/keycontrol = "merchant"
 	var/next_hawk = 0
 	var/will_hawk = TRUE
 	var/max_items = 30
-
-/obj/structure/roguemachine/vendor/proc/get_group_items(var/param)
+	var/budget
+	
+/obj/structure/roguemachine/vendor/proc/get_group_items(param)
 	// Accepts either:
 	// - an object/ref (e.g. REF(rep) from attack_hand links), or
 	// - a key string in the form "type_name"
@@ -69,7 +69,7 @@
 			return
 
 /obj/structure/roguemachine/vendor/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
 		return
@@ -184,7 +184,7 @@
 			return
 
 		var/prename = held_items[matches[1]]["NAME"]
-		var/newname = input(usr, "SET A NEW NAME FOR THIS PRODUCT", src, prename)
+		var/newname = sanitize(input(usr, "SET A NEW NAME FOR THIS PRODUCT", src, prename))
 		// explicit null check: input returns null on cancel; empty string allowed? we block empty.
 		if(newname != null && newname != "")
 			for(var/obj/item/I in matches)
@@ -281,7 +281,7 @@
 	update_icon()
 	icon_state = "streetvendor0"
 
-/obj/structure/roguemachine/vendor/Initialize()
+/obj/structure/roguemachine/vendor/Initialize(mapload)
 	. = ..()
 	update_icon()
 	START_PROCESSING(SSroguemachine, src)
@@ -373,10 +373,7 @@
 	keycontrol = "tavern"
 	will_hawk = FALSE
 
-/obj/structure/roguemachine/vendor/bathhouse
-	keycontrol = "nightman"
-
-/obj/structure/roguemachine/vendor/inn/Initialize()
+/obj/structure/roguemachine/vendor/inn/Initialize(mapload)
 	. = ..()
 
 	// Add room keys with a price of 20
@@ -397,12 +394,13 @@
 
 /obj/structure/roguemachine/vendor/innrockhill
 	keycontrol = "tavern"
+	will_hawk = FALSE
 
-/obj/structure/roguemachine/vendor/innrockhill/Initialize()
+/obj/structure/roguemachine/vendor/innrockhill/Initialize(mapload)
 	. = ..()
 
 	// Add room keys with a price of 20
-	for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi))
+	for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomix, /obj/item/roguekey/roomx))
 		var/obj/P = new X(src)
 		held_items[P] = list()
 		held_items[P]["NAME"] = P.name
@@ -418,11 +416,29 @@
 	update_icon()
 
 
+/obj/structure/roguemachine/vendor/bathhouse
+	keycontrol = "nightmaiden"//used to be nightman but it's nice for them to be able to stock the shelves too when the master isn't around
+
+/obj/structure/roguemachine/vendor/bathhouse/locker
+	will_hawk = FALSE
+
+/obj/structure/roguemachine/vendor/bathhouse/locker/Initialize(mapload)
+	. = ..()
+
+	// Add locker keys with a price of 10
+	for (var/X in list(/obj/item/roguekey/bathlocker1, /obj/item/roguekey/bathlocker2, /obj/item/roguekey/bathlocker3, /obj/item/roguekey/bathlocker4, /obj/item/roguekey/bathlocker5, /obj/item/roguekey/bathlocker6))
+		var/obj/P = new X(src)
+		held_items[P] = list()
+		held_items[P]["NAME"] = P.name
+		held_items[P]["PRICE"] = 5
+
+	update_icon()
+
 
 /obj/structure/roguemachine/vendor/merchant
 	keycontrol = "merchant"
 
-/obj/structure/roguemachine/vendor/merchant/Initialize()
+/obj/structure/roguemachine/vendor/merchant/Initialize(mapload)
 	. = ..()
 	for(var/X in list(/obj/item/roguekey/apartments/stall1,/obj/item/roguekey/apartments/stall2,/obj/item/roguekey/apartments/stall3))
 		var/obj/P = new X(src)
@@ -434,7 +450,7 @@
 /obj/structure/roguemachine/vendor/stablemaster
 	keycontrol = "stablemaster"
 
-/obj/structure/roguemachine/vendor/stablemaster/Initialize()
+/obj/structure/roguemachine/vendor/stablemaster/Initialize(mapload)
 	. = ..()
 	for(var/X in list(/obj/item/roguekey/apartments/stablemaster_1,/obj/item/roguekey/apartments/stablemaster_2,/obj/item/roguekey/apartments/stablemaster_3,/obj/item/roguekey/apartments/stablemaster_4,/obj/item/roguekey/apartments/stablemaster_5))
 		var/obj/P = new X(src)

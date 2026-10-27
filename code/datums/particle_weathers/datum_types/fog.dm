@@ -1,17 +1,16 @@
 //Fog
 /particles/weather/fog
 	icon 				   = 'icons/effects/96x96.dmi'
-	icon_state             = list("smoke-static" = 5)
+	icon_state             = list("smoke-static" = 5, "smoke-static-alt" = 5)
 	gradient               = list(0,"#a1a1a1e3",100,"#e2dcd8e3","loop")
 	color                  = 0
 	color_change		   = generator("num",0,3)
 	position               = generator("box", list(-500,-256,0), list(500,500,0))
-	gravity                = list(-5 -1, 0.1)
+	gravity                = list(-1, 0.1)
 	drift                  = generator("circle", 0, 3) // Some random movement for variation
 	friction               = 0.3  // shed 30% of velocity and drift every 0.1s
 	//Weather effects, max values
-	maxSpawning           = 120
-	maxSpawning           = 40
+	maxSpawning           = 35
 	wind                   = 5
 
 /particles/weather/fog/bloodfog
@@ -81,7 +80,8 @@
 	name = "Fog"
 	desc = "Gentle fog, la la description."
 	particleEffectType = /particles/weather/fog
-
+	warning_message = span_greenannounce("The air is thick and damp, and a rush of cool dry air foretells what approachs.")
+	late_warning_message = span_greenannounce("A cold mist rolls in, swallowing the horizon.")
 	scale_vol_with_severity = TRUE
 	//weather_sounds = list(/datum/looping_sound/rain)
 	//indoor_weather_sounds = list(/datum/looping_sound/indoor_rain)
@@ -93,8 +93,8 @@
 	maxSeverityChange = 2
 	severitySteps = 5
 	immunity_type = TRAIT_RAINSTORM_IMMUNE
-	probability = 1
-	target_trait = PARTICLEWEATHER_RAIN
+	probability = 30
+	forecast_tag = "fog"
 	#ifndef  SPACEMAN_DMM
 	filter_type = filter(type="alpha", render_source = O_LIGHTING_VISUAL_RENDER_TARGET, flags = MASK_INVERSE)
 	secondary_filter_type = filter(type="alpha", render_source = FOG_RENDER_TARGET, flags = MASK_INVERSE)
@@ -128,12 +128,13 @@
 /datum/particle_weather/fog/swamp
 	name = "Swamp Fog"
 	particleEffectType = /particles/weather/fog/swamp
+	probability = 10
 
 /datum/particle_weather/fog/darkness
 	name = "Omen of Darkness Fog"
 	particleEffectType = /particles/weather/dark
-
+	probability = 1
 /datum/particle_weather/fog/blood
 	name = "Omen of Blood Feat Fog"
 	particleEffectType = /particles/weather/fog/bloodfog
-
+	probability = 1

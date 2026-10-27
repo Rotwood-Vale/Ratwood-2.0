@@ -60,8 +60,14 @@
 	var/resident_role
 	/// The requied advclass of the resident
 	var/list/resident_advclass
-	//a door name a skilled artisan can make 
+	//a door name a skilled artisan can make
 	var/doorname = null
+
+/obj/structure/mineral_door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
+	var/was_broken = obj_broken
+	. = ..()
+	if(obj_broken && !was_broken)
+		log_breakin(null, "was broken open")
 
 /obj/structure/mineral_door/onkick(mob/user)
 	if(isSwitchingStates)
@@ -90,9 +96,11 @@
 						user.visible_message(span_warning("[user] kicks open [src]!"), \
 							span_notice("I kick open [src]!"))
 					locked = 0
+					log_breakin(user, "kicked open a locked door")
 					force_open()
 				else
 					playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
+					log_breakin(user, "kicked a locked door")
 					if(HAS_TRAIT(user, TRAIT_LAMIAN_TAIL))
 						user.visible_message(span_warning("[user] tailslams [src]!"), \
 							span_notice("I slam [src] with my tail!"))
@@ -135,7 +143,7 @@
 	update_icon()
 	isSwitchingStates = FALSE
 
-/obj/structure/mineral_door/Initialize()
+/obj/structure/mineral_door/Initialize(mapload)
 	. = ..()
 	if(!base_state)
 		base_state = icon_state
@@ -172,7 +180,7 @@
 		return FALSE
 	if(resident_role)
 		var/datum/job/job = SSjob.name_occupations[human.job]
-		if(job.type != resident_role)
+		if(job?.type != resident_role)
 			if(!HAS_TRAIT(human, TRAIT_RESIDENT))
 				return FALSE
 	if(resident_advclass)
@@ -210,7 +218,12 @@
 		to_chat(human, span_notice("They're just where I left them..."))
 	else
 		to_chat(human, span_notice("It's just where I left it..."))
-	name = "[user.real_name] the [human.advjob ? human.advjob : human.job]'s house"
+	var/owner_title = human.job  // If you somehow have no job at all, it'll just be "Name's house"
+	if(human.mind && human.mind.cosmetic_class_title)
+		owner_title = human.mind.cosmetic_class_title
+	else if(human.advjob)
+		owner_title = human.advjob
+	name = "[user.real_name][owner_title ? " the [owner_title]" : ""]'s house"
 	return TRUE
 
 /obj/structure/mineral_door/Move()
@@ -228,8 +241,11 @@
 	if(ismob(AM))
 		var/mob/user = AM
 		if(HAS_TRAIT(user, TRAIT_BASHDOORS))
+			// Throwing your weight through a door is not a subtle act, so it should break invisibility
+			user.break_invisibility()
 			if(locked)
 				user.visible_message(span_warning("[user] bashes into [src]!"))
+				log_breakin(user, "bashed into a locked door")
 				take_damage(200, "brute", "blunt", 1)
 			else
 				playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
@@ -249,9 +265,6 @@
 				else
 					addtimer(CALLBACK(src, PROC_REF(Close), FALSE), 25)
 
-
-/obj/structure/mineral_door/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/structure/mineral_door/attack_hand(mob/user)
 	. = ..()
@@ -288,7 +301,7 @@
 		return TRUE
 	if(!anchored)
 		return FALSE
-	if(HAS_TRAIT(caller, TRAIT_BASHDOORS))
+	if(caller && HAS_TRAIT(caller, TRAIT_BASHDOORS))
 		return TRUE // bash into it!
 	// it's openable
 	return ishuman(caller) && !locked // only humantype mobs can open doors, as funny as it'd be for a volf to walk in on you ERPing
@@ -314,7 +327,7 @@
 	else
 		Open(silent)
 
-/obj/structure/mineral_door/proc/Open(silent = FALSE)
+/obj/structure/mineral_door/proc/Open(silent = FALSE, mob/user)
 	isSwitchingStates = TRUE
 	if(!silent)
 		playsound(src, openSound, 100)
@@ -332,7 +345,7 @@
 	if(close_delay != -1)
 		addtimer(CALLBACK(src, PROC_REF(Close)), close_delay)
 
-/obj/structure/mineral_door/proc/Close(silent = FALSE, autobump = FALSE)
+/obj/structure/mineral_door/proc/Close(silent = FALSE, autobump = FALSE, mob/user)
 	if(isSwitchingStates || !door_opened)
 		return
 	var/turf/T = get_turf(src)
@@ -415,7 +428,7 @@
 			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
 			user.visible_message("<span class='info'>[user] Carves a name into the door.</span>")
 			if(do_after(user, 10))
-				doorname = input("What name would you like to carve into the door?")
+				doorname = stripped_input(user, "What name would you like to carve into the door?", "", "", MAX_NAME_LEN)
 				if (doorname)
 					name = doorname + "(door)"
 					desc = "a door with a name carved into it"
@@ -429,10 +442,12 @@
 		else
 			return ..()
 
-/obj/structure/mineral_door/attacked_by(obj/item/I, mob/living/user)
-	..()
+/obj/structure/mineral_door/attacked_by(obj/item/item, mob/living/user)
+	var/turf/hit_turf = get_turf(src)
+	if(..())
+		log_breakin(user, "struck the door with \a [item.name]")
 	if(obj_broken || obj_destroyed)
-		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
+		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, hit_turf)
 		new_track.handle_creation(user)
 
 /obj/structure/mineral_door/proc/repairdoor(obj/item/I, mob/user)
@@ -663,7 +678,7 @@
 		pickchance += perbonus
 		pickchance *= P.picklvl
 		pickchance = clamp(pickchance, 1, 95)
-		
+
 		if (lockdifficulty > 1) //each time the difficulty goes up, the harder the lock
 			picktime = picktime+(10*lockdifficulty)//add a flat 10 per level
 			pickchance = pickchance/(lockdifficulty*0.75)//reduce the chance by .75 per level
@@ -677,6 +692,7 @@
 
 		var/picked = FALSE
 		user.log_message("attempting to lockpick door \"[src.name]\" (currently [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
+		log_breakin(user, "started picking the lock with \a [I.name]")
 
 		while(!QDELETED(I) &&(lockprogress < locktreshold))
 			if(!do_after(user, picktime, target = src))
@@ -690,6 +706,7 @@
 				if(lockprogress >= locktreshold)
 					picked = TRUE
 					to_chat(user, "<span class='deadsay'>The locking mechanism gives.</span>")
+					log_breakin(user, "picked the lock and [locked ? "unlocked" : "locked"] the door")
 					if(ishuman(user))
 						var/mob/living/carbon/human/H = user
 						message_admins("[H.real_name]([key_name(user)]) successfully lockpicked [src.name] & [locked ? "unlocked" : "locked"] it. [ADMIN_JMP(src)]")
@@ -710,6 +727,7 @@
 				continue
 		if(!picked)
 			user.log_message("stopped/failed lockpicking door \"[src.name]\" (remains [locked ? "locked" : "unlocked"]).", LOG_ATTACK)
+			log_breakin(user, "gave up picking the lock (still [locked ? "locked" : "unlocked"])")
 		return
 
 /obj/structure/mineral_door/proc/tryskeletonlock(mob/user)
@@ -720,6 +738,7 @@
 	if(lockbroken)
 		to_chat(user, span_warning("The lock to this door is broken."))
 		return
+	log_breakin(user, "used a skeleton key and [locked ? "unlocked" : "locked"] the door")
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		message_admins("[H.real_name]([key_name(user)]) successfully skeletonkey'd [src.name] & [locked ? "unlocked" : "locked"] it. [ADMIN_JMP(src)]")
@@ -838,7 +857,7 @@
 	smashable = TRUE
 	metalizer_result = /obj/structure/mineral_door/wood/donjon
 
-/obj/structure/mineral_door/wood/Initialize()
+/obj/structure/mineral_door/wood/Initialize(mapload)
 	if(icon_state =="woodhandle")
 		if(icon_state != "wcv")
 			if(prob(10))
@@ -847,7 +866,7 @@
 				icon_state = "wcr"
 	if(over_state)
 		add_overlay(mutable_appearance(icon, "[over_state]", ABOVE_MOB_LAYER))
-	..()
+	. = ..()
 
 /obj/structure/mineral_door/wood/blue
 	icon_state = "wcb"
@@ -940,7 +959,7 @@
 	dir = turn(dirin, 180)
 	lockdir = dir
 
-/obj/structure/mineral_door/wood/deadbolt/Initialize()
+/obj/structure/mineral_door/wood/deadbolt/Initialize(mapload)
 	. = ..()
 	lockdir = dir
 	icon_state = base_state
@@ -1072,10 +1091,10 @@
 		to_chat(user, span_warning("The viewport doesn't toggle from this side."))
 		return
 
-/obj/structure/mineral_door/wood/donjon/Initialize()
+/obj/structure/mineral_door/wood/donjon/Initialize(mapload)
 	viewportdir = dir
 	icon_state = base_state
-	..()
+	. = ..()
 
 /obj/structure/mineral_door/wood/donjon/MiddleClick(mob/user, params)
 	if(user.get_active_held_item())
@@ -1118,10 +1137,23 @@
 	obj_broken = 1
 	repairable = FALSE
 
-/obj/structure/mineral_door/wood/donjon/stone/broken/Initialize()
-	..()
+/obj/structure/mineral_door/wood/donjon/stone/broken/Initialize(mapload)
+	. = ..()
 	icon_state = "stonebr" // Weird override otherwise
 
+/obj/structure/mineral_door/wood/donjon/stone/tough
+	name = "tough stone door"
+	desc = "this one has a stronger lock than usual"
+	locked = TRUE
+	max_integrity = 2500
+	lockdifficulty = 3
+
+/obj/structure/mineral_door/wood/donjon/tough
+	name = "tough reinforced door"
+	desc = "this one has a stronger lock than usual"
+	locked = TRUE
+	max_integrity = 2500
+	lockdifficulty = 3
 
 /obj/structure/mineral_door/bars
 	name = "iron door"
@@ -1150,12 +1182,19 @@
 	repair_cost_second = /obj/item/ingot/iron
 	repair_skill = /datum/skill/craft/blacksmithing
 
+/obj/structure/mineral_door/bars/tough
+	name = "tough bars"
+	desc = "this one has a stronger lock than usual"
+	locked = TRUE
+	max_integrity = 2500
+	lockdifficulty = 3
+
 /obj/structure/mineral_door/barsold
 	name = "iron door"
 	desc = ""
 	icon_state = "barsold"
 
-/obj/structure/mineral_door/bars/Initialize()
+/obj/structure/mineral_door/bars/Initialize(mapload)
 	. = ..()
 	add_overlay(mutable_appearance(icon, "barsopen", ABOVE_MOB_LAYER))
 
@@ -1188,6 +1227,14 @@
 	resident_role = /datum/job/roguetown/villager
 	lockid = null //Will be randomized
 
+/obj/structure/mineral_door/wood/mercenary
+	locked = TRUE
+	keylock = TRUE
+	grant_resident_key = TRUE
+	resident_key_type = /obj/item/roguekey/townie
+	resident_role = /datum/job/roguetown/mercenary
+	lockid = null //Will be randomized
+
 /obj/structure/mineral_door/wood/towner/generic
 
 /obj/structure/mineral_door/wood/towner/generic/two_keys
@@ -1202,7 +1249,7 @@
 	lockid = "towner_cheesemaker"
 
 /obj/structure/mineral_door/wood/towner/miner
-	resident_advclass = list(/datum/advclass/miner)
+	resident_advclass = list(/datum/advclass/miner, /datum/advclass/minermaster)
 	lockid = "towner_miner"
 
 /obj/structure/mineral_door/wood/towner/seamstress
@@ -1239,3 +1286,12 @@
 
 /obj/structure/mineral_door/wood/bath/courtesan
 	resident_advclass = list(/datum/advclass/nightmaiden/concubine, /datum/advclass/nightmaiden/courtesan, /datum/advclass/nightmaiden/dominatrix)
+
+/obj/structure/mineral_door/wood/wretched
+	locked = TRUE
+	keylock = TRUE
+	grant_resident_key = TRUE
+	resident_key_type = /obj/item/roguekey/townie// should be every wretch class - ideally we can get resident_role to accept lists but until then this'll do
+	resident_advclass = list(/datum/advclass/witch, /datum/advclass/wretch/licker, /datum/advclass/wretch/deserter, /datum/advclass/wretch/deserter/maa, /datum/advclass/wretch/berserker, /datum/advclass/wretch/roguemage, /datum/advclass/wretch/necromancer, /datum/advclass/wretch/heretic, /datum/advclass/wretch/heretic/spy, /datum/advclass/wretch/outlaw, /datum/advclass/wretch/poacher, /datum/advclass/wretch/plaguebearer, /datum/advclass/wretch/pyromaniac, /datum/advclass/wretch/vigilante, /datum/advclass/wretch/blackoakwyrm, /datum/advclass/wretch/antipope, /datum/advclass/wretch/ancientchampion)
+	lockid = null //Will be randomized
+

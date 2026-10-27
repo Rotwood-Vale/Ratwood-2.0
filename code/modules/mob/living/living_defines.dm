@@ -1,13 +1,11 @@
-
-
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
 	see_in_dark = 8
 	hud_possible = list(ANTAG_HUD)
-	
+
 	typing_indicator_enabled = TRUE
-	
+
 	var/resize = 1 //Badminnery resize
 	var/lastattacker = null
 	var/lastattackerckey = null
@@ -29,7 +27,8 @@
 	var/mobility_flags = MOBILITY_FLAGS_DEFAULT
 
 	var/resting = FALSE
-	var/wallpressed = FALSE
+	/// Cardinal dir of the wall we're pressed against, or FALSE. Use set_wallpressed()/is_wallpressed().
+	VAR_PROTECTED/wallpressed = FALSE
 	var/climbing = FALSE
 
 	var/pixelshift_layer = 0
@@ -43,12 +42,20 @@
 
 	var/last_special = 0 //Used by the resist verb, likely used to prevent players from bypassing next_move by logging in/out.
 	var/timeofdeath = 0
+	var/last_logout_time = 0
+	var/disconnected_admin_alert_timer
+	var/disconnected_admin_alert_sent = FALSE
 
 	var/infected = FALSE //Used to tell if the mob is in progress of turning into deadite
 
-	//Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
-	var/incorporeal_move = FALSE //FALSE is off, INCORPOREAL_MOVE_BASIC is normal, INCORPOREAL_MOVE_SHADOW is for ninjas
-								 //and INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
+	/**
+	 * Allows mobs to move through dense areas without restriction. For instance, in space or out of holder objects.
+	 * FALSE is off
+	 * INCORPOREAL_MOVE_BASIC is normal
+	 * INCORPOREAL_MOVE_SHADOW is for ninjas
+	 * INCORPOREAL_MOVE_JAUNT is blocked by holy water/salt
+	 */
+	var/incorporeal_move = FALSE
 
 	var/list/roundstart_quirks
 
@@ -60,7 +67,7 @@
 
 	var/tod = null // Time of death
 
-	/// The boolean "Are we on fire?" var. 
+	/// The boolean "Are we on fire?" var.
 	var/on_fire = FALSE
 	/// Helper vars for quick access to firestacks, these should be updated every time firestacks are adjusted
 	var/fire_stacks = 0
@@ -99,7 +106,8 @@
 
 	var/stun_absorption = null //converted to a list of stun absorption sources this mob has when one is added
 
-	var/blood_volume = BLOOD_VOLUME_NORMAL //how much blood the mob has
+	/// How much blood the mob has. Use get_blood_volume()/set_blood_volume()/adjust_blood_volume().
+	VAR_PROTECTED/blood_volume = BLOOD_VOLUME_NORMAL
 
 	var/see_override = 0 //0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
 
@@ -142,8 +150,11 @@
 
 	var/ambushable = 0
 
+	// Tracks whether mob is in surrendering state (right-click combat button)
 	var/surrendering = 0
-	var/compliance = 0 // whether we are choosing to auto-resist grabs and stuff
+
+	// Tracks whether mob is in compliance mode (middle-click combat button)
+	var/compliance = 0
 
 	var/defprob = 50 //base chance to defend against this mob's attacks, for simple mob combat
 	var/encumbrance = 0
@@ -161,6 +172,31 @@
 
 
 	var/datum/component/personal_crafting/craftingthing
+
+	//-- Dodge variables
+	/// If this mob can parry at all
+	var/mob_can_parry = FALSE
+	/// Cooldown before it's possible to dodge again
+	COOLDOWN_DECLARE(last_dodge)
+	/// Amount of time added to the cooldown before the mob can dodge again
+	var/dodgetime = 0
+	var/max_dodge = MAX_DODGE_CEIL
+	var/parrydelay = 12
+	/// Sanity boolean. Prevents you from dodging multiple times during a single loop. Not sure if this is actually needed but I aint touching it
+	var/dodge_sanity = FALSE
+
+	//-- Parry variables
+	/// If this mob can dodge at all
+	var/mob_can_dodge = FALSE
+	/// Cooldown before it's possible to parry again
+	COOLDOWN_DECLARE(last_parry)
+	/// Amount of time added to the cooldown before the mob can parry again
+	var/setparrytime = 1.2 SECONDS
+	/// Sound that plays when you parry unarmed
+	var/parry_sound = "unarmparry"
+
+	/// Cooldown when you break out of a grab before you can be grabbed again
+	COOLDOWN_DECLARE(broke_free)
 
 	var/obj/item/grabbing/r_grab = null
 	var/obj/item/grabbing/l_grab = null
@@ -182,6 +218,10 @@
 	 * All it does is track when a mob is sneaking so we don't have to constantly reset alpha values as this fucks with how things are intended to be.
 	 * if you really need to cancel someone who is sneaking, call update_sneak_invis(TRUE).*/
 	var/rogue_sneaking = FALSE
+	/**
+	 * are we currently sneaking and thus invisible due to it
+	 */
+	var/sneak_faded = FALSE
 	/* Can be used to change the lighting threshholds at which players can sneak.*/
 	var/rogue_sneaking_light_threshhold = 0.15
 
@@ -195,3 +235,47 @@
 
 	/// If the character has prominent mob descriptors, they'll make extra noise
 	var/loud_sneaking = FALSE
+
+	/// If TRUE, denotes that the character (a human) has not finished picking their subclass yet (if applicable).
+	var/advsetup = FALSE
+
+	/// If TRUE, denotes that the character (a human) has received their class equipment via equip() proc.
+	/// Usually, this also means that they've made all their choices after spawning.
+	var/class_equip_finished = FALSE
+
+	var/tempatarget = null
+	/// Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
+	var/pegleg = 0
+	var/construct = 0
+	var/burialrited = FALSE
+
+	/// Cache of client.prefs.no_redflash to reduce accesses (and client/prefs datum checking)
+	var/no_redflash = FALSE
+	// --- Fellowship (AP Quest 2 port) ---
+	var/datum/fellowship/current_fellowship
+	var/list/incoming_fellowship_invites = list() // list of /datum/weakref to /datum/fellowship; kept in sync with fellowship.pending_invites
+	var/list/summoned_minions
+	var/attack_relay_refs = 0
+	var/attack_relay_self_added = FALSE
+	var/pet_passive = FALSE
+	/// "In Combat" timer that is used to prevent stealth and a few other mechanics while active.
+	var/in_combat_until
+	var/rest_locked_until = 0
+	/// Whether we are in a swingdelay, used to check for disrupted swingdelays.
+	var/swing_state = FALSE
+
+	/// Toggle delay for Specials, or really anything else that you don't want input spam to instantly cycle through.
+	var/toggle_delay = 1 SECONDS
+	/// Toggle timer for Specials, or really anything else that you don't want input spam to instantly cycle through.
+	var/toggle_timer
+
+	/// Parry timer for projectiles post-attack. Hooks into the attack animation, so is fairly clunky.
+	var/projectile_parry_timer
+
+	/// Had to put this here because attack() is not used solely by humans. That's fucked up, manne.
+	var/dualwield_attack_count = 0
+	var/dualwield_processing = FALSE
+	var/dualwield_finisher = FALSE
+	var/dualwield_resets_in = 0
+	var/dualwield_buff_cd = 0
+	var/dualwield_twoswing = FALSE

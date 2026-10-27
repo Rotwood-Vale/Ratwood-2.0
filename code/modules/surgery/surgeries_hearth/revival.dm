@@ -7,7 +7,7 @@
 		/datum/surgery_step/infuse_lux,
 		/datum/surgery_step/cauterize
 	)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery_step/infuse_lux
@@ -15,7 +15,7 @@
 	implements = list(
 		/obj/item/reagent_containers/lux = 80,
 	)
-	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human)
 	time = 10 SECONDS
 	surgery_flags = SURGERY_BLOODY | SURGERY_INCISED | SURGERY_CLAMPED | SURGERY_RETRACTED | SURGERY_BROKEN
 	surgery_flags_blocked = SURGERY_CONSTRUCT
@@ -53,8 +53,8 @@
 		var/mob/living/LU = user
 		var/excomm_found = FALSE
 		for(var/excomm_name in GLOB.excommunicated_players)
-			var/clean_excomm = lowertext(trim(excomm_name))
-			var/clean_target = lowertext(trim(target.real_name))
+			var/clean_excomm = LOWER_TEXT(trim(excomm_name))
+			var/clean_target = LOWER_TEXT(trim(target.real_name))
 			if(clean_excomm == clean_target)
 				excomm_found = TRUE
 				break
@@ -65,6 +65,7 @@
 				"[user] tries to infuse [target] with lux, but it refuses to take.")
 			target.visible_message(span_danger("[target]'s body convulses violently, rejecting the light!"), span_warning("Something is terribly wrong..."))
 			return FALSE
+	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 	if(!target.revive(full_heal = FALSE))
 		display_results(user, target, span_notice("The lux refuses to meld with [target]'s heart. Their damage must be too severe still."),
 			"[user] works the lux into [target]'s innards, but nothing happens.",
@@ -82,7 +83,6 @@
 			"[user] works the lux into [target]'s innards, but nothing happens.",
 			"[user] works the lux into [target]'s innards, but nothing happens.")
 		return FALSE
-	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 	display_results(user, target, span_notice("You succeed in restarting [target]'s heart with the infusion of lux."),
 		"[user] works the lux into [target]'s innards.",
 		"[user] works the lux into [target]'s innards.")

@@ -1,0 +1,71 @@
+{
+	"chastity_jingle_emotes": [
+		"'s chastity device chimes with each careful step.",
+		"'s cage lets out a short, betraying clink.",
+		"'s locked device taps and rattles softly.",
+		"'s chastity clicks faintly — a small, metallic tell.",
+		"'s belt shifts against skin with a quiet, persistent ring.",
+		"'s chastity rattles with each stride, the sound carrying just far enough to be embarrassing.",
+		"'s locked device gives a muted clank as they shift their weight.",
+		"'s cage taps rhythmically with each step, a quiet, unavoidable metronome.",
+		"'s chastity gives a faint, telltale chime as they pass.",
+		"'s device lets out a short ring — barely audible, perfectly mortifying."
+	],
+	"chastity_movement_pain": [
+		"flinches and stops walking for a beat, teeth clenched.",
+		"freezes mid-step as the cage bites inward.",
+		"grabs at the front of their device, breathing carefully.",
+		"goes rigid, a sharp involuntary sound escaping them as the cage shifts.",
+		"hisses through clenched teeth and adjusts their stance with deliberate care.",
+		"stops short, hand going reflexively toward their front before they catch themselves.",
+		"bends slightly at the waist as the device bites in, breathing through it.",
+		"staggers half a step as the cage drags against them, expression gone tight."
+	],
+	"chastity_movement_struggle": [
+		"adjusts their gait carefully around the device's bulk.",
+		"moves with deliberate, self-conscious stiffness.",
+		"keeps their legs just far enough apart to walk without the cage grinding.",
+		"walks slowly, each step measured against the device's weight.",
+		"keeps one hand near the front of their device out of instinct rather than need.",
+		"walks with the careful deliberateness of someone managing a problem they cannot address.",
+		"keeps their steps short and even, working around the device's weight with practiced effort.",
+		"moves with a stiff, self-correcting gait, each step a small negotiation with the metal."
+	],
+	"chastity_jingle_cloth": [
+		"'s clothing shifts with a faint, muffled clink from somewhere beneath.",
+		"'s step carries a small metallic sound, barely distinguishable through the fabric.",
+		"'s garments muffle a quick, quiet ring as they move.",
+		"'s clothing betrays a subtle weight — a faint metallic tap with each stride.",
+		"'s step produces a muted clink, swallowed almost entirely by the cloth.",
+		"'s movement carries a dull, soft ring from beneath their clothing.",
+		"'s garments hush a faint metallic note with each careful step.",
+		"'s step gives away a muffled clink — easy to miss, impossible to place."
+	],
+	"chastity_jingle_light_armor": [
+		"'s leather creaks softly, a faint, dull clink lost somewhere inside it.",
+		"'s armor shifts with the step — something underneath gives a quiet, smothered ring.",
+		"'s leathers muffle a faint clank, the sound absorbed to nearly nothing.",
+		"'s armor produces a quiet, muted clink from somewhere deeper inside, easy to dismiss.",
+		"'s padded layers swallow most of a quiet metallic ring as they stride forward.",
+		"'s stride pulls a muted, hollow clink from somewhere beneath the leather.",
+		"'s armor hushes a soft, distant metallic ring with each careful step."
+	],
+	"chastity_jingle_medium_armor": [
+		"'s chainmail rings with each step — but something underneath answers with a different note, lower and wrong.",
+		"'s armor shifts with a deep, resonant note that doesn't quite match the metal above.",
+		"'s plate settles with a faint, hollow ring — the source unclear, somewhere inside.",
+		"'s cuirass gives off a hollow note as they move, slightly off from the expected ring.",
+		"'s armor moves with a faint secondary ring buried under the main clatter.",
+		"'s mail rattles — and somewhere beneath it, something answers with a lower, duller note.",
+		"'s armor produces a small, hollow resonance as they shift their weight."
+	],
+	"chastity_jingle_heavy_armor": [
+		"'s plate gives off a faint, muffled resonance with each step — something deeper than the steel.",
+		"'s armor settles with a hollow note barely perceptible beneath the metal.",
+		"'s plate shifts with a step, a deep, smothered ring swallowed entirely by the steel.",
+		"'s heavy armor carries the step's weight with a faint, dull note from somewhere inside.",
+		"'s plate absorbs almost everything — but a faint, resonant hum follows each stride.",
+		"'s armor gives a deep, flat resonance as they move, the source buried entirely beneath the plate.",
+		"'s heavy plate contains the sound almost completely — only the faintest hollow note escapes between steps."
+	]
+}

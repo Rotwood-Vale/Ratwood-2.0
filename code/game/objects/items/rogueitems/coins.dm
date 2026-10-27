@@ -110,6 +110,8 @@
 		if(quantity == 1)
 			amt_text = ""
 		var/amount = input(user, "How many [plural_name] to split?[amt_text]", null, round(quantity/2, 1)) as null|num
+		if(QDELETED(user) || QDELETED(src) || !user.Adjacent(src)) // if coins were consumed/user was deleted/moved away, don't split
+			return
 		amount = clamp(amount, 0, quantity)
 		amount = round(amount, 1) // no taking non-integer coins
 		if(!amount)
@@ -243,7 +245,7 @@
 	plural_name = "zennies"
 
 // ANCIENT
-/obj/item/roguecoin/aalloy
+/obj/item/roguecoin/gilbranze
 	name = "psilen"
 	desc = "A coin of polished gilbranze, beheld to a fallen kingdom that hadn't endured the passage of tyme."
 	icon_state = "a1"
@@ -251,32 +253,32 @@
 	base_type = CTYPE_ANCIENT
 	plural_name = "psila"
 
-/obj/item/roguecoin/inqcoin/pile/Initialize()
+/obj/item/roguecoin/inqcoin/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
 
-/obj/item/roguecoin/aalloy/pile/Initialize()
+/obj/item/roguecoin/gilbranze/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
 
-/obj/item/roguecoin/copper/pile/Initialize()
+/obj/item/roguecoin/copper/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
 
-/obj/item/roguecoin/silver/pile/Initialize()
+/obj/item/roguecoin/silver/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
 
 
-/obj/item/roguecoin/silver/pile/readyuppile/Initialize()
+/obj/item/roguecoin/silver/pile/readyuppile/Initialize(mapload)
 	. = ..()
 	set_quantity(4) // 20 mammons combine with starting pouch to buy something
 
-/obj/item/roguecoin/gold/pile/Initialize()
+/obj/item/roguecoin/gold/pile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(4,19))
 
-/obj/item/roguecoin/gold/virtuepile/Initialize()
+/obj/item/roguecoin/gold/virtuepile/Initialize(mapload)
 	. = ..()
 	set_quantity(rand(8,12))
 
@@ -286,3 +288,7 @@
 #undef CTYPE_ANCIENT
 #undef CTYPE_ICOIN
 #undef MAX_COIN_STACK_SIZE
+
+/obj/item/roguecoin/silver/pile/wretchpile/Initialize(mapload)
+	. = ..()
+	set_quantity(10) // 50 mammons, to avoid being dead broke when latejoining

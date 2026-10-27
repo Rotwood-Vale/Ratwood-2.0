@@ -3,6 +3,8 @@
 	domain = "Life, Creation, Compassion and Perseverance"
 	desc = "The One arrived to PSYDONIA on the COMET SYON, reshaping the barren world in His image. He was struck down by the Necromantress Zizo; some believe Him dead, others slumbering. May we ENDURE in His name."
 	worshippers = "Ancient Dwarves and Elves, Zybantines, Otavans, Those Who Dream of Peace"
+	virtues = "Peace, Resilience, Stubbornness"
+	sins = "Witchcraft, Sadism, Overindulgence"
 	associated_faith = /datum/faith/old_god
 	mob_traits = list(TRAIT_PSYDONIAN_GRIT)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison			= CLERIC_ORI,
@@ -10,6 +12,7 @@
 					/obj/effect/proc_holder/spell/invoked/psydonendure			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/psydonrespite			= CLERIC_T2,
 	)
+	energy_color = COLOR_PATRON_PSYDON
 	traits_tier = list(TRAIT_PSYDONITE = CLERIC_T1)
 	confess_lines = list(
 		"THERE IS ONLY ONE TRUE GOD!",
@@ -24,12 +27,14 @@
 /obj/effect/proc_holder/spell/self/check_boot
 	name = "BOOT-CHECK"
 	desc = "Checks your boot for variety of items."
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "BOOTCHECK"
 	releasedrain = 10
 	chargedrain = 0
 	chargetime = 0
 	chargedloop = null
 	sound = null
-	overlay_state = "BOOTCHECK"
 	associated_skill = /datum/skill/magic/holy
 	antimagic_allowed = TRUE
 	recharge_time = 10 MINUTES
@@ -94,8 +99,8 @@
 	to_chat(H, span_info("A coin in my boot? Psydon smiles upon me!"))
 	H.put_in_hands(found_thing, FALSE)
 	if(prob(H.STALUC + H.get_skill_level(associated_skill)))
-		var/obj/item/extra_thing = pick(lootpool)
-		new extra_thing(get_turf(user))
+		var/extra_path = pick(lootpool)
+		var/obj/item/extra_thing = new extra_path(get_turf(user))
 		to_chat(H, span_info("Ah, of course! I almost forgot I had this stashed away for a perfect occasion."))
 		H.put_in_hands(extra_thing, FALSE)
 	return TRUE
@@ -126,6 +131,8 @@
 	// Allows prayer if holding silver psycross.
 	if(istype(follower.get_active_held_item(), /obj/item/clothing/neck/roguetown/psicross/silver))
 		return TRUE
+	if(HAS_TRAIT(follower, TRAIT_LUX_FREAK)) // the ones that became psydons temple in of themselves
+		return TRUE
 	to_chat(follower, span_danger("For Psydon to hear my prayer I must either must be near a Pantheon Cross, shed my own blood in penitence, hold one of his silver holy symbols, or bask in his rain; as Psydon weeps for his children.."))
 	return FALSE
 
@@ -136,6 +143,8 @@
 /obj/effect/proc_holder/spell/invoked/psydonendure
 	name = "ENDURE"
 	desc = "At the cost of some lyfe sustaining blood, I can mend the wounds of my target."
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "ENDURE"
 	releasedrain = 20
 	chargedrain = 0
@@ -172,7 +181,7 @@
 
 		// Bonuses! Flavour! SOVL!
 		for(var/obj/item/clothing/neck/current_item in target.get_equipped_items(TRUE))
-			if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/aalloy, /obj/item/clothing/neck/roguetown/psicross/silver,	/obj/item/clothing/neck/roguetown/psicross/g))
+			if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver,	/obj/item/clothing/neck/roguetown/psicross/g))
 				pp += 1
 				if(pp >= 12 & target == user) // A harmless easter-egg. Only applies on self-cast. You'd have to be pretty deliberate to wear 12 of them.
 					target.visible_message(span_danger("[target]'s many psycrosses reverberate with a strange, ephemeral sound..."), span_userdanger("HE must be waking up! I can hear it! I'm ENDURING so much!"))
@@ -193,7 +202,7 @@
 				switch(current_item.type) // Target-based worn Psicross Piety bonus. For fun.
 					if(/obj/item/clothing/neck/roguetown/psicross/wood)
 						psicross_bonus = 0.1
-					if(/obj/item/clothing/neck/roguetown/psicross/aalloy)
+					if(/obj/item/clothing/neck/roguetown/psicross/decrepit)
 						psicross_bonus = 0.2
 					if(/obj/item/clothing/neck/roguetown/psicross)
 						psicross_bonus = 0.3
@@ -201,7 +210,7 @@
 						psicross_bonus = 0.4
 					if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 						psicross_bonus = 0.4
-					if(/obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy)
+					if(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient)
 						zcross_trigger = TRUE
 
 		if(damtotal >= 300) // ARE THEY ENDURING MUCH, IN ONE WAY OR ANOTHER?
@@ -216,6 +225,11 @@
 		target.visible_message(span_info("A strange stirring feeling pours from [target]!"), span_info("Sentimental thoughts drive away my pain..."))
 		var/psyhealing = 3
 		psyhealing += psicross_bonus
+
+		if(HAS_TRAIT(user, TRAIT_LUX_FREAK) && zcross_trigger) // LUX ABOMINATIONS WONT STOP SO EASLY!!!
+			user.visible_message(span_warning("[user] shudders as their eyes briefly wash over with a sickly shade of silver!"), span_userdanger("Ice shoots up my spine as the ARCHENEMY's laughter resonates in my skull! I will ENDURE this trial!"))
+			zcross_trigger = FALSE
+
 		if (conditional_buff & !zcross_trigger)
 			to_chat(user, "In <b>ENDURING</b> so much, become <b>EMBOLDENED</b>!")
 			psyhealing += situational_bonus
@@ -227,7 +241,7 @@
 			return FALSE
 
 		target.apply_status_effect(/datum/status_effect/buff/psyhealing, psyhealing)
-		user.blood_volume = max(user.blood_volume-30, 0)//We don't care about scaling, for this one.
+		user.set_blood_volume(max(user.get_blood_volume()-30, 0))//We don't care about scaling, for this one.
 		return TRUE
 
 	revert_cast()

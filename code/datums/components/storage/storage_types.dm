@@ -27,8 +27,12 @@
 	/obj/item/needle,
 	/obj/item/natural/worms/leech,
 	/obj/item/reagent_containers/lux,
+	/obj/item/reagent_containers/lux_impure,
+	/obj/item/leechtick,
+	/obj/item/leechtick_bloated,
 	/obj/item/natural/bundle/cloth/bandage,
-	/obj/item/natural/cloth))
+	/obj/item/natural/cloth,
+	))
 
 /datum/component/storage/concrete/roguetown/messkit
 	screen_max_rows = 3
@@ -63,7 +67,7 @@
 
 /datum/component/storage/concrete/roguetown/keyring/New(datum/P, ...)
 	. = ..()
-	can_hold = typecacheof(list(/obj/item/roguekey))
+	can_hold = typecacheof(list(/obj/item/roguekey, /obj/item/seal))
 
 /datum/component/storage/concrete/roguetown/belt/knife_belt
 	screen_max_rows = 3		//Lets you hold a regular knife + keys basically.
@@ -109,6 +113,9 @@
 	click_gather = FALSE
 	allow_quick_gather = FALSE
 	allow_quick_empty = FALSE
+
+/datum/component/storage/concrete/roguetown/book
+	max_items = 1
 
 /datum/component/storage/concrete/grid/meatsack // our rucksack is different from
 // Vanderlin so we use a separate one for meatsack
@@ -173,10 +180,18 @@
 	allow_dump_out = TRUE
 	dump_time = 40
 	collection_mode = COLLECT_SAME
+	does_not_spill = TRUE
 
 /datum/component/storage/concrete/tray/New(datum/P, ...)
 	. = ..()
 	can_hold = typecacheof(list(/obj/item/cooking, /obj/item/reagent_containers/glass/bowl, /obj/item/reagent_containers/glass/cup, /obj/item/kitchen, /obj/item/reagent_containers/food, /obj/item/reagent_containers/glass/bottle))
+
+/datum/component/storage/concrete/tray/on_move()
+	var/atom/A = parent
+	for(var/mob/living/L in can_see_contents())
+		if(!L.CanReach(A))
+			hide_from(L)
+	// Trays are designed to carry liquids safely - no spilling on move
 
 /datum/component/storage/concrete/grid/headhook
 	max_w_class = WEIGHT_CLASS_NORMAL
@@ -227,40 +242,41 @@
 /datum/component/storage/concrete/grid/orestore/New(datum/P, ...)
 	. = ..()
 	set_holdable(
-		typecacheof(list(/obj/item/rogueore,
-						 /obj/item/rogueore/gold,
-						 /obj/item/rogueore/silver,
-						 /obj/item/rogueore/iron,
-						 /obj/item/rogueore/copper,
-						 /obj/item/rogueore/tin,
-						 /obj/item/rogueore/coal,
-						 /obj/item/rogueore/coal/charcoal,
-						 /obj/item/rogueore/cinnabar,
-						 /obj/item/ingot,
-						 /obj/item/ingot/gold,
-						 /obj/item/ingot/iron,
-						 /obj/item/ingot/copper,
-						 /obj/item/ingot/tin,
-						 /obj/item/ingot/bronze,
-						 /obj/item/ingot/silver,
-						 /obj/item/ingot/steel,
-						 /obj/item/ingot/blacksteel,
-						 /obj/item/ingot/steelholy,
-						 /obj/item/ingot/silverblessed,
-						 /obj/item/ingot/aalloy,
-						 /obj/item/ingot/purifiedaalloy,
-						 /obj/item/ingot/aaslag,
-						 /obj/item/roguegem,
-						 /obj/item/roguegem/green,
-						 /obj/item/roguegem/blue,
-						 /obj/item/roguegem/yellow,
-						 /obj/item/roguegem/violet,
-						 /obj/item/roguegem/ruby,
-						 /obj/item/roguegem/diamond,
-						 /obj/item/roguegem/amethyst,
-						 /obj/item/riddleofsteel,
-						 /obj/item/pearl,
-						 /obj/item/pearl/blue)
+		typecacheof(list(
+			/obj/item/rogueore,
+			/obj/item/rogueore/gold,
+			/obj/item/rogueore/silver,
+			/obj/item/rogueore/iron,
+			/obj/item/rogueore/copper,
+			/obj/item/rogueore/tin,
+			/obj/item/rogueore/coal,
+			/obj/item/rogueore/coal/charcoal,
+			/obj/item/rogueore/cinnabar,
+			/obj/item/ingot,
+			/obj/item/ingot/gold,
+			/obj/item/ingot/iron,
+			/obj/item/ingot/copper,
+			/obj/item/ingot/tin,
+			/obj/item/ingot/bronze,
+			/obj/item/ingot/silver,
+			/obj/item/ingot/steel,
+			/obj/item/ingot/blacksteel,
+			/obj/item/ingot/steelholy,
+			/obj/item/ingot/silverblessed,
+			/obj/item/ingot/decrepit,
+			/obj/item/ingot/gilbranze,
+			/obj/item/ingot/aaslag,
+			/obj/item/roguegem,
+			/obj/item/roguegem/green,
+			/obj/item/roguegem/blue,
+			/obj/item/roguegem/yellow,
+			/obj/item/roguegem/violet,
+			/obj/item/roguegem/ruby,
+			/obj/item/roguegem/diamond,
+			/obj/item/roguegem/amethyst,
+			/obj/item/riddleofsteel,
+			/obj/item/pearl,
+			/obj/item/pearl/blue)
 	))
 
 /datum/component/storage/concrete/grid/orestore/bronze
@@ -276,3 +292,8 @@
 /datum/component/storage/concrete/roguetown/dice_pouch/New(datum/P, ...)
 	. = ..()
 	can_hold = typecacheof(list(/obj/item/dice))
+
+/datum/component/storage/concrete/grid/anvil_bin
+	max_w_class = WEIGHT_CLASS_HUGE
+	screen_max_rows = 8
+	screen_max_columns = 4

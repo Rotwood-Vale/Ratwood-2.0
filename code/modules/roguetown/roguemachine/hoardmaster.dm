@@ -3,6 +3,7 @@
 	desc = ""
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	icon_state = "Hoardmaster"
+	pixel_x = -32
 	density = TRUE
 	blade_dulling = DULLING_BASH
 	max_integrity = 0
@@ -12,7 +13,7 @@
 	var/current_cat = "1"
 
 
-/obj/structure/roguemachine/Hoardmaster/Initialize()
+/obj/structure/roguemachine/Hoardmaster/Initialize(mapload)
 	. = ..()
 	update_icon()
 	var/namechance = rand(1,6)
@@ -104,7 +105,7 @@
 			unlocked_cats+="Sawbones"
 		if("Hedge Knight")
 			unlocked_cats+="Knight"
-		if("Rogue Mage")
+		if("Hedge Mage")
 			unlocked_cats+="Mage"
 		if("Knave")
 			unlocked_cats+="Knave"

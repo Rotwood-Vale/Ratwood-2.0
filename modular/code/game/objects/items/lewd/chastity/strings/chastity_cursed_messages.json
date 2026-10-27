@@ -1,0 +1,33 @@
+{
+	"chastity_imprint": [
+		"You feel the device being imprinted with your will.",
+		"The metal hums and shifts beneath your hands, and then it knows you.",
+		"A strange warmth spreads through the device as it accepts your authority over it."
+	],
+	"chastity_front_shift": [
+		"Your cursed chastity front shifts to %STATE%.",
+		"The front panel rearranges itself with a click. It's %STATE% now.",
+		"Something moves in the device's front and settles into place. %STATE%."
+	],
+	"chastity_anal_open": [
+		"The anal shield opens.",
+		"The rear shield clicks open on its own with a small, hollow sound.",
+		"A soft mechanical release at the back — the anal shield has opened."
+	],
+	"chastity_anal_closed": [
+		"The anal shield seals shut.",
+		"The rear plate draws closed and locks with a decisive click.",
+		"The anal shield closes itself. The back of the device is sealed again."
+	],
+	"chastity_spikes_extend": [
+		"Spikes extend inside your cursed chastity device!",
+		"YOU FEEL THE SPIKES BEFORE YOU UNDERSTAND WHAT'S HAPPENING — sharp points pressing inward from every side.",
+		"A cold mechanical sound from somewhere inside the device, and then you feel them. The spikes are out.",
+		"Something clicks deep in the mechanism and then metal teeth press into your skin from the inside. Oh gods."
+	],
+	"chastity_spikes_retract": [
+		"The spikes retract.",
+		"The teeth withdraw with a sound like a small blade being sheathed. Relief.",
+		"The spikes pull back and the immediate pressure fades. Your skin still remembers them."
+	]
+}

@@ -15,9 +15,9 @@
 	smeltresult = /obj/item/ingot/gold
 	sellprice = 10
 
-/obj/item/rogueore/gold/Initialize()
+/obj/item/rogueore/gold/Initialize(mapload)
 	icon_state = "oregold[rand(1,3)]"
-	..()
+	return ..()
 
 
 /obj/item/rogueore/silver
@@ -27,9 +27,9 @@
 	smeltresult = /obj/item/ingot/silver
 	sellprice = 8
 
-/obj/item/rogueore/silver/Initialize()
+/obj/item/rogueore/silver/Initialize(mapload)
 	icon_state = "oresilv[rand(1,3)]"
-	..()
+	return ..()
 
 
 /obj/item/rogueore/iron
@@ -39,9 +39,9 @@
 	smeltresult = /obj/item/ingot/iron
 	sellprice = 5
 
-/obj/item/rogueore/iron/Initialize()
+/obj/item/rogueore/iron/Initialize(mapload)
 	icon_state = "oreiron[rand(1,3)]"
-	..()
+	return ..()
 
 
 /obj/item/rogueore/copper
@@ -51,9 +51,9 @@
 	smeltresult = /obj/item/ingot/copper
 	sellprice = 3
 
-/obj/item/rogueore/copper/Initialize()
+/obj/item/rogueore/copper/Initialize(mapload)
 	icon_state = "orecop[rand(1,3)]"
-	..()
+	return ..()
 
 /obj/item/rogueore/tin
 	name = "raw tin"
@@ -62,9 +62,9 @@
 	smeltresult = /obj/item/ingot/tin
 	sellprice = 4
 
-/obj/item/rogueore/tin/Initialize()
+/obj/item/rogueore/tin/Initialize(mapload)
 	icon_state = "oretin[rand(1,3)]"
-	..()
+	return ..()
 
 /obj/item/rogueore/coal
 	name = "coal"
@@ -74,32 +74,10 @@
 	smeltresult = /obj/item/rogueore/coal
 	sellprice = 1
 
-//Dolls/Constructs eating coal for fuel.
-/obj/item/rogueore/coal/attack(mob/living/M, mob/user)
-	testing("attack")
-	if(!user.cmode)
-
-		if(M.construct)//This is slop. Why do we use this?
-			if(M == user)
-				user.visible_message(span_notice("[user] puts [src] against [user.p_their()] frame and absorbs it."), span_notice("I absorb [src], feeling my energy return."))
-			else
-				user.visible_message(span_notice("[user] attempts to press [src] to [M]."), span_notice("I attempt to press [src] to [M]."))
-				if(!do_mob(user, M, 30))
-					return
-				user.visible_message(span_notice("[user] presses [src] against [M]."), span_notice("I press [src] against [M]."))
-				to_chat(M, span_notice("I absorb [src], feeling my energy return."))
-			M.energy_add(250)
-			playsound(M.loc,'sound/items/flint.ogg', rand(30,60), TRUE)
-			qdel(src)
-
-		else
-			return ..()
-	else
-		return ..()
-
-/obj/item/rogueore/coal/Initialize()
+/obj/item/rogueore/coal/Initialize(mapload)
 	icon_state = "orecoal[rand(1,3)]"
-	..()
+	. = ..()
+	AddComponent(/datum/component/construct_refueling)
 
 /obj/item/rogueore/coal/charcoal
 	name = "charcoal"
@@ -110,7 +88,7 @@
 	firefuel = 15 MINUTES
 	smeltresult = /obj/item/rogueore/coal/charcoal
 	sellprice = 1
-
+	
 /obj/item/rogueore/cinnabar
 	name = "cinnabar"
 	desc = "Red gems that contain the essence of quicksilver."
@@ -126,10 +104,11 @@
 	smeltresult = null
 	resistance_flags = FIRE_PROOF
 	smelted = TRUE
+	has_item_quality = TRUE
 	var/datum/anvil_recipe/currecipe
-	var/quality = SMELTERY_LEVEL_NORMAL
 	grid_width = 64
 	grid_height = 32
+	dropshrink = 0.8
 
 /obj/item/ingot/examine()
 	. += ..()
@@ -138,30 +117,38 @@
 
 /obj/item/ingot/Initialize(mapload, smelt_quality)
 	. = ..()
-	if(!smelt_quality)
-		return
-	quality = smelt_quality
-	switch(quality)
-		if(SMELTERY_LEVEL_SPOIL)
-			name = "spoilt [name]"
-			desc += " It is practically scrap."
-			sellprice *= 0.5
-		if(SMELTERY_LEVEL_POOR)
-			name = "poor-quality [name]"
-			desc += " It is of dubious quality." // EA NASSIR, WHEN I GET YOU...
-			sellprice *= 0.8
-		if(SMELTERY_LEVEL_GOOD)
-			name = "good-quality [name]"
-			desc += " It is of notable quality."
-			sellprice *= 1.1
-		if(SMELTERY_LEVEL_GREAT)
-			name = "great-quality [name]"
-			desc += " It is of remarkable quality. Fit for ambitious endeavours."
-			sellprice *= 1.2
-		if(SMELTERY_LEVEL_EXCELLENT)
-			name = "excellent-quality [name]"
-			desc += " It is of exquisite quality. It [pick("yearns","begs","demands")] to be turned into a masterwork."
-			sellprice *= 1.3
+	if(smelt_quality)
+		apply_smelt_quality(smelt_quality)
+
+/obj/item/ingot/proc/apply_smelt_quality(smelt_quality)
+	item_quality = smelt_quality
+	name = initial(name)
+	desc = initial(desc)
+	var/prefix
+	switch(item_quality)
+		if(ITEM_QUALITY_AWFUL)
+			prefix = ITEM_QUALITY_PREFIX_AWFUL
+			desc = "[initial(desc)] It is practically scrap."
+		if(ITEM_QUALITY_CRUDE)
+			prefix = ITEM_QUALITY_PREFIX_CRUDE
+			desc = "[initial(desc)] It is of dubious quality."
+		if(ITEM_QUALITY_ROUGH)
+			prefix = ITEM_QUALITY_PREFIX_ROUGH
+		if(ITEM_QUALITY_STANDARD)
+			prefix = null
+		if(ITEM_QUALITY_FINE)
+			prefix = ITEM_QUALITY_PREFIX_FINE
+			desc = "[initial(desc)] It is of notable quality."
+		if(ITEM_QUALITY_FLAWLESS)
+			prefix = ITEM_QUALITY_PREFIX_FLAWLESS
+			desc = "[initial(desc)] It is of remarkable quality. Fit for ambitious endeavours."
+		if(ITEM_QUALITY_MASTERWORK)
+			prefix = ITEM_QUALITY_PREFIX_MASTERWORK
+			desc = "[initial(desc)] It is of exquisite quality. It [pick("yearns","begs","demands")] to be turned into a masterwork."
+	if(prefix)
+		name = "[prefix] [initial(name)]"
+	if(initial(sellprice) > 0)
+		sellprice = max(1, round(initial(sellprice) * ITEM_QUALITY_MULT(item_quality), 1))
 
 /obj/item/ingot/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/rogueweapon/tongs))
@@ -184,7 +171,7 @@
 		var/obj/machinery/anvil/A = loc
 		A.current_workpiece = null
 		A.update_icon()
-	..()
+	return ..()
 
 /obj/item/ingot/gold
 	name = "gold bar"
@@ -199,23 +186,6 @@
 	icon_state = "ingotiron"
 	smeltresult = /obj/item/ingot/iron
 	sellprice = 15
-
-/obj/item/ingot/iron/Initialize(mapload, smelt_quality)
-	. = ..()
-	var/static/list/slapcraft_recipe_list = list(
-		/datum/crafting_recipe/roguetown/structure/plough,
-		/datum/crafting_recipe/roguetown/survival/peasantry/thresher,
-		/datum/crafting_recipe/roguetown/survival/peasantry/shovel,
-		/datum/crafting_recipe/roguetown/survival/peasantry/hoe,
-		/datum/crafting_recipe/roguetown/survival/peasantry/pitchfork,
-		/datum/crafting_recipe/roguetown/survival/quarterstaff_iron,
-		/datum/crafting_recipe/roguetown/survival/mantrap,
-		)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-		)
 
 /obj/item/ingot/copper
 	name = "copper bar"
@@ -271,35 +241,34 @@
 	name = "blessed silver bar"
 	desc = "This bar radiates a divine purity. Treasured by the realms and commonly found in Psydonic weaponry."
 	icon_state = "ingotsilvblessed"
-	smeltresult = /obj/item/ingot/silver //Smelting it removes the blessing
+	smeltresult = /obj/item/ingot/silverblessed/
 	sellprice = 100
 
 /obj/item/ingot/silverblessed/bullion
 	name = "blessed silver bullion"
 	desc = "This bar radiates a divine purity. The Psycross and the words casted into the surface denotes the Otavan Inquisition as the point of it's origin."
 	icon_state = "ingotsilvblessed_psy"
-	smeltresult = /obj/item/ingot/silver //Smelting it removes the blessing
+	smeltresult = /obj/item/ingot/silverblessed/bullion //no smelting your psydonic silver for blacksteel
 	sellprice = 100
 
-/obj/item/ingot/aalloy
+/obj/item/ingot/decrepit
 	name = "decrepit ingot"
-	desc = "A decrepit slab of wrought bronze, uncomfortably cold to the touch. The gales shift into whispers, when held for long enough; 'progress commands sacrifice'."
+	desc = "A decrepit slab of wrought bronze, uncomfortably cold to the touch. The gales shift into whispers, when held for long enough; 'ambition commands sacrifice'."
 	icon_state = "ingotancient"
 	smeltresult = /obj/item/ingot/aaslag
 	color = "#bb9696"
 	sellprice = 33
 
-
-/obj/item/ingot/purifiedaalloy
-	name = "ancient alloy"
-	desc = "An ingot of polished gilbranze, teeming with forbidden knowledge. The reflection on its surface isn't yours; it smiles back at you with eternal malice."
+/obj/item/ingot/gilbranze
+	name = "gilbranze ingot"
+	desc = "A timeless alloy of gold and bronze, hence the name gilbranze. The reflection on its surface isn't yours; it smiles back at you with eternal malice."
 	icon_state = "ingotancient"
-	smeltresult = /obj/item/ingot/purifiedaalloy
+	smeltresult = /obj/item/ingot/gilbranze
 	sellprice = 111
 
-/obj/item/ingot/purifiedaalloy/eahasir
+/obj/item/ingot/gilbranze/eahasir
 	name = "EA-Hasir high-quality gold ingot"
-	desc = "Solid wealth in your hand- Hey wait a minute, this isn't gold."
+	desc = "Solid wealth in your hand- Hey, wait a minute, this isn't gold!"
 
 /obj/item/ingot/aaslag
 	name = "glimmering slag"
@@ -312,19 +281,65 @@
 /obj/item/ingot/weeping
 	name = "enduring ingot"
 	desc = "A slab of metal, aged and bare. You finally know what it is, yet no word can be sired to describe it. </br>'..none will ever know the greatest truths; of Aeon's grasp, of Adonai's presence, of Psydon's fate..' </br>'..but, perhaps, that's for the better. The malaise is gone, but the evils of this world are still very real..' </br>'..find a way to give the remains a new lyfe; a new vessel that may yet make the Archdevil weep..'"
-	icon_state = "ingotsilv"
+	icon_state = "ingotenduring"
 	smeltresult = /obj/item/ingot/weeping
-	color = "#CECA9C"
 	sellprice = 222
 
-/obj/item/ingot/weeping/Initialize()
-  ..()
-  filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(64,65),rand(1,5),rand(1,5)))
+/obj/item/ingot/weeping/Initialize(mapload)
+	. = ..()
+	filter(type="drop_shadow", x=0, y=0, size=1, offset=2, color=rgb(rand(64,65),rand(1,5),rand(1,5)))
 
 /obj/item/ingot/draconic
 	name = "draconic ingot"
 	desc = "A slab of obsidian, crackling with energy. Your fingers blister from the sheer heat, radiating off of its glassy surface. </br>'..no man, be-they a saint or sinner, can truly withstand such power..' </br>'..but, perhaps, you are different..' </br>'..find a way to give the remains a new lyfe; a new vessel that may yet make the Archdevil weep..'"
-	icon_state = "ingotblacksteel"
+	icon_state = "ingotdraconic"
 	smeltresult = /obj/item/ingot/draconic
-	color = "#70b8ff"
 	sellprice = 333
+
+//Components!
+
+/obj/item/ingot/component //Root. Don't use under most circumstances.
+	name = "substanceless presence"
+	desc = "Something that you were likely never meant to see. Pray to a higher presence for assistance, before rendering it asunder in the forge's flames once more."
+	icon_state = "oreada"
+	smeltresult = /obj/item/ingot/iron
+	sellprice = 1
+
+/obj/item/ingot/component/glutcrystal
+	name = "crystalline glut"
+	desc = "Fractal violence, gleaming with a crimson haze that beckons for its final purpose to be accomplished."
+	icon_state = "component_blood"
+	smeltresult = /obj/item/roguegem/blood_diamond //Ensures that it can be reused for any Glut-specific ritual, should one find this in its crystalline form.
+	sellprice = 33
+
+/obj/item/ingot/component/glutcrystal/examine(mob/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.patron.type == /datum/patron/inhumen/graggar)
+			. += span_danger("You know this gem well. They are born out of great violence, but only if it involves the mightiest of warriors. </br>Fleshcrafting it with the meat of whatever warrior birthed this gem will allow me to summon another of their kind into this world.	</br>Melting away its crystalline shell is ideal, if you wish to ensure no chance for error while conducting such a ritual.")
+
+/obj/item/ingot/component/glutcrystal/Initialize(mapload)
+	. = ..()
+	add_filter("shadow_the_hedgehog", 2, list("type" = "outline", "color" = "#8B0000", "alpha" = 188, "size" = 1))
+
+/obj/item/ingot/component/heapofrawiron
+	name = "heap of raw iron"
+	desc = "A massive hunk, born from the incoherent fusion of molten iron. Chunks of ore-and-ingotry peak out from its jagged surface, yearning to be refined - be it into ingots, or something more purposeful."
+	icon_state = "component_berserkheap"
+	smeltresult = /obj/item/rogueore/iron
+	smelt_bar_num = 4
+
+/obj/item/ingot/component/berserkswordblade
+	name = "blade of the berserkers sword"
+	desc = "A massive blade, forged from a raw heap of iron. The unique spike-styled tang seems to be longer than what'd be seen on most greatswords, stowable only by the innards of a fittingly large handle."
+	icon_state = "component_berserkblade"
+	smeltresult = /obj/item/ingot/iron
+	smelt_bar_num = 3
+
+/obj/item/ingot/component/berserkswordgrip
+	name = "handle of the berserkers sword"
+	desc = "A massive handle, assembled from the double-handed grip of an Executioner's Sword. The unique crescent-styled crossguard seems to have a slot, fittable only by the tang of a fittingly large blade."
+	icon_state = "component_berserkhandle"
+	smeltresult = /obj/item/ingot/iron
+

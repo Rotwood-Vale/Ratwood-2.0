@@ -5,6 +5,10 @@
 	prefix = "a"
 	suffix = "voice"
 	show_obscured = TRUE
+	var/voice_string
+
+/datum/mob_descriptor/voice/proc/get_speaking_name(voice_gender, mob/living/described = null)
+	return "[voice_string ? voice_string : name] [voice_gender]"
 
 /datum/mob_descriptor/voice/ordinary
 	name = "Ordinary"
@@ -88,6 +92,35 @@
 
 /datum/mob_descriptor/voice/smoker
 	name = "Smoker's"
+	voice_string = "Smoker"
 
 /datum/mob_descriptor/voice/venomous
 	name = "Venomous"
+
+/datum/mob_descriptor/voice/custom
+	name = "Custom Voice"
+	custom_index = 12
+
+/datum/mob_descriptor/voice/custom/can_describe(mob/living/described)
+	return length(described.custom_descriptors) >= custom_index
+
+/datum/mob_descriptor/voice/custom/get_description(mob/living/described)
+	var/datum/custom_descriptor_entry/entry = described.custom_descriptors[custom_index]
+	return entry.content_text
+
+/datum/mob_descriptor/voice/custom/get_pre_string(mob/living/described)
+	var/datum/custom_descriptor_entry/entry = described.custom_descriptors[custom_index]
+	switch(entry.prefix_type)
+		if(CUSTOM_PREFIX_HAS_A)
+			return "a "
+		if(CUSTOM_PREFIX_HAS_AN)
+			return "an "
+	return null
+
+/datum/mob_descriptor/voice/custom/get_speaking_name(voice_gender, mob/living/described = null)
+	if(!described || length(described.custom_descriptors) < custom_index)
+		return voice_gender
+	var/datum/custom_descriptor_entry/entry = described.custom_descriptors[custom_index]
+	if(!length(entry.content_text))
+		return voice_gender
+	return "[capitalize(entry.content_text)] [voice_gender]"

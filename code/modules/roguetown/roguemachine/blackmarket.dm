@@ -20,9 +20,9 @@
 	max_integrity = 0
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
+	var/budget
 	var/list/held_items = list()
 	locked = FALSE
-	var/budget = 0
 	var/upgrade_flags
 	var/current_cat = "1"
 	var/list/categories = list(
@@ -36,7 +36,7 @@
 		"Exotic Import"
 	)
 
-/obj/structure/roguemachine/blackmarket/Initialize()
+/obj/structure/roguemachine/blackmarket/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -73,6 +73,7 @@
 		var/cost = PA.cost
 		if(budget >= cost)
 			budget -= cost
+			record_round_statistic(STATS_COPPERFACE_VALUE_SPENT, cost)
 		else
 			say("Not enough!")
 			return
@@ -144,7 +145,7 @@
 	set_light(0)
 	return ..()
 
-/obj/structure/roguemachine/blackmarket/Initialize()
+/obj/structure/roguemachine/blackmarket/Initialize(mapload)
 	. = ..()
 	update_icon()
 

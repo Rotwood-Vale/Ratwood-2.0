@@ -92,6 +92,15 @@
 	icon_state = "woodenbarricade-snow-old"
 	max_integrity = 75
 
+/obj/structure/barricade/mineshaft
+	name = "mineshaft support"
+	desc = "This'll stop those tremors from triggering."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "woodenbarricade_mineshaft"
+	bar_material = WOOD
+	pass_flags = LETPASSTHROW
+	density = FALSE
+
 #undef SINGLE
 #undef VERTICAL
 #undef HORIZONTAL

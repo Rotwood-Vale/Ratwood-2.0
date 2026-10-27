@@ -28,10 +28,15 @@
 				addtimer(CALLBACK(src, PROC_REF(trigger_weather)), rand(5,20))
 				return TRUE
 
-/obj/machinery/light/rogue/lanternpost/Initialize()
+/obj/machinery/light/rogue/lanternpost/Initialize(mapload)
 	torchy = new /obj/item/flashlight/flare/torch/lantern(src)
 	torchy.spark_act()
 	. = ..()
+
+/obj/machinery/light/rogue/lanternpost/Destroy()
+	if(torchy)
+		QDEL_NULL(torchy)
+	return ..()
 
 /obj/machinery/light/rogue/lanternpost/process()
 	if(on)

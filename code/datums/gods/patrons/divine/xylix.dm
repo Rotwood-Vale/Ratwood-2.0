@@ -3,18 +3,23 @@
 	domain = "Trickery, Freedom, Inspiration, Fate, Fluvians"
 	desc = "The Trickster is an unknown amongst the Pantheon. They created the Fluvian race with the gift of Fate, and serve the sole purpose of pulling pranks on Gods and Mortals alike. Their followers see freedom as an absolute, and despise slavery."
 	worshippers = "Gamblers, Bards, Artists, The Silver-Tongued, Fluvians"
+	virtues = "Humor, Friendship, Joy"
+	sins = "Slavery, Seriousness, Servility"
 	mob_traits = list(TRAIT_XYLIX)
 	miracles = list(/obj/effect/proc_holder/spell/targeted/touch/orison				= CLERIC_ORI,
 					/obj/effect/proc_holder/spell/self/xylixslip					= CLERIC_T0,
+					/obj/effect/proc_holder/spell/invoked/ventriloquism				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/xylixlian_luck        	= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/lesser_heal 				= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/fetch/miracle 	= CLERIC_T1,
-					/obj/effect/proc_holder/spell/invoked/projectile/repel/miracle 	= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/mockery					= CLERIC_T1,
 					/obj/effect/proc_holder/spell/invoked/blood_heal				= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/mimicry					= CLERIC_T2,
 					/obj/effect/proc_holder/spell/invoked/mastersillusion			= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/abscond					= CLERIC_T4,
 					/obj/effect/proc_holder/spell/invoked/wound_heal				= CLERIC_T4,
 	)
+	energy_color = COLOR_PATRON_XYLIX
+	traits_tier = list(TRAIT_XYLIX_DEVOTEE = CLERIC_T0) //Requires a minimal holy skill or the 'Devotee' virtue to unlock. Rerolls luck events
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",
 		"NOC IS NIGHT!",
@@ -53,16 +58,23 @@
 	return FALSE
 
 /datum/patron/divine/xylix/on_lesser_heal(
-    mob/living/user,
-    mob/living/target,
-    message_out,
-    message_self,
-    conditional_buff,
-    situational_bonus
+	mob/living/user,
+	mob/living/target,
+	message_out,
+	message_self,
+	conditional_buff,
+	situational_bonus
 )
 	*message_out = span_info("A fugue seems to manifest briefly across [target]!")
 	*message_self = span_notice("My wounds vanish as if they had never been there! ")
 
-	if(prob(50))
+	if(prob(20))
+		*conditional_buff = TRUE
+		*situational_bonus = -1.25
+		*message_out = span_warning("Xylix twists the fate of [target] to heal less than usual!")
+		*message_self = span_warning("Xylix twists your fate to heal less than usual!")
+	else if(prob(60))
 		*conditional_buff = TRUE
 		*situational_bonus = rand(1, 2.5)
+		*message_out = span_notice("Xylix brings fortune and heals [target] more than usual!")
+		*message_self = span_notice("Xylix brings fortune and heals you more than usual!")

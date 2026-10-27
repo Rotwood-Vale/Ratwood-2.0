@@ -53,7 +53,7 @@
 			return
 		mind.heretic_nickname = nickname
 
-	var/msg = input(src, "What would you like to tell your fellow believers?", "Commune") as text|null
+	var/msg = sanitize(input(src, "What would you like to tell your fellow believers?", "Commune") as text|null)
 	if(!msg)
 		return
 
@@ -177,7 +177,7 @@
 		trigger_omen(src, H)
 		return
 		
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/interrupt_chant)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(interrupt_chant))
 
 /mob/living/carbon/human/proc/interrupt_chant()
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)

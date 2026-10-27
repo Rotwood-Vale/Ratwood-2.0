@@ -25,7 +25,7 @@
 	name = "lipstick"
 	icon_state = "random_lipstick"
 
-/obj/item/lipstick/random/Initialize()
+/obj/item/lipstick/random/Initialize(mapload)
 	. = ..()
 	icon_state = "lipstick"
 	colour = pick("red","purple","lime","black","green","blue","white")
@@ -59,17 +59,23 @@
 			to_chat(user, span_warning("I need to wipe off the old lipstick first!"))
 			return
 		if(H == user)
-			user.visible_message(span_notice("[user] does [user.p_their()] lips with \the [src]."), \
-								 span_notice("I take a moment to apply \the [src]. Perfect!"))
+			user.visible_message(
+				span_notice("[user] does [user.p_their()] lips with \the [src]."),
+				span_notice("I take a moment to apply \the [src]. Perfect!")
+			)
 			H.lip_style = "lipstick"
 			H.lip_color = colour
 			H.update_body()
 		else
-			user.visible_message(span_warning("[user] begins to do [H]'s lips with \the [src]."), \
-								 span_notice("I begin to apply \the [src] on [H]'s lips..."))
+			user.visible_message(
+				span_warning("[user] begins to do [H]'s lips with \the [src]."),
+				span_notice("I begin to apply \the [src] on [H]'s lips...")
+			)
 			if(do_after(user, 20, target = H))
-				user.visible_message(span_notice("[user] does [H]'s lips with \the [src]."), \
-									 span_notice("I apply \the [src] on [H]'s lips."))
+				user.visible_message(
+					span_notice("[user] does [H]'s lips with \the [src]."),
+					span_notice("I apply \the [src] on [H]'s lips.")
+				)
 				H.lip_style = "lipstick"
 				H.lip_color = colour
 				H.update_body()
@@ -91,33 +97,37 @@
 				H.lip_style = null
 				H.update_body()
 			else
-				user.visible_message(span_warning("[user] begins to wipe [H]'s lipstick off with \the [src]."), \
-								 	 span_notice("I begin to wipe off [H]'s lipstick..."))
+				user.visible_message(
+					span_warning("[user] begins to wipe [H]'s lipstick off with \the [src]."),
+					span_notice("I begin to wipe off [H]'s lipstick...")
+				)
 				if(do_after(user, 10, target = H))
-					user.visible_message(span_notice("[user] wipes [H]'s lipstick off with \the [src]."), \
-										 span_notice("I wipe off [H]'s lipstick."))
+					user.visible_message(
+						span_notice("[user] wipes [H]'s lipstick off with \the [src]."),
+						span_notice("I wipe off [H]'s lipstick.")
+					)
 					H.lip_style = null
 					H.update_body()
 	else
 		..()
 
-/obj/item/razor
-	name = "electric razor"
-	desc = ""
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "razor"
-	flags_1 = CONDUCT_1
-	w_class = WEIGHT_CLASS_TINY
+// /obj/item/razor
+// 	name = "electric razor"
+// 	desc = ""
+// 	icon = 'icons/obj/items_and_weapons.dmi'
+// 	icon_state = "razor"
+// 	flags_1 = CONDUCT_1
+// 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/razor/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))
-	shave(user, BODY_ZONE_PRECISE_MOUTH)
-	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
-	return BRUTELOSS
+// /obj/item/razor/suicide_act(mob/living/carbon/user)
+// 	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))
+// 	shave(user, BODY_ZONE_PRECISE_MOUTH)
+// 	shave(user, BODY_ZONE_HEAD)//doesnt need to be BODY_ZONE_HEAD specifically, but whatever
+// 	return BRUTELOSS
 
-/obj/item/razor/proc/shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
-	return
+// /obj/item/razor/proc/shave(mob/living/carbon/human/H, location = BODY_ZONE_PRECISE_MOUTH)
+// 	return
 
 
-/obj/item/razor/attack(mob/M, mob/user)
-	return
+// /obj/item/razor/attack(mob/M, mob/user)
+// 	return

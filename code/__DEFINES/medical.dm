@@ -77,6 +77,7 @@
 
 #define ORGAN_SLOT_FRILLS "frills"
 #define ORGAN_SLOT_HORNS "horns"
+#define ORGAN_SLOT_TUSKS "tusks"
 #define ORGAN_SLOT_ANTENNAS "antennas"
 #define ORGAN_SLOT_NECK_FEATURE "neck_feature"
 #define ORGAN_SLOT_SOUL "soul"
@@ -92,18 +93,18 @@
 #define ORGAN_SLOT_VAGINA "vagina"
 
 #define ORGAN_SLOTS_HEAD_ORGANS list(\
-    ORGAN_SLOT_BRAIN,\
-    ORGAN_SLOT_BREATHING_TUBE,\
-    ORGAN_SLOT_EARS,\
-    ORGAN_SLOT_EYES,\
-    ORGAN_SLOT_TONGUE,\
-    ORGAN_SLOT_VOICE,\
-    ORGAN_SLOT_FRILLS,\
-    ORGAN_SLOT_HORNS,\
-    ORGAN_SLOT_ANTENNAS,\
-    ORGAN_SLOT_NECK_FEATURE,\
-    ORGAN_SLOT_HEAD_FEATURE,\
-    ORGAN_SLOT_SNOUT,\
+	ORGAN_SLOT_BRAIN,\
+	ORGAN_SLOT_BREATHING_TUBE,\
+	ORGAN_SLOT_EARS,\
+	ORGAN_SLOT_EYES,\
+	ORGAN_SLOT_TONGUE,\
+	ORGAN_SLOT_VOICE,\
+	ORGAN_SLOT_FRILLS,\
+	ORGAN_SLOT_HORNS,\
+	ORGAN_SLOT_ANTENNAS,\
+	ORGAN_SLOT_NECK_FEATURE,\
+	ORGAN_SLOT_HEAD_FEATURE,\
+	ORGAN_SLOT_SNOUT,\
 )
 
 #define BODYPART_FEATURE_HAIR "hair"
@@ -114,6 +115,15 @@
 #define BODYPART_FEATURE_CREST "crest"
 #define BODYPART_FEATURE_LEGWEAR "legwear"
 #define BODYPART_FEATURE_BRAND "brand"
+#define BODYPART_FEATURE_CHASTITY "chastity"
+#define BODYPART_FEATURE_PUBES "pubes"
+#define BODYPART_FEATURE_PITS "pits"
+
+#define BODY_HAIR_MATERIAL_HAIR 1
+#define BODY_HAIR_MATERIAL_FUR 2
+#define BODY_HAIR_MATERIAL_FEATHERS 3
+#define BODY_HAIR_MATERIAL_FUZZ 4
+#define BODY_HAIR_MATERIAL_BRAIDS 5
 
 //flags for requirements for a surgery step
 #define SURGERY_BLOODY (1<<0)
@@ -157,3 +167,9 @@
 #define WOUND_SEVERITY_FATAL 5
 /// This wound has a zombie or werewolf infection
 #define WOUND_SEVERITY_BIOHAZARD 6
+/// Wound severity is determined by bleed rate (default)
+#define SEVERITY_TYPE_BLEED "bleed"
+/// Wound severity is determined by the wound's hp (alternative)
+#define SEVERITY_TYPE_WHP "whp"
+/// Wound severity is determined by how burnt the host limb is (burn_dam as a percent of max_damage)
+#define SEVERITY_TYPE_BURN "burn"

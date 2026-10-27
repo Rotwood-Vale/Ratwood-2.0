@@ -23,7 +23,7 @@
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)) || !HAS_TRAIT(C,TRAIT_NASTY_EATER))
 				C.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
-				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+				C.set_blood_volume(min(C.get_blood_volume() + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM))
 //Dirty blood shouldn't go in your veins!
 /datum/reagent/blood/shitty/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(iscarbon(L))
@@ -32,7 +32,7 @@
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)) || !(HAS_TRAIT(C, TRAIT_NASTY_EATER) && HAS_TRAIT(C, TRAIT_WILD_EATER)))
 				C.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.8)
 			else
-				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+				C.set_blood_volume(min(C.get_blood_volume() + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM))
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
@@ -59,10 +59,10 @@
 /datum/reagent/blood/on_mob_life(mob/living/carbon/H)//I hate you
 	..()
 	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-		H.adjust_nutrition(2)
-		H.adjust_hydration(2)
-		if(H.blood_volume < BLOOD_VOLUME_NORMAL)
-			H.blood_volume = min(H.blood_volume+4, BLOOD_VOLUME_NORMAL)//Less effective than just water.
+		H.adjust_nutrition(12)
+		H.adjust_hydration(12)
+		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			H.set_blood_volume(min(H.get_blood_volume()+5, BLOOD_VOLUME_NORMAL)) //water should be toxic to hemophages, increasing it so it becomes a water replacement
 		return
 	if(HAS_TRAIT(H, TRAIT_NASTY_EATER))
 		return
@@ -73,11 +73,11 @@
 		..()
 /datum/reagent/blood/shitty/on_mob_life(mob/living/carbon/H)
 	..()
-	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-		H.adjust_nutrition(0.3)
-		H.adjust_hydration(0.3)
-		if(H.blood_volume < BLOOD_VOLUME_NORMAL)
-			H.blood_volume = min(H.blood_volume+2, BLOOD_VOLUME_NORMAL)//Much less effective than just water.
+	if(HAS_TRAIT(H, TRAIT_HEMOPHAGE)) // this should be ass
+		H.adjust_nutrition(2)
+		H.adjust_hydration(2) 
+		if(H.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+			H.set_blood_volume(min(H.get_blood_volume()+2, BLOOD_VOLUME_NORMAL))//Much less effective than just water.
 		if(prob(5))
 			to_chat(H, span_red("This will hardly do... I must procure a better source of lyfeblood..."))
 		return
@@ -98,7 +98,7 @@
 /datum/reagent/water
 	name = "Water"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen."
-	color = "#6a9295c6"
+	color = "#6a9295"
 	taste_description = "water"
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
@@ -115,16 +115,32 @@
 	results = list(/datum/reagent/water/gross = 2)
 	required_reagents = list(/datum/reagent/water/gross = 1, /datum/reagent/water = 1)
 
+/datum/reagent/water/reaction_mob(mob/living/M, method = TOUCH, reac_volume)
+	if(!isliving(M))
+		return ..()
+
+	if(method in list(TOUCH, VAPOR, PATCH))
+		var/mob/living/L = M
+
+		// 120u of water cools 100 temperature- or one level of temperature (A bucket/stonepot)
+		var/cooling = reac_volume * (100 / 120)
+
+		L.bodytemperature = max(L.bodytemperature - cooling, BODYTEMP_COLD_LEVEL_ONE_MAX)	//Will never put someone at level 2 cold
+
+	return ..()
+
 #define WATER_BLOOD_RESTORE 5
 /datum/reagent/water/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(HAS_TRAIT(H, TRAIT_HEMOPHAGE))
-			M.add_nausea(2)
+			M.add_nausea(12) //should instant puke for clearification
 		else
 			H.adjust_hydration(hydration)
-			if(M.blood_volume < BLOOD_VOLUME_NORMAL)
-				M.blood_volume = min(M.blood_volume+WATER_BLOOD_RESTORE, BLOOD_VOLUME_NORMAL)
+			if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+				M.set_blood_volume(min(M.get_blood_volume()+WATER_BLOOD_RESTORE, BLOOD_VOLUME_NORMAL))
+		if(M.bodytemperature > BODYTEMP_NORMAL_MIN + 5)	//drinking water lowers a persons temperature up to the 'normal' minimum
+			M.adjust_bodytemperature(-5)
 	..()
 #undef WATER_BLOOD_RESTORE
 
@@ -153,11 +169,26 @@
 	//I am not putting in a NASTY_EATER check for this. He's the god of bloodshed, not the god of coprophagia.
 	M.adjustToxLoss(4) //Horrible day for poop drinkers
 	M.add_nausea(20)
+
 /datum/chemical_reaction/grosswaterboil //boiling water purifies it
 	name = "gross water purification"
 	id = /datum/reagent/water
 	results = list(/datum/reagent/water = 1)
 	required_reagents = list(/datum/reagent/water/gross = 1)
+	required_temp = 375
+
+/datum/chemical_reaction/holywaterboil //boiling holy water mundanifies it
+	name = "holy water mundanification"
+	id = /datum/reagent/water
+	results = list(/datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/water/blessed = 1)
+	required_temp = 375
+
+/datum/chemical_reaction/cursedwaterboil //boiling cursed water mundanifies it
+	name = "cursed water mundanification"
+	id = /datum/reagent/water
+	results = list(/datum/reagent/water = 1)
+	required_reagents = list(/datum/reagent/water/cursed = 1)
 	required_temp = 375
 
 /datum/reagent/water/bathwater
@@ -572,7 +603,7 @@
 		var/datum/species/species_type = race
 		H.set_species(species_type)
 		H.reagents.del_reagent(type)
-		to_chat(H, "<span class='warning'>You've become \a [lowertext(initial(species_type.name))]!</span>")
+		to_chat(H, "<span class='warning'>You've become \a [LOWER_TEXT(initial(species_type.name))]!</span>")
 	..()
 
 #undef MUT_MSG_IMMEDIATE
@@ -748,8 +779,8 @@
 	color = "#606060" //pure iron? let's make it violet of course
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
-	if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-		C.blood_volume += 0.5
+	if(C.get_blood_volume() < BLOOD_VOLUME_NORMAL)
+		C.adjust_blood_volume(0.5)
 	..()
 
 /datum/reagent/gold
@@ -1001,7 +1032,7 @@
 	M.drowsyness += 2
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.blood_volume = max(H.blood_volume - 10, 0)
+		H.set_blood_volume(max(H.get_blood_volume() - 10, 0))
 	if(prob(20))
 		M.losebreath += 2
 		M.confused = min(M.confused + 2, 5)
@@ -1578,17 +1609,9 @@
 
 	return ..()
 
-//monkey powder heehoo
-/datum/reagent/monkey_powder
-	name = "Monkey Powder"
-	description = "Just add water!"
-	color = "#9C5A19"
-	taste_description = "bananas"
-	can_synth = TRUE
-
 /datum/reagent/cellulose
 	name = "Cellulose Fibers"
-	description = "A crystaline polydextrose polymer, plants swear by this stuff."
+	description = "A crystalline polydextrose polymer, plants swear by this stuff."
 	reagent_state = SOLID
 	color = "#E6E6DA"
 	taste_mult = 0

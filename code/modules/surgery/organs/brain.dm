@@ -8,6 +8,8 @@
 	zone = BODY_ZONE_PRECISE_SKULL
 	slot = ORGAN_SLOT_BRAIN
 	organ_flags = ORGAN_VITAL
+	/// Weakref to the body this brain spawned in. Never qdel this, /datum/weakref/Destroy() qdels its target
+	var/datum/weakref/original_body_ref
 	attack_verb = list("attacked", "slapped", "whacked")
 
 	///The brain's organ variables are significantly more different than the other organs, with half the decay rate for balance reasons, and twice the maxHealth
@@ -27,8 +29,20 @@
 
 	var/list/datum/brain_trauma/traumas = list()
 
+/// Whether this brain belongs to a different body. A destroyed home still counts as foreign,
+/// or gibbing the victim's corpse would enable body swapping. Only a brain that never had a home fails open
+/obj/item/organ/brain/proc/is_foreign_to(mob/living/carbon/body)
+	if(!original_body_ref)
+		return FALSE
+	return original_body_ref.resolve() != body
+
 /obj/item/organ/brain/Insert(mob/living/carbon/C, special = FALSE, drop_if_replaced = FALSE, no_id_transfer = FALSE)
 	. = ..()
+
+	// Only spawn-type inserts pass special, so surgery can never re-home a brain.
+	// owner == C is what proves the parent actually inserted, it early-returns without setting owner
+	if(special && C && owner == C && !original_body_ref)
+		original_body_ref = WEAKREF(C)
 
 	name = "brain"
 
@@ -109,8 +123,8 @@
 	if(brainmob) //if we aren't trying to heal the brain, pass the attack onto the brainmob.
 		O.attack(brainmob, user) //Oh noooeeeee
 
-  if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
-	  setOrganDamage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
+	if(O.force != 0 && !(O.item_flags & NOBLUDGEON))
+		setOrganDamage(maxHealth) //fails the brain as the brain was attacked, they're pretty fragile.
 
 /obj/item/organ/brain/examine(mob/user)
 	. = ..()
@@ -126,13 +140,13 @@
 			else
 				. += span_info("I can feel the small spark of life still left in this one.")
 		else if(organ_flags & ORGAN_FAILING)
-			. += span_info("It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.")
+			. += span_info("It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> in case it becomes functional again later.")
 		else
 			. += span_info("This one seems particularly lifeless. Perhaps it will regain some of its luster later.")
 	else
 		if(decoy_override)
 			if(organ_flags & ORGAN_FAILING)
-				. += span_info("It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.")
+				. += span_info("It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> in case it becomes functional again later.")
 			else
 				. += span_info("This one seems particularly lifeless. Perhaps it will regain some of its luster later.")
 		else

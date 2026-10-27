@@ -3,6 +3,7 @@
 /obj/item/rogueweapon
 	name = ""
 	desc = ""
+	has_item_quality = TRUE
 	icon_state = "sabre"
 	item_state = "sabre"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -12,12 +13,11 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	block_chance = 0
-	armor_penetration = 0
+	armor_penetration = PEN_NONE
 	sharpness = IS_SHARP
 	possible_item_intents = list(SWORD_CUT, SWORD_THRUST)
 	can_parry = TRUE
 	wlength = WLENGTH_NORMAL
-	sellprice = 1
 	parrysound = list('sound/combat/parry/parrygen.ogg')
 	break_sound = 'sound/foley/breaksound.ogg'
 	anvilrepair = /datum/skill/craft/weaponsmithing
@@ -39,10 +39,27 @@
 	/// Icon for sheathing. Only null for weapons that are unsheathable.
 	var/sheathe_icon = null
 
-/obj/item/rogueweapon/Initialize()
+	// whether this is actually a tool, like hoes and hammers, not a weapon proper. used to allow TRAIT_WEAPONLESS users to conduct repairs and such
+	var/is_tool = FALSE
+
+
+	/// the durability damage recieved for every work cycle
+	var/hoe_damage = null
+	/// the time it takes to make new soil or till soil
+	var/work_time = 3 SECONDS 
+
+	/// Special datum holder
+	var/datum/special_intent/special
+
+
+
+/obj/item/rogueweapon/Initialize(mapload)
 	. = ..()
 	if(!destroy_message)
 		destroy_message = span_warning("\The [src] shatters!")
+
+	if(ispath(special))
+		special = new special()
 
 /obj/item/rogueweapon/ComponentInitialize()
 	if(is_silver) // By default, silver weapons are supposed to be blesseable.
@@ -72,7 +89,7 @@
 		wdefense /= 2
 	if(wdefense_wbonus)
 		wdefense_wbonus = -3
-	wdefense_dynamic = wdefense
+	update_wdefense_dynamic()
 	if(sharpness & IS_SHARP)
 		sharpness = IS_BLUNT
 	if(can_parry)
@@ -85,21 +102,19 @@
 	armor_penetration = initial(armor_penetration)
 	wdefense = initial(wdefense)
 	wdefense_wbonus = initial(wdefense_wbonus)
-	wdefense_dynamic = wdefense
+	update_wdefense_dynamic()
 	sharpness = initial(sharpness)
 	can_parry = initial(can_parry)
 	..()
 
 /obj/item/rogueweapon/rmb_self(mob/user)
-	if(length(alt_intents))
-		if(altgripped)
-			ungrip(user)
-			return
-		if(wielded)
-			ungrip(user)
-		altgrip(user)
-		user.update_inv_hands()
-	..()
+	if(!has_altgrip_modes())
+		return ..()
+	if(wielded && !altgripped)
+		ungrip(user)
+	altgrip(user)
+	user.update_inv_hands()
+	return ..()
 
 /obj/item/shaft
 	name = "debug shaft"

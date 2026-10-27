@@ -33,6 +33,7 @@
 	beltr = /obj/item/storage/belt/rogue/pouch
 	beltl = /obj/item/rogue/instrument/drum
 	head = /obj/item/clothing/head/roguetown/jester
+	mask = /obj/item/clothing/mask/rogue/xylixmask
 	neck = /obj/item/clothing/neck/roguetown/coif
 	backpack_contents = list(/obj/item/storage/keyring/servant)
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
@@ -53,6 +54,10 @@
 	H.STAPER = rand(1, 21)
 	H.STALUC = rand(1, 21)
 	H.cmode_music = 'sound/music/combat_jester.ogg'
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/dropkick) // hilarious
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/chokeslam)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stunner)
 	if(H.mind)
 		// Mime vs Jester.
 		// As a mute jester you cannot cast Tell Joke/Tragedy, so why even have them?

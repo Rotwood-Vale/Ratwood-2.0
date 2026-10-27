@@ -1,14 +1,14 @@
 /obj/item/clothing/gloves/roguetown/contraption
 	var/obj/item/accepted_power_source = /obj/item/roguegear/bronze	//Bronze by default
-	var/charge_per_source = 5
+	var/charge_per_source = 10
 	var/current_charge = 0
-	var/misfire_chance = 15
+	var/misfire_chance = 0
 	var/sneaky_misfire_chance
 	var/misfiring = FALSE
 	var/cog_accept = TRUE
 
 
-    // === CONTRAPTION CORE BEHAVIOR ===
+// === CONTRAPTION CORE BEHAVIOR ===
 /obj/item/clothing/gloves/roguetown/contraption/proc/battery_collapse(obj/O, mob/living/user)
 	to_chat(user, span_info("The [accepted_power_source.name] powering [src] fizzles into nothing!"))
 	playsound(src, pick('sound/combat/hits/onmetal/grille (1).ogg','sound/combat/hits/onmetal/grille (2).ogg'), 100, FALSE)
@@ -36,15 +36,16 @@
 	icon_state = "volticgauntlets"
 	slot_flags = ITEM_SLOT_GLOVES
 	var/activate_sound = 'sound/items/stunmace_gen (2).ogg'
-	var/cdtime = 1.5 MINUTES
+	var/cdtime = 20 SECONDS // more in line with a lightning bolt
 	var/activetime = 5 SECONDS
 	sellprice = 100
-	var/delay = 5 SECONDS
+	var/delay = 3 SECONDS
 	var/sprite_changes = 10
 	var/datum/beam/current_beam = null
 	var/active = FALSE
 	var/cooldowny
-
+	sewrepair = FALSE
+	anvilrepair = /datum/skill/craft/armorsmithing
 
 
 /obj/item/clothing/gloves/roguetown/contraption/voltic/attackby(obj/item/I, mob/user, params)
@@ -84,7 +85,7 @@
 		user.visible_message(span_warning("[src] settles down."))
 		user.update_inv_wear_id()
 
-    // === VOLTIC ZAP ===
+// === VOLTIC ZAP ===
 /obj/item/clothing/gloves/roguetown/contraption/voltic/proc/activate(mob/living/user)
 	if (!user)
 		return
@@ -102,7 +103,7 @@
 
 	var/list/mob/living/valid_targets = list()
 	// Find targets in range
-	for (var/mob/living/carbon/C in view(2, user))
+	for (var/mob/living/carbon/C in view(4, user))
 		if (C.anti_magic_check())
 			visible_message(span_warning("The lightning fizzles harmlessly against [C]!"))
 			playsound(get_turf(C), 'sound/magic/magic_nulled.ogg', 100)
@@ -122,19 +123,19 @@
 			continue
 		var/datum/beam/current_beam
 		for (var/x = 1; x <= sprite_changes; x++)
-			current_beam = new(user, C, time = 50 / sprite_changes, beam_icon_state = "lightning[ rand(1,12) ]", btype = /obj/effect/ebeam, maxdistance = 10)
+			current_beam = new(user, C, time = 50 / sprite_changes, icon_state = "lightning[ rand(1,12) ]", beam_type = /obj/effect/ebeam, max_distance = 10)
 			INVOKE_ASYNC(current_beam, TYPE_PROC_REF(/datum/beam, Start))
 			sleep(delay / sprite_changes)
 
 		var/dist = get_dist(user, C)
-		if (dist <= 2)
+		if (dist <= 4)
 			if (HAS_TRAIT(C, TRAIT_SHOCKIMMUNE))
 				continue
 			else
-				C.Immobilize(0.5 SECONDS)
-				C.apply_status_effect(/datum/status_effect/debuff/clickcd, 6 SECONDS)
+				C.Immobilize(3 SECONDS)
+				C.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS)
 				C.electrocute_act(1, src, 1, SHOCK_NOSTUN)
-				C.apply_status_effect(/datum/status_effect/buff/lightningstruck, 6 SECONDS)
+				C.apply_status_effect(/datum/status_effect/buff/lightningstruck, 8 SECONDS)
 		else
 			playsound(user, 'sound/items/stunmace_toggle (3).ogg', 100)
 			user.visible_message(span_warning("The voltaic link fizzles out!"), span_warning("[C] is too far away!"))

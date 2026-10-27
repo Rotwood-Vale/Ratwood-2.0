@@ -8,6 +8,7 @@
 	sellprice = 100
 	icon = 'icons/roguetown/items/misc.dmi'
 	var/deployed_structure = /obj/structure/fluff/walldeco/painting
+	display_category = ITEM_CAT_DECORATION //This painting is pure loot and has no recipe, so it must be labeled seperately
 
 /obj/item/rogue/painting/attack_turf(turf/T, mob/living/user)
 	if(isclosedturf(T))
@@ -28,7 +29,7 @@
 	..()
 
 /obj/structure/fluff/walldeco/painting
-	name = "painting"
+	name = "vague painting"
 	desc = "The artist is unknown. The subject is unknown. Maybe a memorial to a corpse that was trampled on the trail to this reality."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "painting_deployed"
@@ -47,12 +48,14 @@
 	..()
 
 /obj/structure/fluff/walldeco/painting/queen
+	name = "queen alexia painting"
 	desc = "It's Queen Alexia I 'the Righteous' Valmont of Ferentia. Twenty years ago she rebelled against her father, King Mattimeo, and had him burned on a cross for heresy after he was seduced by a Baothan succubus."
 	icon_state = "queenpainting_deployed"
 	stolen_painting = /obj/item/rogue/painting/queen
 
 /obj/item/rogue/painting/queen
 	icon_state = "queenpainting"
+	name = "queen alexia painting"
 	desc = "It's Queen Alexia I 'the Righteous' Valmont of Ferentia. Twenty years ago she rebelled against her father, King Mattimeo, and had him burned on a cross for heresy after he was seduced by a Baothan succubus. These mass-reproduced paintings are devalued."
 	dropshrink = 0.5
 	sellprice = 200
@@ -60,23 +63,27 @@
 
 /obj/item/rogue/painting/seraphina
 	icon_state = "seraphinapainting"
-	desc = "It's holy priest Seraphina, first of her name, blessed be her name."
+	name = "holy priest seraphina painting"
+	desc = "The holy priest Seraphina, first leader of the Sun Cult of Astrata, who unified the ten sects of the gods after the disappearance of PSYDON. Seen as the great unifier of faith as the Age of Rot began a thousand years past."
 	dropshrink = 0.5
 	sellprice = 200
 	deployed_structure = /obj/structure/fluff/walldeco/painting/seraphina
 
 /obj/structure/fluff/walldeco/painting/seraphina
-	desc = "It's holy priest Seraphina, first of her name, blessed be her name."
+	name = "holy priest seraphina painting"
+	desc = "The holy priest Seraphina, first leader of the Sun Cult of Astrata, who unified the ten sects of the gods after the disappearance of PSYDON. Seen as the great unifier of faith as the Age of Rot began a thousand years past."
 	icon_state = "seraphinapainting_deployed"
 	stolen_painting = /obj/item/rogue/painting/seraphina
 
 /obj/item/rogue/painting/skullzhg
 	icon_state = "skullpainting"
-	desc = "A moody scene depicting a skull and candles on a table. Memento mori."
+	name = "morbid painting"
+	desc = "A painting of a candelabra and human skull on a covered table, it is a modestly grim yet tasteful piece of art. Memento mori."
 	sellprice = 200
 	deployed_structure = /obj/structure/fluff/walldeco/painting/skull
 
 /obj/structure/fluff/walldeco/painting/skull
-	desc = "A moody scene depicting a skull and candles on a table. Memento mori."
+	name = "morbid painting"
+	desc = "A painting of a candelabra and human skull on a covered table, it is a modestly grim yet tasteful piece of art. Memento mori."
 	icon_state = "skullpainting_deployed"
 	stolen_painting = /obj/item/rogue/painting/skullzhg

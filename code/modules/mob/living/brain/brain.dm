@@ -7,7 +7,7 @@
 	base_intents = list(INTENT_HELP, INTENT_HARM) //for mechas
 	speech_span = SPAN_ROBOT
 
-/mob/living/brain/Initialize()
+/mob/living/brain/Initialize(mapload)
 	. = ..()
 	testing("WWOLFDNA")
 	create_dna(src)
@@ -31,6 +31,7 @@
 			mind.current = null
 		testing("BASEDLOL ")
 		ghostize(drawskip=TRUE)		//Ghostize checks for key so nothing else is necessary.
+	QDEL_NULL(stored_dna)
 	return ..()
 
 /mob/living/brain/update_mobility()

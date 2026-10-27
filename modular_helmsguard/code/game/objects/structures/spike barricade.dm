@@ -18,6 +18,7 @@
 	canSmoothWith = list(/obj/structure/barricade/wood_spike, /turf/closed/wall)
 	resistance_flags = FLAMMABLE
 	buckle_lying = 0
+	buckle_blocks_spells = TRUE
 	var/contact_dir
 	var/obj/item/bodypart/BP
 
@@ -52,7 +53,7 @@
 			M.Immobilize(30)
 			if(isliving(M))
 				M.emote("scream")
-		M.flash_fullscreen("redflash3")
+		M.fullscreen_redflash("redflash3")
 		shake_camera(M, 3, 1)
 	else
 		M.simple_add_wound(/datum/wound/puncture, silent = FALSE, crit_message = FALSE)
@@ -67,7 +68,7 @@
 	BP.add_wound(/datum/wound/puncture/large)
 	M.forceMove(drop_location())
 	buckle_mob(M, force=1)
-	M.flash_fullscreen("redflash3")
+	M.fullscreen_redflash("redflash3")
 	if(isliving(M))
 		M.emote("painscream")
 
@@ -126,7 +127,7 @@
 		if(do_after(user, rand(30,60), src))
 			if(success_chance >= success_check)
 				playsound(src, pick("sound/foley/flesh_rem.ogg", "sound/foley/flesh_rem2.ogg"), 100)
-				M.flash_fullscreen("redflash3")
+				M.fullscreen_redflash("redflash3")
 				M.emote("painscream")
 				user.visible_message(span_warning("[M] is pulled free from [src]!"))
 				..()
@@ -137,7 +138,7 @@
 					user.visible_message(span_warning("[user] failed to remove themselves from the [src]!"))
 				if(isliving(M))
 					M.emote("pain")
-				M.flash_fullscreen("redflash3")
+				M.fullscreen_redflash("redflash3")
 				return
 			M.Knockdown(rand(15,30))
 			M.Immobilize(30)

@@ -153,11 +153,10 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		log_game("[key_name(user)] pulled the lever with redstone id \"[redstone_id]\"")
 		if(do_after(user, used_time, target = user))
 			for(var/obj/structure/O in redstone_attached)
-				spawn(0) O.redstone_triggered()
+				addtimer(CALLBACK(O, TYPE_PROC_REF(/obj/structure, redstone_triggered)), 0)
 			toggled = !toggled
 			icon_state = "leverfloor[toggled]"
 			playsound(src, 'sound/foley/lever.ogg', 100, extrarange = 3)
-
 
 /obj/structure/lever/attackby(obj/item/I, mob/user, params)
 	var/obj/item = user.get_active_held_item()
@@ -169,7 +168,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		user.visible_message("<span class='info'>[user] Carves a name into the lever.</span>")
 		if(do_after(user, 10))
 			var/levername
-			levername = input("What name would you like to carve into the lever?")
+			levername = stripped_input(user, "What name would you like to carve into the lever?", "", "", MAX_NAME_LEN)
 			if (levername)
 				name = levername + "(lever)"
 				desc = "a lever with a name carved into it"
@@ -192,7 +191,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
 		if(prob(L.STASTR * 4))
 			for(var/obj/structure/O in redstone_attached)
-				spawn(0) O.redstone_triggered()
+				addtimer(CALLBACK(O, TYPE_PROC_REF(/obj/structure, redstone_triggered)), 0)
 			toggled = !toggled
 			icon_state = "leverfloor[toggled]"
 			playsound(src, 'sound/foley/lever.ogg', 100, extrarange = 3)
@@ -211,6 +210,14 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/lever/hidden
 	icon = null
 
+/obj/structure/lever/pretoggled
+	toggled = TRUE
+	icon_state = "leverfloor1"
+
+/obj/structure/lever/wall/pretoggled
+	toggled = TRUE
+	icon_state = "leverwall1"
+
 /obj/structure/lever/hidden/proc/feel_button(mob/living/user)
 	if(isliving(user))
 		var/mob/living/L = user
@@ -218,7 +225,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		user.visible_message("<span class='warning'>[user] presses a hidden button.</span>")
 		user.log_message("pulled the lever with redstone id \"[redstone_id]\"", LOG_GAME)
 		for(var/obj/structure/O in redstone_attached)
-			spawn(0) O.redstone_triggered(user)
+			addtimer(CALLBACK(O, TYPE_PROC_REF(/obj/structure, redstone_triggered), user), 0)
 		toggled = !toggled
 		playsound(src, 'sound/foley/lever.ogg', 100, extrarange = 3)
 
@@ -249,7 +256,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/pressure_plate/proc/triggerplate()
 	playsound(src, 'sound/misc/pressurepad_up.ogg', 35, extrarange = 2)
 	for(var/obj/structure/O in redstone_attached)
-		spawn(0) O.redstone_triggered()
+		addtimer(CALLBACK(O, TYPE_PROC_REF(/obj/structure, redstone_triggered)), 0)
 
 /obj/structure/pressure_plate/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -278,7 +285,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		user.visible_message("<span class='info'>[user] Carves a name into the plate.</span>")
 		if(do_after(user, 10))
 			var/platename
-			platename = input("What name would you like to carve into the plate?")
+			platename = stripped_input(user, "What name would you like to carve into the plate?", "", "", MAX_NAME_LEN)
 			if (platename)
 				name = platename + "(plate)"
 				desc = "a plate with a name carved into it"
@@ -328,7 +335,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	var/rattlesound = 'sound/foley/doors/lockrattle.ogg'
 	var/masterkey = TRUE //if masterkey can open this regardless
 
-/obj/structure/englauncher/Initialize()
+/obj/structure/englauncher/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -343,7 +350,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/englauncher/proc/can_user_rotate(mob/user)
 	var/mob/living/L = user
 	if(istype(L))
-		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return FALSE
 		else
 			return TRUE
@@ -375,7 +382,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		user.visible_message("<span class='info'>[user] Carves a name into the launcher.</span>")
 		if(do_after(user, 10))
 			var/launchername
-			launchername = input("What name would you like to carve into the launcher?")
+			launchername = stripped_input(user, "What name would you like to carve into the launcher?", "", "", MAX_NAME_LEN)
 			if (launchername)
 				name = launchername + "(launcher)"
 				desc = "a launcher with a name carved into it"
@@ -512,7 +519,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			bodyzone =  pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 			quiver_fire(firedirectionthree, bodyzone)
 
-/obj/structure/englauncher/proc/quiver_fire(var/launcher_direction, var/launcher_bodyzone)
+/obj/structure/englauncher/proc/quiver_fire(launcher_direction, launcher_bodyzone)
 	if(!ammo)
 		return
 	if(ammo.arrows.len)
@@ -524,7 +531,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			ammo.update_icon()
 			break
 
-/obj/structure/englauncher/proc/container_aerosolize(var/launcher_liquid, var/launcher_direction)
+/obj/structure/englauncher/proc/container_aerosolize(launcher_liquid, launcher_direction)
 	var/turf/T = get_step(src, launcher_direction) //check for turf
 	if(T)
 		var/obj/item/reagent_containers/con = launcher_liquid //get the container
@@ -613,12 +620,13 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	max_integrity = 0
 	redstone_structure = TRUE
 /*
-/obj/structure/floordoor/Initialize()
+/obj/structure/floordoor/Initialize(mapload)
 	AddComponent(/datum/component/squeak, list('sound/foley/footsteps/FTMET_A1.ogg','sound/foley/footsteps/FTMET_A2.ogg','sound/foley/footsteps/FTMET_A3.ogg','sound/foley/footsteps/FTMET_A4.ogg'), 100)
 	return ..()
 */
 /obj/structure/floordoor/obj_break(damage_flag)
-	obj_flags = null
+	set_is_platform(FALSE)
+	obj_flags &= ~BLOCK_Z_IN_UP
 	..()
 
 /obj/structure/floordoor/redstone_triggered(mob/user)
@@ -627,20 +635,22 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	togg = !togg
 	if(togg)
 		icon_state = "[base_state]0"
-		obj_flags = null
+		set_is_platform(FALSE)
+		obj_flags &= ~BLOCK_Z_IN_UP
 		var/turf/T = loc
 		if(istype(T))
 			for(var/atom/movable/M in loc)
 				T.Entered(M)
 	else
 		icon_state = "[base_state]1"
-		obj_flags = BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+		set_is_platform(TRUE)
+		obj_flags |= BLOCK_Z_IN_UP
 
 /obj/structure/floordoor/open
-		icon_state = "floorhatch0"
-		base_state = "floorhatch"
-		togg = TRUE
-		obj_flags = null
+	icon_state = "floorhatch0"
+	base_state = "floorhatch"
+	togg = TRUE
+	obj_flags = null
 
 /obj/structure/floordoor/gatehatch
 	name = ""
@@ -654,7 +664,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	nomouseover = TRUE
 	mouse_opacity = 0
 
-/obj/structure/floordoor/gatehatch/Initialize()
+/obj/structure/floordoor/gatehatch/Initialize(mapload)
 	AddComponent(/datum/component/squeak, list('sound/foley/footsteps/FTMET_A1.ogg','sound/foley/footsteps/FTMET_A2.ogg','sound/foley/footsteps/FTMET_A3.ogg','sound/foley/footsteps/FTMET_A4.ogg'), 40)
 	return ..()
 
@@ -668,7 +678,8 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	if(togg)
 		sleep(delay2open)
 		icon_state = "[base_state]0"
-		obj_flags = null
+		set_is_platform(FALSE)
+		obj_flags &= ~BLOCK_Z_IN_UP
 		var/turf/T = loc
 		if(istype(T))
 			for(var/atom/movable/M in loc)
@@ -678,7 +689,8 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 	else
 		sleep(delay2close)
 		icon_state = "[base_state]1"
-		obj_flags = BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+		set_is_platform(TRUE)
+		obj_flags |= BLOCK_Z_IN_UP
 		sleep(40-delay2close)
 		changing_state = FALSE
 
@@ -701,7 +713,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		user.visible_message("<span class='info'>[user] Carves a name into the plate.</span>")
 		if(do_after(user, 10))
 			var/hatchname
-			hatchname = input("What name would you like to carve into the hatch?")
+			hatchname = stripped_input(user, "What name would you like to carve into the hatch?", "", "", MAX_NAME_LEN)
 			if (hatchname)
 				name = hatchname + "(hatch)"
 				desc = "a hatch with a name carved into it"
@@ -749,3 +761,33 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/kybraxor/psy
 	name = "Kybraxor the Vaultkeeper"
 	redstone_id = "swamp_psy_dungeon"
+
+/obj/structure/lever/cursed
+	name = "Cursed Lever"
+	// color = "e8a3a0" //this breaks for some reason
+	desc = "A lever radiating a sinister aura. Only those of a certain allegiance may touch it."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "leverwall0"
+	var/allowed_factions = null // List of factions allowed to use this lever, e.g. list("orcs", "tribe")
+
+/obj/structure/lever/cursed/attack_hand(mob/user)
+	if(!istype(user, /mob/living))
+		return
+	var/mob/living/L = user
+	if(src.allowed_factions && (!L.faction || !length(src.allowed_factions & L.faction)))
+		to_chat(user, "<span class='danger'>A dark force repels your hand!</span>")
+		playsound(src, 'sound/magic/magic_nulled.ogg', 50)
+		return
+	. = ..()
+	icon_state = "leverwall[toggled]"
+
+/obj/structure/lever/cursed/onkick(mob/user)
+	if(!istype(user, /mob/living))
+		return
+	var/mob/living/L = user
+	if(src.allowed_factions && (!L.faction || !length(src.allowed_factions & L.faction)))
+		to_chat(user, "<span class='danger'>A dark force repels your kick!</span>")
+		playsound(src, 'sound/magic/magic_nulled.ogg', 50)
+		return
+	. = ..()
+	icon_state = "leverwall[toggled]"
