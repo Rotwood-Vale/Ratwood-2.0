@@ -358,21 +358,22 @@
 	icon_state = "runebag"
 
 /obj/item/quiver/twilight_bullet/runicbag/attack_self(mob/living/user)
-	if(!length(linked_ammo_types))
-		to_chat(user, span_notice("There is no linked ammunition to recall!"))
+	if(arrows.len >= max_storage)
+		to_chat(user, span_notice("The [src.name] is full and can accept no more ammunition!"))
 		return
+	var/choice = input(user, "Replenish which spheres?", "Pharetra") as null|anything in list("Runed", "Blessed")
+	if(!choice)
+		return
+	var/sphere_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock
+	if(choice == "Blessed")
+		sphere_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
 	to_chat(user, span_notice("I begin recalling my ammunition..."))
 	if(!do_after(user, 15 SECONDS, src))
 		return
 	playsound(src, 'sound/magic/blink.ogg', 80)
-	for(var/B in linked_ammo_types.Copy())
-		if(arrows.len >= max_storage)
-			to_chat(user, span_notice("The [src.name] is full and can accept no more ammunition!"))
-			break
-		var/obj/item/ammo_casing/new_boolet = new B(src)
-		arrows += new_boolet
-		link_casing(new_boolet)
-		linked_ammo_types -= B
+	while(summon_round(sphere_type))
+		continue
+	linked_ammo_types.Cut()
 	update_icon()
 
 // Added attackby so you can manually put bullets back in
@@ -396,6 +397,17 @@
 		M.doUnEquip(R, TRUE, src, TRUE, silent = TRUE)
 	else
 		R.forceMove(src)
+	arrows += R
+	link_casing(R)
+	update_icon()
+	return TRUE
+
+/obj/item/quiver/twilight_bullet/runicbag/proc/summon_round(sphere_type)
+	if(!ispath(sphere_type, /obj/item/ammo_casing/caseless/bullet/lead/runelock))
+		return FALSE
+	if(arrows.len >= max_storage)
+		return FALSE
+	var/obj/item/ammo_casing/R = new sphere_type(src)
 	arrows += R
 	link_casing(R)
 	update_icon()
