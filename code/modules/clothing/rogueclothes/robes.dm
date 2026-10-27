@@ -173,8 +173,7 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	flags_inv = HIDEBOOB|HIDETAIL
 	resistance_flags = FIRE_PROOF
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_CHOP, BCLASS_SMASH)
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	cold_protection = CHEST | ARM_LEFT | ARM_RIGHT
 
