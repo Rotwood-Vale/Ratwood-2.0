@@ -37,7 +37,6 @@ type Data = {
   active_tickets: Ticket[];
   closed_tickets: Ticket[];
   resolved_tickets: Ticket[];
-  admin_hide_charname: BooleanLike;
   selected_ticket: {
     ticket_id: number;
     ticket_name: string;
@@ -60,7 +59,6 @@ export const AdminTicketPanel = (props) => {
     closed_tickets,
     resolved_tickets,
     selected_ticket,
-    admin_hide_charname,
   } = data;
 
   const [tabIndex, setTabIndex] = useState(0);
@@ -596,18 +594,6 @@ export const AdminTicketPanel = (props) => {
                                   onClick={handleSend}
                                 >
                                   Send
-                                </Button>
-                                <Button
-                                  icon="user-secret"
-                                  tooltip={
-                                    admin_hide_charname
-                                      ? 'Character name hidden — click to show it'
-                                      : 'Character name visible — click to hide it'
-                                  }
-                                  selected={!!admin_hide_charname}
-                                  onClick={() => act('toggle_charname')}
-                                >
-                                  {admin_hide_charname ? 'Anon' : 'Named'}
                                 </Button>
                                 <Button
                                   icon="image"

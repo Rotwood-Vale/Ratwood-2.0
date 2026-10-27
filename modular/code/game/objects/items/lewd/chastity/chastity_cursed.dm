@@ -31,9 +31,9 @@
 	if(wearer.chastity_device != src)
 		return FALSE
 
-	var/added = get_tally_increment_for_source(source)
+	var/added = max(1, get_tally_increment_for_source(source))
 	received_cum_count += added
-	var/tally_msg = added == 1 ? "A metal scraping sound is briefly heard, a tally mark suddenly appears on [wearer]'s chastity device." : "A metal scraping sound is briefly heard, two tally marks suddenly appear on [wearer]'s chastity device."
+	var/tally_msg = added == 1 ? "A metal scraping sound is briefly heard, a tally mark suddenly appears on [wearer]'s chastity device." : "A metal scraping sound is briefly heard, [added] tally marks suddenly appear on [wearer]'s chastity device."
 	for(var/mob/M in viewers(1, wearer))
 		to_chat(M, span_notice(tally_msg))
 	return TRUE
@@ -48,8 +48,6 @@
 /obj/item/chastity/proc/cleanup_cursed_binding(mob/living/carbon/human/H)
 	if(!chastity_cursed || !H)
 		return FALSE
-
-	reset_received_cum_count()
 
 	SEND_SIGNAL(H, COMSIG_CARBON_LOSE_CHASTITY, src)
 

@@ -52,4 +52,5 @@
 		flags_inv &= ~HIDETAIL
 	else
 		flags_inv |= HIDETAIL
+	persist_inv_flags(HIDETAIL)	//AdjustClothes() calls ResetAdjust() directly, which wipes flags_inv
 	H.update_inv_pants()

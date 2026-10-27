@@ -6,6 +6,7 @@
 
 /mob
 	var/fovangle
+	var/cone_showing = FALSE
 
 //Procs
 /atom/proc/InCone(atom/center = usr, dir = NORTH)
@@ -304,6 +305,8 @@
 		if(H.wear_mask)
 			if(H.wear_mask.block2add)
 				fovangle |= H.wear_mask.block2add
+		if(H.has_status_effect(/datum/status_effect/debuff/sun_blinded))
+			fovangle |= FOV_LEFT|FOV_RIGHT
 		if(cyclops_left)
 			fovangle |= FOV_LEFT
 		if(cyclops_right)
@@ -349,6 +352,9 @@
 /mob/proc/show_cone()
 	if(!client)
 		return
+	if(cone_showing)
+		return
+	cone_showing = TRUE
 	if(hud_used?.fov)
 		hud_used.fov.alpha = 255
 		hud_used.fov_blocker.alpha = 255
@@ -358,6 +364,9 @@
 /mob/proc/hide_cone()
 	if(!client)
 		return
+	if(!cone_showing)
+		return
+	cone_showing = FALSE
 	if(hud_used?.fov)
 		hud_used.fov.alpha = 0
 		hud_used.fov_blocker.alpha = 0

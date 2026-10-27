@@ -105,7 +105,7 @@
 		if("familiar_headshot")
 			to_chat(user, "<span class='notice'>Please use a relatively SFW image of the head and shoulder area to maintain immersion level. <b>Do not use a real life photo or unserious images.</b></span>")
 			to_chat(user, "<span class='notice'>Ensure it's a direct image link. The photo will be resized to 325x325 pixels.</span>")
-			var/new_headshot_link = input(user, "Input the headshot link (https, hosts: gyazo, discord, lensdump, imgbox, catbox):", "Headshot", familiar_headshot_link) as text|null
+			var/new_headshot_link = input(user, "Input the headshot link (https, hosts: gyazo, discord, lensdump, imgbox, catbox, imgbb, filegarden):", "Headshot", familiar_headshot_link) as text|null
 			if(new_headshot_link == null)
 				return
 			if(new_headshot_link == "")
@@ -228,3 +228,28 @@
 
 	if(user.client)
 		fam_show_ui()
+
+/datum/familiar_prefs/proc/load_familiar_prefs(savefile/S)
+	S["familiar_name"]					>> familiar_name
+	S["familiar_pronouns"]				>> familiar_pronouns
+	S["familiar_specie"]				>> familiar_specie
+	S["familiar_headshot_link"]			>> familiar_headshot_link
+	S["familiar_flavortext"]			>> familiar_flavortext
+	S["familiar_ooc_notes"]				>> familiar_ooc_notes
+	S["familiar_ooc_extra"]				>> familiar_ooc_extra
+	S["familiar_ooc_extra_link"]		>> familiar_ooc_extra_link
+	return TRUE
+
+/datum/familiar_prefs/proc/save_familiar_prefs(savefile/S)
+	if(istype(S))
+		WRITE_FILE(S["familiar_name"] , familiar_name)
+		WRITE_FILE(S["familiar_pronouns"] , familiar_pronouns)
+		WRITE_FILE(S["familiar_specie"] , familiar_specie)
+		WRITE_FILE(S["familiar_headshot_link"] , familiar_headshot_link)
+		WRITE_FILE(S["familiar_flavortext"] , familiar_flavortext)
+		WRITE_FILE(S["familiar_ooc_notes"] , familiar_ooc_notes)
+		WRITE_FILE(S["familiar_ooc_extra"] , familiar_ooc_extra)
+		WRITE_FILE(S["familiar_ooc_extra_link"] , familiar_ooc_extra_link)
+	return TRUE
+
+

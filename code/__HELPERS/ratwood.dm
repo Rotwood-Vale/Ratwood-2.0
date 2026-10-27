@@ -88,5 +88,23 @@
 	for(var/obj/item/thing as anything in equipped_items)
 		if (thing.flags_inv)
 			new_flags |= thing.flags_inv
-	
+
+	if(new_flags == obscured_flags)
+		return
 	obscured_flags = new_flags
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.update_body_parts()
+
+/// Tries to get the mob's displayed class title, and return it as a string.
+/// This should always return a string, even an empty one. CHECK ITS length()!
+/mob/living/proc/get_class_title(unknown_class_if_empty = FALSE)
+	if(mind?.cosmetic_class_title)
+		return mind.cosmetic_class_title
+	if(advjob)
+		return advjob
+	if(job)
+		return job
+	if(unknown_class_if_empty)
+		return "Unknown Class"
+	return ""

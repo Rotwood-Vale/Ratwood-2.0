@@ -1,4 +1,6 @@
 #define FILE_ANTAG_REP "data/AntagReputation.json"
+#define FILE_RECENT_MAPS "data/RecentMaps.json"
+#define KEEP_ROUNDS_MAP 3
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
@@ -11,10 +13,13 @@ SUBSYSTEM_DEF(persistence)
 	var/list/antag_rep = list()
 	var/list/antag_rep_change = list()
 	var/list/picture_logging_information = list()
+	var/list/saved_maps = list()
+	var/list/blocked_maps = list()
 
 /datum/controller/subsystem/persistence/Initialize()
 	LoadTrophies()
 	LoadRecentModes()
+	Load_Recent_Maps()
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
 	LoadRandomizedRecipes()
@@ -87,6 +92,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectTrophies()
 	CollectRoundtype()				//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
+	Collect_Maps()
 	if(CONFIG_GET(flag/use_antag_rep))
 		CollectAntagReputation()
 	SaveRandomizedRecipes()
@@ -194,3 +200,44 @@ SUBSYSTEM_DEF(persistence)
 
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
+
+/// Loads up the amount of times maps appeared to alter their appearance in voting and rotation.
+/datum/controller/subsystem/persistence/proc/Load_Recent_Maps()
+	var/map_sav = FILE_RECENT_MAPS
+	if(!fexists(FILE_RECENT_MAPS))
+		return
+	var/list/json = json_decode(file2text(map_sav))
+	if(!json)
+		return
+	saved_maps = json["data"]
+
+	//Convert the mapping data to a shared blocking list, saves us doing this in several places later.
+	for(var/map in config.maplist)
+		var/datum/map_config/VM = config.maplist[map]
+		var/run = 0
+		if(VM.map_name == SSmapping.current_map.map_name)
+			run++
+		for(var/name in SSpersistence.saved_maps)
+			if(VM.map_name == name)
+				run++
+		if(run >= 2) //If run twice in the last KEEP_ROUNDS_MAP + 1 (including current) rounds, disable map for voting and rotation.
+			blocked_maps += VM.map_name
+
+///Updates the list of the most recent maps.
+/datum/controller/subsystem/persistence/proc/Collect_Maps()
+	if(length(saved_maps) > KEEP_ROUNDS_MAP) //Get rid of extras from old configs.
+		saved_maps.Cut(KEEP_ROUNDS_MAP+1)
+	var/mapstosave = min(length(saved_maps)+1, KEEP_ROUNDS_MAP)
+	if(length(saved_maps) < mapstosave) //Add extras if too short, one per round.
+		saved_maps += mapstosave
+	for(var/i = mapstosave; i > 1; i--)
+		saved_maps[i] = saved_maps[i-1]
+	saved_maps[1] = SSmapping.current_map.map_name
+	var/json_file = file(FILE_RECENT_MAPS)
+	var/list/file_data = list()
+	file_data["data"] = saved_maps
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+
+#undef FILE_RECENT_MAPS
+#undef KEEP_ROUNDS_MAP

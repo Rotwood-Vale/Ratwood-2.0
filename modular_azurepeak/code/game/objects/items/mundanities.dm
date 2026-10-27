@@ -98,8 +98,8 @@
 	icon = 'modular_azurepeak/icons/obj/items/mundanities.dmi'
 	icon_state = "grimace_box"
 	var/fluff_desc = null
-	var/list/finished_ckeys = list()
 	var/dice_roll = null
+	var/last_attempt_day = -1
 	sellprice = 150
 
 	grid_width = 32
@@ -112,19 +112,20 @@
 	desc += "[fluff_desc]"
 
 /obj/item/mundane/puzzlebox/impossible/attack_self(mob/living/user)
-	var/ckey = user.ckey
-	if(ckey in finished_ckeys)
-		to_chat(user, span_warning("I've already tried my hand at [src]."))
+	if(last_attempt_day == GLOB.dayspassed)
+		to_chat(user, span_warning("An attempt has already been made.. I should wait a dae.."))
 		return
 	playsound(src.loc, 'sound/items/wood_sharpen.ogg', 75, TRUE)
 	playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
 	if (alert(user, "My fingers trace the outside of this box. It looks nearly impossible. Do I try to solve it?", "ROGUETOWN", "Yes", "No") != "Yes")
 		return
+	if(last_attempt_day == GLOB.dayspassed) // You can stack the yes/no prompts, not letting you do that
+		return
+	last_attempt_day = GLOB.dayspassed
 	if(do_after(user,100, target = src))
 		if((dice_roll) + 4 <= user.STAINT)
 			to_chat(user, span_notice("After much deliberation, I solve \the [src]!"))
 			user.add_stress(/datum/stressevent/puzzle_impossible)
-			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lockrattle.ogg', 75, TRUE)
 			to_chat(user, span_notice("As I pop open \the [src], I feel a tingling wave run from my head to my feet. A piece of an azure crystal tumbles out. When I grab it, it's gone- and I suddenly feel invigorated."))
 			user.STAINT += rand(1,5)
@@ -132,13 +133,13 @@
 			user.STASPD += rand(1,5)
 			user.STACON += rand(1,5)
 			user.STAWIL += rand(1,5)
-			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lock.ogg', 75, TRUE)
 			playsound(src.loc, 'sound/items/visor.ogg', 75, TRUE)
+			src.visible_message(span_warning("\The [src] crumbles to dust."))
+			qdel(src) //one solve per box, no passing it around the keep
 		else
 			to_chat(user, span_warning("I can't even start to solve [src]. Feeling like an absolute fool, I put it aside."))
 			user.add_stress(/datum/stressevent/puzzle_fail)
-			finished_ckeys += ckey
 			playsound(src.loc, 'sound/foley/doors/lockrattle.ogg', 75, TRUE)
 
 
@@ -159,25 +160,25 @@
 	rotprocess = null
 	drop_sound = 'sound/foley/dropsound/shovel_drop.ogg'
 
-/obj/item/reagent_containers/food/snacks/canned/Initialize(mapload)
+/obj/item/reagent_containers/food/snacks/canned/Initialize()
 
 
 	menu_item = pick(1,2,3,4,5) //get the meal. rand does not work for this and i have no idea why.
 	switch(menu_item)
 		if(1)
-			list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_NUTRITIOUS, /datum/reagent/drug/space_drugs = 2, /datum/reagent/berrypoison = 1)
+			list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_THREE_QUARTER_MEAL, /datum/reagent/drug/space_drugs = 2, /datum/reagent/berrypoison = 1)
 			tastes = list("salty bitter syrup" = 2, "bad mushrooms" = 1)
 		if(2)
-			list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_MEAGRE, /datum/reagent/medicine/stronghealth = 1, /datum/reagent/water/salty = 3)
+			list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_MEAL_AND_QUARTER, /datum/reagent/medicine/stronghealth = 1, /datum/reagent/water/salty = 3)
 			tastes = list("overpoweringly salty rous meat" = 2)
 		if(3)
-			list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE, /datum/reagent/medicine/stronghealth = 3, /datum/reagent/water/salty = 3)
+			list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_MEAL_AND_HALF, /datum/reagent/medicine/stronghealth = 3, /datum/reagent/water/salty = 3)
 			tastes = list("cabbit meat" = 1, "thin stew" = 1)
 		if(4)
-			list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_AVERAGE, /datum/reagent/medicine/stronghealth = 3, /datum/reagent/medicine/strongmana = 3, /datum/reagent/water/salty = 3)
+			list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_MEAL_AND_HALF, /datum/reagent/medicine/stronghealth = 3, /datum/reagent/medicine/strongmana = 3, /datum/reagent/water/salty = 3)
 			tastes = list("salt" = 2, "saiga meat" = 1, "vegetables" = 1)
 		if(5)
-			list_reagents = list(/datum/reagent/consumable/nutriment = MEAL_GOOD, /datum/reagent/medicine/stronghealth = 6, /datum/reagent/medicine/strongmana = 6)
+			list_reagents = list(/datum/reagent/consumable/nutriment = NUTRITION_TWO_MEALS, /datum/reagent/medicine/stronghealth = 6, /datum/reagent/medicine/strongmana = 6)
 			tastes = list("hearty meat stew" = 1, "fresh vegetables" = 1)
 	. = ..()
 

@@ -16,8 +16,6 @@
 ///Called when a /mob/living/simple_animal/hostile finds a new target: (atom/source, new_target)
 #define COMSIG_HOSTILE_FOUND_TARGET "comsig_hostile_found_target"
 
-#define COMSIG_MOB_ABILITY_STARTED "comsig_mob_ability_started"
-#define COMSIG_MOB_ABILITY_FINISHED "comsig_mob_ability_finished"
 
 #define COMSIG_SIMPLEMOB_PRE_ATTACK_RANGED "basicmob_pre_attack_ranged"
 	#define COMPONENT_CANCEL_RANGED_ATTACK COMPONENT_CANCEL_ATTACK_CHAIN //! Cancel to prevent the attack from happening
@@ -92,8 +90,17 @@
 ///From living/Life() (seconds, times_fired)
 #define COMSIG_LIVING_LIFE "living_life"
 
+/// From /mob/living/apply_overlay() and remove_overlay(): the mob's rendered overlays changed
+#define COMSIG_LIVING_OVERLAYS_APPLIED "living_overlays_applied"
+
 /// From /obj/item/grabbing/bite/drinklimb() (mob/living/target)
 #define COMSIG_LIVING_DRINKED_LIMB_BLOOD "living_drinked_limb_blood"
 
 /// From /obj/item/organ/proc/Remove() (mob/living/carbon/lost_organ, obj/item/organ/removed, special, drop_if_replaced)
 #define COMSIG_MOB_ORGAN_REMOVED "mob_organ_removed"
+
+/// From /datum/species/proc/spec_attacked_by()
+#define COMSIG_SPECIES_ATTACKED_BY "species_attacked_by"
+
+/// From /mob/living/proc/run_armor_check()
+#define COMSIG_LIVING_ARMOR_CHECKED "living_armor_checked"

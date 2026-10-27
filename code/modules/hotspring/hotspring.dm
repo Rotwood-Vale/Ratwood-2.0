@@ -81,10 +81,8 @@
 				playsound(user, pick(wash), 100, FALSE)
 				if(user.bodytemperature < BODYTEMP_NORMAL_MIN)	//washing yourself helps to warm you up.
 					user.adjust_bodytemperature(75)
-					user.update_health_hud()
 				if(user.bodytemperature > BODYTEMP_NORMAL_MAX)	//washing yourself helps to cool you off.
 					user.adjust_bodytemperature(-75)
-					user.update_health_hud()
 		else
 			user.visible_message(span_info("[user] starts to wash [item2wash] in [src]."))
 			if(do_after(L, 30, target = src))
@@ -249,6 +247,29 @@
 	obj_flags = CAN_BE_HIT | IGNORE_SINK
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = GAME_PLANE_UPPER
+	pixel_x = -60
+	pixel_y = -10
 
 	bound_height = 128
 	bound_width = 128
+	max_integrity = 200
+	blade_dulling = DULLING_CUT
+	attacked_sound = 'sound/misc/woodhit.ogg'
+	destroy_sound = 'sound/misc/woodhit.ogg'
+	static_debris = list(/obj/item/grown/log/tree = 1)
+	var/obj/effect/abstract/particle_holder/cached/petal_effect
+
+/obj/structure/flora/sakura/Initialize(mapload)
+	. = ..()
+	petal_effect = new(src, /particles/sakura, 6)
+	petal_effect.vis_flags &= ~VIS_INHERIT_PLANE
+
+/obj/structure/flora/sakura/Destroy()
+	QDEL_NULL(petal_effect)
+	return ..()
+
+/obj/structure/flora/sakura/examine(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		user.add_stress(/datum/stressevent/sakura_view)
+		to_chat(user, span_green("The gentle flutter of petals calms my spirit."))

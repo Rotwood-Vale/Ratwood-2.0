@@ -30,3 +30,420 @@
 2026-04-06:
   Xander3359:
   - bugfix: Fixed mindlink by setting it to ,m
+2026-04-12:
+  Jamdrawers:
+  - qol: can carry a pouch in your cloak slot
+  - balance: 'gives towners scaling skills (lumberjack for woodcutter, mining for
+      miner, farming for farmer, etc) based on age (master at middleaged, legend at
+      Old)
+
+      Caps witches at 5
+
+      Buffs towner farmer
+
+      Tones down refugee Harvester
+
+      buffs Minstrel with rogue-ish skills'
+  - bugfix: stops skeletons spawning double chain gloves
+  - balance: 'gives leg clothing to the bulwark which otherwise had nothing in the
+      leg slot
+
+      -changes the cloak from a half-cloak to a black rapscallion''s shawl
+
+      -gives the sword-users scabbards
+
+      -adds a shield to the bulwark''s ''spear'' option
+
+      -gives all skeletons equal weapon skill in their possible weapons rather than
+      their weapon skill depending on what they selected at spawn.'
+  - bugfix: shadowcloak and duelist cloak will no longer turn invisible when right-clicked
+  - refactor: reorganised the Cloaks folder, making the baseline cloak have an inventory
+      instead of applying an inventory to every specific type of cloak
+  - rscadd: Adds craftable bronze armour
+  - bugfix: fixed a misaligned floor
+  - bugfix: missing merchant nervelock
+  Kroto-Ker:
+  - bugfix: Reduce crafting menu lag.
+  Loosenail:
+  - image: New hairstyle - "Hyena Mane Short"
+  - image: Moved the new Taro and Lizbeth hairstyles into alphabetical order, like
+      most of the selection.
+  - rscdel: Removed hairstyles - "Scout, Long Straight Ponytail, Ponytail (Yeager),
+      Newyou, Neuter, Female"
+  PPooch:
+  - bugfix: Fix being able to pick more bardic inspirations than intended
+  RadiantFlash7:
+  - balance: Desert Map Temperature changes
+  - balance: Desert Map Day/night cycle now 50/50 compared to rest of the maps 25/75
+  - bugfix: You can now wash off flammable ash and alcohol
+  Shadow-Quill:
+  - qol: You can now remove an object from your Necra's Sight list by re-casting the
+      spell on the object.
+  Teragenic:
+  - bugfix: HF Lord and Brigandine missing onmob icons
+  UntoldTactics:
+  - balance: Knuckles punch intent no longer recieves a 40% bonus integrity damage
+      modifier.
+  Xander3359:
+  - balance: Bloated leech tick is now small (1x1) since it can't be used as a weapon
+  - balance: Buffed surgeon's bag to be able to hold impure lux and leech ticks
+  - bugfix: Fixes active quests not going down if someone else turns in your quest.
+  - bugfix: Bandits can only follow Matthios
+  - qol: Votes now automatically open the prompt when started,
+  - image: Adds a missing icon for the thorn crown when worn.
+  - code_imp: Optimizes keyloop to have less loops
+  - bugfix: You can now pixel shift diagonally
+  - refactor: Replace the 4 direction facing keybinds with 1 block movement keybind
+  - code_imp: Deletes a lot of the unused files
+  - balance: Cabbit form now has actual 20 speed instead of pretend 20 speed
+  - balance: Cabbit form is no longer blocked by mobs, it is tiny and can slip through
+      people's legs
+  gatorceres:
+  - rscadd: plaguebearer (now "malpractitioner") can pick between the old loadout
+      options, or starting with only a rapier and dodge expert
+  - rscadd: malpractitioner starts with a cheele
+  john-pawson:
+  - bugfix: rivers now give 300 drams of water when filling
+  - balance: Bushes inside town no longer give berries
+  technotuna:
+  - bugfix: shift+1, etc. can now be set as keybinds
+  zeroisthebiggay:
+  - bugfix: corrects psydonic sword forces
+  - rscadd: three brand new hairs, Taro, Lizbeth, and Wispy, wahoo Yippee very exciting!!!!!!!!!!
+  - balance: wretches get a plus one to all stats, universally, upon spawning
+  - balance: wretch heretics, the armored ones, get plus two willpower to be on par
+      with templars
+  zoktiik:
+  - bugfix: Baothan "Tell Vice" T0 miracle now supports multiple vices.
+  - bugfix: Tell Vices now has fixed styling, and the vice names now show up in a
+      proper font size.
+  - rscadd: If you have the Deceiving Meekness trait, Tell Vices can technically lie
+      about any number of the vices you have, provided the miracle caster is Novice
+      level. Beware, however, that a "fake" generation is not purely random, and can
+      still reveal some or all of your vices based on certain rules.
+  - refactor: Tell Vice received a massive refactor in order to support all the new
+      behaviors, along with a lot of comment documentation talking about how the new
+      implementation works.
+  - spellcheck: Removed (+1 TRI) language from the base names of a few vices, with
+      the exception of "No Flaw (-3 TRI)". (For now.)
+  - bugfix: Added "on_removal" proc overrides for the simple "trait-granter" procs
+      that were lacking them.
+2026-04-13:
+  zeroisthebiggay:
+  - bugfix: mending no longer glows
+2026-04-14:
+  Jamdrawers:
+  - bugfix: desert grass can be tilled into soil, should smooth better visually
+  - bugfix: missing wretch teleport point on rockhill
+  - bugfix: fixes some merge errors in the vampire manor
+  Xander3359:
+  - bugfix: Fix being unable to delete an image from your OOC Extra
+  - config: Sets changelog to update daily instead of weekly
+  Yuckuza:
+  - bugfix: "Cursed Collars can no longer strip TRAIT_NODROP antag gear and natural\
+      \ armor\n:cl:\n<!-- Both :cl:'s are required for the changelog to work! You\
+      \ can put your name to the right of the first :cl: if you want to overwrite\
+      \ your GitHub username as author ingame. -->\n<!-- You can use multiple of the\
+      \ same prefix (they're only used for the icon ingame) and delete the unneeded\
+      \ ones. Despite some of the tags, changelogs should generally represent how\
+      \ a player might be affected by the changes rather than a summary of the PR's\
+      \ contents. -->\n<!-- By contributing to this codebase, you confirm that any\
+      \ code and sprites you provide are legal to share and will be licensed under\
+      \ the terms specified in README.md \u2014 AGPLv3 for code and CC-BY-SA 3.0 for\
+      \ assets, unless otherwise stated. You acknowledge that the project maintainers\
+      \ are under no obligation to remove any materials that do not violate these\
+      \ licenses. -->"
+2026-04-15:
+  Jamdrawers:
+  - bugfix: desertdeep added to valid hunting areas
+  - bugfix: Head Slave in desert map gets the vomitorium trait as well
+  Kroto-Ker:
+  - bugfix: Examine runtime.
+  Xander3359:
+  - bugfix: Fix void dragon not dropping the spell points scrolls
+2026-04-16:
+  zeroisthebiggay:
+  - image: fixes a stray pixel on the warden hood
+  - balance: reduces spellcost of message and mindlink by one
+2026-04-17:
+  MickDick1:
+  - bugfix: fixed mob path find bug related to mineshaft support beams
+  zoktiik:
+  - rscadd: Masochists will always make the paincrit scream if the top finishes while
+      penetrating with ROUGH or BRUTAL force, thus sating the vice. This patch was
+      to make it trigger independently of whether or not the top is a Sadist.
+2026-04-18:
+  Jamdrawers:
+  - rscadd: adds crafting recipes for non-unique desert clothing
+  - rscadd: crafting recipes for desert walls and floors.
+  - rscadd: Adds 'random' seeds in various farms
+2026-04-19:
+  BlindPoet:
+  - rscadd: Vaquero now gets Expert knife skill
+  Guidesu:
+  - rscadd: Some taurs can now have visible clothing based on armour types on their
+      shirt / armour slot and cloak slot (jupon and tabard).
+  Wadelicious:
+  - balance: Makes slurbow's damage scale with Perception
+  Xander3359:
+  - qol: It's always possible to yield as long as you aren't dead
+  - bugfix: Fix combat mode blocking most right click interactions.
+  - bugfix: Natural armor no longer regens while getting hit
+2026-04-21:
+  IronDragoon:
+  - rscadd: Added new dog voice emotes (arf, awuff, dog complain, dog whine, dog growl)
+  Kroto-Ker:
+  - balance: Removes circuitus from learnable spells.
+  Mryourface13:
+  - bugfix: Lesser Cursed Collar is now named properly.
+  - qol: Cursed Collars' descriptions now tell you that you'll need someone else to
+      remove them.
+  Rayforx:
+  - bugfix: Cold weather removes the ability to bleed.
+  - balance: Makes extremely cold weather slow down bleeding by 50% instead of 100%.
+  UntoldTactics:
+  - balance: Martyr shield skill adjusted from journeyman -> expert.
+  Xander3359:
+  - balance: Nerfs natural armor combat tag to 30 seconds
+  yupup123:
+  - bugfix: Fixes Marked By Baotha Sprite Offsets for Small Races
+2026-04-22:
+  Charopos:
+  - rscadd: Knotted Equine Penises. They're back.
+  - rscadd: The Splurt Penis Sprites. They're also back, again. Hemis - both knotted
+      and non-knotted - should look better now. @ me on discord with specific dick
+      sprite examples if you notice any problems further, or want adjustments to consider.
+  EvenInDeathIStillServe:
+  - rscadd: Nymphomaniac is now also satisfied by individuals getting off using you.
+  Sniperjolly:
+  - rscadd: tailjob/tailpegging to lamia
+  Xander3359:
+  - balance: Templars, Martyrs and the Prelate now get stat buffs when on holy grounds.
+  coffeecoffeecoffee:
+  - balance: Rebalances pouch loot of common NPCs that carry mammon
+  john-pawson:
+  - rscadd: Temporary flavortext, now observable at the bottom of examine panels,
+      separated by a line.
+  - rscadd: Set temporary flavortext button, can be found on the Memory tab at the
+      top right.
+  - rscadd: Set temporary flavortext can now be bound to a keybind on the Game Preferences
+      menu.
+  ophaq:
+  - rscadd: Pop up windows on mouse over for armors and such when examining people.
+      Shows the description too. Custom items stay purple instead of blue to let you
+      know it's custom! You can mouse over those too to read their flavor texts at
+      a distance. You can check your exact durability on items too, but other players
+      won't the exact numbers or % if they examine you.
+  - qol: No more having to click every item on your person with the ? mark to check
+      durability when you can just examine yourself and check item durability states.
+  - rscadd: Archivist now gets the good writer trait.
+  - rscadd: New archivist spell ported over from other codebases. You can learn a
+      skill from others now! It's the reverse of your teach spell.
+  - rscadd: Reworks the refugee scholar class into a 'traveling scholar' that is basically
+      a copy of the archivist, but it's a worse version. They are poorer and can't
+      do alchemy too well.
+  - rscadd: Renamed archivist robes to scholar's robes.
+  - rscadd: Gives the scholar's robe to the modest scholar outfit for the homesteader
+      class outfit.
+  - bugfix: Hopefully fixed the student trait after you learn something not resetting
+      on sleep the next day.
+  zeroisthebiggay:
+  - rscadd: altgripping weapons will make them behave as if they are blunt, ignoring
+      their sharpness and using blunt damage modifiers
+  - rscadd: the eagle's beak is now actually considered a blunt weapon
+  - rscadd: adjudicators now only spawn with a shield if they're using a one handed
+      weapon
+  - rscadd: at the request of someone on discord, ordinators can now choose to equip
+      a psydonic grand mace with a silver dagger when picking their starting weapon
+      and skills
+  - balance: the psydonic poleaxe's blunt forces have had their damage penalty removed,
+      and in addition to the altgrip blunt modifiers, they should actually be pretty
+      good at cracking armor
+  - balance: the psydonic handmace no longer inexplicably has swift balance, and is
+      now heavy balanced like all other maces
+  - balance: grand maces have been given reach on their intents, making them actually
+      grand maces
+  - balance: the psydonic mace has been renamed to the psydonic grand mace, as it
+      is a subtype of the grand mace
+  - balance: the psydonic grand mace has had its stats normalized, no more inexplicable
+      thirty one handed force on a two handed weapon
+  - bugfix: grand maces only fit in greatweapon straps now rather than being able
+      to be belt slotted
+  - rscadd: lawless vice from SR
+  - spellcheck: fixes a possessive it in the description of the lesser cursed collar
+  - qol: knights recieve daily pay
+2026-04-23:
+  john-pawson:
+  - bugfix: Birdboat, the admin-spawned goose, can now eat and vomit all of your food.
+2026-04-25:
+  IronDragoon:
+  - rscadd: Wedding dress, artificer cap and artificer jacket to loadout items (arti
+      items to tailor silverface also)
+  - rscadd: Crafting for pestran tabard (the robes)
+  - rscadd: basic dobo robe and conical mentor hat now craftable in round with appropriate
+      skills/materials
+  - rscadd: "several kazengun weapons to the exotic weapon section of the merchant's\
+      \ silverface, balanced around other racial weapons already present\n<!-- Both\
+      \ :cl:'s are required for the changelog to work! You can put your name to the\
+      \ right of the first :cl: if you want to overwrite your GitHub username as author\
+      \ ingame. -->\n<!-- You can use multiple of the same prefix (they're only used\
+      \ for the icon ingame) and delete the unneeded ones. Despite some of the tags,\
+      \ changelogs should generally represent how a player might be affected by the\
+      \ changes rather than a summary of the PR's contents. -->\n<!-- By contributing\
+      \ to this codebase, you confirm that any code and sprites you provide are legal\
+      \ to share and will be licensed under the terms specified in README.md \u2014\
+      \ AGPLv3 for code and CC-BY-SA 3.0 for assets, unless otherwise stated. You\
+      \ acknowledge that the project maintainers are under no obligation to remove\
+      \ any materials that do not violate these licenses. -->"
+  MickDick1:
+  - rscadd: Added forced wall-leaning (use aggro grab on chest and drag sprite to
+      the adjacent wall)
+  Mr. Pickle Willy:
+  - rscadd: Added "APAB (All Paladins Are Bastards)" by Burialgoods as a selectable
+      combat track, under the name "Sorcerer (Evil)".
+  RadiantFlash7:
+  - balance: Player controlled Fiends, sylphs and watchers have 1.5-2x more ranged
+      cooldown delay
+  Xander3359:
+  - rscadd: Harpies and Arachnids now show up on the round-end panel.
+  - code_imp: Prevents images from being destroyed
+  - bugfix: Fixed non combat taggable regenerating skin regen instantly.
+  hugmeorelse:
+  - bugfix: Fixes parcel dead drop, so it spawns at range, not just when you're on
+      the same tile. Additionally, parcel spawn is tied to the scroll holder.
+  zeroisthebiggay:
+  - rscadd: anyone above twelve strength can use strong intent while having sex to
+      act as if they have the bedbreaker trait
+  - rscadd: baits are now based on regions, rather than targeting specific body parts,
+      for example this means baiting someone's head will bait them if they're targeting
+      your right eye
+  zoktiik:
+  - sound: Added a new sound for recorking glass bottles.
+  - qol: You can now right-click to toggle a glass bottle's cork as long as you're
+      adjacent, and it's not in a bag. Left-clicking it in your hand, and pressing
+      the hotkey for your active hand, also work.
+  - bugfix: Bottles now tell you when one or both of them in a transfer interaction
+      is closed. This includes FEED, FILL, and SPLASH intents.
+  - qol: A small warning in gray text is shown when you put an uncorked bottle in
+      your bag.
+  - bugfix: You are now warned in chat when an open container in your inventory (in
+      a bag) is spilling due to movement.
+  - code_imp: Standardized the anti-spilling behavior of trays, using a new "does_not_spill"
+      variable for storage components.
+2026-04-26:
+  MarioTheShiba:
+  - qol: gives barbers the opportunity to roleplay and give people good mood buffs
+      by getting a nice haircut.
+  Xander3359:
+  - balance: Eora's bud no longer pacifies Eoran's
+  - balance: Eora's bud now gives stats and prevents some stat loss from the pomegranate
+      tree
+  - rscdel: Removes Circuitus
+2026-04-27:
+  EvenInDeathIStillServe:
+  - rscadd: Added a fifth force and speed setting for sex, locked under truly debauched
+      conditions.
+  - rscadd: Barbarians get some outdoors skills now.
+  kimesik:
+  - rscadd: Virtues and sins (fluff) for each of patron gods.
+2026-04-28:
+  Jamdrawers:
+  - rscadd: Added chastity cages, dildos and more to the nightmaster's buy-menu
+  NotGoldenglow:
+  - balance: arcyne potential is no longer limited by crit/dodge/pain trait/armor
+      proficiency. if you previously did not qualify for this trait, you now do.
+2026-04-29:
+  BlankSpaceHere:
+  - rscadd: Eorans can now pray before opening a pomegranate to guarantee a Satin
+      Aril.
+  - rscadd: New Eoran Ritual. Permanent Pacifism in exchange for an energizing and
+      calming aura
+  - bugfix: Eoran Trees can actually be planted on the most common types of grass
+  - bugfix: You can no longer remove an Eoran Bud alone through click-dragging.
+  - balance: Changed Crimson arils to heal percent of total damage in addition to
+      a flat amount.
+  - balance: Eoran Acolytes and Missionaries start with scissors for their tree.
+  - balance: Gave Eoran acolytes and templars +1 Cooking/Sewing with acolytes having
+      an extra +1 farming
+  - balance: Blessed food now grants haste to any Tennite eating it
+  - balance: Increased the range for the Eoran Bond status effect
+  Jamdrawers:
+  - balance: absolvers can no longer be constructs
+  - balance: strong red and strong blue require Expert alchemy up from Journeyman,
+      and strong red produces 50 drams in a cauldron instead of 100. Potions are more
+      expensive in the bandit shop.
+  KeberosNihilus:
+  - rscadd: Added an Exotic Light Armor tab to the tailor's silverface.
+  - rscadd: Filled the Exotic Light Armor tab with a bunch of exotic light armors.
+      Who could've seen that coming?
+  - balance: Balanced(?) the exotic armors by making them cost slightly more than
+      local light armors.
+  - sound: Changed Brigandine and Splint leggings from using the Brigandine Fullplate
+      SFX to using the standard Plate SFX.
+  Kroto-Ker:
+  - bugfix: zone_sel
+  MarioTheShiba:
+  - admin: gave PQ recalculators verbs
+  - rscadd: PQ Rework. PQ cap raised to 500. PQ harder to get at 100 PQ+. Under 100
+      PQ it's unchanged.
+  RadiantFlash7:
+  - rscdel: Removes test message from construct debuff
+  ariaworld:
+  - rscadd: Throwing anything into a river will now cause it to process and shift
+      downstream.
+  - bugfix: Rivers now stop processing when there's nothing in them.
+  - bugfix: NPCs no longer try to swim upstream.
+  hugmeorelse:
+  - rscadd: 'Ports from AP: Kill contracts, such as Kill, Outlaw, Raid, and so forth,
+      now use proximity monitors to spawn the mobs in. This means, upon taking a contract,
+      the mob won''t be on the playing field until the contract itself is brought
+      close to it.'
+  yupup123:
+  - rscadd: '"(JOIN)" buttons for opposite server in lobby chat.'
+  - admin: Added an ADMIN LOG for when a player dies.
+  zeroisthebiggay:
+  - rscdel: prefixing your message with "+" can no longer be used to whisper, use
+      "#" instead
+  - bugfix: attempting to type a bolded message will no longer erroneously make you
+      whisper it
+  - bugfix: the fucking nomad helmet
+  - rscadd: six new generic, unflavored mercenary classes for you to make your own
+      intrigue with! Sellknight, Sellspear, Sellblade, Hired Thug, Light Crossbowman,
+      and Longbowman
+2026-04-30:
+  EvenInDeathIStillServe:
+  - rscadd: Adds a crossbowman virtue that gives you +1 crossbow skill, along with
+      a stashed crossbow and bolts.
+  - rscadd: Adds a Fluffy Overeye hairstyle
+  RandomGooberCoder:
+  - bugfix: EXCIDIUM browser popup will now autoclose when the user is not adjacent
+      to the machine.
+  Teragen:
+  - rscadd: 117th Crusader Subclasses
+  - balance: Ea Nasir Gold Caravan given more starting money and guards given BReady
+      and Steelhearted
+  - balance: Czwarteki now get steels masks and stuff similar to other noble Envoys,
+      but worse due to better stats and skills.
+  - balance: Knightly Journey given health potions and equestrian too
+  - balance: ' Zyb Envoy Removed Garrison SCOM, why did they get this.'
+  - balance: Envoy Jannisary given Longstrider and Battleready alongside +1 CON to
+      differentiate from Merc Jannisaries
+  - balance: 'Otavan Envoy: Equestrian Given to those who got horses. General money
+      increase. Health Potions to certain classes.'
+  - balance: All Slavers given Sleuth.
+  - balance: Master gets perfect tracking. Lampterns changed to copper.
+  - balance: Master now gets more chains, anti-magic ring, and anti-magic gear, plus
+      more money for buying slaves.
+  - balance: All slavers now get bedrolls, food, and a spare chain.
+  - balance: Slaves now get the option between Service, Battle, Mage, and Craftsman.
+  WeNeedMorePhoron, ported by Jamdrawers:
+  - balance: Removed most stats and athletics skills influence on hunger rate and
+      then halved the flat hunger rate gain. Report if hunger happens too often. Str
+      above 10 increases hunger rate by 5% per point instead of 7.5%
+  ophaq:
+  - bugfix: Crow / Bat forms for witches no longer have X-Ray vision.
+  yupup123:
+  - rscadd: Accent Preview Text when Selecting Accents
+  - bugfix: Fixes Saut-Al-Atash Accent
+  zeroisthebiggay:
+  - rscadd: gives necromancers a zcross

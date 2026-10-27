@@ -1,62 +1,59 @@
-/atom/movable/lighting_object
-	name          = ""
+GLOBAL_DATUM_INIT(lighting_underlay_dark, /mutable_appearance, create_lighting_underlay("dark"))
+GLOBAL_DATUM_INIT(lighting_underlay_transparent, /mutable_appearance, create_lighting_underlay("transparent"))
 
-	anchored      = TRUE
-
-	icon             = LIGHTING_ICON
-	icon_state       = "transparent"
-	color            = null //we manually set color in init instead
-	plane            = LIGHTING_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	layer            = LIGHTING_LAYER
-	invisibility     = INVISIBILITY_LIGHTING
+/datum/lighting_object
+	var/mutable_appearance/current_underlay
+	var/mutable_appearance/private_underlay
 
 	var/needs_update = FALSE
-	var/turf/myturf
 
-/atom/movable/lighting_object/Initialize(mapload)
+	var/turf/affected_turf
+
+/proc/create_lighting_underlay(icon_state = "transparent")
+	var/mutable_appearance/underlay = new()
+	underlay.icon = LIGHTING_ICON
+	underlay.icon_state = icon_state
+	underlay.plane = LIGHTING_PLANE
+	underlay.layer = LIGHTING_LAYER
+	underlay.invisibility = INVISIBILITY_LIGHTING
+	underlay.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	return underlay
+
+/datum/lighting_object/New(turf/source)
+	if(!isturf(source))
+		qdel(src, force = TRUE)
+		stack_trace("a lighting object was assigned to [source], a non turf!")
+		return
+
 	. = ..()
-	verbs.Cut()
-	//We avoid setting this in the base as if we do then the parent atom handling will add_atom_color it and that
-	//is totally unsuitable for this object, as we are always changing it's colour manually
-	color = LIGHTING_BASE_MATRIX
 
-	myturf = loc
-	if(myturf.lighting_object)
-		qdel(myturf.lighting_object, force = TRUE)
-	myturf.lighting_object = src
-	myturf.luminosity = 0
+	current_underlay = GLOB.lighting_underlay_dark
+
+	affected_turf = source
+	if(affected_turf.lighting_object)
+		qdel(affected_turf.lighting_object, force = TRUE)
+		stack_trace("a lighting object was assigned to a turf that already had a lighting object!")
+
+	affected_turf.lighting_object = src
+	affected_turf.luminosity = 1
 
 	needs_update = TRUE
 	SSlighting.objects_queue += src
 
-/atom/movable/lighting_object/Destroy(force)
-	if (force)
-		SSlighting.objects_queue -= src
-		if (loc != myturf)
-			var/turf/oldturf = get_turf(myturf)
-			var/turf/newturf = get_turf(loc)
-			stack_trace("A lighting object was qdeleted with a different loc then it is suppose to have ([COORD(oldturf)] -> [COORD(newturf)])")
-		if (isturf(myturf))
-			myturf.lighting_object = null
-			myturf.luminosity = 1
-		myturf = null
-
-		return ..()
-
-	else
+/datum/lighting_object/Destroy(force)
+	if(!force)
 		return QDEL_HINT_LETMELIVE
 
-/atom/movable/lighting_object/proc/update()
-	if (loc != myturf)
-		if (loc)
-			var/turf/oldturf = get_turf(myturf)
-			var/turf/newturf = get_turf(loc)
-			warning("A lighting object realised it's loc had changed in update() ([myturf]\[[myturf ? myturf.type : "null"]]([COORD(oldturf)]) -> [loc]\[[ loc ? loc.type : "null"]]([COORD(newturf)]))!")
+	SSlighting.objects_queue -= src
+	if(isturf(affected_turf))
+		affected_turf.lighting_object = null
+		affected_turf.luminosity = 1
+		affected_turf.underlays -= current_underlay
+	affected_turf = null
 
-		qdel(src, TRUE)
-		return
+	return ..()
 
+/datum/lighting_object/proc/update()
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"
 	// Well my man, it's because the loop performed like shit.
@@ -68,7 +65,9 @@
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
-	var/list/corners = myturf.corners
+	var/turf/affected_turf = src.affected_turf
+
+	var/list/corners = affected_turf.corners
 	var/datum/lighting_corner/cr = dummy_lighting_corner
 	var/datum/lighting_corner/cg = dummy_lighting_corner
 	var/datum/lighting_corner/cb = dummy_lighting_corner
@@ -105,43 +104,31 @@
 	var/set_luminosity = max > 1e-6
 	#endif
 
+	if(affected_turf.outdoor_effect?.sunlight_overlay?.luminosity)
+		set_luminosity = max(set_luminosity, affected_turf.outdoor_effect.sunlight_overlay.luminosity)
+
+	// remove the currently applied underlay before any mutation so removal matches by value
+	affected_turf.underlays -= current_underlay
+
+	var/mutable_appearance/new_underlay
 	if((rr & gr & br & ar) && (rg + gg + bg + ag + rb + gb + bb + ab == 8))
 	//anything that passes the first case is very likely to pass the second, and addition is a little faster in this case
-		icon_state = "transparent"
-		color = null
+		new_underlay = GLOB.lighting_underlay_transparent
 	else if(!set_luminosity)
-		icon_state = "dark"
-		color = null
+		new_underlay = GLOB.lighting_underlay_dark
 	else
-		icon_state = null
-		color = list(
+		if(!private_underlay)
+			private_underlay = create_lighting_underlay()
+		private_underlay.icon_state = null
+		private_underlay.color = list(
 			rr, rg, rb, 00,
 			gr, gg, gb, 00,
 			br, bg, bb, 00,
 			ar, ag, ab, 00,
 			00, 00, 00, 01
 		)
-/*		if(color)
-			animate(src, color = list(rr, rg, rb,00,gr, gg, gb, 00,br, bg, bb, 00,ar, ag, ab, 00,00, 00, 00, 01), time = 5)
-		else
-			color = list(
-				rr, rg, rb, 00,
-				gr, gg, gb, 00,
-				br, bg, bb, 00,
-				ar, ag, ab, 00,
-				00, 00, 00, 01
-			)*/
-	luminosity = set_luminosity
+		new_underlay = private_underlay
 
-// Variety of overrides so the overlays don't get affected by weird things.
-
-/atom/movable/lighting_object/ex_act(severity)
-	return 0
-
-/atom/movable/lighting_object/onTransitZ()
-	return
-
-// Override here to prevent things accidentally moving around overlays.
-/atom/movable/lighting_object/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
-	if(harderforce)
-		. = ..()
+	affected_turf.underlays += new_underlay
+	current_underlay = new_underlay
+	affected_turf.luminosity = set_luminosity

@@ -17,12 +17,14 @@
 	move_to_delay = 8//Fastest mount
 	animal_species = /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck
 	botched_butcher_results = list(
-								/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1,
+								/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 1,
 								/obj/item/natural/bone = 4,
 								/obj/item/alch/sinew = 1,
 								)
 	butcher_results = list(
-						/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2,
+						/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 2,
+						/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 2,
+						/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 2,
 						/obj/item/reagent_containers/food/snacks/fat = 1,
 						/obj/item/natural/hide = 2,
 						/obj/item/natural/bundle/bone/full = 1,
@@ -30,7 +32,9 @@
 						/obj/item/alch/bone = 1, 
 						/obj/item/alch/viscera = 2
 						)
-	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 3,
+	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime = 3,
+						/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 3,
+						/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 3,
 						/obj/item/reagent_containers/food/snacks/fat = 2,
 						/obj/item/natural/hide = 4,
 						/obj/item/natural/bundle/bone/full = 1,
@@ -188,8 +192,10 @@
 	if(stat != DEAD)
 		if(ssaddle)
 			var/mutable_appearance/saddlet = mutable_appearance(icon, gender == FEMALE ? "saddle-f-above" : "saddle-above", 4.3)
+			saddlet.appearance_flags = RESET_ALPHA|RESET_COLOR
 			add_overlay(saddlet)
 			saddlet = mutable_appearance(icon, gender == FEMALE ? "saddle-f" : "saddle")
+			saddlet.appearance_flags = RESET_ALPHA|RESET_COLOR
 			add_overlay(saddlet)
 		if(has_buckled_mobs())
 			var/mutable_appearance/mounted = mutable_appearance(icon, gender == FEMALE ? "saiga_mounted" : "buck_mounted", 4.3)
@@ -216,7 +222,6 @@
 /// If we're a mount and are hit while sprinting, throw our rider off
 /// Also called if the rider is hit
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/proc/check_sprint_dismount()
-	SIGNAL_HANDLER
 	for(var/mob/living/carbon/human/rider in buckled_mobs)
 		if(rider.m_intent == MOVE_INTENT_RUN)
 			violent_dismount(rider)

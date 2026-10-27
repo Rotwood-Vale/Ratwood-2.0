@@ -4,7 +4,7 @@
 
 /mob/living
 	/// ass list [id] = /datum/status_effect. ATTENTION THE CODER IS A RETARD THIS IS NOT SUPPOSED TO BE HERE I REPEART!!!!!!
-	var/list/status_effects_by_id
+	var/alist/status_effects_by_id
 
 /datum/status_effect
 	/// The ID of the effect. ID is used in adding and removing effects to check for duplicates, among other things.
@@ -47,7 +47,7 @@
 	var/mob_effect_offset_x
 	var/mob_effect_offset_y
 	///A direct reference to the generated mob effect post-creation. Used for manipulation (or deletion) of the effect. Normally expires.
-	var/mutable_appearance/mob_effect
+	var/atom/mob_effect
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
@@ -59,19 +59,29 @@
 	if(owner)
 		// ass list
 		LAZYINITLIST(owner.status_effects)
-		LAZYINITLIST(owner.status_effects_by_id)
+		if(!length(owner.status_effects_by_id))
+			owner.status_effects_by_id = alist()
 		LAZYADD(owner.status_effects, src)
 		owner.status_effects_by_id[id] = src
 
-	if(!owner || !on_apply())
+	if(!owner)
 		qdel(src)
 		return
+	if(QDELETED(src) || !owner)
+		return
 
-	if(mob_effect_icon_state)
+	if(mob_effect_icon_state && (duration > 0 || mob_effect_dur))
 		if(!mob_effect_dur)
 			mob_effect_dur = (duration - 1)	//-1 tick juuust in case something goes wrong between status effect deletion and the callback of the appearance itself.
 		mob_effect = owner.play_overhead_indicator_flick(mob_effect_icon, mob_effect_icon_state, mob_effect_dur, mob_effect_layer, null, mob_effect_offset_y, mob_effect_offset_x)
 	
+		mob_effect.plane = ABOVE_LIGHTING_PLANE
+
+	if(!on_apply())
+		on_remove()
+		qdel(src)
+		return
+
 	if(duration != -1)
 		duration = world.time + duration
 	tick_interval = world.time + tick_interval
@@ -112,6 +122,9 @@
 		tick_interval = world.time + initial(tick_interval)
 	if(duration != -1 && duration < world.time)
 		qdel(src)
+		return
+	if(linked_alert && duration != -1)
+		linked_alert.update_countdown(max(duration - world.time, 0))
 
 /datum/status_effect/proc/on_apply() //Called whenever the buff is applied; returning FALSE will cause it to autoremove itself.
 	for(var/S in effectedstats)
@@ -183,6 +196,18 @@
 			var/newnum = attached_effect.effectedstats[S] * -1
 			inspec += "<br><span class='danger'>[S]</span> \Roman [newnum]"
 
+	if(attached_effect && attached_effect.duration != -1 && attached_effect.duration > world.time)
+		var/remaining = attached_effect.duration - world.time
+		var/total_secs = round(remaining / (1 SECONDS))
+		var/timestring
+		if(total_secs >= 60)
+			var/mins = round(total_secs / 60)
+			var/secs = total_secs % 60
+			timestring = "[mins]:[secs < 10 ? "0[secs]" : "[secs]"]"
+		else
+			timestring = "[total_secs]s"
+		inspec += "<br><span class='smallnotice'>Time remaining: [timestring]</span>"
+
 	inspec += "<br>----------------------"
 	to_chat(user, "[inspec.Join()]")
 
@@ -197,8 +222,11 @@
 // applies a given status effect to this mob, returning the effect if it was successful
 /mob/living/proc/apply_status_effect(effect, ...)
 	. = FALSE
+	if(QDELETED(src)) // our status effects have already been cleared, a new one would just hang a ref on us
+		return
 	LAZYINITLIST(status_effects)
-	LAZYINITLIST(status_effects_by_id)
+	if(!length(status_effects_by_id))
+		status_effects_by_id = alist()
 
 	var/datum/status_effect/template = effect
 	var/effect_id = initial(template.id)

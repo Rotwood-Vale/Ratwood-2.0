@@ -9,6 +9,25 @@
 /datum/status_effect/leash_owner
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/leash_owner
+	/// Stores the current leash target
+	var/mob/living/current_target
+	/// The storage for the leash
+	var/datum/beam/current_leash = null
+
+/datum/status_effect/leash_owner/on_creation(mob/living/new_owner, atom/target)
+	. = ..()
+	start_beam(new_owner, target)
+
+/// Used for starting the beam when a target has been acquired
+/datum/status_effect/leash_owner/proc/start_beam(atom/target, mob/living/user)
+	if(!isliving(target))
+		return
+	current_target = target
+	current_leash = user.Beam(current_target, icon_state = "chain")
+
+/datum/status_effect/leash_owner/on_remove()
+	. = ..()
+	QDEL_NULL(current_leash)
 
 /atom/movable/screen/alert/status_effect/leash_owner
 	name = "Leash Master"
@@ -64,6 +83,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	grid_height = 32
 	grid_width = 64
+	dropshrink = 0.9
 	var/mob/living/leash_pet = null //Variable to store our pet later
 	var/mob/living/leash_master = null //And our master too
 	var/mob/living/leash_freepet = null
@@ -102,11 +122,10 @@
 		w_class = WEIGHT_CLASS_SMALL
 
 	if(!leash_pet.has_status_effect(/datum/status_effect/leash_pet)) //If there is no pet, there is no dom. Loop breaks.
-		if(leash_master) UnregisterSignal(leash_master, COMSIG_MOVABLE_MOVED)
-		if(leash_pet) UnregisterSignal(leash_pet, COMSIG_MOVABLE_MOVED)
-		if(leash_freepet) UnregisterSignal(leash_freepet, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(leash_master, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(leash_pet, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(leash_freepet, COMSIG_MOVABLE_MOVED)
 		leash_pet?.remove_status_effect(/datum/status_effect/leash_freepet)
-//		leash_pet.remove_movespeed_modifier(/datum/movespeed_modifier/leash)
 		leash_master?.remove_status_effect(/datum/status_effect/leash_owner)
 		leash_freepet = null
 		leash_master = null
@@ -149,11 +168,9 @@
 			w_class = WEIGHT_CLASS_BULKY //This plus ITEM_SLOT_POCKET prevents putting into backpacks and other storage while still fitting on belt. When process kills, weightclass is returned to smol and backpackable.
 			if(!(user == leash_pet)) //Pet leashed themself. They are not the dom
 				leash_master = user //Save dom reference for later
-				user.apply_status_effect(/datum/status_effect/leash_owner) //Is the leasher
+				user.apply_status_effect(/datum/status_effect/leash_owner, leash_pet) //Is the leasher
 				RegisterSignal(leash_master, COMSIG_MOVABLE_MOVED, PROC_REF(on_master_move))
 				RegisterSignal(leash_pet, COMSIG_MOVABLE_MOVED, PROC_REF(on_pet_move))
-//			if(!leash_pet.has_status_effect(/datum/status_effect/leash_owner)) //Add slowdown if the pet didn't leash themselves
-//				leash_pet.add_movespeed_modifier(/datum/movespeed_modifier/leash)
 			for(var/mob/viewing in viewers(user, null))
 				if(viewing == user)
 					to_chat(user, span_warning("You have hooked a leash onto [leash_pet]!"))
@@ -242,7 +259,6 @@
 		leash_pet.apply_effect(20, EFFECT_KNOCKDOWN, 0)
 		leash_pet.adjustOxyLoss(5)
 		leash_pet.remove_status_effect(/datum/status_effect/leash_pet)
-//		leash_pet.remove_movespeed_modifier(/datum/movespeed_modifier/leash)
 
 /obj/item/leash/proc/on_pet_move()
 	SIGNAL_HANDLER
@@ -328,7 +344,6 @@
 		return
 	user.visible_message(span_notice("\The [user] drops \the [src]."), span_notice("You drop \the [src]."))
 	//DOM HAS DROPPED LEASH. PET IS FREE. SCP HAS BREACHED CONTAINMENT.
-//	leash_pet.remove_movespeed_modifier(/datum/movespeed_modifier/leash)
 	if(leash_pet)
 		leash_freepet = leash_pet
 		UnregisterSignal(leash_pet, COMSIG_MOVABLE_MOVED)
@@ -355,13 +370,12 @@
 		leash_freepet = null
 		return
 	leash_master = user
-	leash_master.apply_status_effect(/datum/status_effect/leash_owner)
+	leash_master.apply_status_effect(/datum/status_effect/leash_owner, leash_pet)
 	UnregisterSignal(leash_freepet, COMSIG_MOVABLE_MOVED)
 	RegisterSignal(leash_master, COMSIG_MOVABLE_MOVED, PROC_REF(on_master_move))
 	RegisterSignal(leash_pet, COMSIG_MOVABLE_MOVED, PROC_REF(on_pet_move))
 	leash_pet.remove_status_effect(/datum/status_effect/leash_freepet)
 	leash_freepet = null
-//	leash_pet.add_movespeed_modifier(/datum/movespeed_modifier/leash)
 
 // These procs were made for travel tiles and are called in traveltile.dm. But they might have uses elsewhere.
 
@@ -403,10 +417,6 @@
 				return leash
 	return null
 
-/*/datum/movespeed_modifier/leash
-	id = MOVESPEED_ID_LEASH
-	multiplicative_slowdown = 5 */
-
 /obj/item/catbell
 	name = "catbell"
 	desc = "A small jingly catbell."
@@ -419,6 +429,7 @@
 	throwforce = 1
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_TINY
+	dropshrink = 0.8
 	var/last_ring
 	/// Sounds that this bell can make when it jingles
 	var/list/jingle_sounds = SFX_COLLARJINGLE

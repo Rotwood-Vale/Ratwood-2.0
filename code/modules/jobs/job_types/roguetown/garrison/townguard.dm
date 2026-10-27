@@ -8,7 +8,7 @@
 	selection_color = JCOLOR_SOLDIER
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = ACCEPTED_RACES
-	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED)
+	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED)
 	tutorial = "Responsible for the safety of the city and the enforcement of the law, \
 	you patrol the city streets, on the look out for crime and disorder. \
@@ -36,27 +36,25 @@
 	. = ..()
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(istype(H.cloak, /obj/item/clothing/cloak/citywatch))
-			var/obj/item/clothing/S = H.cloak
+		if(istype(H.wear_armor, /obj/item/clothing/suit/roguetown/armor/plate/citywatch))
+			var/obj/item/clothing/S = H.wear_armor
 			var/index = findtext(H.real_name, " ")
 			if(index)
 				index = copytext(H.real_name, 1,index)
 			if(!index)
 				index = H.real_name
-			S.name = "watchman halfcloak ([index])"
+			S.name = "citywatch armor ([index])"
 
 /datum/outfit/job/roguetown/guardsman
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	pants = /obj/item/clothing/under/roguetown/chainlegs
-	cloak = /obj/item/clothing/cloak/citywatch
 	armor = /obj/item/clothing/suit/roguetown/armor/plate/citywatch
 	head = /obj/item/clothing/head/roguetown/helmet/citywatch
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	gloves = /obj/item/clothing/gloves/roguetown/chain
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	belt = /obj/item/storage/belt/rogue/leather/black
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/citywatch
-
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	beltr = /obj/item/rogueweapon/mace/cudgel
 	belt = /obj/item/storage/belt/rogue/leather
 	backr = /obj/item/storage/backpack/rogue/satchel
@@ -105,17 +103,17 @@
 	..()
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Stunmace & Shield","Polehammer", "Maul - +STR/CON, -SPD/PER/INT", "Crossbow - +SPD/PER, -STR/CON")
+		var/weapons = list("Stunmace & Shield","Lucerne", "Maul - +STR/CON, -SPD/PER/INT", "Crossbow - +SPD/PER, -STR/CON")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
 			if("Stunmace & Shield")
 				r_hand = /obj/item/rogueweapon/mace/stunmace
-				backl = /obj/item/rogueweapon/shield/iron/citywatch
+				backl = /obj/item/rogueweapon/shield/iron
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
-			if("Polehammer")
-				r_hand = /obj/item/rogueweapon/eaglebeak
+			if("Lucerne")
+				r_hand = /obj/item/rogueweapon/eaglebeak/lucerne
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
@@ -131,7 +129,7 @@
 				H.change_stat(STATKEY_INT, -1)
 			if("Crossbow - +SPD/PER, -STR/CON")
 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				backl = /obj/item/quiver/bolts
+				backl = /obj/item/quiver/heavybluntbolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 5, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, 4, TRUE)
 				H.change_stat(STATKEY_SPD, 1)
@@ -145,16 +143,3 @@
 			)
 
 	H.verbs |= /mob/proc/haltyell
-
-
-#define CLOTHING_CITYWATCH		"#557d8f"
-#define CLOTHING_CITYWATCHLIGHT	"#b0f1f5"
-
-/obj/item/clothing/head/roguetown/helmet/kettle/citywatch
-	color = CLOTHING_CITYWATCH
-
-/obj/item/clothing/wrists/roguetown/bracers/citywatch
-	color = CLOTHING_CITYWATCH
-
-/obj/item/rogueweapon/shield/iron/citywatch
-	color = CLOTHING_CITYWATCHLIGHT

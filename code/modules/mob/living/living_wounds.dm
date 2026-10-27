@@ -87,7 +87,7 @@
 	return healed_any
 
 /// Simple version for adding a wound - DO NOT CALL THIS ON CARBON MOBS!
-/mob/living/proc/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)
+/mob/living/proc/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE, obj/item/weapon, ranged, penfactor, part_mult)
 	if(!wound || (status_flags & GODMODE) || !HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
 		return FALSE
 	if(ispath(wound, /datum/wound))
@@ -118,7 +118,7 @@
 		qdel(wound)
 
 /// Simple version of crit rolling, attempts to do a critical hit on a mob that uses simple wounds - DO NOT CALL THIS ON CARBON MOBS, THEY HAVE BODYPARTS!
-/mob/living/proc/simple_woundcritroll(bclass = BCLASS_BLUNT, dam, mob/living/user, zone_precise = BODY_ZONE_CHEST, silent = FALSE, crit_message = FALSE)
+/mob/living/proc/simple_woundcritroll(bclass = BCLASS_BLUNT, dam, mob/living/user, zone_precise = BODY_ZONE_CHEST, silent = FALSE, crit_message = FALSE, obj/item/weapon, ranged, penfactor, part_mult)
 	if(!bclass || !dam || (status_flags & GODMODE) || !HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
 		return FALSE
 	var/do_crit = TRUE
@@ -203,6 +203,8 @@
 		if(applied)
 			if(user?.client)
 				record_round_statistic(STATS_CRITS_MADE)
+			if(client || mind)
+				log_combat(user, src, "critically wounded", null, "([applied.name] to [parse_zone(zone_precise)])", severe = TRUE)
 			return applied
 	return FALSE
 

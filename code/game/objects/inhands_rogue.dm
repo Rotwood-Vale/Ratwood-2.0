@@ -1,18 +1,25 @@
 /obj/item
 	/// A lazylist to store inhands data.
+	/// A lazylist to store inhands data.
 	var/list/onprop
 	var/d_type = "blunt"
 //#ifdef TESTSERVER
 	var/force_reupdate_inhand = TRUE
-	var/smelted = FALSE // Sanity for smelteries to avoid runtimes, if this is a bar smelted through ore for exp gain
+	/// Sanity for smelteries to avoid runtimes, if this is a bar smelted through ore for exp gain
+	var/smelted = FALSE
 	/// Determines whether this item is silver or not.
 	var/is_silver = FALSE
+	var/is_gold = FALSE
 	var/last_used = 0
 	var/toggle_state = null
+	var/override_state = null
 	var/icon_x_offset = 0
 	var/icon_y_offset = 0
 	var/always_destroy = FALSE
-	var/is_important = FALSE // If TRUE, this item is not allowed to be minted. May be useful for other things later.
+	/// If TRUE, this item is not allowed to be minted. May be useful for other things later.
+	var/is_important = FALSE
+	var/was_crafted = FALSE
+	var/is_carved = FALSE
 //#else
 //	var/force_reupdate_inhand = FALSE
 //#endif
@@ -52,6 +59,10 @@
 	return
 
 /obj/item/proc/getonmobprop(tag)
+	if(current_alt_grip)
+		var/list/altgrip_prop = current_alt_grip.getonmobprop(src, tag)
+		if(altgrip_prop)
+			return altgrip_prop
 	if(tag)
 		switch(tag)
 			if("gen")
@@ -78,6 +89,28 @@
 				return 2
 		if(0.7)
 			return 1
+
+///Wrapper so the deflection callback can work properly.
+/obj/item/proc/fake_throw_at(atom/target, range, speed, mob/thrower)
+	safe_throw_at(target, range, speed, thrower)
+	return
+
+///Throws the item 90, 270 or 180 degrees from wherever it was thrown relative to the deflector mob.
+///Mob ref is only needed for their dir to know how to rotate it and for the throw proc.
+/obj/item/proc/get_deflected(mob/deflector)
+	var/turnangle = (prob(50) ? 270 : 90)
+	if(prob(10))	
+		turnangle = 0 //Right back at thee
+	var/turndir = turn(deflector.dir, turnangle)
+	var/dist = rand(3, 7)
+	var/turf/current_turf = get_turf(src)
+	var/turf/target_turf = get_ranged_target_turf(current_turf, turndir, dist)
+	var/soundin = pick(list('sound/combat/parry/deflect_1.ogg','sound/combat/parry/deflect_2.ogg','sound/combat/parry/deflect_3.ogg','sound/combat/parry/deflect_4.ogg','sound/combat/parry/deflect_5.ogg','sound/combat/parry/deflect_6.ogg'))
+	playsound(deflector, soundin, 100, TRUE)
+
+	//If called immediately it does not work as intended, likely because the movement of the item is still being overridden by the original throw procchain.
+	//This is basically the modern version of spawn(0) that "makes it work"
+	addtimer(CALLBACK(src, PROC_REF(fake_throw_at), target_turf, dist, dist, deflector), 0.1 SECONDS)
 
 // For checking if we have a specific icon state in an icon.
 // Cached cause asking icons is expensive. This is still expensive, so avoid using it if

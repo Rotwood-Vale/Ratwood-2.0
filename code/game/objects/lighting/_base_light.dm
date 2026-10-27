@@ -119,6 +119,8 @@
 	var/area/A = get_area(src)
 	if(A)
 		on = FALSE
+	if(istype(fog_parter_effect))
+		QDEL_NULL(fog_parter_effect)
 	return ..()
 
 /obj/machinery/light/update_icon()
@@ -209,14 +211,11 @@
 		addtimer(CALLBACK(src, PROC_REF(broken_sparks)), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
 /obj/machinery/light/process()
-	if(on)
-		if(initial(fueluse) > 0)
-			if(fueluse > 0)
-				fueluse = max(fueluse - 10, 0)
-			if(fueluse == 0)
-				burn_out()
-	else
+	if(!on || (initial(fueluse) <= 0)) // if we don't use fuel don't process
 		return PROCESS_KILL
+	fueluse = max(fueluse - 10, 0)
+	if(fueluse == 0) // separate check so that if we hit 0 fuel we burn out the same tick
+		burn_out()
 
 
 /obj/machinery/light/proc/burn_out()

@@ -1,6 +1,6 @@
 /datum/language/kazengunese
 	name = "Kazengunese"
-	desc = "The language of the islands of Kazengun. With intricate honorifics and complex grammar. The version spoken commonly in the vale is a result of centuries of cultural contact between the Kazengunese and Zhongese, and is a trade language combining Zhongese & Kazengunese vocabulary"
+	desc = "The language of the islands of Kazengun. With intricate honorifics and complex grammar. The version spoken commonly in Ferentia is a result of centuries of cultural contact between the Kazengunese and Zhongese, and is a trade language combining Zhongese & Kazengunese vocabulary"
 	speech_verb = "says"
 	whisper_verb = "whispers"
 	exclaim_verb = "yells"

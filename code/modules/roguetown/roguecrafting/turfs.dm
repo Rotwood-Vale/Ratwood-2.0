@@ -94,46 +94,30 @@
 /datum/crafting_recipe/roguetown/turfs/carpet
 	name = "carpet(inn)"
 	result = /turf/open/floor/carpet/inn
-	reqs = list(/obj/item/natural/silk= 2)	
+	reqs = list(/obj/item/natural/silk= 2)
 	skillcraft = /datum/skill/craft/carpentry
 	verbage_simple = "construct"
 	verbage = "constructs"
-	craftdiff = 0
+	craftdiff = 2
 
 /datum/crafting_recipe/roguetown/turfs/carpet/purple
 	name = "carpet(purple)"
 	result = /turf/open/floor/carpet/purple
-	reqs = list(/obj/item/natural/silk= 2)	
-	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
-	craftdiff = 2
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/carpet/red
 	name = "carpet(red)"
 	result = /turf/open/floor/carpet/red
-	reqs = list(/obj/item/natural/silk= 2)	
-	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
-	craftdiff = 2
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/carpet/stellar
 	name = "carpet(stellar)"
 	result = /turf/open/floor/carpet/stellar
-	reqs = list(/obj/item/natural/silk= 2)	
-	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
-	craftdiff = 2
+	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/carpet/royalblack
 	name = "carpet(royal black)"
 	result = /turf/open/floor/carpet/royalblack
-	reqs = list(/obj/item/natural/silk= 2)	
-	skillcraft = /datum/skill/craft/carpentry
-	verbage_simple = "construct"
-	verbage = "constructs"
 	craftdiff = 3
 
 /// STONE
@@ -292,6 +276,12 @@
 	reqs = list(/obj/item/natural/stoneblock = 2)
 	craftdiff = 3
 
+/datum/crafting_recipe/roguetown/turfs/stone/brick/bricklight
+	name = "wall (stonebrick light) (2 stoneblocks, 1 lamptern)"
+	result = /turf/closed/wall/mineral/rogue/stonebrick/stonebricklight
+	reqs = list(/obj/item/natural/stoneblock = 2, /obj/item/flashlight/flare/torch/lantern = 1)
+	craftdiff = 3
+
 /datum/crafting_recipe/roguetown/turfs/stone/decorated
 	name = "wall decorated (stone) (2 stone)"
 	result = /turf/closed/wall/mineral/rogue/decostone
@@ -359,6 +349,7 @@
 	verbage_simple = "build"
 	verbage = "builds"
 	craftdiff = 2
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /// WINDOWS
 
@@ -371,6 +362,7 @@
 	verbage_simple = "build"
 	verbage = "builds"
 	craftdiff = 2
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /datum/crafting_recipe/roguetown/turfs/fancywindow/openclose
 	name = "window (fancy) (2 small logs, 1 stone, 1 glass, 1 dirtclod)"
@@ -386,6 +378,7 @@
 	verbage_simple = "build"
 	verbage = "builds"
 	craftdiff = 3
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 /datum/crafting_recipe/roguetown/turfs/reinforcedwindow/openclose
 	name = "window (reinforced) (2 small logs, 1 iron, 1 glass, 1 dirtclod)"
@@ -401,7 +394,7 @@
 	verbage_simple = "build"
 	verbage = "builds"
 	craftdiff = 2
-	
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 /// HAY, TWIG AND TENT
 
 /datum/crafting_recipe/roguetown/turfs/hay
@@ -432,9 +425,9 @@
 	return TRUE
 
 /datum/crafting_recipe/roguetown/turfs/twigplatform
-	name = "platform (twig) (3 sticks)"
+	name = "platform (twig) (2 sticks)" //no more cursed single stick left over
 	result = /turf/open/floor/rogue/twig/platform
-	reqs = list(/obj/item/grown/log/tree/stick = 3)
+	reqs = list(/obj/item/grown/log/tree/stick = 2)
 	skillcraft = /datum/skill/craft/crafting
 	verbage_simple = "assemble"
 	verbage = "assembles"
@@ -455,7 +448,7 @@
 	reqs = list(/obj/item/grown/log/tree/stick = 1,
 				/obj/item/natural/cloth = 1)
 	skillcraft = /datum/skill/craft/crafting
-	verbage_simple = "set up"	
+	verbage_simple = "set up"
 	verbage = "sets up"
 	craftdiff = 1
 
@@ -492,6 +485,7 @@
 	verbage_simple = "build"
 	verbage = "builds"
 	craftdiff = 4
+	display_category = ITEM_CAT_ENG_CONSTRUCTION
 
 	/*
 	By the way, glass windows needing Masonry and Carpentry instead of Ceramics isn't an oversight.
@@ -532,7 +526,7 @@
 // Dark Wood Walls
 
 /datum/crafting_recipe/roguetown/turfs/wood/darkwoodwall
-	name = "Dark Wood Wall"
+	name = "dark wood wall (2 wood planks)"
 	result = /turf/closed/wall/mineral/rogue/wooddark
 	reqs = list(/obj/item/natural/wood/plank = 2)
 	skillcraft = /datum/skill/craft/carpentry
@@ -541,10 +535,75 @@
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/turfs/wood/darkwoodwindow
-	name =	"Dark Wood Murderhole"
+	name =	"dark wood murderhole (2 wood planks)"
 	result = /turf/closed/wall/mineral/rogue/wooddark/window
 	reqs = list(/obj/item/natural/wood/plank = 2)
 	skillcraft = /datum/skill/craft/carpentry
 	verbage_simple = "construct"
 	verbage = "constructs"
 	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/wood/darkwoodwall/vertical
+	name = "dark wood wall vertical (2 wood planks)"
+	result = /turf/closed/wall/mineral/rogue/wooddark/vertical
+	reqs = list(/obj/item/natural/wood/plank = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 3
+
+/datum/crafting_recipe/roguetown/turfs/wood/darkwoodwall/horizontal
+	name = "dark wood wall horizontal (2 wood planks)"
+	result = /turf/closed/wall/mineral/rogue/wooddark/horizontal
+	reqs = list(/obj/item/natural/wood/plank = 2)
+	skillcraft = /datum/skill/craft/carpentry
+	verbage_simple = "construct"
+	verbage = "constructs"
+	craftdiff = 3
+
+// Druidic Grass Turfs
+
+/datum/crafting_recipe/roguetown/turfs/druidic_grass
+	abstract_type = /datum/crafting_recipe/roguetown/turfs/druidic_grass
+	req_table = FALSE
+	always_availible = TRUE
+	skillcraft = /datum/skill/magic/druidic
+	craftdiff = SKILL_LEVEL_MASTER
+	reqs = list(
+		/obj/item/fertilizer = 1,
+		/obj/item/natural/fibers = 3,
+	)
+	tools = list(/obj/item/alch/bloomstone = 1)
+	verbage_simple = "grow"
+	verbage = "grows"
+
+/datum/crafting_recipe/roguetown/turfs/druidic_grass/TurfCheck(mob/user, turf/T)
+	if(isclosedturf(T))
+		return
+	if(!istype(T, /turf/open/floor/rogue))
+		return
+	return TRUE
+
+/datum/crafting_recipe/roguetown/turfs/druidic_grass/grass
+	name = "grass"
+	result = /turf/open/floor/rogue/grass
+
+/datum/crafting_recipe/roguetown/turfs/druidic_grass/grassred
+	name = "red grass"
+	result = /turf/open/floor/rogue/grassred
+
+/datum/crafting_recipe/roguetown/turfs/druidic_grass/grassyel
+	name = "yellow grass"
+	result = /turf/open/floor/rogue/grassyel
+
+/datum/crafting_recipe/roguetown/turfs/druidic_grass/grasscold
+	name = "cold grass"
+	result = /turf/open/floor/rogue/grasscold
+
+/datum/crafting_recipe/roguetown/turfs/druidic_grass/desert_grass
+	name = "desert grass"
+	result = /turf/open/floor/rogue/desert_grass
+
+/datum/crafting_recipe/roguetown/turfs/druidic_grass/grasspurple
+	name = "purple grass"
+	result = /turf/open/floor/rogue/grasspurple

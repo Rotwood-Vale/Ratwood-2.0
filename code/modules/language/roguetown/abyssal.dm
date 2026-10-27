@@ -1,6 +1,6 @@
 /datum/language/abyssal
 	name = "Abyssal" // literally greek
-	desc = "The language of the inhabitants of the sea depths, still in use by those who have moved inland."
+	desc = "(Spoken with ,p) The language of the inhabitants of the sea depths, still in use by those who have moved inland."
 	speech_verb = "states"
 	ask_verb = "ponders"
 	exclaim_verb = "exclaims"
@@ -8,7 +8,7 @@
 	flags = LANGUAGE_HIDE_ICON_IF_UNDERSTOOD | LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD
 	space_chance = 60
 	default_priority = 90
-	icon_state = "asse"
+	icon_state = "fish"
 	spans = list(SPAN_ABYSSAL)
 	syllables = list(
 		"&iota;ζω", "&lambda;ος", "ος", "&alpha;ῦ", "&delta;αιμ", "&tau;ής", "&alpha;σ", "&phi;ω", "&alpha;κ", "&mu;ος", "&eta;σσ",

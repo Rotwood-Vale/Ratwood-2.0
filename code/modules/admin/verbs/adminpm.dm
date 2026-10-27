@@ -145,15 +145,15 @@
 	var/keywordparsedmsg = keywords_lookup(msg)
 
 	if(irc)
-		to_chat(src, span_notice("PM to-<b>Admins</b>: <span class='linkify'>[rawmsg]</span>"))
+		to_chat(src, type = MESSAGE_TYPE_ADMINPM, html = span_notice("PM to-<b>Admins</b>: <span class='linkify'>[rawmsg]</span>"))
 		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>IRC</i>: [keywordparsedmsg]</font>")
 		ircreplyamount--
 		send2irc("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
 	else
 		if(recipient.holder)
 			if(holder)	//both are admins
-				to_chat(recipient, span_danger("Admin PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span>"))
-				to_chat(src, span_notice("Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span>"))
+				to_chat(recipient, type = MESSAGE_TYPE_ADMINPM, html = span_danger("Admin PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span>"))
+				to_chat(src, type = MESSAGE_TYPE_ADMINPM, html = span_notice("Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span>"))
 
 				//omg this is dumb, just fill in both their tickets
 				var/interaction_message = "<font color='purple'>PM from-<b>[key_name(src, recipient, 1)]</b> to-<b>[key_name(recipient, src, 1)]</b>: [keywordparsedmsg]</font>"
@@ -164,8 +164,8 @@
 			else		//recipient is an admin but sender is not
 				var/replymsg = "Reply PM from-<b>[key_name(src, recipient, 1)]</b>: <span class='linkify'>[keywordparsedmsg]</span>"
 				admin_ticket_log(src, "<font color='red'>[replymsg]</font>")
-				to_chat(recipient, span_danger("[replymsg]"))
-				to_chat(src, span_notice("PM to-<b>Admins</b>: <span class='linkify'>[msg]</span>"))
+				to_chat(recipient, type = MESSAGE_TYPE_ADMINPM, html = span_danger("[replymsg]"))
+				to_chat(src, type = MESSAGE_TYPE_ADMINPM, html = span_notice("PM to-<b>Admins</b>: <span class='linkify'>[msg]</span>"))
 
 			//play the receiving admin the adminhelp sound (if they have them enabled)
 			if(recipient.prefs.toggles & SOUND_ADMINHELP)
@@ -178,11 +178,11 @@
 			else
 				created_ticket = recipient.current_ticket
 
-			to_chat(recipient, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
-			to_chat(recipient, span_adminsay("Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='linkify'>[msg]</span>"))
+			to_chat(recipient, type = MESSAGE_TYPE_ADMINPM, html = "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
+			to_chat(recipient, type = MESSAGE_TYPE_ADMINPM, html = span_adminsay("Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='linkify'>[msg]</span>"))
 			// Provide explicit ticket controls for the new ticket system
-			to_chat(recipient, span_adminsay("<i><a href='?viewticket=1'>View ticket</a> | <a href='?replyticket=1'>Quick reply</a></i>"))
-			to_chat(src, span_notice("Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[msg]</span>"))
+			to_chat(recipient, type = MESSAGE_TYPE_ADMINPM, html = span_adminsay("<i><a href='?viewticket=1'>View ticket</a> | <a href='?replyticket=1'>Quick reply</a></i>"))
+			to_chat(src, type = MESSAGE_TYPE_ADMINPM, html = span_notice("Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='linkify'>[msg]</span>"))
 
 			admin_ticket_log(recipient, "<font color='purple'>PM From [key_name_admin(src)]: [keywordparsedmsg]</font>")
 
@@ -206,14 +206,14 @@
 	if(irc)
 		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")
 		for(var/client/X in GLOB.admins)
-			to_chat(X, span_notice("<B>PM: [key_name(src, X, 0)]-&gt;IRC:</B> [keywordparsedmsg]"))
+			to_chat(X, type = MESSAGE_TYPE_ADMINPM, html = span_notice("<B>PM: [key_name(src, X, 0)]-&gt;IRC:</B> [keywordparsedmsg]"))
 	else
 		window_flash(recipient, ignorepref = TRUE)
 		log_admin_private("PM: [key_name(src)]->[key_name(recipient)]: [rawmsg]")
 		//we don't use message_admins here because the sender/receiver might get it too
 		for(var/client/X in GLOB.admins)
 			if(X.key!=key && X.key!=recipient.key)	//check client/X is an admin and isn't the sender or recipient
-				to_chat(X, span_notice("<B>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> [keywordparsedmsg]") )
+				to_chat(X, type = MESSAGE_TYPE_ADMINPM, html = span_notice("<B>PM: [key_name(src, X, 0)]-&gt;[key_name(recipient, X, 0)]:</B> [keywordparsedmsg]") )
 
 /client/proc/popup_admin_pm(client/recipient, msg)
 	var/sender = src

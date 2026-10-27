@@ -22,13 +22,23 @@
 	var/bar_health = 100 // Current material bar health, reduced by failures. At 0 HP it is deleted.
 	var/numberofhits = 0 // Increased every time you hit the bar, the more you have to hit the bar the less quality of the product.
 	var/numberofbreakthroughs = 0 // How many good hits we got on the metal, advances recipes 50% faster, reduces number of hits total, and restores bar_health
+	var/smith_skill_level = 0 // Highest skill level of any smith who landed a hit on this bar. Used to clamp final tier.
+	var/skip_quality = FALSE
+	var/min_input_quality = null
 	var/datum/parent
 	// Whether this recipe will be hidden from recipe books
 	var/hides_from_books = FALSE
 	var/req_trait = null
+	var/rotations_required = 1
 
 /datum/anvil_recipe/New(datum/P, using_blade = FALSE, ...)
 	. = ..()
+
+/datum/anvil_recipe/proc/track_input_quality(obj/item/I)
+	if(!istype(I) || !I.has_item_quality)
+		return
+	if(isnull(min_input_quality) || I.item_quality < min_input_quality)
+		min_input_quality = I.item_quality
 
 /datum/anvil_recipe/proc/show_menu(mob/user)
 	user << browse(generate_html(user),"window=new_recipe;size=500x810")
@@ -58,38 +68,8 @@
 		if(C.body_parts_covered)
 			html += "\n<b>COVERAGE: </b>"
 			html += " | "
-			if(C.body_parts_covered == C.body_parts_covered_dynamic)
-				for(var/zone in body_parts_covered2organ_names(C.body_parts_covered))
-					html += "<b>[capitalize(zone)]</b> | "
-			else
-				var/list/zones = list()
-				//We have some part peeled, so we turn the printout into precise mode and highlight the missing coverage.
-				for(var/zoneorg in body_parts_covered2organ_names(C.body_parts_covered, precise = TRUE))
-					zones += zoneorg
-				for(var/zonedyn in body_parts_covered2organ_names(C.body_parts_covered_dynamic, precise = TRUE))
-					html += "<b>[capitalize(zonedyn)]</b> | "
-					if(zonedyn in zones)
-						zones.Remove(zonedyn)
-				for(var/zone in zones)			
-					html += "<b><font color = '#470000'>[capitalize(zone)]</font></b> | "
-			html += "<br>"
-		if(C.body_parts_inherent)
-			html += "<b>CANNOT BE PEELED: </b>"
-			var/list/inherentList = body_parts_covered2organ_names(C.body_parts_inherent)
-			if(length(inherentList) == 1)
-				html += "<b><font color = '#000833'>[capitalize(inherentList[1])]</font></b><br>"
-			else
-				html += "| "
-				for(var/zone in inherentList)
-					html += "<b><font color = '#000833'>[capitalize(zone)]</b></font> | "
-			html += "<br>"
-		if(C.prevent_crits)
-			if(length(C.prevent_crits))
-				html += "\n<b>PREVENTS CRITS:</b>"
-				for(var/X in C.prevent_crits)
-					if(X == BCLASS_PICK)	//BCLASS_PICK is named "stab", and "stabbing" is its own damage class. Prevents confusion.
-						X = "pick"
-					html += ("\n<b>[capitalize(X)]</b><br>")
+			for(var/zone in body_parts_covered2organ_names(C.body_parts_covered))
+				html += "<b>[capitalize(zone)]</b> | "
 		html += "INTEGRITY: [bookarmor.max_integrity]<br>"
 		if(bookarmor.armor_class == ARMOR_CLASS_HEAVY)
 			html += "<b>AC: </b>HEAVY<br>"
@@ -101,7 +81,7 @@
 		html += "Combat Properties<br>"
 		if(bookweapon.minstr)
 			html += "\n<b>MIN.STR:</b> [bookweapon.minstr]<br>"
-		
+
 		if(bookweapon.force)
 			html += "\n<b>FORCE:</b> [bookweapon.force]<br>"
 		if(bookweapon.gripped_intents && !bookweapon.wielded)
@@ -114,7 +94,7 @@
 				html += "Heavy<br>"
 			if(bookweapon.wbalance == WBALANCE_SWIFT)
 				html += "Swift<br>"
-			
+
 
 		if(bookweapon.wlength != WLENGTH_NORMAL)
 			html += "\n<b>LENGTH:</b> "
@@ -126,8 +106,12 @@
 				if(WLENGTH_GREAT)
 					html += "Great<br>"
 
-		if(bookweapon.alt_intents)
-			html += "\n<b>GRIP: ALT-GRIP (right click while in hand)</b><br>"
+		if(bookweapon.has_altgrip_modes())
+			var/alt_grip_names = bookweapon.get_altgrip_names()
+			html += "\n<b>GRIP: ALT-GRIP (Inhand RMB / Hotkey)"
+			if(alt_grip_names)
+				html += ": [alt_grip_names]"
+			html += "</b><br>"
 		if(bookweapon.gripped_intents)
 			html += "\n<b>TWO-HANDED: Yes</b><br>"
 
@@ -141,11 +125,11 @@
 			html += "\n<b>DEFENSE:</b> [bookweapon.wdefense]<br>"
 		if(bookweapon.associated_skill && bookweapon.associated_skill.name)
 			html += "\n<b>SKILL:</b> [bookweapon.associated_skill.name]<br>"
-		
+
 		if(bookweapon.intdamage_factor != 1 && bookweapon.force >= 5)
 			html += "\n<b>INTEGRITY DAMAGE:</b> [bookweapon.intdamage_factor * 100]%<br>"
 
-	
+
 	if(craftdiff > 0)
 		html += "<h1></h1>For those of [SSskills.level_names_plain[craftdiff]] skills<br>"
 	else

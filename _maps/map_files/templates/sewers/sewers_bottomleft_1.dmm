@@ -15,7 +15,7 @@
 /turf/open/water/swamp,
 /area/rogue/under/town/sewer)
 "j" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/structure/fluff/walldeco/chains,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
@@ -43,7 +43,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "A" = (
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/cobweb,
 /obj/structure/closet/crate/chest,
 /obj/effect/spawner/lootdrop/roguetown/sewers,
 /turf/open/floor/rogue/cobble,
@@ -66,7 +66,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "M" = (
-/obj/effect/decal/cleanable/ash/large,
+/obj/item/ash,
 /turf/open/water/swamp/deep,
 /area/rogue/under/town/sewer)
 "O" = (

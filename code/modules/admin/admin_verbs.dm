@@ -7,11 +7,16 @@ GLOBAL_PROTECT(admin_verbs_default)
 	return list(
 	/client/proc/check_pq,
 	/client/proc/adjust_pq,
+	/client/proc/recalc_pq_bulk,
+	/client/proc/recalc_pq_single,
 	/client/proc/hearallasghost,
 	/client/proc/hearglobalLOOC,
 	/client/proc/togglespawnmessages,
 	/client/proc/toggle_aghost_invis,
+	/client/proc/set_admin_ghost_image,
+	/client/proc/clear_admin_ghost_image,
 	/client/proc/admin_ghost,
+	/client/proc/admin_move_oasis,
 	/datum/admins/proc/start_vote,
 	/datum/admins/proc/show_player_panel,
 	/datum/admins/proc/admin_heal,
@@ -33,14 +38,15 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/cmd_admin_say,
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/set_context_menu_enabled,
-	/client/proc/delete_player_book,
-	/client/proc/amend_player_book,
+	/client/proc/manage_books,
+	/client/proc/manage_paintings,
+	/client/proc/archive_bans,
 	/client/proc/enable_browser_debug,
-	/client/proc/pull_book_file_names,
 	/client/proc/admin_spread_effect,
 	/client/proc/open_bounty_menu,
 	/client/proc/remove_bounty,
 	/client/proc/agevet_player,
+	/client/proc/list_severed_heads,
 	// RATWOOD MODULAR START
 	/client/proc/bunker_bypass,
 	// RATWOOD MODULAR END
@@ -78,6 +84,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/announce,		/*priority announce something to all clients.*/
 	/datum/admins/proc/set_admin_notice, /*announcement all clients see when joining the server.*/
 	/client/proc/toggle_aghost_invis, /* lets us choose whether our in-game mob goes visible when we aghost (off by default) */
+	/client/proc/set_admin_ghost_image,
+	/client/proc/clear_admin_ghost_image,
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/hearallasghost,
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
@@ -98,6 +106,8 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
 	/client/proc/cmd_admin_local_narrate,	/*sends text to all mobs within view of atom*/
+	/client/proc/cmd_admin_set_ic_date,	/*set/clear the IC calendar date override*/
+	/client/proc/cmd_admin_economic_panel,	/*economy inspector: fiscal snapshot, players, blockades, debug ticks*/
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/cmd_admin_check_player_exp, /* shows players by playtime */
 	/client/proc/toggle_combo_hud, // toggle display of the combination pizza antag and taco sci/med/eng hud
@@ -107,6 +117,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/colorasay,
 	/client/proc/resetasaycolor,
 	/client/proc/toggleadminhelpsound,
+	/client/proc/toggledeathalarmsound,
 	/client/proc/respawn_character,
 	/client/proc/discord_id_manipulation, /* No Discord implementation? */
 	/datum/admins/proc/sleep_view,
@@ -172,8 +183,8 @@ GLOBAL_PROTECT(admin_verbs_server)
 //	/datum/admins/proc/toggleAI,
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
+	/client/proc/cmd_controller_view_ui,
 	/client/proc/toggle_random_events,
-	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
 	/client/proc/panicbunker,
 	// /datum/admins/proc/BC_WhitelistKeyVerb,
@@ -188,12 +199,14 @@ GLOBAL_PROTECT(admin_verbs_debug)
 /world/proc/AVerbsDebug()
 	return list(
 	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+	/client/proc/check_timer_sources,
 	/client/proc/restart_controller,
 	/client/proc/cmd_admin_list_open_jobs,
 	/client/proc/Debug2,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
+	/client/proc/cmd_controller_view_ui,
 	/client/proc/restart_controller,
 	/client/proc/enable_debug_verbs,
 	/client/proc/callproc,
@@ -207,6 +220,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/get_dynex_range,		//*debug verbs for dynex explosions.
 	/client/proc/set_dynex_scale,
 	/client/proc/cmd_display_del_log,
+	/client/proc/dump_memory_stats,
 	/client/proc/outfit_manager,
 	/client/proc/debug_huds,
 	/client/proc/map_template_load,
@@ -285,6 +299,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/reload_admins,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_debug_del_all,
+	/client/proc/cmd_controller_view_ui,
 	/client/proc/enable_debug_verbs,
 	/proc/possess,
 	/proc/release,
@@ -418,6 +433,38 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		return
 	aghost_toggle = !aghost_toggle
 	to_chat(src, aghost_toggle ? "Aghosting will now turn your mob invisible." : "Aghost will no longer turn your mob invisible.")
+
+/client/proc/set_admin_ghost_image()
+	set category = "-Admin-"
+	set name = "set ghost image"
+	if(!holder || !prefs)
+		return
+	var/uploaded_file = input(src, "Choose a 32x32 image or gif to use for your admin ghost.", "Set Ghost Image") as null|file
+	if(!uploaded_file)
+		return
+	var/icon/new_icon = new(uploaded_file)
+	if(new_icon.Width() != 32 || new_icon.Height() != 32)
+		new_icon.Scale(32, 32)
+	prefs.admin_ghost_icon = new_icon
+	prefs.save_preferences()
+	apply_admin_ghost_image()
+	to_chat(src, span_notice("Admin ghost image saved."))
+
+/client/proc/clear_admin_ghost_image()
+	set category = "-Admin-"
+	set name = "clear ghost"
+	if(!holder || !prefs)
+		return
+	prefs.admin_ghost_icon = null
+	prefs.save_preferences()
+	apply_admin_ghost_image()
+	to_chat(src, span_notice("Admin ghost image cleared."))
+
+/client/proc/apply_admin_ghost_image()
+	var/mob/dead/observer/admin_ghost = mob
+	if(!istype(admin_ghost))
+		return
+	admin_ghost.apply_admin_ghost_image()
 
 /client/proc/admin_ghost()
 	set category = "-Admin-"
@@ -761,24 +808,24 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "-Special Verbs-"
 	set name = "Force Speech"
 	set desc = ""
-	
+
 	if(!L)
 		to_chat(usr, span_warning("No mob selected."))
 		return
-	
+
 	if(!isliving(L))
 		to_chat(usr, span_warning("Target must be a living mob."))
 		return
-	
+
 	if(!L.loc)
 		to_chat(usr, span_warning("Target mob has no location."))
 		return
-	
+
 	var/message = input(usr, "What do you want them to say?", "Force Say") as text | null
 	if(!message)
 		return
-	
-	L.say(message)
+
+	L.say(message, forced = "admin speech")
 	log_admin("[key_name(usr)] forced [key_name(L)] at [AREACOORD(L)] to say \"[message]\"")
 	message_admins(span_adminnotice("[key_name_admin(usr)] forced [key_name_admin(L)] at [AREACOORD(L)] to say \"[message]\""))
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Force Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -873,47 +920,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		SSticker.end_party=FALSE
 		to_chat(src, span_interface("Ending DISABLED."))
 
-/client/proc/delete_player_book()
-	set name = "Database Delete Player Book"
-	set category = "Debug"
-	set desc = ""
-	if(!holder)
-		return
-	var/player_book = input(src, "What is the book file you want to delete? (spaces and other characters are their url encode versions for the file name, so for example spaces are +)")
-	if(player_book)
-		SSlibrarian.del_player_book(player_book)
-		message_admins("[src] has deleted the player book: [player_book]")
-	else
-		to_chat(src, span_notice("Either the book file doesn't exist or you have failed to type it in properly (you can look up the file name by the verb 'database book file names'"))
-
-/client/proc/pull_book_file_names()
-	set name = "Database Book File Names"
-	set category = "Debug"
-	set desc = ""
-	if(!holder)
-		return
-	var/list/book_titles = SSlibrarian.pull_player_book_titles()
-	if(!book_titles)
-		return
-	var/dat = ""
-	for(var/I in book_titles)
-		dat += "[I]<br>"
-	src << browse(dat, "window=reading;size=250x500;can_close=1;can_minimize=1;can_maximize=1;can_resize=1;titlebar=1")
-
-/client/proc/amend_player_book()
-	set name = "Database Amend Player Book"
-	set category = "Debug"
-	set desc = ""
-	if(!holder)
-		return
-	var/book_title = input(src, "What is the book file name?")
-	var/amend_type = alert(src, "What type of text do you want to amend?", "", "book_title", "author", "icon")
-	var/amend_text = input(src, "What do you want to amend it to? (you don't have to make it in the file name format, use normal spaces)")
-	if(SSlibrarian.amend_player_book(book_title, amend_type, amend_text))
-		message_admins("[src] has amended [book_title]'s [amend_type] to [amend_text]")
-	else
-		to_chat(src, span_notice("Either the book file doesn't exist or you have failed to type something in properly (you can look up the file name by the verb 'database book file names'"))
-
 /client/proc/remove_bounty()
 	set category = "-Admin-"
 	set name = "Remove Bounty"
@@ -940,7 +946,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			scom_announce("An unknown force has erased the bounty on [target_name]. The gods are displeased.")
 			message_admins("[ADMIN_LOOKUPFLW(src)] has removed the bounty on [ADMIN_LOOKUPFLW(target_name)]")
 			return
-	to_chat(src, "Error. Bounty no longer active.") 
+	to_chat(src, "Error. Bounty no longer active.")
 
 /client/proc/enable_browser_debug()
 	set category = "Debug"
@@ -951,3 +957,161 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	to_chat(src, "Browser tools are now enabled.")
 	winset(src, null, "browser-options=devtools,find,byondstorage")
 
+/client/proc/manage_books()
+	set category = "-GameMaster-"
+	set name = "Manage Books"
+	manage_player_archive(PLAYER_ARCHIVE_BOOKS)
+
+/client/proc/manage_paintings()
+	set category = "-GameMaster-"
+	set name = "Manage Paintings"
+	manage_player_archive(PLAYER_ARCHIVE_PAINTINGS)
+
+/// Lists every entry in a player archive, either PLAYER_ARCHIVE_BOOKS or PLAYER_ARCHIVE_PAINTINGS, with links to manage it and ban its author.
+/client/proc/manage_player_archive(kind)
+	if(!holder)
+		return
+	var/datum/player_archive/archive = get_player_archive(kind)
+	if(!archive)
+		return
+
+	var/list/rows = list()
+	for(var/file_name in archive.entries)
+		var/list/cells = archive.get_admin_cells(file_name, src)
+		var/list/actions = archive.get_admin_actions(file_name)
+		cells += actions.Join()
+		rows += list(cells)
+
+	var/dat = "<a href='byond://?_src_=holder;[HrefToken()];player_archive_ban=[kind]' style='margin-right: 10px;'>Ban a Player from [capitalize(kind)]</a>"
+	dat += "<a href='byond://?_src_=holder;[HrefToken()];player_archive_bans=1'>Archive Bans</a>"
+	dat += player_archive_admin_table(archive.get_admin_headers() + "Actions", rows, "No [kind] found")
+	var/datum/browser/popup = new(src, "[archive.entry_noun]_management", "[capitalize(archive.entry_noun)] Management", 800, 700)
+	popup.set_content(dat)
+	popup.open()
+
+/// Builds the table shown in the player archive admin panels, where each row is a list of cell contents.
+/proc/player_archive_admin_table(list/headers, list/rows, empty_text)
+	var/list/dat = list("<table style='border-collapse: separate; border-spacing: 0 10px; width: 100%;'><tr>")
+	for(var/header in headers)
+		dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>[header]</th>"
+	dat += "</tr>"
+	for(var/list/row as anything in rows)
+		dat += "<tr>"
+		for(var/cell in row)
+			dat += "<td style='padding: 12px 15px;'>[cell]</td>"
+		dat += "</tr>"
+	if(!length(rows))
+		dat += "<tr><td colspan='[length(headers)]' style='padding: 20px; text-align: center;'>[empty_text]</td></tr>"
+	dat += "</table>"
+	return dat.Join()
+
+/// Returns the column headings of the admin panel listing this archive, before the actions column.
+/datum/player_archive/proc/get_admin_headers()
+	return list("Title", "Author", "Date")
+
+/// Returns the escaped contents of an entry's row in the admin panel, before the actions column.
+/datum/player_archive/proc/get_admin_cells(file_name, client/viewer)
+	var/list/contents = get_entry(file_name)
+	return list(
+		get_display_title(file_name),
+		"[player_archive_display_text(contents["author"])] ([player_archive_display_text(contents["author_ckey"])])",
+		player_archive_display_text(contents["ic_date"]),
+	)
+
+/// Returns the links in an entry's actions column of the admin panel.
+/datum/player_archive/proc/get_admin_actions(file_name)
+	var/list/contents = get_entry(file_name)
+	var/author_ckey = contents["author_ckey"]
+	. = list("<a href='byond://?_src_=holder;[HrefToken()];delete_player_archive_entry=[kind];file=[url_encode(file_name)]' style='margin-right: 10px;'>Delete</a>")
+	if(is_banned(author_ckey))
+		. += "Author banned"
+	else
+		. += "<a href='byond://?_src_=holder;[HrefToken()];player_archive_ban=[kind];ckey=[url_encode(author_ckey)]'>Ban Author</a>"
+
+/datum/player_archive/books/get_admin_headers()
+	return list("Title", "Author", "Category", "Written")
+
+/datum/player_archive/books/get_admin_cells(file_name, client/viewer)
+	var/list/cells = ..()
+	var/list/book = get_entry(file_name)
+	cells.Insert(3, player_archive_display_text(book["category"]))
+	return cells
+
+/datum/player_archive/books/get_admin_actions(file_name)
+	return list(
+		"<a href='byond://?_src_=holder;[HrefToken()];show_player_book=[url_encode(file_name)]' style='margin-right: 10px;'>View</a>",
+		"<a href='byond://?_src_=holder;[HrefToken()];amend_player_book=[url_encode(file_name)]' style='margin-right: 10px;'>Amend</a>",
+	) + ..()
+
+/datum/player_archive/paintings/get_admin_headers()
+	return list("Preview", "Title", "Author", "Painted")
+
+/datum/player_archive/paintings/get_admin_cells(file_name, client/viewer)
+	var/list/cells = ..()
+	var/image_path = get_image_path(file_name)
+	// Entries whose image is missing are still listed, so they can be cleaned up.
+	var/preview = "No image"
+	if(fexists(image_path))
+		var/res_name = "painting_[md5(file_name)].png"
+		viewer << browse_rsc(file(image_path), res_name)
+		preview = "<img src='[res_name]' height=64 width=64 style='display: block; margin: 0 auto;'>"
+	cells.Insert(1, preview)
+	return cells
+
+/client/proc/show_book_content(file_name)
+	var/list/book = SSlibrarian.archive.get_entry(file_name)
+	if(!length(book))
+		to_chat(src, span_warning("Book not found!"))
+		return
+
+	src << browse_rsc('html/book.png')
+
+	// Book text is the formatted paper HTML that players see in-game; the metadata is escaped separately.
+	var/content = "<h3>[player_archive_display_text(book["book_title"], file_name)]</h3><p>By [player_archive_display_text(book["author"])] ([player_archive_display_text(book["author_ckey"])]), written [player_archive_display_text(book["ic_date"])]<br>Category: [player_archive_display_text(book["category"])]</p>[book["text"]]"
+	var/dat = {"
+	<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+	<html>
+		<head>
+			<style type=\"text/css\">
+				body {
+					background-image:url('book.png');
+					background-repeat: repeat;
+					color: #000000;
+					font-size: 17px;
+					line-height: 1.5;
+					padding: 20px;
+					font-family: 'Times New Roman', serif;
+				}
+			</style>
+		</head>
+		<body>
+			[content]
+		</body>
+	</html>
+	"}
+
+	src << browse(dat, "window=reading;size=800x600;can_close=1;can_minimize=1;can_maximize=1;can_resize=1;border=0")
+
+/client/proc/archive_bans()
+	set category = "-GameMaster-"
+	set name = "Archive Bans"
+	if(!holder)
+		return
+
+	var/list/rows = list()
+	for(var/kind in list(PLAYER_ARCHIVE_BOOKS, PLAYER_ARCHIVE_PAINTINGS))
+		var/datum/player_archive/archive = get_player_archive(kind)
+		for(var/banned_ckey in archive?.upload_bans)
+			var/list/ban = archive.upload_bans[banned_ckey]
+			rows += list(list(
+				player_archive_display_text(banned_ckey),
+				capitalize(kind),
+				player_archive_display_text(ban["admin"]),
+				player_archive_display_text(ban["date"]),
+				"<a href='byond://?_src_=holder;[HrefToken()];player_archive_unban=[kind];ckey=[url_encode(banned_ckey)]'>Unban</a>",
+			))
+
+	var/dat = player_archive_admin_table(list("Player", "Banned From", "Banned By", "Date", "Actions"), rows, "No one is banned from the archives")
+	var/datum/browser/popup = new(src, "archive_bans", "Archive Bans", 700, 500)
+	popup.set_content(dat)
+	popup.open()

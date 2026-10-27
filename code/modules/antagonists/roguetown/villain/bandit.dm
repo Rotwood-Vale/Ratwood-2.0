@@ -27,7 +27,7 @@
 	finalize_bandit()
 
 /datum/antagonist/bandit/proc/finalize_bandit()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/music/traitor.ogg', 60, FALSE, pressure_affected = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/music/traitor2.ogg', 60, FALSE, pressure_affected = FALSE)
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H.patron, /datum/patron/inhumen))
 		H.set_patron(/datum/patron/inhumen/matthios)//If you're not of the Inhumen, we force you to worship Matthios.
@@ -35,7 +35,7 @@
 	ADD_TRAIT(H, TRAIT_BANDITCAMP, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_COMMIE, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_OUTLAW, TRAIT_GENERIC)//No meisters.
+	ADD_TRAIT(H, TRAIT_OUTLAW, TRAIT_GENERIC)
 	to_chat(H, span_alertsyndie("I am a BANDIT!"))
 /*
 	to_chat(H, span_boldwarning("Long ago I did a crime worthy of my bounty being hung on the wall outside of the local inn. \

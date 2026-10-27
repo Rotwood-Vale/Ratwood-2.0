@@ -2,12 +2,11 @@
 /datum/magic_item/mundane/woodcut
 	name = "woodcutting"
 	description = "It is firm like an tree."
-	var/last_used
 
 /datum/magic_item/mundane/woodcut/on_hit_structure(obj/item/i, obj/target, mob/living/user)
 	if(istype(target, /obj/structure/flora))
 		var/obj/structure/flora/tree = target
-		tree.obj_integrity -= 70
+		tree.obj_integrity -= 100
 	. = ..()
 
 /datum/magic_item/mundane/mining
@@ -98,9 +97,8 @@
 /datum/magic_item/mundane/revealing
 	name = "revealing"
 	description = "It's light is painfully bright."
-	var/active = FALSE
 
 /datum/magic_item/mundane/revealing/on_apply(obj/item/i)
 	.=..()
 	var/obj/item/flashlight/flare/light = i
-	light.light_outer_range = light.light_outer_range * 2
+	light.light_outer_range = light.light_outer_range * 3

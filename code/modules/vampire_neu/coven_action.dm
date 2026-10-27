@@ -2,8 +2,9 @@
 	check_flags = NONE
 	background_icon_state = "spell" //And this is the state for the background icon
 	button_icon_state = "coven" //And this is the state for the action icon
+	background_icon = 'icons/mob/actions/vampspells.dmi'
+	overlay_icon = 'icons/mob/actions/vampspells.dmi'
 	button_icon = 'icons/mob/actions/vampspells.dmi'
-	icon_icon = 'icons/mob/actions/vampspells.dmi'
 
 	var/level_icon_state = "1" //And this is the state for the action icon
 	var/datum/coven/coven
@@ -55,28 +56,27 @@
 /datum/action/coven/proc/update_mob_buttons()
 	owner.update_action_buttons()
 
-/datum/action/coven/UpdateButtonIcon(status_only, force)
-	button.icon = icon_icon
+/datum/action/coven/proc/UpdateButtonIcon(status_only, force)
 	if(coven && coven.current_power)
 		name = coven.current_power.name
-		button.name = name
 		desc = coven.current_power.desc
-		button.desc = desc
 		button_icon_state = coven.icon_state
 		background_icon_state = "[initial(background_icon_state)][active]"
-		button.icon_state = background_icon_state
-		overlay_state = "[coven.level_casting]"
+		overlay_icon_state = "[coven.level_casting]"
 	else
 		button_icon_state = initial(button_icon_state)
 		background_icon_state = "[initial(background_icon_state)][active]"
-		button.icon_state = background_icon_state
-		overlay_state = initial(overlay_state)
-	ApplyIcon(button, TRUE)
+		overlay_icon_state = initial(overlay_icon_state)
+	build_all_button_icons(ALL, TRUE)
 
-	if(!IsAvailable())
-		button.update_maptext(coven.current_power.get_cooldown())
+	if(coven?.current_power && !IsAvailable())
+		for(var/datum/hud/hud as anything in viewers)
+			var/atom/movable/screen/movable/action_button/B = viewers[hud]
+			B.update_maptext(coven.current_power.get_cooldown())
 
 /datum/action/coven/IsAvailable()
+	if(!coven?.current_power)
+		return FALSE
 	return coven.current_power.can_activate_untargeted()
 
 /datum/action/coven/Trigger(trigger_flags)
@@ -159,11 +159,16 @@
 		return
 
 	//actually try to use the Coven on the target
-	spawn()
-		if (coven.current_power.try_activate(target))
-			end_targeting()
+
+	// Deferred so the power fires after the cancel below lands, and so end_targeting() is not
+	// unregistering this signal from inside its own dispatch. INVOKE_ASYNC runs inline here.
+	addtimer(CALLBACK(src, PROC_REF(async_try_activate), target), 0)
 
 	return COMSIG_MOB_CANCEL_CLICKON
+
+/datum/action/coven/proc/async_try_activate(atom/target)
+	if (coven.current_power.try_activate(target))
+		end_targeting()
 
 /datum/action/coven/proc/begin_targeting()
 	var/client/client = owner?.client

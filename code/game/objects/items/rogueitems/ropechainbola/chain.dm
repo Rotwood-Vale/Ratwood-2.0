@@ -2,9 +2,10 @@
 	name = "strike"
 	blade_class = BCLASS_BLUNT
 	attack_verb = list("whips", "strikes", "smacks")
-	penfactor = 0 //40
+	penfactor = PEN_NONE
 	chargetime = 5
 	item_d_type = "slash"
+	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
 
 /obj/item/rope/chain
 	name = "chain"
@@ -29,3 +30,6 @@
 	anvilrepair = /datum/skill/craft/blacksmithing
 	resistance_flags = FIRE_PROOF
 	nudist_approved = TRUE
+	dropshrink = null
+	force = 10
+	swingsound = BLUNTWOOSH_MED

@@ -170,7 +170,7 @@
 /datum/supply_pack/rogue/Mage/unfinbook
 	name = "Unfinished Spellbook"
 	cost = 10
-	contains = list(/obj/item/spellbook_unfinished)
+	contains = list(/obj/item/rogueweapon/spellbook)
 
 /datum/supply_pack/rogue/Mage/nomag
 	name = "Ring of Nullmagic"
@@ -183,7 +183,7 @@
 	contains = list(/obj/item/clothing/neck/roguetown/talkstone)
 
 /datum/supply_pack/rogue/Mage/serfstone
-	name = "Vale serfstone"
+	name = "Realm-aligned serfstone"
 	cost = 80
 	contains = list(/obj/item/scomstone/bad)
 

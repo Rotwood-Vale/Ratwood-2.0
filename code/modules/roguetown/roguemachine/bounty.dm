@@ -7,8 +7,8 @@
 	blade_dulling = DULLING_BASH
 	anchored = TRUE
 	max_integrity = 999999
-	var/budget = 0
-
+	var/budget
+	
 /datum/bounty
 	var/target
 	var/target_hidden
@@ -42,6 +42,9 @@
 	var/list/choices = list("Consult Bounties", "Set Bounty", "Print List of Bounties", "Remove Bounty", "Collect Change")
 	var/selection = input(user, "The Excidium listens", src) as null|anything in choices
 
+	if(!Adjacent(user, src)) // User can move while selecting, sanity check
+		return
+
 	switch(selection)
 
 		if("Consult Bounties")
@@ -56,22 +59,10 @@
 		if("Remove Bounty")
 			remove_bounty(H)
 
-		if("Collect Change")
-			budget2change(budget)
-			budget = 0
-
 /obj/structure/roguemachine/bounty/attackby(obj/item/P, mob/user, params)
 
 	if(!(ishuman(user))) return
 
-	if(istype(P, /obj/item/roguecoin))
-		budget += P.get_real_price()
-		qdel(P)
-		update_icon()
-		playsound(loc, 'sound/misc/gold_misc.ogg', 100, TRUE, -1)
-		say("The amount loaded is now [budget].")
-		return attack_hand(user)
-	..()
 
 ///Shows all active bounties to the user.
 /obj/structure/roguemachine/bounty/proc/consult_bounties(mob/living/carbon/human/user)
@@ -84,11 +75,25 @@
 		bounty_found = TRUE
 
 	if(bounty_found)
-		var/datum/browser/popup = new(user, "BOUNTIES", "", 500, 300)
+		var/datum/browser/popup = new(user, "BOUNTIES", "", 500, 300, src)
 		popup.set_content(consult_menu)
 		popup.open()
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(user_moved))
 	else
 		say("No bounties are currently active.")
+
+/// Subscribes to COMSIG_MOVABLE_MOVED to prevent the user from having bounty screen open when not adjacent to the machine
+/obj/structure/roguemachine/bounty/proc/user_moved(mob/former_user)
+	SIGNAL_HANDLER
+
+	if(!istype(former_user))
+		return
+
+	if(Adjacent(former_user, src))
+		return
+
+	UnregisterSignal(former_user, COMSIG_MOVABLE_MOVED)
+	former_user << browse(null, "window=BOUNTIES")
 
 /obj/structure/roguemachine/bounty/proc/remove_bounty(mob/living/carbon/human/user)
 	var/list/bounty_list = list()
@@ -146,9 +151,14 @@
 		say("Insufficient amount. Bounties cannot be more than 500 mammon.")
 		return
 
+	// Has user a bank account?
+	if(!SStreasury.has_account(user))
+		say("You have no bank account.")
+		return
+
 	// Has user enough money?
-	if(budget < amount)
-		say("Insufficient funds.")
+	if(SStreasury.get_balance(user) < amount)
+		say("Insufficient balance funds.")
 		return
 
 	var/reason = input(user, "For what sins do you summon the hounds of hell?", src) as null|text
@@ -159,15 +169,9 @@
 	var/confirm = input(user, "Do you dare unleash this darkness upon the world? Your name will be known.", src) as null|anything in list("Yes", "No")
 	if(isnull(confirm) || confirm == "No") return
 
-	// Deduct money from user
-	budget -= round(amount)
-
-	//Deduct royal tax from amount
-	var/royal_tax = round(amount * 0.1)
-	SStreasury.treasury_value += royal_tax
-	SStreasury.log_entries += "+[royal_tax] to treasury (bounty tax)"
-
-	amount -= royal_tax
+	var/datum/fund/user_account = SStreasury.get_account(user)
+	amount = round(amount)
+	SStreasury.burn(user_account, amount, "bounty placement - [target.real_name]")
 
 	var/race = target.dna.species
 	var/gender = target.gender
@@ -192,7 +196,7 @@
 	new_bounty.amount = amount
 	new_bounty.target = target_realname
 	new_bounty.bandit = bandit_status
-	new_bounty.reason = reason
+	new_bounty.reason = html_encode(reason)
 	new_bounty.employer = employer_name
 	new_bounty.target_race = race
 	new_bounty.target_height = LOWER_TEXT(descriptor_height)
@@ -334,13 +338,15 @@
 	if(choice != "Yes")
 		return
 
-	if(budget < cost)
-		say("Insufficient funds. [cost] mammons required.")
+	if(!SStreasury.has_account(user))
+		say("You have no bank account.")
 		return
 
-	budget -= cost
-	SStreasury.treasury_value += cost
-	SStreasury.log_entries += "+[cost] to treasury (bounty scroll fee)"
+	if(SStreasury.get_balance(user) < cost)
+		say("Insufficient funds in account. [cost] mammons required.")
+		return
+
+	SStreasury.transfer(SStreasury.get_account(user), SStreasury.discretionary_fund, cost, "bounty scroll fee")
 
 	var/obj/item/paper/scroll/bounty/scroll = new(get_turf(src))
 	scroll.update_bounty_text()
@@ -463,7 +469,7 @@
 			playsound(A, 'sound/combat/hits/bladed/genstab (1).ogg', 100, FALSE, -1)
 			loc.visible_message(span_warning("The castifico snaps at [A]'s hand!"))
 			to_chat(A, span_danger("The machine wants YOU!"))
-			A.flash_fullscreen("redflash3")
+			A.fullscreen_redflash("redflash3")
 			A.Stun(10)
 			A.apply_damage(10, BRUTE, def_zone)
 			A.emote("whimper")
@@ -613,3 +619,10 @@
 		return
 	new type_to_put(T, floor(zenars_to_put))
 	playsound(T, 'sound/misc/coindispense.ogg', 100, FALSE, -1)
+
+/proc/has_bounty(mob/living/carbon/human/H)
+	for (var/datum/bounty/existing_bounty in GLOB.head_bounties)
+		if (existing_bounty.target == H.real_name)
+			return TRUE
+
+	return FALSE

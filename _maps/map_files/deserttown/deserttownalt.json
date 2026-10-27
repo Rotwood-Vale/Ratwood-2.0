@@ -1,0 +1,6 @@
+{
+	"map_name": "Desert Town Other Locations (Bandit Camp)",
+	"map_path": "map_files/deserttown",
+	"map_file": "deserttownalt.dmm",
+	"traits": [{"Name": "deserttownalt", "Up": true}, {"Up": true, "Down": true}, {"Down": true}]
+}

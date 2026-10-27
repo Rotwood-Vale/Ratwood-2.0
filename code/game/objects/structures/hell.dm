@@ -90,7 +90,7 @@ GLOBAL_LIST_EMPTY(hellspawns)
 /obj/structure/fluff/psyexit/Initialize(mapload)
 	spawn_time = world.time
 	START_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/structure/fluff/psyexit/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -131,7 +131,7 @@ GLOBAL_LIST_EMPTY(hellspawns)
 /obj/structure/fluff/helljailer/Initialize(mapload)
 	last_move = world.time
 	START_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
 /obj/structure/fluff/helljailer/Destroy()
 	STOP_PROCESSING(SSobj, src)

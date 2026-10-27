@@ -359,6 +359,21 @@
 	icon_state = "spade"
 	color_key_defaults = list(KEY_SKIN_COLOR)
 
+/datum/sprite_accessory/tail/tiefling/tailmaw
+	name = "Tiefling (Tailmaw)"
+
+/datum/sprite_accessory/tail/tiefling/heart/tailmaw
+	name = "Succubus (Tailmaw)"
+
+/datum/sprite_accessory/tail/tiefling/spadeheart/tailmaw
+	name = "Succubus (Alt) (Tailmaw)"
+	icon = 'icons/mob/sprite_accessory/tails/tiefling.dmi'
+	icon_state = "spadeheart"
+
+/datum/sprite_accessory/tail/tiefling/spade/tailmaw
+	name = "Spade (Tailmaw)"
+	can_wag = FALSE
+
 /datum/sprite_accessory/tail/dullahan
 	name = "Revenant"
 	icon = 'icons/mob/sprite_accessory/tails/tiefling.dmi'
@@ -385,6 +400,15 @@
 	icon_state = "lynx"
 	color_keys = 2
 	color_key_names = list("Tail", "Tip")
+
+/datum/sprite_accessory/tail/shadekin
+	name = "Shadekin"
+	icon_state = "shadekin"
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/shadekin/short
+	name = "Shadekin (Short)"
+	icon_state = "shadekinshort"
 
 /datum/sprite_accessory/tail/owl
 	name = "Owl"
@@ -423,7 +447,7 @@
 
 /datum/sprite_accessory/tail/manticore
 	icon = 'modular/icons/mob/tails/manticore_tail.dmi'
-	name = "Manticore"
+	name = "Tail Maw (Manticore)"
 	icon_state = "manticore"
 	color_keys = 3
 	color_key_names = list("Tail", "Innerds", "Spikes")
@@ -440,4 +464,35 @@
 /datum/sprite_accessory/tail/large_snake_plain
 	icon = 'modular_causticcove/icons/mob/tails/large_snake.dmi'
 	name = "Large Snake Plain"
-	icon_state = "large_snake_plain"	
+	icon_state = "large_snake_plain"
+
+// Not caustic cove, i just wanted it at the bottom tee hee.
+/datum/sprite_accessory/tail/tailmaw
+	name = "Tailmaw"
+	icon_state = "tailmaw"
+
+/datum/sprite_accessory/tail/tailmaw2
+	name = "Tailmaw (Wag)"
+	icon_state = "tailmaw2"
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_head
+	name = "Tailmaw (Coloured Head)"
+	icon_state = "tailmawwag_head"
+	color_keys = 2
+	color_key_names = list("Tail", "Head")
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_stripes
+	name = "Tailmaw (Striped)"
+	icon_state = "tailmawwag_striped"
+	color_keys = 2
+	color_key_names = list("Tail", "Stripes")
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/tailmaw2_headstripes
+	name = "Tailmaw (Striped, Coloured Head)"
+	icon_state = "tailmawwag_stripedhead"
+	color_keys = 3
+	color_key_names = list("Tail", "Stripes", "Head")
+	can_wag = TRUE

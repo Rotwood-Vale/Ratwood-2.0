@@ -14,8 +14,10 @@
 
 	var/enhanced_strip = FALSE
 	var/datum/clan/clan
-	var/bloodpool = 1000
-	var/maxbloodpool = 1000
+	/// Vampiric "usable" blood. Use get_bloodpool()/set_bloodpool()/adjust_bloodpool().
+	VAR_PROTECTED/bloodpool = 1000
+	/// Maximum bloodpool. Use get_maxbloodpool()/set_maxbloodpool()/adjust_maxbloodpool().
+	VAR_PROTECTED/maxbloodpool = 1000
 	var/masquerade = 5
 
 	var/last_masquerade_violation = 0
@@ -32,8 +34,6 @@
 	var/frenzy_chance_boost = 10
 	var/humanity = 7
 
-	var/potence_weapon_buff = 0
-
 	/// List of covens this mob possesses
 	var/list/datum/coven/covens
 	var/datum/clan_menu_interface/clan_menu_interface
@@ -43,6 +43,35 @@
 	if(cost > bloodpool)
 		return FALSE
 	return TRUE
+
+/mob/living/proc/is_kindred()
+	return !isnull(mind?.has_antag_datum(/datum/antagonist/vampire))
+
+/// Full-antagonists only, and supernatural ones only too.
+/// Yes, Gnolls aren't immune. They can just use cmode, but this gives hunted vampires a card to play to maybe get (1/2 free escapes)
+///
+/// Again, do not give it to virtues. Not blackblooded, not rotcured. Period. This is your quiet take-a-person-down unsuspectingly immunity list.
+/// If you want protection get a silver cross. Do not give people inherent and unexplainable protection, period. Not even constructs/reverents,
+/// it doesn't need to make sense or realistic here. Its a mechanical nessessity.
+/mob/living/proc/is_immune_to_vampire_domination()
+	if(!mind)
+		return FALSE
+	if(mind.has_antag_datum(/datum/antagonist/vampire))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/zombie))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/skeleton))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/werewolf))
+		return TRUE
+	if(mind.has_antag_datum(/datum/antagonist/lich))
+		return TRUE
+	return FALSE
+
+/mob/living/proc/is_clanmate(mob/living/other)
+	if(isnull(clan) || isnull(other?.clan))
+		return FALSE
+	return clan == other.clan
 
 /datum/clan/proc/grant_hierarchy_actions(mob/living/carbon/human/H)
 	if(!H.clan_position)
@@ -65,6 +94,26 @@
 		var/datum/action/clan_hierarchy/mass_command/mass_action = new()
 		mass_action.Grant(H)
 
+/// Reads bloodpool. bloodpool is VAR_PROTECTED, so non-living code must use this.
+/mob/living/proc/get_bloodpool()
+	return bloodpool
+
+/// Reads maxbloodpool. maxbloodpool is VAR_PROTECTED, so non-living code must use this.
+/mob/living/proc/get_maxbloodpool()
+	return maxbloodpool
+
+/// Sets the bloodpool ceiling. Does not re-clamp current bloodpool (matches prior direct-assignment behavior).
+/mob/living/proc/set_maxbloodpool(value)
+	maxbloodpool = value
+
+/// Adjusts the bloodpool ceiling by a delta.
+/mob/living/proc/adjust_maxbloodpool(adjust)
+	maxbloodpool += adjust
+
+/// Resets the bloodpool ceiling to its compile-time default.
+/mob/living/proc/reset_maxbloodpool()
+	maxbloodpool = initial(maxbloodpool)
+
 /mob/living/proc/set_bloodpool(newblood)
 	bloodpool = CLAMP(newblood, 0, maxbloodpool)
 	hud_used?.bloodpool?.name = "Bloodpool: [bloodpool]"
@@ -83,13 +132,17 @@
 	else
 		hud_used?.bloodpool?.set_value((100 / (maxbloodpool / bloodpool)) / 100, 1 SECONDS)
 
-/mob/living/proc/CheckEyewitness(mob/living/source, mob/attacker, range = 0, affects_source = FALSE)
+/mob/living/proc/CheckEyewitness(mob/living/source, mob/attacker, range = 0, affects_source = FALSE, ignore_kindred = FALSE)
 	var/actual_range = max(1, round(range*(attacker.alpha/255)))
 	var/list/seenby = list()
 	for(var/mob/living/carbon/human/human in oviewers(1, source))
+		if(ignore_kindred && human.is_kindred())
+			continue
 		if(get_turf(src) != turn(human.dir, 180))
 			seenby |= human
 	for(var/mob/living/carbon/human/human in viewers(actual_range, source))
+		if(ignore_kindred && human.is_kindred())
+			continue
 		if(affects_source)
 			if(human == source)
 				seenby |= human
@@ -202,6 +255,12 @@
 	if(!target_coven || !coven_name)
 		return FALSE
 
+	// powers have to come down before the action button does, deactivate() reaches for it on the way out
+	for(var/datum/coven_power/power in target_coven.known_powers)
+		if(power.active)
+			power.deactivate()
+		power.post_lose()
+
 	if(target_coven.coven_action)
 		target_coven.coven_action.Remove(src)
 		QDEL_NULL(target_coven.coven_action)
@@ -210,11 +269,6 @@
 		QDEL_NULL(target_coven.research_interface)
 
 	pre_coven_removal(target_coven)
-
-	for(var/datum/coven_power/power in target_coven.known_powers)
-		power.deactivate()
-		if(power.discipline.coven_action)
-			power.discipline.coven_action.Remove(src)
 
 	target_coven.owner = null
 	target_coven.current_power = null
@@ -240,8 +294,10 @@
 /mob/living/carbon/human/proc/get_coven(datum/coven/coven_type)
 	if(!length(covens))
 		return null
-	for(var/datum/coven/coven as anything in covens)
-		if(coven.type != coven_type)
+	// covens is keyed by name, so iterating it hands us the names rather than the covens themselves
+	for(var/coven_name in covens)
+		var/datum/coven/coven = covens[coven_name]
+		if(coven?.type != coven_type)
 			continue
 		return coven
 	return null
@@ -282,7 +338,7 @@
 			to_chat(src, span_notice("You enter the horrible slumber of deathless Torpor. You will heal until you are renewed."))
 			ADD_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
 		heal_overall_damage(5, 5)
-		adjust_bloodpool(10)
+		adjust_bloodpool(-2)
 	if(HAS_TRAIT(src, TRAIT_DEATHCOMA) && (total_damage <= 0 || (!istype(coffin) || !(src in coffin.contents))))
 		REMOVE_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
 		to_chat(src, span_warning("You have recovered from Torpor."))

@@ -33,6 +33,18 @@
 	var/taur_markings = null
 	var/taur_tertiary = null
 
+	// Determines which set of taur barding sprites to use. Easiest way to do this, frankly... ough.
+	// "m" = mammalian (canine, feline, tempest, kitsune, venard, skunk)
+	// "r" = reptilian (drake, noodle, sloog)
+	// "d" = deer
+	// "s" = saiga
+	// null = no taur-specific clothing support
+	var/taur_clothing_category = null
+	var/has_barding_tassets = TRUE
+	// Customizable colors for plate tasset overlays (like detail_color on clothing)
+	var/tasset1_color = null
+	var/tasset2_color = null
+
 	// Clip Masks allow you to apply a clipping filter to some other parts of human rendering to avoid anything overlapping the tail.
 	// Specifically: update_inv_cloak, update_inv_shirt, update_inv_armor, and update_inv_pants.
 	var/icon/clip_mask_icon = 'icons/mob/taurs.dmi'
@@ -50,6 +62,64 @@
 		clip_mask = icon(icon = (clip_mask_icon || icon), icon_state = clip_mask_state)
 	if(clip_mask_legs_state)
 		clip_mask_legs = icon(icon = (clip_mask_icon || icon), icon_state = clip_mask_legs_state)
+
+/obj/item/bodypart/taur/proc/get_barding_state(obj/item/clothing/clothing)
+	if(!taur_clothing_category || !clothing)
+		return null
+	if(taur_clothing_category == "s")
+		if(istype(clothing, /obj/item/clothing/cloak/psydontabard) || istype(clothing, /obj/item/clothing/cloak/templar/psydon) || istype(clothing, /obj/item/clothing/cloak/tabard/crusader/psydon))
+			return "psydon"
+		if(istype(clothing, /obj/item/clothing/cloak/templar/astrata) || istype(clothing, /obj/item/clothing/cloak/tabard/crusader/astrata))
+			return "astrata"
+	if(istype(clothing, /obj/item/clothing/cloak/tabard))
+		return taur_clothing_category == "s" ? "caparison" : "caparison-tabard"
+	if(istype(clothing, /obj/item/clothing/cloak/stabard))
+		return "caparison"
+	switch(clothing.armor_class)
+		if(ARMOR_CLASS_LIGHT)
+			if(istype(clothing, /obj/item/clothing/suit/roguetown/armor/chainmail))
+				return "chainmail"
+			if(taur_clothing_category == "s" && istype(clothing, /obj/item/clothing/suit/roguetown/armor/gambeson))
+				return "padded"
+			return "leather"
+		if(ARMOR_CLASS_MEDIUM)
+			return "chainmail"
+		if(ARMOR_CLASS_HEAVY)
+			return "plate"
+	return null
+
+/obj/item/bodypart/taur/proc/get_barding_overlay(obj/item/clothing/clothing, worn_layer)
+	var/taur_state = get_barding_state(clothing)
+	if(!taur_state)
+		return null
+	var/mutable_appearance/barding = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "[taur_state]_[taur_clothing_category]", -worn_layer)
+	barding.pixel_x = offset_x
+	if(clothing.color && (taur_state == "padded" || istype(clothing, /obj/item/clothing/cloak)))
+		barding.color = clothing.color
+	if(taur_clothing_category == "s" && taur_state == "caparison")
+		var/mutable_appearance/detail = mutable_appearance('icons/roguetown/clothing/special/onmob/taur_clothing.dmi', "caparison-tabard_s")
+		detail.appearance_flags = RESET_COLOR
+		detail.color = clothing.get_detail_color()
+		barding.overlays += detail
+	return barding
+
+/obj/item/bodypart/taur/generate_limb_cache_key(dropped, hideaux)
+	. = ..()
+	. += jointext(list(
+		taur_icon_state,
+		taur_markings_state,
+		taur_tertiary_state,
+		has_taur_color,
+		color_blend_mode,
+		taur_color,
+		taur_markings,
+		taur_tertiary,
+		taur_clothing_category,
+		tasset1_color,
+		tasset2_color,
+		clip_mask_icon,
+		clip_mask_state,
+		clip_mask_legs_state), "-")
 
 /obj/item/bodypart/taur/get_limb_icon(dropped, hideaux = FALSE)
 	// List of overlays
@@ -151,7 +221,6 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/otie
 	name = "Otie Body"
-
 	offset_x = -16
 	taur_icon_state = "otie_s"
 	taur_markings_state = "otie_markings"
@@ -164,6 +233,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	offset_x = -16
 	taur_icon_state = "canine_s"
+	taur_clothing_category = "m"
 	taur_markings_state = "canine_markings"
 	taur_tertiary_state = "canine_markings_2"
 
@@ -174,6 +244,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	offset_x = -16
 	taur_icon_state = "venard_s"
+	taur_clothing_category = "m"
 	taur_markings_state = "venard_markings"
 	taur_tertiary_state = "venard_markings_2"
 
@@ -184,6 +255,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	offset_x = -16
 	taur_icon_state = "drake_s"
+	taur_clothing_category = "r"
 	taur_markings_state = "drake_markings"
 
 	has_taur_color = TRUE
@@ -203,6 +275,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	offset_x = -16
 	taur_icon_state = "noodle_s"
+	taur_clothing_category = "r"
 	taur_markings_state = "noodle_markings"
 	taur_tertiary_state = "noodle_markings_2"
 
@@ -210,9 +283,10 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/horse
 	name = "Saiga Body"
-
 	offset_x = -16
 	taur_icon_state = "saiga_s"
+	taur_clothing_category = "s"
+	has_barding_tassets = FALSE
 	clip_mask_state = "clip_mask_saiga"
 
 	has_taur_color = TRUE
@@ -222,6 +296,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	offset_x = -16
 	taur_icon_state = "deer_s"
+	taur_clothing_category = "d"
 	taur_markings_state = "deer_markings"
 
 	has_taur_color = TRUE
@@ -239,7 +314,6 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/redpanda
 	name = "Red Panda Body"
-
 	offset_x = -16
 	taur_icon_state = "redpanda_s"
 	taur_markings_state = "redpanda_markings"
@@ -248,7 +322,6 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/rat
 	name = "Rat Body"
-
 	offset_x = -16
 	taur_icon_state = "rat_s"
 	taur_markings_state = "rat_markings"
@@ -270,6 +343,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	offset_x = -16
 	taur_icon_state = "kitsune_s"
+	taur_clothing_category = "m"
 	taur_markings_state = "kitsune_markings"
 	taur_tertiary_state = "kitsune_markings_2"
 
@@ -280,6 +354,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	offset_x = -16
 	taur_icon_state = "feline_s"
+	taur_clothing_category = "m"
 	taur_markings_state = "feline_markings"
 	taur_tertiary_state = "feline_markings_2"
 
@@ -290,6 +365,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	offset_x = -16
 	taur_icon_state = "tempest_s"
+	taur_clothing_category = "m"
 	taur_markings_state = "feline_markings"
 	taur_tertiary_state = "feline_markings_2"
 
@@ -297,7 +373,6 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 /obj/item/bodypart/taur/tiger
 	name = "Tiger Body"
-
 	offset_x = -16
 	taur_icon_state = "feline_s"
 	taur_markings_state = "tiger_markings"
@@ -315,6 +390,33 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	has_taur_color = TRUE
 
+/obj/item/bodypart/taur/spider/weaver
+	name = "Weaver Spider Body"
+	icon = 'icons/mob/weaver_spider.dmi'
+	taur_icon_state = "weaver_s"
+	taur_markings_state = "weaver_markings"
+	taur_tertiary_state = "weaver_bands"
+	clip_mask_icon = 'icons/mob/weaver_spider.dmi'
+	clip_mask_state = "weaver_clip_mask"
+	color_blend_mode = ICON_MULTIPLY
+
+/obj/item/bodypart/taur/spider/weaver/get_limb_icon(dropped, hideaux = FALSE)
+	. = ..()
+	if(dropped)
+		return
+
+	// Only the north-facing central shell is in these states. Draw it over
+	// clothing, sleeves, and long hair; keep hands and held items visible.
+	var/list/shell_states = list("weaver_front_s", "weaver_front_markings", "weaver_front_bands")
+	var/list/shell_colors = list(taur_color, taur_markings, taur_tertiary)
+	for(var/i in 1 to length(shell_states))
+		var/icon/shell_icon = icon(icon, shell_states[i])
+		shell_icon.Blend(shell_colors[i], color_blend_mode)
+		var/image/shell = image(shell_icon)
+		shell.layer = -HAIREXTRA_LAYER + 0.1
+		shell.pixel_x = offset_x
+		. += shell
+
 /obj/item/bodypart/taur/centipede
 	name = "Centipede Body"
 
@@ -330,6 +432,7 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	offset_x = -16
 	taur_icon_state = "sloog_s"
+	taur_clothing_category = "r"
 	taur_markings_state = "sloog_markings"
 
 	has_taur_color = TRUE

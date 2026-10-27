@@ -29,7 +29,9 @@
 		/datum/skill/craft/alchemy = SKILL_LEVEL_LEGENDARY, // This is literally their whole thing
 		/datum/skill/labor/farming = SKILL_LEVEL_JOURNEYMAN, // Farm ingredients so you have something to do that isn't grinding skills
 	)
-
+	subclass_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+	)
 /datum/outfit/job/roguetown/wretch/plaguebearer/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/physician
 	mask = /obj/item/clothing/mask/rogue/physician
@@ -72,9 +74,9 @@
 						beltl = /obj/item/quiver/poisonarrows
 					if("Magic")
 						H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_EXPERT, TRUE)
-						backr = /obj/item/rogueweapon/woodstaff/toper
-						H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-						H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/acidsplash)
+						ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
+						H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 2))
+						backr = /obj/item/rogueweapon/woodstaff/implement
 			if("A Rapier and Agility")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)

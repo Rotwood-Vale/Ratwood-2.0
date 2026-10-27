@@ -6,8 +6,7 @@
 	icon_state = "brigandine"
 	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
+	armor = ARMOR_BRIGANDINE
 	allowed_sex = list(MALE, FEMALE)
 	nodismemsleeves = TRUE
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
@@ -17,10 +16,16 @@
 	armor_class = ARMOR_CLASS_MEDIUM //good idea suggested by lamaster
 	sleeved_detail = FALSE
 	boobed_detail = FALSE
+	chunkcolor = "#7d9097"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_COAT_STEP)
+
+/obj/item/clothing/suit/roguetown/armor/brigandine/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/attack_right(mob/user)
 	if(detail_tag)
@@ -37,6 +42,7 @@
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_armor()
+	chunkcolor = pickedcolor
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/update_icon()
 	cut_overlays()
@@ -65,7 +71,6 @@
 	GLOB.lordcolor -= src
 	return ..()
 
-
 /obj/item/clothing/suit/roguetown/armor/brigandine/heartfelt
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "heartfelt brigandine"
@@ -73,8 +78,7 @@
 	icon_state = "brigandine2"
 	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_FULL
-	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
+	armor = ARMOR_BRIGANDINE
 	allowed_sex = list(MALE, FEMALE)
 	nodismemsleeves = TRUE
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
@@ -109,6 +113,7 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+
 /obj/item/clothing/suit/roguetown/armor/brigandine/coatplates
 	name = "coat of plates"
 	desc = "A leather coat with plates attached to increase protection while retaining mobility. The leather below might stop a dagger."
@@ -116,13 +121,14 @@
 	blocksound = PLATEHIT
 	smelt_bar_num = 2
 	armor_class = ARMOR_CLASS_HEAVY
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/retinue/coat
 	name = "coat of the commander"
 	desc = "A thick boiled leather surcoat with enough plates concealed within the folds to offer superior protection. It weighs a ton and takes a great man to wear."
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER
 	var/picked = FALSE
 	sleeved_detail = TRUE
 	boobed_detail = TRUE
@@ -155,12 +161,16 @@
 	icon_state = "light_brigandine"
 	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_TORSO
-	armor = ARMOR_LEATHER_STUDDED
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
-	smeltresult = /obj/item/ingot/iron
+	armor = ARMOR_PLATE
+	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE - ARMOR_INT_CHEST_PLATE_BRIGANDINE_WEIGHT_MODIFIER
+	smeltresult = /obj/item/ingot/steel
 	equip_delay_self = 40
 	armor_class = ARMOR_CLASS_LIGHT//steel version of the studded leather armor now
 	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/clothing/suit/roguetown/armor/brigandine/light/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/light/attack_right(mob/user)
 	if(detail_tag)
@@ -207,7 +217,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/captain
 	name = "captain's brigandine"
-	desc = "A coat with plates specifically tailored and forged for the captain of the vale."
+	desc = "A coat with plates specifically tailored and forged for the captain of the realm."
 	icon_state = "capplate"
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
@@ -217,7 +227,8 @@
 	blocksound = SOFTHIT
 	equip_delay_self = 4 SECONDS
 	unequip_delay_self = 4 SECONDS
-	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE + 50
+	armor = ARMOR_PLATE // Unique armor, uniquely good value coverage.
+	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL // Makes the armor equivilient w/ darkened steel plate.
 	sellprice = 363 // On par w/ judgement and ichor fang cuz why not
 	smelt_bar_num = 2
 	armor_class = ARMOR_CLASS_HEAVY

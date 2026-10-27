@@ -1,4 +1,5 @@
 /datum/advclass/ranger
+	townie_contract_gate_exempt = TRUE
 	name = "Sentinel"
 	tutorial = "You are a ranger well-versed in traversing untamed lands, with years of experience taking odd jobs as a pathfinder and bodyguard in areas of wilderness untraversable to common soldiery."
 	allowed_sexes = list(MALE, FEMALE)
@@ -7,7 +8,7 @@
 	class_select_category = CLASS_CAT_RANGER
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
 	subclass_social_rank = SOCIAL_RANK_PEASANT
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_OUTDOORSMAN)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_OUTDOORSMAN, TRAIT_EXPERT_HUNTER)
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT, CTAG_LICKER_WRETCH)
 	subclass_stats = list(
 		STATKEY_PER = 3,
@@ -28,9 +29,9 @@
 		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/fishing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/butchering = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/tracking = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/hunting = SKILL_LEVEL_APPRENTICE,
 	)
 
 /datum/outfit/job/roguetown/adventurer/ranger/pre_equip(mob/living/carbon/human/H)
@@ -47,6 +48,7 @@
 	cloak = /obj/item/clothing/cloak/raincloak/green
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltr = /obj/item/flashlight/flare/torch/lantern
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
 	backpack_contents = list(
 		/obj/item/bait = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
@@ -68,7 +70,7 @@
 
 /datum/advclass/ranger/wayfarer
 	name = "Wayfarer"
-	tutorial = "You've spent countless years homing many trades; man-hunting, picking locks, breaking into places you had no right being.. but you are no mere thief. You are trained to track men and recover stolen goods. And The Vale is a prime paycheck.."
+	tutorial = "You've spent countless years homing many trades; man-hunting, picking locks, breaking into places you had no right being.. but you are no mere thief. You are trained to track men and recover stolen goods. And these lands are a prime paycheck.."
 	outfit = /datum/outfit/job/roguetown/adventurer/assassin
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander.ogg'
 	subclass_languages = list(/datum/language/thievescant)
@@ -87,7 +89,7 @@
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_APPRENTICE,
@@ -109,6 +111,7 @@
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/steel
 	beltr = /obj/item/quiver/bolts
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
@@ -116,11 +119,11 @@
 	H.set_blindness(0)
 
 /datum/advclass/ranger/bombadier
-	name = "Bombadier"
+	name = "Bombardier"
 	tutorial = "Bombs? You've got them. Plenty of them - and the skills to make more. You've spent years training under skilled alchemists and have found the perfect mix to create some chaos - now go blow something up!"
 	outfit = /datum/outfit/job/roguetown/adventurer/bombadier
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander2.ogg'
-	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_ALCHEMY_EXPERT) // Bombardier get an exception - alchemy is part of the gimmick.
+	traits_applied = list(TRAIT_MEDIUMARMOR, TRAIT_ALCHEMY_EXPERT, TRAIT_EXPLOSIVE_SUPPLY, TRAIT_BOMBER_EXPERT) // Bombardier get an exception - alchemy is part of the gimmick.
 	subclass_stats = list(
 		STATKEY_STR = 2,
 		STATKEY_INT = 2,
@@ -133,7 +136,7 @@
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/traps = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
 	)
@@ -151,10 +154,11 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
 	belt = /obj/item/storage/belt/rogue/leather
 	backl = /obj/item/storage/backpack/rogue/satchel
+	backr = /obj/item/bmbstrap/firebomb
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	beltl = /obj/item/rogueweapon/mace/cudgel
+	head = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
 	backpack_contents = list(
-		/obj/item/bomb = 4,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
@@ -186,8 +190,9 @@
 		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE, // Won't really equate to much.
 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/hunting = SKILL_LEVEL_NOVICE,
 	)
-	extra_context = "Selecting Light Armor grants +1 SPD. Selecting Medium Armor grants +1 STR along with the corresponding traits."
+	extra_context = "Selecting Light Armor grants +2 SPD. Selecting Medium Armor grants +2 STR along with the corresponding traits."
 
 /datum/outfit/job/roguetown/adventurer/bwanderer/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -200,23 +205,31 @@
 	belt = /obj/item/storage/belt/rogue/leather
 	cloak = /obj/item/clothing/cloak/raincloak/green
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltr = /obj/item/rogueweapon/stoneaxe/woodcut // Technical main weapon?
+	beltr = /obj/item/rogueweapon/stoneaxe/woodcut
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/flashlight/flare/torch/lantern = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
-		var/weapons = list("Recurve Bow","Billhook","Sling","Crossbow")
+		var/weapons = list("Recurve Bow", "Longbow", "Crossbow", "Sling", "Billhook", "Boar Spear", "Handaxe and Shield", "Shortsword and Shield", "Cudgel and Shield", "Whip and Shield")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
 			if("Recurve Bow")
 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
 				beltl = /obj/item/quiver/arrows
+			if("Longbow")
+				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
+				beltl = /obj/item/quiver/arrows
 			if("Billhook") // Debatable here, but we love variety.
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/spear/billhook
+				backr = /obj/item/rogueweapon/scabbard/gwstrap
+			if("Boar Spear")
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				r_hand = /obj/item/rogueweapon/spear/boar
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 			if("Sling")
 				H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_JOURNEYMAN, TRUE)
@@ -226,19 +239,63 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltl = /obj/item/quiver/bolts
-		var/armors = list("Light Armor","Medium Armor")
+			if("Handaxe and Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				r_hand = /obj/item/rogueweapon/stoneaxe/handaxe
+				l_hand = /obj/item/rogueweapon/shield/wood
+			if("Shortsword and Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				r_hand = /obj/item/rogueweapon/sword/short/iron
+				l_hand = /obj/item/rogueweapon/shield/wood
+			if("Cudgel and Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				r_hand = /obj/item/rogueweapon/mace/cudgel
+				l_hand = /obj/item/rogueweapon/shield/wood
+			if("Whip and Shield")
+				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
+				r_hand = /obj/item/rogueweapon/whip
+				l_hand = /obj/item/rogueweapon/shield/wood
+		var/armors = list("Hide Armor (+2 SPD)", "Gambeson (+2 SPD)", "Studded Armor (+2 SPD)", "Chainmail (+2 STR)", "Hauberk (+2 STR)", "Cuirass (+2 STR)")
 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armors
 		switch(armor_choice)
-			if("Light Armor")
-				armor = /obj/item/clothing/suit/roguetown/armor/leather/hide
+			if("Hide Armor (+2 SPD)")
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy
 				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 				gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-				H.change_stat(STATKEY_SPD, 1)
-			if("Medium Armor")
-				armor = /obj/item/clothing/suit/roguetown/armor/chainmail/iron
+				H.change_stat(STATKEY_SPD, 2)
+			if("Gambeson (+2 SPD)")
+				armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+				pants = /obj/item/clothing/under/roguetown/trou/leather
+				gloves = /obj/item/clothing/gloves/roguetown/leather
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+				H.change_stat(STATKEY_SPD, 2)
+			if("Studded Armor (+2 SPD)")
+				armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
+				pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
+				gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+				H.change_stat(STATKEY_SPD, 2)
+			if("Chainmail (+2 STR)")
+				armor = /obj/item/clothing/suit/roguetown/armor/chainmail
 				pants = /obj/item/clothing/under/roguetown/chainlegs/iron
 				gloves = /obj/item/clothing/gloves/roguetown/chain/iron
 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-				H.change_stat(STATKEY_STR, 1)
-				H.set_blindness(0)
+				H.change_stat(STATKEY_STR, 2)
+			if("Hauberk (+2 STR)")
+				armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/iron
+				pants = /obj/item/clothing/under/roguetown/chainlegs/iron/kilt
+				gloves = /obj/item/clothing/gloves/roguetown/chain/iron
+				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+				H.change_stat(STATKEY_STR, 2)
+			if("Cuirass (+2 STR)")
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
+				pants = /obj/item/clothing/under/roguetown/chainlegs/iron
+				gloves = /obj/item/clothing/gloves/roguetown/chain/iron
+				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+				H.change_stat(STATKEY_STR, 2)
+		H.set_blindness(0)

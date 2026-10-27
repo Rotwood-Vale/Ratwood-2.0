@@ -11,22 +11,23 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/roguetown/arbalist
 	subclass_languages = list(/datum/language/otavan)
+	cmode_music = 'sound/music/psydonite.ogg'
 	category_tags = list(CTAG_INQUISITION)
 	traits_applied = list(
 		TRAIT_PERFECT_TRACKER,
+		TRAIT_SLEUTH,
 	)
-	subclass_stats = list(//You get PER/STR for the crossbow.
+	subclass_stats = list(//+9, You get PER/STR for the crossbow.
 		STATKEY_PER = 3,
 		STATKEY_STR = 2,
 		STATKEY_WIL = 2,
-		STATKEY_CON = 1,
 	)
 	subclass_skills = list(
 		/datum/skill/combat/crossbows = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/tracking = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
@@ -59,7 +60,7 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	mask = /obj/item/clothing/mask/rogue/sack/psy
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	backpack_contents = list(
 		/obj/item/roguekey/inquisition = 1,
 		/obj/item/grapplinghook = 1,
@@ -84,7 +85,6 @@
 	strip_delay = 20
 	var/max_storage = 5
 	var/list/stakes = list()
-	sewrepair = TRUE
 	component_type = /datum/component/storage/concrete/roguetown/belt/knife_belt
 
 /obj/item/storage/belt/rogue/leather/stakebelt/attackby(obj/A, loc, params)

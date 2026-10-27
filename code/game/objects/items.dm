@@ -75,7 +75,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	var/body_parts_covered_dynamic = 0
-	var/body_parts_inherent	= 0 //bodypart coverage areas you cannot peel off because it wouldn't make any sense (peeling chest off of torso armor, hands off of gloves, head off of helmets, etc)
+	var/body_parts_inherent	= 0 //bodypart coverage areas that are always covered (chest on torso armor, hands on gloves, head on helmets, etc)
 	var/surgery_cover = TRUE // binary, whether this item is considered covering its bodyparts in respect to surgery. Tattoos, etc. are false.
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
@@ -89,8 +89,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/edelay_type = 1 //if 1, can be moving while equipping (for helmets etc)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
-	var/breakouttime = 0 // greater than 15 str get this isnstead
+	var/breakouttime = 0 // str 20 breaks out on this instead of struggling for slipouttime
 	var/slipouttime = 0
+	var/legcuff_slowdown = 0 //movespeed slowdown while worn as legcuffs, 0 = none
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -146,8 +147,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/bigboy = FALSE //used to center screen_loc when in hand
 	var/wielded = FALSE
 	var/altgripped = FALSE
-	var/list/alt_intents //these replace main intents
+	/// Ordered alternate grip states cycled by right-click while the item is held.
+	var/list/alt_grips
+	/// Currently applied alternate grip state datum.
+	var/datum/alt_grip/current_alt_grip
+	/// 1-based index into alt_grips for the currently applied state.
+	var/current_alt_grip_index = 0
+	/// Original values for vars overridden by the active alt grip state.
+	var/list/alt_grip_restore_vars
 	var/list/gripped_intents //intents while gripped, replacing main intents
+	var/isaltgripsharp = FALSE //In the edge case an alt gripped weapon should remain sharp, then change this to true
 	var/force_wielded = 0
 	var/gripsprite = FALSE //use alternate grip sprite for inhand
 	var/wieldsound = FALSE
@@ -155,6 +164,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/dropshrink = 0
 	/// Force value that is force or force_wielded, with any added bonuses from external sources. (Mainly components for enchantments)
 	var/force_dynamic = 0
+	/// Temporary multiplier applied to sharpness decay for cleave secondary hits. Reset to 1 after use.
+	var/tmp/cleave_sharpness_mult = 1
 	/// Weapon's length. Indicates what limbs it can target without extra circumstances (like grabs / on a prone target).
 	var/wlength = WLENGTH_NORMAL
 	/// Weapon's balance. Swift uses SPD difference between attacker and defender to increase hit%. Heavy increases parry stamina drain based on STR diff.
@@ -171,6 +182,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/minstr_req = FALSE
 	/// %-age of our raw damage that is dealt to armor or weapon on hit / parry / clip.
 	var/intdamage_factor = 1
+
+	var/item_quality = ITEM_QUALITY_STANDARD
+	var/has_item_quality = FALSE
+	/// Ferentian Trading Company seal - foreign vessels refuse to buy back Company-sealed stock.
+	/// Not wired up anywhere yet (goldface/silverface catalog step).
+	var/atc_sealed = FALSE
+	/// If TRUE, the stockpile refuses to mint this item as treasure. AP sets this on mapload for
+	/// items spawned inside town areas ("town property"); that marking is not yet wired up in ES,
+	/// so this is declared but currently always FALSE.
+	var/unmintable = FALSE
 
 	var/sleeved = null
 	var/sleevetype = null
@@ -219,7 +240,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/examine_effects = list()
 
 	///played when an item that is equipped blocks a hit
-	var/list/blocksound
+	var/blocksound
 
 	var/thrown_damage_flag = "blunt"
 
@@ -256,13 +277,70 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/no_use_cd = FALSE //if true, no cooldown when interacting with it
 	var/vorpal = FALSE // does this item/weapon circumvent two-stage death during dismemberment? (do not add this to anything but ultra rare shit)
 
+	/// Makes this item impossible to enchant, for temporary item
+	var/unenchantable = FALSE
+
 	/// Item is compatible with Nudist and Nude Sleeper vice traits. Nudists can equip these (where they otherwise couldn't), and nude sleepers can fall asleep while wearing these.
 	/// Mainly intended for small accessories and things that don't cover much, or for resolving unimmersive situations. See other examples of nudist-friendly items.
 	/// Stripping these items from nude sleepers is 2x faster while they are unconscious.
 	var/nudist_approved = FALSE
+	/// This is predominantly for items WITHOUT A RECIPE. Recipes will hold display_category's otherwise
+	var/display_category
 
 /obj/item/Initialize(mapload)
+	if (attack_verb)
+		attack_verb = typelist("attack_verb", attack_verb)
+
+	if(experimental_inhand)
+		var/props2gen = list("gen")
+		var/list/prop
+		if(gripped_intents)
+			props2gen += "wielded"
+		for(var/i in props2gen)
+			prop = getonmobprop(i)
+			if(prop)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
+
+	if(experimental_onhip)
+		if(slot_flags & ITEM_SLOT_BELT)
+			var/i = "onbelt"
+			var/list/prop = getonmobprop(i)
+			if(prop)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
+
+	if(experimental_onback)
+		if(slot_flags & ITEM_SLOT_BACK)
+			var/i = "onback"
+			var/list/prop = getonmobprop(i)
+			if(prop)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
+				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
+				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
+
+	update_wdefense_dynamic()
+	update_force_dynamic()
+
 	. = ..()
+
+	// Town-property marking (AP parity): items placed inside a town area at mapload are
+	// stamped unmintable, so residents can't strip the town's furnishings and mint them for
+	// coin. Read by the stockpile deposit / mint guard (stockpile.dm).
+	if(mapload)
+		var/area/A = get_area(src)
+		if(A && is_type_in_typecache(A, GLOB.roguetown_areas_typecache))
+			unmintable = TRUE
+
+	for(var/path in actions_types)
+		new path(src)
+	actions_types = null
+
 	if(!pixel_x && !pixel_y && !bigboy)
 		pixel_x = rand(-5,5)
 		pixel_y = rand(-5,5)
@@ -276,6 +354,32 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		body_parts_covered_dynamic = body_parts_covered
 	update_transform()
 
+	if(!hitsound)
+		if(damtype == "fire")
+			hitsound = list('sound/blank.ogg')
+		if(damtype == "brute")
+			hitsound = list("swing_hit")
+
+	if (!embedding)
+		embedding = getEmbeddingBehavior()
+	else if (islist(embedding))
+		embedding = getEmbeddingBehavior(arglist(embedding))
+	else if (!istype(embedding, /datum/embedding_behavior))
+		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
+
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
+
+	if(max_blade_int)
+		if(randomize_blade_int_on_init)
+			//set blade integrity to randomized 60% to 100% if not already set
+			if(!blade_int)
+				blade_int = max_blade_int + rand(-(max_blade_int * 0.4), 0)
+			//set dismemberment integrity to max_blade_int if not already set
+			if(!dismember_blade_int)
+				dismember_blade_int = max_blade_int
+		else
+			blade_int = max_blade_int
 
 /obj/item/proc/update_transform()
 	transform = null
@@ -322,80 +426,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			if (obj_broken)
 				update_damaged_state()
 
-/obj/item/Initialize(mapload)
-	if (attack_verb)
-		attack_verb = typelist("attack_verb", attack_verb)
-
-	if(experimental_inhand)
-		var/props2gen = list("gen")
-		var/list/prop
-		if(gripped_intents)
-			props2gen += "wielded"
-		for(var/i in props2gen)
-			prop = getonmobprop(i)
-			if(prop)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
-
-	if(experimental_onhip)
-		if(slot_flags & ITEM_SLOT_BELT)
-			var/i = "onbelt"
-			var/list/prop = getonmobprop(i)
-			if(prop)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
-
-	if(experimental_onback)
-		if(slot_flags & ITEM_SLOT_BACK)
-			var/i = "onback"
-			var/list/prop = getonmobprop(i)
-			if(prop)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=FALSE)
-				getmoboverlay(i,prop,behind=FALSE,mirrored=TRUE)
-				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
-
-	wdefense_dynamic = wdefense
-	update_force_dynamic()
-
-	. = ..()
-	for(var/path in actions_types)
-		new path(src)
-	actions_types = null
-
-
-	if(!hitsound)
-		if(damtype == "fire")
-			hitsound = list('sound/blank.ogg')
-		if(damtype == "brute")
-			hitsound = list("swing_hit")
-
-	if (!embedding)
-		embedding = getEmbeddingBehavior()
-	else if (islist(embedding))
-		embedding = getEmbeddingBehavior(arglist(embedding))
-	else if (!istype(embedding, /datum/embedding_behavior))
-		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
-
-	if(sharpness) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
-
-	if(max_blade_int)
-		if(randomize_blade_int_on_init)
-			//set blade integrity to randomized 60% to 100% if not already set
-			if(!blade_int)
-				blade_int = max_blade_int + rand(-(max_blade_int * 0.4), 0)
-			//set dismemberment integrity to max_blade_int if not already set
-			if(!dismember_blade_int)
-				dismember_blade_int = max_blade_int
-		else
-			blade_int = max_blade_int
-
-/obj/item/Destroy()
+/obj/item/Destroy(force=FALSE)
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
@@ -524,13 +555,32 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(usr, output)
 
 	if(href_list["explainintdamage"])
-		var/output = span_info("Multiplies the damage done to armor on hit.")
+		var/output = span_info("Multiplies the damage done to armor on hit.\nAlso multiplies durability damage dealt to shields on parry (if higher than Anti-Object Mod).")
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
 		to_chat(usr, output)
 
+	if(href_list["explainshieldcoverage"])
+		var/output = span_info("Chance to passively block incoming projectiles. Only works from the front.\nShields take quarter damage from blocked projectiles and fixed durability damage from melee parries.\nHeavy weapons deal more durability damage to shields — the higher of the attacker's Anti-Object Mod or Integrity Damage is used as a multiplier.")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
+
+	if(href_list["explainpenfactor"])
+		var/output = span_info("Armor Penetration whether this attack goes through armor.\n\
+		Each armor piece has a blocking tier (Light, Medium, Heavy, Blacksteel).\n\
+		Penetration > armor tier: 100% damage goes through.\n\
+		Penetration = armor tier: 20% damage through. Armor absorbs remaining %.\n\
+		Penetration < armor tier: Fully blocked.\n\
+		All attacks go through armor with no protection of that type, including attacks with no armor penetration.\n\
+		Blunt / Burn / Acid attacks bypass this system entirely and use damage reduction instead.")
+		if(!usr.client.prefs.no_examine_blocks)
+			output = examine_block(output)
+		to_chat(usr, output)
+
+
 	if(href_list["explaindemolitionmod"])
-		var/output = span_info("Multiplies the damage done to objects when hitting them.")
+		var/output = span_info("Multiplies the damage done to objects when hitting them.\nAlso multiplies durability damage dealt to shields on parry (if higher than Integrity Damage).")
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
 		to_chat(usr, output)
@@ -542,10 +592,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			output = examine_block(output)
 		to_chat(usr, output)
 
+	if(href_list["showaltgrip"])
+		if(!usr.canUseTopic(src, be_close=TRUE))
+			return
+		show_altgrip(usr, href_list["showaltgrip"])
+
 	if(href_list["inspect"])
 		if(!usr.canUseTopic(src, be_close=TRUE))
 			return
-		var/list/inspec = list(span_notice("Properties of [src.name]"))
+		var/list/inspec = list(span_notice("Properties of [name]"))
 		if(minstr)
 			inspec += "\n<b>MIN.STR:</b> [minstr]"
 		if(minstr_req)
@@ -576,8 +631,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					inspec += "Great"
 			inspec += " <span class='info'><a href='?src=[REF(src)];explainlength=1'>{?}</a></span>"
 
-		if(alt_intents)
-			inspec += "\n<b>ALT-GRIP (RIGHT CLICK WHILE IN HAND)</b>"
+		if(has_altgrip_modes())
+			inspec += "\n<b>ALT-GRIP (RCLICK/HOTKEY(B)/CTRL+SCRLWHL)</b>"
+			var/list/alt_grip_lines = get_altgrip_lines(src, usr)
+			if(length(alt_grip_lines))
+				for(var/alt_grip_line in alt_grip_lines)
+					inspec += "\n[alt_grip_line]"
 
 		var/shafttext = get_blade_dulling_text(src, verbose = TRUE)
 		if(shafttext)
@@ -604,12 +663,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			var/obj/item/rogueweapon/W = src
 			if(W.special)
 				inspec += "[W.special.get_examine()]"
+				inspec +="\n<i>This ability can be used by right clicking while in STRONG stance.</i>"
+
+		if(istype(src, /obj/item/rogueweapon/shield))
+			var/obj/item/rogueweapon/shield/S = src
+			inspec += "\n<b>PASSIVE PROJECTILE BLOCK:</b> [S.coverage]% <span class='info'><a href='?src=[REF(src)];explainshieldcoverage=1'>{?}</a></span>"
 
 		if(intdamage_factor != 1 && force >= 5)
 			inspec += "\n<b>INTEGRITY DAMAGE:</b> [intdamage_factor * 100]% <span class='info'><a href='?src=[REF(src)];explainintdamage=1'>{?}</a></span>"
-
-		if(demolition_mod != 1 && force >= 5)
-			inspec += "\n<b>ANTI-OBJECT MOD:</b> [demolition_mod * 100]% <span class='info'><a href='?src=[REF(src)];explaindemolitionmod=1'>{?}</a></span>"
 
 //**** CLOTHING STUFF
 
@@ -620,37 +681,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			if(C.body_parts_covered)
 				inspec += "\n<b>COVERAGE: <br></b>"
 				inspec += " | "
-				if(C.body_parts_covered == C.body_parts_covered_dynamic)
-					for(var/zone in body_parts_covered2organ_names(C.body_parts_covered))
-						inspec += "<b>[capitalize(zone)]</b> | "
-				else
-					var/list/zones = list()
-					//We have some part peeled, so we turn the printout into precise mode and highlight the missing coverage.
-					for(var/zoneorg in body_parts_covered2organ_names(C.body_parts_covered, precise = TRUE))
-						zones += zoneorg
-					for(var/zonedyn in body_parts_covered2organ_names(C.body_parts_covered_dynamic, precise = TRUE))
-						inspec += "<b>[capitalize(zonedyn)]</b> | "
-						if(zonedyn in zones)
-							zones.Remove(zonedyn)
-					for(var/zone in zones)
-						inspec += "<b><font color = '#7e0000'>[capitalize(zone)]</font></b> | "
+			var/list/zonelist = body_parts_covered2organ_names(C.body_parts_covered)
+			var/count = 0
+			for(var/zone in zonelist)
+				var/add_divider = TRUE
+				if(count == (length(zonelist) - 1))
+					add_divider = FALSE
+				inspec += "<b>[capitalize(zone)]</b> [add_divider ? "| " : ""]"
+				count++
 				inspec += "<br>"
-			if(C.body_parts_inherent)
-				inspec += "<b>CANNOT BE PEELED: </b>"
-				var/list/inherentList = body_parts_covered2organ_names(C.body_parts_inherent)
-				if(length(inherentList) == 1)
-					inspec += "<b><font color = '#77cde2'>[capitalize(inherentList[1])]</font></b>"
-				else
-					inspec += "| "
-					for(var/zone in inherentList)
-						inspec += "<b><font color = '#77cde2'>[capitalize(zone)]</b></font> | "
-			if(C.prevent_crits)
-				if(length(C.prevent_crits))
-					inspec += "\n<b>PREVENTS CRITS:</b>"
-					for(var/X in C.prevent_crits)
-						if(X == BCLASS_PICK)	//BCLASS_PICK is named "stab", and "stabbing" is its own damage class. Prevents confusion.
-							X = "pick"
-						inspec += ("\n<b>[capitalize(X)]</b>")
 				inspec += "<br>"
 			var/thermal_text = C.thermal_examine_text()
 			if(thermal_text)
@@ -691,6 +730,106 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/get_inspect_button()
 	return " <span class='info'><a href='?src=[REF(src)];inspect=1'>{?}</a></span>"
+
+/obj/item/proc/show_examine_hover_tooltip()
+	if(has_customized_identity() || always_show_examine_link)
+		return TRUE
+	if(minstr || minstr_req)
+		return TRUE
+	if(force >= 5)
+		return TRUE
+	if(gripped_intents && force_wielded)
+		return TRUE
+	if(wbalance)
+		return TRUE
+	if(wlength != WLENGTH_NORMAL)
+		return TRUE
+	if(can_parry || max_blade_int)
+		return TRUE
+	if(associated_skill && associated_skill.name)
+		return TRUE
+	if(intdamage_factor != 1 || demolition_mod != 1)
+		return TRUE
+	return FALSE
+
+/obj/item/proc/get_true_durability_percent_text()
+	if(!max_integrity)
+		return null
+	var/percent = round(((obj_integrity / max_integrity) * 100), 1)
+	return "[percent]% ([floor(obj_integrity)])"
+
+/obj/item/proc/get_hover_examine_description()
+	if(!desc)
+		return null
+	return html_encode(desc)
+
+/obj/item/proc/get_hover_examine_condition_text()
+	return null
+
+/obj/item/proc/get_hover_examine_stat_lines(mob/user, self_examine = FALSE)
+	var/list/lines = list()
+	if(minstr)
+		lines += "<b>MIN.STR:</b> [minstr]"
+	if(minstr_req)
+		lines += "<b>NO HALVING ON WIELD</b>"
+	if(force)
+		lines += "<b>FORCE:</b> [get_force_string(force)]"
+	if(gripped_intents && force_wielded)
+		lines += "<b>WIELDED FORCE:</b> [get_force_string(force_wielded)]"
+	if(wbalance)
+		var/balance_text = ""
+		if(wbalance == WBALANCE_HEAVY)
+			balance_text = "Heavy"
+		if(wbalance == WBALANCE_SWIFT)
+			balance_text = "Swift"
+		if(balance_text)
+			lines += "<b>BALANCE:</b> [balance_text]"
+	if(wlength != WLENGTH_NORMAL)
+		var/length_text = ""
+		switch(wlength)
+			if(WLENGTH_SHORT)
+				length_text = "Short"
+			if(WLENGTH_LONG)
+				length_text = "Long"
+			if(WLENGTH_GREAT)
+				length_text = "Great"
+		if(length_text)
+			lines += "<b>LENGTH:</b> [length_text]"
+	var/shaft_text = get_blade_dulling_text(src, verbose = TRUE)
+	if(shaft_text)
+		lines += "<b>SHAFT:</b> [html_encode(shaft_text)]"
+	if(gripped_intents)
+		lines += "<b>TWO-HANDED</b>"
+	if(twohands_required)
+		lines += "<b>BULKY</b>"
+	if(can_parry)
+		lines += "<b>DEFENSE:</b> [wdefense_dynamic]"
+	if(max_blade_int)
+		var/blade_percent = round(((blade_int / max_blade_int) * 100), 1)
+		lines += "<b>SHARPNESS:</b> [blade_percent]% ([blade_int])"
+	if(associated_skill && associated_skill.name)
+		lines += "<b>SKILL:</b> [html_encode(associated_skill.name)]"
+	if(intdamage_factor != 1 && force >= 5)
+		lines += "<b>INTEGRITY DAMAGE:</b> [intdamage_factor * 100]%"
+	if(demolition_mod != 1 && force >= 5)
+		lines += "<b>ANTI-OBJECT MOD:</b> [demolition_mod * 100]%"
+	if(self_examine)
+		var/true_durability = get_true_durability_percent_text()
+		if(true_durability)
+			lines += "<b>Durability:</b> [true_durability]"
+	return lines
+
+/obj/item/proc/get_hover_examine_html(mob/user, self_examine = FALSE)
+	var/list/sections = list()
+	var/description_text = get_hover_examine_description()
+	if(description_text)
+		sections += description_text
+	var/list/stat_lines = get_hover_examine_stat_lines(user, self_examine)
+	if(length(stat_lines))
+		sections += stat_lines.Join("<br>")
+	if(original_name && original_name != name)
+		sections += "<font color='#888888'>Originally: [html_encode(original_name)]</font>"
+	return sections.Join("<br>")
 
 
 /obj/item/interact(mob/user)
@@ -761,7 +900,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	//If the item is in a storage item, take it out
 	if(inv_storage_delay && SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE))
-		if(!move_after(user, inv_storage_delay, target = iscarbon(loc) ? src : src.loc, progress = TRUE))
+		if(!move_after(user, inv_storage_delay, target = iscarbon(loc) ? src : loc, progress = TRUE))
 			return
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
@@ -782,35 +921,19 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			wield(user)
 
 /atom/proc/ontable()
-	if(!isturf(src.loc))
+	if(!isturf(loc))
 		return FALSE
-	for(var/obj/structure/table/T in src.loc)
+	for(var/obj/structure/table/T in loc)
 		return TRUE
-	for(var/obj/machinery/anvil/A in src.loc)
+	for(var/obj/machinery/anvil/A in loc)
 		return TRUE
 	return FALSE
 
 /obj/item/proc/allow_attack_hand_drop(mob/user)
 	return TRUE
 
-/obj/item/attack_paw(mob/user)
-	if(!user)
-		return
-	if(anchored)
-		return
-
-	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
-
-	if(throwing)
-		throwing.finalize(FALSE)
-	if(loc == user)
-		if(!user.temporarilyRemoveItemFromInventory(src))
-			return
-
-	pickup(user)
-	add_fingerprint(user)
-	if(!user.put_in_active_hand(src, FALSE, FALSE))
-		user.dropItemToGround(src)
+/obj/item/proc/quickdraw_interact(mob/living/user, obj/item/held_item)
+	return FALSE
 
 /obj/item/proc/GetDeconstructableContents()
 	return GetAllContents() - src
@@ -845,7 +968,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			var/oldy = pixel_y
 			pixel_y = pixel_y+5
 			animate(src, pixel_y = oldy, time = 0.5)
-	if(altgripped || wielded)
+	if(altgripped)
+		if(isaltgripsharp == FALSE)
+			sharpness = IS_SHARP
+		ungrip(user,FALSE)
+	else if(wielded)
 		ungrip(user, FALSE)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
@@ -876,6 +1003,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/on_found(mob/finder)
 	return
 
+/// called when an item is released by opening its package
+/obj/item/proc/on_package_opened(mob/user)
+	return
+
 // called after an item is placed in an equipment slot
 // user is mob that equipped it
 // slot uses the slot_X defines found in setup.dm
@@ -903,7 +1034,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	user.update_equipment_speed_mods()
 
 	if(!user.is_holding(src))
-		if(altgripped || wielded)
+		if(altgripped)
+			if(isaltgripsharp == FALSE)
+				sharpness = IS_SHARP
+			ungrip(user,FALSE)
+		else if(wielded)
 			ungrip(user, FALSE)
 	if(twohands_required)
 		if(slot == ITEM_SLOT_HANDS)
@@ -929,8 +1064,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 //Set disable_warning to TRUE if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if((is_silver || smeltresult == /obj/item/ingot/silver) && (HAS_TRAIT(M, TRAIT_SILVER_WEAK) &&  !M.has_status_effect(STATUS_EFFECT_ANTIMAGIC)))
-		var/datum/antagonist/vampire/V_lord = M.mind?.has_antag_datum(/datum/antagonist/vampire/)
-		if(V_lord?.generation >= GENERATION_METHUSELAH)
+		var/datum/antagonist/vampire/V_lord = M.mind?.has_antag_datum(/datum/antagonist/vampire)
+		if(V_lord && V_lord.generation >= GENERATION_METHUSELAH)
 			return
 
 		to_chat(M, span_userdanger("I can't pick up the silver, it is my BANE!"))
@@ -948,7 +1083,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return 0
 	if(!M)
 		return FALSE
-	if(HAS_TRAIT(M, TRAIT_CHUNKYFINGERS) && (!equipper || equipper == M) && src.type != /obj/item/grabbing/bite) //If a zombie's trying to put something on without assistance that's not a bite
+	if(HAS_TRAIT(M, TRAIT_CHUNKYFINGERS) && (!equipper || equipper == M) && type != /obj/item/grabbing/bite) //If a zombie's trying to put something on without assistance that's not a bite
 		to_chat(M, span_warning("...What?"))
 		return FALSE
 
@@ -997,9 +1132,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(user, span_warning("I cannot locate any organic eyes on this brain!"))
 		return
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
-	playsound(loc, src.hitsound, 30, TRUE, -1)
+	playsound(loc, hitsound, 30, TRUE, -1)
 
 	user.do_attack_animation(M)
 
@@ -1018,7 +1153,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	else
 		M.take_bodypart_damage(7)
 
-	log_combat(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.used_intent)])")
+	log_combat(user, M, "attacked", "[name]", "(INTENT: [uppertext(user.used_intent)])")
 
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
@@ -1052,20 +1187,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/itempush = 0
 		if(w_class < 4)
 			itempush = 0 //too light to push anything
-		if(istype(hit_atom, /mob/living)) //Living mobs handle hit sounds differently.
-			var/volume = get_volume_by_throwforce_and_or_w_class()
-			if (throwforce > 0)
-				if (mob_throw_hit_sound)
-					playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
-				else if(hitsound)
-					playsound(hit_atom, pick(hitsound), volume, TRUE, -1)
-				else
-					playsound(hit_atom, 'sound/blank.ogg',volume, TRUE, -1)
-			else
-				playsound(hit_atom, 'sound/blank.ogg', 1, volume, -1)
-
-		else
-			playsound(src, drop_sound, YEET_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum, damage_flag = thrown_damage_flag)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
@@ -1467,79 +1588,123 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			if(H.mouth == src)
 				H.update_inv_mouth()
 
-/obj/item/proc/ungrip(mob/living/carbon/user, show_message = TRUE)
-	if(!user)
-		return
-	if(twohands_required)
-		if(!wielded)
-			return
-		if(show_message)
-			to_chat(user, span_notice("I drop [src]."))
-		show_message = FALSE
+/obj/item/proc/clear_grip_state()
+	if(!wielded && !altgripped)
+		return FALSE
 	if(wielded)
 		wielded = FALSE
 		if(force_wielded)
 			update_force_dynamic()
-		wdefense_dynamic = wdefense
+		update_wdefense_dynamic()
 	if(altgripped)
+		clear_altgrip_state()
 		altgripped = FALSE
-		wielded = FALSE
-		if(force_wielded)
-			update_force_dynamic()
-		wdefense_dynamic = wdefense
 	update_transform()
+	icon_angle = initial(icon_angle)
+	return TRUE
+
+/obj/item/proc/can_wield_two_handed(mob/living/carbon/user)
+	if(user.get_inactive_held_item())
+		to_chat(user, span_warning("I need a free hand first."))
+		return FALSE
+	if(user.get_num_arms() < 2)
+		to_chat(user, span_warning("I don't have enough hands."))
+		return FALSE
+	if (obj_broken)
+		to_chat(user, span_warning("It's completely broken."))
+		return FALSE
+	if (istype(src, /obj/item/contraption))
+		var/obj/item/contraption/i = src
+		if (i.current_charge <= 0)
+			to_chat(user, span_warning("Not charged."))
+			return FALSE
+	return TRUE
+
+/obj/item/proc/ungrip(mob/living/carbon/user, show_message = TRUE, show_balloon = FALSE)
+	if(twohands_required)
+		if(!wielded)
+			return
+		if(user && show_message)
+			to_chat(user, span_notice("I drop [src]."))
+		show_message = FALSE
+	if(!clear_grip_state())
+		return
+	if(!user)
+		return
 	if(user.get_item_by_slot(SLOT_BACK) == src)
 		user.update_inv_back()
 	else
 		user.update_inv_hands()
 	if(show_message)
 		to_chat(user, "<span class='notice'>I wield [src] normally.</span>")
+	if(show_balloon)
+		show_altgrip_balloon(user, "normal grip")
 	if(user.get_active_held_item() == src)
 		user.update_a_intents()
-	icon_angle = initial(icon_angle)
 	return
 
-/obj/item/proc/altgrip(mob/living/carbon/user)
+/obj/item/proc/cycle_altgrip(mob/living/carbon/user, direction = 1)
+	if(!length(alt_grips) || !direction)
+		return FALSE
+
+	var/message
+	var/next_index
+	var/datum/alt_grip/next_state
+	var/index_step = 1
+	if(direction < 0)
+		index_step = -1
 	if(altgripped)
-		return
-	if(user.get_inactive_held_item())
-		to_chat(user, span_warning("I need a free hand first."))
-		return
-	if(user.get_num_arms() < 2)
-		to_chat(user, span_warning("I don't have enough hands."))
-		return
-	if (obj_broken)
-		to_chat(user, span_warning("It's completely broken."))
-		return
+		next_index = current_alt_grip_index + index_step
+	else
+		if(direction > 0)
+			next_index = 1
+		else
+			next_index = length(alt_grips)
+
+	while(next_index >= 1 && next_index <= length(alt_grips))
+		next_state = get_altgrip_state(next_index)
+		if(next_state && next_state.usable_by(src, user))
+			break
+		next_state = null
+		next_index += index_step
+
+	if(!next_state)
+		if(altgripped)
+			ungrip(user, TRUE, TRUE)
+			user.changeNext_move(CLICK_CD_QUICK)
+			return TRUE
+		return FALSE
+	if(next_state.is_two_handed(src) && !can_wield_two_handed(user))
+		return FALSE
+	if(!set_altgrip_state(next_index))
+		return FALSE
 	altgripped = TRUE
 	update_transform()
-	to_chat(user, span_notice("I wield [src] with an alternate grip."))
-	playsound(loc, pick('sound/combat/weaponr1.ogg','sound/combat/weaponr2.ogg'), 100, TRUE)
+	user.update_inv_hands()
+	message = get_altgrip_message(user)
+	to_chat(user, span_notice(message))
+	show_altgrip_balloon(user)
 	if(user.get_active_held_item() == src)
-		if(alt_intents)
-			user.update_a_intents()
-			wielded = TRUE
-			if(force_wielded)
-				update_force_dynamic()
-			wdefense_dynamic = (wdefense + wdefense_wbonus)
-			user.update_inv_hands()
+		user.update_a_intents()
+	user.changeNext_move(CLICK_CD_RAPID)
+	return TRUE
+
+/obj/item/proc/altgrip(mob/living/carbon/user)
+	return cycle_altgrip(user, 1)
+
 
 /obj/item/proc/wield(mob/living/carbon/user, show_message = TRUE)
-	if(wielded)
+	if(wielded && !altgripped)
 		return
-	if(user.get_inactive_held_item())
-		to_chat(user, span_warning("I need a free hand first."))
+	if(!gripped_intents)
 		return
-	if(user.get_num_arms() < 2)
-		to_chat(user, span_warning("I don't have enough hands."))
+	if(!can_wield_two_handed(user))
 		return
-	if (obj_broken)
-		to_chat(user, span_warning("It's completely broken."))
-		return
+	clear_grip_state()
 	wielded = TRUE
 	if(force_wielded)
 		update_force_dynamic()
-	wdefense_dynamic = (wdefense + wdefense_wbonus)
+	update_wdefense_dynamic()
 	update_transform()
 	if(show_message)
 		to_chat(user, span_notice("I wield [src] with both hands."))
@@ -1557,13 +1722,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	. = ..()
 	if(twohands_required)
 		return
-	if(wielded) //Trying to unwield it. Ratwood edit. Original: (altgripped || wielded)
+	if(altgripped || wielded) //Trying to unwield it
 		ungrip(user)
 		return
-	if(alt_intents && !gripped_intents)
+	if(has_altgrip_modes() && !gripped_intents)
 		altgrip(user)
+		return
 	if(gripped_intents)
 		wield(user)
+		return
 
 /obj/item/equip_to_best_slot(mob/M)
 	if(..())
@@ -1578,15 +1745,22 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(istype(src, /obj/item/clothing))
 		var/obj/item/clothing/C = src
 		if(C.armor)
-			var/defense = "<u><b>ABSORPTION: </b></u><br>"
 			var/datum/armor/def_armor = C.armor
-			defense += "[colorgrade_rating("BLUNT", def_armor.blunt, elaborate = TRUE)] | "
-			defense += "[colorgrade_rating("SLASH", def_armor.slash, elaborate = TRUE)] | "
-			defense += "[colorgrade_rating("STAB", def_armor.stab, elaborate = TRUE)] | "
-			defense += "[colorgrade_rating("PIERCING", def_armor.piercing, elaborate = TRUE)] "
-			str += "[defense]<br>"
+			if(!def_armor.blunt && !def_armor.slash && !def_armor.stab && !def_armor.piercing)
+				str += "<b>NO ARMOR!</b>"
+			else
+				var/defense = "[SPAN_TOOLTIP("Each tier increases effective HP of the armor by 20%. Absorbed attacks never reach HP. The armor must be broken first.", "<u><b>ABSORB:</b></u>")] [colorgrade_rating("BLUNT", def_armor.blunt, elaborate = TRUE, max_tier = 5)]"
+				defense += "<br>"
+				defense += "[SPAN_TOOLTIP("Each tier reduces damage by 20% of base. Reduced damage still reaches HP. Armor absorbs what was blocked.", "<u><b>REDUCE:</b></u>")] [colorgrade_rating("BURN", def_armor.fire, elaborate = TRUE, max_tier = 5)]"
+				defense += " | [colorgrade_rating("ACID", def_armor.acid, elaborate = TRUE, max_tier = 5)]"
+				defense += "<br>"
+				defense += "[SPAN_TOOLTIP("Blocks attacks below this tier (Armor takes all damage). Same tier penetrates 20% (80% goes to armor). Exceeding tier penetrates fully.", "<u><b>BLOCK:</b></u>")] "
+				defense += "[colorgrade_rating("SLASH", def_armor.slash, elaborate = TRUE)] | "
+				defense += "[colorgrade_rating("STAB", def_armor.stab, elaborate = TRUE)] | "
+				defense += "[colorgrade_rating("PIERCING", def_armor.piercing, elaborate = TRUE)]"
+				str += "[defense]<br>"
 		else
-			str += "NO DEFENSE"
+			str += "<b>NO ARMOR!</b>"
 	return str
 
 /obj/item/proc/temp_to_cold_tier(temp)
@@ -1654,6 +1828,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return "<br><b><u>THERMAL RESISTANCE:</u></b><br>" + jointext(out, "<br>")
 
 /obj/item/obj_break(damage_flag)
+	lose_polish()//call to remove polish bonus on armor/weaps when broken. lives in /blacksmith/items.dm
 	..()
 
 	update_damaged_state()
@@ -1669,8 +1844,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/obj_fix(mob/user, full_repair = TRUE)
 	..()
 	update_damaged_state()
+	if (shoddy_repair) // if we've been jury-rig repaired, ensure our integrity is only restored to 60%
+		obj_integrity = max_integrity * 0.6
 
 /obj/item/obj_destruction(damage_flag)
+	if (obj_flags & PREVENTS_DESTRUCTION)
+		return FALSE
 	if (damage_flag == "acid")
 		obj_destroyed = TRUE
 		acid_melt()
@@ -1679,10 +1858,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		obj_destroyed = TRUE
 		burn()
 		return TRUE
-	if (ismob(loc) && !always_destroy)
+	if (!always_destroy && (ismob(loc) || isclothing(src) || istype(src, /obj/item/rogueweapon)))
 		return FALSE
 
 	obj_destroyed = TRUE
+	if(anvilrepair)
+		if(smeltresult == /obj/item/ingot/iron)
+			new /obj/item/scrap(get_turf(src))
+			if(prob(20))
+				new /obj/item/scrap(get_turf(src))
 	if(destroy_sound)
 		playsound(src, destroy_sound, 100, TRUE)
 	if(destroy_message)
@@ -1702,107 +1886,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	damage.alpha = 150
 	add_overlay(damage)
 
-/// Proc that is only called with the Peel intent. Stacks consecutive hits, shreds coverage once a threshold is met. Thresholds are defined on /obj/item
-/obj/item/proc/peel_coverage(bodypart, divisor, mob/living/carbon/human/owner)
-	var/coveragezone = attackzone2coveragezone(bodypart)
-	if((body_parts_inherent & coveragezone))
-		playsound(src, 'sound/combat/failpeel.ogg', 100, TRUE)
-		visible_message(span_warning("Peel struck an area too thick!"))
-		last_peeled_limb = coveragezone
-		reset_peel()
-		return
-	if(!last_peeled_limb || coveragezone == last_peeled_limb)
-		var/peel_goal = peel_threshold
-		if(divisor > peel_goal)
-			peel_goal = divisor
-
-		var/list/peeledpart = body_parts_covered2organ_names(coveragezone, precise = TRUE)
-
-		if(peel_count < peel_goal)
-			peel_count++
-
-		if(peel_count >= peel_goal)
-			body_parts_covered_dynamic &= ~coveragezone
-			playsound(src, 'sound/foley/peeled_coverage.ogg', 100)
-			var/parttext
-			if(length(peeledpart))
-				parttext = peeledpart[1]	//There should really only be one bodypart that gets exposed here.
-			visible_message("<font color = '#f5f5f5'><b>[parttext ? parttext : "Coverage"]</font></b> gets peeled off of [src]!")
-			var/balloon_msg = "<font color = '#bb1111'>[parttext] peeled!</font>"
-			if(length(peeledpart))
-				balloon_alert_to_viewers(balloon_msg, balloon_msg, DEFAULT_MESSAGE_RANGE)
-			reset_peel(success = TRUE)
-		else
-			if(owner)
-				owner.visible_message(span_info("Peel strikes [src]! <b>[ROUND_UP(peel_count)]</b>!"))
-			var/balloon_msg = "Peel! \Roman[ROUND_UP(peel_count)] <br><font color = '#8b7330'>[peeledpart[1]]!</font>"
-			var/has_guarded = HAS_TRAIT(owner, TRAIT_DECEIVING_MEEKNESS)
-			if(length(peeledpart) && !has_guarded)
-				filtered_balloon_alert(TRAIT_COMBAT_AWARE, balloon_msg)
-			else if(length(peeledpart) && has_guarded)
-				if(prob(10))
-					balloon_msg = "<i>Guarded...</i>"
-					filtered_balloon_alert(TRAIT_COMBAT_AWARE, balloon_msg)
-	else
-		last_peeled_limb = coveragezone
-		reset_peel()
-
 /obj/item/proc/repair_coverage()
 	body_parts_covered_dynamic = body_parts_covered
-	reset_peel()
-
-/obj/item/proc/reset_peel(success = FALSE)
-	if(peel_count > 0 && !success)
-		visible_message(span_info("Peel count lost on [src]!"))
-	peel_count = 0
-
-/obj/item/proc/reduce_peel(amt)
-	if(peel_count > amt)
-		peel_count -= amt
-	else
-		peel_count = 0
-	visible_message(span_info("Peel reduced to [peel_count == 0 ? "none" : "[peel_count]"] on [src]!"))
-
-/proc/attackzone2coveragezone(location)
-	switch(location)
-		if(BODY_ZONE_HEAD)
-			return HEAD
-		if(BODY_ZONE_PRECISE_EARS)
-			return EARS
-		if(BODY_ZONE_PRECISE_SKULL)
-			return HAIR
-		if(BODY_ZONE_PRECISE_NOSE)
-			return NOSE
-		if(BODY_ZONE_PRECISE_NECK)
-			return NECK
-		if(BODY_ZONE_PRECISE_L_EYE)
-			return LEFT_EYE
-		if(BODY_ZONE_PRECISE_R_EYE)
-			return RIGHT_EYE
-		if(BODY_ZONE_PRECISE_MOUTH)
-			return MOUTH
-		if(BODY_ZONE_CHEST)
-			return CHEST
-		if(BODY_ZONE_PRECISE_STOMACH)
-			return VITALS
-		if(BODY_ZONE_PRECISE_GROIN)
-			return GROIN
-		if(BODY_ZONE_L_ARM)
-			return ARM_LEFT
-		if(BODY_ZONE_R_ARM)
-			return ARM_RIGHT
-		if(BODY_ZONE_L_LEG)
-			return LEG_LEFT
-		if(BODY_ZONE_R_LEG)
-			return LEG_RIGHT
-		if(BODY_ZONE_PRECISE_L_HAND)
-			return HAND_LEFT
-		if(BODY_ZONE_PRECISE_R_HAND)
-			return HAND_RIGHT
-		if(BODY_ZONE_PRECISE_L_FOOT)
-			return FOOT_LEFT
-		if(BODY_ZONE_PRECISE_R_FOOT)
-			return FOOT_RIGHT
 
 /obj/item/examine(mob/user)
 	. = ..()
@@ -1825,6 +1910,96 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		str = span_info(str)
 		. += str
 
+/obj/item/proc/step_action() //this was made to rewrite clown shoes squeaking, moved here to avoid throwing runtimes with non-/clothing wearables
+	SEND_SIGNAL(src, COMSIG_CLOTHING_STEP_ACTION)
+
+/obj/item/proc/apply_quality(mob/crafter, skill_path, forced_tier = null)
+	var/tier
+	if(!isnull(forced_tier))
+		tier = forced_tier
+	else
+		var/skill_level = 0
+		if(crafter && skill_path)
+			skill_level = crafter.get_skill_level(skill_path)
+		var/roll = rand(1, 100)
+		switch(skill_level)
+			if(SKILL_LEVEL_NONE, SKILL_LEVEL_NOVICE)
+				if(roll <= 60)
+					tier = ITEM_QUALITY_CRUDE
+				else if(roll <= 95)
+					tier = ITEM_QUALITY_ROUGH
+				else
+					tier = ITEM_QUALITY_STANDARD
+			if(SKILL_LEVEL_APPRENTICE)
+				if(roll <= 20)
+					tier = ITEM_QUALITY_CRUDE
+				else if(roll <= 75)
+					tier = ITEM_QUALITY_ROUGH
+				else
+					tier = ITEM_QUALITY_STANDARD
+			if(SKILL_LEVEL_JOURNEYMAN)
+				tier = ITEM_QUALITY_STANDARD
+			if(SKILL_LEVEL_EXPERT)
+				if(roll <= 70)
+					tier = ITEM_QUALITY_FINE
+				else if(roll <= 95)
+					tier = ITEM_QUALITY_FLAWLESS
+				else
+					tier = ITEM_QUALITY_MASTERWORK
+			if(SKILL_LEVEL_MASTER)
+				if(roll <= 30)
+					tier = ITEM_QUALITY_FINE
+				else if(roll <= 80)
+					tier = ITEM_QUALITY_FLAWLESS
+				else
+					tier = ITEM_QUALITY_MASTERWORK
+			else
+				if(roll <= 40)
+					tier = ITEM_QUALITY_FLAWLESS
+				else
+					tier = ITEM_QUALITY_MASTERWORK
+	item_quality = tier
+	var/prefix
+	switch(tier)
+		if(ITEM_QUALITY_LOOTED)
+			prefix = ITEM_QUALITY_PREFIX_LOOTED
+		if(ITEM_QUALITY_RUINED)
+			prefix = ITEM_QUALITY_PREFIX_RUINED
+		if(ITEM_QUALITY_AWFUL)
+			prefix = ITEM_QUALITY_PREFIX_AWFUL
+		if(ITEM_QUALITY_CRUDE)
+			prefix = ITEM_QUALITY_PREFIX_CRUDE
+		if(ITEM_QUALITY_ROUGH)
+			prefix = ITEM_QUALITY_PREFIX_ROUGH
+		if(ITEM_QUALITY_FINE)
+			prefix = ITEM_QUALITY_PREFIX_FINE
+		if(ITEM_QUALITY_FLAWLESS)
+			prefix = ITEM_QUALITY_PREFIX_FLAWLESS
+		if(ITEM_QUALITY_MASTERWORK)
+			prefix = ITEM_QUALITY_PREFIX_MASTERWORK
+	if(prefix)
+		name = "[prefix] [name]"
+	if(!sellprice && !initial(sellprice) && !static_price)
+		sellprice = GLOB.derived_sellprices?[type] || lookup_derived_subtype_price(type)
+		randomize_price()
+	if(sellprice > 0)
+		sellprice = max(1, round(sellprice * ITEM_QUALITY_MULT(tier)))
+	return tier
+
+/obj/item/proc/mark_as_looted()
+	if(looted)
+		return
+	looted = TRUE
+	item_quality = ITEM_QUALITY_LOOTED
+	name = "[ITEM_QUALITY_PREFIX_LOOTED] [name]"
+
+/obj/item/proc/unmark_as_looted()
+	if(!looted)
+		return
+	looted = FALSE
+	item_quality = ITEM_QUALITY_STANDARD
+	name = replacetext(name, "[ITEM_QUALITY_PREFIX_LOOTED] ", "")
+
 /obj/item/proc/update_force_dynamic()
 	force_dynamic = (wielded ? force_wielded : force)
 
@@ -1837,3 +2012,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return TRUE
 	return FALSE
 
+/obj/item/proc/find_items_mob_carrier()
+	if(ismob(loc))
+		return loc
+	for(var/atom/nested_loc in get_nested_locs(src))
+		if(ismob(nested_loc))
+			return nested_loc
+	return null
+
+/obj/item/proc/update_wdefense_dynamic()
+	wdefense_dynamic = (wielded ? (wdefense + wdefense_wbonus) : wdefense)

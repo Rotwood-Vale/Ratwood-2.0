@@ -1,29 +1,15 @@
 /datum/migrant_wave/knightly_journey
-	name = "The Knightly journey"
+	name = "The Knightly Journey"
 	max_spawns = 1
-	shared_wave_type = /datum/migrant_wave/knightly_journey
-	downgrade_wave = /datum/migrant_wave/knightly_journey_down_one
 	weight = 50
-	roles = list(
+	track = MIGRANT_TRACK_SPECIAL
+	required_roles = list(
 		/datum/migrant_role/kj_knight = 1,
 		/datum/migrant_role/kj_squire = 1,
 	)
-
-/datum/migrant_wave/knightly_journey_down_one
-	name = "The Knightly journey"
-	can_roll = FALSE
-	shared_wave_type = /datum/migrant_wave/knightly_journey
-	downgrade_wave = /datum/migrant_wave/knightly_journey_down_two
-	roles = list(
-		/datum/migrant_role/kj_knight = 1,
-		/datum/migrant_role/kj_squire = 1,
+	optional_roles = list(
+		/datum/migrant_role/kj_chaplain = 1,
+		/datum/migrant_role/kj_follower = 2,
 	)
-
-/datum/migrant_wave/knightly_journey_down_two
-	name = "The Knightly journey"
-	can_roll = FALSE
-	shared_wave_type = /datum/migrant_wave/knightly_journey
-	roles = list(
-		/datum/migrant_role/kj_knight = 1,
-		/datum/migrant_role/kj_squire = 1,
-	)
+	min_optional_fills = 0
+	greet_text = "A veteran knight errant rides into these lands, their squire a few yils into the trade and no longer green. There are battles ahead, and deeds worth the telling."

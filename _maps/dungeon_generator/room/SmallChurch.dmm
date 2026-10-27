@@ -940,7 +940,7 @@
 /area/rogue/under/tomb)
 "KS" = (
 /obj/structure/table/wood/fancy/black,
-/obj/item/rogueweapon/huntingknife/idagger/steel/padagger,
+/obj/item/rogueweapon/huntingknife/idagger/steel/ancient,
 /obj/effect/decal/cleanable/sigil,
 /turf/open/floor/rogue/metal,
 /area/rogue/under/tomb/indoors/church)

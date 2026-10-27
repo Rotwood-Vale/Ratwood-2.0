@@ -22,6 +22,9 @@
 	threat_region = THREAT_REGION_MOUNT_DECAP
 	detail_text = DETAIL_TEXT_DECAP
 
+/area/rogue/outdoors/mountains/decap/rockhill
+	first_time_text = "Somewhere high..."
+
 /area/rogue/indoors/shelter/mountains/decap
 	icon_state = "decap"
 	droning_sound = 'sound/music/area/decap.ogg'

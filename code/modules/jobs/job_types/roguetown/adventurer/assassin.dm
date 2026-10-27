@@ -25,7 +25,7 @@
 
 	wanderer_examine = TRUE
 	advjob_examine = FALSE	//We don't want anyone knowing what type of assassin you are.
-	always_show_on_latechoices = TRUE
+	always_show_on_latechoices = FALSE
 	job_reopens_slots_on_death = FALSE
 
 	// Base job traits, we give one-specialty trait per role.

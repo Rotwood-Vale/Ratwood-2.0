@@ -6,7 +6,6 @@
 	possible_transfer_amounts = list(5, 10)
 	volume = 75 // 3 cups
 	dropshrink = 1
-	sellprice = 10
 	closed = FALSE
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_NECK
 	obj_flags = CAN_BE_HIT
@@ -26,7 +25,7 @@
 	desc = "Bronze tubes spiral about from the mouth of this waterskin in complex, dizzying patterns."
 	icon_state = "water-purifier"
 	desc_uncorked = "Bronze tubes spiral about from the mouth of this waterskin in complex, dizzying patterns. The cap on the mouth is off."
-	var/filtered_reagents = list(/datum/reagent/water/gross) // List of liquids it turns into drinkable water
+	var/filtered_reagents = list(/datum/reagent/water/gross, /datum/reagent/water/bathwater,/datum/reagent/water/salty) // List of liquids it turns into drinkable water
 
 /obj/item/reagent_containers/glass/bottle/waterskin/purifier/onfill(obj/target, mob/user, silent = FALSE)
 	. = ..()

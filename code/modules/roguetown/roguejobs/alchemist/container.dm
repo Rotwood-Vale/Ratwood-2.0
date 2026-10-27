@@ -48,6 +48,9 @@
 /obj/item/reagent_containers/glass/bottle/rogue/strongstampoison
 	list_reagents = list(/datum/reagent/strongstampoison = 15)
 
+/obj/item/reagent_containers/glass/bottle/alchemical/deaditerot
+	list_reagents = list(/datum/reagent/deaditerot = 1)
+
 /obj/item/reagent_containers/glass/bottle/alchemical/strpot
 	list_reagents = list(/datum/reagent/buff/strength = 30)
 
@@ -86,6 +89,13 @@
 
 /obj/item/reagent_containers/glass/bottle/alchemical/fermented_crab
 	list_reagents = list(/datum/reagent/fermented_crab = 15)
+
+/obj/item/reagent_containers/glass/bottle/alchemical/emberwine
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer/emberwine = 5)
+	desc = "A small vial labeled as containing emberwine, a potent aphrodisiac."
+
+/obj/item/reagent_containers/glass/bottle/alchemical/emberwine/full
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer/emberwine = 30)
 
 //////////////////////////
 /// ALCOHOLIC BOTTLES ///
@@ -239,11 +249,11 @@
 	desc = "A bottle with the Apfelweinheim cork-seal. A cider from the Grenzelhoftian town of Apfelweinheim. Well received for its addition of pear, alongside crisp apples."
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/rtoper
-	name = "Bottle of Lirvas Cider"
+	name = "Bottle Rockhill Cider"
 	icon = 'icons/obj/alcohol.dmi'
 	icon_state = "ale"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rtoper = 50)
-	desc = "A bottle with the Lirvas-crest cork-seal. An especially tart cider from the petty kingdom of Lirvas. Myths say the brewers let the barrels age in the bog, which results in that especially strong flavour."
+	desc = "A bottle with the Rockhill-crest cork-seal. An especially tart cider from the duchy of Rockhill. Myths say the brewers let the barrels age in the bog, which results in that especially strong flavour."
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/nred
 	name = "Bottle of Norwandine Ale"

@@ -1,27 +1,13 @@
-/datum/virtue/utility/noble
-	name = "Nobility"
-	desc = "By birth, blade or brain, I am noble known to the royalty of these lands, and have all the benefits associated with it. I've cleverly stashed away a healthy amount of coinage, alongside a familial heirloom."
-	added_traits = list(TRAIT_NOBLE)
-	added_skills = list(list(/datum/skill/misc/reading, 1, 6))
-	added_stashed_items = list("Heirloom Amulet" = /obj/item/clothing/neck/roguetown/ornateamulet/noble,
-								"Hefty Coinpurse" = /obj/item/storage/belt/rogue/pouch/coins/virtuepouch)
-
-/datum/virtue/utility/noble/apply_to_human(mob/living/carbon/human/recipient)
-	SStreasury.noble_incomes[recipient] += 15
-
 /datum/virtue/utility/socialite
 	name = "Socialite"
 	desc = "I thrive in social settings, easily reading the emotions of others and charming those around me. My presence is always felt at any gathering."
-	custom_text = "Incompatible with Ugly virtue. Grants empathic insight."
+	custom_text = "Incompatible with Ugly quirk. Grants empathic insight."
 	added_traits = list(TRAIT_BEAUTIFUL, TRAIT_GOODLOVER, TRAIT_EMPATH)
 	added_stashed_items = list(
 		"Hand Mirror" = /obj/item/handmirror)
 
 /datum/virtue/utility/socialite/handle_traits(mob/living/carbon/human/recipient)
 	..()
-	if(isdullahan(recipient))
-		REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
-		ADD_TRAIT(recipient, TRAIT_BEAUTIFUL_UNCANNY, TRAIT_VIRTUE)
 	if(HAS_TRAIT(recipient, TRAIT_UNSEEMLY))
 		to_chat(recipient, "Your attractiveness is cancelled out! You become normal.")
 		if(HAS_TRAIT(recipient, TRAIT_BEAUTIFUL))
@@ -31,7 +17,7 @@
 /datum/virtue/utility/deadened
 	name = "Deadened"
 	desc = "Some terrible incident colours my past, and now, I feel nothing."
-	added_traits = list(TRAIT_NOMOOD)
+	added_traits = list(TRAIT_NOMOOD, TRAIT_DETACHED)
 
 /datum/virtue/utility/light_steps
 	name = "Light Steps"
@@ -41,55 +27,39 @@
 
 /datum/virtue/utility/resident
 	name = "Resident"
-	desc = "I'm a resident of the vale. I have an account in the city's treasury and a home in the city."
+	desc = "I'm a resident of these lands. I have an account in the city's treasury and a home in the city."
 	added_traits = list(TRAIT_RESIDENT)
 
 /datum/virtue/utility/resident/apply_to_human(mob/living/carbon/human/recipient)
-	var/mapswitch = 0
-	if(SSmapping.config.map_name == "Dun Manor")
-		mapswitch = 1
-	else if(SSmapping.config.map_name == "Dun World")
-		mapswitch = 2
-
-	if(mapswitch == 0)
+	if(!recipient?.mind)
 		return
-	if(recipient.mind?.assigned_role == "Adventurer" || recipient.mind?.assigned_role == "Mercenary" || recipient.mind?.assigned_role == "Court Agent")
-		// Find tavern area for spawning
-		var/area/spawn_area
-		for(var/area/A in world)
-			if(istype(A, /area/rogue/indoors/town/tavern))
-				spawn_area = A
-				break
 
-		if(spawn_area)
-			var/target_z = 3 //ground floor of tavern for dun manor / world
-			var/target_y = 70 //dun manor
-			var/list/possible_chairs = list()
+	var/assigned_role = recipient.mind.assigned_role
+	if(!(assigned_role in list("Adventurer", "Mercenary", "Court Agent")))
+		return
 
-			if(mapswitch == 2)
-				target_y = 234 //dun world huge
+	sync_towner_knowledge(recipient)
+	SSjob.sync_resident_wanderer_knowledge(recipient, TRUE)
 
-			for(var/obj/structure/chair/C in spawn_area)
-				//z-level 3, wooden chair, and Y > north of tavern backrooms
-				var/turf/T = get_turf(C)
-				if(T && T.z == target_z && T.y > target_y && istype(C, /obj/structure/chair/wood/rogue) && !T.density && !T.is_blocked_turf(FALSE))
-					possible_chairs += C
+/datum/virtue/utility/resident/proc/sync_towner_knowledge(mob/living/carbon/human/recipient)
+	if(!recipient?.mind)
+		return
 
-			if(length(possible_chairs))
-				var/obj/structure/chair/chosen_chair = pick(possible_chairs)
-				recipient.forceMove(get_turf(chosen_chair))
-				chosen_chair.buckle_mob(recipient)
-				to_chat(recipient, span_notice("As a resident of the vale, you find yourself seated at a chair in the local tavern."))
-			else
-				var/list/possible_spawns = list()
-				for(var/turf/T in spawn_area)
-					if(T.z == target_z && T.y > (target_y + 4) && !T.density && !T.is_blocked_turf(FALSE))
-						possible_spawns += T
+	var/datum/job/roguetown/villager/towner_job = SSjob.GetJob("Towner")
+	if(!towner_job)
+		return
 
-				if(length(possible_spawns))
-					var/turf/spawn_loc = pick(possible_spawns)
-					recipient.forceMove(spawn_loc)
-					to_chat(recipient, span_notice("As a resident of the vale, you find yourself in the local tavern."))
+	for(var/X in towner_job.peopleknowme)
+		for(var/datum/mind/MF in get_minds(X))
+			if(isnull(recipient.mind?.special_role) && (MF?.special_role in list(ROLE_VAMPIRE, ROLE_NBEAST, ROLE_BANDIT, ROLE_LICH, ROLE_WRETCH, ROLE_UNBOUND_DEATHKNIGHT)))
+				continue
+			recipient.mind.person_knows_me(MF)
+
+	for(var/X in towner_job.peopleiknow)
+		for(var/datum/mind/MF in get_minds(X))
+			if(isnull(recipient.mind?.special_role) && (MF?.special_role in list(ROLE_VAMPIRE, ROLE_NBEAST, ROLE_BANDIT, ROLE_LICH, ROLE_WRETCH, ROLE_UNBOUND_DEATHKNIGHT)))
+				continue
+			recipient.mind.i_know_person(MF)
 
 /datum/virtue/utility/failed_squire
 	name = "Failed Squire"
@@ -98,7 +68,9 @@
 	added_stashed_items = list(
 		"Hammer" = /obj/item/rogueweapon/hammer/iron,
 		"Polishing Cream" = /obj/item/polishing_cream,
-		"Fine Brush" = /obj/item/armor_brush
+		"Fine Brush" = /obj/item/armor_brush,
+		"Armor Plates" = /obj/item/repair_kit/metal,
+		"Sewing Kit" = /obj/item/repair_kit,
 	)
 
 /datum/virtue/utility/failed_squire/apply_to_human(mob/living/carbon/human/recipient)
@@ -120,7 +92,7 @@
 
 /datum/virtue/utility/linguist/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.change_stat(STATKEY_INT, 1)
-	addtimer(CALLBACK(src, .proc/linguist_apply, recipient), 50)
+	addtimer(CALLBACK(src, PROC_REF(linguist_apply), recipient), 50)
 
 /datum/virtue/utility/linguist/proc/linguist_apply(mob/living/carbon/human/recipient)
 	var/static/list/selectable_languages = list(
@@ -136,6 +108,7 @@
 		/datum/language/otavan,
 		/datum/language/etruscan,
 		/datum/language/gronnic,
+		/datum/language/hammerholdian,
 		/datum/language/aavnic,
 		/datum/language/abyssal,
 		/datum/language/merar
@@ -173,8 +146,8 @@
 
 /datum/virtue/utility/feral_appetite
 	name = "Feral Appetite"
-	desc = "Raw, toxic or spoiled food doesn't bother my superior digestive system."
-	added_traits = list(TRAIT_NASTY_EATER)
+	desc = "I can eat just about ANYTHING, rotten or poisonous food and tainted water, even entrails..."
+	added_traits = list(TRAIT_NASTY_EATER, TRAIT_ORGAN_EATER)
 
 /datum/virtue/utility/feral_appetite/handle_traits(mob/living/carbon/human/recipient)
 	..()
@@ -187,6 +160,7 @@
 	desc = "I have eyes able to see through cloying darkness. Incompatible with the vice Colorblind."
 	added_traits = list(TRAIT_DARKVISION)
 	custom_text = "Adds a button to toggle colorblindness to aid seeing in the dark. Taking this with the Colorblind vice will permanently colorblind you."
+	incompatible_vices = list(/datum/charflaw/colorblind)
 
 /datum/virtue/utility/night_vision/apply_to_human(mob/living/carbon/human/recipient)
 	if(recipient.charflaw)
@@ -203,21 +177,7 @@
 	added_skills = list(list(/datum/skill/misc/music, 4, 6)) //Allows them uplaod custom music
 
 /datum/virtue/utility/performer/apply_to_human(mob/living/carbon/human/recipient)
-	addtimer(CALLBACK(src, .proc/performer_apply, recipient), 50)
-
-/datum/virtue/utility/performer/proc/performer_apply(mob/living/carbon/human/recipient)
-	var/list/instruments = list()
-	for(var/instrument_type in subtypesof(/obj/item/rogue/instrument))
-		if(instrument_type == /obj/item/rogue/instrument/harp/handcarved)
-			continue //Skip the donator personal item harp.
-		var/obj/item/rogue/instrument/instr = new instrument_type()
-		instruments[instr.name] = instrument_type
-		qdel(instr)  // Clean up the temporary instance
-
-	var/chosen_name = input(recipient, "What instrument did I stash?", "STASH") as null|anything in instruments
-	if(chosen_name)
-		var/instrument_type = instruments[chosen_name]
-		recipient.mind?.special_items[chosen_name] = instrument_type
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/customization_trait, pick_stashed_instrument), recipient), 50)
 
 /datum/virtue/utility/larcenous
 	name = "Larcenous"
@@ -263,28 +223,6 @@
 						list(/datum/skill/combat/knives, 2, 2)
 	)
 
-/datum/virtue/utility/ugly
-	name = "Ugly"
-	desc = "Be it your family's habits in and out of womb, your own choices or Xylix's cruel roll of fate, you have been left unbearable to look at. Stuck to the unseen pits and crevices of the town, you've grown used to the foul odours of lyfe that often follow you. Corpses do not stink for you, and that is all the company you might find."
-	custom_text = "Incompatible with Beautiful virtue."
-	added_traits = list(TRAIT_UNSEEMLY, TRAIT_NOSTINK)
-
-/datum/virtue/utility/ugly/handle_traits(mob/living/carbon/human/recipient)
-	..()
-	if(HAS_TRAIT(recipient, TRAIT_BEAUTIFUL))
-		to_chat(recipient, "Your repulsiveness is cancelled out! You become normal.")
-		REMOVE_TRAIT(recipient, TRAIT_BEAUTIFUL, TRAIT_VIRTUE)
-		REMOVE_TRAIT(recipient, TRAIT_UNSEEMLY, TRAIT_VIRTUE)
-
-/datum/virtue/utility/secondvoice
-	name = "Second Voice"
-	desc = "From performance, deception, or by a need to change yourself in uncanny ways, you've acquired a second, perfect voice. You may switch between them at any point."
-	custom_text = "Grants access to a new 'Memory' tab. It will have the options for setting and changing your voice."
-
-/datum/virtue/utility/secondvoice/apply_to_human(mob/living/carbon/human/recipient)
-	recipient.verbs += /mob/living/carbon/human/proc/changevoice
-	recipient.verbs += /mob/living/carbon/human/proc/swapvoice
-
 /datum/virtue/utility/keenears
 	name = "Keen Ears"
 	desc = "Cowering from authorities, loved ones or by a generous gift of the gods, you've adapted a keen sense of hearing, and can identify the speakers even when they are out of sight, their whispers ringing louder."
@@ -296,13 +234,15 @@
 	desc = "You realised long ago that the ability to find a man is as helpful to aid the law as it is to evade it."
 	added_skills = list(list(/datum/skill/misc/tracking, 3, 6))
 	added_traits = list(TRAIT_SLEUTH)
-	custom_text = "- Upon right clicking a track, you will Mark the person who made them <i>(Expert skill required, not exclusive to this Virtue)</i>.\n- Further tracks found will be automatically highlighted as theirs, along with the person themselves, if they are not sneaking or invisible at the time.\n- Reduces the cooldown for tracking, allows track examining right away, and movement no longer cancels tracking."
+	custom_text = "- Upon right clicking a track, you will Mark the person who made them <i>(Expert skill required, not exclusive to this Virtue)</i>.\n- Further tracks found will be automatically highlighted as theirs, along with the person themselves, if they are not sneaking or invisible at the time.\n- Reduces the cooldown for tracking, allows track examining right away, and movement no longer cancels tracking.\n- As a bonus, you'll be able to read people's noble gossip regardless of <i>your</i> noble status."
 
 /datum/virtue/utility/bronzearm_r
 	name = "Bronze Arm (R)"
 	desc = "Through connections or wealth, my arm had been replaced by one of bronze and gears, that can grip and hold onto things. I've learned just a bit of Engineering as a result."
 	custom_text = "Replaces your Right arm with a prosthetic Bronze one. Incompatible with Wood Arm (R) vice"
 	added_skills = list(list(/datum/skill/craft/engineering, 1, 6))
+	incompatible_vices = list(/datum/charflaw/limbloss/arm_r)
+	incompatible_virtues = list(/datum/virtue/utility/bronzearm_l)
 
 /datum/virtue/utility/bronzearm_r/apply_to_human(mob/living/carbon/human/recipient)
 	. = ..()
@@ -322,6 +262,8 @@
 	desc = "Through connections or wealth, my arm had been replaced by one of bronze and gears, that can grip and hold onto things. I've learned just a bit of Engineering as a result."
 	custom_text = "Replaces your Left arm with a prosthetic Bronze one. Incompatible with Wood Arm (L) vice"
 	added_skills = list(list(/datum/skill/craft/engineering, 1, 6))
+	incompatible_vices = list(/datum/charflaw/limbloss/arm_l)
+	incompatible_virtues = list(/datum/virtue/utility/bronzearm_r)
 
 /datum/virtue/utility/bronzearm_l/apply_to_human(mob/living/carbon/human/recipient)
 	. = ..()
@@ -367,8 +309,7 @@
 		list(/datum/skill/misc/tracking, 1, 2),
 		list(/datum/skill/labor/butchering, 1, 2),
 		list(/datum/skill/craft/tanning, 1, 2),
-		list(/datum/skill/craft/traps, 1, 2),
-		list(/datum/skill/combat/staves, 1, 2),
+		list(/datum/skill/combat/polearms, 1, 2),
 		list(/datum/skill/combat/slings, 1, 2),
 		list(/datum/skill/craft/crafting, 1, 2),
 		list(/datum/skill/craft/cooking, 1, 2),
@@ -424,4 +365,3 @@
 		list(/datum/skill/craft/cooking, 1, 2),
 		list(/datum/skill/combat/knives, 1, 2)
 	)
-

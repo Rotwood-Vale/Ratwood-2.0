@@ -70,7 +70,7 @@
 		desc = "[initial(desc)] [pick(hunger_tips)]"
 
 
-/atom/movable/screen/alert/status_effect/family_curse/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/family_curse/handle_click(location, control, params)
 	. = ..()
 	if(!ishuman(usr))
 		return
@@ -800,7 +800,7 @@
 		if(istype(role, /datum/job))
 			var/datum/job/J = role
 			title = J.get_informed_title(spouse_mob)
-		to_chat(src, span_info("[spouse_mob.real_name] the [spouse_mob.dna.species.name] [title] is your lover."))
+		to_chat(src, span_info("[spouse_mob.real_name] the [spouse_mob.dna?.species?.name] [title] is your lover."))
 	if(family_datum)
 		family_datum.ListFamily(src)
 	else

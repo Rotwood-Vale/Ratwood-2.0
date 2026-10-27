@@ -59,7 +59,7 @@
 	retreat_health = 0.3
 	food = 0
 	attack_sound = list('sound/combat/hits/blunt/genblunt (1).ogg','sound/combat/hits/blunt/genblunt (2).ogg','sound/combat/hits/blunt/genblunt (3).ogg','sound/combat/hits/blunt/flailhit.ogg')
-	dodgetime = 30
+	dodgetime = 3 SECONDS
 	aggressive = 1
 
 	AIStatus = AI_OFF
@@ -189,7 +189,7 @@
 	reach = 2
 	swingdelay = 2
 	clickcd = DRAGON_ATTACK_SPEED //It is a dragon so it bites slightly faster
-	penfactor = 60 // It is a dragon so it bites hard
+	penfactor = PEN_HEAVY // It is a dragon so it bites hard
 
 /obj/projectile/magic/aoe/dragon_breath
 	name = "fire hairball"

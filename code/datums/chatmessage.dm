@@ -81,7 +81,7 @@
 /datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, list/extra_classes, lifespan)
 	// Register client who owns this message
 	owned_by = owner.client
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
+	RegisterSignal(owned_by, COMSIG_QDELETING, PROC_REF(on_parent_qdel))
 
 	// Clip message
 	var/maxlen = owned_by.prefs.max_chat_length
@@ -122,6 +122,10 @@
 		var/image/r_icon = image('icons/UI_Icons/chat/chat_icons.dmi', icon_state = "radio")
 		text =  "\icon[r_icon]&nbsp;" + text
 
+	if(extra_classes.Find("mindlink"))
+		target.chat_color = "#2681a5"
+		target.chat_color_darkened = "#2681a5"
+
 	// We dim italicized text to make it more distinguishable from regular text
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
 
@@ -130,6 +134,8 @@
 		font_size = 7
 		tgt_color = "#adadad"
 
+	if(extra_classes.Find("mindlink"))
+		font_size = 5
 	// Approximate text height
 	// Note we have to replace HTML encoded metacharacters otherwise MeasureText will return a zero height
 	// BYOND Bug #2563917
@@ -231,7 +237,7 @@
 		return
 
 	var/text
-	if(spans.Find("emote"))
+	if(spans.Find("emote") || spans.Find("mindlink"))
 		text = raw_message
 	else
 		text = lang_treat(speaker, message_language, raw_message, spans, null, TRUE)

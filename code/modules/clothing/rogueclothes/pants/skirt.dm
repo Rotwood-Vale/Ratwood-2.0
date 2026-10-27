@@ -5,6 +5,8 @@
 	icon_state = "skirt"
 	item_state = "skirt"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/pants.dmi'
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/pants.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_pants.dmi'
 	sleevetype = "skirt"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_pants.dmi'
 	alternate_worn_layer = (SHIRT_LAYER)
@@ -15,7 +17,7 @@
 
 /obj/item/clothing/under/roguetown/skirt/random/Initialize(mapload)
 	color = pick("#6b5445", "#435436", "#704542", "#79763f", CLOTHING_BLUE)
-	..()
+	return ..()
 
 /obj/item/clothing/under/roguetown/skirt/blue
 	color = CLOTHING_BLUE

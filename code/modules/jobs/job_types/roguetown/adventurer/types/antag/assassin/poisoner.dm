@@ -18,7 +18,7 @@
 		STATKEY_LCK = 1,
 	)
 	subclass_skills = list(
-		/datum/skill/combat/staves = SKILL_LEVEL_EXPERT,		// May be silly but - hey, they can pose as a doctor-type.
+		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,		// May be silly but - hey, they can pose as a doctor-type.
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,		// For grappling

@@ -275,7 +275,9 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "Do" = (
-/obj/structure/bars/pipe/left,
+/obj/structure/bars/pipe{
+	dir = 9
+	},
 /mob/living/carbon/human/species/skeleton/npc/supereasy,
 /turf/open/water/bath,
 /area/rogue/under/tomb/indoors)
@@ -355,7 +357,7 @@
 /turf/closed/wall/mineral/rogue/stone/moss,
 /area/rogue/under/tomb/indoors)
 "MK" = (
-/obj/machinery/light/rogue/wallfire{
+/obj/machinery/light/rogue/campfire/fireplace{
 	pixel_x = 16
 	},
 /turf/closed/wall/mineral/rogue/decowood/vert,

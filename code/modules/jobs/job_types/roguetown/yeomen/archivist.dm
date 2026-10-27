@@ -6,7 +6,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	spells = list()
 	vice_restrictions = list(/datum/charflaw/unintelligible)
 	allowed_races = ACCEPTED_RACES
 	allowed_ages = ALL_AGES_LIST
@@ -20,10 +20,9 @@
 	round_contrib_points = 3
 	social_rank = SOCIAL_RANK_YEOMAN
 	job_traits = list(
-		TRAIT_ARCYNE_T2,
-		TRAIT_MAGEARMOR,
 		TRAIT_INTELLECTUAL,
 		TRAIT_SEEPRICES_SHITTY,
+		TRAIT_GOODWRITER,
 		TRAIT_MEDICINE_EXPERT,
 		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_SMITHING_EXPERT,
@@ -61,17 +60,20 @@
 		STATKEY_CON = -1,
 		STATKEY_STR = -1
 	)
-	subclass_spellpoints = 12
+	age_mod = /datum/class_age_mod/archivist
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 2, "ward" = TRUE)
 	subclass_skills = list(
+		/datum/skill/combat/staves = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/arcyne = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_LEGENDARY,
+		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/riding = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/climbing = SKILL_LEVEL_NOVICE,
-		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/tanning = SKILL_LEVEL_NOVICE,
 	)
 
 /datum/outfit/job/roguetown/archivist/basic/pre_equip(mob/living/carbon/human/H)
@@ -79,7 +81,7 @@
 	H.adjust_blindness(-3)
 	if(should_wear_femme_clothes(H))
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/archivist
-		head  = /obj/item/clothing/head/roguetown/roguehood/black
+		head	= /obj/item/clothing/head/roguetown/roguehood/black
 	else
 		shirt = /obj/item/clothing/suit/roguetown/shirt/robe/archivist
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/vest/sailor/nightman
@@ -98,14 +100,13 @@
 		/obj/item/natural/feather,
 		/obj/item/paper,
 		/obj/item/paper,
-		/obj/item/paper
-
+		/obj/item/paper,
+		/obj/item/rogueweapon/spellbook
 	)
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/teach)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/refocusstudies)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/takeapprentice)
-	if(H.age == AGE_OLD)
-		H.change_stat(STATKEY_SPD, -1)
-		H.change_stat(STATKEY_INT, 1)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/learn)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/silence/archivist_silence)

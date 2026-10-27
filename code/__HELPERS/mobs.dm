@@ -142,7 +142,6 @@ GLOBAL_LIST_INIT(oldhc, sortList(list(
 		if("decay grey")
 			. = "#6a6a6a"
 
-
 GLOBAL_LIST_EMPTY(species_list)
 
 /proc/age2agedescription(age)
@@ -160,7 +159,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null, double_progress = 0)
+/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null, double_progress = 0, can_move = TRUE)
 	if(!user || !target)
 		return 0
 
@@ -247,7 +246,7 @@ GLOBAL_LIST_EMPTY(species_list)
  * interrupt - whether to interrupt a prior do_after or not
 */
 
-/proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, progress = TRUE, datum/callback/extra_checks = null, same_direction = FALSE, no_interrupt = FALSE)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, progress = TRUE, datum/callback/extra_checks = null, same_direction = FALSE, no_interrupt = FALSE, allow_movement = FALSE)
 	if(!user)
 		return FALSE
 
@@ -257,6 +256,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		return FALSE
 
 	user.doing = TRUE
+	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
 
 	var/atom/Tloc = null
 	if(target && !isturf(target))
@@ -287,7 +287,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		if (progress)
 			progbar.update(world.time - starttime)
 
-		if(QDELETED(user) || user.stat || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()) || (same_direction && user.dir != original_dir))
+		if(QDELETED(user) || user.stat || (!drifting && !allow_movement && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()) || (same_direction && user.dir != original_dir))
 			. = FALSE
 			break
 
@@ -317,6 +317,7 @@ GLOBAL_LIST_EMPTY(species_list)
 				. = FALSE
 				break
 	user.doing = FALSE
+	SEND_SIGNAL(user, COMSIG_DO_AFTER_ENDED)
 	if (progress)
 		qdel(progbar)
 
@@ -397,6 +398,11 @@ GLOBAL_LIST_EMPTY(species_list)
 /mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
 	. = 1
 	return
+
+/mob/proc/stop_all_doing()
+	doing = FALSE
+	for(var/interaction_key in do_afters)
+		LAZYREMOVE(do_afters, interaction_key)
 
 /proc/do_after_mob(mob/user, list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks, required_mobility_flags = MOBILITY_STAND)
 	if(!user || !targets)

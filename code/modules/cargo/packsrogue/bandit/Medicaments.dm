@@ -17,19 +17,34 @@
 // POTIONS //
 /////////////
 
-/datum/supply_pack/rogue/Medicaments/healthpotnew
+/datum/supply_pack/rogue/Medicaments/healthpot
 	name = "Health Potion"
-	cost = 10
-	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/healthpotnew)
+	cost = 20
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/healthpot)
 
 /datum/supply_pack/rogue/Medicaments/manapot
 	name = "Mana Potion"
-	cost = 10
-	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/strongmanapot)
+	cost = 15
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/manapot)
 
 /datum/supply_pack/rogue/Medicaments/stampot
 	name = "Stamina Potion"
-	cost = 10
+	cost = 15
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/stampot)
+
+/datum/supply_pack/rogue/Medicaments/healthpotnew
+	name = "Greater Health Vial"
+	cost = 30
+	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/healthpotnew)
+
+/datum/supply_pack/rogue/Medicaments/manapotnew
+	name = "Greater Mana Vial"
+	cost = 25
+	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/strongmanapot)
+
+/datum/supply_pack/rogue/Medicaments/stampotnew
+	name = "Greater Stamina Potion"
+	cost = 40
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/strongstampot)
 
 /datum/supply_pack/rogue/Medicaments/rotcure
@@ -44,7 +59,7 @@
 
 /datum/supply_pack/rogue/Medicaments/emberwine
 	name = "Emberwine"
-	cost =	150	// It makes a good poison but its moreso to goon with. 
+	cost =	120	// It makes a good poison but its moreso to goon with. 
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/emberwine)
 
 ///////////
@@ -63,7 +78,7 @@
 
 /datum/supply_pack/rogue/Medicaments/ozium
 	name = "Ozium"
-	cost = 15
+	cost = 10
 	contains = list(/obj/item/reagent_containers/powder/ozium)
 
 /datum/supply_pack/rogue/Medicaments/moondust

@@ -23,6 +23,11 @@
 	stressadd = -5
 	desc = "<span class='green'>I made love.</span>"
 
+/datum/stressevent/cumconsumed
+	timer = 10 MINUTES
+	stressadd = -2
+	desc = "<span class='green'>The taste of cum has sated my desire.</span>"
+
 /datum/stressevent/cumpaingood
 	timer = 10 MINUTES
 	stressadd = -5

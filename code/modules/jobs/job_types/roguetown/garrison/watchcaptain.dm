@@ -22,7 +22,7 @@
 	min_pq = 6
 	max_pq = null
 	cmode_music = 'sound/music/combat_citywatch.ogg'
-	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR)
+	job_traits = list(TRAIT_GUARDSMAN, TRAIT_STEELHEARTED, TRAIT_MEDIUMARMOR, TRAIT_PERFECT_TRACKER, TRAIT_SLEUTH) // No evil shall escape my sight
 	job_subclasses = list(
 		/datum/advclass/watchcaptain/watchcaptain
 	)
@@ -31,13 +31,13 @@
 	job_bitflag = BITFLAG_GARRISON
 
 /datum/outfit/job/roguetown/watchcaptain
-	head = /obj/item/clothing/head/roguetown/helmet/citywatch
+	head = /obj/item/clothing/head/roguetown/helmet/citywatch/captain
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	cloak = /obj/item/clothing/cloak/citywatchcaptain
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/citywatch
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/citywatch/captain
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
-	belt = /obj/item/storage/belt/rogue/leather
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/citywatch
+	belt = /obj/item/storage/belt/rogue/leather/steel/tasset
+	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	gloves = /obj/item/clothing/gloves/roguetown/plate/iron
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
@@ -53,9 +53,9 @@
 	category_tags = list(CTAG_SHERIFF)
 	subclass_stats = list(
 		STATKEY_STR = 1,//will people accept a combat roll with less than +2 in strength? Who knows
-		STATKEY_INT = 2,
+		STATKEY_INT = 1,
 		STATKEY_CON = 1,
-		STATKEY_PER = 3, //eye for Crime
+		STATKEY_PER = 2, //eye for Crime
 		STATKEY_WIL = 2,
 	)
 	subclass_skills = list(
@@ -88,16 +88,16 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/cityguard)
 	H.verbs |= list(/mob/living/carbon/human/proc/request_outlaw, /mob/proc/haltyell, /mob/living/carbon/human/mind/proc/setorders)
 	backpack_contents = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
-		/obj/item/rope/chain = 1,
-		/obj/item/storage/keyring/sheriff = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
-		/obj/item/impact_grenade/smoke/blind_gas,
-		)
+			/obj/item/rogueweapon/huntingknife/idagger/steel/special = 1,
+			/obj/item/rope/chain = 1,
+			/obj/item/storage/keyring/watchcaptain = 1,
+			/obj/item/rogueweapon/scabbard/sheath = 1,
+			/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
+			/obj/item/impact_grenade/smoke/blind_gas,
+			)
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Stunmace & Greatshield","Stunmace & Crossbow","Stunmace & Polehammer")	//A better shield or an extra spare stunmace
+		var/weapons = list("Stunmace & Greatshield","Stunmace & Crossbow","Stunmace & Lucerne")	//A better shield or an extra spare stunmace
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -110,7 +110,7 @@
 				H.change_stat(STATKEY_SPD, 1)
 				H.change_stat(STATKEY_STR, -1)
 				beltr = /obj/item/rogueweapon/mace/stunmace
-			if("Stunmace & Polehammer")
+			if("Stunmace & Lucerne")
 				r_hand = /obj/item/rogueweapon/eaglebeak
 				backl = /obj/item/rogueweapon/scabbard/gwstrap
 				beltr = /obj/item/rogueweapon/mace/stunmace

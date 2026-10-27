@@ -102,6 +102,10 @@
 				used = 'sound/vo/attn.ogg'
 			if("clap")
 				used = list('sound/vo/clap (1).ogg','sound/vo/clap (2).ogg','sound/vo/clap (3).ogg','sound/vo/clap (4).ogg')
+			if("slowclap")
+				used = list('sound/body/slowclap.ogg')
+			if("clap1")
+				used = list('sound/body/claponce.ogg')
 			if("psst")
 				used = 'sound/vo/psst.ogg'
 			if("meow")
@@ -150,6 +154,10 @@
 				used = list('sound/vo/mobs/goat/idle (1).ogg', 'sound/vo/mobs/goat/idle (2).ogg', 'sound/vo/mobs/goat/idle (3).ogg')
 			if("chitter")
 				used = 'sound/vo/moth/mothchitter.ogg'
+			if("flutter")
+				used = 'sound/vo/moth/moth_flutter.ogg'
+			if("msqueak")
+				used = 'sound/vo/moth/moth_squeak.ogg'
 			if("strain")
 				used = 'sound/vo/male/gen/strain.ogg'
 			if("moan")
@@ -168,5 +176,21 @@
 				used = 'sound/vo/sniff.ogg'
 			if("sneeze")
 				used = 'sound/vo/male/male_sneeze.ogg'
-
+			//new dog sounds
+			if("arf")
+				used = list('sound/vo/mobs/vw/arf.ogg','sound/vo/mobs/vw/arf2.ogg','sound/vo/mobs/vw/arf3.ogg')
+			if("awuff")
+				used = list('sound/vo/mobs/vw/awuff.ogg','sound/vo/mobs/vw/awuff2.ogg','sound/vo/mobs/vw/awuff3.ogg')
+			if("dcomplain")
+				used = list('sound/vo/mobs/vw/dcomplain.ogg','sound/vo/mobs/vw/dcomplain2.ogg','sound/vo/mobs/vw/dcomplain3.ogg','sound/vo/mobs/vw/dcomplain4.ogg','sound/vo/mobs/vw/dcomplain5.ogg')
+			if("dgrowl")
+				used = list('sound/vo/mobs/vw/dgrowl.ogg','sound/vo/mobs/vw/dgrowl2.ogg','sound/vo/mobs/vw/dgrowl3.ogg','sound/vo/mobs/vw/dgrowl4.ogg','sound/vo/mobs/vw/dgrowl5.ogg')
+			if("dwhine")
+				used = list('sound/vo/mobs/vw/dwhine.ogg','sound/vo/mobs/vw/dwhine2.ogg','sound/vo/mobs/vw/dwhine3.ogg','sound/vo/mobs/vw/dwhine4.ogg','sound/vo/mobs/vw/dwhine5.ogg')
+			//jokes on you, I'm adding horse sounds too! - Randumb
+			if("neigh")
+				used = list('sound/vo/mobs/saiga/idle (1).ogg','sound/vo/mobs/saiga/idle (2).ogg','sound/vo/mobs/saiga/idle (3).ogg','sound/vo/mobs/saiga/idle (4).ogg','sound/vo/mobs/saiga/idle (5).ogg','sound/vo/mobs/saiga/idle (6).ogg')
+			//jokes on YOU, I'm adding the yeen cackle!
+			if("ycackle")
+				used = list('sound/vo/mobs/hyena/cackle.ogg')
 	return used

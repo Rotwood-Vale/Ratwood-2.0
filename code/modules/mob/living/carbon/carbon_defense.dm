@@ -73,7 +73,7 @@
 	var/obj/item/bodypart/BP = get_bodypart(check_zone(def_zone))
 	if(BP)
 		testing("projwound")
-		var/newdam = P.damage * (100-blocked)/100
+		var/newdam = max(0, P.damage - blocked)
 		BP.bodypart_attacked_by(P.woundclass, newdam, zone_precise = def_zone, crit_message = TRUE, weapon = P)
 		return TRUE
 
@@ -81,12 +81,11 @@
 	var/obj/item/bodypart/BP = get_bodypart(check_zone(def_zone))
 	if(!BP)
 		return FALSE
-	var/newdam = P.damage * (100-blocked)/100
+	var/newdam = max(0, P.damage - blocked)
 	if(newdam <= 8)
 		return FALSE
 	if(prob(P.embedchance) && P.dropped)
-		BP.add_embedded_object(P.dropped, silent = FALSE, crit_message = TRUE)
-		return TRUE
+		return BP.add_embedded_object(P.dropped, silent = FALSE, crit_message = TRUE)
 	return FALSE
 
 /mob/living/carbon/send_pull_message(mob/living/target)
@@ -217,6 +216,7 @@
 		to_chat(user, span_warning("Unfortunately, there's nothing there."))
 		return FALSE
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
+	user.mob_timers[MT_SNEAKATTACK] = world.time //Stops you from sneaking after hitting someone else.
 	I.funny_attack_effects(src, user)
 	var/statforce = get_complex_damage(I, user)
 	if(statforce)
@@ -296,14 +296,6 @@
 	*/
 	return FALSE
 
-
-/mob/living/carbon/attack_paw(mob/living/carbon/monkey/M)
-	if(M.used_intent.type == INTENT_HELP)
-		help_shake_act(M)
-		return 0
-
-	if(..()) //successful monkey bite.
-		return 1
 
 /mob/living/carbon/proc/dismembering_strike(mob/living/attacker, dam_zone)
 	if(!attacker.limb_destroyer)

@@ -4,19 +4,20 @@
 	desc = "Gloves made out of sturdy leather. Barely offer any protection, but are better than nothing."
 	icon_state = "leather_gloves"
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
 	max_integrity = ARMOR_INT_SIDE_LEATHER
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
-	unarmed_bonus = 1.1
+	unarmed_bonus = 1
 	color = "#66584c"
 	cold_protection = HAND_LEFT | HAND_RIGHT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
+
+/obj/item/clothing/gloves/roguetown/leather/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/gloves/roguetown/leather/black
 	color = CLOTHING_BLACK
@@ -30,8 +31,6 @@
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 	nudist_approved = TRUE
 
 /obj/item/clothing/gloves/roguetown/fingerless/shadowgloves
@@ -52,20 +51,19 @@
 
 /obj/item/clothing/gloves/roguetown/fingerless_leather
 	name = "fingerless leather gloves"
-	desc = "A pair of protective gloves favored by lockshimmers, laborers, and smokers for maintaining \
-	manual dexterity over regular gloves."
+	desc = "A pair of protective gloves favored by learned mages, lockshimmers, laborers, and smokers for maintaining manual dexterity over regular gloves."
 	icon_state = "roguegloves"
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_CLOTH
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 	salvage_result = /obj/item/natural/hide/cured
+
+/obj/item/clothing/gloves/roguetown/fingerless_leather/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/gloves/roguetown/otavan
 	name = "otavan leather gloves"
@@ -73,15 +71,12 @@
 	icon_state = "fencergloves"
 	item_state = "fencergloves"
 	armor = ARMOR_MAILLE
-	prevent_crits = list(BCLASS_CHOP, BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	cold_protection = HAND_LEFT | HAND_RIGHT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -96,8 +91,7 @@
 /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	name = "psydonic leather gloves"
 	desc = "Thick leather mittens, stitched and cuffed to guard His children's palms from perforation."
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST) //Equivalent to Heavy Leather Gloves. Deinherits the durability and exclusive critprot of Otavan gloves.
+	armor = ARMOR_LEATHER
 	icon_state = "psydongloves"
 	item_state = "psydongloves"
 	salvage_result = /obj/item/natural/hide/cured
@@ -110,14 +104,11 @@
 	icon_state = "eastgloves1"
 	item_state = "eastgloves1"
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	resistance_flags = null
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 
 /obj/item/clothing/gloves/roguetown/eastgloves2
 	name = "stylish gloves"
@@ -125,23 +116,18 @@
 	icon_state = "eastgloves2"
 	item_state = "eastgloves2"
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	resistance_flags = null
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	anvilrepair = null
-	sewrepair = TRUE
 
-/obj/item/clothing/gloves/roguetown/harms
+/obj/item/clothing/gloves/roguetown/leather/horsey
 	name = "arm harness"
 	desc = "Reinforced leather bindings for the arms."
 	icon_state = "harms"
 	item_state = "harms"
-	body_parts_covered = HANDS
-	max_integrity = 400
-	armor = list("blunt" = 60, "slash" = 90, "stab" = 60, "piercing" = 60, "fire" = 0, "acid" = 0)
-	armor_class = ARMOR_CLASS_LIGHT
-	sewrepair = TRUE
-	sleeved = FALSE
+	slot_flags = ITEM_SLOT_GLOVES|ITEM_SLOT_HANDS
+	body_parts_covered = HANDS|ARMS
+	// sleeved = FALSE
+	color = null

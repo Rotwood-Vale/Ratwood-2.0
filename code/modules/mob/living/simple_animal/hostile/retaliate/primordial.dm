@@ -40,9 +40,7 @@
 	blade_class = BCLASS_CUT
 	hitsound = "smallslash"
 	chargetime = 0
-	penfactor = 0
-	candodge = TRUE
-	canparry = TRUE
+	penfactor = PEN_NONE
 	miss_text = "slash the air"
 	item_d_type = "slash"
 	clickcd = 12
@@ -51,9 +49,18 @@
 	icon = 'icons/roguetown/mob/monster/primordial.dmi'
 	AIStatus = AI_OFF
 	can_have_ai = FALSE
+	aggressive = FALSE
+	attack_same = FALSE
 	faction = list("neutral")
 	var/next_ability_use
 	var/ability_cooldown = 30 SECONDS
+
+/mob/living/simple_animal/hostile/retaliate/rogue/primordial/CanAttack(atom/the_target)
+	if(!isliving(the_target))
+		return FALSE
+	if(istype(the_target, /mob/living/simple_animal))
+		return FALSE
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/primordial/death()
 	..()
@@ -240,8 +247,7 @@
 			else if(dx < 0 && dy > 0) // NW corner
 				T.ChangeTurf(/turf/open/water/river/flow, flags = CHANGETURF_IGNORE_AIR)
 	// Auto-remove after duration
-	spawn(duration)
-		qdel(src)
+	QDEL_IN(src, duration)
 
 /obj/effect/whirlpool/Destroy()
 	// Restore saved turfs
@@ -319,17 +325,19 @@
 	var/delay = 3 // deciseconds = 0.3s between rows
 	for(var/row_index = 1, row_index <= wave_rows.len, row_index++)
 		var/list/row = wave_rows[row_index]
-		spawn(delay * (row_index - 1))
-			for(var/turf/T in row)
-				if(!T)
-					continue
-				for(var/mob/living/L in T)
-					if(L == src)
-						continue
-					knockback(L, dir_to_target, 8)
-				new /obj/effect/temp_visual/gust(T, dir_to_target)
+		addtimer(CALLBACK(src, PROC_REF(release_wave_row), row, dir_to_target), delay * (row_index - 1))
 	visible_message(span_danger("[src] exhales a violent gust of wind!"))
 	playsound(src, 'sound/weather/rain/wind_6.ogg', 100, TRUE)
+
+/mob/living/simple_animal/hostile/retaliate/rogue/primordial/air/proc/release_wave_row(list/row, dir_to_target)
+	for(var/turf/T in row)
+		if(!T)
+			continue
+		for(var/mob/living/L in T)
+			if(L == src)
+				continue
+			knockback(L, dir_to_target, 8)
+		new /obj/effect/temp_visual/gust(T, dir_to_target)
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/primordial/air/proc/knockback(mob/living/L, dir, distance)
@@ -347,3 +355,42 @@
 	anchored = TRUE
 	duration = 8
 
+/obj/projectile/magic/aoe/fireball/spitfire
+	name = "Spitfire"
+	exp_heavy = 0
+	exp_light = 0
+	exp_flash = 0
+	exp_fire = 0
+	damage = 15
+	npc_simple_damage_mult = 2 // Makes it more effective against NPCs.
+	accuracy = 40 // Base accuracy is lower for burn projectiles because they bypass armor
+	damage_type = BURN
+	nodamage = FALSE
+	flag = "magic"
+	hitsound = 'sound/blank.ogg'
+	aoe_range = 0
+
+/obj/projectile/magic/aoe/fireball/spitfire/arc
+	name = "Arced Spitfire"
+	damage = 12 // 25% damage penalty
+	arcshot = TRUE
+
+/obj/projectile/magic/aoe/fireball/spitfire/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/living/M = target
+		if(M.anti_magic_check())
+			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
+			qdel(src)
+			return BULLET_ACT_BLOCK
+		if(M.has_status_effect(/datum/status_effect/buff/frost) || M.has_status_effect(/datum/status_effect/buff/frostbite))
+			visible_message(span_warning("[src] extinguishes on contact with [target]!"))
+			playsound(get_turf(target), 'sound/items/firesnuff.ogg', 100)
+			M.remove_status_effect(/datum/status_effect/buff/frost)
+			M.remove_status_effect(/datum/status_effect/buff/frostbite)
+			new /obj/effect/temp_visual/snap_freeze(get_turf(M))
+			qdel(src)
+			return BULLET_ACT_BLOCK
+		M.adjust_fire_stacks(1)
+		M.ignite_mob()

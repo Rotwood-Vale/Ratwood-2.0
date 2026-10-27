@@ -2,20 +2,30 @@
 
 #define BASE_PARRY_STAMINA_DRAIN 5 // Unmodified stamina drain for parry, now a var instead of setting on simplemobs
 #define BAD_GUARD_FATIGUE_DRAIN 20 //Percentage of your green bar lost on letting a guard expire.
-#define GUARD_PEEL_REDUCTION 2	//How many Peel stacks to lose if a Guard is hit.
-#define BAIT_PEEL_REDUCTION 1	//How many Peel stacks to lose if we perfectly bait.
+#define EXPOSED_INTEG_MOD 2.5
+#define VULN_INTEG_MOD 1.5
+#define BAIT_RCLICK_CD 20 SECONDS
+#define BIND_CD 15 SECONDS
+#define BASE_RCLICK_CD 30 SECONDS
+#define FEINT_RCLICK_CD 20 SECONDS
+
+#define BIND_HANDS 1
+#define BIND_FEET 2
+#define BIND_HEAD 3
+#define BIND_TORSO 4
+#define BIND_NECK 5
 
 /*
 Medical defines
 */
 #define ARTERY_LIMB_BLEEDRATE 20	//This is used as a reference point for dynamic wounds, so it's better off as a define.
-#define CONSTITUTION_BLEEDRATE_MOD 0.1	//How much slower we'll be bleeding for every CON point. 0.1 = 10% slower.
-#define CONSTITUTION_BLEEDRATE_CAP 15	//The CON value up to which we get a bleedrate reduction.
+#define CONSTITUTION_BLEEDRATE_MOD 0.05	//How much slower we'll be bleeding for every CON point. 0.1 = 10% slower.
+#define CONSTITUTION_BLEEDRATE_CAP 20	//The CON value up to which we get a bleedrate reduction.
 
 /*
 Misc. Category. Spin it out if needed
 */
-#define CRIT_DISMEMBER_DAMAGE_THRESHOLD 0.75 // 75% damage threshold for dismemberment / crit
+#define CRIT_DISMEMBER_DAMAGE_THRESHOLD 0.9 // 90% damage threshold for dismemberment / crit
 
 /*
 	Critical Resistance Defines
@@ -26,3 +36,12 @@ Misc. Category. Spin it out if needed
 #define CRIT_RESISTANCE_STACKS_OP 1 // Noblood / Revenant etc.
 #define CRIT_RESISTANCE_EFFECTIVE_BLEEDRATE 0.8 // How much CR reduce bleedrate by. Inverse values are higher. Was 0.5, now 0.8.
 #define CRIT_RESISTANCE_TIMER_CD 30 SECONDS // Cooldown between guaranteed CR procs. DOES NOT APPLY TO DISMEMBERMENT.
+
+#define PROJ_PARRY_TIMER	0.65 SECONDS	//The time after an attack (swinging in the air counts) when a thrown item would be deflected at a higher chance.
+#define MAX_DODGE_CLAMP -5 // at 85%. Base is 90%.
+
+//Visible message presets.
+#define VISMSG_ARMOR_BLOCKED " <span class='armoralert'>Armor stops the damage.</span>"
+#define VISMSG_ARMOR_INT_STAGEONE "<span class='armoralert'><i> Dented.</i></span>"
+#define VISMSG_ARMOR_INT_STAGETWO "<span class='armoralert'> Damaged.</span>"
+#define VISMSG_ARMOR_INT_STAGETHREE "<span class='armoralert'><b> Crumbling!</b></span>"

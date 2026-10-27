@@ -111,7 +111,7 @@
 
 	apply_outline()
 	RegisterSignal(parent_weapon, COMSIG_ITEM_ATTACK_SUCCESS, PROC_REF(on_attack_success))
-	RegisterSignal(parent_weapon, COMSIG_PARENT_QDELETING, PROC_REF(on_qdel))
+	RegisterSignal(parent_weapon, COMSIG_QDELETING, PROC_REF(on_qdel))
 	addtimer(CALLBACK(src, PROC_REF(remove_enchantment)), duration)
 
 /datum/component/pestilent_blade_enchant/proc/apply_outline()

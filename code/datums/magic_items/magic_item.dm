@@ -5,6 +5,13 @@
 /datum/magic_item/proc/do_literally_anything_thanks()
 	return
 
+/datum/magic_item/proc/try_start_cooldown(mob/living/gate_holder, cooldown_time)
+	var/status_id = "[type]"
+	if(gate_holder.has_status_effect(/datum/status_effect/debuff/enchantmenttriggered, status_id))
+		return FALSE
+	gate_holder.apply_status_effect(/datum/status_effect/debuff/enchantmenttriggered, cooldown_time, status_id)
+	return TRUE
+
 /datum/magic_item/proc/on_apply(obj/item/i)
 	RegisterSignal(i, COMSIG_PROJECTILE_ON_HIT, PROC_REF(projectile_hit))
 	RegisterSignal(i, COMSIG_ITEM_AFTERATTACK, PROC_REF(on_hit))
@@ -15,6 +22,17 @@
 	RegisterSignal(i, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(i, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_use))
 	RegisterSignal(i, COMSIG_ITEM_HIT_RESPONSE, PROC_REF(on_hit_response))
+	// If the item is already on a mob, fire on_equip immediately so stat effects apply without re-equip
+	if(isliving(i.loc))
+		var/mob/living/user = i.loc
+		if(user.is_holding(i))
+			on_equip(i, user, ITEM_SLOT_HANDS)
+		else
+			for(var/slot_id in ALL_ITEM_SLOTS)
+				if(user.get_item_by_slot(slot_id) == i)
+					on_equip(i, user, slot_id)
+					break
+
 
 /datum/magic_item/proc/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)	//when enchanted item hits a mob/living, do effect.
 

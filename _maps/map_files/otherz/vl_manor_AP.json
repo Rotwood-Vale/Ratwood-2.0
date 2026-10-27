@@ -1,0 +1,6 @@
+{
+	"map_name": "Vampire Lord Manor",
+	"map_path": "map_files/otherz",
+	"map_file": "vl_manor_AP.dmm",
+	"traits": [{"Name": "vl_manor_AP", "Up": true}, {"Up": true, "Down": true}, {"Down": true}]
+}

@@ -1,11 +1,11 @@
-/obj/item/clothing/shirt/toga
-	slot_flags = ITEM_SLOT_SHIRT | ITEM_SLOT_ARMOR
+/obj/item/clothing/suit/roguetown/shirt/dress/toga
 	name = "toga"
 	desc = "A pristine white toga of flowing linen."
 	body_parts_covered = CHEST|GROIN
-	flags_inv = HIDEBOOB|HIDECROTCH
 	icon = 'modular_rmh/icons/clothing/valentyi/toga.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/valentyi/onmob/toga.dmi'
+	hiked_base_icon = 'modular_rmh/icons/clothing/valentyi/onmob/toga.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_toga.dmi'
 	icon_state = "toga"
 	item_state = "toga"
 	var/base_icon = "toga"
@@ -15,7 +15,7 @@
 	sleevetype = null
 	sleeved = null
 
-/obj/item/clothing/shirt/toga/attack_right(mob/user)
+/obj/item/clothing/suit/roguetown/shirt/dress/toga/attack_right(mob/user)
 	switch(alt_wear)
 		if(FALSE)
 			name = "revealing toga"
@@ -35,7 +35,7 @@
 		L.update_inv_armor()
 		L.update_inv_shirt()
 
-/obj/item/clothing/shirt/toga/equipped(mob/user, slot)
+/obj/item/clothing/suit/roguetown/shirt/dress/toga/equipped(mob/user, slot)
 	. = ..()
 	if(user.gender == FEMALE)
 		icon_state = "[base_icon]fem"
@@ -48,7 +48,7 @@
 
 /datum/crafting_recipe/roguetown/sewing/toga
 	name = "toga"
-	result = list(/obj/item/clothing/shirt/toga,)
+	result = list(/obj/item/clothing/suit/roguetown/shirt/dress/toga,)
 	reqs = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 2
@@ -59,11 +59,11 @@
 	name = "Toga"
 	cost = 10
 	contains = list(
-					/obj/item/clothing/shirt/toga,
+					/obj/item/clothing/suit/roguetown/shirt/dress/toga,
 				)
 
 //LOADOUT
 
 /datum/loadout_item/toga
 	name = "Toga"
-	path = /obj/item/clothing/shirt/toga
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/toga

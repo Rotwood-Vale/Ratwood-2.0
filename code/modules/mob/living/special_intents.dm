@@ -85,9 +85,14 @@ This allows the devs to draw whatever shape they want at the cost of it feeling 
 	var/post_icon_state = "strike"
 
 	var/datum/skill/custom_skill
+	var/pre_icon = 'icons/effects/effects.dmi'
+	/// Whether our howner needs to be wielding the weapon. DO NOT USE THIS FOR ESOTERIC SPECIALS WITHOUT A MOB (TRAPS, ETC)
+	var/requires_wielding = FALSE
 
 ///To be called by EXTERNAL SOURCES, preferably. We don't want to bog this datum down with built-in costs, but I won't stop you.
 /datum/special_intent/proc/apply_cost(mob/living/L)
+	if(L.has_status_effect(/datum/status_effect/buff/clash/limbguard))	//TODO: A more standardised way of checking for toggle Specials that should prevent others from being used.
+		return FALSE
 	if(L && stamcost)
 		//If <1 it's %-age based, if >=1 it's just a flat amount.
 		var/cost = (stamcost < 1) ? (L.max_stamina * stamcost) : stamcost
@@ -103,7 +108,6 @@ This allows the devs to draw whatever shape they want at the cost of it feeling 
 	str +="\n<i><font size = 1>This ability can be used by right clicking while in STRONG stance or by using the Special MMB.</font></i></details>"
 	return str
 
-///Called by external sources -- likely an rclick or mmb. By default the 'target' will be stored as a turf.
 /datum/special_intent/proc/deploy(mob/living/user, atom/parent, atom/target)
 	if(!isliving(user) && !ismovableatom(parent))
 		CRASH("Special intent called with non-living parent AND non-movable atom source.")
@@ -135,7 +139,7 @@ This allows the devs to draw whatever shape they want at the cost of it feeling 
 /// Completely indulgent proc cus I just want to see default process_attack() have no custom code
 /datum/special_intent/proc/_add_log()
 	if(howner && howner.ckey)
-		howner.log_message(span_danger("Used the Special [name]."), LOG_ATTACK)
+		howner.log_message("Used the Special [name].", LOG_ATTACK, color = "red")
 	else
 		log_admin("[name] Special was deployed.")
 
@@ -312,10 +316,8 @@ This allows the devs to draw whatever shape they want at the cost of it feeling 
 	if(ishuman(target))
 		var/mob/living/carbon/human/HT = target
 		var/obj/item/bodypart/affecting = HT.get_bodypart(zone)
-		var/armor_block = HT.run_armor_check(zone, d_type, 0, damage = dam, used_weapon = W, armor_penetration = (no_pen ? -999 : 0))
-		if(no_pen && armor_block)
-			armor_block = 999
-		if(full_pen && armor_block)
+		var/armor_block = HT.run_armor_check(zone, d_type, 0, damage = dam, used_weapon = W, armor_penetration = (no_pen ? PEN_NONE : 0))
+		if(full_pen)
 			armor_block = 0		//You block NOTHING, sir!
 		if(HT.apply_damage(dam, W.damtype, affecting, armor_block))
 			affecting.bodypart_attacked_by(bclass, dam, howner, armor = armor_block, crit_message = TRUE, weapon = W)
@@ -425,10 +427,10 @@ SPECIALS START HERE
 /datum/special_intent/side_sweep/apply_hit(turf/T)
 	for(var/mob/living/L in get_hearers_in_view(0, T))
 		if(L != howner)
-			L.apply_status_effect(/datum/status_effect/debuff/exposed, eff_dur)
 			if(L.mobility_flags & MOBILITY_STAND)
 				var/obj/item/rogueweapon/W = iparent
 				apply_generic_weapon_damage(L, dam, W.d_type, t_zone, bclass = BCLASS_CUT)
+				L.apply_status_effect(/datum/status_effect/debuff/exposed, eff_dur)
 	..()
 
 /datum/special_intent/shin_swipe
@@ -456,6 +458,7 @@ SPECIALS START HERE
 			L.apply_status_effect(/datum/status_effect/debuff/hobbled)	//-2 SPD for 8 seconds
 			if(L.mobility_flags & MOBILITY_STAND)
 				apply_generic_weapon_damage(L, dam, "stab", pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), bclass = BCLASS_CUT)
+			L.apply_status_effect(/datum/status_effect/debuff/vulnerable, 3 SECONDS)
 	..()
 
 /datum/special_intent/piercing_lunge
@@ -481,6 +484,7 @@ SPECIALS START HERE
 			L.stamina_add(30)	//Drains ~20 stamina from target; attrition warfare.
 			if(L.mobility_flags & MOBILITY_STAND)
 				apply_generic_weapon_damage(L, dam, "stab", BODY_ZONE_CHEST, bclass = BCLASS_STAB, full_pen = TRUE)	//Ignores armor, applies a stab wound with the weapon force.
+			L.apply_status_effect(/datum/status_effect/debuff/vulnerable, 3 SECONDS)
 	..()
 
 //Hard to hit, freezes you in place. Offbalances & slows the targets hit. If they're already offbalanced they get knocked down.
@@ -518,13 +522,14 @@ SPECIALS START HERE
 			L.safe_throw_at(target_turf, dist, 1, howner, force = MOVE_FORCE_EXTREMELY_STRONG)
 			//We slow them down
 			L.Slowdown(slow_dur)
-			L.apply_status_effect(/datum/status_effect/debuff/exposed, 2.5 SECONDS)
 			//We offbalance them OR knock them down if they're already offbalanced
 			if(L.IsOffBalanced())
 				L.Knockdown(KD_dur)
+				L.drop_all_held_items()
 			else
 				L.OffBalance(Offb_dur)
 			apply_generic_weapon_damage(L, dam, "blunt", BODY_ZONE_CHEST, bclass = BCLASS_BLUNT, no_pen = TRUE)
+			L.apply_status_effect(/datum/status_effect/debuff/exposed, 2.5 SECONDS)
 	var/sfx = pick('sound/combat/ground_smash1.ogg','sound/combat/ground_smash2.ogg','sound/combat/ground_smash3.ogg')
 	playsound(T, sfx, 100, TRUE)
 	..()
@@ -569,6 +574,8 @@ SPECIALS START HERE
 	var/newimmob = immobilize_init + (victim_count SECONDS)
 
 	var/throwtarget = get_edge_target_turf(howner, get_dir(howner, get_step_away(victim, howner)))
+
+	apply_generic_weapon_damage(victim, dam * victim_count, "blunt", BODY_ZONE_CHEST, bclass = BCLASS_BLUNT, no_pen = TRUE)
 	switch(victim_count)
 		if(1)
 			victim.Slowdown(newslow)
@@ -581,18 +588,19 @@ SPECIALS START HERE
 			victim.Immobilize(newimmob)
 			victim.apply_status_effect(/datum/status_effect/debuff/exposed, newexposed)
 			victim.Knockdown(knockdown)
+			victim.drop_all_held_items()
 		if(5 to 9)
 			victim.Slowdown(newslow)
 			victim.Immobilize(newimmob)
 			victim.apply_status_effect(/datum/status_effect/debuff/exposed, newexposed)
 			victim.Knockdown(knockdown)
+			victim.drop_all_held_items()
 			victim.OffBalance(newoffb)
 			victim.Stun(5 SECONDS)
 	if(victim_count < 3)
 		playsound(howner, 'sound/combat/flail_sweep_hit_minor.ogg', 100, TRUE)
 	else
 		playsound(howner, 'sound/combat/flail_sweep_hit_major.ogg', 100, TRUE)
-	apply_generic_weapon_damage(victim, dam * victim_count, "blunt", BODY_ZONE_CHEST, bclass = BCLASS_BLUNT, no_pen = TRUE)
 	victim.safe_throw_at(throwtarget, CLAMP(1, 5, victim_count), 1, howner, force = MOVE_FORCE_EXTREMELY_STRONG)
 
 #define AXE_SWING_GRID_DEFAULT 	list(list(-1,0), list(0,0, 0.2 SECONDS), list(1,0, 0.4 SECONDS))
@@ -634,10 +642,10 @@ SPECIALS START HERE
 /datum/special_intent/axe_swing/apply_hit(turf/T)
 	for(var/mob/living/L in get_hearers_in_view(0, T))
 		if(L != howner)
-			L.apply_status_effect(/datum/status_effect/debuff/exposed, exposed_dur)
 			L.Immobilize(immob_dur)
 			if(L.mobility_flags & MOBILITY_STAND)
 				apply_generic_weapon_damage(L, dam, "slash", pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), bclass = BCLASS_CHOP)
+			L.apply_status_effect(/datum/status_effect/debuff/exposed, exposed_dur)
 	var/sfx = pick('sound/combat/sp_axe_swing1.ogg','sound/combat/sp_axe_swing2.ogg','sound/combat/sp_axe_swing3.ogg')
 	playsound(T, sfx, 100, TRUE)
 	..()
@@ -667,6 +675,7 @@ SPECIALS START HERE
 		if(L != howner)
 			L.Immobilize(immob_dur)
 			apply_generic_weapon_damage(L, dam, "slash", pick(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT), bclass = BCLASS_LASHING)
+			L.apply_status_effect(/datum/status_effect/debuff/vulnerable, 2 SECONDS)
 			whiffed = FALSE
 	if(!whiffed)
 		playsound(T, 'sound/combat/sp_whip_hit.ogg', 100, TRUE)
@@ -676,6 +685,33 @@ SPECIALS START HERE
 
 #define GAREN_WAVE1 0.7 SECONDS
 #define GAREN_WAVE2 1.4 SECONDS
+
+/datum/special_intent/limbguard
+	name = "Limb Guard"
+	desc = "Raise your shield to protect a limb. You will deflect projectiles and anyone striking that limb will be severely penalized. \n\
+		You cannot regain stamina while this is active. It can be cancelled by jumping, kicking or by using MMB again with the same shield out."
+	respect_adjacency = FALSE
+	cooldown = 30 SECONDS
+	stamcost = 30
+
+
+//apply_cost is called before anything else, so it works here for the toggle checks, but it's kind of a bad example -- don't do this.
+/datum/special_intent/limbguard/apply_cost(mob/living/L)
+	if(L.has_status_effect(/datum/status_effect/buff/clash) || L.toggle_timer > world.time)
+		return FALSE
+	var/datum/status_effect/buff/clash/limbguard/lg = L.has_status_effect(/datum/status_effect/buff/clash/limbguard)
+	if(lg)
+		lg.remove_self()
+		return FALSE
+	return ..()
+
+//Complete override because the majority of the code is handled on the status effect.
+/datum/special_intent/limbguard/process_attack()
+	SHOULD_CALL_PARENT(FALSE)
+	howner.apply_status_effect(/datum/status_effect/buff/clash/limbguard, check_zone(howner.zone_selected))
+	howner.toggle_timer = world.time + howner.toggle_delay
+
+//datum/status_effect/buff/clash/limbguard
 
 /datum/special_intent/greatsword_swing
 	name = "Great Swing"
@@ -699,7 +735,7 @@ SPECIALS START HERE
 	var/self_debuffed = FALSE
 	var/self_immob = 2.2 SECONDS
 	var/self_clickcd = 2.1 SECONDS
-	var/self_expose = 2.3 SECONDS
+	var/self_vuln = 2.3 SECONDS
 
 /datum/special_intent/greatsword_swing/_reset()
 	hitcount = initial(hitcount)
@@ -711,7 +747,7 @@ SPECIALS START HERE
 /datum/special_intent/greatsword_swing/_process_grid(list/turfs, newdelay)
 	if(!self_debuffed)
 		howner.Immobilize(self_immob) //we're committing
-		howner.apply_status_effect(/datum/status_effect/debuff/exposed, self_expose)
+		howner.apply_status_effect(/datum/status_effect/debuff/vulnerable, self_vuln)
 		howner.apply_status_effect(/datum/status_effect/debuff/clickcd, self_clickcd)
 		self_debuffed = TRUE
 	hitcount++
@@ -741,6 +777,142 @@ SPECIALS START HERE
 
 #undef GAREN_WAVE1
 #undef GAREN_WAVE2
+
+#define FLAIL_WAVE1 0.7 SECONDS
+#define FLAIL_WAVE2 1.4 SECONDS
+
+/datum/special_intent/greatflail_swing
+	name = "Greatflail Swing"
+	desc = "Swing your greatflail all around you in a ring of Judgement."
+	tile_coordinates = list(
+		list(0,0), list(1,0), list(1,-1),list(1,-2),list(0,-2),list(-1,-2),list(-1,-1),list(-1,0),\
+		list(0,1, FLAIL_WAVE1), list(1,1, FLAIL_WAVE1), list(-1,1, FLAIL_WAVE1),list(1,-3, FLAIL_WAVE1),list(0,-3, FLAIL_WAVE1),list(-1,-3, FLAIL_WAVE1),list(-2,0, FLAIL_WAVE1),list(-2,-1, FLAIL_WAVE1),list(-2,-2, FLAIL_WAVE1),list(2,0, FLAIL_WAVE1),list(2,-1, FLAIL_WAVE1),list(2,-2, FLAIL_WAVE1),\
+		list(0,0, FLAIL_WAVE2), list(1,0, FLAIL_WAVE2), list(1,-1, FLAIL_WAVE2),list(1,-2, FLAIL_WAVE2),list(0,-2, FLAIL_WAVE2),list(-1,-2, FLAIL_WAVE2),list(-1,-1, FLAIL_WAVE2),list(-1,0, FLAIL_WAVE2)
+		)
+	post_icon_state = "sweep_fx"
+	pre_icon_state = "fx_trap_long"
+	sfx_pre_delay = 'sound/combat/flail_sweep.ogg'
+	respect_adjacency = FALSE
+	respect_dir = TRUE
+	delay = 0.7 SECONDS
+	cooldown = 30 SECONDS
+	stamcost = 25	//Stamina cost
+	var/dam = 60
+	var/slow_dur = 2
+	var/hitcount = 0
+	var/self_debuffed = FALSE
+	var/self_immob = 2.2 SECONDS
+	var/self_clickcd = 2.1 SECONDS
+	var/self_vuln = 2.3 SECONDS
+	var/list/mob/living/wave_victims = list()
+	var/exposed_init = 3 SECONDS
+	var/offbalanced_init = 1.5 SECONDS
+	var/knockdown = 2 SECONDS
+	var/immobilize_init = 1 SECONDS
+
+/datum/special_intent/greatflail_swing/_reset()
+	hitcount = initial(hitcount)
+	self_debuffed = initial(self_debuffed)
+	wave_victims.Cut()
+	. = ..()
+
+//It's a bad idea to hook into _process_grid, but this is a ghetto way to check which "wave" we are at.
+//As process grid is called for every set of tiles.
+/datum/special_intent/greatflail_swing/_process_grid(list/turfs, newdelay)
+	if(!self_debuffed)
+		howner.Immobilize(self_immob) //we're committing
+		howner.apply_status_effect(/datum/status_effect/debuff/vulnerable, self_vuln)
+		howner.apply_status_effect(/datum/status_effect/debuff/clickcd, self_clickcd)
+		self_debuffed = TRUE
+	hitcount++
+	. = ..()
+
+
+/datum/special_intent/greatflail_swing/post_delay(list/turfs)
+	wave_victims.Cut()
+	. = ..()
+	var/list/mob/living/victims = wave_victims.Copy()
+	wave_victims.Cut()
+	var/victim_count = length(victims)
+	var/effect_count = min(victim_count, 9)
+
+	for(var/mob/living/victim as anything in victims)
+		apply_sweep_effects(victim, effect_count)
+
+	playsound(howner, 'sound/combat/wooshes/bladed/wooshlarge (3).ogg', 100, TRUE)
+
+/datum/special_intent/greatflail_swing/apply_hit(turf/T)
+	for(var/mob/living/victim in get_hearers_in_view(0, T))
+		if(victim == howner)
+			continue
+		victim.Slowdown(slow_dur)
+		if(!(victim.mobility_flags & MOBILITY_STAND))
+			continue
+		wave_victims |= victim
+		var/hitdmg = dam
+		switch(hitcount)
+			if(2)
+				hitdmg *= 1.5
+			if(3)
+				hitdmg *= 2
+		apply_generic_weapon_damage(
+			victim,
+			hitdmg,
+			"blunt",
+			BODY_ZONE_CHEST,
+			bclass = BCLASS_BLUNT,
+		)
+
+		if(hitcount == 3)
+			apply_generic_weapon_damage(
+				victim,
+				dam * 0.8,
+				"blunt",
+				BODY_ZONE_CHEST,
+				bclass = BCLASS_BLUNT,
+				no_pen = TRUE,
+			)
+		playsound(T, 'sound/combat/flail_sweep_hit_major.ogg', 100, TRUE)
+	..()
+
+/datum/special_intent/greatflail_swing/proc/apply_sweep_effects(
+	mob/living/victim,
+	effect_count,
+	)
+	if(QDELETED(victim) || QDELETED(howner) || effect_count <= 0)
+		return
+	var/newslow = slow_dur + effect_count
+	var/newexposed = exposed_init + (effect_count SECONDS)
+	var/newoffb = offbalanced_init + (effect_count SECONDS)
+	var/newimmob = immobilize_init + (effect_count SECONDS)
+	victim.Slowdown(newslow)
+	if(effect_count >= 2)
+		victim.Immobilize(newimmob)
+		victim.apply_status_effect(
+			/datum/status_effect/debuff/exposed,
+			newexposed,
+		)
+	if(effect_count >= 3)
+		victim.Knockdown(knockdown)
+	if(effect_count >= 5)
+		victim.OffBalance(newoffb)
+		victim.Stun(5 SECONDS)
+	var/turf/throwtarget = get_edge_target_turf(
+		howner,
+		get_dir(howner, get_step_away(victim, howner)),
+	)
+	if(throwtarget)
+		victim.safe_throw_at(
+			throwtarget,
+			CLAMP(effect_count, 1, 5),
+			1,
+			howner,
+			force = MOVE_FORCE_EXTREMELY_STRONG,
+		)
+
+#undef FLAIL_WAVE1
+#undef FLAIL_WAVE2
+
 
 /datum/special_intent/upper_cut // 1x1 combo finisher, exposed targets get knocked down and take alot of damage, others take low damage.
 	name = "Upper Cut"
@@ -783,7 +955,7 @@ SPECIALS START HERE
 			var/throwdist = 1
 			var/target_zone = BODY_ZONE_CHEST
 
-			if(L.has_status_effect(/datum/status_effect/debuff/exposed)) // big damage and a knockdown if they exposed
+			if(L.has_status_effect(/datum/status_effect/debuff/exposed) || L.has_status_effect(/datum/status_effect/debuff/vulnerable)) // big damage and a knockdown if they exposed / vuln.
 				L.Knockdown(KD_dur)
 				throwdist = rand(2,4)
 				dam = 200 // big damage
@@ -794,6 +966,8 @@ SPECIALS START HERE
 			L.safe_throw_at(throwtarget, throwdist, 1, howner, force = MOVE_FORCE_EXTREMELY_STRONG) // small pushback and 50 damage on non exposed
 			
 			playsound(howner, 'sound/combat/hits/punch/punch_hard (2).ogg', 100, TRUE)
+			L.remove_status_effect(/datum/status_effect/debuff/exposed)
+			L.remove_status_effect(/datum/status_effect/debuff/vulnerable)
 	..()
 
 
@@ -831,11 +1005,219 @@ SPECIALS START HERE
 		for(var/mob/living/L in get_hearers_in_view(0, T))
 			if(L != howner)
 				L.Slowdown(slow_dur)
-				L.apply_status_effect(/datum/status_effect/debuff/exposed, 4.5 SECONDS)
 				var/throwtarget = get_edge_target_turf(howner, pushdir)
 				apply_generic_weapon_damage(L, dam, "blunt", BODY_ZONE_CHEST, bclass = BCLASS_BLUNT, no_pen = TRUE)
+				L.apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
 				L.safe_throw_at(throwtarget, push_dist, 1, howner, force = MOVE_FORCE_EXTREMELY_STRONG)
 
+// Martyr special intents from AP - IronDragoon
+#define MARTYR_WAVE2_DELAY 3 SECONDS
+
+/datum/special_intent/martyr_volcano_slam
+	name = "Volcanic Blaze Slam"
+	desc = "A powerful blow to the ground in front of the Martyr, leaving behind scorched earth and setting fire to anyone it touches. The blow is so powerful that stones fly out of the ground, striking those who remain standing."
+	tile_coordinates = list(
+		list(-1,0), list(0,0), list(1,0),
+		list(-1,1), list(0,1), list(1,1),
+		list(-1,2), list(0,2), list(1,2),
+		list(-1,0, MARTYR_WAVE2_DELAY), list(0,0, MARTYR_WAVE2_DELAY), list(1,0, MARTYR_WAVE2_DELAY),
+		list(-1,1, MARTYR_WAVE2_DELAY), list(0,1, MARTYR_WAVE2_DELAY), list(1,1, MARTYR_WAVE2_DELAY),
+		list(-1,2, MARTYR_WAVE2_DELAY), list(0,2, MARTYR_WAVE2_DELAY), list(1,2, MARTYR_WAVE2_DELAY)
+	)
+	use_clickloc = FALSE
+	respect_adjacency = TRUE
+	respect_dir = TRUE
+	delay = 1.2 SECONDS
+	fade_delay = 1 SECONDS
+	pre_icon_state = "trap"
+	post_icon_state = "strike"
+	sfx_pre_delay = 'sound/combat/ground_smash_start.ogg'
+	sfx_post_delay = 'sound/combat/ground_smash1.ogg'
+	cooldown = 60 SECONDS
+	stamcost = 25
+	var/slow_dur = 4
+	var/fire_stacks = 5
+	var/self_immob_dur = 1 SECONDS 
+	var/dam = 0
+
+/datum/special_intent/martyr_volcano_slam/process_attack()
+	var/obj/item/rogueweapon/W = iparent
+	dam = W.force_dynamic * max((howner.STASTR / 10 + howner.STAPER / 10), 1)  / 1.5
+	. = ..()
+
+/datum/special_intent/martyr_volcano_slam/on_create()
+	. = ..()
+	howner.Immobilize(self_immob_dur)
+	to_chat(howner, span_warning("I slam the ground with volcanic fury!"))
+
+/datum/special_intent/martyr_volcano_slam/apply_hit(turf/T)
+
+	new /obj/effect/temp_visual/lavastaff(T)
+
+	for(var/mob/living/L in get_hearers_in_view(0, T))
+		if(L != howner)
+			L.Slowdown(slow_dur)
+			L.adjust_fire_stacks(fire_stacks)
+			L.ignite_mob()
+			if(L.mobility_flags & MOBILITY_STAND)
+				apply_generic_weapon_damage(L, dam, "fire", BODY_ZONE_CHEST, bclass = BCLASS_BLUNT)
+
+	var/sfx = pick('sound/combat/ground_smash1.ogg','sound/combat/ground_smash2.ogg','sound/combat/ground_smash3.ogg')
+	playsound(T, sfx, 100, TRUE)
+	..()
+
+#undef MARTYR_WAVE2_DELAY
+
+#define MARTYR_SWIPE_WAVE2_DELAY 1 SECONDS
+
+/datum/special_intent/martyr_blazing_sweep
+	name = "Blazing Axe Sweep"
+	desc = "Two powerful swings of the axe forward, which spread forward in a semicircle and set fire to the heretics."
+	tile_coordinates = list(
+		list(-1,-1), list(1,-1), list(-1,0), list(0,0), list(1,0),
+		list(-2,-1, MARTYR_SWIPE_WAVE2_DELAY), list(-2,0, MARTYR_SWIPE_WAVE2_DELAY), list(-1,1, MARTYR_SWIPE_WAVE2_DELAY),
+		list(0,1, MARTYR_SWIPE_WAVE2_DELAY), list(1,1, MARTYR_SWIPE_WAVE2_DELAY), list(2,0, MARTYR_SWIPE_WAVE2_DELAY), list(2,-1, MARTYR_SWIPE_WAVE2_DELAY)
+	)
+	use_clickloc = FALSE
+	respect_adjacency = TRUE
+	respect_dir = TRUE
+	delay = 0.7 SECONDS
+	fade_delay = 0.5 SECONDS
+	pre_icon_state = "trap"
+	post_icon_state = "sweep_fx"
+	sfx_pre_delay = 'sound/combat/wooshes/bladed/wooshlarge (1).ogg'
+	sfx_post_delay = 'sound/combat/sp_axe_swing1.ogg'
+	cooldown = 50 SECONDS
+	stamcost = 25
+	var/fire_stacks = 4 
+	var/self_immob_dur = 1 SECONDS
+	var/dam = 0
+
+/datum/special_intent/martyr_blazing_sweep/process_attack()
+	var/obj/item/rogueweapon/W = iparent
+	dam = W.force_dynamic * max((howner.STASTR / 10 + howner.STAPER / 10), 1)
+	. = ..()
+
+/datum/special_intent/martyr_blazing_sweep/on_create()
+	. = ..()
+	howner.Immobilize(self_immob_dur)
+	to_chat(howner, span_warning("I unleash a blazing sweep with the martyr's axe in two furious waves!"))
+
+/datum/special_intent/martyr_blazing_sweep/apply_hit(turf/T)
+	for(var/mob/living/L in get_hearers_in_view(0, T))
+		if(L != howner)
+			L.adjust_fire_stacks(fire_stacks)
+			L.ignite_mob()
+			if(L.mobility_flags & MOBILITY_STAND)
+				apply_generic_weapon_damage(L, dam, "fire", BODY_ZONE_CHEST, bclass = BCLASS_CHOP)
+
+	playsound(T, sfx_post_delay, 100, TRUE)
+	..()
+
+#undef MARTYR_SWIPE_WAVE2_DELAY
+
+#define SWORD_SWEEP_WAVE2_DELAY 1.5 SECONDS
+
+/datum/special_intent/martyr_blazing_sweep_sword
+	name = "Blazing Sword Sweep"
+	desc = "Two powerful circular strikes, dealing fire damage and crushing all those fools who dared to surround the Martyr."
+	tile_coordinates = list(
+
+		list(-1,0), list(0,0), list(1,0),
+		list(-1,-1),				list(1,-1),
+		list(-1,-2), list(0,-2), list(1,-2),
+
+		list(-1,0, SWORD_SWEEP_WAVE2_DELAY), list(0,0, SWORD_SWEEP_WAVE2_DELAY), list(1,0, SWORD_SWEEP_WAVE2_DELAY),
+		list(-1,-1, SWORD_SWEEP_WAVE2_DELAY),				list(1,-1, SWORD_SWEEP_WAVE2_DELAY),
+		list(-1,-2, SWORD_SWEEP_WAVE2_DELAY), list(0,-2, SWORD_SWEEP_WAVE2_DELAY), list(1,-2, SWORD_SWEEP_WAVE2_DELAY)
+
+	)
+	use_clickloc = FALSE
+	respect_adjacency = TRUE
+	respect_dir = TRUE
+	delay = 0.7 SECONDS
+	fade_delay = 0.5 SECONDS
+	pre_icon_state = "trap"
+	post_icon_state = "sweep_fx"
+	sfx_pre_delay = 'sound/combat/wooshes/bladed/wooshlarge (1).ogg'
+	sfx_post_delay = 'sound/combat/sidesweep_hit.ogg'
+	cooldown = 50 SECONDS
+	stamcost = 25
+	custom_skill = null
+	var/fire_stacks = 4
+	var/self_immob_dur = 2 SECONDS
+	var/dam = 0
+
+/datum/special_intent/martyr_blazing_sweep_sword/process_attack()
+	var/obj/item/rogueweapon/W = iparent
+	dam = W.force_dynamic * max((howner.STASTR / 10 + howner.STAPER / 10), 1)
+	. = ..()
+
+/datum/special_intent/martyr_blazing_sweep_sword/on_create()
+	. = ..()
+	howner.Immobilize(self_immob_dur)
+	to_chat(howner, span_warning("I unleash a blazing sword sweep around myself in two furious waves!"))
+
+/datum/special_intent/martyr_blazing_sweep_sword/apply_hit(turf/T, delay = 0)
+	for(var/mob/living/L in get_hearers_in_view(0, T))
+		if(L != howner)
+			L.adjust_fire_stacks(fire_stacks)
+			L.ignite_mob()
+			if(L.mobility_flags & MOBILITY_STAND)
+				apply_generic_weapon_damage(L, dam, "fire", BODY_ZONE_CHEST, bclass = BCLASS_CUT)
+
+	playsound(T, sfx_post_delay, 100, TRUE)
+	..()
+
+#undef SWORD_SWEEP_WAVE2_DELAY
+
+/datum/special_intent/martyr_blazing_trident
+	name = "Blazing Trident Strike"
+	desc = "A powerful blow with the trident forward, releasing arcs of fire from its teeth, which form the cross of Ten and burn the heretics standing in front."
+	tile_coordinates = list(
+
+						list(0,0),
+			list(-1,1), list(0,1), list(1,1),
+	list(-2,2),			list(0,2),			list(2,2),
+			list(-1,3),	list(0,3),	list(1,3),
+						list(0,4)
+	)
+	use_clickloc = FALSE
+	respect_adjacency = TRUE
+	respect_dir = TRUE
+	delay = 0.7 SECONDS
+	fade_delay = 0.5 SECONDS
+	pre_icon_state = "trap"
+	post_icon_state = "sweep_fx"
+	sfx_pre_delay = 'sound/combat/wooshes/bladed/wooshlarge (1).ogg'
+	sfx_post_delay = 'sound/combat/sidesweep_hit.ogg'
+	cooldown = 30 SECONDS
+	stamcost = 25
+	custom_skill = null
+	var/fire_stacks = 4
+	var/self_immob_dur = 0.5 SECONDS
+	var/dam = 0
+
+/datum/special_intent/martyr_blazing_trident/process_attack()
+	var/obj/item/rogueweapon/W = iparent
+	dam = W.force_dynamic * max((howner.STASTR / 10 + howner.STAPER / 10), 1)
+	. = ..()
+
+/datum/special_intent/martyr_blazing_trident/on_create()
+	. = ..()
+	howner.Immobilize(self_immob_dur)
+	to_chat(howner, span_warning("I thrust my trident forward and brought down the power stored in it."))
+
+/datum/special_intent/martyr_blazing_trident/apply_hit(turf/T, delay = 0)
+	for(var/mob/living/L in get_hearers_in_view(0, T))
+		if(L != howner)
+			L.adjust_fire_stacks(fire_stacks)
+			L.ignite_mob()
+			if(L.mobility_flags & MOBILITY_STAND)
+				apply_generic_weapon_damage(L, dam, "fire", BODY_ZONE_CHEST, bclass = BCLASS_STAB)
+
+	playsound(T, sfx_post_delay, 100, TRUE)
+	..()
 
 /* 				EXAMPLES
 /datum/special_intent/another_example_cast
@@ -862,3 +1244,175 @@ tile_coordinates = list(list(1,1), list(-1,1), list(-1,-1), list(1,-1),list(0,0)
 //Example of a sweeping line from left to right from the clicked turf. The second tile and the line will only appear after 1.1 seconds (the first delay).
 //tile_coordinates = list(list(0,0), list(1,0, 1.1 SECONDS), list(2,0, 1.2 SECONDS), list(3,0,1.3 SECONDS), list(4,0,1.4 SECONDS), list(5,0,1.5 SECONDS))
 
+/datum/special_intent/arcyne_descent // Tome finisher, reverse of upper cut visually. It is functionally an uppercut
+	name = "Arcyne Descent"
+	desc = "Rise with arcyne force, then crash down on the target. If the target is Exposed or Vulnerable, they will fall over and be flung back with tremendous damage; otherwise they are pushed slightly back."
+	tile_coordinates = list(list(0,0))
+	post_icon_state = "kick_fx"
+	pre_icon = 'icons/effects/telegraph.dmi'
+	pre_icon_state = "warning"
+	respect_adjacency = TRUE
+	delay = 1.2 SECONDS
+	cooldown = 30 SECONDS
+	stamcost = 25
+	var/KD_dur = 1 SECONDS
+	var/self_immob_dur = 1.5 SECONDS
+	var/dam = 50
+	var/prev_pixel_z
+	var/prev_transform
+
+/datum/special_intent/arcyne_descent/npc_use_chance(mob/living/user, atom/target)
+	return npc_finisher_chance(target)
+
+/datum/special_intent/arcyne_descent/on_create()
+	. = ..()
+
+	howner.OffBalance(self_immob_dur)
+	howner.Immobilize(self_immob_dur)
+	dam = initial(dam)
+	prev_pixel_z = howner.pixel_z
+	prev_transform = howner.transform
+	addtimer(CALLBACK(src, PROC_REF(settle_visuals), prev_pixel_z, prev_transform), delay + fade_delay)
+	howner.visible_message(span_warning("[howner] rises on a surge of arcyne force!"), span_warning("I rise on a surge of arcyne force!"))
+	playsound(howner, 'sound/magic/charging.ogg', 100, TRUE)
+	if(!HAS_TRAIT(howner, TRAIT_BIGGUY))
+		animate(howner, pixel_z = prev_pixel_z + 16, time = 4)
+
+/datum/special_intent/arcyne_descent/apply_hit(turf/T)
+	playsound(T, 'sound/magic/whiteflame.ogg', 100, TRUE)
+	if(!HAS_TRAIT(howner, TRAIT_BIGGUY))
+		animate(howner, pixel_z = prev_pixel_z - 2, time = 2)
+		animate(pixel_z = prev_pixel_z, transform = prev_transform, time = 2)
+
+	for(var/mob/living/L in get_hearers_in_view(0, T))
+		if(L == howner)
+			continue
+
+		var/throwtarget = get_edge_target_turf(howner, get_dir(howner, get_step_away(L, howner)))
+		var/throwdist = 1
+		var/target_zone = get_aimed_zone(L)
+		var/hit_damage = dam
+
+		if(L.has_status_effect(/datum/status_effect/debuff/exposed) || L.has_status_effect(/datum/status_effect/debuff/vulnerable))
+			L.Knockdown(KD_dur)
+			throwdist = rand(2,4)
+			hit_damage = 200
+			target_zone = BODY_ZONE_HEAD
+			playsound(howner, 'sound/misc/meteorimpact.ogg', 100, TRUE)
+			if(istype(iparent, /obj/item/rogueweapon/spellbook))
+				new /obj/effect/temp_visual/thunderstrike_actual(T)
+			L.remove_status_effect(/datum/status_effect/debuff/exposed)
+			L.remove_status_effect(/datum/status_effect/debuff/vulnerable)
+
+		apply_generic_weapon_damage(L, hit_damage, "blunt", target_zone, bclass = BCLASS_BLUNT, no_pen = TRUE)
+		L.safe_throw_at(throwtarget, throwdist, 1, howner, force = MOVE_FORCE_EXTREMELY_STRONG)
+		playsound(howner, 'sound/combat/hits/punch/punch_hard (2).ogg', 100, TRUE)
+
+	..()
+
+/datum/special_intent/quarterstaff_sweep
+	name = "Quarterstaff Sweep"
+	desc = "Sweep a five-tile frontal arc, knocking foes back and leaving them vulnerable. Aims for the targeted zone."
+	tile_coordinates = list(list(-1,-1), list(1,-1), list(-1,0), list(0,0), list(1,0))
+	post_icon_state = "sweep_fx"
+	pre_icon = 'icons/effects/telegraph.dmi'
+	pre_icon_state = "warning"
+	sfx_pre_delay = 'sound/combat/wooshes/blunt/wooshmed (1).ogg'
+	sfx_post_delay = 'sound/combat/hits/blunt/woodblunt (1).ogg'
+	delay = 0.6 SECONDS
+	cooldown = 25 SECONDS
+	requires_wielding = TRUE
+	stamcost = 20
+	var/vulnerable_dur = 3 SECONDS
+	var/dam
+
+/datum/special_intent/quarterstaff_sweep/npc_use_chance(mob/living/user, atom/target)
+	return npc_front_chance(user)
+
+/datum/special_intent/quarterstaff_sweep/process_attack()
+	var/obj/item/rogueweapon/W = iparent
+	if(istype(W))
+		dam = W.force_dynamic * max((max(howner.STASTR, howner.STAPER) / 10), 0.5)
+	. = ..()
+
+/datum/special_intent/quarterstaff_sweep/apply_hit(turf/T)
+	for(var/mob/living/L in get_hearers_in_view(0, T))
+		if(L == howner)
+			continue
+		var/throwdir = get_dir(howner, L)
+		var/turf/throwtarget = get_ranged_target_turf(get_turf(L), throwdir, 1)
+		L.safe_throw_at(throwtarget, 1, 1, howner, force = MOVE_FORCE_EXTREMELY_STRONG)
+		var/hit_zone = get_aimed_zone(L)
+		apply_generic_weapon_damage(L, dam, "blunt", hit_zone, bclass = BCLASS_BLUNT, no_pen = TRUE)
+		L.apply_status_effect(/datum/status_effect/debuff/vulnerable, vulnerable_dur)
+	..()
+
+/// Resolves the attacker's aimed zone against a specific target using the shared accuracy formula.
+/// Uses weapon skill as the accuracy bonus. Specials can override this for custom behavior.
+/datum/special_intent/proc/get_aimed_zone(mob/living/target)
+	var/bonus = 0
+	if(custom_skill)
+		bonus += howner.get_skill_level(custom_skill) * 8
+	else
+		var/obj/item/W = iparent
+		if(istype(W))
+			bonus += howner.get_skill_level(W.associated_skill) * 8
+	return resolve_aimed_zone(howner.zone_selected, howner, target, bonus)
+
+/datum/special_intent/proc/npc_finisher_chance(atom/target)
+	if(!isliving(target))
+		return 0
+	var/mob/living/L = target
+	if(L.has_status_effect(/datum/status_effect/debuff/exposed) || L.has_status_effect(/datum/status_effect/debuff/vulnerable))
+		return 100
+	return 10
+
+/datum/special_intent/proc/npc_front_chance(mob/living/user)
+	var/turf/front = get_step(get_turf(user), user.dir)
+	if(!front)
+		return 0
+	var/list/count = npc_count_nearby(user, 1, front)
+	var/enemies = count[1]
+	if(!enemies)
+		return 0
+	if(count[2])
+		return 5
+	if(enemies >= 3)
+		return 100
+	return (enemies >= 2) ? 60 : 15
+
+/datum/special_intent/proc/npc_count_nearby(mob/living/user, radius, atom/center)
+	var/enemies = 0
+	var/allies = 0
+	for(var/mob/living/L in view(radius, get_turf(center || user)))
+		if(L == user || L.stat == DEAD || !(L.mobility_flags & MOBILITY_STAND))
+			continue
+		if(user.faction_check_mob(L))
+			allies++
+		else
+			enemies++
+	return list(enemies, allies)
+
+/datum/special_intent/proc/settle_visuals(pz = 0, matrix/tf)
+	if(QDELETED(howner))
+		return
+	howner.transform = tf
+	animate(howner, pixel_z = pz, time = 1)
+
+/datum/special_intent/proc/npc_use_chance(mob/living/user, atom/target)
+	return null
+
+#define AXE_SWING_GRID_DEFAULT	list(list(-1,0), list(0,0, 0.2 SECONDS), list(1,0, 0.4 SECONDS))
+#define AXE_SWING_GRID_MIRROR	list(list(-1,0, 0.4 SECONDS), list(0,0, 0.2 SECONDS), list(1,0))
+
+/datum/special_intent/dagger_dash
+	name = "Dagger Dash"
+	desc = "Become quicker on your feet and pass through other beings for a short time. Boost scales with worn armor."
+	cooldown = 90 SECONDS
+	stamcost = 25
+
+/datum/special_intent/dagger_dash/process_attack()
+	SHOULD_CALL_PARENT(FALSE)
+	howner.apply_status_effect(/datum/status_effect/buff/dagger_dash)
+	playsound(howner, 'sound/combat/dagger_boost.ogg', 100, TRUE)
+	apply_cooldown()

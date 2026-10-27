@@ -70,8 +70,6 @@
 /datum/ai_behavior/attack_obstructions/proc/can_smash_object(mob/living/simple_animal/basic_mob, obj/object)
 	if (!object.density && !can_attack_dense_objects)
 		return FALSE
-	if (object.IsObscured())
-		return FALSE
 	if (basic_mob.see_invisible < object.invisibility)
 		return FALSE
 	var/list/whitelist = basic_mob.ai_controller.blackboard[BB_OBSTACLE_TARGETING_WHITELIST]

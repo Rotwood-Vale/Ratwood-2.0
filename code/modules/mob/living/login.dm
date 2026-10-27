@@ -3,6 +3,8 @@
 	..()
 	if(client)
 		client.update_ooc_verb_visibility()
+		if(client.prefs)
+			update_redflash_pref(client.prefs.no_redflash, update_hud = FALSE)
 	//Mind updates
 	sync_mind()
 	mind.show_memory(src, 0)
@@ -28,6 +30,8 @@
 	if(ranged_ability)
 		ranged_ability.deactivate()
 	
+	last_logout_time = 0
+	cancel_disconnected_admin_alert()
 	set_ssd_indicator(FALSE)
 
 /mob/living/proc/login_fade()

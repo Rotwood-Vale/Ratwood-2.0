@@ -31,6 +31,7 @@
 		/datum/mob_descriptor/face/emaciated,
 		/datum/mob_descriptor/face/skeletal,
 		/datum/mob_descriptor/face/long,
+		/datum/mob_descriptor/face/custom,
 	)
 
 /datum/descriptor_choice/face_exp
@@ -75,6 +76,7 @@
 		/datum/mob_descriptor/face_exp/confident,
 		/datum/mob_descriptor/face_exp/nervous,
 		/datum/mob_descriptor/face_exp/worried,
+		/datum/mob_descriptor/face_exp/custom,
 	)
 
 /datum/descriptor_choice/body
@@ -111,6 +113,7 @@
 		/datum/mob_descriptor/body/broadshoulder,
 		/datum/mob_descriptor/body/waspwaist,
 		/datum/mob_descriptor/body/burly,
+		/datum/mob_descriptor/body/custom,
 	)
 
 /datum/descriptor_choice/stature
@@ -185,6 +188,7 @@
 		/datum/mob_descriptor/stature/freek,
 		/datum/mob_descriptor/stature/weerdoe,
 		/datum/mob_descriptor/stature/plump,
+		/datum/mob_descriptor/stature/custom,
 	)
 
 /datum/descriptor_choice/voice
@@ -219,6 +223,7 @@
 		/datum/mob_descriptor/voice/snide,
 		/datum/mob_descriptor/voice/smoker,
 		/datum/mob_descriptor/voice/venomous,
+		/datum/mob_descriptor/voice/custom,
 	)
 
 /datum/descriptor_choice/skin
@@ -239,6 +244,7 @@
 		/datum/mob_descriptor/skin/dusky,
 		/datum/mob_descriptor/skin/irritated,
 		/datum/mob_descriptor/skin/ashen,
+		/datum/mob_descriptor/skin/custom,
 	)
 
 /datum/descriptor_choice/scales
@@ -250,6 +256,7 @@
 		/datum/mob_descriptor/scales/smooth,
 		/datum/mob_descriptor/scales/plated,
 		/datum/mob_descriptor/scales/peeling,
+		/datum/mob_descriptor/skin/custom,
 	)
 
 /datum/descriptor_choice/fur
@@ -268,6 +275,7 @@
 		/datum/mob_descriptor/fur/velvety,
 		/datum/mob_descriptor/fur/dense,
 		/datum/mob_descriptor/fur/matted,
+		/datum/mob_descriptor/skin/custom,
 	)
 
 /datum/descriptor_choice/feathers
@@ -278,6 +286,7 @@
 		/datum/mob_descriptor/feathers/frayed,
 		/datum/mob_descriptor/feathers/delicate,
 		/datum/mob_descriptor/feathers/soft,
+		/datum/mob_descriptor/skin/custom,
 	)
 
 /datum/descriptor_choice/chitin
@@ -286,6 +295,7 @@
 		/datum/mob_descriptor/chitin/smooth,
 		/datum/mob_descriptor/chitin/hard,
 		/datum/mob_descriptor/chitin/fine,
+		/datum/mob_descriptor/skin/custom,
 	)
 
 /datum/descriptor_choice/height
@@ -300,6 +310,7 @@
 		/datum/mob_descriptor/height/giant,
 		/datum/mob_descriptor/height/tiny,
 		/datum/mob_descriptor/height/giant,
+		/datum/mob_descriptor/height/custom,
 	)
 
 /datum/descriptor_choice/trait
@@ -366,6 +377,7 @@
 		/datum/mob_descriptor/trait/cerulean,
 		/datum/mob_descriptor/trait/emerald,
 		/datum/mob_descriptor/trait/amber,
+		/datum/mob_descriptor/trait/custom,
 	)
 
 /datum/descriptor_choice/skin_all
@@ -408,6 +420,7 @@
 		/datum/mob_descriptor/feathers/frayed,
 		/datum/mob_descriptor/feathers/delicate,
 		/datum/mob_descriptor/feathers/soft,
+		/datum/mob_descriptor/skin/custom,
 	)
 
 /datum/descriptor_choice/skin_lamia
@@ -432,6 +445,7 @@
 		/datum/mob_descriptor/scales/smooth,
 		/datum/mob_descriptor/scales/plated,
 		/datum/mob_descriptor/scales/peeling,
+		/datum/mob_descriptor/skin/custom,
 	)
 
 /datum/descriptor_choice/skin_harpy
@@ -456,6 +470,7 @@
 		/datum/mob_descriptor/feathers/frayed,
 		/datum/mob_descriptor/feathers/delicate,
 		/datum/mob_descriptor/feathers/soft,
+		/datum/mob_descriptor/skin/custom,
 	)
 
 #define PROMINENT_DESCRIPTORS \
@@ -506,7 +521,9 @@
 	/datum/mob_descriptor/prominent/whimsy,\
 	/datum/mob_descriptor/prominent/dim_look,\
 	/datum/mob_descriptor/prominent/custom/one,\
-	/datum/mob_descriptor/prominent/custom/two
+	/datum/mob_descriptor/prominent/custom/two,\
+	/datum/mob_descriptor/prominent/custom/three,\
+	/datum/mob_descriptor/prominent/custom/four
 
 #define PROMINENT_WILDKIN \
 	/datum/mob_descriptor/prominent/canine_features,\

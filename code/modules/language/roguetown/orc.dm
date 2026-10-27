@@ -1,6 +1,6 @@
 /datum/language/orcish
 	name = "Orcish"
-	desc = "The harsh and powerful language of the orcish tribes, spoken with strength and authority. A tongue of warriors and conquerors."
+	desc = "(Spoken with ,o) The harsh and powerful language of the orcish tribes, spoken with strength and authority. A tongue of warriors and conquerors."
 	speech_verb = "grumbles"
 	ask_verb = "asks"
 	exclaim_verb = "shouts"

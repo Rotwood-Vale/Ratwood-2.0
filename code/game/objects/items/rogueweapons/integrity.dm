@@ -17,6 +17,8 @@
 		return FALSE
 	if(sharpness_mod != 1)
 		amt *= sharpness_mod
+	if(cleave_sharpness_mult != 1)
+		amt *= cleave_sharpness_mult
 	if(user && HAS_TRAIT(user, TRAIT_SHARPER_BLADES))
 		amt = amt * 0.7
 
@@ -75,17 +77,20 @@
 		return TRUE
 
 /obj/structure/attackby(obj/item/I, mob/user, params)
-	user.changeNext_move(user.used_intent.clickcd)
+	user.changeNext_move(user.get_rmb_clickcd(user.used_intent.clickcd))
+	user.stamina_add(user.get_swifstrong_stam_penalty())
 	. = ..()
 
 
 /obj/machinery/attackby(obj/item/I, mob/user, params)
-	user.changeNext_move(user.used_intent.clickcd)
+	user.changeNext_move(user.get_rmb_clickcd(user.used_intent.clickcd))
+	user.stamina_add(user.get_swifstrong_stam_penalty())
 	. = ..()
 
 /obj/item/attackby(obj/item/I, mob/user, params)
 	if(!no_use_cd)
-		user.changeNext_move(user.used_intent.clickcd)
+		user.changeNext_move(user.get_rmb_clickcd(user.used_intent.clickcd))
+		user.stamina_add(user.get_swifstrong_stam_penalty())
 	if(max_blade_int)
 		if(istype(I, /obj/item/natural))
 			var/obj/item/natural/ST = I

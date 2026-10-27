@@ -31,7 +31,7 @@
 	simple_detect_bonus = 20
 	deaggroprob = 0
 	defprob = 20
-	candodge = TRUE
+	mob_can_dodge = TRUE
 	// del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
 	food = 0
@@ -60,5 +60,4 @@
 	new /obj/item/magic/elemental/mote(deathspot)
 	new /obj/item/magic/elemental/mote(deathspot)
 	update_icon()
-	sleep(1)
-	qdel(src)
+	QDEL_IN(src, 1)

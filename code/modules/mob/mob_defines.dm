@@ -110,7 +110,6 @@
 	var/datum/rmb_intent/rmb_intent //Living
 	var/datum/intent/used_intent
 	var/datum/intent/mmb_intent
-	var/datum/intent/used_rmb_intent
 	/// List of possible intents a mob can have
 	var/list/possible_mmb_intents = list()
 	var/list/possible_spell_intents = list()
@@ -118,6 +117,7 @@
 	var/list/possible_offhand_intents = list()//Living
 	var/list/possible_rmb_intents = list()
 	var/list/base_intents = list() //bare hand intents
+	var/datum/special_intent/unarmed_special //fallback special intent when no weapon is held
 	var/l_index = 1
 	var/r_index = 1
 	var/r_ua_index = 1
@@ -255,6 +255,7 @@
 	var/temptarget = FALSE
 	var/fixedeye = FALSE
 	var/tempfixeye = FALSE //targetting
+	var/rider_look_dir = 0 // Independent facing direction for a rider; overrides mount-synced facing until movement clears it
 	var/image/targeti
 	var/image/swingi
 	var/rautoaiming = FALSE //targets any mob on a turf with rmb or lmb
@@ -266,21 +267,9 @@
 	var/list/attack_grunts = null
 	var/list/takedamage_grunts = null
 
-	var/canparry = FALSE
-	var/candodge = FALSE
-
-	var/dodge_sound = 'sound/combat/dodge.ogg'
-	var/parry_sound = "unarmparry"
-
-	var/dodgecd = FALSE
-
-	var/setparrytime = 12
-	var/dodgetime = 12
 	var/magearmor = 0
 	var/scalearmor = 0
 
-	var/last_dodge = 0
-	var/last_parry = 0
 	var/last_used_double_attack = 0 //Used for Dual Wielder virtue, holds the timer since the double attack was last used
 	var/next_emote = 0
 	var/next_me_emote = 0
@@ -323,3 +312,8 @@
 
 	/// cooldown for the next time this person can offer
 	COOLDOWN_DECLARE(offer_cooldown)
+	///Currently-channeling spell_cooldown datum, set by on_start_charge() and cleared by end_charging().
+	///Cached so checkdefense() can block parry without iterating /actions on every incoming swing.
+	var/datum/action/cooldown/spell/channeling_spell
+	var/facing_locked = FALSE
+	var/last_deflect_recoil = 0

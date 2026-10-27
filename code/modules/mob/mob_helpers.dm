@@ -45,6 +45,78 @@
 
 	return zone
 
+///Returns a TRUE / FALSE if the zone is a FACE / HEAD coverage subzone. Used mainly by accuracy_check & bait.
+/proc/check_face_subzone(zone, check_head = TRUE)
+	if(!zone)
+		return FALSE
+	switch(zone)
+		if(BODY_ZONE_PRECISE_R_EYE)
+			return TRUE
+		if(BODY_ZONE_PRECISE_L_EYE)
+			return TRUE
+		if(BODY_ZONE_PRECISE_NOSE)
+			return TRUE
+		if(BODY_ZONE_PRECISE_MOUTH)
+			return TRUE
+		if(BODY_ZONE_PRECISE_EARS)
+			return TRUE
+		if(BODY_ZONE_PRECISE_SKULL)
+			return TRUE
+		if(BODY_ZONE_HEAD)
+			if(check_head)
+				return TRUE
+		//--Optional Neck Addition--
+		//if(BODY_ZONE_PRECISE_NECK)
+		//	return TRUE
+
+	return FALSE
+
+/proc/check_bait_subzone(zone)
+	if(!zone)
+		return FALSE
+	if(check_face_subzone(zone))
+		return BODY_ZONE_HEAD
+	return zone
+
+/proc/check_bind_subzone(zone_def)
+	if(!zone_def)
+		return FALSE
+	if(check_face_subzone(zone_def))
+		return BIND_HEAD
+	switch(zone_def)
+		if(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+			return BIND_HANDS
+		if(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+			return BIND_FEET
+		if(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_STOMACH, BODY_ZONE_CHEST)
+			return BIND_TORSO
+		if(BODY_ZONE_PRECISE_NECK)
+			return BIND_NECK
+	return FALSE
+
+/proc/check_bind(bindzone, attzone)
+	if(!bindzone || !attzone)
+		return FALSE
+	switch(bindzone)
+		if(BIND_HEAD)
+			return check_face_subzone(attzone, check_head = FALSE)
+		if(BIND_HANDS)
+			switch(attzone)
+				if(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
+					return TRUE
+		if(BIND_FEET)
+			switch(attzone)
+				if(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT)
+					return TRUE
+		if(BIND_TORSO)
+			switch(attzone)
+				if(BODY_ZONE_PRECISE_STOMACH, BODY_ZONE_PRECISE_GROIN)
+					return TRUE
+		if(BIND_NECK)
+			if(attzone == BODY_ZONE_PRECISE_NECK)
+				return TRUE
+	return FALSE
+
 /// Returns the targeting zone equivalent of a given bodypart. Kudos to you if you find a use for this.
 /proc/bodypart_to_zone(part)
 	var/obj/item/bodypart/B = part
@@ -359,6 +431,12 @@
 			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
 	animate(pixel_x=oldx, pixel_y=oldy, time=1)
 
+/// refreshes vision of everyone visible 2 update icon_state changes ! Usually not needed
+/proc/refresh_viewers(atom/source)
+	for(var/mob/M in viewers(7, source))
+		if(M.client)
+			M.update_vision_cone()
+
 
 ///Find if the message has the real name of any user mob in the mob_list
 /proc/findname(msg)
@@ -480,47 +558,36 @@
 	if(hud_used?.action_intent)
 		hud_used.action_intent.switch_intent(r_index,l_index,oactive)
 
+/mob/proc/update_hand_intent(active = TRUE)
+	var/list/intents
+	var/obj/item/Masteritem = active ? get_active_held_item() : get_inactive_held_item()
+	if(Masteritem)
+		if(Masteritem.altgripped)
+			intents = Masteritem.get_altgrip_intents()
+		else if(Masteritem.wielded)
+			intents = Masteritem.gripped_intents
+		else
+			intents = Masteritem.possible_item_intents
+	else
+		// If active = TRUE, index 1 is left and 2 is right. If active == FALSE, index 1 is right and 2 is left.
+		var/do_left = (active_hand_index == 1) ^ active
+		if(do_left)
+			l_index = l_ua_index
+		else
+			r_index = r_ua_index
+		intents = base_intents
+	. = list()
+	for(var/defintent in intents)
+		. += new defintent(src, Masteritem)
+	
 /mob/proc/update_a_intents()
 	stop_attack()
 	QDEL_LIST(possible_a_intents)
 	QDEL_LIST(possible_offhand_intents)
-	var/list/intents = list()
-	var/obj/item/Masteritem = get_active_held_item()
-	if(Masteritem)
-		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
-			intents = Masteritem.gripped_intents
-		if(Masteritem.altgripped)
-			intents = Masteritem.alt_intents
-	else
-		if(active_hand_index == 1)
-			r_index = r_ua_index
-		else
-			l_index = l_ua_index
-		intents = base_intents.Copy()
-	for(var/defintent in intents)
-		if(Masteritem)
-			possible_a_intents += new defintent(src, Masteritem)
-		else
-			possible_a_intents += new defintent(src)
-	Masteritem = get_inactive_held_item()
-	if(Masteritem)
-		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
-			intents = Masteritem.gripped_intents
-		if(Masteritem.altgripped)
-			intents = Masteritem.alt_intents
-	else
-		if(active_hand_index == 1)
-			l_index = l_ua_index
-		else
-			r_index = r_ua_index
-		intents = base_intents.Copy()
-	for(var/defintent in intents)
-		if(Masteritem)
-			possible_offhand_intents += new defintent(src, Masteritem)
-		else
-			possible_offhand_intents += new defintent(src)
+	if(QDELETED(src))
+		return
+	possible_a_intents = update_hand_intent(active = TRUE)
+	possible_offhand_intents = update_hand_intent(active = FALSE)
 	if(hud_used?.action_intent)
 		if(active_hand_index == 1)
 			hud_used.action_intent.update_icon(possible_a_intents,possible_offhand_intents,oactive)
@@ -552,6 +619,10 @@
 	if(input != QINTENT_SPELL)
 		if(ranged_ability)
 			ranged_ability.deactivate()
+		// Also clear new-style cooldown spells set on click_intercept
+		var/datum/action/cooldown/active_cooldown = click_intercept
+		if(istype(active_cooldown))
+			active_cooldown.unset_click_ability(src, refund_cooldown = TRUE)
 	switch(input)
 		if(QINTENT_KICK)
 			if(mmb_intent?.type == INTENT_KICK)
@@ -559,20 +630,23 @@
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_KICK(src)
-		if(QINTENT_STEAL)
-			if(mmb_intent?.type == INTENT_STEAL)
+		if(QINTENT_SPECIAL)
+			if(mmb_intent?.type == INTENT_SPECIAL)
 				qdel(mmb_intent)
 				input = null
 				mmb_intent = null
 			else
-				mmb_intent = new INTENT_STEAL(src)
+				qdel(mmb_intent)
+				mmb_intent = new INTENT_SPECIAL(src)
 		if(QINTENT_BITE)
 			if(mmb_intent?.type == INTENT_BITE)
 				qdel(mmb_intent)
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_BITE(src)
 		if(QINTENT_JUMP)
 			if(mmb_intent?.type == INTENT_JUMP)
@@ -580,6 +654,7 @@
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_JUMP(src)
 		if(QINTENT_GIVE)
 			if(mmb_intent?.type == INTENT_GIVE)
@@ -587,13 +662,13 @@
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_GIVE(src)
 		if(QINTENT_SPELL)
 			if(mmb_intent)
 				qdel(mmb_intent)
 			testing("spellselect [ranged_ability]")
 			mmb_intent = new INTENT_SPELL(src)
-			mmb_intent.releasedrain = ranged_ability.get_fatigue_drain()
 			mmb_intent.chargedrain = ranged_ability.chargedrain
 			mmb_intent.chargetime = ranged_ability.get_chargetime()
 			mmb_intent.warnie = ranged_ability.warnie
@@ -639,16 +714,19 @@
 	if(L.IsSleeping() || L.surrendering)
 		if(cmode)
 			playsound_local(src, 'sound/misc/comboff.ogg', 100)
-			SSdroning.play_area_sound(get_area(src), client)
 			cmode = FALSE
+			SSdroning.kill_droning(client)
+			SSdroning.play_area_sound(get_area(src), client)
 		if(hud_used)
 			if(hud_used.cmode_button)
 				hud_used.cmode_button.update_icon()
 		return
 	if(cmode)
 		playsound_local(src, 'sound/misc/comboff.ogg', 100)
-		SSdroning.play_area_sound(get_area(src), client)
 		cmode = FALSE
+		SSdroning.kill_droning(client)
+		SSdroning.play_area_sound(get_area(src), client)
+		clear_fullscreen("CMODE")
 		if(client && HAS_TRAIT(src, TRAIT_SCREENSHAKE))
 			animate(client, pixel_y)
 	else
@@ -658,6 +736,7 @@
 			SSdroning.play_combat_music(L.cmode_music_override, client)
 		else if(L.cmode_music)
 			SSdroning.play_combat_music(L.cmode_music, client)
+		overlay_fullscreen("CMODE", /atom/movable/screen/fullscreen/crit/cmode)
 		if(client && HAS_TRAIT(src, TRAIT_PSYCHOSIS))
 			animate(client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)
 			animate(pixel_y = -1, time = 1, flags = ANIMATION_RELATIVE)
@@ -730,9 +809,11 @@
 
 	if(zone_selected != old_zone)
 		playsound_local(src, 'sound/misc/click.ogg', 50, TRUE)
-		if(hud_used)
-			if(hud_used.zone_select)
-				hud_used.zone_select.update_icon()
+		if(isliving(src))
+			var/mob/living/L = src
+			L.update_zone_selector_hud()
+		else if(hud_used?.zone_select)
+			hud_used.zone_select.update_zone_layers()
 
 /mob/proc/select_organ_slot(choice)
 	organ_slot_selected = choice
@@ -952,8 +1033,12 @@
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-/// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
-/mob/log_message(message, message_type, color=null, log_globally = TRUE)
+/// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true.
+/// Values store as dicts: "msg", "time", "color", then whatever metadata the writer put in meta, copied
+/// key for key so readers match fields instead of parsing prose. Adding a field is a writer-side key and
+/// nothing else; no signature anywhere changes. The parent writes disk logs from the raw message argument,
+/// so none of the metadata reaches them.
+/mob/log_message(message, message_type, color=null, log_globally = TRUE, list/meta = null)
 	if(!LAZYLEN(message))
 		stack_trace("Empty message")
 		return
@@ -968,15 +1053,22 @@
 	if(!islist(logging[smessage_type]))
 		logging[smessage_type] = list()
 
-	var/colored_message = message
+	// colour rides as its own field: the renderer normalizes "msg" then wraps, so tags baked in here
+	// would show as literal text
+	var/list/entry_value = list("msg" = message, "time" = world.time)
+	// every writer registers itself, and either party of a fielded line writes a line of their own soon enough.
+	// src.key over the directory, so an SSD party still resolves
+	pov_remember_key(ckey, key)
 	if(color)
-		if(color[1] == "#")
-			colored_message = "<font color=[color]>[message]</font>"
-		else
-			colored_message = "<font color='[color]'>[message]</font>"
+		entry_value["color"] = color
+	// isnull, not truthy: an absent party is a null ckey the writer may still name the key of, while an
+	// empty witness roster is a real answer and must survive the copy
+	for(var/field in meta)
+		if(!isnull(meta[field]))
+			entry_value[field] = meta[field]
 
 	//Removed sorting by message type, now sorts by timestamp regardless of message type
-	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (LOG #[LAZYLEN(logging[smessage_type])])" = colored_message)
+	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (LOG #[LAZYLEN(logging[smessage_type])])" = entry_value)
 
 	logging[smessage_type] += timestamped_message
 

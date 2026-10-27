@@ -1,4 +1,0 @@
-author: "Kroto-Ker"
-delete-after: True
-changes:
-  - bugfix: "Reduce crafting menu lag."

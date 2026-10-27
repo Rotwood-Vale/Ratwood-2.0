@@ -16,7 +16,7 @@
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, /datum/intent/unarmed/claw)
 	a_intent = INTENT_HELP
 	d_intent = INTENT_PARRY
-	possible_mmb_intents = list(INTENT_STEAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE)
+	possible_mmb_intents = list(INTENT_SPECIAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE)
 	possible_rmb_intents = list(/datum/rmb_intent/feint, /datum/rmb_intent/aimed, /datum/rmb_intent/strong, /datum/rmb_intent/weak, /datum/rmb_intent/swift, /datum/rmb_intent/riposte)
 
 /mob/living/carbon/human/species/orc/npc
@@ -26,6 +26,7 @@
 	mode = NPC_AI_IDLE
 	wander = FALSE
 	cmode_music = FALSE
+	special_attacker = TRUE
 
 /mob/living/carbon/human/species/orc/npc/Initialize(mapload)
 	. = ..()
@@ -102,10 +103,13 @@
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	if(prob(5))
 		beltl = /obj/item/reagent_containers/glass/bottle/alchemical/healthpot
-	if(prob(50))
-		beltr = /obj/item/storage/belt/rogue/pouch/treasure/
-	else
-		beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+	switch(rand(1, 100))
+		if(1 to 50)
+			beltr = null
+		if(51 to 95)
+			beltr = /obj/item/storage/belt/rogue/pouch/coins/poor/
+		if(96 to 100)
+			beltr = /obj/item/storage/belt/rogue/pouch/treasure/
 	if(prob(5))
 		id = /obj/item/clothing/ring/gold
 

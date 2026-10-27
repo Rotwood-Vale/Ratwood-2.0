@@ -208,7 +208,7 @@
 		remove_buffer(src.buffer)
 	src.buffer = buffer
 	if(!QDELETED(buffer))
-		RegisterSignal(buffer, COMSIG_PARENT_QDELETING, PROC_REF(remove_buffer))
+		RegisterSignal(buffer, COMSIG_QDELETING, PROC_REF(remove_buffer))
 
 /**
  * Called when the buffer's stored object is deleted
@@ -219,7 +219,7 @@
 /obj/item/contraption/linker/proc/remove_buffer(datum/source)
 	SIGNAL_HANDLER
 	SEND_SIGNAL(src, COMSIG_MULTITOOL_REMOVE_BUFFER, source)
-	UnregisterSignal(buffer, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(buffer, COMSIG_QDELETING)
 	buffer = null
 
 
@@ -231,8 +231,7 @@
 	on_icon = "metalizer_flick"
 	off_icon = "metalizer_off"
 	w_class = WEIGHT_CLASS_BULKY
-	misfire_chance = 15
-	charge_per_source = 5
+	charge_per_source = 10
 
 /obj
 	/// This is the result when the wood metalizer artifact is used on this item
@@ -300,8 +299,8 @@
 	off_icon = "smelter_off"
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_power_source = /obj/item/rogueore/coal
-	misfire_chance = 10
-	charge_per_source = 6
+	misfire_chance = 0
+	charge_per_source = 12
 
 /obj/item/contraption/smelter/misfire_result()
 	misfiring = TRUE
@@ -399,7 +398,7 @@
 	off_icon = "shears"
 	w_class = WEIGHT_CLASS_BULKY
 	smeltresult = /obj/item/ingot/bronze
-	charge_per_source = 4
+	charge_per_source = 8
 
 /obj/item/contraption/shears/hammer_action(obj/item/I, mob/user)
 	return
@@ -454,8 +453,8 @@
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_power_source = /obj/item/customlock
 	misfire_chance = 0
-	sneaky_misfire_chance = 20
-	charge_per_source = 2
+	sneaky_misfire_chance = 0
+	charge_per_source = 4
 	cog_accept = FALSE
 	var/list/allowed_locks = list(/obj/structure/mineral_door, /obj/structure/closet, /obj/structure/roguemachine/steward, /obj/structure/roguemachine/vendor, /obj/structure/roguemachine/goldface)
 	var/stored_lock_id = "artificer"
@@ -480,8 +479,8 @@
 
 /obj/item/contraption/lock_imprinter/attackby(obj/item/I, mob/user, params)
 	..()
-	if(istype(I, /obj/item/key))
-		var/obj/item/key/the_key = I
+	if(istype(I, /obj/item/roguekey))
+		var/obj/item/roguekey/the_key = I
 		user.changeNext_move(CLICK_CD_FAST)
 		flick(off_icon, src)
 		playsound(user, 'sound/foley/doors/unlock.ogg', 100, TRUE)

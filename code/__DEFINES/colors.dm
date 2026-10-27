@@ -75,10 +75,33 @@
 #define CLOTHING_WHITE			"#ffffff"
 #define CLOTHING_ORANGE			"#df8405"
 #define CLOTHING_MAGENTA		"#962e5c"
+#define CLOTHING_DRAB			"#9b7e54"
+#define CLOTHING_DARKDRAB		"#7c6d5c"
+#define CLOTHING_BURLAP			"#a09571"
+
 
 #define CLOTHING_WET			"#bbbbbb"
 
 #define CLOTHING_COLOR_NAMES	list("Red","Purple","Black","Brown","Green","Blue","Yellow","Teal","White","Orange","Magenta")
+
+// Patron colors
+#define COLOR_PATRON_ABYSSOR "#0077BE"
+#define COLOR_PATRON_ASTRATA "#FFDF22"
+#define COLOR_PATRON_DENDOR "#A4835B"
+#define COLOR_PATRON_EORA "#C154C1"
+#define COLOR_PATRON_MALUM "#D5872A"
+#define COLOR_PATRON_NECRA "#847F7B"
+#define COLOR_PATRON_NOC "#958B84"
+#define COLOR_PATRON_PESTRA "#89A572"
+#define COLOR_PATRON_RAVOX "#980002"
+#define COLOR_PATRON_XYLIX "#888888" // Special handling on this one, we are in for a fun time
+
+#define COLOR_PATRON_ZIZO "#958B84" // Shared with Noc
+#define COLOR_PATRON_GRAGGAR "#980002" // Shared with Ravox
+#define COLOR_PATRON_BAOTHA "#C154C1" // Shared with Eora
+#define COLOR_PATRON_MATTHIOS "#FFDF22" // Shared with Astrata
+
+#define COLOR_PATRON_PSYDON "#FFFFFF" // Pure white, for he ENDVRES
 
 /proc/clothing_color2hex(input)
 	switch(input)

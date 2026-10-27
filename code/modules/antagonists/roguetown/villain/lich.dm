@@ -21,7 +21,8 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_STEELHEARTED,
 		TRAIT_NOSLEEP,
-		TRAIT_VAMPMANSION,
+		// TRAIT_VAMPMANSION,
+		TRAIT_LICHLAIR, //Ability to far travel to and from our lair.
 		TRAIT_NOMOOD,
 		TRAIT_NOLIMBDISABLE,
 		TRAIT_SHOCKIMMUNE,
@@ -33,7 +34,6 @@
 		TRAIT_DEATHSIGHT,
 		TRAIT_COUNTERCOUNTERSPELL,
 		TRAIT_RITUALIST,
-		TRAIT_ARCYNE_T3,
 		TRAIT_SELF_SUSTENANCE,
 		TRAIT_SILVER_WEAK
 		)
@@ -106,7 +106,7 @@
 	equip_and_traits()
 	L.equipOutfit(/datum/outfit/job/roguetown/lich)
 	L.set_patron(/datum/patron/inhumen/zizo)
-	owner.current.forceMove(pick(GLOB.vlord_starts)) // as opposed to spawning at their normal role spot as a skeleton; which is le bad
+	owner.current.forceMove(pick(GLOB.lich_starts)) // as opposed to spawning at their normal role spot as a skeleton; which is le bad
 
 
 /datum/outfit/job/roguetown/lich/pre_equip(mob/living/carbon/human/H) //Equipment is located below
@@ -126,7 +126,6 @@
 	H.adjust_skillrank(/datum/skill/combat/knives, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)
-	H?.mind.adjust_spellpoints(27)
 	// Give it decent combat stats to make up for loss of 2 extra lives
 	H.change_stat(STATKEY_STR, 3)
 	H.change_stat(STATKEY_INT, 5)
@@ -140,9 +139,6 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_undead_formation)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/bloodlightning)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
@@ -150,7 +146,6 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/lich_announce)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/tame_undead)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/raise_deadite)
 	H.ambushable = FALSE
 
 	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "LICH"), 5 SECONDS)
@@ -213,7 +208,7 @@
 		/obj/item/storage/belt/rogue/leather/black,
 		/obj/item/reagent_containers/glass/bottle/rogue/manapot,
 		/obj/item/rogueweapon/huntingknife/idagger/steel,
-		/obj/item/rogueweapon/woodstaff/riddle_of_steel,
+		/obj/item/rogueweapon/woodstaff/implement/grand,
 		/obj/item/ritechalk,
 		/obj/item/storage/backpack/rogue/satchel,
 	)
@@ -283,10 +278,12 @@
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = -1) //start shaking
 	visible_message(span_warning("[src] begins to glow and shake violently!"))
 
-	spawn(timer)
-		possessor.owner.current.forceMove(get_turf(src))
-		possessor.rise_anew()
-		qdel(src)
+	addtimer(CALLBACK(src, PROC_REF(consume_complete)), timer)
+
+/obj/item/phylactery/proc/consume_complete()
+	possessor.owner.current.forceMove(get_turf(src))
+	possessor.rise_anew()
+	qdel(src)
 
 /obj/effect/proc_holder/spell/self/lich_announce
 	name = "Command Will"
@@ -297,7 +294,7 @@
 	if(user.stat)
 		return FALSE
 
-	var/calltext = input("Send Your Will To Your Undead", "UNDEAD ANNOUNCE") as text|null
+	var/calltext = sanitize(input("Send Your Will To Your Undead", "UNDEAD ANNOUNCE") as text|null)
 	if(!calltext)
 		return FALSE
 

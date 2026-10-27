@@ -362,6 +362,10 @@ h2.alert {
   font-weight: bold;
 }
 
+.yellow {
+  color: #c0ad58;
+}
+
 .alert {
   color: #d82020;
 }
@@ -386,6 +390,9 @@ h2.alert {
 .warning {
   color: #bb4e28;
   font-size: 75%;
+}
+.taunt {
+  color: #e78718;
 }
 .boldwarning {
   color: #bb4e28;
@@ -528,6 +535,18 @@ h2.alert {
 .beautifulnb {
   color: #9656c9;
 }
+.prettymasc {
+  color: #7b9bdb;
+  font-size: 0.9em;
+}
+.prettyfem {
+  color: #e785b6;
+  font-size: 0.9em;
+}
+.prettynb {
+  color: #c3a2e0;
+  font-size: 0.9em;
+}
 
 .revennotice {
   color: #1d2953;
@@ -656,6 +675,10 @@ h2.alert {
   font-family: 'Notredame', 'Pterra';
   font-size: 200%;
 }
+.posh {
+  font-family: 'Parisish', 'Pterra';
+  font-size: 130%;
+}
 .etruscan {
   font-family: 'Feronia', 'Pterra';
   font-size: 100%;
@@ -663,6 +686,10 @@ h2.alert {
 .gronnic {
   font-family: 'Jorvik Informal', 'Pterra';
   font-size: 100%;
+}
+.hammerholdian {
+  font-family: 'Hammerholdian', 'Pterra';
+  font-size: 80%;
 }
 .aavnic {
   font-family: 'Romeodn', 'Pterra';
@@ -710,14 +737,57 @@ h2.alert {
   font-family: 'Courier New', cursive, sans-serif;
   font-style: italic;
 }
+
 .hypnophrase {
-  color: #3bb5d3;
+  color: hsl(0, 0%, 12.5%);
   font-weight: bold;
   animation: hypnocolor 1500ms infinite;
+  animation-direction: alternate;
 }
+
+@keyframes hypnocolor {
+  0% {
+    color: hsl(0, 0%, 12.5%);
+  }
+
+  25% {
+    color: hsl(265.8, 97.7%, 34.1%);
+  }
+
+  50% {
+    color: hsl(272, 86.3%, 60%);
+  }
+
+  75% {
+    color: hsl(266.2, 69.6%, 36.1%);
+  }
+
+  100% {
+    color: hsl(191.9, 83.4%, 71.6%);
+  }
+}
+
 .pulsedeath {
   color: #dd0000;
   animation: deathcolor 1500ms infinite;
+}
+
+@keyframes deathcolor {
+  0% {
+    color: #cc0f0f;
+  }
+  25% {
+    color: #ff0000;
+  }
+  50% {
+    color: #cc0f0f;
+  }
+  75% {
+    color: #ff0000;
+  }
+  100% {
+    color: #cc0f0f;
+  }
 }
 
 .phobia {
@@ -806,23 +876,9 @@ h2.alert {
   color: #d146f5;
   font-size: 75%;
 }
-
-@keyframes deathcolor {
-  0% {
-    color: #cc0f0f;
-  }
-  25% {
-    color: #ff0000;
-  }
-  50% {
-    color: #cc0f0f;
-  }
-  75% {
-    color: #ff0000;
-  }
-  100% {
-    color: #cc0f0f;
-  }
+.love_ludicrous {
+  color: #d61a43;
+  font-size: 75%;
 }
 
 .connectionClosed,

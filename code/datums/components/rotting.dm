@@ -1,5 +1,9 @@
-#define DEAD_TO_ZOMBIE_TIME 7 MINUTES	//Time before death -> raised as zombie (when outside of the city)
-										//(This isn't exact time. Extended 5 -> 7 because only takes 2-3 min in testing at 5.)
+// DEAD_TO_ZOMBIE_TIME lives in __DEFINES/mobs.dm, the ghost lock in observer.dm uses it too
+
+#define SIMPLE_CORPSE_ROT_START 15 MINUTES
+#define SIMPLE_CORPSE_DUST_TIME 25 MINUTES
+#define HUNT_CORPSE_ROT_START 20 MINUTES
+#define HUNT_CORPSE_DUST_TIME 35 MINUTES
 
 /datum/component/rot
 	var/amount = 0
@@ -20,7 +24,7 @@
 
 /datum/component/rot/Destroy()
 	if(soundloop)
-		soundloop.stop()
+		QDEL_NULL(soundloop)
 	. = ..()
 
 /datum/component/rot/process()
@@ -63,7 +67,17 @@
 			return
 
 	var/area/A = get_area(C)
-	if (istype(A, /area/rogue/indoors/town))	//Stops rotting inside town buildings; will stop your zombification such as at church or appothocary.
+	// Only the apothecary and church protects from turning deadite, should be limited to sacred spaces and sterile wards, not just some guy's house
+	var/static/list/rot_protected_areas = typecacheof(list(
+		/area/rogue/indoors/town/physician,
+		/area/rogue/indoors/town/church,
+		/area/rogue/outdoors/exposed/church,
+		/area/rogue/outdoors/town/church,
+		/area/rogue/outdoors/town/graveyard,
+		/area/rogue/outdoors/town/roofs/church,
+		/area/rogue/outdoors/town/roofs/desert/church,
+	))
+	if(is_type_in_typecache(A, rot_protected_areas))
 		return
 	if (istype(A, /area/rogue/indoors/deathsedge))	//Stops rotting inside Death's Edge (Death's Door spell area)
 		return
@@ -133,21 +147,29 @@
 				soundloop.start()
 		C.update_body()
 
+/datum/component/rot/simple
+	var/rot_start = SIMPLE_CORPSE_ROT_START
+	var/dust_time = SIMPLE_CORPSE_DUST_TIME
+
 /datum/component/rot/simple/process()
 	..()
 	var/mob/living/L = parent
 	if(L.stat != DEAD)
 		qdel(src)
 		return
-	if(amount > 15 MINUTES)
+	if(amount > rot_start)
 		if(soundloop && soundloop.stopped)
 			soundloop.start()
 		var/turf/open/T = get_turf(L)
 		if(istype(T))
 			T.pollute_turf(/datum/pollutant/rot, 5)
-	if(amount > 25 MINUTES)
+	if(amount > dust_time)
 		qdel(src)
 		return L.dust(drop_items=TRUE)
+
+/datum/component/rot/simple/hunt
+	rot_start = HUNT_CORPSE_ROT_START
+	dust_time = HUNT_CORPSE_DUST_TIME
 
 /datum/component/rot/gibs
 	amount = MIASMA_GIBS_MOLES
@@ -158,4 +180,7 @@
 	volume = 50
 	extra_range = 0
 
-#undef DEAD_TO_ZOMBIE_TIME
+#undef SIMPLE_CORPSE_ROT_START
+#undef SIMPLE_CORPSE_DUST_TIME
+#undef HUNT_CORPSE_ROT_START
+#undef HUNT_CORPSE_DUST_TIME

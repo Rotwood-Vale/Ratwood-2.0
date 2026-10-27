@@ -23,8 +23,8 @@ GLOBAL_VAR_INIT(mine_collapse_active, 0)
 	var/turf/closed/respawn_rock = /turf/closed/mineral/rogue
 	var/rolling_rocks = FALSE
 
-	var/list/static/whitelist_typecache
-	var/list/static/absorb_rocks_typecache
+	var/static/list/whitelist_typecache
+	var/static/list/absorb_rocks_typecache
 
 /obj/structure/mine_collapse/Initialize(mapload)
 	. = ..()

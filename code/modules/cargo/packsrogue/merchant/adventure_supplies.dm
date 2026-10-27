@@ -98,10 +98,27 @@
 	cost = 15
 	contains = list(/obj/item/flashlight/flare/torch/lantern)
 
+// If adding more, make new category for maps.
+/datum/supply_pack/rogue/adventure_supplies/stag_map
+	name = "White Stag Map"
+	cost = 250
+	contains = list(/obj/item/hunting_map/white_stag)
+
 /datum/supply_pack/rogue/adventure_supplies/folding_table
 	name = "Folding Table"
 	cost = 35
 	contains = list(/obj/item/folding_table_stored)
+
+/datum/supply_pack/rogue/adventure_supplies/folding_alchstation
+	name = "Alchemical station kit"
+	cost = 45
+	contains = list(/obj/item/folding_table_stored/alchstation)
+
+/datum/supply_pack/rogue/adventure_supplies/folding_alchcauldron
+	name = "Folding cauldron"
+	cost = 45
+	contains = list(/obj/item/folding_table_stored/alchcauldron)
+
 
 /datum/supply_pack/rogue/adventure_supplies/mess_kit
 	name = "Mess Kit"
@@ -123,7 +140,7 @@
 					/obj/item/ration,
 				)
 
-/datum/supply_pack/rogue/adventure_supplies/rationpaper
+/datum/supply_pack/rogue/adventure_supplies/rollofbandages
 	name = "Roll of bandages"
 	cost = 25
 	contains = list(/obj/item/natural/bundle/cloth/bandage/full)
@@ -142,3 +159,18 @@
 	name = "Yurt Kit"
 	cost = 200
 	contains = list(/obj/item/tent_kit/yurt)
+
+/datum/supply_pack/rogue/adventure_supplies/boar_map
+	name = "Boars Map"
+	cost = 90
+	contains = list(/obj/item/hunting_map/boars)
+
+/datum/supply_pack/rogue/adventure_supplies/sewingkit
+	name = "Sewing Kit"
+	cost = 40
+	contains = list(/obj/item/repair_kit)
+
+/datum/supply_pack/rogue/adventure_supplies/metalkit
+	name = "Armor Plate"
+	cost = 50
+	contains = list(/obj/item/repair_kit/metal)

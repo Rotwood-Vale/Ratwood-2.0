@@ -1,4 +1,5 @@
 /datum/job/roguetown/mercenary
+	townie_contract_gate_exempt = TRUE
 	title = "Mercenary"
 	flag = WANDERERS
 	department_flag = WANDERERS
@@ -31,8 +32,15 @@
 		/datum/advclass/mercenary/desert_rider/almah,
 		/datum/advclass/mercenary/forlorn,
 		/datum/advclass/mercenary/vaquero,
+		/datum/advclass/mercenary/ferentia,
+		/datum/advclass/mercenary/ferentia/sellspear,
+		/datum/advclass/mercenary/ferentia/sellblade,
+		/datum/advclass/mercenary/ferentia/thug,
+		/datum/advclass/mercenary/ferentia/crossbowman,
+		/datum/advclass/mercenary/ferentia/longbowman,
 		/datum/advclass/mercenary/freelancer,
-		/datum/advclass/mercenary/freelancer/lancer,
+		/datum/advclass/mercenary/freelancer_lancer,
+		/datum/advclass/mercenary/freelancer_sabrist,
 		/datum/advclass/mercenary/grenzelhoft,
 		/datum/advclass/mercenary/grenzelhoft/halberdier,
 		/datum/advclass/mercenary/grenzelhoft/crossbowman,
@@ -47,7 +55,6 @@
 		/datum/advclass/mercenary/warscholar/vizier,
 		/datum/advclass/mercenary/blackoak,
 		/datum/advclass/mercenary/blackoak/ranger,
-		/datum/advclass/mercenary/underdweller,
 		/datum/advclass/mercenary/grudgebearer,
 		/datum/advclass/mercenary/grudgebearer/soldier,
 		/datum/advclass/mercenary/oathmarked,

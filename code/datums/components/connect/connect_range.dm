@@ -25,6 +25,7 @@
 	if(!isatom(tracked) || isarea(tracked) || range < 0)
 		return COMPONENT_INCOMPATIBLE
 	src.connections = connections
+	src.range = range
 	set_tracked(tracked)
 	src.works_in_containers = works_in_containers
 
@@ -53,14 +54,14 @@
 		unregister_signals(isturf(tracked) ? tracked : tracked.loc, turfs)
 		UnregisterSignal(tracked, list(
 			COMSIG_MOVABLE_MOVED,
-			COMSIG_PARENT_QDELETING,
+			COMSIG_QDELETING,
 		))
 	tracked = new_tracked
 	if(!tracked)
 		return
 	//Register signals on the new tracked atom and its surroundings.
 	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, PROC_REF(handle_tracked_qdel))
+	RegisterSignal(tracked, COMSIG_QDELETING, PROC_REF(handle_tracked_qdel))
 	update_signals(tracked)
 
 /datum/component/connect_range/proc/handle_tracked_qdel()

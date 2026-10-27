@@ -10,7 +10,7 @@
 	var/trap_damage = 50 // baseline trap damage, reduced by armor checks. Wear your PPE in dungeons
 	var/def_zone = BODY_ZONE_CHEST
 	var/used_time = 14 // interaction time for disabling traps, scales down with trap skill
-	var/list/static/ignore_typecache 
+	var/static/list/ignore_typecache 
 
 /obj/structure/closet/crate/chest/trapped/Initialize(mapload)
 	. = ..()
@@ -54,7 +54,7 @@
 			C.visible_message(span_notice("\the [src] is locked."))
 			playsound(src, 'sound/foley/doors/lock.ogg', 100)
 			return FALSE
-		if(C.get_skill_level(/datum/skill/craft/traps) < 1)
+		if(C.get_skill_level(/datum/skill/craft/crafting) < 1)
 			bust_open()
 			trap_effect()
 			armed = FALSE
@@ -62,7 +62,7 @@
 		else
 			used_time = 14 SECONDS
 			if(C.mind)
-				used_time -= max((C.get_skill_level(/datum/skill/craft/traps) * 2 SECONDS), 2 SECONDS)
+				used_time -= max((C.get_skill_level(/datum/skill/craft/crafting) * 2 SECONDS), 2 SECONDS)
 				C.visible_message(span_notice("[C] begins disarming \the [src]."), \
 						span_notice("I start disarming \the [src]."))
 			if(do_after(user, used_time, target = src))

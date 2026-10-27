@@ -127,3 +127,31 @@
 		/obj/item/ash,
 	/obj/item/ash
 	)
+
+/obj/item/storage/roguebag/fetish
+	populate_contents = list(
+		/obj/item/clothing/mask/rogue/blindfold,
+		/obj/item/chastity/chastity_cage,
+		/obj/item/chastity/chastity_belt,
+		/obj/item/reagent_containers/glass/bottle/alchemical/emberwine,
+		/obj/item/dildo/wood,
+		/obj/item/natural/cloth,
+		/obj/item/rope/chain,
+		/obj/item/rogueweapon/whip,
+		/obj/item/rogueweapon/surgery/cautery/branding/crude
+	)
+/obj/item/storage/roguebag/gambling_kit_bundle
+	name = "gambling kit bundle"
+	desc = "A stuffed sack containing gaming essentials for a full table night."
+	populate_contents = list(
+		/obj/item/storage/pill_bottle/dice,
+		/obj/item/storage/pill_bottle/dice/farkle,
+		/obj/item/storage/pill_bottle/dice/bakers_dozen,
+		/obj/item/storage/pill_bottle/dice/dwarven,
+		/obj/item/storage/pill_bottle/dice/threes_away,
+		/obj/item/storage/pill_bottle/dice/dice_war,
+		/obj/item/storage/pill_bottle/dice/liars_dice,
+		/obj/item/storage/pill_bottle/dice/dice_poker,
+		/obj/item/toy/cards/deck,
+		/obj/item/folding_table_stored
+	)

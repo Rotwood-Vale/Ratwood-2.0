@@ -167,10 +167,8 @@
 	blade_class = BCLASS_CUT
 	hitsound = "smallslash"
 	chargetime = 0
-	penfactor = 5
+	penfactor = PEN_NONE
 	swingdelay = 3
-	candodge = TRUE
-	canparry = TRUE
 	item_d_type = "stab"
 	clickcd = MINOTAUR_ATTACK_SPEED
 
@@ -182,10 +180,8 @@
 	blade_class = BCLASS_CUT
 	hitsound = "genchop"
 	chargetime = 10
-	penfactor = 10
+	penfactor = PEN_NONE
 	swingdelay = 3
-	candodge = TRUE
-	canparry = TRUE
 	reach = 2 
 	item_d_type = "stab"
 	clickcd = MINOTAUR_AXE_ATTACK_SPEED

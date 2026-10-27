@@ -112,6 +112,7 @@
 #define LIPS			5
 #define NOBLOOD			6
 #define NOTRANSSTING	7
+#define INVISBLOOD		8
 /// Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
 #define MUTCOLORS_PARTSONLY	8
 #define NOZOMBIE		9
@@ -133,7 +134,8 @@
 #define NO_ORGAN_FEATURES			22
 #define NO_BODYPART_FEATURES			23
 #define LAMIAN_TAIL		24
-#define HARPY			25
+#define SPIDER_ABDOMEN	25
+#define HARPY			26
 
 //organ defines
 #define STANDARD_ORGAN_THRESHOLD 	100
@@ -159,7 +161,8 @@
 #define HAIR_COLOR_LIST list("#8f5a00", "#593800", "#362200", "#4e422e", "#8c8271", "#bfb7ab", "#31302e", "#f0dc48")
 #define EYE_COLOR_LIST list("#865900", "#06b400", "#312f27", "#008e83", "#002d8e", "#c16c00")
 
-#define MIN_PENIS_SIZE 1
+#define MIN_PENIS_SIZE 0
+#define SMALL_PENIS_SIZE 1
 #define MAX_PENIS_SIZE 3
 #define DEFAULT_PENIS_SIZE 2
 
@@ -173,6 +176,7 @@
 #define PENIS_TYPE_BARBED_KNOTTED 8
 #define PENIS_TYPE_TENTACLE 9
 #define PENIS_TYPE_TAPERED_KNOTTED 10
+#define PENIS_TYPE_EQUINE_KNOTTED 11
 
 #define SHEATH_TYPE_NONE 0
 #define SHEATH_TYPE_NORMAL 1
@@ -189,4 +193,14 @@
 #define MIN_BREASTS_SIZE 0
 #define MAX_BREASTS_SIZE 12
 #define DEFAULT_BREASTS_SIZE 3
+#define MIN_JIGGLE_BREASTS_SIZE 1
+#define BREAST_JIGGLE_CYCLE (0.8 SECONDS)
+#define BREAST_JIGGLE_MIN_DURATION 8
+#define BREAST_JIGGLE_MAX_DURATION 100
+#define BREAST_JIGGLE_FREE_DURATION 50
+#define BREAST_JIGGLE_STAMINA_PER_SECOND 0.83
+#define BREAST_JIGGLE_ENDLESS_STAMINA_MULT 3
+#define BREAST_JIGGLE_HOP_HEIGHT 4
+#define BREAST_JIGGLE_ENDLESS 0
+#define BREAST_JIGGLE_PROMPT_STEP (BREAST_JIGGLE_CYCLE * 2)
 

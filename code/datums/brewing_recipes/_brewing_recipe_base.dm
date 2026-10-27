@@ -10,6 +10,8 @@
 	var/list/needed_crops = list()
 	///the type paths of needed reagents in typepath = amount
 	var/list/needed_reagents = list()
+	///if set, only this species can see and select this recipe
+	var/req_species = null
 	///list of items that aren't crops we need
 	var/list/needed_items = list()
 	///our brewing time in deci seconds should use the SECONDS MINUTES HOURS helpers
@@ -34,10 +36,13 @@
 	var/list/age_times = list()
 	///the heat we need to be kept at
 	var/heat_required
-	// The name & description on the bottle, if any. Lowercase for the name. 
+	// The name & description on the bottle, if any. Lowercase for the name.
 	var/bottle_name = "generic brew"
 	var/bottle_desc = null
-
+	/// Typepath spawned by the keg when bottling. Override per recipe so the trade matcher can discriminate brews.
+	/// Foreign trade bulk drinks: bottle type shipped when this recipe is drawn for a ship's
+	/// drinks manifest (trade_ship.dm's build_drinks_lines).
+	var/obj/item/reagent_containers/glass/bottle/brewing_bottle/output_bottle_type = /obj/item/reagent_containers/glass/bottle/brewing_bottle
 /datum/brewing_recipe/proc/after_finish_attackby(mob/user, obj/item/attacked_item, atom/source)
 	return FALSE
 

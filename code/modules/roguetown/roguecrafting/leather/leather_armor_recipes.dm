@@ -8,6 +8,7 @@
 	reqs = list(/obj/item/natural/hide/cured = 1,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
+	display_category = ITEM_CAT_ARMOR_NECK
 
 /datum/crafting_recipe/roguetown/leather/armor/heavybracers
 	name = "hardened leather bracers"
@@ -15,6 +16,7 @@
 	reqs = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
+	display_category = ITEM_CAT_ARMOR_BRACERS
 
 /datum/crafting_recipe/roguetown/leather/armor/bracers
 	name = "leather bracers"
@@ -22,6 +24,7 @@
 	reqs = list(/obj/item/natural/hide/cured = 1)
 	sellprice = 10
 	craftdiff = 2
+	display_category = ITEM_CAT_ARMOR_BRACERS
 
 /datum/crafting_recipe/roguetown/leather/armor/pants
 	name = "leather pants"
@@ -29,6 +32,7 @@
 	reqs = list(/obj/item/natural/hide/cured = 2)
 	sellprice = 10
 	craftdiff = 2
+	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/crafting_recipe/roguetown/leather/armor/volfhelm
 	name = "volf helm"
@@ -36,6 +40,7 @@
 	reqs = list(/obj/item/natural/hide/cured = 1, /obj/item/natural/fur/wolf = 1, /obj/item/natural/head/volf = 1)
 	sellprice = 20
 	craftdiff = 2
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/crafting_recipe/roguetown/leather/armor/volfmantle
 	name = "volf mantle"
@@ -43,6 +48,7 @@
 	reqs = list(
 		/obj/item/natural/hide/cured = 2,
 		/obj/item/natural/head/volf = 1)
+	display_category = ITEM_CAT_TAILOR_MISC
 
 /datum/crafting_recipe/roguetown/leather/armor/saigahelm
 	name = "saiga skull helm"
@@ -50,6 +56,7 @@
 	reqs = list(/obj/item/natural/hide/cured = 1, /obj/item/natural/hide = 2, /obj/item/natural/head/saiga = 1)
 	sellprice = 20
 	craftdiff = 2
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/crafting_recipe/roguetown/leather/armor/heavy_leather_pants
 	name = "hardened leather pants"
@@ -61,6 +68,7 @@
 		)
 	sellprice = 20
 	craftdiff = 4
+	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/crafting_recipe/roguetown/leather/armor/heavy_leather_pants/shorts
 	name = "hardened leather shorts"
@@ -72,6 +80,7 @@
 		)
 	sellprice = 20
 	craftdiff = 3
+	display_category = ITEM_CAT_ARMOR_LEGS
 
 /datum/crafting_recipe/roguetown/leather/armor/helmet/advanced
 	name = "hardened leather helmet"
@@ -80,34 +89,39 @@
 				/obj/item/natural/fibers = 1,
 				/obj/item/reagent_containers/food/snacks/tallow = 1)
 	craftdiff = 4
+	display_category = ITEM_CAT_ARMOR_HELMETS
 
 /datum/crafting_recipe/roguetown/leather/armor/armor
 	name = "leather armor"
 	result = /obj/item/clothing/suit/roguetown/armor/leather
 	reqs = list(/obj/item/natural/hide/cured = 2)
 	craftdiff = 2
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/armor/cuirass
 	name = "leather cuirass"
 	result = /obj/item/clothing/suit/roguetown/armor/leather/cuirass
 	reqs = list(/obj/item/natural/hide/cured = 2)
 	craftdiff = 2
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/armor/hidearmor
 	name = "hide armor"
 	result = /obj/item/clothing/suit/roguetown/armor/leather/hide
-	reqs = list(/obj/item/natural/hide/cured = 2,
+	reqs = list(/obj/item/natural/hide/cured = 1,
 				/obj/item/natural/fur = 1)
 	craftdiff = 2
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/armor/heavy_leather_armor
 	name = "hardened leather armor"
 	result = /obj/item/clothing/suit/roguetown/armor/leather/heavy
 	reqs = list(
-		/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/hide/cured = 3,
 		/obj/item/reagent_containers/food/snacks/tallow = 1,
 		/obj/item/natural/fibers = 1)
 	craftdiff = 4
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/armor/freivest
 	name = "fencing jacket"	//Expensive on purpose.
@@ -118,15 +132,17 @@
 		/obj/item/natural/fibers = 4
 	)
 	craftdiff = 4
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/armor/heavy_leather_armor/coat
 	name = "hardened leather coat"
 	result = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
 	reqs = list(
-		/obj/item/natural/hide/cured = 3,
+		/obj/item/natural/hide/cured = 4,
 		/obj/item/reagent_containers/food/snacks/tallow = 1,
 		/obj/item/natural/fibers = 1)
 	craftdiff = 5
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/armor/heavy_leather_armor/jacket
 	name = "hardened leather jacket"
@@ -136,9 +152,29 @@
 		/obj/item/reagent_containers/food/snacks/tallow = 1,
 		/obj/item/natural/fibers = 1)
 	craftdiff = 4
+	display_category = ITEM_CAT_ARMOR_LIGHT
 
 /datum/crafting_recipe/roguetown/leather/armor/helmet
 	name = "leather helmet"
 	result = /obj/item/clothing/head/roguetown/helmet/leather
 	reqs = list(/obj/item/natural/hide/cured = 1)
 	craftdiff = 2
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/crafting_recipe/roguetown/leather/studhood
+	name = "leather padded hood"
+	result = /obj/item/clothing/head/roguetown/helmet/leather/armorhood
+	reqs = list(/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/fibers = 1)
+	craftdiff = 4
+	display_category = ITEM_CAT_ARMOR_HELMETS
+
+/datum/crafting_recipe/roguetown/leather/armor/duelcoat
+	name = "leather coat"
+	result = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
+	reqs = list(
+		/obj/item/natural/hide/cured = 4,
+		/obj/item/reagent_containers/food/snacks/tallow = 1,
+		/obj/item/natural/fibers = 1)
+	craftdiff = 5
+	display_category = ITEM_CAT_ARMOR_LIGHT

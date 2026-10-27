@@ -50,6 +50,7 @@
 					/obj/item/flashlight/flare/torch = 1,
 					/obj/item/bedroll = 1,
 					)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
 	if(H.age == AGE_OLD)
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)
@@ -61,5 +62,5 @@
 	. = ..()
 	for(var/datum/bounty/b in GLOB.head_bounties)
 		if(b.target == H.real_name || b.target_hidden == H.real_name)
-			H.change_stat(STATKEY_INT, 1)
+			H.change_stat(STATKEY_WIL, 1)
 			H.change_stat(STATKEY_SPD, 1)

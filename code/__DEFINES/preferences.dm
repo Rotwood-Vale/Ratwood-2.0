@@ -18,10 +18,10 @@
 #define DISABLE_DEATHRATTLE		(1<<12)
 #define DISABLE_ARRIVALRATTLE	(1<<13)
 #define COMBOHUD_LIGHTING		(1<<14)
-
 #define DEADMIN_ALWAYS			(1<<15)
 #define DEADMIN_ANTAGONIST		(1<<16)
 #define DEADMIN_POSITION_HEAD	(1<<17)
+#define SOUND_DEATH_ALARM		(1<<18)
 
 #define TOGGLE_FULLSCREEN		(1<<20)
 #define SCHIZO_VOICE			(1<<21)
@@ -30,9 +30,10 @@
 
 #define FLOATING_TEXT			(1<<0)
 #define XP_TEXT					(1<<1)
-#define TOGGLES_TEXT_DEFAULT (FLOATING_TEXT|XP_TEXT)
+#define HITZONE_TEXT			(1<<2)
+#define TOGGLES_TEXT_DEFAULT (FLOATING_TEXT|XP_TEXT|HITZONE_TEXT)
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|TOGGLE_FULLSCREEN)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|SOUND_DEATH_ALARM|TOGGLE_FULLSCREEN|ROLEPLAY_ADS)
 
 //Chat toggles
 #define CHAT_OOC			(1<<0)
@@ -152,23 +153,41 @@ GLOBAL_LIST_INIT(voice_types_list, list(VOICE_TYPE_MASC, VOICE_TYPE_FEM, VOICE_T
 #define VOICE_PACK_MASC_ELF "Elvish (Masc)"
 #define VOICE_PACK_MASC_DWARF "Dwarvish (Masc)"
 #define VOICE_PACK_FOP	"Foppish (Masc)"
+#define VOICE_PACK_EVIL "Evil (Masc)"
+#define VOICE_PACK_ZETH "Zeth (Masc)"
 #define VOICE_PACK_KNIGHT "Knightly (Masc)"
 #define VOICE_PACK_WARRIOR "Warrior (Masc)"
+#define VOICE_PACK_WIZARD "Wizardly (Masc)"
+#define VOICE_PACK_ROTMAN "Rotman (Masc)"
 #define VOICE_PACK_FEM	"Feminine"
 #define VOICE_PACK_FEM_DAINTY "Dainty (Fem)"
 #define VOICE_PACK_FEM_HAUGHTY "Haughty (Fem)"
+#define VOICE_PACK_FEM_WARRIOR "Warrior (Fem)"
 #define VOICE_PACK_FEM_ELF	"Elvish (Fem)"
 #define VOICE_PACK_FEM_DWARF "Dwarvish (Fem)"
+#define VOICE_PACK_ROTWOMAN "Rotman (Fem)"
+#define VOICE_PACK_CHOSEN "Chosen (Masc)"
 
 GLOBAL_LIST_INIT(voice_packs_list, list(
 	VOICE_PACK_DEFAULT = null,
 	VOICE_PACK_MASC = /datum/voicepack/male,
+	VOICE_PACK_MASC_ELF = /datum/voicepack/male/elf,
+	VOICE_PACK_MASC_DWARF = /datum/voicepack/male/dwarf,
+	VOICE_PACK_EVIL = /datum/voicepack/male/evil,
+	VOICE_PACK_ZETH = /datum/voicepack/male/zeth,
 	VOICE_PACK_FOP = /datum/voicepack/male/foppish,
 	VOICE_PACK_KNIGHT = /datum/voicepack/male/knight,
 	VOICE_PACK_WARRIOR = /datum/voicepack/male/warrior,
+	VOICE_PACK_WIZARD = /datum/voicepack/male/wizard,
+	VOICE_PACK_ROTMAN = /datum/voicepack/male/rotman,
 	VOICE_PACK_FEM = /datum/voicepack/female,
+	VOICE_PACK_FEM_WARRIOR = /datum/voicepack/female/warrior,
 	VOICE_PACK_FEM_DAINTY = /datum/voicepack/female/dainty,
 	VOICE_PACK_FEM_HAUGHTY = /datum/voicepack/female/haughty,
+	VOICE_PACK_FEM_ELF = /datum/voicepack/female/elf,
+	VOICE_PACK_FEM_DWARF = /datum/voicepack/female/dwarf,
+	VOICE_PACK_ROTWOMAN = /datum/voicepack/female/rotman,
+	VOICE_PACK_CHOSEN = /datum/voicepack/male/chosen
 ))
 
 //RMH ADDITIONS

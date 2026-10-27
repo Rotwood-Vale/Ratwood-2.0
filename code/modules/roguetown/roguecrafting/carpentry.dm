@@ -8,3 +8,4 @@
 		/obj/item/rogueweapon/huntingknife,
 		)
 	craftdiff = 0
+	display_category = ITEM_CAT_ENG_CONSTRUCTION

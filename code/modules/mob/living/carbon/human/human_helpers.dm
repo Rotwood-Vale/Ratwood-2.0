@@ -52,6 +52,100 @@
 		return descriptor_name
 	return "Unknown"
 
+/mob/living/carbon/human/proc/has_active_ownership_mark()
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(bodypart.enslavement_mark)
+			return TRUE
+	for(var/obj/item/organ/organ as anything in internal_organs)
+		if(organ.enslavement_mark)
+			return TRUE
+	return FALSE
+
+// For adding roundstart slavery mark, this has explicit fallbacks to ensure the owner is always the slaver. Does not apply to ownership marks after the fact
+/mob/living/carbon/human/proc/update_owned_slave_trait()
+	if(has_active_ownership_mark())
+		ADD_TRAIT(src, TRAIT_OWNED_SLAVE, "ownership_mark")
+	else
+		// Clear all non-roundstart sources to avoid stale ownership flags from legacy source keys.
+		REMOVE_TRAIT(src, TRAIT_OWNED_SLAVE, null)
+
+/proc/get_current_slaver_owner()
+	for(var/mob/living/carbon/human/slaver in GLOB.human_list)
+		if(slaver.mind?.assigned_role == "Slaver")
+			return slaver
+	return null
+
+/proc/is_slaver_owner(mob/living/owner)
+	return istype(owner) && owner.mind?.assigned_role == "Slaver"
+
+/mob/living/carbon/human/proc/apply_ownership_mark(mob/living/owner, branding_text = "", owner_name = null, use_slaver_fallback = TRUE)
+	var/obj/item/bodypart/head/neck_bodypart = get_bodypart(BODY_ZONE_HEAD)
+	if(!neck_bodypart)
+		return FALSE
+
+	var/mob/living/owner_to_use = owner
+	if(use_slaver_fallback && !owner_to_use)
+		owner_to_use = get_current_slaver_owner()
+
+	var/owner_display_name = owner_name
+	if(!length(owner_display_name))
+		if(owner_to_use)
+			owner_display_name = owner_to_use.real_name || owner_to_use.name
+		else if(use_slaver_fallback)
+			owner_display_name = "the Slaver"
+		else
+			owner_display_name = ""
+
+	neck_bodypart.branded_writing_on_neck = branding_text
+	neck_bodypart.enslavement_mark = TRUE
+	neck_bodypart.brand_owner_name = owner_display_name
+	neck_bodypart.brand_owner = owner_to_use
+
+	branded = TRUE
+	update_owned_slave_trait()
+	return TRUE
+
+/mob/living/carbon/human/proc/update_ownership_marks_for_slaver(mob/living/owner)
+	var/mob/living/owner_to_use = owner || get_current_slaver_owner()
+	var/owner_display_name = owner_to_use ? (owner_to_use.real_name || owner_to_use.name) : "the Slaver"
+	for(var/mob/living/carbon/human/slave in GLOB.human_list)
+		if(slave == owner_to_use)
+			continue
+		for(var/obj/item/bodypart/bodypart as anything in slave.bodyparts)
+			if(bodypart.enslavement_mark && (!bodypart.brand_owner || is_slaver_owner(bodypart.brand_owner) || bodypart.brand_owner_name == "the Slaver" || !length(bodypart.brand_owner_name)))
+				bodypart.brand_owner_name = owner_display_name
+				bodypart.brand_owner = owner_to_use
+		for(var/obj/item/organ/organ as anything in slave.internal_organs)
+			if(organ.enslavement_mark && (!organ.brand_owner || is_slaver_owner(organ.brand_owner) || organ.brand_owner_name == "the Slaver" || !length(organ.brand_owner_name)))
+				organ.brand_owner_name = owner_display_name
+				organ.brand_owner = owner_to_use
+
+	return TRUE
+
+/mob/living/carbon/human/proc/get_active_ownership_brand_info()
+	var/list/info = list("name" = "", "owner" = null)
+	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+		if(bodypart.enslavement_mark)
+			if(length(bodypart.brand_owner_name))
+				info["name"] = bodypart.brand_owner_name
+				info["owner"] = bodypart.brand_owner
+				return info
+			if(!bodypart.brand_owner)
+				info["name"] = "the Slaver"
+				info["owner"] = null
+				return info
+	for(var/obj/item/organ/organ as anything in internal_organs)
+		if(organ.enslavement_mark)
+			if(length(organ.brand_owner_name))
+				info["name"] = organ.brand_owner_name
+				info["owner"] = organ.brand_owner
+				return info
+			if(!organ.brand_owner)
+				info["name"] = "the Slaver"
+				info["owner"] = null
+				return info
+	return info
+
 //Returns "Unknown" if facially disfigured and real_name if not. Useful for setting name when Fluacided or when updating a human's name variable
 /mob/living/carbon/human/proc/get_face_name(if_no_face="Unknown")
 	if( wear_mask && (wear_mask.flags_inv&HIDEFACE) )	//Wearing a mask which hides our face, use id-name if possible
@@ -96,7 +190,7 @@
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
+		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) || HAS_TRAIT(src, TRAIT_GNARLYDIGITS))
 			to_chat(src, span_warning("My meaty finger is much too large for the trigger guard!"))
 			return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
@@ -120,43 +214,33 @@
 
 /mob/living/carbon/human/get_punch_dmg()
 
-	var/damage
-	if(STASTR > UNARMED_DAMAGE_DEFAULT || STASTR < 10)
-		damage = STASTR
-	else
-		damage = UNARMED_DAMAGE_DEFAULT
+	var/damage = UNARMED_DAMAGE_DEFAULT
+	if(HAS_TRAIT(src, TRAIT_CIVILIZEDBARBARIAN))
+		damage += UNARMED_DAMAGE_CIVILBARB
 
 	var/used_str = STASTR
 
-	var/obj/G = get_item_by_slot(SLOT_GLOVES)
 	if(domhand)
 		used_str = get_str_arms(used_hand)
 
 	if(used_str >= 11)
-		var/bonus = 0
-
-		if(used_str <= 14)
-			// Normal scaling: +20% per point over 10
-			bonus = (used_str - 10) * 0.2
+		var/strmod
+		if(used_str > STRENGTH_SOFTCAP && !HAS_TRAIT(src, TRAIT_STRENGTH_UNCAPPED))
+			strmod = ((STRENGTH_SOFTCAP - 10) * STRENGTH_MULT)
+			strmod += ((used_str - STRENGTH_SOFTCAP) * STRENGTH_CAPPEDMULT)
 		else
-			// Diminishing returns after 14
-			// Start with the full +0.8 from 14 STR
-			bonus = 0.8
-			var/extra = used_str - 14
-			// Each point beyond 14 gives a smaller bonus than the last:
-			// e.g., +0.1, +0.075, +0.05625, etc.
-			var/next_bonus = 0.1
-			for(var/i = 1, i <= extra, i++)
-				bonus += next_bonus
-				next_bonus *= 0.75 // reduces 25% each time
-		damage = max(damage + (damage * bonus), 1)
+			strmod = ((used_str - 10) * STRENGTH_MULT)
+		damage = damage + (damage * strmod)
+	else if(used_str <= 9)
+		damage = max(damage + (damage * ((10 - used_str) * 0.1)), 1)
 
 	if(used_str <= 9)
 		damage = max(damage - (damage * ((10 - used_str) * 0.1)), 1)
 
+	var/obj/G = get_item_by_slot(SLOT_GLOVES)
 	if(istype(G, /obj/item/clothing/gloves/roguetown))
 		var/obj/item/clothing/gloves/roguetown/GL = G
-		damage = (damage * GL.unarmed_bonus)
+		damage += GL.unarmed_bonus
 
 	if(mind)
 		if(mind.has_antag_datum(/datum/antagonist/werewolf))

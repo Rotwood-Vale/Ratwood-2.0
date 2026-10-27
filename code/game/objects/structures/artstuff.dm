@@ -20,6 +20,12 @@
 	var/author_ckey
 	var/canvas_size = "32x32"
 	var/reject = FALSE
+	/// Whether anything has been painted on this canvas.
+	var/painted = FALSE
+	/// Whether this canvas's painting is in the archive, either printed from it or uploaded to it. It cannot be signed or archived again.
+	var/archived = FALSE
+	/// Ckeys of everyone who painted on this canvas.
+	var/list/painter_ckeys
 
 	var/canvas_icon = 'icons/roguetown/items/paint_supplies/canvas_32x32.dmi'
 	var/canvas_icon_state = "canvas"
@@ -48,8 +54,19 @@
 
 /obj/item/canvas/Destroy()
 	. = ..()
+	if(used_canvas?.host == src)
+		used_canvas.host = null
 	for(var/mob/mob in showers)
 		remove_shower(mob)
+
+/obj/item/canvas/examine(mob/user)
+	. = ..()
+	if(archived)
+		return
+	if(title)
+		. += span_info("It can be archived at a printing press.")
+	else
+		. += span_info("It can be signed with a feather, then archived at a printing press.")
 
 /obj/item/canvas/attack_hand(mob/user)
 	. = ..()
@@ -74,14 +91,28 @@
 /obj/item/canvas/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(istype(I, /obj/item/natural/feather))
-		author = input("Who's the author of this painting?")
+		if(archived)
+			to_chat(user, span_warning("This painting has already been signed."))
+			return
+		if(title && author_ckey != user.ckey)
+			to_chat(user, span_warning("This painting has already been signed by someone else."))
+			return
+		if(!(user.ckey in painter_ckeys))
+			to_chat(user, span_warning("I can only sign a painting I worked on."))
+			return
+		var/new_title = stripped_input(user, "What's the title of this painting?", "Title", "", MAX_NAME_LEN)
+		if(!new_title)
+			to_chat(user, span_warning("A painting needs a title to be signed."))
+			return
+		if(!player_archive_filename(new_title))
+			to_chat(user, span_warning("Choose a shorter title that does not begin with an underscore."))
+			return
+		author = player_archive_author_name(user)
 		author_ckey = user.ckey
-		title = input("What's the title of this painting.")
-		if(title)
-			name = title
-		if(author)
-			desc = "Painted by: [author]."
-
+		title = new_title
+		reject = FALSE
+		name = title
+		desc = "Painted by: [author]."
 		return
 
 	if(!istype(I, /obj/item/paint_brush))
@@ -113,6 +144,8 @@
 	UnregisterSignal(source, COMSIG_MOVABLE_TURF_ENTERED)
 
 /obj/item/canvas/proc/update_drawing(x, y, current_color)
+	painted = TRUE
+	LAZYOR(painter_ckeys, usr.ckey)
 	if("[x][y]" in overlay_to_index)
 		cut_overlay(overlay_to_index["[x][y]"])
 		overlay_to_index -= "[x][y]"
@@ -130,15 +163,46 @@
 		cut_overlays()
 		overlay_to_index = list()
 
-/obj/item/canvas/proc/upload_painting()
-	if(!author || !title)
-		return
-	var/icon/rendered = usr.client.RenderIcon(src)
-	cut_overlays()
-	if(rendered)
-		icon = rendered
-	//	SSpaintings.playerpainting2file(icon, title, author, author_ckey, canvas_size, src)
-	//	SSpaintings.update_paintings()
+/// Whether this canvas is unpainted and unsigned, so it can be used to print an archived painting.
+/obj/item/canvas/proc/is_blank()
+	return !painted && !archived && !title
+
+/// Displays the archived painting stored under a filename on this canvas. Returns FALSE if it is missing or a different size.
+/obj/item/canvas/proc/load_archived_painting(file_name)
+	var/datum/player_archive/paintings/archive = SSpaintings.archive
+	var/list/painting_data = archive.get_entry(file_name)
+	if(!archive.is_usable(file_name) || painting_data["canvas_size"] != canvas_size)
+		return FALSE
+	var/image_path = archive.get_image_path(file_name)
+	icon = icon(file(image_path))
+	name = painting_data["painting_title"]
+	if(painting_data["author"])
+		desc = "Painted by: [painting_data["author"]][painting_data["ic_date"] ? ", [painting_data["ic_date"]]" : ""]."
+	var/icon/new_icon = getFlatIcon(src)
+	new_icon.Scale(canvas_size_x * canvas_divider_x, canvas_size_y * canvas_divider_y)
+	used_canvas.draw.Blend(new_icon, ICON_OVERLAY)
+	used_canvas.icon = used_canvas.draw
+	archived = TRUE
+	return TRUE
+
+/obj/item/canvas/proc/upload_painting(mob/user)
+	if(!author || !title || !user?.client)
+		player_archive_feedback(user, "A painting needs a title and an author before it can be archived.")
+		return FALSE
+	var/icon/rendered = user.client.RenderIcon(src)
+	if(!rendered)
+		player_archive_feedback(user, "The painting could not be rendered for the archive.")
+		return FALSE
+	if(!SSpaintings.playerpainting2file(src, rendered, user))
+		return FALSE
+	archived = TRUE
+	return TRUE
+
+/// Returns the ckeys of everyone who worked on this painting, all of whom must be allowed to add paintings to the archive for it to be archived.
+/obj/item/canvas/proc/get_contributor_ckeys()
+	. = list(author_ckey)
+	if(painter_ckeys)
+		. |= painter_ckeys
 
 /atom/movable/screen/canvas
 	icon = 'icons/roguetown/items/paint_supplies/canvas_32x32.dmi'
@@ -153,8 +217,6 @@
 
 	var/list/overlay_to_index = list()
 	var/current_overlays = 0
-
-	var/loads_painting = FALSE
 
 /atom/movable/screen/canvas/Initialize(mapload, ...)
 	. = ..()
@@ -215,16 +277,26 @@
 
 	host.update_drawing(x, y, current_color)
 
-/* /obj/item/canvas/random_painting
-	loads_painting = TRUE
+/// Mapping helper: hangs a random archived player painting at its mapped position, each painting at most once per round. Deletes itself if none are left, with the empty spots picked at random.
+/obj/item/canvas/random_painting
+	anchored = TRUE
 
 /obj/item/canvas/random_painting/Initialize(mapload)
-	. = ..()
-	icon = SSpaintings.get_random_painting("32x32")
-	var/icon/new_icon = getFlatIcon(src)
-	new_icon.Scale(160, 160)
-	used_canvas.draw.Blend(new_icon, ICON_OVERLAY)
-	used_canvas.icon = used_canvas.draw */
+	var/mapped_pixel_x = pixel_x
+	var/mapped_pixel_y = pixel_y
+	..()
+	// /obj/item/Initialize() jitters items mapped without a pixel offset.
+	pixel_x = mapped_pixel_x
+	pixel_y = mapped_pixel_y
+	SSpaintings.pending_random_paintings += src
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/canvas/random_painting/LateInitialize()
+	SSpaintings.hang_random_paintings()
+
+/obj/item/canvas/random_painting/Destroy()
+	SSpaintings.pending_random_paintings -= src
+	return ..()
 
 ///////////
 // EASEL //

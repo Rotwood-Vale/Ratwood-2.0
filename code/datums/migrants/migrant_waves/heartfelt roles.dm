@@ -20,10 +20,7 @@
 	grant_lit_torch = FALSE
 	show_wanderer_examine = FALSE 
 	advjob_examine = FALSE
-	outfit = /datum/outfit/job/roguetown/heartfelt/cloak
-
-/datum/outfit/job/roguetown/heartfelt/cloak/pre_equip(mob/living/carbon/human/H)
-	cloak = /obj/item/clothing/cloak/tabard
+	outfit = /datum/outfit/job/roguetown/cloak/tabard
 
 /datum/migrant_role/heartfelt/knight/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
 	..()

@@ -16,7 +16,7 @@
 	var/list/allowed_turf_typecache
 	var/list/forbid_turf_typecache					//allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
 	var/allow_one_away_from_valid_turf = TRUE		//allow moving one tile away from a valid turf but not more.
-	var/drive_verb = "drive"
+	var/drive_verb = "paddle"//This is currently only used for the Dinghy
 	var/ride_check_rider_incapacitated = FALSE
 	var/ride_check_rider_restrained = FALSE
 	var/ride_check_ridden_incapacitated = FALSE
@@ -49,7 +49,7 @@
 	M.updating_glide_size = FALSE
 	if(!driver || QDELETED(driver))
 		driver = M
-	handle_vehicle_offsets()
+	handle_vehicle_offsets(M)
 
 /datum/component/riding/proc/handle_vehicle_layer()
 	var/atom/movable/AM = parent
@@ -66,33 +66,41 @@
 
 /datum/component/riding/proc/vehicle_moved(datum/source)
 	var/atom/movable/AM = parent
+	var/mob/living/current_driver = driver
 	AM.set_glide_size(DELAY_TO_GLIDE_SIZE(vehicle_move_delay))
+	var/mob/living/rider
 	for(var/mob/M in AM.buckled_mobs)
 		if(!istype(M, /mob/living))
 			continue
-		var/mob/living/rider = M
+		rider = M
 		ride_check(M)
 		M.set_glide_size(AM.glide_size)
-		// Award riding XP if the RIDER is in run intent while moving on mount
-		// Only award XP every 5 moves to avoid spam
-		if(rider.m_intent == MOVE_INTENT_RUN)
+		if(ishuman(M))
+			var/mob/living/carbon/human/human_rider = M
+			human_rider.vars["last_mount_move_time"] = world.time
+			human_rider.update_mob_action_buttons()
+			addtimer(CALLBACK(human_rider, TYPE_PROC_REF(/mob, update_mob_action_buttons)), 2 SECONDS)
+	// Award riding XP only to the driver, once per completed mount move.
+	if(current_driver && !QDELETED(current_driver) && (current_driver in AM.buckled_mobs))
+		if(current_driver.m_intent == MOVE_INTENT_RUN)
 			riding_xp_move_counter++
 			if(riding_xp_move_counter >= 5)
-				// Scale XP with rider's STAINT stat, like other movement-based skill gains.
-				var/xp_amt = rider.STAINT * 0.1
-				var/riding_level = rider.get_skill_level(/datum/skill/misc/riding)
-				// At apprentice and above, gains are slowed to half speed.
+				var/xp_amt = current_driver.STAINT * 0.1
+				var/riding_level = current_driver.get_skill_level(/datum/skill/misc/riding)
 				if(riding_level >= SKILL_LEVEL_APPRENTICE)
 					xp_amt *= 0.5
-				// At zero riding skill, gains are doubled to help reach apprentice faster.
 				else if(riding_level == SKILL_LEVEL_NONE)
 					xp_amt *= 2
-				rider.mind && rider.mind.add_sleep_experience(/datum/skill/misc/riding, xp_amt)
+				current_driver.mind && current_driver.mind.add_sleep_experience(/datum/skill/misc/riding, xp_amt)
 				riding_xp_move_counter = 0
 		else
 			riding_xp_move_counter = 0 //reset counter if not running
-	handle_vehicle_offsets()
+	else
+		riding_xp_move_counter = 0
+	handle_vehicle_offsets(rider)
 	handle_vehicle_layer()
+	if(driver && driver.IsImmobilized())
+		force_dismount(driver)
 
 /datum/component/riding/proc/ride_check(mob/living/M)
 	var/atom/movable/AM = parent
@@ -107,7 +115,7 @@
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(M)
 
-/datum/component/riding/proc/handle_vehicle_offsets()
+/datum/component/riding/proc/handle_vehicle_offsets(mob/living/driver)
 	var/atom/movable/AM = parent
 	var/AM_dir = "[AM.dir]"
 	var/passindex = 0
@@ -120,10 +128,10 @@
 					has_fixedeye = TRUE
 			passindex++
 			var/mob/living/buckled_mob = m
-			var/list/offsets = get_offsets(passindex)
+			var/list/offsets = get_offsets(passindex, driver)
 			var/rider_dir = get_rider_dir(passindex)
 			if(!has_fixedeye)
-				buckled_mob.setDir(rider_dir)
+				buckled_mob.setDir(buckled_mob.rider_look_dir || rider_dir)
 				dir_loop:
 					for(var/offsetdir in offsets)
 						if(offsetdir == AM_dir)
@@ -137,7 +145,7 @@
 								buckled_mob.layer = diroffsets[3]
 							buckled_mob.set_mob_offsets("riding", _x = x2off, _y = y2off)
 							break dir_loop
-	var/list/static/default_vehicle_pixel_offsets = list(TEXT_NORTH = list(0, 0), TEXT_SOUTH = list(0, 0), TEXT_EAST = list(0, 0), TEXT_WEST = list(0, 0))
+	var/static/list/default_vehicle_pixel_offsets = list(TEXT_NORTH = list(0, 0), TEXT_SOUTH = list(0, 0), TEXT_EAST = list(0, 0), TEXT_WEST = list(0, 0))
 /*	var/px = default_vehicle_pixel_offsets[AM_dir]
 	var/py = default_vehicle_pixel_offsets[AM_dir]
 	if(directional_vehicle_offsets[AM_dir])
@@ -192,9 +200,22 @@
 	return TRUE
 
 /datum/component/riding/proc/handle_ride(mob/user, direction)
+	user.rider_look_dir = 0 // Cancel any rider look override when movement is attempted
 	var/atom/movable/AM = parent
+	var/fixedeye_driver = FALSE
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.fixedeye)
+			fixedeye_driver = TRUE
+			if(AM.dir != H.dir)
+				AM.setDir(H.dir)
+				handle_vehicle_layer()
+				handle_vehicle_offsets()
 	if(user.incapacitated())
 		Unbuckle(user)
+		return
+
+	if(driver && user != driver) // only the designated driver/first rider can steer
 		return
 
 	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
@@ -258,10 +279,14 @@
 		else
 			last_move_diagonal = FALSE
 
+		if(fixedeye_driver)
+			// Fixed-eye riders can strafe, so movement direction and facing direction can differ.
+			// Force the mount to visually face where the driver is looking.
+			AM.setDir(user.dir)
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		to_chat(user, span_warning("You'll need the keys in one of my hands to [drive_verb] [AM]."))
+		to_chat(user, span_warning("I'll need an oar in one of my hands to [drive_verb] [AM]."))
 	return TRUE
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
@@ -274,6 +299,26 @@
 	else if(slowed)
 		vehicle_move_delay = vehicle_move_delay - slowvalue
 		slowed = FALSE
+
+/datum/component/riding/dinghy/keycheck(mob/user)
+	for(var/obj/item/I in user.held_items)
+		if(HAS_TRAIT(I, TRAIT_OAR))
+			return TRUE
+	return FALSE
+
+/datum/component/riding/dinghy/vehicle_mob_unbuckle(datum/source, mob/living/Mob, force = FALSE)
+	var/atom/movable/AtomMovable = parent
+	restore_position(Mob)
+	unequip_buckle_inhands(Mob)
+	Mob.updating_glide_size = TRUE
+	if(del_on_unbuckle_all && !AtomMovable.has_buckled_mobs())
+		qdel(src)
+		return
+	if(driver == Mob)
+		driver = null
+		for(var/mob/living/rider in AtomMovable.buckled_mobs)
+			driver = rider
+			break
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human
@@ -292,7 +337,7 @@
 	. = ..()
 	var/mob/living/carbon/human/H = parent
 	var/amt2use = HUMAN_CARRY_SLOWDOWN
-	var/reqstrength = 10
+	var/reqstrength = HAS_TRAIT(H, TRAIT_PONYGIRL_RIDEABLE) ? 0 : 10
 	if(H.r_grab && H.l_grab)
 		if(H.r_grab.grabbed == M)
 			if(H.l_grab.grabbed == M)
@@ -324,13 +369,13 @@
 	else
 		AM.layer = MOB_LAYER
 
-/datum/component/riding/human/get_offsets(pass_index)
+/datum/component/riding/human/get_offsets(pass_index, mob/living/driver)
 	var/mob/living/carbon/human/H = parent
 	if(H.buckle_lying)
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(0, 6), TEXT_WEST = list(0, 6))
 	else if(istype(parent, /mob/living/carbon/human/species/wildshape)) //Snowflake druid travel
 		return list(TEXT_NORTH = list(8, 6), TEXT_SOUTH = list(8, 6), TEXT_EAST = list(8, 6), TEXT_WEST = list(8, 6))
-	else if(H.has_status_effect(/datum/status_effect/debuff/harpy_flight))
+	else if(H.has_status_effect(/datum/status_effect/debuff/harpy_flight) && driver?.has_status_effect(/datum/status_effect/debuff/harpy_passenger))
 		return list(TEXT_NORTH = list(0, -24), TEXT_SOUTH = list(0, -24), TEXT_EAST = list(0, -24), TEXT_WEST = list(0, -24))
 	else
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list(6, 4))

@@ -102,3 +102,17 @@
 	var/mob/living/carbon/human/H = user.mob
 	H.toggle_eye_intent(H)
 	return TRUE
+
+/datum/keybinding/human/set_temp_ft
+	hotkey_keys = list("Unbound")
+	name = "set_pose"
+	full_name = "Set Temporary Flavortext"
+	description = "Changes the temporary flavortext."
+
+/datum/keybinding/human/set_temp_ft/down(client/user)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/mob/living/carbon/human/H = user.mob
+	H.temp_flavor()
+	return TRUE

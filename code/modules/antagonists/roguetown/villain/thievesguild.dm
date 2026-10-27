@@ -23,7 +23,7 @@
 	..()
 	if(owner && owner.current)
 		// Grant Thieves' Cant
-		owner.current.grant_language(/datum/language/thievescant)
+		owner.current.grant_language(/datum/language/thievescant, source = "[type]")
 		// Grant skill bonuses
 		owner.current.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
 		owner.current.adjust_skillrank(/datum/skill/misc/lockpicking, 3, TRUE)
@@ -45,9 +45,9 @@
 /datum/antagonist/thievesguild/apply_innate_effects(mob/living/mob_override)
 	..()
 	if(mob_override)
-		mob_override.grant_language(/datum/language/thievescant)
+		mob_override.grant_language(/datum/language/thievescant, source = "[type]")
 
 /datum/antagonist/thievesguild/remove_innate_effects(mob/living/mob_override)
 	..()
 	if(mob_override)
-		mob_override.remove_language(/datum/language/thievescant) 
+		mob_override.remove_language(/datum/language/thievescant, source = "[type]")

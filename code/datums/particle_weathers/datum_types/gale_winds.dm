@@ -36,6 +36,10 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 	visible_message(span_danger("[src] forms from violent winds!"))
 	START_PROCESSING(SSobj, src)
 
+/obj/effect/weather/tornado/proc/is_indoors(turf/T)
+	var/area/AR = T.loc
+	return istype(AR, /area/rogue/indoors)
+
 /obj/effect/weather/tornado/Destroy()
 	GLOB.active_tornadoes -= src
 	return ..()
@@ -62,16 +66,51 @@ GLOBAL_LIST_EMPTY(active_abyssors_rage)
 
 
 /obj/effect/weather/tornado/proc/do_spin_pull()
-	for(var/atom/movable/A in view(radius, src))
-		if(A.anchored)
+	var/turf/center = get_turf(src)
+	if(!center)
+		return
+
+	for(var/atom/movable/Atom in range(radius, src))
+		if(Atom.anchored)
+			continue
+		if(Atom.move_resist > MOVE_FORCE_EXTREMELY_STRONG)
 			continue
 
-		// Optional: Skip very heavy things
-		if(A.move_resist > MOVE_FORCE_EXTREMELY_STRONG)
+		var/turf/target = get_turf(Atom)
+		if(!target)
 			continue
 
-		apply_tornado_force(A)
+		if(is_indoors(target))
+			if(get_dist(center, target) > 3)
+				continue
+			if(!has_wind_path(center, target))
+				continue
 
+		apply_tornado_force(Atom)
+
+/obj/effect/weather/tornado/proc/has_wind_path(turf/from, turf/target)
+	for(var/turf/Turf in get_line(from, target))
+		if(Turf == from)
+			continue
+		if(is_wind_blocked(Turf))
+			return FALSE
+	return TRUE
+
+/obj/effect/weather/tornado/proc/is_wind_blocked(turf/T)
+	if(T.density)
+		return TRUE
+	for(var/obj/Object in T)
+		if(!Object.density)
+			continue
+
+		if(istype(Object, /obj/structure/mineral_door))
+			var/obj/structure/mineral_door/Door = Object
+			if(Door.density) // closed
+				return TRUE
+			continue // open door: wind passes
+		if(istype(Object, /obj/structure/roguewindow))
+			return TRUE // glass blocks wind regardless of open state
+	return FALSE
 
 /obj/effect/weather/tornado/proc/apply_tornado_force(atom/movable/A)
 	var/dx = A.x - src.x

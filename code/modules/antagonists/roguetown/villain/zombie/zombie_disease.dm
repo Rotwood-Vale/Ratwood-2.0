@@ -23,6 +23,8 @@
 
 /datum/status_effect/zombie_infection/on_creation(mob/living/new_owner, time_to_transform = 5 MINUTES, from_infected_wake = "wound")
 	. = ..()
+	if(HAS_TRAIT(new_owner, TRAIT_DEADITE_RESISTANCE))
+		time_to_transform *= 2
 	transformation_time = world.time + time_to_transform
 	message_cooldown_time = world.time + message_cooldown_amount
 	infected_wake = from_infected_wake
@@ -37,27 +39,25 @@
 		message_cooldown_time = world.time + message_cooldown_amount
 	if(world.time > transformation_time)
 		var/mob/living/carbon/human/H = owner
-		if(!iscarbon(H))
+		if(!ishuman(H)) // zombie_check_can_convert is human only
 			owner.remove_status_effect(/datum/status_effect/zombie_infection)
+			return
 
 		if(H.stat == DEAD || infected_wake)
 			H.zombie_check_can_convert()
 			var/datum/antagonist/zombie/zombie_antag = H.mind?.has_antag_datum(/datum/antagonist/zombie)
 			if(zombie_antag && !zombie_antag.has_turned)
 				zombie_antag.wake_zombie(infected_wake)
-				owner.remove_status_effect(/datum/status_effect/zombie_infection)
+			// Clear whether or not the rise happened. A refused conversion (vampire, werewolf, skeleton,
+			// immune, no mind) otherwise leaves this ticking and spamming messages for the rest of the round
+			owner.remove_status_effect(/datum/status_effect/zombie_infection)
 
 /datum/status_effect/zombie_infection/on_apply()
 	. = ..()
-	var/warning_message = pick(infection_messages)
-	if(prob(10))
-		to_chat(owner, span_userdanger("[warning_message]"))
-	else
-		to_chat(owner, span_danger("[warning_message]"))
 	var/mob/living/carbon/human/H = owner
-	if(!iscarbon(H))
+	if(!ishuman(H)) // Everything below needs a human
 		owner.remove_status_effect(/datum/status_effect/zombie_infection)
-	H.vomit(1, blood = TRUE, stun = FALSE)
+		return TRUE
 	return TRUE
 
 /atom/movable/screen/alert/status_effect/zombie_infection
@@ -67,8 +67,7 @@
 
 // Updated proc to use status effect
 /mob/living/carbon/human/proc/attempt_zombie_infection(mob/living/carbon/human/source, infection_type, wake_delay = 0)
-	var/datum/antagonist/zombie/zombie_antag = source?.mind?.has_antag_datum(/datum/antagonist/zombie)
-	if(!zombie_antag || !zombie_antag.has_turned)
+	if(!ishuman(source) || !source.is_risen_deadite()) // Covers NPC deadites as well as players
 		return FALSE
 
 	if(mind?.has_antag_datum(/datum/antagonist/zombie))
@@ -85,7 +84,7 @@
 		if("bite")
 			to_chat(src, span_danger("A growing cold seeps into my body. I feel horrible... REALLY horrible..."))
 		if("wound")
-			flash_fullscreen("redflash3")
+			fullscreen_redflash("redflash3")
 			to_chat(src, span_danger("Ow! It hurts. I feel horrible... REALLY horrible..."))
 
 	return TRUE

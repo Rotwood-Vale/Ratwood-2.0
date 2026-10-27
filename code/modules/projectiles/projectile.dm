@@ -11,6 +11,7 @@
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	movement_type = FLYING
+	light_system = MOVABLE_LIGHT
 	//The sound this plays on impact.
 	var/hitsound = 'sound/blank.ogg'
 	var/hitsound_wall = ""
@@ -85,7 +86,7 @@
 	var/nodamage = FALSE //Determines if the projectile will skip any damage inflictions
 	var/flag = "piercing" //Defines what armor to use when it hits things. Setting this to "blunt" might result in unexpected behavior (i.e. knockout on hit, figure out the root causes and excise it)
 	///How much armor this projectile pierces.
-	var/armor_penetration = 0
+	var/armor_penetration = PEN_NONE
 	var/projectile_type = /obj/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
 	var/decayedRange			//stores original range
@@ -125,6 +126,36 @@
 	var/bonus_accuracy = 0 //bonus accuracy that cannot be affected by range drop off.
 
 	var/target_z = 0
+	/// If TRUE, Guard-deflecting this projectile exposes its firer (riposte punish). Arcyne/wizard bolts opt in.
+	var/expose_caster_on_deflect = FALSE
+	/// Whether this projectile can be deflected by Guard (clash status). Opt-in per subtype.
+	var/guard_deflectable = FALSE
+	/// Multiplier for integrity damage dealt to armor. 1 is default. Higher = harder on armor.
+	var/intdamfactor = 1
+	/// On ricochet, if ricochet_auto_aim_range is nonzero, we'll consider any mobs within this range of the normal angle of incidence to home in on, higher = more auto aim
+	var/ricochet_auto_aim_angle = 30
+	/// On ricochet, if nonzero, we consider all mobs within this range of our projectile at the time of ricochet to home in on like Revolver Ocelot, as governed by ricochet_auto_aim_angle
+	var/ricochet_auto_aim_range = 0
+	/// the angle of impact must be within this many degrees of the struck surface, set to 0 to allow any angle
+	var/ricochet_incidence_leeway = 40
+	/// 0-1 (or more, I guess) multiplier, the ricochet_chance is modified by multiplying this after each ricochet
+	var/ricochet_decay_chance = 0.7
+	/// 0-1 (or more, I guess) multiplier, the projectile's damage is modified by multiplying this after each ricochet
+	var/ricochet_decay_damage = 0.7
+	/// Max tile distance for full damage.
+	var/max_range = 0
+	// Is this projectile blacklisted from crossing z-level
+	var/cannot_cross_z = 0
+	// Demo mod
+	/// Multiplier for damage dealt to objects of all types. 1 is no multiplier. 0.5 is 50% less. 1.5 is 50% more.
+	var/object_damage_multiplier = 1
+	/// If TRUE, this projectile applies wounds but never rolls a critical hit.
+	var/no_crit = FALSE
+	var/suppress_effects_past_range = FALSE
+	var/datum/action/cooldown/spell/source_spell
+	var/aim_peak = 0
+	/// Min tile distance for full damage.
+	var/min_range = 0
 
 /obj/projectile/proc/handle_drop()
 	return
@@ -182,6 +213,9 @@
 		return hit_zone
 	return BODY_ZONE_CHEST
 
+/mob/living/proc/hit_zone_name(hit_zone)
+	return parse_zone(check_limb_hit(hit_zone))
+
 /mob/living/carbon/check_limb_hit(hit_zone)
 	if(get_bodypart(hit_zone))
 		return hit_zone
@@ -222,9 +256,11 @@
 	var/mob/living/L = target
 
 	if(!L.mind)
-		damage *= npc_simple_damage_mult // bonus damage against NPCs.
+		var/datum/component/precious_creature/saddleborn = L.GetComponent(/datum/component/precious_creature)
+		if(!saddleborn)
+			damage *= npc_simple_damage_mult // bonus damage against NPCs.
 	if(blocked != 100) // not completely blocked
-		if(damage && L.blood_volume && damage_type == BRUTE)
+		if(damage && L.get_blood_volume() && damage_type == BRUTE)
 			var/splatter_dir = dir
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
@@ -246,7 +282,7 @@
 	if(ismob(firer))
 		log_combat(firer, L, "shot", src, reagent_note)
 	else
-		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
+		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color=LOG_COLOR_RECEIPT, meta = list(LOG_META_RECEIPT = TRUE))
 
 	return BULLET_ACT_HIT
 
@@ -633,6 +669,8 @@
 				return FALSE
 	return TRUE
 
+#define BUCKLE_PENALTY 0.5
+
 //Spread is FORCED!
 /obj/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
 	var/turf/curloc = get_turf(source)
@@ -658,7 +696,15 @@
 	trajectory_ignore_forcemove = FALSE
 	starting = start_loc
 	original = target
-	if(targloc || !params)
+
+	// mounted penalty
+	if(isliving(source))
+		var/mob/living/shooter = source
+		if(shooter.buckled)
+			accuracy = max(5, accuracy * BUCKLE_PENALTY)
+			bonus_accuracy = max(0, bonus_accuracy * BUCKLE_PENALTY)
+
+	if(targloc)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
 		setAngle(Get_Angle(src, targloc) + spread)
@@ -676,6 +722,8 @@
 	else
 		stack_trace("WARNING: Projectile [type] fired without either mouse parameters, or a target atom to aim at!")
 		qdel(src)
+
+#undef BUCKLE_PENALTY
 
 /proc/calculate_projectile_angle_and_pixel_offsets(mob/user, params)
 	var/list/mouse_control = params2list(params)
@@ -772,3 +820,89 @@
 		QDEL_IN(thing, duration)
 	if(cleanup)
 		cleanup_beam_segments()
+
+/obj/projectile/proc/out_of_effective_range()
+	return suppress_effects_past_range && max_range && check_range(get_turf(src))
+
+/// Called when a guarding mob deflects this projectile.
+/// Return TRUE for successful deflection (guard consumed cleanly, projectile reflected).
+/// Return FALSE if the projectile overpowers the guard (guard disrupted with bad_guard penalty).
+/// Override on subtypes for custom behavior.
+/// silent: if TRUE, skip chat messages (used by parry buffer for multi-projectile spells).
+/obj/projectile/proc/on_guard_deflect(mob/living/defender, silent = FALSE)
+	if(!silent)
+		var/verb_text = hitscan ? "dispels" : "deflects"
+		if(isarcyne(defender))
+			defender.visible_message(span_danger("[defender] [verb_text] [src] with a reactive ward!"))
+			to_chat(defender, span_notice("My ward [verb_text] the incoming spell!"))
+			playsound(get_turf(defender), pick('sound/combat/parry/shield/magicshield (1).ogg', 'sound/combat/parry/shield/magicshield (2).ogg', 'sound/combat/parry/shield/magicshield (3).ogg'), 100)
+		else
+			var/martial_msg = hitscan ? "[defender] [verb_text] [src]!" : "[defender] [verb_text] [src] back at its caster!"
+			defender.visible_message(span_danger("[martial_msg]"))
+			to_chat(defender, span_notice("My guard [verb_text] the incoming spell!"))
+			var/obj/item/held = defender.get_active_held_item()
+			if(held?.parrysound)
+				playsound(get_turf(defender), pick(held.parrysound), 100)
+			else
+				playsound(get_turf(defender), pick(defender.parry_sound), 100)
+	if(hitscan || !reflect_back(defender))
+		qdel(src) // Hitscan can't visually reflect; also fallback if reflect_back fails
+	else
+		// Keep projectile alive through process_hit's qdel check
+		temporary_unstoppable_movement = TRUE
+		ENABLE_BITFIELD(movement_type, UNSTOPPABLE)
+	return TRUE
+
+/obj/projectile/proc/check_range(turf/T)
+	if(!starting)
+		return FALSE
+	if(!istype(T))
+		T = get_turf(src)
+	if(!istype(T))
+		return FALSE
+	if(T.z != starting.z)
+		return FALSE
+	var/distance = get_dist(T, starting)
+	if((min_range && distance < min_range) || (max_range && distance > max_range))
+		return TRUE
+
+/// Redirects this projectile back toward its origin point with slight scatter.
+/// Sets firer to the reflector so the projectile won't re-hit them.
+/// Returns TRUE if reflection succeeded, FALSE if conditions weren't met (no starting turf, reflector not on turf).
+/obj/projectile/proc/reflect_back(mob/living/reflector)
+	if(!starting || !isturf(reflector.loc))
+		return FALSE
+	var/new_x = starting.x + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+	var/new_y = starting.y + pick(0, 0, 0, 0, 0, -1, 1, -2, 2)
+	var/turf/curloc = get_turf(reflector)
+	original = locate(new_x, new_y, z)
+	starting = curloc
+	firer = reflector
+	yo = new_y - curloc.y
+	xo = new_x - curloc.x
+	var/new_angle_s = Angle + rand(120, 240)
+	while(new_angle_s > 180)
+		new_angle_s -= 360
+	setAngle(new_angle_s)
+	return TRUE
+
+/obj/projectile/proc/get_aim_at(distance, crossed_z = FALSE)
+	if(min_range && distance < min_range)
+		return ACC_RANGED_FLOOR
+	if(max_range && distance > max_range)
+		return ACC_RANGED_FLOOR
+	var/aim = aim_peak
+	if(distance > ACC_RANGED_VISUAL_REACH)
+		aim -= (distance - ACC_RANGED_VISUAL_REACH) * ACC_RANGED_FARSIGHT_PENALTY
+	if(crossed_z)
+		aim -= ACC_RANGED_ZCROSS_PENALTY
+	return max(ACC_RANGED_FLOOR, aim)
+
+//
+/obj/projectile/proc/get_aim_from(atom/target)
+	if(!starting)
+		return aim_peak
+	var/turf/T = get_turf(target)
+	if(!istype(T))
+		return aim_peak
+	return get_aim_at(max(abs(T.x - starting.x), abs(T.y - starting.y)), T.z != starting.z)

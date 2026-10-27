@@ -144,6 +144,12 @@
 	icon_state = "confetti"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT //the confetti itself might be annoying enough
 
+/obj/effect/decal/cleanable/confetti/xylix
+	desc = "A colorful scatter of confetti made of dyed parchment. It smells funny."
+	icon = 'icons/effects/confetti.dmi'
+	mouse_opacity = MOUSE_OPACITY_ICON
+	random_icon_states = list("confetti1", "confetti2", "confetti3")
+
 //................	Debris decals (result from crafting or destroying items thats just visual)	............... //
 /obj/effect/decal/cleanable/debris
 	name = ""

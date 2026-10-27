@@ -22,6 +22,8 @@
 					L.apply_status_effect(/datum/status_effect/facial)
 				else
 					facial.refresh_cum()
+				if(L.reagents)
+					L.reagents.add_reagent(/datum/reagent/erpjuice/cum, 1)
 			return
 		return
 	..()

@@ -5,7 +5,7 @@
 	faction = "Station"
 	total_positions = 1 // THE ONE.
 	spawn_positions = 1
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = RACES_NO_CONSTRUCT
 	allowed_patrons = list(/datum/patron/old_god) //Requires the character to be a practicing Psydonite.
 	tutorial = "Once, you were alone in this monastery; a chapel of stone, protecting a shard of Psydon's divinity. Now, you've a whole sect to shepherd - and their propensity for violence oft-clashes with your own vows of pacifism. Temper the floch with your wisdom, siphon away their wounds with your blessings, and guide the wayard towards absolution."
 	selection_color = JCOLOR_INQUISITION
@@ -22,12 +22,15 @@
 	job_traits = list(
 		TRAIT_NOPAINSTUN,
 		TRAIT_PACIFISM,
+		TRAIT_LUX_FREAK,
 		TRAIT_EMPATH,
 		TRAIT_CRITICAL_RESISTANCE,
+		TRAIT_BLOOD_RESISTANCE,
 		TRAIT_SILVER_BLESSED,
 		TRAIT_STEELHEARTED,
-		TRAIT_INQUISITION,,
-		TRAIT_RITUALIST//Handles conversions, too, now.
+		TRAIT_INQUISITION,
+		TRAIT_RITUALIST, //Handles conversions, too, now.
+		TRAIT_SELF_AWARE //Shows full damage numbers on self-diagnosis, for QOL.
 	)
 
 	advclass_cat_rolls = list(CTAG_ABSOLVER = 2)
@@ -57,7 +60,7 @@
 		/datum/skill/labor/fishing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT, // Psydon's Holiest Guy
+		/datum/skill/magic/holy = SKILL_LEVEL_MASTER, // Psydon's Holiest Guy
 	)
 	subclass_stashed_items = list(
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
@@ -94,8 +97,8 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/absolver
-	id = /obj/item/clothing/ring/signet/silver
-	backpack_contents = list(
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
+	backpack_contents = list( // currently full
 		/obj/item/book/rogue/bibble/psy = 1,
 		/obj/item/natural/bundle/cloth/bandage/full = 2,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
@@ -105,6 +108,10 @@
 		/obj/item/storage/keyring/puritan = 1,
 		/obj/item/ritechalk = 1,
 		)
+	
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 6, TRUE)
+	
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_ABSOLVER, start_maxed = TRUE) // PSYDONIAN MIRACLE-WORKER. LUX-MERGING FREEK.
 	if(H.mind)//The below was above, improperly, but is now properly removed.

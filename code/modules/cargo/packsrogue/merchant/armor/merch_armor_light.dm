@@ -21,15 +21,40 @@
 	cost = 20 // Base sellprice of 10
 	contains = list(/obj/item/clothing/wrists/roguetown/bracers/leather/heavy)
 
+/datum/supply_pack/rogue/light_armor/basic_leather_bracers
+	name = "Leather Bracers"
+	cost = 10
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/leather)
+
 /datum/supply_pack/rogue/light_armor/heavy_leather_pants
 	name = "Hardened Leather Pants"
 	cost = 30 // Base sellprice of 20
 	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants)
 
+/datum/supply_pack/rogue/light_armor/leather_trousers
+	name = "Leather Trousers"
+	cost = 15
+	contains = list(/obj/item/clothing/under/roguetown/trou/leather)
+
 /datum/supply_pack/rogue/light_armor/hide_armor
 	name = "Hide Armor"
 	cost = 30 // Base sellprice of 20
 	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/hide)
+
+/datum/supply_pack/rogue/light_armor/leather_cuirass
+	name = "Leather Cuirass"
+	cost = 15
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/cuirass)
+
+/datum/supply_pack/rogue/light_armor/leather_armor
+	name = "Leather Armor"
+	cost = 15
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather)
+
+/datum/supply_pack/rogue/light_armor/leather_helmet
+	name = "Leather Helmet"
+	cost = 20
+	contains = list(/obj/item/clothing/head/roguetown/helmet/leather)
 
 /datum/supply_pack/rogue/light_armor/heavy_leather_armor
 	name = "Hardened Leather Armor"
@@ -56,6 +81,21 @@
 	cost = 20 // No one buying this lmao it costs 1 fur
 	contains = list(/obj/item/clothing/gloves/roguetown/angle)
 
+/datum/supply_pack/rogue/light_armor/fingerless_leather_gloves
+	name = "Fingerless Leather Gloves"
+	cost = 20
+	contains = list(/obj/item/clothing/gloves/roguetown/fingerless_leather)
+
+/datum/supply_pack/rogue/light_armor/leather_gloves
+	name = "Leather Gloves"
+	cost = 15
+	contains = list(/obj/item/clothing/gloves/roguetown/leather)
+
+/datum/supply_pack/rogue/light_armor/padded_arming_cap
+	name = "Padded Arming Cap"
+	cost = 15
+	contains = list(/obj/item/clothing/head/roguetown/paddedcap)
+
 /datum/supply_pack/rogue/light_armor/heavy_padded_coif
 	name = "Heavy Padded Coif"
 	cost = 35 // Equivalent to a padded gambeson on the head, so pricier
@@ -63,7 +103,17 @@
 
 /datum/supply_pack/rogue/light_armor/reinforced_hood
 	name = "Reinforced Hood"
-	cost = 40 //It's armour. Quite good, given layering, too. Someone else can adjust this. EDIT: I'm someone else. If it's such good armor, let's make it as expensive as the other good armor in its class, like the padded gambeson. Steel mask is probably better, you're buying this if you want swag.
+	cost = 40 // The mage hood type, in a sense. This is the one that fits on the face or head but not the neck.
 	contains = list(
-					/obj/item/clothing/head/roguetown/roguehood/reinforced,
-				)
+					/obj/item/clothing/head/roguetown/roguehood/reinforced)
+
+/datum/supply_pack/rogue/light_armor/padded_leather_hood
+	name = "Padded Leather Hood" // The newer version of the hood that fits around the neck like a coif.
+	cost = 40
+	contains = list(
+					/obj/item/clothing/head/roguetown/helmet/leather/armorhood)
+
+/datum/supply_pack/rogue/light_armor/studded_leather_hood
+	name = "Studded Leather Hood"
+	cost = 50
+	contains = list(/obj/item/clothing/head/roguetown/helmet/leather/armorhood/advanced,)

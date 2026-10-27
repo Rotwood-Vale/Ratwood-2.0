@@ -13,9 +13,6 @@
 	var/demolition_mod = 1
 
 	var/datum/armor/armor
-	var/last_peeled_limb
-	var/peel_count = 0
-	var/peel_threshold = 3
 	var/obj_integrity	//defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
@@ -59,6 +56,8 @@
 	var/icon_state_preview
 
 	vis_flags = VIS_INHERIT_PLANE
+	/// Extra AI pathfinding cost for this object. Higher values make NPCs avoid this tile.
+	var/ai_path_weight = 0
 
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
@@ -74,7 +73,7 @@
 				return FALSE
 	return ..()
 
-/obj/Initialize()
+/obj/Initialize(mapload, ...)
 	if (islist(armor))
 		armor = getArmor(arglist(armor))
 	else if (!armor)
@@ -95,6 +94,10 @@
 				obj_flags &= ~string_to_objflag[flag]
 			else
 				obj_flags |= string_to_objflag[flag]
+	var/turf/our_turf = get_turf(src)
+	// if the turf is uninitialized it'll just call Entered on us
+	if(our_turf && (our_turf.flags_1 & INITIALIZED_1) && (obj_flags & BLOCK_Z_OUT_DOWN))
+		our_turf.platform_atom_count++
 
 /obj/Destroy(force=FALSE)
 	if(!ismachinery(src))
@@ -269,6 +272,17 @@
 // Should move all contained objects to it's location.
 /obj/proc/dump_contents()
 	CRASH("Unimplemented.")
+
+/// Sets the BLOCK_Z_OUT_DOWN obj_flag and runs associated updates.
+/obj/proc/set_is_platform(new_platform_status)
+	if((obj_flags & BLOCK_Z_OUT_DOWN) == new_platform_status)
+		return
+	var/turf/our_turf = get_turf(src)
+	obj_flags ^= BLOCK_Z_OUT_DOWN
+	if(new_platform_status)
+		our_turf.platform_atom_count++
+	else
+		our_turf.platform_atom_count--
 
 /obj/merge_conflict_marker
 	name = "---Merge Conflict Marker---"

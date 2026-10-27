@@ -1,9 +1,0 @@
-author: "zoktiik"
-delete-after: True
-changes:
-  - bugfix: "Baothan \"Tell Vice\" T0 miracle now supports multiple vices."
-  - bugfix: "Tell Vices now has fixed styling, and the vice names now show up in a proper font size."
-  - rscadd: "If you have the Deceiving Meekness trait, Tell Vices can technically lie about any number of the vices you have, provided the miracle caster is Novice level. Beware, however, that a \"fake\" generation is not purely random, and can still reveal some or all of your vices based on certain rules."
-  - refactor: "Tell Vice received a massive refactor in order to support all the new behaviors, along with a lot of comment documentation talking about how the new implementation works."
-  - spellcheck: "Removed (+1 TRI) language from the base names of a few vices, with the exception of \"No Flaw (-3 TRI)\". (For now.)"
-  - bugfix: "Added \"on_removal\" proc overrides for the simple \"trait-granter\" procs that were lacking them."

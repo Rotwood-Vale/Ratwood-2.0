@@ -12,14 +12,14 @@
 	layer = BELOW_OBJ_LAYER
 	var/list/held_items = list()
 	locked = TRUE
-	var/budget = 0
 	var/wgain = 0
 	var/is_crafted = FALSE
 	var/keycontrol = "merchant"
 	var/obj/item/reagent_containers/glass/bottle/inserted
 	var/bottle_price = 10
 	var/bottle_sold_max = 10
-
+	var/budget
+	
 /obj/structure/roguemachine/potionseller/crafted
 	is_crafted = TRUE
 	max_integrity = 100
@@ -38,9 +38,6 @@
 	update_icon()
 
 /obj/structure/roguemachine/potionseller/Destroy()
-	if(reagents)
-		qdel(reagents)
-		reagents = null
 	if(inserted)
 		inserted.forceMove(drop_location())
 		inserted = null
@@ -78,7 +75,7 @@
 		return attack_hand(user)
 
 /obj/structure/roguemachine/potionseller/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/roguecoin/aalloy))
+	if(istype(P, /obj/item/roguecoin/gilbranze))
 		return
 	if(istype(P, /obj/item/roguecoin/inqcoin))
 		return

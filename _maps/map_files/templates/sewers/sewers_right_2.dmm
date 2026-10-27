@@ -7,7 +7,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "k" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
 /turf/open/floor/rogue/cobble,
 /area/rogue/under/town/sewer)
 "p" = (

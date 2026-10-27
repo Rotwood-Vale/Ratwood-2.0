@@ -11,24 +11,24 @@
 
 	advclass_cat_rolls = list(CTAG_NSKELETON = 20)
 
-	tutorial = "You are bygone. A wandering has-been. But maybe your luck has not run out, yet.."
+	tutorial = "You are bygone. A wandering has-been. But maybe your luck has not run out, yet..."
 
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/necro
 	show_in_credits = FALSE
 	give_bank_account = FALSE
 	hidden_job = TRUE
 
+	no_virtue = TRUE
+
 /datum/outfit/job/roguetown/greater_skeleton/pre_equip(mob/living/carbon/human/H)
 	..()
 
 	H.set_patron(/datum/patron/inhumen/zizo)
 
-	H.possible_rmb_intents = list(/datum/rmb_intent/feint,\
-	/datum/rmb_intent/aimed,\
-	/datum/rmb_intent/riposte,\
-	/datum/rmb_intent/strong,\
-	/datum/rmb_intent/weak)
-	H.swap_rmb_intent(num=1)
+	ADD_TRAIT(H, TRAIT_OUTLAW, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_SHATTER_WEAKNESS, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_NO_VOICEPACK_OVERRIDE, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_NOSLEEP, TRAIT_GENERIC)
 
 	var/datum/antagonist/new_antag = new /datum/antagonist/skeleton()
 	H.mind.add_antag_datum(new_antag)

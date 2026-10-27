@@ -173,7 +173,8 @@
 	var/is_bled = FALSE
 	var/obj/effect/decal/cleanable/roguerune/rune_to_scribe = null
 	var/chosen_keyword
-
+	smeltresult = null
+	
 /obj/item/rogueweapon/huntingknife/idagger/silver/arcyne/Initialize(mapload)
 	. = ..()
 	filter(type="drop_shadow", x=0, y=0, size=2, offset=1, color=rgb(128, 0, 128, 1))
@@ -199,7 +200,7 @@
 		playsound(loc, get_sfx("genslash"), 100, TRUE)
 		user.visible_message(span_warning("[user] cuts open [user.p_their()] palm!"), \
 			span_cult("I slice open my palm!"))
-		if(user.blood_volume)
+		if(user.get_blood_volume())
 			var/obj/effect/decal/cleanable/roguerune/rune = rune_to_scribe
 			user.apply_damage(initial(rune.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		is_bled = TRUE
@@ -256,6 +257,7 @@
 	desc = "A small mimic, imbued with the arcane to make it docile. It can transform into most things it touchs. "
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "mimic_trinket"
+	dropshrink = 0.6
 	possible_item_intents = list(/datum/intent/use)
 	var/duration = 10 MINUTES
 	var/oldicon
@@ -370,23 +372,30 @@
 
 /obj/item/sendingstonesummoner/Initialize(mapload)
 	. = ..()
-	var/mob/living/user = usr
-	var/obj/item/natural/stone/sending/item1 = new /obj/item/natural/stone/sending
-	var/obj/item/natural/stone/sending/item2 = new /obj/item/natural/stone/sending
+	var/obj/item/natural/stone/sending/item1 = new /obj/item/natural/stone/sending(loc)
+	var/obj/item/natural/stone/sending/item2 = new /obj/item/natural/stone/sending(loc)
 	item1.paired_with = item2
 	item2.paired_with = item1
 	item1.icon_state = "whet"
 	item2.icon_state = "whet"
 	item1.color = "#d8aeff"
 	item2.color = "#d8aeff"
-	user.put_in_hands(item1, FALSE)
-	user.put_in_hands(item2, FALSE)
+	if(usr)
+		var/mob/living/user = usr
+		user.put_in_hands(item1, FALSE)
+		user.put_in_hands(item2, FALSE)
 	qdel(src)
 
 /obj/item/natural/stone/sending
 	name = "sending stone"
 	desc = "One of a pair of sending stones."
 	var/obj/item/natural/stone/sending/paired_with
+
+/obj/item/natural/stone/sending/Destroy()
+	if(paired_with?.paired_with == src)
+		paired_with.paired_with = null
+	paired_with = null
+	return ..()
 
 /obj/item/natural/stone/sending/attack_self(mob/user)
 	var/input_text = input(user, "Enter your message:", "Message")
@@ -479,14 +488,14 @@
 		return
 
 	var/mob/living/simple_animal/hostile/retaliate/rogue/target = captive
+	var/summoner_name = user.real_name ? user.real_name : user.name
 	target.visible_message(span_warning("[src] is trying to bind [target.real_name]"))
 	if(do_after(user, 50, target = src) && binding == FALSE)
 		if(!target.ckey) //player is not inside body or has refused, poll for candidates
 			to_chat(user, span_notice("You attempt to bind the targetted summon to this plane."))
 			binding = TRUE
 			target.visible_message(span_warning("[target.real_name]'s body is entangled by glowing chains..."), runechat_message = TRUE)
-			var/list/candidates = pollCandidatesForMob("Do you want to play as a Mage's summon?", null, null, null, 100, target, POLL_IGNORE_MAGE_SUMMON)
-
+			var/list/candidates = pollCandidatesForMob("Do you want to play as [summoner_name]'s summoned [target.real_name]?", null, null, null, 100, target, POLL_IGNORE_MAGE_SUMMON)
 			// theres at least one candidate
 			if(LAZYLEN(candidates))
 				var/mob/C = pick(candidates)
@@ -510,7 +519,6 @@
 		return FALSE
 	if(ckey) //player
 		src.ckey = ckey
-
 	to_chat(src, span_userdanger("My summoner is [master.real_name]. They will need to convince me to obey them."))
 	to_chat(src, span_notice("[summon_primer]"))
 
@@ -525,3 +533,6 @@
 		to_chat(awakener, span_warning("Your summon did not select a valid name! Please wait as they try again.")) // more verbose than what sanitize_name might pass in it's error message
 		return custom_name(awakener, iteration++)
 	return chosen_name
+
+/obj/item/storage/magebag/starter
+	populate_contents = list()

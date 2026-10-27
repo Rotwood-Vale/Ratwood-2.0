@@ -41,12 +41,12 @@ export const InputButtons = (props: InputButtonsProps) => {
       className="input-button__submit"
       disabled={disabled}
       fluid={!!large_buttons}
-      height={!!large_buttons && 2}
+      height={large_buttons ? 2 : undefined}
       onClick={on_submit_actual}
       m={0.5}
       pt={large_buttons ? 0.33 : 0}
       textAlign="center"
-      tooltip={large_buttons && message}
+      tooltip={large_buttons ? message : undefined}
     >
       MAKE IT SO
     </Button>
@@ -56,7 +56,7 @@ export const InputButtons = (props: InputButtonsProps) => {
       color="transparent"
       className="input-button__cancel"
       fluid={!!large_buttons}
-      height={!!large_buttons && 2}
+      height={large_buttons ? 2 : undefined}
       onClick={on_cancel_actual}
       m={0.5}
       pt={large_buttons ? 0.33 : 0}

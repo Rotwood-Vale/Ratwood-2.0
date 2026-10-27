@@ -99,9 +99,7 @@
 	icon_state = "woodenbarricade_mineshaft"
 	bar_material = WOOD
 	pass_flags = LETPASSTHROW
-
-/obj/structure/barricade/mineshaft/CanPass(atom/movable/mover, turf/target)
-	return TRUE
+	density = FALSE
 
 #undef SINGLE
 #undef VERTICAL

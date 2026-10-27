@@ -114,8 +114,8 @@
 	get_surroundings - takes a list of things and makes a list of key-types to values-amounts of said type in the list
 	check_contents - takes a recipe and a key-type list and checks if said recipe can be done with available stuff
 	check_tools - takes recipe, a key-type list, and a user and checks if there are enough tools to do the stuff, checks bugs one level deep
-	construct_item - takes a recipe and a user, call all the checking procs, calls do_after, 
-	checks all the things again, calls del_reqs, creates result, 
+	construct_item - takes a recipe and a user, call all the checking procs, calls do_after,
+	checks all the things again, calls del_reqs, creates result,
 	calls CheckParts of said result with argument being list returned by del_reqs
 	del_reqs - takes recipe and a user, loops over the recipes reqs var and tries to find everything in the list make by get_environment and delete it/add to parts list, then returns the said list
 */
@@ -312,12 +312,14 @@
 		return
 	if(isturf(R.result))
 		for(var/obj/structure/fluff/traveltile/TT in range(7, user))
-			to_chat(user, span_warning("I can't craft here."))
-			return
+			if(TT.craftblock)
+				to_chat(user, span_warning("I can't craft here."))
+				return
 	if(ispath(R.result, /obj/structure) || ispath(R.result, /obj/machinery))
 		for(var/obj/structure/fluff/traveltile/TT in range(7, user))
-			to_chat(user, span_warning("I can't craft here."))
-			return
+			if(TT.craftblock)
+				to_chat(user, span_warning("I can't craft here."))
+				return
 		for(var/obj/structure/S in T)
 			if(R.buildsame && istype(S, R.result))
 				if(user.dir == S.dir)
@@ -369,6 +371,10 @@
 						var/mob/living/L = user
 						if(L.STAINT > 10)
 							prob2craft += ((10-L.STAINT)*-1)*2
+							if(HAS_TRAIT(L, TRAIT_METICULOUS))
+								prob2craft += (L.STAINT - 10) * 2
+					if(R.skillcraft && R.craftdiff - user.get_skill_level(R.skillcraft) >= 2)
+						prob2craft = 0
 					prob2craft = CLAMP(prob2craft, 0, 99)
 					if(!prob(prob2craft))
 						if(user.client?.prefs.showrolls)
@@ -376,7 +382,9 @@
 							continue
 						to_chat(user, span_danger("I've failed to craft \the [result_name]."))
 						continue
-					var/list/parts = del_reqs(R, user)
+					var/list/quality_capture = R.skip_quality ? list() : null
+					var/list/parts = del_reqs(R, user, quality_capture)
+					var/inherited_quality = quality_capture?["min_quality"]
 					if(islist(R.result))
 						var/list/L = R.result
 						for(var/IT in L)
@@ -386,6 +394,15 @@
 								apply_pottery_quality_to_item(I, user.get_skill_level(R.skillcraft))
 							I.CheckParts(parts, R)
 							I.OnCrafted(user.dir, user)
+							if(isitem(I))
+								var/obj/item/CI = I
+								CI.was_crafted = TRUE
+								if(CI.has_item_quality)
+									if(R.skip_quality)
+										if(!isnull(inherited_quality))
+											CI.apply_quality(null, null, inherited_quality)
+									else
+										CI.apply_quality(user, R.skillcraft)
 							I.add_fingerprint(user)
 					else
 						if(ispath(R.result, /turf))
@@ -405,15 +422,29 @@
 								I.OnCrafted(I.SelectDiagDirection(), user)
 							else
 								I.OnCrafted(user.dir, user)
+							if(isitem(I))
+								var/obj/item/CI = I
+								CI.was_crafted = TRUE
+								if(CI.has_item_quality)
+									if(R.skip_quality)
+										if(!isnull(inherited_quality))
+											CI.apply_quality(null, null, inherited_quality)
+									else
+										CI.apply_quality(user, R.skillcraft)
 							I.add_fingerprint(user)
 					user.visible_message(span_notice("[user] [R.verbage] \a [result_name]!"), \
 										span_notice("I [R.verbage_simple] \a [result_name]!"))
+					user.log_message("crafted [result_name] ([R.type])", LOG_GAME)
 					if(user.mind && R.skillcraft)
 						if(isliving(user))
 							var/mob/living/L = user
-							var/amt2raise = L.STAINT * 2// its different over here
-							if(R.craftdiff > 0) //difficult recipe
-								amt2raise += (R.craftdiff * 10) // also gets more
+							var/amt2raise
+							if(R.craft_xp_override >= 0)
+								amt2raise = R.craft_xp_override
+							else
+								amt2raise = L.STAINT * 2
+								if(R.craftdiff > 0) //difficult recipe
+									amt2raise += (R.craftdiff * 10) // also gets more
 							if(amt2raise > 0)
 								user.mind.add_sleep_experience(R.skillcraft, amt2raise, FALSE)
 					return TRUE
@@ -459,7 +490,7 @@
 	del_reqs return the list of parts resulting object will receive as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
 */
 
-/datum/component/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, mob/user)
+/datum/component/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, mob/user, list/quality_out = null)
 	var/list/surroundings
 	var/list/Deletion = list()
 	. = list()
@@ -572,6 +603,25 @@
 				. += AM
 				Deletion -= AM
 				partlist[A] -= 1
+	if(quality_out)
+		var/min_q = null
+		for(var/atom/movable/AM in Deletion)
+			if(!isitem(AM))
+				continue
+			var/obj/item/IT = AM
+			if(!IT.has_item_quality)
+				continue
+			if(isnull(min_q) || IT.item_quality < min_q)
+				min_q = IT.item_quality
+		for(var/atom/movable/AM in .)
+			if(!isitem(AM))
+				continue
+			var/obj/item/IT = AM
+			if(!IT.has_item_quality)
+				continue
+			if(isnull(min_q) || IT.item_quality < min_q)
+				min_q = IT.item_quality
+		quality_out["min_quality"] = min_q
 	while(Deletion.len)
 		var/DL = Deletion[Deletion.len]
 		Deletion.Cut(Deletion.len)
@@ -616,27 +666,18 @@
 	var/list/data = list()
 
 	var/list/crafting_recipes = list()
-	for(var/rec in GLOB.crafting_recipes)
-		var/datum/crafting_recipe/R = rec
-
-		if(R.name == "") //This is one of the invalid parents that sneaks in
+	for(var/datum/crafting_recipe/R as anything in GLOB.crafting_recipes)
+		if(!R.name)
 			continue
 		if(R.hides_from_crafting_menu)
 			continue
-
 		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
 			continue
 		if(R.required_tech_node && !R.tech_unlocked)
 			continue
-		var/category
-		if(R.skillcraft)
-			var/datum/skill/S = R.skillcraft
-			category = initial(S.name)
-		else
-			category = "Other"
-		if(isnull(crafting_recipes[category]))
-			crafting_recipes[category] = list()
-		crafting_recipes[category] += list(build_recipe_data(R))
+		if(isnull(crafting_recipes[R.cached_category]))
+			crafting_recipes[R.cached_category] = list()
+		crafting_recipes[R.cached_category] += list(R.cached_display_data)
 
 	data["crafting_recipes"] = crafting_recipes
 	return data
@@ -674,13 +715,20 @@
 			showonlycraftable = params["state"]
 
 
-
 /datum/component/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
 	var/list/data = list()
 	data["name"] = R.name
 	data["ref"] = "[REF(R)]"
 	data["path"] = R.type
 	data["sellprice"] = R.sellprice
+	var/result_path
+	if(islist(R.result))
+		var/list/result_list = R.result
+		if(result_list.len)
+			result_path = result_list[1]
+	else if(ispath(R.result, /atom/movable))
+		result_path = R.result
+	data["has_item_quality"] = result_path && ispath(result_path, /obj/item) ? initial(result_path:has_item_quality) : FALSE
 	var/req_text = ""
 	var/tool_text = ""
 	var/catalyst_text = ""
@@ -788,6 +836,7 @@
 	set name = "Toggle legacy craft"
 	set category = "Options"
 	set desc = "Toggles between legacy and miacraft"
+	set hidden = 1
 	usr.client.legacycraft = !legacycraft
 
 /client

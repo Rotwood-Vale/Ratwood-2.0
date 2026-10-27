@@ -14,7 +14,7 @@
 	base_antags = 1
 	maximum_antags = 2
 	min_players = 25
-	weight = 7
+	weight = 0
 
 	earliest_start = 0 SECONDS
 

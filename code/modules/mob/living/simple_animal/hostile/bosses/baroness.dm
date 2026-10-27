@@ -117,7 +117,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	speed = 0.3
-	flag = "magic"
+	flag = "fire"
 	light_color = "#ffffff"
 /obj/projectile/magic/baroness/lightning/on_hit(target)
 	. = ..()
@@ -238,10 +238,8 @@
 	blade_class = BCLASS_CUT
 	hitsound = 'sound/combat/hits/bladed/genchop (1).ogg'
 	chargetime = 15
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	swingdelay = 3
-	candodge = TRUE
-	canparry = TRUE
 	item_d_type = "stab"
 
 /mob/living/carbon/human/species/dwarfskeleton/ambush/knight/summoned

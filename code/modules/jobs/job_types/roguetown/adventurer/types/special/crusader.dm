@@ -1,4 +1,5 @@
 /datum/advclass/crusader
+	townie_contract_gate_exempt = TRUE
 	name = "Crusader"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
@@ -54,7 +55,7 @@
 	gloves = /obj/item/clothing/gloves/roguetown/chain
 	backr = /obj/item/rogueweapon/shield/tower/metal
 	backl = /obj/item/storage/backpack/rogue/satchel
-	beltr = /obj/item/rogueweapon/scabbard/sword
+	beltr = /obj/item/rogueweapon/scabbard/sword/noble
 	r_hand = /obj/item/rogueweapon/sword/decorated
 	beltl = /obj/item/clothing/head/roguetown/helmet/heavy/crusader
 	neck = /obj/item/clothing/neck/roguetown/psicross/g
@@ -72,7 +73,7 @@
 				beltl = /obj/item/clothing/head/roguetown/helmet/heavy/crusader/t
 				neck = /obj/item/clothing/neck/roguetown/psicross
 				r_hand = /obj/item/rogueweapon/sword/sabre
-				beltr = /obj/item/rogueweapon/scabbard/sword
+				beltr = /obj/item/rogueweapon/scabbard/sword/noble
 				belt = /obj/item/storage/belt/rogue/leather/plaquesilver
 
 	if(H.pronouns == SHE_HER || H.pronouns == THEY_THEM_F)
@@ -83,7 +84,7 @@
 							/obj/item/rogueweapon/huntingknife/idagger/silver = 1,
 							/obj/item/storage/belt/rogue/pouch/coins/rich = 1,
 							/obj/item/flashlight/flare/torch = 1,
-							/obj/item/rogueweapon/scabbard/sheath = 1
+							/obj/item/rogueweapon/scabbard/sheath/noble = 1
 							)
 		H.change_stat(STATKEY_STR, 1)
 

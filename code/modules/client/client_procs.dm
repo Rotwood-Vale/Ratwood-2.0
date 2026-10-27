@@ -160,6 +160,11 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		answer_schizohelp(locate(href_list["schizohelp"]))
 		return
 
+	if(href_list["vieweconomics"])
+		var/datum/economic_chronicle/chronicle = get_economic_chronicle()
+		chronicle.ui_interact(mob)
+		return
+
 	if(href_list["viewchronicle"])
 		var/tab = href_list["chronicletab"] || "The Realm"
 		show_chronicle(tab)
@@ -192,6 +197,13 @@ GLOBAL_LIST_EMPTY(respawncounts)
 			. = prefs.familiar_prefs.fam_process_link(usr,href_list)
 			inprefs = FALSE
 			return
+		if("gnoll_prefs")
+			if (inprefs)
+				return
+			inprefs = TRUE
+			. = prefs.gnoll_prefs.gnoll_process_link(usr,href_list)
+			inprefs = FALSE
+			return
 
 	switch(href_list["action"])
 		if("openLink")
@@ -214,6 +226,15 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href=\"https://secure.byond.com/membership\">Click Here to find out more</a>.")
 		return 0
 	return 1
+
+/client/proc/is_localhost()
+	var/static/localhost_addresses = list(
+		"127.0.0.1",
+		"::1",
+		null,
+	)
+	return address in localhost_addresses
+
 /*
  * Call back proc that should be checked in all paths where a client can send messages
  *
@@ -315,11 +336,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 				to_chat(world, "Autoadmin rank not found")
 			else
 				new /datum/admins(autorank, ckey)
-	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin)
-		var/localhost_addresses = list("127.0.0.1", "::1")
-		if(isnull(address) || (address in localhost_addresses))
-			var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
-			new /datum/admins(localhost_rank, ckey, 1, 1)
+	if(CONFIG_GET(flag/enable_localhost_rank) && !connecting_admin && is_localhost())
+		var/datum/admin_rank/localhost_rank = new("!localhost!", R_EVERYTHING, R_DBRANKS, R_EVERYTHING) //+EVERYTHING -DBRANKS *EVERYTHING
+		if(QDELETED(localhost_rank))
+			to_chat(world, "Local admin rank creation failed, somehow?")
+			return
+		new /datum/admins(localhost_rank, ckey, 1, 1)
+		CONFIG_SET(number/movedelay/walk_delay, 3)
+		CONFIG_SET(number/movedelay/run_delay, 2)
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(prefs)
@@ -562,6 +586,11 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 	Master.UpdateTickRate()
 
+	fullscreen()
+	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
+		winset(src, null, "browser-options=find,byondstorage")
+	// byondstorage,devtools <- other options
+
 //////////////
 //DISCONNECT//
 //////////////
@@ -604,7 +633,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
 	GLOB.clients -= src
-	QDEL_NULL(tgui_panel)
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
@@ -1174,13 +1202,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/fullscreen()
 	winset(src, "mainwindow", "statusbar=false")
 
-/client/New()
-	..()
-	fullscreen()
-	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
-		winset(src, null, "browser-options=find,byondstorage")
-	// byondstorage,devtools <- other options
-
 /client/proc/give_award(achievement_type, mob/user)
 	return	player_details.achievements.unlock(achievement_type, mob/user)
 
@@ -1250,6 +1271,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	return
 
 /client/proc/preload_music()
-	if(SSsounds.initialized == TRUE)
-		for(var/sound_path as anything in SSsounds.all_music_sounds)
-			src << load_resource(sound_path, -1)
+	if(cached_sounds || !SSsounds.initialized)
+		return
+	cached_sounds = TRUE
+	for(var/sound_path as anything in SSsounds.all_music_sounds)
+		src << load_resource(sound_path, 0)

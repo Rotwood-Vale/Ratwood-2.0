@@ -1,11 +1,22 @@
 /mob/living
 	//used by the basic ai controller /datum/ai_behavior/basic_melee_attack to determine how fast a mob can attack
 	var/melee_cooldown = CLICK_CD_MELEE
+	/// Mobs this living mob is actively hostile toward.
+	var/list/enemies
+	/// Contract-spawned mobs get this set: their heads pay no HEADEATER bounty (the contract reward is the payment)
+	var/no_head_bounty = FALSE
+	/// Marks a mob as belonging to a contract warband; its corpse dusts itself after death.
+	var/contract_spawned = FALSE
+	var/contract_dust_scheduled = FALSE
+	var/zone_selector_hud_dirty = FALSE
+	var/pain_hud_dirty = FALSE
+	var/injury_hud_update_queued = FALSE
 
 /mob/living/Initialize(mapload)
 	. = ..()
 	update_a_intents()
 	swap_rmb_intent(num=1)
+	AddComponent(/datum/component/wallpress_doubletap)
 	if(unique_name)
 		name = "[name] ([rand(1, 1000)])"
 		real_name = name
@@ -14,10 +25,10 @@
 	init_faith()
 
 /mob/living/Destroy()
+	cancel_disconnected_admin_alert()
 	surgeries = null
 	if(LAZYLEN(status_effects))
-		for(var/s in status_effects)
-			var/datum/status_effect/S = s
+		for(var/datum/status_effect/S as anything in status_effects.Copy())
 			if(S.on_remove_on_mob_delete) //the status effect calls on_remove when its mob is deleted
 				qdel(S)
 			else
@@ -42,7 +53,36 @@
 	sharedSoullinks = null
 	if(craftingthing)
 		QDEL_NULL(craftingthing)
+	clear_enemies()
+	enemies = null
 	return ..()
+
+/// Adds a mob to our enemies list, dropping the reference if that mob is ever destroyed.
+/mob/living/proc/add_enemy(mob/living/new_enemy)
+	if(!new_enemy || new_enemy == src || (new_enemy in enemies))
+		return
+	LAZYSET(enemies, new_enemy, null)
+	RegisterSignal(new_enemy, COMSIG_QDELETING, PROC_REF(on_enemy_destroyed))
+
+/// As add_enemy, but stores an associated value against the mob.
+/mob/living/proc/set_enemy(mob/living/new_enemy, value)
+	if(!new_enemy || new_enemy == src)
+		return
+	add_enemy(new_enemy)
+	enemies[new_enemy] = value
+
+/mob/living/proc/add_enemies(list/new_enemies)
+	for(var/mob/living/new_enemy as anything in new_enemies)
+		add_enemy(new_enemy)
+
+/mob/living/proc/on_enemy_destroyed(datum/source)
+	SIGNAL_HANDLER
+	enemies -= source
+
+/mob/living/proc/clear_enemies()
+	for(var/mob/living/enemy as anything in enemies)
+		UnregisterSignal(enemy, COMSIG_QDELETING)
+	enemies = list()
 
 /mob/living/onZImpact(turf/T, levels)
 	if(HAS_TRAIT(src, TRAIT_NOFALLDAMAGE2))
@@ -83,6 +123,38 @@
 /mob/living/proc/OpenCraftingMenu()
 	return
 
+/mob/living/proc/update_zone_selector_hud()
+	if(hud_used?.zone_select)
+		hud_used.zone_select.update_zone_layers()
+
+/mob/living/proc/mark_zone_selector_hud_dirty()
+	if(!hud_used?.zone_select)
+		return
+	zone_selector_hud_dirty = TRUE
+	queue_injury_hud_flush()
+
+/mob/living/proc/mark_pain_hud_dirty()
+	if(!hud_used)
+		return
+	pain_hud_dirty = TRUE
+	queue_injury_hud_flush()
+
+/mob/living/proc/queue_injury_hud_flush()
+	if(injury_hud_update_queued)
+		return
+	injury_hud_update_queued = TRUE
+	addtimer(CALLBACK(src, PROC_REF(flush_injury_huds)), 0)
+
+/mob/living/proc/flush_injury_huds()
+	injury_hud_update_queued = FALSE
+	if(zone_selector_hud_dirty)
+		zone_selector_hud_dirty = FALSE
+		update_zone_selector_hud()
+	if(pain_hud_dirty)
+		pain_hud_dirty = FALSE
+		update_damage_hud()
+		update_health_hud()
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
@@ -110,7 +182,7 @@
 /mob/living/proc/MobBump(mob/M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
-
+	M.mob_timers[MT_SNEAKBUMP] = world.time //Here we go again. Make people suddenly lose stealth if they're bumped. No more rogueshittery.
 	if(now_pushing)
 		return TRUE
 
@@ -146,13 +218,10 @@
 			var/target_points = FLOOR((L.STACON + L.STASTR)/2, 1)
 
 			switch(sprint_distance)
-				// Point blank
-				if(0 to 1)
+				// Point blank to 2 tiles
+				if(0 to 3)
 					self_points -= 99
 					instafail = TRUE
-				// One to two tile between the people
-				if(2 to 3)
-					self_points -= 2
 				// Five or above tiles between people
 				if(6 to INFINITY)
 					self_points += 1
@@ -182,6 +251,8 @@
 				L.Knockdown(1)
 			if(self_points < target_points)
 				Knockdown(30)
+				apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
+				apply_status_effect(/datum/status_effect/debuff/clickcd, 3 SECONDS)
 			if(self_points == target_points)
 				L.Knockdown(1)
 				Knockdown(30)
@@ -408,10 +479,11 @@
 				return
 
 		// Makes it so people who recently broke out of grabs cannot be grabbed again
-		if(TIMER_COOLDOWN_RUNNING(target, "broke_free") && target.stat == CONSCIOUS)
+		if(COOLDOWN_TIMELEFT(target, broke_free) && target.stat == CONSCIOUS)
 			target.visible_message(span_warning("[target] slips from [src]'s grip."), \
 					span_warning("I slip from [src]'s grab."))
 			log_combat(src, target, "tried grabbing", addition="passive grab")
+			stop_pulling()
 			return
 
 		log_combat(src, target, "grabbed", addition="passive grab")
@@ -431,6 +503,10 @@
 				O.sublimb_grabbed = item_override
 			else
 				O.sublimb_grabbed = used_limb
+			O.update_grabbed_spell_hud()
+			if(BP)
+				C.update_hud_hand_slot(BP.held_index)
+				C.mark_zone_selector_hud_dirty()
 			put_in_hands(O)
 			O.update_hands(src)
 			if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER) || item_override)
@@ -796,7 +872,7 @@
 	update_stat()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
-/mob/living/proc/check_revive(mob/living/user)
+/mob/living/proc/check_revive(mob/living/user, bypass_foreign_brain_check = FALSE)
 	if(src == user)
 		return FALSE
 	if(stat < DEAD)
@@ -830,32 +906,71 @@
 
 	return TRUE
 
+/// Whether this body holds a brain that belongs to a different body, see is_foreign_to()
+/mob/living/carbon/proc/has_foreign_brain()
+	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+	return B?.is_foreign_to(src)
+
+/mob/living/carbon/human/check_revive(mob/living/user, bypass_foreign_brain_check = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(!bypass_foreign_brain_check && has_foreign_brain())	// The Fulmenor chair is the one caller allowed to pass bypass_foreign_brain_check (Pestrians too now, go forth flesh abominations!)
+		to_chat(user, span_danger("The soul within does not know this flesh. It will not answer through a stranger's body. Only the lightning of a Fulmenor chair brimming with elixir under a master's hand or a power of the fleshtwisting pestrian could bind it."))
+		return FALSE
+
+/// The single DEAD-to-alive transition, every revival and rise routes through it.
+/// Returns whether the flip happened, NOT whether they stayed alive, updatehealth re-kills if the caller skipped a health floor
+/mob/living/proc/become_alive(new_stat = CONSCIOUS, bypass_foreign_brain_check = FALSE)
+	if(stat != DEAD)
+		return FALSE
+	if(!bypass_foreign_brain_check && iscarbon(src))
+		var/mob/living/carbon/C = src
+		if(C.has_foreign_brain())
+			return FALSE
+	GLOB.dead_mob_list -= src
+	GLOB.alive_mob_list += src
+	stat = new_stat
+	updatehealth() //then we check if the mob should wake up.
+	update_mobility()
+	update_sight()
+	reload_fullscreen()
+	return TRUE // death() already re-swapped the lists if the updatehealth above re-killed us
+
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+/// bypass_foreign_brain_check pierces only that gate, health and rot still apply. The chair is its one caller (Pestrians too now, go forth flesh abominations!)
+/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive, break_restraints = admin_revive)
 	if(stat == DEAD && (admin_revive || can_be_revived())) //in some cases you can't revive (e.g. no brain)
-		GLOB.dead_mob_list -= src  //If any more forms of revival are added, better to use a proc to do this - easier to search
-		GLOB.alive_mob_list += src
+		if(!become_alive(CONSCIOUS, admin_revive || bypass_foreign_brain_check)) // Refused, nothing flipped, nothing to tidy
+			return
+		// Runs even if become_alive's updatehealth re-killed us, or the corpse keeps its
+		// rot, its dormant deadite datum and the monochrome death filter
 		set_suicide(FALSE)
-		stat = CONSCIOUS
-		updatehealth() //then we check if the mob should wake up.
-		update_mobility()
-		update_sight()
 		clear_alert("not_enough_oxy")
-		reload_fullscreen()
 		remove_client_colour(/datum/client_colour/monochrome)
-		// Add message about struggling to recall death circumstances
-		to_chat(src, "<span class='notice'><b>As you return to life, you struggle to recall the circumstances of your death...</b></span>")
-		to_chat(src, "<span class='italic'>Your memories of your final moments are hazy and fragmented.</span>")
-		. = TRUE
+		. = (stat < DEAD) // The flip happened, but only report success if they actually stayed alive
+		if(.)
+			// Add message about struggling to recall death circumstances
+			to_chat(src, "<span class='notice'><b>As you return to life, you struggle to recall the circumstances of your death...</b></span>")
+			to_chat(src, "<span class='italic'>Your memories of your final moments are hazy and fragmented.</span>")
+			var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
+			if(heart)
+				heart.Restart()
 		if(mind)
 			if(admin_revive)
 				mind.remove_antag_datum(/datum/antagonist/zombie)
-			for(var/obj/effect/proc_holder/spell/spell as anything in mind.spell_list)
-				spell.updateButtonIcon()
-		qdel(GetComponent(/datum/component/rot))
+			for(var/spell as anything in mind.spell_list)
+				var/obj/effect/proc_holder/spell/newspell = spell
+				var/datum/action/cooldown/spell/oldspell = spell
+				if(istype(newspell))
+					newspell.action?.build_all_button_icons()
+				else if (istype(oldspell))
+					oldspell.build_all_button_icons()
+		if(.) // A re-died corpse is a corpse again, it keeps its rot and its pending rise
+			qdel(GetComponent(/datum/component/rot))
 
 /mob/living/proc/remove_CC(should_update_mobility = TRUE)
 	SetStun(0, FALSE)
@@ -936,20 +1051,16 @@
 		reset_offsets("wall_press")
 		return FALSE
 	if(buckled || lying)
-		wallpressed = FALSE
+		set_wallpressed(FALSE)
 		reset_offsets("wall_press")
 		return FALSE
 	var/turf/newwall = get_step(newloc, wallpressed)
 	if(!T.Adjacent(newwall))
 		return reset_offsets("wall_press")
-	if(isclosedturf(newwall) && fixedeye)
-		var/turf/closed/C = newwall
-		if(C.wallpress)
-			return TRUE
-	wallpressed = FALSE
+	if(fixedeye && newwall?.get_wallpress_atom())
+		return TRUE
+	set_wallpressed(FALSE)
 	reset_offsets("wall_press")
-	update_wallpress_slowdown()
-
 
 /mob/living/Move(atom/newloc, direct, glide_size_override)
 
@@ -970,6 +1081,7 @@
 			lying = 270
 		update_transform()
 		lying_prev = lying
+
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct, glide_size)
@@ -1040,7 +1152,7 @@
 						TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress)
+	if((NOBLOOD in dna.species.species_traits) || (INVISBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress) //OV EDIT
 		return
 	..()
 
@@ -1057,7 +1169,13 @@
 	set name = "Resist"
 	set category = "IC"
 	set hidden = 1
+	//giving up on a struggle must not wait on the breakout cooldown that same struggle charged up front
+	if(cancel_restraint_struggle())
+		return
 	if(!can_resist() || surrendering)
+		return
+	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
+		to_chat(src, span_info("I can't resist right now."))
 		return
 
 	changeNext_move(CLICK_CD_RESIST)
@@ -1067,15 +1185,14 @@
 
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
-	if(pulledby)
-		var/mob/living/P
-		if(isliving(pulledby))
-			P = pulledby
+	if(isliving(pulledby))
+		var/mob/living/puller = pulledby
 		if(!restrained(ignore_grab = 1))
 			log_combat(src, pulledby, "resisted grab")
-			resist_grab()
+			if(resist_grab())
+				COOLDOWN_START(src, broke_free, 1 SECONDS)
 			return
-		else if(P.compliance) // we ARE handcuffed apart from the grab, but grabber has Compliance Mode on
+		else if(puller.compliance) // we ARE handcuffed apart from the grab, but grabber has Compliance Mode on
 			log_combat(src, pulledby, "resisted grab (is restrained, compliance mode bypass)") // if you try baiting prisoners with this, I'll know.
 			resist_grab() // resisting out of his grab (100% success) takes priority here
 			return
@@ -1113,12 +1230,11 @@
 	set name = "Yield"
 	set category = "IC"
 	set hidden = 1
-	if(surrendering || stat)
+	if(surrendering || stat == DEAD)
 		return
 	if(!instant)
 		if(alert(src, "Do you yield?", "SURRENDER", "Yes", "No") == "No")
 			return
-	log_combat(src, null, "surrendered")
 	surrendering = 1
 	record_round_statistic(STATS_YIELDS)
 	toggle_cmode()
@@ -1127,16 +1243,22 @@
 	vis_contents += flaggy
 	Stun(300)
 	Knockdown(300)
+	drop_all_held_items()
 	apply_status_effect(/datum/status_effect/debuff/breedable)
 	apply_status_effect(/datum/status_effect/debuff/submissive)
+	apply_status_effect(/datum/status_effect/debuff/omegamale)
 	src.visible_message(span_notice("[src] yields!"))
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1, ignore_walls=TRUE)
 	update_vision_cone()
 	addtimer(CALLBACK(src, PROC_REF(end_submit)), 600)
+	log_combat(src, src, "surrendered")
+	log_admin("([key_name(src)]) surrendered at [AREACOORD(src)].")
+	SSblackbox.record_feedback("tally", "submit", 1, "surrenders")
 
 /mob/living/proc/end_submit()
 	surrendering = 0
 	update_mobility()
+	log_combat(src, src, "stopped surrendering")
 
 /mob/living/proc/toggle_compliance()
 	set name = "Toggle Compliance"
@@ -1148,12 +1270,15 @@
 		notifyme = client.prefs.compliance_notifs
 
 	if(has_status_effect(/datum/status_effect/compliance))
-		src.compliance = 0
+		if(HAS_TRAIT(src, TRAIT_COMPLIANT))
+			to_chat(src, span_alert("My vice makes me compliant against my will.")) //only for people who take the compliant vice
+			return
+		compliance = FALSE
 		remove_status_effect(/datum/status_effect/compliance)
 		if(notifyme)
 			to_chat(src, span_info("I will struggle against grabs as usual."))
 	else
-		src.compliance = 1
+		compliance = TRUE
 		apply_status_effect(/datum/status_effect/compliance)
 		if(notifyme)
 			to_chat(src, span_info("I will allow all grabs and resistance attempts by others."))
@@ -1299,6 +1424,10 @@
 /mob/living/proc/resist_restraints()
 	return
 
+///Routes a resist press to cuff_resist's give-up branch while a struggle is running. TRUE if it handled it
+/mob/living/proc/cancel_restraint_struggle()
+	return FALSE
+
 /mob/living/proc/get_visible_name()
 	return name
 
@@ -1353,6 +1482,8 @@
 			if(what.nudist_approved && L.IsSleeping())
 				surrender_mod = 0.5 // concession for letting nude sleepers wear certain items: people can swipe them fast
 
+		else if(HAS_TRAIT(L, TRAIT_LOOSE_STRAPS))
+			surrender_mod = 0.5
 	if(!who.Adjacent(src))
 		return
 
@@ -1615,7 +1746,10 @@
  */
 
 /mob/living/proc/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
-	adjust_bodytemperature(((fire_handler.stacks)) * 0.5 * seconds_per_tick)
+	var/fire_resist_mult = 1
+	if(HAS_TRAIT(src, TRAIT_FIRE_RESIST))
+		fire_resist_mult = 0.5
+	adjust_bodytemperature(((fire_handler.stacks)) * 0.5 * seconds_per_tick * fire_resist_mult)
 
 /**
  * Adjust the amount of fire stacks on a mob
@@ -1667,6 +1801,9 @@
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	var/datum/status_effect/fire_handler/fire_stacks/their_fire_status = spread_to.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	if(fire_status && fire_status.on_fire)
+		if(fire_stacks < 2)// don't spread fire if you have less than two stacks
+			return
+
 		if(their_fire_status && their_fire_status.on_fire)
 			var/firesplit = (fire_stacks + spread_to.fire_stacks) / 2
 			var/fire_type = (spread_to.fire_stacks > fire_stacks) ? their_fire_status.type : fire_status.type
@@ -1674,13 +1811,23 @@
 			spread_to.set_fire_stacks(firesplit, fire_type)
 			return
 
+		if(!(mobility_flags & MOBILITY_STAND) && spread_to.m_intent == MOVE_INTENT_WALK)// don't ignite because we stepped over someone burning unless we are sprinting
+			to_chat(spread_to, span_notice("You step over [src]'s burning body."))
+			return
+
 		adjust_fire_stacks(-fire_stacks / 2, fire_status.type)
 		spread_to.adjust_fire_stacks(fire_stacks, fire_status.type)
 		if(spread_to.ignite_mob())
-			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK)
+			log_message("bumped into [key_name(spread_to)] and set them on fire.", LOG_ATTACK, meta = list(LOG_META_TARGET = spread_to.ckey))
 		return
 
 	if(!their_fire_status || !their_fire_status.on_fire)
+		return
+
+	if(spread_to.fire_stacks < 2)// don't spread fire if you have less than two stacks
+		return
+
+	if(!(spread_to.mobility_flags & MOBILITY_STAND))// same as above, but we're rubbing our burning face on their leg
 		return
 
 	spread_to.adjust_fire_stacks(-spread_to.fire_stacks / 2, their_fire_status.type)
@@ -1924,6 +2071,22 @@
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
+		if (NAMEOF(src, wallpressed))
+			set_wallpressed(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		if (NAMEOF(src, blood_volume))
+			set_blood_volume(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		if (NAMEOF(src, bloodpool))
+			set_bloodpool(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
+		if (NAMEOF(src, maxbloodpool))
+			set_maxbloodpool(var_value)
+			datum_flags |= DF_VAR_EDITED
+			return TRUE
 		if ("maxHealth")
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
@@ -2041,12 +2204,13 @@
 			if(marked)
 				if(ishuman(src))
 					var/mob/living/carbon/human/H = src
-					if(H.current_mark == M && HAS_TRAIT(H, TRAIT_SLEUTH))
+					if(H.current_mark == M)
 						found_ping(get_turf(M), client, "trap")
 					else
 						found_ping(get_turf(M), client, "hidden")
 
 		for(var/obj/O in view(7,src))
+			SEND_SIGNAL(O, COMSIG_LOOK_AROUND_SPOTTED, src)
 			if(istype(O, /obj/item/restraints/legcuffs/beartrap))
 				var/obj/item/restraints/legcuffs/beartrap/M = O
 				if(isturf(M.loc) && M.armed)
@@ -2061,6 +2225,11 @@
 					found_ping(get_turf(M), client, "trap")
 			if(istype(O, /obj/structure/flora/roguegrass/maneater/real))
 				found_ping(get_turf(O), client, "trap")
+			if(istype(O, /obj/structure/quicksand))
+				found_ping(get_turf(O), client, "trap")
+			if(istype(O, /obj/item/bodypart/head)) // Bodies ping as mobs already, a loose head is an item and would be invisible otherwise
+				if(isturf(O.loc)) // Only one lying loose, not one in a bag or held
+					found_ping(get_turf(O), client, "hidden")
 			//Hearthstone port - Tracking
 		for(var/obj/effect/track/potential_track in orange(7, src)) //Can't use view because they're invisible by default.
 			if(!can_see(src, potential_track, 10))
@@ -2070,7 +2239,41 @@
 			found_ping(get_turf(potential_track), client, "hidden")
 			potential_track.handle_revealing(src)
 		//Hearthstone end.
+		// Hunting Tracks Logic
+		check_nearby_hunting_tracks()
 
+///Finds the closest nearby hunting track visible to our party and reports its distance/direction.
+/mob/living/proc/check_nearby_hunting_tracks()
+	var/obj/effect/hunting_track/closest_track
+	var/min_dist = 8
+	for(var/obj/effect/hunting_track/nearby_track in range(7, src))
+		// Check if we are part of the party that can see this track
+		var/can_see_track = FALSE
+		for(var/datum/weakref/party_weakref in nearby_track.party_refs)
+			if(party_weakref.resolve() == src)
+				can_see_track = TRUE
+				break
+		if(!can_see_track)
+			continue
+		found_ping(get_turf(nearby_track), client, "paws")
+		var/dist = get_dist(src, nearby_track)
+		if(dist < min_dist)
+			min_dist = dist
+			closest_track = nearby_track
+	if(!closest_track)
+		return
+	var/dir_text = dir2text(get_dir(src, closest_track))
+	var/dist_text = ""
+	switch(min_dist)
+		if(0 to 1)
+			dist_text = "right beneath your feet"
+		if(2 to 3)
+			dist_text = "very close by"
+		if(4 to 5)
+			dist_text = "a few paces away"
+		else
+			dist_text = "in the distance"
+	to_chat(src, span_notice("You spot a faint trail [dist_text] to the [dir_text]."))
 
 /proc/found_ping(atom/A, client/C, state)
 	if(!A || !C || !state)
@@ -2100,21 +2303,12 @@
 		visible_message(span_info("[src] looks up."))
 	var/turf/ceiling = get_step_multiz(src, UP)
 	var/turf/T = get_turf(src)
+	var/datum/controller/subsystem/ParticleWeather/PW = SSParticleWeather //used so we can see what's the weather outside
 	if(!ceiling) //We are at the highest z-level.
 		if(T.can_see_sky())
-			switch(GLOB.forecast)
-				if("prerain")
-					to_chat(src, span_warning("Dark clouds gather..."))
-					return
-				if("rain")
-					to_chat(src, span_warning("A wet wind blows."))
-					return
-				if("rainbow")
-					to_chat(src, span_notice("A beautiful rainbow!"))
-					return
-				if("fog")
-					to_chat(src, span_warning("I can't see anything, the fog has set in."))
-					return
+			if(PW.runningWeather)
+				to_chat(src, span_warning("[PW.runningWeather.warning_message]"))
+				return
 			to_chat(src, span_warning("There is nothing special to say about this weather."))
 			do_time_change()
 		return
@@ -2123,6 +2317,8 @@
 		return
 
 	if(T.can_see_sky())
+		if(PW.runningWeather)
+			to_chat(src, span_warning("[PW.runningWeather.warning_message]"))
 		do_time_change()
 
 	var/ttime = 10
@@ -2181,8 +2377,8 @@
 			_y = min(0,_y)
 	else if(STAPER > 11)
 		var/offset = STAPER - 10
-		if(offset > 5)	//Caps the bonus at 15 PER, which is a whole extra screen in an orthogonal direction. Anymore will get disorienting.
-			offset = 5
+		if(offset >= 5)	//Caps the bonus at 15 PER, which is a whole extra screen in an orthogonal direction. Anymore will get disorienting.
+			offset = 4
 		if(STAPER >= 12)
 			message = span_info("[src] easily peers afar.")
 		if(_x > 0)
@@ -2193,9 +2389,11 @@
 			_y += offset
 		else if(_y != 0)
 			_y -= offset
-	if(m_intent != MOVE_INTENT_SNEAK)
 		if(_y == 0 && _x == 0)	//Their PER was too low to see anything.
 			message = span_info("[src] oafishly stares in front of themselves.")
+	if(m_intent == MOVE_INTENT_SNEAK)
+		to_chat(src, message)
+	else
 		visible_message(message)
 	animate(client, pixel_x = world.icon_size*_x, pixel_y = world.icon_size*_y, ttime)
 //	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(stop_looking))
@@ -2229,6 +2427,8 @@
 
 	if(m_intent != MOVE_INTENT_SNEAK)
 		visible_message(span_info("[src] looks down through [T]."))
+	else
+		to_chat(src, span_info("[src] looks down through [T]."))
 
 	if(!do_after(src, ttime, target = src))
 		return
@@ -2287,10 +2487,24 @@
 	offered_item_ref = WEAKREF(offered_item)
 
 	var/stealthy = (m_intent == MOVE_INTENT_SNEAK)
+	var/obj/item/reagent_containers/glass/offered_item_other = null
+	if(istype(offered_item, /obj/item/reagent_containers/glass) && offered_item?.reagents?.maximum_volume > 0) // we have a drink in our hand
+		offered_item_other = offered_to.offered_item_ref?.resolve()
 
 	if(stealthy)
 		to_chat(src, span_notice("I secretly offer [offered_item] to [offered_to]."))
 		to_chat(offered_to, span_notice("[offered_to] secretly offers [offered_item] to me..."))
+	else if(!isnull(offered_item_other) && istype(offered_item_other) && offered_item_other?.reagents?.maximum_volume > 0) // clink drinks
+		playsound(src,offered_item_other.reagents.maximum_volume > 50 ? 'sound/misc/clink_drink_big.ogg' : 'sound/misc/clink_drink.ogg', 100, TRUE)
+		addtimer(CALLBACK(src, PROC_REF(stop_offering_item)), 0.6 SECONDS)
+		addtimer(CALLBACK(offered_to, PROC_REF(stop_offering_item)), 0.6 SECONDS)
+		visible_message(
+			span_notice("[src] clinks [offered_item] with [offered_to]!"), \
+			span_notice("I clink [offered_item] with [offered_to]!"), \
+			vision_distance = COMBAT_MESSAGE_RANGE, \
+			ignored_mobs = list(offered_to)
+		)
+		to_chat(offered_to, span_notice("[src] clinks [offered_item] with me!"))
 	else
 		visible_message(
 			span_notice("[src] offers [offered_item] to [offered_to] with an outstretched hand."), \
@@ -2347,3 +2561,49 @@
 		)
 	SEND_SIGNAL(offered_item, COMSIG_OBJ_HANDED_OVER, src, offerer)
 	offerer.stop_offering_item()
+
+// Contract-spawned mobs: heads pay no HEADEATER bounty (the contract reward is the payment)
+// and the corpse dusts itself a while after death so cleared warbands don't litter the wilds.
+/mob/living/proc/mark_contract_spawned(dust_corpse = TRUE)
+	no_head_bounty = TRUE
+	contract_spawned = TRUE
+	ADD_TRAIT(src, TRAIT_ZOMBIE_IMMUNE, CONTRACT_SPAWN_TRAIT)
+	if(dust_corpse)
+		RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(on_contract_death))
+/mob/living/carbon/mark_contract_spawned(dust_corpse = TRUE)
+	. = ..()
+	var/obj/item/bodypart/head/head = get_bodypart(BODY_ZONE_HEAD)
+	if(istype(head))
+		head.no_head_bounty = TRUE
+
+/mob/living/proc/on_contract_death(datum/source, gibbed)
+	SIGNAL_HANDLER
+	if(gibbed || contract_dust_scheduled) // already torn apart, or a timer is already pending
+		return
+	contract_dust_scheduled = TRUE
+	addtimer(CALLBACK(src, PROC_REF(dust_contract_corpse)), QUEST_MOB_DUST_DELAY)
+
+/mob/living/proc/dust_contract_corpse()
+	contract_dust_scheduled = FALSE
+	if(QDELETED(src) || stat != DEAD) // skip if it was somehow revived in the meantime
+		return
+	dust()
+
+/// Cancels a spell currently being channeled, covering both the old proc_holder system
+/// (which sets client.charging during mouse-hold) and the new spell_cooldown datum system
+/// (tracked via /mob/channeling_spell set in on_start_charge).
+/// Returns TRUE if a channel was actually interrupted.
+/mob/living/proc/interrupt_spell_channel()
+	. = FALSE
+	if(channeling_spell)
+		channeling_spell.cancel_casting()
+		// before_cast drives non-click charge spells through do_after; cancel_casting alone
+		// sets currently_charging=FALSE but the do_after loop only breaks on user.doing=FALSE
+		// or movement, so we need to explicitly break it.
+		stop_all_doing()
+		. = TRUE
+	if(client?.charging && used_intent?.tranged && !used_intent.tshield)
+		stop_attack()
+		. = TRUE
+	if(.)
+		to_chat(src, span_danger("My spell is disrupted!"))

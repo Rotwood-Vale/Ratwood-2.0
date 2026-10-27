@@ -74,6 +74,10 @@
 	ADD_TRAIT(src, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 	//REMOVE_TRAIT(src, TRAIT_SIMPLE_WOUNDS, TRAIT_GENERIC) //Ditto.
 
+/mob/living/simple_animal/hostile/boss/lich/Destroy()
+	QDEL_NULL(blink)
+	. = ..()
+
 /mob/living/simple_animal/hostile/boss/lich/Shoot()
 	projectiletype = pick(allowed_projectile_types)
 	..()
@@ -186,7 +190,7 @@
 	damage_type = BURN
 	nodamage = FALSE
 	speed = 0.3
-	flag = "magic"
+	flag = "fire"
 	light_color = "#ffffff"
 /obj/projectile/magic/lich/lightning/on_hit(target)
 	. = ..()
@@ -307,10 +311,8 @@
 	blade_class = BCLASS_CUT
 	hitsound = 'sound/combat/hits/bladed/genchop (1).ogg'
 	chargetime = 20
-	penfactor = 25
+	penfactor = PEN_MEDIUM
 	swingdelay = 3
-	candodge = TRUE
-	canparry = TRUE
 	item_d_type = "stab"
 
 /mob/living/simple_animal/hostile/rogue/skeleton/guard/shield/lich

@@ -56,12 +56,11 @@
 							playsound(loc, 'sound/combat/hits/burn (1).ogg', 100, FALSE, -1)
 							user.adjust_fire_stacks(10)
 							user.ignite_mob()
-							user.flash_fullscreen("redflash3")
+							user.fullscreen_redflash("redflash3")
 							user.emote("firescream")
 						guidinglight(src) // Actually starts the proc for applying the buff
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-						spawn(120)
-							icon_state = "astrata_chalky"
+						addtimer(VARSET_CALLBACK(src, icon_state, "astrata_chalky"), 120)
 
 /obj/structure/ritualcircle/astrata/proc/guidinglight(src)
 	var/ritualtargets = view(7, loc) // Range of 7 from the source, which is the rune
@@ -111,8 +110,78 @@
 
 /obj/structure/ritualcircle/xylix
 	name = "Rune of Trickery"
+	desc = "A Holy Rune of Xylix. The air feels untrustworthy."
 	icon_state = "xylix_chalky"
-	desc = "A Holy Rune of Xylix. You can hear the wind, and distant bells, in the distance."
+	var/trickeryrites = list("Rite of the Pratfall", "Stagehand's Silence")
+
+/obj/structure/ritualcircle/xylix/attack_hand(mob/living/user)
+	if(!istype(user.patron, /datum/patron/divine/xylix))
+		to_chat(user, span_smallred("I don't know the proper rites for this..."))
+		return
+
+	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
+		to_chat(user, span_smallred("I don't know the proper rites for this..."))
+		return
+
+	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
+		to_chat(user, span_smallred("I have performed enough rituals for the day..."))
+		return
+
+	var/riteselection = input(user, "Rituals of Trickery", src) as null|anything in trickeryrites
+	switch(riteselection)
+		if("Rite of the Pratfall")
+			if(!do_after(user, 40))
+				return
+			user.say("Hehe! Tippy toes and tumbling woes...")
+			playsound(loc, 'sound/misc/clownedhehe.ogg', 90, FALSE)
+
+			if(!do_after(user, 40))
+				return
+			user.say("Hoohoo! Step with care, or embrace the air!")
+			playsound(loc, 'sound/misc/clownedhohoho.ogg', 90, FALSE)
+
+			if(!do_after(user, 30))
+				return
+			user.say("Hahaha! Your slippery fate awaits every move! A pratfall a day keeps the dignity away!")
+			playsound(loc, 'sound/magic/decoylaugh.ogg', 90, FALSE)
+
+			icon_state = "xylix_active"
+			loc.visible_message(span_warning("[user] traces a mocking sigil upon the rune."))
+
+			for(var/mob/living/M in range(1, src))
+				M.apply_status_effect(/datum/status_effect/buff/xylix_pratfall)
+
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			addtimer(CALLBACK(src, PROC_REF(reset_rune)), 120)
+
+		if("Stagehand's Silence")
+			if(!do_after(user, 50))
+				return
+			user.say("I CALL UPON THE MANY-FACED TRAGEDIAN!!")
+			playsound(loc, 'sound/misc/clownedhehe.ogg', 90, FALSE)
+
+			if(!do_after(user, 50))
+				return
+			user.say("PLAY YOUR HARP- LET EACH STRING DEAFEN MY FOES!!")
+			playsound(loc, 'sound/misc/clownedhohoho.ogg', 90, FALSE)
+
+			if(!do_after(user, 50))
+				return
+			user.say("--ON WITH THE SHOW!!")
+			to_chat(user, span_cultsmall("Every play needs its stagehands. Xylix will quicken the slow, speed your sneaking, and quiet your footsteps... for a time."))
+			playsound(loc, 'sound/magic/mockery.ogg', 90, FALSE, -1)
+			icon_state = "xylix_active"
+			stagehands_silence()
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			addtimer(CALLBACK(src, PROC_REF(reset_rune)), 120)
+
+/obj/structure/ritualcircle/xylix/proc/stagehands_silence()
+	var/list/ritualtargets = view(1, loc)
+	for(var/mob/living/carbon/human/target in ritualtargets)
+		target.apply_status_effect(/datum/status_effect/buff/stagehands_silence)
+
+/obj/structure/ritualcircle/xylix/proc/reset_rune()
+	icon_state = "xylix_chalky"
 
 /obj/structure/ritualcircle/ravox
 	name = "Rune of Justice"
@@ -156,14 +225,13 @@
 							playsound(loc, 'sound/misc/fliesloop.ogg', 100, FALSE, -1)
 							flylordstriage(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "pestra_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "pestra_chalky"), 120)
 
 /obj/structure/ritualcircle/pestra/proc/flylordstriage(src)
 	var/ritualtargets = view(0, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		to_chat(target,span_userdanger("You feel them crawling into your wounds and pores. Their horrific hum rings through your ears as they do their work!"))
-		target.flash_fullscreen("redflash3")
+		target.fullscreen_redflash("redflash3")
 		target.emote("agony")
 		target.Stun(200)
 		target.Knockdown(200)
@@ -174,7 +242,7 @@
 	name = "Rune of Beasts"
 	desc = "A Holy Rune of Dendor. Becoming one with nature is to connect with ones true instinct."
 	icon_state = "dendor_chalky"
-	var/bestialrites = list("Rite of the Lesser Wolf")
+	var/bestialrites = list("Rite of the Lesser Wolf", "Borrowed Madness", "Spider Kinship")
 
 /obj/structure/ritualcircle/dendor/attack_hand(mob/living/user)
 	if(!..())
@@ -206,20 +274,102 @@
 							playsound(loc, 'sound/vo/mobs/wwolf/howl (2).ogg', 100, FALSE, -1)
 							lesserwolf(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "dendor_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "dendor_chalky"), 120)
+		if("Borrowed Madness")
+			if(do_after(user, 50))
+				user.say("I pray for strength...")
+				playsound(loc, 'sound/vo/mobs/vw/idle (1).ogg', 100, FALSE, -1)
+				if(do_after(user, 50))
+					user.say("I pray for pain...")
+					playsound(loc, 'sound/vo/mobs/vw/idle (4).ogg', 100, FALSE, -1)
+					if(do_after(user, 50))
+						loc.visible_message(span_warning("[user] produces an eerie sound as they titter quietly, softly weeping. Their body twitches ever so slightly..."))
+						playsound(loc, 'sound/vo/mobs/vw/bark (1).ogg', 100, FALSE, -1)
+						if(do_after(user, 30))
+							icon_state = "dendor_active"
+							loc.visible_message(span_warning("[user] suddenly snaps their head upward, letting out a twisted howl!"))
+							playsound(loc, 'sound/vo/mobs/wwolf/howl (2).ogg', 100, FALSE, -1)
+							borrowedmadness(src)
+							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+							addtimer(VARSET_CALLBACK(src, icon_state, "dendor_chalky"), 120)
+		if("Spider Kinship")
+			if(do_after(user, 50))
+				user.say("I call to the ruthless wilds,")
+				playsound(loc, 'sound/vo/mobs/spider/idle (1).ogg', 100, FALSE, -1)
+				if(do_after(user, 50))
+					user.say("... grant me an agile form of your dominion..!")
+					playsound(loc, 'sound/vo/mobs/spider/idle (3).ogg', 100, FALSE, -1)
+					if(do_after(user, 30))
+						icon_state = "dendor_active"
+						loc.visible_message(span_warning("[user] seizes up, suddenly covered in a mess of silky webs, which then slough away into a sticky pile!"))
+						playsound(loc, 'sound/vo/mobs/spider/pain.ogg', 100, FALSE, -1)
+						spiderkinship(src)
+						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+						addtimer(VARSET_CALLBACK(src, icon_state, "dendor_chalky"), 120)
 
 /obj/structure/ritualcircle/dendor/proc/lesserwolf(src)
 	var/ritualtargets = view(1, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
 		target.apply_status_effect(/datum/status_effect/buff/lesserwolf)
 
+/obj/structure/ritualcircle/dendor/proc/borrowedmadness(src)
+	var/ritualtargets = view(1, loc)
+	for(var/mob/living/carbon/human/target in ritualtargets)
+		if(!istype(target.patron, /datum/patron/divine/dendor))
+			to_chat(target, span_warning("The ritual's power does not recognize me..."))
+			continue
+		to_chat(target, span_userdanger("Do you like hurting other people?"))
+		target.fullscreen_redflash("redflash3")
+		target.emote("agony")
+		target.Unconscious(200)
+		target.Knockdown(200)
+		var/obj/effect/proc_holder/spell/self/wildshape/ws = target.mind?.get_spell(/obj/effect/proc_holder/spell/self/wildshape)
+		if(ws)
+			var/form_path = /mob/living/carbon/human/species/wildshape/dendormole
+			if(!(form_path in ws.possible_shapes))
+				ws.possible_shapes += form_path
+				to_chat(target, span_notice("The Moss Crawler form stirs within my soul..."))
+				addtimer(CALLBACK(src, PROC_REF(remove_ritual_form), target, form_path), 30 MINUTES)
+		else
+			to_chat(target, span_warning("I lack the Beast Form ability to channel this power..."))
+
+/obj/structure/ritualcircle/dendor/proc/spiderkinship(src)
+	var/ritualtargets = view(1, loc)
+	for(var/mob/living/carbon/human/target in ritualtargets)
+		if(!istype(target.patron, /datum/patron/divine/dendor))
+			to_chat(target, span_warning("The ritual's power does not recognize me..."))
+			continue
+		to_chat(target, span_userdanger("The webs of madness and nature whisper to me. The webs are eternal. Long live the Nest!"))
+		target.fullscreen_redflash("redflash3")
+		target.emote("agony")
+		target.Unconscious(100)
+		target.Knockdown(200)
+		var/obj/effect/proc_holder/spell/self/wildshape/ws = target.mind?.get_spell(/obj/effect/proc_holder/spell/self/wildshape)
+		if(ws)
+			var/form_path = /mob/living/carbon/human/species/wildshape/mirecrawler
+			if(!(form_path in ws.possible_shapes))
+				ws.possible_shapes += form_path
+				to_chat(target, span_notice("The Mire Crawler form stirs within my soul..."))
+				addtimer(CALLBACK(src, PROC_REF(remove_ritual_form), target, form_path), 30 MINUTES)
+		else
+			to_chat(target, span_warning("I lack the Beast Form ability to channel this power..."))
+
+/// Removes a temporary ritual form from the druid's Beast Form wheel when the duration expires.
+/obj/structure/ritualcircle/dendor/proc/remove_ritual_form(mob/living/carbon/human/target, form_path)
+	if(QDELETED(target) || !target.mind)
+		return
+	var/obj/effect/proc_holder/spell/self/wildshape/ws = target.mind.get_spell(/obj/effect/proc_holder/spell/self/wildshape)
+	if(ws && (form_path in ws.possible_shapes))
+		ws.possible_shapes -= form_path
+		to_chat(target, span_warning("The borrowed form fades from my soul..."))
+
+
 
 /obj/structure/ritualcircle/malum
 	name = "Rune of Forge"
 	desc = "A Holy Rune of Malum. A hammer and heat, to fix any imperfections with."
 	icon_state = "malum_chalky"
-var/forgerites = list("Ritual of Blessed Reforgance")
+	var/forgerites = list("Ritual of Blessed Reforgance")
 
 /obj/structure/ritualcircle/malum/attack_hand(mob/living/user)
 	if(!..())
@@ -250,13 +400,12 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 							playsound(loc, 'sound/magic/churn.ogg', 100, FALSE, -1)
 							holyreforge(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "malum_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "malum_chalky"), 120)
 
 /obj/structure/ritualcircle/malum/proc/holyreforge(src)
 	var/ritualtargets = view(7, loc)
 	for(var/mob/living/carbon/human/target in ritualtargets)
-		target.flash_fullscreen("whiteflash") //Cool effect!
+		target.fullscreen_redflash("whiteflash") //Cool effect!
 	for (var/obj/item/ingot/silver/I in loc)
 		qdel(I)
 		new /obj/item/ingot/silverblessed(loc)
@@ -332,8 +481,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 						to_chat(user, span_cultsmall("A crystalline shard forms at the center of the rune, humming with Abyssor's power."))
 						new /obj/item/abyssal_marker(loc)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-						spawn(240)
-							icon_state = "abyssoralt_chalky"
+						addtimer(VARSET_CALLBACK(src, icon_state, "abyssoralt_chalky"), 240)
 		if("Rite of Dreamcraft")
 			if(!HAS_TRAIT(user, TRAIT_DREAMWALKER))
 				return
@@ -368,8 +516,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				var/mob/living/carbon/human/H = user
 				if(H.mind)
 					H.mind.special_role = "dreamwalker"
-			spawn(240)
-				icon_state = "abyssoralt_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "abyssoralt_chalky"), 240)
 
 /obj/structure/ritualcircle/abyssor_alt_inactive/proc/dreamcraft_weapon(mob/living/user, choice)
 	var/obj/item/new_weapon
@@ -414,13 +561,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	target.emote("Agony")
 	playsound(loc, 'sound/combat/newstuck.ogg', 50)
 	loc.visible_message(span_cult("Ethereal tendrils emerge from the rune, wrapping around [target]'s body. Their form shifts and warps as dream-stuff solidifies into armor."))
-	spawn(20)
-		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/dreamwalker_armorrite)
-		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-		spawn(40)
-			to_chat(target, span_purple("Reality is but a fragile dream. You are the dreamer, and your will is law."))
-
+	addtimer(CALLBACK(src, PROC_REF(dreamarmor_stage2), target), 20)
 /obj/structure/ritualcircle/abyssor/attack_hand(mob/living/user)
 	if(!..())
 		return
@@ -446,8 +587,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 						to_chat(user, span_cultsmall("A crystalline shard forms at the center of the rune, humming with Abyssor's power."))
 						new /obj/item/abyssal_marker/tidal(loc)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-						spawn(240)
-							icon_state = "abyssor_chalky"
+						addtimer(VARSET_CALLBACK(src, icon_state, "abyssor_chalky"), 240)
 
 /obj/item/abyssal_marker
 	name = "abyssal marker"
@@ -556,7 +696,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 
 /obj/structure/active_abyssor_rune/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, .proc/spawn_spire), spawn_time)
+	addtimer(CALLBACK(src, PROC_REF(spawn_spire)), spawn_time)
 	src.visible_message(span_userdanger("A glowing, pulsating rune etches itself into the ground. Reality cracks visibly around it! Something is coming!"))
 
 /obj/structure/active_abyssor_rune/proc/spawn_spire()
@@ -815,7 +955,15 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		return COMPONENT_INCOMPATIBLE
 
 	linked_spire = spire
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	RegisterSignal(linked_spire, COMSIG_QDELETING, PROC_REF(on_spire_deleted))
+
+/datum/component/spire_fiend/proc/on_spire_deleted()
+	linked_spire = null
+	var/mob/living/living_parent = parent
+	if(!istype(living_parent) || QDELETED(living_parent))
+		return
+	living_parent.dust()
 
 /datum/component/spire_fiend/proc/on_death()
 	SIGNAL_HANDLER
@@ -876,8 +1024,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 						playsound(loc, 'sound/vo/mobs/ghost/moan (1).ogg', 100, FALSE, -1)
 						undermaidenbargain(src)
 						user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-						spawn(120)
-							icon_state = "necra_chalky"
+						addtimer(VARSET_CALLBACK(src, icon_state, "necra_chalky"), 120)
 		if("Vow to the Undermaiden")
 			loc.visible_message(span_warning("[user] sways before the rune, they open their mouth, though no words come out..."))
 			playsound(user, 'sound/vo/mobs/ghost/whisper (3).ogg', 100, FALSE, -1)
@@ -895,8 +1042,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 						if(undermaidenvow(src))
 							playsound(loc, 'sound/vo/mobs/ghost/moan (1).ogg', 100, FALSE, -1)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "necra_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "necra_chalky"), 120)
 						else
 							loc.visible_message(span_warning("Then... nothing. The Undermaiden does not care for the vows of the damned, or those of other faiths."))
 		if("The Toll")
@@ -922,8 +1068,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 							user.say("For this toll, a soul!!")
 							to_chat(user,span_cultsmall("[user] grasps the strands of Lux and attempts to pull a soul through the rift!"))
 							thetoll(target, user)
-							spawn(120)
-								icon_state = "necra_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "necra_chalky"), 120)
 
 
 
@@ -1024,7 +1169,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	desc = "A Holy Rune of Eora. A gentle warmth and joy spreads across your soul."
 	icon_state = "eora_chalky"
 
-	var/peacerites = list("Rite of Pacification")
+	var/peacerites = list("Rite of Pacification", "Rite of the Open Hearth")
 
 /obj/structure/ritualcircle/eora/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/divine/eora)
@@ -1049,8 +1194,35 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 							icon_state = "eora_active"
 							pacify(src)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-							spawn(120)
-								icon_state = "eora_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "eora_chalky"), 120)
+		if("Rite of the Open Hearth")
+			var/onrune = view(1, loc)
+			var/list/folksonrune = list()
+			for(var/mob/living/carbon/human/persononrune in onrune)
+				if(HAS_TRAIT(persononrune, TRAIT_EXTEROCEPTION))//Only works on Eorans
+					folksonrune += persononrune
+			if(!folksonrune.len)
+				to_chat(user, span_warning("There are no Eorans on the rune to perform this rite on."))
+				return
+			var/target = input(user, "Choose a host") as null|anything in folksonrune
+			if(!target)
+				return
+			user.say("I stand before you Mother to beg your ear and swear an oath!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("To stoke no anguish! To cause no pain!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("To mend what is frayed and redeem what has strayed!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("To shelter the lost and warm the forgotten!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			icon_state = "eora_active"
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			eoranaura(target)
+			addtimer(VARSET_CALLBACK(src, icon_state, "eora_chalky"), 120)
 
 /obj/structure/ritualcircle/eora/proc/pacify(src)
 	var/ritualtargets = view(0, loc)
@@ -1059,14 +1231,15 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		target.visible_message(span_green("I feel the burdens of my heart lifting. Something feels very wrong... I don't mind at all..."))
 		target.apply_status_effect(/datum/status_effect/buff/pacify)
 
-
-
+/obj/structure/ritualcircle/eora/proc/eoranaura(mob/living/carbon/human/target)
+	loc.visible_message(span_good("[target]'s form becomes enveloped in calming aura."))
+	addtimer(CALLBACK(src, PROC_REF(eoranaura_stage2), target), 20)
 // TIME FOR THE ASCENDANT. These can be stronger. As they are pretty much antag exclusive - Iconoclast for Matthios, Lich for ZIZO. ZIZO!
 
 
 /obj/structure/ritualcircle/zizo
-	name = "Rune of Progress"
-	desc = "A Holy Rune of ZIZO. Progress at any cost."
+	name = "Rune of Ambition"
+	desc = "A Holy Rune of ZIZO. Ambition at any cost."
 	icon_state = "zizo_chalky"
 	var/zizorites = list("Rite of Armaments", "Rite of the Dark Crystal", "Conversion")
 
@@ -1082,7 +1255,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended))
 		to_chat(user,span_smallred("I have performed enough rituals for the day... I must rest before communing more."))
 		return
-	var/riteselection = input(user, "Rituals of Progress", src) as null|anything in zizorites
+	var/riteselection = input(user, "Rituals of Ambition", src) as null|anything in zizorites
 	switch(riteselection)
 		if("Rite of Armaments")
 			var/onrune = view(1, loc)
@@ -1095,7 +1268,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("ZIZO! ZIZO! DAME OF PROGRESS!!")
+			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("ZIZO! ZIZO! HEED MY CALL!!")
@@ -1107,12 +1280,17 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 			icon_state = "zizo_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			zizoarmaments(target)
-			spawn(120)
-				icon_state = "zizo_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "zizo_chalky"), 120)
 		if("Rite of the Dark Crystal")
+			if(!user.mind)
+				return
+			if(user.mind.necro_crystal_count() >= user.mind.necro_crystal_cap())
+				var/confirm = alert(user, "Your pact with Zizo allows no more relics while your existing ones remain bound. Sever your oldest crystal - and the dead bound to it - to forge a new one?", "Rite of the Dark Crystal", "Sever and Replace", "Cancel")
+				if(confirm != "Sever and Replace")
+					return
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("ZIZO! ZIZO! DAME OF PROGRESS!!")
+			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("ZIZO! ZIZO! GRANT THE CABAL THEIR RELIC!!")
@@ -1121,12 +1299,15 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 			user.say("ZIZO! ZIZO! THE DARK CRYSTAL TO COMMAND THE DEAD!!")
 			if(!do_after(user, 5 SECONDS))
 				return
+			// re-check cap right before committing, in case circumstances changed during the chant
+			if(user.mind.necro_crystal_count() >= user.mind.necro_crystal_cap())
+				user.mind.necro_retire_oldest_crystal()
 			icon_state = "zizo_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
-			new /obj/item/necro_relics/necro_crystal(loc)
+			var/obj/item/necro_relics/necro_crystal/new_crystal = new /obj/item/necro_relics/necro_crystal(loc)
+			user.mind.necro_register_crystal(new_crystal)
 			loc.visible_message(span_purple("A dark crystal materializes in the center of the ritual circle, pulsing with necromantic energy!"))
-			spawn(120)
-				icon_state = "zizo_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "zizo_chalky"), 120)
 		if("Conversion")
 			if(!Adjacent(user))
 				to_chat(user, "You must stand close to the rune to receive Zizo's blessing.")
@@ -1144,7 +1325,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				return
 			if(!do_after(user, 5 SECONDS))
 				return
-			user.say("ZIZO! ZIZO! DAME OF PROGRESS!!")
+			user.say("ZIZO! ZIZO! DAME OF AMBITION!!")
 			if(!do_after(user, 5 SECONDS))
 				return
 			user.say("ZIZO! ZIZO! HEED MY CALL!!")
@@ -1155,8 +1336,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				return
 			icon_state = "zizo_active"
 			zizoconversion(target) // removed CD bc it's gonna be coal to sit there and wait for it to go off rite cooldown, this one is purely social in its nature
-			spawn(120)
-				icon_state = "zizo_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "zizo_chalky"), 120)
 
 /obj/structure/ritualcircle/zizo/proc/zizoarmaments(mob/living/carbon/human/target)
 	if(!HAS_TRAIT(target, TRAIT_CABAL))
@@ -1172,14 +1352,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		target.Paralyze(120)
 	else
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
-	spawn(20)
-		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
-		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
-			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-		spawn(40)
-			to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will be powerful."))
+	addtimer(CALLBACK(src, PROC_REF(zizoarmaments_stage2), target), 20)
 
 /datum/outfit/job/roguetown/darksteelrite/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -1188,14 +1361,65 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/full/zizo
-	pants = /obj/item/clothing/under/roguetown/platelegs/zizo
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
-	gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
-	backr = /obj/item/rogueweapon/sword/long/zizo
-	neck = /obj/item/clothing/neck/roguetown/bevor
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+
+	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION", "BASCINET", "VOLF-FACE - VISORED")
+	var/helmet_choice = input(H, "Choose your helmet.", "PROTECTION FROM THE LADY") as anything in helmets
+	switch(helmet_choice)
+		if("BARBUTE - VISORED")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/zizo
+		if("FROGMOUTH - NECK PROTECTION")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo
+		if("BASCINET")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/zizo
+		if("VOLF-FACE - VISORED")
+			head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/zizo
+
+	var/armors = list("HEAVY ARMOR", "MEDIUM ARMOR")
+	var/armors_choice = input(H, "Choose your ARMOR.", "PROTECTION FROM THE LADY") as anything in armors
+	switch(armors_choice)
+		if("HEAVY ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/full/zizo
+			pants = /obj/item/clothing/under/roguetown/platelegs/zizo
+			gloves = /obj/item/clothing/gloves/roguetown/plate/zizo
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/zizo
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/zizo
+			neck = /obj/item/clothing/neck/roguetown/bevor/zizo
+		if("MEDIUM ARMOR")
+			armor = /obj/item/clothing/suit/roguetown/armor/plate/fluted/zizo
+			pants = /obj/item/clothing/under/roguetown/platelegs/medium/zizo
+			shoes = /obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo
+			gloves = /obj/item/clothing/gloves/roguetown/plate/medium/zizo
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/zizo
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/zizo
+			neck = /obj/item/clothing/neck/roguetown/bevor/zizo
+
+	var/weapons = list("Absolutio - (greatsword)", "Vindicatio - (longsword)", "Damnatio - (rapier)", "Perditio - (kriegmesser)", "Messis - (billhook)", "Devotio - (arming sword)") // Funny evyl names
+	var/weapons_choice = input(H, "Choose your ARMS.", "ARMS FROM THE LADY") as anything in weapons
+	switch(weapons_choice)
+		if("Absolutio - (greatsword)")
+			r_hand = /obj/item/rogueweapon/greatsword/avantyne
+			l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+		if("Vindicatio - (longsword)")
+			r_hand = /obj/item/rogueweapon/sword/long/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+		if("Damnatio - (rapier)")
+			r_hand = /obj/item/rogueweapon/sword/rapier/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+		if("Perditio - (kriegmesser)")
+			r_hand = /obj/item/rogueweapon/sword/long/kriegmesser/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+		if("Messis - (billhook)")
+			r_hand = /obj/item/rogueweapon/spear/billhook/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+			if(HAS_TRAIT(H, TRAIT_RITUALIST))
+				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
+		if("Devotio - (arming sword)")
+			r_hand = /obj/item/rogueweapon/sword/arming/zizo
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+
+	H.mind.RemoveSpell(/datum/action/cooldown/spell/mending)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
 
 /obj/structure/ritualcircle/zizo/proc/zizoconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -1217,36 +1441,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		target.emote("Agony")
 		playsound(loc, 'sound/combat/newstuck.ogg', 50)
 		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. [target] is convulsing on the ground, as they finally accept the truth. "))
-		spawn(20)
-			playsound(target, 'sound/health/slowbeat.ogg', 60)
-			playsound(loc, 'sound/ambience/creepywind.ogg', 80)
-			target.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-			target.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
-			target.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
-			spawn(40)
-				playsound(loc, 'sound/misc/boatleave.ogg', 100)
-				to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will fight in the name of Progress."))
-				if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
-					target.set_patron(new /datum/patron/inhumen/zizo)
-					target.already_converted_once = TRUE
-					return
-				else
-					var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
-					target.set_patron(new /datum/patron/inhumen/zizo) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
-					var/datum/devotion/C = new /datum/devotion(target, target.patron)
-					if(previous_level == 4)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
-					if(previous_level == 3)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
-					if(previous_level == 2)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
-					if(previous_level == 1)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
-					target.already_converted_once = TRUE
+		addtimer(CALLBACK(src, PROC_REF(zizoconversion_stage2), target), 20)
 	if(prompt == "DEATH")
 		to_chat(target, span_warning("Images of Her Work most grandoise flood your mind yet... you choose to reject them. Only final death awaits now, you foolish thing."))
 		target.Stun(60)
@@ -1303,8 +1498,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 			icon_state = "matthios_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			matthiosarmaments(target)
-			spawn(120)
-				icon_state = "matthios_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "matthios_chalky"), 120)
 		if("Defenestration")
 			if(!do_after(user, 5 SECONDS))
 				return
@@ -1323,8 +1517,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			else
 				to_chat(user, span_cultsmall("The ritual fails. A noble must be in the center of the circle!"))
-			spawn(120)
-				icon_state = "matthios_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "matthios_chalky"), 120)
 		if("Conversion")
 			if(!Adjacent(user))
 				to_chat(user, "You must stand close to the rune to receive Matthios' blessing.")
@@ -1353,8 +1546,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				return
 			icon_state = "matthios_active"
 			matthiosconversion(target)
-			spawn(120)
-				icon_state = "matthios_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "matthios_chalky"), 120)
 
 /obj/structure/ritualcircle/matthios/proc/matthiosarmaments(mob/living/carbon/human/target)
 	if(!HAS_TRAIT(target, TRAIT_COMMIE))
@@ -1371,15 +1563,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		playsound(src,'sound/misc/lava_death.ogg', rand(30,60), TRUE)
 		return
 	loc.visible_message(span_cult("[target]'s lux pours from their nose, into the rune, gleaming golds sizzles. Molten gold and metals swirl into armor, seered to their skin."))
-	spawn(20)
-		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/gildedrite)
-		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
-			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-		spawn(40)
-			to_chat(target, span_cult("More to the maw, this shall help feed our greed."))
-
+	addtimer(CALLBACK(src, PROC_REF(matthiosarmaments_stage2), target), 20)
 /// Performs the de-noblification ritual, which requires a noble character in the center of the circle. TRUE on success, FALSE on failure.
 /obj/structure/ritualcircle/matthios/proc/defenestration()
 	var/mob/living/carbon/human/victim = null
@@ -1453,7 +1637,9 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/matthios
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
 	backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+
+	H.mind.RemoveSpell(/datum/action/cooldown/spell/mending)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
 
 /obj/structure/ritualcircle/matthios/proc/matthiosconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -1473,33 +1659,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		target.emote("Laugh")
 		playsound(loc, 'sound/misc/smelter_fin.ogg', 50)
 		loc.visible_message(span_cult("[target]'s eyes gleam and shine with a glimmer of a thousand gems and jewels, as they give in to their lust for wealth."))
-		spawn(20)
-			playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-			target.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE) //fuck do they gotta get? a better grip
-			target.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
-			target.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
-			spawn(40)
-				to_chat(target, span_cult("More to the maw, for [target] shall feed their own greed along with us!"))
-				playsound(loc, 'sound/items/matidol2.ogg', 50)
-				if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
-					target.set_patron(new /datum/patron/inhumen/matthios)
-					return
-				else
-					var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
-					target.set_patron(new /datum/patron/inhumen/matthios) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
-					var/datum/devotion/C = new /datum/devotion(target, target.patron)
-					if(previous_level == 4)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
-					if(previous_level == 3)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
-					if(previous_level == 2)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
-					if(previous_level == 1)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+		addtimer(CALLBACK(src, PROC_REF(matthiosconversion_stage2), target), 20)
 	if(prompt == "NO DEAL!")
 		to_chat(target, span_warning("All that does glimmer could be yours... if only you would submit to your own greedy nature. Only final death awaits now, you, fellow most austere."))
 		target.Stun(60)
@@ -1554,8 +1714,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 			icon_state = "graggar_active"
 			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
 			graggararmor(target)
-			spawn(120)
-				icon_state = "graggar_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "graggar_chalky"), 120)
 		if("War Ritual")
 			to_chat(user, span_userdanger("This rite will get me more tired than usual... I wonder, should I proceed?"))
 			if(!do_after(user, 5 SECONDS))
@@ -1574,8 +1733,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_heavy)
 			else
 				to_chat(user, span_smallred("The ritual fails. A noble, member of the inquisition or a tennite churchling body must be in the center of the circle!"))
-			spawn(120)
-				icon_state = "graggar_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "graggar_chalky"), 120)
 		if("Conversion")
 			if(!Adjacent(user))
 				to_chat(user, "You must stand close to the rune to receive Graggar's blessing.")
@@ -1604,8 +1762,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 				return
 			icon_state = "graggar_active"
 			graggarconversion(target)
-			spawn(120)
-				icon_state = "graggar_chalky"
+			addtimer(VARSET_CALLBACK(src, icon_state, "graggar_chalky"), 120)
 
 /obj/structure/ritualcircle/graggar/proc/graggararmor(mob/living/carbon/human/target)
 	if(!HAS_TRAIT(target, TRAIT_HORDE))
@@ -1622,15 +1779,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		playsound(src,'sound/misc/lava_death.ogg', rand(30,60), TRUE)
 		return
 	loc.visible_message(span_cult("[target]'s lux pours from their nose, into the rune, motive and metals swirl into armor, snug around their form!"))
-	spawn(20)
-		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/viciousrite)
-		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
-		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
-			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
-		spawn(40)
-			to_chat(target, span_cult("Break them."))
-
+	addtimer(CALLBACK(src, PROC_REF(graggararmor_stage2), target), 20)
 /// Performs the war ritual, which requires a noble or inquisition member in the center of the circle. TRUE on success, FALSE on failure.
 /obj/structure/ritualcircle/graggar/proc/perform_warritual()
 	var/mob/living/carbon/human/victim = null
@@ -1704,33 +1853,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
 		target.emote("Warcry")
 		loc.visible_message(span_cult("[target]'s mind if flooded with images of slaughter most sublime, as they embrace their violent nature, casting away shackles of honour and empathy.")) // i cant
-		spawn(20)
-			playsound(target, 'sound/misc/heroin_rush.ogg', 100)
-			playsound(target, 'sound/health/fastbeat.ogg', 100)
-			target.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
-			target.adjust_skillrank(/datum/skill/labor/butchering, 1, TRUE)
-			spawn(40)
-				to_chat(target, span_cult("Break them."))
-				target.say("SLAUGHTER!!") // many enemies bring much honour
-				if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
-					target.set_patron(new /datum/patron/inhumen/graggar)
-					return
-				else
-					var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
-					target.set_patron(new /datum/patron/inhumen/graggar) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
-					var/datum/devotion/C = new /datum/devotion(target, target.patron)
-					if(previous_level == 4)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
-					if(previous_level == 3)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
-					if(previous_level == 2)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
-					if(previous_level == 1)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+		addtimer(CALLBACK(src, PROC_REF(graggarconversion_stage2), target), 20)
 	if(prompt == "I DEFY YOU!!")
 		to_chat(target, span_warning("AAAAAAAAAAAAAAAAHHHH!!"))
 		target.Stun(60)
@@ -1748,7 +1871,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	name = "Rune of Hedonism"
 	desc = "A Holy Rune of Baotha. Relief for the broken hearted."
 	icon_state = "baotha_chalky"
-	var/baotharites = list("Conversion", "Unholy Boon of Fertility")
+	var/baotharites = list("Conversion", "Unholy Boon of Fertility", "Rite of Armaments")
 
 /obj/structure/ritualcircle/baotha/attack_hand(mob/living/user)
 	if((user.patron?.type) != /datum/patron/inhumen/baotha)
@@ -1786,8 +1909,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 						if(do_after(user, 50))
 							icon_state = "baotha_active"
 							baothaconversion(target) // removed CD bc it's gonna be coal to sit there and wait for it to go off rite cooldown, this one is purely social in its nature
-							spawn(120)
-								icon_state = "baotha_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "baotha_chalky"), 120)
 		if("Unholy Boon of Fertility")
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
@@ -1807,8 +1929,50 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 						if(do_after(user, 50))
 							icon_state = "baotha_active"
 							baothablessing(target)
-							spawn(120)
-								icon_state = "baotha_chalky"
+							addtimer(VARSET_CALLBACK(src, icon_state, "baotha_chalky"), 120)
+		if("Rite of Armaments")
+			var/onrune = view(1, loc)
+			var/list/folksonrune = list()
+			for(var/mob/living/carbon/human/persononrune in onrune)
+				if(HAS_TRAIT(persononrune, TRAIT_DEPRAVED))
+					folksonrune += persononrune
+			var/mob/living/carbon/human/target = input(user, "Choose a host") as null|anything in folksonrune
+			if(!target)
+				return
+			if(HAS_TRAIT(target, TRAIT_NUDIST))
+				to_chat(user, "The target is a nudist and cannot wear armor!")
+				return
+			if(!do_after(user, 5 SECONDS))
+				return
+			var/list/armor_options = list(
+				"Baothan Cuirass" = image(icon = 'icons/roguetown/clothing/special/baotha.dmi', icon_state = "baothachest"),
+				"Saccharine Plate Armor" = image(icon = 'icons/roguetown/clothing/armor.dmi', icon_state = "baothaplate"),
+			)
+			var/armor_choice = show_radial_menu(user, src, armor_options, require_near = TRUE, tooltips = TRUE)
+			if(!armor_choice)
+				return
+
+			var/list/weapon_options = list(
+				"Perfect Agony" = image(icon = 'icons/roguetown/weapons/whips32.dmi', icon_state = "baotha_whip"),
+				"Saccharine Swordspear" = image(icon = 'icons/roguetown/weapons/polearms64.dmi', icon_state = "swordstaff"),
+			)
+			var/weapon_choice = show_radial_menu(user, src, weapon_options, require_near = TRUE, tooltips = TRUE)
+			if(!weapon_choice)
+				weapon_choice = "Perfect Agony"
+
+			user.say("Lady, my Lady...")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Wrap thee in darkness, swaddle thee in cold bliss, and armor thee in desire...")
+			if(!do_after(user, 5 SECONDS))
+				return
+			user.say("Let all those who look upon me see thy beauty and despair!!")
+			if(!do_after(user, 5 SECONDS))
+				return
+			icon_state = "baotha_chalky"
+			user.apply_status_effect(/datum/status_effect/debuff/ritesexpended)
+			baothaarmor(target, armor_choice, weapon_choice)
+			addtimer(VARSET_CALLBACK(src, icon_state, "pestra_chalky"), 120)
 
 /obj/structure/ritualcircle/baotha/proc/baothaconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
@@ -1829,33 +1993,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		to_chat(target, span_userdanger("PLEASURE FOR PLEASURE'S SAKE!"))
 		target.sexcon.set_arousal(300)
 		loc.visible_message(span_cult("[target] writhes and moans as sensations of pleasure and pain surge through their body...")) // warhammer 3 slaaneshi daemonette quotes
-		spawn(20)
-			playsound(target, 'sound/health/fastbeat.ogg', 60)
-			playsound(loc, 'sound/ambience/creepywind.ogg', 80)
-			target.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
-			target.adjust_skillrank(/datum/skill/misc/music, 1, TRUE)
-			target.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE) // haha get it?
-			spawn(40)
-				to_chat(target, span_purple("Enjoy yourself, for what is lyfe without pleasure, ha?")) // help
-				if(target.devotion == null)
-					target.set_patron(new /datum/patron/inhumen/baotha)
-					return
-				else
-					var/previous_level = target.devotion.level //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
-					target.set_patron(new /datum/patron/inhumen/baotha)
-					var/datum/devotion/C = new /datum/devotion(target, target.patron)
-					if(previous_level == 4)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
-					if(previous_level == 3)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
-					if(previous_level == 2)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
-					if(previous_level == 1)
-						target.mind?.RemoveAllMiracles()
-						C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+		addtimer(CALLBACK(src, PROC_REF(baothaconversion_stage2), target), 20)
 	if(prompt == "LASH")
 		to_chat(target, span_warning("All too asutere, aloof and prudish, aren't you? Bah, I shall not waste any more of my time on you.")) // gotta change it too
 		target.Stun(60)
@@ -1879,17 +2017,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		target.Knockdown(60)
 		target.sexcon.set_arousal(100)
 		loc.visible_message(span_cult("[target] moans and shivers on top of the rune. Lashes of purple flame dance across their lower abdomen as a new marking appears against their form."))
-		spawn(20)
-			var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[target.gender == "male" ? "m" : "f"]", -BODY_LAYER)
-			target.add_overlay(marking_overlay)
-			target.update_body_parts()
-			playsound(target, 'sound/health/fastbeat.ogg', 60)
-			spawn(40)
-				to_chat(target, span_purple("Enjoy the new you!"))
-				ADD_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
-				var/obj/item/organ/vagina/vagina = target.getorganslot(ORGAN_SLOT_VAGINA)
-				if(vagina && !vagina.fertility)
-					vagina.fertility = TRUE
+		addtimer(CALLBACK(src, PROC_REF(baothablessing_stage2), target), 20)
 	if(prompt == "Resist!")
 		to_chat(target, span_warning("I sincerely proposed you my greatest blessing, and you rejected me? How foolish!"))
 		target.Stun(60)
@@ -1898,6 +2026,48 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		target.emote("Agony")
 		target.apply_damage(100, BRUTE, BODY_ZONE_CHEST)
 		loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as they dare to defy Baotha."))
+
+/obj/structure/ritualcircle/baotha/proc/baothaarmor(mob/living/carbon/human/target, armor_choice, weapon_choice)
+	if(!HAS_TRAIT(target, TRAIT_DEPRAVED))
+		loc.visible_message(span_cult("THE RITE REJECTS ONE NOT OF HER LOVE"))
+		return
+	if(!armor_choice)
+		armor_choice = "Baothan Cuirass"
+	switch(armor_choice)
+		if("Baothan Cuirass")
+			target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)	
+		if("Saccharine Plate Armor")
+			target.equipOutfit(/datum/outfit/job/roguetown/baothalightarmor)
+	if(!weapon_choice)
+		weapon_choice = "Perfect Agony"
+	switch(weapon_choice)
+		if("Perfect Agony")
+			target.put_in_hands(new /obj/item/rogueweapon/whip/baotha(target), TRUE)
+			if(HAS_TRAIT(target, TRAIT_RITUALIST))
+				target.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT)
+				target.adjust_skillrank_down_to(/datum/skill/combat/polearms, SKILL_LEVEL_APPRENTICE)
+		if("Saccharine Swordspear")
+			target.put_in_hands(new /obj/item/rogueweapon/spear/partizan/baotha(target), TRUE)
+			if(HAS_TRAIT(target, TRAIT_RITUALIST))
+				target.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT)
+				target.adjust_skillrank_down_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_APPRENTICE)
+	target.Stun(60)
+	target.Knockdown(60)
+	to_chat(target, span_userdanger("DELECTABLE PAIN!"))
+	target.emote("Agony")
+	playsound(loc, 'sound/combat/newstuck.ogg', 50)
+	if(HAS_TRAIT(target, TRAIT_INFINITE_STAMINA) || (target.mob_biotypes & MOB_UNDEAD))
+		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. As their black, rotten lux is torn from their chest, the very essence of their body surges to form it into armor. "))
+		target.Paralyze(120)
+	else
+		loc.visible_message(span_cult("Great hooks come from the rune, embedding into [target]'s ankles, pulling them onto the rune. Then, into their wrists. Their lux is torn from their chest, and reforms into armor. "))
+	spawn(20)
+		playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+		if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+			ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+		spawn(40)
+			to_chat(target, span_purple("All will love you and despair."))
 
 //TIME FOR THE ONE. Exclusive to ABSOLVERS. Allowing conversion, deconversion and removal of rite armour.
 //'Lesser' expenditure allows us to have a stopgap to this, while not entirely making poultice farming useless.
@@ -1916,17 +2086,13 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	if(!HAS_TRAIT(user, TRAIT_RITUALIST))
 		to_chat(user,span_smallred("I don't know the proper rites for this..."))
 		return
-	if(!HAS_TRAIT(user, TRAIT_INQUISITION))//Just in case someone OUTSIDE of the Inquisition has this combination. A converted ritualist, for example.
-		to_chat(user,span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
-		return
-	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended_lesser))//We only use lesser cooldown for this, given it's just the Absolver.
+	if(user.has_status_effect(/datum/status_effect/debuff/ritesexpended_lesser))
 		to_chat(user,span_smallred("I have done enough for the moment. I should take a brief rest."))
 		return
 	var/riteselection = input(user, "Rites of the Lost", src) as null|anything in psydonrites
 	switch(riteselection)
 		if("Conversion")//Convert non-Psydonites to Psydon.
 			if(!Adjacent(user))
-				to_chat(user, "You must stand close to the rune to understand the One's will.")
 				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
@@ -1946,10 +2112,18 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 					if(do_after(user, 5 SECONDS))
 						user.say("I beg of you, accept this wayward soul.")//WEEP FOR THEM, LASZLO.
 						user.emote("cry")
-						loc.visible_message(span_cult("[user] weeps."))
+						var/luxshield = FALSE
+						if(HAS_TRAIT(user, TRAIT_LUX_FREAK))
+							loc.visible_message(span_cult("[user] weeps silver tears."))
+							luxshield = TRUE
+						else
+							loc.visible_message(span_cult("[user] weeps."))
 						if(do_after(user, 5 SECONDS))
-							psydonconversion(target)
+							psydonconversion(target, luxshield)
 		if("Admonishment")//Deconvert WWs/Vampires.
+			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
+				to_chat(user, span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
+				return
 			if(!Adjacent(user))
 				return
 			var/list/valids_on_rune = list()
@@ -1970,17 +2144,18 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 					if(do_after(user, 5 SECONDS))
 						to_chat(user, span_warning("A blind leap, as you call upon the One to rebuke the Inhumen..."))
 						user.emote("cry")
-						loc.visible_message(span_cult("[user] weeps."))
+						loc.visible_message(span_cult("[user] weeps silver tears."))
 						if(do_after(user, 5 SECONDS))
 							psydonadmonishment(target)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
 		if("Freedom")//Strip folks in rite armour.
+			if(!HAS_TRAIT(user, TRAIT_LUX_FREAK))
+				to_chat(user, span_smallred("This isn't something I'm capable of. The conduction and manipulation of lux is beyond me."))
+				return
 			if(!Adjacent(user))
 				return
 			var/list/valids_on_rune = list()
 			for(var/mob/living/carbon/human/peep in range(0, loc))
-				if(!HAS_TRAIT(peep, TRAIT_OVERTHERETIC))
-					continue
 				valids_on_rune += peep
 			if(!valids_on_rune.len)
 				to_chat(user, "No valid targets on the rune!")
@@ -1995,12 +2170,12 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 					if(do_after(user, 5 SECONDS))
 						to_chat(user, span_warning("A measured strike, as you attempt to sever the cords..."))
 						user.emote("cry")
-						loc.visible_message(span_cult("[user] weeps."))
+						loc.visible_message(span_cult("[user] weeps silver tears."))
 						if(do_after(user, 5 SECONDS))
 							psydonstrip(target)
 							user.apply_status_effect(/datum/status_effect/debuff/ritesexpended_lesser)
 
-/obj/structure/ritualcircle/psydon/proc/psydonconversion(mob/living/carbon/human/target)
+/obj/structure/ritualcircle/psydon/proc/psydonconversion(mob/living/carbon/human/target, luxshield = FALSE)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive the One's will.")
 		return
@@ -2013,34 +2188,17 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 		target.emote("cry")
 		loc.visible_message(span_cult("[target] weeps."))
 		target.Stun(80)//Keep them in place, for a bit. Until we're done.
-		spawn(20)
-			playsound(target, 'sound/magic/PSYDONE.ogg', 60)
-			to_chat(target, span_mind_control("..."))
-			spawn(20)
-				to_chat(target, span_warning("Has it always been this quiet? It's all so dim..."))
-				to_chat(target, span_mind_control("..."))
-				spawn(40)
-					to_chat(target, span_mind_control("..."))
-					if(target.devotion == null)
-						target.set_patron(new /datum/patron/old_god)
-						return
-					else
-						var/previous_level = target.devotion.level //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
-						target.set_patron(new /datum/patron/old_god)
-						var/datum/devotion/C = new /datum/devotion(target, target.patron)
-						if(previous_level == 4)
-							target.mind?.RemoveAllMiracles()
-							C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
-						if(previous_level == 3)
-							target.mind?.RemoveAllMiracles()
-							C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
-						if(previous_level == 2)
-							target.mind?.RemoveAllMiracles()
-							C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
-						if(previous_level == 1)
-							target.mind?.RemoveAllMiracles()
-							C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
-
+		if(luxshield)
+			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but something stops their wrath from hurting me.")) // absolver doing the legwork
+			loc.visible_message(span_cult("The silver tears boil and evaporate but [target] stays safe in their new conviction."))
+		else
+			to_chat(target, span_danger("My former patron doesn't approve of my conversion, but I shall ENDURE their wrath.")) // no unnatural lux abomination to save you here!
+			target.Knockdown(60)
+			to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
+			target.emote("Agony")
+			target.apply_damage(100, BURN, BODY_ZONE_HEAD)
+			loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as their former patron punishes their defiance."))
+		addtimer(CALLBACK(src, PROC_REF(psydonconversion_stage2), target), 20)
 	if(prompt == "NAE")
 		to_chat(target, span_warning("You brace. Why do you brace? Nothing comes."))
 		loc.visible_message(span_cult("[target] stands untouched. They reject His will."))
@@ -2088,7 +2246,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 			I.Jitter(30)
 			return
 		else
-			target.flash_fullscreen("redflash3")
+			target.fullscreen_redflash("redflash3")
 			target.emote("agony", forced = TRUE)
 			to_chat(target, span_userdanger("THIS FOUL RITE! IT BURNS ME TO MY CORE!"))
 			Were.on_removal()
@@ -2114,7 +2272,7 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 			target.Knockdown(30)
 			return
 		else
-			target.flash_fullscreen("redflash3")
+			target.fullscreen_redflash("redflash3")
 			target.emote("agony", forced = TRUE)
 			to_chat(target, span_userdanger("THIS FOUL RITE! MY STILL HEART QUICKENS ONCE MORE!"))
 			Vamp.on_removal()
@@ -2127,20 +2285,13 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 
 
 /obj/structure/ritualcircle/psydon/proc/psydonstrip(mob/living/carbon/human/target)
-	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))//A fallback. You should never see this.
-		loc.visible_message(span_cult("This one is not bound by chains upon their lux. I can do nothing more with this rite."))
-		return
 	target.Stun(20)
 	target.Knockdown(20)
 	to_chat(target, span_userdanger("IT'S INSIDE MY HEAD!"))
 	target.emote("Agony")
 	playsound(loc, 'sound/misc/pressurepad_up.ogg', 50)
 	loc.visible_message(span_cult("[target]'s flesh briefly warps, as some unseen force tears the equipment from their frame!"))
-	spawn(20)
-		playsound(loc, 'sound/misc/pressurepad_down.ogg', 50)
-		target.equipOutfit(/datum/outfit/job/roguetown/rite_strip)
-		if(HAS_TRAIT(target, TRAIT_OVERTHERETIC))
-			REMOVE_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+	addtimer(CALLBACK(src, PROC_REF(psydonstrip_stage2), target), 20)
 
 //Dropping rite armour. Or, well, basically everything.
 /datum/outfit/job/roguetown/rite_strip/pre_equip(mob/living/carbon/human/H)
@@ -2150,3 +2301,232 @@ var/forgerites = list("Ritual of Blessed Reforgance")
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
+	var/obj/item/chastity/device = H.chastity_device
+	if(device)
+		device.remove_chastity(H) // because ritual name is FREEDOM and I find it funny
+		if(!QDELETED(device))
+			device.forceMove(get_turf(H))
+
+/obj/structure/ritualcircle/abyssor_alt_inactive/proc/dreamarmor_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/dreamwalker_armorrite)
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("Reality is but a fragile dream. You are the dreamer, and your will is law.")), 40)
+
+/obj/structure/ritualcircle/eora/proc/eoranaura_stage2(mob/living/carbon/human/target)
+	target.apply_status_effect(/datum/status_effect/eoranaura)
+	playsound(target, 'sound/magic/eora_bless.ogg', 90, FALSE, -1)
+	to_chat(target, span_boldred("I can do no HARM."))
+	ADD_TRAIT(target, TRAIT_PACIFISM, TRAIT_MIRACLE)
+
+/obj/structure/ritualcircle/zizo/proc/zizoarmaments_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/darksteelrite)
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+		ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("They are ignorant, backwards, without hope. You. You will be powerful.")), 40)
+
+/obj/structure/ritualcircle/zizo/proc/zizoconversion_stage2(mob/living/carbon/human/target)
+	playsound(target, 'sound/health/slowbeat.ogg', 60)
+	playsound(loc, 'sound/ambience/creepywind.ogg', 80)
+	target.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
+	target.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
+	target.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(zizoconversion_stage3), target), 40)
+
+/obj/structure/ritualcircle/zizo/proc/zizoconversion_stage3(mob/living/carbon/human/target)
+	playsound(loc, 'sound/misc/boatleave.ogg', 100)
+	to_chat(target, span_purple("They are ignorant, backwards, without hope. You. You will fight in the name of Ambition."))
+	if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
+		target.set_patron(new /datum/patron/inhumen/zizo)
+		target.already_converted_once = TRUE
+		return
+	else
+		var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
+		target.set_patron(new /datum/patron/inhumen/zizo) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
+		var/datum/devotion/C = new /datum/devotion(target, target.patron)
+		if(previous_level == 4)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
+		if(previous_level == 3)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
+		if(previous_level == 2)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+		if(previous_level == 1)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+		target.already_converted_once = TRUE
+
+/obj/structure/ritualcircle/matthios/proc/matthiosarmaments_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/gildedrite)
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+		ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_cult("More to the maw, this shall help feed our greed.")), 40)
+
+/obj/structure/ritualcircle/matthios/proc/matthiosconversion_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE) //fuck do they gotta get? a better grip
+	target.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
+	target.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(matthiosconversion_stage3), target), 40)
+
+/obj/structure/ritualcircle/matthios/proc/matthiosconversion_stage3(mob/living/carbon/human/target)
+	to_chat(target, span_cult("More to the maw, for [target] shall feed their own greed along with us!"))
+	playsound(loc, 'sound/items/matidol2.ogg', 50)
+	if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
+		target.set_patron(new /datum/patron/inhumen/matthios)
+		return
+	else
+		var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
+		target.set_patron(new /datum/patron/inhumen/matthios) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
+		var/datum/devotion/C = new /datum/devotion(target, target.patron)
+		if(previous_level == 4)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
+		if(previous_level == 3)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
+		if(previous_level == 2)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+		if(previous_level == 1)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+
+/obj/structure/ritualcircle/graggar/proc/graggararmor_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/viciousrite)
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+		ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_cult("Break them.")), 40)
+
+/obj/structure/ritualcircle/graggar/proc/graggarconversion_stage2(mob/living/carbon/human/target)
+	playsound(target, 'sound/misc/heroin_rush.ogg', 100)
+	playsound(target, 'sound/health/fastbeat.ogg', 100)
+	target.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
+	target.adjust_skillrank(/datum/skill/labor/butchering, 1, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(graggarconversion_stage3), target), 40)
+
+/obj/structure/ritualcircle/graggar/proc/graggarconversion_stage3(mob/living/carbon/human/target)
+	to_chat(target, span_cult("Break them."))
+	target.say("SLAUGHTER!!") // many enemies bring much honour
+	if(target.devotion == null) // why can't it just go 'huh null? yeah ok dont care let's continue' why do i have to write this
+		target.set_patron(new /datum/patron/inhumen/graggar)
+		return
+	else
+		var/previous_level = target.devotion.level // IF NULL JUST MOVE ON WHAT'S YOUR PROBLEM HOLY FUCKING SHIT!!!
+		target.set_patron(new /datum/patron/inhumen/graggar) //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
+		var/datum/devotion/C = new /datum/devotion(target, target.patron)
+		if(previous_level == 4)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
+		if(previous_level == 3)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
+		if(previous_level == 2)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+		if(previous_level == 1)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+
+/obj/structure/ritualcircle/baotha/proc/baothaconversion_stage2(mob/living/carbon/human/target)
+	playsound(target, 'sound/health/fastbeat.ogg', 60)
+	playsound(loc, 'sound/ambience/creepywind.ogg', 80)
+	target.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
+	target.adjust_skillrank(/datum/skill/misc/music, 1, TRUE)
+	target.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE) // haha get it?
+	addtimer(CALLBACK(src, PROC_REF(baothaconversion_stage3), target), 40)
+
+/obj/structure/ritualcircle/baotha/proc/baothaconversion_stage3(mob/living/carbon/human/target)
+	to_chat(target, span_purple("Enjoy yourself, for what is lyfe without pleasure, ha?")) // help
+	if(target.devotion == null)
+		target.set_patron(new /datum/patron/inhumen/baotha)
+		return
+	else
+		var/previous_level = target.devotion.level //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
+		target.set_patron(new /datum/patron/inhumen/baotha)
+		var/datum/devotion/C = new /datum/devotion(target, target.patron)
+		if(previous_level == 4)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
+		if(previous_level == 3)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
+		if(previous_level == 2)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+		if(previous_level == 1)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+
+/obj/structure/ritualcircle/baotha/proc/baothablessing_stage2(mob/living/carbon/human/target)
+	var/mutable_appearance/marking_overlay = mutable_appearance('icons/roguetown/misc/baotha_marking.dmi', "marking_[target.gender == "male" ? "m" : "f"]", -BODY_LAYER)
+	if(isdwarf(target) || isgoblinp(target) || iskobold(target) || iscritter(target))
+		if(target.gender == MALE)
+			marking_overlay.pixel_y -= 6
+		else
+			marking_overlay.pixel_y -= 4
+	target.add_overlay(marking_overlay)
+	target.update_body_parts()
+	playsound(target, 'sound/health/fastbeat.ogg', 60)
+	addtimer(CALLBACK(src, PROC_REF(baothablessing_stage3), target), 40)
+
+/obj/structure/ritualcircle/baotha/proc/baothablessing_stage3(mob/living/carbon/human/target)
+	to_chat(target, span_purple("Enjoy the new you!"))
+	ADD_TRAIT(target, TRAIT_BAOTHA_FERTILITY_BOON, TRAIT_GENERIC)
+	var/obj/item/organ/vagina/vagina = target.getorganslot(ORGAN_SLOT_VAGINA)
+	if(vagina && !vagina.fertility)
+		vagina.fertility = TRUE
+
+/obj/structure/ritualcircle/baotha/proc/baothaarmor_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/combat/hits/onmetal/grille (2).ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/baothaarmor)
+	target.apply_status_effect(/datum/status_effect/debuff/devitalised)
+	if(!HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+		ADD_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), target, span_purple("All will love you and despair.")), 40)
+
+/obj/structure/ritualcircle/psydon/proc/psydonconversion_stage2(mob/living/carbon/human/target)
+	playsound(target, 'sound/magic/PSYDONE.ogg', 60)
+	to_chat(target, span_mind_control("..."))
+	addtimer(CALLBACK(src, PROC_REF(psydonconversion_stage3), target), 20)
+
+/obj/structure/ritualcircle/psydon/proc/psydonconversion_stage3(mob/living/carbon/human/target)
+	to_chat(target, span_warning("Has it always been this quiet? It's all so dim..."))
+	to_chat(target, span_mind_control("..."))
+	addtimer(CALLBACK(src, PROC_REF(psydonconversion_stage4), target), 40)
+
+/obj/structure/ritualcircle/psydon/proc/psydonconversion_stage4(mob/living/carbon/human/target)
+	to_chat(target, span_mind_control("..."))
+	if(target.devotion == null)
+		target.set_patron(new /datum/patron/old_god)
+		return
+	else
+		var/previous_level = target.devotion.level //now you might ask why we get previous_level variable before switching le patron. reason is when swapping patrons it completely fucks up devotion data for people
+		target.set_patron(new /datum/patron/old_god)
+		var/datum/devotion/C = new /datum/devotion(target, target.patron)
+		if(previous_level == 4)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, start_maxed = TRUE) // gotta change?
+		if(previous_level == 3)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3) // gotta change?
+		if(previous_level == 2)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+		if(previous_level == 1)
+			target.mind?.RemoveAllMiracles()
+			C.grant_miracles(target, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+
+/obj/structure/ritualcircle/psydon/proc/psydonstrip_stage2(mob/living/carbon/human/target)
+	playsound(loc, 'sound/misc/pressurepad_down.ogg', 50)
+	target.equipOutfit(/datum/outfit/job/roguetown/rite_strip)
+	if(HAS_TRAIT(target, TRAIT_OVERTHERETIC))
+		REMOVE_TRAIT(target, TRAIT_OVERTHERETIC, TRAIT_MIRACLE)

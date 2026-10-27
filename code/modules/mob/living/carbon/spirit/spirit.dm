@@ -93,7 +93,7 @@
 
 /mob/living/carbon/spirit/Destroy()
 	if(owned_lantern)
-		qdel(owned_lantern)
+		QDEL_NULL(owned_lantern)
 	return ..()
 
 /mob/living/carbon/spirit/updatehealth()
@@ -103,7 +103,7 @@
 		var/health_deficiency = (maxHealth - health)
 		if(health_deficiency >= 45)
 			slow += (health_deficiency / 25)
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
+	add_movespeed_modifier(MOVESPEED_ID_SPIRIT_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
 
 /mob/living/carbon/spirit/Stat()
 	..()

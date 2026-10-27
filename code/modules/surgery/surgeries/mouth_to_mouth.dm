@@ -6,7 +6,7 @@
 	name = "Mouth to Mouth"
 
 	possible_locs = list(BODY_ZONE_HEAD)
-	time = 4 SECONDS
+	time = 3 SECONDS
 	accept_hand = TRUE
 	accept_any_item = TRUE
 	possible_intents = list(
@@ -24,7 +24,7 @@
 	repeating = TRUE
 
 	// How much oxy damage we heal per completion
-	var/oxyhealing = 10
+	var/oxyhealing = 15
 
 /datum/surgery_step/mouth_to_mouth/validate_target(mob/user, mob/living/target, target_zone, datum/intent/intent)
 	. = ..()

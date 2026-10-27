@@ -41,7 +41,7 @@
 	name = "striped tunic"
 	desc = "This cheap tunic is often used by sturdy laborous men and women."
 	icon_state = "workervest"
-	armor = null
+	armor = ARMOR_PADDED_BAD
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	body_parts_covered = COVERAGE_VEST
@@ -59,15 +59,14 @@
 
 /obj/item/clothing/suit/roguetown/armor/workervest/Initialize(mapload)
 	color = pick("#94b4b6", "#ba8f9e", "#bd978c", "#92bd8c", "#c7c981")
-	..()
+	return ..()
 
 /obj/item/clothing/suit/roguetown/armor/silkcoat
 	name = "silk coat"
 	desc = "A padded dressing made from the finest silks."
 	icon_state = "bliaut"
 	color = null
-	armor = ARMOR_SPELLSINGER
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_TWIST)
+	armor = ARMOR_LEATHER
 	blocksound = SOFTHIT
 	slot_flags = ITEM_SLOT_ARMOR
 	blade_dulling = DULLING_BASHCHOP
@@ -78,7 +77,6 @@
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	sleevetype = "shirt"
 	max_integrity = ARMOR_INT_CHEST_CIVILIAN
-	sellprice = 50
 	armor_class = ARMOR_CLASS_LIGHT
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = CLOTHED_RACES_TYPES

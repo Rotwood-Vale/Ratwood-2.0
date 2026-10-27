@@ -73,7 +73,7 @@
 		// Garbage and Miscellanous
 		/obj/item/rogue/instrument/flute = 30,
 		/obj/item/ash = 50,
-		/obj/item/natural/glass/shard = 50,
+		/obj/item/natural/glass_shard = 50,
 		/obj/item/candle/yellow = 30,
 		/obj/item/flashlight/flare/torch = 30,
 		/obj/item/reagent_containers/glass/bowl = 40,
@@ -87,7 +87,7 @@
 		/obj/item/paper/scroll = 30,
 		/obj/item/rope = 30,
 		/obj/item/rope/chain = 30,
-		/obj/item/storage/roguebag/crafted = 30,
+		/obj/item/storage/roguebag = 30,
 		/obj/item/clothing/mask/cigarette/pipe = 30,
 		/obj/item/paper = 30,
 		/obj/item/reagent_containers/glass/bowl = 30,
@@ -120,7 +120,7 @@
 		/obj/item/flint = 40,
 		/obj/item/rogueweapon/stoneaxe/woodcut = 30,
 		/obj/item/rogueweapon/stoneaxe = 30,
-		/obj/item/rogueweapon/hammer = 30,
+		/obj/item/rogueweapon/hammer/iron = 30,
 		/obj/item/rogueweapon/tongs = 30,
 		/obj/item/rogueweapon/pick = 30,
 

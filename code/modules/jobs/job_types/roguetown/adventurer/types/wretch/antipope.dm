@@ -27,14 +27,16 @@
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT, //For self-defence, no STR so can't grab well, only resist
 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/staves = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/polearms = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER, //You are Ascendants' chosen.
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
+	)
+	subclass_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
 	)
 	extra_context = "Inhumen exclusive. No wretch bounty, for the purpose of infiltration and doomsaying. Given EVIL sermon abilities, torture, maxed out miracles of their own patron and some extra miracles from other Inhumen patrons."
 
@@ -52,11 +54,18 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
 	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/special
+	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/kris
 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backr = /obj/item/rogueweapon/woodstaff/quarterstaff
-	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy
+	if(istype(H.patron, /datum/patron/inhumen/zizo))
+		id = /obj/item/clothing/neck/roguetown/psicross/inhumen/g
+	if(istype(H.patron, /datum/patron/inhumen/graggar))
+		id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar
+	if(istype(H.patron, /datum/patron/inhumen/baotha))
+		id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha
+	if(istype(H.patron, /datum/patron/inhumen/matthios))
+		id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
@@ -72,9 +81,8 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/convert_heretic)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/wound_heal)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/silence)//Shut that guy up!
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/nondetection)//For the purposes of meeting folks.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)//See above.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/evil_resurrect)//Sacrifice a heart to bring somebody back to life.
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
 		H.verbs |= /mob/living/carbon/human/proc/completesermon_evil
 		H.verbs |= /mob/living/carbon/human/proc/revelations
 
@@ -213,8 +221,8 @@
 	if (!H.restrained())
 		to_chat(src, span_warning ("My victim needs to be restrained in order to do this!"))
 		return
-	if(!istype(S, /obj/item/clothing/neck/roguetown/psicross/inhumen/aalloy))
-		to_chat(src, span_warning("I need to be holding a zcross to extract this divination!"))
+	if(!istype(S, /obj/item/clothing/neck/roguetown/psicross/inhumen/))
+		to_chat(src, span_warning("I need to be holding an inhumen amulet to extract this divination!"))
 		return
 	for(var/obj/structure/fluff/psycross/zizocross/N in oview(5, src))
 		found = N
@@ -228,7 +236,7 @@
 			"ARE YOU FAITHFUL!?",
 			"WHO IS YOUR SHEPHERD!?",
 		)
-		src.visible_message(span_warning("[src] shoves the decrepit zcross into [H]'s lux!"))
+		src.visible_message(span_warning("[src] shoves [S] into [H]'s lux!"))
 		say(pick(faith_lines), spans = list("torture"))
 		H.emote("agony", forced = TRUE)
 

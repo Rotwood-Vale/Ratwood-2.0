@@ -91,6 +91,14 @@
 					/obj/item/quiver/bolts,
 				)
 
+/datum/supply_pack/rogue/ranged_weapons/quivers/heavybluntbolts
+	name = "Quiver of Heavy Blunt Bolts"
+	cost = 35 // 2 Iron Ingots
+	contains = list(
+					/obj/item/quiver/heavybluntbolts,
+				)
+
+
 /datum/supply_pack/rogue/ranged_weapons/quivers/pyrobolts
 	name = "Quiver of Pyroclastic Bolts"
 	cost = 100 // Matching price of steel
@@ -123,6 +131,13 @@
 	cost = 35 // 2 Iron Ingots
 	contains = list(
 					/obj/item/quiver/sling/iron,
+				)
+
+/datum/supply_pack/rogue/ranged_weapons/slingsteel
+	name = "Sling Bullets Pouch, Steel"
+	cost = 80 // 2 Steel Ingots
+	contains = list(
+					/obj/item/quiver/sling/steel,
 				)
 
 /datum/supply_pack/rogue/ranged_weapons/net

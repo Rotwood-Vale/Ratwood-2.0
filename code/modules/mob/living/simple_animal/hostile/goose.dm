@@ -94,7 +94,7 @@
 			visible_message(span_notice("[src] looks too full to eat \the [tasty]!"))
 			message_cooldown = world.time + 5 SECONDS
 		return
-	if (tasty.foodtype & GROSS)
+	if (tasty.foodtype)
 		visible_message(span_notice("[src] hungrily gobbles up \the [tasty]!"))
 		tasty.forceMove(src)
 		playsound(src,'sound/blank.ogg', 70, TRUE)
@@ -188,7 +188,7 @@
 	name = "Vomit"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "vomit"
-	icon_icon = 'icons/mob/animal.dmi'
+	button_icon = 'icons/mob/animal.dmi'
 	cooldown_time = 250
 
 /datum/action/cooldown/vomit/Trigger()

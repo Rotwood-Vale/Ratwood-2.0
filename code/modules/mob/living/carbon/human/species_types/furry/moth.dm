@@ -9,7 +9,7 @@
 	Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and \
 	rituals, not much is known about the moth-kin. These so-called \"mystics\" are rarely seen within humen and \
 	beastkin settlements, but those that find themselves in civilisation are oft ascended to nobility.<br>\
-	(+1 Speed, Blackleg Trait)"
+	(+1 Speed, Bewinged Trait)"
 
 	expanded_desc = "Fluvians are a diverse race of moth-like creechers that live in sparse, nomadic communities across Grimoria. \
 	Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and rituals, not much \
@@ -84,6 +84,8 @@
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/animal,
 		/datum/customizer/organ/vagina/animal,
+		/datum/customizer/bodypart_feature/pubes/fuzzy,
+		/datum/customizer/bodypart_feature/pits/fuzzy,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/moth/reddish,
@@ -103,6 +105,9 @@
 	body_markings = list(
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
+		/datum/body_marking/tall_eyes,
+		/datum/body_marking/outer_tall_eyes,
+		/datum/body_marking/blank_face,
 		/datum/body_marking/moth/grayscale/reddish,
 		/datum/body_marking/moth/grayscale/royal,
 		/datum/body_marking/moth/grayscale/gothic,
@@ -152,9 +157,6 @@
 /datum/species/moth/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
-
-/datum/species/moth/get_random_body_markings(list/passed_features)
-	return assemble_body_markings_from_set(GLOB.body_marking_sets_by_type[pick(body_marking_sets)], passed_features, src)
 
 /datum/species/moth/get_random_features()
 	var/list/returned = MANDATORY_FEATURE_LIST
