@@ -200,7 +200,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/secret_door_creator/Initialize(mapload)
 	var/turf/source_turf = get_turf(src)
 	if(isclosedturf(source_turf))
-		new /obj/structure/secret_wall_controller(source_turf, redstone_id, open_phrase, secret_door_access, secret_door_locale, auto_close_delay, slide_dir, floor_turf, override_floor)
+		new /obj/structure/secret_wall_controller(source_turf, src)
 	else
 		log_mapping("[src] is not on a wall at [AREACOORD(src)]")
 	. = ..()

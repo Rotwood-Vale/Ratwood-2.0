@@ -39606,7 +39606,7 @@
 "hRH" = (
 /obj/effect/mapping_helpers/secret_door_creator{
 	secret_door_access = list(/datum/job/roguetown/baron,/datum/job/roguetown/baron_retainer);
-	secret_door_locale = "barons stash"
+	secret_door_locale = "baron's stash"
 	},
 /turf/closed/wall/mineral/rogue/stone{
 	max_integrity = 6000
@@ -42439,8 +42439,8 @@
 /area/rogue/under/town/basement/keep)
 "ive" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant, /datum/job/roguetown/hand);
-	secret_door_locale = "hands office"
+	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant,/datum/job/roguetown/hand);
+	secret_door_locale = "hand's office"
 	},
 /turf/closed/wall/mineral/rogue/decostone/long,
 /area/rogue/indoors/town/manor/rockhill)
@@ -44739,11 +44739,11 @@
 /turf/open/floor/rogue/grass/nospawn,
 /area/rogue/outdoors/bogsafe)
 "iVq" = (
-/obj/effect/mapping_helpers/secret_door_creator,
-/turf/closed/wall/mineral/rogue/stonebrick{
+/obj/effect/mapping_helpers/secret_door_creator{
 	secret_door_access = list(/datum/job/roguetown/keeper);
 	secret_door_locale = "cell sewer escape"
 	},
+/turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/under/town/sewer)
 "iVt" = (
 /obj/structure/flora/roguegrass/herb/artemisia,
@@ -71281,7 +71281,7 @@
 "okA" = (
 /obj/effect/mapping_helpers/secret_door_creator{
 	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant);
-	secret_door_locale = "councillors suite"
+	secret_door_locale = "councillor's suite"
 	},
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/under/town/basement/keep)

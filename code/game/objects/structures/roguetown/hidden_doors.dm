@@ -1,4 +1,4 @@
-/// Open phrases shared by every secret wall with the same secret_door_access, keyed by secret_door_access_key()
+/// Open phrases shared by every secret wall with the same secret_door_access, keyed by secret_wall_access_key()
 GLOBAL_LIST_EMPTY(secret_wall_phrases)
 /// Phrases a mapper fixed with open_phrase, keyed like secret_wall_phrases. The first one set wins
 GLOBAL_LIST_EMPTY(secret_wall_fixed_phrases)
@@ -32,7 +32,7 @@ GLOBAL_LIST_EMPTY(secret_walls_with_access)
 	var/list/secret_door_access
 	/// Rough description of where the wall is, shown by Recall Passphrases. Falls back to the area name
 	var/secret_door_locale
-	/// secret_door_access_key() of our secret_door_access, null without one
+	/// secret_wall_access_key() of our secret_door_access, null without one
 	var/access_key
 	/// How long it stays open before trying to close. 0 means a trigger while open closes it instead
 	var/auto_close_delay = 5 SECONDS
@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(secret_walls_with_access)
 	var/turf/open/placed_floor_type
 	var/is_open = FALSE
 	/// Mid slide, triggers are ignored
-	var/switching = FALSE
+	var/is_switching = FALSE
 	/// Set around our own ChangeTurf calls so on_turf_change() ignores them
 	var/self_changing = FALSE
 	/// The tile was replaced from outside while open
@@ -69,24 +69,10 @@ GLOBAL_LIST_EMPTY(secret_walls_with_access)
 	/// Weakrefs to non-living things that sat on the tile while it was a wall. They don't block closing
 	var/list/resident_refs
 
-/obj/structure/secret_wall_controller/Initialize(mapload, _redstone_id, _open_phrase, list/_secret_door_access, _secret_door_locale, _auto_close_delay, _slide_dir, _floor_turf, _override_floor)
+/obj/structure/secret_wall_controller/Initialize(mapload, obj/effect/mapping_helpers/secret_door_creator/helper)
 	// set before the parent call so redstone linkage happens in the normal LateInitialize pass
-	if(_redstone_id)
-		redstone_id = _redstone_id
-	if(_open_phrase)
-		open_phrase = _open_phrase
-	if(_secret_door_access)
-		secret_door_access = _secret_door_access
-	if(_secret_door_locale)
-		secret_door_locale = _secret_door_locale
-	if(!isnull(_auto_close_delay))
-		auto_close_delay = _auto_close_delay
-	if(_slide_dir)
-		slide_dir = _slide_dir
-	if(_floor_turf)
-		floor_turf = _floor_turf
-	if(!isnull(_override_floor))
-		override_floor = _override_floor
+	if(helper)
+		copy_helper_settings(helper)
 	. = ..()
 	var/turf/T = get_turf(src)
 	if(!isclosedturf(T))
@@ -96,7 +82,7 @@ GLOBAL_LIST_EMPTY(secret_walls_with_access)
 	wall_type = T.type
 	name = T.name
 	if(length(secret_door_access))
-		access_key = secret_door_access_key(secret_door_access)
+		access_key = secret_wall_access_key(secret_door_access)
 	setup_phrase()
 	become_hearing_sensitive()
 	RegisterSignal(T, COMSIG_TURF_CHANGE, PROC_REF(on_turf_change))
@@ -116,6 +102,17 @@ GLOBAL_LIST_EMPTY(secret_walls_with_access)
 		close_timer = null
 	resident_refs = null
 	return ..()
+
+/// Takes the mapper's settings from the helper that spawned us
+/obj/structure/secret_wall_controller/proc/copy_helper_settings(obj/effect/mapping_helpers/secret_door_creator/helper)
+	redstone_id = helper.redstone_id
+	open_phrase = helper.open_phrase
+	secret_door_access = helper.secret_door_access
+	secret_door_locale = helper.secret_door_locale
+	auto_close_delay = helper.auto_close_delay
+	slide_dir = helper.slide_dir
+	floor_turf = helper.floor_turf
+	override_floor = helper.override_floor
 
 /// Picks our phrase, or our access group's phrase which a mapper-set open_phrase overrides
 /obj/structure/secret_wall_controller/proc/setup_phrase()
@@ -154,7 +151,7 @@ GLOBAL_LIST_EMPTY(secret_walls_with_access)
 
 /// Returns "opened" or "closed" when it did either, for logging
 /obj/structure/secret_wall_controller/proc/trigger(mob/user)
-	if(switching)
+	if(is_switching)
 		return
 	if(!is_open)
 		return open_wall(user) ? "opened" : null
@@ -208,7 +205,7 @@ GLOBAL_LIST_EMPTY(secret_walls_with_access)
 	floor_replaced = FALSE
 	is_open = TRUE
 
-	switching = TRUE
+	is_switching = TRUE
 	new /obj/effect/secret_wall_slide(new_turf, wall_appearance, dir_to_slide, FALSE, slide_time)
 	play_grind_sound(user)
 	addtimer(CALLBACK(src, PROC_REF(finish_open)), slide_time)
@@ -217,24 +214,20 @@ GLOBAL_LIST_EMPTY(secret_walls_with_access)
 	return TRUE
 
 /obj/structure/secret_wall_controller/proc/finish_open()
-	switching = FALSE
+	is_switching = FALSE
 
 /// Returns TRUE if it started sliding shut
 /obj/structure/secret_wall_controller/proc/try_close(mob/user)
 	close_timer = null
 	if(!is_open)
 		return FALSE
-	if(switching) // still sliding open, try again once it's done
+	if(is_switching) // still sliding open, try again once it's done
 		schedule_close(slide_time)
 		return FALSE
 	var/turf/T = get_turf(src)
-	if(is_floor_replaced(T))
-		qdel(src)
+	if(!can_close_now(T))
 		return FALSE
-	if(is_blocked(T))
-		schedule_close(close_retry_delay)
-		return FALSE
-	switching = TRUE
+	is_switching = TRUE
 	density = TRUE // nobody steps in while it slides shut
 	var/obj/effect/secret_wall_slide/slide = new(T, wall_appearance, get_slide_dir(), TRUE, slide_time)
 	play_grind_sound(user)
@@ -242,16 +235,11 @@ GLOBAL_LIST_EMPTY(secret_walls_with_access)
 	return TRUE
 
 /obj/structure/secret_wall_controller/proc/finish_close(obj/effect/secret_wall_slide/slide)
-	switching = FALSE
+	is_switching = FALSE
 	density = FALSE
 	var/turf/T = get_turf(src)
-	if(is_floor_replaced(T))
+	if(!can_close_now(T)) // something got in anyway, back off
 		qdel(slide)
-		qdel(src)
-		return
-	if(is_blocked(T)) // something got in anyway, back off and retry
-		qdel(slide)
-		schedule_close(close_retry_delay)
 		return
 	var/turf/closed/wall = change_own_turf(T, wall_type)
 	is_open = FALSE
@@ -263,6 +251,16 @@ GLOBAL_LIST_EMPTY(secret_walls_with_access)
 	if(!wall.smooth && wall_icon_state)
 		wall.icon_state = wall_icon_state
 	qdel(slide)
+
+/// FALSE if the floor was replaced, which deletes us, or if the tile is blocked, which retries later
+/obj/structure/secret_wall_controller/proc/can_close_now(turf/T)
+	if(is_floor_replaced(T))
+		qdel(src)
+		return FALSE
+	if(is_blocked(T))
+		schedule_close(close_retry_delay)
+		return FALSE
+	return TRUE
 
 /// Any living mob on the tile, or any item or structure that wasn't already in the wall
 /obj/structure/secret_wall_controller/proc/is_blocked(turf/T)
@@ -406,7 +404,7 @@ GLOBAL_LIST_EMPTY(secret_walls_with_access)
 	return open_word() + " " + magic_word()
 
 /// Same for any two lists holding the same job types, whatever their order
-/proc/secret_door_access_key(list/access)
+/proc/secret_wall_access_key(list/access)
 	var/list/paths = list()
 	for(var/path in access)
 		paths |= "[path]"
