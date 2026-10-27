@@ -137,9 +137,9 @@
 			if(blessed)
 				if(!T.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder))
 					if(T.patron)
-						to_chat(T, span_danger("The trice-cursed Otavan silver! By [T.patron.name], it hurts!!"))
+						to_chat(T, span_danger("The thrice-cursed Otavan silver! By [T.patron.name], it hurts!!"))
 					else
-						to_chat(T, span_danger("The trice-cursed Otavan silver! By all that's holy, it hurts!!"))
+						to_chat(T, span_danger("The thrice-cursed Otavan silver! By all that's holy, it hurts!!"))
 				T.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
 			else
 				if(!T.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
