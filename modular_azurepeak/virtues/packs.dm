@@ -88,10 +88,8 @@
 	name = "Broken Soul (-2 TRI)"
 	desc = "Life has been cruel to me. I've learned to endure what most cannot, and I've felt nothing for so long I can barely remember what emotions were like. I am a walking testament to survival through suffering."
 	triumph_cost = 2
-	granted_virtues = list(
-		/datum/virtue/utility/tolerant,
-		/datum/virtue/utility/deadened
-	)
+	added_traits = list(TRAIT_TOLERANT)
+	granted_virtues = list(/datum/virtue/utility/deadened)
 	custom_text = "Grants two virtues for the outcast:\n\
 	- Tolerant: No stress from certain species, broad acceptance\n\
 	- Deadened: Completely emotionless (NOMOOD trait)"

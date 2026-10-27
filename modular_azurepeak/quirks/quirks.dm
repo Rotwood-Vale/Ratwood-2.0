@@ -426,6 +426,12 @@
 	recipient.verbs += /mob/living/carbon/human/proc/changevoice
 	recipient.verbs += /mob/living/carbon/human/proc/swapvoice
 
+/datum/quirk/tolerant
+	name = "Tolerant"
+	desc = "Whether fostered through travel or care, you just don't see an issue with certain folks."
+	custom_text = "Prevents you from experiencing negative stress events or examine text when looking at select species and origins."
+	added_traits = list(TRAIT_TOLERANT)
+
 /datum/quirk/ugly
 	name = "Ugly"
 	desc = "My face is ugly and makes everyone who looks at me miserable."

@@ -1283,6 +1283,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 			save_character()
 			user << browse(null, "window=origin_map")
 			user << browse(null, "window=origin_info")
+			skip_preview = TRUE
 			ShowChoices(user)
 			return
 	if(href_list["preference"] == "origin_cancel")
