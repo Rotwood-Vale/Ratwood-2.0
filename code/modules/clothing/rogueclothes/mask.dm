@@ -102,6 +102,7 @@
 		lensmoved = FALSE
 
 /obj/item/clothing/mask/rogue/spectacles/golden
+	is_gold = TRUE
 	name = "golden spectacles"
 	icon_state = "goggles"
 	max_integrity = 35
@@ -191,6 +192,7 @@
 	block2add = FOV_LEFT
 
 /obj/item/clothing/mask/rogue/lordmask
+	is_gold = TRUE
 	name = "golden halfmask"
 	desc = "Half of your face turned gold."
 	icon_state = "lmask"
@@ -198,6 +200,9 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	sewrepair = FALSE
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/mask/rogue/lordmask/ComponentInitialize()
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/mask/rogue/lordmask/l
 	icon_state = "lmask_l"
@@ -215,7 +220,6 @@
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	max_integrity = ARMOR_INT_MASK_CLOTH
-	prevent_crits = list(BCLASS_BLUNT)
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
 	flags_inv = HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEEARS
 	body_parts_covered = FACE|HEAD
@@ -309,7 +313,6 @@
 	max_integrity = ARMOR_INT_MASK_IRON
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE
 	block2add = FOV_BEHIND
@@ -327,7 +330,6 @@
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE
 	block2add = FOV_BEHIND
@@ -339,6 +341,7 @@
 
 /obj/item/clothing/mask/rogue/facemask/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/mask/rogue/facemask/equipped(mob/user, slot)
 	..()
@@ -363,6 +366,8 @@
 	max_integrity = 200
 	icon_state = "ancientmask"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/mask/rogue/facemask/ancient/decrepit
 	name = "decrepit mask"
@@ -381,7 +386,7 @@
 /obj/item/clothing/mask/rogue/facemask/bronze
 	name = "bronze mask"
 	desc = "Glimmering bronze, curved to veil its wearer's face from both judgement and harm."
-	armor = ARMOR_BRONZE
+	armor = ARMOR_PLATE
 	armor_class = ARMOR_CLASS_LIGHT
 	icon_state = "bronzemask"
 	item_state = "bronzemask"
@@ -510,6 +515,7 @@
 	icon_state = "steppemask_snout"
 
 /obj/item/clothing/mask/rogue/facemask/goldmask
+	is_gold = TRUE
 	name = "Gold Mask"
 	icon_state = "goldmask"
 	max_integrity = ARMOR_INT_MASK_GOLD
@@ -604,7 +610,6 @@
 	drop_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	resistance_flags = FIRE_PROOF
 	armor = ARMOR_PADDED_BAD
-	prevent_crits = null
 	flags_inv = HIDEFACE|HIDESNOUT
 	body_parts_covered = FACE
 	block2add = FOV_BEHIND
@@ -648,10 +653,10 @@
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
 /obj/item/clothing/mask/rogue/lordmask/naledi/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_NALEDI, "naledi_mask")
+	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/mask/rogue/lordmask/naledi/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, female = FALSE, customi = null, sleeveindex, boobed_overlay = FALSE, icon/clip_mask = null)
 	if(default_layer == BELT_LAYER)
@@ -683,7 +688,6 @@
 	max_integrity = ARMOR_INT_MASK_IRON + 50
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
 
 /obj/item/clothing/mask/rogue/lordmask/zizite
@@ -695,7 +699,6 @@
 	max_integrity = ARMOR_INT_MASK_IRON + 50
 	armor = ARMOR_PLATE
 	flags_inv = HIDEFACE|HIDESNOUT
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	sellprice = 0
 
 /obj/item/clothing/mask/rogue/exoticsilkmask
@@ -761,7 +764,6 @@
 	break_sound = 'sound/foley/breaksound.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT)
 	flags_inv = HIDEFACE
 	body_parts_covered = FACE
 	block2add = FOV_BEHIND
@@ -969,3 +971,17 @@
 	icon_state = "bduelist"
 	armor = ARMOR_BRONZE
 	max_integrity = ARMOR_INT_MASK_BRONZE + 50//worse protection than iron goggles so it gets a slight buff
+
+/obj/item/clothing/mask/rogue/spectacles/fancy/dark
+	name = "fancy tinted spectacles"
+	desc = "Delicate, thin-lensed spectacles of foreign make, their craft finer than most local wares. This variant has a darker tint to its lenses."
+	icon_state = "glassesb_dark"
+
+/obj/item/clothing/mask/rogue/spectacles/monocle
+	name = "silver monocle"
+	icon_state = "monocle"
+	max_integrity = 35
+
+/obj/item/clothing/mask/rogue/lordmask/naledi/lesser
+	name = "naledian runed mask"
+	desc = "Runes and wards, meant for daemons; the gold has somehow rusted in unnatural, impossible agony. The most prominent of these etchings is in the shape of the Naledian psycross. Lightly armored to protect the wearer's face."

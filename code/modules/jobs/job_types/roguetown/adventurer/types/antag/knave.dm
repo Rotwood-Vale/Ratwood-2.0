@@ -53,6 +53,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
 	id = /obj/item/mattcoin
 	H.adjust_blindness(-3)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
 	var/subtype = list("Rogue", "Poacher")
 	if(H.mind)
 		var/subtype_choice = input(H, "Choose your path.", "TAKE UP ARMS") as anything in subtype

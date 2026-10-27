@@ -367,7 +367,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 				apply_status_effect(/datum/status_effect/buff/mount_apple_healing, 1)
 				if(istype(src, /mob/living/simple_animal/hostile/retaliate))
 					var/mob/living/simple_animal/hostile/retaliate/retaliating_mount = src
-					if(retaliating_mount.enemies.len)
+					if(LAZYLEN(retaliating_mount.enemies))
 						retaliating_mount.clear_enemies()
 						visible_message(span_notice("[src] calms down."))
 						retaliating_mount.LoseTarget()
@@ -793,7 +793,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 ///mob/living/simple_animal/extinguish_mob()
 //	return
 
-/mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/simple_animal/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	if(..()) //successfully ressuscitated from death
 		icon = initial(icon)
 		icon_state = icon_living
@@ -884,7 +884,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		walk(src, 0) //stop mid walk
 
 	update_transform()
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 
 /mob/living/simple_animal/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
@@ -1056,7 +1056,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		return ..()
 	if(ishuman(M) && buckled_mobs && buckled_mobs.len < max_buckled_mobs)
 		var/mob/living/carbon/human/primary_rider = M
-		for(var/mob/living/passenger in primary_rider.buckled_mobs.Copy())
+		for(var/mob/living/passenger in primary_rider.buckled_mobs?.Copy())
 			if(buckled_mobs.len >= max_buckled_mobs)
 				break
 			if(!ishuman(passenger) || passenger.stat != CONSCIOUS)
@@ -1100,6 +1100,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 					new_delay -= 5 + amt/6
 				else
 					new_delay -= 3
+			if(HAS_TRAIT(user, TRAIT_STEPPE_RIDER))
+				new_delay -= 0.25
 			var/health_deficiency = getBruteLoss() + getFireLoss()
 			if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN) && (health <= round(maxHealth * 0.5) || health_deficiency >= round(maxHealth * 0.5)))
 				new_delay = max(new_delay, initial(move_to_delay) + 2)

@@ -475,7 +475,7 @@
 	output = /datum/reagent/consumable/soup/tangerine_marmalade
 
 /datum/stew_recipe/squash_soup
-	inputs = list(/obj/item/reagent_containers/food/snacks/rogue/fruit/pumpkin_sliced, /obj/item/reagent_containers/food/snacks/rogue/preserved/pumpkin_mashed)
+	inputs = list(/obj/item/reagent_containers/food/snacks/rogue/fruit/pumpkin_sliced)
 	output = /datum/reagent/consumable/soup/stew/squash_soup
 
 /datum/stew_recipe/frysquash_soup

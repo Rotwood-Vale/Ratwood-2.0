@@ -87,12 +87,12 @@
 
 /datum/anvil_recipe/weapons/ancient/knuckles
 	name = "Knuckles, Ancient"
-	created_item = /obj/item/rogueweapon/knuckles/ancient
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/ancient
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/decrepit/knuckles
 	name = "Knuckles, Decrepit"
-	created_item = /obj/item/rogueweapon/knuckles/ancient/decrepit
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/decrepit
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/ancient/shortsword
@@ -281,7 +281,7 @@
 
 /datum/anvil_recipe/weapons/bronze/bronzeknuckle
 	name = "Knuckledusters, Bronze"
-	created_item = /obj/item/rogueweapon/knuckles/bronzeknuckles
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/bronze
 	display_category = ITEM_CAT_WEAPONS_MACES
 	display_category = ITEM_CAT_WEAPONS_MACES
 
@@ -435,6 +435,13 @@
 	name = "Messer, Iron"
 	req_blade = /obj/item/blade/iron_sword
 	created_item = /obj/item/rogueweapon/sword/short/messer/iron
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
+/datum/anvil_recipe/weapons/iron/messer/virtue
+	name = "Dueling Messer (+1 Iron)"
+	req_blade = /obj/item/blade/iron_sword
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/sword/short/messer/iron/virtue
 	display_category = ITEM_CAT_WEAPONS_SWORDS
 
 /datum/anvil_recipe/weapons/iron/broadsword
@@ -668,7 +675,7 @@
 
 /datum/anvil_recipe/weapons/steel/steelknuckle
 	name = "Knuckles, Steel"
-	created_item = /obj/item/rogueweapon/knuckles
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/steel/hurlbat
@@ -847,6 +854,13 @@
 	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel
 	display_category = ITEM_CAT_WEAPONS_AXES
 
+/datum/anvil_recipe/weapons/steel/woodcutter
+	name = "Woodcutter's Axe, Steel (+1 Steel, +1 Small Log)"
+	req_blade = /obj/item/blade/steel_axe
+	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
+	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
+	display_category = ITEM_CAT_WEAPONS_AXES
+
 /datum/anvil_recipe/weapons/steel/pulaski
 	name = "Pulaski axe (+1 Stick)"
 	additional_items = list(/obj/item/grown/log/tree/stick)
@@ -882,7 +896,7 @@
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
 
 /datum/anvil_recipe/weapons/steel/eaglebeak
-	name = "Eagle's Beak (+1 Steel, +1 Small Log)"
+	name = "Lucerne, Steel (+1 Steel, +1 Small Log)"
 	req_blade = /obj/item/blade/steel_polearm
 	additional_items = list(/obj/item/ingot/steel, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/eaglebeak
@@ -1532,8 +1546,8 @@
 	created_item = /obj/item/rogueweapon/halberd/blacksteel
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
 
-/datum/anvil_recipe/weapons/blacksteel/polehammer
-	name = "Blacksteel Polehammer (+3 Blacksteel, +1 Toper, +1 Small Log, +1 Silk)"
+/datum/anvil_recipe/weapons/blacksteel/Lucerne
+	name = "Blacksteel Lucerne (+3 Blacksteel, +1 Toper, +1 Small Log, +1 Silk)"
 	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/roguegem/yellow, /obj/item/grown/log/tree/small, /obj/item/natural/silk)
 	created_item = /obj/item/rogueweapon/eaglebeak/blacksteel
 	display_category = ITEM_CAT_WEAPONS_POLEARMS
@@ -1553,7 +1567,7 @@
 /datum/anvil_recipe/weapons/blacksteel/knuckles
 	name = "Blacksteel Knuckles (+1 Dorpel, +1 Silk)"//unarmed chuds get fucked
 	additional_items = list(/obj/item/roguegem/diamond, /obj/item/natural/silk)
-	created_item = /obj/item/rogueweapon/knuckles/blacksteel
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/blacksteel
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/blacksteel/hurlbat
@@ -1738,7 +1752,7 @@
 
 /datum/anvil_recipe/weapons/psy/knuckles
 	name = "Psydonic Knuckledusters"
-	created_item = /obj/item/rogueweapon/knuckles/psydon
+	created_item = /obj/item/clothing/gloves/roguetown/knuckles/psydon
 	display_category = ITEM_CAT_WEAPONS_MACES
 
 /datum/anvil_recipe/weapons/psy/cudgel

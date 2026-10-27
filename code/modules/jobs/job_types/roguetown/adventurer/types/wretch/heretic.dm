@@ -569,7 +569,7 @@
 	name = "Heretic Monk"
 	tutorial = "Strong in body and spirit, you spread the truth through violence and word in equal measures. You eschew burdening armor in favor of physical prowess."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
+	allowed_races = ALL_BUT_BLOODLESS
 	outfit = /datum/outfit/job/roguetown/wretch/hereticmonk
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_WRETCH)
@@ -698,9 +698,9 @@
 					if("Atgervi Shaman")
 						beltr = /obj/item/rogueweapon/handclaw/gronn
 					if("Disgraced Disciple (Natural Armor)")
-						beltr = /obj/item/rogueweapon/knuckles/psydon/old //Worse than steel or bronze knuckledusters, that's the price you pay for the drip and the natural armor.
+						beltr = /obj/item/clothing/gloves/roguetown/knuckles/psydon/old //Worse than steel or bronze knuckledusters, that's the price you pay for the drip and the natural armor.
 					else
-						beltr = /obj/item/rogueweapon/knuckles
+						beltr = /obj/item/clothing/gloves/roguetown/knuckles
 			if("Glaive")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				backr = /obj/item/rogueweapon/scabbard/gwstrap

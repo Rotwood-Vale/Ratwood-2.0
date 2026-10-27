@@ -105,7 +105,7 @@
 	if(!iscarbon(grabbed))
 		return
 	var/mob/living/carbon/C = grabbed
-	C.update_action_buttons_icon()
+	C.update_mob_action_buttons()
 
 /obj/item/grabbing/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -139,7 +139,7 @@
 			grabbee.l_grab = null
 		if(grabbee.mouth == src)
 			grabbee.mouth = null
-			grabbee.update_action_buttons_icon()
+			grabbee.update_mob_action_buttons()
 		grabbee = null
 	for(var/datum/D in dependents)
 		D.grabdropped(src)
@@ -455,8 +455,8 @@
 		user.stop_pulling()
 		return
 	var/mob/living/carbon/C = grabbed
-	var/armor_block = C.run_armor_check(limb_grabbed, "slash")
 	var/damage = user.get_punch_dmg()
+	var/armor_block = C.run_armor_check(limb_grabbed, "slash", armor_penetration = PEN_NONE, damage = damage)
 	if(grabbed == user && limb_grabbed.status == BODYPART_ROBOTIC)	//removing ones own prosthetic should not be violent, nor damaging
 		C.visible_message(span_notice("[user] starts twisting [limb_grabbed] of [C], twisting it out of its socket!"), span_notice("I start twisting [limb_grabbed] from [src]."))
 		playsound(user, 'sound/misc/blackbag2.ogg', 100)
@@ -474,7 +474,6 @@
 		armor_block = C.run_armor_check(limb_grabbed, "blunt")
 		C.apply_damage(damage, BRUTE, limb_grabbed, armor_block)
 	limb_grabbed.bodypart_attacked_by(BCLASS_TWIST, damage, user, sublimb_grabbed, crit_message = TRUE)
-	limb_grabbed.bodypart_attacked_by(BCLASS_TWIST, damage, user, sublimb_grabbed, crit_message = TRUE)
 	C.visible_message(span_danger("[user] twists [C]'s [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]"), \
 					span_userdanger("[user] twists my [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_warning("I twist [C]'s [parse_zone(sublimb_grabbed)].[C.next_attack_msg.Join()]"))
@@ -487,7 +486,7 @@
 		limb_grabbed.drop_limb(TRUE)
 	if(ishuman(user) && user.mind)
 		var/text = "[bodyzone2readablezone(user.zone_selected)]..."
-		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, show_self = FALSE)
 
 	if(limb_grabbed.body_zone == sublimb_grabbed && isdoll(C))
 		var/mob/living/carbon/human/target = C
@@ -678,7 +677,7 @@
 		user.stop_pulling()
 		return
 	var/mob/living/carbon/C = grabbed
-	var/armor_block = C.run_armor_check(limb_grabbed, d_type, armor_penetration = BLUNT_DEFAULT_PENFACTOR)
+	var/armor_block = C.run_armor_check(limb_grabbed, d_type, armor_penetration = PEN_NONE)
 	var/damage = user.get_punch_dmg()
 	var/unarmed_skill = user.get_skill_level(/datum/skill/combat/unarmed)
 	damage *= (1 + (unarmed_skill / 10))	//1.X multiplier where X is the unarmed skill.
@@ -687,7 +686,7 @@
 		limb_grabbed.bodypart_attacked_by(BCLASS_BLUNT, damage, user, sublimb_grabbed, crit_message = TRUE)
 		playsound(C.loc, "smashlimb", 100, FALSE, -1)
 	else
-		C.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+		C.next_attack_msg += VISMSG_ARMOR_BLOCKED
 	C.visible_message(span_danger("[user] smashes [C]'s [limb_grabbed] into [A]![C.next_attack_msg.Join()]"), \
 					span_userdanger("[user] smashes my [limb_grabbed] into [A]![C.next_attack_msg.Join()]"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_warning("I smash [C]'s [limb_grabbed] against [A].[C.next_attack_msg.Join()]"))
@@ -695,7 +694,7 @@
 	log_combat(user, C, "limbsmashed [limb_grabbed] ")
 	if(ishuman(user) && user.mind)
 		var/text = "[bodyzone2readablezone(user.zone_selected)]..."
-		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text)
+		user.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, show_self = FALSE)
 
 /datum/intent/grab
 	unarmed = TRUE

@@ -76,11 +76,11 @@
 	results = list(/datum/reagent/consumable/Acoffee = 6)
 	required_reagents = list(/datum/reagent/consumable/acorn_powder = 1, /datum/reagent/water = 5)
 
-/datum/chemical_reaction/alch/acoffee/on_reaction(mob/user, obj/item/reagent_containers/container, total_volume)
+/datum/chemical_reaction/alch/acoffee/on_reaction(datum/reagents/holder, created_volume)
 	. = ..()
-	if(container)
+	if(holder)
 		// Remove all leftover water
-		container.reagents.del_reagent(/datum/reagent/water)
+		holder.del_reagent(/datum/reagent/water)
 
 /datum/reagent/consumable/milk
 	name = "Milk"
