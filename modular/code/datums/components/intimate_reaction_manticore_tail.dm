@@ -8,8 +8,6 @@
 	/// Cooldown for sex-received flavor messages.
 	var/last_receive_flavor_time = 0
 	var/receive_flavor_cooldown = 20 SECONDS
-	/// Player toggle for flavor messages, off by default.
-	var/messages_enabled = FALSE
 
 /datum/component/intimate_reaction/manticore_tail/Initialize()
 	if(!istype(parent, /obj/item/organ/tail))
@@ -41,7 +39,7 @@
 	return T.owner == source
 
 /datum/component/intimate_reaction/manticore_tail/try_handle_wearer_moved(mob/living/carbon/human/source)
-	if(!messages_enabled)
+	if(!source.client?.prefs?.manticore_tail_messages)
 		return FALSE
 	if(!is_valid_wearer_source(source))
 		return FALSE
@@ -75,7 +73,7 @@
 	return TRUE
 
 /datum/component/intimate_reaction/manticore_tail/try_handle_wearer_sex_action_received(mob/living/carbon/human/source, mob/living/carbon/human/acting_mob, datum/sex_controller/acting_sexcon, datum/sex_action/action, receiver_part, giving, arousal_amt, pain_amt, applied_force, applied_speed)
-	if(!messages_enabled)
+	if(!source.client?.prefs?.manticore_tail_messages)
 		return FALSE
 	if(!(receiver_part & (SEX_PART_TAIL | SEX_PART_TAIL_MAW)))
 		return FALSE

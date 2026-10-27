@@ -49,14 +49,11 @@ GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
 	var/mob/living/carbon/human/H = M
 	if(reaction_component)
 		reaction_component.bind_to_wearer(H)
-	H.verbs += /mob/living/carbon/human/proc/toggle_manticore_tail_messages
 	update_maw_state()
 
 /obj/item/organ/tail/manticore/Remove(mob/living/carbon/M, special = FALSE, drop_if_replaced = TRUE)
 	if(ishuman(M) && reaction_component)
 		reaction_component.unbind_from_wearer(M)
-	if(M)
-		M.verbs -= /mob/living/carbon/human/proc/toggle_manticore_tail_messages
 	var/datum/status_effect/creampie_leak/leak = M?.has_status_effect(/datum/status_effect/creampie_leak/long) || M?.has_status_effect(/datum/status_effect/creampie_leak)
 	if(leak?.orifice & SEX_PART_TAIL_MAW)
 		leak.orifice &= ~SEX_PART_TAIL_MAW
@@ -124,16 +121,6 @@ GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
 	if(istype(tail))
 		return tail
 	return null
-
-/mob/living/carbon/human/proc/toggle_manticore_tail_messages()
-	set name = "Toggle Tail Sensations"
-	set category = "IC"
-
-	var/obj/item/organ/tail/manticore/tail = get_manticore_tail(src)
-	if(!tail?.reaction_component)
-		return
-	tail.reaction_component.messages_enabled = !tail.reaction_component.messages_enabled
-	to_chat(src, "I will [tail.reaction_component.messages_enabled ? "now" : "no longer"] notice my tail's sensations.")
 
 /mob/living/carbon/human/get_extra_mob_descriptors()
 	. = ..()
