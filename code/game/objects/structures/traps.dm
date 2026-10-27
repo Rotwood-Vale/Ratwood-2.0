@@ -461,7 +461,7 @@
 	lightstep_resistant = TRUE // its made by players against players
 
 /obj/structure/trap/bogtrap/Initialize(mapload)
-	..()
+	. = ..()
 	if(!activate_for_typecache)
 		activate_for_typecache = typecacheof(list(/mob/living)) // only activate against mobs
 
