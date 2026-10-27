@@ -290,7 +290,7 @@
 
 /obj/projectile/bullet/firearm/lead/runelock/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(isliving(target))
+	if(isliving(target) && !blessed)
 		var/mob/living/L = target
 		L.apply_status_effect(/datum/status_effect/debuff/psypowder)
 
@@ -333,7 +333,8 @@
 	icon_state = "runebag"
 	item_state = "runebag"
 	max_storage = 12
-	var/list/linked_ammo_types = list() // types to regenerate on recall
+	var/selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock // what the pouch is currently attuned to
+	var/list/linked_ammo_types = list() // types the casings report on firing
 	var/list/linked_casings = list()    // every live casing linked to this bag, in or out of it
 
 /obj/item/quiver/twilight_bullet/runicbag/Destroy()
@@ -361,20 +362,56 @@
 	if(arrows.len >= max_storage)
 		to_chat(user, span_notice("The [src.name] is full and can accept no more ammunition!"))
 		return
-	var/choice = input(user, "Replenish which spheres?", "Pharetra") as null|anything in list("Runed", "Blessed")
-	if(!choice)
-		return
-	var/sphere_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock
-	if(choice == "Blessed")
-		sphere_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
-	to_chat(user, span_notice("I begin recalling my ammunition..."))
+	var/type_name = (selected_type == /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed) ? "blessed" : "runed"
+	to_chat(user, span_notice("I begin recalling [type_name] spheres..."))
 	if(!do_after(user, 15 SECONDS, src))
 		return
 	playsound(src, 'sound/magic/blink.ogg', 80)
-	while(summon_round(sphere_type))
+	while(summon_round(selected_type))
 		continue
 	linked_ammo_types.Cut()
 	update_icon()
+
+/obj/item/quiver/twilight_bullet/runicbag/MiddleClick(mob/user, params)
+	if(selected_type == /obj/item/ammo_casing/caseless/bullet/lead/runelock)
+		selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
+		to_chat(user, span_notice("The spheres in the pouch shimmer and turn <b>blessed</b>."))
+	else
+		selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock
+		to_chat(user, span_notice("The spheres in the pouch darken and turn <b>runed</b>."))
+	convert_spheres(selected_type)
+	playsound(src, 'sound/magic/charged.ogg', 40, FALSE)
+	return TRUE
+
+/obj/item/quiver/twilight_bullet/runicbag/proc/convert_spheres(new_type)
+	var/converted = 0
+	for(var/obj/item/ammo_casing/C as anything in arrows.Copy())
+		if(C.type == new_type)
+			continue
+		unlink_casing(C) 
+		qdel(C)
+		converted++
+	for(var/i in 1 to converted)
+		summon_round(new_type)
+	update_icon()
+
+/obj/item/quiver/twilight_bullet/runicbag/attack_right(mob/user)
+	if(!arrows.len)
+		to_chat(user, span_warning("The pouch is empty."))
+		return TRUE
+	var/obj/item/ammo_casing/O = arrows[arrows.len]
+	arrows -= O 
+	O.forceMove(user.loc)
+	user.put_in_hands(O)
+	update_icon()
+	return TRUE
+
+// Examine requested by Xander
+/obj/item/quiver/twilight_bullet/runicbag/examine(mob/user)
+	. = ..()
+	var/type_name = (selected_type == /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed) ? "blessed" : "runed"
+	. += span_info("It holds [arrows.len]/[max_storage] [type_name] spheres.")
+	. += span_info("Use it in hand to recall spheres of the attuned type. Middle-click to convert the spheres inside. Right-click to draw a sphere.")
 
 // Added attackby so you can manually put bullets back in
 /obj/item/quiver/twilight_bullet/runicbag/attackby(obj/item/A, mob/user, params)
@@ -423,6 +460,7 @@
 
 /obj/item/quiver/twilight_bullet/runicbag/blessed/Initialize(mapload)
 	. = ..()
+	selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
 	for(var/i in 1 to max_storage)
 		var/obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed/R = new(src)
 		arrows += R
