@@ -48,6 +48,14 @@
 	name = "Blacksteel Dolabra"
 	req_bar = /obj/item/ingot/blacksteel
 	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/rogueweapon/woodstaff/quarterstaff)
-	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/blacksteel/engineer
+	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/blacksteel
+	createditem_num = 1
+	craftdiff = 4
+
+/datum/anvil_recipe/engineeredsmithing/dolabra/albranze
+	name = "Albranze Dolabra"
+	req_bar = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/ingot/bronze, /obj/item/rogueweapon/woodstaff/quarterstaff)
+	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/albranze
 	createditem_num = 1
 	craftdiff = 4

@@ -322,20 +322,20 @@
 	inhand_y_dimension = 64
 	bigboy = TRUE
 
-/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/blacksteel/pioneer
-	name = "pioneer's dolabra"
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/pioneer
+	name = "guilded eleonora"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "pdolabra"
 	gripsprite = TRUE
-	desc = "A long handled axe with a carved grip made of hardened maple wood. This one has an axe-blade of frayed blacksteel, having lost its varnish long ago with a long pick-head behind the blade, this dolabra is decorated with golden reinforced bracers along the shaft and a heavy gold mace head at the top."
+	desc = "A long handled dolabra axe-pick with a carved grip made of hardened maple wood. This one has an axe-blade of frayed blacksteel, having lost its varnish long ago with a long pick-head behind the blade, this dolabra is decorated with golden reinforced bracers along the shaft and a heavy gold mace head at the top."
 	dropshrink = 0.75
 	force = 30
 	force_wielded = 34
-	max_integrity = 750
+	max_integrity = 1000
 	wdefense = 6
 	wdefense_wbonus = 3
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash, /datum/intent/pick)
-	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long/woodcutter/pioneer, /datum/intent/axe/bash, /datum/intent/pick/ranged/dolabra/pioneer)
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/dolabra/pioneer, /datum/intent/pick)
+	gripped_intents = list(/datum/intent/axe/cut/long/dolabra/pioneer, /datum/intent/axe/chop/long/woodcutter/pioneer, /datum/intent/axe/bash/dolabra/pioneer, /datum/intent/pick/ranged/dolabra/pioneer)
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -346,20 +346,20 @@
 	special = /datum/special_intent/greatsword_swing
 	smeltresult = /obj/item/ingot/gold
 
-/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/blacksteel/engineer
-	name = "engineer's dolabra"
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/blacksteel
+	name = "blacksteel dolabra"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "edolabra"
 	gripsprite = TRUE
-	desc = "A long-handled axe with a carved grip made of hardened maple wood. Fitted with an axe-blade of polished blacksteel and a long pick-head behind the blade."
+	desc = "A long-handled dolabra axe-pick with a carved grip made of hardened maple wood. Fitted with an axe-blade of polished blacksteel and a long pick-head behind the blade."
 	dropshrink = 0.70
-	force = 28
-	force_wielded = 32
-	max_integrity = 750 // fifty less than the blacksteel pickaxe
+	force = 30
+	force_wielded = 34
+	max_integrity = 1000 // more than a blacksteel pickaxe
 	wdefense = 6
-	wdefense_wbonus = 2
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash, /datum/intent/pick)
-	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long/woodcutter, /datum/intent/axe/bash, /datum/intent/pick/ranged/dolabra)
+	wdefense_wbonus = 3
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/dolabra, /datum/intent/pick)
+	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long/woodcutter, /datum/intent/axe/bash/dolabra, /datum/intent/pick/ranged/dolabra)
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -370,7 +370,31 @@
 	special = /datum/special_intent/greatsword_swing
 	smeltresult = /obj/item/ingot/blacksteel
 
-/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/blacksteel/getonmobprop(tag)
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/albranze
+	name = "albranze dolabra"
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "bdolabra" // albranze is a bronze aluminium mix, aluminium was traditionally more expensive than even silver and gold combined
+	gripsprite = TRUE
+	desc = "a long handled dolabra axe-pick with a long shaft of treated oak. Fitted with an axe-head made of polished albranze with a fitted pick-head behind the blade."
+	dropshrink = 0.70
+	force = 28
+	force_wielded = 32
+	max_integrity = 750 // near a blacksteel pickaxe
+	wdefense = 6
+	wdefense_wbonus = 2
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/dolabra, /datum/intent/pick)
+	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long/woodcutter, /datum/intent/axe/bash/dolabra, /datum/intent/pick/ranged/dolabra)
+	wlength = WLENGTH_LONG
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	resistance_flags = FIRE_PROOF
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = TRUE
+	special = /datum/special_intent/greatsword_swing
+	smeltresult = /obj/item/ingot/bronze
+
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)

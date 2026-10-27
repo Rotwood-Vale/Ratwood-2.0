@@ -36,19 +36,6 @@
 	skillcraft = /datum/skill/craft/engineering
 	display_category = ITEM_CAT_ENG_TRIGGERS
 
-/datum/crafting_recipe/roguetown/engineering/peddlercart
-	name = "peddler cart"
-	category = "Machines"
-	result = /obj/structure/roguemachine/vendor/mobile
-	reqs = list(
-		/obj/item/grown/log/tree/small = 1,
-		/obj/item/ingot/iron = 1,
-		/obj/item/natural/glass = 1,
-		/obj/item/roguegear/bronze = 2,
-	)
-	craftdiff = 4
-	skillcraft = /datum/skill/craft/engineering
-
 /datum/crafting_recipe/roguetown/engineering/trapdoor
 	name = "floorhatch"
 	result = /obj/structure/floordoor

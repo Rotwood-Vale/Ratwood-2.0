@@ -158,7 +158,7 @@
 	beltr = /obj/item/rogueweapon/huntingknife
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/blacksteel/engineer
+	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/albranze
 	backpack_contents = list(
 								/obj/item/rogueweapon/hammer/steel = 1,
 								/obj/item/rogueweapon/chisel = 1,
