@@ -188,7 +188,7 @@
 		qdel(src)
 		return
 	for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
-		var/obj/projectile/bullet/BB = CB.BB
+		var/obj/projectile/bullet/firearm/BB = CB.BB
 		if(BB)
 			BB.gunpowder_npc_critfactor *= npcdamfactor
 			BB.critfactor *= critfactor

@@ -2746,6 +2746,62 @@
 	sellprice = 50
 	sheathe_icon = "elfsword"
 
+
+/obj/item/rogueweapon/sword/sabre/psy/folding/relic
+	name = "\"Testament\""
+	desc = "Commissioned by the Inquisition and wrought by the blacksmiths of Arkenfeit, this peculiar blade was made for those \
+	who could ill afford to announce their calling before the time came to draw steel. Its silvered edge folds neatly into \
+	the hilt, concealing a weapon fit for the most delicate of investigations. Many a heretic has mistaken its bearer for \
+	a harmless clerk, only to learn that the Inquisition keeps its sharpest judgements close at hand."
+	max_integrity = 250
+	max_blade_int = 250
+	var/extended = FALSE
+	bigboy = TRUE
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "psyfoldingblade_on"
+
+/obj/item/rogueweapon/sword/sabre/psy/folding/relic/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 100,\
+		added_def = 2,\
+	)
+
+/obj/item/rogueweapon/sword/sabre/psy/folding/relic/attack_self(mob/user)
+	extended = !extended
+	playsound(src.loc, 'sound/blank.ogg', 50, TRUE)
+	if(extended)
+		possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/cut/sabre/heavy, /datum/intent/sword/thrust/sabre, /datum/intent/sword/strike)
+		wlength = WLENGTH_NORMAL
+		w_class = WEIGHT_CLASS_BULKY
+		sharpness = IS_SHARP
+		slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
+		equip_delay_self = initial(equip_delay_self)
+		unequip_delay_self = initial(unequip_delay_self)
+		inv_storage_delay = initial(inv_storage_delay)
+		icon_state = "psyfoldingblade_on"
+		playsound(user, 'sound/items/knife_open.ogg', 100, TRUE)
+	else
+		possible_item_intents = list(/datum/intent/sword/strike)
+		wlength = WLENGTH_SHORT
+		w_class = WEIGHT_CLASS_SMALL
+		sharpness = IS_BLUNT
+		slot_flags = ITEM_SLOT_HIP
+		equip_delay_self = 0 SECONDS
+		unequip_delay_self = 0 SECONDS
+		inv_storage_delay = 0 SECONDS
+		icon_state = "psyfoldingblade_off"
+	if(user.a_intent)
+		var/datum/intent/I = user.a_intent
+		if(istype(I))
+			I.afterchange()
+	user.update_a_intents()
+	update_icon()
+
 #undef LONGSWORD_STOCK_INTENTS
 #undef LONGSWORD_STOCK_GRIPPED_INTENTS
 #undef LONGSWORD_STOCK_ALT_GRIPS

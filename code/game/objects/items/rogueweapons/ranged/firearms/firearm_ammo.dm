@@ -38,6 +38,10 @@
 	var/gunpowder_npc_critfactor = 1
 	var/gunpowder
 
+/obj/item/ammo_casing
+	var/obj/item/quiver/twilight_bullet/runicbag/linked_bag = null
+	var/breech_loaded = FALSE
+
 /**
  * Generic ammo used by handgonnes and arquebuses
  */
@@ -107,11 +111,11 @@
 	if(skill_multiplier && can_train_combat_skill(L, /datum/skill/combat/firearms, SKILL_LEVEL_EXPERT))
 		L.mind.add_sleep_experience(/datum/skill/combat/firearms, L.STAINT * skill_multiplier)
 
-
 /**
  * General firearm effect, on strike.
  * You roll 1-12, and if it's higher than your CON, you're FUCKED.
  * Otherwise, applies a slowdown for beating the check.
+ * Silver and blessed burn is handled here too, so every subtype inherits it.
  */
 
 /obj/projectile/bullet/firearm/on_hit(atom/target, blocked = FALSE)
@@ -127,6 +131,21 @@
 				M.Immobilize(rand(30,60))
 			else
 				M.Slowdown(stumble_strength)
+	if(silver && isliving(target))
+		var/mob/living/T = target
+		if(HAS_TRAIT(T, TRAIT_SILVER_WEAK))
+			if(blessed)
+				if(!T.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder))
+					if(T.patron)
+						to_chat(T, span_danger("The trice-cursed Otavan silver! By [T.patron.name], it hurts!!"))
+					else
+						to_chat(T, span_danger("The trice-cursed Otavan silver! By all that's holy, it hurts!!"))
+				T.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+			else
+				if(!T.has_status_effect(/datum/status_effect/fire_handler/fire_stacks/sunder/blessed))
+					to_chat(T, span_danger("Silver rebukes my presence! These fires are lashing at my very soul!"))
+				T.adjust_fire_stacks(3, /datum/status_effect/fire_handler/fire_stacks/sunder)
+			T.ignite_mob()
 
 //The actual pouches.
 /obj/item/quiver/bullet
@@ -202,10 +221,6 @@
 	update_icon()
 
 //RUNELOCK
-/obj/item/ammo_casing
-	var/obj/item/quiver/twilight_bullet/runicbag/linked_bag = null
-	var/breech_loaded = FALSE
-
 /obj/item/ammo_casing/caseless/bullet/lead/silver
 	name = "silver sphere"
 	desc = "A small silver sphere. Softer than a lead bullet, but highly effective against the undead."
@@ -217,7 +232,10 @@
 	desc = "A small silver sphere. Softer than a lead bullet, but highly effective against the undead."
 	damage = 120
 	silver = TRUE
+	critfactor = 0.8
 	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/silver
+	damage_type = BRUTE
+	armor_penetration = PEN_NONE
 
 /obj/item/ammo_casing/caseless/bullet/lead/runelock
 	name = "runed sphere"
@@ -254,13 +272,15 @@
 /obj/projectile/bullet/firearm/lead/runelock
 	name = "runed sphere"
 	desc = "A small, perfectly round metal sphere covered in Psydonite runes. Lethal at high velocity."
-	damage = 90
+	damage = 45
 	speed = 0.6
 	icon_state = "musketball_runed"
 	max_range = 7
 	range = 12
 	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
 	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock
+	damage_type = BRUTE
+	armor_penetration = PEN_HEAVY
 
 /obj/projectile/bullet/firearm/lead/runelock/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -273,16 +293,17 @@
 	desc = "A small, perfectly round sphere crafted from pure silver. These munitions are forged by the finest Otavan smiths and blessed personally by the Grandmaster. Lethal against the undead, but also highly effective against other heretics."
 	projectile_type = /obj/projectile/bullet/firearm/lead/runelock/blessed
 	icon_state = "musketball_blessed"
-	smeltresult = /obj/item/rogueore/silver
 
 /obj/projectile/bullet/firearm/lead/runelock/blessed
 	name = "blessed sphere"
 	desc = "A small, perfectly round sphere crafted from pure silver. These munitions are forged by the finest Otavan smiths and blessed personally by the Grandmaster. Lethal against the undead, but also highly effective against other heretics."
-	damage = 100
+	damage = 120
 	icon_state = "musketball_blessed"
 	silver = TRUE
 	blessed = TRUE
 	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
+	damage_type = BRUTE
+	armor_penetration = PEN_NONE
 
 /atom/movable/screen/alert/status_effect/debuff/psypowder
 	name = "Runed Poison"
@@ -312,21 +333,31 @@
 	icon_state = "runebag"
 
 /obj/item/quiver/twilight_bullet/runicbag/attack_self(mob/living/user)
-	if(!length(linked_ammo_types))
+	if(linked_ammo_types)
+		to_chat(user, span_notice("I begin recalling my ammunition..."))
+		if(do_after(user, 15 SECONDS, src))
+			playsound(src, 'sound/magic/blink.ogg', 80)
+			for(var/B in linked_ammo_types)
+				if(arrows.len < max_storage)
+					var/obj/item/ammo_casing/new_boolet = new B()
+					arrows += new_boolet
+					linked_ammo_types -= B
+					new_boolet.linked_bag = src
+				else
+					to_chat(user, span_notice("The [src.name] is full and can accept no more ammunition!"))
+					break
+	else
 		to_chat(user, span_notice("There is no linked ammunition to recall!"))
-		return
-	to_chat(user, span_notice("I begin recalling my ammunition..."))
-	if(do_after(user, 15 SECONDS, src))
-		playsound(src, 'sound/magic/blink.ogg', 80)
-		for(var/B in linked_ammo_types.Copy())
-			if(arrows.len < max_storage)
-				var/obj/item/ammo_casing/new_boolet = new B()
-				arrows += new_boolet
-				linked_ammo_types -= B
-				new_boolet.linked_bag = src
-			else
-				to_chat(user, span_notice("The [src.name] is full and can accept no more ammunition!"))
-				break
+
+// Added attackby so you can manually put bullets back in
+/obj/item/quiver/twilight_bullet/runicbag/attackby(obj/item/A, mob/user, params)
+	if(istype(A, /obj/item/ammo_casing/caseless/bullet/lead/runelock))
+		if(eatarrow(A, user))
+			to_chat(user, span_notice("You insert \the [A] into \the [src]."))
+		else
+			to_chat(user, span_warning("\The [src] is full!"))
+		return TRUE
+	return ..()
 
 /obj/item/quiver/twilight_bullet/runicbag/eatarrow(obj/A, loc)
 	if(istype(A, /obj/item/ammo_casing/caseless/bullet/lead/runelock))
