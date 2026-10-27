@@ -1,4 +1,5 @@
 /datum/anvil_recipe/engineering
+	abstract_type = /datum/anvil_recipe/engineering
 	i_type = "Engineering"
 	appro_skill = /datum/skill/craft/engineering
 	craftdiff = 1
@@ -37,12 +38,13 @@
 	craftdiff = 0
 
 /datum/anvil_recipe/engineeredsmithing
+	abstract_type = /datum/anvil_recipe/engineeredsmithing
 	i_type = "Engineering"
 	appro_skill = /datum/skill/craft/engineering
 	craftdiff = 4
 	req_trait = TRAIT_ENGINEER
 	hides_from_books = TRUE
-	req_bar = /obj/item/ingot/blacksteel
+	req_bar = /obj/item/ingot/bronze
 
 /datum/anvil_recipe/engineeredsmithing/dolabra //exists solely to replace a stolen dolabra
 	name = "Blacksteel Dolabra"
@@ -58,4 +60,4 @@
 	additional_items = list(/obj/item/ingot/bronze, /obj/item/rogueweapon/woodstaff/quarterstaff)
 	created_item = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/albranze
 	createditem_num = 1
-	craftdiff = 4
+	craftdiff = 3
