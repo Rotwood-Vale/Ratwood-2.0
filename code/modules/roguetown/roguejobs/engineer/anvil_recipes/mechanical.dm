@@ -1,4 +1,5 @@
 /datum/anvil_recipe/engineering
+	abstract_type = /datum/anvil_recipe/engineering
 	i_type = "Engineering"
 	appro_skill = /datum/skill/craft/engineering
 	craftdiff = 1
