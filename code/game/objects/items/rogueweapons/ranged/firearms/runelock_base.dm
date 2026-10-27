@@ -37,3 +37,8 @@
 	. = ..()
 	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
 		chamber_round()
+
+/obj/item/gun/ballistic/revolver/rune/Destroy()
+	chambered = null
+	QDEL_NULL(magazine)
+	return ..()

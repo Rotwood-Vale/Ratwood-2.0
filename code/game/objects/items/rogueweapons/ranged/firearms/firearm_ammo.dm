@@ -250,9 +250,15 @@
 	if(!get_filter("rune_filter"))
 		add_filter("rune_filter", 2, list("type" = "outline", "color" = rgb(112, 28, 28, 1), "alpha" = 200, "size" = 2))
 
+/obj/item/ammo_casing/caseless/bullet/lead/runelock/Destroy()
+	if(linked_bag)
+		linked_bag.unlink_casing(src)
+	linked_bag = null
+	return ..()
+
 /obj/item/ammo_casing/caseless/bullet/lead/runelock/ready_proj(atom/target, mob/living/user, quiet, zone_override = "", atom/fired_from)
 	. = ..()
-	if(linked_bag)
+	if(linked_bag && length(linked_bag.linked_ammo_types) < linked_bag.max_storage)
 		linked_bag.linked_ammo_types += type
 
 /obj/item/ammo_casing/caseless/bullet/lead/runelock/equipped(mob/living/user)
@@ -327,27 +333,47 @@
 	icon_state = "runebag"
 	item_state = "runebag"
 	max_storage = 12
-	var/list/linked_ammo_types = list()
+	var/list/linked_ammo_types = list() // types to regenerate on recall
+	var/list/linked_casings = list()    // every live casing linked to this bag, in or out of it
+
+/obj/item/quiver/twilight_bullet/runicbag/Destroy()
+	for(var/obj/item/ammo_casing/C as anything in linked_casings)
+		C.linked_bag = null
+	linked_casings.Cut()
+	linked_ammo_types.Cut()
+	QDEL_LIST(arrows)
+	return ..()
+
+/obj/item/quiver/twilight_bullet/runicbag/proc/link_casing(obj/item/ammo_casing/C)
+	C.linked_bag = src
+	linked_casings |= C
+
+/obj/item/quiver/twilight_bullet/runicbag/proc/unlink_casing(obj/item/ammo_casing/C)
+	linked_casings -= C
+	arrows -= C
+	if(C.linked_bag == src)
+		C.linked_bag = null
 
 /obj/item/quiver/twilight_bullet/runicbag/update_icon()
 	icon_state = "runebag"
 
 /obj/item/quiver/twilight_bullet/runicbag/attack_self(mob/living/user)
-	if(linked_ammo_types)
-		to_chat(user, span_notice("I begin recalling my ammunition..."))
-		if(do_after(user, 15 SECONDS, src))
-			playsound(src, 'sound/magic/blink.ogg', 80)
-			for(var/B in linked_ammo_types)
-				if(arrows.len < max_storage)
-					var/obj/item/ammo_casing/new_boolet = new B()
-					arrows += new_boolet
-					linked_ammo_types -= B
-					new_boolet.linked_bag = src
-				else
-					to_chat(user, span_notice("The [src.name] is full and can accept no more ammunition!"))
-					break
-	else
+	if(!length(linked_ammo_types))
 		to_chat(user, span_notice("There is no linked ammunition to recall!"))
+		return
+	to_chat(user, span_notice("I begin recalling my ammunition..."))
+	if(!do_after(user, 15 SECONDS, src))
+		return
+	playsound(src, 'sound/magic/blink.ogg', 80)
+	for(var/B in linked_ammo_types.Copy())
+		if(arrows.len >= max_storage)
+			to_chat(user, span_notice("The [src.name] is full and can accept no more ammunition!"))
+			break
+		var/obj/item/ammo_casing/new_boolet = new B(src)
+		arrows += new_boolet
+		link_casing(new_boolet)
+		linked_ammo_types -= B
+	update_icon()
 
 // Added attackby so you can manually put bullets back in
 /obj/item/quiver/twilight_bullet/runicbag/attackby(obj/item/A, mob/user, params)
@@ -360,33 +386,33 @@
 	return ..()
 
 /obj/item/quiver/twilight_bullet/runicbag/eatarrow(obj/A, loc)
-	if(istype(A, /obj/item/ammo_casing/caseless/bullet/lead/runelock))
-		var/obj/item/ammo_casing/R = A
-		if(arrows.len < max_storage)
-			if(ismob(loc))
-				var/mob/M = loc
-				M.doUnEquip(R, TRUE, src, TRUE, silent = TRUE)
-			else
-				R.forceMove(src)
-			arrows += R
-			R.linked_bag = src
-			update_icon()
-			return TRUE
-		else
-			return FALSE
+	if(!istype(A, /obj/item/ammo_casing/caseless/bullet/lead/runelock))
+		return FALSE
+	if(arrows.len >= max_storage)
+		return FALSE
+	var/obj/item/ammo_casing/R = A
+	if(ismob(loc))
+		var/mob/M = loc
+		M.doUnEquip(R, TRUE, src, TRUE, silent = TRUE)
+	else
+		R.forceMove(src)
+	arrows += R
+	link_casing(R)
+	update_icon()
+	return TRUE
 
 /obj/item/quiver/twilight_bullet/runicbag/runed/Initialize(mapload)
 	. = ..()
-	for(var/i in 1 to 12)
-		var/obj/item/ammo_casing/caseless/bullet/lead/runelock/R = new()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/bullet/lead/runelock/R = new(src)
 		arrows += R
-		R.linked_bag = src
+		link_casing(R)
 	update_icon()
 
 /obj/item/quiver/twilight_bullet/runicbag/blessed/Initialize(mapload)
 	. = ..()
-	for(var/i in 1 to 12)
-		var/obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed/R = new()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed/R = new(src)
 		arrows += R
-		R.linked_bag = src
+		link_casing(R)
 	update_icon()
