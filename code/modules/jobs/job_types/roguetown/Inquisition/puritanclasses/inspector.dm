@@ -140,7 +140,7 @@
 			H.change_stat(STATKEY_WIL, 1)
 			H.change_stat(STATKEY_SPD, 1)
 		if("Testament (Folding Sabre)")
-			H.put_in_hands(new /obj/item/rogueweapon/sword/sabre/psy/folding/relic(H), TRUE)
+			H.put_in_hands(new /obj/item/rogueweapon/sword/rapier/psy/folding/relic(H), TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/scabbard/sword, SLOT_BELT_L, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 			H.change_stat(STATKEY_WIL, 1)
