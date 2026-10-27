@@ -30,6 +30,13 @@
 	ammo_type = /obj/item/ammo_casing/caseless/bullet
 	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
 	var/stumble_strength = 4
+	var/secondary_damage
+	var/secondary_damage_type
+	var/silver = FALSE
+	var/blessed = FALSE
+	var/critfactor = 1
+	var/gunpowder_npc_critfactor = 1
+	var/gunpowder
 
 /**
  * Generic ammo used by handgonnes and arquebuses
@@ -195,20 +202,103 @@
 	update_icon()
 
 //RUNELOCK
-/obj/projectile
-	var/secondary_damage
-	var/secondary_damage_type
-
-/obj/projectile/bullet
-	var/silver = FALSE
-	var/blessed = FALSE
-	var/critfactor = 1
-	var/gunpowder_npc_critfactor = 1
-	var/gunpowder
-
 /obj/item/ammo_casing
 	var/obj/item/quiver/twilight_bullet/runicbag/linked_bag = null
 	var/breech_loaded = FALSE
+
+/obj/item/ammo_casing/caseless/bullet/lead/silver
+	name = "silver sphere"
+	desc = "A small silver sphere. Softer than a lead bullet, but highly effective against the undead."
+	projectile_type = /obj/projectile/bullet/firearm/lead/silver
+	icon_state = "musketball_silver"
+
+/obj/projectile/bullet/firearm/lead/silver
+	name = "silver sphere"
+	desc = "A small silver sphere. Softer than a lead bullet, but highly effective against the undead."
+	damage = 120
+	silver = TRUE
+	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/silver
+
+/obj/item/ammo_casing/caseless/bullet/lead/runelock
+	name = "runed sphere"
+	desc = "A small, perfectly round metal sphere covered in Psydonite runes. Lethal at high velocity."
+	projectile_type = /obj/projectile/bullet/firearm/lead/runelock
+	caliber = "runed_sphere"
+	icon_state = "musketball_runed"
+	max_integrity = 0
+
+/obj/item/ammo_casing/caseless/bullet/lead/runelock/Initialize(mapload)
+	. = ..()
+	if(!get_filter("rune_filter"))
+		add_filter("rune_filter", 2, list("type" = "outline", "color" = rgb(112, 28, 28, 1), "alpha" = 200, "size" = 2))
+
+/obj/item/ammo_casing/caseless/bullet/lead/runelock/ready_proj(atom/target, mob/living/user, quiet, zone_override = "", atom/fired_from)
+	. = ..()
+	if(linked_bag)
+		linked_bag.linked_ammo_types += type
+
+/obj/item/ammo_casing/caseless/bullet/lead/runelock/equipped(mob/living/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(!HAS_TRAIT(H, TRAIT_INQUISITION) && !(H.STAINT >= 15) && !(H.patron?.type == /datum/patron/old_god) && !(H.merctype == 10))
+			to_chat(H, "<font color='yellow'>The [name] is extremely hot to touch! It burns your hand!</font>")
+			var/def_zone = "[(H.active_hand_index == 2) ? "r" : "l" ]_hand"
+			H.apply_damage(rand(5,15), BURN, def_zone)
+			forceMove(get_turf(H))
+	else
+		to_chat(user, "<font color='yellow'>The [name] is extremely hot to touch! It burns your hand!</font>")
+		user.apply_damage(rand(5,15), BURN)
+		forceMove(get_turf(user))
+	..()
+
+/obj/projectile/bullet/firearm/lead/runelock
+	name = "runed sphere"
+	desc = "A small, perfectly round metal sphere covered in Psydonite runes. Lethal at high velocity."
+	damage = 90
+	speed = 0.6
+	icon_state = "musketball_runed"
+	max_range = 7
+	range = 12
+	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
+	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock
+
+/obj/projectile/bullet/firearm/lead/runelock/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		L.apply_status_effect(/datum/status_effect/debuff/psypowder)
+
+/obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
+	name = "blessed runed sphere"
+	desc = "A small, perfectly round sphere crafted from pure silver. These munitions are forged by the finest Otavan smiths and blessed personally by the Grandmaster. Lethal against the undead, but also highly effective against other heretics."
+	projectile_type = /obj/projectile/bullet/firearm/lead/runelock/blessed
+	icon_state = "musketball_blessed"
+	smeltresult = /obj/item/rogueore/silver
+
+/obj/projectile/bullet/firearm/lead/runelock/blessed
+	name = "blessed sphere"
+	desc = "A small, perfectly round sphere crafted from pure silver. These munitions are forged by the finest Otavan smiths and blessed personally by the Grandmaster. Lethal against the undead, but also highly effective against other heretics."
+	damage = 100
+	icon_state = "musketball_blessed"
+	silver = TRUE
+	blessed = TRUE
+	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
+
+/atom/movable/screen/alert/status_effect/debuff/psypowder
+	name = "Runed Poison"
+	desc = "This powder is killing my eyes and body. I barely can see and move..."
+	icon = 'icons/mob/screen_alert.dmi'
+	icon_state = "runed_poison"
+
+/datum/status_effect/debuff/psypowder
+	id = "runed_poison"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/psypowder
+	effectedstats = list(STATKEY_STR = -3, STATKEY_SPD = -3, STATKEY_CON = -2, STATKEY_PER = -2)
+	duration = 15 SECONDS
+
+/datum/status_effect/debuff/psypowder/on_remove()
+	. = ..()
+	to_chat(owner, span_warning("My vision returns...!"))
 
 /obj/item/quiver/twilight_bullet/runicbag
 	name = "pharetra"
@@ -222,21 +312,21 @@
 	icon_state = "runebag"
 
 /obj/item/quiver/twilight_bullet/runicbag/attack_self(mob/living/user)
-	if(linked_ammo_types)
-		to_chat(user, span_notice("I begin recalling my ammunition..."))
-		if(do_after(user, 15 SECONDS, src))
-			playsound(src, 'sound/magic/blink.ogg', 80)
-			for(var/B in linked_ammo_types)
-				if(arrows.len < max_storage)
-					var/obj/item/ammo_casing/new_boolet = new B()
-					arrows += new_boolet
-					linked_ammo_types -= B
-					new_boolet.linked_bag = src
-				else
-					to_chat(user, span_notice("The [src.name] is full and can accept no more ammunition!"))
-					break
-	else
+	if(!length(linked_ammo_types))
 		to_chat(user, span_notice("There is no linked ammunition to recall!"))
+		return
+	to_chat(user, span_notice("I begin recalling my ammunition..."))
+	if(do_after(user, 15 SECONDS, src))
+		playsound(src, 'sound/magic/blink.ogg', 80)
+		for(var/B in linked_ammo_types.Copy())
+			if(arrows.len < max_storage)
+				var/obj/item/ammo_casing/new_boolet = new B()
+				arrows += new_boolet
+				linked_ammo_types -= B
+				new_boolet.linked_bag = src
+			else
+				to_chat(user, span_notice("The [src.name] is full and can accept no more ammunition!"))
+				break
 
 /obj/item/quiver/twilight_bullet/runicbag/eatarrow(obj/A, loc)
 	if(istype(A, /obj/item/ammo_casing/caseless/bullet/lead/runelock))
@@ -269,106 +359,3 @@
 		arrows += R
 		R.linked_bag = src
 	update_icon()
-
-/atom/movable/screen/alert/status_effect/debuff/psypowder
-	name = "Runed Poison"
-	desc = "This powder is killing my eyes and body. I barely can see and move..."
-	icon = 'icons/mob/screen_alert.dmi'
-	icon_state = "runed_poison"
-
-/datum/status_effect/debuff/psypowder
-	id = "runed_poison"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/psypowder
-	effectedstats = list(STATKEY_STR = -3, STATKEY_SPD = -3, STATKEY_CON = -2, STATKEY_PER = -2)
-	duration = 15 SECONDS
-
-/datum/status_effect/debuff/psypowder/on_apply()
-	. = ..()
-
-/datum/status_effect/debuff/psypowder/on_remove()
-	. = ..()
-	to_chat(owner, span_warning("My vision returns...!"))
-
-/obj/projectile/bullet/firearm/lead/silver
-	name = "silver sphere"
-	desc = "A small silver sphere. Softer than a lead bullet, but highly effective against the undead."
-	damage = 120
-	silver = TRUE
-	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/silver
-
-/obj/projectile/bullet/firearm/lead/runelock
-	name = "runed sphere"
-	desc = "A small, perfectly round metal sphere covered in Psydonite runes. Lethal at high velocity."
-	damage = 90
-	speed = 0.6
-	icon = 'icons/roguetown/weapons/ammo.dmi'
-	icon_state = "musketball_runed"
-	max_range = 7
-	range = 12
-	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
-	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock
-
-/obj/projectile/bullet/firearm/lead/runelock/on_hit(atom/target, blocked = FALSE)
-	. = ..()
-	if(isliving(target))
-		var/mob/living/L = target
-		L.apply_status_effect(/datum/status_effect/debuff/psypowder)
-
-/obj/projectile/bullet/firearm/lead/runelock/blessed
-	name = "blessed sphere"
-	desc = "A small, perfectly round sphere crafted from pure silver. These munitions are forged by the finest Otavan smiths and blessed personally by the Grandmaster. Lethal against the undead, but also highly effective against other heretics."
-	damage = 100
-	icon_state = "musketball_blessed"
-	silver = TRUE
-	blessed = TRUE
-	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
-
-/obj/item/ammo_casing/caseless/bullet/lead/runelock
-	name = "runed sphere"
-	desc = "A small, perfectly round metal sphere covered in Psydonite runes. Lethal at high velocity."
-	projectile_type = /obj/projectile/bullet/firearm/lead/runelock
-	caliber = "runed_sphere"
-	icon = 'icons/roguetown/weapons/ammo.dmi'
-	icon_state = "musketball_runed"
-	possible_item_intents = list(/datum/intent/use)
-	max_integrity = 0
-	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/ammo_casing/caseless/bullet/lead/runelock/Initialize(mapload)
-	. = ..()
-	var/filter = src.get_filter("rune_filter")
-	if(!filter)
-		src.add_filter("rune_filter", 2, list("type" = "outline", "color" = rgb(112, 28, 28, 1), "alpha" = 200, "size" = 2))
-
-/obj/item/ammo_casing/caseless/bullet/lead/runelock/ready_proj(atom/target, mob/living/user, quiet, zone_override = "", atom/fired_from)
-	. = ..()
-	if(linked_bag)
-		linked_bag.linked_ammo_types += type
-
-/obj/item/ammo_casing/caseless/bullet/lead/runelock/equipped(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(!HAS_TRAIT(H, TRAIT_INQUISITION) && !(H.STAINT >= 15) && !(H.patron?.type == /datum/patron/old_god) && !(H.merctype == 10))
-			to_chat(H, "<font color='yellow'>The [name] is extremely hot to touch! It burns your hand!</font>")
-			var/def_zone = "[(H.active_hand_index == 2) ? "r" : "l" ]_hand"
-			H.apply_damage(rand(5,15), BURN, def_zone)
-			src.forceMove(get_turf(H))
-	else
-		to_chat(user, "<font color='yellow'>The [name] is extremely hot to touch! It burns your hand!</font>")
-		user.apply_damage(rand(5,15), BURN)
-		src.forceMove(get_turf(user))
-	..()
-
-/obj/item/ammo_casing/caseless/bullet/lead/silver
-	name = "silver sphere"
-	desc = "A small silver sphere. Softer than a lead bullet, but highly effective against the undead."
-	projectile_type = /obj/projectile/bullet/firearm/lead/silver
-	icon_state = "musketball_silver"
-
-/obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
-	name = "blessed runed sphere"
-	desc = "A small, perfectly round sphere crafted from pure silver. These munitions are forged by the finest Otavan smiths and blessed personally by the Grandmaster. Lethal against the undead, but also highly effective against other heretics."
-	projectile_type = /obj/projectile/bullet/firearm/lead/runelock/blessed
-	icon_state = "musketball_blessed"
-	w_class = WEIGHT_CLASS_TINY
-	smeltresult = /obj/item/rogueore/silver
