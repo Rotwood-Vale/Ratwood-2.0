@@ -460,7 +460,7 @@
 	var/retinue_planted = FALSE//Is this a retinue trap? Inverses the checks for who triggers.
 	lightstep_resistant = TRUE // its made by players against players
 
-/obj/structure/trap/Initialize(mapload)
+/obj/structure/trap/bogtrap/Initialize(mapload)
 	..()
 	if(!activate_for_typecache)
 		activate_for_typecache = typecacheof(list(/mob/living)) // only activate against mobs
