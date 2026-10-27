@@ -441,19 +441,6 @@
 	else
 		. += span_notice("The holster is empty.")
 
-/obj/item/storage/belt/rogue/leather/twilight_holsterbelt/black
-	name = "black holster belt"
-	desc = "A black belt with an attached holster. Had to sacrifice belt space for the convenience of carrying a pistol."
-	icon_state = "holsterbelt"
-	item_state = "holsterbelt"
-
-/obj/item/storage/belt/rogue/leather/twilight_holsterbelt/black/runelock/New()
-	. = ..()
-	for(var/i in 1 to max_storage)
-		var/obj/item/gun/ballistic/revolver/rune/twilight_runelock/A = new(src)
-		pistol += A
-	update_icon()
-
 //Knifeblade belts, act as quivers mixed with belts. Lower storage size of a belt, but holds knives without taking space.
 /obj/item/storage/belt/rogue/leather/knifebelt
 	name = "tossblade belt"
