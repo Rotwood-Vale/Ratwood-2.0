@@ -41,10 +41,10 @@
 	name = "runelock pistol"
 	desc = "An extremely lethal weapon. Uses runic magic instead of smokepowder."
 	icon = 'icons/roguetown/weapons/guns32.dmi'
-	icon_state = "pistol2"
-	var/icon_state_ready = "pistol2-1"
-	var/default_icon_state = "pistol2"
-	item_state = "pistol2"
+	icon_state = "runepistol2"
+	var/icon_state_ready = "runepistol2-1"
+	var/default_icon_state = "runepistol2"
+	item_state = "runepistol2"
 	possible_item_intents = list(/datum/intent/shoot/twilight_runelock, /datum/intent/arc/twilight_runelock, INTENT_GENERIC)
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/twilight_runelock
 	slot_flags = ITEM_SLOT_HIP
