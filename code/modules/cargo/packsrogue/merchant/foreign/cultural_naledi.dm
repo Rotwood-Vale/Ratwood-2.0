@@ -33,7 +33,7 @@
 		/obj/item/clothing/mask/rogue/lordmask/naledi,
 		/obj/item/clothing/neck/roguetown/psicross/naledi,
 		/obj/item/clothing/shoes/roguetown/sandals,
-		/obj/item/clothing/gloves/roguetown/angle/pontifex,
+		/obj/item/clothing/gloves/roguetown/bandages/pontifex,
 	)
 	ship_qty_min = 1
 	ship_qty_max = 1
