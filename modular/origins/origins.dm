@@ -152,7 +152,6 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	origin_title = "Kazengun"
 	origin_language = /datum/language/kazengunese
 	origin_traits = list(TRAIT_SOFT_FOOTED)
-	hated_by = list(ORIGIN_FERENTIA)
 	prejudice_stress = /datum/stressevent/prejudice/kazengun
 	prejudice_examine = span_red("Uninvited Kazengunite! Pah!")
 	map_x = 120
