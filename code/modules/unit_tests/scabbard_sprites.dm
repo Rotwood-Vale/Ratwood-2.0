@@ -1,4 +1,3 @@
-/// Every blade a scabbard accepts must resolve to an existing icon state either its own or the scabbard's fallback.
 /// a scabbard must have a valid icon state, or either a default fallback
 /datum/unit_test/scabbard_sprites
 

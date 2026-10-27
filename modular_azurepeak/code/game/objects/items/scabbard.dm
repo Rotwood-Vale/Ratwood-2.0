@@ -282,6 +282,7 @@
 	item_state = "sheath"
 
 	valid_blade = /obj/item/rogueweapon/huntingknife
+	fallback_sheathe_icon = "gendagger"
 	w_class = WEIGHT_CLASS_SMALL
 
 	grid_width = 32
@@ -515,6 +516,7 @@
 	sewrepair = TRUE
 
 	valid_blade = /obj/item/rogueweapon/sword
+	fallback_sheathe_icon = "gensword"
 //You'd think think it'd look for subtypes, but no.
 	invalid_blades = list(
 		/obj/item/rogueweapon/sword/long/exe,
