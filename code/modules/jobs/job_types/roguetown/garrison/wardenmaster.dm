@@ -118,7 +118,7 @@
 		)
 	H.adjust_blindness(-3)
 	if(H.mind)
-		var/weapons = list("Greataxe","Javelins & Shield","Blackhorn Longbow","Handgonne")	//competent at both sides of wardenry so it's more a matter of what weapon you start with
+		var/weapons = list("Greataxe","Javelins & Shield","Blackhorn Longbow","Flintgonne")	//competent at both sides of wardenry so it's more a matter of what weapon you start with
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		var/armor_options = list("Light Armor", "Medium Armor")
 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
@@ -133,8 +133,8 @@
 			if("Blackhorn Longbow")
 				beltr = /obj/item/quiver/arrows
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden
-			if("Handgonne")//okay I can remove this later but I think it would be... just... so based
-				r_hand = /obj/item/gun/ballistic/firearm/handgonne
+			if("Flintgonne")//okay I can remove this later but I think it would be... just... so based
+				r_hand = /obj/item/gun/ballistic/firearm/flintgonne
 				l_hand = /obj/item/powderflask
 				beltr = /obj/item/quiver/bullet/lead
 		switch(armor_choice)
