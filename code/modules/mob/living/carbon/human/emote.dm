@@ -91,7 +91,7 @@
 	COOLDOWN_DECLARE(sex_moaning)
 
 /mob/living/carbon/human/verb/sex_moan()
-	set name = "Moan"
+	set name = "Moan (Lewd)"
 	set category = "Noises"
 
 	if(!COOLDOWN_FINISHED(src, sex_moaning))
@@ -106,9 +106,9 @@
 		switch(S.arousal)
 			if(0 to 40)
 				emote("sexmoanlight", forced = TRUE)
-			if(41 to 75)
+			if(40 to 75)
 				emote("sexmoanmed", forced = TRUE)
-			if(76 to INFINITY)
+			else
 				emote("sexmoanhvy", forced = TRUE)
 
 /datum/emote/living/carbon/human/eyebrow

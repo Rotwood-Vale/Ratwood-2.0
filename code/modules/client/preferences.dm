@@ -1988,13 +1988,13 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 				// RMH EDIT: add moan type selection
 				if ("moanselection")
-					to_chat(user, "<font color='yellow'>This option allws you to customize your character's moanpack, dependant on the voice type. Leave it on 'default' or click 'cancel' to automatically use your voice type and species' moanpack.</font>")
+					to_chat(user, "<font color='yellow'>This option allows you to customize your character's moanpack, dependent on the voice type. Leave it on 'default' or click 'cancel' to automatically use your voice type and species' moanpack.</font>")
 					if (user.client.prefs.voice_type == VOICE_TYPE_MASC)
 						generate_selectable_moanpacks()
 						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks_male)
 						if(moanpack_sel_input)
 							moan_selection = moanpack_sel_input
-							to_chat(user, "<font color='red'>Your character will now use the '[LOWER_TEXT(moanpack_sel_input)]' moanpack.</font>")
+							to_chat(user, "<font color='red'>Your character will now use the '[moanpack_sel_input]' moanpack.</font>")
 						else
 							moan_selection = MOANPACK_TYPE_DEF
 					else if (user.client.prefs.voice_type == VOICE_TYPE_FEM)
@@ -2002,7 +2002,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks_female)
 						if(moanpack_sel_input)
 							moan_selection = moanpack_sel_input
-							to_chat(user, "<font color='red'>Your character will now use the '[LOWER_TEXT(moanpack_sel_input)]' moanpack.</font>")
+							to_chat(user, "<font color='red'>Your character will now use the '[moanpack_sel_input]' moanpack.</font>")
 						else
 							moan_selection = MOANPACK_TYPE_DEF
 
@@ -2011,7 +2011,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks)
 						if(moanpack_sel_input)
 							moan_selection = moanpack_sel_input
-							to_chat(user, "<font color='red'>Your character will now use the '[LOWER_TEXT(moanpack_sel_input)]' moanpack.</font>")
+							to_chat(user, "<font color='red'>Your character will now use the '[moanpack_sel_input]' moanpack.</font>")
 						else
 							moan_selection = MOANPACK_TYPE_DEF
 
@@ -2241,26 +2241,33 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						to_chat(user, "<span class='warning'>No moanpack selected!</span>")
 						return
 
-					var/atom/movable/moanbox = new(get_turf(parent.mob))
-					var/type = GLOB.selectable_moanpacks[moan_selection]
-					var/datum/moan_pack/MP
-					if(moan_selection == MOANPACK_TYPE_DEF)
-						if(voice_type == VOICE_TYPE_MASC)
-							MP = new /datum/moan_pack/male
-						else
-							MP = new /datum/moan_pack/female
-					else
-						MP = new type
+					var/moan_key = pick("sexmoanlight", "sexmoanmed", "sexmoanhvy")
 
-					var/list/moan_types = list("sexmoanlight", "sexmoanmed", "sexmoanhvy")
-					var/moan_key = moan_types[rand(1, length(moan_types))]
-					var/soundin = MP.get_moans(moan_key)
+					// Resolve the voice pack the same way emotes do: the chosen voice pack, else the species' one for this voice type
+					var/vp_type = GLOB.voice_packs_list[voice_pack]
+					if(!vp_type)
+						var/datum/voicepack/species_vp = pref_species.soundpack_m
+						if(voice_type != VOICE_TYPE_MASC && pref_species.soundpack_f)
+							species_vp = pref_species.soundpack_f
+						vp_type = ispath(species_vp) ? species_vp : species_vp.type
+					var/datum/voicepack/VP = new vp_type
+					var/soundin = VP.get_sound(moan_key)
+					qdel(VP)
 
+					// A chosen moanpack overrides the voice pack's moans
+					generate_selectable_moanpacks()
+					var/moan_type = GLOB.selectable_moanpacks[moan_selection]
+					if(moan_type)
+						var/datum/moan_pack/MP = new moan_type
+						soundin = MP.get_moans(moan_key) || soundin
+						qdel(MP)
+
+					if(islist(soundin))
+						soundin = pick(soundin)
 					if(soundin)
 						parent.mob.playsound_local(get_turf(parent.mob), soundin, 70, 0, 0, 7)
-
-					QDEL_IN(moanbox, 10 TICKS)
-					qdel(MP)
+					else
+						to_chat(user, "<span class='warning'>This voice has no moans.</span>")
 
 				if("highlight_color")
 					var/new_color = color_pick_sanitized(user, "Choose your character's nickname highlight color:", "Character Preference","#"+highlight_color)
@@ -3504,14 +3511,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.voice_type = voice_type
 
 	//RMH Edit
+	// Default leaves moans to the voice type and voice pack
 	generate_selectable_moanpacks()
-	if(moan_selection == MOANPACK_TYPE_DEF)
-		if(voice_type == VOICE_TYPE_MASC)
-			character.moan_selection = GLOB.selectable_moanpacks["MALE DEFAULT"]
-		else
-			character.moan_selection = GLOB.selectable_moanpacks["FEMALE DEFAULT"]
-	else
-		character.moan_selection = GLOB.selectable_moanpacks[moan_selection]
+	character.moan_selection = GLOB.selectable_moanpacks[moan_selection]
 
 	// LETHALSTONE ADDITION END
 
