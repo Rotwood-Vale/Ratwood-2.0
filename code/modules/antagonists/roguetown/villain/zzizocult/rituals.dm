@@ -1718,9 +1718,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		vial = null
 		return
 	var/dist = get_dist(user, target)
-	if(dist <= 10)
-		var/list/info = get_locator_info(user, target, detailed = FALSE)
-		to_chat(user, span_notice("[src] pulls towards the [info["dir"]][info["z"]]."))
+	if(dist <= 7)
+		to_chat(user, span_notice("[src] is too close to the scent!"))
 	else
 		var/list/info = get_locator_info(user, target)
 		to_chat(user, span_notice("[src] pulls towards the [info["dir"]]. The scent feels [info["proximity"]][info["z"]]."))
