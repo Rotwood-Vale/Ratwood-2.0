@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		table { table-layout: fixed; }
 		td { word-wrap: break-word; }
 		.r { line-height: 1.35; font-size: 15px; }
-		a.cat { display: inline-block; text-decoration: none; background: #2a0a0a; border-bottom: 1px solid #7b5353; margin: 6px 0 3px 0; padding: 2px 14px; font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+		a.cat { display: inline-block; text-decoration: none; background: #2a0a0a; border-bottom: 1px solid #7b5353; margin: 6px 0 3px 0; padding: 2px 14px; font-size: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 		.sub { border-bottom: 1px dotted #7b5353; margin: 5px 0 1px 0; font-size: 15px; font-weight: bold; color: #c9a96e; }
 		.box { border: 1px solid #7b5353; background: #1a0707; padding: 3px 6px; margin: 3px 0; }
 		.scroll { max-height: 110px; overflow-y: auto; margin-top: 2px; }
