@@ -38,6 +38,8 @@
 
 	/// Stores weapon
 	var/obj/item/rogueweapon/sheathed
+	/// Sheathe icon used when this scabbard has no state for the sheathed weapon's own sheathe_icon
+	var/fallback_sheathe_icon = ""
 
 	var/sheathe_time = 0.1 SECONDS
 	var/sheathe_sound = 'sound/foley/equip/scabbard_holster.ogg'
@@ -176,6 +178,8 @@
 /obj/item/rogueweapon/scabbard/update_icon(mob/living/user)
 	if(sheathed)
 		icon_state = "[initial(icon_state)]_[sheathed.sheathe_icon]"
+		if(!icon_exists(icon, icon_state))
+			icon_state = "[initial(icon_state)]_[fallback_sheathe_icon]"
 	else
 		icon_state = "[initial(icon_state)]"
 
@@ -692,6 +696,7 @@
 	desc = "A piece of steel lined with wood. Great for batting away blows."
 	icon_state = "kazscab"
 	item_state = "kazscab"
+	fallback_sheathe_icon = "mulyeog"
 	// Only accept Kazengun swords
 	valid_blades = list(
 		/obj/item/rogueweapon/sword/short/kazengun,
@@ -773,6 +778,7 @@
 	desc = "A plain lacquered scabbard with simple steel hardware. A plain dark cloth serves to hang it from a belt."
 	icon_state = "kazscabyuruku"
 	item_state = "kazscabyuruku"
+	fallback_sheathe_icon = "kodachi"
 	associated_skill = /datum/skill/combat/swords
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	// Only accept Kazengun swords (kodachi variant)
@@ -790,6 +796,7 @@
 	desc = "A simple lacquered sheath, for shorter eastern-styled blades."
 	icon_state = "kazscabdagger"
 	item_state = "kazscabdagger"
+	fallback_sheathe_icon = "tanto"
 	// Only accept Kazengun daggers
 	valid_blades = list(
 		/obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
