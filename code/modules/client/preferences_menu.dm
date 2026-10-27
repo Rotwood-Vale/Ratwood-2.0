@@ -68,6 +68,9 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 /datum/preferences/proc/pref_sub(label)
 	return "<div class='sub'>[label]</div>"
 
+/datum/preferences/proc/pref_box(header, body)
+	return "<div class='box'>[header]<div class='scroll'>[body]</div></div>"
+
 /datum/preferences/proc/pref_color_row(label, hex, preference)
 	return pref_line(list(pref_item(label, "<span style='border: 1px solid #161616; background-color: #[hex];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> [pref_link("Change", preference)]")))
 
@@ -84,8 +87,10 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		table { table-layout: fixed; }
 		td { word-wrap: break-word; }
 		.r { line-height: 1.35; font-size: 15px; }
-		a.cat { display: inline-block; text-decoration: none; background: #2a0a0a; border-bottom: 1px solid #7b5353; margin: 6px 0 3px 0; padding: 2px 14px; font-size: 18px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+		a.cat { display: inline-block; text-decoration: none; background: #2a0a0a; border-bottom: 1px solid #7b5353; margin: 6px 0 3px 0; padding: 2px 14px; font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 		.sub { border-bottom: 1px dotted #7b5353; margin: 5px 0 1px 0; font-size: 15px; font-weight: bold; color: #c9a96e; }
+		.box { border: 1px solid #7b5353; background: #1a0707; padding: 3px 6px; margin: 3px 0; }
+		.scroll { max-height: 110px; overflow-y: auto; margin-top: 2px; }
 		</style>[get_top_html(user)]<table width='100%'><tr>"}
 	for(var/list/column in GLOB.pref_columns)
 		html += "<td width='40%' valign='top'>"
@@ -230,10 +235,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		language_text = get_language_link(extra_language, "lang_free")
 	html += pref_line(list(pref_item("Language", language_text), pref_item("Food", pref_link("Change", "culinary", "menu"))))
 	html += pref_sub("Stats")
-	html += pref_line(list(pref_item("Statpack", bg_link(statpack.name, "statpack"))))
-	var/stat_string = statpack.generate_modifier_string()
-	if(stat_string)
-		html += pref_line(list(stat_string))
+	html += pref_box(pref_item("Statpack", bg_link(statpack.name, "statpack")), statpack.generate_modifier_string())
 	html += pref_sub("Virtues")
 	html += get_virtue_html("Primary Virtue", virtue, 1)
 	if(second_virtue_allowed())
@@ -252,13 +254,13 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	html += "<div class='r'><font color='#c9a96e'><b>Triumph Gain: <font color='[gain_color]'>[gain_text]</font></b></font></div>"
 	for(var/i in 1 to length(quirks))
 		var/datum/quirk/current_quirk = quirks[i]
-		html += "<b>[current_quirk.name]</b> ([current_quirk.point_cost]) [bg_link("\[Remove\]", "quirk_remove", i)]"
+		var/quirk_header = "<b>[current_quirk.name]</b> ([current_quirk.point_cost]) [bg_link("\[Remove\]", "quirk_remove", i)]"
 		if(current_quirk.configurable)
-			html += " [bg_link("\[Configure\]", "quirk_config", i)]<br>[current_quirk.config_summary()]"
-		html += get_trait_details_html(current_quirk)
+			quirk_header += " [bg_link("\[Configure\]", "quirk_config", i)]<br>[current_quirk.config_summary()]"
+		var/quirk_body = get_trait_details_html(current_quirk)
 		if(current_quirk.warning_text)
-			html += "<br><font color='#f44336'>[current_quirk.warning_text]</font>"
-		html += "<br>"
+			quirk_body += "<br><font color='#f44336'>[current_quirk.warning_text]</font>"
+		html += pref_box(quirk_header, quirk_body)
 	html += pref_line(list(bg_link("Add a Quirk", "quirk_add"), pref_link("Loadout Menu", "loadout", "menu")))
 	var/list/vice_names = list()
 	for(var/i in 1 to VICE_SLOTS)
@@ -273,7 +275,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	var/html = "<b>[label]:</b> [bg_link(V.name, "virtue", slot)]"
 	if(!istype(V, /datum/virtue/none))
 		html += " [bg_link("\[Clear\]", "virtue_clear", slot)]"
-	return "[html]<br>[V.desc][get_trait_details_html(V)]<br>"
+	return pref_box(html, "[V.desc][get_trait_details_html(V)]")
 
 /datum/preferences/proc/get_trait_details_html(datum/customization_trait/T)
 	var/html = ""
