@@ -13,7 +13,7 @@
 	miracle = TRUE
 	devotion_cost = 10
 	var/list/near_death_lines = list(
-		"A haze begins to envelop me, but then suddenly recedes, as if warded back by some great light...",
+		"A haze begins to envelop me, but then suddenly recedes, as if warded back by some great ligh1t...",
 		"A terrible weight bears down upon me, as if the wyrld itself were crushing me with its heft...",
 		"The sound of a placid river drifts into hearing, followed by the ominous toll of a ferryman's bell...",
 		"Some vast, immeasurably distant figure looms beyond my perception - I feel it, more than I see. It waits. It watches.",
