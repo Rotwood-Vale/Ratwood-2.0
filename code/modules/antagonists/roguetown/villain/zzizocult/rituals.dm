@@ -1718,7 +1718,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		vial = null
 		return
 	var/dist = get_dist(user, target)
-	if(dist <= 7)
+	if(dist <= 9)
 		to_chat(user, span_notice("[src] is too close to the scent!"))
 	else
 		var/list/info = get_locator_info(user, target)
