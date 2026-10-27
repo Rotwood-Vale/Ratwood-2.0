@@ -997,11 +997,20 @@
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
 		arousal_amt *= 1.5
 		if(prob(10))
-			var/list/lover_list = list("This feels so good!","I am in heaven!","This is too good to be possible!","By the ten!","I can't stop, too good!")
-			if(action_target.patron?.type == /datum/patron/old_god)
-				lover_list = list("This feels so good!","I am in heaven!","This is too good to be possible!","By PSYDON!","I can't stop, too good!")
-			else if(is_type_in_list(action_target.patron?.type, ALL_INHUMEN_PATRONS))
-				lover_list = list("This feels so good!","I am in heaven!","This is too good to be possible!","By the four!","I can't stop, too good!")
+			var/list/lover_list = list("This feels so good!","I am in heaven!","This is too good to be possible!","I can't stop, too good!")
+			switch(action_target.patron?.type)
+				if(/datum/patron/old_god)
+					lover_list += "By PSYDON!"
+				if(/datum/patron/inhumen/zizo)
+					lover_list += "By ZIZO!"
+				if(/datum/patron/inhumen/graggar)
+					lover_list += "By GRAGGAR!"
+				if(/datum/patron/inhumen/matthios)
+					lover_list += "By MATTHIOS!"
+				if(/datum/patron/inhumen/baotha)
+					lover_list += "By BAOTHA!"
+				else
+					lover_list += "By the ten!"
 			to_chat(action_target, span_love(pick(lover_list)))
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
