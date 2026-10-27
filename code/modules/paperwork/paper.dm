@@ -65,6 +65,8 @@
 	var/extra_headers //For additional styling or other js features.
 
 	var/info		//What's actually written on the paper.
+	/// Ckeys of everyone who wrote on the paper, so a book bound from it can be checked against the archive upload bans.
+	var/list/writer_ckeys
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
 	var/stamps		//The (text for the) stamps on the paper.
 	var/fields = 0	//Amount of user created fields
@@ -162,6 +164,7 @@
 			info += "<br>[chunk_html]"
 		else
 			info = chunk_html
+		LAZYOR(writer_ckeys, user.ckey)
 
 	writer_draft = ""
 
@@ -598,6 +601,7 @@
 
 /obj/item/paper/proc/clearpaper()
 	info = null
+	writer_ckeys = null
 	stamps = null
 	seal_label = null
 	seal_color = initial(seal_color)
@@ -728,6 +732,7 @@
 				to_chat(usr, "<span class='warning'>Too long. Try again.</span>")
 				return
 			addtofield(field_num, t) // Field-only writing via read links.
+			LAZYOR(writer_ckeys, usr.ckey)
 			playsound(src, 'sound/items/write.ogg', 100, FALSE)
 			format_browse(build_read_info(TRUE), usr)
 			update_icon_state()
@@ -818,6 +823,8 @@
 			var/obj/item/manuscript/M = new /obj/item/manuscript(get_turf(P.loc))
 			M.page_texts = list(src.info, p.info)
 			M.compiled_pages = "<p>[src.info]</p><p>[p.info]</p>"
+			if(writer_ckeys || p.writer_ckeys)
+				M.writer_ckeys = (writer_ckeys || list()) | (p.writer_ckeys || list())
 			qdel(p)
 			if(user.Adjacent(M))
 				M.add_fingerprint(user)
