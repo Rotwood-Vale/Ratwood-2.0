@@ -1,5 +1,0 @@
-author: "IronDragoon"
-delete-after: True
-changes:
-  - rscadd: "Ability to store user made paintings and books, with them randomly appearing on some mapped spots and in bookshelves respectively"
-  - rscadd: "Archivist printing press. Lets users add paintings and books to be archived, as well as make copies of existing items. Also allows printing of other useful tomes."
