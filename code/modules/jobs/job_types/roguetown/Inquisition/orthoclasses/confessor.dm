@@ -34,7 +34,6 @@
 		/datum/skill/misc/stealing = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/crossbows = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 	)
 	subclass_stashed_items = list(
@@ -73,18 +72,37 @@
 				l_hand = /obj/item/rogueweapon/sword/short/psy
 				r_hand = /obj/item/rogueweapon/scabbard/sword
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 4, TRUE)
-		var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
-		var/bolt_choice = input(H,"CHOOSE YOUR MUNITIONS", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
-		switch(bolt_choice)
-			if("Bolts - Steel-Tipped")
-				beltl = /obj/item/quiver/bolts
-			if("Sunderbolts - Silver-Tipped, Halved Damage")
-				beltl = /obj/item/quiver/holybolts
+
+		var/ranged_weapons = list("Slurbow", "Runelock Pistol")
+		var/ranged_choice = input(H, "CHOOSE YOUR RANGED WEAPON.", "STRIKE FROM AFAR.") as anything in ranged_weapons
+		switch(ranged_choice)
+			if("Slurbow")
+				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
+				H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/leather/knifebelt/black/psydon, SLOT_BELT, TRUE)
+				H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow, SLOT_BACK_L, TRUE)
+				var/quivers = list("Bolts - Steel-Tipped", "Sunderbolts - Silver-Tipped, Halved Damage")
+				var/bolt_choice = input(H, "CHOOSE YOUR MUNITIONS.", "TAKE UP PSYDON'S MISSILES.") as anything in quivers
+				switch(bolt_choice)
+					if("Bolts - Steel-Tipped")
+						H.equip_to_slot_or_del(new /obj/item/quiver/bolts, SLOT_BELT_L, TRUE)
+					if("Sunderbolts - Silver-Tipped, Halved Damage")
+						H.equip_to_slot_or_del(new /obj/item/quiver/holybolts, SLOT_BELT_L, TRUE)
+			if("Runelock Pistol")
+				ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
+				H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_EXPERT, TRUE)
+				H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/leather/twilight_holsterbelt, SLOT_BELT, TRUE)
+				H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock, SLOT_BELT_L, TRUE)
+				var/pouches = list("Pharetra - Runed Spheres", "Pharetra - Blessed Silver Spheres")
+				var/pouch_choice = input(H, "CHOOSE YOUR MUNITIONS.", "TAKE UP PSYDON'S MISSILES.") as anything in pouches
+				switch(pouch_choice)
+					if("Pharetra - Runed Spheres")
+						H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/runed, SLOT_BACK_L, TRUE)
+					if("Pharetra - Blessed Silver Spheres")
+						H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/blessed, SLOT_BACK_L, TRUE)
 
 	head = /obj/item/clothing/head/roguetown/roguehood/psydon/confessor
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/confessor
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
-	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow
 	cloak = /obj/item/storage/backpack/rogue/satchel/beltpack
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
