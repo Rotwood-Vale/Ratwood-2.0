@@ -124,7 +124,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak/reinforced
 	name = "tough skin"
-	armor = ARMOR_LEATHER
+	armor = ARMOR_BRONZE //medium-balanced, slightly worse than leather and padded
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/gladiator
 	name = "pit-hardened chest"//pit? hnnnnhhhffgggg
