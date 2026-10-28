@@ -73,7 +73,7 @@
 	icon = 'modular_helmsguard/icons/weapons/flintgonne.dmi'//Not Helmsguard. OldRW original, I think? But it's no better a place to put it.
 	icon_state = "flintgonne"
 	item_state = "flintgonne"
-	var/fire_delay = 4 //Reliable, unlike the handgonne, but not instant.
+	var/fire_delay = 4//Reliable, unlike the handgonne, but not instant.
 
 //Handgonne, but quicker. Much quicker. But still not point and fire.
 /obj/item/gun/ballistic/firearm/flintgonne/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
