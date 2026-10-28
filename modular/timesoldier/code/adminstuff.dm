@@ -8,6 +8,12 @@
 #define TIMESOLDIER_SPAWN_OFFER "Offer to Ghosts"
 #define TIMESOLDIER_SPAWN_CANCEL "Cancel"
 
+#define FUTURE_VOICE_MALE_GENERIC "Male Generic" // regular guy.
+#define FUTURE_VOICE_FEMALE "Female" // girlboss.
+
+#define FUTURE_LANGUAGE_IMPERIAL "Imperial"
+#define FUTURE_LANGUAGE_NEW_IMPERIAL "New Imperial"
+
 /client/proc/timesoldier_start_broadcast()
 	set category = "-GameMaster-"
 	set name = "Future Broadcast - Start"
@@ -15,7 +21,7 @@
 
 	if(!check_rights(R_FUN))
 		return
-	
+
 	var/list/voice_options = list(
 		FUTURE_VOICE_MALE_GENERIC,
 		FUTURE_VOICE_FEMALE
@@ -33,17 +39,17 @@
 	var/selected_voice = input(usr, "Select The Voice Type.", "GIVE ME A VOICE") as null|anything in voice_options
 	if(!selected_voice)
 		return
-	
+
 	var/radios_found = 0
 
 	for(var/obj/item/timesoldier/radio/R in world)
 		R.start_broadcast(selected_voice, selected_language)
 		radios_found++
-	
+
 	if(!radios_found)
 		to_chat(usr, span_warning("There are no field transceivers in the world! Cancelling..."))
 		return
-	
+
 	log_admin("[key_name(usr)] begun a Future Broadcast using the [selected_voice] voice in [selected_language].")
 	message_admins(span_adminnotice("[key_name_admin(usr)] started a Future Broadcast using the [selected_voice] voice in [selected_language]."))
 
@@ -59,27 +65,27 @@
 	var/message = input(usr, "What do we transmit?", "YOUR MESSAGE,MILORD") as text|null
 	if(!message)
 		return
-	
+
 	var/radios_found = 0
 	var/radios_active = 0
 
 	for(var/obj/item/timesoldier/radio/R in world)
 		radios_found++
 
-		if(!R.broadcasting)	
+		if(!R.broadcasting)
 			continue
-		
+
 		R.receive_broadcast(message)
 		radios_active++
-	
+
 	if(!radios_found)
 		to_chat(usr, span_warning("There are no field transceivers in the world! Cancelling..."))
 		return
-	
+
 	if(!radios_active)
 		to_chat(usr, span_warning("The field transceivers are not currently broadcasting. Turn them on!"))
 		return
-	
+
 	log_admin("[key_name(usr)] sent a Future Broadcast: \"[message]\"")
 	message_admins(span_adminnotice("[key_name_admin(usr)] sent a Future Broadcast: \"[message]\""))
 
@@ -91,7 +97,7 @@
 
 	if(!check_rights(R_FUN))
 		return
-	
+
 	var/radios_found = 0
 	var/radios_active = 0
 	for(var/obj/item/timesoldier/radio/R in world)

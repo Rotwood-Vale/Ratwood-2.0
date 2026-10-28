@@ -1540,3 +1540,11 @@
 	reqs = list(/obj/item/natural/cloth = 2)
 	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/necra_cross_cloth
+	name = "stone necran cross (with clothpieces)"
+	category = "Misc"
+	result = /obj/structure/fluff/psycross/necra/cloth
+	reqs =	list(/obj/item/rogueore/iron = 1, /obj/item/natural/stone = 3, /obj/item/natural/cloth = 2)
+	verbage_simple = "construct"
+	verbage = "constructs"
