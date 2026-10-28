@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - rscadd: "manticore tail messages are disabled by default but has a verb to toggle it on/off"
