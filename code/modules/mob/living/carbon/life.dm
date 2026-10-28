@@ -227,9 +227,7 @@
 		if(has_adrenaline)
 			bodypart_pain *= 0.5
 		. += bodypart_pain
-	for(var/datum/reagent/r in reagents.reagent_list)
-		if(r.pain)
-			. += r.pain
+		. += chem_pain
 
 /mob/living/carbon/human/get_complex_pain()
 	. = ..()
