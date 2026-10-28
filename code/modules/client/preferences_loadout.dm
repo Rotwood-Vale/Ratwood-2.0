@@ -16,17 +16,17 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 /datum/preferences/proc/open_loadout_slots(mob/user)
 	if(!user || !user.client)
 		return
-	var/datum/browser/popup = new(user, "loadout_slots", "<div align='center'>Loadout</div>", 760, 640)
+	var/datum/browser/popup = new(user, "loadout_slots", "<div align='center'>Loadout</div>", 750, 500)
 	popup.set_content(get_loadout_slots_html(user))
 	popup.open(FALSE)
 
 /datum/preferences/proc/get_loadout_slots_html(mob/user)
 	var/html = {"<style>
-		body { font-size: 15px; }
+		body { font-size: 13px; }
 		.slot { border: 1px solid #7b5353; background: #00000044; padding: 6px; margin: 3px; min-height: 130px; }
-		.icon { border: 1px solid #7b5353; background: #00000066; width: 64px; height: 64px; text-align: center; }
-		.sub { border-bottom: 1px dotted #7b5353; margin: 5px 0 1px 0; font-size: 15px; font-weight: bold; color: #c9a96e; }
-		.small { font-size: 13px; color: #aa8f8f; }
+		.icon { border: 1px solid #7b5353; background: #00000066; width: 48px; height: 48px; text-align: center; }
+		.sub { border-bottom: 1px dotted #7b5353; margin: 5px 0 1px 0; font-size: 13px; font-weight: bold; color: #c9a96e; }
+		.small { font-size: 11px; color: #aa8f8f; }
 		.name { font-weight: bold; color: #e3c06f; }
 		</style>"}
 	html += "<div class='sub'>Points: [get_remaining_points()] / [get_total_points()]</div>"
@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				GLOB.cached_loadout_icons.Cut(1, 50)
 			GLOB.cached_loadout_icons[cache_key] = icon(icon_file, icon_state)
 		user << browse_rsc(GLOB.cached_loadout_icons[cache_key], "loadout_icon_[slot].png")
-		html += "<img src='loadout_icon_[slot].png' width='60' height='60'>"
+		html += "<img src='loadout_icon_[slot].png' width='46' height='46'>"
 	html += "</div></td><td valign='top'><div class='name'>[custom_name || current_item.name]</div>"
 	html += "<div class='small'>[custom_desc || item_desc || current_item.desc]</div>"
 	if(custom_name || custom_desc)
