@@ -16,7 +16,7 @@
 	name = "PARENT SMOKEPOWDER PROJECTILE"
 	damage = 90//Do you see how infrequently these things fire...
 	armor_penetration = PEN_BSTEEL //... and yet I need to explain?
-	range = 4//Effective range? 4 tiles. You aren't sniping with this.
+	range = 7 //Effective range? 7 tiles. You aren't sniping with this.
 	embedchance = 100//Yessir.
 	speed = 0.1//Take a guess.
 	npc_simple_damage_mult = 4//320, at 80 base.
