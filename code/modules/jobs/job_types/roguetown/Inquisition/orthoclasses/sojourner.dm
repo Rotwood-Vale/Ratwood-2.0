@@ -57,10 +57,12 @@
 	head = /obj/item/clothing/head/roguetown/roguehood/sojourner
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/naledi
-	neck = /obj/item/clothing/neck/roguetown/psicross/g //Naledians covet gold far more than typical Orthodoxists covet silver.
+	neck = /obj/item/clothing/neck/roguetown/psicross/silver/sojourner
 	id = /obj/item/clothing/ring/signet/silver/inqscomm/g
 	r_hand = /obj/item/rogueweapon/woodstaff/implement/greater/sojourner//A very questionable spear. No pen. Middling CDR on cast.
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
+	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
+	armor = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -70,5 +72,4 @@
 	cloak = /obj/item/clothing/cloak/psydontabard/alt
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/ortho = 1,
-	/obj/item/roguegem/amethyst/naledi = 1,
 	/obj/item/rogueweapon/spellbook = 1)

@@ -697,6 +697,14 @@
 	if(isliving(user))
 		REMOVE_TRAIT(user, TRAIT_WORN_SILVER_PSICROSS, REF(src))
 
+/obj/item/clothing/neck/roguetown/psicross/silver/sojourner
+	name = "gilded silver psycross"
+	desc = "A silver psycross beneath a fine layer of gold, honoring Naledian tradition without forsaking the Inquisition's silver. 'Purity afloat, for paradise awaits!'"
+	icon_state = "psycross_g"
+	item_state = "psycross_g"
+	is_gold = TRUE
+	sellprice = 100
+
 /obj/item/clothing/neck/roguetown/psicross/g
 	is_gold = TRUE
 	name = "golden psycross"
