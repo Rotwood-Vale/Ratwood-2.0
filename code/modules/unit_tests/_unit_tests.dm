@@ -86,6 +86,7 @@
 
 // BEGIN_INCLUDE
 #include "anchored_mobs.dm"
+#include "anvil_recipes.dm"
 #include "baseturfs.dm"
 #include "colorblind_hud_palette.dm"
 #include "component_tests.dm"

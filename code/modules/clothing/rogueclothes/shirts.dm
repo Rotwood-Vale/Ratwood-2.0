@@ -784,6 +784,8 @@
 //tattoo code
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
 	name = "bouhoi bujeog tattoos"
+	anvilrepair = null
+	sewrepair = null
 	desc = "A mystic style of tattoos adopted by the Ruma Clan, emulating a practice performed by warrior monks of the Xinyi Dynasty. They are your way of identifying fellow clan members, an sign of companionship and secretive brotherhood. These are styled into the shape of clouds, created by a mystical ink which shifts and moves in ripples like a pond to harden where your skin is struck. It's movement causes you to shudder."
 	resistance_flags = FIRE_PROOF
 	icon_state = "easttats"
@@ -808,6 +810,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
+/obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/examine(mob/user)
+	. = ..()
+	. += span_info("These tattoos slowly mend themselves after a minute without taking damage.")
+
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/dropped(mob/living/carbon/human/user)
 	. = ..()
 	if(QDELETED(src))
@@ -824,6 +830,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/process()
 	if(obj_integrity >= max_integrity)
+		if(obj_broken)
+			obj_fix()
 		STOP_PROCESSING(SSobj, src)
 		src.visible_message(span_notice("The [src] flow more calmly, as they finish resting and regain their strength."), vision_distance = 1)
 		return
