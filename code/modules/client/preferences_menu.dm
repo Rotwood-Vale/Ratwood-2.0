@@ -503,6 +503,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 				descriptions[vice_label] = singleton?.desc
 				if(vice_type in current_types)
 					default_checked += vice_label
+			items = default_checked + (items - default_checked)
 			// i love TGUI checklist!!!
 			var/list/picked = tgui_input_checkboxes(user, "Select your vices.", "Vice Selection", items, 1, VICE_SLOTS, default_checked = default_checked, descriptions = descriptions, strict_modern = TRUE, window_width = 500, window_height = 500)
 			if(!length(picked))
