@@ -24,7 +24,7 @@
 	if(!istype(parent, /obj/item/rogueweapon) \
 		&& !istype(parent, /obj/item/ammo_casing/caseless/rogue) \
 		&& !istype(parent, /obj/item/clothing/gloves/roguetown/bandages/abotteer) \
-    && !istype(parent, /obj/item/clothing/gloves/roguetown/knuckles))
+		&& !istype(parent, /obj/item/clothing/gloves/roguetown/knuckles))
 		return COMPONENT_INCOMPATIBLE
 	src.pre_blessed = pre_blessed
 	src.silver_type = silver_type
