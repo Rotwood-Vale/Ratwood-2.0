@@ -67,6 +67,7 @@ GLOBAL_LIST_INIT(ghost_verbs, list(
 		log_game("[key_name(usr)] AM failed due to disconnect.")
 		return
 	client.screen.Cut()
+	client.destroy_shadow_pool()
 	client.screen += client.void
 //	stop_all_loops()
 	SSdroning.kill_rain(src.client)

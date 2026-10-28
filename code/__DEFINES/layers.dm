@@ -4,6 +4,15 @@
 #define FIELD_OF_VISION_BLOCKER_PLANE -199
 #define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*fovblock"
 
+#define RAW_WALL_SHADOW_PLANE -198
+#define RAW_WALL_SHADOW_TARGET "*raw_wall_shadow"
+
+#define SHADOW_CUTOUT_PLANE -197
+#define SHADOW_CUTOUT_TARGET "*shadow_cutout"
+
+#define DYNAMIC_WALL_SHADOW_PLANE -196
+#define DYNAMIC_WALL_SHADOW_TARGET "*dynamic_wall_shadow"
+
 #define CLICKCATCHER_PLANE -99
 
 #define PLANE_SPACE -95

@@ -96,6 +96,7 @@ SUBSYSTEM_DEF(mapping)
 	repopulate_sorted_areas()
 	initialize_reserved_level(transit.z_value)
 	generate_z_level_linkages()
+	call_ext(RUST_G, "byond:init_map_bounds")(world.maxx, world.maxy, world.maxz)
 	return ..()
 
 /datum/controller/subsystem/mapping/proc/generate_z_level_linkages()

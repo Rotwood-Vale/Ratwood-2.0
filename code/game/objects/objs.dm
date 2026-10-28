@@ -60,6 +60,9 @@
 	var/icon_state_preview
 
 	vis_flags = VIS_INHERIT_PLANE
+	var/fov_box_id = 0
+	var/fov_glide_id = 0
+	var/list/fov_shadow_box = null
 
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
@@ -85,6 +88,15 @@
 	if(obj_integrity == null)
 		obj_integrity = max_integrity
 
+
+	if(fov_shadow_box)
+		fov_box_id = ++GLOB.fov_box_uid
+		register_fov_boxes()
+		RegisterSignal(src, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/obj, on_fov_moved))
+
+		if(fov_shadow_cutout)
+			add_shadow_cutout()
+
 	. = ..() //Do this after, else mat datums is mad.
 
 	if (set_obj_flags)
@@ -105,6 +117,9 @@
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
+	if(fov_shadow_box)
+		remove_shadow_cutout()
+		unregister_fov_boxes()
 	. = ..()
 
 /obj/proc/setAnchored(anchorvalue)

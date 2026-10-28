@@ -1075,6 +1075,8 @@
 	name = "knight statue"
 	desc = "Many men and women of the Otavan Orthodoxy died here to fight the Rot. It is tradition for the bones of their knights to be encased in these stone works." 
 	icon_state = "knightstatue2_r"
+	fov_shadow_box = list(3, 0, 29, 4)
+	fov_shadow_cutout = TRUE
 
 
 /obj/structure/fluff/statue/myth

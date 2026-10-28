@@ -210,6 +210,8 @@
 		var/turf/open/transparent/openspace/target = get_step_multiz(src, UP)
 		if(istype(target))
 			target.ChangeTurf(above_floor)
+	set_shadow_cell(x, y, z, SHADOW_CELL_WALL)
+	notify_shadows_map_changed(src)
 
 /turf/closed/Destroy()
 	if(above_floor)
@@ -227,6 +229,8 @@
 						break
 				if(count < 2)
 					above.ScrapeAway()
+	set_shadow_cell(x, y, z, SHADOW_CELL_EMPTY)
+	notify_shadows_map_changed(src)
 	. = ..()
 
 /turf/closed/attack_hand(mob/user)
