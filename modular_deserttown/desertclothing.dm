@@ -230,6 +230,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon = 'modular_deserttown/icons/clothing/shirts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
+	hiked_base_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_deserttown_shirts.dmi'
 	icon_state = "thawb"
 	item_state = "thawb"
 	dropshrink = null
@@ -282,6 +284,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon = 'modular_deserttown/icons/clothing/shirts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
+	hiked_base_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_deserttown_shirts.dmi'
 	icon_state = "dprince"
 	item_state = "dprince"
 

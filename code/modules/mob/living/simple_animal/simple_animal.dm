@@ -884,7 +884,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		walk(src, 0) //stop mid walk
 
 	update_transform()
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 
 /mob/living/simple_animal/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
@@ -1100,6 +1100,8 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 					new_delay -= 5 + amt/6
 				else
 					new_delay -= 3
+			if(HAS_TRAIT(user, TRAIT_STEPPE_RIDER))
+				new_delay -= 0.25
 			var/health_deficiency = getBruteLoss() + getFireLoss()
 			if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN) && (health <= round(maxHealth * 0.5) || health_deficiency >= round(maxHealth * 0.5)))
 				new_delay = max(new_delay, initial(move_to_delay) + 2)

@@ -9,7 +9,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	name = "item"
 	var/original_name = null // Stores the original name if item was renamed
 	icon = 'icons/obj/items_and_weapons.dmi'
-	///icon state name for inhanf overlays
+	///icon state name for inhand overlays
 	var/item_state = null
 	///Icon file for left hand inhand overlays
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -513,10 +513,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(usr, output)
 
 	if(href_list["explainbalance"])
-		var/output = span_info("A heavy weapon is easier to dodge, and inflicts 2 stamina damage per level of strength differences on a parrying defender. \n\
-		A swift balance weapon reduce the enemy's parry chance by 10% per level of speed difference, by up to 30%, \n\
-		If the defender have higher perception however, the penalty is reduced by 10% per point of difference, down to none.\n\
-		Intelligence also reduces the penalty by 3% per point of difference, down to none.")
+		var/output = span_info("A heavy weapon is easier to dodge, and inflicts [STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL] stamina damage per level of strength difference on a parrying defender. \n\
+		A swift balance weapon reduces the enemy's parry chance depending on SPD difference. \n\
+		Targeting harder to hit zones such as hands, feet, stomach or face zones has a defense reduction cap at [SWIFTCAP_PRECISE]%. \n\
+		Targeting large limbs such as arms, head or legs has a defense reduction cap of [SWIFTCAP_LIMBS]%. \n\
+		Targeting the chest only has a cap of [SWIFTCAP_CHEST]% parry reduction. \n\
+		Swift Balance does not work if the attacker is wearing Medium or Heavy AC equipment on their outerwear, innerwear or pants slots. \n\
+		Defender's difference in INT and PER (if higher) may reduce the parry penalty in some circumstances.")
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
 		to_chat(usr, output)
@@ -663,6 +666,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			var/obj/item/rogueweapon/W = src
 			if(W.special)
 				inspec += "[W.special.get_examine()]"
+				inspec +="\n<i>This ability can be used by right clicking while in STRONG stance.</i>"
 
 		if(istype(src, /obj/item/rogueweapon/shield))
 			var/obj/item/rogueweapon/shield/S = src
@@ -1186,20 +1190,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/itempush = 0
 		if(w_class < 4)
 			itempush = 0 //too light to push anything
-		if(istype(hit_atom, /mob/living)) //Living mobs handle hit sounds differently.
-			var/volume = get_volume_by_throwforce_and_or_w_class()
-			if (throwforce > 0)
-				if (mob_throw_hit_sound)
-					playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
-				else if(hitsound)
-					playsound(hit_atom, pick(hitsound), volume, TRUE, -1)
-				else
-					playsound(hit_atom, 'sound/blank.ogg',volume, TRUE, -1)
-			else
-				playsound(hit_atom, 'sound/blank.ogg', 1, volume, -1)
-
-		else
-			playsound(src, drop_sound, YEET_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum, damage_flag = thrown_damage_flag)
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
