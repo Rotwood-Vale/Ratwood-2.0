@@ -34,9 +34,9 @@ GLOBAL_LIST_INIT(origins, build_origins())
 
 /datum/origin/zybantine
 	name = ORIGIN_ZYBANTINE
-	desc = "The Zybantine Empire spans across many countries, encompassing many of the deserts of Ferentia. The Empire favours strength and wealth; though rumours are abound \
+	desc = "The Zybantine Empire spans across many countries, encompassing many of the deserts of Grimoria. The Empire favours strength and wealth; though rumours are abound \
 	that the opulent empire gathers its wealth through unsavoury means."
-	short_desc = "The Zybantine Empire spans across many countries, encompassing many of the deserts of Ferentia."
+	short_desc = "The Zybantine Empire spans across many countries, encompassing many of the deserts of Grimoria."
 	origin_title = "Zybantine"
 	origin_language = /datum/language/celestial
 	origin_traits = list(TRAIT_HEAT_RESISTANCE, TRAIT_WATCHFUL)
@@ -152,8 +152,6 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	origin_title = "Kazengun"
 	origin_language = /datum/language/kazengunese
 	origin_traits = list(TRAIT_SOFT_FOOTED)
-	prejudice_stress = /datum/stressevent/prejudice/kazengun
-	prejudice_examine = span_red("Uninvited Kazengunite! Pah!")
 	map_x = 120
 	map_y = 374
 
