@@ -116,7 +116,7 @@
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak
 	name = "tough skin"
 	desc = "My skin has always been tough enough to stop most cuts and bruises, with time it will mend."
-	armor = ARMOR_PADDED_BAD
+	armor = ARMOR_REGENERATING_WEAK
 	max_integrity = 300
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
