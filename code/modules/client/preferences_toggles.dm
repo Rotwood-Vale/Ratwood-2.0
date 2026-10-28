@@ -701,7 +701,7 @@
 		return
 	prefs.manticore_tail_messages = !prefs.manticore_tail_messages
 	prefs.save_preferences()
-	to_chat(src, "You will [prefs.manticore_tail_messages ? "now" : "no longer"] notice your manticore tail's sensations.")
+	to_chat(src, "You will [prefs.manticore_tail_messages ? "now" : "no longer"] see tailmaw content.")
 
 /client/verb/toggle_compliance_notifs() // The messages need to be on-by-default while this is in its early stages.
 	set category = "Options"
