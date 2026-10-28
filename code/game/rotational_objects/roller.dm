@@ -67,7 +67,6 @@
 
 /obj/structure/roller/LateInitialize()
 	. = ..()
-	find_rotation_network()
 	build_roller_chain()
 
 /obj/structure/roller/Destroy()

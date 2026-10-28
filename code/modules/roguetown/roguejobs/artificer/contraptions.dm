@@ -1,5 +1,3 @@
-#define TRY_MISFIRE(target_mob) if(prob(misfire_chance)) misfire(target_mob)
-
 /obj/item/contraption
 	name = "random piece of machinery"
 	desc = "A cog with teeth meticulously crafted for tight interlocking."
@@ -11,9 +9,9 @@
 	smeltresult = /obj/item/ingot/bronze
 	slot_flags = ITEM_SLOT_HIP
 		//this is what we normally power things with
-	var/obj/item/accepted_power_source = /obj/item/roguegear
+	var/obj/item/accepted_power_source = /obj/item/roguegear/bronze
 	//this is what we use to double power items with, this isn't for all devices
-	var/obj/item/prime_power_source = /obj/item/debug
+	var/obj/item/prime_power_source = /obj/item/roguegear/wood/reliable
 	/// This is the amount of charges we get per power source
 	var/charge_per_source = 5
 	var/charge_per_prime = 10
@@ -27,7 +25,6 @@
 	var/misfiring = FALSE
 	obj_flags_ignore = TRUE
 	/// If this contraption should accept cogs that alter its behaviour
-	var/special_cog = FALSE
 
 /obj/item/contraption/getonmobprop(tag)
 	. = ..()
@@ -60,10 +57,7 @@
 
 /obj/item/contraption/examine(mob/user)
 	. = ..()
-	if(!istype(user, /mob/living))
-		return TRUE
-	var/mob/living/player = user
-	var/skill = player.get_skill_level(/datum/skill/craft/engineering)
+	var/skill = isobserver(user) ? SKILL_LEVEL_LEGENDARY : user.get_skill_level(/datum/skill/craft/engineering)
 	if(current_charge)
 		. += span_warning("The contraption has [current_charge] of [max_stored_charge] charges left.")
 		. += span_warning("It uses [initial(accepted_power_source.name)] or [initial(prime_power_source.name)] to function.")
@@ -72,10 +66,10 @@
 	if(misfire_chance)
 		if(skill > 2)
 			. += span_warning("You calculate this contraptions chance of failure to be anywhere between [max(0, (misfire_chance - skill) - rand(4))]% and [max(2, (misfire_chance - skill) + rand(3))]%.")
-		else
-			. += span_warning("It seems slightly unstable...")
+	else
+		. += span_warning("It seems slightly unstable...")
 	if(skill >= 6 && sneaky_misfire_chance)
-		. += span_warning("This contraption has a chance for catastrophic failure in the hands of the inexperient.")
+		. += span_warning("This contraption has a chance for catastrophic failure in the hands of the inexperienced.")
 
 /obj/item/contraption/proc/battery_collapse(atom/A, mob/living/user)
 	to_chat(user, span_info("The [accepted_power_source.name] wastes away into nothing."))
@@ -214,14 +208,6 @@
 	else
 		. += span_notice("All you can make out is a bunch of gibberish.")
 
-/obj/item/contraption/linker/examine(mob/user)
-	. = ..()
-	. += span_info("Use it like a multitool on compatible machinery to store a target in its buffer, then use it again on another compatible target to link them.")
-	. += span_info("Use it in-hand to wipe its stored buffer.")
-	. += span_info("Right-click an adjacent rotatable rotational object while holding this to rotate it.")
-	. += span_info("Middle-click an adjacent placed shaft, cogwheel, or gearbox while holding this to disassemble it back into an item pile.")
-	if(user.get_skill_level(/datum/skill/craft/engineering) >= 4)
-		. += span_info("Holding it in your hands grants Tune Up, which spends wrench charge to repair or enhance compatible engineering targets.")
 /obj/item/contraption/linker/attack_self(mob/user)
 	. = ..()
 	if(user.get_skill_level(/datum/skill/craft/engineering) >= 3)
@@ -281,7 +267,7 @@
 	if(istype(O, /obj/item/grown/log/tree/small)&& skill>3)
 		var/newdir = O.dir
 		var/obj/I = O
-		var/obj/item/randomingot = pick (/obj/item/ingot/bronze,/obj/item/ingot/iron,/obj/item/ingot/copper, /obj/item/ingot/tin, /obj/item/rogueore/coal)
+		var/obj/item/randomingot = pick (/obj/item/ingot/bronze, /obj/item/ingot/iron, /obj/item/ingot/steel)
 		var/obj/result = new randomingot(get_turf(I))
 		result.dir = newdir
 		qdel(I)

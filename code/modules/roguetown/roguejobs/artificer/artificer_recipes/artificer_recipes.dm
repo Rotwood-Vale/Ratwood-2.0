@@ -244,7 +244,7 @@
 	skill_level = 3
 
 /datum/artificer_recipe/contraptions/mess_kit
-	name = "Mess Kit (+2 Iron)" // reduced to two iron because it really isn't worth three
+	name = "Mess Kit (+1 Iron)" // reduced to two iron because it really isn't worth three
 	required_item = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron)
 	created_item = /obj/item/storage/gadget/messkit

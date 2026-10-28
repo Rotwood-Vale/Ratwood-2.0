@@ -1,5 +1,3 @@
-#define CANNON_POWDER_COST 1
-
 /datum/anvil_recipe/cannon
 	i_type = "Engineering"
 	abstract_type = /datum/anvil_recipe/cannon
@@ -174,7 +172,6 @@
 					M.adjustBruteLoss(300)
 				else
 					M.adjustBruteLoss(200)
-
 			if(M != target)
 				var/blast_dir = get_dir(T, M)
 				if(blast_dir == 0)
@@ -263,7 +260,7 @@
 	var/last_fired = 0
 	var/cooldown = 10 SECONDS
 
-/obj/structure/cannon/Initialize()
+/obj/structure/cannon/Initialize(mapload)
 	. = ..()
 	dir = NORTH
 	update_icon() 
@@ -511,5 +508,4 @@
 	if(barrel_integrity <= 0)
 		src.visible_message(span_danger("[src] It breaks apart due to severe barrel wear!"))
 		explosion(get_turf(src), 1, 2, 4, 0, TRUE, FALSE, 2)
-		qdel(src) 
-#undef CANNON_POWDER_COST
+		qdel(src)
