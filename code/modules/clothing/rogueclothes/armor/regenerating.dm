@@ -145,15 +145,12 @@
 
 /obj/item/skin_hardener
 	name = "fibrous skin salve"
-	desc = "A thick cream made from finely ground cloth and natural fibers. Worked into regenerating skin, its strange paste binds to the renewing surface, leaving it denser and more resilient. Those accustomed to the weight and encumbrance of proper armour will find no use for this."
+	desc = "A thick cream made from finely ground cloth and natural fibers. Worked into thick skin, its strange paste binds to the renewing surface, leaving it denser and more resilient."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "salve"
 
 /obj/item/skin_hardener/attack_obj(obj/O, mob/living/user)
 	if(!istype(O, /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak) || istype(O, /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak/reinforced))
-		return
-	if(HAS_TRAIT(user, TRAIT_MEDIUMARMOR) || HAS_TRAIT(wearer, TRAIT_HEAVYARMOR))
-		to_chat(user, span_warning("The salve refuses to take hold. My training in heavier armour leaves little room for this reinforcement."))
 		return
 
 	var/obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak/S = O
