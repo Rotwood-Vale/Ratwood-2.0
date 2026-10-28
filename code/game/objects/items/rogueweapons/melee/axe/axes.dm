@@ -332,6 +332,7 @@
 	force = 30
 	force_wielded = 34
 	max_integrity = 1000
+	max_blade_int = 1200
 	wdefense = 6
 	wdefense_wbonus = 3
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/dolabra/pioneer, /datum/intent/pick)
@@ -356,6 +357,7 @@
 	force = 30
 	force_wielded = 34
 	max_integrity = 1000 // more than a blacksteel pickaxe
+	max_blade_int = 1200
 	wdefense = 6
 	wdefense_wbonus = 3
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/dolabra, /datum/intent/pick)
@@ -380,6 +382,7 @@
 	force = 28
 	force_wielded = 32
 	max_integrity = 750 // near a blacksteel pickaxe
+	max_blade_int = 1200
 	wdefense = 6
 	wdefense_wbonus = 2
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/dolabra, /datum/intent/pick)
