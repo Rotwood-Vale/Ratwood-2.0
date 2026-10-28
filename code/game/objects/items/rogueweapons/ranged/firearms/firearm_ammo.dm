@@ -23,7 +23,7 @@
 	accuracy = 90//Their point. Very slow firing. Yet powerful and accurate.
 	bonus_accuracy = 10//As opposed to using PER.
 	damage_type = BRUTE
-	woundclass = BCLASS_PICK//This assures pen crits, a niche differentiation from crossbows.
+	woundclass = BCLASS_STAB
 	flag = "piercing"//Vestigial, but just in case we use another flag later.
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball_proj"
