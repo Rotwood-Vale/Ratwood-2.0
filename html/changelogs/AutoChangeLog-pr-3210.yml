@@ -1,0 +1,4 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - qol: "added examine text to pref toggle also for tailmaws"
