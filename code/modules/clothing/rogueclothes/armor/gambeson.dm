@@ -69,7 +69,6 @@
 	name = "light arming jacket"
 	desc = "A lightweight collared jacket, purpose-woven for skirmishes and battle. The modest weight and streamlined form make it ideal for wearing under a cuirass or elegant halfplate."
 	icon_state = "dgamb"
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //More integrity and superior protection vs a light gamberson, and cheaper than a proper gamberson with the same integrity.
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/lord/heavy
@@ -77,7 +76,6 @@
 	desc = "A collared jacket, intended to be worn underneath plate armor. The thicker padding ensures that any gaps left within its alloyed shell are thoroughly protected - lest an unforseen bowstrike, landing true, ruptures the vulnerable flesh beneath."
 	icon_state = "dgamb"
 	armor = ARMOR_PADDED
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	max_integrity = ARMOR_INT_CHEST_LIGHT_ELITE //More integ than a padded gamberson, at the cost of leg protection
 
 /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe
