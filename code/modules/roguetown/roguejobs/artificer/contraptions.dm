@@ -483,6 +483,7 @@
 			playsound(item, 'sound/items/flint.ogg', 100, TRUE)
 			qdel(item)
 			user.mind.add_sleep_experience(/datum/skill/craft/sewing, (user.STAINT))
+			return 
 	return ..()
 
 /obj/item/contraption/lock_imprinter
