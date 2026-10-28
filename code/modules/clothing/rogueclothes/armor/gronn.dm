@@ -62,7 +62,7 @@
 	item_state = "gronnfurgloves"
 	icon = 'icons/roguetown/clothing/special/gronn.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gronn.dmi'
-	unarmed_bonus = 1.25
+	unarmed_bonus = 5
 	max_integrity = 250
 	color = "#ffffff"
 	cold_protection = HAND_LEFT | HAND_RIGHT
@@ -260,7 +260,7 @@
 	icon_state = "gronnplate"
 	item_state = "gronnplate"
 	boobed = FALSE
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEEL
 	smeltresult = /obj/item/ingot/iron
 

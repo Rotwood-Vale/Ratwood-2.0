@@ -173,6 +173,8 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
 	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_shirts_royalty.dmi'
 	name = "royal gown"
 	desc = "An elaborate ball gown, a favoured fashion of queens and elevated nobility in Enigma."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
@@ -232,6 +234,8 @@
 	name = "cold dress"
 	icon = 'icons/roguetown/clothing/shirts_royalty.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/shirts_royalty.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_shirts_royalty.dmi'
 	desc = "A thick and comfortable dress popular amongst nobility during winter."
 	body_parts_covered = COVERAGE_FULL
 	icon_state = "winterdress"
@@ -280,6 +284,8 @@
 /obj/item/clothing/suit/roguetown/shirt/dress/gown
 	icon = 'icons/roguetown/clothing/shirts_gown.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_gown.dmi'
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/shirts_gown.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_shirts_gown.dmi'
 	name = "spring gown"
 	desc = "A delicate gown that captures the essence of the season of renewal."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
@@ -464,6 +470,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon_state = "dress"
 	item_state = "dress"
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/shirts.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_shirts.dmi'
 	allowed_sex = list(MALE, FEMALE)
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
@@ -776,6 +784,8 @@
 //tattoo code
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats
 	name = "bouhoi bujeog tattoos"
+	anvilrepair = null
+	sewrepair = null
 	desc = "A mystic style of tattoos adopted by the Ruma Clan, emulating a practice performed by warrior monks of the Xinyi Dynasty. They are your way of identifying fellow clan members, an sign of companionship and secretive brotherhood. These are styled into the shape of clouds, created by a mystical ink which shifts and moves in ripples like a pond to harden where your skin is struck. It's movement causes you to shudder."
 	resistance_flags = FIRE_PROOF
 	icon_state = "easttats"
@@ -800,6 +810,10 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
+/obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/examine(mob/user)
+	. = ..()
+	. += span_info("These tattoos slowly mend themselves after a minute without taking damage.")
+
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/dropped(mob/living/carbon/human/user)
 	. = ..()
 	if(QDELETED(src))
@@ -816,6 +830,8 @@
 
 /obj/item/clothing/suit/roguetown/shirt/undershirt/easttats/process()
 	if(obj_integrity >= max_integrity)
+		if(obj_broken)
+			obj_fix()
 		STOP_PROCESSING(SSobj, src)
 		src.visible_message(span_notice("The [src] flow more calmly, as they finish resting and regain their strength."), vision_distance = 1)
 		return
@@ -833,6 +849,8 @@
 	desc = "A modest yet decorated dress made of the finest silks and softest fabrics. Inlaid with golden thread, this is the height of fashion for the wealthiest of wearers."
 	icon = 'icons/roguetown/clothing/special/steward.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/steward.dmi'
+	hiked_base_icon = 'icons/roguetown/clothing/special/onmob/steward.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_steward.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/steward.dmi'
 	icon_state = "stewarddress"
 	item_state = "stewarddress"
