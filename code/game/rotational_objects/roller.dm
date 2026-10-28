@@ -138,6 +138,8 @@
 
 	if(rpm > 0)
 		operating = TRUE
+		for(var/atom/movable/movable in loc)
+			on_entered(src, movable)
 	else
 		operating = FALSE
 		for(var/atom/movable/movable in loc)
@@ -153,12 +155,11 @@
 			connected.set_rotations_per_minute(rotations_per_minute)
 
 /obj/structure/roller/proc/build_roller_chain()
-	var/turf/forward_turf = get_step(src, movedir)
-	var/obj/structure/roller/forward_roller = locate(/obj/structure/roller) in forward_turf
-
-	if(forward_roller && (forward_roller.movedir == movedir || forward_roller.movedir == REVERSE_DIR(movedir)))
-		connected_rollers |= forward_roller
-		forward_roller.connected_rollers |= src
+	for(var/link_dir in list(movedir, REVERSE_DIR(movedir)))
+		var/obj/structure/roller/neighbour = locate(/obj/structure/roller) in get_step(src, link_dir)
+		if(neighbour && (neighbour.movedir == movedir || neighbour.movedir == REVERSE_DIR(movedir)))
+			connected_rollers |= neighbour
+			neighbour.connected_rollers |= src
 
 /obj/structure/roller/proc/get_move_delay()
 	// Higher RPM = faster movement (shorter delay)
