@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(last_words)
 	set_sunder(0) //So deadites aren't PSzsghdhrfrliorfing almost post-death
 	reset_perspective(null)
 	reload_fullscreen()
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	update_damage_hud()
 	update_health_hud()
 	update_mobility()

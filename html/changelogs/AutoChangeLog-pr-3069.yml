@@ -1,5 +1,0 @@
-author: "Kroto-Ker"
-delete-after: True
-changes:
-  - rscadd: "Traits are added to all origins."
-  - balance: "Hard limits capacity to craft to only 1 level above your own."

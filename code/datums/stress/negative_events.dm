@@ -581,6 +581,11 @@
 	stressadd = 3
 	desc = span_red("I couldn't pay my debts in time.")
 
+/datum/stressevent/archivist_shushed
+	timer = 1 MINUTES
+	stressadd = 4
+	desc = span_red("I was shushed by the archivist!")
+
 /datum/stressevent/sunlit
 	timer = 1 MINUTES
 	stressadd = 2
@@ -601,3 +606,5 @@
 
 /datum/stressevent/prejudice/underdark
 	desc = span_red("That underdweller should be underground, where it belongs.")
+
+// this generally only happens if you're below 10 FOR, this is a little nudge to work on your luck stat

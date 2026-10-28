@@ -444,3 +444,130 @@
       happened, delites are now knocked down and scream when turning instead of doing
       so completely silently. You also dont vomit blood at the moment of infection,
       you still get warning mesages after
+2026-10-23:
+  HelennaC:
+  - admin: slooc color change
+  Kroto-Ker:
+  - rscadd: Traits are added to all origins.
+  - balance: Hard limits capacity to craft to only 1 level above your own.
+  Randumb-Phantomb:
+  - qol: Psydonic full plate recipe clarified
+  The-Sun-In-Splendour:
+  - bugfix: soulchurner description changing based on inquisition or not
+  Yuckuza:
+  - rscadd: Adds "Enable Breast Milking" toggle which allows other players to milk
+      your character via clicking their exposed chest with a container when enabled.
+2026-10-24:
+  0-the-fool:
+  - rscdel: Disabled lich modifier
+  - rscdel: Disabled lich skeleton naming
+  Kroto-Ker:
+  - rscadd: Azure Peak mage content
+  Randumb-Phantomb:
+  - bugfix: bug that lead to old valiant warrior dukes having expert swords rather
+      than master fixed.
+  Xander3359:
+  - balance: Complaint now only auto-yields if it's whispered
+  - bugfix: Fix hypnotext not cycling through the colors
+  wikimody:
+  - bugfix: No, concetntraded rot isnt more drunk then water
+2026-10-25:
+  SirSwagmeyer:
+  - bugfix: Fixed a bug in which mauls and gnoll claws weren't applied their respective
+      blunt damage integrity modifiers.
+  Xander3359:
+  - code_imp: Recodes most of the druid loop stuff so that it's no longer AI slop
+      9000
+  wikimody:
+  - rscadd: Arbalist lux bolt now deals its damage in 3*3 area
+  - rscadd: Psydonian miraclists take reduced damage from it (no lynching the arbalist
+      please)
+  - balance: The lux bolt now deal same anti structure damage as the malums hammer,
+      with is a lot
+2026-10-26:
+  Kaolin1234:
+  - rscadd: Arachnids can now select the Weaver Spider Body, with customizable body,
+      abdomen-marking, and leg-band colors.
+  SirSwagmeyer:
+  - qol: Woodcutter axe chop now chops trees more efficiently than other axes
+  - bugfix: removed a stray demolition modifier in the Saperka shovel.
+  Yuckuza:
+  - balance: Yielding now drops STR, PER, SPD, and LCK by -15 for 5 minutes. Yielding
+      now grants critical resistance and thick blooded for a full minute.
+2026-10-27:
+  Arturlang:
+  - bugfix: stacking floors on a tile no longer should make a error tile
+  CentralSmith:
+  - bugfix: Pipes no longer stay packed and lit after burning out on the ground or
+      inside containers.
+  - bugfix: Already-stuck pipes can be emptied by activating them while unlit.
+  - bugfix: Ruma Clan Gun-in and Sasu tattoos clear their broken state when they finish
+      regenerating and explain their passive repair when examined.
+  IronDragoon:
+  - rscadd: Ability to store user made paintings and books, with them randomly appearing
+      on some mapped spots and in bookshelves respectively
+  - rscadd: Archivist printing press. Lets users add paintings and books to be archived,
+      as well as make copies of existing items. Also allows printing of other useful
+      tomes.
+  JackSage:
+  - rscdel: "Removed prices on pintle cages.\n<!-- Both :cl:'s are required for the\
+      \ changelog to work! You can put your name to the right of the first :cl: if\
+      \ you want to overwrite your GitHub username as author ingame. -->\n<!-- You\
+      \ can use multiple of the same prefix (they're only used for the icon ingame)\
+      \ and delete the unneeded ones. Despite some of the tags, changelogs should\
+      \ generally represent how a player might be affected by the changes rather than\
+      \ a summary of the PR's contents. -->\n<!-- By contributing to this codebase,\
+      \ you confirm that any code and sprites you provide are legal to share and will\
+      \ be licensed under the terms specified in README.md \u2014 AGPLv3 for code\
+      \ and CC-BY-SA 3.0 for assets, unless otherwise stated. You acknowledge that\
+      \ the project maintainers are under no obligation to remove any materials that\
+      \ do not violate these licenses. -->"
+2026-10-28:
+  Arturlang:
+  - rscadd: manticore tail messages are disabled by default but has a verb to toggle
+      it on/off
+  - bugfix: autosmither search works again
+  - bugfix: you can now craft the broken studded leather corslet recipie
+  HalfAwake691:
+  - balance: Necromancer now has Arcane Armament EXPERT
+  - balance: Necromancer is no longer forced to take Wither
+  SirSwagmeyer:
+  - balance: Swift Balance now requires the attacker to be wearing light armor to
+      work.
+  - balance: Parrying with a Swift Balanced weapon while having nothing in the off-hand
+      will give a small boost in defense.
+  - balance: Swift Balance's parry penalty now scales based on the targeting zone
+      of the attacker. The harder it is to hit, the harder it is to defend against.
+  - balance: Dodge (with dodge expert) now dynamically changes its chances depending
+      on how the combat is going.
+  - balance: 'Dodge stamina drain is now affected by swift stance attacks.
+
+      balance; Dodge now decays its chance at a faster rate if the attacker has higher
+      weaponskill than the dodger.'
+  - balance: Dodge now starts at 90% rather than 95%. Pity Dodge recovery from being
+      struck can no longer exceed 85%.
+  - balance: Swift stance is now more effective vs dodge.
+  - balance: +2 speed statpacks have been adjusted to discourage the new minmaxing
+      meta that will come with the rework
+  - balance: Weapon Skill difference between the target and attacker is now more effective
+      vs dodge. This currently does not apply to pure unarmed.
+  - balance: SPD difference between target and attacker is now more effective vs dodge.
+  - qol: 10 SPD is now the minimum for dodge mechanics to fully function. (Down from
+      11)
+  - qol: Dodging simple mobs with Dodge Expert is now easier.
+  - bugfix: Armor defines now cover the right limbs as intended.
+  - bugfix: Werewolf claws and urumi whips now have proper armor penetration values.
+  - bugfix: Actually readd the steel messer's unique rend intent (I made the intent
+      but forgot to add it)
+  - bugfix: Patches some runtime and sprite issues with dagger dash special
+  - balance: Gave a slight boost to gorget's integrity, in lieu of all neck armor
+      being unpeelable, now.
+  - bugfix: Fixed a bug issue with psydonic knuckles not being blessed or able to
+      be blessed. It doesn't do anything else right now.
+  - bugfix: Fixed a bug that left frost sabre's FREEZE intent undefined on armor pen.
+  Xander3359:
+  - rscadd: Bottles shatter when shot
+  - bugfix: Psydonites no longer worship the ten with fabled lovers
+  wikimody:
+  - qol: impure lux reivival fluid recepture is no longer a scam. Also chairs start
+      full and the fluid is used in increments of 50 instead of 48
