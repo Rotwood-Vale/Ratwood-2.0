@@ -56,6 +56,7 @@
 	sellprice = 100
 
 /obj/item/clothing/head/roguetown/circlet
+	is_gold = TRUE
 	no_loot_taint = TRUE
 	name = "golden circlet"
 	icon_state = "circlet"

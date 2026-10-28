@@ -390,6 +390,33 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 
 	has_taur_color = TRUE
 
+/obj/item/bodypart/taur/spider/weaver
+	name = "Weaver Spider Body"
+	icon = 'icons/mob/weaver_spider.dmi'
+	taur_icon_state = "weaver_s"
+	taur_markings_state = "weaver_markings"
+	taur_tertiary_state = "weaver_bands"
+	clip_mask_icon = 'icons/mob/weaver_spider.dmi'
+	clip_mask_state = "weaver_clip_mask"
+	color_blend_mode = ICON_MULTIPLY
+
+/obj/item/bodypart/taur/spider/weaver/get_limb_icon(dropped, hideaux = FALSE)
+	. = ..()
+	if(dropped)
+		return
+
+	// Only the north-facing central shell is in these states. Draw it over
+	// clothing, sleeves, and long hair; keep hands and held items visible.
+	var/list/shell_states = list("weaver_front_s", "weaver_front_markings", "weaver_front_bands")
+	var/list/shell_colors = list(taur_color, taur_markings, taur_tertiary)
+	for(var/i in 1 to length(shell_states))
+		var/icon/shell_icon = icon(icon, shell_states[i])
+		shell_icon.Blend(shell_colors[i], color_blend_mode)
+		var/image/shell = image(shell_icon)
+		shell.layer = -HAIREXTRA_LAYER + 0.1
+		shell.pixel_x = offset_x
+		. += shell
+
 /obj/item/bodypart/taur/centipede
 	name = "Centipede Body"
 

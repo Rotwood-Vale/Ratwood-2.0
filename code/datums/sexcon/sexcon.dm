@@ -94,7 +94,7 @@
 	/// Allow crotch to be exposed and bypass clothes check
 	var/bottom_exposed = FALSE
 	/// If TRUE, hide genital visuals only. The organs still function but are now a True/False toggle
-	var/hide_pintle_visuals = FALSE
+	var/list/hidden_genitals = list()
 	/// Bypasses positioning and exposure checks entirely
 	var/freeuse = FALSE
 	// Moved here from proc/get_generic_force_adjective to reduce list initialization/destruction
@@ -995,10 +995,23 @@
 
 /datum/sex_controller/proc/perform_sex_action(mob/living/carbon/human/action_target, arousal_amt, pain_amt, giving, obj/item/organ/penis/involved_penis = null)
 	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
-		arousal_amt *=1.5
+		arousal_amt *= 1.5
 		if(prob(10))
-			var/lovermessage = pick("This feels so good!","I am in heaven!","This is too good to be possible!","By the ten!","I can't stop, too good!")
-			to_chat(action_target, span_love(lovermessage))
+			var/list/lover_list = list("This feels so good!","I am in heaven!","This is too good to be possible!","I can't stop, too good!")
+			switch(action_target.patron?.type)
+				if(/datum/patron/old_god)
+					lover_list += "By PSYDON!"
+				if(/datum/patron/inhumen/zizo)
+					lover_list += "By ZIZO!"
+				if(/datum/patron/inhumen/graggar)
+					lover_list += "By GRAGGAR!"
+				if(/datum/patron/inhumen/matthios)
+					lover_list += "By MATTHIOS!"
+				if(/datum/patron/inhumen/baotha)
+					lover_list += "By BAOTHA!"
+				else
+					lover_list += "By the ten!"
+			to_chat(action_target, span_love(pick(lover_list)))
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 			pain_amt *= 2
@@ -1289,7 +1302,7 @@
 	else
 		dat += "</center><center><a href='?src=[REF(src)];task=toggle_bottom_exposed'>[bottom_exposed ? "CROTCH EXPOSED" : "CROTCH CONCEALED"]</a>"
 	if(got_cock || got_pussy || user.getorganslot(ORGAN_SLOT_TESTICLES))
-		dat += " | <a href='?src=[REF(src)];task=toggle_hide_pintle_visuals'>[hide_pintle_visuals ? "GENITALS HIDDEN" : "GENITALS VISIBLE"]</a>"
+		dat += " | <a href='?src=[REF(src)];task=toggle_hide_pintle_visuals'>HIDE GENITALS</a>"
 	dat += " ~|~ <a href='?src=[REF(src)];task=toggle_freeuse'>[freeuse ? "FREEUSE ON" : "FREEUSE OFF"]</a>"
 	if(current_action && !desire_stop)
 		var/datum/sex_action/action = SEX_ACTION(current_action)
@@ -1387,8 +1400,22 @@
 				bottom_exposed = !bottom_exposed
 				update_exposure()
 		if("toggle_hide_pintle_visuals")
-			hide_pintle_visuals = !hide_pintle_visuals
-			update_exposure()
+			var/list/options = list()
+			if(user.getorganslot(ORGAN_SLOT_PENIS))
+				options["Penis"] = ORGAN_SLOT_PENIS
+			if(user.getorganslot(ORGAN_SLOT_TESTICLES))
+				options["Testicles"] = ORGAN_SLOT_TESTICLES
+			if(user.getorganslot(ORGAN_SLOT_VAGINA))
+				options["Vagina"] = ORGAN_SLOT_VAGINA
+			var/choice = input(user, "Toggle which genital?", "Genitals") as null|anything in options
+			if(choice)
+				if(options[choice] in hidden_genitals)
+					hidden_genitals -= options[choice]
+					to_chat(user, span_notice("[choice] is now visible."))
+				else
+					hidden_genitals += options[choice]
+					to_chat(user, span_notice("[choice] is now hidden."))
+				update_exposure()
 		if("toggle_freeuse")
 			freeuse = !freeuse
 			to_chat(user, span_notice("Positioning and exposure checks are now [freeuse ? "disabled" : "enabled"]."))

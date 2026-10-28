@@ -16,8 +16,6 @@
 ///Called when a /mob/living/simple_animal/hostile finds a new target: (atom/source, new_target)
 #define COMSIG_HOSTILE_FOUND_TARGET "comsig_hostile_found_target"
 
-#define COMSIG_MOB_ABILITY_STARTED "comsig_mob_ability_started"
-#define COMSIG_MOB_ABILITY_FINISHED "comsig_mob_ability_finished"
 
 #define COMSIG_SIMPLEMOB_PRE_ATTACK_RANGED "basicmob_pre_attack_ranged"
 	#define COMPONENT_CANCEL_RANGED_ATTACK COMPONENT_CANCEL_ATTACK_CHAIN //! Cancel to prevent the attack from happening
@@ -101,7 +99,7 @@
 /// From /obj/item/organ/proc/Remove() (mob/living/carbon/lost_organ, obj/item/organ/removed, special, drop_if_replaced)
 #define COMSIG_MOB_ORGAN_REMOVED "mob_organ_removed"
 
-/// From /datum/species/proc/spec_attacked_by()
+/// From /datum/species/proc/spec_attacked_by() and /datum/species/proc/harm()
 #define COMSIG_SPECIES_ATTACKED_BY "species_attacked_by"
 
 /// From /mob/living/proc/run_armor_check()

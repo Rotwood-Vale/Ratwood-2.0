@@ -8,7 +8,7 @@
 /atom/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	if(!usr || !over)
 		return
-	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_NO_MOUSEDROP)	//Whatever is receiving will verify themselves for adjacency.
+	if(SEND_SIGNAL(src, COMSIG_MOUSEDROP_ONTO, over, usr) & COMPONENT_CANCEL_MOUSEDROP_ONTO)	//Whatever is receiving will verify themselves for adjacency.
 		return
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
@@ -80,11 +80,17 @@
 	if(mob.incapacitated())
 		return
 
+	var/signal_result = SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
+
 	if(mob.stat != CONSCIOUS)
 		mob.atkswinging = null
 		charging = null
 		STOP_PROCESSING(SSmousecharge, src)
 		mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
+		return
+
+	// New spell system intercepted this click — skip old cursor/intent handling
+	if(signal_result & COMPONENT_CLIENT_MOUSEDOWN_INTERCEPT)
 		return
 
 	tcompare = object
@@ -191,8 +197,16 @@
 
 /mob
 	var/datum/intent/curplaying
+	var/obj/effect/spell_rune_under/spell_rune
 
 /client/MouseUp(object, location, control, params)
+	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
+		click_intercept_time = world.time
+
+	if(mob?.channeling_spell?.currently_charging)
+		charging = 0
+		return
+
 	var/was_charging
 	if(charging && isliving(mob))
 		update_to_mob(mob, 0)
@@ -394,6 +408,7 @@
 		selected_target[2] = params
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
+	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
 
 
 /obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)

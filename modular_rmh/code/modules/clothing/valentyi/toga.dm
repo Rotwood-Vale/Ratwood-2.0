@@ -4,6 +4,8 @@
 	body_parts_covered = CHEST|GROIN
 	icon = 'modular_rmh/icons/clothing/valentyi/toga.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/valentyi/onmob/toga.dmi'
+	hiked_base_icon = 'modular_rmh/icons/clothing/valentyi/onmob/toga.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_toga.dmi'
 	icon_state = "toga"
 	item_state = "toga"
 	var/base_icon = "toga"

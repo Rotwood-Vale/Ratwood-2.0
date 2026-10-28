@@ -13,10 +13,6 @@
 	var/demolition_mod = 1
 
 	var/datum/armor/armor
-	var/last_peeled_limb
-	var/peel_count = 0
-	var/last_peel_stack_time = -1
-	var/peel_threshold = 3
 	var/obj_integrity	//defaults to max_integrity
 	var/max_integrity = 500
 	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
@@ -63,6 +59,8 @@
 	var/fov_box_id = 0
 	var/fov_glide_id = 0
 	var/list/fov_shadow_box = null
+	/// Extra AI pathfinding cost for this object. Higher values make NPCs avoid this tile.
+	var/ai_path_weight = 0
 
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
