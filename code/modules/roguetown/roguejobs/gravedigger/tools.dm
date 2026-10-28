@@ -589,7 +589,7 @@
 	name = "Saperka"
 	desc = "A compact, steel-headed spade favored by pioneers. \
 	Scarred by a hundred fieldworks, its socket is nicked from prying and the edge has been honed to bite through roots-or armor-in a pinch."
-	force = 20
+	force = 24
 	force_wielded = 28
 	possible_item_intents = list(/datum/intent/axe/cut/demolition, /datum/intent/axe/chop/demolition, /datum/intent/mace/smash, /datum/intent/shovelscoop)
 	gripped_intents = list(/datum/intent/axe/cut/demolition, /datum/intent/axe/chop/demolition, /datum/intent/mace/smash, /datum/intent/pick/demolition)
