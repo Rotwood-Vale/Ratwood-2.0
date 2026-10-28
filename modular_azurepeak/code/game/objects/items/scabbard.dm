@@ -704,6 +704,7 @@
 	associated_skill = /datum/skill/combat/swords
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	can_parry = TRUE
+	sewrepair = FALSE
 	wdefense = 8
 
 	max_integrity = 220
@@ -797,6 +798,7 @@
 	associated_skill = /datum/skill/combat/knives
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
 	can_parry = TRUE
+	sewrepair = FALSE
 	wdefense = 3
 
 	max_integrity = 0
