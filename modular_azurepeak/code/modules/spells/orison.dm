@@ -308,8 +308,7 @@
 	var/should_pain = FALSE
 	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		M.adjust_blood_volume(10)
-	for(var/datum/wound/wound as anything in M.get_wounds())
-		wound.heal_wound(1.5)
+	if(M.heal_all_wounds(1.5))
 		should_pain = TRUE
 	if(M.getBruteLoss() > 0 || M.getFireLoss() > 0)
 		should_pain = TRUE
@@ -349,17 +348,16 @@
 	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		M.adjust_blood_volume(20)
 	var/should_pain = FALSE
-	for(var/datum/wound/wound as anything in M.get_wounds())
-		wound.heal_wound(3)
+	if(M.heal_all_wounds(3))
 		should_pain = TRUE
 	if(M.getBruteLoss() > 0 || M.getFireLoss() > 0)
 		should_pain = TRUE
-		M.adjustBruteLoss(-2*REM, 0)
-		M.adjustFireLoss(-2*REM, 0)
-	M.adjustToxLoss(-5*REM, 0)
-	M.adjustOxyLoss(-5*REM, 0)
+		M.adjustBruteLoss(-2*REM, FALSE)
+		M.adjustFireLoss(-2*REM, FALSE)
+	M.adjustToxLoss(-5*REM, FALSE)
+	M.adjustOxyLoss(-5*REM, FALSE)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
-	M.adjustCloneLoss(-5*REM, 0)
+	M.adjustCloneLoss(-5*REM, FALSE)
 	if(HAS_TRAIT(M, TRAIT_NOPAIN))
 		should_pain = FALSE
 	if(should_pain)
