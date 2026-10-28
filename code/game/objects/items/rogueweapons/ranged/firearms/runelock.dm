@@ -237,3 +237,48 @@
 		else
 			return 10
 	return chargetime
+
+/obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle
+	name = "\"Doomsdae\""
+	desc = "A relic of a new era, forged for the war that will end the history of creation as we know it. Crafted by Otavan master artificers and enchanted by the rune mages of Otava, this runic rifle is a weapon meant to crush the legions of darkness at the End of Times. The runes along its barrel are inscribed with the blood of heretics who paid for their betrayal of the true faith with their lives."
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "runelock"
+	icon_state_ready = "runelock_loaded"
+	default_icon_state = "runelock"
+	item_state = "runelock"
+	force_wielded = 15
+	associated_skill = /datum/skill/combat/staves
+	possible_item_intents = list(/datum/intent/mace/strike/wood)
+	gripped_intents = list(/datum/intent/shoot/twilight_runelock, /datum/intent/arc/twilight_runelock, INTENT_GENERIC)
+	pixel_y = -16
+	pixel_x = -16
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	experimental_onback = TRUE
+	bigboy = TRUE
+	wlength = WLENGTH_LONG
+	slot_flags = ITEM_SLOT_BACK
+	wdefense = 3
+	can_parry = TRUE
+	minstr = 6
+	walking_stick = TRUE
+	damfactor = 2
+	critfactor = 1
+	reload_time = 40
+	reload_stamina_cost = 80
+
+/obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -7,"sy" = 6,"nx" = 7,"ny" = 6,"wx" = -2,"wy" = 3,"ex" = 1,"ey" = 3,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -43,"sturn" = 43,"wturn" = 30,"eturn" = -30, "nflip" = 0, "sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 5,"sy" = -2,"nx" = -5,"ny" = -1,"wx" = -8,"wy" = 2,"ex" = 8,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 1,"nturn" = -45,"sturn" = 45,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
+
+/obj/item/gun/ballistic/revolver/rune/twilight_runelock/lesser
+	name = "runelock pistol"
+	desc = "A hastily-inscribed runelock. The runes are shallow and the channeling inefficient"
+	damfactor = 0.8

@@ -91,7 +91,7 @@
 				ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
 				H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_EXPERT, TRUE)
 				H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/leather/twilight_holsterbelt, SLOT_BELT, TRUE)
-				H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock, SLOT_BELT_L, TRUE)
+				H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock/lesser, SLOT_BELT_L, TRUE)
 				var/pouches = list("Pharetra - Runed Spheres", "Pharetra - Blessed Silver Spheres")
 				var/pouch_choice = input(H, "CHOOSE YOUR MUNITIONS.", "TAKE UP PSYDON'S MISSILES.") as anything in pouches
 				switch(pouch_choice)
