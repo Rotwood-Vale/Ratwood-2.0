@@ -427,7 +427,7 @@
 	if(!limb_snip_candidate)
 		to_chat(user, span_warning("[patient] is already missing that limb, what more do you want?"))
 		return
-	
+
 	var/amputation_speed_mod = 1
 
 	patient.visible_message(span_danger("[user] begins to secure [src] around [patient]'s [limb_snip_candidate.name]."), span_userdanger("[user] begins to secure [src] around your [limb_snip_candidate.name]!"))
@@ -449,40 +449,12 @@
 		charge_deduction(amputee, user, 1)
 
 /obj/item/contraption/shears/attack_obj(obj/O, mob/living/user)
-	if(user.used_intent.type == /datum/intent/snip && istype(O, /obj/item))
+	if(user.used_intent.type == /datum/intent/snip && isitem(O))
 		var/obj/item/item = O
-		if(item.sewrepair && item.salvage_result) // We can only salvage objects which can be sewn!
-			var/salvage_time = 70
-			var/skill_level = user.get_skill_level(/datum/skill/craft/sewing)
-			skill_level = clamp((skill_level+1),1,6)
-			if(user.get_skill_level(/datum/skill/craft/engineering)>(user.get_skill_level(/datum/skill/craft/sewing))) //use the higher skill
-				salvage_time = (70 - ((user.get_skill_level(/datum/skill/craft/engineering)) * 10))
-			else //default to using sewing with no engineering skill
-				salvage_time = (70 - ((user.get_skill_level(/datum/skill/craft/sewing)) * 10))
-
-			if(!do_after(user, salvage_time, target = user))
-				return
-
-			if(item.fiber_salvage) //We're getting fiber as base if fiber is present on the item
-				new /obj/item/natural/fibers(get_turf(item))
-			if(istype(item, /obj/item/storage))
-				var/obj/item/storage/bag = item
-				bag.emptyStorage()
-
-			if(prob(50 - (skill_level * 10))) // We are dumb and we failed!
-				to_chat(user, span_info("I ruined some of the materials due to my lack of skill..."))
-				playsound(item, 'sound/foley/cloth_rip.ogg', 50, TRUE)
-				qdel(item)
-				user.mind.add_sleep_experience(/datum/skill/craft/sewing, (user.STAINT)) //Getting exp for failing
-				return //We are returning early if the skill check fails!
-			item.salvage_amount -= item.torn_sleeve_number
-			for(var/i = 1; i <= item.salvage_amount; i++) // We are spawning salvage result for the salvage amount minus the torn sleves!
-				var/obj/item/Sr = new item.salvage_result(get_turf(item))
-				Sr.color = item.color
-			user.visible_message(span_notice("[user] salvages [item] into usable materials."))
-			playsound(item, 'sound/items/flint.ogg', 100, TRUE)
-			qdel(item)
-			user.mind.add_sleep_experience(/datum/skill/craft/sewing, (user.STAINT))
+		var/sewing = user.get_skill_level(/datum/skill/craft/sewing)
+		var/time_skill = max(sewing, user.get_skill_level(/datum/skill/craft/engineering))
+		if(item.try_salvage(user, time_skill, clamp(sewing + 1, 1, 6)))
+			return
 	return ..()
 
 /obj/item/contraption/lock_imprinter

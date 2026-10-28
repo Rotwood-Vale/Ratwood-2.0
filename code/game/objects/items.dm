@@ -2022,3 +2022,29 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/update_wdefense_dynamic()
 	wdefense_dynamic = (wielded ? (wdefense + wdefense_wbonus) : wdefense)
+
+/// Salvages this item into salvage_result. Returns TRUE once salvage was attempted
+/obj/item/proc/try_salvage(mob/living/user, time_skill, fail_skill)
+	if(!sewrepair || !salvage_result)
+		return FALSE
+	if(!do_after(user, 70 - time_skill * 10, target = user))
+		return TRUE
+	var/turf/T = get_turf(src)
+	if(fiber_salvage)
+		new /obj/item/natural/fibers(T)
+	if(istype(src, /obj/item/storage))
+		var/obj/item/storage/bag = src
+		bag.emptyStorage()
+	user.mind?.add_sleep_experience(/datum/skill/craft/sewing, user.STAINT)
+	if(prob(50 - fail_skill * 10))
+		to_chat(user, span_info("I ruined some of the materials due to my lack of skill..."))
+		playsound(T, 'sound/foley/cloth_rip.ogg', 50, TRUE)
+		qdel(src)
+		return TRUE
+	for(var/i in 1 to salvage_amount - torn_sleeve_number)
+		var/obj/item/salvaged = new salvage_result(T)
+		salvaged.color = color
+	user.visible_message(span_notice("[user] salvages [src] into usable materials."))
+	playsound(T, 'sound/items/flint.ogg', 100, TRUE)
+	qdel(src)
+	return TRUE
