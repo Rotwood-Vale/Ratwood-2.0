@@ -271,7 +271,7 @@
 		var/obj/result = new randomingot(get_turf(I))
 		result.dir = newdir
 		qdel(I)
-	else
+	if(!O.metalizer_result)
 		to_chat(user, span_info("The [name] refuses to function."))
 		playsound(user, 'sound/items/flint.ogg', 100, FALSE)
 		flick(off_icon, src)
