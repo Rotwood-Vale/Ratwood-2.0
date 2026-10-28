@@ -23,7 +23,8 @@
 /datum/component/silverbless/Initialize(pre_blessed = BLESSING_NONE, silver_type, added_force, added_blade_int, added_int, added_def)
 	if(!istype(parent, /obj/item/rogueweapon) \
 		&& !istype(parent, /obj/item/ammo_casing/caseless/rogue) \
-		&& !istype(parent, /obj/item/clothing/gloves/roguetown/bandages/abboteer))
+		&& !istype(parent, /obj/item/clothing/gloves/roguetown/bandages/abboteer) \
+    && !istype(parent, /obj/item/clothing/gloves/roguetown/knuckles))
 		return COMPONENT_INCOMPATIBLE
 	src.pre_blessed = pre_blessed
 	src.silver_type = silver_type
