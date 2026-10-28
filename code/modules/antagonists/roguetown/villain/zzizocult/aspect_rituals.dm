@@ -1065,11 +1065,11 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		qdel(src)
 		return
 	var/mob/living/carbon/human/target
-	if(forced_target && !QDELETED(forced_target) && forced_target.stat != DEAD && (forced_target in view(range, src)))
+	if(forced_target && !QDELETED(forced_target) && forced_target.stat < SOFT_CRIT && (forced_target in view(range, src)))
 		target = forced_target
 	else
 		for(var/mob/living/carbon/human/H in view(range, src))
-			if(H == owner || is_zizo(H) || H.stat == DEAD)
+			if(H == owner || is_zizo(H) || H.stat >= SOFT_CRIT)
 				continue
 			target = H
 			break
@@ -1294,12 +1294,14 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /obj/projectile/magic/mendbolt
 	name = "bolt of mending"
-	tracer_type = /obj/effect/projectile/tracer/stun
+	tracer_type = /obj/effect/projectile/tracer/disabler
+	color = "#ffb347"
+	hitscan_light_color_override = "#ffb347"
 	muzzle_type = null
 	impact_type = null
 	hitscan = TRUE
 	movement_type = UNSTOPPABLE
-	light_color = "#00ff00"
+	light_color = "#ffb347"
 	damage = 0
 	nodamage = TRUE
 	speed = 0.3
@@ -1321,6 +1323,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 			for(var/obj/item/I in H.get_equipped_items())
 				I.obj_integrity = min(I.obj_integrity + (I.max_integrity * 0.2), I.max_integrity)
 		to_chat(L, span_notice("I AM MENDED!"))
+		ysis_effect(L, 4)
 	qdel(src)
 
 /datum/ritual/toil/progress
@@ -1346,14 +1349,41 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	new /obj/structure/ysis(center)
 	to_chat(user, span_notice("Erectin' a Ysis."))
 
+/proc/ysis_effect(atom/movable/target, healings)
+	var/datum/effect_system/spark_spread/S = new(target)
+	S.set_up(3, 1, target)
+	S.start()
+	for(var/i in 1 to healings)
+		new /obj/effect/temp_visual/heal(get_turf(target), "#ffb347")
+	target.add_filter("ysis_glow", 2, list(type = "outline", color = "#ffb347", size = 2))
+	target.transition_filter("ysis_glow", list(size = 0), 2 SECONDS)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, remove_filter), "ysis_glow"), 2 SECONDS)
+
 /obj/structure/ysis
 	name = "Ysis"
 	desc = "It feels good to touch!"
 	icon = 'icons/obj/clockwork_objects.dmi'
-	icon_state = "hierophant_ansible"
+	icon_state = "interdiction_lens"
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 200
+	var/active = FALSE
+	var/ready_time = 0
+	var/cooldown_time = 45 SECONDS
+
+/obj/structure/ysis/examine(mob/user)
+	. = ..()
+	if(world.time < ready_time)
+		. += span_warning("WAIT [round((ready_time - world.time) / 10)] SECONDS.")
+
+/obj/structure/ysis/update_icon()
+	. = ..()
+	if(active)
+		icon_state = "interdiction_lens_active"
+	else if(world.time < ready_time)
+		icon_state = "interdiction_lens_unwrenched"
+	else
+		icon_state = "interdiction_lens"
 
 /obj/structure/ysis/attack_hand(mob/living/user)
 	. = ..()
@@ -1361,9 +1391,24 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		return
 	if(!ishuman(user) || user.stat == DEAD)
 		return
+	if(active)
+		to_chat(user, span_warning("[src] is already working on someone."))
+		return
+	if(world.time < ready_time)
+		to_chat(user, span_warning("[src] is recovering!"))
+		return
 	var/mob/living/carbon/human/H = user
 	to_chat(H, span_notice("THE YSIS WORKS UPON ME..."))
-	if(!do_after(H, 5 SECONDS, target = src))
+	active = TRUE
+	update_icon()
+	set_light(3, 1, 1.5, l_color = "#ffb347")
+	ysis_effect(src, 0)
+	playsound(src, 'sound/magic/charging.ogg', 60, TRUE)
+	var/finished = do_after(H, 5 SECONDS, target = src)
+	active = FALSE
+	set_light(0)
+	if(!finished)
+		update_icon()
 		return
 	var/datum/status_effect/buff/healing/heal = H.apply_status_effect(/datum/status_effect/buff/healing, 10, TRUE)
 	if(heal)
@@ -1372,6 +1417,12 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		I.obj_integrity = min(I.obj_integrity + (I.max_integrity * 0.2), I.max_integrity)
 	to_chat(H, span_notice("YSIS MENDS ME."))
 	playsound(src, 'sound/magic/lightning.ogg', 60, TRUE)
+	ysis_effect(H, 8)
+	flick("interdiction_lens_discharged", src)
+	ready_time = world.time + cooldown_time
+	update_icon()
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), cooldown_time)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(ysis_effect), src, 0), cooldown_time)
 
 /datum/ritual/toil/fulmenor
 	name = "Curse of Fulmenor"
