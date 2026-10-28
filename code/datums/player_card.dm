@@ -14,6 +14,11 @@
 	var/flavortext
 	var/nsfwflavortext
 	var/headshot_link
+	var/headshot_zoom = HEADSHOT_ZOOM_MIN
+	var/headshot_x = HEADSHOT_POSITION_DEFAULT
+	var/headshot_y = HEADSHOT_POSITION_DEFAULT
+	var/headshot_framed = FALSE
+	var/headshot_frame_chat = FALSE
 	var/rumour
 	var/noble_gossip
 	var/list/img_gallery
@@ -56,6 +61,11 @@
 	flavortext = H.flavortext
 	nsfwflavortext = H.nsfwflavortext
 	headshot_link = H.headshot_link
+	headshot_zoom = H.headshot_zoom
+	headshot_x = H.headshot_x
+	headshot_y = H.headshot_y
+	headshot_framed = H.headshot_framed
+	headshot_frame_chat = H.headshot_frame_chat
 	rumour = H.rumour
 	noble_gossip = H.noble_gossip
 	img_gallery = H.img_gallery?.Copy()
@@ -93,6 +103,11 @@
 	H.flavortext = flavortext
 	H.nsfwflavortext = nsfwflavortext
 	H.headshot_link = headshot_link
+	H.headshot_zoom = headshot_zoom
+	H.headshot_x = headshot_x
+	H.headshot_y = headshot_y
+	H.headshot_framed = headshot_framed
+	H.headshot_frame_chat = headshot_frame_chat
 	H.rumour = rumour
 	H.noble_gossip = noble_gossip
 	H.img_gallery = img_gallery?.Copy()

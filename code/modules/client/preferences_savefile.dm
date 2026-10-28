@@ -855,6 +855,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 /datum/preferences/proc/load_character(slot)
+	character_gallery_generation++
+	saved_gallery_state = null
+	gallery_alternates = list()
 	if(!path)
 		return FALSE
 	if(!fexists(path))
@@ -926,9 +929,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		to_chat(parent, span_warning("Couldn't load familiar prefs!"))
 
+	var/gnoll_gallery_loaded = FALSE
 	if(istype(gnoll_prefs))
 		if(!gnoll_prefs.load_gnoll_prefs(S))
 			to_chat(parent, span_warning("Couldn't load gnoll prefs!"))
+		else
+			gnoll_gallery_loaded = TRUE
 	else
 		to_chat(parent, span_warning("Couldn't load gnoll prefs!"))
 
@@ -968,30 +974,45 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["headshot_link"]			>> headshot_link
 	if(!valid_headshot_link(null, headshot_link, TRUE))
 		headshot_link = null
+	S["headshot_zoom"]			>> headshot_zoom
+	headshot_zoom = sanitize_integer(headshot_zoom, HEADSHOT_ZOOM_MIN, HEADSHOT_ZOOM_MAX, HEADSHOT_ZOOM_MIN)
+	S["headshot_x"]			>> headshot_x
+	headshot_x = sanitize_headshot_position(headshot_x)
+	S["headshot_y"]			>> headshot_y
+	headshot_y = sanitize_headshot_position(headshot_y)
+	S["headshot_framed"]			>> headshot_framed
+	headshot_framed = sanitize_integer(headshot_framed, FALSE, TRUE, FALSE)
+	S["headshot_frame_chat"]			>> headshot_frame_chat
+	headshot_frame_chat = sanitize_integer(headshot_frame_chat, FALSE, TRUE, FALSE)
 
 	S["flavortext"]			>> flavortext
 	S["ooc_notes"]			>> ooc_notes
 	S["ooc_extra"]			>> ooc_extra
-	S["ooc_extra_img"]		>> ooc_extra_img
 	S["ooc_extra_img_link"]	>> ooc_extra_img_link
 	if(!valid_headshot_link(null, ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
-		ooc_extra_img = null
 		ooc_extra_img_link = null
+	S["ooc_extra_img_size"]	>> ooc_extra_img_size
+	ooc_extra_img_size = sanitize_integer(ooc_extra_img_size, OOC_EXTRA_SIZE_MIN, OOC_EXTRA_SIZE_MAX, OOC_EXTRA_SIZE_MAX)
+	ooc_extra_img = ooc_extra_img_link ? ooc_extra_img_markup(ooc_extra_img_link, ooc_extra_img_size) : null
 	S["rumour"]				>> rumour
 	S["noble_gossip"]		>> noble_gossip
 	S["song_artist"]		>> song_artist
 	S["song_title"]			>> song_title
 	S["nsfwflavortext"]	>> nsfwflavortext
-	S["nsfw_ooc_extra_img"]		>> nsfw_ooc_extra_img
 	S["nsfw_ooc_extra_img_link"]	>> nsfw_ooc_extra_img_link
 	if(!valid_headshot_link(null, nsfw_ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
-		nsfw_ooc_extra_img = null
 		nsfw_ooc_extra_img_link = null
+	S["nsfw_ooc_extra_img_size"]	>> nsfw_ooc_extra_img_size
+	nsfw_ooc_extra_img_size = sanitize_integer(nsfw_ooc_extra_img_size, OOC_EXTRA_SIZE_MIN, OOC_EXTRA_SIZE_MAX, OOC_EXTRA_SIZE_MAX)
+	nsfw_ooc_extra_img = nsfw_ooc_extra_img_link ? ooc_extra_img_markup(nsfw_ooc_extra_img_link, nsfw_ooc_extra_img_size) : null
 	S["erpprefs"]			>> erpprefs
 	S["img_gallery"]	>> img_gallery
-	img_gallery = SANITIZE_LIST(img_gallery)
+	img_gallery = valid_gallery_links(img_gallery)
 	S["nsfw_img_gallery"]	>> nsfw_img_gallery
-	nsfw_img_gallery = SANITIZE_LIST(nsfw_img_gallery)
+	nsfw_img_gallery = valid_gallery_links(nsfw_img_gallery)
+	var/list/loaded_alternates
+	S["gallery_alternates"] >> loaded_alternates
+	gallery_alternates = valid_gallery_alternates(src, loaded_alternates)
 
 	S["char_accent"]		>> char_accent
 	if (!char_accent)
@@ -1112,9 +1133,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	validate_customizer_entries()
 
+	var/list/loaded_gallery = json_decode(gallery_state())
+	if(!gnoll_gallery_loaded)
+		loaded_gallery[3] = null
+	saved_gallery_state = json_encode(loaded_gallery)
 	return TRUE
 
 /datum/preferences/proc/save_character()
+	sync_gallery_alternates(src)
 	if(!path)
 		return FALSE
 	var/savefile/S = new /savefile(path)
@@ -1215,11 +1241,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["dnr"] , dnr_pref)
 	WRITE_FILE(S["update_mutant_colors"] , update_mutant_colors)
 	WRITE_FILE(S["headshot_link"] , headshot_link)
+	WRITE_FILE(S["gallery_alternates"], gallery_alternates)
+	WRITE_FILE(S["headshot_zoom"] , headshot_zoom)
+	WRITE_FILE(S["headshot_x"] , headshot_x)
+	WRITE_FILE(S["headshot_y"] , headshot_y)
+	WRITE_FILE(S["headshot_framed"] , headshot_framed)
+	WRITE_FILE(S["headshot_frame_chat"] , headshot_frame_chat)
 	WRITE_FILE(S["flavortext"] , html_decode(flavortext))
 	WRITE_FILE(S["ooc_notes"] , html_decode(ooc_notes))
 	WRITE_FILE(S["ooc_extra"] ,	ooc_extra)
 	WRITE_FILE(S["ooc_extra_img"] , ooc_extra_img)
 	WRITE_FILE(S["ooc_extra_img_link"] , ooc_extra_img_link)
+	WRITE_FILE(S["ooc_extra_img_size"] , ooc_extra_img_size)
 	WRITE_FILE(S["rumour"] , html_decode(rumour))
 	WRITE_FILE(S["noble_gossip"] , html_decode(noble_gossip))
 	WRITE_FILE(S["song_artist"] , song_artist)
@@ -1246,6 +1279,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["nsfwflavortext"] , html_decode(nsfwflavortext))
 	WRITE_FILE(S["nsfw_ooc_extra_img"] , nsfw_ooc_extra_img)
 	WRITE_FILE(S["nsfw_ooc_extra_img_link"] , nsfw_ooc_extra_img_link)
+	WRITE_FILE(S["nsfw_ooc_extra_img_size"] , nsfw_ooc_extra_img_size)
 	WRITE_FILE(S["erpprefs"] , html_decode(erpprefs))
 	WRITE_FILE(S["img_gallery"] , img_gallery)
 	WRITE_FILE(S["nsfw_img_gallery"] , nsfw_img_gallery)
@@ -1298,19 +1332,32 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	// External pref datums have their save/load moved to local procs, to avoid constant reference access
 
+	var/external_prefs_saved = TRUE
+	var/list/saved_gallery = json_decode(gallery_state())
+	var/list/previous_gallery = isnull(saved_gallery_state) ? null : json_decode(saved_gallery_state)
+	saved_gallery[3] = previous_gallery ? previous_gallery[3] : null
 	if(istype(familiar_prefs))
 		if(!familiar_prefs.save_familiar_prefs(S))
+			external_prefs_saved = FALSE
 			to_chat(parent, span_warning("Couldn't save familiar prefs!"))
 	else
+		external_prefs_saved = FALSE
 		to_chat(parent, span_warning("Couldn't save familiar prefs!"))
 
 	if(istype(gnoll_prefs))
 		if(!gnoll_prefs.save_gnoll_prefs(S))
+			external_prefs_saved = FALSE
 			to_chat(parent, span_warning("Couldn't save gnoll prefs!"))
+		else
+			var/list/current_gallery = json_decode(gallery_state())
+			saved_gallery[3] = current_gallery[3]
 	else
+		external_prefs_saved = FALSE
 		to_chat(parent, span_warning("Couldn't save gnoll prefs!"))
 
-	return TRUE
+	log_headshot_framing("saved")
+	saved_gallery_state = json_encode(saved_gallery)
+	return external_prefs_saved
 
 
 #undef SAVEFILE_VERSION_MAX

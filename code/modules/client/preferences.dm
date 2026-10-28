@@ -337,10 +337,16 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/update_mutant_colors = TRUE
 
 	var/headshot_link
+	var/headshot_zoom = HEADSHOT_ZOOM_MIN
+	var/headshot_x = HEADSHOT_POSITION_DEFAULT
+	var/headshot_y = HEADSHOT_POSITION_DEFAULT
+	var/headshot_framed = FALSE
+	var/headshot_frame_chat = FALSE
 	var/chatheadshot = FALSE
 	var/ooc_extra
 	var/ooc_extra_img
 	var/ooc_extra_img_link
+	var/ooc_extra_img_size = OOC_EXTRA_SIZE_MAX
 	var/song_artist
 	var/song_title
 	var/list/descriptor_entries = list()
@@ -424,6 +430,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/nsfw_ooc_extra_img
 	var/nsfw_ooc_extra_img_link
+	var/nsfw_ooc_extra_img_size = OOC_EXTRA_SIZE_MAX
 
 	var/erpprefs
 
@@ -820,9 +827,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<br><b>Markings:</b> <a href='?_src_=prefs;preference=markings;task=menu'>Change</a>"
 			dat += "<br><b>Descriptors:</b> <a href='?_src_=prefs;preference=descriptors;task=menu'>Change</a>"
 
-			dat += "<br><b>Headshot:</b> <a href='?_src_=prefs;preference=headshot;task=input'>Change</a>"
-			if(headshot_link != null)
-				dat += "<br><img src='[headshot_link]' width='100px' height='100px'>"
+			dat += "<br><b>Character Gallery:</b> <a href='?_src_=prefs;preference=character_gallery;task=input'>Change</a>"
+			dat += character_gallery_thumbnails()
 
 			dat += "<br><b>[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "<font color = '#802929'>" : ""]Flavortext:[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "</font>" : ""]</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=flavortext;task=input'>Change</a>"
 			dat += "<br><b>NSFW Flavortext:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=nsfwflavortext;task=input'>Change</a>"
@@ -835,16 +841,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<br><b>Song:</b> <a href='?_src_=prefs;preference=ooc_extra;task=input'>Change URL</a>"
 			dat += "<a href='?_src_=prefs;preference=change_title;task=input'>Change Title</a>"
 			dat += "<a href='?_src_=prefs;preference=change_artist;task=input'>Change Artist</a>"
-			dat += "<br><b>OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=prefs;preference=ooc_extra_img;task=input'>Change</a>"
-			if(ooc_extra_img_link != null)
-				dat += "<br><img src='[ooc_extra_img_link]' width='100px' height='100px'>"
-			dat += "<br><b>NSFW OOC Extra Image/Video/Gif (Flavor Text):</b> <a href='?_src_=prefs;preference=nsfw_ooc_extra_img;task=input'>Change</a>"
-			if(nsfw_ooc_extra_img_link != null)
-				dat += "<br><img src='[nsfw_ooc_extra_img_link]' width='100px' height='100px'>"
-			dat += "<br><B>Image Gallery:</b> <a href='?_src_=prefs;preference=img_gallery;task=input'>Add</a>"
-			dat+= "<a href='?_src_=prefs;preference=clear_gallery;task=input'>Clear Gallery</a>"
-			dat += "<br><B>Nsfw Image Gallery:</b> <a href='?_src_=prefs;preference=nsfw_img_gallery;task=input'>Add</a>"
-			dat+= "<a href='?_src_=prefs;preference=clear_nsfw_gallery;task=input'>Clear Nsfw Gallery</a>"
 			dat += "<br><a href='?_src_=prefs;preference=ooc_preview;task=input'><b>Preview Examine</b></a>"
 
 			dat += "</td>"
@@ -2198,24 +2194,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					if(new_color)
 						highlight_color = sanitize_hexcolor(new_color)
 
-				if("headshot")
-					to_chat(user, "<span class='notice'>Please use a relatively SFW image of the head and shoulder area to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
-					to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
-					to_chat(user, "<span class='notice'>Keep in mind that the photo will be downsized to 325x325 pixels, so the more square the photo, the better it will look.</span>")
-					var/new_headshot_link = tgui_input_text(user, "Input the headshot link (https, hosts: gyazo, lensdump, imgbox, catbox, imgbb, filegarden):", "Headshot", headshot_link,  encode = FALSE)
-					if(new_headshot_link == null)
-						return
-					if(new_headshot_link == "")
-						headshot_link = null
-						ShowChoices(user)
-						return
-					if(!valid_headshot_link(user, new_headshot_link))
-						headshot_link = null
-						ShowChoices(user)
-						return
-					headshot_link = new_headshot_link
-					to_chat(user, "<span class='notice'>Successfully updated headshot picture</span>")
-					log_game("[user] has set their Headshot image to '[headshot_link]'.")
 				if("legacyhelp")
 					var/list/dat = list()
 					dat += "This slot was around since before major Flavortext / OOC changes.<br>"
@@ -2344,86 +2322,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					to_chat(user, "<span class='notice'>Successfully updated ERP Preferences.</span>")
 					log_game("[user] has set their ERP preferences'.")
 
-				if("img_gallery")
-
-					if(img_gallery.len >= 3)
-						to_chat(user, "You already have three images in your gallery!")
-						return
-
-					to_chat(user, "<span class='notice'>Please use an image ["<span class='bold'>of your character</span>"] to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
-					to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
-					to_chat(user, "<span class='notice'>Keep in mind that all three images are displayed next to eachother and justified to fill a horizontal rectangle. As such, vertical images work best.</span>")
-					to_chat(user, "<span class='notice'>You can only have a maximum of ["<span class='bold'>THREE IMAGES</span>"] in your gallery at a time.</span>")
-
-					var/new_galleryimg = tgui_input_text(user, "Input the image link (https, hosts: gyazo, lensdump, imgbox, catbox, imgbb, filegarden):", "Gallery Image",  encode = FALSE)
-
-					if(new_galleryimg == null)
-						return
-					if(new_galleryimg == "")
-						new_galleryimg = null
-						ShowChoices(user)
-						return
-					if(!valid_headshot_link(user, new_galleryimg))
-						to_chat(user, "<span class='notice'>Invalid image link. Make sure it's a direct link from a valid host (gyazo, lensdump, imgbox, catbox, imgbb, filegarden).</span>")
-						new_galleryimg = null
-						ShowChoices(user)
-						return
-					img_gallery += new_galleryimg
-					to_chat(user, "<span class='notice'>Successfully added image to gallery.</span>")
-					log_game("[user] has added an image to their gallery: '[new_galleryimg]'.")
-
-				if("nsfw_img_gallery")
-
-					if(nsfw_img_gallery.len >= 3)
-						to_chat(user, "You already have three images in your gallery!")
-						return
-
-					to_chat(user, "<span class='notice'>Please use an image ["<span class='bold'>of your character</span>"] to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
-					to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
-					to_chat(user, "<span class='notice'>Keep in mind that all three images are displayed next to eachother and justified to fill a horizontal rectangle. As such, vertical images work best.</span>")
-					to_chat(user, "<span class='notice'>You can only have a maximum of ["<span class='bold'>THREE IMAGES</span>"] in your gallery at a time.</span>")
-
-					var/new_galleryimg = tgui_input_text(user, "Input the image link (https, hosts: gyazo, lensdump, imgbox, catbox, imgbb, filegarden):", "Gallery Image",  encode = FALSE)
-
-					if(new_galleryimg == null)
-						return
-					if(new_galleryimg == "")
-						new_galleryimg = null
-						ShowChoices(user)
-						return
-					if(!valid_headshot_link(user, new_galleryimg))
-						to_chat(user, "<span class='notice'>Invalid image link. Make sure it's a direct link from a valid host (gyazo, lensdump, imgbox, catbox, imgbb, filegarden).</span>")
-						new_galleryimg = null
-						ShowChoices(user)
-						return
-					nsfw_img_gallery += new_galleryimg
-					to_chat(user, "<span class='notice'>Successfully added image to nsfw gallery.</span>")
-					log_game("[user] has added an image to their nsfw gallery: '[new_galleryimg]'.")
-
-				if("clear_gallery")
-					if(!img_gallery.len)
-						to_chat(user, "You don't have any images in your gallery to clear!")
-						return
-					var/dachoice = tgui_alert(user, "Do you really want to clear your image gallery?", "Clear Gallery", list("Yae", "Nae"))
-					if(dachoice == "Nae")
-						ShowChoices(user)
-						return
-					img_gallery = list()
-					to_chat(user, "<span class='notice'>Successfully cleared image gallery.</span>")
-					log_game("[user] has cleared their image gallery.")
-
-				if("clear_nsfw_gallery")
-					if(!nsfw_img_gallery.len)
-						to_chat(user, "You don't have any images in your nsfw gallery to clear!")
-						return
-					var/dachoice = tgui_alert(user, "Do you really want to clear your nsfw image gallery?", "Clear nsfw Gallery", list("Yae", "Nae"))
-					if(dachoice == "Nae")
-						ShowChoices(user)
-						return
-					nsfw_img_gallery = list()
-					to_chat(user, "<span class='notice'>Successfully cleared their nsfw image gallery.</span>")
-					log_game("[user] has cleared their nsfw image gallery.")
-
 				if("ooc_preview")
 					var/datum/examine_panel/preview_examine_panel = new(user)
 					preview_examine_panel.pref = src
@@ -2431,6 +2329,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					preview_examine_panel.viewing = user
 					preview_examine_panel.previewing = "character"
 					preview_examine_panel.ui_interact(user)
+
+				if("character_gallery")
+					open_character_gallery(user, "character")
+					return
 
 				if("rumour_preview")
 					var/msg = ""
@@ -2499,80 +2401,6 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					song_title = new_title
 					to_chat(user, "<span class='notice'>Successfully updated song title.</span>")
 					log_game("[user] has set their song title.")
-
-				if("ooc_extra_img")
-					to_chat(user, "<span class='notice'>Add a link to images/videos (jpg, png, gif, mp4) that will be displayed in your Flavor Text.</span>")
-					to_chat(user, "<span class='notice'>Images/videos will be constrained by width but have limitless height. Suitable hosts: catbox, discord, gyazo, lensdump, imgbox, imgbb, filegarden.</span>")
-					to_chat(user, "<font color='#d6d6d6'>Leave a single space to delete it.</font>")
-					to_chat(user, "<font color='red'>Abuse of this will get you banned.</font>")
-					var/link = tgui_input_text(user, "Input the image/video link (https):", "OOC Extra Image", ooc_extra_img_link, encode = FALSE)
-					if(link == null)
-						return
-					if(link == "")
-						link = null
-						var/choice = tgui_alert(user, "Do you really want to clear your OOC Extra Image/Video/Gif?", "Clear OOC Extra Image/Video/Gif", list("Yae", "Nae"))
-						if(choice == "Nae")
-							ShowChoices(user)
-							return
-						ooc_extra_img = null
-						ooc_extra_img_link = null
-						to_chat(user, "<span class='notice'>Successfully deleted OOC Extra Image.</span>")
-						ShowChoices(user)
-						return
-					var/static/list/valid_ext = list("jpg", "jpeg", "png", "gif", "mp4")
-					if(!valid_headshot_link(user, link, FALSE, valid_ext))
-						link = null
-						ShowChoices(user)
-						return
-					ooc_extra_img_link = link
-					var/ext = LOWER_TEXT(splittext(link, ".")[length(splittext(link, "."))])
-					var/info
-					switch(ext)
-						if("jpg", "jpeg", "png", "gif")
-							ooc_extra_img = "<div align='center'><br><img src='[link]' style='max-width: 100%;'/></div>"
-							info = "an image."
-						if("mp4")
-							ooc_extra_img = "<div align='center'><br><video style='max-width: 100%;' controls><source src='[link]' type='video/mp4'></video></div>"
-							info = "a video."
-					to_chat(user, "<span class='notice'>Successfully updated OOC Extra Image with [info]</span>")
-					log_game("[user] has set their OOC Extra Image to '[link]'.")
-
-				if("nsfw_ooc_extra_img")
-					to_chat(user, "<span class='notice'>Add a link to NSFW images/videos (jpg, png, gif, mp4) that will be displayed in your NSFW Flavor Text.</span>")
-					to_chat(user, "<span class='notice'>Images/videos will be constrained by width but have limitless height. Suitable hosts: catbox, discord, gyazo, lensdump, imgbox, imgbb, filegarden.</span>")
-					to_chat(user, "<font color='#d6d6d6'>Leave a single space to delete it.</font>")
-					to_chat(user, "<font color='red'>Abuse of this will get you banned.</font>")
-					var/link = tgui_input_text(user, "Input the image/video link (https):", "NSFW OOC Extra Image", nsfw_ooc_extra_img_link, encode = FALSE)
-					if(link == null)
-						return
-					if(link == "")
-						link = null
-						var/choice = tgui_alert(user, "Do you really want to clear your NSFW OOC Extra Image/Video/Gif?", "Clear NSFW OOC Extra Image/Video/Gif", list("Yae", "Nae"))
-						if(choice == "Nae")
-							ShowChoices(user)
-							return
-						nsfw_ooc_extra_img = null
-						nsfw_ooc_extra_img_link = null
-						to_chat(user, "<span class='notice'>Successfully deleted NSFW OOC Extra Image.</span>")
-						ShowChoices(user)
-						return
-					var/static/list/valid_ext = list("jpg", "jpeg", "png", "gif", "mp4")
-					if(!valid_headshot_link(user, link, FALSE, valid_ext))
-						link = null
-						ShowChoices(user)
-						return
-					nsfw_ooc_extra_img_link = link
-					var/ext = LOWER_TEXT(splittext(link, ".")[length(splittext(link, "."))])
-					var/info
-					switch(ext)
-						if("jpg", "jpeg", "png", "gif")
-							nsfw_ooc_extra_img = "<div align='center'><br><img src='[link]' style='max-width: 100%;'/></div>"
-							info = "an image."
-						if("mp4")
-							nsfw_ooc_extra_img = "<div align='center'><br><video style='max-width: 100%;' controls><source src='[link]' type='video/mp4'></video></div>"
-							info = "a video."
-					to_chat(user, "<span class='notice'>Successfully updated NSFW OOC Extra Image with [info]</span>")
-					log_game("[user] has set their NSFW OOC Extra Image to '[link]'.")
 
 				if("familiar_prefs")
 					familiar_prefs.fam_show_ui()
@@ -3256,6 +3084,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, skip_normal_prefs = FALSE)
+	if(!character_setup)
+		log_headshot_framing("spawned")
 	if(skip_normal_prefs)
 		// For gnolls spawning from a non-gnoll base slot, we must not apply any base-slot state.
 		// Set species to gnoll immediately so advclass check_requirements can read dna.species.type.
@@ -3393,6 +3223,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.dna.real_name = character.real_name
 
 	character.headshot_link = headshot_link
+	character.headshot_zoom = headshot_zoom
+	character.headshot_x = headshot_x
+	character.headshot_y = headshot_y
+	character.headshot_framed = headshot_framed
+	character.headshot_frame_chat = headshot_frame_chat
 
 	character.origin = origin ? origin.name : "Unknown"
 	for(var/trait in origin?.origin_traits)
@@ -3535,6 +3370,17 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	var/static/link_regex = regex(@"i\.gyazo\.com/|.\.l3n\.co/|(images2|thumbs2)\.imgbox\.com/|files\.catbox\.moe/|i\.ibb\.co/|file\.garden/") //gyazo, lensdump, imgbox, catbox, imgbb, filegarden
 
 	if(!length(value))
+		return FALSE
+
+	if(length(value) > IMAGE_LINK_MAX_LENGTH)
+		if(!silent)
+			to_chat(user, span_warning("Your link must be [IMAGE_LINK_MAX_LENGTH] characters or fewer!"))
+		return FALSE
+
+	var/static/regex/whitespace = regex(@"[\s\n\r\t]")
+	if(findtext(value, whitespace))
+		if(!silent)
+			to_chat(user, span_warning("Your link can't contain spaces or line breaks!"))
 		return FALSE
 
 	var/find_index = findtext(value, "https://")
