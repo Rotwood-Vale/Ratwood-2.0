@@ -1305,7 +1305,7 @@
 	force_wielded = 20//Worse than just using a knife, really, despite the range.
 	thrown_bclass = BCLASS_STAB
 	throwforce = 20
-	max_integrity = 150
+	max_integrity = 200
 	max_blade_int = 180
 	smeltresult = /obj/item/ingot/silverblessed
 	is_silver = TRUE
