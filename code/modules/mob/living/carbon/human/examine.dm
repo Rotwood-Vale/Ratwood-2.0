@@ -821,18 +821,19 @@
 		else
 			lines = build_cool_description(get_mob_descriptors(obscure_name, user), src, user)
 
-		var/app_str
-		if(!(user.client?.prefs?.full_examine))
-			app_str = "<details><summary>[span_info("Details")]</summary>"
-		
-		for(var/line in lines)
-			app_str += span_info(line)
-			app_str += "<br>"
-		if(!(user.client?.prefs?.full_examine))
-			if(length(lines))
+		if(length(lines))
+			var/collapse_details = !(user.client?.prefs?.full_examine)
+			var/app_str
+			if(collapse_details)
+				app_str = "<details><summary>[span_info("Details")]</summary>"
+
+			for(var/line in lines)
+				app_str += span_info(line)
+				app_str += "<br>"
+			if(collapse_details)
 				app_str += "</details>"
 
-		. += app_str
+			. += app_str
 
 	// for underwears that don't cover from the rear, genital descriptions are still shown
 	if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN) && src.underwear)
