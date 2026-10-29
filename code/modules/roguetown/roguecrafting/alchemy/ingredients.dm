@@ -1,5 +1,3 @@
-
-
 /obj/item/alch
 	name = "dust"
 	desc = ""
@@ -26,7 +24,6 @@
 /obj/item/alch/seeddust
 	name = "seed dust"
 	icon_state = "seeddust"
-
 
 /obj/item/alch/blessedseedpowder
 	name = "blessed seed powder"
