@@ -338,6 +338,7 @@
 #define OFFSET_HANDS_F "handsf"
 #define OFFSET_UNDIES_F "underwearf"
 #define OFFSET_BREASTS_F "breastsf"
+#define OFFSET_BUTT "butt"
 
 //MINOR TWEAKS/MISC
 #define AGE_MIN				18	//youngest a character can be
