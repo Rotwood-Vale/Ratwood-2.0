@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 				quirk_details += "<br>"
 			quirk_details += "<font color='#f44336'>[current_quirk.warning_text]</font>"
 		html += pref_box(quirk_header, current_quirk.desc, quirk_details, current_quirk.name)
-	html += pref_line(list(bg_link("Add a Quirk", "quirk_add")))
+	html += pref_line(list(bg_link("Add Quirk", "quirk_add")))
 	var/list/vice_names = list()
 	for(var/i in 1 to VICE_SLOTS)
 		var/datum/charflaw/vice = vars["vice[i]"]
