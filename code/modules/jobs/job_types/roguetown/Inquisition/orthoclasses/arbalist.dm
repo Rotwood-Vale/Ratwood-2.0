@@ -55,8 +55,6 @@
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
-	belt = /obj/item/storage/belt/rogue/leather/stakebelt//Because your 'crossbow' FUCKS.
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy//Your ticket to fame, brother.
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	mask = /obj/item/clothing/mask/rogue/sack/psy
@@ -66,7 +64,6 @@
 		/obj/item/grapplinghook = 1,
 		/obj/item/paper/inqslip/arrival/ortho = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
-		/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest = 1//You get ONE.
 		)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
@@ -77,8 +74,11 @@
 	var/ranged_choice = input(H, "CHOOSE YOUR RANGED WEAPON.", "STRIKE FROM AFAR.") as anything in ranged_weapons
 	switch(ranged_choice)
 		if("Arbalest")
+			H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/leather/stakebelt, SLOT_BELT, TRUE)//Because your 'crossbow' FUCKS.
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy, SLOT_BELT_L, TRUE)//Your ticket to fame, brother.
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/arbalest, SLOT_BACK_L, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/quiver/heavybolts, SLOT_BELT_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest, SLOT_IN_BACKPACK, TRUE)//You get ONE.
 			if(H.mind)
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_inviolability)//A shield against the undead.
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_lux_bolt)//Take a guess. Exclusive to arbalist.
@@ -87,6 +87,9 @@
 			ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/combat/crossbows, -1, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_MASTER, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)// To parry with the Rifle
+			H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/leather/knifebelt/black/psydon, SLOT_BELT, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy, SLOT_BELT_L, TRUE)//Your ticket to fame, brother.
 			H.equip_to_slot_or_del(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle, SLOT_BACK_L, TRUE)
 			var/pouches = list("Pharetra - Runed Spheres", "Pharetra - Blessed Silver Spheres")
 			var/pouch_choice = input(H, "CHOOSE YOUR MUNITIONS.", "TAKE UP PSYDON'S MISSILES.") as anything in pouches

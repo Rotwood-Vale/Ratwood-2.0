@@ -247,7 +247,7 @@
 	default_icon_state = "runelock"
 	item_state = "runelock"
 	force_wielded = 15
-	associated_skill = /datum/skill/combat/staves
+	associated_skill = /datum/skill/combat/polearms
 	possible_item_intents = list(/datum/intent/mace/strike/wood)
 	gripped_intents = list(/datum/intent/shoot/twilight_runelock, /datum/intent/arc/twilight_runelock, INTENT_GENERIC)
 	pixel_y = -16
