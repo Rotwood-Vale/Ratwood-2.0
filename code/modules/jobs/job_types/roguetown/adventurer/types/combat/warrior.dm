@@ -334,11 +334,11 @@
 		if("Headbutt - Vulnerable Debuff")
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/headbutt)
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt/barbarian
-	pants = /obj/item/clothing/under/roguetown/chainlegs/skirt/bronze
 	shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 	if(should_wear_masc_clothes(H))
 		H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
+		pants = /obj/item/clothing/under/roguetown/chainlegs/skirt/bronze
 	if(should_wear_femme_clothes(H))
 		if(weapon_choice != "Discipline - Unarmed" && weapon_choice != "Discipline - Bodybuilder")//tits out
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/bikini
