@@ -1,6 +1,0 @@
-author: "SirSwagmeyer"
-delete-after: True
-changes:
-  - balance: "patched in a fix from AP that was missed in the original Combat 2.0 port: Plate Armor Piercing Protection: Heavy ---> Medium. Rejoice, crossbow users! You can kill again."
-  - bugfix: "fixed a bug related to firearms code in which it was not up to Combat 2.0 parity."
-  - rscadd: "added a feature to firearm bullets in which you deal double projectile damage to exposed and vulnerable targets."
