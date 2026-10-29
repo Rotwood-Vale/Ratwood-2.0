@@ -648,8 +648,8 @@
 
 /mob/living/carbon/proc/update_chem_pain()
 	chem_pain = 0
-	for(var/datum/reagent/r in reagents.reagent_list)
-		if(r.pain)
+	for(var/datum/reagent/r in reagents?.reagent_list)
+		if(r.pain && r.metabolizing)
 			chem_pain += r.pain
 
 /mob/living/carbon/proc/add_nausea(amt)

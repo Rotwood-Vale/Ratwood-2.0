@@ -227,7 +227,7 @@
 		if(has_adrenaline)
 			bodypart_pain *= 0.5
 		. += bodypart_pain
-		. += chem_pain
+	. += chem_pain
 
 /mob/living/carbon/human/get_complex_pain()
 	. = ..()
