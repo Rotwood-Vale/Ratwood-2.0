@@ -2793,7 +2793,7 @@
 /atom/movable/screen/alert/status_effect/buff/dagger_dash
 	name = "Dagger Dash"
 	desc = "I'm slipping through!"
-	icon_state = "daggerboost"
+	icon_state = "daggerdash"
 
 /atom/movable/screen/alert/status_effect/buff/dagger_boost
 	name = "Dagger Boost"
@@ -2857,5 +2857,6 @@
 	. = ..()
 
 /datum/status_effect/buff/dagger_boost/process()
+	. = ..()
 	if(!istype(owner.get_active_held_item(), held_dagger))
 		owner.remove_status_effect(/datum/status_effect/buff/dagger_boost)
