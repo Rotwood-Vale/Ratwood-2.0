@@ -341,7 +341,7 @@
 	to_chat(src, "I will see [HAS_TRAIT(src, TRAIT_COMBAT_AWARE) ? "more" : "less"] combat information now.")
 
 /mob/living/carbon/human/proc/toggle_descriptors()
-	set name = "Toggle Anonimity"
+	set name = "Toggle Anonymity"
 	set category = "Virtue"
 
 	show_descriptors = !show_descriptors
