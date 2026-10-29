@@ -357,3 +357,16 @@
 	icon_state = "shadowrobe"
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM + 30 //280
+
+/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/bikini
+	name = "padded corslet"
+	desc = "A thin padded corslet,worn by those who prefer versatility and agility in combat at the cost of less coverage."
+	icon_state = "paddedkini"
+	item_state = "paddedkini"
+	armor = ARMOR_PADDED
+	nodismemsleeves = TRUE
+	body_parts_covered = COVERAGE_TORSO
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	color = "#b49679"
+	cold_protection = CHEST | GROIN
+	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX

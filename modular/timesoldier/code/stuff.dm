@@ -1,10 +1,3 @@
-#define FUTURE_VOICE_MALE_GENERIC "Male Generic" // regular guy.
-#define FUTURE_VOICE_FEMALE "Female" // girlboss.
-
-#define FUTURE_LANGUAGE_IMPERIAL "Imperial"
-#define FUTURE_LANGUAGE_NEW_IMPERIAL "New Imperial"
-
-
 /obj/item/reagent_containers/food/snacks/rogue/timesoldier/ferenchow
 	name = "Ferentian Ration Can"
 	desc = "<span class='yellow'><i>Made in bulk in Kingsfield, filling, and surprisingly tasty. It's made from everyone's favorite Eoran blessed Meat Stew.</i></span>"
