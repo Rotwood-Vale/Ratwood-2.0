@@ -1050,7 +1050,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	voice_color		= voice_color
 	voice_pitch		= voice_pitch
 	skin_tone		= skin_tone
-	if(!(blood_color_choice in drakian_blood_colors))
+	if(!(blood_color_choice in GLOB.drakian_blood_colors))
 		blood_color_choice = "red"
 	backpack		= sanitize_inlist(backpack, GLOB.backpacklist, initial(backpack))
 	jumpsuit_style	= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))

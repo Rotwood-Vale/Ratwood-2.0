@@ -417,11 +417,11 @@
 	return BLOOD_COLOR_DEFAULT
 
 /mob/living/carbon/human
-	var/blood_hue // Chosen blood hue for drakians. A key in drakian_blood_colors.
+	var/blood_hue // Chosen blood hue for drakians. A key in GLOB.drakian_blood_colors.
 
 /mob/living/carbon/human/get_blood_color()
-	if(dna?.species?.id == "dracon" && (blood_hue in drakian_blood_colors))
-		var/list/blood_pair = drakian_blood_colors[blood_hue]
+	if(dna?.species?.id == "dracon" && (blood_hue in GLOB.drakian_blood_colors))
+		var/list/blood_pair = GLOB.drakian_blood_colors[blood_hue]
 		return blood_pair["color"]
 	if(dna?.species?.blood_color)
 		return dna.species.blood_color
