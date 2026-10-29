@@ -15,6 +15,8 @@
 		return
 
 	if(check_arm_grabbed(used_hand))
+		if(try_handhold(A, proximity, params)) // At this point the attack is blocked so we'll allow snowflake behaviour
+			return
 		to_chat(src, span_warning("Someone is grabbing my arm!"))
 		return
 

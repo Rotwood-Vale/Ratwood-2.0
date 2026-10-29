@@ -12,7 +12,7 @@
 		update_pixel_shifting()
 
 /mob/living/proc/update_pixel_shifting(moved = FALSE)
-	if(moved)
+	if(moved && !handholding)
 		unpixel_shift()
 
 /mob/living/CanPass(atom/movable/mover, turf/target)

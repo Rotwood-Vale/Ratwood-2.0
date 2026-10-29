@@ -2395,6 +2395,7 @@
 #include "code\modules\mob\living\carbon\emote.dm"
 #include "code\modules\mob\living\carbon\energystamina.dm"
 #include "code\modules\mob\living\carbon\examine.dm"
+#include "code\modules\mob\living\carbon\handholding.dm"
 #include "code\modules\mob\living\carbon\inventory.dm"
 #include "code\modules\mob\living\carbon\keen_ears.dm"
 #include "code\modules\mob\living\carbon\life.dm"
