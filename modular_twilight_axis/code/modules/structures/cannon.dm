@@ -97,9 +97,9 @@
 	pass_flags = PASSTABLE | PASSMOB
 
 /obj/projectile/bullet/cannon_debris/on_hit(atom/target, blocked = 0)
-	var/turf/T = get_turf(target)
-	if(T && !istype(target, /mob/living))
-		new /obj/effect/particle_effect/smoke/arquebus(T)
+	var/turf/turf = get_turf(target)
+	if(turf && !istype(target, /mob/living))
+		new /obj/effect/particle_effect/smoke/arquebus(turf)
 	qdel(src)
 	return BULLET_ACT_HIT
 
@@ -108,31 +108,32 @@
 	desc = "Lead core"
 	icon = 'modular_twilight_axis/icons/cannon/cannonball.dmi'
 	icon_state = "ball"
-	damage = 110
+	damage = 200
 	damage_type = BRUTE
+
 	flag = "bullet"
-	speed = 2.5
+	speed = 3.5
 	var/pierces_left = 3
 
 /obj/projectile/bullet/cannonball_straight/on_hit(atom/target, blocked = 0)
 	. = ..()
-	var/turf/T = get_turf(target)
-	if(!T)
+	var/turf/turf = get_turf(target)
+	if(!turf)
 		qdel(src)
 		return
 
 	if(isliving(target))
-		var/mob/living/L = target
+		var/mob/living/player = target
 
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
+		if(ishuman(player))
+			var/mob/living/carbon/human/H = player
 			var/list/valid_limbs = list()
 			for(var/obj/item/bodypart/BP in H.bodyparts)
 				if(BP.body_zone != BODY_ZONE_CHEST && BP.body_zone != BODY_ZONE_HEAD)
 					valid_limbs += BP
 
 			var/limbs_to_lose = rand(1, 3)
-			for(var/i in 1 to limbs_to_lose)
+			for(var/pellets in 1 to limbs_to_lose)
 				if(!length(valid_limbs))
 					break
 				var/obj/item/bodypart/lost_limb = pick(valid_limbs)
@@ -140,21 +141,19 @@
 				lost_limb.dismember(BRUTE, BCLASS_CHOP, null, lost_limb.body_zone, 110, TRUE, TRUE)
 
 			for(var/obj/item/bodypart/remaining_limb in H.bodyparts)
-				H.apply_damage(100, BRUTE, remaining_limb.body_zone)
+				H.apply_damage(140, BRUTE, remaining_limb.body_zone)
 		else
-			L.adjustBruteLoss(400)
+			player.adjustBruteLoss(400)
 
 		var/throw_dir = turn(dir, pick(-90, 90))
-		var/turf/throw_turf = get_ranged_target_turf(L, throw_dir, rand(2, 4))
+		var/turf/throw_turf = get_ranged_target_turf(player, throw_dir, rand(2, 4))
 		if(throw_turf)
-			L.throw_at(throw_turf, 4, 2, null, FALSE, FALSE, null, MOVE_FORCE_STRONG)
-
-		L.Knockdown(60)
-		L.Paralyze(40)
+			player.throw_at(throw_turf, 4, 2, null, FALSE, FALSE, null, MOVE_FORCE_STRONG)
+			player.death()
 
 	else if(istype(target, /turf/closed) || istype(target, /obj/structure) || istype(target, /obj/machinery))
 		target.ex_act(EXPLODE_DEVASTATE)
-		new /obj/effect/particle_effect/smoke/arquebus(T)
+		new /obj/effect/particle_effect/smoke/arquebus(turf)
 
 	pierces_left--
 
@@ -164,38 +163,38 @@
 		return BULLET_ACT_FORCE_PIERCE
 
 	else
-		T.visible_message(span_danger("The cannonball explodes with a loud bang!"))
+		turf.visible_message(span_danger("The cannonball explodes with a loud bang!"))
 
-		for(var/mob/living/M in range(4, T))
-			if(!M.mind || istype(M, /mob/living/simple_animal))
-				if(get_dist(T, M) <= 3)
-					M.adjustBruteLoss(300)
+		for(var/mob/living/mob in range(4, turf))
+			if(!mob.mind || istype(mob, /mob/living/simple_animal))
+				if(get_dist(turf, mob) <= 3)
+					mob.adjustBruteLoss(400)
 				else
-					M.adjustBruteLoss(200)
-			if(M != target)
-				var/blast_dir = get_dir(T, M)
+					mob.adjustBruteLoss(300)
+			if(mob != target)
+				var/blast_dir = get_dir(turf, mob)
 				if(blast_dir == 0)
 					blast_dir = pick(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 
-				var/turf/blast_turf = get_ranged_target_turf(M, blast_dir, rand(2, 4))
+				var/turf/blast_turf = get_ranged_target_turf(mob, blast_dir, rand(2, 4))
 				if(blast_turf)
-					M.throw_at(blast_turf, 4, 2, null, FALSE, FALSE, null, MOVE_FORCE_STRONG)
+					mob.throw_at(blast_turf, 4, 2, null, FALSE, FALSE, null, MOVE_FORCE_STRONG)
 
-				M.Knockdown(60)
-				M.Paralyze(40)
-				M.adjustBruteLoss(rand(40, 80))
-				M.visible_message(span_warning("[M] knocks you off your feet with a powerful shock wave!"))
+				mob.Knockdown(60)
+				mob.Paralyze(40)
+				mob.adjustBruteLoss(rand(40, 80))
+				mob.visible_message(span_warning("[mob] knocks you off your feet with a powerful shock wave!"))
 			else
-				M.visible_message(span_warning("[M] the blast creates a powerful shockwave!"))
-			return
+				mob.visible_message(span_warning("[mob] the blast creates a powerful shockwave!"))
+			return ..()
 				
 
 		var/shrapnel_count = rand(6, 12)
 		var/list/all_dirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
-		for(var/i in 1 to shrapnel_count)
-			var/obj/projectile/bullet/grapeshot_pellet/S = new(T)
+		for(var/pellets in 1 to shrapnel_count)
+			var/obj/projectile/bullet/grapeshot_pellet/S = new(turf)
 			var/shoot_dir = pick(all_dirs)
-			var/turf/shrapnel_target = get_ranged_target_turf(T, shoot_dir, rand(4, 7))
+			var/turf/shrapnel_target = get_ranged_target_turf(turf, shoot_dir, rand(4, 7))
 
 			if(shrapnel_target)
 				shrapnel_target = locate(shrapnel_target.x + rand(-2, 2), shrapnel_target.y + rand(-2, 2), shrapnel_target.z)
@@ -205,10 +204,10 @@
 			S.p_y = 16
 			S.fire()
 
-		for(var/i in 1 to 16)
-			var/obj/projectile/bullet/cannon_debris/D = new(T)
+		for(var/pellets in 1 to 16)
+			var/obj/projectile/bullet/cannon_debris/D = new(turf)
 			var/shoot_dir = pick(all_dirs)
-			var/turf/debris_target = get_ranged_target_turf(T, shoot_dir, rand(5, 9))
+			var/turf/debris_target = get_ranged_target_turf(turf, shoot_dir, rand(5, 9))
 
 			if(debris_target)
 				debris_target = locate(debris_target.x + rand(-3, 3), debris_target.y + rand(-3, 3), debris_target.z)
@@ -218,7 +217,7 @@
 			D.p_y = 16
 			D.fire()
 
-		explosion(T, devastation_range = 0, heavy_impact_range = 3, light_impact_range = 6, flame_range = 0, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+		explosion(turf, devastation_range = 0, heavy_impact_range = 3, light_impact_range = 6, flame_range = 0, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
 
 		qdel(src)
 		return BULLET_ACT_HIT
@@ -227,11 +226,11 @@
 	name = "shrapnel"
 	icon = 'modular_twilight_axis/icons/cannon/ammo.dmi'
 	icon_state = "musketball"
-	damage = 90
+	damage = 110
 	damage_type = BRUTE
 	flag = "piercing"
 	armor_penetration = PEN_BSTEEL
-	speed = 2.0
+	speed = 2.5
 	woundclass = BCLASS_PIERCE
 	embedchance = 100
 
@@ -445,9 +444,9 @@
 	if(!start_turf)
 		return
 
-	for(var/mob/M in range(7, src))
-		if(M.client)
-			shake_camera(M, 4, 2)
+	for(var/mob/mob in range(7, src))
+		if(mob.client)
+			shake_camera(mob, 4, 2)
 
 	playsound(src, 'modular_twilight_axis/sound/cannon/launch.ogg', 100, 0, 20, 1, null, null, FALSE, TRUE)
 
@@ -462,7 +461,7 @@
 	if(istype(bullet_loaded, /obj/item/cannon_shell/grapeshot))
 		var/pellet_count = 30
 		var/shoot_dir = dir
-		for(var/i in 1 to pellet_count)
+		for(var/pellets in 1 to pellet_count)
 			var/obj/projectile/bullet/grapeshot_pellet/S = new(start_turf)
 			S.def_zone = pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 			var/turf/pellet_target = get_ranged_target_turf(start_turf, shoot_dir, 8)
@@ -481,14 +480,6 @@
 		P.p_x = 16
 		P.p_y = 16
 		P.fire()
-
-	var/user_name = user ? "[user]" : "Unknown (Auto-ignite)"
-	log_game("[user_name] fired a cannon in the direction of [dir2text(dir)] on ([x], [y], [z])")
-	message_admins("The cannon fired; the player set it on fire. [user_name] on [ADMIN_VERBOSEJMP(src.loc)]")
-	qdel(bullet_loaded)
-	bullet_loaded = null
-	powder_loaded = FALSE
-	rammed = FALSE
 
 	if((world.time - last_fired) < cooldown)
 		barrel_integrity -= 2

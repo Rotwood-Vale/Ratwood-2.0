@@ -36,11 +36,11 @@
 
 // Armor damage type categories
 // DR Absorb: damage reduced by tier, ALL damage goes to armor integrity (none to HP). Blunt.
-// DR Pierce: damage reduced by tier, reduced damage STILL hits HP. Armor also takes integrity damage. Fire, acid.
+// DR Pierce: damage reduced by tier, reduced damage STILL hits HP. Armor also takes integrity damage. Fire, acid, bullet
 // DBLOCK: tier pass/fail penetration system. Slash, stab, piercing.
 #define BLUNT_DR_COEFFICIENT 0.3 // Blunt only: 1 / (1 + 0.3 * tier) = 60% reduction at tier 5
 #define ARMOR_DR_ABSORB_TYPES list("blunt")
-#define ARMOR_DR_PIERCE_TYPES list("fire", "acid")
+#define ARMOR_DR_PIERCE_TYPES list("fire", "acid", "bullet")
 #define ARMOR_DR_TYPES list("blunt", "fire", "acid", "bullet")
 #define ARMOR_DBLOCK_TYPES list("slash", "stab", "piercing")
 
