@@ -210,7 +210,11 @@
 		var/turf/open/transparent/openspace/target = get_step_multiz(src, UP)
 		if(istype(target))
 			target.ChangeTurf(above_floor)
-	set_shadow_cell(x, y, z, SHADOW_CELL_WALL)
+	if(opacity)
+		set_shadow_cell(x, y, z, SHADOW_CELL_WALL)
+	else
+		set_shadow_cell(x, y, z, SHADOW_CELL_EMPTY)
+		
 	notify_shadows_map_changed(src)
 
 /turf/closed/Destroy()
