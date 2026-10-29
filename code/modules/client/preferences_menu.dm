@@ -36,14 +36,8 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 	/datum/language/abyssal,
 ))
 
-GLOBAL_LIST_INIT(vice_conflict_groups, list(
-	list(/datum/charflaw/badsight, /datum/charflaw/noeyer, /datum/charflaw/noeyel, /datum/charflaw/noeyeall, /datum/charflaw/colorblind),
-	list(/datum/charflaw/narcoleptic, /datum/charflaw/sleepless),
-	list(/datum/charflaw/mute, /datum/charflaw/unintelligible),
-))
-
 /datum/preferences
-	var/list/open_categories = list("Identity", "Background", "Features", "Flavor Text")
+	var/list/open_categories = list("Identity", "Background", "Voice", "Features", "Flavor Text")
 
 /datum/preferences/proc/yes_no(value)
 	if(value)
@@ -68,8 +62,17 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 /datum/preferences/proc/pref_sub(label)
 	return "<div class='sub'>[label]</div>"
 
-/datum/preferences/proc/pref_box(header, body)
-	return "<div class='box'>[header]<div class='scroll'>[body]</div></div>"
+/datum/preferences/proc/pref_box(header, body, details, key)
+	var/footer = ""
+	if(details)
+		var/label = "Expand Details"
+		if(key in open_categories)
+			label = "Shrink Details"
+			if(body)
+				body += "<br>"
+			body += details
+		footer = "<div><a href='?_src_=prefs;preference=category;name=[url_encode(key)]'>\[[label]\]</a></div>"
+	return "<div class='box'>[header]<div>[body]</div>[footer]</div>"
 
 /datum/preferences/proc/pref_color_row(label, hex, preference)
 	return pref_line(list(pref_item(label, "<span style='border: 1px solid #161616; background-color: #[hex];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> [pref_link("Change", preference)]")))
@@ -90,7 +93,6 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		a.cat { display: inline-block; text-decoration: none; background: #2a0a0a; border-bottom: 1px solid #7b5353; margin: 6px 0 3px 0; padding: 2px 14px; font-size: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 		.sub { border-bottom: 1px dotted #7b5353; margin: 5px 0 1px 0; font-size: 15px; font-weight: bold; color: #c9a96e; }
 		.box { border: 1px solid #7b5353; background: #1a0707; padding: 3px 6px; margin: 3px 0; }
-		.scroll { max-height: 110px; overflow-y: auto; margin-top: 2px; }
 		</style>[get_top_html(user)]<table width='100%'><tr>"}
 	for(var/list/column in GLOB.pref_columns)
 		html += "<td width='40%' valign='top'>"
@@ -234,6 +236,7 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	if(!origin?.origin_language)
 		language_text = get_language_link(extra_language, "lang_free")
 	html += pref_line(list(pref_item("Language", language_text), pref_item("Food", pref_link("Change", "culinary", "menu"))))
+	html += pref_line(list(pref_item("Loadout Menu", pref_link("Change", "loadout", "menu"))))
 	html += pref_sub("Stats")
 	html += pref_box(pref_item("Statpack", bg_link(statpack.name, "statpack")), statpack.generate_modifier_string())
 	html += pref_sub("Virtues")
@@ -257,11 +260,13 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 		var/quirk_header = "<b>[current_quirk.name]</b> ([current_quirk.point_cost]) [bg_link("\[Remove\]", "quirk_remove", i)]"
 		if(current_quirk.configurable)
 			quirk_header += " [bg_link("\[Configure\]", "quirk_config", i)]<br>[current_quirk.config_summary()]"
-		var/quirk_body = get_trait_details_html(current_quirk)
+		var/quirk_details = get_trait_details_html(current_quirk)
 		if(current_quirk.warning_text)
-			quirk_body += "<br><font color='#f44336'>[current_quirk.warning_text]</font>"
-		html += pref_box(quirk_header, quirk_body)
-	html += pref_line(list(bg_link("Add a Quirk", "quirk_add"), pref_link("Loadout Menu", "loadout", "menu")))
+			if(quirk_details)
+				quirk_details += "<br>"
+			quirk_details += "<font color='#f44336'>[current_quirk.warning_text]</font>"
+		html += pref_box(quirk_header, current_quirk.desc, quirk_details, current_quirk.name)
+	html += pref_line(list(bg_link("Add a Quirk", "quirk_add")))
 	var/list/vice_names = list()
 	for(var/i in 1 to VICE_SLOTS)
 		var/datum/charflaw/vice = vars["vice[i]"]
@@ -275,14 +280,14 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	var/html = "<b>[label]:</b> [bg_link(V.name, "virtue", slot)]"
 	if(!istype(V, /datum/virtue/none))
 		html += " [bg_link("\[Clear\]", "virtue_clear", slot)]"
-	return pref_box(html, "[V.desc][get_trait_details_html(V)]")
+	return pref_box(html, V.desc, get_trait_details_html(V), "[label]")
 
 /datum/preferences/proc/get_trait_details_html(datum/customization_trait/T)
-	var/html = ""
+	var/list/lines = list()
 	if(T.custom_text)
-		html += "<br><i>[T.custom_text]</i>"
+		lines += "<i>[T.custom_text]</i>"
 	if(LAZYLEN(T.added_traits))
-		html += "<br>Traits granted: [T.added_traits.Join(", ")]"
+		lines += "<b>Traits granted:</b> [T.added_traits.Join(", ")]"
 	var/list/skill_lines = list()
 	for(var/skill in T.added_skills)
 		if(islist(skill))
@@ -293,10 +298,10 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 			var/datum/skill/S = skill
 			skill_lines += "[initial(S.name)] +[T.added_skills[skill]]"
 	if(length(skill_lines))
-		html += "<br>Skills granted: [skill_lines.Join(", ")]"
+		lines += "<b>Skills granted:</b> [skill_lines.Join(", ")]"
 	if(LAZYLEN(T.added_stashed_items))
-		html += "<br>Stashed items: [T.added_stashed_items.Join(", ")]"
-	return html
+		lines += "<b>Stashed items:</b> [T.added_stashed_items.Join(", ")]"
+	return lines.Join("<br>")
 
 /datum/preferences/proc/get_language_link(language_path, bg)
 	if(!ispath(language_path, /datum/language))
@@ -472,8 +477,6 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 					return
 				quirks += new selected.type()
 				to_chat(user, span_notice("Added [selected.name] as a quirk."))
-				if(selected.desc)
-					to_chat(user, "<span class='info'>[selected.desc]</span>")
 		if("quirk_remove")
 			if(slot && slot <= length(quirks))
 				quirks.Cut(slot, slot + 1)
@@ -636,15 +639,11 @@ GLOBAL_LIST_INIT(vice_conflict_groups, list(
 	return FALSE
 
 /datum/preferences/proc/check_vice_vice_conflict(vice_type, list/selected_vices, show_message = FALSE, mob/user = null)
-	for(var/list/group in GLOB.vice_conflict_groups)
-		if(!(vice_type in group))
-			continue
-		for(var/other in selected_vices)
-			if(other == vice_type || !(other in group))
-				continue
+	var/datum/charflaw/vice = GLOB.charflaw_singletons[vice_type]
+	for(var/other in selected_vices)
+		if(vice && (other in vice.incompatible_vices))
 			if(show_message && user)
-				var/datum/charflaw/vice = GLOB.charflaw_singletons[vice_type]
 				var/datum/charflaw/other_vice = GLOB.charflaw_singletons[other]
-				to_chat(user, span_warning("[vice?.name] vice conflicts with [other_vice?.name] vice!"))
+				to_chat(user, span_warning("[vice.name] vice conflicts with [other_vice?.name] vice!"))
 			return TRUE
 	return FALSE

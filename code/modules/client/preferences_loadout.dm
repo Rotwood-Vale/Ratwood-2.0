@@ -22,39 +22,47 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 
 /datum/preferences/proc/get_loadout_slots_html(mob/user)
 	var/html = {"<style>
-		body { font-size: 13px; }
-		.slot { border: 1px solid #7b5353; background: #00000044; padding: 6px; margin: 3px; min-height: 130px; }
-		.icon { border: 1px solid #7b5353; background: #00000066; width: 48px; height: 48px; text-align: center; }
-		.sub { border-bottom: 1px dotted #7b5353; margin: 5px 0 1px 0; font-size: 13px; font-weight: bold; color: #c9a96e; }
-		.small { font-size: 11px; color: #aa8f8f; }
-		.name { font-weight: bold; color: #e3c06f; }
+		body { font-family: Verdana, Arial, sans-serif; font-size: 16px; line-height: normal; }
+		.slot { border: 1px solid #7b5353; background: #00000044; padding: 6px; margin: 2px; }
+		.cost { float: right; background: #4CAF50; color: #1C0000; padding: 1px 5px; font-size: 0.65em; font-weight: bold; }
+		.icon { border: 1px solid #444; background: rgba(0,0,0,0.6); width: 48px; height: 48px; margin-right: 8px; text-align: center; }
+		.sub { border-bottom: 1px solid #7b5353; margin: 0 0 4px 0; padding-bottom: 3px; font-size: 0.7em; font-weight: bold; color: #aa8f8f; }
+		.small { font-size: 0.65em; line-height: 1.2; color: #aa8f8f; }
+		.name { font-size: 0.75em; font-weight: bold; color: #aa8f8f; margin-bottom: 2px; }
+		.empty { text-align: center; padding: 8px; color: #aa8f8f; font-style: italic; font-size: 0.7em; }
+		a.btn { display: inline-block; border: 1px solid #7b5353; padding: 3px 6px; margin: 1px; font-family: Verdana, Arial, sans-serif !important; font-size: 0.6em; line-height: normal; text-decoration: none; }
+		a.btn.select { background: rgba(76, 175, 80, 0.3); border-color: #4CAF50; color: #4CAF50; }
+		a.btn.clear { background: rgba(244, 67, 54, 0.3); border-color: #f44336; color: #f44336; }
+		a.btn.customize { background: rgba(33, 150, 243, 0.3); border-color: #2196F3; color: #2196F3; }
+		a.btn.color { background: rgba(156, 39, 176, 0.3); border-color: #9C27B0; color: #9C27B0; }
+		a.btn:hover { filter: brightness(1.4); }
 		</style>"}
 	html += "<div class='sub'>Points: [get_remaining_points()] / [get_total_points()]</div>"
 	html += "<div class='small'>Loadout items sell for nothing. Armor rating is reduced by 90% with no crit prevention, and weapon damage is reduced by 25%.</div>"
 	html += "<table width='100%'><tr>"
 	for(var/i in 1 to LOADOUT_SLOTS)
 		var/datum/loadout_item/current_item = vars[loadout_var(i)]
-		html += "<td width='50%' valign='top'><div class='slot'><div class='sub'>Slot [i][current_item?.triumph_cost ? " ([current_item.triumph_cost] points)" : ""]</div>"
+		html += "<td width='50%' valign='top'><div class='slot'><div class='sub'>[current_item?.triumph_cost ? "<span class='cost'>[current_item.triumph_cost] Points</span>" : ""]Slot [i]</div>"
 		if(current_item)
 			html += get_loadout_item_html(user, i, current_item)
-			html += "<br>[loadout_link("Change", "item", i)] [loadout_link("Rename", "rename", i)] [loadout_link("Description", "describe", i)] [loadout_link("Color", "color", i)] [loadout_link("Clear", "clear", i)]"
+			html += "<br>[loadout_link("Change Item", "item", i, "select")] [loadout_link("Rename", "rename", i, "customize")] [loadout_link("Description", "describe", i, "customize")] [loadout_link("Color", "color", i, "color")] [loadout_link("Clear", "clear", i, "clear")]"
 		else
-			html += "<div class='small'>Empty</div>[loadout_link("Select Item", "item", i)]"
+			html += "<div class='empty'>Empty Slot<br><br>[loadout_link("Select Item", "item", i, "select")]</div>"
 		html += "</div></td>"
 		if(i % 2 == 0)
 			html += "</tr><tr>"
 	html += "</tr></table><div class='sub'>Presets</div><table width='100%'><tr>"
 	for(var/i in 1 to PRESET_SLOTS)
 		html += "<td valign='top'><div class='slot'><b>Preset [i]</b><br><span class='small'>[get_preset_summary(i)]</span><br>"
-		html += "[preset_link("Save", "save", i)] [preset_link("Load", "load", i)] [preset_link("Clear", "clear", i)]</div></td>"
+		html += "[preset_link("Save", "save", i, "select")] [preset_link("Load", "load", i, "customize")] [preset_link("Clear", "clear", i, "clear")]</div></td>"
 	html += "</tr></table>"
 	return html
 
-/datum/preferences/proc/loadout_link(label, lo, slot)
-	return "<a href='?_src_=prefs;preference=loadout;lo=[lo];slot=[slot]'>[label]</a>"
+/datum/preferences/proc/loadout_link(label, lo, slot, style)
+	return "<a class='btn [style]' href='?_src_=prefs;preference=loadout;lo=[lo];slot=[slot]'>[label]</a>"
 
-/datum/preferences/proc/preset_link(label, preset, slot)
-	return "<a href='?_src_=prefs;preference=loadout;preset=[preset];slot=[slot]'>[label]</a>"
+/datum/preferences/proc/preset_link(label, preset, slot, style)
+	return "<a class='btn [style]' href='?_src_=prefs;preference=loadout;preset=[preset];slot=[slot]'>[label]</a>"
 
 /datum/preferences/proc/get_loadout_item_html(mob/user, slot, datum/loadout_item/current_item)
 	var/obj/item/sample = current_item.path
@@ -76,9 +84,9 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	html += "</div></td><td valign='top'><div class='name'>[custom_name || current_item.name]</div>"
 	html += "<div class='small'>[custom_desc || item_desc || current_item.desc]</div>"
 	if(custom_name || custom_desc)
-		html += "<div class='small'>Customized</div>"
+		html += "<div class='small' style='font-size: 0.7em;'>✎ Customized</div>"
 	if(item_color)
-		html += "<div><span style='border: 1px solid #161616; background-color: [item_color];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <span class='small'>[item_color]</span></div>"
+		html += "<div class='small' style='font-size: 0.7em;'><span style='color: [item_color];'>●</span> Color: [item_color]</div>"
 	html += "</td></tr></table>"
 	return html
 
