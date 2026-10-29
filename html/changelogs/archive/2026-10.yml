@@ -571,3 +571,24 @@
   wikimody:
   - qol: impure lux reivival fluid recepture is no longer a scam. Also chairs start
       full and the fluid is used in increments of 50 instead of 48
+2026-10-29:
+  Arturlang:
+  - bugfix: invisible scabbard issues for good, hopefully
+  IronDragoon:
+  - qol: added examine text to pref toggle also for tailmaws
+  Kaolin1234:
+  - image: Refined the Weaver spider body's proportions, shading, markings, and torso
+      transition.
+  SirSwagmeyer:
+  - balance: 'patched in a fix from AP that was missed in the original Combat 2.0
+      port: Plate Armor Piercing Protection: Heavy ---> Medium. Rejoice, crossbow
+      users! You can kill again.'
+  - bugfix: fixed a bug related to firearms code in which it was not up to Combat
+      2.0 parity.
+  - rscadd: added a feature to firearm bullets in which you deal double projectile
+      damage to exposed and vulnerable targets.
+  eirenxiv:
+  - bugfix: fixed martyr weapons being dull on oath activation
+  - bugfix: fixed kazengun scabbards not being repairable with metal kits
+  zVineatic:
+  - spellcheck: Age related description fix
