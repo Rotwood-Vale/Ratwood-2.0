@@ -49,7 +49,7 @@
 	TEST_ASSERT_EQUAL(bed.sleepy, 2, "A completely enclosed bed cannot upgrade without a webbed floor tile.")
 	var/obj/effect/proc_holder/spell/self/spin_silk_bed/spell = allocate(/obj/effect/proc_holder/spell/self/spin_silk_bed)
 	TEST_ASSERT(!spell.can_place(center), "Cannot place a second bed on the same tile.")
-	var/mob/living/carbon/human/sleeper = allocate(/mob/living/carbon/human, center)
+	var/mob/living/carbon/human/consistent/sleeper = allocate(/mob/living/carbon/human/consistent, center)
 	TEST_ASSERT(bed.buckle_mob(sleeper, force = TRUE), "Bed should accept a sleeper.")
 	TEST_ASSERT(bed.CanPass(sleeper, center), "Its occupant must bypass web obstruction.")
 	qdel(bed)
