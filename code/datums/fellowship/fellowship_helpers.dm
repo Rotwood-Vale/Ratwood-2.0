@@ -26,3 +26,11 @@
 	var/datum/fellowship_ui/holder = GLOB.fellowship_uis_by_mob[M]
 	if(holder)
 		holder.refresh()
+
+/proc/shares_fellowship(mob/living/A, mob/living/B)
+	if(!istype(A) || !istype(B))
+		return FALSE
+	var/datum/fellowship/F = A.current_fellowship
+	if(!F)
+		return FALSE
+	return F == B.current_fellowship

@@ -92,10 +92,6 @@
 			bonus += ACC_PICK_BONUS
 		if(used_intent.blade_class == BCLASS_CUT)
 			bonus += ACC_CUT_BONUS
-		if(used_intent.blade_class == BCLASS_PEEL)
-			bonus += ACC_PEEL_BONUS
-		if(used_intent.blade_class == BCLASS_HALFSWORD)
-			bonus += ACC_HALFSWORD_BONUS
 		if((used_intent.blade_class == BCLASS_BLUNT || used_intent.blade_class == BCLASS_SMASH) && check_zone(zone) != zone)	//A mace can't hit the eyes very well
 			bonus -= ACC_BLUNT_PRECISE_PENALTY
 		if(used_intent.accuracy_modifier)
@@ -197,6 +193,53 @@
 	if(parent_zone != def_zone && prob(chance2hit))
 		return parent_zone
 	return BODY_ZONE_CHEST
+
+/mob/living/proc/apply_spell_accuracy(obj/projectile/P)
+	if(!P)
+		return
+	P.aim_peak = ACC_RANGED_BASE + ((STAPER - ACC_SPELL_PER_BASELINE) * ACC_SPELL_PER_STEP)
+
+/// aim_stat defaults to Perception, the archery case. Spells pass Intelligence.
+/mob/living/proc/get_ranged_lead_error(moved, aim_stat)
+	// If you have not moved, they don't miss
+	if(moved <= 0)
+		return 0
+	if(isnull(aim_stat))
+		aim_stat = STAPER
+	var/error = ARCHER_NPC_STATIONARY_MISS + (moved * ARCHER_NPC_MOVING_TARGET_ERROR)
+	if(aim_stat > ARCHER_NPC_AIM_BASELINE)
+		error -= min((aim_stat - ARCHER_NPC_AIM_BASELINE) * ARCHER_NPC_LEAD_ERROR_PER_POINT, ARCHER_NPC_LEAD_ERROR_MAX_BONUS)
+	else if(aim_stat < ARCHER_NPC_AIM_BASELINE)
+		error += (ARCHER_NPC_AIM_BASELINE - aim_stat) * ARCHER_NPC_LEAD_ERROR_PER_POOR
+	return CLAMP(error, ARCHER_NPC_LEAD_ERROR_FLOOR, ARCHER_NPC_LEAD_ERROR_CEILING)
+
+/mob/living/proc/scatter_aim_turf(turf/aim, atom/reference, tiles)
+	if(!isturf(aim) || tiles <= 0)
+		return aim
+	var/perp = turn(get_dir(src, reference), pick(90, -90))
+	return get_ranged_target_turf(aim, perp, tiles) || aim
+
+/mob/living/proc/get_ranged_lead_turf(atom/movable/target, turf/locked_turf, projectile_speed = ARCHER_NPC_DEFAULT_PROJECTILE_SPEED, aim_stat)
+	var/turf/current = get_turf(target)
+	if(!isturf(current) || !isturf(locked_turf))
+		return current
+	var/turf/aim = current
+	var/lead = 0
+	// get_dist hands back -1 when it cannot measure, and -1 is truthy - unclamped it slips past every
+	// "did they move" guard and leads a full cap's worth at a target standing still.
+	var/moved = max(0, get_dist(locked_turf, current))
+	if(moved > 0 && target.last_move && isliving(target))
+		var/mob/living/living_target = target
+		var/target_delay = living_target.cached_multiplicative_slowdown
+		if(target_delay > 0)
+			lead = CLAMP(round((get_dist(src, current) * projectile_speed) / target_delay, 1), 0, ARCHER_NPC_MAX_LEAD)
+			if(lead)
+				aim = get_ranged_target_turf(current, target.last_move, lead) || current
+	var/error_chance = get_ranged_lead_error(moved, aim_stat)
+	if(!prob(error_chance))
+		return aim
+	var/offset = ARCHER_NPC_MISS_OFFSET_TILES + (prob(error_chance) ? 1 : 0)
+	return scatter_aim_turf(aim, current, offset)
 
 #undef ULTRA_PRECISE_ZONE
 #undef PRECISE_ZONE

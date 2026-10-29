@@ -35,6 +35,7 @@
 #define STATUS_EFFECT_REGENERATIVE_CORE /datum/status_effect/regenerative_core
 
 #define STATUS_EFFECT_ANTIMAGIC /datum/status_effect/antimagic //grants antimagic (and reapplies if lost) for the duration
+#define STATUS_EFFECT_BLINDED /datum/status_effect/debuff/blindness // "new" noc blind effect. see noc.dm for details.
 
 /////////////
 // DEBUFFS //

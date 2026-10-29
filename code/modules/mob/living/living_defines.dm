@@ -179,7 +179,9 @@
 	/// Cooldown before it's possible to dodge again
 	COOLDOWN_DECLARE(last_dodge)
 	/// Amount of time added to the cooldown before the mob can dodge again
-	var/dodgetime = 1.2 SECONDS
+	var/dodgetime = 0
+	var/max_dodge = MAX_DODGE_START
+	var/parrydelay = 12
 	/// Sanity boolean. Prevents you from dodging multiple times during a single loop. Not sure if this is actually needed but I aint touching it
 	var/dodge_sanity = FALSE
 
@@ -252,5 +254,28 @@
 	// --- Fellowship (AP Quest 2 port) ---
 	var/datum/fellowship/current_fellowship
 	var/list/incoming_fellowship_invites = list() // list of /datum/weakref to /datum/fellowship; kept in sync with fellowship.pending_invites
-	/// List of enemies for the mob's AI
-	var/list/enemies = list()
+	var/list/summoned_minions
+	var/attack_relay_refs = 0
+	var/attack_relay_self_added = FALSE
+	var/pet_passive = FALSE
+	/// "In Combat" timer that is used to prevent stealth and a few other mechanics while active.
+	var/in_combat_until
+	var/rest_locked_until = 0
+	/// Whether we are in a swingdelay, used to check for disrupted swingdelays.
+	var/swing_state = FALSE
+
+	/// Toggle delay for Specials, or really anything else that you don't want input spam to instantly cycle through.
+	var/toggle_delay = 1 SECONDS
+	/// Toggle timer for Specials, or really anything else that you don't want input spam to instantly cycle through.
+	var/toggle_timer
+
+	/// Parry timer for projectiles post-attack. Hooks into the attack animation, so is fairly clunky.
+	var/projectile_parry_timer
+
+	/// Had to put this here because attack() is not used solely by humans. That's fucked up, manne.
+	var/dualwield_attack_count = 0
+	var/dualwield_processing = FALSE
+	var/dualwield_finisher = FALSE
+	var/dualwield_resets_in = 0
+	var/dualwield_buff_cd = 0
+	var/dualwield_twoswing = FALSE

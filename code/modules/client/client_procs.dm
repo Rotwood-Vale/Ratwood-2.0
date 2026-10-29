@@ -1023,6 +1023,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	else
 		winset(src, null, "input.focus=true command=activeInput input.background-color=[COLOR_INPUT_ENABLED] input.text-color = #EEEEEE")
 
+	SEND_SIGNAL(src, COMSIG_CLIENT_CLICK, object, location, control, params, usr)
+
 	..()
 
 /client/proc/add_verbs_from_config()
@@ -1271,6 +1273,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	return
 
 /client/proc/preload_music()
-	if(SSsounds.initialized == TRUE)
-		for(var/sound_path as anything in SSsounds.all_music_sounds)
-			src << load_resource(sound_path, -1)
+	if(cached_sounds || !SSsounds.initialized)
+		return
+	cached_sounds = TRUE
+	for(var/sound_path as anything in SSsounds.all_music_sounds)
+		src << load_resource(sound_path, 0)

@@ -67,7 +67,7 @@
 	chargetime = 0
 	recovery = 5
 	damfactor = 0.5
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	reach = 1
 	icon_state = "inlash"
 	item_d_type = "slash"
@@ -80,12 +80,13 @@
 	chargetime = 0
 	recovery = 5
 	damfactor = 1
-	penfactor = BLUNT_DEFAULT_PENFACTOR		
+	penfactor = PEN_NONE		
 	reach = 1								
 	icon_state = "instrike"
 	item_d_type = "slash"
 
 /obj/item/storage/belt/rogue/leather/plaquegold
+	is_gold = TRUE
 	name = "plaque belt"
 	icon_state = "goldplaque"
 	sellprice = 50

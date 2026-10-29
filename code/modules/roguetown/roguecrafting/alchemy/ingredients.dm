@@ -13,7 +13,6 @@
 	name = "viscera"
 	icon_state = "viscera"
 
-
 /obj/item/alch/waterdust
 	name = "water essentia"
 	icon_state = "water_runedust"
@@ -94,12 +93,10 @@
 	name = "coal dust"
 	icon_state = "coaldust"
 
-
 /obj/item/alch/stonedust
 	name = "stone dust"
 	desc = "Finely ground mineral dust used for glass clay refinement."
 	icon_state = "coaldust"
-
 
 /obj/item/alch/silverdust
 	name = "silver dust"

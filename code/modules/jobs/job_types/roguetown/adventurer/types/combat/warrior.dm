@@ -207,6 +207,7 @@
 	name = "Barbarian"
 	tutorial = "You are a brutal warrior, who has foregone armor in favor of pure strength. Crush your enemies, see them driven before you, and hear the lamentations of their women! Oh, and you can specialize in unarmed combat and wrestling."
 	outfit = /datum/outfit/job/roguetown/adventurer/barbarian
+	allowed_races = ALL_BUT_BLOODLESS
 	cmode_music = 'sound/music/cmode/antag/combat_darkstar.ogg'
 	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_CRITICAL_RESISTANCE, TRAIT_NOPAINSTUN)
 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
@@ -317,6 +318,9 @@
 	if(should_wear_femme_clothes(H))
 		armor = /obj/item/clothing/suit/roguetown/armor/leather/bikini
 		backl = /obj/item/storage/backpack/rogue/satchel
+		pants = /obj/item/clothing/under/roguetown/splintlegs/kneelpad
+		cloak = /obj/item/clothing/cloak/volfmantle/shoulderpad/lightleather
+		shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini/bronze
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
@@ -618,7 +622,7 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		/obj/item/rogueweapon/huntingknife = 1, //Ensures that Exorcists who take the Shovel can still butcher wildlife. Minor oversight on my part.
 		)
-	var/cross = list("The Pantheon Arisen", "The Old God Mourning") 
+	var/cross = list("The Pantheon Arisen", "The Old God Mourning")
 	var/cross_choice = input(H, "Whose symbol you bear?", "CHOOSE YOUR TOOL.") as anything in cross
 	switch(cross_choice)
 		if("The Pantheon Arisen")
@@ -670,9 +674,10 @@
 			H.change_stat("speed", 3)
 			H.change_stat("willpower", 1)
 			H.change_stat("strength", 1)
+			pants = /obj/item/clothing/under/roguetown/trou/leathertights/kneelpads
+			cloak = /obj/item/clothing/cloak/volfmantle/shoulderpad/lightleather
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/bikini
 			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
-			pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
 			gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
@@ -685,7 +690,7 @@
 			switch(weapon_choice)
 				if ("Steel Knuckles")
 					H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
-					beltr = /obj/item/rogueweapon/knuckles
+					beltr = /obj/item/clothing/gloves/roguetown/knuckles
 				if("Axe")
 					H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					beltr = /obj/item/rogueweapon/stoneaxe/boneaxe
@@ -729,7 +734,8 @@
 			H.change_stat("strength", 1)
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/hide/bikini
 			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
-			pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/shorts
+			pants = /obj/item/clothing/under/roguetown/splintlegs/kneelpad
+			cloak = /obj/item/clothing/cloak/volfmantle/shoulderpad/lightleather
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			shoes = /obj/item/clothing/shoes/roguetown/boots/furlinedboots
 			gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
@@ -742,7 +748,7 @@
 			switch(weapon_choice)
 				if ("Steel Knuckles")
 					H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_JOURNEYMAN, TRUE)
-					beltr = /obj/item/rogueweapon/knuckles
+					beltr = /obj/item/clothing/gloves/roguetown/knuckles
 				if("Axe")
 					H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					beltr = /obj/item/rogueweapon/stoneaxe/boneaxe
@@ -785,7 +791,8 @@
 			H.change_stat("strength", 2)
 			armor = /obj/item/clothing/suit/roguetown/armor/leather/studded/bikini
 			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
-			pants = /obj/item/clothing/under/roguetown/tights/black
+			pants = /obj/item/clothing/under/roguetown/splintlegs/kneelpad
+			cloak = /obj/item/clothing/cloak/volfmantle/shoulderpad/lightleather
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			shoes = /obj/item/clothing/shoes/roguetown/boots
 			gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
@@ -823,7 +830,7 @@
 			H.adjust_skillrank(/datum/skill/combat/maces, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-			H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)			
+			H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
@@ -837,22 +844,23 @@
 			H.change_stat("willpower", 2)
 			H.change_stat("constitution", 1)
 			armor = /obj/item/clothing/suit/roguetown/armor/plate/bikini
-			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
-			pants = /obj/item/clothing/under/roguetown/trou/leather
+			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini/bronze
+			pants = /obj/item/clothing/under/roguetown/splintlegs/kneelpad
+			cloak = /obj/item/clothing/cloak/volfmantle/shoulderpad/lightleather
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			shoes = /obj/item/clothing/shoes/roguetown/boots
 			gloves = /obj/item/clothing/gloves/roguetown/angle
 			backl = /obj/item/storage/backpack/rogue/satchel
 			belt = /obj/item/storage/belt/rogue/leather
 			neck = /obj/item/storage/belt/rogue/pouch/coins/poor
-			var/weapons = list("Great Sword","Eagle's Beak","Battle Axe","MY BARE HANDS!!!")
+			var/weapons = list("Great Sword","Lucerne","Battle Axe","MY BARE HANDS!!!")
 			var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 			switch(weapon_choice)
 				if("Great Sword")
 					H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/greatsword
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
-				if("Eagle's Beak")
+				if("Lucerne")
 					H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
 					r_hand = /obj/item/rogueweapon/eaglebeak
 					backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -871,7 +879,7 @@
 			H.adjust_skillrank(/datum/skill/combat/maces, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/axes, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-			H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)	//Funny nerf because I can in fact stop you. No double shield meta for you.		
+			H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)	//Funny nerf because I can in fact stop you. No double shield meta for you.
 			H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
@@ -885,7 +893,8 @@
 			H.change_stat("speed", -1)
 			armor = /obj/item/clothing/suit/roguetown/armor/plate/full/bikini
 			shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/bikini
-			pants = /obj/item/clothing/under/roguetown/trou/leather
+			pants = /obj/item/clothing/under/roguetown/splintlegs/kneelpad
+			cloak = /obj/item/clothing/cloak/volfmantle/shoulderpad/lightleather
 			wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 			shoes = /obj/item/clothing/shoes/roguetown/boots
 			gloves = /obj/item/clothing/gloves/roguetown/angle
