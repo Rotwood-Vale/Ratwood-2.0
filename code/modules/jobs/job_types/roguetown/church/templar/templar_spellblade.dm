@@ -53,6 +53,7 @@
 	backr = /obj/item/rogueweapon/shield/heater
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/clothing/neck/roguetown/psicross/noc
+	beltr = /obj/item/rogueweapon/scabbard/sword
 	id = /obj/item/clothing/ring/silver
 	backpack_contents = list(
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
@@ -116,7 +117,7 @@
 	var/helmchoice = input(H, "Choose your Helm.", "REFLECTION OF PALE LIGHT") as anything in helmets
 	head = helmets[helmchoice]
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_1, start_maxed = TRUE)
+	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2, start_maxed = TRUE)
 
 /datum/outfit/job/roguetown/templar/noc_spellblade/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
