@@ -246,7 +246,7 @@
 				if(rotted)
 					for(var/obj/item/reagent_containers/food/snacks/rogue/meat/steak/putrid in produced_steaks)
 						putrid.become_rotten()
-				new /obj/effect/decal/cleanable/blood/splatter(get_turf(src))
+				new /obj/effect/decal/cleanable/blood/splatter(get_turf(src), owner?.get_blood_color())
 				user.mind.add_sleep_experience(/datum/skill/labor/butchering, amt2raise, FALSE)
 				qdel(src)
 	..()
@@ -287,7 +287,7 @@
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
 	if(!skeletonized && owner && !(NOBLOOD in owner.dna?.species?.species_traits))
-		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src))
+		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src), owner.get_blood_color())
 
 //empties the bodypart from its organs and other things inside it
 /obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)

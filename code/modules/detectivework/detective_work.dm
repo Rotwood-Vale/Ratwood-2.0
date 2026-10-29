@@ -25,6 +25,12 @@
 	if(D)
 		. = D.fibers
 
+/atom/proc/get_stored_blood_color()
+	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
+	if(D?.blood_color)
+		return D.blood_color
+	return BLOOD_COLOR_DEFAULT
+
 /atom/proc/add_fingerprint_list(list/fingerprints)		//ASSOC LIST FINGERPRINT = FINGERPRINT
 	if(QDELETED(src))
 		return
@@ -50,11 +56,11 @@
 		var/obj/item/clothing/gloves/G = M.gloves
 		old = length(G.return_blood_DNA())
 		if(G.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
-			if(add_blood_DNA(G.return_blood_DNA()) && length(G.return_blood_DNA()) > old) //only reduces the bloodiness of our gloves if the item wasn't already bloody
+			if(add_blood_DNA(G.return_blood_DNA(), G.get_stored_blood_color()) && length(G.return_blood_DNA()) > old) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				G.transfer_blood--
 	else if(M.bloody_hands > 1)
 		old = length(M.return_blood_DNA())
-		if(add_blood_DNA(M.return_blood_DNA()) && length(M.return_blood_DNA()) > old)
+		if(add_blood_DNA(M.return_blood_DNA(), M.get_stored_blood_color()) && length(M.return_blood_DNA()) > old)
 			M.bloody_hands--
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_fibers(M)
@@ -69,52 +75,52 @@
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_hiddenprint(M)
 
-/atom/proc/add_blood_DNA(list/dna)						//ASSOC LIST DNA = BLOODTYPE
+/atom/proc/add_blood_DNA(list/dna, blood_color)						//ASSOC LIST DNA = BLOODTYPE
 	return FALSE
 
-/obj/add_blood_DNA(list/dna)
+/obj/add_blood_DNA(list/dna, blood_color)
 	. = ..()
 	if(QDELETED(src))
 		return
-	if(length(dna))
-		. = AddComponent(/datum/component/forensics, null, null, dna)
+	if(length(dna) || blood_color)
+		. = AddComponent(/datum/component/forensics, null, null, dna, null, blood_color)
 
-/obj/item/clothing/gloves/add_blood_DNA(list/blood_dna)
+/obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, blood_color)
 	. = ..()
 	transfer_blood = rand(2, 4)
 
-/turf/add_blood_DNA(list/blood_dna)
+/turf/add_blood_DNA(list/blood_dna, blood_color)
 	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
 	if(!B)
-		B = new /obj/effect/decal/cleanable/blood/splatter(src)
-	B.add_blood_DNA(blood_dna) //give blood info to the blood decal.
+		B = new /obj/effect/decal/cleanable/blood/splatter(src, blood_color)
+	B.add_blood_DNA(blood_dna, blood_color) //give blood info to the blood decal.
 	return TRUE //we bloodied the floor
 
-/mob/living/carbon/human/add_blood_DNA(list/blood_dna)
+/mob/living/carbon/human/add_blood_DNA(list/blood_dna, blood_color)
 	if(dna?.species?.id == "gnoll")
 		if(length(blood_dna))
-			AddComponent(/datum/component/forensics, null, null, blood_dna)
+			AddComponent(/datum/component/forensics, null, null, blood_dna, null, blood_color)
 		bloody_hands = 0
 		update_inv_gloves()
 		return TRUE
 
 	if(cloak)
-		cloak.add_blood_DNA(blood_dna)
+		cloak.add_blood_DNA(blood_dna, blood_color)
 		update_inv_cloak()
 	else if(wear_armor)
-		wear_armor.add_blood_DNA(blood_dna)
+		wear_armor.add_blood_DNA(blood_dna, blood_color)
 		update_inv_armor()
 	else if(wear_shirt)
-		wear_shirt.add_blood_DNA(blood_dna)
+		wear_shirt.add_blood_DNA(blood_dna, blood_color)
 		update_inv_shirt()
 	else if(wear_pants)
-		wear_pants.add_blood_DNA(blood_dna)
+		wear_pants.add_blood_DNA(blood_dna, blood_color)
 		update_inv_pants()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
-		G.add_blood_DNA(blood_dna)
+		G.add_blood_DNA(blood_dna, blood_color)
 	else if(length(blood_dna))
-		AddComponent(/datum/component/forensics, null, null, blood_dna)
+		AddComponent(/datum/component/forensics, null, null, blood_dna, null, blood_color)
 		bloody_hands = rand(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return TRUE

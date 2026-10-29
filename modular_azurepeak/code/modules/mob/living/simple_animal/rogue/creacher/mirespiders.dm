@@ -51,6 +51,9 @@
 	can_have_ai = FALSE
 	ai_controller = /datum/ai_controller/mirespider
 
+/mob/living/simple_animal/hostile/retaliate/rogue/mirespider/get_blood_color()
+	return BLOOD_COLOR_BLUE
+
 /mob/living/simple_animal/hostile/retaliate/rogue/mirespider/Initialize(mapload)
 	. = ..()
 	update_icon()
@@ -191,6 +194,9 @@
 	check_friendly_fire = 1
 
 	var/list/mob/living/simple_animal/hostile/retaliate/rogue/mirespider/followers = list()
+
+/mob/living/simple_animal/hostile/rogue/mirespider_lurker/get_blood_color()
+	return BLOOD_COLOR_BLUE
 
 /mob/living/simple_animal/hostile/rogue/mirespider_lurker/mushroom
 	icon = 'icons/mob/mirespider_shroom.dmi'

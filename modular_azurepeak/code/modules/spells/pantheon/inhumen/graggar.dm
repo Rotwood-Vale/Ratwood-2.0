@@ -127,15 +127,17 @@
 	if(being_destroyed)
 		return
 	being_destroyed = TRUE
+	var/spill_color = BLOOD_COLOR_DEFAULT
 	if(iscarbon(loc))
 		var/mob/living/carbon/mob_target = loc
+		spill_color = mob_target.get_blood_color()
 		if(mob_target.legcuffed == src)
 			mob_target.set_legcuffed(null)
 		if(mob_target.has_status_effect(/datum/status_effect/debuff/netted))
 			mob_target.remove_status_effect(/datum/status_effect/debuff/netted)
 	var/turf/T = get_turf(src)
 	if(T)
-		new /obj/effect/decal/cleanable/blood(T)
+		new /obj/effect/decal/cleanable/blood(T, spill_color)
 		playsound(T, pick('sound/combat/gib (1).ogg', 'sound/combat/gib (2).ogg'), 50, TRUE)
 	if(!QDELING(src))
 		qdel(src)

@@ -259,15 +259,24 @@
 	underlay_state = "bleed"
 	var/bleed_damage = 200
 
+/datum/status_effect/stacking/saw_bleed/prepare_overlay()
+	if(QDELETED(src) || !owner || !status_overlay || !status_underlay)
+		return
+	var/bleed_color = owner.get_blood_color()
+	status_overlay.icon = get_greyscale_blood_icon(overlay_file, "[overlay_state][stacks]")
+	status_overlay.color = bleed_color
+	status_underlay.icon = get_greyscale_blood_icon(underlay_file, "[underlay_state][stacks]")
+	status_underlay.color = bleed_color
+
 /datum/status_effect/stacking/saw_bleed/fadeout_effect()
-	new /obj/effect/temp_visual/bleed(get_turf(owner))
+	new /obj/effect/temp_visual/bleed(get_turf(owner), null, owner.get_blood_color())
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
 	owner.adjustBruteLoss(bleed_damage)
 	var/turf/T = get_turf(owner)
-	new /obj/effect/temp_visual/bleed/explode(T)
+	new /obj/effect/temp_visual/bleed/explode(T, null, owner.get_blood_color())
 	for(var/d in GLOB.alldirs)
-		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d, owner.get_blood_color())
 	playsound(T, "desceration", 100, TRUE, -1)
 
 /datum/status_effect/neck_slice

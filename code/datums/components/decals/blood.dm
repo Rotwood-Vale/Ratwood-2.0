@@ -1,14 +1,19 @@
 /datum/component/decal/blood
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	var/blood_color = BLOOD_COLOR_DEFAULT
 
 /datum/component/decal/blood/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_STRENGTH_BLOOD, _color, _layer=ABOVE_OBJ_LAYER)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+	if(_color)
+		blood_color = _color
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_GET_EXAMINE_NAME, PROC_REF(get_examine_name))
 
 /datum/component/decal/blood/generate_appearance(_icon, _icon_state, _dir, _layer, _color)
 	testing("genappearance")
+	if(_color)
+		blood_color = _color
 	var/obj/item/I = parent
 	if(I.bigboy)
 		if(!_icon)
@@ -26,14 +31,15 @@
 	//try to find a pre-processed blood-splatter. otherwise, make a new one
 	// Use initial icon to avoid cache collisions from dynamic icon objects
 	var/base_icon = isfile(icon) ? "[icon]" : "[initial(I.icon)]"
-	var/index = "[base_icon]-[icon_state]"
+	var/index = "[base_icon]-[icon_state]-[blood_color]"
 	pic = blood_splatter_appearances[index]
 
 	if(!pic)
 		var/icon/blood_splatter_icon = icon(icon, icon_state, , 1)		//we only want to apply blood-splatters to the initial icon_state for each object
 		blood_splatter_icon.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
-		blood_splatter_icon.Blend(icon(_icon, _icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+		blood_splatter_icon.Blend(get_colored_blood_mask(_icon, _icon_state, blood_color), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 		pic = mutable_appearance(blood_splatter_icon, initial(icon_state))
+		pic.appearance_flags = RESET_COLOR
 		blood_splatter_appearances[index] = pic
 	pic.alpha = 150
 	return TRUE
