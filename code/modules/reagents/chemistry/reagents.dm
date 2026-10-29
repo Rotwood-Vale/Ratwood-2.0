@@ -109,7 +109,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 // Called when this reagent stops being metabolized by a liver
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
-	if(iscarbon(L) && pain)
+	if(iscarbon(L) && (pain || old_pain))
 		var/mob/living/carbon/C = L
 		C.update_chem_pain()
 	return
