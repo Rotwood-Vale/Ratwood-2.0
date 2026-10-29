@@ -575,6 +575,8 @@
 		return
 	if(isliving(user))
 		var/mob/living/L = user
+		if(L.m_intent == MOVE_INTENT_SNEAK)
+			return
 		user.changeNext_move(CLICK_CD_INTENTCAP)
 		playsound(src.loc, "plantcross", 50, FALSE, -1)
 		if(do_after(L, SEARCHTIME, target = src))
