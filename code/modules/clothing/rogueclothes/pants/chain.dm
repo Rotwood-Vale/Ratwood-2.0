@@ -46,6 +46,13 @@
 	smeltresult = /obj/item/ingot/steel
 	dropshrink = 0.9
 
+/obj/item/clothing/under/roguetown/splintlegs/kneelpad
+	name = "steel poleyns"
+	desc = "Two smalls plate kneel pads designed for good flexibility."
+	icon_state = "platekneelpad"
+	item_state = "platekneelpad"
+	body_parts_covered = LEGS
+
 /obj/item/clothing/under/roguetown/splintlegs/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_STEP)
