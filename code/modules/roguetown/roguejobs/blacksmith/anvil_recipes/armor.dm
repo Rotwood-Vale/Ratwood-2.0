@@ -663,6 +663,7 @@
 
 /datum/anvil_recipe/armor/studdedbikini
 	name = "Studded Leather Corslet (+ Leather Corslet)"
+	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/leather)
 	created_item = /obj/item/clothing/suit/roguetown/armor/leather/studded/bikini
 	display_category = ITEM_CAT_ARMOR_CHESTPIECES

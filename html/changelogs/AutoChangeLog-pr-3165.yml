@@ -1,4 +1,0 @@
-author: "SirSwagmeyer"
-delete-after: True
-changes:
-  - bugfix: "Fixed a bug in which mauls and gnoll claws weren't applied their respective blunt damage integrity modifiers."
