@@ -23,9 +23,3 @@
 	name = "Plain (Thighs)"
 	icon_state = "pair"
 	color_key_defaults = list(KEY_SKIN_COLOR)
-
-#ifdef UNIT_TESTS
-/datum/sprite_accessory/butt/unit_testing_icon_states(list/states)
-	for(var/size in MIN_BUTT_SIZE to MAX_BUTT_SIZE)
-		states += "butt_[icon_state]_[size]"
-#endif
