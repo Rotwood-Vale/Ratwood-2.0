@@ -10,7 +10,7 @@
 	)
 	outfit = /datum/outfit/job/roguetown/wretch/blackoak
 	cmode_music = 'sound/music/combat_blackoak.ogg'
-	maximum_possible_slots = 1
+	maximum_possible_slots = 2
 	class_select_category = CLASS_CAT_RACIAL
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(TRAIT_AZURENATIVE, TRAIT_OUTDOORSMAN, TRAIT_BLACKOAK, TRAIT_DODGEEXPERT, TRAIT_ARCYNE, TRAIT_WOODWALKER, TRAIT_EXPERT_HUNTER)
@@ -88,7 +88,7 @@
 
 	subclass_selected = null
 	var/selection_html = get_spellblade_chant_html(src, H, "blackoak")
-	H << browse(selection_html, "window=spellblade_chant;size=1100x900")
+	H << browse(selection_html, "window=spellblade_chant;size=1400x900")
 	onclose(H, "spellblade_chant", src)
 
 	var/open_time = world.time
@@ -120,6 +120,11 @@
 				H.mind.AddSpell(new /datum/action/cooldown/spell/telegraphed_strike/spellblade/tremor)
 				H.mind.AddSpell(new /datum/action/cooldown/spell/charge)
 				H.mind.AddSpell(new /datum/action/cooldown/spell/cataclysm)
+			if("sagittary")
+				H.mind.AddSpell(new /datum/action/cooldown/spell/leyline_nock)
+				H.mind.AddSpell(new /datum/action/cooldown/spell/thornfall)
+				H.mind.AddSpell(new /datum/action/cooldown/spell/withdraw)
+				H.mind.AddSpell(new /datum/action/cooldown/spell/skyrend)
 
 		H.mind.AddSpell(new /datum/action/cooldown/spell/recall_weapon)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/empower_weapon)
@@ -185,5 +190,11 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
 			else
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
+		if("sagittary")
+			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/blackoak
+			beltr = /obj/item/quiver/arrows
+			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			H.change_stat(STATKEY_PER, 2)
 
 	wretch_select_bounty(H)

@@ -39,6 +39,9 @@ without going through the click pipeline, so spells can deliver weapon-style str
 	if(!exact_zone && def_zone != BODY_ZONE_CHEST && isliving(target))
 		// A bound weapon carries arcyne as its own skill, so Bind Armament transfers accuracy onto it.
 		var/datum/skill/accuracy_skill = weapon?.associated_skill || /datum/skill/combat/arcyne
+		// Bows carry no associated_skill, so Sagittary strikes aim with bow skill instead
+		if(istype(weapon, /obj/item/gun/ballistic/revolver/grenadelauncher/bow))
+			accuracy_skill = /datum/skill/combat/bows
 		var/accuracy_bonus = user.get_skill_level(accuracy_skill) * 8
 		switch(blade_class)
 			if(BCLASS_STAB)
@@ -211,6 +214,34 @@ Returns null on success, or an error string. */
 			if(G.density)
 				return "I cannot teleport through gates!"
 	return null
+
+// helpers for advance and withdraw spellblade spells
+/proc/arcyne_can_leap_into(turf/T)
+	if(!T || T.density)
+		return FALSE
+	for(var/obj/structure/S in T.contents)
+		if(S.density && !S.climbable)
+			return FALSE
+	return TRUE
+
+/proc/arcyne_leap_step(mob/living/carbon/human/H, dir)
+	var/turf/current = get_turf(H)
+	var/turf/destination = get_step(current, dir)
+	if(!arcyne_can_leap_into(destination))
+		return FALSE
+	if(!(dir & (dir - 1)))
+		return step(H, dir)
+
+	var/vertical = dir & (NORTH|SOUTH)
+	var/horizontal = dir & (EAST|WEST)
+	for(var/list/halves in list(list(vertical, horizontal), list(horizontal, vertical)))
+		if(!arcyne_can_leap_into(get_step(current, halves[1])))
+			continue
+		if(!step(H, halves[1]))
+			continue
+		step(H, halves[2])
+		return get_turf(H) == destination
+	return FALSE
 
 /* Walks toward target up to max_range tiles, returning the farthest valid turf.
 Used by Caedo to clamp distance instead of failing when out of range. */
