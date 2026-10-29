@@ -72,7 +72,7 @@
 		. += span_warning("This contraption has a chance for catastrophic failure in the hands of the inexperienced.")
 
 /obj/item/contraption/proc/battery_collapse(atom/A, mob/living/user)
-	to_chat(user, span_info("The [accepted_power_source.name] wastes away into nothing."))
+	to_chat(user, span_info("The [initial(accepted_power_source.name)] wastes away into nothing."))
 	playsound(src, pick('sound/combat/hits/onmetal/grille (1).ogg', 'sound/combat/hits/onmetal/grille (2).ogg', 'sound/combat/hits/onmetal/grille (3).ogg'), 100, FALSE)
 	shake_camera(user, 1, 1)
 	var/datum/effect_system/spark_spread/S = new()

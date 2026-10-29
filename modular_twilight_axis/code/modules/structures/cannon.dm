@@ -185,6 +185,10 @@
 				M.Paralyze(40)
 				M.adjustBruteLoss(rand(40, 80))
 				M.visible_message(span_warning("[M] knocks you off your feet with a powerful shock wave!"))
+			else
+				M.visible_message(span_warning("[M] the blast creates a powerful shockwave!"))
+			return
+				
 
 		var/shrapnel_count = rand(6, 12)
 		var/list/all_dirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
@@ -485,19 +489,6 @@
 	bullet_loaded = null
 	powder_loaded = FALSE
 	rammed = FALSE
-
-	var/skill = 0
-	if(user && isliving(user))
-		var/mob/living/L = user
-		skill = L.get_skill_level(/datum/skill/combat/firearms)
-
-	var/misfire_chance = max(2 - (skill * 5))
-
-	if(prob(misfire_chance))
-		src.visible_message(span_danger("[src] It's falling apart!"))
-		explosion(get_turf(src), 1, 2, 4, 0, TRUE, FALSE, 2)
-		qdel(src)
-		return
 
 	if((world.time - last_fired) < cooldown)
 		barrel_integrity -= 2

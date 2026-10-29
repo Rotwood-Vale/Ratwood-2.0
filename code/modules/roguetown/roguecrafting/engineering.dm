@@ -347,7 +347,7 @@
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
 
-/datum/crafting_recipe/roguetown/engineering/roller
+/*/datum/crafting_recipe/roguetown/engineering/roller
 	name = "rollers (2x)"
 	category = "Minecarts"
 	result = list(/obj/item/rotation_contraption/roller,
@@ -357,6 +357,7 @@
 	verbage = "engineers"
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
+*/ // commented out until we fix the problems regarding them
 
 /datum/crafting_recipe/roguetown/engineering/autogrinder
 	name = "autogrinder"

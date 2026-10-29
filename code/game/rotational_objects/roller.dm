@@ -1,4 +1,4 @@
-//Make a component to do things like gravity/flying checks
+/*//Make a component to do things like gravity/flying checks
 ///Manages the loop caused by being on a conveyor belt
 ///Prevents movement while you're floating, etc
 ///Takes the direction to move, delay between steps, and time before starting to move as arguments
@@ -253,3 +253,4 @@
 		return
 	rotate_roller(user)
 	return TRUE
+/*

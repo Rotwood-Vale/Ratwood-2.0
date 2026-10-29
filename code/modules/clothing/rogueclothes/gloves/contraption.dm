@@ -10,7 +10,6 @@
 	var/misfire_chance = 0
 	var/sneaky_misfire_chance
 	var/misfiring = FALSE
-	var/cog_accept = TRUE
 
 /*/obj/item/clothing/gloves/roguetown/chain/contraption/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
@@ -18,7 +17,7 @@
 */
 // === CONTRAPTION CORE BEHAVIOR ===
 /obj/item/clothing/gloves/roguetown/chain/contraption/proc/battery_collapse(obj/wearer, mob/living/user)
-	to_chat(user, span_info("The [accepted_power_source.name] powering [src] fizzles into nothing!"))
+	to_chat(user, span_info("The [initial(accepted_power_source.name)] powering [src] fizzles into nothing!"))
 	playsound(src, pick('sound/combat/hits/onmetal/grille (1).ogg','sound/combat/hits/onmetal/grille (2).ogg'), 100, FALSE)
 
 /obj/item/clothing/gloves/roguetown/chain/contraption/proc/misfire(obj/wearer, mob/living/user)
