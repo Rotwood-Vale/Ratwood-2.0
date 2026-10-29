@@ -79,6 +79,8 @@
 		if(ARMOR_CLASS_HEAVY)
 			fatiguemod = 3
 
+	HT.interrupt_spell_channel()
+
 	HT.apply_status_effect(/datum/status_effect/debuff/baited)
 	HT.apply_status_effect(/datum/status_effect/debuff/exposed)
 	HT.apply_status_effect(/datum/status_effect/debuff/clickcd, 5 SECONDS)
@@ -223,7 +225,7 @@
 		to_chat(user, span_notice("I disrupt [L.p_their()] guard!"))
 		perc = 100
 
-	perc = CLAMP(perc, 0, 90)
+	perc = CLAMP(perc, 10, 90)
 
 	if(L.has_status_effect(/datum/status_effect/buff/clash))
 		L.remove_status_effect(/datum/status_effect/buff/clash)

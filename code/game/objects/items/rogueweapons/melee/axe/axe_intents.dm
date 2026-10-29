@@ -96,6 +96,10 @@
 	damfactor = 1.2
 	demolition_mod = 1.5
 
+/datum/intent/axe/chop/long/woodcutter
+	reach = 2
+	demolition_mod = 3
+
 /datum/intent/axe/bash
 	name = "bash"
 	icon_state = "inbash"

@@ -1,10 +1,6 @@
 #define TARGET_CLOSEST 1
 #define TARGET_RANDOM 2
 #define MAGIC_XP_MULTIPLIER 0.3 //used to miltuply the amount of xp gained from spells
-#define SPELL_SCALING_THRESHOLD 10 // The threshold at which the spell scaling starts to kick in
-#define SPELL_POSITIVE_SCALING_THRESHOLD 15 // The threshold at which spell scaling stop
-#define FATIGUE_REDUCTION_PER_INT 0.05 // The amount of fatigue reduction per point of intelligence above / below threshold
-#define COOLDOWN_REDUCTION_PER_INT 0.05 // The amount of cooldown reduction per point of intelligence above / below threshold
 #define CHARGE_REDUCTION_PER_SKILL 0.05 // The amount of charge reduction per skill level.
 #define FATIGUE_REDUCTION_PER_SKILL 0.05 // The amount of fatigue reduction per skill level.
 #define MEDIUM_ARMOR_STAM_PENALTY 0.15 // Multiplier on base stamina cost for wearing medium armor
@@ -57,7 +53,6 @@
 		var/obj/effect/R = new /obj/effect/spell_rune
 		R.icon = action_icon
 		R.icon_state = overlay_state // Weird af but that's how spells work???
-		action.overlay_alpha = overlay_alpha
 		mob_charge_effect = R
 	update_icon()
 
@@ -89,6 +84,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/Destroy()
 	if (action)
 		QDEL_NULL(action)
+	if(mob_charge_effect)
+		QDEL_NULL(mob_charge_effect)
 	if(ranged_ability_user)
 		remove_ranged_ability()
 	return ..()
@@ -112,6 +109,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/proc/add_ranged_ability(mob/living/user, msg, forced)
 	if(!user || !user.client)
 		return
+	// If a new-style action spell is currently set as click_intercept, unset it first
+	var/datum/action/cooldown/active_action = user.click_intercept
+	if(istype(active_action))
+		active_action.unset_click_ability(user, refund_cooldown = TRUE)
 	if(user.ranged_ability && user.ranged_ability != src)
 		if(forced)
 //			to_chat(user, span_info("<b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>."))
@@ -131,6 +132,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/proc/remove_ranged_ability(msg)
 	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
 		return
+	// Clean up stale client signals from cooldown spells that may still be registered
+	for(var/datum/action/cooldown/spell/S in ranged_ability_user.actions)
+		S.UnregisterSignal(ranged_ability_user.client, list(COMSIG_CLIENT_MOUSEDOWN, COMSIG_CLIENT_MOUSEUP))
 	ranged_ability_user.ranged_ability = null
 
 	ranged_ability_user.click_intercept = null
@@ -220,6 +224,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	action_icon = 'icons/mob/actions/roguespells.dmi'
 	action_background_icon_state = ""
 	base_action = /datum/action/spell_action/spell
+	var/expose_caster_on_deflect = TRUE
+	var/spell_impact_intensity = SPELL_IMPACT_NONE // Visual impact intensity for on-hit effects. See SPELL_IMPACT defines.
+	var/source_aspect // Aspect type path this spell was granted by, if any.
 
 /obj/effect/proc_holder/spell/get_chargetime()
 	if(ranged_ability_user && chargetime)
@@ -237,14 +244,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/newtime = chargetime
 	//skill block
 	newtime = newtime - (chargetime * (user.get_skill_level(associated_skill) * CHARGE_REDUCTION_PER_SKILL))
-	//spellbook cast time reduction
-	var/obj/item/book/spellbook/sbook = user.is_holding_item_of_type(/obj/item/book/spellbook)
-	if(sbook && sbook?.open)
-		newtime = newtime - (chargetime * (sbook.get_cdr()))
-	//staff cast time reduction
-	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
-	if(staff && staff.cast_time_reduction)
-		newtime = newtime - (chargetime * (staff.cast_time_reduction))
 	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE)) // Hastens Charge by 25%.
 		newtime *= 0.75
 	if(newtime > 0)
@@ -286,16 +285,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		var/skill_mod = chargetime * skill_level * CHARGE_REDUCTION_PER_SKILL
 		if(skill_mod > 0)
 			breakdown += span_smallgreen("  Skill: -[DisplayTimeText(skill_mod)]")
-	var/obj/item/book/spellbook/sbook = user.is_holding_item_of_type(/obj/item/book/spellbook)
-	if(sbook && sbook?.open)
-		var/book_mod = chargetime * sbook.get_cdr()
-		if(book_mod > 0)
-			breakdown += span_smallgreen("  Spellbook: -[DisplayTimeText(book_mod)]")
-	var/obj/item/rogueweapon/staff = user.is_holding_item_of_type(/obj/item/rogueweapon/)
-	if(staff && staff.cast_time_reduction)
-		var/staff_mod = chargetime * staff.cast_time_reduction
-		if(staff_mod > 0)
-			breakdown += span_smallgreen("  Staff: -[DisplayTimeText(staff_mod)]")
 	if(HAS_TRAIT(user, TRAIT_LEYLINE_HASTE))
 		breakdown += span_smallgreen("  <font color='#00e1ff'>Ley Lines (-25%)</font>")
 	return breakdown
@@ -511,12 +500,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			if("holdervar")
 				adjust_var(user, holder_var_type, holder_var_amount)
 	if(action)
-		action.UpdateButtonIcon()
+		action.build_all_button_icons()
 	START_PROCESSING(SSfastprocess, src)
 	record_featured_stat(FEATURED_STATS_MAGES, user)
 	return TRUE
 
-/obj/effect/proc_holder/spell/proc/charge_check(mob/user)
+/obj/effect/proc_holder/spell/proc/charge_check(mob/user, feedback = TRUE)
 	if(skipcharge)
 		return TRUE
 	switch(charge_type)
@@ -611,7 +600,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	charge_counter = recharge_time
 
 	if(action)
-		action.UpdateButtonIcon()
+		action.build_all_button_icons()
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
 	var/old_recharge = recharge_time
@@ -639,13 +628,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		charge_counter += delta
 		if(charge_counter >= recharge_time)
 			charge_counter = recharge_time
-			if(action?.button)
-				action.button.update_maptext(0)
-			action?.UpdateButtonIcon()
+			var/datum/action/spell_action/SA = action
+			SA?.update_all_maptext(0)
+			action?.build_all_button_icons()
 			STOP_PROCESSING(SSfastprocess, src)
 			return
-		if(action?.button)
-			action.button.update_maptext(recharge_time - charge_counter)
+		var/datum/action/spell_action/SA = action
+		SA?.update_all_maptext(recharge_time - charge_counter)
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
 	if(!ignore_los)
@@ -697,7 +686,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				var/mob/living/carbon/human/H = user
 				H.bad_guard(span_warning("I can't focus while casting spells!"), cheesy = TRUE)
 		if(action)
-			action.UpdateButtonIcon()
+			action.build_all_button_icons()
 		return TRUE
 	return FALSE
 
@@ -774,9 +763,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if("holdervar")
 			adjust_var(user, holder_var_type, -holder_var_amount)
 	START_PROCESSING(SSfastprocess, src)
-	if(action?.button)
-		action.button.update_maptext(0)
-		action.UpdateButtonIcon()
+	if(action)
+		var/datum/action/spell_action/SA = action
+		SA?.update_all_maptext(0)
+		action.build_all_button_icons()
 	if(user.mmb_intent && user.mmb_intent.mob_light)
 		QDEL_NULL(user.mmb_intent.mob_light)
 
@@ -899,7 +889,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	perform(targets,user=user)
 
 /obj/effect/proc_holder/spell/proc/updateButtonIcon(status_only, force)
-	action.UpdateButtonIcon(status_only, force)
+	if(status_only)
+		action.build_all_button_icons(UPDATE_BUTTON_STATUS, force)
+		return
+	action.build_all_button_icons(ALL, force)
 
 /obj/effect/proc_holder/spell/proc/can_be_cast_by(mob/caster)
 	if((human_req || clothes_req) && !ishuman(caster))
@@ -929,7 +922,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		last_mount_move_time = 0
 	return world.time < last_mount_move_time + 2 SECONDS
 
-/obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr)
+/obj/effect/proc_holder/spell/proc/can_cast(mob/user = usr, feedback = TRUE)
 	if(((!user.mind) || !(src in user.mind.spell_list)) && !(src in user.mob_spell_list))
 		return FALSE
 
@@ -1008,13 +1001,25 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	user.adjustBruteLoss(-10)
 	user.adjustFireLoss(-10)
 
+/// Helper for non-projectile spells. Call before applying effects to a target.
+/// Returns TRUE if the target's Guard or parry buffer deflected the spell (skip this target).
+/// Returns FALSE if the spell should proceed normally.
+/// The caster is Exposed when guard deflects (pseudo-melee punishment); pass attacker to override who is punished.
+/// Usage in cast(): if(spell_guard_check(L)) continue
+/obj/effect/proc_holder/spell/proc/spell_guard_check(mob/living/target, no_message = FALSE, mob/living/attacker, punish_caster)
+	if(!isliving(target))
+		return FALSE
+	if(target == (ranged_ability_user || action?.owner))
+		return FALSE
+	if(isnull(attacker))
+		attacker = ranged_ability_user || action?.owner
+	if(isnull(punish_caster))
+		punish_caster = expose_caster_on_deflect
+	return target.guard_deflect_spell(name, no_message, attacker, punish_caster)
+
 #undef TARGET_CLOSEST
 #undef TARGET_RANDOM
 #undef MAGIC_XP_MULTIPLIER
-#undef SPELL_SCALING_THRESHOLD
-#undef SPELL_POSITIVE_SCALING_THRESHOLD
-#undef FATIGUE_REDUCTION_PER_INT
-#undef COOLDOWN_REDUCTION_PER_INT
 #undef CHARGE_REDUCTION_PER_SKILL
 #undef MEDIUM_ARMOR_STAM_PENALTY
 #undef HEAVY_ARMOR_STAM_PENALTY
