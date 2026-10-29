@@ -51,7 +51,8 @@
 		playsound(user, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 70, FALSE)
 		if(do_after(user,2 SECONDS, target = src))
 			reagents.trans_to(I, reagents.total_volume)
-	return TRUE
+		return TRUE
+	return ..()
 
 /obj/item/reagent_containers/glass/bucket/pot/decrepit
 	name = "decrepit pot"
@@ -64,7 +65,7 @@
 	name = "stone pot"
 	desc = "A pot made out of stone. It can hold less than a metal pot."
 	icon_state = "pote_stone"
-	volume = 120 // 99 is the max volume for a stone pot
+	volume = 120
 
 /obj/item/reagent_containers/glass/bucket/pot/kettle
 	name = "kettle"
@@ -106,7 +107,7 @@
 	icon_state = "teapot"
 	fill_icon_thresholds = null
 	dropshrink = 1.0
-	volume = 99
+	volume = 120
 	sellprice = 0
 
 /obj/item/reagent_containers/glass/bucket/pot/carved/getonmobprop(tag)
