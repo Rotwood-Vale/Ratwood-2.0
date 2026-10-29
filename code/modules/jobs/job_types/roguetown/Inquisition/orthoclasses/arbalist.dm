@@ -39,6 +39,7 @@
 	subclass_stashed_items = list(
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
 	)
+	maximum_possible_slots = 1
 
 /datum/outfit/job/roguetown/arbalist
 	job_bitflag = BITFLAG_HOLY_WARRIOR
@@ -72,7 +73,7 @@
 
 /datum/outfit/job/roguetown/arbalist/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/ranged_weapons = list("Arbalest", "Runelock Rifle")
+	var/ranged_weapons = list("Arbalest", "Fussilier")
 	var/ranged_choice = input(H, "CHOOSE YOUR RANGED WEAPON.", "STRIKE FROM AFAR.") as anything in ranged_weapons
 	switch(ranged_choice)
 		if("Arbalest")
@@ -82,8 +83,7 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_inviolability)//A shield against the undead.
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_lux_bolt)//Take a guess. Exclusive to arbalist.
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity)//To get your blood back, m'lord.
-		if("Runelock Rifle")
-			ADD_TRAIT(H, TRAIT_INQUISITION, TRAIT_GENERIC)
+		if("Fussilier")
 			ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/combat/crossbows, -1, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_MASTER, TRUE)

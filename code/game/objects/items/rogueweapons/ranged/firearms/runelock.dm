@@ -239,7 +239,7 @@
 	return chargetime
 
 /obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle
-	name = "\"Doomsdae\""
+	name = "\"Abbot\""
 	desc = "A relic of a new era, forged for the war that will end the history of creation as we know it. Crafted by Otavan master artificers and enchanted by the rune mages of Otava, this runic rifle is a weapon meant to crush the legions of darkness at the End of Times. The runes along its barrel are inscribed with the blood of heretics who paid for their betrayal of the true faith with their lives."
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "runelock"
