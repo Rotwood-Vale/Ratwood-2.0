@@ -212,7 +212,7 @@
 	tutorial = "You are a daring rogue of the seas! Swashbucklers wield agile swordplay and acrobatic prowess - fighting dirty to outmaneuver foes with flair."
 	outfit = /datum/outfit/job/roguetown/adventurer/swashbuckler
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander3.ogg'
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_NUTCRACKER, TRAIT_LEAPER)
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_NUTCRACKER)
 	subclass_virtues = list(
 		/datum/virtue/combat/guarded
 		)
