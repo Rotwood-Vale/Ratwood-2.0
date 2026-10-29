@@ -1923,7 +1923,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	. = ..()
 
 /datum/status_effect/zizo_ascension/tick()
-	if(QDELETED(cultist) || cultist.stat == DEAD || QDELETED(altar) || owner.loc != altar.loc || owner.stat == DEAD)
+	if(QDELETED(cultist) || cultist.stat == DEAD || QDELETED(altar) || owner.loc != altar.loc)
 		ascension_fail()
 		return
 	elapsed += 5
