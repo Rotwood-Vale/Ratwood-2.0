@@ -33,11 +33,11 @@
 		"Sewing Kit" = /obj/item/repair_kit,
 	)
 /datum/outfit/job/roguetown/wretch/plaguebearer/pre_equip(mob/living/carbon/human/H)
-	head = /obj/item/clothing/head/roguetown/physician
-	mask = /obj/item/clothing/mask/rogue/physician
+	head = /obj/item/clothing/head/roguetown/physician/sawbones
+	mask = /obj/item/clothing/mask/rogue/physician/sawbones
 	neck = /obj/item/clothing/neck/roguetown/chaincoif 
 	pants = /obj/item/clothing/under/roguetown/trou/leather/mourning
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician
+	armor = /obj/item/clothing/suit/roguetown/shirt/robe/physician/sawbones
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/poor
