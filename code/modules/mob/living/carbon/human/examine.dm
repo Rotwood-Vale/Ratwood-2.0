@@ -945,8 +945,13 @@
 		if(get_dist(src, H) <= ((2 + clamp(floor(((H.STAPER - 10))),-1, 4)) + HAS_TRAIT(user, TRAIT_INTELLECTUAL)))
 			showassess = TRUE
 
+	var/list/examine_links = list()
 	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
-		. += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a> [showassess ? " | <a href='?src=[REF(src)];task=assess;'>Assess</a>" : ""]"
+		examine_links += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
+	if(showassess)
+		examine_links += "<a href='?src=[REF(src)];task=assess;'>Assess</a>"
+	if(length(examine_links))
+		. += examine_links.Join(" | ")
 
 
 	/// Rumours & Gossip
