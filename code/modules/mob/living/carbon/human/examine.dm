@@ -817,9 +817,9 @@
 	if(show_descriptors)
 		var/list/lines
 		if((get_face_name() != real_name) && !observer_privilege)
-			lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src)
+			lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src, user)
 		else
-			lines = build_cool_description(get_mob_descriptors(obscure_name, user), src)
+			lines = build_cool_description(get_mob_descriptors(obscure_name, user), src, user)
 
 		var/app_str
 		if(!(user.client?.prefs?.full_examine))
@@ -1482,4 +1482,3 @@
 			gang_text = span_userdanger ("Blortz Volves scum! Enemy!")
 
 	return gang_text
-
