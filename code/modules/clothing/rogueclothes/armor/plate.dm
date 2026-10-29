@@ -630,7 +630,7 @@
 	sleevetype = "shirt"
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sewrepair = TRUE
-	anvilrepair = FALSE
+	anvilrepair = FALSE //this must be specified because it's a variant of scale
 	equip_delay_self = 4 SECONDS
 	armor_class = ARMOR_CLASS_LIGHT
 	armor = ARMOR_LEATHER
@@ -672,6 +672,7 @@
 	armor_class = ARMOR_CLASS_MEDIUM
 	armor = ARMOR_PLATE
 	sewrepair = FALSE
+	anvilrepair = /datum/skill/craft/armorsmithing //this has to be re-specified, because it is a variant of the previous version
 	smelt_bar_num = 2
 	smeltresult = /obj/item/ingot/steel
 	blocksound = PLATEHIT
