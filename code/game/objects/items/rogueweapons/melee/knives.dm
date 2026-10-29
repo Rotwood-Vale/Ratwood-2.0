@@ -833,6 +833,7 @@
 	desc = "This beautiful dagger is of intricate, elvish design. Sharper, too."
 	force = 22
 	icon_state = "elfdagger"
+	sheathe_icon = "elfdagger"
 	item_state = "elfdag"
 	last_used = 0
 	is_silver = FALSE

@@ -17,6 +17,9 @@
 	sewrepair = TRUE
 	desc_uncorked = "A leather waterskin. The cap on the mouth is off."
 
+/obj/item/reagent_containers/glass/bottle/waterskin/glass_shot()
+	return FALSE
+
 /obj/item/reagent_containers/glass/bottle/waterskin/milk // Filled subtype used by the cheesemaker
 	list_reagents = list(/datum/reagent/consumable/milk = 64)
 
