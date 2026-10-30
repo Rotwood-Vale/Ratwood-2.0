@@ -568,7 +568,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		return
 	if(istype(containment, /obj/item/flint))
 		var/datum/effect_system/spark_spread/S = new()
-		S.set_up(1, 1, get_turf(src))
+		S.set_up(1, 1, front)
 		S.start()
 		return
 
