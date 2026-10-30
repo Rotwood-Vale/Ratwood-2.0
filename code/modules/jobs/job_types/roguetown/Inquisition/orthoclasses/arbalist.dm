@@ -70,7 +70,7 @@
 
 /datum/outfit/job/roguetown/arbalist/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
-	var/ranged_weapons = list("Arbalest", "Fussilier")
+	var/ranged_weapons = list("Arbalest", "Fusilier")
 	var/ranged_choice = input(H, "CHOOSE YOUR RANGED WEAPON.", "STRIKE FROM AFAR.") as anything in ranged_weapons
 	switch(ranged_choice)
 		if("Arbalest")
@@ -83,7 +83,7 @@
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_inviolability)//A shield against the undead.
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_lux_bolt)//Take a guess. Exclusive to arbalist.
 				H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity)//To get your blood back, m'lord.
-		if("Fussilier")
+		if("Fusilier")
 			ADD_TRAIT(H, TRAIT_FUSILIER, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/combat/crossbows, -1, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_MASTER, TRUE)
@@ -95,9 +95,9 @@
 			var/pouch_choice = input(H, "CHOOSE YOUR MUNITIONS.", "TAKE UP PSYDON'S MISSILES.") as anything in pouches
 			switch(pouch_choice)
 				if("Pharetra - Runed Spheres")
-					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/runed, SLOT_BELT_R, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/runed/arbalist, SLOT_BELT_R, TRUE)
 				if("Pharetra - Blessed Silver Spheres")
-					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/blessed, SLOT_BELT_R, TRUE)
+					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/blessed/arbalist, SLOT_BELT_R, TRUE)
 
 //Stake belt. Here because nothing else uses it. It's just a throwing knife belt, but for stake bolts.
 //A better way to carry them, since these are unobtanium.

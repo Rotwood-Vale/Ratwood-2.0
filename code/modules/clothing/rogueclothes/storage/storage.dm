@@ -382,8 +382,8 @@
 /obj/item/storage/belt/rogue/leather/twilight_holsterbelt
 	name = "holster belt"
 	desc = "A belt with an attached holster. Had to sacrifice belt space for the convenience of carrying a pistol."
-	icon_state = "baseholsterbelt"
-	item_state = "baseholsterbelt"
+	icon_state = "holsterbelt"
+	item_state = "holsterbelt"
 	strip_delay = 20
 	var/max_storage = 1
 	var/list/pistol = list()
@@ -394,9 +394,9 @@
 
 /obj/item/storage/belt/rogue/leather/twilight_holsterbelt/update_icon()
 	if(pistol.len)
-		icon_state = "baseholsterbelt_full"
+		icon_state = "holsterbelt_full"
 	else
-		icon_state = "baseholsterbelt"
+		icon_state = "holsterbelt"
 
 /obj/item/storage/belt/rogue/leather/twilight_holsterbelt/proc/eatpistol(obj/A)
 	if((A.type in typesof(/obj/item/gun/ballistic/revolver/rune/twilight_runelock)) || (A.type in typesof(/obj/item/gun/ballistic/firearm/arquebus_pistol)))

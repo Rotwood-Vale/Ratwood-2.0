@@ -60,7 +60,7 @@
 	if(isliving(target))
 		var/mob/living/target_living = target
 		if(target_living.has_status_effect(/datum/status_effect/debuff/exposed) || target_living.has_status_effect(/datum/status_effect/debuff/vulnerable))
-			damage *= 2
+			damage *= 1.2
 
 	. = ..()
 
@@ -243,11 +243,10 @@
 	armor_penetration = PEN_NONE
 
 /obj/item/ammo_casing/caseless/bullet/lead/runelock
-	name = "runed sphere"
-	desc = "A small, perfectly round metal sphere covered in Psydonite runes. Lethal at high velocity."
+	name = "PARENT RUNELOCK SPHERE"
+	desc = "YOU SHOULD NOT BE SEEING THIS. YELL AT DEVS!!!"
 	projectile_type = /obj/projectile/bullet/firearm/lead/runelock
 	caliber = "runed_sphere"
-	icon_state = "musketball_runed"
 	max_integrity = 0
 
 /obj/item/ammo_casing/caseless/bullet/lead/runelock/Initialize(mapload)
@@ -281,21 +280,31 @@
 	..()
 
 /obj/projectile/bullet/firearm/lead/runelock
-	name = "runed sphere"
-	desc = "A small, perfectly round metal sphere covered in Psydonite runes. Lethal at high velocity."
-	damage = 45
+	name = "PARENT RUNELOCK PROJECTILE"
 	speed = 0.6
-	icon_state = "musketball_runed"
 	max_range = 7
 	range = 12
 	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
 	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock
 	damage_type = BRUTE
-	armor_penetration = PEN_HEAVY
 
-/obj/projectile/bullet/firearm/lead/runelock/on_hit(atom/target, blocked = FALSE)
+/obj/item/ammo_casing/caseless/bullet/lead/runelock/runed
+	name = "runed sphere"
+	desc = "A small, perfectly round metal sphere covered in Psydonite runes. Lethal at high velocity."
+	projectile_type = /obj/projectile/bullet/firearm/lead/runelock/runed
+	icon_state = "musketball_runed"
+
+/obj/projectile/bullet/firearm/lead/runelock/runed
+	name = "runed sphere"
+	desc = "A small, perfectly round metal sphere covered in Psydonite runes. Lethal at high velocity."
+	damage = 45
+	icon_state = "musketball_runed"
+	armor_penetration = PEN_BSTEEL
+	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/runed
+
+/obj/projectile/bullet/firearm/lead/runelock/runed/on_hit(atom/target, blocked = FALSE)
 	. = ..()
-	if(isliving(target) && !blessed)
+	if(isliving(target))
 		var/mob/living/L = target
 		L.apply_status_effect(/datum/status_effect/debuff/psypowder)
 
@@ -312,9 +321,8 @@
 	icon_state = "musketball_blessed"
 	silver = TRUE
 	blessed = TRUE
-	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
-	damage_type = BRUTE
 	armor_penetration = PEN_NONE
+	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
 
 /atom/movable/screen/alert/status_effect/debuff/psypowder
 	name = "Runed Poison"
@@ -338,9 +346,10 @@
 	icon_state = "runebag"
 	item_state = "runebag"
 	max_storage = 12
-	var/selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock // what the pouch is currently attuned to
+	var/selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/runed // what the pouch is currently attuned to
 	var/list/linked_ammo_types = list() // types the casings report on firing
 	var/list/linked_casings = list()    // every live casing linked to this bag, in or out of it
+	var/recall_energy_cost = 25 // energy drained per sphere recalled
 
 /obj/item/quiver/twilight_bullet/runicbag/Destroy()
 	for(var/obj/item/ammo_casing/C as anything in linked_casings)
@@ -367,22 +376,39 @@
 	if(arrows.len >= max_storage)
 		to_chat(user, span_notice("The [src.name] is full and can accept no more ammunition!"))
 		return
+	if(user.energy < recall_energy_cost)
+		to_chat(user, span_warning("The runes on the lock flicker and die. I don't have the energy to recall them."))
+		return
 	var/type_name = (selected_type == /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed) ? "blessed" : "runed"
-	to_chat(user, span_notice("I begin recalling [type_name] spheres..."))
+	to_chat(user, span_notice("The runes on the lock flare as I call the [type_name] spheres home..."))
 	if(!do_after(user, 15 SECONDS, src))
+		to_chat(user, span_warning("My concentration breaks, and the runes go dark."))
+		return
+	//Re-check after the wait, energy may have been spent meanwhile. Only recall what can be paid for.
+	var/affordable = round(user.energy / recall_energy_cost)
+	if(affordable < 1)
+		to_chat(user, span_warning("My energy gutters out before the spheres can answer."))
+		return
+	var/summoned = 0
+	while(summoned < affordable && summon_round(selected_type))
+		summoned++
+	if(!summoned)
 		return
 	playsound(src, 'sound/magic/blink.ogg', 80)
-	while(summon_round(selected_type))
-		continue
+	user.energy_add(-(recall_energy_cost * summoned))
+	if(arrows.len < max_storage)
+		to_chat(user, span_warning("My energy runs dry. Only [summoned] sphere\s answered the call."))
+	else
+		to_chat(user, span_notice("The spheres snap back into the pharetra."))
 	linked_ammo_types.Cut()
 	update_icon()
 
 /obj/item/quiver/twilight_bullet/runicbag/MiddleClick(mob/user, params)
-	if(selected_type == /obj/item/ammo_casing/caseless/bullet/lead/runelock)
+	if(selected_type == /obj/item/ammo_casing/caseless/bullet/lead/runelock/runed)
 		selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
 		to_chat(user, span_notice("The spheres in the pouch shimmer and turn <b>blessed</b>."))
 	else
-		selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock
+		selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/runed
 		to_chat(user, span_notice("The spheres in the pouch darken and turn <b>runed</b>."))
 	convert_spheres(selected_type)
 	playsound(src, 'sound/magic/charged.ogg', 40, FALSE)
@@ -445,7 +471,7 @@
 	return TRUE
 
 /obj/item/quiver/twilight_bullet/runicbag/proc/summon_round(sphere_type)
-	if(!ispath(sphere_type, /obj/item/ammo_casing/caseless/bullet/lead/runelock))
+	if(!ispath(sphere_type, /obj/item/ammo_casing/caseless/bullet/lead/runelock) || sphere_type == /obj/item/ammo_casing/caseless/bullet/lead/runelock)
 		return FALSE
 	if(arrows.len >= max_storage)
 		return FALSE
@@ -458,7 +484,7 @@
 /obj/item/quiver/twilight_bullet/runicbag/runed/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/bullet/lead/runelock/R = new(src)
+		var/obj/item/ammo_casing/caseless/bullet/lead/runelock/runed/R = new(src)
 		arrows += R
 		link_casing(R)
 	update_icon()
@@ -471,3 +497,10 @@
 		arrows += R
 		link_casing(R)
 	update_icon()
+
+//Smaller, 8-sphere pharetras for the Arbalist's Fusilier option.
+/obj/item/quiver/twilight_bullet/runicbag/runed/arbalist
+	max_storage = 8
+
+/obj/item/quiver/twilight_bullet/runicbag/blessed/arbalist
+	max_storage = 8

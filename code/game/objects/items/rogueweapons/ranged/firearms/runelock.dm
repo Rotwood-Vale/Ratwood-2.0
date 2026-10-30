@@ -71,6 +71,10 @@
 	equip_delay_self = 1 SECONDS
 	unequip_delay_self = 1 SECONDS
 	inv_storage_delay = 1 SECONDS
+	var/can_spin = TRUE // Pistols can be spun on the finger. The rifle turns this off.
+
+	//spinning the pistol has a cooldown on the to_chat to reduce chatspam
+	COOLDOWN_DECLARE(flip_cooldown)
 
 /obj/item/gun/ballistic/revolver/rune/twilight_runelock/getonmobprop(tag)
 	. = ..()
@@ -80,6 +84,41 @@
 				return list("shrink" = 0.4,"sx" = -10,"sy" = -8,"nx" = 13,"ny" = -8,"wx" = -8,"wy" = -7,"ex" = 7,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 30,"sturn" = -30,"wturn" = -30,"eturn" = 30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/obj/item/gun/ballistic/revolver/rune/twilight_runelock/rmb_self(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(!can_spin)
+		return
+
+	SpinAnimation(4, 2) // The spin happens regardless of the cooldown
+
+	if(!COOLDOWN_FINISHED(src, flip_cooldown))
+		return
+
+	COOLDOWN_START(src, flip_cooldown, 3 SECONDS)
+	if((user.get_skill_level(/datum/skill/combat/firearms) < 3) && prob(40))
+		user.visible_message(
+			span_danger("While trying to spin [src] [user] drops it instead!"),
+			span_userdanger("While trying to spin [src] you drop it instead!"),
+		)
+		if(isliving(user))
+			var/mob/living/unfortunate_idiot = user
+			var/dropped_gun_target = pick(
+				BODY_ZONE_PRECISE_L_FOOT,
+				BODY_ZONE_PRECISE_R_FOOT,
+			)
+			unfortunate_idiot.apply_damage(src.force, BRUTE, dropped_gun_target)
+		user.dropItemToGround(src, TRUE)
+	else
+		user.visible_message(
+			span_notice("[user] spins [src] around [user.p_their()] finger"),
+			span_notice("You spin [src] around your finger"),
+		)
+		playsound(src, 'sound/foley/equip/swordsmall1.ogg', 20, FALSE)
+
+	return
 
 /obj/item/gun/ballistic/revolver/rune/twilight_runelock/shoot_with_empty_chamber()
 	if(cocked)
@@ -266,6 +305,7 @@
 	critfactor = 1
 	reload_time = 40
 	reload_stamina_cost = 80
+	can_spin = FALSE // No twirling a rifle around your finger.
 
 /obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle/getonmobprop(tag)
 	. = ..()
