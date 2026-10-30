@@ -50,7 +50,7 @@
 	if(hash_pos)
 		return "#[text2num(copytext(address, hash_pos + 1))]"
 	var/recipient = reject_bad_name(address, max_length = MAX_CHARTER_LEN)
-	if(recipient && lowertext(recipient) == lowertext(KINGSFIELD_MAILTAG))
+	if(recipient && LOWER_TEXT(recipient) == LOWER_TEXT(KINGSFIELD_MAILTAG))
 		for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
 			if(X.mailtag == KINGSFIELD_MAILTAG)
 				return "#[X.ournum]"
