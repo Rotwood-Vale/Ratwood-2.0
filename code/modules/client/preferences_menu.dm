@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 ))
 
 /datum/preferences
-	var/list/open_categories = list("Identity", "Background", "Voice", "Features", "Flavor Text")
+	var/list/open_categories = list()
 
 /datum/preferences/proc/yes_no(value)
 	if(value)
@@ -58,9 +58,6 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 
 /datum/preferences/proc/pref_line(list/items)
 	return "<div class='r'>[items.Join(" | ")]</div>"
-
-/datum/preferences/proc/pref_sub(label)
-	return "<div class='sub'>[label]</div>"
 
 /datum/preferences/proc/pref_box(header, body, details, key)
 	var/footer = ""
@@ -89,20 +86,13 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		body { font-size: 15px; }
 		table { table-layout: fixed; }
 		td { word-wrap: break-word; }
-		.r { line-height: 1.35; font-size: 15px; }
-		a.cat { display: inline-block; text-decoration: none; background: #2a0a0a; border-bottom: 1px solid #7b5353; margin: 6px 0 3px 0; padding: 2px 14px; font-size: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-		.sub { border-bottom: 1px dotted #7b5353; margin: 5px 0 1px 0; font-size: 15px; font-weight: bold; color: #c9a96e; }
+		.r { line-height: 1.35; font-size: 15px; margin: 4px 0; }
 		.box { border: 1px solid #7b5353; background: #1a0707; padding: 3px 6px; margin: 3px 0; }
 		</style>[get_top_html(user)]<table width='100%'><tr>"}
 	for(var/list/column in GLOB.pref_columns)
 		html += "<td width='40%' valign='top'>"
 		for(var/category in column)
-			var/arrow = "+"
-			var/body = ""
-			if(category in open_categories)
-				arrow = "-"
-				body = call(src, GLOB.pref_categories[category])(user)
-			html += "<div><a class='cat' href='?_src_=prefs;preference=category;name=[url_encode(category)]'>[arrow] [category]</a></div>[body]"
+			html += "[call(src, GLOB.pref_categories[category])(user)]<br>"
 		html += "</td>"
 		if(column == GLOB.pref_columns[1])
 			html += "<td width='20%'></td>"
@@ -236,14 +226,15 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 	if(!origin?.origin_language)
 		language_text = get_language_link(extra_language, "lang_free")
 	html += pref_line(list(pref_item("Language", language_text), pref_item("Food", pref_link("Change", "culinary", "menu"))))
+	html += "<br>"
 	html += pref_line(list(pref_item("Loadout Menu", pref_link("Change", "loadout", "menu"))))
-	html += pref_sub("Stats")
+	html += pref_line(list(pref_item("Presets", pref_link("Change", "loadout", "presets"))))
+	html += "<br>"
 	html += pref_box(pref_item("Statpack", bg_link(statpack.name, "statpack")), statpack.generate_modifier_string())
-	html += pref_sub("Virtues")
 	html += get_virtue_html("Primary Virtue", virtue, 1)
 	if(second_virtue_allowed())
 		html += get_virtue_html("Second Virtue", virtuetwo, 2)
-	html += pref_sub("Quirks")
+	html += "<br>"
 	var/triumph_gain = get_quirk_points_remaining()
 	var/gain_color = "#e3c06f"
 	var/gain_text = "[triumph_gain]"
@@ -267,12 +258,12 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 			quirk_details += "<font color='#f44336'>[current_quirk.warning_text]</font>"
 		html += pref_box(quirk_header, current_quirk.desc, quirk_details, current_quirk.name)
 	html += pref_line(list(bg_link("Add Quirk", "quirk_add")))
+	html += "<br>"
 	var/list/vice_names = list()
 	for(var/i in 1 to VICE_SLOTS)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			vice_names += "[vice.name] (+[vice.point_value])"
-	html += pref_sub("Vices")
 	html += pref_line(list(pref_item("Selected", bg_link(vice_names.Join(", ") || "None", "vice"))))
 	return html
 
@@ -332,7 +323,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 	var/bark_name = "INVALID"
 	if(B)
 		bark_name = initial(B.name)
-	var/html = pref_line(list(pref_item("Identity", pref_link(voice_type, "voicetype")), pref_item("Pack", pref_link(voice_pack, "voicepack"))))
+	var/html = pref_line(list(pref_item("Voice", pref_link(voice_type, "voicetype")), pref_item("Pack", pref_link(voice_pack, "voicepack"))))
 	html += pref_line(list(pref_item("Color", pref_link("Change", "voice")), pref_item("Emote Pitch", pref_link(voice_pitch, "voice_pitch"))))
 	html += pref_line(list(pref_item("Accent", pref_link(char_accent, "char_accent"))))
 	html += pref_line(list(pref_item("Mannerism", pref_link(char_mannerism, "char_mannerism"))))
@@ -506,6 +497,12 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 				descriptions[vice_label] = singleton?.desc
 				if(vice_type in current_types)
 					default_checked += vice_label
+			var/datum/charflaw/noflaw = GLOB.charflaw_singletons[/datum/charflaw/noflaw]
+			labels[noflaw.name] = noflaw.type
+			items += noflaw.name
+			descriptions[noflaw.name] = noflaw.desc
+			if(noflaw.type in current_types)
+				default_checked += noflaw.name
 			items = default_checked + (items - default_checked)
 			// i love TGUI checklist!!!
 			var/list/picked = tgui_input_checkboxes(user, "Select your vices.", "Vice Selection", items, 1, VICE_SLOTS, default_checked = default_checked, descriptions = descriptions, strict_modern = TRUE, window_width = 500, window_height = 500)

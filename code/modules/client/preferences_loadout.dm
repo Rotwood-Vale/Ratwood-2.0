@@ -20,7 +20,14 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	popup.set_content(get_loadout_slots_html(user))
 	popup.open(FALSE)
 
-/datum/preferences/proc/get_loadout_slots_html(mob/user)
+/datum/preferences/proc/open_preset_menu(mob/user)
+	if(!user || !user.client)
+		return
+	var/datum/browser/popup = new(user, "loadout_presets", "<div align='center'>Presets</div>", 600, 250)
+	popup.set_content(get_loadout_slots_html(user, TRUE))
+	popup.open(FALSE)
+
+/datum/preferences/proc/get_loadout_slots_html(mob/user, show_presets)
 	var/html = {"<style>
 		body { font-family: Verdana, Arial, sans-serif; font-size: 16px; line-height: normal; }
 		.slot { border: 1px solid #7b5353; background: #00000044; padding: 6px; margin: 2px; }
@@ -37,6 +44,13 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		a.btn.color { background: rgba(156, 39, 176, 0.3); border-color: #9C27B0; color: #9C27B0; }
 		a.btn:hover { filter: brightness(1.4); }
 		</style>"}
+	if(show_presets)
+		html += "<table width='100%'><tr>"
+		for(var/i in 1 to PRESET_SLOTS)
+			html += "<td valign='top'><div class='slot'><b>Preset [i]</b><br><span class='small'>[get_preset_summary(i)]</span><br>"
+			html += "[preset_link("Save", "save", i, "select")] [preset_link("Load", "load", i, "customize")] [preset_link("Clear", "clear", i, "clear")]</div></td>"
+		html += "</tr></table>"
+		return html
 	html += "<div class='sub'>Points: [get_remaining_points()] / [get_total_points()]</div>"
 	html += "<div class='small'>Loadout items sell for nothing. Armor rating is reduced by 90% with no crit prevention, and weapon damage is reduced by 25%.</div>"
 	html += "<table width='100%'><tr>"
@@ -51,10 +65,6 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		html += "</div></td>"
 		if(i % 2 == 0)
 			html += "</tr><tr>"
-	html += "</tr></table><div class='sub'>Presets</div><table width='100%'><tr>"
-	for(var/i in 1 to PRESET_SLOTS)
-		html += "<td valign='top'><div class='slot'><b>Preset [i]</b><br><span class='small'>[get_preset_summary(i)]</span><br>"
-		html += "[preset_link("Save", "save", i, "select")] [preset_link("Load", "load", i, "customize")] [preset_link("Clear", "clear", i, "clear")]</div></td>"
 	html += "</tr></table>"
 	return html
 
@@ -151,7 +161,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			vars["loadout_preset_[slot]"] = null
 			to_chat(user, span_notice("Cleared Preset [slot]."))
 	save_character()
-	open_loadout_slots(user)
+	ShowChoices(user)
+	open_preset_menu(user)
 
 // presets :(
 /datum/preferences/proc/save_preset(preset_slot)

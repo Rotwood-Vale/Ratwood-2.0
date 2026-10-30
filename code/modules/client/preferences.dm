@@ -1383,6 +1383,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	else if(href_list["preference"] == "loadout")
 		if(href_list["task"] == "menu")
 			open_loadout_slots(user)
+		else if(href_list["task"] == "presets")
+			open_preset_menu(user)
 		else
 			process_loadout_link(user, href_list)
 		return
