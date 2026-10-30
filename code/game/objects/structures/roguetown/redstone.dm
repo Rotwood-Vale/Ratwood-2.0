@@ -520,6 +520,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/englauncher/redstone_triggered(mob/user)
 	if(!containment)
 		return
+	var/turf/front = get_step(src, firedirection)
 		// Bag of throwables — pull and throw the first viable item
 	if(istype(containment, /obj/item/storage))
 		var/obj/item/storage/bag = containment
