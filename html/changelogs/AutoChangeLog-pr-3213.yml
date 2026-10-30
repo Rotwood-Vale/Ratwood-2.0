@@ -1,5 +1,0 @@
-author: "petwir1"
-delete-after: True
-changes:
-  - bugfix: "double repair method descriptors on the inquisitorial dusters are now reduced to the proper one per variant."
-  - bugfix: "repair kits now work on both duster variants.\n:cl:"

@@ -31,7 +31,7 @@
 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_NOVICE,
@@ -41,7 +41,7 @@
 	)
 	extra_context = "This subclass has multiple unique spells, including one in the form of an 'arcyne barrier'. \
 	So long as it's active, the user is immune to magic, yet still capable of casting it."
-	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 0, "utilities" = 4, ward = FALSE, "locked_aspects" = list(/datum/magic_aspect/cryomancy), "post_aspect_spells" = list(/datum/action/cooldown/spell/conjure_arcyne_ward/barrier))
+	subclass_mage_aspects = list("mastery" = TRUE, "major" = 1, "minor" = 0, "utilities" = 4, ward = FALSE, "locked_aspects" = list(/datum/magic_aspect/cryomancy), "post_aspect_spells" = list(/datum/action/cooldown/spell/conjure_arcyne_ward/barrier))
 
 /datum/outfit/job/roguetown/sojourner
 	job_bitflag = BITFLAG_HOLY_WARRIOR
@@ -57,10 +57,12 @@
 	head = /obj/item/clothing/head/roguetown/roguehood/sojourner
 	mask = /obj/item/clothing/mask/rogue/lordmask/naledi/sojourner
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/naledi
-	neck = /obj/item/clothing/neck/roguetown/psicross/g //Naledians covet gold far more than typical Orthodoxists covet silver.
+	neck = /obj/item/clothing/neck/roguetown/psicross/silver/sojourner
 	id = /obj/item/clothing/ring/signet/silver/inqscomm/g
 	r_hand = /obj/item/rogueweapon/woodstaff/implement/greater/sojourner//A very questionable spear. No pen. Middling CDR on cast.
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
+	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
+	armor = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	backl = /obj/item/storage/backpack/rogue/satchel/otavan
 	backr = /obj/item/rogueweapon/scabbard/gwstrap
@@ -70,5 +72,4 @@
 	cloak = /obj/item/clothing/cloak/psydontabard/alt
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/ortho = 1,
-	/obj/item/roguegem/amethyst/naledi = 1,
 	/obj/item/rogueweapon/spellbook = 1)

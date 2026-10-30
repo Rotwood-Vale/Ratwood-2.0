@@ -1293,17 +1293,19 @@
 
 //Only a 'woodenstaff' for the purpose of CDR on spells.
 /obj/item/rogueweapon/woodstaff/implement/greater/sojourner
+	base_implement_name = "sojourner staff"
 	name = "sojourner staff"
 	desc = "What remains of an old psydonic spear. The tip is blunted, with both barbs and trident-like head removed. \
 	It serves a more noble purpose, now, as a sojourner's casting implement. Though, with enough force, one may still drive the tip forward."
-	icon_state = "psystaff"//Temp
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "psystaff"
 	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)
 	gripped_intents = list(/datum/intent/spear/thrust/blunted, /datum/intent/special/magicarc, /datum/intent/mace/smash/wood/ranged)
 	force = 18
 	force_wielded = 20//Worse than just using a knife, really, despite the range.
 	thrown_bclass = BCLASS_STAB
 	throwforce = 20
-	max_integrity = 150
+	max_integrity = 200
 	max_blade_int = 180
 	smeltresult = /obj/item/ingot/silverblessed
 	is_silver = TRUE
