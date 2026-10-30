@@ -155,13 +155,13 @@
 		build_tiles()
 	for(var/mob/living/L in muted)
 		if(get_dist(L, src) > radius || L.z != z)
-			REMOVE_TRAIT(L, TRAIT_MUTE, src)
+			REMOVE_TRAIT(L, TRAIT_MUTE, "seal")
 			muted -= L
 	for(var/mob/living/L in range(radius, src))
 		if(L in muted)
 			continue
 		muted += L
-		ADD_TRAIT(L, TRAIT_MUTE, src)
+		ADD_TRAIT(L, TRAIT_MUTE, "seal")
 		to_chat(L, span_warning("The wind in my voice goes still. I can't speak!"))
 
 /datum/status_effect/seal_concentration
