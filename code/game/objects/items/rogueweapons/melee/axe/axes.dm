@@ -323,7 +323,7 @@
 	bigboy = TRUE
 
 /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/pioneer
-	name = "guilded eleonora"
+	name = "gilded eleonora"
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "pdolabra"
 	gripsprite = TRUE
