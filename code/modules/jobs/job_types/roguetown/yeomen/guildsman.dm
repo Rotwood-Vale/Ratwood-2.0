@@ -56,7 +56,7 @@
 		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE
 	)
 
 /datum/outfit/job/roguetown/guildsman/blacksmith/pre_equip(mob/living/carbon/human/H)
@@ -113,11 +113,11 @@
 
 	category_tags = list(CTAG_GUILDSMEN)
 	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ENGINEER, TRAIT_ARCYNE, TRAIT_LEGENDARY_MINER)
-	subclass_stats = list( // alchemy expert upon request
+	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
 		STATKEY_STR = 1,
-		STATKEY_CON = 1,
+		STATKEY_CON = 1
 	)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // Allows them to use their axe effectively
@@ -131,11 +131,12 @@
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/smelting = SKILL_LEVEL_JOURYNEYMAN,
-		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN
+		/datum/skill/craft/smelting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_APPRENTICE,
