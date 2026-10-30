@@ -73,7 +73,7 @@
 				emote("groan", forced = TRUE)
 
 
-		if(used && (consume_debuff || istype(used_weapon, /obj/projectile)))
+		if(used)
 			used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 	else
 		// DR types: blunt, fire
