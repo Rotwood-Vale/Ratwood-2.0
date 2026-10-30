@@ -125,6 +125,7 @@
 	if(isliving(target))
 		var/mob/living/player = target
 
+
 		if(ishuman(player))
 			var/mob/living/carbon/human/H = player
 			var/list/valid_limbs = list()
@@ -149,7 +150,10 @@
 		var/turf/throw_turf = get_ranged_target_turf(player, throw_dir, rand(2, 4))
 		if(throw_turf)
 			player.throw_at(throw_turf, 4, 2, null, FALSE, FALSE, null, MOVE_FORCE_STRONG)
+		if(ishuman(player))
+			pierces_left = 0
 			player.death()
+			explosion(turf, devastation_range = 0, heavy_impact_range = 3, light_impact_range = 6, flame_range = 0, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
 
 	else if(istype(target, /turf/closed) || istype(target, /obj/structure) || istype(target, /obj/machinery))
 		target.ex_act(EXPLODE_DEVASTATE)
@@ -183,39 +187,34 @@
 				mob.Knockdown(60)
 				mob.Paralyze(40)
 				mob.adjustBruteLoss(rand(40, 80))
-				mob.visible_message(span_warning("[mob] knocks you off your feet with a powerful shock wave!"))
-			else
-				mob.visible_message(span_warning("[mob] the blast creates a powerful shockwave!"))
-			return ..()
-				
 
 		var/shrapnel_count = rand(6, 12)
 		var/list/all_dirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST)
 		for(var/pellets in 1 to shrapnel_count)
-			var/obj/projectile/bullet/grapeshot_pellet/S = new(turf)
+			var/obj/projectile/bullet/grapeshot_pellet/grapeshotpellets = new(turf)
 			var/shoot_dir = pick(all_dirs)
 			var/turf/shrapnel_target = get_ranged_target_turf(turf, shoot_dir, rand(4, 7))
 
 			if(shrapnel_target)
 				shrapnel_target = locate(shrapnel_target.x + rand(-2, 2), shrapnel_target.y + rand(-2, 2), shrapnel_target.z)
 
-			S.preparePixelProjectile(shrapnel_target, src, null, rand(-30, 30))
-			S.p_x = 16
-			S.p_y = 16
-			S.fire()
+			grapeshotpellets.preparePixelProjectile(shrapnel_target, src, null, rand(-30, 30))
+			grapeshotpellets.p_x = 16
+			grapeshotpellets.p_y = 16
+			grapeshotpellets.fire()
 
 		for(var/pellets in 1 to 16)
-			var/obj/projectile/bullet/cannon_debris/D = new(turf)
+			var/obj/projectile/bullet/cannon_debris/debris = new(turf)
 			var/shoot_dir = pick(all_dirs)
 			var/turf/debris_target = get_ranged_target_turf(turf, shoot_dir, rand(5, 9))
 
 			if(debris_target)
 				debris_target = locate(debris_target.x + rand(-3, 3), debris_target.y + rand(-3, 3), debris_target.z)
 
-			D.preparePixelProjectile(debris_target, src, null, rand(-45, 45))
-			D.p_x = 16
-			D.p_y = 16
-			D.fire()
+			debris.preparePixelProjectile(debris_target, src, null, rand(-45, 45))
+			debris.p_x = 16
+			debris.p_y = 16
+			debris.fire()
 
 		explosion(turf, devastation_range = 0, heavy_impact_range = 3, light_impact_range = 6, flame_range = 0, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
 
@@ -332,14 +331,14 @@
 
 /obj/structure/cannon/attackby(obj/item/used_item, mob/user, params)
 	if(istype(used_item, /obj/item/powderflask))
-		var/obj/item/powderflask/P = used_item
+		var/obj/item/powderflask/powder = used_item
 		if(powder_loaded)
 			to_chat(user, span_warning("The gun is already loaded with gunpowder!"))
 			return
 		user.visible_message(span_notice("[user] begins to pour gunpowder into the [src.name]..."))
 		playsound(src, 'modular_twilight_axis//sound/cannon/powder.ogg', 100, TRUE)
 		if(do_after(user, 3 SECONDS, src))
-			if(QDELETED(P) || QDELETED(src))
+			if(QDELETED(powder) || QDELETED(src))
 				return
 			powder_loaded = TRUE
 			to_chat(user, span_notice("You poured gunpowder into the barrel."))
@@ -368,7 +367,7 @@
 			return
 		user.visible_message(span_notice("[user] begins to compress the charge in the [src.name] with a ramrod..."))
 		playsound(src, 'modular_twilight_axis//sound/cannon/ramrod.ogg', 100, TRUE)
-		if(do_after(user, 4 SECONDS, src))
+		if(do_after(user, 6 SECONDS, src))
 			rammed = TRUE
 			user.visible_message(span_notice("[user] packs the charge down with a ramrod. Now the cannon is ready to fire."))
 		return
@@ -384,10 +383,10 @@
 		if(istype(used_item, /obj/item/natural/fibers) || istype(used_item, /obj/item/natural/bundle/fibers))
 			inserted_fuse = new /obj/item/cannon_fuse/fiber(src)
 			if(istype(used_item, /obj/item/natural/bundle/fibers))
-				var/obj/item/natural/bundle/fibers/B = used_item
-				B.amount--
-				if(B.amount <= 0)
-					qdel(B)
+				var/obj/item/natural/bundle/fibers/fiberbundle = used_item
+				fiberbundle.amount--
+				if(fiberbundle.amount <= 0)
+					qdel(fiberbundle)
 			else
 				qdel(used_item)
 		else
@@ -450,11 +449,11 @@
 
 	playsound(src, 'modular_twilight_axis/sound/cannon/launch.ogg', 100, 0, 20, 1, null, null, FALSE, TRUE)
 
-	for(var/turf/AT in get_adjacent_turfs(src.loc))
-		new /obj/effect/particle_effect/smoke/arquebus(AT)
+	for(var/turf/smoke in get_adjacent_turfs(src.loc))
+		new /obj/effect/particle_effect/smoke/arquebus(smoke)
 		if(prob(40))
-			for(var/turf/BT in get_adjacent_turfs(AT))
-				new /obj/effect/particle_effect/smoke/arquebus(BT)
+			for(var/turf/smokeextra in get_adjacent_turfs(smoke))
+				new /obj/effect/particle_effect/smoke/arquebus(smokeextra)
 
 	var/turf/target_turf = get_ranged_target_turf(src, dir, 16)
 
@@ -462,24 +461,29 @@
 		var/pellet_count = 30
 		var/shoot_dir = dir
 		for(var/pellets in 1 to pellet_count)
-			var/obj/projectile/bullet/grapeshot_pellet/S = new(start_turf)
-			S.def_zone = pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+			var/obj/projectile/bullet/grapeshot_pellet/grapeshotpellets = new(start_turf)
+			grapeshotpellets.def_zone = pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 			var/turf/pellet_target = get_ranged_target_turf(start_turf, shoot_dir, 8)
 
 			if(pellet_target)
-				S.preparePixelProjectile(pellet_target, src, null, rand(-20, 20))
+				grapeshotpellets.preparePixelProjectile(pellet_target, src, null, rand(-20, 20))
 
-			S.p_x = 16
-			S.p_y = 16
-			S.fire()
+			grapeshotpellets.p_x = 16
+			grapeshotpellets.p_y = 16
+			grapeshotpellets.fire()
 	else
-		var/obj/projectile/bullet/cannonball_straight/P = new(start_turf)
+		var/obj/projectile/bullet/cannonball_straight/powder = new(start_turf)
 		if(target_turf)
-			P.preparePixelProjectile(target_turf, src)
+			powder.preparePixelProjectile(target_turf, src)
 
-		P.p_x = 16
-		P.p_y = 16
-		P.fire()
+		powder.p_x = 16
+		powder.p_y = 16
+		powder.fire()
+	
+	qdel(bullet_loaded)
+	bullet_loaded = null
+	powder_loaded = FALSE
+	rammed = FALSE
 
 	if((world.time - last_fired) < cooldown)
 		barrel_integrity -= 2
