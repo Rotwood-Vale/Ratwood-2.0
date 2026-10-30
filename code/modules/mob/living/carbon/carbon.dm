@@ -651,6 +651,7 @@
 	for(var/datum/reagent/r in reagents?.reagent_list)
 		if(r.pain && r.metabolizing)
 			chem_pain += r.pain
+	mark_pain_hud_dirty()
 
 /mob/living/carbon/proc/add_nausea(amt)
 	nausea = clamp(nausea + amt, 0, 300)

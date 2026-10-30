@@ -294,84 +294,63 @@
 		M.stamina_add(1*REM)
 
 
-/datum/reagent/medicine/pestra_lesser
-	name = "Pestra's Medicine"
-	description = ""
-	taste_mult = 3 // Bitter medicine
+/datum/reagent/medicine/pestra
+	abstract_type = /datum/reagent/medicine/pestra
 	color = "#008145"
 	taste_description = "terrible bitterness"
-	metabolization_rate = REAGENTS_METABOLISM
+	taste_mult = 3
+	/// Brute and burn healed per tick, other damage heals more
+	var/heal = 1
+	var/other_heal = 3
+	var/wound_heal = 1.5
+	var/blood_heal = 10
+	/// Fraction of STAWIL * 10 dealt as pain to the unaccustomed
+	var/pain_mult = 2.5
+	var/heal_message = "Your wounds stitch together, as if under the hands of a competent surgeon."
+	var/pain_message = "Your flesh moves on its own volition causing pain!"
 
-/datum/reagent/medicine/pestra_lesser/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/pestra/on_mob_life(mob/living/carbon/M)
 	if(volume >= 60)
-		M.reagents.remove_reagent(/datum/reagent/medicine/pestra_lesser, 2) //No overhealing.
-	var/should_pain = FALSE
+		M.reagents.remove_reagent(type, 2) //No overhealing.
 	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-		M.adjust_blood_volume(10)
-	if(M.heal_all_wounds(1.5))
-		should_pain = TRUE
+		M.set_blood_volume(min(M.get_blood_volume() + blood_heal, BLOOD_VOLUME_NORMAL))
+	var/should_pain = M.heal_all_wounds(wound_heal)
 	if(M.getBruteLoss() > 0 || M.getFireLoss() > 0)
 		should_pain = TRUE
-		M.adjustBruteLoss(-1*REM, FALSE)
-		M.adjustFireLoss(-1*REM, FALSE)
-	M.adjustToxLoss(-3*REM, FALSE)
-	M.adjustOxyLoss(-3*REM, FALSE)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -3*REM)
-	M.adjustCloneLoss(-3*REM, FALSE)
-	if(HAS_TRAIT(M, TRAIT_NOPAIN))
-		should_pain = FALSE
-	if(should_pain)
-		if(istype(M.patron, /datum/patron/divine/pestra) || M.skills?.get_skill_level(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
-			pain = 0
+		M.adjustBruteLoss(-heal * REM, FALSE)
+		M.adjustFireLoss(-heal * REM, FALSE)
+	M.adjustToxLoss(-other_heal * REM, FALSE)
+	M.adjustOxyLoss(-other_heal * REM, FALSE)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -other_heal * REM)
+	M.adjustCloneLoss(-other_heal * REM, FALSE)
+	pain = 0
+	if(should_pain && !HAS_TRAIT(M, TRAIT_NOPAIN))
+		if(istype(M.patron, /datum/patron/divine/pestra) || M.get_skill_level(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT)
 			if(prob(3))
-				to_chat(M, span_green("Your wounds stitch together, as if under the hands of a competent surgeon."))
+				to_chat(M, span_green(heal_message))
 		else
-			pain = M.STAWIL * 2.5 // quater of the pain treshold
+			pain = M.STAWIL * pain_mult
 			if(prob(3))
-				to_chat(M, span_infection("Your flesh moves on its own volition causing pain!"))
-	else
-		pain = 0
-	..()
+				to_chat(M, span_infection(pain_message))
+	return ..()
 
+/datum/reagent/medicine/pestra/lesser
+	name = "Pestra's Medicine"
+	description = "A bitter green draught that knits flesh, painfully for those unused to it."
 
-/datum/reagent/medicine/pestra_greater
+/datum/reagent/medicine/pestra/greater
 	name = "Pestra's Sacred Medicine"
-	description = ""
-	taste_mult = 5 // Bitter medicine
+	description = "A dark, bitter draught that knits even grievous wounds, at great pain to the unaccustomed."
 	color = "#002e18"
 	taste_description = "terrible bitterness and a hint of suffering"
-	metabolization_rate = REAGENTS_METABOLISM
-
-/datum/reagent/medicine/pestra_greater/on_mob_life(mob/living/carbon/M)
-	if(volume >= 60)
-		M.reagents.remove_reagent(/datum/reagent/medicine/pestra_greater, 2) //No overhealing.
-	if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-		M.adjust_blood_volume(20)
-	var/should_pain = FALSE
-	if(M.heal_all_wounds(3))
-		should_pain = TRUE
-	if(M.getBruteLoss() > 0 || M.getFireLoss() > 0)
-		should_pain = TRUE
-		M.adjustBruteLoss(-2*REM, FALSE)
-		M.adjustFireLoss(-2*REM, FALSE)
-	M.adjustToxLoss(-5*REM, FALSE)
-	M.adjustOxyLoss(-5*REM, FALSE)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
-	M.adjustCloneLoss(-5*REM, FALSE)
-	if(HAS_TRAIT(M, TRAIT_NOPAIN))
-		should_pain = FALSE
-	if(should_pain)
-		if(istype(M.patron, /datum/patron/divine/pestra) || M.skills?.get_skill_level(/datum/skill/misc/medicine) >= SKILL_LEVEL_EXPERT) // they are used to it, and understand what is happening
-			pain = 0
-			if(prob(3))
-				to_chat(M, span_green("Your wounds stitch together, as if under the hands of a master surgeon."))
-		else
-			pain = M.STAWIL * 5 // half of the pain treshold
-			if(prob(3))
-				to_chat(M, span_infection("Your flesh shifts and writhes causing immense suffering!"))
-	else
-		pain = 0
-	..()
+	taste_mult = 5
+	heal = 2
+	other_heal = 5
+	wound_heal = 3
+	blood_heal = 20
+	pain_mult = 5
+	heal_message = "Your wounds stitch together, as if under the hands of a master surgeon."
+	pain_message = "Your flesh shifts and writhes causing immense suffering!"
 
 
 /obj/item/melee/touch_attack/orison/proc/lay_hands(atom/thing, mob/living/carbon/human/user)
@@ -475,9 +454,9 @@
 					water_contents = list(/datum/reagent/water/blessed = water_qty)
 				else
 					if(holy_skill >= SKILL_LEVEL_MASTER)
-						water_contents = list(/datum/reagent/medicine/pestra_greater = water_qty)
+						water_contents = list(/datum/reagent/medicine/pestra/greater = water_qty)
 					else
-						water_contents = list(/datum/reagent/medicine/pestra_lesser = water_qty)
+						water_contents = list(/datum/reagent/medicine/pestra/lesser = water_qty)
 
 			var/datum/reagents/reagents_to_add = new()
 			reagents_to_add.add_reagent_list(water_contents)
