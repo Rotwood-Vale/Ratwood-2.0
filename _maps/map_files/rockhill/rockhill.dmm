@@ -24926,7 +24926,7 @@
 /area/rogue/outdoors/beach/harbor)
 "eTT" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant/datum/job/roguetown/hand);
+	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant,/datum/job/roguetown/hand);
 	secret_door_locale = "west kitchen escape"
 	},
 /turf/closed/wall/mineral/rogue/stone,
