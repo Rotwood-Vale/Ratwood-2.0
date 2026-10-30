@@ -528,6 +528,7 @@
 	var/list/cached_reagents = reagent_list
 	for(var/_reagent in cached_reagents)
 		var/datum/reagent/R = _reagent
+		var/temp_pain = 0
 		if(R.type == reagent)
 			if(my_atom && isliving(my_atom))
 				var/mob/living/M = my_atom
@@ -535,11 +536,15 @@
 					R.metabolizing = FALSE
 					R.on_mob_end_metabolize(M)
 				R.on_mob_delete(M)
+				temp_pain = R.pain
 			qdel(R)
 			reagent_list -= R
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change(DEL_REAGENT)
+				if(temp_pain && iscarbon(my_atom))
+					var/mob/living/carbon/C = my_atom
+					C.update_chem_pain()
 	return 1
 
 /datum/reagents/proc/update_total()
