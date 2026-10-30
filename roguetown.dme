@@ -3185,6 +3185,7 @@
 #include "code\modules\spells\spell_types\wizard\cryomancy\ice_wall.dm"
 #include "code\modules\spells\spell_types\wizard\cryomancy\rimecast.dm"
 #include "code\modules\spells\spell_types\wizard\cryomancy\verglas.dm"
+#include "code\modules\spells\spell_types\wizard\cryomancy\seal.dm"
 #include "code\modules\spells\spell_types\wizard\ferramancy\arcyne_lance.dm"
 #include "code\modules\spells\spell_types\wizard\ferramancy\bind_armament.dm"
 #include "code\modules\spells\spell_types\wizard\ferramancy\blade_dance.dm"
