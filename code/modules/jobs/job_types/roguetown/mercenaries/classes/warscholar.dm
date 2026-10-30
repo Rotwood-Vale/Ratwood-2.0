@@ -182,7 +182,7 @@
 			H.put_in_hands(new /obj/item/clothing/gloves/roguetown/knuckles(H))
 
 	head = /obj/item/clothing/head/roguetown/roguehood/pontifex
-	gloves = /obj/item/clothing/gloves/roguetown/angle/pontifex
+	gloves = /obj/item/clothing/gloves/roguetown/bandages/pontifex
 	head = /obj/item/clothing/head/roguetown/roguehood/pontifex
 	armor = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex
 	shirt = /obj/item/clothing/suit/roguetown/shirt/robe/pointfex

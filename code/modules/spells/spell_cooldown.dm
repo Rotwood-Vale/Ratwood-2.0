@@ -1164,6 +1164,8 @@
 	hold_warned = 0
 	next_hold_shake = 0
 	if(owner)
+		if(owner.ckey)
+			owner.log_message("started charging [name].", LOG_ATTACK)
 		owner.tempfixeye = TRUE
 		if(!owner.fixedeye)
 			owner.nodirchange = TRUE

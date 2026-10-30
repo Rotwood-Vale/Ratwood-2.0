@@ -3222,6 +3222,7 @@
 #include "code\modules\spells\spell_types\wizard\kinesis\kinetic_burst.dm"
 #include "code\modules\spells\spell_types\wizard\kinesis\mass_crush.dm"
 #include "code\modules\spells\spell_types\wizard\kinesis\soulshot.dm"
+#include "code\modules\spells\spell_types\wizard\misc\magicians_brick.dm"
 #include "code\modules\spells\spell_types\wizard\misc\aetherknife.dm"
 #include "code\modules\spells\spell_types\wizard\misc\blink.dm"
 #include "code\modules\spells\spell_types\wizard\misc\fly.dm"

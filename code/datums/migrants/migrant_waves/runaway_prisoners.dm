@@ -89,7 +89,8 @@
 	name = "Runaway Prisoner (Mage)"
 	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/roguetown/adventurer/runaway_prisoner/mage
-	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_ALCHEMY_EXPERT)
+	traits_applied = list(TRAIT_CRITICAL_RESISTANCE, TRAIT_ARCYNE, TRAIT_ALCHEMY_EXPERT)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 6, "ward" = TRUE)
 	category_tags = list(CTAG_RUNAWAY_PRISONER)
 	subclass_stats = list(
 		STATKEY_LCK = 3,
