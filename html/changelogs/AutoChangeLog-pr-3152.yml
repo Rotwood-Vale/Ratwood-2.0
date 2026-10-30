@@ -1,5 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - bugfix: "oozes are now no longer able to forever revive themselves out of suffering ooze when they die"
-  - balance: "ooze shapeshift ability now gives you a 30 second cooldown if you die in ooze form"
