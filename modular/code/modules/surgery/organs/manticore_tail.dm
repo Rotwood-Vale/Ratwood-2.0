@@ -135,6 +135,10 @@ GLOBAL_LIST_INIT(manticore_plain_tailmaw_accessories, list(
 /datum/mob_descriptor/manticore_tail/can_describe(mob/living/described)
 	return ishuman(described) && get_manticore_tail(described)
 
+/datum/mob_descriptor/manticore_tail/can_user_see(mob/living/described, mob/user)
+	var/datum/preferences/viewer_preferences = user?.client?.prefs
+	return !viewer_preferences || viewer_preferences.manticore_tail_messages
+
 /datum/mob_descriptor/manticore_tail/get_description(mob/living/described)
 	var/obj/item/organ/tail/manticore/tail = get_manticore_tail(described)
 	. = tail?.get_examine_text()
