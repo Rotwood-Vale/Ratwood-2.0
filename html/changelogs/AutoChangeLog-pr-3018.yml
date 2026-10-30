@@ -1,0 +1,7 @@
+author: "wikimody"
+delete-after: True
+changes:
+  - rscadd: "Pestrians now can create holy medicine with their orisons. Above novice make weaker version, masters and legends make the strong version. Being on weak intent makes holy water instead. Pestrian medicine heals at around half the power of red for weaker version, or full power of red for stronger. Non pestrians or dedicated surgeons will be in massive pain however if they are healed by it."
+  - bugfix: "Pestrians no longer make unholy water (ups, my bad)"
+  - code_imp: "Chems can now cause or reduce pain"
+  - bugfix: "Pestran devotes just learned that Pestra is the goddes they pray to, not Pesta (there was a wrong define there)"

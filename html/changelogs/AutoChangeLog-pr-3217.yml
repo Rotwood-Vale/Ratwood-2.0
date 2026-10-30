@@ -1,0 +1,4 @@
+author: "CentralSmith"
+delete-after: True
+changes:
+  - bugfix: "Pickpocketing now requires an adjacent target and cannot be used from inside hiding spots."
