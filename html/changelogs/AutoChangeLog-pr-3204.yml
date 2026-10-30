@@ -1,9 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Sojourner staves use their original sprites and retain their identity when attuned."
-  - balance: "Sojourners start with a leather coat and psydonic leather gloves."
-  - balance: "Sojourner staff integrity increased from 150 to 200."
-  - balance: "Sojourners start with Journeyman Polearms instead of Apprentice."
-  - balance: "Sojourners receive a gold-looking silver psycross for prayer, Inquisition rituals and silver protections."
-  - rscdel: "Sojourners no longer start with a Naledic Amythortz."
