@@ -823,6 +823,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOTIGHTGRABMESSAGE "notightgrabmessage" // Hides grab tightening messages.
 #define TRAIT_NOSSDINDICATOR "nossdindicator" // Hides the SSD indicator. Used with scrying.
 #define TRAIT_NOSTRUGGLE "nostruggle" // Instant grabs on someone else.
+#define TRAIT_OOZE_SUFFERING "ooze_suffering" // Held by a suffering ooze; dying now is permanent.
 #define TRAIT_GARROTED "garroted" // Garrote-wired. Used for a snowflaked grab with item relevant tracking.
 #define TRAIT_INDEXED "indexed" // Used in Indexer-mailing to prevent false-flags.
 #define TRAIT_ACCUSED "accused" // Used in Indexer-mailing to prevent false-flags.
