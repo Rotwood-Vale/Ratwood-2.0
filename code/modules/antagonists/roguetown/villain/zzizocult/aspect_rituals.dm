@@ -1887,8 +1887,15 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	base_intents = list(/datum/intent/simple/claw/witch_cat)
 	melee_damage_lower = 2
 	melee_damage_upper = 5
+	armor_penetration = PEN_MEDIUM
+	hud_type = /datum/hud/dextrous
+	held_items = list(null, null)
 	var/mob/living/carbon/human/body
 	var/list/bitten = list()
+
+/mob/living/simple_animal/pet/cat/rogue/black/witch/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
 
 /mob/living/simple_animal/pet/cat/rogue/black/witch/UnarmedAttack(atom/A, proximity)
 	var/mob/living/carbon/human/victim = A
@@ -1924,6 +1931,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	overlay_state = "tame_deadite"
 	recharge_time = 10 SECONDS
 	chargedloop = null
+	ignore_cockblock = TRUE
 	var/mob/living/simple_animal/pet/cat/rogue/black/witch/cat
 
 /obj/effect/proc_holder/spell/self/witch_possess/charge_check(mob/user, feedback = TRUE)
