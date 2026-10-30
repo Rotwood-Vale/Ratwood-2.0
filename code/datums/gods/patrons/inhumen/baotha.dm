@@ -1,7 +1,7 @@
 /datum/patron/inhumen/baotha
 	name = "Baotha"
 	domain = "Hedonism, Debauchery, Addiction, Heartbreak"
-	desc = "The Lady of Debauchery was the only snow elf to have survived Zizo's massacre, a beloved consort of Naledian royalty protected by ancient wards of the Naledian palace. The horrific ritual left her lux agonizingly half-anchored and hollow. Her pain dulled by spices and dust, Her soul soothed by intimacy. It would never be enough. The first succubus borne and consumed by depravity and addiction, upon the discovery of a shard of SYON took it from her beloved and ascended to Godhood. Her followers desire only to experience mind-rotting pleasures."
+	desc = "The Lady of Debauchery was the only snow elf to have survived Zizo's massacre, mere coincidence of being present in the most magically warded structure in Grimoria. The horrific ritual left her lux agonizingly half-anchored and hollow. Her pain dulled by spices and dust, Her soul soothed by intimacy. It would never be enough. The first succubus borne and consumed by depravity and addiction, upon the discovery of a shard of SYON took it from her beloved Noc and ascended to Godhood. Her followers desire only to experience mind-rotting pleasures."
 	worshippers = "Widows, Gamblers, Addicts, Scorned Lovers, Far-Gone Prostitutes"
 	virtues = "Lust, Gluttony, Thrill-Seeking"
 	sins = "Chastity, Temperance, Gloom"
