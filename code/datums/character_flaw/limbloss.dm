@@ -14,7 +14,7 @@
 
 /datum/charflaw/limbloss/arm_r
 	name = "Wood Arm (R)"
-	desc = "I lost my right arm long ago. The wooden one that replaced it doesn't bleed or feel pain, but it's fragile and can't grip weapons.<br><i>(Incompatible with the Steel Arm (R) quirk and Steel Golem virtue)</i>"
+	desc = "I lost my right arm long ago. The wooden one that replaced it doesn't bleed or feel pain, but it's fragile and can't grip weapons.<br><i>(Incompatible with the Bronze Arm (R) quirk and Bronze Golem virtue)</i>"
 	lost_zone = BODY_ZONE_R_ARM
 	point_value = 2
 
@@ -28,7 +28,7 @@
 
 /datum/charflaw/limbloss/arm_l
 	name = "Wood Arm (L)"
-	desc = "I lost my left arm long ago. The wooden one that replaced it doesn't bleed or feel pain, but it's fragile and can't grip weapons.<br><i>(Incompatible with the Steel Arm (L) quirk and Steel Golem virtue)</i>"
+	desc = "I lost my left arm long ago. The wooden one that replaced it doesn't bleed or feel pain, but it's fragile and can't grip weapons.<br><i>(Incompatible with the Bronze Arm (L) quirk and Bronze Golem virtue)</i>"
 	lost_zone = BODY_ZONE_L_ARM
 	point_value = 2
 

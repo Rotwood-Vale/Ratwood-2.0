@@ -1,7 +1,7 @@
 // Quirks are mostly for flavor or provide very little (or focused on roleplay) benefits.
 // At best they should be very minor conveniences as a reward for leaning into vices.
 // The baseline point_cost is one.
-// The steel limbs are the exception to the above, and are priced to match.
+// The bronze limbs are the exception to the above, and are priced to match.
 
 /datum/quirk/acquiredtastes
 	name = "Acquired Tastes"
@@ -14,6 +14,44 @@
 	desc = "I am cursed with an odd voice and appearance."
 	point_cost = 0
 	added_traits = list(TRAIT_COMICSANS)
+
+/datum/quirk/bronzearm_r
+	name = "Bronze Arm (R)"
+	desc = "Through connections or wealth, my right arm has been replaced by one of bronze and gears."
+	custom_text = "Replaces your right arm with a bronze prosthetic. It feels no pain and cannot bleed, but it does not heal on its own, can jam, and can be twisted off if unarmored. Anyone can repair it with a hammer, slowly without Engineering. Incompatible with the Wood Arm (R) vice."
+	warning_text = "This quirk costs nothing and does not apply to constructs, dolls or risen skeletons!"
+	point_cost = 3
+	fitted_prosthetics = list(/obj/item/bodypart/r_arm/prosthetic/bronzeright/fitted)
+	incompatible_vices = list(/datum/charflaw/limbloss/arm_r)
+	incompatible_virtues = list(/datum/virtue/utility/bronzegolem)
+
+/datum/quirk/bronzearm_l
+	name = "Bronze Arm (L)"
+	desc = "Through connections or wealth, my left arm has been replaced by one of bronze and gears."
+	custom_text = "Replaces your left arm with a bronze prosthetic. It feels no pain and cannot bleed, but it does not heal on its own, can jam, and can be twisted off if unarmored. Anyone can repair it with a hammer, slowly without Engineering. Incompatible with the Wood Arm (L) vice."
+	warning_text = "This quirk costs nothing and does not apply to constructs, dolls or risen skeletons!"
+	point_cost = 3
+	fitted_prosthetics = list(/obj/item/bodypart/l_arm/prosthetic/bronzeleft/fitted)
+	incompatible_vices = list(/datum/charflaw/limbloss/arm_l)
+	incompatible_virtues = list(/datum/virtue/utility/bronzegolem)
+
+/datum/quirk/bronzeleg_r
+	name = "Bronze Leg (R)"
+	desc = "Through connections or wealth, my right leg has been replaced by one of bronze and gears."
+	custom_text = "Replaces your right leg with a bronze prosthetic. It feels no pain and cannot bleed, but it does not heal on its own, can jam, and can be twisted off if unarmored. Anyone can repair it with a hammer, slowly without Engineering."
+	warning_text = "This quirk costs nothing and does not apply to constructs, dolls, risen skeletons, harpies, or bodies with a tail in place of legs!"
+	point_cost = 2
+	fitted_prosthetics = list(/obj/item/bodypart/r_leg/prosthetic/bronzeright/fitted)
+	incompatible_virtues = list(/datum/virtue/utility/bronzegolem)
+
+/datum/quirk/bronzeleg_l
+	name = "Bronze Leg (L)"
+	desc = "Through connections or wealth, my left leg has been replaced by one of bronze and gears."
+	custom_text = "Replaces your left leg with a bronze prosthetic. It feels no pain and cannot bleed, but it does not heal on its own, can jam, and can be twisted off if unarmored. Anyone can repair it with a hammer, slowly without Engineering."
+	warning_text = "This quirk costs nothing and does not apply to constructs, dolls, risen skeletons, harpies, or bodies with a tail in place of legs!"
+	point_cost = 2
+	fitted_prosthetics = list(/obj/item/bodypart/l_leg/prosthetic/bronzeleft/fitted)
+	incompatible_virtues = list(/datum/virtue/utility/bronzegolem)
 
 /datum/quirk/deadnose
 	name = "Dead Nose"
@@ -294,44 +332,6 @@
 /datum/quirk/secondvoice/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.verbs += /mob/living/carbon/human/proc/changevoice
 	recipient.verbs += /mob/living/carbon/human/proc/swapvoice
-
-/datum/quirk/steelarm_r
-	name = "Steel Arm (R)"
-	desc = "Through connections or wealth, my right arm has been replaced by one of steel and gears."
-	custom_text = "Replaces your right arm with a steel prosthetic. It feels no pain and cannot bleed, but it does not heal on its own, can jam, and can be twisted off if unarmored. Anyone can repair it with a hammer, slowly without Engineering. Incompatible with the Wood Arm (R) vice."
-	warning_text = "This quirk costs nothing and does not apply to constructs, dolls or risen skeletons!"
-	point_cost = 3
-	fitted_prosthetics = list(/obj/item/bodypart/r_arm/prosthetic/steel/fitted)
-	incompatible_vices = list(/datum/charflaw/limbloss/arm_r)
-	incompatible_virtues = list(/datum/virtue/utility/steelgolem)
-
-/datum/quirk/steelarm_l
-	name = "Steel Arm (L)"
-	desc = "Through connections or wealth, my left arm has been replaced by one of steel and gears."
-	custom_text = "Replaces your left arm with a steel prosthetic. It feels no pain and cannot bleed, but it does not heal on its own, can jam, and can be twisted off if unarmored. Anyone can repair it with a hammer, slowly without Engineering. Incompatible with the Wood Arm (L) vice."
-	warning_text = "This quirk costs nothing and does not apply to constructs, dolls or risen skeletons!"
-	point_cost = 3
-	fitted_prosthetics = list(/obj/item/bodypart/l_arm/prosthetic/steel/fitted)
-	incompatible_vices = list(/datum/charflaw/limbloss/arm_l)
-	incompatible_virtues = list(/datum/virtue/utility/steelgolem)
-
-/datum/quirk/steelleg_r
-	name = "Steel Leg (R)"
-	desc = "Through connections or wealth, my right leg has been replaced by one of steel and gears."
-	custom_text = "Replaces your right leg with a steel prosthetic that slows you down. It feels no pain and cannot bleed, but it does not heal on its own, can jam, and can be twisted off if unarmored. Anyone can repair it with a hammer, slowly without Engineering."
-	warning_text = "This quirk costs nothing and does not apply to constructs, dolls, risen skeletons, harpies, or bodies with a tail in place of legs!"
-	point_cost = 2
-	fitted_prosthetics = list(/obj/item/bodypart/r_leg/prosthetic/steel/fitted)
-	incompatible_virtues = list(/datum/virtue/utility/steelgolem)
-
-/datum/quirk/steelleg_l
-	name = "Steel Leg (L)"
-	desc = "Through connections or wealth, my left leg has been replaced by one of steel and gears."
-	custom_text = "Replaces your left leg with a steel prosthetic that slows you down. It feels no pain and cannot bleed, but it does not heal on its own, can jam, and can be twisted off if unarmored. Anyone can repair it with a hammer, slowly without Engineering."
-	warning_text = "This quirk costs nothing and does not apply to constructs, dolls, risen skeletons, harpies, or bodies with a tail in place of legs!"
-	point_cost = 2
-	fitted_prosthetics = list(/obj/item/bodypart/l_leg/prosthetic/steel/fitted)
-	incompatible_virtues = list(/datum/virtue/utility/steelgolem)
 
 /datum/quirk/ugly
 	name = "Ugly"

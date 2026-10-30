@@ -236,20 +236,20 @@
 	added_traits = list(TRAIT_SLEUTH)
 	custom_text = "- Upon right clicking a track, you will Mark the person who made them <i>(Expert skill required, not exclusive to this Virtue)</i>.\n- Further tracks found will be automatically highlighted as theirs, along with the person themselves, if they are not sneaking or invisible at the time.\n- Reduces the cooldown for tracking, allows track examining right away, and movement no longer cancels tracking.\n- As a bonus, you'll be able to read people's noble gossip regardless of <i>your</i> noble status."
 
-/datum/virtue/utility/steelgolem
-	name = "Steel Golem (-10 TRI)"
-	desc = "Through wealth, misfortune, or experimentation, all four of my limbs have been replaced with steel. I am part man, part machine."
+/datum/virtue/utility/bronzegolem
+	name = "Bronze Golem (-10 TRI)"
+	desc = "Through wealth, misfortune, or experimentation, all four of my limbs have been replaced with bronze. I am part man, part machine."
 	triumph_cost = 10
 	added_skills = list(list(/datum/skill/craft/engineering, 2, 6))
 	fitted_prosthetics = list(
-		/obj/item/bodypart/r_arm/prosthetic/steel/fitted,
-		/obj/item/bodypart/l_arm/prosthetic/steel/fitted,
-		/obj/item/bodypart/r_leg/prosthetic/steel/fitted,
-		/obj/item/bodypart/l_leg/prosthetic/steel/fitted
+		/obj/item/bodypart/r_arm/prosthetic/bronzeright/fitted,
+		/obj/item/bodypart/l_arm/prosthetic/bronzeleft/fitted,
+		/obj/item/bodypart/r_leg/prosthetic/bronzeright/fitted,
+		/obj/item/bodypart/l_leg/prosthetic/bronzeleft/fitted
 	)
 	incompatible_vices = list(/datum/charflaw/limbloss/arm_r, /datum/charflaw/limbloss/arm_l)
-	incompatible_quirks = list(/datum/quirk/steelarm_r, /datum/quirk/steelarm_l, /datum/quirk/steelleg_r, /datum/quirk/steelleg_l)
-	custom_text = "Replaces both arms and both legs with steel prosthetics.\n- Grants +2 Engineering.\n- They feel no pain and cannot bleed, but they do not heal on their own, can jam, and can be twisted off if unarmored.\n- The legs slow you down.\n- Anyone can repair them with a hammer, slowly without Engineering.\n- Does not apply to constructs, dolls, risen skeletons, harpies, or bodies with a tail in place of legs."
+	incompatible_quirks = list(/datum/quirk/bronzearm_r, /datum/quirk/bronzearm_l, /datum/quirk/bronzeleg_r, /datum/quirk/bronzeleg_l)
+	custom_text = "Replaces both arms and both legs with bronze prosthetics.\n- Grants +2 Engineering.\n- They feel no pain and cannot bleed, but they do not heal on their own, can jam, and can be twisted off if unarmored.\n- Anyone can repair them with a hammer, slowly without Engineering.\n- Does not apply to constructs, dolls, risen skeletons, harpies, or bodies with a tail in place of legs."
 
 /datum/virtue/utility/woodwalker
 	name = "Woodwalker"

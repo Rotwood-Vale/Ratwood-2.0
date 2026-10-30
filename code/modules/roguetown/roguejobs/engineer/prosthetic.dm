@@ -563,23 +563,21 @@
 
 /////     FITTED LIMBS     /////
 
-// Given by the Steel Arm and Steel Leg quirks and the Steel Golem virtue.
-// They are worthless once removed so a free limb can't become coin or ingots, and the legs are lighter than crafted ones.
+// Given by the Bronze Arm and Bronze Leg quirks and the Bronze Golem virtue.
+// They are worthless once removed so a free limb can't become coin or ingots.
 
-/obj/item/bodypart/l_arm/prosthetic/steel/fitted
+/obj/item/bodypart/l_arm/prosthetic/bronzeleft/fitted
 	sellprice = 0
 	smeltresult = null
 
-/obj/item/bodypart/r_arm/prosthetic/steel/fitted
+/obj/item/bodypart/r_arm/prosthetic/bronzeright/fitted
 	sellprice = 0
 	smeltresult = null
 
-/obj/item/bodypart/l_leg/prosthetic/steel/fitted
+/obj/item/bodypart/l_leg/prosthetic/bronzeleft/fitted
 	sellprice = 0
 	smeltresult = null
-	organ_slowdown = 0.5
 
-/obj/item/bodypart/r_leg/prosthetic/steel/fitted
+/obj/item/bodypart/r_leg/prosthetic/bronzeright/fitted
 	sellprice = 0
 	smeltresult = null
-	organ_slowdown = 0.5
