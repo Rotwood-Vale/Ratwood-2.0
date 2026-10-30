@@ -134,7 +134,7 @@
 /obj/effect/seal_field/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in muted)
-		REMOVE_TRAIT(L, TRAIT_MUTE, src)
+		REMOVE_TRAIT(L, TRAIT_MUTE, "seal")
 	QDEL_LIST(tiles)
 	muted = null
 	follow = null
