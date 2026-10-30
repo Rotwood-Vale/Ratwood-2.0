@@ -15245,7 +15245,7 @@
 /area/rogue/under/town/basement)
 "cYT" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant);
+	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant,/datum/job/roguetown/hand);
 	secret_door_locale = "rear of pantry"
 	},
 /turf/closed/wall/mineral/rogue/stonebrick,
@@ -18331,7 +18331,7 @@
 /area/rogue/indoors/town/manor/rockhill)
 "dFt" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant);
+	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant, /datum/job/roguetown/hand);
 	secret_door_locale = "heir suite access"
 	},
 /turf/closed/wall/mineral/rogue/wooddark/vertical,
@@ -24926,7 +24926,7 @@
 /area/rogue/outdoors/beach/harbor)
 "eTT" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant);
+	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant/datum/job/roguetown/hand);
 	secret_door_locale = "west kitchen escape"
 	},
 /turf/closed/wall/mineral/rogue/stone,
@@ -46831,7 +46831,7 @@
 /area/rogue/indoors/town/warden)
 "joa" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/prince);
+	secret_door_access = list(/datum/job/roguetown/prince,/datum/job/roguetown/hand);
 	secret_door_locale = "above dining hall"
 	},
 /turf/closed/wall/mineral/rogue/wooddark/horizontal,
@@ -46910,7 +46910,7 @@
 /area/rogue/outdoors/rtfield/rockhill)
 "jpp" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant);
+	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant,/datum/job/roguetown/hand);
 	secret_door_locale = "servant passage entrance"
 	},
 /turf/closed/wall/mineral/rogue/stonebrick,
@@ -47543,7 +47543,7 @@
 /area/rogue/indoors/town/church)
 "jvp" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant);
+	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant,/datum/job/roguetown/hand);
 	secret_door_locale = "west kitchen escape"
 	},
 /turf/closed/wall/mineral/rogue/decostone/long,
@@ -53747,6 +53747,13 @@
 /obj/machinery/light/rogue/candle,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town/garrison)
+"kJV" = (
+/obj/effect/mapping_helpers/secret_door_creator{
+	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant,/datum/job/roguetown/hand);
+	secret_door_locale = "study"
+	},
+/turf/closed/wall/mineral/rogue/stonebrick,
+/area/rogue/under/town/basement/keep)
 "kKe" = (
 /obj/structure/stairs/stone{
 	dir = 4
@@ -55153,7 +55160,7 @@
 /area/rogue/under/dungeon/tricksntraps)
 "kZt" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/prince);
+	secret_door_access = list(/datum/job/roguetown/prince,/datum/job/roguetown/hand);
 	secret_door_locale = "heir's rooms"
 	},
 /turf/closed/wall/mineral/rogue/stonebrick,
@@ -69117,8 +69124,8 @@
 /area/rogue/indoors/town/cell)
 "nMH" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant);
-	secret_door_locale = "study"
+	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant,/datum/job/roguetown/hand);
+	secret_door_locale = "seneschal quarters"
 	},
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/under/town/basement/keep)
@@ -71262,7 +71269,7 @@
 /area/rogue/indoors/town/tailor)
 "okA" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant);
+	secret_door_access = list(/datum/job/roguetown/butler,/datum/job/roguetown/servant,/datum/job/roguetown/hand);
 	secret_door_locale = "councillor's suite"
 	},
 /turf/closed/wall/mineral/rogue/stonebrick,
@@ -102672,7 +102679,7 @@
 /area/rogue/indoors)
 "uFr" = (
 /obj/effect/mapping_helpers/secret_door_creator{
-	secret_door_access = list(/datum/job/roguetown/prince);
+	secret_door_access = list(/datum/job/roguetown/prince, /datum/job/roguetown/hand);
 	secret_door_locale = "heir's rooms"
 	},
 /turf/closed/wall/mineral/rogue/stonebrick,
@@ -519192,7 +519199,7 @@ hRX
 wtC
 eJr
 jTP
-nMH
+kJV
 wtF
 wtF
 jTP
