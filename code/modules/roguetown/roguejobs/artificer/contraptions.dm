@@ -91,6 +91,7 @@
 		if(skill > 2)
 			. += span_warning("You calculate this contraptions chance of failure to be anywhere between [max(0, (misfire_chance - skill) - rand(4))]% and [max(2, (misfire_chance - skill) + rand(3))]%.")
 
+	
 	if(skill >= 6 && sneaky_misfire_chance)
 		. += span_warning("This contraption has a chance for catastrophic failure in the hands of the inexperienced.")
 
@@ -252,6 +253,7 @@
 	off_icon = "metalizer_off"
 	w_class = WEIGHT_CLASS_NORMAL
 	charge_per_source = 10
+	charge_per_prime = 20
 	max_stored_charge = 100
 	grid_height = 64
 	grid_width = 64
@@ -272,14 +274,6 @@
 	..()
 	if(!current_charge)
 		return
-	var/skill = user.get_skill_level(/datum/skill/craft/engineering)
-	if(istype(O, /obj/item/grown/log/tree/small)&& skill>3)
-		var/newdir = O.dir
-		var/obj/I = O
-		var/obj/item/randomingot = pick (/obj/item/ingot/bronze, /obj/item/ingot/iron, /obj/item/ingot/steel)
-		var/obj/result = new randomingot(get_turf(I))
-		result.dir = newdir
-		qdel(I)
 	if(!O.metalizer_result)
 		to_chat(user, span_info("The [name] refuses to function."))
 		playsound(user, 'sound/items/flint.ogg', 100, FALSE)
@@ -289,10 +283,38 @@
 		S.set_up(1, 1, front)
 		S.start()
 		return
+	var/skill = user.get_skill_level(/datum/skill/craft/engineering)
+	if(istype(O, /obj/structure/mineral_door/wood)) //This is to ensure the new door will retain its lock
+		var/obj/structure/mineral_door/wood/I = O
+		var/obj/structure/mineral_door/wood/new_door = new I.metalizer_result(get_turf(I))
+		new_door.locked = I.locked
+		if(I.lockid)
+			new_door.lockid = I.lockid
+		qdel(I)
+	else
+		var/newdir = O.dir
+		var/obj/I = O
+		var/obj/result = new I.metalizer_result(get_turf(I))
+		result.dir = newdir
+		qdel(I)
+	flick(on_icon, src)
 	charge_deduction(O, user, 1)
 	shake_camera(user, 1, 1)
 	playsound(src, 'sound/magic/swap.ogg', 100, TRUE)
+	user.mind.add_sleep_experience(/datum/skill/craft/engineering, (user.STAINT / 2))
+	if(misfire_chance && prob(max(0, misfire_chance - user.goodluck(2) - skill)))
+		misfire(O, user)
 	return
+
+/obj/item/contraption/wood_metalizer/misfire_result()
+	misfiring = TRUE
+	for(var/obj/object in oview(3, src))
+		if(object.metalizer_result)  // Check if the object is within the flame range
+			new object.metalizer_result(get_turf(object))
+			playsound(object, 'sound/magic/swap.ogg', 100, TRUE)
+			qdel(object)
+	explosion(src, light_impact_range = 3, flame_range = 1, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+	qdel(src)
 
 /obj/item/contraption/smelter
 	name = "portable smelter"
@@ -405,7 +427,7 @@
 	off_icon = "shears"
 	w_class = WEIGHT_CLASS_SMALL
 	smeltresult = /obj/item/ingot/bronze
-	charge_per_source = 4
+	charge_per_source = 5
 	max_stored_charge = 20
 	grid_height = 32
 	grid_width = 64
