@@ -90,8 +90,7 @@
 	if(misfire_chance)
 		if(skill > 2)
 			. += span_warning("You calculate this contraptions chance of failure to be anywhere between [max(0, (misfire_chance - skill) - rand(4))]% and [max(2, (misfire_chance - skill) + rand(3))]%.")
-	else
-		. += span_warning("It seems slightly unstable...")
+
 	if(skill >= 6 && sneaky_misfire_chance)
 		. += span_warning("This contraption has a chance for catastrophic failure in the hands of the inexperienced.")
 
@@ -303,6 +302,7 @@
 	off_icon = "smelter_off"
 	w_class = WEIGHT_CLASS_BULKY
 	accepted_power_source = /obj/item/rogueore/coal
+	prime_power_source = null
 	misfire_chance = 0
 	charge_per_source = 10
 	max_stored_charge = 20
@@ -475,9 +475,10 @@
 	off_icon = "imprinter_off"
 	w_class = WEIGHT_CLASS_NORMAL
 	accepted_power_source = /obj/item/customlock
+	prime_power_source = null
 	misfire_chance = 0
 	sneaky_misfire_chance = 0
-	charge_per_source = 4
+	charge_per_source = 10
 	max_stored_charge = 20
 	grid_height = 32
 	grid_width = 64

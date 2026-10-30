@@ -151,7 +151,7 @@
 		if(throw_turf)
 			player.throw_at(throw_turf, 4, 2, null, FALSE, FALSE, null, MOVE_FORCE_STRONG)
 		if(ishuman(player))
-			pierces_left = 0
+			pierces_left = 1
 			player.death()
 			explosion(turf, devastation_range = 0, heavy_impact_range = 3, light_impact_range = 6, flame_range = 0, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
 
