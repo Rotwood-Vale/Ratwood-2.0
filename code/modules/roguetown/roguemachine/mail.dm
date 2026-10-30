@@ -369,7 +369,7 @@
 							GLOB.confessors += ", [I.signee]"
 						else
 							GLOB.confessors += "[I.signee]"
-				if(no | selfreport)
+				if(no || selfreport || stopfarming)
 					if(I.paired)
 						qdel(I.paired)
 					qdel(I)
