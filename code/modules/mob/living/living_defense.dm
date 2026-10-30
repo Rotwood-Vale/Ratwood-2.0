@@ -15,7 +15,12 @@
 	// don't feed it into checkarmor (which already ran above and handles null damage fine).
 	var/block_damage = damage || 999
 	var/blocked = 0
-	if(attack_flag in ARMOR_DR_TYPES)
+	if(attack_flag in ARMOR_DR_PIERCE_TYPES)
+		// Acid/Bullet: DR reduces damage, but reduced damage still reaches HP.
+		if(armor_tier > 0)
+			var/dr_mult = 1 / (1 + 0.2 * armor_tier)
+			blocked = block_damage * (1 - dr_mult)
+	else if(attack_flag in ARMOR_DR_TYPES)
 		// Blunt/Fire: armor absorbs all HP damage. DR reduces integrity damage to armor (in checkarmor).
 		if(armor_tier > 0)
 			blocked = block_damage

@@ -1,4 +1,8 @@
 /mob/living/carbon/human/proc/attempt_steal(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	// Check from the thief so hiding inside an object does not count as reach.
+	if(!user.Adjacent(target))
+		to_chat(user, span_warning("They're out of reach."))
+		return
 	var/mob/living/carbon/human/user_human = user
 	var/mob/living/carbon/human/target_human = target
 	var/thiefskill = user.get_skill_level(/datum/skill/misc/stealing) + (has_world_trait(/datum/world_trait/matthios_fingers) ? 1 : 0)
@@ -12,6 +16,9 @@
 	var/exp_to_gain = user_human.STAINT
 	to_chat(user, span_notice("I try to steal from [target_human]..."))	
 	if(do_after(user, 5, target = target_human, progress = 0))
+		if(!user.Adjacent(target_human))
+			to_chat(user, span_warning("They're out of reach."))
+			return
 		if(stealroll > targetperception)
 			//TODO add exp here
 			// RATWOOD MODULAR START

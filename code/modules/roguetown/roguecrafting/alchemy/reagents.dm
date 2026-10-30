@@ -311,7 +311,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	reagent_state = LIQUID
 	color = "#000000"
 	taste_description = "sour meat"
-	metabolization_rate = 1000000 // handled by on add, any amount is dangerous
+	metabolization_rate = 1 // handled by on add, any amount is dangerous
 	harmful = TRUE
 	self_consuming = TRUE // shouldn't matter, but yes, its liver independent
 
@@ -421,6 +421,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	metabolization_rate = 0.1
 	toxpwr = 0
 	harmful = TRUE
+	pain = 500
 
 /datum/reagent/toxin/killersice/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(20, 0)

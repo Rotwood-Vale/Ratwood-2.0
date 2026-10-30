@@ -95,7 +95,10 @@
 					// DR tier formula: damage * 1 / (1 + 0.2 * tier)
 					// Fire: armor takes the DR-reduced amount, none reaches HP.
 					var/dr_mult = 1 / (1 + 0.2 * protection)
-					intdamage *= dr_mult
+					if(d_type in ARMOR_DR_PIERCE_TYPES)
+						intdamage *= (1 - dr_mult)
+					else
+						intdamage *= dr_mult
 			if(intdamfactor != 1)
 				intdamage *= intdamfactor
 
