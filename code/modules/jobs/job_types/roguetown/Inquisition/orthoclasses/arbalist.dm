@@ -68,9 +68,7 @@
 		/obj/item/grapplinghook = 1,
 		/obj/item/paper/inqslip/arrival/ortho = 1,
 		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
-		/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest = 1, //You get ONE.
-		/obj/item/inqhound = 1,
-		/obj/item/inqscanner = 1,
+		/obj/item/ammo_casing/caseless/rogue/heavy_bolt/tempest = 1//You get ONE.
 		)
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)	//Capped to T2 miracles.
