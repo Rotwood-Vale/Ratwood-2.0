@@ -1,0 +1,6 @@
+author: "I_Buff_What_Kills_Me"
+delete-after: True
+changes:
+  - rscadd: "prevents exorcist and inquisition from taking silverweakness trait"
+  - bugfix: "hemophage cursed blood samples can be turned in for marquees (with the right restrictions)"
+  - bugfix: "no more hemophage marquee farm from inquis memeber"

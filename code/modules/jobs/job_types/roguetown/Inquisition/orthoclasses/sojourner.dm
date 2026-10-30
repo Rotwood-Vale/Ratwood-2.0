@@ -25,6 +25,7 @@
 		STATKEY_STR = -1,
 		STATKEY_SPD = -1,
 	)
+	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_MASTER,
 		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
