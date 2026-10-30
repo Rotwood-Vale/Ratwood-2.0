@@ -60,7 +60,7 @@
 	if(isliving(target))
 		var/mob/living/target_living = target
 		if(target_living.has_status_effect(/datum/status_effect/debuff/exposed) || target_living.has_status_effect(/datum/status_effect/debuff/vulnerable))
-			damage *= 1.2
+			damage *= 1.5
 
 	. = ..()
 
