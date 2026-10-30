@@ -572,7 +572,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 			return
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
-	var/list/choices = list("PITCH", "TOIL", "STRAND", "ROT", "BLOOD", "NOISE", "BITE")
+	var/list/choices = list("PITCH", "TOIL", "STRAND", "ROT", "BLOOD", "NOISE", "BITE") - GLOB.zizo_bestowed
 	var/choice = tgui_input_list(user, "CHOOSE AN ASPECT TO BRING FORTH.","ZIZO", choices)
 	if(!choice)
 		new /obj/item/necro_relics/necro_crystal(center)
@@ -584,7 +584,49 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		qdel(poo)
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
+	if(choice in GLOB.zizo_bestowed)
+		new /obj/item/necro_relics/necro_crystal(center)
+		return
 	GLOB.zizo_bestowed += choice
+	if(choice == "BITE")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_bite, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Murk!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+	if(choice == "STRAND")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_strand, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Nightmares!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+	if(choice == "TOIL")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_toil, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Decay!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+	if(choice == "ROT")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_rot, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Rot!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+		var/list/food = list()
+		for(var/obj/item/reagent_containers/food/snacks/F in world)
+			if(F.eat_effect != /datum/status_effect/debuff/rotfood)
+				food += F
+		for(var/obj/item/reagent_containers/food/snacks/F as anything in food)
+			if(F.become_rotten())
+				STOP_PROCESSING(SSobj, F)
+			CHECK_TICK
+	if(choice == "NOISE")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_noise, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Madness!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+	if(choice == "BLOOD")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_blood, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Blood!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+		for(var/turf/open/water/W in world)
+			W.water_reagent = /datum/reagent/blood
+			W.water_color = "#C80000"
+			W.mapped = FALSE
+			W.update_icon()
+			CHECK_TICK
+	if(choice == "PITCH")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_pitch, 0)
+		GLOB.todoverride = "night"
+		settod()
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Darkness!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+		for(var/obj/machinery/light/L in GLOB.machines)
+			L.update()
 	to_chat(user, span_boldnotice("The [choice] aspect has been unleashed upon Grimoria! Its rites may now be researched."))
 	user.Jitter(4)
 	gate_count++
@@ -752,6 +794,11 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /obj/item/rogueweapon/sword/long/noise/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/soulbound_weapon, /datum/skill/combat/swords)
+
+/obj/item/rogueweapon/sword/long/noise/attack(mob/living/M, mob/living/user)
+	update_force_dynamic()
+	force_dynamic += force_dynamic * max(M.get_stress_amount(), 0) / 30
+	return ..()
 
 /datum/special_intent/madman_delusion
 	name = "Cruelty"
@@ -1220,6 +1267,27 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/status_effect/dream_teleport/recall
 	duration = 3 MINUTES
+
+/mob/living/simple_animal/hostile/rogue/dreamfiend/nightmare
+	faction = list("dream", "crabs", "zizo_cult")
+
+/datum/status_effect/dream_teleport/strand/nightmare/on_creation(mob/living/new_owner, turf/origin)
+	if(prob(50) && length(GLOB.zizo_reality_rends))
+		var/list/near_rend = list()
+		for(var/turf/open/T in range(4, pick(GLOB.zizo_reality_rends)))
+			if(!T.density)
+				near_rend += T
+		if(length(near_rend))
+			origin = pick(near_rend)
+	new_owner.SetSleeping(0)
+	summon_dreamfiend(new_owner, null, /mob/living/simple_animal/hostile/rogue/dreamfiend/nightmare)
+	return ..(new_owner, origin)
+
+/datum/status_effect/dream_teleport/strand/nightmare/on_remove()
+	for(var/mob/living/simple_animal/hostile/rogue/dreamfiend/nightmare/F in world)
+		if(F.ai_controller.blackboard[BB_MAIN_TARGET] == owner)
+			qdel(F)
+	return ..()
 
 /datum/ritual/strand/dream_jaunt
 	name = "Dream Jaunt"
@@ -1893,7 +1961,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/mob/living/carbon/human/body
 	var/list/bitten = list()
 
-/mob/living/simple_animal/pet/cat/rogue/black/witch/Initialize()
+/mob/living/simple_animal/pet/cat/rogue/black/witch/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
 

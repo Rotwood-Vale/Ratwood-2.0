@@ -153,6 +153,11 @@
 		return FALSE
 	return TRUE
 
+/datum/stressevent/triumph_noise
+	timer = 10 MINUTES
+	stressadd = 3
+	desc = span_red("The memory of my triumph turns to rot!")
+
 /datum/stressevent/freakout
 	timer = 15 SECONDS
 	stressadd = 2

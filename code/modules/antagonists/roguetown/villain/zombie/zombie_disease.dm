@@ -65,6 +65,11 @@
 	desc = "You feel a coldness spreading through your body. You're turning into one of -them-!"
 	icon_state = "zombie"
 
+/mob/living/carbon/human/proc/murk_infect(chance)
+	if(!has_world_trait(/datum/world_trait/zizo_bite) || !prob(chance) || is_zizo(src) || HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE) || mind?.has_antag_datum(/datum/antagonist/zombie) || has_status_effect(/datum/status_effect/zombie_infection))
+		return
+	apply_status_effect(/datum/status_effect/zombie_infection, ZOMBIE_BITE_CONVERSION_TIME, TRUE)
+
 // Updated proc to use status effect
 /mob/living/carbon/human/proc/attempt_zombie_infection(mob/living/carbon/human/source, infection_type, wake_delay = 0)
 	if(!ishuman(source) || !source.is_risen_deadite()) // Covers NPC deadites as well as players
