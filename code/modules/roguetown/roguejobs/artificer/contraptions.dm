@@ -98,46 +98,32 @@
 		addtimer(CALLBACK(src, PROC_REF(battery_collapse), A, user), 5)
 
 /obj/item/contraption/attackby(obj/item/I, mob/user, params)
-	var/datum/effect_system/spark_spread/S = new()
-	var/turf/front = get_turf(src)
 	if(istype(I, accepted_power_source))
-		user.changeNext_move(CLICK_CD_FAST)
-		S.set_up(1, 1, front)
-		S.start()
-		if((max_stored_charge - current_charge) < charge_per_source) //checking if there's too much charge
-			to_chat(user, span_info("I try to insert the [I.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
-			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
-			shake_camera(user, 1, 1)
-		else
-			to_chat(user, span_info("I insert the [I.name] and the [name] starts ticking."))
-			current_charge += charge_per_source
-			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
-			qdel(I)
-			addtimer(CALLBACK(src, PROC_REF(play_clock_sound)), 5)
+		insert_power_source(I, user, charge_per_source)
 	if(istype(I, prime_power_source))
-		user.changeNext_move(CLICK_CD_FAST)
-		S.set_up(1, 1, front)
-		S.start()
-		if((max_stored_charge - current_charge) < charge_per_prime) //checking if there's too much charge with a prime source
-			if((max_stored_charge - current_charge) < charge_per_source) //if there's too much for prime, we give it the standard charge
-				to_chat(user, span_info("I try to insert the [I.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
-				playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
-				shake_camera(user, 1, 1)
-			else
-				to_chat(user, span_info("I insert the [I.name] and the [name] starts ticking. I feel I reached capacity before it was fully used"))
-				current_charge = max_stored_charge
-				playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
-				qdel(I)
-				addtimer(CALLBACK(src, PROC_REF(play_clock_sound)), 5)
-		else
-			to_chat(user, span_info("I insert the [I.name] and the [name] starts ticking. It gets a big boost"))
-			current_charge += charge_per_prime
-			playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
-			qdel(I)
-			addtimer(CALLBACK(src, PROC_REF(play_clock_sound)), 5)
+		insert_power_source(I, user, charge_per_prime)
 	if(istype(I, /obj/item/rogueweapon/hammer))
 		hammer_action(I, user)
 	..()
+
+/obj/item/contraption/proc/insert_power_source(obj/item/I, mob/user, amount)
+	user.changeNext_move(CLICK_CD_FAST)
+	var/datum/effect_system/spark_spread/S = new()
+	S.set_up(1, 1, get_turf(src))
+	S.start()
+	playsound(src, 'sound/combat/hits/blunt/woodblunt (2).ogg', 100, TRUE)
+	var/room = max_stored_charge - current_charge
+	if(room < charge_per_source)
+		to_chat(user, span_info("I try to insert the [I.name] but theres already \a [initial(accepted_power_source.name)] inside!"))
+		shake_camera(user, 1, 1)
+		return
+	var/message = "I insert the [I.name] and the [name] starts ticking."
+	if(amount > charge_per_source)
+		message += (room < amount) ? " I feel I reached capacity before it was fully used" : " It gets a big boost"
+	to_chat(user, span_info(message))
+	current_charge = min(current_charge + amount, max_stored_charge)
+	qdel(I)
+	addtimer(CALLBACK(src, PROC_REF(play_clock_sound)), 5)
 
 /obj/item/contraption/proc/hammer_action(obj/item/I, mob/user)
 	user.changeNext_move(CLICK_CD_FAST)
