@@ -76,6 +76,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/embed_chance = 0
 	/// Bypass bloody wound checks, used for fractures so they apply to skeleton-mobs.
 	var/bypass_bloody_wound_check = FALSE
+	/// If TRUE, this wound can land on a prosthetic. Almost nothing a body can suffer makes sense on one.
+	var/can_apply_to_prosthetics = FALSE
 	/// Some wounds make no sense on a dismembered limb and need to go
 	var/qdel_on_droplimb = FALSE
 	/// Severity names, assoc list.
@@ -152,6 +154,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 /// Returns whether or not this wound can be applied to a given bodypart
 /datum/wound/proc/can_apply_to_bodypart(obj/item/bodypart/affected)
 	if(bodypart_owner || owner || QDELETED(affected) || QDELETED(affected.owner))
+		return FALSE
+	if(!can_apply_to_prosthetics && !affected.is_organic_limb())
 		return FALSE
 	if(!isnull(bleed_rate) && !affected.can_bloody_wound() && !bypass_bloody_wound_check)
 		return FALSE

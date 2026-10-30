@@ -50,15 +50,17 @@
 		if(tw_List.len)
 			playsound(get_turf(user), 'sound/magic/psydonbleeds.ogg', 50, TRUE)
 			C_caster.visible_message(span_warning("A thread of silvery lux spools out from [C_caster] and attaches to [C_target], softly aglow..."), span_warning("You begin twining your lux together with [C_target], drawing forth their wounds unto yourself..."))
-			var/static/list/disallowed_wounds = typecacheof(list(/datum/wound/dismemberment, /datum/wound/facial, /datum/wound/fracture/head, /datum/wound/fracture/neck, /datum/wound/cbt/permanent, /datum/wound/grievous/pre_decapitation, /datum/wound/grievous/pre_skullshatter))
+			var/static/list/disallowed_wounds = typecacheof(list(/datum/wound/dismemberment, /datum/wound/facial, /datum/wound/fracture/head, /datum/wound/fracture/neck, /datum/wound/cbt/permanent, /datum/wound/grievous/pre_decapitation, /datum/wound/grievous/pre_skullshatter, /datum/wound/jammed))
 			for(var/datum/wound/targetwound in tw_List)
 				if(disallowed_wounds[targetwound.type])
 					continue
 				if(move_after(user, 0.5 SECONDS, needhand = FALSE, target = user))
 					if(!targetwound) // it's possible they might've healed on or advanced
 						continue
-					wounds_wept = TRUE // This isn't *particularly* hot code, so this should be fine.
 					var/obj/item/bodypart/c_BP = C_caster.get_bodypart(targetwound.bodypart_owner.body_zone)
+					if(c_BP && !c_BP.is_organic_limb()) // our prosthetic can't carry their wound
+						continue
+					wounds_wept = TRUE // This isn't *particularly* hot code, so this should be fine.
 					// instead of recreating a new wound of the same type as the victims, we can just transfer theirs (includes any existing healing/clotting) over to us
 					var/pre_bleeding = targetwound.bleed_rate
 					targetwound.apply_to_bodypart(c_BP, silent = TRUE, crit_message = FALSE)

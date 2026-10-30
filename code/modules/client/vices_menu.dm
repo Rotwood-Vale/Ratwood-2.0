@@ -1626,6 +1626,9 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				// Skip if already selected as secondary virtue
 				if(virtuetwo && V.type == virtuetwo.type)
 					continue
+				// Check for conflicting vices
+				if(check_pick_vice_conflict(V.type, TRUE, usr))
+					continue
 				// Check for conflicting quirks
 				if(check_virtue_quirk_conflict(V.type, TRUE, usr))
 					continue
