@@ -549,3 +549,6 @@
 	#define url_encode(text) rustg_url_encode(text)
 	#define url_decode(text) rustg_url_decode(text)
 #endif
+
+/proc/set_shadow_cell(x, y, z, cell_type)
+	call_ext(RUST_G, "byond:set_map_cell")(x, y, z, cell_type)

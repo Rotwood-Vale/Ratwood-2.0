@@ -2020,6 +2020,8 @@
 /mob/living/onTransitZ(old_z,new_z)
 	..()
 	update_z(new_z)
+	last_shadow_turf = null
+	update_dynamic_shadows(custom_glide = 0)
 
 /mob/living/MouseDrop(mob/over)
 	. = ..()
@@ -2397,6 +2399,10 @@
 		visible_message(message)
 	animate(client, pixel_x = world.icon_size*_x, pixel_y = world.icon_size*_y, ttime)
 //	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(stop_looking))
+
+	is_looking_afar = TRUE
+	update_dynamic_shadows(custom_radius = 18, custom_glide = ttime)
+
 	update_cone_show()
 
 /mob/proc/look_down(turf/T)
@@ -2456,6 +2462,10 @@
 			return
 	reset_perspective()
 	update_cone_show()
+
+	if(is_looking_afar)
+		is_looking_afar = FALSE
+		update_dynamic_shadows(custom_radius = 8, custom_glide = 2)
 //	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
 
 /mob/living/proc/resist_leash()

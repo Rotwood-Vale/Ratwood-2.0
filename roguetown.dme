@@ -2273,6 +2273,7 @@
 #include "code\modules\library\lib_items.dm"
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\random_books.dm"
+#include "code\modules\lighting\dynamic_shadows.dm"
 #include "code\modules\lighting\lighting_area.dm"
 #include "code\modules\lighting\lighting_atom.dm"
 #include "code\modules\lighting\lighting_atom_additions.dm"

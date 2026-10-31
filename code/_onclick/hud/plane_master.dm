@@ -58,6 +58,33 @@
 //	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -15)
 //	filters += filter(type = "drop_shadow", color = "#04080FAA", size = -20)
 
+/atom/movable/screen/plane_master/raw_wall_shadows
+	name = "raw wall shadows plane master"
+	plane = RAW_WALL_SHADOW_PLANE
+	render_target = RAW_WALL_SHADOW_TARGET 
+	mouse_opacity = 0
+	appearance_flags = PLANE_MASTER
+
+/atom/movable/screen/plane_master/shadow_cutouts
+	name = "shadow cutouts plane master"
+	plane = SHADOW_CUTOUT_PLANE
+	render_target = SHADOW_CUTOUT_TARGET
+	mouse_opacity = 0
+	appearance_flags = PLANE_MASTER
+
+/atom/movable/screen/plane_master/dynamic_wall_shadows
+	name = "dynamic wall shadows plane master"
+	plane = DYNAMIC_WALL_SHADOW_PLANE
+	render_target = DYNAMIC_WALL_SHADOW_TARGET
+	mouse_opacity = 0
+	appearance_flags = PLANE_MASTER
+
+/atom/movable/screen/plane_master/dynamic_wall_shadows/Initialize(mapload)
+	. = ..()
+	filters += filter(type = "layer", render_source = RAW_WALL_SHADOW_TARGET)
+	filters += filter(type = "alpha", render_source = SHADOW_CUTOUT_TARGET, flags = MASK_INVERSE)
+	filters += filter(type = "blur", size = 1)
+
 /atom/movable/screen/plane_master/osreal
 	name = "open space plane master real"
 	plane = OPENSPACE_PLANE
@@ -84,6 +111,7 @@
 	filters = list()
 	if(istype(mymob) && mymob.eye_blurry)
 		filters += GAUSSIAN_BLUR(CLAMP(mymob.eye_blurry*0.1,0.6,3))
+	filters += filter(type = "layer", render_source = DYNAMIC_WALL_SHADOW_TARGET, blend_mode = BLEND_MULTIPLY, color = "#000000b0")
 	apply_vampire_sight(mymob)
 
 /atom/movable/screen/plane_master/game_world
@@ -105,6 +133,7 @@
 				add_filter("druqks_color", 2, color_matrix_filter(list(0,0,1,0, 0,1,0,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)))
 			if(L.has_status_effect(/datum/status_effect/debuff/vampbite))
 				add_filter("druqks_color", 2, color_matrix_filter(list(0,0,1,0, 0,1,0,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)))
+	filters += filter(type = "layer", render_source = DYNAMIC_WALL_SHADOW_TARGET, blend_mode = BLEND_MULTIPLY, color = "#000000b0")
 	apply_vampire_sight(mymob)
 
 /atom/movable/screen/plane_master/lighting
@@ -171,6 +200,7 @@
 			if(L.has_status_effect(/datum/status_effect/buff/druqks))
 				add_filter("druqks_color", 2, color_matrix_filter(list(0,0,1,0, 0,1,0,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)))
 	filters += filter(type = "alpha", render_source = FIELD_OF_VISION_BLOCKER_RENDER_TARGET, flags = MASK_INVERSE)
+	filters += filter(type = "layer", render_source = DYNAMIC_WALL_SHADOW_TARGET, blend_mode = BLEND_INSET_OVERLAY, color = "#000000")
 	apply_vampire_sight(mymob)
 
 /atom/movable/screen/plane_master/game_world_above
@@ -189,6 +219,7 @@
 			var/mob/living/L = mymob
 			if(L.has_status_effect(/datum/status_effect/buff/druqks))
 				add_filter("druqks_color", 2, color_matrix_filter(list(0,0,1,0, 0,1,0,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)))
+	filters += filter(type = "layer", render_source = DYNAMIC_WALL_SHADOW_TARGET, blend_mode = BLEND_MULTIPLY, color = "#000000b0")
 	apply_vampire_sight(mymob)
 
 /atom/movable/screen/plane_master/game_world_below
@@ -197,7 +228,13 @@
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 
-/atom/movable/screen/plane_master/game_world_below/backdrop(mob/mymob)
+/atom/movable/screen/plane_master/wall_objects
+	name = "wall objects plane master"
+	plane = WALL_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+
+/atom/movable/screen/plane_master/wall_objects/backdrop(mob/mymob)
 	clear_filters()
 	filters += AMBIENT_OCCLUSION
 	if(istype(mymob) && mymob.eye_blurry)
@@ -240,6 +277,10 @@
 	mouse_opacity = 0
 	appearance_flags = PLANE_MASTER
 
+/atom/movable/screen/plane_master/field_of_vision_blocker/Initialize(mapload)
+	. = ..()
+	filters += filter(type = "blur", size = 1)
+
 /atom/movable/screen/plane_master/o_light_visual
 	name = "overlight light visual plane master"
 	layer = O_LIGHTING_VISUAL_LAYER
@@ -277,6 +318,7 @@
 					filters += filter(type="color", color = list(0,0,1,0, 0,1,0,0, 1,0,0,0, 0,0,0,1, 0,0,0,0))
 					F1 = filters[filters.len-1]
 					animate(F1, size=50, radius=480, time=10, loop=-1, flags=ANIMATION_PARALLEL)
+	filters += filter(type = "layer", render_source = DYNAMIC_WALL_SHADOW_TARGET, blend_mode = BLEND_MULTIPLY, color = "#000000b0")
 	apply_vampire_sight(mymob)
 
 

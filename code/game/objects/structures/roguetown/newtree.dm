@@ -8,6 +8,7 @@
 	blade_dulling = DULLING_CUT
 	opacity = 1
 	density = 1
+	plane = WALL_PLANE
 	attacked_sound = 'sound/misc/woodhit.ogg'
 	destroy_sound = 'sound/misc/woodhit.ogg'
 	climbable = FALSE
@@ -65,6 +66,8 @@
 	if(!istype(NT, /turf/open/transparent/openspace) && !(locate(/obj/structure/flora/roguetree/stump) in NT))//if i don't add the stump check it spawns however many zlevels it goes up because of src recursion
 		new /obj/structure/flora/roguetree/stump(NT)
 	playsound(src, 'sound/misc/treefall.ogg', 100, FALSE)
+	set_shadow_cell(x, y, z, SHADOW_CELL_EMPTY)
+	notify_shadows_map_changed(src)
 	. = ..()
 
 /obj/structure/flora/newtree/attack_hand(mob/user)
@@ -167,6 +170,8 @@
 	if(istype(loc, /turf/open/floor/rogue/grass))
 		var/turf/T = loc
 		T.ChangeTurf(/turf/open/floor/rogue/dirt)
+	set_shadow_cell(x, y, z, SHADOW_CELL_TREE)
+	notify_shadows_map_changed(src)
 
 /obj/structure/flora/newtree/proc/build_trees()
 	var/turf/target = get_step_multiz(src, UP)
