@@ -13,18 +13,26 @@
 	skin_tone = skins[pick(skins)]
 	eye_color = random_eye_color()
 	if(ft_reset)
+		gallery_alternates = list()
 		flavortext = null
 		nsfwflavortext = null
 		ooc_extra_img = null
 		ooc_extra_img_link = null
+		ooc_extra_img_size = OOC_EXTRA_SIZE_MAX
 		nsfw_ooc_extra_img = null
 		nsfw_ooc_extra_img_link = null
+		nsfw_ooc_extra_img_size = OOC_EXTRA_SIZE_MAX
 		erpprefs = null
 		ooc_notes = null
 		ooc_extra = null
 		song_title = null
 		song_artist = null
 		headshot_link = null
+		headshot_zoom = HEADSHOT_ZOOM_MIN
+		headshot_x = HEADSHOT_POSITION_DEFAULT
+		headshot_y = HEADSHOT_POSITION_DEFAULT
+		headshot_framed = FALSE
+		headshot_frame_chat = FALSE
 		img_gallery = null
 		nsfw_img_gallery = null
 	features = pref_species.get_random_features()

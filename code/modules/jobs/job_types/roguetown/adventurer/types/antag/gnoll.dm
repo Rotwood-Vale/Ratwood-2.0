@@ -174,6 +174,10 @@
 
 	// Copy gnoll flavortext to gnoll mob
 	headshot_link = prefs.headshot_link
+	headshot_zoom = prefs.headshot_zoom
+	headshot_x = prefs.headshot_x
+	headshot_y = prefs.headshot_y
+	headshot_framed = prefs.headshot_framed
 	flavortext = prefs.flavortext
 	ooc_notes = prefs.ooc_notes
 	rumour = prefs.rumour

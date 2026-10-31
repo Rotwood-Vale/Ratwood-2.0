@@ -2,6 +2,11 @@ export type ExaminePanelData = {
   // Identity
   character_name: string;
   headshot: string;
+  headshot_zoom: number;
+  headshot_x: number;
+  headshot_y: number;
+  headshot_framed: boolean;
+  is_admin: boolean;
   obscured: boolean;
   // Descriptions
   flavor_text: string;

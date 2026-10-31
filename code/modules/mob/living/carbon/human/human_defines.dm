@@ -129,6 +129,11 @@
 	var/datum/inspiration/inspiration = null
 
 	var/headshot_link = null
+	var/headshot_zoom = HEADSHOT_ZOOM_MIN
+	var/headshot_x = HEADSHOT_POSITION_DEFAULT
+	var/headshot_y = HEADSHOT_POSITION_DEFAULT
+	var/headshot_framed = FALSE
+	var/headshot_frame_chat = FALSE
 	var/origin = "Unknown"
 	var/flavortext = null
 	var/ooc_notes = null

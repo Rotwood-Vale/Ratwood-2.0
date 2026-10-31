@@ -1044,6 +1044,11 @@
 	socks = target.socks
 	has_stubble = target.has_stubble
 	headshot_link = target.headshot_link
+	headshot_zoom = target.headshot_zoom
+	headshot_x = target.headshot_x
+	headshot_y = target.headshot_y
+	headshot_framed = target.headshot_framed
+	headshot_frame_chat = target.headshot_frame_chat
 	flavortext = target.flavortext
 
 	var/obj/item/bodypart/head/target_head = target.get_bodypart(BODY_ZONE_HEAD)

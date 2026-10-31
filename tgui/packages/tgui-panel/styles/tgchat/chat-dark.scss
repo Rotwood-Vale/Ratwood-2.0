@@ -927,7 +927,30 @@ h2.alert {
   will-change: transform;
 }
 
-.chat_headshot:hover img {
+.chat_headshot:hover > img {
+  transform: scale(2.5);
+  z-index: 100;
+  border-radius: 2px;
+}
+
+.chat_headshot img {
+  pointer-events: none;
+  user-select: none;
+}
+
+// A framed headshot crops its picture inside this box, so the hover enlarges the box instead
+.chat_headshot_frame {
+  position: relative;
+  width: 100%;
+  // The chat line has no fixed height for a percentage to resolve against
+  aspect-ratio: 1;
+  overflow: hidden;
+  transition: transform 0.35s ease;
+  transform-origin: top left;
+  will-change: transform;
+}
+
+.chat_headshot:hover .chat_headshot_frame {
   transform: scale(2.5);
   z-index: 100;
   border-radius: 2px;
