@@ -1,3 +1,5 @@
+#define KINGSFIELD_MAILTAG "Kingsfield"
+
 /obj/structure/roguemachine/mail
 	name = "HERMES"
 	desc = "Carrier zads have fallen severely out of fashion ever since the advent of this hydropneumatic mail system. A coin slot activates the mechanism for dispensing parchment(a zenny) and quills(a ziliqua)."
@@ -40,6 +42,25 @@
 	set_light(0)
 	SSroguemachine.hermailers -= src
 	return ..()
+
+/// Turns what someone typed at a HERMES into "#number" for a box, or a name that can match a real_name.
+/// Don't sanitize() names here: it encodes ' as &#39;, which never matches a real_name and reads as box #39.
+/proc/parse_hermes_address(address)
+	var/hash_pos = findtext(address, "#")
+	if(hash_pos)
+		return "#[text2num(copytext(address, hash_pos + 1))]"
+	var/recipient = reject_bad_name(address, max_length = MAX_CHARTER_LEN)
+	if(recipient && LOWER_TEXT(recipient) == LOWER_TEXT(KINGSFIELD_MAILTAG))
+		for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
+			if(X.mailtag == KINGSFIELD_MAILTAG)
+				return "#[X.ournum]"
+	return recipient
+
+/proc/find_hermes_box(address)
+	var/box2find = text2num(copytext(address, findtext(address, "#") + 1))
+	for(var/obj/structure/roguemachine/mail/X in SSroguemachine.hermailers)
+		if(X.ournum == box2find)
+			return X
 
 /obj/structure/roguemachine/mail/attack_hand(mob/user)
 	if(ishuman(user) && GLOB.carebox.try_retrieve_carebox(user, src))
@@ -134,9 +155,24 @@
 	if(inqcoins)
 		to_chat(user, span_warning("The machine doesn't respond."))
 		return
-	var/send2place = sanitize(input(user, "Where to? (Person or #number)", "ROGUETOWN", null))
+	var/raw_address = input(user, "Where to? (Person or #number)", "ROGUETOWN", null)
+	var/send2place = parse_hermes_address(raw_address)
 	if(!send2place)
+		if(raw_address)
+			to_chat(user, span_warning("The machine can't make sense of that address."))
 		return
+	if(findtext(send2place, "#"))
+		if(!find_hermes_box(send2place))
+			to_chat(user, span_warning("Failed to send it. Bad number?"))
+			return
+	else
+		var/recipient_found = FALSE
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
+			if(H.real_name == send2place)
+				recipient_found = TRUE
+				break
+		if(!recipient_found && (alert(user, "Could not find recipient [send2place]. Still send the letter?", "", "YES", "NO") == "NO"))
+			return
 	var/sentfrom = sanitize(input(user, "Who is this letter from?", "ROGUETOWN", null))
 	if(!sentfrom)
 		sentfrom = "Anonymous"
@@ -170,8 +206,10 @@
 				P.mailer = sentfrom
 				P.mailedto = send2place
 				P.update_icon()
-				GLOB.fax_panel.register_player_letter(sentfrom, send2place, t)
+				GLOB.fax_panel.register_player_letter(sentfrom, send2place, t, sender_ckey, recipient_ckey)
 				P.forceMove(X.loc)
+				if(X.mailtag == KINGSFIELD_MAILTAG)
+					GLOB.fax_panel.notify_kingsfield_mail(P, user)
 				X.say("New mail!")
 				playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				break
@@ -182,10 +220,9 @@
 			update_icon()
 			return
 		else
+			qdel(P)
 			to_chat(user, span_warning("Failed to send it. Bad number?"))
 	else
-		if(!send2place)
-			return
 		if(SSroguemachine.hermailermaster)
 			var/obj/item/roguemachine/mastermail/X = SSroguemachine.hermailermaster
 			if(!recipient_ckey)
@@ -546,7 +583,12 @@
 			to_chat(user, span_warning("The machine doesn't respond."))
 			return
 		if(alert(user, "Send Mail?",,"YES","NO") == "YES")
-			var/send2place = sanitize(input(user, "Where to? (Person or #number)", "ROGUETOWN", null))
+			var/raw_address = input(user, "Where to? (Person or #number)", "ROGUETOWN", null)
+			var/send2place = parse_hermes_address(raw_address)
+			if(!send2place)
+				if(raw_address)
+					to_chat(user, span_warning("The machine can't make sense of that address."))
+				return
 			var/sentfrom = sanitize(input(user, "Who is this from? (Leave blank to send anonymously)", "ROGUETOWN", null))
 			if(!sentfrom)
 				sentfrom = "Anonymous"
@@ -579,6 +621,8 @@
 								letter_text = letter_package.note.info
 						GLOB.fax_panel.register_player_letter(sentfrom, send2place, letter_text, sender_ckey, recipient_ckey)
 						P.forceMove(X.loc)
+						if(X.mailtag == KINGSFIELD_MAILTAG)
+							GLOB.fax_panel.notify_kingsfield_mail(P, user)
 						X.say("New mail!")
 						playsound(X, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 						break
@@ -589,8 +633,6 @@
 				else
 					to_chat(user, span_warning("Cannot send it. Bad number?"))
 			else
-				if(!send2place)
-					return
 				var/mob/living/carbon/human/mailrecipient = null
 				for(var/mob/living/carbon/human/H in GLOB.human_list)
 					if(H.real_name == send2place)
