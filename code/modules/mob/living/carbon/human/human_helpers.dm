@@ -44,6 +44,8 @@
 		return face_name
 	if(id_name)
 		return id_name
+	if(!show_descriptors)
+		return "Unknown"
 	var/list/d_list = get_mob_descriptors()
 	var/trait_desc = "[capitalize(build_coalesce_description_nofluff(d_list, src, list(MOB_DESCRIPTOR_SLOT_TRAIT), "%DESC1%"))]"
 	var/stature_desc = "[capitalize(build_coalesce_description_nofluff(d_list, src, list(MOB_DESCRIPTOR_SLOT_STATURE), "%DESC1%"))]"

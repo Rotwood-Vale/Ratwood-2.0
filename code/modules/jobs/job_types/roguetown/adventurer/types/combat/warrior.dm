@@ -116,7 +116,10 @@
 	tutorial = "You are an esteemed swordsman who foregoes armor in exchange for a more nimble fighting style."
 	outfit = /datum/outfit/job/roguetown/adventurer/duelist
 	cmode_music = 'sound/music/cmode/adventurer/combat_outlander2.ogg'
-	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_DODGEEXPERT, TRAIT_DECEIVING_MEEKNESS)
+	traits_applied = list(TRAIT_STEELHEARTED, TRAIT_DODGEEXPERT)
+	subclass_virtues = list(
+		/datum/virtue/combat/guarded
+	)
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_STR = 1,
