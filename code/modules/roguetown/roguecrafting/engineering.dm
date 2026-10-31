@@ -536,7 +536,7 @@
 	name = "saw blades trap"
 	category = "traps"
 	result = /obj/structure/trap/saw_blades
-	reqs =  list(/obj/item/ingot/bronze, = 2, /obj/item/roguegear/bronze = 2, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/natural/whetstone = 1)
+	reqs = list(/obj/item/ingot/bronze = 2, /obj/item/roguegear/bronze = 2, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/natural/whetstone = 1)
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 5
 
@@ -544,7 +544,7 @@
 	name = "flame trap"
 	category = "traps"
 	result = /obj/structure/trap/flame
-	reqs =  list(/obj/item/ingot/bronze, = 2, /obj/item/roguegear/bronze = 2, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/alch/coaldust = 2)
+	reqs = list(/obj/item/ingot/bronze = 2, /obj/item/roguegear/bronze = 2, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/alch/coaldust = 2)
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 5
 
@@ -552,7 +552,7 @@
 	name = "shock trap"
 	category = "traps"
 	result = /obj/structure/trap/shock
-	reqs =  list(/obj/item/ingot/bronze, = 2, /obj/item/roguegear/bronze = 2, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/rogueore/cinnabar = 1)
+	reqs = list(/obj/item/ingot/bronze = 2, /obj/item/roguegear/bronze = 2, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/rogueore/cinnabar = 1)
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 5
 
@@ -621,7 +621,7 @@
 	result = list(/obj/item/impact_grenade/smoke/poison_gas,
 				  /obj/item/impact_grenade/smoke/poison_gas,
 				  /obj/item/impact_grenade/smoke/poison_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /datum/reagent/berrypoison = 10, /datum/reagent/water = 48)
+	reqs = list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /datum/reagent/berrypoison = 10, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -633,7 +633,7 @@
 	result = list(/obj/item/impact_grenade/smoke/fire_gas,
 				  /obj/item/impact_grenade/smoke/fire_gas,
 				  /obj/item/impact_grenade/smoke/fire_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /datum/reagent/water = 48)
+	reqs = list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -645,7 +645,7 @@
 	result = list(/obj/item/impact_grenade/smoke/blind_gas,
 				  /obj/item/impact_grenade/smoke/blind_gas,
 				  /obj/item/impact_grenade/smoke/blind_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /obj/item/reagent_containers/food/snacks/rogue/veg/onion_sliced = 1, /obj/item/ash = 1 = 1, /datum/reagent/water = 48)
+	reqs = list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /obj/item/reagent_containers/food/snacks/rogue/veg/onion_sliced = 1, /obj/item/ash = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -657,7 +657,7 @@
 	result = list(/obj/item/impact_grenade/smoke/mute_gas,
 				  /obj/item/impact_grenade/smoke/mute_gas,
 				  /obj/item/impact_grenade/smoke/mute_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /obj/item/rogueore/cinnabar = 1, /datum/reagent/water = 48)
+	reqs = list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /obj/item/rogueore/cinnabar = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -669,7 +669,7 @@
 	result = list(/obj/item/impact_grenade/smoke/healing_gas,
 				  /obj/item/impact_grenade/smoke/healing_gas,
 				  /obj/item/impact_grenade/smoke/healing_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /obj/item/alch/viscera = 1, /obj/item/alch/bonemeal = 1, /datum/reagent/water = 48)
+	reqs = list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /obj/item/alch/viscera = 1, /obj/item/alch/bonemeal = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4 
