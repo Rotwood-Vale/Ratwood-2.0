@@ -17,11 +17,14 @@
 	var/used_time = 14 // interaction time for disabling traps, scales down with trap skill
 
 
-	var/static/list/ignore_typecache
+	var/static/list/ignore_typecache // what we dont activate for
+	var/list/activate_for_typecache // what somthing needs to be to activate for
 	var/list/mob/immune_minds = list() //unused and a bit weird, helpful for making mobs immune to the traps without TRAIT_LIGHT_STEP
 
 	var/sparks = TRUE
 	var/datum/effect_system/spark_spread/spark_system
+
+	var/lightstep_resistant = FALSE // if true lightstep only has 25% chance to not triger it
 
 /obj/structure/trap/Initialize(mapload)
 	. = ..()
@@ -114,6 +117,9 @@
 	// Don't want the traps triggered by sparks, ghosts or projectiles.
 	if(is_type_in_typecache(AM, ignore_typecache))
 		return
+	if(activate_for_typecache)
+		if(!is_type_in_typecache(AM, activate_for_typecache))
+			return
 	if(!armed)
 		return
 	if(ismob(AM))
@@ -123,7 +129,9 @@
 		if(checks_antimagic && M.anti_magic_check())
 			flare()
 			return
-		if(HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
+		if(HAS_TRAIT(AM, TRAIT_LIGHT_STEP) && !lightstep_resistant)
+			return
+		else if(HAS_TRAIT(AM, TRAIT_LIGHT_STEP) && prob(25)) // resistant only have 25% chance to not work
 			return
 	if(charges <= 0)
 		return
@@ -450,6 +458,12 @@
 	var/bandit_reveal_alpha = 140
 	var/others_reveal_alpha = 35
 	var/retinue_planted = FALSE//Is this a retinue trap? Inverses the checks for who triggers.
+	lightstep_resistant = TRUE // its made by players against players
+
+/obj/structure/trap/bogtrap/Initialize(mapload)
+	. = ..()
+	if(!activate_for_typecache)
+		activate_for_typecache = typecacheof(list(/mob/living)) // only activate against mobs
 
 /obj/structure/trap/bogtrap/flare()
 	alpha = 200
@@ -488,24 +502,16 @@
 	else
 		if(assigned == "bandit" || special == "bandit")
 			return TRUE
-
-		if(assigned == "wretch")
-			return TRUE
-
-		if(special == "lich" || special == "vampire lord")
-			return TRUE
-
-		if(assigned == "bogguard")
-			return TRUE
-
 	return FALSE
 
 /obj/structure/trap/bogtrap/proc/has_required_trigger_trait(mob/living/H)
 	if(!H) return FALSE
 	if(HAS_TRAIT(H, TRAIT_MEDIUMARMOR)) return TRUE
 	if(HAS_TRAIT(H, TRAIT_HEAVYARMOR))  return TRUE
-	if(HAS_TRAIT(H, TRAIT_DODGEEXPERT)) return TRUE
+	if(HAS_TRAIT(H, TRAIT_DODGEEXPERT)) return TRUE 
 	if(HAS_TRAIT(H, TRAIT_CRITICAL_RESISTANCE)) return TRUE
+	if(HAS_TRAIT(H, TRAIT_ARCYNE)) return TRUE // all mages are dangerous
+	if(HAS_TRAIT(H, TRAIT_BLOOD_RESISTANCE)) return TRUE
 	return FALSE
 
 /obj/structure/trap/bogtrap/proc/is_trap_exception(mob/living/H)
@@ -528,9 +534,7 @@
 			|| assigned == "bogguard" \
 			|| assigned == "warden" || special == "warden")
 	else
-		return (assigned == "bandit" || special == "bandit" \
-			|| assigned == "bogguard" \
-			|| assigned == "warden" || special == "warden")
+		return (assigned == "bandit" || special == "bandit")
 
 /obj/structure/trap/bogtrap/proc/show_personal_reveal(mob/user)
 	if(!user || !user.client)

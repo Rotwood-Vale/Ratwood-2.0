@@ -613,17 +613,16 @@
 	name = "Saperka"
 	desc = "A compact, steel-headed spade favored by pioneers. \
 	Scarred by a hundred fieldworks, its socket is nicked from prying and the edge has been honed to bite through roots-or armor-in a pinch."
-	force = 12//It has a gripped state. USE IT!!!!!
-	force_wielded = 28//It's not just a better battleaxe, now. God I hate this thing.
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/smash, /datum/intent/shovelscoop)
-	gripped_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/smash)
-	icon_state = "saperka"//Temp sprite. Why was this just the shovel icon? I HATE YOU!!!!
+	force = 24
+	force_wielded = 28
+	possible_item_intents = list(/datum/intent/axe/cut/demolition, /datum/intent/axe/chop/demolition, /datum/intent/mace/smash, /datum/intent/shovelscoop)
+	gripped_intents = list(/datum/intent/axe/cut/demolition, /datum/intent/axe/chop/demolition, /datum/intent/mace/smash, /datum/intent/pick/demolition)
+	icon_state = "saperka"
 	icon = 'icons/roguetown/weapons/tools.dmi'
-	sharpness = 100
-	max_blade_int = 260
-	blade_dulling = DULLING_SHAFT_WOOD
+	sharpness = IS_SHARP
+	max_blade_int = 500
+	max_integrity = 500
 	wlength = WLENGTH_SHORT
-	gripped_intents = null
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_NORMAL
 	smeltresult = /obj/item/ingot/steel
@@ -631,8 +630,16 @@
 	wdefense = 5
 	swingsound = BLADEWOOSH_MED
 	associated_skill = /datum/skill/combat/axes
-	resistance_flags = FLAMMABLE
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_polearm.ogg'
+
+/datum/intent/axe/cut/demolition
+	demolition_mod = 7
+
+/datum/intent/axe/chop/demolition // special intends for anti building specialised
+	demolition_mod = 7
+
+/datum/intent/pick/demolition
+	demolition_mod = 4
 
 /obj/item/rogueweapon/shovel/saperka/getonmobprop(tag)
 	. = ..()
