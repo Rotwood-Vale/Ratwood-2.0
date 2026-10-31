@@ -1848,6 +1848,71 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	ADD_TRAIT(target, TRAIT_NOPAIN, TRAIT_GENERIC)
 	to_chat(target, span_notice("I no longer feel pain."))
 
+/datum/ritual/fleshcrafting/lesserrituos
+	lesser = TRUE
+	name = "Lesser Rituos"
+	desc = "The dark lady's lessser work. When I cast this ritual upon myself, I gain strength from undeath. Can be stacked 3 times. Requires a dark crystal."
+	center_requirement = /mob/living/carbon/human
+	n_req = /obj/item/necro_relics/necro_crystal
+	research_cost = 10
+
+/datum/ritual/fleshcrafting/lesserrituos/invoke(mob/living/user, turf/center)
+	var/mob/living/carbon/human/target = locate() in center.contents
+	var/obj/item/bodypart/head = target?.get_bodypart(BODY_ZONE_HEAD)
+	if(!target || !target.mind || head?.skeletonized)
+		to_chat(user, span_warning("THE RITE DOES NOTHING."))
+		new /obj/item/necro_relics/necro_crystal(center)
+		return
+	to_chat(user, span_notice("The rite begins. Remain still."))
+	var/poo = new /obj/effect/temp_visual/opengate(center, 10 SECONDS)
+	playsound(user, 'sound/villain/littlescary.ogg', 100, TRUE)
+	if(!do_after(user, 10 SECONDS) || QDELETED(target) || !(target in center.contents))
+		qdel(poo)
+		new /obj/item/necro_relics/necro_crystal(center)
+		return
+	var/limbs = 0
+	for(var/obj/item/bodypart/part in target.bodyparts)
+		if(part.skeletonized && part != head && !istype(part, /obj/item/bodypart/chest))
+			limbs++
+	var/stage = 1
+	if(HAS_TRAIT(target, TRAIT_WARLOCK) || limbs >= 4)
+		stage = 3
+	else if(limbs)
+		stage = 2
+	var/list/parts = list()
+	for(var/obj/item/bodypart/part in target.bodyparts)
+		if(part.skeletonized || (stage < 3 && (part == head || istype(part, /obj/item/bodypart/chest))))
+			continue
+		parts += part
+	if(stage == 1 && length(parts))
+		parts = list(pick(parts))
+	for(var/obj/item/bodypart/part in parts)
+		part.skeletonize(FALSE)
+	target.update_body_parts()
+	var/list/traits = list(TRAIT_ARCYNE)
+	if(stage != 2)
+		traits += list(TRAIT_NOMOOD, TRAIT_SILVER_WEAK)
+	if(stage > 1)
+		target.mob_biotypes |= MOB_UNDEAD
+		traits += list(TRAIT_TOXIMMUNE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_UNLYCKERABLE, TRAIT_LIMBATTACHMENT)
+	if(stage == 3)
+		traits += list(TRAIT_NOPAIN, TRAIT_BLOODLOSS_IMMUNE)
+	for(var/trait in traits)
+		if(!HAS_TRAIT(target, trait))
+			ADD_TRAIT(target, trait, "lesser_rituos")
+	var/list/config = list("mastery" = FALSE, "major" = 0, "minor" = 0, "utilities" = 0)
+	//I think this works...? It'd be nice if it was easier !
+	if(LAZYLEN(target.mind.mage_aspect_config))
+		config = target.mind.mage_aspect_config.Copy()
+	if(stage < 3)
+		config["minor"] += 1
+		config["utilities"] += 3
+	else if(HAS_TRAIT(target, TRAIT_WARLOCK))
+		config["major"] += 1
+	target.mind.setup_mage_aspects(config)
+	target.playsound_local(target, 'sound/misc/lava_death.ogg', 100, FALSE)
+	to_chat(target, span_notice("Death is not an end. My soul is Hers."))
+
 /datum/ritual/fleshcrafting/immortality
 	lesser = TRUE
 	name = "Flawed Immortality"
