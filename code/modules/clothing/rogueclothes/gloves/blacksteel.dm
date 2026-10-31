@@ -16,7 +16,6 @@
 	smeltresult = /obj/item/ingot/blacksteel
 
 /obj/item/clothing/gloves/roguetown/blacksteel/ComponentInitialize()
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/gloves/roguetown/blacksteel/plategloves
 	name = "ancient blacksteel plate gauntlets"

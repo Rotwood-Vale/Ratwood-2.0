@@ -139,8 +139,8 @@ TRAIT UNIQUE PROCS
 
 
 /datum/component/armour_filtering/proc/trait_boon_equip(mob/living/carbon/human/user, id)
-	// Dexterity users reject disliked armour; liked armour must still reach the id-specific boons below.
-	if(!positive && (HAS_TRAIT(user, TRAIT_FENCERDEXTERITY) || HAS_TRAIT(user, TRAIT_MAGEDEXTERITY)))
+	// Fencers reject disliked armour; liked armour must still reach the id-specific boons below.
+	if(!positive && HAS_TRAIT(user, TRAIT_FENCERDEXTERITY))
 		user.dropItemToGround(parent, TRUE, TRUE)
 		if(HAS_TRAIT(user, TRAIT_ARMOUR_DISLIKED))
 			REMOVE_TRAIT(user, TRAIT_ARMOUR_DISLIKED, TRAIT_GENERIC)

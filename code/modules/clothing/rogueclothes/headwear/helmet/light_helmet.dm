@@ -18,7 +18,6 @@
 
 /obj/item/clothing/head/roguetown/paddedcap/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/leather
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_HIP
@@ -39,7 +38,6 @@
 
 /obj/item/clothing/head/roguetown/helmet/leather/ComponentInitialize() //they could already use this, this just makes the examine say so.
 	AddComponent(/datum/component/armour_filtering/positive, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/helmet/leather/chapeau
 	name = "Chapeau a Naled"
@@ -161,7 +159,6 @@
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 
 /obj/item/clothing/head/roguetown/grenzelhofthat/ComponentInitialize() //they could already use this, this just makes the examine say so.
-	AddComponent(/datum/component/armour_filtering/positive, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/head/roguetown/grenzelhofthat/attack_right(mob/user)
 	..()
