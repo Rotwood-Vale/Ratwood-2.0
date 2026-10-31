@@ -16,6 +16,8 @@
 	traits_applied = list(
 		TRAIT_PERFECT_TRACKER,
 		TRAIT_SLEUTH,
+		TRAIT_ZOMBIE_IMMUNE,
+		TRAIT_SILVER_BLESSED,
 	)
 	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 	subclass_stats = list(//+9, You get PER/STR for the crossbow.
@@ -36,6 +38,9 @@
 		/datum/skill/craft/tanning = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/butchering = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/reading = SKILL_LEVEL_NOVICE,
+		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE, // that guy pulls his lux on regual
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_APPRENTICE, // for holy stakes
+		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE, // for holy stakes
 	)
 	subclass_stashed_items = list(
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
@@ -50,14 +55,14 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/arbalest//Tool of the trade.
-	cloak = /obj/item/clothing/cloak/psydontabard/alt
+	cloak = /obj/item/storage/backpack/rogue/satchel/beltpack
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	neck = /obj/item/clothing/neck/roguetown/gorget
 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
-	belt = /obj/item/storage/belt/rogue/leather/stakebelt//Because your 'crossbow' FUCKS.
-	beltr = /obj/item/quiver/heavybolts//IT REALLY DOES. You can't get more of these. Swap to a normal crossbow afterwards.
-	beltl = /obj/item/rogueweapon/huntingknife/idagger/silver/stake/preblessed/psy//Your ticket to fame, brother.
+	belt = /obj/item/storage/belt/rogue/leather/stakebelt
+	beltr = /obj/item/quiver/heavybolts
+	beltl = /obj/item/rogueweapon/huntingknife/idagger/silver/stake/psy //Your ticket to fame, brother.
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	mask = /obj/item/clothing/mask/rogue/sack/psy
@@ -74,6 +79,7 @@
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_inviolability)//A shield against the undead.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_lux_bolt)//Take a guess. Exclusive to arbalist.
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/arbalist_blood_runes)// SAY HELLO TO BLOOD MAGIC, m'lord. Exclusive to arbalist.
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonic_sacrosanctity)//To get your blood back, m'lord.
 
 //Stake belt. Here because nothing else uses it. It's just a throwing knife belt, but for stake bolts.
