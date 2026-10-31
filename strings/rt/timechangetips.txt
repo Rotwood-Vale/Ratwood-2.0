@@ -10,7 +10,9 @@ A torch should be kept dry, and a blade sharp.
 The key to a long life is knowing when to run.
 Holy miracles are lethal to deadites, and unholy magicks mend their bones and skin.
 Xylix blessed the first Fluvians with the tarot deck, who spread the stolen knowledge of Fate with the world..
-Baotha was once a snow elf who was kept prisoner by the Naledi. It is said her revenge against her captors led to the empire's downfall.
+Baotha was once the last snow elf, a beloved noble of the Celestial Empire whom was guest of the Naledi. Protected from the ritual that slaughtered her species her soul was left in a fraying state. The first succubus was borne of tragedy.
+In the Age of Light, Noc guided the land of Naledi alongside his consort Baotha. The last snow elf, who's unique injury to the soul was subject of his boundless curiosity.
+Succubi and Incubi are said to suffer the same metaphysical hollowing of the Lux that Baotha once had. In their depraved hunger, they will never find satiation.
 Eora is scoffed on by followers of Astrata - little realising Her love blesses their families and their hearths.
 None know where Zizo makes her lair. Her followers believe she rests upon the Celestial Throne of PSYDON, willfully ignoring its proximity to Otava.
 Dendor was the First Druid, until civilisation drove him mad.
@@ -60,9 +62,13 @@ Gaze upon the works of PSYDONIA, ye mighty, and weep!
 The church will commonly take tithes from the faithful of towns, making them easy targets for Matthiosans.
 The Lamia were one of many races changed by the dreams of Abyssor, along with the Axians.
 Zizo stole the souls of all snow elves to further Her goals of ascension. They serve eternally in her undead armies, forever freed from Necra's grasp.
-The land of Naledi is a shell of its former self, driven to its knees by their mistreatment of the mortal Baotha.
+The land of Naledi is a shell of its former self, driven to its knees by the manipulations of the consort turned betrayer Baotha.
 Most citizens of Grenzelhoft cannot remember a time the empire was not at war. Many turn to mercenary work to escape the crushing poverty of the lower class. Others turn to banditry.
 Legend has it that the Terrorbog guards the body of one of the first wildkin druids made by Dendor.
+The Terrorbog is one of Grimoria's greatest mysteries. None know what lays in the center of the accursed, shifting labyrinth of stale water and fetid air.
+Adventurers and mercenaries lured by mystery or wealthy patrons venture deep into the Terrorbog, seeking to discover its secrets. The Vale is the last major beacon of society before their demise.
+The outer edges of the Terrorbog are quite safe when compared to their depths. Bandits may be dangerous but at least the trees aren't moving with malign intent.
+The Terrorbog is slowly expanding. You can still see what remains of the old Lowtown in the south.
 Astrata claimed the title of the Pantheon's head for herself. Ravox makes sure She does not abuse her position.
 The barren steppes of Gronn are the homelands of the orcs. Few travel there willingly, for the Gorespawn Star dominates the land.
 Vampyres are sun-cursed creechers spawned from a failed ritual of the Dark Arts.
@@ -71,7 +77,7 @@ The kobolds birthed the Dragon-God Matthios, though the father of dragons was ne
 Merchants and the rich are often viewed with suspicion of Matthiosite heresy by the Inquisition. Ironic considering they are the ones targeted most frequently.
 The Ten will have you think He is dead; but all He asks of you is for your faith to ENDURE.
 The powerful nation of Otava is home to an ancient order of divine peacekeepers who endure in the name of PSYDON. They work with the Holy See to smite evil where it lurks.
-The land of Naledi is now but a smouldering ruin of rot and feces; sand runs through with daemonic taint. The warscholars flee their home, weeping as He does.
+The land of Naledi is a land at war; sand runs through with daemonic taint, their ancient capital holds though the warscholars flee their home, weeping as He does.
 I AM OLDER THAN AEON. I AM SIN, FATHER OF LIES. I HAVE GONE BY MANY NAMES. SAY THEM AND WEEP, FOR I AM ALL THAT THEY ARE.
 Working yourself to death is considered an act worthy of veneration for Malumites—so long as you finish your creation.
 It's a good idea to bandage and suture arterial wounds as soon as possible. Death happens slowly, and then all at once.
@@ -95,6 +101,8 @@ LOOK UP TO THOSE WHO EXCEL AT VIOLENCE; THEY CARRY THE WILL OF THE GODS AND RECI
 O SYDON, forgive your wayward child. Forgive us our ignorance. Forgive us our defilement of your corpse.
 Skeletons have no BRAIN. Try to FEINT them. But don't tell this to everyone!
 A DODGING rogue who keeps their eyes FIXED retreats only backwards.
+Her Majesty, Alexia I 'the Righteous' Valmont rules Ferentia. Her first act was to have her father burned upon a cross, for he had fallen to heresy under the manipulations of a Baothan succubus.
+Queen Alexia the Righteous is rumored to favor Otava, and has invited the Holy Otavan Inquisition to burn heresy and corruption from her kingdom.
 The lands of Ferentia are home to many wonderful and woeful beasts, especially in the Terrorbog. The Ferentian man is hardy, though often wolf food.
 The heads of goblins, minotaurs, dragons, footpads, seamen, trolls, and various beasts can all be sold to a Merchant, or a particular machine...
 Wearing a red tabard provokes even the most serene minotaur.
@@ -123,37 +131,3 @@ Heretical Abyssorites are despised by many, even their own ilk often think twice
 One does not need to be devout, even those unbelieving can get caught by the predaceous dream of Abyssor. It consumes them, unable to tell his realm apart from their own. Yet suddenly, everything seems possible.
 The Ten are both Saints and Gods, the original Aasimar and the shepherds of the new age.
 Not all who wish to ascend to godhood are evil. Just most of them.
-They say the Rust Brotherhood that once dominated the Rust Spires was nearly wiped out but that is far from the truth.
-Indeed the Brotherhood shall return and overthrow their trinity worshipping masters... 
-They pollute the mantle and crust of Psydonia, the Spires are evil. Destroy them.
-The Spires will save Psydonia, the Rust is it's natural immune system.
-The Rust Plague is not evil, it simply is a disease of pure instinct that infects the mind.
-The Pyrgos, three of them exist. Superpositioned together, they are linked together by "floors" of some sort. Maybe they exist as an Ark.
-Dytikos Pyrgos, one of the dreaded Rust Spires far to the west, near Hammerhold. It houses a million souls within, if that. They say the Overseer of the Spire is a hemophage, and that the disease is common there. Fools.
-Dytikos Pyrgos, one of the dreaded Rust Spires far to the west, near Hammerhold. It houses a million souls within, if that. They say the Overseer of the Spire is a dreadful “Lord of the Nite,” if rumors are to be believed...
-Kentrikos Pyrgos, the central spire, located east of Otava. It is locked in conflict with neighboring psydonic states and survives only by virtue of the rust plague. How lucky are we...
-Kentrikos Pyrgos, the central spire, located east of Otava. Its chief export is devout psydonic riflemen and low-quality artificery.
-Kentrikos Pyrgos, the central spire, located east of Otava. The Central Spire is the home of the Lady of Mirrors. It is said that she lies in stasis at the bottommost layer...
-Anatolikos Pyrgos, the east spire, located somewhere to the far east... Mining excavators say the ore is turning more and more brittle but sorcery has never been more powerful...
-Anatolikos Pyrgos, the east spire, located somewhere to the far east...  The only spire that has been fully reclaimed. They said they found a still beating heart, but why?
-Lady of Mirrors! Lady of Mirrors! Lady of Mirrors! Hear my prayer!
-The Lady of Mirrors, once the Grand ruler of the Spires, has vanished. We are forever forsaken by her grace. We must be pure.
-They say the Lady of Mirrors had a lover who joined her before she departed.
-Spire residents disagree about the events that transpired on that fateful day...
-I am retribution! I am the sword of the Allfather! Behold my purity and devotion!
-I shall return! I will scorch the filth from this world after the rust claims all!
-They said she ripped herself apart and scattered her organs across every floor. But why?
-We must be pure, we must be pure, we must be pure.
-Annoint them in a bath of silver, he will be pure. He will complete the ceremony then.
-Preach the trinity of Psydon residents! For the three sides of the Allfather are what temper you!
-Traditional names do not exist within the spires; Only deed names do.
-Onwards! Prepare thy rifles and brace yourself for the rustwalkers approach our position!
-My blood has been bubbling since I was bitten. I will join the rust horde soon.
-Water, I need water, but it makes me sick. It was the volf I ate. The Rust Plague will claim me soon... Wheres my gun...
-Rust constructs; Hardy creachures of metal. They serve masters no more.
-The Rust Plague is the ultimate immune response to invaders. It spreads from the corrupting pollution of the Rust Spires. Psydonia will fall.
-The Rust Plague is the ultimate immune response to invaders. It spreads from the corrupting pollution of the Rust Spires. Psydonia will not fall.
-The creation of the Rust Plague not tied to Zizo, it was a creation of heretical malumites!
-The creation of the Rust Plague not tied to Zizo, it was a creation of the trinity worshipping psydonites!
-There is no privacy in the spires, only the illusion of such. The Order of Brass does not monitor every mirror, only some.
-There is privacy in the spires, to imply otherwise is treason. Please report to your nearest Brass Knight about said rumors.
