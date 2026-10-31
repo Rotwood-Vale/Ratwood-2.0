@@ -75,6 +75,7 @@
 	desc = "A cannon ball."
 	icon = 'modular_twilight_axis/icons/cannon/cannon.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
+	dropshrink = 0.70
 
 /obj/item/cannon_shell/cannonball
 	name = "cannonball"
