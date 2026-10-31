@@ -92,6 +92,8 @@
 	beltl = /obj/item/storage/keyring/dungeoneer
 	backr = /obj/item/storage/backpack/rogue/satchel/black
 	id = /obj/item/scomstone/bad/garrison
+	backl = /obj/item/rogueweapon/scabbard/gwstrap
+	r_hand = /obj/item/rogueweapon/sword/long/exe
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
 		/obj/item/flashlight/flare/torch/lantern = 1,

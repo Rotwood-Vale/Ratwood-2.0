@@ -35,6 +35,9 @@
 
 /datum/outfit/job/roguetown/bandit/hedgeknight/pre_equip(mob/living/carbon/human/H)
 	..()
+	if (!(istype(H.patron, /datum/patron/inhumen/matthios)))
+		to_chat(H, span_warning("No TRUE bandit would worship any other but Matthios."))
+		H.set_patron(/datum/patron/inhumen/matthios)
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/black
 	gloves = /obj/item/clothing/gloves/roguetown/chain/blk
 	pants = /obj/item/clothing/under/roguetown/chainlegs/blk
