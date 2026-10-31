@@ -361,6 +361,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		return
 	if(QDELETED(target) || !(target in center.contents) || QDELETED(assistant))
 		return
+	var/pure = target.purity
 	if(!absorb_lux(target, center))
 		to_chat(user, span_warning("[target] has no lux left to give."))
 		return
@@ -369,7 +370,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		new /obj/item/necro_relics/necro_crystal(center)
 		zizo_award(user, 3)
 		zizo_award(assistant, 3)
-	if(target.purity == TRUE)
+	if(pure == TRUE)
 		new /obj/item/necro_relics/necro_crystal(center)
 		zizo_award(user, 3)
 		zizo_award(assistant, 3)

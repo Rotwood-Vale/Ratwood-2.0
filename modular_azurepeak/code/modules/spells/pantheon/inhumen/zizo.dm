@@ -174,6 +174,8 @@
 	if((target.mobility_flags & MOBILITY_STAND))
 		to_chat(user, span_info("My target must be lying down to have their lux torn."))
 		return
+	if(zizo_target_error(user, target))
+		return
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || (target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped) || target.mob_biotypes & MOB_UNDEAD)) //can't farm your skeletons
 		to_chat(user, span_notice("This one's lux is already disturbed!"))
 		return
@@ -196,7 +198,9 @@
 		target.add_stress(/datum/stressevent/myfuckingluxman)
 	playsound(src, 'sound/items/blackmirror_needle.ogg', 60, FALSE, 3)
 	user.visible_message(span_alert("[user] tears a glob of lux from [target]'s chest!"))
-	new /obj/item/reagent_containers/lux_impure(target.loc)
+	new /obj/item/necro_relics/necro_crystal(target.loc)
+	zizo_award(user, 5)
+	ADD_TRAIT(target, TRAIT_LUX_RIPPED, TRAIT_GENERIC)
 	SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
 	record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 	record_round_statistic(STATS_LUX_HARVESTED)
