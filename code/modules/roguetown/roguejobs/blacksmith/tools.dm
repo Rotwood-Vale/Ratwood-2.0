@@ -437,7 +437,7 @@
 	name = "ancient tongs"
 	desc = "Wrought gilbranze pincers the molten alloy, putting it before the anvil and hammer. Soon, it will fashion a new legacy; one unmarred by this dogmatic millenia."
 	force = 5
-	max_integrity = 10
+	max_integrity = 15
 	icon_state = "atongs"
 	smeltresult = /obj/item/ingot/aaslag
 
