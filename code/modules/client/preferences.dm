@@ -86,6 +86,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/pronouns = HE_HIM				// LETHALSTONE EDIT: character's pronouns (well duh)
 	var/voice_pack = "Default"
 	var/voice_type = VOICE_TYPE_MASC	// LETHALSTONE EDIT: the type of soundpack the mob should use
+	var/moan_selection = MOANPACK_TYPE_DEF	//RMH EDIT: choose moanpack
+	var/datum/moan_pack/temp_mp	//RMH EDIT: mp preview
 	var/datum/statpack/statpack	= new /datum/statpack/wildcard/fated // LETHALSTONE EDIT: the statpack we're giving our char instead of racial bonuses
 	var/datum/virtue/virtue = new /datum/virtue/none // LETHALSTONE EDIT: the virtue we get for not picking a statpack
 	var/datum/virtue/virtuetwo = new /datum/virtue/none
@@ -359,6 +361,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	COOLDOWN_DECLARE(bark_previewing)
 	COOLDOWN_DECLARE(descriptor_preview)
 	var/hear_barks = TRUE
+
+	// Moanpacks preview
+	COOLDOWN_DECLARE(moan_previewing)
 
 	// PATREON
 	// Vrell - I fucking hate how inconsistent the variable style is for this shit. underscores? all lowercase? camelcase?
@@ -644,7 +649,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<b>Voice Identity</b>: <a href='?_src_=prefs;preference=voicetype;task=input'>[voice_type]</a><BR>"
 			// LETHALSTONE EDIT END
 			dat += "<b>Voice Pack</b>: <a href='?_src_=prefs;preference=voicepack;task=input'>[voice_pack]</a><BR>"
-
+			// RMH EDIT
+			dat += "<b>Moanpack Type</b>: <a href='?_src_=prefs;preference=moanselection;task=input'>[moan_selection]</a> <a href='?_src_=prefs;preference=moanpreview;task=input'>(Preview)</a><BR>"
 			dat += "<BR>"
 			dat += "<b>Race:</b> <a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a>[spec_check(user) ? "" : " (!)"]<BR>"
 			if(pref_species.use_titles)
@@ -1982,6 +1988,35 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						else
 							to_chat(user, "<font color='red'>Your character will now audibly emote in accordance to their Voice Identity and any Racial / Class-specific voice packs.</font>")
 
+				// RMH EDIT: add moan type selection
+				if ("moanselection")
+					to_chat(user, "<font color='yellow'>This option allows you to customize your character's moanpack, dependent on the voice type. Leave it on 'default' or click 'cancel' to automatically use your voice type and species' moanpack.</font>")
+					if (user.client.prefs.voice_type == VOICE_TYPE_MASC)
+						generate_selectable_moanpacks()
+						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks_male)
+						if(moanpack_sel_input)
+							moan_selection = moanpack_sel_input
+							to_chat(user, "<font color='red'>Your character will now use the '[moanpack_sel_input]' moanpack.</font>")
+						else
+							moan_selection = MOANPACK_TYPE_DEF
+					else if (user.client.prefs.voice_type == VOICE_TYPE_FEM)
+						generate_selectable_moanpacks()
+						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks_female)
+						if(moanpack_sel_input)
+							moan_selection = moanpack_sel_input
+							to_chat(user, "<font color='red'>Your character will now use the '[moanpack_sel_input]' moanpack.</font>")
+						else
+							moan_selection = MOANPACK_TYPE_DEF
+
+					else
+						generate_selectable_moanpacks()
+						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks)
+						if(moanpack_sel_input)
+							moan_selection = moanpack_sel_input
+							to_chat(user, "<font color='red'>Your character will now use the '[moanpack_sel_input]' moanpack.</font>")
+						else
+							moan_selection = MOANPACK_TYPE_DEF
+
 				if("taur_type")
 					var/list/species_taur_list = pref_species.get_taur_list()
 					if(!LAZYLEN(species_taur_list))
@@ -2194,6 +2229,47 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						addtimer(CALLBACK(barkbox, TYPE_PROC_REF(/atom/movable, bark), list(parent.mob), 7, 70, BARK_DO_VARY(bark_pitch, bark_variance)), total_delay)
 						total_delay += rand(DS2TICKS(bark_speed/4), DS2TICKS(bark_speed/4) + DS2TICKS(bark_speed/4)) TICKS
 					QDEL_IN(barkbox, total_delay)
+
+				if("moanpreview")
+					if(SSticker.current_state == GAME_STATE_STARTUP)
+						to_chat(user, "<span class='warning'>Moan previews can't play during initialization!</span>")
+						return
+					if(!COOLDOWN_FINISHED(src, moan_previewing))
+						return
+					if(!parent || !parent.mob)
+						return
+					COOLDOWN_START(src, moan_previewing, 5 SECONDS)
+					if(!moan_selection)
+						to_chat(user, "<span class='warning'>No moanpack selected!</span>")
+						return
+
+					var/moan_key = pick("sexmoanlight", "sexmoanmed", "sexmoanhvy")
+
+					// Resolve the voice pack the same way emotes do: the chosen voice pack, else the species' one for this voice type
+					var/vp_type = GLOB.voice_packs_list[voice_pack]
+					if(!vp_type)
+						var/datum/voicepack/species_vp = pref_species.soundpack_m
+						if(voice_type != VOICE_TYPE_MASC && pref_species.soundpack_f)
+							species_vp = pref_species.soundpack_f
+						vp_type = ispath(species_vp) ? species_vp : species_vp.type
+					var/datum/voicepack/VP = new vp_type
+					var/soundin = VP.get_sound(moan_key)
+					qdel(VP)
+
+					// A chosen moanpack overrides the voice pack's moans
+					generate_selectable_moanpacks()
+					var/moan_type = GLOB.selectable_moanpacks[moan_selection]
+					if(moan_type)
+						var/datum/moan_pack/MP = new moan_type
+						soundin = MP.get_moans(moan_key) || soundin
+						qdel(MP)
+
+					if(islist(soundin))
+						soundin = pick(soundin)
+					if(soundin)
+						parent.mob.playsound_local(get_turf(parent.mob), soundin, 70, 0, 0, 7)
+					else
+						to_chat(user, "<span class='warning'>This voice has no moans.</span>")
 
 				if("highlight_color")
 					var/new_color = color_pick_sanitized(user, "Choose your character's nickname highlight color:", "Character Preference","#"+highlight_color)
@@ -3435,6 +3511,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	character.pronouns = pronouns
 	character.voice_type = voice_type
+
+	//RMH Edit
+	// Default leaves moans to the voice type and voice pack
+	generate_selectable_moanpacks()
+	character.moan_selection = GLOB.selectable_moanpacks[moan_selection]
 
 	// LETHALSTONE ADDITION END
 

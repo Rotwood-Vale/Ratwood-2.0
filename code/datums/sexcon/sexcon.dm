@@ -819,7 +819,10 @@
 		if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
 			user.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	user.add_stress(/datum/stressevent/cumok)
-	user.emote("sexmoanhvy", forced = TRUE)
+	if(!user.can_speak())
+		user.emote("sexmoangag_org", forced = TRUE)
+	else
+		user.emote("sexmoanhvy", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
 	try_xylix_confetti_climax()
 	last_ejaculation_time = world.time
@@ -1066,27 +1069,64 @@
 		return
 	if(prob(50))
 		return
+
+	var/has_baotha_patron = user.patron && istype(user.patron, /datum/patron/inhumen/baotha)
+	var/has_masochist = user.has_flaw(/datum/charflaw/addiction/masochist)
+	var/marked_by_baotha = user.has_flaw(/datum/charflaw/marked_by_baotha)
+	var/likes_pain = has_baotha_patron || has_masochist || marked_by_baotha
+
 	var/chosen_emote
-	switch(arousal_amt)
-		if(0 to 5)
-			chosen_emote = "sexmoanlight"
-		if(5 to INFINITY)
-			chosen_emote = "sexmoanhvy"
+
+	if(!user.can_speak())
+		chosen_emote = "sexmoangag"
+	else
+		switch(arousal)
+			if(0 to 40)
+				chosen_emote = "sexmoanlight"
+			if(40 to 75)
+				chosen_emote = "sexmoanmed"
+			else
+				chosen_emote = "sexmoanhvy"
 
 	if(pain_amt >= PAIN_MILD_EFFECT)
-		if(giving)
-			if(prob(30))
-				chosen_emote = "groan"
+		if(likes_pain)
+			if(giving)
+				if(!user.can_speak())
+					chosen_emote = "sexmoangag"
+				else
+					if(prob(15))
+						chosen_emote = "sexmoanhvy"
+					else
+						chosen_emote = "sexmoanmed"
 		else
-			if(prob(40))
-				chosen_emote = "painmoan"
+			if(giving)
+				if(prob(30))
+					chosen_emote = "groan"
+			else
+				if(prob(40))
+					chosen_emote = "painmoan"
+
 	if(pain_amt >= PAIN_MED_EFFECT)
-		if(giving)
-			if(prob(50))
-				chosen_emote = "groan"
+		if(likes_pain)
+			if(giving)
+				if(!user.can_speak())
+					chosen_emote = "sexmoangag"
+				else
+					if(prob(20))
+						chosen_emote = "sexmoanhvy"
+					else
+						chosen_emote = "sexmoanmed"
 		else
-			if(prob(60))
-				chosen_emote = "painmoan"
+			if(giving)
+				if(prob(50))
+					chosen_emote = "groan"
+			else
+				if(prob(60))
+					// Because males have atrocious whimper noise
+					if(user.gender == FEMALE && prob(50))
+						chosen_emote = "whimper"
+					else
+						chosen_emote = "groan"
 
 	last_moan = world.time
 	user.emote(chosen_emote, forced = TRUE)

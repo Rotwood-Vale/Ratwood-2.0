@@ -34,6 +34,10 @@
 	var/is_animal = FALSE
 	var/needs_emotion = FALSE //If true, emote will check for detached trait and not run if the user has it and the emote wasn't intentional. Used for emotes that require emotional investment to make sense, like crying or laughing.
 
+	//RMH EDIT
+	var/static/list/moan_keys = list("sexmoanlight","sexmoanmed","sexmoanhvy","sexmoangag","sexmoangag_org")
+	var/static/list/gag_moan_keys = list("sexmoangag","sexmoangag_org")
+
 /datum/emote/New()
 	if(!runechat_msg && !use_params_for_runechat)
 		//strip punctuation
@@ -190,6 +194,9 @@
 				modifier = "old"
 			if((!ignore_silent && (H.silent)) || (!ignore_silent && !is_emote_muffled(H)) || (!ignore_silent && HAS_TRAIT(H, TRAIT_MUTE)) ||  (!ignore_silent && HAS_TRAIT(H, TRAIT_BAGGED)))
 				modifier = "silenced"
+			// RMH EDIT: gagged moans are already muffled, so don't blank them out
+			if(modifier == "silenced" && (key in gag_moan_keys))
+				modifier = null
 			if(user.gender == FEMALE && H.dna.species.soundpack_f)
 				possible_sounds = H.dna.species.soundpack_f.get_sound(key,modifier)
 			else if(H.dna.species.soundpack_m)
@@ -205,6 +212,10 @@
 						else
 							possible_sounds = H.dna.species.soundpack_m.get_sound(key, modifier)
 			// LETHALSTONE ADDITION END
+			// RMH ADD: a chosen moanpack overrides the voice pack's moans
+			if(H.moan_selection && (key in moan_keys))
+				var/datum/moan_pack/MP = new H.moan_selection
+				possible_sounds = MP.get_moans(key) || possible_sounds
 			if(possible_sounds)
 				if(islist(possible_sounds))
 					var/list/PS = possible_sounds

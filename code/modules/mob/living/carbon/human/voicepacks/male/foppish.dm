@@ -23,7 +23,7 @@
 			used = list('sound/vo/male/foppish/sniff.ogg', 'sound/vo/male/foppish/sniff (2).ogg', 'sound/vo/male/foppish/sniff (3).ogg', 'sound/vo/male/foppish/sniff (4).ogg')
 		if("sexmoanlight")
 			used = list('sound/vo/male/foppish/groan (2).ogg', 'sound/vo/male/foppish/groan (3).ogg', 'sound/vo/male/foppish/groan (4).ogg', 'sound/vo/male/foppish/groan (5).ogg', 'sound/vo/male/foppish/groan (6).ogg', 'sound/vo/male/foppish/moan (1).ogg', 'sound/vo/male/foppish/moan (2).ogg', 'sound/vo/male/foppish/moan (3).ogg')
-		if("sexmoanhvy")
+		if("sexmoanmed", "sexmoanhvy")
 			used = list('sound/vo/male/foppish/moan (4).ogg', 'sound/vo/male/foppish/moan (5).ogg', 'sound/vo/male/foppish/moan (6).ogg', 'sound/vo/male/foppish/moan (7).ogg')
 		if("sneeze")
 			used = 'sound/vo/male/foppish/sneeze.ogg'
