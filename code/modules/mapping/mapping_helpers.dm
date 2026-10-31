@@ -188,31 +188,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon = 'icons/effects/hidden_door.dmi'
 	icon_state = "hidden_door"
 
-	var/redstone_id
-
-	var/obj/structure/mineral_door/secret/door_type = /obj/structure/mineral_door/secret
+	var/redstone_id //Linked levers open every wall with this id. Speaking a phrase only opens the walls next to the speaker
+	var/open_phrase //Left empty, a random phrase is picked. With secret_door_access set, it is the phrase for every wall with the same list
+	var/list/secret_door_access //Job types told the phrase through Recall Passphrases. Walls with the same list share one random phrase
+	var/secret_door_locale //Rough description of where the wall is, shown by Recall Passphrases. Falls back to the area name
+	var/auto_close_delay = 5 SECONDS //0 makes it toggle on each trigger instead
+	var/slide_dir //Null slides toward a neighbouring wall
 	var/override_floor = TRUE //Will only use the below as the floor tile if true. Source turf have at least 1 baseturf to use false
 	var/turf/open/floor_turf = /turf/open/floor/rogue/blocks
 
 /obj/effect/mapping_helpers/secret_door_creator/Initialize(mapload)
-	if(!isclosedturf(get_turf(src)))
-		return ..()
-	var/turf/closed/source_turf = get_turf(src)
-	var/obj/structure/mineral_door/secret/new_door = new door_type(source_turf)
-
-	new_door.name = source_turf.name
-	new_door.desc = source_turf.desc
-	new_door.icon = source_turf.icon
-	new_door.icon_state = source_turf.icon_state
-
-	if(redstone_id)
-		new_door.redstone_id = redstone_id
-		GLOB.redstone_objs += new_door
-		new_door.LateInitialize()
-
-	if(override_floor || length(source_turf.baseturfs) < 1)
-		source_turf.ChangeTurf(floor_turf)
+	var/turf/source_turf = get_turf(src)
+	if(isclosedturf(source_turf))
+		new /obj/structure/secret_wall_controller(source_turf, src)
 	else
-		source_turf.ChangeTurf(source_turf.baseturfs[1])
-
+		log_mapping("[src] is not on a wall at [AREACOORD(src)]")
 	. = ..()
