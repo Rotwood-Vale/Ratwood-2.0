@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /datum/ritual/servantry/convert
 	name = "Convert"
-	desc = "Place a sacrifice in the middle of the rune to convert them into a lackey. Grants SECRETS. If they refuse, it sacrifices them. Requires an assistant on the rune if there are more than 3 cultists."
+	desc = "Place a sacrifice in the middle of the rune to convert them into a lackey. Grants SECRETS. Requires an assistant on the rune if there are more than 3 cultists."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a sacrifice"
 	is_cultist_ritual = TRUE
@@ -313,20 +313,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		zizo_award(target, 3)
 	else
 		target.visible_message(span_danger("[target] thrashes around, unyielding!"))
-		if(!absorb_lux(target, get_turf(target)))
-			to_chat(user, span_warning("[target] has no lux left to give."))
-		else
-			to_chat(user, span_notice("The lux is torn from [target] and bound into a dark crystal."))
-			if(target.purity == TRUE)
-				new /obj/item/necro_relics/necro_crystal(center)
-				zizo_award(user, 3)
-			var/datum/job/J = SSjob.GetJob(target.mind?.assigned_role)
-			if(J && (J.type in (list(NOBLE_ROLES) + list(CHURCH_ROLES) + list(GARRISON_ROLES) + list(INQUISITION_ROLES))))
-				new /obj/item/necro_relics/necro_crystal(center)
-				zizo_award(user, 3)
-			zizo_award(user, 5)
-			if(assistant)
-				zizo_award(assistant, 5)
 
 /datum/ritual/servantry/sacrifice
 	lesser = TRUE
