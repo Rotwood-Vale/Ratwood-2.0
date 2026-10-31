@@ -1738,6 +1738,7 @@
 #include "code\modules\client\customizer\customizers\bodypart_feature\pubes.dm"
 #include "code\modules\client\customizer\customizers\organ\antennas.dm"
 #include "code\modules\client\customizer\customizers\organ\back_feature.dm"
+#include "code\modules\client\customizer\customizers\organ\belly.dm"
 #include "code\modules\client\customizer\customizers\organ\ears.dm"
 #include "code\modules\client\customizer\customizers\organ\eyes.dm"
 #include "code\modules\client\customizer\customizers\organ\frills.dm"
