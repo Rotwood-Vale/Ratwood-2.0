@@ -4,6 +4,7 @@ GLOBAL_LIST_EMPTY(gate_targets)
 GLOBAL_LIST_EMPTY(cult_robes)
 GLOBAL_LIST_EMPTY(zizo_reality_rends)
 GLOBAL_LIST_EMPTY(zizo_fuges)
+GLOBAL_LIST_EMPTY(zizo_summoned)
 GLOBAL_LIST_EMPTY(zizo_marks)
 
 GLOBAL_LIST_INIT(zizo_researchable, list(
@@ -784,6 +785,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "hagsword"
 	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE
 	max_blade_int = 9999
 	force = 25
 	force_wielded = 35
@@ -836,6 +838,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	sheathe_icon = "graggardagger"
 	force = 25
 	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE
 	max_blade_int = 9999
 	smeltresult = null
 	possible_item_intents =	list(/datum/intent/dagger/thrust/cult,/datum/intent/dagger/cut/cult)
@@ -851,6 +854,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	sheathe_icon = "fdagger"
 	force = 20
 	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE
 	max_blade_int = 9999
 	smeltresult = null
 	special = /datum/special_intent/ignite_dagger
@@ -895,6 +899,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	icon_state = "poisonsabre"
 	force = 30
 	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE
 	max_blade_int = 9999
 	var/active_intents =	list(/datum/intent/sword/cut/sabre/cult, /datum/intent/sword/thrust/sabre/cult)
 	var/inactive_intents = list()
@@ -948,7 +953,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	force_wielded = 35
 	minstr = 8
 	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE
 	w_class = WEIGHT_CLASS_BULKY
+	smeltresult = null
 	swingsound = BLUNTWOOSH_LARGE
 	gripsprite = TRUE
 	wlength = WLENGTH_LONG
@@ -1179,6 +1186,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	w_class = WEIGHT_CLASS_BULKY
 	minstr = 8
 	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE
 	max_blade_int = 9999
 	anvilrepair = /datum/skill/craft/carpentry
 	smeltresult = null

@@ -855,7 +855,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/list/turf_data = list()
 	var/list/obj/structure/pylon/pylons = list()
 	var/list/obj/structure/raver/ravers = list()
-	var/list/recipes_made = list()
 	// list(name, typepath, time 2 produce, aspect, & if unrepeatable)
 	var/static/list/recipes = list(
 		list("Dark Shards", /obj/item/cultbrick, 40 SECONDS, null, FALSE),
@@ -880,7 +879,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	for(var/list/Rtype in recipes)
 		if(Rtype[4] && !(Rtype[4] in GLOB.zizo_bestowed))
 			continue
-		if(Rtype[5] && (Rtype[2] in recipes_made))
+		if(Rtype[5] && (Rtype[2] in GLOB.zizo_summoned))
 			continue
 		menu["[Rtype[1]] - [Rtype[3] / 10] seconds"] = Rtype
 	if(!length(menu))
@@ -898,7 +897,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	busy = FALSE
 	icon_state = "teleport"
 	if(unrepeatable)
-		recipes_made |= spawn_type
+		GLOB.zizo_summoned |= spawn_type
 	var/atom/produced = spawn_type
 	new spawn_type(get_turf(src))
 	visible_message(span_danger("The fuge disgorges [initial(produced.name)]!"))
