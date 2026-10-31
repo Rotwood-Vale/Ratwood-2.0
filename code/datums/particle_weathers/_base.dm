@@ -312,10 +312,12 @@
 /datum/particle_weather/proc/weather_sound_effect(mob/living/L, outside = TRUE)
 	var/datum/looping_sound/currentSound = currentSounds[L]
 	if(currentSound)
-		//SET VOLUME
+		// Only changed severity needs a channel update. This runs every pass for every listener
 		if(scale_vol_with_severity)
-			currentSound.volume = initial(currentSound.volume) * severityMod()
-		if(!currentSound.loop_started) //don't restart already playing sounds
+			var/severity_volume = initial(currentSound.volume) * severityMod()
+			if(severity_volume != currentSound.volume)
+				currentSound.set_volume(severity_volume)
+		if(!currentSound.is_active()) //don't restart already playing sounds
 			currentSound.start()
 		return
 
@@ -329,7 +331,7 @@
 	if(tempSound)
 		currentSound = new tempSound(L, FALSE, TRUE, CHANNEL_WEATHER)
 		currentSounds[L] = currentSound
-		//SET VOLUME
+		// Nothing is playing yet, so initial volume needs no channel update
 		if(scale_vol_with_severity)
 			currentSound.volume = initial(currentSound.volume) * severityMod()
 		currentSound.start()
@@ -337,8 +339,7 @@
 /datum/particle_weather/proc/stop_weather_sound_effect(mob/living/L)
 	var/datum/looping_sound/currentSound = currentSounds[L]
 	if(currentSound)
-		currentSounds[L] = null
-		currentSound.stop()
+		currentSounds -= L // Remove the key as well as deleting the loop, so the map retains no dead listener entry
 		qdel(currentSound)
 
 /datum/particle_weather/proc/weather_message(mob/living/L)

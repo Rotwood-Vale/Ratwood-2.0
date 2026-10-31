@@ -57,12 +57,19 @@ SUBSYSTEM_DEF(memory_stats)
 	var/delta = (isnull(rss_after) || isnull(rss_before)) ? "unknown" : round((rss_after - rss_before) / (1024 * 1024), 0.1)
 	WRITE_LOG(GLOB.world_mem_log, "MEMMAP: [stage] [map_path] delta_mb=[delta] time_s=[(REALTIMEOFDAY - start_time) / 10]")
 
+/**
+ * Writes process memory and point ambience cache counts to the memory log.
+ *
+ * Process working set includes more than the sound system. Cache entry and key counts describe
+ * cache size, not allocated bytes.
+ */
 /datum/controller/subsystem/memory_stats/proc/log_memory_stats()
 	var/list/out = list()
 
 	var/rss_bytes = get_process_rss_bytes()
 	if(!isnull(rss_bytes))
 		var/rss = round(rss_bytes / (1024 * 1024), 0.1)
+		out += "rss_scope=[world.system_type == UNIX ? "this_process" : "all_dd_processes"]"
 		out += "rss_mb=[rss]"
 		out += "rss_bytes=[num2text(rss_bytes, 12)]"
 		if(last_rss_mb && rss - last_rss_mb > 250)
@@ -90,6 +97,17 @@ SUBSYSTEM_DEF(memory_stats)
 	out += "gc_totalgcs=[SSgarbage.totalgcs]"
 	for(var/i in 1 to length(SSgarbage.queues))
 		out += "gc_queue[i]=[length(SSgarbage.queues[i])]"
+
+	out += "pa_tile_keys=[length(SSpoint_ambience.tile_cache)]"
+	out += "pa_tile_live=[SSpoint_ambience.tile_cache_entries]"
+	out += "pa_history_fields=[length(SSpoint_ambience.source_change_history)]"
+	out += "pa_fading=[length(SSpoint_ambience.fading)]"
+	out += "pa_dirty_clients=[length(SSpoint_ambience.dirty_clients)]"
+	var/pa_index_cells = 0
+	for(var/list/floor_buckets as anything in SSpoint_ambience.buckets_by_z)
+		if(islist(floor_buckets))
+			pa_index_cells += length(floor_buckets)
+	out += "pa_index_cells=[pa_index_cells]"
 
 	// timers
 	out += "timer_buckets=[SStimer.bucket_count]"

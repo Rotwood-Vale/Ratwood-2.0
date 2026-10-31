@@ -9,27 +9,6 @@
 	mid_length = 60
 	volume = 10
 
-/datum/looping_sound/torchloop
-	mid_sounds = list('sound/items/torchloop.ogg')
-	mid_length = 75
-	volume = 30
-	extra_range = -1
-	vary = TRUE
-	//sound_group = /datum/sound_group/torches
-
-/datum/looping_sound/boneloop
-	mid_sounds = list('sound/vo/mobs/ghost/skullpile_loop.ogg')
-	mid_length = 65
-	volume = 100
-	extra_range = -1
-
-/datum/looping_sound/fireloop
-	mid_sounds = list('sound/misc/fire_place.ogg')
-	mid_length = 35
-	volume = 100
-	extra_range = -2
-	vary = TRUE
-	sound_group = /datum/sound_group/fire_loop
 
 /datum/looping_sound/boilloop
 	mid_sounds = list('sound/misc/boiling.ogg')
@@ -37,59 +16,59 @@
 	volume = 70
 	extra_range = 0
 	vary = TRUE
+	// Tokens update volume during playback. Native repeat keeps the single clip continuous
+	use_sound_tokens = TRUE
 
-/datum/looping_sound/streetlamp1
-	mid_sounds = list('sound/misc/loops/StLight1.ogg')
-	mid_length = 60
-	volume = 40
-	extra_range = 0
-	vary = TRUE
-	ignore_walls = FALSE
+/// Enables wall muffling for cauldrons independently of the music muffling preference
+/datum/looping_sound/boilloop/configure_token(datum/sound_token/token)
+	token.muffle_behind_walls = TRUE
 
-/datum/looping_sound/streetlamp2
-	mid_sounds = list('sound/misc/loops/StLight2.ogg')
-	mid_length = 40
-	volume = 40
-	extra_range = 0
-	vary = TRUE
-	ignore_walls = FALSE
 
-/datum/looping_sound/streetlamp3
-	mid_sounds = list('sound/misc/loops/StLight3.ogg')
-	mid_length = 50
-	volume = 40
-	extra_range = 0
-	vary = TRUE
-	ignore_walls = FALSE
-
-/datum/looping_sound/clockloop
-	mid_sounds = list('sound/misc/clockloop.ogg')
-	mid_length = 20
-	volume = 10
-	extra_range = -3
-	ignore_walls = FALSE
-
+/**
+ * Timer-driven boat ambience, started when the bell initializes.
+ *
+ * The loop stays active all round and alternates clips, so token playback would retain a channel
+ * and spatial tracking without removing the timer. Volume updates when each clip plays. The bell's
+ * ring uses a separate playsound() call.
+ */
 /datum/looping_sound/boatloop
 	mid_sounds = list('sound/ambience/boat (1).ogg','sound/ambience/boat (2).ogg')
 	mid_length = 60
 	volume = 100
 	extra_range = -1
 
+/**
+ * Positional playback for the carried Psydon music box.
+ *
+ * Tokens update the sound as the carrier or listeners move, and native repeat avoids gaps between
+ * plays. Uses Sound Effects rather than Instruments because the music accompanies stress and status
+ * effects.
+ */
 /datum/looping_sound/psydonmusicboxsound
 	mid_sounds = list('sound/magic/psydonmusicbox.ogg')
 	mid_length = 320
 	volume = 50
 	extra_range = 10
+	use_sound_tokens = TRUE
 
+/// Enables wall muffling while retaining Sound Effects volume control
+/datum/looping_sound/psydonmusicboxsound/configure_token(datum/sound_token/token)
+	token.muffle_behind_walls = !CONFIG_GET(flag/disable_music_wall_muffle)
+
+
+/// Positional charge loop that follows Pestra's caster and nearby listeners during the cast
+/datum/looping_sound/fliesloop
+	mid_sounds = list('sound/misc/fliesloop.ogg')
+	mid_length = 60
+	volume = 50
+	extra_range = 0
+	use_sound_tokens = TRUE
 
 /datum/looping_sound/blackmirror
 	mid_sounds = list('sound/items/blackmirror_amb.ogg')
 	mid_length = 30
 	volume = 100
 	extra_range = -3
+	// Tokens update volume during the charge rather than waiting for the next clip
+	use_sound_tokens = TRUE
 
-/datum/looping_sound/blank // datum call for a blank soundloop. Useful for avoiding qdel runtimes on machines and potentially structures
-	mid_sounds = list('sound/blank.ogg')
-	mid_length = 0
-	volume = 0
-	extra_range = 0

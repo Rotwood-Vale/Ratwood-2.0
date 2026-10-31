@@ -252,7 +252,8 @@ SUBSYSTEM_DEF(vote)
 		generated_actions += voting_action
 
 		if(to_vote.vote_sound)
-			SEND_SOUND(new_voter, sound(to_vote.vote_sound))
+			var/vote_volume = new_voter.prefs ? new_voter.prefs.at_overall(new_voter.prefs.adminmusicvol) : 100
+			SEND_SOUND(new_voter, sound(to_vote.vote_sound, volume = vote_volume))
 
 		if(initialized && new_voter.prefs?.voting_popup)
 			INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/controller/subsystem/vote, ui_interact), new_voter.mob)
@@ -466,7 +467,8 @@ SUBSYSTEM_DEF(vote)
 	generated_actions += voting_action
 
 	if(current_vote.vote_sound)
-		SEND_SOUND(C, sound(current_vote.vote_sound))
+		var/vote_volume = C.prefs ? C.prefs.at_overall(C.prefs.adminmusicvol) : 100
+		SEND_SOUND(C, sound(current_vote.vote_sound, volume = vote_volume))
 
 	// Notify them in chat
 	var/remaining_time = max(0, current_vote.time_remaining) * 10

@@ -263,7 +263,7 @@
 	return "chastity device"
 
 // Unified sound helper: supports single sound or list input with optional chance gating.
-/datum/sex_action/chastityplay/proc/play_chastity_impact_sound(mob/living/carbon/human/target, sound_to_play, volume = 40, chance = 100, vary = TRUE, frequency = -1)
+/datum/sex_action/chastityplay/proc/play_chastity_impact_sound(mob/living/carbon/human/target, sound_to_play, volume = 40, chance = 100, vary = TRUE, extrarange = -1)
 	if(!target || !sound_to_play)
 		return FALSE
 	if(chance < 100 && !prob(chance))
@@ -271,7 +271,7 @@
 	if(islist(sound_to_play))
 		if(!length(sound_to_play))
 			return FALSE
-		playsound(get_turf(target), pick(sound_to_play), volume, vary, frequency)
+		playsound_erp(get_turf(target), pick(sound_to_play), volume, vary, extrarange, travel = SOUND_TRAVEL_CONTAINED)
 		return TRUE
-	playsound(get_turf(target), sound_to_play, volume, vary, frequency)
+	playsound_erp(get_turf(target), sound_to_play, volume, vary, extrarange, travel = SOUND_TRAVEL_CONTAINED)
 	return TRUE

@@ -22,6 +22,10 @@
 	var/nomsg = FALSE
 	var/soundping = TRUE
 	var/ignore_silent = FALSE
+	/// Whether this emote reaches adjacent floors when the caller supplies no travel class
+	var/cross_z_audible = TRUE
+	/// Default SOUND_TRAVEL_* barrier policy, used when the caller supplies no travel class
+	var/snd_travel = SOUND_TRAVEL_UNRESTRICTED
 	var/snd_vol = 100
 	var/snd_range = -1
 	var/mute_time = 30//time after where someone can't do another emote
@@ -31,7 +35,8 @@
 	var/runechat_msg = null
 	// If this is true, we skip setting the base runechat message and instead use whatever our at-emote-runtime message is. Useful for things like kiss/lick which change message based on conditions.
 	var/use_params_for_runechat = FALSE
-	var/is_animal = FALSE
+	/// Whether the Anthro Noise Emotes preference controls this sound
+	var/anthro_noise = FALSE
 	var/needs_emotion = FALSE //If true, emote will check for detached trait and not run if the user has it and the emote wasn't intentional. Used for emotes that require emotional investment to make sense, like crying or laughing.
 
 /datum/emote/New()
@@ -56,7 +61,18 @@
 /datum/emote/proc/adjacentaction(mob/user, mob/target)
 	return
 
-/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE, targetted = FALSE, animal = FALSE)
+/**
+ * Displays the emote and plays its sound using the selected travel policy.
+ *
+ * Messages use audible_message() or visible_message(). Sound uses snd_travel and cross_z_audible
+ * unless the caller supplies a travel class.
+ *
+ * Arguments:
+ * * travel - Optional SOUND_TRAVEL_* override for this call, including its default floor cap. Null
+ *   preserves the emote's defaults.
+ * * erp - Whether the sound should use ERP audio handling.
+ */
+/datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE, targetted = FALSE, anthro_noise = FALSE, travel = null, erp = FALSE)
 	. = TRUE
 	if(!can_run_emote(user, TRUE, intentional))
 		return FALSE
@@ -117,7 +133,10 @@
 			else// if(!vision.viewing_head)
 				emotelocation = user
 
-		playsound(emotelocation, tmp_sound, snd_vol, FALSE, snd_range, soundping = soundping, animal_pref = animal)
+		// An explicit travel class supplies both barrier handling and the floor cap
+		var/sound_travel = isnull(travel) ? snd_travel : travel
+		var/floor_volume = isnull(travel) ? (cross_z_audible ? null : SOUND_FLOOR_NEVER) : SOUND_TRAVEL_FLOOR(travel)
+		playsound(emotelocation, tmp_sound, snd_vol, FALSE, snd_range, soundping = soundping, anthro_noise = anthro_noise, travel = sound_travel, floor_volume = floor_volume, erp = erp)
 	if(!nomsg)
 		user.log_message(msg, LOG_EMOTE)
 		var/pre_color_msg = msg

@@ -32,7 +32,7 @@
 		if(SEX_FORCE_EXTREME, SEX_FORCE_LUDICROUS)
 			chastity_volume = 50
 
-	playsound(sound_target, chastity_item.chastity_move_sound ? chastity_item.chastity_move_sound : SFX_JINGLE_BELLS, chastity_volume, TRUE, -2, ignore_walls = FALSE)
+	playsound_erp(sound_target, chastity_item.chastity_move_sound ? chastity_item.chastity_move_sound : SFX_JINGLE_BELLS, chastity_volume, TRUE, -2)
 	return TRUE
 
 /// Returns TRUE if the sexcon's user is wearing spiked chastity AND has the masochist flaw.
