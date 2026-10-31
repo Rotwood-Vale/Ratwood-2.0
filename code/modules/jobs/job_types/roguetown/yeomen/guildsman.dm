@@ -13,7 +13,7 @@
 
 	tutorial = "You are a member of the Duchy's Guild of Crafts, a massive guild formed to represent the interests of all craftsmen in the township.\
 	As a Guildsman, you hail from the three most important constituent guilds: The Smith's Guild, the Artificer's Guild, and the Architect's Guild. The Guildsmaster has sway over you, but it is not absolute."
-	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT)
+	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT, TRAIT_LEGENDARY_MINER)
 
 	outfit = /datum/outfit/job/roguetown/guildsman
 	selection_color = JCOLOR_YEOMAN
@@ -37,24 +37,27 @@
 
 	category_tags = list(CTAG_GUILDSMEN)
 	subclass_stats = list(
-		STATKEY_STR = 3,
-		STATKEY_WIL = 2,
-		STATKEY_CON = 2,
-		STATKEY_INT = 2,
-		STATKEY_LCK = 1 // general skillbuff to bring them in line with the architech
+		STATKEY_STR = 2,
+		STATKEY_WIL = 1,
+		STATKEY_CON = 1,
+		STATKEY_INT = 1,
+		STATKEY_LCK = 1
 	)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/smelting = SKILL_LEVEL_MASTER, // Goofy to insist you're worse at smelting than smithing
-		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE, // 2 engineering as most engineering crafts were increased in skill
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/engineering = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE
 	)
 
 /datum/outfit/job/roguetown/guildsman/blacksmith/pre_equip(mob/living/carbon/human/H)
@@ -110,38 +113,36 @@
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/battlewardry, /datum/magic_aspect/artifice), "post_aspect_spells" = list(/obj/effect/proc_holder/spell/invoked/takeapprentice), "ward" = TRUE)
 
 	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER, TRAIT_ENGINEER, TRAIT_ARCYNE, TRAIT_LEGENDARY_MINER)
-	subclass_stats = list( // alchemy expert upon request
+	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ENGINEER, TRAIT_ARCYNE, TRAIT_LEGENDARY_MINER)
+	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
-		STATKEY_LCK = 2,
 		STATKEY_STR = 1,
-		STATKEY_CON = 1,
-		STATKEY_PER = 1
+		STATKEY_CON = 1
 	)
 	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // main weapon is an axe
-		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // Allows them to use their axe effectively
+		/datum/skill/combat/maces = SKILL_LEVEL_NOVICE, // less than blacksmith, used in hammers
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN, // 
-		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN, // can fill in for a blacksmith but can now actually repair equipment if needed
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/smelting = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE, // AP gave them apprentice to allow for grinding since bombs need alchemy skill to get the ingredients
-		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT, // dd you know you can't even climb the walls you make?
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
+		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT, // glass making
+		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 	)
 
 /datum/outfit/job/roguetown/guildsman/engineer/pre_equip(mob/living/carbon/human/H)
