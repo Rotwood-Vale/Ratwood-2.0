@@ -20,13 +20,17 @@
 	miracle = TRUE
 	devotion_cost = 10
 
-/obj/effect/proc_holder/spell/invoked/baothablessings/cast(list/targets, mob/living/user)
+/obj/effect/proc_holder/spell/invoked/baothablessings/cast(list/targets, mob/living/user) // There was no drawback the -5 fortune did absolutely nothing, due to numbing pleasure +2 fortune so you could get +5 fortune back easily.
 	if(isliving(targets[1]))
 		var/mob/living/carbon/target = targets[1]
 		if(HAS_TRAIT(target, TRAIT_PSYDONITE))
 			target.visible_message(span_info("[target] stirs for a moment, the miracle dissipates."), span_notice("A dull warmth swells in your heart, only to fade as quickly as it arrived."))
 			user.playsound_local(user, 'sound/magic/PSY.ogg', 100, FALSE, -1)
 			playsound(target, 'sound/magic/PSY.ogg', 100, FALSE, -1)
+			return FALSE
+		if(target.has_status_effect(/datum/status_effect/buff/vitae))
+			to_chat(user, span_warning("The target is already under one of these effects!"))
+			revert_cast()
 			return FALSE
 		if(target.has_status_effect(/datum/status_effect/buff/druqks/baotha))
 			to_chat(user, span_warning("They're already blessed by these effects!"))
@@ -101,6 +105,17 @@
 		var/datum/physiology/phy = human_target.physiology
 		if(target.mob_biotypes & MOB_UNDEAD)
 			return FALSE	//No, you don't get to feel good. You're a undead mob. Feel bad.
+		
+		if(target.has_status_effect(/datum/status_effect/buff/druqks/baotha))
+			to_chat(user, span_warning("The target is already under one of the blessings!."))
+			revert_cast()
+			return FALSE
+
+		if(target.has_status_effect(/datum/status_effect/buff/vitae))
+			to_chat(user, span_warning("The target is already under this effect."))
+			revert_cast()
+			return FALSE
+		
 		target.visible_message(span_info("[target] begins to twitch as warmth radiates from them!"), span_notice("The pain from my wounds fade, every new one being a mere, pleasent warmth!"))
 		phy.pain_mod *= 0.5	//Literally halves your pain modifier.
 		addtimer(VARSET_CALLBACK(phy, pain_mod, phy.pain_mod /= 0.5), 1 MINUTES)	//Adds back the 0.5 of pain, basically setting it back to 1.
