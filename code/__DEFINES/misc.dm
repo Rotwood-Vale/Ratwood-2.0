@@ -148,7 +148,7 @@
 
 //Cache of bloody footprint images
 //Key:
-//"entered-[blood_state]-[dir_of_image]"
+//"entered-[blood_state]-[dir_of_image]" or with "-grey" when the step is a tintable human-blood mask
 //or: "exited-[blood_state]-[dir_of_image]"
 GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 

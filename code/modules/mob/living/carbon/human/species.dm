@@ -68,6 +68,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/exotic_blood = ""
 	///If my race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/exotic_bloodtype = ""
+	/// Hex tint for this species' blood. Sprites are greyscaled from their red channel, then multiplied by this.
+	var/blood_color = BLOOD_COLOR_DEFAULT
 	///What the species drops on gibbing
 	var/meat = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	var/skinned_type
@@ -2035,7 +2037,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				bloody = 1
 				var/turf/location = H.loc
 				var/splatter_dir = get_dir(H, user)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(H.loc, splatter_dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(H.loc, splatter_dir, H.get_blood_color())
 				if(istype(location))
 					H.add_splatter_floor(location)
 					H.add_splatter_wall(location, force = I.force)

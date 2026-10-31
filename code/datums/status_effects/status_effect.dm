@@ -329,6 +329,8 @@
 
 /datum/status_effect/stacking/proc/on_threshold_drop()
 
+/datum/status_effect/stacking/proc/prepare_overlay()
+
 /datum/status_effect/stacking/proc/can_have_status()
 	return owner.stat != DEAD
 
@@ -360,6 +362,7 @@
 		stacks = min(stacks, max_stacks)
 		status_overlay.icon_state = "[overlay_state][stacks]"
 		status_underlay.icon_state = "[underlay_state][stacks]"
+		prepare_overlay()
 		owner.add_overlay(status_overlay)
 		owner.underlays += status_underlay
 	else
@@ -383,6 +386,7 @@
 	status_underlay.pixel_x = -owner.pixel_x
 	status_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
 	status_underlay.alpha = 40
+	prepare_overlay()
 	owner.add_overlay(status_overlay)
 	owner.underlays += status_underlay
 	return ..()

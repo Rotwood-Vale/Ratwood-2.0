@@ -89,7 +89,11 @@
 				add_blood = bloodiness
 			bloodiness -= add_blood
 			S.bloody_shoes[blood_state] = min(MAX_SHOE_BLOODINESS,S.bloody_shoes[blood_state]+add_blood)
-			S.add_blood_DNA(return_blood_DNA())
+			var/step_color = BLOOD_COLOR_DEFAULT
+			if(istype(src, /obj/effect/decal/cleanable/blood))
+				var/obj/effect/decal/cleanable/blood/step_blood = src
+				step_color = step_blood.blood_color
+			S.add_blood_DNA(return_blood_DNA(), step_color)
 			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()

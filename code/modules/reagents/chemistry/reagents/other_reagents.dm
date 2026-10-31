@@ -1,7 +1,7 @@
 /datum/reagent/blood
 	data = list("donor"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
 	name = "Blood"
-	color = "#C80000" // rgb: 200, 0, 0
+	color = BLOOD_COLOR_DEFAULT
 	metabolization_rate = 5 //fast rate so it disappears fast.
 	taste_description = "iron"
 	taste_mult = 1.3
@@ -34,10 +34,17 @@
 			else
 				C.set_blood_volume(min(C.get_blood_volume() + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM))
 
+/datum/reagent/blood/on_new(data)
+	if(islist(data) && data["blood_color"])
+		color = data["blood_color"]
+
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
 		if(data["blood_DNA"] != mix_data["blood_DNA"])
 			data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
+		if(!data["blood_color"] && mix_data["blood_color"])
+			data["blood_color"] = mix_data["blood_color"]
+			color = mix_data["blood_color"]
 	return 1
 
 /datum/reagent/blood/reaction_turf(turf/T, reac_volume)//splash the blood all over the place
@@ -48,9 +55,11 @@
 
 	var/obj/effect/decal/cleanable/blood/B = locate() in T //find some blood here
 	if(!B)
-		B = new(T)
-	if(data["blood_DNA"])
-		B.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+		B = new(T, data ? data["blood_color"] : null)
+	if(data && data["blood_DNA"])
+		B.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]), data["blood_color"])
+	else if(data && data["blood_color"])
+		B.set_blood_color(data["blood_color"])
 
 /datum/reagent/blood/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(method == INGEST) // Make sure you DRANK the blood before giving damage

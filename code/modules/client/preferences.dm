@@ -102,6 +102,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/facial_hairstyle = "Shaved"	//Face hair type
 	var/facial_hair_color = "000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
+	var/blood_color_choice = "red"		//Drakian blood hue. A key in GLOB.drakian_blood_colors.
 	var/mutant_skin = FALSE			//Use mutant color as skin color instead of skin_tone
 	var/eye_color = "000"				//Eye color
 	var/extra_language = "None" // Extra language
@@ -811,6 +812,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				dat += "<b>Mutant Color #1:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
 				dat += "<b>Mutant Color #2:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
 				dat += "<b>Mutant Color #3:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
+
+			if(pref_species.id == "dracon")
+				var/list/blood_pair = GLOB.drakian_blood_colors[blood_color_choice]
+				if(!blood_pair)
+					blood_pair = GLOB.drakian_blood_colors["red"]
+				dat += "<b>Ancestral Blood:</b> <span style='border: 1px solid #161616; background-color: [blood_pair["color"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=blood_color;task=input'>[blood_pair["name"]]</a><BR>"
 
 			dat += "<br><b>Voice Color: </b><a href='?_src_=prefs;preference=voice;task=input'>Change</a>"
 			dat += "<br><b>Nickname Color: </b> </b><a href='?_src_=prefs;preference=highlight_color;task=input'>Change</a>"
@@ -2672,6 +2679,16 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						features["mcolor3"] = sanitize_hexcolor(new_mutantcolor)
 						try_update_mutant_colors()
 
+				if("blood_color")
+					if(pref_species.id == "dracon")
+						var/list/blood_hues = list()
+						for(var/hue in GLOB.drakian_blood_colors)
+							var/list/pair = GLOB.drakian_blood_colors[hue]
+							blood_hues[pair["name"]] = hue
+						var/chosen_name = tgui_input_list(user, "Choose your ancestral blood:", "Ancestral Blood", blood_hues)
+						if(chosen_name && blood_hues[chosen_name])
+							blood_color_choice = blood_hues[chosen_name]
+
 				if("skin_choice_pick")
 					var/prompt = alert(user, "Choose skin/scales color",, "Custom", "Predefined")
 					if(prompt == "Custom")
@@ -3308,6 +3325,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.gender = gender
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = src)
 	character.dna.update_body_size()
+	if(character.dna?.species?.id == "dracon" && (blood_color_choice in GLOB.drakian_blood_colors))
+		character.blood_hue = blood_color_choice
+	else
+		character.blood_hue = null
 
 	if((randomise[RANDOM_NAME] || randomise[RANDOM_NAME_ANTAG] && antagonist) && !character_setup)
 		slot_randomized = TRUE

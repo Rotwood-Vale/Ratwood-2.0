@@ -230,7 +230,7 @@
 		living_movable.adjustFireLoss(25)
 		return
 	if (istype(src,/turf/open/water/bloody))
-		living_movable.add_mob_blood(living_movable)
+		living_movable.add_mob_blood(living_movable, BLOOD_COLOR_DEFAULT)
 	if(!(living_movable.movement_type & FLYING) && !HAS_TRAIT(living_movable, TRAIT_ON_BOAT))
 		if(!(living_movable.mobility_flags & MOBILITY_STAND) || water_level == 3)
 			living_movable.SoakMob(FULL_BODY)
@@ -329,7 +329,7 @@
 					water_color = "#a4955b"
 					update_icon()*/
 				if (istype(src,/turf/open/water/bloody))
-					L.add_mob_blood(L) //Yes its their own DNA
+					L.add_mob_blood(L, BLOOD_COLOR_DEFAULT)
 
 		else
 			user.visible_message(span_info("[user] starts to wash [item2wash] in [src]."))
@@ -338,7 +338,7 @@
 					wash_atom(item2wash, CLEAN_STRONG)
 					L.update_inv_hands()
 				if(istype(src,/turf/open/water/bloody))
-					item2wash.add_blood_DNA(list("Blood" = random_blood_type()))
+					item2wash.add_blood_DNA(list("Blood" = random_blood_type()), BLOOD_COLOR_DEFAULT)
 				if(iscarbon(L))
 					var/mob/living/carbon/C = user
 					C.update_inv_hands()

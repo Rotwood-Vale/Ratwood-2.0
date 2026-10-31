@@ -590,17 +590,17 @@
 	if(!new_blood_dna)
 		return FALSE
 	var/old_length = blood_DNA_length()
-	add_blood_DNA(new_blood_dna)
+	add_blood_DNA(new_blood_dna, L.get_blood_color())
 	if(blood_DNA_length() == old_length)
 		return FALSE
 	return TRUE
 
 ///to add blood from a mob onto something, and transfer their dna info
-/atom/proc/add_mob_blood(mob/living/M)
+/atom/proc/add_mob_blood(mob/living/M, blood_color)
 	var/list/blood_dna = M.get_blood_dna_list()
 	if(!blood_dna)
 		return FALSE
-	return add_blood_DNA(blood_dna)
+	return add_blood_DNA(blood_dna, blood_color || M.get_blood_color())
 
 ///Called when gravity returns after floating I think
 /atom/proc/handle_fall()
