@@ -535,7 +535,7 @@ GLOBAL_LIST_EMPTY(collar_masters)
 	pet.Stun(300)
 	pet.Knockdown(300)
 	pet.apply_status_effect(/datum/status_effect/debuff/breedable)
-	pet.apply_status_effect(/datum/status_effect/debuff/submissive)
+	pet.apply_status_effect(/datum/status_effect/debuff/submissive)//this DOESNT get /datum/status_effect/debuff/omegamale since it's mostly a sex thing
 
 	// Visual and sound effects
 	pet.visible_message(span_warning("[pet] is forced to surrender by their collar!"), \
