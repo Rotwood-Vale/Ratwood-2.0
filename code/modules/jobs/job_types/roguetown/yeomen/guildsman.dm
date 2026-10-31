@@ -13,7 +13,6 @@
 
 	tutorial = "You are a member of the Duchy's Guild of Crafts, a massive guild formed to represent the interests of all craftsmen in the township.\
 	As a Guildsman, you hail from the three most important constituent guilds: The Smith's Guild, the Artificer's Guild, and the Architect's Guild. The Guildsmaster has sway over you, but it is not absolute."
-	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT, TRAIT_LEGENDARY_MINER)
 
 	outfit = /datum/outfit/job/roguetown/guildsman
 	selection_color = JCOLOR_YEOMAN
@@ -36,18 +35,19 @@
 	outfit = /datum/outfit/job/roguetown/guildsman/blacksmith
 
 	category_tags = list(CTAG_GUILDSMEN)
+	traits_applied = list(TRAIT_TRAINED_SMITH, TRAIT_SMITHING_EXPERT, TRAIT_LEGENDARY_MINER)
 	subclass_stats = list(
 		STATKEY_STR = 2,
+		STATKEY_CON = 2,
 		STATKEY_WIL = 1,
-		STATKEY_CON = 1,
 		STATKEY_INT = 1,
 		STATKEY_LCK = 1
 	)
 	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN, // you can use your hammer as a weapon
+		/datum/skill/combat/axes = SKILL_LEVEL_NOVICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_MASTER,
@@ -110,31 +110,32 @@
 	tutorial = "You are an engineer, hailing from the artificers of old, you now combine the teachings of engineering with architecture. \
 	You now fit the role of both designer and constructor, working with wood or working with machinery, you are a respected craftsman and highly sought after for your experience is endless."
 	outfit = /datum/outfit/job/roguetown/guildsman/engineer
-	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/battlewardry, /datum/magic_aspect/artifice), "post_aspect_spells" = list(/obj/effect/proc_holder/spell/invoked/takeapprentice), "ward" = TRUE)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/battlewardry, /datum/magic_aspect/artifice), "post_aspect_spells" = list(/obj/effect/proc_holder/spell/invoked/takeapprentice), "ward" = FALSE)
 
 	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ENGINEER, TRAIT_ARCYNE, TRAIT_LEGENDARY_MINER)
+	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_SQUIRE_REPAIR, TRAIT_ENGINEER, TRAIT_ARCYNE, TRAIT_LEGENDARY_MINER)
 	subclass_stats = list(
-		STATKEY_INT = 3,
+		STATKEY_INT = 2,
 		STATKEY_WIL = 2,
 		STATKEY_STR = 1,
-		STATKEY_CON = 1
+		STATKEY_CON = 1,
+		STATKEY_PER = 1
 	)
 	subclass_skills = list(
 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // Allows them to use their axe effectively
 		/datum/skill/combat/maces = SKILL_LEVEL_NOVICE, // less than blacksmith, used in hammers
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE, // Not sure why they got journeyman wrestling, architect had it probably doesn't need it
 		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/smelting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/ceramics = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE, // you should be more experienced in repairing your own tools
+		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE, 
+		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT, // ceramics is a very unforgiving craft, expert is almost always required for even glass panes
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
