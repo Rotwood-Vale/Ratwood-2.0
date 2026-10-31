@@ -27,7 +27,7 @@
 			return strings("brazillian_replacement.json", type, convert_HTML = TRUE)
 		if("Lupian accent")
 			return strings("polish_replacement.json", type, convert_HTML = TRUE)
-		if("Tiefling accent")
+		if("South Etruscan accent")
 			return strings("spanish_replacement.json", type, convert_HTML = TRUE)
 		if("Half Orc accent")
 			return strings("middlespeak.json", type, convert_HTML = TRUE)
