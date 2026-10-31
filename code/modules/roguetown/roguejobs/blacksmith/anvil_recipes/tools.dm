@@ -122,7 +122,7 @@
 
 /datum/anvil_recipe/tools/decrepit/tongs
 	name = "Tongs, Decrepit"
-	created_item = /obj/item/rogueweapon/tongs/ancient/decrepit
+	created_item = /obj/item/rogueweapon/tongs/ancient
 	i_type = "Tools"
 	display_category = ITEM_CAT_TOOLS_WORKSHOP
 

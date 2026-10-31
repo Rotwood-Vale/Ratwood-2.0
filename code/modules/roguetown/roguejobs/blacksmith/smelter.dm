@@ -63,7 +63,10 @@
 				to_chat(user, span_warning("\The [src] is currently smelting. Wait for it to finish, or douse it with water to retrieve items from it."))
 				return
 			if(!length(contained_items))
-				to_chat(user, span_warn("Nothing to retrieve from inside."))
+				if(user.m_intent == MOVE_INTENT_SNEAK)
+					add_item(attacking_item, user)
+					return
+				to_chat(user, span_warn("Nothing to retrieve from inside. Use SNEAK to smelt the tongs."))
 				return
 			var/obj/item/item_to_remove = contained_items[contained_items.len]
 			contained_items -= item_to_remove

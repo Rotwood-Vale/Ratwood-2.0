@@ -444,26 +444,12 @@
 /obj/item/rogueweapon/tongs/ancient
 	name = "ancient tongs"
 	desc = "Wrought gilbranze pincers the molten alloy, putting it before the anvil and hammer. Soon, it will fashion a new legacy; one unmarred by this dogmatic millenia."
+	force = 5
+	max_integrity = 10
 	icon_state = "atongs"
 	smeltresult = /obj/item/ingot/aaslag
 
 /obj/item/rogueweapon/tongs/ancient/update_icon()
-	. = ..()
-	if(!hingot)
-		icon_state = "atongs"
-	else
-		if(hott)
-			icon_state = "atongsi1"
-		else
-			icon_state = "atongsi0"
-
-/obj/item/rogueweapon/tongs/ancient/decrepit
-	name = "decrepit tongs"
-	desc = "How many ingots of once-pure alloy have these rusted, falling-apart jaws handled? The lyves taken through proxy of weapons once pincered by this tool? Perhaps it's about time that tally incremented yet again."
-	force = 5
-	max_integrity = 10
-
-/obj/item/rogueweapon/tongs/ancient/decrepit/update_icon()
 	. = ..()
 	if(!hingot)
 		icon_state = "atongs"
