@@ -69,6 +69,58 @@
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_hiddenprint(M)
 
+/// Notes a player opening, locking, picking or breaking this for admins' View Forensics. Mobs without a player are skipped.
+/// Routine is everyday use (opening, closing, keyed locking, picking up, dropping), kept in its own capped list.
+/// only_if_tracked skips atoms no player has handled yet, so mass drops of untouched gear make no component.
+/// Evidence also goes to the game log and the player's own log, so it outlives the atom. Routine use is too frequent to log,
+/// and so are repeats: an action that folds into the last entry, such as the twentieth hit on a door, is not logged again.
+/atom/proc/add_forensic_action(mob/user, action, routine = FALSE, only_if_tracked = FALSE)
+	if(!user?.ckey || QDELETED(src))
+		return
+	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
+	if(!D)
+		if(only_if_tracked)
+			return
+		D = AddComponent(/datum/component/forensics)
+	if(D.add_action(user, action, routine) && !routine)
+		user.log_message("forensics on [src] ([type]): [action]", LOG_GAME)
+
+/// Notes poison going into or out of food and drink, and drinks spiked on the rim, for admins' View Forensics.
+/// transfer_log is what trans_to() moved, reagent type = amount. Only spiking prepends.
+/datum/reagents/proc/record_forensic_transfer(atom/target_atom, list/transfer_log, mob/transfered_by, method, prepend)
+	if(!transfered_by.ckey)
+		return
+	var/list/reagent_names = list()
+	var/list/poison_names = list()
+	for(var/reagent_type in transfer_log)
+		// trans_to() logs every reagent even when nothing moved, such as into a full container
+		if(!transfer_log[reagent_type])
+			continue
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[reagent_type]
+		if(!reagent)
+			continue
+		reagent_names |= reagent.name
+		if(reagent.is_poison())
+			poison_names |= reagent.name
+	var/poisons = english_list(poison_names)
+	var/source = my_atom ? format_text("[my_atom]") : "something"
+
+	if(isobj(target_atom))
+		if(prepend)
+			target_atom.add_forensic_action(transfered_by, "spiked the rim with [english_list(reagent_names)] from [source][length(poison_names) ? ", poisoning it with [poisons]" : ""]")
+		else if(length(poison_names))
+			target_atom.add_forensic_action(transfered_by, "added poison ([poisons]) from [source]")
+		return
+
+	// Consumption is noted on the food or drink, as the victim's mob has no View Forensics.
+	if(method != INGEST || !length(poison_names) || !isobj(my_atom) || !ismob(target_atom))
+		return
+	var/mob/victim = target_atom
+	if(victim == transfered_by)
+		my_atom.add_forensic_action(transfered_by, "ate or drank poison ([poisons]) from it")
+	else
+		my_atom.add_forensic_action(transfered_by, "fed poison ([poisons]) from it to [victim.real_name] ([victim.ckey || "no player"])")
+
 /atom/proc/add_blood_DNA(list/dna)						//ASSOC LIST DNA = BLOODTYPE
 	return FALSE
 

@@ -13,8 +13,8 @@
 	var/climb_offset = 0 //offset up when climbed
 	var/mob/living/structureclimber
 	var/hammer_repair
-	/// Forced-entry lines shown to admins on examine, oldest first
-	var/list/breakin_log
+	/// The player whose attack is landing right now, so on_forced_break() can name them. take_damage carries no attacker
+	var/mob/forcing_user
 //	move_resist = MOVE_FORCE_STRONG
 
 /obj/structure/Initialize(mapload)
@@ -292,25 +292,22 @@
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status
-	var/breakin_count = LAZYLEN(breakin_log)
-	if(breakin_count && isAdminObserver(user))
-		. += span_boldnotice("\[ADMIN\] Break-in log:")
-		for(var/i in max(1, breakin_count - 4) to breakin_count)
-			. += span_notice(breakin_log[i])
-		if(breakin_count > 5)
-			. += span_notice("<a href='?src=[REF(src)];show_breakin_log=1'>Show all [breakin_count]</a>")
 
-/obj/structure/Topic(href, href_list)
+/obj/structure/attacked_by(obj/item/I, mob/living/user)
+	forcing_user = user
 	. = ..()
-	if(href_list["show_breakin_log"] && isAdminObserver(usr))
-		usr << browse("<html><body>[jointext(breakin_log, "<br>")]</body></html>", "window=breakin_log;size=500x400")
+	forcing_user = null
 
-/// Records a forced-entry attempt for admin persual
-/obj/structure/proc/log_breakin(mob/user, action)
-	add_hiddenprint(user)
-	var/line = "[user ? key_name(user) : "something"] [action]"
-	investigate_log(line, INVESTIGATE_DOORS)
-	LAZYADD(breakin_log, "[station_time_timestamp()] - [line]")
+/// take_damage() as a player's doing, so a break it causes is put to them by on_forced_break()
+/obj/structure/proc/take_damage_from(mob/user, damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE)
+	forcing_user = user
+	. = take_damage(damage_amount, damage_type, damage_flag, sound_effect)
+	forcing_user = null
+
+/// Run by doors, windows and closets the moment they break, however it happened, for View Forensics.
+/// Only a break from attacked_by() or take_damage_from() has a player to record.
+/obj/structure/proc/on_forced_break(action = "broke")
+	add_forensic_action(forcing_user, action)
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	if(max_integrity)

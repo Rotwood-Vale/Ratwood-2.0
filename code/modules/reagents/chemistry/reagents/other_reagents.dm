@@ -151,6 +151,10 @@
 /datum/reagent/water/gross/sewage
 	taste_description = "repulsive sulfur and decaying shit"
 
+// Dirty water is everyday filth rather than a poison someone slipped in.
+/datum/reagent/water/gross/is_poison()
+	return FALSE
+
 /datum/reagent/water/gross/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(method == INGEST) // Make sure you DRANK the toxic water before giving damage
 		..()

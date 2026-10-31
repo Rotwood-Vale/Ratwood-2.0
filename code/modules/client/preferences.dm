@@ -70,6 +70,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/ghost_accs = GHOST_ACCS_DEFAULT_OPTION
 	var/ghost_others = GHOST_OTHERS_DEFAULT_OPTION
 	var/icon/admin_ghost_icon
+	/// The name an admin's admin ghost takes instead of the name of the mob they left.
+	var/admin_ghost_name
 	var/ghost_hud = 1
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
@@ -3257,7 +3259,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	return FALSE
 
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, skip_normal_prefs = FALSE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, skip_normal_prefs = FALSE, keep_name = FALSE)
 	if(skip_normal_prefs)
 		// For gnolls spawning from a non-gnoll base slot, we must not apply any base-slot state.
 		// Set species to gnoll immediately so advclass check_requirements can read dna.species.type.
@@ -3270,6 +3272,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		character.real_name = gnoll_name
 		character.name = gnoll_name
 		character.dna.real_name = gnoll_name
+		character.pref_base_name = gnoll_name
 		return
 
 	if(randomise[RANDOM_SPECIES] && !character_setup)
@@ -3309,24 +3312,28 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = src)
 	character.dna.update_body_size()
 
-	if((randomise[RANDOM_NAME] || randomise[RANDOM_NAME_ANTAG] && antagonist) && !character_setup)
-		slot_randomized = TRUE
-		real_name = pref_species.random_name(gender)
+	// keep_name is a live refresh of a character already in the round, whose own name is always in GLOB.chosen_names.
+	// /mob/living/carbon/human/proc/reapply_preferences() renames them itself
+	if(!keep_name)
+		if((randomise[RANDOM_NAME] || randomise[RANDOM_NAME_ANTAG] && antagonist) && !character_setup)
+			slot_randomized = TRUE
+			real_name = pref_species.random_name(gender)
 
-	if(roundstart_checks)
-		if(CONFIG_GET(flag/humans_need_surnames) && ((pref_species.id == "human") || (pref_species.id == "humen")))
-			var/firstspace = findtext(real_name, " ")
-			var/name_length = length(real_name)
-			if(!firstspace)	//we need a surname
-				real_name += " [pick(GLOB.last_names)]"
-			else if(firstspace == name_length)
-				real_name += "[pick(GLOB.last_names)]"
+		if(roundstart_checks)
+			if(CONFIG_GET(flag/humans_need_surnames) && ((pref_species.id == "human") || (pref_species.id == "humen")))
+				var/firstspace = findtext(real_name, " ")
+				var/name_length = length(real_name)
+				if(!firstspace)	//we need a surname
+					real_name += " [pick(GLOB.last_names)]"
+				else if(firstspace == name_length)
+					real_name += "[pick(GLOB.last_names)]"
 
-	if(real_name in GLOB.chosen_names)
-		character.real_name = pref_species.random_name(gender)
-	else
-		character.real_name = real_name
-	character.name = character.real_name
+		if(real_name in GLOB.chosen_names)
+			character.real_name = pref_species.random_name(gender)
+		else
+			character.real_name = real_name
+		character.name = character.real_name
+		character.pref_base_name = character.real_name
 
 	if((selected_title != "None" && pref_species.use_titles) && selected_title != null)
 		character.dna.species.name = selected_title
