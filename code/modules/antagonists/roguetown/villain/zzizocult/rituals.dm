@@ -270,6 +270,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/datum/antagonist/zizocultist/PR = user.mind.has_antag_datum(/datum/antagonist/zizocultist, TRUE)
 	var/lackeys = 0
 	for(var/datum/mind/M in SSmapping.retainer.cultists)
+		if(!M.current || QDELETED(M.current) || M.current.stat == DEAD)
+			continue
 		if(is_zizolackey(M))
 			lackeys++
 	var/mob/living/carbon/human/assistant
