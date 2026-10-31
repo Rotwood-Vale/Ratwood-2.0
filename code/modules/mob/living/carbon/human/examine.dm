@@ -713,6 +713,8 @@
 			for(var/obj/item/stuck_thing as anything in part.embedded_objects)
 				if(stuck_thing.w_class >= WEIGHT_CLASS_SMALL)
 					. += span_bloody("<b>[m3] \a [stuck_thing] stuck in [m2] [part.name]!</b>")
+		if(part.status == BODYPART_ROBOTIC && get_location_accessible(src, part.body_zone))
+			. += span_info("[m3] \a [part.name].")
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

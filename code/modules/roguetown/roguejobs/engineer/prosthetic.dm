@@ -144,6 +144,9 @@
 
 /////     ARMS     /////
 
+/obj/item/bodypart/l_arm/prosthetic
+	dismember_wound = /datum/wound/bruise/large
+
 /obj/item/bodypart/l_arm/prosthetic/woodleft
 	name = "wooden left arm"
 	desc = "A left arm of wood."
@@ -157,13 +160,12 @@
 	static_icon = TRUE			//returns icon to initial icon state after removal under get_limb_icon
 	brute_reduction = 0
 	burn_reduction = 0
-	max_damage = 20
+	max_damage = 40
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 300
 	sellprice = 30
 	fingers = FALSE //can't swing weapons but can pick stuff up and punch
 	anvilrepair = /datum/skill/craft/carpentry
-	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/l_arm/prosthetic/iron
 	name = "iron left arm"
@@ -171,6 +173,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_arm"
 	prosthetic_prefix = "pri"
+	limb_material = "iron"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -190,6 +193,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_arm"
 	prosthetic_prefix = "prs"
+	limb_material = "steel"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -216,14 +220,13 @@
 	static_icon = TRUE			//returns icon to initial icon state after removal under get_limb_icon
 	brute_reduction = 0
 	burn_reduction = 0
-	max_damage = 110
+	max_damage = 220
 	w_class = WEIGHT_CLASS_NORMAL
 	max_integrity = 350
 	sellprice = 30
 	fingers = TRUE // it acts like a normal arm
 	anvilrepair = /datum/skill/craft/engineering
 	smeltresult = /obj/item/ingot/bronze
-	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/l_arm/prosthetic/gold
 	name = "golden left arm"
@@ -231,6 +234,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_arm"
 	prosthetic_prefix = "prc"
+	limb_material = "gold"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -245,6 +249,9 @@
 
 /obj/item/bodypart/l_arm/prosthetic/attack(mob/living/M, mob/user)
 	prosthetic_attachment(M, user)
+
+/obj/item/bodypart/r_arm/prosthetic
+	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/r_arm/prosthetic/woodright
 	name = "wooden right arm"
@@ -264,7 +271,6 @@
 	sellprice = 30
 	fingers = FALSE //can't swing weapons but can pick stuff up and punch
 	anvilrepair = /datum/skill/craft/carpentry
-	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/r_arm/prosthetic/iron
 	name = "iron right arm"
@@ -272,6 +278,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_arm"
 	prosthetic_prefix = "pri"
+	limb_material = "iron"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -291,6 +298,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_arm"
 	prosthetic_prefix = "prs"
+	limb_material = "steel"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -310,7 +318,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "bp_arm"
 	prosthetic_prefix = "prs"
-	limb_material = "bronze" // still need a different onmob sprite for bronze limbs brah
+	limb_material = "bronze"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -324,7 +332,6 @@
 	fingers = TRUE // it acts like a normal arm
 	anvilrepair = /datum/skill/craft/engineering
 	smeltresult = /obj/item/ingot/bronze
-	dismember_wound = /datum/wound/bruise/large
 
 /obj/item/bodypart/r_arm/prosthetic/gold
 	name = "golden right arm"
@@ -332,6 +339,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_arm"
 	prosthetic_prefix = "prc"
+	limb_material = "gold"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -354,6 +362,7 @@
 	desc = "A left leg made of wood."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pr_leg"
+	limb_material = "wood"
 	resistance_flags = FLAMMABLE
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -375,6 +384,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_leg"
 	prosthetic_prefix = "pri"
+	limb_material = "iron"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -394,6 +404,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_leg"
 	prosthetic_prefix = "prs"
+	limb_material = "steel"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -432,6 +443,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_leg"
 	prosthetic_prefix = "prc"
+	limb_material = "gold"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -451,6 +463,7 @@
 	desc = "A right leg made of wood."
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pr_leg"
+	limb_material = "wood"
 	resistance_flags = FLAMMABLE
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -470,6 +483,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "pri_leg"
 	prosthetic_prefix = "pri"
+	limb_material = "iron"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -490,6 +504,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prs_leg"
 	prosthetic_prefix = "prs"
+	limb_material = "steel"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -530,6 +545,7 @@
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "prc_leg"
 	prosthetic_prefix = "prc"
+	limb_material = "gold"
 	resistance_flags = FIRE_PROOF
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
@@ -544,3 +560,24 @@
 
 /obj/item/bodypart/r_leg/prosthetic/attack(mob/living/M, mob/user)
 	prosthetic_attachment(M, user)
+
+/////     FITTED LIMBS     /////
+
+// Given by the Bronze Arm and Bronze Leg quirks and the Bronze Golem virtue.
+// They are worthless once removed so a free limb can't become coin or ingots.
+
+/obj/item/bodypart/l_arm/prosthetic/bronzeleft/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/r_arm/prosthetic/bronzeright/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/l_leg/prosthetic/bronzeleft/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/r_leg/prosthetic/bronzeright/fitted
+	sellprice = 0
+	smeltresult = null

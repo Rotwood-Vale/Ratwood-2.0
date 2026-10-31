@@ -2,6 +2,34 @@
 	. = ..()
 	. += inspect_limb(user)
 
+/obj/item/bodypart/get_mechanics_examine(mob/user)
+	. = ..()
+	if(status != BODYPART_ROBOTIC)
+		return
+	var/material = capitalize(limb_material)
+	. += span_info("Prosthetics feel no pain, cannot bleed and take no wounds other than jams. Sleep and miracles won't repair them.")
+	. += span_info("[material] limbs stop working at <b>[max_damage]</b> damage.")
+	if(brute_reduction || burn_reduction)
+		. += span_info("[material] limbs take <b>[brute_reduction]</b> less brute and <b>[burn_reduction]</b> less burn from each hit.")
+	. += span_info("A heavy blow to an unarmored prosthetic above <b>90%</b> damage can jam it. Hammering, Mending, or popping it off and back on clears a jam.")
+	if(anvilrepair)
+		var/datum/skill/repair_skill = anvilrepair
+		. += span_info("[material] limbs can be repaired by hammer while attached, faster with <b>[initial(repair_skill.name)]</b>. Mending also repairs them.")
+	. += span_info("A single twist pops a prosthetic off an unarmored limb.")
+	if(!fingers)
+		. += span_info("[material] arms can pick things up and punch, but can't grip weapons.")
+	if(organ_slowdown)
+		. += span_info("[material] legs slow their wearer.")
+	if(!owner)
+		. += span_info("Attaches by hand to a missing limb.")
+
+/mob/living/carbon/human/get_mechanics_examine(mob/user)
+	. = ..()
+	// Only the prosthetics on show, and lines several of them share just the once.
+	for(var/obj/item/bodypart/part as anything in bodyparts)
+		if(part.status == BODYPART_ROBOTIC && get_location_accessible(src, part.body_zone))
+			. |= part.get_mechanics_examine(user)
+
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()
 	if(owner)

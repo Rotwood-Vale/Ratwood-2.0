@@ -26,6 +26,8 @@
 	var/list/incompatible_vices = list()
 	/// If someone already has traits deemed incompatible, don't apply the quirk at all.
 	var/list/incompatible_traits = list()
+	/// Prosthetic limb types that replace the recipient's own limbs when this is applied.
+	var/list/fitted_prosthetics = list()
 
 /datum/customization_trait/New()
 	. = ..()
@@ -41,11 +43,34 @@
 			return trait
 	return FALSE
 
+/// Whether the recipient's body can take our fitted prosthetics, telling them if it can't. Check this before charging for them.
+/datum/customization_trait/proc/check_prosthetic_fit(mob/living/carbon/human/recipient)
+	if(!LAZYLEN(fitted_prosthetics))
+		return TRUE
+	var/datum/job/job = SSjob.GetJob(recipient.job)
+	var/fits = !recipient.construct && !job?.no_virtue
+	// Prosthetic legs don't suit these lower bodies.
+	if(recipient.get_taur_tail() || isharpy(recipient))
+		for(var/obj/item/bodypart/limb_type as anything in fitted_prosthetics)
+			if(initial(limb_type.body_part) & (LEG_LEFT | LEG_RIGHT))
+				fits = FALSE
+	if(!fits)
+		to_chat(recipient, span_warning("[name] cannot be fitted to my body. It will not be applied."))
+	return fits
+
+/datum/customization_trait/proc/fit_prosthetics(mob/living/carbon/human/recipient)
+	for(var/limb_type in fitted_prosthetics)
+		var/obj/item/bodypart/new_limb = new limb_type()
+		var/obj/item/bodypart/old_limb = recipient.get_bodypart(new_limb.body_zone)
+		new_limb.replace_limb(recipient, TRUE)
+		qdel(old_limb)
+
 // Shared proc for applying crap.
 /datum/customization_trait/proc/apply_generic_effects(mob/living/carbon/human/recipient)
 	if(blocked_by_incompatible_traits(recipient))
 		return FALSE
 	apply_to_human(recipient)
+	fit_prosthetics(recipient)
 	handle_traits(recipient)
 	handle_skills(recipient)
 	handle_stashed_items(recipient)

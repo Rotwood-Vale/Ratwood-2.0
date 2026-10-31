@@ -62,6 +62,11 @@
 		healed_any = TRUE
 	return healed_any
 
+/// Works at any jam in this prosthetic by the specified amount of repair
+/obj/item/bodypart/proc/repair_jam(repair_amount)
+	var/datum/wound/jammed/jam = has_wound(/datum/wound/jammed)
+	jam?.work_loose(repair_amount)
+
 /// Adds a wound to this bodypart, applying any necessary effects
 /obj/item/bodypart/proc/add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)
 	if(!wound || !owner || (owner.status_flags & GODMODE))
@@ -122,7 +127,7 @@
 		if(istype(wound, /datum/wound))
 			bleed_rate += wound.bleed_rate*/
 	for(var/obj/item/embedded as anything in embedded_objects)
-		if(!embedded.embedding.embedded_bloodloss)
+		if(!embedded.embedding.embedded_bloodloss || !is_organic_limb())
 			continue
 		bleed_rate += embedded.embedding.embedded_bloodloss
 
@@ -147,7 +152,7 @@
 				return 0
 			return hud_bleed_rate
 	for(var/obj/item/embedded as anything in embedded_objects)
-		if(!embedded.embedding.embedded_bloodloss)
+		if(!embedded.embedding.embedded_bloodloss || !is_organic_limb())
 			continue
 		hud_bleed_rate += embedded.embedding.embedded_bloodloss
 
@@ -318,6 +323,10 @@
 		if(prob(used))
 			attempted_wounds += /datum/wound/burn
 
+	// Prosthetics have no bones to break. Blows that would break or dislocate one jam it instead.
+	if(!is_organic_limb())
+		var/would_jam = (/datum/wound/fracture in attempted_wounds) || (/datum/wound/dislocation in attempted_wounds)
+		attempted_wounds = would_jam ? list(/datum/wound/jammed) : list()
 
 	// Check if critical resistance applies
 	var/has_crit_attempt = length(attempted_wounds)

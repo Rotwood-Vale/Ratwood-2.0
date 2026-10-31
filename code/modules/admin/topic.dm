@@ -309,16 +309,20 @@
 		var/mob/living/M = locate(href_list["heal_add_wound"])
 		var/obj/item/bodypart/BP = locate(href_list["bodypart"])
 		if(M && BP && ishuman(M))
-			var/list/wound_types = list(
-				"Fracture" = /datum/wound/fracture,
-				"Slash" = /datum/wound/slash,
-				"Puncture" = /datum/wound/puncture,
-				"Burn" = /datum/wound/burn,
-				"Bruise" = /datum/wound/bruise,
-				"Artery" = /datum/wound/artery,
-				"Bite" = /datum/wound/bite,
-				"Dislocation" = /datum/wound/dislocation
-			)
+			var/list/wound_types
+			if(BP.status == BODYPART_ROBOTIC) // prosthetics refuse every other wound
+				wound_types = list("Jam" = /datum/wound/jammed)
+			else
+				wound_types = list(
+					"Fracture" = /datum/wound/fracture,
+					"Slash" = /datum/wound/slash,
+					"Puncture" = /datum/wound/puncture,
+					"Burn" = /datum/wound/burn,
+					"Bruise" = /datum/wound/bruise,
+					"Artery" = /datum/wound/artery,
+					"Bite" = /datum/wound/bite,
+					"Dislocation" = /datum/wound/dislocation
+				)
 			var/wound_choice = input(usr, "Select wound type:", "Add Wound") as null|anything in wound_types
 			if(wound_choice)
 				var/wound_path = wound_types[wound_choice]
@@ -354,9 +358,12 @@
 						show_heal_panel(M)
 						return
 
-				BP.add_wound(wound_path)
 				var/datum/wound/applied_wound = wound_path
 				var/wound_display_name = initial(applied_wound:name)
+				if(!BP.add_wound(wound_path))
+					to_chat(usr, span_warning("[BP.name] refused the [wound_display_name] wound."))
+					show_heal_panel(M)
+					return
 				message_admins("[key_name_admin(usr)] added [wound_display_name] wound to [BP.name] on [key_name_admin(M)].")
 				log_admin("[key_name(usr)] added [wound_display_name] wound to [BP.name] on [key_name(M)].")
 			show_heal_panel(M)

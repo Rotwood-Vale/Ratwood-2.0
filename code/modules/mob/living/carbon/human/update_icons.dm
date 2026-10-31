@@ -177,6 +177,7 @@ There are several things that need to be remembered:
 		var/bleed_checker = FALSE
 		var/body_zone = BP.body_zone
 		var/aux_zone = BP.aux_zone
+		var/draw_damage = !BP.skeletonized && BP.is_organic_limb() // flesh damage sprites look wrong on prosthetics
 
 		var/used_offset = use_female_icon ? BP.offset_f : BP.offset
 		var/offset_x = 0
@@ -186,7 +187,7 @@ There are several things that need to be remembered:
 			offset_x = offset_data[1]
 			offset_y = offset_data[2]
 
-		if(!BP.skeletonized)
+		if(draw_damage)
 			if(BP.brutestate)
 				damage_overlays += get_cached_damage_overlay(limb_icon, "[body_zone]_[BP.brutestate]0", DAMAGE_LAYER, offset_x, offset_y)
 				legdam_overlays += get_cached_damage_overlay(limb_icon, "legdam_[body_zone]_[BP.brutestate]0", LEG_DAMAGE_LAYER, offset_x, offset_y)
@@ -219,7 +220,7 @@ There are several things that need to be remembered:
 			armdam_overlays += get_cached_damage_overlay(limb_icon, "armdam_[body_zone]_b", ARM_DAMAGE_LAYER, offset_x, offset_y, bandage_color)
 
 		if(aux_zone && !((body_zone == BODY_ZONE_CHEST) && hidechest))
-			if(!BP.skeletonized)
+			if(draw_damage)
 				if(BP.brutestate)
 					damage_overlays += get_cached_damage_overlay(limb_icon, "[aux_zone]_[BP.brutestate]0", DAMAGE_LAYER, offset_x, offset_y)
 					legdam_overlays += get_cached_damage_overlay(limb_icon, "legdam_[aux_zone]_[BP.brutestate]0", LEG_DAMAGE_LAYER, offset_x, offset_y)
