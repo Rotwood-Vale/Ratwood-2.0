@@ -36,7 +36,7 @@
 	dodgeable_intent = FALSE
 	misscost = 0
 
-/obj/item/reagent_containers/glass/attack(mob/M, mob/user, obj/target)
+/obj/item/reagent_containers/glass/attack(mob/M, mob/user)
 	if(user.used_intent.type == INTENT_FILL)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -52,10 +52,6 @@
 		if(reagents)
 			for(var/datum/reagent/A in reagents.reagent_list)
 				R += "[A] ([num2text(A.volume)]),"
-
-		if(isturf(target) && reagents.reagent_list.len && thrownby)
-			log_combat(thrownby, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
-			message_admins("[ADMIN_LOOKUPFLW(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
 		reagents.reaction(M, TOUCH)
 		log_combat(user, M, "splashed", R)
 		reagents.clear_reagents()
@@ -63,42 +59,44 @@
 	else if(user.used_intent.type == INTENT_POUR)
 		if(!canconsume(M, user) || !is_drainable())
 			return
-		var/sneaking = FALSE
-		if(user.m_intent == MOVE_INTENT_SNEAK)
-			sneaking = TRUE
-		if(M != user)
-			M.visible_message(span_danger("[user] attempts to feed [M] something."), \
-						span_danger("[user] attempts to feed you something."))
-			if(!do_mob(user, M, double_progress = TRUE))
-				return
-			if(!reagents || !reagents.total_volume)
-				return // The drink might be empty after the delay, such as by spam-feeding
-			M.visible_message(span_danger("[user] feeds [M] something."), \
-						span_danger("[user] feeds you something."))
-			log_combat(user, M, "fed", reagents.log_list())
+		try_consume(M, user)
+
+/obj/item/reagent_containers/glass/try_consume(mob/eater, mob/feeder)
+	var/sneaking = FALSE
+	if(feeder.m_intent == MOVE_INTENT_SNEAK)
+		sneaking = TRUE
+	if(eater != feeder)
+		eater.visible_message(span_danger("[feeder] attempts to feed [eater] something."), \
+					span_danger("[feeder] attempts to feed you something."))
+		if(!do_mob(feeder, eater, double_progress = TRUE))
+			return
+		if(!reagents || !reagents.total_volume)
+			return // The drink might be empty after the delay, such as by spam-feeding
+		eater.visible_message(span_danger("[feeder] feeds [eater] something."), \
+					span_danger("[feeder] feeds you something."))
+		log_combat(feeder, eater, "fed", reagents.log_list())
+	else
+		// check to see if we're a noble drinking soup
+		if(ishuman(feeder) && istype(src, /obj/item/reagent_containers/glass/bowl))
+			var/mob/living/carbon/human/human_user = feeder
+			if(human_user.is_noble()) // egads we're an unmannered SLOB
+				human_user.add_stress(/datum/stressevent/noble_bad_manners)
+				if(prob(25))
+					to_chat(human_user, span_red("I've got better manners than this..."))
+		if(sneaking)
+			to_chat(feeder, span_notice("I carefully sip [src]."))
 		else
-			// check to see if we're a noble drinking soup
-			if (ishuman(user) && istype(src, /obj/item/reagent_containers/glass/bowl))
-				var/mob/living/carbon/human/human_user = user
-				if (human_user.is_noble()) // egads we're an unmannered SLOB
-					human_user.add_stress(/datum/stressevent/noble_bad_manners)
-					if (prob(25))
-						to_chat(human_user, span_red("I've got better manners than this..."))
-			if(sneaking)
-				to_chat(user, span_notice("I carefully sip [src]."))
-			else
-				to_chat(user, span_notice("I swallow a gulp of [src]."))
-		addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), M, sneaking ? 1 : amount_per_gulp, TRUE, TRUE, FALSE, user, FALSE, INGEST, TRUE, spiked ? TRUE : FALSE), 5)
-		spiked = FALSE
-		playsound(M.loc,pick(drinksounds), sneaking ? 50 : 100, TRUE)
-		if(user.client?.prefs.autoconsume)
-			if(M == user && do_after(user, CLICK_CD_MELEE))
-				INVOKE_ASYNC(src, PROC_REF(attack), M, user, target)
-				user.changeNext_move(CLICK_CD_MELEE)
-			else if(M != user)
-				INVOKE_ASYNC(src, PROC_REF(attack), M, user, target)
-				user.changeNext_move(CLICK_CD_MELEE)
-		return
+			to_chat(feeder, span_notice("I swallow a gulp of [src]."))
+	addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), eater, sneaking ? 1 : amount_per_gulp, TRUE, TRUE, FALSE, feeder, FALSE, INGEST, TRUE, spiked ? TRUE : FALSE), 5)
+	spiked = FALSE
+	playsound(eater.loc,pick(drinksounds), sneaking ? 50 : 100, TRUE)
+	if(feeder.client?.prefs.autoconsume)
+		if(eater == feeder && do_after(feeder, CLICK_CD_MELEE))
+			INVOKE_ASYNC(src, PROC_REF(attack), eater, feeder)
+			feeder.changeNext_move(CLICK_CD_MELEE)
+		else if(eater != feeder)
+			INVOKE_ASYNC(src, PROC_REF(attack), eater, feeder)
+			feeder.changeNext_move(CLICK_CD_MELEE)
 
 /obj/item/reagent_containers/glass/attack_obj(obj/target, mob/living/user)
 	if(user.used_intent.type == INTENT_GENERIC)
@@ -373,7 +371,7 @@
 
 /obj/item/reagent_containers/glass/bucket/equipped(mob/user, slot)
 	..()
-	if (slot == SLOT_HEAD)
+	if(slot == SLOT_HEAD)
 		if(reagents.total_volume)
 			to_chat(user, span_danger("[src]'s contents spill all over you!"))
 			reagents.reaction(user, TOUCH)
