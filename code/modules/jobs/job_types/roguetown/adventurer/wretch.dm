@@ -55,6 +55,8 @@
 		/datum/advclass/wretch/antipope,
 		/datum/advclass/wretch/wretchedtoiler,
 		/datum/advclass/wretch/ancientchampion,
+		/datum/advclass/wretch/heretic_spellblade,
+		/datum/advclass/wretch/heretic_spellfist,
 	)
 
 /datum/job/roguetown/wretch/after_spawn(mob/living/L, mob/M, latejoin = TRUE)

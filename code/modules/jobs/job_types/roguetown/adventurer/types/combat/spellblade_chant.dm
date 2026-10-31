@@ -23,7 +23,7 @@
 			mace_weapons = "Steel Mace / Steel Warhammer & Shield / Grand Mace / Battle Axe / Steel Greataxe"
 		if("zizite")
 			blade_weapons = "Kriegmesser / Longsword / Rapier / Sabre / Steel Greatsword / Steel Dagger & Shield"
-			phalanx_weapons = "Halberd / Bardiche / Boar Spear / Dory & Shield / Naginata"
+			phalanx_weapons = "Halberd / Bardiche / Boar Spear / Dory & Shield / Naginata / Avantyne Billhook"
 			mace_weapons = "Steel Mace / Steel Warhammer & Shield / Grand Mace / Battle Axe / Steel Greataxe"
 		if("noccite")
 			blade_weapons = "Longsword / Rapier / Sabre / Steel Greatsword / Steel Dagger & Shield / Twilight Fang"
