@@ -767,7 +767,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /obj/item/clothing/head/roguetown/helmet/skullcap/cult
 	name = "ominous hood"
 	desc = "It echoes with ominous laughter. Worn over a skullcap"
-	icon_state = "warlockhood2"
+	icon_state = "warlockhood"
 	dynamic_hair_suffix = ""
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
