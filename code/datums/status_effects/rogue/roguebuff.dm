@@ -596,6 +596,23 @@
 	desc = "This area is built to give a better view."
 	icon_state = "guardsman"
 
+// Martyr holy ground buff. Defensive only, sized like the other area buffs.
+/datum/status_effect/buff/hallowed_ward
+	id = "hallowedward"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/hallowed_ward
+	effectedstats = list(STATKEY_CON = 2, STATKEY_WIL = 2)
+
+/datum/status_effect/buff/hallowed_ward/process()
+	. = ..()
+	var/area/rogue/our_area = get_area(owner)
+	if(!istype(our_area) || !(our_area.holy_area))
+		owner.remove_status_effect(/datum/status_effect/buff/hallowed_ward)
+
+/atom/movable/screen/alert/status_effect/buff/hallowed_ward
+	name = "Hallowed Ward"
+	desc = "I swore to give up no hallowed ground. I will not yield it."
+	icon_state = "guardsman"
+
 // Holy area buff
 /datum/status_effect/debuff/holy_blessing
 	id = "holyblessing"
