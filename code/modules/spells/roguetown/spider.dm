@@ -46,7 +46,7 @@
 	if(!do_after(user, spin_time, target = user, progress = TRUE))
 		revert_cast(user)
 		return FALSE
-	if(locate(/obj/structure/spider/stickyweb) in web_turf)
+	if((locate(/obj/structure/spider/stickyweb) in web_turf) || (locate(/obj/structure/bed/rogue/silk) in web_turf))
 		return TRUE
 	user.stamina_add(stamina_cost)
 	new web_type(web_turf)
@@ -67,6 +67,51 @@
 	spin_time = 8 SECONDS
 	stamina_cost = 60
 	web_name = "dense web"
+
+/obj/effect/proc_holder/spell/self/spin_silk_bed
+	name = "Spin Silk Bed"
+	desc = "Weave a bedroll-soft silk nest. Web every surrounding floor tile, with at least one webbed tile, to give it the comfort of a proper bed."
+	antimagic_allowed = TRUE
+	ignore_cockblock = TRUE
+	sound = 'sound/misc/nutriment.ogg'
+	overlay_state = "webdense"
+	recharge_time = 30 SECONDS
+	var/spin_time = 8 SECONDS
+	var/stamina_cost = 60
+
+/obj/effect/proc_holder/spell/self/spin_silk_bed/proc/can_place(turf/T)
+	if(!isfloorturf(T) || T.density)
+		return FALSE
+	for(var/obj/O in T)
+		if(!QDELETED(O) && (istype(O, /obj/structure) || O.density))
+			return FALSE
+	return TRUE
+
+/obj/effect/proc_holder/spell/self/spin_silk_bed/cast(mob/living/user)
+	var/turf/T = get_turf(user)
+	if(user.loc != T || !can_place(T))
+		to_chat(user, span_warning("I need clear floor space to weave a silk bed."))
+		revert_cast(user)
+		return FALSE
+	if(!HAS_TRAIT(user, TRAIT_INFINITE_STAMINA) && user.stamina + stamina_cost > user.max_stamina)
+		to_chat(user, span_warning("I am too tired to weave a silk bed."))
+		revert_cast(user)
+		return FALSE
+	user.visible_message(span_notice("[user] begins weaving a silk bed."))
+	if(!do_after(user, spin_time, target = user))
+		revert_cast(user)
+		return FALSE
+	if(user.loc != T || !can_place(T))
+		to_chat(user, span_warning("There is no longer room for the silk bed."))
+		revert_cast(user)
+		return FALSE
+	if(!HAS_TRAIT(user, TRAIT_INFINITE_STAMINA) && user.stamina + stamina_cost > user.max_stamina)
+		to_chat(user, span_warning("I am too tired to finish weaving."))
+		revert_cast(user)
+		return FALSE
+	user.stamina_add(stamina_cost)
+	new /obj/structure/bed/rogue/silk(T)
+	return TRUE
 
 /// Drow Merc mount summon spells, spider spells of a different kind.
 
