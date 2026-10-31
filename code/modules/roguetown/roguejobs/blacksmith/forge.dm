@@ -1,5 +1,6 @@
 
 /obj/machinery/light/rogue/forge
+	pitch_exempt = TRUE
 	icon = 'icons/roguetown/misc/forge.dmi'
 	name = "stone forge"
 	desc = "This forge sings of war and creation."

@@ -1,5 +1,6 @@
 
 /obj/machinery/light/rogue/oven
+	pitch_exempt = TRUE
 	icon = 'icons/roguetown/misc/lighting.dmi'
 	name = "oven"
 	desc = "With enough room for up to five whole pies, this humble yet wondrous invention has fed civilization since time immemorial."
