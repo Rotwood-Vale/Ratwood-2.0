@@ -26,8 +26,8 @@
 			phalanx_weapons = "Halberd / Bardiche / Boar Spear / Dory & Shield / Naginata"
 			mace_weapons = "Steel Mace / Steel Warhammer & Shield / Grand Mace / Battle Axe / Steel Greataxe"
 		if("noccite")
-			blade_weapons = "Longsword / Rapier / Sabre / Steel Greatsword / Steel Dagger & Shield / Twilight Fang"
-			phalanx_weapons = "Halberd / Bardiche / Boar Spear / Dory & Shield / Naginata"
+			blade_weapons = "Longsword / Rapier / Sabre / Steel Greatsword / Steel Dagger & Shield " // removed Twilight Fang as it does not exist.
+			phalanx_weapons = "Halberd / Bardiche / Boar Spear / Dory & Shield"
 			mace_weapons = "Steel Mace / Steel Warhammer & Shield / Grand Mace / Battle Axe / Steel Greataxe"
 		if("almah")
 			blade_weapons = "Dual Shamshirs / Shalal sabre & Shield"
