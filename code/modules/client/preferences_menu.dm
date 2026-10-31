@@ -268,12 +268,15 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		var/quirk_header = "<b>[current_quirk.name]</b> ([current_quirk.point_cost]) [bg_link("\[Remove\]", "quirk_remove", i)]"
 		if(current_quirk.configurable)
 			quirk_header += " [bg_link("\[Configure\]", "quirk_config", i)]<br>[current_quirk.config_summary()]"
-		var/quirk_details = get_trait_details_html(current_quirk)
+		var/list/quirk_lines = list()
+		if(current_quirk.desc)
+			quirk_lines += current_quirk.desc
+		var/trait_details = get_trait_details_html(current_quirk)
+		if(trait_details)
+			quirk_lines += trait_details
 		if(current_quirk.warning_text)
-			if(quirk_details)
-				quirk_details += "<br>"
-			quirk_details += "<font color='#f44336'>[current_quirk.warning_text]</font>"
-		html += pref_box(quirk_header, current_quirk.desc, quirk_details, current_quirk.name)
+			quirk_lines += "<font color='#f44336'>[current_quirk.warning_text]</font>"
+		html += pref_box(quirk_header, null, quirk_lines.Join("<br>"), current_quirk.name)
 	html += pref_line(list(bg_link("Add Quirk", "quirk_add")))
 	html += "<div class='lab'>Vices</div>"
 	var/vice_count = 0
@@ -281,7 +284,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			vice_count++
-			html += pref_box("<b>[vice.name]</b> (+[vice.point_value]) [bg_link("\[Remove\]", "vice_remove", i)]", vice.desc)
+			html += pref_box("<b>[vice.name]</b> (+[vice.point_value]) [bg_link("\[Remove\]", "vice_remove", i)]", null, vice.desc, vice.name)
 	if(vice_count < VICE_SLOTS)
 		html += pref_line(list(bg_link("Add Vice", "vice_add")))
 	return html
