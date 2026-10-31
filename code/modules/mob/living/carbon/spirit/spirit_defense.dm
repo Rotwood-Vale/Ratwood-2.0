@@ -131,7 +131,7 @@
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(prob(50/severity) && BP.body_zone != BODY_ZONE_CHEST)
-				BP.brute_dam = BP.max_damage
+				BP.set_damage(BP.max_damage, BP.burn_dam)
 				BP.dismember()
 				max_limb_loss--
 				if(!max_limb_loss)

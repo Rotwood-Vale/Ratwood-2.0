@@ -67,8 +67,7 @@
 			repair_percent *= attacked_prosthetic.max_integrity
 			exp_gained = min(attacked_prosthetic.obj_integrity + repair_percent, attacked_prosthetic.max_integrity) - attacked_prosthetic.obj_integrity
 			attacked_prosthetic.obj_integrity = min(attacked_prosthetic.obj_integrity + repair_percent, attacked_prosthetic.max_integrity)
-			attacked_prosthetic.brute_dam = max(attacked_prosthetic.brute_dam - 10, 0)
-			attacked_prosthetic.burn_dam = max(attacked_prosthetic.burn_dam - 10, 0)
+			attacked_prosthetic.set_damage(max(attacked_prosthetic.brute_dam - 10, 0), max(attacked_prosthetic.burn_dam - 10, 0))
 			attacked_prosthetic.wounds = null //Fixing fractures
 			attacked_prosthetic.disabled = BODYPART_NOT_DISABLED
 			if(repair_percent == 0.01) // If an inexperienced repair attempt has been successful

@@ -71,12 +71,7 @@
 	if(HAS_TRAIT(src, TRAIT_NOPAIN))
 		return
 	if(!stat)
-		var/pain_threshold = HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH) ? ((STAWIL + 5) * 10) : (STAWIL * 10)
-		if(has_flaw(/datum/charflaw/addiction/masochist)) // Masochists handle pain better by about 1 endurance point
-			pain_threshold += 10
-		if(has_status_effect(/datum/status_effect/buff/battle_cry))
-			pain_threshold += 10
-		var/painpercent = get_complex_pain() / pain_threshold
+		var/painpercent = get_complex_pain() / get_pain_threshold()
 		painpercent = painpercent * 100
 
 		if(world.time > mob_timers["painstun"])
@@ -506,7 +501,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			if(limb.get_damage() >= limb.max_damage)
 				limb.cremation_progress += rand(2,5)
 				if(dna && dna.species && !(NOBLOOD in dna.species.species_traits))
-					blood_volume = max(blood_volume - 10, 0)
+					adjust_blood_volume(-10)
 				if(limb.cremation_progress >= 50)
 					if(limb.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
 						limb.skeletonize()
@@ -551,7 +546,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 				should_update_body = TRUE
 				if(dna && dna.species)
 					if(dna && dna.species && !(NOBLOOD in dna.species.species_traits))
-						blood_volume = 0
+						set_blood_volume(0)
 					dna.species.species_traits |= NOBLOOD
 
 	if(should_update_body)
@@ -658,7 +653,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			energy_add(sleepy_mod * 15)
 		if(hydration > 0 || doesnt_hunger)
 			if(!bleed_rate)
-				blood_volume = min(blood_volume + (4 * sleepy_mod), BLOOD_VOLUME_NORMAL)
+				set_blood_volume(min(blood_volume + (4 * sleepy_mod), BLOOD_VOLUME_NORMAL))
 			for (var/obj/item/bodypart/affecting in bodyparts)
 				if (!affecting)
 					continue

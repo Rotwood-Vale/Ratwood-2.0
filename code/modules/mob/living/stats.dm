@@ -235,6 +235,7 @@
 				newamt--
 				BUFEND++
 			STAWIL = newamt
+			mark_pain_hud_dirty()
 
 		if(STATKEY_SPD)
 			newamt = STASPD + amt
