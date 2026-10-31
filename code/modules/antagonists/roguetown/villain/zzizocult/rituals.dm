@@ -857,6 +857,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		list("Snow Scythe (Bite)", /obj/item/rogueweapon/spear/bite, 90 SECONDS, "BITE", TRUE),
 		list("Mortal Blade (Rot)", /obj/item/rogueweapon/sword/sabre/rot, 90 SECONDS, "ROT", TRUE),
 		list("Forgotten Tool (Toil)", /obj/item/rogueweapon/mace/maul/toil, 90 SECONDS, "TOIL", TRUE),
+		list("Witchwood (Strand)", /obj/item/rogueweapon/zizowand, 90 SECONDS, "STRAND", TRUE),
 		list("Madman Blade (Noise)", /obj/item/rogueweapon/sword/long/noise, 90 SECONDS, "NOISE", TRUE),
 		list("Slave Knife (Blood)", /obj/item/rogueweapon/huntingknife/idagger/steel/blood, 90 SECONDS, "BLOOD", TRUE),
 		list("Astrata-Touched Dagger (Pitch)", /obj/item/rogueweapon/huntingknife/idagger/steel/pitch, 90 SECONDS, "PITCH", TRUE),

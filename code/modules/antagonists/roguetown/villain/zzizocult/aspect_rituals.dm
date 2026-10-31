@@ -1233,6 +1233,191 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 			if("wielded")
 				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
+/datum/intent/dream_beam
+	name = "dream beam"
+	blade_class = null
+	icon_state = "inshoot"
+	tranged = TRUE
+	noaa = TRUE
+	no_attack = TRUE
+	warnie = "aimwarn"
+	chargetime = 3 SECONDS
+	chargedrain = 2
+	charging_slowdown = 3
+	no_early_release = TRUE
+	chargedloop = /datum/looping_sound/invokegen
+
+/datum/intent/dream_fling
+	name = "fling"
+	blade_class = null
+	icon_state = "inmove"
+	tranged = TRUE
+	noaa = TRUE
+	no_attack = TRUE
+	chargetime = 1 SECONDS
+	chargedrain = 1
+	charging_slowdown = 2
+	no_early_release = TRUE
+
+/datum/intent/dream_fling/get_chargetime()
+	var/obj/item/rogueweapon/zizowand/wand = masteritem
+	if(istype(wand) && wand.flung)
+		return chargetime
+	return 0
+
+/obj/projectile/magic/dream_beam
+	name = "dream beam"
+	tracer_type = /obj/effect/projectile/tracer/bloodsteal
+	muzzle_type = null
+	impact_type = null
+	hitscan = TRUE
+	movement_type = UNSTOPPABLE
+	guard_deflectable = TRUE
+	expose_caster_on_deflect = TRUE
+	damage = 100
+	damage_type = BRUTE
+	woundclass = BCLASS_STAB
+	nodamage = FALSE
+	speed = 0.3
+	flag = "piercing"
+	hitsound = 'sound/magic/obeliskbeam.ogg'
+	light_color = "#9400D3"
+	light_outer_range = 7
+	spell_impact_intensity = SPELL_IMPACT_MEDIUM
+	var/hits = 0
+
+/obj/projectile/magic/dream_beam/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			visible_message(span_warning("[src] fizzles on contact with [target]!"))
+			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
+			qdel(src)
+			return BULLET_ACT_BLOCK
+	if(!ismob(target))
+		qdel(src)
+		return . || BULLET_ACT_HIT
+	hits++
+	damage = round(initial(damage) * 0.75)
+	if(hits >= 4)
+		qdel(src)
+
+/obj/projectile/energy/dream_shroom
+	name = "dream spore"
+	icon = 'icons/obj/magic_projectiles.dmi'
+	icon_state = "arcyne_bolt"
+	guard_deflectable = TRUE
+	expose_caster_on_deflect = TRUE
+	damage = 0
+	nodamage = TRUE
+	color = "#9b30ff"
+	speed = MAGE_PROJ_FAST
+	hitsound = null
+	arcshot = TRUE
+
+/obj/projectile/energy/dream_shroom/on_hit(target)
+	..()
+	var/turf/T = get_turf(src)
+	if(!T || T.density)
+		return
+	var/obj/structure/zizo_bane/shroom = new(T)
+	shroom.make_gas()
+	shroom.time_delay = world.time + 20 SECONDS
+	QDEL_IN(shroom, 2 MINUTES)
+
+/datum/special_intent/dream_shroom
+	name = "Dream Shroom"
+	desc = "PLACEHOLDER"
+	use_clickloc = TRUE
+	range = 7
+	cooldown = 30 SECONDS
+
+/datum/special_intent/dream_shroom/on_create()
+	var/obj/projectile/energy/dream_shroom/spore = new(get_turf(howner))
+	spore.firer = howner
+	spore.fired_from = get_turf(howner)
+	spore.def_zone = howner.zone_selected
+	spore.range = max(1, get_dist_euclidian(click_loc, howner))
+	spore.preparePixelProjectile(click_loc, howner)
+	spore.fire()
+
+/obj/item/rogueweapon/zizowand
+	name = "witchwood"
+	desc = "A gift from a snow elf queen to an almighty wizard. Once used to quell the sea itself into slumber."
+	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon_state = "zizowand"
+	force = 15
+	possible_item_intents = list(MACE_STRIKE, /datum/intent/dream_beam, /datum/intent/dream_fling)
+	gripped_intents = null
+	sharpness = IS_BLUNT
+	wlength = WLENGTH_SHORT
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_HIP
+	associated_skill = /datum/skill/combat/arcyne
+	wdefense = 4
+	max_integrity = 9999
+	resistance_flags = INDESTRUCTIBLE
+	smeltresult = null
+	special = /datum/special_intent/dream_shroom
+	var/fling_damage = 40
+	var/datum/weakref/flung
+
+/obj/item/rogueweapon/zizowand/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/soulbound_weapon, /datum/skill/combat/arcyne)
+
+/obj/item/rogueweapon/zizowand/getonmobprop(tag)
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -10,"sy" = -7,"nx" = 11,"ny" = -6,"wx" = -1,"wy" = -6,"ex" = 3,"ey" = -6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+
+/obj/item/rogueweapon/zizowand/proc/clear_fling()
+	var/obj/item/I = flung?.resolve()
+	I?.remove_filter("dream_fling")
+	flung = null
+
+/obj/item/rogueweapon/zizowand/afterattack(atom/target, mob/living/user, flag)
+	. = ..()
+	if(!isliving(user) || get_dist(user, target) > 7)
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
+	if(istype(user.used_intent, /datum/intent/dream_beam))
+		if(user.client?.chargedprog < 100)
+			return
+		playsound(user, 'sound/magic/soulshot.ogg', 100, TRUE)
+		var/obj/projectile/magic/dream_beam/beam = new(get_turf(user))
+		beam.firer = user
+		beam.fired_from = get_turf(user)
+		beam.def_zone = user.zone_selected
+		beam.preparePixelProjectile(target, user)
+		beam.fire()
+		return
+	if(!istype(user.used_intent, /datum/intent/dream_fling))
+		return
+	var/obj/item/held = flung?.resolve()
+	if(!held)
+		if(!isitem(target))
+			return
+		var/obj/item/I = target
+		if(!isturf(I.loc) || I.anchored)
+			return
+		I.add_filter("dream_fling", 2, list("type" = "outline", "color" = "#9b30ff", "size" = 1))
+		flung = WEAKREF(I)
+		addtimer(CALLBACK(src, PROC_REF(clear_fling)), 15 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+		return
+	if(target == user || !isturf(held.loc))
+		clear_fling()
+		return
+	if(user.client?.chargedprog < 100)
+		return
+	held.remove_filter("dream_fling")
+	var/old_force = held.throwforce
+	held.throwforce = fling_damage
+	held.throw_at(target, 8, 2, user, TRUE, FALSE, VARSET_CALLBACK(held, throwforce, old_force))
+	flung = null
+
 /datum/intent/spear/cut/scythe
 	reach = 3
 	damfactor = 1
