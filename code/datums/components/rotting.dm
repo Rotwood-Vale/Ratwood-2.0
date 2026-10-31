@@ -77,7 +77,7 @@
 		/area/rogue/outdoors/town/roofs/church,
 		/area/rogue/outdoors/town/roofs/desert/church,
 	))
-	if(is_type_in_typecache(A, rot_protected_areas))
+	if(is_type_in_typecache(A, rot_protected_areas) && !has_world_trait(/datum/world_trait/zizo_bite))
 		return
 	if (istype(A, /area/rogue/indoors/deathsedge))	//Stops rotting inside Death's Edge (Death's Door spell area)
 		return
@@ -88,7 +88,10 @@
 		qdel(src)
 		return
 
-	if(amount > DEAD_TO_ZOMBIE_TIME)
+	var/zombie_time = DEAD_TO_ZOMBIE_TIME
+	if(has_world_trait(/datum/world_trait/zizo_bite))
+		zombie_time = 1 MINUTES
+	if(amount > zombie_time)
 		if(is_zombie)
 			var/datum/antagonist/zombie/Z = C.mind.has_antag_datum(/datum/antagonist/zombie)
 			if(Z && !Z.has_turned && !Z.revived && C.stat == DEAD)

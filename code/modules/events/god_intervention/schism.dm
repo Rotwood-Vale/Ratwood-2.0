@@ -371,6 +371,8 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 
 /// Resets day cycle override to null
 /proc/reset_tod_override()
+	if(has_world_trait(/datum/world_trait/zizo_pitch))
+		return
 	GLOB.todoverride = null
 
 /// Finds strongest divine pantheon to challenge Astrata

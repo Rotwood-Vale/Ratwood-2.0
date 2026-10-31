@@ -126,6 +126,16 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	/// Aspect reset budget used. Major costs 2, Minor/Utility costs 1. Max 2. Resets on sleep.
 	var/aspect_resets_used = 0
 
+	var/list/zizo_researched = list(
+		/datum/ritual/servantry/convert, /datum/ritual/servantry/sacrifice,
+		/datum/ritual/servantry/heartache,
+		/datum/ritual/servantry/gutted, /datum/ritual/transmutation/cross,
+		/datum/ritual/transmutation/criminalstool, /datum/ritual/transmutation/invademind,
+		/datum/ritual/transmutation/summonoutfit, /datum/ritual/transmutation/raiseshrine,
+		/datum/ritual/servantry/guidance,
+		)
+	var/zizo_points = 0
+
 /datum/mind/New(key)
 	src.key = key
 	soulOwner = src

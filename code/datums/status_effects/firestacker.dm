@@ -274,6 +274,13 @@
 	victim?.dna?.species?.handle_fire(victim, no_protection)
 	victim.adjustFireLoss(10)
 
+/datum/status_effect/fire_handler/fire_stacks/dark
+	id = "fire_stacks_dark"
+	moblight_type = null
+
+/datum/status_effect/fire_handler/fire_stacks/dark/deal_damage(wait)
+	owner.on_fire_stack(wait * 0.1, src)
+
 /datum/status_effect/fire_handler/fire_stacks/sunder
 	id = "fire_stacks_sunder"
 	fire_alert_type = /atom/movable/screen/alert/fire/sunder

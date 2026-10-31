@@ -215,6 +215,9 @@
 	if(istype(onturf, /turf/open/water/sewer) && !HAS_TRAIT(src, TRAIT_NOSTINK))
 		if(!HAS_TRAIT(src, TRAIT_HOLDBREATH))
 			add_stress(/datum/stressevent/sewertouched)
+	var/turf/open/water/W = onturf
+	if(istype(W) && ispath(W.water_reagent, /datum/reagent/water/gross) && !(mobility_flags & MOBILITY_STAND) && !HAS_TRAIT(src, TRAIT_HOLDBREATH))
+		murk_infect(5)
 
 /mob/living/carbon/proc/get_complex_pain()
 	. = 0

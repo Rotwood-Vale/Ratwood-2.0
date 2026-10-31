@@ -12,6 +12,7 @@
 		STATKEY_WIL = -2,
 		STATKEY_SPD = -1
 	)
+	pure_heart = TRUE
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 2, "ward" = TRUE)
 	subclass_skills = list(
 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,

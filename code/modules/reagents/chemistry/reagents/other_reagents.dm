@@ -137,8 +137,11 @@
 			M.add_nausea(12) //should instant puke for clearification
 		else
 			H.adjust_hydration(hydration)
+			var/blood_restore = WATER_BLOOD_RESTORE
+			if(has_world_trait(/datum/world_trait/zizo_blood) && !is_zizo(H))
+				blood_restore = 2
 			if(M.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-				M.set_blood_volume(min(M.get_blood_volume()+WATER_BLOOD_RESTORE, BLOOD_VOLUME_NORMAL))
+				M.set_blood_volume(min(M.get_blood_volume()+blood_restore, BLOOD_VOLUME_NORMAL))
 		if(M.bodytemperature > BODYTEMP_NORMAL_MIN + 5)	//drinking water lowers a persons temperature up to the 'normal' minimum
 			M.adjust_bodytemperature(-5)
 	..()
@@ -161,6 +164,9 @@
 		return
 	M.adjustToxLoss(1)
 	M.add_nausea(12) //Over 8 units will cause puking
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.murk_infect(3)
 /datum/reagent/water/gross/sewage/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if (method == INGEST)
 		..()

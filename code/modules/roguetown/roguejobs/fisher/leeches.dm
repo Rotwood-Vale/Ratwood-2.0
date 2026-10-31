@@ -40,10 +40,16 @@
 	var/blood_maximum = BLOOD_VOLUME_SURVIVE
 	// Who are we latching onto?
 	var/mob/living/host
+	// Last person attached to
+	var/mob/living/carbon/human/fed_from
 	/// Multiplier for extracted blood. Mainly used by Cheeles or equivalent.
 	var/blood_multiplier = 1
 	/// Whether we can be attached to mindless mobs.
 	var/mindless_attach = TRUE
+	// Whether it makes a visible message / has a do_after.
+	var/suppressed = FALSE
+	var/pierce_armor = FALSE
+	var/instant_apply = FALSE
 
 /obj/item/natural/worms/leech/Initialize(mapload)
 	. = ..()
@@ -51,6 +57,15 @@
 	leech_lore()
 	if(drainage)
 		START_PROCESSING(SSobj, src)
+
+/obj/item/natural/worms/leech/proc/fall_off()
+	if(QDELETED(src) || !is_embedded)
+		return
+	var/obj/item/bodypart/bp = loc
+	if(istype(bp))
+		bp.remove_embedded_object(src)
+	else if(host)
+		host.simple_remove_embedded_object(src)
 
 /obj/item/natural/worms/leech/update_icon()
 	. = ..()
@@ -86,6 +101,8 @@
 		var/blood_extracted = min(blood_maximum - blood_storage, host.get_blood_volume(), blood_sucking)
 		host.set_blood_volume(max(host.get_blood_volume() - blood_extracted, 0))
 		blood_storage += blood_extracted
+		if(blood_extracted && ishuman(host))
+			fed_from = host
 		if((blood_storage >= blood_maximum) || (host.get_blood_volume() <= 0))
 			if(bp)
 				bp.remove_embedded_object(src)
@@ -115,6 +132,8 @@
 		var/blood_extracted = min(blood_maximum - blood_storage, user.get_blood_volume(), blood_sucking)
 		user.set_blood_volume(max(user.get_blood_volume() - blood_extracted, 0))
 		blood_storage += blood_extracted * blood_multiplier
+		if(blood_extracted && ishuman(user))
+			fed_from = user
 		if((blood_storage >= blood_maximum) || (user.get_blood_volume() <= 0))
 			if(bodypart)
 				bodypart.remove_embedded_object(src)
@@ -126,6 +145,8 @@
 /obj/item/natural/worms/leech/on_embed(obj/item/bodypart/bp)
 	if(bp.owner)
 		host = bp.owner
+		if(!giving && ishuman(bp.owner))
+			fed_from = bp.owner
 		START_PROCESSING(SSobj, src)
 
 /obj/item/natural/worms/leech/examine(mob/user)
@@ -143,6 +164,8 @@
 		. += span_warning("[p_theyre(TRUE)] [pick("slurping", "sucking", "inhaling")].")
 	else
 		. += span_notice("[p_theyre(TRUE)] [pick("vomiting", "gorfing", "exhaling")].")
+	if(fed_from && is_zizo(user))
+		. += span_warning("It carries the remnant of [fed_from.real_name].")
 	if(drainage)
 		START_PROCESSING(SSobj, src)
 
@@ -158,21 +181,23 @@
 		var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting)
 			return
-		if(!get_location_accessible(H, check_zone(user.zone_selected)))
+		if(!pierce_armor && !get_location_accessible(H, check_zone(user.zone_selected)))
 			to_chat(user, span_warning("Something in the way."))
 			return
 		var/used_time = (70 - (user.get_skill_level(/datum/skill/misc/medicine) * 10))/2
-		if(!do_mob(user, H, used_time))
-			return
+		if(!instant_apply)
+			if(!do_mob(user, H, used_time))
+				return
 		if(!H)
 			return
 		user.dropItemToGround(src)
 		src.forceMove(H)
 		affecting.add_embedded_object(src, silent = TRUE, crit_message = FALSE)
-		if(M == user)
-			user.visible_message(span_notice("[user] places [src] on [user.p_their()] [affecting]."), span_notice("I place a leech on my [affecting]."))
-		else
-			user.visible_message(span_notice("[user] places [src] on [M]'s [affecting]."), span_notice("I place a leech on [M]'s [affecting]."))
+		if(!suppressed)
+			if(M == user)
+				user.visible_message(span_notice("[user] places [src] on [user.p_their()] [affecting]."), span_notice("I place a leech on my [affecting]."))
+			else
+				user.visible_message(span_notice("[user] places [src] on [M]'s [affecting]."), span_notice("I place a leech on [M]'s [affecting]."))
 		return
 	return ..()
 

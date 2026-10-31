@@ -254,10 +254,10 @@
 						if(prob(25))
 							C.emote("choke")
 						var/choke_damage
-						if(user.STASTR > STRENGTH_SOFTCAP)
+						if(user.grapple_str() > STRENGTH_SOFTCAP)
 							choke_damage = STRENGTH_SOFTCAP
 						else
-							choke_damage = user.STASTR * 0.75
+							choke_damage = user.grapple_str() * 0.75
 						if(chokehold)
 							choke_damage *= 1.2		//Slight bonus
 						if(C.pulling == user && C.grab_state >= GRAB_AGGRESSIVE)
@@ -371,7 +371,7 @@
 				if(user.loc != M.loc)
 					to_chat(user, span_warning("I must be above them."))
 					return
-				var/stun_dur = max(((65 + (skill_diff * 10) + (user.STASTR * 5) - (M.STASTR * 5)) * combat_modifier), 20)
+				var/stun_dur = max(((65 + (skill_diff * 10) + (user.grapple_str() * 5) - (M.grapple_str() * 5)) * combat_modifier), 20)
 				var/pincount = 0
 				var/list/pin_hold
 				user.stamina_add(rand(1,3))
@@ -397,7 +397,7 @@
 					user.stop_pulling()
 					return FALSE
 				user.stamina_add(rand(5,15))
-				if(M.compliance || prob(clamp((((4 + (((user.STASTR - M.STASTR)/2) + skill_diff)) * 10 + rand(-5, 5)) * combat_modifier), 5, 95)))
+				if(M.compliance || prob(clamp((((4 + (((user.grapple_str() - M.grapple_str())/2) + skill_diff)) * 10 + rand(-5, 5)) * combat_modifier), 5, 95)))
 					M.visible_message(span_danger("[user] shoves [M] to the ground!"), \
 									span_userdanger("[user] shoves me to the ground!"), span_hear("I hear a sickening sound of pugilism!"), COMBAT_MESSAGE_RANGE)
 					M.Knockdown(max(10 + (skill_diff * 2), 1))
@@ -418,7 +418,7 @@
 				else
 					I = M.get_inactive_held_item()
 			user.stamina_add(rand(3,8))
-			var/probby = clamp((((3 + (((user.STASTR - M.STASTR)/4) + skill_diff)) * 10) * combat_modifier), 5, 95)
+			var/probby = clamp((((3 + (((user.grapple_str() - M.grapple_str())/4) + skill_diff)) * 10) * combat_modifier), 5, 95)
 			if(I)
 				if(M.mind)
 					if(I.associated_skill)

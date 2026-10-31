@@ -89,6 +89,8 @@ This allows the devs to draw whatever shape they want at the cost of it feeling 
 	/// Whether our howner needs to be wielding the weapon. DO NOT USE THIS FOR ESOTERIC SPECIALS WITHOUT A MOB (TRAPS, ETC)
 	var/requires_wielding = FALSE
 
+	var/active_timer
+
 ///To be called by EXTERNAL SOURCES, preferably. We don't want to bog this datum down with built-in costs, but I won't stop you.
 /datum/special_intent/proc/apply_cost(mob/living/L)
 	if(L.has_status_effect(/datum/status_effect/buff/clash/limbguard))	//TODO: A more standardised way of checking for toggle Specials that should prevent others from being used.

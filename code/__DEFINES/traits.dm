@@ -80,6 +80,8 @@
 #define TRAIT_LUX_FREAK "Lux Abomination" // absolver and stigmata only. Dont give it to people unless they can freely manipulate lux of others (absolver, stigmata and gods so far)
 #define TRAIT_NOSLEEP "Fatal Insomnia"
 #define TRAIT_FASTSLEEP "Fast Sleeper"
+#define TRAIT_BLOODBOUND "Bloodbound"
+#define TRAIT_MONSTROUS "Monstrous"
 #define TRAIT_GOODLOVER "Fabled Lover"
 #define TRAIT_SEEDKNOW "Seed Knower"
 #define TRAIT_SQUIRE_REPAIR "Squire Knowledge"
@@ -550,6 +552,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_SQUIRE_REPAIR = span_info("Trained at my Master's side, I can restore any kind of gears with time and polish them until they gleam like new."),
 	TRAIT_WATERBREATHING = span_info("I do not drown in bodies of water."),
 	TRAIT_NUDE_SLEEPER = span_warning("I can't fall asleep unless I'm nude and in bed."),
+	TRAIT_MONSTROUS = span_warning("My body is fundamentally inhumen. Nothing can hide this."),
 	TRAIT_LOOSE_STRAPS = span_warning("My armor's straps are delicate, and may break easily. It's liable to be flung off if it takes too much damage."),
 	TRAIT_ABYSSOR_SWIM = span_info("I get far less tired when swimming than my peers."),
 	TRAIT_LONGSTRIDER = span_info("Each of my steps finds it's footing no matter how treacherous the terrain is."),
@@ -856,6 +859,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NODISMEMBER		"Dismember Immunity"
 #define TRAIT_FIRE_RESIST		"fire_resistance" // 50% fire damage/heating reduction + 2x stack decay - use this for player-accessible fire resistance
 #define TRAIT_NOFIRE			"nonflammable"
+#define TRAIT_PEAK_GRAPPLER		"peak_grappler"
 #define TRAIT_NOGUNS			"no_guns"
 #define TRAIT_NOMETABOLISM		"no_metabolism"
 #define TRAIT_LIMBATTACHMENT 	"limb_attach"

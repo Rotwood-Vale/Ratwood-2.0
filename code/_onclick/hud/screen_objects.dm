@@ -2012,7 +2012,10 @@
 				to_chat(M, span_warning("I haven't TRIUMPHED."))
 				return
 			if(alert("Do you want to remember a TRIUMPH?", "", "Yes", "No") == "Yes")
-				M.add_stress(/datum/stressevent/triumph)
+				if(has_world_trait(/datum/world_trait/zizo_noise) && !is_zizo(M))
+					M.add_stress(/datum/stressevent/triumph_noise)
+				else
+					M.add_stress(/datum/stressevent/triumph)
 				M.adjust_triumphs(-1)
 				M.playsound_local(M, 'sound/misc/notice (2).ogg', 100, FALSE)
 				if(M.sexcon)
