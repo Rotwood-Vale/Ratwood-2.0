@@ -62,6 +62,7 @@
 	retreat_distance = 10
 	minimum_distance = 10
 	rapid_melee = 1
+	milkies = TRUE
 	STASPD = 15
 	STACON = 8
 	STASTR = 12
