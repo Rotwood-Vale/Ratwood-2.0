@@ -1114,7 +1114,7 @@
 			var/mob/living/carbon/human/H = user
 			for(var/type in GLOB.origins)
 				var/datum/origin/O = GLOB.origins[type]
-				if(O.name == origin && O.prejudice_stress && H.origin != origin && (!O.hated_by || (H.origin in O.hated_by)))
+				if(O.name == origin && O.prejudice_stress && H.origin != origin && !HAS_TRAIT(H, TRAIT_TOLERANT) && (!O.hated_by || (H.origin in O.hated_by)))
 					. += O.prejudice_examine
 					user.add_stress(O.prejudice_stress)
 
