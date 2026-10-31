@@ -1,0 +1,4 @@
+author: "IronDragoon"
+delete-after: True
+changes:
+  - rscadd: "Added option for lactation 'after impregnation'. If character is fertile and has breasts, will then start lactating after being impregnated (resets each round)"

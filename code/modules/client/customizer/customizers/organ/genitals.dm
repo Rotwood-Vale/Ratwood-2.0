@@ -368,19 +368,26 @@
 	..()
 	var/datum/customizer_entry/organ/breasts/breasts_entry = entry
 	breasts_entry.breast_size = sanitize_integer(breasts_entry.breast_size, MIN_BREASTS_SIZE, MAX_BREASTS_SIZE, DEFAULT_BREASTS_SIZE)
+	breasts_entry.lactating = sanitize_integer(breasts_entry.lactating, LACTATION_DISABLED, LACTATION_AFTER_IMPREGNATION, LACTATION_DISABLED)
 
 /datum/customizer_choice/organ/breasts/imprint_organ_dna(datum/organ_dna/organ_dna, datum/customizer_entry/entry, datum/preferences/prefs)
 	..()
 	var/datum/organ_dna/breasts/breasts_dna = organ_dna
 	var/datum/customizer_entry/organ/breasts/breasts_entry = entry
 	breasts_dna.breast_size = breasts_entry.breast_size
-	breasts_dna.lactating = breasts_entry.lactating
+	breasts_dna.lactation_mode = breasts_entry.lactating
 
 /datum/customizer_choice/organ/breasts/generate_pref_choices(list/dat, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
 	..()
 	var/datum/customizer_entry/organ/breasts/breasts_entry = entry
+	var/lactation_label = "Disabled"
+	switch(breasts_entry.lactating)
+		if(LACTATION_ENABLED)
+			lactation_label = "Enabled"
+		if(LACTATION_AFTER_IMPREGNATION)
+			lactation_label = "After Impregnation"
 	dat += "<br>Breast size: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=breast_size''>[find_key_by_value(GLOB.named_breast_sizes, breasts_entry.breast_size)]</a>"
-	dat += "<br>Lactation: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=lactating''>[breasts_entry.lactating ? "Enabled" : "Disabled"]</a>"
+	dat += "<br>Lactation: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=lactating''>[lactation_label]</a>"
 
 /datum/customizer_choice/organ/breasts/handle_topic(mob/user, list/href_list, datum/preferences/prefs, datum/customizer_entry/entry, customizer_type)
 	..()
@@ -393,11 +400,18 @@
 			var/new_size = GLOB.named_breast_sizes[named_size]
 			breasts_entry.breast_size = sanitize_integer(new_size, MIN_BREASTS_SIZE, MAX_BREASTS_SIZE, DEFAULT_BREASTS_SIZE)
 		if("lactating")
-			breasts_entry.lactating = !breasts_entry.lactating
+			switch(breasts_entry.lactating)
+				if(LACTATION_DISABLED)
+					breasts_entry.lactating = LACTATION_ENABLED
+				if(LACTATION_ENABLED)
+					breasts_entry.lactating = LACTATION_AFTER_IMPREGNATION
+				else
+					breasts_entry.lactating = LACTATION_DISABLED
 
 /datum/customizer_entry/organ/breasts
 	var/breast_size = DEFAULT_BREASTS_SIZE
-	var/lactating = FALSE
+	/// LACTATION_* mode. Keeps this name because savefiles store it by name.
+	var/lactating = LACTATION_DISABLED
 
 /datum/customizer/organ/breasts/human
 	customizer_choices = list(/datum/customizer_choice/organ/breasts/human)
