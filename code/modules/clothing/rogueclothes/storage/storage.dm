@@ -378,6 +378,72 @@
 	icon_state = "stewardbelt"
 	item_state = "stewardbelt"
 
+//Holster belt
+/obj/item/storage/belt/rogue/leather/twilight_holsterbelt
+	name = "holster belt"
+	desc = "A belt with an attached holster. Had to sacrifice belt space for the convenience of carrying a pistol."
+	icon_state = "holsterbelt"
+	item_state = "holsterbelt"
+	strip_delay = 20
+	var/max_storage = 1
+	var/list/pistol = list()
+	sewrepair = TRUE
+	component_type = /datum/component/storage/concrete/roguetown/belt/holster_belt
+	grid_width = 96
+	grid_height = 96
+
+/obj/item/storage/belt/rogue/leather/twilight_holsterbelt/update_icon()
+	if(pistol.len)
+		icon_state = "holsterbelt_full"
+	else
+		icon_state = "holsterbelt"
+
+/obj/item/storage/belt/rogue/leather/twilight_holsterbelt/proc/eatpistol(obj/A)
+	if((A.type in typesof(/obj/item/gun/ballistic/revolver/rune/twilight_runelock)) || (A.type in typesof(/obj/item/gun/ballistic/firearm/arquebus_pistol)))
+		var/obj/item/gun/ballistic/P = A
+		if(!P.gripped_intents)
+			if(pistol.len < max_storage)
+				P.forceMove(src)
+				pistol += P
+				update_icon()
+				return TRUE
+			else
+				return FALSE
+
+/obj/item/storage/belt/rogue/leather/twilight_holsterbelt/attackby(obj/A, loc, params)
+	if((A.type in typesof(/obj/item/gun/ballistic/revolver/rune/twilight_runelock)) || (A.type in typesof(/obj/item/gun/ballistic/firearm/arquebus_pistol)))
+		var/obj/item/gun/ballistic/P = A
+		if(!P.gripped_intents)
+			if(pistol.len < max_storage)
+				if(ismob(loc))
+					var/mob/M = loc
+					M.doUnEquip(P, TRUE, src, TRUE, silent = TRUE)
+				else
+					P.forceMove(src)
+				pistol += P
+				update_icon()
+				to_chat(usr, span_notice("I holster the [P.name] into [src.name]."))
+			else
+				to_chat(loc, span_warning("Something is already holstered."))
+			return
+	..()
+
+/obj/item/storage/belt/rogue/leather/twilight_holsterbelt/attack_right(mob/user)
+	if(pistol.len)
+		var/obj/O = pistol[pistol.len]
+		pistol -= O
+		O.forceMove(user.loc)
+		user.put_in_hands(O)
+		update_icon()
+		return TRUE
+
+/obj/item/storage/belt/rogue/leather/twilight_holsterbelt/examine(mob/user)
+	. = ..()
+	if(pistol.len == 1)
+		. += span_notice("There is a weapon in the holster.")
+	else
+		. += span_notice("The holster is empty.")
+
 //Knifeblade belts, act as quivers mixed with belts. Lower storage size of a belt, but holds knives without taking space.
 /obj/item/storage/belt/rogue/leather/knifebelt
 	name = "tossblade belt"
