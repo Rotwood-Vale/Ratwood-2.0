@@ -21,7 +21,7 @@
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT, //Master if any of the sword options picked
 		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT, //ZIZO KNIFE.
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN, // MASTER if billhook picked
 		/datum/skill/combat/maces = SKILL_LEVEL_EXPERT, //Can side-spec into maces, but not desirable.
 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
@@ -55,7 +55,7 @@
 	backpack_contents = list(
 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
 		/obj/item/rope/chain = 1,
-		/obj/item/rogueweapon/huntingknife = 1,
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)

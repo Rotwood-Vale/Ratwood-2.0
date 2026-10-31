@@ -112,6 +112,7 @@
 #define TRAIT_SEA_DRINKER "Denizen of the Deep"
 /// Won't be frozen when swimming in water
 #define TRAIT_WATERLOVING "Water loving"
+#define TRAIT_BOGWALKER "Bog Walker"
 #define TRAIT_STUDENT		"Student"
 #define TRAIT_INTELLECTUAL "Intellectual"
 #define TRAIT_GRAVEROBBER "Experienced Grave Robber"
@@ -716,6 +717,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
 	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
 	TRAIT_SELF_AWARE = span_info("I know my body well, and know innately what its aches mean."),
+	TRAIT_BOGWALKER = span_info("The bog's blessing graces me. Kneestingers and leeches will not harm me, and I cannot trigger ambushes within the bog unless sprinting."),
 	TRAIT_DEADITE_RESISTANCE = span_info("I was raised in rot-infested lands. My body is more resistant to the infection."),
 	TRAIT_COLD_RESISTANCE = span_info("I've grown a tolerance to the cold, due to the climate of my homeland."),
 	TRAIT_HEAT_RESISTANCE = span_info("I've grown a tolerance to heat, due to the climate of my homeland."),
