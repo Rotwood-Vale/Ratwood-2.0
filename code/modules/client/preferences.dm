@@ -455,6 +455,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	/// Whether we can see the feint HUD bar.
 	var/feint_hud = FALSE 
 
+	/// Per-character theme override for examine panel viewers
+	var/examine_theme
+
+
 /datum/preferences/New(client/C)
 	parent = C
 	migrant  = new /datum/migrant_pref(src)
@@ -583,7 +587,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<td style='width:33%;text-align:left'>"
 			dat += "<a href='?_src_=prefs;preference=tgui_ui_prefs;task=menu'>[tgui_pref ? "TGUI" : "Legacy"]</a>"
 			dat += "<br>"
-			dat += "<a href='?_src_=prefs;preference=tgui_theme'>Theme: [get_tgui_theme_display_name()]</a>"
+			var/list/theme_names = get_tgui_theme_display_name()
+			var/theme_name = theme_names[tgui_theme] ? theme_names[tgui_theme] : tgui_theme
+			dat += "<a href='?_src_=prefs;preference=tgui_theme'>Theme: [theme_name]</a>"
 			dat += "<br>"
 			dat += "<a href='?_src_=prefs;preference=parchment_skin'>Parchment: [get_parchment_skin_display_name()]</a>"
 			dat += "</td>"
@@ -825,6 +831,12 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<br><b>Headshot:</b> <a href='?_src_=prefs;preference=headshot;task=input'>Change</a>"
 			if(headshot_link != null)
 				dat += "<br><img src='[headshot_link]' width='100px' height='100px'>"
+
+			var/examine_theme_name = "None (Use Viewer's)"
+			if(examine_theme)
+				var/list/all_themes = get_tgui_theme_display_name()
+				examine_theme_name = all_themes[examine_theme] || examine_theme
+			dat += "<br><b>Examine Theme:</b> <a href='?_src_=prefs;preference=examine_theme;task=input'>[examine_theme_name]</a>"
 
 			dat += "<br><b>[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "<font color = '#802929'>" : ""]Flavortext:[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "</font>" : ""]</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=flavortext;task=input'>Change</a>"
 			dat += "<br><b>NSFW Flavortext:</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=nsfwflavortext;task=input'>Change</a>"
@@ -2426,6 +2438,25 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					to_chat(user, "<span class='notice'>Successfully cleared their nsfw image gallery.</span>")
 					log_game("[user] has cleared their nsfw image gallery.")
 
+				if("examine_theme")
+					var/list/all_themes = get_tgui_theme_display_name()
+					var/list/choices = list("None (Use Viewer's)")
+					for(var/theme_key in all_themes)
+						choices += all_themes[theme_key]
+					var/current_display = "None (Use Viewer's)"
+					if(examine_theme)
+						current_display = all_themes[examine_theme] || examine_theme
+					var/picked = tgui_input_list(user, "Choose the theme others see on your examine panel:", "Examine Theme", choices, current_display)
+					if(!picked)
+						return
+					if(picked == "None (Use Viewer's)")
+						examine_theme = null
+					else
+						for(var/theme_key in all_themes)
+							if(all_themes[theme_key] == picked)
+								examine_theme = theme_key
+								break
+
 				if("ooc_preview")
 					var/datum/examine_panel/preview_examine_panel = new(user)
 					preview_examine_panel.pref = src
@@ -2991,7 +3022,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 				if("tgui_lock")
 					tgui_lock = !tgui_lock
 				if("tgui_theme")
-					setTguiStyle()
+					setTguiStyle(user)
 				if("parchment_skin")
 					cycle_parchment_skin()
 				if("winflash")
@@ -3422,6 +3453,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	character.nsfw_img_gallery = nsfw_img_gallery
 
+	character.examine_theme = examine_theme
 	character.ooc_extra = ooc_extra
 
 	character.ooc_extra_img = ooc_extra_img
