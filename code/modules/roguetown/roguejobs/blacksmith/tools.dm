@@ -378,12 +378,12 @@
 /obj/item/rogueweapon/tongs/update_icon()
 	. = ..()
 	if(!hingot)
-		icon_state = "tongs"
+		icon_state = "[initial(icon_state)]"
 	else
 		if(hott)
-			icon_state = "tongsi1"
+			icon_state = "[initial(icon_state)]i1"
 		else
-			icon_state = "tongsi0"
+			icon_state = "[initial(icon_state)]i0"
 
 /obj/item/rogueweapon/tongs/proc/make_unhot(input)
 	if(hott == input)
@@ -440,16 +440,6 @@
 	max_integrity = 10
 	icon_state = "atongs"
 	smeltresult = /obj/item/ingot/aaslag
-
-/obj/item/rogueweapon/tongs/ancient/update_icon()
-	. = ..()
-	if(!hingot)
-		icon_state = "atongs"
-	else
-		if(hott)
-			icon_state = "atongsi1"
-		else
-			icon_state = "atongsi0"
 
 /obj/item/rogueweapon/tongs/blacksteel
 	name = "blacksteel tongs"
