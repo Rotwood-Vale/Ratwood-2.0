@@ -58,11 +58,11 @@
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	if(H.mind)
-		var/primary_weapons = list("A Poison Dagger", "A Rapier and Agility")
+		var/primary_weapons = list("A Underdark Dagger", "A Rapier and Agility")
 		var/primary_weapon_choice = input(H, "Choose your signature weapon.", "TOOLS OF YOUR TRADE") as anything in primary_weapons
 		H.set_blindness(0)
 		switch(primary_weapon_choice)
-			if("A Poison Dagger")
+			if("A Underdark Dagger")
 				backpack_contents += /obj/item/rogueweapon/huntingknife/idagger/steel/corroded
 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 				var/additional_weapons = list("Archery", "Magic")
