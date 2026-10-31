@@ -1,10 +1,12 @@
 // categories
 GLOBAL_LIST_INIT(pref_categories, list(
 	"Identity" = /datum/preferences/proc/page_identity,
-	"Background" = /datum/preferences/proc/page_background,
+	"Origin" = /datum/preferences/proc/page_origin,
+	"Customization" = /datum/preferences/proc/page_loadout,
+	"Stats" = /datum/preferences/proc/page_stats,
 	"Character Settings" = /datum/preferences/proc/page_character_settings,
 	"Voice" = /datum/preferences/proc/page_voice,
-	"Features" = /datum/preferences/proc/page_features,
+	"Body" = /datum/preferences/proc/page_features,
 	"Flavor Text" = /datum/preferences/proc/page_flavor_text,
 ))
 
@@ -12,8 +14,8 @@ GLOBAL_LIST_INIT(pref_categories, list(
 GLOBAL_LIST_INIT(no_preview_prefs, list("category", "background", "flavortext", "nsfwflavortext", "ooc_notes", "erpprefs", "headshot", "rumour", "gossip", "rumour_preview", "ooc_extra", "ooc_extra_img", "nsfw_ooc_extra_img", "change_title", "change_artist", "img_gallery", "nsfw_img_gallery", "clear_gallery", "clear_nsfw_gallery", "ooc_preview", "formathelp", "voicetype", "voicepack", "voice", "voice_pitch", "char_accent", "char_mannerism", "barksound", "barkspeed", "barkpitch", "barkvary", "barkpreview", "combat_music", "dnr", "preferred_map", "familiar_prefs", "gnoll_prefs", "nickname", "highlight_color", "pronouns", "culinary", "tgui_theme", "parchment_skin", "tgui_ui_prefs", "playerquality", "triumphs", "setspouse", "family", "gender_choice", "species_choice"))
 
 GLOBAL_LIST_INIT(pref_columns, list(
-	list("Identity", "Background"),
-	list("Character Settings", "Voice", "Features", "Flavor Text"),
+	list("Identity", "Origin", "Customization", "Stats"),
+	list("Character Settings", "Voice", "Body", "Flavor Text"),
 ))
 
 GLOBAL_LIST_INIT(selectable_languages, list(
@@ -57,7 +59,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 	return "<b>[label]:</b> [value]"
 
 /datum/preferences/proc/pref_line(list/items)
-	return "<div class='r'>[items.Join(" | ")]</div>"
+	return "<div class='r'>[items.Join("<br>")]</div>"
 
 /datum/preferences/proc/pref_box(header, body, details, key)
 	var/footer = ""
@@ -83,19 +85,29 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 /datum/preferences/proc/get_character_page(mob/user)
 	validate_background()
 	var/html = {"<style>
-		body { font-size: 15px; }
+		body { font-size: 14px; }
 		table { table-layout: fixed; }
 		td { word-wrap: break-word; }
-		.r { line-height: 1.35; font-size: 15px; margin: 4px 0; }
+		.r { line-height: 1.5; font-size: 14px; margin: 2px 0; }
+		.lab { font-weight: bold; color: #c9a96e; margin: 4px 0 1px 2px; }
+		.cbox { border: 1px solid #7b5353; background: #00000033; padding: 3px 6px; margin: 0 0 6px 0; }
 		.box { border: 1px solid #7b5353; background: #1a0707; padding: 3px 6px; margin: 3px 0; }
+		.cbox a, .box a { background: none; border-color: transparent; padding: 0; margin: 0 8px 0 0; }
 		</style>[get_top_html(user)]<table width='100%'><tr>"}
 	for(var/list/column in GLOB.pref_columns)
-		html += "<td width='40%' valign='top'>"
+		if(column == GLOB.pref_columns[1])
+			html += "<td width='35%' valign='top'>"
+		else
+			html += "<td width='40%' valign='top'>"
 		for(var/category in column)
-			html += "[call(src, GLOB.pref_categories[category])(user)]<br>"
+			var/page = call(src, GLOB.pref_categories[category])(user)
+			if(category == "Stats")
+				html += "[page]<br>"
+			else
+				html += "<div class='lab'>[category]</div><div class='cbox'>[page]</div>"
 		html += "</td>"
 		if(column == GLOB.pref_columns[1])
-			html += "<td width='20%'></td>"
+			html += "<td width='25%'></td>"
 	return "[html]</tr></table>"
 
 /datum/preferences/proc/get_top_html(mob/user)
@@ -176,14 +188,14 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		race_flag = " (!)"
 	var/list/race_items = list(pref_item("Race", "[pref_link(pref_species.name, "species")][race_flag]"))
 	if(pref_species.use_titles)
-		race_items += pref_item("Title", pref_link(selected_title || "None", "race_title"))
+		race_items += pref_item("Race Title", pref_link(selected_title || "None", "race_title"))
 	if(length(pref_species.custom_selection))
 		var/race_bonus_display = "None"
 		for(var/bonus in pref_species.custom_selection)
 			if(race_bonus && pref_species.custom_selection[bonus] == race_bonus)
 				race_bonus_display = bonus
 				break
-		race_items += pref_item("Bonus", pref_link(race_bonus_display, "race_bonus_select"))
+		race_items += pref_item("Race Bonus", pref_link(race_bonus_display, "race_bonus_select"))
 	else
 		race_bonus = null
 	html += pref_line(race_items)
@@ -204,37 +216,42 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 			html += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER_ANTAG]'>When Antagonist: [yes_no(randomise[RANDOM_GENDER_ANTAG])]</a><br>"
 	return html
 
-/datum/preferences/proc/page_background(mob/user)
+/datum/preferences/proc/page_origin(mob/user)
 	var/html = ""
 	var/origin_name = "None"
 	if(origin)
 		origin_name = origin.name
 	html += pref_line(list(pref_item("Origin", pref_link(origin_name, "origin")), pref_item("Family", pref_link(family || "None", "family", ""))))
 	if(family != FAMILY_NONE)
-		var/spousename = "Spouse"
+		var/spousename = "Preferred Spouse"
 		if(family == FAMILY_PARTIAL)
-			spousename = "Parent"
+			spousename = "Preferred Parent"
 		var/species_text = "<font color='#1cb308'>Unrestricted</font>"
 		if(xenophobe_pref == 1)
 			species_text = "<font color='#FFA500'>Same Race</font>"
 		if(xenophobe_pref == 2 && restricted_species_pref)
 			species_text = "<font color='#aa0202'>[restricted_species_pref] Only</font>"
-		html += pref_line(list(pref_item(spousename, pref_link(setspouse || "None", "setspouse", "")), pref_item("Gender", pref_link(gender_choice || "Any", "gender_choice", "")), pref_item("Species", pref_link(species_text, "species_choice", ""))))
+		html += pref_line(list(pref_item(spousename, pref_link(setspouse || "None", "setspouse", "")), pref_item("Preferred Gender", pref_link(gender_choice || "Any Gender", "gender_choice", "")), pref_item("Restrict Species", pref_link(species_text, "species_choice", ""))))
 	var/datum/faith/selected_faith = GLOB.faithlist[selected_patron?.associated_faith]
 	html += pref_line(list(pref_item("Faith", pref_link(selected_faith?.name || "INVALID", "faith")), pref_item("Patron", pref_link(selected_patron?.name || "INVALID", "patron"))))
 	var/language_text = "Locked by origin"
 	if(!origin?.origin_language)
 		language_text = get_language_link(extra_language, "lang_free")
-	html += pref_line(list(pref_item("Language", language_text), pref_item("Food", pref_link("Change", "culinary", "menu"))))
-	html += "<br>"
-	html += pref_line(list(pref_item("Loadout Menu", pref_link("Change", "loadout", "menu"))))
+	html += pref_line(list(pref_item("Language", language_text), pref_item("Food Preferences", pref_link("Change", "culinary", "menu"))))
+	return html
+
+/datum/preferences/proc/page_loadout(mob/user)
+	var/html = pref_line(list(pref_item("Loadout Menu", pref_link("Change", "loadout", "menu"))))
 	html += pref_line(list(pref_item("Presets", pref_link("Change", "loadout", "presets"))))
-	html += "<br>"
+	return html
+
+/datum/preferences/proc/page_stats(mob/user)
+	var/html = ""
 	html += pref_box(pref_item("Statpack", bg_link(statpack.name, "statpack")), statpack.generate_modifier_string())
 	html += get_virtue_html("Primary Virtue", virtue, 1)
 	if(second_virtue_allowed())
 		html += get_virtue_html("Second Virtue", virtuetwo, 2)
-	html += "<br>"
+	html += "<div class='lab'>Quirks</div>"
 	var/triumph_gain = get_quirk_points_remaining()
 	var/gain_color = "#e3c06f"
 	var/gain_text = "[triumph_gain]"
@@ -258,13 +275,15 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 			quirk_details += "<font color='#f44336'>[current_quirk.warning_text]</font>"
 		html += pref_box(quirk_header, current_quirk.desc, quirk_details, current_quirk.name)
 	html += pref_line(list(bg_link("Add Quirk", "quirk_add")))
-	html += "<br>"
-	var/list/vice_names = list()
+	html += "<div class='lab'>Vices</div>"
+	var/vice_count = 0
 	for(var/i in 1 to VICE_SLOTS)
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
-			vice_names += "[vice.name] (+[vice.point_value])"
-	html += pref_line(list(pref_item("Selected", bg_link(vice_names.Join(", ") || "None", "vice"))))
+			vice_count++
+			html += pref_box("<b>[vice.name]</b> (+[vice.point_value]) [bg_link("\[Remove\]", "vice_remove", i)]", vice.desc)
+	if(vice_count < VICE_SLOTS)
+		html += pref_line(list(bg_link("Add Vice", "vice_add")))
 	return html
 
 /datum/preferences/proc/get_virtue_html(label, datum/virtue/V, slot)
@@ -312,8 +331,8 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 /datum/preferences/proc/page_character_settings(mob/user)
 	var/html = pref_line(list(pref_item("Unrevivable", pref_link(yes_no(dnr_pref), "dnr"))))
 	html += pref_line(list(pref_item("Combat Music", pref_link(combat_music.shortname || combat_music.name || "INVALID", "combat_music"))))
-	html += pref_line(list(pref_item("Map", pref_link(preferred_map || "None", "preferred_map"))))
-	html += pref_line(list(pref_item("Familiar", pref_link("Preferences", "familiar_prefs")), pref_item("Gnoll", pref_link("Preferences", "gnoll_prefs"))))
+	html += pref_line(list(pref_item("Map Preferences", pref_link(preferred_map || "No Preference", "preferred_map"))))
+	html += pref_line(list(pref_item("Familiar Preferences", pref_link("Change", "familiar_prefs")), pref_item("Gnoll Preferences", pref_link("Change", "gnoll_prefs"))))
 	return html
 
 /datum/preferences/proc/page_voice(mob/user)
@@ -323,61 +342,63 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 	var/bark_name = "INVALID"
 	if(B)
 		bark_name = initial(B.name)
-	var/html = pref_line(list(pref_item("Voice", pref_link(voice_type, "voicetype")), pref_item("Pack", pref_link(voice_pack, "voicepack"))))
-	html += pref_line(list(pref_item("Color", pref_link("Change", "voice")), pref_item("Emote Pitch", pref_link(voice_pitch, "voice_pitch"))))
+	var/html = pref_line(list(pref_item("Voice", pref_link(voice_type, "voicetype")), pref_item("Voice Pack", pref_link(voice_pack, "voicepack"))))
+	html += pref_line(list(pref_item("Voice Color", pref_link("Change", "voice")), pref_item("Voice Pitch", pref_link(voice_pitch, "voice_pitch"))))
 	html += pref_line(list(pref_item("Accent", pref_link(char_accent, "char_accent"))))
-	html += pref_line(list(pref_item("Mannerism", pref_link(char_mannerism, "char_mannerism"))))
-	html += pref_line(list(pref_item("Bark", pref_link(bark_name, "barksound")), pref_link("Preview", "barkpreview")))
-	html += pref_line(list(pref_item("Speed", pref_link(bark_speed, "barkspeed")), pref_item("Pitch", pref_link(bark_pitch, "barkpitch")), pref_item("Variance", pref_link(bark_variance, "barkvary"))))
+	html += pref_line(list(pref_item("Speech Mannerism", pref_link(char_mannerism, "char_mannerism"))))
+	html += pref_line(list(pref_item("Vocal Bark", pref_link(bark_name, "barksound")), pref_link("<b>Preview Bark</b>", "barkpreview")))
+	html += pref_line(list(pref_item("Vocal Bark Speed", pref_link(bark_speed, "barkspeed")), pref_item("Vocal Bark Pitch", pref_link(bark_pitch, "barkpitch")), pref_item("Vocal Bark Variance", pref_link(bark_variance, "barkvary"))))
 	return html
 
 /datum/preferences/proc/page_features(mob/user)
 	var/html = ""
 	var/list/appearance_items = list()
 	if(pref_species.use_skintones)
-		appearance_items += pref_item("Skin Tone", pref_link("Change", "s_tone"))
+		appearance_items += pref_item(pref_species.skin_tone_wording, pref_link("Change", "s_tone"))
 		if(pref_species.mutant_skin_option)
-			appearance_items += pref_item("Mutant Skin", pref_link(yes_no(mutant_skin), "mutant_skin"))
-	appearance_items += pref_item("Scale", pref_link("[features["body_size"] * 100]%", "body_size"))
+			appearance_items += pref_item("Mutant Skintone", pref_link(yes_no(mutant_skin), "mutant_skin"))
+	appearance_items += pref_item("Sprite Scale", pref_link("[features["body_size"] * 100]%", "body_size"))
 	html += pref_line(appearance_items)
 	if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
-		html += pref_color_row("Colors", features["mcolor"], "mutant_color")
-		html += pref_color_row("Color 2", features["mcolor2"], "mutant_color2")
-		html += pref_color_row("Color 3", features["mcolor3"], "mutant_color3")
+		html += pref_color_row("Mutant Color #1", features["mcolor"], "mutant_color")
+		html += pref_color_row("Mutant Color #2", features["mcolor2"], "mutant_color2")
+		html += pref_color_row("Mutant Color #3", features["mcolor3"], "mutant_color3")
 	if(LAZYLEN(pref_species.allowed_taur_types))
 		var/obj/item/bodypart/taur/T = taur_type
 		var/taur_name = "None"
 		if(ispath(T))
 			taur_name = T::name
-		html += pref_line(list(pref_item("Taur", pref_link(taur_name, "taur_type"))))
+		html += pref_line(list(pref_item("Taur Body Type", pref_link(taur_name, "taur_type"))))
 		html += pref_color_row("Taur Color", taur_color, "taur_color")
 		html += pref_color_row("Taur Markings", taur_markings, "taur_markings")
 		html += pref_color_row("Taur Tertiary", taur_tertiary, "taur_tertiary")
 	html += pref_line(list(pref_item("Features", pref_link("Change", "customizers", "menu")), pref_item("Markings", pref_link("Change", "markings", "menu"))))
 	html += pref_line(list(pref_item("Descriptors", pref_link("Change", "descriptors", "menu"))))
-	html += pref_line(list(pref_item("Update colors with change", pref_link(yes_no(update_mutant_colors), "update_mutant_colors"))))
+	html += pref_line(list(pref_item("Update feature colors with change", pref_link(yes_no(update_mutant_colors), "update_mutant_colors"))))
 	return html
 
 /datum/preferences/proc/page_flavor_text(mob/user)
-	var/flavor_label = "Examine"
+	var/flavor_label = "Flavortext"
 	if(length(flavortext) < MINIMUM_FLAVOR_TEXT)
-		flavor_label = "<font color='#802929'>Examine</font>"
+		flavor_label = "<font color='#802929'>Flavortext</font>"
 	var/ooc_label = "OOC Notes"
 	if(length(ooc_notes) < MINIMUM_OOC_NOTES)
 		ooc_label = "<font color='#802929'>OOC Notes</font>"
-	var/html = pref_line(list(pref_item(flavor_label, pref_link("Change", "flavortext")), pref_item("NSFW", pref_link("Change", "nsfwflavortext")), pref_link("(?)", "formathelp")))
-	html += pref_line(list(pref_item(ooc_label, pref_link("Change", "ooc_notes"))))
-	html += pref_line(list(pref_item("NSFW Notes", pref_link("Change", "erpprefs"))))
+	var/help = pref_link("(?)", "formathelp")
+	var/html = pref_line(list(pref_item(flavor_label, "[help] [pref_link("Change", "flavortext")]")))
+	html += pref_line(list(pref_item("NSFW Flavortext", "[help] [pref_link("Change", "nsfwflavortext")]")))
+	html += pref_line(list(pref_item(ooc_label, "[help] [pref_link("Change", "ooc_notes")]")))
+	html += pref_line(list(pref_item("ERP Preferences", "[help] [pref_link("Change", "erpprefs")]")))
 	html += pref_line(list(pref_item("Headshot", pref_link("Change", "headshot"))))
 	html += pref_image(headshot_link)
-	html += pref_line(list(pref_item("Rumours", pref_link("Set", "rumour")), pref_item("Gossip", pref_link("Set", "gossip")), pref_link("<i>Preview</i>", "rumour_preview")))
-	html += pref_line(list(pref_item("Song", pref_link("URL", "ooc_extra")), pref_link("Title", "change_title"), pref_link("Artist", "change_artist")))
-	html += pref_line(list(pref_item("OOC Image", pref_link("Change", "ooc_extra_img"))))
+	html += pref_line(list(pref_item("Rumours & Noble Gossip", help), "[pref_link("Set Rumours", "rumour")] [pref_link("Set Gossip", "gossip")] [pref_link("<i>Preview</i>", "rumour_preview")]"))
+	html += pref_line(list(pref_item("Song", ""), "[pref_link("Change URL", "ooc_extra")] [pref_link("Title", "change_title")] [pref_link("Artist", "change_artist")]"))
+	html += pref_line(list(pref_item("OOC Extra", pref_link("Change", "ooc_extra_img"))))
 	html += pref_image(ooc_extra_img_link)
-	html += pref_line(list(pref_item("NSFW Image", pref_link("Change", "nsfw_ooc_extra_img"))))
+	html += pref_line(list(pref_item("NSFW OOC Extra", pref_link("Change", "nsfw_ooc_extra_img"))))
 	html += pref_image(nsfw_ooc_extra_img_link)
-	html += pref_line(list(pref_item("Gallery", "[pref_link("Add", "img_gallery")] [pref_link("Clear", "clear_gallery")]")))
-	html += pref_line(list(pref_item("NSFW Gallery", "[pref_link("Add", "nsfw_img_gallery")] [pref_link("Clear", "clear_nsfw_gallery")]")))
+	html += pref_line(list(pref_item("Image Gallery", ""), "[pref_link("Add", "img_gallery")] [pref_link("Clear Gallery", "clear_gallery")]"))
+	html += pref_line(list(pref_item("Nsfw Image Gallery", ""), "[pref_link("Add", "nsfw_img_gallery")] [pref_link("Clear Nsfw Gallery", "clear_nsfw_gallery")]"))
 	html += pref_line(list(pref_link("<b>Preview Examine</b>", "ooc_preview")))
 	return html
 
@@ -477,60 +498,48 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 				var/datum/quirk/Q = quirks[slot]
 				if(Q.configurable)
 					Q.configure(user)
-		// vices now work via list
-		if("vice")
-			var/list/items = list()
-			var/list/descriptions = list()
-			var/list/default_checked = list()
-			var/list/labels = list()
+		if("vice_add")
 			var/list/current_types = list()
 			for(var/i in 1 to VICE_SLOTS)
 				var/datum/charflaw/existing_vice = vars["vice[i]"]
 				if(existing_vice)
 					current_types += existing_vice.type
-			for(var/vice_name in GLOB.character_flaws)
-				var/vice_type = GLOB.character_flaws[vice_name]
-				var/datum/charflaw/singleton = GLOB.charflaw_singletons[vice_type]
-				var/vice_label = "[splittext(vice_name, " (+")[1]] (+[singleton?.point_value || 0])"
-				labels[vice_label] = vice_type
-				items += vice_label
-				descriptions[vice_label] = singleton?.desc
-				if(vice_type in current_types)
-					default_checked += vice_label
-			var/datum/charflaw/noflaw = GLOB.charflaw_singletons[/datum/charflaw/noflaw]
-			labels[noflaw.name] = noflaw.type
-			items += noflaw.name
-			descriptions[noflaw.name] = noflaw.desc
-			if(noflaw.type in current_types)
-				default_checked += noflaw.name
-			items = default_checked + (items - default_checked)
-			// i love TGUI checklist!!!
-			var/list/picked = tgui_input_checkboxes(user, "Select your vices.", "Vice Selection", items, 1, VICE_SLOTS, default_checked = default_checked, descriptions = descriptions, strict_modern = TRUE, window_width = 500, window_height = 500)
-			if(!length(picked))
+			if((/datum/charflaw/noflaw in current_types) || (/datum/charflaw/randflaw in current_types))
+				current_types = list()
+			var/list/all_vices = GLOB.character_flaws.Copy()
+			all_vices["No Flaw (-3 TRI)"] = /datum/charflaw/noflaw
+			var/list/available = list()
+			for(var/vice_name in all_vices)
+				var/vice_type = all_vices[vice_name]
+				if((vice_type in current_types) || check_vice_pick_conflict(vice_type) || check_vice_vice_conflict(vice_type, current_types))
+					continue
+				if(length(current_types) && (vice_type == /datum/charflaw/noflaw || vice_type == /datum/charflaw/randflaw))
+					continue
+				available[vice_name] = vice_type
+			if(length(current_types) >= VICE_SLOTS || !length(available))
+				to_chat(user, span_warning("No vices available to add."))
 				return
-			var/list/picked_types = list()
-			for(var/vice_label in picked)
-				picked_types += labels[vice_label]
-			if(((/datum/charflaw/noflaw in picked_types) || (/datum/charflaw/randflaw in picked_types)) && length(picked_types) > 1)
-				to_chat(user, span_warning("No Flaw can't be combined with other vices."))
-				return
-			for(var/vice_type in picked_types)
-				if(check_vice_pick_conflict(vice_type, TRUE, user) || check_vice_vice_conflict(vice_type, picked_types, TRUE, user))
-					return
-			var/list/ordered_types = list()
-			for(var/vice_type in current_types)
-				if(vice_type in picked_types)
-					ordered_types += vice_type
-			for(var/vice_type in picked_types)
-				if(!(vice_type in ordered_types))
-					ordered_types += vice_type
-			for(var/i in 1 to VICE_SLOTS)
-				vars["vice[i]"] = null
-				if(i <= length(ordered_types))
-					var/new_vice_type = ordered_types[i]
-					vars["vice[i]"] = new new_vice_type()
-			charflaw = null
-			to_chat(user, span_notice("Vices updated."))
+			available = sort_list(available)
+			var/choice = tgui_input_list(user, "Choose a vice to add.", "Vice Selection", available)
+			if(choice)
+				var/new_vice_type = available[choice]
+				if(!length(current_types))
+					for(var/i in 1 to VICE_SLOTS)
+						vars["vice[i]"] = null
+				for(var/i in 1 to VICE_SLOTS)
+					if(!vars["vice[i]"])
+						vars["vice[i]"] = new new_vice_type()
+						break
+				charflaw = null
+				to_chat(user, span_notice("Added [choice] as a vice."))
+		if("vice_remove")
+			if(slot && slot <= VICE_SLOTS)
+				for(var/i in slot to VICE_SLOTS - 1)
+					vars["vice[i]"] = vars["vice[i + 1]"]
+				vars["vice[VICE_SLOTS]"] = null
+				if(!vice1)
+					vice1 = new /datum/charflaw/noflaw()
+				charflaw = null
 		if("lang_free")
 			var/list/choices = get_language_choices()
 			var/chosen_language = tgui_input_list(user, "Choose your character's extra language:", "EXTRA LANGUAGE", choices)

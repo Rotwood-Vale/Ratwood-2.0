@@ -813,7 +813,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		dat = list("<center>REGISTER!</center>")
 
 	winshow(user, "preferencess_window", TRUE)
-	winset(user, "preferencess_window", "size=1000x900;pos=280,80")
+	winset(user, "preferencess_window", "size=820x850;pos=280,80")
 	var/datum/browser/noclose/popup = new(user, "preferences_browser", "<div align='center'>[used_title]</div>")
 	popup.set_window_options("can_close=0")
 	popup.set_content(dat.Join())
