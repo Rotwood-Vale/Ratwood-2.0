@@ -536,7 +536,7 @@
 	name = "saw blades trap"
 	category = "traps"
 	result = /obj/structure/trap/saw_blades
-	reqs =  list(/obj/item/roguegear/bronze = 3, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/alch/irondust =1, /obj/item/natural/whetstone = 1)
+	reqs =  list(/obj/item/ingot/bronze, = 2, /obj/item/roguegear/bronze = 2, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/natural/whetstone = 1)
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 5
 
@@ -544,7 +544,7 @@
 	name = "flame trap"
 	category = "traps"
 	result = /obj/structure/trap/flame
-	reqs =  list(/obj/item/roguegear/bronze = 1, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/alch/irondust =1, /obj/item/alch/firedust =1)
+	reqs =  list(/obj/item/ingot/bronze, = 2, /obj/item/roguegear/bronze = 2, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/alch/coaldust = 2)
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 5
 
@@ -552,9 +552,9 @@
 	name = "shock trap"
 	category = "traps"
 	result = /obj/structure/trap/shock
-	reqs =  list(/obj/item/roguegear/bronze = 1, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/alch/irondust =1, /obj/item/alch/magicdust =1)
+	reqs =  list(/obj/item/ingot/bronze, = 2, /obj/item/roguegear/bronze = 2, /obj/item/natural/clay = 2, /obj/item/roguegem/amethyst = 2, /obj/item/rogueore/cinnabar = 1)
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 6
+	craftdiff = 5
 
 // ----------- Explosive grenades and gas belchers -----------
 // Mostly here to avoid having to use spark-generating 6 step recipes around impact grenades and other instant explosives
@@ -563,7 +563,7 @@
 	name = "blastsand sticks (x3)"
 	category = "Explosives"
 	result = list(/obj/item/tntstick, /obj/item/tntstick, /obj/item/tntstick)
-	reqs = list(/obj/item/paper = 3, /obj/item/alch/coaldust = 2, /obj/item/compost = 2, /obj/item/natural/fibers = 1)
+	reqs = list(/obj/item/paper = 3, /obj/item/alch/coaldust = 4, /obj/item/natural/fibers = 1)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
@@ -573,7 +573,7 @@
 	name = "blastsand satchel"
 	category = "Explosives"
 	result = /obj/item/satchel_bomb
-	reqs = list(/obj/item/storage/backpack/rogue/satchel  = 1, /obj/item/tntstick = 3, /obj/item/alch/firedust = 1, /obj/item/natural/fibers = 1)
+	reqs = list(/obj/item/storage/backpack/rogue/satchel  = 1, /obj/item/tntstick = 3, /obj/item/alch/coaldust = 1, /obj/item/natural/fibers = 1)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
@@ -585,7 +585,7 @@
 	result = list(/obj/item/impact_grenade/explosion,
 				  /obj/item/impact_grenade/explosion,
 				  /obj/item/impact_grenade/explosion)
-	reqs = list(/obj/item/natural/clay = 1, /obj/item/paper = 1, /obj/item/alch/coaldust = 1, /obj/item/alch/firedust = 1, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 1)
+	reqs = list(/obj/item/natural/clay = 1, /obj/item/paper = 1, /obj/item/alch/coaldust = 3)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -598,7 +598,7 @@
 				  /obj/item/signal_flare,
 				  /obj/item/signal_flare,
 				  /obj/item/signal_flare)
-	reqs = list(/obj/item/natural/clay = 1, /obj/item/paper = 1, /obj/item/alch/coaldust = 1, /obj/item/alch/firedust = 1, /obj/item/reagent_containers/food/snacks/grown/rogue/fyritius = 1)
+	reqs = list(/obj/item/natural/clay = 1, /obj/item/paper = 1, /obj/item/alch/coaldust = 3)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
@@ -621,7 +621,7 @@
 	result = list(/obj/item/impact_grenade/smoke/poison_gas,
 				  /obj/item/impact_grenade/smoke/poison_gas,
 				  /obj/item/impact_grenade/smoke/poison_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /datum/reagent/berrypoison = 5, /obj/item/alch/airdust = 1, /datum/reagent/water = 48)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /datum/reagent/berrypoison = 10, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -633,7 +633,7 @@
 	result = list(/obj/item/impact_grenade/smoke/fire_gas,
 				  /obj/item/impact_grenade/smoke/fire_gas,
 				  /obj/item/impact_grenade/smoke/fire_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 2, /obj/item/ash = 1, /obj/item/alch/firedust = 1, /obj/item/alch/solardust = 1, /datum/reagent/water = 48)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -645,7 +645,7 @@
 	result = list(/obj/item/impact_grenade/smoke/blind_gas,
 				  /obj/item/impact_grenade/smoke/blind_gas,
 				  /obj/item/impact_grenade/smoke/blind_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /obj/item/reagent_containers/food/snacks/rogue/veg/onion_sliced = 1, /obj/item/natural/dirtclod = 1, /datum/reagent/water = 48)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /obj/item/reagent_containers/food/snacks/rogue/veg/onion_sliced = 1, /obj/item/ash = 1 = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -657,7 +657,7 @@
 	result = list(/obj/item/impact_grenade/smoke/mute_gas,
 				  /obj/item/impact_grenade/smoke/mute_gas,
 				  /obj/item/impact_grenade/smoke/mute_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /obj/item/alch/irondust = 1, /obj/item/rogueore/cinnabar = 1, /datum/reagent/water = 48)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /obj/item/rogueore/cinnabar = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
@@ -669,7 +669,7 @@
 	result = list(/obj/item/impact_grenade/smoke/healing_gas,
 				  /obj/item/impact_grenade/smoke/healing_gas,
 				  /obj/item/impact_grenade/smoke/healing_gas)
-	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /obj/item/alch/viscera = 1, /obj/item/alch/bonemeal = 1, /datum/reagent/water = 48)
+	reqs =  list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 3, /obj/item/ash = 1, /obj/item/alch/viscera = 1, /obj/item/alch/bonemeal = 1, /datum/reagent/water = 48)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4 
@@ -683,4 +683,54 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 2
+	display_category = ITEM_CAT_ENG_COMBAT
+
+/datum/crafting_recipe/roguetown/engineering/highexplosiveimpact
+	name = "high explosive impact, bombard charge"
+	category = "Explosives"
+	result = /obj/item/cannonball/explosive
+	reqs = list(/obj/item/tntstick = 2, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5
+	display_category = ITEM_CAT_ENG_COMBAT
+
+/datum/crafting_recipe/roguetown/engineering/canistershotimpact
+	name = "canister shot, bombard charge"
+	category = "Explosives"
+	result = /obj/item/cannonball/canister
+	reqs = list(/obj/item/ammo_casing/caseless/bullet/grapeshot = 3, /obj/item/alch/coaldust = 2, /obj/item/paper = 4)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5
+	display_category = ITEM_CAT_ENG_COMBAT
+
+/datum/crafting_recipe/roguetown/engineering/smokeimpact
+	name = "smoke shell, bombard charge"
+	category = "Explosives"
+	result = /obj/item/cannonball/smoke
+	reqs = list(/obj/item/bomb/smoke = 3, /obj/item/alch/coaldust = 2, /obj/item/paper = 4)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5
+	display_category = ITEM_CAT_ENG_COMBAT
+
+/datum/crafting_recipe/roguetown/engineering/flareimpact
+	name = "flare shell, bombard charge"
+	category = "Explosives"
+	result = /obj/item/cannonball/flare
+	reqs = list(/obj/item/rogueore/cinnabar = 2, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5
+	display_category = ITEM_CAT_ENG_COMBAT
+
+/datum/crafting_recipe/roguetown/engineering/incendiaryimpact
+	name = "incendiary shell, bombard charge"
+	category = "Explosives"
+	result = /obj/item/cannonball/incendiary
+	reqs = list(/obj/item/alch/coaldust = 4, /obj/item/paper = 4)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 5
 	display_category = ITEM_CAT_ENG_COMBAT

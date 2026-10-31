@@ -134,7 +134,6 @@
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE, // you should be more experienced in repairing your own tools
 		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE, 
 		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT, // ceramics is a very unforgiving craft, expert is almost always required for even glass panes
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
