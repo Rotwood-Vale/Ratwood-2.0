@@ -44,6 +44,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/reagent_weight = 1 //affects how far it travels when sprayed
 	var/metabolizing = FALSE
 	var/harmful = FALSE //is it bad for you? Currently only used for borghypo. C2s and Toxins have it TRUE by default.
+	var/pain = 0 //how much pain this reagent causes when in the system. Negative value for pain relief
+	var/old_pain = 0 // used to check if the pain value of chem changed
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -79,6 +81,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 				record_round_statistic(STATS_WATER_CONSUMED, metabolization_rate)
 		if(istype(src, /datum/reagent/consumable/ethanol) && has_world_trait(/datum/world_trait/baotha_revelry))
 			adjusted_metabolization_rate = adjusted_metabolization_rate * 0.5
+		if(pain != old_pain) // if pain value changed, update
+			M.update_chem_pain()
+			old_pain = pain
 		holder.remove_reagent(type, adjusted_metabolization_rate) //By default it slowly disappears.
 	return TRUE
 
@@ -96,10 +101,17 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 
 // Called when this reagent first starts being metabolized by a liver
 /datum/reagent/proc/on_mob_metabolize(mob/living/L)
+	if(iscarbon(L) && pain)
+		var/mob/living/carbon/C = L
+		C.update_chem_pain()
+		old_pain = pain
 	return
 
 // Called when this reagent stops being metabolized by a liver
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
+	if(iscarbon(L) && (pain || old_pain))
+		var/mob/living/carbon/C = L
+		C.update_chem_pain()
 	return
 
 /datum/reagent/proc/on_move(mob/M)
