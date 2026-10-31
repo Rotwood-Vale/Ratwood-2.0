@@ -1,334 +1,289 @@
 /obj/structure/roguemachine/vendor
+	parent_type = /obj/structure/roguemachine/shop
 	name = "PEDDLER"
 	desc = "The stomach of this thing can been stuffed with fun things for you to buy."
-	icon = 'icons/roguetown/misc/machines.dmi'
-	icon_state = "streetvendor1"
-	density = TRUE
-	blade_dulling = DULLING_BASH
-	integrity_failure = 0.1
-	max_integrity = 0
-	anchored = TRUE
-	layer = BELOW_OBJ_LAYER
+	tgui_id = "Peddler"
 	var/list/held_items = list()
-	locked = TRUE
-	var/wgain = 0
-	var/keycontrol = "merchant"
-	var/next_hawk = 0
-	var/will_hawk = TRUE
-	var/max_items = 30
-	var/budget
-	
-/obj/structure/roguemachine/vendor/proc/get_group_items(param)
-	// Accepts either:
-	// - an object/ref (e.g. REF(rep) from attack_hand links), or
-	// - a key string in the form "type_name"
-	// Returns a list of held_items keys (actual obj/item refs) that match the group.
+	var/max_items = 60
+	/// Items still waiting on a UI icon, flattened a few per tick so bulk loads don't lag
+	var/list/icon_queue = list()
+	var/generating_icons = FALSE
 
-	var/obj/item/rep
-	// try to resolve param to a held item first (safe for REF strings)
-	if(param)
-		rep = locate(param) in held_items
-	// if param was already an object
-	if(!rep && istype(param, /obj/item))
-		rep = param
+/obj/structure/roguemachine/vendor/Exited(atom/movable/gone, atom/newLoc)
+	. = ..()
+	held_items -= gone
+	icon_queue -= gone
 
-	var/key
-	if(rep)
-		var/namer = held_items[rep]["NAME"] || rep.name
-		key = "[rep.type]_[namer]"
-	else
-		key = param
+/// Items of the same type sold under the same name are one product group
+/obj/structure/roguemachine/vendor/proc/make_group_key(item_type, item_name)
+	return "[item_type]_[item_name]"
 
+/obj/structure/roguemachine/vendor/proc/group_key(obj/item/I)
+	return make_group_key(I.type, held_items[I]["NAME"] || I.name)
+
+/// Returns the held_items keys (actual obj/item refs) belonging to the given group key
+/obj/structure/roguemachine/vendor/proc/get_group_items(key)
 	var/list/matches = list()
 	for(var/obj/item/O in held_items)
-		var/oname = held_items[O]["NAME"] || O.name
-		if("[O.type]_[oname]" == key)
+		if(group_key(O) == key)
 			matches += O
-
 	return matches
 
+/obj/structure/roguemachine/vendor/proc/is_full()
+	return length(held_items) >= max_items
+
+/// Records an item that is already inside, priced like the group it joins unless a price is given
+/obj/structure/roguemachine/vendor/proc/store_item(obj/item/P, price)
+	var/list/group = get_group_items(make_group_key(P.type, P.name))
+	if(isnull(price))
+		price = length(group) ? held_items[group[1]]["PRICE"] : 0
+	// joining a group shares its icon; kept per item so renaming the group doesn't lose it
+	var/icon_data = length(group) ? held_items[group[1]]["ICON"] : null
+	held_items[P] = list("NAME" = P.name, "PRICE" = price, "ICON" = icon_data)
+	if(!icon_data)
+		icon_queue += P
+		if(!generating_icons)
+			INVOKE_ASYNC(src, PROC_REF(generate_icons))
+
+/// Flattens the queued items' icons for the UI, spread across ticks
+/obj/structure/roguemachine/vendor/proc/generate_icons()
+	generating_icons = TRUE
+	while(length(icon_queue))
+		var/obj/item/I = icon_queue[1]
+		icon_queue.Cut(1, 2)
+		// gone, or given its group's icon while it waited
+		if(!held_items[I] || held_items[I]["ICON"])
+			continue
+		var/icon_data = icon2base64(getFlatIcon(I, no_anim = TRUE))
+		for(var/obj/item/O as anything in get_group_items(group_key(I)))
+			if(!held_items[O]["ICON"])
+				held_items[O]["ICON"] = icon_data
+		CHECK_TICK
+		if(QDELETED(src))
+			return
+	generating_icons = FALSE
+	SStgui.update_uis(src)
+
+/// Stocks a new item of each type at the given price
+/obj/structure/roguemachine/vendor/proc/stock_new(list/item_types, price)
+	for(var/item_type in item_types)
+		store_item(new item_type(src), price)
+
 /obj/structure/roguemachine/vendor/proc/insert(obj/item/P, mob/living/user)
-	if(P.w_class <= WEIGHT_CLASS_BULKY)
-		if(held_items.len < max_items)
-			var/price_to_set = 0
+	if(P.w_class > WEIGHT_CLASS_BULKY)
+		return
+	if(is_full())
+		to_chat(user, span_warning("Full."))
+		return
+	if(!user.transferItemToLoc(P, src))
+		to_chat(user, span_warning("[P] is stuck to your hand!"))
+		return
+	store_item(P)
+	playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
+	update_icon()
+	SStgui.update_uis(src)
 
-			for(var/obj/item/I in held_items)
-				if(I.name == P.name)
-					price_to_set = held_items[I]["PRICE"]
-					break
-
-			held_items[P] = list()
-			held_items[P]["NAME"] = P.name
-			held_items[P]["PRICE"] = price_to_set
-
-			P.forceMove(src)
-			playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
-			return attack_hand(user)
+/// Stores as many of the items as fit. Pass the storage they're taken from, if any.
+/obj/structure/roguemachine/vendor/proc/load_items(list/items, mob/living/user, datum/component/storage/from_storage)
+	var/stored = 0
+	var/full = FALSE
+	for(var/obj/item/I as anything in items)
+		if(I.w_class > WEIGHT_CLASS_BULKY)
+			continue
+		if(is_full())
+			full = TRUE
+			break
+		if(from_storage)
+			from_storage.remove_from_storage(I, src)
 		else
-			to_chat(user, span_warning("Full."))
-			return
+			I.forceMove(src)
+		store_item(I)
+		stored++
 
-/obj/structure/roguemachine/vendor/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/roguecoin/gilbranze))
-		return
-	if(istype(P, /obj/item/roguecoin/inqcoin))
-		return
-	if(istype(P, /obj/item/roguecoin))
-		budget += P.get_real_price()
-		qdel(P)
-		update_icon()
+	if(stored)
 		playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
-		return attack_hand(user)
-	if(istype(P, /obj/item/roguekey))
-		var/obj/item/roguekey/K = P
-		if(K.lockid == keycontrol)
-			locked = !locked
-			playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-			update_icon()
-			return attack_hand(user)
-		else
-			if(!locked)
-				insert(P, user)
-			else
-				to_chat(user, span_warning("Wrong key."))
-				return
-	if(istype(P, /obj/item/storage/keyring))
-		var/obj/item/storage/keyring/K = P
-		for(var/obj/item/roguekey/KE in K)
-			if(KE.lockid == keycontrol)
-				locked = !locked
-				playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-				update_icon()
-				return attack_hand(user)
-	if(!locked)
-		insert(P, user)
-	..()
+		to_chat(user, span_notice("\The [src] swallows [stored] item\s."))
+		update_icon()
+		SStgui.update_uis(src)
+	if(full)
+		to_chat(user, span_warning("\The [src] is full."))
+	else if(!stored)
+		to_chat(user, span_warning("There is nothing \the [src] can take."))
 
-/obj/structure/roguemachine/vendor/Topic(href, href_list)
-	. = ..()
-	// defensive checks
-	if(!usr || !ishuman(usr))
+/obj/structure/roguemachine/vendor/proc/is_loadable(obj/item/I)
+	if(I.anchored || (I.item_flags & ABSTRACT))
+		return FALSE
+	if(istype(I, /obj/item/roguecoin))
+		return FALSE
+	return TRUE
+
+/// Loads every loose item on the tile on the user's side of the machine
+/obj/structure/roguemachine/vendor/sweep_floor(mob/living/user)
+	. = TRUE
+	var/turf/front = get_step(src, get_dir(src, user))
+	if(!front)
 		return
+	var/list/candidates = list()
+	for(var/obj/item/I in front)
+		if(is_loadable(I))
+			candidates += I
+	load_items(candidates, user)
 
-	// BUY
-	if(href_list["buy"])
-		// ensure caller has permission; buying usually requires machine locked
-		if(!usr.canUseTopic(src, BE_CLOSE) || !locked)
-			return
+/// Loads the top-level contents of a bag; nested bags go in whole
+/obj/structure/roguemachine/vendor/load_from_storage(datum/component/storage/STR, mob/living/user)
+	var/list/candidates = list()
+	for(var/obj/item/I in STR.contents())
+		if(is_loadable(I))
+			candidates += I
+	load_items(candidates, user, STR)
 
-		var/keyorref = href_list["buy"]
-		var/list/matches = get_group_items(keyorref)
-		if(!length(matches))
-			return
+/obj/structure/roguemachine/vendor/handle_item(obj/item/I, mob/user)
+	if(locked)
+		return FALSE
+	insert(I, user)
+	return TRUE
 
-		// pick one item from the group to vend
-		var/obj/item/O = matches[1]
-		var/price = held_items[O]["PRICE"] || 0
+/obj/structure/roguemachine/vendor/has_stock()
+	return length(held_items)
 
-		// if price > 0, charge buyer; price == 0 is free
-		if(price > 0 && ishuman(usr))
-			if(budget >= price)
-				budget -= price
-				wgain += price
-			else
-				say("NO MONEY NO HONEY!")
-				return
+/obj/structure/roguemachine/vendor/ui_data(mob/user)
+	var/list/data = ..()
+	data["stored"] = length(held_items)
+	data["capacity"] = max_items
 
-		record_round_statistic(STATS_PEDDLER_REVENUE, held_items[O]["PRICE"])
-		// remove one instance and deliver it
+	var/list/groups = list()
+	var/list/group_order = list()
+	for(var/obj/item/I in held_items)
+		var/key = group_key(I)
+		if(!groups[key])
+			groups[key] = list(
+				"key" = key,
+				// names are stored html-encoded for hawking; tgui escapes text itself
+				"name" = html_decode(held_items[I]["NAME"] || "thing"),
+				"price" = held_items[I]["PRICE"] || 0,
+				"count" = 0,
+				"desc" = I.desc,
+				// null until generate_icons gets to it
+				"icon" = null,
+			)
+			group_order += key
+		groups[key]["count"] += 1
+		// a merged group can have members with and without an icon yet
+		if(!groups[key]["icon"])
+			groups[key]["icon"] = held_items[I]["ICON"]
+
+	var/list/group_data = list()
+	for(var/key in group_order)
+		group_data += list(groups[key])
+	data["groups"] = group_data
+	return data
+
+/// Hands the first item to the user and drops the rest at their feet
+/obj/structure/roguemachine/vendor/proc/dispense(list/items, mob/living/user)
+	var/turf/T = get_turf(user)
+	var/first = TRUE
+	for(var/obj/item/O as anything in items)
 		held_items -= O
-		if(!usr.put_in_hands(O))
-			O.forceMove(get_turf(src))
-		update_icon()
+		if(!first || !user.put_in_hands(O))
+			O.forceMove(T)
+		first = FALSE
+	update_icon()
 
-	// RETRIEVE (take out of vendor by owner/operator; usually only when unlocked)
-	if(href_list["retrieve"])
-		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-			return
-
-		var/keyorref = href_list["retrieve"]
-		var/list/matches = get_group_items(keyorref)
-		if(!length(matches))
-			return
-
-		var/obj/item/O = matches[1]
-		held_items -= O
-		if(!usr.put_in_hands(O))
-			O.forceMove(get_turf(src))
-		update_icon()
-
-	// CHANGE (convert budget to change for player) - keep original permission logic
-	if(href_list["change"])
-		if(!usr.canUseTopic(src, BE_CLOSE) || !locked)
-			return
-		if(ishuman(usr) && budget > 0)
-			budget2change(budget, usr)
-			budget = 0
-
-	// WITHDRAW GAIN (owner withdraws stored profit when unlocked)
-	if(href_list["withdrawgain"])
-		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-			return
-		if(ishuman(usr) && wgain > 0)
-			budget2change(wgain, usr)
-			wgain = 0
-
-	// SET NAME (apply name to the whole group)
-	if(href_list["setname"])
-		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-			return
-
-		var/keyorref = href_list["setname"]
-		var/list/matches = get_group_items(keyorref)
-		if(!length(matches))
-			return
-
-		var/prename = held_items[matches[1]]["NAME"]
-		var/newname = sanitize(input(usr, "SET A NEW NAME FOR THIS PRODUCT", src, prename))
-		// explicit null check: input returns null on cancel; empty string allowed? we block empty.
-		if(newname != null && newname != "")
-			for(var/obj/item/I in matches)
-				held_items[I]["NAME"] = newname
-			update_icon()
-
-	// SET PRICE (apply price to the whole group)
-	if(href_list["setprice"])
-		if(!usr.canUseTopic(src, BE_CLOSE) || locked)
-			return
-
-		var/keyorref = href_list["setprice"]
-		var/list/matches = get_group_items(keyorref)
-		if(!length(matches))
-			return
-
-		var/preprice = held_items[matches[1]]["PRICE"] || 0
-		var/newprice = input(usr, "SET A NEW PRICE FOR THIS PRODUCT", src, preprice) as null|num
-		// explicit null check so 0 is accepted
-		if(newprice != null)
-			// validation: no negative prices, no decimals
-			if(newprice < 0 || findtext(num2text(newprice), "."))
-				return attack_hand(usr)
-			for(var/obj/item/I in matches)
-				held_items[I]["PRICE"] = newprice
-			update_icon()
-
-	// redraw UI with updated groups / counts
-	return attack_hand(usr)
-
-/obj/structure/roguemachine/vendor/attack_hand(mob/living/user)
+/obj/structure/roguemachine/vendor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	user.changeNext_move(CLICK_CD_INTENTCAP)
-	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
-	var/canread = user.can_read(src, TRUE)
-	var/contents
+	var/mob/living/carbon/human/H = usr
+	if(!istype(H))
+		return
 
-	if(canread)
-		contents = "<center>THE PEDDLER, THIRD ITERATION<BR>"
-		if(locked)
-			contents += "<a href='?src=[REF(src)];change=1'>Stored Mammon:</a> [budget]<BR>"
-		else
-			contents += "<a href='?src=[REF(src)];withdrawgain=1'>Stored Profits:</a> [wgain]<BR>"
-	else
-		contents = "<center>[stars("THE PEDDLER, THIRD ITERATION")]<BR>"
-		if(locked)
-			contents += "<a href='?src=[REF(src)];change=1'>[stars("Stored Mammon:")]</a> [budget]<BR>"
-		else
-			contents += "<a href='?src=[REF(src)];withdrawgain=1'>[stars("Stored Profits:")]</a> [wgain]<BR>"
+	switch(action)
+		if("buy")
+			if(!locked)
+				return
+			var/list/matches = get_group_items(params["key"])
+			if(!length(matches))
+				return
+			var/amount = clamp(round(text2num("[params["amount"]]")), 1, length(matches))
+			var/price = held_items[matches[1]]["PRICE"] || 0
+			if(!charge(price * amount, "NO MONEY NO HONEY!"))
+				return TRUE
+			dispense(matches.Copy(1, amount + 1), H)
+			return TRUE
 
-	contents += "</center>"
+		if("take")
+			if(locked)
+				return
+			var/list/matches = get_group_items(params["key"])
+			if(!length(matches))
+				return
+			var/amount = params["all"] ? length(matches) : 1
+			dispense(matches.Copy(1, amount + 1), H)
+			return TRUE
 
-	var/list/groups = list()
-	for(var/obj/item/I in held_items)
-		var/namer = held_items[I]["NAME"] || "thing"
-		var/key = "[I.type]_[namer]"
-		if(!groups[key])
-			groups[key] = list("REP" = I, "COUNT" = 0, "PRICE" = held_items[I]["PRICE"])
-		groups[key]["COUNT"] += 1
+		if("set_name")
+			if(locked || !H.can_read(src, TRUE))
+				return
+			var/list/matches = get_group_items(params["key"])
+			var/newname = sanitize(copytext(trim("[params["name"]]"), 1, MAX_NAME_LEN + 1))
+			if(!length(matches) || !length(newname))
+				return
+			// renaming into an existing group merges with it, so take that group's price
+			var/obj/item/first = matches[1]
+			var/price = held_items[first]["PRICE"]
+			var/list/joining = get_group_items(make_group_key(first.type, newname)) - matches
+			if(length(joining))
+				price = held_items[joining[1]]["PRICE"]
+			for(var/obj/item/I in matches)
+				held_items[I]["NAME"] = newname
+				held_items[I]["PRICE"] = price
+			return TRUE
 
-	// render groups
-	for(var/key in groups)
-		var/obj/item/rep = groups[key]["REP"]
-		var/namer = held_items[rep]["NAME"]
-		var/price = groups[key]["PRICE"]
-		var/count = groups[key]["COUNT"]
-
-		if(locked)
-			if(canread)
-				contents += "[icon2html(rep, user)] [namer] x[count] - [price] <a href='?src=[REF(src)];buy=[REF(rep)]'>BUY</a>"
-			else
-				contents += "[icon2html(rep, user)] [stars(namer)] x[count] - [price] <a href='?src=[REF(src)];buy=[REF(rep)]'>[stars("BUY")]</a>"
-		else
-			if(canread)
-				contents += "[icon2html(rep, user)] <a href='?src=[REF(src)];setname=[REF(rep)]'>[namer]</a> x[count] - <a href='?src=[REF(src)];setprice=[REF(rep)]'>[price]</a> <a href='?src=[REF(src)];retrieve=[REF(rep)]'>TAKE</a>"
-			else
-				contents += "[icon2html(rep, user)] <a href='?src=[REF(src)];setname=[REF(rep)]'>[stars(namer)]</a> x[count] - <a href='?src=[REF(src)];setprice=[REF(rep)]'>[price]</a> <a href='?src=[REF(src)];retrieve=[REF(rep)]'>[stars("TAKE")]</a>"
-
-		contents += "<BR>"
-
-	var/datum/browser/popup = new(user, "VENDORTHING", "", 450, 350)
-	popup.set_content(contents)
-	popup.open()
+		if("set_price")
+			if(locked)
+				return
+			var/list/matches = get_group_items(params["key"])
+			var/newprice = text2num("[params["price"]]")
+			// no negative prices, no decimals
+			if(!length(matches) || isnull(newprice) || newprice < 0 || newprice != round(newprice))
+				return
+			newprice = min(newprice, SHOP_MAX_PRICE)
+			for(var/obj/item/I in matches)
+				held_items[I]["PRICE"] = newprice
+			return TRUE
 
 /obj/structure/roguemachine/vendor/obj_break(damage_flag)
 	..()
 	for(var/obj/item/I in held_items)
 		I.forceMove(src.loc)
-		held_items -= I
-	budget2change(budget)
-	set_light(0)
-	update_icon()
-	icon_state = "streetvendor0"
-
-/obj/structure/roguemachine/vendor/Initialize(mapload)
-	. = ..()
-	update_icon()
-	START_PROCESSING(SSroguemachine, src)
-
-/obj/structure/roguemachine/vendor/update_icon()
-	cut_overlays()
-	if(obj_broken)
-		set_light(0)
-		return
-	if(!locked)
-		icon_state = "streetvendor0"
-		return
-	else
-		icon_state = "streetvendor1"
-	if(held_items.len)
-		set_light(1, 1, 1, l_color = "#1b7bf1")
-		add_overlay(mutable_appearance(icon, "vendor-gen"))
 
 /obj/structure/roguemachine/vendor/Destroy()
-	STOP_PROCESSING(SSroguemachine, src)
 	for(var/obj/item/I in held_items)
 		I.forceMove(src.loc)
-		held_items -= I
-	set_light(0)
 	return ..()
 
-/obj/structure/roguemachine/vendor/process()
-	if(obj_broken)
+/obj/structure/roguemachine/vendor/hawk()
+	if(!length(held_items))
 		return
-	if(!will_hawk)
-		return
-	if(world.time > next_hawk)
-		next_hawk = world.time + rand(1 MINUTES, 2 MINUTES)
-		if(length(held_items))
-			var/obj/item/I = pick(held_items)
-			var/namer = held_items[I]["NAME"]
-			namer = capitalize(namer)
+	var/obj/item/I = pick(held_items)
+	var/namer = held_items[I]["NAME"]
+	namer = capitalize(namer)
 
-			if(!findtext(namer, "s", -1)) // doesn't already end with "s"
-				for(var/obj/item/O in held_items)
-					if(O == I)
-						continue
-					if(O.type == I.type && (held_items[O]["NAME"]) == held_items[I]["NAME"])
-						namer += "s" //add a plural s!
-						break
+	if(!findtext(namer, "s", -1)) // doesn't already end with "s"
+		for(var/obj/item/O in held_items)
+			if(O == I)
+				continue
+			if(O.type == I.type && (held_items[O]["NAME"]) == held_items[I]["NAME"])
+				namer += "s" //add a plural s!
+				break
 
-			say("[namer] for sale! [held_items[I]["PRICE"]] mammons!")
+	say("[namer] for sale! [held_items[I]["PRICE"]] mammons!")
+
+/obj/structure/roguemachine/vendor/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Left-click with an open hand to browse its wares. Several of one ware can be bought at once.")
+	. += span_info("While it's UNLOCKED, strike it with an item to stock it. Right-click with a bag to load what's inside, or with an open hand to load everything on the floor in front of it.")
+	. += span_info("Wares of the same kind and name are sold together at one price. Renaming wares to match another's name merges them at that ware's price.")
 
 /obj/structure/roguemachine/vendor/centcom
 	name = "LANDLORD"
@@ -338,7 +293,13 @@
 	keycontrol = "dhjlashfdg"
 	var/list/cachey = list()
 
+/obj/structure/roguemachine/vendor/centcom/get_mechanics_examine(mob/user)
+	return list()
+
 /obj/structure/roguemachine/vendor/centcom/attack_hand(mob/living/user)
+	return
+
+/obj/structure/roguemachine/vendor/centcom/attack_right(mob/user)
 	return
 
 /obj/structure/roguemachine/vendor/centcom/attackby(obj/item/P, mob/user, params)
@@ -377,18 +338,10 @@
 	. = ..()
 
 	// Add room keys with a price of 20
-	for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomviii))
-		var/obj/P = new X(src)
-		held_items[P] = list()
-		held_items[P]["NAME"] = P.name
-		held_items[P]["PRICE"] = 20
+	stock_new(list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomviii), 20)
 
 	// Add fancy keys with a price of 100
-	for (var/Y in list(/obj/item/storage/keyring/innfancyi, /obj/item/roguekey/fancyroomii, /obj/item/storage/keyring/innfancyiii, /obj/item/storage/keyring/innfancyiv, /obj/item/storage/keyring/innfancyv))
-		var/obj/Q = new Y(src)
-		held_items[Q] = list()
-		held_items[Q]["NAME"] = Q.name
-		held_items[Q]["PRICE"] = 100
+	stock_new(list(/obj/item/storage/keyring/innfancyi, /obj/item/roguekey/fancyroomii, /obj/item/storage/keyring/innfancyiii, /obj/item/storage/keyring/innfancyiv, /obj/item/storage/keyring/innfancyv), 100)
 
 	update_icon()
 
@@ -400,18 +353,10 @@
 	. = ..()
 
 	// Add room keys with a price of 20
-	for (var/X in list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomix, /obj/item/roguekey/roomx))
-		var/obj/P = new X(src)
-		held_items[P] = list()
-		held_items[P]["NAME"] = P.name
-		held_items[P]["PRICE"] = 20
+	stock_new(list(/obj/item/roguekey/roomi, /obj/item/roguekey/roomii, /obj/item/roguekey/roomiii, /obj/item/roguekey/roomiv, /obj/item/roguekey/roomv, /obj/item/roguekey/roomvi, /obj/item/roguekey/roomvii, /obj/item/roguekey/roomviii, /obj/item/roguekey/roomix, /obj/item/roguekey/roomx), 20)
 
 	// Add fancy keys with a price of 100
-	for (var/Y in list(/obj/item/storage/keyring/innfancyi, /obj/item/storage/keyring/innfancyii, /obj/item/storage/keyring/innfancyiii))
-		var/obj/Q = new Y(src)
-		held_items[Q] = list()
-		held_items[Q]["NAME"] = Q.name
-		held_items[Q]["PRICE"] = 100
+	stock_new(list(/obj/item/storage/keyring/innfancyi, /obj/item/storage/keyring/innfancyii, /obj/item/storage/keyring/innfancyiii), 100)
 
 	update_icon()
 
@@ -426,11 +371,7 @@
 	. = ..()
 
 	// Add locker keys with a price of 10
-	for (var/X in list(/obj/item/roguekey/bathlocker1, /obj/item/roguekey/bathlocker2, /obj/item/roguekey/bathlocker3, /obj/item/roguekey/bathlocker4, /obj/item/roguekey/bathlocker5, /obj/item/roguekey/bathlocker6))
-		var/obj/P = new X(src)
-		held_items[P] = list()
-		held_items[P]["NAME"] = P.name
-		held_items[P]["PRICE"] = 5
+	stock_new(list(/obj/item/roguekey/bathlocker1, /obj/item/roguekey/bathlocker2, /obj/item/roguekey/bathlocker3, /obj/item/roguekey/bathlocker4, /obj/item/roguekey/bathlocker5, /obj/item/roguekey/bathlocker6), 5)
 
 	update_icon()
 
@@ -440,11 +381,7 @@
 
 /obj/structure/roguemachine/vendor/merchant/Initialize(mapload)
 	. = ..()
-	for(var/X in list(/obj/item/roguekey/apartments/stall1,/obj/item/roguekey/apartments/stall2,/obj/item/roguekey/apartments/stall3))
-		var/obj/P = new X(src)
-		held_items[P] = list()
-		held_items[P]["NAME"] = P.name
-		held_items[P]["PRICE"] = 10
+	stock_new(list(/obj/item/roguekey/apartments/stall1,/obj/item/roguekey/apartments/stall2,/obj/item/roguekey/apartments/stall3), 10)
 	update_icon()
 
 /obj/structure/roguemachine/vendor/stablemaster
@@ -452,9 +389,24 @@
 
 /obj/structure/roguemachine/vendor/stablemaster/Initialize(mapload)
 	. = ..()
-	for(var/X in list(/obj/item/roguekey/apartments/stablemaster_1,/obj/item/roguekey/apartments/stablemaster_2,/obj/item/roguekey/apartments/stablemaster_3,/obj/item/roguekey/apartments/stablemaster_4,/obj/item/roguekey/apartments/stablemaster_5))
-		var/obj/P = new X(src)
-		held_items[P] = list()
-		held_items[P]["NAME"] = P.name
-		held_items[P]["PRICE"] = 30
+	stock_new(list(/obj/item/roguekey/apartments/stablemaster_1,/obj/item/roguekey/apartments/stablemaster_2,/obj/item/roguekey/apartments/stablemaster_3,/obj/item/roguekey/apartments/stablemaster_4,/obj/item/roguekey/apartments/stablemaster_5), 30)
 	update_icon()
+
+// PEDDLER CARTS
+
+/obj/structure/roguemachine/vendor/mobile
+	name = "peddler cart"
+	desc = "A smaller, wheeled PEDDLER that can be moved around."
+	icon_state = "svendorcart1"
+	icon_prefix = "svendorcart"
+	anchored = FALSE
+	is_cart = TRUE
+	max_items = 20
+	max_integrity = 400
+	climbable = TRUE
+	// no owner until it's claimed, or crafted with its key
+	keycontrol = null
+	key_name = "peddler cart key"
+
+/obj/structure/roguemachine/vendor/mobile/crafted
+	is_crafted = TRUE
