@@ -102,6 +102,7 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 	if(target.has_status_effect(/datum/status_effect/debuff/devitalised) || target.has_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped))
 		return FALSE
 	target.apply_status_effect(/datum/status_effect/debuff/devitalised/lux_ripped)
+	ADD_TRAIT(target, TRAIT_LUX_RIPPED, TRAIT_GENERIC)
 	new /obj/effect/temp_visual/cult/sac(get_turf(target))
 	new /obj/effect/temp_visual/cult/sparks(get_turf(target))
 	target.Unconscious(4 MINUTES)
@@ -137,6 +138,9 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 		return TRUE
 	if(!target.mind?.key)
 		to_chat(user, span_warning("THIS ONE HAS NO SOUL."))
+		return TRUE
+	if(!wanted && HAS_TRAIT(target, TRAIT_LUX_RIPPED))
+		to_chat(user, span_warning("THEIR LUX IS ALREADY TORN AWAY."))
 		return TRUE
 	if(istype(target, /mob/living/carbon/human/species/skeleton) || is_species(target, /datum/species/gnoll))
 		to_chat(user, span_warning("THIS RITUAL IS NOT FOR THEM."))

@@ -82,6 +82,7 @@
 #define TRAIT_FASTSLEEP "Fast Sleeper"
 #define TRAIT_BLOODBOUND "Bloodbound"
 #define TRAIT_MONSTROUS "Monstrous"
+#define TRAIT_LUX_RIPPED "Lux Ripped"
 #define TRAIT_GOODLOVER "Fabled Lover"
 #define TRAIT_SEEDKNOW "Seed Knower"
 #define TRAIT_SQUIRE_REPAIR "Squire Knowledge"

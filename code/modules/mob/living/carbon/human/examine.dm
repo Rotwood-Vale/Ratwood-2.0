@@ -1153,6 +1153,8 @@
 			if((H.patron.type == /datum/patron/inhumen/zizo) || (H.patron.type == /datum/patron/inhumen/baotha))
 				if(src.purity == TRUE)
 					. += span_greentext("<b>[capitalize(m2)] lux is pure!</b>")
+				if(HAS_TRAIT(src, TRAIT_LUX_RIPPED))
+					. += span_danger("<b>[capitalize(m2)] lux is torn!</b>")
 				if(src.virginity == TRUE)
 					. += span_aiprivradio("VIRGIN!")
 
