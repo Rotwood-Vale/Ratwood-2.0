@@ -147,7 +147,7 @@
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
-	if(on && has_world_trait(/datum/world_trait/zizo_pitch) && !istype(src, /obj/machinery/light/rogue/candle))
+	if(on && has_world_trait(/datum/world_trait/zizo_pitch) && !istype(src, /obj/machinery/light/rogue/candle) && !istype(src, /obj/machinery/light/rogue/hearth) && !istype(src, /obj/machinery/light/rogue/oven))
 		burn_out()
 	emergency_mode = FALSE
 	if(on)
