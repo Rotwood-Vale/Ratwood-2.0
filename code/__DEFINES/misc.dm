@@ -39,6 +39,7 @@
 #define LEGSLEEVE_LAYER			35
 #define SHOESLEEVE_LAYER		34
 #define SHIRT_LAYER				33
+#define ASS_LAYER				33.6
 #define WRISTS_LAYER			32
 #define ARMOR_LAYER				31
 #define TABARD_LAYER			30
