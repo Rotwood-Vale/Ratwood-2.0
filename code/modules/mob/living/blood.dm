@@ -138,7 +138,7 @@
 		if (stat == DEAD)
 			bleed_rate = 0 // just to be sure for anything else that cares about it, since we're ostensibly out of blood now
 			return
-		else
+		else if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
 			// handle just the oxyloss, and then abort. nothing else in here is relevant to us
 			adjustOxyLoss(blood_volume <= BLOOD_VOLUME_SURVIVE ? 3 : 1)
 
