@@ -17,6 +17,7 @@
 		TRAIT_SLEUTH,
 		TRAIT_PURITAN_ADVENTURER,//For fluff.
 	)
+	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 	subclass_stats = list(//+9
 		STATKEY_SPD = 3,
 		STATKEY_WIL = 3,

@@ -1,0 +1,9 @@
+2026-11-01:
+  IronDragoon:
+  - rscadd: Added option for lactation 'after impregnation'. If character is fertile
+      and has breasts, will then start lactating after being impregnated (resets each
+      round)
+  Nid4259:
+  - bugfix: fixed grand duke valiant warrior using a tribal chiefs skills and description
+  SirSwagmeyer:
+  - bugfix: Ports the previous pickpocket rework onto Combat 2.0's STEAL intent.
