@@ -68,7 +68,3 @@ GLOBAL_LIST_INIT(vamp_generation_to_text, list(
 #define TORPOR_VOLUNTARY_VITAE_COST 1
 /// How much healing is required to regrow a head
 #define TORPOR_HEAD_REGROW_AMOUNT 100
-/// Multiplier for vitae to blood
-#define VAMPIRE_BLOOD_LOSS_VITAE_MULT 0.5
-/// How much blood they need back before they can rise from death torpor
-#define TORPOR_RISE_BLOOD_VOLUME BLOOD_VOLUME_OKAY

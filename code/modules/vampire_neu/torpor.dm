@@ -15,7 +15,6 @@
 
 /datum/component/vampire_torpor/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_update))
-	RegisterSignal(parent, COMSIG_VAMPIRE_BLED_DRY, PROC_REF(on_bled_dry))
 	RegisterSignal(parent, COMSIG_LIVING_PRE_DEATH, PROC_REF(on_pre_death))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(parent, COMSIG_HUMAN_LIFE, PROC_REF(on_life))
@@ -24,7 +23,6 @@
 /datum/component/vampire_torpor/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_LIVING_HEALTH_UPDATE,
-		COMSIG_VAMPIRE_BLED_DRY,
 		COMSIG_LIVING_PRE_DEATH,
 		COMSIG_LIVING_DEATH,
 		COMSIG_HUMAN_LIFE,
@@ -67,13 +65,6 @@
 	if(source.health > source.crit_threshold)
 		return
 	// we're in the middle of updatehealth() here, keep whatever starting torpor sets off out of it
-	INVOKE_ASYNC(src, PROC_REF(put_under), source)
-
-/// If you run out of blood, which implies you also ran of vitae, you die also
-/datum/component/vampire_torpor/proc/on_bled_dry(mob/living/carbon/human/source)
-	SIGNAL_HANDLER
-	if(final_death || source.stat == DEAD)
-		return
 	INVOKE_ASYNC(src, PROC_REF(put_under), source)
 
 /datum/component/vampire_torpor/proc/on_pre_death(mob/living/carbon/human/source, gibbed)

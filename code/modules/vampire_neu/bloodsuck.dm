@@ -39,9 +39,8 @@
 	last_drinkblood_use = world.time
 	changeNext_move(CLICK_CD_MELEE)
 
-	if(!VVictim)
-		victim.set_blood_volume(max(victim.get_blood_volume() - 5, 0))
-		victim.handle_blood()
+	victim.set_blood_volume(max(victim.get_blood_volume() - 5, 0))
+	victim.handle_blood()
 
 	playsound(loc, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
 	beast_feed_pulse()
@@ -90,8 +89,7 @@
 
 	if(victim.get_bloodpool() > 0)
 		var/used_vitae = 150
-		if(!VVictim)
-			victim.set_blood_volume(max(victim.get_blood_volume() - 45, 0))
+		victim.set_blood_volume(max(victim.get_blood_volume() - 45, 0))
 		if(victim.get_bloodpool() < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
 			used_vitae = victim.get_bloodpool()
 			to_chat(src, span_warning("...But alas, only leftovers..."))

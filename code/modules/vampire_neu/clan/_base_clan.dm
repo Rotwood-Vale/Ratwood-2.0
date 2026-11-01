@@ -28,8 +28,6 @@ And it also helps for the character set panel
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_SILVER_WEAK,
 		TRAIT_VAMPMANSION,
-		TRAIT_NO_BLOODLOSS_EFFECTS,
-		TRAIT_NO_BLOOD_REGEN,
 	)
 	/// Traits unique to this Clan, handed out on top of clane_traits.
 	var/list/extra_clan_traits = list()
@@ -105,7 +103,6 @@ And it also helps for the character set panel
 		cache_pre_embrace_state(H)
 		apply_clan_components(H)
 		H.AddComponent(/datum/component/vampire_torpor)
-		H.AddComponent(/datum/component/vampire_vitae_bleeding)
 		RegisterSignal(H, COMSIG_HUMAN_LIFE, PROC_REF(on_vampire_life))
 
 		// Apply vampire-specific traits
@@ -319,7 +316,6 @@ And it also helps for the character set panel
 		vampire.mob_biotypes = vampire.dna.species.inherent_biotypes
 
 	qdel(vampire.GetComponent(/datum/component/vampire_torpor))
-	qdel(vampire.GetComponent(/datum/component/vampire_vitae_bleeding))
 
 	var/datum/component/sunlight_vulnerability/sun_comp = vampire.GetComponent(/datum/component/sunlight_vulnerability)
 	if(sun_comp)

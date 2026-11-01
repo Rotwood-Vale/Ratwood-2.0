@@ -47,8 +47,6 @@
 	ADD_TRAIT(vampire, TRAIT_TORPOR, id)
 	ADD_TRAIT(vampire, TRAIT_DEATHCOMA, id)
 	ADD_TRAIT(vampire, TRAIT_NODEATH, id)
-	// you already probably lost a lot of vitae, lets stop that
-	ADD_TRAIT(vampire, TRAIT_NO_BLEEDING, id)
 	ADD_TRAIT(vampire, TRAIT_FAKEDEATH, id)
 	RegisterSignal(vampire, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(vampire, COMSIG_LIVING_TRY_OPEN_EYES, PROC_REF(on_try_open_eyes))
@@ -69,7 +67,6 @@
 	REMOVE_TRAIT(owner, TRAIT_TORPOR, id)
 	REMOVE_TRAIT(owner, TRAIT_DEATHCOMA, id)
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, id)
-	REMOVE_TRAIT(owner, TRAIT_NO_BLEEDING, id)
 	REMOVE_TRAIT(owner, TRAIT_FAKEDEATH, id)
 	REMOVE_TRAIT(owner, TRAIT_DEATHS_DOOR, id)
 	UnregisterSignal(owner, list(
@@ -391,9 +388,6 @@
 			torpor_comp.notify(span_notice("My [crippling_names[wound]] knits itself closed."))
 	restore_organs()
 	expel_embedded()
-	// loosing all the blood kills the vampire, so just in case that's how you died, we restore it
-	if(vampire.get_bloodpool() <= 0 && vampire.get_blood_volume() < BLOOD_VOLUME_NORMAL)
-		vampire.adjust_blood_volume(heal_amount * 10)
 	return heal_amount
 
 /datum/status_effect/vampire_torpor/proc/expel_embedded()
@@ -462,10 +456,6 @@
 	var/datum/wound/crippling = get_crippling_wound()
 	if(crippling)
 		return "My [crippling.name] must close before I can rise."
-	if(vampire.get_bleed_rate() > 0)
-		return "My wounds still bleed. I cannot rise until they close."
-	if(vampire.get_blood_volume() < TORPOR_RISE_BLOOD_VOLUME)
-		return "My veins are all but empty. I cannot rise until my blood returns."
 	return null
 
 /datum/status_effect/vampire_torpor/proc/update_blocker()
@@ -474,15 +464,11 @@
 
 /datum/status_effect/vampire_torpor/proc/is_mended()
 	var/mob/living/carbon/human/vampire = owner
-	return can_rise() && vampire.health >= vampire.maxHealth && vampire.getBruteLoss() + vampire.getFireLoss() <= 0 && vampire.get_blood_volume() >= BLOOD_VOLUME_NORMAL
+	return can_rise() && vampire.health >= vampire.maxHealth && vampire.getBruteLoss() + vampire.getFireLoss() <= 0
 
 /datum/status_effect/vampire_torpor/proc/can_rise()
 	var/mob/living/carbon/human/vampire = owner
 	if(is_missing_vitals() || get_crippling_wound())
-		return FALSE
-	if(vampire.get_bleed_rate() > 0)
-		return FALSE
-	if(vampire.get_blood_volume() < TORPOR_RISE_BLOOD_VOLUME)
 		return FALSE
 	return vampire.health > vampire.crit_threshold
 

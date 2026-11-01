@@ -16,9 +16,6 @@
 /// Return a list of custom warnings before you succumb: (list/warnings)
 #define COMSIG_LIVING_GET_SUCCUMB_WARNINGS "living_get_succumb_warnings"
 
-/// From /datum/component/vampire_vitae_bleeding, when a vampire runs out blood, which should include virae: ()
-#define COMSIG_VAMPIRE_BLED_DRY "vampire_bled_dry"
-
 /// Clicking on the close eyes button, excludes forced closings: ()
 #define COMSIG_LIVING_CLOSED_EYES "living_closed_eyes"
 

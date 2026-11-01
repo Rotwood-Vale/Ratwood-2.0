@@ -3384,7 +3384,6 @@
 #include "code\modules\vampire_neu\living_modifications.dm"
 #include "code\modules\vampire_neu\torpor.dm"
 #include "code\modules\vampire_neu\torpor_effect.dm"
-#include "code\modules\vampire_neu\vitae_bleeding.dm"
 #include "code\modules\vampire_neu\vampire.dm"
 #include "code\modules\vampire_neu\vampire_sight.dm"
 #include "code\modules\vampire_neu\vampirelord.dm"

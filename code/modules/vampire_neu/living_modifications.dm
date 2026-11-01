@@ -334,6 +334,7 @@
 
 	// Handle low bloodpool effects
 	handle_bloodpool_effects()
+	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/carbon/human/proc/handle_bloodpool_effects()
 	// Apply thirst effects based on bloodpool levels
