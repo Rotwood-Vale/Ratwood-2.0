@@ -1868,6 +1868,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		stage = 3
 	else if(limbs)
 		stage = 2
+	target.mob_biotypes |= MOB_UNDEAD
 	var/list/parts = list()
 	for(var/obj/item/bodypart/part in target.bodyparts)
 		if(part.skeletonized || (stage < 3 && (part == head || istype(part, /obj/item/bodypart/chest))))
@@ -1882,7 +1883,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(stage != 2)
 		traits += list(TRAIT_NOMOOD, TRAIT_SILVER_WEAK)
 	if(stage > 1)
-		target.mob_biotypes |= MOB_UNDEAD
 		traits += list(TRAIT_TOXIMMUNE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_UNLYCKERABLE, TRAIT_LIMBATTACHMENT)
 	if(stage == 3)
 		traits += list(TRAIT_NOPAIN, TRAIT_BLOODLOSS_IMMUNE, TRAIT_MONSTROUS)
