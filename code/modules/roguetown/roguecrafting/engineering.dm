@@ -563,7 +563,7 @@
 	name = "blastsand sticks (x3)"
 	category = "Explosives"
 	result = list(/obj/item/tntstick, /obj/item/tntstick, /obj/item/tntstick)
-	reqs = list(/obj/item/paper = 3, /obj/item/alch/coaldust = 4, /obj/item/natural/fibers = 1)
+	reqs = list(/obj/item/paper = 3, /obj/item/alch/coaldust = 2, /obj/item/natural/fibers = 1, /obj/item/compost = 2)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 3
@@ -585,7 +585,7 @@
 	result = list(/obj/item/impact_grenade/explosion,
 				  /obj/item/impact_grenade/explosion,
 				  /obj/item/impact_grenade/explosion)
-	reqs = list(/obj/item/natural/clay = 1, /obj/item/paper = 1, /obj/item/alch/coaldust = 3)
+	reqs = list(/obj/item/natural/clay = 1, /obj/item/paper = 1, /obj/item/alch/coaldust = 1, /obj/item/compost = 1)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4
