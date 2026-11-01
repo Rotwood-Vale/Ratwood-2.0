@@ -39,8 +39,9 @@
 	last_drinkblood_use = world.time
 	changeNext_move(CLICK_CD_MELEE)
 
-	victim.set_blood_volume(max(victim.get_blood_volume() - 5, 0))
-	victim.handle_blood()
+	if(!VVictim)
+		victim.set_blood_volume(max(victim.get_blood_volume() - 5, 0))
+		victim.handle_blood()
 
 	playsound(loc, 'sound/misc/drink_blood.ogg', 100, FALSE, -4)
 	beast_feed_pulse()
@@ -89,7 +90,8 @@
 
 	if(victim.get_bloodpool() > 0)
 		var/used_vitae = 150
-		victim.set_blood_volume(max(victim.get_blood_volume() - 45, 0))
+		if(!VVictim)
+			victim.set_blood_volume(max(victim.get_blood_volume() - 45, 0))
 		if(victim.get_bloodpool() < used_vitae)  // We assume they're left with 250 vitae or less, so we take it all
 			used_vitae = victim.get_bloodpool()
 			to_chat(src, span_warning("...But alas, only leftovers..."))
@@ -108,7 +110,11 @@
 			if(VVictim.generation > VDrinker.generation)
 				VDrinker.generation = VVictim.generation
 			VDrinker.research_points += VVictim.research_points + VVictim.research_spent
-			victim.death()
+			var/datum/component/vampire_torpor/victim_torpor = victim.GetComponent(/datum/component/vampire_torpor)
+			if(victim_torpor)
+				victim_torpor.die_for_good(ash = FALSE)
+			else
+				victim.death()
 			victim.adjustBruteLoss(-50, TRUE)
 			victim.adjustFireLoss(-50, TRUE)
 			return

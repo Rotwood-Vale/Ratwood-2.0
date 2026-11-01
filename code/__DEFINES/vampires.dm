@@ -56,3 +56,19 @@ GLOBAL_LIST_INIT(vamp_generation_to_text, list(
 
 //Coven Defines
 #define POTENCE_PUNCH_DAMAGE_PER_LEVEL 5
+
+/// Voluntary torpor, enter by lying down with your eyes closed
+#define TORPOR_VOLUNTARY "voluntary"
+/// Torpor when you die, forces you to be in torpor for awhile
+#define TORPOR_DEATH "death"
+
+/// How much we multiply healing and reduce forced dormancy time when in a grave/coffin
+#define TORPOR_RESTING_PLACE_MULT 2
+/// How much vitae it costs to heal while in voluntary torpor
+#define TORPOR_VOLUNTARY_VITAE_COST 1
+/// How much healing is required to regrow a head
+#define TORPOR_HEAD_REGROW_AMOUNT 100
+/// Multiplier for vitae to blood
+#define VAMPIRE_BLOOD_LOSS_VITAE_MULT 0.5
+/// How much blood they need back before they can rise from death torpor
+#define TORPOR_RISE_BLOOD_VOLUME BLOOD_VOLUME_OKAY

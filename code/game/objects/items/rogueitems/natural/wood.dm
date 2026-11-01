@@ -405,6 +405,7 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
+	AddElement(/datum/element/heart_stake, 10 SECONDS)
 
 /obj/item/grown/log/tree/stake/attack_obj(obj/O, mob/living/user)
 	if(!isitem(O))
