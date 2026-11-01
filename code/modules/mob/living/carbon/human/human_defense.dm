@@ -39,7 +39,7 @@
 			if(d_type != "piercing")
 				if(armor_penetration >= protection)
 					consume_debuff = FALSE
-					intdamage = damage * (1 - (pen_info * PEN_PASSTHROUGH_RATIO))
+					intdamage = damage * max(0.5, 1 - (pen_info * PEN_PASSTHROUGH_RATIO))
 			else
 				if(armor_penetration == protection)
 					consume_debuff = FALSE
