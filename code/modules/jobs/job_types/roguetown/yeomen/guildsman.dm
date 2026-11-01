@@ -159,7 +159,7 @@
 	beltr = /obj/item/roguekey/crafterguild
 	beltl = /obj/item/flashlight/flare/torch/lantern/bronzelamptern
 	backl = /obj/item/storage/backpack/rogue/artibackpack/engineer
-	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/albranze
+	backr = /obj/item/rogueweapon/pick/woodcutter/dolabra/albranze
 	backpack_contents = list(
 								/obj/item/rogueweapon/hammer/bronze = 1,
 								/obj/item/rogueweapon/chisel/bronze = 1,
