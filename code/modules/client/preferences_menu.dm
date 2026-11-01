@@ -84,6 +84,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 // da categories get built here
 /datum/preferences/proc/get_character_page(mob/user)
 	validate_background()
+	is_banned_from(user.ckey, "Appearance")
 	var/html = {"<style>
 		body { font-size: 14px; }
 		table { table-layout: fixed; }
