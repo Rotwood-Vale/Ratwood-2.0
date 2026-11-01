@@ -204,7 +204,7 @@
 
 /obj/item/gun/ballistic/revolver/rune/twilight_runelock/get_mechanics_examine(mob/user)
 	. = ..()
-	. += span_info("Runic locks require a special runed sphere. The weapon must be channeled with mana, loaded with a sphere, and then rammed with a rod before firing.")
+	. += span_info("Runic locks require a special runed sphere. The weapon must be channeled with mana, loaded with a sphere before firing.")
 
 /obj/item/gun/ballistic/revolver/rune/twilight_runelock/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(chambered && HAS_TRAIT(user, TRAIT_PACIFISM))

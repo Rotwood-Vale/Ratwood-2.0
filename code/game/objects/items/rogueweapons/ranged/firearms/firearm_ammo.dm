@@ -384,12 +384,19 @@
 	if(!do_after(user, 15 SECONDS, src))
 		to_chat(user, span_warning("My concentration breaks, and the runes go dark."))
 		return
-	//Re-check after the wait, energy may have been spent meanwhile. Only recall what can be paid for.
 	var/affordable = round(user.energy / recall_energy_cost)
 	if(affordable < 1)
 		to_chat(user, span_warning("My energy gutters out before the spheres can answer."))
 		return
 	var/summoned = 0
+	for(var/obj/item/ammo_casing/C as anything in linked_casings - arrows)
+		if(summoned >= affordable || arrows.len >= max_storage)
+			break
+		if(istype(C.loc, /obj/item/gun))
+			continue
+		qdel(C)
+		if(summon_round(selected_type))
+			summoned++
 	while(summoned < affordable && summon_round(selected_type))
 		summoned++
 	if(!summoned)
@@ -444,7 +451,6 @@
 	. += span_info("It holds [arrows.len]/[max_storage] [type_name] spheres.")
 	. += span_info("Use it in hand to recall spheres of the attuned type. Middle-click to convert the spheres inside. Right-click to draw a sphere.")
 
-// Added attackby so you can manually put bullets back in
 /obj/item/quiver/twilight_bullet/runicbag/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing/caseless/bullet/lead/runelock))
 		if(eatarrow(A, user))
