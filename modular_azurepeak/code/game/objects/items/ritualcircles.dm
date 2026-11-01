@@ -1361,7 +1361,6 @@
 	for(var/I in items)
 		H.dropItemToGround(I, TRUE)
 	H.drop_all_held_items()
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
 
 	var/helmets = list("BARBUTE - VISORED", "FROGMOUTH - NECK PROTECTION", "BASCINET", "VOLF-FACE - VISORED")
 	var/helmet_choice = input(H, "Choose your helmet.", "PROTECTION FROM THE LADY") as anything in helmets
@@ -1417,8 +1416,11 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 		if("Devotio - (arming sword)")
 			r_hand = /obj/item/rogueweapon/sword/arming/zizo
-			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo	
-			
+			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
+
+	H.mind.RemoveSpell(/datum/action/cooldown/spell/mending)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
+
 /obj/structure/ritualcircle/zizo/proc/zizoconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)
 		to_chat(usr, "Selected target is not on the rune! [target.p_they(TRUE)] must be directly on top of the rune to receive Zizo's blessing.")
@@ -1635,7 +1637,9 @@
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/matthios
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
 	backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+
+	H.mind.RemoveSpell(/datum/action/cooldown/spell/mending)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
 
 /obj/structure/ritualcircle/matthios/proc/matthiosconversion(mob/living/carbon/human/target)
 	if(!target || QDELETED(target) || target.loc != loc)

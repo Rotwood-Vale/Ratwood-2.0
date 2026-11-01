@@ -27,7 +27,7 @@
 
 /mob/living/carbon/proc/on_spell_availability_trait_changed(datum/source, trait)
 	SIGNAL_HANDLER
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
@@ -644,6 +644,14 @@
 	var/nausea = 0
 	var/pain_threshold = 0
 	var/bleeding_tier = 0
+	var/chem_pain = 0
+
+/mob/living/carbon/proc/update_chem_pain()
+	chem_pain = 0
+	for(var/datum/reagent/r in reagents?.reagent_list)
+		if(r.pain && r.metabolizing)
+			chem_pain += r.pain
+	mark_pain_hud_dirty()
 
 /mob/living/carbon/proc/add_nausea(amt)
 	nausea = clamp(nausea + amt, 0, 300)
@@ -1175,7 +1183,7 @@
 //	update_tod_hud()
 	update_spd()
 	if(stat != old_stat)
-		update_action_buttons_icon()
+		update_mob_action_buttons()
 
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()
@@ -1185,7 +1193,7 @@
 		throw_alert("handcuffed", /atom/movable/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 	else
 		clear_alert("handcuffed")
-	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
+	update_mob_action_buttons() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 	update_mobility()

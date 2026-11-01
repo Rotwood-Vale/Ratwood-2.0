@@ -70,7 +70,7 @@
 	if(QDELETED(src) || !owner)
 		return
 
-	if(mob_effect_icon_state)
+	if(mob_effect_icon_state && (duration > 0 || mob_effect_dur))
 		if(!mob_effect_dur)
 			mob_effect_dur = (duration - 1)	//-1 tick juuust in case something goes wrong between status effect deletion and the callback of the appearance itself.
 		mob_effect = owner.play_overhead_indicator_flick(mob_effect_icon, mob_effect_icon_state, mob_effect_dur, mob_effect_layer, null, mob_effect_offset_y, mob_effect_offset_x)

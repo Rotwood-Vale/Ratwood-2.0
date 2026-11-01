@@ -125,7 +125,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/anklets/baotha
 	neck = /obj/item/clothing/neck/roguetown/gorget/boatha
 	backr = /obj/item/storage/backpack/rogue/satchel/short
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)
 
 
 /obj/item/storage/belt/rogue/leather/plaquegold/baotha
@@ -371,4 +371,4 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/baotha
 	neck = /obj/item/clothing/neck/roguetown/coif/baotha
 	backr = /obj/item/storage/backpack/rogue/satchel/short
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mending/lesser)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/mending/lesser)

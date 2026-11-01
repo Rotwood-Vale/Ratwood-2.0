@@ -780,6 +780,18 @@ have ways of interacting with a specific atom and control it. They posses a blac
 
 		index += 1
 
+/datum/ai_controller/proc/wake_for_combat()
+	if(ai_status == AI_STATUS_ON)
+		return
+	if(ismob(pawn))
+		var/mob/living/mob_pawn = pawn
+		if(mob_pawn.stat >= UNCONSCIOUS)
+			return
+		if(mob_pawn.client && !continue_processing_when_client)
+			return
+	blackboard[BB_AI_ALERT_MODE_UNTIL] = world.time + 30 SECONDS
+	set_ai_status(AI_STATUS_ON)
+
 #undef TRACK_AI_DATUM_TARGET
 #undef CLEAR_AI_DATUM_TARGET
 #undef TRAIT_AI_TRACKING

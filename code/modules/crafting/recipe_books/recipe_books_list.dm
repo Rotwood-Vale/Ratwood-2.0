@@ -149,6 +149,5 @@
 		/datum/book_entry/magic1,
 		/datum/book_entry/magic2,
 		/datum/crafting_recipe/roguetown/arcana,
-		/datum/crafting_recipe/gemstaff,
 		/datum/runeritual,
 	)

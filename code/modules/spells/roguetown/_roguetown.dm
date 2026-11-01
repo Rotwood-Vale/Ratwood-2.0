@@ -14,11 +14,11 @@
 /obj/effect/proc_holder/spell/update_icon()
 	if(!action)
 		return
-	action.button_icon_state = "[base_icon_state][active]"
+	action.background_icon_state = "[base_icon_state][active]"
 	if(overlay_state)
-		action.overlay_state = overlay_state
+		action.button_icon_state = overlay_state
 	action.name = name
-	action.UpdateButtonIcon()
+	action.build_all_button_icons(force = TRUE)
 
 /obj/effect/proc_holder/spell/invoked/Click()
 	var/mob/living/user = usr
@@ -79,6 +79,9 @@
 	var/current_amount = 0	//How many projectiles left.
 	var/projectiles_per_fire = 1		//Projectiles per fire. Probably not a good thing to use unless you override ready_projectile().
 	gesture_required = TRUE // All projectiles are offensive and should be locked to not handcuff
+	var/obj/projectile/projectile_type_arc // If set, this spell supports arc mode via Shift+G toggle
+	/// Whether this spell is set to fire in arc mode. Toggled via Shift+G.
+	var/arc_mode = FALSE
 
 /obj/effect/proc_holder/spell/invoked/projectile/proc/ready_projectile(obj/projectile/P, atom/target, mob/user, iteration)
 	return
@@ -129,3 +132,43 @@
 	if(proj_range)
 		stats.Insert(1, span_info("Projectile range: [proj_range] tiles"))
 	return stats
+
+/// Toggles arc mode on this spell. Only works if projectile_type_arc is set.
+/obj/effect/proc_holder/spell/invoked/projectile/proc/toggle_arc_mode(mob/user)
+	if(!projectile_type_arc)
+		to_chat(user, span_warning("[name] cannot be arced."))
+		return
+	arc_mode = !arc_mode
+	to_chat(user, span_notice("[name] arc mode [arc_mode ? "enabled" : "disabled"]."))
+	update_arc_maptext()
+
+/// Updates the ARC maptext indicator on the spell's action button using a dedicated holder.
+/obj/effect/proc_holder/spell/invoked/projectile/proc/update_arc_maptext()
+	if(!action)
+		return
+	for(var/datum/hud/hud as anything in action.viewers)
+		var/atom/movable/screen/movable/action_button/B = action.viewers[hud]
+		var/atom/movable/screen/arc_maptext_holder/arc_holder
+		// Find existing arc holder or create one
+		for(var/atom/movable/screen/arc_maptext_holder/existing in B.vis_contents)
+			arc_holder = existing
+			break
+		if(!arc_holder)
+			arc_holder = new(B)
+			B.vis_contents.Add(arc_holder)
+		if(arc_mode)
+			arc_holder.maptext = MAPTEXT("ARC")
+			arc_holder.color = "#00ccff"
+		else
+			arc_holder.maptext = null
+
+/// Dedicated maptext holder for the ARC indicator, separate from the cooldown maptext.
+/atom/movable/screen/arc_maptext_holder
+	layer = ABOVE_HUD_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	maptext_x = 2
+	maptext_y = 0
+	maptext_width = 64
+	maptext_height = 11
+
+/// Updates the ARC maptext indicator on the spell's action button using a dedicated holder.
