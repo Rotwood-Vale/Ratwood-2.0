@@ -352,11 +352,10 @@
 		new_head.add_bodypart_feature(feature)
 	lost_head_features = null
 
-/// Heal by the strength of their Bloodheal, faster the longer they have mended and in a proper resting place,
+/// Heal based on what level your bloodheal is at
 /// for delta_time worth of mending. Returns how much mending was done, 0 if something stopped it
 /datum/status_effect/vampire_torpor/proc/mend(delta_time)
 	var/mob/living/carbon/human/vampire = owner
-	// the sun's gaze and holy fire both keep the Curse from mending anything at all
 	if(in_sunlight() || is_sundered())
 		return 0
 	var/seconds = delta_time / (1 SECONDS)
