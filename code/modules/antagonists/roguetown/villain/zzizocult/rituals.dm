@@ -1846,9 +1846,9 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	research_cost = 10
 
 /datum/ritual/fleshcrafting/lesserrituos/invoke(mob/living/user, turf/center)
-	var/mob/living/carbon/human/target = locate() in center.contents
-	var/obj/item/bodypart/head = target?.get_bodypart(BODY_ZONE_HEAD)
-	if(!target || !target.mind || head?.skeletonized)
+	var/mob/living/carbon/human/target = user
+	var/obj/item/bodypart/head = target.get_bodypart(BODY_ZONE_HEAD)
+	if(get_turf(user) != center || !target.mind || head?.skeletonized)
 		to_chat(user, span_warning("THE RITE DOES NOTHING."))
 		new /obj/item/necro_relics/necro_crystal(center)
 		return
@@ -1899,8 +1899,15 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	else if(HAS_TRAIT(target, TRAIT_WARLOCK))
 		config["major"] += 1
 	target.mind.setup_mage_aspects(config)
-	target.playsound_local(target, 'sound/misc/lava_death.ogg', 100, FALSE)
+	playsound(center, 'sound/misc/lava_death.ogg', 100, FALSE)
 	to_chat(target, span_notice("Death is not an end. My soul is Hers."))
+	new /obj/effect/temp_visual/zizo_ring(center)
+	var/obj/effect/abstract/particle_holder/burst = new(center, /particles/zizo_burst)
+	QDEL_IN(burst, 1.4 SECONDS)
+	shake_camera(target, 4, 3)
+	for(var/atom/A in range(7, center))
+		if(A.light_on && A.light_outer_range)
+			zizo_flicker(A)
 
 /datum/ritual/fleshcrafting/immortality
 	lesser = TRUE
