@@ -910,9 +910,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DRUQK				"druqk"
 #define TRAIT_BURIED_COIN_GIVEN "buried_coin_given" // prevents a human corpse from being used for a corpse multiple times
 #define TRAIT_BLOODLOSS_IMMUNE "bloodloss_immune" // can bleed, but will never die from blood loss
-#define TRAIT_NO_BLEEDING "no_bleeding" // open wounds stay open, but no blood is lost through them
-#define TRAIT_NO_BLOODLOSS_EFFECTS "no_bloodloss_effects" // low blood has no effect at all - no dizziness, fainting, debuffs or suffocation
-#define TRAIT_NO_BLOOD_REGEN "no_blood_regen" // blood doesn't come back on its own over time
+#define TRAIT_NO_BLEEDING "no_bleeding" // bleeding wounds do not cause blood loss
+#define TRAIT_NO_BLOODLOSS_EFFECTS "no_bloodloss_effects" // being low on blood does not have any effects
+#define TRAIT_NO_BLOOD_REGEN "no_blood_regen" // prevents blood regeneration for carbons and humans passively
 #define TRAIT_NO_BITE "no_bite" //prevents biting
 #define TRAIT_LEGENDARY_ALCHEMIST		"Expert Herb Finder"
 #define TRAIT_STUCKITEMS "stuck_items" // Prevents removing items except for hand slots
