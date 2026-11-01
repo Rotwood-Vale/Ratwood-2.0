@@ -1885,7 +1885,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		target.mob_biotypes |= MOB_UNDEAD
 		traits += list(TRAIT_TOXIMMUNE, TRAIT_NOHUNGER, TRAIT_NOBREATH, TRAIT_UNLYCKERABLE, TRAIT_LIMBATTACHMENT)
 	if(stage == 3)
-		traits += list(TRAIT_NOPAIN, TRAIT_BLOODLOSS_IMMUNE)
+		traits += list(TRAIT_NOPAIN, TRAIT_BLOODLOSS_IMMUNE, TRAIT_MONSTROUS)
 	for(var/trait in traits)
 		if(!HAS_TRAIT(target, trait))
 			ADD_TRAIT(target, trait, "lesser_rituos")
