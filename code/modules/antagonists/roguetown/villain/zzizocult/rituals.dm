@@ -1227,8 +1227,24 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	tick_interval = 2 SECONDS
 	alert_type = null
 	var/energy = 0
+	var/last_hit = -5 MINUTES
+
+/datum/status_effect/zizo_regen/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMGE, PROC_REF(on_hit))
+
+/datum/status_effect/zizo_regen/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMGE)
+
+/datum/status_effect/zizo_regen/proc/on_hit(mob/source, damage)
+	SIGNAL_HANDLER
+	if(damage > 0)
+		last_hit = world.time
 
 /datum/status_effect/zizo_regen/tick()
+	if(world.time < last_hit + 5 MINUTES)
+		return
 	owner.energy_add(energy)
 	owner.adjustStaminaLoss(-energy / 5)
 
