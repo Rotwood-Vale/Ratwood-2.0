@@ -37,10 +37,8 @@
 
 	for (var/mob/living/carbon/human/H in GLOB.player_list)
 		if (H.real_name == target_name)
-			var/datum/curse/temp = new curse_type()
-
-			if (H.is_cursed(temp))
-				H.remove_curse(temp)
+			if (H.is_cursed(curse_type))
+				H.remove_curse(curse_type)
 				priority_announce("Gods have lifted [curse_pick] from [H.real_name]!", title = "DIVINE MERCY", sound = 'sound/misc/bell.ogg')
 				message_admins("ADMIN DIVINE WRATH: ([ckey]) has lifted [curse_pick] from [H.real_name]) ") //[ADMIN_LOOKUPFLW(user)] Maybe add this here if desirable but dunno.
 				log_game("ADMIN DIVINE WRATH: ([ckey]) has lifted [curse_pick] from [H.real_name])")
