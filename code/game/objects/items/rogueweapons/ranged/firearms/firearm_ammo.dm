@@ -500,7 +500,7 @@
 /datum/status_effect/debuff/arbalest_hunt
 	id = "arbalest_hunt"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/arbalest_hunt
-	effectedstats = list(STATKEY_SPD = -3, STATKEY_WIL = -3)
+	effectedstats = list(STATKEY_SPD = -1, STATKEY_WIL = -2)
 	duration = 5 MINUTES
 
 /datum/status_effect/debuff/arbalest_hunt/on_apply()
