@@ -55,20 +55,20 @@
 						remove_status_effect(/datum/status_effect/buff/journey_end_final)
 						remove_status_effect(/datum/status_effect/buff/journey_end)
 						apply_status_effect(/datum/status_effect/buff/journey_ending)
-					else	
+					else
 						if(prob(3))
 							to_chat(src, span_warning("I feel dizzy."))
 
 						remove_status_effect(/datum/status_effect/debuff/bleedingworse)
 						remove_status_effect(/datum/status_effect/debuff/bleedingworst)
 						apply_status_effect(/datum/status_effect/debuff/bleeding)
-						
+
 				if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 					if(HAS_TRAIT(src, TRAIT_JOURNEYS_END))
 						remove_status_effect(/datum/status_effect/debuff/bleeding)
 						remove_status_effect(/datum/status_effect/debuff/bleedingworse)
 						remove_status_effect(/datum/status_effect/debuff/bleedingworst)
-						
+
 						remove_status_effect(/datum/status_effect/buff/journey_ending)
 						remove_status_effect(/datum/status_effect/buff/journey_end_final)
 						apply_status_effect(/datum/status_effect/buff/journey_end)
@@ -86,7 +86,7 @@
 						remove_status_effect(/datum/status_effect/debuff/bleedingworst)
 
 						remove_status_effect(/datum/status_effect/buff/journey_ending)
-						remove_status_effect(/datum/status_effect/buff/journey_end)					
+						remove_status_effect(/datum/status_effect/buff/journey_end)
 						apply_status_effect(/datum/status_effect/buff/journey_end_final)
 					else
 						if(prob(3))
@@ -96,7 +96,7 @@
 						if(prob(3) && !IsUnconscious())
 							Unconscious(rand(5 SECONDS,10 SECONDS))
 							to_chat(src, span_warning("I feel drained."))
-							
+
 						remove_status_effect(/datum/status_effect/debuff/bleedingworse)
 						remove_status_effect(/datum/status_effect/debuff/bleeding)
 						apply_status_effect(/datum/status_effect/debuff/bleedingworst)
@@ -139,7 +139,7 @@
 		if (stat == DEAD)
 			bleed_rate = 0 // just to be sure for anything else that cares about it, since we're ostensibly out of blood now
 			return
-		else if(!HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS))
+		else if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) && !HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS))
 			// handle just the oxyloss, and then abort. nothing else in here is relevant to us
 			adjustOxyLoss(blood_volume <= BLOOD_VOLUME_SURVIVE ? 3 : 1)
 
