@@ -113,10 +113,11 @@
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/battlewardry, /datum/magic_aspect/artifice), "post_aspect_spells" = list(/obj/effect/proc_holder/spell/invoked/takeapprentice), "ward" = FALSE)
 
 	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_SQUIRE_REPAIR, TRAIT_ENGINEER, TRAIT_ARCYNE, TRAIT_LEGENDARY_MINER)
+	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ENGINEER, TRAIT_ARCYNE, TRAIT_LEGENDARY_MINER)
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_WIL = 2,
+		STATKEY_LCK = 2, // +7 overall statspread excluding fortune, the fortune is for mining
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
 		STATKEY_PER = 1
@@ -130,11 +131,12 @@
 		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_NOVICE,
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE, // you should be more experienced in repairing your own tools
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN, // you can fill in for a smith but poorly, locked to journeyman in all smithing skills, use an autosmither
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT, // ceramics is a very unforgiving craft, expert is almost always required for even glass panes
+		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
@@ -148,7 +150,6 @@
 /datum/outfit/job/roguetown/guildsman/engineer/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/articap
-	mask = /obj/item/clothing/mask/rogue/spectacles/golden
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket
 	cloak = /obj/item/clothing/cloak/apron/waist/brown
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
@@ -175,6 +176,8 @@
 								/obj/item/rogueweapon/shovel/bronze/spade = 1,
 								/obj/item/flint = 1,
 								/obj/item/dye_brush = 1,
+								/obj/item/rogueweapon/scabbard/sheath = 1,
+								/obj/item/clothing/mask/rogue/spectacles/golden = 1, // people with bad sight had their spectacles overwritten, should prevent this from happening
 						)
 	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
