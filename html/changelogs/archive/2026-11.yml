@@ -7,3 +7,7 @@
   - bugfix: fixed grand duke valiant warrior using a tribal chiefs skills and description
   SirSwagmeyer:
   - bugfix: Ports the previous pickpocket rework onto Combat 2.0's STEAL intent.
+2026-11-02:
+  Arturlang:
+  - bugfix: when smithing and then quenching sometimes, the item would randomly dissapear
+      during the quenching step

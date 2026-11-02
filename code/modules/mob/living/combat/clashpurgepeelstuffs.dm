@@ -183,7 +183,7 @@
 
 ///Shared by the Defend RMB stance and the direct Guard keybinding, so both go through the same checks.
 /mob/living/carbon/human/proc/try_guard()
-	if(has_status_effect(/datum/status_effect/buff/clash) || has_status_effect(/datum/status_effect/debuff/clashcd))
+	if(has_status_effect(/datum/status_effect/buff/clash) || has_status_effect(/datum/status_effect/debuff/clashcd) || has_status_effect(/datum/status_effect/buff/clash/limbguard))
 		return FALSE
 	if(!get_active_held_item())
 		if(get_skill_level(/datum/skill/combat/unarmed) < 3)
@@ -197,6 +197,9 @@
 	if(has_status_effect(/datum/status_effect/debuff/exposed))
 		balloon_alert(src, "<font color = '#ffffff'>Can't guard while exposed!</font>")
 		return FALSE
+	if(has_status_effect(/datum/status_effect/debuff/vulnerable))
+		balloon_alert(src, "<font color = '#ffffff'>Can't guard while vulnerable!</font>")
+		return FALSE
 	// Can't guard while channeling a spell
 	var/datum/action/cooldown/spell/active_spell = click_intercept
 	if(istype(active_spell) && (active_spell.currently_charging || active_spell.charged))
@@ -204,9 +207,6 @@
 		return FALSE
 
 	if(is_swinging(disrupt_only = TRUE))
-		return FALSE
-
-	if(has_status_effect(/datum/status_effect/debuff/exposed))
 		return FALSE
 
 	apply_status_effect(/datum/status_effect/buff/clash)
