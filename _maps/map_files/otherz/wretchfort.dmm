@@ -3607,7 +3607,7 @@
 "Kd" = (
 /obj/machinery/anvil,
 /obj/item/rogueweapon/hammer/ancient/decrepit,
-/obj/item/rogueweapon/tongs/ancient/decrepit,
+/obj/item/rogueweapon/tongs/ancient,
 /turf/open/floor/rogue/concrete,
 /area/rogue/under/wretch)
 "Kf" = (

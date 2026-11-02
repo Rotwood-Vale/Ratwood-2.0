@@ -9,7 +9,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	name = "item"
 	var/original_name = null // Stores the original name if item was renamed
 	icon = 'icons/obj/items_and_weapons.dmi'
-	///icon state name for inhanf overlays
+	///icon state name for inhand overlays
 	var/item_state = null
 	///Icon file for left hand inhand overlays
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -513,10 +513,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(usr, output)
 
 	if(href_list["explainbalance"])
-		var/output = span_info("A heavy weapon is easier to dodge, and inflicts 2 stamina damage per level of strength differences on a parrying defender. \n\
-		A swift balance weapon reduce the enemy's parry chance by 10% per level of speed difference, by up to 30%, \n\
-		If the defender have higher perception however, the penalty is reduced by 10% per point of difference, down to none.\n\
-		Intelligence also reduces the penalty by 3% per point of difference, down to none.")
+		var/output = span_info("A heavy weapon is easier to dodge, and inflicts [STAM_DRAIN_PER_STR_DIFF_HEAVY_BAL] stamina damage per level of strength difference on a parrying defender. \n\
+		A swift balance weapon reduces the enemy's parry chance depending on SPD difference. \n\
+		Targeting harder to hit zones such as hands, feet, stomach or face zones has a defense reduction cap at [SWIFTCAP_PRECISE]%. \n\
+		Targeting large limbs such as arms, head or legs has a defense reduction cap of [SWIFTCAP_LIMBS]%. \n\
+		Targeting the chest only has a cap of [SWIFTCAP_CHEST]% parry reduction. \n\
+		Swift Balance does not work if the attacker is wearing Medium or Heavy AC equipment on their outerwear, innerwear or pants slots. \n\
+		Defender's difference in INT and PER (if higher) may reduce the parry penalty in some circumstances.")
 		if(!usr.client.prefs.no_examine_blocks)
 			output = examine_block(output)
 		to_chat(usr, output)
@@ -2022,3 +2025,29 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/update_wdefense_dynamic()
 	wdefense_dynamic = (wielded ? (wdefense + wdefense_wbonus) : wdefense)
+
+/// Salvages this item into salvage_result. Returns TRUE once salvage was attempted
+/obj/item/proc/try_salvage(mob/living/user, time_skill, fail_skill)
+	if(!sewrepair || !salvage_result)
+		return FALSE
+	if(!do_after(user, 70 - time_skill * 10, target = user))
+		return TRUE
+	var/turf/T = get_turf(src)
+	if(fiber_salvage)
+		new /obj/item/natural/fibers(T)
+	if(istype(src, /obj/item/storage))
+		var/obj/item/storage/bag = src
+		bag.emptyStorage()
+	user.mind?.add_sleep_experience(/datum/skill/craft/sewing, user.STAINT)
+	if(prob(50 - fail_skill * 10))
+		to_chat(user, span_info("I ruined some of the materials due to my lack of skill..."))
+		playsound(T, 'sound/foley/cloth_rip.ogg', 50, TRUE)
+		qdel(src)
+		return TRUE
+	for(var/i in 1 to salvage_amount - torn_sleeve_number)
+		var/obj/item/salvaged = new salvage_result(T)
+		salvaged.color = color
+	user.visible_message(span_notice("[user] salvages [src] into usable materials."))
+	playsound(T, 'sound/items/flint.ogg', 100, TRUE)
+	qdel(src)
+	return TRUE
