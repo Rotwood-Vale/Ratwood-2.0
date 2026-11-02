@@ -131,6 +131,8 @@
 	// Allows prayer if holding silver psycross.
 	if(istype(follower.get_active_held_item(), /obj/item/clothing/neck/roguetown/psicross/silver))
 		return TRUE
+	if(HAS_TRAIT(follower, TRAIT_LUX_FREAK)) // the ones that became psydons temple in of themselves
+		return TRUE
 	to_chat(follower, span_danger("For Psydon to hear my prayer I must either must be near a Pantheon Cross, shed my own blood in penitence, hold one of his silver holy symbols, or bask in his rain; as Psydon weeps for his children.."))
 	return FALSE
 
@@ -179,7 +181,7 @@
 
 		// Bonuses! Flavour! SOVL!
 		for(var/obj/item/clothing/neck/current_item in target.get_equipped_items(TRUE))
-			if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver,	/obj/item/clothing/neck/roguetown/psicross/g))
+			if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/silver/sojourner,	/obj/item/clothing/neck/roguetown/psicross/g))
 				pp += 1
 				if(pp >= 12 & target == user) // A harmless easter-egg. Only applies on self-cast. You'd have to be pretty deliberate to wear 12 of them.
 					target.visible_message(span_danger("[target]'s many psycrosses reverberate with a strange, ephemeral sound..."), span_userdanger("HE must be waking up! I can hear it! I'm ENDURING so much!"))
@@ -204,7 +206,7 @@
 						psicross_bonus = 0.2
 					if(/obj/item/clothing/neck/roguetown/psicross)
 						psicross_bonus = 0.3
-					if(/obj/item/clothing/neck/roguetown/psicross/silver)
+					if(/obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/silver/sojourner)
 						psicross_bonus = 0.4
 					if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 						psicross_bonus = 0.4
@@ -223,6 +225,11 @@
 		target.visible_message(span_info("A strange stirring feeling pours from [target]!"), span_info("Sentimental thoughts drive away my pain..."))
 		var/psyhealing = 3
 		psyhealing += psicross_bonus
+
+		if(HAS_TRAIT(user, TRAIT_LUX_FREAK) && zcross_trigger) // LUX ABOMINATIONS WONT STOP SO EASLY!!!
+			user.visible_message(span_warning("[user] shudders as their eyes briefly wash over with a sickly shade of silver!"), span_userdanger("Ice shoots up my spine as the ARCHENEMY's laughter resonates in my skull! I will ENDURE this trial!"))
+			zcross_trigger = FALSE
+
 		if (conditional_buff & !zcross_trigger)
 			to_chat(user, "In <b>ENDURING</b> so much, become <b>EMBOLDENED</b>!")
 			psyhealing += situational_bonus

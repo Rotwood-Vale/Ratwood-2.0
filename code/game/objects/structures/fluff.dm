@@ -682,20 +682,7 @@
 	metalizer_result = /obj/item/roguegear/bronze
 
 /obj/structure/fluff/wallclock/attack_right(mob/user)
-	if(user.mind && isliving(user))
-		var/area/rogue/user_area = get_area(user)
-		if(user_area?.no_special_item_retrieval) //area does not allow fetching special items, return
-			return
-		if(user.mind.special_items && user.mind.special_items.len)
-			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
-			if(item)
-				if(user.Adjacent(src))
-					if(user.mind.special_items[item])
-						var/path2item = user.mind.special_items[item]
-						user.mind.special_items -= item
-						var/obj/item/I = new path2item(user.loc)
-						user.put_in_hands(I)
-			return
+	handle_special_items_retrieval(user, src)
 
 /obj/structure/fluff/wallclock/Destroy()
 	if(soundloop)
@@ -1255,7 +1242,7 @@
 		/obj/item/candle/candlestick/silver,
 		/obj/item/rogueweapon/sword/long/judgement, // various unique weapons around from a few roles follows. Don't lose your fancy toys....
 		/obj/item/rogueweapon/sword/long/oathkeeper,
-		/obj/item/rogueweapon/woodstaff/riddle_of_steel/magos, //bit dumb for a bandit mage to toss this toy away but whatever
+		/obj/item/rogueweapon/woodstaff/implement/grand/magos, //bit dumb for a bandit mage to toss this toy away but whatever
 		/obj/item/clothing/head/roguetown/circlet,
 		/obj/item/carvedgem,  //Some of these aren't particularly worth much, but it'd be REALLY unintuitive for "valuables" to not actually be offerings
 		/obj/item/rogueweapon/huntingknife/stoneknife/kukri,

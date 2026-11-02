@@ -30,7 +30,7 @@
 	advjob_examine = TRUE
 	always_show_on_latechoices = FALSE
 	job_reopens_slots_on_death = FALSE //no endless stream of bandits, unless the migration waves deem it so
-	job_traits = list(TRAIT_SELF_SUSTENANCE, TRAIT_DEATHBYSNUSNU, TRAIT_STEELHEARTED)
+	job_traits = list(TRAIT_SELF_SUSTENANCE, TRAIT_DEATHBYSNUSNU, TRAIT_STEELHEARTED, TRAIT_HERESIARCH)
 	same_job_respawn_delay = 1 MINUTES
 	cmode_music = 'sound/music/cmode/antag/combat_deadlyshadows.ogg'
 	job_subclasses = list(
@@ -38,7 +38,7 @@
 		/datum/advclass/hedgeknight,
 		/datum/advclass/iconoclast,
 		/datum/advclass/knave,
-		/datum/advclass/roguemage,
+		/datum/advclass/hedgemage,
 		/datum/advclass/sawbones,
 		/datum/advclass/sellsword,
 		/datum/advclass/pioneer

@@ -17,6 +17,7 @@
 		TRAIT_PERFECT_TRACKER,
 		TRAIT_SLEUTH,
 	)
+	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 	subclass_stats = list(//+9, You get PER/STR for the crossbow.
 		STATKEY_PER = 3,
 		STATKEY_STR = 2,
@@ -60,7 +61,7 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	mask = /obj/item/clothing/mask/rogue/sack/psy
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	backpack_contents = list(
 		/obj/item/roguekey/inquisition = 1,
 		/obj/item/grapplinghook = 1,

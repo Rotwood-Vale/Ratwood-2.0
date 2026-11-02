@@ -14,7 +14,7 @@
 	if(!action)
 		return
 	action.button_icon_state = "[base_icon_state][active]"
-	action.UpdateButtonIcon()
+	action.build_all_button_icons()
 
 /obj/effect/proc_holder/spell/aimed/Click()
 	var/mob/living/user = usr

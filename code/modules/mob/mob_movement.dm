@@ -107,6 +107,12 @@
 	if(mob.force_moving)
 		return FALSE
 
+	var/mob/living/sliding_mob = mob
+	var/datum/status_effect/ice_slide/ice_sliding = sliding_mob.has_status_effect(/datum/status_effect/ice_slide)
+	if(ice_sliding)
+		ice_sliding.steer(direct)
+		return FALSE
+
 	if(mob.shifting)
 		mob.pixel_shift(direct)
 		return FALSE
@@ -714,6 +720,8 @@
 					if(H.m_intent != MOVE_INTENT_RUN)
 						H.visible_message(span_notice("[H] steadies atop [animal_mount], preparing to break into a run."))
 						animal_mount.emote("aggro")
+						if(HAS_TRAIT(H, TRAIT_STEPPE_RIDER))
+							mounted_intent_swap_time *= 0.5
 						if(do_after(H, mounted_intent_swap_time))
 							H.m_intent = MOVE_INTENT_RUN
 				if(MOVE_INTENT_SNEAK)
@@ -797,29 +805,24 @@
 					return FALSE
 	return TRUE
 
-/mob/living/proc/check_dodge_skill()
+/mob/living/proc/check_dodge_skill(check_trait = TRUE)
 	return TRUE
 
-/mob/living/carbon/human/check_dodge_skill()
-	if(!HAS_TRAIT(src, TRAIT_DODGEEXPERT))
-		return FALSE
+/mob/living/carbon/human/check_dodge_skill(check_trait = TRUE)
+	if(check_trait)
+		if(!HAS_TRAIT(src, TRAIT_DODGEEXPERT))
+			return FALSE
 	if(istype(src.wear_armor, /obj/item/clothing))
 		var/obj/item/clothing/CL = src.wear_armor
-		if(CL.armor_class == ARMOR_CLASS_HEAVY)
-			return FALSE
-		if(CL.armor_class == ARMOR_CLASS_MEDIUM)
+		if(CL.armor_class > ARMOR_CLASS_LIGHT)
 			return FALSE
 	if(istype(src.wear_shirt, /obj/item/clothing))
 		var/obj/item/clothing/CL = src.wear_shirt
-		if(CL.armor_class == ARMOR_CLASS_HEAVY)
-			return FALSE
-		if(CL.armor_class == ARMOR_CLASS_MEDIUM)
+		if(CL.armor_class > ARMOR_CLASS_LIGHT)
 			return FALSE
 	if(istype(src.wear_pants, /obj/item/clothing))
 		var/obj/item/clothing/CL = src.wear_pants
-		if(CL.armor_class == ARMOR_CLASS_HEAVY)
-			return FALSE
-		if(CL.armor_class == ARMOR_CLASS_MEDIUM)
+		if(CL.armor_class > ARMOR_CLASS_LIGHT)
 			return FALSE
 	return TRUE
 

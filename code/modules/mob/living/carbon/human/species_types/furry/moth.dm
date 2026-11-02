@@ -9,7 +9,7 @@
 	Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and \
 	rituals, not much is known about the moth-kin. These so-called \"mystics\" are rarely seen within humen and \
 	beastkin settlements, but those that find themselves in civilisation are oft ascended to nobility.<br>\
-	(+1 Speed, Blackleg Trait)"
+	(+1 Speed, Bewinged Trait)"
 
 	expanded_desc = "Fluvians are a diverse race of moth-like creechers that live in sparse, nomadic communities across Grimoria. \
 	Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and rituals, not much \
@@ -157,9 +157,6 @@
 /datum/species/moth/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
-
-/datum/species/moth/get_random_body_markings(list/passed_features)
-	return assemble_body_markings_from_set(GLOB.body_marking_sets_by_type[pick(body_marking_sets)], passed_features, src)
 
 /datum/species/moth/get_random_features()
 	var/list/returned = MANDATORY_FEATURE_LIST

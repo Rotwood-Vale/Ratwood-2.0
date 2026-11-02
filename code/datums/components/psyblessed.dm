@@ -23,7 +23,8 @@
 /datum/component/silverbless/Initialize(pre_blessed = BLESSING_NONE, silver_type, added_force, added_blade_int, added_int, added_def)
 	if(!istype(parent, /obj/item/rogueweapon) \
 		&& !istype(parent, /obj/item/ammo_casing/caseless/rogue) \
-		&& !istype(parent, /obj/item/clothing/gloves/roguetown/bandages/abboteer))
+		&& !istype(parent, /obj/item/clothing/gloves/roguetown/bandages/abboteer) \
+		&& !istype(parent, /obj/item/clothing/gloves/roguetown/knuckles))
 		return COMPONENT_INCOMPATIBLE
 	src.pre_blessed = pre_blessed
 	src.silver_type = silver_type
@@ -95,6 +96,7 @@
 		I.max_integrity += round(added_int * blessing_divisor)
 		I.obj_integrity = I.max_integrity
 		I.wdefense += round(added_def * blessing_divisor)
+		I.update_wdefense_dynamic()
 		I.name = "blessed [I.name]"
 		I.AddComponent(/datum/component/metal_glint)
 
@@ -102,7 +104,7 @@
 /datum/component/silverbless/proc/on_fix()
 	if(!is_blessed || !istype(parent, /obj/item/rogueweapon))
 		return
-	var/obj/item/rogueweapon/I = parent
+	var/obj/item/I = parent
 	I.force += added_force
 	if(I.force_wielded)
 		I.force_wielded += added_force

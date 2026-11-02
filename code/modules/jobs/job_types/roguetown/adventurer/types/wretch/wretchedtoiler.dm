@@ -5,7 +5,7 @@
 	allowed_races = RACES_ALL_KINDS
 	outfit = /datum/outfit/job/wretch/wretchedtoiler
 	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_RITUALIST, TRAIT_ARCYNE_T2, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT, TRAIT_SMITHING_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_HOMESTEAD_EXPERT, TRAIT_LEGENDARY_MINER) //This can always be nerfed or changed to a specialization choice.
+	traits_applied = list(TRAIT_RITUALIST, TRAIT_ALCHEMY_EXPERT, TRAIT_MEDICINE_EXPERT, TRAIT_SMITHING_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_HOMESTEAD_EXPERT, TRAIT_LEGENDARY_MINER) //This can always be nerfed or changed to a specialization choice.
 	cmode_music = 'sound/music/cmode/antag/combat_thrall.ogg' //We don't have the original .ogg and I'm lazy. You get thrall music now. Change it if you want.
 	class_select_category = CLASS_CAT_TRADER
 	extra_context = "Choose between 2 options: being an EVIL mastermind or a WRETCHED servant" //choose between master and servant
@@ -76,6 +76,8 @@
 	var/classchoice = input(H, "Choose your archetypes", "Available archetypes") as anything in classes
 	switch(classchoice)
 		if("MALICIOUS Mastermind")
+			ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
+			H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/lesser_augmentation), "post_aspect_spells" = list(/datum/action/cooldown/spell/message, /datum/action/cooldown/spell/mindlink)))
 			//stats
 			H.STAINT += 2
 			H.STAPER += 1
@@ -91,8 +93,6 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/eyebite)
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill)
 			//evil ass coordination stuff
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/mindlink)
 			//they get uhhh i think this is the hedgemage fit
 			mask = /obj/item/clothing/mask/rogue/eyepatch // Chuunibyou up to 11.
 			head = /obj/item/clothing/head/roguetown/roguehood/black
@@ -110,7 +110,6 @@
 			neck = /obj/item/clothing/neck/roguetown/leather // No iron gorget vs necro. They will have to acquire one in round.
 			r_hand = /obj/item/scrying //expert should give you good odds with this? if it breaks in one use, blame xylix, not me
 			//you get some spellpoints. if you really wanna take combat spells you can ig
-			H?.mind.adjust_spellpoints(12)
 			var/staffs = list(
 				"ronts-focused staff",
 				"blortz-focused staff",
@@ -122,19 +121,21 @@
 			var/staffchoice = input(H, H, "Choose your staff", "Available staffs") as anything in staffs
 			switch(staffchoice)
 				if("ronts-focused staff")
-					backr = /obj/item/rogueweapon/woodstaff/ruby
+					backr = /obj/item/rogueweapon/woodstaff/implement/greater/ruby
 				if("blortz-focused staff")
-					backr = /obj/item/rogueweapon/woodstaff/quartz
+					backr = /obj/item/rogueweapon/woodstaff/implement/greater/quartz
 				if("saffira-focused staff")
-					backr = /obj/item/rogueweapon/woodstaff/sapphire
+					backr = /obj/item/rogueweapon/woodstaff/implement/greater/sapphire
 				if("gemerald-focused staff")
-					backr = /obj/item/rogueweapon/woodstaff/emerald
+					backr = /obj/item/rogueweapon/woodstaff/implement/greater
 				if("amethyst-focused staff")
-					backr = /obj/item/rogueweapon/woodstaff/amethyst
+					backr = /obj/item/rogueweapon/woodstaff/implement/amethyst
 				if("toper-focused staff")
-					backr = /obj/item/rogueweapon/woodstaff/toper
+					backr = /obj/item/rogueweapon/woodstaff/implement
 
 		if("SNIVELLING servant")
+			ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
+			H.mind.setup_mage_aspects(list("mastery" = FALSE, "major" = 0, "minor" = 1, "utilities" = 2, "locked_aspects" = list(/datum/magic_aspect/lesser_augmentation), "post_aspect_spells" = list(/datum/action/cooldown/spell/message, /datum/action/cooldown/spell/mindlink)))
 			//stats
 			H.STACON += 2
 			H.STAWIL += 1
@@ -147,17 +148,10 @@
 			H.adjust_skillrank_up_to(/datum/skill/craft/masonry, SKILL_LEVEL_EXPERT, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, SKILL_LEVEL_EXPERT, TRUE)
 			//buffs. you better be snarling "GET THEM, MASTER!" while you cast these
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/fortitude)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/stoneskin)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/hawks_eyes)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/giants_strength)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/guidance)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/haste)
 			//the fit. you ready to TOIL?
 			neck = /obj/item/clothing/neck/roguetown/gorget/cursed_collar //hey, relax. it's just an iron gorget that you can't take off and makes you look like someone's pet
 			armor = /obj/item/clothing/suit/roguetown/shirt/rags //toilmaxxing
 			//you get less spellpoints. enough for like slip or message or smth
-			H?.mind.adjust_spellpoints(6) 
 	wretch_select_bounty(H)
 
 /obj/effect/proc_holder/spell/invoked/order //i think this has to be here

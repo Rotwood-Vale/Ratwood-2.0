@@ -67,7 +67,7 @@
 	chargetime = 0
 	recovery = 5
 	damfactor = 0.5
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	reach = 1
 	icon_state = "inlash"
 	item_d_type = "slash"
@@ -80,12 +80,13 @@
 	chargetime = 0
 	recovery = 5
 	damfactor = 1
-	penfactor = BLUNT_DEFAULT_PENFACTOR		
+	penfactor = PEN_NONE		
 	reach = 1								
 	icon_state = "instrike"
 	item_d_type = "slash"
 
 /obj/item/storage/belt/rogue/leather/plaquegold
+	is_gold = TRUE
 	name = "plaque belt"
 	icon_state = "goldplaque"
 	sellprice = 50
@@ -315,7 +316,7 @@
 	component_type = /datum/component/storage/concrete/roguetown/backpack
 
 /obj/item/storage/backpack/rogue/artibackpack
-	name = "Cooling backpack"
+	name = "cooling backpack"
 	desc = "A leather backpack with complex pipework coursing through it. It hums and vibrates constantly."
 	icon_state = "artibackpack"
 	item_state = "artibackpack" 
@@ -326,7 +327,10 @@
 	max_integrity = 300
 	equip_sound = 'sound/blank.ogg'
 	bloody_icon_state = "bodyblood"
-	component_type = /datum/component/storage/concrete/roguetown/backpack
+	component_type = /datum/component/storage/concrete/roguetown/backpack/arti
+
+/obj/item/storage/backpack/rogue/artibackpack/engineer
+	name = "engineer's backpack"
 
 /obj/item/storage/backpack/rogue/backpack/bagpack
 	name = "rucksack"

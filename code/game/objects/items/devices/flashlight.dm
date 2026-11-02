@@ -35,7 +35,7 @@
 	update_brightness(user)
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		A.build_all_button_icons()
 	return 1
 
 /obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
@@ -47,6 +47,18 @@
 
 /obj/item/flashlight/attack(mob/living/carbon/M, mob/living/carbon/human/user)
 	add_fingerprint(user)
+	if(on)
+		if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+			var/obj/item/clothing/mask/cigarette/cig = help_light_cig(M)
+			if(cig)
+				if(cig.lit)
+					to_chat(user, span_warning("[cig.name] is already lit!"))
+					return 1
+				if(M == user)
+					cig.attackby(src, user)
+				else
+					cig.light(span_notice("[user] holds [src] out for [M], and lights [cig]."))
+				return 1
 	return ..()
 
 // FLARES

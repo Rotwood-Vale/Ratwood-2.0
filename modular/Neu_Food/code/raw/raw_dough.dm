@@ -17,9 +17,10 @@
 			to_chat(user, span_notice("Kneading in more powder..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/dough(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/dough(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to work it."))
 	else
@@ -46,9 +47,10 @@
 			to_chat(user, span_notice("Kneading butter into the dough..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/butterdough(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/butterdough(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/raisins))
@@ -57,27 +59,30 @@
 			to_chat(user, span_notice("Kneading the dough and adding raisins..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/rbread_half(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/rbread_half(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/fruit/apple_sliced))
 		if(isturf(loc)&& (found_table))
 			playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
 			to_chat(user, span_notice("Kneading the dough and adding apple slices..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/abread_half(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/abread_half(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/butterdough))
 		if(isturf(loc)&& (found_table))
 			playsound(get_turf(user), 'modular/Neu_Food/sound/kneading.ogg', 100, TRUE, -1)
 			to_chat(user, span_notice("Kneading the dough into an elongated shape..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/strudeldough(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/strudeldough(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
 	if(istype(I, /obj/item/kitchen/rollingpin))
@@ -86,8 +91,9 @@
 			to_chat(user, span_notice("Rolling the dough flat and thin..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/flatdough(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/flatdough(get_turf(src))
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
 	else
@@ -115,9 +121,10 @@
 			to_chat(user, span_notice("Scoring lines into [src]..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/hardtack_raw(loc)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/hardtack_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/hardtack_raw(get_turf(src))
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/hardtack_raw(get_turf(src))
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to score it into crackerdough!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/tomato))
@@ -126,9 +133,10 @@
 			to_chat(user, span_notice("Meticulously crushing the tomatoes into a thick, chunky sauce..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to smear the flatdough with sauced tomatoes!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/tomato_sliced))
@@ -137,9 +145,10 @@
 			to_chat(user, span_notice("Crushing the sliced tomatoes into a thick, velvety sauce..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to smear the flatdough with sauced tomatoes!"))
 	else
@@ -165,9 +174,10 @@
 			to_chat(user, span_notice("Ripping the fresh cheese apart and sprinkling the tomato-sauced flatdough..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_cheese(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_cheese(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to sprinkle the tomato-sauced flatdough with cheese!"))
 	else
@@ -193,9 +203,10 @@
 			to_chat(user, span_notice("Topping the becheesed tomatoplate with sausage..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_sausage(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_sausage(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to finish it off with some toppings!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat/fish) || istype(I, /obj/item/reagent_containers/food/snacks/rogue/meat/fish/fried))
@@ -204,9 +215,10 @@
 			to_chat(user, span_notice("Topping the becheesed tomatoplate with fillets of fish..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_fish(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_fish(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to finish it off with some toppings!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/truffles))
@@ -215,9 +227,10 @@
 			to_chat(user, span_notice("Topping the becheesed tomatoplate with truffles..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_truffles(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_truffles(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to finish it off with some toppings!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/toxicshrooms))
@@ -226,9 +239,10 @@
 			to_chat(user, span_notice("Topping the becheesed tomatoplate with truffles..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_poisontruffles(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_poisontruffles(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to finish it off with some toppings!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/onion/rogue))
@@ -237,9 +251,10 @@
 			to_chat(user, span_notice("Meticulously tearing the whole onion up, and spreading its sum onto the becheesed tomatoplate..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_onion(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_onion(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to finish it off with some toppings!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/veg/onion_sliced))
@@ -248,9 +263,10 @@
 			to_chat(user, span_notice("Topping the becheesed tomatoplate with sliced onions..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_onion(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_onion(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to finish it off with some toppings!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/pear))
@@ -259,9 +275,10 @@
 			to_chat(user, span_notice("Topping the becheesed tomatoplate with pears..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_pear(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tomatoplate_raw_pear(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to finish it off with some toppings!"))
 	else
@@ -355,9 +372,10 @@
 			to_chat(user, span_notice("Adding fresh cheese..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/cheesebun_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/cheesebun_raw(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/doughslice))
@@ -366,9 +384,10 @@
 			to_chat(user, span_notice("Combining dough..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/dough(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/dough(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
 	if(istype(I, /obj/item/clothing/neck/roguetown/psicross/astrata))
@@ -377,8 +396,9 @@
 			to_chat(user, span_notice("Pressing the shape of Astrata's cross into the bun..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/crossbun_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/crossbun_raw(get_turf(src))
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
 	if(istype(I, /obj/item/clothing/neck/roguetown/psicross)) // This is gonna be messy cuz other are subtypes
@@ -387,8 +407,9 @@
 			to_chat(user, span_notice("Pressing the shape of the psycross into the bun..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/psycrossbun_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/psycrossbun_raw(get_turf(src))
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/dough))
@@ -397,9 +418,10 @@
 			to_chat(user, span_notice("Kneading the dough into an elongated shape..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/strudeldough(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/strudeldough(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
 	else
@@ -430,9 +452,10 @@
 			playsound(get_turf(user), 'modular/Neu_Food/sound/eggbreak.ogg', 100, TRUE, -1)
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/cake_base(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/cake_base(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
 	if(istype(I, /obj/item/kitchen/spoon))
@@ -441,8 +464,9 @@
 			to_chat(user, span_notice("Further spreading the butterdough out, shaping it into a muffin..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/muffindough(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/muffindough(get_turf(src))
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to shape it into a muffin!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/fruit/pumpkin_sliced) || istype(I, /obj/item/reagent_containers/food/snacks/rogue/preserved/pumpkin_mashed) || istype(I, /obj/item/reagent_containers/food/snacks/pumpkinspice))
@@ -451,9 +475,10 @@
 			to_chat(user, span_notice("Adding pumpkin to the butterdough..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/pumpkinloaf_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/pumpkinloaf_raw(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to prepare it!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/pear))
@@ -462,9 +487,10 @@
 			to_chat(user, span_notice("Working the pears into the butterdough, shaping it into a fruity loaf..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/pearbread_uncooked(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/pearbread_uncooked(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with fruits!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/plum))
@@ -473,9 +499,10 @@
 			to_chat(user, span_notice("Working the plums into the butterdough, shaping it into a fruity loaf..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/plumbread_uncooked(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/plumbread_uncooked(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with fruits!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/lemon))
@@ -484,9 +511,10 @@
 			to_chat(user, span_notice("Working the lemons into the butterdough, shaping it into a fruity loaf..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/lemonbread_uncooked(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/lemonbread_uncooked(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with fruits!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/tangerine))
@@ -495,9 +523,10 @@
 			to_chat(user, span_notice("Working the tangerines into the butterdough, shaping it into a fruity loaf..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/tangerinebread_uncooked(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/tangerinebread_uncooked(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with fruits!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/blackberry))
@@ -506,9 +535,10 @@
 			to_chat(user, span_notice("Working the blackberries into the butterdough, shaping it into a fruity loaf..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/blackberrybread_uncooked(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/blackberrybread_uncooked(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with fruits!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/raspberry))
@@ -517,9 +547,10 @@
 			to_chat(user, span_notice("Working the raspberries into the butterdough, shaping it into a fruity loaf..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/raspberrybread_uncooked(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/raspberrybread_uncooked(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with fruits!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/berries/rogue))
@@ -528,9 +559,10 @@
 			to_chat(user, span_notice("Working the jackberries into the butterdough, shaping it into a fruity loaf..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/jackberrybread_uncooked(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/jackberrybread_uncooked(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with fruits!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/berries/rogue/poison))
@@ -539,9 +571,10 @@
 			to_chat(user, span_notice("Working the jackberries into the butterdough, shaping it into a fruity loaf..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/poisonberrybread_uncooked(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/poisonberrybread_uncooked(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with fruits!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/chocolate) || istype(I, /obj/item/reagent_containers/food/snacks/chocolate/slice))
@@ -550,9 +583,10 @@
 			to_chat(user, span_notice("Working the chocolate into the butterdough, shaping it into a sweet loaf..."))
 			if(do_after(user,long_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/chocolatebread_uncooked(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/chocolatebread_uncooked(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with chocolate!"))
 	else
@@ -683,8 +717,9 @@
 			to_chat(user, span_notice("Flattening [src]..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/piedough(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/piedough(get_turf(src))
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
 	if(istype(I, /obj/item/kitchen/spoon))
@@ -693,8 +728,9 @@
 			to_chat(user, span_notice("Pressing a divot into [src]..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/tartdough(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/tartdough(get_turf(src))
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to roll it out!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/fruit/pumpkin_sliced) || istype(I, /obj/item/reagent_containers/food/snacks/rogue/preserved/pumpkin_mashed) || istype(I, /obj/item/reagent_containers/food/snacks/pumpkinspice))
@@ -703,9 +739,10 @@
 			to_chat(user, span_notice("Adding pumpkin to the butterdough..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/pumpkinball_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/pumpkinball_raw(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to prepare it!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/tangerine))
@@ -714,10 +751,11 @@
 			to_chat(user, span_notice("Adding tangerines to the butterdough..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tangerinebiscuit_raw(loc)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tangerinebiscuit_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tangerinebiscuit_raw(get_turf(src))
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tangerinebiscuit_raw(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with fruits!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/plum))
@@ -726,10 +764,11 @@
 			to_chat(user, span_notice("Adding raisins to the butterdough..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/plumbiscuit_raw(loc)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/plumbiscuit_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/plumbiscuit_raw(get_turf(src))
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/plumbiscuit_raw(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with fruits!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/raisins))
@@ -738,10 +777,11 @@
 			to_chat(user, span_notice("Adding raisins to the dough..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/biscuit_raw(loc)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/biscuit_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/biscuit_raw(get_turf(src))
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/biscuit_raw(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with fruits!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/chocolate) || istype(I, /obj/item/reagent_containers/food/snacks/chocolate/slice))
@@ -750,10 +790,11 @@
 			to_chat(user, span_notice("Adding chocolate to the dough..."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/chocolatebiscuit_raw(loc)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/chocolatebiscuit_raw(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/chocolatebiscuit_raw(get_turf(src))
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/chocolatebiscuit_raw(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to stuff it with chocolate!"))
 	if(I.get_sharpness())
@@ -766,8 +807,9 @@
 				to_chat(user, span_notice("Cutting the butterdough in strips and making a prezzel..."))
 				if(do_after(user,short_cooktime, target = src))
 					add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-					new /obj/item/reagent_containers/food/snacks/rogue/foodbase/prezzel_raw(loc)
+					new /obj/item/reagent_containers/food/snacks/rogue/foodbase/prezzel_raw(get_turf(src))
 					qdel(src)
+				return TRUE
 			else
 				to_chat(user, span_warning("You need to put [src] on a table to cut it!"))
 	else
@@ -820,12 +862,13 @@
 /obj/item/reagent_containers/food/snacks/rogue/piedough/proc/prepare_handpie(obj/item/I, mob/living/user, handpie_path)
 	playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 50, TRUE, -1)
 	to_chat(user, span_notice("Making a handpie..."))
-	if(do_after(user,short_cooktime, target = src))
-		add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-		var/handpie = new handpie_path(get_turf(user))
-		user.put_in_hands(handpie)
-		qdel(I)
-		qdel(src)
+	if(!do_after(user,short_cooktime, target = src))
+		return
+	add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
+	var/handpie = new handpie_path(get_turf(src))
+	qdel(I)
+	qdel(src)
+	user.put_in_hands(handpie)
 
 /*	.................   Strudel Dough   ................... */
 /obj/item/reagent_containers/food/snacks/rogue/strudeldough
@@ -884,9 +927,10 @@
 			to_chat(user, span_notice("Filling the dotted tartdough with tangerines.."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_tangerine(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_tangerine(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to fill it up!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/plum))
@@ -895,9 +939,10 @@
 			to_chat(user, span_notice("Filling the dotted tartdough with plums.."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_plum(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_plum(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to pack the fillings in!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/blackberry))
@@ -906,9 +951,10 @@
 			to_chat(user, span_notice("Filling the dotted tartdough with blackberries.."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_blackberry(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_blackberry(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to pack the fillings in!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/raspberry))
@@ -917,9 +963,10 @@
 			to_chat(user, span_notice("Filling the dotted tartdough with raspberries.."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_raspberry(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_raspberry(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to pack the fillings in!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/strawberry))
@@ -928,9 +975,10 @@
 			to_chat(user, span_notice("Filling the dotted tartdough with strawberries.."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_strawberry(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_strawberry(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to pack the fillings in!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/fruit/pear))
@@ -939,9 +987,10 @@
 			to_chat(user, span_notice("Filling the dotted tartdough with pears.."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_pear(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_pear(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to pack the fillings in!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/fruit/apple_sliced))
@@ -950,9 +999,10 @@
 			to_chat(user, span_notice("Filling the dotted tartdough with apple slices.."))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_apple(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_apple(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to pack the fillings in!"))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/rogue/fruit/apple_sliced/gold))
@@ -961,9 +1011,10 @@
 			to_chat(user, span_notice("Filling the dotted tartdough with.. golden apple slices..?"))
 			if(do_after(user,short_cooktime, target = src))
 				add_sleep_experience(user, /datum/skill/craft/cooking, user.STAINT)
-				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_goldapple(loc)
+				new /obj/item/reagent_containers/food/snacks/rogue/foodbase/tartdough_goldapple(get_turf(src))
 				qdel(I)
 				qdel(src)
+				return TRUE
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to pack the fillings in!"))
 	else

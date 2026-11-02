@@ -122,3 +122,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_skills_for_display(datum/skill/A, datum/skill/B)
 	return sorttext("[B.abstract_type]", "[A.abstract_type]") || sorttext(B.name, A.name)
+
+/proc/cmp_list_name_asc(list/a, list/b)
+	return sorttext(b["name"], a["name"])

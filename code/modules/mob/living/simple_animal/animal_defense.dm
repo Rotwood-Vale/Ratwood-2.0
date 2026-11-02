@@ -54,7 +54,7 @@
 			next_attack_msg.Cut()
 			if(armor > 0)
 				nodmg = TRUE
-				next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+				next_attack_msg += VISMSG_ARMOR_BLOCKED
 			apply_damage(newforce, I.damtype, hitlim, armor)
 			I.remove_bintegrity(1)
 			if(I.damtype == BRUTE && !nodmg)
@@ -84,7 +84,7 @@
 			return TRUE
 		I.do_special_attack_effect(user, null, null, src, null)
 
-/mob/living/simple_animal/getarmor(def_zone, type, damage, armor_penetration, blade_dulling, peeldivisor, intdamfactor = 1, used_weapon)
+/mob/living/simple_animal/getarmor(def_zone, type, damage, armor_penetration, blade_dulling, intdamfactor = 1, used_weapon)
 	if(!type)
 		return 0
 	var/armorval = 0
@@ -155,7 +155,7 @@
 			var/haha = M.used_intent.item_d_type
 			var/armor = run_armor_check(null, haha, armor_penetration = M.used_intent.penfactor, damage = damage)
 			if(armor > 0)
-				next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+				next_attack_msg += VISMSG_ARMOR_BLOCKED
 			attack_threshold_check(damage, hitlim, armorcheck = armor)
 			log_combat(M, src, "attacked")
 			updatehealth()
@@ -248,7 +248,7 @@
 		var/haha = M.used_intent.item_d_type
 		var/armor = run_armor_check(null, haha, armor_penetration = M.used_intent.penfactor, damage = damage)
 		if(armor > 0)
-			next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+			next_attack_msg += VISMSG_ARMOR_BLOCKED
 		attack_threshold_check(damage, hitlim, armorcheck = armor)
 		log_combat(M, src, "attacked")
 		updatehealth()
@@ -267,7 +267,7 @@
 		var/haha = M.d_type
 		var/armor = run_armor_check(null, haha, armor_penetration = M.armor_penetration, damage = damage)
 		if(armor > 0)
-			next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+			next_attack_msg += VISMSG_ARMOR_BLOCKED
 		attack_threshold_check(damage, hitlim, M.melee_damage_type, armor)
 		simple_woundcritroll(M.a_intent.blade_class, damage, M, hitlim)
 		visible_message(span_danger("\The [M] [pick(M.a_intent.attack_verb)] [src]![next_attack_msg.Join()]"), \
@@ -298,7 +298,7 @@
 	var/hitlim = simple_limb_hit(user.zone_selected)
 	var/armor = run_armor_check(null, "stab", armor_penetration = 0, damage = damage)
 	if(armor > 0)
-		user.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+		user.next_attack_msg += VISMSG_ARMOR_BLOCKED
 	if(src.apply_damage(damage, BRUTE, hitlim, armor))
 		if(istype(user, /mob/living/carbon/human/species/werewolf))
 			visible_message(span_danger("The werewolf bites into [src] and thrashes!"))

@@ -90,7 +90,7 @@
 			if("JUSTICE DISPENSED THROUGH KNUCKLE AND BLADE!")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE) //No Civbarb.
 				l_hand = /obj/item/rogueweapon/katar
-				r_hand = /obj/item/rogueweapon/knuckles
+				r_hand = /obj/item/clothing/gloves/roguetown/knuckles
 	wretch_select_bounty(H)
 
 /datum/outfit/job/roguetown/wretch/vigilante/proc/owl_equip(mob/living/carbon/human/H)
@@ -148,7 +148,6 @@
 	H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 1, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/climbing, 5, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 5, TRUE)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/magicians_brick) //Trust the plan.
 	ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC) // You LITERALLY get no weapon skills. You're throwing shit at enemies.
 	ADD_TRAIT(H, TRAIT_THROWINGARM, TRAIT_GENERIC) // throw shit better

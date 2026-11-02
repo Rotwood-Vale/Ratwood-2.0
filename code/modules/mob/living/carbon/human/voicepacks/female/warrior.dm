@@ -22,7 +22,7 @@
 		if("jump")
 			used = list('sound/vo/female/warrior/jump (1).ogg', 'sound/vo/female/warrior/jump (2).ogg', 'sound/vo/female/warrior/jump (3).ogg')
 		if("giggle")
-			used = list('sound/vo/female/warrior/giggle (1).ogg', 'sound/vo/female/warrior/giggle (2).ogg')
+			used = list('sound/vo/female/warrior/giggle (1).ogg')
 		if("chuckle")
 			used = list('sound/vo/female/warrior/chuckle (1).ogg', 'sound/vo/female/warrior/chuckle (2).ogg')
 		if("scream")

@@ -153,6 +153,8 @@
 				used = 'sound/vo/moth/mothchitter.ogg'
 			if("flutter")
 				used = 'sound/vo/moth/moth_flutter.ogg'
+			if("msqueak")
+				used = 'sound/vo/moth/moth_squeak.ogg'
 			if("strain")
 				used = 'sound/vo/female/gen/strain.ogg'
 			if("moan")
@@ -185,4 +187,7 @@
 			//jokes on you, I'm adding horse sounds too! - Randumb
 			if("neigh")
 				used = list('sound/vo/mobs/saiga/idle (1).ogg','sound/vo/mobs/saiga/idle (2).ogg','sound/vo/mobs/saiga/idle (3).ogg','sound/vo/mobs/saiga/idle (4).ogg','sound/vo/mobs/saiga/idle (5).ogg','sound/vo/mobs/saiga/idle (6).ogg')
+			//jokes on YOU, I'm adding the yeen cackle!
+			if("ycackle")
+				used = list('sound/vo/mobs/hyena/cackle.ogg')
 	return used

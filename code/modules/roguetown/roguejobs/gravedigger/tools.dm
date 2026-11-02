@@ -379,6 +379,30 @@
 	color = "#bb9696"
 	sellprice = 15
 
+/obj/item/rogueweapon/shovel/bronze
+	force = 23
+	name = "bronze shovel"
+	desc = "Dig the mound, so that water may flow into a thirsting crop. Puncture the earth, so that its depths may be catered to your whim. Leaven the soil, so that the buried may know peace from this world's evils."
+	icon_state = "bronzeshovel"
+	wlength = WLENGTH_SHORT
+	slot_flags = ITEM_SLOT_HIP
+	w_class = WEIGHT_CLASS_NORMAL
+	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 300
+	grid_height = 64
+
+/obj/item/rogueweapon/shovel/bronze/spade
+	force = 17
+	name = "bronze spade"
+	desc = "Dig the mound, so that water may flow into a thirsting crop. Puncture the earth, so that its depths may be catered to your whim. Leaven the soil, so that the buried may know peace from this world's evils."
+	icon_state = "bronzespade"
+	wlength = WLENGTH_SHORT
+	slot_flags = ITEM_SLOT_HIP
+	w_class = WEIGHT_CLASS_NORMAL
+	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 300
+	grid_height = 64
+
 /obj/item/rogueweapon/shovel/silver
 	force = 25
 	name = "silver shovel"
@@ -591,8 +615,8 @@
 	Scarred by a hundred fieldworks, its socket is nicked from prying and the edge has been honed to bite through roots-or armor-in a pinch."
 	force = 12//It has a gripped state. USE IT!!!!!
 	force_wielded = 28//It's not just a better battleaxe, now. God I hate this thing.
-	possible_item_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash, /datum/intent/shovelscoop)
-	gripped_intents = list(/datum/intent/axe/cut/battle, /datum/intent/axe/chop/battle, /datum/intent/mace/smash)
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/smash, /datum/intent/shovelscoop)
+	gripped_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/mace/smash)
 	icon_state = "saperka"//Temp sprite. Why was this just the shovel icon? I HATE YOU!!!!
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	sharpness = 100
@@ -607,7 +631,6 @@
 	wdefense = 5
 	swingsound = BLADEWOOSH_MED
 	associated_skill = /datum/skill/combat/axes
-	demolition_mod = 2.5//Woodcutter axe level. A whole 1.0 lower than what it was before. I hate you. - Carl
 	resistance_flags = FLAMMABLE
 	pickup_sound = 'modular_helmsguard/sound/sheath_sounds/draw_polearm.ogg'
 

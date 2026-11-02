@@ -85,6 +85,10 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	/// Whether we're storing the on_gain effects on the owner mob and should cleanup them if we're deleted
 	var/should_persist_effects = FALSE
 	var/datum/weakref/persisted_on
+	/// Severity names, assoc list with severity stages. Make sure this list has at least !!5!! entries.
+	var/list/severity_stages = list()
+	/// What do we use for our severity type? Default is bleed rate (usually up to 20 -- artery equi.)
+	var/severity_type = SEVERITY_TYPE_BLEED
 
 /datum/wound/Destroy(force)
 	if(bodypart_owner)
@@ -460,7 +464,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 #define CLOT_THRESHOLD_ARTERY 2
 
 /// Make sure this is called AFTER your child upgrade proc, unless you have a reason for the bleed rate to be above artery on a regular wound.
-/datum/wound/dynamic/upgrade(dam as num, armor, exposed = FALSE)
+/datum/wound/dynamic/upgrade(dam as num, armor, exposed = FALSE, pen_info)
 	if(!bodypart_owner.unlimited_bleeding)
 		if(bleed_rate >= ARTERY_LIMB_BLEEDRATE)
 			set_bleed_rate(ARTERY_LIMB_BLEEDRATE)
@@ -479,6 +483,34 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	if(bodypart_owner || owner || QDELETED(affected) || QDELETED(affected.owner))
 		return FALSE
 	return TRUE
+
+/datum/wound/proc/update_stage()
+	var/newname
+	var/oldname = name
+	if(length(severity_stages))
+		var/checkval
+		var/severityval
+		switch(severity_type)
+			if(SEVERITY_TYPE_BLEED)
+				checkval = bleed_rate
+			if(SEVERITY_TYPE_WHP)
+				checkval = whp
+			if(SEVERITY_TYPE_BURN)
+				if(bodypart_owner && bodypart_owner.max_damage > 0)
+					checkval = round((bodypart_owner.burn_dam / bodypart_owner.max_damage) * 100)
+		for(var/sevname in severity_stages)
+			if(severity_stages[sevname] <= checkval)
+				newname = sevname
+		for(var/i in 1 to length(severity_stages))
+			if(severity_stages[i] == newname)
+				severityval = i
+		severityval = clamp(severityval, 0, 5)
+		if(severityval)
+			severity = severityval
+
+	name = "[newname	? "[newname] " : ""][initial(name)]"	//[adjective] [name], aka, "gnarly slash" or "slash"
+	if(name != oldname)
+		owner.visible_message(span_red("The [oldname] on [owner]'s [LOWER_TEXT(bodyzone2readablezone(bodypart_to_zone(bodypart_owner)))] gets worse!"))
 
 #undef CLOT_THRESHOLD_INCREASE_PER_HIT
 #undef CLOT_RATE_INCREASE_PER_HIT

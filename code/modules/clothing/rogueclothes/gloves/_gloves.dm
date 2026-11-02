@@ -10,8 +10,8 @@
 	siemens_coefficient = 1
 	max_heat_protection_temperature = 361
 	experimental_inhand = FALSE
-	/// Unarmed damage multiplier (for pure fists / wrestling only)
-	var/unarmed_bonus = 1
+	/// Flat unarmed damage bonus (for pure fists / wrestling only)
+	var/unarmed_bonus = 0
 	/// If TRUE, this glove counts as the "weapon" for the purposes of on-hit item effects (silver ignition, magic_item enchantments) when used to throw an unarmed strike. Reserved for wraps meant to fight barehanded, not everyday gloves.
 	var/unarmed_weapon_effects = FALSE
 

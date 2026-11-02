@@ -239,6 +239,7 @@ Reel teleports the attached atom to the grabbed turf.
 			if(istype(O,/obj/structure/roguewindow))
 				var/obj/structure/roguewindow/W = O
 				if(!W.climbable)
+					W.log_breakin(isliving(attached) ? attached : null, "smashed through the window with a grappling hook")
 					O.obj_integrity = 1	//Keeps it from being destroyed
 					O.obj_break()
 		LAZYCLEARLIST(obj_to_destroy)

@@ -501,7 +501,8 @@
 			if(prob(88))
 				bushtype = pickweight(list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue=5,
 						/obj/item/reagent_containers/food/snacks/grown/berries/rogue/poison=3,
-						/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed=1))
+						/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed=1,
+						/obj/item/reagent_containers/food/snacks/grown/bakersroot=1))
 		else
 			desc += "Sadly, years of harvest inside this town have left it fruitless."
 	loot_replenish()
@@ -836,6 +837,8 @@
 		to_chat(H, span_warning("My [BP.name] snags on a thorn."))
 		BP.receive_damage(10)
 		var/riding_level = H.get_skill_level(/datum/skill/misc/riding)
+		if(HAS_TRAIT(H, TRAIT_STEPPE_RIDER))
+			riding_level += 3
 		if(prob(100 - (riding_level * 5)))
 			to_chat(H, span_danger("My mount goes mad with pain!"))
 			H.unbuckle_mob()

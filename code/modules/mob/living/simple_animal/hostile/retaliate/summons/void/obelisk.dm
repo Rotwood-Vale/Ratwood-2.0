@@ -93,7 +93,7 @@
 	blade_class = BCLASS_BLUNT
 	hitsound = 'sound/combat/hits/onstone/wallhit.ogg'
 	chargetime = 0
-	penfactor = 20
+	penfactor = PEN_LIGHT
 	swingdelay = 0
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR

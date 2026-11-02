@@ -300,7 +300,7 @@
 			H.change_stat(STATKEY_CON, -1)
 //Unarmed specific stuff is locked to patrons who have it. RAAAAAAA!!!!!! HEAVY ARMOUR BRUISERS!!!!!!
 		if("Close Caress")
-			H.put_in_hands(new /obj/item/rogueweapon/knuckles/eora(H), TRUE)
+			H.put_in_hands(new /obj/item/clothing/gloves/roguetown/knuckles/eora(H), TRUE)
 			H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/roguetown/armor/plate, SLOT_ARMOR, TRUE)

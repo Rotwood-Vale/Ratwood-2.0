@@ -159,6 +159,7 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
+	AddComponent(/datum/component/construct_refueling, 50)
 
 /obj/item/grown/log/tree/small/attackby(obj/item/I, mob/living/user, params)
 	if(item_flags & IN_STORAGE)

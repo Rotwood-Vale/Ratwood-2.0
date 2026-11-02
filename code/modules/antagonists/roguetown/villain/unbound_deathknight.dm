@@ -51,7 +51,6 @@
 	ADD_TRAIT(L, TRAIT_NOSLEEP, TRAIT_GENERIC)
 	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, TRAIT_GENERIC)
 	ADD_TRAIT(L, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(L, TRAIT_ARCYNE_T2, TRAIT_GENERIC)
 	ADD_TRAIT(L, TRAIT_SELF_SUSTENANCE, TRAIT_GENERIC)
 	ADD_TRAIT(L, TRAIT_EXTREME_TEMPERATURE_IMMUNE, TRAIT_GENERIC)
 
@@ -147,7 +146,6 @@
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
-	H.mind.adjust_spellpoints(9)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/bonechill)
 
 	beltl = /obj/item/rogueweapon/scabbard/sword/noble
