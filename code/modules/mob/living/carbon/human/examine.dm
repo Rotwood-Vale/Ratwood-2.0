@@ -814,7 +814,7 @@
 				. += "<span class='info' style='color: #313131ff'>[m1] wearing black lipstick.</span>"
 
 
-	if(!HAS_TRAIT(src, TRAIT_ANONYMOUS))
+	if(!HAS_TRAIT(src, TRAIT_ANONYMOUS) || user == src || observer_privilege)
 		var/list/lines
 		if((get_face_name() != real_name) && !observer_privilege)
 			lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src, user)
@@ -827,9 +827,10 @@
 			if(collapse_details)
 				app_str = "<details><summary>[span_info("Details")]</summary>"
 
+			var/list/info_lines = list()
 			for(var/line in lines)
-				app_str += span_info(line)
-				app_str += "<br>"
+				info_lines += span_info(line)
+			app_str += info_lines.Join("<br>")
 			if(collapse_details)
 				app_str += "</details>"
 
@@ -947,7 +948,7 @@
 			showassess = TRUE
 
 	var/list/examine_links = list()
-	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes))
+	if((!obscure_name || client?.prefs.masked_examine) && (flavortext || headshot_link || ooc_notes || nsfwflavortext || erpprefs))
 		examine_links += "<a href='?src=[REF(src)];task=view_headshot;'>Examine closer</a>"
 	if(showassess)
 		examine_links += "<a href='?src=[REF(src)];task=assess;'>Assess</a>"
