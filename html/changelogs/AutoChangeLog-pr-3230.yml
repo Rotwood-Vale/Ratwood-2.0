@@ -1,0 +1,7 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - bugfix: "licker wretches keeping silver weakness post-conversion"
+  - bugfix: "vampires clan abilities starting out without icons or names"
+  - bugfix: "giving a vampire a silver item and it being trapped in their contents"
+  - bugfix: "lycker immunity not making you immune to vampire conversion"
