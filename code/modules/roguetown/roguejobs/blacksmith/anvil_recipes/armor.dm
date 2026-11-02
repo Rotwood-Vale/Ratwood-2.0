@@ -41,11 +41,6 @@
 	req_blade = /obj/item/blade/steel_plate
 	craftdiff = SKILL_LEVEL_JOURNEYMAN
 
-/datum/anvil_recipe/armor/decorated
-	abstract_type = /datum/anvil_recipe/armor/decorated
-	req_bar = /obj/item/ingot/gold
-	craftdiff = SKILL_LEVEL_EXPERT
-
 /datum/anvil_recipe/armor/silver
 	abstract_type = /datum/anvil_recipe/armor/silver
 	craftdiff = SKILL_LEVEL_EXPERT
