@@ -15,6 +15,12 @@
 	max_w_class = WEIGHT_CLASS_NORMAL
 	not_while_equipped = TRUE
 
+/datum/component/storage/concrete/roguetown/backpack/arti
+	screen_max_rows = 7
+	screen_max_columns = 6
+	max_w_class = WEIGHT_CLASS_NORMAL
+	not_while_equipped = FALSE
+
 /datum/component/storage/concrete/roguetown/surgery_bag
 	screen_max_rows = 5
 	screen_max_columns = 5

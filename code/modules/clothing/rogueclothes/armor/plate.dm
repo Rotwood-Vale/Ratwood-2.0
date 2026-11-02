@@ -358,7 +358,7 @@
 	desc = "Breastplate, pauldrons, couters, cuisses... did you forget something?"
 	icon_state = "platekini"
 	allowed_sex = list(MALE, FEMALE)
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	body_parts_covered = COVERAGE_TORSO|LEGS|ARMS
 	equip_delay_self = 8 SECONDS
 	unequip_delay_self = 8 SECONDS
 	equip_delay_other = 3 SECONDS
@@ -454,8 +454,8 @@
 // MEDIUM
 /obj/item/clothing/suit/roguetown/armor/plate/bikini
 	name = "half-plate corslet"
-	desc = "A high breastplate and hip armor allowing flexibility and great protection, save for the stomach."
-	body_parts_covered = CHEST|GROIN
+	desc = "A high breastplate and hip armor allowing flexibility and great protection."
+	body_parts_covered = COVERAGE_TORSO
 	icon_state = "halfplatekini"
 	item_state = "halfplatekini"
 	armor = ARMOR_PLATE // Identical to steel cuirass, but covering the groin instead of the vitals.
@@ -630,6 +630,7 @@
 	sleevetype = "shirt"
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	sewrepair = TRUE
+	anvilrepair = FALSE //this must be specified because it's a variant of scale
 	equip_delay_self = 4 SECONDS
 	armor_class = ARMOR_CLASS_LIGHT
 	armor = ARMOR_LEATHER
@@ -670,6 +671,8 @@
 	max_integrity = ARMOR_INT_CHEST_PLATE_BRIGANDINE
 	armor_class = ARMOR_CLASS_MEDIUM
 	armor = ARMOR_PLATE
+	sewrepair = FALSE
+	anvilrepair = /datum/skill/craft/armorsmithing //this has to be re-specified, because it is a variant of the previous version
 	smelt_bar_num = 2
 	smeltresult = /obj/item/ingot/steel
 	blocksound = PLATEHIT

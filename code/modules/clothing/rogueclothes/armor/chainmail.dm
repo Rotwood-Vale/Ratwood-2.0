@@ -138,5 +138,15 @@
 	item_state = "chainkini"
 	allowed_sex = list(MALE, FEMALE)
 	allowed_race = CLOTHED_RACES_TYPES
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = COVERAGE_TORSO
 	armor_class = ARMOR_CLASS_LIGHT //placed in the medium category to keep it with its parent obj
+
+/obj/item/clothing/suit/roguetown/armor/chainmail/bikini/bronze
+	name = "bronze chainmail corslet"
+	desc = "A mail corslet made of bonze rings."
+	icon_state = "bchainkini"
+	item_state = "bchainkini"
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_CHEST_MEDIUM_BRONZE
+	smeltresult = /obj/item/ingot/bronze
+

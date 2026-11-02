@@ -152,7 +152,7 @@
 		list("id" = "descriptor_color", "label" = "Enable Colored Descriptors", "enabled" = !!owner.prefs.descriptor_color, "desc" = "Color genital descriptors based on arousal and body hair descriptors based on hair color."),
 		list("id" = "cursed_collars", "label" = "Enable Cursed Collars", "enabled" = !!owner.prefs.cursed_collarable, "desc" = "Allow others to equip a cursed collar on you."),
 		list("id" = "milkable", "label" = "Enable Breast Milking", "enabled" = !!owner.prefs.milkable, "desc" = "Allow other players to milk your breasts if lactating. You can still milk yourself when disabled. Only applies to clicking chest with a reagent container, NOT lactation during sex actions."),
-		list("id" = "manticore_tail_messages", "label" = "Manticore Tail Sensations", "enabled" = !!owner.prefs.manticore_tail_messages, "desc" = "Show flavor messages from your manticore tail when moving or during intimate actions."),
+		list("id" = "manticore_tail_messages", "label" = "Tailmaws", "enabled" = !!owner.prefs.manticore_tail_messages, "desc" = "Show flavor messages from your manticore tail when moving or during intimate actions, and see tail maw descriptions when examining others."),
 	)
 
 	data["categories"] = list(
@@ -695,13 +695,13 @@
 
 /client/verb/toggle_manticore_tail_messages_pref()
 	set category = "Options"
-	set name = "Toggle Manticore Tail Sensations"
+	set name = "Toggle Tailmaws"
 	set hidden = 1
 	if(!prefs)
 		return
 	prefs.manticore_tail_messages = !prefs.manticore_tail_messages
 	prefs.save_preferences()
-	to_chat(src, "You will [prefs.manticore_tail_messages ? "now" : "no longer"] notice your manticore tail's sensations.")
+	to_chat(src, "You will [prefs.manticore_tail_messages ? "now" : "no longer"] see tailmaw content.")
 
 /client/verb/toggle_compliance_notifs() // The messages need to be on-by-default while this is in its early stages.
 	set category = "Options"

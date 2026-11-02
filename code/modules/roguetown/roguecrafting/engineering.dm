@@ -154,7 +154,7 @@
 	reqs = list(/obj/item/ingot/steel = 2, /obj/item/natural/fibers = 1, /obj/item/natural/wood/plank = 2)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 5
+	craftdiff = 4
 	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/twentybolts
@@ -210,6 +210,11 @@
 						/obj/item/ammo_casing/caseless/rogue/bolt/bronze,
 						/obj/item/ammo_casing/caseless/rogue/bolt/bronze
 					)
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 3
+	display_category = ITEM_CAT_ENG_COMBAT
+
 /datum/crafting_recipe/roguetown/engineering/heavyboltsten
 	name = "Heavy Bolts 10x"
 	reqs = list(/obj/item/natural/wood/plank = 4, /obj/item/ingot/iron = 2)
@@ -224,7 +229,11 @@
 					/obj/projectile/bullet/reusable/heavy_bolt,
 					/obj/projectile/bullet/reusable/heavy_bolt
 				)
-	
+	structurecraft = /obj/machinery/artificer_table
+	skillcraft = /datum/skill/craft/engineering
+	craftdiff = 3
+	display_category = ITEM_CAT_ENG_COMBAT
+
 //pyro arrow crafting, from stonekeep
 /datum/crafting_recipe/roguetown/engineering/pyrobolt
 	name = "pyroclastic bolt"
@@ -665,58 +674,6 @@
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 4 
 	display_category = ITEM_CAT_ENG_COMBAT
-//------------------ Mortar Shells --------------
-// high explosive shells for the bombard
-
-/datum/crafting_recipe/roguetown/engineering/highexplosiveimpact
-	name = "high explosive impact, bombard charge"
-	category = "Explosives"
-	result = /obj/item/cannonball/explosive
-	reqs = list(/obj/item/tntstick = 2, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
-	structurecraft = /obj/machinery/artificer_table
-	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 5
-	display_category = ITEM_CAT_ENG_COMBAT
-
-/datum/crafting_recipe/roguetown/engineering/canistershotimpact
-	name = "canister shot, bombard charge"
-	category = "Explosives"
-	result = /obj/item/cannonball/canister
-	reqs = list(/obj/item/ammo_casing/caseless/bullet/grapeshot = 3, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
-	structurecraft = /obj/machinery/artificer_table
-	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 5
-	display_category = ITEM_CAT_ENG_COMBAT
-
-/datum/crafting_recipe/roguetown/engineering/smokeimpact
-	name = "smoke shell, bombard charge"
-	category = "Explosives"
-	result = /obj/item/cannonball/smoke
-	reqs = list(/obj/item/bomb/smoke = 3, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
-	structurecraft = /obj/machinery/artificer_table
-	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 5
-	display_category = ITEM_CAT_ENG_COMBAT
-
-/datum/crafting_recipe/roguetown/engineering/flareimpact
-	name = "flare shell, bombard charge"
-	category = "Explosives"
-	result = /obj/item/cannonball/flare
-	reqs = list(/obj/item/rogueore/cinnabar = 2, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
-	structurecraft = /obj/machinery/artificer_table
-	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 5
-	display_category = ITEM_CAT_ENG_COMBAT
-
-/datum/crafting_recipe/roguetown/engineering/incendiaryimpact
-	name = "incendiary shell, bombard charge"
-	category = "Explosives"
-	result = /obj/item/cannonball/incendiary
-	reqs = list(/obj/item/alch/firedust = 2, /obj/item/alch/coaldust = 1, /obj/item/paper = 4)
-	structurecraft = /obj/machinery/artificer_table
-	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 5
-	display_category = ITEM_CAT_ENG_COMBAT
 
 /datum/crafting_recipe/roguetown/engineering/ramrod
 	name = "bombard ramrod"
@@ -726,14 +683,4 @@
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
 	craftdiff = 2
-	display_category = ITEM_CAT_ENG_COMBAT
-
-/datum/crafting_recipe/roguetown/engineering/palantir
-	name = "bombard targeting palantir"
-	category = "Explosives"
-	result = /obj/item/rogueweapon/palantir
-	reqs = list(/obj/item/roguegear/bronze = 2, /obj/item/ingot/bronze = 1, /obj/item/paper = 2, /obj/item/rogueore/cinnabar = 1)
-	structurecraft = /obj/machinery/artificer_table
-	skillcraft = /datum/skill/craft/engineering
-	craftdiff = 6 // self explanatory why
 	display_category = ITEM_CAT_ENG_COMBAT
