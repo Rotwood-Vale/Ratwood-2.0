@@ -291,7 +291,7 @@ T1 Enchantments below here*/
 /obj/item/enchantmentscroll/greater/lifesteal/attack_obj(obj/item/O, mob/living/user)
 	if(!..())
 		return
-	if(istype(O,/obj/item/rogueweapon))
+	if(istype(O,/obj/item/rogueweapon) || istype(O,/obj/item/clothing/gloves/roguetown/bandages))
 		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
 		var/magiceffect= new component
 		O.AddComponent(/datum/component/magic_item, magiceffect)
@@ -309,7 +309,7 @@ T1 Enchantments below here*/
 /obj/item/enchantmentscroll/greater/lightning/attack_obj(obj/item/O, mob/living/user)
 	if(!..())
 		return
-	if(istype(O,/obj/item/rogueweapon))
+	if(istype(O,/obj/item/rogueweapon) || istype(O,/obj/item/clothing/gloves/roguetown/bandages))
 		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
 		var/magiceffect= new component
 		O.AddComponent(/datum/component/magic_item, magiceffect)
@@ -490,7 +490,7 @@ T1 Enchantments below here*/
 /obj/item/enchantmentscroll/mythic/briars/attack_obj(obj/item/O, mob/living/user)
 	if(!..())
 		return
-	if(istype(O,/obj/item/rogueweapon))
+	if(istype(O,/obj/item/rogueweapon) || istype(O,/obj/item/clothing/gloves/roguetown/bandages))
 		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
 		var/magiceffect= new component
 		O.AddComponent(/datum/component/magic_item, magiceffect)
@@ -508,7 +508,7 @@ T1 Enchantments below here*/
 /obj/item/enchantmentscroll/mythic/chaos_storm/attack_obj(obj/item/O, mob/living/user)
 	if(!..())
 		return
-	if(istype(O,/obj/item/rogueweapon))
+	if(istype(O,/obj/item/rogueweapon) || istype(O,/obj/item/clothing/gloves/roguetown/bandages))
 		to_chat(user, span_notice("You open [src] and place [O] within. Moments later, it flashes blue with arcana, and [src] crumbles to dust."))
 		var/magiceffect= new component
 		O.AddComponent(/datum/component/magic_item, magiceffect)
