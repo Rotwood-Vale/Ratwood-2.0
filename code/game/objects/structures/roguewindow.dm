@@ -374,9 +374,15 @@
 	if(isliving(mover))
 		if(mover.throwing)
 			if(!climbable)
-				add_forensic_action(mover, "thrown into it")
-				// The thrower breaks it, or the mover themselves on a jump
-				var/mob/thrower = mover.throwing.thrower || mover
+				var/mob/living/thrown = mover
+				var/mob/thrower = thrown.throwing.thrower
+				if(thrower && thrower != thrown)
+					add_forensic_action(thrower, "threw [thrown.real_name] ([thrown.ckey || "no player"]) into it")
+					add_forensic_action(thrown, "thrown into it by [thrower.real_name]")
+				else
+					// A jump, or no one to name
+					add_forensic_action(thrown, "thrown into it")
+					thrower = thrown
 				if(!iscarbon(mover))
 					take_damage_from(thrower, 10)
 				else
@@ -399,7 +405,7 @@
 	else if(isitem(mover))
 		var/obj/item/I = mover
 		if(I.throwforce >= 10)
-			take_damage_from(I.throwing?.thrower, I.throwforce)
+			take_damage_from(I.throwing?.thrower, I.throwforce, cause = "with thrown [format_text(I.name)]")
 			if(brokenstate)
 				return 1
 		else
@@ -437,7 +443,7 @@
 		set_climbable(TRUE)
 		brokenstate = TRUE
 		opacity = FALSE
-		on_forced_break()
+		on_forced_break(damage_flag)
 	update_icon()
 	..()
 

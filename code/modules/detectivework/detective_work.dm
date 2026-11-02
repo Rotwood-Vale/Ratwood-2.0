@@ -85,6 +85,14 @@
 	if(D.add_action(user, action, routine) && !routine)
 		user.log_message("forensics on [src] ([type]): [action]", LOG_GAME)
 
+/// add_forensic_action() for something no player did, such as a fire, an explosion or a mob without a player. Always evidence.
+/atom/proc/add_unattributed_forensic_action(action)
+	if(QDELETED(src))
+		return
+	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
+	if(D.add_action(null, action))
+		log_game("forensics on [src] ([type]) at [AREACOORD(src)]: [action]")
+
 /// Notes poison going into or out of food and drink, and drinks spiked on the rim, for admins' View Forensics.
 /// transfer_log is what trans_to() moved, reagent type = amount. Only spiking prepends.
 /datum/reagents/proc/record_forensic_transfer(atom/target_atom, list/transfer_log, mob/transfered_by, method, prepend)

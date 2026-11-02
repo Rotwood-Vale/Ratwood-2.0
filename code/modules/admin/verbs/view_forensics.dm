@@ -164,7 +164,7 @@
 			// Same format as the stat panel's ROUND TIME
 			"time" = time2text(entry.time, "hh:mm:ss", 0),
 			"ckey" = entry.ckey,
-			"name" = html_decode(entry.name),
+			"name" = entry.name && html_decode(entry.name),
 			"action" = html_decode(entry.action),
 			"count" = entry.count,
 		))

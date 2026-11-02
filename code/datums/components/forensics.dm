@@ -205,6 +205,7 @@
 	/// Round time of the latest repeat
 	var/time
 	var/count = 1
+	/// Null, as is name, for something no player did, such as a fire
 	var/ckey
 	/// The character's real name at the time
 	var/name
@@ -212,12 +213,12 @@
 
 /datum/forensic_action/New(mob/user, action)
 	time = STATION_TIME_PASSED()
-	ckey = user.ckey
-	name = user.real_name
+	ckey = user?.ckey
+	name = user?.real_name
 	src.action = action
 
 /datum/forensic_action/proc/is_repeat(mob/user, action)
-	return ckey == user.ckey && name == user.real_name && src.action == action
+	return ckey == user?.ckey && name == user?.real_name && src.action == action
 
 /// Forensic actions by round time, oldest first. Only used on the rare merge of two forensics components
 /proc/cmp_forensic_action_time_asc(datum/forensic_action/a, datum/forensic_action/b)

@@ -15,8 +15,9 @@ import { Window } from '../layouts';
 
 type ForensicAction = {
   time: string;
-  ckey: string;
-  name: string;
+  // Null, as is name, for something no player did
+  ckey: string | null;
+  name: string | null;
   action: string;
   count: number;
 };
@@ -116,8 +117,10 @@ const ActionsSection = (props: {
                   <Box nowrap>{entry.time}</Box>
                 </Table.Cell>
                 <Table.Cell>
-                  <Box nowrap>
-                    {entry.ckey} ({entry.name})
+                  <Box nowrap italic={!entry.ckey}>
+                    {entry.ckey
+                      ? `${entry.ckey} (${entry.name})`
+                      : 'No player'}
                   </Box>
                 </Table.Cell>
                 <Table.Cell>
@@ -127,7 +130,7 @@ const ActionsSection = (props: {
                   </Box>
                 </Table.Cell>
                 <Table.Cell collapsing>
-                  <PlayerButtons ckey={entry.ckey} />
+                  {entry.ckey && <PlayerButtons ckey={entry.ckey} />}
                 </Table.Cell>
               </Table.Row>
             ))}

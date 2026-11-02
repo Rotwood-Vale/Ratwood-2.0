@@ -785,7 +785,7 @@
 		density = FALSE
 		opacity = FALSE
 		brokenstate = TRUE
-		on_forced_break()
+		on_forced_break(damage_flag)
 	..()
 
 /obj/structure/mineral_door/OnCrafted(dirin, user)

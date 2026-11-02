@@ -259,7 +259,7 @@
 /obj/structure/closet/obj_break(damage_flag)
 	if(!obj_broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
-		on_forced_break("smashed open")
+		on_forced_break(damage_flag, "smashed open")
 	..()
 
 /obj/structure/closet/attacked_by(obj/item/I, mob/living/user)
