@@ -1083,7 +1083,7 @@
 	created_item = /obj/item/clothing/mask/rogue/facemask/steel/maille
 	display_category = ITEM_CAT_ARMOR_MASKS
 
-/datum/anvil_recipe/armor/steel/maillemask
+/datum/anvil_recipe/armor/steel/maillemaskfluted
 	name = "Fluted Maille Mask, Steel"
 	created_item = /obj/item/clothing/mask/rogue/facemask/steel/maille/fluted
 	display_category = ITEM_CAT_ARMOR_MASKS
@@ -1389,7 +1389,7 @@
 /datum/anvil_recipe/armor/decorated/gilded_halfplate
 	name = "Fluted Halfplate, Decorated (+1 Steel Halfplate, +1 Steel)"
 	additional_items = list(/obj/item/clothing/suit/roguetown/armor/plate, /obj/item/ingot/steel)
-	created_item = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/decorated
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/fluted/decorated
 	display_category = ITEM_CAT_ARMOR_CHESTPIECES
 
 /datum/anvil_recipe/armor/decorated/gilded_fullplate

@@ -161,7 +161,7 @@
 	armor_class = ARMOR_CLASS_HEAVY // Prevents slot-stoackage by those who aren't already specialzed in wearing plate armor.
 	max_integrity = ARMOR_INT_CHEST_PLATE_STEELLIGHT // To note, this is about 450 INT, or +150 over regular hauberk and -50 under regular plate.
 
-/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient/decrepit/heavy
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy/ancient/decrepit
 	name = "decrepit plate-and-maille"
 	desc = "Frayed bronze rings and rotting leather, woven together to form a sleeved maille-atekon; one that's been uncomfortably \
 	tucked beneath a matching cuirass. Such are the last remains of those who've dared to march against the undying legions, be it \
@@ -170,7 +170,7 @@
 	item_state = "ancientcuirasshauberk"
 	max_integrity = ARMOR_INT_CHEST_PLATE_DECREPITLIGHT // 200 INT.
 
-/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient/heavy
+/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy/ancient
 	name = "ancient plate-and-maille"
 	desc = "Polished gilbranze rings and silk, woven together to form a sleeved maille-atekon; one that's been uncomfortably tucked \
 	beneath a matching cuirass. It eminates an unfamiliar sensation, rarely seen amongst rot-and-undeath - elegance. In the worlds to \
@@ -213,7 +213,7 @@
 
 /datum/crafting_recipe/roguetown/survival/ancientmailledhauberk
 	name = "layer an ancient cuirass atop hauberk"
-	result = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient/heavy)
+	result = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/heavy/ancient)
 	reqs = list(/obj/item/clothing/suit/roguetown/armor/plate/half/ancient = 1,
 				/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ancient = 1)
 	craftdiff = 0 //Note that its Decrepit-tier variant is intended to largely be used by mobs and not players; hence, the lack of a crafting recipe.

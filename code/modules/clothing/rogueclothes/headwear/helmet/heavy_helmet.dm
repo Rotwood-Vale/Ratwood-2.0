@@ -120,6 +120,7 @@
 	block2add = FOV_BEHIND
 
 /obj/item/clothing/head/roguetown/helmet/heavy/barbute/visor/ComponentInitialize()
+	..()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/barbute/great
@@ -408,11 +409,6 @@
 	name = "fluted armet"
 	desc = "An ornate steel greathelm with a visor, which protects the entire head. While bulky, the fluted design excels at prolonging chivalrous bouts \
 	with fellow knights. Add a feather to show the colors of your family or allegiance."
-
-/obj/item/clothing/head/roguetown/helmet/heavy/knight/greatplume/fluted
-	name = "fluted armet with greatplume"
-	desc = "An ornate steel greathelm with a visor, which protects the entire head. While bulky, the fluted design excels at prolonging chivalrous \
-	bouts with fellow knights. The wider couplet atop its neckguard's rear can accept a uniquely large greatplume."
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/greatplume
 	name = "greatplumed armet"
@@ -1371,6 +1367,7 @@
 	armor_class = ARMOR_CLASS_HEAVY //For the worthy - or in this case, the knightly.
 
 /obj/item/clothing/head/roguetown/helmet/heavy/aventail/ComponentInitialize()
+	..()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR|MOUTH|NECK), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/aventail/attackby(obj/item/W, mob/living/user, params)
