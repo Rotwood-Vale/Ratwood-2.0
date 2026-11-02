@@ -1,4 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - balance: "Complaint now only auto-yields if it's whispered"

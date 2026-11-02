@@ -1246,6 +1246,7 @@
 	drop_all_held_items()
 	apply_status_effect(/datum/status_effect/debuff/breedable)
 	apply_status_effect(/datum/status_effect/debuff/submissive)
+	apply_status_effect(/datum/status_effect/debuff/omegamale)
 	src.visible_message(span_notice("[src] yields!"))
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1, ignore_walls=TRUE)
 	update_vision_cone()
@@ -2546,7 +2547,10 @@
 
 /mob/living/proc/accept_offered_item(mob/living/offerer, obj/offered_item, stealthy)
 	transferItemToLoc(offered_item, src)
-	put_in_active_hand(offered_item)
+	if(!put_in_active_hand(offered_item))
+		offered_item.forceMove(drop_location())
+		offerer.stop_offering_item()
+		return
 	if(stealthy)
 		to_chat(offerer, span_notice("[src] takes the secretly offered [offered_item]."))
 		to_chat(src, span_notice("I take the secretly offered [offered_item] from [offerer]."))

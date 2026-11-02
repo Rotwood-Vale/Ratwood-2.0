@@ -468,6 +468,12 @@
 	no_early_release = TRUE
 	blade_class = BCLASS_PICK
 
+/datum/intent/pick/ranged/dolabra
+	demolition_mod = 3
+
+/datum/intent/pick/ranged/dolabra/pioneer
+	demolition_mod = 4.5
+
 /datum/intent/shoot //shooting crossbows or other guns, no parrydrain
 	name = "shoot"
 	icon_state = "inshoot"
