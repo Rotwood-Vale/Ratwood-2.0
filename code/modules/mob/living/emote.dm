@@ -2242,7 +2242,7 @@
 	show_runechat = TRUE
 
 /datum/emote/living/ffsalute/run_emote(mob/living/user, params, type_override, intentional, targetted, animal)
-	if(HAS_TRAIT(user, TRAIT_XYLIX))
+	if(HAS_TRAIT(user, TRAIT_XYLIX) || HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
 		. = ..()
 
 /mob/living/carbon/human/proc/emote_ffsalute()

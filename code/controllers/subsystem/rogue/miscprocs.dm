@@ -367,13 +367,15 @@
 /mob/living/carbon/human/proc/on_guarded_gained(datum/source)
 	SIGNAL_HANDLER
 	ADD_TRAIT(src, TRAIT_GUARD_RAISED, GUARDED_TRAIT)
-	verbs |= list(/mob/living/carbon/human/proc/toggle_guarded, /mob/living/carbon/human/proc/toggle_descriptors)
+	verbs |= list(/mob/living/carbon/human/proc/toggle_guarded, /mob/living/carbon/human/proc/toggle_descriptors, /mob/living/carbon/human/proc/emote_ffsalute)
 
 /mob/living/carbon/human/proc/on_guarded_lost(datum/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_GUARD_RAISED, GUARDED_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_ANONYMOUS, GUARDED_TRAIT)
 	verbs -= list(/mob/living/carbon/human/proc/toggle_guarded, /mob/living/carbon/human/proc/toggle_descriptors)
+	if(!HAS_TRAIT(src, TRAIT_XYLIX))
+		verbs -= /mob/living/carbon/human/proc/emote_ffsalute
 
 /proc/guarded_roll(chance, mob/living/subject)
 	if(!HAS_TRAIT(subject, TRAIT_GUARD_RAISED))
