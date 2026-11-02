@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/projectile/waterbolt
 	name = "Water Bolt"
-	desc = "Shoot out a magical bolt of water that extinguishes fires from a distance."
+	desc = "Shoot out a magical bolt of water that extinguishes fires from a distance. Can be cast on yourself to put out flames."
 	button_icon = 'icons/mob/actions/roguespells.dmi'
 	button_icon_state = "frost_bolt"
 	sound = 'sound/foley/water_land1.ogg'
@@ -8,6 +8,7 @@
 	glow_intensity = GLOW_INTENSITY_LOW
 
 	click_to_activate = TRUE
+	self_cast_possible = TRUE
 	cast_range = 15
 
 	primary_resource_type = SPELL_COST_STAMINA
@@ -17,7 +18,7 @@
 	invocation_type = INVOCATION_WHISPER
 
 	charge_required = FALSE
-	cooldown_time = 8 SECONDS
+	cooldown_time = 2 SECONDS
 
 	projectile_type = /obj/projectile/energy/waterbolt
 
@@ -27,6 +28,16 @@
 	point_cost = 1
 
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN
+
+/datum/action/cooldown/spell/projectile/waterbolt/fire_projectile(atom/target)
+	if(target != owner)
+		return ..()
+	var/mob/living/caster = owner
+	if(caster.fire_stacks > 0)
+		caster.adjust_fire_stacks(-10)
+		if(caster.fire_stacks <= 0)
+			caster.extinguish_mob()
+	return TRUE
 
 // Harmless water bolt
 /obj/projectile/energy/waterbolt
