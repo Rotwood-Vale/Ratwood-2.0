@@ -8,7 +8,7 @@
 	if (!recipient.get_skill_level(/datum/skill/magic/arcane))
 		if (!recipient.mind?.has_spell(/datum/action/cooldown/spell/touch/prestidigitation))
 			recipient.mind?.AddSpell(new /datum/action/cooldown/spell/touch/prestidigitation)
-		if (!HAS_TRAIT(recipient, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(recipient, TRAIT_HEAVYARMOR) && !HAS_TRAIT(recipient, TRAIT_DODGEEXPERT) && !HAS_TRAIT(recipient, TRAIT_CRITICAL_RESISTANCE) && !HAS_TRAIT(recipient, TRAIT_BLOOD_RESISTANCE) && !HAS_TRAIT(recipient, TRAIT_NOPAIN) && !HAS_TRAIT(recipient, TRAIT_NOPAINSTUN))
+		if (!HAS_TRAIT(recipient, TRAIT_MEDIUMARMOR) && !HAS_TRAIT(recipient, TRAIT_HEAVYARMOR) && !HAS_TRAIT(recipient, TRAIT_DODGEEXPERT) && !HAS_TRAIT(recipient, TRAIT_CRITICAL_RESISTANCE) && !HAS_TRAIT(recipient, TRAIT_BLOOD_RESISTANCE) && !HAS_TRAIT_NOT_FROM(recipient, TRAIT_NOPAIN, SPECIES_TRAIT) && !HAS_TRAIT(recipient, TRAIT_NOPAINSTUN))
 			ADD_TRAIT(recipient, TRAIT_ARCYNE, TRAIT_GENERIC)
 			add_arcyne_potential_utilities(recipient, 3)
 	else

@@ -99,7 +99,7 @@
 				beltl = /obj/item/rogueweapon/mace/steel/ancient
 
 /datum/advclass/tribalchieftain/warrior
-	name = "Valiant Warrior"
+	name = "Valiant Chief"
 	tutorial = "Ooga Chacka BESTA chacka!"
 	// outfit = /datum/outfit/job/roguetown/tribalchieftain/warrior
 	category_tags = list(CTAG_TRIBALCHIEFTAIN)
