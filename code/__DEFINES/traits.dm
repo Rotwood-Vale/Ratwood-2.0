@@ -35,7 +35,12 @@
 #define TRAIT_HEAVYARMOR "Plate Training"
 #define TRAIT_DODGEEXPERT "Expert Dodger"
 #define TRAIT_MAGEARMOR "Magic Barrier"
+/// Guarded: can raise and lower the guard. Grant this, never TRAIT_GUARD_RAISED
 #define TRAIT_DECEIVING_MEEKNESS "Deceiving Meekness"
+/// The guard is currently raised. Only the Guarded toggles add it, see TRAIT_DECEIVING_MEEKNESS
+#define TRAIT_GUARD_RAISED "Guard Raised"
+/// Identifying features hidden by Guarded's anonymity toggle
+#define TRAIT_ANONYMOUS "Anonymous"
 #define TRAIT_CRITICAL_RESISTANCE "Critical Resistance"
 #define TRAIT_CRIT_THRESHOLD "NPC Respect Crit Threshold"
 #define TRAIT_JOURNEYS_END "Journey's End"

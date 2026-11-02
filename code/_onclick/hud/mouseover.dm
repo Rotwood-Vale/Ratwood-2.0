@@ -201,7 +201,7 @@
 
 /mob/living/carbon/human/get_mouseover_data(mob/viewer)
 	var/mousecolor = "#c1aaaa"
-	if(voice_color && show_descriptors)
+	if(voice_color && !HAS_TRAIT(src, TRAIT_ANONYMOUS))
 		if(name == real_name)
 			mousecolor = "#[voice_color]"
 

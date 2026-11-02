@@ -166,11 +166,6 @@
 	custom_text = "Obfuscates information about you from all sorts of effects, including patron abilities & passives, combat information, Assess and other virtues."
 	added_traits = list(TRAIT_DECEIVING_MEEKNESS)
 
-/datum/virtue/combat/guarded/apply_to_human(mob/living/carbon/human/recipient)
-	. = ..()
-	recipient.verbs += /mob/living/carbon/human/proc/toggle_descriptors
-	recipient.verbs += /mob/living/carbon/human/proc/emote_ffsalute
-	recipient.verbs += /mob/living/carbon/human/proc/toggle_guarded
 
 /*/datum/virtue/combat/impervious
 	name = "Impervious"

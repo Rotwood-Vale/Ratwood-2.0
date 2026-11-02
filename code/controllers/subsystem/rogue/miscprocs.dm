@@ -344,22 +344,48 @@
 	set name = "Toggle Anonymity"
 	set category = "Virtue"
 
-	show_descriptors = !show_descriptors
-	to_chat(src, "My identifying features are [show_descriptors ? "no longer " : ""]obscured.")
-	if(show_descriptors)
-		voicecolor_override = null
+	if(HAS_TRAIT_FROM(src, TRAIT_ANONYMOUS, GUARDED_TRAIT))
+		REMOVE_TRAIT(src, TRAIT_ANONYMOUS, GUARDED_TRAIT)
+	else if(!HAS_TRAIT(src, TRAIT_GUARD_RAISED))
+		to_chat(src, span_warning("I must raise my guard first."))
+		return
 	else
-		voicecolor_override = "#A0A0A0"
+		ADD_TRAIT(src, TRAIT_ANONYMOUS, GUARDED_TRAIT)
+	to_chat(src, "My identifying features are [HAS_TRAIT(src, TRAIT_ANONYMOUS) ? "" : "no longer "]obscured.")
 
 /mob/living/carbon/human/proc/toggle_guarded()
 	set name = "Toggle Guarded"
 	set category = "Virtue"
 
-	if(HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
-		REMOVE_TRAIT(src, TRAIT_DECEIVING_MEEKNESS, TRAIT_VIRTUE) 
+	if(HAS_TRAIT_FROM(src, TRAIT_GUARD_RAISED, GUARDED_TRAIT))
+		REMOVE_TRAIT(src, TRAIT_GUARD_RAISED, GUARDED_TRAIT)
+		REMOVE_TRAIT(src, TRAIT_ANONYMOUS, GUARDED_TRAIT)
 	else
-		ADD_TRAIT(src, TRAIT_DECEIVING_MEEKNESS, TRAIT_VIRTUE)
-	to_chat(src, "I have [HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS) ? "raised" : "lowered"] my guard around others.")
+		ADD_TRAIT(src, TRAIT_GUARD_RAISED, GUARDED_TRAIT)
+	to_chat(src, "I have [HAS_TRAIT(src, TRAIT_GUARD_RAISED) ? "raised" : "lowered"] my guard around others.")
+
+/mob/living/carbon/human/proc/on_guarded_gained(datum/source)
+	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_GUARD_RAISED, GUARDED_TRAIT)
+	verbs |= list(/mob/living/carbon/human/proc/toggle_guarded, /mob/living/carbon/human/proc/toggle_descriptors)
+
+/mob/living/carbon/human/proc/on_guarded_lost(datum/source)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_GUARD_RAISED, GUARDED_TRAIT)
+	REMOVE_TRAIT(src, TRAIT_ANONYMOUS, GUARDED_TRAIT)
+	verbs -= list(/mob/living/carbon/human/proc/toggle_guarded, /mob/living/carbon/human/proc/toggle_descriptors)
+
+/proc/guarded_roll(chance, mob/living/subject)
+	if(!HAS_TRAIT(subject, TRAIT_GUARD_RAISED))
+		return chance
+	return clamp(round(chance + rand(-20, 20)), 0, 100)
+
+/mob/living/carbon/human/proc/get_voice_color()
+	return voicecolor_override || voice_color
+
+/mob/living/carbon/human/proc/on_anonymous_changed(datum/source)
+	SIGNAL_HANDLER
+	voicecolor_override = HAS_TRAIT(src, TRAIT_ANONYMOUS) ? "A0A0A0" : null
 
 GLOBAL_LIST_EMPTY(miracle_tiers)
 

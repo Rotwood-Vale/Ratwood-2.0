@@ -1937,7 +1937,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(ishuman(user) && user != H)
 		var/aim_text = "[bodyzone2readablezone(user.zone_selected)]..."
-		if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
+		if(HAS_TRAIT(user, TRAIT_GUARD_RAISED))
 			aim_text = prob(10) ? "<i>I can't tell...</i>" : null
 		user.resolve_combataware(H, "[bodyzone2readablezone(selzone)]...", aim_text)
 

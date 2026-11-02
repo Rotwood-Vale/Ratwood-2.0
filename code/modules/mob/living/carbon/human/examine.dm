@@ -101,7 +101,7 @@
 		if(H.dna?.species?.type == /datum/species/gnoll)
 			. += span_cultsmall("Graggar has marked them!")
 
-	if(user != src && HAS_TRAIT(user, TRAIT_MATTHIOS_EYES) && (!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS)))
+	if(user != src && HAS_TRAIT(user, TRAIT_MATTHIOS_EYES) && (!HAS_TRAIT(src, TRAIT_GUARD_RAISED)))
 		var/atom/item = get_most_expensive()
 		if(item)
 			. += span_notice("You get the feeling [m2] most valuable possession is \a [item].")
@@ -160,7 +160,7 @@
 			is_normal = TRUE
 
 		if(user != src)
-			if(HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
+			if(HAS_TRAIT(src, TRAIT_GUARD_RAISED))
 				guarded = TRUE
 
 	if(user != src)
@@ -742,7 +742,7 @@
 	if((user != src) && isliving(user))
 		var/mob/living/L = user
 		var/final_str = STASTR
-		if(HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
+		if(HAS_TRAIT(src, TRAIT_GUARD_RAISED))
 			final_str = L.STASTR - rand(1,2)
 		var/strength_diff = final_str - L.STASTR
 		switch(strength_diff)
@@ -760,7 +760,7 @@
 	if((HAS_TRAIT(user,TRAIT_INTELLECTUAL)))
 		var/mob/living/L = user
 		var/final_int = STAINT
-		if(HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
+		if(HAS_TRAIT(src, TRAIT_GUARD_RAISED))
 			final_int = L.STAINT
 		var/int_diff = final_int - L.STAINT
 		switch(int_diff)
@@ -780,7 +780,7 @@
 		if(heart?.inscryption && (heart.inscryption_key in maniac.key_nums))
 			. += span_danger("[t_He] know[p_s()] [heart.inscryption_key], I AM SURE OF IT!")
 
-	if(!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS) && user != src)
+	if(!HAS_TRAIT(src, TRAIT_GUARD_RAISED) && user != src)
 		if(isliving(user))
 			var/mob/living/L = user
 			if(L.STAINT > 9 && L.STAPER > 9)
@@ -814,7 +814,7 @@
 				. += "<span class='info' style='color: #313131ff'>[m1] wearing black lipstick.</span>"
 
 
-	if(show_descriptors)
+	if(!HAS_TRAIT(src, TRAIT_ANONYMOUS))
 		var/list/lines
 		if((get_face_name() != real_name) && !observer_privilege)
 			lines = build_cool_description_unknown(get_mob_descriptors_unknown(obscure_name, user), src, user)
@@ -1194,7 +1194,7 @@
 		if(name in GLOB.outlawed_players)
 			. += span_userdanger("OUTLAW!")
 
-		if(HAS_TRAIT(user, TRAIT_JUSTICARSIGHT) && !HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
+		if(HAS_TRAIT(user, TRAIT_JUSTICARSIGHT) && !HAS_TRAIT(src, TRAIT_GUARD_RAISED))
 			for(var/datum/bounty/b in GLOB.head_bounties) //I hate this.
 				if(b.target == real_name)
 					. += span_syndradio("[m3] a bounty on [m2] head of [b.amount] mammon for [b.reason], issued by [b.employer].")
@@ -1216,7 +1216,7 @@
 			if(J?.department_flag & GARRISON || J?.department_flag & NOBLEMEN)
 				. += span_greentext("<b>[m1] an agent of the court!</b>")
 
-		if(user != src && !HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS) && ishuman(user))
+		if(user != src && !HAS_TRAIT(src, TRAIT_GUARD_RAISED) && ishuman(user))
 			if(has_flaw(/datum/charflaw/addiction/lovefiend) && user.has_flaw(/datum/charflaw/addiction/lovefiend))
 				. += span_aiprivradio("[m1] as lovesick as I.")
 
@@ -1335,7 +1335,7 @@
 		if(HAS_TRAIT(src, TRAIT_DNR) && src != user && !HAS_TRAIT(user, TRAIT_DEATHSIGHT)) // A lot of conditional to avoid a redundant message, but we also want unknown DNRs to be covered.
 			. += span_danger("Their body holds not even a glimmer of life. No medicine can bring them back.")
 
-	if (HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS) && (!HAS_TRAIT(src, TRAIT_VAMP_DREAMS)) && (!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS)))
+	if (HAS_TRAIT(src, TRAIT_CRITICAL_WEAKNESS) && (!HAS_TRAIT(src, TRAIT_VAMP_DREAMS)) && (!HAS_TRAIT(src, TRAIT_GUARD_RAISED)))
 		if(isliving(user))
 			var/mob/living/L = user
 			if(L.STAINT > 9 && L.STAPER > 9)
@@ -1359,7 +1359,7 @@
 	var/heretic_text = null
 	var/seer
 
-	if(HAS_TRAIT(src,TRAIT_DECEIVING_MEEKNESS))
+	if(HAS_TRAIT(src,TRAIT_GUARD_RAISED))
 		return null
 
 	if(HAS_TRAIT(examiner, TRAIT_HERETIC_SEER))
@@ -1403,7 +1403,7 @@
 /mob/living/proc/get_heretic_symbol(mob/examiner)
 	var/heretic_text
 	var/seer = FALSE
-	if(HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
+	if(HAS_TRAIT(src, TRAIT_GUARD_RAISED))
 		return
 	if(HAS_TRAIT(examiner, TRAIT_HERETIC_SEER))
 		seer = TRUE
