@@ -127,8 +127,8 @@
 		/datum/skill/combat/maces = SKILL_LEVEL_NOVICE, // less than blacksmith, used in hammers
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE, // Not sure why they got journeyman wrestling, architect had it probably doesn't need it
-		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
+		/datum/skill/craft/carpentry = SKILL_LEVEL_MASTER,
+		/datum/skill/craft/masonry = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/engineering = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN, // you can fill in for a smith but poorly, locked to journeyman in all smithing skills, use an autosmither
