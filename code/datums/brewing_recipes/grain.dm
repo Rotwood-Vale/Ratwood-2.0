@@ -19,6 +19,12 @@
 	output_bottle_type = /obj/item/reagent_containers/glass/bottle/brewing_bottle/beer_oat
 	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/oat = 6)
 
+/datum/brewing_recipe/beer/bakersroot
+	name = "Baker's Root Beer"
+	bottle_name = "baker's root beer"
+	bottle_desc = "A bottle of locally-brewed baker's root beer. Has a thick, earthy flavor."
+	needed_items = list(/obj/item/reagent_containers/food/snacks/grown/bakersroot/clean = 6)
+
 /datum/brewing_recipe/beer/rice
 	name = "Rice Wine"
 	bottle_name = "rice wine"

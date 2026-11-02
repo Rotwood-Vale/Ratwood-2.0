@@ -628,3 +628,9 @@
   - code_imp: Chems can now cause or reduce pain
   - bugfix: Pestran devotes just learned that Pestra is the goddes they pray to, not
       Pesta (there was a wrong define there)
+2026-10-31:
+  I_Buff_What_Kills_Me:
+  - rscadd: prevents exorcist and inquisition from taking silverweakness trait
+  - bugfix: hemophage cursed blood samples can be turned in for marquees (with the
+      right restrictions)
+  - bugfix: no more hemophage marquee farm from inquis memeber
