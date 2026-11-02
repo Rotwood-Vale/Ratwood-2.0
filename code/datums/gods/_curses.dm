@@ -40,7 +40,7 @@
 	var/description = "This is a debug curse."
 	var/trait
 	var/resist = FALSE
-s	var/next_burn = 0
+	var/next_burn = 0
 
 /datum/curse/proc/on_life(mob/living/carbon/human/owner)
 	return
