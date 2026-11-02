@@ -100,13 +100,7 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/firearms, SKILL_LEVEL_MASTER, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/storage/belt/rogue/leather/twilight_holsterbelt, SLOT_BELT, TRUE)
 			H.put_in_hands(new /obj/item/gun/ballistic/revolver/rune/twilight_runelock(H), TRUE)
-			var/pouches = list("Pharetra - Runed Spheres", "Pharetra - Blessed Silver Spheres")
-			var/pouch_choice = input(H, "CHOOSE YOUR MUNITIONS.", "TAKE UP PSYDON'S MISSILES.") as anything in pouches
-			switch(pouch_choice)
-				if("Pharetra - Runed Spheres")
-					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/runed, SLOT_BELT_R, TRUE)
-				if("Pharetra - Blessed Silver Spheres")
-					H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag/blessed, SLOT_BELT_R, TRUE)
+			H.equip_to_slot_or_del(new /obj/item/quiver/twilight_bullet/runicbag, SLOT_BELT_R, TRUE)
 
 	var/weapons = list("Psydonic Longsword", "Psydonic Rapier", "Daybreak (Whip)", "Stigmata (Halberd)", "Eucharist (Rapier)", "Testament (Folding Sabre)")
 	var/weapon_choice = input(H,"FLOURISH YOUR SILVER.", "WIELD THEM IN HIS NAME.") as anything in weapons

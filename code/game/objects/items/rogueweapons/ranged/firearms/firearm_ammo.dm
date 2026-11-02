@@ -40,6 +40,7 @@
 
 /obj/item/ammo_casing
 	var/obj/item/quiver/twilight_bullet/runicbag/linked_bag = null
+	var/obj/item/storage/belt/rogue/leather/entropy_sphere_belt/linked_belt = null
 	var/breech_loaded = FALSE
 
 /**
@@ -257,13 +258,18 @@
 /obj/item/ammo_casing/caseless/bullet/lead/runelock/Destroy()
 	if(linked_bag)
 		linked_bag.unlink_casing(src)
+	if(linked_belt)
+		linked_belt.unlink_casing(src)
 	linked_bag = null
+	linked_belt = null
 	return ..()
 
 /obj/item/ammo_casing/caseless/bullet/lead/runelock/ready_proj(atom/target, mob/living/user, quiet, zone_override = "", atom/fired_from)
 	. = ..()
 	if(linked_bag && length(linked_bag.linked_ammo_types) < linked_bag.max_storage)
 		linked_bag.linked_ammo_types += type
+	if(linked_belt && length(linked_belt.linked_ammo_types) < linked_belt.max_storage)
+		linked_belt.linked_ammo_types += type
 
 /obj/item/ammo_casing/caseless/bullet/lead/runelock/equipped(mob/living/user)
 	if(ishuman(user))
@@ -340,13 +346,203 @@
 	. = ..()
 	to_chat(owner, span_warning("My vision returns...!"))
 
+/datum/status_effect/debuff/psypowder/heavy
+	duration = 30 SECONDS
+
+/obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy
+	name = "heavy runed sphere"
+	desc = "You shoudnt be seeing this."
+	projectile_type = /obj/projectile/bullet/firearm/lead/runelock/heavy
+	caliber = "runed_sphere"
+	icon_state = "musketball_runed"
+	max_integrity = 0
+
+/obj/projectile/bullet/firearm/lead/runelock/heavy // only shot by the rifle
+	name = "heavy runed sphere"
+	desc = "You shoudnt be seeing this."
+	damage = 100
+	speed = 0.4 // a bit faster
+	icon_state = "musketball_runed"
+	max_range = 25 // be a sniper you alwys wished to be
+	range = 25
+	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
+	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy
+	damage_type = BRUTE
+	armor_penetration = PEN_BSTEEL
+
+/obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy/blessed
+	name = "heavy blessed runed sphere"
+	desc = "A large, perfectly round sphere crafted from pure silver. These munitions are forged by the finest Otavan smiths and blessed personally by the Grandmaster. The expanded runework nessesites firing it from a rifle."
+	projectile_type = /obj/projectile/bullet/firearm/lead/runelock/heavy/blessed
+	icon_state = "musketball_blessed"
+
+/obj/projectile/bullet/firearm/lead/runelock/heavy/blessed
+	name = "heavy blessed runed sphere"
+	desc = "A large, perfectly round sphere crafted from pure silver. These munitions are forged by the finest Otavan smiths and blessed personally by the Grandmaster. The expanded runework nessesites firing it from a rifle."
+	damage = 240
+	icon_state = "musketball_blessed"
+	silver = TRUE
+	blessed = TRUE
+	armor_penetration = PEN_NONE
+	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy/blessed
+
+/obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy/runed
+	name = "heavy runed sphere"
+	desc = "A large, perfectly round metal sphere covered in Psydonite runes. Lethal at high velocity."
+	projectile_type = /obj/projectile/bullet/firearm/lead/runelock/heavy/runed
+	caliber = "runed_sphere"
+	icon_state = "musketball_runed"
+
+/obj/projectile/bullet/firearm/lead/runelock/heavy/runed
+	name = "heavy runed sphere"
+	desc = "A large, perfectly round metal sphere covered in Psydonite runes. Lethal at high velocity."
+	damage = 90
+	icon_state = "musketball_runed"
+	armor_penetration = PEN_BSTEEL
+	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy/runed
+
+/obj/projectile/bullet/firearm/lead/runelock/heavy/runed/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		L.apply_status_effect(/datum/status_effect/debuff/psypowder/heavy) // 2 times duration
+
+/obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy/entropy
+	name = "sphere of entropy"
+	desc = "Looking at the complex runework on this sphere makes you feel somehow lesser."
+	projectile_type = /obj/projectile/bullet/firearm/lead/runelock/heavy/entropy
+	caliber = "runed_sphere"
+	icon_state = "musketball_blessed"
+
+/obj/projectile/bullet/firearm/lead/runelock/heavy/entropy
+	name = "entrophy sphere"
+	desc = "You feel lesser for even gazing at this."
+	damage = 120
+	icon_state = "musketball_blessed"
+	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
+	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy/entropy
+	armor_penetration = PEN_BSTEEL
+	silver = TRUE
+	blessed = TRUE
+
+/obj/projectile/bullet/firearm/lead/runelock/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(ishuman(target))
+		var/mob/living/carbon/human/L = target
+		L.stamina_add(50)
+		L.energy_add(-450) // around 3 bulets to remove a blue bar
+		if(L.devotion)
+			L.devotion.update_devotion(-500) // half of T4 clerics
+		if(L.get_bloodpool())
+			L.adjust_bloodpool(-500) // half a normal vampire vita
+		to_chat(L, span_danger("You feel as if you somehow became lesser!"))
+		
+
+/obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy/tracker
+	name = "mark"
+	desc = "A highly specialised and expensive tracking sphere. Victim will leave a trail of silver dust as they escape, and will bleed more as they move around."
+	projectile_type = /obj/projectile/bullet/firearm/lead/runelock/heavy/tracker
+	caliber = "runed_sphere"
+	icon_state = "musketball_silver"
+
+/obj/projectile/bullet/firearm/lead/runelock/heavy/tracker
+	name = "mark"
+	desc = "You can't escape the hunters mark."
+	damage = 80
+	icon_state = "musketball_silver"
+	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
+	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy/tracker
+	armor_penetration = PEN_BSTEEL // we want this to go though no mater what
+	silver = TRUE
+	blessed = TRUE
+
+/obj/projectile/bullet/firearm/lead/runelock/heavy/tracker/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(ishuman(target))
+		var/mob/living/carbon/human/L = target
+		L.apply_status_effect(/datum/status_effect/debuff/arbalest_hunt)
+
+/obj/effect/decal/cleanable/food/arbalest_trail
+	name = "silver dust"
+	desc = "A trail of silvery dust created by a marking sphere buried in some poor heretic."
+	icon_state = "flour" // dont laugh, we lack sprites
+	color = "#afb1b1"
+	alpha = 100
+
+/obj/effect/decal/cleanable/food/arbalest_trail/Initialize(mapload)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(self_cleaning)), 10 MINUTES) // och look its self cleaning
+
+/obj/effect/decal/cleanable/food/arbalest_trail/proc/self_cleaning()
+	qdel(src)
+	
+
+/atom/movable/screen/alert/status_effect/debuff/arbalest_hunt
+	name = "Hunters Mark"
+	desc = "There is something burrowing inside me! The more I move the worse it becomes! I need to stand still and extract it (click the popup)."
+	icon = 'icons/mob/screen_alert.dmi'
+	icon_state = "embed"
+
+/atom/movable/screen/alert/status_effect/debuff/arbalest_hunt/handle_click(location, control, params)
+	if(!usr || !usr.client)
+		return FALSE
+	var/mob/user = usr
+	var/paramslist = params2list(params)
+	if(paramslist["shift"] && paramslist["left"]) // screen objects don't do the normal Click() stuff so we'll cheat
+		examine_ui(user)
+		return FALSE
+	var/mob/living/carbon/human/L = usr
+	if(!istype(L))
+		return
+	if(do_after(L, 10 SECONDS))	
+		L.remove_status_effect(/datum/status_effect/debuff/arbalest_hunt)
+
+
+/datum/status_effect/debuff/arbalest_hunt
+	id = "arbalest_hunt"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/arbalest_hunt
+	effectedstats = list(STATKEY_SPD = -3)
+	duration = 5 MINUTES
+	var/damage = 0
+	var/scaling = 0.15 // how much the damage is incresed for every tile moved
+	var/damage_cap = 50 // the maximum damage that can be done per step, 50 same as cut troath or heart
+
+/datum/status_effect/debuff/arbalest_hunt/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move_init))
+
+/datum/status_effect/debuff/arbalest_hunt/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+
+/datum/status_effect/debuff/arbalest_hunt/proc/handle_move()
+	var/mob/living/carbon/human/H = owner
+	damage += scaling
+	damage = min(damage, damage_cap)
+	H.adjust_blood_volume(-damage)
+	H.adjustBruteLoss(damage)
+	var/turf/T = get_turf(H)
+	if(istype(T))
+		new /obj/effect/decal/cleanable/food/arbalest_trail(T)
+
+/datum/status_effect/debuff/arbalest_hunt/proc/handle_move_init(datum/source)
+	SIGNAL_HANDLER
+	if(source != owner)
+		return FALSE
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/status_effect/debuff/arbalest_hunt, handle_move))
+
 /obj/item/quiver/twilight_bullet/runicbag
 	name = "pharetra"
 	desc = "A leather pouch designed to store runic bullets. The rune inscribed on the lock binds to the ammunition stored inside, and upon activation, returns spent runic bullets to the pouch for reuse."
 	icon_state = "runebag"
 	item_state = "runebag"
 	max_storage = 12
-	var/selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/runed // what the pouch is currently attuned to
+	var/has_types = TRUE
+	var/ammo_type1 = /obj/item/ammo_casing/caseless/bullet/lead/runelock/runed 
+	var/ammo_type2 = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed 
+	var/ammo_type_name1 = "runed"
+	var/ammo_type_name2 = "blessed"
+	var/selected_type // what the pouch is currently attuned to
 	var/list/linked_ammo_types = list() // types the casings report on firing
 	var/list/linked_casings = list()    // every live casing linked to this bag, in or out of it
 	var/recall_energy_cost = 25 // energy drained per sphere recalled
@@ -379,7 +575,7 @@
 	if(user.energy < recall_energy_cost)
 		to_chat(user, span_warning("The runes on the lock flicker and die. I don't have the energy to recall them."))
 		return
-	var/type_name = (selected_type == /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed) ? "blessed" : "runed"
+	var/type_name = (selected_type == ammo_type2) ? "ammo_type_name2" : "ammo_type_name1"
 	to_chat(user, span_notice("The runes on the lock flare as I call the [type_name] spheres home..."))
 	if(!do_after(user, 15 SECONDS, src))
 		to_chat(user, span_warning("My concentration breaks, and the runes go dark."))
@@ -411,12 +607,15 @@
 	update_icon()
 
 /obj/item/quiver/twilight_bullet/runicbag/MiddleClick(mob/user, params)
-	if(selected_type == /obj/item/ammo_casing/caseless/bullet/lead/runelock/runed)
-		selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
-		to_chat(user, span_notice("The spheres in the pouch shimmer and turn <b>blessed</b>."))
+	if(!has_types)
+		to_chat(user, span_warning("The spheres in this pouch cannot be converted."))
+		return TRUE
+	if(selected_type == ammo_type1)
+		selected_type = ammo_type2
+		to_chat(user, span_notice("The spheres in the pouch shimmer and turn <b>[ammo_type_name2]</b>."))
 	else
-		selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/runed
-		to_chat(user, span_notice("The spheres in the pouch darken and turn <b>runed</b>."))
+		selected_type = ammo_type1
+		to_chat(user, span_notice("The spheres in the pouch darken and turn <b>[ammo_type_name1]</b>."))
 	convert_spheres(selected_type)
 	playsound(src, 'sound/magic/charged.ogg', 40, FALSE)
 	return TRUE
@@ -447,12 +646,20 @@
 // Examine requested by Xander
 /obj/item/quiver/twilight_bullet/runicbag/examine(mob/user)
 	. = ..()
-	var/type_name = (selected_type == /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed) ? "blessed" : "runed"
+	var/type_name = ""
+	if(has_types)
+		type_name = (selected_type == ammo_type2) ? ammo_type_name2 : ammo_type_name1
+	else
+		type_name = ammo_type_name1
 	. += span_info("It holds [arrows.len]/[max_storage] [type_name] spheres.")
-	. += span_info("Use it in hand to recall spheres of the attuned type. Middle-click to convert the spheres inside. Right-click to draw a sphere.")
+	if(has_types)
+		. += span_info("Use it in hand to recall spheres of the attuned type. Middle-click to convert the spheres inside. Right-click to draw a sphere.")
+	else
+		. += span_info("Use it in hand to recall spheres. Right-click to draw a sphere.")
+	
 
 /obj/item/quiver/twilight_bullet/runicbag/attackby(obj/item/A, mob/user, params)
-	if(istype(A, /obj/item/ammo_casing/caseless/bullet/lead/runelock))
+	if((has_types && istype(A, ammo_type2)) || istype(A, ammo_type1))
 		if(eatarrow(A, user))
 			to_chat(user, span_notice("You insert \the [A] into \the [src]."))
 		else
@@ -461,7 +668,7 @@
 	return ..()
 
 /obj/item/quiver/twilight_bullet/runicbag/eatarrow(obj/A, loc)
-	if(!istype(A, /obj/item/ammo_casing/caseless/bullet/lead/runelock))
+	if((!has_types || !istype(A, ammo_type2)) && !istype(A, ammo_type1))
 		return FALSE
 	if(arrows.len >= max_storage)
 		return FALSE
@@ -477,7 +684,7 @@
 	return TRUE
 
 /obj/item/quiver/twilight_bullet/runicbag/proc/summon_round(sphere_type)
-	if(!ispath(sphere_type, /obj/item/ammo_casing/caseless/bullet/lead/runelock) || sphere_type == /obj/item/ammo_casing/caseless/bullet/lead/runelock)
+	if(!ispath(sphere_type, ammo_type1) && (!has_types || !ispath(sphere_type, ammo_type2)))
 		return FALSE
 	if(arrows.len >= max_storage)
 		return FALSE
@@ -487,26 +694,32 @@
 	update_icon()
 	return TRUE
 
-/obj/item/quiver/twilight_bullet/runicbag/runed/Initialize(mapload)
+/obj/item/quiver/twilight_bullet/runicbag/Initialize(mapload)
 	. = ..()
+	selected_type = ammo_type1
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/bullet/lead/runelock/runed/R = new(src)
-		arrows += R
-		link_casing(R)
-	update_icon()
-
-/obj/item/quiver/twilight_bullet/runicbag/blessed/Initialize(mapload)
-	. = ..()
-	selected_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed
-	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/bullet/lead/runelock/blessed/R = new(src)
+		var/obj/item/ammo_casing/R = new selected_type(src)
 		arrows += R
 		link_casing(R)
 	update_icon()
 
 //Smaller, 8-sphere pharetras for the Arbalist's Fusilier option.
-/obj/item/quiver/twilight_bullet/runicbag/runed/arbalist
+/obj/item/quiver/twilight_bullet/runicbag/arbalist
+	name = "Fusilier's pharetra"
+	desc = "A leather pouch designed to store runic bullets. The rune inscribed on the lock binds to the ammunition stored inside, and upon activation, returns spent runic bullets to the pouch for reuse. This version is meant for the heavier rifle ammo of the Fusilier"
 	max_storage = 8
+	ammo_type1 = /obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy/runed 
+	ammo_type2 = /obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy/blessed 
+	ammo_type_name1 = "heavy runed"
+	ammo_type_name2 = "heavy blessed"
 
-/obj/item/quiver/twilight_bullet/runicbag/blessed/arbalist
-	max_storage = 8
+/obj/item/quiver/twilight_bullet/runicbag/arbalist/mark
+	name = "Markers pouch"
+	desc = "A small rune-inscribed pouch for storing and recaling a single marking sphere."
+	max_storage = 1
+	has_types = FALSE
+	ammo_type1 = /obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy/tracker
+	ammo_type_name1 = "hunters mark"
+	w_class = WEIGHT_CLASS_TINY
+	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_RING
+	recall_energy_cost = 100 // special ammo

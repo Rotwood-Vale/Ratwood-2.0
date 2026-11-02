@@ -16,6 +16,7 @@
 	var/ranged_skill = null
 	var/per_scales_damage = FALSE
 	var/steady_aim = FALSE
+	var/heavy_load = FALSE // If true, can fire heavy bullets
 
 /obj/item/gun/ballistic/revolver/rune/proc/can_quick_load(mob/user)
 	return TRUE

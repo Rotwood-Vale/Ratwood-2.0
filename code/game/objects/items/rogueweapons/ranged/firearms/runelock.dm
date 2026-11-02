@@ -179,9 +179,15 @@
 		to_chat(user, span_warning("This weapon uses runic magic, not crude smokepowder! Channel its energy directly instead."))
 		return
 		
-	if(istype(A, /obj/item/ammo_box) || istype(A, /obj/item/ammo_casing))
+	if(istype(A, /obj/item/ammo_casing))
 		if(cocked)
 			if((loc == user) && (user.get_inactive_held_item() != src) && (user.get_active_held_item() != src))
+				return
+			if(istype(A, /obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy) && !heavy_load)
+				to_chat(user, span_warning("This is a heavy sphere, [name] runes cannot provide enough energy to fire it."))
+				return
+			if(!istype(A, /obj/item/ammo_casing/caseless/bullet/lead/runelock/heavy) && heavy_load)
+				to_chat(user, span_warning("This is a light sphere, [name] runes would overload it if you tried to fire it."))
 				return
 			..()
 		else
@@ -301,11 +307,12 @@
 	can_parry = TRUE
 	minstr = 6
 	walking_stick = TRUE
-	damfactor = 2
+	damfactor = 1
 	critfactor = 1
 	reload_time = 40
 	reload_stamina_cost = 80
 	can_spin = FALSE // No twirling a rifle around your finger.
+	heavy_load = TRUE // the one gun that fires heavy bullets
 
 /obj/item/gun/ballistic/revolver/rune/twilight_runelock/rifle/getonmobprop(tag)
 	. = ..()
