@@ -104,6 +104,8 @@
 	cost = 5
 	min_chaos = 2
 	weight = 20
+	incompatible = list(/datum/round_modifier/high_wretches, /datum/round_modifier/vampire, /datum/round_modifier/vampirelord)
+	job_slots = list("Wretch" = -5)
 	villain_events = list(/datum/round_event_control/antagonist/solo/zizo_cult)
 
 /*
