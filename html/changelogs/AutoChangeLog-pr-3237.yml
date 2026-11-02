@@ -1,4 +1,0 @@
-author: "Arturlang"
-delete-after: True
-changes:
-  - bugfix: "when smithing and then quenching sometimes, the item would randomly dissapear during the quenching step"
