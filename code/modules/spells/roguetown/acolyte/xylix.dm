@@ -653,26 +653,23 @@
 		revert_cast()
 		return FALSE
 
-/datum/action/cooldown/spell/projectile/fetch/greater/miracle
+/datum/action/cooldown/spell/projectile/fetch/miracle
 	name = "Divine Fetch"
 	primary_resource_type = SPELL_COST_DEVOTION
 	primary_resource_cost = 10
 	invocations = list()
 	cooldown_time = 5 SECONDS
-	attunement_school = null
 	ignore_armor_penalty = TRUE
 	associated_stat = null
 	associated_skill = /datum/skill/magic/holy
 	spell_tier = 0
 	point_cost = 0
 
-/datum/action/cooldown/spell/projectile/repel/greater/miracle
+/datum/action/cooldown/spell/projectile/repel/miracle
 	name = "Divine Repel"
 	primary_resource_type = SPELL_COST_DEVOTION
 	primary_resource_cost = 14
 	invocations = list()
-	cooldown_time = 15 SECONDS
-	attunement_school = null
 	ignore_armor_penalty = TRUE
 	associated_stat = null
 	associated_skill = /datum/skill/magic/holy
