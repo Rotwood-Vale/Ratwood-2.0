@@ -1,7 +1,7 @@
 /// The output is halved for every z-level the windmill sits below the top.
-#define WINDMILL_TOP_RPM_MAX 16
+#define WINDMILL_TOP_RPM_MAX 32
 /// Stress a spinning windmill feeds into its rotation network.
-#define WINDMILL_STRESS_GENERATION 256
+#define WINDMILL_STRESS_GENERATION 1024
 
 /obj/structure/windmill
 	name = "windmill"

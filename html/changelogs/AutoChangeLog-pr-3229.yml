@@ -1,0 +1,7 @@
+author: "ronfino"
+delete-after: True
+changes:
+  - refactor: "Renamed tab \"Admin.Special\" into \"-GameMaster-\""
+  - refactor: "Renamed verb \"Spawn...\" into \"Spawn\""
+  - refactor: "Renamed verb \"Bomb...\" into \"Bomb\""
+  - refactor: "Renamed verb \"Bomb - DynEx...\" into \"Bomb - Dynamic Explosion\""

@@ -210,6 +210,7 @@
 	material_quality = floor(material_quality/current_recipe.num_of_materials)-4
 	skill_quality = floor((skill_quality/current_recipe.num_of_materials)/1500)+material_quality
 	skill_quality -= floor(numberofhits * 0.25)
+	skill_quality = clamp(skill_quality, BLACKSMITH_LEVEL_MIN, BLACKSMITH_LEVEL_MAX)
 
 	var/modifier
 	switch(skill_quality)

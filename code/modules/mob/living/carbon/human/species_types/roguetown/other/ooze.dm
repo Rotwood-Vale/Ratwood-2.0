@@ -182,6 +182,18 @@
 /datum/species/ooze/check_roundstart_eligible()
 	return TRUE
 
+/datum/species/ooze/intercept_death(mob/living/carbon/human/human, gibbed)
+	if(HAS_TRAIT(human, TRAIT_OOZE_SUFFERING))
+		return istype(human.loc, /obj/shapeshift_holder/ooze_death)
+	if(istype(human.loc, /obj/shapeshift_holder))
+		var/obj/shapeshift_holder/old_form = human.loc
+		old_form.restore()
+	var/mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering/shape = new(human.loc)
+	shape.color = "#[human.dna.features["mcolor"]]"
+	new /obj/shapeshift_holder/ooze_death(shape, human)
+	shape.name = "[human]"
+	return TRUE
+
 //SLIME FORM WOOO
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/ooze
@@ -196,12 +208,29 @@
 	shapeshift_type = /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/transformed
 	convert_damage = FALSE
 	do_gib = FALSE
+	/// Cooldown applied when the blob form is killed, instead of the normal recharge_time.
+	var/death_recharge_time = 30 SECONDS
 
 /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/transformed
 	melee_damage_lower = 9
 	melee_damage_upper = 14
 	del_on_deaggro = null
 	defprob = 70
+
+/mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/transformed/death(gibbed)
+	var/obj/shapeshift_holder/ooze_blob/form = locate() in src
+	if(!form)
+		return ..()
+	form.shapeDeath()
+
+/obj/shapeshift_holder/ooze_blob
+
+/obj/shapeshift_holder/ooze_blob/shapeDeath()
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/ooze/blob_spell = source
+	if(blob_spell)
+		blob_spell.charge_counter = blob_spell.recharge_time - blob_spell.death_recharge_time
+		blob_spell.start_recharge()
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering
 	name = "suffering ooze"
@@ -216,11 +245,10 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/ooze_blob/suffering/revive(full_heal = FALSE, admin_revive = FALSE, bypass_foreign_brain_check = FALSE)
 	var/obj/shapeshift_holder/ooze_death/H = locate() in src
 	if(H)
-		H.restore()
+		H.restore(death = FALSE)
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/ooze/Shapeshift(mob/living/caster)
-	var/obj/shapeshift_holder/H = locate() in caster
-	if(H)
+	if(locate(/obj/shapeshift_holder) in caster)
 		to_chat(caster, span_warning("You're already shapeshifted!"))
 		return
 
@@ -228,7 +256,7 @@
 	if(ishuman(caster))
 		var/mob/living/carbon/human/human_caster = caster
 		shape.color = "#[human_caster.dna.features["mcolor"]]"
-	H = new(shape,src,caster)
+	new /obj/shapeshift_holder/ooze_blob(shape, src, caster)
 	shape.name = "[shape]"
 	shape.faction = caster.faction
 
@@ -246,6 +274,7 @@
 	if(!istype(shape))
 		CRASH("shapeshift holder created outside mob/living")
 	stored = caster
+	ADD_TRAIT(stored, TRAIT_OOZE_SUFFERING, REF(src))
 	if(stored.mind)
 		stored.mind.transfer_to(shape)
 	stored.forceMove(src)
@@ -255,9 +284,17 @@
 	slink = soullink(/datum/soullink/shapeshift, stored , shape)
 	slink.source = src
 
-/obj/shapeshift_holder/ooze_death/restore(death=FALSE, knockout=0)
+/obj/shapeshift_holder/ooze_death/Destroy()
+	var/mob/living/held = stored
+	. = ..()
+	if(held)
+		REMOVE_TRAIT(held, TRAIT_OOZE_SUFFERING, REF(src))
+
+/obj/shapeshift_holder/ooze_death/restore(death=TRUE, knockout=0)
 	if(restoring || QDELETED(src))
 		return
+	if(death || !stored)
+		return ..()
 
 	restoring = TRUE
 	qdel(slink)
@@ -276,7 +313,6 @@
 		shape.mind?.transfer_to(stored)
 	stored.revive(full_heal = TRUE, admin_revive = FALSE)
 	to_chat(stored, span_notice("Bug notice: If you can no longer see emotes, move to a different z level and back (up/down a level). This is a known bug."))
-	stored.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/ooze)
 	stored.Knockdown(200)
 	stored.Stun(200)
 	stored.apply_status_effect(/datum/status_effect/debuff/revived)

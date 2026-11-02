@@ -322,6 +322,92 @@
 	inhand_y_dimension = 64
 	bigboy = TRUE
 
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/pioneer
+	name = "guilded eleonora"
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "pdolabra"
+	gripsprite = TRUE
+	desc = "A long handled dolabra axe-pick with a carved grip made of hardened maple wood. This one has an axe-blade of frayed blacksteel, having lost its varnish long ago with a long pick-head behind the blade, this dolabra is decorated with golden reinforced bracers along the shaft and a heavy gold mace head at the top."
+	dropshrink = 0.75
+	force = 30
+	force_wielded = 34
+	max_integrity = 1000
+	max_blade_int = 1200
+	wdefense = 6
+	wdefense_wbonus = 3
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/dolabra/pioneer, /datum/intent/pick)
+	gripped_intents = list(/datum/intent/axe/cut/long/dolabra/pioneer, /datum/intent/axe/chop/long/woodcutter/pioneer, /datum/intent/axe/bash/dolabra/pioneer, /datum/intent/pick/ranged/dolabra/pioneer)
+	wlength = WLENGTH_LONG
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	resistance_flags = FIRE_PROOF
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = TRUE
+	special = /datum/special_intent/greatsword_swing
+	smeltresult = /obj/item/ingot/gold
+
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/blacksteel
+	name = "blacksteel dolabra"
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "edolabra"
+	gripsprite = TRUE
+	desc = "A long-handled dolabra axe-pick with a carved grip made of hardened maple wood. Fitted with an axe-blade of polished blacksteel and a long pick-head behind the blade."
+	dropshrink = 0.70
+	force = 30
+	force_wielded = 34
+	max_integrity = 1000 // more than a blacksteel pickaxe
+	max_blade_int = 1200
+	wdefense = 6
+	wdefense_wbonus = 3
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/dolabra, /datum/intent/pick)
+	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long/woodcutter, /datum/intent/axe/bash/dolabra, /datum/intent/pick/ranged/dolabra)
+	wlength = WLENGTH_LONG
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	resistance_flags = FIRE_PROOF
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = TRUE
+	special = /datum/special_intent/greatsword_swing
+	smeltresult = /obj/item/ingot/blacksteel
+
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/albranze
+	name = "albranze dolabra"
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "bdolabra" // albranze is a bronze aluminium mix, aluminium was traditionally more expensive than even silver and gold combined
+	gripsprite = TRUE
+	desc = "a long handled dolabra axe-pick with a long shaft of treated oak. Fitted with an axe-head made of polished albranze with a fitted pick-head behind the blade."
+	dropshrink = 0.70
+	force = 28
+	force_wielded = 32
+	max_integrity = 750 // near a blacksteel pickaxe
+	max_blade_int = 1200
+	wdefense = 6
+	wdefense_wbonus = 2
+	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/dolabra, /datum/intent/pick)
+	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long/woodcutter, /datum/intent/axe/bash/dolabra, /datum/intent/pick/ranged/dolabra)
+	wlength = WLENGTH_LONG
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	resistance_flags = FIRE_PROOF
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = TRUE
+	special = /datum/special_intent/greatsword_swing
+	smeltresult = /obj/item/ingot/bronze
+
+/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 5,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
 /obj/item/rogueweapon/stoneaxe/woodcut/getonmobprop(tag)
 	. = ..()
 	if(tag)
