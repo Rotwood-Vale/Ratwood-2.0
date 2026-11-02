@@ -462,18 +462,17 @@
 		var/mob/living/carbon/human/L = target
 		L.apply_status_effect(/datum/status_effect/debuff/arbalest_hunt)
 
-/obj/effect/decal/cleanable/food/arbalest_trail
+/obj/effect/decal/cleanable/blood/footprints/arbalest_trail
 	name = "silver dust"
 	desc = "A trail of silvery dust created by a marking sphere buried in some poor heretic."
-	icon_state = "flour" // dont laugh, we lack sprites
-	color = "#afb1b1"
-	alpha = 100
+	blood_state = BLOOD_STATE_XENO
+	alpha = 240
 
-/obj/effect/decal/cleanable/food/arbalest_trail/Initialize(mapload)
+/obj/effect/decal/cleanable/blood/footprints/arbalest_trail/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(self_cleaning)), 5 MINUTES) // och look its self cleaning
 
-/obj/effect/decal/cleanable/food/arbalest_trail/proc/self_cleaning()
+/obj/effect/decal/cleanable/blood/footprints/arbalest_trail/proc/self_cleaning()
 	qdel(src)
 	
 
@@ -501,29 +500,34 @@
 /datum/status_effect/debuff/arbalest_hunt
 	id = "arbalest_hunt"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/arbalest_hunt
-	effectedstats = list(STATKEY_SPD = -3)
+	effectedstats = list(STATKEY_SPD = -3, STATKEY_WIL = -3)
 	duration = 5 MINUTES
-	var/damage = 0
-	var/scaling = 0.15 // how much the damage is incresed for every tile moved
-	var/damage_cap = 50 // the maximum damage that can be done per step, 50 same as cut troath or heart
 
 /datum/status_effect/debuff/arbalest_hunt/on_apply()
 	. = ..()
+	owner.add_filter("arbalest_hunt_glow", 2, list("type" = "outline", "color" = GLOW_COLOR_METAL, "alpha" = 150, "size" = 2))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move_init))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_hunt))
 
 /datum/status_effect/debuff/arbalest_hunt/on_remove()
 	. = ..()
+	owner.remove_filter("arbalest_hunt_glow")
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
+
+/datum/status_effect/debuff/arbalest_hunt/proc/clear_hunt(mob/living/source)
+	SIGNAL_HANDLER
+	qdel(src)
 
 /datum/status_effect/debuff/arbalest_hunt/proc/handle_move()
 	var/mob/living/carbon/human/H = owner
-	damage += scaling
-	damage = min(damage, damage_cap)
-	H.adjust_blood_volume(-damage)
-	H.adjustBruteLoss(damage)
 	var/turf/T = get_turf(H)
 	if(istype(T))
-		new /obj/effect/decal/cleanable/food/arbalest_trail(T)
+		var/obj/effect/decal/cleanable/blood/footprints/arbalest_trail/trail = locate() in T
+		if(!trail)
+			trail = new(T)
+		trail.entered_dirs |= H.dir
+		trail.update_icon()
 
 /datum/status_effect/debuff/arbalest_hunt/proc/handle_move_init(datum/source)
 	SIGNAL_HANDLER
