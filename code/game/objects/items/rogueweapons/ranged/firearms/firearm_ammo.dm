@@ -471,7 +471,7 @@
 
 /obj/effect/decal/cleanable/food/arbalest_trail/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(self_cleaning)), 10 MINUTES) // och look its self cleaning
+	addtimer(CALLBACK(src, PROC_REF(self_cleaning)), 5 MINUTES) // och look its self cleaning
 
 /obj/effect/decal/cleanable/food/arbalest_trail/proc/self_cleaning()
 	qdel(src)
