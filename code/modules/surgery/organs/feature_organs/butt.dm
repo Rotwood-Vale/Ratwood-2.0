@@ -1,6 +1,6 @@
 /obj/item/organ/butt
 	name = "butt"
-	icon_state = "breasts" //that file is cursed
+	icon_state = "butt"
 	visible_organ = TRUE
 	zone = BODY_ZONE_PRECISE_GROIN
 	slot = ORGAN_SLOT_BUTT
