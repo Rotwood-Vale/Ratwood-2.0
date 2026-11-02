@@ -579,7 +579,7 @@
 	if(user.energy < recall_energy_cost)
 		to_chat(user, span_warning("The runes on the lock flicker and die. I don't have the energy to recall them."))
 		return
-	var/type_name = (selected_type == ammo_type2) ? "ammo_type_name2" : "ammo_type_name1"
+	var/type_name = (selected_type == ammo_type2) ? ammo_type_name2 : ammo_type_name1
 	to_chat(user, span_notice("The runes on the lock flare as I call the [type_name] spheres home..."))
 	if(!do_after(user, 15 SECONDS, src))
 		to_chat(user, span_warning("My concentration breaks, and the runes go dark."))
