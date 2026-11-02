@@ -473,9 +473,9 @@
 				stackcount--
 			else if(stackcount >= 2)
 				var/obj/item/natural/bundle/plank/B = new(get_turf(user))
-				B.amount = clamp(stackcount, 2, 6)
+				B.amount = clamp(stackcount, 2, 20)
 				B.update_bundle()
-				stackcount -= clamp(stackcount, 2, 6)
+				stackcount -= clamp(stackcount, 2, 20)
 				user.put_in_hands(B)
 		for(var/obj/item/natural/wood/plank/F in get_turf(src))
 			playsound(get_turf(user.loc), 'sound/foley/dropsound/wooden_drop.ogg', 80)
