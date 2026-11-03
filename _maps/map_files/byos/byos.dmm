@@ -7622,7 +7622,7 @@
 	dir = 6;
 	pixel_y = 8
 	},
-/obj/effect/landmark/start/sapprentice,
+/obj/effect/landmark/start/guildassociate,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/beach/harbor)
 "iug" = (
@@ -8426,7 +8426,7 @@
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 4
 	},
-/obj/effect/landmark/start/sapprentice,
+/obj/effect/landmark/start/guildassociate,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors/beach/harbor)
 "joR" = (

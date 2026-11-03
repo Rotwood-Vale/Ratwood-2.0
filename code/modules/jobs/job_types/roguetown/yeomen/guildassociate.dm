@@ -30,8 +30,7 @@ As a guild associate, you hail from a lesser guild or aid the guild in their wor
 
 /datum/advclass/guildassociate/architect
 	name = "Guild Architect"
-	tutorial = "You are a Guild Architect, a master of the art of building and construction. You build castles, fortifications and entire cities with your own hands. And you know how to source those materials yourself too.\
-When there is no construction work around, your fellow Guildsmen appreciate your help with gathering materials."
+	tutorial = "You are a Guild Architect, a master of the art of building and construction. You build castles, fortifications and entire cities with your own hands."
 	outfit = /datum/outfit/job/roguetown/guildassociate/architect
 
 	category_tags = list(CTAG_GUILDASSOCIATE)
@@ -98,17 +97,18 @@ When there is no construction work around, your fellow Guildsmen appreciate your
 
 /datum/advclass/guildassociate/labourer
 	name = "Guild Laborer"
-	tutorial = "You are a Guild Laborer, a master of the art of mining and resource extraction. You know how to find the best resource locations and how to gather them safely.\
-Your fellow Guildsmen appreciate your help with gathering materials."
+	tutorial = "Once a hired mercenary off the street. You have been hired to fulfill menial tasks for the Guild of Crafts.\
+The back-breaking work and endless hours but at least the pays better and you eat better now..."
 	outfit = /datum/outfit/job/roguetown/guildassociate/labourer
 
 	category_tags = list(CTAG_GUILDASSOCIATE)
-	traits_applied = list(TRAIT_LEGENDARY_MINER, TRAIT_SMITHING_EXPERT, TRAIT_DARKVISION, TRAIT_MEDIUMARMOR)
-	maximum_possible_slots = 20
+	traits_applied = list(TRAIT_LEGENDARY_MINER, TRAIT_SMITHING_EXPERT, TRAIT_DARKVISION, TRAIT_MEDIUMARMOR, TRAIT_STEELHEARTED)
+	maximum_possible_slots = 1
 	subclass_stats = list(
-		STATKEY_STR = 2,
+		STATKEY_STR = 2, // 9 overall statspread given this is meant to be a mercenary that got hired to do labor, single slot only
 		STATKEY_CON = 2,
 		STATKEY_LCK = 2,
+		STATKEY_WIL = 2,
 		STATKEY_PER = 1,
 	)
 	subclass_skills = list(
@@ -134,22 +134,22 @@ Your fellow Guildsmen appreciate your help with gathering materials."
 	head = /obj/item/clothing/head/roguetown/helmet/kettle/minershelm
 	cloak = /obj/item/clothing/cloak/apron/waist/bar
 	id = /obj/item/scomstone/bad
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket
+	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
 	cloak = /obj/item/clothing/cloak/apron/waist/brown
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
-	pants = /obj/item/clothing/under/roguetown/trou/artipants
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
+	pants = /obj/item/clothing/under/roguetown/chainlegs/iron
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/iron
 	shoes = /obj/item/clothing/shoes/roguetown/boots
-	belt = /obj/item/storage/belt/rogue/leather
+	belt = /obj/item/storage/belt/rogue/leather/black
 	beltl = /obj/item/storage/detpack
 	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/albranze // guild issued standard multitool for anyone
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
-						/obj/item/rogueweapon/huntingknife/bronze = 1,
-						/obj/item/rogueweapon/shovel/bronze/spade = 1,
-						/obj/item/rogueweapon/hammer/bronze = 1,
-						/obj/item/rogueweapon/chisel/bronze = 1,
-						/obj/item/rogueweapon/handsaw/bronze = 1,
+						/obj/item/rogueweapon/huntingknife = 1,
+						/obj/item/rogueweapon/shovel/small = 1,
+						/obj/item/rogueweapon/hammer/iron = 1,
+						/obj/item/rogueweapon/chisel = 1,
+						/obj/item/rogueweapon/handsaw = 1,
 						/obj/item/rogueweapon/scabbard/sheath = 1,
 						/obj/item/recipe_book/survival = 1,
 						/obj/item/flint = 1,

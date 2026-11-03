@@ -80599,7 +80599,7 @@
 /turf/open/floor/rogue/tile/harem1,
 /area/rogue/indoors/town/manor/desert)
 "wCH" = (
-/obj/effect/landmark/start/sapprentice,
+/obj/effect/landmark/start/guildassociate,
 /turf/open/floor/rogue/deserttile{
 	color = "#d4d6d6";
 	icon_state = "tiledrab2"
