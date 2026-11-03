@@ -59,6 +59,8 @@
 				var/datum/component/silverbless/bless = used_weapon.GetComponent(/datum/component/silverbless)
 				if(bless.is_blessed)
 					intdamage = round(intdamage * bless.cursed_item_intdamage)
+					if(used.is_cult)
+						intdamage = round(intdamage * 1.2)
 
 		if(consume_debuff)
 			if(has_status_effect(/datum/status_effect/debuff/exposed))

@@ -1521,7 +1521,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	is_cult = TRUE
 
 /obj/item/clothing/head/hooded/cultrobehood/empowered
-	armor = ARMOR_PLATE
 	max_integrity = 400
 	icon_state = "ewarlockhood"
 	item_state = "ewarlockhood"
@@ -1555,7 +1554,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(empowered)
 		return
 	empowered = TRUE
-	armor = getArmor(arglist(ARMOR_PLATE))
 	max_integrity = 400
 	obj_integrity = max_integrity
 	icon_state = "ewarlock"
