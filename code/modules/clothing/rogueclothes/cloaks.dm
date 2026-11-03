@@ -919,6 +919,8 @@
 	boobed = TRUE
 	allowed_race = CLOTHED_RACES_TYPES
 	flags_inv = HIDECROTCH|HIDEBOOB
+	hiked_base_icon = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_cloaks.dmi'
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
@@ -1436,6 +1438,33 @@
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 	dropshrink = null
+
+/obj/item/clothing/cloak/volfmantle/shoulderpad
+	name = "plate spaulders"
+	desc = "An heavy metallic spaulder designed to strike awe and demand submission on the hearts of others."
+	icon_state = "metalshoulderpad"
+	item_state = "metalshoulderpad"
+	slot_flags = ITEM_SLOT_CLOAK
+	salvage_result = /obj/item/ingot/steel
+	cold_protection = ARM_RIGHT
+
+/obj/item/clothing/cloak/volfmantle/shoulderpad/leather
+	name = "leather spaulders"
+	desc = "A pair of leather shoulder protections to look bigger and dominant."
+	icon_state = "leathershoulderpad"
+	item_state = "leathershoulderpad"
+	slot_flags = ITEM_SLOT_CLOAK
+	salvage_result = /obj/item/natural/hide/cured
+	cold_protection = ARM_LEFT | ARM_RIGHT
+
+/obj/item/clothing/cloak/volfmantle/shoulderpad/lightleather
+	name = "light leather spaulders"
+	desc = "An small pair of leather pads for shoulder protection."
+	icon_state = "lightleathershoulderpad"
+	item_state = "lightleathershoulderpad"
+	slot_flags = ITEM_SLOT_CLOAK
+	salvage_result = /obj/item/natural/hide/cured
+	cold_protection = ARM_LEFT | ARM_RIGHT
 
 /obj/item/clothing/cloak/wickercloak
 	name = "wicker cloak"

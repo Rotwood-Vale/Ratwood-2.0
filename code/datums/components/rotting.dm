@@ -67,7 +67,17 @@
 			return
 
 	var/area/A = get_area(C)
-	if (istype(A, /area/rogue/indoors/town))	//Stops rotting inside town buildings; will stop your zombification such as at church or appothocary.
+	// Only the apothecary and church protects from turning deadite, should be limited to sacred spaces and sterile wards, not just some guy's house
+	var/static/list/rot_protected_areas = typecacheof(list(
+		/area/rogue/indoors/town/physician,
+		/area/rogue/indoors/town/church,
+		/area/rogue/outdoors/exposed/church,
+		/area/rogue/outdoors/town/church,
+		/area/rogue/outdoors/town/graveyard,
+		/area/rogue/outdoors/town/roofs/church,
+		/area/rogue/outdoors/town/roofs/desert/church,
+	))
+	if(is_type_in_typecache(A, rot_protected_areas))
 		return
 	if (istype(A, /area/rogue/indoors/deathsedge))	//Stops rotting inside Death's Edge (Death's Door spell area)
 		return

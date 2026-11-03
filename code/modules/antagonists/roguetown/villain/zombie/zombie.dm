@@ -346,15 +346,12 @@
 		qdel(src)
 		return
 
-	
-
 	zombie.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	zombie.setOxyLoss(0, updating_health = FALSE, forced = TRUE)
 	zombie.setToxLoss(0, updating_health = FALSE, forced = TRUE)
-	if(!infected_wake)	// if we died, heal all this too
-		zombie.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
-		zombie.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
-		zombie.heal_wounds(INFINITY)
+	zombie.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
+	zombie.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
+	zombie.heal_wounds(INFINITY)
 	if(zombie.stat == DEAD)
 		if(!zombie.become_alive(UNCONSCIOUS)) // Backstops the pre-heal foreign gate above
 			qdel(src)
@@ -372,6 +369,11 @@
 	if(zombie.stat >= DEAD)
 		//could not revive
 		qdel(src)
+
+	zombie.fullscreen_redflash("redflash3")
+	zombie.emote("scream") // Warning for nearby players
+	zombie.Knockdown(1)
+	zombie.remove_status_effect(/datum/status_effect/zombie_infection)
 
 /datum/antagonist/zombie/greet()
 	to_chat(owner.current, span_userdanger("Death is not the end..."))
@@ -426,12 +428,10 @@
 	zombie.set_blood_volume(BLOOD_VOLUME_NORMAL)
 	zombie.setOxyLoss(0, updating_health = FALSE, forced = TRUE) // Zombies don't breathe
 	zombie.setToxLoss(0, updating_health = FALSE, forced = TRUE) // Zombies are immune to poison
-
-	if (infected_wake || converted)
-		zombie.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
-		zombie.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
-		zombie.heal_wounds(INFINITY) // Heal all non-permanent wounds
-		to_chat(zombie, span_userdanger("Your bones snap back into place and your flesh knits itself back together as you rise again in undeath."))
+	zombie.adjustBruteLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
+	zombie.adjustFireLoss(-INFINITY, updating_health = FALSE, forced = TRUE)
+	zombie.heal_wounds(INFINITY) // Heal all non-permanent wounds
+	to_chat(zombie, span_userdanger("Your bones snap back into place and your flesh knits itself back together as you rise again in undeath."))
 
 	if(zombie.stat == DEAD)
 		if(!zombie.become_alive(UNCONSCIOUS)) // Backstops the pre-heal foreign gate above. The corpse stays
@@ -467,18 +467,18 @@
 ///Making sure they're not any other antag as well as adding the zombie datum to their mind
 /mob/living/carbon/human/proc/zombie_check_can_convert()
 	if(!mind)
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/vampire))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/werewolf))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/zombie))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/skeleton))
-		return
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/gnoll))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_ZOMBIE_IMMUNE))
-		return
+		return FALSE
 	return mind.add_antag_datum(/datum/antagonist/zombie)
 

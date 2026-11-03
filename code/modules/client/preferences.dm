@@ -134,6 +134,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/descriptor_color = FALSE
 	/// If a cursed collar can be equipped to them at all
 	var/cursed_collarable = FALSE
+	/// If we are lactating, can others milk us via reagent containers (not for sex actions, but the stuff in milking.dm)
+	var/milkable = FALSE
+	/// If manticore tail flavor messages are on by default
+	var/manticore_tail_messages = FALSE
 	var/voting_popup = TRUE
 	var/compliance_notifs = TRUE
 	var/skillcap_notifs = TRUE
@@ -447,6 +451,9 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/tgui_pref = TRUE
 
 	var/race_bonus
+
+	/// Whether we can see the feint HUD bar.
+	var/feint_hud = FALSE 
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -1925,9 +1932,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							if (AGE_ADULT)
 								to_chat(user, "You preside in your 'prime', whatever this may be, and gain no bonus nor endure any penalty for your time spent alive.")
 							if (AGE_MIDDLEAGED)
-								to_chat(user, "Muscles ache and joints begin to slow as Aeon's grasp begins to settle upon your shoulders. (-1 SPD, +1 WIL)")
+								to_chat(user, "Muscles ache and joints begin to slow as Aeon's grasp begins to settle upon your shoulders. (-1 SPD, +1 WIL, +1 FOR)")
 							if (AGE_OLD)
-								to_chat(user, "In a place as lethal as PSYDONIA, the elderly are all but marvels... or beneficiaries of the habitually privileged. (-1 STR, -2 SPE, -1 PER, -2 CON, +2 INT, +1 FOR)")
+								to_chat(user, "In a place as lethal as PSYDONIA, the elderly are all but marvels... or beneficiaries of the habitually privileged. (-1 STR, -2 SPE, -1 PER, -2 CON, +3 INT, +1 FOR)")
 						// LETHALSTONE EDIT END
 						ResetJobs()
 						family = FAMILY_NONE
@@ -3390,6 +3397,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.headshot_link = headshot_link
 
 	character.origin = origin ? origin.name : "Unknown"
+	for(var/trait in origin?.origin_traits)
+		ADD_TRAIT(character, trait, ORIGIN_TRAIT)
 
 	character.statpack = statpack
 

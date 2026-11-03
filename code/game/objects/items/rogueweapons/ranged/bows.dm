@@ -239,7 +239,8 @@
 			perception_modifier = 15
 		if(perception_modifier < 10)
 			perception_modifier = 10
-		BB.damage *= damfactor * (perception_modifier / 10)
+		var/per_scaling = 1 + (min(user.STAPER, RANGED_STAT_SOFTCAP) * RANGED_STAT_MULT) + (max(0, user.STAPER - RANGED_STAT_SOFTCAP) * RANGED_STAT_CAPPEDMULT)
+		BB.damage *= damfactor * per_scaling
 	return ..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/update_icon()
@@ -384,7 +385,7 @@
 	randomspread = 0
 	spread = 0
 	force = 12
-	damfactor = 1.2
+	damfactor = 1.3
 	accfactor = 0.9
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/getonmobprop(tag)

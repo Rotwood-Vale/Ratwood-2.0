@@ -64,6 +64,7 @@
 		/obj/item/rogueweapon/pick/steel = 1,
 	)
 
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/pioneer/plant_bogtrap_delayed)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/architect_plan)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/architect_conjure)

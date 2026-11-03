@@ -25,8 +25,8 @@
 	advjob_examine = TRUE // So that everyone know which subjob they have picked
 	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
 	job_subclasses = list(
-		/datum/advclass/guildsman/artificer,
 		/datum/advclass/guildsman/blacksmith,
+		/datum/advclass/guildsman/engineer,
 	)
 	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice)
 
@@ -102,14 +102,15 @@
 		head = /obj/item/clothing/head/roguetown/turban/random
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
 
-/datum/advclass/guildsman/artificer
+/datum/advclass/guildsman/engineer
 	name = "Guild Engineer"
-	tutorial = "You are an engineer, Once trained under architects and artificers you now have the experience to surpass them both. \
-	Your calling is the works of artificing and architecture, be it smithing, constructing or the arcane machinery you do it all, your experience demands respect."
-	outfit = /datum/outfit/job/roguetown/guildsman/artificer
+	tutorial = "You are an engineer, hailing from the artificers of old, you now combine the teachings of engineering with architecture. \
+	You now fit the role of both designer and constructor, working with wood or working with machinery, you are a respected craftsman and highly sought after for your experience is endless."
+	outfit = /datum/outfit/job/roguetown/guildsman/engineer
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 4, "locked_aspects" = list(/datum/magic_aspect/battlewardry, /datum/magic_aspect/artifice), "post_aspect_spells" = list(/obj/effect/proc_holder/spell/invoked/takeapprentice), "ward" = TRUE)
 
 	category_tags = list(CTAG_GUILDSMEN)
-	traits_applied = list(TRAIT_ARCYNE_T1, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER, TRAIT_LEGENDARY_MINER)
+	traits_applied = list(TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_FUSILIER, TRAIT_ENGINEER, TRAIT_ARCYNE, TRAIT_LEGENDARY_MINER)
 	subclass_stats = list( // alchemy expert upon request
 		STATKEY_INT = 3,
 		STATKEY_WIL = 2,
@@ -119,11 +120,11 @@
 		STATKEY_PER = 1
 	)
 	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // woodcutting, don't want a wild venard attacking you
+		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN, // main weapon is an axe
 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN, // this will allow an architech to use a portable bombard
+		/datum/skill/combat/firearms = SKILL_LEVEL_JOURNEYMAN, // 
 		/datum/skill/craft/crafting = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/carpentry = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/masonry = SKILL_LEVEL_EXPERT,
@@ -134,8 +135,7 @@
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE, // AP gave them apprentice to allow for grinding since bombs need alchemy skill to get the ingredients
-		/datum/skill/magic/arcane = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT, // dd you know you can't even climb the walls you make?
 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
@@ -144,7 +144,7 @@
 		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT, // glass making
 	)
 
-/datum/outfit/job/roguetown/guildsman/artificer/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/guildsman/engineer/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/roguetown/articap
 	mask = /obj/item/clothing/mask/rogue/spectacles/golden
@@ -153,37 +153,31 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 	pants = /obj/item/clothing/under/roguetown/trou/artipants
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/pick/steel
-	beltl = /obj/item/flashlight/flare/torch/lantern
-	backl = /obj/item/storage/backpack/rogue/backpack
-	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter
+	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced/short
+	belt = /obj/item/storage/belt/rogue/leather/black
+	beltr = /obj/item/roguekey/crafterguild
+	beltl = /obj/item/flashlight/flare/torch/lantern/bronzelamptern
+	backl = /obj/item/storage/backpack/rogue/artibackpack/engineer
+	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/albranze
 	backpack_contents = list(
-								/obj/item/rogueweapon/hammer/steel = 1,
-								/obj/item/rogueweapon/chisel = 1,
-								/obj/item/rogueweapon/handsaw = 1,
+								/obj/item/rogueweapon/hammer/bronze = 1,
+								/obj/item/rogueweapon/chisel/bronze = 1,
+								/obj/item/rogueweapon/handsaw/bronze = 1,
 								/obj/item/lockpickring/mundane = 1,
-								/obj/item/recipe_book/blacksmithing = 1,
-								/obj/item/recipe_book/engineering = 1,
-								/obj/item/recipe_book/ceramics = 1,
-								/obj/item/recipe_book/builder = 1,
 								/obj/item/recipe_book/survival = 1,
 								/obj/item/contraption/linker = 1,
 								/obj/item/mini_flagpole/artificer = 1,
-								/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 								/obj/item/mini_flagpole/blacksmith = 1,
+								/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
 								/obj/item/rogueweapon/blowrod = 1,
-								/obj/item/dye_brush = 1,
-								/obj/item/roguekey/crafterguild = 1,
-								/obj/item/rogueweapon/huntingknife = 1,
+								/obj/item/rogueweapon/huntingknife/bronze = 1,
+								/obj/item/rogueweapon/shovel/bronze/spade = 1,
 								/obj/item/flint = 1,
+								/obj/item/dye_brush = 1,
 						)
 	if(SSmapping.current_map.map_name == "Desert Town")
 		shoes = /obj/item/clothing/shoes/roguetown/sandals
-	// Not a real mage, no free spell point. Take Arcyne Potential if you want it.
+
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/enchant_weapon)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/architect_plan)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/architect_conjure)

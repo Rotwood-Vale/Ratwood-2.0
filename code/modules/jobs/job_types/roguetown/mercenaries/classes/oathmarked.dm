@@ -103,7 +103,7 @@
 /obj/item/rogueweapon/eaglebeak/oathmarked
 	force = 12//Two-hand this.
 	force_wielded = 32
-	gripped_intents = list(/datum/intent/spear/thrust/eaglebeak, /datum/intent/spear/bash/eaglebeak,
+	gripped_intents = list(/datum/intent/spear/thrust/bad, /datum/intent/spear/bash/eaglebeak,
 	/datum/intent/mace/smash/eaglebeak, /datum/intent/mace/warhammer/pick/ranged)
 	name = "oathmarked's lucerne"
 	desc = "A reinforced pole affixed with a head of steel. On the opposite side, a pick, intended to punch through plate. \
@@ -131,7 +131,7 @@
 	name = "oathmarked's flamberge"
 	desc = "An incredibly well balanced blade, designed for a rather large frame. Heavy beyond any reasonable measure. \
 	The work of a master smith, or one with far too much time to spare. The blade of a noble, surely."
-	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/thrust/zwei, /datum/intent/sword/peel/big, /datum/intent/sword/strike/bad)
+	gripped_intents = list(/datum/intent/sword/cut/zwei, /datum/intent/sword/thrust/zwei, /datum/intent/sword/strike/bad)
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "oathflamberge"//Temp.
 	max_blade_int = 220

@@ -61,6 +61,7 @@
 	mask = /obj/item/clothing/mask/rogue/facemask/steel
 	neck = /obj/item/clothing/neck/roguetown/chaincoif
 	id = /obj/item/mattcoin
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
 
 /datum/outfit/job/roguetown/bandit/sellsword/post_equip(mob/living/carbon/human/H)
 	. = ..()

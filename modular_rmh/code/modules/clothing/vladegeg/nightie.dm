@@ -6,6 +6,8 @@
 	slot_flags = ITEM_SLOT_SHIRT | ITEM_SLOT_ARMOR
 	icon = 'modular_rmh/icons/clothing/vladegeg/nightie.dmi'
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/nightie.dmi'
+	hiked_base_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/nightie.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_nightie.dmi'
 	sleeved = null
 	sleevetype = null
 	icon_state = "dress"

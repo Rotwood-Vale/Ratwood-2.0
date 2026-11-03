@@ -33,7 +33,7 @@
 	anvilrepair = /datum/skill/craft/carpentry
 	dropshrink = 0.9
 	COOLDOWN_DECLARE(shield_bang)
-
+	special = /datum/special_intent/limbguard
 
 /obj/item/rogueweapon/shield/attackby(obj/item/attackby_item, mob/user, params)
 
@@ -78,7 +78,7 @@
 	icon_state = "inbash"
 	hitsound = list('sound/combat/shieldbash_wood.ogg')
 	chargetime = 0
-	penfactor = BLUNT_DEFAULT_PENFACTOR
+	penfactor = PEN_NONE
 	item_d_type = "blunt"
 	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
 
@@ -117,7 +117,8 @@
 	icon_state = "woodsh"
 	dropshrink = 0.8
 	anvilrepair = /datum/skill/craft/carpentry
-	coverage = 30
+	coverage = 60
+	max_integrity = 120
 	smeltresult = /obj/item/ash
 	dropshrink = 0.8
 
@@ -171,9 +172,9 @@
 	resistance_flags = FLAMMABLE
 	var/swapped = FALSE
 	wdefense = 10
-	coverage = 40
+	coverage = 70
 	parrysound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
-	max_integrity = 300
+	max_integrity = 280
 	anvilrepair = /datum/skill/craft/weaponsmithing
 	smeltresult = /obj/item/ingot/iron
 
@@ -190,10 +191,10 @@
 	resistance_flags = null
 	flags_1 = CONDUCT_1
 	wdefense = 11
-	coverage = 50
+	coverage = 70
 	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
-	max_integrity = 330
+	max_integrity = 300
 	smeltresult = /obj/item/ingot/steelholy
 
 /obj/item/rogueweapon/shield/tower/holysee/MiddleClick(mob/user, params)
@@ -231,7 +232,7 @@
 	resistance_flags = null
 	flags_1 = CONDUCT_1
 	wdefense = 12
-	coverage = 60
+	coverage = 70
 	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	max_integrity = 300
@@ -452,7 +453,7 @@
 	force = 15
 	throwforce = 10
 	dropshrink = 0.8
-	coverage = 30
+	coverage = 50
 	attacked_sound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	parrysound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	max_integrity = 220
@@ -475,7 +476,7 @@
 	force = 20
 	throwforce = 25 // "I can do this all day."
 	dropshrink = 0.8
-	coverage = 30
+	coverage = 50
 	attacked_sound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	parrysound = list('sound/combat/parry/shield/metalshield (1).ogg','sound/combat/parry/shield/metalshield (2).ogg','sound/combat/parry/shield/metalshield (3).ogg')
 	possible_item_intents = list(SHIELD_SMASH_METAL, SHIELD_BLOCK) // No SHIELD_BASH. Too heavy to swing quickly, or something.
@@ -576,7 +577,7 @@
 	force = 25
 	throwforce = 30 // DO NOT GIVE ANYTHING; BUT TAKE FROM THEM.. EVERYTHING!
 	dropshrink = 0.8 // Free free to add actual designs to this shield, too, if-or-whenever.
-	coverage = 50//for dealing with persian archers
+	coverage = 60
 	resistance_flags = null
 	flags_1 = CONDUCT_1
 	minstr = 11 //Particularly heavy to use as a melee weapon.

@@ -50,6 +50,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 //			var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 //			if (istype(L))
 //				L.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance, 0))/150))
+	if(boozepwr >= 50 && HAS_TRAIT(C, TRAIT_HEARTY_DRINKER))
+		C.apply_status_effect(/datum/status_effect/buff/hearty_drinker)
 	return ..()
 
 /datum/reagent/consumable/ethanol/reaction_obj(obj/O, reac_volume)
