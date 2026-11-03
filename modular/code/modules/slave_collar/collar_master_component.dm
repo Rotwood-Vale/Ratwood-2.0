@@ -611,18 +611,8 @@ GLOBAL_LIST_EMPTY(collar_masters)
 		pet.do_jitter_animation(10)
 
 	// Sound effects based on arousal level
-	if(prob(15) && (!high_pop_mode || high_pop_feedback_allowed(pet, "arousal_sound", 6 SECONDS)))  // 15% chance each tick to make a sound
-		var/current_arousal = pet.sexcon.arousal
-		if(!pet.can_speak())
-			pet.emote("sexmoangag", forced = TRUE)
-		else
-			switch(current_arousal)
-				if(0 to 40)
-					pet.emote("sexmoanlight", forced = TRUE)
-				if(40 to 75)
-					pet.emote("sexmoanmed", forced = TRUE)
-				else
-					pet.emote("sexmoanhvy", forced = TRUE)
+	if(pet.sexcon.arousal > 10 && prob(10) && (!high_pop_mode || high_pop_feedback_allowed(pet, "arousal_sound", 6 SECONDS)))  // 10% chance each tick to make a sound
+		pet.emote(pet.sexcon.get_moan_emote(), forced = TRUE)
 
 	// Continue loop
 	pet.active_timers[loop_id] = addtimer(CALLBACK(src, PROC_REF(arousal_tick), pet, amount_per_tick, loop_id), 1 SECONDS, TIMER_STOPPABLE)

@@ -1055,6 +1055,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pronouns = sanitize_text(pronouns, THEY_THEM)
 	voice_type = sanitize_text(voice_type, VOICE_TYPE_MASC)
 	moan_selection = sanitize_text(moan_selection, MOANPACK_TYPE_DEF)	//RMH edit
+	validate_moan_selection()
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 6, 0)
 	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 6, 0)
 	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 6, 0)

@@ -94,22 +94,14 @@
 	set name = "Moan (Lewd)"
 	set category = "Noises"
 
-	if(!COOLDOWN_FINISHED(src, sex_moaning))
+	if(!COOLDOWN_FINISHED(src, sex_moaning) || !sexcon)
+		return
+	if(sexcon.arousal <= 0 && !sexcon.current_action)
+		to_chat(src, span_warning("I'm not in the mood."))
 		return
 
 	COOLDOWN_START(src, sex_moaning, 3 SECONDS)
-
-	if(!can_speak())
-		emote("sexmoangag", forced = TRUE)
-	else
-		var/datum/sex_controller/S = sexcon
-		switch(S.arousal)
-			if(0 to 40)
-				emote("sexmoanlight", forced = TRUE)
-			if(40 to 75)
-				emote("sexmoanmed", forced = TRUE)
-			else
-				emote("sexmoanhvy", forced = TRUE)
+	emote(sexcon.get_moan_emote(), forced = TRUE)
 
 /datum/emote/living/carbon/human/eyebrow
 	key = "eyebrow"

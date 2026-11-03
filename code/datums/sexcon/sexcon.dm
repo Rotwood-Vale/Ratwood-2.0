@@ -1062,18 +1062,7 @@
 	var/marked_by_baotha = user.has_flaw(/datum/charflaw/marked_by_baotha)
 	var/likes_pain = has_baotha_patron || has_masochist || marked_by_baotha
 
-	var/chosen_emote
-
-	if(!user.can_speak())
-		chosen_emote = "sexmoangag"
-	else
-		switch(arousal)
-			if(0 to 40)
-				chosen_emote = "sexmoanlight"
-			if(40 to 75)
-				chosen_emote = "sexmoanmed"
-			else
-				chosen_emote = "sexmoanhvy"
+	var/chosen_emote = get_moan_emote()
 
 	if(pain_amt >= PAIN_MILD_EFFECT)
 		if(likes_pain)

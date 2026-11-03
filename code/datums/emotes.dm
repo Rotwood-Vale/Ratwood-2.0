@@ -214,8 +214,8 @@
 			// LETHALSTONE ADDITION END
 			// RMH ADD: a chosen moanpack overrides the voice pack's moans
 			if(H.moan_selection && (key in moan_keys))
-				var/datum/moan_pack/MP = new H.moan_selection
-				possible_sounds = MP.get_moans(key) || possible_sounds
+				var/datum/moan_pack/MP = get_moanpack(H.moan_selection)
+				possible_sounds = MP?.get_moans(key) || possible_sounds
 			if(possible_sounds)
 				if(islist(possible_sounds))
 					var/list/PS = possible_sounds

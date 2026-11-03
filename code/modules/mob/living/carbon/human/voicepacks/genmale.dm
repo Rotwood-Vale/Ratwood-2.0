@@ -17,6 +17,10 @@
 				used = list('sound/vo/male/gen/breathgasp (1).ogg','sound/vo/male/gen/breathgasp (2).ogg','sound/vo/male/gen/breathgasp (3).ogg')
 			if("burp")
 				used = 'sound/vo/male/gen/burp.ogg'
+			if("sexmoangag")
+				used = list('modular_rmh/sound/vo/gagged/male/MALE_GAGGED_SOFT/01.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_SOFT/02.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_SOFT/03.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_SOFT/04.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_SOFT/05.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_SOFT/06.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_SOFT/07.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_SOFT/08.ogg')
+			if("sexmoangag_org")
+				used = list('modular_rmh/sound/vo/gagged/male/MALE_GAGGED_HOT/01.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_HOT/02.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_HOT/03.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_HOT/04.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_HOT/05.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_HOT/06.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_HOT/07.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_HOT/08.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_HOT/09.ogg','modular_rmh/sound/vo/gagged/male/MALE_GAGGED_HOT/10.ogg')
 			if("choke")
 				used = 'sound/vo/male/gen/choke.ogg'
 			if("chuckle")

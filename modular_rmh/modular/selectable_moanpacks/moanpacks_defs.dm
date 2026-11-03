@@ -1,42 +1,62 @@
 /mob/living/carbon/human
 
-	var/datum/moan_pack/moan_selection = null
+	/// Moanpack typepath chosen in prefs, or null to use the voice pack's moans
+	var/moan_selection = null
 
 GLOBAL_LIST_EMPTY(selectable_moanpacks_female)
 GLOBAL_LIST_EMPTY(selectable_moanpacks_male)
 GLOBAL_LIST_EMPTY(selectable_moanpacks)
-
+GLOBAL_LIST_EMPTY(moanpack_instances)
 
 /proc/generate_selectable_moanpacks()
 	if(GLOB.selectable_moanpacks.len)
 		return
 
-	for(var/moanpack_type_m in subtypesof(/datum/moan_pack/male))
-		var/datum/moan_pack/m_t_m = new moanpack_type_m
-		GLOB.selectable_moanpacks_male[m_t_m.name] = moanpack_type_m
-		GLOB.selectable_moanpacks[m_t_m.name] = moanpack_type_m
-		qdel(m_t_m)
-
-	var/datum/moan_pack/m_t_m = new /datum/moan_pack/male
-	GLOB.selectable_moanpacks_male[m_t_m.name] = /datum/moan_pack/male
-	GLOB.selectable_moanpacks[m_t_m.name] = /datum/moan_pack/male
-	qdel(m_t_m)
+	for(var/datum/moan_pack/pack_type as anything in typesof(/datum/moan_pack/male, /datum/moan_pack/female))
+		var/datum/moan_pack/pack = new pack_type
+		GLOB.moanpack_instances[pack_type] = pack
+		GLOB.selectable_moanpacks[pack.name] = pack_type
+		if(ispath(pack_type, /datum/moan_pack/male))
+			GLOB.selectable_moanpacks_male[pack.name] = pack_type
+		else
+			GLOB.selectable_moanpacks_female[pack.name] = pack_type
 
 	GLOB.selectable_moanpacks_male = sortList(GLOB.selectable_moanpacks_male)
-
-	for(var/moanpack_type_f in subtypesof(/datum/moan_pack/female))
-		var/datum/moan_pack/m_t_f = new moanpack_type_f()
-		GLOB.selectable_moanpacks_female[m_t_f.name] = moanpack_type_f
-		GLOB.selectable_moanpacks[m_t_f.name] = moanpack_type_f
-		qdel(m_t_f)
-
-	var/datum/moan_pack/m_t_f = new /datum/moan_pack/female
-	GLOB.selectable_moanpacks_female[m_t_f.name] = /datum/moan_pack/female
-	GLOB.selectable_moanpacks[m_t_f.name] = /datum/moan_pack/female
-	qdel(m_t_f)
-
 	GLOB.selectable_moanpacks_female = sortList(GLOB.selectable_moanpacks_female)
 	GLOB.selectable_moanpacks = sortList(GLOB.selectable_moanpacks)
+
+/// Returns the shared instance of a moanpack type
+/proc/get_moanpack(pack_type)
+	generate_selectable_moanpacks()
+	return GLOB.moanpack_instances[pack_type]
+
+/// Returns the name -> typepath list of moanpacks a voice type may pick from
+/proc/moanpacks_for_voice(voice_type)
+	generate_selectable_moanpacks()
+	switch(voice_type)
+		if(VOICE_TYPE_MASC)
+			return GLOB.selectable_moanpacks_male
+		if(VOICE_TYPE_FEM)
+			return GLOB.selectable_moanpacks_female
+	return GLOB.selectable_moanpacks
+
+/// Returns the moan emote key for the owner's current arousal, or the gagged moan if they can't speak
+/datum/sex_controller/proc/get_moan_emote()
+	if(!user.can_speak())
+		return "sexmoangag"
+	switch(arousal)
+		if(-INFINITY to 40)
+			return "sexmoanlight"
+		if(40 to 75)
+			return "sexmoanmed"
+	return "sexmoanhvy"
+
+/// Resets moan_selection to default if it isn't a pack the current voice type may use. Returns FALSE if it was reset.
+/datum/preferences/proc/validate_moan_selection()
+	if(moan_selection == MOANPACK_TYPE_DEF || (moan_selection in moanpacks_for_voice(voice_type)))
+		return TRUE
+	moan_selection = MOANPACK_TYPE_DEF
+	return FALSE
 
 /datum/moan_pack
 	var/name
