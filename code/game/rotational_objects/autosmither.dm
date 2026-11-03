@@ -50,7 +50,7 @@
 
 	var/list/pre_start_list = list(STEP_FIDDLE, STEP_BUTTON, STEP_LEVER)
 	var/list/post_start_list = list(STEP_BUTTON, STEP_LEVER, STEP_FIDDLE)
-	debris = list(/obj/item/roguegear = 2, /obj/item/natural/wood/plank = 2, /obj/item/ingot/steel = 1)
+	static_debris = list(/obj/item/roguegear/bronze = 4, /obj/item/natural/wood/plank = 4, /obj/item/ingot/steel = 2)
 
 /obj/structure/autosmither/Initialize(mapload)
 	. = ..()
