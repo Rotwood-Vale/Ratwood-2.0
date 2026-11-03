@@ -11,3 +11,35 @@
   Arturlang:
   - bugfix: when smithing and then quenching sometimes, the item would randomly dissapear
       during the quenching step
+2026-11-03:
+  Arturlang:
+  - bugfix: licker wretches keeping silver weakness post-conversion
+  - bugfix: vampires clan abilities starting out without icons or names
+  - bugfix: giving a vampire a silver item and it being trapped in their contents
+  - bugfix: lycker immunity not making you immune to vampire conversion
+  CentralSmith:
+  - bugfix: You can no longer raise your guard while vulnerable from a successful
+      feint.
+  - bugfix: Right-click Defend and the guard hotkey now use the same checks, including
+      preventing guard from stacking with limbguard.
+  Guidesu:
+  - rscadd: Bakers Root
+  Yuckuza:
+  - rscadd: Ported berserker rage ability from AP
+  - rscadd: New pure unarmed options for shaman merc, berserker, thespian, barbarian,
+      monk, heretic monk, iconoclast, and lunancy embracer
+  - balance: Throwing loadout for vigilante wretch now gets throwing arm trait, master
+      climbing, master athletics, and a packback with lots of room for throwables.
+  - rscadd: Berserker wretch loadout options expanded to include grand maul and berserker
+      sword along with the option between light armor or natural armor.
+  - balance: crit resistance on several classes swapped for blood resistance; crit
+      resistance now locked behind unarmed or pure unarmed choices
+  - balance: amazon heavy armor loadout mace option weapon skill reduced to JMAN
+  - balance: Astrtatan immolation can be self-targeted.
+  ronfino:
+  - refactor: Renamed tab "Admin.Special" into "-GameMaster-"
+  - refactor: Renamed verb "Spawn..." into "Spawn"
+  - refactor: Renamed verb "Bomb..." into "Bomb"
+  - refactor: Renamed verb "Bomb - DynEx..." into "Bomb - Dynamic Explosion"
+  - bugfix: Tongs are smeltable again via SNEAK.
+  - rscdel: Removed duplicate tongs from code.
