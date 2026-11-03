@@ -23,11 +23,10 @@ As a guild associate, you hail from a lesser guild or aid the guild in their wor
 	cmode_music = 'sound/music/cmode/towner/combat_towner3.ogg'
 	job_subclasses = list(
 		/datum/advclass/guildassociate/architect,
-		/datum/advclass/guildassociate/miner,
+		/datum/advclass/guildassociate/labourer,
 		/datum/advclass/guildassociate/journeymanengineer,
 		/datum/advclass/guildassociate/journeymansmith,
 	)
-		
 
 /datum/advclass/guildassociate/architect
 	name = "Guild Architect"
@@ -75,7 +74,7 @@ When there is no construction work around, your fellow Guildsmen appreciate your
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
 	belt = /obj/item/storage/belt/rogue/leather
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	backr = /obj/item/rogueweapon/pick/woodcutter/dolabra/albranze // general engineer/architects multitool
+	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/albranze // general engineer/architects multitool
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
 						/obj/item/rogueweapon/hammer/iron = 1,
@@ -97,11 +96,11 @@ When there is no construction work around, your fellow Guildsmen appreciate your
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/architect_plan)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/architect_conjure)
 
-/datum/advclass/guildassociate/miner
+/datum/advclass/guildassociate/labourer
 	name = "Guild Laborer"
 	tutorial = "You are a Guild Laborer, a master of the art of mining and resource extraction. You know how to find the best resource locations and how to gather them safely.\
 Your fellow Guildsmen appreciate your help with gathering materials."
-	outfit = /datum/outfit/job/roguetown/guildassociate/miner
+	outfit = /datum/outfit/job/roguetown/guildassociate/labourer
 
 	category_tags = list(CTAG_GUILDASSOCIATE)
 	traits_applied = list(TRAIT_LEGENDARY_MINER, TRAIT_SMITHING_EXPERT, TRAIT_DARKVISION, TRAIT_MEDIUMARMOR)
@@ -143,7 +142,7 @@ Your fellow Guildsmen appreciate your help with gathering materials."
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 	belt = /obj/item/storage/belt/rogue/leather
 	beltl = /obj/item/storage/detpack
-	backr = /obj/item/rogueweapon/pick/woodcutter/dolabra/albranze // guild issued standard multitool for anyone
+	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/albranze // guild issued standard multitool for anyone
 	backl = /obj/item/storage/backpack/rogue/backpack
 	backpack_contents = list(
 						/obj/item/rogueweapon/huntingknife/bronze = 1,
@@ -216,7 +215,7 @@ While not as trained as your brethren, you are more than capable of doing the wo
 	beltr = /obj/item/roguekey/crafterguild
 	beltl = /obj/item/flashlight/flare/torch/lantern/bronzelamptern
 	backl = /obj/item/storage/backpack/rogue/artibackpack/engineer
-	backr = /obj/item/rogueweapon/pick/woodcutter/dolabra/albranze
+	backr = /obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/albranze
 	backpack_contents = list(
 							/obj/item/rogueweapon/hammer/bronze = 1,
 							/obj/item/rogueweapon/chisel/bronze = 1,
@@ -233,9 +232,6 @@ While not as trained as your brethren, you are more than capable of doing the wo
 							/obj/item/recipe_book/engineering = 1,
 							/obj/item/recipe_book/builder = 1,
 						)
-	if(SSmapping.current_map.map_name == "Desert Town")
-		shoes = /obj/item/clothing/shoes/roguetown/sandals
-
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/architect_plan)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/architect_conjure)
