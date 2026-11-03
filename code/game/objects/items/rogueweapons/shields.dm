@@ -666,7 +666,7 @@
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
 		distfromcaster = get_dist(user, AM)
 
-		if(distfromcaster == 1)
+		if(distfromcaster == 0)
 			if(isliving(AM))
 				var/mob/living/M = AM
 				M.Paralyze(10)
