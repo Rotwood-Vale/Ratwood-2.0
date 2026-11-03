@@ -26,7 +26,6 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	dropshrink = 0.8
 	var/desc_uncorked = "An open bottle. Hopefully the cork is nearby."
 	var/fancy		// for bottles with custom descriptors that you don't want to change when bottle manipulated
-	var/glass_on_impact = FALSE // If TRUE, bottle will generate glass shard on impact. Otherwise it won't.
 
 /obj/item/reagent_containers/glass/bottle/update_icon(dont_fill=FALSE)
 	if(!fill_icon_thresholds || dont_fill || !reagents)
@@ -57,11 +56,19 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	shatter(get_turf(src))
 	..()
 
+/obj/item/reagent_containers/glass/bottle/bullet_act(obj/projectile/P)
+	. = ..()
+	glass_shot(P)
+
+/obj/item/reagent_containers/glass/bottle/proc/glass_shot(obj/projectile/P)
+	if(P.damage <= 0)
+		return
+	shatter(get_turf(src))
+
 /obj/item/reagent_containers/glass/bottle/proc/shatter(turf/T)
 	if(istransparentturf(T))
 		shatter(GET_TURF_BELOW(T))
 		return 
-	glass_on_impact && new /obj/item/natural/glass_shard(get_turf(T))
 	new /obj/effect/decal/cleanable/debris/glassy(get_turf(T))
 	qdel(src)
 

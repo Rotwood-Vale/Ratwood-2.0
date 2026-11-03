@@ -142,6 +142,7 @@
 // SStreasury rides at INIT_ORDER_ECONOMY + 1 and so stays ahead of SSeconomy.
 #define INIT_ORDER_ECONOMY			-2
 #define INIT_ORDER_OUTPUTS			35
+#define INIT_ORDER_PLAYER_ARCHIVES	32 // Before SSatoms, so mapped bookshelves and paintings can draw from the archives.
 #define INIT_ORDER_ATOMS			30
 #define INIT_ORDER_TREES			29
 #define INIT_ORDER_MAPGEN			28 //Can we possibly move this to BEFORE atom init in some way? I sure fuckin hope so.

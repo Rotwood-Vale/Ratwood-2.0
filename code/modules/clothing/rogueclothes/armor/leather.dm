@@ -93,7 +93,7 @@
 /obj/item/clothing/suit/roguetown/armor/leather/studded/warden
 	name = "forester's armor"
 	desc = "A hardened leather harness with a large pauldron worn over a maille coat, associated with the wardens."
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	icon = 'icons/roguetown/clothing/special/warden.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/warden.dmi'
 	icon_state = "forestleather"
@@ -191,7 +191,7 @@
 	desc = "A sturdy raincoat draped atop of a tightly-fastened boiled leather cuirass. Saint Astratan youths often fashion little pieces of memorabilia and stitch it on the inner pockets of the coat to remind the confessors that their cause is virtuous, and that they mustn't lose sight of what matters."
 	icon_state = "confessorcoat"
 	item_state = "confessorcoat"
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
@@ -224,7 +224,7 @@
 	desc = "A heavy leather jacket that covers the arms and protects the vitals."
 	icon_state = "leatherjacketo"
 	item_state = "leatherjacketo"
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	cold_protection = CHEST | ARM_LEFT | ARM_RIGHT
@@ -234,7 +234,7 @@
 	desc = "Traditional Drow armour made from the hide of one of the Underdark's many beasts, underlayered with the chitin plates of a drider. Durable yet still flexible, perfect for skirmishers."
 	icon_state = "shadowvest"
 	item_state = "shadowvest"
-	body_parts_covered = COVERAGE_FULL
+	body_parts_covered = COVERAGE_ALL_BUT_HANDFEET
 	armor = ARMOR_LEATHER
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
@@ -274,7 +274,7 @@
 /obj/item/clothing/suit/roguetown/armor/leather/bikini
 	name = "leather corslet"
 	desc = "Flexible cowhide armor. Lightweight, better than nothing. Trimmed to protect the heart and hips."
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = COVERAGE_TORSO
 	icon_state = "leatherkini"
 	item_state = "leatherkini"
 	allowed_sex = list(FEMALE, MALE)
@@ -284,7 +284,7 @@
 /obj/item/clothing/suit/roguetown/armor/leather/studded/bikini
 	name = "studded leather corslet"
 	desc = "Studded leather is the most durable of all hides and leathers and about as light. Trimmed to protect the heart and hips."
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = COVERAGE_TORSO
 	icon_state = "studleatherkini"
 	item_state = "studleatherkini"
 	allowed_sex = list(MALE, FEMALE)
@@ -293,7 +293,7 @@
 /obj/item/clothing/suit/roguetown/armor/leather/hide/bikini
 	name = "hide corslet"
 	desc = "A light armor of wildbeast hide. Far more durable than leather. Trimmed to protect the heart and hips."
-	body_parts_covered = CHEST|GROIN
+	body_parts_covered = COVERAGE_TORSO
 	icon_state = "hidearmorkini"
 	item_state = "hidearmorkini"
 	allowed_sex = list(MALE, FEMALE)
@@ -359,7 +359,7 @@
 
 	slot_flags = ITEM_SLOT_ARMOR
 	armor = ARMOR_LEATHER
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 	detail_tag = "_detail"
@@ -407,7 +407,7 @@
 	icon_state = "hand"
 	item_state = "hand"
 	armor = ARMOR_LEATHER
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/heir
 	name = "Heir's uniform"
@@ -428,7 +428,7 @@
 	desc = ""
 	icon_state = "councillor"
 	item_state = "councillor"
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/magos
 	name = "Magos' Robes"
@@ -436,14 +436,14 @@
 	icon_state = "magos"
 	item_state = "magos"
 	slot_flags = ITEM_SLOT_ARMOR
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 
 /obj/item/clothing/suit/roguetown/armor/leather/newkeep/steward
 	name = "Steward's Vest"
 	desc = "Smart and modern garb, embroidered with real gold"
 	icon_state = "steward"
 	item_state = "steward"
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	body_parts_covered = COVERAGE_ALL_BUT_HANDLEGS
 	armor = ARMOR_PADDED_BAD
 
 /obj/item/clothing/head/roguetown/duchess_hood
