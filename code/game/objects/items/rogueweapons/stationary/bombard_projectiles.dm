@@ -219,10 +219,10 @@ The canister effect, when using canister shot or adjacent stuff.
 /obj/projectile/canister_shrap
 	name = "\improper canister shrapnel"
 	icon_state = "bullet"
-	damage = 110 // shrapnel was pretty terrible and rarely ever used, warcrime shell
+	damage = 70
 	range = 12//We want this to go beyond screen, in case of far misses.
 	pass_flags = PASSTABLE | PASSGRILLE
-	armor_penetration = PEN_BSTEEL
+	armor_penetration = PEN_MEDIUM
 	damage_type = BRUTE
 	woundclass = BCLASS_PIERCE
 	flag = "piercing"
