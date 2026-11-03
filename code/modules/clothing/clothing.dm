@@ -58,6 +58,7 @@
 
 	var/naledicolor = FALSE
 	var/chunkcolor = "#5e5e5e"
+	var/is_cult = FALSE
 	var/material_category = ARMOR_MAT_LEATHER
 
 	var/snouting = FALSE //do we have the snout-snug sprite toggled?

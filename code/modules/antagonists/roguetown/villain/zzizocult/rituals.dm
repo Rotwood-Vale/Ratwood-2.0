@@ -1162,6 +1162,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/obj/item/organ/zizo_graft/organ = new organ_path
 	organ.Insert(H)
 	ADD_TRAIT(H, TRAIT_MONSTROUS, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 	material--
 	to_chat(H, span_userdanger("THE RAVER JAMS THE GRAFT INTO MY FLESH!"))
 	H.emote("scream")
@@ -1484,6 +1485,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/active_item = FALSE
 	var/regen_timer
 	var/last_hit = -5 MINUTES
+	is_cult = TRUE
 
 /obj/item/clothing/cloak/cultrobe/take_damage(damage_amount, damage_type = BRUTE, damage_flag, sound_effect, attack_dir, armor_penetration)
 	last_hit = world.time
@@ -1516,6 +1518,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	armor = ARMOR_LEATHER
 	max_integrity = 200
 	resistance_flags = FIRE_PROOF
+	is_cult = TRUE
 
 /obj/item/clothing/head/hooded/cultrobehood/empowered
 	armor = ARMOR_PLATE
@@ -1944,6 +1947,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	ADD_TRAIT(target, TRAIT_NOSOFTCRIT, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
 	ADD_TRAIT(target, TRAIT_MONSTROUS, TRAIT_GENERIC)
+	ADD_TRAIT(target, TRAIT_SILVER_WEAK, TRAIT_GENERIC)
 	to_chat(target, span_notice("ZIZO EMPOWERS ME!! SOMETHING HAS GONE WRONG, THE RITUAL FAILED BUT WHAT IT LEFT ME WITH IS STILL POWER!!"))
 	target.mind.AddSpell(new /obj/effect/proc_holder/spell/self/regenerate)
 	target.change_stat(STATKEY_STR, -3)

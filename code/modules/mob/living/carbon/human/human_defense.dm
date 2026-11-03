@@ -29,6 +29,10 @@
 		used = get_best_worn_armor(def_zone, d_type)
 		if(used)
 			protection = used.armor.getRating(d_type)
+			if(used.is_cult && istype(used_weapon) && used_weapon.is_silver)
+				var/datum/component/silverbless/blessing = used_weapon.GetComponent(/datum/component/silverbless)
+				if(blessing.is_blessed)
+					protection = max(protection - 1, 0)
 			if(!blade_dulling)
 				blade_dulling = BCLASS_BLUNT
 			if(used.blocksound)
@@ -51,7 +55,7 @@
 			if(intdamfactor != 1)
 				intdamage *= intdamfactor
 
-			if(istype(used_weapon) && used_weapon.is_silver && ((used.smeltresult in list(/obj/item/ingot/aaslag, /obj/item/ingot/decrepit, /obj/item/ingot/gilbranze)) || used.GetComponent(/datum/component/cursed_item)))
+			if(istype(used_weapon) && used_weapon.is_silver && ((used.smeltresult in list(/obj/item/ingot/aaslag, /obj/item/ingot/decrepit, /obj/item/ingot/gilbranze)) || used.GetComponent(/datum/component/cursed_item) || used.is_cult))
 				var/datum/component/silverbless/bless = used_weapon.GetComponent(/datum/component/silverbless)
 				if(bless.is_blessed)
 					intdamage = round(intdamage * bless.cursed_item_intdamage)

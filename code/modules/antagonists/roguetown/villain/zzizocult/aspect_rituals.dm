@@ -1789,6 +1789,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	H.change_stat(STATKEY_STR, 6)
 	H.change_stat(STATKEY_CON, 6)
 	ADD_TRAIT(H, TRAIT_MONSTROUS, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_SILVER_WEAK, "fulmenor")
 	H.enter_frenzymod()
 	to_chat(H, span_notice("I WANT TO HURT PEOPLE!"))
 	return TRUE
@@ -1804,6 +1805,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	H.change_stat(STATKEY_STR, -6)
 	H.change_stat(STATKEY_CON, -6)
 	REMOVE_TRAIT(H, TRAIT_MONSTROUS, TRAIT_GENERIC)
+	REMOVE_TRAIT(H, TRAIT_SILVER_WEAK, "fulmenor")
 	to_chat(H, span_notice("THE MONSTROUS HUNGER FADES FROM ME."))
 
 // BITE
