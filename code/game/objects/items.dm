@@ -1866,7 +1866,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		obj_destroyed = TRUE
 		acid_melt()
 		return TRUE
-	if (damage_flag == "fire")
+	if (damage_flag == "fire" && (resistance_flags & FLAMMABLE))
 		obj_destroyed = TRUE
 		burn()
 		return TRUE
