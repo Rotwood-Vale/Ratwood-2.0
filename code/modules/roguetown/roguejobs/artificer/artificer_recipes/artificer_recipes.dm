@@ -329,7 +329,7 @@
 /datum/artificer_recipe/contraptions/steamshield
 	name = "Steam Shield (+1 wood plank)(+1 Bronze gear)(+1 bronze ingot)"
 	required_item = /obj/item/ingot/bronze
-	additional_items = list(/obj/item/roguegear/bronze, /obj/item/natural/wood/plank)
+	additional_items = list(/obj/item/roguegear/bronze, /obj/item/natural/wood/plank, /obj/item/ingot/bronze)
 	created_item = /obj/item/rogueweapon/shield/steam
 	hammers_per_item = 12
 	skill_level = 4
