@@ -137,7 +137,7 @@
 	var/psicross_bonus = 0
 
 	for(var/obj/item/clothing/neck/current_item in H.get_equipped_items(TRUE))
-		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/g))
+		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/silver/sojourner, /obj/item/clothing/neck/roguetown/psicross/g))
 			switch(current_item.type) // Worn Psicross Piety bonus. For fun.
 				if(/obj/item/clothing/neck/roguetown/psicross/wood)
 					psicross_bonus = -2
@@ -145,7 +145,7 @@
 					psicross_bonus = -4
 				if(/obj/item/clothing/neck/roguetown/psicross)
 					psicross_bonus = -5
-				if(/obj/item/clothing/neck/roguetown/psicross/silver)
+				if(/obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/silver/sojourner)
 					psicross_bonus = -7
 				if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 					psicross_bonus = -7
@@ -248,7 +248,7 @@
 	var/psicross_bonus = 0
 
 	for(var/obj/item/clothing/neck/current_item in H.get_equipped_items(TRUE))
-		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/g))
+		if(current_item.type in list(/obj/item/clothing/neck/roguetown/psicross/inhumen/ancient, /obj/item/clothing/neck/roguetown/psicross, /obj/item/clothing/neck/roguetown/psicross/wood, /obj/item/clothing/neck/roguetown/psicross/decrepit, /obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/silver/sojourner, /obj/item/clothing/neck/roguetown/psicross/g))
 			switch(current_item.type) // Worn Psicross Piety bonus. For fun.
 				if(/obj/item/clothing/neck/roguetown/psicross/wood)
 					psicross_bonus = -2
@@ -256,7 +256,7 @@
 					psicross_bonus = -4
 				if(/obj/item/clothing/neck/roguetown/psicross)
 					psicross_bonus = -5
-				if(/obj/item/clothing/neck/roguetown/psicross/silver)
+				if(/obj/item/clothing/neck/roguetown/psicross/silver, /obj/item/clothing/neck/roguetown/psicross/silver/sojourner)
 					psicross_bonus = -7
 				if(/obj/item/clothing/neck/roguetown/psicross/g) // PURITY AFLOAT.
 					psicross_bonus = -7

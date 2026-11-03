@@ -32,3 +32,4 @@
 		/datum/advclass/arbalist,
 		/datum/advclass/sojourner
 	)
+	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
