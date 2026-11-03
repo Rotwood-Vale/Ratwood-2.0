@@ -55,6 +55,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/hide
 	id = /obj/item/mattcoin
 	H.adjust_blindness(-3)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
 	var/weapons = list("The Brigand (Axes, Maces & Whips/Flails)","Common Soldiery (Polearms & Swords)", "The Nefarious Dusthead (Knives, Climbing & Athletics)")
 	if(H.mind)
 		var/weapon_choice = input(H, "Choose your expert-level proficiencies.", "HOW DOTH THOU WALK THROUGH LYFE, BRIGAND?") as anything in weapons

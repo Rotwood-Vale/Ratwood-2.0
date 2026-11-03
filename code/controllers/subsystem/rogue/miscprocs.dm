@@ -61,7 +61,7 @@
 
 /datum/devotion/Destroy(force)
 	. = ..()
-	if (patron.type == /datum/patron/inhumen/zizo || patron.type == /datum/patron/divine/necra)
+	if (holder && istype(patron) && (patron.type == /datum/patron/inhumen/zizo || patron.type == /datum/patron/divine/necra))
 		REMOVE_TRAIT(holder, TRAIT_DEATHSIGHT, "devotion")
 	holder?.hud_used?.shutdown_bloodpool()
 	holder?.devotion = null
@@ -339,3 +339,17 @@
 	else
 		ADD_TRAIT(src, TRAIT_COMBAT_AWARE, TRAIT_VIRTUE)
 	to_chat(src, "I will see [HAS_TRAIT(src, TRAIT_COMBAT_AWARE) ? "more" : "less"] combat information now.")
+
+GLOBAL_LIST_EMPTY(miracle_tiers)
+
+/proc/get_miracle_tier(miracle_type)
+	if(!length(GLOB.miracle_tiers))
+		for(var/patron_key in GLOB.patronlist)
+			var/datum/patron/patron = GLOB.patronlist[patron_key]
+			if(!islist(patron.miracles))
+				continue
+			for(var/mtype in patron.miracles)
+				var/tier = patron.miracles[mtype]
+				if(isnull(GLOB.miracle_tiers[mtype]) || tier < GLOB.miracle_tiers[mtype])
+					GLOB.miracle_tiers[mtype] = tier
+	return GLOB.miracle_tiers[miracle_type]

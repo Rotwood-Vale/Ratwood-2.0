@@ -14,11 +14,13 @@
 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
 	traits_applied = list(TRAIT_HEAVYARMOR)
 	subclass_stats = list(
+
 		STATKEY_WIL = 3,
 		STATKEY_CON = 3,
 		STATKEY_STR = 2,
 		STATKEY_SPD = -1
 	)
+	
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
@@ -37,6 +39,7 @@
 	subclass_stashed_items = list(
 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
 	)
+	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 
 /datum/outfit/job/roguetown/psydoniantemplar
 	job_bitflag = BITFLAG_HOLY_WARRIOR
@@ -55,7 +58,7 @@
 	backpack_contents = list(/obj/item/roguekey/inquisition = 1,
 	/obj/item/paper/inqslip/arrival/adju = 1,
 	/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
-	/obj/item/clothing/ring/signet/silver = 1)
+	/obj/item/clothing/ring/signet/silver/inqscomm = 1)
 
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	var/datum/devotion/C = new /datum/devotion(H, H.patron)

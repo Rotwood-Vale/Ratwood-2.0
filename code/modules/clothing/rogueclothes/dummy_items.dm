@@ -197,3 +197,35 @@
 /obj/item/harpy_leg/intercept_zImpact(atom/movable/AM, levels = 1) // with this shit it doesn't generate "X falls through open space". thank u guppyluxx
 	. = ..()
 	. |= FALL_NO_MESSAGE
+
+/obj/item/hem_grip
+	name = "hem"
+	desc = "A fistful of gathered cloth."
+	icon = 'icons/mob/roguehudgrabs.dmi'
+	icon_state = "grabbing"
+	item_state = "grabbing"
+	item_flags = ABSTRACT | NOBLUDGEON
+	w_class = WEIGHT_CLASS_HUGE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	no_effect = TRUE
+	experimental_inhand = FALSE
+	experimental_onhip = FALSE
+	drop_sound = 'sound/blank.ogg'
+	pickup_sound = 'sound/blank.ogg'
+	var/mob/living/wearer
+
+/obj/item/hem_grip/dropped(mob/user)
+	. = ..()
+	release_hem()
+	if(!QDELETED(src))
+		qdel(src)
+
+/obj/item/hem_grip/Destroy()
+	release_hem()
+	return ..()
+
+/obj/item/hem_grip/proc/release_hem()
+	var/mob/living/holder = wearer
+	wearer = null
+	if(!QDELETED(holder))
+		holder.drop_hiked_hem()

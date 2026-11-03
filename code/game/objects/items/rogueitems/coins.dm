@@ -288,3 +288,7 @@
 #undef CTYPE_ANCIENT
 #undef CTYPE_ICOIN
 #undef MAX_COIN_STACK_SIZE
+
+/obj/item/roguecoin/silver/pile/wretchpile/Initialize(mapload)
+	. = ..()
+	set_quantity(10) // 50 mammons, to avoid being dead broke when latejoining

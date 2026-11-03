@@ -52,6 +52,7 @@
 	armor = /obj/item/clothing/suit/roguetown/armor/leather
 	id = /obj/item/mattcoin
 	H.adjust_blindness(-3)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
 	var/weapons = list("Crossbow & Dagger", "Bow & Sword")
 	if(H.mind)
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons

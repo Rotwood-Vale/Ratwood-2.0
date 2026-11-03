@@ -148,7 +148,6 @@
 	sewrepair = FALSE
 	armor = ARMOR_VAMP
 	max_integrity = ARMOR_INT_LEG_ANTAG
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = PLATEHIT
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	anvilrepair = /datum/skill/craft/armorsmithing
@@ -182,7 +181,6 @@
 	body_parts_covered = COVERAGE_TORSO
 	body_parts_inherent = FULL_BODY
 	armor_class = ARMOR_CLASS_HEAVY
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PEEL, BCLASS_PIERCE, BCLASS_CHOP, BCLASS_LASHING, BCLASS_STAB)
 	armor = ARMOR_VAMP
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -196,7 +194,6 @@
 	icon_state = "vplate"
 	item_state = "vplate"
 	armor = ARMOR_VAMP
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PEEL, BCLASS_PIERCE, BCLASS_CHOP, BCLASS_LASHING, BCLASS_STAB)
 	nodismemsleeves = TRUE
 	max_integrity = ARMOR_INT_CHEST_PLATE_ANTAG
 	allowed_sex = list(MALE, FEMALE)
@@ -213,7 +210,6 @@
 	body_parts_inherent = FULL_BODY
 	icon_state = "vboots"
 	item_state = "vboots"
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PEEL, BCLASS_PIERCE, BCLASS_CHOP, BCLASS_LASHING, BCLASS_STAB)
 	max_integrity = ARMOR_INT_LEG_ANTAG
 	color = null
 	blocksound = PLATEHIT
@@ -225,7 +221,6 @@
 	icon_state = "vhelmet"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
 	body_parts_inherent = FULL_BODY
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PEEL, BCLASS_PIERCE, BCLASS_CHOP, BCLASS_LASHING, BCLASS_STAB)
 	block2add = FOV_BEHIND
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/active_item = FALSE
@@ -252,7 +247,6 @@
 	armor = ARMOR_VAMP
 	body_parts_inherent = FULL_BODY
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST, BCLASS_PEEL, BCLASS_PIERCE, BCLASS_CHOP, BCLASS_LASHING, BCLASS_STAB)
 
 /obj/structure/vampire/necromanticbook // Used to summon undead to attack town/defend manor.
 	name = "Tome of Souls"

@@ -3,7 +3,7 @@
 	tutorial = "The New Moon Spellblades of Zybantia are the remnants of a fallen Nocite monastery in an unknown region of Lalvestine, \
 	the last major stronghold of the Ten in the Zybantian Empire. \
 	Their monastic lyfestyle and devotion collapsed quickly under the weight of the Rot, and they were forced from a lyfe of devout solitude \
-	into that of a common sellsword; Noc’s blessings proving rather useful when slaying monsters and men alike. \
+	into that of a common sellsword; Noc�s blessings proving rather useful when slaying monsters and men alike. \
 	For whatever reason, you find yourself in the region, offering your skills to the highest bidder. Knowledge is power."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = list(
@@ -18,14 +18,14 @@
 	class_select_category = CLASS_CAT_ZYBANTU
 	subclass_languages = list(/datum/language/celestial)
 	category_tags = list(CTAG_MERCENARY)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_MAGEARMOR, TRAIT_ARCYNE_T2, TRAIT_MAGEDEXTERITY)
-	subclass_spellpoints = 8//We'll focus on this being a combination spellblade.
+	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_ARCYNE)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_SPD = 2,
 		STATKEY_WIL = 2,
 		STATKEY_CON = -2,
 	)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 0, "minor" = 0, "utilities" = 6)
 	subclass_skills = list(
 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
@@ -66,15 +66,26 @@
 		/obj/item/roguekey/mercenary = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/spellbook_unfinished/pre_arcyne = 1,
+		/obj/item/rogueweapon/spellbook = 1,
 		/obj/item/roguegem/amethyst = 1,
 		/obj/item/lockpick = 1,
 		)
 
+	to_chat(H, span_warning("You start with Bind Weapon. Remember to Bind your weapon so you can use your abilities and build up Arcyne Momentum."))
+
+	var/datum/status_effect/buff/arcyne_momentum/momentum = H.apply_status_effect(/datum/status_effect/buff/arcyne_momentum)
+	if(momentum)
+		momentum.chant = "blade"
+
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonweapon)//Singular user of this, outside of scrolls.
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/frostbolt)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/airblade)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/caedo)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/air_strike)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/leyline_anchor)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/blade_storm)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/recall_weapon)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/empower_weapon)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/bind_weapon)
+		H.mind.AddSpell(new /datum/action/cooldown/spell/mending)
 
 //Their sabre. Peel capable when off. Does burn when on. OldRW rage inducing classic, returned.
 //Now properly inflicts burn wounds, on top of the burn type damage. Very painful.
@@ -86,7 +97,7 @@
 	force = 22//Dropped to 14 when on. Fire damage is a hell of a thing. -8, overall.
 	max_integrity = 200//+50
 	max_blade_int = 150//-50
-	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike)
+	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 	damtype = BRUTE
 	light_color = LIGHT_COLOR_BLUE
 	var/on = FALSE
@@ -97,7 +108,7 @@
 	attack_verb = list("freezes")
 	animname = "chop"
 	hitsound = list('sound/combat/hits/pick/genpick (1).ogg')
-	penfactor = 60
+	penfactor = PEN_HEAVY
 	swingdelay = 8//+2
 //	damfactor = 1.2//Not with new wounds!!!!
 	blade_class = BCLASS_BURN
@@ -112,7 +123,7 @@
 	if(on)
 		on = FALSE
 		damtype = BRUTE
-		possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/peel, /datum/intent/sword/strike)
+		possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 		force = 22
 	else
 		user.visible_message(span_warning("[user]'s blade lights up with a blue flame."))
@@ -134,8 +145,7 @@
 	desc = "Light, fancy, yet still fairly protective. This teal coat is a signature of the New Moon Holy Order with a noc amulet upon the middle of the chestpiece."
 	icon_state = "newmoon_jacket"
 	item_state = "newmoon_jacket"
-	armor = ARMOR_SPELLSINGER//Better than the old, but, whatever. By a bit.
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 /obj/item/clothing/head/roguetown/roguehood/reinforced/newmoon

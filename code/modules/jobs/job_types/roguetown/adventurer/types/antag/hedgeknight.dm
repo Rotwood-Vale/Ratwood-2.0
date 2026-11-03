@@ -53,6 +53,7 @@
 					/obj/item/rogueweapon/scabbard/sheath/noble = 1
 					)
 	H.adjust_blindness(-3)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
 	if(H.mind)
 		var/weapons = list("Master Swordsman","Master Spearman","Master Cleaver","Master Bludgeoner")
 		var/weapon_choice = input(H, "Choose your proficiency.", "TRAINED BY VETERANS") as anything in weapons

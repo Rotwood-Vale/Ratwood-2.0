@@ -419,6 +419,11 @@
 	item_type = /obj/item/clothing/mask/rogue/spectacles/inq
 	marquescost = 10
 
+/datum/inqports/equipment/inqscomm
+	name = "1 Inquisitorial SCOMgnet Ring"
+	item_type = /obj/item/clothing/ring/signet/silver/inqscomm
+	marquescost = 6
+
 // ✤ WARDROBE ✤ STARTS HERE! YEP!
 
 /obj/item/clothing/neck/roguetown/fencerguard/inq

@@ -198,6 +198,6 @@
 /datum/supply_pack/rogue/zybantine/makhaira
 	name = "Makhaira"
 	cost = 75
-	contains = list(/obj/item/rogueweapon/sword/short/messer)
+	contains = list(/obj/item/rogueweapon/sword/short/messer/bronze)
 	ship_qty_min = 2
 	ship_qty_max = 3
