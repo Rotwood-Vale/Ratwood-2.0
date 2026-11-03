@@ -23,7 +23,7 @@
 	name = "Grapeshot Shell (+1 Steel)"
 	additional_items = list(/obj/item/ingot/steel)
 	req_bar = /obj/item/ingot/steel
-	created_item = /obj/item/cannon_shell/
+	created_item = /obj/item/cannon_shell/grapeshot
 	craftdiff = 3
 
 /datum/crafting_recipe/roguetown/survival/fiberfuse
