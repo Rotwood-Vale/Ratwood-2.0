@@ -509,6 +509,18 @@
 	sleeve_overlay.alpha = I.alpha
 	. += sleeve_overlay
 
+	if(I.get_detail_tag() && I.sleeved_detail)
+		var/mutable_appearance/detail_overlay = mutable_appearance(icon(I.sleeved, "[used][I.get_detail_tag()]"), layer=-layer_used)
+		if(I.get_detail_color())
+			detail_overlay.color = I.get_detail_color()
+		. += detail_overlay
+
+	if(I.get_altdetail_tag() && I.sleeved_detail)
+		var/mutable_appearance/altdetail_overlay = mutable_appearance(icon(I.sleeved, "[used][I.get_altdetail_tag()]"), layer=-layer_used)
+		if(I.get_altdetail_color())
+			altdetail_overlay.color = I.get_altdetail_color()
+		. += altdetail_overlay
+
 	if(HAS_BLOOD_DNA(I))
 		var/icon/blood_overlay = bloody_layer[used]
 		if(!blood_overlay)
