@@ -219,7 +219,7 @@ The canister effect, when using canister shot or adjacent stuff.
 /obj/projectile/canister_shrap
 	name = "\improper canister shrapnel"
 	icon_state = "bullet"
-	damage = 70
+	damage = 110
 	range = 12//We want this to go beyond screen, in case of far misses.
 	pass_flags = PASSTABLE | PASSGRILLE
 	armor_penetration = PEN_MEDIUM
