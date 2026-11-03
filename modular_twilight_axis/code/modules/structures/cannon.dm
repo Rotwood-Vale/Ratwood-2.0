@@ -3,47 +3,45 @@
 	abstract_type = /datum/anvil_recipe/cannon
 	appro_skill = /datum/skill/craft/engineering
 	req_trait = TRAIT_ENGINEER
-	craftdiff = 5
+	craftdiff = 4
 	hides_from_books = TRUE
 
 /datum/anvil_recipe/cannon/cannon
-	name = "Cannon (+1 Blacksteel, +3 Steel, +2 Cogs, +2 Small Logs)"
-	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/roguegear/, /obj/item/roguegear/bronze, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small,)
-	req_bar = /obj/item/ingot/blacksteel
+	name = "Cannon"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small,)
+	req_bar = /obj/item/ingot/steel
 	created_item = /obj/structure/cannon
 
 /datum/anvil_recipe/cannon/cannonball
-	name = "Cannon Ball (+1 Steel, +2 Blastsand Sticks)"
-	additional_items = list(/obj/item/ingot/steel, /obj/item/tntstick, /obj/item/tntstick)
-	req_bar = /obj/item/ingot/steel
-	created_item = /obj/item/cannon_shell/cannonball
-	craftdiff = 5
-
-/datum/anvil_recipe/cannon/grapeshot
-	name = "Grapeshot Shell (+1 Steel)"
+	name = "Cannon Ball"
 	additional_items = list(/obj/item/ingot/steel)
 	req_bar = /obj/item/ingot/steel
-	created_item = /obj/item/cannon_shell/
-	craftdiff = 3
+	created_item = /obj/item/cannon_shell/cannonball
+
+/datum/anvil_recipe/cannon/grapeshot
+	name = "Grapeshot Shell"
+	additional_items = list(/obj/item/ingot/steel)
+	req_bar = /obj/item/ingot/steel
+	created_item = /obj/item/cannon_shell/grapeshot
 
 /datum/crafting_recipe/roguetown/survival/fiberfuse
-	name = "fiber fuse (2 Fibers + 1 Fat)"
+	name = "fiber fuse"
 
 	result = /obj/item/cannon_fuse/fiber
 	reqs = list(
 		/obj/item/natural/fibers = 2,
 		/obj/item/reagent_containers/food/snacks/fat = 1,
 		)
-	craftdiff = 3
+	craftdiff = 1
 
 /datum/crafting_recipe/roguetown/survival/parchmentfuse
-	name = "parchment fuse (2 Parchment + 1 Fat)"
+	name = "parchment fuse"
 	result = /obj/item/cannon_fuse/parchment
 	reqs = list(
 		/obj/item/paper = 2,
 		/obj/item/reagent_containers/food/snacks/fat = 1,
 		)
-	craftdiff = 3
+	craftdiff = 1
 
 /obj/item/cannon_fuse
 	name = "fuse"
@@ -75,7 +73,6 @@
 	desc = "A cannon ball."
 	icon = 'modular_twilight_axis/icons/cannon/cannon.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
-	dropshrink = 0.70
 
 /obj/item/cannon_shell/cannonball
 	name = "cannonball"
@@ -175,9 +172,9 @@
 		for(var/mob/living/mob in range(4, turf))
 			if(!mob.mind || istype(mob, /mob/living/simple_animal))
 				if(get_dist(turf, mob) <= 3)
-					mob.adjustBruteLoss(300)
+					mob.adjustBruteLoss(400)
 				else
-					mob.adjustBruteLoss(200)
+					mob.adjustBruteLoss(300)
 			if(mob != target)
 				var/blast_dir = get_dir(turf, mob)
 				if(blast_dir == 0)
