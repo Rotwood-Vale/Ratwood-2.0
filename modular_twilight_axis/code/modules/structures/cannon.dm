@@ -6,7 +6,7 @@
 	craftdiff = 5
 	hides_from_books = TRUE
 
-/datum/anvil_recipe/cannon/cannon
+/datum/anvil_recipe/cannon/cannonstructure
 	name = "Cannon (+1 Blacksteel, +3 Steel, +2 Cogs, +2 Small Logs)"
 	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/roguegear/, /obj/item/roguegear/bronze, /obj/item/grown/log/tree/small, /obj/item/grown/log/tree/small,)
 	req_bar = /obj/item/ingot/blacksteel
@@ -17,7 +17,6 @@
 	additional_items = list(/obj/item/ingot/steel, /obj/item/tntstick, /obj/item/tntstick)
 	req_bar = /obj/item/ingot/steel
 	created_item = /obj/item/cannon_shell/cannonball
-	craftdiff = 5
 
 /datum/anvil_recipe/cannon/grapeshot
 	name = "Grapeshot Shell (+1 Steel)"
