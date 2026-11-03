@@ -635,7 +635,7 @@
 	max_integrity = 200
 	var/smoke_path = /obj/effect/particle_effect/smoke
 	var/cooldowny
-	var/cdtime = 20 SECONDS
+	var/cdtime = 30 SECONDS
 
 /obj/item/rogueweapon/shield/steam/attack_self(mob/user)
 	if(cooldowny)
