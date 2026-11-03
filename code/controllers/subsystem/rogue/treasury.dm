@@ -752,7 +752,7 @@ SUBSYSTEM_DEF(treasury)
 		return POLL_TAX_CAT_COURTIER
 	if((H.job in GLOB.garrison_positions) || H.job == "Squire")
 		return POLL_TAX_CAT_GARRISON
-	if(H.job in list("Guildmaster", "Guildsman", "Tailor"))
+	if(H.job in list("Guildmaster", "Guildsman", "Tailor", "Guild Associate"))
 		return POLL_TAX_CAT_GUILDS
 	if((H.job == "Merchant") || (H.job == "Shophand"))
 		return POLL_TAX_CAT_MERCHANT

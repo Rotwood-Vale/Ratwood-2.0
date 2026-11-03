@@ -9,7 +9,7 @@
 	spawn_positions = 1
 	min_pq = 0
 	selection_color = JCOLOR_YEOMAN
-	social_rank = SOCIAL_RANK_YEOMAN
+	social_rank = SOCIAL_RANK_NOBLE
 	allowed_races = ACCEPTED_RACES
 
 	tutorial = "You are the leader of the Duchy's Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
@@ -24,7 +24,7 @@
 	round_contrib_points = 3
 	cmode_music = 'sound/music/cmode/towner/combat_retired.ogg'
 
-	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SEEPRICES, TRAIT_SMITHING_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_HOMESTEAD_EXPERT, TRAIT_LEGENDARY_MINER)
+	job_traits = list(TRAIT_TRAINED_SMITH, TRAIT_SEEPRICES, TRAIT_SMITHING_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_HOMESTEAD_EXPERT, TRAIT_LEGENDARY_MINER, TRAIT_ENGINEER)
 	// Guildmaster get way less gate due to their role
 
 	advclass_cat_rolls = list(CTAG_GUILDSMASTER = 2)
@@ -36,7 +36,7 @@
 /datum/advclass/guildmaster
 	name = "Guildmaster"
 	tutorial = "You are the leader of the Duchy's Guild of Crafts. You represents the interests of all of the craftsmen underneath you - including the Tailor\
-	the Blacksmiths, the Artificers and the Architects. Other townspeople may look to you for guidance, but they are not under your control. You are an experienced smith and artificer, and can do their work easily. Protect the craftsmen's interests."
+	the Blacksmiths, the Engineers and the Architects. Other townspeople may look to you for guidance, but they are not under your control. You are an experienced smith and artificer, and can do their work easily. Protect the craftsmen's interests."
 	outfit = /datum/outfit/job/roguetown/guildmaster/basic
 	category_tags = list(CTAG_GUILDSMASTER)
 	subclass_stats = list(
@@ -59,7 +59,7 @@
 		/datum/skill/craft/armorsmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_MASTER,
 		/datum/skill/craft/smelting = SKILL_LEVEL_MASTER, // Goofy notion that you would be a master smith but not smelter
-		/datum/skill/craft/engineering = SKILL_LEVEL_JOURNEYMAN, // 2 Engineering, let them make more artificers stuffs
+		/datum/skill/craft/engineering = SKILL_LEVEL_EXPERT, // you can fill in for an engineer if needed
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE, // Worse than the real tailor, so can't steal their job right away
 		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
@@ -74,6 +74,7 @@
 	H.adjust_blindness(-3)
 	head = /obj/item/clothing/head/roguetown/chaperon/noble/guildmaster
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
+	id = /obj/item/scomstone
 	if(H.mind)
 		// Skillset is a combo of Artificer + Blacksmith with Labor Skills.
 		// And Tailor / Leathercrafting
@@ -104,6 +105,7 @@
 		H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/smelting, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/sewing, 1, TRUE) // Worse than the real tailor, so can't steal their job right away
 		H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)

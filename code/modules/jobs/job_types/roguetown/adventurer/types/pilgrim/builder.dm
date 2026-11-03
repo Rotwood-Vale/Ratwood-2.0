@@ -1,5 +1,5 @@
 /datum/advclass/builder
-	name = "Architect"
+	name = "Builder"
 	tutorial = "You are a skilled carpenter and mason working closely with the guild, you are able to manipulate wood and stone to suit your needs, \
 	building forts and stores, carpenting floors, putting up crosses and repairing broken doors. You can do it all with enough logs or rocks."
 	allowed_sexes = list(MALE, FEMALE)

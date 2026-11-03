@@ -330,6 +330,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Guildsman"
 	icon_state = "arrow"
 
+/obj/effect/landmark/start/guildassociate
+	name = "Guild Associate"
+	icon_state = "arrow"
+
 /obj/effect/landmark/start/guildmaster
 	name = "Guildmaster"
 	icon_state = "arrow"
@@ -468,10 +472,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/orphan
 	name = "Vagabond"
-	icon_state = "arrow"
-
-/obj/effect/landmark/start/sapprentice
-	name = "Guild Apprentice"
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/rockhillslaver

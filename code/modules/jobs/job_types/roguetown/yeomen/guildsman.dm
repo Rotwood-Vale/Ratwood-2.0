@@ -1,5 +1,5 @@
-// Guildsman. Replacement class for the Blacksmith, Artificer.
-// But also includes a Mason-Architect.
+// Guildsman includes a blacksmith and architect-artificer (engineer)
+// Guildsman should be split back into engineer and smith as their own separate roles when possible as we are taking a different approach
 /datum/job/roguetown/guildsman
 	title = "Guildsman"
 	flag = GUILDSMAN
@@ -64,6 +64,7 @@
 	..()
 	head = /obj/item/clothing/head/roguetown/hatfur
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
+	id = /obj/item/scomstone/bad
 	if(prob(50))
 		head = /obj/item/clothing/head/roguetown/hatblu
 	if(H.age == AGE_OLD)
@@ -152,6 +153,7 @@
 	head = /obj/item/clothing/head/roguetown/articap
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/jacket/artijacket
 	cloak = /obj/item/clothing/cloak/apron/waist/brown
+	id = /obj/item/scomstone/bad
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/blacksmith
 	pants = /obj/item/clothing/under/roguetown/trou/artipants
 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/artificer

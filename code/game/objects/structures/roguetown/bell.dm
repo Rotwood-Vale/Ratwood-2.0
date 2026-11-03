@@ -69,7 +69,7 @@
 				if("Physician")
 					rolestonotify = list("Head Physician", "Apothecary")
 				if("The Guild of Craft")
-					rolestonotify = list("Guildmaster", "Guildsman")
+					rolestonotify = list("Guildmaster", "Guildsman", "Guild Associate")
 				if("Steward")
 					rolestonotify = list("Steward", "Clerk")
 				if("Baths")

@@ -179,7 +179,6 @@
 #define CHURCHLING	(1<<1)
 #define ORPHAN		(1<<2)
 #define SHOPHAND	(1<<3)
-#define GUILDAPPRENTICE 	(1<<4)
 
 #define WANDERERS		(1<<7)
 
@@ -219,7 +218,8 @@
 
 #define GUILDMASTER (1<<1)
 #define GUILDSMAN  	(1<<2)
-#define TAILOR		(1<<3)
+#define GUILDASSOCIATE (1<<3)
+#define TAILOR		(1<<4)
 
 #define JCOLOR_NOBLE "#aa83b9"
 #define JCOLOR_COURTIER "#81adc8"
@@ -303,8 +303,8 @@
 
 #define JDO_GUILDMASTER 19.1
 #define JDO_GUILDSMAN 19.2
-#define JDO_TAILOR 19.3
-#define JDO_GUILDAPPRENTICE 19.4
+#define JDO_GUILDASSOCIATE 19.3
+#define JDO_TAILOR 19.4
 
 #define JDO_BARKEEP 26
 #define JDO_COOK 27
@@ -404,7 +404,6 @@
 	/datum/job/roguetown/farmer,\
 	/datum/job/roguetown/orphan,\
 	/datum/job/roguetown/shophand,\
-	/datum/job/roguetown/gapprentice,\
 	/datum/job/roguetown/prisonerb,\
 	/datum/job/roguetown/hostage,\
 	/datum/job/roguetown/prisonerr
@@ -417,6 +416,7 @@
 	/datum/job/roguetown/barkeep,\
 	/datum/job/roguetown/guildsmaster,\
 	/datum/job/roguetown/guildsman,\
+	/datum/job/roguetown/guildassociate,\
 	/datum/job/roguetown/tailor,\
 	/datum/job/roguetown/merchant,\
 	/datum/job/roguetown/scribe

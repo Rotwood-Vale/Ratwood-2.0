@@ -137,6 +137,7 @@ GLOBAL_LIST_INIT(yeoman_positions, list(
 	"Bathmaster",
 	"Guildmaster",
 	"Guildsman",
+	"Guild Associate",
 	"Slaver",
 	"Tailor",
 ))
