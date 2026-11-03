@@ -117,7 +117,6 @@
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_WIL = 2,
-		STATKEY_LCK = 2, // +7 overall statspread excluding fortune, the fortune is for mining
 		STATKEY_STR = 1,
 		STATKEY_CON = 1,
 		STATKEY_PER = 1
