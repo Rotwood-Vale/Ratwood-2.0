@@ -97,8 +97,6 @@ GLOBAL_LIST_EMPTY(boss_mineral_doors)
 	if(deathspot)
 		for(var/obj/item/clothing/ring/dragon_ring/R in deathspot)
 			qdel(R)
-		for(var/obj/item/book/granter/spell_points/voiddragon/B in deathspot)
-			qdel(B)
 		for(var/obj/item/roguekey/mage/dragon/K in deathspot)
 			qdel(K)
 
