@@ -112,7 +112,6 @@
 	SIGNAL_HANDLER
 	if(arrow.firer != owner)
 		return
-	// No shield or Guard bypass - the arrow lands exactly on the aimed zone with bodkin-grade penetration.
 	arrow.true_aim = TRUE
 	arrow.armor_penetration = max(arrow.armor_penetration, PEN_HEAVY)
 	playsound(get_turf(owner), 'sound/magic/antimagic.ogg', 40, TRUE)

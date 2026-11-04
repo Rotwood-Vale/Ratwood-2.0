@@ -7,7 +7,7 @@
 		a leyline bolt bursts from the wound and carries on, striking the target and everyone in a line behind them. \
 		At 3+ momentum: consumes 3 for a longer, more damaging bolt with light penetration."
 	button_icon = 'icons/mob/actions/classuniquespells/spellblade.dmi'
-	button_icon_state = "azurean_javelin" // Placeholder until bow sprites exist
+	button_icon_state = "azurean_javelin"
 	sound = 'sound/magic/antimagic.ogg'
 	spell_color = GLOW_COLOR_ARCANE
 	glow_intensity = GLOW_INTENSITY_MEDIUM
