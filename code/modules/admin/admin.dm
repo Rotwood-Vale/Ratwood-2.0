@@ -1372,6 +1372,7 @@
 			mob_job.current_positions = max(0, mob_job.current_positions - 1)
 		if(target_job)
 			SSrole_class_handler.adjust_class_amount(target_job, -1)
+		mind.remove_antag_datum(/datum/antagonist/zizocultist)
 		mind.unknow_all_people()
 		for(var/datum/mind/MF in get_minds())
 			mind.become_unknown_to(MF)

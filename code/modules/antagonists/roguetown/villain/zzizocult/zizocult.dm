@@ -68,6 +68,14 @@
 	new /datum/antag_setup(owner.current)
 	greet()
 
+/datum/antagonist/zizocultist/on_removal()
+	SSmapping.retainer.cultists -= owner
+	var/mob/living/carbon/human/H = owner?.current
+	if(istype(H))
+		H.verbs -= /mob/living/carbon/human/proc/communicate
+		H.verbs -= /mob/living/carbon/human/proc/zizo_targets_list
+	return ..()
+
 /datum/antagonist/zizocultist/greet()
 	to_chat(owner, span_danger("I'm a cultist to the ALMIGHTY. They call it the UNSPEAKABLE. A new future begins."))
 	owner.announce_objectives()
