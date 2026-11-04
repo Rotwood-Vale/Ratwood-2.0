@@ -64,14 +64,14 @@
 <div class="abilities">
 <h4>Abilities</h4>
 <ul>
-<li><b>Leyline Nock</b> — Prime your next arrow. When it strikes, a leyline bolt bursts through the target and those behind. Empowered (3 momentum): longer, harder-hitting bolt with light penetration.</li>
+<li><b>Leyline Nock</b> — Loose an arrow of arcyne light, costing no arrows. When it strikes, a leyline bolt bursts through the target and those behind along its path. Empowered (3 momentum): longer, harder-hitting bolt with light penetration.</li>
 <li><b>Thornfall</b> — Rain arcyne thorns on a 3x3 area up to 7 tiles away after a short telegraph. Costs no arrows. Empowered: doubles damage.</li>
 <li><b>Withdraw</b> — Leap 3 tiles away from your target, passing through enemies. Empowered: leave a burst behind that batters and hurls back anyone adjacent.</li>
 <li><b>Skyrend</b> — Loose a volley of arcyne arrows that follow your target. 7 Momentum: 5 arrows. At 10: 8 arrows. Arrows can be caught by shields or anyone in the way!</li>
 <li><b>Bound Bow</b> — Each arrow hit builds 1 Momentum. Empower Weapon makes your next arrow strike exactly where you aimed and punch through armor like a bodkin.</li>
 </ul>
 </div>
-<p class="weapon-info">Woad Recurve Bow & Quiver / Elvish Dirk</p>
+<p class="weapon-info">Woad Recurve Bow & Quiver / Elvish Saber or Elvish Dagger</p>
 </div>
 <a class="choose-btn" href='?src=\ref[caller];subclass=sagittary'>Chant the Sagittary Verse</a>
 </div>
@@ -543,7 +543,7 @@ a.choose-btn:hover {
 <p><em>Far is my sight! True is my aim!</em></p>
 <p><em>With a dozen arrows I shall thin their ranks.</em></p>
 <p><em>Five hundred yils, unbowed!</em></p>
-<p><em>By blood and oak, five hundred more!</em></p>"}
+<p><em>By blood and steel, five hundred more!</em></p>"}
 
 /proc/get_preamble_closing(faction)
 	switch(faction)
