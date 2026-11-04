@@ -31,11 +31,14 @@
 
 
 	var/list/dna_to_add //find the dna to pass to the spawned gibs. do note this can be null if the mob doesn't have blood. add_blood_DNA() has built in null handling.
+	var/gib_color = BLOOD_COLOR_DEFAULT
 	if(source_mob)
 		dna_to_add = source_mob.get_blood_dna_list() //ez pz
+		gib_color = source_mob.get_blood_color()
 	else if(gib_mob_type)
 		var/mob/living/temp_mob = new gib_mob_type(src) //generate a fake mob so that we pull the right type of DNA for the gibs.
 		dna_to_add = temp_mob.get_blood_dna_list()
+		gib_color = temp_mob.get_blood_color()
 		qdel(temp_mob)
 	else
 		dna_to_add = list("Non-human DNA" = random_blood_type()) //else, generate a random bloodtype for it.
@@ -47,7 +50,7 @@
 				var/gibType = gibtypes[i]
 				gib = new gibType(loc)
 
-				gib.add_blood_DNA(dna_to_add)
+				gib.add_blood_DNA(dna_to_add, gib_color)
 
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))

@@ -303,7 +303,7 @@
 					if(selected_limb?.drop_limb())
 						var/turf/limb_turf = get_turf(selected_limb) || get_turf(target) || target.drop_location()
 						if(limb_turf)
-							new /obj/effect/decal/cleanable/blood/gibs/limb(limb_turf)
+							new /obj/effect/decal/cleanable/blood/gibs/limb(limb_turf, target.get_blood_color())
 
 			return
 
