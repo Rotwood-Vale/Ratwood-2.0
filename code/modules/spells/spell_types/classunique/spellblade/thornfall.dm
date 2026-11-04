@@ -32,7 +32,7 @@
 	spell_impact_intensity = SPELL_IMPACT_LOW
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN | SPELL_REQUIRES_SAME_Z
 
-	var/damage = 25
+	var/damage = 35
 	var/armor_pen = PEN_LIGHT
 	var/empowered_mult = 2
 	var/momentum_cost = 3
@@ -71,7 +71,7 @@
 		affected_turfs += T
 		new /obj/effect/temp_visual/telegraph/thornfall(T)
 
-	H.visible_message(span_warning("[H] looses an arrow high into the sky - it splinters into arcyne light!"))
+	H.visible_message(span_warning("[H] looses an arrow high into the sky, splintering into arcane light!"))
 	log_combat(H, cast_on, "used Thornfall on", zone=def_zone)
 
 	addtimer(CALLBACK(src, PROC_REF(resolve_thornfall), H, bow, affected_turfs, final_damage, def_zone, empowered), fall_delay)
