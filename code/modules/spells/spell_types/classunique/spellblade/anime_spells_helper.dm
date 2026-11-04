@@ -77,8 +77,8 @@ without going through the click pipeline, so spells can deliver weapon-style str
 	var/datum/status_effect/buff/clash/limbguard/LG = target.has_status_effect(/datum/status_effect/buff/clash/limbguard)
 	if(LG?.is_active && LG.protected_zone == def_zone && user != target)
 	// Only an attack with an actual weapon can trigger a the full guard deflect effect. So no disarming / exposure from blocking fire breath.
-		if(weapon)
-			LG.process_attack(target, target, user, weapon, def_zone)
+		if(weapon && !istype(weapon, /obj/item/gun/ballistic/revolver/grenadelauncher/bow))
+			LG.process_attack(target, target, user, weapon, def_zone) //magic bows shouldn't get disarmed.
 		else
 			LG.block_spell(target, user, spell_name)
 		return ARCYNE_STRIKE_WARDED

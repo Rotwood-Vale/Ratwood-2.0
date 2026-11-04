@@ -1,6 +1,7 @@
 /datum/action/cooldown/spell/leyline_nock
 	source_aspect = /datum/magic_aspect/pseudo/spellblade
 	name = "Leyline Nock"
+	expose_caster_on_deflect = FALSE
 	desc = "Nock an arrow of pure arcyne light and loose it at a target. Costs no arrows. \
 		When it strikes, a leyline bolt bursts from the wound and carries on along the arrow's path, striking the target and everyone in a line behind them. \
 		Builds 1 momentum on hit. \

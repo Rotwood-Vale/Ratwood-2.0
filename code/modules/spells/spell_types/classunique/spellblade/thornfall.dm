@@ -1,6 +1,7 @@
 /datum/action/cooldown/spell/thornfall
 	source_aspect = /datum/magic_aspect/pseudo/spellblade
 	name = "Thornfall"
+	expose_caster_on_deflect = FALSE
 	desc = "Loose an arrow skyward and let the leyline split it into a hail of arcyne thorns, falling on a 3x3 area up to 7 tiles away. \
 		The thorns fall after a short telegraph - aim where they will be. Costs no arrows. \
 		Builds 1 momentum on hit. \
@@ -97,11 +98,12 @@
 				deflected = TRUE
 				continue
 			if(empowered)
-				arcyne_strike(H, victim, bow, round(final_damage / 2), def_zone, BCLASS_PIERCE, armor_penetration = armor_pen, spell_name = "Thornfall", skip_animation = TRUE, skip_message = TRUE)
-				arcyne_strike(H, victim, bow, round(final_damage / 2), def_zone, BCLASS_PIERCE, armor_penetration = armor_pen, spell_name = "Thornfall", skip_animation = TRUE)
-			else
-				arcyne_strike(H, victim, bow, final_damage, def_zone, BCLASS_PIERCE, armor_penetration = armor_pen, spell_name = "Thornfall", skip_animation = TRUE)
-			hit_count++
+				var/first_strike = arcyne_strike(H, victim, bow, round(final_damage / 2), def_zone, BCLASS_PIERCE, armor_penetration = armor_pen, spell_name = "Thornfall", skip_animation = TRUE, skip_message = TRUE)
+				var/second_strike = arcyne_strike(H, victim, bow, round(final_damage / 2), def_zone, BCLASS_PIERCE, armor_penetration = armor_pen, spell_name = "Thornfall", skip_animation = TRUE)
+				if(first_strike != ARCYNE_STRIKE_WARDED || second_strike != ARCYNE_STRIKE_WARDED)
+					hit_count++
+			else if(arcyne_strike(H, victim, bow, final_damage, def_zone, BCLASS_PIERCE, armor_penetration = armor_pen, spell_name = "Thornfall", skip_animation = TRUE) != ARCYNE_STRIKE_WARDED)
+				hit_count++
 
 	if(hit_count)
 		var/datum/status_effect/buff/arcyne_momentum/surge = H.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
