@@ -287,9 +287,6 @@
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3)
 	if(is_organic_limb() && !skeletonized && owner && !(NOBLOOD in owner.dna?.species?.species_traits))
-		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src))
-
-  if(!skeletonized && owner && !(NOBLOOD in owner.dna?.species?.species_traits))
 		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src), owner.get_blood_color())
 
 //empties the bodypart from its organs and other things inside it
