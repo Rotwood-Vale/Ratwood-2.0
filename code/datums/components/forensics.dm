@@ -8,6 +8,7 @@
 	var/list/hiddenprints		//assoc ckey = realname/gloves/ckey
 	var/list/blood_DNA			//assoc dna = bloodtype
 	var/list/fibers				//assoc print = print
+	var/blood_color
 	/// Admin only, never wiped. /datum/forensic_action for picks, breaks and hits, oldest first.
 	var/list/actions
 	/// The same for everyday use (opening, closing, keyed locking, pickups and drops), capped apart so a busy door cannot push the evidence out of actions
@@ -18,18 +19,22 @@
 	hiddenprints = hiddenprints | F.hiddenprints
 	blood_DNA = blood_DNA | F.blood_DNA
 	fibers = fibers | F.fibers
+	if(F.blood_color)
+		blood_color = F.blood_color
 	actions = merge_actions(actions, F.actions)
 	routine_actions = merge_actions(routine_actions, F.routine_actions)
 	check_blood()
 	return ..()
 
-/datum/component/forensics/Initialize(new_fingerprints, new_hiddenprints, new_blood_DNA, new_fibers)
+/datum/component/forensics/Initialize(new_fingerprints, new_hiddenprints, new_blood_DNA, new_fibers, new_blood_color)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	fingerprints = new_fingerprints
 	hiddenprints = new_hiddenprints
 	blood_DNA = new_blood_DNA
 	fibers = new_fibers
+	if(new_blood_color)
+		blood_color = new_blood_color
 	check_blood()
 
 /datum/component/forensics/RegisterWithParent()
@@ -52,6 +57,7 @@
 
 /datum/component/forensics/proc/wipe_blood_DNA()
 	blood_DNA = null
+	blood_color = null
 	if(isitem(parent))
 		qdel(parent.GetComponent(/datum/component/decal/blood))
 	return TRUE
@@ -224,12 +230,15 @@
 /proc/cmp_forensic_action_time_asc(datum/forensic_action/a, datum/forensic_action/b)
 	return a.time - b.time
 
-/datum/component/forensics/proc/add_blood_DNA(list/dna)		//list(dna_enzymes = type)
-	if(!length(dna))
+/datum/component/forensics/proc/add_blood_DNA(list/dna, new_blood_color)		//list(dna_enzymes = type)
+	if(!length(dna) && !new_blood_color)
 		return
-	LAZYINITLIST(blood_DNA)
-	for(var/i in dna)
-		blood_DNA[i] = dna[i]
+	if(length(dna))
+		LAZYINITLIST(blood_DNA)
+		for(var/i in dna)
+			blood_DNA[i] = dna[i]
+	if(new_blood_color)
+		blood_color = new_blood_color
 	check_blood()
 	return TRUE
 
@@ -238,6 +247,16 @@
 		return
 	if(!length(blood_DNA))
 		return
-	parent.LoadComponent(/datum/component/decal/blood)
+	var/use_color = blood_color || BLOOD_COLOR_DEFAULT
+	var/datum/component/decal/blood/B = parent.GetComponent(/datum/component/decal/blood)
+	if(B)
+		if(B.blood_color == use_color)
+			return
+		B.remove()
+		B.blood_color = use_color
+		B.generate_appearance(null, null, null, null, use_color)
+		B.apply()
+		return
+	parent.LoadComponent(/datum/component/decal/blood, null, null, null, CLEAN_STRENGTH_BLOOD, use_color)
 
 #undef FORENSIC_ACTIONS_MAX

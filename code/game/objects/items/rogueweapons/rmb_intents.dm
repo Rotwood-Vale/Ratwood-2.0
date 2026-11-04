@@ -14,7 +14,7 @@
 	if(!cmode)	//We just toggled it off.
 		addtimer(CALLBACK(src, PROC_REF(purge_bait)), 30 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		addtimer(CALLBACK(src, PROC_REF(reset_dodgetime), 20 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE))
-	if(!HAS_TRAIT(src, TRAIT_DECEIVING_MEEKNESS))
+	if(!HAS_TRAIT(src, TRAIT_GUARD_RAISED))
 		filtered_balloon_alert(TRAIT_COMBAT_AWARE, (cmode ? ("<i><font color = '#831414'>Tense</font></i>") : ("<i><font color = '#c7c6c6'>Relaxed</font></i>")), y_offset = 32)
 
 /datum/rmb_intent/proc/special_attack(mob/living/user, atom/target)
@@ -240,7 +240,7 @@
 		if(special_msg)
 			to_chat(user, special_msg)
 		else if(user.client?.prefs.showrolls)
-			to_chat(user, span_warning("[L.p_they(TRUE)] did not fall for my feint... [perc]%"))
+			to_chat(user, span_warning("[L.p_they(TRUE)] did not fall for my feint... [guarded_roll(perc, L)]%"))
 		if(L.d_intent == INTENT_DODGE)
 			L.changeNext_def(clamp(L.dodgetime - 2, 0, CLICK_CD_DODGE))
 			L.changeMaxDodge(-2)

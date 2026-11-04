@@ -113,6 +113,9 @@
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_blood))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KEENEARS), PROC_REF(on_keen_ears_trait_changed))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_KEENEARS), PROC_REF(on_keen_ears_trait_changed))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DECEIVING_MEEKNESS), PROC_REF(on_guarded_gained))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DECEIVING_MEEKNESS), PROC_REF(on_guarded_lost))
+	RegisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_ANONYMOUS), SIGNAL_REMOVETRAIT(TRAIT_ANONYMOUS)), PROC_REF(on_anonymous_changed))
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, footstep_type, 1, 2)
 	GLOB.human_list += src
@@ -695,6 +698,7 @@
 	spill_embedded_objects()
 	set_heartattack(FALSE)
 	drunkenness = 0
+	sunder_stacks = 0
 	. = ..()
 	mark_zone_selector_hud_dirty()
 

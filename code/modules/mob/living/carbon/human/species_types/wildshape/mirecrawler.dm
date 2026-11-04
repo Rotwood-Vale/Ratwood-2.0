@@ -37,6 +37,7 @@
 /datum/species/mirecrawler
 	name = "Lesser Mire Crawler"
 	id = "dendormirecrawler"
+	blood_color = BLOOD_COLOR_BLUE
 	species_traits = list(NO_UNDERWEAR, NO_ORGAN_FEATURES, NO_BODYPART_FEATURES)
 	inherent_traits = list(
 		TRAIT_KNEESTINGER_IMMUNITY, //All of these are dendorite transformations, they are ALL blessed by dendor
