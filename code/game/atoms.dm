@@ -390,7 +390,7 @@
 		. = override.Join("")
 
 /**
- * Get the chat icon of this atom for examine, with a trailing space, or an empty string if it has none.
+ * Get the chat icon of this specific atom for examine or an empty string if it has none.
  *
  * Uses the asset cache rather than base64, as chat messages are stored and periodically re-saved by the client.
  * Atoms without a real icon state are skipped, as icon() would otherwise return the entire dmi as a sprite sheet.
