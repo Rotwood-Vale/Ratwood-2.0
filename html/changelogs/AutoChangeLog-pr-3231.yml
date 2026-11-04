@@ -1,0 +1,4 @@
+author: "Risraivyn"
+delete-after: True
+changes:
+  - rscadd: "Add item icons to examine"
