@@ -392,13 +392,13 @@
 /**
  * Get the chat icon of this specific atom for examine or an empty string if it has none.
  *
- * Uses the asset cache rather than base64, as chat messages are stored and periodically re-saved by the client.
+ * Uses cached base64 rather than icon2html(), as sending new assets with browse_rsc stalls the client.
  * Atoms without a real icon state are skipped, as icon() would otherwise return the entire dmi as a sprite sheet.
  */
 /atom/proc/get_examine_icon(mob/user)
-	if(!user?.client || !icon_exists(icon, icon_state))
+	if(!user?.client || !icon_exists(icon, icon_state) || !get_icon_dmi_path(src))
 		return ""
-	return "[icon2html(src, user)] "
+	return "[icon2base64html(src)] "
 
 ///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
