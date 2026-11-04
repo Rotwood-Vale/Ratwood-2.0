@@ -814,7 +814,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				dat += "<b>Mutant Color #2:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
 				dat += "<b>Mutant Color #3:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
 
-			if(pref_species.id == "dracon")
+			if(pref_species.id == "dracon" || pref_species.id == "demihuman" || pref_species.id == "anthromorph" || pref_species.id == "anthromorphsmall")
 				var/list/blood_pair = GLOB.drakian_blood_colors[blood_color_choice]
 				if(!blood_pair)
 					blood_pair = GLOB.drakian_blood_colors["red"]
@@ -2681,7 +2681,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						try_update_mutant_colors()
 
 				if("blood_color")
-					if(pref_species.id == "dracon")
+					if(pref_species.id == "dracon" || pref_species.id == "demihuman" || pref_species.id == "anthromorph" || pref_species.id == "anthromorphsmall")
 						var/list/blood_hues = list()
 						for(var/hue in GLOB.drakian_blood_colors)
 							var/list/pair = GLOB.drakian_blood_colors[hue]
@@ -3326,8 +3326,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.gender = gender
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = src)
 	character.dna.update_body_size()
-	if(character.dna?.species?.id == "dracon" && (blood_color_choice in GLOB.drakian_blood_colors))
-		character.blood_hue = blood_color_choice
+	if(character.dna?.species?.id == "dracon" || character.dna?.species?.id == "demihuman" || character.dna?.species?.id == "anthromorph" || character.dna?.species?.id == "anthromorphsmall")
+		if(blood_color_choice in GLOB.drakian_blood_colors)
+			character.blood_hue = blood_color_choice
 	else
 		character.blood_hue = null
 
