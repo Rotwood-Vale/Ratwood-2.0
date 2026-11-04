@@ -1125,7 +1125,7 @@
 /datum/admins/proc/spawn_atom(object as text)
 	set category = "-GameMaster-"
 	set desc = ""
-	set name = "Spawn..."
+	set name = "Spawn"
 
 	if(!check_rights(R_SPAWN) || !object)
 		return

@@ -386,12 +386,12 @@
 /obj/item/rogueweapon/tongs/update_icon()
 	. = ..()
 	if(!hingot)
-		icon_state = "tongs"
+		icon_state = "[initial(icon_state)]"
 	else
 		if(hott)
-			icon_state = "tongsi1"
+			icon_state = "[initial(icon_state)]i1"
 		else
-			icon_state = "tongsi0"
+			icon_state = "[initial(icon_state)]i0"
 
 /obj/item/rogueweapon/tongs/proc/make_unhot(input)
 	if(hott == input)
@@ -444,34 +444,10 @@
 /obj/item/rogueweapon/tongs/ancient
 	name = "ancient tongs"
 	desc = "Wrought gilbranze pincers the molten alloy, putting it before the anvil and hammer. Soon, it will fashion a new legacy; one unmarred by this dogmatic millenia."
+	force = 5
+	max_integrity = 15
 	icon_state = "atongs"
 	smeltresult = /obj/item/ingot/aaslag
-
-/obj/item/rogueweapon/tongs/ancient/update_icon()
-	. = ..()
-	if(!hingot)
-		icon_state = "atongs"
-	else
-		if(hott)
-			icon_state = "atongsi1"
-		else
-			icon_state = "atongsi0"
-
-/obj/item/rogueweapon/tongs/ancient/decrepit
-	name = "decrepit tongs"
-	desc = "How many ingots of once-pure alloy have these rusted, falling-apart jaws handled? The lyves taken through proxy of weapons once pincered by this tool? Perhaps it's about time that tally incremented yet again."
-	force = 5
-	max_integrity = 10
-
-/obj/item/rogueweapon/tongs/ancient/decrepit/update_icon()
-	. = ..()
-	if(!hingot)
-		icon_state = "atongs"
-	else
-		if(hott)
-			icon_state = "atongsi1"
-		else
-			icon_state = "atongsi0"
 
 /obj/item/rogueweapon/tongs/blacksteel
 	name = "blacksteel tongs"

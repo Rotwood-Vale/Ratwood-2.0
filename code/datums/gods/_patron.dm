@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(prayers)
 		pious.verbs -= verb
 	if(istype(src, /datum/patron/divine/xylix) || istype(src, /datum/patron/inhumen/matthios))
 		pious.remove_language(/datum/language/thievescant, source = "[type]")
-	if(istype(src, /datum/patron/divine/xylix))
+	if(istype(src, /datum/patron/divine/xylix) && !HAS_TRAIT(pious, TRAIT_DECEIVING_MEEKNESS))
 		pious.verbs -= /mob/living/carbon/human/proc/emote_ffsalute
 	for(var/trait in mob_traits)
 		REMOVE_TRAIT(pious, trait, "[type]")
