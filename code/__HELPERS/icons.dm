@@ -224,6 +224,35 @@ world
 /icon/proc/GrayScale()
 	MapColors(0.3,0.3,0.3, 0.59,0.59,0.59, 0.11,0.11,0.11, 0,0,0)
 
+/// Greyscale mask of one blood icon state. The red channel is copied into green and blue so a later multiply can recolor it.
+/proc/get_greyscale_blood_icon(blood_icon, icon_state)
+	if(!blood_icon || !icon_state)
+		return
+	var/static/list/cache = list()
+	var/key = "[blood_icon]|[icon_state]"
+	var/icon/cached = cache[key]
+	if(!cached)
+		cached = icon(blood_icon, icon_state)
+		cached.MapColors(1,1,1, 0,0,0, 0,0,0, 0,0,0)
+		cache[key] = cached
+	return cached
+
+/// Greyscale blood mask multiplied by a donor color. Cached per icon, state, and color. Blend() does not mutate this icon.
+/proc/get_colored_blood_mask(blood_icon, icon_state, blood_color = BLOOD_COLOR_DEFAULT)
+	if(!blood_color)
+		blood_color = BLOOD_COLOR_DEFAULT
+	var/static/list/cache = list()
+	var/key = "[blood_icon]|[icon_state]|[blood_color]"
+	var/icon/cached = cache[key]
+	if(!cached)
+		var/icon/grey = get_greyscale_blood_icon(blood_icon, icon_state)
+		if(!grey)
+			return
+		cached = new /icon(grey)
+		cached.Blend(blood_color, ICON_MULTIPLY)
+		cache[key] = cached
+	return cached
+
 /icon/proc/ColorTone(tone)
 	GrayScale()
 

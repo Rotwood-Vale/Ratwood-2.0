@@ -668,7 +668,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/drop_bomb()
 	set category = "-GameMaster-"
-	set name = "Bomb..."
+	set name = "Bomb"
 	set desc = ""
 
 	var/list/choices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
@@ -710,7 +710,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/drop_dynex_bomb()
 	set category = "-GameMaster-"
-	set name = "Bomb - DynEx..."
+	set name = "Bomb - Dynamic Explosion"
 	set desc = ""
 
 	var/ex_power = input("Explosive Power:") as null|num
