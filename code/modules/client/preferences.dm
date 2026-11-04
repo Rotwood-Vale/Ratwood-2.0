@@ -98,6 +98,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/facial_hairstyle = "Shaved"	//Face hair type
 	var/facial_hair_color = "000"		//Facial hair color
 	var/skin_tone = "caucasian1"		//Skin color
+	var/blood_color_choice = "red"		//Drakian blood hue. A key in GLOB.drakian_blood_colors.
 	var/mutant_skin = FALSE			//Use mutant color as skin color instead of skin_tone
 	var/eye_color = "000"				//Eye color
 	var/extra_language = "None" // Extra language
@@ -130,6 +131,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/cursed_collarable = FALSE
 	/// If we are lactating, can others milk us via reagent containers (not for sex actions, but the stuff in milking.dm)
 	var/milkable = FALSE
+	/// If manticore tail flavor messages are on by default
+	var/manticore_tail_messages = FALSE
 	var/voting_popup = TRUE
 	var/compliance_notifs = TRUE
 	var/skillcap_notifs = TRUE
@@ -260,6 +263,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 
 	var/anonymize = TRUE
 	var/masked_examine = FALSE
+	var/full_examine = TRUE
 	var/top_examine = FALSE
 	var/show_mouseover_role = FALSE
 	var/nsfw_examine_always = FALSE
@@ -433,7 +437,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/race_bonus
 
 	/// Whether we can see the feint HUD bar.
-	var/feint_hud = FALSE 
+	var/feint_hud = FALSE
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -1644,9 +1648,9 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							if (AGE_ADULT)
 								to_chat(user, "You preside in your 'prime', whatever this may be, and gain no bonus nor endure any penalty for your time spent alive.")
 							if (AGE_MIDDLEAGED)
-								to_chat(user, "Muscles ache and joints begin to slow as Aeon's grasp begins to settle upon your shoulders. (-1 SPD, +1 WIL)")
+								to_chat(user, "Muscles ache and joints begin to slow as Aeon's grasp begins to settle upon your shoulders. (-1 SPD, +1 WIL, +1 FOR)")
 							if (AGE_OLD)
-								to_chat(user, "In a place as lethal as PSYDONIA, the elderly are all but marvels... or beneficiaries of the habitually privileged. (-1 STR, -2 SPE, -1 PER, -2 CON, +2 INT, +1 FOR)")
+								to_chat(user, "In a place as lethal as PSYDONIA, the elderly are all but marvels... or beneficiaries of the habitually privileged. (-1 STR, -2 SPE, -1 PER, -2 CON, +3 INT, +1 FOR)")
 						// LETHALSTONE EDIT END
 						ResetJobs()
 						family = FAMILY_NONE
@@ -2380,6 +2384,16 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						features["mcolor3"] = sanitize_hexcolor(new_mutantcolor)
 						try_update_mutant_colors()
 
+				if("blood_color")
+					if(pref_species.id == "dracon")
+						var/list/blood_hues = list()
+						for(var/hue in GLOB.drakian_blood_colors)
+							var/list/pair = GLOB.drakian_blood_colors[hue]
+							blood_hues[pair["name"]] = hue
+						var/chosen_name = tgui_input_list(user, "Choose your ancestral blood:", "Ancestral Blood", blood_hues)
+						if(chosen_name && blood_hues[chosen_name])
+							blood_color_choice = blood_hues[chosen_name]
+
 				if("skin_choice_pick")
 					var/prompt = alert(user, "Choose skin/scales color",, "Custom", "Predefined")
 					if(prompt == "Custom")
@@ -3016,6 +3030,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.gender = gender
 	character.set_species(chosen_species, icon_update = FALSE, pref_load = src)
 	character.dna.update_body_size()
+	if(character.dna?.species?.id == "dracon" && (blood_color_choice in GLOB.drakian_blood_colors))
+		character.blood_hue = blood_color_choice
+	else
+		character.blood_hue = null
 
 	if((randomise[RANDOM_NAME] || randomise[RANDOM_NAME_ANTAG] && antagonist) && !character_setup)
 		slot_randomized = TRUE

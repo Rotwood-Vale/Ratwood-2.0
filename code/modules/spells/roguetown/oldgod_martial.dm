@@ -33,7 +33,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		return FALSE
 	user.adjust_blood_volume(-50) //Lowered from -100. An empowering hit that does more damage to you than the enemy even if you debuff them is never a good trade.
 	user.handle_blood()
-	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
+	new /obj/effect/decal/cleanable/blood/puddle(user.loc, user.get_blood_color())
 	user.apply_status_effect(/datum/status_effect/psydonic_retribution, user.get_active_held_item())
 	return TRUE
 
@@ -125,7 +125,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /obj/effect/proc_holder/spell/self/psydonic_inspire/cast(list/targets,mob/living/user = usr)
 	user.adjust_blood_volume(-130)//Lowered from -200 due to how useless this miracle was, leaving you almost dead if you had any kind of bleeding.
 	user.handle_blood()
-	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
+	new /obj/effect/decal/cleanable/blood/puddle(user.loc, user.get_blood_color())
 	for(var/mob/living/carbon/target in view(6, get_turf(user)))
 		if(!istype(target.patron, /datum/patron/old_god))
 			to_chat(target, span_danger("A presence witnesses you. For a time, it weeps."))
@@ -210,7 +210,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		return FALSE
 	user.adjust_blood_volume(-300)//RAAAA!!!!
 	user.handle_blood()
-	new /obj/effect/decal/cleanable/blood/puddle(user.loc)
+	new /obj/effect/decal/cleanable/blood/puddle(user.loc, user.get_blood_color())
 	user.apply_damage(200, BRUTE, spread_damage = TRUE) //300 damage is a lot and enough to cripple one limb instantly, lowering to 200.
 	user.apply_status_effect(/datum/status_effect/buff/inviolability)
 	return TRUE
@@ -273,26 +273,10 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 
 	dispel_conjured_item()
 	var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/R = new /obj/item/ammo_casing/caseless/rogue/heavy_bolt/lux(user.drop_location())
-
-	if(user.STAPER > 10)
-		var/int_scaling = user.STAPER - 10
-		R.name = "lux bolt +[int_scaling]"//This doesn't do anything, just yet.
+	R.AddComponent(/datum/component/conjured_item)
 	user.put_in_hands(R)
 	set_conjured_item(R)
 	addtimer(CALLBACK(src, PROC_REF(lux_punish), user), wait = 12 SECONDS)
-//For later. We'll have this multi-purpose eventually.
-/*
-	var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy/silver = user.get_active_held_item()
-	if(istype(silver)
-		target.visible_message(span_notice("[user] places a palm around the [silver], leaving it awash with crimson."), \
-			span_userdanger("The bolt is suffused with my own spark. It shall strike harder than before..."))
-		qdel(silver)
-		user.set_blood_volume(max(user.get_blood_volume()-300, 0))
-		user.handle_blood()
-		new /obj/effect/decal/cleanable/blood/puddle(user.loc)
-		user.apply_damage(50, BRUTE, spread_damage = TRUE)
-		return TRUE
-*/
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/psydonic_lux_bolt/proc/lux_punish(mob/living/carbon/target)
@@ -300,7 +284,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 		span_userdanger("My own spark, my <b>lyfe</b>, flashes afore me. What have I done?"))
 	target.adjust_blood_volume(-200)//Take a guess.
 	target.handle_blood()
-	new /obj/effect/decal/cleanable/blood/puddle(target.loc)
+	new /obj/effect/decal/cleanable/blood/puddle(target.loc, target.get_blood_color())
 	target.apply_damage(250, BRUTE, spread_damage = TRUE) //Lowered from 300. At 300, it's enough to literally cripple limbs, which renders the miracle only useful if you have the absolver ready to take damage or in bed. It's limited to one bolt at a time anyways, so at most you'll only use it once in battle.
 	playsound(target.loc, 'sound/magic/woundheal_crunch.ogg', 100, FALSE)
 
@@ -324,45 +308,69 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	hitsound = 'sound/combat/hits/hi_bolt (1).ogg'
 	speed = 0.3
 	npc_simple_damage_mult = 7
-	poisontype = /datum/reagent/water/blessed
-	poisonamount = 15
-	var/probably_not_friendly = MOB_UNDEAD
+	
 
 /obj/projectile/bullet/reusable/heavy_bolt/lux/on_hit(target)
 	. = ..()
-	//Handle the mob impact, firstly.
-	if(ismob(target))
-		var/mob/living/carbon/human/M = target
-		if(M.mob_biotypes & probably_not_friendly)
-			M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder)
-			M.ignite_mob()
-			visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
-			M.apply_damage(50, BRUTE, spread_damage = TRUE)
-			M.apply_damage(50, BURN, spread_damage = TRUE)//Yeah, yeah, I know...
-		else
-			M.adjust_fire_stacks(12)
-			M.ignite_mob()
-			visible_message(span_warning("[target] is engulfed in flames upon being struck by [src]!"))
-			M.apply_damage(75, BRUTE, spread_damage = TRUE)
-			M.apply_damage(25, BURN, spread_damage = TRUE)//Again, I KNOW.
-	//Now, the rest. About 1:1 with artillery fireball.
-	var/turf/fallzone = get_turf(target)
-	if(!fallzone)
-		return
-	var/const/damage = 300
+	var/const/structure_damage = 1000
 	var/const/radius = 1
-	for(var/turf/open/visual in view(radius, fallzone))
+	//Handle the mob impact, firstly.
+	var/turf/fallzone = get_turf(target)
+	if(!fallzone) // falback in case we hit somone without a turf (Harpy flying?)
+		if(ismob(target))
+			var/mob/living/carbon/human/M = target
+			if(M.mob_biotypes & MOB_UNDEAD)
+				M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
+			if(HAS_TRAIT(M, TRAIT_SILVER_WEAK))
+				M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+				M.ignite_mob()
+				visible_message(span_warning("[target] erupts in divine flames upon being struck by [src]!"))
+				M.apply_damage(50, BRUTE, spread_damage = TRUE)
+				M.apply_damage(50, BURN, spread_damage = TRUE)
+			else
+				M.adjust_fire_stacks(12)
+				M.ignite_mob()
+				visible_message(span_warning("[target] is engulfed in flames upon being struck by [src]!"))
+				M.apply_damage(75, BRUTE, spread_damage = TRUE)
+				M.apply_damage(25, BURN, spread_damage = TRUE)
+		return
+
+	for(var/mob/living/carbon/human/M in range(radius, fallzone))
+		if(M.mob_biotypes & MOB_UNDEAD)
+			M.reagents.add_reagent(/datum/reagent/water/blessed, 15)
+		if(HAS_TRAIT(M, TRAIT_SILVER_WEAK)) // I plaed psydonate miraclist VL. The silveweakness has to override all else
+			M.adjust_fire_stacks(12, /datum/status_effect/fire_handler/fire_stacks/sunder/blessed)
+			M.ignite_mob()
+			visible_message(span_warning("[M] erupts in divine flames originating from [src]!"))
+			M.apply_damage(50, BRUTE, spread_damage = TRUE)
+			M.apply_damage(50, BURN, spread_damage = TRUE)
+		else
+			if(HAS_TRAIT(M, TRAIT_PSYDONITE)) // only for practicing psydonites, all of inqusition qualifies. I dont want arbalist linched
+				M.adjust_fire_stacks(3)
+				M.ignite_mob()
+				visible_message(span_warning("[M] is singed by the flames originating from [src], yet the flames seem to avoid them!"))
+				M.apply_damage(20, BRUTE, spread_damage = TRUE)
+				M.apply_damage(5, BURN, spread_damage = TRUE)
+			else
+				M.adjust_fire_stacks(12)
+				M.ignite_mob()
+				visible_message(span_warning("[M] is engulfed in flames originating from [src]!"))
+				M.apply_damage(75, BRUTE, spread_damage = TRUE)
+				M.apply_damage(25, BURN, spread_damage = TRUE)
+		
+	for(var/turf/open/visual in range(radius, fallzone))
 		var/obj/effect/temp_visual/luxturf/luxspread = new /obj/effect/temp_visual/luxturf(visual)
 		var/datum/effect_system/smoke_spread/S = new /datum/effect_system/smoke_spread/fast // SMOKE EFFECT
 		animate(luxspread, alpha = 255, time = 8)
 		S.set_up(radius, fallzone)
 		S.start()
 	// Everything from this point has to do with what is damaged, additional structures can be added to the list to have different damage/effects!
-	for(var/obj/structure/damaged in view(radius, fallzone))
-		if(!istype(damaged, /obj/structure/flora/newbranch))
-			damaged.take_damage(damage, BRUTE, "blunt", 1)
-	for(var/turf/closed/wall/damagedwalls in view(radius, fallzone))
-		damagedwalls.take_damage(damage, BRUTE, "blunt", 1)
+	for(var/obj/structure/damaged in range(radius, fallzone))
+		damaged.take_damage(structure_damage, BRUTE, "blunt", 1)
+	for(var/turf/closed/wall/damagedwalls in range(radius, fallzone))
+		damagedwalls.take_damage(structure_damage, BRUTE, "blunt", 1)
+	for(var/turf/closed/mineral/aoemining in range(radius, fallzone))
+		aoemining.take_damage(structure_damage, BRUTE,"blunt",1)
 	qdel(src)
 
 /obj/effect/temp_visual/luxturf
