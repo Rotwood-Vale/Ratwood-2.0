@@ -155,6 +155,11 @@
 			"Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface,
 			"Snouted Roundface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface/roundface/snouted,
 			"Froggemund Helmet"	= /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth,
+			"Froggemund Helmet With Greatplume" = /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/greatplume,
+			"Visored Barbute" = /obj/item/clothing/head/roguetown/helmet/heavy/barbute/visor,
+			"Great Barbute" = /obj/item/clothing/head/roguetown/helmet/heavy/barbute/great,
+			"Kulah Khud"	= /obj/item/clothing/head/roguetown/helmet/sallet/zyb,
+			"Otavan Helmet" = /obj/item/clothing/head/roguetown/helmet/otavan,
 			"Cataphract Helmet" = /obj/item/clothing/head/roguetown/helmet/heavy/cataphract,
 			"Beaked Helmet" = /obj/item/clothing/head/roguetown/helmet/heavy/beakhelm,
 			"None"

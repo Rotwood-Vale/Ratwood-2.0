@@ -39,7 +39,7 @@
 	req_bar = /obj/item/ingot/gold
 
 /datum/anvil_recipe/weapons/silver
-	abstract_type = /datum/anvil_recipe/weapons/
+	abstract_type = /datum/anvil_recipe/weapons/silver
 	req_bar = /obj/item/ingot/silver
 	craftdiff = SKILL_LEVEL_EXPERT
 
