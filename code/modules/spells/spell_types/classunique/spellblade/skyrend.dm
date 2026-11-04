@@ -30,7 +30,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	spell_tier = 3
 	spell_impact_intensity = SPELL_IMPACT_HIGH
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN | SPELL_REQUIRES_SAME_Z
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN
 
 	var/base_arrows = 5
 	var/bonus_arrows = 3

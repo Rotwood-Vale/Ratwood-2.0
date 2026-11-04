@@ -1,34 +1,36 @@
-#define NOCK_FILTER "nock_glow"
-
 /datum/action/cooldown/spell/leyline_nock
 	source_aspect = /datum/magic_aspect/pseudo/spellblade
 	name = "Leyline Nock"
-	desc = "Prime your next arrow with arcyne force. When an arrow from your bound bow strikes, \
-		a leyline bolt bursts from the wound and carries on, striking the target and everyone in a line behind them. \
+	desc = "Nock an arrow of pure arcyne light and loose it at a target. Costs no arrows. \
+		When it strikes, a leyline bolt bursts from the wound and carries on along the arrow's path, striking the target and everyone in a line behind them. \
+		Builds 1 momentum on hit. \
 		At 3+ momentum: consumes 3 for a longer, more damaging bolt with light penetration."
 	button_icon = 'icons/mob/actions/classuniquespells/spellblade.dmi'
 	button_icon_state = "azurean_javelin"
-	sound = 'sound/magic/antimagic.ogg'
+	sound = 'sound/combat/Ranged/flatbow-shot-01.ogg'
 	spell_color = GLOW_COLOR_ARCANE
 	glow_intensity = GLOW_INTENSITY_MEDIUM
 
-	click_to_activate = FALSE
-	self_cast_possible = TRUE
+	cast_range = 7
 
 	primary_resource_type = SPELL_COST_STAMINA
-	primary_resource_cost = SPELLCOST_SB_POKE
+	primary_resource_cost = SPELLCOST_SB_RANGED
 
 	invocations = list("Sagitta Lineae!")
 	invocation_type = INVOCATION_SHOUT
 
-	charge_required = FALSE
+	charge_required = TRUE
 	weapon_cast_penalized = FALSE
+	charge_time = CHARGETIME_POKE
+	hold_drain = 0
+	charge_slowdown = CHARGING_SLOWDOWN_NONE
+	charge_sound = 'sound/magic/charging.ogg'
 	cooldown_time = 12 SECONDS
 
 	associated_skill = /datum/skill/magic/arcane
 	spell_tier = 2
 	spell_impact_intensity = SPELL_IMPACT_MEDIUM
-	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN | SPELL_REQUIRES_SAME_Z
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN
 
 	var/pierce_length = 3
 	var/pierce_damage = 25
@@ -48,8 +50,9 @@
 		to_chat(H, span_warning("I need my bound bow in hand!"))
 		return FALSE
 
-	if(H.has_status_effect(/datum/status_effect/buff/nock_ready))
-		to_chat(H, span_warning("My arrow is already primed!"))
+	var/turf/target_turf = get_turf(cast_on)
+	if(!target_turf || target_turf == get_turf(H))
+		to_chat(H, span_warning("Invalid target!"))
 		return FALSE
 
 	var/empowered = FALSE
@@ -57,20 +60,30 @@
 	if(M && M.stacks >= momentum_cost)
 		M.consume_stacks(momentum_cost)
 		empowered = TRUE
-		to_chat(H, span_notice("[momentum_cost] momentum released - empowered nock primed!"))
+		to_chat(H, span_notice("[momentum_cost] momentum released - empowered nock!"))
 
-	var/datum/status_effect/buff/nock_ready/effect = H.apply_status_effect(/datum/status_effect/buff/nock_ready, bow)
-	if(effect)
-		effect.spell_ref = WEAKREF(src)
-		effect.empowered = empowered
+	var/def_zone = H.zone_selected || BODY_ZONE_CHEST
+
+	var/obj/projectile/magic/leyline_arrow/P = new(H.loc)
+	P.firer = H
+	P.fired_from = get_turf(H)
+	P.def_zone = def_zone
+	P.spell_ref = WEAKREF(src)
+	P.empowered = empowered
+	if(empowered)
+		P.color = "#B48CFF"
+	H.apply_spell_accuracy(P)
+	P.preparePixelProjectile(isliving(cast_on) ? cast_on : target_turf, H)
+	P.fire()
 
 	H.visible_message(
-		span_notice("[H] draws a thread of arcyne light along [H.p_their()] bowstring."),
-		span_notice("My arrow is primed - the next to strike will carry a leyline bolt."))
-	playsound(get_turf(H), 'sound/magic/antimagic.ogg', 60, TRUE)
+		span_warning("[H] draws a thread of arcyne light along [H.p_their()] bowstring and looses it!"),
+		span_notice("I loose a leyline arrow!"))
+	playsound(get_turf(H), 'sound/combat/Ranged/flatbow-shot-01.ogg', 70, TRUE)
+	log_combat(H, cast_on, "used Leyline Nock[empowered ? " (empowered)" : ""] on", zone = def_zone)
 	return TRUE
 
-/datum/action/cooldown/spell/leyline_nock/proc/do_bolt(mob/living/carbon/human/user, mob/living/struck, empowered)
+/datum/action/cooldown/spell/leyline_nock/proc/do_bolt(mob/living/carbon/human/user, mob/living/struck, empowered, turf/fired_turf)
 	if(QDELETED(user) || user.stat == DEAD)
 		return
 
@@ -82,22 +95,30 @@
 	if(!origin)
 		return
 
-	var/pierce_dir = get_dir(user, struck)
-	if(!pierce_dir)
-		pierce_dir = user.dir
+	var/turf/line_start = fired_turf || get_turf(user)
+	var/pierce_dir = get_dir(line_start, origin) || user.dir
 
 	var/def_zone = user.zone_selected || BODY_ZONE_CHEST
 	var/damage = empowered ? empowered_pierce_damage : pierce_damage
-	var/length = empowered ? empowered_pierce_length : pierce_length
+	var/bolt_length = empowered ? empowered_pierce_length : pierce_length
 	var/ap = empowered ? empowered_ap : 0
 
 	var/list/pierce_turfs = list()
-	var/turf/current = origin
-	for(var/i in 1 to length)
-		current = get_step(current, pierce_dir)
-		if(!arcyne_can_leap_into(current))
-			break
-		pierce_turfs += current
+	if(line_start != origin)
+		var/turf/far_end = get_ranged_target_turf_direct(line_start, origin, (get_dist(line_start, origin) + bolt_length) * 2)
+		var/list/line = get_line(origin, far_end)
+		line -= origin
+		for(var/turf/T in line)
+			if(length(pierce_turfs) >= bolt_length || !arcyne_can_leap_into(T))
+				break
+			pierce_turfs += T
+	else
+		var/turf/current = origin
+		for(var/i in 1 to bolt_length)
+			current = get_step(current, pierce_dir)
+			if(!arcyne_can_leap_into(current))
+				break
+			pierce_turfs += current
 
 	var/obj/effect/temp_visual/origin_burst = new /obj/effect/temp_visual/blade_stab(origin)
 	origin_burst.dir = pierce_dir
@@ -130,8 +151,11 @@
 			hit_count++
 			already_hit += victim
 
+	var/datum/status_effect/buff/arcyne_momentum/M = user.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
+	if(M)
+		M.add_stacks(1)
+
 	if(hit_count >= 2)
-		var/datum/status_effect/buff/arcyne_momentum/M = user.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
 		if(M)
 			M.add_stacks(1)
 			to_chat(user, span_notice("DOUBLE PIERCE! ARCYNE SURGE!"))
@@ -139,52 +163,39 @@
 	else if(hit_count)
 		user.visible_message(span_danger("A leyline bolt bursts from [struck]!"))
 
-// statuses
-
-/atom/movable/screen/alert/status_effect/buff/nock_ready
-	name = "Leyline Nocked"
-	desc = "My next arrow to strike will carry a leyline bolt through the target."
-	icon_state = "buff"
-
-/datum/status_effect/buff/nock_ready
-	id = "nock_ready"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/nock_ready
-	duration = 10 SECONDS
-	status_type = STATUS_EFFECT_UNIQUE
+/obj/projectile/magic/leyline_arrow
+	name = "leyline arrow"
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "arrow_proj"
+	color = "#88BFFF"
+	expose_caster_on_deflect = TRUE
+	damage = 22
+	damage_type = BRUTE
+	nodamage = FALSE
+	flag = "piercing"
+	woundclass = BCLASS_PIERCE
+	armor_penetration = PEN_LIGHT
+	range = 15
+	speed = 0.4
+	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
 	var/datum/weakref/spell_ref
 	var/empowered = FALSE
-	var/obj/item/bow
 
-/datum/status_effect/buff/nock_ready/on_creation(mob/living/new_owner, obj/item/primed_bow)
-	bow = primed_bow
-	return ..()
-
-/datum/status_effect/buff/nock_ready/on_apply()
+/obj/projectile/magic/leyline_arrow/on_hit(target, blocked = FALSE)
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			visible_message(span_warning("[src] fizzles on contact with \the [target]!"))
+			playsound(get_turf(target), 'sound/magic/magic_nulled.ogg', 100)
+			qdel(src)
+			return BULLET_ACT_BLOCK
 	. = ..()
-	if(!bow)
-		return FALSE
-	RegisterSignal(bow, COMSIG_PROJECTILE_ON_HIT, PROC_REF(on_arrow_hit))
-	owner.add_filter(NOCK_FILTER, 2, list("type" = "outline", "color" = "#4488ff", "alpha" = 160, "size" = 2))
-
-/datum/status_effect/buff/nock_ready/on_remove()
-	if(bow)
-		UnregisterSignal(bow, COMSIG_PROJECTILE_ON_HIT)
-		bow = null
-	owner.remove_filter(NOCK_FILTER)
-	. = ..()
-
-/datum/status_effect/buff/nock_ready/proc/on_arrow_hit(obj/item/source, mob/living/firer, atom/target, angle)
-	SIGNAL_HANDLER
-	if(firer != owner || !isliving(target) || target == owner)
+	if(!isliving(target) || !isliving(firer) || target == firer)
 		return
 	var/mob/living/struck = target
 	if(struck.stat == DEAD)
 		return
 	var/datum/action/cooldown/spell/leyline_nock/spell = spell_ref?.resolve()
-	var/was_empowered = empowered
-	owner.remove_status_effect(/datum/status_effect/buff/nock_ready)
 	if(!spell)
 		return
-	INVOKE_ASYNC(spell, TYPE_PROC_REF(/datum/action/cooldown/spell/leyline_nock, do_bolt), firer, struck, was_empowered)
-
-#undef NOCK_FILTER
+	INVOKE_ASYNC(spell, TYPE_PROC_REF(/datum/action/cooldown/spell/leyline_nock, do_bolt), firer, struck, empowered, starting)
