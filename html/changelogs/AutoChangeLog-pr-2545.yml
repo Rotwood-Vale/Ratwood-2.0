@@ -1,0 +1,13 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - rscadd: "Added new adjustable masks in padded cloth, leather, iron chain, and steel chain variants."
+  - rscadd: "You can now combine cuirasses with hauberks to make plate-and-maille via the crafting menu. Comes in steel cuirass, fluted, decorated, and ancient. All are heavy armor and share coverage with fullplate, but have less integrity."
+  - rscadd: "3 new steel barbutes with exceedingly fashionable plum options. No longer locked to skeletons!"
+  - rscadd: "Added aventails, a medium armor-class neck protection item. Also added two aventailed bascinets which protect the neck and head. Open-face bascinet is medium armor; the visored one is heavy."
+  - rscadd: "Elven barbute icons updated and made purchasable in the Silverface."
+  - rscadd: "Froggemund is now purchasable in the Silverface. Comes in two variants; one accepts a nurse veil; the other accepts a feather for a greatplume."
+  - rscadd: "Greatplume variants of the armet and fluted armet are craftable and available at the Silverface."
+  - rscadd: "New decorated variants of steel armor! Reskins of typical steel plate options that require gold to smith."
+  - rscadd: "New helmets available as loadout options for knights, disgraced knight wretch, knight errant advclass, and knightly journey migrant knight. Elven barbutes are available to black oak rangers and pariahs."
+  - image: "backend change, organized head.dmi"
