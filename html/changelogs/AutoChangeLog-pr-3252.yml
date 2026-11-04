@@ -1,4 +1,0 @@
-author: "ariaworld"
-delete-after: True
-changes:
-  - bugfix: "Fixed Deadite NPCs biting when skullcracked/paralyzed."
