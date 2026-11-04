@@ -539,9 +539,9 @@ a.choose-btn:hover {
 
 /proc/get_sagittary_chant_text(faction, mob/living/carbon/human/H)
 	return {"<p><em>I am a bow of Tarichea — Ferentia, her name reborn!</em></p>
-<p><em>The arrow is my law! Blood my ink!</em></p>
+<p><em>The bow is my law! Blood my ink!</em></p>
 <p><em>Far is my sight! True is my aim!</em></p>
-<p><em>With a dozen shafts I shall thin their ranks.</em></p>
+<p><em>With a dozen arrows I shall thin their ranks.</em></p>
 <p><em>Five hundred yils, unbowed!</em></p>
 <p><em>By blood and oak, five hundred more!</em></p>"}
 
