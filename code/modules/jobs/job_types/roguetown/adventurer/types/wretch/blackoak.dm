@@ -192,9 +192,21 @@
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_EXPERT, TRUE)
 		if("sagittary")
 			r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/blackoak
-			beltr = /obj/item/quiver/arrows
+			backr = /obj/item/quiver/arrows
+			backpack_contents[/obj/item/rogueweapon/huntingknife/idagger/steel/elvish] = 1
 			H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_MASTER, TRUE)
-			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.change_stat(STATKEY_PER, 2)
+			var/sidearms = list("Elvish Saber", "Elvish Dagger")
+			var/sidearm_choice = input(H, "Choose your SIDEARM.", "THE HIDDEN THORN") as anything in sidearms
+			switch(sidearm_choice)
+				if("Elvish Saber")
+					l_hand = /obj/item/rogueweapon/sword/sabre/elf
+					beltr = /obj/item/rogueweapon/scabbard/sword
+				if("Elvish Dagger")
+					l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/elvish
+					beltr = /obj/item/rogueweapon/scabbard/sheath
+					H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
 
 	wretch_select_bounty(H)
