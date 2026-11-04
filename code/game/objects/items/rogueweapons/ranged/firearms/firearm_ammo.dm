@@ -430,11 +430,11 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/L = target
 		L.stamina_add(50)
-		L.energy_add(-450) // around 3 bulets to remove a blue bar
+		L.energy_add(-200) 
 		if(L.devotion)
-			L.devotion.update_devotion(-500) // half of T4 clerics
+			L.devotion.update_devotion(-200) 
 		if(L.get_bloodpool())
-			L.adjust_bloodpool(-500) // half a normal vampire vita
+			L.adjust_bloodpool(-200) 
 		to_chat(L, span_danger("You feel as if you somehow became lesser!"))
 		
 
