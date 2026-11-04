@@ -74,7 +74,7 @@
 		)
 
 /obj/item/rogueweapon/get_examine_string(mob/user, thats = FALSE)
-	return "[thats? "That's ":""]<b>[get_examine_name(user)]</b> <font size = 1>[get_blade_dulling_text(src)]</font>"
+	return "[thats? "That's ":""][get_examine_icon(user)]<b>[get_examine_name(user)]</b> <font size = 1>[get_blade_dulling_text(src)]</font>"
 
 /obj/item/rogueweapon/obj_break(damage_flag)
 	..()
