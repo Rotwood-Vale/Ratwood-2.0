@@ -635,7 +635,7 @@
 	max_integrity = 200
 	var/smoke_path = /obj/effect/particle_effect/smoke
 	var/cooldowny
-	var/cdtime = 30 SECONDS
+	var/cdtime = 20 SECONDS
 
 /obj/item/rogueweapon/shield/steam/attack_self(mob/user)
 	if(cooldowny)
@@ -655,7 +655,7 @@
 	playsound(user, 'sound/items/steamrelease.ogg', 100, FALSE, -1)
 	cooldowny = world.time
 	addtimer(CALLBACK(src,PROC_REF(steamready), user), cdtime)
-	for(var/atom/movable/AM in view(1, user))
+	for(var/atom/movable/AM in oview(1, user))
 		thrownatoms += AM
 	for(var/turf/T in oview(2, user))
 		new smoke_path(T) //smoke everywhere!
