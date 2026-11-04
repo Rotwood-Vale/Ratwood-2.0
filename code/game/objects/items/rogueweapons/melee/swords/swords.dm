@@ -2758,7 +2758,7 @@
 	who could ill afford to announce their calling before the time came to draw steel. Its silvered edge folds neatly into \
 	the hilt, concealing a weapon fit for the most delicate of investigations. Many a heretic has mistaken its bearer for \
 	a harmless clerk, only to learn that the Inquisition keeps its sharpest judgements close at hand."
-	force = 25 // Same as Eucharist
+	force = 25 // Same as Hwando and Elvish Sabre 
 	max_integrity = 250
 	max_blade_int = 250
 	var/extended = FALSE
