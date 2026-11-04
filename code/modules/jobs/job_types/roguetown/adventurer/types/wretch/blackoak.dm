@@ -1,4 +1,4 @@
-// WOE: SPELLBLADE DODGE EXPERT POLEARM BUILD UPON YE.
+// the trees are speaking elvish
 /datum/advclass/wretch/blackoakwyrm
 	name = "Black Oak Pariah"
 	tutorial = "Carrying extreme beliefs not even befit of the Black Oaks, you have found yourself seceded from the group. They come in waves. Your people were the ones that settled these lands, and now you find them trampled by monster and outside alike. The foreign-backed Crown, deceitful and arrogant, has denied your people the harvest they so dutifully sowed. Your extensive training in the Black Oaks has given you skill in elven weaponry and an arcane acuity. Whether you fight openly with a blade, or stalk in the trees above with a bow, a bounty from the crown follows, and the condemned scorn of those that were once your comrades."
