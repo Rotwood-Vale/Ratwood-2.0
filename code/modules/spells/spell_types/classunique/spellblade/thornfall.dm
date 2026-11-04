@@ -3,6 +3,7 @@
 	name = "Thornfall"
 	desc = "Loose an arrow skyward and let the leyline split it into a hail of arcyne thorns, falling on a 3x3 area up to 7 tiles away. \
 		The thorns fall after a short telegraph - aim where they will be. Costs no arrows. \
+		Builds 1 momentum on hit. \
 		At 3+ momentum: consumes 3 to double damage. \
 		Strikes your aimed bodypart. (25/50 damage, LIGHT PENETRATION)"
 	button_icon = 'icons/mob/actions/classuniquespells/spellblade.dmi'
@@ -102,11 +103,10 @@
 				arcyne_strike(H, victim, bow, final_damage, def_zone, BCLASS_PIERCE, armor_penetration = armor_pen, spell_name = "Thornfall", skip_animation = TRUE)
 			hit_count++
 
-	if(hit_count >= 2)
+	if(hit_count)
 		var/datum/status_effect/buff/arcyne_momentum/surge = H.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
 		if(surge)
 			surge.add_stacks(1)
-			to_chat(H, span_notice("DOUBLE STRIKE! ARCYNE SURGE!"))
 
 /obj/effect/temp_visual/telegraph/thornfall
 	light_outer_range = 1
