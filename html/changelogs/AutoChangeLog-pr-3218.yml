@@ -1,0 +1,6 @@
+author: "Rin053"
+delete-after: True
+changes:
+  - rscadd: "Drakians can choose their ancestral blood in character setup. The choices are Rontz, Saffira, Gemerald, Toper, and Amythortz."
+  - rscadd: "Fluvians, arachnids, mire crawlers, and mire lurkers bleed blue."
+  - rscadd: "Bloodstains, footprints, trails, and gibs use the bleeder's blood color, and dry into a duller shade of that blood."
