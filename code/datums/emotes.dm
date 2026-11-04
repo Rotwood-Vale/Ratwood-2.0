@@ -213,7 +213,8 @@
 							possible_sounds = H.dna.species.soundpack_m.get_sound(key, modifier)
 			// LETHALSTONE ADDITION END
 			// RMH ADD: a chosen moanpack overrides the voice pack's moans
-			if(H.moan_selection && (key in moan_keys))
+			// but never un-silences a moan the voice pack blanked out
+			if(H.moan_selection && modifier != "silenced" && (key in moan_keys))
 				var/datum/moan_pack/MP = get_moanpack(H.moan_selection)
 				possible_sounds = MP?.get_moans(key) || possible_sounds
 			if(possible_sounds)

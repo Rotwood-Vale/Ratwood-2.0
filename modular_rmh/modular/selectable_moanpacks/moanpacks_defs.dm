@@ -40,9 +40,14 @@ GLOBAL_LIST_EMPTY(moanpack_instances)
 			return GLOB.selectable_moanpacks_female
 	return GLOB.selectable_moanpacks
 
+/// Whether moans should come out gagged. Uses can_speak_vocal() rather than can_speak(),
+/// since can_speak() runs the client's chat spam filter and moans would count toward an IC automute.
+/mob/living/carbon/proc/is_moan_gagged()
+	return silent || !can_speak_vocal()
+
 /// Returns the moan emote key for the owner's current arousal, or the gagged moan if they can't speak
 /datum/sex_controller/proc/get_moan_emote()
-	if(!user.can_speak())
+	if(user.is_moan_gagged())
 		return "sexmoangag"
 	switch(arousal)
 		if(-INFINITY to 40)
@@ -50,6 +55,11 @@ GLOBAL_LIST_EMPTY(moanpack_instances)
 		if(40 to 75)
 			return "sexmoanmed"
 	return "sexmoanhvy"
+
+/// Returns the moanpack typepath for the chosen pack name, or null for Default
+/datum/preferences/proc/get_moanpack_type()
+	generate_selectable_moanpacks()
+	return GLOB.selectable_moanpacks[moan_selection]
 
 /// Resets moan_selection to default if it isn't a pack the current voice type may use. Returns FALSE if it was reset.
 /datum/preferences/proc/validate_moan_selection()
@@ -629,25 +639,6 @@ GLOBAL_LIST_EMPTY(moanpack_instances)
 	sounds_sexmoangag_org = list(
 		'modular_rmh/sound/vo/gagged/female/gagged_orgasm.ogg')
 
-/datum/moan_pack/female/dark_elf_pleasure
-	name = "Female Dark Elf Pleasure"
-	sounds_sexmoanlight = list('modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/1.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/2.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/3.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/4.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/5.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/6.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/7.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/8.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/9.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/10.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/11.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/12.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/13.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/14.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/15.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/16.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/17.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/18.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/19.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/mild/20.ogg')
-	sounds_sexmoanmed = list('modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/medium/1.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/medium/2.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/medium/3.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/medium/4.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/medium/5.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/medium/6.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/medium/7.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/medium/8.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/medium/9.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/medium/10.ogg')
-	sounds_sexmoanhvy = list('modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/hot/1.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/hot/2.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/hot/3.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/hot/4.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/hot/5.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PLEASURE/hot/6.ogg')
-	sounds_sexmoangag = list(
-		'modular_rmh/sound/vo/gagged/female/FEMALE_GAGGED_PLEASURE/01.ogg',
-		'modular_rmh/sound/vo/gagged/female/FEMALE_GAGGED_PLEASURE/02.ogg',
-		'modular_rmh/sound/vo/gagged/female/FEMALE_GAGGED_PLEASURE/03.ogg',
-		'modular_rmh/sound/vo/gagged/female/FEMALE_GAGGED_PLEASURE/04.ogg',
-		'modular_rmh/sound/vo/gagged/female/FEMALE_GAGGED_PLEASURE/05.ogg',
-		'modular_rmh/sound/vo/gagged/female/FEMALE_GAGGED_PLEASURE/06.ogg',
-		'modular_rmh/sound/vo/gagged/female/FEMALE_GAGGED_PLEASURE/07.ogg',
-		'modular_rmh/sound/vo/gagged/female/FEMALE_GAGGED_PLEASURE/08.ogg',
-		'modular_rmh/sound/vo/gagged/female/FEMALE_GAGGED_PLEASURE/09.ogg',
-		'modular_rmh/sound/vo/gagged/female/FEMALE_GAGGED_PLEASURE/10.ogg')
-	sounds_sexmoangag_org = list(
-		'modular_rmh/sound/vo/gagged/female/gagged_orgasm.ogg')
-
 /datum/moan_pack/female/dark_elf_passion
 	name = "Female Dark Elf Passion"
 	sounds_sexmoanlight = list('modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PASSION/mild/1.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PASSION/mild/2.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PASSION/mild/3.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PASSION/mild/4.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PASSION/mild/5.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PASSION/mild/6.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PASSION/mild/7.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PASSION/mild/8.ogg','modular_rmh/sound/vo/female/moans/FEMALE DARK ELF PASSION/mild/9.ogg')
@@ -808,7 +799,7 @@ GLOBAL_LIST_EMPTY(moanpack_instances)
 /datum/moan_pack/female/orc_fiery
 	name = "Female Orc Fiery"
 	sounds_sexmoanlight = list('modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/mild/1.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/mild/2.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/mild/3.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/mild/4.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/mild/5.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/mild/6.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/mild/7.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/mild/8.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/mild/9.ogg')
-	sounds_sexmoanmed = list('modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/1.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/2.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/3.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/4.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/5.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/6.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/7.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/1.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/8.ogg')
+	sounds_sexmoanmed = list('modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/1.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/2.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/3.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/4.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/5.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/6.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/7.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/medium/8.ogg')
 	sounds_sexmoanhvy = list('modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/hot/1.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/hot/2.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/hot/3.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/hot/4.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/hot/5.ogg','modular_rmh/sound/vo/female/moans/FEMALE ORC FIERY/hot/6.ogg')
 	sounds_sexmoangag = list(
 		'modular_rmh/sound/vo/gagged/female/FEMALE_GAGGED_PLEASURE/01.ogg',

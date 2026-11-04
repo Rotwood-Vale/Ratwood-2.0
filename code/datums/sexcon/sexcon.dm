@@ -819,7 +819,7 @@
 		if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
 			user.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	user.add_stress(/datum/stressevent/cumok)
-	if(!user.can_speak())
+	if(user.is_moan_gagged())
 		user.emote("sexmoangag_org", forced = TRUE)
 	else
 		user.emote("sexmoanhvy", forced = TRUE)
@@ -1064,17 +1064,12 @@
 
 	var/chosen_emote = get_moan_emote()
 
-	if(pain_amt >= PAIN_MILD_EFFECT)
-		if(likes_pain)
-			if(giving)
-				if(!user.can_speak())
-					chosen_emote = "sexmoangag"
-				else
-					if(prob(15))
-						chosen_emote = "sexmoanhvy"
-					else
-						chosen_emote = "sexmoanmed"
-		else
+	if(likes_pain)
+		// Pain only spurs them on: giving moans skip the light tier. Gagged moans stay gagged.
+		if(giving && pain_amt >= PAIN_MILD_EFFECT && chosen_emote != "sexmoangag")
+			chosen_emote = prob(pain_amt >= PAIN_MED_EFFECT ? 20 : 15) ? "sexmoanhvy" : "sexmoanmed"
+	else
+		if(pain_amt >= PAIN_MILD_EFFECT)
 			if(giving)
 				if(prob(30))
 					chosen_emote = "groan"
@@ -1082,17 +1077,7 @@
 				if(prob(40))
 					chosen_emote = "painmoan"
 
-	if(pain_amt >= PAIN_MED_EFFECT)
-		if(likes_pain)
-			if(giving)
-				if(!user.can_speak())
-					chosen_emote = "sexmoangag"
-				else
-					if(prob(20))
-						chosen_emote = "sexmoanhvy"
-					else
-						chosen_emote = "sexmoanmed"
-		else
+		if(pain_amt >= PAIN_MED_EFFECT)
 			if(giving)
 				if(prob(50))
 					chosen_emote = "groan"

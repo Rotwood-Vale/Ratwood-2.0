@@ -2231,14 +2231,18 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 						var/datum/voicepack/species_vp = pref_species.soundpack_m
 						if(voice_type != VOICE_TYPE_MASC && pref_species.soundpack_f)
 							species_vp = pref_species.soundpack_f
-						vp_type = ispath(species_vp) ? species_vp : species_vp.type
-					var/datum/voicepack/VP = new vp_type
-					var/soundin = VP.get_sound(moan_key)
-					qdel(VP)
+						if(ispath(species_vp))
+							vp_type = species_vp
+						else if(istype(species_vp))
+							vp_type = species_vp.type
+					var/soundin
+					if(vp_type)
+						var/datum/voicepack/VP = new vp_type
+						soundin = VP.get_sound(moan_key)
+						qdel(VP)
 
 					// A chosen moanpack overrides the voice pack's moans
-					generate_selectable_moanpacks()
-					var/datum/moan_pack/MP = get_moanpack(GLOB.selectable_moanpacks[moan_selection])
+					var/datum/moan_pack/MP = get_moanpack(get_moanpack_type())
 					soundin = MP?.get_moans(moan_key) || soundin
 
 					if(islist(soundin))
@@ -3491,8 +3495,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	//RMH Edit
 	// Default leaves moans to the voice type and voice pack
-	generate_selectable_moanpacks()
-	character.moan_selection = GLOB.selectable_moanpacks[moan_selection]
+	character.moan_selection = get_moanpack_type()
 
 	// LETHALSTONE ADDITION END
 

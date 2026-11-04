@@ -192,8 +192,4 @@ GLOBAL_LIST_INIT(voice_packs_list, list(
 
 //RMH ADDITIONS
 
-#define MOANPACK_TYPE_MALE	"Male"
-#define MOANPACK_TYPE_FEMALE	"Female"
 #define MOANPACK_TYPE_DEF	"Default"
-
-GLOBAL_LIST_INIT(moanpack_types_list, list(MOANPACK_TYPE_DEF, MOANPACK_TYPE_MALE, MOANPACK_TYPE_FEMALE))
