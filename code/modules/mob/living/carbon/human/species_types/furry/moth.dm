@@ -4,6 +4,7 @@
 /datum/species/moth
 	name = "Fluvian"
 	id = "moth"
+	blood_color = BLOOD_COLOR_BLUE
 	desc = "<b>Fluvian</b><br> \
 	Fluvians are a diverse race of moth-like creechers that live in sparse, nomadic communities across Grimoria. \
 	Aside from their obsession with the concept of their propensity with esoteric and seemingly inhumen rites and \

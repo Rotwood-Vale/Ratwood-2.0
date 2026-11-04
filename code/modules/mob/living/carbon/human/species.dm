@@ -68,6 +68,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/exotic_blood = ""
 	///If my race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/exotic_bloodtype = ""
+	/// Hex tint for this species' blood. Sprites are greyscaled from their red channel, then multiplied by this.
+	var/blood_color = BLOOD_COLOR_DEFAULT
 	///What the species drops on gibbing
 	var/meat = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	var/skinned_type
@@ -1380,10 +1382,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			nodmg = TRUE
 			target.next_attack_msg += VISMSG_ARMOR_BLOCKED
 		else
-			affecting.bodypart_attacked_by(user.used_intent.blade_class, damage, user, selzone, crit_message = TRUE)
+			var/obj/item/clothing/gloves/roguetown/worn_gloves = user.get_item_by_slot(SLOT_GLOVES)
+			var/obj/item/unarmed_weapon
+			if(istype(worn_gloves) && worn_gloves.unarmed_weapon_effects)
+				unarmed_weapon = worn_gloves
+
+			affecting.bodypart_attacked_by(user.used_intent.blade_class, damage, user, selzone, crit_message = TRUE, weapon = unarmed_weapon)
 			SEND_SIGNAL(target, COMSIG_ATOM_ATTACK_HAND, user)
 			if(affecting.body_zone == BODY_ZONE_HEAD)
 				SEND_SIGNAL(user, COMSIG_HEAD_PUNCHED, target)
+			if(istype(worn_gloves))
+				worn_gloves.apply_unarmed_weapon_effects(user, affecting, user.used_intent, target, selzone)
 		log_combat(user, target, "punched", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 		if(ishuman(user))
 			user.resolve_combataware(target, "[bodyzone2readablezone(selzone)]...", "[bodyzone2readablezone(user.zone_selected)]...")
@@ -1940,7 +1949,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(ishuman(user) && user != H)
 		var/aim_text = "[bodyzone2readablezone(user.zone_selected)]..."
-		if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
+		if(HAS_TRAIT(user, TRAIT_GUARD_RAISED))
 			aim_text = prob(10) ? "<i>I can't tell...</i>" : null
 		user.resolve_combataware(H, "[bodyzone2readablezone(selzone)]...", aim_text)
 
@@ -1976,7 +1985,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!nodmg)
 			post_reduction_dmg = (post_weakness_dmg - armor_block)
 			var/has_vuln_or_exposed = (H.has_status_effect(/datum/status_effect/debuff/exposed) || H.has_status_effect(/datum/status_effect/debuff/vulnerable))
-			var/datum/wound/crit_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, post_reduction_dmg, user, selzone, crit_message = TRUE, weapon = I)
+			var/datum/wound/crit_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, post_reduction_dmg, user, selzone, crit_message = TRUE, weapon = I, pen_info = pen_info_check)
 			if(should_embed_weapon(crit_wound, I))
 				var/can_impale = TRUE
 				if(!affecting)
@@ -2036,7 +2045,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				bloody = 1
 				var/turf/location = H.loc
 				var/splatter_dir = get_dir(H, user)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(H.loc, splatter_dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(H.loc, splatter_dir, H.get_blood_color())
 				if(istype(location))
 					H.add_splatter_floor(location)
 					H.add_splatter_wall(location, force = I.force)

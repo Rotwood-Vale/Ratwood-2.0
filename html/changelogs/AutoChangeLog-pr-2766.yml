@@ -1,0 +1,12 @@
+author: "Yuckuza"
+delete-after: True
+changes:
+  - rscadd: "Punching bandages now accept weapon enchants such as life steal, briar thorns, lightning, etc."
+  - rscadd: "Abotteer gets new unique silver-blessed wraps that allow him to sunder silver-weak mobs."
+  - balance: "Sunder crit rework ported from Azure Peak."
+  - balance: "Redone silver sunders. 40 stacks are applied per hit; 100 allows old Sunder kills. Sunder stacks apply debuffing effects as they build up. Bring numbers + gear for monsters, not just blessed silver."
+  - balance: "All forms of sundering flames disable your pain immunity, making you subject to paincrit again and enabling you to feel pain. This only applies if you're already silver weak."
+  - balance: "vampires take (60) vs (40) sunderstacks. - This means they die in 3 to 4 blows vs 4 to 6 blows if you can keep the pressure with blessed silver. They also feel the effects of critical sunders slightly longer than regular silver-weak."
+  - balance: "Eucharist relic rapier force buffed to 25, on par with heartstring and cuphilted rapier"
+  - balance: "Consecretia relic flail intents swapped with greatflail intents to aid wanna-be Belmonts"
+  - balance: "Unforgotten and Forgotten sword relic weapons now get 10 force when blessed, putting them on par with ordinator's apocrypha greatsword."

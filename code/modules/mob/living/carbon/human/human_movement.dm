@@ -72,7 +72,11 @@
 				var/turf/T = get_turf(src)
 				if(S.bloody_shoes && S.bloody_shoes[S.blood_state])
 					for(var/obj/effect/decal/cleanable/blood/footprints/oldFP in T)
-						if (oldFP.blood_state == S.blood_state)
+						if(oldFP.blood_state == S.blood_state)
+							if(S.blood_state == BLOOD_STATE_HUMAN && !oldFP.dried)
+								var/print_color = S.get_stored_blood_color()
+								if(print_color && oldFP.blood_color != print_color)
+									oldFP.add_blood_DNA(S.return_blood_DNA(), print_color)
 							return
 					//No oldFP or they're all a different kind of blood
 					S.bloody_shoes[S.blood_state] = max(0, S.bloody_shoes[S.blood_state] - BLOOD_LOSS_PER_STEP)
@@ -81,7 +85,8 @@
 						FP.blood_state = S.blood_state
 						FP.entered_dirs |= dir
 						FP.bloodiness = S.bloody_shoes[S.blood_state] - BLOOD_LOSS_IN_SPREAD
-						FP.add_blood_DNA(S.return_blood_DNA())
+						var/print_color = S.get_stored_blood_color()
+						FP.add_blood_DNA(S.return_blood_DNA(), print_color)
 						FP.update_icon()
 					update_inv_shoes()
 				//End bloody footprints

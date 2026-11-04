@@ -493,7 +493,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/cmd_admin_delete(atom/A as obj|mob|turf in world)
 	set category = "-GameMaster-"
-	set name = "Delete..."
+	set name = "Delete"
 
 	if(!check_rights(R_SPAWN|R_DEBUG))
 		return
