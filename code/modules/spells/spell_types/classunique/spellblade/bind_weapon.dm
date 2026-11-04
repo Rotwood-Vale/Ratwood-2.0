@@ -4,7 +4,7 @@
 	desc = "Bind your held weapon as an arcyne conduit. Successful strikes with bound weapons build arcyne momentum, fueling your abilities. \
 		It can also be recalled to your hand from anywhere with Recall Weapon. \
 		The weapon must match your chant - Blade requires a sword or dagger, Phalangite a polearm, Macebearer a mace or warhammer, Sagittary a bow. \
-		A bound bow builds momentum from arrow hits, but slower than blades. \
+		A bound bow builds momentum from each arrow hit. \
 		You can rebind to restore a lost Arcyne Momentum status, or bind a new weapon if your old one was destroyed. \
 		Cast with empty hands to unbind your current weapon."
 	button_icon = 'icons/mob/actions/classuniquespells/spellblade.dmi'

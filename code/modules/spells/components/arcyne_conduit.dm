@@ -5,7 +5,7 @@
 	var/outline_color = "#4a90d9"
 	var/gain_cooldown = 2 SECONDS // 2 seconds between melee momentum gains
 	var/last_melee_gain = 0
-	var/ranged_gain_cooldown = 3 SECONDS // makes it harder to build momentum with arrows. might need to be tweaked
+	var/ranged_gain_cooldown = 1 SECONDS
 	var/last_ranged_gain = 0
 	var/datum/weakref/owner_ref
 

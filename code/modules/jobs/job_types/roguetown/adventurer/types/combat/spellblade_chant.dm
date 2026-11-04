@@ -68,7 +68,7 @@
 <li><b>Thornfall</b> — Rain arcyne thorns on a 3x3 area up to 7 tiles away after a short telegraph. Costs no arrows. Empowered: doubles damage.</li>
 <li><b>Withdraw</b> — Leap 3 tiles away from your target, passing through enemies. Empowered: leave a burst behind that batters and hurls back anyone adjacent.</li>
 <li><b>Skyrend</b> — Loose a volley of arcyne arrows that follow your target. 7 Momentum: 5 arrows. At 10: 8 arrows. Arrows can be caught by shields or anyone in the way!</li>
-<li><b>Bound Bow</b> — Arrow hits build 1 Momentum every 3 seconds. Empower Weapon makes your next arrow strike exactly where you aimed and punch through armor like a bodkin.</li>
+<li><b>Bound Bow</b> — Each arrow hit builds 1 Momentum. Empower Weapon makes your next arrow strike exactly where you aimed and punch through armor like a bodkin.</li>
 </ul>
 </div>
 <p class="weapon-info">Woad Recurve Bow & Quiver / Elvish Dirk</p>
