@@ -25,7 +25,7 @@
 	associated_skill = /datum/skill/magic/arcane
 	spell_tier = 1
 	spell_impact_intensity = SPELL_IMPACT_LOW
-	point_cost = 1
+	point_cost = 2
 
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN
 
