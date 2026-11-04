@@ -424,6 +424,12 @@
 	item_type = /obj/item/clothing/ring/signet/silver/inqscomm
 	marquescost = 6
 
+/datum/inqports/equipment/runelock
+	name = "Runelock Pistol"
+	item_type = /obj/item/gun/ballistic/revolver/rune/twilight_runelock
+	marquescost = 16
+	maximum = 2
+
 // ✤ WARDROBE ✤ STARTS HERE! YEP!
 
 /obj/item/clothing/neck/roguetown/fencerguard/inq
