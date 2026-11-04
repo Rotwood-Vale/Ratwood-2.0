@@ -544,7 +544,7 @@
 			if("Silver Ssangsudo")
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/sword/long/kriegmesser/silver/ssangsudo
-				beltr = /obj/item/rogueweapon/scabbard/sword/kazengun
+				beltr = /obj/item/rogueweapon/scabbard/sword/kazengun/noparry
 			if("Silver Mace")
 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				r_hand = /obj/item/rogueweapon/mace/steel/silver
