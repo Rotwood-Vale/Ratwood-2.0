@@ -17,7 +17,6 @@
 	buckle_lying = 90
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	integrity_failure = 0.35
 	var/buildstacktype
 	var/buildstackamount = 2
