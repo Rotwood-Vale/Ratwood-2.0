@@ -44,6 +44,8 @@
 /obj/structure/handcart/dump_contents()
 	var/atom/L = drop_location()
 	for(var/atom/movable/AM in src)
+		if(AM == upgrade)
+			continue
 		AM.forceMove(L)
 	stuff_shit = list()
 	current_capacity = 0
