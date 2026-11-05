@@ -381,13 +381,28 @@
  * COMSIG_ATOM_GET_EXAMINE_NAME signal
  */
 /atom/proc/get_examine_name(mob/user)
-	. = "\a [src]"
-	var/list/override = list(gender == PLURAL ? "some" : "a", " ", "[name]")
-	if(article)
-		. = "[article] [src]"
-		override[EXAMINE_POSITION_ARTICLE] = article
+	var/art = article
+	
+	if(isnull(art))
+		if(gender == PLURAL)
+			art = "some"
+		else
+			var/first_char = LOWER_TEXT(copytext(name, 1, 2))
+			art = (first_char in list("a", "e", "i", "o", "u")) ? "an" : "a"
+
+	var/name_text = art ? "[art] [name]" : "[name]"
+	var/list/override = list(art ? "[art]" : "", art ? " " : "", "[name]")
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
-		. = override.Join("")
+		name_text = override.Join("")
+
+	if(!icon)
+		return name_text
+
+	var/icon_html = icon2base64html(src)
+	if(icon_html)
+		return "[icon_html] [name_text]"
+
+	return name_text
 
 ///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
@@ -590,17 +605,17 @@
 	if(!new_blood_dna)
 		return FALSE
 	var/old_length = blood_DNA_length()
-	add_blood_DNA(new_blood_dna)
+	add_blood_DNA(new_blood_dna, L.get_blood_color())
 	if(blood_DNA_length() == old_length)
 		return FALSE
 	return TRUE
 
 ///to add blood from a mob onto something, and transfer their dna info
-/atom/proc/add_mob_blood(mob/living/M)
+/atom/proc/add_mob_blood(mob/living/M, blood_color)
 	var/list/blood_dna = M.get_blood_dna_list()
 	if(!blood_dna)
 		return FALSE
-	return add_blood_DNA(blood_dna)
+	return add_blood_DNA(blood_dna, blood_color || M.get_blood_color())
 
 ///Called when gravity returns after floating I think
 /atom/proc/handle_fall()

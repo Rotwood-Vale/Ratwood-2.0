@@ -235,7 +235,7 @@
 			prob2defend = max(prob2defend - 5, 0)
 
 		if(client?.prefs.showrolls)
-			var/text = "Roll to dodge... [HAS_TRAIT(attacker, TRAIT_DECEIVING_MEEKNESS) ? "???" : prob2defend]%"
+			var/text = "Roll to dodge... [guarded_roll(prob2defend, attacker)]%"
 
 			if(dualwield_penalty)
 				text += " (-5%)"
