@@ -515,7 +515,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	qdel(remnant)
 	to_chat(user, span_notice("SLEEP IS SISTER TO DEATH, AND DEATH IS MY LADY'S DOMAIN. [uppertext(victim.real_name)] SHALL BECOME UNCONSCIOUS IN 12 SECONDS."))
 	victim.playsound_local(victim, 'sound/vo/mobs/ghost/whisper (1).ogg', 60, FALSE)
-	to_chat(victim, span_userdanger("I FEEL A TERRIBLE EXHAUSTION COME UPON ME. I HAVE 12 SECONDS TO PREPARE BEFORE IT CLAIMS ME. SOMEONE WILL COME FOR ME IN MY SLUMBER."))
+	to_chat(victim, span_userdanger("I FEEL A TERRIBLE EXHAUSTION COME UPON ME. I HAVE 12 SECONDS TO PREPARE BEFORE IT CLAIMS ME. SOMEONE MAY COME FOR ME IN MY SLUMBER."))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sleepcurse), victim), 12 SECONDS)
 
 /proc/sleepcurse(mob/living/victim)
