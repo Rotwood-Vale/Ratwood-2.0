@@ -1588,6 +1588,7 @@
 #include "code\modules\antagonists\roguetown\villain\zzizocult\aspect_rituals.dm"
 #include "code\modules\antagonists\roguetown\villain\zzizocult\rituals.dm"
 #include "code\modules\antagonists\roguetown\villain\zzizocult\zizocult.dm"
+#include "code\modules\antagonists\roguetown\villain\zzizocult\zizo_ascendant.dm"
 #include "code\modules\antagonists\separatist\separatist.dm"
 #include "code\modules\antagonists\space_dragon\space_dragon.dm"
 #include "code\modules\antagonists\traitor\datum_traitor.dm"

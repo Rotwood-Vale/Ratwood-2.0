@@ -1328,7 +1328,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/special_intent/dream_shroom
 	name = "Dream Shroom"
-	desc = "PLACEHOLDER"
+	desc = "Shoot out a spore of Zizo's Bane!"
 	use_clickloc = TRUE
 	range = 7
 	cooldown = 30 SECONDS
