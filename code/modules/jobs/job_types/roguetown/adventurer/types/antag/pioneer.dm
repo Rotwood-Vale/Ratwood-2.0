@@ -98,7 +98,6 @@
 	invocations = list("Measure twice, set once...")
 	invocation_type = "whisper"
 	miracle = FALSE
-	req_items = list(/obj/item/rogueweapon/shovel)
 
 	var/setup_delay = 8 SECONDS
 	var/pending = FALSE
