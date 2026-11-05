@@ -22,18 +22,8 @@
 /obj/structure/handcart/examine(mob/user)
 	. = ..()
 	. += span_info("Clicking and dragging an item onto the handcart from the tile you are on will put every items from the tile you can into the cart.")
-	if(upgrade_level == 1)
-		. += span_notice("This cart has a <i>level 1</i> woodcutters wheelbrace installed.")
-	else if(upgrade_level == 2)
-		. += span_notice("This cart has a <i>level 2</i> woodcutters wheelbrace installed.")
-
-/obj/structure/handcart/proc/manage_upgrade()
-	switch(upgrade_level)
-		if(1)
-			maximum_capacity = 90
-		if(2)
-			maximum_capacity = 120
-	update_icon()
+	if(upgrade_level > 0)
+		. += span_notice("This cart has <b>[upgrade]</b> installed. It cannot be downgraded.")
 
 /obj/structure/handcart/Initialize(mapload)
 	if(mapload)		// if closed, any item at the crate's loc is put in the contents
@@ -92,41 +82,17 @@
 /obj/structure/handcart/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/roguegear/wood))
 		var/obj/item/roguegear/wood/cog = I
-		if(cog.ulevel == 0)
-			upgrade = I
-			upgrade_level = cog.ulevel
-			maximum_capacity = cog.cart_capacity
-			qdel(cog)
-			playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
-			shake_camera(user, 1, 1)
-			to_chat(user, span_warning("[cog.name] inserted!"))
+		if(cog.ulevel < upgrade_level)
+			to_chat(user, span_warning("[I] is obsolete."))
 			return
-		if(cog.ulevel == 1)
-			if(upgrade_level != 0)
-				to_chat(user, span_warning("This [I] is obsolete."))
-				return
-			else
-				upgrade = I
-				upgrade_level = cog.ulevel
-				maximum_capacity = cog.cart_capacity
-				qdel(cog)
-				playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
-				shake_camera(user, 1, 1)
-				to_chat(user, span_warning("[cog.name] inserted!"))
-				return
-		if(cog.ulevel == 2)
-			if(upgrade_level == 2)
-				to_chat(user, span_warning("This [I] is obsolete."))
-				return
-			else
-				upgrade = I
-				upgrade_level = cog.ulevel
-				maximum_capacity = cog.cart_capacity
-				qdel(cog)
-				playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
-				shake_camera(user, 1, 1)
-				to_chat(user, span_warning("[cog.name] inserted!"))
-				return
+		upgrade = I
+		upgrade_level = cog.ulevel + 1
+		maximum_capacity = cog.cart_capacity
+		qdel(upgrade)
+		playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
+		shake_camera(user, 1, 1)
+		to_chat(user, span_warning("[cog] inserted!"))
+		return
 	if(!user.cmode)
 		if(!insertion_allowed(I))
 			return
