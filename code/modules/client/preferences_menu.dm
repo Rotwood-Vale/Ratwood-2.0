@@ -367,11 +367,6 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		html += pref_color_row("Mutant Color #1", features["mcolor"], "mutant_color")
 		html += pref_color_row("Mutant Color #2", features["mcolor2"], "mutant_color2")
 		html += pref_color_row("Mutant Color #3", features["mcolor3"], "mutant_color3")
-	if(pref_species.id == "dracon")
-		var/list/blood_pair = GLOB.drakian_blood_colors[blood_color_choice]
-		if(!blood_pair)
-			blood_pair = GLOB.drakian_blood_colors["red"]
-		html += pref_line(list(pref_item("Ancestral Blood", "<span style='border: 1px solid #161616; background-color: [blood_pair["color"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> [pref_link(blood_pair["name"], "blood_color")]")))
 	if(LAZYLEN(pref_species.allowed_taur_types))
 		var/obj/item/bodypart/taur/T = taur_type
 		var/taur_name = "None"
