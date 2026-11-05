@@ -7,7 +7,7 @@
 	outfit = /datum/outfit/job/roguetown/bandit/pioneer
 	category_tags = list(CTAG_BANDIT)
 	maximum_possible_slots = 2//They're limited because these guys can LEVEL THE TOWN. But only a little with how ineffective bombers are.
-	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_WEBWALK, TRAIT_FUSILIER, TRAIT_BOMBER_EXPERT, TRAIT_SQUIRE_REPAIR, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_ALCHEMY_EXPERT, TRAIT_SMITHING_EXPERT, TRAIT_LEGENDARY_MINER) //Added bomber expert as it was an oversight not to have it, and squire repair because brigands just buy stuff anyway, makes sense for the 'support' class to fix shit
+	traits_applied = list(TRAIT_OUTDOORSMAN, TRAIT_WEBWALK, TRAIT_FUSILIER, TRAIT_BOMBER_EXPERT, TRAIT_SQUIRE_REPAIR, TRAIT_MASTER_CARPENTER, TRAIT_MASTER_MASON, TRAIT_HOMESTEAD_EXPERT, TRAIT_LEGENDARY_MINER) //Added bomber expert as it was an oversight not to have it, and squire repair because brigands just buy stuff anyway, makes sense for the 'support' class to fix shit
 	subclass_stats = list(
 		STATKEY_INT = 2,
 		STATKEY_PER = 2,
@@ -32,12 +32,11 @@
 		/datum/skill/craft/engineering = SKILL_LEVEL_EXPERT,//Contraptions, explosives, etc.
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/labor/mining = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/blacksmithing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/armorsmithing = SKILL_LEVEL_JOURNEYMAN,//Repairs, really. But dabbling.
-		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_JOURNEYMAN,//As above.
+		/datum/skill/craft/blacksmithing = SKILL_LEVEL_APPRENTICE,
+		/datum/skill/craft/armorsmithing = SKILL_LEVEL_APPRENTICE,//Repairs, really. But dabbling.
+		/datum/skill/craft/weaponsmithing = SKILL_LEVEL_APPRENTICE,//As above.
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,//Yet again.
 		/datum/skill/craft/smelting = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/craft/ceramics = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/swimming = SKILL_LEVEL_EXPERT,
 		/datum/skill/misc/lockpicking = SKILL_LEVEL_EXPERT,
@@ -107,6 +106,8 @@
 
 /obj/effect/proc_holder/spell/targeted/pioneer/plant_bogtrap_delayed/proc/_has_saperka(mob/living/user)
 	for(var/obj/item/rogueweapon/shovel/saperka/S in user)
+		return TRUE
+	for(var/obj/item/rogueweapon/pick/woodcutter/dolabra/pioneer/S in user)
 		return TRUE
 	return FALSE
 
