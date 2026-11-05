@@ -44,7 +44,7 @@
 	head = /obj/item/clothing/head/roguetown/helmet/kettle
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-	cloak = /obj/item/clothing/cloak/tabard/stabard/dungeon
+	cloak = /obj/item/clothing/cloak/stabard/dungeon
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	backl = /obj/item/storage/backpack/rogue/satchel/short
 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/black/steel
