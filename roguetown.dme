@@ -37,7 +37,6 @@
 #include "code\__DEFINES\atom_hud.dm"
 #include "code\__DEFINES\banking.dm"
 #include "code\__DEFINES\barks.dm"
-#include "code\__DEFINES\blood.dm"
 #include "code\__DEFINES\calendar.dm"
 #include "code\__DEFINES\callbacks.dm"
 #include "code\__DEFINES\cargo.dm"
