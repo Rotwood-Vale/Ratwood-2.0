@@ -285,7 +285,10 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			vice_count++
-			html += pref_box("<b>[vice.name]</b> (+[vice.point_value]) [bg_link("\[Remove\]", "vice_remove", i)]", null, vice.desc, vice.name)
+			var/vice_header = "<b>[vice.name]</b> (+[vice.point_value]) [bg_link("\[Remove\]", "vice_remove", i)]"
+			if(vice.configurable)
+				vice_header += " [bg_link("\[Configure\]", "vice_config", i)]<br>[vice.config_summary()]"
+			html += pref_box(vice_header, null, vice.desc, vice.name)
 	if(vice_count < VICE_SLOTS)
 		html += pref_line(list(bg_link("Add Vice", "vice_add")))
 	return html
@@ -536,6 +539,11 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 						break
 				charflaw = null
 				to_chat(user, span_notice("Added [choice] as a vice."))
+		if("vice_config")
+			if(slot && slot <= VICE_SLOTS)
+				var/datum/charflaw/vice = vars["vice[slot]"]
+				if(vice?.configurable)
+					vice.configure(user)
 		if("vice_remove")
 			if(slot && slot <= VICE_SLOTS)
 				for(var/i in slot to VICE_SLOTS - 1)

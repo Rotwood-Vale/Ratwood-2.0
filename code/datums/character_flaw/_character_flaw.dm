@@ -56,8 +56,21 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/ephemeral = FALSE // This flaw is currently disabled and will not process
 	var/point_value = 1 // Quirk points granted by this vice. Insignificant vices set this to zero.
 	var/list/incompatible_vices = list()
+	var/configurable = FALSE
 
 /datum/charflaw/proc/on_mob_creation(mob/user)
+	return
+
+/datum/charflaw/proc/configure(mob/user)
+	return
+
+/datum/charflaw/proc/config_summary()
+	return
+
+/datum/charflaw/proc/save_config()
+	return list()
+
+/datum/charflaw/proc/load_config(list/data)
 	return
 
 /datum/charflaw/proc/apply_post_equipment(mob/user)

@@ -170,6 +170,14 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			configs["[Q.type]"] = Q.save_config()
 	return configs
 
+/datum/preferences/proc/get_vice_configs()
+	var/list/configs = list()
+	for(var/i = 1 to VICE_SLOTS)
+		var/datum/charflaw/vice = vars["vice[i]"]
+		if(vice?.configurable)
+			configs["[vice.type]"] = vice.save_config()
+	return configs
+
 // Points gained from additional selected vices (+1 per vice after slot one)
 /datum/preferences/proc/get_vice_points()
 	var/points = 0
@@ -3087,6 +3095,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		var/datum/charflaw/vice = vars["vice[i]"]
 		if(vice)
 			var/datum/charflaw/new_vice = new vice.type()
+			new_vice.load_config(vice.save_config())
 			character.vices += new_vice
 			new_vice.on_mob_creation(character)
 			// Set first vice as the legacy charflaw for compatibility

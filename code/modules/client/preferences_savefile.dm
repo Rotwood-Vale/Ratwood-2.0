@@ -587,6 +587,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vice4 = (vice4_type && ispath(vice4_type)) ? new vice4_type() : null
 	vice5 = (vice5_type && ispath(vice5_type)) ? new vice5_type() : null
 	vice6 = (vice6_type && ispath(vice6_type)) ? new vice6_type() : null
+	var/list/vice_configs
+	S["vice_configs"] >> vice_configs
+	if(islist(vice_configs))
+		for(var/i = 1 to VICE_SLOTS)
+			var/datum/charflaw/vice = vars["vice[i]"]
+			if(vice)
+				vice.load_config(vice_configs["[vice.type]"])
 
 /datum/preferences/proc/_load_culinary_preferences(S)
 	var/list/loaded_culinary_preferences
@@ -1165,6 +1172,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["vice4"], preferences_typepath_or_null(vice4))
 	WRITE_FILE(S["vice5"], preferences_typepath_or_null(vice5))
 	WRITE_FILE(S["vice6"], preferences_typepath_or_null(vice6))
+	WRITE_FILE(S["vice_configs"], get_vice_configs())
 	WRITE_FILE(S["feature_mcolor"]		, features["mcolor"])
 	WRITE_FILE(S["feature_mcolor2"]		, features["mcolor2"])
 	WRITE_FILE(S["feature_mcolor3"]		, features["mcolor3"])

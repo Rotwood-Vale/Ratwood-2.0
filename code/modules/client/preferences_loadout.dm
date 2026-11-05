@@ -172,6 +172,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"virtuetwo" = virtuetwo?.type,
 		"quirks" = get_quirk_typepaths(),
 		"quirk_configs" = get_quirk_configs(),
+		"vice_configs" = get_vice_configs(),
 		"extra_language" = extra_language
 	)
 	for(var/i in 1 to VICE_SLOTS)
@@ -215,6 +216,12 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		vars["vice[i]"] = null
 		if(ispath(vice_type, /datum/charflaw))
 			vars["vice[i]"] = new vice_type()
+	var/list/preset_vice_configs = preset["vice_configs"]
+	if(islist(preset_vice_configs))
+		for(var/i in 1 to VICE_SLOTS)
+			var/datum/charflaw/vice = vars["vice[i]"]
+			if(vice)
+				vice.load_config(preset_vice_configs["[vice.type]"])
 	var/list/preset_configs = preset["quirk_configs"]
 	for(var/datum/quirk/Q in quirks)
 		if(islist(preset_configs))
