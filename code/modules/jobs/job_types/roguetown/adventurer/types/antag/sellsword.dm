@@ -45,7 +45,7 @@
 	..()
 	head = snouthelm_pick(H, /obj/item/clothing/head/roguetown/helmet/sallet/visored, /obj/item/clothing/head/roguetown/helmet/sallet/visored/snouted)
 	neck = /obj/item/clothing/neck/roguetown/bevor
-	cloak = /obj/item/clothing/cloak/tabard/stabard/dungeon
+	cloak = /obj/item/clothing/cloak/stabard/dungeon
 	armor = /obj/item/clothing/suit/roguetown/armor/chainmail
 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
 	belt = /obj/item/storage/belt/rogue/leather
