@@ -2268,7 +2268,7 @@
 	icon = 'icons/roguetown/weapons/swords64.dmi'
 	icon_state = "silverssangsudo"
 	sheathe_icon = "silver_ssangsudo"
-	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/rend, /datum/intent/sword/strike)
+	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike, /datum/intent/rend/krieg)
 
 /obj/item/rogueweapon/sword/long/dec
 	no_loot_taint = TRUE
@@ -2291,6 +2291,7 @@
 
 /obj/item/rogueweapon/sword/sabre/mulyeog/silver
 	force = 22
+	minstr = 7
 	name = "silver hwando"
 	desc = "A foreign single-edged sword forged with pure silver. There's a red tassel on the hilt, said to bring about good fortune."
 	sheathe_icon = "silver_mulyeog"
@@ -2298,7 +2299,7 @@
 	smeltresult = /obj/item/ingot/silver
 	is_silver = TRUE
 
-/obj/item/rogueweapon/sword/sabre/muulyeog/silver/ComponentInitialize()
+/obj/item/rogueweapon/sword/sabre/mulyeog/silver/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
