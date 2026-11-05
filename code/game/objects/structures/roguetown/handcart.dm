@@ -47,9 +47,11 @@
 		AM.forceMove(L)
 	stuff_shit = list()
 	current_capacity = 0
+	update_icon()
 
 /obj/structure/handcart/Destroy()
 	dump_contents()
+	QDEL_NULL(upgrade)
 	return ..()
 
 /obj/structure/handcart/MouseDrop_T(atom/movable/O, mob/living/user)
@@ -85,11 +87,9 @@
 		if(cog.ulevel < upgrade_level)
 			to_chat(user, span_warning("[I] is obsolete."))
 			return
-		qdel(upgrade)
-		I.forceMove(src)	
-		upgrade = I
-		upgrade_level = cog.ulevel + 1
-		maximum_capacity = cog.cart_capacity
+		if(!user.transferItemToLoc(cog, src))
+			return
+		install_upgrade(cog)
 		playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
 		shake_camera(user, 1, 1)
 		to_chat(user, span_warning("[cog] inserted!"))
@@ -101,6 +101,14 @@
 			playsound(loc, 'sound/foley/cartadd.ogg', 100, FALSE, -1)
 		return
 	..()
+
+/obj/structure/handcart/proc/install_upgrade(obj/item/roguegear/wood/cog)
+	if(upgrade && upgrade != cog)
+		QDEL_NULL(upgrade)
+	upgrade = cog
+	upgrade_level = cog.ulevel + 1
+	maximum_capacity = cog.cart_capacity
+	update_icon()
 
 /obj/structure/handcart/attack_hand(mob/living/user)
 	. = ..()
