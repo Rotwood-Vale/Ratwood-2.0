@@ -143,6 +143,12 @@
 	var/newcolor = rgb(149, 10, 10)
 	if(istype(B, /obj/effect/decal/cleanable/xenoblood))
 		newcolor = rgb(43, 186, 0)
+	else if(istype(B, /obj/effect/decal/cleanable/blood))
+		var/obj/effect/decal/cleanable/blood/pool = B
+		newcolor = pool.dried ? pool.dried_color : pool.blood_color
+	else if(istype(B, /obj/effect/decal/cleanable/trail_holder))
+		var/obj/effect/decal/cleanable/trail_holder/pool = B
+		newcolor = pool.dried ? pool.dried_color : pool.blood_color
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	// but only for a few seconds
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, remove_atom_colour), TEMPORARY_COLOUR_PRIORITY, newcolor), 6 SECONDS)

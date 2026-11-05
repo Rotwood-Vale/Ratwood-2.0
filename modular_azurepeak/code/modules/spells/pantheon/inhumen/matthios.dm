@@ -38,7 +38,7 @@
 /obj/effect/proc_holder/spell/invoked/appraise/cast(list/targets, mob/living/user)
 	if(ishuman(targets[1]))
 		var/mob/living/carbon/human/target = targets[1]
-		if(HAS_TRAIT(target, TRAIT_DECEIVING_MEEKNESS) && target != user)
+		if(HAS_TRAIT(target, TRAIT_GUARD_RAISED) && target != user)
 			to_chat(user, "<font color='yellow'>I cannot tell...</font>")
 			if(prob(50 + ((target.STAPER - 10) * 10)))
 				to_chat(target, span_warning("A pair of prying eyes were laid on me..."))
@@ -303,7 +303,7 @@
 					if(selected_limb?.drop_limb())
 						var/turf/limb_turf = get_turf(selected_limb) || get_turf(target) || target.drop_location()
 						if(limb_turf)
-							new /obj/effect/decal/cleanable/blood/gibs/limb(limb_turf)
+							new /obj/effect/decal/cleanable/blood/gibs/limb(limb_turf, target.get_blood_color())
 
 			return
 

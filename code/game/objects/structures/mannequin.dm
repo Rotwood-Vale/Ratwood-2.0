@@ -510,13 +510,15 @@
 	. += sleeve_overlay
 
 	if(HAS_BLOOD_DNA(I))
-		var/icon/blood_overlay = bloody_layer[used]
+		var/blood_tint = I.get_stored_blood_color()
+		var/icon/blood_overlay = bloody_layer["[used][blood_tint]"]
 		if(!blood_overlay)
 			blood_overlay = icon(I.sleeved, used)
 			blood_overlay.Blend("#fff", ICON_ADD) 			//fills the icon_state with white (except where it's transparent)
-			blood_overlay.Blend(icon(I.bloody_icon, I.bloody_icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-			bloody_layer[used] = fcopy_rsc(blood_overlay)
+			blood_overlay.Blend(get_colored_blood_mask(I.bloody_icon, I.bloody_icon_state, blood_tint), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
+			bloody_layer["[used][blood_tint]"] = fcopy_rsc(blood_overlay)
 		var/mutable_appearance/pic = mutable_appearance(blood_overlay, layer=-layer_used)
+		pic.appearance_flags = RESET_COLOR
 		. += pic
 
 //For dropping all clothing unless the mannequin is unchangeable.
