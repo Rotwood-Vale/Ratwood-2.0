@@ -567,7 +567,7 @@
 
 /////     FITTED LIMBS     /////
 
-// Given by the Bronze Arm and Bronze Leg quirks, the Bronze Golem virtue and the Wood Arm vices.
+// Given by the Bronze Arm and Bronze Leg quirks, the Bronze Golem virtue and the Wood Arm and Wood Leg vices.
 // They are worthless once removed so a free limb can't become coin or ingots.
 
 /obj/item/bodypart/l_arm/prosthetic/woodleft/fitted
@@ -575,6 +575,14 @@
 	smeltresult = null
 
 /obj/item/bodypart/r_arm/prosthetic/woodright/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/l_leg/prosthetic/fitted
+	sellprice = 0
+	smeltresult = null
+
+/obj/item/bodypart/r_leg/prosthetic/fitted
 	sellprice = 0
 	smeltresult = null
 

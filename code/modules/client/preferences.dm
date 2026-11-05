@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/points = 0
 	for(var/i = 2 to 6)
 		var/datum/charflaw/vice = vars["vice[i]"]
-		if(vice)
+		if(vice && vice.fits_preferences(src))
 			points += vice.point_value
 	return points
 

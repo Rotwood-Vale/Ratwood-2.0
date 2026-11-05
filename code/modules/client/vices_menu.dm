@@ -1222,7 +1222,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		else if(is_first_vice)
 			html += "<span class='slot-required'>REQUIRED (0 Q-Pts)</span>"
 		else if(current_vice)
-			var/quirk_points_from_slot = current_vice.point_value
+			var/quirk_points_from_slot = current_vice.fits_preferences(src) ? current_vice.point_value : 0
 			html += "<span class='slot-cost'>+[quirk_points_from_slot] Q-Point[quirk_points_from_slot == 1 ? "" : "s"]</span>"
 
 		html += "</div>"
@@ -1235,6 +1235,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			html += "<div class='vice-info'>"
 			html += "<div class='vice-name'>[current_vice.name]</div>"
 			html += "<div class='vice-desc'>[current_vice.desc]</div>"
+			if(!current_vice.fits_preferences(src))
+				html += "<div class='vice-desc' style='color: #d9534f;'>This vice doesn't fit your current body. It has no effect and gives no Q-Points.</div>"
 			html += "</div>"
 			html += "</div>"
 
@@ -1878,6 +1880,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 						continue
 					
 					if(check_vice_pick_conflict(vice_type, TRUE, usr))
+						continue
+
+					var/datum/charflaw/vice_singleton = GLOB.charflaw_singletons[vice_type]
+					if(vice_singleton && !vice_singleton.fits_preferences(src))
 						continue
 
 					// Check for conflicting vices (eye-related)
