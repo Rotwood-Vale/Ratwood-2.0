@@ -614,9 +614,6 @@
 	GLOB.lordcolor -= src
 	return ..()
 
-/obj/item/clothing/cloak/tabard/stabard/dungeon
-	color = CLOTHING_BLACK
-
 /obj/item/clothing/cloak/stabard/bog
 	name = "bogman tabard"
 	desc = "A tabard colored in a glorius green of the mighty protectors of the BOG." // THE BOG DESERVES A BETTER DESCRIPTION!
