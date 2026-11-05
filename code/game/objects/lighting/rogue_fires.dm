@@ -85,6 +85,18 @@
 	status = LIGHT_BURNED
 	desc = "The fire is gone!"
 
+/obj/machinery/light/rogue/firebowl/lighthouse
+	desc = "A massive wrought metal platter upon a heavy base. A bright roaring fire burns bright atop."
+	icon_state = "lighthousefire1"
+	base_state = "lighthousefire1"
+
+/obj/machinery/light/rogue/firebowl/lighthouse/off
+	icon_state = "lighthousefire1"
+	base_state = "lighthousefire1"
+	soundloop = null 
+	status = LIGHT_BURNED
+	desc = "The Lighthouse is not lit...this is a grave omen"
+
 /obj/machinery/light/rogue/firebowl/standing
 	name = "standing fire"
 	desc = "Wrought metal spun into a surprisingly stable stand for a large candle to sit upon."
