@@ -370,7 +370,7 @@
 	if(H.mind)
 		if(H.mind.current)
 			H.mind.current.faction += "[H.name]_faction"
-		var/weapons = list("Daggers", "Rapier", "Sabre","Whip", "Bow", "Crossbow", "Slurbow", "Whip", "Urumi")
+		var/weapons = list("Daggers", "Rapier", "Sabre","Whip", "Bow", "Crossbow", "Slurbow", "Urumi")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -430,9 +430,6 @@
 					l_hand = /obj/item/rogueweapon/huntingknife/idagger/silver/psydagger
 				else
 					l_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
-			if("Whip") //For baothans.
-				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
-				beltr = /obj/item/rogueweapon/whip
 			if("Urumi")
 				H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_EXPERT, TRUE)
 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
