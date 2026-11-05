@@ -87,7 +87,7 @@
 			H.change_stat(STATKEY_PER, 2)
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 			gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
-			wrists = //obj/item/clothing/wrists/roguetown/bracers/cloth/monk
+			wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
 	// -- Start of section for god specific bonuses --	
 	if(H.patron?.type == /datum/patron/inhumen/graggar)
 		ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
