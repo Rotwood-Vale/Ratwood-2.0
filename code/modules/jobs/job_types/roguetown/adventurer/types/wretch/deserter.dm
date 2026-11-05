@@ -328,7 +328,7 @@
 				cloak = /obj/item/clothing/cloak/stabard/bog
 				mask = /obj/item/clothing/head/roguetown/roguehood/bogman
 			if("Black")
-				cloak = /obj/item/clothing/cloak/tabard/stabard/dungeon
+				cloak = /obj/item/clothing/cloak/stabard/dungeon
 				mask = /obj/item/clothing/head/roguetown/roguehood/bogman/black
 			if("Brown and Longcoat")
 				cloak = /obj/item/clothing/suit/roguetown/armor/longcoat/brown
