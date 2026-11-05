@@ -66,7 +66,7 @@
 			"Lucerne",
 			"Battle Axe + Shield",
 			"Lance + Kite Shield",
-			"Samshir",
+			"Shamshir",
 			"Ssangsudo",
 			"Shashka + Shield",
 			"Steel Flameberge",
