@@ -61,6 +61,6 @@
 			H.visible_message(span_danger("[target] has their blood ripped from their body!!"), \
 					span_userdanger("My blood erupts from my body!"), \
 					span_hear("..."), COMBAT_MESSAGE_RANGE, target)
-			new /obj/effect/decal/cleanable/blood/puddle(H.loc)
+			new /obj/effect/decal/cleanable/blood/puddle(H.loc, H.get_blood_color())
 			sender.adjust_bloodpool(400)
 	qdel(src)

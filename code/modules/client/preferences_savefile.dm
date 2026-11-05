@@ -249,6 +249,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["anonymize"]			>> anonymize
 	S["ghost_protection"]	>> ghost_protection
 	S["masked_examine"]		>> masked_examine
+	S["full_examine"]		>> full_examine
 	S["top_examine"]		>> top_examine
 	S["feint_hud"]			>> feint_hud
 	S["show_mouseover_role"] >> show_mouseover_role
@@ -280,6 +281,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["descriptor_color"]	>> descriptor_color
 	S["cursed_collarable"] 	>> cursed_collarable
 	S["milkable"]			>> milkable
+	S["manticore_tail_messages"]	>> manticore_tail_messages
 	S["shake"]				>> shake
 	S["no_redflash"] 		>> no_redflash
 	S["mastervol"]			>> mastervol
@@ -376,6 +378,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ambiencevol = sanitize_integer(ambiencevol, 0, 100, initial(ambiencevol))
 	mastervol = sanitize_integer(mastervol, 0, 100, initial(mastervol))
 	hide_unavailable_emotes = sanitize_integer(hide_unavailable_emotes, 0, 1, initial(hide_unavailable_emotes))
+	full_examine = sanitize_integer(full_examine, 0, 1, initial(full_examine))
 
 	//ROGUETOWN
 	parallax = PARALLAX_INSANE
@@ -436,6 +439,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ambiencevol"], ambiencevol)
 	WRITE_FILE(S["anonymize"], anonymize)
 	WRITE_FILE(S["masked_examine"], masked_examine)
+	WRITE_FILE(S["full_examine"], full_examine)
 	WRITE_FILE(S["top_examine"], top_examine)
 	WRITE_FILE(S["feint_hud"], feint_hud)
 	WRITE_FILE(S["show_mouseover_role"], show_mouseover_role)
@@ -466,6 +470,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["descriptor_color"], descriptor_color)
 	WRITE_FILE(S["cursed_collarable"], cursed_collarable)
 	WRITE_FILE(S["milkable"], milkable)
+	WRITE_FILE(S["manticore_tail_messages"], manticore_tail_messages)
 	WRITE_FILE(S["shake"], shake)
 	WRITE_FILE(S["no_redflash"], no_redflash)
 	WRITE_FILE(S["lastclass"], lastclass)
@@ -830,6 +835,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (!voice_pitch)
 		voice_pitch = 1
 	S["skin_tone"]			>> skin_tone
+	S["blood_color_choice"]	>> blood_color_choice
 	S["mutant_skin"]		>> mutant_skin
 	S["hairstyle_name"]		>> hairstyle
 	S["facial_style_name"]	>> facial_hairstyle
@@ -1047,6 +1053,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	voice_color		= voice_color
 	voice_pitch		= voice_pitch
 	skin_tone		= skin_tone
+	if(!(blood_color_choice in GLOB.drakian_blood_colors))
+		blood_color_choice = "red"
 	backpack		= sanitize_inlist(backpack, GLOB.backpacklist, initial(backpack))
 	jumpsuit_style	= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
@@ -1143,6 +1151,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["voice_color"]			, voice_color)
 	WRITE_FILE(S["voice_pitch"]			, voice_pitch)
 	WRITE_FILE(S["skin_tone"]			, skin_tone)
+	WRITE_FILE(S["blood_color_choice"]	, blood_color_choice)
 	WRITE_FILE(S["mutant_skin"]			, mutant_skin)
 	WRITE_FILE(S["hairstyle_name"]		, hairstyle)
 	WRITE_FILE(S["facial_style_name"]	, facial_hairstyle)

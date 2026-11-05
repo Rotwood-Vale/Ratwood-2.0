@@ -23,6 +23,13 @@
 	max_blade_int = 300
 	is_tool = TRUE
 
+/obj/item/rogueweapon/handsaw/bronze
+	name = "bronze handsaw"
+	desc = "The serrated half of a bronzen pair, keen to saw away at its problems."
+	icon_state = "bronzehandsaw"
+	max_blade_int = 400
+	smeltresult = /obj/item/ingot/bronze
+
 /obj/item/rogueweapon/handsaw/blacksteel
 	name = "blacksteel handsaw"
 	desc = "Embrace the joy of creation, one motion at a time."
@@ -59,6 +66,14 @@
 	var/already_assembled = FALSE
 	var/chisel_prefix = ""
 
+/obj/item/rogueweapon/chisel/bronze
+	name = "bronze chisel"
+	desc = "The blunted half of a bronzen pair, for issues requiring a steady trepanning. Add something to strike it with before doing stonework, like a mallet or a stone."
+	icon_state = "bronzechisel"
+	max_blade_int = 400
+	smeltresult = /obj/item/ingot/bronze
+	chisel_prefix = "bronze"
+
 /obj/item/rogueweapon/chisel/blacksteel
 	name = "blacksteel chisel"
 	desc = "The pen that'll scrawl a masterwork through this parchment-of-stone. Add something to strike it with before doing stonework, like a mallet or a stone."
@@ -81,6 +96,7 @@
 		/obj/item/rogueweapon/hammer/iron     = "h",
 		/obj/item/rogueweapon/hammer/wood     = "m",
 		/obj/item/rogueweapon/hammer/blacksteel = "bh",
+		/obj/item/rogueweapon/hammer/bronze	= "bronzeh",
 		/obj/item/rogueweapon/hammer/ancient   = "a"
 	)
 
