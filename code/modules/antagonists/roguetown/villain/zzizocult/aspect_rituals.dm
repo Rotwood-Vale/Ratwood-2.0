@@ -263,6 +263,10 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
 		if(H.mind && H.get_skill_level(/datum/skill/magic/arcane) > 0)
 			to_chat(H, span_userdanger("Vile magick ripples out from [where.name]! Something evil has happened!"))
+			if(!is_zizo(H))
+				zizo_wonder(H)
+	for(var/obj/item/inqhound/hound in world)
+		hound.say("REALMATIC DESTABILIZATION DETECTED AT [uppertext(where.name)]. HERETICAL ACTIVITY: LIKELY.")
 	if(!final)
 		return
 	priority_announce("THE GODS WEEP. ASCENSION IS NIGH.", title = "Omen", sound = 'sound/villain/dreamer_warning.ogg')
@@ -288,7 +292,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /obj/structure/reality_rend/examine(mob/user)
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/H = user
+	zizo_wonder(user)
+
+/proc/zizo_wonder(mob/living/carbon/human/H)
 	H.overlay_fullscreen("cult", /atom/movable/screen/fullscreen/druqks)
 	H.add_stress(/datum/stressevent/saw_wonder/cult)
 	H.emote("scream")

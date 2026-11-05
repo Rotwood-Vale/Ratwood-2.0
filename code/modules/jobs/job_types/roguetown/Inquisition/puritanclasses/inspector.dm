@@ -45,7 +45,9 @@
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
+		"HOUND" = /obj/item/inqhound,
+		"SNIFFER" = /obj/item/inqscanner
 	)
 
 /datum/outfit/job/roguetown/puritan/inspector/pre_equip(mob/living/carbon/human/H)

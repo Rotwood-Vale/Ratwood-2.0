@@ -29,10 +29,6 @@
 		used = get_best_worn_armor(def_zone, d_type)
 		if(used)
 			protection = used.armor.getRating(d_type)
-			if(used.is_cult && istype(used_weapon) && used_weapon.is_silver)
-				var/datum/component/silverbless/blessing = used_weapon.GetComponent(/datum/component/silverbless)
-				if(blessing.is_blessed)
-					protection = max(protection - 1, 0)
 			if(!blade_dulling)
 				blade_dulling = BCLASS_BLUNT
 			if(used.blocksound)

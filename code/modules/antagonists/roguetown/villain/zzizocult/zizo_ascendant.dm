@@ -28,14 +28,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/zizo_ascendant/examine(mob/user)
 	. = ..()
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/H = user
-	H.overlay_fullscreen("cult", /atom/movable/screen/fullscreen/druqks)
-	H.add_stress(/datum/stressevent/saw_wonder/cult)
-	H.emote("scream")
-	H.Paralyze(2 SECONDS)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(clear_cult_fullscreen), H), 2 SECONDS)
+	if(ishuman(user))
+		zizo_wonder(user)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/zizo_ascendant/Life()
 	. = ..()

@@ -38,7 +38,9 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_MASTER,
 	)
 	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
+		"HOUND" = /obj/item/inqhound,
+		"SNIFFER" = /obj/item/inqscanner
 	)
 
 /datum/outfit/job/roguetown/puritan/ordinator/pre_equip(mob/living/carbon/human/H)

@@ -1590,6 +1590,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "hound"
 	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_HIP
 	grid_width = 64
 	grid_height = 32
 	obj_flags_ignore = TRUE
@@ -1671,7 +1672,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	icon_state = "scanner"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	grid_width = 64
+	grid_width = 32
 	grid_height = 32
 	var/obj/item/bloodvial/vial
 
