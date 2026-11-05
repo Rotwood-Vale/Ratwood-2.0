@@ -23,7 +23,7 @@
 	. = ..()
 	. += span_info("Clicking and dragging an item onto the handcart from the tile you are on will put every items from the tile you can into the cart.")
 	if(upgrade_level > 0)
-		. += span_notice("This cart has <b>[upgrade]</b> installed. It cannot be downgraded.")
+		. += span_notice("This cart has <b>[upgrade]</b> installed.")
 
 /obj/structure/handcart/Initialize(mapload)
 	if(mapload)		// if closed, any item at the crate's loc is put in the contents
@@ -85,10 +85,11 @@
 		if(cog.ulevel < upgrade_level)
 			to_chat(user, span_warning("[I] is obsolete."))
 			return
+		qdel(upgrade)
+		I.forceMove(src)	
 		upgrade = I
 		upgrade_level = cog.ulevel + 1
 		maximum_capacity = cog.cart_capacity
-		qdel(upgrade)
 		playsound(src, pick('sound/combat/hits/onwood/fence_hit1.ogg', 'sound/combat/hits/onwood/fence_hit2.ogg', 'sound/combat/hits/onwood/fence_hit3.ogg'), 100, FALSE)
 		shake_camera(user, 1, 1)
 		to_chat(user, span_warning("[cog] inserted!"))
@@ -149,9 +150,9 @@
 	. = ..()
 	cut_overlays()
 	if(upgrade_level)
-		if(upgrade_level == 1)
-			add_overlay("ov_upgrade")
 		if(upgrade_level == 2)
+			add_overlay("ov_upgrade")
+		if(upgrade_level == 3)
 			add_overlay("ov_upgrade2")
 	if(stuff_shit.len)
 		icon_state = "cart-full"
