@@ -149,7 +149,6 @@
 		if(/datum/patron/inhumen/matthios)
 			H.cmode_music = 'sound/music/combat_matthios.ogg'
 			helmets += list("Decorated Bucket Helmet" = /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold) // This is so stupid. - Just a little, but it does look cool!
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold, SLOT_HEAD, TRUE)
 			H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/matthios, SLOT_IN_BACKPACK, TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_JOURNEYMAN, TRUE)
 			H.change_stat(STATKEY_WIL, 2)
