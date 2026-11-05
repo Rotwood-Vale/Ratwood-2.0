@@ -2290,7 +2290,7 @@
 	wdefense = 3
 
 /obj/item/rogueweapon/sword/sabre/mulyeog/silver
-	force = 27
+	force = 22
 	name = "silver hwando"
 	desc = "A foreign single-edged sword forged with pure silver. There's a red tassel on the hilt, said to bring about good fortune."
 	sheathe_icon = "silver_mulyeog"
