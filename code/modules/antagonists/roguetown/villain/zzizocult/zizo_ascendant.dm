@@ -228,7 +228,7 @@
 					continue
 				if(living_victim.stat > CONSCIOUS)
 					playsound(living_victim, 'sound/magic/cosmic_expansion.ogg', 80, TRUE)
-					living_victim.visible_message(span_danger("THE BEAM EVISCERATES [UPPERTEXT(living_victim.name)] TO A PILE OF ASH!"), span_userdanger("THE BEAM STRIPS YOUR FLESH TO DUST! YOU ARE GONE!"))
+					living_victim.visible_message(span_danger("THE BEAM EVISCERATES [uppertext(living_victim.name)] TO A PILE OF ASH!"), span_userdanger("THE BEAM STRIPS YOUR FLESH TO DUST! YOU ARE GONE!"))
 					living_victim.dust()
 					continue
 				living_victim.emote("scream")

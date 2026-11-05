@@ -1322,8 +1322,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	if(!T || T.density)
 		return
 	var/obj/structure/zizo_bane/shroom = new(T)
-	shroom.make_gas()
-	shroom.time_delay = world.time + 20 SECONDS
 	QDEL_IN(shroom, 2 MINUTES)
 
 /datum/special_intent/dream_shroom

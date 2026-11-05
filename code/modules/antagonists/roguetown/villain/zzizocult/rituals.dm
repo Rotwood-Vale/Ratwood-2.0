@@ -499,7 +499,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/servantry/sleepcurse
 	lesser = TRUE
 	name = "Curse of Sleep"
-	desc = "Curse your target to fall asleep after thirty seconds. They are warned. Requires a leech that fed from your target."
+	desc = "Curse your target to fall asleep after twelve seconds. They are warned. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	research_cost = 3
 	keep_center = TRUE
@@ -513,10 +513,10 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
 		return
 	qdel(remnant)
-	to_chat(user, span_notice("SLEEP IS SISTER TO DEATH, AND DEATH IS MY LADY'S DOMAIN. [uppertext(victim.real_name)] SHALL BECOME UNCONSCIOUS IN 30 SECONDS."))
+	to_chat(user, span_notice("SLEEP IS SISTER TO DEATH, AND DEATH IS MY LADY'S DOMAIN. [uppertext(victim.real_name)] SHALL BECOME UNCONSCIOUS IN 12 SECONDS."))
 	victim.playsound_local(victim, 'sound/vo/mobs/ghost/whisper (1).ogg', 60, FALSE)
-	to_chat(victim, span_userdanger("I FEEL A TERRIBLE EXHAUSTION COME UPON ME. I HAVE 30 SECONDS TO PREPARE BEFORE IT CLAIMS ME. SOMEONE WILL COME FOR ME IN MY SLUMBER."))
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sleepcurse), victim), 30 SECONDS)
+	to_chat(victim, span_userdanger("I FEEL A TERRIBLE EXHAUSTION COME UPON ME. I HAVE 12 SECONDS TO PREPARE BEFORE IT CLAIMS ME. SOMEONE WILL COME FOR ME IN MY SLUMBER."))
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sleepcurse), victim), 12 SECONDS)
 
 /proc/sleepcurse(mob/living/victim)
 	if(QDELETED(victim) || !ishuman(victim))
