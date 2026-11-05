@@ -1649,8 +1649,6 @@
 			backr = /obj/item/rogueweapon/sword/long/matthios
 		if("Drakkyrmaw")
 			l_hand = /obj/item/rogueweapon/katar/drakkyrmaw
-	neck = /obj/item/clothing/neck/roguetown/chaincoif/chainmantle
-	backr = /obj/item/rogueweapon/flail/peasantwarflail/matthios
 	if(istype(H.wear_armor, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))//prevents getting free gilded armor for your hedge knight buddy if you have natural armor
 		armor = null
 	if(istype(H.wear_shirt, /obj/item/clothing/suit/roguetown/armor/regenerating/skin))
