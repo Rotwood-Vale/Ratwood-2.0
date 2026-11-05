@@ -164,7 +164,8 @@
 		. += span_warning("[p_theyre(TRUE)] [pick("slurping", "sucking", "inhaling")].")
 	else
 		. += span_notice("[p_theyre(TRUE)] [pick("vomiting", "gorfing", "exhaling")].")
-	if(fed_from && (is_zizo(user) || istype(user.patron, /datum/patron/inhumen/zizo)))
+	var/mob/living/viewer = user
+	if(fed_from && (is_zizo(user) || istype(viewer?.patron, /datum/patron/inhumen/zizo)))
 		. += span_warning("It carries the remnant of [fed_from.real_name].")
 	if(drainage)
 		START_PROCESSING(SSobj, src)
