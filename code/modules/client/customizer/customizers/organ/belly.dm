@@ -26,7 +26,7 @@
 	abstract_type = /datum/sprite_accessory/belly
 	icon = 'icons/mob/sprite_accessory/genitals/belly.dmi'
 	color_key_name = "Belly"
-	layer = 44.5
+	layer = BODY_BELLY_LAYER
 	color_key_defaults = list(KEY_CHEST_COLOR)
 
 /datum/sprite_accessory/belly/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
