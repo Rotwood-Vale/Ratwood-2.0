@@ -1361,3 +1361,28 @@
 	desc = "Ward of silver, sigil of eternity; by the Ten, I command thee back to Hell!"
 	icon_state = "undivided_s"
 	sellprice = 50
+
+/obj/item/clothing/neck/roguetown/collar/fur
+	name = "fur collar"
+	desc = "A thick ruff of trapped fur, worn about the shoulders."
+	icon_state = "furscarf"
+	item_state = "furscarf"
+	salvage_result = /obj/item/natural/fur
+	salvage_amount = 1
+	sewrepair = TRUE
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/neck.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/neck.dmi'
+
+/obj/item/clothing/neck/roguetown/cravat
+	name = "cravat"
+	desc = "An otavan fashion, a strip of tied cloth that can be donned on the neck to make oneself look more sophisticated."
+	icon_state = "cravat"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/neck.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/neck.dmi'
+
+/obj/item/clothing/neck/roguetown/ruffle
+	name = "ruffled collar"
+	desc = "A ridiculous lace collar typically worn by jesters."
+	icon_state = "ruffle"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/neck.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/neck.dmi'

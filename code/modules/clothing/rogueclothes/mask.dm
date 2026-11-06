@@ -1073,3 +1073,132 @@
 /obj/item/clothing/mask/rogue/lordmask/naledi/lesser
 	name = "naledian runed mask"
 	desc = "Runes and wards, meant for daemons; the gold has somehow rusted in unnatural, impossible agony. The most prominent of these etchings is in the shape of the Naledian psycross. Lightly armored to protect the wearer's face."
+
+/obj/item/clothing/mask/rogue/blindfold/psydon
+	name = "blessed blindfold"
+	desc = "You will not conquer. You will endure. In pain, you affirm the Architect's design."
+	icon = 'modular_twilight_axis/icons/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_twilight_axis/icons/roguetown/clothing/onmob/masks.dmi'
+	icon_state = "psyblindfold"
+	item_state = "psyblindfold"
+	tint = 1
+
+/obj/item/clothing/mask/rogue/eyepatch/fake
+	desc = "An eyepatch, fitted for the right eye. It has an almost imperceptible gap so that you can see something."
+	block2add = null
+	icon = 'modular_twilight_axis/icons/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_twilight_axis/icons/roguetown/clothing/onmob/masks.dmi'
+
+/obj/item/clothing/mask/rogue/eyepatch/left/fake
+	desc = "An eyepatch, fitted for the left eye. It has an almost imperceptible gap so that you can see something."
+	block2add = null
+	icon = 'modular_twilight_axis/icons/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_twilight_axis/icons/roguetown/clothing/onmob/masks.dmi'
+
+/obj/item/clothing/mask/rogue/facemask/xylixmask
+	name = "xylixian mask"
+	desc = "A ceramic mask, forever stuck with the joyful smile its patron god favors. While it will shatter easily from blows, its smug countenance shall taunt its foes."
+	max_integrity = 50
+	armor = null
+	drop_sound = 'sound/foley/brickdrop.ogg'
+	pickup_sound = 'sound/foley/brickdrop.ogg'
+	icon = 'modular_twilight_axis/icons/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_twilight_axis/icons/roguetown/clothing/onmob/masks.dmi'
+	icon_state = "xylixmask"
+	item_state = "xylixmask"
+	detail_tag = "_l"
+	altdetail_tag = "_r"
+	color = "#FFFFFF"
+	detail_color = "#4756d8"
+	altdetail_color = "#b8252c"
+	anvilrepair = /datum/skill/craft/ceramics
+	smeltresult = null
+
+/obj/item/clothing/mask/rogue/facemask/xylixmask/Initialize()
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/mask/rogue/facemask/xylixmask/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+	if(get_altdetail_tag())
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		pic2.appearance_flags = RESET_COLOR
+		if(get_altdetail_color())
+			pic2.color = get_altdetail_color()
+		add_overlay(pic2)
+
+/obj/item/clothing/mask/rogue/faceveil
+	name = "simple veil"
+	desc = "A remarkably plain veil meant to conceal ones face... if you wore this, a gust of wind would be all it takes to reveal your identity."
+	icon_state = "faceveil"
+	flags_inv = HIDEFACE|HIDESNOUT
+	adjustable = CAN_CADJUST
+	toggle_icon_state = TRUE
+	grid_width = 32
+	grid_height = 32
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/masks.dmi'
+
+/obj/item/clothing/mask/rogue/faceveil/ComponentInitialize()
+	AddComponent(/datum/component/adjustable_clothing, NECK, null, null, 'sound/foley/equip/rummaging-03.ogg', null, (UPD_HEAD|UPD_MASK))
+
+/obj/item/clothing/mask/rogue/physician/feld
+	name = "feldsher's mask"
+	desc = "Tragedy, neutrality, and comedy; the guise of a master, tempered against the most sorrowful and sudden consequences of bad medicine."
+	icon_state = "pestramask"
+	item_state = "pestramask"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/masks.dmi'
+
+/obj/item/clothing/mask/rogue/physician/phys
+	name = "physicker's mask"
+	desc = "A beaked guise, stuffed with herbs to keep one's humors unmarred during more grizzlesome labors."
+	icon_state = "feldmask"
+	item_state = "feldmask"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/masks.dmi'
+
+/obj/item/clothing/mask/rogue/shepherd/shadowmask/spymaster
+	name = "hand's halfmask"
+	icon_state = "handmask"
+	desc = "A sleek, contoured halfmask of silk."
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/masks.dmi'
+
+/obj/item/clothing/mask/rogue/spectacles/sglasses
+	name = "smokey onyxa spectacles"
+	desc = "Death has come to your little town, Sheriff. Now, you can either ignore it, or you can help me to stop it."
+	icon_state = "sglasses"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/masks.dmi'
+
+/obj/item/clothing/mask/rogue/spectacles/thin
+	name = "thin-lensed spectacles"
+	icon_state = "glassesa"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/masks.dmi'
+
+/obj/item/clothing/mask/rogue/xylixmask/ceramic
+	name = "ceramic mask"
+	item_state = "ceramicmask"
+	icon_state = "ceramicmask"
+	desc = "An ivory ceramic mask, plain and vacant. What is a joke with a smile missing? Ever so drought of what used to be painted with colors and joy."
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/masks.dmi'
+
+/obj/item/clothing/mask/rogue/xylixmask/weathered
+	name = "weathered mask"
+	item_state = "xylix_weathered"
+	icon_state = "xylix_weathered"
+	desc = "An ancient ceramic face. It looks weathered, the sort molded by Xylixian worshippers of many yils past. Even when cast aside, it feels like the hardened clay has never left your hands. As if it always finds a way back into your palms."
+
+	max_integrity = 200
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/masks.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/masks.dmi'
