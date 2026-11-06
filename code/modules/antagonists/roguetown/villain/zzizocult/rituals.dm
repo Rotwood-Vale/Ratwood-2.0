@@ -589,6 +589,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 GLOBAL_LIST_EMPTY(zizo_proxy)
 
+/*
+
 /datum/ritual/servantry/proxy
 	lesser = TRUE
 	name = "Curse of Proxy"
@@ -608,6 +610,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 
 /proc/zizo_unproxy(mob/living/user)
 	GLOB.zizo_proxy -= user
+*/
 
 /datum/ritual/servantry/darksunmark
 	lesser = TRUE

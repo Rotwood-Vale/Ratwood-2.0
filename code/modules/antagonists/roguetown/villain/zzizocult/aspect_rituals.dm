@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/fleshcrafting/nopain, /datum/ritual/fleshcrafting/immortality,
 	/datum/ritual/transmutation/summonarmor, /datum/ritual/transmutation/summonweapon, /datum/ritual/transmutation/hiddenward, /datum/ritual/transmutation/lessernecromancy, /datum/ritual/fleshcrafting/lesserrituos,
 	/datum/ritual/transmutation/summonpylon, /datum/ritual/transmutation/summonraver,
-	/datum/ritual/transmutation/propaganda, /datum/ritual/servantry/sleepcurse,
+	/datum/ritual/transmutation/propaganda, /datum/ritual/servantry/sleepcurse, /datum/ritual/servantry/egress, /datum/ritual/servantry/knock,
 	/datum/ritual/transmutation/silencerleech, /datum/ritual/servantry/darksunmark,
 	/datum/ritual/strand/dream_jaunt, /datum/ritual/strand/strandsend,
 	/datum/ritual/strand/strandrecall, /datum/ritual/toil/progress,
