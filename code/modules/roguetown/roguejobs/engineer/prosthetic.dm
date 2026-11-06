@@ -366,8 +366,6 @@
 	resistance_flags = FLAMMABLE
 	obj_flags = CAN_BE_HIT
 	status = BODYPART_ROBOTIC
-	obj_flags = CAN_BE_HIT
-	status = BODYPART_ROBOTIC
 	static_icon = TRUE			//returns icon to initial icon state after removal under get_limb_icon
 	brute_reduction = 0
 	burn_reduction = 0
@@ -601,3 +599,24 @@
 /obj/item/bodypart/r_leg/prosthetic/bronzeright/fitted
 	sellprice = 0
 	smeltresult = null
+
+/////     FITTING     /////
+
+// Constructs, dolls and oozes take no prosthetics at all.
+// Harpy talons and taur or lamia lower bodies don't take prosthetic legs.
+
+/// Whether this body can be fitted with prosthetics. Pass legs = TRUE when the prosthetic is a leg.
+/mob/living/carbon/human/proc/can_fit_prosthetics(legs = FALSE)
+	if(construct || isooze(src))
+		return FALSE
+	return !legs || (!get_taur_tail() && !isharpy(src))
+
+/// Whether the body set in these preferences can be fitted with prosthetics. Pass legs = TRUE when the prosthetic is a leg.
+/datum/preferences/proc/can_fit_prosthetics(legs = FALSE)
+	if(pref_species.construct || istype(pref_species, /datum/species/ooze))
+		return FALSE
+	return !legs || (!istype(pref_species, /datum/species/harpy) && !taur_type)
+
+/// Whether this limb type is a leg.
+/proc/is_leg_bodypart(obj/item/bodypart/limb_type)
+	return initial(limb_type.body_part) & (LEG_LEFT | LEG_RIGHT)

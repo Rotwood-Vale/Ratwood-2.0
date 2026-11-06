@@ -249,7 +249,7 @@
 	)
 	incompatible_vices = list(/datum/charflaw/limbloss/arm_r, /datum/charflaw/limbloss/arm_l, /datum/charflaw/limbloss/leg_r, /datum/charflaw/limbloss/leg_l)
 	incompatible_quirks = list(/datum/quirk/bronzearm_r, /datum/quirk/bronzearm_l, /datum/quirk/bronzeleg_r, /datum/quirk/bronzeleg_l)
-	custom_text = "Replaces both arms and both legs with bronze prosthetics.\n- Grants +2 Engineering.\n- They feel no pain and cannot bleed, but they do not heal on their own, can jam, and can be twisted off if unarmored.\n- Anyone can repair them with a hammer, slowly without Engineering.\n- Does not apply to constructs, dolls, risen skeletons, harpies, or bodies with a tail in place of legs."
+	custom_text = "Replaces both arms and both legs with bronze prosthetics.\n- Grants +2 Engineering.\n- They feel no pain and cannot bleed, but they do not heal on their own, can jam, and can be twisted off if unarmored.\n- Anyone can repair them with a hammer, slowly without Engineering.\n- Does not apply to constructs, dolls, oozes, risen skeletons, harpies, or bodies with a tail in place of legs."
 
 /datum/virtue/utility/woodwalker
 	name = "Woodwalker"

@@ -708,7 +708,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"border" = "#7b5353",
 		"panel" = "#00000066",
 		"panel_dark" = "#00000044",
-		"button_hover" = "rgba(123, 83, 83, 0.3)"
+		"button_hover" = "rgba(123, 83, 83, 0.3)",
+		"warning" = "#d9534f"
 	)
 	
 	var/html = {"
@@ -1236,7 +1237,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 			html += "<div class='vice-name'>[current_vice.name]</div>"
 			html += "<div class='vice-desc'>[current_vice.desc]</div>"
 			if(!current_vice.fits_preferences(src))
-				html += "<div class='vice-desc' style='color: #d9534f;'>This vice doesn't fit your current body. It has no effect and gives no Q-Points.</div>"
+				html += "<div class='vice-desc' style='color: [theme["warning"]];'>This vice doesn't fit your current body. It has no effect and gives no Q-Points.</div>"
 			html += "</div>"
 			html += "</div>"
 
@@ -1625,8 +1626,14 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				var/datum/virtue/V = GLOB.virtues[path]
 				if(!V.name)
 					continue
+				// Check if restricted by species
+				if(length(pref_species.restricted_virtues))
+					if(V.type in pref_species.restricted_virtues)
+						continue
 				// Skip if already selected as secondary virtue
 				if(virtuetwo && V.type == virtuetwo.type)
+					continue
+				if(!V.prosthetics_fit_preferences(src))
 					continue
 				// Check for conflicting vices
 				if(check_pick_vice_conflict(V.type, TRUE, usr))
@@ -1666,6 +1673,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				if(length(pref_species.restricted_virtues))
 					if(V.type in pref_species.restricted_virtues)
 						continue
+				if(!V.prosthetics_fit_preferences(src))
+					continue
 				// Skip if already selected as primary virtue
 				if(virtue && V.type == virtue.type)
 					continue
@@ -1729,6 +1738,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 				if(length(pref_species.restricted_quirks))
 					if(Q.type in pref_species.restricted_quirks)
 						continue
+				if(!Q.prosthetics_fit_preferences(src))
+					continue
 				// Check for conflicting virtues
 				if(check_quirk_virtue_conflict(Q.type, TRUE, usr))
 					continue

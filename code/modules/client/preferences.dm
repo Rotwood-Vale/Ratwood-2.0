@@ -722,6 +722,14 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				for(var/datum/quirk/Q in quirks)
 					if(Q.type in pref_species.restricted_quirks)
 						quirks -= Q
+			// Prosthetic picks that no longer fit the body, e.g. after a species change.
+			if(virtue && !virtue.prosthetics_fit_preferences(src))
+				virtue = GLOB.virtues[/datum/virtue/none]
+			if(virtuetwo && !virtuetwo.prosthetics_fit_preferences(src))
+				virtuetwo = GLOB.virtues[/datum/virtue/none]
+			for(var/datum/quirk/Q in quirks)
+				if(!Q.prosthetics_fit_preferences(src))
+					quirks -= Q
 			if(statpack.name != "Virtuous")
 				virtuetwo = GLOB.virtues[/datum/virtue/none]
 			dat += "<b>Character Customization:</b> <a href='?_src_=prefs;preference=vices_menu;task=input'>Configure All</a><BR>"

@@ -43,17 +43,22 @@
 			return trait
 	return FALSE
 
+/// Whether the body set in these preferences can take our fitted prosthetics. Ones that can't are hidden from the pickers.
+/datum/customization_trait/proc/prosthetics_fit_preferences(datum/preferences/prefs)
+	for(var/limb_type in fitted_prosthetics)
+		if(!prefs.can_fit_prosthetics(is_leg_bodypart(limb_type)))
+			return FALSE
+	return TRUE
+
 /// Whether the recipient's body can take our fitted prosthetics, telling them if it can't. Check this before charging for them.
 /datum/customization_trait/proc/prosthetics_fit_or_warn(mob/living/carbon/human/recipient)
 	if(!LAZYLEN(fitted_prosthetics))
 		return TRUE
 	var/datum/job/job = SSjob.GetJob(recipient.job)
-	var/fits = !recipient.construct && !job?.no_virtue
-	// Prosthetic legs don't suit these lower bodies.
-	if(recipient.get_taur_tail() || isharpy(recipient))
-		for(var/obj/item/bodypart/limb_type as anything in fitted_prosthetics)
-			if(initial(limb_type.body_part) & (LEG_LEFT | LEG_RIGHT))
-				fits = FALSE
+	var/fits = !job?.no_virtue
+	for(var/limb_type in fitted_prosthetics)
+		if(!recipient.can_fit_prosthetics(is_leg_bodypart(limb_type)))
+			fits = FALSE
 	if(!fits)
 		to_chat(recipient, span_warning("[name] cannot be fitted to my body. It will not be applied."))
 	return fits
