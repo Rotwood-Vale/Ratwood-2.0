@@ -290,9 +290,20 @@
 	speed = 0.6
 	max_range = 7
 	range = 12
+	var/passby_sound = 'sound/magic/blade_burst.ogg'
+	var/last_passby_sound = 0
 	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
 	ammo_type = /obj/item/ammo_casing/caseless/bullet/lead/runelock
 	damage_type = BRUTE
+
+/obj/projectile/bullet/firearm/lead/runelock/Move(atom/newloc, dir = NONE)
+	. = ..()
+	if(!. || !loc)
+		return
+	if(world.time < last_passby_sound + 2)
+		return
+	last_passby_sound = world.time
+	playsound(src, passby_sound, 60, FALSE, 2)
 
 /obj/item/ammo_casing/caseless/bullet/lead/runelock/runed
 	name = "runed sphere"
