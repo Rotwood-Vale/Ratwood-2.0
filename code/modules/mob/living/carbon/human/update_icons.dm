@@ -540,8 +540,9 @@ There are several things that need to be remembered:
 
 			//add sleeve overlays, then offset
 			var/list/sleeves = list()
-			if(wear_wrists.sleeved && armsindex > 0 && !should_hide_sleeves_for_layer(WRISTSLEEVE_LAYER))
-				sleeves = get_sleeves_layer(wear_wrists,armsindex,WRISTSLEEVE_LAYER)
+			var/wristsleevelayer = (wear_wrists.alternate_worn_layer == OVER_ARMOR_LAYER) ? OVER_GLOVES_LAYER : WRISTSLEEVE_LAYER
+			if(wear_wrists.sleeved && armsindex > 0 && !should_hide_sleeves_for_layer(wristsleevelayer))
+				sleeves = get_sleeves_layer(wear_wrists,armsindex,wristsleevelayer)
 
 			if(sleeves)
 				for(var/mutable_appearance/S as anything in sleeves)
@@ -1161,7 +1162,7 @@ There are several things that need to be remembered:
 	remove_overlay(CLOAK_LAYER)
 	remove_overlay(CLOAK_BEHIND_LAYER)
 	remove_overlay(TABARD_LAYER)
-	remove_overlay(UNDER_ARMOR_LAYER)
+	remove_overlay(UNDER_ARMOR_CACHE_INDEX)
 
 	var/obj/item/bodypart/taur/taur = get_taur_tail()
 	var/icon/c_mask = taur?.clip_mask
@@ -1205,17 +1206,24 @@ There are several things that need to be remembered:
 					overlays_standing[TABARD_LAYER] = list(cloak_overlay, taur_tabard_ov)
 				else
 					overlays_standing[TABARD_LAYER] = cloak_overlay
-			if(cloak.alternate_worn_layer == UNDER_ARMOR_LAYER)
-				overlays_standing[UNDER_ARMOR_LAYER] = cloak_overlay	
 			if(cloak.alternate_worn_layer == CLOAK_BEHIND_LAYER)
 				overlays_standing[CLOAK_BEHIND_LAYER] = cloak_overlay
-			if(!cloak.alternate_worn_layer)
+			if(cloak.alternate_worn_layer == UNDER_ARMOR_LAYER)
+				var/mutable_appearance/taur_under_ov = taur?.get_barding_overlay(cloak, UNDER_ARMOR_LAYER)
+				if(taur_under_ov)
+					overlays_standing[UNDER_ARMOR_CACHE_INDEX] = list(cloak_overlay, taur_under_ov)
+				else
+					cloaklays += cloak_overlay
+			else if(!cloak.alternate_worn_layer)
 				cloaklays += cloak_overlay
 
 			//add sleeve overlays, then offset
 			var/list/cloaksleeves = list()
 			if(cloak.sleeved)
-				cloaksleeves = get_sleeves_layer(cloak,0,CLOAK_LAYER)
+				var/sleevelayer = CLOAK_LAYER
+				if(cloak.alternate_worn_layer == UNDER_ARMOR_LAYER)
+					sleevelayer = cloak.sleevetype ? UNDER_ARMORSLEEVE_LAYER : UNDER_ARMOR_LAYER
+				cloaksleeves = get_sleeves_layer(cloak,0,sleevelayer)
 
 			if(length(cloaksleeves))
 				for(var/mutable_appearance/S as anything in cloaksleeves)
@@ -1280,8 +1288,8 @@ There are several things that need to be remembered:
 	update_inv_armor() //fixboob
 	apply_overlay(TABARD_LAYER)
 	apply_overlay(CLOAK_BEHIND_LAYER)
+	apply_overlay(UNDER_ARMOR_CACHE_INDEX)
 	apply_overlay(CLOAK_LAYER)
-	apply_overlay(UNDER_ARMOR_LAYER)
 
 /mob/living/carbon/human/update_inv_shirt()
 	queue_icon_update(PENDING_UPDATE_INV_SHIRT)

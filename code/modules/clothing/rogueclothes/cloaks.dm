@@ -35,11 +35,32 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 	var/picked
-	var/overarmor = TRUE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
+
+/obj/item/clothing/cloak
+	var/overarmor = TRUE
+
+/obj/item/clothing/cloak/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Middle-clicking a cloak adjusts its layer, allowing it to be shown either above or below any worn armor.")
+
+/obj/item/clothing/cloak/MiddleClick(mob/user)
+	overarmor = !overarmor
+
+	var/restored_layer = initial(alternate_worn_layer) || TABARD_LAYER
+	alternate_worn_layer = overarmor ? restored_layer : UNDER_ARMOR_LAYER
+
+	var/where = "under my armor"
+	if(overarmor)
+		where = (restored_layer == CLOAK_BEHIND_LAYER) ? "behind me" : "over my armor"
+	to_chat(user, span_info("I wear [src] [where]."))
+
+	user.update_inv_cloak()
+	user.update_inv_armor()
+	user.update_inv_back()
 
 /obj/item/clothing/cloak/ComponentInitialize()
 	. = ..()
@@ -64,21 +85,10 @@
 	boobed = TRUE
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
-	var/overarmor = TRUE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
-
-/obj/item/clothing/cloak/abyssortabard/MiddleClick(mob/user)
-	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
-	if(overarmor)
-		alternate_worn_layer = TABARD_LAYER
-	else
-		alternate_worn_layer = UNDER_ARMOR_LAYER
-	user.update_inv_cloak()
-	user.update_inv_armor()
 
 /obj/item/clothing/cloak/reformtabard
 	name = "reformist tabard"
@@ -91,7 +101,6 @@
 	boobed = TRUE
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
-	var/overarmor = TRUE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
@@ -109,7 +118,6 @@
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 	var/open_wear = FALSE
-	var/overarmor = TRUE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
@@ -123,17 +131,6 @@
 	item_state = "psydontabardalt"
 	flags_inv = HIDECROTCH
 	open_wear = TRUE
-
-/obj/item/clothing/cloak/psydontabard/MiddleClick(mob/user)
-	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
-	if(overarmor)
-		alternate_worn_layer = TABARD_LAYER
-	else
-		alternate_worn_layer = UNDER_ARMOR_LAYER
-	user.update_inv_cloak()
-	user.update_inv_armor()
-	user.update_inv_shirt()
 
 /obj/item/clothing/cloak/psydontabard/attack_right(mob/user)
 	switch(open_wear)
@@ -170,18 +167,6 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
-
-/obj/item/clothing/cloak/tabard/MiddleClick(mob/user)
-	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
-	if(overarmor)
-		alternate_worn_layer = TABARD_LAYER
-	else
-		alternate_worn_layer = UNDER_ARMOR_LAYER
-	user.update_inv_cloak()
-	user.update_inv_armor()
-
-
 
 /obj/item/clothing/cloak/tabard/attack_right(mob/user)
 	if(picked)
@@ -485,21 +470,10 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	flags_inv = HIDECROTCH|HIDEBOOB
 	var/picked
-	var/overarmor = TRUE
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
-
-/obj/item/clothing/cloak/stabard/MiddleClick(mob/user)
-	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
-	if(overarmor)
-		alternate_worn_layer = TABARD_LAYER
-	else
-		alternate_worn_layer = UNDER_ARMOR_LAYER
-	user.update_inv_cloak()
-	user.update_inv_armor()
 
 /obj/item/clothing/cloak/stabard/attack_right(mob/user)
 	if(picked)
@@ -1327,7 +1301,6 @@
 	color = CLOTHING_BLACK
 
 /obj/item/clothing/cloak/templar
-	var/overarmor = TRUE
 
 /obj/item/clothing/cloak/templar/psydon
 	name = "psydon tabard"
@@ -1533,16 +1506,6 @@
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
-
-/obj/item/clothing/cloak/templar/MiddleClick(mob/user)
-	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the tabard over my armor" : "wear the tabard under my armor"]."))
-	if(overarmor)
-		alternate_worn_layer = TABARD_LAYER
-	else
-		alternate_worn_layer = UNDER_ARMOR_LAYER
-	user.update_inv_cloak()
-	user.update_inv_armor()
 
 /obj/item/clothing/cloak/templar/eora
 	name = "eora tabard"
@@ -1991,21 +1954,10 @@
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_cloaks.dmi'
 	sleevetype = "cotehardie"
 	nodismemsleeves = FALSE
-	var/overarmor = TRUE
 
 /obj/item/clothing/cloak/cotehardie/Initialize(mapload)
 	. = ..()
 	update_icon()
-
-/obj/item/clothing/cloak/cotehardie/MiddleClick(mob/user)
-	overarmor = !overarmor
-	to_chat(user, span_info("I [overarmor ? "wear the coat over my armor" : "wear the coat under my armor"]."))
-	if(overarmor)
-		alternate_worn_layer = TABARD_LAYER
-	else
-		alternate_worn_layer = UNDER_ARMOR_LAYER
-	user.update_inv_cloak()
-	user.update_inv_armor()
 
 /obj/item/clothing/cloak/captain
 	name = "captain's cape"
