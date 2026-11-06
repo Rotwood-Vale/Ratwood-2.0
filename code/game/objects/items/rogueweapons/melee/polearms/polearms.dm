@@ -274,7 +274,7 @@
 	wdefense_wbonus = 8	//13 when wielded.
 	bigboy = TRUE
 	gripsprite = TRUE
-	associated_skill = /datum/skill/combat/polearms
+	associated_skill = /datum/skill/combat/staves
 	anvilrepair = /datum/skill/craft/carpentry
 	resistance_flags = FLAMMABLE
 
@@ -1328,6 +1328,7 @@
 	force_wielded = 20
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	icon_state = "quarterstaff"
+	associated_skill = /datum/skill/combat/staves
 	max_integrity = 150
 
 /obj/item/rogueweapon/woodstaff/quarterstaff/iron
