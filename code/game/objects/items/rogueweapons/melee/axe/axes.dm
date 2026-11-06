@@ -686,6 +686,7 @@
 	max_blade_int = 400
 	icon = 'icons/roguetown/weapons/64.dmi'
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/axe/chop/heavy, /datum/intent/axe/sweep)
+	special = /datum/special_intent/graggar_break_the_ranks
 
 /obj/item/rogueweapon/greataxe/steel/doublehead/graggar/Initialize(mapload)
 	. = ..()
