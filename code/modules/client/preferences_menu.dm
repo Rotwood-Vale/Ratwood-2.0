@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 ))
 
 /datum/preferences
-	var/list/open_categories = list()
+	var/list/open_categories = list("Identity", "Origin", "Voice", "Body", "Flavor Text")
 
 /datum/preferences/proc/yes_no(value)
 	if(value)
@@ -91,6 +91,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		td { word-wrap: break-word; }
 		.r { line-height: 1.5; font-size: 14px; margin: 2px 0; }
 		.lab { font-weight: bold; color: #c9a96e; margin: 4px 0 1px 2px; }
+		.lab a { background: none; border-color: transparent; padding: 0; color: #c9a96e; }
 		.cbox { border: 1px solid #7b5353; background: #00000033; padding: 3px 6px; margin: 0 0 6px 0; }
 		.box { border: 1px solid #7b5353; background: #1a0707; padding: 3px 6px; margin: 3px 0; }
 		.cbox a, .box a { background: none; border-color: transparent; padding: 0; margin: 0 8px 0 0; }
@@ -105,7 +106,13 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 			if(category == "Stats")
 				html += "[page]<br>"
 			else
-				html += "<div class='lab'>[category]</div><div class='cbox'>[page]</div>"
+				var/arrow = "+"
+				if(category in open_categories)
+					arrow = "-"
+					page = "<div class='cbox'>[page]</div>"
+				else
+					page = ""
+				html += "<div class='lab'><a href='?_src_=prefs;preference=category;name=[url_encode(category)]'>[arrow] [category]</a></div>[page]"
 		html += "</td>"
 		if(column == GLOB.pref_columns[1])
 			html += "<td width='25%'></td>"
