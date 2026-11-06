@@ -1,6 +1,6 @@
 //Rot-cure for revival sickness healing and rot-penalty reversal.
 /obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure
-	list_reagents = list(/datum/reagent/rotcure = 20)	//Should be enough for 2 usages.
+	list_reagents = list(/datum/reagent/rotcure = 30)	//Should be enough for 2 usages.
 
 /datum/reagent/rotcure
 	name = "Rot-Cure"
@@ -17,7 +17,15 @@
 	. = 1
 
 /datum/reagent/rotcure/on_mob_life(mob/living/carbon/M)
+	var/datum/antagonist/zombie/was_zombie = get_deadite_antag_for_body(M)
+
 	if(volume > 8)	//Roughly 1 sip from vial.
-		M.remove_status_effect(/datum/status_effect/debuff/rotted)	//Removes de-rot debuff, which is otherwise perminant.
+		if(was_zombie)
+			if(remove_rot(target = M, user = M, method = "surgery", damage = 0,
+			success_message = "The rot pours out from the pores of [M].",
+			fail_message = "The rot fail to leave the body.")
+			lethal = FALSE)
+			M.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
+		M.remove_status_effect(/datum/status_effect/debuff/rotted)	//Removes de-rot debuff
 		M.remove_status_effect(/datum/status_effect/debuff/revived)	//Removes the 15-minute temp revive debuff
 	..()

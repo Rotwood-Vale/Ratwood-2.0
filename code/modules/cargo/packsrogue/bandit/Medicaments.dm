@@ -47,11 +47,6 @@
 	cost = 40
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/strongstampot)
 
-/datum/supply_pack/rogue/Medicaments/rotcure
-	name = "Rot Cure Potion"
-	cost = 200
-	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure)
-
 /datum/supply_pack/rogue/Medicaments/frankenbrew
 	name = "Frankenbrew"
 	cost = 200
