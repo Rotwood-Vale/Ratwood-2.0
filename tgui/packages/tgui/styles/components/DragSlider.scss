@@ -1,0 +1,15 @@
+.DragSlider {
+  position: relative;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .ProgressBar__fill {
+    transition: none;
+  }
+}

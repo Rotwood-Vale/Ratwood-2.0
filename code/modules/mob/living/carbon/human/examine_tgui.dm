@@ -44,6 +44,10 @@
 	var/ooc_notes = ""
 	var/ooc_notes_nsfw
 	var/headshot = ""
+	var/headshot_zoom = HEADSHOT_ZOOM_MIN
+	var/headshot_x = HEADSHOT_POSITION_DEFAULT
+	var/headshot_y = HEADSHOT_POSITION_DEFAULT
+	var/headshot_framed = FALSE
 	var/list/img_gallery = list()
 	var/list/nsfw_img_gallery = list()
 	var/ooc_extra_image = ""
@@ -74,6 +78,10 @@
 		is_vet = holder.check_agevet()
 		if(!obscured)
 			headshot += holder.headshot_link
+			headshot_zoom = holder.headshot_zoom
+			headshot_x = holder.headshot_x
+			headshot_y = holder.headshot_y
+			headshot_framed = holder.headshot_link ? holder.headshot_framed : FALSE
 			img_gallery = holder.img_gallery
 			nsfw_img_gallery = holder.nsfw_img_gallery
 			ooc_extra_image = holder.ooc_extra_img
@@ -92,6 +100,10 @@
 				ooc_notes = pref.ooc_notes
 				ooc_notes_nsfw = pref.erpprefs
 				headshot = pref.headshot_link
+				headshot_zoom = pref.headshot_zoom
+				headshot_x = pref.headshot_x
+				headshot_y = pref.headshot_y
+				headshot_framed = pref.headshot_link ? pref.headshot_framed : FALSE
 				img_gallery = pref.img_gallery
 				nsfw_img_gallery = pref.nsfw_img_gallery
 				ooc_extra_image = pref.ooc_extra_img
@@ -115,6 +127,10 @@
 				ooc_notes = gnoll.ooc_notes
 				ooc_notes_nsfw = gnoll.erpprefs
 				headshot = gnoll.headshot_link
+				headshot_zoom = gnoll.headshot_zoom
+				headshot_x = gnoll.headshot_x
+				headshot_y = gnoll.headshot_y
+				headshot_framed = gnoll.headshot_link ? gnoll.headshot_framed : FALSE
 				img_gallery = gnoll.img_gallery
 				nsfw_img_gallery = gnoll.nsfw_img_gallery
 				ooc_extra_image = gnoll.ooc_extra_img
@@ -145,6 +161,11 @@
 		// Identity
 		"character_name" = obscured ? "Unknown" : char_name,
 		"headshot" = headshot,
+		"headshot_zoom" = headshot_zoom,
+		"headshot_x" = headshot_x,
+		"headshot_y" = headshot_y,
+		"headshot_framed" = headshot_framed,
+		"is_admin" = check_rights_for(user?.client, R_ADMIN) ? TRUE : FALSE,
 		"obscured" = obscured ? TRUE : FALSE,
 		// Descriptions
 		"flavor_text" = flavor_text,
