@@ -1814,7 +1814,14 @@
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	bloody_icon_state = "bodyblood"
 	sewrepair = TRUE
+	component_type = /datum/component/storage/concrete/roguetown/trader
 	var/active_item = FALSE
+
+/datum/component/storage/concrete/roguetown/trader
+	screen_max_rows = 8
+	screen_max_columns = 8
+	max_w_class = WEIGHT_CLASS_BULKY
+	not_while_equipped = TRUE
 
 /obj/item/storage/backpack/rogue/backpack_trader/equipped(mob/living/user, slot)
 	. = ..()
@@ -1990,7 +1997,7 @@
 
 /obj/item/clothing/cloak/sheriff
 	name = "sheriff's cloak"
-	desc = "Плащ-накидка с вышитой серебряной геральдикой дозора."
+	desc = "A cloak-cape embroidered with the silver heraldry of the watch."
 	icon = 'modular_clothing_port/icons/ta/modular_twilight_axis/icons/roguetown/clothing/special/citywatch_armor.dmi'
 	mob_overlay_icon = 'modular_clothing_port/icons/ta/modular_twilight_axis/icons/roguetown/clothing/special/onmob/citywatch_armor.dmi'
 	sleeved = 'modular_clothing_port/icons/ta/modular_twilight_axis/icons/roguetown/clothing/special/onmob/citywatch_armor.dmi'
@@ -2283,7 +2290,7 @@
 
 /obj/item/clothing/head/roguetown/roguehood/burgerhood
 	name = "noble hood"
-	desc = "Шёлковый капюшон, показывающий высокий статус владельца. По крайней мере выглядит сносно."
+	desc = "A silk hood that shows its owner's high status. At the very least, it looks passable."
 	color = null
 	icon_state = "burgerhood"
 	item_state = "burgerhood"
@@ -2312,7 +2319,7 @@
 	color = null
 
 /obj/item/clothing/head/roguetown/hscarf
-	desc = "Шёлковая повязка, что часто находится на голове чаще всего или моряка, или пирата!"
+	desc = "A silk headscarf, most often found on the head of a sailor or a pirate!"
 	name = "head scarf"
 	icon_state = "headscarf"
 	item_state = "headscarf"
@@ -2553,7 +2560,7 @@
 
 /obj/item/clothing/suit/roguetown/shirt/twilight_hammerhold/coat
 	name = "boyar coat"
-	desc = "Боярский плащ вдохновленный эльфийской культурой, который носят знатные представители Хаммерхолда"
+	desc = "A boyar's cloak inspired by elven culture, worn by the nobility of Hammerhold."
 	icon_state = "coat_a"
 	item_state = "coat_a"
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
@@ -2905,6 +2912,7 @@
 /datum/loadout_item/port_storage_backpack_rogue_backpack_trader
 	name = "Traders chests"
 	path = /obj/item/storage/backpack/rogue/backpack_trader
+	triumph_cost = 6
 
 /datum/loadout_item/port_clothing_cloak_bandolier
 	name = "Bandolier"
