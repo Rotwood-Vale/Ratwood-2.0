@@ -719,6 +719,8 @@ There are several things that need to be remembered:
 		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/head.dmi', female = FALSE)
 		var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
 		if(head_overlay)
+			var/hat_center_x = head_overlay.pixel_x
+			var/hat_center_y = head_overlay.pixel_y
 			if(gender == MALE)
 				if(OFFSET_HEAD in dna.species.offset_features)
 					head_overlay.pixel_x += dna.species.offset_features[OFFSET_HEAD][1]
@@ -728,6 +730,14 @@ There are several things that need to be remembered:
 					head_overlay.pixel_x += dna.species.offset_features[OFFSET_HEAD_F][1]
 					head_overlay.pixel_y += dna.species.offset_features[OFFSET_HEAD_F][2]
 			overlays_standing[HEAD_LAYER] = head_overlay
+			var/obj/item/clothing/head/worn_hat = head
+			if(istype(worn_hat))
+				var/list/layered_icons = worn_hat.build_layered_stored_icons(HEAD_LAYER, 'icons/roguetown/clothing/onmob/head.dmi')
+				if(length(layered_icons))
+					for(var/mutable_appearance/layered_icon as anything in layered_icons)
+						layered_icon.pixel_x += head_overlay.pixel_x - hat_center_x
+						layered_icon.pixel_y += head_overlay.pixel_y - hat_center_y
+					overlays_standing[HEAD_LAYER] = list(head_overlay) + layered_icons
 		apply_overlay(HEAD_LAYER)
 
 	rebuild_obscured_flags()

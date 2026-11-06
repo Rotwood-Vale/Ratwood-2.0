@@ -3744,4 +3744,5 @@
 #include "modular_twilight_axis\code\game\objects\items\scabbard.dm"
 #include "modular_twilight_axis\code\modules\bildings\blueprint_planner.dm"
 #include "modular_twilight_axis\code\modules\structures\cannon.dm"
+#include "modular_clothing_port\code\clothing_port.dm"
 // END_INCLUDE

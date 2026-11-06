@@ -606,7 +606,10 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
-/obj/item/clothing/head/roguetown/scarf/MiddleClick(mob/user)
+/obj/item/clothing/head/roguetown/scarf/AltRightClick(mob/user)
+	. = ..()
+	if(. || loc != user)
+		return
 	overarmor = !overarmor
 	to_chat(user, span_info("I [overarmor ? "wear \the [src] under my hair" : "wear \the [src] over my hair"]."))
 	if(overarmor)
