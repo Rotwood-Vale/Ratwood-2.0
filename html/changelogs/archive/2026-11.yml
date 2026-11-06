@@ -140,3 +140,10 @@
   wikimody:
   - rscadd: Adds DEFY new psydonian T3 miracle with lets them move and act in near
       death state for limited time
+2026-11-06:
+  Yuckuza:
+  - bugfix: LE pure unarmed no longer spawns with bracers they can't actually use.
+  petwir1:
+  - rscadd: 'dwarven knowledge trait allows items to be fully repaired
+
+      :cl:'
