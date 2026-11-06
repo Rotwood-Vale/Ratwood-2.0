@@ -51,4 +51,4 @@
 
 /datum/round_event/antagonist/solo/zizo_cult/start()
 	for(var/datum/mind/antag_mind as anything in setup_minds)
-		antag_mind.add_antag_datum(/datum/antagonist/zizocultist)
+		antag_mind.add_antag_datum(/datum/antagonist/zizocultist/roundstart)

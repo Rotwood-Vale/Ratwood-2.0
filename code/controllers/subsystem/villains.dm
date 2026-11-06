@@ -93,8 +93,9 @@ GLOBAL_LIST_EMPTY(antag_setups)
 	var/budget = 20
 	var/static/list/stat_keys = list(STATKEY_STR, STATKEY_PER, STATKEY_INT, STATKEY_CON, STATKEY_WIL, STATKEY_SPD)
 
-/datum/antag_setup/New(mob/living/carbon/human/H)
+/datum/antag_setup/New(mob/living/carbon/human/H, points = 20)
 	user = H
+	budget = points
 	var/waited = 0
 	while(!H.advjob)
 		sleep(1 SECONDS)

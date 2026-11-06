@@ -13,11 +13,17 @@
 		"NO GODS! ONLY MASTERS!",
 	)
 	var/islesser = TRUE
+	var/start_budget = 20
+	var/start_points = 0
 	var/change_stats = TRUE
 	var/list/innate_traits = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_CABAL,
 	)
+
+/datum/antagonist/zizocultist/roundstart
+	start_budget = 26
+	start_points = 5
 
 /datum/antagonist/zizocultist/leader
 	name = "Zizoid Cultist"
@@ -65,7 +71,8 @@
 	H.verbs |= /mob/living/carbon/human/proc/release_minion
 	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT)
 	H.grant_language(/datum/language/undead)
-	new /datum/antag_setup(owner.current)
+	owner.zizo_points += start_points
+	new /datum/antag_setup(owner.current, start_budget)
 	greet()
 
 /datum/antagonist/zizocultist/on_removal()

@@ -185,13 +185,14 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 
 /datum/status_effect/buff/curse_immunity
 	id = "curse_immunity"
-	duration = 30 MINUTES
+	duration = 15 MINUTES
 	alert_type = null
 
 /proc/curse_target(mob/living/target)
 	if(!target || target.has_status_effect(/datum/status_effect/buff/curse_immunity))
 		return FALSE
-	target.apply_status_effect(/datum/status_effect/buff/curse_immunity, 30 MINUTES)
+	target.apply_status_effect(/datum/status_effect/buff/curse_immunity, 15 MINUTES)
+	target.playsound_local(target, 'sound/vo/mobs/ghost/whisper (1).ogg', 60, FALSE)
 	if(target.client)
 		var/image/eye = image('icons/effects/eldritch.dmi', target, "eye_open", ABOVE_ALL_MOB_LAYER)
 		eye.pixel_y = 32

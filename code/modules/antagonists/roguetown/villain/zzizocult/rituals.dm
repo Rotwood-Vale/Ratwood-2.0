@@ -514,15 +514,100 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		return
 	qdel(remnant)
 	to_chat(user, span_notice("SLEEP IS SISTER TO DEATH, AND DEATH IS MY LADY'S DOMAIN. [uppertext(victim.real_name)] SHALL BECOME UNCONSCIOUS IN 12 SECONDS."))
-	victim.playsound_local(victim, 'sound/vo/mobs/ghost/whisper (1).ogg', 60, FALSE)
 	to_chat(victim, span_userdanger("I FEEL A TERRIBLE EXHAUSTION COME UPON ME. I HAVE 12 SECONDS TO PREPARE BEFORE IT CLAIMS ME. SOMEONE MAY COME FOR ME IN MY SLUMBER."))
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sleepcurse), victim), 12 SECONDS)
 
 /proc/sleepcurse(mob/living/victim)
 	if(QDELETED(victim) || !ishuman(victim))
 		return
-	victim.Unconscious(2 MINUTES)
-		
+	victim.Unconscious(1 MINUTES)
+
+/datum/ritual/servantry/egress
+	lesser = TRUE
+	name = "Curse of Egress"
+	desc = "Curse your target with the inability to pass the same doorway twice. Lasts 5 minutes. Requires a leech that fed from your target."
+	center_requirement = /obj/item/natural/worms/leech
+	research_cost = 3
+	keep_center = TRUE
+
+/datum/ritual/servantry/egress/invoke(mob/living/user, turf/center)
+	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
+	if(!remnant)
+		return
+	var/mob/living/carbon/human/victim = remnant.fed_from
+	if(!curse_target(victim))
+		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
+		return
+	qdel(remnant)
+	to_chat(user, span_notice("LIKE A RAT IN A MAZE!"))
+	to_chat(victim, span_userdanger("WHAT A HORRIBLE NITE TO HAVE A CURSE."))
+	victim.apply_status_effect(/datum/status_effect/debuff/zizo_egress)
+
+/datum/status_effect/debuff/zizo_egress
+	id = "zizo_egress"
+	duration = 5 MINUTES
+	alert_type = null
+	var/list/doors = list()
+
+/datum/status_effect/debuff/zizo_egress/on_apply()
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(left_tile))
+	return ..()
+
+/datum/status_effect/debuff/zizo_egress/on_remove()
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+
+/datum/status_effect/debuff/zizo_egress/proc/left_tile(datum/source, atom/old_loc)
+	SIGNAL_HANDLER
+	for(var/obj/structure/mineral_door/D in old_loc)
+		doors |= D
+
+/datum/ritual/servantry/knock
+	lesser = TRUE
+	name = "Curse of Knock"
+	desc = "Keys no longer work for your target! Lasts 5 minutes. Requires a leech that fed from your target."
+	center_requirement = /obj/item/natural/worms/leech
+	research_cost = 3
+	keep_center = TRUE
+
+/datum/ritual/servantry/knock/invoke(mob/living/user, turf/center)
+	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
+	if(!remnant)
+		return
+	var/mob/living/carbon/human/victim = remnant.fed_from
+	if(!curse_target(victim))
+		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
+		return
+	qdel(remnant)
+	to_chat(user, span_notice("THEY SHALL HAVE FINGERS OF BUTTER!"))
+	to_chat(victim, span_userdanger("WHAT A HORRIBLE NITE TO HAVE A CURSE."))
+	victim.apply_status_effect(/datum/status_effect/debuff/zizo_knock)
+
+/datum/status_effect/debuff/zizo_knock
+	id = "zizo_knock"
+	duration = 5 MINUTES
+	alert_type = null
+
+GLOBAL_LIST_EMPTY(zizo_proxy)
+
+/datum/ritual/servantry/proxy
+	lesser = TRUE
+	name = "Curse of Proxy"
+	desc = "SNIFFERs track your target instead of you! Lasts 10 minutes. Requires a leech that fed from your target."
+	center_requirement = /obj/item/natural/worms/leech
+	research_cost = 3
+	keep_center = TRUE
+
+/datum/ritual/servantry/proxy/invoke(mob/living/user, turf/center)
+	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
+	if(!remnant)
+		return
+	GLOB.zizo_proxy[user] = remnant.fed_from
+	qdel(remnant)
+	to_chat(user, span_notice("THAT VILE HOUND SHALL NOT FIND ME, FOR NOW."))
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(zizo_unproxy), user), 10 MINUTES)
+
+/proc/zizo_unproxy(mob/living/user)
+	GLOB.zizo_proxy -= user
 
 /datum/ritual/servantry/darksunmark
 	lesser = TRUE
@@ -1716,6 +1801,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		vial = null
 		return
 	var/mob/living/carbon/human/target = vial.target
+	if(GLOB.zizo_proxy[target] && !prob(25))
+		target = GLOB.zizo_proxy[target]
 	if(!target || QDELETED(target) || target.stat == DEAD)
 		to_chat(user, span_warning("[src] can't find anything."))
 		qdel(vial)
