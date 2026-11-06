@@ -3,7 +3,6 @@ GLOBAL_LIST_INIT(pref_categories, list(
 	"Identity" = /datum/preferences/proc/page_identity,
 	"Origin" = /datum/preferences/proc/page_origin,
 	"Customization" = /datum/preferences/proc/page_loadout,
-	"Stats" = /datum/preferences/proc/page_stats,
 	"Character Settings" = /datum/preferences/proc/page_character_settings,
 	"Voice" = /datum/preferences/proc/page_voice,
 	"Body" = /datum/preferences/proc/page_features,
@@ -14,7 +13,7 @@ GLOBAL_LIST_INIT(pref_categories, list(
 GLOBAL_LIST_INIT(no_preview_prefs, list("category", "background", "flavortext", "nsfwflavortext", "ooc_notes", "erpprefs", "headshot", "rumour", "gossip", "rumour_preview", "ooc_extra", "ooc_extra_img", "nsfw_ooc_extra_img", "change_title", "change_artist", "img_gallery", "nsfw_img_gallery", "clear_gallery", "clear_nsfw_gallery", "ooc_preview", "formathelp", "voicetype", "voicepack", "voice", "voice_pitch", "char_accent", "char_mannerism", "barksound", "barkspeed", "barkpitch", "barkvary", "barkpreview", "combat_music", "dnr", "preferred_map", "familiar_prefs", "gnoll_prefs", "nickname", "highlight_color", "pronouns", "culinary", "tgui_theme", "parchment_skin", "tgui_ui_prefs", "playerquality", "triumphs", "setspouse", "family", "gender_choice", "species_choice"))
 
 GLOBAL_LIST_INIT(pref_columns, list(
-	list("Identity", "Origin", "Customization", "Stats"),
+	list("Identity", "Origin", "Customization"),
 	list("Character Settings", "Voice", "Body", "Flavor Text"),
 ))
 
@@ -103,16 +102,13 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 			html += "<td width='40%' valign='top'>"
 		for(var/category in column)
 			var/page = call(src, GLOB.pref_categories[category])(user)
-			if(category == "Stats")
-				html += "[page]<br>"
+			var/arrow = "+"
+			if(category in open_categories)
+				arrow = "-"
+				page = "<div class='cbox'>[page]</div>"
 			else
-				var/arrow = "+"
-				if(category in open_categories)
-					arrow = "-"
-					page = "<div class='cbox'>[page]</div>"
-				else
-					page = ""
-				html += "<div class='lab'><a href='?_src_=prefs;preference=category;name=[url_encode(category)]'>[arrow] [category]</a></div>[page]"
+				page = ""
+			html += "<div class='lab'><a href='?_src_=prefs;preference=category;name=[url_encode(category)]'>[arrow] [category]</a></div>[page]"
 		html += "</td>"
 		if(column == GLOB.pref_columns[1])
 			html += "<td width='25%'></td>"
@@ -251,11 +247,12 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 /datum/preferences/proc/page_loadout(mob/user)
 	var/html = pref_line(list(pref_item("Loadout Menu", pref_link("Change", "loadout", "menu"))))
 	html += pref_line(list(pref_item("Presets", pref_link("Change", "loadout", "presets"))))
+	html += page_stats(user)
 	return html
 
 /datum/preferences/proc/page_stats(mob/user)
 	var/html = ""
-	html += pref_box(pref_item("Statpack", bg_link(statpack.name, "statpack")), statpack.generate_modifier_string())
+	html += pref_box(pref_item("Statpack", bg_link(statpack.name, "statpack")), statpack.generate_modifier_string() || "")
 	html += get_virtue_html("Primary Virtue", virtue, 1)
 	if(second_virtue_allowed())
 		html += get_virtue_html("Second Virtue", virtuetwo, 2)
