@@ -7,6 +7,7 @@
 
 /datum/keybinding/mob/pixel_shift
 	hotkey_keys = list() // purposefully left blank
+	hold_binding = TRUE
 	name = "pixel_shift"
 	full_name = "Pixel Shift"
 	description = "Shift your characters offset."
