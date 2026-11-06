@@ -855,7 +855,9 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /obj/item/clothing/head/roguetown/helmet/skullcap/cult
 	name = "ominous hood"
 	desc = "It echoes with ominous laughter. Worn over a skullcap"
-	icon_state = "warlockhood"
+	icon = 'icons/roguetown/cult/zizohead.dmi'
+	mob_overlay_icon = 'icons/roguetown/cult/zizohead.dmi'
+	icon_state = "warlock"
 	dynamic_hair_suffix = ""
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
@@ -1594,8 +1596,8 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /obj/item/clothing/head/hooded/cultrobehood
 	name = "hood"
 	desc = "Evil ass ZIZO hood."
-	icon = 'icons/roguetown/clothing/onmob/head.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
+	icon = 'icons/roguetown/cult/zizohead.dmi'
+	mob_overlay_icon = 'icons/roguetown/cult/zizohead.dmi'
 	icon_state = "warlockhood"
 	item_state = "warlockhood"
 	slot_flags = ITEM_SLOT_HEAD
@@ -2152,6 +2154,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /obj/item/clothing/head/roguetown/crown/zizo
 	name = "Zizo Crown"
 	desc = "FOR THE ASCENDANT."
+	mob_overlay_icon = 'icons/roguetown/cult/zizohead.dmi'
 	icon_state = "zcrown"
 
 /obj/effect/proc_holder/spell/targeted/touch/cleave
