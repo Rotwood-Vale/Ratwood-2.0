@@ -2233,6 +2233,12 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /mob/living/simple_animal/pet/cat/rogue/black/witch/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_ZJUMP, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOFALLDAMAGE2, TRAIT_GENERIC)
+	pass_flags |= PASSTABLE | PASSGRILLE
+	STAPER = 15
+	see_in_dark = 12
+	lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 
 /mob/living/simple_animal/pet/cat/rogue/black/witch/UnarmedAttack(atom/A, proximity)
 	var/mob/living/carbon/human/victim = A
