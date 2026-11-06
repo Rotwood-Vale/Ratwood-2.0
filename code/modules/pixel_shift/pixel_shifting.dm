@@ -110,6 +110,11 @@
 /mob/living/carbon/pixel_rotate(angle)
 	if(notransform || buckled || !isturf(loc))
 		return
+	if(mobility_flags & MOBILITY_STAND)
+		// Stored angles wrap through 360; standing limits are relative to upright.
+		var/current_lean = pixel_rotation > 180 ? pixel_rotation - 360 : pixel_rotation
+		var/new_lean = clamp(current_lean + angle, -PIXEL_ROTATION_STANDING_LIMIT, PIXEL_ROTATION_STANDING_LIMIT)
+		angle = new_lean - current_lean
 	if(!angle)
 		return
 	var/matrix/new_transform = matrix(transform)

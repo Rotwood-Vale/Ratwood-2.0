@@ -6,6 +6,10 @@
 	var/final_pixel_y = pixel_y
 	var/final_dir = dir
 	var/changed = 0
+	if(pixel_rotation && lying_prev && (mobility_flags & MOBILITY_STAND))
+		// Cosmetic spinning must not survive the transition back to standing.
+		pixel_rotation = 0
+		changed++
 	if(lying != lying_prev && rotate_on_lying)
 		var/old_lying_prev = lying_prev
 		changed++
