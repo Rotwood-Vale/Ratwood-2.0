@@ -496,6 +496,9 @@
 	icon_state = "physhat"
 	nudist_approved = TRUE
 
+/obj/item/clothing/head/roguetown/physician/sawbones
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 
 /obj/item/clothing/head/roguetown/helmet/tricorn
 	slot_flags = ITEM_SLOT_HEAD

@@ -166,6 +166,10 @@
 	flags_inv = HIDEBOOB|HIDETAIL
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/suit/roguetown/shirt/robe/physician/sawbones
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+
 //Eora content from Stonekeep
 
 /obj/item/clothing/suit/roguetown/shirt/robe/eora
