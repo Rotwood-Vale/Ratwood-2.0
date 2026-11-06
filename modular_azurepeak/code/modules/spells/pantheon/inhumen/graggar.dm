@@ -333,7 +333,7 @@
 
 //Bloodrage T0 -- Adrenaline buff.
 /obj/effect/proc_holder/spell/self/graggar_bloodrage
-	name = "Bloodrrush"
+	name = "Bloodrush"
 	desc = "Fills you with an adrenaline rush for a short while."
 	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
