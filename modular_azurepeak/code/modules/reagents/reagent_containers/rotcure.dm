@@ -17,15 +17,15 @@
 	. = 1
 
 /datum/reagent/rotcure/on_mob_life(mob/living/carbon/M)
-	var/datum/antagonist/zombie/was_zombie = get_deadite_antag_for_body(M)
-
+	
 	if(volume > 8)	//Roughly 1 sip from vial.
+		var/datum/antagonist/zombie/was_zombie = get_deadite_antag_for_body(M)
 		if(was_zombie)
-			if(remove_rot(target = M, user = M, method = "surgery", damage = 0,
+			if(remove_rot(target = M, user = M, method = "alchemy", damage = 0,
 			success_message = "The rot pours out from the pores of [M].",
-			fail_message = "The rot fail to leave the body.")
-			lethal = FALSE)
-			M.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
+			fail_message = "The rot fail to leave the body.", lethal = FALSE))
+				M.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)
+		M.remove_status_effect(/datum/status_effect/zombie_infection) 
 		M.remove_status_effect(/datum/status_effect/debuff/rotted)	//Removes de-rot debuff
 		M.remove_status_effect(/datum/status_effect/debuff/revived)	//Removes the 15-minute temp revive debuff
 	..()
