@@ -921,7 +921,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	desc = "This dagger once pierced the Sun Queen's heart."
 	icon_state = "fdagger"
 	sheathe_icon = "fdagger"
-	force = 20
+	force = 30
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE
 	associated_skill = /datum/skill/combat/arcyne
@@ -936,7 +936,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/special_intent/ignite_dagger
 	name = "Ignite Dagger"
 	desc = "Channel the power of Pitch within the dagger to heat it to an incredible degree."
-	cooldown = 120 SECONDS
+	cooldown = 60 SECONDS
 	stamcost = 25
 
 /datum/special_intent/ignite_dagger/on_create()
@@ -945,6 +945,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/obj/item/rogueweapon/huntingknife/idagger/steel/W = iparent
 	active_timer = addtimer(CALLBACK(src, PROC_REF(effect_expire)), 30 SECONDS, TIMER_STOPPABLE)
 	W.damtype = BURN
+	W.force -= 15
+	W.update_force_dynamic()
 	if("[W.icon_state]_active" in icon_states(W.icon))
 		W.icon_state = "[W.icon_state]_active"
 	W.inactive_intents = W.possible_item_intents
@@ -957,6 +959,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	howner.visible_message(span_warning("[iparent]'s blade cools down!"))
 	var/obj/item/rogueweapon/huntingknife/idagger/steel/W = iparent
 	W.damtype = BRUTE
+	W.force += 15
+	W.update_force_dynamic()
 	W.icon_state = initial(W.icon_state)
 	W.possible_item_intents = W.inactive_intents
 	howner.update_a_intents()
@@ -995,7 +999,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/obj/item/rogueweapon/sword/sabre/rot/W = iparent
 	active_timer = addtimer(CALLBACK(src, PROC_REF(effect_expire)), 30 SECONDS, TIMER_STOPPABLE)
 	W.damtype = TOX
-	W.force -= 20
+	W.force -= 22
 	W.update_force_dynamic()
 	W.inactive_intents = W.possible_item_intents
 	W.possible_item_intents = W.active_intents
@@ -1008,7 +1012,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	howner.visible_message(span_warning("[iparent]'s coating of toxins falls to the dirt!"))
 	var/obj/item/rogueweapon/sword/sabre/rot/W = iparent
 	W.damtype = BRUTE
-	W.force += 20
+	W.force += 22
 	W.possible_item_intents = W.inactive_intents
 	howner.update_a_intents()
 	W.update_force_dynamic()
