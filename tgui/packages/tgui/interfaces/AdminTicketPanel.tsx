@@ -322,6 +322,17 @@ export const AdminTicketPanel = (props) => {
                             </Button>
                             <Button
                               compact
+                              tooltip="Pref Refresh - Reapply this player's saved preferences to their character, keeping its current name."
+                              onClick={() =>
+                                act('ticket_pref_refresh', {
+                                  ticket_id: selected_ticket.ticket_id,
+                                })
+                              }
+                            >
+                              Pref Refresh
+                            </Button>
+                            <Button
+                              compact
                               tooltip="PQ (Check Player Quality) - Open the PQ panel for this player."
                               onClick={() =>
                                 act('ticket_pq', {
