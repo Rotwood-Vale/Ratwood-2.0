@@ -37,6 +37,9 @@
 /obj/effect/temp_visual/small_smoke/gunsmoke/black
 	color = COLOR_BLACK
 
+/obj/effect/temp_visual/small_smoke/gunsmoke/blue
+	color = COLOR_BLUE_LIGHT
+
 /obj/item/gun/ballistic/revolver/rune/twilight_runelock
 	name = "runelock pistol"
 	desc = "An extremely lethal weapon. Uses runic magic instead of smokepowder."
@@ -56,7 +59,7 @@
 	var/cocked = FALSE
 	cartridge_wording = "runed sphere"
 	load_sound = 'sound/firearm/musketload.ogg'
-	fire_sound = 'sound/firearm/musketfire2.ogg'
+	fire_sound = 'sound/firearm/runelock_fire.ogg'
 	vary_fire_sound = TRUE
 	fire_sound_volume = 200
 	anvilrepair = /datum/skill/craft/engineering
@@ -241,7 +244,7 @@
 	cocked = FALSE
 	update_icon()
 	var/shoot_dir = get_dir(src, target)
-	new /obj/effect/temp_visual/small_smoke/gunsmoke(get_step(user, shoot_dir), shoot_dir)
+	new /obj/effect/temp_visual/small_smoke/gunsmoke/blue(get_step(user, shoot_dir), shoot_dir)
 	..()
 
 /obj/item/ammo_box/magazine/internal/shot/twilight_runelock
