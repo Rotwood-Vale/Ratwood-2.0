@@ -1996,8 +1996,6 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 	if(stage < 3)
 		config["minor"] += 1
 		config["utilities"] += 3
-	else if(HAS_TRAIT(target, TRAIT_WARLOCK))
-		config["major"] += 1
 	target.mind.setup_mage_aspects(config)
 	playsound(center, 'sound/misc/lava_death.ogg', 100, FALSE)
 	to_chat(target, span_notice("Death is not an end. My soul is Hers."))
@@ -2008,6 +2006,11 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 	for(var/atom/A in range(7, center))
 		if(A.light_on && A.light_outer_range)
 			zizo_flicker(A)
+	if(stage == 3)
+		if(HAS_TRAIT(target, TRAIT_WARLOCK))
+			grant_poke_spell_zizo_warlock(target)
+		else
+			grant_poke_spell_zizo(target)
 
 /datum/ritual/fleshcrafting/immortality
 	lesser = TRUE
