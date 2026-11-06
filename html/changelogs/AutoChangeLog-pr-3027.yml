@@ -1,0 +1,10 @@
+author: "AlucardHellsingChapel"
+delete-after: True
+changes:
+  - rscadd: "Added new armor set"
+  - rscadd: "Added new weapon and shield"
+  - rscadd: "New Miracles"
+  - balance: "rebalanced T0"
+  - sound: "added audio/sound effects"
+  - image: "added some icons or images"
+  - code_imp: "changed rites of armament code to include new options"

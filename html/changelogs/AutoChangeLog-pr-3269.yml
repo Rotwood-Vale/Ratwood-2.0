@@ -1,4 +1,0 @@
-author: "Yuckuza"
-delete-after: True
-changes:
-  - bugfix: "LE pure unarmed no longer spawns with bracers they can't actually use."
