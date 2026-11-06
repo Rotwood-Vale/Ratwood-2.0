@@ -1,5 +1,5 @@
 /datum/unit_test/surgery_diagnosis/Run()
-	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	TEST_ASSERT(!length(patient.get_missing_organs()), "An intact patient was diagnosed with missing organs")
 	var/obj/item/organ/liver = patient.getorganslot(ORGAN_SLOT_LIVER)
 	TEST_ASSERT(liver, "Patient did not start with a liver")
@@ -21,7 +21,7 @@
 	TEST_ASSERT(!length(patient.get_missing_organs()), "Construct anatomy produced a false missing-organ diagnosis")
 
 /datum/unit_test/surgical_fire_healing/Run()
-	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/bodypart/chest = patient.get_bodypart(BODY_ZONE_CHEST)
 	var/datum/wound/slash/incision/incision = chest.add_wound(/datum/wound/slash/incision)
 	var/datum/wound/slash/cut = chest.add_wound(/datum/wound/slash)
