@@ -1284,6 +1284,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 /datum/preferences/Topic(href, href_list, hsrc)			//yeah, gotta do this I guess..
 	. = ..()
+	if(href_list["scroll"])
+		scroll_pos = text2num(href_list["scroll"])
 	if(href_list["close"])
 		var/client/C = usr.client
 		if(C)

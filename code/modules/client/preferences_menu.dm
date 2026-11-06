@@ -13,8 +13,8 @@ GLOBAL_LIST_INIT(pref_categories, list(
 GLOBAL_LIST_INIT(no_preview_prefs, list("category", "background", "flavortext", "nsfwflavortext", "ooc_notes", "erpprefs", "headshot", "rumour", "gossip", "rumour_preview", "ooc_extra", "ooc_extra_img", "nsfw_ooc_extra_img", "change_title", "change_artist", "img_gallery", "nsfw_img_gallery", "clear_gallery", "clear_nsfw_gallery", "ooc_preview", "formathelp", "voicetype", "voicepack", "voice", "voice_pitch", "char_accent", "char_mannerism", "barksound", "barkspeed", "barkpitch", "barkvary", "barkpreview", "combat_music", "dnr", "preferred_map", "familiar_prefs", "gnoll_prefs", "nickname", "highlight_color", "pronouns", "culinary", "tgui_theme", "parchment_skin", "tgui_ui_prefs", "playerquality", "triumphs", "setspouse", "family", "gender_choice", "species_choice"))
 
 GLOBAL_LIST_INIT(pref_columns, list(
-	list("Identity", "Origin", "Customization"),
-	list("Character Settings", "Voice", "Body", "Flavor Text"),
+	list("Identity", "Origin", "Voice", "Customization"),
+	list("Character Settings", "Body", "Flavor Text"),
 ))
 
 GLOBAL_LIST_INIT(selectable_languages, list(
@@ -38,7 +38,8 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 ))
 
 /datum/preferences
-	var/list/open_categories = list("Identity", "Origin", "Voice", "Body", "Flavor Text")
+	var/list/open_categories = list("Identity", "Origin", "Body", "Flavor Text")
+	var/scroll_pos = 0
 
 /datum/preferences/proc/yes_no(value)
 	if(value)
@@ -94,7 +95,36 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		.cbox { border: 1px solid #7b5353; background: #00000033; padding: 3px 6px; margin: 0 0 6px 0; }
 		.box { border: 1px solid #7b5353; background: #1a0707; padding: 3px 6px; margin: 3px 0; }
 		.cbox a, .box a { background: none; border-color: transparent; padding: 0; margin: 0 8px 0 0; }
-		</style>[get_top_html(user)]<table width='100%'><tr>"}
+		</style>
+		<script>
+		function stamp(e) {
+			e = e || window.event;
+			var t = e.target || e.srcElement;
+			while(t && t.tagName != 'A')
+				t = t.parentNode;
+			if(!t || !t.href || t.href.indexOf('_src_=prefs') == -1)
+				return;
+			var y = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+			t.href = t.href.replace(/;scroll=\[0-9.\]*/, '') + ';scroll=' + y;
+		}
+		document.onmousedown = stamp;
+		document.onclick = stamp;
+		var saved = parseInt(window.name);
+		var target = isNaN(saved) ? [scroll_pos] : saved;
+		var tracking = false;
+		function restore() { window.scrollTo(0, target); }
+		function track() {
+			if(tracking)
+				window.name = String(window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
+		}
+		window.onscroll = track;
+		window.onload = function() {
+			restore();
+			setTimeout(restore, 50);
+			setTimeout(restore, 200);
+			setTimeout(function() { tracking = true; track(); }, 300);
+		};
+		</script>[get_top_html(user)]<table width='100%'><tr>"}
 	for(var/list/column in GLOB.pref_columns)
 		if(column == GLOB.pref_columns[1])
 			html += "<td width='35%' valign='top'>"
@@ -112,7 +142,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		html += "</td>"
 		if(column == GLOB.pref_columns[1])
 			html += "<td width='25%'></td>"
-	return "[html]</tr></table>"
+	return "[html]</tr></table><script>restore();</script>"
 
 /datum/preferences/proc/get_top_html(mob/user)
 	var/triumphs = "None"
