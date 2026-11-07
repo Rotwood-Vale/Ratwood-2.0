@@ -1147,7 +1147,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		to_chat(owner, span_warning("Too many sentries!"))
 		return FALSE
 	var/turf/T = get_turf(cast_on)
-	if(!T || T.density)
+	if(!T || T.density || isopenspace(T))
 		to_chat(owner, span_warning("No room!"))
 		return FALSE
 	W.turrets += new /obj/structure/toilturret(T, owner, W)
@@ -1842,9 +1842,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/mob/living/carbon/human/corpse = locate() in center.contents
 	if(!corpse || corpse.stat != DEAD || !corpse.mind)
 		to_chat(user, span_warning("YOU NEED A CORPSE."))
-		return
-	if(HAS_TRAIT(corpse, TRAIT_ZOMBIE_IMMUNE))
-		to_chat(user, span_warning("THEY SHALL NOT RISE."))
 		return
 	playsound(get_turf(corpse), 'sound/magic/magnet.ogg', 80, TRUE)
 	var/obj/item/necro_relics/necro_crystal/crystal = locate() in get_step(center, NORTH)
