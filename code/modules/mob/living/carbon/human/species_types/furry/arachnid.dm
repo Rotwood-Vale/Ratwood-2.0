@@ -155,6 +155,7 @@
 /datum/species/arachnid/proc/give_web_spells(mob/living/carbon/arachnidcarbon)
 	arachnidcarbon.AddSpell(new /obj/effect/proc_holder/spell/self/spin_web/thin)
 	arachnidcarbon.AddSpell(new /obj/effect/proc_holder/spell/self/spin_web/dense)
+	arachnidcarbon.AddSpell(new /obj/effect/proc_holder/spell/self/spin_silk_bed)
 
 /datum/species/arachnid/on_species_loss(mob/living/carbon/arachnidcarbon) // one of those auto-appends a dot at the end of player speech
 	. = ..()
@@ -164,6 +165,7 @@
 /datum/species/arachnid/proc/remove_web_spells(mob/living/carbon/arachnidcarbon)
 	arachnidcarbon.RemoveSpell(/obj/effect/proc_holder/spell/self/spin_web/thin)
 	arachnidcarbon.RemoveSpell(/obj/effect/proc_holder/spell/self/spin_web/dense)
+	arachnidcarbon.RemoveSpell(/obj/effect/proc_holder/spell/self/spin_silk_bed)
 
 /datum/species/arachnid/get_random_features()
 	var/list/returned = MANDATORY_FEATURE_LIST
