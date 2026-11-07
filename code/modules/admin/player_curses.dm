@@ -161,8 +161,7 @@
 				var/bmax = FALSE
 				if(penis)
 					if(penis.penis_size > MIN_PENIS_SIZE)
-						penis.penis_size--
-						penis.massive = FALSE
+						penis.set_penis_size(penis.penis_size - 1)
 					else
 						pmax = TRUE
 				if(testicles)
@@ -191,7 +190,7 @@
 				var/bmax = FALSE
 				if(penis)
 					if(penis.penis_size < MAX_PENIS_SIZE)
-						penis.penis_size++
+						penis.set_penis_size(penis.penis_size + 1)
 					else
 						pmax = TRUE
 				if(testicles)

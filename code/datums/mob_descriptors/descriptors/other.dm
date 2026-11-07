@@ -46,7 +46,7 @@
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
 	if(penis?.massive && user_allows_descriptor_color(watcher))
-		return "#d61a43"
+		return MASSIVE_PENIS_DESCRIPTOR_COLOR
 	return ..()
 
 /datum/mob_descriptor/penis/get_description(mob/living/described)
@@ -67,7 +67,7 @@
 		if(MAX_PENIS_SIZE)
 			adjective = "a large"
 	if(penis.massive)
-		adjective = pick("a massive","a colossal","an unpleasently large","a jumbo","a grotesquely swelled","an obscene","an unnaturally large")
+		adjective = pick("a massive", "a colossal", "an unpleasantly large", "a jumbo", "a grotesquely swelled", "an obscene", "an unnaturally large")
 	if(H.sexcon)
 		switch(H.sexcon.arousal)
 			if(80 to INFINITY)

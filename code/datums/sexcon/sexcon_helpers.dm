@@ -242,22 +242,18 @@
 	breasts.lactating = TRUE
 	to_chat(src, span_love("My breasts feel tender and heavy..."))
 
-/mob/living/carbon/human/proc/has_massive_erection()
+/// Charges triumphs for a massive pintle if the buyer's prefs ask for one. Only called on lobby spawns.
+/// The body keeps TRAIT_MASSIVE_PINTLE, so organ rebuilds later this life stay massive.
+/mob/living/carbon/human/proc/try_buy_massive_pintle(client/buyer)
 	var/obj/item/organ/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
-	if(!penis?.massive || !sexcon)
-		return FALSE
-	return penis.erect_state == ERECT_STATE_HARD || sexcon.arousal > 20
-
-/// Charges 10 triumphs for a massive pintle if the player's prefs ask for one. Only called on lobby spawns.
-/mob/living/carbon/human/proc/pay_for_the_big_one(client/owner_client)
-	var/obj/item/organ/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
-	if(!penis || penis.penis_size != MAX_PENIS_SIZE || !owner_client?.prefs?.wants_the_big_one())
+	if(!penis?.can_be_massive() || !buyer?.prefs?.wants_massive_pintle())
 		return
-	if(SStriumphs.get_triumphs(owner_client.ckey) < 10)
-		to_chat(owner_client, span_warning("I don't have enough TRIUMPH (10 TRI) to support my great endowment. I'll have to settle for being merely large."))
+	if(SStriumphs.get_triumphs(buyer.ckey) < MASSIVE_PENIS_TRIUMPH_COST)
+		to_chat(buyer, span_warning("I don't have enough TRIUMPH ([MASSIVE_PENIS_TRIUMPH_COST] TRI) to support my great endowment. I'll have to settle for being merely large."))
 		return
-	owner_client.adjust_triumphs(-10, FALSE)
-	penis.massive = TRUE
+	buyer.adjust_triumphs(-MASSIVE_PENIS_TRIUMPH_COST, FALSE)
+	ADD_TRAIT(src, TRAIT_MASSIVE_PINTLE, TRAIT_GENERIC)
+	penis.set_massive(TRUE)
 	update_body_parts(TRUE)
 
 /mob/living/carbon/human/proc/get_highest_grab_state_on(mob/living/carbon/human/victim)

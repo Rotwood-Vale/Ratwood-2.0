@@ -788,7 +788,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 
 	H.after_creation()
 	if(!is_gnoll)
-		H.pay_for_the_big_one(client)
+		H.try_buy_massive_pintle(client)
 
 	if(transfer_after)
 		transfer_character()

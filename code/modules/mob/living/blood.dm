@@ -161,15 +161,6 @@
 //			adjust_hydration(-nutrition_ratio * HUNGER_FACTOR) //get thirsty twice as fast when regenning blood
 		set_blood_volume(min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio))
 
-	// A massive pintle draws blood while erect. Low constitution can drain you into blood loss.
-	if(stat != DEAD && ishuman(src) && !HAS_TRAIT(src, TRAIT_JOURNEYS_END) && bodytemperature > TCRYO)
-		var/mob/living/carbon/human/H = src
-		if(H.has_massive_erection())
-			var/blood_minimum = 117 + (STACON * 18) // CON 19 or lower can reach tier one blood loss, 12 or lower tier two, 5 or lower tier three.
-			var/blood_extracted = min(blood_volume - blood_minimum, 2)
-			if(blood_extracted > 0)
-				set_blood_volume(max(blood_volume - blood_extracted, 0))
-
 	//Effects of bloodloss - only if we're actually alive, though
 	if (stat != DEAD)
 		if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
@@ -336,6 +327,24 @@
 		playsound(get_turf(src), vol2use, 100, FALSE)
 
 	return TRUE
+
+/mob/living/carbon/human/handle_blood()
+	. = ..()
+	drain_blood_for_massive_pintle()
+
+/// A massive pintle draws blood while erect. Low constitution can drain you into blood loss.
+/mob/living/carbon/human/proc/drain_blood_for_massive_pintle()
+	if(stat == DEAD || HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_JOURNEYS_END) || bodytemperature <= TCRYO)
+		return
+	if(NOBLOOD in dna?.species?.species_traits)
+		return
+	var/obj/item/organ/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
+	if(!penis?.is_massive_and_erect())
+		return
+	var/blood_floor = MASSIVE_PENIS_BLOOD_FLOOR_BASE + (STACON * MASSIVE_PENIS_BLOOD_FLOOR_PER_CON)
+	var/blood_extracted = min(blood_volume - blood_floor, MASSIVE_PENIS_BLOOD_DRAIN)
+	if(blood_extracted > 0)
+		set_blood_volume(blood_volume - blood_extracted)
 
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod

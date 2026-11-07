@@ -3463,11 +3463,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		// This should only ever ~do~ anything for previews
 		character.ensure_not_taur()
 
-	if(character_setup)
-		// Preview only: the real massive flag is paid for at spawn in pay_for_the_big_one().
+	if(character_setup && istype(character, /mob/living/carbon/human/dummy))
+		// Preview mannequin only. Living mobs (e.g. Pestra fleshcraft) also pass character_setup, and must not get it free.
 		var/obj/item/organ/penis/preview_penis = character.getorganslot(ORGAN_SLOT_PENIS)
-		if(preview_penis)
-			preview_penis.massive = wants_the_big_one() && preview_penis.penis_size == MAX_PENIS_SIZE
+		preview_penis?.set_massive(wants_massive_pintle())
 
 	if(icon_updates)
 		character.update_body()
