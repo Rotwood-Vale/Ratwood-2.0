@@ -81,6 +81,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Dice Poker Container"
 	path = /obj/item/storage/pill_bottle/dice/dice_poker
 
+/datum/loadout_item/chess
+	name = "Foldable Chessboard"
+	path = /obj/item/chessboard_folded
+
 /datum/loadout_item/tarot_deck
 	name = "Tarot Deck"
 	path = /obj/item/toy/cards/deck/tarot

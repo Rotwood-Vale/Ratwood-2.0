@@ -122,6 +122,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggleadminhelpsound,
 	/client/proc/toggledeathalarmsound,
 	/client/proc/respawn_character,
+	/client/proc/ccg_admin_management,
 	/client/proc/discord_id_manipulation, /* No Discord implementation? */
 	/datum/admins/proc/sleep_view,
 	/datum/admins/proc/wake_view,

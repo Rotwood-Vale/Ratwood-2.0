@@ -330,6 +330,63 @@ CREATE TABLE `SS13_player` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `SS13_ccg_collection`
+--
+
+DROP TABLE IF EXISTS `SS13_ccg_collection`;
+CREATE TABLE `SS13_ccg_collection` (
+  `ckey` varchar(32) NOT NULL,
+  `card_id` varchar(128) NOT NULL,
+  `amount` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ckey`,`card_id`),
+  KEY `idx_ccg_collection_card_id` (`card_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Table structure for table `SS13_ccg_decks`
+--
+
+DROP TABLE IF EXISTS `SS13_ccg_decks`;
+CREATE TABLE `SS13_ccg_decks` (
+  `ckey` varchar(32) NOT NULL,
+  `deck_slot` tinyint(3) unsigned NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `faction` varchar(64) NOT NULL,
+  `leader` varchar(128) NOT NULL,
+  PRIMARY KEY (`ckey`,`deck_slot`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Table structure for table `SS13_ccg_deck_cards`
+--
+
+DROP TABLE IF EXISTS `SS13_ccg_deck_cards`;
+CREATE TABLE `SS13_ccg_deck_cards` (
+  `ckey` varchar(32) NOT NULL,
+  `deck_slot` tinyint(3) unsigned NOT NULL,
+  `card_position` tinyint(3) unsigned NOT NULL,
+  `card_id` varchar(128) NOT NULL,
+  PRIMARY KEY (`ckey`,`deck_slot`,`card_position`),
+  KEY `idx_ccg_deck_cards_card_id` (`card_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Table structure for table `SS13_ccg_settings`
+--
+
+DROP TABLE IF EXISTS `SS13_ccg_settings`;
+CREATE TABLE `SS13_ccg_settings` (
+  `ckey` varchar(32) NOT NULL,
+  `active_deck_index` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `deckbuilder_view_mode` varchar(16) NOT NULL DEFAULT 'setup',
+  `soundtrack_enabled` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `presets_are_virtual` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `win_progress` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `loss_progress` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
 -- Table structure for table `SS13_poll_option`
 --
 
