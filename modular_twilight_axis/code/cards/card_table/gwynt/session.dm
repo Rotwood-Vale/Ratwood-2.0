@@ -1,3 +1,12 @@
+GLOBAL_VAR_INIT(ccg_music_channel, null)
+
+/// Arlette's soundtrack gets its own sound channel, reserved from SSsounds the first time it's needed.
+/proc/ccg_music_channel()
+	if(!GLOB.ccg_music_channel)
+		GLOB.ccg_music_channel = SSsounds.reserve_sound_channel_datumless()
+	return GLOB.ccg_music_channel
+
+#define CHANNEL_GWYNT_MUSIC ccg_music_channel()
 #define CCG_SIDE_ONE "one"
 #define CCG_SIDE_TWO "two"
 #define CCG_HAND_SIZE 12
@@ -1041,6 +1050,7 @@
 	return out
 
 #undef CCG_SIDE_ONE
+#undef CHANNEL_GWYNT_MUSIC
 #undef CCG_SIDE_TWO
 #undef CCG_HAND_SIZE
 #undef CCG_MULLIGAN_COUNT
