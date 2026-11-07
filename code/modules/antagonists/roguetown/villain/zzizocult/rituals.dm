@@ -1364,7 +1364,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 	owner.remove_filter("raver_warp")
 
 /datum/status_effect/raver_corruption/tick()
-	if(QDELETED(raver) || owner.buckled != raver || owner.stat == DEAD || (is_zizo(owner) && !graft))
+	if(QDELETED(raver) || owner.buckled != raver || (is_zizo(owner) && !graft))
 		qdel(src)
 		return
 	if(!graft)
@@ -1410,7 +1410,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 		qdel(src)
 
 /proc/raver_finish_corruption(mob/living/carbon/human/H, obj/structure/raver/R)
-	if(QDELETED(H) || H.stat == DEAD || is_zizo(H))
+	if(QDELETED(H) || is_zizo(H))
 		return
 	if(!QDELETED(R))
 		R.unbuckle_mob(H, force = TRUE)

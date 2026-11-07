@@ -1557,10 +1557,10 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	return ..(new_owner, origin)
 
 /datum/status_effect/dream_teleport/strand/nightmare/on_remove()
+	. = ..()
 	for(var/mob/living/simple_animal/hostile/rogue/dreamfiend/nightmare/F in world)
-		if(F.ai_controller.blackboard[BB_MAIN_TARGET] == owner)
+		if(F.ai_controller?.blackboard[BB_MAIN_TARGET] == owner)
 			qdel(F)
-	return ..()
 
 /datum/ritual/strand/dream_jaunt
 	name = "Dream Jaunt"
