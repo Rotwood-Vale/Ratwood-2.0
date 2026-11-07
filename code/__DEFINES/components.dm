@@ -509,7 +509,7 @@
 #define COMSIG_FORCE_UNDISGUISE "comsig_force_undisguise"
 
 #define COMSIG_ITEM_ATTACK_EFFECT "item_attack_effect"
-#define COMSIG_ITEM_ATTACK_EFFECT_SELF "item_attack_effect_self"
+#define COMSIG_ITEM_ATTACK_EFFECT_SELF "item_attack_effect_self" // (user, affecting, intent, victim, selzone, thrown)
 
 //S Smithing
 
@@ -521,4 +521,3 @@
 //Roguetown-specific
 #define  COMSIG_MOB_ON_KICK	"mob_on_kick"	//from /mob/living/proc/try_kick(atom/A). This is for when the src has done a kick.
 #define  COMSIG_MOB_KICKED	"mob_kicked"	//from /datum/species/proc/kicked(mob/living/carbon/human/user, mob/living/carbon/human/target). This is for when the mob has BEEN kicked.
-#define COMSIG_ITEM_ARMOR_BLOCKED "item_armor_blocked"	//from /mob/living/proc/run_armor_check(): sent to used_weapon when armor fully absorbs a hit

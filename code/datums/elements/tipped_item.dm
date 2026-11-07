@@ -1,6 +1,5 @@
 /datum/element/tipped_item
 	element_flags = ELEMENT_DETACH
-	var/blocked_by_armor = FALSE
 
 /datum/element/tipped_item/Attach(atom/movable/target, amount)
 	. = ..()
@@ -10,12 +9,11 @@
 		target.create_reagents(1)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, PROC_REF(check_dip))
-	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, PROC_REF(try_inject))
-	RegisterSignal(target, COMSIG_ITEM_ARMOR_BLOCKED, PROC_REF(on_armor_blocked))
+	RegisterSignal(target, COMSIG_ITEM_ATTACK_EFFECT_SELF, PROC_REF(try_inject))
 
 /datum/element/tipped_item/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_PRE_ATTACK, COMSIG_ITEM_AFTERATTACK, COMSIG_ITEM_ARMOR_BLOCKED))
+	UnregisterSignal(source, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_PRE_ATTACK, COMSIG_ITEM_ATTACK_EFFECT_SELF))
 
 /datum/element/tipped_item/proc/check_dip(obj/item/dipper, obj/item/reagent_containers/attacked_container, mob/living/attacker, params)
 	SIGNAL_HANDLER
@@ -39,21 +37,16 @@
 	attacker.visible_message(span_danger("[attacker] dips \the [dipper] in \the [attacked_container]!"), "You dip \the [dipper] in \the [attacked_container]!", vision_distance = 2)
 	log_combat(attacker, dipper, "poisoned", addition="with [reagentlog]")
 
-/datum/element/tipped_item/proc/on_armor_blocked(obj/item/source)
+/datum/element/tipped_item/proc/try_inject(obj/item/source, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/victim, selzone, thrown = FALSE)
 	SIGNAL_HANDLER
-	blocked_by_armor = TRUE
 
-/datum/element/tipped_item/proc/try_inject(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	if(thrown || !user?.used_intent || user.used_intent.blade_class == BCLASS_BLUNT)
+		return
+	if(!isliving(victim) || !source.reagents?.total_volume)
+		return
 	var/reagentlog2 = source.reagents
-	if(!proximity_flag)
-		return
-	if(blocked_by_armor)
-		blocked_by_armor = FALSE
-		return
-	blocked_by_armor = FALSE
-	if(isliving(target))
-		log_combat(user, target, "poisoned", addition="with [reagentlog2]")
-		source.reagents.trans_to(target, 1, transfered_by = user)
+	log_combat(user, victim, "poisoned", addition="with [reagentlog2]")
+	source.reagents.trans_to(victim, 1, transfered_by = user)
 
 /datum/element/tipped_item/proc/on_examine(atom/movable/source, mob/user, list/examine_list)
 	if(source.reagents.total_volume)
