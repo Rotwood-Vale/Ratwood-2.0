@@ -156,8 +156,9 @@
 	name = "Arcyne Slave"
 	tutorial = "An unlucky slave, captured from their home, moved to the Zybantines and trained for slave labor and obediency, for long enough to where you can only faintly remember who you were before... You are now being transported from the deserts to harsher lands to be sold."
 	outfit = /datum/outfit/job/roguetown/slaver/slave/arcyne
-	traits_applied = list(TRAIT_GOODLOVER, TRAIT_OUTLANDER)
+	traits_applied = list(TRAIT_ARCYNE, TRAIT_GOODLOVER, TRAIT_OUTLANDER)
 	category_tags = list(CTAG_SLAVER_SLAVE)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 1, "utilities" = 4, "ward" = TRUE)
 
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_NOVICE,
