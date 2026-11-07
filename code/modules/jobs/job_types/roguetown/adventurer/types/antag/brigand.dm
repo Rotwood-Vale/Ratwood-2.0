@@ -72,7 +72,6 @@
 				backl= /obj/item/rogueweapon/shield/iron
 				beltr = /obj/item/rogueweapon/sword
 				beltl = /obj/item/rogueweapon/scabbard/sword
-				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_EXPERT, TRUE)
 			if("The Nefarious Dusthead (Knives, Whips, Climbing & Athletics)") //Dagger, athletics, and OK lockpicking. You will never be a Knave. This is mostly a for-fun class, where else have you seen a knife strength build?
