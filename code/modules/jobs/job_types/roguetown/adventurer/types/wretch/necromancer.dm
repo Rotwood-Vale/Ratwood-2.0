@@ -111,7 +111,7 @@
 	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/necromancer)
 
 /datum/mind/proc/has_lich_kit()
-	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation)
+	return has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation) && !has_spell(/obj/effect/proc_holder/spell/invoked/raise_undead_formation/lesser)
 
 /datum/mind/proc/necro_crystal_count()
 	for(var/datum/weakref/W in necro_crystals)

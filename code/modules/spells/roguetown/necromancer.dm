@@ -274,6 +274,7 @@
 	cabal_affine = TRUE
 	is_summoned = TRUE
 	recharge_time = 15 SECONDS
+	chargetime = 3 SECONDS
 	to_spawn = 1
 
 /obj/effect/proc_holder/spell/invoked/tame_undead
