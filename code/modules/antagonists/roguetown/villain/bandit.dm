@@ -29,8 +29,8 @@
 /datum/antagonist/bandit/proc/finalize_bandit()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/music/traitor2.ogg', 60, FALSE, pressure_affected = FALSE)
 	var/mob/living/carbon/human/H = owner.current
-	if(!istype(H.patron, /datum/patron/inhumen))
-		H.set_patron(/datum/patron/inhumen/matthios)//If you're not of the Inhumen, we force you to worship Matthios.
+	H.set_patron(/datum/patron/inhumen/matthios) // You are el bandito, worship big M, and make him proud.
+	to_chat(H, span_warning("No TRUE bandit would worship any other but Matthios."))
 	H.verbs |= /mob/proc/haltyell_exhausting
 	ADD_TRAIT(H, TRAIT_BANDITCAMP, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
