@@ -614,23 +614,23 @@ GLOBAL_LIST_EMPTY(collar_masters)
 	if(prob(10) && (!high_pop_mode || high_pop_feedback_allowed(pet, "arousal_sound", 6 SECONDS)))  // 10% chance each tick to make a sound
 		var/current_arousal = pet.sexcon.arousal
 		if(current_arousal > 60)
-			playsound(pet, pick('sound/vo/female/gen/se/sex (1).ogg',
+			playsound_erp(pet, pick('sound/vo/female/gen/se/sex (1).ogg',
 							  'sound/vo/female/gen/se/sex (2).ogg',
 							  'sound/vo/female/gen/se/sex (3).ogg',
 							  'sound/vo/female/gen/se/sex (4).ogg',
 							  'sound/vo/female/gen/se/sex (5).ogg',
 							  'sound/vo/female/gen/se/sex (6).ogg',
 							  'sound/vo/female/gen/se/sex (7).ogg'), 50, TRUE)
-			pet.emote("moan")
+			pet.emote_erp("moan", bypass_cooldown = FALSE)
 		else if(current_arousal > 10)
-			playsound(pet, pick('sound/vo/female/gen/se/sexlight (1).ogg',
+			playsound_erp(pet, pick('sound/vo/female/gen/se/sexlight (1).ogg',
 							  'sound/vo/female/gen/se/sexlight (2).ogg',
 							  'sound/vo/female/gen/se/sexlight (3).ogg',
 							  'sound/vo/female/gen/se/sexlight (4).ogg',
 							  'sound/vo/female/gen/se/sexlight (5).ogg',
 							  'sound/vo/female/gen/se/sexlight (6).ogg',
 							  'sound/vo/female/gen/se/sexlight (7).ogg'), 50, TRUE)
-			pet.emote("whimper")
+			pet.emote_erp("whimper", bypass_cooldown = FALSE)
 
 	// Continue loop
 	pet.active_timers[loop_id] = addtimer(CALLBACK(src, PROC_REF(arousal_tick), pet, amount_per_tick, loop_id), 1 SECONDS, TIMER_STOPPABLE)

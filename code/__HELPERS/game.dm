@@ -479,7 +479,7 @@
 				continue
 
 		showCandidatePollWindow(M, poll_time, Question, result, ignore_category, time_passed, flashwindow, poll_width, poll_height)
-		SEND_SOUND(M, 'sound/misc/updatebook.ogg')
+		SEND_SOUND(M, sound('sound/misc/updatebook.ogg', volume = overall_volume(M)))
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off or get deleted during the wait period.

@@ -5,7 +5,7 @@
 	fueluse = 60 MINUTES
 	bulb_colour = "#f9ad80"
 	bulb_power = 1
-	var/datum/looping_sound/soundloop = null // = /datum/looping_sound/fireloop
+	var/datum/looping_sound/soundloop = null
 	pass_flags = LETPASSTHROW
 	flags_1 = NODECONSTRUCT_1
 	var/no_refuel = FALSE // For special holder that don't actually refuel
@@ -13,6 +13,17 @@
 	var/crossfire = TRUE
 	var/can_damage = FALSE
 	var/heat_level = 0
+	/// Point ambience category type path used while lit, or null for silence
+	var/point_ambience_category
+	/// Category-volume multiplier for this light. null or one leaves volume unchanged.
+	/// Relative scaling preserves its level and proportional volume floor when the category is retuned
+	var/point_ambience_volume_scale
+
+/// Registers lit, categorized lights directly on a turf. Unregisters all others. Safe to call
+/// repeatedly
+/obj/machinery/light/rogue/proc/update_point_ambience()
+	if(point_ambience_category)
+		update_point_ambience_source(point_ambience_category, on, point_ambience_volume_scale)
 
 /obj/machinery/light/rogue/proc/update_turf_heat()
 	if(!heat_level)
@@ -27,6 +38,7 @@
 
 /obj/machinery/light/rogue/Moved(atom/OldLoc, Dir)
 	. = ..()
+	update_point_ambience()
 	if(!heat_level)
 		return
 	if(isfloorturf(OldLoc))
@@ -44,6 +56,7 @@
 	update_icon()
 	seton(TRUE)
 	update_turf_heat()
+	update_point_ambience()
 	. = ..()
 
 /obj/machinery/light/rogue/weather_trigger(W)
@@ -84,6 +97,9 @@
 		playsound(src.loc, 'sound/items/firesnuff.ogg', 100)
 	..()
 	update_icon()
+	// burn_out() changes the light state without calling update(), so refresh index membership
+	// here
+	update_point_ambience()
 
 /obj/machinery/light/rogue/update_icon()
 	if(on)
@@ -98,9 +114,12 @@
 	else
 		GLOB.fires_list -= src
 	update_turf_heat()
+	update_point_ambience()
 
 /obj/machinery/light/rogue/Destroy()
 	QDEL_NULL(soundloop)
+	if(point_ambience_category)
+		SSpoint_ambience.unregister_source(src, point_ambience_category)
 	GLOB.fires_list -= src
 	if(heat_level && isfloorturf(loc))
 		var/turf/open/floor/T = loc
@@ -213,6 +232,10 @@
 				set_light(0)
 				update_icon()
 				update_turf_heat()
+				// This extinguishing path bypasses update(). Refresh index membership explicitly
+				update_point_ambience()
+				if(soundloop)
+					soundloop.stop()
 				qdel(W)
 				src.visible_message("<span class='warning'>[user] snuffs the fire.</span>")
 				return

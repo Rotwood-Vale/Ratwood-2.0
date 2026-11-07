@@ -132,8 +132,15 @@
 	if(HAS_TRAIT(human_parent, TRAIT_SOFT_FOOTED))
 		used_volume *= 0.7
 		used_extra_range -= 1
-	// this is fine without an explicit copy because it doesn't mutate the existing list
-	used_sound = pick(used_footsteps - last_sound) || last_sound
+	// Exclude the previous footstep by index, avoiding a temporary list while keeping other choices equally likely
+	var/count = length(used_footsteps)
+	if(!count)
+		return
+	var/last_index = (count > 1) ? used_footsteps.Find(last_sound) : 0
+	var/index = rand(1, last_index ? count - 1 : count)
+	if(last_index && index >= last_index)
+		index++
+	used_sound = used_footsteps[index]
 	last_sound = used_sound
 
 	if(humshoes)

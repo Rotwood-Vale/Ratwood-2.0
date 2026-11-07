@@ -258,11 +258,11 @@
 			top.Stun(15)
 	if(!btm.IsStun())
 		if(prob(5))
-			btm.emote("groan", forced = TRUE)
+			btm.emote_erp("groan")
 			btm.sexcon.try_do_pain_effect(PAIN_MED_EFFECT, FALSE)
 			btm.Stun(15)
 		else if(prob(3))
-			btm.emote("painmoan")
+			btm.emote_erp("painmoan", bypass_cooldown = FALSE)
 		else if(top.sexcon.knotted_part_partner&SEX_PART_JAWS && btm.getOxyLoss() < 50) // if the current top knotted them orally
 			btm.adjustOxyLoss(1)
 
@@ -317,17 +317,17 @@
 		if(btm.m_intent == MOVE_INTENT_RUN) // running only makes this worse, darling
 			btm.Knockdown(10)
 			btm.Stun(30)
-			btm.emote("groan", forced = TRUE)
+			btm.emote_erp("groan")
 			return
 	if(!btm.IsStun())
 		if(prob(10))
-			btm.emote("groan", forced = TRUE)
+			btm.emote_erp("groan")
 			btm.sexcon.try_do_pain_effect(PAIN_MED_EFFECT, FALSE)
 			btm.Stun(15)
 			if(top.sexcon.knotted_part_partner&SEX_PART_JAWS && btm.getOxyLoss() < 50) // if the current top knotted them orally
 				btm.adjustOxyLoss(3)
 		else if(prob(4))
-			btm.emote("painmoan")
+			btm.emote_erp("painmoan", bypass_cooldown = FALSE)
 	addtimer(CALLBACK(src, PROC_REF(knot_movement_btm_after)), 0.1 SECONDS)
 
 /datum/sex_controller/proc/knot_movement_btm_after()
@@ -360,9 +360,9 @@
 				if(affecting && affecting.brute_dam < 150-damage) // cap damage applied
 					btm.apply_damage(damage, BRUTE, body_zone)
 			btm.Stun(80)
-			playsound(btm, 'sound/misc/mat/pop.ogg', 100, TRUE, -2, ignore_walls = FALSE)
-			playsound(top, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
-			btm.emote("paincrit", forced = TRUE)
+			playsound_erp(btm, 'sound/misc/mat/pop.ogg', 100, TRUE, -2)
+			playsound_erp(top, 'sound/misc/mat/segso.ogg', 50, TRUE, -2)
+			btm.emote_erp("paincrit", travel = SOUND_TRAVEL_LEAKING)
 			if(notify)
 				var/knot_word_yank = top.sexcon.get_knot_synonym()
 				if(btm_removed)
@@ -371,13 +371,13 @@
 					top.visible_message(span_notice("[top] yanks their [knot_word_yank] out of [btm]!"), span_notice("I yank my [knot_word_yank] out from [btm]."))
 			btm.sexcon.try_do_pain_effect(PAIN_HIGH_EFFECT, FALSE)
 		else if(notify)
-			playsound(btm, 'sound/misc/mat/insert (1).ogg', 50, TRUE, -2, ignore_walls = FALSE)
+			playsound_erp(btm, 'sound/misc/mat/insert (1).ogg', 50, TRUE, -2, travel = SOUND_TRAVEL_LEAKING)
 			var/knot_word_slip = top.sexcon.get_knot_synonym()
 			if(btm_removed)
 				btm.visible_message(span_notice("[btm] slips free from [top]'s [knot_word_slip]!"), span_notice("I slip free from [top]'s [knot_word_slip]."))
 			else
 				top.visible_message(span_notice("[top] slips their [knot_word_slip] out of [btm]!"), span_notice("I slip my [knot_word_slip] out from [btm]."))
-			btm.emote("painmoan", forced = TRUE)
+			btm.emote_erp("painmoan")
 			btm.sexcon.try_do_pain_effect(PAIN_MILD_EFFECT, FALSE)
 		add_cum_floor(get_turf(btm))
 		if(top.sexcon.knotted_part_partner&(SEX_PART_CUNT|SEX_PART_ANUS|SEX_PART_SLIT_SHEATH)) // use top's knotted_part_partner var to check what effect we need to apply, as bottom may be double knotted or more
@@ -529,7 +529,7 @@
 	if(get_dist(cur_loc, last_loc) <= 5) // too close, don't spawn a puddle
 		return
 	add_cum_floor(cur_loc)
-	playsound(owner, pick('sound/misc/bleed (1).ogg', 'sound/misc/bleed (2).ogg', 'sound/misc/bleed (3).ogg'), 50, TRUE, -2, ignore_walls = FALSE)
+	playsound_erp(owner, pick('sound/misc/bleed (1).ogg', 'sound/misc/bleed (2).ogg', 'sound/misc/bleed (3).ogg'), 50, TRUE, -2)
 	last_loc = cur_loc
 	var/obj/item/reagent_containers/glass/cum_chalice = locate() in cur_loc
 	if(!cum_chalice?.spillable) // leak contents underneath the first found open container

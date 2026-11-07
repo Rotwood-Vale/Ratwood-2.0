@@ -4,6 +4,7 @@
 	plane = WALL_PLANE
 	density = TRUE
 	opacity = TRUE
+	sound_door = TRUE
 	smooth = SMOOTH_MORE
 	smooth_diag = FALSE
 	climbable = FALSE
@@ -54,7 +55,7 @@
 		return
 	in_motion = TRUE
 	density = FALSE
-	opacity = FALSE
+	set_opacity(FALSE)
 	if (isnull(slide_direction))
 		animate(src, transform = matrix().Scale(1, 0.1), pixel_y = -14, time = 5)
 		addtimer(CALLBACK(src, PROC_REF(finish_opening), FALSE), 6)
@@ -83,7 +84,7 @@
 
 /obj/structure/falsewall/proc/finish_closing(restore_layer)
 	density = TRUE
-	opacity = TRUE
+	set_opacity(TRUE)
 	if(restore_layer)
 		layer = original_layer
 	in_motion = FALSE

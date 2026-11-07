@@ -8,6 +8,7 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = FALSE
+	sound_opening = TRUE
 	max_integrity = 200
 	integrity_failure = 0.5
 	var/base_state = "window-solid"

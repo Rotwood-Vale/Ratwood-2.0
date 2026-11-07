@@ -352,8 +352,7 @@ Inquisitorial armory down here
 			on = TRUE
 			update_brightness()
 			//force = on_damage
-			if(soundloop)
-				soundloop.start()
+			update_point_ambience()
 			if(ismob(loc))
 				var/mob/M = loc
 				M.update_inv_hands()
@@ -370,8 +369,6 @@ Inquisitorial armory down here
 
 /obj/item/flashlight/flare/torch/lantern/psycenser/turn_off()
 	playsound(src.loc, 'sound/items/censer_off.ogg', 100)
-	if(soundloop)
-		soundloop.stop()
 	STOP_PROCESSING(SSobj, src)
 	..()
 	if(ismob(loc))
