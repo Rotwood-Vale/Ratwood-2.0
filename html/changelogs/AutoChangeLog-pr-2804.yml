@@ -1,0 +1,7 @@
+author: "SirSwagmeyer"
+delete-after: True
+changes:
+  - balance: "Rebalanced a variety of bandit subclasses, including brigand, hedge knight, rogue mage, sawbones, sellsword, and knave."
+  - balance: "Rebalanced an array of buffs for Deserter, Heretic, Poacher, Outlaw, Berserker, Roguemage, Pyromaniac, Plaguebearer, and heretic spy."
+  - balance: "buffed profane from a bone-shaped nerf dart to a bony arcane lance."
+  - bugfix: "Fixed Vale Native not preventing ambushes as intended."
