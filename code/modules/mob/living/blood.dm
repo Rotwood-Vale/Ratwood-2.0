@@ -289,6 +289,8 @@
 
 	if(bodytemperature <= TCRYO) //cold blood is viscous, bleeds slower
 		amt *= 0.5
+	if(has_world_trait(/datum/world_trait/zizo_blood) && !is_zizo(src))
+		amt *= 1.25
 
 	//For each CON above 10, we bleed slower.
 	//Consequently, for each CON under 10 we bleed faster.

@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Doddering"=/datum/charflaw/slow,
 	"Nimrodded"=/datum/charflaw/dull,
 	"Unlucky"=/datum/charflaw/unlucky,
+	"Virgin"=/datum/charflaw/virgin,
 	))
 
 /datum/charflaw
@@ -678,6 +679,16 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/critweakness/on_removal(mob/user)
 	..()
 	REMOVE_TRAIT(user, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
+
+/datum/charflaw/virgin
+	name = "Virgin"
+	desc = "Dark forces lust after my purity!"
+
+/datum/charflaw/virgin/apply_post_equipment(mob/user)
+	var/mob/living/carbon/human/H = user
+	to_chat(user, "You're a virgin!")
+	H.virginity = TRUE
+	H.purity = TRUE
 
 /datum/charflaw/silverweakness
 	name = "Silver Weakness"

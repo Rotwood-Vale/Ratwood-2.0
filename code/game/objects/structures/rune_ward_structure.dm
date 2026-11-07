@@ -23,7 +23,7 @@
 	if(ismob(AM))
 		var/mob/M = AM
 		var/mob/owner = owner_ref?.resolve()
-		if(M == owner)
+		if(M == owner || is_ally(M))
 			return
 		var/datum/action/cooldown/spell/touch/rune_ward/spell = spell_ref?.resolve()
 		if(spell && (M.real_name in spell.allowed_names))
@@ -53,6 +53,12 @@
 	log_combat(AM, src, "triggered [name] placed by [owner_name] ([owner_ckey]) at [AREACOORD(src)]")
 	rune_effect(L)
 	trigger_visual()
+	consume()
+
+/obj/structure/rune_ward/proc/is_ally(mob/M)
+	return FALSE
+
+/obj/structure/rune_ward/proc/consume()
 	qdel(src)
 
 /obj/structure/rune_ward/proc/trigger_visual()

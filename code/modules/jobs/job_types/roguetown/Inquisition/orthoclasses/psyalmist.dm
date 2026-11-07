@@ -8,6 +8,7 @@
 	subclass_social_rank = SOCIAL_RANK_PEASANT
 	traits_applied = list(TRAIT_EMPATH, TRAIT_DODGEEXPERT)
 	category_tags = list(CTAG_INQUISITION)
+	pure_heart = TRUE
 	subclass_languages = list(/datum/language/otavan)
 	cmode_music = 'sound/music/psydonite.ogg'
 	subclass_stats = list(//+9

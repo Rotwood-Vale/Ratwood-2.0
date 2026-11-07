@@ -217,6 +217,65 @@
 	to_spawn = 3
 
 
+/obj/effect/proc_holder/spell/self/raise_skeleton
+	name = "Summon Skeleton"
+	desc = "Conjure an evil, devilish skeleton from the death realms of Bite. Maximum of two, don't be greedy!"
+	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
+	action_icon = 'icons/mob/actions/zizomiracles.dmi'
+	overlay_state = "skeleton"
+	recharge_time = 2 MINUTES
+	chargedloop = null
+	var/list/active_skeletons = list()
+
+/obj/effect/proc_holder/spell/self/raise_skeleton/cast(list/targets, mob/living/user = usr)
+	. = ..()
+	for(var/datum/weakref/W in active_skeletons.Copy())
+		if(!W.resolve())
+			active_skeletons -= W
+	if(length(active_skeletons) >= 2)
+		to_chat(user, span_warning("I cannot command any more skeletons."))
+		revert_cast()
+		return FALSE
+	var/task = input(user, "WHAT IS THY BIDDING?", "IN HER NAME") as null|anything in list("TOIL", "FIGHT", "GUARD", "SEEK")
+	if(!task || !do_after(user, 6 SECONDS))
+		revert_cast()
+		return FALSE
+	var/turf/T = get_step(user, user.dir)
+	if(!isopenturf(T))
+		to_chat(user, span_warning("The targeted location is blocked. My summon fails to come forth."))
+		revert_cast()
+		return FALSE
+	var/list/candidates = pollGhostCandidates("The veil splits! A hand reaches forth! Serve [user.real_name] in undeath as a Greater Skeleton? YOU WILL [task]", ROLE_NECRO_SKELETON, null, null, 10 SECONDS, POLL_IGNORE_NECROMANCER_SKELETON)
+	if(!LAZYLEN(candidates))
+		to_chat(user, span_warning("The depths are hollow."))
+		revert_cast()
+		return FALSE
+	var/mob/C = pick(candidates)
+	if(istype(C, /mob/dead/new_player))
+		var/mob/dead/new_player/N = C
+		N.close_spawn_windows()
+	var/mob/living/carbon/human/species/skeleton/no_equipment/target = new(T)
+	target.crystal = WEAKREF(src)
+	target.key = C.key
+	SSjob.EquipRank(target, "Fortified Skeleton", TRUE)
+	target.visible_message(span_warning("[target]'s eyes light up with an eerie glow!"))
+	active_skeletons += WEAKREF(target)
+	target.mind.AddSpell(new /obj/effect/proc_holder/spell/self/suicidebomb/lesser)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "FORTIFIED SKELETON"), 3 SECONDS)
+	addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon/human, choose_pronouns_and_body)), 7 SECONDS)
+	target.faction |= list("[user.mind.current.real_name]_faction")
+	user.fullscreen_redflash("redflash1")
+	playsound(user, "shatter", 50, TRUE)
+	return TRUE
+
+/obj/effect/proc_holder/spell/invoked/raise_undead_formation/lesser
+	name = "Raise Lesser Undead"
+	desc = "Raises a simple minded undead skeleton. Inferior shamblers. Husks in everything but zeal."
+	cabal_affine = TRUE
+	is_summoned = TRUE
+	recharge_time = 15 SECONDS
+	to_spawn = 1
+
 /obj/effect/proc_holder/spell/invoked/tame_undead
 	name = "Tame Deadite"
 	desc = "Oftentymes, husks and shamblers walk aimlessly - uncertain of their future. Befriends the undead \

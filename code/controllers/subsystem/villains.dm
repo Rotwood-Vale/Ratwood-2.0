@@ -83,29 +83,34 @@
 	popup.open(FALSE)
 
 // this menu allows players 2 boost their stats to wretch tier (+12 weight) & choose between DE / Heavy Armor
-/mob/living/carbon/human/var/datum/antag_setup/antag_setup
+GLOBAL_LIST_EMPTY(antag_setups)
 
 /datum/antag_setup
 	var/mob/living/carbon/human/user
 	var/list/stats = list()
 	var/list/defaults = list()
 	var/chosen_trait
-	var/budget = 12
+	var/budget = 20
 	var/static/list/stat_keys = list(STATKEY_STR, STATKEY_PER, STATKEY_INT, STATKEY_CON, STATKEY_WIL, STATKEY_SPD)
 
-/datum/antag_setup/New(mob/living/carbon/human/H)
+/datum/antag_setup/New(mob/living/carbon/human/H, points = 20)
 	user = H
-	H.antag_setup = src
+	budget = points
 	var/waited = 0
 	while(!H.advjob)
 		sleep(1 SECONDS)
 		waited += 1 SECONDS
-		if(QDELETED(H) || waited > 60 SECONDS)
+		if(QDELETED(H) || waited > 120 SECONDS)
 			qdel(src)
 			return
 	for(var/key in stat_keys)
 		stats[key] = H.get_stat_level(key)
+		for(var/datum/status_effect/S in H.status_effects)
+			stats[key] -= S.effectedstats[key]
 		defaults[key] = stats[key]
+		if(H.statpack && !islist(H.statpack.stat_array[key]))
+			budget += H.statpack.stat_array[key] * statweight(key)
+	GLOB.antag_setups += src
 	open_menu()
 
 /datum/antag_setup/proc/statweight(key)
@@ -116,7 +121,7 @@
 /datum/antag_setup/proc/statspent()
 	. = 0
 	for(var/key in stat_keys)
-		. += (stats[key] - defaults[key]) * statweight(key)
+		. += (stats[key] - 10) * statweight(key)
 
 /datum/antag_setup/proc/open_menu()
 	var/contents = "Points remaining: [budget - statspent()]</center><BR>"
@@ -128,7 +133,7 @@
 	contents += "--------------<BR>"
 	contents += "<b>Choose a trait:</b><BR>"
 	contents += "<a href='?src=[REF(src)];trait=dodge'>Dodge Expert</a><BR>"
-	contents += "<a href='?src=[REF(src)];trait=heavy'>Heavy Armor</a><BR>"
+	contents += "<a href='?src=[REF(src)];trait=heavy'>Critical Resistance</a><BR>"
 	contents += "Chosen: [chosen_trait]<BR>"
 	contents += "--------------<BR>"
 	contents += "<center><a href='?src=[REF(src)];confirm=1'>\[CONFIRM\]</a></center>"
@@ -153,7 +158,7 @@
 		if(href_list["trait"] == "dodge")
 			chosen_trait = TRAIT_DODGEEXPERT
 		if(href_list["trait"] == "heavy")
-			chosen_trait = TRAIT_HEAVYARMOR
+			chosen_trait = TRAIT_CRITICAL_RESISTANCE
 		open_menu()
 	if(href_list["confirm"])
 		if(!chosen_trait)
@@ -164,7 +169,7 @@
 			if(diff)
 				user.change_stat(key, diff)
 		ADD_TRAIT(user, chosen_trait, TRAIT_GENERIC)
-		user.antag_setup = null
+		GLOB.antag_setups -= src
 		user << browse(null, "window=antagsetup")
 		qdel(src)
 
