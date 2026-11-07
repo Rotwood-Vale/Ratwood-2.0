@@ -1475,6 +1475,10 @@
 /obj/structure/roguewindow,
 /turf/open/floor/rogue/blocks/stonered/tiny,
 /area/rogue/indoors)
+"Op" = (
+/obj/structure/expedition_gate/departure,
+/turf/open/floor/rogue/dirt/road,
+/area/rogue/outdoors)
 "OI" = (
 /turf/closed/wall/mineral/rogue/decostone/long{
 	dir = 1
@@ -3375,7 +3379,7 @@ rT
 rT
 rT
 rT
-rT
+Op
 rT
 vq
 hh
