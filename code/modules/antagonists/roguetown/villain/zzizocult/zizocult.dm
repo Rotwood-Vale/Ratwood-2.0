@@ -178,6 +178,13 @@
 
 	if(stat >= UNCONSCIOUS || !can_speak_vocal())
 		return
+	var/has_cross = FALSE
+	for(var/obj/item/I in held_items + get_equipped_items(TRUE))
+		if(I.type == /obj/item/clothing/neck/roguetown/psicross/inhumen)
+			has_cross = TRUE
+	if(!has_cross)
+		to_chat(src, span_warning("I REQUIRE AN AMULET OF THE DARK LADY."))
+		return
 
 	var/speak = input("What do you speak of?", "ZIZO") as text|null
 	if(!speak)
