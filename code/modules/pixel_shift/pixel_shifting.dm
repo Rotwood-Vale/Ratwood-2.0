@@ -108,7 +108,9 @@
 	return
 
 /mob/living/carbon/pixel_rotate(angle)
-	if(notransform || buckled || !isturf(loc))
+	if(notransform || !isturf(loc))
+		return
+	if(buckled && (!isliving(buckled) || !buckled.GetComponent(/datum/component/riding)))
 		return
 	if(mobility_flags & MOBILITY_STAND)
 		// Stored angles wrap through 360; standing limits are relative to upright.
