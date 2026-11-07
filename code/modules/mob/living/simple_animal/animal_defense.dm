@@ -55,7 +55,7 @@
 			if(armor > 0)
 				nodmg = TRUE
 				next_attack_msg += VISMSG_ARMOR_BLOCKED
-			apply_damage(newforce, I.damtype, hitlim, armor)
+			var/dealt_damage = apply_damage(newforce, I.damtype, hitlim, armor)
 			I.remove_bintegrity(1)
 			if(I.damtype == BRUTE && !nodmg)
 				if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
@@ -78,11 +78,12 @@
 						add_splatter_wall(location, force = newforce)
 						if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 							user.add_mob_blood(src)
+			if(!nodmg && dealt_damage)
+				I.do_special_attack_effect(user, null, null, src, null)
 		send_item_attack_message(I, user, hitlim)
 		next_attack_msg.Cut()
 		if(I.force_dynamic)
 			return TRUE
-		I.do_special_attack_effect(user, null, null, src, null)
 
 /mob/living/simple_animal/getarmor(def_zone, type, damage, armor_penetration, blade_dulling, intdamfactor = 1, used_weapon)
 	if(!type)

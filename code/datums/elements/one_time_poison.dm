@@ -19,7 +19,7 @@
 
 /datum/element/one_time_poison/proc/try_inject(obj/item/source, mob/user, obj/item/bodypart/affecting, intent, mob/living/victim, selzone)
 	var/reagentlog2 = source.reagents
-	if(!isliving(victim))
+	if(!isliving(victim) || !victim.reagents)
 		return
 
 	log_combat(user, victim, "poisoned", addition="with [reagentlog2]")
