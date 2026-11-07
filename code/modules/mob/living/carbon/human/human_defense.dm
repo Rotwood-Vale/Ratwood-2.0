@@ -279,7 +279,8 @@
 				//throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 				var/obj/item/bodypart/L = pick(bodyparts)
 				L.add_embedded_object(I, silent = FALSE, crit_message = TRUE)
-				emote("embed")
+				if(L.is_organic_limb())
+					emote("embed")
 				L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
 //					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='danger'>[I] embeds itself in my [L.name]!</span>")
 				hitpush = FALSE

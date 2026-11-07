@@ -321,7 +321,7 @@
 							var/list/zones = list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_PRECISE_NECK, BODY_ZONE_HEAD)
 							var/zone = pick(zones)
 							var/obj/item/bodypart/BP = L.get_bodypart(zone)
-							if (BP && !(BP.skeletonized))
+							if (BP && !(BP.skeletonized) && BP.is_organic_limb())
 								var/obj/item/natural/worms/leech/I = new(L)
 								BP.add_embedded_object(I, silent = TRUE)
 /*				if(water_reagent == /datum/reagent/water) //become shittified, checks so bath water can be naturally gross but not discolored
@@ -531,7 +531,7 @@
 				var/obj/item/bodypart/BP = C.get_bodypart(zone)
 				if(!BP)
 					continue
-				if(BP.skeletonized)
+				if(BP.skeletonized || !BP.is_organic_limb())
 					continue
 				var/obj/item/natural/worms/leech/I = new(C)
 				BP.add_embedded_object(I, silent = TRUE)
@@ -571,7 +571,7 @@
 				var/obj/item/bodypart/BP = C.get_bodypart(zone)
 				if(!BP)
 					continue
-				if(BP.skeletonized)
+				if(BP.skeletonized || !BP.is_organic_limb())
 					continue
 				var/obj/item/natural/worms/leech/I = new(C)
 				BP.add_embedded_object(I, silent = TRUE)

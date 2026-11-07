@@ -157,7 +157,8 @@
 		else if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/obj/item/bodypart/affecting = null
-			for(var/obj/item/bodypart/BP in H.bodyparts)
+			// The limb being aimed at comes first, then whichever other prosthetic needs it.
+			for(var/obj/item/bodypart/BP in list(H.get_bodypart(check_zone(user.zone_selected))) + H.bodyparts)
 				if(!BP || QDELETED(BP))
 					continue
 				if(BP.status != BODYPART_ROBOTIC)
@@ -173,6 +174,7 @@
 			var/heal_amount = round(5 + 0.12 * (user.STAINT ** 2)) // jakk here, but this only affects valid limbs
 
 			affecting.heal_damage(heal_amount, heal_amount)
+			affecting.remove_wound(/datum/wound/jammed)
 			H.update_damage_overlays()
 
 			user.visible_message(

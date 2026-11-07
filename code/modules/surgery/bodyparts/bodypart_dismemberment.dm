@@ -102,13 +102,15 @@
 	else if(C.client || C.mind)
 		C.log_message("has lost their [src.name] to dismemberment", LOG_ATTACK, color = LOG_COLOR_SEVERE)
 
-	if(body_zone != BODY_ZONE_HEAD) // Sorry pal, no protagonist moment if it's your head flying off. Your ride ends here, mutie.
-		INVOKE_ASYNC(C, TYPE_PROC_REF(/mob/living/carbon, delimb_pain))
-	if(!(NOBLOOD in C.dna?.species?.species_traits) && !(INVISBLOOD in C.dna?.species?.species_traits)) //OV EDIT
-		add_mob_blood(C)
-	C.add_stress(/datum/stressevent/dismembered)
+	// A prosthetic coming off is neither gory nor painful.
+	if(is_organic_limb())
+		if(body_zone != BODY_ZONE_HEAD) // Sorry pal, no protagonist moment if it's your head flying off. Your ride ends here, mutie.
+			INVOKE_ASYNC(C, TYPE_PROC_REF(/mob/living/carbon, delimb_pain))
+		if(!(NOBLOOD in C.dna?.species?.species_traits) && !(INVISBLOOD in C.dna?.species?.species_traits)) //OV EDIT
+			add_mob_blood(C)
+		C.add_stress(/datum/stressevent/dismembered)
 
-	if(stress2give && C.mind) //Shouldn't be freaking out over a boglin getting their shit rocked.
+	if(stress2give && C.mind && is_organic_limb()) //Shouldn't be freaking out over a boglin getting their shit rocked.
 		for(var/mob/living/carbon/CA in hearers(world.view, C))
 			if(CA != C && !HAS_TRAIT(CA, TRAIT_BLIND) && !guillotine_execution)
 				if(stress2give == /datum/stressevent/viewdismember)
@@ -147,7 +149,7 @@
 		return TRUE
 
 	var/turf/location = C.loc
-	if(istype(location))
+	if(istype(location) && is_organic_limb())
 		C.add_splatter_floor(location)
 		C.add_splatter_wall(user, location, force = 2, spill_amount = 3) //Garunteed at least 2 tile distance of blood spattering on the walls, and up to 3 walls to splat.
 	var/direction = pick(GLOB.cardinals)
@@ -223,13 +225,15 @@
 			C.visible_message(span_danger("<B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B>"))
 	else
 		C.visible_message(span_danger("<B>The [src.name] is [pick("torn off", "sundered", "severed", "separated", "unsewn")]!</B>"))
-	if(body_zone != BODY_ZONE_HEAD)
-		C.delimb_pain()
-	if(!(NOBLOOD in C.dna?.species?.species_traits))
-		add_mob_blood(C)
-	C.add_stress(/datum/stressevent/dismembered)
+	// A prosthetic coming off is neither gory nor painful.
+	if(is_organic_limb())
+		if(body_zone != BODY_ZONE_HEAD)
+			C.delimb_pain()
+		if(!(NOBLOOD in C.dna?.species?.species_traits))
+			add_mob_blood(C)
+		C.add_stress(/datum/stressevent/dismembered)
 
-	if(stress2give && C.mind) //Shouldn't be freaking out over a boglin getting their shit rocked.
+	if(stress2give && C.mind && is_organic_limb()) //Shouldn't be freaking out over a boglin getting their shit rocked.
 		for(var/mob/living/carbon/CA in hearers(world.view, C))
 			if(CA != C && !HAS_TRAIT(CA, TRAIT_BLIND) && !guillotine_execution)
 				if(stress2give == /datum/stressevent/viewdismember)
@@ -268,7 +272,7 @@
 		return TRUE
 
 	var/turf/location = C.loc
-	if(istype(location))
+	if(istype(location) && is_organic_limb())
 		C.add_splatter_floor(location)
 	var/direction = pick(GLOB.cardinals)
 	var/t_range = rand(2,max(throw_range/2, 2))

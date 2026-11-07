@@ -728,7 +728,7 @@
 		var/mob/living/carbon/human/HM = owner
 		var/obj/item/bodypart/most_damaged
 		for(var/obj/item/bodypart/BP in HM.bodyparts)
-			if(QDELETED(BP))
+			if(QDELETED(BP) || !BP.is_organic_limb())
 				continue
 			if(!most_damaged || (BP.brute_dam + BP.burn_dam) > (most_damaged.brute_dam + most_damaged.burn_dam))
 				most_damaged = BP

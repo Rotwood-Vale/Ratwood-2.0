@@ -62,6 +62,11 @@
 		healed_any = TRUE
 	return healed_any
 
+/// Works at any jam in this prosthetic by the specified amount of repair
+/obj/item/bodypart/proc/repair_jam(repair_amount)
+	var/datum/wound/jammed/jam = has_wound(/datum/wound/jammed)
+	jam?.work_loose(repair_amount)
+
 /// Adds a wound to this bodypart, applying any necessary effects
 /obj/item/bodypart/proc/add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)
 	if(!wound || !owner || (owner.status_flags & GODMODE))
@@ -73,6 +78,9 @@
 			handle_ooze_wounds(wound, silent, crit_message)
 			return
 	if(ispath(wound, /datum/wound))
+		// Prosthetics have no bones to break. Whatever would break or dislocate one jams it instead.
+		if(!is_organic_limb() && (ispath(wound, /datum/wound/fracture) || ispath(wound, /datum/wound/dislocation)))
+			wound = /datum/wound/jammed
 		var/datum/wound/primordial_wound = GLOB.primordial_wounds[wound]
 		if(!primordial_wound.can_apply_to_bodypart(src))
 			return
@@ -122,7 +130,7 @@
 		if(istype(wound, /datum/wound))
 			bleed_rate += wound.bleed_rate*/
 	for(var/obj/item/embedded as anything in embedded_objects)
-		if(!embedded.embedding.embedded_bloodloss)
+		if(!embedded.embedding.embedded_bloodloss || !is_organic_limb())
 			continue
 		bleed_rate += embedded.embedding.embedded_bloodloss
 
@@ -147,7 +155,7 @@
 				return 0
 			return hud_bleed_rate
 	for(var/obj/item/embedded as anything in embedded_objects)
-		if(!embedded.embedding.embedded_bloodloss)
+		if(!embedded.embedding.embedded_bloodloss || !is_organic_limb())
 			continue
 		hud_bleed_rate += embedded.embedding.embedded_bloodloss
 
@@ -319,6 +327,10 @@
 		if(prob(used))
 			attempted_wounds += /datum/wound/burn
 
+	// Prosthetics have no bones to break. Blows that would break or dislocate one jam it instead.
+	if(!is_organic_limb())
+		var/would_jam = (/datum/wound/fracture in attempted_wounds) || (/datum/wound/dislocation in attempted_wounds)
+		attempted_wounds = would_jam ? list(/datum/wound/jammed) : list()
 
 	// Check if critical resistance applies
 	var/has_crit_attempt = length(attempted_wounds)
@@ -591,29 +603,44 @@
 	if(owner && ((owner.status_flags & GODMODE) || HAS_TRAIT(owner, TRAIT_PIERCEIMMUNE)))
 		return FALSE
 	if(istype(embedder, /obj/item/natural/worms/leech))
+		if(!is_organic_limb()) // no blood in a prosthetic to latch onto
+			return FALSE
 		record_round_statistic(STATS_LEECHES_EMBEDDED)
 	LAZYADD(embedded_objects, embedder)
 	embedder.is_embedded = TRUE
 	embedder.forceMove(src)
 	if(owner)
-		embedder.add_mob_blood(owner)
+		if(is_organic_limb())
+			embedder.add_mob_blood(owner)
 		if (!silent)
 			playsound(owner, 'sound/combat/newstuck.ogg', 100, vary = TRUE)
-			if (owner.has_status_effect(/datum/status_effect/buff/ozium))
-				owner.emote ("exhales")
-			if (owner.has_status_effect(/datum/status_effect/buff/drunk) && !owner.has_status_effect(/datum/status_effect/buff/ozium))
-				owner.emote("pain")
-			if (!owner.has_status_effect(/datum/status_effect/buff/drunk) && !owner.has_status_effect(/datum/status_effect/buff/ozium))
-				owner.emote("embed")
+			if(is_organic_limb())
+				if (owner.has_status_effect(/datum/status_effect/buff/ozium))
+					owner.emote ("exhales")
+				if (owner.has_status_effect(/datum/status_effect/buff/drunk) && !owner.has_status_effect(/datum/status_effect/buff/ozium))
+					owner.emote("pain")
+				if (!owner.has_status_effect(/datum/status_effect/buff/drunk) && !owner.has_status_effect(/datum/status_effect/buff/ozium))
+					owner.emote("embed")
+			else
+				to_chat(owner, span_warning("[embedder] sticks in my [name]. I feel nothing."))
 		if(crit_message)
 			owner.next_attack_msg += " <span class='userdanger'>[embedder] runs through [owner]'s [src]!</span>"
 		update_disabled()
 		if(embedder.is_silver && HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
 			var/datum/component/silverbless/psyblessed = embedder.GetComponent(/datum/component/silverbless)
 			owner.adjust_fire_stacks(1, psyblessed?.is_blessed ? /datum/status_effect/fire_handler/fire_stacks/sunder/blessed : /datum/status_effect/fire_handler/fire_stacks/sunder)
-			to_chat(owner, span_danger("the [embedder] in your body painfully jostles!"))
+			if(is_organic_limb())
+				to_chat(owner, span_danger("the [embedder] in your body painfully jostles!"))
+			else
+				to_chat(owner, span_danger("the [embedder] in your [name] jostles, and its silver sears the flesh at the fitting!"))
 		owner.mark_zone_selector_hud_dirty()
 	return TRUE
+
+/// Returns the message shown when something embedded in this bodypart acts up
+/obj/item/bodypart/proc/get_embed_ache_message(obj/item/embedded)
+	if(is_organic_limb())
+		return "[embedded] in my [name] hurts!"
+	return "[embedded] grinds against my [name]. I can't feel it, but I can hear it."
 
 /// Removes an embedded object from this bodypart
 /obj/item/bodypart/proc/remove_embedded_object(obj/item/embedder)
@@ -651,7 +678,7 @@
 	var/obj/item/natural/cloth/cloth
 	if(istype(bandage, /obj/item/natural/cloth))
 		cloth = bandage
-	if(cloth.medicine_quality)
+	if(cloth.medicine_quality && is_organic_limb())
 		if(cloth.medicine_amount >= 0)
 			heal_wounds(cloth.medicine_quality * 1)
 			heal_damage(cloth.medicine_quality * 1, cloth.medicine_quality * 1, 0, null, FALSE)
