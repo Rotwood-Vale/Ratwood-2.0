@@ -699,6 +699,7 @@
 	to the force of violence; a blessing, before they pursue the most dangerous game of all."
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash)
 	force = 30
+	force_wielded = 35
 	wdefense = 5
 	unenchantable = TRUE
 
