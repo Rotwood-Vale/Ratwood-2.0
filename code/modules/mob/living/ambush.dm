@@ -213,4 +213,4 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_AZURENATIVE) || HAS_TRAIT(src, TRAIT_WOODWALKER))
 		return TRUE
-	return HAS_TRAIT(src, TRAIT_BOGWALKER) && istype(get_area(src), /area/rogue/outdoors/bog)
+	return HAS_TRAIT(src, TRAIT_BOGWALKER)
