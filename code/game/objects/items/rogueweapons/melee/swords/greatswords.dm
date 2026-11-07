@@ -354,8 +354,8 @@
 	icon_state = "zizogsw"
 	force = 20
 	force_wielded = 40
-	max_blade_int = 500
-	max_integrity = 500
+	max_blade_int = 350
+	max_integrity = 400
 
 /obj/item/rogueweapon/greatsword/avantyne/Initialize(mapload)
 	. = ..()
