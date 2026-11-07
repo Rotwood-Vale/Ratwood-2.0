@@ -63,6 +63,10 @@
 
 	// First, wipe
 	keys_held.Cut()
+	release_inactive_keybindings()
+	intended_direction = NONE
+	next_move_dir_add = NONE
+	next_move_dir_sub = NONE
 
 	erase_all_macros()
 	update_movement_keys()

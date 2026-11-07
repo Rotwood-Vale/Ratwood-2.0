@@ -173,6 +173,8 @@
 	var/last_turn = 0
 	/// A rolling buffer of any keys held currently
 	var/list/keys_held = list()
+	/// Active hold bindings by name, with the physical keys for each active chord.
+	var/list/held_keybindings = list()
 	/// The direction we WANT to move, based off our keybinds
 	/// Will be udpated to be the actual direction later on
 	var/intended_direction = NONE

@@ -43,6 +43,7 @@
 
 	if(length(keys_held) > MAX_HELD_KEYS)
 		keys_held.Cut(1,2)
+		release_inactive_keybindings()
 
 	keys_held[_key] = TRUE
 	var/movement = movement_keys[_key]
@@ -64,11 +65,26 @@
 			full_key = "[AltMod][CtrlMod][ShiftMod]"
 		else
 			full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
+	var/list/chord_keys
 	var/keycount = 0
 	for(var/kb_name in prefs.key_bindings[full_key])
 		keycount++
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
 		if(kb)
+			if(kb.hold_binding)
+				if(!chord_keys)
+					chord_keys = list(_key)
+					if(keys_held["Alt"])
+						chord_keys |= "Alt"
+					if(keys_held["Ctrl"])
+						chord_keys |= "Ctrl"
+					if(keys_held["Shift"])
+						chord_keys |= "Shift"
+				var/list/held_chords = held_keybindings[kb_name]
+				if(!held_chords)
+					held_chords = list()
+					held_keybindings[kb_name] = held_chords
+				held_chords[full_key] = chord_keys
 			if(kb.down(src) && keycount >= MAX_COMMANDS_PER_KEY)
 				break
 
@@ -120,16 +136,25 @@
 		if(!movement_locked && !(next_move_dir_add & movement))
 			next_move_dir_sub |= movement
 
-	// We don't do full key for release, because for mod keys you
-	// can hold different keys and releasing any should be handled by the key binding specifically
-	for (var/kb_name in prefs.key_bindings[_key])
-		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
-		if(kb)
-			if(kb.up(src))
-				break
+	release_inactive_keybindings()
 	holder?.key_up(_key, src)
 	mob.focus?.key_up(_key, src)
 	mob.update_mouse_pointer()
+
+/// End hold actions once none of the chords that activated them are still held.
+/client/proc/release_inactive_keybindings()
+	if(!length(held_keybindings))
+		return
+	for(var/kb_name in held_keybindings.Copy())
+		var/list/held_chords = held_keybindings[kb_name]
+		for(var/chord in held_chords.Copy())
+			var/list/chord_keys = held_chords[chord]
+			if(length(chord_keys - keys_held))
+				held_chords -= chord
+		if(!length(held_chords))
+			held_keybindings -= kb_name
+			var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
+			kb.up(src)
 
 /client/verb/activeInput()
 	set hidden = 1
