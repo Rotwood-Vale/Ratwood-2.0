@@ -194,7 +194,7 @@
 	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
 	body_parts_inherent = COVERAGE_FULL
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	repair_time = 40 SECONDS
+	repair_time = 20 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berzerker
 	name = "unstoppable chest"
@@ -203,7 +203,7 @@
 	body_parts_covered = COVERAGE_VEST
 	body_parts_inherent = COVERAGE_VEST
 	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
-	repair_time = 40 SECONDS
+	repair_time = 30 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/iconclast
 	name = "gilded skin"
@@ -278,21 +278,6 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
-	repair_time = 30 SECONDS
-
-/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/berserker
-	name = "unstoppable skin"
-	desc = "I've endured enough. The onslaught has lost its meaning."
-	armor = ARMOR_LEATHER
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //A full-body leather armor.
-	repair_time = 20 SECONDS
-
-/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/berserker
-	name = "unstoppable chest"
-	desc = "The callouses could stop arrows! But only so many."
-	blocksound = SOFTHIT //must differ from the body/berserker's blocksound or the shirt slot check will reject it while armor is worn
-	armor = ARMOR_MAILLE
-	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
 	repair_time = 30 SECONDS
 
 #undef COMBAT_TAG_DURATION
