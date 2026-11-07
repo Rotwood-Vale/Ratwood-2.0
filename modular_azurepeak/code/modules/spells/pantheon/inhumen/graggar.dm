@@ -132,7 +132,7 @@
 
 /datum/status_effect/buff/graggar_regenerate
 	id = "graggar_regenerate"
-	examine_text = "<font color='red'>SUBJECTPRONOUN flesh regrows!</font>"
+	examine_text = "<font color='red'>Their flesh regrows!</font>"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/graggar_regenerate
 	effectedstats = list(STATKEY_WIL = -3, STATKEY_STR = -3)
 	duration = 6 SECONDS
