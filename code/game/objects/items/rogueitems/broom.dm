@@ -33,7 +33,8 @@
 			playsound(user, "clothwipe", 100, TRUE)
 			qdel(O)
 		if(istype(O, /obj/effect/decal/cleanable/blood))
-			add_blood_DNA(O.return_blood_DNA())
+			var/obj/effect/decal/cleanable/blood/wiped_blood = O
+			add_blood_DNA(wiped_blood.return_blood_DNA(), wiped_blood.blood_color)
 			return
 
 /obj/item/broom/attack_turf(turf/T, mob/living/user)
@@ -45,5 +46,5 @@
 			playsound(user, "clothwipe", 100, TRUE)
 			qdel(C)
 		for(var/obj/effect/decal/cleanable/blood/O in T)
-			add_blood_DNA(O.return_blood_DNA())
+			add_blood_DNA(O.return_blood_DNA(), O.blood_color)
 			return

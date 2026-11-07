@@ -119,6 +119,10 @@
 /mob/proc/set_disgust(amount)
 	return
 
+///Set the sunder level of a mob
+/mob/proc/set_sunder(amount)
+	return
+
 ///Adjust the body temperature of a mob, with min/max settings
 /mob/proc/adjust_bodytemperature(amount,min_temp=0,max_temp=600)
 	if(bodytemperature >= min_temp && bodytemperature <= max_temp)

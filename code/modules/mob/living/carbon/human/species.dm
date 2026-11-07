@@ -68,6 +68,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/exotic_blood = ""
 	///If my race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/exotic_bloodtype = ""
+	/// Hex tint for this species' blood. Sprites are greyscaled from their red channel, then multiplied by this.
+	var/blood_color = BLOOD_COLOR_DEFAULT
 	///What the species drops on gibbing
 	var/meat = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	var/skinned_type
@@ -685,6 +687,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
+
+/datum/species/proc/intercept_death(mob/living/carbon/human/H, gibbed)
+	return FALSE
 
 /datum/species/proc/auto_equip(mob/living/carbon/human/H)
 	// handles the equipping of species-specific gear
@@ -1377,10 +1382,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			nodmg = TRUE
 			target.next_attack_msg += VISMSG_ARMOR_BLOCKED
 		else
-			affecting.bodypart_attacked_by(user.used_intent.blade_class, damage, user, selzone, crit_message = TRUE)
+			var/obj/item/clothing/gloves/roguetown/worn_gloves = user.get_item_by_slot(SLOT_GLOVES)
+			var/obj/item/unarmed_weapon
+			if(istype(worn_gloves) && worn_gloves.unarmed_weapon_effects)
+				unarmed_weapon = worn_gloves
+
+			affecting.bodypart_attacked_by(user.used_intent.blade_class, damage, user, selzone, crit_message = TRUE, weapon = unarmed_weapon)
 			SEND_SIGNAL(target, COMSIG_ATOM_ATTACK_HAND, user)
 			if(affecting.body_zone == BODY_ZONE_HEAD)
 				SEND_SIGNAL(user, COMSIG_HEAD_PUNCHED, target)
+			if(istype(worn_gloves))
+				worn_gloves.apply_unarmed_weapon_effects(user, affecting, user.used_intent, target, selzone)
 		log_combat(user, target, "punched", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 		if(ishuman(user))
 			user.resolve_combataware(target, "[bodyzone2readablezone(selzone)]...", "[bodyzone2readablezone(user.zone_selected)]...")
@@ -1431,7 +1443,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				user.changeMaxDodge(3)
 			if(target.mind)
 				target.dodgetime = (clamp(target.dodgetime - 8, 0, CLICK_CD_DODGE))	//We reset the dodgetime after getting struck directly in the body.
-				target.changeMaxDodge(5)
+				target.changeMaxDodge(5, clamp = TRUE)
 
 /datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return
@@ -1873,7 +1885,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(!affecting)
 		return
-	
+
 	var/datum/status_effect/buff/clash/limbguard/LG = H.has_status_effect(/datum/status_effect/buff/clash/limbguard)
 	if(LG)
 		if(LG.protected_zone == selzone && LG.is_active)	// We "missed" into limbguard's protected zone.
@@ -1937,13 +1949,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(ishuman(user) && user != H)
 		var/aim_text = "[bodyzone2readablezone(user.zone_selected)]..."
-		if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
+		if(HAS_TRAIT(user, TRAIT_GUARD_RAISED))
 			aim_text = prob(10) ? "<i>I can't tell...</i>" : null
 		user.resolve_combataware(H, "[bodyzone2readablezone(selzone)]...", aim_text)
 
 	if(H.client?.prefs.floating_text_toggles & HITZONE_TEXT)
-		H.balloon_alert(H, "[bodyzone2readablezone(selzone)]...") 
-		
+		H.balloon_alert(H, "[bodyzone2readablezone(selzone)]...")
+
 	var/pen_info_check = get_pen_info(H, user, H.get_best_worn_armor(def_zone, int.item_d_type), def_zone, int.item_d_type, int.penfactor, I)
 	var/armor_block = H.run_armor_check(selzone, I.d_type, "", "",pen, damage = Iforce, blade_dulling=bladec, intdamfactor = used_intfactor, used_weapon = I, pen_info = pen_info_check)
 
@@ -1972,7 +1984,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				user.changeMaxDodge(1)
 		if(!nodmg)
 			post_reduction_dmg = (post_weakness_dmg - armor_block)
-//			var/has_vuln_or_exposed = (H.has_status_effect(/datum/status_effect/debuff/exposed) || H.has_status_effect(/datum/status_effect/debuff/vulnerable)) //UNATOMIZABLE CODE FOR THE THE PR THAT WILL FOLLOW
+			var/has_vuln_or_exposed = (H.has_status_effect(/datum/status_effect/debuff/exposed) || H.has_status_effect(/datum/status_effect/debuff/vulnerable))
 			var/datum/wound/crit_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, post_reduction_dmg, user, selzone, crit_message = TRUE, weapon = I, pen_info = pen_info_check)
 			if(should_embed_weapon(crit_wound, I))
 				var/can_impale = TRUE
@@ -1998,7 +2010,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				user.changeMaxDodge(3)
 			if(H.mind)
 				H.dodgetime = (clamp(H.dodgetime - 8, 0, CLICK_CD_DODGE))	//We reset the dodgetime after getting struck directly in the body.
-				H.changeMaxDodge(5)
+				if(!has_vuln_or_exposed)
+					H.changeMaxDodge(5, clamp = TRUE)
 //		if(H.used_intent.blade_class == BCLASS_BLUNT && I.force >= 15 && affecting.body_zone == "chest")
 //			var/turf/target_shove_turf = get_step(H.loc, get_dir(user.loc,H.loc))
 //			H.throw_at(target_shove_turf, 1, 1, H, spin = FALSE)
@@ -2031,7 +2044,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				bloody = 1
 				var/turf/location = H.loc
 				var/splatter_dir = get_dir(H, user)
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(H.loc, splatter_dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(H.loc, splatter_dir, H.get_blood_color())
 				if(istype(location))
 					H.add_splatter_floor(location)
 					H.add_splatter_wall(location, force = I.force)
@@ -2297,13 +2310,12 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 		if(pure_stacks)
 			var/firemodifier = pure_stacks.stacks / 50
 
-			if(pure_stacks.on_fire)
-				// Classic "you're actively burning" damage
-				burn_damage = 10 + (pure_stacks.stacks * 3)
-			else
+			if(!pure_stacks.on_fire)
 				// Residual heat damage scaling with temp
 				firemodifier = min(firemodifier, 0)
 				burn_damage = round(max(log(2-firemodifier,max(H.bodytemperature-BODYTEMP_NORMAL, 1))-5,0))
+				if(HAS_TRAIT(H, TRAIT_FIRE_RESIST))
+					burn_damage *= 0.5
 
 		if(burn_damage > 0)
 			switch(burn_damage)
@@ -2384,21 +2396,49 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 // FIRE //
 //////////
 
+#define FIRE_WOUND_BURN_BASE 4
+#define FIRE_WOUND_BURN_STACK_SCALE 6
+#define FIRE_WOUND_BURN_SUITED 2
+
 /datum/species/proc/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
 	if(!Canignite_mob(H))
 		return TRUE
-	
-	// Stops maxing out temp from firestacks alone
-	if(H.bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX)	
-		return
+
 	var/thermal_protection = H.get_thermal_protection()
 
 	if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
 		return
+
+	var/fire_resist_mult = 1
+	if(HAS_TRAIT(H, TRAIT_FIRE_RESIST))
+		fire_resist_mult = 0.5
+
+	var/burn_damage
 	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-		H.adjust_bodytemperature(1)
+		burn_damage = FIRE_WOUND_BURN_SUITED
 	else
-		H.adjust_bodytemperature(2)	//arbitrary value, but our temp scale runs from 0 to 600 behind the scenes- 455 to heat level 2. standard is 300, thats 50 seconds of being on fire to top out at lvl 2
+		burn_damage = FIRE_WOUND_BURN_BASE + round(sqrt(H.fire_stacks) * FIRE_WOUND_BURN_STACK_SCALE)
+	burn_damage = round(burn_damage * fire_resist_mult * heatmod * H.physiology.heat_mod)
+	if(burn_damage <= 0)
+		return
+
+	if(H.stat < UNCONSCIOUS && prob(min(burn_damage * 4, 100)))
+		H.emote("pain")
+
+	var/obj/item/bodypart/BP // concentrate fire on one limb at a time
+	for(var/obj/item/bodypart/candidate as anything in H.bodyparts)
+		if(QDELETED(candidate))
+			continue
+		if(!BP || candidate.burn_dam > BP.burn_dam)
+			BP = candidate
+	if(!BP)
+		return
+	BP.receive_damage(0, burn_damage)
+	BP.bodypart_attacked_by(BCLASS_BURN, burn_damage, null, BP.body_zone)
+
+#undef FIRE_WOUND_BURN_BASE
+#undef FIRE_WOUND_BURN_STACK_SCALE
+#undef FIRE_WOUND_BURN_SUITED
 
 /datum/species/proc/Canignite_mob(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOFIRE))
@@ -2606,7 +2646,7 @@ GLOBAL_VAR_INIT(cold_breath_overlay, mutable_appearance(
 
 /datum/action/innate/flight
 	name = "Toggle Flight"
-	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	button_icon_state = ""
 
 /datum/action/innate/flight/Activate()

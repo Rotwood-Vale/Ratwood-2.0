@@ -358,7 +358,7 @@
 	anvilrepair = /datum/skill/craft/armorsmithing
 	equip_sound = 'sound/foley/equip/equip_armor.ogg'
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
-	max_integrity = ARMOR_INT_SIDE_IRON
+	max_integrity = ARMOR_INT_SIDE_IRON + 50
 	resistance_flags = FIRE_PROOF
 	body_parts_inherent = NECK
 	slot_flags = ITEM_SLOT_NECK
@@ -372,8 +372,21 @@
 /obj/item/clothing/neck/roguetown/gorget/steel
 	name = "steel gorget"
 	smeltresult = /obj/item/ingot/steel
-	max_integrity = ARMOR_INT_SIDE_STEEL
+	max_integrity = ARMOR_INT_SIDE_STEEL + 100
 	icon_state = "sgorget"
+
+/obj/item/clothing/neck/roguetown/gorget/aventail
+	name = "aventail"
+	desc = "A thick garment of steel maille and padding, traditionally attached to bascinets. It's burdensome on the shoulders of those who aren't properly \
+	trained to wear knightly garments."
+	icon_state = "aventailbase"
+	body_parts_covered = NECK|MOUTH
+	slot_flags = ITEM_SLOT_NECK
+	max_integrity = ARMOR_INT_SIDE_STEEL + 50 //In essence, a chainmail gorget.
+	armor_class = ARMOR_CLASS_MEDIUM
+	armor = ARMOR_MAILLE
+	blocksound = CHAINHIT
+	smeltresult = /obj/item/ingot/steel
 
 /obj/item/clothing/neck/roguetown/gorget/steel/ancient
 	name = "ancient gorget"
@@ -696,6 +709,14 @@
 	. = ..()
 	if(isliving(user))
 		REMOVE_TRAIT(user, TRAIT_WORN_SILVER_PSICROSS, REF(src))
+
+/obj/item/clothing/neck/roguetown/psicross/silver/sojourner
+	name = "gilded silver psycross"
+	desc = "A silver psycross beneath a fine layer of gold, honoring Naledian tradition without forsaking the Inquisition's silver. 'Purity afloat, for paradise awaits!'"
+	icon_state = "psycross_g"
+	item_state = "psycross_g"
+	is_gold = TRUE
+	sellprice = 100
 
 /obj/item/clothing/neck/roguetown/psicross/g
 	is_gold = TRUE
@@ -1170,12 +1191,12 @@
 			ADD_TRAIT(user, TRAIT_DARKVISION, CULT_TRAIT)//Close enough to a cult. No duplicates beyond dreamer.
 			ADD_TRAIT(user, TRAIT_HARDDISMEMBER, CULT_TRAIT)//Too angry to lose a limb, or something.
 			ADD_TRAIT(user, TRAIT_IGNOREDAMAGESLOWDOWN, CULT_TRAIT)//Can't tag 'em to slow 'em.
-			armor = ARMOR_PLATE_BSTEEL
+			armor = getArmor(arglist(ARMOR_PLATE_BSTEEL))
 		else
 			to_chat(user, span_suicide("The necklace... I can hear a voice mocking me!"))
 			ADD_TRAIT(user, TRAIT_PSYCHOSIS, CULT_TRAIT)
 			user.hallucination = INFINITY
-			armor = ARMOR_CLOTHING
+			armor = getArmor(arglist(ARMOR_CLOTHING))
 
 /obj/item/clothing/neck/roguetown/dragon_scale/dropped(mob/living/user)
 	..()
@@ -1340,5 +1361,3 @@
 	desc = "Ward of silver, sigil of eternity; by the Ten, I command thee back to Hell!"
 	icon_state = "undivided_s"
 	sellprice = 50
-
-

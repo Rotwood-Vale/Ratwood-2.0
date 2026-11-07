@@ -201,13 +201,14 @@
 	tutorial = "You are a Gefechtsgelehrter - \"Combat Scholar\" - An experienced Zauberer hailing from the prestigious Celestial Academy, your fellow alumni may have pursued summoning, enchantments or similar academical ventures. But you? You studied siegecraft. And you got damn good at it too."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
+
 	outfit = /datum/outfit/job/roguetown/mercenary/grenzelhoft_mage
 	class_select_category = CLASS_CAT_GRENZELHOFT
-	category_tags = list(CTAG_MERCENARY)
+	category_tags = list(CTAG_MERCENARY, CTAG_MERCPARTY_WARMAGE)
 	cmode_music = 'sound/music/combat_grenzelhoft.ogg'
 	subclass_languages = list(/datum/language/grenzelhoftian)
-	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
-	traits_applied = list(TRAIT_MAGEARMOR, TRAIT_INTELLECTUAL, TRAIT_STEELHEARTED, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY)
+	traits_applied = list(TRAIT_INTELLECTUAL, TRAIT_STEELHEARTED, TRAIT_ALCHEMY_EXPERT, TRAIT_MAGEDEXTERITY)
+	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 6, "allowed_majors" = list(/datum/magic_aspect/pyromancy, /datum/magic_aspect/geomancy, /datum/magic_aspect/ferramancy), "variants" = list(/datum/magic_aspect/pyromancy = "gefechtsgelehrter", /datum/magic_aspect/geomancy = "gefechtsgelehrter", /datum/magic_aspect/ferramancy = "gefechtsgelehrter"), "post_aspect_spells" = list(/datum/action/cooldown/spell/message, /datum/action/cooldown/spell/aetherknife), "ward" = TRUE)
 	subclass_stats = list(
 		STATKEY_INT = 3,
 		STATKEY_WIL = 3,
@@ -215,8 +216,11 @@
 		STATKEY_PER = 3,
 		STATKEY_SPD = 1
 	)
+	age_mod = /datum/class_age_mod/grenzel_mage
 	subclass_skills = list(
-		/datum/skill/magic/arcane = SKILL_LEVEL_EXPERT,
+		/datum/skill/magic/arcane = SKILL_LEVEL_JOURNEYMAN,
+		/datum/skill/combat/staves = SKILL_LEVEL_EXPERT,
+		/datum/skill/combat/arcyne = SKILL_LEVEL_EXPERT,
 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
@@ -235,7 +239,7 @@
 	..()
 	to_chat(H, span_warning("You are a Gefechtsgelehrter - \"Combat Scholar\" - An experienced Zauberer hailing from the prestigious Celestial Academy, your fellow alumni may have pursued summoning, enchantments or similar academical ventures. But you? You studied siegecraft. And you got damn good at it too."))
 	belt = /obj/item/storage/belt/rogue/leather/battleskirt
-	backl = /obj/item/rogueweapon/woodstaff/gefechtsgelehrter
+	backl = /obj/item/rogueweapon/woodstaff/implement/greater/gefechtsgelehrter
 	cloak = /obj/item/clothing/cloak/stabard/grenzelmage
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/cuirass
 	//General gear regardless of class.
@@ -249,34 +253,12 @@
 	backr = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/roguekey/mercenary = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/mid = 1,
+		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
 		/obj/item/flashlight/flare/torch = 1,
 		/obj/item/rogueweapon/huntingknife = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
-		/obj/item/spellbook_unfinished/pre_arcyne = 1,
-		/obj/item/roguegem/amethyst = 1,
+		/obj/item/rogueweapon/spellbook/greater = 1,
+		/obj/item/chalk = 1
 		)
-	if(H.mind) // State mandated spells c:
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fireball/artillery)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/spitfire)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/arcynebolt)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/forcewall/greater)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/repel)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/rebuke)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/conjure_armor)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/message)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/counterspell)
-		H.mind?.adjust_spellpoints(6)
-	if(H.age == AGE_OLD) // FEAR the old man in a profession where men die young, or something corny like that.
-		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, 5, TRUE)
-		H.change_stat(STATKEY_SPD, -1)
-		H.change_stat(STATKEY_WIL, -1)
-		H.change_stat(STATKEY_PER, 2)
-		H.change_stat(STATKEY_INT, 2)
-		H.change_stat(STATKEY_CON, -2)
-		H.mind?.adjust_spellpoints(3)
-		ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC)
-	else
-		ADD_TRAIT(H, TRAIT_ARCYNE_T3, TRAIT_GENERIC) // T3 because a combat mage from Grenzelhoft shouldn't be the weakest puremage in Merc class.
+	ADD_TRAIT(H, TRAIT_ARCYNE, TRAIT_GENERIC)
 	H.merctype = 7

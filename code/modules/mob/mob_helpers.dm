@@ -224,6 +224,7 @@
 	return newphrase
 
 /// Makes you talk like you got cult stunned, which is slurring but with some dark messages
+// Except up, its Psyphied so this is what you get from being sundered instead, thank you whoever left this, I will cook.
 /proc/cultslur(n) // Inflicted on victims of a stun talisman
 	var/phrase = STRIP_HTML_SIMPLE(n,MAX_MESSAGE_LEN)
 	var/leng = length_char(phrase)
@@ -242,14 +243,13 @@
 			if(LOWER_TEXT(newletter)=="u")
 				newletter="oo"
 			if(LOWER_TEXT(newletter)=="c")
-				newletter=" NAR "
+				newletter="lr"
+			if(LOWER_TEXT(newletter)=="e")
+				newletter="do"
+			if(LOWER_TEXT(newletter)=="zizo") //YOU WISH
+				newletter="psy"
 			if(LOWER_TEXT(newletter)=="s")
-				newletter=" SIE "
-		if(prob(25))
-			if(newletter==" ")
-				newletter=" no hope... "
-			if(newletter=="H")
-				newletter=" IT COMES... "
+				newletter="zr"
 
 		switch(rand(1,15))
 			if(1)
@@ -259,9 +259,9 @@
 			if(3)
 				newletter="fth"
 			if(4)
-				newletter="nglu"
+				newletter="zghl"
 			if(5)
-				newletter="glor"
+				newletter="psyzl"
 			else
 				;;
 		newphrase+="[newletter]";counter-=1
@@ -619,6 +619,10 @@
 	if(input != QINTENT_SPELL)
 		if(ranged_ability)
 			ranged_ability.deactivate()
+		// Also clear new-style cooldown spells set on click_intercept
+		var/datum/action/cooldown/active_cooldown = click_intercept
+		if(istype(active_cooldown))
+			active_cooldown.unset_click_ability(src, refund_cooldown = TRUE)
 	switch(input)
 		if(QINTENT_KICK)
 			if(mmb_intent?.type == INTENT_KICK)
@@ -626,6 +630,7 @@
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_KICK(src)
 		if(QINTENT_SPECIAL)
 			if(mmb_intent?.type == INTENT_SPECIAL)
@@ -633,6 +638,7 @@
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_SPECIAL(src)
 		if(QINTENT_BITE)
 			if(mmb_intent?.type == INTENT_BITE)
@@ -640,6 +646,7 @@
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_BITE(src)
 		if(QINTENT_JUMP)
 			if(mmb_intent?.type == INTENT_JUMP)
@@ -647,6 +654,7 @@
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_JUMP(src)
 		if(QINTENT_GIVE)
 			if(mmb_intent?.type == INTENT_GIVE)
@@ -654,6 +662,7 @@
 				input = null
 				mmb_intent = null
 			else
+				qdel(mmb_intent)
 				mmb_intent = new INTENT_GIVE(src)
 		if(QINTENT_SPELL)
 			if(mmb_intent)

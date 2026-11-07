@@ -7,9 +7,12 @@
 	plane = GAME_PLANE_FOV_HIDDEN
 	var/splatter_type = "splatter"
 
-/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
+/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir, new_blood_color)
 	icon_state = "[splatter_type][rand(1, 6)]"
-	. = ..()
+	if(splatter_type == "splatter")
+		icon = get_greyscale_blood_icon(icon, icon_state)
+		color = new_blood_color || BLOOD_COLOR_DEFAULT
+	. = ..(mapload, set_dir)
 	animate(src, alpha = 0, time = duration)
 /*
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
@@ -244,6 +247,11 @@
 	name = "spooky lights"
 	icon_state = "purplesparkles"
 
+/obj/effect/temp_visual/zizorite
+	name = "profane magic"
+	icon_state = "purplesparkles"
+	duration = 6
+
 /obj/effect/temp_visual/revenant/cracks
 	name = "glowing cracks"
 	icon_state = "purplecrack"
@@ -457,8 +465,10 @@
 	duration = 10
 	var/shrink = TRUE
 
-/obj/effect/temp_visual/bleed/Initialize(mapload, atom/size_calc_target)
-	. = ..()
+/obj/effect/temp_visual/bleed/Initialize(mapload, atom/size_calc_target, new_blood_color)
+	icon = get_greyscale_blood_icon(icon, icon_state)
+	color = new_blood_color || BLOOD_COLOR_DEFAULT
+	. = ..(mapload)
 	var/size_matrix = matrix()
 	if(size_calc_target)
 		layer = size_calc_target.layer + 0.01

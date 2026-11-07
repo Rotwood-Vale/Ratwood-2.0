@@ -1,4 +1,4 @@
-/mob/living/carbon/human/proc/process_clash(mob/user, obj/item/IM, obj/item/IU)
+/mob/living/carbon/human/proc/process_clash(mob/user, obj/item/IM, obj/item/IU, is_bite = FALSE)
 	if(!ishuman(user))
 		return
 	if(user == src)
@@ -183,7 +183,7 @@
 
 ///Shared by the Defend RMB stance and the direct Guard keybinding, so both go through the same checks.
 /mob/living/carbon/human/proc/try_guard()
-	if(has_status_effect(/datum/status_effect/buff/clash) || has_status_effect(/datum/status_effect/debuff/clashcd))
+	if(has_status_effect(/datum/status_effect/buff/clash) || has_status_effect(/datum/status_effect/debuff/clashcd) || has_status_effect(/datum/status_effect/buff/clash/limbguard))
 		return FALSE
 	if(!get_active_held_item())
 		if(get_skill_level(/datum/skill/combat/unarmed) < 3)
@@ -197,11 +197,16 @@
 	if(has_status_effect(/datum/status_effect/debuff/exposed))
 		balloon_alert(src, "<font color = '#ffffff'>Can't guard while exposed!</font>")
 		return FALSE
-
-	if(is_swinging(disrupt_only = TRUE))
+	if(has_status_effect(/datum/status_effect/debuff/vulnerable))
+		balloon_alert(src, "<font color = '#ffffff'>Can't guard while vulnerable!</font>")
+		return FALSE
+	// Can't guard while channeling a spell
+	var/datum/action/cooldown/spell/active_spell = click_intercept
+	if(istype(active_spell) && (active_spell.currently_charging || active_spell.charged))
+		to_chat(src, span_warning("I can't guard while channeling a spell!"))
 		return FALSE
 
-	if(has_status_effect(/datum/status_effect/debuff/exposed))
+	if(is_swinging(disrupt_only = TRUE))
 		return FALSE
 
 	apply_status_effect(/datum/status_effect/buff/clash)
@@ -229,7 +234,7 @@
 /mob/living/carbon/human/proc/reset_dodgetime()
 	if(!cmode && mind)
 		dodgetime = 0
-		max_dodge = MAX_DODGE_CEIL
+		max_dodge = MAX_DODGE_START
 
 ///A Unique Stat comparison between src and HT.
 ///It takes the highest stats up to 14 and lowest stats 'up to' 14.

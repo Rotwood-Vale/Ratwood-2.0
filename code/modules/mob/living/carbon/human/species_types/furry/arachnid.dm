@@ -4,6 +4,7 @@
 /datum/species/arachnid
 	name = "Arachnid"
 	id = "arachnid"
+	blood_color = BLOOD_COLOR_BLUE
 	clothes_id = "lamia"
 	desc = "<b>Arachnid</b><br>\
 	(+1 Strength, -1 Speed, Webwalk Trait, Longstrider Trait, Venomous Trait)"
@@ -135,6 +136,7 @@
 
 	allowed_taur_types = list(
 		/obj/item/bodypart/taur/spider,
+		/obj/item/bodypart/taur/spider/weaver,
 		/obj/item/bodypart/taur/ant,
 		/obj/item/bodypart/taur/wasp
 	)

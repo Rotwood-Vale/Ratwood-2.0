@@ -134,7 +134,7 @@ It will also call down lightning strikes from the sky, and fling people with it'
 
 /datum/action/innate/megafauna_attack
 	name = "Megafauna Attack"
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = ""
 	var/mob/living/simple_animal/hostile/retaliate/rogue/voiddragon/M
 	var/chosen_message
@@ -650,9 +650,6 @@ It will also call down lightning strikes from the sky, and fling people with it'
 	new /obj/item/clothing/ring/dragon_ring(deathspot)
 	new /obj/item/clothing/ring/dragon_ring(deathspot)
 	new /obj/item/clothing/ring/dragon_ring(deathspot)
-	new /obj/item/book/granter/spell_points/voiddragon(deathspot)
-	new /obj/item/book/granter/spell_points/voiddragon(deathspot)
-	new /obj/item/book/granter/spell_points/voiddragon(deathspot)
 	update_icon()
 	spill_embedded_objects()
 
@@ -687,3 +684,28 @@ It will also call down lightning strikes from the sky, and fling people with it'
 #undef DRAKE_SWOOP_DIRECTION_CHANGE_RANGE
 #undef SWOOP_DAMAGEABLE
 #undef SWOOP_INVULNERABLE
+
+/obj/effect/temp_visual/targetlightning
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "trap"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	light_outer_range = 2
+	duration =15
+	var/explode_sound = list('sound/misc/explode/incendiary (1).ogg','sound/misc/explode/incendiary (2).ogg')
+
+/obj/effect/temp_visual/targetlightning/Initialize(mapload, list/flame_hit)
+	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(storm), flame_hit)
+
+/obj/effect/temp_visual/targetlightning/proc/storm(list/flame_hit)	//electroshocktherapy
+	var/turf/T = get_turf(src)
+	sleep(duration)
+	playsound(T,'sound/magic/lightning.ogg', 80, TRUE)
+	new /obj/effect/temp_visual/lightning(T)
+
+	for(var/mob/living/L in T.contents)
+		if(L.anti_magic_check())
+			continue
+		L.electrocute_act(65)	//a little over half the damage of thunderstrike, but doesn't degrade on each subsequent ring.
+		to_chat(L, span_userdanger("You're hit by lightning!!!"))

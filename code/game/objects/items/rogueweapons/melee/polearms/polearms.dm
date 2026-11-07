@@ -1280,25 +1280,6 @@
 	unequip_delay_self = 2 SECONDS
 	inv_storage_delay = 1 SECONDS
 
-/obj/item/rogueweapon/woodstaff/naledi
-	name = "naledian warstaff"
-	desc = "A staff carrying the crescent moon of Psydon's knowledge, as well as the black and gold insignia of the war scholars."
-	icon_state = "naledistaff"
-	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)
-	gripped_intents = list(/datum/intent/spear/bash/ranged, /datum/intent/special/magicarc, /datum/intent/mace/smash/wood/ranged)
-	force = 18
-	force_wielded = 22
-	max_integrity = 250
-
-/obj/item/rogueweapon/woodstaff/naledi/getonmobprop(tag)
-	. = ..()
-	if(tag)
-		switch(tag)
-			if("gen")
-				return list("shrink" = 0.8,"sx" = -9,"sy" = 5,"nx" = 9,"ny" = 5,"wx" = -4,"wy" = 4,"ex" = 4,"ey" = 4,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 32,"eturn" = -23,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
-			if("wielded")
-				return list("shrink" = 0.8,"sx" = 8,"sy" = 0,"nx" = -1,"ny" = 0,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
-
 // Decorative Naledi staff for loadout - regular staff with Naledi appearance
 /obj/item/rogueweapon/woodstaff/decorative
 	name = "decorative naledian staff"
@@ -1311,23 +1292,25 @@
 	max_integrity = 150
 
 //Only a 'woodenstaff' for the purpose of CDR on spells.
-/obj/item/rogueweapon/woodstaff/sojourner
+/obj/item/rogueweapon/woodstaff/implement/greater/sojourner
+	base_implement_name = "sojourner staff"
 	name = "sojourner staff"
 	desc = "What remains of an old psydonic spear. The tip is blunted, with both barbs and trident-like head removed. \
 	It serves a more noble purpose, now, as a sojourner's casting implement. Though, with enough force, one may still drive the tip forward."
-	icon_state = "psystaff"//Temp
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "psystaff"
 	possible_item_intents = list(SPEAR_BASH, /datum/intent/special/magicarc)
 	gripped_intents = list(/datum/intent/spear/thrust/blunted, /datum/intent/special/magicarc, /datum/intent/mace/smash/wood/ranged)
 	force = 18
 	force_wielded = 20//Worse than just using a knife, really, despite the range.
 	thrown_bclass = BCLASS_STAB
 	throwforce = 20
-	max_integrity = 150
+	max_integrity = 200
 	max_blade_int = 180
 	smeltresult = /obj/item/ingot/silverblessed
 	is_silver = TRUE
 
-/obj/item/rogueweapon/woodstaff/sojourner/ComponentInitialize()
+/obj/item/rogueweapon/woodstaff/implement/greater/sojourner/ComponentInitialize()
 	AddComponent(\
 		/datum/component/silverbless,\
 		pre_blessed = BLESSING_NONE,\
@@ -1629,6 +1612,76 @@
 	max_blade_int = 200 // Elven design makes it sharper than Kazengunese stuff
 	sellprice = 60
 
+/datum/intent/spear/bash/staff
+	name = "staff bash"
+	damfactor = 1
+	reach = 1
+
+//
+/obj/item/rogueweapon/spear/spellblade
+	name = "dory"
+	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon_state = "short_spear"
+	desc = "A shortened spear, six feet long and balanced. Favored by Ferentian Spellblades \
+		who found the traditional long spear ill-suited for their flashy, individualistic fighting style. \
+		Designed to thrust quickly from one hand but maneuver nimbly in two.<BR><BR> \
+		'From this dae on, we shall name ourselves naught spearman, but phalangite, and our spear, the dory, not a shortspear. \
+		And with this measure we shall gain great respect henceforth.' - Unknown Grandmaster of the Ferentian Spellblade Order, 900 AP."
+	force = 20
+	force_wielded = 25
+	possible_item_intents = list(/datum/intent/spear/thrust/azurean/oneh)
+	gripped_intents = list(/datum/intent/spear/thrust/azurean, /datum/intent/spear/thrust/azurean/pick, SPEAR_BASH)
+	wlength = WLENGTH_LONG
+	w_class = WEIGHT_CLASS_BULKY
+	minstr = 7
+	max_blade_int = 180
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	smeltresult = /obj/item/ingot/iron
+	associated_skill = /datum/skill/combat/polearms
+	wdefense = 4
+	thrown_bclass = BCLASS_STAB
+	throwforce = 22
+	resistance_flags = FLAMMABLE
+	armor_penetration = PEN_NONE
+
+// ---- Ferentian Shortspear intents ----
+/datum/intent/spear/thrust/azurean
+	name = "thrust"
+	desc = "A quick, nimble two-handed thrust. Keeps reach but lacks the power to pierce armor."
+	reach = 2
+	clickcd = CLICK_CD_QUICK // Long range, quick poke, NO AP
+	penfactor = PEN_NONE
+	damfactor = 1
+	effective_range = null
+	effective_range_type = EFF_RANGE_NONE
+
+/datum/intent/spear/thrust/azurean/oneh
+	name = "one-handed thrust"
+	desc = "A rapid jab from one hand. Fast with long range, but unable to penetrate armor."
+	reach = 2
+	clickcd = CLICK_CD_QUICK // capture that nimble feel
+	penfactor = PEN_NONE
+	damfactor = 1
+	effective_range = null
+	effective_range_type = EFF_RANGE_NONE
+
+/datum/intent/spear/thrust/azurean/pick
+	name = "pick"
+	icon_state = "inpick"
+	desc = "A shortspear is nimble enough to handle when two-handed and gripped toward the blade. Grasps it near the end and drive it into the weak point of your opponent's armor - hard to pull off but can be devastating if successful."
+	blade_class = BCLASS_PICK
+	attack_verb = list("impales", "drives into")
+	hitsound = list('sound/combat/hits/pick/genpick (1).ogg', 'sound/combat/hits/pick/genpick (2).ogg')
+	reach = 1
+	clickcd = 18
+	swingdelay = 14
+	penfactor = PEN_HEAVY
+	damfactor = 0.8
+	item_d_type = "stab"
+	effective_range = null
+	effective_range_type = EFF_RANGE_NONE
+
+//
 /obj/item/rogueweapon/spear/partizan/baotha
 	name = "Saccharine Swordspear"
 	desc = "Keep the rest at arm's length, lest you're burdened with the pain of rememberance."

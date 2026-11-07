@@ -70,7 +70,7 @@
 	if(QDELETED(src) || !owner)
 		return
 
-	if(mob_effect_icon_state)
+	if(mob_effect_icon_state && (duration > 0 || mob_effect_dur))
 		if(!mob_effect_dur)
 			mob_effect_dur = (duration - 1)	//-1 tick juuust in case something goes wrong between status effect deletion and the callback of the appearance itself.
 		mob_effect = owner.play_overhead_indicator_flick(mob_effect_icon, mob_effect_icon_state, mob_effect_dur, mob_effect_layer, null, mob_effect_offset_y, mob_effect_offset_x)
@@ -329,6 +329,8 @@
 
 /datum/status_effect/stacking/proc/on_threshold_drop()
 
+/datum/status_effect/stacking/proc/prepare_overlay()
+
 /datum/status_effect/stacking/proc/can_have_status()
 	return owner.stat != DEAD
 
@@ -360,6 +362,7 @@
 		stacks = min(stacks, max_stacks)
 		status_overlay.icon_state = "[overlay_state][stacks]"
 		status_underlay.icon_state = "[underlay_state][stacks]"
+		prepare_overlay()
 		owner.add_overlay(status_overlay)
 		owner.underlays += status_underlay
 	else
@@ -383,6 +386,7 @@
 	status_underlay.pixel_x = -owner.pixel_x
 	status_underlay.transform = matrix() * (icon_height/world.icon_size) * 3
 	status_underlay.alpha = 40
+	prepare_overlay()
 	owner.add_overlay(status_overlay)
 	owner.underlays += status_underlay
 	return ..()

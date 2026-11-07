@@ -243,7 +243,7 @@
 	else
 		return 0
 
-/datum/intent/proc/get_chargedrain()
+/datum/intent/proc/get_chargedrain(held_for = 0)
 	if(chargedrain)
 		return chargedrain
 	else
@@ -467,6 +467,12 @@
 	reach = 2
 	no_early_release = TRUE
 	blade_class = BCLASS_PICK
+
+/datum/intent/pick/ranged/dolabra
+	demolition_mod = 3
+
+/datum/intent/pick/ranged/dolabra/pioneer
+	demolition_mod = 4.5
 
 /datum/intent/shoot //shooting crossbows or other guns, no parrydrain
 	name = "shoot"
@@ -766,3 +772,29 @@
 /*/datum/intent/effect/daze/shield
 	intent_effect = /datum/status_effect/debuff/dazed/shield
 	swingdelay = 3 */
+
+/datum/intent/hand
+	name = "hand"
+	icon_state = "inuse"
+	no_attack = TRUE
+	noaa = TRUE
+
+/datum/intent/hand/clean
+	name = "clean"
+	icon_state = "intouch"
+
+/datum/intent/hand/draw
+	name = "draw"
+	icon_state = "indraw"
+
+/datum/intent/hand/light
+	name = "light"
+	icon_state = "inlight"
+
+/datum/intent/hand/sense
+	name = "sense"
+	icon_state = "insense"
+
+/datum/intent/hand/spark
+	name = "spark"
+	icon_state = "inspark"

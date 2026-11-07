@@ -360,6 +360,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		mob_color = H.voice_color
+		if(H.voicecolor_override)
+			mob_color = H.voicecolor_override
 	var/chatmsg = "<font color = #[mob_color]><b>[src]</b></font> " + sign_verb + "."
 	var/list/ignored_mobs = understanders.Copy()
 	if(length(hidden_ghosts))
@@ -589,7 +591,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(findtext(message, regex("yield|give\\s*up|surrender|stop\\s*resisting","i")))
 		play_overhead_private_rclickemote(heard_message, "yield")
 		for(var/mob/living/carbon/human in heard_message)
-			human.apply_status_effect(/datum/status_effect/debuff/yield_prompt)
+			if(human == src) // Allow compliant people to request you give up as well...
+				continue
+			human.apply_status_effect(/datum/status_effect/debuff/yield_prompt, message_mode)
 
 	//speech bubble
 	var/list/speech_bubble_recipients = list()

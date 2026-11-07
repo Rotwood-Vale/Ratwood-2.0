@@ -259,15 +259,24 @@
 	underlay_state = "bleed"
 	var/bleed_damage = 200
 
+/datum/status_effect/stacking/saw_bleed/prepare_overlay()
+	if(QDELETED(src) || !owner || !status_overlay || !status_underlay)
+		return
+	var/bleed_color = owner.get_blood_color()
+	status_overlay.icon = get_greyscale_blood_icon(overlay_file, "[overlay_state][stacks]")
+	status_overlay.color = bleed_color
+	status_underlay.icon = get_greyscale_blood_icon(underlay_file, "[underlay_state][stacks]")
+	status_underlay.color = bleed_color
+
 /datum/status_effect/stacking/saw_bleed/fadeout_effect()
-	new /obj/effect/temp_visual/bleed(get_turf(owner))
+	new /obj/effect/temp_visual/bleed(get_turf(owner), null, owner.get_blood_color())
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
 	owner.adjustBruteLoss(bleed_damage)
 	var/turf/T = get_turf(owner)
-	new /obj/effect/temp_visual/bleed/explode(T)
+	new /obj/effect/temp_visual/bleed/explode(T, null, owner.get_blood_color())
 	for(var/d in GLOB.alldirs)
-		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d, owner.get_blood_color())
 	playsound(T, "desceration", 100, TRUE, -1)
 
 /datum/status_effect/neck_slice
@@ -980,3 +989,41 @@
 	name = "Knockback Cooldown"
 	desc = "I have been knocked back recently by an attack and cannot be knocked back again"
 	icon_state = "debuff" // Placeholder
+
+/datum/status_effect/debuff/cast_disrupted
+	id = "cast_disrupted"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/cast_disrupted
+	duration = EXPOSED_CAST_LOCKOUT
+	status_type = STATUS_EFFECT_UNIQUE
+
+/datum/status_effect/debuff/cast_disrupted/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+
+/datum/status_effect/debuff/feinted
+	id = "feinted"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/feinted
+	mob_effect_icon = 'icons/mob/mob_effects.dmi'
+	mob_effect_icon_state = "eff_feinted"
+	mob_effect_offset_y = 10
+	mob_effect_layer = MOB_EFFECT_LAYER_FEINTED
+	duration = 30 SECONDS
+
+/datum/status_effect/debuff/feinted/on_creation(mob/living/new_owner, new_dur)
+	if(new_dur)
+		duration = new_dur
+	return ..()
+
+//Unused
+
+/atom/movable/screen/alert/status_effect/debuff/cast_disrupted
+	name = "Casting Disrupted"
+	desc = "My concentration is broken. I cannot gather magicka until I recover."
+	icon = 'icons/mob/screen_alert_combat.dmi'
+	icon_state = "castdisrupted"
+
+/atom/movable/screen/alert/status_effect/debuff/feinted
+	name = "Feinted"
+	desc = "I've been feinted. It won't happen again so soon."
+	icon_state = "feinted"
