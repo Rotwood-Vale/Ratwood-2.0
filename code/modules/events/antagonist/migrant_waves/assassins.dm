@@ -4,7 +4,7 @@
 	wave_type = /datum/migrant_wave/assassin
 	max_occurrences = 2
 
-	weight = 10
+	weight = 0
 
 	earliest_start = 0 SECONDS
 

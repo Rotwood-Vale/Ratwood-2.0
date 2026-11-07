@@ -78,11 +78,13 @@
 	min_chaos = 3
 	villain_events = list(/datum/round_event_control/antagonist/solo/vampires)
 
+/*
 /datum/round_modifier/assassin
 	name = "Assassins"
 	desc = "Ware! Knives in the dark!"
 	cost = 1
 	villain_events = list(/datum/round_event_control/antagonist/solo/assassins)
+*/
 
 /datum/round_modifier/rebel
 	name = "Rebellion"
