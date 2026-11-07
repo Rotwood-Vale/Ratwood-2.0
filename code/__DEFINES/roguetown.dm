@@ -501,6 +501,13 @@ GLOBAL_LIST_EMPTY(round_join_times)
 #define TRIUMPH_CAT_MISC "MISC!"
 #define TRIUMPH_CAT_ACTIVE_DATUMS "ACTIVE"
 
+// Triumph sinks: things players spend triumphs on, tallied per wipe season for the admin Triumphs panel.
+// To track a new sink, add a define, add it to TRIUMPH_SINK_SOURCES, and call SStriumphs.record_triumph_sink() where it's spent.
+#define TRIUMPH_SINK_MASSIVE_PINTLE "Massive pintle"
+#define TRIUMPH_SINK_SOURCES list(\
+	TRIUMPH_SINK_MASSIVE_PINTLE,\
+	)
+
 #define ARMOR_CLASS_NONE 0
 #define ARMOR_CLASS_LIGHT 1
 #define ARMOR_CLASS_MEDIUM 2

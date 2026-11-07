@@ -78,6 +78,10 @@
 		owner.archive_bans()
 		return
 
+	if(href_list["triumph_sinks"])
+		owner.show_triumph_sinks()
+		return
+
 	if(href_list["player_archive_ban"])
 		var/datum/player_archive/archive = get_player_archive(href_list["player_archive_ban"])
 		if(!archive)

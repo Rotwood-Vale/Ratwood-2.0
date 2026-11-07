@@ -272,6 +272,8 @@
 #define TRAIT_SIMPLE_WOUNDS "simple_wounds"
 #define TRAIT_VAMP_DREAMS "vamp_dreams"
 #define TRAIT_LIMPDICK "Limp Dick"
+/// This body paid triumphs for a massive pintle at spawn. Re-applied whenever a Large pintle is inserted.
+#define TRAIT_MASSIVE_PINTLE "massive_pintle"
 #define TRAIT_SEXPASS "sexpass"
 #define TRAIT_STEELHEARTED "Steelhearted" //no bad mood from dismembering or seeing this
 #define TRAIT_IWASREVIVED "iwasrevived" //prevents PQ gain from reviving the same person twice

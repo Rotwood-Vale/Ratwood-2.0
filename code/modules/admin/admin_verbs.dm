@@ -57,6 +57,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 /world/proc/AVerbsAdmin()
 	return list(
 	/client/proc/adjusttriumph,
+	/client/proc/triumphs_panel,
 	/client/proc/end_party,
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/client/proc/toggle_lobby_ooc,

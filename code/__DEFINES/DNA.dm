@@ -166,6 +166,17 @@
 #define MAX_PENIS_SIZE 3
 #define DEFAULT_PENIS_SIZE 2
 
+// Massive pintles: an optional upgrade to a MAX_PENIS_SIZE pintle, bought with triumphs at each lobby spawn.
+#define MASSIVE_PENIS_TRIUMPH_COST 10
+#define MASSIVE_PENIS_PAIN_MULTIPLIER 1.2
+#define MASSIVE_PENIS_DESCRIPTOR_COLOR "#d61a43"
+/// Blood drained per blood tick while erect.
+#define MASSIVE_PENIS_BLOOD_DRAIN 2
+/// The drain stops at MASSIVE_PENIS_BLOOD_FLOOR_BASE + CON * MASSIVE_PENIS_BLOOD_FLOOR_PER_CON.
+/// CON 19 or lower can reach tier one blood loss, 12 or lower tier two, 5 or lower tier three.
+#define MASSIVE_PENIS_BLOOD_FLOOR_BASE 117
+#define MASSIVE_PENIS_BLOOD_FLOOR_PER_CON 18
+
 #define PENIS_TYPE_PLAIN 1
 #define PENIS_TYPE_KNOTTED 2
 #define PENIS_TYPE_EQUINE 3
