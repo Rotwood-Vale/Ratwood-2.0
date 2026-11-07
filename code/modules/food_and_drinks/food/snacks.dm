@@ -384,100 +384,101 @@ All foods are distributed among various categories. Use common sense.
 	if(iscarbon(M))
 		if(!canconsume(M, user))
 			return FALSE
+		try_consume(M, user)
 
-		var/fullness = M.nutrition + 10
-		for(var/datum/reagent/consumable/C in M.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
-			fullness += C.nutriment_factor * C.volume / C.metabolization_rate
+/obj/item/reagent_containers/food/snacks/try_consume(mob/eater, mob/feeder)
+	var/fullness = eater.nutrition + 10
+	for(var/datum/reagent/consumable/C in eater.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
+		fullness += C.nutriment_factor * C.volume / C.metabolization_rate
 
-		if(M == user)								//If you're eating it myself.
-/*			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(user, TRAIT_VORACIOUS))
-				to_chat(M, span_warning("I don't feel like eating any more junk food at the moment!"))
+	if(eater == feeder)								//If you're eating it myself.
+/*			if(junkiness && eater.satiety < -150 && eater.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(feeder, TRAIT_VORACIOUS))
+			to_chat(eater, span_warning("I don't feel like eating any more junk food at the moment!"))
+			return FALSE
+		else if(fullness <= 50)
+			feeder.visible_message(span_notice("[feeder] hungrily [eatverb]s \the [src], gobbling it down!"), span_notice("I hungrily [eatverb] \the [src], gobbling it down!"))
+		else if(fullness > 50 && fullness < 150)
+			feeder.visible_message(span_notice("[feeder] hungrily [eatverb]s \the [src]."), span_notice("I hungrily [eatverb] \the [src]."))
+		else if(fullness > 150 && fullness < 500)
+			feeder.visible_message(span_notice("[feeder] [eatverb]s \the [src]."), span_notice("I [eatverb] \the [src]."))
+		else if(fullness > 500 && fullness < 600)
+			feeder.visible_message(span_notice("[feeder] unwillingly [eatverb]s a bit of \the [src]."), span_notice("I unwillingly [eatverb] a bit of \the [src]."))
+		else if(fullness > (600 * (1 + eater.overeatduration / 2000)))	// The more you eat - the more you can eat
+			feeder.visible_message(span_warning("[feeder] cannot force any more of \the [src] to go down [feeder.p_their()] throat!"), span_warning("I cannot force any more of \the [src] to go down your throat!"))
+			return FALSE
+		if(HAS_TRAIT(eater, TRAIT_VORACIOUS))
+			eater.changeNext_move(CLICK_CD_MELEE * 0.5)*/
+		switch(eater.nutrition)
+			if(NUTRITION_LEVEL_FAT to INFINITY)
+				feeder.visible_message(span_notice("[feeder] forces [eater.p_them()]self to eat \the [src]."), span_notice("I force myself to eat \the [src]."))
+			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_FAT)
+				feeder.visible_message(span_notice("[feeder] [eatverb]s \the [src]."), span_notice("I [eatverb] \the [src]."))
+			if(0 to NUTRITION_LEVEL_STARVING)
+				feeder.visible_message(span_notice("[feeder] hungrily [eatverb]s \the [src], gobbling it down!"), span_notice("I hungrily [eatverb] \the [src], gobbling it down!"))
+				eater.changeNext_move(CLICK_CD_MELEE * 0.5)
+/*			if(eater.energy <= 50)
+			feeder.visible_message(span_notice("[feeder] hungrily [eatverb]s \the [src], gobbling it down!"), span_notice("I hungrily [eatverb] \the [src], gobbling it down!"))
+		else if(eater.energy > 50 && eater.energy < 500)
+			feeder.visible_message(span_notice("[feeder] hungrily [eatverb]s \the [src]."), span_notice("I hungrily [eatverb] \the [src]."))
+		else if(eater.energy > 500 && eater.energy < 1000)
+			feeder.visible_message(span_notice("[feeder] [eatverb]s \the [src]."), span_notice("I [eatverb] \the [src]."))
+		if(HAS_TRAIT(eater, TRAIT_VORACIOUS))
+		eater.changeNext_move(CLICK_CD_MELEE * 0.5) nom nom nom*/
+	else
+		if(!isbrain(eater))		//If you're feeding it to someone else.
+//				if(fullness <= (600 * (1 + eater.overeatduration / 1000)))
+			if(eater.nutrition in NUTRITION_LEVEL_FAT to INFINITY)
+				eater.visible_message(span_warning("[feeder] cannot force any more of [src] down [eater]'s throat!"), \
+									span_warning("[feeder] cannot force any more of [src] down your throat!"))
 				return FALSE
-			else if(fullness <= 50)
-				user.visible_message(span_notice("[user] hungrily [eatverb]s \the [src], gobbling it down!"), span_notice("I hungrily [eatverb] \the [src], gobbling it down!"))
-			else if(fullness > 50 && fullness < 150)
-				user.visible_message(span_notice("[user] hungrily [eatverb]s \the [src]."), span_notice("I hungrily [eatverb] \the [src]."))
-			else if(fullness > 150 && fullness < 500)
-				user.visible_message(span_notice("[user] [eatverb]s \the [src]."), span_notice("I [eatverb] \the [src]."))
-			else if(fullness > 500 && fullness < 600)
-				user.visible_message(span_notice("[user] unwillingly [eatverb]s a bit of \the [src]."), span_notice("I unwillingly [eatverb] a bit of \the [src]."))
-			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
-				user.visible_message(span_warning("[user] cannot force any more of \the [src] to go down [user.p_their()] throat!"), span_warning("I cannot force any more of \the [src] to go down your throat!"))
-				return FALSE
-			if(HAS_TRAIT(M, TRAIT_VORACIOUS))
-				M.changeNext_move(CLICK_CD_MELEE * 0.5)*/
-			switch(M.nutrition)
-				if(NUTRITION_LEVEL_FAT to INFINITY)
-					user.visible_message(span_notice("[user] forces [M.p_them()]self to eat \the [src]."), span_notice("I force myself to eat \the [src]."))
-				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_FAT)
-					user.visible_message(span_notice("[user] [eatverb]s \the [src]."), span_notice("I [eatverb] \the [src]."))
-				if(0 to NUTRITION_LEVEL_STARVING)
-					user.visible_message(span_notice("[user] hungrily [eatverb]s \the [src], gobbling it down!"), span_notice("I hungrily [eatverb] \the [src], gobbling it down!"))
-					M.changeNext_move(CLICK_CD_MELEE * 0.5)
-/*			if(M.energy <= 50)
-				user.visible_message(span_notice("[user] hungrily [eatverb]s \the [src], gobbling it down!"), span_notice("I hungrily [eatverb] \the [src], gobbling it down!"))
-			else if(M.energy > 50 && M.energy < 500)
-				user.visible_message(span_notice("[user] hungrily [eatverb]s \the [src]."), span_notice("I hungrily [eatverb] \the [src]."))
-			else if(M.energy > 500 && M.energy < 1000)
-				user.visible_message(span_notice("[user] [eatverb]s \the [src]."), span_notice("I [eatverb] \the [src]."))
-			if(HAS_TRAIT(M, TRAIT_VORACIOUS))
-			M.changeNext_move(CLICK_CD_MELEE * 0.5) nom nom nom*/
-		else
-			if(!isbrain(M))		//If you're feeding it to someone else.
-//				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
-				if(M.nutrition in NUTRITION_LEVEL_FAT to INFINITY)
-					M.visible_message(span_warning("[user] cannot force any more of [src] down [M]'s throat!"), \
-										span_warning("[user] cannot force any more of [src] down your throat!"))
-					return FALSE
-				else
-					M.visible_message(span_danger("[user] tries to feed [M] [src]."), \
-										span_danger("[user] tries to feed me [src]."))
-				if(iscarbon(M))
-					var/mob/living/carbon/C = M
-					var/obj/item/bodypart/CH = C.get_bodypart(BODY_ZONE_HEAD)
-					if(C.cmode)
-						if(CH && !CH.grabbedby)
-							to_chat(user, span_info("[C.p_they(TRUE)] steals [C.p_their()] face from it."))
-							return FALSE
-				if(!do_mob(user, M, double_progress = TRUE, can_move = FALSE))
-					return
-				log_combat(user, M, "fed", reagents.log_list())
-				if(istype(src, /obj/item/reagent_containers/food/snacks/grown/berries/rogue) || istype(src, /obj/item/reagent_containers/food/snacks/grown/fruit))
-					M.add_stress(/datum/stressevent/hand_fed_fruit)
-//				M.visible_message(span_danger("[user] forces [M] to eat [src]!"), span_danger("[user] forces you to eat [src]!"))
 			else
-				to_chat(user, span_warning("[M] doesn't seem to have a mouth!"))
+				eater.visible_message(span_danger("[feeder] tries to feed [eater] [src]."), \
+									span_danger("[feeder] tries to feed me [src]."))
+			if(iscarbon(eater))
+				var/mob/living/carbon/C = eater
+				var/obj/item/bodypart/CH = C.get_bodypart(BODY_ZONE_HEAD)
+				if(C.cmode)
+					if(CH && !CH.grabbedby)
+						to_chat(feeder, span_info("[C.p_they(TRUE)] steals [C.p_their()] face from it."))
+						return FALSE
+			if(!do_mob(feeder, eater, double_progress = TRUE, can_move = FALSE))
 				return
+			log_combat(feeder, eater, "fed", reagents.log_list())
+			if(istype(src, /obj/item/reagent_containers/food/snacks/grown/berries/rogue) || istype(src, /obj/item/reagent_containers/food/snacks/grown/fruit))
+				eater.add_stress(/datum/stressevent/hand_fed_fruit)
+//				eater.visible_message(span_danger("[feeder] forces [eater] to eat [src]!"), span_danger("[feeder] forces you to eat [src]!"))
+		else
+			to_chat(feeder, span_warning("[eater] doesn't seem to have a mouth!"))
+			return
 
-		if(reagents)								//Handle ingestion of the reagent.
-			if(M.satiety > -200)
-				M.satiety -= junkiness
-			playsound(M.loc,'sound/misc/eat.ogg', rand(30,60), TRUE)
-			if(reagents.total_volume)
-				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
-				var/fraction = min(bitesize / reagents.total_volume, 1)
-				var/amt2take = reagents.total_volume / max(bitesize - bitecount, 1)
-				if((bitecount >= bitesize) || (bitesize == 1))
-					amt2take = reagents.total_volume
-				reagents.trans_to(M, amt2take, transfered_by = user, method = INGEST)
-				bitecount++
-				On_Consume(M)
-				checkLiked(fraction, M)
-				if(bitecount >= bitesize)
-					qdel(src)
-				else if(user.client?.prefs.autoconsume)
-					if(M == user && do_after(user, CLICK_CD_MELEE))
-						INVOKE_ASYNC(src, PROC_REF(attack), M, user, def_zone)
-						user.changeNext_move(CLICK_CD_MELEE)
-					else if(M != user)
-						INVOKE_ASYNC(src, PROC_REF(attack), M, user, def_zone)
-						user.changeNext_move(CLICK_CD_MELEE)
-				return TRUE
-		playsound(M.loc,'sound/misc/eat.ogg', rand(30,60), TRUE)
-		qdel(src)
-		return FALSE
+	if(reagents)								//Handle ingestion of the reagent.
+		if(eater.satiety > -200)
+			eater.satiety -= junkiness
+		playsound(eater.loc,'sound/misc/eat.ogg', rand(30,60), TRUE)
+		if(reagents.total_volume)
+			SEND_SIGNAL(src, COMSIG_FOOD_EATEN, eater, feeder)
+			var/fraction = min(bitesize / reagents.total_volume, 1)
+			var/amt2take = reagents.total_volume / max(bitesize - bitecount, 1)
+			if((bitecount >= bitesize) || (bitesize == 1))
+				amt2take = reagents.total_volume
+			reagents.trans_to(eater, amt2take, transfered_by = feeder, method = INGEST)
+			bitecount++
+			On_Consume(eater)
+			checkLiked(fraction, eater)
+			if(bitecount >= bitesize)
+				qdel(src)
+			else if(feeder.client?.prefs.autoconsume)
+				if(eater == feeder && do_after(feeder, CLICK_CD_MELEE))
+					INVOKE_ASYNC(src, PROC_REF(attack), eater, feeder, feeder.zone_selected)
+					feeder.changeNext_move(CLICK_CD_MELEE)
+				else if(eater != feeder)
+					INVOKE_ASYNC(src, PROC_REF(attack), eater, feeder, feeder.zone_selected)
+					feeder.changeNext_move(CLICK_CD_MELEE)
+			return TRUE
+	playsound(eater.loc,'sound/misc/eat.ogg', rand(30,60), TRUE)
+	qdel(src)
+	return FALSE
 
-	return 0
 /obj/item/reagent_containers/food/snacks/proc/get_nutrition()
 	var/nutriment_count = 0
 	for(var/reagent in list_reagents)
