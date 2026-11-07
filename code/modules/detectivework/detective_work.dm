@@ -25,12 +25,6 @@
 	if(D)
 		. = D.fibers
 
-/atom/proc/get_stored_blood_color()
-	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
-	if(D?.blood_color)
-		return D.blood_color
-	return BLOOD_COLOR_DEFAULT
-
 /atom/proc/add_fingerprint_list(list/fingerprints)		//ASSOC LIST FINGERPRINT = FINGERPRINT
 	if(QDELETED(src))
 		return
@@ -56,11 +50,11 @@
 		var/obj/item/clothing/gloves/G = M.gloves
 		old = length(G.return_blood_DNA())
 		if(G.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
-			if(add_blood_DNA(G.return_blood_DNA(), G.get_stored_blood_color()) && length(G.return_blood_DNA()) > old) //only reduces the bloodiness of our gloves if the item wasn't already bloody
+			if(add_blood_DNA(G.return_blood_DNA()) && length(G.return_blood_DNA()) > old) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				G.transfer_blood--
 	else if(M.bloody_hands > 1)
 		old = length(M.return_blood_DNA())
-		if(add_blood_DNA(M.return_blood_DNA(), M.get_stored_blood_color()) && length(M.return_blood_DNA()) > old)
+		if(add_blood_DNA(M.return_blood_DNA()) && length(M.return_blood_DNA()) > old)
 			M.bloody_hands--
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_fibers(M)
@@ -75,52 +69,112 @@
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_hiddenprint(M)
 
-/atom/proc/add_blood_DNA(list/dna, blood_color)						//ASSOC LIST DNA = BLOODTYPE
+/// Notes a player opening, locking, picking or breaking this for admins' View Forensics. Mobs without a player are skipped.
+/// Routine is everyday use (opening, closing, keyed locking, picking up, dropping), kept in its own capped list.
+/// only_if_tracked skips atoms no player has handled yet, so mass drops of untouched gear make no component.
+/// Evidence also goes to the game log and the player's own log, so it outlives the atom. Routine use is too frequent to log,
+/// and so are repeats: an action that folds into the last entry, such as the twentieth hit on a door, is not logged again.
+/atom/proc/add_forensic_action(mob/user, action, routine = FALSE, only_if_tracked = FALSE)
+	if(!user?.ckey || QDELETED(src))
+		return
+	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
+	if(!D)
+		if(only_if_tracked)
+			return
+		D = AddComponent(/datum/component/forensics)
+	if(D.add_action(user, action, routine) && !routine)
+		user.log_message("forensics on [src] ([type]): [action]", LOG_GAME)
+
+/// add_forensic_action() for something no player did, such as a fire, an explosion or a mob without a player. Always evidence.
+/atom/proc/add_unattributed_forensic_action(action)
+	if(QDELETED(src))
+		return
+	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
+	if(D.add_action(null, action))
+		log_game("forensics on [src] ([type]) at [AREACOORD(src)]: [action]")
+
+/// Notes poison going into or out of food and drink, and drinks spiked on the rim, for admins' View Forensics.
+/// transfer_log is what trans_to() moved, reagent type = amount. Only spiking prepends.
+/datum/reagents/proc/record_forensic_transfer(atom/target_atom, list/transfer_log, mob/transfered_by, method, prepend)
+	if(!transfered_by.ckey)
+		return
+	var/list/reagent_names = list()
+	var/list/poison_names = list()
+	for(var/reagent_type in transfer_log)
+		// trans_to() logs every reagent even when nothing moved, such as into a full container
+		if(!transfer_log[reagent_type])
+			continue
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[reagent_type]
+		if(!reagent)
+			continue
+		reagent_names |= reagent.name
+		if(reagent.is_poison())
+			poison_names |= reagent.name
+	var/poisons = english_list(poison_names)
+	var/source = my_atom ? format_text("[my_atom]") : "something"
+
+	if(isobj(target_atom))
+		if(prepend)
+			target_atom.add_forensic_action(transfered_by, "spiked the rim with [english_list(reagent_names)] from [source][length(poison_names) ? ", poisoning it with [poisons]" : ""]")
+		else if(length(poison_names))
+			target_atom.add_forensic_action(transfered_by, "added poison ([poisons]) from [source]")
+		return
+
+	// Consumption is noted on the food or drink, as the victim's mob has no View Forensics.
+	if(method != INGEST || !length(poison_names) || !isobj(my_atom) || !ismob(target_atom))
+		return
+	var/mob/victim = target_atom
+	if(victim == transfered_by)
+		my_atom.add_forensic_action(transfered_by, "ate or drank poison ([poisons]) from it")
+	else
+		my_atom.add_forensic_action(transfered_by, "fed poison ([poisons]) from it to [victim.real_name] ([victim.ckey || "no player"])")
+
+/atom/proc/add_blood_DNA(list/dna)						//ASSOC LIST DNA = BLOODTYPE
 	return FALSE
 
-/obj/add_blood_DNA(list/dna, blood_color)
+/obj/add_blood_DNA(list/dna)
 	. = ..()
 	if(QDELETED(src))
 		return
-	if(length(dna) || blood_color)
-		. = AddComponent(/datum/component/forensics, null, null, dna, null, blood_color)
+	if(length(dna))
+		. = AddComponent(/datum/component/forensics, null, null, dna)
 
-/obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, blood_color)
+/obj/item/clothing/gloves/add_blood_DNA(list/blood_dna)
 	. = ..()
 	transfer_blood = rand(2, 4)
 
-/turf/add_blood_DNA(list/blood_dna, blood_color)
+/turf/add_blood_DNA(list/blood_dna)
 	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
 	if(!B)
-		B = new /obj/effect/decal/cleanable/blood/splatter(src, blood_color)
-	B.add_blood_DNA(blood_dna, blood_color) //give blood info to the blood decal.
+		B = new /obj/effect/decal/cleanable/blood/splatter(src)
+	B.add_blood_DNA(blood_dna) //give blood info to the blood decal.
 	return TRUE //we bloodied the floor
 
-/mob/living/carbon/human/add_blood_DNA(list/blood_dna, blood_color)
+/mob/living/carbon/human/add_blood_DNA(list/blood_dna)
 	if(dna?.species?.id == "gnoll")
 		if(length(blood_dna))
-			AddComponent(/datum/component/forensics, null, null, blood_dna, null, blood_color)
+			AddComponent(/datum/component/forensics, null, null, blood_dna)
 		bloody_hands = 0
 		update_inv_gloves()
 		return TRUE
 
 	if(cloak)
-		cloak.add_blood_DNA(blood_dna, blood_color)
+		cloak.add_blood_DNA(blood_dna)
 		update_inv_cloak()
 	else if(wear_armor)
-		wear_armor.add_blood_DNA(blood_dna, blood_color)
+		wear_armor.add_blood_DNA(blood_dna)
 		update_inv_armor()
 	else if(wear_shirt)
-		wear_shirt.add_blood_DNA(blood_dna, blood_color)
+		wear_shirt.add_blood_DNA(blood_dna)
 		update_inv_shirt()
 	else if(wear_pants)
-		wear_pants.add_blood_DNA(blood_dna, blood_color)
+		wear_pants.add_blood_DNA(blood_dna)
 		update_inv_pants()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
-		G.add_blood_DNA(blood_dna, blood_color)
+		G.add_blood_DNA(blood_dna)
 	else if(length(blood_dna))
-		AddComponent(/datum/component/forensics, null, null, blood_dna, null, blood_color)
+		AddComponent(/datum/component/forensics, null, null, blood_dna)
 		bloody_hands = rand(2, 4)
 	update_inv_gloves()	//handles bloody hands overlays and updating
 	return TRUE

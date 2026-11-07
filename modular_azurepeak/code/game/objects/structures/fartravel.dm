@@ -43,7 +43,7 @@
 		mob_job = SSjob.GetJob(departing_mob.mind.assigned_role)
 		if(mob_job)
 			mob_job.current_positions = max(0, mob_job.current_positions - 1)
-			var/target_job = SSrole_class_handler.get_advclass_by_name(user.advjob)
+			var/target_job = SSrole_class_handler.get_advclass_by_name(departing_mob.advjob)
 			if(target_job)
 				SSrole_class_handler.adjust_class_amount(target_job, -1)
 	if(!length(departing_mob.contents))
@@ -74,22 +74,7 @@
 		departing_mob.visible_message("<span class='notice'>[user] sends the body of [departing_mob] away. They're someone else's problem now.</span>")
 	else
 		departing_mob.visible_message("<span class='notice'>[departing_mob == user ? "Out of their own volition, " : "Ushered by [user], "][departing_mob] leaves [SSmapping.map_adjustment.realm_name].</span>")
-		// If departure is a lord, remove them from found_lords to prevent false omen triggers
-	if(departing_mob.mind && departing_mob.ckey)
-		if(departing_mob.mind.assigned_role == "Mercenary")
-			var/obj/structure/roguemachine/talkstatue/mercenary/statue = SSroguemachine.mercenary_statue
-			if(!statue && length(SSroguemachine.mercenary_statues))
-				statue = SSroguemachine.mercenary_statues[1]
-			if(statue)
-				statue.mercenary_status -= departing_mob.real_name
-
-		if(departing_mob.mind.assigned_role == "Grand Duke" || departing_mob.mind.assigned_role == "Grand Duchess")
-			if(GLOB.found_lords[departing_mob.ckey])
-				GLOB.found_lords -= departing_mob.ckey
-	if(departing_mob.has_embedded_objects())
-		var/list/embeds = departing_mob.get_embedded_objects()
-		for(var/thing in embeds)
-			QDEL_NULL(thing)
+	departing_mob.far_travel_cleanup(departing_mob.mind, departing_mob.ckey)
 	if(departing_mob.client)
 		// Move players to lobby/new_player so they can choose if they want to spectate. For potential latency reduction
 		departing_mob.returntolobby()
