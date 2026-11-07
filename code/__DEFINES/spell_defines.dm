@@ -99,6 +99,7 @@
 
 // Spellblade specific cost
 #define SPELLCOST_SB_POKE 12 // Roughly 3 attacks worth
+#define SPELLCOST_SB_RANGED 6 // should be a bit smaller.
 #define SPELLCOST_SB_MOBILITY 12 // Dashes / Teleports / Anchor
 #define SPELLCOST_SB_ULT 50 // Their ult
 
