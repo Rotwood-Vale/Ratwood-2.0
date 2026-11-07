@@ -62,6 +62,7 @@
 //Puncture (Stab -- not Pick) Omniwounds
 //Vaguely: Not nearly as painful, higher bleed cap, easier to sew / heal.
 
+#define PUNC_UPG_BLEEDRATE 0.1
 #define PUNC_UPG_WHPRATE 0.5
 #define PUNC_UPG_SEWRATE 0.65
 #define PUNC_UPG_PAINRATE 0.1
@@ -71,7 +72,7 @@
 /datum/wound/dynamic/puncture/upgrade(dam, armor, exposed, pen_info)
 	whp += (dam * PUNC_UPG_WHPRATE)
 	if(!armor || exposed)
-		set_bleed_rate(bleed_rate + PUNC_UPG_CLAMP_RAW)
+		set_bleed_rate(bleed_rate + clamp(dam * PUNC_UPG_BLEEDRATE, 0.1, PUNC_UPG_CLAMP_RAW))
 	else
 		switch(pen_info)
 			if(1 to 2)
@@ -88,6 +89,7 @@
 	update_name()
 	..()
 
+#undef PUNC_UPG_BLEEDRATE
 #undef PUNC_UPG_WHPRATE
 #undef PUNC_UPG_SEWRATE
 #undef PUNC_UPG_PAINRATE
