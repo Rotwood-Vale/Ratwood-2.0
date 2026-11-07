@@ -487,7 +487,7 @@
 		/obj/item/natural/silk = 1,
 		/obj/item/ash = 1)
 	skillcraft = /datum/skill/misc/medicine
-	craftdiff = 2
+	craftdiff = SKILL_LEVEL_NOVICE
 
 /datum/crafting_recipe/roguetown/ironore
 	name = "iron ore"

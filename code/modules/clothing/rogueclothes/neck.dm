@@ -333,6 +333,18 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "ARMOR")
 
+/obj/item/clothing/neck/roguetown/gorget/steel/graggar
+	name = "vicious gorget"
+	desc = "Curled plate, cradling the neck. Once, they were chains - now, they've allowed you to break free."
+	icon_state = "graggargorget"
+	item_state = "graggargorget"
+	max_integrity = ARMOR_INT_SIDE_ANTAG
+	armor = ARMOR_PLATE_BSTEEL	
+
+/obj/item/clothing/neck/roguetown/gorget/steel/graggar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "ARMOR")
+
 /obj/item/clothing/neck/roguetown/bevor/iron
 	name = "iron bevor"
 	desc = "A series of iron plates designed to protect the neck."
@@ -374,6 +386,19 @@
 	smeltresult = /obj/item/ingot/steel
 	max_integrity = ARMOR_INT_SIDE_STEEL + 100
 	icon_state = "sgorget"
+
+/obj/item/clothing/neck/roguetown/gorget/aventail
+	name = "aventail"
+	desc = "A thick garment of steel maille and padding, traditionally attached to bascinets. It's burdensome on the shoulders of those who aren't properly \
+	trained to wear knightly garments."
+	icon_state = "aventailbase"
+	body_parts_covered = NECK|MOUTH
+	slot_flags = ITEM_SLOT_NECK
+	max_integrity = ARMOR_INT_SIDE_STEEL + 50 //In essence, a chainmail gorget.
+	armor_class = ARMOR_CLASS_MEDIUM
+	armor = ARMOR_MAILLE
+	blocksound = CHAINHIT
+	smeltresult = /obj/item/ingot/steel
 
 /obj/item/clothing/neck/roguetown/gorget/steel/ancient
 	name = "ancient gorget"
@@ -696,6 +721,14 @@
 	. = ..()
 	if(isliving(user))
 		REMOVE_TRAIT(user, TRAIT_WORN_SILVER_PSICROSS, REF(src))
+
+/obj/item/clothing/neck/roguetown/psicross/silver/sojourner
+	name = "gilded silver psycross"
+	desc = "A silver psycross beneath a fine layer of gold, honoring Naledian tradition without forsaking the Inquisition's silver. 'Purity afloat, for paradise awaits!'"
+	icon_state = "psycross_g"
+	item_state = "psycross_g"
+	is_gold = TRUE
+	sellprice = 100
 
 /obj/item/clothing/neck/roguetown/psicross/g
 	is_gold = TRUE

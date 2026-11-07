@@ -686,6 +686,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
 
+/datum/species/proc/intercept_death(mob/living/carbon/human/H, gibbed)
+	return FALSE
+
 /datum/species/proc/auto_equip(mob/living/carbon/human/H)
 	// handles the equipping of species-specific gear
 	return
@@ -1377,10 +1380,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			nodmg = TRUE
 			target.next_attack_msg += VISMSG_ARMOR_BLOCKED
 		else
-			affecting.bodypart_attacked_by(user.used_intent.blade_class, damage, user, selzone, crit_message = TRUE)
+			var/obj/item/clothing/gloves/roguetown/worn_gloves = user.get_item_by_slot(SLOT_GLOVES)
+			var/obj/item/unarmed_weapon
+			if(istype(worn_gloves) && worn_gloves.unarmed_weapon_effects)
+				unarmed_weapon = worn_gloves
+
+			affecting.bodypart_attacked_by(user.used_intent.blade_class, damage, user, selzone, crit_message = TRUE, weapon = unarmed_weapon)
 			SEND_SIGNAL(target, COMSIG_ATOM_ATTACK_HAND, user)
 			if(affecting.body_zone == BODY_ZONE_HEAD)
 				SEND_SIGNAL(user, COMSIG_HEAD_PUNCHED, target)
+			if(istype(worn_gloves))
+				worn_gloves.apply_unarmed_weapon_effects(user, affecting, user.used_intent, target, selzone)
 		log_combat(user, target, "punched", null, "(AIMED: [uppertext(parse_zone(user.zone_selected))])")
 		if(ishuman(user))
 			user.resolve_combataware(target, "[bodyzone2readablezone(selzone)]...", "[bodyzone2readablezone(user.zone_selected)]...")
@@ -1873,7 +1883,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(!affecting)
 		return
-	
+
 	var/datum/status_effect/buff/clash/limbguard/LG = H.has_status_effect(/datum/status_effect/buff/clash/limbguard)
 	if(LG)
 		if(LG.protected_zone == selzone && LG.is_active)	// We "missed" into limbguard's protected zone.
@@ -1937,13 +1947,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if(ishuman(user) && user != H)
 		var/aim_text = "[bodyzone2readablezone(user.zone_selected)]..."
-		if(HAS_TRAIT(user, TRAIT_DECEIVING_MEEKNESS))
+		if(HAS_TRAIT(user, TRAIT_GUARD_RAISED))
 			aim_text = prob(10) ? "<i>I can't tell...</i>" : null
 		user.resolve_combataware(H, "[bodyzone2readablezone(selzone)]...", aim_text)
 
 	if(H.client?.prefs.floating_text_toggles & HITZONE_TEXT)
-		H.balloon_alert(H, "[bodyzone2readablezone(selzone)]...") 
-		
+		H.balloon_alert(H, "[bodyzone2readablezone(selzone)]...")
+
 	var/pen_info_check = get_pen_info(H, user, H.get_best_worn_armor(def_zone, int.item_d_type), def_zone, int.item_d_type, int.penfactor, I)
 	var/armor_block = H.run_armor_check(selzone, I.d_type, "", "",pen, damage = Iforce, blade_dulling=bladec, intdamfactor = used_intfactor, used_weapon = I, pen_info = pen_info_check)
 
@@ -1973,7 +1983,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(!nodmg)
 			post_reduction_dmg = (post_weakness_dmg - armor_block)
 			var/has_vuln_or_exposed = (H.has_status_effect(/datum/status_effect/debuff/exposed) || H.has_status_effect(/datum/status_effect/debuff/vulnerable))
-			var/datum/wound/crit_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, post_reduction_dmg, user, selzone, crit_message = TRUE, weapon = I)
+			var/datum/wound/crit_wound = affecting.bodypart_attacked_by(user.used_intent.blade_class, post_reduction_dmg, user, selzone, crit_message = TRUE, weapon = I, pen_info = pen_info_check)
 			if(should_embed_weapon(crit_wound, I))
 				var/can_impale = TRUE
 				if(!affecting)

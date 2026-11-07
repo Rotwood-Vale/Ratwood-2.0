@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(towner_posting_descriptors, list(
 		"postable_advclasses" = list(
 			/datum/advclass/blacksmith,
 			/datum/advclass/guildsman/blacksmith,
-			/datum/advclass/guildsman/artificer,
+			/datum/advclass/guildsman/engineer,
 			/datum/advclass/guildmaster,
 		),
 	),
