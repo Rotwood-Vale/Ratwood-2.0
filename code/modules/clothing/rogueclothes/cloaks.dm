@@ -2811,7 +2811,7 @@
 	detail_tag = "_detail"
 	detail_color = CLOTHING_YARROW
 
-/obj/item/clothing/cloak/desert/Initialize()
+/obj/item/clothing/cloak/desert/Initialize(mapload)
 	. = ..()
 	update_icon()
 
@@ -2923,7 +2923,7 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 	detail_tag = "_detail"
 
-/obj/item/clothing/head/hooded/desert_hood/Initialize()
+/obj/item/clothing/head/hooded/desert_hood/Initialize(mapload)
 	. = ..()
 	update_icon()
 

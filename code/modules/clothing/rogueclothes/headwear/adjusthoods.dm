@@ -389,7 +389,7 @@
 	salvage_result = /obj/item/natural/cloth
 	salvage_amount = 1
 
-/obj/item/clothing/head/roguetown/roguehood/bishop/Initialize()
+/obj/item/clothing/head/roguetown/roguehood/bishop/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CHOSEN, "VISAGE")
 

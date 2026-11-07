@@ -1114,7 +1114,7 @@
 	anvilrepair = /datum/skill/craft/ceramics
 	smeltresult = null
 
-/obj/item/clothing/mask/rogue/facemask/xylixmask/Initialize()
+/obj/item/clothing/mask/rogue/facemask/xylixmask/Initialize(mapload)
 	. = ..()
 	update_icon()
 
