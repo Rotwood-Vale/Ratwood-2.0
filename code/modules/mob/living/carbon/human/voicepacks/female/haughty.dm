@@ -21,7 +21,7 @@
 			used = list('sound/vo/female/haughty/paincrit (1).ogg', 'sound/vo/female/haughty/paincrit (2).ogg', 'sound/vo/female/haughty/paincrit (3).ogg')
 		if("sexmoanlight")
 			used = list('sound/vo/female/haughty/sexL (1).ogg', 'sound/vo/female/haughty/sexL (2).ogg', 'sound/vo/female/haughty/sexL (3).ogg', 'sound/vo/female/haughty/sexL (4).ogg', 'sound/vo/female/haughty/sexL (5).ogg', 'sound/vo/female/haughty/sexL (6).ogg')
-		if("sexmoanhvy")
+		if("sexmoanmed", "sexmoanhvy")
 			used = list('sound/vo/female/haughty/sexH (1).ogg', 'sound/vo/female/haughty/sexH (2).ogg', 'sound/vo/female/haughty/sexH (3).ogg', 'sound/vo/female/haughty/sexH (4).ogg', 'sound/vo/female/haughty/sexH (5).ogg', 'sound/vo/female/haughty/sexH (6).ogg', 'sound/vo/female/haughty/sexH (7).ogg', 'sound/vo/female/haughty/sexH (8).ogg',)
 
 	if(!used)

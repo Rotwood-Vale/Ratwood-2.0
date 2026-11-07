@@ -819,7 +819,10 @@
 		if(user.has_flaw(/datum/charflaw/addiction/baothamarked))
 			user.sate_addiction(/datum/charflaw/addiction/baothamarked)
 	user.add_stress(/datum/stressevent/cumok)
-	user.emote("sexmoanhvy", forced = TRUE)
+	if(user.is_moan_gagged())
+		user.emote("sexmoangag_org", forced = TRUE)
+	else
+		user.emote("sexmoanhvy", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
 	try_xylix_confetti_climax()
 	last_ejaculation_time = world.time
@@ -1066,27 +1069,38 @@
 		return
 	if(prob(50))
 		return
-	var/chosen_emote
-	switch(arousal_amt)
-		if(0 to 5)
-			chosen_emote = "sexmoanlight"
-		if(5 to INFINITY)
-			chosen_emote = "sexmoanhvy"
 
-	if(pain_amt >= PAIN_MILD_EFFECT)
-		if(giving)
-			if(prob(30))
-				chosen_emote = "groan"
-		else
-			if(prob(40))
-				chosen_emote = "painmoan"
-	if(pain_amt >= PAIN_MED_EFFECT)
-		if(giving)
-			if(prob(50))
-				chosen_emote = "groan"
-		else
-			if(prob(60))
-				chosen_emote = "painmoan"
+	var/has_baotha_patron = user.patron && istype(user.patron, /datum/patron/inhumen/baotha)
+	var/has_masochist = user.has_flaw(/datum/charflaw/addiction/masochist)
+	var/marked_by_baotha = user.has_flaw(/datum/charflaw/marked_by_baotha)
+	var/likes_pain = has_baotha_patron || has_masochist || marked_by_baotha
+
+	var/chosen_emote = get_moan_emote()
+
+	if(likes_pain)
+		// Pain only spurs them on: giving moans skip the light tier. Gagged moans stay gagged.
+		if(giving && pain_amt >= PAIN_MILD_EFFECT && chosen_emote != "sexmoangag")
+			chosen_emote = prob(pain_amt >= PAIN_MED_EFFECT ? 20 : 15) ? "sexmoanhvy" : "sexmoanmed"
+	else
+		if(pain_amt >= PAIN_MILD_EFFECT)
+			if(giving)
+				if(prob(30))
+					chosen_emote = "groan"
+			else
+				if(prob(40))
+					chosen_emote = "painmoan"
+
+		if(pain_amt >= PAIN_MED_EFFECT)
+			if(giving)
+				if(prob(50))
+					chosen_emote = "groan"
+			else
+				if(prob(60))
+					// Because males have atrocious whimper noise
+					if(user.gender == FEMALE && prob(50))
+						chosen_emote = "whimper"
+					else
+						chosen_emote = "groan"
 
 	last_moan = world.time
 	user.emote(chosen_emote, forced = TRUE)
