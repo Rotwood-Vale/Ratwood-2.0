@@ -45,7 +45,6 @@
 		TRAIT_NOPAIN,
 		TRAIT_NOPAINSTUN,
 		TRAIT_NOBREATH,
-		TRAIT_NOBREATH,
 		TRAIT_TOXIMMUNE,
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_NOSLEEP,
@@ -310,6 +309,8 @@
 	to_chat(zombie, span_narsiesmall("Hungry... so hungry... I CRAVE FLESH!"))
 	zombie.cmode_music = 'sound/music/combat_weird.ogg'
 
+	// Let's bring back the old strength
+	zombie.STASTR = rand(16,18)
 
 	// This is the original first commit values for it, aka 5-7
 	zombie.STASPD = rand(5,7)
