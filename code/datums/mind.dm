@@ -133,6 +133,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		/datum/ritual/transmutation/criminalstool, /datum/ritual/transmutation/invademind,
 		/datum/ritual/transmutation/summonoutfit, /datum/ritual/transmutation/raiseshrine,
 		/datum/ritual/servantry/guidance,
+		/datum/ritual/servantry/sleepcurse, /datum/ritual/transmutation/silencerleech, /datum/ritual/transmutation/propaganda,
 		)
 	var/zizo_points = 0
 

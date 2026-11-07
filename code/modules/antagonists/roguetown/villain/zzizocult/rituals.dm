@@ -497,7 +497,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		part.drop_limb()
 
 /datum/ritual/servantry/sleepcurse
-	lesser = TRUE
 	name = "Curse of Sleep"
 	desc = "Curse your target to fall asleep after twelve seconds. They are warned. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
@@ -773,7 +772,6 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 		V.add_stress(/datum/stressevent/leechcult)
 
 /datum/ritual/transmutation/silencerleech
-	lesser = TRUE
 	name = "Silencing Leech"
 	desc = "Transmute a leech to silence the voice of whoever you attach it to."
 	center_requirement = /obj/item/natural/worms/leech

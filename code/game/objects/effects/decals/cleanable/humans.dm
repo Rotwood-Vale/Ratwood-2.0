@@ -44,6 +44,14 @@
 	blood_timer = addtimer(CALLBACK(src, PROC_REF(become_dry)), rand(5 MINUTES,8 MINUTES), TIMER_STOPPABLE)
 
 
+/obj/effect/decal/cleanable/blood/attack_hand(mob/living/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		to_chat(H, "<span class='notice'>I get my hands bloody.</span>")
+		H.bloody_hands++
+		H.update_inv_gloves()
+
 /obj/effect/decal/cleanable/blood/proc/become_dry()
 	if(QDELETED(src))
 		return
