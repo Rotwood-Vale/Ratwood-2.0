@@ -24,6 +24,14 @@ GLOBAL_LIST_INIT(named_breast_sizes, list(
 	"Obscene" = 9
 ))
 
+GLOBAL_LIST_INIT(named_butt_sizes, list(
+	"Flat" = 0,
+	"Small" = 1,
+	"Medium" = 2,
+	"Large" = 3,
+	"Extra-large" = 4,
+))
+
 GLOBAL_LIST_INIT(customizer_choices, build_customizer_choices())
 GLOBAL_LIST_INIT(customizers, build_customizers())
 
