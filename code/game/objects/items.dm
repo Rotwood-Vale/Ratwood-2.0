@@ -201,6 +201,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/l_sleeve_status = SLEEVE_NOMOD
 	var/r_sleeve_zone = BODY_ZONE_R_ARM
 	var/l_sleeve_zone = BODY_ZONE_L_ARM
+	/// If the armor from this item has been stripped away, used for examine
+	var/armor_detached
 
 	var/twohands_required = FALSE
 
