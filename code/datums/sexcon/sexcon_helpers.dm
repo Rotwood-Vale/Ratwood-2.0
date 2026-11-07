@@ -242,6 +242,24 @@
 	breasts.lactating = TRUE
 	to_chat(src, span_love("My breasts feel tender and heavy..."))
 
+/mob/living/carbon/human/proc/has_massive_erection()
+	var/obj/item/organ/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
+	if(!penis?.massive || !sexcon)
+		return FALSE
+	return penis.erect_state == ERECT_STATE_HARD || sexcon.arousal > 20
+
+/// Charges 10 triumphs for a massive pintle if the player's prefs ask for one. Only called on lobby spawns.
+/mob/living/carbon/human/proc/pay_for_the_big_one(client/owner_client)
+	var/obj/item/organ/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
+	if(!penis || penis.penis_size != MAX_PENIS_SIZE || !owner_client?.prefs?.wants_the_big_one())
+		return
+	if(SStriumphs.get_triumphs(owner_client.ckey) < 10)
+		to_chat(owner_client, span_warning("I don't have enough TRIUMPH (10 TRI) to support my great endowment. I'll have to settle for being merely large."))
+		return
+	owner_client.adjust_triumphs(-10, FALSE)
+	penis.massive = TRUE
+	update_body_parts(TRUE)
+
 /mob/living/carbon/human/proc/get_highest_grab_state_on(mob/living/carbon/human/victim)
 	var/grabstate = null
 	if(r_grab && r_grab.grabbed == victim)

@@ -162,6 +162,7 @@
 				if(penis)
 					if(penis.penis_size > MIN_PENIS_SIZE)
 						penis.penis_size--
+						penis.massive = FALSE
 					else
 						pmax = TRUE
 				if(testicles)

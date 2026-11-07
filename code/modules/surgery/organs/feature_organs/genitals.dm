@@ -12,6 +12,8 @@
 	var/penis_size = DEFAULT_PENIS_SIZE
 	var/functional = TRUE
 	var/branded_writing = ""
+	/// Paid for with triumphs at spawn (see pay_for_the_big_one). Only valid on a MAX_PENIS_SIZE pintle.
+	var/massive = FALSE
 
 /obj/item/organ/penis/Initialize(mapload)
 	. = ..()

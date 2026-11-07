@@ -551,6 +551,8 @@
 							size_num = 3
 
 					penis.penis_size = size_num
+					if(size_num != MAX_PENIS_SIZE)
+						penis.massive = FALSE
 					H.update_body()
 					should_update = TRUE
 

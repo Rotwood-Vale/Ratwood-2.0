@@ -29,6 +29,8 @@
 	var/datum/customizer_entry/organ/penis/penis_entry = entry
 	penis_entry.penis_size = sanitize_integer(penis_entry.penis_size, MIN_PENIS_SIZE, MAX_PENIS_SIZE, DEFAULT_PENIS_SIZE)
 	penis_entry.sheath_type = sanitize_integer(penis_entry.sheath_type, SHEATH_TYPE_NONE, SHEATH_TYPE_SLIT, SHEATH_TYPE_NONE)
+	if(penis_entry.penis_size != MAX_PENIS_SIZE)
+		penis_entry.massive = FALSE
 
 /datum/customizer_choice/organ/penis/imprint_organ_dna(datum/organ_dna/organ_dna, datum/customizer_entry/entry, datum/preferences/prefs)
 	..()
@@ -42,6 +44,8 @@
 	..()
 	var/datum/customizer_entry/organ/penis/penis_entry = entry
 	dat += "<br>Penis size: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=penis_size''>[find_key_by_value(GLOB.named_penis_sizes, penis_entry.penis_size)]</a>"
+	if(penis_entry.penis_size == MAX_PENIS_SIZE)
+		dat += "<br>Massive: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=massive''>[penis_entry.massive ? "YES" : "NO"]</a> (10 TRI per round)"
 	dat += "<br>Functional: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=functional''>[penis_entry.functional ? "YES" : "NO"]</a>"
 	dat += "<br>Sheath: <a href='?_src_=prefs;task=change_customizer;customizer=[customizer_type];customizer_task=sheath_type''>[sheath_type_preference_label(penis_entry.sheath_type)]</a>"
 
@@ -55,6 +59,11 @@
 				return
 			var/new_size = GLOB.named_penis_sizes[named_size]
 			penis_entry.penis_size = sanitize_integer(new_size, MIN_PENIS_SIZE, MAX_PENIS_SIZE, DEFAULT_PENIS_SIZE)
+			if(penis_entry.penis_size != MAX_PENIS_SIZE)
+				penis_entry.massive = FALSE
+		if("massive")
+			if(penis_entry.penis_size == MAX_PENIS_SIZE)
+				penis_entry.massive = !penis_entry.massive
 		if("functional")
 			penis_entry.functional = !penis_entry.functional
 		if("sheath_type")
@@ -70,6 +79,15 @@
 	var/penis_size = DEFAULT_PENIS_SIZE
 	var/functional = TRUE
 	var/sheath_type = SHEATH_TYPE_NONE
+	/// Wants to pay 10 triumphs at spawn for a massive pintle. Only valid with MAX_PENIS_SIZE.
+	var/massive = FALSE
+
+/// TRUE if the active slot has an enabled Large pintle with the massive option ticked.
+/datum/preferences/proc/wants_the_big_one()
+	for(var/datum/customizer_entry/organ/penis/penis_entry in customizer_entries)
+		if(!penis_entry.disabled && penis_entry.massive && penis_entry.penis_size == MAX_PENIS_SIZE)
+			return TRUE
+	return FALSE
 
 /datum/customizer/organ/penis/human
 	customizer_choices = list(/datum/customizer_choice/organ/penis/human)

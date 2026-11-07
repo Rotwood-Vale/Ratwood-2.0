@@ -1015,6 +1015,11 @@
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 			pain_amt *= 2
+	var/obj/item/organ/penis/pintle = involved_penis || penetrating(action_target)
+	if(pintle?.massive)
+		pain_amt *= 1.2
+		if(force >= SEX_FORCE_HIGH)
+			pain_amt *= 1.2
 	var/list/modular_adjustments = modular_adjust_action_for_target_chastity(action_target, arousal_amt, pain_amt)
 	if(islist(modular_adjustments) && modular_adjustments.len >= 2)
 		arousal_amt = modular_adjustments[1]
@@ -1029,6 +1034,24 @@
 	modular_emit_received_sex_action_signal(action_target, arousal_amt, pain_amt, giving)
 	if(modular_should_play_chastitycourse_noise(action_target))
 		chastitycourse_noise(action_target)
+
+/// Returns our pintle if it is currently penetrating partner, from either side's active action. Otherwise null.
+/datum/sex_controller/proc/penetrating(mob/living/carbon/human/partner)
+	if(!partner || partner == user)
+		return null
+	var/obj/item/organ/penis/pintle = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(!pintle)
+		return null
+	if(current_action && target == partner)
+		var/datum/sex_action/own_act = SEX_ACTION(current_action)
+		if(own_act && (own_act.category & SEX_CATEGORY_PENETRATE) && (own_act.user_sex_part & SEX_PART_COCK))
+			return pintle
+	var/datum/sex_controller/partner_sexcon = partner.sexcon
+	if(partner_sexcon?.current_action && partner_sexcon.target == user)
+		var/datum/sex_action/their_act = SEX_ACTION(partner_sexcon.current_action)
+		if(their_act && (their_act.category & SEX_CATEGORY_PENETRATE) && (their_act.target_sex_part & SEX_PART_COCK))
+			return pintle
+	return null
 
 /datum/sex_controller/proc/receive_sex_action(arousal_amt, pain_amt, giving, applied_force, applied_speed)
 	arousal_amt *= get_force_pleasure_multiplier(applied_force, giving)
@@ -1811,7 +1834,8 @@
 			target.OffBalance(30 SECONDS)
 		if(user?.client?.prefs?.extreme_erp && target?.client?.prefs?.extreme_erp)
 			if(!target.has_wound(/datum/wound/fracture/groin))
-				if(prob(10))
+				var/obj/item/organ/penis/pintle = penetrating(target)
+				if(prob(pintle?.massive ? 20 : 10))
 					var/obj/item/bodypart/groin = target.get_bodypart(check_zone(BODY_ZONE_PRECISE_GROIN))
 					groin.add_wound(/datum/wound/fracture)
 		

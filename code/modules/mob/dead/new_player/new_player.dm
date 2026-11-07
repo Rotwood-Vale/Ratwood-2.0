@@ -787,6 +787,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/rp_prompt.txt"))
 	new_character = .
 
 	H.after_creation()
+	if(!is_gnoll)
+		H.pay_for_the_big_one(client)
 
 	if(transfer_after)
 		transfer_character()
