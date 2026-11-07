@@ -238,7 +238,7 @@
 	swingdelay = 1 SECONDS
 	clickcd = CLICK_CD_CHARGED
 	parriable_intent = FALSE
-	swingdelay_type = SWINGDELAY_CANCEL
+	swingdelay_type = SWINGDELAY_PENALTY
 
 /datum/intent/mace/strike/gnoll
 	name = "armor rending strike"
