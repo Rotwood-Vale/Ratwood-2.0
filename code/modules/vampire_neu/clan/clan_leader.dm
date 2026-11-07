@@ -40,7 +40,7 @@
 	H.adjust_maxbloodpool(vitae_bonus)
 	if(vamp_datum)
 		vamp_datum.name = "[lord_title]"
-		vamp_datum.antag_hud_name = "Vlord"
+		vamp_datum.update_hud_icon()
 
 /datum/clan_leader/proc/remove_leader(mob/living/carbon/human/H)
 	REMOVE_TRAIT(H, TRAIT_CLAN_LEADER, "clan")
@@ -53,3 +53,6 @@
 	for(var/trait in lord_traits)
 		REMOVE_TRAIT(H, trait, "lord_component")
 	H.adjust_maxbloodpool(-(vitae_bonus))
+
+	var/datum/antagonist/vampire/vamp_datum = H.mind?.has_antag_datum(/datum/antagonist/vampire)
+	vamp_datum?.update_hud_icon()
