@@ -132,7 +132,6 @@
 	log_game("The round has ended.")
 	dump_chronicle_stats() // weekly economy-stats disk dump (data/chronicle_stats/)
 
-	ccg_sync_all_player_collections()
 	to_chat(world, "<BR><BR><BR><span class='reallybig'>So ends this tale on Ratwood Keep.</span>")
 	get_end_reason()
 

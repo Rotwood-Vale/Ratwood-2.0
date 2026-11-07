@@ -22,10 +22,6 @@
 	if(!CheckAdminHref(href, href_list))
 		return
 
-	if(href_list["ccg_manage"])
-		ccg_management_topic(href_list)
-		return
-
 	if(href_list["mass_direct"])
 		if(mass_direct_handle_topic(href_list))
 			return

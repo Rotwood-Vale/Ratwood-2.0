@@ -1,6 +1,6 @@
 /obj/item/ccg_deck
 	name = "Arlette deck"
-	desc = "A prepared deck for a round-based game of Arlette."
+	desc = "A deck box for a round-based game of Arlette. Slot cards into it to build a deck."
 	icon = 'modular_twilight_axis/icons/obj/gwynt_objs.dmi'
 	icon_state = "gwint_deck"
 	w_class = WEIGHT_CLASS_SMALL
@@ -9,16 +9,18 @@
 	var/leader_id = "azuria_ducal_marshal"
 	var/datum/ccg_match/match
 	var/obj/item/ccg_deck/match_host
-	var/owner_ckey
 	var/inviter_ckey
 	var/inviter_name
-	var/load_from_preferences = FALSE
-	var/loaded_from_preferences = FALSE
+	/// Starter decks fill themselves with this faction's starter cards when created.
+	var/starter_faction
 
 /obj/item/ccg_deck/Initialize(mapload)
 	. = ..()
 	if(!length(GLOB.ccg_base_card_ids))
 		ccg_build_card_registry()
+	if(starter_faction)
+		set_faction(starter_faction)
+		set_cards(ccg_starter_deck_cards(starter_faction))
 
 /obj/item/ccg_deck/Destroy()
 	var/datum/ccg_match/active_match = get_active_match()
@@ -29,6 +31,19 @@
 	match = null
 	match_host = null
 	return ..()
+
+/obj/item/ccg_deck/examine(mob/user)
+	. = ..()
+	var/datum/ccg_faction/faction = ccg_faction(faction_id)
+	var/datum/ccg_leader/leader = ccg_leader(leader_id)
+	. += span_info("Faction: [faction ? faction.name : "None"]. Leader: [leader ? leader.name : "None"].")
+	. += span_info("It holds [card_ids.len]/[CCG_DECK_SIZE] cards. A deck needs at least [CCG_MIN_DECK_SIZE] to play.")
+
+/obj/item/ccg_deck/get_mechanics_examine(mob/user)
+	. = ..()
+	. += span_info("Use the deck in hand to look through it, take a card out, or change its faction or leader.")
+	. += span_info("Hit the deck with a loose card to slot it in. Right-click the deck in hand to take a card out.")
+	. += span_info("To play, set your deck down on a table, then have another player hit it with their own deck.")
 
 /obj/item/ccg_deck/proc/set_cards(list/new_cards)
 	card_ids = list()
@@ -57,51 +72,101 @@
 		leader_id = leader.id
 	return TRUE
 
-/obj/item/ccg_deck/proc/load_saved_deck(mob/user)
-	if(loaded_from_preferences || !user?.client?.prefs)
-		return FALSE
-	var/datum/preferences/P = user.client.prefs
-	P.ccg_clean_cards()
-	var/datum/ccg_faction/faction = ccg_faction(P.ccg_saved_deck_faction)
-	if(!faction)
-		faction = ccg_faction(CCG_FACTION_AZURIA)
-	set_faction(faction.id, P.ccg_saved_deck_leader)
-	var/list/saved_cards = length(P.ccg_saved_deck_cards) ? P.ccg_saved_deck_cards : P.ccg_first_deck_cards(faction.id)
-	set_cards(P.ccg_owned_deck_cards(saved_cards))
-	owner_ckey = user.ckey
-	var/owner_name = user.real_name || user.name
-	if(owner_name)
-		name = "Arlette Deck of [owner_name]"
-	loaded_from_preferences = TRUE
-	return TRUE
-
-/obj/item/ccg_deck/equipped(mob/user, slot, initial = FALSE)
-	. = ..()
-	if(load_from_preferences)
-		load_saved_deck(user)
-
-/obj/item/ccg_deck/proc/remove_cards_not_in_faction()
-	var/list/removed = list()
-	var/list/kept = list()
-	for(var/card_id in card_ids)
-		if(ccg_card_allowed_for_faction(card_id, faction_id))
-			kept += card_id
-		else
-			removed += card_id
-	card_ids = kept
-	return removed
-
-/obj/item/ccg_deck/proc/is_owner(mob/user)
-	return user?.ckey && owner_ckey == user.ckey
-
 /obj/item/ccg_deck/proc/is_on_table()
 	var/turf/T = get_turf(src)
 	return T && locate(/obj/structure/table) in T
 
-/obj/item/ccg_deck/proc/open_deck_view(mob/user)
-	if(!user?.client)
+/obj/item/ccg_deck/proc/in_active_match()
+	var/datum/ccg_match/active_match = get_active_match()
+	if(active_match && !active_match.result_text)
+		return TRUE
+	if(active_match)
+		release_finished_match()
+	return FALSE
+
+/obj/item/ccg_deck/proc/show_card_list(mob/user)
+	var/datum/ccg_faction/faction = ccg_faction(faction_id)
+	var/datum/ccg_leader/leader = ccg_leader(leader_id)
+	var/list/lines = list("<b>[name]</b>: [card_ids.len]/[CCG_DECK_SIZE] cards. Faction: [faction ? faction.name : "None"]. Leader: [leader ? leader.name : "None"].")
+	if(leader?.desc)
+		lines += "<i>[leader.desc]</i>"
+	var/list/card_lines = ccg_describe_card_list(card_ids)
+	if(length(card_lines))
+		lines += card_lines
+	else
+		lines += "The deck is empty."
+	to_chat(user, span_info(jointext(lines, "<br>")))
+
+/// Pulls one copy of a chosen card out of the deck and puts it in the user's hands.
+/obj/item/ccg_deck/proc/take_card_out(mob/user)
+	if(!length(card_ids))
+		to_chat(user, span_warning("The deck is empty."))
 		return FALSE
-	user.client.ccg_open_deckbuilder(src, user, !is_owner(user))
+	var/list/choices = list()
+	for(var/card_id in card_ids)
+		var/datum/ccg_card/card = ccg_card(card_id)
+		if(!card)
+			continue
+		var/label = "[card.name] ([ccg_row_label(card.row)], [ccg_rarity_label(card.rarity)]) x[ccg_card_count_in_list(card_ids, card_id)]"
+		choices[label] = card_id
+	var/choice = tgui_input_list(user, "Which card do you take out?", "[name]", sortList(choices))
+	if(!choice || QDELETED(src) || !user.is_holding(src) || in_active_match())
+		return FALSE
+	var/card_id = choices[choice]
+	if(!(card_id in card_ids))
+		return FALSE
+	card_ids -= card_id
+	var/obj/item/ccg_card_single/single = new(get_turf(user))
+	single.set_card(card_id)
+	user.put_in_hands(single)
+	to_chat(user, span_notice("I take [single.name] out of the deck."))
+	return TRUE
+
+/// Changes the deck's faction. Cards that don't belong to the new faction fall out as loose cards.
+/obj/item/ccg_deck/proc/choose_faction(mob/user)
+	if(!length(GLOB.ccg_factions_by_id))
+		ccg_build_faction_registry()
+	var/list/choices = list()
+	for(var/id in GLOB.ccg_factions_by_id)
+		var/datum/ccg_faction/faction = GLOB.ccg_factions_by_id[id]
+		choices[faction.name] = faction.id
+	var/choice = tgui_input_list(user, "Pick the deck's faction. Cards from other factions will fall out.", "[name]", sortList(choices))
+	if(!choice || QDELETED(src) || !user.is_holding(src) || in_active_match())
+		return FALSE
+	if(!set_faction(choices[choice]))
+		return FALSE
+	var/list/kept = list()
+	var/dropped = 0
+	for(var/card_id in card_ids)
+		if(ccg_card_allowed_for_faction(card_id, faction_id))
+			kept += card_id
+			continue
+		var/obj/item/ccg_card_single/single = new(get_turf(user))
+		single.set_card(card_id)
+		dropped++
+	card_ids = kept
+	to_chat(user, span_notice("The deck now plays as [choice][dropped ? ". [dropped] card\s from other factions fall out" : ""]."))
+	return TRUE
+
+/obj/item/ccg_deck/proc/choose_leader(mob/user)
+	if(!length(GLOB.ccg_leaders_by_id))
+		ccg_build_leader_registry()
+	var/list/choices = list()
+	var/list/descriptions = list()
+	for(var/id in GLOB.ccg_leaders_by_id)
+		var/datum/ccg_leader/leader = GLOB.ccg_leaders_by_id[id]
+		if(leader.faction != faction_id)
+			continue
+		choices[leader.name] = leader.id
+		descriptions[leader.name] = leader.desc
+	if(!length(choices))
+		to_chat(user, span_warning("This faction has no leaders to choose from."))
+		return FALSE
+	var/choice = tgui_input_list(user, "Pick the deck's leader.", "[name]", sortList(choices), descriptions = descriptions)
+	if(!choice || QDELETED(src) || !user.is_holding(src) || in_active_match())
+		return FALSE
+	set_faction(faction_id, choices[choice])
+	to_chat(user, span_notice("[choice] now leads the deck."))
 	return TRUE
 
 /obj/item/ccg_deck/attack_self(mob/user)
@@ -113,12 +178,19 @@
 		return TRUE
 	if(active_match)
 		release_finished_match()
-	if(!is_owner(user))
-		open_deck_view(user)
-	else if(inviter_ckey && inviter_ckey != user.ckey)
-		to_chat(user, span_notice("Strike this deck with your own Arlette deck to begin."))
-	else
-		open_deck_view(user)
+	var/list/options = list("Look through the deck", "Take a card out", "Change faction", "Change leader")
+	var/choice = tgui_input_list(user, "What do you do with the deck?", "[name]", options)
+	if(!choice || QDELETED(src) || !user.is_holding(src))
+		return TRUE
+	switch(choice)
+		if("Look through the deck")
+			show_card_list(user)
+		if("Take a card out")
+			take_card_out(user)
+		if("Change faction")
+			choose_faction(user)
+		if("Change leader")
+			choose_leader(user)
 	return TRUE
 
 /obj/item/ccg_deck/attack_hand(mob/user, params)
@@ -128,10 +200,22 @@
 		return TRUE
 	if(active_match)
 		release_finished_match()
-	if(is_on_table())
-		open_deck_view(user)
-		return TRUE
 	return ..()
+
+/obj/item/ccg_deck/attack_right(mob/user)
+	if(!user)
+		return
+	var/datum/ccg_match/active_match = get_active_match()
+	if(active_match && !active_match.result_text)
+		ui_interact(user)
+		return TRUE
+	if(active_match)
+		release_finished_match()
+	if(!user.is_holding(src))
+		show_card_list(user)
+		return TRUE
+	take_card_out(user)
+	return TRUE
 
 /obj/item/ccg_deck/MouseDrop(atom/over_object)
 	var/datum/ccg_match/active_match = get_active_match()
@@ -256,51 +340,28 @@
 /obj/item/ccg_deck/proc/add_single_card(mob/user, obj/item/ccg_card_single/single)
 	if(!user || !single)
 		return FALSE
-	var/datum/ccg_match/active_match = get_active_match()
-	if(active_match && !active_match.result_text)
+	if(in_active_match())
 		to_chat(user, span_warning("Finish the card match before changing this deck."))
 		return FALSE
-	if(active_match)
-		release_finished_match()
-	if(!ccg_card(single.card_id))
+	var/datum/ccg_card/card = ccg_card(single.card_id)
+	if(!card)
 		to_chat(user, span_warning("This card cannot be added to the deck."))
 		return FALSE
-	var/datum/ccg_card/card = ccg_card(single.card_id)
 	if(!ccg_card_allowed_for_faction(single.card_id, faction_id))
-		to_chat(user, span_warning("This card belongs to another deck faction."))
+		var/datum/ccg_faction/card_faction = ccg_faction(card.faction)
+		to_chat(user, span_warning("[card.name] belongs to [card_faction ? card_faction.name : "another faction"], not this deck's faction."))
 		return FALSE
-	var/datum/preferences/P = user.client?.prefs
-	if(!P)
-		to_chat(user, span_warning("The card collection is unavailable. The card was not added."))
+	if(card_ids.len >= CCG_DECK_SIZE)
+		to_chat(user, span_warning("The deck is full ([CCG_DECK_SIZE] cards)."))
 		return FALSE
-	if(!single.pooled && P.ccg_card_pool_count(single.card_id) >= ccg_card_pool_limit(card))
-		to_chat(user, span_warning("The card was not added. Your collection already has the maximum of [ccg_card_pool_limit(card)] copies."))
+	var/limit = ccg_card_deck_limit(card)
+	if(ccg_card_count_in_list(card_ids, single.card_id) >= limit)
+		to_chat(user, span_warning("A deck can only hold [limit] cop[limit == 1 ? "y" : "ies"] of [card.name]."))
 		return FALSE
-	if(!single.pooled && !P.ccg_add_known_card(single.card_id))
-		to_chat(user, span_warning("The card could not be added to your collection. Try again."))
-		return FALSE
-	if(card_ids.len >= CCG_DECK_SIZE || ccg_card_count_in_list(card_ids, single.card_id) >= ccg_card_deck_limit(card))
-		var/deck_reason = card_ids.len >= CCG_DECK_SIZE ? "the deck is full" : "this card has reached its deck limit"
-		to_chat(user, span_notice("Added [card.name] to your collection ([P.ccg_card_pool_count(single.card_id)]/[ccg_card_pool_limit(card)]), but not to this deck: [deck_reason]."))
-		if(!single.pooled && single.source_ckey && single.source_ckey != user.ckey)
-			ccg_award_trade_progress(single.source_ckey, user)
-		SStgui.update_user_uis(user)
-		qdel(single)
+	if(user.is_holding(single) && !user.temporarilyRemoveItemFromInventory(single))
 		return FALSE
 	card_ids += single.card_id
-	if(!P.ccg_save_deck_snapshot(card_ids, faction_id, leader_id))
-		card_ids.Cut(card_ids.len, card_ids.len + 1)
-		if(!single.pooled)
-			to_chat(user, span_warning("The card was saved to your collection, but the deck failed to save."))
-			SStgui.update_user_uis(user)
-			qdel(single)
-		else
-			to_chat(user, span_warning("The Arlette deck failed to save. The card was not added."))
-		return FALSE
-	if(!single.pooled && single.source_ckey && single.source_ckey != user.ckey)
-		ccg_award_trade_progress(single.source_ckey, user)
-	to_chat(user, span_notice("Added [card.name] to your collection ([P.ccg_card_pool_count(single.card_id)]/[ccg_card_pool_limit(card)]) and this deck ([ccg_card_count_in_list(card_ids, single.card_id)]/[ccg_card_deck_limit(card)])."))
-	SStgui.update_user_uis(user)
+	to_chat(user, span_notice("I slot [card.name] into the deck ([card_ids.len]/[CCG_DECK_SIZE])."))
 	qdel(single)
 	return TRUE
 
@@ -315,6 +376,9 @@
 		return FALSE
 	if(inviter_ckey == user.ckey)
 		to_chat(user, span_warning("You need another player for this match."))
+		return FALSE
+	if(card_ids.len < CCG_MIN_DECK_SIZE || challenger_deck.card_ids.len < CCG_MIN_DECK_SIZE)
+		to_chat(user, span_warning("Both decks need at least [CCG_MIN_DECK_SIZE] cards to play."))
 		return FALSE
 	var/mob/player_one = ccg_find_mob_by_ckey(inviter_ckey)
 	if(!player_one)
@@ -378,13 +442,14 @@
 		if("toggle_soundtrack")
 			if(user?.client?.prefs)
 				user.client.prefs.ccg_soundtrack_enabled = !user.client.prefs.ccg_soundtrack_enabled
-				user.client.prefs.ccg_save_settings_sql()
 				active_match.sync_soundtrack_for(user)
 				active_match.update_deck_uis()
 				return TRUE
 		if("collect")
 			if(!active_match.side_for_user(user, src))
 				return FALSE
+			if(end_match_session(active_match))
+				return TRUE
 		if("play")
 			if(active_match.play_card(user, params["card"], src, params))
 				active_match.update_deck_uis()
@@ -405,56 +470,56 @@
 			if(active_match.pass(user, src))
 				active_match.update_deck_uis()
 				return TRUE
-		if("collect")
-			if(end_match_session(active_match))
-				return TRUE
 	return FALSE
 
-/obj/item/ccg_deck/attack_right(mob/user)
-	if(!user)
-		return
-	if(!user.is_holding(src))
-		return FALSE
-	var/datum/ccg_match/active_match = get_active_match()
-	if(active_match && !active_match.result_text)
-		ui_interact(user)
-		return TRUE
-	if(active_match)
-		release_finished_match()
-	if(!is_owner(user))
-		open_deck_view(user)
-		return TRUE
-	return_to_stash(user)
-	return TRUE
+/obj/item/ccg_deck/starter
+	name = "Arlette starter deck"
 
-/obj/item/ccg_deck/proc/return_to_stash(mob/user)
-	if(!user?.mind || !isliving(user))
-		return FALSE
-	if(!user.is_holding(src))
-		return FALSE
-	if(!owner_ckey || owner_ckey != user.ckey)
-		to_chat(user, span_warning("This Arlette deck is not bound to your stash."))
-		return TRUE
-	if(!length(card_ids))
-		to_chat(user, span_warning("This Arlette deck has no cards to stash."))
-		return TRUE
-	if(ccg_mind_has_stashed_deck(user.mind))
-		to_chat(user, span_warning("You already have an Arlette deck in your stash."))
-		return TRUE
-	if(istype(user, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		user.client?.prefs?.ccg_sync_cards_from_inventory(H)
-	if(!user.mind.special_items)
-		user.mind.special_items = list()
-	var/owner_name = user.real_name || user.name
-	user.mind.special_items["Arlette Deck of [owner_name]"] = /obj/item/ccg_deck/stashed
-	to_chat(user, span_notice("You return the Arlette deck to your stash."))
-	qdel(src)
-	return TRUE
+/obj/item/ccg_deck/starter/random
+	name = "Arlette starter deck"
+	desc = "A sealed starter deck for a round-based game of Arlette. Which faction is inside is anyone's guess."
 
-/obj/item/ccg_deck/stashed
-	name = "card deck"
-	load_from_preferences = TRUE
+/obj/item/ccg_deck/starter/random/Initialize(mapload)
+	var/static/list/faction_names = list(
+		CCG_FACTION_AZURIA = "Rockhill",
+		CCG_FACTION_ENIGMA = "Enigma",
+		CCG_FACTION_NALEDI = "Naledi",
+		CCG_FACTION_GRENZELHOFT = "Grenzelhoft",
+		CCG_FACTION_RANESHI = "Raneshi",
+		CCG_FACTION_GRONN = "Gronn",
+		CCG_FACTION_KAZENGUN = "Kazengun",
+	)
+	starter_faction = pick(faction_names)
+	name = "Arlette starter deck ([faction_names[starter_faction]])"
+	return ..()
+
+/obj/item/ccg_deck/starter/azuria
+	name = "Arlette starter deck (Rockhill)"
+	starter_faction = CCG_FACTION_AZURIA
+
+/obj/item/ccg_deck/starter/enigma
+	name = "Arlette starter deck (Enigma)"
+	starter_faction = CCG_FACTION_ENIGMA
+
+/obj/item/ccg_deck/starter/naledi
+	name = "Arlette starter deck (Naledi)"
+	starter_faction = CCG_FACTION_NALEDI
+
+/obj/item/ccg_deck/starter/grenzelhoft
+	name = "Arlette starter deck (Grenzelhoft)"
+	starter_faction = CCG_FACTION_GRENZELHOFT
+
+/obj/item/ccg_deck/starter/raneshi
+	name = "Arlette starter deck (Raneshi)"
+	starter_faction = CCG_FACTION_RANESHI
+
+/obj/item/ccg_deck/starter/gronn
+	name = "Arlette starter deck (Gronn)"
+	starter_faction = CCG_FACTION_GRONN
+
+/obj/item/ccg_deck/starter/kazengun
+	name = "Arlette starter deck (Kazengun)"
+	starter_faction = CCG_FACTION_KAZENGUN
 
 /obj/item/ccg_card_single
 	name = "collectible card"
@@ -463,8 +528,6 @@
 	icon_state = "gwint_card"
 	w_class = WEIGHT_CLASS_TINY
 	var/card_id
-	var/pooled = FALSE
-	var/source_ckey
 
 /obj/item/ccg_card_single/proc/set_card(new_card_id)
 	card_id = new_card_id
@@ -478,24 +541,25 @@
 	if(card_id)
 		set_card(card_id)
 
-/obj/item/ccg_card_single/attack_self(mob/user)
-	if(pooled)
-		to_chat(user, span_notice("The card is already in your known collection."))
-		qdel(src)
-		return
-	var/datum/preferences/P = user?.client?.prefs
+/obj/item/ccg_card_single/examine(mob/user)
+	. = ..()
 	var/datum/ccg_card/card = ccg_card(card_id)
-	if(P && card && P.ccg_card_pool_count(card_id) >= ccg_card_pool_limit(card))
-		to_chat(user, span_warning("The card was not added. Your collection already has the maximum of [ccg_card_pool_limit(card)] copies."))
+	if(!card)
 		return
-	if(P && P.ccg_add_known_card(card_id))
-		to_chat(user, span_notice("Added [card.name] to your collection ([P.ccg_card_pool_count(card_id)]/[ccg_card_pool_limit(card)])."))
-		if(source_ckey && source_ckey != user.ckey)
-			ccg_award_trade_progress(source_ckey, user)
-		SStgui.update_user_uis(user)
-		qdel(src)
-	else
-		to_chat(user, span_warning("The card could not be added to your collection. Try again."))
+	var/datum/ccg_faction/faction = ccg_faction(card.faction)
+	var/power_text = (card.row == CCG_ROW_WEATHER || card.row == CCG_ROW_SPECIAL) ? "" : ", strength [card.power]"
+	. += span_info("[ccg_rarity_label(card.rarity)] [faction ? faction.name : "Neutral"] card. [ccg_row_label(card.row)][power_text][card.hero ? ", hero" : ""].")
+	. += span_info("Hit an Arlette deck with this card to slot it in. A deck holds up to [ccg_card_deck_limit(card)] of these.")
+
+/obj/item/ccg_card_single/attack_self(mob/user)
+	user.examinate(src)
+
+/obj/item/ccg_card_single/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/ccg_deck))
+		var/obj/item/ccg_deck/deck = I
+		deck.add_single_card(user, src)
+		return TRUE
+	return ..()
 
 /obj/item/ccg_card_generator
 	name = "sealed card packet"
@@ -621,10 +685,3 @@
 /obj/item/ccg_card_single/unique_spy
 	card_id = "unique_spy"
 
-/proc/ccg_find_mob_by_ckey(ckey)
-	if(!ckey)
-		return null
-	for(var/client/C)
-		if(C.ckey == ckey)
-			return C.mob
-	return null

@@ -893,8 +893,6 @@
 	if(round_wins[CCG_SIDE_ONE] >= 2 || round_wins[CCG_SIDE_TWO] >= 2)
 		var/winner = round_wins[CCG_SIDE_ONE] >= 2 ? CCG_SIDE_ONE : CCG_SIDE_TWO
 		result_text = "[player_names[winner]] wins the match."
-		if(turns_played >= 5)
-			ccg_award_match_progress(player_ckeys[winner], player_ckeys[opposite(winner)])
 		play_cue(CCG_SOUND_GAME_END)
 		stop_soundtracks()
 		return

@@ -386,8 +386,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//ROGUETOWN
 	parallax = PARALLAX_INSANE
 
-	ccg_load_or_migrate_sql()
-
 	verify_keybindings_valid()
 	return TRUE
 

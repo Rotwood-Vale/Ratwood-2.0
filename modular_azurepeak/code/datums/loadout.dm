@@ -85,6 +85,34 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Foldable Chessboard"
 	path = /obj/item/chessboard_folded
 
+/datum/loadout_item/arlette_azuria
+	name = "Arlette Starter Deck (Rockhill)"
+	path = /obj/item/ccg_deck/starter/azuria
+
+/datum/loadout_item/arlette_enigma
+	name = "Arlette Starter Deck (Enigma)"
+	path = /obj/item/ccg_deck/starter/enigma
+
+/datum/loadout_item/arlette_naledi
+	name = "Arlette Starter Deck (Naledi)"
+	path = /obj/item/ccg_deck/starter/naledi
+
+/datum/loadout_item/arlette_grenzelhoft
+	name = "Arlette Starter Deck (Grenzelhoft)"
+	path = /obj/item/ccg_deck/starter/grenzelhoft
+
+/datum/loadout_item/arlette_raneshi
+	name = "Arlette Starter Deck (Raneshi)"
+	path = /obj/item/ccg_deck/starter/raneshi
+
+/datum/loadout_item/arlette_gronn
+	name = "Arlette Starter Deck (Gronn)"
+	path = /obj/item/ccg_deck/starter/gronn
+
+/datum/loadout_item/arlette_kazengun
+	name = "Arlette Starter Deck (Kazengun)"
+	path = /obj/item/ccg_deck/starter/kazengun
+
 /datum/loadout_item/tarot_deck
 	name = "Tarot Deck"
 	path = /obj/item/toy/cards/deck/tarot
