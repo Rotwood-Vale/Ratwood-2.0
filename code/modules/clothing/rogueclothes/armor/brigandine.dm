@@ -25,7 +25,6 @@
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/attack_right(mob/user)
 	if(detail_tag)
@@ -170,7 +169,6 @@
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/light/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
-	AddComponent(/datum/component/armour_filtering/negative, TRAIT_MAGEDEXTERITY)
 
 /obj/item/clothing/suit/roguetown/armor/brigandine/light/attack_right(mob/user)
 	if(detail_tag)
