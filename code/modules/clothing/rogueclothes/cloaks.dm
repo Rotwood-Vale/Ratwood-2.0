@@ -2055,6 +2055,7 @@
 	detail_color = CLOTHING_BLACK
 
 /obj/item/clothing/cloak/absolutionistrobe/black
+	nodismemsleeves = TRUE
 	name = "blessed robe"
 	desc = "Weep for what was lost. Pray for those who may yet be saved. Endure, in His name."
 	icon_state = "blackabsolutionistrobe"
@@ -2111,6 +2112,7 @@
 	AddComponent(/datum/component/storage/concrete/roguetown/cloak)
 
 /obj/item/clothing/cloak/cape/inquisitorgold
+	nodismemsleeves = TRUE
 	name = "golden order cloak"
 	desc = "A time honored cloak inlaid with golden threading, the stitchwork tethers it to the Golden Orders; a catch-all term for the various faith-militances that \
 	ward Psydonia from heathens, cultists, and the ever-looming threat of another calamity."
@@ -2122,6 +2124,7 @@
 	color = null
 
 /obj/item/clothing/cloak/cape/inquisitorsilver
+	nodismemsleeves = TRUE
 	name = "silver order cloak"
 	desc = "A time honored cloak inlaid with silver threading, the stitchwork tethers it to the Silver Orders; a catch-all term for the various faith-militances that \
 	ward Psydonia from monsters, creechers, and the ever-looming threat of the Archdevil's return."
@@ -2146,6 +2149,7 @@
 	allowed_race = NON_DWARVEN_RACE_TYPES
 
 /obj/item/clothing/cloak/half/duelcape
+	boobed = TRUE
 	name = "duelist cape"
 	desc = "A flamboyant red duelists cape that is sure to catch the eye."
 	icon_state = "duelistcape"
@@ -2181,6 +2185,10 @@
 	update_icon()
 
 /obj/item/clothing/cloak/half/shadowcloak
+	boobed = TRUE
+	inhand_mod = TRUE
+	nodismemsleeves = TRUE
+	sleevetype = "shirt"
 	name = "stalker cloak"
 	desc = "A heavy leather cloak held together by a gilded pin, depicting the Grand Duke's house. The sign of a faithful servant."
 	icon_state = "shadowcloak"
@@ -2198,6 +2206,7 @@
 	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/cloaks.dmi'
 
 /obj/item/clothing/cloak/poncho/fancycoat
+	sleevetype = "poncho"
 	name = "fancy coat"
 	desc = "A loose garment that is usually draped across ones upper body. No one's quite sure of its cultural origin but it does look fancy."
 	icon_state = "fancycoat"
@@ -2507,7 +2516,7 @@
 	icon_state = "crusader_surcoat"
 	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/crusader.dmi'
 	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/crusader.dmi'
-	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/crusader.dmi'
+	sleeved = null
 	custom_design = TRUE
 
 /obj/item/clothing/cloak/tabard/stabard/crusader/astrata
