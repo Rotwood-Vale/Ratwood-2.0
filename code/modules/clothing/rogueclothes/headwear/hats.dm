@@ -301,7 +301,7 @@
 	item_state = "inqhat"
 	max_integrity = ARMOR_INT_HELMET_HARDLEATHER
 	armor = ARMOR_LEATHER
-	body_parts_covered = HEAD|HAIR|EARS
+	body_parts_covered = HEAD|EARS|HAIR|NOSE|EYES
 	cold_protection = HEAD
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
 	heat_protection = HEAD
