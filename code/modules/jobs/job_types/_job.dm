@@ -222,6 +222,9 @@
 		for(var/S in spells)
 			H.mind.AddSpell(new S)
 
+	var/mob/living/carbon/human/human_mob = H
+	human_mob.check_secret_passphrases(M)
+
 	if(length(job_stats))
 		for(var/stat in job_stats)
 			H.change_stat(stat, job_stats[stat])
