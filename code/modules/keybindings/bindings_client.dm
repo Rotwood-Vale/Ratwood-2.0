@@ -45,6 +45,13 @@
 		keys_held.Cut(1,2)
 
 	keys_held[_key] = TRUE
+	// Consume rotation actions while posing; the input loop repeats them.
+	if(mob.shifting)
+		var/rotation_angle = pixel_rotation_key_angle(_key)
+		if(rotation_angle)
+			step_pixel_rotation(rotation_angle)
+			return
+
 	// Client-level keybindings are ones anyone should be able to do at any time
 	// Things like taking screenshots, hitting tab, and adminhelps.
 	var/AltMod = keys_held["Alt"] ? "Alt" : ""
@@ -56,13 +63,6 @@
 			full_key = "[AltMod][CtrlMod][ShiftMod]"
 		else
 			full_key = "[AltMod][CtrlMod][ShiftMod][_key]"
-	// Consume hand-selection actions while posing; the input loop repeats them.
-	if(mob.shifting)
-		var/rotation_angle = pixel_rotation_key_angle(_key)
-		if(rotation_angle)
-			step_pixel_rotation(rotation_angle)
-			return
-
 	var/movement = movement_keys[_key]
 	if(movement)
 		calculate_move_dir()
@@ -124,7 +124,7 @@
 	var/movement = movement_keys[_key]
 	if(movement)
 		calculate_move_dir()
-		if(!movement_locked && !(next_move_dir_add & movement))
+		if(!movement_locked && !(next_move_dir_add & movement) && !(mob?.shifting && pixel_rotation_key_angle(_key)))
 			next_move_dir_sub |= movement
 
 	// We don't do full key for release, because for mod keys you

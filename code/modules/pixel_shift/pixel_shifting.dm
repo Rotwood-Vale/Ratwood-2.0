@@ -11,7 +11,7 @@
 	hotkey_keys = list() // purposefully left blank
 	name = "pixel_shift"
 	full_name = "Pixel Shift"
-	description = "Hold: movement keys shift, hand-selection keys (normally Q/E) rotate. Use your empty hand with a grab in the other hand to pose the grabbed person."
+	description = "Hold: movement keys shift and Q/E rotate. Use your empty hand with a grab in the other hand to pose the grabbed person."
 
 /datum/keybinding/mob/pixel_shift/down(client/user)
 	. = ..()
@@ -142,27 +142,26 @@
 	var/next_pixel_rotation = 0
 
 /client/proc/pixel_rotation_key_angle(key)
-	var/alt_mod = keys_held["Alt"] ? "Alt" : ""
-	var/ctrl_mod = keys_held["Ctrl"] ? "Ctrl" : ""
-	var/shift_mod = keys_held["Shift"] ? "Shift" : ""
-	var/full_key
-	if(key in list("Alt", "Ctrl", "Shift"))
-		full_key = "[alt_mod][ctrl_mod][shift_mod]"
-	else
-		full_key = "[alt_mod][ctrl_mod][shift_mod][key]"
-	var/angle = 0
-	if(("swap_left" in prefs.key_bindings[full_key]) || ("swap_left" in prefs.key_bindings[key]))
-		angle -= 5
-	if(("swap_right" in prefs.key_bindings[full_key]) || ("swap_right" in prefs.key_bindings[key]))
-		angle += 5
-	return angle
+	switch(key)
+		if("Q")
+			return -5
+		if("E")
+			return 5
+	return 0
 
-/client/proc/repeat_pixel_rotation()
+/// Repeat held rotations and return the directions still available for pixel movement.
+/client/proc/process_pixel_shift_input()
 	var/angle = 0
+	var/movement_dir = NONE
 	for(var/key in keys_held)
-		angle += pixel_rotation_key_angle(key)
+		var/key_angle = pixel_rotation_key_angle(key)
+		if(key_angle)
+			angle += key_angle
+		else
+			movement_dir |= movement_keys[key]
 	if(angle)
 		step_pixel_rotation(clamp(angle, -5, 5))
+	return movement_dir
 
 /client/proc/step_pixel_rotation(angle)
 	if(world.time < next_pixel_rotation)

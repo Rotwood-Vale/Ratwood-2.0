@@ -7,9 +7,10 @@
 	// But the move of one mob might poke the client of another, so we do this
 	if(!user)
 		return FALSE
+	var/movement_dir = user.intended_direction
 	if(src == user.mob && user.mob.shifting && !user.movement_blocked)
-		user.repeat_pixel_rotation()
-	var/movement_dir = user.intended_direction | user.next_move_dir_add
+		movement_dir = user.process_pixel_shift_input()
+	movement_dir |= user.next_move_dir_add
 	// If we're not movin anywhere, we aren't movin anywhere
 	// Safe because nothing adds to movement_dir after this moment
 	if(!movement_dir)
