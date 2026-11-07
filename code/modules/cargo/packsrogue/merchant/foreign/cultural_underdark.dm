@@ -33,7 +33,7 @@
 	ship_qty_max = 1
 
 /datum/supply_pack/rogue/underdark/poisondagger
-	name = "Underdark poison dagger"
+	name = "Underdark dagger"
 	cost = 250
 	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/corroded)
 	ship_qty_min = 1

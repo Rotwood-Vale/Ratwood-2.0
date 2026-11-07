@@ -578,10 +578,6 @@
 	icon_state = "warden_machete"
 	sheathe_icon = "warden_machete"
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/corroded/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/tipped_item)	//Lets you tip your weapon in poison
-
 /obj/item/rogueweapon/huntingknife/idagger/steel/dirk
 	name = "fanged dagger"
 	desc = "A vicious dagger of drow make with a cruel, curved, fanglike blade."
@@ -624,10 +620,6 @@
 	force = 22 // 10% - This is a 8 clickCD weapon
 	max_integrity = 200
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/pestrasickle/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/tipped_item)	//Lets you tip your weapon in poison
-
 /obj/item/rogueweapon/huntingknife/idagger/dtace
 	name = "'De Tace'"
 	desc = "The right hand of the right hand, this narrow length of steel serves as a quick solution to petty greviences."
@@ -637,10 +629,6 @@
 	max_integrity = 200
 	smeltresult = /obj/item/ingot/steel
 	picklvl = 1.3
-
-/obj/item/rogueweapon/huntingknife/idagger/dtace/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/tipped_item)	//Lets you tip your weapon in poison
 
 /obj/item/rogueweapon/huntingknife/idagger/blacksteel
 	name = "blacksteel dagger"
