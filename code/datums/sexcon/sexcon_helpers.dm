@@ -252,6 +252,7 @@
 		to_chat(buyer, span_warning("I don't have enough TRIUMPH ([MASSIVE_PENIS_TRIUMPH_COST] TRI) to support my great endowment. I'll have to settle for being merely large."))
 		return
 	buyer.adjust_triumphs(-MASSIVE_PENIS_TRIUMPH_COST, FALSE)
+	SStriumphs.record_triumph_sink(TRIUMPH_SINK_MASSIVE_PINTLE, MASSIVE_PENIS_TRIUMPH_COST)
 	ADD_TRAIT(src, TRAIT_MASSIVE_PINTLE, TRAIT_GENERIC)
 	penis.set_massive(TRUE)
 	update_body_parts(TRUE)

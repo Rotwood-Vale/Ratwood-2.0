@@ -48,6 +48,9 @@ SUBSYSTEM_DEF(triumphs)
 	// When the server session is about to end we will write it all in.
 	var/list/triumph_amount_cache = list()
 
+	// Triumphs spent per sink this wipe season. Assoc list "source" = amount. Saved at round end.
+	var/list/triumph_sinks = list()
+
 /*
 	TRIUMPH BUY MENU THINGS
 */
@@ -90,6 +93,7 @@ SUBSYSTEM_DEF(triumphs)
 	. = ..()
 
 	prep_the_triumphs_leaderboard()
+	load_triumph_sinks()
 
 
 	for(var/cur_path in subtypesof(/datum/triumph_buy))
@@ -239,6 +243,8 @@ SUBSYSTEM_DEF(triumphs)
 	if(fexists(leaderboard_file))
 		fdel(leaderboard_file)
 	WRITE_FILE(leaderboard_file, json_encode(triumph_leaderboard))
+
+	save_triumph_sinks()
 
 
 
