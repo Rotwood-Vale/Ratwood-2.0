@@ -1,9 +1,14 @@
 GLOBAL_VAR_INIT(ccg_music_channel, null)
 
 /// Arlette's soundtrack gets its own sound channel, reserved from SSsounds the first time it's needed.
+/// Called by name so this compiles both before and after the sound system overhaul renamed the proc
+/// (reserve_sound_channel_datumless() became reserve_sound_channel()).
 /proc/ccg_music_channel()
 	if(!GLOB.ccg_music_channel)
-		GLOB.ccg_music_channel = SSsounds.reserve_sound_channel_datumless()
+		if(hascall(SSsounds, "reserve_sound_channel_datumless"))
+			GLOB.ccg_music_channel = call(SSsounds, "reserve_sound_channel_datumless")()
+		else
+			GLOB.ccg_music_channel = call(SSsounds, "reserve_sound_channel")()
 	return GLOB.ccg_music_channel
 
 #define CHANNEL_GWYNT_MUSIC ccg_music_channel()
