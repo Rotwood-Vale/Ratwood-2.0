@@ -23,9 +23,9 @@
 /datum/component/hiding_spot/Initialize(occupied_message, hide_message, unhide_message)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	src.occupied_message = replacetext(occupied_message, "%LOCATION", "[parent]")
-	src.hide_message = replacetext(hide_message, "%LOCATION", "[parent]")
-	src.unhide_message = replacetext(unhide_message, "%LOCATION", "[parent]")
+	src.occupied_message = replacetext(occupied_message, "%LOCATION", "\improper[parent]")
+	src.hide_message = replacetext(hide_message, "%LOCATION", "\improper[parent]")
+	src.unhide_message = replacetext(unhide_message, "%LOCATION", "\improper[parent]")
 
 /datum/component/hiding_spot/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_delete))
@@ -52,6 +52,7 @@
 
 /// Hides the occupant inside of parent if they click on sneak intent
 /datum/component/hiding_spot/proc/on_attack_hand(datum/source, mob/living/user)
+	SIGNAL_HANDLER
 	if(!isliving(user))
 		return // No ghosts
 	var/mob/living/potential_hider = user
@@ -71,6 +72,13 @@
 		to_chat(potential_hider, span_warning(occupied_message))
 		return
 
+	INVOKE_ASYNC(src, PROC_REF(try_hide), user)
+	
+	return COMPONENT_NO_ATTACK_HAND
+
+/// Calculates the "hiding speed" and applies it to do_after
+/datum/component/hiding_spot/proc/try_hide(mob/living/user)
+	var/mob/living/potential_hider = user
 	var/sneak_level = potential_hider.get_skill_level(/datum/skill/misc/sneaking) || 0
 	var/sneaktime = max(1 SECONDS, 5 SECONDS - (sneak_level SECONDS)) // Hard caps at 1 second at Expert and above.
 
@@ -80,7 +88,6 @@
 	potential_hider.forceMove(parent)
 	to_chat(potential_hider, span_warning(hide_message))
 	hider = WEAKREF(potential_hider)
-	return COMPONENT_NO_ATTACK_HAND
 
 /// Kicks out the occupant, nulls out the reference so someone else can hide inside
 /datum/component/hiding_spot/proc/escape_hidingspot(mob/living/user)

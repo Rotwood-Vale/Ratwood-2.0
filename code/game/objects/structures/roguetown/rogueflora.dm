@@ -494,7 +494,10 @@
 	var/bushtype
 
 /obj/structure/flora/roguegrass/bush/Initialize(mapload)
-	AddComponent(/datum/component/hiding_spot)
+	AddComponent(/datum/component/hiding_spot, \
+		"Someone is already hiding inside %LOCATION!", \
+		"I hide inside %LOCATION!", \
+		"I come out from inside %LOCATION!")
 	if(isnull(bushtype))
 		var/area/rogue/bush_area = get_area(src)
 		if(!istype(bush_area) || !bush_area.town_area)
