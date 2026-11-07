@@ -50,7 +50,7 @@
 /datum/action/cooldown/spell/zizo/rituos/can_cast_spell(feedback = TRUE)
 	if(owner?.advjob == "Lunacy Embracer")
 		if(feedback)
-			owner.balloon_alert(owner, "Your wild nature forbids you from this rite.")
+			owner.balloon_alert(owner, "your wild nature forbids you from this rite.")
 		return FALSE
 
 	return ..()
