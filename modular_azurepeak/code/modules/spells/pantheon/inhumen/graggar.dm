@@ -573,7 +573,7 @@
 
 /obj/effect/proc_holder/spell/invoked/graggar_avatar
 	name = "Avatar of Rage"
-	desc = "Unleash your true rage for two minutes, granting pain immunity, infinite stamina, immunity to grabs, uncapped strength, and +2 strength. Removes stun-adjacent and stun effects, and can be cast while incapacitated."
+	desc = "Unleash your true rage for two minutes, granting pain immunity, infinite stamina (unless you have Dodge Expert), immunity to grabs, uncapped strength, and +2 strength. Removes stun-adjacent and stun effects, and can be cast while incapacitated."
 	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	overlay_state = "avatar"
@@ -627,7 +627,8 @@
 	ADD_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
 	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_MIRACLE)
 	ADD_TRAIT(owner, TRAIT_NOPAIN, TRAIT_MIRACLE)
-	ADD_TRAIT(owner, TRAIT_INFINITE_STAMINA, TRAIT_MIRACLE)
+	if(!HAS_TRAIT(owner, TRAIT_DODGEEXPERT))
+		ADD_TRAIT(owner, TRAIT_INFINITE_STAMINA, TRAIT_MIRACLE)
 	ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_MIRACLE)
 	shake_camera(owner, 5, 2) //Aura
 	to_chat(owner, span_userdanger(pick("KILL, FUCKING KILL! SLAUGHTER THEM!", "BLOOD, FUCKING SPILL THE BLOOD!", "BLOOD AND FURY, SPLITTING MY SKULL!", "I'LL KILL ANYTHING THAT MOVES!", "I'M FUCKING UNSTOPPABLE, I'LL BREAK THEM!", "GRAGGAR MAKE A WORLD OF BLOODSHED!", "GRAGGAR FEAST UPON MY SLAUGHTER!")))
