@@ -26,17 +26,6 @@
 	chunkcolor = "#8c9599"
 	material_category = ARMOR_MAT_LEATHER
 
-/obj/item/clothing/head/roguetown/helmet/MiddleClick(mob/user)
-	if(!ishuman(user))
-		return
-	if(flags_inv & HIDE_HEADTOP)
-		flags_inv &= ~HIDE_HEADTOP
-	else
-		flags_inv |= HIDE_HEADTOP
-	persist_inv_flags(HIDE_HEADTOP)
-	to_chat(user, span_info("I wear \the [src] [(flags_inv & HIDE_HEADTOP) ? "over" : "under"] my hair."))
-	user.update_inv_head()
-
 /obj/item/clothing/head/roguetown/helmet/getonmobprop(tag)
 	if(tag)
 		switch(tag)
