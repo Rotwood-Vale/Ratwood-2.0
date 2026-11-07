@@ -1085,12 +1085,12 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 	busy = TRUE
 	var/datum/status_effect/debuff/pylon_drain/drain = target.apply_status_effect(/datum/status_effect/debuff/pylon_drain)
 	drain.pylon = src
-	to_chat(user, span_notice("IT LATCHES ONTO [uppertext(target)]. IT WILL PRODUCE A DARK CRYSTAL IN 10 MINUTES. THEY MIGHT FIND THE PYLON."))
+	to_chat(user, span_notice("IT LATCHES ONTO [uppertext(target)]. IT WILL PRODUCE A DARK CRYSTAL IN 5 MINUTES. THEY MIGHT FIND THE PYLON."))
 	visible_message(span_danger("[src] vibrates menacingly!"))
 
 /datum/status_effect/debuff/pylon_drain
 	id = "pylon_drain"
-	duration = 10 MINUTES
+	duration = 5 MINUTES
 	tick_interval = 5 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/pylon_drain
 	var/obj/structure/pylon/pylon
