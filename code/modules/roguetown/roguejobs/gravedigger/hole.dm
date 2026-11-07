@@ -4,10 +4,6 @@
 	desc = "Just a small hole..."
 	icon_state = "hole1"
 	icon = 'icons/turf/roguefloor.dmi'
-	var/stage = 1
-	var/mutable_appearance/abovemob
-	var/turf/open/floor/rogue/dirt/mastert
-	var/faildirt = 0
 	mob_storage_capacity = 3
 	allow_dense = TRUE
 	opened = TRUE
@@ -17,6 +13,11 @@
 	max_integrity = 0
 	buckle_lying = 90
 	layer = 2.8
+	var/stage = 1
+	var/mutable_appearance/abovemob
+	var/turf/open/floor/rogue/dirt/mastert
+	var/faildirt = 0
+	var/clawing_out = FALSE
 
 /obj/structure/closet/dirthole/grave
 	desc = "A hole big enough for a coffin."
@@ -34,36 +35,43 @@
 	locked = TRUE
 
 /obj/structure/closet/dirthole/container_resist(mob/living/user) // like that once scene from Kill Bill, crawl out of a grave.
-	..()
-	if(!src.locked == TRUE) // if we're not locked in, we don't need to crawl out.
+	if(opened || !locked || stage != 4)
+		return ..()
+	if(clawing_out)
 		return
-	if(!src.opened == FALSE) // if it's already open we can just get out.
-		return
-	if(src.stage != 4) // if we're not in a closed grave, we don't need to crawl out.
-		return
-	var/mob/living/carbon/stuck = user // Let's get carbonated.
-	if (!stuck.has_hand_for_held_index(stuck.active_hand_index)) // Do we have a functioning hand?
-		to_chat(user, span_warning("I can't dig out of here, I can't move my hand!"))
-		return
-	if (stuck.handcuffed) // Are we handcuffed?
-		to_chat(user, span_warning("I can't dig out of here, I'm handcuffed!"))
-		return
+	if(iscarbon(user))
+		var/mob/living/carbon/stuck = user
+		if(!stuck.has_hand_for_held_index(stuck.active_hand_index))
+			to_chat(user, span_warning("I can't dig out of here, I can't move my hand!"))
+			return
+		if(stuck.handcuffed)
+			to_chat(user, span_warning("I can't dig out of here, I'm handcuffed!"))
+			return
+
+	clawing_out = TRUE
 	to_chat(user, span_warning("I start clawing at the dirt for a way out!"))
 	playsound(src, 'sound/foley/climb.ogg', 100, TRUE) // dirt shaking noises.
-	playsound(usr, 'sound/foley/climb.ogg', 100, TRUE)
-	if (do_after(user, 15 SECONDS, TRUE, src))
-		user.visible_message(span_alert("A hand bursts from [src]!"),span_alert("I've managed to penetrate the surface of [src] with my hand!"))
-		playsound(src, 'sound/foley/plantcross1.ogg', 100, TRUE)
-		playsound(usr, 'sound/foley/plantcross1.ogg', 100, TRUE)
-		if (do_after(user, 10 SECONDS, TRUE, src))
-			src.stage--
-			src.update_icon()
-			src.climb_offset = 0
-			src.open()
-			playsound(src, 'sound/foley/breaksound.ogg', 100, TRUE)
-			playsound(src, 'sound/foley/bodyfall (3).ogg', 90, TRUE)
-			user.visible_message(span_warning("[user] emerges from [src]!"),span_alert("I emerge from [src]!"))
-			user.log_message("clawed their way out of [src]", LOG_ATTACK)
+	if(!do_after(user, 15 SECONDS, TRUE, src))
+		clawing_out = FALSE
+		return
+	user.visible_message(span_alert("A hand bursts from [src]!"), span_alert("I've managed to penetrate the surface of [src] with my hand!"))
+	playsound(src, 'sound/foley/plantcross1.ogg', 100, TRUE)
+	if(!do_after(user, 10 SECONDS, TRUE, src))
+		clawing_out = FALSE
+		return
+	clawing_out = FALSE
+
+	stage = 3
+	climb_offset = 0
+	locked = FALSE
+	open()
+	if(ishuman(user))
+		var/mob/living/carbon/human/emerged = user
+		emerged.buried = FALSE
+	playsound(src, 'sound/foley/breaksound.ogg', 100, TRUE)
+	playsound(src, 'sound/foley/bodyfall (3).ogg', 90, TRUE)
+	user.visible_message(span_warning("[user] emerges from [src]!"), span_alert("I emerge from [src]!"))
+	user.log_message("clawed their way out of [src]", LOG_ATTACK)
 
 /obj/structure/closet/dirthole/closed/loot/Initialize(mapload)
 	. = ..()
@@ -103,6 +111,9 @@
 
 /obj/structure/closet/dirthole/toggle(mob/living/user)
 	return
+
+/obj/structure/closet/dirthole/relay_container_resist(mob/living/user, obj/O)
+	container_resist(user)
 
 /obj/structure/closet/dirthole/attack_hand(mob/living/user)
 	. = ..()

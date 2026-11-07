@@ -102,6 +102,7 @@ And it also helps for the character set panel
 	if(is_vampire)
 		cache_pre_embrace_state(H)
 		apply_clan_components(H)
+		H.AddComponent(/datum/component/vampire_torpor)
 		RegisterSignal(H, COMSIG_HUMAN_LIFE, PROC_REF(on_vampire_life))
 
 		// Apply vampire-specific traits
@@ -110,6 +111,7 @@ And it also helps for the character set panel
 
 		implant_vampire_eyes(H)
 		RegisterSignal(H, COMSIG_MOB_ORGAN_REMOVED, PROC_REF(on_organ_loss))
+		RegisterSignal(H, COMSIG_LIVING_FULLY_HEALED, PROC_REF(on_fully_healed))
 		// Apply vampire-specific changes
 		H.mob_biotypes = MOB_UNDEAD
 		H.adjust_maxbloodpool(2000)
@@ -292,7 +294,7 @@ And it also helps for the character set panel
 	SHOULD_CALL_PARENT(TRUE)
 
 	// the organ hook has to go first, it re-implants the vampire eyes the moment we pull them out below
-	UnregisterSignal(vampire, list(COMSIG_HUMAN_LIFE, COMSIG_MOB_ORGAN_REMOVED))
+	UnregisterSignal(vampire, list(COMSIG_HUMAN_LIFE, COMSIG_MOB_ORGAN_REMOVED, COMSIG_LIVING_FULLY_HEALED))
 	restore_mortal_eyes(vampire)
 
 	var/datum/action/clan_menu/clan_action = locate(/datum/action/clan_menu) in vampire.actions
@@ -312,6 +314,8 @@ And it also helps for the character set panel
 	vampire.update_body()
 	if(vampire.dna?.species) // surely it's impossible to not have a species?
 		vampire.mob_biotypes = vampire.dna.species.inherent_biotypes
+
+	qdel(vampire.GetComponent(/datum/component/vampire_torpor))
 
 	var/datum/component/sunlight_vulnerability/sun_comp = vampire.GetComponent(/datum/component/sunlight_vulnerability)
 	if(sun_comp)
@@ -576,6 +580,11 @@ And it also helps for the character set panel
 		eyecache["second_color"],
 		TRUE,
 	)
+
+/datum/clan/proc/on_fully_healed(mob/living/carbon/human/healed, admin_revive)
+	SIGNAL_HANDLER
+	if(!istype(healed.getorganslot(ORGAN_SLOT_EYES), /obj/item/organ/eyes/night_vision/vampire))
+		implant_vampire_eyes(healed)
 
 /// Prevents tongue and eye loss by the vampyre
 /datum/clan/proc/on_organ_loss(mob/living/carbon/lost_organ, obj/item/organ/removed, special, drop_if_replaced)
