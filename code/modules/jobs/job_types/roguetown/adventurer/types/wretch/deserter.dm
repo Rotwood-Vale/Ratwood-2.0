@@ -186,7 +186,7 @@
 	pants = /obj/item/clothing/under/roguetown/platelegs
 	neck = /obj/item/clothing/neck/roguetown/bevor
 	cloak = /obj/item/clothing/cloak/tabard/black
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
 	wrists = /obj/item/clothing/wrists/roguetown/bracers
 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor
 	belt = /obj/item/storage/belt/rogue/leather/steel/tasset //less meta
@@ -251,7 +251,7 @@
 		/datum/skill/misc/tracking = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/medicine = SKILL_LEVEL_APPRENTICE, //No miracles to deal w/ stabs through plate/maile armor
 		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE, //So you can repair your heater shield + build in the bogs
-		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE, //So you can maintain your metal gear
+		/datum/skill/craft/masonry = SKILL_LEVEL_APPRENTICE, //So you can build additional walls and misc decorations
 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_APPRENTICE, //Ditto
 	)
 
