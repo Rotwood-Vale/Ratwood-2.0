@@ -1,4 +1,23 @@
 
+/// Names of absent organs expected by this patient's species and customized anatomy.
+/mob/living/carbon/human/proc/get_missing_organs()
+	var/list/missing_organs = list()
+	var/datum/species/species = dna?.species
+	if(!species)
+		return missing_organs
+	var/list/expected_organs = species.organs.Copy()
+	for(var/slot in dna.organ_dna)
+		var/datum/organ_dna/organ_dna = dna.organ_dna[slot]
+		expected_organs[slot] = organ_dna.can_create_organ() ? organ_dna.organ_type : null
+	for(var/slot in expected_organs)
+		if(getorganslot(slot) || !species.is_organ_slot_allowed(src, slot))
+			continue
+		var/obj/item/organ/organ_type = expected_organs[slot]
+		if(!organ_type)
+			continue
+		missing_organs += initial(organ_type.name)
+	return missing_organs
+
 /mob/living/carbon/human/proc/change_name(new_name)
 	real_name = new_name
 
