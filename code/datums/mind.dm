@@ -1146,10 +1146,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 									// Set armor class to LIGHT for all loadout armor
 									if(C.armor_class != ARMOR_CLASS_NONE)
 										C.armor_class = ARMOR_CLASS_LIGHT
-									// Cap protection at padded level, so weaker items aren't raised and real armor stays worth having
-									var/datum/armor/_cap = getArmor(arglist(ARMOR_PADDED_BAD))
-									C.armor = C.armor.setRating(min(C.armor.blunt, _cap.blunt), min(C.armor.slash, _cap.slash), min(C.armor.stab, _cap.stab), min(C.armor.piercing, _cap.piercing))
-									// Randomize max integrity around light base by ±10% and ensure full integrity
+									C.armor = C.armor.setRating(C.armor.blunt > 0 ? max(1, C.armor.blunt - 2) : 0, C.armor.slash > 0 ? max(1, C.armor.slash - 2) : 0, C.armor.stab > 0 ? max(1, C.armor.stab - 2) : 0, C.armor.piercing > 0 ? max(1, C.armor.piercing - 2) : 0)
 									var/_base_int = ARMOR_INT_CHEST_LIGHT_BASE
 									var/_variance = round(_base_int * 0.1)
 									C.max_integrity = _base_int + rand(-_variance, _variance)

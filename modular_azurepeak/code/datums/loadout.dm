@@ -1318,6 +1318,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Eastern Cloak"
 	path = /obj/item/clothing/cloak/eastcloak1
 
+/datum/loadout_item/kazengun_cloak
+	name = "Jinbaori"
+	path = /obj/item/clothing/cloak/kazengun
+
 /datum/loadout_item/shoulderpad_metal
 	name = "Plate spaulders"
 	path = /obj/item/clothing/cloak/volfmantle/shoulderpad
@@ -1980,6 +1984,11 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1
 	triumph_cost = 2
 
+/datum/loadout_item/tri_eastern_pants_2
+	name = "Eastern Pants (White)"
+	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants2
+	triumph_cost = 2
+
 /datum/loadout_item/tri_grenzelhoft_pants
 	name = "Grenzelhoft Pants"
 	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants
@@ -2020,6 +2029,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_hierophant_cloak
 	name = "Hierophant Cloak"
 	path = /obj/item/clothing/cloak/hierophant
+
+/datum/loadout_item/tri_kazengun_cloak
+	name = "Kazengun Cloak"
+	path = /obj/item/clothing/cloak/kazengun
 
 
 
