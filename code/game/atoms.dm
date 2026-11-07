@@ -402,7 +402,7 @@
 
 ///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
-	return "[thats? "That's ":""][get_examine_icon(user)][get_examine_name(user)]"
+	return "[thats? "That's [get_examine_icon(user)]":""][get_examine_name(user)]"
 
 /atom/proc/get_inspect_button()
 	return ""
