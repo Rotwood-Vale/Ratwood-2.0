@@ -1057,7 +1057,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	. = ..()
 	if(slot != ITEM_SLOT_HANDS || !user.mind)
 		return
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/self/deploy_turret)
+	user.mind.AddSpell(new /datum/action/cooldown/spell/deploy_turret)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/self/direct_turrets)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/self/scrap_turrets)
 
@@ -1065,7 +1065,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	. = ..()
 	if(!user.mind)
 		return
-	user.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/deploy_turret)
+	user.mind.RemoveSpell(/datum/action/cooldown/spell/deploy_turret)
 	user.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/direct_turrets)
 	user.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/scrap_turrets)
 
@@ -1120,36 +1120,38 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	to_chat(user, span_notice("My sentries have disassembled."))
 	return TRUE
 
-/obj/effect/proc_holder/spell/self/deploy_turret
+/datum/action/cooldown/spell/deploy_turret
 	name = "Deploy Turret"
 	desc = "Buildin' a Sentry."
-	recharge_time = 20 SECONDS
-	chargedloop = null
+	button_icon = 'icons/mob/actions/zizomiracles.dmi'
+	button_icon_state = "toil"
+	click_to_activate = TRUE
+	self_cast_possible = FALSE
+	cast_range = 3
+	charge_required = TRUE
+	charge_time = 4 SECONDS
+	charge_swingdelay_type = SWINGDELAY_CANCEL
+	charge_slowdown = CHARGING_SLOWDOWN_MEDIUM
+	cooldown_time = 20 SECONDS
 
-/obj/effect/proc_holder/spell/self/deploy_turret/cast(list/targets, mob/living/user = usr)
+/datum/action/cooldown/spell/deploy_turret/cast(atom/cast_on)
 	. = ..()
-	var/obj/item/rogueweapon/mace/maul/toil/W = user.get_active_held_item()
+	var/obj/item/rogueweapon/mace/maul/toil/W = owner.get_active_held_item()
 	if(!istype(W))
-		to_chat(user, span_warning("I must hold the Tool."))
-		revert_cast()
+		to_chat(owner, span_warning("I must hold the Tool."))
 		return FALSE
 	for(var/obj/structure/toilturret/existing as anything in W.turrets.Copy())
 		if(QDELETED(existing))
 			W.turrets -= existing
 	if(length(W.turrets) >= W.max_turrets)
-		to_chat(user, span_warning("Too many sentries!"))
-		revert_cast()
+		to_chat(owner, span_warning("Too many sentries!"))
 		return FALSE
-	var/turf/T = get_step(user, user.dir)
+	var/turf/T = get_turf(cast_on)
 	if(!T || T.density)
-		to_chat(user, span_warning("No room!"))
-		revert_cast()
+		to_chat(owner, span_warning("No room!"))
 		return FALSE
-	if(!do_after(user, 4 SECONDS, target = T))
-		revert_cast()
-		return FALSE
-	W.turrets += new /obj/structure/toilturret(T, user, W)
-	to_chat(user, span_notice("The turret whirs to life!"))
+	W.turrets += new /obj/structure/toilturret(T, owner, W)
+	to_chat(owner, span_notice("The turret whirs to life!"))
 	return TRUE
 
 /obj/structure/toilturret
