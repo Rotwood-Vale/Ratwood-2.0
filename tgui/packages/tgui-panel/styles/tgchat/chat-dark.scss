@@ -909,12 +909,11 @@ h2.alert {
   padding: 0;
 }
 
+// $chat-size in CharacterGallery.scss previews this size
 .chat_headshot {
   position: relative;
-  width:  min(100px, 100%);
-  height: min(100px, 100%);
-  max-width: 100px;
-  max-height: 100px;
+  width: min(125px, 100%);
+  max-width: 125px;
   display: inline-block;
 }
 
@@ -925,20 +924,17 @@ h2.alert {
   transition: transform 0.35s ease;
   transform-origin: top left;
   will-change: transform;
-}
-
-.chat_headshot:hover > img {
-  transform: scale(2.5);
-  z-index: 100;
-  border-radius: 2px;
-}
-
-.chat_headshot img {
   pointer-events: none;
   user-select: none;
 }
 
-// A framed headshot crops its picture inside this box, so the hover enlarges the box instead
+.chat_headshot > img {
+  height: auto;
+  max-height: 125px;
+}
+
+// The hover scales this box rather than the img inside it. The box crops its picture with overflow hidden, so
+// scaling the img would only zoom further into the crop instead of enlarging the headshot
 .chat_headshot_frame {
   position: relative;
   width: 100%;
@@ -948,8 +944,17 @@ h2.alert {
   transition: transform 0.35s ease;
   transform-origin: top left;
   will-change: transform;
+  // As with the unframed picture, only the 125 px box keeps the hover, not the enlarged frame
+  pointer-events: none;
 }
 
+// Undoes the will-change: transform that .chat_headshot img sets. Only .chat_headshot_frame scales on hover, so
+// without this each framed headshot in chat holds a compositing layer for a picture that never moves
+.chat_headshot_frame img {
+  will-change: auto;
+}
+
+.chat_headshot:hover > img,
 .chat_headshot:hover .chat_headshot_frame {
   transform: scale(2.5);
   z-index: 100;

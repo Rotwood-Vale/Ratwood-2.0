@@ -1,4 +1,11 @@
-import { Button, Section, Stack, Table, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Section,
+  Stack,
+  Table,
+  Tooltip,
+} from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
@@ -9,6 +16,7 @@ type ToggleEntry = {
   label: string;
   enabled: BooleanLike;
   desc: string;
+  override_note?: string;
 };
 
 type SelectOption = {
@@ -81,6 +89,11 @@ const ToggleEntryRow = ({ entry }: { entry: ToggleEntry }) => {
             onClick={() => act('toggle', { id: entry.id })}
           >
             {entry.label}
+            {!!entry.override_note && (
+              <Box as="span" color="label" ml={1}>
+                ({entry.override_note})
+              </Box>
+            )}
           </Button.Checkbox>
         </Tooltip>
       </Table.Cell>

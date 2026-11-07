@@ -1696,6 +1696,7 @@
 #include "code\modules\chatter\chatter.dm"
 #include "code\modules\client\border_control.dm"
 #include "code\modules\client\character_gallery.dm"
+#include "code\modules\client\character_gallery_images.dm"
 #include "code\modules\client\client_colour.dm"
 #include "code\modules\client\client_defines.dm"
 #include "code\modules\client\client_procs.dm"

@@ -130,10 +130,12 @@
 
 	var/headshot_link = null
 	var/headshot_zoom = HEADSHOT_ZOOM_MIN
-	var/headshot_x = HEADSHOT_POSITION_DEFAULT
-	var/headshot_y = HEADSHOT_POSITION_DEFAULT
+	var/headshot_x = HEADSHOT_X_DEFAULT
+	var/headshot_y = HEADSHOT_Y_DEFAULT
 	var/headshot_framed = FALSE
 	var/headshot_frame_chat = FALSE
+	var/image_backdrop = GALLERY_BACKDROP_PICTURE
+	var/list/card_backgrounds = list()
 	var/origin = "Unknown"
 	var/flavortext = null
 	var/ooc_notes = null

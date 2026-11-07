@@ -1,12 +1,17 @@
+import type { BooleanLike } from 'tgui-core/react';
+
+import type { GallerySettings } from './ExamineGallery/effects';
+
 export type ExaminePanelData = {
   // Identity
   character_name: string;
   headshot: string;
+  /** Whether headshot is a real picture rather than the placeholder */
+  has_headshot: BooleanLike;
   headshot_zoom: number;
   headshot_x: number;
   headshot_y: number;
-  headshot_framed: boolean;
-  is_admin: boolean;
+  is_admin: BooleanLike;
   obscured: boolean;
   // Descriptions
   flavor_text: string;
@@ -25,4 +30,8 @@ export type ExaminePanelData = {
   is_vet: boolean;
   is_naked: boolean;
   nsfw_examine_always: Boolean;
+  gallery: GallerySettings;
+  image_backdrop: string;
+  card_backgrounds: Record<string, string>;
+  gallery_figures: string[];
 };

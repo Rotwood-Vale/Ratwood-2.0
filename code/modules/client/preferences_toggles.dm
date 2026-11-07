@@ -101,6 +101,17 @@
 		list("id" = "nsfw_examine", "label" = "Always Show NSFW Examine", "enabled" = !!owner.prefs.nsfw_examine_always, "desc" = "Always display NSFW examine info, even when clothed."),
 	)
 
+	var/plain_note = owner.prefs.gallery_plain ? "off while Plain Gallery is on" : null
+	var/list/gallery_entries = list(
+		list("id" = "gallery_plain", "label" = "Plain Gallery", "enabled" = !!owner.prefs.gallery_plain, "desc" = "The I Hate Whimsy toggle or the My Poor Computer toggle. Shows only the artwork and basic navigation: no cards, frames, backdrops, gallery animations, sounds or candle flicker. Your appearance choices and the settings below are kept for when you turn it off."),
+		list("id" = "gallery_backdrop", "label" = "Gallery Backdrop", "enabled" = !!owner.prefs.gallery_backdrop, "desc" = "Show the backdrop each character's owner chose behind the art card in the examine Image Gallery. Turn it off if the gallery stutters.", "override_note" = plain_note),
+		list("id" = "gallery_card_deal", "label" = "Art Card Deal", "enabled" = !!owner.prefs.gallery_card_deal, "desc" = "Deal the art cards in like a hand of cards in the examine Image Gallery. Turned off, they fade instead.", "override_note" = plain_note),
+		list("id" = "gallery_image_sounds", "label" = "Art Card Sounds", "enabled" = !!owner.prefs.gallery_image_sounds, "desc" = "Play a sound when changing art cards in the examine Image Gallery.", "override_note" = plain_note),
+		list("id" = "gallery_image_tilt", "label" = "Art Card Tilt", "enabled" = !!owner.prefs.gallery_image_tilt, "desc" = "Lean the art card toward your mouse in the examine Image Gallery.", "override_note" = plain_note),
+		list("id" = "gallery_candle_flicker", "label" = "Candle Flicker", "enabled" = !!owner.prefs.gallery_candle_flicker, "desc" = "Make the candle glow flicker while your mouse moves over the examine Image Gallery, and anything in its backdrop blink now and then.", "override_note" = plain_note),
+		list("id" = "gallery_easter_eggs", "label" = "Easter Eggs", "enabled" = !!owner.prefs.gallery_easter_eggs, "desc" = "A few surprises hidden in the Image Gallery. Your other gallery settings stay as they are.", "override_note" = plain_note),
+	)
+
 	var/list/visual_entries = list(
 		list("id" = "screen_shake", "label" = "Screen Shake", "enabled" = !!owner.prefs.shake, "desc" = "Enable camera shake during impactful events."),
 		list("id" = "no_redflash", "label" = "Anti-Eyestrain Mode", "enabled" = !!owner.prefs.no_redflash, "desc" = "Disables red & white overlays flashing on screen from pain or other events."),
@@ -158,6 +169,7 @@
 		list("name" = "Character", "entries" = character_entries),
 		list("name" = "Graphics", "entries" = graphics_entries, "selects" = graphics_selects),
 		list("name" = "Visuals", "entries" = visual_entries),
+		list("name" = "Character Gallery", "entries" = gallery_entries),
 		list("name" = "Gameplay", "entries" = gameplay_entries),
 		list("name" = "Audio", "entries" = audio_entries),
 		list("name" = "Content", "entries" = content_entries),
@@ -194,6 +206,20 @@
 				owner.toggle_topexamine()
 			if("mouseover_role")
 				owner.toggle_mouseover_role()
+			if("gallery_plain")
+				owner.toggle_gallery_plain()
+			if("gallery_backdrop")
+				owner.toggle_gallery_backdrop()
+			if("gallery_card_deal")
+				owner.toggle_gallery_card_deal()
+			if("gallery_image_sounds")
+				owner.toggle_gallery_image_sounds()
+			if("gallery_image_tilt")
+				owner.toggle_gallery_image_tilt()
+			if("gallery_candle_flicker")
+				owner.toggle_gallery_candle_flicker()
+			if("gallery_easter_eggs")
+				owner.toggle_gallery_easter_eggs()
 			if("nsfw_examine")
 				owner.nsfw_examine_always()
 			if("examine_blocks")
@@ -358,6 +384,90 @@
 			to_chat(src, "Role text will now be shown under player mouseover names.")
 		else
 			to_chat(src, "Role text will no longer be shown under player mouseover names.")
+
+/client/verb/toggle_gallery_plain()
+	set category = "Options"
+	set name = "Toggle Plain Gallery"
+	set hidden = 1
+	if(prefs)
+		prefs.gallery_plain = !prefs.gallery_plain
+		prefs.queue_save_preferences()
+		if(prefs.gallery_plain)
+			to_chat(src, "The Image Gallery will show only artwork and basic navigation the next time you open it, with no cards, frames, backdrops, gallery animations or sounds.")
+		else
+			to_chat(src, "The Image Gallery will follow your other gallery settings the next time you open it.")
+
+/client/verb/toggle_gallery_backdrop()
+	set category = "Options"
+	set name = "Toggle Gallery Backdrop"
+	set hidden = 1
+	if(prefs)
+		prefs.gallery_backdrop = !prefs.gallery_backdrop
+		prefs.queue_save_preferences()
+		if(prefs.gallery_backdrop)
+			to_chat(src, "Gallery backdrops enabled.")
+		else
+			to_chat(src, "Gallery backdrops disabled.")
+
+/client/verb/toggle_gallery_card_deal()
+	set category = "Options"
+	set name = "Toggle Art Card Deal"
+	set hidden = 1
+	if(prefs)
+		prefs.gallery_card_deal = !prefs.gallery_card_deal
+		prefs.queue_save_preferences()
+		if(prefs.gallery_card_deal)
+			to_chat(src, "Art cards will now be dealt in.")
+		else
+			to_chat(src, "Art cards will now fade in.")
+
+/client/verb/toggle_gallery_image_sounds()
+	set category = "Options"
+	set name = "Toggle Art Card Sounds"
+	set hidden = 1
+	if(prefs)
+		prefs.gallery_image_sounds = !prefs.gallery_image_sounds
+		prefs.queue_save_preferences()
+		if(prefs.gallery_image_sounds)
+			to_chat(src, "Art card sounds enabled.")
+		else
+			to_chat(src, "Art card sounds disabled.")
+
+/client/verb/toggle_gallery_image_tilt()
+	set category = "Options"
+	set name = "Toggle Art Card Tilt"
+	set hidden = 1
+	if(prefs)
+		prefs.gallery_image_tilt = !prefs.gallery_image_tilt
+		prefs.queue_save_preferences()
+		if(prefs.gallery_image_tilt)
+			to_chat(src, "Art card tilt enabled.")
+		else
+			to_chat(src, "Art card tilt disabled.")
+
+/client/verb/toggle_gallery_candle_flicker()
+	set category = "Options"
+	set name = "Toggle Gallery Candle Flicker"
+	set hidden = 1
+	if(prefs)
+		prefs.gallery_candle_flicker = !prefs.gallery_candle_flicker
+		prefs.queue_save_preferences()
+		if(prefs.gallery_candle_flicker)
+			to_chat(src, "Gallery candle flicker enabled.")
+		else
+			to_chat(src, "Gallery candle flicker disabled.")
+
+/client/verb/toggle_gallery_easter_eggs()
+	set category = "Options"
+	set name = "Toggle Gallery Easter Eggs"
+	set hidden = 1
+	if(prefs)
+		prefs.gallery_easter_eggs = !prefs.gallery_easter_eggs
+		prefs.queue_save_preferences()
+		if(prefs.gallery_easter_eggs)
+			to_chat(src, "Gallery easter eggs enabled.")
+		else
+			to_chat(src, "Gallery easter eggs disabled.")
 
 /client/verb/nsfw_examine_always()
 	set category = "Options"

@@ -4,9 +4,9 @@ import { Button, Stack } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { PageButton } from '../components/PageButton';
 import { Window } from '../layouts';
+import { ImageGalleryPage } from './ExamineGallery';
 import { ExaminePanelData } from './ExaminePanelData';
 import { FlavorTextPage } from './ExaminePanelPages';
-import { ImageGalleryPage } from './ExaminePanelPages';
 
 enum Page {
   FlavorText,
@@ -47,7 +47,8 @@ export const ExaminePanel = (props) => {
   const [collapsed, setCollapsed] = useState(false);
   const [expandedWidth, setExpandedWidth] = useState(DEFAULT_WIDTH);
 
-  const hasGallery = img_gallery.length > 0 || nsfw_img_gallery.length > 0;
+  const hasGallery =
+    (img_gallery?.length ?? 0) > 0 || (nsfw_img_gallery?.length ?? 0) > 0;
   const showTabs = hasGallery && !collapsed;
   const showGallery =
     hasGallery && !collapsed && currentPage === Page.ImageGallery;

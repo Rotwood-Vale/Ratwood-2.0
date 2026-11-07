@@ -279,6 +279,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/top_examine = FALSE
 	var/show_mouseover_role = FALSE
 	var/nsfw_examine_always = FALSE
+	var/gallery_plain = FALSE
+	var/gallery_backdrop = TRUE
+	var/gallery_card_deal = TRUE
+	var/gallery_image_sounds = TRUE
+	var/gallery_image_tilt = TRUE
+	var/gallery_candle_flicker = TRUE
+	var/gallery_easter_eggs = TRUE
 	var/mute_animal_emotes = FALSE
 	var/autoconsume = FALSE
 	var/autowoodcut = TRUE
@@ -337,11 +344,16 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/update_mutant_colors = TRUE
 
 	var/headshot_link
+	var/list/gallery_alternates = list()
+	/// Links that fail validation or overflow their gallery, never shown to anyone but their owner
+	var/list/blocked_links = list()
 	var/headshot_zoom = HEADSHOT_ZOOM_MIN
-	var/headshot_x = HEADSHOT_POSITION_DEFAULT
-	var/headshot_y = HEADSHOT_POSITION_DEFAULT
+	var/headshot_x = HEADSHOT_X_DEFAULT
+	var/headshot_y = HEADSHOT_Y_DEFAULT
 	var/headshot_framed = FALSE
 	var/headshot_frame_chat = FALSE
+	var/image_backdrop = GALLERY_BACKDROP_PICTURE
+	var/list/card_backgrounds = list()
 	var/chatheadshot = FALSE
 	var/ooc_extra
 	var/ooc_extra_img
@@ -362,6 +374,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/bark_variance = 0.2
 	COOLDOWN_DECLARE(bark_previewing)
 	COOLDOWN_DECLARE(descriptor_preview)
+	/// Saves and Undo each open the whole savefile, which stalls the server for longer the more slots it holds
+	COOLDOWN_DECLARE(savefile_cooldown)
+	/// As savefile_cooldown for Change Character, apart from it so a save can be followed straight away by a change
+	COOLDOWN_DECLARE(slot_choice_cooldown)
 	var/hear_barks = TRUE
 
 	// PATREON
@@ -542,12 +558,16 @@ GLOBAL_LIST_EMPTY(chosen_names)
 #define APPEARANCE_CATEGORY_COLUMN "<td valign='top' width='14%'>"
 #define MAX_MUTANT_ROWS 4
 
-/datum/preferences/proc/ShowChoices(mob/user, tabchoice)
+/datum/preferences/proc/ShowChoices(mob/user, tabchoice, refresh_only = FALSE)
 	if(!user || !user.client)
+		return
+	// winget sleeps, so the client may be gone by the time it answers
+	if(refresh_only && (winget(user, "preferencess_window", "is-visible") != "true" || !user?.client))
 		return
 	if(slot_randomized)
 		load_character(default_slot) // Reloads the character slot. Prevents random features from overwriting the slot if saved.
 		slot_randomized = FALSE
+	refresh_character_gallery(values_changed = FALSE)
 	var/list/dat = list("<center>")
 	if(tabchoice)
 		current_tab = tabchoice
@@ -827,7 +847,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<br><b>Markings:</b> <a href='?_src_=prefs;preference=markings;task=menu'>Change</a>"
 			dat += "<br><b>Descriptors:</b> <a href='?_src_=prefs;preference=descriptors;task=menu'>Change</a>"
 
-			dat += "<br><b>Character Gallery:</b> <a href='?_src_=prefs;preference=character_gallery;task=input'>Change</a>"
+			dat += "<br><b>Character Gallery:</b> <a href='?_src_=prefs;preference=character_gallery;task=input'>Change</a> <a href='?_src_=prefs;preference=ooc_preview;task=input'><b>Preview Examine</b></a>"
 			dat += character_gallery_thumbnails()
 
 			dat += "<br><b>[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "<font color = '#802929'>" : ""]Flavortext:[(length(flavortext) < MINIMUM_FLAVOR_TEXT) ? "</font>" : ""]</b><a href='?_src_=prefs;preference=formathelp;task=input'>(?)</a><a href='?_src_=prefs;preference=flavortext;task=input'>Change</a>"
@@ -841,7 +861,6 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			dat += "<br><b>Song:</b> <a href='?_src_=prefs;preference=ooc_extra;task=input'>Change URL</a>"
 			dat += "<a href='?_src_=prefs;preference=change_title;task=input'>Change Title</a>"
 			dat += "<a href='?_src_=prefs;preference=change_artist;task=input'>Change Artist</a>"
-			dat += "<br><a href='?_src_=prefs;preference=ooc_preview;task=input'><b>Preview Examine</b></a>"
 
 			dat += "</td>"
 
@@ -1121,9 +1140,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	if(user.client?.is_new_player())
 		dat = list("<center>REGISTER!</center>")
 
-	winshow(user, "preferencess_window", TRUE)
-	winset(user, "preferencess_window", "size=820x850")
-	winset(user, "preferencess_window", "pos=280,80")
+	if(!refresh_only)
+		winshow(user, "preferencess_window", TRUE)
+		winset(user, "preferencess_window", "size=820x850")
+		winset(user, "preferencess_window", "pos=280,80")
 	var/datum/browser/noclose/popup = new(user, "preferences_browser", "<div align='center'>[used_title]</div>")
 	popup.set_window_options("can_close=0")
 	popup.set_content(dat.Join())
@@ -1580,6 +1600,8 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 /datum/preferences/Topic(href, href_list, hsrc)			//yeah, gotta do this I guess..
 	. = ..()
+	if(usr?.client != parent)
+		return
 	if(href_list["close"])
 		var/client/C = usr.client
 		if(C)
@@ -2323,15 +2345,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					log_game("[user] has set their ERP preferences'.")
 
 				if("ooc_preview")
-					var/datum/examine_panel/preview_examine_panel = new(user)
-					preview_examine_panel.pref = src
-					preview_examine_panel.holder = user
-					preview_examine_panel.viewing = user
-					preview_examine_panel.previewing = "character"
-					preview_examine_panel.ui_interact(user)
+					open_examine_preview(user, GALLERY_FORM_CHARACTER)
+					return
 
 				if("character_gallery")
-					open_character_gallery(user, "character")
+					open_character_gallery(user, GALLERY_FORM_CHARACTER)
 					return
 
 				if("rumour_preview")
@@ -2976,15 +2994,25 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 							preview_erect_state = ERECT_STATE_NONE
 
 				if("save")
-					save_preferences()
-					save_character()
-					to_chat(user, span_notice("CHARACTER SAVED."))
+					if(savefile_ready(user, "saving"))
+						COOLDOWN_START(src, savefile_cooldown, SAVEFILE_COOLDOWN_TIME)
+						save_preferences()
+						save_character()
+						to_chat(user, span_notice("CHARACTER SAVED."))
 
 				if("load")
-					load_preferences()
-					load_character()
+					if(savefile_ready(user, "undoing"))
+						COOLDOWN_START(src, savefile_cooldown, SAVEFILE_COOLDOWN_TIME)
+						flush_queued_save()
+						load_preferences()
+						load_character()
 
 				if("changeslot")
+					if(!COOLDOWN_FINISHED(src, slot_choice_cooldown))
+						to_chat(user, span_warning("Wait a moment before changing character again."))
+						ShowChoices(user)
+						return 1
+					COOLDOWN_START(src, slot_choice_cooldown, SAVEFILE_COOLDOWN_TIME)
 					var/list/choices = list()
 					if(path)
 						var/savefile/S = new /savefile(path)
@@ -3009,6 +3037,17 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 
 	ShowChoices(user)
 	return 1
+
+/**
+ * Whether Save and Undo may open the savefile, warning the user while savefile_cooldown runs
+ *
+ * It never starts the cooldown, so each caller starts it once it goes ahead
+ */
+/datum/preferences/proc/savefile_ready(mob/user, action_text)
+	if(COOLDOWN_FINISHED(src, savefile_cooldown))
+		return TRUE
+	to_chat(user, span_warning("Wait a moment before [action_text] again."))
+	return FALSE
 
 /datum/preferences/proc/resolve_loadout_to_color(item_path)
 	if (loadout && (item_path == loadout.path) && loadout_1_hex && length(loadout_1_hex))
@@ -3223,10 +3262,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.dna.real_name = character.real_name
 
 	character.headshot_link = headshot_link
-	character.headshot_zoom = headshot_zoom
-	character.headshot_x = headshot_x
-	character.headshot_y = headshot_y
-	character.headshot_framed = headshot_framed
+	COPY_GALLERY_PRESENTATION(character, src)
 	character.headshot_frame_chat = headshot_frame_chat
 
 	character.origin = origin ? origin.name : "Unknown"
@@ -3367,20 +3403,10 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 		reset_all_customizer_accessory_colors()
 
 /proc/valid_headshot_link(mob/user, value, silent = FALSE, list/valid_extensions = list("jpg", "png", "jpeg"))
+	// IMAGE_LINK_HOSTS_TEXT must name the same hosts
 	var/static/link_regex = regex(@"i\.gyazo\.com/|.\.l3n\.co/|(images2|thumbs2)\.imgbox\.com/|files\.catbox\.moe/|i\.ibb\.co/|file\.garden/") //gyazo, lensdump, imgbox, catbox, imgbb, filegarden
 
 	if(!length(value))
-		return FALSE
-
-	if(length(value) > IMAGE_LINK_MAX_LENGTH)
-		if(!silent)
-			to_chat(user, span_warning("Your link must be [IMAGE_LINK_MAX_LENGTH] characters or fewer!"))
-		return FALSE
-
-	var/static/regex/whitespace = regex(@"[\s\n\r\t]")
-	if(findtext(value, whitespace))
-		if(!silent)
-			to_chat(user, span_warning("Your link can't contain spaces or line breaks!"))
 		return FALSE
 
 	var/find_index = findtext(value, "https://")
@@ -3392,6 +3418,12 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	if(!findtext(value, ".") || findtext(value, "<") || findtext(value, ">") || findtext(value, "]") || findtext(value, "\[") || findtext(value, "'") || findtext(value, "\""))	//there is no link in the world that would ever need < or >
 		if(!silent)
 			to_chat(user, "<span class='warning'>Invalid link!</span>")
+		return FALSE
+
+	// Text after a ? or # would let the link end in an allowed extension that is not the file's own
+	if(findtext(value, "?") || findtext(value, "#"))
+		if(!silent)
+			to_chat(user, "<span class='warning'>The link must be a direct link to the file, without '?' or '#'!</span>")
 		return FALSE
 	var/list/value_split = splittext(value, ".")
 

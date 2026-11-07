@@ -1,0 +1,128 @@
+.CardBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #000;
+}
+.CardBackground--transparent {
+  background: transparent;
+}
+.CardBackground__filters {
+  position: absolute;
+}
+.CardBackground--charcoal,
+.CardBackground--red,
+.CardBackground--green {
+  background-image:
+    radial-gradient(ellipse at 31% 24%, #c6b39609 0%, transparent 64%),
+    radial-gradient(ellipse at 79% 81%, #100e0b12 0%, transparent 73%);
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: normal;
+  box-shadow:
+    inset 0 0 11px #09070530,
+    inset 0 0 2px #100b0838;
+  isolation: isolate;
+}
+.CardBackground--charcoal {
+  background-color: #24231f;
+}
+.CardBackground--red {
+  background-color: #402320;
+}
+.CardBackground--green {
+  background-color: #293123;
+}
+.CardBackground--charcoal::before,
+.CardBackground--red::before,
+.CardBackground--green::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--card-paint) center/540px 540px;
+  mix-blend-mode: soft-light;
+  filter: contrast(1.3);
+  opacity: 0.85;
+  mask-image:
+    radial-gradient(
+      ellipse 25% 24% at 13% 14%,
+      #000 12%,
+      #000c 38%,
+      #0005 65%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 18% 33% at 94% 31%,
+      #000 5%,
+      #000b 33%,
+      #0003 68%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 23% 17% at 37% 91%,
+      #000d 8%,
+      #0006 50%,
+      transparent 100%
+    );
+  -webkit-mask-image:
+    radial-gradient(
+      ellipse 25% 24% at 13% 14%,
+      #000 12%,
+      #000c 38%,
+      #0005 65%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 18% 33% at 94% 31%,
+      #000 5%,
+      #000b 33%,
+      #0003 68%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse 23% 17% at 37% 91%,
+      #000d 8%,
+      #0006 50%,
+      transparent 100%
+    );
+}
+.CardBackground--glass {
+  background:
+    radial-gradient(
+      ellipse 60% 46% at 7% 12%,
+      #ebc99624 0%,
+      #dacbaf09 52%,
+      transparent 100%
+    ),
+    radial-gradient(ellipse 35% 75% at 97% 67%, #9caf9a12 0%, transparent 100%),
+    #59674715;
+  backdrop-filter: blur(0.8px) saturate(0.86);
+  -webkit-backdrop-filter: blur(0.8px) saturate(0.86);
+  box-shadow:
+    inset 1px 1px 0 #f2ead04d,
+    inset -2px -2px 0 #101a155e,
+    inset 0 0 10px #4d64454a;
+}
+.CardBackground--glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      116deg,
+      transparent 7%,
+      #e1e1c308 17%,
+      #e8e3c63d 25%,
+      #e8e3c65a 31%,
+      #dfdcc432 38%,
+      #dfdcc406 49%,
+      transparent 58%
+    ),
+    radial-gradient(ellipse 19% 31% at 17% 30%, #e1d8b818 0%, transparent 100%),
+    radial-gradient(ellipse 13% 24% at 29% 64%, #12201814 0%, transparent 100%),
+    radial-gradient(ellipse 28% 13% at 78% 13%, #d7ddc415 0%, transparent 100%),
+    radial-gradient(ellipse 17% 34% at 84% 75%, #d7ddc412 0%, transparent 100%);
+  filter: var(--card-reflection);
+}

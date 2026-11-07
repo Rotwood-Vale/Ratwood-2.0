@@ -18,19 +18,20 @@
 	var/datum/statpack/gnoll_statpack = new /datum/statpack/wildcard/fated()
 
 	var/headshot_link
-	/// Inactive image URLs and framing, keyed by their gallery image slot
 	var/list/gallery_alternates = list()
-	/// Headshot framing, see [/mob/living/carbon/human/var/headshot_zoom]
+	/// Links that fail validation or overflow their gallery, never shown to anyone but their owner
+	var/list/blocked_links = list()
 	var/headshot_zoom = HEADSHOT_ZOOM_MIN
-	var/headshot_x = HEADSHOT_POSITION_DEFAULT
-	var/headshot_y = HEADSHOT_POSITION_DEFAULT
+	var/headshot_x = HEADSHOT_X_DEFAULT
+	var/headshot_y = HEADSHOT_Y_DEFAULT
 	var/headshot_framed = FALSE
+	var/image_backdrop = GALLERY_BACKDROP_PICTURE
+	var/list/card_backgrounds = list()
 	var/flavortext
 	var/ooc_notes
 	var/ooc_extra
 	var/ooc_extra_img
 	var/ooc_extra_img_link
-	/// Width of the OOC extra image in percent of the flavour text column, see [OOC_EXTRA_SIZE_MIN]
 	var/ooc_extra_img_size = OOC_EXTRA_SIZE_MAX
 	var/song_artist
 	var/song_title
@@ -215,9 +216,17 @@
 
 	return TRUE
 
+/datum/gnoll_prefs/vv_edit_var(var_name, var_value)
+	. = ..()
+	for(var/client/client as anything in GLOB.clients)
+		if(client?.prefs?.gnoll_prefs == src)
+			client.prefs.refresh_character_gallery()
+			return
+
 /datum/gnoll_prefs/proc/gnoll_show_ui(mob/user)
 	if(!user.client)
 		return
+	user.client.prefs?.refresh_character_gallery(values_changed = FALSE)
 
 	var/list/dat = list()
 	dat += "<html><head><title>Gnoll Customization</title></head><body>"
@@ -605,15 +614,10 @@
 			log_game("[user] has set their ERP preferences'.")
 
 		if("ooc_preview")
-			var/datum/examine_panel/preview_examine_panel = new(user)
-			preview_examine_panel.pref = user.client?.prefs
-			preview_examine_panel.holder = user
-			preview_examine_panel.viewing = user
-			preview_examine_panel.previewing = "gnoll"
-			preview_examine_panel.ui_interact(user)
+			user.client?.prefs?.open_examine_preview(user, GALLERY_FORM_GNOLL)
 
 		if("character_gallery")
-			user.client?.prefs?.open_character_gallery(user, "gnoll")
+			user.client?.prefs?.open_character_gallery(user, GALLERY_FORM_GNOLL)
 
 		if("rumour_preview")
 			var/msg = ""
@@ -756,55 +760,24 @@
 	if(color_hex2num("#" + sanitize_hexcolor(gnoll_voice_color)) < 230)
 		gnoll_voice_color = "a0a0a0"
 
-	S["gnoll_headshot_link"]	>> headshot_link
-	if(!valid_headshot_link(null, headshot_link, TRUE))
-		headshot_link = null
-	S["gnoll_headshot_zoom"]	>> headshot_zoom
-	headshot_zoom = sanitize_integer(headshot_zoom, HEADSHOT_ZOOM_MIN, HEADSHOT_ZOOM_MAX, HEADSHOT_ZOOM_MIN)
-	S["gnoll_headshot_x"]	>> headshot_x
-	headshot_x = sanitize_headshot_position(headshot_x)
-	S["gnoll_headshot_y"]	>> headshot_y
-	headshot_y = sanitize_headshot_position(headshot_y)
-	S["gnoll_headshot_framed"]	>> headshot_framed
-	headshot_framed = sanitize_integer(headshot_framed, FALSE, TRUE, FALSE)
+	load_gallery_images(S, src, "gnoll_")
 
 	S["gnoll_flavortext"]			>> flavortext
 	S["gnoll_ooc_notes"]			>> ooc_notes
 	S["gnoll_ooc_extra"]			>> ooc_extra
-	S["gnoll_ooc_extra_img_link"]	>> ooc_extra_img_link
-	if(!valid_headshot_link(null, ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
-		ooc_extra_img_link = null
-	S["gnoll_ooc_extra_img_size"]	>> ooc_extra_img_size
-	ooc_extra_img_size = sanitize_integer(ooc_extra_img_size, OOC_EXTRA_SIZE_MIN, OOC_EXTRA_SIZE_MAX, OOC_EXTRA_SIZE_MAX)
-	ooc_extra_img = ooc_extra_img_link ? ooc_extra_img_markup(ooc_extra_img_link, ooc_extra_img_size) : null
 
 	S["gnoll_song_artist"] 			>> song_artist
 	S["gnoll_song_title"] 			>> song_title
 	S["gnoll_rumour"]				>> rumour
 	S["gnoll_noble_gossip"]			>> noble_gossip
 	S["gnoll_nsfwflavortext"]		>> nsfwflavortext
-	S["gnoll_nsfw_ooc_extra_img_link"]	>> nsfw_ooc_extra_img_link
-	if(!valid_headshot_link(null, nsfw_ooc_extra_img_link, FALSE, list("jpg", "jpeg", "png", "gif", "mp4")))
-		nsfw_ooc_extra_img_link = null
-	S["gnoll_nsfw_ooc_extra_img_size"]	>> nsfw_ooc_extra_img_size
-	nsfw_ooc_extra_img_size = sanitize_integer(nsfw_ooc_extra_img_size, OOC_EXTRA_SIZE_MIN, OOC_EXTRA_SIZE_MAX, OOC_EXTRA_SIZE_MAX)
-	nsfw_ooc_extra_img = nsfw_ooc_extra_img_link ? ooc_extra_img_markup(nsfw_ooc_extra_img_link, nsfw_ooc_extra_img_size) : null
 	S["gnoll_erpprefs"]			>> erpprefs
-	S["gnoll_img_gallery"]	>> img_gallery
-	img_gallery = valid_gallery_links(img_gallery)
-	S["gnoll_nsfw_img_gallery"]	>> nsfw_img_gallery
-	nsfw_img_gallery = valid_gallery_links(nsfw_img_gallery)
-	var/list/loaded_alternates
-	S["gnoll_gallery_alternates"] >> loaded_alternates
-	gallery_alternates = valid_gallery_alternates(src, loaded_alternates)
 
 	return TRUE
 
 // To be called by preferences savefile code ONLY
 /datum/gnoll_prefs/proc/save_gnoll_prefs(savefile/S)
 	if(istype(S))
-		sync_gallery_alternates(src)
-		WRITE_FILE(S["gnoll_gallery_alternates"], gallery_alternates)
 		WRITE_FILE(S["gnoll_name"] , gnoll_name)
 		WRITE_FILE(S["gnoll_pronouns"] , gnoll_pronouns)
 		WRITE_FILE(S["gnoll_pelt_type"] , pelt_type)
@@ -821,27 +794,15 @@
 		WRITE_FILE(S["gnoll_voice_color"] , gnoll_voice_color) 
 		WRITE_FILE(S["gnoll_statpack"] , preferences_typepath_or_null(gnoll_statpack))
 
-		WRITE_FILE(S["gnoll_headshot_link"] , headshot_link)
-		WRITE_FILE(S["gnoll_headshot_zoom"] , headshot_zoom)
-		WRITE_FILE(S["gnoll_headshot_x"] , headshot_x)
-		WRITE_FILE(S["gnoll_headshot_y"] , headshot_y)
-		WRITE_FILE(S["gnoll_headshot_framed"] , headshot_framed)
+		save_gallery_images(S, src, "gnoll_")
 		WRITE_FILE(S["gnoll_flavortext"] , html_decode(flavortext))
 		WRITE_FILE(S["gnoll_ooc_notes"] , html_decode(ooc_notes))
 		WRITE_FILE(S["gnoll_ooc_extra"] ,	ooc_extra)
-		WRITE_FILE(S["gnoll_ooc_extra_img"] , ooc_extra_img)
-		WRITE_FILE(S["gnoll_ooc_extra_img_link"] , ooc_extra_img_link)
-		WRITE_FILE(S["gnoll_ooc_extra_img_size"] , ooc_extra_img_size)
 		WRITE_FILE(S["gnoll_song_artist"] , song_artist)
 		WRITE_FILE(S["gnoll_song_title"] , song_title)		
 		WRITE_FILE(S["gnoll_rumour"] , html_decode(rumour))
 		WRITE_FILE(S["gnoll_noble_gossip"] , html_decode(noble_gossip))
 		WRITE_FILE(S["gnoll_nsfwflavortext"] , html_decode(nsfwflavortext))
-		WRITE_FILE(S["gnoll_nsfw_ooc_extra_img"] , nsfw_ooc_extra_img)
-		WRITE_FILE(S["gnoll_nsfw_ooc_extra_img_link"] , nsfw_ooc_extra_img_link)
-		WRITE_FILE(S["gnoll_nsfw_ooc_extra_img_size"] , nsfw_ooc_extra_img_size)
 		WRITE_FILE(S["gnoll_erpprefs"] , html_decode(erpprefs))
-		WRITE_FILE(S["gnoll_img_gallery"] , img_gallery)
-		WRITE_FILE(S["gnoll_nsfw_img_gallery"] , nsfw_img_gallery)
-	
+
 	return TRUE
