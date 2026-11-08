@@ -205,14 +205,10 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors/town/cell)
 "abM" = (
-/obj/structure/rack/rogue,
-/obj/structure/shisha/hookah{
-	pixel_x = -1;
-	pixel_y = 7
-	},
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
+/obj/structure/roguemachine/vendor/mobile,
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/indoors/town/bath)
 "abO" = (
@@ -24032,6 +24028,7 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
 	},
+/obj/structure/roguemachine/vendor/mobile,
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/indoors/town/shop)
 "eLB" = (
@@ -51268,6 +51265,7 @@
 	pixel_x = -48;
 	pixel_y = 32
 	},
+/obj/structure/roguemachine/potionseller/mobile,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/physician)
 "klw" = (
@@ -59502,6 +59500,7 @@
 /obj/machinery/light/roguestreet/orange/walllamp{
 	dir = 1
 	},
+/obj/structure/roguemachine/vendor/mobile,
 /turf/open/floor/rogue/tile,
 /area/rogue/indoors/town/dwarfin/rockhill)
 "lVl" = (
@@ -115500,6 +115499,7 @@
 /obj/machinery/light/rogue/candle{
 	pixel_y = -32
 	},
+/obj/structure/roguemachine/potionseller/mobile,
 /turf/open/floor/rogue/blocks/flipped,
 /area/rogue/indoors/town/church/basement)
 "xpN" = (

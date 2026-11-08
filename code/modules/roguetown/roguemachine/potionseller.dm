@@ -1,6 +1,29 @@
 #define POTIONSELLER_TANKS 3
 #define POTIONSELLER_TANK_VOLUME 500
 
+/// A shelf of one kind of empty container, sold for a flat price
+/datum/potion_shelf
+	/// Singular name, shown in the UI and the machine's speech
+	var/name
+	/// Type of container this shelf takes, subtypes included
+	var/accepts
+	var/price = 0
+	var/capacity = 0
+	var/list/stock = list()
+
+/datum/potion_shelf/New(name, accepts, price, capacity)
+	src.name = name
+	src.accepts = accepts
+	src.price = price
+	src.capacity = capacity
+
+/datum/potion_shelf/Destroy()
+	stock.Cut()
+	return ..()
+
+/datum/potion_shelf/proc/is_full()
+	return length(stock) >= capacity
+
 /obj/structure/roguemachine/potionseller
 	parent_type = /obj/structure/roguemachine/shop
 	name = "POTION SELLER"
@@ -11,10 +34,11 @@
 	key_icon_state = "greenkey"
 	/// The container in the slot, bought into or poured from
 	var/obj/item/reagent_containers/inserted
-	var/bottle_price = 10
+	/// How many of each empty container the shelves hold
 	var/max_bottles = 20
-	/// Empty bottles for sale
-	var/list/bottle_stock = list()
+	var/max_vials = 20
+	/// Empty containers for sale: bottles, then vials
+	var/list/shelves = list()
 	/// One reagent holder per tank, each holding any mixture
 	var/list/tanks = list()
 	var/list/tank_labels = list()
@@ -30,6 +54,8 @@
 
 /obj/structure/roguemachine/potionseller/Initialize(mapload)
 	. = ..()
+	shelves += new /datum/potion_shelf("bottle", /obj/item/reagent_containers/glass/bottle/rogue, 10, max_bottles)
+	shelves += new /datum/potion_shelf("vial", /obj/item/reagent_containers/glass/bottle/alchemical, 5, max_vials)
 	for(var/i in 1 to POTIONSELLER_TANKS)
 		var/datum/reagents/tank = new(tank_volume, NO_REACT)
 		tank.my_atom = src
@@ -37,12 +63,14 @@
 		tank_labels += null
 		tank_prices += 0
 	if(!is_crafted)
-		for(var/i in 1 to 10)
-			bottle_stock += new /obj/item/reagent_containers/glass/bottle/rogue(src)
+		for(var/datum/potion_shelf/shelf as anything in shelves)
+			for(var/i in 1 to min(10, shelf.capacity))
+				shelf.stock += new shelf.accepts(src)
 
 /obj/structure/roguemachine/potionseller/Destroy()
 	drop_bottles()
 	QDEL_LIST(tanks)
+	QDEL_LIST(shelves)
 	return ..()
 
 /obj/structure/roguemachine/potionseller/obj_break(damage_flag)
@@ -51,20 +79,22 @@
 		splash_tank(tank)
 	drop_bottles()
 
-/// Drops the container in the slot and the bottle shelf
+/// Drops the container in the slot and everything on the shelves
 /obj/structure/roguemachine/potionseller/proc/drop_bottles()
 	if(inserted)
 		inserted.forceMove(drop_location())
 		inserted = null
-	for(var/obj/item/B in bottle_stock.Copy())
-		B.forceMove(drop_location())
-	bottle_stock.Cut()
+	for(var/datum/potion_shelf/shelf as anything in shelves)
+		for(var/obj/item/B in shelf.stock.Copy())
+			B.forceMove(drop_location())
+		shelf.stock.Cut()
 
 /obj/structure/roguemachine/potionseller/Exited(atom/movable/gone, atom/newLoc)
 	. = ..()
 	if(gone == inserted)
 		inserted = null
-	bottle_stock -= gone
+	for(var/datum/potion_shelf/shelf as anything in shelves)
+		shelf.stock -= gone
 
 /obj/structure/roguemachine/potionseller/proc/default_tank_label(index)
 	return "Tank [index]"
@@ -79,6 +109,13 @@
 		return null
 	return index
 
+/// Parses a shelf number from ui params, returning that shelf, or null if it isn't a valid one
+/obj/structure/roguemachine/potionseller/proc/shelf_from_param(param)
+	var/index = text2num("[param]")
+	if(!isnum(index) || index != round(index) || index < 1 || index > length(shelves))
+		return null
+	return shelves[index]
+
 /obj/structure/roguemachine/potionseller/proc/is_liquid_container(obj/item/I)
 	if(!istype(I, /obj/item/reagent_containers/glass) || !I.reagents)
 		return FALSE
@@ -86,9 +123,12 @@
 		return FALSE
 	return TRUE
 
-/// Only plain bottles are kept as stock for sale
-/obj/structure/roguemachine/potionseller/proc/is_stock_bottle(obj/item/I)
-	return istype(I, /obj/item/reagent_containers/glass/bottle/rogue) || istype(I, /obj/item/reagent_containers/glass/bottle/alchemical)
+/// The shelf an empty container would be stocked on, or null if none takes it
+/obj/structure/roguemachine/potionseller/proc/shelf_for(obj/item/I)
+	for(var/datum/potion_shelf/shelf as anything in shelves)
+		if(istype(I, shelf.accepts))
+			return shelf
+	return null
 
 /// Pours from a container into a tank, returning drams moved
 /obj/structure/roguemachine/potionseller/proc/pour_into_tank(obj/item/reagent_containers/C, index, amount, mob/user)
@@ -97,25 +137,26 @@
 		return 0
 	return C.reagents.trans_to(tank, amount, no_react = TRUE, transfered_by = user) || 0
 
-/obj/structure/roguemachine/potionseller/proc/stock_bottle(obj/item/I, mob/user)
-	if(length(bottle_stock) >= max_bottles)
-		to_chat(user, span_warning("The bottle shelf is full."))
+/obj/structure/roguemachine/potionseller/proc/stock_bottle(obj/item/I, datum/potion_shelf/shelf, mob/user)
+	if(shelf.is_full())
+		to_chat(user, span_warning("The [shelf.name] shelf is full."))
 		return FALSE
 	if(!user.transferItemToLoc(I, src))
 		to_chat(user, span_warning("[I] is stuck to your hand!"))
 		return FALSE
-	bottle_stock += I
+	shelf.stock += I
 	playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 	SStgui.update_uis(src)
 	return TRUE
 
 /// Empties the filled liquid containers in a bag into the loading tank, as far as it has room,
-/// and moves empty stock bottles from the bag onto the bottle shelf
+/// and moves empty bottles and vials from the bag onto their shelves
 /obj/structure/roguemachine/potionseller/load_from_storage(datum/component/storage/STR, mob/living/user)
 	var/poured = 0
 	var/shelved = 0
 	var/tank_full = FALSE
-	var/shelf_full = FALSE
+	/// Shelves that couldn't take everything offered
+	var/list/full_shelves = list()
 	for(var/obj/item/reagent_containers/C in STR.contents())
 		if(!is_liquid_container(C))
 			continue
@@ -126,12 +167,13 @@
 				tank_full = TRUE
 			// a bottle emptied here isn't shelved until the next right-click
 			continue
-		if(is_stock_bottle(C))
-			if(length(bottle_stock) >= max_bottles)
-				shelf_full = TRUE
+		var/datum/potion_shelf/shelf = shelf_for(C)
+		if(shelf)
+			if(shelf.is_full())
+				full_shelves |= shelf
 				continue
 			STR.remove_from_storage(C, src)
-			bottle_stock += C
+			shelf.stock += C
 			shelved++
 
 	if(poured || shelved)
@@ -140,15 +182,15 @@
 		if(poured)
 			parts += "pours [round(poured)] dram\s into [tank_label(loading_tank)]"
 		if(shelved)
-			parts += "shelves [shelved] bottle\s"
+			parts += "shelves [shelved] container\s"
 		to_chat(user, span_notice("\The [src] [english_list(parts)]."))
 		update_icon()
 		SStgui.update_uis(src)
 	if(tank_full)
 		to_chat(user, span_warning("[tank_label(loading_tank)] is full."))
-	if(shelf_full)
-		to_chat(user, span_warning("The bottle shelf is full."))
-	if(!poured && !shelved && !tank_full && !shelf_full)
+	for(var/datum/potion_shelf/shelf as anything in full_shelves)
+		to_chat(user, span_warning("The [shelf.name] shelf is full."))
+	if(!poured && !shelved && !tank_full && !length(full_shelves))
 		to_chat(user, span_warning("There is nothing \the [src] can take."))
 
 /obj/structure/roguemachine/potionseller/refuses_unowned(obj/item/I)
@@ -156,8 +198,9 @@
 
 /obj/structure/roguemachine/potionseller/handle_item(obj/item/I, mob/user)
 	if(is_liquid_container(I))
-		if(!locked && is_stock_bottle(I) && !I.reagents.total_volume)
-			stock_bottle(I, user)
+		var/datum/potion_shelf/shelf = shelf_for(I)
+		if(!locked && shelf && !I.reagents.total_volume)
+			stock_bottle(I, shelf, user)
 			return TRUE
 		if(inserted)
 			to_chat(user, span_warning("Something is already inside!"))
@@ -182,10 +225,17 @@
 
 /obj/structure/roguemachine/potionseller/ui_data(mob/user)
 	var/list/data = ..()
-	data["bottle_price"] = bottle_price
-	data["bottles"] = length(bottle_stock)
-	data["max_bottles"] = max_bottles
 	data["loading_tank"] = loading_tank
+
+	var/list/shelf_data = list()
+	for(var/datum/potion_shelf/shelf as anything in shelves)
+		shelf_data += list(list(
+			"name" = shelf.name,
+			"price" = shelf.price,
+			"stock" = length(shelf.stock),
+			"capacity" = shelf.capacity,
+		))
+	data["shelves"] = shelf_data
 
 	var/list/tank_data = list()
 	for(var/i in 1 to length(tanks))
@@ -272,17 +322,21 @@
 			return TRUE
 
 		if("buy_bottle")
-			if(!length(bottle_stock))
-				say("MY BOTTLES ARE ALL SOLD OUT, TRAVELER")
+			var/datum/potion_shelf/shelf = shelf_from_param(params["shelf"])
+			if(!shelf)
+				return
+			var/shouted = uppertext("[shelf.name]s")
+			if(!length(shelf.stock))
+				say("MY [shouted] ARE ALL SOLD OUT, TRAVELER")
 				return TRUE
-			// a bought bottle goes into the slot, so it has to be free
+			// a bought container goes into the slot, so it has to be free
 			if(locked && inserted)
 				say("TAKE YOUR CONTAINER FIRST, TRAVELER")
 				return TRUE
-			if(locked && !charge(bottle_price, "MY BOTTLES ARE TOO EXPENSIVE FOR YOU, TRAVELER"))
+			if(locked && !charge(shelf.price, "MY [shouted] ARE TOO EXPENSIVE FOR YOU, TRAVELER"))
 				return TRUE
-			var/obj/item/B = bottle_stock[length(bottle_stock)]
-			bottle_stock -= B
+			var/obj/item/B = shelf.stock[length(shelf.stock)]
+			shelf.stock -= B
 			if(inserted)
 				give_to(B, H)
 			else
@@ -350,10 +404,11 @@
 		if("set_bottle_price")
 			if(locked)
 				return
+			var/datum/potion_shelf/shelf = shelf_from_param(params["shelf"])
 			var/newprice = text2num("[params["price"]]")
-			if(isnull(newprice) || !(newprice >= 0))
+			if(!shelf || isnull(newprice) || !(newprice >= 0))
 				return
-			bottle_price = round(min(newprice, SHOP_MAX_PRICE))
+			shelf.price = round(min(newprice, SHOP_MAX_PRICE))
 			return TRUE
 
 /obj/structure/roguemachine/potionseller/proc/splash_tank(datum/reagents/tank)
@@ -383,9 +438,9 @@
 /obj/structure/roguemachine/potionseller/get_mechanics_examine(mob/user)
 	. = ..()
 	. += span_info("Strike it with a container to put it in the slot. Drag a tank's level, or use + and -, to draw from as many tanks as you like, then POUR. Prices are per dram.")
-	. += span_info("A bottle bought from its shelf goes straight into the slot, so take your own container out first.")
-	. += span_info("While it's UNLOCKED, pour the slotted container into a tank, flush a tank onto the floor, or set a tank's label and price. Empty bottles struck into it go on the shelf.")
-	. += span_info("While it's UNLOCKED, right-click with a bag to empty its filled containers into the loading tank and shelve its empty bottles.")
+	. += span_info("It sells empty bottles and vials from separate shelves. One bought goes straight into the slot, so take your own container out first.")
+	. += span_info("While it's UNLOCKED, pour the slotted container into a tank, flush a tank onto the floor, or set a tank's label and price. Empty bottles and vials struck into it go on their shelves.")
+	. += span_info("While it's UNLOCKED, right-click with a bag to empty its filled containers into the loading tank and shelve its empty bottles and vials.")
 	. += span_info("If it breaks, its tanks spill across the floor.")
 
 // POTION CARTS
@@ -401,6 +456,7 @@
 	climbable = TRUE
 	tank_volume = 250
 	max_bottles = 10
+	max_vials = 10
 	// no owner until it's claimed, or crafted with its key
 	keycontrol = null
 	key_name = "potion cart key"

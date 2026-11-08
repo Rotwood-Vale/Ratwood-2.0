@@ -50,10 +50,15 @@ type Container = {
   color: string | null;
 };
 
+type Shelf = {
+  name: string;
+  price: number;
+  stock: number;
+  capacity: number;
+};
+
 type PotionSellerData = ShopData & {
-  bottle_price: number;
-  bottles: number;
-  max_bottles: number;
+  shelves: Shelf[];
   loading_tank: number;
   tanks: Tank[];
   container: Container | null;
@@ -497,30 +502,24 @@ const Vessel = (props: {
   );
 };
 
-const BottleRow = (props: {
+const capitalize = (text: string) =>
+  text.charAt(0).toUpperCase() + text.slice(1);
+
+const ShelfRow = (props: {
+  index: number;
+  shelf: Shelf;
   owner: boolean;
   canRead: boolean;
-  bottles: number;
-  maxBottles: number;
-  bottlePrice: number;
   budget: number;
   slotFull: boolean;
   act: ActFn;
 }) => {
-  const {
-    owner,
-    canRead,
-    bottles,
-    maxBottles,
-    bottlePrice,
-    budget,
-    slotFull,
-    act,
-  } = props;
-  const cantAffordBottle = !owner && bottlePrice > budget;
-  // a bought bottle goes into the slot
+  const { index, shelf, owner, canRead, budget, slotFull, act } = props;
+  const shelfNumber = index + 1;
+  const cantAfford = !owner && shelf.price > budget;
+  // a bought container goes into the slot
   const blocked = !owner && slotFull;
-  const disabled = !bottles || cantAffordBottle || blocked;
+  const disabled = !shelf.stock || cantAfford || blocked;
 
   return (
     <div
@@ -533,26 +532,28 @@ const BottleRow = (props: {
       }}
     >
       <span style={{ color: SEAL_AMBER, fontFamily: SERIF }}>
-        {starsIfIlliterate('Bottles', canRead)}
+        {starsIfIlliterate(`${capitalize(shelf.name)}s`, canRead)}
       </span>
       <span style={{ flex: 1, fontSize: FONT_TITLE, fontWeight: 'bold' }}>
-        {bottles} / {maxBottles}
+        {shelf.stock} / {shelf.capacity}
       </span>
       {owner && (
         <PriceField
-          value={bottlePrice}
-          unit="m/bottle"
+          value={shelf.price}
+          unit={`m/${shelf.name}`}
           canRead={canRead}
           width="52px"
           parse={parseWholeNumber}
-          onCommit={(price) => act('set_bottle_price', { price })}
+          onCommit={(price) =>
+            act('set_bottle_price', { shelf: shelfNumber, price })
+          }
         />
       )}
       <button
         type="button"
         style={inkButtonStyle({ disabled })}
         disabled={disabled}
-        onClick={() => act('buy_bottle')}
+        onClick={() => act('buy_bottle', { shelf: shelfNumber })}
         title={
           blocked
             ? starsIfIlliterate('Take your container out first', canRead)
@@ -561,10 +562,10 @@ const BottleRow = (props: {
       >
         {starsIfIlliterate(
           owner
-            ? 'Take a bottle'
-            : bottlePrice
-              ? `Buy bottle (${bottlePrice}m)`
-              : 'Take a free bottle',
+            ? `Take a ${shelf.name}`
+            : shelf.price
+              ? `Buy ${shelf.name} (${shelf.price}m)`
+              : `Take a free ${shelf.name}`,
           canRead,
         )}
       </button>
@@ -708,16 +709,18 @@ export const PotionSeller = () => {
               {starsIfIlliterate('Pour', canRead)}
             </button>
           </div>
-          <BottleRow
-            owner={owner}
-            canRead={canRead}
-            bottles={data.bottles}
-            maxBottles={data.max_bottles}
-            bottlePrice={data.bottle_price}
-            budget={data.budget}
-            slotFull={!!container}
-            act={act}
-          />
+          {data.shelves.map((shelf, i) => (
+            <ShelfRow
+              key={shelf.name}
+              index={i}
+              shelf={shelf}
+              owner={owner}
+              canRead={canRead}
+              budget={data.budget}
+              slotFull={!!container}
+              act={act}
+            />
+          ))}
         </div>
       </Window.Content>
     </Window>
