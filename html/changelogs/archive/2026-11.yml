@@ -147,3 +147,30 @@
   - rscadd: 'dwarven knowledge trait allows items to be fully repaired
 
       :cl:'
+2026-11-07:
+  AlucardHellsingChapel:
+  - rscadd: Added new armor set
+  - rscadd: Added new weapon and shield
+  - rscadd: New Miracles
+  - balance: rebalanced T0
+  - sound: added audio/sound effects
+  - image: added some icons or images
+  - code_imp: changed rites of armament code to include new options
+  IronDragoon:
+  - admin: New admin tools for pref refreshing, forensics and afk players
+  SirSwagmeyer:
+  - balance: Rebalanced a variety of bandit subclasses, including brigand, hedge knight,
+      rogue mage, sawbones, sellsword, and knave.
+  - balance: Rebalanced an array of buffs for Deserter, Heretic, Poacher, Outlaw,
+      Berserker, Roguemage, Pyromaniac, Plaguebearer, and heretic spy.
+  - balance: buffed profane from a bone-shaped nerf dart to a bony arcane lance.
+  - bugfix: Fixed Vale Native not preventing ambushes as intended.
+  - rscadd: Added the polearm special to the eagle's beak, as intended.
+  - rscadd: Readded the rapier special to the Estoc, as previously intended.
+2026-11-08:
+  IronDragoon:
+  - rscadd: Adds new icons for vamps, as well as adding icons for bandits, deadites,
+      werewolves and skeletons/lich (ported from AP)
+  - qol: Letters sent to kingsfield now notify admins, made it easier for them to
+      reply. They can be sent to just 'Kingsfield' as well.
+  - bugfix: Fixed names with (') not receiving mail
