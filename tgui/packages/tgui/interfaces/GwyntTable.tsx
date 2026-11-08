@@ -104,7 +104,7 @@ const rarityColor: Record<CardRarity, string> = {
   unique: '#fbbf24',
 };
 
-const cardAtlasAsset = 'ccg_cards/gwynt_cards_atlas.jpg';
+const cardAtlasAsset = 'ccg_cards/cards.png';
 const cardAtlasColumns = 16;
 const cardAtlasRows = 10;
 
@@ -122,19 +122,20 @@ const cardAtlasStyle = (atlas: CardAtlasPosition | undefined) => {
     backgroundPosition: `${atlasPercent(atlas.column, cardAtlasColumns)} ${atlasPercent(atlas.row, cardAtlasRows)}`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: `${cardAtlasColumns * 100}% ${cardAtlasRows * 100}%`,
+    imageRendering: 'pixelated' as const,
     zIndex: 0,
   };
 };
 
 const rowWeatherFrameAssets: Record<CardRow, string> = {
-  infantry: 'ccg_cards/effects/row_frame_frost.png',
-  archers: 'ccg_cards/effects/row_frame_fog.png',
-  siege: 'ccg_cards/effects/row_frame_rain.png',
+  infantry: 'ccg_cards/effects/frost.png',
+  archers: 'ccg_cards/effects/fog.png',
+  siege: 'ccg_cards/effects/rain.png',
 };
 
 const rowEffectFrameAssets = {
-  horn: 'ccg_cards/effects/row_frame_horn.png',
-  mardroeme: 'ccg_cards/effects/row_frame_mardroeme.png',
+  horn: 'ccg_cards/effects/horn.png',
+  mardroeme: 'ccg_cards/effects/mushroom.png',
 };
 
 const GwyntVisualEffects = () => (
@@ -317,17 +318,17 @@ const GwyntVisualEffects = () => (
 
       .ccg-row-frame {
         position: absolute;
-        top: 50%;
-        left: 50%;
+        top: 0;
+        left: 62px;
         width: calc(100% - 116px);
-        height: calc(100% + 20px);
+        height: 100%;
         object-fit: fill;
+        image-rendering: pixelated;
         pointer-events: none;
         z-index: 3;
         opacity: 0.8;
         mix-blend-mode: screen;
         filter: drop-shadow(0 0 8px rgba(15,23,42,0.55));
-        transform: translate(-50%, -50%) scale(calc(var(--frame-scale-x, 1) * 1.15), calc(var(--frame-scale-y, 1) * 1.15));
         transform-origin: center center;
       }
 
@@ -467,32 +468,32 @@ const effectBadges: Record<string, string> = {
 };
 
 const rowIconAssets: Record<CardType, string> = {
-  infantry: 'ccg_cards/gwent_icons/melee.webp',
-  archers: 'ccg_cards/gwent_icons/ranged.webp',
-  siege: 'ccg_cards/gwent_icons/siege.webp',
-  weather: 'ccg_cards/gwent_icons/sun.webp',
-  special: 'ccg_cards/gwent_icons/horn_special.webp',
+  infantry: 'ccg_cards/icons/melee.png',
+  archers: 'ccg_cards/icons/ranged.png',
+  siege: 'ccg_cards/icons/siege.png',
+  weather: 'ccg_cards/icons/sun.png',
+  special: 'ccg_cards/icons/command.png',
 };
 
 const effectIconAssets: Record<string, string> = {
-  morale: 'ccg_cards/gwent_icons/add_power.webp',
-  scorch: 'ccg_cards/gwent_icons/kill_any_powerful_include_itself.webp',
-  scorch_infantry: 'ccg_cards/gwent_icons/kill_any_if_10.webp',
-  scorch_global: 'ccg_cards/gwent_icons/scorch_special.webp',
-  spy: 'ccg_cards/gwent_icons/spy.webp',
-  medic: 'ccg_cards/gwent_icons/medic.webp',
-  bond: 'ccg_cards/gwent_icons/double.webp',
-  agile: 'ccg_cards/gwent_icons/any_type_card.webp',
-  muster: 'ccg_cards/gwent_icons/double.webp',
-  horn: 'ccg_cards/gwent_icons/horn.webp',
-  decoy: 'ccg_cards/gwent_icons/maneken.webp',
-  berserk: 'ccg_cards/gwent_icons/berserk_to_bear.webp',
-  mardroeme: 'ccg_cards/gwent_icons/mardrem.webp',
-  avenger: 'ccg_cards/gwent_icons/berserk_mushroom.webp',
-  clear_weather: 'ccg_cards/gwent_icons/sun.webp',
-  frost: 'ccg_cards/gwent_icons/winter.webp',
-  fog: 'ccg_cards/gwent_icons/fog.webp',
-  rain: 'ccg_cards/gwent_icons/rain.webp',
+  morale: 'ccg_cards/icons/morale.png',
+  scorch: 'ccg_cards/icons/burn.png',
+  scorch_infantry: 'ccg_cards/icons/incinerate.png',
+  scorch_global: 'ccg_cards/icons/scorch.png',
+  spy: 'ccg_cards/icons/spy.png',
+  medic: 'ccg_cards/icons/heal.png',
+  bond: 'ccg_cards/icons/bond.png',
+  agile: 'ccg_cards/icons/agile.png',
+  muster: 'ccg_cards/icons/bond.png',
+  horn: 'ccg_cards/icons/horn.png',
+  decoy: 'ccg_cards/icons/decoy.png',
+  berserk: 'ccg_cards/icons/berserk.png',
+  mardroeme: 'ccg_cards/icons/mushroom.png',
+  avenger: 'ccg_cards/icons/avenger.png',
+  clear_weather: 'ccg_cards/icons/sun.png',
+  frost: 'ccg_cards/icons/frost.png',
+  fog: 'ccg_cards/icons/fog.png',
+  rain: 'ccg_cards/icons/rain.png',
 };
 
 const effectDescriptions: Record<string, string> = {
@@ -553,6 +554,7 @@ const CardIconBadge = ({
             width: compact ? '11px' : '16px',
             height: compact ? '11px' : '16px',
             objectFit: 'contain',
+            imageRendering: 'pixelated',
           }}
         />
       ) : (
