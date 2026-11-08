@@ -2400,6 +2400,9 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	var/mob/living/simple_animal/hostile/rogue/doppelganger/double = new(get_turf(user), user, target, flat)
 	user.visible_message(span_warning("[user] falls limp!"))
 	user.mind.transfer_to(double)
+	to_chat(double, span_userdanger("Erotic actions as doppelganger are prohibited without explicit consent. You will be instantly banned if you break this rule."))
+	message_admins("[ADMIN_LOOKUPFLW(double)] used the Reflection ritual to impersonate [ADMIN_LOOKUPFLW(target)].")
+	log_game("[key_name(double)] used the Reflection ritual to impersonate [key_name(target)].")
 
 /datum/ritual/noise/forgettongue
 	name = "Curse of Babel"
