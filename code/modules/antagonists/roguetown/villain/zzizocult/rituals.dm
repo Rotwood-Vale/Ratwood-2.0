@@ -564,7 +564,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/servantry/knock
 	lesser = TRUE
 	name = "Curse of Knock"
-	desc = "Keys no longer work for your target! Lasts 5 minutes. Requires a leech that fed from your target."
+	desc = "Keys no longer work for your target! Lasts 10 minutes. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	research_cost = 3
 	keep_center = TRUE
@@ -584,8 +584,35 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /datum/status_effect/debuff/zizo_knock
 	id = "zizo_knock"
-	duration = 5 MINUTES
+	duration = 10 MINUTES
 	alert_type = null
+
+/datum/ritual/servantry/misfortune
+	lesser = TRUE
+	name = "Curse of Misfortune"
+	desc = "Curse your target with misfortune. Lasts 10 minutes. Requires a leech that fed from your target."
+	center_requirement = /obj/item/natural/worms/leech
+	research_cost = 3
+	keep_center = TRUE
+
+/datum/ritual/servantry/misfortune/invoke(mob/living/user, turf/center)
+	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
+	if(!remnant)
+		return
+	var/mob/living/carbon/human/victim = remnant.fed_from
+	if(!curse_target(victim))
+		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
+		return
+	qdel(remnant)
+	to_chat(user, span_notice("MAY THEY TRIP AND FALL AND DIE!"))
+	to_chat(victim, span_userdanger("WHAT A HORRIBLE NITE TO HAVE A CURSE."))
+	victim.apply_status_effect(/datum/status_effect/debuff/zizo_misfortune)
+
+/datum/status_effect/debuff/zizo_misfortune
+	id = "zizo_misfortune"
+	duration = 10 MINUTES
+	alert_type = null
+	effectedstats = list(STATKEY_LCK = -2)
 
 GLOBAL_LIST_EMPTY(zizo_proxy)
 
