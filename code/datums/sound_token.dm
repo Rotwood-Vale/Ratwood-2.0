@@ -144,6 +144,7 @@
 	if(!isnull(_repeating))
 		repeating = _repeating
 	sound = sound(_sound)
+	uploaded = IS_UPLOADED_SONG(_sound)
 	sound.repeat = repeating
 	if(vary)
 		sound.frequency = get_rand_frequency()
@@ -177,7 +178,6 @@
 /// who turned uploads off hears the same one
 /datum/sound_token/proc/refresh_stand_in()
 	PRIVATE_PROC(TRUE)
-	uploaded = IS_UPLOADED_SONG(sound.file)
 	stand_in = null
 	if(!uploaded || !length(stand_in_songs))
 		return
