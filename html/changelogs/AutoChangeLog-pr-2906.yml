@@ -1,0 +1,12 @@
+author: "Guidesu"
+delete-after: True
+changes:
+  - rscadd: "Added craftable wooden spits for campfires."
+  - rscadd: "Added leather tent walls and flaps."
+  - rscadd: "Added bedrolls and small tent kits to loadout."
+  - qol: "Tree stumps now work as table surfaces for item placement, crafting, cooking, and table-style interactions."
+  - qol: "Tent walls and loose tent flaps can now be dismantled with a stake from the side they were built on."
+  - qol: "Tent walls and flaps can now be built on open space."
+  - balance: "Reduced small tent kit, ger kit, and yurt kit crafting costs."
+  - bugfix: "Dismantled tent walls now clean up leftover twig-floor/open-space issues."
+  - image: "Added wooden spit sprites."
