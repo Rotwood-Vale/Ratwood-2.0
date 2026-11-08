@@ -35,6 +35,19 @@
 		if(C.silent || !C.can_speak())
 			message = "makes a noise."
 
+/datum/emote/living/carbon/human/sexmoanmed
+	key = "sexmoanmed"
+	emote_type = EMOTE_AUDIBLE
+	nomsg = TRUE
+	only_forced_audio = TRUE
+
+/datum/emote/living/carbon/human/sexmoanmed/can_run_emote(mob/living/user, status_check = TRUE , intentional)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.silent || !C.can_speak())
+			message = "makes a noise."
+
 /datum/emote/living/carbon/human/sexmoanhvy
 	key = "sexmoanhvy"
 	emote_type = EMOTE_AUDIBLE
@@ -47,6 +60,48 @@
 		var/mob/living/carbon/C = user
 		if(C.silent || !C.can_speak())
 			message = "makes a noise."
+
+/datum/emote/living/carbon/human/sexmoangag
+	key = "sexmoangag"
+	emote_type = EMOTE_AUDIBLE
+	nomsg = TRUE
+	only_forced_audio = TRUE
+
+/datum/emote/living/carbon/human/sexmoangag/can_run_emote(mob/living/user, status_check = TRUE , intentional)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.silent || !C.can_speak())
+			message = "makes a noise."
+
+/datum/emote/living/carbon/human/sexmoangag_org
+	key = "sexmoangag_org"
+	emote_type = EMOTE_AUDIBLE
+	nomsg = TRUE
+	only_forced_audio = TRUE
+
+/datum/emote/living/carbon/human/sexmoangag_org/can_run_emote(mob/living/user, status_check = TRUE , intentional)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.silent || !C.can_speak())
+			message = "makes a noise."
+
+/mob/living/carbon/human
+	COOLDOWN_DECLARE(sex_moaning)
+
+/mob/living/carbon/human/verb/sex_moan()
+	set name = "Moan (Lewd)"
+	set category = "Noises"
+
+	if(!COOLDOWN_FINISHED(src, sex_moaning) || !sexcon)
+		return
+	if(sexcon.arousal <= 0 && !sexcon.current_action)
+		to_chat(src, span_warning("I'm not in the mood."))
+		return
+
+	COOLDOWN_START(src, sex_moaning, 3 SECONDS)
+	emote(sexcon.get_moan_emote(), forced = TRUE)
 
 /datum/emote/living/carbon/human/eyebrow
 	key = "eyebrow"

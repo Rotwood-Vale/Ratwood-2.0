@@ -1414,6 +1414,7 @@
 	voice_color = client.prefs.voice_color
 	voice_pitch = client.prefs.voice_pitch
 	voice_type = client.prefs.voice_type
+	moan_selection = client.prefs.get_moanpack_type()
 	set_bark(client.prefs.bark_id)
 	vocal_speed = client.prefs.bark_speed
 	vocal_pitch = client.prefs.bark_pitch

@@ -28,6 +28,8 @@
 	var/song_artist
 	var/pronouns
 	var/voice_type
+	/// Moanpack typepath, or null for the voice pack's own moans
+	var/moan_selection
 	var/vocal_bark
 	var/vocal_bark_id
 	var/vocal_speed
@@ -69,6 +71,7 @@
 	song_artist = H.song_artist
 	pronouns = H.pronouns
 	voice_type = H.voice_type
+	moan_selection = H.moan_selection
 	vocal_bark = H.vocal_bark
 	vocal_bark_id = H.vocal_bark_id
 	vocal_speed = H.vocal_speed
@@ -106,6 +109,7 @@
 	H.song_artist = song_artist
 	H.pronouns = pronouns
 	H.voice_type = voice_type
+	H.moan_selection = moan_selection
 	H.vocal_bark = vocal_bark
 	H.vocal_bark_id = vocal_bark_id
 	H.vocal_speed = vocal_speed

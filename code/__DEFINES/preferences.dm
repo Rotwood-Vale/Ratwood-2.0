@@ -189,3 +189,7 @@ GLOBAL_LIST_INIT(voice_packs_list, list(
 	VOICE_PACK_ROTWOMAN = /datum/voicepack/female/rotman,
 	VOICE_PACK_CHOSEN = /datum/voicepack/male/chosen
 ))
+
+//RMH ADDITIONS
+
+#define MOANPACK_TYPE_DEF	"Default"
