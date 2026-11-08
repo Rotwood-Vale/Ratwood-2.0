@@ -2382,7 +2382,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/noise/reflection
 	name = "Reflection"
-	desc = "Create a visual replica of your target and take control of it. Requires a leech that fed from your target."
+	desc = "Create a visual replica of your target and take control of it for 7 minutes. Requires a leech that fed from your target."
 	is_cultist_ritual = TRUE
 	center_requirement = /obj/item/natural/worms/leech
 	keep_center = TRUE
@@ -2401,6 +2401,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	user.visible_message(span_warning("[user] falls limp!"))
 	user.mind.transfer_to(double)
 	to_chat(double, span_userdanger("Erotic actions as doppelganger are prohibited without explicit consent. You will be instantly banned if you break this rule."))
+	to_chat(double, span_userdanger("The doppelganger only lasts 7 minutes."))
+	QDEL_IN(double, 7 MINUTES)
 	message_admins("[ADMIN_LOOKUPFLW(double)] used the Reflection ritual to impersonate [ADMIN_LOOKUPFLW(target)].")
 	log_game("[key_name(double)] used the Reflection ritual to impersonate [key_name(target)].")
 
