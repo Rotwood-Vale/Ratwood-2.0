@@ -167,3 +167,10 @@
   - bugfix: Fixed Vale Native not preventing ambushes as intended.
   - rscadd: Added the polearm special to the eagle's beak, as intended.
   - rscadd: Readded the rapier special to the Estoc, as previously intended.
+2026-11-08:
+  IronDragoon:
+  - rscadd: Adds new icons for vamps, as well as adding icons for bandits, deadites,
+      werewolves and skeletons/lich (ported from AP)
+  - qol: Letters sent to kingsfield now notify admins, made it easier for them to
+      reply. They can be sent to just 'Kingsfield' as well.
+  - bugfix: Fixed names with (') not receiving mail

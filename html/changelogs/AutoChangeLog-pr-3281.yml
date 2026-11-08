@@ -1,0 +1,4 @@
+author: "Kaolin1234"
+delete-after: True
+changes:
+  - bugfix: "Restored the aavnic valaška's Pick intent in both one-handed and two-handed grips."
