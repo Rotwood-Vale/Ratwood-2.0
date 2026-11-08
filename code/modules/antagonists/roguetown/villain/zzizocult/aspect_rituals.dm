@@ -121,10 +121,15 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 		new /obj/item/necro_relics/necro_crystal(T)
 	return TRUE
 
+/proc/psydont(mob/living/carbon/human/H)
+	for(var/obj/item/clothing/neck/roguetown/psicross/silver/S in H.held_items + H.get_equipped_items(TRUE))
+		return TRUE
+	return FALSE
+
 /proc/find_remnant(mob/user, turf/center)
 	for(var/obj/item/natural/worms/leech/L in center)
 		if(L.fed_from && !QDELETED(L.fed_from) && L.fed_from.stat != DEAD)
-			if(istype(L.fed_from.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+			if(psydont(L.fed_from))
 				to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
 				return FALSE
 			return L
@@ -156,7 +161,7 @@ GLOBAL_DATUM_INIT(zizo_research, /datum/zizo_research, new)
 	if(wanted && !(target in wanted))
 		to_chat(user, span_warning("THIS RITUAL IS NOT FOR THEM."))
 		return TRUE
-	if(istype(target.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+	if(psydont(target))
 		to_chat(user, span_warning("SILVER REPELS THE DARK MAGICK!"))
 		return TRUE
 	return FALSE

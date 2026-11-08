@@ -443,7 +443,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	if(!prey || !prey.z)
 		to_chat(user, span_warning("The heart finds nothing."))
 		return
-	if(istype(prey.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+	if(psydont(prey))
 		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
 		return
 	var/list/info = get_locator_info(user, prey)
@@ -498,8 +498,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		part.drop_limb()
 
 /datum/ritual/servantry/sleepcurse
-	name = "Curse of Sleep"
-	desc = "Curse your target to fall asleep after twelve seconds. They are warned. Requires a leech that fed from your target."
+	name = "Curse of Zizo"
+	desc = "Curse your target with a heart attack that renders them unconscious after fifteen seconds. Usually does not kill. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	research_cost = 3
 	keep_center = TRUE
@@ -513,14 +513,15 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
 		return
 	qdel(remnant)
-	to_chat(user, span_notice("SLEEP IS SISTER TO DEATH, AND DEATH IS MY LADY'S DOMAIN. [uppertext(victim.real_name)] SHALL BECOME UNCONSCIOUS IN 12 SECONDS."))
-	to_chat(victim, span_userdanger("I FEEL A TERRIBLE EXHAUSTION COME UPON ME. I HAVE 12 SECONDS TO PREPARE BEFORE IT CLAIMS ME. SOMEONE MAY COME FOR ME IN MY SLUMBER."))
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sleepcurse), victim), 12 SECONDS)
+	to_chat(user, span_notice("THE METRONOME OF THEIR HEART SHALL CEASE!"))
+	to_chat(victim, span_userdanger("A crushing pain burns in my chest!"))
+	victim.emote("gasp", forced = TRUE)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(sleepcurse), victim), 15 SECONDS)
 
-/proc/sleepcurse(mob/living/victim)
-	if(QDELETED(victim) || !ishuman(victim))
+/proc/sleepcurse(mob/living/carbon/human/victim)
+	if(QDELETED(victim) || victim.stat == DEAD)
 		return
-	victim.Unconscious(1 MINUTES)
+	victim.heart_attack()
 
 /datum/ritual/servantry/egress
 	lesser = TRUE
@@ -2213,7 +2214,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/spelltarget = target
-	if(istype(spelltarget.wear_neck, /obj/item/clothing/neck/roguetown/psicross/silver))
+	if(psydont(spelltarget))
 		to_chat(user, span_danger("They are wearing silver, it resists the dark magick!"))
 		return
 	to_chat(spelltarget, span_danger("YOU HAVE A TERRIBLE FEELING ABOUT THIS. GET AWAY!"))
