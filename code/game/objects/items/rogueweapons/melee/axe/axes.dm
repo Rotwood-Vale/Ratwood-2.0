@@ -686,6 +686,7 @@
 	max_blade_int = 400
 	icon = 'icons/roguetown/weapons/64.dmi'
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/axe/chop/heavy, /datum/intent/axe/sweep)
+	special = /datum/special_intent/graggar_break_the_ranks
 
 /obj/item/rogueweapon/greataxe/steel/doublehead/graggar/Initialize(mapload)
 	. = ..()
@@ -698,6 +699,8 @@
 	to the force of violence; a blessing, before they pursue the most dangerous game of all."
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash)
 	force = 30
+	force_wielded = 35
+	throwforce = 30 // Hey it's a throwing axe
 	wdefense = 5
 	unenchantable = TRUE
 
