@@ -2330,6 +2330,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /mob/living/simple_animal/hostile/rogue/doppelganger/Initialize(mapload, mob/living/carbon/human/caster, mob/living/carbon/human/target, icon/flat)
 	. = ..()
+	if(!target)
+		return
 	ADD_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
 	body = caster
 	icon = flat
