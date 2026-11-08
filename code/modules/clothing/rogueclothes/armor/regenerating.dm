@@ -114,6 +114,7 @@
 	HEAVEN CLOSED ITS GATES TO US, LONG AGO.' </br>'YET, HIS CHILDREN PERSIST; AND AS LONG AS THEY DO, SO MUST I. \
 	HAPPINESS MUST BE FOUGHT FOR.'"
 	armor = ARMOR_PADDED
+	combat_taggable = TRUE
 	repair_time = 20 SECONDS
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
 
@@ -136,6 +137,7 @@
 	blocksound = SOFTHIT
 	body_parts_covered = COVERAGE_VEST
 	body_parts_inherent = COVERAGE_VEST
+	combat_taggable = TRUE
 	armor = ARMOR_LEATHER
 	repair_time = 20 SECONDS
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 50//350
@@ -155,6 +157,7 @@
 	body_parts_covered = COVERAGE_VEST
 	body_parts_inherent = COVERAGE_VEST
 	blocksound = SOFTHIT
+	combat_taggable = TRUE
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
 	repair_time = 15 SECONDS//less armor and integ so faster regen
@@ -164,6 +167,7 @@
 	desc = "Are you not entertained?!"
 	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
 	body_parts_inherent = COVERAGE_FULL
+	combat_taggable = TRUE
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
 	repair_time = 15 SECONDS
@@ -173,6 +177,7 @@
 	desc = "They say I've taken the first step on a path older than memory."
 	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
 	body_parts_inherent = COVERAGE_FULL
+	combat_taggable = TRUE
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
 	repair_time = 15 SECONDS
@@ -183,6 +188,7 @@
 	body_parts_covered = COVERAGE_VEST
 	body_parts_inherent = COVERAGE_VEST
 	blocksound = SOFTHIT
+	combat_taggable = TRUE
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	repair_time = 15 SECONDS//less armor and integ so faster regen
@@ -193,6 +199,7 @@
 	armor = ARMOR_BRONZE//scary, but longer regen
 	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
 	body_parts_inherent = COVERAGE_FULL
+	combat_taggable = TRUE
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	repair_time = 20 SECONDS
 
@@ -202,6 +209,7 @@
 	armor = ARMOR_MAILLE//covers stabs
 	body_parts_covered = COVERAGE_VEST
 	body_parts_inherent = COVERAGE_VEST
+	combat_taggable = TRUE
 	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
 	repair_time = 30 SECONDS
 
@@ -213,6 +221,7 @@
 	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
 	body_parts_inherent = COVERAGE_FULL
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	combat_taggable = TRUE
 	repair_time = 40 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/iconoclast
@@ -222,6 +231,7 @@
 	body_parts_covered = COVERAGE_VEST
 	body_parts_inherent = COVERAGE_VEST
 	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL
+	combat_taggable = TRUE
 	repair_time = 40 SECONDS
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/barbarian
@@ -230,6 +240,7 @@
 	body_parts_covered = COVERAGE_FULL
 	body_parts_inherent = COVERAGE_FULL
 	armor = ARMOR_PADDED
+	combat_taggable = TRUE
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
 	repair_time = 15 SECONDS
 
@@ -239,6 +250,7 @@
 	body_parts_covered = COVERAGE_VEST
 	body_parts_inherent = COVERAGE_VEST
 	blocksound = SOFTHIT
+	combat_taggable = TRUE
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
 	repair_time = 15 SECONDS
@@ -249,6 +261,7 @@
 	body_parts_covered = COVERAGE_FULL
 	body_parts_inherent = COVERAGE_FULL
 	armor = ARMOR_LEATHER
+	combat_taggable = TRUE
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //A full-body leather armor.
 	repair_time = 30 SECONDS
 
@@ -259,6 +272,7 @@
 	body_parts_inherent = COVERAGE_VEST
 	blocksound = PLATEHIT//I HAVE BALLS OF STEEL
 	armor = ARMOR_LEATHER
+	combat_taggable = TRUE
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //defaults to a leather armor
 	repair_time = 30 SECONDS//better armor, longer repair
 
@@ -278,6 +292,7 @@
 	l_sleeve_status = SLEEVE_NORMAL
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	combat_taggable = TRUE
 	repair_time = 30 SECONDS
 
 #undef COMBAT_TAG_DURATION
