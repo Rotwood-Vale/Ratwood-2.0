@@ -1179,13 +1179,10 @@
 
 //Training unarmed
 /obj/structure/fluff/statue/tdummy/attack_hand(mob/user)
-	if(!user.cmode)
-		if(user.mind)
-			if(isliving(user))
-				if(user.doing)
-					return
-				if(user.used_intent.type != INTENT_HARM) //Gotta punch
-					return
+	if(user.cmode || !user.mind || !isliving(user) || user.doing)
+		return ..()
+	if(user.used_intent.type != INTENT_HARM) //Gotta punch
+		return ..()
 				var/mob/living/L = user
 				user.visible_message(span_notice("[user] begins training on [src]..."))
 				while(do_after(user, 1 SECONDS, target = src))
