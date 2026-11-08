@@ -2359,6 +2359,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	return examine_text.Copy()
 
 /mob/living/simple_animal/hostile/rogue/doppelganger/Destroy()
+	drop_all_held_items()
 	if(mind)
 		if(QDELETED(body))
 			ghostize()
