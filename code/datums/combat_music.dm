@@ -386,14 +386,6 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	credits = "Thomas Bangalter - Stress"
 	musicpath = list('sound/music/combat_maniac2.ogg')
 
-/* Unused
-/datum/combat_music/maniac_old
-	name = "Maniac (Old)"
-	desc = ""
-	shortname = "Maniac Old"
-	musicpath = list('sound/music/combat_maniac.ogg')
-*/
-
 /datum/combat_music/martyr
 	name = "Martyr"
 	desc = ""
@@ -693,3 +685,10 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	shortname = "Shepherd"
 	credits = "MusicImaginary - Yendrek"
 	musicpath = list('sound/music/frei_shepherd.ogg')
+
+/datum/combat_music/fallen_knight
+	name = "Fallen Knight"
+	desc = ""
+	credits = "Studio EIM - Canto VII Boss 3 Battle Theme"
+	shortname = "Fallen Knight"
+	musicpath = list('sound/music/cmode/antag/combat_disgraced.ogg')

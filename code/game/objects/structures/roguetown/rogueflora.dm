@@ -467,13 +467,13 @@
 		if(L.m_intent == MOVE_INTENT_SNEAK)
 			return
 		else
-			if(!(HAS_TRAIT(L, TRAIT_AZURENATIVE) && L.m_intent != MOVE_INTENT_RUN))
-				playsound(A.loc, "plantcross", 80, FALSE, -1)
-			var/oldx = A.pixel_x
-			animate(A, pixel_x = oldx+1, time = 0.5)
-			animate(pixel_x = oldx-1, time = 0.5)
-			animate(pixel_x = oldx, time = 0.5)
-			L.consider_ambush()
+			if(!L.treads_lightly())
+				playsound(A.loc, "plantcross", 100, FALSE, -1)
+				var/oldx = A.pixel_x
+				animate(A, pixel_x = oldx+1, time = 0.5)
+				animate(pixel_x = oldx-1, time = 0.5)
+				animate(pixel_x = oldx, time = 0.5)
+				L.consider_ambush()
 	return
 
 
@@ -501,7 +501,8 @@
 			if(prob(88))
 				bushtype = pickweight(list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue=5,
 						/obj/item/reagent_containers/food/snacks/grown/berries/rogue/poison=3,
-						/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed=1))
+						/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweed=1,
+						/obj/item/reagent_containers/food/snacks/grown/bakersroot=1))
 		else
 			desc += "Sadly, years of harvest inside this town have left it fruitless."
 	loot_replenish()

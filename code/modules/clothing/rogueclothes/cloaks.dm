@@ -53,6 +53,9 @@
 		for(var/obj/item/I in things)
 			STR.remove_from_storage(I, get_turf(src))
 
+/obj/item/clothing/cloak/tabard/black
+	color = CLOTHING_BLACK
+
 /obj/item/clothing/cloak/abyssortabard
 	name = "abyssorite tabard"
 	desc = "A tabard worn by Abyssorite devouts."
@@ -1438,6 +1441,33 @@
 	heat_protection = null
 	max_heat_protection_temperature = BODYTEMP_NORMAL_MAX
 	dropshrink = null
+
+/obj/item/clothing/cloak/volfmantle/shoulderpad
+	name = "plate spaulders"
+	desc = "An heavy metallic spaulder designed to strike awe and demand submission on the hearts of others."
+	icon_state = "metalshoulderpad"
+	item_state = "metalshoulderpad"
+	slot_flags = ITEM_SLOT_CLOAK
+	salvage_result = /obj/item/ingot/steel
+	cold_protection = ARM_RIGHT
+
+/obj/item/clothing/cloak/volfmantle/shoulderpad/leather
+	name = "leather spaulders"
+	desc = "A pair of leather shoulder protections to look bigger and dominant."
+	icon_state = "leathershoulderpad"
+	item_state = "leathershoulderpad"
+	slot_flags = ITEM_SLOT_CLOAK
+	salvage_result = /obj/item/natural/hide/cured
+	cold_protection = ARM_LEFT | ARM_RIGHT
+
+/obj/item/clothing/cloak/volfmantle/shoulderpad/lightleather
+	name = "light leather spaulders"
+	desc = "An small pair of leather pads for shoulder protection."
+	icon_state = "lightleathershoulderpad"
+	item_state = "lightleathershoulderpad"
+	slot_flags = ITEM_SLOT_CLOAK
+	salvage_result = /obj/item/natural/hide/cured
+	cold_protection = ARM_LEFT | ARM_RIGHT
 
 /obj/item/clothing/cloak/wickercloak
 	name = "wicker cloak"
