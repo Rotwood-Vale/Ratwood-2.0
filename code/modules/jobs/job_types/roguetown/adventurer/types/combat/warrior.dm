@@ -121,8 +121,8 @@
 		/datum/virtue/combat/guarded
 	)
 	subclass_stats = list(
-		STATKEY_INT = 2,
 		STATKEY_STR = 1,
+		STATKEY_INT = 2,
 		STATKEY_WIL = 1,
 		STATKEY_SPD = 1,
 	)

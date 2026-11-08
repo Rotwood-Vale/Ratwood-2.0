@@ -1,0 +1,6 @@
+author: "Guidesu"
+delete-after: True
+changes:
+  - rscadd: "Adds new clothing ported from AP and TW."
+  - bugfix: "Hat storage."
+  - bugfix: "Bracers and cloak layering"
