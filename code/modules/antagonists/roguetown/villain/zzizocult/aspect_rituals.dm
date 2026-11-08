@@ -2311,44 +2311,47 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/witch_possess)
 	return
 
-/obj/structure/mirror/profane
-	name = "profane mirror"
-	desc = "Shapes shift behind its twisted glass! It looks evil."
-	color = "#4a2a5c"
-	pixel_y = 0
-	var/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/ghost
-	var/datum/mind/owner
-
-/obj/structure/mirror/profane/obj_break(damage_flag, mapload)
-	. = ..()
-	qdel(src)
-
-/obj/structure/mirror/profane/Destroy()
-	qdel(ghost)
-	owner?.RemoveSpell(/obj/effect/proc_holder/spell/self/mirror_possess)
-	return ..()
-
-/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost
-	name = "hynt"
-	desc = "UNNATURAL. WHAT IS THIS?!"
-	alpha = 70
-	density = FALSE
-	incorporeal_move = TRUE
-	status_flags = GODMODE
+/mob/living/simple_animal/hostile/rogue/doppelganger
+	mob_biotypes = MOB_HUMANOID
 	maxHealth = 100
 	health = 100
-	melee_damage_lower = 20
-	melee_damage_upper = 20
+	dextrous = TRUE
+	held_items = list(null, null)
+	del_on_death = TRUE
+	can_have_ai = FALSE
+	AIStatus = AI_OFF
 	ai_controller = null
-	faction = list("zizo")
+	footstep_type = FOOTSTEP_MOB_BAREFOOT
+	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, /datum/intent/simple/claw)
+	melee_damage_lower = 5
+	melee_damage_upper = 10
 	var/mob/living/carbon/human/body
-	var/obj/structure/mirror/profane/mirror
-	var/datum/beam/leash
-	var/looks = 0
-	var/next_step = 0
+	var/list/examine_text
 
-/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/Destroy()
-	qdel(leash)
+/mob/living/simple_animal/hostile/rogue/doppelganger/Initialize(mapload, mob/living/carbon/human/caster, mob/living/carbon/human/target, icon/flat)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
+	body = caster
+	icon = flat
+	name = target.real_name
+	real_name = target.real_name
+	gender = target.gender
+	faction = caster.faction.Copy()
+	voicecolor_override = target.voice_color
+	vocal_bark = target.vocal_bark
+	vocal_bark_id = target.vocal_bark_id
+	vocal_pitch = target.vocal_pitch
+	vocal_pitch_range = target.vocal_pitch_range
+	vocal_speed = target.vocal_speed
+	verb_say = target.dna.species.say_mod
+	examine_text = target.examine(caster)
+	var/datum/action/cooldown/spell/end = new /datum/action/cooldown/spell/end_doppelganger(src)
+	end.Grant(src)
+
+/mob/living/simple_animal/hostile/rogue/doppelganger/examine(mob/user)
+	return examine_text.Copy()
+
+/mob/living/simple_animal/hostile/rogue/doppelganger/Destroy()
 	if(mind)
 		if(QDELETED(body))
 			ghostize()
@@ -2356,82 +2359,39 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 			mind.transfer_to(body)
 	return ..()
 
-/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/forceMove(atom/destination)
-	if(isturf(destination) && (world.time < next_step || destination.z != z || get_dist(destination, mirror) > 15))
-		return FALSE
-	next_step = world.time + 8
-	return ..()
+/datum/action/cooldown/spell/end_doppelganger
+	name = "Dismiss Reflection"
+	desc = "Return to your body."
+	button_icon = 'icons/mob/actions/zizomiracles.dmi'
+	button_icon_state = "ZIZO"
+	click_to_activate = FALSE
+	charge_required = FALSE
+	spell_flags = SPELL_IGNORE_SPELLBLOCK
 
-/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/examine(mob/user)
+/datum/action/cooldown/spell/end_doppelganger/cast(atom/cast_on)
 	. = ..()
-	if(user == src || !isliving(user) || is_zizo(user))
-		return
-	looks++
-	adjustBruteLoss(20, forced = TRUE)
-	to_chat(src, span_danger("[user] GAZES AT ME! IT BURNS!"))
-	to_chat(user, span_warning("The hynt shrieks and writhes under my gaze!"))
-	visible_message(span_danger("[src] shrieks and writhes, burned by [user]'s gaze!"), ignored_mobs = list(src, user))
-	if(looks >= 5)
-		qdel(src)
-
-/obj/effect/proc_holder/spell/self/mirror_possess
-	name = "Conjure Hynt"
-	desc = "Conjure a hynt at the profane mirror."
-	overlay_icon = 'icons/mob/actions/zizomiracles.dmi'
-	action_icon = 'icons/mob/actions/zizomiracles.dmi'
-	overlay_state = "tame_deadite"
-	recharge_time = 30 SECONDS
-	chargedloop = null
-	var/obj/structure/mirror/profane/mirror
-	var/mob/living/simple_animal/hostile/rogue/haunt/mirror_ghost/ghost
-
-/obj/effect/proc_holder/spell/self/mirror_possess/charge_check(mob/user, feedback = TRUE)
-	if(user == ghost)
-		return TRUE
-	return ..()
-
-/obj/effect/proc_holder/spell/self/mirror_possess/cast(list/targets, mob/user = usr)
-	. = ..()
-	if(user == ghost)
-		qdel(ghost)
-		return TRUE
-	if(!ishuman(user) || !user.mind || QDELETED(mirror) || mirror.obj_broken)
-		to_chat(user, span_warning("NO MIRROR."))
-		revert_cast()
-		return FALSE
-	if(!QDELETED(mirror.ghost))
-		to_chat(user, span_warning("A HYNT IS ALREADY CONJURED!"))
-		revert_cast()
-		return FALSE
-	ghost = new(get_turf(mirror))
-	ghost.body = user
-	ghost.mirror = mirror
-	ghost.leash = mirror.Beam(ghost, "blood", 'icons/roguetown/cult/cultsprites.dmi')
-	ghost.leash.alpha = 70
-	mirror.ghost = ghost
-	user.visible_message(span_warning("[user] falls limp!"))
-	user.mind.transfer_to(ghost)
-	QDEL_IN(ghost, 90 SECONDS)
-	return TRUE
+	QDEL_IN(owner, 1)
 
 /datum/ritual/noise/reflection
 	name = "Reflection"
-	desc = "Consume a hand mirror to raise a profane mirror. You are able to conjure a hynt through its twisted glass. You control the hynt, and it is a spectral entity that moves through walls and harm mortal flesh. Yet a mortal's gaze destroys it."
+	desc = "Create a visual replica of your target and take control of it. Requires a leech that fed from your target."
 	is_cultist_ritual = TRUE
-	center_requirement = /obj/item/handmirror
+	center_requirement = /obj/item/natural/worms/leech
+	keep_center = TRUE
 	research_cost = 5
 
 /datum/ritual/noise/reflection/invoke(mob/living/user, turf/center)
-	if(!user.mind)
+	if(!ishuman(user) || !user.mind)
 		return
-	var/obj/effect/proc_holder/spell/self/mirror_possess/spell = locate() in user.mind.spell_list
-	if(spell)
-		qdel(spell.mirror)
-	spell = new
-	user.mind.AddSpell(spell)
-	spell.mirror = new /obj/structure/mirror/profane(center)
-	spell.mirror.owner = user.mind
-	to_chat(user, span_notice("IN THE NOISE, IT IS ALL MIRRORS."))
+	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
+	if(!remnant)
+		return
+	var/mob/living/carbon/human/target = remnant.fed_from
+	qdel(remnant)
+	var/icon/flat = get_flat_human_icon("[target.real_name] [world.time]", null, null, DUMMY_HUMAN_SLOT_MANIFEST, GLOB.cardinals, TRUE, target, TRUE)
+	var/mob/living/simple_animal/hostile/rogue/doppelganger/double = new(get_turf(user), user, target, flat)
+	user.visible_message(span_warning("[user] falls limp!"))
+	user.mind.transfer_to(double)
 
 /datum/ritual/noise/forgettongue
 	name = "Curse of Babel"
