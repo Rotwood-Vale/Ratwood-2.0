@@ -700,6 +700,7 @@
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash)
 	force = 30
 	force_wielded = 35
+	throwforce = 30 // Hey it's a throwing axe
 	wdefense = 5
 	unenchantable = TRUE
 
