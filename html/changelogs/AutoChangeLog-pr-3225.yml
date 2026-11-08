@@ -1,5 +1,0 @@
-author: "IronDragoon"
-delete-after: True
-changes:
-  - qol: "Letters sent to kingsfield now notify admins, made it easier for them to reply. They can be sent to just 'Kingsfield' as well."
-  - bugfix: "Fixed names with (') not receiving mail"
