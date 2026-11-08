@@ -530,7 +530,7 @@ LICH SKELETONS
 	name = "Venerated Siege-Ballistiares"
 	tutorial = "Few in number, yet known in presence. Fleshless palms cradle the pinnacle of siegebreakage; a massive weapon, capable of sundering all the walls-and-defenses that'd impede your master's path."
 	outfit = /datum/outfit/job/roguetown/greater_skeleton/lich/rareballistiares
-	maximum_possible_slots = 1 //Limited, but powerful.
+	maximum_possible_slots = 2 //Limited, but powerful.
 	category_tags = list(CTAG_LSKELETON)
 
 /datum/outfit/job/roguetown/greater_skeleton/lich/rareballistiares/pre_equip(mob/living/carbon/human/H)
