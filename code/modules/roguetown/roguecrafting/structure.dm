@@ -561,14 +561,6 @@
 	skillcraft = /datum/skill/craft/carpentry
 	buildsame = TRUE
 
-/datum/crafting_recipe/roguetown/structure/wallshelf
-	name = "wall shelf (1 plank)"
-	result = /obj/structure/rack/rogue/shelf
-	reqs = list(/obj/item/natural/wood/plank = 1)
-	wallcraft = TRUE
-	skillcraft = /datum/skill/craft/carpentry
-	craftdiff = 2
-
 /datum/crafting_recipe/roguetown/structure/mineshaft_support
 	name = "mineshaft support"
 	result = /obj/structure/barricade/mineshaft
@@ -663,22 +655,6 @@
 				/obj/item/natural/stone = 2)
 	verbage_simple = "build"
 	verbage = "builds"
-
-/datum/crafting_recipe/roguetown/structure/wooden_spit
-	name = "wooden spit"
-	result = /obj/machinery/light/rogue/hearth/wooden_spit
-	reqs = list(/obj/item/grown/log/tree/stick = 2)
-	structurecraft = /obj/machinery/light/rogue/campfire
-	ignoredensity = TRUE
-	verbage_simple = "set up"
-	verbage = "sets up"
-	craftdiff = 0
-
-/datum/crafting_recipe/roguetown/structure/wooden_spit/TurfCheck(mob/user, turf/T)
-	for(var/obj/machinery/light/rogue/campfire/fire in T)
-		if(fire.can_support_spit)
-			return TRUE
-	return FALSE
 
 /datum/crafting_recipe/roguetown/structure/cookpit
 	name = "hearth"
@@ -1329,7 +1305,7 @@
 	craftdiff = 4
 
 /datum/crafting_recipe/roguetown/structure/fireplace
-	name = "fireplace (north)"
+	name = "fireplace (wall)"
 	result = /obj/machinery/light/rogue/campfire/fireplace/crafted
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/stoneblock = 3)
@@ -1339,7 +1315,7 @@
 	wallcraft = TRUE
 
 /datum/crafting_recipe/roguetown/structure/fireplace/blue
-	name = "blue fireplace (north)"
+	name = "blue fireplace (wall)"
 	result = /obj/machinery/light/rogue/campfire/fireplace/crafted/blue
 	reqs = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/natural/stoneblock = 3,
@@ -1556,3 +1532,69 @@
 	reqs = list(/obj/item/natural/cloth = 2)
 	skillcraft = /datum/skill/craft/sewing
 	craftdiff = 2
+
+/datum/crafting_recipe/roguetown/structure/wallshelf
+	name = "wooden shelf (wall)"
+	result = /obj/structure/rack/rogue/shelf
+	reqs = list(/obj/item/natural/wood/plank = 1)
+	wallcraft = TRUE
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+
+/datum/crafting_recipe/roguetown/structure/shelf_medium
+	name = "wooden shelf (medium)"
+	category = "Misc"
+	result = /obj/structure/rack/rogue/shelf/big
+	reqs = list(/obj/item/grown/log/tree/stick = 3)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 0
+	ignoredensity = TRUE
+
+/datum/crafting_recipe/roguetown/structure/shelf_big
+	name = "wooden shelf (big)"
+	category = "Misc"
+	result = /obj/structure/rack/rogue/shelf/biggest
+	reqs = list(/obj/item/grown/log/tree/stick = 4)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+	craftdiff = 1
+	ignoredensity = TRUE
+
+/datum/crafting_recipe/roguetown/structure/chest_wood_plain
+	name = "chest (wooden)"
+	category = "Containers"
+	result = /obj/structure/closet/crate/roguecloset/inn/chest
+	reqs = list(/obj/item/grown/log/tree/small = 1)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+
+/datum/crafting_recipe/roguetown/structure/chest_wood_plain_alt
+	name = "chest (wooden, old, alt)"
+	category = "Containers"
+	result = /obj/structure/closet/crate/chest/old_crate
+	reqs = list(/obj/item/grown/log/tree/small = 1)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+
+/datum/crafting_recipe/roguetown/structure/chest_wood_sturdy
+	name = "chest (wooden, sturdy)"
+	category = "Containers"
+	result = /obj/structure/closet/crate/chest/neu
+	reqs = list(/obj/item/grown/log/tree/small = 1)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry
+
+/datum/crafting_recipe/roguetown/structure/closet_wood_inn
+	name = "closet (wide, inn)"
+	category = "Containers"
+	result = /obj/structure/closet/crate/roguecloset/inn/south
+	reqs = list(/obj/item/grown/log/tree/small = 1)
+	verbage_simple = "construct"
+	verbage = "constructs"
+	skillcraft = /datum/skill/craft/carpentry

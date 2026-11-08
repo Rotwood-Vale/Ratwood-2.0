@@ -167,6 +167,20 @@
 	stamina_status_effect = /datum/status_effect/buff/campfire_stamina/fireplace
 	heat_level = 6
 
+/obj/machinery/light/rogue/campfire/fireplace/OnCrafted(dirin)
+	pixel_x = 0
+	pixel_y = 0
+	switch(dirin)
+		if(NORTH)
+			pixel_y = 32
+		if(SOUTH)
+			pixel_y = -32
+		if(EAST)
+			pixel_x = 32
+		if(WEST)
+			pixel_x = -32
+	. = ..()
+
 /obj/machinery/light/rogue/campfire/fireplace/attack_right(mob/user)
 	if(isliving(user) && on)
 		user.visible_message(span_warning("[user] snuffs [src]."))
@@ -192,20 +206,76 @@
 	name = "grand fireplace"
 	healing_range = 6
 
+/obj/machinery/light/rogue/campfire/fireplace/inn/OnCrafted(dirin)
+	pixel_x = 0
+	pixel_y = 0
+	switch(dirin)
+		if(NORTH)
+			pixel_y = 32
+		if(SOUTH)
+			pixel_y = -32
+		if(EAST)
+			pixel_x = 32
+		if(WEST)
+			pixel_x = -32
+	. = ..()
+
 /obj/machinery/light/rogue/campfire/fireplace/crafted
 	density = FALSE
 	pixel_y = 32
 	cookonme = TRUE
+
+/obj/machinery/light/rogue/campfire/fireplace/crafted/OnCrafted(dirin)
+	pixel_x = 0
+	pixel_y = 0
+	switch(dirin)
+		if(NORTH)
+			pixel_y = 32
+		if(SOUTH)
+			pixel_y = -32
+		if(EAST)
+			pixel_x = 32
+		if(WEST)
+			pixel_x = -32
+	. = ..()
 
 /obj/machinery/light/rogue/campfire/fireplace/crafted/blue
 	desc = "A curious cool fire dances upon a bed of mysteriously glowing embers."
 	icon = 'icons/roguetown/misc/wallfireblue.dmi'
 	bulb_colour = "#6e90ff"
 
+/obj/machinery/light/rogue/campfire/fireplace/crafted/blue/OnCrafted(dirin)
+	pixel_x = 0
+	pixel_y = 0
+	switch(dirin)
+		if(NORTH)
+			pixel_y = 32
+		if(SOUTH)
+			pixel_y = -32
+		if(EAST)
+			pixel_x = 32
+		if(WEST)
+			pixel_x = -32
+	. = ..()
+
 /obj/machinery/light/rogue/campfire/fireplace/blue
 	desc = "A curious cool fire dances upon a bed of mysteriously glowing embers."
 	icon = 'icons/roguetown/misc/wallfireblue.dmi'
 	bulb_colour = "#6e90ff"
+
+/obj/machinery/light/rogue/campfire/fireplace/blue/OnCrafted(dirin)
+	pixel_x = 0
+	pixel_y = 0
+	switch(dirin)
+		if(NORTH)
+			pixel_y = 32
+		if(SOUTH)
+			pixel_y = -32
+		if(EAST)
+			pixel_x = 32
+		if(WEST)
+			pixel_x = -32
+	. = ..()
 
 /obj/machinery/light/rogue/candle
 	name = "candles"
