@@ -162,6 +162,13 @@
 		arrows += A
 	update_icon()
 
+/obj/item/quiver/bolt/heavy/ancient/Initialize(mapload)
+	..()
+	for(var/i in 1 to max_storage)
+		var/obj/item/ammo_casing/caseless/rogue/heavy_bolt/ancient/A = new()
+		arrows += A
+	update_icon()
+
 /obj/item/quiver/Wbolts/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_storage)
