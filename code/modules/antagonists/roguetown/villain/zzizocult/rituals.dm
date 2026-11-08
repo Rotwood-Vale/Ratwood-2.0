@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /datum/zizogoal/robgrave
 	name = "Grave Robbery"
-	desc = "Dig up a grave."
+	desc = "Dig up a marked grave inside the graveyard."
 
 /datum/zizogoal/worshipzizo_garrison
 	name = "Worship Zizo at Garrison"
@@ -109,6 +109,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		gl.complete = TRUE
 		user.zizo_goals_complete |= gl.type
 		zizo_award(user, gl.reward)
+		return TRUE
 
 /proc/reroll_goals(mob/living/carbon/human/user)
 	user.zizo_goals = list()
