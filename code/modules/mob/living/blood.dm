@@ -473,6 +473,8 @@
 		W.update_icon()
 		return
 	new /obj/effect/decal/cleanable/blood/splatter(T)
+	for(var/obj/effect/decal/cleanable/blood/B in T)
+		B.add_blood_DNA(get_blood_dna_list())
 	T?.pollute_turf(/datum/pollutant/metallic_scent, 30)
 
 
@@ -528,6 +530,8 @@
 			D.update_icon()
 		else
 			new /obj/effect/decal/cleanable/blood/drip(T)
+	for(var/obj/effect/decal/cleanable/blood/B in T)
+		B.add_blood_DNA(get_blood_dna_list())
 
 //OV edit
 /mob/living/carbon/human/add_drip_floor(turf/T, amt)
