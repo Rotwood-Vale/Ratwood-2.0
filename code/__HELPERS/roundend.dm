@@ -134,6 +134,8 @@
 
 	to_chat(world, "<BR><BR><BR><span class='reallybig'>So ends this tale on Ratwood Keep.</span>")
 	get_end_reason()
+	if(SSticker.roundend_epilogue)
+		to_chat(world, span_notice(SSticker.roundend_epilogue))
 
 	var roundend_music = pick('sound/music/roundend.ogg','sound/music/roundend2.ogg','sound/music/roundend3.ogg')
 	var/list/key_list = list()

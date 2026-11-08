@@ -58,6 +58,11 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	if(!ishuman(speaker))
 		return
 	var/mob/living/carbon/human/H = speaker
+	if(findtext(message, "i ascend") || findtext(message, "i assent") || findtext(message, "i abdicate") || findtext(message, "stop ascent") || findtext(message, "status of the rite") || findtext(message, "rite status"))
+		var/obj/structure/roguethrone/throne = GLOB.king_throne
+		if(throne && get_dist(H, throne) <= RITE_ASSENT_RANGE)
+			throne.handle_rite_speech(H, raw_message || message)
+			return
 	var/nocrown
 	if(!istype(H.head, /obj/item/clothing/head/roguetown/crown/serpcrown))
 		nocrown = TRUE
@@ -425,4 +430,3 @@ GLOBAL_VAR_INIT(last_crown_announcement_time, -1000)
 	priority_announce("[H.real_name], the [H.get_role_title()], sits as the regent of the realm.", "A New Regent Resides", pick('sound/misc/royal_decree.ogg', 'sound/misc/royal_decree2.ogg'), "Captain")
 	SSticker.regentmob = H
 	SSticker.regentday = GLOB.dayspassed
-

@@ -78,6 +78,23 @@
 	min_chaos = 3
 	villain_events = list(/datum/round_event_control/antagonist/solo/vampires)
 
+/datum/round_modifier/ashen_host
+	name = "Ashen Host"
+	desc = "The Ashen Host gathers beneath the Legate's banner."
+	cost = 1
+	weight = 55
+	min_chaos = 1
+	incompatible = list(
+		/datum/round_modifier/high_wretches,
+		/datum/round_modifier/vampire,
+		/datum/round_modifier/vampirelord,
+		/datum/round_modifier/rebel
+	)
+	job_slots = list(
+		"Ashen Host" = 12,
+		"Wretch" = -5,
+	)
+
 /datum/round_modifier/assassin
 	name = "Assassins"
 	desc = "Ware! Knives in the dark!"
