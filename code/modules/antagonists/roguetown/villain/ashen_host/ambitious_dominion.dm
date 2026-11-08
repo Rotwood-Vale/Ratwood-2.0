@@ -8,7 +8,7 @@
 	new_realm_type_short = "Dominion"
 
 /datum/usurpation_rite/ambitious_dominion/can_invoke(mob/living/carbon/human/user)
-	return ..() && user.mind?.has_antag_datum(/datum/antagonist/ashen_host/leader) && ("Ashen Host" in user.faction)
+	return ..() && user.mind?.has_antag_datum(/datum/antagonist/ashen_host) && ("Ashen Host" in user.faction)
 
 /datum/usurpation_rite/ambitious_dominion/on_gathering_started()
 	to_chat(invoker, span_notice("The rite has begun. Within [RITE_GATHERING_DURATION / (1 MINUTES)] minutes, five arcyne-trained, Zizo-faithful, or undead voices must speak 'I assent' near the throne. The ruler or regent may say 'I abdicate' to begin the contest early."))

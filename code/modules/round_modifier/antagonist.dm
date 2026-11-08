@@ -81,9 +81,9 @@
 /datum/round_modifier/ashen_host
 	name = "Ashen Host"
 	desc = "The Ashen Host gathers beneath the Legate's banner."
-	cost = 8
-	weight = 5
-	min_chaos = 3
+	cost = 1
+	weight = 5555
+	min_chaos = 1
 	incompatible = list(
 		/datum/round_modifier/high_wretches,
 		/datum/round_modifier/vampire,
