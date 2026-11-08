@@ -1551,8 +1551,8 @@
 
 /datum/crafting_recipe/roguetown/structure/wallshelf
 	name = "wooden shelf (wall)"
-	result = /obj/structure/rack/rogue/shelf
-	reqs = list(/obj/item/natural/wood/plank = 1)
+	result = /obj/structure/rack/rogue/shelf/wall
+	reqs = list(/obj/item/grown/log/tree/stick = 2)
 	wallcraft = TRUE
 	skillcraft = /datum/skill/craft/carpentry
 	craftdiff = 0
