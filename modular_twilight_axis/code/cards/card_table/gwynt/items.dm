@@ -250,7 +250,8 @@
 
 /obj/item/ccg_deck/dropped(mob/user, silent = FALSE)
 	. = ..()
-	if(get_active_match()?.result_text)
+	var/datum/ccg_match/active_match = get_active_match()
+	if(active_match?.result_text)
 		release_finished_match()
 	if(get_active_match())
 		return
