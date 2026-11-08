@@ -1768,7 +1768,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_fencing_gambeson
 	name = "Fencing Gambeson (Otavan)"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
-	triumph_cost = 3
+	triumph_cost = 6
 
 /datum/loadout_item/tri_fencing_shirt
 	name = "Fencing Shirt (Padded)"
@@ -1808,37 +1808,37 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_gronn_byrine_chausses
 	name = "Byrine Chausses"
 	path = /obj/item/clothing/under/roguetown/splintlegs/iron/gronn
-	triumph_cost = 3
+	triumph_cost = 4
 
 /datum/loadout_item/tri_gronn_byrine_gloves
 	name = "Byrine Gloves"
 	path = /obj/item/clothing/gloves/roguetown/chain/gronn
-	triumph_cost = 3
+	triumph_cost = 4
 
 /datum/loadout_item/tri_gronn_byrine_hauberk
 	name = "Byrine"
 	path = /obj/item/clothing/suit/roguetown/armor/brigandine/gronn
-	triumph_cost = 3
+	triumph_cost = 6
 
 /datum/loadout_item/tri_gronn_fur_pants
 	name = "Fur Pants"
 	path = /obj/item/clothing/under/roguetown/trou/leather/gronn
-	triumph_cost = 3
+	triumph_cost = 4
 
 /datum/loadout_item/tri_gronn_bone_gloves
 	name = "Bone Gloves"
 	path = /obj/item/clothing/gloves/roguetown/angle/gronnfur
-	triumph_cost = 3
+	triumph_cost = 4
 
 /datum/loadout_item/tri_hierophant_gambeson
 	name = "Hierophant Gambeson"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant
-	triumph_cost = 3
+	triumph_cost = 6
 
 /datum/loadout_item/tri_gronn_ravager_mantle
 	name = "Ravager Mantle"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn
-	triumph_cost = 3
+	triumph_cost = 6
 
 /datum/loadout_item/tri_huus_quyaq
 	name = "Huus Quyaq (Northern)"
@@ -1848,7 +1848,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_kurche
 	name = "Kurche (Gronn)"
 	path = /obj/item/clothing/suit/roguetown/armor/kurche
-	triumph_cost = 3
+	triumph_cost = 6
 
 /datum/loadout_item/tri_leather_cuirass
 	name = "Leather Cuirass"
@@ -1869,21 +1869,6 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	path = /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood
 	triumph_cost = 4
 
-/datum/loadout_item/tri_newmoon_hood
-	name = "New Moon Hood"
-	path = /obj/item/clothing/head/roguetown/roguehood/reinforced/newmoon
-	triumph_cost = 2
-
-/datum/loadout_item/tri_newmoon_jacket
-	name = "New Moon Jacket"
-	path = /obj/item/clothing/suit/roguetown/armor/leather/newmoon_jacket
-	triumph_cost = 3
-
-/datum/loadout_item/tri_newmoon_tunic
-	name = "New Moon Tunic"
-	path = /obj/item/clothing/suit/roguetown/shirt/tunic/newmoon
-	triumph_cost = 3
-
 /datum/loadout_item/tri_ornate_tailcoat
 	name = "Ornate Tailcoat"
 	path = /obj/item/clothing/suit/roguetown/shirt/coat/steward
@@ -1893,7 +1878,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_otavan_gambeson
 	name = "Otavan Gambeson"
 	path = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan
-	triumph_cost = 3
+	triumph_cost = 6
 
 /datum/loadout_item/tri_padded_caftan
 	name = "Padded Caftan"
@@ -1913,7 +1898,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_psyaltrist_leather
 	name = "Psyaltrist Leather"
 	path = /obj/item/clothing/suit/roguetown/armor/leather/studded/psyaltrist
-	triumph_cost = 3
+	triumph_cost = 6
 
 /datum/loadout_item/tri_zyb_coat
 	name = "Desert Coat"
@@ -1991,7 +1976,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_otavan_gloves
 	name = "Otavan Gloves"
 	path = /obj/item/clothing/gloves/roguetown/otavan
-	triumph_cost = 2
+	triumph_cost = 4
 
 /datum/loadout_item/tri_pontifex_gloves
 	name = "Pontifex Gloves"
@@ -2017,6 +2002,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_otavan_boots
 	name = "Otavan Boots"
 	path = /obj/item/clothing/shoes/roguetown/boots/otavan
+	triumph_cost = 3
 
 
 /datum/loadout_item/tri_rumaclan_boots
@@ -2033,7 +2019,7 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_atgervi_pants
 	name = "Atgervi Fur Pants"
 	path = /obj/item/clothing/under/roguetown/trou/leather/atgervi
-	triumph_cost = 2
+	triumph_cost = 4
 
 /datum/loadout_item/tri_eastern_pants_1
 	name = "Eastern Pants (Black)"
@@ -2053,12 +2039,12 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/tri_otavan_pants
 	name = "Otavan Pants"
 	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
-	triumph_cost = 2
+	triumph_cost = 4
 
 /datum/loadout_item/tri_otavan_generic_pants
 	name = "Otavan Pants (Generic)"
 	path = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
-	triumph_cost = 2
+	triumph_cost = 4
 
 /datum/loadout_item/tri_kazengun_pants
 	name = "Kazengun Pants"
@@ -2086,10 +2072,10 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 	name = "Hierophant Cloak"
 	path = /obj/item/clothing/cloak/hierophant
 
-
 /datum/loadout_item/tri_kazengun_cloak
 	name = "Kazengun Cloak"
 	path = /obj/item/clothing/cloak/kazengun
+
 
 
 // NECK ACCESSORIES (Alphabetically Ordered)
@@ -2564,3 +2550,748 @@ GLOBAL_LIST_INIT(loadout_items, init_subtypes(/datum/loadout_item))
 /datum/loadout_item/caparison/fogbeast/azure
 	name = "Ducal Caparison (Fogbeast)"
 	path = /obj/item/caparison/fogbeast/azure
+
+/datum/loadout_item/cloak_absolutionistrobe_black
+	name = "Blessed robe"
+	path = /obj/item/clothing/cloak/absolutionistrobe/black
+
+/datum/loadout_item/cloak_apron_waist_maid
+	name = "Maid apron"
+	path = /obj/item/clothing/cloak/apron/waist/maid
+
+/datum/loadout_item/cloak_bandolier
+	name = "Bandolier"
+	path = /obj/item/clothing/cloak/bandolier
+
+/datum/loadout_item/cloak_bandolier_inq
+	name = "Inquisitorial bandolier"
+	path = /obj/item/clothing/cloak/bandolier/inq
+
+/datum/loadout_item/cloak_bishop
+	name = "Bishop cape"
+	path = /obj/item/clothing/cloak/bishop
+
+/datum/loadout_item/cloak_cape_inquisitorgold
+	name = "Golden order cloak"
+	path = /obj/item/clothing/cloak/cape/inquisitorgold
+
+/datum/loadout_item/cloak_cape_inquisitorsilver
+	name = "Silver order cloak"
+	path = /obj/item/clothing/cloak/cape/inquisitorsilver
+
+/datum/loadout_item/cloak_etrcape
+	name = "Wanderer's cape"
+	path = /obj/item/clothing/cloak/etrcape
+
+/datum/loadout_item/cloak_half_duelcape
+	name = "Duelist cape (duelcape)"
+	path = /obj/item/clothing/cloak/half/duelcape
+
+/datum/loadout_item/cloak_half_shadowcloak_spymaster
+	name = "Hand's cloak"
+	path = /obj/item/clothing/cloak/half/shadowcloak/spymaster
+
+/datum/loadout_item/cloak_poncho_fancycoat
+	name = "Fancy coat (fancycoat)"
+	path = /obj/item/clothing/cloak/poncho/fancycoat
+
+/datum/loadout_item/cloak_poncho_fancycoat_trimmed
+	name = "Trimmed fancy coat"
+	path = /obj/item/clothing/cloak/poncho/fancycoat/trimmed
+
+/datum/loadout_item/cloak_rangercloak
+	name = "Ranger cloak"
+	path = /obj/item/clothing/cloak/rangercloak
+
+/datum/loadout_item/cloak_rosa
+	name = "Regal cloak"
+	path = /obj/item/clothing/cloak/rosa
+
+/datum/loadout_item/cloak_rosa_two
+	name = "Courtly cloak"
+	path = /obj/item/clothing/cloak/rosa/two
+
+/datum/loadout_item/cloak_sash
+	name = "Sash"
+	path = /obj/item/clothing/cloak/sash
+
+/datum/loadout_item/cloak_sash_dupatta
+	name = "Dupatta"
+	path = /obj/item/clothing/cloak/sash/dupatta
+
+/datum/loadout_item/cloak_scaledcloak
+	name = "Scaled cloak"
+	path = /obj/item/clothing/cloak/scaledcloak
+
+/datum/loadout_item/cloak_scout
+	name = "Scout cloak"
+	path = /obj/item/clothing/cloak/scout
+
+/datum/loadout_item/cloak_sheriff
+	name = "Sheriff's cloak"
+	path = /obj/item/clothing/cloak/sheriff
+
+/datum/loadout_item/cloak_sleevedtabard
+	name = "Sleeved tabard"
+	path = /obj/item/clothing/cloak/sleevedtabard
+
+/datum/loadout_item/cloak_tabard_psydontabard_black
+	name = "Blessed tabard"
+	path = /obj/item/clothing/cloak/tabard/psydontabard/black
+
+/datum/loadout_item/cloak_tabard_psydontabard_white
+	name = "Traditional tabard"
+	path = /obj/item/clothing/cloak/tabard/psydontabard/white
+
+/datum/loadout_item/cloak_tabard_psydontabard_white_alt
+	name = "Opened traditional tabard"
+	path = /obj/item/clothing/cloak/tabard/psydontabard/white/alt
+
+/datum/loadout_item/cloak_tabard_stabard_crusader
+	name = "Surcoat of the golden order"
+	path = /obj/item/clothing/cloak/tabard/stabard/crusader
+
+/datum/loadout_item/cloak_tabard_stabard_crusader_astrata
+	name = "Surcoat of the golden order (astrata)"
+	path = /obj/item/clothing/cloak/tabard/stabard/crusader/astrata
+
+/datum/loadout_item/cloak_tabard_stabard_crusader_bsteel
+	name = "Surcoat of the blacksteel order"
+	path = /obj/item/clothing/cloak/tabard/stabard/crusader/bsteel
+
+/datum/loadout_item/cloak_tabard_stabard_crusader_heavy
+	name = "Overvestments"
+	path = /obj/item/clothing/cloak/tabard/stabard/crusader/heavy
+
+/datum/loadout_item/cloak_tabard_stabard_crusader_t
+	name = "Surcoat of the silver order"
+	path = /obj/item/clothing/cloak/tabard/stabard/crusader/t
+
+/datum/loadout_item/cloak_tabard_stabard_crusader_t_astrata
+	name = "Surcoat of the silver order (astrata)"
+	path = /obj/item/clothing/cloak/tabard/stabard/crusader/t/astrata
+
+/datum/loadout_item/cloak_tabard_stabard_crusader_t_see
+	name = "Surcoat of the silver order (see)"
+	path = /obj/item/clothing/cloak/tabard/stabard/crusader/t/see
+
+/datum/loadout_item/cloak_tabard_stabard_crusader_see
+	name = "Surcoat of the golden order (see)"
+	path = /obj/item/clothing/cloak/tabard/stabard/crusader/see
+
+/datum/loadout_item/cloak_tabard_stabard_surcoat_short
+	name = "Short jupon"
+	path = /obj/item/clothing/cloak/tabard/stabard/surcoat/short
+
+/datum/loadout_item/cloak_tabard_toga
+	name = "Toga (toga)"
+	path = /obj/item/clothing/cloak/tabard/toga
+
+/datum/loadout_item/cloak_tabard_toga_alt
+	name = "Bared toga"
+	path = /obj/item/clothing/cloak/tabard/toga/alt
+
+/datum/loadout_item/cloak_tabard_toga_dress
+	name = "Toga (dress)"
+	path = /obj/item/clothing/cloak/tabard/toga/dress
+
+/datum/loadout_item/cloak_tabard_toga_dress_alt
+	name = "Bared toga (alt)"
+	path = /obj/item/clothing/cloak/tabard/toga/dress/alt
+
+/datum/loadout_item/cloak_templar_astratancleric
+	name = "Astratan cloak"
+	path = /obj/item/clothing/cloak/templar/astratancleric
+
+/datum/loadout_item/cloak_templar_astratancleric_grey
+	name = "Frayed cloak"
+	path = /obj/item/clothing/cloak/templar/astratancleric/grey
+
+/datum/loadout_item/cloak_templar_eoran_alt
+	name = "Eoran tabard (alt)"
+	path = /obj/item/clothing/cloak/templar/eoran/alt
+
+/datum/loadout_item/cloak_templar_necrancleric
+	name = "Necran cloak"
+	path = /obj/item/clothing/cloak/templar/necrancleric
+
+/datum/loadout_item/cloak_templar_ravoxcleric
+	name = "Justice cloak"
+	path = /obj/item/clothing/cloak/templar/ravoxcleric
+
+/datum/loadout_item/cloak_templar_see_alt
+	name = "See templar tabard"
+	path = /obj/item/clothing/cloak/templar/see_alt
+
+/datum/loadout_item/cloak_templar_seecleric
+	name = "See devotee tabard"
+	path = /obj/item/clothing/cloak/templar/seecleric
+
+/datum/loadout_item/cloak_desert
+	name = "Desert cloak"
+	path = /obj/item/clothing/cloak/desert
+
+/datum/loadout_item/cloak_elven
+	name = "Elven cloak"
+	path = /obj/item/clothing/cloak/elven
+
+/datum/loadout_item/cloak_elven_short
+	name = "Elven shortcloak"
+	path = /obj/item/clothing/cloak/elven/short
+
+/datum/loadout_item/cloak_scarf
+	name = "Scarf (elven)"
+	path = /obj/item/clothing/cloak/scarf
+
+/datum/loadout_item/gloves_roguetown_fingerless_shadowgloves_spymaster
+	name = "Hand's gloves"
+	path = /obj/item/clothing/gloves/roguetown/fingerless/shadowgloves/spymaster
+
+/datum/loadout_item/gloves_roguetown_rosa
+	name = "Ivory gloves"
+	path = /obj/item/clothing/gloves/roguetown/rosa
+
+/datum/loadout_item/gloves_roguetown_rosa_eight
+	name = "Courtly gloves"
+	path = /obj/item/clothing/gloves/roguetown/rosa/eight
+
+/datum/loadout_item/gloves_roguetown_rosa_five
+	name = "Sable gloves"
+	path = /obj/item/clothing/gloves/roguetown/rosa/five
+
+/datum/loadout_item/gloves_roguetown_rosa_four
+	name = "Obsidian gloves"
+	path = /obj/item/clothing/gloves/roguetown/rosa/four
+
+/datum/loadout_item/gloves_roguetown_rosa_nine
+	name = "Royal gloves"
+	path = /obj/item/clothing/gloves/roguetown/rosa/nine
+
+/datum/loadout_item/gloves_roguetown_rosa_seven
+	name = "Regal gloves"
+	path = /obj/item/clothing/gloves/roguetown/rosa/seven
+
+/datum/loadout_item/gloves_roguetown_rosa_six
+	name = "Maroon gloves"
+	path = /obj/item/clothing/gloves/roguetown/rosa/six
+
+/datum/loadout_item/gloves_roguetown_rosa_ten
+	name = "Stately gloves"
+	path = /obj/item/clothing/gloves/roguetown/rosa/ten
+
+/datum/loadout_item/gloves_roguetown_rosa_three
+	name = "Silvered gloves"
+	path = /obj/item/clothing/gloves/roguetown/rosa/three
+
+/datum/loadout_item/head_roguetown_antlers
+	name = "Old antlers"
+	path = /obj/item/clothing/head/roguetown/antlers
+
+/datum/loadout_item/head_roguetown_circlet_carvedgem_porcelain
+	name = "Porcelain circlet"
+	path = /obj/item/clothing/head/roguetown/circlet/carvedgem/porcelain
+
+/datum/loadout_item/head_roguetown_courtphysician
+	name = "Sanguine hat"
+	path = /obj/item/clothing/head/roguetown/courtphysician
+
+/datum/loadout_item/head_roguetown_courtphysician_female
+	name = "Sanguine cap"
+	path = /obj/item/clothing/head/roguetown/courtphysician/female
+
+/datum/loadout_item/head_roguetown_deserthood
+	name = "Desert hood"
+	path = /obj/item/clothing/head/roguetown/deserthood
+
+/datum/loadout_item/head_roguetown_doublehennin
+	name = "Dual hennin"
+	path = /obj/item/clothing/head/roguetown/doublehennin
+
+/datum/loadout_item/head_roguetown_duelhat_etrhat
+	name = "Wanderer's hat"
+	path = /obj/item/clothing/head/roguetown/duelhat/etrhat
+
+/datum/loadout_item/head_roguetown_duelhat_etrusca
+	name = "Etruscan duelist hat"
+	path = /obj/item/clothing/head/roguetown/duelhat/etrusca
+
+/datum/loadout_item/head_roguetown_durag
+	name = "Durag"
+	path = /obj/item/clothing/head/roguetown/durag
+
+/datum/loadout_item/head_roguetown_eaststrawhat
+	name = "Worn rice hat"
+	path = /obj/item/clothing/head/roguetown/eaststrawhat
+
+/datum/loadout_item/head_roguetown_explorerhat
+	name = "Explorer's hat (explorerhat)"
+	path = /obj/item/clothing/head/roguetown/explorerhat
+
+/datum/loadout_item/head_roguetown_flamboyant
+	name = "Flamboyant hat"
+	path = /obj/item/clothing/head/roguetown/flamboyant
+
+/datum/loadout_item/head_roguetown_flotsam
+	name = "Flotsam bonnet"
+	path = /obj/item/clothing/head/roguetown/flotsam
+
+/datum/loadout_item/head_roguetown_gasa
+	name = "Gasa"
+	path = /obj/item/clothing/head/roguetown/gasa
+
+/datum/loadout_item/head_roguetown_headband_fur
+	name = "Fur headband"
+	path = /obj/item/clothing/head/roguetown/headband/fur
+
+/datum/loadout_item/head_roguetown_hscarf
+	name = "Head scarf"
+	path = /obj/item/clothing/head/roguetown/hscarf
+
+/datum/loadout_item/head_roguetown_longveil
+	name = "Long veil"
+	path = /obj/item/clothing/head/roguetown/longveil
+
+/datum/loadout_item/head_roguetown_maidhead
+	name = "Maid headdress"
+	path = /obj/item/clothing/head/roguetown/maidhead
+
+/datum/loadout_item/head_roguetown_menacing_executioner
+	name = "Executioners hood"
+	path = /obj/item/clothing/head/roguetown/menacing/executioner
+
+/datum/loadout_item/head_roguetown_nightcap
+	name = "Nitecap"
+	path = /obj/item/clothing/head/roguetown/nightcap
+
+/datum/loadout_item/head_roguetown_nun_hood
+	name = "Nun hood"
+	path = /obj/item/clothing/head/roguetown/nun_hood
+
+/datum/loadout_item/head_roguetown_onhelm_tw_d_basic
+	name = "Helm's chaperon"
+	path = /obj/item/clothing/head/roguetown/onhelm/tw_d_basic
+
+/datum/loadout_item/head_roguetown_onhelm_tw_d_horns
+	name = "Horns helmkleinod"
+	path = /obj/item/clothing/head/roguetown/onhelm/tw_d_horns
+
+/datum/loadout_item/head_roguetown_roguehood_bishop
+	name = "Bishop hood"
+	path = /obj/item/clothing/head/roguetown/roguehood/bishop
+
+/datum/loadout_item/head_roguetown_roguehood_burgerhood
+	name = "Noble hood"
+	path = /obj/item/clothing/head/roguetown/roguehood/burgerhood
+
+/datum/loadout_item/head_roguetown_roguehood_eorahood
+	name = "Opera hood"
+	path = /obj/item/clothing/head/roguetown/roguehood/eorahood
+
+/datum/loadout_item/head_roguetown_roguehood_ravox
+	name = "Ravox hood"
+	path = /obj/item/clothing/head/roguetown/roguehood/ravox
+
+/datum/loadout_item/head_roguetown_roguehood_see
+	name = "See hood"
+	path = /obj/item/clothing/head/roguetown/roguehood/see
+
+/datum/loadout_item/head_roguetown_roningasa
+	name = "Roningasa"
+	path = /obj/item/clothing/head/roguetown/roningasa
+
+/datum/loadout_item/head_roguetown_sandogasa
+	name = "Sandogasa"
+	path = /obj/item/clothing/head/roguetown/sandogasa
+
+/datum/loadout_item/head_roguetown_stewardtophat
+	name = "Top hat"
+	path = /obj/item/clothing/head/roguetown/stewardtophat
+
+/datum/loadout_item/head_roguetown_tiyon
+	name = "Tiyon"
+	path = /obj/item/clothing/head/roguetown/tiyon
+
+/datum/loadout_item/head_roguetown_torioigasa
+	name = "Torioigasa"
+	path = /obj/item/clothing/head/roguetown/torioigasa
+
+/datum/loadout_item/head_roguetown_elven_hat
+	name = "Elven burka"
+	path = /obj/item/clothing/head/roguetown/elven_hat
+
+/datum/loadout_item/head_roguetown_hammerhold_hat
+	name = "Kokoshnik"
+	path = /obj/item/clothing/head/roguetown/hammerhold_hat
+
+/datum/loadout_item/head_roguetown_hammerhold_hat_peasant
+	name = "Hammerhold hat"
+	path = /obj/item/clothing/head/roguetown/hammerhold_hat/peasant
+
+/datum/loadout_item/head_roguetown_veiledhat
+	name = "Veiled hat"
+	path = /obj/item/clothing/head/roguetown/veiledhat
+
+/datum/loadout_item/mask_rogue_blindfold_psydon
+	name = "Blessed blindfold"
+	path = /obj/item/clothing/mask/rogue/blindfold/psydon
+
+/datum/loadout_item/mask_rogue_eyepatch_fake
+	name = "Eyepatch"
+	path = /obj/item/clothing/mask/rogue/eyepatch/fake
+
+/datum/loadout_item/mask_rogue_eyepatch_left_fake
+	name = "Eyepatch (fake)"
+	path = /obj/item/clothing/mask/rogue/eyepatch/left/fake
+
+/datum/loadout_item/mask_rogue_facemask_xylixmask
+	name = "Xylixian mask"
+	path = /obj/item/clothing/mask/rogue/facemask/xylixmask
+
+/datum/loadout_item/mask_rogue_faceveil
+	name = "Simple veil"
+	path = /obj/item/clothing/mask/rogue/faceveil
+
+/datum/loadout_item/mask_rogue_physician_feld
+	name = "Feldsher's mask"
+	path = /obj/item/clothing/mask/rogue/physician/feld
+
+/datum/loadout_item/mask_rogue_physician_phys
+	name = "Physicker's mask"
+	path = /obj/item/clothing/mask/rogue/physician/phys
+
+/datum/loadout_item/mask_rogue_shepherd_shadowmask_spymaster
+	name = "Hand's halfmask"
+	path = /obj/item/clothing/mask/rogue/shepherd/shadowmask/spymaster
+
+/datum/loadout_item/mask_rogue_spectacles_sglasses
+	name = "Smokey onyxa spectacles"
+	path = /obj/item/clothing/mask/rogue/spectacles/sglasses
+
+/datum/loadout_item/mask_rogue_spectacles_thin
+	name = "Thin-lensed spectacles"
+	path = /obj/item/clothing/mask/rogue/spectacles/thin
+
+/datum/loadout_item/mask_rogue_xylixmask_ceramic
+	name = "Ceramic mask"
+	path = /obj/item/clothing/mask/rogue/xylixmask/ceramic
+
+/datum/loadout_item/mask_rogue_xylixmask_weathered
+	name = "Weathered mask"
+	path = /obj/item/clothing/mask/rogue/xylixmask/weathered
+
+/datum/loadout_item/neck_roguetown_collar_fur
+	name = "Fur collar"
+	path = /obj/item/clothing/neck/roguetown/collar/fur
+
+/datum/loadout_item/neck_roguetown_cravat
+	name = "Cravat"
+	path = /obj/item/clothing/neck/roguetown/cravat
+
+/datum/loadout_item/neck_roguetown_ruffle
+	name = "Ruffled collar"
+	path = /obj/item/clothing/neck/roguetown/ruffle
+
+/datum/loadout_item/shoes_roguetown_boots_hammerhold_boots
+	name = "Hammerhold boots"
+	path = /obj/item/clothing/shoes/roguetown/boots/hammerhold_boots
+
+/datum/loadout_item/shoes_roguetown_courtphysician
+	name = "Sanguine shoes"
+	path = /obj/item/clothing/shoes/roguetown/courtphysician
+
+/datum/loadout_item/shoes_roguetown_courtphysician_female
+	name = "Sanguine heels"
+	path = /obj/item/clothing/shoes/roguetown/courtphysician/female
+
+/datum/loadout_item/shoes_roguetown_hammerhold_shoes
+	name = "Hammerhold shoes"
+	path = /obj/item/clothing/shoes/roguetown/hammerhold_shoes
+
+/datum/loadout_item/shoes_roguetown_rosa
+	name = "Ivory shoes"
+	path = /obj/item/clothing/shoes/roguetown/rosa
+
+/datum/loadout_item/shoes_roguetown_rosa_eight
+	name = "Courtly shoes"
+	path = /obj/item/clothing/shoes/roguetown/rosa/eight
+
+/datum/loadout_item/shoes_roguetown_rosa_five
+	name = "Sable shoes"
+	path = /obj/item/clothing/shoes/roguetown/rosa/five
+
+/datum/loadout_item/shoes_roguetown_rosa_four
+	name = "Obsidian shoes"
+	path = /obj/item/clothing/shoes/roguetown/rosa/four
+
+/datum/loadout_item/shoes_roguetown_rosa_nine
+	name = "Royal shoes"
+	path = /obj/item/clothing/shoes/roguetown/rosa/nine
+
+/datum/loadout_item/shoes_roguetown_rosa_seven
+	name = "Regal shoes"
+	path = /obj/item/clothing/shoes/roguetown/rosa/seven
+
+/datum/loadout_item/shoes_roguetown_rosa_ten
+	name = "Stately shoes"
+	path = /obj/item/clothing/shoes/roguetown/rosa/ten
+
+/datum/loadout_item/shoes_roguetown_rosa_three
+	name = "Silvered shoes"
+	path = /obj/item/clothing/shoes/roguetown/rosa/three
+
+/datum/loadout_item/suit_roguetown_shirt_courtphysician
+	name = "Sanguine vest"
+	path = /obj/item/clothing/suit/roguetown/shirt/courtphysician
+
+/datum/loadout_item/suit_roguetown_shirt_courtphysician_female
+	name = "Sanguine blouse"
+	path = /obj/item/clothing/suit/roguetown/shirt/courtphysician/female
+
+/datum/loadout_item/suit_roguetown_shirt_desertbra
+	name = "Desert bra"
+	path = /obj/item/clothing/suit/roguetown/shirt/desertbra
+
+/datum/loadout_item/suit_roguetown_shirt_dress_blue
+	name = "Light blue dress (blue)"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/blue
+
+/datum/loadout_item/suit_roguetown_shirt_dress_etrdress
+	name = "Low-cut dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/etrdress
+
+/datum/loadout_item/suit_roguetown_shirt_dress_etrdress2
+	name = "Embroidered dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/etrdress2
+
+/datum/loadout_item/suit_roguetown_shirt_dress_etrdress3
+	name = "Strapless gown"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/etrdress3
+
+/datum/loadout_item/suit_roguetown_shirt_dress_green
+	name = "Light green dress (green)"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/green
+
+/datum/loadout_item/suit_roguetown_shirt_dress_maidfancy
+	name = "Valorian maid dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/maidfancy
+
+/datum/loadout_item/suit_roguetown_shirt_dress_nightgown
+	name = "Nightgown (nightgown)"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/nightgown
+
+/datum/loadout_item/suit_roguetown_shirt_dress_saree
+	name = "Saree"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/saree
+
+/datum/loadout_item/suit_roguetown_shirt_dress_silkdress_bishop
+	name = "Bishop's cassock"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/silkdress/bishop
+
+/datum/loadout_item/suit_roguetown_shirt_dress_tavern
+	name = "Tavern dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/dress/tavern
+
+/datum/loadout_item/suit_roguetown_shirt_explorer
+	name = "Explorer's vest (explorer)"
+	path = /obj/item/clothing/suit/roguetown/shirt/explorer
+
+/datum/loadout_item/suit_roguetown_shirt_fancyjacket
+	name = "Fancy jacket"
+	path = /obj/item/clothing/suit/roguetown/shirt/fancyjacket
+
+/datum/loadout_item/suit_roguetown_shirt_fancyjacket_triumph_padded
+	name = "Dark jacket"
+	path = /obj/item/clothing/suit/roguetown/shirt/fancyjacket/triumph_padded
+
+/datum/loadout_item/suit_roguetown_shirt_haori
+	name = "Haori"
+	path = /obj/item/clothing/suit/roguetown/shirt/haori
+
+/datum/loadout_item/suit_roguetown_shirt_kamishimo
+	name = "Kamishimo"
+	path = /obj/item/clothing/suit/roguetown/shirt/kamishimo
+
+/datum/loadout_item/suit_roguetown_shirt_kazengun_jacket
+	name = "Kazengun jacket"
+	path = /obj/item/clothing/suit/roguetown/shirt/kazengun_jacket
+
+/datum/loadout_item/suit_roguetown_shirt_kimono
+	name = "Kimono"
+	path = /obj/item/clothing/suit/roguetown/shirt/kimono
+
+/datum/loadout_item/suit_roguetown_shirt_kimono2
+	name = "Long sleeved kimono"
+	path = /obj/item/clothing/suit/roguetown/shirt/kimono2
+
+/datum/loadout_item/suit_roguetown_shirt_robe_abyssor_leader
+	name = "Sylveric robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor_leader
+
+/datum/loadout_item/suit_roguetown_shirt_robe_abyssor_painter
+	name = "Rainfall robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor_painter
+
+/datum/loadout_item/suit_roguetown_shirt_robe_abyssor_painter_sea
+	name = "Sea robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor_painter_sea
+
+/datum/loadout_item/suit_roguetown_shirt_robe_bared
+	name = "Bared robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/bared
+
+/datum/loadout_item/suit_roguetown_shirt_robe_eora_resprite
+	name = "Eoran robe (resprite)"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/eora/resprite
+
+/datum/loadout_item/suit_roguetown_shirt_robe_eora_resprite_pink
+	name = "Eoran robe (pink)"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/eora/resprite/pink
+
+/datum/loadout_item/suit_roguetown_shirt_robe_hag
+	name = "Hedge robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/hag
+
+/datum/loadout_item/suit_roguetown_shirt_robe_leopard
+	name = "Leopard robe (leopard)"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/leopard
+
+/datum/loadout_item/suit_roguetown_shirt_robe_leopard_alt
+	name = "Open leopard robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/leopard/alt
+
+/datum/loadout_item/suit_roguetown_shirt_robe_nun_dress
+	name = "Nun dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/nun_dress
+
+/datum/loadout_item/suit_roguetown_shirt_robe_ravox
+	name = "Ravox robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/ravox
+
+/datum/loadout_item/suit_roguetown_shirt_robe_see
+	name = "See robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/see
+
+/datum/loadout_item/suit_roguetown_shirt_robe_seecleric
+	name = "See clerical robe"
+	path = /obj/item/clothing/suit/roguetown/shirt/robe/seecleric
+
+/datum/loadout_item/suit_roguetown_shirt_silkbra
+	name = "Giltsilk bra"
+	path = /obj/item/clothing/suit/roguetown/shirt/silkbra
+
+/datum/loadout_item/suit_roguetown_shirt_tunic_rosa
+	name = "Ivory dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/tunic/rosa
+
+/datum/loadout_item/suit_roguetown_shirt_tunic_rosa_five
+	name = "Sable dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/tunic/rosa/five
+
+/datum/loadout_item/suit_roguetown_shirt_tunic_rosa_four
+	name = "Obsidian dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/tunic/rosa/four
+
+/datum/loadout_item/suit_roguetown_shirt_tunic_rosa_six
+	name = "Maroon dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/tunic/rosa/six
+
+/datum/loadout_item/suit_roguetown_shirt_tunic_rosa_three
+	name = "Velvet dress"
+	path = /obj/item/clothing/suit/roguetown/shirt/tunic/rosa/three
+
+/datum/loadout_item/suit_roguetown_shirt_tunic_rosacoat
+	name = "Regal coat"
+	path = /obj/item/clothing/suit/roguetown/shirt/tunic/rosacoat
+
+/datum/loadout_item/suit_roguetown_shirt_tunic_rosacoat_four
+	name = "Stately coat"
+	path = /obj/item/clothing/suit/roguetown/shirt/tunic/rosacoat/four
+
+/datum/loadout_item/suit_roguetown_shirt_tunic_rosacoat_two
+	name = "Courtly coat"
+	path = /obj/item/clothing/suit/roguetown/shirt/tunic/rosacoat/two
+
+/datum/loadout_item/suit_roguetown_shirt_elven
+	name = "Elven suit"
+	path = /obj/item/clothing/suit/roguetown/shirt/elven
+
+/datum/loadout_item/suit_roguetown_shirt_elven_coat
+	name = "Elven coat"
+	path = /obj/item/clothing/suit/roguetown/shirt/elven/coat
+
+/datum/loadout_item/suit_roguetown_shirt_elven_coat_alt
+	name = "Elven furcoat"
+	path = /obj/item/clothing/suit/roguetown/shirt/elven/coat/alt
+
+/datum/loadout_item/suit_roguetown_shirt_hammerhold
+	name = "Hammerhold shirt"
+	path = /obj/item/clothing/suit/roguetown/shirt/hammerhold
+
+/datum/loadout_item/suit_roguetown_shirt_hammerhold_coat
+	name = "Noble coat"
+	path = /obj/item/clothing/suit/roguetown/shirt/hammerhold/coat
+
+/datum/loadout_item/suit_roguetown_shirt_undershirt_etrdoublet
+	name = "Doublet"
+	path = /obj/item/clothing/suit/roguetown/shirt/undershirt/etrdoublet
+
+/datum/loadout_item/suit_roguetown_shirt_yoroihitatare
+	name = "Yoroihitatare"
+	path = /obj/item/clothing/suit/roguetown/shirt/yoroihitatare
+
+/datum/loadout_item/under_roguetown_loincloth_deprived
+	name = "Large loincloth"
+	path = /obj/item/clothing/under/roguetown/loincloth/deprived
+
+/datum/loadout_item/under_roguetown_skirt_courtphysician
+	name = "Sanguine skirt"
+	path = /obj/item/clothing/under/roguetown/skirt/courtphysician
+
+/datum/loadout_item/under_roguetown_skirt_desert
+	name = "Desert skirt"
+	path = /obj/item/clothing/under/roguetown/skirt/desert
+
+/datum/loadout_item/under_roguetown_skirt_formal
+	name = "Knee-high skirt (formal)"
+	path = /obj/item/clothing/under/roguetown/skirt/formal
+
+/datum/loadout_item/under_roguetown_skirt_short
+	name = "Short skirt"
+	path = /obj/item/clothing/under/roguetown/skirt/short
+
+/datum/loadout_item/under_roguetown_tights_dhoti
+	name = "Dhoti"
+	path = /obj/item/clothing/under/roguetown/tights/dhoti
+
+/datum/loadout_item/under_roguetown_tights_hose
+	name = "Cloth hosen"
+	path = /obj/item/clothing/under/roguetown/tights/hose
+
+/datum/loadout_item/backpack_rogue_backpack_trader
+	name = "Trader's pack"
+	path = /obj/item/storage/backpack/rogue/backpack/trader
+	triumph_cost = 6
+
+/datum/loadout_item/belt_rogue_leather_battleskirt_loincloth
+	name = "Cloth loincloth"
+	path = /obj/item/storage/belt/rogue/leather/battleskirt/loincloth
+
+/datum/loadout_item/belt_rogue_leather_belthooks
+	name = "Belt hooks"
+	path = /obj/item/storage/belt/rogue/leather/belthooks
+
+/datum/loadout_item/belt_rogue_leather_beltshawl
+	name = "Belt shawl"
+	path = /obj/item/storage/belt/rogue/leather/beltshawl
+
+/datum/loadout_item/belt_rogue_leather_hammerhold_sash
+	name = "Hammerhold sash"
+	path = /obj/item/storage/belt/rogue/leather/hammerhold_sash
+
+/datum/loadout_item/belt_rogue_leather_iron
+	name = "Iron belt"
+	path = /obj/item/storage/belt/rogue/leather/iron
+
+/datum/loadout_item/belt_rogue_leather_sash_maid
+	name = "Cloth sash (maid)"
+	path = /obj/item/storage/belt/rogue/leather/sash/maid
