@@ -1,119 +1,120 @@
-/datum/job/roguetown/absolver
-	title = "Absolver"
-	flag = ABSOLVER
-	department_flag = INQUISITION
-	faction = "Station"
-	total_positions = 1 // THE ONE.
-	spawn_positions = 1
-	allowed_races = RACES_NO_CONSTRUCT
-	allowed_patrons = list(/datum/patron/old_god) //Requires the character to be a practicing Psydonite.
-	tutorial = "Once, you were alone in this monastery; a chapel of stone, protecting a shard of Psydon's divinity. Now, you've a whole sect to shepherd - and their propensity for violence oft-clashes with your own vows of pacifism. Temper the floch with your wisdom, siphon away their wounds with your blessings, and guide the wayard towards absolution."
-	selection_color = JCOLOR_INQUISITION
-	outfit = /datum/outfit/job/roguetown/absolver
-	display_order = JDO_ABSOLVER
-	min_pq = 20
-	max_pq = null
-	round_contrib_points = 2
-	wanderer_examine = FALSE
-	advjob_examine = FALSE
-	give_bank_account = 15
-	social_rank = SOCIAL_RANK_YEOMAN
-
-	job_traits = list(
-		TRAIT_NOPAINSTUN,
-		TRAIT_PACIFISM,
-		TRAIT_LUX_FREAK,
-		TRAIT_EMPATH,
-		TRAIT_CRITICAL_RESISTANCE,
-		TRAIT_BLOOD_RESISTANCE,
-		TRAIT_SILVER_BLESSED,
-		TRAIT_STEELHEARTED,
-		TRAIT_INQUISITION,
-		TRAIT_RITUALIST, //Handles conversions, too, now.
-		TRAIT_SELF_AWARE //Shows full damage numbers on self-diagnosis, for QOL.
-	)
-	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
-
-	advclass_cat_rolls = list(CTAG_ABSOLVER = 2)
-	job_subclasses = list(
-		/datum/advclass/absolver
-	)
-
-/datum/advclass/absolver
-	name = "Absolver"
-	tutorial = "Once, you were alone in this monastery; a chapel of stone, protecting a shard of Psydon's divinity. Now, you've a whole sect to shepherd - and their propensity for violence oft-clashes with your own vows of pacifism. Temper the floch with your wisdom, siphon away their wounds with your blessings, and guide the wayard towards absolution."
-	outfit = /datum/outfit/job/roguetown/absolver/basic
-	subclass_languages = list(/datum/language/otavan)
-	category_tags = list(CTAG_ABSOLVER)
-	subclass_stats = list(
-		STATKEY_CON = 7,
-		STATKEY_WIL = 3,
-		STATKEY_SPD = -2 //Originally swapped to -3, but this probably isn't as important due to the pacifism trait.
-	)
-	subclass_skills = list(
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN, // Enduring.
-		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN, // A hobbyist.
-		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE, // Parry things.
-		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/labor/fishing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/magic/holy = SKILL_LEVEL_MASTER, // Psydon's Holiest Guy
-	)
-	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
-	)
-
-// REMEMBER FLAGELLANT? REMEMBER LASZLO? THIS IS HIM NOW. FEEL OLD YET?
-
-/datum/job/roguetown/absolver/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
-	. = ..()
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(H.mind)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonpersist)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonlux_tamper)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonabsolve)
-			H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-
-/datum/outfit/job/roguetown/absolver/basic/pre_equip(mob/living/carbon/human/H)
-	..()
-	job_bitflag = BITFLAG_HOLY_WARRIOR
-	H.adjust_blindness(-3)
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/psythorns
-	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
-	beltr = /obj/item/flashlight/flare/torch/lantern/psycenser
-	beltl = /obj/item/storage/belt/rogue/pouch/coins/rich
-	neck = /obj/item/clothing/neck/roguetown/psicross/silver
-	cloak = /obj/item/clothing/cloak/absolutionistrobe
-	backr = /obj/item/storage/backpack/rogue/satchel/otavan
-	belt = /obj/item/storage/belt/rogue/leather
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/psydon
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
-	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
-	mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/absolver
-	id = /obj/item/clothing/ring/signet/silver/inqscomm
-	backpack_contents = list( // currently full
-		/obj/item/book/rogue/bibble/psy = 1,
-		/obj/item/natural/bundle/cloth/bandage/full = 2,
-		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
-		/obj/item/paper/inqslip/arrival/abso = 1,
-		/obj/item/needle = 1,
-		/obj/item/natural/worms/leech/cheele = 1,
-		/obj/item/storage/keyring/puritan = 1,
-		/obj/item/ritechalk = 1,
-		)
-	
-	if(H.age == AGE_OLD)
-		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 6, TRUE)
-	
-	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_ABSOLVER, start_maxed = TRUE) // PSYDONIAN MIRACLE-WORKER. LUX-MERGING FREEK.
-	if(H.mind)//The below was above, improperly, but is now properly removed.
-		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)//You're not meant to have both this and persist.
+// [DISABLED: zombie project] Everything below is commented out on purpose. Do not delete. See RULES_AND_LESSONS.md
+// /datum/job/roguetown/absolver
+// 	title = "Absolver"
+// 	flag = ABSOLVER
+// 	department_flag = INQUISITION
+// 	faction = "Station"
+// 	total_positions = 1 // THE ONE.
+// 	spawn_positions = 1
+// 	allowed_races = RACES_NO_CONSTRUCT
+// 	allowed_patrons = list(/datum/patron/old_god) //Requires the character to be a practicing Psydonite.
+// 	tutorial = "Once, you were alone in this monastery; a chapel of stone, protecting a shard of Psydon's divinity. Now, you've a whole sect to shepherd - and their propensity for violence oft-clashes with your own vows of pacifism. Temper the floch with your wisdom, siphon away their wounds with your blessings, and guide the wayard towards absolution."
+// 	selection_color = JCOLOR_INQUISITION
+// 	outfit = /datum/outfit/job/roguetown/absolver
+// 	display_order = JDO_ABSOLVER
+// 	min_pq = 20
+// 	max_pq = null
+// 	round_contrib_points = 2
+// 	wanderer_examine = FALSE
+// 	advjob_examine = FALSE
+// 	give_bank_account = 15
+// 	social_rank = SOCIAL_RANK_YEOMAN
+// 
+// 	job_traits = list(
+// 		TRAIT_NOPAINSTUN,
+// 		TRAIT_PACIFISM,
+// 		TRAIT_LUX_FREAK,
+// 		TRAIT_EMPATH,
+// 		TRAIT_CRITICAL_RESISTANCE,
+// 		TRAIT_BLOOD_RESISTANCE,
+// 		TRAIT_SILVER_BLESSED,
+// 		TRAIT_STEELHEARTED,
+// 		TRAIT_INQUISITION,
+// 		TRAIT_RITUALIST, //Handles conversions, too, now.
+// 		TRAIT_SELF_AWARE //Shows full damage numbers on self-diagnosis, for QOL.
+// 	)
+// 	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
+// 
+// 	advclass_cat_rolls = list(CTAG_ABSOLVER = 2)
+// 	job_subclasses = list(
+// 		/datum/advclass/absolver
+// 	)
+// 
+// /datum/advclass/absolver
+// 	name = "Absolver"
+// 	tutorial = "Once, you were alone in this monastery; a chapel of stone, protecting a shard of Psydon's divinity. Now, you've a whole sect to shepherd - and their propensity for violence oft-clashes with your own vows of pacifism. Temper the floch with your wisdom, siphon away their wounds with your blessings, and guide the wayard towards absolution."
+// 	outfit = /datum/outfit/job/roguetown/absolver/basic
+// 	subclass_languages = list(/datum/language/otavan)
+// 	category_tags = list(CTAG_ABSOLVER)
+// 	subclass_stats = list(
+// 		STATKEY_CON = 7,
+// 		STATKEY_WIL = 3,
+// 		STATKEY_SPD = -2 //Originally swapped to -3, but this probably isn't as important due to the pacifism trait.
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN, // Enduring.
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN, // A hobbyist.
+// 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE, // Parry things.
+// 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/labor/fishing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/magic/holy = SKILL_LEVEL_MASTER, // Psydon's Holiest Guy
+// 	)
+// 	subclass_stashed_items = list(
+// 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+// 	)
+// 
+// // REMEMBER FLAGELLANT? REMEMBER LASZLO? THIS IS HIM NOW. FEEL OLD YET?
+// 
+// /datum/job/roguetown/absolver/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+// 	. = ..()
+// 	if(ishuman(L))
+// 		var/mob/living/carbon/human/H = L
+// 		if(H.mind)
+// 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/psydonpersist)
+// 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonlux_tamper)
+// 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonabsolve)
+// 			H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
+// 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
+// 
+// /datum/outfit/job/roguetown/absolver/basic/pre_equip(mob/living/carbon/human/H)
+// 	..()
+// 	job_bitflag = BITFLAG_HOLY_WARRIOR
+// 	H.adjust_blindness(-3)
+// 	wrists = /obj/item/clothing/wrists/roguetown/bracers/psythorns
+// 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
+// 	beltr = /obj/item/flashlight/flare/torch/lantern/psycenser
+// 	beltl = /obj/item/storage/belt/rogue/pouch/coins/rich
+// 	neck = /obj/item/clothing/neck/roguetown/psicross/silver
+// 	cloak = /obj/item/clothing/cloak/absolutionistrobe
+// 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
+// 	belt = /obj/item/storage/belt/rogue/leather
+// 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
+// 	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/psydon
+// 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
+// 	mask = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
+// 	head = /obj/item/clothing/head/roguetown/helmet/heavy/absolver
+// 	id = /obj/item/clothing/ring/signet/silver/inqscomm
+// 	backpack_contents = list( // currently full
+// 		/obj/item/book/rogue/bibble/psy = 1,
+// 		/obj/item/natural/bundle/cloth/bandage/full = 2,
+// 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 2,
+// 		/obj/item/paper/inqslip/arrival/abso = 1,
+// 		/obj/item/needle = 1,
+// 		/obj/item/natural/worms/leech/cheele = 1,
+// 		/obj/item/storage/keyring/puritan = 1,
+// 		/obj/item/ritechalk = 1,
+// 		)
+// 	
+// 	if(H.age == AGE_OLD)
+// 		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 6, TRUE)
+// 	
+// 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+// 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_ABSOLVER, start_maxed = TRUE) // PSYDONIAN MIRACLE-WORKER. LUX-MERGING FREEK.
+// 	if(H.mind)//The below was above, improperly, but is now properly removed.
+// 		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/psydonrespite)//You're not meant to have both this and persist.

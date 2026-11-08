@@ -1,98 +1,99 @@
-/datum/advclass/wretch/poacher
-	name = "Poacher"
-	tutorial = "You have rejected society and its laws, choosing life in the wilderness instead. Simple thieving highwayman or freedom fighter, you take from those who have and give to the have-nots. Fancy, how the latter includes yourself!"
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/wretch/poacher
-	cmode_music = 'sound/music/combat_poacher.ogg'
-	class_select_category = CLASS_CAT_RANGER
-	category_tags = list(CTAG_WRETCH)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_WOODSMAN, TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_EXPERT_HUNTER)
-	// No straight upgrade to perception / speed to not stack one stat too high, but still stronger than MAA Skirm out of town.
-	subclass_stats = list(
-		STATKEY_PER = 2,
-		STATKEY_SPD = 2,
-		STATKEY_WIL = 2,
-		STATKEY_CON = 1
-	)
-	subclass_skills = list(
-		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/bows = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/stealing = SKILL_LEVEL_APPRENTICE,
-		//these people live in the forest so let's give them some peasant skills
-		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/labor/butchering = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/hunting = SKILL_LEVEL_EXPERT,
-	)
-	subclass_stashed_items = list(
-		"Sewing Kit" = /obj/item/repair_kit,
-	)
-/datum/outfit/job/roguetown/wretch/poacher/pre_equip(mob/living/carbon/human/H)
-	mask = /obj/item/clothing/mask/rogue/wildguard
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
-	backl = /obj/item/storage/backpack/rogue/satchel
-	belt = /obj/item/storage/belt/rogue/leather
-	neck = /obj/item/clothing/neck/roguetown/gorget
-	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
-	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
-	beltl = /obj/item/quiver/bodkin
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
-	backpack_contents = list(
-		/obj/item/bait = 1,
-		/obj/item/rogueweapon/huntingknife/combat/messer = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
-		/obj/item/rope/chain = 1,
-		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
-		)
-	if(H.mind)
-		var/fashion = list("Cunning Archer", "Ruthless Hunter", "Unrelenting Beastslayer", "Disgraced Warden")
-		var/fashion_choice = input(H, "Who are you todae? This is purely cosmetic.", "BE FASHIONABLE") as anything in fashion
-		H.set_blindness(0)
-		switch(fashion_choice)
-			if("Cunning Archer") //Robin Hood-esque outfit with a funny hat and a green rain cloak.
-				head = /obj/item/clothing/head/roguetown/archercap
-				cloak = /obj/item/clothing/cloak/raincloak/green
-			if("Ruthless Hunter") //Bloodborne-esque outfit with a longcoat and an oddly familiar hat.
-				head = /obj/item/clothing/head/roguetown/duelhat
-				cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
-			if("Unrelenting Beastslayer") //Classic Poacher look with a dark green hood and a fur cloak.
-				head = /obj/item/clothing/head/roguetown/roguehood/darkgreen
-				cloak = /obj/item/clothing/cloak/raincloak/furcloak/darkgreen
-			if("Disgraced Warden") //Warden's antlered shroud and warden's cloak. Marginally better protection but makes you look a lot more suspicious.
-				head = /obj/item/clothing/head/roguetown/roguehood/poacher
-				cloak = /obj/item/clothing/cloak/poachercloak
-		var/weapons = list("Dagger","Axe", "Sling", "My Bow Is Enough")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-		H.set_blindness(0)
-		switch(weapon_choice)
-			if("Dagger")
-				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
-				beltr = /obj/item/rogueweapon/scabbard/sheath
-				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
-			if("Axe")
-				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
-				beltr = /obj/item/rogueweapon/stoneaxe/woodcut
-			if ("Sling")
-				H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_MASTER, TRUE)
-				beltr = /obj/item/quiver/sling/steel
-				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
-			if ("My Bow Is Enough")
-				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_LEGENDARY, TRUE)
-				head = /obj/item/clothing/head/roguetown/helmet/kettle
-		wretch_select_bounty(H)
+// [DISABLED: zombie project] Everything below is commented out on purpose. Do not delete. See RULES_AND_LESSONS.md
+// /datum/advclass/wretch/poacher
+// 	name = "Poacher"
+// 	tutorial = "You have rejected society and its laws, choosing life in the wilderness instead. Simple thieving highwayman or freedom fighter, you take from those who have and give to the have-nots. Fancy, how the latter includes yourself!"
+// 	allowed_sexes = list(MALE, FEMALE)
+// 	allowed_races = RACES_ALL_KINDS
+// 	outfit = /datum/outfit/job/roguetown/wretch/poacher
+// 	cmode_music = 'sound/music/combat_poacher.ogg'
+// 	class_select_category = CLASS_CAT_RANGER
+// 	category_tags = list(CTAG_WRETCH)
+// 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_WOODSMAN, TRAIT_OUTDOORSMAN, TRAIT_SURVIVAL_EXPERT, TRAIT_EXPERT_HUNTER)
+// 	// No straight upgrade to perception / speed to not stack one stat too high, but still stronger than MAA Skirm out of town.
+// 	subclass_stats = list(
+// 		STATKEY_PER = 2,
+// 		STATKEY_SPD = 2,
+// 		STATKEY_WIL = 2,
+// 		STATKEY_CON = 1
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/misc/tracking = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/bows = SKILL_LEVEL_MASTER,
+// 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/stealing = SKILL_LEVEL_APPRENTICE,
+// 		//these people live in the forest so let's give them some peasant skills
+// 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/labor/butchering = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/hunting = SKILL_LEVEL_EXPERT,
+// 	)
+// 	subclass_stashed_items = list(
+// 		"Sewing Kit" = /obj/item/repair_kit,
+// 	)
+// /datum/outfit/job/roguetown/wretch/poacher/pre_equip(mob/living/carbon/human/H)
+// 	mask = /obj/item/clothing/mask/rogue/wildguard
+// 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+// 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
+// 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+// 	backl = /obj/item/storage/backpack/rogue/satchel
+// 	belt = /obj/item/storage/belt/rogue/leather
+// 	neck = /obj/item/clothing/neck/roguetown/gorget
+// 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+// 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
+// 	beltl = /obj/item/quiver/bodkin
+// 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+// 	backpack_contents = list(
+// 		/obj/item/bait = 1,
+// 		/obj/item/rogueweapon/huntingknife/combat/messer = 1,
+// 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+// 		/obj/item/flashlight/flare/torch/lantern/prelit = 1,
+// 		/obj/item/rope/chain = 1,
+// 		/obj/item/reagent_containers/glass/bottle/alchemical/healthpot = 1,	//Small health vial
+// 		)
+// 	if(H.mind)
+// 		var/fashion = list("Cunning Archer", "Ruthless Hunter", "Unrelenting Beastslayer", "Disgraced Warden")
+// 		var/fashion_choice = input(H, "Who are you todae? This is purely cosmetic.", "BE FASHIONABLE") as anything in fashion
+// 		H.set_blindness(0)
+// 		switch(fashion_choice)
+// 			if("Cunning Archer") //Robin Hood-esque outfit with a funny hat and a green rain cloak.
+// 				head = /obj/item/clothing/head/roguetown/archercap
+// 				cloak = /obj/item/clothing/cloak/raincloak/green
+// 			if("Ruthless Hunter") //Bloodborne-esque outfit with a longcoat and an oddly familiar hat.
+// 				head = /obj/item/clothing/head/roguetown/duelhat
+// 				cloak = /obj/item/clothing/suit/roguetown/armor/longcoat
+// 			if("Unrelenting Beastslayer") //Classic Poacher look with a dark green hood and a fur cloak.
+// 				head = /obj/item/clothing/head/roguetown/roguehood/darkgreen
+// 				cloak = /obj/item/clothing/cloak/raincloak/furcloak/darkgreen
+// 			if("Disgraced Warden") //Warden's antlered shroud and warden's cloak. Marginally better protection but makes you look a lot more suspicious.
+// 				head = /obj/item/clothing/head/roguetown/roguehood/poacher
+// 				cloak = /obj/item/clothing/cloak/poachercloak
+// 		var/weapons = list("Dagger","Axe", "Sling", "My Bow Is Enough")
+// 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+// 		H.set_blindness(0)
+// 		switch(weapon_choice)
+// 			if("Dagger")
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/knives, SKILL_LEVEL_EXPERT, TRUE)
+// 				beltr = /obj/item/rogueweapon/scabbard/sheath
+// 				r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel
+// 			if("Axe")
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_EXPERT, TRUE)
+// 				beltr = /obj/item/rogueweapon/stoneaxe/woodcut
+// 			if ("Sling")
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/slings, SKILL_LEVEL_MASTER, TRUE)
+// 				beltr = /obj/item/quiver/sling/steel
+// 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/sling
+// 			if ("My Bow Is Enough")
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/bows, SKILL_LEVEL_LEGENDARY, TRUE)
+// 				head = /obj/item/clothing/head/roguetown/helmet/kettle
+// 		wretch_select_bounty(H)

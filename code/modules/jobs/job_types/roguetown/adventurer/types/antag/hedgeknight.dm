@@ -1,88 +1,89 @@
-/datum/advclass/hedgeknight //heavy knight class - just like black knight adventurer class. starts with heavy armor training and plate, but less weapon skills than brigand, sellsword and knave
-	name = "Hedge Knight"
-	tutorial = "A noble fallen from grace, your tarnished armor sits upon your shoulders as a heavy reminder of the life you've lost. Take back what is rightfully yours."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_NO_CONSTRUCT
-	outfit = /datum/outfit/job/roguetown/bandit/hedgeknight
-	category_tags = list(CTAG_BANDIT)
-	maximum_possible_slots = 2 //Too many plate armoured fellas is scawy ...
-	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg' // big chungus gets the wall too
-	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
-	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_DISGRACED_NOBLE)
-	subclass_stats = list(
-		STATKEY_CON = 3, //dark souls 3 dual greatshield moment
-		STATKEY_STR = 2,
-		STATKEY_WIL = 3,
-		STATKEY_INT = 2,
-		STATKEY_SPD = -2,
-	)
-	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
-		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
-	)
-
-/datum/outfit/job/roguetown/bandit/hedgeknight/pre_equip(mob/living/carbon/human/H)
-	..()
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/black
-	gloves = /obj/item/clothing/gloves/roguetown/chain/blk
-	pants = /obj/item/clothing/under/roguetown/chainlegs/blk
-	cloak = /obj/item/clothing/cloak/tabard/blkknight
-	neck = /obj/item/clothing/neck/roguetown/gorget
-	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/blkknight
-	wrists = /obj/item/clothing/wrists/roguetown/bracers
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/blkknight
-	belt = /obj/item/storage/belt/rogue/leather/steel/tasset
-	backr = /obj/item/storage/backpack/rogue/satchel/black
-	id = /obj/item/mattcoin
-	backpack_contents = list(
-					/obj/item/rogueweapon/huntingknife/idagger = 1,
-					/obj/item/flashlight/flare/torch = 1,
-					/obj/item/rogueweapon/scabbard/sheath/noble = 1
-					)
-	H.adjust_blindness(-3)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
-	if(H.mind)
-		var/weapons = list("Master Swordsman","Master Spearman","Master Cleaver","Master Bludgeoner")
-		var/weapon_choice = input(H, "Choose your proficiency.", "TRAINED BY VETERANS") as anything in weapons
-		H.set_blindness(0)
-		switch(weapon_choice)
-			if("Master Swordsman")
-				beltr = /obj/item/rogueweapon/sword/long/death
-				beltl = /obj/item/rogueweapon/scabbard/sword/noble
-				backl = /obj/item/rogueweapon/shield/tower/metal
-				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			if("Master Spearman")
-				r_hand = /obj/item/rogueweapon/spear/death
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)	//No shields, you have a two-hander!
-			if("Master Cleaver")
-				beltl = /obj/item/rogueweapon/stoneaxe/battle
-				backl = /obj/item/rogueweapon/shield/tower/metal
-				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)		//No shields, 'cause of things like greataxes.
-			if("Master Bludgeoner")
-				r_hand = /obj/item/rogueweapon/mace/goden/steel
-				backl = /obj/item/rogueweapon/scabbard/gwstrap
-				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
-
-/datum/outfit/job/roguetown/bandit/hedgeknight/post_equip(mob/living/carbon/human/H)
-	. = ..()
-	for(var/datum/bounty/b in GLOB.head_bounties)
-		if(b.target == H.real_name || b.target_hidden == H.real_name)
-			H.change_stat(STATKEY_CON, 1)
-			H.change_stat(STATKEY_WIL, 1)
-			H.change_stat(STATKEY_PER, 1)
+// [DISABLED: zombie project] Everything below is commented out on purpose. Do not delete. See RULES_AND_LESSONS.md
+// /datum/advclass/hedgeknight //heavy knight class - just like black knight adventurer class. starts with heavy armor training and plate, but less weapon skills than brigand, sellsword and knave
+// 	name = "Hedge Knight"
+// 	tutorial = "A noble fallen from grace, your tarnished armor sits upon your shoulders as a heavy reminder of the life you've lost. Take back what is rightfully yours."
+// 	allowed_sexes = list(MALE, FEMALE)
+// 	allowed_races = RACES_NO_CONSTRUCT
+// 	outfit = /datum/outfit/job/roguetown/bandit/hedgeknight
+// 	category_tags = list(CTAG_BANDIT)
+// 	maximum_possible_slots = 2 //Too many plate armoured fellas is scawy ...
+// 	cmode_music = 'sound/music/cmode/antag/combat_thewall.ogg' // big chungus gets the wall too
+// 	subclass_social_rank = SOCIAL_RANK_MINOR_NOBLE
+// 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_DISGRACED_NOBLE)
+// 	subclass_stats = list(
+// 		STATKEY_CON = 3, //dark souls 3 dual greatshield moment
+// 		STATKEY_STR = 2,
+// 		STATKEY_WIL = 3,
+// 		STATKEY_INT = 2,
+// 		STATKEY_SPD = -2,
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/maces = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/polearms = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/wrestling = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/craft/cooking = SKILL_LEVEL_NOVICE,
+// 		/datum/skill/labor/butchering = SKILL_LEVEL_NOVICE,
+// 	)
+// 
+// /datum/outfit/job/roguetown/bandit/hedgeknight/pre_equip(mob/living/carbon/human/H)
+// 	..()
+// 	head = /obj/item/clothing/head/roguetown/helmet/heavy/knight/black
+// 	gloves = /obj/item/clothing/gloves/roguetown/chain/blk
+// 	pants = /obj/item/clothing/under/roguetown/chainlegs/blk
+// 	cloak = /obj/item/clothing/cloak/tabard/blkknight
+// 	neck = /obj/item/clothing/neck/roguetown/gorget
+// 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
+// 	armor = /obj/item/clothing/suit/roguetown/armor/plate/blkknight
+// 	wrists = /obj/item/clothing/wrists/roguetown/bracers
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/blkknight
+// 	belt = /obj/item/storage/belt/rogue/leather/steel/tasset
+// 	backr = /obj/item/storage/backpack/rogue/satchel/black
+// 	id = /obj/item/mattcoin
+// 	backpack_contents = list(
+// 					/obj/item/rogueweapon/huntingknife/idagger = 1,
+// 					/obj/item/flashlight/flare/torch = 1,
+// 					/obj/item/rogueweapon/scabbard/sheath/noble = 1
+// 					)
+// 	H.adjust_blindness(-3)
+// 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
+// 	if(H.mind)
+// 		var/weapons = list("Master Swordsman","Master Spearman","Master Cleaver","Master Bludgeoner")
+// 		var/weapon_choice = input(H, "Choose your proficiency.", "TRAINED BY VETERANS") as anything in weapons
+// 		H.set_blindness(0)
+// 		switch(weapon_choice)
+// 			if("Master Swordsman")
+// 				beltr = /obj/item/rogueweapon/sword/long/death
+// 				beltl = /obj/item/rogueweapon/scabbard/sword/noble
+// 				backl = /obj/item/rogueweapon/shield/tower/metal
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 			if("Master Spearman")
+// 				r_hand = /obj/item/rogueweapon/spear/death
+// 				backl = /obj/item/rogueweapon/scabbard/gwstrap
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)	//No shields, you have a two-hander!
+// 			if("Master Cleaver")
+// 				beltl = /obj/item/rogueweapon/stoneaxe/battle
+// 				backl = /obj/item/rogueweapon/shield/tower/metal
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_MASTER, TRUE)		//No shields, 'cause of things like greataxes.
+// 			if("Master Bludgeoner")
+// 				r_hand = /obj/item/rogueweapon/mace/goden/steel
+// 				backl = /obj/item/rogueweapon/scabbard/gwstrap
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_MASTER, TRUE)
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/shields, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 
+// /datum/outfit/job/roguetown/bandit/hedgeknight/post_equip(mob/living/carbon/human/H)
+// 	. = ..()
+// 	for(var/datum/bounty/b in GLOB.head_bounties)
+// 		if(b.target == H.real_name || b.target_hidden == H.real_name)
+// 			H.change_stat(STATKEY_CON, 1)
+// 			H.change_stat(STATKEY_WIL, 1)
+// 			H.change_stat(STATKEY_PER, 1)

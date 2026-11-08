@@ -1,74 +1,75 @@
-/datum/advclass/sawbones // doctor class. like the pilgrim, but more evil
-	name = "Sawbones"
-	tutorial = "It was an accident! Your patient wasn't using his second kidney, anyway. After an unfortunate 'misunderstanding' with the town and your medical practice, you know practice medicine on the run with your new associates. Business has never been better!"
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/bandit/sawbones
-	category_tags = list(CTAG_BANDIT)
-	cmode_music = 'sound/music/combat_physician.ogg'
-	subclass_social_rank = SOCIAL_RANK_PEASANT
-	traits_applied = list(TRAIT_MEDICINE_EXPERT, TRAIT_NOSTINK, TRAIT_EMPATH, TRAIT_DECEIVING_MEEKNESS, TRAIT_ALCHEMY_EXPERT)
-	subclass_stats = list(
-		STATKEY_INT = 4,
-		STATKEY_SPD = 3,
-		STATKEY_LCK = 3
-	)
-	subclass_skills = list(
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/labor/lumberjacking = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN, //needed for getting into hideout
-		/datum/skill/misc/sneaking = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/medicine = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
-	)
-
-/datum/outfit/job/roguetown/bandit/sawbones/pre_equip(mob/living/carbon/human/H)
-	..()
-	mask = /obj/item/clothing/mask/rogue/facemask/steel
-	head = /obj/item/clothing/head/roguetown/nightman
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
-	shirt = /obj/item/clothing/suit/roguetown/shirt/shortshirt
-	belt = /obj/item/storage/belt/rogue/leather
-	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
-	l_hand = /obj/item/rogueweapon/sword/rapier
-	beltr = /obj/item/rogueweapon/scabbard/sword
-	pants = /obj/item/clothing/under/roguetown/trou
-	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
-	backr = /obj/item/storage/backpack/rogue/satchel
-	id = /obj/item/mattcoin
-	backpack_contents = list(
-					/obj/item/natural/worms/leech/cheele = 1,
-					/obj/item/natural/cloth = 2,
-					/obj/item/flashlight/flare/torch = 1,
-					/obj/item/bedroll = 1,
-					)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
-	if(H.age == AGE_OLD)
-		H.change_stat(STATKEY_SPD, -1)
-		H.change_stat(STATKEY_INT, 1)
-		H.change_stat(STATKEY_PER, 1)
-	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-		var/armor_options = list("Light Armor", "Medium Armor")
-		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
-
-		switch(armor_choice)
-			if("Light Armor")
-				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-			if("Medium Armor")
-				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-
-/datum/outfit/job/roguetown/bandit/sawbones/post_equip(mob/living/carbon/human/H)
-	. = ..()
-	for(var/datum/bounty/b in GLOB.head_bounties)
-		if(b.target == H.real_name || b.target_hidden == H.real_name)
-			H.change_stat(STATKEY_WIL, 1)
-			H.change_stat(STATKEY_SPD, 1)
+// [DISABLED: zombie project] Everything below is commented out on purpose. Do not delete. See RULES_AND_LESSONS.md
+// /datum/advclass/sawbones // doctor class. like the pilgrim, but more evil
+// 	name = "Sawbones"
+// 	tutorial = "It was an accident! Your patient wasn't using his second kidney, anyway. After an unfortunate 'misunderstanding' with the town and your medical practice, you know practice medicine on the run with your new associates. Business has never been better!"
+// 	allowed_sexes = list(MALE, FEMALE)
+// 	allowed_races = RACES_ALL_KINDS
+// 	outfit = /datum/outfit/job/roguetown/bandit/sawbones
+// 	category_tags = list(CTAG_BANDIT)
+// 	cmode_music = 'sound/music/combat_physician.ogg'
+// 	subclass_social_rank = SOCIAL_RANK_PEASANT
+// 	traits_applied = list(TRAIT_MEDICINE_EXPERT, TRAIT_NOSTINK, TRAIT_EMPATH, TRAIT_DECEIVING_MEEKNESS, TRAIT_ALCHEMY_EXPERT)
+// 	subclass_stats = list(
+// 		STATKEY_INT = 4,
+// 		STATKEY_SPD = 3,
+// 		STATKEY_LCK = 3
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/craft/carpentry = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_NOVICE,
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN, //needed for getting into hideout
+// 		/datum/skill/misc/sneaking = SKILL_LEVEL_NOVICE,
+// 		/datum/skill/misc/medicine = SKILL_LEVEL_LEGENDARY,
+// 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+// 	)
+// 
+// /datum/outfit/job/roguetown/bandit/sawbones/pre_equip(mob/living/carbon/human/H)
+// 	..()
+// 	mask = /obj/item/clothing/mask/rogue/facemask/steel
+// 	head = /obj/item/clothing/head/roguetown/nightman
+// 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
+// 	shirt = /obj/item/clothing/suit/roguetown/shirt/shortshirt
+// 	belt = /obj/item/storage/belt/rogue/leather
+// 	beltl = /obj/item/storage/belt/rogue/surgery_bag/full/physician
+// 	l_hand = /obj/item/rogueweapon/sword/rapier
+// 	beltr = /obj/item/rogueweapon/scabbard/sword
+// 	pants = /obj/item/clothing/under/roguetown/trou
+// 	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
+// 	backr = /obj/item/storage/backpack/rogue/satchel
+// 	id = /obj/item/mattcoin
+// 	backpack_contents = list(
+// 					/obj/item/natural/worms/leech/cheele = 1,
+// 					/obj/item/natural/cloth = 2,
+// 					/obj/item/flashlight/flare/torch = 1,
+// 					/obj/item/bedroll = 1,
+// 					)
+// 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/free)
+// 	if(H.age == AGE_OLD)
+// 		H.change_stat(STATKEY_SPD, -1)
+// 		H.change_stat(STATKEY_INT, 1)
+// 		H.change_stat(STATKEY_PER, 1)
+// 	if(H.mind)
+// 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
+// 		var/armor_options = list("Light Armor", "Medium Armor")
+// 		var/armor_choice = input(H, "Choose your armor.", "TAKE UP ARMS") as anything in armor_options
+// 
+// 		switch(armor_choice)
+// 			if("Light Armor")
+// 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+// 			if("Medium Armor")
+// 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+// 
+// /datum/outfit/job/roguetown/bandit/sawbones/post_equip(mob/living/carbon/human/H)
+// 	. = ..()
+// 	for(var/datum/bounty/b in GLOB.head_bounties)
+// 		if(b.target == H.real_name || b.target_hidden == H.real_name)
+// 			H.change_stat(STATKEY_WIL, 1)
+// 			H.change_stat(STATKEY_SPD, 1)

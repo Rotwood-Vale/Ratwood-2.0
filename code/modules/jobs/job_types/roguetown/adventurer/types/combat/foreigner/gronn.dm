@@ -1,109 +1,110 @@
-//Gronnic Itinerant is a combination subclass.
-//A choice between polearms, ranged, or miracles.
-/datum/advclass/foreigner/gronn
-	name = "Gronnic Itinerant"
-	tutorial = "Whether separated from your clan, or otherwise cast aside? You've found your way to Ferentia. \
-	Bound by blood oaths, violence and any other matter of mania that follows your people, how will you possibly adapt? \
-	Perhaps, if another chief were to find you..."
-	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/adventurer/gronnic
-	subclass_languages = list(/datum/language/gronnic)
-	cmode_music = 'sound/music/combat_gronn.ogg'
-	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
-	traits_applied = list(TRAIT_STEELHEARTED)
-	subclass_stats = list(
-		STATKEY_WIL = 2,
-		STATKEY_INT = -1,
-	)
-	subclass_skills = list(
-		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
-	)
-	extra_context = "Inhumen exclusive. \
-	Bruiser provides: +3STR/-2INT, medium armor training, JMAN polearms and JMAN riding, paired with critical resistance. \
-	Archer provides:  +3PER/+2STR, medium armor training, EXPT bows, JMAN tracking. \
-	Zealot provides: +2SPD/+2STR, dodge expert, T2 miracles."
-
-/datum/outfit/job/roguetown/adventurer/gronnic
-	allowed_patrons = ALL_GRONNIC_PATRONS //Subvariant of the 'ALL_INHUMEN_PATRONS' tag, with Abyssor and Dendor as situational additions. Do not add any more to this, no matter what.
-
-/datum/outfit/job/roguetown/adventurer/gronnic/pre_equip(mob/living/carbon/human/H)
-	..()
-	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
-	gloves = /obj/item/clothing/gloves/roguetown/angle
-	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/rogueweapon/stoneaxe/handaxe
-	beltl = /obj/item/rogueweapon/huntingknife
-	backl = /obj/item/storage/backpack/rogue/satchel
-
-	switch(H.patron?.type)
-		if(/datum/patron/inhumen/zizo)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn
-		if(/datum/patron/inhumen/graggar)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/gronn
-		if(/datum/patron/inhumen/matthios)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gronn
-		if(/datum/patron/inhumen/baotha)
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/gronn
-		if(/datum/patron/divine/abyssor)
-			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/gronn
-		if(/datum/patron/divine/dendor)
-			id = /obj/item/clothing/neck/roguetown/psicross/dendor/gronn
-		else
-			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
-
-	backpack_contents = list(/obj/item/rogueweapon/scabbard/sheath)
-
-	if(H.mind)
-		var/gronnish_lot = list("Bruiser","Archer", "Zealot")
-		var/lot_choice = input(H, "Choose your LOT", "WHAT WERE YOU") as anything in gronnish_lot
-		switch(lot_choice)
-			if("Bruiser")
-				//Equipment
-				head = /obj/item/clothing/head/roguetown/helmet/nomadhelmet
-				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
-				backr = /obj/item/rogueweapon/scabbard/gwstrap
-				r_hand = /obj/item/rogueweapon/halberd/bardiche
-				//Skills & Stats.
-				H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-				H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
-				H.change_stat(STATKEY_STR, 3)
-				H.change_stat(STATKEY_INT, -2)
-				//The rest.
-				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-			if("Archer")
-				//Equipment
-				head = /obj/item/clothing/head/roguetown/hatfur
-				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
-				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
-				l_hand = /obj/item/quiver/arrows
-				//Skills & Stats.
-				H.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)
-				H.adjust_skillrank(/datum/skill/misc/tracking, 3, TRUE)
-				H.change_stat(STATKEY_PER, 3)
-				H.change_stat(STATKEY_STR, 2)
-				//The rest.
-				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-			if("Zealot")
-				//Equipment
-				head = /obj/item/clothing/head/roguetown/hatfur
-				armor = /obj/item/clothing/suit/roguetown/armor/leather/Huus_quyaq
-				r_hand = /obj/item/rogueweapon/stoneaxe/handaxe
-				//Skills & Stats.
-				H.adjust_skillrank(/datum/skill/magic/holy, 2, TRUE)
-				H.change_stat(STATKEY_STR, 2)
-				H.change_stat(STATKEY_SPD, 2)
-				//The rest.
-				var/datum/devotion/C = new /datum/devotion(H, H.patron)
-				C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2) //Capped to T2 miracles. Devotion at T2.
-				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-
-	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
+// [DISABLED: zombie project] Everything below is commented out on purpose. Do not delete. See RULES_AND_LESSONS.md
+// //Gronnic Itinerant is a combination subclass.
+// //A choice between polearms, ranged, or miracles.
+// /datum/advclass/foreigner/gronn
+// 	name = "Gronnic Itinerant"
+// 	tutorial = "Whether separated from your clan, or otherwise cast aside? You've found your way to Ferentia. \
+// 	Bound by blood oaths, violence and any other matter of mania that follows your people, how will you possibly adapt? \
+// 	Perhaps, if another chief were to find you..."
+// 	allowed_races = RACES_ALL_KINDS
+// 	outfit = /datum/outfit/job/roguetown/adventurer/gronnic
+// 	subclass_languages = list(/datum/language/gronnic)
+// 	cmode_music = 'sound/music/combat_gronn.ogg'
+// 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
+// 	traits_applied = list(TRAIT_STEELHEARTED)
+// 	subclass_stats = list(
+// 		STATKEY_WIL = 2,
+// 		STATKEY_INT = -1,
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/combat/axes = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
+// 	)
+// 	extra_context = "Inhumen exclusive. \
+// 	Bruiser provides: +3STR/-2INT, medium armor training, JMAN polearms and JMAN riding, paired with critical resistance. \
+// 	Archer provides:  +3PER/+2STR, medium armor training, EXPT bows, JMAN tracking. \
+// 	Zealot provides: +2SPD/+2STR, dodge expert, T2 miracles."
+// 
+// /datum/outfit/job/roguetown/adventurer/gronnic
+// 	allowed_patrons = ALL_GRONNIC_PATRONS //Subvariant of the 'ALL_INHUMEN_PATRONS' tag, with Abyssor and Dendor as situational additions. Do not add any more to this, no matter what.
+// 
+// /datum/outfit/job/roguetown/adventurer/gronnic/pre_equip(mob/living/carbon/human/H)
+// 	..()
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/iron
+// 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah
+// 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants
+// 	gloves = /obj/item/clothing/gloves/roguetown/angle
+// 	belt = /obj/item/storage/belt/rogue/leather
+// 	beltr = /obj/item/rogueweapon/stoneaxe/handaxe
+// 	beltl = /obj/item/rogueweapon/huntingknife
+// 	backl = /obj/item/storage/backpack/rogue/satchel
+// 
+// 	switch(H.patron?.type)
+// 		if(/datum/patron/inhumen/zizo)
+// 			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn
+// 		if(/datum/patron/inhumen/graggar)
+// 			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar/gronn
+// 		if(/datum/patron/inhumen/matthios)
+// 			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios/gronn
+// 		if(/datum/patron/inhumen/baotha)
+// 			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha/gronn
+// 		if(/datum/patron/divine/abyssor)
+// 			id = /obj/item/clothing/neck/roguetown/psicross/abyssor/gronn
+// 		if(/datum/patron/divine/dendor)
+// 			id = /obj/item/clothing/neck/roguetown/psicross/dendor/gronn
+// 		else
+// 			id = /obj/item/clothing/neck/roguetown/psicross/inhumen/gronn/special //Failsafe. Gives a specially-fluffed version of Zizo's talisman, which can be reinterpreted as needed.
+// 
+// 	backpack_contents = list(/obj/item/rogueweapon/scabbard/sheath)
+// 
+// 	if(H.mind)
+// 		var/gronnish_lot = list("Bruiser","Archer", "Zealot")
+// 		var/lot_choice = input(H, "Choose your LOT", "WHAT WERE YOU") as anything in gronnish_lot
+// 		switch(lot_choice)
+// 			if("Bruiser")
+// 				//Equipment
+// 				head = /obj/item/clothing/head/roguetown/helmet/nomadhelmet
+// 				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
+// 				backr = /obj/item/rogueweapon/scabbard/gwstrap
+// 				r_hand = /obj/item/rogueweapon/halberd/bardiche
+// 				//Skills & Stats.
+// 				H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
+// 				H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
+// 				H.change_stat(STATKEY_STR, 3)
+// 				H.change_stat(STATKEY_INT, -2)
+// 				//The rest.
+// 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+// 				ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+// 			if("Archer")
+// 				//Equipment
+// 				head = /obj/item/clothing/head/roguetown/hatfur
+// 				armor = /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe
+// 				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow
+// 				l_hand = /obj/item/quiver/arrows
+// 				//Skills & Stats.
+// 				H.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)
+// 				H.adjust_skillrank(/datum/skill/misc/tracking, 3, TRUE)
+// 				H.change_stat(STATKEY_PER, 3)
+// 				H.change_stat(STATKEY_STR, 2)
+// 				//The rest.
+// 				ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+// 			if("Zealot")
+// 				//Equipment
+// 				head = /obj/item/clothing/head/roguetown/hatfur
+// 				armor = /obj/item/clothing/suit/roguetown/armor/leather/Huus_quyaq
+// 				r_hand = /obj/item/rogueweapon/stoneaxe/handaxe
+// 				//Skills & Stats.
+// 				H.adjust_skillrank(/datum/skill/magic/holy, 2, TRUE)
+// 				H.change_stat(STATKEY_STR, 2)
+// 				H.change_stat(STATKEY_SPD, 2)
+// 				//The rest.
+// 				var/datum/devotion/C = new /datum/devotion(H, H.patron)
+// 				C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2) //Capped to T2 miracles. Devotion at T2.
+// 				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+// 
+// 	H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()

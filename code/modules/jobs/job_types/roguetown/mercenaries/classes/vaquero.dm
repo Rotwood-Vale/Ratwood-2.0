@@ -1,111 +1,112 @@
-/datum/advclass/mercenary/vaquero
-	name = "Vaquero"
-	tutorial = "Originating in the vibrant Kingdom of Etrusca, a 'vaquero' had originally been a mere cattle-driver... Now, though, it has become a title for roaming swashbucklers. Whether they set out as a defender of the commonfolk or a pilferer of purses, the Vaquero is defined by the tale they carve across continents - and more frequently - by their story's violent end."
-	outfit = /datum/outfit/job/roguetown/mercenary/vaquero
-	class_select_category = CLASS_CAT_ETRUSCA
-	cmode_music = 'sound/music/combat_vaquero.ogg'
-	category_tags = list(CTAG_MERCENARY)
-	subclass_languages = list(/datum/language/etruscan)
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_MEDIUMARMOR, TRAIT_EQUESTRIAN)
-	subclass_virtues = list(
-		/datum/virtue/combat/guarded
-	)
-	subclass_stats = list(
-		STATKEY_SPD = 3,
-		STATKEY_INT = 2,
-		STATKEY_WIL = 1
-	)
-	subclass_skills = list(
-		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/stealing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/music = SKILL_LEVEL_EXPERT,
-	)
-
-	extra_context = "This class is restricted from using the Equestrian virtue."
-
-	virtue_restrictions = list(
-		/datum/virtue/utility/riding
-	)
-
-/datum/outfit/job/roguetown/mercenary/vaquero/pre_equip(mob/living/carbon/human/H)
-	..()
-	head = /obj/item/clothing/head/roguetown/bardhat
-	mouth = /obj/item/alch/rosa
-	shoes = /obj/item/clothing/shoes/roguetown/boots
-	neck = /obj/item/clothing/neck/roguetown/gorget
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
-	shirt = /obj/item/clothing/suit/roguetown/shirt/freifechter
-	belt = /obj/item/storage/belt/rogue/leather
-	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
-	cloak = /obj/item/clothing/cloak/half/rider/red
-	backl = /obj/item/storage/backpack/rogue/satchel
-	beltl = /obj/item/rogueweapon/scabbard/sword
-	l_hand = /obj/item/rogueweapon/sword/rapier/vaquero
-	beltr = /obj/item/rogueweapon/scabbard/sheath
-	r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying/vaquero
-	backpack_contents = list(
-					/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-					/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
-					/obj/item/lockpick = 1,
-					/obj/item/flashlight/flare/torch = 1,
-					/obj/item/roguekey/mercenary = 1,
-					/obj/item/rogueweapon/scabbard/sheath = 1
-					)
-	var/datum/inspiration/I = new /datum/inspiration(H)
-	I.grant_inspiration(H, bard_tier = BARD_T2)
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
-	if(H.mind)
-		var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
-		var/weapon_choice = input(H, "Choose your instrument.", "TAKE UP ARMS") as anything in weapons
-		H.set_blindness(0)
-		switch(weapon_choice)
-			if("Accordion")
-				backr = /obj/item/rogue/instrument/accord
-			if("Bagpipe")
-				backr = /obj/item/rogue/instrument/bagpipe
-			if("Banjo")
-				backr = /obj/item/rogue/instrument/banjo
-			if("Drum")
-				backr = /obj/item/rogue/instrument/drum
-			if("Flute")
-				backr = /obj/item/rogue/instrument/flute
-			if("Guitar")
-				backr = /obj/item/rogue/instrument/guitar
-			if("Harmonica")
-				backr = /obj/item/rogue/instrument/harmonica
-			if("Harp")
-				backr = /obj/item/rogue/instrument/harp
-			if("Hurdy-Gurdy")
-				backr = /obj/item/rogue/instrument/hurdygurdy
-			if("Jaw Harp")
-				backr = /obj/item/rogue/instrument/jawharp
-			if("Lute")
-				backr = /obj/item/rogue/instrument/lute
-			if("Psyaltery")
-				backr = /obj/item/rogue/instrument/psyaltery
-			if("Shamisen")
-				backr = /obj/item/rogue/instrument/shamisen
-			if("Trumpet")
-				backr = /obj/item/rogue/instrument/trumpet
-			if("Viola")
-				backr = /obj/item/rogue/instrument/viola
-			if("Vocal Talisman")
-				backr = /obj/item/rogue/instrument/vocals
-	H.merctype = 13
-	
-	if (H.mind)
-		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)
+// [DISABLED: zombie project] Everything below is commented out on purpose. Do not delete. See RULES_AND_LESSONS.md
+// /datum/advclass/mercenary/vaquero
+// 	name = "Vaquero"
+// 	tutorial = "Originating in the vibrant Kingdom of Etrusca, a 'vaquero' had originally been a mere cattle-driver... Now, though, it has become a title for roaming swashbucklers. Whether they set out as a defender of the commonfolk or a pilferer of purses, the Vaquero is defined by the tale they carve across continents - and more frequently - by their story's violent end."
+// 	outfit = /datum/outfit/job/roguetown/mercenary/vaquero
+// 	class_select_category = CLASS_CAT_ETRUSCA
+// 	cmode_music = 'sound/music/combat_vaquero.ogg'
+// 	category_tags = list(CTAG_MERCENARY)
+// 	subclass_languages = list(/datum/language/etruscan)
+// 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_MEDIUMARMOR, TRAIT_EQUESTRIAN)
+// 	subclass_virtues = list(
+// 		/datum/virtue/combat/guarded
+// 	)
+// 	subclass_stats = list(
+// 		STATKEY_SPD = 3,
+// 		STATKEY_INT = 2,
+// 		STATKEY_WIL = 1
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/combat/swords = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/crossbows = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/bows = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/knives = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/sneaking = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/stealing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/riding = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/misc/lockpicking = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/music = SKILL_LEVEL_EXPERT,
+// 	)
+// 
+// 	extra_context = "This class is restricted from using the Equestrian virtue."
+// 
+// 	virtue_restrictions = list(
+// 		/datum/virtue/utility/riding
+// 	)
+// 
+// /datum/outfit/job/roguetown/mercenary/vaquero/pre_equip(mob/living/carbon/human/H)
+// 	..()
+// 	head = /obj/item/clothing/head/roguetown/bardhat
+// 	mouth = /obj/item/alch/rosa
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots
+// 	neck = /obj/item/clothing/neck/roguetown/gorget
+// 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
+// 	shirt = /obj/item/clothing/suit/roguetown/shirt/freifechter
+// 	belt = /obj/item/storage/belt/rogue/leather
+// 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+// 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
+// 	armor = /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat
+// 	cloak = /obj/item/clothing/cloak/half/rider/red
+// 	backl = /obj/item/storage/backpack/rogue/satchel
+// 	beltl = /obj/item/rogueweapon/scabbard/sword
+// 	l_hand = /obj/item/rogueweapon/sword/rapier/vaquero
+// 	beltr = /obj/item/rogueweapon/scabbard/sheath
+// 	r_hand = /obj/item/rogueweapon/huntingknife/idagger/steel/parrying/vaquero
+// 	backpack_contents = list(
+// 					/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+// 					/obj/item/rogueweapon/huntingknife/idagger/navaja = 1,
+// 					/obj/item/lockpick = 1,
+// 					/obj/item/flashlight/flare/torch = 1,
+// 					/obj/item/roguekey/mercenary = 1,
+// 					/obj/item/rogueweapon/scabbard/sheath = 1
+// 					)
+// 	var/datum/inspiration/I = new /datum/inspiration(H)
+// 	I.grant_inspiration(H, bard_tier = BARD_T2)
+// 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
+// 	if(H.mind)
+// 		var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
+// 		var/weapon_choice = input(H, "Choose your instrument.", "TAKE UP ARMS") as anything in weapons
+// 		H.set_blindness(0)
+// 		switch(weapon_choice)
+// 			if("Accordion")
+// 				backr = /obj/item/rogue/instrument/accord
+// 			if("Bagpipe")
+// 				backr = /obj/item/rogue/instrument/bagpipe
+// 			if("Banjo")
+// 				backr = /obj/item/rogue/instrument/banjo
+// 			if("Drum")
+// 				backr = /obj/item/rogue/instrument/drum
+// 			if("Flute")
+// 				backr = /obj/item/rogue/instrument/flute
+// 			if("Guitar")
+// 				backr = /obj/item/rogue/instrument/guitar
+// 			if("Harmonica")
+// 				backr = /obj/item/rogue/instrument/harmonica
+// 			if("Harp")
+// 				backr = /obj/item/rogue/instrument/harp
+// 			if("Hurdy-Gurdy")
+// 				backr = /obj/item/rogue/instrument/hurdygurdy
+// 			if("Jaw Harp")
+// 				backr = /obj/item/rogue/instrument/jawharp
+// 			if("Lute")
+// 				backr = /obj/item/rogue/instrument/lute
+// 			if("Psyaltery")
+// 				backr = /obj/item/rogue/instrument/psyaltery
+// 			if("Shamisen")
+// 				backr = /obj/item/rogue/instrument/shamisen
+// 			if("Trumpet")
+// 				backr = /obj/item/rogue/instrument/trumpet
+// 			if("Viola")
+// 				backr = /obj/item/rogue/instrument/viola
+// 			if("Vocal Talisman")
+// 				backr = /obj/item/rogue/instrument/vocals
+// 	H.merctype = 13
+// 	
+// 	if (H.mind)
+// 		H.AddSpell(new /obj/effect/proc_holder/spell/self/choose_riding_virtue_mount)

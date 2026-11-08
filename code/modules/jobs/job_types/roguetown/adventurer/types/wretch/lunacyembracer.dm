@@ -1,184 +1,185 @@
-/datum/advclass/wretch/lunacyembracer
-	name = "Lunacy Embracer"
-	tutorial = "You have rejected and terrorized civilization in the name of nature. You run wild under the moon, a terror to the townsfolk and a champion of Dendor's wild domain."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = ALL_BUT_BLOODLESS
-	disallowed_races = list(
-		/datum/species/harpy,	//for further clarification, basically, FLYING LUNACY EMBRACERS. embracers getting into sneaky places they shouldn't goes about as well as you'd think
-	)
-	outfit = /datum/outfit/job/roguetown/wretch/lunacyembracer
-	class_select_category = CLASS_CAT_ACCURSED
-	category_tags = list(CTAG_WRETCH)
-	maximum_possible_slots = 2
-
-	traits_applied = list(
-		TRAIT_NUDIST,
-		TRAIT_CRITICAL_RESISTANCE,
-		TRAIT_BLOOD_RESISTANCE,//they need both, with no armor one bronze arrow is a death sentence
-		TRAIT_NOPAINSTUN,
-		TRAIT_DODGEEXPERT,
-		TRAIT_CIVILIZEDBARBARIAN,
-		TRAIT_STRONGBITE,
-		TRAIT_WOODWALKER,
-		TRAIT_NASTY_EATER,
-		TRAIT_CALTROPIMMUNE,
-		TRAIT_LONGSTRIDER,
-		TRAIT_OUTDOORSMAN,
-		TRAIT_WOODSMAN,
-		TRAIT_WILDERNESSGUIDE,
-		TRAIT_DEATHBYSNUSNU,
-		TRAIT_RAGE,
-	)
-	subclass_stats = list(
-		STATKEY_STR = 3,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 2,
-		STATKEY_SPD = 2,
-		STATKEY_INT = -2,
-		STATKEY_PER = -2
-	)
-
-	subclass_skills = list(
-		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/labor/farming = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/masonry = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/labor/butchering = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/labor/fishing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
-	)
-
-	extra_context = "This class is restricted from using the Natural Armor virtue."
-
-	virtue_restrictions = list(
-		/datum/virtue/combat/tough_hide,
-	)
-
-/datum/outfit/job/roguetown/wretch/lunacyembracer/pre_equip(mob/living/carbon/human/H)
-	..()
-	// Establish the base before applying choice and patron bonuses.
-	H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
-	H.set_blindness(0)
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/rage)
-	var/unarmed = list("I still use weapons", "I forgo weapons")
-	var/unarmed_choice = input(H,"Have you given up weapons?", "HOW DEDICATED ARE YOU?") as anything in unarmed
-	switch(unarmed_choice)
-		if("I still use weapons")
-			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
-			r_hand = /obj/item/rogueweapon/handclaw/gronn
-			l_hand = /obj/item/rogueweapon/handclaw/gronn
-		if("I forgo weapons")
-			ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
-			ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
-			ADD_TRAIT(H, TRAIT_THROWINGARM, TRAIT_GENERIC)//sorta like scarp letting you toss guns at people
-			ADD_TRAIT(H, TRAIT_BIGGUY, TRAIT_GENERIC)//so you can get through doors and stuff without a weapon
-			ADD_TRAIT(H, TRAIT_STRENGTH_UNCAPPED, TRAIT_GENERIC)//experimental, they are still largely unarmored and cant use this for anything apart from unarmed weaponless punching.
-			H.change_stat(STATKEY_INT, 2)//true unarmed gets no stat malus
-			H.change_stat(STATKEY_PER, 2)
-			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
-			gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
-			wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
-	// -- Start of section for god specific bonuses --	
-	if(H.patron?.type == /datum/patron/inhumen/graggar)
-		ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC) //no athletics for you
-		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar
-	if(H.patron?.type == /datum/patron/inhumen/matthios)
-		H.grant_language(/datum/language/thievescant) // was 100% sure I'd drop this on LE but shockingly they don't have any ranks in sneak by default
-		H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_NOVICE, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_NOVICE, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_NOVICE, TRUE)
-		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios
-	if(H.patron?.type == /datum/patron/inhumen/zizo)
-		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_EXPERT, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_NOVICE, TRUE) //tempted to remove literacy for zizoid LE, it's funny for noc but w/e
-		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
-		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen
-	if(H.patron?.type == /datum/patron/inhumen/baotha)
-		H.adjust_skillrank_up_to(/datum/skill/misc/music, SKILL_LEVEL_APPRENTICE, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_MASTER, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_MASTER, TRUE) // holy shit they can COOK
-		ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)//please don't let me regret doing this
-		H.put_in_hands(new /obj/item/ritechalk(H))
-		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha
-	if(H.patron?.type == /datum/patron/divine/astrata)//naked man must set himself on fire
-		H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
-		neck = /obj/item/clothing/neck/roguetown/psicross/astrata
-	if(H.patron?.type == /datum/patron/divine/dendor)
-		H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_EXPERT, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/magic/druidic, SKILL_LEVEL_JOURNEYMAN, TRUE)
-		H.grant_language(/datum/language/beast) //dendor antags can talk to WWs and druids
-		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
-		neck = /obj/item/clothing/neck/roguetown/psicross/dendor
-		H.put_in_hands(new /obj/item/ritechalk(H))
-	if(H.patron?.type == /datum/patron/divine/noc)
-		H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN, TRUE) // Really good at reading... almost actually useful for LE.
-		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_EXPERT, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_NOVICE, TRUE)
-		ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
-		neck = /obj/item/clothing/neck/roguetown/psicross/noc
-	if(H.patron?.type == /datum/patron/divine/abyssor)
-		H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_MASTER, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
-		ADD_TRAIT(H, TRAIT_WATERBREATHING, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
-		H.put_in_hands(new /obj/item/ritechalk(H))
-		neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
-	if(H.patron?.type == /datum/patron/divine/necra)
-		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
-		neck = /obj/item/clothing/neck/roguetown/psicross/necra
-	if(H.patron?.type == /datum/patron/divine/pestra)
-		H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_NOVICE, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_EXPERT, TRUE)
-		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
-		neck = /obj/item/clothing/neck/roguetown/psicross/pestra
-	if(H.patron?.type == /datum/patron/divine/eora)
-		ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
-		H.put_in_hands(new /obj/item/ritechalk(H))
-		neck = /obj/item/clothing/neck/roguetown/psicross/eora
-	if(H.patron?.type == /datum/patron/divine/malum) // lol, lmao
-		H.adjust_skillrank_up_to(/datum/skill/craft/blacksmithing, SKILL_LEVEL_NOVICE, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/craft/armorsmithing, SKILL_LEVEL_NOVICE, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/craft/weaponsmithing, SKILL_LEVEL_NOVICE, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/craft/smelting, SKILL_LEVEL_NOVICE, TRUE)
-		neck = /obj/item/clothing/neck/roguetown/psicross/malum
-	if(H.patron?.type == /datum/patron/divine/ravox)
-		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
-		neck = /obj/item/clothing/neck/roguetown/psicross/ravox
-	if(H.patron?.type == /datum/patron/divine/xylix)
-		H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_EXPERT, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_NOVICE, TRUE)
-		H.adjust_skillrank_up_to(/datum/skill/misc/music, SKILL_LEVEL_NOVICE, TRUE)
-		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC) //please, god, be funny
-		H.put_in_hands(new /obj/item/ritechalk(H))
-		neck = /obj/item/clothing/neck/roguetown/psicross/xylix
-	// -- End of section for god specific bonuses --
-	if(unarmed_choice == "I forgo weapons")
-		var/datum/devotion/C = new /datum/devotion(H, H.patron)
-		C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR)//I want to enable astratan LE to become... FIRE PUNCH
-	else
-		var/datum/devotion/C = new /datum/devotion(H, H.patron)
-		C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR)
-
-	H.cmode_music = 'sound/music/combat_berserker.ogg'
-	to_chat(H, span_danger("You have abandoned your humanity to run wild under the moon. The call of nature fills your soul!"))
-	wretch_select_bounty(H)
+// [DISABLED: zombie project] Everything below is commented out on purpose. Do not delete. See RULES_AND_LESSONS.md
+// /datum/advclass/wretch/lunacyembracer
+// 	name = "Lunacy Embracer"
+// 	tutorial = "You have rejected and terrorized civilization in the name of nature. You run wild under the moon, a terror to the townsfolk and a champion of Dendor's wild domain."
+// 	allowed_sexes = list(MALE, FEMALE)
+// 	allowed_races = ALL_BUT_BLOODLESS
+// 	disallowed_races = list(
+// 		/datum/species/harpy,	//for further clarification, basically, FLYING LUNACY EMBRACERS. embracers getting into sneaky places they shouldn't goes about as well as you'd think
+// 	)
+// 	outfit = /datum/outfit/job/roguetown/wretch/lunacyembracer
+// 	class_select_category = CLASS_CAT_ACCURSED
+// 	category_tags = list(CTAG_WRETCH)
+// 	maximum_possible_slots = 2
+// 
+// 	traits_applied = list(
+// 		TRAIT_NUDIST,
+// 		TRAIT_CRITICAL_RESISTANCE,
+// 		TRAIT_BLOOD_RESISTANCE,//they need both, with no armor one bronze arrow is a death sentence
+// 		TRAIT_NOPAINSTUN,
+// 		TRAIT_DODGEEXPERT,
+// 		TRAIT_CIVILIZEDBARBARIAN,
+// 		TRAIT_STRONGBITE,
+// 		TRAIT_WOODWALKER,
+// 		TRAIT_NASTY_EATER,
+// 		TRAIT_CALTROPIMMUNE,
+// 		TRAIT_LONGSTRIDER,
+// 		TRAIT_OUTDOORSMAN,
+// 		TRAIT_WOODSMAN,
+// 		TRAIT_WILDERNESSGUIDE,
+// 		TRAIT_DEATHBYSNUSNU,
+// 		TRAIT_RAGE,
+// 	)
+// 	subclass_stats = list(
+// 		STATKEY_STR = 3,
+// 		STATKEY_CON = 2,
+// 		STATKEY_WIL = 2,
+// 		STATKEY_SPD = 2,
+// 		STATKEY_INT = -2,
+// 		STATKEY_PER = -2
+// 	)
+// 
+// 	subclass_skills = list(
+// 		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/craft/tanning = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/labor/farming = SKILL_LEVEL_MASTER,
+// 		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/tracking = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/craft/masonry = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/craft/alchemy = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/craft/cooking = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/labor/butchering = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/labor/fishing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
+// 	)
+// 
+// 	extra_context = "This class is restricted from using the Natural Armor virtue."
+// 
+// 	virtue_restrictions = list(
+// 		/datum/virtue/combat/tough_hide,
+// 	)
+// 
+// /datum/outfit/job/roguetown/wretch/lunacyembracer/pre_equip(mob/living/carbon/human/H)
+// 	..()
+// 	// Establish the base before applying choice and patron bonuses.
+// 	H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 	H.set_blindness(0)
+// 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/rage)
+// 	var/unarmed = list("I still use weapons", "I forgo weapons")
+// 	var/unarmed_choice = input(H,"Have you given up weapons?", "HOW DEDICATED ARE YOU?") as anything in unarmed
+// 	switch(unarmed_choice)
+// 		if("I still use weapons")
+// 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+// 			r_hand = /obj/item/rogueweapon/handclaw/gronn
+// 			l_hand = /obj/item/rogueweapon/handclaw/gronn
+// 		if("I forgo weapons")
+// 			ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
+// 			ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+// 			ADD_TRAIT(H, TRAIT_THROWINGARM, TRAIT_GENERIC)//sorta like scarp letting you toss guns at people
+// 			ADD_TRAIT(H, TRAIT_BIGGUY, TRAIT_GENERIC)//so you can get through doors and stuff without a weapon
+// 			ADD_TRAIT(H, TRAIT_STRENGTH_UNCAPPED, TRAIT_GENERIC)//experimental, they are still largely unarmored and cant use this for anything apart from unarmed weaponless punching.
+// 			H.change_stat(STATKEY_INT, 2)//true unarmed gets no stat malus
+// 			H.change_stat(STATKEY_PER, 2)
+// 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
+// 			gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
+// 			wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
+// 	// -- Start of section for god specific bonuses --	
+// 	if(H.patron?.type == /datum/patron/inhumen/graggar)
+// 		ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
+// 		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC) //no athletics for you
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/graggar
+// 	if(H.patron?.type == /datum/patron/inhumen/matthios)
+// 		H.grant_language(/datum/language/thievescant) // was 100% sure I'd drop this on LE but shockingly they don't have any ranks in sneak by default
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, SKILL_LEVEL_NOVICE, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/stealing, SKILL_LEVEL_NOVICE, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_NOVICE, TRUE)
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/matthios
+// 	if(H.patron?.type == /datum/patron/inhumen/zizo)
+// 		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_EXPERT, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_NOVICE, TRUE) //tempted to remove literacy for zizoid LE, it's funny for noc but w/e
+// 		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
+// 		ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
+// 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen
+// 	if(H.patron?.type == /datum/patron/inhumen/baotha)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/music, SKILL_LEVEL_APPRENTICE, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_MASTER, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/craft/cooking, SKILL_LEVEL_MASTER, TRUE) // holy shit they can COOK
+// 		ADD_TRAIT(H, TRAIT_GOODLOVER, TRAIT_GENERIC)
+// 		ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
+// 		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)//please don't let me regret doing this
+// 		H.put_in_hands(new /obj/item/ritechalk(H))
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/inhumen/baotha
+// 	if(H.patron?.type == /datum/patron/divine/astrata)//naked man must set himself on fire
+// 		H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/astrata
+// 	if(H.patron?.type == /datum/patron/divine/dendor)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_EXPERT, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/magic/druidic, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 		H.grant_language(/datum/language/beast) //dendor antags can talk to WWs and druids
+// 		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/dendor
+// 		H.put_in_hands(new /obj/item/ritechalk(H))
+// 	if(H.patron?.type == /datum/patron/divine/noc)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/reading, SKILL_LEVEL_JOURNEYMAN, TRUE) // Really good at reading... almost actually useful for LE.
+// 		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_EXPERT, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/magic/arcane, SKILL_LEVEL_NOVICE, TRUE)
+// 		ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/noc
+// 	if(H.patron?.type == /datum/patron/divine/abyssor)
+// 		H.adjust_skillrank_up_to(/datum/skill/labor/fishing, SKILL_LEVEL_MASTER, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
+// 		ADD_TRAIT(H, TRAIT_WATERBREATHING, TRAIT_GENERIC)
+// 		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
+// 		H.put_in_hands(new /obj/item/ritechalk(H))
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
+// 	if(H.patron?.type == /datum/patron/divine/necra)
+// 		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
+// 		ADD_TRAIT(H, TRAIT_SOUL_EXAMINE, TRAIT_GENERIC)
+// 		ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/necra
+// 	if(H.patron?.type == /datum/patron/divine/pestra)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_NOVICE, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/craft/alchemy, SKILL_LEVEL_EXPERT, TRUE)
+// 		ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
+// 		ADD_TRAIT(H, TRAIT_ALCHEMY_EXPERT, TRAIT_GENERIC)
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/pestra
+// 	if(H.patron?.type == /datum/patron/divine/eora)
+// 		ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
+// 		ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)
+// 		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
+// 		H.put_in_hands(new /obj/item/ritechalk(H))
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/eora
+// 	if(H.patron?.type == /datum/patron/divine/malum) // lol, lmao
+// 		H.adjust_skillrank_up_to(/datum/skill/craft/blacksmithing, SKILL_LEVEL_NOVICE, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/craft/armorsmithing, SKILL_LEVEL_NOVICE, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/craft/weaponsmithing, SKILL_LEVEL_NOVICE, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/craft/smelting, SKILL_LEVEL_NOVICE, TRUE)
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/malum
+// 	if(H.patron?.type == /datum/patron/divine/ravox)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/ravox
+// 	if(H.patron?.type == /datum/patron/divine/xylix)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/climbing, SKILL_LEVEL_EXPERT, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, SKILL_LEVEL_NOVICE, TRUE)
+// 		H.adjust_skillrank_up_to(/datum/skill/misc/music, SKILL_LEVEL_NOVICE, TRUE)
+// 		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC) //please, god, be funny
+// 		H.put_in_hands(new /obj/item/ritechalk(H))
+// 		neck = /obj/item/clothing/neck/roguetown/psicross/xylix
+// 	// -- End of section for god specific bonuses --
+// 	if(unarmed_choice == "I forgo weapons")
+// 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
+// 		C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR)//I want to enable astratan LE to become... FIRE PUNCH
+// 	else
+// 		var/datum/devotion/C = new /datum/devotion(H, H.patron)
+// 		C.grant_miracles(H, cleric_tier = CLERIC_T3, passive_gain = CLERIC_REGEN_MAJOR)
+// 
+// 	H.cmode_music = 'sound/music/combat_berserker.ogg'
+// 	to_chat(H, span_danger("You have abandoned your humanity to run wild under the moon. The call of nature fills your soul!"))
+// 	wretch_select_bounty(H)

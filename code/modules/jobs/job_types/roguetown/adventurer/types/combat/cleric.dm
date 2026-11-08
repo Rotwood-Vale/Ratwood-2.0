@@ -1,817 +1,818 @@
-/datum/advclass/cleric
-	townie_contract_gate_exempt = TRUE
-	name = "Monk"
-	tutorial = "You are a wandering acolyte, versed in both miracles and martial arts. You forego the hauberk that paladins wear in favor of humbling your foes through bloodless strikes. Your satchel hangs heavy, too, with ample provisions for the pilgrimage you're upon."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_ALL_KINDS
-	vampcompat = FALSE
-	outfit = /datum/outfit/job/roguetown/adventurer/cleric
-	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
-	class_select_category = CLASS_CAT_CLERIC
-	subclass_social_rank = SOCIAL_RANK_YEOMAN
-	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
-	subclass_stats = list(
-		STATKEY_WIL = 2,
-		STATKEY_CON = 1,
-	)
-	subclass_skills = list(
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,
-	)
-	// One of you is gonna look at me and act like I am stupid. It is a form of disguise
-	// Also because the alternative is not very clean codewise.
-	subclass_stashed_items = list(
-		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
-	)
-	extra_context = "This subclass can choose from multiple disciplines. \
-	The further your chosen discipline strays from unarmed combat, however, the greater your skills in fistfighting and wrestling will atrophy. \
-	Your vow determines your overall speed, strength and provided trait for dodge expert or critical resistance."
-
-/datum/outfit/job/roguetown/adventurer/cleric
-	allowed_patrons = ALL_PATRONS
-
-/datum/outfit/job/roguetown/adventurer/cleric/pre_equip(mob/living/carbon/human/H)
-	..()
-
-	// Add druidic skill for Dendor followers
-	if(istype(H.patron, /datum/patron/divine/dendor))
-		H.adjust_skillrank(/datum/skill/magic/druidic, 3, TRUE)
-		to_chat(H, span_notice("As a follower of Dendor, you have innate knowledge of druidic magic."))
-
-	to_chat(H, span_warning("You are a wandering acolyte, versed in both miracles and martial arts. \
-	You forego the hauberk that paladins wear in favor of humbling your foes through bloodless strikes. \
-	Your satchel hangs heavy, too, with ample provisions for the pilgrimage you're upon."))
-	head = /obj/item/clothing/head/roguetown/headband/monk
-	mask = /obj/item/clothing/head/roguetown/roguehood
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
-	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
-	cloak = /obj/item/clothing/suit/roguetown/shirt/robe //anyone who doesn't have cool patron drip sprites just gets this generic robe and hood.
-	pants = /obj/item/clothing/under/roguetown/tights/black
-	shoes = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded
-	backl = /obj/item/storage/backpack/rogue/satchel
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
-	belt = /obj/item/storage/belt/rogue/leather/rope
-	beltr = /obj/item/flashlight/flare/torch/lantern
-	backpack_contents = list(
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/reagent_containers/food/snacks/rogue/meat/salami = 1,
-		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
-		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1, //Plays into the classic stereotype of beer-loving monks and well-stocked pilgrims.
-		)
-
-	// Ascendant symbols go into the backpack, so you don't get insta-found out.
-	switch(H.patron?.type)
-		if(/datum/patron/inhumen/zizo)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
-		if(/datum/patron/inhumen/matthios)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
-		if(/datum/patron/inhumen/graggar)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
-
-	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
-
-	if(H.mind)
-		var/weapons = list("Penance - Unarmored","Discipline - Unarmed","Katar","Knuckledusters","Quarterstaff")
-		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
-		switch(weapon_choice)
-			if("Penance - Unarmored") // Skin armor, +1 con because this locks you out of holy monk vestments and the associated stamina boost
-				ADD_TRAIT(H, TRAIT_NOPAINSTUN, JOB_TRAIT)
-				H.change_stat(STATKEY_CON, 1)
-				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
-				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/monk //a leather armor
-				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/monk //a gambeson
-			if("Discipline - Unarmed")
-				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist//Just this and disciple, effectively.
-			if("Katar")
-				beltl = /obj/item/rogueweapon/katar/bronze
-				gloves = /obj/item/clothing/gloves/roguetown/bandages
-			if("Knuckledusters")
-				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-					r_hand = /obj/item/clothing/gloves/roguetown/knuckles/psydon/old
-				else
-					r_hand = /obj/item/clothing/gloves/roguetown/knuckles/bronze
-			if("Quarterstaff")
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
-				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
-				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
-				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
-				gloves = /obj/item/clothing/gloves/roguetown/bandages
-
-		//Wow, these sure are long!
-		if(weapon_choice == "Penance - Unarmored" || weapon_choice == "Discipline - Unarmed")
-			var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance", "Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
-			var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
-			switch(vow_choice)
-				if("Vow of Solace | +2SPD, Dodge Expert")
-					H.change_stat(STATKEY_SPD, 2)
-					ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-				if("Vow of the Feat | +2STR, Critical Resistance")
-					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-					H.change_stat(STATKEY_STR, 2)
-				if("Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
-					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-					ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
-					ADD_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC)
-					H.change_stat(STATKEY_STR, 2)
-					H.change_stat(STATKEY_SPD, 2)
-		else
-			var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance")
-			var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
-			switch(vow_choice)
-				if("Vow of Solace | +2SPD, Dodge Expert")
-					H.change_stat(STATKEY_SPD, 2)
-					ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-				if("Vow of the Feat | +2STR, Critical Resistance")
-					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-					H.change_stat(STATKEY_STR, 2)
-	H.cmode_music = 'sound/music/combat_holy.ogg'
-
-	switch(H.patron?.type)
-		if(/datum/patron/old_god)
-			cloak = /obj/item/clothing/cloak/psydontabard
-			mask = /obj/item/clothing/head/roguetown/roguehood/psydon
-			neck = /obj/item/clothing/neck/roguetown/psicross
-		if(/datum/patron/divine/astrata)
-			mask = /obj/item/clothing/head/roguetown/roguehood/astrata
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/astrata
-			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
-			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
-		if(/datum/patron/divine/noc)
-			mask =  /obj/item/clothing/head/roguetown/nochood
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/noc
-			neck = /obj/item/clothing/neck/roguetown/psicross/noc
-		if(/datum/patron/divine/abyssor)
-			mask = /obj/item/clothing/head/roguetown/roguehood/abyssor
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor
-			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
-		if(/datum/patron/divine/dendor)
-			mask = /obj/item/clothing/head/roguetown/dendormask
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
-			neck = /obj/item/clothing/neck/roguetown/psicross/dendor
-			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // see: druid.dm
-		if(/datum/patron/divine/necra)
-			mask = /obj/item/clothing/head/roguetown/necrahood
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/necra
-			neck = /obj/item/clothing/neck/roguetown/psicross/necra
-			H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
-		if (/datum/patron/divine/malum)
-			mask = /obj/item/clothing/head/roguetown/roguehood //placeholder
-			cloak = /obj/item/clothing/cloak/templar/malumite
-			neck = /obj/item/clothing/neck/roguetown/psicross/malum
-		if (/datum/patron/divine/eora)
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/eora
-			mask = /obj/item/clothing/head/roguetown/eoramask
-			neck = /obj/item/clothing/neck/roguetown/psicross/eora
-			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
-		if (/datum/patron/divine/xylix)
-			cloak = /obj/item/clothing/cloak/templar/xylix
-			mask = /obj/item/clothing/mask/rogue/xylixmask
-			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
-			H.cmode_music = 'sound/music/combat_jester.ogg'
-		if(/datum/patron/divine/pestra)
-			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
-		if(/datum/patron/divine/ravox)
-			neck = /obj/item/clothing/neck/roguetown/psicross/ravox
-		if(/datum/patron/inhumen/zizo)
-			H.cmode_music = 'sound/music/combat_heretic.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/matthios)
-			H.cmode_music = 'sound/music/combat_matthios.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/graggar)
-			H.cmode_music = 'sound/music/combat_graggar.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/baotha)
-			H.cmode_music = 'sound/music/combat_baotha.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-
-/datum/advclass/cleric/paladin
-	name = "Paladin"
-	tutorial = "You are a holy knight, clad in maille and armed with steel. \
-	Where others of the clergy may have spent their free time studying scriptures, you devoted yourself towards fighting Psydonia's evils \
-	- a longsword in one hand, and a clenched psycross in the other."
-	outfit = /datum/outfit/job/roguetown/adventurer/paladin
-	traits_applied = list(TRAIT_MEDIUMARMOR)
-	subclass_stats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 2,
-		STATKEY_WIL = 1,
-	)
-	subclass_skills = list(
-		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/whipsflails = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,
-	)
-	subclass_stashed_items = list(
-		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
-	)
-	extra_context = "This subclass can choose to take one of two holy items to take along: a potion of lifeblood and Novice skills in Medicine, \
-	or a silver longsword that gives Journeyman skills in Swordsmanship. Psydonics choose between two denominations instead."
-
-/datum/outfit/job/roguetown/adventurer/paladin/pre_equip(mob/living/carbon/human/H)
-	to_chat(H, span_warning("You are a holy knight, clad in maille and armed with steel. \
-	Where others of the clergy may have spent their free time studying scriptures, you devoted yourself towards fighting Psydonia's evils \
-	- a longsword in one hand, and a clenched psycross in the other."))
-	belt = /obj/item/storage/belt/rogue/leather
-	backl = /obj/item/storage/backpack/rogue/satchel
-	backr = /obj/item/rogueweapon/shield/iron
-	cloak = /obj/item/clothing/cloak/cape/crusader					// If your Patron doesn't have any custom helmet
-	head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket 	// or tabard, you're given a generic one by default.
-	armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
-	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic
-	neck = /obj/item/clothing/neck/roguetown/chaincoif
-	pants = /obj/item/clothing/under/roguetown/chainlegs
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
-	gloves = /obj/item/clothing/gloves/roguetown/chain
-	backpack_contents = list(
-		/obj/item/flashlight/flare/torch/metal = 1,
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		)
-	switch(H.patron?.type)
-		if(/datum/patron/inhumen/zizo)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
-		if(/datum/patron/inhumen/matthios)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
-		if(/datum/patron/inhumen/graggar)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
-	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
-	switch(H.patron?.type)
-		if(/datum/patron/old_god)
-			wrists = /obj/item/clothing/neck/roguetown/psicross
-			cloak = /obj/item/clothing/cloak/psydontabard
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute // Added for Sublass Prewiew.
-			if(H.mind)
-				var/helmets = list("Barbute", "Sallet", "Armet","Buckethelm","Volfskulle Bascinet")
-				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HIS LIGHT.") as anything in helmets
-				switch(helmet_choice)
-					if("Barbute")
-						head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute
-					if("Sallet")
-						head = /obj/item/clothing/head/roguetown/helmet/heavy/psysallet
-					if("Armet")
-						head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm
-					if("Buckethelm")
-						head = /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
-					if("Volfskulle Bascinet")
-						head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/psydonic
-		if(/datum/patron/divine/astrata)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
-			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
-			cloak = /obj/item/clothing/cloak/templar/astrata
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor // Added for Sublass Prewiew.
-			if(H.mind)
-				var/helmets = list("Barbute", "Visored Barbute","Buckethelm")
-				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HER LIGHT.") as anything in helmets
-				switch(helmet_choice)
-					if("Barbute")
-						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm
-					if("Visored Barbute")
-						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor
-					if("Buckethelm")
-						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratan
-		if(/datum/patron/divine/noc)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/noc
-			cloak = /obj/item/clothing/cloak/templar/noc
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/nochelm
-		if(/datum/patron/divine/abyssor)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/abyssor
-			cloak = /obj/item/clothing/cloak/abyssortabard
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/abyssorgreathelm
-		if(/datum/patron/divine/dendor)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/dendor
-			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // see: druid.dm
-			cloak = /obj/item/clothing/cloak/templar/dendor
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/dendorhelm
-		if(/datum/patron/divine/necra)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/necra
-			H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
-			cloak = /obj/item/clothing/cloak/templar/necra
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/necrahelm
-		if (/datum/patron/divine/malum)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/malum
-			cloak = /obj/item/clothing/cloak/templar/malum
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/malum
-		if (/datum/patron/divine/eora)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/eora
-			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
-			cloak = /obj/item/clothing/cloak/templar/eora
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/eoran
-		if (/datum/patron/divine/ravox)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/ravox
-			cloak = /obj/item/clothing/cloak/cleric/ravox
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold
-		if (/datum/patron/divine/xylix)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/xylix
-			H.cmode_music = 'sound/music/combat_jester.ogg'
-			cloak = /obj/item/clothing/cloak/templar/xylix
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/xylixhelm
-		if (/datum/patron/divine/pestra)
-			wrists = /obj/item/clothing/neck/roguetown/psicross/pestra
-			cloak = /obj/item/clothing/cloak/templar/pestra
-			head = /obj/item/clothing/head/roguetown/helmet/heavy/pestran
-		if(/datum/patron/inhumen/zizo)
-			H.cmode_music = 'sound/music/combat_heretic.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/matthios)
-			H.cmode_music = 'sound/music/combat_matthios.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/graggar)
-			H.cmode_music = 'sound/music/combat_graggar.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/baotha)
-			H.cmode_music = 'sound/music/combat_baotha.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-
-	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
-	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	if(H.mind)
-		if(!istype(H?.patron, /datum/patron/old_god)) //Psydonics are special.
-			C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1) //Capped to T1 miracles.
-			var/oaths = list("Cleric - Medicine & Mirth","Crusader - Silver Weapon")
-			var/oath_choice = input(H, "Choose your OATH.", "PROFESS YOUR BLESSINGS.") as anything in oaths
-			switch(oath_choice)
-				if("Cleric - Medicine & Mirth")
-					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
-					beltl = /obj/item/reagent_containers/glass/bottle/rogue/healthpot //No needles or cloth, but a basic potion of lifeblood - similar to the Sorcerer's manna potion. Take the 'Physician's Apprentice' virtue for that, uncapped skills, and more.
-				if("Crusader - Silver Weapon")
-					var/crusaderweapon = list("Silver Longsword", "Silver Mace", "Silver Flail", "Silver Greatflail, 13 STR MIN", "Silver Spear", "Silver Axe", "Silver Whip", "Silver Urumi")
-					var/crusaderweapon_choice = input(H, "Choose your silver weapon, Crusader!") as anything in crusaderweapon
-					switch(crusaderweapon_choice)
-						if("Silver Longsword")
-							H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-							l_hand = /obj/item/rogueweapon/sword/long/silver //Turns the Paladin into a pre-Exorcist version of the Monster Hunter. Differences are +1 CON / -1 INT, access to minor miracles, and more limb coverage.
-							beltl = /obj/item/rogueweapon/scabbard/sword //Functionally, inflicts silverbane at the cost of -5 damage. Likely won't be a balancing issue, unless we start seeing +5-10 Clerics overnight.
-						if("Silver Mace")
-							H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
-							beltl = /obj/item/rogueweapon/mace/steel/silver
-						if("Silver Flail")
-							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-							beltl = /obj/item/rogueweapon/flail/sflail/silver
-						if("Silver Greatflail, 13 STR MIN")
-							H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
-							l_hand = /obj/item/rogueweapon/flail/peasantwarflail/silver
-						if("Silver Spear")
-							H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
-							l_hand = /obj/item/rogueweapon/spear/silver
-						if("Silver Axe")
-							H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-							l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/silver
-						if("Silver Whip")
-							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-							l_hand = /obj/item/rogueweapon/whip/silver // Die, monster! You don't belong in this world!
-						if("Silver Urumi")
-							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-							l_hand = /obj/item/rogueweapon/whip/urumi/silver // Die, monster! You don't belong in this world!
-		else
-			var/denominations = list("ENDURING, AS HE DOES - FAITH", "VEYLED, LIKE HIS MARTYRS - ARMOUR")
-			var/denomination_choice = input("Choose your DENOMINATION.", "YOUR FAITH IN HIM.") as anything in denominations
-			switch(denomination_choice)
-				if("ENDURING, AS HE DOES - FAITH")
-					C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
-					H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
-					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_NOVICE, TRUE)
-					armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate
-				if("VEYLED, LIKE HIS MARTYRS - ARMOUR")
-					C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)
-					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
-					ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC) //Basically a bit more flavourful Knight Errant, so may as very well give HEAVYARMOR
-					armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate
-	var/weapons = list("Longsword","Mace","Flail","Whip","Urumi","Spear","Axe")
-	var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP YOUR GOD'S ARMS.") as anything in weapons
-	switch(weapon_choice)
-		if("Longsword")
-			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-				beltr = /obj/item/rogueweapon/sword/long/oldpsysword
-			else
-				beltr = /obj/item/rogueweapon/sword/long
-			r_hand = /obj/item/rogueweapon/scabbard/sword
-		if("Mace")
-			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-				beltr = /obj/item/rogueweapon/mace/cudgel/psy/old
-			else
-				beltr = /obj/item/rogueweapon/mace
-		if("Flail")
-			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			beltr = /obj/item/rogueweapon/flail
-		if("Whip")
-			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			beltr = /obj/item/rogueweapon/whip
-		if("Urumi")
-			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-				beltr = /obj/item/rogueweapon/whip/urumi/silver/psydonic/old
-			else
-				beltr = /obj/item/rogueweapon/whip/urumi
-		if("Spear")
-			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
-				r_hand = /obj/item/rogueweapon/spear/psyspear/old
-			else
-				r_hand = /obj/item/rogueweapon/spear
-			backr = /obj/item/rogueweapon/scabbard/gwstrap
-			beltr = /obj/item/rogueweapon/shield/buckler
-		if("Axe")
-			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
-			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
-	H.set_blindness(0)
-
-/datum/advclass/cleric/cantor
-	name = "Cantor"
-	tutorial = "You were a bard once - but you've found a new calling. Your eyes have been opened to the divine, now you wander from city to city singing songs and telling tales of your patron's greatness."
-	outfit = /datum/outfit/job/roguetown/adventurer/cantor
-	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_EMPATH)
-	subclass_stats = list(
-		STATKEY_STR = 1,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 2,
-	)
-	subclass_skills = list(
-		/datum/skill/misc/music = SKILL_LEVEL_EXPERT,
-		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-	)
-	subclass_stashed_items = list(
-		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
-	)
-	extra_context = "This subclass has higher-tier miracles and access to bardic inspiration."
-
-/datum/outfit/job/roguetown/adventurer/cantor/pre_equip(mob/living/carbon/human/H)
-	to_chat(H, span_warning("You were a bard once - but you've found a new calling. Your eyes have been opened to the divine, now you wander from city to city singing songs and telling tales of your patron's greatness."))
-	H.mind?.current?.faction += "[H.name]_faction"
-	head = /obj/item/clothing/head/roguetown/bardhat
-	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
-	backl = /obj/item/storage/backpack/rogue/satchel
-	cloak = /obj/item/clothing/cloak/cape/crusader	//You are given a generic cloak by default if your Patron doesn't have one for you.
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
-	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
-	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
-	pants = /obj/item/clothing/under/roguetown/trou/leather
-	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
-	belt = /obj/item/storage/belt/rogue/leather/knifebelt/iron
-	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/special
-	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
-	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)//Capped to T2 miracles. Devotion at T2.
-	var/datum/inspiration/I = new /datum/inspiration(H)
-	I.grant_inspiration(H, bard_tier = BARD_T2)
-	backpack_contents = list(
-		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/rogueweapon/scabbard/sheath = 1
-		)
-	switch(H.patron?.type)
-		if(/datum/patron/inhumen/zizo)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
-		if(/datum/patron/inhumen/matthios)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
-		if(/datum/patron/inhumen/graggar)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
-		if(/datum/patron/inhumen/baotha)
-			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
-	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
-	switch(H.patron?.type)
-		if(/datum/patron/old_god)
-			neck = /obj/item/clothing/neck/roguetown/psicross
-			cloak = /obj/item/clothing/cloak/templar/psydon
-		if(/datum/patron/divine/astrata)
-			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
-			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
-			cloak = /obj/item/clothing/cloak/templar/astrata
-		if(/datum/patron/divine/noc)
-			neck = /obj/item/clothing/neck/roguetown/psicross/noc
-			cloak = /obj/item/clothing/cloak/templar/noc
-		if(/datum/patron/divine/abyssor)
-			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
-			cloak = /obj/item/clothing/cloak/templar/abyssor
-		if(/datum/patron/divine/dendor)
-			neck = /obj/item/clothing/neck/roguetown/psicross/dendor
-			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // see: druid.dm
-			cloak = /obj/item/clothing/cloak/templar/dendor
-		if(/datum/patron/divine/necra)
-			neck = /obj/item/clothing/neck/roguetown/psicross/necra
-			H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
-			cloak = /obj/item/clothing/cloak/templar/necra
-		if (/datum/patron/divine/malum)
-			neck = /obj/item/clothing/neck/roguetown/psicross/malum
-			cloak = /obj/item/clothing/cloak/templar/malum
-		if (/datum/patron/divine/eora)
-			neck = /obj/item/clothing/neck/roguetown/psicross/eora
-			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
-			cloak = /obj/item/clothing/cloak/templar/eora
-		if (/datum/patron/divine/ravox)
-			neck = /obj/item/clothing/neck/roguetown/psicross/ravox
-			cloak = /obj/item/clothing/cloak/templar/ravox
-		if (/datum/patron/divine/xylix)
-			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
-			H.cmode_music = 'sound/music/combat_jester.ogg'
-			cloak = /obj/item/clothing/cloak/templar/xylix
-		if (/datum/patron/divine/pestra)
-			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
-			cloak = /obj/item/clothing/cloak/templar/pestra
-		if(/datum/patron/inhumen/zizo)
-			H.cmode_music = 'sound/music/combat_heretic.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
-			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
-		if(/datum/patron/inhumen/matthios)
-			H.cmode_music = 'sound/music/combat_matthios.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/graggar)
-			H.cmode_music = 'sound/music/combat_graggar.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/baotha)
-			H.cmode_music = 'sound/music/combat_baotha.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-	if(H.mind)
-		var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
-		var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
-		H.set_blindness(0)
-		switch(weapon_choice)
-			if("Accordion")
-				backr = /obj/item/rogue/instrument/accord
-			if("Bagpipe")
-				backr = /obj/item/rogue/instrument/bagpipe
-			if("Banjo")
-				backr = /obj/item/rogue/instrument/banjo
-			if("Drum")
-				backr = /obj/item/rogue/instrument/drum
-			if("Flute")
-				backr = /obj/item/rogue/instrument/flute
-			if("Guitar")
-				backr = /obj/item/rogue/instrument/guitar
-			if("Harmonica")
-				backr = /obj/item/rogue/instrument/harmonica
-			if("Harp")
-				backr = /obj/item/rogue/instrument/harp
-			if("Hurdy-Gurdy")
-				backr = /obj/item/rogue/instrument/hurdygurdy
-			if("Jaw Harp")
-				backr = /obj/item/rogue/instrument/jawharp
-			if("Lute")
-				backr = /obj/item/rogue/instrument/lute
-			if("Psyaltery")
-				backr = /obj/item/rogue/instrument/psyaltery
-			if("Shamisen")
-				backr = /obj/item/rogue/instrument/shamisen
-			if("Trumpet")
-				backr = /obj/item/rogue/instrument/trumpet
-			if("Viola")
-				backr = /obj/item/rogue/instrument/viola
-			if("Vocal Talisman")
-				backr = /obj/item/rogue/instrument/vocals
-
-/datum/advclass/cleric/missionary
-	name = "Missionary"
-	tutorial = "You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith. Preachers focus on homesteading while Shepards preach through example and protecting their would-be flock."
-	outfit = /datum/outfit/job/roguetown/adventurer/missionary
-	traits_applied = list(TRAIT_EMPATH)
-	subclass_stats = list(
-		STATKEY_INT = 2,
-		STATKEY_PER = 2,
-		STATKEY_WIL = 1,
-		STATKEY_SPD = 1,
-	)
-	subclass_skills = list(
-		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,//just enough to reattach limbs, same as acolytes
-		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/labor/lumberjacking = SKILL_LEVEL_NOVICE,
-	)
-	subclass_stashed_items = list(
-		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
-	)
-	extra_context = "This subclass is given access to the strongest miracles in Ferentian lands, at the cost of suffering elsewhere."
-
-/datum/outfit/job/roguetown/adventurer/missionary/pre_equip(mob/living/carbon/human/H)
-	to_chat(H, span_warning("You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith."))
-	if(H.mind?.current)
-		H.mind.current.faction += "[H.name]_faction"
-	// Grant bardic inspiration if Xylix is patron
-	if(istype(H.patron, /datum/patron/divine/xylix))
-		var/datum/inspiration/I = new /datum/inspiration(H)
-		I.grant_inspiration(H, bard_tier = BARD_T2)
-	backl = /obj/item/storage/backpack/rogue/satchel
-	cloak = /obj/item/clothing/suit/roguetown/shirt/robe //Anyone who doesn't have cool patron drip sprites just gets generic robes
-	head = /obj/item/clothing/head/roguetown/roguehood
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
-	pants = /obj/item/clothing/under/roguetown/trou/leather
-	shoes = /obj/item/clothing/shoes/roguetown/boots
-	belt = /obj/item/storage/belt/rogue/leather
-	beltr = /obj/item/flashlight/flare/torch/lantern
-	backpack_contents = list(
-		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
-		/obj/item/flashlight/flare/torch = 1,
-		)
-	var/is_non_pantheon_missionary = istype(H.patron, /datum/patron/inhumen/zizo) || istype(H.patron, /datum/patron/inhumen/matthios) || istype(H.patron, /datum/patron/inhumen/baotha) || istype(H.patron, /datum/patron/inhumen/graggar)
-	if(!is_non_pantheon_missionary)
-		backpack_contents[/obj/item/ritechalk] = 1
-		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
-	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
-	switch(H.patron?.type)
-		if(/datum/patron/old_god)
-			neck = /obj/item/clothing/neck/roguetown/psicross
-			cloak = /obj/item/clothing/cloak/psydontabard
-			head = /obj/item/clothing/head/roguetown/roguehood/psydon
-		if(/datum/patron/divine/astrata)
-			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
-			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
-			head = /obj/item/clothing/head/roguetown/roguehood/astrata
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/astrata
-		if(/datum/patron/divine/noc)
-			neck = /obj/item/clothing/neck/roguetown/psicross/noc
-			head =  /obj/item/clothing/head/roguetown/nochood
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/noc
-		if(/datum/patron/divine/abyssor)
-			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
-			head = /obj/item/clothing/head/roguetown/roguehood/abyssor
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor
-		if(/datum/patron/divine/dendor)
-			neck = /obj/item/clothing/neck/roguetown/psicross/dendor
-			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // see: druid.dm
-			head = /obj/item/clothing/head/roguetown/dendormask
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
-			H.adjust_skillrank(/datum/skill/labor/farming, SKILL_LEVEL_APPRENTICE, TRUE)
-			H.adjust_skillrank(/datum/skill/misc/hunting, SKILL_LEVEL_NOVICE, TRUE)
-			ADD_TRAIT(H, TRAIT_EXPERT_HUNTER, TRAIT_GENERIC)
-		if(/datum/patron/divine/necra)
-			neck = /obj/item/clothing/neck/roguetown/psicross/necra
-			H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
-			head = /obj/item/clothing/head/roguetown/necrahood
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/necra
-		if (/datum/patron/divine/malum)
-			neck = /obj/item/clothing/neck/roguetown/psicross/malum
-			cloak = /obj/item/clothing/cloak/templar/malumite
-		if (/datum/patron/divine/eora)
-			neck = /obj/item/clothing/neck/roguetown/psicross/eora
-			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
-			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/eora
-			head = /obj/item/clothing/head/roguetown/eoramask
-			beltl = /obj/item/rogueweapon/huntingknife/scissors
-			backpack_contents[/obj/item/reagent_containers/eoran_seed] = 1
-			ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
-		if (/datum/patron/divine/xylix)
-			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
-			H.cmode_music = 'sound/music/combat_jester.ogg'
-			cloak = /obj/item/clothing/cloak/templar/xylix
-			mask = /obj/item/clothing/mask/rogue/xylixmask
-			if(HAS_TRAIT(H, TRAIT_PERMAMUTE))
-				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall)
-				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair)
-		if(/datum/patron/divine/pestra)
-			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
-		if(/datum/patron/divine/ravox)
-			neck = /obj/item/clothing/neck/roguetown/psicross/ravox
-		if(/datum/patron/inhumen/zizo)
-			H.cmode_music = 'sound/music/combat_heretic.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
-			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
-		if(/datum/patron/inhumen/matthios)
-			H.cmode_music = 'sound/music/combat_matthios.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/graggar)
-			H.cmode_music = 'sound/music/combat_graggar.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/baotha)
-			H.cmode_music = 'sound/music/combat_baotha.ogg'
-			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
-		
-	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)//Only T4 NOT to start maxed, with a devotion cap.
-	C.update_devotion(C.max_devotion / 4 - 50, C.max_devotion / 4 - 50, silent = TRUE) // Start at ~25% of devotion cap
-	if(H.mind)
-		var/weapons = list("Path of the Preacher", "Path of the Shepard")
-		var/weapon_choice = input(H, "Choose your path.", "CHOOSE YOUR DISCIPLINE.") as anything in weapons
-		switch(weapon_choice)
-			if("Path of the Preacher")//Discount homesteader. No trait so you can't level these skills up, nor do you have starting tools.
-				r_hand = /obj/item/rogueweapon/woodstaff
-				H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 3, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 3, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 1, TRUE)//just so you can make pretty floors easier
-				H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 3, TRUE)
-			if("Path of the Shepard")//The "combat" variant. The core stat spread should keep this class from ever overshadowing the others, but it's worth keeping an eye out anyway.
-				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 3, TRUE)//Good luck fighting like a monk without monk stats or Dodge Expert.
-
-	if(istype(H.patron, /datum/patron/divine))
-		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
-	if(istype(H.patron, /datum/patron/inhumen))
-		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
-
-/datum/advclass/cleric/stigmata
-	name = "Stigmata"
-	tutorial = "PSYDON weeps. You are a devout cleric of the Allfather whom takes the suffering of others upon themselves. You have eschewn violence. You will suffer. You will endure."
-	outfit = /datum/outfit/job/roguetown/adventurer/stigmata
-	allowed_races = RACES_NO_CONSTRUCT
-
-	traits_applied = list(
-		TRAIT_PACIFISM,
-		TRAIT_EMPATH,
-		TRAIT_CRITICAL_RESISTANCE,
-		TRAIT_BLOOD_RESISTANCE,
-		TRAIT_STEELHEARTED,
-		TRAIT_SELF_AWARE,
-		TRAIT_LUX_FREAK,
-		TRAIT_RITUALIST
-	)
-	subclass_stats = list(
-		STATKEY_CON = 5,
-		STATKEY_WIL = 3,
-		STATKEY_SPD = 1,
-		STATKEY_STR = -2,
-	)
-	subclass_skills = list(
-		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
-		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/labor/fishing = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
-		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
-	)
-	subclass_stashed_items = list(
-		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
-	)
-	extra_context = "This is a psydonite only subclass, it will force you to be one if it is not set. You will be a pacifist and are able to draw upon a weaker version of the abilities known by a Psydonic Absolver."
-
-/datum/outfit/job/roguetown/adventurer/stigmata
-	allowed_patrons = list(/datum/patron/old_god)
-
-/datum/outfit/job/roguetown/adventurer/stigmata/pre_equip(mob/living/carbon/human/H, visualsOnly)
-	. = ..()
-	H.adjust_blindness(-3)
-	pants = /obj/item/clothing/under/roguetown/tights/black
-	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/black
-	neck = /obj/item/clothing/neck/roguetown/psicross/silver
-	shoes = /obj/item/clothing/shoes/roguetown/boots
-	backl = /obj/item/storage/backpack/rogue/satchel
-	belt = /obj/item/storage/belt/rogue/leather
-	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
-	backpack_contents = list(
-		/obj/item/flashlight/flare/torch = 1,
-		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
-		/obj/item/storage/belt/rogue/pouch/medicine = 1,
-		/obj/item/ritechalk = 1
-		)
-
-	if (H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonlux_tamper) // absolver's bleed transfer
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonamend) // nerfed no-rez version of absolver's absolve
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
-
-	var/datum/devotion/C = new /datum/devotion(H, H.patron)
-	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = (CLERIC_REGEN_ABSOLVER / 2), start_maxed = TRUE)
+// [DISABLED: zombie project] Everything below is commented out on purpose. Do not delete. See RULES_AND_LESSONS.md
+// /datum/advclass/cleric
+// 	townie_contract_gate_exempt = TRUE
+// 	name = "Monk"
+// 	tutorial = "You are a wandering acolyte, versed in both miracles and martial arts. You forego the hauberk that paladins wear in favor of humbling your foes through bloodless strikes. Your satchel hangs heavy, too, with ample provisions for the pilgrimage you're upon."
+// 	allowed_sexes = list(MALE, FEMALE)
+// 	allowed_races = RACES_ALL_KINDS
+// 	vampcompat = FALSE
+// 	outfit = /datum/outfit/job/roguetown/adventurer/cleric
+// 	category_tags = list(CTAG_ADVENTURER, CTAG_COURTAGENT)
+// 	class_select_category = CLASS_CAT_CLERIC
+// 	subclass_social_rank = SOCIAL_RANK_YEOMAN
+// 	traits_applied = list(TRAIT_CIVILIZEDBARBARIAN, TRAIT_OUTLANDER)
+// 	subclass_stats = list(
+// 		STATKEY_WIL = 2,
+// 		STATKEY_CON = 1,
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,
+// 	)
+// 	// One of you is gonna look at me and act like I am stupid. It is a form of disguise
+// 	// Also because the alternative is not very clean codewise.
+// 	subclass_stashed_items = list(
+// 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
+// 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
+// 	)
+// 	extra_context = "This subclass can choose from multiple disciplines. \
+// 	The further your chosen discipline strays from unarmed combat, however, the greater your skills in fistfighting and wrestling will atrophy. \
+// 	Your vow determines your overall speed, strength and provided trait for dodge expert or critical resistance."
+// 
+// /datum/outfit/job/roguetown/adventurer/cleric
+// 	allowed_patrons = ALL_PATRONS
+// 
+// /datum/outfit/job/roguetown/adventurer/cleric/pre_equip(mob/living/carbon/human/H)
+// 	..()
+// 
+// 	// Add druidic skill for Dendor followers
+// 	if(istype(H.patron, /datum/patron/divine/dendor))
+// 		H.adjust_skillrank(/datum/skill/magic/druidic, 3, TRUE)
+// 		to_chat(H, span_notice("As a follower of Dendor, you have innate knowledge of druidic magic."))
+// 
+// 	to_chat(H, span_warning("You are a wandering acolyte, versed in both miracles and martial arts. \
+// 	You forego the hauberk that paladins wear in favor of humbling your foes through bloodless strikes. \
+// 	Your satchel hangs heavy, too, with ample provisions for the pilgrimage you're upon."))
+// 	head = /obj/item/clothing/head/roguetown/headband/monk
+// 	mask = /obj/item/clothing/head/roguetown/roguehood
+// 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt
+// 	armor = /obj/item/clothing/suit/roguetown/shirt/robe/monk
+// 	cloak = /obj/item/clothing/suit/roguetown/shirt/robe //anyone who doesn't have cool patron drip sprites just gets this generic robe and hood.
+// 	pants = /obj/item/clothing/under/roguetown/tights/black
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots/footwraps/padded
+// 	backl = /obj/item/storage/backpack/rogue/satchel
+// 	wrists = /obj/item/clothing/wrists/roguetown/bracers/cloth/monk
+// 	belt = /obj/item/storage/belt/rogue/leather/rope
+// 	beltr = /obj/item/flashlight/flare/torch/lantern
+// 	backpack_contents = list(
+// 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+// 		/obj/item/reagent_containers/food/snacks/rogue/meat/salami = 1,
+// 		/obj/item/reagent_containers/food/snacks/rogue/bread = 1,
+// 		/obj/item/reagent_containers/glass/bottle/rogue/beer = 1, //Plays into the classic stereotype of beer-loving monks and well-stocked pilgrims.
+// 		)
+// 
+// 	// Ascendant symbols go into the backpack, so you don't get insta-found out.
+// 	switch(H.patron?.type)
+// 		if(/datum/patron/inhumen/zizo)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+// 		if(/datum/patron/inhumen/matthios)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+// 		if(/datum/patron/inhumen/graggar)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+// 		if(/datum/patron/inhumen/baotha)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
+// 
+// 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+// 	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
+// 
+// 	if(H.mind)
+// 		var/weapons = list("Penance - Unarmored","Discipline - Unarmed","Katar","Knuckledusters","Quarterstaff")
+// 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
+// 		switch(weapon_choice)
+// 			if("Penance - Unarmored") // Skin armor, +1 con because this locks you out of holy monk vestments and the associated stamina boost
+// 				ADD_TRAIT(H, TRAIT_NOPAINSTUN, JOB_TRAIT)
+// 				H.change_stat(STATKEY_CON, 1)
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
+// 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
+// 				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/monk //a leather armor
+// 				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/monk //a gambeson
+// 			if("Discipline - Unarmed")
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
+// 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist//Just this and disciple, effectively.
+// 			if("Katar")
+// 				beltl = /obj/item/rogueweapon/katar/bronze
+// 				gloves = /obj/item/clothing/gloves/roguetown/bandages
+// 			if("Knuckledusters")
+// 				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+// 					r_hand = /obj/item/clothing/gloves/roguetown/knuckles/psydon/old
+// 				else
+// 					r_hand = /obj/item/clothing/gloves/roguetown/knuckles/bronze
+// 			if("Quarterstaff")
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
+// 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
+// 				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
+// 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+// 				gloves = /obj/item/clothing/gloves/roguetown/bandages
+// 
+// 		//Wow, these sure are long!
+// 		if(weapon_choice == "Penance - Unarmored" || weapon_choice == "Discipline - Unarmed")
+// 			var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance", "Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
+// 			var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
+// 			switch(vow_choice)
+// 				if("Vow of Solace | +2SPD, Dodge Expert")
+// 					H.change_stat(STATKEY_SPD, 2)
+// 					ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+// 				if("Vow of the Feat | +2STR, Critical Resistance")
+// 					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+// 					H.change_stat(STATKEY_STR, 2)
+// 				if("Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
+// 					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+// 					ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
+// 					ADD_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC)
+// 					H.change_stat(STATKEY_STR, 2)
+// 					H.change_stat(STATKEY_SPD, 2)
+// 		else
+// 			var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance")
+// 			var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
+// 			switch(vow_choice)
+// 				if("Vow of Solace | +2SPD, Dodge Expert")
+// 					H.change_stat(STATKEY_SPD, 2)
+// 					ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+// 				if("Vow of the Feat | +2STR, Critical Resistance")
+// 					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+// 					H.change_stat(STATKEY_STR, 2)
+// 	H.cmode_music = 'sound/music/combat_holy.ogg'
+// 
+// 	switch(H.patron?.type)
+// 		if(/datum/patron/old_god)
+// 			cloak = /obj/item/clothing/cloak/psydontabard
+// 			mask = /obj/item/clothing/head/roguetown/roguehood/psydon
+// 			neck = /obj/item/clothing/neck/roguetown/psicross
+// 		if(/datum/patron/divine/astrata)
+// 			mask = /obj/item/clothing/head/roguetown/roguehood/astrata
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/astrata
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
+// 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
+// 		if(/datum/patron/divine/noc)
+// 			mask =  /obj/item/clothing/head/roguetown/nochood
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/noc
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/noc
+// 		if(/datum/patron/divine/abyssor)
+// 			mask = /obj/item/clothing/head/roguetown/roguehood/abyssor
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
+// 		if(/datum/patron/divine/dendor)
+// 			mask = /obj/item/clothing/head/roguetown/dendormask
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/dendor
+// 			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // see: druid.dm
+// 		if(/datum/patron/divine/necra)
+// 			mask = /obj/item/clothing/head/roguetown/necrahood
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/necra
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/necra
+// 			H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
+// 		if (/datum/patron/divine/malum)
+// 			mask = /obj/item/clothing/head/roguetown/roguehood //placeholder
+// 			cloak = /obj/item/clothing/cloak/templar/malumite
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/malum
+// 		if (/datum/patron/divine/eora)
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/eora
+// 			mask = /obj/item/clothing/head/roguetown/eoramask
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/eora
+// 			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
+// 		if (/datum/patron/divine/xylix)
+// 			cloak = /obj/item/clothing/cloak/templar/xylix
+// 			mask = /obj/item/clothing/mask/rogue/xylixmask
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
+// 			H.cmode_music = 'sound/music/combat_jester.ogg'
+// 		if(/datum/patron/divine/pestra)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
+// 		if(/datum/patron/divine/ravox)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/ravox
+// 		if(/datum/patron/inhumen/zizo)
+// 			H.cmode_music = 'sound/music/combat_heretic.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 		if(/datum/patron/inhumen/matthios)
+// 			H.cmode_music = 'sound/music/combat_matthios.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 		if(/datum/patron/inhumen/graggar)
+// 			H.cmode_music = 'sound/music/combat_graggar.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 		if(/datum/patron/inhumen/baotha)
+// 			H.cmode_music = 'sound/music/combat_baotha.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 
+// /datum/advclass/cleric/paladin
+// 	name = "Paladin"
+// 	tutorial = "You are a holy knight, clad in maille and armed with steel. \
+// 	Where others of the clergy may have spent their free time studying scriptures, you devoted yourself towards fighting Psydonia's evils \
+// 	- a longsword in one hand, and a clenched psycross in the other."
+// 	outfit = /datum/outfit/job/roguetown/adventurer/paladin
+// 	traits_applied = list(TRAIT_MEDIUMARMOR)
+// 	subclass_stats = list(
+// 		STATKEY_STR = 2,
+// 		STATKEY_CON = 2,
+// 		STATKEY_WIL = 1,
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/combat/shields = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/maces = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/swords = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/whipsflails = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/axes = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/reading = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,
+// 	)
+// 	subclass_stashed_items = list(
+// 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
+// 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+// 	)
+// 	extra_context = "This subclass can choose to take one of two holy items to take along: a potion of lifeblood and Novice skills in Medicine, \
+// 	or a silver longsword that gives Journeyman skills in Swordsmanship. Psydonics choose between two denominations instead."
+// 
+// /datum/outfit/job/roguetown/adventurer/paladin/pre_equip(mob/living/carbon/human/H)
+// 	to_chat(H, span_warning("You are a holy knight, clad in maille and armed with steel. \
+// 	Where others of the clergy may have spent their free time studying scriptures, you devoted yourself towards fighting Psydonia's evils \
+// 	- a longsword in one hand, and a clenched psycross in the other."))
+// 	belt = /obj/item/storage/belt/rogue/leather
+// 	backl = /obj/item/storage/backpack/rogue/satchel
+// 	backr = /obj/item/rogueweapon/shield/iron
+// 	cloak = /obj/item/clothing/cloak/cape/crusader					// If your Patron doesn't have any custom helmet
+// 	head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket 	// or tabard, you're given a generic one by default.
+// 	armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk
+// 	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic
+// 	neck = /obj/item/clothing/neck/roguetown/chaincoif
+// 	pants = /obj/item/clothing/under/roguetown/chainlegs
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
+// 	gloves = /obj/item/clothing/gloves/roguetown/chain
+// 	backpack_contents = list(
+// 		/obj/item/flashlight/flare/torch/metal = 1,
+// 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+// 		)
+// 	switch(H.patron?.type)
+// 		if(/datum/patron/inhumen/zizo)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+// 		if(/datum/patron/inhumen/matthios)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+// 		if(/datum/patron/inhumen/graggar)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+// 		if(/datum/patron/inhumen/baotha)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
+// 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
+// 	switch(H.patron?.type)
+// 		if(/datum/patron/old_god)
+// 			wrists = /obj/item/clothing/neck/roguetown/psicross
+// 			cloak = /obj/item/clothing/cloak/psydontabard
+// 			head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute // Added for Sublass Prewiew.
+// 			if(H.mind)
+// 				var/helmets = list("Barbute", "Sallet", "Armet","Buckethelm","Volfskulle Bascinet")
+// 				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HIS LIGHT.") as anything in helmets
+// 				switch(helmet_choice)
+// 					if("Barbute")
+// 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonbarbute
+// 					if("Sallet")
+// 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psysallet
+// 					if("Armet")
+// 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psydonhelm
+// 					if("Buckethelm")
+// 						head = /obj/item/clothing/head/roguetown/helmet/heavy/psybucket
+// 					if("Volfskulle Bascinet")
+// 						head = /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/psydonic
+// 		if(/datum/patron/divine/astrata)
+// 			wrists = /obj/item/clothing/neck/roguetown/psicross/astrata
+// 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
+// 			cloak = /obj/item/clothing/cloak/templar/astrata
+// 			head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor // Added for Sublass Prewiew.
+// 			if(H.mind)
+// 				var/helmets = list("Barbute", "Visored Barbute","Buckethelm")
+// 				var/helmet_choice = input(H, "Choose your HELMET.", "WALK IN HER LIGHT.") as anything in helmets
+// 				switch(helmet_choice)
+// 					if("Barbute")
+// 						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm
+// 					if("Visored Barbute")
+// 						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratahelm/visor
+// 					if("Buckethelm")
+// 						head = /obj/item/clothing/head/roguetown/helmet/heavy/astratan
+// 		if(/datum/patron/divine/noc)
+// 			wrists = /obj/item/clothing/neck/roguetown/psicross/noc
+// 			cloak = /obj/item/clothing/cloak/templar/noc
+// 			head = /obj/item/clothing/head/roguetown/helmet/heavy/nochelm
+// 		if(/datum/patron/divine/abyssor)
+// 			wrists = /obj/item/clothing/neck/roguetown/psicross/abyssor
+// 			cloak = /obj/item/clothing/cloak/abyssortabard
+// 			head = /obj/item/clothing/head/roguetown/helmet/heavy/abyssorgreathelm
+// 		if(/datum/patron/divine/dendor)
+// 			wrists = /obj/item/clothing/neck/roguetown/psicross/dendor
+// 			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // see: druid.dm
+// 			cloak = /obj/item/clothing/cloak/templar/dendor
+// 			head = /obj/item/clothing/head/roguetown/helmet/heavy/dendorhelm
+// 		if(/datum/patron/divine/necra)
+// 			wrists = /obj/item/clothing/neck/roguetown/psicross/necra
+// 			H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
+// 			cloak = /obj/item/clothing/cloak/templar/necra
+// 			head = /obj/item/clothing/head/roguetown/helmet/heavy/necrahelm
+// 		if (/datum/patron/divine/malum)
+// 			wrists = /obj/item/clothing/neck/roguetown/psicross/malum
+// 			cloak = /obj/item/clothing/cloak/templar/malum
+// 			head = /obj/item/clothing/head/roguetown/helmet/heavy/malum
+// 		if (/datum/patron/divine/eora)
+// 			wrists = /obj/item/clothing/neck/roguetown/psicross/eora
+// 			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
+// 			cloak = /obj/item/clothing/cloak/templar/eora
+// 			head = /obj/item/clothing/head/roguetown/helmet/heavy/eoran
+// 		if (/datum/patron/divine/ravox)
+// 			wrists = /obj/item/clothing/neck/roguetown/psicross/ravox
+// 			cloak = /obj/item/clothing/cloak/cleric/ravox
+// 			head = /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold
+// 		if (/datum/patron/divine/xylix)
+// 			wrists = /obj/item/clothing/neck/roguetown/psicross/xylix
+// 			H.cmode_music = 'sound/music/combat_jester.ogg'
+// 			cloak = /obj/item/clothing/cloak/templar/xylix
+// 			head = /obj/item/clothing/head/roguetown/helmet/heavy/xylixhelm
+// 		if (/datum/patron/divine/pestra)
+// 			wrists = /obj/item/clothing/neck/roguetown/psicross/pestra
+// 			cloak = /obj/item/clothing/cloak/templar/pestra
+// 			head = /obj/item/clothing/head/roguetown/helmet/heavy/pestran
+// 		if(/datum/patron/inhumen/zizo)
+// 			H.cmode_music = 'sound/music/combat_heretic.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 		if(/datum/patron/inhumen/matthios)
+// 			H.cmode_music = 'sound/music/combat_matthios.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 		if(/datum/patron/inhumen/graggar)
+// 			H.cmode_music = 'sound/music/combat_graggar.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 		if(/datum/patron/inhumen/baotha)
+// 			H.cmode_music = 'sound/music/combat_baotha.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 
+// 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
+// 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+// 	if(H.mind)
+// 		if(!istype(H?.patron, /datum/patron/old_god)) //Psydonics are special.
+// 			C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1) //Capped to T1 miracles.
+// 			var/oaths = list("Cleric - Medicine & Mirth","Crusader - Silver Weapon")
+// 			var/oath_choice = input(H, "Choose your OATH.", "PROFESS YOUR BLESSINGS.") as anything in oaths
+// 			switch(oath_choice)
+// 				if("Cleric - Medicine & Mirth")
+// 					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
+// 					beltl = /obj/item/reagent_containers/glass/bottle/rogue/healthpot //No needles or cloth, but a basic potion of lifeblood - similar to the Sorcerer's manna potion. Take the 'Physician's Apprentice' virtue for that, uncapped skills, and more.
+// 				if("Crusader - Silver Weapon")
+// 					var/crusaderweapon = list("Silver Longsword", "Silver Mace", "Silver Flail", "Silver Greatflail, 13 STR MIN", "Silver Spear", "Silver Axe", "Silver Whip", "Silver Urumi")
+// 					var/crusaderweapon_choice = input(H, "Choose your silver weapon, Crusader!") as anything in crusaderweapon
+// 					switch(crusaderweapon_choice)
+// 						if("Silver Longsword")
+// 							H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 							l_hand = /obj/item/rogueweapon/sword/long/silver //Turns the Paladin into a pre-Exorcist version of the Monster Hunter. Differences are +1 CON / -1 INT, access to minor miracles, and more limb coverage.
+// 							beltl = /obj/item/rogueweapon/scabbard/sword //Functionally, inflicts silverbane at the cost of -5 damage. Likely won't be a balancing issue, unless we start seeing +5-10 Clerics overnight.
+// 						if("Silver Mace")
+// 							H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 							beltl = /obj/item/rogueweapon/mace/steel/silver
+// 						if("Silver Flail")
+// 							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 							beltl = /obj/item/rogueweapon/flail/sflail/silver
+// 						if("Silver Greatflail, 13 STR MIN")
+// 							H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 							l_hand = /obj/item/rogueweapon/flail/peasantwarflail/silver
+// 						if("Silver Spear")
+// 							H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 							l_hand = /obj/item/rogueweapon/spear/silver
+// 						if("Silver Axe")
+// 							H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 							l_hand = /obj/item/rogueweapon/stoneaxe/woodcut/silver
+// 						if("Silver Whip")
+// 							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 							l_hand = /obj/item/rogueweapon/whip/silver // Die, monster! You don't belong in this world!
+// 						if("Silver Urumi")
+// 							H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 							l_hand = /obj/item/rogueweapon/whip/urumi/silver // Die, monster! You don't belong in this world!
+// 		else
+// 			var/denominations = list("ENDURING, AS HE DOES - FAITH", "VEYLED, LIKE HIS MARTYRS - ARMOUR")
+// 			var/denomination_choice = input("Choose your DENOMINATION.", "YOUR FAITH IN HIM.") as anything in denominations
+// 			switch(denomination_choice)
+// 				if("ENDURING, AS HE DOES - FAITH")
+// 					C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)
+// 					H.adjust_skillrank_up_to(/datum/skill/magic/holy, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_NOVICE, TRUE)
+// 					armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fluted/ornate
+// 				if("VEYLED, LIKE HIS MARTYRS - ARMOUR")
+// 					C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_WEAK, devotion_limit = CLERIC_REQ_1)
+// 					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_APPRENTICE, TRUE)
+// 					ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC) //Basically a bit more flavourful Knight Errant, so may as very well give HEAVYARMOR
+// 					armor = /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/ornate
+// 	var/weapons = list("Longsword","Mace","Flail","Whip","Urumi","Spear","Axe")
+// 	var/weapon_choice = input(H, "Choose your WEAPON.", "TAKE UP YOUR GOD'S ARMS.") as anything in weapons
+// 	switch(weapon_choice)
+// 		if("Longsword")
+// 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+// 				beltr = /obj/item/rogueweapon/sword/long/oldpsysword
+// 			else
+// 				beltr = /obj/item/rogueweapon/sword/long
+// 			r_hand = /obj/item/rogueweapon/scabbard/sword
+// 		if("Mace")
+// 			H.adjust_skillrank_up_to(/datum/skill/combat/maces, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+// 				beltr = /obj/item/rogueweapon/mace/cudgel/psy/old
+// 			else
+// 				beltr = /obj/item/rogueweapon/mace
+// 		if("Flail")
+// 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 			beltr = /obj/item/rogueweapon/flail
+// 		if("Whip")
+// 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 			beltr = /obj/item/rogueweapon/whip
+// 		if("Urumi")
+// 			H.adjust_skillrank_up_to(/datum/skill/combat/whipsflails, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+// 				beltr = /obj/item/rogueweapon/whip/urumi/silver/psydonic/old
+// 			else
+// 				beltr = /obj/item/rogueweapon/whip/urumi
+// 		if("Spear")
+// 			H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+// 				r_hand = /obj/item/rogueweapon/spear/psyspear/old
+// 			else
+// 				r_hand = /obj/item/rogueweapon/spear
+// 			backr = /obj/item/rogueweapon/scabbard/gwstrap
+// 			beltr = /obj/item/rogueweapon/shield/buckler
+// 		if("Axe")
+// 			H.adjust_skillrank_up_to(/datum/skill/combat/axes, SKILL_LEVEL_JOURNEYMAN, TRUE)
+// 			r_hand = /obj/item/rogueweapon/stoneaxe/woodcut
+// 	H.set_blindness(0)
+// 
+// /datum/advclass/cleric/cantor
+// 	name = "Cantor"
+// 	tutorial = "You were a bard once - but you've found a new calling. Your eyes have been opened to the divine, now you wander from city to city singing songs and telling tales of your patron's greatness."
+// 	outfit = /datum/outfit/job/roguetown/adventurer/cantor
+// 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_EMPATH)
+// 	subclass_stats = list(
+// 		STATKEY_STR = 1,
+// 		STATKEY_WIL = 1,
+// 		STATKEY_SPD = 2,
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/misc/music = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/magic/holy = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+// 	)
+// 	subclass_stashed_items = list(
+// 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
+// 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+// 	)
+// 	extra_context = "This subclass has higher-tier miracles and access to bardic inspiration."
+// 
+// /datum/outfit/job/roguetown/adventurer/cantor/pre_equip(mob/living/carbon/human/H)
+// 	to_chat(H, span_warning("You were a bard once - but you've found a new calling. Your eyes have been opened to the divine, now you wander from city to city singing songs and telling tales of your patron's greatness."))
+// 	H.mind?.current?.faction += "[H.name]_faction"
+// 	head = /obj/item/clothing/head/roguetown/bardhat
+// 	armor = /obj/item/clothing/suit/roguetown/armor/leather/vest
+// 	backl = /obj/item/storage/backpack/rogue/satchel
+// 	cloak = /obj/item/clothing/cloak/cape/crusader	//You are given a generic cloak by default if your Patron doesn't have one for you.
+// 	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson
+// 	gloves = /obj/item/clothing/gloves/roguetown/fingerless_leather
+// 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
+// 	pants = /obj/item/clothing/under/roguetown/trou/leather
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather
+// 	belt = /obj/item/storage/belt/rogue/leather/knifebelt/iron
+// 	beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/special
+// 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
+// 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+// 	C.grant_miracles(H, cleric_tier = CLERIC_T2, passive_gain = CLERIC_REGEN_MINOR, devotion_limit = CLERIC_REQ_2)//Capped to T2 miracles. Devotion at T2.
+// 	var/datum/inspiration/I = new /datum/inspiration(H)
+// 	I.grant_inspiration(H, bard_tier = BARD_T2)
+// 	backpack_contents = list(
+// 		/obj/item/flashlight/flare/torch = 1,
+// 		/obj/item/rogueweapon/scabbard/sheath = 1
+// 		)
+// 	switch(H.patron?.type)
+// 		if(/datum/patron/inhumen/zizo)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen] = 1
+// 		if(/datum/patron/inhumen/matthios)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/matthios] = 1
+// 		if(/datum/patron/inhumen/graggar)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/graggar] = 1
+// 		if(/datum/patron/inhumen/baotha)
+// 			backpack_contents[/obj/item/clothing/neck/roguetown/psicross/inhumen/baotha] = 1
+// 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
+// 	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
+// 	switch(H.patron?.type)
+// 		if(/datum/patron/old_god)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross
+// 			cloak = /obj/item/clothing/cloak/templar/psydon
+// 		if(/datum/patron/divine/astrata)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
+// 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
+// 			cloak = /obj/item/clothing/cloak/templar/astrata
+// 		if(/datum/patron/divine/noc)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/noc
+// 			cloak = /obj/item/clothing/cloak/templar/noc
+// 		if(/datum/patron/divine/abyssor)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
+// 			cloak = /obj/item/clothing/cloak/templar/abyssor
+// 		if(/datum/patron/divine/dendor)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/dendor
+// 			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // see: druid.dm
+// 			cloak = /obj/item/clothing/cloak/templar/dendor
+// 		if(/datum/patron/divine/necra)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/necra
+// 			H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
+// 			cloak = /obj/item/clothing/cloak/templar/necra
+// 		if (/datum/patron/divine/malum)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/malum
+// 			cloak = /obj/item/clothing/cloak/templar/malum
+// 		if (/datum/patron/divine/eora)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/eora
+// 			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
+// 			cloak = /obj/item/clothing/cloak/templar/eora
+// 		if (/datum/patron/divine/ravox)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/ravox
+// 			cloak = /obj/item/clothing/cloak/templar/ravox
+// 		if (/datum/patron/divine/xylix)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
+// 			H.cmode_music = 'sound/music/combat_jester.ogg'
+// 			cloak = /obj/item/clothing/cloak/templar/xylix
+// 		if (/datum/patron/divine/pestra)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
+// 			cloak = /obj/item/clothing/cloak/templar/pestra
+// 		if(/datum/patron/inhumen/zizo)
+// 			H.cmode_music = 'sound/music/combat_heretic.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
+// 			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
+// 		if(/datum/patron/inhumen/matthios)
+// 			H.cmode_music = 'sound/music/combat_matthios.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 		if(/datum/patron/inhumen/graggar)
+// 			H.cmode_music = 'sound/music/combat_graggar.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 		if(/datum/patron/inhumen/baotha)
+// 			H.cmode_music = 'sound/music/combat_baotha.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 	if(H.mind)
+// 		var/weapons = list("Accordion","Bagpipe", "Banjo","Drum","Flute","Guitar","Harmonica","Harp","Hurdy-Gurdy","Jaw Harp","Lute","Psyaltery","Shamisen","Trumpet","Viola","Vocal Talisman")
+// 		var/weapon_choice = tgui_input_list(H, "Choose your instrument.", "TAKE UP ARMS", weapons)
+// 		H.set_blindness(0)
+// 		switch(weapon_choice)
+// 			if("Accordion")
+// 				backr = /obj/item/rogue/instrument/accord
+// 			if("Bagpipe")
+// 				backr = /obj/item/rogue/instrument/bagpipe
+// 			if("Banjo")
+// 				backr = /obj/item/rogue/instrument/banjo
+// 			if("Drum")
+// 				backr = /obj/item/rogue/instrument/drum
+// 			if("Flute")
+// 				backr = /obj/item/rogue/instrument/flute
+// 			if("Guitar")
+// 				backr = /obj/item/rogue/instrument/guitar
+// 			if("Harmonica")
+// 				backr = /obj/item/rogue/instrument/harmonica
+// 			if("Harp")
+// 				backr = /obj/item/rogue/instrument/harp
+// 			if("Hurdy-Gurdy")
+// 				backr = /obj/item/rogue/instrument/hurdygurdy
+// 			if("Jaw Harp")
+// 				backr = /obj/item/rogue/instrument/jawharp
+// 			if("Lute")
+// 				backr = /obj/item/rogue/instrument/lute
+// 			if("Psyaltery")
+// 				backr = /obj/item/rogue/instrument/psyaltery
+// 			if("Shamisen")
+// 				backr = /obj/item/rogue/instrument/shamisen
+// 			if("Trumpet")
+// 				backr = /obj/item/rogue/instrument/trumpet
+// 			if("Viola")
+// 				backr = /obj/item/rogue/instrument/viola
+// 			if("Vocal Talisman")
+// 				backr = /obj/item/rogue/instrument/vocals
+// 
+// /datum/advclass/cleric/missionary
+// 	name = "Missionary"
+// 	tutorial = "You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith. Preachers focus on homesteading while Shepards preach through example and protecting their would-be flock."
+// 	outfit = /datum/outfit/job/roguetown/adventurer/missionary
+// 	traits_applied = list(TRAIT_EMPATH)
+// 	subclass_stats = list(
+// 		STATKEY_INT = 2,
+// 		STATKEY_PER = 2,
+// 		STATKEY_WIL = 1,
+// 		STATKEY_SPD = 1,
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/combat/polearms = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/magic/holy = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_NOVICE,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/reading = SKILL_LEVEL_EXPERT,
+// 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,//just enough to reattach limbs, same as acolytes
+// 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/craft/carpentry = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/labor/lumberjacking = SKILL_LEVEL_NOVICE,
+// 	)
+// 	subclass_stashed_items = list(
+// 		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
+// 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+// 	)
+// 	extra_context = "This subclass is given access to the strongest miracles in Ferentian lands, at the cost of suffering elsewhere."
+// 
+// /datum/outfit/job/roguetown/adventurer/missionary/pre_equip(mob/living/carbon/human/H)
+// 	to_chat(H, span_warning("You are a devout worshipper of the divine with a strong connection to your patron god. You've spent years studying scriptures and serving your deity - now you wander into foreign lands, spreading the word of your faith."))
+// 	if(H.mind?.current)
+// 		H.mind.current.faction += "[H.name]_faction"
+// 	// Grant bardic inspiration if Xylix is patron
+// 	if(istype(H.patron, /datum/patron/divine/xylix))
+// 		var/datum/inspiration/I = new /datum/inspiration(H)
+// 		I.grant_inspiration(H, bard_tier = BARD_T2)
+// 	backl = /obj/item/storage/backpack/rogue/satchel
+// 	cloak = /obj/item/clothing/suit/roguetown/shirt/robe //Anyone who doesn't have cool patron drip sprites just gets generic robes
+// 	head = /obj/item/clothing/head/roguetown/roguehood
+// 	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/priest
+// 	pants = /obj/item/clothing/under/roguetown/trou/leather
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots
+// 	belt = /obj/item/storage/belt/rogue/leather
+// 	beltr = /obj/item/flashlight/flare/torch/lantern
+// 	backpack_contents = list(
+// 		/obj/item/storage/belt/rogue/pouch/coins/poor = 1,
+// 		/obj/item/flashlight/flare/torch = 1,
+// 		)
+// 	var/is_non_pantheon_missionary = istype(H.patron, /datum/patron/inhumen/zizo) || istype(H.patron, /datum/patron/inhumen/matthios) || istype(H.patron, /datum/patron/inhumen/baotha) || istype(H.patron, /datum/patron/inhumen/graggar)
+// 	if(!is_non_pantheon_missionary)
+// 		backpack_contents[/obj/item/ritechalk] = 1
+// 		ADD_TRAIT(H, TRAIT_RITUALIST, TRAIT_GENERIC)
+// 	H.cmode_music = 'sound/music/cmode/church/combat_reckoning.ogg'
+// 	switch(H.patron?.type)
+// 		if(/datum/patron/old_god)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross
+// 			cloak = /obj/item/clothing/cloak/psydontabard
+// 			head = /obj/item/clothing/head/roguetown/roguehood/psydon
+// 		if(/datum/patron/divine/astrata)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/astrata
+// 			H.cmode_music = 'sound/music/cmode/church/combat_astrata.ogg'
+// 			head = /obj/item/clothing/head/roguetown/roguehood/astrata
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/astrata
+// 		if(/datum/patron/divine/noc)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/noc
+// 			head =  /obj/item/clothing/head/roguetown/nochood
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/noc
+// 		if(/datum/patron/divine/abyssor)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/abyssor
+// 			head = /obj/item/clothing/head/roguetown/roguehood/abyssor
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/abyssor
+// 		if(/datum/patron/divine/dendor)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/dendor
+// 			H.cmode_music = 'sound/music/cmode/garrison/combat_warden.ogg' // see: druid.dm
+// 			head = /obj/item/clothing/head/roguetown/dendormask
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/dendor
+// 			H.adjust_skillrank(/datum/skill/labor/farming, SKILL_LEVEL_APPRENTICE, TRUE)
+// 			H.adjust_skillrank(/datum/skill/misc/hunting, SKILL_LEVEL_NOVICE, TRUE)
+// 			ADD_TRAIT(H, TRAIT_EXPERT_HUNTER, TRAIT_GENERIC)
+// 		if(/datum/patron/divine/necra)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/necra
+// 			H.cmode_music = 'sound/music/cmode/church/combat_necra.ogg'
+// 			head = /obj/item/clothing/head/roguetown/necrahood
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/necra
+// 		if (/datum/patron/divine/malum)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/malum
+// 			cloak = /obj/item/clothing/cloak/templar/malumite
+// 		if (/datum/patron/divine/eora)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/eora
+// 			H.cmode_music = 'sound/music/cmode/church/combat_eora.ogg'
+// 			cloak = /obj/item/clothing/suit/roguetown/shirt/robe/eora
+// 			head = /obj/item/clothing/head/roguetown/eoramask
+// 			beltl = /obj/item/rogueweapon/huntingknife/scissors
+// 			backpack_contents[/obj/item/reagent_containers/eoran_seed] = 1
+// 			ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
+// 		if (/datum/patron/divine/xylix)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/xylix
+// 			H.cmode_music = 'sound/music/combat_jester.ogg'
+// 			cloak = /obj/item/clothing/cloak/templar/xylix
+// 			mask = /obj/item/clothing/mask/rogue/xylixmask
+// 			if(HAS_TRAIT(H, TRAIT_PERMAMUTE))
+// 				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall)
+// 				H.mind?.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair)
+// 		if(/datum/patron/divine/pestra)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/pestra
+// 		if(/datum/patron/divine/ravox)
+// 			neck = /obj/item/clothing/neck/roguetown/psicross/ravox
+// 		if(/datum/patron/inhumen/zizo)
+// 			H.cmode_music = 'sound/music/combat_heretic.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/minion_order)
+// 			H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/gravemark)
+// 		if(/datum/patron/inhumen/matthios)
+// 			H.cmode_music = 'sound/music/combat_matthios.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 		if(/datum/patron/inhumen/graggar)
+// 			H.cmode_music = 'sound/music/combat_graggar.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 		if(/datum/patron/inhumen/baotha)
+// 			H.cmode_music = 'sound/music/combat_baotha.ogg'
+// 			ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
+// 		
+// 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+// 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = CLERIC_REGEN_MAJOR, devotion_limit = CLERIC_REQ_3)//Only T4 NOT to start maxed, with a devotion cap.
+// 	C.update_devotion(C.max_devotion / 4 - 50, C.max_devotion / 4 - 50, silent = TRUE) // Start at ~25% of devotion cap
+// 	if(H.mind)
+// 		var/weapons = list("Path of the Preacher", "Path of the Shepard")
+// 		var/weapon_choice = input(H, "Choose your path.", "CHOOSE YOUR DISCIPLINE.") as anything in weapons
+// 		switch(weapon_choice)
+// 			if("Path of the Preacher")//Discount homesteader. No trait so you can't level these skills up, nor do you have starting tools.
+// 				r_hand = /obj/item/rogueweapon/woodstaff
+// 				H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 3, TRUE)
+// 				H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 3, TRUE)
+// 				H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 1, TRUE)//just so you can make pretty floors easier
+// 				H.adjust_skillrank_up_to(/datum/skill/craft/sewing, 3, TRUE)
+// 			if("Path of the Shepard")//The "combat" variant. The core stat spread should keep this class from ever overshadowing the others, but it's worth keeping an eye out anyway.
+// 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
+// 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 3, TRUE)//Good luck fighting like a monk without monk stats or Dodge Expert.
+// 
+// 	if(istype(H.patron, /datum/patron/divine))
+// 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast)
+// 	if(istype(H.patron, /datum/patron/inhumen))
+// 		H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/divineblast/unholyblast)
+// 
+// /datum/advclass/cleric/stigmata
+// 	name = "Stigmata"
+// 	tutorial = "PSYDON weeps. You are a devout cleric of the Allfather whom takes the suffering of others upon themselves. You have eschewn violence. You will suffer. You will endure."
+// 	outfit = /datum/outfit/job/roguetown/adventurer/stigmata
+// 	allowed_races = RACES_NO_CONSTRUCT
+// 
+// 	traits_applied = list(
+// 		TRAIT_PACIFISM,
+// 		TRAIT_EMPATH,
+// 		TRAIT_CRITICAL_RESISTANCE,
+// 		TRAIT_BLOOD_RESISTANCE,
+// 		TRAIT_STEELHEARTED,
+// 		TRAIT_SELF_AWARE,
+// 		TRAIT_LUX_FREAK,
+// 		TRAIT_RITUALIST
+// 	)
+// 	subclass_stats = list(
+// 		STATKEY_CON = 5,
+// 		STATKEY_WIL = 3,
+// 		STATKEY_SPD = 1,
+// 		STATKEY_STR = -2,
+// 	)
+// 	subclass_skills = list(
+// 		/datum/skill/misc/athletics = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/climbing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/craft/sewing = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/combat/unarmed = SKILL_LEVEL_NOVICE,
+// 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN,
+// 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/labor/fishing = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/misc/swimming = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/craft/crafting = SKILL_LEVEL_APPRENTICE,
+// 		/datum/skill/magic/holy = SKILL_LEVEL_JOURNEYMAN,
+// 	)
+// 	subclass_stashed_items = list(
+// 		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy
+// 	)
+// 	extra_context = "This is a psydonite only subclass, it will force you to be one if it is not set. You will be a pacifist and are able to draw upon a weaker version of the abilities known by a Psydonic Absolver."
+// 
+// /datum/outfit/job/roguetown/adventurer/stigmata
+// 	allowed_patrons = list(/datum/patron/old_god)
+// 
+// /datum/outfit/job/roguetown/adventurer/stigmata/pre_equip(mob/living/carbon/human/H, visualsOnly)
+// 	. = ..()
+// 	H.adjust_blindness(-3)
+// 	pants = /obj/item/clothing/under/roguetown/tights/black
+// 	shirt = /obj/item/clothing/suit/roguetown/shirt/tunic/black
+// 	neck = /obj/item/clothing/neck/roguetown/psicross/silver
+// 	shoes = /obj/item/clothing/shoes/roguetown/boots
+// 	backl = /obj/item/storage/backpack/rogue/satchel
+// 	belt = /obj/item/storage/belt/rogue/leather
+// 	beltl = /obj/item/storage/belt/rogue/pouch/coins/poor
+// 	backpack_contents = list(
+// 		/obj/item/flashlight/flare/torch = 1,
+// 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1,
+// 		/obj/item/storage/belt/rogue/pouch/medicine = 1,
+// 		/obj/item/ritechalk = 1
+// 		)
+// 
+// 	if (H.mind)
+// 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)
+// 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonlux_tamper) // absolver's bleed transfer
+// 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/psydonamend) // nerfed no-rez version of absolver's absolve
+// 		H.mind.teach_crafting_recipe(/datum/crafting_recipe/roguetown/alchemy/qsabsolution)
+// 
+// 	var/datum/devotion/C = new /datum/devotion(H, H.patron)
+// 	C.grant_miracles(H, cleric_tier = CLERIC_T4, passive_gain = (CLERIC_REGEN_ABSOLVER / 2), start_maxed = TRUE)
