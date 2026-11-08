@@ -426,9 +426,14 @@
 
 /datum/inqports/equipment/runelock
 	name = "Runelock Pistol"
-	item_type = /obj/item/gun/ballistic/revolver/rune/twilight_runelock
+	item_type = /obj/structure/closet/crate/chest/inqcrate/equipment/runelock
 	marquescost = 16
 	maximum = 2
+/obj/structure/closet/crate/chest/inqcrate/equipment/runelock/Initialize(mapload)
+	. = ..()
+	new /obj/item/quiver/twilight_bullet/runicbag(src)
+	new /obj/item/gun/ballistic/revolver/rune/twilight_runelock(src)
+	new /obj/item/storage/belt/rogue/leather/twilight_holsterbelt(src)
 
 // ✤ WARDROBE ✤ STARTS HERE! YEP!
 
