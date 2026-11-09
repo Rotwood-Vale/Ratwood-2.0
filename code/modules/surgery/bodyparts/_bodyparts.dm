@@ -671,7 +671,7 @@
 	cached_base_appearances = null
 
 //Gives you a proper icon appearance for the dismembered limb
-/obj/item/bodypart/proc/get_limb_icon(dropped, hideaux = FALSE)
+/obj/item/bodypart/proc/get_limb_icon(dropped, hideaux = FALSE, limb_layer = -BODYPARTS_LAYER)
 	icon_state = ""
 
 	. = list()
@@ -685,6 +685,8 @@
 
 	// Check cache for base appearances
 	var/new_cache_key = generate_limb_cache_key(dropped, hideaux)
+	if(limb_layer != -BODYPARTS_LAYER)
+		new_cache_key += "-layer[limb_layer]"
 	if(limb_appearance_cache_key == new_cache_key && cached_base_appearances)
 		. = cached_base_appearances.Copy()
 	else
@@ -695,7 +697,7 @@
 			if(burnstate)
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]_[icon_gender]", -DAMAGE_LAYER, image_dir)
 
-		var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
+		var/image/limb = image(layer = limb_layer, dir = image_dir)
 		var/image/aux
 		. += limb
 
