@@ -137,7 +137,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/monk
 	name = "tough skin"
-	desc = "Do you forsake protection for enlightenment, or in repentance for past transgressions?"
+	desc = "Do you forsake protection for enlightenment, or in repentance for past transgressions? I must meditate upon these thoughts, to mend the wounds inflicted upon me."
 
 /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/disciple //alternative repair option for sojourner.
 	name = "enduring skin"
@@ -146,7 +146,7 @@
 	</br>A corpse. I am living on a fucking corpse. He is the world, and the world is rotting away. \
 	</br>To give into despair and hopelessness, however, is to rob all meaning from His sacrifice. \
 	</br>Heaven's gate closed to us long ago, yet His children persist; as as long as they do, so must I. \
-	</br>Happiness must be fought for."
+	</br>Happiness must be fought for. The pain inflicted upon this vessel can be mended with meditation."
 	repair_fraction = 0.35 //Single layer, so back to default rate.
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //a heavy gambeson.
 
@@ -292,7 +292,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/body/monke
 	name = "trained skin"
-	desc = "They say I've taken the first step on a path older than memory.\
+	desc = "They say I've taken the first step on a path older than memory. My superficial wounds can be repaired with a needle.
 	</br>Aeon, Psydon, Adonai… I don't fully understand what those names mean yet, but I repeat them as I was taught.\
 	</br>The world is said to be held together by His sacrifice. I can't imagine something like that, but the Disciples say it is true.\
 	</br>I came here because I wanted purpose, something solid to believe in.\
@@ -306,7 +306,7 @@
 	</br>A corpse. I am living on a fucking corpse. He is the world, and the world is rotting away. \
 	</br>To give into despair and hopelessness, however, is to rob all meaning from His sacrifice. \
 	</br>Heaven's gate closed to us long ago, yet His children persist; as as long as they do, so must I. \
-	</br>Happiness must be fought for."
+	</br>Happiness must be fought for. My superficial wounds can be repaired with a needle or a cautery."
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //a heavy gambeson.
 
 /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/chest
@@ -318,13 +318,13 @@
 
 /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/chest/confessor
 	name = "arbalist's skin"
-	desc = "Taut lyke the bow I draw."
+	desc = "Taut lyke the bow I draw. My superficial wounds can be repaired with a needle."
 	armor = ARMOR_PADDED
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 
 /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/chest/monke
 	name = "trained chest"
-	desc = "They say I've taken the first step on a path older than memory.\
+	desc = "They say I've taken the first step on a path older than memory. My superficial wounds can be repaired with a needle.\
 	</br>Aeon, Psydon, Adonai… I don't fully understand what those names mean yet, but I repeat them as I was taught.\
 	</br>The world is said to be held together by His sacrifice. I can't imagine something like that, but the Disciples say it is true.\
 	</br>I came here because I wanted purpose, something solid to believe in.\
@@ -338,7 +338,7 @@
 	</br>A corpse. I am living on a fucking corpse. He is the world, and the world is rotting away. \
 	</br>To give into despair and hopelessness, however, is to rob all meaning from His sacrifice. \
 	</br>Heaven's gate closed to us long ago, yet His children persist; as as long as they do, so must I. \
-	</br>Happiness must be fought for."
+	</br>Happiness must be fought for. My superficial wounds can be repaired with a needle or a cautery."
 
 /*
  * EMOTE ARMOUR
@@ -467,10 +467,11 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MEDIUM //defaults to a gambeson
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/body/weak
+	desc = "Toughened from abuse, training, or by sheer privilege of birth. Resting will restore its strength."
 	body_parts_covered = COVERAGE_FULL //everything but head and it's subzones (neck, skull, ears, eyes, nose, mouth)
 	body_parts_inherent = COVERAGE_FULL
-	armor = ARMOR_LEATHER_NPC
-	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE
+	armor = ARMOR_LEATHER
+	max_integrity = ARMOR_INT_CHEST_LIGHT_BASE - 50
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/body/thug
 	name = "calloused skin"
@@ -478,7 +479,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/body/barbarian
 	name = "hardened skin"
-	desc = "Toughened from abuse. My mettle remains. Resting will restore it's strength."
+	desc = "Toughened from abuse. My mettle remains. Resting will restore its strength."
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/body/gladiator
 	name = "pit-hardened skin"
@@ -486,7 +487,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/body/berzerker
 	name = "unstoppable skin"
-	desc = "I've endured enough. The onslaught has lost its meaning."
+	desc = "I've endured enough. The onslaught has lost its meaning. I must rest this weary vessel to knit it whole again."
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //A full-body leather armor.
 
@@ -503,7 +504,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/chest/barbarian
 	name = "hardened chest"
-	desc = "Toughened from abuse. My mettle remains. Resting will restore it's strength."
+	desc = "Toughened from abuse. My mettle remains. Resting will restore its strength."
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/chest/gladiator
 	name = "pit-hardened chest"
@@ -511,6 +512,6 @@
 
 /obj/item/clothing/suit/roguetown/armor/manual/resting/chest/berzerker
 	name = "unstoppable chest"
-	desc = "The callouses could stop arrows! But only so many."
+	desc = "The callouses could stop arrows! But only so many. A mote of rest, however, and my flesh shall knit itself anew."
 	armor = ARMOR_MAILLE
 	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL //Light steel maille.
