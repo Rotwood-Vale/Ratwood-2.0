@@ -35,8 +35,7 @@
 		dat += "Wait."
 	else
 		dat += "<b>Greater Villains:</b><br>"
-		var/datum/job/ashen_host_job = SSjob.GetJob("Ashen Host")
-		if(!length(SSgamemode.rolled_villain_events) && (!ashen_host_job || !ashen_host_job.total_positions))
+		if(!length(SSgamemode.rolled_villain_events))
 			dat += "None.<br>"
 		for(var/datum/round_event_control/antagonist/event in SSgamemode.rolled_villain_events)
 			var/slots = 1
@@ -47,16 +46,11 @@
 		if(length(SSgamemode.rolled_villain_events))
 			dat += "<i>These roll at roundstart from your antag preferences.</i><br>"
 
-		if(ashen_host_job && ashen_host_job.total_positions)
-			dat += villain_job_entry(ashen_host_job)
-
 		dat += "<br><b>Lesser Villains:</b><br>"
-		var/found = ashen_host_job && ashen_host_job.total_positions
+		var/found = FALSE
 		for(var/job_title in GLOB.villain_positions)
 			var/datum/job/J = SSjob.GetJob(job_title)
 			if(!J || !J.total_positions)
-				continue
-			if(J == ashen_host_job)
 				continue
 			found = TRUE
 			dat += villain_job_entry(J)
