@@ -2406,7 +2406,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		return
 	var/mob/living/carbon/human/target = remnant.fed_from
 	qdel(remnant)
-	var/icon/flat = get_flat_human_icon("[target.real_name] [world.time]", null, null, DUMMY_HUMAN_SLOT_MANIFEST, GLOB.cardinals, TRUE, target, TRUE)
+	var/icon/flat = get_flat_existing_human_icon(target)
 	var/mob/living/simple_animal/hostile/rogue/doppelganger/double = new(get_turf(user), user, target, flat)
 	user.visible_message(span_warning("[user] falls limp!"))
 	user.mind.transfer_to(double)
