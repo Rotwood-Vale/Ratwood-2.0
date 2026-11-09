@@ -88,6 +88,7 @@
 				armor = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/easttats/mistwalker //a full-body leather armor with 150% integ.
 				shirt = /obj/item/clothing/suit/roguetown/armor/manual/meditation/chest/easttats/mistwalker //another chest-only leather armor.
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
+				cloak = /obj/item/clothing/cloak/kazengun
 				if(H.dna.species.type in NON_DWARVEN_RACE_TYPES)
 					pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun/black
 					gloves = /obj/item/clothing/gloves/roguetown/eastgloves1
