@@ -1858,6 +1858,7 @@
 
 
 	RegisterSignal(new_owner, COMSIG_MOB_ATTACKED_BY_HAND, PROC_REF(process_touch))
+	RegisterSignal(new_owner, COMSIG_MOB_ATTACKED_BY_BITE, PROC_REF(process_bite))
 	RegisterSignal(new_owner, COMSIG_MOB_ON_KICK, PROC_REF(guard_on_kick))
 	RegisterSignal(new_owner, COMSIG_MOB_KICKED, PROC_REF(guard_kicked))
 	RegisterSignal(new_owner, COMSIG_LIVING_ONJUMP, PROC_REF(guard_disrupted))
@@ -1954,6 +1955,7 @@
 		owner.balloon_alert_to_viewers("<font color = '#ffffff'>Guard expired!</font>")
 	UnregisterSignal(owner, COMSIG_ATOM_BULLET_ACT)
 	UnregisterSignal(owner, COMSIG_MOB_ATTACKED_BY_HAND)
+	UnregisterSignal(owner, COMSIG_MOB_ATTACKED_BY_BITE)
 	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK)
 	UnregisterSignal(owner, COMSIG_MOB_ITEM_BEING_ATTACKED)
 	UnregisterSignal(owner, COMSIG_MOB_ON_KICK)
@@ -2134,9 +2136,40 @@
 
 /datum/status_effect/buff/clash/limbguard/process_touch(mob/living/carbon/human/parent, mob/living/carbon/human/attacker, mob/living/carbon/human/defender)
 	if(attacker && check_zone(attacker.zone_selected) == protected_zone)
-		var/obj/item/I = defender.get_active_held_item()
-		defender.process_clash(attacker, I, null)	//This will strike at their hand, but not clear away the effect. They tried to grab the protected limb.
+		if(attacker.gloves && !attacker.gloves.obj_broken)	//Gloved hands eat the punishment -- we shred their gloves against our guard instead of breaking their arm (for now).
+			attacker.gloves.take_damage(201, BRUTE) // Breaks regular leather gloves and unarmed knuckles. Does not break metal gloves instantly.
+			var/obj/item/I = defender.get_active_held_item()
+			defender.process_clash(attacker, I, null)
+		else	//Bare hands -- your bone is forfeit.
+			var/arm_zone = (attacker.active_hand_index % 2 == 0) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
+			var/obj/item/bodypart/arm = attacker.get_bodypart(arm_zone)
+			if(arm)
+				arm.add_wound(/datum/wound/fracture, crit_message = FALSE)
+				owner.flash_fullscreen("whiteflash")
+				defender.flash_fullscreen("whiteflash")
+				var/obj/item/I = defender.get_active_held_item()
+				defender.process_clash(attacker, I, null)
+				owner.visible_message("<span class='crit'><b>Critical hit!</b> [owner] catches [attacker]'s bare-handed strike and SNAPS [attacker.p_their()] [parse_zone(arm_zone)]!")
+		playsound(owner, 'sound/combat/limbguard_struck.ogg', 100, TRUE)
+		remove_self()
 		return COMPONENT_HAND_NO_ATTACK
+
+//Unlike a weapon strike, there's nothing to disarm here -- we just wrench the guarded limb free and rough them up for it.
+/datum/status_effect/buff/clash/limbguard/process_bite(mob/living/parent, mob/user)
+	if(!is_active || !ishuman(user))
+		return
+	var/mob/living/carbon/human/HM = user
+	if(check_zone(HM.zone_selected) != protected_zone)
+		return
+	apply_debuffs(HM)
+	counter_bite(HM)
+	playsound(owner, 'sound/combat/limbguard_struck.ogg', 100, TRUE)
+	if(HM.mind)
+		owner.stamina_add(-(owner.max_stamina / 3))
+		owner.energy_add((owner.max_energy / 5))
+	remove_self()
+	return COMPONENT_HAND_NO_ATTACK
+
 
 /datum/status_effect/buff/clash/limbguard/apply_cooldown()
 	owner.apply_status_effect(/datum/status_effect/debuff/specialcd, 60 SECONDS)
