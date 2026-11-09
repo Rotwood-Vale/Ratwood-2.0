@@ -91,7 +91,7 @@
 		/datum/round_modifier/rebel
 	)
 	job_slots = list(
-		"Ashen Host" = 12,
+		"Ashen Host" = 20,
 		"Wretch" = -5,
 	)
 

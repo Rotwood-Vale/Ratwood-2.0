@@ -12,7 +12,7 @@
 	outfit_female = null
 	display_order = JDO_WRETCH
 	show_in_credits = FALSE
-	min_pq = 30
+	min_pq = 5
 	max_pq = null
 	obsfuscated_job = TRUE
 	class_categories = TRUE
@@ -27,6 +27,7 @@
 	same_job_respawn_delay = 1 MINUTES
 	job_traits = list(TRAIT_STEELHEARTED, TRAIT_OUTLAW, TRAIT_HERESIARCH, TRAIT_SELF_SUSTENANCE, TRAIT_ASHEN_HOST, TRAIT_CABAL)
 	job_subclasses = list(
+		/datum/advclass/ashen_host/hollow,
 		/datum/advclass/ashen_host/legionary,
 		/datum/advclass/ashen_host/speculator,
 		/datum/advclass/ashen_host/haruspex,

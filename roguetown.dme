@@ -2097,6 +2097,7 @@
 #include "code\modules\antagonists\roguetown\villain\ashen_host\haruspex.dm"
 #include "code\modules\antagonists\roguetown\villain\ashen_host\legion.dm"
 #include "code\modules\antagonists\roguetown\villain\ashen_host\praetorian.dm"
+#include "code\modules\antagonists\roguetown\villain\ashen_host\hollow.dm"
 #include "code\modules\antagonists\roguetown\villain\ashen_host\ashen_host.dm"
 #include "code\modules\jobs\job_types\roguetown\adventurer\types\wretch\antipope.dm"
 #include "code\modules\jobs\job_types\roguetown\byos\tribalchief.dm"
