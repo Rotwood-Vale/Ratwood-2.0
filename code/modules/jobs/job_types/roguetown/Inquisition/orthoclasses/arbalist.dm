@@ -47,8 +47,8 @@
 /datum/outfit/job/roguetown/arbalist/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	..()
 	head = /obj/item/clothing/head/roguetown/headband/bloodied
-	armor = /obj/item/clothing/suit/roguetown/armor/brigandine/light
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/inq
+	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/fencer/psydon
+	shirt = /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/chest/confessor
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/arbalest//Tool of the trade.
 	cloak = /obj/item/clothing/cloak/psydontabard/alt
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver

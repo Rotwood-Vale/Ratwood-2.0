@@ -264,6 +264,15 @@
 	..()
 	to_chat(H, span_warning("The mercenary guild is teeming with corn-fed brutes looking to make mammons off the only thing they're good at - while simple-minded describes you best, you possess brute strength and a heavy club. Sometimes that's all you need to solve problems in lyfe."))
 	if(H.mind)
+		var/armor = list("Regular Armor", "Skin Armor")
+		var/armor_choice = input(H, "Choose your armor.", "PROTECT YOURSELF") as anything in armor
+		switch(armor_choice)
+			if("Regular Armor")
+				armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
+				shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
+			if("Skin Armor")
+				armor = /obj/item/clothing/suit/roguetown/armor/manual/resting/chest/thug //a leather armor.
+				shirt = /obj/item/clothing/suit/roguetown/armor/manual/resting/body/thug //a gambeson.
 		var/weapons = list("Mace", "Warhammer", "WHO NEEDS A CLUB? I HAVE MY HANDS!")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
@@ -293,8 +302,6 @@
 	head = /obj/item/clothing/neck/roguetown/chaincoif/iron
 	mask = /obj/item/clothing/mask/rogue/facemask
 	neck = /obj/item/clothing/neck/roguetown/gorget
-	armor = /obj/item/clothing/suit/roguetown/armor/plate/half/iron
-	shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/heavy
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	gloves = /obj/item/clothing/gloves/roguetown/plate
