@@ -1,6 +1,0 @@
-author: "Remuluson2"
-delete-after: True
-changes:
-  - bugfix: "Bushes now work as proper hiding spots without foraging forcing player out of it."
-  - bugfix: "Bedrolls now work as proper hiding spots without folding the bed."
-  - bugfix: "Fixes to behind code to handle \"interaction overriding\" components properly."

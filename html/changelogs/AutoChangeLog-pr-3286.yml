@@ -1,8 +1,0 @@
-author: "Guidesu"
-delete-after: True
-changes:
-  - rscadd: "Added a foldable chessboard for chess, checkers and backgammon (loadout and merchants)."
-  - rscadd: "Decks of cards can be set up as a card table for blackjack and poker. Right-click a deck to try it."
-  - rscadd: "Added Arlette, a physical collectible card game with seven faction starter decks, boosters and loose cards (loadout, merchants and loot)."
-  - sound: "Added sounds and music for chess and Arlette."
-  - image: "Added chessboard and Arlette deck/card sprites."
