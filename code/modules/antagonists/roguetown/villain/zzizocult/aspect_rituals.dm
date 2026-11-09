@@ -2338,6 +2338,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	if(!target)
 		return
 	ADD_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
 	body = caster
 	icon = flat
 	name = target.real_name
