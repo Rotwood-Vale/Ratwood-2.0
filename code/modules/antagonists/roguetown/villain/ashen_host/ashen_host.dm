@@ -27,10 +27,10 @@
 	same_job_respawn_delay = 1 MINUTES
 	job_traits = list(TRAIT_STEELHEARTED, TRAIT_OUTLAW, TRAIT_HERESIARCH, TRAIT_SELF_SUSTENANCE, TRAIT_ASHEN_HOST, TRAIT_CABAL)
 	job_subclasses = list(
-		/datum/advclass/ashen_host/heretic,
-		/datum/advclass/ashen_host/heretic_spy,
-		/datum/advclass/ashen_host/necromancer,
-		/datum/advclass/ashen_host/ancientchampion,
+		/datum/advclass/ashen_host/legionary,
+		/datum/advclass/ashen_host/speculator,
+		/datum/advclass/ashen_host/haruspex,
+		/datum/advclass/ashen_host/praetorian,
 		/datum/advclass/ashen_host/herald_of_progress,
 		/datum/advclass/ashen_host/commander,
 	)

@@ -1,4 +1,4 @@
-/datum/advclass/ashen_host/ancientchampion
+/datum/advclass/ashen_host/praetorian
 	name = "Ashen Praetorian"
 	tutorial = "In life, you were a mortal warrior shedding blood for Her Majesty, a veteran of countless battles and razings. In death, you have been rewarded with a privilege to serve Her forever more. You awaken once again, wielding blade and arcyne, to complete Her Grandest Work."
 	allowed_sexes = list(MALE, FEMALE)

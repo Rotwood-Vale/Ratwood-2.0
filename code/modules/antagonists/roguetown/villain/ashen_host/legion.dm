@@ -1,4 +1,4 @@
-/datum/advclass/ashen_host/heretic
+/datum/advclass/ashen_host/legionary
 	name = "Ashen Legionary"
 	tutorial = "A Legionary is no meager footsoldier, you are her plate-clad bloodied hand. Wielding dark sorceries, unholy incantations and heavy, dread armaments, no soldier is better prepared to inversely crucify the unworthy than you. Utilize Faith, Magic and Might to lay low any who would stand between you and HER ambition."
 	allowed_sexes = list(MALE, FEMALE)
@@ -7,7 +7,7 @@
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_ASHEN)
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_HEAVYARMOR)
-	maximum_possible_slots = 4
+	maximum_possible_slots = 2
 	subclass_stats = list(
 		STATKEY_STR = 3,
 		STATKEY_PER = 1,
@@ -138,7 +138,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/neck/roguetown/gorget, SLOT_NECK, TRUE)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roguetown/chainlegs, SLOT_PANTS, TRUE)
 
-/datum/advclass/ashen_host/heretic_spy
+/datum/advclass/ashen_host/speculator
 	name = "Ashen Speculator"
 	tutorial = " How can knowledge be Evil, when it grants Eternity ? There is Salvation in unholy scripture, Grace in darkness. Utilize faith and subterfuge to reveal the Light of the Pantheon for what it is, a dazzling lie that conceals the truth of HER ways."
 	allowed_sexes = list(MALE, FEMALE)

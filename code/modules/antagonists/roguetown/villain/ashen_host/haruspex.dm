@@ -1,4 +1,4 @@
-/datum/advclass/ashen_host/necromancer
+/datum/advclass/ashen_host/haruspex
 	name = "Ashen Haruspex"
 	tutorial = "Branded a Necromancer by the dimwitted and the Forces That Be, you are a Haruspex, breaking Necra's chained souls and conjuring undying legions to marshal against those who would lay down their lyfe and souls for petty Gods. Conjure the Arcyne and the Lux to your will and show them there is Kinship in Her"
 	allowed_sexes = list(MALE, FEMALE)
