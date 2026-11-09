@@ -108,11 +108,11 @@
 					shirt = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/monk //a gambeson.
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
 			if("Pugilist")
 				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/weighted
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
 			if("Katar")
 				beltl = /obj/item/rogueweapon/katar/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
