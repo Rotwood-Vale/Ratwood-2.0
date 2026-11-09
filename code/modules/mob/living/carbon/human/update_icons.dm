@@ -2033,14 +2033,12 @@ generate/load female uniform sprites matching all previously decided variables
 	var/hidearms = (wear_armor && (wear_armor.body_parts_covered & ARMS) && !wear_armor.sleeved) || \
 					(wear_shirt && (wear_shirt.body_parts_covered & ARMS) && !wear_shirt.sleeved)
 
-	// Weaver hands share the arm sprite in front and rear views.
-	var/arm_layer = istype(get_taur_tail(), /obj/item/bodypart/taur/spider/weaver) ? -BODY_ADJ_LAYER + 0.1 : -BODYPARTS_LAYER
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		BP.update_limb()
 		if(BP.body_zone == BODY_ZONE_CHEST)
 			new_limbs += BP.get_limb_icon(hideaux = hiden)
 		else if(BP.body_part == ARM_LEFT || BP.body_part == ARM_RIGHT)
-			new_limbs += BP.get_limb_icon(hideaux = hidearms, limb_layer = arm_layer)
+			new_limbs += BP.get_limb_icon(hideaux = hidearms)
 		else
 			new_limbs += BP.get_limb_icon()
 
