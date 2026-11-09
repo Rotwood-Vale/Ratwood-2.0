@@ -55,7 +55,7 @@ Exercise Verbs
 		balloon_alert_to_viewers(number_words, number_words, 7, y_offset = -12)
 		stamina_add(stamina_loss)
 
-		/// For healable skin armor. This is unideal, but I'm a mapper, sire, and I don't know how signals work.
+		/// For healable skin armor.
 		if(pushups_in_a_row % 10 == 0 && !on_knees)
 			var/obj/item/clothing/suit/roguetown/armor/manual/pushups/skin_armor
 			if (istype(wear_shirt, /obj/item/clothing/suit/roguetown/armor/manual/pushups))
