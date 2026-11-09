@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(zizo_researchable, list(
 	/datum/ritual/bite/thanatophobia,
 	/datum/ritual/rot/transfuse, /datum/ritual/rot/blight,
 	/datum/ritual/rot/plague, /datum/ritual/noise/thermalvis,
-	/datum/ritual/noise/forgettongue, /datum/ritual/noise/reflection, /datum/ritual/servantry/witchery,
+	/datum/ritual/noise/forgettongue, /datum/ritual/servantry/witchery,
 	/datum/ritual/pitch/fireresist, /datum/ritual/pitch/shadowform,
 	/datum/ritual/pitch/lightcurse, /datum/ritual/blood/transfuse,
 	/datum/ritual/blood/bloodsnare, /datum/ritual/blood/bloodbond,
@@ -2315,107 +2315,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /datum/ritual/servantry/witchery/apply_passive(mob/living/carbon/human/H)
 	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/witch_possess)
 	return
-
-/mob/living/simple_animal/hostile/rogue/doppelganger
-	mob_biotypes = MOB_HUMANOID
-	maxHealth = 100
-	health = 100
-	dextrous = TRUE
-	held_items = list(null, null)
-	del_on_death = TRUE
-	can_have_ai = FALSE
-	AIStatus = AI_OFF
-	ai_controller = null
-	footstep_type = FOOTSTEP_MOB_BAREFOOT
-	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, /datum/intent/simple/claw)
-	melee_damage_lower = 5
-	melee_damage_upper = 10
-	var/mob/living/carbon/human/body
-	var/list/examine_text
-
-/mob/living/simple_animal/hostile/rogue/doppelganger/Initialize(mapload, mob/living/carbon/human/caster, mob/living/carbon/human/target, icon/flat)
-	. = ..()
-	if(!target)
-		return
-	ADD_TRAIT(src, TRAIT_SPELLCOCKBLOCK, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
-	body = caster
-	icon = flat
-	name = target.real_name
-	real_name = target.real_name
-	gender = target.gender
-	faction = caster.faction.Copy()
-	voicecolor_override = target.voice_color
-	vocal_bark = target.vocal_bark
-	vocal_bark_id = target.vocal_bark_id
-	vocal_pitch = target.vocal_pitch
-	vocal_pitch_range = target.vocal_pitch_range
-	vocal_speed = target.vocal_speed
-	verb_say = target.dna.species.say_mod
-	examine_text = target.examine(caster)
-	var/datum/action/cooldown/spell/end = new /datum/action/cooldown/spell/end_doppelganger(src)
-	end.Grant(src)
-
-/mob/living/simple_animal/hostile/rogue/doppelganger/examine(mob/user)
-	return examine_text.Copy()
-
-/mob/living/simple_animal/hostile/rogue/doppelganger/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, message_mode = null)
-	message_admins("DOPPELGANGER SAY: [ADMIN_LOOKUPFLW(src)] as [real_name]: [message]")
-	return ..()
-
-/mob/living/simple_animal/hostile/rogue/doppelganger/emote(act, m_type = null, message = null, intentional = FALSE, forced = FALSE, targetted = FALSE, custom_me = FALSE, animal = FALSE)
-	if(intentional || !forced)
-		message_admins("DOPPELGANGER EMOTE: [ADMIN_LOOKUPFLW(src)] as [real_name]: [act] [message]")
-	return ..()
-
-/mob/living/simple_animal/hostile/rogue/doppelganger/Destroy()
-	drop_all_held_items()
-	new /obj/effect/gibspawner/human/bodypartless(get_turf(src))
-	if(mind)
-		if(QDELETED(body))
-			ghostize()
-		else
-			mind.transfer_to(body)
-	return ..()
-
-/datum/action/cooldown/spell/end_doppelganger
-	name = "Dismiss Reflection"
-	desc = "Return to your body."
-	button_icon = 'icons/mob/actions/zizomiracles.dmi'
-	button_icon_state = "ZIZO"
-	click_to_activate = FALSE
-	charge_required = FALSE
-	spell_flags = SPELL_IGNORE_SPELLBLOCK
-
-/datum/action/cooldown/spell/end_doppelganger/cast(atom/cast_on)
-	. = ..()
-	QDEL_IN(owner, 1)
-
-/datum/ritual/noise/reflection
-	name = "Reflection"
-	desc = "Create a visual replica of your target and take control of it for 7 minutes. Requires a leech that fed from your target."
-	is_cultist_ritual = TRUE
-	center_requirement = /obj/item/natural/worms/leech
-	keep_center = TRUE
-	research_cost = 5
-
-/datum/ritual/noise/reflection/invoke(mob/living/user, turf/center)
-	if(!ishuman(user) || !user.mind)
-		return
-	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
-	if(!remnant)
-		return
-	var/mob/living/carbon/human/target = remnant.fed_from
-	qdel(remnant)
-	var/icon/flat = get_flat_existing_human_icon(target)
-	var/mob/living/simple_animal/hostile/rogue/doppelganger/double = new(get_turf(user), user, target, flat)
-	user.visible_message(span_warning("[user] falls limp!"))
-	user.mind.transfer_to(double)
-	to_chat(double, span_userdanger("Erotic actions as doppelganger are prohibited. You will be instantly banned if you break this rule."))
-	to_chat(double, span_userdanger("The doppelganger only lasts 7 minutes."))
-	QDEL_IN(double, 7 MINUTES)
-	message_admins("[ADMIN_LOOKUPFLW(double)] used the Reflection ritual to impersonate [ADMIN_LOOKUPFLW(target)].")
-	log_game("[key_name(double)] used the Reflection ritual to impersonate [key_name(target)].")
 
 /datum/ritual/noise/forgettongue
 	name = "Curse of Babel"
