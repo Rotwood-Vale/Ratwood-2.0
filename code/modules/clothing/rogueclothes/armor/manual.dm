@@ -30,7 +30,7 @@
 	var/repair_percent
 
 /obj/item/clothing/suit/roguetown/armor/manual/Initialize(mapload)
-	..()
+	. = ..()
 	if(isnull(repair_percent))
 		repair_percent = repair_fraction * max_integrity
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
