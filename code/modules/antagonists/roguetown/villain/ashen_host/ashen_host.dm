@@ -28,6 +28,7 @@
 	job_traits = list(TRAIT_STEELHEARTED, TRAIT_OUTLAW, TRAIT_HERESIARCH, TRAIT_SELF_SUSTENANCE, TRAIT_ASHEN_HOST, TRAIT_CABAL)
 	job_subclasses = list(
 		/datum/advclass/ashen_host/hollow,
+		/datum/advclass/ashen_host/hollow_ballistiares,
 		/datum/advclass/ashen_host/legionary,
 		/datum/advclass/ashen_host/speculator,
 		/datum/advclass/ashen_host/haruspex,
