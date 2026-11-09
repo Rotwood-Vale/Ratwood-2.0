@@ -1093,7 +1093,7 @@
 	icon_state = "ancientbolt_proj"
 	object_damage_multiplier = 16
 	poisontype = /datum/reagent/stampoison
-	poisonamount = 1 //You are, in essence, giving them tenantus. Roughly 50% stronger than a poisoned iron arrow.
+	poisonamount = 1 //You are, in essence, giving them tetanus. Roughly 50% stronger than a poisoned iron arrow.
 	slur = 3
 	eyeblur = 3
 	drowsy = 3
