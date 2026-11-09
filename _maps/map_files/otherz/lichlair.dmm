@@ -246,6 +246,10 @@
 	},
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start/lich_lair)
+"lD" = (
+/obj/effect/landmark/start/lich,
+/turf/open/floor/rogue/carpet/lord/center,
+/area/rogue/indoors/lich_start)
 "mz" = (
 /obj/structure/table/vtable/v2,
 /obj/machinery/light/rogue/candle/floorcandle/alt,
@@ -295,6 +299,15 @@
 /obj/item/kitchen/fork/decrepit,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
+"ps" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 4
+	},
+/obj/effect/landmark/start/lich,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/lich_start)
 "pC" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -307,6 +320,15 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/carpet/lord/center,
+/area/rogue/indoors/lich_start)
+"pK" = (
+/obj/structure/spider/stickyweb,
+/obj/effect/decal/edge{
+	color = "#3f3f3f";
+	dir = 8
+	},
+/obj/effect/landmark/start/lich,
+/turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
 "pP" = (
 /obj/effect/decal/edge{
@@ -615,6 +637,7 @@
 /area/rogue/indoors/lich_start)
 "At" = (
 /obj/item/ash,
+/obj/effect/landmark/start/lich,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/indoors/lich_start)
 "Ax" = (
@@ -682,6 +705,7 @@
 	color = "#3f3f3f";
 	dir = 4
 	},
+/obj/effect/landmark/start/lich,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
 "CC" = (
@@ -698,6 +722,7 @@
 	color = "#3f3f3f";
 	dir = 8
 	},
+/obj/effect/landmark/start/lich,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
 "CZ" = (
@@ -968,6 +993,7 @@
 	color = "#3f3f3f";
 	dir = 4
 	},
+/obj/effect/landmark/start/lich,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
 "Pv" = (
@@ -1079,6 +1105,12 @@
 /obj/structure/chair/wood/rogue{
 	dir = 8
 	},
+/obj/effect/landmark/start/lich,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/lich_start)
+"TY" = (
+/obj/effect/decal/remains/human,
+/obj/effect/landmark/start/lich,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
 "UH" = (
@@ -1133,6 +1165,7 @@
 	dir = 4;
 	pixel_x = -7
 	},
+/obj/effect/landmark/start/lich,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
 "VT" = (
@@ -1143,6 +1176,10 @@
 /obj/item/clothing/shoes/roguetown/sandals/ancient/decrepit,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start/lich_lair)
+"Wm" = (
+/obj/effect/landmark/start/lich,
+/turf/open/floor/rogue/ruinedwood/spiral,
+/area/rogue/indoors/lich_start)
 "Wx" = (
 /obj/structure/fluff/walldeco/rpainting/forest,
 /turf/closed/wall/mineral/rogue/decostone/mossy/red,
@@ -1172,6 +1209,7 @@
 "WL" = (
 /obj/effect/decal/remains/human,
 /obj/item/ash,
+/obj/effect/landmark/start/lich,
 /turf/open/floor/rogue/churchbrick,
 /area/rogue/indoors/lich_start)
 "WX" = (
@@ -1915,10 +1953,10 @@ mZ
 Vu
 SM
 VK
-TJ
+TY
 Rl
 Rl
-TJ
+TY
 VK
 wb
 bL
@@ -2038,7 +2076,7 @@ Rh
 mz
 At
 BT
-QC
+ps
 Pt
 wJ
 QC
@@ -2163,7 +2201,7 @@ Rh
 Qu
 pF
 DS
-Wy
+lD
 Wy
 Wy
 Wy
@@ -2284,10 +2322,10 @@ Ba
 rM
 Rh
 zY
-Vu
+Wm
 XN
 CV
-Oh
+pK
 ex
 Br
 CV
