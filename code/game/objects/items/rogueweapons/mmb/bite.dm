@@ -150,7 +150,10 @@
 					recoil_mult = 0.05
 
 			var/recoil = round(dam2do * recoil_mult)
-			user.apply_damage(recoil, BRUTE, BODY_ZONE_PRECISE_MOUTH)// cleaner, basically! this will recoil 25% damage to your mouth if you bite flesh, and 50% if you bite armor
+			if(HAS_TRAIT(user, TRAIT_BITERHELM) && user.head)
+				user.head.take_damage(recoil, BRUTE, "blunt")
+			else
+				user.apply_damage(recoil, BRUTE, BODY_ZONE_PRECISE_MOUTH)// cleaner, basically! this will recoil 25% damage to your mouth if you bite flesh, and 50% if you bite armor
 		if(prob(25)) // 1/4 of the time you'll overextend and be exposed, giving your opponent a room to strike back hard
 			user.apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
 
@@ -331,7 +334,10 @@
 				recoil_mult = 0.05
 
 		var/recoil = round(damage * recoil_mult)
-		user.apply_damage(recoil, BRUTE, BODY_ZONE_PRECISE_MOUTH) // cleaner, basically! this will recoil 25% damage to your mouth if you bite flesh, and 50% if you bite armor
+		if(HAS_TRAIT(user, TRAIT_BITERHELM) && user.head)
+			user.head.take_damage(recoil, BRUTE, "blunt")
+		else
+			user.apply_damage(recoil, BRUTE, BODY_ZONE_PRECISE_MOUTH) // cleaner, basically! this will recoil 25% damage to your mouth if you bite flesh, and 50% if you bite armor
 	if(prob(50)) // half the time you'll overextend and be exposed, giving your opponent a room to strike back hard
 		user.apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
 
