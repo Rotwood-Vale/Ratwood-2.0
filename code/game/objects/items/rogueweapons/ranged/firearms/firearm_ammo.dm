@@ -440,12 +440,12 @@
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/L = target
-		L.stamina_add(50)
-		L.energy_add(-200) 
+		L.stamina_add(25)
+		L.energy_add(-100) 
 		if(L.devotion)
-			L.devotion.update_devotion(-200) 
+			L.devotion.update_devotion(-100) 
 		if(L.get_bloodpool())
-			L.adjust_bloodpool(-200) 
+			L.adjust_bloodpool(-100) 
 		to_chat(L, span_danger("You feel as if you somehow became lesser!"))
 		
 
