@@ -22,7 +22,7 @@
 	/// Time taken for regeneration
 	var/repair_time = 10 SECONDS
 	/// If the armor regen is stopped by a combat tag
-	var/combat_taggable = FALSE
+	var/combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/equipped(mob/user, slot)
 	. = ..()
@@ -147,7 +147,6 @@
 	max_integrity = 300
 	body_parts_covered = FULL_BODY
 	body_parts_inherent = FULL_BODY
-	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/gladiator
 	name = "pit-hardened chest"//pit? hnnnnhhhffgggg
