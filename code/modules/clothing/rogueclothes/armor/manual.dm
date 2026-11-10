@@ -305,7 +305,7 @@
 	</br>Compassion, Piety, Brotherhood; a trinity known to all, yet forgotten to tyme. \
 	</br>A corpse. I am living on a fucking corpse. He is the world, and the world is rotting away. \
 	</br>To give into despair and hopelessness, however, is to rob all meaning from His sacrifice. \
-	</br>Heaven's gate closed to us long ago, yet His children persist; as as long as they do, so must I. \
+	</br>Heaven's gate closed to us long ago, yet His children persist; as long as they do, so must I. \
 	</br>Happiness must be fought for. My superficial wounds can be repaired with a needle or a cautery."
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //a heavy gambeson.
 
