@@ -1,25 +1,15 @@
-import type { CSSProperties } from 'react';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+} from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import {
-  cardStyle,
-  FONT_SMALL,
-  FONT_TITLE,
-  INK_FAINT,
-  INK_SOFT,
-  inkButtonStyle,
-  pageStyle,
-  PARCHMENT_SHADOW,
-  rulerStyle,
-  SEAL_AMBER,
-  SEAL_RED,
-  sectionHeaderStyle,
-  subtitleStyle,
-  titleStyle,
-} from './common/parchment';
-import { WaxSeal } from './common/WaxSeal';
 
 type Contributor = {
   name: string;
@@ -69,56 +59,16 @@ const findProject = (projects: ProjectInfo[], type: string): ProjectInfo =>
     lockedReason: '',
   };
 
-const hintStyle: CSSProperties = {
-  color: INK_SOFT,
-  fontStyle: 'italic',
-  fontSize: FONT_SMALL,
-};
-
-const emptyStyle: CSSProperties = {
-  ...cardStyle,
-  color: INK_FAINT,
-  fontStyle: 'italic',
-  textAlign: 'center',
-};
-
-const VitaeBar = (props: { value: number; max: number; color: string }) => {
-  const { value, max, color } = props;
-  const pct = max > 0 ? Math.max(0, Math.min((value / max) * 100, 100)) : 0;
-  return (
-    <div
-      style={{
-        background: PARCHMENT_SHADOW,
-        height: '8px',
-        borderRadius: '2px',
-        margin: '6px 0 4px 0',
-      }}
-    >
-      <div
-        style={{
-          background: color,
-          width: `${pct}%`,
-          height: '100%',
-          borderRadius: '2px',
-        }}
-      />
-    </div>
-  );
-};
-
-const ActiveProjectCard = (props: {
+const ActiveProjectSection = (props: {
   project: ActiveProject;
   info: ProjectInfo;
-  index: number;
   isLord: boolean;
   act: ActFn;
 }) => {
-  const { project, info, index, isLord, act } = props;
+  const { project, info, isLord, act } = props;
   const remaining = Math.max(info.cost - project.paid, 0);
-  const percent =
-    info.cost > 0 ? Math.floor((project.paid / info.cost) * 100) : 100;
   const canContribute = project.maxContribution > 0;
-  const progress = `${formatVitae(project.paid)} / ${formatVitae(info.cost)} vitae (${percent}%)`;
+  const progress = `${formatVitae(project.paid)} / ${formatVitae(info.cost)} vitae`;
   const contributors = project.contributors.length
     ? project.contributors
         .map((entry) => `${entry.name} (${formatVitae(entry.amount)})`)
@@ -126,67 +76,55 @@ const ActiveProjectCard = (props: {
     : 'No one yet';
 
   return (
-    <div style={cardStyle}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <WaxSeal label={info.name} mark={`${index + 1}`} size={44} />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 'bold', fontSize: FONT_TITLE }}>
-            {info.name}
-          </div>
-          <div style={hintStyle}>{info.description}</div>
-        </div>
-      </div>
-      <VitaeBar value={project.paid} max={info.cost} color={SEAL_RED} />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          fontSize: FONT_SMALL,
-          color: INK_SOFT,
-        }}
-      >
-        <span>{progress}</span>
-        <span>Remaining: {formatVitae(remaining)}</span>
-      </div>
-      <div style={{ ...hintStyle, marginTop: '4px' }}>
-        Contributors: {contributors}
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          gap: '6px',
-          marginTop: '8px',
-        }}
-      >
-        <button
-          type="button"
-          disabled={!canContribute}
-          title={
-            canContribute
-              ? `I can give up to ${formatVitae(project.maxContribution)} vitae`
-              : 'I have nothing left to give to this ritual'
-          }
-          style={inkButtonStyle({ color: SEAL_RED, disabled: !canContribute })}
-          onClick={() => act('contribute', { type: project.type })}
-        >
-          Contribute
-        </button>
-        {isLord && (
-          <button
-            type="button"
-            style={inkButtonStyle()}
-            onClick={() => act('cancel_project', { type: project.type })}
+    <Section
+      title={info.name}
+      buttons={
+        <>
+          <Button
+            icon="tint"
+            disabled={!canContribute}
+            tooltip={
+              canContribute
+                ? `I can give up to ${formatVitae(project.maxContribution)} vitae`
+                : 'I have nothing left to give to this ritual'
+            }
+            onClick={() => act('contribute', { type: project.type })}
           >
-            Cancel
-          </button>
-        )}
-      </div>
-    </div>
+            Contribute
+          </Button>
+          {isLord && (
+            <Button
+              icon="times"
+              color="bad"
+              onClick={() => act('cancel_project', { type: project.type })}
+            >
+              Cancel
+            </Button>
+          )}
+        </>
+      }
+    >
+      <Box italic color="label" mb={1}>
+        {info.description}
+      </Box>
+      <ProgressBar
+        value={project.paid}
+        maxValue={Math.max(info.cost, 1)}
+        color="bad"
+      >
+        {progress}
+      </ProgressBar>
+      <LabeledList>
+        <LabeledList.Item label="Remaining">
+          {formatVitae(remaining)} vitae
+        </LabeledList.Item>
+        <LabeledList.Item label="Contributors">{contributors}</LabeledList.Item>
+      </LabeledList>
+    </Section>
   );
 };
 
-const AvailableProjectCard = (props: {
+const AvailableProjectSection = (props: {
   project: AvailableProject;
   info: ProjectInfo;
   act: ActFn;
@@ -195,40 +133,32 @@ const AvailableProjectCard = (props: {
   const canStart = !!project.canStart;
 
   return (
-    <div style={cardStyle}>
-      <div style={{ fontWeight: 'bold', fontSize: FONT_TITLE }}>
-        {info.name}
-      </div>
-      <div style={hintStyle}>{info.description}</div>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '8px',
-          marginTop: '8px',
-        }}
-      >
-        <div style={{ minWidth: 0 }}>
-          <div style={{ color: SEAL_AMBER, fontWeight: 'bold' }}>
-            Cost: {formatVitae(info.cost)} vitae
-          </div>
-          {!canStart && !!info.lockedReason && (
-            <div style={{ ...hintStyle, color: SEAL_RED }}>
-              {info.lockedReason}
-            </div>
-          )}
-        </div>
-        <button
-          type="button"
+    <Section
+      title={info.name}
+      buttons={
+        <Button
+          icon="play"
           disabled={!canStart}
-          style={inkButtonStyle({ color: SEAL_RED, disabled: !canStart })}
           onClick={() => act('start_project', { type: project.type })}
         >
           Begin
-        </button>
-      </div>
-    </div>
+        </Button>
+      }
+    >
+      <Box italic color="label">
+        {info.description}
+      </Box>
+      <LabeledList>
+        <LabeledList.Item label="Cost">
+          {formatVitae(info.cost)} vitae
+        </LabeledList.Item>
+        {!canStart && !!info.lockedReason && (
+          <LabeledList.Item label="Locked" color="bad">
+            {info.lockedReason}
+          </LabeledList.Item>
+        )}
+      </LabeledList>
+    </Section>
   );
 };
 
@@ -244,64 +174,57 @@ export const CrimsonCrucible = () => {
   const isLord = !!data.isLord;
 
   return (
-    <Window width={680} height={720} theme="parchment">
+    <Window width={560} height={680}>
       <Window.Content scrollable>
-        <div style={pageStyle}>
-          <div style={titleStyle}>Crimson Crucible</div>
-          <div style={subtitleStyle}>
+        <Section title="My Vitae">
+          <ProgressBar
+            value={vitae}
+            maxValue={Math.max(maxVitae, 1)}
+            color="bad"
+          >
+            {`${formatVitae(vitae)} / ${formatVitae(maxVitae)}`}
+          </ProgressBar>
+          <Box mt={1} italic color="label">
             {isLord
-              ? 'Right of Dominion: begin rituals and feed them with vitae.'
-              : 'Right of Sacrifice: feed the rituals your lord has begun.'}
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span>My vitae</span>
-            <span>
-              {formatVitae(vitae)} / {formatVitae(maxVitae)}
-            </span>
-          </div>
-          <VitaeBar value={vitae} max={maxVitae} color={SEAL_RED} />
-          <div style={rulerStyle} />
-
-          <div style={sectionHeaderStyle}>Active Rituals</div>
+              ? 'Right of Dominion: I begin rituals and feed them with vitae.'
+              : 'Right of Sacrifice: I feed the rituals my lord has begun.'}
+          </Box>
+        </Section>
+        <Section title="Active Rituals">
           {activeProjects.length ? (
-            activeProjects.map((project, index) => (
-              <ActiveProjectCard
+            activeProjects.map((project) => (
+              <ActiveProjectSection
                 key={project.type}
                 project={project}
                 info={findProject(projects, project.type)}
-                index={index}
                 isLord={isLord}
                 act={act}
               />
             ))
           ) : (
-            <div style={emptyStyle}>
-              The crucible is silent. No ritual has begun.
-            </div>
+            <NoticeBox>The crucible is silent. No ritual has begun.</NoticeBox>
           )}
-
-          {isLord ? (
-            <>
-              <div style={sectionHeaderStyle}>New Rituals</div>
-              {availableProjects.length ? (
-                availableProjects.map((project) => (
-                  <AvailableProjectCard
-                    key={project.type}
-                    project={project}
-                    info={findProject(projects, project.type)}
-                    act={act}
-                  />
-                ))
-              ) : (
-                <div style={emptyStyle}>No rituals are available.</div>
-              )}
-            </>
-          ) : (
-            <div style={{ ...hintStyle, textAlign: 'center' }}>
-              Only the lord of the clan may begin or cancel rituals.
-            </div>
-          )}
-        </div>
+        </Section>
+        {isLord ? (
+          <Section title="New Rituals">
+            {availableProjects.length ? (
+              availableProjects.map((project) => (
+                <AvailableProjectSection
+                  key={project.type}
+                  project={project}
+                  info={findProject(projects, project.type)}
+                  act={act}
+                />
+              ))
+            ) : (
+              <NoticeBox>No rituals are available.</NoticeBox>
+            )}
+          </Section>
+        ) : (
+          <NoticeBox info>
+            Only the lord of the clan may begin or cancel rituals.
+          </NoticeBox>
+        )}
       </Window.Content>
     </Window>
   );

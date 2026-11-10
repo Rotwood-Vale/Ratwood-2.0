@@ -233,6 +233,10 @@ And it also helps for the character set panel
 	if(hierarchy_root)
 		return
 
+	apply_hierarchy_layout(vampire_clan_public_layout())
+	if(hierarchy_root)
+		return
+
 	// Create the root leadership position
 	hierarchy_root = new /datum/clan_hierarchy_node("Clan Leader", "The supreme leader of the clan", 0)
 	hierarchy_root.position_color = "#gold"

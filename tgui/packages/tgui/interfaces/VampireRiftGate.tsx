@@ -1,22 +1,15 @@
-import type { CSSProperties } from 'react';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import {
-  bannerStyle,
-  cardStyle,
-  FONT_SMALL,
-  FONT_TITLE,
-  INK_FAINT,
-  INK_SOFT,
-  inkButtonStyle,
-  pageStyle,
-  SEAL_RED,
-  sectionHeaderStyle,
-  subtitleStyle,
-  titleStyle,
-} from './common/parchment';
 
 type Amulet = {
   ref: string;
@@ -28,111 +21,80 @@ type Amulet = {
 type Data = {
   amulets: Amulet[];
   vitaeCost: number;
+  placementRange: number;
   hasVitae: BooleanLike;
   sendingActive: BooleanLike;
 };
 
-const hintStyle: CSSProperties = {
-  color: INK_SOFT,
-  fontStyle: 'italic',
-  fontSize: FONT_SMALL,
-};
-
 export const VampireRiftGate = () => {
   const { act, data } = useBackend<Data>();
-  const { amulets = [], vitaeCost = 0 } = data;
+  const { amulets = [], vitaeCost = 0, placementRange = 0 } = data;
   const hasVitae = !!data.hasVitae;
   const sendingActive = !!data.sendingActive;
 
   return (
-    <Window width={480} height={480} theme="parchment">
+    <Window width={480} height={480}>
       <Window.Content scrollable>
-        <div style={pageStyle}>
-          <div style={titleStyle}>Rift Gate</div>
-          <div style={subtitleStyle}>Each rift costs {vitaeCost} vitae.</div>
-          {sendingActive ? (
-            <div style={bannerStyle(SEAL_RED)}>
-              A sending rift is already open.
-            </div>
-          ) : (
-            <div style={bannerStyle(INK_SOFT, true)}>The gate is dormant.</div>
-          )}
-          <div
-            style={{
-              ...hintStyle,
-              textAlign: 'center',
-              visibility: hasVitae ? 'hidden' : 'visible',
-            }}
-          >
-            I lack the vitae to tear a rift.
-          </div>
-
-          <div style={sectionHeaderStyle}>Anchors</div>
+        <Section title="Rift">
+          <LabeledList>
+            <LabeledList.Item label="Cost">{vitaeCost} vitae</LabeledList.Item>
+            <LabeledList.Item label="Placement">
+              Up to {placementRange} paces from the anchor
+            </LabeledList.Item>
+            <LabeledList.Item
+              label="Status"
+              color={sendingActive ? 'bad' : 'good'}
+            >
+              {sendingActive ? 'A sending rift is open' : 'Dormant'}
+            </LabeledList.Item>
+          </LabeledList>
+          <Box mt={1} italic color="label">
+            My sight passes through the chosen anchor first, so I can pick the
+            spot before the rift opens.
+          </Box>
+        </Section>
+        <NoticeBox
+          danger
+          style={{ visibility: hasVitae ? 'hidden' : 'visible' }}
+        >
+          I lack the vitae to tear a rift.
+        </NoticeBox>
+        <Section title="Anchors">
           {amulets.length ? (
             amulets.map((amulet) => (
-              <div
-                key={amulet.ref}
-                style={{
-                  ...cardStyle,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                }}
-              >
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontWeight: 'bold', fontSize: FONT_TITLE }}>
-                    {amulet.name}
-                  </div>
-                  <div style={{ color: INK_SOFT }}>{amulet.area}</div>
-                  <div style={hintStyle}>Charges: {amulet.uses}</div>
-                </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '4px',
-                  }}
-                >
-                  <button
-                    type="button"
+              <Stack key={amulet.ref} align="center" mb={1}>
+                <Stack.Item grow>
+                  <Box bold>{amulet.name}</Box>
+                  <Box color="label">
+                    {amulet.area}, charges: {amulet.uses}
+                  </Box>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="reply"
                     disabled={!hasVitae}
-                    title="Tear a rift beside the amulet that leads back here"
-                    style={inkButtonStyle({
-                      color: SEAL_RED,
-                      disabled: !hasVitae,
-                    })}
+                    tooltip="Gaze through the amulet and choose where a rift back here opens"
                     onClick={() => act('open_return', { amulet: amulet.ref })}
                   >
                     Return
-                  </button>
-                  <button
-                    type="button"
+                  </Button>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="share"
                     disabled={!hasVitae || sendingActive}
-                    title="Open rifts here that lead to the amulet"
-                    style={inkButtonStyle({
-                      color: SEAL_RED,
-                      disabled: !hasVitae || sendingActive,
-                    })}
+                    tooltip="Gaze through the amulet and choose where the rift from here leads"
                     onClick={() => act('open_sending', { amulet: amulet.ref })}
                   >
                     Send
-                  </button>
-                </div>
-              </div>
+                  </Button>
+                </Stack.Item>
+              </Stack>
             ))
           ) : (
-            <div
-              style={{
-                ...cardStyle,
-                color: INK_FAINT,
-                fontStyle: 'italic',
-                textAlign: 'center',
-              }}
-            >
-              No gate amulets are bound to the rift.
-            </div>
+            <NoticeBox>No gate amulets are bound to the rift.</NoticeBox>
           )}
-        </div>
+        </Section>
       </Window.Content>
     </Window>
   );

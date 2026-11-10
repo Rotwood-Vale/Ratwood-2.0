@@ -1,5 +1,4 @@
 GLOBAL_LIST_EMPTY(vampire_objects)
-#define INITIAL_BLOODPOOL_PERCENTAGE 40
 /datum/antagonist/vampire
 	name = "Vampire"
 	roundend_category = "Vampires"
@@ -101,7 +100,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	equip()
 
 /datum/antagonist/vampire/proc/show_clan_selection(mob/living/carbon/human/vampdude)
-	if(vampdude.job == "Wretch")
+	if(vampdude.job == "Wretch" && vampdude.get_vampire_generation() <= GENERATION_NEONATE)
 		create_custom_clan(vampdude)
 		return
 
@@ -145,7 +144,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	to_chat(vampdude, span_notice("You are now a member of the [custom_clan_name] clan with [length(selected_covens)] coven(s)."))
 
 /datum/antagonist/vampire/proc/after_gain()
-	owner.current.set_bloodpool(owner.current.get_maxbloodpool() / 100 * INITIAL_BLOODPOOL_PERCENTAGE)
+	owner.current.set_bloodpool(owner.current.get_maxbloodpool() / 100 * VAMPIRE_INITIAL_BLOODPOOL_PERCENTAGE)
 	antag_hud_name = get_hud_icon()
 	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
@@ -264,5 +263,3 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 /datum/antagonist/vampire/ancillae/New(incoming_clan = /datum/clan/nosferatu, forced_clan = FALSE, generation = GENERATION_ANCILLAE)
 	. = ..()
-
-

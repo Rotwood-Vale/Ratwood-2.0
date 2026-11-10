@@ -1,16 +1,3 @@
-#define VAMPCOST_ONE 8000
-#define VAMPCOST_TWO 10000
-#define VAMPCOST_THREE 12000
-#define VAMPCOST_FOUR 14000
-#define ARMOR_COST 5000
-#define SUN_STEAL_COST 10000
-#define SERVANT_COST 800
-#define SERVANT_T2_COST 2500
-#define SERVANT_T3_COST 4000
-
-#define INITIATE_LORDE 1
-#define INITIATE_ANYONE 2
-
 /obj/structure/vampire/bloodpool
 	name = "Crimson Crucible"
 	icon_state = "vat"
@@ -221,15 +208,15 @@
 	var/datum/clan/initiator_clan
 	var/start_failure_message = "This project cannot be started."
 	var/completion_sound = 'sound/misc/batsound.ogg'
-	var/can_be_initiated_by = INITIATE_LORDE
+	var/can_be_initiated_by = VAMPIRE_PROJECT_INITIATE_LORDE
 
 /datum/vampire_project/proc/can_start(mob/living/carbon/human/user, obj/structure/vampire/bloodpool/pool, silent = FALSE)
 	if(!istype(user) || !istype(pool))
 		return FALSE
 
-	if(can_be_initiated_by == INITIATE_ANYONE)
+	if(can_be_initiated_by == VAMPIRE_PROJECT_INITIATE_ANYONE)
 		return TRUE
-	else if(can_be_initiated_by == INITIATE_LORDE)
+	else if(can_be_initiated_by == VAMPIRE_PROJECT_INITIATE_LORDE)
 		if(user.clan.clan_leader == user)
 			return TRUE
 		else
@@ -400,7 +387,7 @@
 /datum/vampire_project/armor_crafting
 	display_name = "Wicked Plate"
 	description = "Craft a complete set of vampiric armor from crystallized blood."
-	total_cost = 5000
+	total_cost = VAMPCOST_ARMOR
 	completion_sound = 'sound/misc/vcraft.ogg'
 
 /datum/vampire_project/armor_crafting/on_complete(atom/movable/creation_point)
@@ -415,9 +402,9 @@
 /datum/vampire_project/sunsteal
 	display_name = "Steal the Sun"
 	description = "The scorching gaze of the Sun-Tyrant shall hamper our plans no more. This project can only be initiated by your lorde."
-	total_cost = SUN_STEAL_COST
+	total_cost = VAMPCOST_SUNSTEAL
 	completion_sound = 'sound/misc/vcraft.ogg'
-	can_be_initiated_by = INITIATE_LORDE
+	can_be_initiated_by = VAMPIRE_PROJECT_INITIATE_LORDE
 
 /datum/vampire_project/sunsteal/on_complete(atom/movable/creation_point)
 	var/obj/structure/vampire/bloodpool/bloodpool = creation_point
@@ -466,7 +453,7 @@
 /datum/vampire_project/servant/servant_t1
 	display_name = "Summon Servant"
 	description = "A loyal servant to do your bidding."
-	total_cost = SERVANT_COST
+	total_cost = VAMPCOST_SERVANT_T1
 	completion_sound = 'sound/misc/vcraft.ogg'
 
 /datum/vampire_project/servant/servant_t1/on_complete(obj/structure/vampire/bloodpool/creation_point)
@@ -476,7 +463,7 @@
 /datum/vampire_project/servant/servant_t2
 	display_name = "Summon Guard"
 	description = "A loyal servant to do your bidding."
-	total_cost = SERVANT_T2_COST
+	total_cost = VAMPCOST_SERVANT_T2
 	completion_sound = 'sound/misc/vcraft.ogg'
 
 /datum/vampire_project/servant/servant_t2/on_complete(obj/structure/vampire/bloodpool/creation_point)
@@ -486,19 +473,9 @@
 /datum/vampire_project/servant/servant_t3
 	display_name = "Summon Knight Spawn"
 	description = "A loyal servant to do your bidding."
-	total_cost = SERVANT_T3_COST
+	total_cost = VAMPCOST_SERVANT_T3
 	completion_sound = 'sound/misc/vcraft.ogg'
 
 /datum/vampire_project/servant/servant_t3/on_complete(obj/structure/vampire/bloodpool/creation_point)
 	if(!summon("Vampire Spawn", creation_point))
 		on_cancel()
-
-#undef VAMPCOST_ONE
-#undef VAMPCOST_TWO
-#undef VAMPCOST_THREE
-#undef VAMPCOST_FOUR
-#undef ARMOR_COST
-#undef SUN_STEAL_COST
-#undef SERVANT_COST
-#undef SERVANT_T2_COST
-#undef SERVANT_T3_COST
