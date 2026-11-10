@@ -109,7 +109,7 @@
 	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail
 	pants = /obj/item/clothing/under/roguetown/platelegs/holysee
 	cloak = /obj/item/clothing/cloak/holysee
-	id = /obj/item/clothing/neck/roguetown/psicross/undivided
+	id = /obj/item/clothing/neck/roguetown/psicross/silver/undivided
 	head = /obj/item/clothing/head/roguetown/helmet/heavy/holysee
 	backpack_contents = list(
 		/obj/item/rogueweapon/huntingknife/idagger/silver = 1,
