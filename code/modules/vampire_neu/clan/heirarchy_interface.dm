@@ -382,6 +382,23 @@
 			cursor: default;
 		}
 
+		.layout-public {
+			display: block;
+			width: 100%;
+			margin: 4px 0 8px 0;
+			padding: 6px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 12px;
+		}
+
+		.layout-public:disabled {
+			background: #333;
+			color: #666;
+			cursor: default;
+		}
+
 		.layout-hint {
 			color: #888;
 			font-style: italic;
@@ -416,7 +433,7 @@
 
 	var/can_load = (user == user_clan.clan_leader)
 	var/list/public_layout = vampire_clan_public_layout()
-	var/list/rows = list(layout_row_html("Public", public_layout["name"], CLAN_LAYOUT_PUBLIC_SLOT, FALSE, can_load))
+	var/list/rows = list()
 	var/list/slots = get_vampire_clan_layouts(user.ckey)
 	for(var/slot in 1 to CLAN_LAYOUT_PERSONAL_SLOTS)
 		var/list/entry = slots ? slots[slot] : null
@@ -424,7 +441,8 @@
 
 	return {"
 	<div class="layout-panel">
-		<h3>Layouts</h3>
+		<h3>Library</h3>
+		<button class='btn-primary layout-public' onclick='loadLayout("[CLAN_LAYOUT_PUBLIC_SLOT]")' [can_load ? "" : "disabled"]>[html_encode(public_layout["name"])]</button>
 		[jointext(rows, "")]
 		[can_load ? "" : "<p class='layout-hint'>Only the clan leader can load a layout.</p>"]
 	</div>

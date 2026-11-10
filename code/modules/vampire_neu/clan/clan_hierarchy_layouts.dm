@@ -23,7 +23,7 @@ GLOBAL_LIST_EMPTY(vampire_clan_layout_cache)
 		for(var/i in 1 to 3)
 			nodes += list(vampire_clan_layout_node("[hersir_id]_thrall_[i]", hersir_id, "Thrall Warrior", "A bound warrior who fights wherever their Hersir commands.", 2, 5, FALSE, "#6e2a2a"))
 	return list(
-		"name" = "Jarl's Hall",
+		"name" = "Basic Clan",
 		"format" = CLAN_LAYOUT_FORMAT,
 		"version" = CLAN_LAYOUT_VERSION,
 		"nodes" = nodes,
