@@ -44,6 +44,13 @@ type Data = {
   projects: ProjectInfo[];
   vitaeReserve: number;
   capacityPerAscension: number;
+  minDonation: number;
+  donationVitae: number;
+  donationBlood: number;
+  bloodNormal: number;
+  isVampire: BooleanLike;
+  blood: number;
+  maxGive: number;
   isLord: BooleanLike;
   vitae: number;
   maxVitae: number;
@@ -110,6 +117,28 @@ const getContributeTooltip = (
   }
   const source = drawsFromCup ? ', the cup first' : '';
   return `I can give up to ${formatVitae(project.maxContribution)} vitae${source}`;
+};
+
+const getGiveTooltip = (data: Data) => {
+  const {
+    maxGive = 0,
+    cup = 0,
+    cupCapacity = 0,
+    minDonation = 0,
+    donationVitae = 0,
+    donationBlood = 0,
+  } = data;
+  if (maxGive > 0) {
+    const bloodCost =
+      donationVitae > 0
+        ? Math.ceil((maxGive * donationBlood) / donationVitae)
+        : 0;
+    return `I can give up to ${formatVitae(maxGive)} vitae for ${formatVitae(bloodCost)} blood`;
+  }
+  if (cup >= cupCapacity) {
+    return 'The cup is full';
+  }
+  return `The crucible takes no less than ${formatVitae(minDonation)} vitae`;
 };
 
 const ActiveProjectSection = (props: {
@@ -275,7 +304,75 @@ const ProjectColumn = (props: {
   );
 };
 
-export const CrimsonCrucible = () => {
+const MortalCrucible = () => {
+  const { act, data } = useBackend<Data>();
+  const {
+    blood = 0,
+    bloodNormal = 0,
+    vitae = 0,
+    maxVitae = 0,
+    cup = 0,
+    cupCapacity = 0,
+    maxGive = 0,
+    donationVitae = 0,
+    donationBlood = 0,
+  } = data;
+
+  return (
+    <Window width={480} height={260}>
+      <Window.Content>
+        <Section title="The Cup">
+          <LabeledList>
+            <LabeledList.Item label="My Blood">
+              <ProgressBar
+                value={blood}
+                maxValue={Math.max(bloodNormal, 1)}
+                color="bad"
+              >
+                {`${formatVitae(blood)} / ${formatVitae(bloodNormal)}`}
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item label="My Vitae">
+              <ProgressBar
+                value={vitae}
+                maxValue={Math.max(maxVitae, 1)}
+                color="bad"
+              >
+                {`${formatVitae(vitae)} / ${formatVitae(maxVitae)}`}
+              </ProgressBar>
+            </LabeledList.Item>
+            <LabeledList.Item
+              label="The Cup"
+              buttons={
+                <Button
+                  icon="hand-holding-heart"
+                  disabled={maxGive <= 0}
+                  tooltip={getGiveTooltip(data)}
+                  onClick={() => act('give_blood')}
+                >
+                  Give blood
+                </Button>
+              }
+            >
+              <ProgressBar
+                value={cup}
+                maxValue={Math.max(cupCapacity, 1)}
+                color="bad"
+              >
+                {`${formatVitae(cup)} / ${formatVitae(cupCapacity)}`}
+              </ProgressBar>
+            </LabeledList.Item>
+          </LabeledList>
+          <Box mt={1} italic color="label">
+            {`The crucible drinks mortal blood into its cup: every ${formatVitae(donationVitae)} vitae costs ${formatVitae(donationBlood)} blood. Only Kaine's children may turn it to their rites.`}
+          </Box>
+        </Section>
+      </Window.Content>
+    </Window>
+  );
+};
+
+const KindredCrucible = () => {
   const { act, data } = useBackend<Data>();
   const {
     projects = [],
@@ -432,4 +529,9 @@ export const CrimsonCrucible = () => {
       </Window.Content>
     </Window>
   );
+};
+
+export const CrimsonCrucible = () => {
+  const { data } = useBackend<Data>();
+  return data.isVampire ? <KindredCrucible /> : <MortalCrucible />;
 };

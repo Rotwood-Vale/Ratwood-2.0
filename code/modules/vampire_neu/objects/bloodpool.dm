@@ -35,7 +35,7 @@
 			to_chat(user, span_notice("- [project.display_name]: [project.paid_amount]/[project.total_cost] ([progress_percent]%)"))
 
 /obj/structure/vampire/bloodpool/attack_hand(mob/living/user)
-	if(!user.mind?.has_antag_datum(/datum/antagonist/vampire))
+	if(!user.is_kindred() && !can_offer_blood(user))
 		return
 	ui_interact(user)
 
@@ -65,12 +65,26 @@
 	data["projects"] = projects
 	data["vitaeReserve"] = CRUCIBLE_VITAE_RESERVE
 	data["capacityPerAscension"] = CRUCIBLE_CAPACITY_PER_ASCENSION
+	data["minDonation"] = CRUCIBLE_MIN_DONATION
+	data["donationVitae"] = CRUCIBLE_DONATION_VITAE
+	data["donationBlood"] = CRUCIBLE_DONATION_BLOOD
+	data["bloodNormal"] = BLOOD_VOLUME_NORMAL
 	return data
 
 /obj/structure/vampire/bloodpool/ui_data(mob/user)
 	var/list/data = list()
 	var/mob/living/living_user = user
 	if(!istype(living_user))
+		return data
+
+	data["cup"] = current
+	data["cupCapacity"] = get_cup_capacity()
+	data["isVampire"] = living_user.is_kindred()
+	if(!data["isVampire"])
+		data["blood"] = living_user.get_blood_volume()
+		data["vitae"] = living_user.get_bloodpool() * CLIENT_VITAE_MULTIPLIER
+		data["maxVitae"] = living_user.get_maxbloodpool() * CLIENT_VITAE_MULTIPLIER
+		data["maxGive"] = get_max_blood_gift(living_user)
 		return data
 
 	var/is_lord = is_crucible_lord(living_user)
@@ -106,8 +120,6 @@
 	data["isLord"] = is_lord
 	data["vitae"] = living_user.get_bloodpool()
 	data["maxVitae"] = living_user.get_maxbloodpool()
-	data["cup"] = current
-	data["cupCapacity"] = get_cup_capacity()
 	data["maxPour"] = get_max_pour(living_user)
 	data["summoning"] = summoning_role
 	data["ascensions"] = ascensions
@@ -123,7 +135,12 @@
 		return
 
 	var/mob/living/user = ui.user
-	if(!istype(user) || !user.mind?.has_antag_datum(/datum/antagonist/vampire))
+	if(!istype(user))
+		return
+
+	if(!user.is_kindred())
+		if(action == "give_blood" && can_offer_blood(user))
+			return give_blood(user)
 		return
 
 	switch(action)
@@ -185,6 +202,49 @@
 	user.adjust_bloodpool(-amount)
 	current += amount
 	to_chat(user, span_greentext("Poured [amount] vitae into the cup. ([current]/[get_cup_capacity()])"))
+	return TRUE
+
+/obj/structure/vampire/bloodpool/proc/can_offer_blood(mob/living/user)
+	if(!ishuman(user) || user.is_kindred())
+		return FALSE
+	var/mob/living/carbon/human/donor = user
+	return !(NOBLOOD in donor.dna?.species?.species_traits)
+
+/obj/structure/vampire/bloodpool/proc/get_max_blood_gift(mob/living/user)
+	var/vitae_in_blood = FLOOR((user.get_blood_volume() - CRUCIBLE_MIN_DONOR_BLOOD) * CRUCIBLE_DONATION_VITAE / CRUCIBLE_DONATION_BLOOD, 1)
+	var/gift = min(user.get_bloodpool() * CLIENT_VITAE_MULTIPLIER, vitae_in_blood, get_cup_capacity() - current)
+	if(gift < CRUCIBLE_MIN_DONATION)
+		return 0
+	return gift
+
+/obj/structure/vampire/bloodpool/proc/give_blood(mob/living/user)
+	var/max_gift = get_max_blood_gift(user)
+	if(max_gift <= 0)
+		if(current >= get_cup_capacity())
+			to_chat(user, span_warning("The cup is already full."))
+		else
+			to_chat(user, span_warning("The crucible takes no less than [CRUCIBLE_MIN_DONATION] vitae, and I have too little blood to give."))
+		return
+
+	var/amount = tgui_input_number(user, "How much vitae to give? Every [CRUCIBLE_DONATION_VITAE] vitae costs [CRUCIBLE_DONATION_BLOOD] blood. (Max: [max_gift])", "THE CUP", max_gift, max_gift, CRUCIBLE_MIN_DONATION)
+	if(!amount || amount < CRUCIBLE_MIN_DONATION)
+		return
+
+	if(QDELETED(src) || get_dist(user, src) > 1)
+		to_chat(user, span_warning("I need to be next to the crucible."))
+		return
+
+	max_gift = get_max_blood_gift(user)
+	if(max_gift <= 0)
+		to_chat(user, span_warning("The crucible will take no more of my blood."))
+		return
+
+	amount = clamp(round(amount), CRUCIBLE_MIN_DONATION, max_gift)
+	user.adjust_bloodpool(-CEILING(amount / CLIENT_VITAE_MULTIPLIER, 1))
+	user.set_blood_volume(max(user.get_blood_volume() - CEILING(amount * CRUCIBLE_DONATION_BLOOD / CRUCIBLE_DONATION_VITAE, 1), CRUCIBLE_MIN_DONOR_BLOOD))
+	current += amount
+	to_chat(user, span_userdanger("Cursed magic drains my strength."))
+	to_chat(user, span_notice("The cup drinks [amount] vitae from my blood. ([current]/[get_cup_capacity()])"))
 	return TRUE
 
 /obj/structure/vampire/bloodpool/proc/get_active_project(project_type_text)
