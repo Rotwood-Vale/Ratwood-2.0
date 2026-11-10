@@ -479,8 +479,8 @@
 		item_d_type = "fire"
 		blade_class = BCLASS_PICK
 
-/obj/item/rogueweapon/halberd/bardiche/scythe/martyr/Initialize()
-	. = ..()
+/obj/item/rogueweapon/halberd/bardiche/scythe/martyr/Initialize(mapload)
+	. = ..(mapload)
 	if(SSroguemachine.martyrweapon)
 		qdel(src)
 	else
