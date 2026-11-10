@@ -233,3 +233,7 @@
       out of it.
   - bugfix: Bedrolls now work as proper hiding spots without folding the bed.
   - bugfix: Fixes to behind code to handle "interaction overriding" components properly.
+2026-11-10:
+  ophaq:
+  - rscadd: Adds the harmonica, jaw harp, trumpet, banjo, and bagpipe to the list
+      of instruments for the conjure instrument spell and alphabetizes the list.
