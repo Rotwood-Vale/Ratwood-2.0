@@ -20,6 +20,23 @@
 	patient.set_species(/datum/species/construct/metal)
 	TEST_ASSERT(!length(patient.get_missing_organs()), "Construct anatomy produced a false missing-organ diagnosis")
 
+	patient.set_species(/datum/species/dullahan)
+	var/datum/species/dullahan/dullahan = patient.dna.species
+	var/obj/item/bodypart/head/dullahan/head = dullahan.my_head
+	var/obj/item/organ/eyes = patient.getorganslot(ORGAN_SLOT_EYES)
+	TEST_ASSERT(head && eyes, "Dullahan did not start with a head and eyes")
+	head.drop_limb(FALSE)
+	TEST_ASSERT(!patient.getorganslot(ORGAN_SLOT_EYES) && eyes.loc == head, "Detaching the head did not move the eyes out of the body's organ slots")
+	TEST_ASSERT(patient.put_in_active_hand(head), "Dullahan could not hold their detached head")
+	TEST_ASSERT(!length(patient.get_missing_organs()), "Organs in the detached Dullahan head were reported missing")
+
+	eyes.forceMove(get_turf(head))
+	missing = patient.get_missing_organs()
+	eyes.forceMove(head)
+	head.attach_limb(patient)
+	TEST_ASSERT_EQUAL(length(missing), 1, "Diagnosis should report exactly the organ removed from the detached head")
+	TEST_ASSERT(eyes.name in missing, "Diagnosis did not name the eyes removed from the detached head")
+
 /datum/unit_test/surgical_fire_healing/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/bodypart/chest = patient.get_bodypart(BODY_ZONE_CHEST)
