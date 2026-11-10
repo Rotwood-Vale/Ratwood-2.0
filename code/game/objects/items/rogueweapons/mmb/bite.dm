@@ -393,7 +393,10 @@
 	sippy = TRUE
 	to_chat(user, span_warning("You tighten your lips and attempt to drink blood!"))
 
+	var/has_drunk = FALSE
 	while(src && user && grabbed && sippy)
+		if(has_drunk && !user.client?.prefs.autoblooddrink)
+			break
 		var/mob/living/carbon/C = grabbed
 		if(QDELETED(src) || !user || !grabbed || !sippy)
 			break
@@ -408,7 +411,8 @@
 			break
 
 		user.drinksomeblood(C, sublimb_grabbed)
-		if(!do_after(user, 2 SECONDS, grabbed))
+		has_drunk = TRUE
+		if(!user.client?.prefs.autoblooddrink || !do_after(user, 2 SECONDS, grabbed))
 			break
 
 	user.break_invisibility()
