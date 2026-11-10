@@ -526,6 +526,7 @@
 		return FALSE
 
 /obj/item/rogueweapon/halberd/bardiche/scythe/martyr/Destroy()
+	SSroguemachine.martyrweapon = null
 	var/datum/component/martyr = GetComponent(/datum/component/martyrweapon)
 	if(martyr)
 		martyr.ClearFromParent()
