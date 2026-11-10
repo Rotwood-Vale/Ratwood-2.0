@@ -3,7 +3,7 @@
 	tutorial = "Branded a Necromancer by the dimwitted and the Forces That Be, you are a Haruspex, breaking Necra's chained souls and conjuring undying legions to marshal against those who would lay down their lyfe and souls for petty Gods. Conjure the Arcyne and the Lux to your will and show them there is Kinship in Her"
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/wretch/necromancer
+	outfit = /datum/outfit/job/roguetown/ashen_host/haruspex
 	cmode_music = 'sound/music/combat_heretic.ogg'
 	class_select_category = CLASS_CAT_MAGE
 	category_tags = list(CTAG_ASHEN)
@@ -35,7 +35,7 @@
 	subclass_stashed_items = list(
 		"Sewing Kit" = /obj/item/repair_kit,
 	)
-/datum/outfit/job/roguetown/wretch/necromancer/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/ashen_host/haruspex/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/necromhood
 	shoes = /obj/item/clothing/shoes/roguetown/boots/leather/reinforced
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants

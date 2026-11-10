@@ -33,7 +33,7 @@
 		/datum/advclass/ashen_host/speculator,
 		/datum/advclass/ashen_host/haruspex,
 		/datum/advclass/ashen_host/praetorian,
-		/datum/advclass/ashen_host/herald_of_progress,
+		/datum/advclass/ashen_host/cornicen,
 		/datum/advclass/ashen_host/commander,
 	)
 

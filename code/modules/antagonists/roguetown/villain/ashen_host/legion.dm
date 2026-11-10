@@ -3,7 +3,7 @@
 	tutorial = "A Legionary is no meager footsoldier, you are her plate-clad bloodied hand. Wielding dark sorceries, unholy incantations and heavy, dread armaments, no soldier is better prepared to inversely crucify the unworthy than you. Utilize Faith, Magic and Might to lay low any who would stand between you and HER ambition."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/ashen_host/heretic
+	outfit = /datum/outfit/job/roguetown/ashen_host/legionary
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_ASHEN)
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_HEAVYARMOR)
@@ -37,10 +37,10 @@
 	)
 	extra_context = "This subclass gains the Wound Heal miracle and the Convert Heretic spell."
 
-/datum/outfit/job/roguetown/ashen_host/heretic
+/datum/outfit/job/roguetown/ashen_host/legionary
 	has_loadout = TRUE
 
-/datum/outfit/job/roguetown/ashen_host/heretic/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/ashen_host/legionary/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.set_patron(/datum/patron/inhumen/zizo)
 	H.set_blindness(0)
@@ -100,7 +100,7 @@
 		H.change_stat(STATKEY_INT, 2) 
 		H.change_stat(STATKEY_PER, 2)
 
-/datum/outfit/job/roguetown/ashen_host/heretic/choose_loadout(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/ashen_host/legionary/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
 	var/helmets = list(
 		"Pigface Bascinet" = /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
@@ -143,7 +143,7 @@
 	tutorial = " How can knowledge be Evil, when it grants Eternity ? There is Salvation in unholy scripture, Grace in darkness. Utilize faith and subterfuge to reveal the Light of the Pantheon for what it is, a dazzling lie that conceals the truth of HER ways."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/ashen_host/heretic_spy
+	outfit = /datum/outfit/job/roguetown/ashen_host/speculator
 	class_select_category = CLASS_CAT_ROGUE
 	category_tags = list(CTAG_ASHEN)
 	traits_applied = list(TRAIT_RITUALIST, TRAIT_DODGEEXPERT)
@@ -177,10 +177,10 @@
 	)
 	extra_context = "This subclass gains the Wound Heal miracle and the Convert Heretic spell."
 
-/datum/outfit/job/roguetown/ashen_host/heretic_spy
+/datum/outfit/job/roguetown/ashen_host/speculator
 	has_loadout = TRUE
 
-/datum/outfit/job/roguetown/ashen_host/heretic_spy/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/ashen_host/speculator/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.set_patron(/datum/patron/inhumen/zizo)
 	H.set_blindness(0)
@@ -260,7 +260,7 @@
 	ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HERESIARCH, TRAIT_GENERIC)
 
-/datum/outfit/job/roguetown/ashen_host/heretic_spy/choose_loadout(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/ashen_host/speculator/choose_loadout(mob/living/carbon/human/H)
 	. = ..()
 	H.cmode_music = 'sound/music/combat_heretic.ogg'
 	H.equip_to_slot_or_del(new /obj/item/rogueweapon/huntingknife/idagger/steel/kris/zizo, SLOT_IN_BACKPACK, TRUE)

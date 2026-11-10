@@ -1,9 +1,9 @@
-/datum/advclass/ashen_host/herald_of_progress
+/datum/advclass/ashen_host/cornicen
 	name = "Ashen Cornicen"
 	tutorial = "Your melodies bring about melancholy visions of the future. Your soliloquies are punctuated by whispered truths of the past. Dread change, but the promises of tomorrow come to fruition all the same. You are a Cornicen of her Legions, a soothsayer of what is to be. Sing the  Eulogy for this flawed Realm, in HER name."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/wretch/herald_of_progress
+	outfit = /datum/outfit/job/roguetown/ashen_host/cornicen
 	cmode_music = 'sound/music/combatheraldprogress.ogg'
 	class_select_category = CLASS_CAT_CLERIC
 	category_tags = list(CTAG_ASHEN)
@@ -41,7 +41,7 @@
 		"Sewing Kit" = /obj/item/repair_kit,
 	)
 
-/datum/outfit/job/roguetown/wretch/herald_of_progress/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/ashen_host/cornicen/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/roguehood/red
 	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/ashen
 	mask = /obj/item/clothing/mask/rogue/lordmask/zizite
