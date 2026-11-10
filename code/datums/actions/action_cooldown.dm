@@ -415,4 +415,5 @@
 	var/poke_choice = tgui_input_list(user, "Choose your greater spell.", "Arcyne Progress", poke_options)
 	if(!poke_choice || !user.mind)
 		return
-	user.mind.AddSpell(new poke_options[poke_choice])
+	var/spell_path = poke_options[poke_choice]
+	user.mind.AddSpell(new spell_path)
