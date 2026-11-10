@@ -50,9 +50,11 @@ SUBSYSTEM_DEF(crediticons)
 	var/mutable_appearance/portrait
 
 /// The character's name now, read from their body while it exists, so post-spawn renames are picked up.
+/// Wildshape and werewolf forms are separate human bodies with their own names; while the mind is in
+/// one of those, the last name read from the real body is kept.
 /datum/credit_entry/proc/current_name()
 	var/mob/living/carbon/human/body = mind?.current
-	if(ishuman(body) && !QDELETED(body) && body.real_name)
+	if(ishuman(body) && !QDELETED(body) && !body.is_shapeshift_shell() && body.real_name)
 		name = body.real_name
 	return name
 
