@@ -556,7 +556,8 @@
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	sleevetype = "silverarmor"
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
-	armor = ARMOR_PLATE
+	armor = ARMOR_PLATE_BSTEEL
+	max_integrity = ARMOR_INT_CHEST_PLATE_BLACKSTEEL
 	sellprice = 1000
 	smeltresult = null
 
@@ -601,7 +602,8 @@
 	sleeved = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
 	sleevetype = "silvergloves"
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
-	armor = ARMOR_PLATE
+	armor = ARMOR_PLATE_BSTEEL
+	max_integrity = ARMOR_INT_SIDE_BLACKSTEEL
 	smeltresult = null
 
 /obj/item/clothing/gloves/roguetown/plate/holysee/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
@@ -648,7 +650,8 @@
 	sleeved = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
 	sleevetype = "silverboots"
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/martyr.dmi'
-	armor = ARMOR_PLATE
+	armor = ARMOR_PLATE_BSTEEL
+	max_integrity = ARMOR_INT_SIDE_BLACKSTEEL
 	smeltresult = null
 
 /obj/item/clothing/shoes/roguetown/boots/armor/holysee/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
@@ -696,7 +699,8 @@
 	sleevetype = "silverlegs"
 	icon_state = "silverlegs"
 	item_state = "silverlegs"
-	armor = ARMOR_PLATE
+	armor = ARMOR_PLATE_BSTEEL
+	max_integrity = ARMOR_INT_LEG_BLACKSTEEL
 	sellprice = 1000
 	smeltresult = null
 
@@ -749,6 +753,8 @@
 	worn_y_dimension = 64
 	icon_state = "silverbascinet"
 	item_state = "silverbascinet"
+	armor = ARMOR_PLATE_BSTEEL
+	max_integrity = ARMOR_INT_HELMET_BLACKSTEEL
 	sellprice = 1000
 	smeltresult = null
 
@@ -804,6 +810,8 @@
 	worn_y_dimension = 64
 	icon_state = "silverarmet"
 	item_state = "silverarmet"
+	armor = ARMOR_PLATE_BSTEEL
+	max_integrity = ARMOR_INT_HELMET_BLACKSTEEL
 	smeltresult = null
 
 /obj/item/clothing/cloak/holysee
