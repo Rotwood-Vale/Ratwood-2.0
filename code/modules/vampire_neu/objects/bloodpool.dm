@@ -553,7 +553,7 @@
 
 /datum/vampire_project/gate_amulet
 	display_name = "World Anchor"
-	description = "Forge a Gate Amulet from crystallized blood. Wherever it is carried, the Rift Gate can tear a portal open beside it, until the amulet shatters."
+	description = "Forge a Gate Amulet from crystallized blood. The Rift Gate carries its bearer home, and whoever they bear upon their shoulder."
 	category = CRUCIBLE_CATEGORY_SUMMONING
 	total_cost = VAMPCOST_GATE_AMULET
 	completion_sound = 'sound/misc/vcraft.ogg'

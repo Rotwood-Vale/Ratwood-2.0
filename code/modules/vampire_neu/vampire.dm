@@ -231,15 +231,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	name = "Teleport Sending"
 	icon_state = "x2"
 
-/obj/effect/landmark/vteleportdestination
-	name = "Return Destination"
-	icon_state = "x2"
-	var/amuletname
-
-/obj/effect/landmark/vteleportsenddest
-	name = "Sending Destination"
-	icon_state = "x2"
-
 // Prefabs for admin
 /datum/antagonist/vampire/thinblood
 	name = "Thinblood"

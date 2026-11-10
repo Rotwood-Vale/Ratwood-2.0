@@ -1,6 +1,8 @@
+import { memo, useState } from 'react';
 import {
   Box,
   Button,
+  Input,
   LabeledList,
   NoticeBox,
   Section,
@@ -11,90 +13,197 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
+type Zone = {
+  ref: string;
+  name: string;
+};
+
 type Amulet = {
   ref: string;
   name: string;
   area: string;
-  uses: number;
 };
 
 type Data = {
-  amulets: Amulet[];
+  zones: Zone[];
   vitaeCost: number;
-  placementRange: number;
+  portalDuration: number;
+  amulets: Amulet[];
   hasVitae: BooleanLike;
-  sendingActive: BooleanLike;
+  riftZone: string | null;
+  riftSecondsLeft: number;
 };
+
+type ActFn = (action: string, params?: Record<string, unknown>) => void;
+
+const formatDuration = (seconds: number) => {
+  const total = Math.max(Math.round(seconds || 0), 0);
+  const minutes = Math.floor(total / 60);
+  const rest = `${total % 60}`.padStart(2, '0');
+  return `${minutes}:${rest}`;
+};
+
+const ZoneList = memo(
+  (props: {
+    zones: Zone[];
+    query: string;
+    canOpen: boolean;
+    blockedReason: string | null;
+    act: ActFn;
+  }) => {
+    const { zones, query, canOpen, blockedReason, act } = props;
+    const shown = query
+      ? zones.filter((zone) => zone.name.toLowerCase().includes(query))
+      : zones;
+
+    if (!shown.length) {
+      return <NoticeBox>No zone matches that name.</NoticeBox>;
+    }
+
+    return (
+      <>
+        {shown.map((zone) => (
+          <Button
+            key={zone.ref}
+            fluid
+            icon="eye"
+            disabled={!canOpen}
+            tooltip={blockedReason}
+            onClick={() => act('open_zone', { zone: zone.ref })}
+          >
+            {zone.name}
+          </Button>
+        ))}
+      </>
+    );
+  },
+);
 
 export const VampireRiftGate = () => {
   const { act, data } = useBackend<Data>();
-  const { amulets = [], vitaeCost = 0, placementRange = 0 } = data;
+  const {
+    zones = [],
+    vitaeCost = 0,
+    portalDuration = 0,
+    amulets = [],
+    riftZone,
+    riftSecondsLeft = 0,
+  } = data;
+  const [search, setSearch] = useState('');
   const hasVitae = !!data.hasVitae;
-  const sendingActive = !!data.sendingActive;
+  const riftOpen = !!riftZone;
+  const canOpen = hasVitae && !riftOpen;
+
+  let blockedReason: string | null = null;
+  if (riftOpen) {
+    blockedReason = 'A rift is already open';
+  } else if (!hasVitae) {
+    blockedReason = 'I lack the vitae';
+  }
 
   return (
-    <Window width={480} height={480}>
-      <Window.Content scrollable>
-        <Section title="Rift">
-          <LabeledList>
-            <LabeledList.Item label="Cost">{vitaeCost} vitae</LabeledList.Item>
-            <LabeledList.Item label="Placement">
-              Up to {placementRange} paces from the anchor
-            </LabeledList.Item>
-            <LabeledList.Item
-              label="Status"
-              color={sendingActive ? 'bad' : 'good'}
+    <Window width={520} height={680}>
+      <Window.Content>
+        <Stack fill vertical>
+          <Stack.Item>
+            <Section
+              title="Rift"
+              buttons={
+                riftOpen && (
+                  <Button
+                    icon="times"
+                    color="bad"
+                    onClick={() => act('close_rift')}
+                  >
+                    Close
+                  </Button>
+                )
+              }
             >
-              {sendingActive ? 'A sending rift is open' : 'Dormant'}
-            </LabeledList.Item>
-          </LabeledList>
-          <Box mt={1} italic color="label">
-            My sight passes through the chosen anchor first, so I can pick the
-            spot before the rift opens.
-          </Box>
-        </Section>
-        <NoticeBox
-          danger
-          style={{ visibility: hasVitae ? 'hidden' : 'visible' }}
-        >
-          I lack the vitae to tear a rift.
-        </NoticeBox>
-        <Section title="Anchors">
-          {amulets.length ? (
-            amulets.map((amulet) => (
-              <Stack key={amulet.ref} align="center" mb={1}>
-                <Stack.Item grow>
-                  <Box bold>{amulet.name}</Box>
-                  <Box color="label">
-                    {amulet.area}, charges: {amulet.uses}
-                  </Box>
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    icon="reply"
-                    disabled={!hasVitae}
-                    tooltip="Gaze through the amulet and choose where a rift back here opens"
-                    onClick={() => act('open_return', { amulet: amulet.ref })}
-                  >
-                    Return
-                  </Button>
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    icon="share"
-                    disabled={!hasVitae || sendingActive}
-                    tooltip="Gaze through the amulet and choose where the rift from here leads"
-                    onClick={() => act('open_sending', { amulet: amulet.ref })}
-                  >
-                    Send
-                  </Button>
-                </Stack.Item>
-              </Stack>
-            ))
-          ) : (
-            <NoticeBox>No gate amulets are bound to the rift.</NoticeBox>
+              <LabeledList>
+                <LabeledList.Item label="Cost">
+                  {vitaeCost} vitae
+                </LabeledList.Item>
+                <LabeledList.Item label="Lasts">
+                  {formatDuration(portalDuration)}
+                </LabeledList.Item>
+                <LabeledList.Item label="Way back">
+                  Gate amulet bearers, and whoever they carry on their shoulder
+                </LabeledList.Item>
+                <LabeledList.Item
+                  label="Status"
+                  color={riftOpen ? 'bad' : 'good'}
+                >
+                  {riftOpen
+                    ? `Open to ${riftZone}, closes in ${formatDuration(riftSecondsLeft)}`
+                    : 'Dormant'}
+                </LabeledList.Item>
+              </LabeledList>
+              <Box mt={1} italic color="label">
+                My sight enters the chosen place first, so I can pick the spot
+                before the rift opens.
+              </Box>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <NoticeBox
+              danger
+              style={{ visibility: hasVitae ? 'hidden' : 'visible' }}
+            >
+              I lack the vitae to tear a rift.
+            </NoticeBox>
+          </Stack.Item>
+          {amulets.length > 0 && (
+            <Stack.Item>
+              <Section title="Amulet Bearers">
+                {amulets.map((amulet) => (
+                  <Stack key={amulet.ref} align="center" mb={1}>
+                    <Stack.Item grow>
+                      <Box bold>{amulet.name}</Box>
+                      <Box color="label">{amulet.area}</Box>
+                    </Stack.Item>
+                    <Stack.Item>
+                      <Button
+                        icon="eye"
+                        disabled={!canOpen}
+                        tooltip={
+                          blockedReason || 'Open the rift near this amulet'
+                        }
+                        onClick={() =>
+                          act('open_amulet', { amulet: amulet.ref })
+                        }
+                      >
+                        Open Near
+                      </Button>
+                    </Stack.Item>
+                  </Stack>
+                ))}
+              </Section>
+            </Stack.Item>
           )}
-        </Section>
+          <Stack.Item grow>
+            <Section
+              title="Zones"
+              fill
+              scrollable
+              buttons={
+                <Input
+                  placeholder="Search zones..."
+                  value={search}
+                  onChange={setSearch}
+                />
+              }
+            >
+              <ZoneList
+                zones={zones}
+                query={search.trim().toLowerCase()}
+                canOpen={canOpen}
+                blockedReason={blockedReason}
+                act={act}
+              />
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
