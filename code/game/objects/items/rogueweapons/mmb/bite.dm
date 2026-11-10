@@ -139,7 +139,7 @@
 
 			switch(armor_class)
 				if(ARMOR_CLASS_NONE)
-					recoil_mult = 0.05
+					recoil_mult = 0
 				if(ARMOR_CLASS_LIGHT)
 					recoil_mult = 0.15
 				if(ARMOR_CLASS_MEDIUM)
@@ -323,7 +323,7 @@
 
 		switch(armor_class)
 			if(ARMOR_CLASS_NONE)
-				recoil_mult = 0.05
+				recoil_mult = 0
 			if(ARMOR_CLASS_LIGHT)
 				recoil_mult = 0.15
 			if(ARMOR_CLASS_MEDIUM)
