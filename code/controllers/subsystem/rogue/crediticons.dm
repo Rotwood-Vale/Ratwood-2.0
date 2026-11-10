@@ -14,8 +14,9 @@ SUBSYSTEM_DEF(crediticons)
 	flags = SS_NO_INIT | SS_NO_FIRE
 	/// Assoc list of /datum/mind => /datum/credit_entry, in join order.
 	var/list/entries = list()
-	/// real_name => portrait, for wanted people who have no credits entry (uncredited jobs).
-	/// Kept apart from entries so they never roll in the credits.
+	/// Wanted name => portrait source, captured from the actual mob when they were declared or bountied.
+	/// Holds their /datum/credit_entry if they have one (so recaptures carry over), else a fallback
+	/// mutable_appearance for uncredited jobs. Kept apart from entries so fallbacks never roll in the credits.
 	var/list/wanted_portraits = list()
 	/// portrait => base64 PNG for wanted posters. Each portrait is flattened at most once.
 	var/list/poster_cache = list()
@@ -42,14 +43,19 @@ SUBSYSTEM_DEF(crediticons)
 
 /datum/credit_entry
 	var/datum/mind/mind
-	/// Name at the last capture or lookup. Use current_name(); antags often rename after spawning.
+	/// Name at the last capture or lookup. Read it through current_name(); antags often rename after spawning.
 	var/name
 	var/title
 	var/voice_color
 	/// Clean, south-facing appearance of the character as they set out. FLOAT_PLANE, blank base icon.
+	/// Change it through set_portrait() so the cached poster and portrait object are dropped.
 	var/mutable_appearance/portrait
+	/// Scaled, masked portrait shown inside every client's credit for this entry. Built once, on first roll.
+	var/atom/movable/screen/credit_portrait/portrait_holder
+	/// Lazy list of credit screen objects showing this entry right now, across all clients.
+	var/list/live_credits
 
-/// The character's name now, read from their body while it exists, so post-spawn renames are picked up.
+/// Refreshes name from the character's body while it exists, so post-spawn renames are picked up, and returns it.
 /// Wildshape and werewolf forms are separate human bodies with their own names; while the mind is in
 /// one of those, the last name read from the real body is kept.
 /datum/credit_entry/proc/current_name()
@@ -58,17 +64,43 @@ SUBSYSTEM_DEF(crediticons)
 		name = body.real_name
 	return name
 
+/datum/credit_entry/proc/set_portrait(mutable_appearance/new_portrait)
+	SScrediticons.poster_cache -= portrait
+	portrait = new_portrait
+	if(!portrait_holder)
+		return
+	for(var/atom/movable/screen/credit/credit as anything in live_credits)
+		credit.vis_contents -= portrait_holder
+	QDEL_NULL(portrait_holder)
+
+/// The shared portrait object for credits to show in their vis_contents, or null if there's no portrait.
+/datum/credit_entry/proc/get_portrait_holder()
+	if(!portrait)
+		return null
+	if(!portrait_holder)
+		portrait_holder = new(null, portrait)
+	return portrait_holder
+
+/// Every credits entry, in join order.
+/datum/controller/subsystem/crediticons/proc/get_roster()
+	. = list()
+	for(var/datum/mind/M as anything in entries)
+		. += entries[M]
+
 /// Schedules a portrait capture for H. Safe to call repeatedly; the newest call wins.
+/// The mind is pinned now, so the capture still lands if it leaves the body (wildshape) before the timer fires.
 /datum/controller/subsystem/crediticons/proc/queue_capture(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
-	addtimer(CALLBACK(src, PROC_REF(capture), H), CREDIT_CAPTURE_DELAY, TIMER_UNIQUE | TIMER_OVERRIDE)
+	addtimer(CALLBACK(src, PROC_REF(capture), H, H.mind), CREDIT_CAPTURE_DELAY, TIMER_UNIQUE | TIMER_OVERRIDE)
 
-/// Captures (or replaces) the credits entry for H's mind. Returns the entry, or null if H isn't eligible.
-/datum/controller/subsystem/crediticons/proc/capture(mob/living/carbon/human/H)
+/// Captures (or replaces) the credits entry for M (default: H's mind) from H's body.
+/// Returns the entry, or null if they aren't eligible.
+/datum/controller/subsystem/crediticons/proc/capture(mob/living/carbon/human/H, datum/mind/M)
 	if(QDELETED(H))
 		return null
-	var/datum/mind/M = H.mind
+	if(!M)
+		M = H.mind
 	if(!M?.key) // player characters only; NPCs and admin-spawned bodies have no key
 		return null
 	var/datum/job/J = M.assigned_role // may hold a datum or a title string depending on who set it
@@ -85,32 +117,36 @@ SUBSYSTEM_DEF(crediticons)
 	entry.name = H.real_name
 	entry.title = H.get_role_title()
 	entry.voice_color = H.voice_color
-	poster_cache -= entry.portrait
-	entry.portrait = build_portrait(H)
+	entry.set_portrait(build_portrait(H))
 	return entry
 
-/// Schedules a fallback portrait for someone just declared an outlaw or bountied.
-/// Does nothing useful if they already have a credits entry by the time it fires.
+/// Schedules a wanted-poster portrait for someone just declared an outlaw or bountied.
 /datum/controller/subsystem/crediticons/proc/queue_wanted_capture(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
 	addtimer(CALLBACK(src, PROC_REF(capture_wanted), H), CREDIT_CAPTURE_DELAY, TIMER_UNIQUE | TIMER_OVERRIDE)
 
+/// Ties H's name to H's own portrait, so same-named characters can't swap faces on the posters.
 /datum/controller/subsystem/crediticons/proc/capture_wanted(mob/living/carbon/human/H)
 	if(QDELETED(H))
 		return
-	if(H.mind && entries[H.mind])
-		return
 	poster_cache -= wanted_portraits[H.real_name]
-	wanted_portraits[H.real_name] = build_portrait(H)
+	var/datum/credit_entry/entry = H.mind && entries[H.mind]
+	wanted_portraits[H.real_name] = entry || build_portrait(H)
 
-/// Best portrait for a character name: their credits entry, else a wanted fallback, else null.
+/// Best portrait for a wanted name: the one captured when they were declared, else a credits entry
+/// with that name, else null.
 /datum/controller/subsystem/crediticons/proc/get_portrait_by_name(name)
+	var/wanted = wanted_portraits[name]
+	if(istype(wanted, /datum/credit_entry))
+		var/datum/credit_entry/wanted_entry = wanted
+		return wanted_entry.portrait
+	if(wanted)
+		return wanted
 	for(var/datum/mind/M as anything in entries)
 		var/datum/credit_entry/entry = entries[M]
 		if(entry.current_name() == name)
 			return entry.portrait
-	return wanted_portraits[name]
 
 /// Builds a clean portrait from the mob's standing overlays.
 /// Only overlays_standing is read, so typing indicators, emotes, status effects and anything else
@@ -122,10 +158,33 @@ SUBSYSTEM_DEF(crediticons)
 	for(var/i in 1 to length(standing))
 		if(i in excluded_layers)
 			continue
-		var/overlay = standing[i]
-		if(overlay)
-			portrait.overlays += overlay
+		var/layer_overlays = standing[i]
+		if(islist(layer_overlays))
+			for(var/overlay in layer_overlays)
+				add_clean_overlay(portrait, overlay)
+		else if(layer_overlays)
+			add_clean_overlay(portrait, layer_overlays)
 	return portrait
+
+/// Adds overlay to portrait, minus any blood (tagged BLOOD_OVERLAY_NAME where it's applied).
+/// The live mob's overlay is never edited; a copy is made only when there is blood to strip.
+/datum/controller/subsystem/crediticons/proc/add_clean_overlay(mutable_appearance/portrait, mutable_appearance/overlay)
+	if(overlay.name == BLOOD_OVERLAY_NAME)
+		return
+	var/list/kept = list()
+	var/had_blood = FALSE
+	for(var/mutable_appearance/nested as anything in overlay.overlays)
+		if(nested.name == BLOOD_OVERLAY_NAME)
+			had_blood = TRUE
+		else
+			kept += nested
+	if(!had_blood)
+		portrait.overlays += overlay
+		return
+	var/mutable_appearance/clean = new(overlay)
+	clean.overlays.Cut()
+	clean.overlays += kept
+	portrait.overlays += clean
 
 /// Upper-body PNG (base64) of a portrait, for wanted posters. Flattened once, on first request.
 /datum/controller/subsystem/crediticons/proc/get_poster_base64(mutable_appearance/portrait)
@@ -142,24 +201,20 @@ SUBSYSTEM_DEF(crediticons)
 /// (64x64 weapons with negative pixel offsets) are clipped like the client clips them. Running
 /// getFlatIcon() on the whole portrait doesn't work: its canvas-resize path mixes up its bounds and
 /// draws every later layer off-canvas, giving a blank poster.
+/// Sleeps between overlays if the tick runs long; callers are UI handlers, which may sleep.
 /datum/controller/subsystem/crediticons/proc/build_poster_icon(mutable_appearance/portrait)
 	var/list/sorted = list()
 	for(var/image/overlay as anything in portrait.overlays)
-		if(!overlay.alpha)
-			continue
-		var/index = length(sorted) + 1
-		for(var/i in 1 to length(sorted))
-			var/image/existing = sorted[i]
-			if(overlay.layer < existing.layer)
-				index = i
-				break
-		sorted.Insert(index, overlay)
+		if(overlay.alpha)
+			sorted += overlay
+	sortTim(sorted, GLOBAL_PROC_REF(cmp_atom_layer_asc))
 
 	var/icon/canvas = icon('icons/blanks/32x32.dmi', "nothing")
 	for(var/image/overlay as anything in sorted)
 		var/icon/part = getFlatIcon(image(overlay), SOUTH)
 		if(part)
 			canvas.Blend(part, ICON_OVERLAY, overlay.pixel_x + 1, overlay.pixel_y + 1)
+		CHECK_TICK
 	canvas.Crop(1, 17, 32, 32)
 	canvas.Scale(96, 48)
 	return canvas

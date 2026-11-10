@@ -18,9 +18,7 @@
 	set waitfor = FALSE
 	if(credits_rolling)
 		return
-	var/list/roster = list()
-	for(var/datum/mind/M as anything in SScrediticons.entries)
-		roster += SScrediticons.entries[M]
+	var/list/roster = SScrediticons.get_roster()
 	if(!length(roster))
 		return
 
@@ -62,25 +60,20 @@
 	var/client/parent
 	var/datum/credit_entry/creditee
 	var/upvoted
-	var/atom/movable/screen/credit_portrait/portrait_holder
 
+/// Hearts this credit on every screen currently showing it.
 /atom/movable/screen/credit/Click()
 	if(upvoted)
 		return
 	upvoted = TRUE
+	for(var/atom/movable/screen/credit/CR as anything in creditee.live_credits)
+		CR.show_heart()
+
+/atom/movable/screen/credit/proc/show_heart()
 	var/image/I = new('icons/effects/effects.dmi', "hearty")
 	I.pixel_x = rand(-32,32)
 	animate(I, pixel_y = 64, alpha = 0, time = 18, flags = ANIMATION_PARALLEL)
 	add_overlay(I)
-	for(var/client/C in GLOB.clients)
-		if(C == parent)
-			continue
-		for(var/atom/movable/screen/credit/CR in C.screen)
-			if(CR.creditee == creditee)
-				var/image/IR = new('icons/effects/effects.dmi', "hearty")
-				IR.pixel_x = rand(-32,32)
-				animate(IR, pixel_y = 64, alpha = 0, time = 18, flags = ANIMATION_PARALLEL)
-				CR.add_overlay(IR)
 
 /atom/movable/screen/credit/Initialize(mapload, datum/credit_entry/entry, client/P, lane = 0, slide_duration = CREDIT_SLIDE_DURATION_MAX)
 	. = ..()
@@ -98,8 +91,8 @@
 	maptext_x = -32
 	maptext_y = 8
 	maptext_width = 150
-	if(entry.portrait)
-		portrait_holder = new(null, entry.portrait)
+	var/atom/movable/screen/credit_portrait/portrait_holder = entry.get_portrait_holder()
+	if(portrait_holder)
 		vis_contents += portrait_holder
 	var/matrix/M = matrix(transform)
 	M.Translate(224, 64 + lane * CREDIT_LANE_HEIGHT)
@@ -107,16 +100,20 @@
 	M = matrix(transform)
 	M.Translate(-CREDIT_SLIDE_DISTANCE, 0)
 	animate(src, transform = M, time = slide_duration)
+	// Fade in, hold, then fade out as the slide ends.
 	animate(src, alpha = 255, time = CREDIT_FADE_TIME, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, PROC_REF(FadeOut)), slide_duration - CREDIT_FADE_TIME)
+	animate(alpha = 255, time = slide_duration - CREDIT_FADE_TIME * 2)
+	animate(alpha = 0, time = CREDIT_FADE_TIME)
 	QDEL_IN(src, slide_duration)
 	P.screen += src
 	LAZYADD(P.credits, src)
+	LAZYADD(entry.live_credits, src)
 
 /atom/movable/screen/credit/Destroy()
-	vis_contents.Cut()
-	QDEL_NULL(portrait_holder)
-	creditee = null
+	vis_contents.Cut() // the portrait object is shared with every client's copy of this credit; it isn't ours to delete
+	if(creditee)
+		LAZYREMOVE(creditee.live_credits, src)
+		creditee = null
 	var/client/P = parent
 	if(!P)
 		return ..()
@@ -125,10 +122,8 @@
 	parent = null
 	return ..()
 
-/atom/movable/screen/credit/proc/FadeOut()
-	animate(src, alpha = 0, time = CREDIT_FADE_TIME, flags = ANIMATION_PARALLEL)
-
-/// The scaled, masked portrait shown inside a credit. Lives only in the credit's vis_contents.
+/// The scaled, masked portrait shown inside a credit. One per credits entry, shared by every client's
+/// copy of that credit through vis_contents, so the filter and overlay are set up once per character.
 /// All scaling and masking is done here with transform/filters, so the client does the drawing.
 /atom/movable/screen/credit_portrait
 	screen_loc = null

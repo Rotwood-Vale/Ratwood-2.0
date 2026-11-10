@@ -222,11 +222,17 @@
 	queue_bounty_portrait(target_realname)
 
 /// Makes sure a bounty target has a wanted-poster portrait, even if their job isn't in the credits.
+/// Bounties only record a name, so a player-controlled match is preferred over an NPC namesake.
 /proc/queue_bounty_portrait(target_realname)
+	var/mob/living/carbon/human/match
 	for(var/mob/living/carbon/human/target in GLOB.human_list)
-		if(target.real_name == target_realname)
-			SScrediticons.queue_wanted_capture(target)
-			return
+		if(target.real_name != target_realname)
+			continue
+		match = target
+		if(target.mind?.key)
+			break
+	if(match)
+		SScrediticons.queue_wanted_capture(match)
 
 /proc/add_bounty_noface(target_realname, race, gender, descriptor_height, descriptor_body, descriptor_voice, amount, bandit_status, reason, employer_name)
 	var/datum/bounty/new_bounty_noface = new /datum/bounty

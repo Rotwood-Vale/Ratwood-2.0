@@ -74,6 +74,9 @@
 #define TURF_LAYER				1		//If you're on fire
 #define TOTAL_LAYERS			56		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
+/// Name given to blood overlays on worn clothing and hands, so snapshots (credits portraits) can strip them.
+#define BLOOD_OVERLAY_NAME "blood overlay"
+
 #define BACK_CLOAK_SOUTH_LAYER		(BODY_BEHIND_LAYER+1)
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers

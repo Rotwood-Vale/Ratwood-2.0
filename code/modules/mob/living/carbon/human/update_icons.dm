@@ -444,6 +444,7 @@ There are several things that need to be remembered:
 
 	if(!gloves && bloody_hands)
 		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
+		bloody_overlay.name = BLOOD_OVERLAY_NAME
 		if(get_num_arms(FALSE) < 2)
 			if(has_left_hand(FALSE))
 				bloody_overlay.icon_state = "bloodyhands_left"
@@ -1830,6 +1831,7 @@ generate/load female uniform sprites matching all previously decided variables
 			clothing_icon.Blend(icon(bloody_icon, bloody_icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 			bloody_onmob["[index][(boobed_overlay) ? "_boob" : ""]"] = fcopy_rsc(clothing_icon)
 		var/mutable_appearance/pic = mutable_appearance(clothing_icon, -layer2use)
+		pic.name = BLOOD_OVERLAY_NAME
 		standing.overlays.Add(pic)
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
@@ -1936,6 +1938,7 @@ generate/load female uniform sprites matching all previously decided variables
 				blood_overlay.Blend(icon(I.bloody_icon, I.bloody_icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 				bloody_r[used] = fcopy_rsc(blood_overlay)
 			var/mutable_appearance/pic = mutable_appearance(blood_overlay, layer=-layer2use)
+			pic.name = BLOOD_OVERLAY_NAME
 			sleeves += pic
 
 	if(sleeveindex == 3 || sleeveindex == 4 || !sleeveindex)
@@ -1963,6 +1966,7 @@ generate/load female uniform sprites matching all previously decided variables
 				blood_overlay.Blend(icon(I.bloody_icon, I.bloody_icon_state), ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
 				bloody_l[used] = fcopy_rsc(blood_overlay)
 			var/mutable_appearance/pic = mutable_appearance(blood_overlay, layer=-layer2use)
+			pic.name = BLOOD_OVERLAY_NAME
 			sleeves += pic
 
 	return sleeves

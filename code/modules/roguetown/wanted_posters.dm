@@ -18,26 +18,25 @@
 
 /// Builds the current wanted list. One poster per person, with all their bounties merged.
 /// include_hidden adds hidden-identity bounties; only use it once identities no longer matter (round end).
-/proc/collect_wanted_posters(include_bounties = TRUE, include_hidden = FALSE)
+/proc/collect_wanted_posters(include_hidden = FALSE)
 	var/list/posters = list()
 	for(var/outlaw_name in GLOB.outlawed_players)
 		if(!posters[outlaw_name])
 			posters[outlaw_name] = new /datum/wanted_poster(outlaw_name)
-	if(include_bounties)
-		for(var/datum/bounty/bounty as anything in GLOB.head_bounties)
-			var/target_name = bounty.target
-			if(!target_name && include_hidden)
-				target_name = bounty.target_hidden
-			if(!target_name)
-				continue
-			var/datum/wanted_poster/poster = posters[target_name]
-			if(!poster)
-				poster = new /datum/wanted_poster(target_name)
-				posters[target_name] = poster
-			if(isnum(bounty.amount))
-				poster.amount += bounty.amount
-			if(bounty.reason)
-				poster.crimes |= bounty.reason
+	for(var/datum/bounty/bounty as anything in GLOB.head_bounties)
+		var/target_name = bounty.target
+		if(!target_name && include_hidden)
+			target_name = bounty.target_hidden
+		if(!target_name)
+			continue
+		var/datum/wanted_poster/poster = posters[target_name]
+		if(!poster)
+			poster = new /datum/wanted_poster(target_name)
+			posters[target_name] = poster
+		if(isnum(bounty.amount))
+			poster.amount += bounty.amount
+		if(bounty.reason)
+			poster.crimes |= bounty.reason
 	. = list()
 	for(var/poster_name in posters)
 		. += posters[poster_name]
