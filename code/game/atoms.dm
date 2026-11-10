@@ -380,32 +380,28 @@
  * COMSIG_ATOM_GET_EXAMINE_NAME signal
  */
 /atom/proc/get_examine_name(mob/user)
-	var/art = article
-	
-	if(isnull(art))
-		if(gender == PLURAL)
-			art = "some"
-		else
-			var/first_char = LOWER_TEXT(copytext(name, 1, 2))
-			art = (first_char in list("a", "e", "i", "o", "u")) ? "an" : "a"
-
-	var/name_text = art ? "[art] [name]" : "[name]"
-	var/list/override = list(art ? "[art]" : "", art ? " " : "", "[name]")
+	. = "\a [src]"
+	var/list/override = list(gender == PLURAL ? "some" : "a", " ", "[name]")
+	if(article)
+		. = "[article] [src]"
+		override[EXAMINE_POSITION_ARTICLE] = article
 	if(SEND_SIGNAL(src, COMSIG_ATOM_GET_EXAMINE_NAME, user, override) & COMPONENT_EXNAME_CHANGED)
-		name_text = override.Join("")
+		. = override.Join("")
 
-	if(!icon)
-		return name_text
-
-	var/icon_html = icon2base64html(src)
-	if(icon_html)
-		return "[icon_html] [name_text]"
-
-	return name_text
+/**
+ * Get the chat icon of this specific atom for examine or an empty string if it has none.
+ *
+ * Uses cached base64 rather than icon2html(), as sending new assets with browse_rsc stalls the client.
+ * Atoms without a real icon state are skipped, as icon() would otherwise return the entire dmi as a sprite sheet.
+ */
+/atom/proc/get_examine_icon(mob/user)
+	if(!user?.client || !icon_exists(icon, icon_state) || !get_icon_dmi_path(src))
+		return ""
+	return "[icon2base64html(src)] "
 
 ///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE)
-	return "[thats? "That's ":""][get_examine_name(user)]"
+	return "[thats? "That's [get_examine_icon(user)]":""][get_examine_name(user)]"
 
 /atom/proc/get_inspect_button()
 	return ""
