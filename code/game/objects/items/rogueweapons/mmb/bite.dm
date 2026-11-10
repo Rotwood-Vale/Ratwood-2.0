@@ -58,6 +58,34 @@
 /mob/living/onbite(mob/living/carbon/human/user)
 	return
 
+/mob/living/carbon/proc/apply_bite_recoil(mob/living/carbon/human/user, def_zone, d_type, damage)
+	if(HAS_TRAIT(user, TRAIT_BITENORECOIL))
+		return
+
+	var/armor_class = get_armor_class(def_zone, d_type)
+	var/recoil_mult
+
+	switch(armor_class)
+		if(ARMOR_CLASS_NONE)
+			recoil_mult = 0
+		if(ARMOR_CLASS_LIGHT)
+			recoil_mult = 0.15
+		if(ARMOR_CLASS_MEDIUM)
+			recoil_mult = 0.30
+		if(ARMOR_CLASS_HEAVY)
+			recoil_mult = 0.50
+		else
+			recoil_mult = 0.05
+
+	var/recoil = round(damage * recoil_mult)
+	if(recoil > 0)
+		return
+
+	if(HAS_TRAIT(user, TRAIT_BITERHELM) && user.head)
+		user.head.take_damage(recoil, BRUTE, "blunt")
+	else
+		user.apply_damage(recoil, BRUTE, BODY_ZONE_PRECISE_MOUTH)
+
 // Initial bite on target
 // src is the target
 ///Initial bite on target
@@ -129,31 +157,7 @@
 			nodmg = TRUE
 	if(!nodmg)
 		var/armor_block = run_armor_check(user.zone_selected, "stab", armor_penetration = PEN_NONE, blade_dulling=BCLASS_BITE, damage = dam2do)
-
-		var/vamp = user.mind?.has_antag_datum(/datum/antagonist/vampire)
-		var/wolf = user.mind?.has_antag_datum(/datum/antagonist/werewolf)
-
-		if(!vamp && !wolf)
-			var/armor_class = src.get_armor_class(def_zone, "stab")
-			var/recoil_mult
-
-			switch(armor_class)
-				if(ARMOR_CLASS_NONE)
-					recoil_mult = 0
-				if(ARMOR_CLASS_LIGHT)
-					recoil_mult = 0.15
-				if(ARMOR_CLASS_MEDIUM)
-					recoil_mult = 0.30
-				if(ARMOR_CLASS_HEAVY)
-					recoil_mult = 0.50
-				else
-					recoil_mult = 0.05
-
-			var/recoil = round(dam2do * recoil_mult)
-			if(HAS_TRAIT(user, TRAIT_BITERHELM) && user.head)
-				user.head.take_damage(recoil, BRUTE, "blunt")
-			else
-				user.apply_damage(recoil, BRUTE, BODY_ZONE_PRECISE_MOUTH)// cleaner, basically! this will recoil 25% damage to your mouth if you bite flesh, and 50% if you bite armor
+		apply_bite_recoil(user, def_zone, "stab", dam2do)
 		if(prob(25)) // 1/4 of the time you'll overextend and be exposed, giving your opponent a room to strike back hard
 			user.apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
 
@@ -314,30 +318,7 @@
 		damage = damage*2
 	var/armor_block = C.run_armor_check(sublimb_grabbed, d_type, armor_penetration = PEN_NONE, damage = damage)
 
-	var/vamp = user.mind?.has_antag_datum(/datum/antagonist/vampire)
-	var/wolf = user.mind?.has_antag_datum(/datum/antagonist/werewolf)
-
-	if(!vamp && !wolf)
-		var/armor_class = C.get_armor_class(sublimb_grabbed, d_type)
-		var/recoil_mult
-
-		switch(armor_class)
-			if(ARMOR_CLASS_NONE)
-				recoil_mult = 0
-			if(ARMOR_CLASS_LIGHT)
-				recoil_mult = 0.15
-			if(ARMOR_CLASS_MEDIUM)
-				recoil_mult = 0.30
-			if(ARMOR_CLASS_HEAVY)
-				recoil_mult = 0.50
-			else
-				recoil_mult = 0.05
-
-		var/recoil = round(damage * recoil_mult)
-		if(HAS_TRAIT(user, TRAIT_BITERHELM) && user.head)
-			user.head.take_damage(recoil, BRUTE, "blunt")
-		else
-			user.apply_damage(recoil, BRUTE, BODY_ZONE_PRECISE_MOUTH) // cleaner, basically! this will recoil 25% damage to your mouth if you bite flesh, and 50% if you bite armor
+	C.apply_bite_recoil(user, sublimb_grabbed, d_type, damage)
 	if(prob(50)) // half the time you'll overextend and be exposed, giving your opponent a room to strike back hard
 		user.apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
 
