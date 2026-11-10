@@ -2155,16 +2155,6 @@
 	desc = "I am protected by blessed Psydonian plate armor."
 	icon_state = "buff"
 
-/datum/status_effect/buff/motive
-	id = "motive"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/motive
-	effectedstats = list(STATKEY_STR = 1,STATKEY_CON = 1)
-
-/atom/movable/screen/alert/status_effect/buff/motive
-	name = "Motive"
-	desc = span_bloody("GRAGGAR'S ARMAMENTS CALL ME TO SLAUGHTER!! KILL!! RIP!! CONSUME!!")
-	icon_state = "call_to_slaughter"
-
 #define EORANAURA_FILTER "eoranaura"
 
 /datum/status_effect/eoranaura
