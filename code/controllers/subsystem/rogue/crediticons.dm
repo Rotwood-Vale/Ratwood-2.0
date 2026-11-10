@@ -7,13 +7,18 @@
  *
  * Portraits are snapshots of the live mob's worn/body overlays, stored as a mutable_appearance.
  * No icon math happens at capture time; the client does the drawing when the credits roll.
- * The only flattening is lazy, for the handful of outlaw wanted posters on the round end panel.
+ * The only flattening is lazy and cached, for wanted posters (bandit notices, round end Outlaws tab).
  */
 SUBSYSTEM_DEF(crediticons)
 	name = "crediticons"
 	flags = SS_NO_INIT | SS_NO_FIRE
 	/// Assoc list of /datum/mind => /datum/credit_entry, in join order.
 	var/list/entries = list()
+	/// real_name => portrait, for wanted people who have no credits entry (uncredited jobs).
+	/// Kept apart from entries so they never roll in the credits.
+	var/list/wanted_portraits = list()
+	/// portrait => base64 PNG for wanted posters. Each portrait is flattened at most once.
+	var/list/poster_cache = list()
 	/// overlays_standing indexes that are transient state rather than how the character looks.
 	/// Anything not listed here is kept, so new clothing/body layers show up without touching this file.
 	var/static/list/excluded_layers = list(
@@ -41,8 +46,6 @@ SUBSYSTEM_DEF(crediticons)
 	var/voice_color
 	/// Clean, south-facing appearance of the character as they set out. FLOAT_PLANE, blank base icon.
 	var/mutable_appearance/portrait
-	/// Lazily flattened upper-body icon, only built for wanted posters.
-	var/icon/poster_icon
 
 /// Schedules a portrait capture for H. Safe to call repeatedly; the newest call wins.
 /datum/controller/subsystem/crediticons/proc/queue_capture(mob/living/carbon/human/H)
@@ -70,9 +73,32 @@ SUBSYSTEM_DEF(crediticons)
 	entry.name = H.real_name
 	entry.title = H.get_role_title()
 	entry.voice_color = H.voice_color
+	poster_cache -= entry.portrait
 	entry.portrait = build_portrait(H)
-	entry.poster_icon = null
 	return entry
+
+/// Schedules a fallback portrait for someone just declared an outlaw or bountied.
+/// Does nothing useful if they already have a credits entry by the time it fires.
+/datum/controller/subsystem/crediticons/proc/queue_wanted_capture(mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+	addtimer(CALLBACK(src, PROC_REF(capture_wanted), H), CREDIT_CAPTURE_DELAY, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/datum/controller/subsystem/crediticons/proc/capture_wanted(mob/living/carbon/human/H)
+	if(QDELETED(H))
+		return
+	if(H.mind && entries[H.mind])
+		return
+	poster_cache -= wanted_portraits[H.real_name]
+	wanted_portraits[H.real_name] = build_portrait(H)
+
+/// Best portrait for a character name: their credits entry, else a wanted fallback, else null.
+/datum/controller/subsystem/crediticons/proc/get_portrait_by_name(name)
+	for(var/datum/mind/M as anything in entries)
+		var/datum/credit_entry/entry = entries[M]
+		if(entry.name == name)
+			return entry.portrait
+	return wanted_portraits[name]
 
 /// Builds a clean portrait from the mob's standing overlays.
 /// Only overlays_standing is read, so typing indicators, emotes, status effects and anything else
@@ -89,23 +115,17 @@ SUBSYSTEM_DEF(crediticons)
 			portrait.overlays += overlay
 	return portrait
 
-/// Upper-body icon for the wanted poster panel. Flattened once per entry, on first request.
-/datum/controller/subsystem/crediticons/proc/get_poster_icon(datum/credit_entry/entry)
-	if(!entry?.portrait)
+/// Upper-body PNG (base64) of a portrait, for wanted posters. Flattened once, on first request.
+/datum/controller/subsystem/crediticons/proc/get_poster_base64(mutable_appearance/portrait)
+	if(!portrait)
 		return null
-	if(!entry.poster_icon)
-		var/icon/flat = getFlatIcon(entry.portrait, SOUTH)
-		flat.Crop(1, 17, 32, 32)
-		flat.Scale(96, 48)
-		entry.poster_icon = flat
-	return entry.poster_icon
-
-/// Entries for characters named in GLOB.outlawed_players.
-/datum/controller/subsystem/crediticons/proc/get_outlaw_entries()
-	. = list()
-	for(var/datum/mind/M as anything in entries)
-		var/datum/credit_entry/entry = entries[M]
-		if(entry.name in GLOB.outlawed_players)
-			. += entry
+	. = poster_cache[portrait]
+	if(.)
+		return
+	var/icon/flat = getFlatIcon(portrait, SOUTH)
+	flat.Crop(1, 17, 32, 32)
+	flat.Scale(96, 48)
+	. = icon2base64(flat)
+	poster_cache[portrait] = .
 
 #undef CREDIT_CAPTURE_DELAY

@@ -52,6 +52,18 @@
 			user.playsound_local(user, 'sound/misc/notice (2).ogg', 100, FALSE)
 		else
 			. += span_bold("There doesn't seem to be any reports of bandit activity.")
+		. += "<a href='byond://?src=[REF(src)];read_notices=1'>Read the wanted notices.</a>"
+
+/obj/structure/fluff/walldeco/wantedposter/Topic(href, href_list)
+	. = ..()
+	if(!href_list["read_notices"])
+		return
+	var/mob/user = usr
+	if(!istype(user) || !user.Adjacent(src))
+		return
+	var/datum/browser/popup = new(user, "wanted_notices", "<center>Wanted</center>", 680, 620, src)
+	popup.set_content(render_wanted_posters(collect_wanted_posters(), "The board is bare. No one is wanted, for now."))
+	popup.open()
 
 /obj/structure/fluff/walldeco/innsign
 	name = "tavern sign"
