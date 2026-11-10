@@ -41,11 +41,20 @@ SUBSYSTEM_DEF(crediticons)
 	)
 
 /datum/credit_entry
+	var/datum/mind/mind
+	/// Name at the last capture or lookup. Use current_name(); antags often rename after spawning.
 	var/name
 	var/title
 	var/voice_color
 	/// Clean, south-facing appearance of the character as they set out. FLOAT_PLANE, blank base icon.
 	var/mutable_appearance/portrait
+
+/// The character's name now, read from their body while it exists, so post-spawn renames are picked up.
+/datum/credit_entry/proc/current_name()
+	var/mob/living/carbon/human/body = mind?.current
+	if(ishuman(body) && !QDELETED(body) && body.real_name)
+		name = body.real_name
+	return name
 
 /// Schedules a portrait capture for H. Safe to call repeatedly; the newest call wins.
 /datum/controller/subsystem/crediticons/proc/queue_capture(mob/living/carbon/human/H)
@@ -70,6 +79,7 @@ SUBSYSTEM_DEF(crediticons)
 	if(!entry)
 		entry = new
 		entries[M] = entry
+	entry.mind = M
 	entry.name = H.real_name
 	entry.title = H.get_role_title()
 	entry.voice_color = H.voice_color
@@ -96,7 +106,7 @@ SUBSYSTEM_DEF(crediticons)
 /datum/controller/subsystem/crediticons/proc/get_portrait_by_name(name)
 	for(var/datum/mind/M as anything in entries)
 		var/datum/credit_entry/entry = entries[M]
-		if(entry.name == name)
+		if(entry.current_name() == name)
 			return entry.portrait
 	return wanted_portraits[name]
 
@@ -122,10 +132,34 @@ SUBSYSTEM_DEF(crediticons)
 	. = poster_cache[portrait]
 	if(.)
 		return
-	var/icon/flat = getFlatIcon(portrait, SOUTH)
-	flat.Crop(1, 17, 32, 32)
-	flat.Scale(96, 48)
-	. = icon2base64(flat)
+	. = icon2base64(build_poster_icon(portrait))
 	poster_cache[portrait] = .
+
+/// Flattens a portrait to the upper-body icon used on wanted posters.
+/// Each overlay is flattened on its own and blended onto a fixed 32x32 frame, so oversized layers
+/// (64x64 weapons with negative pixel offsets) are clipped like the client clips them. Running
+/// getFlatIcon() on the whole portrait doesn't work: its canvas-resize path mixes up its bounds and
+/// draws every later layer off-canvas, giving a blank poster.
+/datum/controller/subsystem/crediticons/proc/build_poster_icon(mutable_appearance/portrait)
+	var/list/sorted = list()
+	for(var/image/overlay as anything in portrait.overlays)
+		if(!overlay.alpha)
+			continue
+		var/index = length(sorted) + 1
+		for(var/i in 1 to length(sorted))
+			var/image/existing = sorted[i]
+			if(overlay.layer < existing.layer)
+				index = i
+				break
+		sorted.Insert(index, overlay)
+
+	var/icon/canvas = icon('icons/blanks/32x32.dmi', "nothing")
+	for(var/image/overlay as anything in sorted)
+		var/icon/part = getFlatIcon(image(overlay), SOUTH)
+		if(part)
+			canvas.Blend(part, ICON_OVERLAY, overlay.pixel_x + 1, overlay.pixel_y + 1)
+	canvas.Crop(1, 17, 32, 32)
+	canvas.Scale(96, 48)
+	return canvas
 
 #undef CREDIT_CAPTURE_DELAY
