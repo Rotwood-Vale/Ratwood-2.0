@@ -101,49 +101,42 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	equip()
 
 /datum/antagonist/vampire/proc/show_clan_selection(mob/living/carbon/human/vampdude)
-	var/list/clan_options = list()
-	var/list/available_clans = list()
-
 	if(vampdude.job == "Wretch")
 		create_custom_clan(vampdude)
 		return
 
-	for(var/clan_type in subtypesof(/datum/clan))
-		var/datum/clan/temp_clan = new clan_type
-		if(temp_clan.selectable_by_vampires)
-			available_clans += clan_type
-			clan_options[temp_clan.name] = clan_type
-		qdel(temp_clan)
+	var/fallback_clan = /datum/clan/nosferatu
+	var/choice
+	var/custom_name
+	if(vampdude.client)
+		var/datum/vampire_clan_selection_menu/menu = new(vampdude, fallback_clan)
+		menu.ui_interact(vampdude)
+		if(SStgui.get_open_ui(vampdude, menu))
+			menu.wait()
+		if(!QDELETED(menu))
+			choice = menu.choice
+			custom_name = menu.custom_name
+			qdel(menu)
 
-	clan_options["Create Custom Clan"] = "custom"
-
-	var/choice = input(vampdude, "Choose your vampire clan:", "Clan Selection") as null|anything in clan_options
-
-	if(!choice)
-		// Default to nosferatu if no choice made
-		default_clan = /datum/clan/nosferatu
-		vampdude.set_clan(default_clan)
-		clan_selected = TRUE
+	if(choice == "custom")
+		create_custom_clan(vampdude, custom_name)
 		return
 
-	if(clan_options[choice] == "custom")
-		create_custom_clan(vampdude)
-	else
-		default_clan = clan_options[choice]
-		vampdude.set_clan(default_clan)
-		clan_selected = TRUE
+	default_clan = choice || fallback_clan
+	vampdude.set_clan(default_clan)
+	clan_selected = TRUE
 
-/datum/antagonist/vampire/proc/create_custom_clan(mob/living/carbon/human/vampdude)
+/datum/antagonist/vampire/proc/create_custom_clan(mob/living/carbon/human/vampdude, custom_name)
 	// Get custom clan name
-	custom_clan_name = sanitize(input(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Clan") as text|null)
+	if(isnull(custom_name))
+		custom_name = tgui_input_text(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Clan", MAX_NAME_LEN, encode = FALSE)
+	custom_clan_name = sanitize(custom_name)
 	if(!custom_clan_name)
 		custom_clan_name = "Custom Clan"
 
 	var/datum/clan/custom/new_clan = new /datum/clan/custom()
 	new_clan.name = custom_clan_name
-	switch(vampdude.get_vampire_generation())
-		if(GENERATION_NEONATE, GENERATION_THINBLOOD)
-			new_clan.covens_to_select = COVENS_PER_WRETCH_CLAN
+	new_clan.set_covens_for_generation(vampdude.get_vampire_generation())
 
 	// Apply the custom clan
 	vampdude.set_clan_direct(new_clan)
@@ -186,7 +179,13 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 // Custom clan datum for player-created clans
 /datum/clan/custom
 	name = "Custom Clan"
+	tagline = "Forge your own cursed bloodline"
 	selectable_by_vampires = FALSE
+
+/datum/clan/custom/proc/set_covens_for_generation(generation)
+	switch(generation)
+		if(GENERATION_NEONATE, GENERATION_THINBLOOD)
+			covens_to_select = COVENS_PER_WRETCH_CLAN
 
 /obj/structure/vampire
 	icon = 'icons/roguetown/topadd/death/vamp-lord.dmi'

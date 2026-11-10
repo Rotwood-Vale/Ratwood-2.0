@@ -7,6 +7,7 @@ And it also helps for the character set panel
 /datum/clan
 	var/name = "Caitiff"
 	var/desc = "The clanless. The rabble. Of no importance."
+	var/tagline = "An ancient curse carried through blood"
 	var/clanicon
 
 	var/list/clane_covens = list() //coven datums

@@ -9,6 +9,7 @@
 	name = "House Thronleer"
 	desc = "House Thronleer is a secretive, tradition‑bound clan that favors ritual, subtlety, and guile."
 	curse = "Weakness of the soul."
+	tagline = "Ritual, subtlety, and guile"
 	clanicon = "bloodheal"
 	blood_preference = BLOOD_PREFERENCE_FANCY
 	clane_covens = list(

@@ -1,65 +1,95 @@
+#define RIFT_GATE_VITAE_COST 1000
+
 /obj/structure/vampire/portalmaker
 	name = "Rift Gate"
 	icon_state = "obelisk"
 	var/sending = FALSE
 
 /obj/structure/vampire/portalmaker/attack_hand(mob/living/user)
-	var/list/possibleportals = list()
-
 	. = TRUE
+	ui_interact(user)
 
+/obj/structure/vampire/portalmaker/ui_state(mob/user)
+	return GLOB.human_adjacent_state
 
-	if(!user.has_bloodpool_cost(1000))
-		to_chat(user, span_warning("This costs 1000 vitae, I lack that."))
+/obj/structure/vampire/portalmaker/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "VampireRiftGate", name)
+		ui.open()
+
+/obj/structure/vampire/portalmaker/ui_static_data(mob/user)
+	var/list/data = list()
+	data["vitaeCost"] = RIFT_GATE_VITAE_COST
+	return data
+
+/obj/structure/vampire/portalmaker/ui_data(mob/user)
+	var/list/data = list()
+	var/list/amulets = list()
+	for(var/obj/item/clothing/neck/portalamulet/amulet in GLOB.vampire_objects)
+		amulets += list(list(
+			"ref" = REF(amulet),
+			"name" = amulet.name,
+			"area" = get_area_name(amulet, TRUE) || "Unknown",
+			"uses" = amulet.uses,
+		))
+	var/mob/living/living_user = user
+	data["amulets"] = amulets
+	data["hasVitae"] = istype(living_user) && living_user.has_bloodpool_cost(RIFT_GATE_VITAE_COST)
+	data["sendingActive"] = sending
+	return data
+
+/obj/structure/vampire/portalmaker/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
 		return
-	var/list/choices = list("RETURN", "SENDING", "I RESCIND")
-	switch(input(user, "Which type of portal?", "Portal Type") as null|anything in choices)
-		if("I RESCIND")
-			return
 
-		if("RETURN")
-			for(var/obj/item/clothing/neck/portalamulet/P in GLOB.vampire_objects)
-				possibleportals += P
-			var/atom/choice = input(user, "Choose an area to open the portal", "Choices") as null|anything in possibleportals
-			if(!choice)
-				return
-			user.visible_message("[user] begins to summon a portal.", "I begin to summon a portal.")
-			if(!do_after(user, 3 SECONDS, src))
-				return
+	var/mob/living/user = ui.user
+	if(!istype(user))
+		return
 
-			user.has_bloodpool_cost(-1000)
-			if(istype(choice, /obj/item/clothing/neck/portalamulet))
-				var/obj/item/clothing/neck/portalamulet/A = choice
-				A.uses -= 1
-				var/obj/effect/landmark/vteleportdestination/VR = new(A.loc)
-				VR.amuletname = A.name
-				create_portal_return(A.name, 3000)
-				user.playsound_local(get_turf(src), 'sound/misc/portalactivate.ogg', 100, FALSE, pressure_affected = FALSE)
-				if(A.uses <= 0)
-					A.visible_message("[A] shatters!")
-					qdel(A)
-		if("SENDING")
-			if(sending)
-				to_chat(user, "A portal is already active!")
-				return
-			for(var/obj/item/clothing/neck/portalamulet/P in GLOB.vampire_objects)
-				possibleportals += P
-			var/atom/choice = input(user, "Choose an area to open the portal to", "Choices") as null|anything in possibleportals
-			if(!choice)
-				return
-			user.visible_message("[user] begins to summon a portal.", "I begin to summon a portal.")
-			if(do_after(user, 3 SECONDS, src))
-				user.has_bloodpool_cost(-1000)
-				if(istype(choice, /obj/item/clothing/neck/portalamulet))
-					var/obj/item/clothing/neck/portalamulet/A = choice
-					A.uses -= 1
-					var/turf/G = get_turf(A)
-					new /obj/effect/landmark/vteleportsenddest(G.loc)
-					if(A.uses <= 0)
-						A.visible_message("[A] shatters!")
-						qdel(A)
-					create_portal()
-					user.playsound_local(get_turf(src), 'sound/misc/portalactivate.ogg', 100, FALSE, pressure_affected = FALSE)
+	var/obj/item/clothing/neck/portalamulet/amulet = locate(params["amulet"])
+	if(!istype(amulet) || !(amulet in GLOB.vampire_objects))
+		return
+
+	switch(action)
+		if("open_return")
+			return open_rift(user, amulet, FALSE)
+		if("open_sending")
+			return open_rift(user, amulet, TRUE)
+
+/obj/structure/vampire/portalmaker/proc/open_rift(mob/living/user, obj/item/clothing/neck/portalamulet/amulet, sending_portal)
+	if(sending_portal && sending)
+		to_chat(user, "A portal is already active!")
+		return
+	if(!user.has_bloodpool_cost(RIFT_GATE_VITAE_COST))
+		to_chat(user, span_warning("This costs [RIFT_GATE_VITAE_COST] vitae, I lack that."))
+		return
+
+	user.visible_message("[user] begins to summon a portal.", "I begin to summon a portal.")
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	if(QDELETED(amulet) || amulet.uses <= 0 || (sending_portal && sending) || !user.has_bloodpool_cost(RIFT_GATE_VITAE_COST))
+		return
+
+	var/turf/destination = get_turf(amulet)
+	if(!destination)
+		return
+
+	user.adjust_bloodpool(-RIFT_GATE_VITAE_COST)
+	amulet.uses -= 1
+	if(sending_portal)
+		new /obj/effect/landmark/vteleportsenddest(destination)
+		create_portal()
+	else
+		var/obj/effect/landmark/vteleportdestination/return_point = new(destination)
+		return_point.amuletname = amulet.name
+		create_portal_return(amulet.name, 3000)
+	user.playsound_local(get_turf(src), 'sound/misc/portalactivate.ogg', 100, FALSE, pressure_affected = FALSE)
+	if(amulet.uses <= 0)
+		amulet.visible_message("[amulet] shatters!")
+		qdel(amulet)
+	return TRUE
 
 /obj/structure/vampire/portal
 	name = "Eerie Portal"
@@ -149,3 +179,5 @@
 			visible_message("[src] shatters!")
 			qdel(src)
 */
+
+#undef RIFT_GATE_VITAE_COST

@@ -45,62 +45,128 @@
 			to_chat(user, span_notice("- [project.display_name]: [project.paid_amount]/[project.total_cost] ([progress_percent]%)"))
 
 /obj/structure/vampire/bloodpool/attack_hand(mob/living/user)
-	var/datum/antagonist/vampire/vampire = user.mind?.has_antag_datum(/datum/antagonist/vampire)
-	if(!vampire)
+	if(!user.mind?.has_antag_datum(/datum/antagonist/vampire))
+		return
+	ui_interact(user)
+
+/obj/structure/vampire/bloodpool/ui_state(mob/user)
+	return GLOB.human_adjacent_state
+
+/obj/structure/vampire/bloodpool/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CrimsonCrucible", name)
+		ui.open()
+
+/obj/structure/vampire/bloodpool/ui_static_data(mob/user)
+	var/list/data = list()
+	var/list/projects = list()
+	for(var/project_type in subtypesof(/datum/vampire_project))
+		var/datum/vampire_project/project = get_project_prototype(project_type)
+		projects += list(list(
+			"type" = "[project_type]",
+			"name" = project.display_name,
+			"description" = project.description,
+			"cost" = project.total_cost,
+			"lockedReason" = project.start_failure_message,
+		))
+	data["projects"] = projects
+	return data
+
+/obj/structure/vampire/bloodpool/ui_data(mob/user)
+	var/list/data = list()
+	var/mob/living/living_user = user
+	if(!istype(living_user))
+		return data
+
+	var/is_lord = is_crucible_lord(living_user)
+	var/list/active_project_data = list()
+	for(var/project_type in active_projects)
+		var/datum/vampire_project/project = active_projects[project_type]
+		var/list/contributor_data = list()
+		for(var/mob/living/contributor in project.contributors)
+			contributor_data += list(list(
+				"name" = contributor.real_name,
+				"amount" = project.contributors[contributor],
+			))
+		active_project_data += list(list(
+			"type" = "[project_type]",
+			"paid" = project.paid_amount,
+			"maxContribution" = max(project.get_max_contribution(living_user), 0),
+			"contributors" = contributor_data,
+		))
+
+	var/list/available_project_data = list()
+	if(is_lord)
+		for(var/project_type in available_project_types)
+			if(active_projects[project_type])
+				continue
+			var/datum/vampire_project/project = get_project_prototype(project_type)
+			available_project_data += list(list(
+				"type" = "[project_type]",
+				"canStart" = project.can_start(living_user, src, TRUE),
+			))
+
+	data["isLord"] = is_lord
+	data["vitae"] = living_user.get_bloodpool()
+	data["maxVitae"] = living_user.get_maxbloodpool()
+	data["activeProjects"] = active_project_data
+	data["availableProjects"] = available_project_data
+	return data
+
+/obj/structure/vampire/bloodpool/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
 		return
 
-	var/lord = FALSE
-	if(user.clan?.clan_leader == user)
-		lord = TRUE
-
-	var/list/available_options_lord = list()
-	var/list/available_options_contributor = list()
-
-	// Add available project types that aren't already active
-	for(var/project_type in available_project_types)
-		var/datum/vampire_project/temp_project = new project_type()
-		if(temp_project.can_start(user, src, TRUE) && !(project_type in active_projects))
-			available_options_lord[temp_project.display_name] = project_type
-		qdel(temp_project)
-
-	// Add option to contribute to existing projects
-	if(active_projects.len)
-		available_options_lord["Contribute to Project"] = "contribute"
-		available_options_contributor["Contribute to Project"] = "contribute"
-	// Add option to view/cancel projects
-	if(active_projects.len)
-		available_options_lord["Manage Projects"] = "manage"
-
-	var/choice = input(user, "What to do?", "VAMPYRE") as null|anything in available_options_lord
-	if(!choice)
+	var/mob/living/user = ui.user
+	if(!istype(user) || !user.mind?.has_antag_datum(/datum/antagonist/vampire))
 		return
 
-	var/action_lord = available_options_lord[choice]
-	var/action_contributor = available_options_contributor[choice]
+	switch(action)
+		if("start_project")
+			var/project_type = text2path(params["type"])
+			if(!is_crucible_lord(user) || !(project_type in available_project_types) || active_projects[project_type])
+				return
+			return start_new_project(project_type, user)
+		if("contribute")
+			var/datum/vampire_project/project = get_active_project(params["type"])
+			if(!project)
+				return
+			return project.handle_contribution(user)
+		if("cancel_project")
+			var/datum/vampire_project/project = get_active_project(params["type"])
+			if(!project || !is_crucible_lord(user))
+				return
+			if(tgui_alert(user, "Cancel [project.display_name]? All invested vitae will be refunded.", "CANCELLATION", list("Yes", "No")) != "Yes")
+				return
+			if(QDELETED(src) || get_active_project(params["type"]) != project || !is_crucible_lord(user))
+				return
+			cancel_project(project.type)
+			return TRUE
 
-	if(lord)
-		switch(action_lord)
-			if("contribute")
-				handle_project_contribution(user)
-			if("manage")
-				handle_project_management(user)
-			else
-				// It's a project type
-				start_new_project(action_lord, user)
-	else
-		switch(action_contributor)
-			if("contribute")
-				handle_project_contribution(user)
+/obj/structure/vampire/bloodpool/proc/is_crucible_lord(mob/living/user)
+	return !!user.clan && user.clan.clan_leader == user
+
+/obj/structure/vampire/bloodpool/proc/get_active_project(project_type_text)
+	var/project_type = text2path(project_type_text)
+	if(!project_type)
+		return null
+	return active_projects[project_type]
+
+/obj/structure/vampire/bloodpool/proc/get_project_prototype(project_type)
+	var/static/list/prototypes = list()
+	var/datum/vampire_project/prototype = prototypes[project_type]
+	if(!prototype)
+		prototype = new project_type()
+		prototypes[project_type] = prototype
+	return prototype
 
 /obj/structure/vampire/bloodpool/proc/start_new_project(project_type, mob/living/user)
 	var/datum/vampire_project/project = new project_type()
 
 	if(!project.can_start(user, src))
 		to_chat(user, span_warning(project.start_failure_message))
-		qdel(project)
-		return
-
-	if(!project.confirm_start(user))
 		qdel(project)
 		return
 
@@ -112,53 +178,7 @@
 	active_projects[project_type] = project
 
 	to_chat(user, span_greentext("Started project: [project.display_name]. Begin contributing vitae to progress."))
-
-/obj/structure/vampire/bloodpool/proc/handle_project_contribution(mob/living/user)
-	if(!active_projects.len)
-		to_chat(user, span_warning("No active projects to contribute to."))
-		return
-
-	var/list/project_choices = list()
-	for(var/project_type in active_projects)
-		var/datum/vampire_project/project = active_projects[project_type]
-		var/remaining = project.total_cost - project.paid_amount
-		project_choices["[project.display_name] (Remaining: [remaining])"] = project_type
-
-	var/choice = input(user, "Select project to contribute to:", "CONTRIBUTION") as null|anything in project_choices
-	if(!choice)
-		return
-
-	var/project_type = project_choices[choice]
-	var/datum/vampire_project/project = active_projects[project_type]
-
-	project.handle_contribution(user)
-
-/obj/structure/vampire/bloodpool/proc/handle_project_management(mob/living/user)
-	if(!active_projects.len)
-		to_chat(user, span_warning("No active projects to manage."))
-		return
-
-	var/list/project_options = list()
-	for(var/project_type in active_projects)
-		var/datum/vampire_project/project = active_projects[project_type]
-		var/progress_percent = round((project.paid_amount / project.total_cost) * 100, 1)
-		project_options["[project.display_name] ([progress_percent]%)"] = project_type
-
-	var/choice = input(user, "Select project to manage:", "PROJECT MANAGEMENT") as null|anything in project_options
-	if(!choice)
-		return
-
-	var/project_type = project_options[choice]
-	var/datum/vampire_project/project = active_projects[project_type]
-
-	var/action = input(user, "What would you like to do?", "MANAGEMENT") as null|anything in list("View Details", "Cancel Project")
-
-	switch(action)
-		if("View Details")
-			project.show_details(user)
-		if("Cancel Project")
-			if(alert(user, "Cancel [project.display_name]?<BR>All invested vitae will be refunded.", "CANCELLATION", "Yes", "No") == "Yes")
-				cancel_project(project_type)
+	return TRUE
 
 /obj/structure/vampire/bloodpool/proc/complete_project(project_type)
 	var/datum/vampire_project/project = active_projects[project_type]
@@ -219,9 +239,6 @@
 
 	return TRUE
 
-/datum/vampire_project/proc/confirm_start(mob/living/user)
-	return alert(user, "Begin [display_name]? [description]. Total Cost: [total_cost].You can contribute vitae over time.", "PROJECT START", "MAKE IT SO", "I RESCIND") == "MAKE IT SO"
-
 /datum/vampire_project/proc/on_start(mob/living/user)
 	return
 
@@ -238,7 +255,7 @@
 		to_chat(user, span_warning("I have nothing left to give to [display_name]."))
 		return
 
-	var/contribution = input(user, "How much vitae to contribute? (Max: [max_contribution])", "CONTRIBUTION") as num|null
+	var/contribution = tgui_input_number(user, "How much vitae to contribute? (Max: [max_contribution])", "CONTRIBUTION", max_contribution, max_contribution, 0)
 
 	if(!contribution || contribution <= 0)
 		return
@@ -248,8 +265,17 @@
 		to_chat(user, span_warning("[display_name] is no longer underway."))
 		return
 
+	if(get_dist(user, bloodpool) > 1)
+		to_chat(user, span_warning("I need to be next to the crucible."))
+		return
+
 	if(user.get_bloodpool() < contribution)
 		to_chat(user, span_warning("I do not have enough vitae."))
+		return
+
+	max_contribution = get_max_contribution(user)
+	if(max_contribution <= 0)
+		to_chat(user, span_warning("I have nothing left to give to [display_name]."))
 		return
 
 	contribution = clamp(round(contribution), 1, max_contribution)
@@ -262,12 +288,7 @@
 
 	if(paid_amount >= total_cost)
 		bloodpool.complete_project(type)
-
-/datum/vampire_project/proc/show_details(mob/living/user)
-	to_chat(user, span_notice("Project: [display_name]"))
-	to_chat(user, span_notice("Description: [description]"))
-	to_chat(user, span_notice("Progress: [paid_amount]/[total_cost]"))
-	to_chat(user, span_notice("Contributors: [english_list(contributors)]"))
+	return TRUE
 
 /datum/vampire_project/proc/on_complete()
 	return
@@ -290,6 +311,7 @@
 	description = "The ancient blood stirs once more. Forgotten whispers echo through the marrow of the land."
 	total_cost = VAMPCOST_ONE
 	completion_sound = 'sound/misc/batsound.ogg'
+	start_failure_message = "Only the Methuselah may perform this rite."
 
 /datum/vampire_project/power_growth/can_start(mob/living/user, obj/structure/vampire/bloodpool/pool)
 	var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
