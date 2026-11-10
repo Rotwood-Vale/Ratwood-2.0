@@ -2,15 +2,18 @@
 	name = "Crimson Crucible"
 	icon_state = "vat"
 	var/current = 0
+	var/ascensions = 0
+	var/summoning_role
 	var/datum/clan/owner_clan
 
 	var/list/active_projects = list()
 	var/list/available_project_types = list(
-		/datum/vampire_project/power_growth,
-		/datum/vampire_project/armor_crafting,
 		/datum/vampire_project/servant/servant_t1,
 		/datum/vampire_project/servant/servant_t2,
 		/datum/vampire_project/servant/servant_t3,
+		/datum/vampire_project/armor_crafting,
+		/datum/vampire_project/gate_amulet,
+		/datum/vampire_project/power_growth,
 		/datum/vampire_project/sunsteal,
 	)
 	var/sunstolen = FALSE
@@ -21,7 +24,7 @@
 
 /obj/structure/vampire/bloodpool/examine(mob/user)
 	. = ..()
-	to_chat(user, span_boldnotice("Blood level: [current]"))
+	to_chat(user, span_boldnotice("Blood level: [current] / [get_cup_capacity()]"))
 
 	// Show active projects
 	if(active_projects.len)
@@ -50,14 +53,18 @@
 	var/list/projects = list()
 	for(var/project_type in subtypesof(/datum/vampire_project))
 		var/datum/vampire_project/project = get_project_prototype(project_type)
+		if(!project.category)
+			continue
 		projects += list(list(
 			"type" = "[project_type]",
 			"name" = project.display_name,
 			"description" = project.description,
+			"category" = project.category,
 			"cost" = project.total_cost,
-			"lockedReason" = project.start_failure_message,
 		))
 	data["projects"] = projects
+	data["vitaeReserve"] = CRUCIBLE_VITAE_RESERVE
+	data["capacityPerAscension"] = CRUCIBLE_CAPACITY_PER_ASCENSION
 	return data
 
 /obj/structure/vampire/bloodpool/ui_data(mob/user)
@@ -79,7 +86,9 @@
 		active_project_data += list(list(
 			"type" = "[project_type]",
 			"paid" = project.paid_amount,
+			"fromCup" = project.cup_paid_amount,
 			"maxContribution" = max(project.get_max_contribution(living_user), 0),
+			"lockedReason" = project.get_contribution_lock_reason(),
 			"contributors" = contributor_data,
 		))
 
@@ -91,12 +100,19 @@
 			var/datum/vampire_project/project = get_project_prototype(project_type)
 			available_project_data += list(list(
 				"type" = "[project_type]",
-				"canStart" = project.can_start(living_user, src, TRUE),
+				"lockedReason" = project.get_start_lock_reason(living_user, src),
 			))
 
 	data["isLord"] = is_lord
 	data["vitae"] = living_user.get_bloodpool()
 	data["maxVitae"] = living_user.get_maxbloodpool()
+	data["cup"] = current
+	data["cupCapacity"] = get_cup_capacity()
+	data["maxPour"] = get_max_pour(living_user)
+	data["summoning"] = summoning_role
+	data["ascensions"] = ascensions
+	data["sunStolen"] = SSticker.sunstolen
+	data["sunRiteDone"] = sunstolen
 	data["activeProjects"] = active_project_data
 	data["availableProjects"] = available_project_data
 	return data
@@ -121,6 +137,8 @@
 			if(!project)
 				return
 			return project.handle_contribution(user)
+		if("pour_vitae")
+			return pour_vitae(user)
 		if("cancel_project")
 			var/datum/vampire_project/project = get_active_project(params["type"])
 			if(!project || !is_crucible_lord(user))
@@ -134,6 +152,40 @@
 
 /obj/structure/vampire/bloodpool/proc/is_crucible_lord(mob/living/user)
 	return !!user.clan && user.clan.clan_leader == user
+
+/obj/structure/vampire/bloodpool/proc/get_cup_capacity()
+	return CRUCIBLE_BASE_CAPACITY + ascensions * CRUCIBLE_CAPACITY_PER_ASCENSION
+
+/obj/structure/vampire/bloodpool/proc/get_max_pour(mob/living/user)
+	return max(min(user.get_bloodpool() - CRUCIBLE_VITAE_RESERVE, get_cup_capacity() - current), 0)
+
+/obj/structure/vampire/bloodpool/proc/pour_vitae(mob/living/user)
+	var/max_pour = get_max_pour(user)
+	if(max_pour <= 0)
+		if(current >= get_cup_capacity())
+			to_chat(user, span_warning("The cup is already full."))
+		else
+			to_chat(user, span_warning("The last [CRUCIBLE_VITAE_RESERVE] vitae cannot be given to the cup."))
+		return
+
+	var/amount = tgui_input_number(user, "How much vitae to pour into the cup? (Max: [max_pour])", "THE CUP", max_pour, max_pour, 0)
+	if(!amount || amount <= 0)
+		return
+
+	if(QDELETED(src) || get_dist(user, src) > 1)
+		to_chat(user, span_warning("I need to be next to the crucible."))
+		return
+
+	max_pour = get_max_pour(user)
+	if(max_pour <= 0)
+		to_chat(user, span_warning("I can pour no more into the cup."))
+		return
+
+	amount = clamp(round(amount), 1, max_pour)
+	user.adjust_bloodpool(-amount)
+	current += amount
+	to_chat(user, span_greentext("Poured [amount] vitae into the cup. ([current]/[get_cup_capacity()])"))
+	return TRUE
 
 /obj/structure/vampire/bloodpool/proc/get_active_project(project_type_text)
 	var/project_type = text2path(project_type_text)
@@ -152,8 +204,9 @@
 /obj/structure/vampire/bloodpool/proc/start_new_project(project_type, mob/living/user)
 	var/datum/vampire_project/project = new project_type()
 
-	if(!project.can_start(user, src))
-		to_chat(user, span_warning(project.start_failure_message))
+	var/lock_reason = project.get_start_lock_reason(user, src)
+	if(lock_reason)
+		to_chat(user, span_warning(lock_reason))
 		qdel(project)
 		return
 
@@ -176,9 +229,14 @@
 	active_projects.Remove(project_type)
 
 	// Notify all contributors
+	var/list/witnesses = list()
 	for(var/mob/living/contributor in project.contributors)
-		to_chat(contributor, span_boldannounce("[project.display_name] has been completed!"))
-		contributor.playsound_local(get_turf(src), project.completion_sound, 100, FALSE, pressure_affected = FALSE)
+		witnesses |= contributor
+	if(!QDELETED(project.initiator))
+		witnesses |= project.initiator
+	for(var/mob/living/witness as anything in witnesses)
+		to_chat(witness, span_boldannounce("[project.display_name] has been completed!"))
+		witness.playsound_local(get_turf(src), project.completion_sound, 100, FALSE, pressure_affected = FALSE)
 
 	// Execute project completion
 	project.on_complete(src)
@@ -199,8 +257,10 @@
 /datum/vampire_project
 	var/display_name = "Unknown Project"
 	var/description = "A mysterious undertaking."
+	var/category
 	var/total_cost = 1000
 	var/paid_amount = 0
+	var/cup_paid_amount = 0
 	/// Assoc list of contributor mob -> vitae they personally paid in, so refunds can't mint blood
 	var/list/contributors = list()
 	var/obj/structure/vampire/bloodpool/bloodpool
@@ -210,33 +270,37 @@
 	var/completion_sound = 'sound/misc/batsound.ogg'
 	var/can_be_initiated_by = VAMPIRE_PROJECT_INITIATE_LORDE
 
-/datum/vampire_project/proc/can_start(mob/living/carbon/human/user, obj/structure/vampire/bloodpool/pool, silent = FALSE)
+/datum/vampire_project/proc/get_start_lock_reason(mob/living/carbon/human/user, obj/structure/vampire/bloodpool/pool)
 	if(!istype(user) || !istype(pool))
-		return FALSE
+		return start_failure_message
+	if(can_be_initiated_by == VAMPIRE_PROJECT_INITIATE_LORDE && user.clan?.clan_leader != user)
+		return "This project can only be initiated by your Lorde."
+	return null
 
-	if(can_be_initiated_by == VAMPIRE_PROJECT_INITIATE_ANYONE)
-		return TRUE
-	else if(can_be_initiated_by == VAMPIRE_PROJECT_INITIATE_LORDE)
-		if(user.clan.clan_leader == user)
-			return TRUE
-		else
-			if(!silent)
-				to_chat(user, span_warning("This project can only be initiate by your Lorde."))
-			return FALSE
-
-	return TRUE
+/datum/vampire_project/proc/get_contribution_lock_reason()
+	return null
 
 /datum/vampire_project/proc/on_start(mob/living/user)
 	return
+
+/datum/vampire_project/proc/get_cup_share(mob/living/user)
+	if(QDELETED(bloodpool) || !bloodpool.is_crucible_lord(user))
+		return 0
+	return bloodpool.current
 
 /datum/vampire_project/proc/get_max_contribution(mob/living/user)
 	var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
 	var/headroom = total_cost - paid_amount
 	if(!lord && (display_name != "Wicked Plate") && (display_name != "World Anchor"))
 		headroom -= 100
-	return min(user.get_bloodpool(), headroom)
+	return min(user.get_bloodpool() + get_cup_share(user), headroom)
 
 /datum/vampire_project/proc/handle_contribution(mob/living/user)
+	var/lock_reason = get_contribution_lock_reason()
+	if(lock_reason)
+		to_chat(user, span_warning(lock_reason))
+		return
+
 	var/max_contribution = get_max_contribution(user)
 	if(max_contribution <= 0)
 		to_chat(user, span_warning("I have nothing left to give to [display_name]."))
@@ -256,8 +320,9 @@
 		to_chat(user, span_warning("I need to be next to the crucible."))
 		return
 
-	if(user.get_bloodpool() < contribution)
-		to_chat(user, span_warning("I do not have enough vitae."))
+	lock_reason = get_contribution_lock_reason()
+	if(lock_reason)
+		to_chat(user, span_warning(lock_reason))
 		return
 
 	max_contribution = get_max_contribution(user)
@@ -267,11 +332,24 @@
 
 	contribution = clamp(round(contribution), 1, max_contribution)
 
-	user.adjust_bloodpool(-contribution)
-	paid_amount += contribution
-	contributors[user] += contribution
+	var/cup_part = min(get_cup_share(user), contribution)
+	var/personal_part = contribution - cup_part
+	if(user.get_bloodpool() < personal_part)
+		to_chat(user, span_warning("I do not have enough vitae."))
+		return
 
-	to_chat(user, span_greentext("Contributed [contribution] vitae to [display_name]. ([paid_amount]/[total_cost])"))
+	if(cup_part > 0)
+		bloodpool.current -= cup_part
+		cup_paid_amount += cup_part
+	if(personal_part > 0)
+		user.adjust_bloodpool(-personal_part)
+		contributors[user] += personal_part
+	paid_amount += contribution
+
+	if(cup_part > 0)
+		to_chat(user, span_greentext("Directed [contribution] vitae into [display_name], [cup_part] of it from the cup. ([paid_amount]/[total_cost])"))
+	else
+		to_chat(user, span_greentext("Contributed [contribution] vitae to [display_name]. ([paid_amount]/[total_cost])"))
 
 	if(paid_amount >= total_cost)
 		bloodpool.complete_project(type)
@@ -290,19 +368,25 @@
 		to_chat(contributor, span_notice("Received [refund_amount] vitae refund from cancelled project: [display_name]"))
 
 	contributors.Cut()
+	if(cup_paid_amount > 0 && !QDELETED(bloodpool))
+		bloodpool.current += cup_paid_amount
+	cup_paid_amount = 0
 	paid_amount = 0
 
 // Specific project types
 /datum/vampire_project/power_growth
 	display_name = "Rite of Stirring"
 	description = "The ancient blood stirs once more. Forgotten whispers echo through the marrow of the land."
+	category = CRUCIBLE_CATEGORY_ASCENSION
 	total_cost = VAMPCOST_ONE
 	completion_sound = 'sound/misc/batsound.ogg'
 	start_failure_message = "Only the Methuselah may perform this rite."
 
-/datum/vampire_project/power_growth/can_start(mob/living/user, obj/structure/vampire/bloodpool/pool)
-	var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
-	return lord && !lord.ascended
+/datum/vampire_project/power_growth/get_start_lock_reason(mob/living/carbon/human/user, obj/structure/vampire/bloodpool/pool)
+	var/datum/antagonist/vampire/lord/lord = user?.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
+	if(!lord || lord.ascended)
+		return start_failure_message
+	return ..()
 
 /datum/vampire_project/power_growth/on_complete()
 	// Find nearby vampire lords who can level up
@@ -314,6 +398,7 @@
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
 			lord_body.adjust_maxbloodpool(1000)
+			bloodpool.ascensions++
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_2
 			break
@@ -321,6 +406,7 @@
 /datum/vampire_project/power_growth_2
 	display_name = "Rite of Reclamation"
 	description = "Strength long sealed returns. The soil, the stone, and the shadows bend again to their rightful master."
+	category = CRUCIBLE_CATEGORY_ASCENSION
 	total_cost = VAMPCOST_TWO
 	completion_sound = 'sound/misc/batsound.ogg'
 
@@ -334,6 +420,7 @@
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
 			lord_body.adjust_maxbloodpool(1000)
+			bloodpool.ascensions++
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth_2
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_3
 			break
@@ -341,6 +428,7 @@
 /datum/vampire_project/power_growth_3
 	display_name = "Rite of Dominion"
 	description = "The veil of time shreds. The Elder's will pours forth, binding trespassers within the grasp of the Land."
+	category = CRUCIBLE_CATEGORY_ASCENSION
 	total_cost = VAMPCOST_THREE
 	completion_sound = 'sound/misc/batsound.ogg'
 
@@ -354,6 +442,7 @@
 			for(var/S in MOBSTATS)
 				lord_body.change_stat(S, 2)
 			lord_body.adjust_maxbloodpool(1000)
+			bloodpool.ascensions++
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth_3
 			bloodpool.available_project_types += /datum/vampire_project/power_growth_4
 			break
@@ -361,6 +450,7 @@
 /datum/vampire_project/power_growth_4
 	display_name = "Rite of Sovereignty"
 	description = "The Lord is whole. Ancient power saturates every stone and vein, for the Land and its master are one."
+	category = CRUCIBLE_CATEGORY_ASCENSION
 	total_cost = VAMPCOST_FOUR
 	completion_sound = 'sound/misc/batsound.ogg'
 
@@ -381,12 +471,14 @@
 				for(var/S in MOBSTATS)
 					subordinate_body.change_stat(S, 2)
 
+			bloodpool.ascensions++
 			bloodpool.available_project_types -= /datum/vampire_project/power_growth_4
 			break
 
 /datum/vampire_project/armor_crafting
 	display_name = "Wicked Plate"
 	description = "Craft a complete set of vampiric armor from crystallized blood."
+	category = CRUCIBLE_CATEGORY_SUMMONING
 	total_cost = VAMPCOST_ARMOR
 	completion_sound = 'sound/misc/vcraft.ogg'
 
@@ -399,35 +491,90 @@
 	new /obj/item/clothing/gloves/roguetown/chain/vampire (bloodpool.loc)
 	creation_point.visible_message(span_notice("A complete set of armor materializes from the crimson crucible."))
 
+/datum/vampire_project/gate_amulet
+	display_name = "World Anchor"
+	description = "Forge a Gate Amulet from crystallized blood. Wherever it is carried, the Rift Gate can tear a portal open beside it, until the amulet shatters."
+	category = CRUCIBLE_CATEGORY_SUMMONING
+	total_cost = VAMPCOST_GATE_AMULET
+	completion_sound = 'sound/misc/vcraft.ogg'
+
+/datum/vampire_project/gate_amulet/on_complete(atom/movable/creation_point)
+	new /obj/item/clothing/neck/portalamulet(bloodpool.loc)
+	creation_point.visible_message(span_notice("A gate amulet congeals within the crimson crucible."))
+
 /datum/vampire_project/sunsteal
 	display_name = "Steal the Sun"
 	description = "The scorching gaze of the Sun-Tyrant shall hamper our plans no more. This project can only be initiated by your lorde."
+	category = CRUCIBLE_CATEGORY_SUN
 	total_cost = VAMPCOST_SUNSTEAL
 	completion_sound = 'sound/misc/vcraft.ogg'
 	can_be_initiated_by = VAMPIRE_PROJECT_INITIATE_LORDE
 
-/datum/vampire_project/sunsteal/on_complete(atom/movable/creation_point)
-	var/obj/structure/vampire/bloodpool/bloodpool = creation_point
-	if(!istype(bloodpool))
+/datum/vampire_project/sunsteal/get_start_lock_reason(mob/living/carbon/human/user, obj/structure/vampire/bloodpool/pool)
+	. = ..()
+	if(.)
 		return
+	if(pool.sunstolen || SSticker.sunstolen)
+		return "The sun has already been stolen."
 
-	SSticker.sunsteal(initiator_clan?.clan_leader)
+/datum/vampire_project/sunsteal/get_contribution_lock_reason()
+	if(SSticker.sunstolen)
+		return "The sun has already been stolen."
+	return ..()
+
+/datum/vampire_project/sunsteal/on_complete(atom/movable/creation_point)
+	var/mob/living/sunstealer = initiator_clan?.clan_leader
+	if(QDELETED(sunstealer))
+		sunstealer = initiator
+	if(QDELETED(sunstealer) || !SSticker.sunsteal(sunstealer))
+		on_cancel()
+		return
+	bloodpool.sunstolen = TRUE
+	bloodpool.available_project_types -= type
+
+/datum/vampire_project/servant/get_start_lock_reason(mob/living/carbon/human/user, obj/structure/vampire/bloodpool/pool)
+	var/summon_lock = get_summon_lock_reason(pool)
+	if(summon_lock)
+		return summon_lock
+	return ..()
+
+/datum/vampire_project/servant/get_contribution_lock_reason()
+	return get_summon_lock_reason(bloodpool)
+
+/datum/vampire_project/servant/proc/get_summon_lock_reason(obj/structure/vampire/bloodpool/pool)
+	if(pool?.summoning_role)
+		return "The crucible is already calling a [pool.summoning_role] from beyond. This rite must wait until that call is answered or fades."
+	return null
+
+/datum/vampire_project/servant/proc/pick_summon_candidate(list/candidates)
+	for(var/mob/dead/candidate in shuffle(candidates))
+		if(QDELETED(candidate) || !candidate.client || !candidate.key)
+			continue
+		if(isnewplayer(candidate))
+			var/mob/dead/new_player/lobby_player = candidate
+			if(lobby_player.spawning)
+				continue
+		return candidate
+	return null
 
 /datum/vampire_project/servant/proc/summon(type, atom/feedback_atom)
 	feedback_atom.visible_message("The crucible stirs, summoning a servant from the realms beyond...")
+	bloodpool.summoning_role = type
+	SStgui.update_uis(bloodpool)
 	var/list/candidates = pollGhostCandidates("Do you want to play as a Vampire's [type]?", ROLE_VAMPIRE_SUMMON, null, null, 10 SECONDS, POLL_IGNORE_VL_SERVANT)
-	if(!LAZYLEN(candidates))
-		feedback_atom.visible_message("But alas, the depths are hollow...")
+	bloodpool.summoning_role = null
+	SStgui.update_uis(bloodpool)
+	if(QDELETED(feedback_atom))
 		return FALSE
 
-	var/mob/C = pick(candidates)
-	if(!C || !istype(C, /mob/dead))
+	var/mob/dead/C = pick_summon_candidate(candidates)
+	if(!C)
 		feedback_atom.visible_message("But alas, the depths are hollow...")
 		return FALSE
 
 	. = TRUE
 
-	if(istype(C, /mob/dead/new_player))
+	if(isnewplayer(C))
 		var/mob/dead/new_player/N = C
 		N.close_spawn_windows()
 
@@ -453,6 +600,7 @@
 /datum/vampire_project/servant/servant_t1
 	display_name = "Summon Servant"
 	description = "A loyal servant to do your bidding."
+	category = CRUCIBLE_CATEGORY_SUMMONING
 	total_cost = VAMPCOST_SERVANT_T1
 	completion_sound = 'sound/misc/vcraft.ogg'
 
@@ -463,6 +611,7 @@
 /datum/vampire_project/servant/servant_t2
 	display_name = "Summon Guard"
 	description = "A loyal servant to do your bidding."
+	category = CRUCIBLE_CATEGORY_SUMMONING
 	total_cost = VAMPCOST_SERVANT_T2
 	completion_sound = 'sound/misc/vcraft.ogg'
 
@@ -473,6 +622,7 @@
 /datum/vampire_project/servant/servant_t3
 	display_name = "Summon Knight Spawn"
 	description = "A loyal servant to do your bidding."
+	category = CRUCIBLE_CATEGORY_SUMMONING
 	total_cost = VAMPCOST_SERVANT_T3
 	completion_sound = 'sound/misc/vcraft.ogg'
 
