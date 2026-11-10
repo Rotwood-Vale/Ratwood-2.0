@@ -22,16 +22,18 @@
 	if(!length(roster))
 		return
 
-	// Fit the whole roster inside the reboot countdown.
+	// Fit the whole roster inside the reboot countdown. One spare interval covers the stagger below.
 	var/budget = CONFIG_GET(number/round_end_countdown) * 10 - CREDIT_START_DELAY - CREDIT_SLIDE_DURATION_MAX
-	var/interval = clamp(budget / length(roster), CREDIT_SPAWN_INTERVAL_MIN, CREDIT_SPAWN_INTERVAL_MAX)
+	var/interval = clamp(budget / (length(roster) + 1), CREDIT_SPAWN_INTERVAL_MIN, CREDIT_SPAWN_INTERVAL_MAX)
 	// Portraits in the same lane spawn CREDIT_LANE_COUNT intervals apart; slide fast enough that they never overlap.
 	var/slide_speed = max(CREDIT_SLIDE_DISTANCE / CREDIT_SLIDE_DURATION_MAX, CREDIT_MIN_SPACING / (interval * CREDIT_LANE_COUNT))
 	var/slide_duration = CREDIT_SLIDE_DISTANCE / slide_speed
 
 	credits_rolling = TRUE
 	verbs += /client/proc/ClearCredits
-	sleep(CREDIT_START_DELAY)
+	// Every client starts rolling in the same tick. A random offset within one interval spreads their
+	// spawns across ticks instead of creating one credit per client all at once.
+	sleep(CREDIT_START_DELAY + rand() * interval)
 	var/lane = 0
 	for(var/datum/credit_entry/entry as anything in roster)
 		if(!credits_rolling)

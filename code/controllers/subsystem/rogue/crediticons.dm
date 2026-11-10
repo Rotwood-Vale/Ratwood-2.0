@@ -7,7 +7,7 @@
  *
  * Portraits are snapshots of the live mob's worn/body overlays, stored as a mutable_appearance.
  * No icon math happens at capture time; the client does the drawing when the credits roll.
- * The only flattening is lazy and cached, for wanted posters (bandit notices, round end Outlaws tab).
+ * The only flattening is lazy and cached, for wanted posters (town wanted boards, round end Outlaws tab).
  */
 SUBSYSTEM_DEF(crediticons)
 	name = "crediticons"

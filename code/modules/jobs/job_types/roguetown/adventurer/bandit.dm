@@ -51,7 +51,7 @@
 		if(!H.mind)
 			return
 		H.ambushable = FALSE
-		SSrole_class_handler.bandits_in_round = TRUE // bandit notices report activity for job-spawned bandits too, not just event ones
+		SSrole_class_handler.bandits_in_round = TRUE // wanted posters report bandit activity for job-spawned bandits too, not just event ones
 
 /datum/outfit/job/roguetown/bandit/pre_equip(mob/living/carbon/human/H)
 	. = ..()

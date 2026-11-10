@@ -1,7 +1,7 @@
 /**
- * Wanted posters, shared by the bandit notices in town and the round end Outlaws tab.
+ * Wanted posters, shared by the wanted boards in town and the round end Outlaws tab.
  *
- * In-round (bandit notices) only publicly named people are shown: declared outlaws
+ * In-round (wanted boards) only publicly named people are shown: declared outlaws
  * (GLOB.outlawed_players) and bounty targets whose name is on the Excidium (/datum/bounty/target).
  * Hidden-identity bounties set target_hidden instead; those are only shown once the round is over.
  * Portraits come from SScrediticons.

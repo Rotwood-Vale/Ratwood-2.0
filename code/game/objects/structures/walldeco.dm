@@ -26,8 +26,8 @@
 	return
 
 /obj/structure/fluff/walldeco/wantedposter
-	name = "bandit notice"
-	desc = "A place for posters displaying the faces of roving bandits. Let's see if there are any this week..."
+	name = "wanted poster"
+	desc = "A board of posters naming the realm's outlaws and the bounties on their heads. Let's see who is wanted this week..."
 	icon_state = "wanted1"
 	layer = BELOW_MOB_LAYER
 	pixel_y = 32
@@ -47,11 +47,20 @@
 /obj/structure/fluff/walldeco/wantedposter/examine(mob/user)
 	. = ..()
 	if(user.Adjacent(src))
-		if(SSrole_class_handler.bandits_in_round)
-			. += span_bold("I see that bandits are active in the region.")
+		var/wanted_count = length(collect_wanted_posters())
+		var/bandits_active = SSrole_class_handler.bandits_in_round
+		var/wanted_text
+		switch(wanted_count)
+			if(0)
+				wanted_text = "No one is wanted at present"
+			if(1)
+				wanted_text = "One person is wanted by the realm"
+			else
+				wanted_text = "[wanted_count] persons are wanted by the realm"
+		var/bandit_text = bandits_active ? "bandits are active in the region" : "there are no reports of bandit activity"
+		. += span_bold("[wanted_text], and [bandit_text].")
+		if(wanted_count || bandits_active)
 			user.playsound_local(user, 'sound/misc/notice (2).ogg', 100, FALSE)
-		else
-			. += span_bold("There doesn't seem to be any reports of bandit activity.")
 		. += "<a href='byond://?src=[REF(src)];read_notices=1'>Read the wanted notices.</a>"
 
 /obj/structure/fluff/walldeco/wantedposter/Topic(href, href_list)
