@@ -307,7 +307,7 @@
 	</br>To give into despair and hopelessness, however, is to rob all meaning from His sacrifice. \
 	</br>Heaven's gate closed to us long ago, yet His children persist; as long as they do, so must I. \
 	</br>Happiness must be fought for. My superficial wounds can be repaired with a needle or a cautery."
-	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER //a heavy gambeson.
+	max_integrity = ARMOR_INT_CHEST_LIGHT_ELITE + 50 //They eat a LOT of abuse.
 
 /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/chest
 	body_parts_covered = COVERAGE_VEST
@@ -339,6 +339,7 @@
 	</br>To give into despair and hopelessness, however, is to rob all meaning from His sacrifice. \
 	</br>Heaven's gate closed to us long ago, yet His children persist; as long as they do, so must I. \
 	</br>Happiness must be fought for. My superficial wounds can be repaired with a needle or a cautery."
+	max_integrity = ARMOR_INT_CHEST_LIGHT_ELITE + 50 //They eat a LOT of abuse.
 
 /*
  * EMOTE ARMOUR

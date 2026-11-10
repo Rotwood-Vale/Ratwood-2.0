@@ -51,10 +51,10 @@
 	if(H.has_flaw(/datum/charflaw/addiction/alcoholic))//THE LEADER OF THE EIGHT ENDURING FISTS SWAYED BACK AND FORTH TO TRICK THE HERETICS, DRUNK WITH INTERNAL FIRE. THEY WERE BUT FROGS IN A WELL LOOKING UP AT THE NIGHT SKY THINKING THEY HAD REACHED THE HEAVENS.
 		ADD_TRAIT(H, TRAIT_DRUNK_HEALING, TRAIT_GENERIC)
 	if(H.mind)
-		var/weapons = list("Abboteer - Master Pugilist, Weaponless Oath & No Malus", "Pugilist - Master Athletics, Pain Resistance", "Quarterstaff - Expert Polearms, +I PER / +I INT")
+		var/weapons = list("Abboteer - Master Pugilist, Weaponless Oath & Intelligence", "Pugilist - Master Athletics, Pain Resistance", "Quarterstaff - Expert Polearms, +I PER / +I INT")
 		var/weapon_choice = input(H,"CHOOSE YOUR WEAPON.", "TAKE UP PSYDON'S ARMS.") as anything in weapons
 		switch(weapon_choice)
-			if("Abboteer - Master Pugilist, Weaponless Oath & No Malus")//the enduringest psychud. Weighted 12 stats but no weapons, period.
+			if("Abboteer - Master Pugilist, Weaponless Oath & Intelligence")//the enduringest psychud. Weighted 12 stats but no weapons, period.
 				devotion_gain = CLERIC_REGEN_MINOR
 				devotion_limit = CLERIC_REQ_2
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
@@ -66,10 +66,10 @@
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)
-				H.change_stat(STATKEY_INT, 1)
-				H.change_stat(STATKEY_SPD, 1)
+				H.change_stat(STATKEY_INT, 3) //Abbotteers primarily struggle with getting constantly feinted. They need a leg-up or they'll suffer.
 			if("Pugilist - Master Athletics, Pain Resistance")//classic disciple but with the weapon choices not being a noob trap that debuffs you for grabbing a weapon you can make with 1 bullion roundstart.
 				H.adjust_skillrank_up_to(/datum/skill/misc/athletics, SKILL_LEVEL_MASTER, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/misc/swimming, SKILL_LEVEL_EXPERT, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
 				ADD_TRAIT(H, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
 				ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
