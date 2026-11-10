@@ -292,7 +292,7 @@
 
 /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/body/monke
 	name = "trained skin"
-	desc = "They say I've taken the first step on a path older than memory. My superficial wounds can be repaired with a needle.
+	desc = "They say I've taken the first step on a path older than memory. My superficial wounds can be repaired with a needle.\
 	</br>Aeon, Psydon, Adonai… I don't fully understand what those names mean yet, but I repeat them as I was taught.\
 	</br>The world is said to be held together by His sacrifice. I can't imagine something like that, but the Disciples say it is true.\
 	</br>I came here because I wanted purpose, something solid to believe in.\
