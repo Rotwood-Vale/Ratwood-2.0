@@ -13,11 +13,6 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-type Zone = {
-  ref: string;
-  name: string;
-};
-
 type Amulet = {
   ref: string;
   name: string;
@@ -25,7 +20,7 @@ type Amulet = {
 };
 
 type Data = {
-  zones: Zone[];
+  zones: string[];
   vitaeCost: number;
   portalDuration: number;
   amulets: Amulet[];
@@ -43,9 +38,12 @@ const formatDuration = (seconds: number) => {
   return `${minutes}:${rest}`;
 };
 
+const toTitle = (name: string) =>
+  name ? name.charAt(0).toUpperCase() + name.slice(1) : '';
+
 const ZoneList = memo(
   (props: {
-    zones: Zone[];
+    zones: string[];
     query: string;
     canOpen: boolean;
     blockedReason: string | null;
@@ -53,7 +51,7 @@ const ZoneList = memo(
   }) => {
     const { zones, query, canOpen, blockedReason, act } = props;
     const shown = query
-      ? zones.filter((zone) => zone.name.toLowerCase().includes(query))
+      ? zones.filter((zone) => zone.toLowerCase().includes(query))
       : zones;
 
     if (!shown.length) {
@@ -64,14 +62,14 @@ const ZoneList = memo(
       <>
         {shown.map((zone) => (
           <Button
-            key={zone.ref}
+            key={zone}
             fluid
             icon="eye"
             disabled={!canOpen}
             tooltip={blockedReason}
-            onClick={() => act('open_zone', { zone: zone.ref })}
+            onClick={() => act('open_zone', { zone })}
           >
-            {zone.name}
+            {toTitle(zone)}
           </Button>
         ))}
       </>
@@ -106,20 +104,7 @@ export const VampireRiftGate = () => {
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
-            <Section
-              title="Rift"
-              buttons={
-                riftOpen && (
-                  <Button
-                    icon="times"
-                    color="bad"
-                    onClick={() => act('close_rift')}
-                  >
-                    Close
-                  </Button>
-                )
-              }
-            >
+            <Section title="Rift">
               <LabeledList>
                 <LabeledList.Item label="Cost">
                   {vitaeCost} vitae
@@ -135,10 +120,22 @@ export const VampireRiftGate = () => {
                   color={riftOpen ? 'bad' : 'good'}
                 >
                   {riftOpen
-                    ? `Open to ${riftZone}, closes in ${formatDuration(riftSecondsLeft)}`
+                    ? `Open to ${toTitle(riftZone || '')}, closes in ${formatDuration(riftSecondsLeft)}`
                     : 'Dormant'}
                 </LabeledList.Item>
               </LabeledList>
+              {riftOpen && (
+                <Button
+                  fluid
+                  mt={1}
+                  icon="times"
+                  color="bad"
+                  textAlign="center"
+                  onClick={() => act('close_rift')}
+                >
+                  Close the Rift
+                </Button>
+              )}
               <Box mt={1} italic color="label">
                 My sight enters the chosen place first, so I can pick the spot
                 before the rift opens.

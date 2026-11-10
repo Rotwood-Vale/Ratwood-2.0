@@ -29,13 +29,9 @@
 /obj/structure/vampire/portalmaker/ui_static_data(mob/user)
 	var/list/data = list()
 	var/list/zones = list()
-	for(var/area/zone as anything in GLOB.sortedAreas)
-		if(zone.hidden)
-			continue
-		zones += list(list(
-			"ref" = REF(zone),
-			"name" = zone.name,
-		))
+	for(var/area/rogue/zone in GLOB.sortedAreas)
+		if(zone.town_area && !zone.hidden)
+			zones |= zone.name
 	data["zones"] = zones
 	data["vitaeCost"] = RIFT_GATE_VITAE_COST
 	data["portalDuration"] = RIFT_GATE_PORTAL_DURATION / (1 SECONDS)
@@ -71,10 +67,10 @@
 
 	switch(action)
 		if("open_zone")
-			var/area/zone = locate(params["zone"])
-			if(!istype(zone) || zone.hidden || !(zone in GLOB.sortedAreas))
+			var/list/zone_areas = get_town_zone_areas(params["zone"])
+			if(!length(zone_areas))
 				return
-			return open_rift(user, zone)
+			return open_rift(user, zone_areas, params["zone"])
 		if("open_amulet")
 			var/obj/item/clothing/neck/portalamulet/amulet = locate(params["amulet"])
 			if(!istype(amulet) || !(amulet in GLOB.vampire_objects))
@@ -82,14 +78,24 @@
 			var/turf/anchor = get_rift_anchor(amulet)
 			if(!anchor)
 				return
-			return open_rift(user, get_area(anchor), anchor)
+			var/area/anchor_area = get_area(anchor)
+			return open_rift(user, list(anchor_area), anchor_area.name, anchor)
 		if("close_rift")
 			if(!length(rift_portals))
 				return
 			close_rift()
 			return TRUE
 
-/obj/structure/vampire/portalmaker/proc/open_rift(mob/living/user, area/zone, turf/arrival)
+/obj/structure/vampire/portalmaker/proc/get_town_zone_areas(zone_name)
+	var/list/zone_areas = list()
+	if(!istext(zone_name))
+		return zone_areas
+	for(var/area/rogue/zone in GLOB.sortedAreas)
+		if(zone.town_area && !zone.hidden && zone.name == zone_name)
+			zone_areas += zone
+	return zone_areas
+
+/obj/structure/vampire/portalmaker/proc/open_rift(mob/living/user, list/zone_areas, zone_name, turf/arrival)
 	if(length(rift_portals))
 		to_chat(user, span_warning("A rift is already open."))
 		return
@@ -107,9 +113,9 @@
 		return
 
 	if(!arrival)
-		arrival = pick_rift_arrival(zone)
+		arrival = pick_rift_arrival(zone_areas)
 	if(!arrival)
-		to_chat(user, span_warning("The rift finds no footing in [zone.name]."))
+		to_chat(user, span_warning("The rift finds no footing in [zone_name]."))
 		return
 
 	SStgui.close_user_uis(user, src)
@@ -118,14 +124,13 @@
 	SStgui.on_transfer(user, eye)
 	eye.can_reenter_corpse = TRUE
 	eye.ghostize_time = world.time
-	eye.bind_rift(user, src, zone, arrival)
+	eye.bind_rift(user, src, zone_areas, zone_name, arrival)
 	eye.key = user.key
 	return TRUE
 
 /obj/structure/vampire/portalmaker/proc/finish_rift(mob/dead/observer/rogue/arcaneeye/rift/eye, turf/destination)
 	var/mob/living/user = eye.vampirelord
-	var/area/zone = eye.zone
-	if(!rift_can_open_at(destination, zone))
+	if(!rift_can_open_at(destination, eye.anchor, eye.zone_areas))
 		to_chat(eye, span_warning("The rift will not open here."))
 		return
 	if(length(rift_portals))
@@ -138,18 +143,20 @@
 		eye.return_from_rift()
 		return
 
+	var/zone_name = eye.zone_name
 	eye.return_from_rift()
 	user.adjust_bloodpool(-RIFT_GATE_VITAE_COST)
-	tear_rift(destination, home, mouths, zone)
+	tear_rift(destination, home, mouths, zone_name)
 	user.playsound_local(get_turf(src), 'sound/misc/portalactivate.ogg', 100, FALSE, pressure_affected = FALSE)
 	SStgui.update_uis(src)
 	return TRUE
 
-/obj/structure/vampire/portalmaker/proc/tear_rift(turf/destination, turf/home, list/mouths, area/zone)
+/obj/structure/vampire/portalmaker/proc/tear_rift(turf/destination, turf/home, list/mouths, zone_name)
+	var/turf/landing = get_rift_landing(destination)
 	for(var/turf/mouth as anything in mouths)
-		rift_portals += new /obj/structure/vampire/portal(mouth, src, destination)
+		rift_portals += new /obj/structure/vampire/portal(mouth, src, landing)
 	rift_portals += new /obj/structure/vampire/portal/homeward(destination, src, home)
-	rift_zone_name = zone.name
+	rift_zone_name = zone_name
 	rift_close_time = world.time + RIFT_GATE_PORTAL_DURATION
 	rift_timer = addtimer(CALLBACK(src, PROC_REF(close_rift)), RIFT_GATE_PORTAL_DURATION, TIMER_STOPPABLE)
 
@@ -178,9 +185,23 @@
 		mouths += get_turf(mouth)
 	return mouths
 
-/obj/structure/vampire/portalmaker/proc/pick_rift_arrival(area/zone)
-	for(var/turf/candidate as anything in shuffle(get_area_turfs(zone.type)))
-		if(rift_can_open_at(candidate, zone))
+/obj/structure/vampire/portalmaker/proc/get_rift_landing(turf/destination)
+	var/list/landings = list()
+	for(var/direction in GLOB.cardinals)
+		var/turf/landing = get_step(destination, direction)
+		if(landing && get_area(landing) == get_area(destination) && !istransparentturf(landing) && !landing.is_blocked_turf(TRUE))
+			landings += landing
+	if(!length(landings))
+		return destination
+	return pick(landings)
+
+/obj/structure/vampire/portalmaker/proc/pick_rift_arrival(list/zone_areas)
+	var/list/candidates = list()
+	for(var/area/zone as anything in zone_areas)
+		for(var/turf/zone_turf in zone)
+			candidates += zone_turf
+	for(var/turf/candidate as anything in shuffle(candidates))
+		if(rift_can_open_at(candidate, candidate, zone_areas))
 			return candidate
 	return null
 
@@ -191,8 +212,11 @@
 		return null
 	return anchor
 
-/obj/structure/vampire/portalmaker/proc/rift_can_open_at(turf/destination, area/zone)
-	if(!istype(destination) || !istype(zone) || zone.hidden || get_area(destination) != zone)
+/obj/structure/vampire/portalmaker/proc/rift_can_open_at(turf/destination, turf/anchor, list/zone_areas)
+	if(!istype(destination) || !istype(anchor) || destination.z != anchor.z || get_dist(destination, anchor) > RIFT_GATE_PLACEMENT_RANGE)
+		return FALSE
+	var/area/destination_area = get_area(destination)
+	if(!destination_area || destination_area.hidden || !(destination_area in zone_areas))
 		return FALSE
 	if(istransparentturf(destination) || destination.is_blocked_turf(TRUE))
 		return FALSE
@@ -219,10 +243,15 @@
 	exit = null
 	return ..()
 
-/obj/structure/vampire/portal/Crossed(atom/movable/AM)
+/obj/structure/vampire/portal/Crossed(atom/movable/AM, oldloc)
 	. = ..()
 	var/mob/living/traveler = AM
-	if(!istype(traveler) || traveler.buckled || !exit || !allows_passage(traveler))
+	if(!istype(traveler) || traveler.buckled || !exit)
+		return
+	var/turf/came_from = get_turf(oldloc)
+	if(came_from && get_dist(came_from, src) > 1)
+		return
+	if(!allows_passage(traveler))
 		return
 	carry_through(traveler)
 
@@ -272,10 +301,11 @@
 
 /mob/dead/observer/rogue/arcaneeye/rift
 	var/obj/structure/vampire/portalmaker/gate
-	var/area/zone
+	var/list/zone_areas
+	var/zone_name
+	var/turf/anchor
 	var/list/image/placement_images = list()
 	var/client/placement_viewer
-	var/turf/marked_center
 	var/sight_timer
 
 /mob/dead/observer/rogue/arcaneeye/rift/Initialize(mapload)
@@ -284,6 +314,8 @@
 		/mob/dead/observer/proc/dead_tele,
 		/mob/dead/observer/rogue/arcaneeye/proc/scry_tele,
 		/mob/dead/observer/rogue/arcaneeye/proc/cancel_scry,
+		/mob/dead/observer/rogue/arcaneeye/proc/eye_down,
+		/mob/dead/observer/rogue/arcaneeye/proc/eye_up,
 		/mob/dead/observer/rogue/arcaneeye/proc/vampire_telepathy,
 	)
 	verbs += list(
@@ -297,13 +329,16 @@
 	deltimer(sight_timer)
 	vampirelord = null
 	gate = null
-	zone = null
+	zone_areas = null
+	anchor = null
 	return ..()
 
-/mob/dead/observer/rogue/arcaneeye/rift/proc/bind_rift(mob/living/body, obj/structure/vampire/portalmaker/rift_gate, area/rift_zone, turf/arrival)
+/mob/dead/observer/rogue/arcaneeye/rift/proc/bind_rift(mob/living/body, obj/structure/vampire/portalmaker/rift_gate, list/rift_zone_areas, rift_zone_name, turf/arrival)
 	vampirelord = body
 	gate = rift_gate
-	zone = rift_zone
+	zone_areas = rift_zone_areas
+	zone_name = rift_zone_name
+	anchor = arrival
 	RegisterSignal(body, COMSIG_QDELETING, PROC_REF(on_body_deleted))
 	RegisterSignal(rift_gate, COMSIG_QDELETING, PROC_REF(on_gate_deleted))
 	forceMove(arrival)
@@ -321,7 +356,7 @@
 /mob/dead/observer/rogue/arcaneeye/rift/Login()
 	. = ..()
 	show_placement()
-	to_chat(src, span_notice("My sight drifts into [zone?.name]. I may wander anywhere within it, up and down as well: <b>Open Rift Here</b> tears the rift where I stand, <b>Return to Body</b> abandons it."))
+	to_chat(src, span_notice("My sight settles in [zone_name]. I may drift up to [RIFT_GATE_PLACEMENT_RANGE] paces from here: <b>Open Rift Here</b> tears the rift where I stand, <b>Return to Body</b> abandons it."))
 
 /mob/dead/observer/rogue/arcaneeye/rift/Logout()
 	hide_placement()
@@ -329,30 +364,16 @@
 
 /mob/dead/observer/rogue/arcaneeye/rift/Move(NewLoc, direct)
 	var/turf/destination = NewLoc ? get_turf(NewLoc) : get_step(src, direct)
-	if(!zone || get_area(destination) != zone)
+	if(!anchor || !destination || destination.z != anchor.z || get_dist(destination, anchor) > RIFT_GATE_PLACEMENT_RANGE)
 		return FALSE
 	return ..()
-
-/mob/dead/observer/rogue/arcaneeye/rift/canZMove(direction, turf/target)
-	if(!zone || get_area(target) != zone)
-		return FALSE
-	return ..()
-
-/mob/dead/observer/rogue/arcaneeye/rift/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	. = ..()
-	if(client)
-		show_placement()
 
 /mob/dead/observer/rogue/arcaneeye/rift/proc/show_placement()
-	var/turf/center = get_turf(src)
-	if(placement_viewer && placement_viewer == client && marked_center == center)
-		return
 	hide_placement()
-	if(!client || !center)
+	if(!client || !anchor)
 		return
-	marked_center = center
-	for(var/turf/marked in range(RIFT_GATE_MARKER_RANGE, center))
-		var/can_open = gate?.rift_can_open_at(marked, zone)
+	for(var/turf/marked in range(RIFT_GATE_PLACEMENT_RANGE + 1, anchor))
+		var/can_open = gate?.rift_can_open_at(marked, anchor, zone_areas)
 		var/image/marker = image('icons/turf/overlays.dmi', marked, can_open ? "greenOverlay" : "redOverlay")
 		marker.plane = ABOVE_LIGHTING_PLANE
 		marker.alpha = 100
@@ -364,7 +385,6 @@
 	if(placement_viewer)
 		placement_viewer.images -= placement_images
 	placement_viewer = null
-	marked_center = null
 	placement_images.Cut()
 
 /mob/dead/observer/rogue/arcaneeye/rift/proc/open_rift_here()
