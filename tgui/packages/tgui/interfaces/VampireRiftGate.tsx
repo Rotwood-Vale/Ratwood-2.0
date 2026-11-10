@@ -17,6 +17,7 @@ type Amulet = {
   ref: string;
   name: string;
   area: string;
+  uses: number;
 };
 
 type Data = {
@@ -113,7 +114,8 @@ export const VampireRiftGate = () => {
                   {formatDuration(portalDuration)}
                 </LabeledList.Item>
                 <LabeledList.Item label="Way back">
-                  Gate amulet bearers, and whoever they carry on their shoulder
+                  A gate amulet worn about the neck, one charge per passage, for
+                  its bearer and whoever they carry on their shoulder
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Status"
@@ -124,18 +126,17 @@ export const VampireRiftGate = () => {
                     : 'Dormant'}
                 </LabeledList.Item>
               </LabeledList>
-              {riftOpen && (
-                <Button
-                  fluid
-                  mt={1}
-                  icon="times"
-                  color="bad"
-                  textAlign="center"
-                  onClick={() => act('close_rift')}
-                >
-                  Close the Rift
-                </Button>
-              )}
+              <Button
+                fluid
+                mt={1}
+                icon="times"
+                color="bad"
+                textAlign="center"
+                disabled={!riftOpen}
+                onClick={() => act('close_rift')}
+              >
+                Close the Rift
+              </Button>
               <Box mt={1} italic color="label">
                 My sight enters the chosen place first, so I can pick the spot
                 before the rift opens.
@@ -157,7 +158,9 @@ export const VampireRiftGate = () => {
                   <Stack key={amulet.ref} align="center" mb={1}>
                     <Stack.Item grow>
                       <Box bold>{amulet.name}</Box>
-                      <Box color="label">{amulet.area}</Box>
+                      <Box color="label">
+                        {`${amulet.area}, charges: ${amulet.uses}`}
+                      </Box>
                     </Stack.Item>
                     <Stack.Item>
                       <Button

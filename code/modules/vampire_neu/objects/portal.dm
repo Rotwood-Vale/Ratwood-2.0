@@ -48,6 +48,7 @@
 			"ref" = REF(amulet),
 			"name" = amulet.name,
 			"area" = get_area_name(anchor, TRUE),
+			"uses" = amulet.uses,
 		))
 	var/mob/living/living_user = user
 	data["amulets"] = amulets
@@ -81,10 +82,8 @@
 			var/area/anchor_area = get_area(anchor)
 			return open_rift(user, list(anchor_area), anchor_area.name, anchor)
 		if("close_rift")
-			if(!length(rift_portals))
-				return
-			close_rift()
-			return TRUE
+			if(length(rift_portals))
+				close_rift()
 
 /obj/structure/vampire/portalmaker/proc/get_town_zone_areas(zone_name)
 	var/list/zone_areas = list()
@@ -251,20 +250,33 @@
 	var/turf/came_from = get_turf(oldloc)
 	if(came_from && get_dist(came_from, src) > 1)
 		return
-	if(!allows_passage(traveler))
+	if(!can_pass(traveler))
+		to_chat(traveler, span_warning("The rift will not carry me without a gate amulet about my neck."))
 		return
-	carry_through(traveler)
+	if(!get_worn_gate_amulet(traveler))
+		to_chat(traveler, span_warning("Without a gate amulet about my neck, the rift will not carry me back."))
+	INVOKE_ASYNC(src, PROC_REF(begin_passage), traveler)
 
-/obj/structure/vampire/portal/proc/allows_passage(mob/living/traveler)
-	if(!bears_gate_amulet(traveler))
-		to_chat(traveler, span_warning("Without a gate amulet, the rift will not carry me back."))
+/obj/structure/vampire/portal/proc/can_pass(mob/living/traveler)
 	return TRUE
 
-/obj/structure/vampire/portal/proc/bears_gate_amulet(mob/living/traveler)
-	for(var/obj/item/clothing/neck/portalamulet/amulet in GLOB.vampire_objects)
-		if(get(amulet, /mob/living) == traveler)
-			return TRUE
-	return FALSE
+/obj/structure/vampire/portal/proc/get_worn_gate_amulet(mob/living/traveler)
+	var/obj/item/clothing/neck/portalamulet/amulet = traveler.get_item_by_slot(SLOT_NECK)
+	if(!istype(amulet) || amulet.uses <= 0)
+		return null
+	return amulet
+
+/obj/structure/vampire/portal/proc/begin_passage(mob/living/traveler)
+	if(!do_after(traveler, RIFT_GATE_PASSAGE_TIME, FALSE, src))
+		return
+	if(QDELETED(src) || !exit || QDELETED(traveler) || traveler.loc != loc || traveler.buckled || !can_pass(traveler))
+		return
+	var/obj/item/clothing/neck/portalamulet/amulet = get_worn_gate_amulet(traveler)
+	carry_through(traveler)
+	pay_passage(amulet)
+
+/obj/structure/vampire/portal/proc/pay_passage(obj/item/clothing/neck/portalamulet/amulet)
+	return
 
 /obj/structure/vampire/portal/proc/carry_through(mob/living/traveler)
 	var/mob/living/carried = traveler.pulling
@@ -279,17 +291,18 @@
 	traveler.start_pulling(carried, supress_message = TRUE)
 	traveler.buckle_mob(carried, TRUE, TRUE, 90, 0, 0)
 
-/obj/structure/vampire/portal/homeward/allows_passage(mob/living/traveler)
-	if(bears_gate_amulet(traveler))
-		return TRUE
-	to_chat(traveler, span_warning("The rift will not carry me without a gate amulet."))
-	return FALSE
+/obj/structure/vampire/portal/homeward/can_pass(mob/living/traveler)
+	return !!get_worn_gate_amulet(traveler)
+
+/obj/structure/vampire/portal/homeward/pay_passage(obj/item/clothing/neck/portalamulet/amulet)
+	amulet?.spend_charge()
 
 /obj/item/clothing/neck/portalamulet
 	name = "Gate Amulet"
-	desc = "A clot of crystallized blood strung on a cord. The Rift Gate carries its bearer home, and whoever they bear upon their shoulder."
+	desc = "A clot of crystallized blood strung on a cord. Worn about the neck, it lets the Rift Gate carry its bearer home, and whoever they bear upon their shoulder."
 	icon_state = "bloodtooth"
 	icon = 'icons/roguetown/clothing/neck.dmi'
+	var/uses = GATE_AMULET_CHARGES
 
 /obj/item/clothing/neck/portalamulet/Initialize(mapload)
 	GLOB.vampire_objects |= src
@@ -298,6 +311,17 @@
 /obj/item/clothing/neck/portalamulet/Destroy()
 	GLOB.vampire_objects -= src
 	return ..()
+
+/obj/item/clothing/neck/portalamulet/examine(mob/user)
+	. = ..()
+	. += span_notice("It holds [uses] more passage\s home.")
+
+/obj/item/clothing/neck/portalamulet/proc/spend_charge()
+	uses--
+	if(uses > 0)
+		return
+	visible_message(span_warning("[src] shatters!"))
+	qdel(src)
 
 /mob/dead/observer/rogue/arcaneeye/rift
 	var/obj/structure/vampire/portalmaker/gate

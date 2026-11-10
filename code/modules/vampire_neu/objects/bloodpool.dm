@@ -103,6 +103,7 @@
 			"fromCup" = project.cup_paid_amount,
 			"maxContribution" = max(project.get_max_contribution(living_user), 0),
 			"lockedReason" = project.get_contribution_lock_reason(),
+			"waitsForSummon" = project.waits_for_summon(src),
 			"contributors" = contributor_data,
 		))
 
@@ -115,6 +116,7 @@
 			available_project_data += list(list(
 				"type" = "[project_type]",
 				"lockedReason" = project.get_start_lock_reason(living_user, src),
+				"waitsForSummon" = project.waits_for_summon(src),
 			))
 
 	data["isLord"] = is_lord
@@ -340,6 +342,9 @@
 /datum/vampire_project/proc/get_contribution_lock_reason()
 	return null
 
+/datum/vampire_project/proc/waits_for_summon(obj/structure/vampire/bloodpool/pool)
+	return FALSE
+
 /datum/vampire_project/proc/on_start(mob/living/user)
 	return
 
@@ -553,7 +558,7 @@
 
 /datum/vampire_project/gate_amulet
 	display_name = "World Anchor"
-	description = "Forge a Gate Amulet from crystallized blood. The Rift Gate carries its bearer home, and whoever they bear upon their shoulder."
+	description = "Forge a Gate Amulet from crystallized blood. Worn about the neck, it lets the Rift Gate carry its bearer home, and whoever they bear upon their shoulder, until its charges are spent."
 	category = CRUCIBLE_CATEGORY_SUMMONING
 	total_cost = VAMPCOST_GATE_AMULET
 	completion_sound = 'sound/misc/vcraft.ogg'
@@ -601,8 +606,11 @@
 /datum/vampire_project/servant/get_contribution_lock_reason()
 	return get_summon_lock_reason(bloodpool)
 
+/datum/vampire_project/servant/waits_for_summon(obj/structure/vampire/bloodpool/pool)
+	return !!pool?.summoning_role
+
 /datum/vampire_project/servant/proc/get_summon_lock_reason(obj/structure/vampire/bloodpool/pool)
-	if(pool?.summoning_role)
+	if(waits_for_summon(pool))
 		return "The crucible is already calling a [pool.summoning_role] from beyond. This rite must wait until that call is answered or fades."
 	return null
 
@@ -623,7 +631,6 @@
 	SStgui.update_uis(bloodpool)
 	var/list/candidates = pollGhostCandidates("Do you want to play as a Vampire's [type]?", ROLE_VAMPIRE_SUMMON, null, null, 10 SECONDS, POLL_IGNORE_VL_SERVANT)
 	bloodpool.summoning_role = null
-	SStgui.update_uis(bloodpool)
 	if(QDELETED(feedback_atom))
 		return FALSE
 

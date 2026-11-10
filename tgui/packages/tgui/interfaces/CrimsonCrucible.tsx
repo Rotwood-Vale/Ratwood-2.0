@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import {
   Box,
   Button,
+  Icon,
   LabeledList,
   NoticeBox,
   ProgressBar,
@@ -32,12 +33,14 @@ type ActiveProject = {
   fromCup: number;
   maxContribution: number;
   lockedReason: string | null;
+  waitsForSummon: BooleanLike;
   contributors: Contributor[];
 };
 
 type AvailableProject = {
   type: string;
   lockedReason: string | null;
+  waitsForSummon: BooleanLike;
 };
 
 type Data = {
@@ -204,7 +207,7 @@ const ActiveProjectSection = (props: {
           </LabeledList.Item>
         )}
         <LabeledList.Item label="Contributors">{contributors}</LabeledList.Item>
-        {!!project.lockedReason && (
+        {!!project.lockedReason && !project.waitsForSummon && (
           <LabeledList.Item label="Waiting" color="average">
             {project.lockedReason}
           </LabeledList.Item>
@@ -244,7 +247,7 @@ const AvailableProjectSection = (props: {
         <LabeledList.Item label="Cost">
           {formatVitae(info.cost)} vitae
         </LabeledList.Item>
-        {locked && (
+        {locked && !project.waitsForSummon && (
           <LabeledList.Item label="Locked" color="bad">
             {project.lockedReason}
           </LabeledList.Item>
@@ -256,6 +259,7 @@ const AvailableProjectSection = (props: {
 
 const ProjectColumn = (props: {
   title: string;
+  titleStatus?: ReactNode;
   header?: ReactNode;
   emptyText?: string;
   active: ActiveProject[];
@@ -267,6 +271,7 @@ const ProjectColumn = (props: {
 }) => {
   const {
     title,
+    titleStatus,
     header,
     emptyText,
     active,
@@ -279,7 +284,7 @@ const ProjectColumn = (props: {
   const isEmpty = !active.length && !available.length;
 
   return (
-    <Section title={title} fill scrollable>
+    <Section title={title} buttons={titleStatus} fill scrollable>
       {header}
       {active.map((project) => (
         <ActiveProjectSection
@@ -479,11 +484,12 @@ const KindredCrucible = () => {
               <Stack.Item grow basis={0}>
                 <ProjectColumn
                   title="Summoning Rites"
-                  header={
+                  titleStatus={
                     !!summoning && (
-                      <NoticeBox info>
-                        {`The crucible is calling a ${summoning} from beyond. Other servants must wait until the call is answered or fades.`}
-                      </NoticeBox>
+                      <Box inline nowrap color="average">
+                        <Icon name="hourglass-half" mr={0.5} />
+                        {`Calling a ${summoning}...`}
+                      </Box>
                     )
                   }
                   emptyText={
