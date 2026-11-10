@@ -744,14 +744,13 @@
 			data += "<div style='border-top: 1.5px solid #aa8a5a; margin: 0 auto 20px auto; width: 65%;'></div>"
 
 			var/list/outlaws = list()
-			for(var/mob/living/carbon/human/outlaw in GLOB.human_list)
-				if(outlaw.real_name in GLOB.outlawed_players)
-					var/icon/credit_icon = SScrediticons.get_credit_icon(outlaw, TRUE)
-					if(credit_icon)
-						outlaws += list(list(
-							"name" = outlaw.real_name,
-							"icon" = credit_icon
-						))
+			for(var/datum/credit_entry/entry as anything in SScrediticons.get_outlaw_entries())
+				var/icon/poster_icon = SScrediticons.get_poster_icon(entry)
+				if(poster_icon)
+					outlaws += list(list(
+						"name" = entry.name,
+						"icon" = poster_icon
+					))
 
 			if(!length(outlaws))
 				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm is peaceful, its inhabitants kind</div>"

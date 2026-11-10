@@ -10,7 +10,6 @@
 	outfit = null
 	outfit_female = null
 	display_order = JDO_TRADER
-	show_in_credits = FALSE
 	min_pq = 0
 	max_pq = null
 

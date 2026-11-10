@@ -345,7 +345,6 @@ Balloon Alert / Floating Text defines
 
 GLOBAL_LIST_INIT(lockhashes, list())
 GLOBAL_LIST_INIT(lockids, list())
-GLOBAL_LIST_EMPTY(credits_icons)
 GLOBAL_LIST_EMPTY(indexed)
 GLOBAL_LIST_EMPTY(cursedsamples)
 GLOBAL_LIST_EMPTY(accused)
