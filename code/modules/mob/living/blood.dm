@@ -282,6 +282,8 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/proc/bleed(amt)
+	if(HAS_TRAIT(src, TRAIT_SILK_COMPRESSION))
+		return FALSE
 	if(!blood_volume)
 		return FALSE
 	if(!iscarbon(src) && !HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))

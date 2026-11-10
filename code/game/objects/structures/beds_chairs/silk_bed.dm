@@ -1,6 +1,6 @@
 /obj/structure/bed/rogue/silk
 	name = "silk bed"
-	desc = "A shallow nest of woven silk. Web every surrounding floor tile to make it more comfortable."
+	desc = "Soft silk bedding spread across the floor. Weave here again to add a sheltering silk veil and improve its comfort."
 	icon = 'icons/roguetown/misc/silk_bed.dmi'
 	icon_state = "basic"
 	sleepy = 2
@@ -10,9 +10,9 @@
 	metalizer_result = null
 	attacked_sound = 'sound/foley/cloth_rip.ogg'
 	break_sound = 'sound/foley/cloth_rip.ogg'
-	var/required_web_tiles = 0
-	var/webbed_tiles = 0
-	var/mutable_appearance/web_backdrop
+	/// A second weave adds the overhead silk veil and ordinary-bed comfort.
+	var/upgraded = FALSE
+	var/mutable_appearance/web_foreground
 
 /obj/structure/bed/rogue/silk/Initialize(mapload)
 	. = ..()
@@ -21,57 +21,38 @@
 		qdel(hiding)
 	if(prob(50))
 		static_debris = list(/obj/item/natural/silk = 1)
-	refresh_comfort()
-	START_PROCESSING(SSobj, src)
+	refresh_silk_appearance()
 
-/obj/structure/bed/rogue/silk/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
+/obj/structure/bed/rogue/silk/proc/upgrade()
+	if(upgraded)
+		return FALSE
+	upgraded = TRUE
+	sleepy = 3
+	refresh_silk_appearance()
+	return TRUE
 
-/obj/structure/bed/rogue/silk/process(seconds_per_tick)
-	refresh_comfort()
-
-/// A bounded local scan also handles turf replacement and moved/deleted webs.
-/obj/structure/bed/rogue/silk/proc/refresh_comfort()
-	required_web_tiles = 0
-	webbed_tiles = 0
-	if(isturf(loc))
-		for(var/turf/T in RANGE_TURFS(1, loc))
-			if(T == loc || !isfloorturf(T))
-				continue
-			required_web_tiles++
-			for(var/obj/structure/spider/stickyweb/web in T)
-				if(QDELETED(web))
-					continue
-				webbed_tiles++
-				break
-	var/complete = required_web_tiles > 0 && webbed_tiles == required_web_tiles
-	sleepy = complete ? 3 : 2
-	icon_state = complete ? "complete" : "basic"
-	var/backdrop_alpha = complete ? 200 : 100
-	if(!web_backdrop || web_backdrop.alpha != backdrop_alpha)
-		if(web_backdrop)
-			underlays -= web_backdrop
-		// Only the backdrop uses web transparency; the cocoon artwork stays intact.
-		web_backdrop = mutable_appearance('modular/Mapping/icons/webbing.dmi', "stickyweb1", alpha = backdrop_alpha)
-		underlays += web_backdrop
-
+/// Both layers tile seamlessly; neighboring beds need no shared state or processing.
+/obj/structure/bed/rogue/silk/proc/refresh_silk_appearance()
+	icon_state = upgraded ? "complete" : "basic"
+	if(upgraded && !web_foreground)
+		// Like chair armrests: escape the structure's lower plane without raising the floor silk.
+		web_foreground = mutable_appearance(icon, "complete_front", ABOVE_ALL_MOB_LAYER, GAME_PLANE_UPPER)
+		web_foreground.appearance_flags |= KEEP_APART
+		overlays += web_foreground
 
 /obj/structure/bed/rogue/silk/examine(mob/user)
-	refresh_comfort()
 	. = ..()
-	if(sleepy == 3)
-		. += span_notice("Sheltered by the surrounding webs, the silken nest offers a soft, snug place to rest.")
+	if(upgraded)
+		. += span_notice("A sheltering silk veil covers this soft bedding. It offers the comfort of a proper bed.")
 	else
-		. += span_notice("The loosely woven silk offers a simple resting place, still open to its surroundings. [webbed_tiles] of [required_web_tiles] surrounding floor tiles are webbed; at least one is needed.")
+		. += span_notice("This floor covering offers bedroll-level comfort. Weave a silk bed here again to add a sheltering veil and improve it.")
 
 /obj/structure/bed/rogue/silk/handle_layer()
-	layer = BELOW_MOB_LAYER
+	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bed/rogue/silk/post_buckle_mob(mob/living/M)
 	. = ..()
 	M.reset_offsets("bed_buckle")
-	refresh_comfort()
 
 // Silk has no wooden mattress to wear out independently of its integrity.
 /obj/structure/bed/rogue/silk/damage_bed(dam_value)
