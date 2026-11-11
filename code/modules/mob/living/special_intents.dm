@@ -1292,8 +1292,6 @@ SPECIALS START HERE
 	)
 
 /datum/special_intent/martyr_dendor_vine_reap/_reset()
-	base_dam = 0
-	constrict_dam = 0
 	entangled_targets = list()
 	. = ..()
 

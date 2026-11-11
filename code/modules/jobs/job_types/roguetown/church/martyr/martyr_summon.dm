@@ -224,7 +224,7 @@
 
 	var/obj/item/rogueweapon/spawned_weapon = new weapon_select.selected_weapon(user.loc)
 
-	if(user.put_in_hands(spawned_weapon, del_on_fail = TRUE))
+	if(user.put_in_hands(spawned_weapon))
 		to_chat(user, span_notice("The relic descends into my hand with a thunderous crash."))
 	else
 		to_chat(user, span_warning("My hands are full! The relic strikes the ground."))
