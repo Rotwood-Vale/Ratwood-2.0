@@ -1,0 +1,4 @@
+author: "AlucardHellsingChapel"
+delete-after: True
+changes:
+  - balance: "Rebalanced Duelist stat point allocation to what it was before: 2 SPD , 2 INT , 1 WIL."

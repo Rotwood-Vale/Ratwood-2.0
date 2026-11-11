@@ -1,0 +1,4 @@
+author: "ronfino"
+delete-after: True
+changes:
+  - refactor: "Refactored handcart upgrade code."

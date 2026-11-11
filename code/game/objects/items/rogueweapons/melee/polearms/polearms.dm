@@ -1101,6 +1101,7 @@
 	walking_stick = TRUE
 	wdefense = 5
 	wbalance = WBALANCE_HEAVY
+	special = /datum/special_intent/polearm_backstep
 
 /obj/item/rogueweapon/eaglebeak/getonmobprop(tag)
 	. = ..()

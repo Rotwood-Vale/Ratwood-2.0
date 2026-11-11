@@ -1,0 +1,4 @@
+author: "AlucardHellsingChapel"
+delete-after: True
+changes:
+  - rscdel: "Removed motive buff"
