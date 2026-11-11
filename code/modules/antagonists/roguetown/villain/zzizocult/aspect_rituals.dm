@@ -527,8 +527,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 
 /datum/ritual/servantry/aspect
 	name = "Open Gate"
-	desc = "REQUIRED TO UNLOCK ASCENSION. Activate the ritual to learn the locations it must be performed. Requires a dark crystal. It unlocks an Aspect that grants new research for the cult. MUST BE PERFORMED 3 TIMES TO UNLOCK ASCENSION."
-	n_req = /obj/item/necro_relics/necro_crystal
+	desc = "REQUIRED TO UNLOCK ASCENSION. Activate the ritual to learn the locations it must be performed. It unlocks an Aspect that grants new research for the cult. MUST BE PERFORMED 3 TIMES TO UNLOCK ASCENSION."
 	is_cultist_ritual = TRUE
 	var/gate_count
 
@@ -572,7 +571,6 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	if(gate_count > 0)
 		if(zizo_target_error(user, target, GLOB.gate_targets))
 			print_gate_sacrifice_info(user)
-			new /obj/item/necro_relics/necro_crystal(center)
 			return
 	refill_bestow_areas()
 	var/area/here = get_area(center)
@@ -587,26 +585,22 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		for(var/atype in GLOB.zizo_bestow_areas)
 			var/area/A = atype
 			to_chat(user, span_notice("- [initial(A.name)]"))
-		if(gate_count > 0 && tgui_alert(user, "REROLL GATE TARGETS? DARK CRYSTAL IS LOST.", "ZIZO", list("Reroll", "Cancel")) == "Reroll")
+		if(gate_count > 0 && tgui_alert(user, "REROLL GATE TARGETS?", "ZIZO", list("Reroll", "Cancel")) == "Reroll")
 			reroll_gate_targets(gate_count)
 			print_gate_sacrifice_info(user)
 			return
-		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	var/list/choices = list("PITCH", "TOIL", "STRAND", "ROT", "BLOOD", "NOISE", "BITE") - GLOB.zizo_bestowed
 	var/choice = tgui_input_list(user, "CHOOSE AN ASPECT TO BRING FORTH.","ZIZO", choices)
 	if(!choice)
-		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	to_chat(user, span_notice("The rite begins. Remain still.<BR>Some may be alerted to your location after it is complete."))
-	var/poo = new /obj/effect/temp_visual/opengate(center)
+	var/poo = new /obj/effect/temp_visual/opengate(center, 25 SECONDS)
 	playsound(user, 'sound/villain/littlescary.ogg', 100, TRUE)
-	if(!do_after(user, 15 SECONDS))
+	if(!do_after(user, 25 SECONDS))
 		qdel(poo)
-		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	if(choice in GLOB.zizo_bestowed)
-		new /obj/item/necro_relics/necro_crystal(center)
 		return
 	GLOB.zizo_bestowed += choice
 	if(choice == "BITE")
