@@ -2136,7 +2136,7 @@
 
 /datum/status_effect/buff/clash/limbguard/process_touch(mob/living/carbon/human/parent, mob/living/carbon/human/attacker, mob/living/carbon/human/defender)
 	if(attacker && check_zone(attacker.zone_selected) == protected_zone)
-		if(attacker.gloves && !attacker.gloves.obj_broken)	//Gloved hands eat the punishment -- we shred their gloves against our guard instead of breaking their arm (for now).
+		if(attacker.gloves?.obj_broken == FALSE)	//Gloved hands eat the punishment -- we shred their gloves against our guard instead of breaking their arm (for now).
 			attacker.gloves.take_damage(201, BRUTE) // Breaks regular leather gloves and unarmed knuckles. Does not break metal gloves instantly.
 			var/obj/item/I = defender.get_active_held_item()
 			defender.process_clash(attacker, I, null)
@@ -2156,15 +2156,14 @@
 
 //Unlike a weapon strike, there's nothing to disarm here -- we just wrench the guarded limb free and rough them up for it.
 /datum/status_effect/buff/clash/limbguard/process_bite(mob/living/parent, mob/user)
-	if(!is_active || !ishuman(user))
+	if(!is_active || !istype(user, /mob/living/carbon/human))
 		return
-	var/mob/living/carbon/human/HM = user
-	if(check_zone(HM.zone_selected) != protected_zone)
+	if(check_zone(user.zone_selected) != protected_zone)
 		return
-	apply_debuffs(HM)
-	counter_bite(HM)
+	apply_debuffs(user)
+	counter_bite(user)
 	playsound(owner, 'sound/combat/limbguard_struck.ogg', 100, TRUE)
-	if(HM.mind)
+	if(user.mind)
 		owner.stamina_add(-(owner.max_stamina / 3))
 		owner.energy_add((owner.max_energy / 5))
 	remove_self()

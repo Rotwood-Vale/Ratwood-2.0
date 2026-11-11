@@ -1,9 +1,8 @@
 /mob/living/carbon/proc/get_armor_class(def_zone, d_type)
-	if(!ishuman(src))
-		return ARMOR_CLASS_NONE
+	return ARMOR_CLASS_NONE
 
-	var/mob/living/carbon/human/H = src
-	var/obj/item/clothing/C = H.get_best_worn_armor(def_zone, d_type)
+/mob/living/carbon/human/get_armor_class(def_zone, d_type)
+	var/obj/item/clothing/C = get_best_worn_armor(def_zone, d_type)
 
 	if(!C)
 		return ARMOR_CLASS_NONE

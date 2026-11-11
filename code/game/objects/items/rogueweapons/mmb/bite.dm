@@ -44,7 +44,6 @@
 			return
 	user.changeNext_move(clickcd)
 	if(ismob(target))
-		SEND_SIGNAL(user, COMSIG_MOB_ATTACK_HAND, user)
 		if(SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_BY_BITE, user) & COMPONENT_HAND_NO_ATTACK)
 			return
 	user.break_invisibility()
@@ -63,22 +62,18 @@
 		return
 
 	var/armor_class = get_armor_class(def_zone, d_type)
-	var/recoil_mult
+	var/recoil_mult = 0
 
 	switch(armor_class)
-		if(ARMOR_CLASS_NONE)
-			recoil_mult = 0
 		if(ARMOR_CLASS_LIGHT)
 			recoil_mult = 0.15
 		if(ARMOR_CLASS_MEDIUM)
 			recoil_mult = 0.30
 		if(ARMOR_CLASS_HEAVY)
 			recoil_mult = 0.50
-		else
-			recoil_mult = 0.05
 
 	var/recoil = round(damage * recoil_mult)
-	if(recoil > 0)
+	if(recoil <= 0)
 		return
 
 	if(HAS_TRAIT(user, TRAIT_BITERHELM) && user.head)
@@ -125,7 +120,7 @@
 		if(BODY_ZONE_PRECISE_STOMACH)
 			def_zone = BODY_ZONE_CHEST
 
-	if(src.cmode) // no more hands/feet biting in combat, ser
+	if(cmode) // no more hands/feet biting in combat, ser
 		switch(def_zone)
 			if(BODY_ZONE_PRECISE_R_HAND)
 				def_zone = BODY_ZONE_R_ARM
