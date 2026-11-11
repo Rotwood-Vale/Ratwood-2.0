@@ -1,6 +1,0 @@
-author: "Kaolin1234"
-delete-after: True
-changes:
-  - bugfix: "Fixed bare hands being obscured by the Weaver Spider Body."
-  - image: "Refined the Weaver Spider Body’s waist, front stance, and side stripes."
-  - rscadd: "Dark Elves can select Weaver Spider Body."

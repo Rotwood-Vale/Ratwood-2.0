@@ -1,6 +1,0 @@
-author: "Kaolin1234"
-delete-after: True
-changes:
-  - bugfix: "Resting and warming hands by fires no longer heal surgical incisions."
-  - qol: "Diagnose and Secular Diagnosis report missing organs while respecting patient anatomy."
-  - bugfix: "Both Diagnose and Secular Diagnosis now check the Dullahan’s own detached head for organ slots missing from the body;  Thank you, CentralSmith"

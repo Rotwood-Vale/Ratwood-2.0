@@ -1,4 +1,0 @@
-author: "CentralSmith"
-delete-after: True
-changes:
-  - bugfix: "Shield blocks and Limbguard deflections now stop thrown nets from ensnaring you."
