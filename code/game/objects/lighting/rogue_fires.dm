@@ -207,7 +207,6 @@
 	bulb_colour = "#6e90ff"
 
 /obj/machinery/light/rogue/candle
-	pitch_exempt = TRUE
 	name = "candles"
 	desc = "Tiny flames flicker to the slightest breeze and offer enough light to see."
 	icon_state = "wallcandle1"
@@ -512,7 +511,6 @@
 
 
 /obj/machinery/light/rogue/hearth
-	pitch_exempt = TRUE
 	name = "hearth"
 	desc = "A hearth of stones carefully arranged to support a pan or a pot above a steady bed of embers."
 	icon_state = "hearth1"

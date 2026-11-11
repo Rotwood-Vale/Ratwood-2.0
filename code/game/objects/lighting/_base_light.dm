@@ -34,7 +34,6 @@
 	var/switchcount = 0			// count of number of times switched on/off
 								// this is used to calc the probability the light burns out
 
-	var/pitch_exempt = FALSE
 
 	var/rigged = FALSE			// true if rigged to explode
 
@@ -149,8 +148,6 @@
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
-	if(on && has_world_trait(/datum/world_trait/zizo_pitch) && !pitch_exempt)
-		burn_out()
 	emergency_mode = FALSE
 	if(on)
 		var/BR = brightness

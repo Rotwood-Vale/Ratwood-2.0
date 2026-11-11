@@ -42,9 +42,6 @@
 	name = "Baotha's Revelry"
 	desc = "Alcohol lasts longer."
 
-/datum/world_trait/zizo_pitch
-	name = "Zizo's Pitch"
-
 /datum/world_trait/zizo_blood
 	name = "Zizo's Blood"
 

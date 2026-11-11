@@ -566,6 +566,80 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	else
 		to_chat(user, span_warning("NO SUITABLE SACRIFICE CAN BE FOUND YET."))
 
+/turf/closed/wall/proc/zizo_collapse()
+	var/datum/effect_system/smoke_spread/dust = new
+	dust.set_up(0, src)
+	dust.start()
+	playsound(src, 'sound/misc/meteorimpact.ogg', 50, TRUE)
+	dismantle_wall(1)
+
+/proc/zizo_calamity(choice)
+	if(choice == "BITE")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_bite, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Murk!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+	if(choice == "STRAND")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_strand, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Nightmares!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+	if(choice == "TOIL")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_toil, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Decay!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+		var/list/town_walls = list()
+		for(var/turf/closed/wall/W in world)
+			if(istype(get_area(W), /area/rogue/indoors/town) || istype(get_area(W), /area/rogue/outdoors/town))
+				town_walls += W
+			CHECK_TICK
+		var/list/collapsing = list()
+		var/list/breaking = list()
+		for(var/i in 1 to 5)
+			if(!length(town_walls))
+				break
+			var/turf/closed/wall/epicenter = pick_n_take(town_walls)
+			playsound(epicenter, 'sound/misc/cavein.ogg', 200, TRUE)
+			for(var/turf/closed/wall/W in range(3, epicenter))
+				collapsing |= W
+			for(var/obj/structure/O in range(3, epicenter))
+				if(istype(O, /obj/structure/mineral_door) || istype(O, /obj/structure/roguewindow))
+					breaking |= O
+		for(var/turf/closed/wall/W as anything in collapsing)
+			new /obj/effect/temp_visual/trap/mine_collapse(W)
+			addtimer(CALLBACK(W, TYPE_PROC_REF(/turf/closed/wall, zizo_collapse)), 4 SECONDS)
+		for(var/obj/structure/O as anything in breaking)
+			addtimer(CALLBACK(O, TYPE_PROC_REF(/obj, take_damage), O.max_integrity, BRUTE, "", FALSE), 4 SECONDS)
+	if(choice == "ROT")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_rot, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Rot!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+		var/list/food = list()
+		for(var/obj/item/reagent_containers/food/snacks/F in world)
+			if(F.eat_effect != /datum/status_effect/debuff/rotfood && !prob(20))
+				food += F
+		for(var/obj/item/reagent_containers/food/snacks/F as anything in food)
+			if(F.become_rotten())
+				STOP_PROCESSING(SSobj, F)
+			CHECK_TICK
+	if(choice == "NOISE")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_noise, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Madness!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+	if(choice == "BLOOD")
+		SSmapping.add_world_trait(/datum/world_trait/zizo_blood, 0)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Blood!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+		for(var/turf/open/water/W in world)
+			W.water_reagent = /datum/reagent/blood
+			W.water_color = "#C80000"
+			W.mapped = FALSE
+			W.update_icon()
+			CHECK_TICK
+	if(choice == "PITCH")
+		GLOB.todoverride = "night"
+		settod()
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reset_tod_override)), 20 MINUTES)
+		priority_announce("Inhumen cultists afflict Rockhill with Curse of Darkness!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
+		for(var/obj/machinery/light/roguestreet/L in GLOB.streetlamp_list)
+			L.break_light_tube()
+			L.burn_out()
+			addtimer(CALLBACK(L, TYPE_PROC_REF(/obj/machinery/light, fix)), 20 MINUTES)
+		var/datum/round_event_control/lightsout/forced/blackout = new
+		blackout.runEvent()
+
 /datum/ritual/servantry/aspect/invoke(mob/living/user, turf/center)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(gate_count > 0)
@@ -603,45 +677,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	if(choice in GLOB.zizo_bestowed)
 		return
 	GLOB.zizo_bestowed += choice
-	if(choice == "BITE")
-		SSmapping.add_world_trait(/datum/world_trait/zizo_bite, 0)
-		priority_announce("Inhumen cultists afflict Rockhill with Curse of Murk!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
-	if(choice == "STRAND")
-		SSmapping.add_world_trait(/datum/world_trait/zizo_strand, 0)
-		priority_announce("Inhumen cultists afflict Rockhill with Curse of Nightmares!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
-	if(choice == "TOIL")
-		SSmapping.add_world_trait(/datum/world_trait/zizo_toil, 0)
-		priority_announce("Inhumen cultists afflict Rockhill with Curse of Decay!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
-	if(choice == "ROT")
-		SSmapping.add_world_trait(/datum/world_trait/zizo_rot, 0)
-		priority_announce("Inhumen cultists afflict Rockhill with Curse of Rot!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
-		var/list/food = list()
-		for(var/obj/item/reagent_containers/food/snacks/F in world)
-			if(F.eat_effect != /datum/status_effect/debuff/rotfood)
-				food += F
-		for(var/obj/item/reagent_containers/food/snacks/F as anything in food)
-			if(F.become_rotten())
-				STOP_PROCESSING(SSobj, F)
-			CHECK_TICK
-	if(choice == "NOISE")
-		SSmapping.add_world_trait(/datum/world_trait/zizo_noise, 0)
-		priority_announce("Inhumen cultists afflict Rockhill with Curse of Madness!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
-	if(choice == "BLOOD")
-		SSmapping.add_world_trait(/datum/world_trait/zizo_blood, 0)
-		priority_announce("Inhumen cultists afflict Rockhill with Curse of Blood!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
-		for(var/turf/open/water/W in world)
-			W.water_reagent = /datum/reagent/blood
-			W.water_color = "#C80000"
-			W.mapped = FALSE
-			W.update_icon()
-			CHECK_TICK
-	if(choice == "PITCH")
-		SSmapping.add_world_trait(/datum/world_trait/zizo_pitch, 0)
-		GLOB.todoverride = "night"
-		settod()
-		priority_announce("Inhumen cultists afflict Rockhill with Curse of Darkness!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
-		for(var/obj/machinery/light/L in GLOB.machines)
-			L.update()
+	zizo_calamity(choice)
 	to_chat(user, span_boldnotice("The [choice] aspect has been unleashed upon Grimoria! Its rites may now be researched."))
 	user.Jitter(4)
 	gate_count++

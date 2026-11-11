@@ -1,5 +1,4 @@
 /obj/machinery/light/rogue/cauldron
-	pitch_exempt = TRUE
 	name = "cauldron"
 	desc = "Bubble, Bubble, toil and trouble. A great iron cauldron for brewing potions."
 	icon = 'icons/roguetown/misc/alchemy.dmi'

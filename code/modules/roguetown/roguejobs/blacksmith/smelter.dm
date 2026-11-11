@@ -6,7 +6,6 @@
 // DO NOT RE-ENABLE IT UNTIL FURTHER NOTICE
 
 /obj/machinery/light/rogue/smelter
-	pitch_exempt = TRUE
 	icon = 'icons/roguetown/misc/forge.dmi'
 	name = "stone furnace"
 	desc = "A stone furnace, weathered by time and heat."
