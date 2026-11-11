@@ -12210,6 +12210,10 @@
 /obj/item/rogueweapon/greatsword/iron,
 /obj/item/rogueweapon/greatsword/iron,
 /obj/item/rogueweapon/greatsword/iron,
+/obj/item/rogueweapon/greataxe,
+/obj/item/rogueweapon/greataxe,
+/obj/item/rogueweapon/greataxe,
+/obj/item/rogueweapon/greataxe,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/cell/warden)
 "cvG" = (
@@ -88011,8 +88015,8 @@
 /area/rogue/indoors)
 "rDC" = (
 /obj/structure/mineral_door/wood{
-	lockid = "archive";
-	name = "Academy Entrance"
+	name = "Academy Entrance";
+	keylock = 0
 	},
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors/town/academy)
