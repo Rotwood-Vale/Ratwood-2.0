@@ -31,19 +31,13 @@
 		"Inquisitor",
 		"Orthodoxist",
 		"Absolver",
-		"Archivist",
 		"Court Magician",
 		"Wretch",
 		"Bandit",
 		"Knight",
 		"Knight Captain",
-		"Watch Captain",
-		"City Guard",
 		"Man at Arms",
 		"Sergeant",
-		"Warden",
-		"Veteran",
-		"Master Warden",
 	)
 
 	typepath = /datum/round_event/antagonist/solo/zizo_cult
