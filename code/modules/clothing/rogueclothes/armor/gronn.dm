@@ -171,7 +171,7 @@
 
 
 /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood/AdjustClothes(mob/user)
-	if(loc == user)
+	if(is_worn_or_stored_by(user))
 		if(adjustable == CAN_CADJUST)
 			playsound(src, 'sound/foley/equip/rummaging-03.ogg', 50, TRUE)
 			if(on)

@@ -60,7 +60,12 @@
 		shoes = /obj/item/clothing/shoes/roguetown/gladiator
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
-	new /obj/structure/handcart/ea_hasir(src)
+
+/datum/outfit/job/roguetown/merchant/ea_hasir/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+	if(visualsOnly)
+		return
+	new /obj/structure/handcart/ea_hasir(get_turf(H))
 
 /datum/migrant_role/ea_hasir/guard
 	name = "EA Hasir-ian Guard"
@@ -114,8 +119,6 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots
 
 /obj/structure/handcart/ea_hasir
-	upgrade_level = 2
-	maximum_capacity = 120
 	// Random loot pool
 	var/list/possible_loot = list(
 	/obj/item/clothing/neck/roguetown/ornateamulet,
@@ -194,19 +197,10 @@
 
 	update_icon()
 
-/obj/structure/handcart/ea_hasir/proc/spawn_guaranteed_loot()
-
 /obj/structure/handcart/ea_hasir/Initialize(mapload)
 	. = ..()
-	if(mapload)
-		addtimer(CALLBACK(src, PROC_REF(take_contents)), 0)
-
-	// fill with guaranteed loot
-	addtimer(CALLBACK(src, PROC_REF(spawn_guaranteed_loot)), 1)
-	// fill with random gold loot
+	install_upgrade(new /obj/item/roguegear/wood/reliable(src))
 	addtimer(CALLBACK(src, PROC_REF(spawn_random_loot)), 1)
-
-	update_icon()
 
 #undef CTAG_EA_MERCHANT
 #undef CTAG_EA_GUARD

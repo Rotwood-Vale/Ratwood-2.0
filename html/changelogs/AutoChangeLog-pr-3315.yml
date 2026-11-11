@@ -1,0 +1,5 @@
+author: "ronfino"
+delete-after: True
+changes:
+  - spellcheck: "Renamed \"Messer\" to \"Kriegsmesser\" in weapon choice"
+  - code_imp: "Removed greatweapon strap from Left Back Slot, swapped with crossbow instead."

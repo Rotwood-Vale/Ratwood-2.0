@@ -114,7 +114,8 @@
 		return FALSE
 
 	if(mob.shifting)
-		mob.pixel_shift(direct)
+		var/mob/pose_target = mob.get_pixel_shift_target()
+		pose_target?.pixel_shift(direct)
 		return FALSE
 	else if(mob.is_shifted)
 		mob.unpixel_shift()
