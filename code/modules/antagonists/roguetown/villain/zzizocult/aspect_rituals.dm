@@ -890,7 +890,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /obj/item/rogueweapon/sword/long/noise
 	name = "madman blade"
 	desc = ""
-	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon = 'icons/roguetown/cult/cultweapons64.dmi'
 	icon_state = "hagsword"
 	max_integrity = 9999
 	resistance_flags = INDESTRUCTIBLE
@@ -943,6 +943,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /obj/item/rogueweapon/huntingknife/idagger/steel/blood
 	name = "slave knife"
 	desc = "A blade wielded by blood-pit slaves in the chaotic age after PSYDON's death. This one is permanently wet with blood."
+	icon = 'icons/roguetown/cult/cultweapons32.dmi'
 	icon_state = "graggardagger"
 	sheathe_icon = "graggardagger"
 	force = 25
@@ -960,6 +961,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /obj/item/rogueweapon/huntingknife/idagger/steel/pitch
 	name = "astrata-touched dagger"
 	desc = "This dagger once pierced the Sun Queen's heart."
+	icon = 'icons/roguetown/cult/cultweapons32.dmi'
 	icon_state = "fdagger"
 	sheathe_icon = "fdagger"
 	force = 30
@@ -1011,6 +1013,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /obj/item/rogueweapon/sword/sabre/rot
 	name = "mortal blade"
 	desc = "Once a righteous blade wielded by a fair maiden. No longer."
+	icon = 'icons/roguetown/cult/cultweapons32.dmi'
 	icon_state = "poisonsabre"
 	force = 30
 	max_integrity = 9999
@@ -1064,7 +1067,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "forgotten tool"
 	desc = "A wrench used by an artificer-thief in the the ancient age of Aeon."
 	icon_state = "bronzewrench"
-	icon = 'icons/roguetown/weapons/blunt64.dmi'
+	icon = 'icons/roguetown/cult/cultweapons64.dmi'
 	force = 25
 	force_wielded = 40
 	wdefense_wbonus = 5
@@ -1397,7 +1400,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 /obj/item/rogueweapon/zizowand
 	name = "witchwood"
 	desc = "A gift from a snow elf queen to an almighty wizard. Once used to quell the sea itself into slumber."
-	icon = 'icons/roguetown/weapons/misc32.dmi'
+	icon = 'icons/roguetown/cult/cultweapons32.dmi'
 	icon_state = "zizowand"
 	force = 15
 	possible_item_intents = list(MACE_STRIKE, /datum/intent/dream_beam, /datum/intent/dream_fling)
@@ -1482,7 +1485,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	name = "snow scythe"
 	desc = "An oversized scythe used to harvest giant mushrooms. Born to underdark farmers, she explored every nook and cranny of the ancient caverns."
 	icon_state = "silverpeasantscythe"
-	icon = 'icons/roguetown/weapons/polearms64.dmi'
+	icon = 'icons/roguetown/cult/cultweapons64.dmi'
 	pixel_y = -16
 	pixel_x = -16
 	inhand_x_dimension = 64
