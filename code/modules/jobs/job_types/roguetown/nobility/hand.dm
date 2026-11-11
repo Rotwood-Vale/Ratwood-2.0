@@ -21,7 +21,7 @@
 	cmode_music = 'sound/music/cmode/nobility/combat_spymaster.ogg'
 	social_rank = SOCIAL_RANK_NOBLE
 	quirk_restrictions = list(/datum/quirk/hunted)
-	job_traits = list(TRAIT_NOBLE, TRAIT_EXPERT_HUNTER)
+	job_traits = list(TRAIT_NOBLE, TRAIT_EXPERT_HUNTER, TRAIT_DECEIVING_MEEKNESS)
 	job_subclasses = list(
 		/datum/advclass/hand/blademaster,
 		/datum/advclass/hand/spymaster,
