@@ -88,6 +88,9 @@
 	// Use Implant taur instead, which actually works correctly
 	if(istype(tool, /obj/item/bodypart/taur))
 		return FALSE
+	// Crafted prosthetics attach directly via prosthetic_attachment(), no surgery roll
+	if(istype(tool, /obj/item/bodypart/l_arm/prosthetic) || istype(tool, /obj/item/bodypart/r_arm/prosthetic) || istype(tool, /obj/item/bodypart/l_leg/prosthetic) || istype(tool, /obj/item/bodypart/r_leg/prosthetic))
+		return FALSE
 	. = ..()
 
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
