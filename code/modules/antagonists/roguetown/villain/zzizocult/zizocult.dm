@@ -40,6 +40,10 @@
 	var/mob/living/M = mob_override || owner.current
 	for(var/trait in innate_traits)
 		ADD_TRAIT(M, trait, "zizocultist")
+	if(has_world_trait(/datum/world_trait/zizo_bite))
+		ADD_TRAIT(M, TRAIT_RESISTCOLD, "zizocultist")
+	if(has_world_trait(/datum/world_trait/zizo_rot))
+		ADD_TRAIT(M, TRAIT_NOHUNGER, "zizocultist")
 	M.apply_status_effect(/datum/status_effect/buff/zizo_gate_sense)
 	M.faction |= "zizo_cult"
 
@@ -47,6 +51,8 @@
 	var/mob/living/M = mob_override || owner.current
 	for(var/trait in innate_traits)
 		REMOVE_TRAIT(M, trait, "zizocultist")
+	REMOVE_TRAIT(M, TRAIT_RESISTCOLD, "zizocultist")
+	REMOVE_TRAIT(M, TRAIT_NOHUNGER, "zizocultist")
 	M.remove_status_effect(/datum/status_effect/buff/zizo_gate_sense)
 	M.remove_status_effect(/datum/status_effect/buff/zizo_gate_pull)
 	M.faction -= "zizo_cult"

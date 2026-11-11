@@ -164,9 +164,6 @@
 		return
 	M.adjustToxLoss(1)
 	M.add_nausea(12) //Over 8 units will cause puking
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		H.murk_infect(3)
 /datum/reagent/water/gross/sewage/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if (method == INGEST)
 		..()
