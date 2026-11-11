@@ -134,7 +134,7 @@
 		if(structural_damage > 0)
 			for(var/obj/structure/damaged in view(struct_radius, epicenter))
 				if(!istype(damaged, /obj/structure/flora/newbranch))
-					damaged.take_damage(structural_damage, BRUTE, "blunt", 1)
+					damaged.take_damage_from(ismob(firer) ? firer : null, structural_damage, BRUTE, "blunt", 1, cause = "with [format_text(name)]")
 			for(var/turf/closed/wall/damagedwalls in view(struct_radius, epicenter))
 				damagedwalls.take_damage(structural_damage, BRUTE, "blunt", 1)
 
@@ -466,7 +466,7 @@
 			apply_scorch_stack(L, 3)
 		for(var/obj/structure/damaged in T)
 			if(!istype(damaged, /obj/structure/flora/newbranch))
-				damaged.take_damage(blast_structural, BRUTE, "blunt", TRUE)
+				damaged.take_damage_from(caster, blast_structural, BRUTE, "blunt", TRUE, cause = "with [name]")
 	if(!QDELETED(caster))
 		addtimer(CALLBACK(src, PROC_REF(exhaust_caster), caster), exhaust_delay)
 

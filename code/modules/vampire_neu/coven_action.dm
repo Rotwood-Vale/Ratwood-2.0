@@ -21,6 +21,7 @@
 	coven.assign(M)
 
 	register_to_availability_signals()
+	UpdateButtonIcon()
 
 /datum/action/coven/proc/register_to_availability_signals()
 	//this should only go through if it's the first Coven gained by the mob

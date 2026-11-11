@@ -158,7 +158,7 @@
 /datum/supply_pack/rogue/Pioneer/dolabra
 	name = "Eleonora"
 	cost = 150
-	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel/woodcutter/dolabra/pioneer)
+	contains = list(/obj/item/rogueweapon/pick/woodcutter/dolabra/pioneer)
 
 //Tools of the trade.
 

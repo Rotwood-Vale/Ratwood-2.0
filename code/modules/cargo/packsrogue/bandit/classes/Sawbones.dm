@@ -16,7 +16,7 @@
 /datum/supply_pack/rogue/Sawbones/trustworthymask
 	name = "Trustworthy Mask"
 	cost = 25
-	contains = list(/obj/item/clothing/mask/rogue/physician/sawbones)
+	contains = list(/obj/item/clothing/mask/rogue/physician/plaguebearer)
 
 /datum/supply_pack/rogue/Sawbones/leather/Lhelmet
 	name = "Leather Helmet"
@@ -84,7 +84,7 @@
 /datum/supply_pack/rogue/Sawbones/trustworthyrobes
 	name = "Trustworthy Robes"
 	cost = 25
-	contains = list(/obj/item/clothing/suit/roguetown/shirt/robe/physician/sawbones)
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/robe/physician/plaguebearer)
 
 /datum/supply_pack/rogue/Sawbones/gambeson
 	name = "Gambeson"
@@ -393,6 +393,11 @@
 	name = "Fire Resistance Potion"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/fireresist)
+
+/datum/supply_pack/rogue/Sawbones/rotcure
+	name = "Rot Cure Potion"
+	cost = 100
+	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure)
 
 /datum/supply_pack/rogue/Sawbones/emberwine
 	name = "Emberwine"
