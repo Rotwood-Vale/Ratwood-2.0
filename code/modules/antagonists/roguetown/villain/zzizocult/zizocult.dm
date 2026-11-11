@@ -6,6 +6,8 @@
 	antagpanel_category = "Zizoid Cult"
 	rogue_enabled = TRUE
 	job_rank = ROLE_ZIZOIDCULTIST
+	antag_hud_type = ANTAG_HUD_ZIZO
+	antag_hud_name = "zcult_hud"
 	confess_lines = list(
 		"DEATH TO THE TEN!",
 		"PRAISE ZIZO!",
@@ -79,10 +81,12 @@
 	H.grant_language(/datum/language/undead)
 	owner.zizo_points += start_points
 	new /datum/antag_setup(owner.current, start_budget)
+	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 	greet()
 
 /datum/antagonist/zizocultist/on_removal()
 	SSmapping.retainer.cultists -= owner
+	remove_own_antag_hud()
 	var/mob/living/carbon/human/H = owner?.current
 	if(istype(H))
 		H.verbs -= /mob/living/carbon/human/proc/communicate
