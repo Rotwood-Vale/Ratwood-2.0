@@ -147,3 +147,127 @@
   - rscadd: 'dwarven knowledge trait allows items to be fully repaired
 
       :cl:'
+2026-11-07:
+  AlucardHellsingChapel:
+  - rscadd: Added new armor set
+  - rscadd: Added new weapon and shield
+  - rscadd: New Miracles
+  - balance: rebalanced T0
+  - sound: added audio/sound effects
+  - image: added some icons or images
+  - code_imp: changed rites of armament code to include new options
+  IronDragoon:
+  - admin: New admin tools for pref refreshing, forensics and afk players
+  SirSwagmeyer:
+  - balance: Rebalanced a variety of bandit subclasses, including brigand, hedge knight,
+      rogue mage, sawbones, sellsword, and knave.
+  - balance: Rebalanced an array of buffs for Deserter, Heretic, Poacher, Outlaw,
+      Berserker, Roguemage, Pyromaniac, Plaguebearer, and heretic spy.
+  - balance: buffed profane from a bone-shaped nerf dart to a bony arcane lance.
+  - bugfix: Fixed Vale Native not preventing ambushes as intended.
+  - rscadd: Added the polearm special to the eagle's beak, as intended.
+  - rscadd: Readded the rapier special to the Estoc, as previously intended.
+2026-11-08:
+  IronDragoon:
+  - rscadd: Adds new icons for vamps, as well as adding icons for bandits, deadites,
+      werewolves and skeletons/lich (ported from AP)
+  - qol: Letters sent to kingsfield now notify admins, made it easier for them to
+      reply. They can be sent to just 'Kingsfield' as well.
+  - bugfix: Fixed names with (') not receiving mail
+2026-11-09:
+  AlucardHellsingChapel:
+  - bugfix: fixed the Vicious Greataxe weapon special
+  - bugfix: fixed typo in Bloodrush miracle
+  - rscadd: Added New Heavy Armor set for Graggarites
+  - rscadd: Added New weapon and shield Vicious Tomahawk and Vicious Targe
+  - rscadd: Added New Miracle Berserker Body health regenerating miracle
+  - rscadd: Added Roar of the Gorebound star that causes dodging people to fall down
+      on hit.
+  - rscadd: Added Avatar of Rage that grants for 2 minutes Strength unbound, infinite
+      stamina, nopainstun and no pain.
+  - rscadd: Throwing force for the tomahawk (30) force
+  CentralSmith:
+  - bugfix: Pots and teapots can receive liquid poured from other containers.
+  - bugfix: Carved teapots now hold 120 units, matching ceramic teapots and stone
+      pots.
+  Guidesu:
+  - bugfix: Examine icons
+  - rscadd: Added craftable wooden spits for campfires.
+  - rscadd: Added leather tent walls and flaps.
+  - rscadd: Added bedrolls and small tent kits to loadout.
+  - qol: Tree stumps now work as table surfaces for item placement, crafting, cooking,
+      and table-style interactions.
+  - qol: Tent walls and loose tent flaps can now be dismantled with a stake from the
+      side they were built on.
+  - qol: Tent walls and flaps can now be built on open space.
+  - balance: Reduced small tent kit, ger kit, and yurt kit crafting costs.
+  - bugfix: Dismantled tent walls now clean up leftover twig-floor/open-space issues.
+  - image: Added wooden spit sprites.
+  - rscadd: Adds new clothing ported from AP and TW.
+  - bugfix: Hat storage.
+  - bugfix: Bracers and cloak layering
+  - rscadd: Added a foldable chessboard for chess, checkers and backgammon (loadout
+      and merchants).
+  - rscadd: Decks of cards can be set up as a card table for blackjack and poker.
+      Right-click a deck to try it.
+  - rscadd: Added Arlette, a physical collectible card game with seven faction starter
+      decks, boosters and loose cards (loadout, merchants and loot).
+  - sound: Added sounds and music for chess and Arlette.
+  - image: Added chessboard and Arlette deck/card sprites.
+  Kaolin1234:
+  - bugfix: "Restored the aavnic vala\u0161ka's Pick intent in both one-handed and\
+      \ two-handed grips."
+  - rscadd: Pixel Shift now supports full-circle rotation using your hand-selection
+      keys, normally Q/E. Hold a key to keep rotating.
+  - rscadd: Use Pixel Shift with an empty active hand and a character grabbed in the
+      other hand to shift and rotate them.
+  - rscadd: Added an optional unassigned keybinding to reset cosmetic rotation without
+      resetting pixel position.
+  - rscadd: "\xB130\xB0 limit to spinning while STANDING.  Can still spin freely if\
+      \ already laying down.  Spin..  SPIIIIIN!"
+  - rscadd: 'Allow pixel rotation while riding animal and player mounts
+
+      fix?: Keep Pixel Shift rotation independent of Q/E bindings'
+  Remuluson2:
+  - bugfix: Bushes now work as proper hiding spots without foraging forcing player
+      out of it.
+  - bugfix: Bedrolls now work as proper hiding spots without folding the bed.
+  - bugfix: Fixes to behind code to handle "interaction overriding" components properly.
+2026-11-10:
+  ophaq:
+  - rscadd: Adds the harmonica, jaw harp, trumpet, banjo, and bagpipe to the list
+      of instruments for the conjure instrument spell and alphabetizes the list.
+2026-11-11:
+  AlucardHellsingChapel:
+  - rscdel: Removed motive buff
+  - balance: 'Rebalanced Duelist stat point allocation to what it was before: 2 SPD
+      , 2 INT , 1 WIL.'
+  CentralSmith:
+  - bugfix: Shield blocks and Limbguard deflections now stop thrown nets from ensnaring
+      you.
+  HalfAwake691:
+  - balance: Paladin devotion tier raised from 1 to 2
+  Hyenh:
+  - rscadd: Silver varients of Kazengun weapons
+  Kaolin1234:
+  - bugfix: Fixed bare hands being obscured by the Weaver Spider Body.
+  - image: "Refined the Weaver Spider Body\u2019s waist, front stance, and side stripes."
+  - rscadd: Dark Elves can select Weaver Spider Body.
+  - bugfix: Resting and warming hands by fires no longer heal surgical incisions.
+  - qol: Diagnose and Secular Diagnosis report missing organs while respecting patient
+      anatomy.
+  - bugfix: "Both Diagnose and Secular Diagnosis now check the Dullahan\u2019s own\
+      \ detached head for organ slots missing from the body;  Thank you, CentralSmith"
+  - rscadd: "Arachnids can now select the Crocs de l\u2019araign\xE9e Cavalier and\
+      \ Assassin mercenary classes."
+  - spellcheck: "Updated the Cavalier\u2019s selection text to list all eligible races."
+  SirSwagmeyer:
+  - balance: blacklisted Rituos from Lunacy Embracer
+  ariaworld:
+  - rscadd: Witch spawns with pouch on neck.
+  - rscadd: Lets you train Unarmed on Training Dummies.
+  ronfino:
+  - refactor: Refactored handcart upgrade code.
+  wikimody:
+  - rscadd: Cure rot potion now cures delites without killing them, its now harder
+      to get however

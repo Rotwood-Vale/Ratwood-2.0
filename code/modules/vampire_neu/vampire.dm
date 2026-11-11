@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	antagpanel_category = "Vampire"
 	job_rank = ROLE_VAMPIRE
 	antag_hud_type = ANTAG_HUD_VAMPIRE
-	antag_hud_name = "Vspawn"
+	antag_hud_name = "vamp_spawn_hud"
 	confess_lines = list(
 		"I WANT YOUR BLOOD!",
 		"DRINK THE BLOOD!",
@@ -153,7 +153,20 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 
 /datum/antagonist/vampire/proc/after_gain()
 	owner.current.set_bloodpool(owner.current.get_maxbloodpool() / 100 * INITIAL_BLOODPOOL_PERCENTAGE)
+	antag_hud_name = get_hud_icon()
 	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
+
+/// The HUD icon for this vampire's rank
+/datum/antagonist/vampire/proc/get_hud_icon()
+	if(owner?.current && HAS_TRAIT(owner.current, TRAIT_CLAN_LEADER))
+		return "vamp_lord_hud"
+	return "vamp_spawn_hud"
+
+/// Re-picks the HUD icon after a rank change, such as gaining or losing clan leadership
+/datum/antagonist/vampire/proc/update_hud_icon()
+	antag_hud_name = get_hud_icon()
+	if(owner?.current && owner.antag_hud == GLOB.huds[antag_hud_type])
+		set_antag_hud(owner.current, antag_hud_name)
 
 /datum/antagonist/vampire/on_removal()
 	remove_antag_hud(antag_hud_type, owner.current)
