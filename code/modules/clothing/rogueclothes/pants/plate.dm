@@ -54,7 +54,6 @@
 	desc = "Plate chausses which stir with the innate violence driving our world"
 	icon_state = "graggarplatelegs"
 	armor = ARMOR_PLATE_BSTEEL
-	armor_class = ARMOR_CLASS_MEDIUM
 	max_integrity = ARMOR_INT_LEG_ANTAG
 
 /obj/item/clothing/under/roguetown/platelegs/graggar/Initialize(mapload)
