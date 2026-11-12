@@ -944,7 +944,7 @@
 	name = "silver longsword"
 	desc = "A longsword with a blade of pure silver. The weight doesn't just burden your hand, but your very soul as well; an unspoken oath, to stand against the horrors that lurk within the nite. </br>'Swing with precision and purpose, levyman o' the Gods. The nite is long and many-an-evil cur would engineer civilization's destruction, while Astrata's gaze leers elsewhere. So long as you wield this sword, you have a duty that beckons.'"
 	icon_state = "silverlongsword"
-	sheathe_icon = "psysword"
+	sheathe_icon = "silverlongsword"
 	force = 20
 	force_wielded = 25
 	minstr = 9
@@ -1102,7 +1102,19 @@
 		/datum/intent/sword/chop/short,
 		)
 	icon_state = "eastshortsword"
-	sheathe_icon = "mulyeog"
+	sheathe_icon = "kodachi"
+
+/obj/item/rogueweapon/sword/short/silver/kazengun
+	name = "silver kodachi"
+	desc = "A razor-edged sword with a wavy pattern weld apparent on its blade of pure silver."
+	icon = 'icons/roguetown/weapons/swords32.dmi'
+	possible_item_intents = list(
+		/datum/intent/sword/cut/short,
+		/datum/intent/sword/thrust/short,
+		/datum/intent/sword/chop/short,
+		)
+	icon_state = "silvereastshortsword"
+	sheathe_icon = "silver_kodachi"
 
 /obj/item/rogueweapon/sword/short/falchion
 	name = "falchion"
@@ -1234,6 +1246,7 @@
 	desc = "A \"Großesmesser\" of disputed Grenzel origin, meaning greatknife. It's a basic single-edge sword for civilian and military use. It excels at slicing and chopping, and it's made of steel. \
 	It can fill the exact function of a hunting sword, this one is more durable."
 	icon_state = "smesser"
+	sheathe_icon = "smesser"
 	force = 24	//Hunting sword + 4
 	max_blade_int = 250	//Sword + 50
 	possible_item_intents = list(/datum/intent/sword/cut/sabre, /datum/intent/axe/chop, /datum/intent/sword/cut/rend/messer, /datum/intent/sword/strike)
@@ -1251,12 +1264,13 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = 100
-	sheathe_icon = "isword"
+	sheathe_icon = "imesser"
 
 /obj/item/rogueweapon/sword/short/messer/iron/virtue
 	name = "dueling messer"
 	desc = "A basic single-edge iron hunting sword that has been modified for the express purpose of dueling, with an added guard and a leaner grip for comfort and speed."
 	icon_state = "dmesser"
+	sheathe_icon = "dmesser"
 	swingsound = BLADEWOOSH_SMALL
 	wdefense = 3
 	wbalance = WBALANCE_SWIFT
@@ -1266,6 +1280,7 @@
 	desc = "A copper hunting sword. Less lethal than its iron counterpart."
 	force = 20 // Worse force. This weapon has steel integ instead of iron integ. Don't ask me why, it was that way before too.
 	icon_state = "cmesser"
+	sheathe_icon = "cmesser"
 	minstr = 4
 	wdefense = 2
 	smeltresult = /obj/item/ingot/copper
@@ -1357,6 +1372,7 @@
 	smeltresult = /obj/item/ingot/iron
 	max_integrity = 100
 	icon_state = "isaber"
+	sheathe_icon = "isaber"
 
 /obj/item/rogueweapon/sword/sabre/steppesman
 	name = "aavnic shashka"
@@ -1422,6 +1438,7 @@
 	name = "elvish saber"
 	desc = "This finely crafted saber is of elven design."
 	icon_state = "esaber"
+	sheathe_icon = "esaber"
 	item_state = "esaber"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -1653,7 +1670,7 @@
 	name = "silver rapier"
 	desc = "A basket-hilted rapier, fitted with a thin blade of pure silver. Immortalized by Rockhill's witch hunters, this weapon - though cumberstone in an untrained hand - is surprisingly adept at both parrying and riposting."
 	icon_state = "silverrapier"
-	sheathe_icon = "psyrapier"
+	sheathe_icon = "silverrapier"
 	max_integrity = 225
 	max_blade_int = 225
 	force = 20
@@ -1678,7 +1695,7 @@
 	name = "psydonic rapier"
 	desc = "A basket-hilted rapier, fitted with a thin blade of pure silver. Such a resplendent weapon not only pierces the gaps within a heathen's maille, but also serves as the symbol of an Otavan diplomat's authority."
 	icon_state = "silverrapier"
-	sheathe_icon = "rapier"
+	sheathe_icon = "silverrapier"
 	max_integrity = 225
 	max_blade_int = 225
 	force = 20
@@ -1717,8 +1734,7 @@
 	sheathe_icon = "psyrapier"
 	max_integrity = 300
 	max_blade_int = 300
-	force = 20
-	force_wielded = 20
+	force = 25//on par with cup hilted rapier
 	minstr = 8
 	wdefense = 8
 	smeltresult = /obj/item/ingot/silver
@@ -1926,7 +1942,7 @@
 	desc = "Beautifully designed for nobility, yet born from an ignoble purpose; to satiate the powers of ancient mythos with sacrificial blood. This Naledian \
 	sword, better known as a 'ram-dao', now serves to satiate the spite of vengeful spirits - not through bloodshed, but through sunderance."
 	icon_state = "ram_dao"
-	sheathe_icon = "scabbard_decsword3"
+	sheathe_icon = "decsword3"
 	force = 25
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop, /datum/intent/axe/bash/battle)
 	gripped_intents = null
@@ -2245,6 +2261,14 @@
 	sheathe_icon = "ssangsudo"
 	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike, /datum/intent/rend/krieg)
 
+/obj/item/rogueweapon/sword/long/kriegmesser/silver/ssangsudo
+	name = "silver ssangsudo"
+	desc = "A Kazengun style of long blade forged with pure silver. A weapon supremely skilled in the art of cutting."
+	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon_state = "silverssangsudo"
+	sheathe_icon = "silver_ssangsudo"
+	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike, /datum/intent/rend/krieg)
+
 /obj/item/rogueweapon/sword/long/dec
 	no_loot_taint = TRUE
 	name = "decorated longsword"
@@ -2263,6 +2287,27 @@
 	icon_state = "eastsword1"
 	smeltresult = /obj/item/ingot/steel
 	wdefense = 3
+
+/obj/item/rogueweapon/sword/sabre/mulyeog/silver
+	force = 22
+	minstr = 7
+	name = "silver hwando"
+	desc = "A foreign single-edged sword forged with pure silver. There's a red tassel on the hilt, said to bring about good fortune."
+	sheathe_icon = "silver_mulyeog"
+	icon_state = "silvereastsword"
+	smeltresult = /obj/item/ingot/silver
+	is_silver = TRUE
+
+/obj/item/rogueweapon/sword/sabre/mulyeog/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 100,\
+		added_def = 2,\
+	)
 
 /obj/item/rogueweapon/sword/sabre/mulyeog/rumahench
 	name = "ruma hwando"
@@ -2518,6 +2563,7 @@
 	seems to have innovatively combined the lethal cutting prowess of Psydonia's oldest weapon with the psychological damage of knowing that its \
 	wielder could likely bribe the Carriageman himself, and still chose to personally kill you."
 	icon_state = "goldswordking"
+	sheathe_icon = "goldswordking"
 	max_integrity = 75
 	max_blade_int = 75
 	sellprice = 300

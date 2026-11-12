@@ -19,6 +19,7 @@
 		TRAIT_ZOMBIE_IMMUNE,
 		TRAIT_SILVER_BLESSED,
 	)
+	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 	subclass_stats = list(//+9, You get PER/STR for the crossbow.
 		STATKEY_PER = 3,
 		STATKEY_STR = 2,

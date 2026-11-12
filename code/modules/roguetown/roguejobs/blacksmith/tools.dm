@@ -95,7 +95,7 @@
 		var/unskilled = repair_skill < SKILL_LEVEL_JOURNEYMAN
 		var/integrity_percentage = (attacked_item.obj_integrity / attacked_item.max_integrity) * 100
 
-		if(HAS_TRAIT(blacksmith, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE)) // squires are always considered skilled w/o other bonuses for the purposes of repair
+		if(HAS_TRAIT(blacksmith, TRAIT_SQUIRE_REPAIR) || HAS_TRAIT(user, TRAIT_SELF_SUSTENANCE) || HAS_TRAIT(user, TRAIT_DWARF_REPAIR)) // squires are always considered skilled w/o other bonuses for the purposes of repair
 			unskilled = FALSE
 
 		if(!attacked_item.anvilrepair || (attacked_item.obj_integrity >= attacked_item.max_integrity) || !isturf(attacked_item.loc))
@@ -269,6 +269,14 @@
 	force = 12
 	max_integrity = 10
 
+/obj/item/rogueweapon/hammer/bronze
+	name = "bronze hammer"
+	desc = "'I've been gripping this thing since before I could even walk - I didn't choose this, this is who I am. I just strike it. I don't think.' </br>'I spent my youth desperate to forge a better sword, become a more skilled smith, before I knew it..' </br>'I was old.' </br>'I don't even know what the hell I strike the iron for. But there is still one thing I like about it..' </br>'..the sparks. I like seeing sparks.. ..breathtaking, life, bursting before my eyes for just a moment..'"
+	icon_state = "hammer_bronze"
+	smeltresult = /obj/item/ingot/bronze
+	force = 24
+	max_integrity = 300
+
 /obj/item/rogueweapon/hammer/copper
 	name = "copper hammer"
 	desc = "A copper hammer, slightly better than a stone hammer."
@@ -378,12 +386,12 @@
 /obj/item/rogueweapon/tongs/update_icon()
 	. = ..()
 	if(!hingot)
-		icon_state = "tongs"
+		icon_state = "[initial(icon_state)]"
 	else
 		if(hott)
-			icon_state = "tongsi1"
+			icon_state = "[initial(icon_state)]i1"
 		else
-			icon_state = "tongsi0"
+			icon_state = "[initial(icon_state)]i0"
 
 /obj/item/rogueweapon/tongs/proc/make_unhot(input)
 	if(hott == input)
@@ -436,34 +444,10 @@
 /obj/item/rogueweapon/tongs/ancient
 	name = "ancient tongs"
 	desc = "Wrought gilbranze pincers the molten alloy, putting it before the anvil and hammer. Soon, it will fashion a new legacy; one unmarred by this dogmatic millenia."
+	force = 5
+	max_integrity = 15
 	icon_state = "atongs"
 	smeltresult = /obj/item/ingot/aaslag
-
-/obj/item/rogueweapon/tongs/ancient/update_icon()
-	. = ..()
-	if(!hingot)
-		icon_state = "atongs"
-	else
-		if(hott)
-			icon_state = "atongsi1"
-		else
-			icon_state = "atongsi0"
-
-/obj/item/rogueweapon/tongs/ancient/decrepit
-	name = "decrepit tongs"
-	desc = "How many ingots of once-pure alloy have these rusted, falling-apart jaws handled? The lyves taken through proxy of weapons once pincered by this tool? Perhaps it's about time that tally incremented yet again."
-	force = 5
-	max_integrity = 10
-
-/obj/item/rogueweapon/tongs/ancient/decrepit/update_icon()
-	. = ..()
-	if(!hingot)
-		icon_state = "atongs"
-	else
-		if(hott)
-			icon_state = "atongsi1"
-		else
-			icon_state = "atongsi0"
 
 /obj/item/rogueweapon/tongs/blacksteel
 	name = "blacksteel tongs"

@@ -556,7 +556,7 @@
 		detail_color = playerchoice
 		detail_tag = "_detail"
 		update_icon()
-		if(loc == user && ishuman(user))
+		if(is_worn_or_stored_by(user) && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_armor()
 			H.update_icon()
@@ -756,3 +756,97 @@
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 
 // horseshoes!
+
+/obj/item/clothing/shoes/roguetown/boots/hammerhold_boots
+	name = "hammerhold boots"
+	desc = ""
+	icon_state = "boots"
+	item_state = "boots"
+	allowed_race = NON_DWARVEN_RACE_TYPES
+	icon = 'modular_twilight_axis/icons/roguetown/clothing/boots.dmi'
+	mob_overlay_icon = 'modular_twilight_axis/icons/roguetown/clothing/onmob/boots.dmi'
+
+/obj/item/clothing/shoes/roguetown/courtphysician
+	name = "sanguine shoes"
+	desc = "Leather shoes, the solemn tap of these bears grim news, or salvation."
+	icon_state = "docshoes"
+	item_state = "docshoes"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/courtphys.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/helpers/sleeves_courtphys.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/courtphys.dmi'
+	salvage_result = /obj/item/natural/hide/cured
+	sewrepair = TRUE
+
+/obj/item/clothing/shoes/roguetown/courtphysician/female
+	name = "sanguine heels"
+	desc = "Leather heels, the solemn tap of these bears grim news, or salvation."
+	icon_state = "docheels"
+	item_state = "docheels"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/courtphys.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/helpers/sleeves_courtphys.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/courtphys.dmi'
+	detail_tag = "_detail"
+	detail_color = CLOTHING_RED
+
+/obj/item/clothing/shoes/roguetown/courtphysician/female/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/shoes/roguetown/courtphysician/female/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_HEELS, 2)
+	stepnoise_flag = STEPNOISE_HEELS
+
+/obj/item/clothing/shoes/roguetown/courtphysician/female/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/clothing/shoes/roguetown/hammerhold_shoes
+	name = "hammerhold shoes"
+	desc = ""
+	icon_state = "shoes"
+	item_state = "shoes"
+	allowed_race = NON_DWARVEN_RACE_TYPES
+	icon = 'modular_twilight_axis/icons/roguetown/clothing/boots.dmi'
+	mob_overlay_icon = 'modular_twilight_axis/icons/roguetown/clothing/onmob/boots.dmi'
+
+/obj/item/clothing/shoes/roguetown/rosa
+	name = "ivory shoes"
+	desc = "Finely crafted shoes of silk and leather."
+	icon_state = "rosashoes1"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/rosewood.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/rosewood.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/rosewood.dmi'
+
+/obj/item/clothing/shoes/roguetown/rosa/eight
+	name = "courtly shoes"
+	icon_state = "rosashoes8"
+
+/obj/item/clothing/shoes/roguetown/rosa/five
+	name = "sable shoes"
+	icon_state = "rosashoes5"
+
+/obj/item/clothing/shoes/roguetown/rosa/four
+	name = "obsidian shoes"
+	icon_state = "rosashoes4"
+
+/obj/item/clothing/shoes/roguetown/rosa/nine
+	name = "royal shoes"
+	icon_state = "rosashoes9"
+
+/obj/item/clothing/shoes/roguetown/rosa/seven
+	name = "regal shoes"
+	icon_state = "rosashoes7"
+
+/obj/item/clothing/shoes/roguetown/rosa/ten
+	name = "stately shoes"
+	icon_state = "rosashoes10"
+
+/obj/item/clothing/shoes/roguetown/rosa/three
+	name = "silvered shoes"
+	icon_state = "rosashoes3"

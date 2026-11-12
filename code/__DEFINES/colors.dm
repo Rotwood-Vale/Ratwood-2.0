@@ -129,3 +129,9 @@
 			return CLOTHING_ORANGE
 		if("Magenta")
 			return CLOTHING_MAGENTA
+
+#define CLOTHING_CHALK_WHITE		"#f4ecde"
+#define CLOTHING_DARK_GREY			"#505050"
+#define CLOTHING_GOLD_METALLIC		"#b0955d"
+#define CLOTHING_SCARLET			"#b8252c"
+#define CLOTHING_YARROW				"#f0cb76"

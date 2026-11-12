@@ -59,7 +59,7 @@
 		return wound
 
 /// Loops through our list of wounds healing them until we run out of healing or all wounds are healed
-/mob/living/proc/heal_wounds(heal_amount, list/specific_types)
+/mob/living/proc/heal_wounds(heal_amount, list/specific_types, list/excluded_types)
 	var/healed_any = FALSE
 	if(has_status_effect(/datum/status_effect/buff/fortify))
 		heal_amount *= 1.5
@@ -68,6 +68,8 @@
 			continue
 		if(heal_amount <= 0)
 			break
+		if(is_type_in_list(wound, excluded_types))
+			continue
 		if(length(specific_types))
 			var/found = FALSE
 			for(var/woundtype in specific_types)
@@ -85,6 +87,25 @@
 			simple_bleeding = 0
 			bleed_rate = 0
 	return healed_any
+
+/// Heals all wounds by heal_amount
+/mob/living/proc/heal_all_wounds(heal_amount)
+	var/healed_amount = 0
+	if(has_status_effect(/datum/status_effect/buff/fortify))
+		heal_amount *= 1.5
+	for(var/datum/wound/wound as anything in get_wounds())
+		if(isnull(wound))
+			continue
+		if(heal_amount <= 0)
+			break
+		var/amount_healed = wound.heal_wound(heal_amount)
+		if(amount_healed)
+			healed_amount += amount_healed
+	if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
+		if(!length(get_wounds()) && !length(get_embedded_objects()))
+			simple_bleeding = 0
+			bleed_rate = 0
+	return healed_amount
 
 /// Simple version for adding a wound - DO NOT CALL THIS ON CARBON MOBS!
 /mob/living/proc/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE, obj/item/weapon, ranged, penfactor, part_mult)
