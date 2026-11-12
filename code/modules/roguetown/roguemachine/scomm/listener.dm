@@ -126,8 +126,7 @@
 	if(ishuman(user) && user.job == HAND)
 		desc = knowndesc
 	else if(HAS_TRAIT(user, TRAIT_INQUISITION))
-		knowndesc = "This is clearly stolen octavian technology!"
-		desc = knowndesc
+		desc = knowndesc + " This is clearly stolen octavian technology!"
 	else
 		desc = initial(desc)
 
@@ -195,4 +194,3 @@
 	for(var/obj/item/scomstone/garrison/hand/S in SSroguemachine.scomm_machines)
 		S.name = label ? "#[label]" : "#NOTSET"
 		S.repeat_message(raw_message, src, usedcolor, message_language)
-		S.name = (S.fakename)
