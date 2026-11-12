@@ -97,14 +97,14 @@
 // Hands version
 /obj/item/scomstone/garrison/hand
 	name = "spymasters crownstone"
-	desc = "A lavish golden ring with the mark of the Crown. Heavy and garish. The gem embedded flickering in excitement. This one has been specially modified to lissen to spymasters lissener network."
+	desc = "A lavish golden ring with the mark of the Crown. Heavy and garish. The gem embedded flickering in excitement. This one has been specially modified to lissen to spymasters pearls."
 	var/truename = "spymasters crownstone"
 
 /obj/item/listeningdevice_hand
-	name = "spymasters listener"
-	desc = "An ever-attentive ear..."
+	name = "Midnight Pearl"
+	desc = "A biutifully crafted pearl, shimering with a soft moonlight. You feel weirdly seen when looking at it."
 	icon = 'icons/roguetown/items/misc.dmi'
-	icon_state = "listenstone"
+	icon_state = "midnight_pearl"
 	dropshrink = 0.6
 	gripped_intents = null
 	possible_item_intents = list(INTENT_GENERIC)
@@ -124,17 +124,15 @@
 
 /obj/item/listeningdevice_hand/examine(mob/user)
 	. = ..()
-	if(ishuman(user) && user.job == HAND)
+	if(ishuman(user) && (user.job == HAND || user.mind?.special_role == "Court Agent"))
 		desc = knowndesc
-	else if(HAS_TRAIT(user, TRAIT_INQUISITION))
-		desc = knowndesc + " This is clearly stolen octavian technology!"
 	else
 		desc = initial(desc)
 
 /obj/item/listeningdevice_hand/Initialize(mapload)
 	. = ..()
 	become_hearing_sensitive()
-	knowndesc = "An ever-attentive ear... [span_notice("This ear hasn't been bent. It's unlabelled.")]"
+	knowndesc = "An ever lissening pearl... [span_notice("It's unlabelled.")]"
 
 /obj/item/listeningdevice_hand/Destroy()
 	lose_hearing_sensitivity()
@@ -144,19 +142,19 @@
 	var/input = input(user, "SIX LETTERS", "BEND AN EAR")
 	if(!input)
 		label = null
-		knowndesc = "An ever-attentive ear... [span_notice("This ear hasn't been bent. It's unlabelled.")])"
+		knowndesc = "An ever lissening pearl... [span_notice("It's unlabelled.")]"
 		desc = knowndesc
 		return
 	label = uppertext(trim(input, 7))
-	knowndesc = "An ever-attentive ear... [span_notice("This ear's been bent. It's labelled as [label].")]"
+	knowndesc = "An ever lissening pearl... [span_notice("It's labelled as [label].")]"
 	desc = knowndesc
 	return
 
 /obj/item/listeningdevice_hand/attack_right(mob/living/user)
 	if(!hidden)
 		alpha = 30
-		name = "thing"
-		desc = "What is that thing?.."
+		name = "pebble"
+		desc = "What is this rock doing here?"
 		hidden = TRUE
 		return TRUE
 	alpha = 255
@@ -175,7 +173,7 @@
 		icon_state = "[initial(icon_state)]_active"
 	else
 		icon_state = initial(icon_state)
-	to_chat(user, span_info("I [active ? "undeafen" : "deafen"] the Listener."))
+	to_chat(user, span_info("I [active ? "undeafen" : "deafen"] the pearl."))
 	update_icon()
 	return
 
