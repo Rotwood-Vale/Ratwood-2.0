@@ -96,7 +96,9 @@
 
 // Hands version
 /obj/item/scomstone/garrison/hand
+	name = "spymasters crownstone"
 	desc = "A lavish golden ring with the mark of the Crown. Heavy and garish. The gem embedded flickering in excitement. This one has been specially modified to lissen to spymasters lissener network."
+	var/truename = "spymasters crownstone"
 
 /obj/item/listeningdevice_hand
 	name = "spymasters listener"
@@ -193,3 +195,4 @@
 	for(var/obj/item/scomstone/garrison/hand/S in SSroguemachine.scomm_machines)
 		S.name = label ? "#[label]" : "#NOTSET"
 		S.repeat_message(raw_message, src, usedcolor, message_language)
+		S.name = S.truename
