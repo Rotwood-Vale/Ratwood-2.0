@@ -98,7 +98,6 @@
 /obj/item/scomstone/garrison/hand
 	desc = "A lavish golden ring with the mark of the Crown. Heavy and garish. The gem embedded flickering in excitement. This one has been specially modified to lissen to spymasters lissener network."
 
-
 /obj/item/listeningdevice_hand
 	name = "spymasters listener"
 	desc = "An ever-attentive ear..."
