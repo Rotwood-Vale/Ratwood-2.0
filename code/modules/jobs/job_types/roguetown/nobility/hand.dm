@@ -112,7 +112,7 @@
 
 	category_tags = list(CTAG_HAND)
 	subclass_languages = list(/datum/language/thievescant)
-	traits_applied = list(TRAIT_KEENEARS, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER)//Spy not a royal champion
+	traits_applied = list(TRAIT_KEENEARS, TRAIT_DODGEEXPERT, TRAIT_PERFECT_TRACKER, TRAIT_CICERONE)//Spy not a royal champion
 	subclass_stats = list(
 		STATKEY_SPD = 3,
 		STATKEY_PER = 2,
