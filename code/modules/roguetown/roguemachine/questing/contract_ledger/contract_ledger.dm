@@ -189,6 +189,9 @@
 	if("towner" in dynamic_roles)
 		data["towner_postings"] = build_towner_posting_listing(user)
 		data["towner_purse_balance"] = SStreasury?.discretionary_fund?.balance || 0
+		if(can_commission_towner_blockade(user))
+			data["towner_blockade_cost"] = GLOB.defense_quest_tier_costs[QUEST_BLOCKADE_DEFENSE]
+			data["towner_blockade_regions"] = build_blockade_region_labels(available_only = TRUE)
 	return data
 
 // crown_authority_roles lives in _es_compat.dm (ES 3-role roster: Steward/Clerk/Grand Duke).
@@ -403,6 +406,9 @@ GLOBAL_LIST_INIT(contract_proxy_officials, list(
 			return TRUE
 		if("compose_towner")
 			compose_towner_from_tgui(user, params)
+			return TRUE
+		if("commission_towner_blockade")
+			commission_towner_blockade_from_tgui(user, params["region"])
 			return TRUE
 		if("request_hoard_recovery")
 			request_hoard_recovery(user, params["region"])

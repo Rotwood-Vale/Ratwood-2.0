@@ -98,13 +98,15 @@
 		out[qtype] = regions
 	return out
 
-/obj/structure/roguemachine/contractledger/proc/build_blockade_region_labels()
+/obj/structure/roguemachine/contractledger/proc/build_blockade_region_labels(available_only = FALSE)
 	var/list/out = list()
 	for(var/datum/blockade/B as anything in GLOB.active_blockades)
 		var/datum/economic_region/ER = B.get_region()
 		if(!ER)
 			continue
 		var/datum/threat_region/TR = B.get_threat_region()
+		if(available_only && (!TR || B.has_active_scroll()))
+			continue
 		out[ER.name] = TR ? "[ER.name] ([TR.region_name])" : ER.name
 	return out
 
@@ -310,7 +312,13 @@
 		Q.reward_amount = 0
 		Q.is_directive = TRUE
 		directives_issued_today++
-	var/funding = is_directive ? "directive" : (source_fund == SStreasury.discretionary_fund ? "crown" : "pledge")
+	var/funding = "personal"
+	if(is_directive)
+		funding = "directive"
+	else if(source_fund == SStreasury.discretionary_fund)
+		funding = "crown"
+	else if(source_fund == SStreasury.burgher_pledge_fund)
+		funding = "pledge"
 	var/bonus_label_text = get_commission_bonus_pay_label(bonus_pay_level)
 	SStreasury.defense_log += list(list(
 		"title" = Q.get_title(),
@@ -326,7 +334,7 @@
 	SSquestpool.log_event("defense_issue", "[steward.real_name] commissioned blockade defense on [region_name] (faction [Q.faction_id]) for [cost]m ([funding])[levy_exempt ? " (levy-exempt)" : ""][bonus_label_text ? " ([bonus_label_text])" : ""]")
 	scom_announce("A blockade defense writ has been issued for [region_name][bonus_label_text ? " - [bonus_label_text] attached" : ""].")
 	playsound(src, 'sound/misc/coindispense.ogg', 60, FALSE, -1)
-	var/source_label = is_directive ? "as a Request" : (funding == "crown" ? "from Crown's Purse" : "from the Pledge")
+	var/source_label = is_directive ? "as a Request" : "from [source_fund.name]"
 	to_chat(steward, span_notice("Blockade writ drafted [source_label] to your hand: <b>[Q.get_title()]</b>[levy_exempt ? " - <i>levy-exempt</i>" : ""][bonus_label_text ? " - <i>[bonus_label_text]</i>" : ""]."))
 	return TRUE
 

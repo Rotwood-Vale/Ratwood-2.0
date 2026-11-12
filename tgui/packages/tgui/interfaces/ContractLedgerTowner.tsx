@@ -43,6 +43,8 @@ type TownerData = {
   balance: number;
   towner_purse_balance: number;
   towner_postings: Posting[];
+  towner_blockade_cost?: number;
+  towner_blockade_regions?: Record<string, string>;
 };
 
 const toggleStyle = (selected: boolean): React.CSSProperties =>
@@ -252,6 +254,50 @@ const ViewOnlyPostingCard = (props: { posting: Posting }) => {
   );
 };
 
+const BlockadePosting = () => {
+  const { act, data } = useBackend<TownerData>();
+  const [region, setRegion] = useState('');
+  const cost = data.towner_blockade_cost;
+  if (cost === undefined) return null;
+
+  const regions = data.towner_blockade_regions || {};
+  const options = Object.entries(regions);
+  const selectedRegion = regions[region] ? region : '';
+  const canAfford = data.balance >= cost;
+
+  return (
+    <div className="ContractLedger__Card" style={{ marginTop: 12 }}>
+      <strong>Blockade Defense</strong>
+      <p>Draft a writ to hand to a bearer or pin to the Contract Ledger.</p>
+      <select
+        aria-label="Blockaded region"
+        className="ContractLedger__InnkeeperSelect"
+        disabled={!options.length}
+        value={selectedRegion}
+        onChange={(event) => setRegion(event.target.value)}
+      >
+        <option value="">
+          {options.length ? 'Choose a blockade' : 'No blockades need a writ'}
+        </option>
+        {options.map(([name, label]) => (
+          <option key={name} value={name}>
+            {label}
+          </option>
+        ))}
+      </select>
+      <Button
+        disabled={!selectedRegion || !canAfford}
+        tooltip={canAfford ? undefined : 'Insufficient personal balance'}
+        onClick={() =>
+          act('commission_towner_blockade', { region: selectedRegion })
+        }
+      >
+        Draft Writ ({cost}m)
+      </Button>
+    </div>
+  );
+};
+
 export const TownerPostingPanel = () => {
   const { act, data } = useBackend<TownerData>();
   const postings = data.towner_postings || [];
@@ -298,8 +344,10 @@ export const TownerPostingPanel = () => {
           {anyCrown && <> | Purse: {data.towner_purse_balance ?? 0}m</>}
         </span>
       </div>
+      <BlockadePosting />
       <div style={blurbStyle}>
-        Post a contract with your own mammons. Whomever takes it must deliver the parcel to you, who is the only one that can open the package.
+        Post a recovery contract with your own mammons. The bearer must deliver
+        the parcel to you, and only you can open it.
       </div>
 
       {yourPostings.length > 0 && (
