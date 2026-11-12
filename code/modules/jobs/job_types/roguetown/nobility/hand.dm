@@ -97,7 +97,7 @@
 		/obj/item/rogueweapon/huntingknife/idagger/dtace = 1,//You don't get killer's ice for this because you're the gross swordsmaster and I HATE YOU!!!!
 		/obj/item/rogueweapon/scabbard/sheath/royal = 1,
 		/obj/item/storage/keyring/hand = 1,
-		/obj/item/listeningdevice_hand = 3
+		/obj/item/listeningdevice_hand = 2
 	)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
@@ -146,7 +146,7 @@
 		/obj/item/storage/keyring/hand = 1,
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,//Just like the wizard, since he can dip the blade.
-		/obj/item/listeningdevice_hand = 3
+		/obj/item/listeningdevice_hand = 5
 	)
 	if(H.dna.species.type in NON_DWARVEN_RACE_TYPES)
 		shirt = /obj/item/clothing/suit/roguetown/armor/gambeson/shadowrobe
@@ -212,7 +212,7 @@
 		/obj/item/lockpickring/mundane = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/poison = 1,//starts with a vial of poison, like all wizened evil advisors do!
 		/obj/item/rogueweapon/spellbook = 1,
-		/obj/item/listeningdevice_hand = 3
+		/obj/item/listeningdevice_hand = 4
 	)
 
 ////////////////////
