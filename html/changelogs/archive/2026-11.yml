@@ -271,3 +271,27 @@
   wikimody:
   - rscadd: Cure rot potion now cures delites without killing them, its now harder
       to get however
+2026-11-12:
+  CentralSmith:
+  - bugfix: Adjudicators choosing the Psydonic Executioner Sword + Shield now receive
+      their shield.
+  SirSwagmeyer:
+  - bugfix: Bites no longer ignore Defend intent guarding, or Limbguard. Biting a
+      limbguarded area will instantly break your jaw.
+  - balance: hitting a Limbguard with your bare hands now does severe damage to your
+      gloves. If your gloves are broken or you are bare handed, punching a Limbguard
+      will break the offending arm.
+  - balance: hitting a Limbguard with your bare hands now does severe damage to your
+      gloves. If your gloves are broken or you are bare handed, punching a Limbguard
+      will break the offending arm.w
+  - qol: Drink now loops automatically, but you'll be left vulnerable and off-balanced
+      while doing so.
+  - balance: Bite/Chew have been adjusted to have counterplay, such as making the
+      biter vulnerable and off-balanced. Bite has a static fail rate. Bite/Chew also
+      deal recoil damage to your mouth, based if you're biting into armor or not.
+  - bugfix: There was a weird iteration that made biting display your main weapon's
+      attack animation. Fixed.
+  ronfino:
+  - spellcheck: Renamed "Messer" to "Kriegsmesser" in weapon choice
+  - code_imp: Removed greatweapon strap from Left Back Slot, swapped with crossbow
+      instead.
