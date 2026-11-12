@@ -3,8 +3,8 @@
 
 /datum/antagonist/zombie
 	name = "Deadite"
-	antag_hud_type = ANTAG_HUD_TRAITOR
-	antag_hud_name = "zombie"
+	antag_hud_type = ANTAG_HUD_ZOMBIE
+	antag_hud_name = "zombie_hud"
 	show_in_roundend = FALSE
 	rogue_enabled = TRUE
 	/// SET TO FALSE IF WE DON'T TURN INTO ROTMEN WHEN REMOVED
@@ -151,6 +151,7 @@
 */
 ///Remove zombification - cure rot, surgical rot remove
 /datum/antagonist/zombie/on_removal()
+	remove_own_antag_hud()
 	// Restore the body we deadified, not whatever mob the mind now occupies
 	var/mob/living/carbon/human/zombie = deadite_body_ref?.resolve()
 	if(!ishuman(zombie))
@@ -316,6 +317,8 @@
 
 	zombie.STAINT = 1
 	has_turned = TRUE
+	// Only on rising, so the infected who haven't turned stay hidden from deadites
+	add_antag_hud(antag_hud_type, antag_hud_name, zombie)
 	// Drop your helm and gorgies boy you won't need it anymore!!!
 	var/static/list/removed_slots = list(
 		SLOT_HEAD,

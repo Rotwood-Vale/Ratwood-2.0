@@ -41,11 +41,14 @@
 	
 /datum/component/adjustable_clothing/proc/on_attack_right(mob/user)
 	var/obj/item/clothing/C = parent
-	if(!ishuman(C.loc))
-		return
+	var/mob/living/carbon/human/H = C.loc
+	if(!ishuman(H))
+		var/obj/item/clothing/head/hat = C.get_storing_hat()
+		H = hat?.loc
+		if(!ishuman(H))
+			return
 	if(C.adjustable != CAN_CADJUST)
 		return
-	var/mob/living/carbon/human/H = C.loc
 	if(toggled_open)	//We're open, so we'll close
 		toggle_closed(C)
 	else

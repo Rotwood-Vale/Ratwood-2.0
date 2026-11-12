@@ -99,6 +99,7 @@
 #include "spawn_humans.dm"
 #include "species_whitelists.dm"
 #include "subsystem_init.dm"
+#include "surgery_diagnosis.dm"
 #include "timer_sanity.dm"
 #include "timers.dm"
 #include "unit_test.dm"

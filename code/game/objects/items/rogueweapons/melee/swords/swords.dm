@@ -1104,6 +1104,18 @@
 	icon_state = "eastshortsword"
 	sheathe_icon = "kodachi"
 
+/obj/item/rogueweapon/sword/short/silver/kazengun
+	name = "silver kodachi"
+	desc = "A razor-edged sword with a wavy pattern weld apparent on its blade of pure silver."
+	icon = 'icons/roguetown/weapons/swords32.dmi'
+	possible_item_intents = list(
+		/datum/intent/sword/cut/short,
+		/datum/intent/sword/thrust/short,
+		/datum/intent/sword/chop/short,
+		)
+	icon_state = "silvereastshortsword"
+	sheathe_icon = "silver_kodachi"
+
 /obj/item/rogueweapon/sword/short/falchion
 	name = "falchion"
 	desc = "A single-edged sword that is similar to a messer in appearance, its origins trace back to Otava. An implement of commoners and knights alike. It's good for cutting and thrusting."
@@ -2249,6 +2261,14 @@
 	sheathe_icon = "ssangsudo"
 	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike, /datum/intent/rend/krieg)
 
+/obj/item/rogueweapon/sword/long/kriegmesser/silver/ssangsudo
+	name = "silver ssangsudo"
+	desc = "A Kazengun style of long blade forged with pure silver. A weapon supremely skilled in the art of cutting."
+	icon = 'icons/roguetown/weapons/swords64.dmi'
+	icon_state = "silverssangsudo"
+	sheathe_icon = "silver_ssangsudo"
+	gripped_intents = list(/datum/intent/sword/cut/krieg, /datum/intent/sword/thrust/long/deep, /datum/intent/sword/strike, /datum/intent/rend/krieg)
+
 /obj/item/rogueweapon/sword/long/dec
 	no_loot_taint = TRUE
 	name = "decorated longsword"
@@ -2267,6 +2287,27 @@
 	icon_state = "eastsword1"
 	smeltresult = /obj/item/ingot/steel
 	wdefense = 3
+
+/obj/item/rogueweapon/sword/sabre/mulyeog/silver
+	force = 22
+	minstr = 7
+	name = "silver hwando"
+	desc = "A foreign single-edged sword forged with pure silver. There's a red tassel on the hilt, said to bring about good fortune."
+	sheathe_icon = "silver_mulyeog"
+	icon_state = "silvereastsword"
+	smeltresult = /obj/item/ingot/silver
+	is_silver = TRUE
+
+/obj/item/rogueweapon/sword/sabre/mulyeog/silver/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_TENNITE,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 100,\
+		added_def = 2,\
+	)
 
 /obj/item/rogueweapon/sword/sabre/mulyeog/rumahench
 	name = "ruma hwando"
