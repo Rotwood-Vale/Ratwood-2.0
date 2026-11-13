@@ -41,6 +41,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(list(/area/rogue/indoors
 		guy.add_stress(/datum/stressevent/seeblessed)
 	if((src.holy_area == TRUE) && HAS_TRAIT(guy, TRAIT_HOLYWARRIOR))
 		guy.apply_status_effect(/datum/status_effect/debuff/holy_blessing)
+	try_apply_hallowed_ward(guy)
 	if((src.necra_area == TRUE) && !(guy.has_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)||(guy.has_status_effect(/datum/status_effect/debuff/deathdoorwilloss)))) //Necra saps at wil
 		if(HAS_TRAIT(guy, TRAIT_SOUL_EXAMINE))
 			guy.apply_status_effect(/datum/status_effect/debuff/necrandeathdoorwilloss)
@@ -54,6 +55,10 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(list(/area/rogue/indoors
 		playsound(src, 'sound/misc/lava_death.ogg', 100, FALSE)
 		guy.dust()
 		GLOB.azure_round_stats[STATS_GREED_DUSTED]++
+
+/area/rogue/proc/try_apply_hallowed_ward(mob/living/carbon/human/character)
+	if(holy_area && HAS_TRAIT(character, TRAIT_HALLOWED_WARD) && !character.has_status_effect(/datum/status_effect/buff/hallowed_ward))
+		character.apply_status_effect(/datum/status_effect/buff/hallowed_ward)
 
 /area/rogue/indoors
 	name = "indoors"

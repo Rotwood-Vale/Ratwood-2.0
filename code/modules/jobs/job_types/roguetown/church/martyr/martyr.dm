@@ -34,6 +34,7 @@
 		TRAIT_DUALWIELDER,
 		TRAIT_VOTARY,
 		TRAIT_CONVICTION,
+		TRAIT_HALLOWED_WARD,
 	)
 
 	//No undeath-adjacent virtues for a role that can sacrifice itself. The Ten like their sacrifices 'pure'.
@@ -47,6 +48,16 @@
 	job_subclasses = list(
 		/datum/advclass/martyr
 	)
+
+/datum/job/roguetown/martyr/after_spawn(mob/living/character, mob/M, latejoin = FALSE)
+	..()
+	if(!ishuman(character))
+		return
+
+	// At round start, the character is placed on the map before job traits are granted.
+	var/area/rogue/spawn_area = get_area(character)
+	if(istype(spawn_area))
+		spawn_area.try_apply_hallowed_ward(character)
 
 /datum/advclass/martyr
 	name = "Martyr"
