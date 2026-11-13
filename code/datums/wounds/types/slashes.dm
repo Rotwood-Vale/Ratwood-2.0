@@ -74,7 +74,7 @@
 /datum/wound/dynamic/slash/upgrade(dam, armor, exposed, pen_info)
 	whp += (dam * SLASH_UPG_WHPRATE)
 	if((!armor || exposed))
-		set_bleed_rate(bleed_rate + SLASH_UPG_CLAMP_RAW)
+		set_bleed_rate(bleed_rate + clamp(dam * SLASH_UPG_BLEEDRATE, 0.1, SLASH_UPG_CLAMP_RAW))
 	else
 		switch(pen_info)
 			if(1 to 2)
