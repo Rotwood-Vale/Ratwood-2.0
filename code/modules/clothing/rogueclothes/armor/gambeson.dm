@@ -188,6 +188,7 @@
 	altdetail_color = "#c08955"
 	detail_tag = "_detail"
 	altdetail_tag = "_detailalt"
+	resistance_flags = FIRE_PROOF
 	var/shiftable = FALSE
 	var/picked = FALSE
 	armor = ARMOR_PADDED
