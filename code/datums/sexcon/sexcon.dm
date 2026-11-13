@@ -776,11 +776,14 @@
 /datum/sex_controller/proc/get_load_bursts()
 	switch(get_semen_volume())
 		if(4)
-			return 2
+			. = 2
 		if(5 to INFINITY)
-			return 3
+			. = 3
 		else
-			return 1
+			. = 1
+	var/obj/item/organ/penis/pintle = user.getorganslot(ORGAN_SLOT_PENIS)
+	if(pintle?.massive)
+		. += MASSIVE_PENIS_EXTRA_LOAD_BURSTS
 
 /datum/sex_controller/proc/get_max_loads()
 	var/con = user.STACON
@@ -1516,6 +1519,8 @@
 		return
 	if(!can_perform_action(action_type, user.incapacitated()))
 		return
+	if(try_massive_insertion_fail(SEX_ACTION(action_type)))
+		return
 	knot_check_remove(action_type)
 	// Set vars
 	desire_stop = FALSE
@@ -1585,6 +1590,7 @@
 		suppress_action_messages = !show_action_message
 		find_ringing_collar()
 		action.on_perform(user, target)
+		massive_pintle_receiver_line(action)
 		do_visual_effects(target, action)
 		suppress_action_messages = FALSE
 		// It could want to finish afterwards the performed action

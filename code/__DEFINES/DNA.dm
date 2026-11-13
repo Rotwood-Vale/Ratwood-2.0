@@ -170,6 +170,14 @@
 #define MASSIVE_PENIS_TRIUMPH_COST 10
 #define MASSIVE_PENIS_PAIN_MULTIPLIER 1.2
 #define MASSIVE_PENIS_DESCRIPTOR_COLOR "#d61a43"
+/// Percent chance that starting a penetration act with a massive pintle fails because it won't fit.
+#define MASSIVE_PENIS_INSERT_FAIL_CHANCE 20
+/// Percent chance per thrust that the receiver gets an overwhelmed line (low/mid force).
+#define MASSIVE_PENIS_LINE_CHANCE 10
+/// Percent chance per thrust that the receiver gets a panic line (high force and above).
+#define MASSIVE_PENIS_PANIC_LINE_CHANCE 20
+/// Extra cum bursts a massive pintle adds on orgasm.
+#define MASSIVE_PENIS_EXTRA_LOAD_BURSTS 1
 /// Blood drained per blood tick while erect.
 #define MASSIVE_PENIS_BLOOD_DRAIN 2
 /// The drain stops at MASSIVE_PENIS_BLOOD_FLOOR_BASE + CON * MASSIVE_PENIS_BLOOD_FLOOR_PER_CON.
