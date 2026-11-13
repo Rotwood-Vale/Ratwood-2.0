@@ -97,6 +97,11 @@
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/half)
 	
 /datum/supply_pack/rogue/Sawbones/scuirass
+	name = "Fluted Cuirass"
+	cost = 40
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/half/fluted)
+	
+/datum/supply_pack/rogue/Sawbones/scuirass
 	name = "Scalemail"
 	cost = 40
 	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/scale)
