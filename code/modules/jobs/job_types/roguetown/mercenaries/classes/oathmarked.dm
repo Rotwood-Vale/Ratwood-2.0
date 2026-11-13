@@ -122,7 +122,7 @@
 		A hammer to break the rabble. A pick to slay the traitors. A head to pierce both.</small>"
 
 /datum/intent/mace/warhammer/pick/ranged
-	penfactor = 40//-40% less.
+	penfactor = 50//-40% less.
 	damfactor = 0.8//-10% less.
 	reach = 2
 	clickcd = CLICK_CD_HEAVY
