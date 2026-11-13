@@ -11,7 +11,7 @@
 	if(!can_see_cone(attacker))
 		return FALSE
 	var/paired_swing = src?.dualwield_twoswing
-	// Defensive Flow
+	// Chained Defense
 	var/chained_parry = FALSE
 	var/datum/status_effect/buff/defense_chain/chain = has_status_effect(/datum/status_effect/buff/defense_chain)
 	if(chain && ref(attacker) != chain.opener_ref) // anyone except the attacker whose attack opened the window

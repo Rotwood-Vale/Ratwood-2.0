@@ -2,7 +2,7 @@
 	if(pulledby || pulling)
 		return FALSE
 	var/paired_swing = user?.dualwield_twoswing
-	// Defensive Flow
+	// Chained Defense
 	var/datum/status_effect/buff/defense_chain/chain = has_status_effect(/datum/status_effect/buff/defense_chain)
 	var/chained_dodge = (chain && ref(user) != chain.opener_ref) ? TRUE : FALSE
 	if(!paired_swing && !chained_dodge && world.time < last_dodge + dodgetime)

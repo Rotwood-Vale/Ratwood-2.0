@@ -2846,7 +2846,7 @@
 	if(!istype(owner.get_active_held_item(), held_dagger))
 		owner.remove_status_effect(/datum/status_effect/buff/dagger_boost)
 
-/// Group-fight Defensive Flow, shared by parry and dodge. Only successful parry/dodge triggers it
+/// Group-fight Chained Defense, shared by parry and dodge. Only successful parry/dodge triggers it
 /datum/status_effect/buff/defense_chain
 	id = "defense_chain"
 	duration = 12 // 1.2 secs
@@ -2859,7 +2859,7 @@
 	. = ..()
 
 /atom/movable/screen/alert/status_effect/buff/defense_chain
-	name = "Defensive Flow"
+	name = "Chained Defense"
 	desc = span_notice("I have found my rhythm. For a moment, I can turn aside or slip blows from anyone but my first opponent at no cost.")
 	icon_state = "strike"
 
