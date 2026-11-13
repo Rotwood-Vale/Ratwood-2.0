@@ -34,6 +34,9 @@
 	/// The lockpick stored in the boot
 	var/atom/movable/holdinglockpick
 
+/obj/item/clothing/shoes/roguetown/boots/ducal
+	nudist_approved = TRUE
+
 /obj/item/clothing/shoes/roguetown/boots/Destroy()
 	QDEL_NULL(holdingknife)
 	QDEL_NULL(holdinglockpick)
@@ -141,6 +144,9 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 
+/obj/item/clothing/shoes/roguetown/shortboots/ducal
+	nudist_approved = TRUE
+
 /obj/item/clothing/shoes/roguetown/ridingboots
 	name = "riding boots"
 	color = "#d5c2aa"
@@ -237,6 +243,9 @@
 	armor = list("blunt" = 25, "slash" = 20, "stab" = 25,"fire" = 0, "acid" = 0)
 	heat_protection = FOOT_LEFT | FOOT_RIGHT
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
+
+/obj/item/clothing/shoes/roguetown/shalal/ducal
+	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/boots/leather
 	name = "leather boots"

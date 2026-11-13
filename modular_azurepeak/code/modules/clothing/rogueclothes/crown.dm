@@ -2,6 +2,7 @@
 
 /obj/item/clothing/head/roguetown/crown/serpcrown
 	no_loot_taint = TRUE
+	nudist_approved = TRUE
 	name = "Crown of the Realm"
 	article = "the"
 	desc = "Heavy is the head that wears this."

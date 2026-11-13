@@ -27,7 +27,7 @@
 /obj/item/clothing/suit/roguetown/armor/regenerating/equipped(mob/user, slot)
 	. = ..()
 	UnregisterSignal(user, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE))
-	if(slot == SLOT_SHIRT || slot == SLOT_ARMOR)
+	if(slot == SLOT_SHIRT || slot == SLOT_ARMOR || slot == SLOT_PANTS)
 		RegisterSignal(user, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE), PROC_REF(on_attacked_by))
 
 /// Combat tag system, makes your skin stop regenning if you are attacked by anything
@@ -279,6 +279,39 @@
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
 	repair_time = 30 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/duke
+	name = "the lord's new clothes"
+	desc = "The finest clothes in all the land, tailored at GREAT expense by a most wise and radiant lord. It's said they're invisible to only the dimwitted."
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS|NECK
+	body_parts_inherent = COVERAGE_ALL_BUT_LEGS|NECK
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER
+	repair_time = 40 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/duke
+	name = "the lord's new vest"
+	desc = "A shimmering vest of magicial cloth tailored exclusively for a most wise and fashionable lord. Invisible to the dullard."
+	body_parts_covered = COVERAGE_VEST
+	body_parts_inherent = COVERAGE_VEST
+	armor = ARMOR_BRIGANDINE
+	blocksound = SOFTHIT
+	max_integrity = ARMOR_INT_CHEST_LIGHT_STEEL
+	repair_time = 40 SECONDS
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/legs
+	slot_flags = ITEM_SLOT_PANTS
+	body_parts_covered = COVERAGE_FULL_LEG
+	body_parts_inherent = COVERAGE_FULL_LEG
+	sleeved = null
+	attachment_component = null
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/legs/duke
+	name = "the lord's new hosen"
+	desc = "An exquisite weave, apparent only to those of sufficient wit and breeding."
+	armor = ARMOR_BRONZE
+	max_integrity = ARMOR_INT_LEG_BRONZE
+	repair_time = 40 SECONDS
 
 #undef COMBAT_TAG_DURATION
 

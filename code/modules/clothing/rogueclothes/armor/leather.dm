@@ -448,6 +448,7 @@
 
 /obj/item/clothing/head/roguetown/duchess_hood
 	name = "duchess hood"
+	nudist_approved = TRUE
 	icon = 'icons/roguetown/clothing/licensed-infraredbaron/head.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/licensed-infraredbaron/onmob/head.dmi'
 	icon_state = "duchess_hood"

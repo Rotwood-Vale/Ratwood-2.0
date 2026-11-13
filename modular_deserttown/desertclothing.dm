@@ -413,6 +413,7 @@
 //
 /obj/item/clothing/head/roguetown/sultan
 	name = "sultan's turban"
+	nudist_approved = TRUE
 	desc = "Bask in its noble size and granduer!."
 	icon = 'modular_deserttown/icons/clothing/head.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/head32x48.dmi'
@@ -438,6 +439,7 @@
 
 /obj/item/clothing/head/roguetown/sultana
 	name = "sultana's headdress"
+	nudist_approved = TRUE
 	desc = "Silky smooth Zybantine silk headress!"
 	icon = 'modular_deserttown/icons/clothing/head.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/head.dmi'
