@@ -51,6 +51,21 @@
 /obj/item/reagent_containers/attack(mob/M, mob/user, def_zone)
 	return ..()
 
+/obj/item/reagent_containers/onbite(mob/living/biter)
+	. = ..()
+	if(!isliving(biter))
+		return
+	if(biter.stat != CONSCIOUS)
+		return
+	if(!canconsume(biter, biter))
+		return FALSE
+	if(iscarbon(biter))
+		var/mob/living/carbon/carbon = biter
+		if(carbon.is_mouth_covered())
+			return
+	try_consume(biter, biter)
+
+/// Checks if the eater can actually eat the thing
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user, silent = FALSE)
 	if(!iscarbon(eater))
 		return FALSE
@@ -83,6 +98,10 @@
 			to_chat(user, span_warning("I have to remove [who] [covered] first!"))
 		return FALSE
 	return TRUE
+
+/// Tries to consume whatever it is
+/obj/item/reagent_containers/proc/try_consume(mob/consumer, mob/feeder)
+	return
 
 /obj/item/reagent_containers/ex_act()
 	if(reagents)
