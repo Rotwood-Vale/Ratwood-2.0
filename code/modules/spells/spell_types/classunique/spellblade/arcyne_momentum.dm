@@ -4,7 +4,7 @@
 
 /atom/movable/screen/alert/status_effect/buff/arcyne_momentum
 	name = "Arcyne Momentum (0)"
-	desc = "Melee strikes fuel arcyne power. Build momentum to unleash your power. Melee strikes grant 1 stack every 2 seconds. Certain abilities capable of striking multiple targets grant bonus momentum. At 7+ the power overcharges - spend it! If it decays unspent, ALL momentum discharges at once, leaving you strained - briefly slowed and Vulnerable. Take care not to lose control."
+	desc = "Offensive strikes fuel arcyne power. Build momentum to unleash your power. Melee strikes grant 1 stack every 2 seconds; arrows from a bound bow grant 1 stack every second. Certain abilities capable of striking multiple targets grant bonus momentum. At 7+ the power overcharges - spend it! If it decays unspent, ALL momentum discharges at once, leaving you strained - briefly slowed and Vulnerable. Take care not to lose control."
 	icon_state = "buff"
 
 /datum/status_effect/buff/arcyne_momentum

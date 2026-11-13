@@ -5,6 +5,8 @@
 	var/outline_color = "#4a90d9"
 	var/gain_cooldown = 2 SECONDS // 2 seconds between melee momentum gains
 	var/last_melee_gain = 0
+	var/ranged_gain_cooldown = 1 SECONDS
+	var/last_ranged_gain = 0
 	var/datum/weakref/owner_ref
 
 /datum/component/arcyne_conduit/Initialize(outline_color_override, mob/living/owner)
@@ -18,13 +20,14 @@
 	var/obj/item/I = parent
 	I.add_filter(CONDUIT_FILTER, 2, list("type" = "outline", "color" = outline_color, "alpha" = 200, "size" = 1))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK, PROC_REF(on_attack_success))
+	RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, PROC_REF(on_projectile_hit))
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/arcyne_conduit/UnregisterFromParent()
 	var/obj/item/I = parent
 	if(istype(I))
 		I.remove_filter(CONDUIT_FILTER)
-	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_PROJECTILE_ON_HIT, COMSIG_PARENT_EXAMINE))
 	var/mob/living/owner = owner_ref?.resolve()
 	if(owner)
 		UnregisterSignal(owner, COMSIG_LIVING_DEATH)
@@ -54,6 +57,23 @@
 	if(M)
 		M.add_stacks(1)
 		last_melee_gain = world.time
+
+/datum/component/arcyne_conduit/proc/on_projectile_hit(obj/item/source, mob/living/firer, atom/target, angle)
+	SIGNAL_HANDLER
+	if(!isliving(firer) || !isliving(target))
+		return
+	if(firer != owner_ref?.resolve())
+		return
+	var/mob/living/victim = target
+	if(victim == firer || victim.stat == DEAD)
+		return
+	if(world.time < last_ranged_gain + ranged_gain_cooldown)
+		return
+	var/datum/status_effect/buff/arcyne_momentum/M = firer.has_status_effect(/datum/status_effect/buff/arcyne_momentum)
+	if(!M)
+		return
+	M.add_stacks(1)
+	last_ranged_gain = world.time
 
 /datum/component/arcyne_conduit/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER

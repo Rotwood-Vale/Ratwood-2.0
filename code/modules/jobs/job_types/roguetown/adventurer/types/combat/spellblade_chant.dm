@@ -50,6 +50,33 @@
 	if(extra_mace_weapon)
 		mace_weapons = "[extra_mace_weapon] / [mace_weapons]"
 
+	// bloakonly.. for now.
+	var/sagittary_column = ""
+	var/container_width = 960
+	if(faction == "blackoak")
+		container_width = 1300
+		sagittary_column = {"<div class="column">
+<div class="column-content">
+<h3>— Sagittary —</h3>
+<div class="chant-text">
+[get_sagittary_chant_text(faction, H)]
+</div>
+<div class="abilities">
+<h4>Abilities</h4>
+<ul>
+<li><b>Leyline Nock</b> — Loose an arrow of arcyne light, costing no arrows. When it strikes, a leyline bolt bursts through the target and those behind along its path. Empowered (3 momentum): longer, harder-hitting bolt with light penetration.</li>
+<li><b>Thornfall</b> — Rain arcyne thorns on a 3x3 area up to 7 tiles away after a short telegraph. Costs no arrows. Empowered: doubles damage.</li>
+<li><b>Withdraw</b> — Leap 3 tiles away from your target, passing through enemies. Empowered: leave a burst behind that batters and hurls back anyone adjacent.</li>
+<li><b>Skyrend</b> — Loose a volley of arcyne arrows that follow your target. 7 Momentum: 5 arrows. At 10: 8 arrows. Arrows can be caught by shields or anyone in the way!</li>
+<li><b>Bound Bow</b> — Each arrow hit builds 1 Momentum. Empower Weapon makes your next arrow strike exactly where you aimed and punch through armor like a bodkin.</li>
+</ul>
+</div>
+<p class="weapon-info">Woad Recurve Bow & Quiver / Elvish Saber or Elvish Dagger</p>
+</div>
+<a class="choose-btn" href='?src=\ref[caller];subclass=sagittary'>Chant the Sagittary Verse</a>
+</div>
+"}
+
 	// Color palette per faction
 	var/col_bg			// body background
 	var/col_text			// main text
@@ -115,7 +142,7 @@ body {
 	padding: 20px;
 }
 .chant-container {
-	max-width: 960px;
+	max-width: [container_width]px;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -339,7 +366,7 @@ a.choose-btn:hover {
 </div>
 <a class="choose-btn" href='?src=\ref[caller];subclass=macebearer'>[mace_btn]</a>
 </div>
-</div>
+[sagittary_column]</div>
 <div class="shared-info">
 <h4>Shared Abilities</h4>
 <p>Bind Weapon · Recall Weapon · Empower Weapon · Mending · 4 Utility Spell Points</p>
@@ -509,6 +536,14 @@ a.choose-btn:hover {
 <p><em>With a hundred blows I shall shatter our foes to dust.</em></p>
 <p><em>My body a weapon, and conquest my destination.</em></p>
 <p><em>By her grace, I conquer!</em></p>"}
+
+/proc/get_sagittary_chant_text(faction, mob/living/carbon/human/H)
+	return {"<p><em>I am a bow of Tarichea — Ferentia, her name reborn!</em></p>
+<p><em>The bow is my law! Blood my ink!</em></p>
+<p><em>Far is my sight! True is my aim!</em></p>
+<p><em>With a dozen arrows I shall thin their ranks.</em></p>
+<p><em>Five hundred yils, unbowed!</em></p>
+<p><em>By blood and steel, five hundred more!</em></p>"}
 
 /proc/get_preamble_closing(faction)
 	switch(faction)
