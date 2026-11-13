@@ -300,3 +300,30 @@
 	name = "Baothan Mania"
 	desc = "That accursed rune. It burns brightly across my flesh, searing my loins with a painful desire for release."
 	icon_state = "nymphomaniac"
+
+/datum/charflaw/addiction/corpulent
+	name = "Corpulent"
+	desc = "I've indulged deeply in lyfe's pleasures, and my waistline has taken a toll."
+	time = 50 MINUTES
+	needsate_text = "My stomach growls with hunger."
+	debuff = /datum/status_effect/debuff/addiction/corpulent
+	var/bites = 0
+	var/bites_needed = 12
+
+/datum/charflaw/addiction/corpulent/on_mob_creation(mob/user)
+	..()
+	ADD_TRAIT(user, TRAIT_OVERWEIGHT, TRAIT_GENERIC)
+
+/datum/charflaw/addiction/corpulent/on_removal(mob/user)
+	..()
+	REMOVE_TRAIT(user, TRAIT_OVERWEIGHT, TRAIT_GENERIC)
+
+/datum/status_effect/debuff/addiction/corpulent
+	id = "addiction_corpulent"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/addiction/corpulent
+	effectedstats = list(STATKEY_SPD = -2)
+
+/atom/movable/screen/alert/status_effect/debuff/addiction/corpulent
+	name = "Gluttony"
+	desc = "I'm really feeling my weight... So hungry."
+	icon_state = "debuff"
