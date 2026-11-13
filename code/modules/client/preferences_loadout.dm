@@ -170,6 +170,7 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		"statpack" = statpack?.type,
 		"virtue" = virtue?.type,
 		"virtuetwo" = virtuetwo?.type,
+		"virtue_configs" = get_virtue_configs(),
 		"quirks" = get_quirk_typepaths(),
 		"quirk_configs" = get_quirk_configs(),
 		"vice_configs" = get_vice_configs(),
@@ -204,6 +205,10 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 		virtuetwo = new virtuetwo_type()
 	else
 		virtuetwo = new /datum/virtue/none()
+	var/list/preset_virtue_configs = preset["virtue_configs"]
+	if(islist(preset_virtue_configs))
+		for(var/datum/virtue/V in list(virtue, virtuetwo))
+			V.load_config(preset_virtue_configs["[V.type]"])
 	quirks = list()
 	var/quirks_preset = preset["quirks"]
 	if(islist(quirks_preset))

@@ -178,6 +178,13 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			configs["[vice.type]"] = vice.save_config()
 	return configs
 
+/datum/preferences/proc/get_virtue_configs()
+	var/list/configs = list()
+	for(var/datum/virtue/V in list(virtue, virtuetwo))
+		if(V.configurable)
+			configs["[V.type]"] = V.save_config()
+	return configs
+
 // Points gained from additional selected vices (+1 per vice after slot one)
 /datum/preferences/proc/get_vice_points()
 	var/points = 0

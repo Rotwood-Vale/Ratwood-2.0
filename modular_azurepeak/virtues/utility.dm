@@ -90,48 +90,51 @@
 		"Book Crafting Kit" = /obj/item/book_crafting_kit
 	)
 
+/datum/virtue/utility/linguist
+	configurable = TRUE
+	var/list/languages = list()
+
+/datum/virtue/utility/linguist/config_summary()
+	var/list/names = list()
+	for(var/datum/language/L as anything in languages)
+		names += initial(L.name)
+	if(!length(names))
+		return "<b>Languages</b>: None chosen"
+	return "<b>Languages</b>: [names.Join(", ")]"
+
+/datum/virtue/utility/linguist/save_config()
+	return list("languages" = languages)
+
+/datum/virtue/utility/linguist/load_config(list/data)
+	languages = list()
+	if(!islist(data) || !islist(data["languages"]))
+		return
+	for(var/language in data["languages"])
+		var/language_path = string_to_typepath(language)
+		if(ispath(language_path, /datum/language) && !(language_path in languages) && length(languages) < 3)
+			languages += language_path
+
+/datum/virtue/utility/linguist/configure(mob/user)
+	var/datum/preferences/prefs = user.client?.prefs
+	if(!prefs)
+		return
+	var/list/chosen = list()
+	for(var/i in 1 to 3)
+		var/list/choices = prefs.get_language_choices()
+		choices -= "None"
+		for(var/language_name in choices.Copy())
+			if(choices[language_name] in chosen)
+				choices -= language_name
+		var/choice = tgui_input_list(user, "Choose language [i] of 3:", "Intellectual", choices)
+		if(!choice)
+			return
+		chosen += choices[choice]
+	languages = chosen
+
 /datum/virtue/utility/linguist/apply_to_human(mob/living/carbon/human/recipient)
 	recipient.change_stat(STATKEY_INT, 1)
-	addtimer(CALLBACK(src, PROC_REF(linguist_apply), recipient), 50)
-
-/datum/virtue/utility/linguist/proc/linguist_apply(mob/living/carbon/human/recipient)
-	var/static/list/selectable_languages = list(
-		/datum/language/elvish,
-		/datum/language/dwarvish,
-		/datum/language/orcish,
-		/datum/language/hellspeak,
-		/datum/language/draconic,
-		/datum/language/celestial,
-		/datum/language/grenzelhoftian,
-		/datum/language/canilunzt,
-		/datum/language/kazengunese,
-		/datum/language/otavan,
-		/datum/language/etruscan,
-		/datum/language/gronnic,
-		/datum/language/hammerholdian,
-		/datum/language/aavnic,
-		/datum/language/abyssal,
-		/datum/language/merar
-	)
-
-	var/list/choices = list()
-	for(var/language_type in selectable_languages)
-		if(recipient.has_language(language_type))
-			continue
-		var/datum/language/a_language = new language_type()
-		choices[a_language.name] = language_type
-
-	if(length(choices))	//If this isn't true then we have no new languages learn -- we probably picked archivist
-		var/lang_count = 3
-		var/count = lang_count
-		for(var/i in 1 to lang_count)
-			var/chosen_language = input(recipient, "Choose your extra spoken language.", "VIRTUE: [count] LEFT") as null|anything in choices
-			if(chosen_language)
-				var/language_type = choices[chosen_language]
-				recipient.grant_language(language_type)
-				choices -= chosen_language
-				to_chat(recipient, span_info("I recall my knowledge of [chosen_language]..."))
-				count--
+	for(var/language in languages)
+		recipient.grant_language(language)
 
 /datum/virtue/utility/deathless
 	name = "Deathless"

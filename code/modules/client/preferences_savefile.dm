@@ -629,6 +629,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		virtuetwo = new /datum/virtue/none
 
+	var/list/virtue_configs
+	S["virtue_configs"] >> virtue_configs
+	if(islist(virtue_configs))
+		for(var/datum/virtue/V in list(virtue, virtuetwo))
+			V.load_config(virtue_configs["[V.type]"])
+
 /datum/preferences/proc/_load_quirks(S)
 	var/list/quirk_types
 	S["quirks"] >> quirk_types
@@ -816,7 +822,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	bark_speed = round(clamp(bark_speed, initial(B.minspeed), initial(B.maxspeed)), 1)
 	bark_pitch = clamp(bark_pitch, initial(B.minpitch), initial(B.maxpitch))
 	bark_variance = clamp(bark_variance, initial(B.minvariance), initial(B.maxvariance))
-	bark_volume = isnull(bark_volume) ? 70 : round(clamp(bark_volume, 10, 70), 1)
+	if(isnull(bark_volume))
+		bark_volume = 70
+	bark_volume = round(clamp(bark_volume, 10, 70), 1)
 
 /datum/preferences/proc/_load_appearence(S)
 	S["real_name"]			>> real_name
@@ -1247,6 +1255,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!virtue2_typepath)
 		virtue2_typepath = /datum/virtue/none
 	WRITE_FILE(S["virtuetwo"], virtue2_typepath)
+	WRITE_FILE(S["virtue_configs"], get_virtue_configs())
 	WRITE_FILE(S["quirks"], get_quirk_typepaths())
 	WRITE_FILE(S["quirk_configs"], get_quirk_configs())
 	WRITE_FILE(S["race_bonus"], race_bonus)

@@ -331,6 +331,8 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 	var/html = "<b>[label]:</b> [bg_link(V.name, "virtue", slot)]"
 	if(!istype(V, /datum/virtue/none))
 		html += " [bg_link("\[Clear\]", "virtue_clear", slot)]"
+	if(V.configurable)
+		html += " [bg_link("\[Configure\]", "virtue_config", slot)]<br>[V.config_summary()]"
 	return pref_box(html, V.desc, get_trait_details_html(V), "[label]")
 
 /datum/preferences/proc/get_trait_details_html(datum/customization_trait/T)
@@ -495,11 +497,17 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 			if(choice)
 				var/datum/virtue/selected = available[choice]
 				if(slot == 2)
-					virtuetwo = selected
+					virtuetwo = new selected.type()
 				else
-					virtue = selected
+					virtue = new selected.type()
 				to_chat(user, span_notice("Selected [selected.name] as virtue."))
 				to_chat(user, "<span class='info'>[selected.desc]</span>")
+		if("virtue_config")
+			var/datum/virtue/V = virtue
+			if(slot == 2)
+				V = virtuetwo
+			if(V?.configurable)
+				V.configure(user)
 		if("virtue_clear")
 			if(slot == 2)
 				virtuetwo = GLOB.virtues[/datum/virtue/none]
