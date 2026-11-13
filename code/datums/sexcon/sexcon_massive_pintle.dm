@@ -58,6 +58,19 @@ GLOBAL_LIST_INIT(massive_pintle_mouth_panic_lines, list(
 		return pintle?.massive ? user : null
 	return null
 
+/// TRUE if anyone near us is riding or sucking our cock right now.
+/datum/sex_controller/proc/is_pintle_occupied()
+	var/list/nearby = range(1, user)
+	if(!isturf(user.loc))
+		nearby |= user.loc.contents
+	for(var/mob/living/carbon/human/partner in nearby)
+		if(partner == user)
+			continue
+		var/datum/sex_action/their_act = partner.sexcon?.get_action_towards(user)
+		if(their_act?.is_cock_penetration(cock_on_target = TRUE))
+			return TRUE
+	return FALSE
+
 /// The receiver's sex part used by action, given who the receiver is.
 /datum/sex_controller/proc/get_receiver_part(datum/sex_action/action, mob/living/carbon/human/receiver)
 	return receiver == target ? action.target_sex_part : action.user_sex_part
@@ -65,14 +78,21 @@ GLOBAL_LIST_INIT(massive_pintle_mouth_panic_lines, list(
 /// Rolls whether a massive pintle fails to fit when action starts. Returns TRUE and shows the messages on a fail.
 /datum/sex_controller/proc/try_massive_insertion_fail(datum/sex_action/action)
 	var/mob/living/carbon/human/receiver = get_massive_pintle_receiver(action)
-	if(!receiver || !prob(MASSIVE_PENIS_INSERT_FAIL_CHANCE))
+	if(!receiver)
+		return FALSE
+	// Already knotted together: it's inside, so it clearly fits.
+	var/mob/living/carbon/human/owner = receiver == target ? user : target
+	if(owner.sexcon.knotted_status == KNOTTED_AS_TOP && owner.sexcon.knotted_recipient == receiver)
+		return FALSE
+	if(!prob(MASSIVE_PENIS_INSERT_FAIL_CHANCE))
 		return FALSE
 	var/orifice = sex_part_orifice_name(get_receiver_part(action, receiver))
+	var/cock_word = action.uses_both_cocks ? "cocks" : "cock"
 	var/vision = do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE
 	if(receiver == target)
-		user.visible_message(span_warning("[user] tries to force [user.p_their()] massive cock into [target]'s [orifice], but it's simply too big!"), vision_distance = vision)
+		user.visible_message(span_warning("[user] tries to force [user.p_their()] massive [cock_word] into [target]'s [orifice], but it's simply too big!"), vision_distance = vision)
 	else
-		user.visible_message(span_warning("[user] tries to take [target]'s massive cock into [user.p_their()] [orifice], but it's simply too big!"), vision_distance = vision)
+		user.visible_message(span_warning("[user] tries to take [target]'s massive [cock_word] into [user.p_their()] [orifice], but it's simply too big!"), vision_distance = vision)
 	to_chat(receiver, span_warning("It won't fit...!"))
 	log_combat(user, target, "Failed to start sex action (massive pintle too big): [action.name]")
 	return TRUE
@@ -82,6 +102,11 @@ GLOBAL_LIST_INIT(massive_pintle_mouth_panic_lines, list(
 	var/mob/living/carbon/human/receiver = get_massive_pintle_receiver(action)
 	if(!receiver)
 		return
+	// If we're riding/sucking and our partner is also thrusting a massive pintle into us, let their loop roll the lines so we don't get them twice.
+	if(receiver == user)
+		var/datum/sex_controller/partner_sexcon = target.sexcon
+		if(partner_sexcon?.get_massive_pintle_receiver(partner_sexcon.get_action_towards(user)) == user)
+			return
 	var/panic = force >= SEX_FORCE_HIGH
 	if(!prob(panic ? MASSIVE_PENIS_PANIC_LINE_CHANCE : MASSIVE_PENIS_LINE_CHANCE))
 		return

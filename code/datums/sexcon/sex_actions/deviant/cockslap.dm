@@ -23,6 +23,12 @@
 		return FALSE
 	if(!user.sexcon.Adjacent_Or_Closet(target))
 		return FALSE
+	// Their face has to be bare: masks and helmets block it.
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_MOUTH))
+		return FALSE
+	// Can't swing it while someone is riding or sucking it.
+	if(user.sexcon.is_pintle_occupied())
+		return FALSE
 	return TRUE
 
 /datum/sex_action/cockslap/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)

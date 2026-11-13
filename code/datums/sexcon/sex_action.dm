@@ -41,6 +41,8 @@
 	var/obj/effect/proc_holder/spell/user_required_spell_type
 	/// If solo is TRUE, user must equal target.
 	var/solo = FALSE
+	/// TRUE for acts that use both cocks of a double pintle. Only used for wording.
+	var/uses_both_cocks = FALSE
 
 /// TRUE if this action penetrates with the user's cock, or with the target's cock when cock_on_target is set.
 /datum/sex_action/proc/is_cock_penetration(cock_on_target = FALSE)
