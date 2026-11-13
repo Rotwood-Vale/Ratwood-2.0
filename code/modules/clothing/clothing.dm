@@ -862,3 +862,7 @@ BLIND     // can't see anything
 			return VISMSG_ARMOR_INT_STAGETWO
 		if(0 to 0.24)
 			return VISMSG_ARMOR_INT_STAGETHREE
+
+/obj/item/clothing
+	var/base_icon_state
+	var/custom_design

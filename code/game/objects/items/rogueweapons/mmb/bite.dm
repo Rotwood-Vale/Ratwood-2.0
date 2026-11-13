@@ -43,6 +43,9 @@
 			. = ..()
 			return
 	user.changeNext_move(clickcd)
+	if(ismob(target))
+		if(SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_BY_BITE, user) & COMPONENT_HAND_NO_ATTACK)
+			return
 	user.break_invisibility()
 	target.onbite(user)
 	. = ..()
@@ -53,6 +56,30 @@
 
 /mob/living/onbite(mob/living/carbon/human/user)
 	return
+
+/mob/living/carbon/proc/apply_bite_recoil(mob/living/carbon/human/user, def_zone, d_type, damage)
+	if(HAS_TRAIT(user, TRAIT_BITENORECOIL))
+		return
+
+	var/armor_class = get_armor_class(def_zone, d_type)
+	var/recoil_mult = 0
+
+	switch(armor_class)
+		if(ARMOR_CLASS_LIGHT)
+			recoil_mult = 0.15
+		if(ARMOR_CLASS_MEDIUM)
+			recoil_mult = 0.30
+		if(ARMOR_CLASS_HEAVY)
+			recoil_mult = 0.50
+
+	var/recoil = round(damage * recoil_mult)
+	if(recoil <= 0)
+		return
+
+	if(HAS_TRAIT(user, TRAIT_BITERHELM) && user.head)
+		user.head.take_damage(recoil, BRUTE, "blunt")
+	else
+		user.apply_damage(recoil, BRUTE, BODY_ZONE_PRECISE_MOUTH)
 
 // Initial bite on target
 // src is the target
@@ -74,6 +101,39 @@
 			return FALSE
 
 	var/def_zone = check_zone(user.zone_selected)
+
+
+
+	switch(def_zone) // redirects that to where it makes sense, because I hate how soulless it is atm
+		if(BODY_ZONE_PRECISE_R_EYE)
+			def_zone = BODY_ZONE_HEAD
+
+		if(BODY_ZONE_PRECISE_L_EYE)
+			def_zone = BODY_ZONE_HEAD
+
+		if(BODY_ZONE_PRECISE_SKULL)
+			def_zone = BODY_ZONE_HEAD
+
+		if(BODY_ZONE_PRECISE_MOUTH)
+			def_zone = BODY_ZONE_PRECISE_NECK
+
+		if(BODY_ZONE_PRECISE_STOMACH)
+			def_zone = BODY_ZONE_CHEST
+
+	if(cmode) // no more hands/feet biting in combat, ser
+		switch(def_zone)
+			if(BODY_ZONE_PRECISE_R_HAND)
+				def_zone = BODY_ZONE_R_ARM
+
+			if(BODY_ZONE_PRECISE_L_HAND)
+				def_zone = BODY_ZONE_L_ARM
+
+			if(BODY_ZONE_PRECISE_R_FOOT)
+				def_zone = BODY_ZONE_R_LEG
+
+			if(BODY_ZONE_PRECISE_L_FOOT)
+				def_zone = BODY_ZONE_L_LEG
+
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(!affecting)
 		to_chat(user, span_warning("Nothing to bite."))
@@ -81,7 +141,7 @@
 
 	next_attack_msg.Cut()
 
-	user.do_attack_animation(src, "bite")
+	user.do_attack_animation_simple(src, ATTACK_EFFECT_BITE)
 	playsound(user, 'sound/gore/flesh_eat_01.ogg', 100)
 	var/nodmg = FALSE
 	var/dam2do = 10*(user.STASTR/20)
@@ -92,6 +152,10 @@
 			nodmg = TRUE
 	if(!nodmg)
 		var/armor_block = run_armor_check(user.zone_selected, "stab", armor_penetration = PEN_NONE, blade_dulling=BCLASS_BITE, damage = dam2do)
+		apply_bite_recoil(user, def_zone, "stab", dam2do)
+		if(prob(25)) // 1/4 of the time you'll overextend and be exposed, giving your opponent a room to strike back hard
+			user.apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
+
 		if(!apply_damage(dam2do, BRUTE, def_zone, armor_block, user))
 			nodmg = TRUE
 			next_attack_msg += VISMSG_ARMOR_BLOCKED
@@ -241,15 +305,20 @@
 		to_chat(user, span_warning("My mouth has something in it."))
 		return FALSE*/
 
-	user.changeNext_move(CLICK_CD_GRABBING)
+	user.changeNext_move(1.2 SECONDS) // One chew every 1.2 seconds
 	user.break_invisibility()
 	var/mob/living/carbon/C = grabbed
 	var/damage = user.get_punch_dmg()
 	if(HAS_TRAIT(user, TRAIT_STRONGBITE))
 		damage = damage*2
 	var/armor_block = C.run_armor_check(sublimb_grabbed, d_type, armor_penetration = PEN_NONE, damage = damage)
+
+	C.apply_bite_recoil(user, sublimb_grabbed, d_type, damage)
+	if(prob(50)) // half the time you'll overextend and be exposed, giving your opponent a room to strike back hard
+		user.apply_status_effect(/datum/status_effect/debuff/exposed, 3 SECONDS)
+
 	C.next_attack_msg.Cut()
-	user.do_attack_animation(C, "bite")
+	user.do_attack_animation_simple(C, ATTACK_EFFECT_BITE)
 	if(C.apply_damage(damage, BRUTE, limb_grabbed, armor_block))
 		playsound(C.loc, "smallslash", 100, FALSE, -1)
 		var/datum/wound/caused_wound = limb_grabbed.bodypart_attacked_by(BCLASS_BITE, damage, user, sublimb_grabbed, crit_message = TRUE)
@@ -310,15 +379,36 @@
 	C.next_attack_msg.Cut()
 	log_combat(user, C, "limb chewed [sublimb_grabbed] ")
 
-//this is for carbon mobs being drink only
-/obj/item/grabbing/bite/proc/drinklimb(mob/living/user) //implies limb_grabbed and sublimb are things
-	if(!user.Adjacent(grabbed))
-		qdel(src)
+/obj/item/grabbing/bite/proc/drinklimb(mob/living/user)
+	if(sippy)
+		sippy = FALSE
+		to_chat(user, span_warning("You relax your mouth."))
 		return
 
-	if(!limb_grabbed.get_bleed_rate())
-		to_chat(user, span_warning("Sigh. It's not bleeding."))
-		return
+	sippy = TRUE
+	to_chat(user, span_warning("You tighten your lips and attempt to drink blood!"))
+
+	var/has_drunk = FALSE
+	while(src && user && grabbed && sippy)
+		if(has_drunk && !user.client?.prefs.autoblooddrink)
+			break
+		var/mob/living/carbon/C = grabbed
+		if(QDELETED(src) || !user || !grabbed || !sippy)
+			break
+		if(C.get_blood_volume() <= 0)
+			to_chat(user, span_warning("--But there's no blood left to drink."))
+			break
+		if(!limb_grabbed.get_bleed_rate())
+			to_chat(user, span_warning("--But they're not bleeding, I should chew."))
+			break
+		if(!user.Adjacent(grabbed))
+			qdel(src)
+			break
+
+		user.drinksomeblood(C, sublimb_grabbed)
+		has_drunk = TRUE
+		if(!user.client?.prefs.autoblooddrink || !do_after(user, 2 SECONDS, grabbed))
+			break
 
 	user.break_invisibility()
 
@@ -328,4 +418,4 @@
 			if(!victim.has_status_effect(/datum/status_effect/debuff/kiss_ecstasy))
 				victim.apply_status_effect(/datum/status_effect/debuff/kiss_ecstasy)
 
-	user.drinksomeblood(grabbed, sublimb_grabbed)
+	sippy = FALSE

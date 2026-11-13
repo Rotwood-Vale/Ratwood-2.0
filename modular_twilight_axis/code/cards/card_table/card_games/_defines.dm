@@ -1,0 +1,21 @@
+#define CARD_TABLE_GAME_NONE "none"
+#define CARD_TABLE_GAME_BLACKJACK "blackjack"
+#define CARD_TABLE_GAME_POKER "poker"
+
+#define CARD_TABLE_POKER_DRAW "draw"
+#define CARD_TABLE_POKER_TEXAS "texas"
+#define CARD_TABLE_POKER_OMAHA "omaha"
+#define CARD_TABLE_POKER_STUD "stud"
+
+#define CARD_TABLE_BLACKJACK_GRON "gron"
+#define CARD_TABLE_BLACKJACK_VALORIA "valoria"
+#define CARD_TABLE_BLACKJACK_AZURE "azure"
+#define CARD_TABLE_BLACKJACK_GRENZELHOFT "grenzel"
+#define CARD_TABLE_BLACKJACK_KAZENGUN "kazengun"
+
+#define CARD_TABLE_STAGE_LOBBY "lobby"
+#define CARD_TABLE_STAGE_PLAYING "playing"
+#define CARD_TABLE_STAGE_FINISHED "finished"
+
+#define CARD_TABLE_LEAVE_RANGE 2
+#define CARD_TABLE_RANGE_CHECK_TIME (2 SECONDS)
