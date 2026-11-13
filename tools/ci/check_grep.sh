@@ -182,6 +182,18 @@ if $grep 'balloon_alert\(.*?, ?"[A-Z]' $code_files; then
 	st=1
 fi;
 
+part "heart HUD inputs written outside their setters"
+if ! bash tools/ci/check_heart_hud_writes.sh; then
+	st=1
+fi;
+
+part "VARSET_CALLBACK with a side effect"
+if grep -rnE 'VARSET_CALLBACK\([^)]*([-+*/%]=|\+\+|--)' --include='*.dm' code modular*; then
+	echo
+	echo -e "${RED}ERROR: VARSET_CALLBACK evaluates its value when the timer is created, so an operator like /= inside it runs immediately. Pass a plain value, or CALLBACK a proc that changes the var.${NC}"
+	st=1
+fi;
+
 part "update_icon_updates_onmob element usage"
 if $grep 'AddElement\(/datum/element/update_icon_updates_onmob.+ITEM_SLOT_HANDS' $code_files; then
 	echo
