@@ -219,6 +219,8 @@
 		if(HAS_TRAIT(attacker, TRAIT_FENCERDEXTERITY))
 			prob2defend -= 20
 
+	if(chained_parry)
+		prob2defend += 10 // +10% parry chance, they're getting teamed on, anyway
 	prob2defend = clamp(prob2defend, 5, 90)
 	if(HAS_TRAIT(attacker, TRAIT_HARDSHELL) && client) //Dwarf-merc specific limitation w/ their armor on in pvp
 		prob2defend = clamp(prob2defend, 5, 70)
@@ -239,9 +241,6 @@
 
 	if(has_status_effect(/datum/status_effect/swingdelay/penalty))
 		prob2defend -= 50
-
-	if(chained_parry)
-		prob2defend = clamp(prob2defend + 10, 5, 90) // +10% parry chance, they're getting teamed on, anyway
 
 	if(prob(prob2defend) || ancestor_reroll(prob2defend))
 		parry_status = TRUE

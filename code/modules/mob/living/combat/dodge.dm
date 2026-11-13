@@ -232,6 +232,8 @@
 			if(istype(mainh, /obj/item/rogueweapon/shield) || istype(offh, /obj/item/rogueweapon/shield))	//why do I have to pre-empt the worst of you
 				max_dodge = MAX_DODGE_FLOOR
 				changeNext_def(CLICK_CD_DODGE)
+		if(chained)
+			prob2defend += 10 // +10% dodge chance, they're getting teamed on anyway
 		prob2defend = clamp((prob2defend + max_dodge), 5, (90 + max_dodge))
 
 		// Dual wield drawback (-5%)
@@ -249,9 +251,6 @@
 
 		if(src.has_status_effect(/datum/status_effect/swingdelay/penalty))
 			prob2defend -= 50
-
-		if(chained)
-			prob2defend = clamp(prob2defend + 10, 5, 90) //+10% dodge chance, they're getting teamed on anyway
 
 		var/dodge_status = FALSE
 		if(prob(prob2defend) || ancestor_reroll(prob2defend))
