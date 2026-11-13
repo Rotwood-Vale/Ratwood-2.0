@@ -358,7 +358,7 @@
 				to_chat(user, span_warning("The patron of this one shields them from being suppressed."))
 				return
 
-			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+			if(HAS_TRAIT(H, TRAIT_PSYDONITE))
 				to_chat(user, span_warning("The followers of the dead god are outside of the ten's light."))
 				return
 

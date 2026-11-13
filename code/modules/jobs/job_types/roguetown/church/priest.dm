@@ -371,7 +371,7 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
 		return FALSE
 
-	if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+	if(HAS_TRAIT(H, TRAIT_PSYDONITE))
 		to_chat(src, span_warning("The followers of the dead god are not under the ten's light and as such light cannot be taken away from them."))
 		return FALSE
 
