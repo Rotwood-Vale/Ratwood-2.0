@@ -1132,12 +1132,6 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 							// Mark as loadout item to prevent crafting usage
 							I.loadout_item = TRUE
 
-							// Add subtle examination text to indicate this is a loadout reproduction
-							if(I.desc)
-								I.desc += " The overall look and feel of the item suggests this may be a mere reproduction."
-							else
-								I.desc = "The overall look and feel of the item suggests this may be a mere reproduction."
-
 							// Set sellprice to 0
 							I.sellprice = 0
 
@@ -1160,8 +1154,7 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 									// Set armor class to LIGHT for all loadout armor
 									if(C.armor_class != ARMOR_CLASS_NONE)
 										C.armor_class = ARMOR_CLASS_LIGHT
-									// Apply ARMOR_MIND_PROTECTION with slight randomization (±10%)
-									// Randomize max integrity around light base by ±10% and ensure full integrity
+									C.armor = C.armor.setRating(C.armor.blunt > 0 ? max(1, C.armor.blunt - 2) : 0, C.armor.slash > 0 ? max(1, C.armor.slash - 2) : 0, C.armor.stab > 0 ? max(1, C.armor.stab - 2) : 0, C.armor.piercing > 0 ? max(1, C.armor.piercing - 2) : 0)
 									var/_base_int = ARMOR_INT_CHEST_LIGHT_BASE
 									var/_variance = round(_base_int * 0.1)
 									C.max_integrity = _base_int + rand(-_variance, _variance)

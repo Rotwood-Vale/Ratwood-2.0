@@ -77,6 +77,7 @@
 /// Trait given only temporarily to prevent being able to Z fall (at all)
 #define TRAIT_PREVENT_Z_FALL "Prevent Z fall" // DO NOT GIVE THIS UNDER NORMAL CIRCUMSTANCES
 #define TRAIT_MISSING_NOSE "Missing Nose" //halved stamina regeneration
+#define TRAIT_OVERWEIGHT "Corpulent"
 #define TRAIT_DISFIGURED "Disfigured"
 #define TRAIT_SPELLCOCKBLOCK "Bewitched" //prevents spellcasting
 #define TRAIT_ANTIMAGIC	"Anti-Magic"
@@ -118,6 +119,7 @@
 #define TRAIT_SEA_DRINKER "Denizen of the Deep"
 /// Won't be frozen when swimming in water
 #define TRAIT_WATERLOVING "Water loving"
+#define TRAIT_BOGWALKER "Bog Walker"
 #define TRAIT_STUDENT		"Student"
 #define TRAIT_INTELLECTUAL "Intellectual"
 #define TRAIT_GRAVEROBBER "Experienced Grave Robber"
@@ -360,6 +362,7 @@
 #define TRAIT_SWIFTCAST "Spell Acceleration"
 #define TRAIT_COMBAT_AWARE	"Combat Aware"
 #define TRAIT_SILVER_WEAK "Silver Weakness"
+#define TRAIT_BITENORECOIL "Sturdy Fangs"
 /// Held while wearing a silver psycross in a valid slot. Wards off a vampire trying to drink from you.
 #define TRAIT_WORN_SILVER_PSICROSS "worn_silver_psicross"
 #define TRAIT_ASSASSIN	"Assassin"
@@ -532,6 +535,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_GRABIMMUNE = span_warning("My great strength, or slippery agility, prevents others from getting ahold of me!"),
 	TRAIT_DISFIGURED = span_warning("No one can recognize me..."),
 	TRAIT_MISSING_NOSE = span_warning("I struggle to breathe."),
+	TRAIT_OVERWEIGHT = span_warning("I've indulged deeply in lyfe's pleasures, and my waistline has taken a toll."),
 	TRAIT_SPELLCOCKBLOCK = span_warning("I cannot cast any spells."),
 	TRAIT_ANTIMAGIC = "I am immune to most forms of magic.",
 	TRAIT_ANTISCRYING = "I am immune to most forms of magical divination.",
@@ -723,6 +727,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_TRIBAL = span_info("I belong to the Island's tribe."),
 	TRAIT_COMPLIANT = span_info("No matter how hard I try, I can't put up a fight against others."),
 	TRAIT_SELF_AWARE = span_info("I know my body well, and know innately what its aches mean."),
+	TRAIT_BOGWALKER = span_info("The bog's blessing graces me. Kneestingers and leeches will not harm me, and I cannot trigger ambushes within the bog unless sprinting."),
 	TRAIT_DEADITE_RESISTANCE = span_info("I was raised in rot-infested lands. My body is more resistant to the infection."),
 	TRAIT_COLD_RESISTANCE = span_info("I've grown a tolerance to the cold, due to the climate of my homeland."),
 	TRAIT_HEAT_RESISTANCE = span_info("I've grown a tolerance to heat, due to the climate of my homeland."),
@@ -736,7 +741,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_LOCAL_KNOWLEDGE = span_info("I've lived in Ferentia long enough to avoid its dangers."),
 	TRAIT_SOFT_FOOTED = span_info("In the far-off land of Kazengun, it's considered impolite to walk noisily. My steps are soft and light."),
 	TRAIT_ANCESTOR_GUARDIAN = span_info("In Avar, we venerate our ancestors, and they ward us from danger. From time to time, they shall guide my hand in battle."),
-	TRAIT_LIGHT_SENSITIVITY = span_info("Living in the dim caverns of the underdark has caused my eyes to adjust. Though I can see well in the dark, bright lights are anathema to me!")
+	TRAIT_LIGHT_SENSITIVITY = span_info("Living in the dim caverns of the underdark has caused my eyes to adjust. Though I can see well in the dark, bright lights are anathema to me!"),
+	TRAIT_BITENORECOIL = span_info("My fangs are sturdy, and I do not suffer recoil when biting.")
 ))
 
 // trait accessor defines

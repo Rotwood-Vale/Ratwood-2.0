@@ -28,6 +28,7 @@ And it also helps for the character set panel
 		TRAIT_LIMBATTACHMENT,
 		TRAIT_SILVER_WEAK,
 		TRAIT_VAMPMANSION,
+		TRAIT_BITENORECOIL,
 	)
 	/// Traits unique to this Clan, handed out on top of clane_traits.
 	var/list/extra_clan_traits = list()

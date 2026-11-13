@@ -697,6 +697,14 @@
 	sheathe_icon = "tanto"
 	picklvl = 1.2
 
+/obj/item/rogueweapon/huntingknife/idagger/silver/kazengun
+	name = "silver tanto"
+	desc = "A silver dagger imported from the Kazengunese archipelago. A sturdy blade bears a subtle curve, set into a decorated circular crossguard. A waxed \
+	wrapping of twisted cordage provides a secure grip."
+	icon_state = "silvereastdagger"
+	sheathe_icon = "silver_tanto"
+	picklvl = 1.2
+
 /obj/item/rogueweapon/huntingknife/idagger/steel/elvish
 	name = "elvish dirk"
 	desc = "A wave-bladed dagger of Elven design, whose elegant steel craftsmanship is only rivaled by its deceptive lethality."

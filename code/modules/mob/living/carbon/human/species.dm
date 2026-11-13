@@ -268,6 +268,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		limbs_id = name
 	if(!clothes_id)
 		clothes_id = id
+	if(customizers)
+		customizers += /datum/customizer/organ/belly
 	..()
 
 /datum/species/proc/after_creation(mob/living/carbon/human/H)

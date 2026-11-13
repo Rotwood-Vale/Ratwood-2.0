@@ -240,6 +240,8 @@
 #define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"			//from base of mob/anti_magic_check(): (mob/user, magic, holy, tinfoil, chargecost, self, protection_sources)
 	#define COMPONENT_BLOCK_MAGIC 1
 #define COMSIG_MOB_HUD_CREATED "mob_hud_created"				//from base of mob/create_mob_hud(): ()
+#define COMSIG_MOB_ATTACK_BITE "mob_attack_bite"				
+#define COMSIG_MOB_ATTACKED_BY_BITE	"mob_attacked_by_bite"		//from base of /datum/intent/bite/on_mmb(atom/target, mob/living/user, params): (mob/living/user)
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"				//from base of
 #define COMSIG_MOB_ATTACKED_BY_HAND	"mob_attacked_by_hand"		//from base of datum/species/proc/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	#define COMPONENT_HAND_NO_ATTACK 1

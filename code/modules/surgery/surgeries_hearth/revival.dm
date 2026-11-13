@@ -49,22 +49,6 @@
 			"[user] works the lux into [target]'s innards.",
 			"[user] works the lux into [target]'s innards.")
 		return FALSE
-	if(istype(user, /mob/living))
-		var/mob/living/LU = user
-		var/excomm_found = FALSE
-		for(var/excomm_name in GLOB.excommunicated_players)
-			var/clean_excomm = LOWER_TEXT(trim(excomm_name))
-			var/clean_target = LOWER_TEXT(trim(target.real_name))
-			if(clean_excomm == clean_target)
-				excomm_found = TRUE
-				break
-		if(ispath(LU.patron?.type, /datum/patron/divine) && excomm_found)
-			display_results(user, target,
-				span_warning("The lux recoils! Necra is not willing to return [target]'s soul."),
-				"[user] tries to infuse [target] with lux, but it refuses to take.",
-				"[user] tries to infuse [target] with lux, but it refuses to take.")
-			target.visible_message(span_danger("[target]'s body convulses violently, rejecting the light!"), span_warning("Something is terribly wrong..."))
-			return FALSE
 	target.adjustOxyLoss(-target.getOxyLoss()) //Ye Olde CPR
 	if(!target.revive(full_heal = FALSE))
 		display_results(user, target, span_notice("The lux refuses to meld with [target]'s heart. Their damage must be too severe still."),

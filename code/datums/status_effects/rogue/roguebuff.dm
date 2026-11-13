@@ -636,6 +636,8 @@
 	examine_text = "SUBJECTPRONOUN is bathed in a restorative aura!"
 	var/healing_on_tick = 1
 	var/tech_healing_modifier = 1
+	/// Wound types this healing effect must leave untouched.
+	var/list/excluded_wound_types
 	/// Color of the outline applied during the heal
 	var/outline_colour = "#c42424"
 
@@ -671,11 +673,11 @@
 	if(owner.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		owner.set_blood_volume(min(owner.get_blood_volume()+healing_on_tick, BLOOD_VOLUME_NORMAL))
 	if(wCount.len > 0)
-		owner.heal_wounds(healing_on_tick)
+		owner.heal_wounds(healing_on_tick, excluded_types = excluded_wound_types)
 		owner.update_damage_overlays()
 	if(HAS_TRAIT(owner, TRAIT_SIMPLE_WOUNDS))
 		if(wCount.len > 0)
-			owner.heal_wounds(healing_on_tick * 2)
+			owner.heal_wounds(healing_on_tick * 2, excluded_types = excluded_wound_types)
 		owner.bleed_rate = owner.get_bleed_rate()
 		if(!length(owner.get_wounds()) && !length(owner.get_embedded_objects()))
 			owner.simple_bleeding = 0
@@ -770,6 +772,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/buff/healing/campfire
 	examine_text = null
 	duration = 10 SECONDS
+	excluded_wound_types = list(/datum/wound/slash/incision)
 
 /atom/movable/screen/alert/status_effect/buff/campfire_stamina
 	name = "Camp Rest"
@@ -832,7 +835,8 @@
 		owner.set_blood_volume(min(owner.get_blood_volume()+healing_on_tick, BLOOD_VOLUME_OKAY))
 	var/list/wCount = owner.get_wounds()
 	if(length(wCount))
-		owner.heal_wounds(healing_on_tick, list(/datum/wound/slash, /datum/wound/puncture, /datum/wound/bite, /datum/wound/bruise, /datum/wound/dynamic, /datum/wound/dislocation))
+		// Surgical openings must remain open until deliberately closed.
+		owner.heal_wounds(healing_on_tick, list(/datum/wound/slash, /datum/wound/puncture, /datum/wound/bite, /datum/wound/bruise, /datum/wound/dynamic, /datum/wound/dislocation), list(/datum/wound/slash/incision))
 		owner.update_damage_overlays()
 	owner.adjustBruteLoss(-healing_on_tick, 0)
 	owner.adjustFireLoss(-healing_on_tick, 0)
@@ -1858,6 +1862,7 @@
 
 
 	RegisterSignal(new_owner, COMSIG_MOB_ATTACKED_BY_HAND, PROC_REF(process_touch))
+	RegisterSignal(new_owner, COMSIG_MOB_ATTACKED_BY_BITE, PROC_REF(process_bite))
 	RegisterSignal(new_owner, COMSIG_MOB_ON_KICK, PROC_REF(guard_on_kick))
 	RegisterSignal(new_owner, COMSIG_MOB_KICKED, PROC_REF(guard_kicked))
 	RegisterSignal(new_owner, COMSIG_LIVING_ONJUMP, PROC_REF(guard_disrupted))
@@ -1954,6 +1959,7 @@
 		owner.balloon_alert_to_viewers("<font color = '#ffffff'>Guard expired!</font>")
 	UnregisterSignal(owner, COMSIG_ATOM_BULLET_ACT)
 	UnregisterSignal(owner, COMSIG_MOB_ATTACKED_BY_HAND)
+	UnregisterSignal(owner, COMSIG_MOB_ATTACKED_BY_BITE)
 	UnregisterSignal(owner, COMSIG_MOB_ITEM_ATTACK)
 	UnregisterSignal(owner, COMSIG_MOB_ITEM_BEING_ATTACKED)
 	UnregisterSignal(owner, COMSIG_MOB_ON_KICK)
@@ -2134,9 +2140,39 @@
 
 /datum/status_effect/buff/clash/limbguard/process_touch(mob/living/carbon/human/parent, mob/living/carbon/human/attacker, mob/living/carbon/human/defender)
 	if(attacker && check_zone(attacker.zone_selected) == protected_zone)
-		var/obj/item/I = defender.get_active_held_item()
-		defender.process_clash(attacker, I, null)	//This will strike at their hand, but not clear away the effect. They tried to grab the protected limb.
+		if(attacker.gloves?.obj_broken == FALSE)	//Gloved hands eat the punishment -- we shred their gloves against our guard instead of breaking their arm (for now).
+			attacker.gloves.take_damage(201, BRUTE) // Breaks regular leather gloves and unarmed knuckles. Does not break metal gloves instantly.
+			var/obj/item/I = defender.get_active_held_item()
+			defender.process_clash(attacker, I, null)
+		else	//Bare hands -- your bone is forfeit.
+			var/arm_zone = (attacker.active_hand_index % 2 == 0) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM
+			var/obj/item/bodypart/arm = attacker.get_bodypart(arm_zone)
+			if(arm)
+				arm.add_wound(/datum/wound/fracture, crit_message = FALSE)
+				owner.flash_fullscreen("whiteflash")
+				defender.flash_fullscreen("whiteflash")
+				var/obj/item/I = defender.get_active_held_item()
+				defender.process_clash(attacker, I, null)
+				owner.visible_message("<span class='crit'><b>Critical hit!</b> [owner] catches [attacker]'s bare-handed strike and SNAPS [attacker.p_their()] [parse_zone(arm_zone)]!")
+		playsound(owner, 'sound/combat/limbguard_struck.ogg', 100, TRUE)
+		remove_self()
 		return COMPONENT_HAND_NO_ATTACK
+
+//Unlike a weapon strike, there's nothing to disarm here -- we just wrench the guarded limb free and rough them up for it.
+/datum/status_effect/buff/clash/limbguard/process_bite(mob/living/parent, mob/user)
+	if(!is_active || !istype(user, /mob/living/carbon/human))
+		return
+	if(check_zone(user.zone_selected) != protected_zone)
+		return
+	apply_debuffs(user)
+	counter_bite(user)
+	playsound(owner, 'sound/combat/limbguard_struck.ogg', 100, TRUE)
+	if(user.mind)
+		owner.stamina_add(-(owner.max_stamina / 3))
+		owner.energy_add((owner.max_energy / 5))
+	remove_self()
+	return COMPONENT_HAND_NO_ATTACK
+
 
 /datum/status_effect/buff/clash/limbguard/apply_cooldown()
 	owner.apply_status_effect(/datum/status_effect/debuff/specialcd, 60 SECONDS)
@@ -2154,16 +2190,6 @@
 	name = "Psydonic Endurance"
 	desc = "I am protected by blessed Psydonian plate armor."
 	icon_state = "buff"
-
-/datum/status_effect/buff/motive
-	id = "motive"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/motive
-	effectedstats = list(STATKEY_STR = 1,STATKEY_CON = 1)
-
-/atom/movable/screen/alert/status_effect/buff/motive
-	name = "Motive"
-	desc = span_bloody("GRAGGAR'S ARMAMENTS CALL ME TO SLAUGHTER!! KILL!! RIP!! CONSUME!!")
-	icon_state = "call_to_slaughter"
 
 #define EORANAURA_FILTER "eoranaura"
 
