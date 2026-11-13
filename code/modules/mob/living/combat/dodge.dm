@@ -2,13 +2,16 @@
 	if(pulledby || pulling)
 		return FALSE
 	var/paired_swing = user?.dualwield_twoswing
-	if(!paired_swing && world.time < last_dodge + dodgetime)
+	// Defensive Flow
+	var/datum/status_effect/buff/defense_chain/chain = has_status_effect(/datum/status_effect/buff/defense_chain)
+	var/chained_dodge = (chain && ref(user) != chain.opener_ref) ? TRUE : FALSE
+	if(!paired_swing && !chained_dodge && world.time < last_dodge + dodgetime)
 		return FALSE
 	if(has_status_effect(/datum/status_effect/debuff/riposted))
 		return FALSE
 	if(has_status_effect(/datum/status_effect/debuff/exposed) || has_status_effect(/datum/status_effect/debuff/vulnerable))
 		return FALSE
-	if(!paired_swing)
+	if(!paired_swing && !chained_dodge)
 		last_dodge = world.time
 	if(src.loc == user.loc)
 		return FALSE
@@ -59,7 +62,7 @@
 			to_chat(src, span_boldwarning("There's nowhere to dodge to!"))
 			return FALSE
 		else
-			if(do_dodge(user, dodge_turf))
+			if(do_dodge(user, dodge_turf, chained_dodge))
 				flash_fullscreen("blackflash2")
 				user.aftermiss()
 				if(has_status_effect(STATUS_EFFECT_GRAGGAR_FEAR))
@@ -104,7 +107,7 @@
 		dodge_candidates += dodge_candidate
 	return dodge_candidates
 
-/mob/living/proc/do_dodge(mob/living/attacker, turf/turfy)
+/mob/living/proc/do_dodge(mob/living/attacker, turf/turfy, chained = FALSE)
 	if(dodge_sanity)
 		return FALSE
 	if(stamina >= max_stamina) // Out of stamina? Out of dodge
@@ -247,6 +250,9 @@
 		if(src.has_status_effect(/datum/status_effect/swingdelay/penalty))
 			prob2defend -= 50
 
+		if(chained)
+			prob2defend = clamp(prob2defend + 10, 5, 90) //+10% dodge chance, they're getting teamed on anyway
+
 		var/dodge_status = FALSE
 		if(prob(prob2defend) || ancestor_reroll(prob2defend))
 			dodge_status = TRUE
@@ -255,9 +261,13 @@
 			return FALSE
 		if(!attacker?.mind) // For NPC, reduce the drained to 5 stamina
 			drained = drained_npc
-		if(!human_dodger.stamina_add(max(drained,5)))
+		if(!chained && !human_dodger.stamina_add(max(drained,5)))
 			to_chat(src, span_warning("I'm too tired to dodge!"))
 			return FALSE
+		if(chained)
+			refresh_defense_chain()
+		else
+			register_paid_defense(attacker)
 
 	// Should only show success cause it terminates earlier otherwise
 	if(client)
@@ -284,7 +294,7 @@
 		if(STALUC != attacker.STALUC)
 			var/lucmod = STALUC - attacker.STALUC
 			probclip += lucmod * 10
-		if(prob(probclip) && IS && IU)
+		if(prob(probclip) && IS && IU && !chained)
 			var/intdam = IS.max_blade_int ? INTEG_PARRY_DECAY : INTEG_PARRY_DECAY_NOSHARP
 			var/sharp_loss = SHARPNESS_ONHIT_DECAY
 			if(istype(attacker.rmb_intent, /datum/rmb_intent/strong))
@@ -300,7 +310,7 @@
 	var/ignore_penalty = FALSE
 	if(fixedeye && goodluck(5))
 		ignore_penalty = TRUE
-	if(!ignore_penalty)
+	if(!ignore_penalty && !chained)
 		var/max_mod = 0
 		max_mod = ourskill - theirskill
 		changeNext_def(clamp(dodgetime + 1, 0, CLICK_CD_DODGE))

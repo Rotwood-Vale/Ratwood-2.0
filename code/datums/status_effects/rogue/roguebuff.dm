@@ -2845,3 +2845,34 @@
 	. = ..()
 	if(!istype(owner.get_active_held_item(), held_dagger))
 		owner.remove_status_effect(/datum/status_effect/buff/dagger_boost)
+
+/// Group-fight Defensive Flow, shared by parry and dodge. Only successful parry/dodge triggers it
+/datum/status_effect/buff/defense_chain
+	id = "defense_chain"
+	duration = 12 // 1.2 secs
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/buff/defense_chain
+	var/opener_ref
+
+/datum/status_effect/buff/defense_chain/on_creation(mob/living/new_owner, first_attacker_ref)
+	opener_ref = first_attacker_ref
+	. = ..()
+
+/atom/movable/screen/alert/status_effect/buff/defense_chain
+	name = "Defensive Flow"
+	desc = span_notice("I have found my rhythm. For a moment, I can turn aside or slip blows from anyone but my first opponent at no cost.")
+	icon_state = "strike"
+
+/mob/living/proc/has_defend_intent()
+	return istype(rmb_intent, /datum/rmb_intent/riposte)
+
+/mob/living/proc/refresh_defense_chain()
+	var/datum/status_effect/buff/defense_chain/chain = has_status_effect(/datum/status_effect/buff/defense_chain)
+	chain?.refresh()
+
+/mob/living/proc/register_paid_defense(mob/living/attacker)
+	if(!has_defend_intent())
+		return
+	if(has_status_effect(/datum/status_effect/buff/defense_chain))
+		return
+	apply_status_effect(/datum/status_effect/buff/defense_chain, ref(attacker))
