@@ -2867,6 +2867,8 @@
 	return istype(rmb_intent, /datum/rmb_intent/riposte)
 
 /mob/living/proc/refresh_defense_chain(mob/living/attacker)
+	if(!has_defend_intent())
+		return
 	var/datum/status_effect/buff/defense_chain/chain = has_status_effect(/datum/status_effect/buff/defense_chain)
 	if(!chain)
 		return
