@@ -96,6 +96,7 @@
 #include "reagent_id_typos.dm"
 #include "reagent_recipe_collisions.dm"
 #include "scabbard_sprites.dm"
+#include "silk_bed.dm"
 #include "spawn_humans.dm"
 #include "species_whitelists.dm"
 #include "subsystem_init.dm"
