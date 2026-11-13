@@ -509,7 +509,6 @@
 	I.item_flags &= ~BEING_REMOVED
 
 //drops both cuffs to the floor. This is from SS13, not Roguetown.
-//predates nets, so it needs netted status cleanup before anything calls it again
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
 		var/obj/item/W = handcuffed
@@ -551,10 +550,6 @@
 	if(cuff_break)
 		playsound(src, 'sound/misc/chain_snap.ogg', 100, FALSE, 10)
 	to_chat(src, "<span class='notice'>I [cuff_break ? "break" : "slip"] out of [I]!</span>")
-
-	if(istype(I, /obj/item/net))
-		if(has_status_effect(/datum/status_effect/debuff/netted))
-			remove_status_effect(/datum/status_effect/debuff/netted)
 
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
@@ -1199,15 +1194,15 @@
 	update_mobility()
 
 // sole owner of legcuffed, every path that changes the slot comes through here
-// There are three states that must be maintained consistently with the slot:
-// the movespeed slowdown, the alert, and the overlay!
-// Otherwise, it will keep breaking. If we know it's always true,
-// encapsulate instead of writing it directly every time you need itz`
+// Keep the restraint's slowdown, net debuff, alert, and overlay in sync with the slot.
 /mob/living/carbon/proc/set_legcuffed(obj/item/cuffs, mob/user)
 	if(legcuffed == cuffs)
 		return
 	var/obj/item/old_cuffs = legcuffed
 	legcuffed = cuffs
+	// Inventory removal can move the net before the slot is cleared.
+	if(istype(old_cuffs, /obj/item/net))
+		remove_status_effect(/datum/status_effect/debuff/netted)
 	//must hold: the movespeed slowdown is applied exactly when the slot holds a slowing item
 	remove_movespeed_modifier(MOVESPEED_ID_CUFFED_LEG_SLOWDOWN)
 	if(legcuffed)
