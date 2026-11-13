@@ -81,21 +81,38 @@
 	C.grant_miracles(H, cleric_tier = CLERIC_T1, passive_gain = CLERIC_REGEN_DEVOTEE, devotion_limit = CLERIC_REQ_1)
 
 	if(H.mind)
-		var/weapons = list("Penance - Unarmored","Discipline - Unarmed","Katar","Knuckledusters","Quarterstaff")
+		var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Blood Resistance")
+		var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
+		switch(vow_choice)
+			if("Vow of Solace | +2SPD, Dodge Expert")
+				H.change_stat(STATKEY_SPD, 2)
+				ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
+			if("Vow of the Feat | +2STR, Blood Resistance")
+				ADD_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC)
+				H.change_stat(STATKEY_STR, 2)
+
+		var/weapons = list("Penance - Unarmored","Pugilist","Katar","Knuckledusters","Quarterstaff")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		switch(weapon_choice)
-			if("Penance - Unarmored") // Skin armor, +1 con because this locks you out of holy monk vestments and the associated stamina boost
+			if("Penance - Unarmored") // Loses Dodge Expert, gains Enduring, swaps light armor for skin armor.
 				ADD_TRAIT(H, TRAIT_NOPAINSTUN, JOB_TRAIT)
+				REMOVE_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 				H.change_stat(STATKEY_CON, 1)
-				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
+				if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+					armor = /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/chest/monke //a leather armor. Sewing repair.
+					shirt = /obj/item/clothing/suit/roguetown/armor/manual/tool/needle/body/monke //a gambeson.
+					H.adjust_skillrank_up_to(/datum/skill/craft/sewing, SKILL_LEVEL_NOVICE, TRUE) //since enduring makes psydonic willpower redundant.
+					H.adjust_skillrank_up_to(/datum/skill/misc/medicine, SKILL_LEVEL_NOVICE, TRUE)
+				else
+					armor = /obj/item/clothing/suit/roguetown/armor/manual/meditation/chest/monk //a leather armor. Meditation repair.
+					shirt = /obj/item/clothing/suit/roguetown/armor/manual/meditation/body/monk //a gambeson.
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
 				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
-				armor = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/chest/monk //a leather armor
-				shirt = /obj/item/clothing/suit/roguetown/armor/regenerating/skin/body/monk //a gambeson
-			if("Discipline - Unarmed")
-				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 4, TRUE)
-				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 4, TRUE)
-				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist//Just this and disciple, effectively.
+			if("Pugilist")
+				H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, SKILL_LEVEL_EXPERT, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, SKILL_LEVEL_EXPERT, TRUE)
+				gloves = /obj/item/clothing/gloves/roguetown/bandages/pugilist
 			if("Katar")
 				beltl = /obj/item/rogueweapon/katar/bronze
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
@@ -105,39 +122,11 @@
 				else
 					r_hand = /obj/item/clothing/gloves/roguetown/knuckles/bronze
 			if("Quarterstaff")
-				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
+				H.adjust_skillrank_up_to(/datum/skill/combat/staves, SKILL_LEVEL_JOURNEYMAN, TRUE) //On par with the new Quarterstaff-centric virtue. A monk can take said-virtue if they want the best of both worlds.
 				r_hand = /obj/item/rogueweapon/woodstaff/quarterstaff/iron
 				l_hand = /obj/item/rogueweapon/scabbard/gwstrap
 				wrists = /obj/item/clothing/wrists/roguetown/bracers/leather/heavy
 				gloves = /obj/item/clothing/gloves/roguetown/bandages
-
-		//Wow, these sure are long!
-		if(weapon_choice == "Penance - Unarmored" || weapon_choice == "Discipline - Unarmed")
-			var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance", "Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
-			var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
-			switch(vow_choice)
-				if("Vow of Solace | +2SPD, Dodge Expert")
-					H.change_stat(STATKEY_SPD, 2)
-					ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-				if("Vow of the Feat | +2STR, Critical Resistance")
-					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-					H.change_stat(STATKEY_STR, 2)
-				if("Vow of the Ascetic | +2SPD, +2STR, Critical Resistance, Weaponless")
-					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-					ADD_TRAIT(H, TRAIT_WEAPONLESS, TRAIT_GENERIC)
-					ADD_TRAIT(H, TRAIT_BLOOD_RESISTANCE, TRAIT_GENERIC)
-					H.change_stat(STATKEY_STR, 2)
-					H.change_stat(STATKEY_SPD, 2)
-		else
-			var/monk_vow = list("Vow of Solace | +2SPD, Dodge Expert","Vow of the Feat | +2STR, Critical Resistance")
-			var/vow_choice = input(H, "Choose your VOW", "VALIDATE YOUR FAILINGS") as anything in monk_vow
-			switch(vow_choice)
-				if("Vow of Solace | +2SPD, Dodge Expert")
-					H.change_stat(STATKEY_SPD, 2)
-					ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
-				if("Vow of the Feat | +2STR, Critical Resistance")
-					ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
-					H.change_stat(STATKEY_STR, 2)
 	H.cmode_music = 'sound/music/combat_holy.ogg'
 
 	switch(H.patron?.type)

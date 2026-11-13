@@ -97,6 +97,7 @@
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_HARDDISMEMBER, INNATE_TRAIT) //limbs still get disabled by damage
 	ADD_TRAIT(owner, TRAIT_STRONGKICK, INNATE_TRAIT)//anti-dorpal insurance
+	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, INNATE_TRAIT)//anti-dorpal insurance
 
 /datum/status_effect/buff/berserk_rush/on_remove()
 	. = ..()
@@ -105,5 +106,6 @@
 /datum/status_effect/buff/berserk_rush/proc/clear_berserk_rush()
 	REMOVE_TRAIT(owner, TRAIT_HARDDISMEMBER, INNATE_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_STRONGKICK, INNATE_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, INNATE_TRAIT)
 
 #undef RAGE_FILTER

@@ -219,7 +219,7 @@
 
 	// Equip the skin armor
 	recipient.equip_to_slot_or_del(
-		new /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak(recipient),
+		new /obj/item/clothing/suit/roguetown/armor/manual/resting/body/weak(recipient),
 		SLOT_SHIRT,
 		TRUE
 	)

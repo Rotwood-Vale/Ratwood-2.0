@@ -14,7 +14,6 @@
 	max_integrity = 675
 	item_flags = DROPDEL
 	repair_time = 14 SECONDS
-	combat_taggable = TRUE
 
 /obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor/Initialize(mapload)
 	. = ..()
@@ -22,6 +21,9 @@
 	// loc is shitcode here because the skin is created inside the gnoll so we can juse abuse that logic
 	RegisterSignal(loc, list(COMSIG_SPECIES_ATTACKED_BY, COMSIG_LIVING_ARMOR_CHECKED, COMSIG_MOB_APPLY_DAMGE), PROC_REF(on_attacked_by), override = TRUE)
 	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "HIDE", "#GNOLLED")/// no one should ever see this unless they spawn in gnoll skin via the game panel
+
+/obj/item/clothing/suit/roguetown/armor/regenerating/skin/gnoll_armor/proc/on_attacked_by()
+	return
 
 /datum/antagonist/gnoll
 	name = "Gnoll"

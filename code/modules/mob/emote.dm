@@ -30,6 +30,8 @@
 			mute_time = P.mute_time
 			if(P.run_emote(src, param, m_type, intentional, targetted, (animal ? animal : P.is_animal)))
 				break
+		if(intentional)
+			SEND_SIGNAL(src, COMSIG_MOB_EMOTED, act, intentional)
 
 	if(custom_me)
 		next_me_emote = world.time + mute_time
