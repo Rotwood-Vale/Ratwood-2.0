@@ -84,7 +84,8 @@
 	organ_type = /obj/item/organ/ears
 	sprite_accessories = list(
 		/datum/sprite_accessory/ears/elf,
-		/datum/sprite_accessory/ears/elfw)
+		/datum/sprite_accessory/ears/elfw,
+		/datum/sprite_accessory/ears/elfshort)
 
 /datum/customizer/organ/ears/elf
 	customizer_choices = list(/datum/customizer_choice/organ/ears/elf)
