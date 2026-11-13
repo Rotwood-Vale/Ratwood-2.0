@@ -1,13 +1,13 @@
-/datum/advclass/wretch/ancientchampion
-	name = "Ancient Champion"
+/datum/advclass/ashen_host/praetorian
+	name = "Ashen Praetorian"
 	tutorial = "In life, you were a mortal warrior shedding blood for Her Majesty, a veteran of countless battles and razings. In death, you have been rewarded with a privilege to serve Her forever more. You awaken once again, wielding blade and arcyne, to complete Her Grandest Work."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_SHUNNED_UP //Can't be Revenant (because bugs) and can't be Construct (also bugs). You get force-set to Skeleton Human anyway.
-	outfit = /datum/outfit/job/roguetown/wretch/ancientchampion
+	outfit = /datum/outfit/job/roguetown/ashen_host/praetorian
 	cmode_music = 'sound/music/combat_ancient.ogg'
 	class_select_category = CLASS_CAT_ACCURSED
-	category_tags = list(CTAG_WRETCH)
-	maximum_possible_slots = 1 //Spellcaster in Luxarmour, with Master in swords. Zizo's top skeleton.
+	category_tags = list(CTAG_ASHEN)
+	maximum_possible_slots = 2 //Spellcaster in Luxarmour, with Master in swords. Zizo's top skeleton.
 	applies_post_equipment = TRUE
 	traits_applied = list(TRAIT_HEAVYARMOR, TRAIT_OVERTHERETIC)
 	subclass_stats = list(
@@ -35,10 +35,10 @@
 	subclass_stashed_items = list(
 		"Armor Plates" =  /obj/item/repair_kit/metal,
 	)
-/datum/outfit/job/roguetown/wretch/ancientchampion
+/datum/outfit/job/roguetown/ashen_host/praetorian
 	has_loadout = TRUE
 
-/datum/outfit/job/roguetown/wretch/ancientchampion/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/ashen_host/praetorian/pre_equip(mob/living/carbon/human/H)
 	..()
 
 	if(H.mind)
@@ -49,7 +49,7 @@
 	mask = /obj/item/flowercrown/rosa //Worn by Her champions. Bring death to bring forth new life.
 	cloak = /obj/item/clothing/cloak/half
 	belt = /obj/item/storage/belt/rogue/leather/black
-	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/ancient
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/ashen
 	backl = /obj/item/storage/backpack/rogue/satchel
 	beltl = /obj/item/rogueweapon/scabbard/sword
 	backpack_contents = list(
@@ -134,7 +134,7 @@
 			l_hand = /obj/item/rogueweapon/shield/tower/metal/zizo
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)	
 
-/datum/outfit/job/roguetown/wretch/ancientchampion/choose_loadout(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/ashen_host/praetorian/choose_loadout(mob/living/carbon/human/H)
 	if(H.mind)
 		var/paths = list("The Path of Might (+1 ALL STATS)", "The Path of Magic (More Spells)")
 		var/path_choice = input(H, "What did you excel at in life?", "IN HER NAME.") as anything in paths

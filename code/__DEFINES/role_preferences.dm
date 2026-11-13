@@ -20,6 +20,7 @@
 #define ROLE_GNOLL				"Gnoll"
 #define ROLE_ASCENDANT			"Ascendant"
 #define ROLE_WRETCH				"Wretch"
+#define ROLE_ASHEN_HOST			"Ashen Host"
 #define ROLE_UNBOUND_DEATHKNIGHT "Unbound Death Knight"
 #define ROLE_DARK_ITINERANT "Dark Itinerant"
 

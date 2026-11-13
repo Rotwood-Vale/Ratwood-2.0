@@ -189,6 +189,7 @@
 #define COURTAGENT	    (1<<4)
 #define WRETCH          (1<<5)
 #define TRADER			(1<<6)
+#define ASHENHOST		(1<<20)
 
 #define TRIBAL		(1<<8)
 

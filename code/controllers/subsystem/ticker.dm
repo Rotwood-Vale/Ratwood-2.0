@@ -67,6 +67,10 @@ SUBSYSTEM_DEF(ticker)
 
 	/// Realm name, the location name of the current map
 	var/realm_name = "Rotwood Vale"
+	var/realm_type = "Grand Duchy"
+	var/realm_type_short = "Duchy"
+	var/usurpation_day
+	var/roundend_epilogue
 	/// Reports the current ruler's display name
 	var/rulertype = "Grand Duke"
 	/// The current ruling mob

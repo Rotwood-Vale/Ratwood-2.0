@@ -524,6 +524,87 @@ LICH SKELETONS
 		if("Shawl")
 			cloak = /obj/item/clothing/cloak/thief_cloak/lich
 
+
+// Limited slot. Exclusive access to the Siegebow and slightly better melee skills, but worse speed.
+/datum/advclass/greater_skeleton/lich/rareballistiares
+	name = "Venerated Siege-Ballistiares"
+	tutorial = "Few in number, yet known in presence. Fleshless palms cradle the pinnacle of siegebreakage; a massive weapon, capable of sundering all the walls-and-defenses that'd impede your master's path."
+	outfit = /datum/outfit/job/roguetown/greater_skeleton/lich/rareballistiares
+	maximum_possible_slots = 2 //Limited, but powerful.
+	category_tags = list(CTAG_LSKELETON)
+
+/datum/outfit/job/roguetown/greater_skeleton/lich/rareballistiares/pre_equip(mob/living/carbon/human/H)
+	..()
+
+	H.STASTR = 12
+	H.STASPD = 7
+	H.STACON = 7
+	H.STAWIL = 16
+	H.STAINT = 6
+	H.STAPER = 16
+
+	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+
+	H.adjust_skillrank(/datum/skill/combat/crossbows, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/slings, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
+
+	//Utility skills, unlyve to serve
+	H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/masonry, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/sewing, 2, TRUE)
+
+	head = /obj/item/clothing/head/roguetown/helmet/kettle/ancient
+	shirt = /obj/item/clothing/suit/roguetown/armor/chainmail/ancient
+	pants = /obj/item/clothing/under/roguetown/chainlegs/kilt/ancient
+	armor = /obj/item/clothing/suit/roguetown/armor/leather/studded
+	wrists = /obj/item/clothing/wrists/roguetown/bracers/ancient
+	neck = /obj/item/clothing/neck/roguetown/chaincoif/ancient
+	shoes = /obj/item/clothing/shoes/roguetown/sandals/ancient
+	gloves = /obj/item/clothing/gloves/roguetown/chain/ancient
+	belt = /obj/item/storage/belt/rogue/leather/black
+
+	backl = /obj/item/storage/backpack/rogue/satchel
+
+	l_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy/ancient
+	beltl = /obj/item/quiver/bolt/heavy/ancient
+
+	backpack_contents = list(
+		/obj/item/natural/cloth = 1, //For your helm
+		/obj/item/storage/belt/rogue/pouch/coins/gilbranze = 1
+	)
+
+	H.adjust_blindness(-3)
+	var/weapons = list("Gladius", "Dagger")
+	var/weapon_choice = input(H, "Choose your SIDEARM.", "BREAK THE CASTLES WHICH HIDE THE LYVING.") as anything in weapons
+	H.set_blindness(0)
+	switch(weapon_choice)
+		if("Gladius")
+			beltr = /obj/item/rogueweapon/sword/short/gladius/ancient
+			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+		if("Dagger")
+			beltr = /obj/item/rogueweapon/huntingknife/idagger/steel/ancient
+			H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
+	var/tabards = list("Black Cloak + Greathood", "Black Jupon", "Black Toga")
+	var/tabard_choice = input(H, "Choose your CLOAK.", "BEAR YOUR MASTER'S HERALDRY.") as anything in tabards
+	switch(tabard_choice)
+		if("Black Jupon")
+			cloak = /obj/item/clothing/cloak/stabard/surcoat/lich
+		if("Black Cloak + Greathood")
+			cloak = /obj/item/clothing/cloak/half/lich
+			mask = /obj/item/clothing/cloak/tabard/stabard/hoodlich
+		if("Black Toga")
+			cloak = /obj/item/clothing/cloak/tabard/toga/lich
+
+	H.energy = H.max_energy
+
+
 //////////////////
 // UNIQUE ITEMS //
 //////////////////
@@ -571,6 +652,23 @@ LICH SKELETONS
 	name = "ancient shawl"
 	desc = "Roughspun fabrics from beyond your lyfetime, donned by those who have embraced the fetters they've truly become."
 	color = CLOTHING_BLACK
+
+/obj/item/clothing/cloak/tabard/toga/lich
+	name = "decrepit toga"
+	desc = "Roughspun fabrics from beyond your lyfetime, donned by those who fight a war without reason."
+	color = CLOTHING_BLACK
+	detail_color = "#bb9696"
+
+/obj/item/clothing/cloak/tabard/stabard/hoodlich
+	name = "decrepit greathood"
+	desc = "Roughspun fabrics from beyond your lyfetime, donned by those who have reaped what they've sown."
+	color = CLOTHING_BLACK
+	detail_color = CLOTHING_BURLAP
+	detail_tag = "_spl"
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_NECK|ITEM_SLOT_MASK|ITEM_SLOT_CLOAK
+	icon_state = "guard_hood" // The same as the guard hood however to break it from using the lords colors it has been given its own item path
+	item_state = "guard_hood"
+	body_parts_covered = CHEST
 
 // SHIELDS
 

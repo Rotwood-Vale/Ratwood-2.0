@@ -1082,6 +1082,22 @@
 	speed = 0.3
 	npc_simple_damage_mult = 2
 
+/obj/item/ammo_casing/caseless/rogue/heavy_bolt/ancient
+	name = "ancient heavy bolt"
+	desc = "A polished length of gilbranze, which chisels away stone-and-spirit alike with each vaulting. It whispers to you; a half-glance to the right, further up to compensate, so that the living's humors may taste utter disruption."
+	icon_state = "ancientheavybolt"
+	projectile_type = /obj/projectile/bullet/reusable/heavy_bolt/ancient
+
+/obj/projectile/bullet/reusable/heavy_bolt/ancient
+	name = "ancient heavy bolt"
+	icon_state = "ancientbolt_proj"
+	object_damage_multiplier = 16
+	poisontype = /datum/reagent/stampoison
+	poisonamount = 1 //You are, in essence, giving them tetanus. Roughly 50% stronger than a poisoned iron arrow.
+	slur = 3
+	eyeblur = 3
+	drowsy = 3
+
 /obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy
 	name = "stake bolt"
 	desc = "A silver stake, affixed with fins. Drive back the darkness!"

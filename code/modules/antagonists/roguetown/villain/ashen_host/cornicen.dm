@@ -1,12 +1,12 @@
-/datum/advclass/wretch/herald_of_progress
-	name = "Herald of Progress"
-	tutorial = "Your melodies bring about melancholy visions of the future. Your soliloquies are punctuated by whispered truths of the past. Dread change, the promises of tomorrow come to fruition all the same. You are the herald of progress, a soothsayer of what is to be. The realm is a stage, and you are Her voice."
+/datum/advclass/ashen_host/cornicen
+	name = "Ashen Cornicen"
+	tutorial = "Your melodies bring about melancholy visions of the future. Your soliloquies are punctuated by whispered truths of the past. Dread change, but the promises of tomorrow come to fruition all the same. You are a Cornicen of her Legions, a soothsayer of what is to be. Sing the  Eulogy for this flawed Realm, in HER name."
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_ALL_KINDS
-	outfit = /datum/outfit/job/roguetown/wretch/herald_of_progress
+	outfit = /datum/outfit/job/roguetown/ashen_host/cornicen
 	cmode_music = 'sound/music/combatheraldprogress.ogg'
 	class_select_category = CLASS_CAT_CLERIC
-	category_tags = list(CTAG_WRETCH)
+	category_tags = list(CTAG_ASHEN)
 	traits_applied = list(TRAIT_DODGEEXPERT, TRAIT_DECEIVING_MEEKNESS, TRAIT_OVERTHERETIC, TRAIT_ARCYNE)
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 0, "utilities" = 0, "locked_aspects" = list(/datum/magic_aspect/fulgurmancy))
 	maximum_possible_slots = 1 // only one frontman
@@ -29,16 +29,21 @@
 		/datum/skill/misc/medicine = SKILL_LEVEL_JOURNEYMAN, 
 	)
 	subclass_stats = list(
-		STATKEY_WIL = 4,
-		STATKEY_CON = 2,
-		STATKEY_SPD = 2,
+		STATKEY_STR = 1,
+		STATKEY_PER = 1,
+		STATKEY_INT = 1,
+		STATKEY_CON = 3,
+		STATKEY_WIL = 5,
+		STATKEY_SPD = 3,
+		STATKEY_LCK = 1,
 	)
 	subclass_stashed_items = list(
 		"Sewing Kit" = /obj/item/repair_kit,
 	)
 
-/datum/outfit/job/roguetown/wretch/herald_of_progress/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/roguetown/ashen_host/cornicen/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/roguetown/roguehood/red
+	id = /obj/item/clothing/neck/roguetown/psicross/inhumen/ashen
 	mask = /obj/item/clothing/mask/rogue/lordmask/zizite
 	cloak = /obj/item/clothing/cloak/raincloak/red
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/ 
@@ -81,7 +86,6 @@
 		var/datum/inspiration/I = new /datum/inspiration(H)
 		I.grant_inspiration(H, bard_tier = BARD_T3)
 		H.set_blindness(0)
-		wretch_select_bounty(H)
 
 /obj/effect/proc_holder/spell/invoked/raise_undead_formation/miracle
 	associated_skill = /datum/skill/magic/holy

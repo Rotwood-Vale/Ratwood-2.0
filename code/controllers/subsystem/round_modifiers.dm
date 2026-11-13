@@ -42,6 +42,8 @@
 		var/datum/round_modifier/M = new T
 		if(level < M.min_chaos || level > M.max_chaos)
 			continue
+		if(M.type == /datum/round_modifier/ashen_host && length(GLOB.new_player_list) == 1)
+			M.cost = 2
 		pool[M] = M.weight
 
 	while(budget > 0 && length(pool))
