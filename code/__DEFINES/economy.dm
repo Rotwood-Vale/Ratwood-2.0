@@ -29,3 +29,5 @@
 #define ACCOUNT_SEC_NAME "Defense Budget"
 
 #define NO_FREEBIES "commies go home"
+
+#define SHOP_MAX_PRICE 9999
