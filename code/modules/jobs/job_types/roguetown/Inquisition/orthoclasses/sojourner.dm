@@ -16,7 +16,6 @@
 	traits_applied = list(
 		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_NALEDI,
-		TRAIT_MAGEDEXTERITY, //THEY NEED THIS MORE THAN ANY OTHER MAGE IN THE GAME. 
 	)
 	subclass_stats = list(// This does not follow the typical 8 stat setup. Do not increase this.
 		STATKEY_INT = 3,
