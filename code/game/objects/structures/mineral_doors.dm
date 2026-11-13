@@ -288,11 +288,6 @@
 	return TryToSwitchState(user)
 
 /obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
-	var/mob/living/L = mover
-	if(isliving(L))
-		var/datum/status_effect/debuff/zizo_egress/S = L.has_status_effect(/datum/status_effect/debuff/zizo_egress)
-		if(S && (src in S.doors))
-			return FALSE
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density
@@ -310,10 +305,6 @@
 
 /obj/structure/mineral_door/proc/TryToSwitchState(mob/living/user)
 	if(!isliving(user) || isSwitchingStates || !anchored)
-		return FALSE
-	var/datum/status_effect/debuff/zizo_egress/S = user.has_status_effect(/datum/status_effect/debuff/zizo_egress)
-	if(S && (src in S.doors))
-		to_chat(user, span_warning("The door is stuck fast."))
 		return FALSE
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user

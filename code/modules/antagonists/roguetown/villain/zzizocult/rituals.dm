@@ -125,33 +125,54 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		weighted -= chosen_type
 		user.zizo_goals += new chosen_type()
 
-/datum/zizo_research/proc/open(mob/living/carbon/human/user)
-	var/contents = "SECRETS UNVEILED: [user.mind.zizo_points]<BR>--------------<BR>"
-	var/any = FALSE
+/datum/zizo_research/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/zizo_research/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ZizoResearch", "ZIZO", 700, 600)
+		ui.open()
+
+/datum/zizo_research/ui_data(mob/user)
+	var/list/data = list("points" = user.mind.zizo_points)
+	var/list/nodes = list()
 	for(var/ritualtype in GLOB.zizo_researchable)
 		var/datum/ritual/R = ritualtype
 		if((R.is_cultist_ritual || !R.lesser) && !is_zizo(user))
 			continue
-		any = TRUE
-		if(ritualtype in user.mind.zizo_researched)
-			contents += "<B>[initial(R.name)]</B> - LEARNED<BR>'<I>[R.desc]</I>'<BR>"
-			continue
-		if(R.needs_aspect && !(R.needs_aspect in GLOB.zizo_bestowed))
-			contents += "<B>[initial(R.name)]</B> - LOCKED - <B>OPEN [R.needs_aspect] GATE.</B><BR>'<I>[R.desc]</I>'<BR>"
-			continue
 		var/obj/item/needed = initial(R.research_item)
-		contents += "<a href='?src=[REF(src)];buy=[ritualtype]'>[initial(R.name)]</a> - [initial(R.research_cost)] SECRETS[needed ? " AND A HELD [uppertext(initial(needed.name))]" : ""]<BR>'<I>[R.desc]</I>'<BR>"
-	if(!any)
-		contents += "There is nothing left to uncover.<BR>"
-	var/datum/browser/popup = new(user, "zizoresearch", "ZIZO", 500, 500)
-	popup.set_content(contents)
-	popup.open(FALSE)
+		var/list/node = list("path" = ritualtype, "name" = initial(R.name), "desc" = R.desc, "cost" = initial(R.research_cost), "aspect" = R.needs_aspect, "lesser" = R.lesser)
+		if(ispath(R.icon_type, /datum/action))
+			var/datum/action/shown_action = R.icon_type
+			node["icon"] = shown_action.button_icon
+			node["state"] = shown_action.button_icon_state
+		else if(ispath(R.icon_type, /obj/effect/proc_holder/spell))
+			var/obj/effect/proc_holder/spell/shown_spell = R.icon_type
+			node["icon"] = shown_spell.overlay_icon
+			node["state"] = shown_spell.overlay_state
+		else
+			var/atom/shown = R.icon_type
+			node["icon"] = shown.icon
+			node["state"] = shown.icon_state
+		if(R.node_state)
+			node["state"] = R.node_state
+		node["done"] = (ritualtype in user.mind.zizo_researched)
+		node["disabled"] = (R.needs_aspect && !(R.needs_aspect in GLOB.zizo_bestowed))
+		if(needed)
+			node["item"] = uppertext(initial(needed.name))
+		nodes += list(node)
+	data["knowledge"] = nodes
+	return data
 
-/datum/zizo_research/Topic(href, href_list)
+/datum/zizo_research/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
 	var/mob/living/carbon/human/user = usr
 	if(!ishuman(user))
 		return
-	var/ritualtype = text2path(href_list["buy"])
+	var/ritualtype = text2path(params["path"])
 	if(!ritualtype || (ritualtype in user.mind.zizo_researched) || !(ritualtype in GLOB.zizo_researchable))
 		return
 	var/datum/ritual/R = new ritualtype
@@ -178,7 +199,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		R.apply_passive(user)
 	to_chat(user, span_boldnotice("EUREKA! I DISCOVER [uppertext(R.name)]!"))
 	qdel(R)
-	open(user)
+	return TRUE
 
 /proc/reroll_gate_targets(gate_count)
 	if(gate_count <= 0)
@@ -227,6 +248,8 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	var/passive = FALSE
 	var/lesser = FALSE
 	var/research_item
+	var/icon_type
+	var/node_state
 	var/list/spells = list()
 
 /datum/ritual/proc/invoke(mob/living/user, turf/center)
@@ -263,6 +286,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /datum/ritual/servantry/convert
 	name = "Convert"
+	icon_type = /obj/item/clothing/neck/roguetown/psicross/inhumen
 	desc = "Place a sacrifice in the middle of the rune to convert them into a lackey. Grants SECRETS. Requires an assistant on the rune if there are more than 3 cultists."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a sacrifice"
@@ -319,6 +343,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/servantry/sacrifice
 	lesser = TRUE
 	name = "Sacrifice"
+	icon_type = /obj/item/rogueweapon/huntingknife/idagger
 	desc = "Place a sacrifice in the middle of the rune to rip out their lux. Grants SECRETS and a dark crystal. Requires an assistant holding a knife to stand on the sigil for the rite to function."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a sacrifice"
@@ -370,6 +395,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/servantry/heartache
 	lesser = TRUE
 	name = "Heartaches"
+	icon_type = /obj/item/corruptedheart
 	desc = "Create a heart to locate sacrifices."
 	center_requirement = /obj/item/organ/heart
 
@@ -380,6 +406,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/servantry/guidance
 	lesser = TRUE
 	name = "Divine Guidance"
+	icon_type = /obj/item/organ/eyes
 	desc = "Obtain guidance from ZIZO to receive SECRETS. Can use every 20 minutes."
 	center_requirement = /obj/item/organ/eyes
 	center_desc = "eyes"
@@ -477,6 +504,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/servantry/gutted
 	lesser = TRUE
 	name = "Gutted Fish"
+	icon_type = /obj/item/rogueweapon/huntingknife
 	desc = "Place a dead and mindless humanoid in the center of the sigil to rip out its organs."
 	center_requirement = /mob/living/carbon/human // One to be gutted.human
 
@@ -499,6 +527,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 
 /datum/ritual/servantry/sleepcurse
 	name = "Curse of Zizo"
+	icon_type = /obj/item/natural/worms/leech
 	desc = "Curse your target with a heart attack that renders them unconscious after fifteen seconds. Usually does not kill. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	research_cost = 3
@@ -523,15 +552,16 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		return
 	victim.heart_attack()
 
-/datum/ritual/servantry/egress
+/datum/ritual/servantry/tongues
 	lesser = TRUE
-	name = "Curse of Egress"
-	desc = "Curse your target with the inability to pass the same doorway twice. Lasts 5 minutes. Requires a leech that fed from your target."
+	name = "Curse of Tongues"
+	icon_type = /obj/item/natural/worms/leech
+	desc = "Curse your target with unintelligible speech. Lasts 5 minutes. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	research_cost = 3
 	keep_center = TRUE
 
-/datum/ritual/servantry/egress/invoke(mob/living/user, turf/center)
+/datum/ritual/servantry/tongues/invoke(mob/living/user, turf/center)
 	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
 	if(!remnant)
 		return
@@ -540,31 +570,65 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
 		return
 	qdel(remnant)
-	to_chat(user, span_notice("LIKE A RAT IN A MAZE!"))
+	to_chat(user, span_notice("MAY THEIR TONGUE ROT AND BLEED AND BURST!"))
 	to_chat(victim, span_userdanger("WHAT A HORRIBLE NITE TO HAVE A CURSE."))
-	victim.apply_status_effect(/datum/status_effect/debuff/zizo_egress)
+	victim.apply_status_effect(/datum/status_effect/debuff/zizo_tongues)
 
-/datum/status_effect/debuff/zizo_egress
-	id = "zizo_egress"
+/datum/status_effect/debuff/zizo_tongues
+	id = "zizo_tongues"
 	duration = 5 MINUTES
 	alert_type = null
-	var/list/doors = list()
 
-/datum/status_effect/debuff/zizo_egress/on_apply()
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(left_tile))
+/datum/status_effect/debuff/zizo_tongues/on_apply()
+	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
-/datum/status_effect/debuff/zizo_egress/on_remove()
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+/datum/status_effect/debuff/zizo_tongues/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAIT_STATUS_EFFECT(id))
 
-/datum/status_effect/debuff/zizo_egress/proc/left_tile(datum/source, atom/old_loc)
-	SIGNAL_HANDLER
-	for(var/obj/structure/mineral_door/D in old_loc)
-		doors |= D
+/datum/ritual/servantry/exhaustion
+	lesser = TRUE
+	name = "Curse of Exhaustion"
+	icon_type = /obj/item/natural/worms/leech
+	desc = "Curse your target with immense exhaustion, encouraging them to find their bed and rest. The exhaustion lasts 5 minutes. Shows no effect to target. Requires a leech that fed from your target."
+	center_requirement = /obj/item/natural/worms/leech
+	research_cost = 3
+	keep_center = TRUE
+
+/datum/ritual/servantry/exhaustion/invoke(mob/living/user, turf/center)
+	var/obj/item/natural/worms/leech/remnant = find_remnant(user, center)
+	if(!remnant)
+		return
+	var/mob/living/carbon/human/victim = remnant.fed_from
+	if(!curse_target(victim, FALSE))
+		to_chat(user, span_warning("THEY ARE PROTECTED FROM FURTHER CURSES."))
+		return
+	qdel(remnant)
+	to_chat(user, span_notice("MAY THEY KNOW SLUMBER UNTO DEATH!"))
+	victim.apply_status_effect(/datum/status_effect/debuff/zizo_exhaustion)
+
+/datum/status_effect/debuff/zizo_exhaustion
+	id = "zizo_exhaustion"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/sleepytimet3
+
+/datum/status_effect/debuff/zizo_exhaustion/on_apply()
+	var/mob/living/carbon/human/H = owner
+	H.remove_sleep_depravation(TRUE)
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, remove_status_effect), type), 5 MINUTES)
+	return ..()
+
+/datum/status_effect/debuff/zizo_exhaustion/tick()
+	var/datum/status_effect/incapacitating/sleeping/S = owner.IsSleeping()
+	if(!S)
+		return
+	S.duration += 1 MINUTES
+	owner.remove_status_effect(type)
 
 /datum/ritual/servantry/knock
 	lesser = TRUE
 	name = "Curse of Knock"
+	icon_type = /obj/item/storage/keyring
+	node_state = "keyring3"
 	desc = "Keys no longer work for your target! Lasts 10 minutes. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	research_cost = 3
@@ -591,6 +655,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 /datum/ritual/servantry/misfortune
 	lesser = TRUE
 	name = "Curse of Misfortune"
+	icon_type = /obj/item/dice/d6
 	desc = "Curse your target with misfortune. Lasts 10 minutes. Requires a leech that fed from your target."
 	center_requirement = /obj/item/natural/worms/leech
 	research_cost = 3
@@ -643,6 +708,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/servantry/darksunmark
 	lesser = TRUE
 	name = "Dark Sun's Mark"
+	icon_type = /obj/item/candle/yellow
 	desc = "Mark someone for death by Graggar Assassins."
 	center_requirement = /obj/item/rogueweapon/huntingknife/idagger
 	research_cost = 2
@@ -678,6 +744,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 
 /datum/ritual/transmutation/allseeingeye
 	name = "All-seeing Eye"
+	icon_type = /obj/item/scrying/eye
 	desc = "Create an eye to scry through."
 	is_cultist_ritual = TRUE
 	center_requirement = /obj/item/organ/eyes
@@ -689,6 +756,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/transmutation/cross
 	lesser = TRUE
 	name = "Summon Amulet of Zizo"
+	icon_type = /obj/item/clothing/neck/roguetown/psicross/inhumen
 	desc = "Create a Zizo Amulet."
 	center_requirement = /obj/item/clothing/neck/roguetown/psicross
 
@@ -699,6 +767,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/transmutation/raiseshrine
 	lesser = TRUE
 	name = "Raise Profane Shrine"
+	icon_type = /obj/item/grown/log/tree/small
 	desc = "Raise an inverted cross as a shrine to ZIZO. Used in completing objectives."
 	center_requirement = /obj/item/grown/log/tree/small
 
@@ -723,6 +792,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/transmutation/criminalstool
 	lesser = TRUE
 	name = "Criminal's Tool"
+	icon_type = /obj/item/soap/cult
 	desc = "Create soap to clean runes with."
 	center_requirement = /obj/item/natural/cloth
 
@@ -738,6 +808,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/transmutation/propaganda
 	lesser = TRUE
 	name = "Remnant Leech"
+	icon_type = /obj/item/natural/worms/leech/propaganda
 	desc = "Create a leech that attaches silently onto targets. Used for curses."
 	center_requirement = /obj/item/natural/worms/leech
 	n_req = /obj/item/paper
@@ -802,6 +873,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 
 /datum/ritual/transmutation/silencerleech
 	name = "Silencing Leech"
+	icon_type = /obj/item/natural/worms/leech/silencer
 	desc = "Transmute a leech to silence the voice of whoever you attach it to."
 	center_requirement = /obj/item/natural/worms/leech
 	n_req = /obj/item/paper
@@ -852,6 +924,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/transmutation/invademind
 	lesser = TRUE
 	name = "Invade Mind"
+	icon_type = /obj/item/natural/feather
 	desc = "Send an anonymous message into someone's head."
 	center_requirement = /obj/item/natural/feather
 
@@ -867,6 +940,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/transmutation/summonoutfit
 	lesser = TRUE
 	name = "Summon Cult Outfit"
+	icon_type = /obj/item/clothing/head/roguetown/helmet/skullcap/cult
 	desc = "Conjure an ominous outfit that provides some defense."
 	center_requirement = /obj/item/natural/cloth
 
@@ -902,6 +976,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 
 /datum/ritual/transmutation/summonarmor
 	name = "Summon Darksteel Armor"
+	icon_type = /obj/item/clothing/suit/roguetown/armor/plate/full/zizo
 	desc = "Conjure a set of unremovable darksteel plate. Trains you in heavy armor and grants mending. Requires a dark crystal."
 	center_requirement = /mob/living/carbon/human
 	n_req = /obj/item/necro_relics/necro_crystal
@@ -924,6 +999,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 
 /datum/ritual/transmutation/summonfuge
 	name = "Summon Fuge"
+	icon_type = /obj/structure/fuge
 	desc = "Conjure a machine to pull items in from other realms. Must be raised where the WORLD feels UNREAL."
 	is_cultist_ritual = TRUE
 	research_cost = 0
@@ -1045,6 +1121,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 
 /datum/ritual/transmutation/summonpylon
 	name = "Summon Pylon"
+	icon_type = /obj/structure/pylon
 	desc = "Conjure a device that siphons life essence from random people to create dark crystals. The target is given hints towards the pylon's location. Must be near a Fuge."
 	is_cultist_ritual = TRUE
 	center_requirement = /obj/item/candle/candlestick/gold
@@ -1167,6 +1244,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 
 /datum/ritual/transmutation/summonraver
 	name = "Summon Raver"
+	icon_type = /obj/structure/raver
 	desc = "Conjure a device to drain the lux of sacrifices. Buckle a victim to the raver and it shall consume their lux. Afterwards, a cultist can buckle to it and receive powerful body enhancements. Must be near a Fuge."
 	center_requirement = /obj/item/natural/worms
 	is_cultist_ritual = TRUE
@@ -1850,6 +1928,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/transmutation/summonweapon
 	lesser = TRUE
 	name = "Summon Weapons"
+	icon_type = /obj/item/rogueweapon/sword/long/zizo
 	desc = "Learn a spell to conjure an avantyne dagger or sword. Consumes a dark crystal to learn."
 	passive = TRUE
 	research_item = /obj/item/necro_relics/necro_crystal
@@ -1863,6 +1942,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/transmutation/lessernecromancy
 	lesser = TRUE
 	name = "Lesser Necromancy"
+	icon_type = /obj/item/natural/bone
 	desc = "Become an initiate in the teachings of Necromancy. Consumes a dark crystal to learn."
 	research_item = /obj/item/necro_relics/necro_crystal
 	passive = TRUE
@@ -1876,6 +1956,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/transmutation/hiddenward
 	lesser = TRUE
 	name = "Inhumen Ward"
+	icon_type = /datum/action/cooldown/spell/conjure_arcyne_ward/zizo
 	desc = "Learn a spell to conjure a strong, invisible ward. Consumes a dark crystal to learn."
 	passive = TRUE
 	research_item = /obj/item/necro_relics/necro_crystal
@@ -1888,6 +1969,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 
 /datum/ritual/fleshcrafting/bunnylegs
 	name = "Saliendo Pedes"
+	icon_type = /obj/item/bodypart/l_leg
 	desc = "Use a pair of legs to permanently increase your jump height."
 	center_requirement = /mob/living/carbon/human
 	w_req = /obj/item/bodypart/l_leg
@@ -1903,6 +1985,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/fleshcrafting/fleshmend
 	lesser = TRUE
 	name = "Fleshmend"
+	icon_type = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	desc = "Use a piece of raw meat to heal yourself."
 	n_req = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	center_requirement = /mob/living/carbon/human
@@ -1912,6 +1995,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/fleshcrafting/fleshmend/greater
 	lesser = FALSE
 	name = "Greater Fleshmend"
+	icon_type = /obj/item/reagent_containers/food/snacks/rogue/meat/steak
 	desc = "Use a piece of raw meat to heal yourself, but better."
 	is_cultist_ritual = TRUE
 	heal_tick = 70
@@ -1928,6 +2012,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/fleshcrafting/darkeyes
 	lesser = TRUE
 	name = "Darkened Eyes"
+	icon_type = /obj/item/organ/eyes
 	desc = "Use a pair of eyes to permanently see in the dark."
 	center_requirement = /mob/living/carbon/human
 	w_req = /obj/item/organ/eyes
@@ -1949,6 +2034,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 
 /datum/ritual/fleshcrafting/nopain
 	name = "Painless Battle"
+	icon_type = /obj/item/organ/brain
 	desc = "Use a heart and a brain to become immune to pain. Requires a dark crystal."
 	research_cost = 3
 	center_requirement = /mob/living/carbon/human
@@ -1966,6 +2052,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/fleshcrafting/lesserrituos
 	lesser = TRUE
 	name = "Lesser Rituos"
+	icon_type = /obj/item/necro_relics/necro_crystal
 	desc = "The dark lady's lessser work. When I cast this ritual upon myself, I gain strength from undeath. Can be stacked 3 times. Requires a dark crystal."
 	center_requirement = /mob/living/carbon/human
 	n_req = /obj/item/necro_relics/necro_crystal
@@ -2043,6 +2130,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 /datum/ritual/fleshcrafting/immortality
 	lesser = TRUE
 	name = "Flawed Immortality"
+	icon_type = /obj/item/organ/heart
 	desc = "Sacrifice an Aasimar to obtain a flawed version of immortality. Not as useful as you might expect."
 	center_requirement = /mob/living/carbon/human
 	n_req = /mob/living/carbon/human
@@ -2079,6 +2167,7 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 
 /datum/ritual/fleshcrafting/ascend
 	name = "ASCEND!"
+	icon_type = /obj/item/clothing/head/roguetown/crown/zizo
 	desc = "Sacrifice the ruler on the north side and a person with pure lux on the south side. Must be performed inside the keep. The ruler must be kept on the profane altar for 5 minutes to Ascend. Alerts everyone."
 	center_requirement = /mob/living/carbon/human
 	center_desc = "the one to ascend"

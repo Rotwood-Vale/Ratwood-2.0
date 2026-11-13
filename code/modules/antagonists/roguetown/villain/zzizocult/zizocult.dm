@@ -231,4 +231,4 @@
 /mob/living/carbon/human/proc/zizo_lore()
 	set name = "Research"
 	set category = "ZIZO"
-	GLOB.zizo_research.open(src)
+	GLOB.zizo_research.ui_interact(src)
