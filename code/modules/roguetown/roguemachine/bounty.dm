@@ -219,6 +219,20 @@
 		new_bounty.target_body_type = "feminine"
 	compose_bounty(new_bounty)
 	GLOB.head_bounties += new_bounty
+	queue_bounty_portrait(target_realname)
+
+/// Makes sure a bounty target has a wanted-poster portrait, even if their job isn't in the credits.
+/// Bounties only record a name, so a player-controlled match is preferred over an NPC namesake.
+/proc/queue_bounty_portrait(target_realname)
+	var/mob/living/carbon/human/match
+	for(var/mob/living/carbon/human/target in GLOB.human_list)
+		if(target.real_name != target_realname)
+			continue
+		match = target
+		if(target.mind?.key)
+			break
+	if(match)
+		SScrediticons.queue_wanted_capture(match)
 
 /proc/add_bounty_noface(target_realname, race, gender, descriptor_height, descriptor_body, descriptor_voice, amount, bandit_status, reason, employer_name)
 	var/datum/bounty/new_bounty_noface = new /datum/bounty
@@ -246,11 +260,12 @@
 	new_bounty_noface.target_body = LOWER_TEXT(descriptor_body)
 	//new_bounty_noface.target_voice = LOWER_TEXT(descriptor_voice)
 	new_bounty_noface.bandit = bandit_status
-	new_bounty_noface.reason = reason
+	new_bounty_noface.reason = html_encode(reason)
 	new_bounty_noface.employer = employer_name
 	//var/list/lines = build_cool_description(get_mob_descriptors(obscure_name, user), target)
 	compose_bounty_noface(new_bounty_noface)
 	GLOB.head_bounties += new_bounty_noface
+	queue_bounty_portrait(target_realname)
 
 /proc/add_bounty_obscure(target_realname, race, gender, descriptor_height, descriptor_body, descriptor_voice, amount, bandit_status, reason, employer_name)
 	var/datum/bounty/new_bounty_obscure = new /datum/bounty
@@ -278,11 +293,12 @@
 	new_bounty_obscure.target_body = LOWER_TEXT(descriptor_body)
 	//new_bounty_obscure.target_voice = LOWER_TEXT(descriptor_voice)
 	new_bounty_obscure.bandit = bandit_status
-	new_bounty_obscure.reason = reason
+	new_bounty_obscure.reason = html_encode(reason)
 	new_bounty_obscure.employer = employer_name
 	//var/list/lines = build_cool_description(get_mob_descriptors(obscure_name, user), target)
 	compose_bounty_obscure(new_bounty_obscure)
 	GLOB.head_bounties += new_bounty_obscure
+	queue_bounty_portrait(target_realname)
 
 ///Composes a random bounty banner based on the given bounty info.
 ///@param new_bounty:  The bounty datum.

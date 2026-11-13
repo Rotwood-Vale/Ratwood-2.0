@@ -121,7 +121,9 @@
 	var/datum/chatOutput/chatOutput
 
 	///lazy list of all credit object bound to this client
-	var/list/credits = list()
+	var/list/credits
+	///TRUE while the end-of-round credits are rolling for this client; cleared by Hide Credits
+	var/credits_rolling = FALSE
 
 	///these persist between logins/logouts during the same round.
 	var/datum/player_details/player_details

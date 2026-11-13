@@ -91,6 +91,7 @@
 #include "colorblind_hud_palette.dm"
 #include "component_tests.dm"
 #include "create_and_destroy.dm"
+#include "credits_capture.dm"
 #include "focus_only_tests.dm"
 #include "harddels.dm"
 #include "reagent_id_typos.dm"
