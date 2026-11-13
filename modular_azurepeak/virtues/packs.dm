@@ -12,21 +12,6 @@
 		if(V)
 			V.apply_generic_effects(recipient)
 
-// Bronze Golem Pack: Both Bronze Arms
-// For those who have replaced both arms with mechanical prosthetics
-/datum/virtue/pack/bronzegolem
-	name = "Bronze Golem (-3 TRI)"
-	desc = "Through wealth, misfortune, or perhaps experimentation, both of my arms have been replaced with bronze prosthetics. I am part man, part machine - a walking testament to artifice."
-	triumph_cost = 3
-	granted_virtues = list(
-		/datum/virtue/utility/bronzearm_r,
-		/datum/virtue/utility/bronzearm_l
-	)
-	custom_text = "Grants both Bronze Arm virtues:\n\
-	- Bronze Arm (R): Right arm replaced with bronze prosthetic\n\
-	- Bronze Arm (L): Left arm replaced with bronze prosthetic\n\
-	- +1 Engineering skill from studying the mechanisms"
-
 // Enchanting Performer Pack: Socialite + Performer + Second Voice
 // For entertainers, bards, and charismatic performers
 /datum/virtue/pack/enchanter

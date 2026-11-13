@@ -2031,8 +2031,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(martyr?.is_active)
 		dismember_damtype = BRUTE
 	if(affecting.brute_dam && prob(probability) && affecting.dismember(dismember_damtype, user.used_intent?.blade_class, user, selzone, vorpal = I.vorpal))
-		bloody = 1
-		I.add_mob_blood(H)
+		if(affecting.is_organic_limb())
+			bloody = 1
+			I.add_mob_blood(H)
 		user.update_inv_hands()
 		playsound(get_turf(H), I.get_dismember_sound(), 80, TRUE)
 

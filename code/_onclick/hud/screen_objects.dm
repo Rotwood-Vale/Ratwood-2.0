@@ -1526,7 +1526,7 @@
 			var/obj/item/bodypart/BP = X
 			if(BP.body_zone in missing_bodyparts_zones)
 				continue
-			var/damage = min(BP.burn_dam + BP.brute_dam, BP.max_damage)
+			var/damage = BP.is_organic_limb() ? min(BP.burn_dam + BP.brute_dam, BP.max_damage) : 0 // prosthetic damage only shows on self examine
 			var/comparison = BP.max_damage ? (damage / BP.max_damage) : 0
 			var/wound_alpha = clamp(round((comparison * 255) * 2), 0, 255)
 			var/has_bleed = BP.get_hud_bleed_rate() > 0

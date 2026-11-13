@@ -52,7 +52,7 @@
 		var/obj/item/bodypart/attacked_prosthetic = attacked_object
 		if(!attacked_prosthetic.anvilrepair) //No hammering flesh limbs
 			return
-		if(attacked_prosthetic.obj_integrity >= attacked_prosthetic.max_integrity && attacked_prosthetic.brute_dam == 0 && attacked_prosthetic.burn_dam == 0 && attacked_prosthetic.wounds == null && attacked_prosthetic.disabled == BODYPART_NOT_DISABLED) //A mouthful
+		if(attacked_prosthetic.obj_integrity >= attacked_prosthetic.max_integrity && attacked_prosthetic.brute_dam == 0 && attacked_prosthetic.burn_dam == 0 && !length(attacked_prosthetic.wounds) && attacked_prosthetic.disabled == BODYPART_NOT_DISABLED) //A mouthful
 			to_chat(user, span_warning("There is nothing to further repair on [attacked_prosthetic]."))
 			return
 		if(blacksmith.get_skill_level(attacked_prosthetic.anvilrepair) <= 0)
@@ -69,7 +69,7 @@
 			attacked_prosthetic.obj_integrity = min(attacked_prosthetic.obj_integrity + repair_percent, attacked_prosthetic.max_integrity)
 			attacked_prosthetic.brute_dam = max(attacked_prosthetic.brute_dam - 10, 0)
 			attacked_prosthetic.burn_dam = max(attacked_prosthetic.burn_dam - 10, 0)
-			attacked_prosthetic.wounds = null //Fixing fractures
+			QDEL_LIST(attacked_prosthetic.wounds) //Fixing fractures
 			attacked_prosthetic.disabled = BODYPART_NOT_DISABLED
 			if(repair_percent == 0.01) // If an inexperienced repair attempt has been successful
 				to_chat(user, span_warning("You fumble your way into slightly repairing [attacked_prosthetic]."))
@@ -202,47 +202,54 @@
 		return
 	if(user.doing)
 		return
-	if(M.construct)
-		var/mob/living/carbon/human/H = M
-		var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-		if(!affecting)
-			return
-
-		while(affecting.get_damage() != 0 || length(affecting.wounds))
-			var/used_time = 7 SECONDS
-			if(M == user)
-				to_chat(user, span_warning("Repairing myself is difficult..."))
-				used_time += 3 SECONDS //repairing yourself as a golem is logistically going to be a lot more difficult than someone else doing it for you
-			if(user.mind)
-				used_time -= (user.get_skill_level(/datum/skill/craft/engineering) * 10)
-			playsound(loc, 'sound/items/bsmith1.ogg', 100, FALSE)
-			if(!do_mob(user, M, used_time))
-				return
-			playsound(loc, 'sound/items/bsmith4.ogg', 100, FALSE)
-
-			var/brute_heal = (affecting.brute_dam / 2)+5 //scale golem healing based on how much damage the limb has so we're not hammering a super damaged golem for years but also not fully healing them in 7 seconds
-			var/burn_heal = (affecting.burn_dam / 2)+5 //also keep in mind that this is healing one body part's damage, rather than the entire body's damage at once
-			affecting.heal_damage(brute_heal, burn_heal)
-
-			if(affecting.brute_dam == 0 && affecting.burn_dam == 0)
-				affecting.heal_wounds(20)//heal wounds twice as fast if there's no other damage to patch up
-			else
-				affecting.heal_wounds(10) // Other heal are far more powerful and can heal skullcrack in 15 hits instead of 75
-
-			H.update_damage_overlays()
-
-			if(M == user)
-				user.visible_message(span_notice("[user] hammers [user.p_their()] [affecting.name]."), span_notice("I hammer my [affecting.name]."))
-			else
-				user.visible_message(span_notice("[user] hammers [M]'s [affecting.name]."), span_notice("I hammer [M]'s [affecting.name]."))
-		if(affecting.get_damage() == 0 && !length(affecting.wounds))//if the bodypart has no damage nor wounds on it...
-			if(M == user)
-				to_chat(user, span_warning("My [affecting.name] is undamaged."))
-			else
-				to_chat(user, span_warning("[M]'s [affecting.name] is undamaged."))
-			return
-	else //Non-construct.
+	var/mob/living/carbon/human/H = M
+	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
+	if(!M.construct && affecting?.status != BODYPART_ROBOTIC) //Non-construct.
 		to_chat(user, span_warning("I can't tinker on living flesh!"))
+		return
+	if(!affecting)
+		return
+
+	//constructs answer to engineering. prosthetics answer to whichever skill made them, and anyone can have a slow go at one
+	var/repair_type = M.construct ? /datum/skill/craft/engineering : affecting.anvilrepair
+	var/repair_skill = (user.mind && repair_type) ? user.get_skill_level(repair_type) : 0
+	var/unskilled = !M.construct && !repair_skill
+
+	while(affecting.owner == H && (affecting.get_damage() != 0 || length(affecting.wounds)))
+		var/used_time = unskilled ? 10 SECONDS : 7 SECONDS
+		if(M == user)
+			to_chat(user, span_warning("Repairing myself is difficult..."))
+			used_time += 3 SECONDS //repairing yourself as a golem is logistically going to be a lot more difficult than someone else doing it for you
+		used_time -= (repair_skill * 10)
+		playsound(loc, 'sound/items/bsmith1.ogg', 100, FALSE)
+		if(!do_mob(user, M, used_time))
+			return
+		playsound(loc, 'sound/items/bsmith4.ogg', 100, FALSE)
+
+		var/brute_heal = unskilled ? 10 : (affecting.brute_dam / 2)+5 //scale golem healing based on how much damage the limb has so we're not hammering a super damaged golem for years but also not fully healing them in 7 seconds
+		var/burn_heal = unskilled ? 10 : (affecting.burn_dam / 2)+5 //also keep in mind that this is healing one body part's damage, rather than the entire body's damage at once
+		affecting.heal_damage(brute_heal, burn_heal)
+
+		var/wound_heal = 10 // Other heal are far more powerful and can heal skullcrack in 15 hits instead of 75
+		if(unskilled)
+			wound_heal = 5
+		else if(affecting.brute_dam == 0 && affecting.burn_dam == 0)
+			wound_heal = 20 //heal wounds twice as fast if there's no other damage to patch up
+		affecting.heal_wounds(wound_heal)
+		affecting.repair_jam(wound_heal)
+
+		H.update_damage_overlays()
+
+		if(M == user)
+			user.visible_message(span_notice("[user] hammers [user.p_their()] [affecting.name]."), span_notice("I hammer my [affecting.name]."))
+		else
+			user.visible_message(span_notice("[user] hammers [M]'s [affecting.name]."), span_notice("I hammer [M]'s [affecting.name]."))
+	if(affecting.get_damage() == 0 && !length(affecting.wounds))//if the bodypart has no damage nor wounds on it...
+		if(M == user)
+			to_chat(user, span_warning("My [affecting.name] is undamaged."))
+		else
+			to_chat(user, span_warning("[M]'s [affecting.name] is undamaged."))
+		return
 
 /obj/item/rogueweapon/hammer/wood	// wood hammer (mallet)
 	name = "wooden mallet"

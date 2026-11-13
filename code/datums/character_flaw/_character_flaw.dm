@@ -43,6 +43,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Unintelligible (+2 Q-Points)"=/datum/charflaw/unintelligible,
 	"Wood Arm (L) (+2 Q-Points)"=/datum/charflaw/limbloss/arm_l,
 	"Wood Arm (R) (+2 Q-Points)"=/datum/charflaw/limbloss/arm_r,
+	"Wood Leg (L) (+2 Q-Points)"=/datum/charflaw/limbloss/leg_l,
+	"Wood Leg (R) (+2 Q-Points)"=/datum/charflaw/limbloss/leg_r,
 	"Hemophage (+2 Q-Points)"=/datum/charflaw/hemophage,
 	"Feeble-bodied"=/datum/charflaw/weak,
 	"Frail"=/datum/charflaw/frail,
@@ -59,6 +61,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/proc/on_mob_creation(mob/user)
 	return
+
+/// Whether this vice can apply to the body set in these preferences. Vices that don't fit can't be picked and give no quirk points.
+/datum/charflaw/proc/fits_preferences(datum/preferences/prefs)
+	return TRUE
 
 /datum/charflaw/proc/apply_post_equipment(mob/user)
 	return

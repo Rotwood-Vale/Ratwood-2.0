@@ -260,7 +260,8 @@
 		if(!saddleborn)
 			damage *= npc_simple_damage_mult // bonus damage against NPCs.
 	if(blocked != 100) // not completely blocked
-		if(damage && L.get_blood_volume() && damage_type == BRUTE)
+		var/obj/item/bodypart/hit_limb = L.get_bodypart(def_zone)
+		if(damage && L.get_blood_volume() && damage_type == BRUTE && (!hit_limb || hit_limb.is_organic_limb()))
 			var/splatter_dir = dir
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
