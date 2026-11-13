@@ -678,7 +678,6 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	id = "zizo_misfortune"
 	duration = 10 MINUTES
 	alert_type = null
-	effectedstats = list(STATKEY_LCK = -2)
 
 GLOBAL_LIST_EMPTY(zizo_proxy)
 
