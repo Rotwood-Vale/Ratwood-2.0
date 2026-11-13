@@ -1,6 +1,3 @@
-#define ZOMBIE_INFECTION_PROBABILITY 20 	/// Zombie infection probability for bites on a wound
-#define ZOMBIE_INFECTION_TIME 2 MINUTES	/// Time taken until zombie infection kicks in (unit wakes up as a zombie)
-
 /*
 	ZOMBIFICATION
 */
@@ -24,5 +21,3 @@
 	if (bodypart_owner)
 		sortTim(bodypart_owner.wounds, GLOBAL_PROC_REF(cmp_wound_severity_dsc))
 	return TRUE
-
-#undef ZOMBIE_INFECTION_TIME
