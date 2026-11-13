@@ -6,7 +6,10 @@
 	max_loops = 1
 	volume = 80
 	extra_range = 7
-	persistent_loop = TRUE
+	// Update the alarm's volume and pan as listeners move during its long clip
+	use_sound_tokens = TRUE
+	// Keep the finite-loop timer so playback ends through on_stop() and alarm_ended()
+	never_native_repeat = TRUE
 
 /datum/looping_sound/rat_alarm/on_stop()
 	. = ..()
@@ -68,6 +71,7 @@
 	addtimer(CALLBACK(src, PROC_REF(start_soundloop)), 5)
 
 /obj/structure/lever/wall/rat_alarm/proc/start_soundloop()
+	QDEL_NULL(soundloop) // alarm_ended() leaves the finished loop set, so don't orphan it here
 	soundloop = new(src, TRUE)
 	for(var/mob/living/hearer in get_hearers_in_range(world.view + 7, src))
 		if(hearer.client && get_dist(src, hearer) > world.view)

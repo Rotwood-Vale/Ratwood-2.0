@@ -1,5 +1,5 @@
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, forced = FALSE, targetted = FALSE, custom_me = FALSE, animal = FALSE)
+/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, forced = FALSE, targetted = FALSE, custom_me = FALSE, anthro_noise = FALSE, travel = null, erp = FALSE)
 	var/oldact = act
 	act = LOWER_TEXT(act)
 	var/param = message
@@ -23,18 +23,29 @@
 			var/list/custom_emote = GLOB.emote_list["me"]
 			for(var/datum/emote/P in custom_emote)
 				mute_time = P.mute_time
-				P.run_emote(src, oldact, m_type, intentional, targetted, (animal ? animal : P.is_animal))
+				P.run_emote(src, oldact, m_type, intentional, targetted, (anthro_noise ? anthro_noise : P.anthro_noise), travel, erp)
 				break
 	else
 		for(var/datum/emote/P in key_emotes)
 			mute_time = P.mute_time
-			if(P.run_emote(src, param, m_type, intentional, targetted, (animal ? animal : P.is_animal)))
+			if(P.run_emote(src, param, m_type, intentional, targetted, (anthro_noise ? anthro_noise : P.anthro_noise), travel, erp))
 				break
 
 	if(custom_me)
 		next_me_emote = world.time + mute_time
 	else
 		next_emote = world.time + mute_time
+
+/**
+ * Runs an emote with ERP containment rules for this call.
+ *
+ * CONTAINED blocks walls and closed openings. LEAKING permits muffled sound one tile beyond a
+ * single closed opening. Soundproof areas also block open openings.
+ *
+ * The policy belongs to the call because these emotes are also used by combat, surgery and wounds.
+ */
+/mob/proc/emote_erp(act, bypass_cooldown = TRUE, travel = SOUND_TRAVEL_CONTAINED)
+	return emote(act, forced = bypass_cooldown, travel = travel, erp = TRUE)
 
 /atom/movable/proc/send_speech_emote(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, message_mode, original_message)
 	var/rendered = compose_message(src, message_language, message, , spans, message_mode)

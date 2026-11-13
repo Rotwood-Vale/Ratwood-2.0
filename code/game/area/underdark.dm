@@ -3,6 +3,7 @@
 	icon_state = "cavewet"
 	warden_area = FALSE
 	first_time_text = "The Underdark" // This is where most people will enter Underdark
+	river_ambience = TRUE
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
 	spookysounds = SPOOKY_CAVE
@@ -63,6 +64,7 @@
 	icon_state = "cavewet"
 	warden_area = FALSE
 	first_time_text = "The Underdark" // This is where most people will enter Underdark
+	river_ambience = TRUE
 	ambientsounds = AMB_CAVEWATER
 	ambientnight = AMB_CAVEWATER
 	spookysounds = SPOOKY_CAVE

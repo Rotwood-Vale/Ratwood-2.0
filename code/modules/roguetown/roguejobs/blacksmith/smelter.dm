@@ -13,6 +13,7 @@
 	base_state = "cavesmelter"
 	anchored = TRUE
 	density = TRUE
+	point_ambience_category = /datum/point_ambience_category/fire
 	climbable = TRUE
 	climb_time = 0
 	climb_offset = 10
