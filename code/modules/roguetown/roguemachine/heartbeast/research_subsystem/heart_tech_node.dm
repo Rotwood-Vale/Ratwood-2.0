@@ -80,6 +80,55 @@
 	is_recipe_node = TRUE
 	prerequisites = list("FLESH_DECOYS")
 
+/datum/chimeric_tech_node/flesh_node
+	name = "Flesh nodes"
+	description = "Allows making of flesh nodes, used for crafting organs and bodyparts."
+	string_id = "FLESH_NODE"
+	required_tier = 1
+	cost = 5
+	selection_weight = 1
+	is_recipe_node = TRUE
+
+/datum/chimeric_tech_node/simple_organs
+	name = "Simple organs"
+	description = "Allows making organs with the flesh nodes and heartblood."
+	string_id = "BASIC_ORGANS"
+	required_tier = 2
+	cost = 40
+	selection_weight = 1
+	is_recipe_node = TRUE
+	prerequisites = list("FLESH_NODE")
+
+/datum/chimeric_tech_node/simple_limbs
+	name = "Simple limbs"
+	description = "Allows shaping flesh nodes into arms and legs with help of heartblood."
+	string_id = "BASIC_BODYPARTS"
+	required_tier = 2
+	cost = 40
+	selection_weight = 1
+	is_recipe_node = TRUE
+	prerequisites = list("FLESH_NODE")
+
+/datum/chimeric_tech_node/advanced_body
+	name = "Advanced limbs"
+	description = "Allows making more advanced bodyeparts with flesh nodes."
+	string_id = "ADVANCED_BODYPARTS"
+	required_tier = 3
+	cost = 80
+	selection_weight = 1
+	is_recipe_node = TRUE
+	prerequisites = list("BASIC_BODYPARTS", "BASIC_ORGANS")
+
+/datum/chimeric_tech_node/life_creation
+	name = "Creation of life"
+	description = "Considered pure heresy by few non pestrians who were able to witness it, combination of lux and trully masterfull fleshaping allows creation of true living being."
+	string_id = "LIFE_CREATION"
+	required_tier = 4 // sits up there with rose
+	cost = 120
+	selection_weight = 1
+	is_recipe_node = TRUE
+	prerequisites = list("ADVANCED_BODYPARTS")
+
 /datum/chimeric_tech_node/black_rose
 	name = "Black Rose Synthesis"
 	description = "Allows crafting of black roses from corrupted flesh and beast blood. It is believed heartbeasts were in part created by Pestra herself to control the black rot that lingers within these roses."
