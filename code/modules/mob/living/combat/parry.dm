@@ -300,7 +300,7 @@
 		if(!do_parry(used_weapon, stamina_drained, attacker)) //show message
 			return FALSE
 		if(chained_parry)
-			refresh_defense_chain()
+			refresh_defense_chain(attacker)
 		else
 			register_paid_defense(attacker)
 		//only gain experience if attacker and defender aren't using non-combat skills for their weapons

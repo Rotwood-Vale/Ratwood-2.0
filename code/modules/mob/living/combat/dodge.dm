@@ -265,7 +265,7 @@
 			to_chat(src, span_warning("I'm too tired to dodge!"))
 			return FALSE
 		if(chained)
-			refresh_defense_chain()
+			refresh_defense_chain(attacker)
 		else
 			register_paid_defense(attacker)
 

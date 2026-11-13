@@ -2866,9 +2866,13 @@
 /mob/living/proc/has_defend_intent()
 	return istype(rmb_intent, /datum/rmb_intent/riposte)
 
-/mob/living/proc/refresh_defense_chain()
+/mob/living/proc/refresh_defense_chain(mob/living/attacker)
 	var/datum/status_effect/buff/defense_chain/chain = has_status_effect(/datum/status_effect/buff/defense_chain)
-	chain?.refresh()
+	if(!chain)
+		return
+	if(attacker)
+		chain.opener_ref = ref(attacker)
+	chain.refresh()
 
 /mob/living/proc/register_paid_defense(mob/living/attacker)
 	if(!has_defend_intent())
