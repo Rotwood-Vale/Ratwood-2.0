@@ -46,6 +46,9 @@
 			if(SSgamemode.current_storyteller?.name == "Abyssor")
 				weather_pool[/datum/particle_weather/hurricane] = 1	//Intended to be very rare, as it is destructive
 
+	if(has_world_trait(/datum/world_trait/zizo_bite))
+		weather_pool = list(/datum/particle_weather/snow_gentle = 10, /datum/particle_weather/snow_storm = 2, /datum/particle_weather/hail = 1)
+
 	if(!weather_pool || !length(weather_pool))
 		return
 

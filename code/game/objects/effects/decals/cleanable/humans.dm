@@ -30,7 +30,7 @@
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	beauty = -100
 	alpha = 200
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	mouse_opacity = MOUSE_OPACITY_ICON
 	appearance_flags = NO_CLIENT_COLOR
 	var/blood_timer
 
@@ -43,6 +43,14 @@
 	pixel_y = rand(5,5)
 	blood_timer = addtimer(CALLBACK(src, PROC_REF(become_dry)), rand(5 MINUTES,8 MINUTES), TIMER_STOPPABLE)
 
+
+/obj/effect/decal/cleanable/blood/attack_hand(mob/living/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		to_chat(H, "<span class='notice'>I get my hands bloody.</span>")
+		H.bloody_hands++
+		H.update_inv_gloves()
 
 /obj/effect/decal/cleanable/blood/proc/become_dry()
 	if(QDELETED(src))

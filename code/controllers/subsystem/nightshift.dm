@@ -123,6 +123,8 @@ SUBSYSTEM_DEF(nightshift)
 				advance_sleep_depravation()
 
 /mob/living/carbon/human/proc/advance_sleep_depravation()
+	if(has_status_effect(/datum/status_effect/debuff/zizo_exhaustion))
+		return
 	if(has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
 		return
 	if(has_status_effect(/datum/status_effect/debuff/sleepytime))

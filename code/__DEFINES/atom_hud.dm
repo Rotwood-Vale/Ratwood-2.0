@@ -15,6 +15,7 @@
 #define ANTAG_HUD_UNDEAD	5
 #define ANTAG_HUD_WEREWOLF	6
 #define ANTAG_HUD_BANDIT	7
+#define ANTAG_HUD_ZIZO	8
 // Notification action types
 #define NOTIFY_JUMP "jump"
 #define NOTIFY_ATTACK "attack"

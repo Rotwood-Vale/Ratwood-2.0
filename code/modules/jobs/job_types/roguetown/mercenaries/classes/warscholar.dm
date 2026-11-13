@@ -17,6 +17,7 @@
 		STATKEY_PER = 1,
 		STATKEY_CON = -1
 	)
+	pure_heart = TRUE
 	age_mod = /datum/class_age_mod/war_scholar
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_mage_aspects = list("mastery" = FALSE, "major" = 1, "minor" = 2, "utilities" = 6, "post_aspect_spells" = list(/datum/action/cooldown/spell/mindlink, /datum/action/cooldown/spell/mending), "ward" = TRUE)
@@ -105,6 +106,7 @@
 		STATKEY_WIL = 2,
 		STATKEY_CON = 3
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT,
@@ -216,6 +218,7 @@
 		STATKEY_SPD = 2,
 		STATKEY_WIL = 2,
 	)
+	pure_heart = TRUE
 	virtue_restrictions = list(/datum/virtue/combat/tough_hide)
 	subclass_skills = list(
 		/datum/skill/combat/wrestling = SKILL_LEVEL_APPRENTICE,

@@ -10,6 +10,7 @@
 		STATKEY_CON = -1,
 		STATKEY_WIL = -1
 	)
+	pure_heart = TRUE
 	subclass_skills = list(
 		/datum/skill/magic/holy = SKILL_LEVEL_NOVICE,
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,

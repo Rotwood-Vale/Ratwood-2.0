@@ -585,6 +585,11 @@
 		return
 	if(!keylock)
 		return
+	var/mob/living/L = user
+	if(L?.has_status_effect(/datum/status_effect/debuff/zizo_knock))
+		to_chat(user, span_warning("The door is stuck fast."))
+		door_rattle()
+		return
 	if(lockbroken)
 		to_chat(user, span_warning("The lock to this door is broken."))
 	user.changeNext_move(CLICK_CD_INTENTCAP)

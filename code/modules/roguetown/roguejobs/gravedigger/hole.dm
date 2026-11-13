@@ -224,10 +224,13 @@
 				user.log_message("robbed a marked grave (destroying [G])", LOG_ATTACK)
 				record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 				record_round_statistic(STATS_GRAVES_ROBBED)
+				var/zgoal = FALSE
+				if(ishuman(user) && istype(get_area(src), /area/rogue/outdoors/town/graveyard))
+					zgoal = complete_zgoal(user, /datum/zizogoal/robgrave)
 				qdel(G)
 				if(isliving(user))
 					var/mob/living/L = user
-					if(!HAS_TRAIT(L, TRAIT_GRAVEROBBER))
+					if(!HAS_TRAIT(L, TRAIT_GRAVEROBBER) && !zgoal)
 						L.apply_status_effect(/datum/status_effect/debuff/cursed)
 		update_icon()
 		attacking_shovel.heldclod = new(attacking_shovel)

@@ -75,6 +75,16 @@
 	new /obj/item/natural/bundle/cloth/bandage/full(src)
 	new /obj/item/natural/bundle/cloth/bandage/full(src)
 
+/datum/inqports/supplies/hound
+	name = "HOUND DEVICE"
+	item_type = /obj/item/inqhound
+	marquescost = 2
+
+/datum/inqports/supplies/scanner
+	name = "SNIFFER DEVICE"
+	item_type = /obj/item/inqscanner
+	marquescost = 2
+
 /datum/inqports/supplies/chains
 	name = "2 Lengths of Chain"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/chains

@@ -9,7 +9,7 @@
 	antag_flag = ROLE_VAMPIRE
 	shared_occurence_type = SHARED_HIGH_THREAT
 
-	weight = 12
+	weight = 0
 
 	denominator = 80
 

@@ -313,11 +313,16 @@
 					play_overhead_indicator('icons/mob/overhead_effects.dmi', "sign_Xylix", 15, MUTATIONS_LAYER, private = TRAIT_XYLIX_DEVOTEE, soundin = 'sound/items/gem.ogg', y_offset = 32)
 					add_stress(/datum/stressevent/xylixian_pity)
 			return failed
-	else if(STALUC < 10)
-		var/failed = prob((10 - STALUC) * multi)
+	else
+		var/chance = max(10 - STALUC, 0) * multi
+		if(has_status_effect(/datum/status_effect/debuff/zizo_misfortune))
+			chance += 10
+		if(!chance)
+			return
+		var/failed = prob(chance)
 		// if we failed, but we're a xylixian devotee, we get another shot
 		if(failed && HAS_TRAIT(src, TRAIT_XYLIX_DEVOTEE))
-			failed = prob((10 - STALUC) * multi)
+			failed = prob(chance)
 			// if xylix twisted fate into our favour, get a little jingle from them
 			if(!failed)
 				play_overhead_indicator('icons/mob/overhead_effects.dmi', "sign_Xylix", 15, MUTATIONS_LAYER, private = TRAIT_XYLIX_DEVOTEE, soundin = 'sound/items/gem.ogg', y_offset = 32)

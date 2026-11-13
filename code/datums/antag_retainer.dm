@@ -12,8 +12,12 @@
 	var/list/wretches = list()
 	var/list/aspirants = list()
 	var/list/assassins = list()
+	var/list/cultists = list()
 
 	var/head_rebel_decree = FALSE
+
+	///zizo cult !
+	var/cult_ascended = FALSE
 
 	///vampire stuff
 	var/mob/living/carbon/human/vampire_lord
