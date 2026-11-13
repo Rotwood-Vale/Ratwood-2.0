@@ -1,0 +1,10 @@
+#define TRAIT_EXPEDITION_MEMBER "expedition_member"
+
+#define EXPEDITION_INACTIVE 0
+#define EXPEDITION_PREPARING 1
+#define EXPEDITION_ACTIVE 2
+#define EXPEDITION_COMPLETED 3
+
+GLOBAL_LIST_EMPTY(expedition_party)
+GLOBAL_VAR_INIT(expedition_status, EXPEDITION_INACTIVE)
+GLOBAL_VAR_INIT(expedition_goal, "")

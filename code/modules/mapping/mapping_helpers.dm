@@ -193,6 +193,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/obj/structure/mineral_door/secret/door_type = /obj/structure/mineral_door/secret
 	var/override_floor = TRUE //Will only use the below as the floor tile if true. Source turf have at least 1 baseturf to use false
 	var/turf/open/floor_turf = /turf/open/floor/rogue/blocks
+	var/boss_door_id = null
 
 /obj/effect/mapping_helpers/secret_door_creator/Initialize(mapload)
 	if(!isclosedturf(get_turf(src)))
@@ -205,6 +206,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	new_door.icon = source_turf.icon
 	new_door.icon_state = source_turf.icon_state
 
+	if(boss_door_id)
+		new_door.boss_door_id = boss_door_id
+		GLOB.boss_mineral_doors |= new_door
+
 	if(redstone_id)
 		new_door.redstone_id = redstone_id
 		GLOB.redstone_objs += new_door
@@ -215,4 +220,4 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	else
 		source_turf.ChangeTurf(source_turf.baseturfs[1])
 
-	. = ..()
+	return ..()
