@@ -620,7 +620,7 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 		priority_announce("Inhumen cultists afflict Rockhill with Curse of Rot!", title = "Calamity", sound = 'sound/villain/dreamer_warning.ogg')
 		var/list/food = list()
 		for(var/obj/item/reagent_containers/food/snacks/F in world)
-			if(F.eat_effect != /datum/status_effect/debuff/rotfood && !prob(20))
+			if(F.eat_effect != /datum/status_effect/debuff/rotfood && !prob(40))
 				food += F
 		for(var/obj/item/reagent_containers/food/snacks/F as anything in food)
 			if(F.become_rotten())
