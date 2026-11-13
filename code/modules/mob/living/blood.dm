@@ -328,6 +328,24 @@
 
 	return TRUE
 
+/mob/living/carbon/human/handle_blood()
+	. = ..()
+	drain_blood_for_massive_pintle()
+
+/// A massive pintle draws blood while erect. Low constitution can drain you into blood loss.
+/mob/living/carbon/human/proc/drain_blood_for_massive_pintle()
+	if(stat == DEAD || HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_JOURNEYS_END) || bodytemperature <= TCRYO)
+		return
+	if(NOBLOOD in dna?.species?.species_traits)
+		return
+	var/obj/item/organ/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
+	if(!penis?.is_massive_and_erect())
+		return
+	var/blood_floor = MASSIVE_PENIS_BLOOD_FLOOR_BASE + (STACON * MASSIVE_PENIS_BLOOD_FLOOR_PER_CON)
+	var/blood_extracted = min(blood_volume - blood_floor, MASSIVE_PENIS_BLOOD_DRAIN)
+	if(blood_extracted > 0)
+		set_blood_volume(blood_volume - blood_extracted)
+
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
 	if(!(NOBLOOD in dna.species.species_traits))

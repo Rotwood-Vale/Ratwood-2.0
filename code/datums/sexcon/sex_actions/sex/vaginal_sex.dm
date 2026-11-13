@@ -49,6 +49,7 @@
 
 /datum/sex_action/vaginal_sex/double
 	name = "Fuck their cunt with both cocks"
+	uses_both_cocks = TRUE
 
 /datum/sex_action/vaginal_sex/double/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!user.sexcon.double_penis_type())

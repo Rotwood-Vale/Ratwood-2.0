@@ -550,7 +550,7 @@
 						if("large")
 							size_num = 3
 
-					penis.penis_size = size_num
+					penis.set_penis_size(size_num)
 					H.update_body()
 					should_update = TRUE
 
