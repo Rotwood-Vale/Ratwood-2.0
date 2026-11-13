@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(pref_categories, list(
 ))
 
 // skips char preview update on these options 2 avoid topic lag
-GLOBAL_LIST_INIT(no_preview_prefs, list("category", "background", "flavortext", "nsfwflavortext", "ooc_notes", "erpprefs", "headshot", "rumour", "gossip", "rumour_preview", "ooc_extra", "ooc_extra_img", "nsfw_ooc_extra_img", "change_title", "change_artist", "img_gallery", "nsfw_img_gallery", "clear_gallery", "clear_nsfw_gallery", "ooc_preview", "formathelp", "voicetype", "voicepack", "voice", "voice_pitch", "char_accent", "char_mannerism", "barksound", "barkspeed", "barkpitch", "barkvary", "barkpreview", "combat_music", "dnr", "preferred_map", "familiar_prefs", "gnoll_prefs", "nickname", "highlight_color", "pronouns", "culinary", "tgui_theme", "parchment_skin", "tgui_ui_prefs", "playerquality", "triumphs", "setspouse", "family", "gender_choice", "species_choice"))
+GLOBAL_LIST_INIT(no_preview_prefs, list("category", "background", "flavortext", "nsfwflavortext", "ooc_notes", "erpprefs", "headshot", "rumour", "gossip", "rumour_preview", "ooc_extra", "ooc_extra_img", "nsfw_ooc_extra_img", "change_title", "change_artist", "img_gallery", "nsfw_img_gallery", "clear_gallery", "clear_nsfw_gallery", "ooc_preview", "formathelp", "voicetype", "voicepack", "voice", "voice_pitch", "char_accent", "char_mannerism", "barksound", "barkspeed", "barkpitch", "barkvary", "barkvolume", "barkpreview", "combat_music", "dnr", "preferred_map", "familiar_prefs", "gnoll_prefs", "nickname", "highlight_color", "pronouns", "culinary", "tgui_theme", "parchment_skin", "tgui_ui_prefs", "playerquality", "triumphs", "setspouse", "family", "gender_choice", "species_choice"))
 
 GLOBAL_LIST_INIT(pref_columns, list(
 	list("Identity", "Origin", "Voice", "Customization"),
@@ -127,9 +127,9 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 		</script>[get_top_html(user)]<table width='100%'><tr>"}
 	for(var/list/column in GLOB.pref_columns)
 		if(column == GLOB.pref_columns[1])
-			html += "<td width='35%' valign='top'>"
+			html += "<td width='37%' valign='top'>"
 		else
-			html += "<td width='40%' valign='top'>"
+			html += "<td width='38%' valign='top'>"
 		for(var/category in column)
 			var/page = call(src, GLOB.pref_categories[category])(user)
 			var/arrow = "+"
@@ -389,6 +389,7 @@ GLOBAL_LIST_INIT(selectable_languages, list(
 	html += pref_line(list(pref_item("Speech Mannerism", pref_link(char_mannerism, "char_mannerism"))))
 	html += pref_line(list(pref_item("Vocal Bark", pref_link(bark_name, "barksound")), pref_link("<b>Preview Bark</b>", "barkpreview")))
 	html += pref_line(list(pref_item("Vocal Bark Speed", pref_link(bark_speed, "barkspeed")), pref_item("Vocal Bark Pitch", pref_link(bark_pitch, "barkpitch")), pref_item("Vocal Bark Variance", pref_link(bark_variance, "barkvary"))))
+	html += pref_line(list(pref_item("Vocal Bark Volume", pref_link(bark_volume, "barkvolume"))))
 	return html
 
 /datum/preferences/proc/page_features(mob/user)

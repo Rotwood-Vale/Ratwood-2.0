@@ -347,6 +347,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/bark_speed = 4
 	var/bark_pitch = 1
 	var/bark_variance = 0.2
+	var/bark_volume = 70
 	COOLDOWN_DECLARE(bark_previewing)
 	COOLDOWN_DECLARE(descriptor_preview)
 	var/hear_barks = TRUE
@@ -1903,6 +1904,11 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					if(!isnull(borkset))
 						bark_variance = clamp(borkset, initial(B.minvariance), initial(B.maxvariance))
 
+				if("barkvolume")
+					var/borkset = input(user, "Choose your desired bark volume. Min: 10. Max: 70", "Character Preference") as null|num
+					if(!isnull(borkset))
+						bark_volume = round(clamp(borkset, 10, 70), 1)
+
 				if("barkpreview")
 					if(SSticker.current_state == GAME_STATE_STARTUP) //Timers don't tick at all during game startup, so let's just give an error message
 						to_chat(user, "<span class='warning'>Bark previews can't play during initialization!</span>")
@@ -1916,7 +1922,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 					barkbox.set_bark(bark_id)
 					var/total_delay = 0
 					for(var/i in 1 to (round((32 / bark_speed)) + 1))
-						addtimer(CALLBACK(barkbox, TYPE_PROC_REF(/atom/movable, bark), list(parent.mob), 7, 70, BARK_DO_VARY(bark_pitch, bark_variance)), total_delay)
+						addtimer(CALLBACK(barkbox, TYPE_PROC_REF(/atom/movable, bark), list(parent.mob), 7, bark_volume, BARK_DO_VARY(bark_pitch, bark_variance)), total_delay)
 						total_delay += rand(DS2TICKS(bark_speed/4), DS2TICKS(bark_speed/4) + DS2TICKS(bark_speed/4)) TICKS
 					QDEL_IN(barkbox, total_delay)
 
@@ -3160,6 +3166,7 @@ Slots: [job.spawn_positions] [job.round_contrib_points ? "RCP: +[job.round_contr
 	character.vocal_speed = bark_speed
 	character.vocal_pitch = bark_pitch
 	character.vocal_pitch_range = bark_variance
+	character.vocal_volume = bark_volume
 
 	//if(parent)
 	//	var/list/L = get_player_curses(parent.ckey)

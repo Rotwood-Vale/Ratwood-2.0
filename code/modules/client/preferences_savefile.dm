@@ -807,6 +807,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["bark_speed"] >> bark_speed
 	S["bark_pitch"] >> bark_pitch
 	S["bark_variance"] >> bark_variance
+	S["bark_volume"] >> bark_volume
 	S["hear_barks"] >> hear_barks
 
 	if(!(bark_id in GLOB.bark_list))
@@ -815,6 +816,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	bark_speed = round(clamp(bark_speed, initial(B.minspeed), initial(B.maxspeed)), 1)
 	bark_pitch = clamp(bark_pitch, initial(B.minpitch), initial(B.maxpitch))
 	bark_variance = clamp(bark_variance, initial(B.minvariance), initial(B.maxvariance))
+	bark_volume = isnull(bark_volume) ? 70 : round(clamp(bark_volume, 10, 70), 1)
 
 /datum/preferences/proc/_load_appearence(S)
 	S["real_name"]			>> real_name
@@ -1215,6 +1217,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["bark_speed"]				, bark_speed)
 	WRITE_FILE(S["bark_pitch"]				, bark_pitch)
 	WRITE_FILE(S["bark_variance"]			, bark_variance)
+	WRITE_FILE(S["bark_volume"]				, bark_volume)
 	WRITE_FILE(S["hear_barks"]				, hear_barks)
 
 	WRITE_FILE(S["dnr"] , dnr_pref)
