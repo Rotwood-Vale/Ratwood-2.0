@@ -125,42 +125,48 @@
 	record_featured_object_stat(FEATURED_STATS_CRAFTED_ITEMS, name)
 
 
-/proc/movable_travel_z_level(atom/movable/AM, turf/newtarg)
-	if(!isliving(AM))
-		AM.forceMove(newtarg)
+/proc/movable_travel_z_level(atom/movable/traveler, turf/destination)
+	if(!isliving(traveler))
+		traveler.forceMove(destination)
 		return
-	var/mob/living/L = AM
-	var/prev_z_level = L.z
-	var/new_z_level = newtarg.z
-	var/stamina_cost = (L.mobility_flags & MOBILITY_STAND) ? 10 : 30 // 1/3rd the cost of climbing up a wall.
-	var/atom/movable/pulling = L.pulling
-	var/was_pulled_buckled = FALSE
-	if(pulling)
-		if(pulling in L.buckled_mobs)
-			was_pulled_buckled = TRUE
-	if((prev_z_level < new_z_level)) // Going UP a Z-level (Only applies stamina cost to the person walking up, not the pulled mob)
-		L.stamina_add(stamina_cost)
-	L.forceMove(newtarg)
-	if(pulling)
-		/// Grab chains can loop back on themselves (A grabs B while B grabs A), ensure we only grab each mob along only once
-		var/list/atom/movable/already_dragged = list(L, pulling)
-		L.stop_pulling()
-		pulling.forceMove(newtarg)
-		L.start_pulling(pulling, supress_message = TRUE)
-		if(was_pulled_buckled) // Assume this was a fireman carry since piggybacking is not a thing
-			L.buckle_mob(pulling, TRUE, TRUE, 90, 0, 0)
-		if(isliving(pulling))
-			var/mob/living/P = pulling
-			while(isliving(P.pulling) && !(P.pulling in already_dragged))
-				var/mob/living/next_pulled = P.pulling
-				was_pulled_buckled = (next_pulled in P.buckled_mobs)
-				already_dragged += next_pulled
-				P.stop_pulling()
-				next_pulled.forceMove(newtarg)
-				P.start_pulling(next_pulled, supress_message = TRUE)
-				if(was_pulled_buckled) // Assume this was a fireman carry since piggybacking is not a thing
-					P.buckle_mob(next_pulled, TRUE, TRUE, 90, 0, 0)
-				P = next_pulled
+	var/mob/living/carrier = traveler
+	if(carrier.z < destination.z)
+		var/stamina_cost = (carrier.mobility_flags & MOBILITY_STAND) ? 10 : 30
+		carrier.stamina_add(stamina_cost)
+	carrier.travel_z_with_riders(destination)
+
+	// A pull chain can loop back to an earlier mob.
+	var/list/already_moved = list(carrier)
+	var/mob/living/puller = carrier
+	while(puller.pulling && !(puller.pulling in already_moved))
+		var/atom/movable/pulled = puller.pulling
+		already_moved += pulled
+		var/mob/living/pulled_mob = pulled
+		if(!(pulled in puller.buckled_mobs))
+			puller.stop_pulling()
+			if(istype(pulled_mob))
+				pulled_mob.travel_z_with_riders(destination)
+			else
+				pulled.forceMove(destination)
+			puller.start_pulling(pulled, supress_message = TRUE)
+		if(!istype(pulled_mob) || !isliving(pulled_mob.pulling))
+			break
+		puller = pulled_mob
+
+/// Stairs and ladders carry attached riders along without changing their buckle posture.
+/mob/living/proc/travel_z_with_riders(turf/destination)
+	var/atom/origin = loc
+	forceMove(destination)
+	if(loc != destination || !has_buckled_mobs())
+		return
+	for(var/mob/living/rider as anything in buckled_mobs.Copy())
+		if(QDELETED(rider) || rider.buckled != src || rider.loc != origin)
+			continue
+		// The carrier has already reached this tile. The rider is following it, not falling.
+		var/was_zfalling = rider.zfalling
+		rider.zfalling = TRUE
+		rider.forceMove(destination)
+		rider.zfalling = was_zfalling
 
 /obj/structure/stairs/dark
 	icon_state = "desc"//visual change for dark basements and tight quarters
