@@ -118,6 +118,8 @@
 			. += span_notice("It has one torn sleeve.")
 		else
 			. += span_notice("Both its sleeves have been torn!")
+	if(armor_detached)
+		. += span_notice("It has had its armor permanently removed!")
 
 ///Remembers that the wearer set these flags_inv bits by hand, so re-equipping doesn't undo it.
 /obj/item/clothing/proc/persist_inv_flags(flag)
@@ -403,6 +405,19 @@
 			else
 				user.visible_message(span_warning("[user] tries to tear [src]."))
 				return
+		if(user.zone_selected == BODY_ZONE_CHEST)
+			if(armor_class == ARMOR_CLASS_NONE)
+				return
+			user.visible_message(span_warning("[user] tries to tear [src]."))
+			if(!do_after(user, 20 SECONDS, target = user)) // Yes, this takes forever, but you are permanently bricking a piece of armor
+				return
+			user.visible_message(span_notice("[user] tears [src]."))
+			playsound(src, 'sound/foley/cloth_rip.ogg', 50, TRUE)
+			armor = armor.detachArmor(armor)
+			armor_class = ARMOR_CLASS_NONE
+			armor_detached = TRUE
+			return
+
 	if(loc == L)
 		L.regenerate_clothes()
 
