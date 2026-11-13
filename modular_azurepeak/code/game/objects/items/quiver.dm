@@ -310,6 +310,20 @@
 		arrows += A
 	update_icon()
 
+/obj/item/quiver/javelin/silver/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to 4)
+		var/obj/item/ammo_casing/caseless/rogue/javelin/silver/A = new()
+		arrows += A
+	update_icon()
+
+/obj/item/quiver/javelin/blacksteel/Initialize(mapload)
+	. = ..()
+	for(var/i in 1 to 4)
+		var/obj/item/ammo_casing/caseless/rogue/javelin/blacksteel/A = new()
+		arrows += A
+	update_icon()
+
 /obj/item/quiver/sling
 	name = "sling bullet pouch"
 	desc = "This pouch holds the ouch." //i came up with this line on an impulse
