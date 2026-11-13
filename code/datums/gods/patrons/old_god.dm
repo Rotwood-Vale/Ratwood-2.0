@@ -3,7 +3,7 @@
 	domain = "Life, Creation, Compassion and Perseverance"
 	desc = "The One arrived to PSYDONIA on the COMET SYON, reshaping the barren world in His image. He was struck down by the Necromantress Zizo; some believe Him dead, others slumbering. May we ENDURE in His name."
 	worshippers = "Ancient Dwarves and Elves, Zybantines, Otavans, Those Who Dream of Peace"
-	virtues = "Peace, Resilience, Stubbornness"
+	virtues = "Compassion, Piety, Brotherhood"
 	sins = "Witchcraft, Sadism, Overindulgence"
 	associated_faith = /datum/faith/old_god
 	mob_traits = list(TRAIT_PSYDONIAN_GRIT)
