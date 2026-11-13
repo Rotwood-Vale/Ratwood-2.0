@@ -7,9 +7,6 @@
 	var/map_y = 0
 	var/origin_language = null
 	var/list/origin_traits
-	var/list/hated_by
-	var/prejudice_stress
-	var/prejudice_examine
 
 GLOBAL_LIST_INIT(origins, build_origins())
 
@@ -24,9 +21,6 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	origin_title = "Otava"
 	origin_language = /datum/language/otavan
 	origin_traits = list(TRAIT_COLD_RESISTANCE, TRAIT_SLOW_METABOLISM)
-	hated_by = list(ORIGIN_GRENZELHOFT)
-	prejudice_stress = /datum/stressevent/prejudice/otava
-	prejudice_examine = span_red("Sanctimonious Otavan! Pah!")
 	map_x = 183
 	map_y = 151
 
@@ -66,8 +60,6 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	reports of dragons beneath."
 	origin_title = ORIGIN_UNDERDARK
 	origin_traits = list(TRAIT_LIGHT_SENSITIVITY)
-	prejudice_stress = /datum/stressevent/prejudice/underdark
-	prejudice_examine = span_red("Squalid underdweller! Pah!")
 	map_x = 120
 	map_y = 344
 
@@ -90,9 +82,6 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	origin_title = "Grenzelhoft"
 	origin_language = /datum/language/grenzelhoftian
 	origin_traits = list(TRAIT_DEADITE_RESISTANCE, TRAIT_METICULOUS)
-	hated_by = list(ORIGIN_OTAVA)
-	prejudice_stress = /datum/stressevent/prejudice/grenzelhoft
-	prejudice_examine = span_red("Irksome Grenzel! Pah!")
 	map_x = 283
 	map_y = 188
 
@@ -134,9 +123,6 @@ GLOBAL_LIST_INIT(origins, build_origins())
 	origin_title = "Kazengun"
 	origin_language = /datum/language/kazengunese
 	origin_traits = list(TRAIT_SOFT_FOOTED)
-	hated_by = list(ORIGIN_FERENTIA)
-	prejudice_stress = /datum/stressevent/prejudice/kazengun
-	prejudice_examine = span_red("Uninvited Kazengunite! Pah!")
 	map_x = 120
 	map_y = 374
 
