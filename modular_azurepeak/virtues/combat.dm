@@ -206,6 +206,29 @@
 	desc = "Whether by natural means or other means, my skin is strong enough to resist being pierced and cut."
 	custom_text = "This will replace your SHIRT slot with a regenerating, unremoveable armor."
 	added_traits = list(TRAIT_NATURALARMOR)
+	configurable = TRUE
+	var/hide_name
+	var/hide_desc
+
+/datum/virtue/combat/tough_hide/config_summary()
+	return "<b>Name</b>: [hide_name || "Default"]<br><b>Description</b>: [hide_desc || "Default"]"
+
+/datum/virtue/combat/tough_hide/save_config()
+	return list("hide_name" = hide_name, "hide_desc" = hide_desc)
+
+/datum/virtue/combat/tough_hide/load_config(list/data)
+	if(!islist(data))
+		return
+	hide_name = data["hide_name"]
+	hide_desc = data["hide_desc"]
+
+/datum/virtue/combat/tough_hide/configure(mob/user)
+	var/new_name = tgui_input_text(user, "What would you like to name your hide?", "Natural Armor", hide_name, 200)
+	if(!isnull(new_name))
+		hide_name = new_name
+	var/new_desc = tgui_input_text(user, "How would you describe your hide?", "Natural Armor", hide_desc, 200)
+	if(!isnull(new_desc))
+		hide_desc = new_desc
 
 /datum/virtue/combat/tough_hide/apply_to_human(mob/living/carbon/human/recipient)
 	. = ..()
@@ -218,34 +241,10 @@
 		qdel(shirt)
 
 	// Equip the skin armor
-	recipient.equip_to_slot_or_del(
-		new /obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak(recipient),
-		SLOT_SHIRT,
-		TRUE
-	)
-	
-	if(alert(recipient, "Would you like to change the name or description of your skin?", "TOUGH HIDE", "MAKE IT SO", "I RESCIND") == "MAKE IT SO") // Query user
-		addtimer(CALLBACK(src, PROC_REF(customize_skin), recipient), 1 SECONDS)
-
-/datum/virtue/combat/tough_hide/proc/customize_skin(mob/living/carbon/human/recipient)
-	var/obj/item/clothing/hide = recipient.wear_shirt
-	var/vanished_hide = FALSE
-	if(!QDELETED(hide))
-		var/inputty = stripped_input(recipient, "What would you like to name your hide?", "TOUGH HIDE", null, 200)
-		if(!QDELETED(hide))
-			if(inputty)
-				hide.name = inputty
-		else
-			vanished_hide = TRUE
-		inputty = stripped_input(recipient, "How would you describe your hide?", "TOUGH HIDE", null, 200)
-		if(!QDELETED(hide))
-			if(inputty)
-				hide.desc = inputty
-		else
-			vanished_hide = TRUE
-	else
-		vanished_hide = TRUE
-
-	if(vanished_hide) //failsafe
-		to_chat(recipient, span_warning("My natural armor vanished! Perhaps some divine intervention might sort things out..."))
+	var/obj/item/clothing/suit/roguetown/armor/regenerating/skin/weak/hide = new(recipient)
+	if(hide_name)
+		hide.name = hide_name
+	if(hide_desc)
+		hide.desc = hide_desc
+	recipient.equip_to_slot_or_del(hide, SLOT_SHIRT, TRUE)
 
