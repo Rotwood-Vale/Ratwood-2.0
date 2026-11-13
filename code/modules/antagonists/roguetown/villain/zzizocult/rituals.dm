@@ -1532,6 +1532,19 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 	icon_state = "cultwall"
 	smooth = SMOOTH_FALSE
 
+/obj/structure/illusory_wall
+	density = FALSE
+	opacity = TRUE
+	anchored = TRUE
+	layer = ABOVE_MOB_LAYER
+
+/obj/structure/illusory_wall/Initialize(mapload, turf/closed/wall/copied)
+	. = ..()
+	icon = copied.icon
+	icon_state = copied.icon_state
+	name = copied.name
+	desc = copied.desc
+
 /obj/item/cultbrick
 	name = "dark shards"
 	desc = "You could use these to make something."
@@ -1612,9 +1625,22 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 	if(nearby_fuge == FALSE)
 		to_chat(user, span_warning("THIS MUST BE NEAR A FUGE!"))
 		return
-	var/choice = input(user, "BUILD", "ZIZO") as null|anything in list("Wall", "Door")
+	var/choice = input(user, "BUILD", "ZIZO") as null|anything in list("Wall", "Door", "Illusory Wall")
 	if(!choice || !amount)
 		return
+	var/turf/closed/wall/copied
+	if(choice == "Illusory Wall")
+		var/list/walls = list()
+		for(var/turf/closed/wall/W in range(2, user))
+			if(W != T)
+				walls[W.name] = W
+		if(!length(walls))
+			to_chat(user, span_warning("NO WALLS NEARBY."))
+			return
+		var/pick = input(user, "COPY WALL", "ZIZO") as null|anything in walls
+		if(!pick)
+			return
+		copied = walls[pick]
 	if(choice == "Door")
 		for(var/obj/structure/mineral_door/wood/donjon/stone/cult/D in range(2, T))
 			if(get_turf(D) != T)
@@ -1636,6 +1662,9 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 		if("Door")
 			new /obj/structure/mineral_door/wood/donjon/stone/cult(T)
 			new /obj/effect/temp_visual/cult/door(T)
+		if("Illusory Wall")
+			new /obj/structure/illusory_wall(T, copied)
+			new /obj/effect/temp_visual/cult/turf(T)
 	playsound(T, 'sound/foley/breaksound.ogg', 50, TRUE)
 	amount--
 	if(amount <= 0)
