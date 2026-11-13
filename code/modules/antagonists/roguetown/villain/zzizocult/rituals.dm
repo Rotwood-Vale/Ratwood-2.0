@@ -1540,6 +1540,8 @@ GLOBAL_LIST_EMPTY(zizo_proxy)
 
 /obj/structure/illusory_wall/Initialize(mapload, turf/closed/wall/copied)
 	. = ..()
+	if(!copied)
+		return
 	icon = copied.icon
 	icon_state = copied.icon_state
 	name = copied.name
