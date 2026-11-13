@@ -51,7 +51,17 @@
 	. = ..()
 	owner.special_role = ROLE_ASPIRANT
 	SSmapping.retainer.aspirants |= owner
-	addtimer(CALLBACK(src, PROC_REF(give_equipment_prompt)), 5 SECONDS)
+
+	if(istype(src, /datum/antagonist/aspirant/supporter) || istype(src, /datum/antagonist/aspirant) && !istype(src, /datum/antagonist/aspirant/loyalist) && !istype(src, /datum/antagonist/aspirant/ruler))
+		owner.special_items["Very Rich Coin Pouch"] = /obj/item/storage/belt/rogue/pouch/coins/veryrich
+		addtimer(CALLBACK(src, PROC_REF(give_equipment_prompt)), 5 SECONDS)
+	if(istype(src, /datum/antagonist/aspirant) && !istype(src, /datum/antagonist/aspirant/supporter) && !istype(src, /datum/antagonist/aspirant/loyalist) && !istype(src, /datum/antagonist/aspirant/ruler))
+		owner.special_items["Proof of Claim"] = /obj/item/paper/scroll/letter_of_claim
+	
+	create_objectives()
+	if(istype(src, /datum/antagonist/aspirant/ruler))
+		return
+	owner.announce_objectives()
 
 /datum/antagonist/aspirant/greet()
 	to_chat(owner, span_danger("I have grown weary of being near the throne, but never on it. I have decided that it is time I ruled Enigma."))
@@ -70,13 +80,6 @@
 	if(.)
 		if(!((new_owner.assigned_role in GLOB.noble_positions) || (new_owner.assigned_role in GLOB.garrison_positions) || (new_owner.assigned_role in GLOB.courtier_positions)))
 			return FALSE
-
-/datum/antagonist/aspirant/on_gain()
-	. = ..()
-	create_objectives()
-	if(istype(src, /datum/antagonist/aspirant/ruler))
-		return
-	owner.announce_objectives()
 
 /datum/antagonist/aspirant/on_removal()
 	remove_objectives()
