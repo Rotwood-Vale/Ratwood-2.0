@@ -1,9 +1,9 @@
-/mob/living/carbon/human/getarmor(def_zone, type, damage, armor_penetration = PEN_NONE, blade_dulling, intdamfactor, used_weapon, pen_info)
+/mob/living/carbon/human/getarmor(def_zone, type, damage, armor_penetration = PEN_NONE, blade_dulling, intdamfactor, used_weapon, pen_info, no_debuff = FALSE)
 	var/armorval = 0
 	var/organnum = 0
 
 	if(def_zone)
-		return checkarmor(def_zone, type, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon, pen_info)
+		return checkarmor(def_zone, type, damage, armor_penetration, blade_dulling, intdamfactor, used_weapon, pen_info, no_debuff)
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL my bodyparts for protection, and averages out the values
@@ -14,7 +14,7 @@
 	return (armorval/max(organnum, 1))
 
 
-/mob/living/carbon/human/proc/checkarmor(def_zone, d_type, damage, armor_penetration = PEN_NONE, blade_dulling, intdamfactor = 1, obj/item/used_weapon, pen_info)
+/mob/living/carbon/human/proc/checkarmor(def_zone, d_type, damage, armor_penetration = PEN_NONE, blade_dulling, intdamfactor = 1, obj/item/used_weapon, pen_info, no_debuff = FALSE)
 	if(!d_type)
 		return 0
 	if(isbodypart(def_zone))
@@ -22,8 +22,10 @@
 		def_zone = CBP.body_zone
 	var/obj/item/clothing/used
 	var/protection = 0
+	var/dr_armor_present = FALSE
 	var/intdamage = damage
-	var/consume_debuff = TRUE
+	// Only melee weapon should be able to cash in on Exposed / Vulnerable
+	var/consume_debuff = !no_debuff && !istype(used_weapon, /obj/projectile)
 	if(!(d_type in ARMOR_DR_TYPES))
 		// Penetration types: slash, stab, piercing
 		used = get_best_worn_armor(def_zone, d_type)
@@ -71,59 +73,77 @@
 				emote("groan", forced = TRUE)
 
 
-			if(used)
-				used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
+		if(used)
+			used.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
 	else
-		// DR types: blunt, fire, acid
+		// DR types: blunt, fire
 		// Blunt hits every layer covering the zone (outer first); only the highest rating among them mitigates.
 		var/list/layers = (d_type in ARMOR_DR_ABSORB_TYPES) ? get_ordered_coverage_layers(def_zone, d_type) : get_best_worn_armor_layered(def_zone, d_type)
 		if(length(layers))
+			var/obj/item/clothing/best_layer
 			for(var/C in layers)
-				if(layers[C] > protection)
+				if(!best_layer || layers[C] > protection)
 					protection = layers[C]
+					best_layer = C
+			if(d_type in ARMOR_DR_RESIST_TYPES)
+				dr_armor_present = TRUE
 			if(protection > 0)
-				if(d_type in ARMOR_DR_PIERCE_TYPES)
-					// Fire/Acid: damage * 1 / (1 + 0.2 * tier); armor takes the blocked portion (what doesn't reach HP)
-					intdamage *= (1 - (1 / (1 + 0.2 * protection)))
-				else
+				if(d_type in ARMOR_DR_ABSORB_TYPES)
 					// Blunt: damage * 1 / (1 + 0.3 * tier), i.e. up to 60% reduction at tier 5
 					intdamage *= 1 / (1 + BLUNT_DR_COEFFICIENT * protection)
+				else
+					// DR tier formula: damage * 1 / (1 + 0.2 * tier)
+					// Fire: armor takes the DR-reduced amount, none reaches HP.
+					var/dr_mult = 1 / (1 + 0.2 * protection)
+					if(d_type in ARMOR_DR_PIERCE_TYPES)
+						intdamage *= (1 - dr_mult)
+					else
+						intdamage *= dr_mult
 			if(intdamfactor != 1)
 				intdamage *= intdamfactor
 
 			var/full_dmg
-			if(has_status_effect(/datum/status_effect/debuff/exposed))
+			if(consume_debuff && has_status_effect(/datum/status_effect/debuff/exposed))
 				full_dmg = TRUE
 				playsound(src, 'sound/combat/exposed_pop.ogg', 100, TRUE)
 				visible_message("<span class = 'combatsecondarybodypart'>[src] suffers a savage hit to their armor while exposed!</span>")
 				remove_status_effect(/datum/status_effect/debuff/exposed)
 				emote("pain", forced = TRUE)
-			else if(has_status_effect(/datum/status_effect/debuff/vulnerable))
+			else if(consume_debuff && has_status_effect(/datum/status_effect/debuff/vulnerable))
 				playsound(src, 'sound/combat/vulnerable_pop.ogg', 100, TRUE)
 				visible_message(span_biginfo("[src] is struck into their armor while vulnerable!"))
 				remove_status_effect(/datum/status_effect/debuff/vulnerable)
 				emote("groan", forced = TRUE)
 
-			var/layers_deep = 1
-			var/played_sound = FALSE
-			var/overflow = 0 // Damage an outer layer couldn't absorb, carried inward
-			for(var/obj/item/clothing/C in layers)
-				var/actualdmg = intdamage
-				if(!full_dmg)
-					actualdmg /= layers_deep
-				actualdmg += overflow
-				overflow = 0
-				if(C.max_integrity && actualdmg > C.obj_integrity)
-					overflow = actualdmg - C.obj_integrity
-				C.take_damage(actualdmg, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
-				if(C.blocksound && !played_sound)
-					playsound(loc, get_armor_sound(C.blocksound, blade_dulling), 100)
-					played_sound = TRUE
-				layers_deep++
+			if(d_type in ARMOR_DR_SINGLE_LAYER_TYPES)
+				if(best_layer)
+					best_layer.take_damage(intdamage, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
+					if(best_layer.blocksound)
+						playsound(loc, get_armor_sound(best_layer.blocksound, blade_dulling), 100)
+			else
+				var/layers_deep = 1
+				var/played_sound = FALSE
+				var/overflow = 0 // Damage an outer layer couldn't absorb, carried inward
+				for(var/obj/item/clothing/C in layers)
+					var/actualdmg = intdamage
+					if(!full_dmg)
+						actualdmg /= layers_deep
+					actualdmg += overflow
+					overflow = 0
+					if(C.max_integrity && actualdmg > C.obj_integrity)
+						overflow = actualdmg - C.obj_integrity
+					C.take_damage(actualdmg, damage_flag = d_type, sound_effect = FALSE, armor_penetration = 100)
+					if(C.blocksound && !played_sound)
+						playsound(loc, get_armor_sound(C.blocksound, blade_dulling), 100)
+						played_sound = TRUE
+					layers_deep++
 			layers.Cut()
 
 	if(physiology)
 		protection += physiology.armor.getRating(d_type)
+
+	if(dr_armor_present && protection < 1)
+		return protection + 1
 
 	return protection
 
@@ -948,7 +968,6 @@
 	return layers
 
 /mob/living/carbon/human/proc/get_best_worn_armor_layered(def_zone, d_type)
-	var/list/layers = list()
 	if(def_zone == BODY_ZONE_TAUR)
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	else if(get_taur_tail())
@@ -958,6 +977,7 @@
 			if(BODY_ZONE_PRECISE_R_FOOT)
 				def_zone = BODY_ZONE_R_LEG
 	var/list/body_parts = list(skin_armor, head, wear_mask, wear_wrists, gloves, wear_neck, cloak, wear_armor, wear_shirt, shoes, wear_pants, backr, backl, belt, s_store, glasses, ears, wear_ring) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	var/list/used_armor = list()
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
@@ -965,12 +985,15 @@
 			var/obj/item/clothing/C = bp
 			if(zone2covered(def_zone, C.body_parts_covered_dynamic))
 				if(C.max_integrity)
-					if(C.obj_integrity <= 0)
+					if(C.obj_integrity <= 0 || C.obj_broken)
 						continue
 				var/val = C.armor.getRating(d_type)
-				if(val > 0)
-					layers[C] = val
-	return layers
+				// Fire/acid: any worn real-armor piece counts even at a 0 rating (blunt keeps its own rating gate), so it soaks
+				// HP damage and takes integrity damage instead of letting it bypass. Plain cloth (no blunt/slash/stab/piercing rating)
+				// and cosmetics (no max_integrity) stay excluded so they bypass instead of burning off. The stored rating is preserved as the value.
+				if(val > 0 || ((d_type in ARMOR_DR_RESIST_TYPES) && C.max_integrity && C.has_armor_value()))
+					used_armor[C] = val
+	return used_armor
 
 /mob/living/carbon/human/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	//SEND_SIGNAL(src, COMSIG_HUMAN_BURNING)

@@ -85,9 +85,9 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		STATKEY_SPD = -1
 	)
 	subclass_skills = list(
+		/datum/skill/combat/staves = SKILL_LEVEL_MASTER,//Warrior Monk sorry
 		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER,
 		/datum/skill/combat/unarmed = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/polearms = SKILL_LEVEL_MASTER,
 		/datum/skill/misc/reading = SKILL_LEVEL_LEGENDARY,
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/cooking = SKILL_LEVEL_APPRENTICE,

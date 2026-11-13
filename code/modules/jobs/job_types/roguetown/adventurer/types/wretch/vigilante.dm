@@ -113,7 +113,8 @@
 		)
 	H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, 4, TRUE) //Investigations
 	H.adjust_skillrank_up_to(/datum/skill/combat/slings, 4, TRUE) // Funny as shit to use.
-	H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE) //Realized NOBODY was running this class because it was abysmal at combat with jman. Woe.
+	H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE) //Last resort CQC. Enough def on a quarterstaff to fight defensively, not enough to be truly offensive.
+	H.adjust_skillrank_up_to(/datum/skill/combat/staves, 4, TRUE) //Realized NOBODY was running this class because it was abysmal at combat with jman. Woe.
 	H.adjust_skillrank_up_to(/datum/skill/misc/sneaking, 4, TRUE) //I lurk in the shadows...
 	H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 4, TRUE) //Crafty
 	H.adjust_skillrank_up_to(/datum/skill/misc/climbing, 5, TRUE) // Escape routes
@@ -146,6 +147,7 @@
 	H.adjust_skillrank_up_to(/datum/skill/misc/reading, 2, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 2, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/craft/cooking, 1, TRUE)
+	H.mind.AddSpell(new /datum/action/cooldown/spell/magicians_brick)
 	H.adjust_skillrank_up_to(/datum/skill/misc/climbing, 5, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/athletics, 5, TRUE)
 	ADD_TRAIT(H, TRAIT_MAGEARMOR, TRAIT_GENERIC)

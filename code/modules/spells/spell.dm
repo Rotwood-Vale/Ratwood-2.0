@@ -511,11 +511,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	switch(charge_type)
 		if("recharge")
 			if(charge_counter < recharge_time)
-				to_chat(user, still_recharging_msg)
+				if(feedback)
+					to_chat(user, still_recharging_msg)
 				return FALSE
 		if("charges")
 			if(!charge_counter)
-				to_chat(user, span_warning("[name] has no charges left!"))
+				if(feedback)
+					to_chat(user, span_warning("[name] has no charges left!"))
 				return FALSE
 	return TRUE
 
@@ -930,7 +932,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if(moving_mount_blocks_cast(user))
 			return FALSE
 
-	if(!charge_check(user, TRUE))
+	if(!charge_check(user, feedback))
 		return FALSE
 
 	if(user.stat && !stat_allowed)

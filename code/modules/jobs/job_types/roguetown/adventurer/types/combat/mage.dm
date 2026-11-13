@@ -323,6 +323,7 @@
 	else
 		wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
 		if(H.mind)
+			H.mind.AddSpell(new /datum/action/cooldown/spell/magicians_brick)
 			H.mind.AddSpell(new /datum/action/cooldown/spell/projectile/waterbolt)
 	if(H.mind)
 		H.mind.AddSpell(new /datum/action/cooldown/spell/blink)
