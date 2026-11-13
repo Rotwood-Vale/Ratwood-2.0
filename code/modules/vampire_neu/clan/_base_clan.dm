@@ -7,6 +7,7 @@ And it also helps for the character set panel
 /datum/clan
 	var/name = "Caitiff"
 	var/desc = "The clanless. The rabble. Of no importance."
+	var/tagline = "An ancient curse carried through blood"
 	var/clanicon
 
 	var/list/clane_covens = list() //coven datums
@@ -230,6 +231,10 @@ And it also helps for the character set panel
 	to_chat(H, "<span class='notice'>You have joined [name] as a [member_type]! Speak with leadership for position assignment.</span>")
 
 /datum/clan/proc/initialize_hierarchy()
+	if(hierarchy_root)
+		return
+
+	apply_hierarchy_layout(vampire_clan_public_layout())
 	if(hierarchy_root)
 		return
 

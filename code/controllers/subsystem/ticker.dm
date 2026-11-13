@@ -774,8 +774,12 @@ SUBSYSTEM_DEF(ticker)
 /// Wrapper for sunsteal proc
 /datum/controller/subsystem/ticker/proc/sunsteal(mob/living/sunstealer)
 	ASSERT(sunstealer)
+	if(sunstolen)
+		return FALSE
+	sunstolen = TRUE
 	RegisterSignal(sunstealer, list(COMSIG_QDELETING, COMSIG_MOB_DEATH), PROC_REF(on_sunstealer_death))
 	INVOKE_ASYNC(src, PROC_REF(on_sunsteal)) // Invoke async since on_sunsteal() sleeps in CHECK_TICK
+	return TRUE
 
 /// Proc called when the sunstealer successfully steals the sun, causing world-wide effects
 /datum/controller/subsystem/ticker/proc/on_sunsteal()
@@ -828,7 +832,8 @@ SUBSYSTEM_DEF(ticker)
 				new /mob/living/carbon/human/species/skeleton/npc(_T)
 
 /// Returns universe state to normal after the sunstealer has been slain
-/datum/controller/subsystem/ticker/proc/on_sunstealer_death()
+/datum/controller/subsystem/ticker/proc/on_sunstealer_death(datum/source)
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOB_DEATH))
 	GLOB.todoverride = null
 	sunstolen = FALSE
 	settod()
