@@ -110,7 +110,7 @@
 /mob/living/proc/do_dodge(mob/living/attacker, turf/turfy, chained = FALSE)
 	if(dodge_sanity)
 		return FALSE
-	if(stamina >= max_stamina) // Out of stamina? Out of dodge
+	if(!chained && stamina >= max_stamina) // Out of stamina? Out of dodge
 		return FALSE
 	var/obj/item/IL
 	var/ourskill = 0
