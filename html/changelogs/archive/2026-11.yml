@@ -1,0 +1,149 @@
+2026-11-01:
+  IronDragoon:
+  - rscadd: Added option for lactation 'after impregnation'. If character is fertile
+      and has breasts, will then start lactating after being impregnated (resets each
+      round)
+  Nid4259:
+  - bugfix: fixed grand duke valiant warrior using a tribal chiefs skills and description
+  SirSwagmeyer:
+  - bugfix: Ports the previous pickpocket rework onto Combat 2.0's STEAL intent.
+2026-11-02:
+  Arturlang:
+  - bugfix: when smithing and then quenching sometimes, the item would randomly dissapear
+      during the quenching step
+2026-11-03:
+  Arturlang:
+  - bugfix: licker wretches keeping silver weakness post-conversion
+  - bugfix: vampires clan abilities starting out without icons or names
+  - bugfix: giving a vampire a silver item and it being trapped in their contents
+  - bugfix: lycker immunity not making you immune to vampire conversion
+  CentralSmith:
+  - bugfix: You can no longer raise your guard while vulnerable from a successful
+      feint.
+  - bugfix: Right-click Defend and the guard hotkey now use the same checks, including
+      preventing guard from stacking with limbguard.
+  Guidesu:
+  - rscadd: Bakers Root
+  Yuckuza:
+  - rscadd: Ported berserker rage ability from AP
+  - rscadd: New pure unarmed options for shaman merc, berserker, thespian, barbarian,
+      monk, heretic monk, iconoclast, and lunancy embracer
+  - balance: Throwing loadout for vigilante wretch now gets throwing arm trait, master
+      climbing, master athletics, and a packback with lots of room for throwables.
+  - rscadd: Berserker wretch loadout options expanded to include grand maul and berserker
+      sword along with the option between light armor or natural armor.
+  - balance: crit resistance on several classes swapped for blood resistance; crit
+      resistance now locked behind unarmed or pure unarmed choices
+  - balance: amazon heavy armor loadout mace option weapon skill reduced to JMAN
+  - balance: Astrtatan immolation can be self-targeted.
+  ronfino:
+  - refactor: Renamed tab "Admin.Special" into "-GameMaster-"
+  - refactor: Renamed verb "Spawn..." into "Spawn"
+  - refactor: Renamed verb "Bomb..." into "Bomb"
+  - refactor: Renamed verb "Bomb - DynEx..." into "Bomb - Dynamic Explosion"
+  - bugfix: Tongs are smeltable again via SNEAK.
+  - rscdel: Removed duplicate tongs from code.
+2026-11-04:
+  AnnikaRU:
+  - balance: Engineer loses Fusilier, Alchemy Expert and is locked to journeyman in
+      all smithing skills
+  - balance: Engineer's stats were reduced to an overall 7 statspread
+  - balance: Smith's stats were reduced to an overall 7 statspread
+  - balance: Engineer loses skills across the board, including firearms as it is no
+      longer required.
+  - balance: Engineer loses ward and one minor spell choice, being locked to battlewardry
+      and artifice
+  - balance: Cannon was made more expensive to prevent mass cannon deployments
+  - qol: guild blacksmith was given basic carpentry and masonry as well as journeyman
+      mining
+  - qol: long dolabra's were changed to be a pickaxe subtype instead of axe still
+      requiring axe skill
+  - qol: steam shield no longer makes the user drop the shield when activating it
+      and is cheaper to produce
+  - qol: Engineer now receives master in masonry and carpentry
+  - qol: bombard shrapnel charge now deals massive armor damage to anyone in its explosion
+      radius and shredding unarmored people going from 20 AP to medium penetration
+      and 5 damage to 110
+  - bugfix: Planks now properly stack up to 20
+  - bugfix: Engineer is now given their golden spectacles in their backpack to prevent
+      a bad eyesight overwrite
+  - bugfix: Rotational Machinery, Windmill, Autosmither, and Infernal forge now drop
+      the items needed to craft them instead of randomized, autosmither no longer
+      drops example cogs
+  Rin053:
+  - rscadd: Drakians can choose their ancestral blood in character setup. The choices
+      are Rontz, Saffira, Gemerald, Toper, and Amythortz.
+  - rscadd: Fluvians, arachnids, mire crawlers, and mire lurkers bleed blue.
+  - rscadd: Bloodstains, footprints, trails, and gibs use the bleeder's blood color,
+      and dry into a duller shade of that blood.
+  Risraivyn:
+  - rscadd: Add item icons to examine
+  SirSwagmeyer:
+  - bugfix: fixed armor penetration crit rolls again.
+  - rscadd: Guarded virtue can now toggle their own anonimity with a button in the
+      Virtue tab, appearing with fewer identifying features.
+  - refactor: Guarded virtue no longer has a forcefully blank faith salute, it works
+      like normal now. Instead, Guarded gets a Fake Faith Salute emote.
+  - balance: Guarded virtue now obscures worn armor integrity values unless broken.
+  - balance: Guarded virtue now obscures dodge / feint / parry values for the defender.
+  - balance: Guarded virtue now prevents showing any identifiable healing miracle
+      text to the target.
+  Xander3359:
+  - balance: Medicine skill through crafting bandages can be done from untrained when
+      you have positive int
+  - balance: Nerfs Sylph
+  Yuckuza:
+  - rscadd: Added new adjustable masks in padded cloth, leather, iron chain, and steel
+      chain variants.
+  - rscadd: You can now combine cuirasses with hauberks to make plate-and-maille via
+      the crafting menu. Comes in steel cuirass, fluted, decorated, and ancient. All
+      are heavy armor and share coverage with fullplate, but have less integrity.
+  - rscadd: 3 new steel barbutes with exceedingly fashionable plum options. No longer
+      locked to skeletons!
+  - rscadd: Added aventails, a medium armor-class neck protection item. Also added
+      two aventailed bascinets which protect the neck and head. Open-face bascinet
+      is medium armor; the visored one is heavy.
+  - rscadd: Elven barbute icons updated and made purchasable in the Silverface.
+  - rscadd: Froggemund is now purchasable in the Silverface. Comes in two variants;
+      one accepts a nurse veil; the other accepts a feather for a greatplume.
+  - rscadd: Greatplume variants of the armet and fluted armet are craftable and available
+      at the Silverface.
+  - rscadd: New decorated variants of steel armor! Reskins of typical steel plate
+      options that require gold to smith.
+  - rscadd: New helmets available as loadout options for knights, disgraced knight
+      wretch, knight errant advclass, and knightly journey migrant knight. Elven barbutes
+      are available to black oak rangers and pariahs.
+  - image: backend change, organized head.dmi
+  - rscadd: Punching bandages now accept weapon enchants such as life steal, briar
+      thorns, lightning, etc.
+  - rscadd: Abotteer gets new unique silver-blessed wraps that allow him to sunder
+      silver-weak mobs.
+  - balance: Sunder crit rework ported from Azure Peak.
+  - balance: Redone silver sunders. 40 stacks are applied per hit; 100 allows old
+      Sunder kills. Sunder stacks apply debuffing effects as they build up. Bring
+      numbers + gear for monsters, not just blessed silver.
+  - balance: All forms of sundering flames disable your pain immunity, making you
+      subject to paincrit again and enabling you to feel pain. This only applies if
+      you're already silver weak.
+  - balance: vampires take (60) vs (40) sunderstacks. - This means they die in 3 to
+      4 blows vs 4 to 6 blows if you can keep the pressure with blessed silver. They
+      also feel the effects of critical sunders slightly longer than regular silver-weak.
+  - balance: Eucharist relic rapier force buffed to 25, on par with heartstring and
+      cuphilted rapier
+  - balance: Consecretia relic flail intents swapped with greatflail intents to aid
+      wanna-be Belmonts
+  - balance: Unforgotten and Forgotten sword relic weapons now get 10 force when blessed,
+      putting them on par with ordinator's apocrypha greatsword.
+  ariaworld:
+  - balance: Restore Tough Skin defense stats to medium tier protection.
+  - bugfix: Fixed Deadite NPCs biting when skullcracked/paralyzed.
+  wikimody:
+  - rscadd: Adds DEFY new psydonian T3 miracle with lets them move and act in near
+      death state for limited time
+2026-11-06:
+  Yuckuza:
+  - bugfix: LE pure unarmed no longer spawns with bracers they can't actually use.
+  petwir1:
+  - rscadd: 'dwarven knowledge trait allows items to be fully repaired
+
+      :cl:'

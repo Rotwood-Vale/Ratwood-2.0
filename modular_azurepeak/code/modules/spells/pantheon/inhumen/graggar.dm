@@ -28,6 +28,152 @@
 		target.apply_status_effect(/datum/status_effect/debuff/call_to_slaughter)	//Debuffs non-inhumens/psydonians
 	return TRUE
 
+//Roar of the Gorebound Star - frightens nearby enemies, making their dodges unsteady.
+/obj/effect/proc_holder/spell/self/graggar_roar
+	name = "Roar of the Gorebound Star"
+	desc = "Unleash a terrifying warcry that weakens nearby enemies' will. Those who dodge while afraid are knocked to the ground."
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	overlay_state = "fear"
+	recharge_time = 3 MINUTES
+	invocations = list("COWER BEFORE THE GOREBOUND STAR!")
+	invocation_type = "shout"
+	sound = 'sound/magic/graggar_rage.ogg'
+	releasedrain = 30
+	miracle = TRUE
+	devotion_cost = 50
+	cast_without_targets = TRUE
+
+/obj/effect/proc_holder/spell/self/graggar_roar/cast(list/targets, mob/living/user = usr)
+	for(var/mob/living/carbon/target in view(3, get_turf(user)))
+		if(target == user)
+			continue
+		target.apply_status_effect(STATUS_EFFECT_GRAGGAR_FEAR)
+	return TRUE
+
+#define GRAGGAR_FEAR_FILTER "graggar_fear"
+
+/atom/movable/screen/alert/status_effect/debuff/graggar_fear
+	name = "Graggar's Terror"
+	desc = "A primal fear saps your will. Dodging an attack will send you sprawling."
+	icon_state = "fear"
+
+/datum/status_effect/debuff/graggar_fear
+	id = "graggar_fear"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/graggar_fear
+	effectedstats = list(STATKEY_WIL = -2)
+	duration = 10 SECONDS
+	tick_interval = 5 SECONDS
+
+/datum/status_effect/debuff/graggar_fear/tick()
+	if(prob(20))
+		owner.emote("scream")
+
+/datum/status_effect/debuff/graggar_fear/on_apply()
+	. = ..()
+	owner.add_filter(GRAGGAR_FEAR_FILTER, 2, list("type" = "outline", "color" = "#8B0000", "alpha" = 120, "size" = 2))
+
+/datum/status_effect/debuff/graggar_fear/on_remove()
+	owner.remove_filter(GRAGGAR_FEAR_FILTER)
+	return ..()
+
+#undef GRAGGAR_FEAR_FILTER
+
+//Berserk Body - trade strength and will for repeated healing.
+/obj/effect/proc_holder/spell/self/graggar_regenerate
+	name = "Berserk Body"
+	desc = "Grants temporary health regeneration at the cost of strength, will, and devotion."
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	overlay_state = "regenerate"
+	glow_color = COLOR_PATRON_GRAGGAR
+	glow_intensity = GLOW_INTENSITY_LOW
+	releasedrain = 10
+	chargedrain = 0
+	chargetime = 0
+	chargedloop = /datum/looping_sound/invokeascendant
+	sound = 'sound/foley/gross.ogg'
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = FALSE
+	invocation_type = "none"
+	recharge_time = 1 MINUTES
+	devotion_cost = 0
+	miracle = TRUE
+	human_req = TRUE
+
+/obj/effect/proc_holder/spell/self/graggar_regenerate/cast(list/targets, mob/living/carbon/human/user = usr)
+	. = ..()
+	playsound(get_turf(user), 'sound/magic/haste.ogg', 80, TRUE, soundping = TRUE)
+	if(user.has_status_effect(STATUS_EFFECT_GRAGGAR_REGENERATE))
+		user.remove_status_effect(STATUS_EFFECT_GRAGGAR_REGENERATE)
+		return TRUE
+
+	user.emote("warcry")
+	user.visible_message(span_danger("[user] mutters an incantation as their skin begins to regenerate."))
+	user.apply_status_effect(STATUS_EFFECT_GRAGGAR_REGENERATE)
+	return TRUE
+
+/obj/effect/proc_holder/spell/self/graggar_regenerate/start_recharge()
+	var/mob/living/user = ranged_ability_user || action?.owner
+	if(user?.has_status_effect(STATUS_EFFECT_GRAGGAR_REGENERATE))
+		recharge_time = 0
+		charge_counter = 0
+		last_process_time = world.time
+		START_PROCESSING(SSfastprocess, src)
+		return
+
+	recharge_time = initial(recharge_time)
+	return ..()
+
+/atom/movable/screen/alert/status_effect/buff/graggar_regenerate
+	name = "Berserk Body"
+	desc = "My flesh regrows, my bones mend, and my muscles recover at the cost of strength and will."
+	icon_state = "fire"
+
+/datum/status_effect/buff/graggar_regenerate
+	id = "graggar_regenerate"
+	examine_text = "<font color='red'>SUBJECTPRONOUN flesh regrows!</font>"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/graggar_regenerate
+	effectedstats = list(STATKEY_WIL = -3, STATKEY_STR = -3)
+	duration = 6 SECONDS
+	tick_interval = 5 SECONDS
+	var/last_water = 0
+
+/datum/status_effect/buff/graggar_regenerate/tick()
+	var/mob/living/carbon/human/user = owner
+	var/skill = user.get_skill_level(/datum/skill/magic/holy)
+	var/cost = 50
+	switch(skill)
+		if(6)
+			cost = 45
+		if(5)
+			cost = 40
+		if(4)
+			cost = 35
+		if(3)
+			cost = 30
+		if(2)
+			cost = 25
+
+	if(!user.devotion || user.devotion.devotion < cost)
+		to_chat(user, span_warning("I do not have enough devotion to sustain this regeneration!"))
+		return
+
+	user.devotion.update_devotion(-cost)
+	to_chat(user, span_purple("I lose [cost] devotion!"))
+	user.adjustBruteLoss(-5 * skill)
+	user.adjustFireLoss(-5 * skill)
+	user.heal_wounds(3 * skill)
+	if(last_water + 10 SECONDS <= world.time)
+		last_water = world.time
+		if(skill >= 3)
+			user.reagents.add_reagent(/datum/reagent/water, 3 * skill)
+	for(var/i in 1 to 3)
+		var/obj/effect/temp_visual/heal/heal_effect = new /obj/effect/temp_visual/heal_blood(get_turf(user))
+		heal_effect.color = "#bc0909"
+
+	user.apply_status_effect(STATUS_EFFECT_GRAGGAR_REGENERATE)
+
 //Unholy Grasp - Turns the viscera in your hand into a net made of gore.
 /obj/effect/proc_holder/spell/self/blood_net
 	name = "Unholy Grasp"
@@ -185,14 +331,14 @@
 
 	return TRUE
 
-//Bloodrage T0 -- Uncapped STR buff.
+//Bloodrage T0 -- Adrenaline buff.
 /obj/effect/proc_holder/spell/self/graggar_bloodrage
-	name = "Bloodrage"
-	desc = "Grants you unbound strength for a short while."
+	name = "Bloodrrush"
+	desc = "Fills you with an adrenaline rush for a short while."
 	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
 	overlay_state = "bloodrage"
-	recharge_time = 5 MINUTES
+	recharge_time =2 MINUTES
 	invocations = list("GRAGGAR!! GRAGGAR!! GRAGGAR!!",
 		"GRAGGAR! BREAK MY CHAINS!",
 		"GRAGGAR! SHATTER MY BINDS!"
@@ -201,7 +347,7 @@
 	sound = 'sound/magic/bloodrage.ogg'
 	releasedrain = 30
 	miracle = TRUE
-	devotion_cost = 80
+	devotion_cost = 30
 	antimagic_allowed = FALSE
 	var/static/list/purged_effects = list(
 	/datum/status_effect/incapacitating/immobilized,
@@ -220,7 +366,7 @@
 	human.emote("warcry")
 	for(var/effect in purged_effects)
 		human.remove_status_effect(effect)
-	human.apply_status_effect(/datum/status_effect/buff/bloodrage)
+	human.apply_status_effect(/datum/status_effect/buff/adrenaline_rush)
 	human.visible_message(span_danger("[human] rises upward, boiling with immense rage!"))
 	return TRUE
 
@@ -420,3 +566,87 @@
 	rift.target = user
 	summoned = TRUE
 	return TRUE
+
+//////////////////////////
+// T4 - Avatar of Rage	//
+//////////////////////////
+
+/obj/effect/proc_holder/spell/invoked/graggar_avatar
+	name = "Avatar of Rage"
+	desc = "Unleash your true rage for two minutes, granting pain immunity, infinite stamina, immunity to grabs, uncapped strength, and +2 strength. Removes stun-adjacent and stun effects, and can be cast while incapacitated."
+	overlay_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	action_icon = 'icons/mob/actions/graggarmiracles.dmi'
+	overlay_state = "avatar"
+	clothes_req = FALSE
+	releasedrain = 5
+	chargedrain = 0
+	chargetime = 1 SECONDS
+	recharge_time = 10 MINUTES
+	invocations = list("I WILL TEAR YOU LIMB FROM LIMB!!")
+	sound = 'sound/magic/graggar_rage.ogg'
+	chargedloop = /datum/looping_sound/invokeascendant
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = TRUE
+	miracle = TRUE
+	devotion_cost = 100
+	var/static/list/purged_effects = list(
+	/datum/status_effect/incapacitating/off_balanced,
+	/datum/status_effect/incapacitating/immobilized,
+	/datum/status_effect/incapacitating/paralyzed,
+	/datum/status_effect/incapacitating/stun,
+	/datum/status_effect/incapacitating/knockdown
+	)
+
+/obj/effect/proc_holder/spell/invoked/graggar_avatar/cast(list/targets, mob/user)
+	. = ..()
+	var/mob/living/carbon/human/caster = user
+	if(!isliving(user))
+		return FALSE
+	for(var/effect in purged_effects)
+		caster.remove_status_effect(effect)
+	caster.apply_status_effect(/datum/status_effect/buff/avatar)
+	caster.emote("warcry")
+	return TRUE
+
+#define AVATAR_FILTER "avatar"
+
+/atom/movable/screen/alert/status_effect/buff/avatar
+	name = "SLAUGHTER INCARNATE"
+	desc = span_bloody("GRAGGAR! GRAGGAR! GRAGGAR!")
+	icon_state = "bloodrage"
+
+/datum/status_effect/buff/avatar
+	id = "avatar"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/avatar
+	var/outline_color = "#DC143C"
+	duration = 2 MINUTES
+	effectedstats = list(STATKEY_STR = 2)
+
+/datum/status_effect/buff/avatar/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_NOPAIN, TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_INFINITE_STAMINA, TRAIT_MIRACLE)
+	ADD_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_MIRACLE)
+	shake_camera(owner, 5, 2) //Aura
+	to_chat(owner, span_userdanger(pick("KILL, FUCKING KILL! SLAUGHTER THEM!", "BLOOD, FUCKING SPILL THE BLOOD!", "BLOOD AND FURY, SPLITTING MY SKULL!", "I'LL KILL ANYTHING THAT MOVES!", "I'M FUCKING UNSTOPPABLE, I'LL BREAK THEM!", "GRAGGAR MAKE A WORLD OF BLOODSHED!", "GRAGGAR FEAST UPON MY SLAUGHTER!")))
+	var/filter = owner.get_filter(AVATAR_FILTER)
+	if(!filter)
+		owner.add_filter(AVATAR_FILTER, 2, list("type" = "outline", "color" = outline_color, "alpha" = 60, "size" = 2))
+	return TRUE
+
+/datum/status_effect/buff/avatar/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_STRENGTH_UNCAPPED, TRAIT_MIRACLE)
+	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_MIRACLE)
+	REMOVE_TRAIT(owner, TRAIT_NOPAIN, TRAIT_MIRACLE)
+	REMOVE_TRAIT(owner, TRAIT_INFINITE_STAMINA, TRAIT_MIRACLE)
+	REMOVE_TRAIT(owner, TRAIT_GRABIMMUNE, TRAIT_MIRACLE)
+	owner.visible_message(span_warning("[owner] wavers, their rage simmering down."))
+	owner.OffBalance(3 SECONDS)
+	owner.remove_filter(AVATAR_FILTER)
+	owner.emote("breathgasp", forced = TRUE)
+	owner.Slowdown(3)
+
+#undef AVATAR_FILTER

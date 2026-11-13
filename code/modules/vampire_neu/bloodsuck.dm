@@ -29,10 +29,10 @@
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human_victim = victim
 		if(VDrinker && HAS_TRAIT(human_victim, TRAIT_WORN_SILVER_PSICROSS))
-			to_chat(src, span_userdanger("SILVER! HISSS!!!"))
+			to_chat(src, span_silver("SILVER! HISSS!!!"))
 			return
 		if(VDrinker && HAS_TRAIT(human_victim, TRAIT_SILVER_BLESSED))
-			to_chat(src, span_userdanger("SILVER IN THE BLOOD! HISSS!!!"))
+			to_chat(src, span_silver("SILVER IN THE BLOOD! HISSS!!!"))
 			return
 		human_victim.add_bite_animation()
 
@@ -122,7 +122,7 @@
 			victim.death()
 			return
 
-	if(!victim.clan && victim.mind && ishuman(victim) && VDrinker.generation > GENERATION_THINBLOOD && victim.get_blood_volume() <= BLOOD_VOLUME_BAD)
+	if(!victim.clan && victim.mind && ishuman(victim) && !HAS_TRAIT(victim, TRAIT_UNLYCKERABLE) && VDrinker.generation > GENERATION_THINBLOOD && victim.get_blood_volume() <= BLOOD_VOLUME_BAD)
 		if(alert(src, "Would you like to sire a new spawn?", "THE CURSE OF KAIN", "MAKE IT SO", "I RESCIND") != "MAKE IT SO")
 			to_chat(src, span_warning("I decide [victim] is unworthy."))
 		else
@@ -151,7 +151,7 @@
 	if(sire.stat == DEAD) // If you accept the prompt as a corpse, you get turned into a corpse vampire, which RR's you pretty much
 		return FALSE
 
-	if(HAS_TRAIT_FROM(sire, TRAIT_UNLYCKERABLE, REF(src))) // Cannot turn Gnolls to Sires
+	if(HAS_TRAIT(src, TRAIT_UNLYCKERABLE)) // Cannot turn Gnolls to Sires
 		return FALSE
 
 	revive(full_heal = TRUE)

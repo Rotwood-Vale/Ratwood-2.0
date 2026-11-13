@@ -967,6 +967,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	pixel_x = initial(pixel_x)
 	pixel_y = initial(pixel_y)
 	if(isturf(loc))
+		// Only drops that land it in the world, so swapping it between slots or into a bag records nothing.
+		// Untouched gear is skipped, so a death or transform dropping a whole outfit stays free
+		add_forensic_action(user, "dropped", routine = TRUE, only_if_tracked = TRUE)
 		if(!ontable())
 			var/oldy = pixel_y
 			pixel_y = pixel_y+5
@@ -1071,7 +1074,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(V_lord && V_lord.generation >= GENERATION_METHUSELAH)
 			return
 
-		to_chat(M, span_userdanger("I can't pick up the silver, it is my BANE!"))
+		to_chat(M, span_silver("I can't pick up the silver, it is my BANE!"))
 		M.Knockdown(10)
 		M.Paralyze(10)
 		M.adjustFireLoss(25)

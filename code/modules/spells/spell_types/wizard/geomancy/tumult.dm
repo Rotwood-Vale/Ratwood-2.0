@@ -172,7 +172,7 @@
 
 	for(var/turf/struct_turf in get_hear(1, T))
 		for(var/obj/structure/S in struct_turf)
-			S.take_damage(erupt_direct * 2, BRUTE, "blunt")
+			S.take_damage_from(caster, erupt_direct * 2, BRUTE, "blunt", cause = "with [name]")
 
 	new /obj/effect/temp_visual/kinetic_blast(T)
 	var/obj/structure/earthen_pillar/pillar = new(T)
@@ -339,7 +339,7 @@
 			obstacle.take_damage(crash_structure_damage, BRUTE, "blunt")
 		for(var/obj/structure/S in obstacle)
 			if(S.density)
-				S.take_damage(crash_structure_damage, BRUTE, "blunt")
+				S.take_damage_from(H, crash_structure_damage, BRUTE, "blunt", cause = "with [name]")
 	if(!from)
 		return
 	new /obj/effect/temp_visual/spell_impact(from, spell_color, SPELL_IMPACT_MEDIUM)

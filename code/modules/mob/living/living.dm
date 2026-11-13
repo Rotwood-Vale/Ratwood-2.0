@@ -959,6 +959,7 @@
 		set_suicide(FALSE)
 		clear_alert("not_enough_oxy")
 		remove_client_colour(/datum/client_colour/monochrome)
+		set_sunder(0) //Just in case we didn't
 		. = (stat < DEAD) // The flip happened, but only report success if they actually stayed alive
 		if(.)
 			// Add message about struggling to recall death circumstances
@@ -987,6 +988,7 @@
 	SetParalyzed(0, FALSE)
 	SetSleeping(0, FALSE)
 	setStaminaLoss(0)
+	set_sunder(0)
 	SetUnconscious(0, FALSE)
 	if(should_update_mobility)
 		update_mobility()
@@ -1005,6 +1007,7 @@
 	setCloneLoss(0, 0)
 	remove_CC(FALSE)
 	set_disgust(0)
+	set_sunder(0)
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
@@ -2556,7 +2559,10 @@
 
 /mob/living/proc/accept_offered_item(mob/living/offerer, obj/offered_item, stealthy)
 	transferItemToLoc(offered_item, src)
-	put_in_active_hand(offered_item)
+	if(!put_in_active_hand(offered_item))
+		offered_item.forceMove(drop_location())
+		offerer.stop_offering_item()
+		return
 	if(stealthy)
 		to_chat(offerer, span_notice("[src] takes the secretly offered [offered_item]."))
 		to_chat(src, span_notice("I take the secretly offered [offered_item] from [offerer]."))

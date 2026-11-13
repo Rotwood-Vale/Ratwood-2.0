@@ -163,7 +163,7 @@
 			text = "<font color = '#a8665a'>Fatigued</font>"
 			y_offset = BALLOON_Y_OFFSET_TIER3
 		if(text)
-			if(!HAS_TRAIT(H, TRAIT_DECEIVING_MEEKNESS))
+			if(!HAS_TRAIT(H, TRAIT_GUARD_RAISED))
 				H.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, x_offset, y_offset)
 			else
 				if(prob(10))

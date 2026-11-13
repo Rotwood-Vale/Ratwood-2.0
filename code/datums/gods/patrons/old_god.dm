@@ -11,6 +11,7 @@
 					/obj/effect/proc_holder/spell/self/check_boot				= CLERIC_T0,
 					/obj/effect/proc_holder/spell/invoked/psydonendure			= CLERIC_T1,
 					/obj/effect/proc_holder/spell/self/psydonrespite			= CLERIC_T2,
+					/obj/effect/proc_holder/spell/invoked/psydefy				= CLERIC_T3,
 	)
 	energy_color = COLOR_PATRON_PSYDON
 	traits_tier = list(TRAIT_PSYDONITE = CLERIC_T1)
@@ -161,6 +162,7 @@
 	miracle = TRUE
 	devotion_cost = 40
 
+
 /obj/effect/proc_holder/spell/invoked/psydonendure/cast(list/targets, mob/living/user)
 	. = ..()
 	if(isliving(targets[1]))
@@ -246,3 +248,172 @@
 
 	revert_cast()
 	return FALSE
+
+
+/obj/effect/proc_holder/spell/invoked/psydefy
+	name = "DEFY"
+	desc = "I can give a dying person or myself enough strength to ENDURE just a bit longer, to have a chance to leave their mark on the world before their flame goes out. (ONLY USABLE ON PEOPLE IN CRIT / Using it while in crit will self cast)"
+	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
+	overlay_state = "DEFY"
+	releasedrain = 50
+	chargedrain = 0
+	chargetime = 0
+	range = 7
+	warnie = "sydwarning"
+	movement_interrupt = FALSE
+	sound = 'sound/magic/psydonrespite.ogg'
+	invocation_type = "none" // needs to be castable when uncontius
+	associated_skill = /datum/skill/magic/holy
+	antimagic_allowed = TRUE
+	recharge_time = 6 MINUTES
+	miracle = TRUE
+	stat_allowed = TRUE // Has a specific check for the dead, crit people can still self-cast
+	gesture_required = FALSE
+	devotion_cost = 150
+	cast_without_targets = TRUE
+
+/obj/effect/proc_holder/spell/invoked/psydefy/cast(list/targets, mob/living/user)
+	if(user.stat == DEAD)
+		to_chat(user, span_warning("You're dead, it's to late for displays of willpower."))
+		revert_cast()
+		return FALSE
+	var/mob/living/carbon/human/target = null
+	if(user.stat != CONSCIOUS)
+		target = user
+	if(!target && ishuman(targets[1]))
+		target = targets[1]
+	else if(!target)
+		to_chat(user, span_warning("[name] only works on humanoids about to die that have enough will to ENDVRE!"))
+		revert_cast()
+		return FALSE
+
+	var/wAmount = LAZYLEN(target.get_wounds())
+	var/damtotal = target.getBruteLoss() + target.getFireLoss() + target.getToxLoss()
+
+	if(!target.stat) // this is first as all the others give you information about target
+		to_chat(user, span_warning("They are not in dire enought state for this miracle."))
+		revert_cast()
+		return FALSE
+	if(target.stat == UNCONSCIOUS && !(damtotal >= 100 || wAmount > 0 || target.get_blood_volume() < BLOOD_VOLUME_OKAY) && target.IsSleeping()) // very long way of saying NO to sleep casting
+		to_chat(user, span_warning("They are sleeping peacefully, there is no reason for them to stir so roughly."))
+		revert_cast()
+		return FALSE
+	if(target.stat == DEAD) // are dead
+		to_chat(user, span_warning("They're already dead!"))
+		revert_cast()
+		return FALSE
+	if(target.mob_biotypes & MOB_UNDEAD) // still dead
+		to_chat(user, span_warning("The unlyving cannot ENDVRE!"))
+		revert_cast()
+		return FALSE
+	if(HAS_TRAIT(target, TRAIT_PARALYSIS))
+		to_chat(user, span_warning("They're paralyzed, no amount of willpower will get them to move."))
+		revert_cast()
+		return FALSE
+	if(istype(target.patron, /datum/patron/divine/necra)) // worship death
+		to_chat(user, span_warning("They worship death, they do not have enough will to ENDVRE through their end."))
+		revert_cast()
+		return FALSE
+	if(istype(target.patron, /datum/patron/inhumen/zizo)) // thinks they will get raised as undead
+		to_chat(user, span_warning("They dont fear death, they dont see it as an end."))
+		revert_cast()
+		return FALSE
+	if(HAS_TRAIT(target, TRAIT_NOBREATH)) // no avoiding oxy consequencess
+		to_chat(user, span_warning("They dont see themselves as dying and lack a will to resist it."))
+		revert_cast()
+		return FALSE
+
+	var/time = 30 SECONDS
+	if(HAS_TRAIT(user, TRAIT_LUX_FREAK)) // extra bonus for absolver/stigmata for being full suports
+		time += 15 SECONDS
+	var/holy_skill = user.get_skill_level(src.associated_skill)
+	time += holy_skill * 5 SECONDS
+	target.apply_status_effect(/datum/status_effect/death_defiance, time) // max time is 1 minute 15 seconds for absolver/stigmata with legendary skill
+
+	if(!HAS_TRAIT(user, TRAIT_LUX_FREAK)) // extra bonus for absolver/stigmata for being full suports
+		user.apply_damage(100, BRUTE, spread_damage = TRUE)
+		user.adjust_blood_volume(-100)
+
+	return TRUE
+	
+
+/atom/movable/screen/alert/status_effect/death_defiance
+	name = "Death Defience"
+	desc = "I WILL NOT GO INTO THE NIGHT QUIETLY!"
+	icon_state = "buff"
+
+/datum/status_effect/death_defiance // TLDR = you dont die from tox, oxy, you cant be crit state, get crit resistance/reset it stacks, and get some will and con. You are not immortal, but your close to that
+	id = "death_defy"
+	effectedstats = list("willpower" = 5, "constitution" = 3)
+	duration = 30 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/death_defiance
+
+/datum/status_effect/death_defiance/on_creation(mob/living/new_owner, new_duration = null)
+	if(new_duration)
+		duration = new_duration
+	. = ..()
+
+/datum/status_effect/death_defiance/on_apply() // quite similar to martyrs ult
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOLIMBDISABLE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOHUNGER, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOSLEEP, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, TRAIT_STATUS_EFFECT(id)) // no 12 seconds of stun on your last moments
+	ADD_TRAIT(owner, TRAIT_NOPAIN, TRAIT_STATUS_EFFECT(id)) // pure adrenaline
+	ADD_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_BREADY, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_TOXIMMUNE, TRAIT_STATUS_EFFECT(id)) // doesnt heal them but does prevent further damage
+	ADD_TRAIT(owner, TRAIT_NOHARDCRIT, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_NODEATH, TRAIT_STATUS_EFFECT(id)) // I think it only stops oxy death?
+	ADD_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id)) // sadly needed
+
+	owner.setOxyLoss(0,TRUE)
+	owner.remove_status_effect(/datum/status_effect/debuff/crit_resistance_cd) // resets crit resistance
+	owner.remove_status_effect(STATUS_EFFECT_SLEEPING) 
+	owner.remove_status_effect(/datum/status_effect/incapacitating/knockdown)
+	owner.remove_status_effect(/datum/status_effect/incapacitating/stun) 
+	owner.remove_status_effect(/datum/status_effect/incapacitating/unconscious)
+	owner.stat = CONSCIOUS
+	owner.update_stat()
+	owner.energy_add(700)
+	owner.stamina_add(-100) // rise back with full strength
+	owner.visible_message(span_boldwarning("[owner] rises back on their feet, defying death with every movement."), span_boldwarning("I feel a surge of energy as I DEFY death."))
+	owner.emote("scream", TRUE)
+	owner.set_resting(FALSE, FALSE)
+	owner.add_filter("death_defience", 2, list("type" = "outline", "color" = "#2e0000", "alpha" = 25,  "size" = 2))
+
+
+/datum/status_effect/death_defiance/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_BLOODLOSS_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOLIMBDISABLE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOHUNGER, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOSLEEP, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, TRAIT_STATUS_EFFECT(id)) // no 12 seconds of stun on your last moments
+	REMOVE_TRAIT(owner, TRAIT_NOPAIN, TRAIT_STATUS_EFFECT(id)) // pure adrenaline
+	REMOVE_TRAIT(owner, TRAIT_NOPAINSTUN, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_BREADY, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_TOXIMMUNE, TRAIT_STATUS_EFFECT(id)) // doesnt heal them but does prevent further damage
+	REMOVE_TRAIT(owner, TRAIT_NOHARDCRIT, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_NODEATH, TRAIT_STATUS_EFFECT(id)) // I think it only stops oxy death?
+	REMOVE_TRAIT(owner, TRAIT_NOBREATH, TRAIT_STATUS_EFFECT(id)) // sadly needed
+
+	owner.energy_add(-700)
+	owner.stamina_add(100)
+	owner.Stun(15 SECONDS)
+	owner.Knockdown(15 SECONDS)
+	if(!HAS_TRAIT(owner, TRAIT_DNR)) // last mercy to the ones without a second chance
+		owner.adjustOxyLoss(130, TRUE)
+	owner.update_stat()
+	owner.visible_message(span_boldwarning("The strange energy filling the [owner] runs out, and their bathered body falls."), span_boldwarning("I feel my newfound energy and will to resist leave me."))
+	owner.remove_filter("death_defience")
+
+
+
+	

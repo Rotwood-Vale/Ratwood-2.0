@@ -8,7 +8,6 @@
 	category_tags = list(CTAG_WRETCH)
 	traits_applied = list(
 		TRAIT_STEELHEARTED,
-		TRAIT_SILVER_WEAK,
 	)
 	maximum_possible_slots = 2
 	applies_post_equipment = FALSE
