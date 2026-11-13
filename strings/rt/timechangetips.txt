@@ -49,7 +49,7 @@ Black cats are symbols of death, and sacred to Necra. They stare at souls only t
 Trolls are thought to have once guarded Dendor's realm. Druids often seek them out. Few return.
 Drow mushroom wines are said to be delicious as long as they are paired with the right antidote.
 Servants of Xylix are often capricious and untrustworthy, but all share in their god's hatred for slave-taking. 
-The Celestial Throne is said to lay north of Otava. Shards of SYON found nearby are often used as beacons of hope by the Inquisition.
+The Celestial Throne is said to lay north of Otava. It has been inaccessible for 700 years.
 Graggar was slain by Ravox, His head revived through the COMET SYON's power as the Gorebound Star. Gazing upon Him will drive anyone to madness.
 The Gods are listening. To utter the name of Zizo is to attract Her attention, and your damnation.
 The Inhumen have many names. In the frozen, forsaken north, they are revered as sacred animals—the moose, the leopard, the bear, and the volf.
@@ -83,7 +83,6 @@ Working yourself to death is considered an act worthy of veneration for Malumite
 It's a good idea to bandage and suture arterial wounds as soon as possible. Death happens slowly, and then all at once.
 Gripping bleeding bodyparts makes them bleed slower. The harder you grip, the less you bleed.
 The Sovereignty of Otava is a lush wet country home to the best stoneworkers on Psydonia. The gigantic towers of the Grand Cathedral in the capital stand as the seat of the Otavan Inquisition.
-A traditional Psydonic greeting or farewell is 'Purity afloat.' The psycross is often held over the chest during this ritual.
 Blacksteel is a pale imitation of the Zizo-blessed Darksteel, which is gifted to Her followers in Her benevolence.
 Blacksteel is a blessed alloy of pure silver and steel. Its recipe was stolen by Zizite heretics and perverted into Darksteel.
 The Gronn Highlands are a mountainous region known for its jagged peaks and terrible blizzards. Steppes or highlands, Gronn is a terrible place to live.
@@ -103,6 +102,7 @@ Skeletons have no BRAIN. Try to FEINT them. But don't tell this to everyone!
 A DODGING rogue who keeps their eyes FIXED retreats only backwards.
 Her Majesty, Alexia I 'the Righteous' Valmont rules Ferentia. Her first act was to have her father burned upon a cross, for he had fallen to heresy under the manipulations of a Baothan succubus.
 Queen Alexia the Righteous is rumored to favor Otava, and has invited the Holy Otavan Inquisition to burn heresy and corruption from her kingdom.
+It is said that a cell of the Holy Otavan Inquisition assisted Queen Alexia in her coup against King Mattimeos. The Royal Guard was felled by the latest innovation against heresy, the humble Runelock.
 The lands of Ferentia are home to many wonderful and woeful beasts, especially in the Terrorbog. The Ferentian man is hardy, though often wolf food.
 The heads of goblins, minotaurs, dragons, footpads, seamen, trolls, and various beasts can all be sold to a Merchant, or a particular machine...
 Wearing a red tabard provokes even the most serene minotaur.
@@ -131,3 +131,7 @@ Heretical Abyssorites are despised by many, even their own ilk often think twice
 One does not need to be devout, even those unbelieving can get caught by the predaceous dream of Abyssor. It consumes them, unable to tell his realm apart from their own. Yet suddenly, everything seems possible.
 The Ten are both Saints and Gods, the original Aasimar and the shepherds of the new age.
 Not all who wish to ascend to godhood are evil. Just most of them.
+Three would reach out for Divinity and recieve a curse in turn. The Lady of Debauchery spins her webs, a spider evermore banished to the Underdark. The Dark Star screams, a head without the hands to commit violence. The many-faced shall never hold a true form.
+Astratans would have you believe THE TEN were united in the Age of Chaos. Scholars of Noc and warriors of Ravox teach otherwise, to the annoyance of the Sun worshippers.
+A hundred years of darkness, a hundred years of war against the undead. Astrata blessed the sun, shattering the Twilight, ushering in the Age of Light.
+Is it the Age of Light, or the Age of Doubt? Truthfully it is those that come after you that shall name it.
