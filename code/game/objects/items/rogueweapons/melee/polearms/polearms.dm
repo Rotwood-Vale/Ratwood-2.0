@@ -354,6 +354,14 @@
 				to_chat(user, span_danger("The target must have a Nervelock account!")) //no stunlocking antags sorry buddy
 				return
 
+			if(HAS_TRAIT(H, TRAIT_HERESIARCH))
+				to_chat(user, span_warning("The patron of this one shields them from being suppressed."))
+				return
+
+			if(HAS_TRAIT(H, TRAIT_PSYDONIAN_GRIT))
+				to_chat(user, span_warning("The followers of the dead god are outside of the ten's light."))
+				return
+
 			if(istype(user.used_intent, /datum/intent/priest_smite))
 				HU.visible_message(span_warning("[HU] smites [H] with the [src]!"))
 				user.Beam(target,icon_state="lightning[rand(1,12)]",time=5)

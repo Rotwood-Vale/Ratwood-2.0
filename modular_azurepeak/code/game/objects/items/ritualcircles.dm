@@ -2545,6 +2545,17 @@
 
 /obj/structure/ritualcircle/psydon/proc/psydonconversion_stage4(mob/living/carbon/human/target)
 	to_chat(target, span_mind_control("..."))
+	
+	// Remove divine punishments
+	target.remove_status_effect(/datum/status_effect/debuff/apostasy)
+	target.remove_status_effect(/datum/status_effect/debuff/excomm)
+	target.remove_stress(/datum/stressevent/apostasy)
+	target.remove_stress(/datum/stressevent/excommunicated)
+
+	// Remove divine curses
+	for(var/datum/curse/C in target.curses)
+		target.remove_curse(C)
+	
 	if(target.devotion == null)
 		target.set_patron(new /datum/patron/old_god)
 		return
