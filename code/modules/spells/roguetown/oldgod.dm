@@ -64,10 +64,6 @@
 					targetwound.apply_to_bodypart(c_BP, silent = TRUE, crit_message = FALSE)
 					targetwound.set_bleed_rate(pre_bleeding) // but we have to manually force a bleed_rate reset for it to cache properly
 					if(targetwound.severity >= WOUND_SEVERITY_SEVERE)
-						if(HAS_TRAIT(H, TRAIT_INQUISITION))
-							to_chat(H, span_notice("You feel your wounds slipping away."))
-						else
-							to_chat(H, span_danger("You feel a tear as a fragment of your lux is replaced!"))
 						C_caster.visible_message(span_danger("Twisting threads of silvery lux blossom upon [C_caster]'s flesh, conveying [targetwound] upon [C_caster.p_their()] [c_BP.name]!"), span_boldwarning("You shudder in pain as a [targetwound] violently weeps into being upon your [c_BP.name]!"))
 					new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
 					new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
@@ -80,10 +76,7 @@
 		blood_transfer = BLOOD_VOLUME_NORMAL - H.get_blood_volume()
 		H.set_blood_volume(BLOOD_VOLUME_NORMAL)
 		user.adjust_blood_volume(-(blood_transfer))
-		if(HAS_TRAIT(H, TRAIT_INQUISITION))
-			to_chat(H, span_notice("You feel blood flowing back into your body."))
-		else
-			to_chat(H, span_warning("You feel your lux shiver as your blood replenishes!"))
+		to_chat(H, span_notice("You feel your blood replenish!"))
 		user.visible_message(span_warning("A sudden pallor overtakes [user] as [user.p_their()] lyfeblood flees [user.p_their()] pores and into [H]!"), span_warning("You feel your blood drain into [H]!"))
 		new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#487e97")
 		new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#487e97")
@@ -95,11 +88,7 @@
 
 	// Notify the user and target
 	to_chat(user, span_notice("You purify their Lux with the merging of theirs and your own, for a mote."))
-	if(HAS_TRAIT(H, TRAIT_INQUISITION))
-		to_chat(H, span_notice("Your wounds are being removed by the silver string."))
-	else
-		to_chat(H, span_danger("You feel something grabbing at your Lux, stealing parts of it!"))
-		to_chat(H, span_notice("Your wounds seem to be vanishing."))
+	to_chat(H, span_warning("Cold silver threads tug at my Lux, and my wounds begin to vanish."))
 	return TRUE
 
 /obj/effect/proc_holder/spell/self/psydonrespite
@@ -185,8 +174,8 @@
 
 	to_chat(H, span_info("I take a moment to collect myself..."))
 
-	if(HAS_TRAIT(user, TRAIT_LUX_FREAK) && zcross_trigger) // LUX ABOMINATIONS WONT STOP SO EASLY!!!
-		user.visible_message(span_warning("[user] shuddered but they eyes flash silver and they keep on going."), span_userdanger("Cold shoots through my spine and dark laughs resounds, but i focus on my lux and ENDURE."))
+	if(HAS_TRAIT(user, TRAIT_LUX_ATTUNED) && zcross_trigger)
+		user.visible_message(span_warning("[user] shudders, but a silver light flashes in their eyes and they remain standing."), span_userdanger("Cold shoots through my spine and something laughs, but I focus and ENDURE."))
 		zcross_trigger = FALSE
 
 	if(zcross_trigger)
@@ -215,7 +204,7 @@
 
 /obj/effect/proc_holder/spell/self/psydonpersist
 	name = "PERSIST"
-	desc = "Stand still to focus on mending your injuries. You shall PERSIST."
+	desc = "Stand still and spend devotion to mend your injuries. You shall PERSIST."
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "PERSIST"
@@ -294,10 +283,10 @@
 	var/bruthealval = -14 + psicross_bonus + sit_bonus1
 	var/burnhealval = -14 + psicross_bonus + sit_bonus2
 
-	to_chat(H, span_info("I focus on my insides and start to weave my flesh back together.")) // Why is he better then other psydonites? He is a lux freak that knows exactly what he is doing instead of just immitating miracles
+	to_chat(H, span_info("I take a moment to collect myself..."))
 
-	if(HAS_TRAIT(user, TRAIT_LUX_FREAK) && zcross_trigger) // LUX ABOMINATIONS WONT STOP SO EASLY!!! Kind of redoundant here since this is absolver special and he alwys has it, but futureprofing
-		user.visible_message(span_warning("[user] shuddered but they eyes flash silver and they keep on going."), span_userdanger("Cold shoots through my spine and dark laughs resounds, but i focus on my lux and ENDURE."))
+	if(HAS_TRAIT(user, TRAIT_LUX_ATTUNED) && zcross_trigger)
+		user.visible_message(span_warning("[user] shudders, but a silver light flashes in their eyes and they remain standing."), span_userdanger("Cold shoots through my spine and something laughs, but I focus and ENDURE."))
 		zcross_trigger = FALSE
 	
 	if(zcross_trigger)
@@ -313,13 +302,13 @@
 		H.adjustBruteLoss(bruthealval)
 		H.adjustFireLoss(burnhealval)
 		if (conditional_buff)
-			to_chat(user, span_info("My lux fills the wounds and forces the flesh to knit back together."))
+			to_chat(user, span_info("My pain gives way to a sense of furthered clarity before returning again, dulled."))
 		user.devotion?.update_devotion(-60)
 		to_chat(user, "<font color='purple'>I lose 60 devotion!</font>")
 		cast(user)
 		return TRUE
 	else
-		to_chat(H, span_warning("I lose my focus and control over my lux escapes me."))  
+		to_chat(H, span_warning("My thoughts and sense of quiet escape me."))
 		return FALSE
 
 
@@ -368,7 +357,7 @@
 			return FALSE
 		to_chat(user, span_warning("You attempt to revive [H] by ABSOLVING them!"))
 		// Dramatic effect
-		user.visible_message(span_danger("[user] grabs [H] by the wrists, silvery lux thread pouring from their hands!"))  
+		user.visible_message(span_danger("[user] grabs [H] by the wrists, attempting to ABSOLVE them!"))
 
 		if(alert(H, "They want to ABSOLVE you. Will you let them?", "ABSOLUTION", "I'll allow it", "I refuse") != "I'll allow it")
 			H.visible_message(span_notice("Nothing happens."))
@@ -389,7 +378,7 @@
 		ADD_TRAIT(H, TRAIT_IWASREVIVED, "[type]")
 		H.apply_status_effect(/datum/status_effect/buff/psyvived)
 		user.apply_status_effect(/datum/status_effect/buff/psyvived)
-		H.visible_message(span_notice("[H] is ABSOLVED!"), span_green("I awake from the void, covered in inert silver threads."))  
+		H.visible_message(span_notice("[H] is ABSOLVED!"), span_green("I awake from the void."))
 		H.mind.remove_antag_datum(/datum/antagonist/zombie)
 		H.remove_status_effect(/datum/status_effect/debuff/rotted_zombie)	//Removes the rotted-zombie debuff if they have it - Failsafe for it.
 		H.apply_status_effect(/datum/status_effect/debuff/revived)	//Temp debuff on revive, your stats get hit temporarily. Doubly so if having rotted.
@@ -419,7 +408,7 @@
 	user.adjustCloneLoss(clone_transfer)
 
 	// Visual effects
-	user.visible_message(span_danger("Silvery threads of lux explode from [user] and hit [H] ABSOLVING their suffering!"))
+	user.visible_message(span_danger("Silver threads lash from [user] into [H], drawing their suffering away!"))
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
@@ -429,12 +418,8 @@
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717")
 
 	// Notify the user and target
-	to_chat(user, span_warning("You pull on [H]'s lux, ABSOLVING them of their injuries!"))
-	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
-		to_chat(user, span_notice("You feel pull on your soul as [user], ABSOLVES you of your suferring."))
-	else
-		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // Someone just tore away something from your lux, that isn't calm  
-		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burderns lighten."))
+	to_chat(user, span_warning("You absolve [H] of their injuries!"))
+	to_chat(H, span_warning("Cold threads pull at my Lux, and my wounds follow them away."))
 	return TRUE
 
 // Weaker absolve for the Stigmata adventurer
@@ -504,7 +489,7 @@
 	user.adjustCloneLoss(clone_transfer)
 
 	// Visual effects
-	user.visible_message(span_danger("Silvery thread of lux shoots from [user] and hits [H] AMENDING their suffering!"))
+	user.visible_message(span_danger("Silver threads reach from [user] into [H], drawing their agony away!"))
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717") 
@@ -514,11 +499,7 @@
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(user), "#aa1717") 
 	
 	// Notify the user and target
-	to_chat(user, span_warning("You pull on [H]'s lux, AMENDING their injuries!"))
-	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
-		to_chat(user, span_notice("You feel pull on your soul as [user], AMENDS your suferring."))
-	else
-		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // someone just torn away something from your lux, that isn't calm
-		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burdens lighten."))
+	to_chat(user, span_warning("You take [H]'s agony upon yourself, AMENDING them!"))
+	to_chat(H, span_warning("Cold threads pull at my Lux, and my agony follows them away."))
 	
 	return TRUE
