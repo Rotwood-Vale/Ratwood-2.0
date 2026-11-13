@@ -5,6 +5,7 @@
 /datum/keybinding/mob/prevent_movement
 	hotkey_keys = list("Ctrl")
 	classic_keys = list("Ctrl")
+	hold_binding = TRUE
 	name = "block_movement"
 	full_name = "Block movement"
 	description = "Holds you in place so you can turn"
@@ -25,6 +26,7 @@
 /datum/keybinding/mob/block_movement
 	hotkey_keys = list("CtrlShift")
 	classic_keys = list("CtrlShift")
+	hold_binding = TRUE
 	name = "prevent_movement"
 	full_name = "Prevent Movement"
 	description = "Prevents you from moving completely"
