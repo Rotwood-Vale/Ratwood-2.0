@@ -28,7 +28,7 @@
 	min_chaos = 1
 	incompatible = list(/datum/round_modifier/low_gnolls)
 	job_slots = list("Gnoll" = 4)
-
+/*
 /datum/round_modifier/high_gnolls
 	name = "High Gnolls"
 	desc = "The bloodbeasts swarm! The GORESTAR laughs!"
@@ -36,7 +36,7 @@
 	min_chaos = 2
 	incompatible = list(/datum/round_modifier/low_gnolls, /datum/round_modifier/medium_gnolls)
 	job_slots = list("Gnoll" = 6)
-
+*/ 
 /datum/round_modifier/high_wretches
 	name = "High Wretches"
 	desc = "Heresy spreads like a plague in the hearts of men!"
