@@ -25,7 +25,7 @@
 	if(GLOB.tod != "day")
 		in_sunlight = FALSE
 		return
-	
+
 	// If theyre holding a parasol
 	if(H.is_holding_item_of_type(/obj/item/rogueweapon/mace/parasol))
 		to_chat(H, span_danger("My parasol shields me from the Sun-Tyrant's scorn."))

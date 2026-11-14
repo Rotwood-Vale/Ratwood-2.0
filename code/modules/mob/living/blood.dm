@@ -11,8 +11,9 @@
 	amount = clamp(amount, 0, BLOOD_VOLUME_MAXIMUM)
 	if(amount == blood_volume)
 		return blood_volume
+	var/old_volume = blood_volume
 	blood_volume = amount
-	SEND_SIGNAL(src, COMSIG_LIVING_BLOOD_VOLUME_CHANGED, blood_volume)
+	SEND_SIGNAL(src, COMSIG_LIVING_BLOOD_VOLUME_CHANGED, blood_volume, old_volume)
 	update_blood_hud()
 	return blood_volume
 
@@ -40,10 +41,10 @@
 	if(HAS_TRAIT(src, TRAIT_HUSK)) //husked people do not pump the blood.
 		return
 
-	blood_volume = min(blood_volume, BLOOD_VOLUME_MAXIMUM)
+	set_blood_volume(min(blood_volume, BLOOD_VOLUME_MAXIMUM))
 	//Effects of bloodloss - only run if we're not actually dead.
 	if (stat != DEAD)
-		if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
+		if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) && !HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS))
 			switch(blood_volume)
 				if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 					if(HAS_TRAIT(src, TRAIT_JOURNEYS_END))
@@ -54,20 +55,20 @@
 						remove_status_effect(/datum/status_effect/buff/journey_end_final)
 						remove_status_effect(/datum/status_effect/buff/journey_end)
 						apply_status_effect(/datum/status_effect/buff/journey_ending)
-					else	
+					else
 						if(prob(3))
 							to_chat(src, span_warning("I feel dizzy."))
 
 						remove_status_effect(/datum/status_effect/debuff/bleedingworse)
 						remove_status_effect(/datum/status_effect/debuff/bleedingworst)
 						apply_status_effect(/datum/status_effect/debuff/bleeding)
-						
+
 				if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 					if(HAS_TRAIT(src, TRAIT_JOURNEYS_END))
 						remove_status_effect(/datum/status_effect/debuff/bleeding)
 						remove_status_effect(/datum/status_effect/debuff/bleedingworse)
 						remove_status_effect(/datum/status_effect/debuff/bleedingworst)
-						
+
 						remove_status_effect(/datum/status_effect/buff/journey_ending)
 						remove_status_effect(/datum/status_effect/buff/journey_end_final)
 						apply_status_effect(/datum/status_effect/buff/journey_end)
@@ -85,7 +86,7 @@
 						remove_status_effect(/datum/status_effect/debuff/bleedingworst)
 
 						remove_status_effect(/datum/status_effect/buff/journey_ending)
-						remove_status_effect(/datum/status_effect/buff/journey_end)					
+						remove_status_effect(/datum/status_effect/buff/journey_end)
 						apply_status_effect(/datum/status_effect/buff/journey_end_final)
 					else
 						if(prob(3))
@@ -95,7 +96,7 @@
 						if(prob(3) && !IsUnconscious())
 							Unconscious(rand(5 SECONDS,10 SECONDS))
 							to_chat(src, span_warning("I feel drained."))
-							
+
 						remove_status_effect(/datum/status_effect/debuff/bleedingworse)
 						remove_status_effect(/datum/status_effect/debuff/bleeding)
 						apply_status_effect(/datum/status_effect/debuff/bleedingworst)
@@ -109,11 +110,11 @@
 			remove_status_effect(/datum/status_effect/debuff/bleedingworst)
 
 	bleed_rate = get_bleed_rate()
-	if(HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH))
+	if(HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH) || HAS_TRAIT(src, TRAIT_NO_BLEEDING))
 		bleed_rate = FALSE
 	if(bleed_rate)
 		bleed(bleed_rate)
-	else if(blood_volume < BLOOD_VOLUME_NORMAL)
+	else if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NO_BLOOD_REGEN))
 		set_blood_volume(min(blood_volume + 1, BLOOD_VOLUME_NORMAL))
 
 	// Non-vampiric bloodpool regen.
@@ -126,10 +127,10 @@
 	if(HAS_TRAIT(src, TRAIT_HUSK)) //husked people do not pump the blood.
 		return
 
-	blood_volume = min(blood_volume, BLOOD_VOLUME_MAXIMUM)
+	set_blood_volume(min(blood_volume, BLOOD_VOLUME_MAXIMUM))
 	if(dna?.species)
 		if(NOBLOOD in dna.species.species_traits)
-			blood_volume = BLOOD_VOLUME_NORMAL
+			set_blood_volume(BLOOD_VOLUME_NORMAL)
 			return
 
 	// if we're dead and have no blood left, then there's nothing to do here: we can't regen it ourselves (in this proc), so...
@@ -138,12 +139,12 @@
 		if (stat == DEAD)
 			bleed_rate = 0 // just to be sure for anything else that cares about it, since we're ostensibly out of blood now
 			return
-		else
+		else if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) && !HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS))
 			// handle just the oxyloss, and then abort. nothing else in here is relevant to us
 			adjustOxyLoss(blood_volume <= BLOOD_VOLUME_SURVIVE ? 3 : 1)
 
 	//Blood regeneration if there is some space
-	if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume)
+	if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume && !HAS_TRAIT(src, TRAIT_NO_BLOOD_REGEN))
 		var/nutrition_ratio = 1
 //			switch(nutrition)
 //				if(0 to NUTRITION_LEVEL_STARVING)
@@ -163,7 +164,7 @@
 
 	//Effects of bloodloss - only if we're actually alive, though
 	if (stat != DEAD)
-		if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
+		if(!HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) && !HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS))
 			var/current_bleeding_tier
 			switch(blood_volume)
 				if(BLOOD_VOLUME_SAFE to INFINITY)
@@ -241,15 +242,15 @@
 							remove_status_effect(/datum/status_effect/debuff/bleeding)
 							remove_status_effect(/datum/status_effect/debuff/bleedingworse)
 
-			if(blood_volume <= BLOOD_VOLUME_BAD)
+			if(blood_volume <= BLOOD_VOLUME_BAD && !HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS))
 				adjustOxyLoss(blood_volume <= BLOOD_VOLUME_SURVIVE ? 3 : 1)
-			else if((blood_volume > BLOOD_VOLUME_SURVIVE) || HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) || HAS_TRAIT(src, TRAIT_JOURNEYS_END))
+			else if((blood_volume > BLOOD_VOLUME_SURVIVE) || HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE) || HAS_TRAIT(src, TRAIT_JOURNEYS_END) || HAS_TRAIT(src, TRAIT_NO_BLOODLOSS_EFFECTS))
 				if(getOxyLoss())
 					adjustOxyLoss(-1.6)
 
 	//Bleeding out
 	bleed_rate = get_bleed_rate() // expensive proc, but we zero it on bled-out mobs
-	if(HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH))
+	if(HAS_TRAIT(src, TRAIT_ADRENALINE_RUSH) || HAS_TRAIT(src, TRAIT_NO_BLEEDING))
 		bleed_rate = FALSE
 	if(bleed_rate)
 		bleed(bleed_rate) // bandage handling moved to bodypart.get_bleed_rate()
@@ -339,7 +340,7 @@
 	bleed_rate = 0
 
 /mob/living/carbon/human/restore_blood()
-	blood_volume = BLOOD_VOLUME_NORMAL
+	set_blood_volume(BLOOD_VOLUME_NORMAL)
 	bleed_rate = 0
 
 /****************************************************

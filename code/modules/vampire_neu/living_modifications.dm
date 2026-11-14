@@ -115,13 +115,19 @@
 	maxbloodpool = initial(maxbloodpool)
 
 /mob/living/proc/set_bloodpool(newblood)
+	var/old_bloodpool = bloodpool
 	bloodpool = CLAMP(newblood, 0, maxbloodpool)
+	if(bloodpool != old_bloodpool)
+		SEND_SIGNAL(src, COMSIG_LIVING_BLOODPOOL_CHANGED, bloodpool, old_bloodpool)
 	hud_used?.bloodpool?.name = "Bloodpool: [bloodpool]"
 	hud_used?.bloodpool?.desc = "Bloodpool: [bloodpool]/[maxbloodpool]"
 	hud_used?.bloodpool?.set_value((100 / (maxbloodpool / bloodpool)) / 100, 1 SECONDS)
 
 /mob/living/proc/adjust_bloodpool(adjust, visible = TRUE)
+	var/old_bloodpool = bloodpool
 	bloodpool = CLAMP(bloodpool + adjust, 0, maxbloodpool)
+	if(bloodpool != old_bloodpool)
+		SEND_SIGNAL(src, COMSIG_LIVING_BLOODPOOL_CHANGED, bloodpool, old_bloodpool)
 	if(!visible)
 		return
 
@@ -329,19 +335,6 @@
 	// Handle low bloodpool effects
 	handle_bloodpool_effects()
 	blood_volume = BLOOD_VOLUME_NORMAL
-
-	// Coffin regeneration
-	var/total_damage = getBruteLoss() + getFireLoss()
-	var/obj/structure/closet/crate/coffin/coffin = loc
-	if(istype(coffin) && total_damage && (src in coffin.contents))
-		if(!HAS_TRAIT(src, TRAIT_DEATHCOMA))
-			to_chat(src, span_notice("You enter the horrible slumber of deathless Torpor. You will heal until you are renewed."))
-			ADD_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
-		heal_overall_damage(5, 5)
-		adjust_bloodpool(-2)
-	if(HAS_TRAIT(src, TRAIT_DEATHCOMA) && (total_damage <= 0 || (!istype(coffin) || !(src in coffin.contents))))
-		REMOVE_TRAIT(src, TRAIT_DEATHCOMA, VAMPIRE_TRAIT)
-		to_chat(src, span_warning("You have recovered from Torpor."))
 
 /mob/living/carbon/human/proc/handle_bloodpool_effects()
 	// Apply thirst effects based on bloodpool levels
