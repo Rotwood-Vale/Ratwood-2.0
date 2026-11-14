@@ -177,9 +177,9 @@
 	switch(passed_layer)
 		if(BODY_BEHIND_LAYER)
 			return "BEHIND"
-		if(BODY_ADJ_LAYER)
+		if(BODY_ADJ_LAYER, BODY_BREASTS_LAYER)
 			return "ADJ"
-		if(BODY_FRONT_LAYER)
+		if(BODY_FRONT_LAYER, BODY_GENITAL_LAYER)
 			return "FRONT"
 		if(ASS_LAYER)
 			return "FRONT"

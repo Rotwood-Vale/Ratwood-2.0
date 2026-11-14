@@ -295,3 +295,7 @@
   - spellcheck: Renamed "Messer" to "Kriegsmesser" in weapon choice
   - code_imp: Removed greatweapon strap from Left Back Slot, swapped with crossbow
       instead.
+2026-11-13:
+  ophaq:
+  - balance: Lessens Arlette booster pack prices and added two more cards to them.
+  - bugfix: Makes the booster packs, cards and deck grid size 1x1 instead of 2x2.
