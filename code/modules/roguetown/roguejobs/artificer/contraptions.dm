@@ -82,16 +82,17 @@
 /obj/item/contraption/examine(mob/user)
 	. = ..()
 	var/skill = isobserver(user) ? SKILL_LEVEL_LEGENDARY : user.get_skill_level(/datum/skill/craft/engineering)
+	var/power_sources = "[initial(accepted_power_source.name)][prime_power_source ? " or [initial(prime_power_source.name)]" : ""]"
 	if(current_charge)
 		. += span_warning("The contraption has [current_charge] of [max_stored_charge] charges left.")
-		. += span_warning("It uses [initial(accepted_power_source.name)] or [initial(prime_power_source.name)] to function.")
+		. += span_warning("It uses [power_sources] to function.")
 	else
-		. += span_warning("This contraption requires a new [initial(accepted_power_source.name)] or [initial(prime_power_source.name)] to function.")
-	if(misfire_chance)
+		. += span_warning("This contraption requires a new [power_sources] to function.")
+	if(misfire_chance && skill < 6)
 		if(skill > 2)
 			. += span_warning("You calculate this contraptions chance of failure to be anywhere between [max(0, (misfire_chance - skill) - rand(4))]% and [max(2, (misfire_chance - skill) + rand(3))]%.")
-
-	
+		else
+			. += span_warning("It seems slightly unstable...")
 	if(skill >= 6 && sneaky_misfire_chance)
 		. += span_warning("This contraption has a chance for catastrophic failure in the hands of the inexperienced.")
 
