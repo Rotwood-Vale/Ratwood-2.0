@@ -229,7 +229,7 @@
 		switch(weapon_choice)
 			if("Crossbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-				beltr = /obj/item/quiver/poisonarrows
+				beltr = /obj/item/quiver/bolts
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, SKILL_LEVEL_EXPERT, TRUE)
 			if("Blackhorn Longbow")
 				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow/warden

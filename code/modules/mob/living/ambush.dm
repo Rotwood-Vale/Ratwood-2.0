@@ -30,6 +30,8 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 			true_ambush_chance *= 1.5
 		else if(danger_level == DANGER_LEVEL_BLEAK)
 			true_ambush_chance *= 2
+	if(HAS_TRAIT(src, TRAIT_LOCAL_KNOWLEDGE))
+		true_ambush_chance *= 0.75
 	if(!always && prob(100 - true_ambush_chance))
 		return FALSE
 	if(!always)
@@ -75,10 +77,10 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 		// This is the part where we scale ambush difficulty based on threat. Due to how we have a mix of
 		// Ambush Config and Single Mob Ambush, I use a weird scaling system:
 		// Single Mob
-		// Low - 1 Mob only 
+		// Low - 1 Mob only
 		// Moderate - 1 to 2 (This is REALLY moderate)
-		// Dangerous - 2 to 3 
-		// Dire - 3 to 4 
+		// Dangerous - 2 to 3
+		// Dire - 3 to 4
 		// Ambush Difficulty Scaling:
 		// Low = -1 Mob
 		// Dangerous = +1 Mob
@@ -204,3 +206,11 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 			continue
 		adjacent += AT
 	return adjacent
+
+/// If you can quietly move through the environment without making noises
+/mob/living/proc/treads_lightly()
+	if(m_intent == MOVE_INTENT_RUN)
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_AZURENATIVE) || HAS_TRAIT(src, TRAIT_WOODWALKER))
+		return TRUE
+	return HAS_TRAIT(src, TRAIT_BOGWALKER)

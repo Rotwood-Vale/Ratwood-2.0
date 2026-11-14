@@ -40,6 +40,8 @@
 	return sellprice
 
 /atom/movable/proc/get_real_price()
+	if(loadout_item)
+		return 0
 	if(sellprice == initial(sellprice))
 		randomize_price()
 	if(!sellprice && initial(sellprice) == 0)

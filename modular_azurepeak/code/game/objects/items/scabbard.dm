@@ -38,6 +38,8 @@
 
 	/// Stores weapon
 	var/obj/item/rogueweapon/sheathed
+	/// Sheathe icon used when this scabbard has no state for the sheathed weapon's own sheathe_icon
+	var/fallback_sheathe_icon = ""
 
 	var/sheathe_time = 0.1 SECONDS
 	var/sheathe_sound = 'sound/foley/equip/scabbard_holster.ogg'
@@ -59,6 +61,50 @@
 		var/atom/movable/screen/inventory/hand/H = over
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
+
+
+/obj/item/rogueweapon/scabbard/attack_hand(mob/user)
+	if(sheathed)
+		return puke_sword(user)
+
+	..()
+
+
+/obj/item/rogueweapon/scabbard/attackby(obj/item/I, mob/user, params)
+	if(!sheathed)
+		if(!eat_sword(user, I))
+			return ..()
+
+/obj/item/rogueweapon/scabbard/quickdraw_interact(mob/living/user, obj/item/held_item)
+	if(held_item)
+		if(weapon_check(user, held_item))
+			attackby(held_item, user)
+		return TRUE
+	if(sheathed)
+		attack_hand(user)
+	return TRUE
+
+
+/obj/item/rogueweapon/scabbard/examine(mob/user)
+	. = ..()
+
+	if(sheathed)
+		. += span_notice("The sheath is occupied by [sheathed]. Left-click to pull it out.")
+
+
+/obj/item/rogueweapon/scabbard/update_icon(mob/living/user)
+	if(sheathed)
+		icon_state = "[initial(icon_state)]_[sheathed.sheathe_icon]"
+		if(!icon_exists(icon, icon_state))
+			icon_state = "[initial(icon_state)]_[fallback_sheathe_icon]"
+	else
+		icon_state = "[initial(icon_state)]"
+
+	if(user)
+		user.update_inv_hands()
+		user.update_inv_belt()
+		user.update_inv_back()
+
 
 /obj/item/rogueweapon/scabbard/getonmobprop(tag)
 	..()
@@ -153,6 +199,7 @@
 	item_state = "sheath"
 
 	valid_blade = /obj/item/rogueweapon/huntingknife
+	fallback_sheathe_icon = "gendagger"
 	w_class = WEIGHT_CLASS_SMALL
 
 	grid_width = 32
@@ -353,6 +400,7 @@
 	sewrepair = TRUE
 
 	valid_blade = /obj/item/rogueweapon/sword
+	fallback_sheathe_icon = "gensword"
 //You'd think think it'd look for subtypes, but no.
 	invalid_blades = list(
 		/obj/item/rogueweapon/sword/long/exe,
@@ -524,10 +572,12 @@
 	desc = "A piece of steel lined with wood. Great for batting away blows."
 	icon_state = "kazscab"
 	item_state = "kazscab"
+	fallback_sheathe_icon = "mulyeog"
 	// Only accept Kazengun swords
 	valid_blades = list(
 		/obj/item/rogueweapon/sword/short/kazengun,
 		/obj/item/rogueweapon/sword/sabre/mulyeog,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/silver,
 		/obj/item/rogueweapon/sword/sabre/mulyeog/rumahench,
 		/obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain,
 		/obj/item/rogueweapon/sword/sabre/hook
@@ -536,6 +586,7 @@
 	associated_skill = /datum/skill/combat/swords
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	can_parry = TRUE
+	sewrepair = FALSE
 	wdefense = 8
 
 	max_integrity = 220
@@ -550,7 +601,8 @@
 		/obj/item/rogueweapon/sword/sabre/mulyeog/rumahench,
 		/obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain,
 		/obj/item/rogueweapon/sword/sabre/hook,
-		/obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
+		/obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo,
+		/obj/item/rogueweapon/sword/long/kriegmesser/silver/ssangsudo
 	)
 	can_parry = FALSE
 
@@ -561,10 +613,12 @@
 	valid_blades = list(
 		/obj/item/rogueweapon/sword/short/kazengun,
 		/obj/item/rogueweapon/sword/sabre/mulyeog,
+		/obj/item/rogueweapon/sword/sabre/mulyeog/silver,
 		/obj/item/rogueweapon/sword/sabre/mulyeog/rumahench,
 		/obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain,
 		/obj/item/rogueweapon/sword/sabre/hook,
-		/obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo
+		/obj/item/rogueweapon/sword/long/kriegmesser/ssangsudo,
+		/obj/item/rogueweapon/sword/long/kriegmesser/silver/ssangsudo
 	)
 
 /obj/item/rogueweapon/scabbard/sword/kazengun/steel
@@ -605,11 +659,13 @@
 	desc = "A plain lacquered scabbard with simple steel hardware. A plain dark cloth serves to hang it from a belt."
 	icon_state = "kazscabyuruku"
 	item_state = "kazscabyuruku"
+	fallback_sheathe_icon = "kodachi"
 	associated_skill = /datum/skill/combat/swords
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK, SHIELD_SMASH)
 	// Only accept Kazengun swords (kodachi variant)
 	valid_blades = list(
 		/obj/item/rogueweapon/sword/short/kazengun,
+		/obj/item/rogueweapon/sword/short/silver/kazengun,
 		/obj/item/rogueweapon/sword/sabre/mulyeog,
 		/obj/item/rogueweapon/sword/sabre/mulyeog/rumahench,
 		/obj/item/rogueweapon/sword/sabre/mulyeog/rumacaptain,
@@ -622,13 +678,16 @@
 	desc = "A simple lacquered sheath, for shorter eastern-styled blades."
 	icon_state = "kazscabdagger"
 	item_state = "kazscabdagger"
+	fallback_sheathe_icon = "tanto"
 	// Only accept Kazengun daggers
 	valid_blades = list(
-		/obj/item/rogueweapon/huntingknife/idagger/steel/kazengun
+		/obj/item/rogueweapon/huntingknife/idagger/steel/kazengun,
+		/obj/item/rogueweapon/huntingknife/idagger/silver/kazengun
 	)
 	associated_skill = /datum/skill/combat/knives
 	possible_item_intents = list(SHIELD_BASH, SHIELD_BLOCK)
 	can_parry = TRUE
+	sewrepair = FALSE
 	wdefense = 3
 
 	max_integrity = 0

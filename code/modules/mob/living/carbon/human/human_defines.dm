@@ -7,7 +7,7 @@
 	hud_possible = list(ANTAG_HUD)
 	hud_type = /datum/hud/human
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
-	possible_mmb_intents = list(INTENT_STEAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE, INTENT_GIVE)
+	possible_mmb_intents = list(INTENT_SPECIAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE, INTENT_GIVE)
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
@@ -35,6 +35,8 @@
 	var/eye_color = "000"
 
 	var/voice_color = "a0a0a0"
+	/// The saved name real_name was built from. Roles may add to it, such as "Ser" or the lord's surname. See get_refreshed_name()
+	var/pref_base_name
 	var/nickname = "Please Change Me"
 	var/highlight_color = "#FF0000"
 	var/detail_color = "000"
@@ -181,6 +183,8 @@
 	var/list/datum/charflaw/vices = list()  // Multiple vices system
 	var/unspent_quirk_points = 0  // Any leftover quirk points are turned into triumphs after the round ends
 
+	var/list/feint_list = list()
+
 	// curse list and cooldown
 	var/list/curses = list()
 	COOLDOWN_DECLARE(priest_announcement)
@@ -213,3 +217,4 @@
 	var/hypothermia_timer_id
 
 	var/branded = FALSE // Saves time during examine if character hasn't been branded at all
+

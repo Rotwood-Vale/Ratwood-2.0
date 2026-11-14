@@ -50,7 +50,7 @@
 		/obj/item/rogueweapon/scabbard/sheath = 1
 		)
 	if(H.mind)
-		var/grenzel_purpose = list("Zweihander","Hellebardier (Halberd)","Armbrustschütze (Crossbow + Messer)", "Lucerne")
+		var/grenzel_purpose = list("Zweihander","Hellebardier (Halberd)","Armbrustschütze (Crossbow + Kriegsmesser)", "Lucerne")
 		var/weapon_choice = input(H, "Choose your ALLY", "WOE THE CONTRACT") as anything in grenzel_purpose
 		switch(weapon_choice)
 			if("Zweihander")
@@ -59,12 +59,12 @@
 			if("Hellebardier (Halberd)")
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 4, TRUE)
 				r_hand = /obj/item/rogueweapon/halberd
-			if("Armbrustschütze (Crossbow + Messer)")
+			if("Armbrustschütze (Crossbow + Kriegsmesser)")
 				H.adjust_skillrank_up_to(/datum/skill/combat/crossbows, 4, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
 				H.adjust_skillrank_up_to(/datum/skill/misc/tracking, 3, TRUE)
+				backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				l_hand = /obj/item/rogueweapon/sword/long/kriegmesser
-				r_hand = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 				beltl = /obj/item/quiver/bolts
 				beltr = /obj/item/rogueweapon/scabbard
 				H.change_stat(STATKEY_STR, -1)
@@ -126,7 +126,7 @@
 	gloves = /obj/item/clothing/gloves/roguetown/angle/grenzelgloves
 	neck = /obj/item/clothing/neck/roguetown/fencerguard/generic
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/leather
-	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
+	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic
 	shoes = /obj/item/clothing/shoes/roguetown/boots/grenzelhoft
 	backl = /obj/item/storage/backpack/rogue/satchel
 	belt = /obj/item/storage/belt/rogue/leather

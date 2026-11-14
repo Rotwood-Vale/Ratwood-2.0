@@ -332,11 +332,13 @@
 				to_chat(user, span_warning("Something is in the way."))
 				return
 		for(var/obj/machinery/M in T)
+			if(R.structurecraft && istype(M, R.structurecraft))
+				continue
 			if(M.density)
 				to_chat(user, span_warning("Something is in the way."))
 				return
 	if(R.req_table)
-		if(!(locate(/obj/structure/table) in T))
+		if(!(has_table_surface(T)))
 			to_chat(user, span_warning("I need to make this on a table."))
 			return
 	if(R.structurecraft)
@@ -371,6 +373,10 @@
 						var/mob/living/L = user
 						if(L.STAINT > 10)
 							prob2craft += ((10-L.STAINT)*-1)*2
+							if(HAS_TRAIT(L, TRAIT_METICULOUS))
+								prob2craft += (L.STAINT - 10) * 2
+					if(R.skillcraft && R.craftdiff - user.get_skill_level(R.skillcraft) >= 2)
+						prob2craft = 0
 					prob2craft = CLAMP(prob2craft, 0, 99)
 					if(!prob(prob2craft))
 						if(user.client?.prefs.showrolls)
@@ -837,4 +843,3 @@
 
 /client
 	var/legacycraft = FALSE
-

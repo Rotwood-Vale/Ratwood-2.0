@@ -36,11 +36,12 @@
 /obj/structure/roguewindow/obj_destruction(damage_flag)
 	..()
 
-/obj/structure/roguewindow/attacked_by(obj/item/I, mob/living/user)
-	..()
+/obj/structure/roguewindow/attacked_by(obj/item/item, mob/living/user)
+	if(..())
+		add_forensic_action(user, "hit with [format_text(item.name)]")
 	if(obj_broken || obj_destroyed)
 		var/obj/effect/track/structure/new_track = SStracks.get_track(/obj/effect/track/structure, get_turf(src))
-		message_admins("Window [obj_destroyed ? "destroyed" : "broken"] by [user?.real_name] using [I] [ADMIN_JMP(src)]")
+		message_admins("Window [obj_destroyed ? "destroyed" : "broken"] by [user?.real_name] using [item] [ADMIN_JMP(src)]")
 		log_admin("Window [obj_destroyed ? "destroyed" : "broken"] by [user?.real_name] at X:[src.x] Y:[src.y] Z:[src.z] in area: [get_area(src)]")
 		new_track.handle_creation(user)
 
@@ -300,6 +301,7 @@
 				else
 					playsound(loc, 'sound/items/pickbad.ogg', 40, TRUE)
 					obj_integrity = break_me
+					add_forensic_action(user, "broke prying the latch")
 					held_knife.take_damage(10, BRUTE, "blunt")
 					to_chat(user, "<span class='warning'>Clack. [100 - pickchance]% chance to fuck up.</span>")
 					add_sleep_experience(opener, /datum/skill/misc/lockpicking, opener.STAINT/4)
@@ -319,6 +321,10 @@
 						span_danger("I fucked up!! FUCK!!"))
 					return
 
+			if(!lockpicking_check_done)
+				add_forensic_action(user, "tried to pry the latch")
+			else
+				add_forensic_action(user, climbable ? "pried the latch shut" : "pried the latch open")
 			if(climbable && (lockpicking_check_done == 1))
 				close_up(user)
 				user.visible_message(
@@ -368,12 +374,21 @@
 	if(isliving(mover))
 		if(mover.throwing)
 			if(!climbable)
+				var/mob/living/thrown = mover
+				var/mob/thrower = thrown.throwing.thrower
+				if(thrower && thrower != thrown)
+					add_forensic_action(thrower, "threw [thrown.real_name] ([thrown.ckey || "no player"]) into it")
+					add_forensic_action(thrown, "thrown into it by [thrower.real_name]")
+				else
+					// A jump, or no one to name
+					add_forensic_action(thrown, "thrown into it")
+					thrower = thrown
 				if(!iscarbon(mover))
-					take_damage(10)
+					take_damage_from(thrower, 10)
 				else
 					var/mob/living/carbon/dude = mover
 					var/base_damage = 20
-					take_damage(base_damage * (dude.STASTR / 10))
+					take_damage_from(thrower, base_damage * (dude.STASTR / 10))
 			if(brokenstate || climbable)
 				if(ishuman(mover))
 					var/mob/living/carbon/human/dude = mover
@@ -390,7 +405,7 @@
 	else if(isitem(mover))
 		var/obj/item/I = mover
 		if(I.throwforce >= 10)
-			take_damage(I.throwforce)
+			take_damage_from(I.throwing?.thrower, I.throwforce, cause = "with thrown [format_text(I.name)]")
 			if(brokenstate)
 				return 1
 		else
@@ -411,7 +426,8 @@
 		return
 	user.changeNext_move(CLICK_CD_INTENTCAP)
 	if(HAS_TRAIT(user, TRAIT_BASHDOORS))
-		src.take_damage(15)
+		add_forensic_action(user, "bashed")
+		take_damage_from(user, 15)
 		return
 	src.visible_message(span_info("[user] knocks on [src]."))
 	add_fingerprint(user)
@@ -427,6 +443,7 @@
 		set_climbable(TRUE)
 		brokenstate = TRUE
 		opacity = FALSE
+		on_forced_break(damage_flag)
 	update_icon()
 	..()
 

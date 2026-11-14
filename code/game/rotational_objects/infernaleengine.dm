@@ -12,7 +12,7 @@
 	stress_generator = TRUE
 	rotation_structure = TRUE
 	initialize_dirs = CONN_DIR_FORWARD | CONN_DIR_FLIP
-	debris = list(/obj/item/magic/infernal/core = 1)
+	static_debris = list(/obj/item/magic/infernal/core = 1, /obj/item/ingot/steel = 1)
 
 /obj/structure/infernalengine/examine(mob/user)
 	. = ..()
@@ -34,7 +34,7 @@
 	var/engine_rotation_dir = EAST
 
 	last_stress_generation = 0
-	set_stress_generation(1024)
+	set_stress_generation(3072)
 	set_rotational_direction_and_speed(engine_rotation_dir, 32) //high RPM to make up for the difficulty to make this
 	return TRUE
 

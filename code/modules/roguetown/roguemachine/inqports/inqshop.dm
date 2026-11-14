@@ -462,6 +462,11 @@
 	new /obj/item/book/rogue/bibble/psy(src)
 	new /obj/item/book/rogue/bibble/psy(src)
 
+/datum/inqports/equipment/inqscomm
+	name = "1 Inquisitorial SCOMgnet Ring"
+	item_type = /obj/item/clothing/ring/signet/silver/inqscomm
+	marquescost = 6
+
 // ✤ WARDROBE ✤ STARTS HERE! YEP!
 
 /obj/item/clothing/neck/roguetown/fencerguard/inq

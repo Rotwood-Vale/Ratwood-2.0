@@ -309,13 +309,13 @@
 						user_informed = TRUE
 				else
 					UH.visible_message(span_warning("Severs the bloodlink from [target]!"))
-					bloodbeam.End()
+					QDEL_NULL(bloodbeam)
 					return TRUE
 			else
 				UH.visible_message(span_warning("Severs the bloodlink from [target]!"))
-				bloodbeam.End()
+				QDEL_NULL(bloodbeam)
 				return TRUE
-		bloodbeam.End()
+		QDEL_NULL(bloodbeam)
 		return TRUE
 	revert_cast()
 	return FALSE

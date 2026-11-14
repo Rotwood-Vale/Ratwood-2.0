@@ -1177,6 +1177,40 @@
 					return
 	..()
 
+//Training unarmed
+/obj/structure/fluff/statue/tdummy/attack_hand(mob/user)
+	if(user.cmode || !user.mind || !isliving(user) || user.doing)
+		return ..()
+	if(user.used_intent.type != INTENT_HARM) //Gotta punch
+		return ..()
+	var/mob/living/living_user = user
+	user.visible_message(span_notice("[user] begins training on [src]..."))
+	while(do_after(user, 1 SECONDS, target = src))
+		if(!(living_user.mobility_flags & MOBILITY_STAND))
+			to_chat(user, span_warning("You are knocked down and stop training."))
+			break
+		var/probby = (living_user.STALUC / 10) * 100
+		probby = min(probby, 99)
+		user.changeNext_move(CLICK_CD_MELEE)
+		living_user.stamina_add(rand(4,6))
+		if(living_user.STAINT < 3)
+			probby = 0
+		if(!can_train_combat_skill(user, /datum/skill/combat/unarmed, SKILL_LEVEL_APPRENTICE))
+			to_chat(user, span_warning("I've learned all I can from doing this, it's time for the real thing."))
+			break
+		if(prob(probby) && !user.buckled)
+			user.visible_message(span_info("[user] trains on [src]!"))
+			var/amt2raise = living_user.STAINT * 0.35
+			if(amt2raise > 0)
+				user.mind.add_sleep_experience(/datum/skill/combat/unarmed, amt2raise, FALSE)
+			playsound(loc,pick('sound/combat/hits/onwood/education1.ogg','sound/combat/hits/onwood/education2.ogg','sound/combat/hits/onwood/education3.ogg'), rand(50,100), FALSE)
+		else
+			user.visible_message(span_danger("[user] trains on [src], but [src] ripostes!"))
+			living_user.AdjustKnockdown(1)
+			living_user.throw_at(get_step(living_user, get_dir(src,living_user)), 2, 2, living_user, spin = FALSE)
+			playsound(loc, 'sound/combat/hits/kick/stomp.ogg', 100, TRUE, -1)
+		flick(pick("p_dummy_smashed","p_dummy_smashedalt"),src)
+
 /obj/structure/fluff/statue/spider
 	name = "idol of baotha"
 	desc = "The temptress has been depicted in many forms, but a common shape is that of the spider, ensnaring the victims who call themselves her followers ever tighter in her web."
@@ -1242,7 +1276,7 @@
 		/obj/item/candle/candlestick/silver,
 		/obj/item/rogueweapon/sword/long/judgement, // various unique weapons around from a few roles follows. Don't lose your fancy toys....
 		/obj/item/rogueweapon/sword/long/oathkeeper,
-		/obj/item/rogueweapon/woodstaff/riddle_of_steel/magos, //bit dumb for a bandit mage to toss this toy away but whatever
+		/obj/item/rogueweapon/woodstaff/implement/grand/magos, //bit dumb for a bandit mage to toss this toy away but whatever
 		/obj/item/clothing/head/roguetown/circlet,
 		/obj/item/carvedgem,  //Some of these aren't particularly worth much, but it'd be REALLY unintuitive for "valuables" to not actually be offerings
 		/obj/item/rogueweapon/huntingknife/stoneknife/kukri,

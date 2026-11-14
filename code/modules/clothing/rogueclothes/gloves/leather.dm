@@ -4,14 +4,13 @@
 	desc = "Gloves made out of sturdy leather. Barely offer any protection, but are better than nothing."
 	icon_state = "leather_gloves"
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
 	max_integrity = ARMOR_INT_SIDE_LEATHER
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
-	unarmed_bonus = 1.1
+	unarmed_bonus = 1
 	color = "#66584c"
 	cold_protection = HAND_LEFT | HAND_RIGHT
 	min_cold_protection_temperature = BODYTEMP_COLD_LEVEL_ONE_MAX
@@ -54,8 +53,6 @@
 	name = "fingerless leather gloves"
 	desc = "A pair of protective gloves favored by learned mages, lockshimmers, laborers, and smokers for maintaining manual dexterity over regular gloves."
 	icon_state = "roguegloves"
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT)
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_CLOTH
@@ -74,7 +71,6 @@
 	icon_state = "fencergloves"
 	item_state = "fencergloves"
 	armor = ARMOR_MAILLE
-	prevent_crits = list(BCLASS_CHOP, BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
@@ -95,8 +91,7 @@
 /obj/item/clothing/gloves/roguetown/otavan/psygloves
 	name = "psydonic leather gloves"
 	desc = "Thick leather mittens, stitched and cuffed to guard His children's palms from perforation."
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST) //Equivalent to Heavy Leather Gloves. Deinherits the durability and exclusive critprot of Otavan gloves.
+	armor = ARMOR_LEATHER
 	icon_state = "psydongloves"
 	item_state = "psydongloves"
 	salvage_result = /obj/item/natural/hide/cured
@@ -109,7 +104,6 @@
 	icon_state = "eastgloves1"
 	item_state = "eastgloves1"
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	resistance_flags = null
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
@@ -122,7 +116,6 @@
 	icon_state = "eastgloves2"
 	item_state = "eastgloves2"
 	armor = ARMOR_LEATHER
-	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT)
 	resistance_flags = null
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
@@ -138,3 +131,52 @@
 	body_parts_covered = HANDS|ARMS
 	// sleeved = FALSE
 	color = null
+
+/obj/item/clothing/gloves/roguetown/fingerless/shadowgloves/spymaster
+	name = "hand's gloves"
+	desc = "Supple silk, cut at the fingertips to ensure absolute precision."
+	icon_state = "handgloves"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/gloves.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/gloves.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/gloves.dmi'
+
+/obj/item/clothing/gloves/roguetown/rosa
+	name = "ivory gloves"
+	desc = "Finely crafted gloves of silk and leather."
+	icon_state = "rosagloves1"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/rosewood.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/rosewood.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/rosewood.dmi'
+	salvage_result = /obj/item/natural/hide/cured
+
+/obj/item/clothing/gloves/roguetown/rosa/eight
+	name = "courtly gloves"
+	icon_state = "rosagloves8"
+
+/obj/item/clothing/gloves/roguetown/rosa/five
+	name = "sable gloves"
+	icon_state = "rosagloves5"
+
+/obj/item/clothing/gloves/roguetown/rosa/four
+	name = "obsidian gloves"
+	icon_state = "rosagloves4"
+
+/obj/item/clothing/gloves/roguetown/rosa/nine
+	name = "royal gloves"
+	icon_state = "rosagloves9"
+
+/obj/item/clothing/gloves/roguetown/rosa/seven
+	name = "regal gloves"
+	icon_state = "rosagloves7"
+
+/obj/item/clothing/gloves/roguetown/rosa/six
+	name = "maroon gloves"
+	icon_state = "rosagloves6"
+
+/obj/item/clothing/gloves/roguetown/rosa/ten
+	name = "stately gloves"
+	icon_state = "rosagloves10"
+
+/obj/item/clothing/gloves/roguetown/rosa/three
+	name = "silvered gloves"
+	icon_state = "rosagloves3"

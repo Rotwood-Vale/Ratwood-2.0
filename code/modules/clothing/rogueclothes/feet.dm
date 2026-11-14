@@ -103,8 +103,7 @@
 	icon_state = "psydonboots"
 	item_state = "psydonboots"
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)	//On par with Heavy Leather Boots.
+	armor = ARMOR_LEATHER
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 
@@ -129,8 +128,7 @@
 /obj/item/clothing/shoes/roguetown/boots/nobleboot/steppesman
 	name = "aavnic riding boots"
 	desc = "A pair of sturdy riding boots with an iron heel and brass spurs."
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 
 /obj/item/clothing/shoes/roguetown/shortboots
@@ -259,9 +257,8 @@
 	desc = "Sturdy boots stitched together from cured leather. Stylish, firm, and sport a satisfying 'squeek' with each step."
 	icon_state = "alboots"
 	item_state = "alboots"
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)	//Same as gloves
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
-	armor = ARMOR_LEATHER_GOOD	//Better than regular leather.
+	armor = ARMOR_LEATHER	//Better than regular leather.
 	color = null
 	cold_protection = FOOT_LEFT | FOOT_RIGHT
 	min_cold_protection_temperature = 50
@@ -278,10 +275,9 @@
 	body_parts_covered = FEET
 	icon_state = "fencerboots"
 	item_state = "fencerboots"
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = SOFTHIT
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
-	armor = ARMOR_LEATHER_GOOD
+	armor = ARMOR_LEATHER
 	allowed_race = NON_DWARVEN_RACE_TYPES
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
@@ -294,8 +290,7 @@
 	icon_state = "grenzelboots"
 	item_state = "grenzelboots"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
-	armor = ARMOR_LEATHER_GOOD
+	armor = ARMOR_LEATHER
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
 
@@ -313,7 +308,6 @@
 	name = "woad elven boots"
 	desc = "The living trunks still blossom in the spring. They let water through, but it is never cold."
 	armor = ARMOR_BLACKOAK //Resistant to blunt and stab, but very weak to slash.
-	prevent_crits = list(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
 	max_integrity = ARMOR_INT_SIDE_IRON
 	resistance_flags = FIRE_PROOF
 	blocksound = SOFTHIT
@@ -357,7 +351,6 @@
 	body_parts_covered = FEET
 	icon_state = "armorboots"
 	item_state = "armorboots"
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	color = null
 	blocksound = PLATEHIT
 	resistance_flags = FIRE_PROOF
@@ -392,7 +385,7 @@
 	name = "vicious boots"
 	desc = "Plated boots which stir with the same violence driving our world. They have treaded a thousand skulls."
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	icon_state = "graggarplateboots"
 
 /obj/item/clothing/shoes/roguetown/boots/armor/graggar/Initialize(mapload)
@@ -405,7 +398,7 @@
 	name = "gilded boots"
 	desc = "Gilded tombs do worm enfold."
 	icon_state = "matthiosboots"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/shoes/roguetown/boots/armor/matthios/Initialize(mapload)
 	. = ..()
@@ -422,7 +415,9 @@
 	name = "avantyne boots"
 	desc = "<font color='A50021'>The lone and level sands stretch far away.</font> </br>‎<font color='FF0000'>March forth to the edge of reality, leaving behind its corpse.</font>"
 	icon_state = "zizoboots"
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/shoes/roguetown/boots/armor/zizo/Initialize(mapload)
 	. = ..()
@@ -438,7 +433,7 @@
 	name = "avantyne-threaded sabatons"
 	desc = "<font color='A50021'>The lone and level sands stretch far away.</font> </br>‎<font color='FF0000'>March forth to the edge of reality, leaving behind its corpse.</font>"
 	max_integrity = ARMOR_INT_SIDE_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	icon_state = "zizoboots"
 
 /obj/item/clothing/shoes/roguetown/boots/armor/avantyne/zizo/Initialize(mapload)
@@ -461,6 +456,7 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/item/clothing/shoes/roguetown/boots/armor/gold
+	is_gold = TRUE
 	name = "golden greaves"
 	desc = "Resplendant sabatons of pure gold, adorned with angled greaves that proudly bear the holy sigil. Its besilked cuffs have remained surprisingly bereft of debris - not even a sprig of lint remains to be criticized."
 	icon_state = "goldgreaves"
@@ -560,7 +556,7 @@
 		detail_color = playerchoice
 		detail_tag = "_detail"
 		update_icon()
-		if(loc == user && ishuman(user))
+		if(is_worn_or_stored_by(user) && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_armor()
 			H.update_icon()
@@ -662,7 +658,6 @@
 	sleeved = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bplateboots"
 	item_state = "bplateboots"
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	color = null
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_SIDE_BLACKSTEEL
@@ -672,6 +667,8 @@
 	resistance_flags = FIRE_PROOF
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/shoes/roguetown/boots/blacksteel/ComponentInitialize()
 	AddComponent(/datum/component/armour_filtering/negative, TRAIT_FENCERDEXTERITY)
@@ -685,7 +682,6 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/blkknight.dmi'
 	icon_state = "bkboots"
 	item_state = "bkboots"
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_TWIST)
 	color = null
 	blocksound = PLATEHIT
 	max_integrity = ARMOR_INT_SIDE_BLACKSTEEL
@@ -696,10 +692,13 @@
 	resistance_flags = FIRE_PROOF
 	cold_protection = null
 	min_cold_protection_temperature = BODYTEMP_NORMAL_MIN
+	chunkcolor = "#303036"
+	material_category = ARMOR_MAT_PLATE
 
 // ----------------- BLACKSTEEL END -----------------------
 
 /obj/item/clothing/shoes/roguetown/anklets
+	is_gold = TRUE
 	name = "golden anklets"
 	desc = "Luxurious anklets made of the finest gold. They leave the feet bare while adding an exotic flair."
 	gender = PLURAL
@@ -721,7 +720,7 @@
 	icon_state = "eastsandals"
 	item_state = "eastsandals"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
-	armor = ARMOR_LEATHER_GOOD
+	armor = ARMOR_LEATHER
 	nudist_approved = TRUE
 
 /obj/item/clothing/shoes/roguetown/boots/horsey
@@ -755,3 +754,99 @@
 	salvage_result = /obj/item/natural/hide/cured
 	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
+
+// horseshoes!
+
+/obj/item/clothing/shoes/roguetown/boots/hammerhold_boots
+	name = "hammerhold boots"
+	desc = ""
+	icon_state = "boots"
+	item_state = "boots"
+	allowed_race = NON_DWARVEN_RACE_TYPES
+	icon = 'modular_twilight_axis/icons/roguetown/clothing/boots.dmi'
+	mob_overlay_icon = 'modular_twilight_axis/icons/roguetown/clothing/onmob/boots.dmi'
+
+/obj/item/clothing/shoes/roguetown/courtphysician
+	name = "sanguine shoes"
+	desc = "Leather shoes, the solemn tap of these bears grim news, or salvation."
+	icon_state = "docshoes"
+	item_state = "docshoes"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/courtphys.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/helpers/sleeves_courtphys.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/courtphys.dmi'
+	salvage_result = /obj/item/natural/hide/cured
+	sewrepair = TRUE
+
+/obj/item/clothing/shoes/roguetown/courtphysician/female
+	name = "sanguine heels"
+	desc = "Leather heels, the solemn tap of these bears grim news, or salvation."
+	icon_state = "docheels"
+	item_state = "docheels"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/courtphys.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/onmob/helpers/sleeves_courtphys.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/courtphys.dmi'
+	detail_tag = "_detail"
+	detail_color = CLOTHING_RED
+
+/obj/item/clothing/shoes/roguetown/courtphysician/female/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/shoes/roguetown/courtphysician/female/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_HEELS, 2)
+	stepnoise_flag = STEPNOISE_HEELS
+
+/obj/item/clothing/shoes/roguetown/courtphysician/female/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/clothing/shoes/roguetown/hammerhold_shoes
+	name = "hammerhold shoes"
+	desc = ""
+	icon_state = "shoes"
+	item_state = "shoes"
+	allowed_race = NON_DWARVEN_RACE_TYPES
+	icon = 'modular_twilight_axis/icons/roguetown/clothing/boots.dmi'
+	mob_overlay_icon = 'modular_twilight_axis/icons/roguetown/clothing/onmob/boots.dmi'
+
+/obj/item/clothing/shoes/roguetown/rosa
+	name = "ivory shoes"
+	desc = "Finely crafted shoes of silk and leather."
+	icon_state = "rosashoes1"
+	icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/rosewood.dmi'
+	mob_overlay_icon = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/rosewood.dmi'
+	sleeved = 'modular_azurepeak/icons/clothing_port/roguetown/clothing/special/onmob/rosewood.dmi'
+
+/obj/item/clothing/shoes/roguetown/rosa/eight
+	name = "courtly shoes"
+	icon_state = "rosashoes8"
+
+/obj/item/clothing/shoes/roguetown/rosa/five
+	name = "sable shoes"
+	icon_state = "rosashoes5"
+
+/obj/item/clothing/shoes/roguetown/rosa/four
+	name = "obsidian shoes"
+	icon_state = "rosashoes4"
+
+/obj/item/clothing/shoes/roguetown/rosa/nine
+	name = "royal shoes"
+	icon_state = "rosashoes9"
+
+/obj/item/clothing/shoes/roguetown/rosa/seven
+	name = "regal shoes"
+	icon_state = "rosashoes7"
+
+/obj/item/clothing/shoes/roguetown/rosa/ten
+	name = "stately shoes"
+	icon_state = "rosashoes10"
+
+/obj/item/clothing/shoes/roguetown/rosa/three
+	name = "silvered shoes"
+	icon_state = "rosashoes3"

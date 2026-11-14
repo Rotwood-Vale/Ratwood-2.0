@@ -184,6 +184,25 @@
 				fueluse = 4000
 		update_icon()
 
+GLOBAL_LIST_EMPTY(leyline_sites)
+GLOBAL_LIST_EMPTY(leyline_activations)
+
+/proc/get_leyline_charges(mob/living/user)
+	var/used = GLOB.leyline_activations[user.real_name] || 0
+	return max(GLOB.dayspassed + (HAS_TRAIT(user, TRAIT_LEYLINE_EXPERTISE) ? 3 : 1) - used, 0)
+
+/proc/spend_leyline_charge(mob/living/user)
+	if(!GLOB.leyline_activations[user.real_name])
+		GLOB.leyline_activations[user.real_name] = 0
+	GLOB.leyline_activations[user.real_name]++
+
+/proc/get_max_leyline_tier()
+	if(GLOB.dayspassed >= 4)
+		return 5
+	if(GLOB.dayspassed >= 3)
+		return 4
+	return 3
+
 /obj/structure/leyline
 	name = "inactive leyline"
 	desc = "A curious arrangement of stones."
@@ -195,6 +214,13 @@
 	density = FALSE
 	var/time_between_uses = 12000
 	var/last_process = 0
+	var/alignment = "neutral"
+	var/leyline_type = "normal"
+	var/mega_region = ""
+	var/max_uses_per_day = 2
+	var/uses_today = 0
+	var/last_reset_day = 0
+	var/max_tier = 0
 
 /obj/structure/leyline/Initialize(mapload)
 	.=..()
@@ -260,6 +286,15 @@
 					desc = "A curious arrangement of stones."
 					update_icon()
 					last_process = world.time
+
+/obj/structure/leyline/proc/check_daily_reset()
+	if(GLOB.dayspassed != last_reset_day)
+		uses_today = 0
+		last_reset_day = GLOB.dayspassed
+
+/obj/structure/leyline/proc/has_uses_remaining()
+	check_daily_reset()
+	return uses_today < max_uses_per_day
 
 /obj/structure/manaflower
 	name = "manaflower"

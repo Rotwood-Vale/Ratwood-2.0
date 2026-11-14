@@ -9,7 +9,7 @@
 
 	allowed_races = list(/datum/species/goblinp, /datum/species/anthromorphsmall, /datum/species/kobold)
 	allowed_sexes = list(MALE, FEMALE)
-	spells = list(/obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	spells = list(/datum/action/cooldown/spell/touch/prestidigitation)
 	display_order = JDO_TRIBALSHAMAN
 	// tutorial = "Ooga chacka ZAP a chacka!"
 	tutorial = "You've seen visions of fire and magma, gnashing claws and red scales. The Dragon's will burns behind your eyes, and Graggar's voice echoes in your dreams. \
@@ -27,7 +27,7 @@
 	// Can't get very far as a magician if you can't chant spells now can you?
 	vice_restrictions = list(/datum/charflaw/mute)
 
-	job_traits = list(TRAIT_MAGEARMOR, TRAIT_ARCYNE_T4, TRAIT_SEEPRICES, TRAIT_INTELLECTUAL, TRAIT_ALCHEMY_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION)
+	job_traits = list(TRAIT_SEEPRICES, TRAIT_INTELLECTUAL, TRAIT_ALCHEMY_EXPERT, TRAIT_TRIBAL, TRAIT_DARKVISION)
 	job_subclasses = list(
 		/datum/advclass/courtmage
 	)
@@ -37,7 +37,6 @@
 	tutorial = "Ooga chacka ZAP a chacka!"
 	outfit = /datum/outfit/job/roguetown/tribalshaman/basic
 
-	subclass_spellpoints = 33
 	category_tags = list(CTAG_TRIBALSHAMAN)
 	subclass_stats = list(
 		STATKEY_INT = 5,// Automatic advanced magic for most spells. (I.E summon weapon being upgraded to steel from iron/etc)
@@ -74,7 +73,6 @@
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 1)
-		H.mind?.adjust_spellpoints(6)
 
 /datum/outfit/job/roguetown/tribalshaman/basic/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -92,13 +90,13 @@
 	beltr = /obj/item/storage/keyring/tribalchief
 	beltl = /obj/item/storage/magebag/associate
 	id = /obj/item/clothing/ring/gold
-	r_hand = /obj/item/rogueweapon/woodstaff/riddle_of_steel/serpent
+	r_hand = /obj/item/rogueweapon/woodstaff/implement/grand/riddle
 	backl = /obj/item/storage/backpack/rogue/satchel
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/bottle/rogue/poison,
 		/obj/item/reagent_containers/glass/bottle/rogue/healthpot,
 		/obj/item/recipe_book/alchemy,
 		/obj/item/recipe_book/magic,
-		/obj/item/book/spellbook,
+		/obj/item/rogueweapon/spellbook,
 		/obj/item/rogueweapon/huntingknife/idagger/silver/arcyne
 	)

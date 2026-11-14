@@ -92,7 +92,6 @@
 	reqs = list(/obj/item/clothing/mask/cigarette/rollie/nicotine = 1, /obj/item/alch/mentha = 1)
 	craftdiff = 1
 
-//Hard to craft but feasable, will give ONE vial but that has 10 units so, enough to cure 2 people if they ration it.
 /datum/crafting_recipe/roguetown/alchemy/curerot
 	name = "rot cure potion"
 	category = "Table"
@@ -287,18 +286,19 @@
 	craftdiff = 4
 	verbage_simple = "mix"
 
-/datum/crafting_recipe/roguetown/alchemy/frankenbrew_small
+/datum/crafting_recipe/roguetown/alchemy/frankenbrew_impure
 	name = "reanimation elixir (impure lux)"
 	category = "Table"
 	result = list(
-		/obj/item/reagent_containers/glass/bottle/frankenbrew/third
+		/obj/item/reagent_containers/glass/bottle/frankenbrew,
+		/obj/item/reagent_containers/glass/bottle/frankenbrew
 	)
 	reqs = list(
-		/obj/item/reagent_containers/glass/bottle = 1,
+		/obj/item/reagent_containers/glass/bottle = 2,
 		/obj/item/reagent_containers/food/snacks/grown/manabloom = 1,
 		/obj/item/reagent_containers/lux_impure = 1,
 		/obj/item/alch/calendula = 1,
-		/datum/reagent/water = 49
+		/datum/reagent/water = 98
 	)
 	craftdiff = 4
 	verbage_simple = "mix"

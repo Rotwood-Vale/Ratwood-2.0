@@ -153,6 +153,8 @@
 				used = 'sound/vo/moth/mothchitter.ogg'
 			if("flutter")
 				used = 'sound/vo/moth/moth_flutter.ogg'
+			if("msqueak")
+				used = 'sound/vo/moth/moth_squeak.ogg'
 			if("strain")
 				used = 'sound/vo/female/gen/strain.ogg'
 			if("moan")

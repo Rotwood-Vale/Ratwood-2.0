@@ -17,6 +17,7 @@
 		TRAIT_SLEUTH,
 		TRAIT_PURITAN_ADVENTURER,//For fluff.
 	)
+	vice_restrictions = list(/datum/charflaw/hemophage, /datum/charflaw/silverweakness)
 	subclass_stats = list(//+9
 		STATKEY_SPD = 3,
 		STATKEY_WIL = 3,
@@ -103,7 +104,7 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	shoes = /obj/item/clothing/shoes/roguetown/boots/psydonboots
 	mask = /obj/item/clothing/mask/rogue/facemask/steel/confessor
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	backpack_contents = list(
 		/obj/item/roguekey/inquisition = 1,
 		/obj/item/rope/inqarticles/inquirycord = 1,

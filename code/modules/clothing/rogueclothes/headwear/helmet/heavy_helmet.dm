@@ -7,7 +7,6 @@
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	armor = ARMOR_PLATE
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
 	block2add = FOV_BEHIND
 	smeltresult = /obj/item/ingot/steel
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
@@ -57,11 +56,96 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/head/roguetown/helmet/heavy/barbute
+	name = "barbute"
+	desc = "A steel helmet that provides excellent coverage, while uniquely keeping its wearer's field-of-view almost entirely unrestricted. The cruciformic visor is \
+	an inherited design, borne from the earliest daes of Psydonia. Mounted on the back is a unique couplet, fit for adopting feathered greatplumes."
+	icon_state = "barbute"
+	item_state = "barbute"
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
+	block2add = null
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi' //Uses the new 'greatplume + orle' system. If this glitches out, I made sure to include a fully-prepared 32x32 version - with details - in head.dmi.
+	bloody_icon = 'icons/effects/blood64.dmi'
+
+/obj/item/clothing/head/roguetown/helmet/heavy/barbute/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "_detail"
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+	if(istype(W, /obj/item/natural/feather) && !altdetail_tag)
+		var/choicealt = input(user, "Choose a color.", "Greatplume") as anything in GLOB.colorlist
+		altdetail_color = GLOB.colorlist[choicealt]
+		altdetail_tag = "_detailalt"
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/heavy/barbute/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+	if(get_altdetail_tag())
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		pic2.appearance_flags = RESET_COLOR
+		if(get_altdetail_color())
+			pic2.color = get_altdetail_color()
+		add_overlay(pic2)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/barbute/visor
+	name = "visored barbute"
+	desc = "A steel greathelm that provides excellent coverage, and whose cruciformic guise is further reinforced by a heavy visor. Valiant paladin, wretched bulwark, thoughtless worm; it \
+	won't be long until they're almost here. Will you cry all your tears, or will you face your fears? </br>Mounted on the back is a unique couplet, fit for adopting feathered greatplumes."
+	icon_state = "barbute_visor"
+	item_state = "barbute_visor"
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY
+	adjustable = CAN_CADJUST
+	emote_environment = 3
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	block2add = FOV_BEHIND
+
+/obj/item/clothing/head/roguetown/helmet/heavy/barbute/visor/ComponentInitialize()
+	..()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/barbute/great
+	name = "great barbute"
+	desc = "A steel greathelm of inordinate thickness, whose design seems to've been inspired by both a tournament's froggemund and a kingdom's sugarloaf. It is far from elegant, but it will \
+	thwart killing blows again-and-again without compromise. Never forget that a champion of Psydonia needn't nobility nor wealth to become eternal; they need only the courage to be free. \
+	</br>'In their legends, there were no gods - only heroes.'"
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL
+	icon_state = "barbutedunk"
+	item_state = "barbutedunk"
+	emote_environment = 3
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
+	block2add = FOV_BEHIND
+
 /obj/item/clothing/head/roguetown/helmet/heavy/ancient
 	name = "ancient barbute"
 	desc = "Polished gilbranze plates, pounded to form a visored helmet. Zizo commands ambition, and ambition commands sacrifice; let these sundered legionnaires rise again, to spill the blood of unenlightened fools. A coiled pocket is perched atop the rim, awaiting to be plumed."
 	icon_state = "ancientbarbute"
 	smeltresult = /obj/item/ingot/aaslag
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi' //Uses the new 'greatplume + orle' system. If this glitches out, I made sure to include a fully-prepared 32x32 version - with details - in head.dmi.
+	bloody_icon = 'icons/effects/blood64.dmi'
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/ancient/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -91,6 +175,10 @@
 	max_integrity = ARMOR_INT_HELMET_HEAVY_DECREPIT
 	color = "#bb9696"
 	anvilrepair = null
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi' //Uses the new 'greatplume + orle' system. If this glitches out, I made sure to include a fully-prepared 32x32 version - with details - in head.dmi.
+	bloody_icon = 'icons/effects/blood64.dmi'
 
 /obj/item/clothing/head/roguetown/helmet/heavy/ancient/decrepit/attackby(obj/item/W, mob/living/user, params)
 	..()
@@ -135,6 +223,8 @@
 	desc = "Polished gilbranze plates, molded into a bulwark's greathelm. The Comet Syon's glare has been forever burnt into the alloy; a decayed glimpse into the world that was, before Psydon's slumber and Zizo's awakening."
 	icon_state = "ancientsavoyard"
 	smeltresult = /obj/item/ingot/aaslag
+	chunkcolor = "#532e25"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/guard/ancient/decrepit
 	name = "decrepit savoyard"
@@ -171,6 +261,7 @@
 	smelt_bar_num = 2
 
 /obj/item/clothing/head/roguetown/helmet/heavy/sheriff/gold
+	is_gold = TRUE
 	name = "golden helmet"
 	desc = "A resplendant barbute, masterfully forged from pure gold. Its nasalguard is marked by a holy sigil, and its interior is fitted \
 	with a besilked arming cap. Even in absolute darkness, the polished surface sparkles with imbued sunlight."
@@ -235,12 +326,34 @@
 			pic.color = get_detail_color()
 		add_overlay(pic)
 
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/gilded
+	name = "gilded knight's helmet"
+	desc = "A noble knight's helm made of steel and completed with a gilded trim."
+	icon_state = "gildedknight"
+	item_state = "gildedknight"
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/gilded/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(!(istype(W, /obj/item/natural/feather) && !detail_tag))
+		return
+	user.visible_message(span_warning("[user] adds [W] to [src]."))
+	user.transferItemToLoc(W, src, FALSE, FALSE)
+	detail_tag = "_detail"
+	update_icon()
+	if(loc == user && ishuman(user))
+		var/mob/living/carbon/H = user
+		H.update_inv_head()
+
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/ancient
 	name = "ancient bascinet"
 	desc = "An ancient greathelm of polished gilbranze. There is no sight more haunting than that of a noble knight, long-succumbed to the undying forces of evil. Add a feather to show the colors of your family or allegiance."
 	icon_state = "ancientknight"
 	item_state = "ancientknight"
 	smeltresult = /obj/item/ingot/aaslag
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi' //Uses the new 'greatplume + orle' system. If this glitches out, I made sure to include a fully-prepared 32x32 version - with details - in head.dmi.
+	bloody_icon = 'icons/effects/blood64.dmi'
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/ancient/decrepit
 	name = "decrepit bascinet"
@@ -248,6 +361,10 @@
 	max_integrity = ARMOR_INT_HELMET_HEAVY_DECREPIT
 	color = "#bb9696"
 	anvilrepair = null
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi' //Uses the new 'greatplume + orle' system. If this glitches out, I made sure to include a fully-prepared 32x32 version - with details - in head.dmi.
+	bloody_icon = 'icons/effects/blood64.dmi'
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/shadowplate
 	name = "drow cavalier helm"
@@ -290,7 +407,60 @@
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/fluted
 	name = "fluted armet"
-	desc = "An ornate steel greathelm with a visor, which protects the entire head. While bulky, the fluted design excels at prolonging chivalrous bouts with fellow knights. Add a feather to show the colors of your family or allegiance."
+	desc = "An ornate steel greathelm with a visor, which protects the entire head. While bulky, the fluted design excels at prolonging chivalrous bouts \
+	with fellow knights. Add a feather to show the colors of your family or allegiance."
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/greatplume
+	name = "greatplumed armet"
+	desc = "A noble steel greathelm with a visor, which protects the entire head. When one must outpeacock all the other knightly contestants \
+	at a tournament, accept no substitute. The wider couplet atop its neckguard's rear can accept a uniquely large greatplume."
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	bloody_icon = 'icons/effects/blood64.dmi'
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/greatplume/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/feather) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Greatplume") as anything in GLOB.colorlist
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "_detail"
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/greatplume/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/owl
+	name = "strigidae armet"
+	desc = "An armet of distinct bird like design with a pronounced beak. \
+		Close to the teachings of the moon himself, it shields the curious gaze of the one wearing it. \
+		This one used to be in the hands of a pale elf and may be fitted with a great plume atop, to bear heraldic colors."
+	icon_state = "armetowl"
+
+/obj/item/clothing/head/roguetown/helmet/heavy/knight/armet/owl/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(!(istype(W, /obj/item/natural/feather) && !detail_tag))
+		return
+	var/choice = input(user, "Choose a color.", "Greatplume") as anything in GLOB.colorlist
+	user.visible_message(span_warning("[user] adds [W] to [src]."))
+	user.transferItemToLoc(W, src, FALSE, FALSE)
+	detail_color = GLOB.colorlist[choice]
+	detail_tag = "_detail"
+	update_icon()
+	if(loc == user && ishuman(user))
+		var/mob/living/carbon/H = user
+		H.update_inv_head()
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/iron
 	name = "iron knight's helmet"
@@ -300,6 +470,7 @@
 	max_integrity = ARMOR_INT_HELMET_HEAVY_IRON
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/gold
+	is_gold = TRUE
 	name = "golden knight's armet"
 	desc = "A resplendant armet, masterfully forged from pure gold. Hexagrammic etchings of a holy sigil line its visor, and its interior is fitted \
 	with a besilked arming cap. Even in absolute darkness, the polished surface sparkles with imbued sunlight."
@@ -448,13 +619,14 @@
 
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gold
-	name = "golden helmet"
+	is_gold = TRUE
+	name = "decorated bucket helmet"
 	icon_state = "topfhelm_gold"
 	item_state = "topfhelm_gold"
-	desc = "A full-head covering helm with the engravings of Ravox. Bravery. Justice. Ever Unyielding."
-
-/obj/item/clothing/head/roguetown/helmet/heavy/bucket/ravox/attackby(obj/item/W, mob/living/user, params)
-	return
+	desc = "A greathelmet that offers excellent protection to the head, while also ensuring total coverage to its most vulnerable spots. It \
+	resembles an overturned bucket when worn - ergo, 'bucket helmet'. Owing to its simple-yet-robust design, the bucket helmet's venerability \
+	can still be observed todae, atop the shoulders of hedge-knights and paladins alike. This particular variant is decorated with golden \
+	iconography of Ravoxian design. </br>'Bravery, justice, ever-unyielding.'"
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket
 	name = "bucket helmet"
@@ -481,6 +653,16 @@
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
+	if(istype(W, /obj/item/clothing/head/roguetown/veiled) && !altdetail_tag)
+		var/choicealt = input(user, "Choose a color.", "Veil") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		altdetail_color = GLOB.colorlist[choicealt]
+		altdetail_tag = "_detailalt"
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
 
 /obj/item/clothing/head/roguetown/helmet/heavy/bucket/update_icon()
 	cut_overlays()
@@ -490,6 +672,12 @@
 		if(get_detail_color())
 			pic.color = get_detail_color()
 		add_overlay(pic)
+	if(get_altdetail_tag())
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		pic2.appearance_flags = RESET_COLOR
+		if(get_altdetail_color())
+			pic2.color = get_altdetail_color()
+		add_overlay(pic2)
 
 /obj/item/clothing/head/roguetown/helmet/heavy/xylixhelm
 	name = "xylixian helmet"
@@ -935,7 +1123,6 @@
 	desc = "An assembly of woven trunk, kept alive by ancient song, now twisted and warped for battle and scorn."
 	body_parts_covered = FULL_HEAD | NECK
 	armor = ARMOR_BLACKOAK //Resistant to blunt & stab, but very weak to slash.
-	prevent_crits = list(BCLASS_BLUNT, BCLASS_SMASH, BCLASS_TWIST, BCLASS_PICK)
 	icon = 'icons/roguetown/clothing/special/race_armor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/race_armor.dmi'
 	icon_state = "welfhead"
@@ -1038,14 +1225,65 @@
 			pic2.color = get_altdetail_color()
 		add_overlay(pic2)
 
+
+/obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/greatplume
+	name = "froggemund helmet with greatplume"
+	desc = "A tall and imposing frogmouth-style helm popular in the highest plateaus of the Azure Peak. It covers not only the \
+	entire head and face, but the neck as well. Mounted on the back is a larger couplet, capable of mounting a feathered greatplume; a \
+	blessing for the flamboyant-hearted."
+	icon_state = "frogmouthgreatplume"
+	item_state = "frogmouthgreatplume"
+	smelt_bar_num = 2
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	bloody_icon = 'icons/effects/blood64.dmi'
+
+/obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/greatplume/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/cloth) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "_detail"
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+	if(istype(W, /obj/item/natural/feather) && !altdetail_tag)
+		var/choicealt = input(user, "Choose a color.", "Greatplume") as anything in GLOB.colorlist
+		altdetail_color = GLOB.colorlist[choicealt]
+		altdetail_tag = "_detailalt"
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/greatplume/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+	if(get_altdetail_tag())
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		pic2.appearance_flags = RESET_COLOR
+		if(get_altdetail_color())
+			pic2.color = get_altdetail_color()
+		add_overlay(pic2)
+
 /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo
 	name = "avantyne froggemund"
 	desc = "<font color='A50021'>In an antique land, two vast and trunkless legs of stone stand in the desert.</font>"
 	icon_state = "zizofrogmouth"
 	item_state = "zizofrogmouth"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
-	armor = ARMOR_ASCENDANT
-	peel_threshold = 5
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/head/roguetown/helmet/heavy/frogmouth/zizo/Initialize(mapload)
 	. = ..()
@@ -1064,14 +1302,14 @@
 	bloody_icon = 'icons/effects/blood64.dmi'
 	experimental_inhand = FALSE
 	experimental_onhip = FALSE
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 
 /obj/item/clothing/head/roguetown/helmet/heavy/graggar
 	name = "vicious helmet"
 	desc = "A rugged helmet which stirs with the same violence which drives our world."
 	icon_state = "graggarplatehelm"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
 	var/active_item = FALSE
 
@@ -1098,14 +1336,44 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_COMMIE, "VISAGE")
 
+/obj/item/clothing/head/roguetown/helmet/heavy/graggar/skull
+	name = "vicious skullhelm"
+	desc = "Nigh lyke a crushed skull worn with pride; as sturdy as one that has seen fractures.. and survived them, too. Godliness \
+	was never meant to be tainted with minds so fragile and passionate."
+	icon_state = "graggarplatehelm_heavy"
+	max_integrity = ARMOR_INT_HELMET_ANTAG
+	armor = ARMOR_PLATE_BSTEEL
+	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/head/roguetown/helmet/heavy/graggar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "HELM", "RENDERED ASUNDER")
+
+/obj/item/clothing/head/roguetown/helmet/heavy/graggar/equipped(mob/living/user, slot)
+	. = ..()
+	if(active_item)
+		return
+	if(slot == SLOT_HEAD)
+		active_item = TRUE
+		ADD_TRAIT(user, TRAIT_BITERHELM, TRAIT_GENERIC)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/graggar/dropped(mob/living/user)
+	..()
+	if(!active_item)
+		return
+	active_item = FALSE
+	REMOVE_TRAIT(user, TRAIT_BITERHELM, TRAIT_GENERIC)
+
+
 /obj/item/clothing/head/roguetown/helmet/heavy/zizo
 	name = "avantyne barbute"
 	desc = "<font color='A50021'>In an antique land, two vast and trunkless legs of stone stand in the desert.</font>"
 	adjustable = CAN_CADJUST
 	icon_state = "zizobarbute"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
-	peel_threshold = 5
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_PLATE
 
 /obj/item/clothing/head/roguetown/helmet/heavy/zizo/Initialize(mapload)
 	. = ..()
@@ -1115,6 +1383,66 @@
 	. = ..()
 	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)	//Standard helmet
 
+/obj/item/clothing/head/roguetown/helmet/heavy/aventail
+	name = "hounskull with aventail"
+	desc = "A steel hounskull bascinet with a thick maille aventail secured to the inside. Just as a froggemund befits a knight in the tournaments, an \
+	aventailed bascinet befits a knight on the battlefield; unmatched in coverage, durability, and weight."
+	icon_state = "visaventail"
+	item_state = "visaventail"
+	adjustable = CAN_CADJUST
+	emote_environment = 3
+	body_parts_covered = FULL_HEAD|NECK
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR
+	block2add = FOV_RIGHT|FOV_LEFT
+	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL + ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY //Froggemunds, galore!
+	smeltresult = /obj/item/ingot/steel
+	smelt_bar_num = 2
+	armor_class = ARMOR_CLASS_HEAVY //For the worthy - or in this case, the knightly.
+
+/obj/item/clothing/head/roguetown/helmet/heavy/aventail/ComponentInitialize()
+	..()
+	AddComponent(/datum/component/adjustable_clothing, (HEAD|EARS|HAIR|MOUTH|NECK), (HIDEEARS|HIDEHAIR), null, 'sound/items/visor.ogg', null, UPD_HEAD)
+
+/obj/item/clothing/head/roguetown/helmet/heavy/aventail/attackby(obj/item/W, mob/living/user, params)
+	..()
+	if(istype(W, /obj/item/natural/feather) && !detail_tag)
+		var/choice = input(user, "Choose a color.", "Plume") as anything in GLOB.colorlist + GLOB.pridelist
+		detail_color = GLOB.colorlist[choice]
+		detail_tag = "_detail"
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+	if(istype(W, /obj/item/natural/cloth) && !altdetail_tag)
+		var/choicealt = input(user, "Choose a color.", "Orle") as anything in GLOB.colorlist + GLOB.pridelist
+		user.visible_message(span_warning("[user] adds [W] to [src]."))
+		user.transferItemToLoc(W, src, FALSE, FALSE)
+		altdetail_color = GLOB.colorlist[choicealt]
+		altdetail_tag = "_detailalt"
+		if(choicealt in GLOB.pridelist)
+			detail_tag = "_detailp"
+		update_icon()
+		if(loc == user && ishuman(user))
+			var/mob/living/carbon/H = user
+			H.update_inv_head()
+
+/obj/item/clothing/head/roguetown/helmet/heavy/aventail/update_icon()
+	cut_overlays()
+	if(get_detail_tag())
+		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
+		pic.appearance_flags = RESET_COLOR
+		if(get_detail_color())
+			pic.color = get_detail_color()
+		add_overlay(pic)
+	if(get_altdetail_tag())
+		var/mutable_appearance/pic2 = mutable_appearance(icon(icon, "[icon_state][altdetail_tag]"))
+		pic2.appearance_flags = RESET_COLOR
+		if(get_altdetail_color())
+			pic2.color = get_altdetail_color()
+		add_overlay(pic2)
+
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/zizo
 	name = "avantyne bascinet"
 	desc = "<font color='A50021'>In an antique land, two vast and trunkless legs of stone stand in the desert.</font>"
@@ -1122,8 +1450,9 @@
 	icon_state = "zizobascinet"
 	item_state = "zizobascinet"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
-	peel_threshold = 5
-	armor = ARMOR_ASCENDANT
+	armor = ARMOR_PLATE_BSTEEL
+	material_category = ARMOR_MAT_PLATE
+	chunkcolor = "#363030"
 
 /obj/item/clothing/head/roguetown/helmet/heavy/knight/zizo/Initialize(mapload)
 	. = ..()
@@ -1140,11 +1469,12 @@
 	icon_state = "volfplate_avantyne"
 	item_state = "volfplate_avantyne"
 	max_integrity = ARMOR_INT_HELMET_ANTAG
-	armor = ARMOR_ASCENDANT
-	peel_threshold = 5
+	armor = ARMOR_PLATE_BSTEEL
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	armor_class = ARMOR_CLASS_MEDIUM
-	
+	chunkcolor = "#363030"
+	material_category = ARMOR_MAT_PLATE
+
 /obj/item/clothing/head/roguetown/helmet/heavy/volfplate/zizo/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "HELMET")
@@ -1171,7 +1501,7 @@
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
 	icon_state = "capbarbute"
-	armor = ARMOR_CUIRASS // Unique armor, uniquely good value coverage.
+	armor = ARMOR_PLATE // Unique armor, uniquely good value coverage.
 	adjustable = CAN_CADJUST
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDESNOUT
 	max_integrity = ARMOR_INT_HELMET_HEAVY_STEEL - ARMOR_INT_HELMET_HEAVY_ADJUSTABLE_PENALTY

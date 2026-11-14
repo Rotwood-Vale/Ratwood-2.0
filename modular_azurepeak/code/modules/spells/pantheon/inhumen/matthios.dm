@@ -21,6 +21,9 @@
 	miracle = TRUE
 	devotion_cost = 0
 
+/obj/effect/proc_holder/spell/invoked/appraise/free // distinct from secular appraise (bandits still use matthios to read people. soul)
+	miracle = FALSE
+
 /obj/effect/proc_holder/spell/invoked/appraise/secular
 	name = "Secular Appraise"
 	overlay_icon = 'icons/mob/actions/genericmiracles.dmi'
@@ -35,7 +38,7 @@
 /obj/effect/proc_holder/spell/invoked/appraise/cast(list/targets, mob/living/user)
 	if(ishuman(targets[1]))
 		var/mob/living/carbon/human/target = targets[1]
-		if(HAS_TRAIT(target, TRAIT_DECEIVING_MEEKNESS) && target != user)
+		if(HAS_TRAIT(target, TRAIT_GUARD_RAISED) && target != user)
 			to_chat(user, "<font color='yellow'>I cannot tell...</font>")
 			if(prob(50 + ((target.STAPER - 10) * 10)))
 				to_chat(target, span_warning("A pair of prying eyes were laid on me..."))

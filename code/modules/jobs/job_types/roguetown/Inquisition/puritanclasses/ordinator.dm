@@ -58,7 +58,7 @@
 	shoes = /obj/item/clothing/shoes/roguetown/boots/otavan/inqboots
 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
 	wrists = /obj/item/clothing/neck/roguetown/psicross/silver
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	pants = /obj/item/clothing/under/roguetown/platelegs
 	cloak = /obj/item/clothing/cloak/ordinatorcape
 	beltr = /obj/item/storage/belt/rogue/pouch/coins/rich

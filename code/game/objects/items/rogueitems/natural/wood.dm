@@ -159,6 +159,7 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 		)
+	AddComponent(/datum/component/construct_refueling, 50)
 
 /obj/item/grown/log/tree/small/attackby(obj/item/I, mob/living/user, params)
 	if(item_flags & IN_STORAGE)
@@ -279,9 +280,8 @@
 			prob2break = 0
 		if(L.m_intent == MOVE_INTENT_RUN)
 			prob2break = 100
-		if(prob(prob2break))
-			if(!(HAS_TRAIT(L, TRAIT_AZURENATIVE) || HAS_TRAIT(L, TRAIT_WOODWALKER) && L.m_intent != MOVE_INTENT_RUN))
-				playsound(src,'sound/items/seedextract.ogg', 100, FALSE)
+		if(prob(prob2break) && !L.treads_lightly())
+			playsound(src,'sound/items/seedextract.ogg', 100, FALSE)
 			qdel(src)
 			if (L.alpha == 0 && L.rogue_sneaking) // not anymore you're not
 				L.update_sneak_invis(TRUE)
@@ -472,9 +472,9 @@
 				stackcount--
 			else if(stackcount >= 2)
 				var/obj/item/natural/bundle/plank/B = new(get_turf(user))
-				B.amount = clamp(stackcount, 2, 6)
+				B.amount = clamp(stackcount, 2, B.maxamount)
 				B.update_bundle()
-				stackcount -= clamp(stackcount, 2, 6)
+				stackcount -= clamp(stackcount, 2, B.maxamount)
 				user.put_in_hands(B)
 		for(var/obj/item/natural/wood/plank/F in get_turf(src))
 			playsound(get_turf(user.loc), 'sound/foley/dropsound/wooden_drop.ogg', 80)

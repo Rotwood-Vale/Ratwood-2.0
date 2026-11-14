@@ -284,6 +284,8 @@
 #define SHOCK_ILLUSION (1 << 2)
 ///The shock doesn't stun.
 #define SHOCK_NOSTUN (1 << 3)
+///Visual and sound effects only, no damage applied.
+#define SHOCK_VISUAL_ONLY (1 << 4)
 
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
@@ -634,10 +636,16 @@
 #define DOLL_EBON "4e3729"
 
 // Pixel shifting
+#define PIXEL_ROTATION_STANDING_LIMIT 30
 #define PIXEL_SHIFT_MAXIMUM 16
 #define PIXEL_SHIFT_PASSABLE_THRESHOLD 8
 
 #define TYPING_INDICATOR_TIMEOUT 20 MINUTES
+#ifdef NPC_THINK_DEBUG
+#define AI_THINK(pawn, message) pawn.visible_message(message, runechat_message = message)
+#else
+#define AI_THINK(pawn, message)
+#endif
 
 // NPC Debugging
 #ifdef NPC_THINK_DEBUG

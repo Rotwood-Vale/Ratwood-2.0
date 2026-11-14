@@ -25,6 +25,8 @@
 			added = round(added * 0.5, 1)
 		if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
 			added = round(added * 0.5, 1)
+		if(has_status_effect(/datum/status_effect/debuff/addiction/corpulent))
+			added = round(added * 0.5, 1)
 		if(HAS_TRAIT(src, TRAIT_MONK_ROBE))
 			added = round(added * 1.25, 1)
 		if(ishuman(src))
@@ -33,6 +35,8 @@
 				added = round(added * 0.8, 1)
 			else if(H.has_status_effect(/datum/status_effect/debuff/sleepytime/t3))
 				added = round(added * 0.7, 1)
+		if(HAS_TRAIT(src, TRAIT_OVERWEIGHT) && stamina > max_stamina * 0.5 && m_intent != MOVE_INTENT_SNEAK && !HAS_TRAIT(src, TRAIT_NOBREATH) && prob(25))
+			emote("pant")
 		if(stamina >= 1)
 			stamina_add(added)
 		else
@@ -64,6 +68,12 @@
 	if(m_intent == MOVE_INTENT_RUN && (mobility_flags & MOBILITY_STAND))
 		if(isnull(buckled))
 			mind && mind.add_sleep_experience(/datum/skill/misc/athletics, (STAINT*0.02))
+	if(added < 0 && HAS_TRAIT(src, TRAIT_GOLD_AFFINITY))
+		var/gold = 0
+		for(var/obj/item/I in get_equipped_items())
+			if(I.is_gold)
+				gold++
+		added *= 1 - (min(gold, 5) * 0.02)
 	energy += added
 	if(energy > max_energy)
 		energy = max_energy
@@ -114,10 +124,17 @@
 /mob/living/stamina_add(added as num, emote_override, force_emote = TRUE) //call update_stamina here and set last_fatigued, return false when not enough fatigue left
 	if(HAS_TRAIT(src, TRAIT_INFINITE_STAMINA))
 		return TRUE
+
+	var/true_added = added
 	if(HAS_TRAIT(src, TRAIT_FORTITUDE) && added > 0) // 2nd check is to halve stamina SPEND, not stamina GAIN
 		added = added * 0.7
 	if(added < 0 && HAS_TRAIT(src, TRAIT_FROZEN_STAMINA))
 		added = 0
+
+	if(mind && true_added > 0)
+		// the amount of athletics skill gained is proportional to how much stamina is used
+		// using a tenth of the bar gives 1 XP point of athletics skill, multiplied by your constitution divided by 10
+		mind.add_sleep_experience(/datum/skill/misc/athletics, (STACON / 10) * ((true_added / max_stamina) * 10), show_xp = m_intent == MOVE_INTENT_RUN)
 	if(bodytemperature > BODYTEMP_HEAT_LEVEL_ONE_MAX && added >=1)	//being max heat(level 2) makes you regen half as much stamina
 		added = round(added * 1.5, 1)
 	stamina = CLAMP(stamina+added, 0, max_stamina)
@@ -150,7 +167,7 @@
 			text = "<font color = '#a8665a'>Fatigued</font>"
 			y_offset = BALLOON_Y_OFFSET_TIER3
 		if(text)
-			if(!HAS_TRAIT(H, TRAIT_DECEIVING_MEEKNESS))
+			if(!HAS_TRAIT(H, TRAIT_GUARD_RAISED))
 				H.filtered_balloon_alert(TRAIT_COMBAT_AWARE, text, x_offset, y_offset)
 			else
 				if(prob(10))

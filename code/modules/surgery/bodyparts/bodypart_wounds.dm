@@ -157,7 +157,7 @@
 	return max(round(hud_bleed_rate, 0.1), 0)
 
 /// Called after a bodypart is attacked so that wounds and critical effects can be applied
-/obj/item/bodypart/proc/bodypart_attacked_by(bclass = BCLASS_BLUNT, dam, mob/living/user, zone_precise = src.body_zone, silent = FALSE, crit_message = FALSE, armor, obj/item/weapon, armor_penetration)
+/obj/item/bodypart/proc/bodypart_attacked_by(bclass = BCLASS_BLUNT, dam, mob/living/user, zone_precise = src.body_zone, silent = FALSE, crit_message = FALSE, armor, obj/item/weapon, pen_info, no_debuff)
 	RETURN_TYPE(/datum/wound)
 	if(!bclass || !dam || !owner || (owner.status_flags & GODMODE))
 		return null
@@ -168,26 +168,28 @@
 			acheck_dflag = "blunt"
 		if(BCLASS_CHOP, BCLASS_CUT, BCLASS_LASHING, BCLASS_PUNISH)
 			acheck_dflag = "slash"
-		if(BCLASS_PICK, BCLASS_STAB)
+		if(BCLASS_PICK, BCLASS_STAB, BCLASS_BITE)
 			acheck_dflag = "stab"
 		//More AP means the less effective bleed clamping is.
-	armor = owner.run_armor_check(zone_precise, acheck_dflag, damage = 0, armor_penetration = armor_penetration)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		if(human_owner.checkcritarmor(zone_precise, bclass))
+	if(!armor)
+		armor = owner.run_armor_check(zone_precise, acheck_dflag, damage = 0)
+	if((owner.mind || HAS_TRAIT(owner, TRAIT_CRIT_THRESHOLD)) && (get_damage() <= (max_damage * CRIT_DISMEMBER_DAMAGE_THRESHOLD))) //No crits unless the limb is at 90%+ damage.
+		do_crit = FALSE
+	if(do_crit && ishuman(owner) && bclass != BCLASS_PICK) // Armor with integrity prevents crits
+		var/mob/living/carbon/human/H = owner
+		var/obj/item/clothing/worn_armor = H.get_best_worn_armor(zone_precise, acheck_dflag)
+		if(worn_armor)
 			do_crit = FALSE
-		if(owner.mind && (get_damage() <= (max_damage * CRIT_DISMEMBER_DAMAGE_THRESHOLD))) //No crits unless the damage is maxed out.
-			do_crit = FALSE // We used to check if they are buckled or lying down but being grounded is a big enough advantage.
 	if(user)
 		if(user.goodluck(2))
 			dam += 10
-		if(istype(user.rmb_intent, /datum/rmb_intent/weak) || bclass == BCLASS_PEEL)
+		if(istype(user.rmb_intent, /datum/rmb_intent/weak))
 			do_crit = FALSE
 	testing("bodypart_attacked_by() dam [dam]")
 
-	var/datum/wound/dynwound = manage_dynamic_wound(bclass, dam, armor)
+	var/datum/wound/dynwound = manage_dynamic_wound(bclass, dam, armor, pen_info)
 
-	if(do_crit)
+	if(do_crit && ishuman(owner))
 		var/datum/component/silverbless/psyblessed = weapon?.GetComponent(/datum/component/silverbless)
 		var/sundering = HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && istype(weapon) && weapon?.is_silver && psyblessed?.is_blessed
 		var/crit_attempt = try_crit(sundering ? BCLASS_SUNDER : bclass, dam, user, zone_precise, silent, crit_message)
@@ -209,7 +211,7 @@
 
 	return dynwound
 
-/obj/item/bodypart/proc/manage_dynamic_wound(bclass, dam, armor)
+/obj/item/bodypart/proc/manage_dynamic_wound(bclass, dam, armor, pen_info)
 	var/woundtype
 	if(isooze(owner)) //If the owner is an ooze, gives them a special dynamic wound instead.
 		woundtype = /datum/wound/dynamic/ooze
@@ -234,7 +236,7 @@
 	var/datum/wound/dynwound = has_wound(woundtype)
 	var/exposed = owner.has_status_effect(/datum/status_effect/debuff/exposed)
 	if(!isnull(dynwound))
-		dynwound.upgrade(dam, armor, exposed)
+		dynwound.upgrade(dam, armor, exposed, pen_info)
 	else
 		if(ispath(woundtype) && woundtype)
 			if(!isnull(woundtype))
@@ -242,7 +244,7 @@
 				dynwound = newwound
 				if(newwound && !isnull(newwound))	//don't even ask - Free
 					owner.visible_message(span_red("A new [newwound.name] appears on [owner]'s [LOWER_TEXT(bodyzone2readablezone(bodypart_to_zone(newwound.bodypart_owner)))]!"))
-					newwound.upgrade(dam, armor, exposed)
+					newwound.upgrade(dam, armor, exposed, pen_info)
 	return dynwound
 
 /// Behemoth of a proc used to apply a wound after a bodypart is damaged in an attack
@@ -307,6 +309,7 @@
 			used = round(damage_dividend * 20 + (dam / 2))
 			if(prob(used))
 				attempted_wounds += /datum/wound/sunder
+				owner.add_stress(/datum/stressevent/sundercritted) //You're still being sundered, sire
 	if((bclass in GLOB.charring_bclasses))
 		used = round(damage_dividend * 20 + (dam / 3))
 		if(user && istype(user.rmb_intent, /datum/rmb_intent/strong))
@@ -400,9 +403,16 @@
 	if(bclass in GLOB.sunder_bclasses)
 		if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
 			used = round(damage_dividend * 20 + (dam / 2))
-			if(prob(used))
-				attempted_wounds += list(/datum/wound/sunder/chest)
-
+			if(prob(used) && !owner.mind) //mindless always die to one critical sunder
+				attempted_wounds += /datum/wound/sunder/chest
+			if(prob(used) && owner.sunder_stacks > 100 && owner.mind) //over 100 sunder_stacks opens us to lethality
+				attempted_wounds += /datum/wound/sunder/chest
+			if(prob(used) && owner.sunder_stacks < 150 && owner.mind) //We don't want too many stacks or we'll never recover.
+				owner.sunder_stacks += 40
+				owner.visible_message(span_silver("[owner]'s body visibly wilts away at the blow, a blessed sunder!"), span_userdanger("A CRITICAL BLOW SUNDERS ME WITH SACRED FLAME!"))
+				owner.add_stress(/datum/stressevent/sundercritted)
+			if(user?.mind?.has_antag_datum(/datum/antagonist/vampire) || user?.mind?.has_antag_datum(/datum/antagonist/vampire/lord))
+				owner.sunder_stacks += 20 //vamps take (20) additional sunderstacks totaling to 60, this means two strikes will kill a vampire if they strike true.
 	// Check if critical resistance applies
 	var/has_crit_attempt = length(attempted_wounds)
 	if(!has_crit_attempt)
@@ -524,9 +534,16 @@
 	if(bclass in GLOB.sunder_bclasses)
 		if(HAS_TRAIT(owner, TRAIT_SILVER_WEAK) && !owner.has_status_effect(STATUS_EFFECT_ANTIMAGIC))
 			used = round(damage_dividend * 20 + (dam / 2), 1)
-			if(prob(used))
+			if(prob(used) && !owner.mind) //mindless always die in one critical sunder
 				attempted_wounds += /datum/wound/sunder/head
-
+			if(prob(used) && owner.sunder_stacks > 100 && owner.mind) //over 100 sunderstacks opens to lethality
+				attempted_wounds += /datum/wound/sunder/head
+			if(prob(used) && owner.sunder_stacks < 150 && owner.mind) //We don't want too many stacks or we'll never recover.
+				owner.sunder_stacks += 40
+				owner.visible_message(span_silver("[owner]'s body visibly wilts away at the blow, a blessed sunder!"), span_userdanger("A CRITICAL BLOW SUNDERS ME WITH SACRED FLAME!"))
+				owner.add_stress(/datum/stressevent/sundercritted)
+			if(user?.mind?.has_antag_datum(/datum/antagonist/vampire) || user?.mind?.has_antag_datum(/datum/antagonist/vampire/lord))
+				owner.sunder_stacks += 20 //vamps take (20) additional sunderstacks totaling to 60, this means two strikes will kill a vampire if they strike true.
 	var/has_crit_attempt = length(attempted_wounds) || try_knockout
 	if(!has_crit_attempt)
 		return FALSE

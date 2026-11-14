@@ -482,7 +482,7 @@
 		owner.queue_icon_update(PENDING_UPDATE_BODY)
 		owner.update_mobility()
 		if(held_index)
-			owner.update_action_buttons_icon()
+			owner.update_mob_action_buttons()
 	return TRUE //if there was a change.
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
@@ -683,8 +683,15 @@
 		icon_state = initial(icon_state)
 		return
 
+	// Weaver hands share the arm sprite in front and rear views.
+	var/limb_layer = -BODYPARTS_LAYER
+	if(!dropped && (body_part == ARM_LEFT || body_part == ARM_RIGHT) && ishuman(owner) && istype(owner.get_taur_tail(), /obj/item/bodypart/taur/spider/weaver))
+		limb_layer = -BODY_ADJ_LAYER + 0.1
+
 	// Check cache for base appearances
 	var/new_cache_key = generate_limb_cache_key(dropped, hideaux)
+	if(limb_layer != -BODYPARTS_LAYER)
+		new_cache_key += "-layer[limb_layer]"
 	if(limb_appearance_cache_key == new_cache_key && cached_base_appearances)
 		. = cached_base_appearances.Copy()
 	else
@@ -695,7 +702,7 @@
 			if(burnstate)
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]_[icon_gender]", -DAMAGE_LAYER, image_dir)
 
-		var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
+		var/image/limb = image(layer = limb_layer, dir = image_dir)
 		var/image/aux
 		. += limb
 

@@ -95,7 +95,7 @@
 	head = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/arbiter
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
-	id = /obj/item/clothing/ring/signet/silver
+	id = /obj/item/clothing/ring/signet/silver/inqscomm
 	backpack_contents = list(
 		/obj/item/storage/keyring/puritan = 1,
 		/obj/item/rogueweapon/huntingknife/idagger/silver/psydagger,

@@ -124,7 +124,7 @@ All foods are distributed among various categories. Use common sense.
 	..()
 	if(rotprocess)
 		if(!istype(loc, /obj/structure/closet/crate/chest) && ! istype(loc, /obj/item/cooking/platter)  && !istype(loc, /obj/structure/roguemachine/vendor) && !istype (loc, /obj/item/storage/backpack/rogue/artibackpack)&& !istype (loc, /obj/structure/table/cooling))
-			if(!locate(/obj/structure/table) in loc)
+			if(!has_table_surface(loc))
 				warming -= 20 //ssobj processing has a wait of 20
 			else
 				if(locate(/obj/structure/table/cooling) in loc)
@@ -265,6 +265,15 @@ All foods are distributed among various categories. Use common sense.
 	if(!eater)
 		return
 
+	var/datum/charflaw/addiction/corpulent/gluttony = eater.get_flaw(/datum/charflaw/addiction/corpulent)
+	if(gluttony && !gluttony.sated)
+		gluttony.bites += 1 + (faretype >= FARE_FINE)
+		if(gluttony.bites >= gluttony.bites_needed)
+			gluttony.bites = 0
+			eater.sate_addiction(/datum/charflaw/addiction/corpulent)
+		else
+			to_chat(eater, span_warning("I need more..."))
+
 	if(HAS_TRAIT(eater, TRAIT_HEMOPHAGE)) //trait desc states that normal food would make them ill, adjusted accordingly
 		eater.adjustToxLoss(2)
 
@@ -312,7 +321,7 @@ All foods are distributed among various categories. Use common sense.
 		if (!HAS_TRAIT(human_eater, TRAIT_NASTY_EATER) && !HAS_TRAIT(human_eater, TRAIT_ORGAN_EATER) && !HAS_TRAIT(human_eater, TRAIT_WILD_EATER))
 			if (human_eater.is_noble())
 				if (!portable)
-					if(!(locate(/obj/structure/table) in range(1, eater)))
+					if(!has_table_surface(range(1, eater)))
 						eater.add_stress(/datum/stressevent/noble_ate_without_table) // look i just had to okay?
 						if (prob(25))
 							to_chat(eater, span_red("I should really eat this at a table..."))
@@ -649,7 +658,7 @@ All foods are distributed among various categories. Use common sense.
 
 	if ( \
 			!isturf(src.loc) || \
-			!(locate(/obj/structure/table) in src.loc) && \
+			!has_table_surface(src.loc) && \
 			!(locate(/obj/structure/table/optable) in src.loc) && \
 			!(locate(/obj/item/storage/bag/tray) in src.loc) \
 		)

@@ -136,27 +136,10 @@
 	associated_skill = /datum/skill/magic/holy
 	var/list/chosen_bundles = list() // Tracks which categories have already been granted
 	var/list/utility_bundle = list(	//Utility means exactly that. Nothing offensive and nothing that can affect another person negatively, 11 spellpoints total. (Barring Fetch, and technically Create Campfire)
-		/obj/effect/proc_holder/spell/self/message,
-		/obj/effect/proc_holder/spell/invoked/leap,
-		/obj/effect/proc_holder/spell/invoked/mending,
-		/obj/effect/proc_holder/spell/invoked/create_campfire,
-		/obj/effect/proc_holder/spell/invoked/projectile/fetch,
-		/obj/effect/proc_holder/spell/invoked/blink,
 	)
 	var/list/offensive_bundle = list(	//This is not meant to make them combat-capable. A weak offensive, and mostly defensive option. 9 spellpoints total.
-		/obj/effect/proc_holder/spell/invoked/wither/miracle,
-		/obj/effect/proc_holder/spell/self/conjure_armor/miracle,
-		/obj/effect/proc_holder/spell/invoked/conjure_weapon/miracle,
-		/obj/effect/proc_holder/spell/invoked/enchant_weapon, // Should be fine since Enchant Weapon has been nerfed over time, and Burning Blade is (sadly) no longer a thing. Some T4 clerics also don't get Arcane skill naturally, so they have to manually refresh this.
 	)
 	var/list/buff_bundle = list(	//Buffs! An Acolyte being a supportive caster is 100% what they already are, so this fits neatly. No debuffs -- every patron already has a plethora of those.
-		/obj/effect/proc_holder/spell/invoked/hawks_eyes::name 			= /obj/effect/proc_holder/spell/invoked/hawks_eyes,
-		/obj/effect/proc_holder/spell/invoked/giants_strength::name 	= /obj/effect/proc_holder/spell/invoked/giants_strength,
-		/obj/effect/proc_holder/spell/invoked/longstrider::name 		= /obj/effect/proc_holder/spell/invoked/longstrider,
-		/obj/effect/proc_holder/spell/invoked/guidance::name 			= /obj/effect/proc_holder/spell/invoked/guidance,
-		/obj/effect/proc_holder/spell/invoked/haste::name 				= /obj/effect/proc_holder/spell/invoked/haste,
-		/obj/effect/proc_holder/spell/invoked/stoneskin::name 			= /obj/effect/proc_holder/spell/invoked/stoneskin,
-		/obj/effect/proc_holder/spell/invoked/fortitude::name 			= /obj/effect/proc_holder/spell/invoked/fortitude, // Picking the most expensive options adds up to 12 points
 	)
 
 /obj/effect/proc_holder/spell/self/noc_spell_bundle/cast(list/targets, mob/user)
@@ -319,11 +302,6 @@
 		return TRUE
 
 
-/obj/effect/proc_holder/spell/invoked/silence/miracle/proc/remove_buff(mob/living/carbon/target)
-	REMOVE_TRAIT(target, TRAIT_MUTE, MAGIC_TRAIT)
-	to_chat(target, span_warning("My voice returns to me!"))
-
-
 /obj/effect/proc_holder/spell/invoked/magicshield
 	name = "Moonlit Ward"
 	desc = "Wrap a target in a ward of anti-magic."
@@ -369,3 +347,141 @@
 		return
 	REMOVE_TRAIT(target, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	to_chat(target, span_warning("The anti-magic ward fades."))
+
+/datum/status_effect/debuff/blindness
+	id = "blindness"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/blindness
+	duration = 15 SECONDS
+	effectedstats = list(STATKEY_PER = -2)
+
+/datum/status_effect/debuff/blindness/on_apply()
+	. = ..()
+
+/datum/status_effect/debuff/blindness/on_remove()
+	. = ..()
+	to_chat(owner, span_warning("My vision returns...!"))
+
+///////////////////////////
+// T3 - Arcyne Affinity. //
+///////////////////////////
+
+/atom/movable/screen/alert/status_effect/debuff/blindness
+	name = "Blindness"
+	desc = "I see naught but darkness! (-2 PER, vision cone reduced)"
+
+/datum/action/cooldown/spell/noc
+	background_icon = 'icons/mob/actions/nocmiracles.dmi'
+	button_icon = 'icons/mob/actions/nocmiracles.dmi'
+	spell_color = GLOW_COLOR_NOC
+
+	ignore_armor_penalty = TRUE
+
+	attunement_school = null
+
+	primary_resource_type = SPELL_COST_DEVOTION
+
+	secondary_resource_type = SPELL_COST_STAMINA
+
+	has_visual_effects = FALSE
+	spell_impact_intensity = SPELL_IMPACT_NONE
+	associated_stat = null
+	associated_skill = /datum/skill/magic/holy
+	spell_tier = 0
+
+	point_cost = 0
+
+	required_items = list(/obj/item/clothing/neck/roguetown/psicross/noc, /obj/item/clothing/neck/roguetown/psicross/undivided, /obj/item/clothing/neck/roguetown/psicross/silver/undivided)
+
+///////////////////////////
+// T3 - Arcyne Affinity. //
+///////////////////////////
+
+/datum/action/cooldown/spell/noc/spellpack
+	name = "Arcyne Affinity"
+	desc = "Allows you to learn a set of spells. \n \
+	<b>MAGISTER</b>: Greater Arcyne Bolt, Arc Bolt, Phase, Message, Campfire \n \
+	<b>ENCHANTER</b>: Stygian Efflorescence, Geas, Rune Ward, Forcewall, Blood Rush \n \
+	<b>SEER</b>: Attune Giant, Guidance, Attune Haste, Fortitude, Mindlink"
+	button_icon_state = "spellpack"
+//Magister = Generic magos, low utility mostly damage; Enchanter = Area denial beast, some utility; Seer = Full support with practically 0 offensive capacity.
+	click_to_activate = FALSE
+	primary_resource_cost = SPELLCOST_MIRACLE
+	secondary_resource_cost = SPELLCOST_UTILITY_BUFF
+	invocation_type = INVOCATION_NONE
+	charge_required = FALSE
+	cooldown_time = 5 SECONDS
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC | SPELL_REQUIRES_HUMAN | SPELL_REQUIRES_SAME_Z
+
+	/// var we use to flag we are currently choosing a bundle.
+	var/choosing_bundle = FALSE
+	var/chosen_bundle
+	var/list/magister_bundle = list(
+		/datum/action/cooldown/spell/projectile/greater_arcyne_bolt,
+		/datum/action/cooldown/spell/projectile/arc_bolt,
+		/datum/action/cooldown/spell/phase,
+		/datum/action/cooldown/spell/message,
+		/datum/action/cooldown/spell/create_campfire
+	)
+	var/list/enchanter_bundle = list(
+		/datum/action/cooldown/spell/projectile/stygian_efflorescence,
+		/datum/action/cooldown/spell/geas,
+		/datum/action/cooldown/spell/touch/rune_ward,
+		/datum/action/cooldown/spell/forcewall,
+		/datum/action/cooldown/spell/augment_buff/blood_rush,
+	)
+	var/list/seer_bundle = list(
+		/datum/action/cooldown/spell/augment_buff/attune_giant,
+		/datum/action/cooldown/spell/augment_buff/guidance,
+		/datum/action/cooldown/spell/augment_buff/attune_haste,
+		/datum/action/cooldown/spell/augment_buff/fortitude,
+		/datum/action/cooldown/spell/mindlink
+	)
+
+/datum/action/cooldown/spell/noc/spellpack/cast(atom/cast_on)
+	. = ..()
+
+	if(choosing_bundle)
+		return FALSE
+	var/choice = chosen_bundle
+	if(!chosen_bundle)
+		choosing_bundle = TRUE
+		choice = alert(owner, "What type of spells has Noc blessed you with?", "CHOOSE PATH", "Magister", "Enchanter", "Seer")
+		chosen_bundle = choice
+		choosing_bundle = FALSE
+
+	switch(choice)
+		if("Magister")
+			add_spells(owner, magister_bundle, grant_all = TRUE)
+			owner.mind?.RemoveSpell(src.type)
+			return TRUE
+		if("Enchanter")
+			add_spells(owner, enchanter_bundle, grant_all = TRUE)
+			owner.mind?.RemoveSpell(src.type)
+			return TRUE
+		if("Seer")
+			add_spells(owner, seer_bundle, grant_all = TRUE)
+			owner.mind?.RemoveSpell(src.type)
+			return TRUE
+	return FALSE
+
+/datum/action/cooldown/spell/noc/spellpack/proc/add_spells(mob/owner, list/spells, choice_count = 1, grant_all = FALSE)
+	for(var/spell_type in spells)
+		if(owner?.mind.has_spell(spells[spell_type]))
+			spells.Remove(spell_type)
+	if(!grant_all)
+		var/choice_count_visual = choice_count
+		for(var/i in 1 to choice_count)
+			var/choice = input(owner, "Choose a spell! Choices remaining: [choice_count_visual]") as null|anything in spells
+			if(!isnull(choice))
+				var/picked_spell = spells[choice]
+				var/datum/new_spell = new picked_spell
+				owner?.mind.AddSpell(new_spell)
+				choice_count_visual--
+				spells.Remove(choice)
+	else
+		for(var/spell_type in spells)
+			var/datum/new_spell = new spell_type
+			owner?.mind.AddSpell(new_spell)
+	if(!length(spells))
+		owner.mind?.RemoveSpell(src.type)
+

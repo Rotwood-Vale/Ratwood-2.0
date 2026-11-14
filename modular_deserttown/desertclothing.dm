@@ -230,6 +230,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon = 'modular_deserttown/icons/clothing/shirts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
+	hiked_base_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_deserttown_shirts.dmi'
 	icon_state = "thawb"
 	item_state = "thawb"
 	dropshrink = null
@@ -282,6 +284,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|VITALS
 	icon = 'modular_deserttown/icons/clothing/shirts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
+	hiked_base_icon = 'modular_deserttown/icons/clothing/onmob/shirts.dmi'
+	hiked_overlay_icon = 'icons/roguetown/clothing/onmob/hiked/hiked_deserttown_shirts.dmi'
 	icon_state = "dprince"
 	item_state = "dprince"
 
@@ -387,8 +391,8 @@
 
 /datum/crafting_recipe/roguetown/sewing/turban/fancy
 	name = "fancy turban"
-	result = list(/obj/item/clothing/head/roguetown/turban)
-	reqs = list(/obj/item/natural/silk = 2)
+	result = list(/obj/item/clothing/head/roguetown/turban/fancypurple)
+	reqs = list(/obj/item/natural/silk = 3)
 	craftdiff = 4
 
 /obj/item/clothing/head/roguetown/tagelmust
@@ -651,8 +655,10 @@
 	icon_state = "sultbelt"
 	sellprice = 30
 
+//////Magos sash renamed for general use sorry Jafar needed the drip
+
 /obj/item/storage/belt/rogue/leather/jafar
-	name = "Zybantine magos Sash"
+	name = "Zybantine Large Sash"
 	icon = 'modular_deserttown/icons/clothing/belts.dmi'
 	mob_overlay_icon = 'modular_deserttown/icons/clothing/onmob/belts.dmi'
 	icon_state = "jafar"
@@ -747,8 +753,7 @@
 	icon_state = "shalal"//change when I get around to it
 	item_state = "shalal"
 	color = "#d4c7bf"
-	armor = ARMOR_LEATHER_GOOD
-	prevent_crits = list(BCLASS_CUT, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)	//Same as gloves
+	armor = ARMOR_LEATHER
 	max_integrity = ARMOR_INT_SIDE_HARDLEATHER
 
 	

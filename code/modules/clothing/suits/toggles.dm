@@ -8,7 +8,7 @@
 
 /obj/item/clothing/attack_right(mob/user)
 	. = ..()
-	if(adjustable && loc == user)
+	if(adjustable && is_worn_or_stored_by(user))
 		AdjustClothes(user)
 	if(hoodtype)
 		ToggleHood(user)
@@ -179,7 +179,7 @@
 	usr.update_inv_wear_suit()
 	for(var/X in actions)
 		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		A.build_all_button_icons()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
 	. = ..()
