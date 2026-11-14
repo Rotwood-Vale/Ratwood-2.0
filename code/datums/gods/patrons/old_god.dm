@@ -252,7 +252,7 @@
 
 /obj/effect/proc_holder/spell/invoked/psydefy
 	name = "DEFY"
-	desc = "I can give a dying person or myself enough strength to ENDURE just a bit longer, to have a chance to leave their mark on the world before their flame goes out. (ONLY USABLE ON PEOPLE IN CRIT / Using it while in crit will self cast)"
+	desc = "I call upon my own sustaining willpower to allow a fleeting moment of resilience to a critically-wounded target. I shall not falter myself, if I were to fall as well. Upon the threshold of death, to merely ENDURE is naught enough; one must strive to leave their mark and defy the inevitable."
 	overlay_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	action_icon = 'icons/mob/actions/psydonmiracles.dmi'
 	overlay_state = "DEFY"
@@ -316,11 +316,11 @@
 		revert_cast()
 		return FALSE
 	if(istype(target.patron, /datum/patron/inhumen/zizo)) // thinks they will get raised as undead
-		to_chat(user, span_warning("They dont fear death, they dont see it as an end."))
+		to_chat(user, span_warning("They do not fear death, as they do not see it as an end."))
 		revert_cast()
 		return FALSE
 	if(HAS_TRAIT(target, TRAIT_NOBREATH)) // no avoiding oxy consequencess
-		to_chat(user, span_warning("They dont see themselves as dying and lack a will to resist it."))
+		to_chat(user, span_warning("Those who tread the path between life and death cannot be swayed by mere mortal fear."))
 		revert_cast()
 		return FALSE
 
@@ -339,8 +339,8 @@
 	
 
 /atom/movable/screen/alert/status_effect/death_defiance
-	name = "Death Defience"
-	desc = "I WILL NOT GO INTO THE NIGHT QUIETLY!"
+	name = "Death Defiance"
+	desc = "PERCHED AT THE VERY PRECIPICE OF OBLIVION, I YET STAND."
 	icon_state = "buff"
 
 /datum/status_effect/death_defiance // TLDR = you dont die from tox, oxy, you cant be crit state, get crit resistance/reset it stacks, and get some will and con. You are not immortal, but your close to that
@@ -384,7 +384,7 @@
 	owner.visible_message(span_boldwarning("[owner] rises back on their feet, defying death with every movement."), span_boldwarning("I feel a surge of energy as I DEFY death."))
 	owner.emote("scream", TRUE)
 	owner.set_resting(FALSE, FALSE)
-	owner.add_filter("death_defience", 2, list("type" = "outline", "color" = "#2e0000", "alpha" = 25,  "size" = 2))
+	owner.add_filter("death_defiance", 2, list("type" = "outline", "color" = "#2e0000", "alpha" = 25,  "size" = 2))
 
 
 /datum/status_effect/death_defiance/on_remove()
@@ -411,8 +411,8 @@
 	if(!HAS_TRAIT(owner, TRAIT_DNR)) // last mercy to the ones without a second chance
 		owner.adjustOxyLoss(130, TRUE)
 	owner.update_stat()
-	owner.visible_message(span_boldwarning("The strange energy filling the [owner] runs out, and their bathered body falls."), span_boldwarning("I feel my newfound energy and will to resist leave me."))
-	owner.remove_filter("death_defience")
+	owner.visible_message(span_boldwarning("The strange energy filling the [owner] runs out, leaving them vulnerable once more."), span_boldwarning("I feel my newfound energy fade away."))
+	owner.remove_filter("death_defiance")
 
 
 

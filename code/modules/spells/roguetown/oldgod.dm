@@ -186,7 +186,7 @@
 	to_chat(H, span_info("I take a moment to collect myself..."))
 
 	if(HAS_TRAIT(user, TRAIT_LUX_FREAK) && zcross_trigger) // LUX ABOMINATIONS WONT STOP SO EASLY!!!
-		user.visible_message(span_warning("[user] shuddered but they eyes flash silver and they keep on going."), span_userdanger("Cold shoots through my spine and dark laughs resounds, but i focus on my lux and ENDURE."))
+		user.visible_message(span_warning("[user] shudders as their eyes briefly wash over with a sickly shade of silver!"), span_userdanger("Ice shoots up my spine as the ARCHENEMY's laughter resonates in my skull! I will ENDURE this trial!"))
 		zcross_trigger = FALSE
 
 	if(zcross_trigger)
@@ -297,7 +297,7 @@
 	to_chat(H, span_info("I focus on my insides and start to weave my flesh back together.")) // Why is he better then other psydonites? He is a lux freak that knows exactly what he is doing instead of just immitating miracles
 
 	if(HAS_TRAIT(user, TRAIT_LUX_FREAK) && zcross_trigger) // LUX ABOMINATIONS WONT STOP SO EASLY!!! Kind of redoundant here since this is absolver special and he alwys has it, but futureprofing
-		user.visible_message(span_warning("[user] shuddered but they eyes flash silver and they keep on going."), span_userdanger("Cold shoots through my spine and dark laughs resounds, but i focus on my lux and ENDURE."))
+		user.visible_message(span_warning("[user] shudders as their eyes briefly wash over with a sickly shade of silver!"), span_userdanger("Ice shoots up my spine as the ARCHENEMY's laughter resonates in my skull! I will ENDURE this trial!"))
 		zcross_trigger = FALSE
 	
 	if(zcross_trigger)
@@ -368,7 +368,7 @@
 			return FALSE
 		to_chat(user, span_warning("You attempt to revive [H] by ABSOLVING them!"))
 		// Dramatic effect
-		user.visible_message(span_danger("[user] grabs [H] by the wrists, silvery lux thread pouring from their hands!"))  
+		user.visible_message(span_danger("[user] grabs [H] by the wrists, silvery threads of lux pouring from their hands!"))  
 
 		if(alert(H, "They want to ABSOLVE you. Will you let them?", "ABSOLUTION", "I'll allow it", "I refuse") != "I'll allow it")
 			H.visible_message(span_notice("Nothing happens."))
@@ -419,7 +419,7 @@
 	user.adjustCloneLoss(clone_transfer)
 
 	// Visual effects
-	user.visible_message(span_danger("Silvery threads of lux explode from [user] and hit [H] ABSOLVING their suffering!"))
+	user.visible_message(span_danger("Silvery threads of lux explode from [user] and hit [H], ABSOLVING their suffering!"))
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
 	new /obj/effect/temp_visual/psyheal_rogue(get_turf(H), "#aa1717")
@@ -431,10 +431,10 @@
 	// Notify the user and target
 	to_chat(user, span_warning("You pull on [H]'s lux, ABSOLVING them of their injuries!"))
 	if(HAS_TRAIT(H, TRAIT_INQUISITION)) // inqusition is used to it
-		to_chat(user, span_notice("You feel pull on your soul as [user], ABSOLVES you of your suferring."))
+		to_chat(user, span_notice("You feel pull on your soul as [user] ABSOLVES you of your suferring."))
 	else
 		to_chat(H, span_danger("You feel a terrible tear as a part of your soul is torn away by silver thread!")) // Someone just tore away something from your lux, that isn't calm  
-		to_chat(H, span_notice("Your wounds seem to mysteriously vanish and your burderns lighten."))
+		to_chat(H, span_notice("Your wounds seem to mysteriously vanish, your burdens lightening."))
 	return TRUE
 
 // Weaker absolve for the Stigmata adventurer
