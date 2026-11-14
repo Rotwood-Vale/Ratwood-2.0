@@ -137,6 +137,8 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 		/datum/ritual/servantry/misfortune,
 		)
 	var/zizo_points = 0
+	var/list/antag_setup_stats
+	var/antag_setup_trait
 
 /datum/mind/New(key)
 	src.key = key

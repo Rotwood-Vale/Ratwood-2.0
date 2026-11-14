@@ -17,8 +17,7 @@
 	var/islesser = TRUE
 	var/start_budget = 20
 	var/start_points = 0
-	var/change_stats = TRUE
-	var/list/innate_traits = list(
+	var/change_stats = TRUE	var/list/innate_traits = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_CABAL,
 		TRAIT_HERESIARCH,
@@ -93,6 +92,16 @@
 	if(istype(H))
 		H.verbs -= /mob/living/carbon/human/proc/communicate
 		H.verbs -= /mob/living/carbon/human/proc/zizo_targets_list
+		H.verbs -= /mob/living/carbon/human/proc/release_minion
+		for(var/key in owner.antag_setup_stats)
+			H.change_stat(key, -owner.antag_setup_stats[key])
+		if(owner.antag_setup_trait)
+			REMOVE_TRAIT(H, owner.antag_setup_trait, TRAIT_GENERIC)
+		for(var/datum/antag_setup/S in GLOB.antag_setups)
+			if(S.user == H)
+				qdel(S)
+	owner.antag_setup_stats = null
+	owner.antag_setup_trait = null
 	return ..()
 
 /datum/antagonist/zizocultist/greet()

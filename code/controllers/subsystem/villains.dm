@@ -164,11 +164,15 @@ GLOBAL_LIST_EMPTY(antag_setups)
 		if(!chosen_trait)
 			to_chat(user, span_warning("Choose a trait."))
 			return
+		var/list/applied = list()
 		for(var/key in stat_keys)
 			var/diff = stats[key] - defaults[key]
 			if(diff)
 				user.change_stat(key, diff)
+				applied[key] = diff
 		ADD_TRAIT(user, chosen_trait, TRAIT_GENERIC)
+		user.mind?.antag_setup_stats = applied
+		user.mind?.antag_setup_trait = chosen_trait
 		GLOB.antag_setups -= src
 		user << browse(null, "window=antagsetup")
 		qdel(src)
