@@ -335,7 +335,7 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 /datum/combat_music/inquis_arbiter
 	name = "Inquisitor - Arbiter"
 	desc = ""
-	credits = "Studio EIM - Canto VII Boss 3 Battle Theme"
+	credits = "Studio EIM - Canto VII Battle Theme F2"
 	shortname = "Arbiter"
 	musicpath = list('sound/music/combat_arbiter.ogg')
 
