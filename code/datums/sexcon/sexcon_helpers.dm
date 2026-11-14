@@ -189,7 +189,7 @@
 	
 /mob/living/carbon/human/proc/try_impregnate(mob/living/carbon/human/wife, orifice = SEX_PART_CUNT)
 	var/obj/item/organ/testicles/testes = getorganslot(ORGAN_SLOT_TESTICLES)
-	if(!testes || !wife || !is_virile())
+	if(!testes || !wife || !is_virile() || HAS_TRAIT(src, TRAIT_OVIPOSITOR))
 		return
 	if(orifice & SEX_PART_TAIL_MAW)
 		var/obj/item/organ/tail/manticore/tail = get_manticore_tail(wife)
