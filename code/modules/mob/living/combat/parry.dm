@@ -375,7 +375,7 @@
 			testing("failparry")
 			return FALSE
 		if(chained_parry)
-			refresh_defense_chain()
+			refresh_defense_chain(attacker)
 		else
 			register_paid_defense(attacker)
 		//only gain experience if attacker isn't using a non-combat skill for their weapon
