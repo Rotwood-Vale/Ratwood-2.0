@@ -17,7 +17,8 @@
 	var/islesser = TRUE
 	var/start_budget = 20
 	var/start_points = 0
-	var/change_stats = TRUE	var/list/innate_traits = list(
+	var/change_stats = TRUE
+	var/list/innate_traits = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_CABAL,
 		TRAIT_HERESIARCH,

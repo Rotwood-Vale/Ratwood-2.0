@@ -339,6 +339,10 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		zizo_award(target, 3)
 	else
 		target.visible_message(span_danger("[target] thrashes around, unyielding!"))
+		if(tgui_alert(user, "THIS FOOL REFUSES CONVERSION!", "ZIZO", list("Sacrifice", "Spare")) == "Sacrifice" && (target in center.contents))
+			var/datum/ritual/servantry/sacrifice/S = new
+			S.invoke(user, center, TRUE)
+			qdel(S)
 
 /datum/ritual/servantry/sacrifice
 	lesser = TRUE
@@ -348,7 +352,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 	center_requirement = /mob/living/carbon/human
 	center_desc = "a sacrifice"
 
-/datum/ritual/servantry/sacrifice/invoke(mob/living/user, turf/center)
+/datum/ritual/servantry/sacrifice/invoke(mob/living/user, turf/center, solo)
 	var/mob/living/carbon/human/target = locate() in center.contents
 	if(zizo_target_error(user, target))
 		return
@@ -362,17 +366,19 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 				break
 		if(assistant)
 			break
-	if(!assistant)
+	if(!assistant && !solo)
 		to_chat(user, span_warning("I need another cultist on the rune with a knife in their hand."))
 		return
-	to_chat(user, span_notice("You and [assistant] begin the sacrifice..."))
-	assistant.Immobilize(10 SECONDS)
+	to_chat(user, span_notice("You begin the sacrifice..."))
+	if(solo)
+		target.Immobilize(10 SECONDS)
+	assistant?.Immobilize(10 SECONDS)
 	var/poo = new /obj/effect/temp_visual/opengate(center, 10 SECONDS)
 	if(!do_after(user, 10 SECONDS, target = target))
-		assistant.SetImmobilized(0)
+		assistant?.SetImmobilized(0)
 		qdel(poo)
 		return
-	if(QDELETED(target) || !(target in center.contents) || QDELETED(assistant))
+	if(QDELETED(target) || !(target in center.contents) || (assistant && QDELETED(assistant)))
 		return
 	var/pure = target.purity
 	if(!absorb_lux(target, center))
@@ -389,7 +395,7 @@ GLOBAL_LIST_INIT(ritualslist, build_zizo_rituals())
 		zizo_award(assistant, 3)
 	zizo_award(user, 5)
 	zizo_award(assistant, 5)
-	target.visible_message(span_danger("[assistant] tears open [target]'s chest and rips free their lux!"))
+	target.visible_message(span_danger("[assistant || user] tears open [target]'s chest and rips free their lux!"))
 	to_chat(user, span_notice("The sacrifice is accepted!"))
 
 /datum/ritual/servantry/heartache
