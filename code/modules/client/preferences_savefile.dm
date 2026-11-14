@@ -606,6 +606,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	vice4 = (vice4_type && ispath(vice4_type)) ? new vice4_type() : null
 	vice5 = (vice5_type && ispath(vice5_type)) ? new vice5_type() : null
 	vice6 = (vice6_type && ispath(vice6_type)) ? new vice6_type() : null
+	fix_duplicate_vices()
 	S["redolent_type"] >> redolent_type
 	S["redolent_scent"] >> redolent_scent
 	S["hypnotic_gaze_text"] >> hypnotic_gaze_text
