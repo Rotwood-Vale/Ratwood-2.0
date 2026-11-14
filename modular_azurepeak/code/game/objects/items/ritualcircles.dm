@@ -2252,13 +2252,15 @@
 		loc.visible_message(span_warning("[target] does not have the mind to benefit from the One's guidance."))
 		return
 
-	if(HAS_TRAIT(target, TRAIT_SILVER_BLESSED))
-		loc.visible_message(span_warning("[target] has already been saved by the One's admonishment."))
-		return
-
 	if(target.stat == DEAD)
 		loc.visible_message(span_warning("With their heart stilled, the ritual will have no purchase upon [target]. It would be a waste."))
 		return
+
+	// Remove divine curses
+	for(var/datum/curse/C in target.curses)
+		target.remove_curse(C)
+		loc.visible_message(span_warning("With masterfull precision, the divine curse on [target] is unvowen."))
+		target.apply_status_effect(/datum/status_effect/debuff/devitalised)
 
 	var/datum/antagonist/werewolf/Were = target.mind.has_antag_datum(/datum/antagonist/werewolf/)
 	var/datum/antagonist/werewolf/lesser/Wereless = target.mind.has_antag_datum(/datum/antagonist/werewolf/lesser/)
@@ -2545,6 +2547,17 @@
 
 /obj/structure/ritualcircle/psydon/proc/psydonconversion_stage4(mob/living/carbon/human/target)
 	to_chat(target, span_mind_control("..."))
+	
+	// Remove divine punishments
+	target.remove_status_effect(/datum/status_effect/debuff/apostasy)
+	target.remove_status_effect(/datum/status_effect/debuff/excomm)
+	target.remove_stress(/datum/stressevent/apostasy)
+	target.remove_stress(/datum/stressevent/excommunicated)
+
+	// Remove divine curses
+	for(var/datum/curse/C in target.curses)
+		target.remove_curse(C)
+	
 	if(target.devotion == null)
 		target.set_patron(new /datum/patron/old_god)
 		return
