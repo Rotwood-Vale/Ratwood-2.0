@@ -267,7 +267,7 @@
 
 /datum/rmb_intent/riposte
 	name = "defend"
-	desc = "No delay between dodge and parry rolls.\n(RMB WHILE NOT GRABBING ANYTHING AND HOLDING A WEAPON)\nEnter a defensive stance, guaranteeing the next hit is defended against.\nTwo people who hit each other with the Guard up will have their weapons Clash, potentially disarming them.\nLetting it expire or hitting someone with it who has no Guard up is tiresome."
+	desc = "No delay between dodge and parry rolls.\n(RMB WHILE NOT GRABBING ANYTHING AND HOLDING A WEAPON)\nEnter a defensive stance, guaranteeing the next hit is defended against.\nTwo people who hit each other with the Guard up will have their weapons Clash, potentially disarming them.\nLetting it expire or hitting someone with it who has no Guard up is tiresome.\nSuccessfully parrying or dodging an attack while in this stance starts a Chained Defense. For a moment, parrying or dodging anyone but that first attacker has a slightly better chance to succeed, as well as costing no stamina and no weapon integrity."
 	icon_state = "rmbdef"
 	adjacency = FALSE
 	bypasses_click_cd = TRUE
