@@ -117,7 +117,7 @@
 	if(..()) // call parent buckle
 		var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
 		riding_datum.vehicle_move_delay = 2
-		if(M.mind)
+		if(!HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) && M.mind)
 			var/riding_skill = M.get_skill_level(/datum/skill/misc/riding)
 			if(riding_skill)
 				riding_datum.vehicle_move_delay = max(1, 2 - (riding_skill * 0.2))
@@ -142,13 +142,39 @@
 			return riding_datum.handle_ride(user, direction)
 	return ..()
 
-/mob/living/carbon/human/Knockdown(amount, updating = TRUE)
-	. = ..() // parent Knockdown
-	if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) && buckled_mobs)
-		for(var/mob/living/carbon/human/rider in buckled_mobs)
-			unbuckle_mob(rider, TRUE)
-			to_chat(rider, span_warning("You fall off [src] as they collapse!"))
-			to_chat(src, span_warning("[rider] tumbles off you as you fall!"))
+/mob/living/carbon/human/proc/update_rider_steering_verb()
+	SIGNAL_HANDLER
+	var/datum/component/riding/human/riding = GetComponent(/datum/component/riding)
+	if(riding)
+		riding.steering_generation++
+	if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE))
+		verbs |= /mob/living/carbon/human/proc/toggle_rider_steering
+	else
+		verbs -= /mob/living/carbon/human/proc/toggle_rider_steering
+
+/mob/living/carbon/human/proc/toggle_rider_steering()
+	set name = "Allow Rider Steering"
+	set category = "IC"
+	if(!HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) || incapacitated())
+		return
+	allow_rider_steering = !allow_rider_steering
+	to_chat(src, span_notice("Rider steering is now [allow_rider_steering ? "allowed" : "disabled"]."))
+	var/datum/component/riding/human/riding = GetComponent(/datum/component/riding)
+	if(riding)
+		riding.steering_generation++
+	for(var/mob/living/rider in buckled_mobs)
+		to_chat(rider, span_notice("[src] [allow_rider_steering ? "allows you to steer again" : "takes control of their own movement"]."))
+
+/// Called only after a disabling effect has actually been applied.
+/mob/living/carbon/human/proc/dismount_on_forced_fall()
+	if(!HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) || !has_buckled_mobs())
+		return
+	if(!IsKnockdown() && !IsParalyzed())
+		return
+	for(var/mob/living/rider in buckled_mobs.Copy())
+		unbuckle_mob(rider, TRUE)
+		to_chat(rider, span_warning("You fall off [src] as they collapse!"))
+		to_chat(src, span_warning("[rider] tumbles off you as you fall!"))
 
 /mob/living/carbon/human/attackby(obj/item/I, mob/living/user, params)
 	if(buckled && istype(buckled, /mob/living/carbon/human))
@@ -175,3 +201,9 @@
 			visible_message(span_warning("The [P] is redirected to [mount]!"))
 			return mount.bullet_act(P)
 	return ..()
+
+/// Invoke the mount client's ordinary movement path and its shared cooldown.
+/mob/living/carbon/human/proc/execute_piloted_move(direction)
+	if(!client)
+		return FALSE
+	return client.Move(get_step(src, direction), direction)

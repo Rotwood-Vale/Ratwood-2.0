@@ -79,12 +79,6 @@
 			return
 		if(!buckle_mob(user, TRUE, FALSE))
 			return
-		var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
-		riding_datum.vehicle_move_delay = 4
-		if(user.mind)
-			var/riding_skill = user.get_skill_level(/datum/skill/misc/riding)
-			if(riding_skill)
-				riding_datum.vehicle_move_delay = max(1, 3 - (riding_skill * 0.2))
 		return TRUE
 #endif
 
@@ -93,6 +87,8 @@
 	sexcon = new /datum/sex_controller(src)
 #endif
 	verbs += /mob/living/proc/lay_down
+	RegisterSignal(src, list(SIGNAL_ADDTRAIT(TRAIT_PONYGIRL_RIDEABLE), SIGNAL_REMOVETRAIT(TRAIT_PONYGIRL_RIDEABLE)), PROC_REF(update_rider_steering_verb))
+	update_rider_steering_verb()
 
 	icon_state = ""		//Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
 
@@ -922,6 +918,8 @@
 	if(!is_type_in_typecache(target, can_ride_typecache))
 		target.visible_message(span_warning("[target] really can't seem to mount [src]..."))
 		return
+	if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) && (IsKnockdown() || IsParalyzed() || IsUnconscious() || stat != CONSCIOUS))
+		return FALSE
 	buckle_lying = lying_buckle
 	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
 	if(target_hands_needed)

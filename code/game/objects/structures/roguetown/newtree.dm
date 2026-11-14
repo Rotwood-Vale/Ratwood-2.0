@@ -69,44 +69,52 @@
 
 /obj/structure/flora/newtree/attack_hand(mob/user)
 	if(isliving(user))
-		var/mob/living/L = user
-		if(L.stat != CONSCIOUS || L.incapacitated() || !(L.mobility_flags & MOBILITY_STAND))
-			return
-		var/turf/target = get_step_multiz(user, UP)
-		if(!istype(target, /turf/open/transparent/openspace))
-			to_chat(user, span_warning("I can't climb here."))
-			return
-		if(!L.can_zTravel(target, UP))
-			to_chat(user, span_warning("I can't climb there."))
-			return
-		var/used_time = 3 SECONDS
-		var/exp_to_gain = 0
-		var/myskill = SKILL_LEVEL_NOVICE // default for NPCs
-		if(L.mind)
-			myskill = L.get_skill_level(/datum/skill/misc/climbing)
-			if(HAS_TRAIT(L, TRAIT_WOODWALKER))
-				exp_to_gain = L.STAINT
-			else
-				exp_to_gain = L.STAINT/2
-			var/obj/structure/table/TA = locate() in L.loc
-			if(TA)
+		var/mob/living/climber = user
+		var/mob/living/carbon/human/mount = climber.get_mountable_mount()
+		if(mount)
+			var/datum/component/riding/human/riding = mount.GetComponent(/datum/component/riding)
+			return riding?.handle_climb(user, src)
+		return climb_tree(climber)
+
+/obj/structure/flora/proc/climb_tree(mob/living/L, datum/callback/pilot_check)
+	if(L.stat != CONSCIOUS || L.incapacitated() || !(L.mobility_flags & MOBILITY_STAND))
+		return
+	var/turf/target = get_step_multiz(L, UP)
+	if(!istype(target, /turf/open/transparent/openspace))
+		to_chat(L, span_warning("I can't climb here."))
+		return
+	if(!L.can_zTravel(target, UP))
+		to_chat(L, span_warning("I can't climb there."))
+		return
+	var/used_time = 3 SECONDS
+	var/exp_to_gain = 0
+	var/myskill = SKILL_LEVEL_NOVICE // default for NPCs
+	if(L.mind)
+		myskill = L.get_skill_level(/datum/skill/misc/climbing)
+		if(HAS_TRAIT(L, TRAIT_WOODWALKER))
+			exp_to_gain = L.STAINT
+		else
+			exp_to_gain = L.STAINT/2
+		var/obj/structure/table/TA = locate() in L.loc
+		if(TA)
+			myskill += 1
+		else
+			var/obj/structure/chair/CH = locate() in L.loc
+			if(CH)
 				myskill += 1
-			else
-				var/obj/structure/chair/CH = locate() in L.loc
-				if(CH)
-					myskill += 1
-			used_time = max(70 - (myskill * 10) - (L.STASPD * 3), (HAS_TRAIT(L, TRAIT_WOODWALKER) ? 15 : 30))
-		playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
-		user.visible_message(span_warning("[user] starts to climb [src]."), span_warning("I start to climb [src]..."))
-		if(do_after(L, used_time, target = src))
-			var/pulling = user.pulling
-			if(ismob(pulling))
-				user.pulling.forceMove(target)
-			user.forceMove(target)
-			user.start_pulling(pulling,supress_message = TRUE)
-			playsound(user, 'sound/foley/climb.ogg', 100, TRUE)
-			if(L.mind) // idk just following whats going on above
-				L.mind.add_sleep_experience(/datum/skill/misc/climbing, exp_to_gain, FALSE)
+		used_time = max(70 - (myskill * 10) - (L.STASPD * 3), (HAS_TRAIT(L, TRAIT_WOODWALKER) ? 15 : 30))
+	playsound(L, 'sound/foley/climb.ogg', 100, TRUE)
+	L.visible_message(span_warning("[L] starts to climb [src]."), span_warning("I start to climb [src]..."))
+	if(do_after(L, used_time, target = src, extra_checks = pilot_check) && (!pilot_check || pilot_check.Invoke()))
+		var/pulling = L.pulling
+		if(ismob(pulling))
+			L.pulling.forceMove(target)
+		L.forceMove(target)
+		L.start_pulling(pulling,supress_message = TRUE)
+		playsound(L, 'sound/foley/climb.ogg', 100, TRUE)
+		if(L.mind) // idk just following whats going on above
+			L.mind.add_sleep_experience(/datum/skill/misc/climbing, exp_to_gain, FALSE)
+		return TRUE
 
 /obj/structure/flora/newtree/attackby(obj/item/I, mob/living/user, params)
 	if(!isliving(user) || user.used_intent.blade_class != BCLASS_CHOP)

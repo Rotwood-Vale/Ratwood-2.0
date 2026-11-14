@@ -535,6 +535,7 @@
 		icon_state = "fullgrass_[rand(1, 3)]"
 
 /obj/structure/flora/roguegrass/reedbush
+	brushes_riders = TRUE
 	name = "reed bush"
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "reedbush_1"
@@ -552,6 +553,7 @@
 	max_integrity = 5
 
 /obj/structure/flora/roguegrass/water/reeds
+	brushes_riders = TRUE
 	name = "reeds"
 	desc = "This plant thrives in water, and shelters dangers."
 	icon_state = "reeds"
@@ -567,14 +569,20 @@
 /obj/structure/flora/roguegrass/water/reeds/update_icon()
 	dir = pick(GLOB.alldirs)
 
+/obj/structure/flora/roguegrass
+	/// Tall foliage still brushes against passengers above ground level.
+	var/brushes_riders = FALSE
+
 /datum/component/roguegrass/Initialize()
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), PROC_REF(Crossed))
 
 /datum/component/roguegrass/proc/Crossed(datum/source, atom/movable/AM)
-	var/atom/A = parent
+	var/obj/structure/flora/roguegrass/A = parent
 
 	if(isliving(AM))
 		var/mob/living/L = AM
+		if(!A.brushes_riders && L.get_mountable_mount())
+			return
 		if(L.m_intent == MOVE_INTENT_SNEAK)
 			return
 		else
@@ -589,6 +597,7 @@
 
 
 /obj/structure/flora/roguegrass/bush
+	brushes_riders = TRUE
 	name = "bush"
 	desc = "A bush. It's crawling with spiders, but maybe there's something useful inside..."
 	icon_state = "bush2"
@@ -897,6 +906,7 @@
 //Thorn bush
 
 /obj/structure/flora/roguegrass/thorn_bush
+	brushes_riders = TRUE
 	name = "thorn bush"
 	desc = "A thorny bush. Watch your step!"
 	icon_state = "thornbush"
