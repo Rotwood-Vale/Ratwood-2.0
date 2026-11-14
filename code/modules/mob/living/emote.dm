@@ -345,6 +345,25 @@
 	emote_type = EMOTE_AUDIBLE
 	show_runechat = FALSE
 
+/datum/emote/living/pant
+	key = "pant"
+	key_third_person = "pants"
+	message = "pants."
+	message_muffled = "makes a muffled pant."
+	emote_type = EMOTE_AUDIBLE
+	show_runechat = FALSE
+
+/datum/emote/living/pant/get_sound(mob/living/user)
+	key = "fatigue"
+	. = ..()
+	key = "pant"
+
+/mob/living/carbon/human/verb/emote_pant()
+	set name = "Pant"
+	set category = "Noises"
+
+	emote("pant", intentional = TRUE)
+
 /datum/emote/living/giggle
 	key = "giggle"
 	key_third_person = "giggles"

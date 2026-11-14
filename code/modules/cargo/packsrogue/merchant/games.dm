@@ -71,10 +71,10 @@
 
 /datum/supply_pack/rogue/games/arlette_booster
 	name = "Arlette Card Booster"
-	cost = 20
+	cost = 15
 	contains = list(/obj/item/ccg_card_booster)
 
 /datum/supply_pack/rogue/games/arlette_booster_premium
 	name = "Premium Arlette Card Booster"
-	cost = 45
+	cost = 30
 	contains = list(/obj/item/ccg_card_booster/premium)
