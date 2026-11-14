@@ -366,13 +366,17 @@ GLOBAL_LIST_EMPTY(priest_swap_timers)
 		to_chat(src, span_warning("This one's connection to the ten is too shallow."))
 		return FALSE
 
-	//Let's not curse heretical antags.
-	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
-		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
-		return FALSE
+	if(HAS_TRAIT(H, TRAIT_LUX_FREAK))
+		to_chat(src, span_warning("The curse is undone before it could take root in [H] lux!"))
+		return
 
 	if(HAS_TRAIT(H, TRAIT_INQUISITION))
 		to_chat(src, span_warning("Dammed octavian's runic arrays dampen divine punishment directed against their agents!"))
+		return FALSE
+		
+	//Let's not curse heretical antags.
+	if(HAS_TRAIT(H, TRAIT_HERESIARCH))
+		to_chat(src, span_warning("The patron of this one shields them from being suppressed."))
 		return FALSE
 
 	return TRUE

@@ -354,12 +354,16 @@
 				to_chat(user, span_danger("The target must have a Nervelock account!")) //no stunlocking antags sorry buddy
 				return
 
-			if(HAS_TRAIT(H, TRAIT_HERESIARCH))
-				to_chat(user, span_warning("The patron of this one shields them from being suppressed."))
+			if(HAS_TRAIT(H, TRAIT_LUX_FREAK))
+				to_chat(src, span_warning("[H] resisted the divine punishment on their soul!"))
 				return
-
+			
 			if(HAS_TRAIT(H, TRAIT_INQUISITION))
 				to_chat(src, span_warning("Dammed octavian's runic arrays dampen divine punishment directed against their agents!"))
+				return
+
+			if(HAS_TRAIT(H, TRAIT_HERESIARCH))
+				to_chat(user, span_warning("The patron of this one shields them from being suppressed."))
 				return
 
 			if(istype(user.used_intent, /datum/intent/priest_smite))
