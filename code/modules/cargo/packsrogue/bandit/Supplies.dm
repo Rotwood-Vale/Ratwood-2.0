@@ -197,6 +197,16 @@
 	cost = 35
 	contains = list(/obj/item/rogueweapon/pick/steel)
 
+/datum/supply_pack/rogue/Things/clotchkit
+	name = "Sewing Kit"
+	cost = 70
+	contains = list(/obj/item/repair_kit)
+
+/datum/supply_pack/rogue/Things/metalkit
+	name = "Armor Plate"
+	cost = 50
+	contains = list(/obj/item/repair_kit/metal)
+
 //////////////
 // COOKING  //		//Very basic ingredients. Nothing like meat or fruits, you can go and get those yourself. Buying components for everyone on your own will add up quickly. What are YOU bringing for the Matthios potluck?
 //////////////
