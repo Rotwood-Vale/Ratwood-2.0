@@ -1,9 +1,15 @@
 //IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.
 /mob/living/carbon/update_transform(forcepixel)
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
+	// Apply posture and scaling without the cosmetic rotation.
+	ntransform.Turn(-pixel_rotation)
 	var/final_pixel_y = pixel_y
 	var/final_dir = dir
 	var/changed = 0
+	if(pixel_rotation && lying_prev && (mobility_flags & MOBILITY_STAND))
+		// Cosmetic spinning must not survive the transition back to standing.
+		pixel_rotation = 0
+		changed++
 	if(lying != lying_prev && rotate_on_lying)
 		var/old_lying_prev = lying_prev
 		changed++
@@ -34,6 +40,7 @@
 
 	if(changed)
 //		animate(src, transform = ntransform, time = (lying_prev == 0 || !lying) ? 2 : 0, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
+		ntransform.Turn(pixel_rotation)
 		transform = ntransform
 		// Only reset pixel_x if we're not in a custom pixel shift
 		if(!is_shifted)

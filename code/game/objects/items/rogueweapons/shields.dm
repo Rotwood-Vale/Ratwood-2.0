@@ -280,6 +280,19 @@
 	. = ..()
 	AddComponent(/datum/component/cursed_item, TRAIT_CABAL, "SHIELD")
 
+/obj/item/rogueweapon/shield/iron/graggar
+	name = "vicious targe"
+	desc = "A decorated targe, splattered and sanctified with the trophies of Psydonia's most dangerous hunters. No matter the icy rains, \
+	no matter the scorching heat – no matter the wrath of their enemies, Graggar never faltered in His arms. When Ravox broke their oath and \
+	rescinded their claim to Godhood, grief could not describe what He had felt."
+	icon_state = "graggarshield"
+	unenchantable = TRUE
+	max_integrity = 300
+
+/obj/item/rogueweapon/shield/iron/graggar/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/cursed_item, TRAIT_HORDE, "SHIELD", "RENDERED ASUNDER")
+
 /obj/item/rogueweapon/shield/tower/metal/ancient/decrepit
 	name = "decrepit shield"
 	desc = "A hefty tower shield, wrought from frayed bronze. Looped with dried kelp and reeking of saltwater, you'd assume that this had been fished out from the remains of a long-sunken warship.. alongside its former legionnaire."
@@ -635,7 +648,7 @@
 	max_integrity = 200
 	var/smoke_path = /obj/effect/particle_effect/smoke
 	var/cooldowny
-	var/cdtime = 30 SECONDS
+	var/cdtime = 20 SECONDS
 
 /obj/item/rogueweapon/shield/steam/attack_self(mob/user)
 	if(cooldowny)
@@ -655,7 +668,7 @@
 	playsound(user, 'sound/items/steamrelease.ogg', 100, FALSE, -1)
 	cooldowny = world.time
 	addtimer(CALLBACK(src,PROC_REF(steamready), user), cdtime)
-	for(var/atom/movable/AM in view(1, user))
+	for(var/atom/movable/AM in oview(1, user))
 		thrownatoms += AM
 	for(var/turf/T in oview(2, user))
 		new smoke_path(T) //smoke everywhere!
