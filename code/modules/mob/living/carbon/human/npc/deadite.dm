@@ -109,7 +109,7 @@
 	return FALSE
 
 /mob/living/carbon/human/proc/try_do_deadite_bite(mob/living/victim)
-	if(!src || stat >= DEAD)
+	if(!src || stat >= DEAD || HAS_TRAIT(src, TRAIT_NO_BITE) || src.incapacitated()) //incapacitated too so that even neck-fracture deadites can't "reach" to bite
 		return FALSE
 	
 	var/obj/item/grabbing/bite/bite = get_item_by_slot(SLOT_MOUTH)

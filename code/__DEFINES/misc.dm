@@ -16,6 +16,7 @@
 
 //Human Overlays Indexes/////////
 
+#define UNDER_ARMOR_CACHE_INDEX	56		// Cache only; use UNDER_ARMOR_LAYER for the fractional render layer.
 #define JOYBRINGER_LAYER		55
 #define BLACK_ROT_LAYER			54
 #define POTENCE_LAYER			53
@@ -43,6 +44,9 @@
 #define ARMOR_LAYER				31
 #define TABARD_LAYER			30
 #define BELT_LAYER				29		//only when looking south
+#define BODY_BREASTS_LAYER		33.2
+#define BODY_BELLY_LAYER		33.4
+#define BODY_GENITAL_LAYER		33.6
 #define UNDER_CLOAK_LAYER		28
 #define HANDS_PART_LAYER		27
 #define GLOVES_LAYER			26
@@ -71,19 +75,23 @@
 #define SUNDER_LAYER			3
 #define FIRE_LAYER				2		//If you're on fire
 #define TURF_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			54		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			56		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 #define BACK_CLOAK_SOUTH_LAYER		(BODY_BEHIND_LAYER+1)
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
 //IT DOESN'T OK, IT MEANS "UNDER"
-#define UNDER_ARMOR_LAYER			(ARMOR_LAYER+1)
+//Fractional, so it can't land on another layer's overlay cache slot. Never index overlays_standing with these.
+#define UNDER_ARMOR_LAYER			(ARMOR_LAYER+0.5)
+#define UNDER_ARMORSLEEVE_LAYER		(ARMORSLEEVE_LAYER+0.5)
 #define UNDER_HAT_LAYER			(HEAD_LAYER+1)
 
 //AND -1 MEANS "ABOVE", OK?, OK!?!
 #define ABOVE_SHOES_LAYER			(SHOES_LAYER-1)
 #define ABOVE_BODY_FRONT_LAYER		(BODY_FRONT_LAYER-1)
+#define OVER_GLOVES_LAYER			(GLOVESLEEVE_LAYER-0.5)
+#define OVER_ARMOR_LAYER			(ARMOR_LAYER-0.5)
 
 //Security levels
 #define SEC_LEVEL_GREEN	0
