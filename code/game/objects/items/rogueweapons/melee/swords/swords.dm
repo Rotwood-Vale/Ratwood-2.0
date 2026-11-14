@@ -1737,8 +1737,8 @@
 	sheathe_icon = "silverrapier"
 	max_integrity = 225
 	max_blade_int = 225
-	force = 25
-	force_wielded = 25
+	force = 23
+	force_wielded = 23
 	minstr = 8
 	wdefense = 8
 	smeltresult = /obj/item/ingot/silverblessed
