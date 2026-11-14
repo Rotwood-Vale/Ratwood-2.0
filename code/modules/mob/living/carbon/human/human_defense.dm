@@ -897,7 +897,7 @@
 		I.take_damage(damage_amount, damage_type, damage_flag, 0)
 
 /// Helper proc that returns the worn item ref that has the highest rating covering the def_zone (targeted zone) for the d_type (damage type)
-/mob/living/carbon/human/proc/get_best_worn_armor(def_zone, d_type)
+/mob/living/carbon/human/proc/get_best_worn_armor(def_zone, d_type, require_crit_protection = FALSE, require_dismemberment_protection = FALSE)
 	var/protection = 0
 	var/obj/item/clothing/used
 	if(def_zone == BODY_ZONE_TAUR)
@@ -914,6 +914,10 @@
 			continue
 		if(bp && istype(bp, /obj/item/clothing))
 			var/obj/item/clothing/C = bp
+			if(require_crit_protection && !C.prevents_crit_wounds)
+				continue
+			if(require_dismemberment_protection && !C.prevents_dismemberment)
+				continue
 			if(zone2covered(def_zone, C.body_parts_covered_dynamic))
 				if(C.max_integrity)
 					if(C.obj_integrity <= 0)

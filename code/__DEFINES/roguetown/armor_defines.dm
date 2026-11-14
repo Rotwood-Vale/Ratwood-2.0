@@ -172,6 +172,13 @@
 #define ARMOR_PADDED list("blunt" = DR_ULTRA, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_BSTEEL, "fire" = DR_HEAVY, "acid" = DR_NONE, "bullet" = DR_NONE)
 #define ARMOR_LEATHER list("blunt" = DR_HEAVY, "slash" = DBLOCK_HEAVY, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_HEAVY, "fire" = DR_SUPER, "acid" = DR_NONE, "bullet" = DR_NONE)
 
+// SKIN ARMOR - Natural armor for most classes, save antags and disciple. SHOULD ALWAYS permit some form of penetration, we want players to bleed despite having regenerating armor.alist
+// ARMOR_SKINFULL: Used for our shirt layer fullbody coverage.
+// ARMOR_SKINPECS: Used for our armor layer COVERAGE_VEST, which covers chest and stomach but NOTHING more. Can be used for other pieces dependent on context of the class; use good sense.
+// Another trade off of skin armor is 0 fire protection compared to leather/padded. We want sidegrades, sire.
+#define ARMOR_SKINFULL list("blunt" = DR_SUPER, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_LIGHT, "piercing" = DBLOCK_LIGHT, "fire" = DR_NONE, "acid" = DR_NONE, "bullet" = DR_NONE)
+#define ARMOR_SKINPECS list("blunt" = DR_ULTRA, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_MEDIUM, "fire" = DR_NONE, "acid" = DR_NONE, "bullet" = DR_NONE)
+
 // LIGHT ARMOR - SNOWFLAKE. Not comfortable with them, but not touching it atm.
 #define ARMOR_DRAGONSKIN list("blunt" = DR_SUPER, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_MEDIUM, "piercing" = DBLOCK_MEDIUM, "fire" = DR_HEAVY, "acid" = DR_NONE, "bullet" = DR_NONE) // Iconoclast dragon skin. Fire resistant.
 #define ARMOR_DRAGONHIDE list("blunt" = DR_SUPER, "slash" = DBLOCK_MEDIUM, "stab" = DBLOCK_LIGHT, "piercing" = DBLOCK_LIGHT, "fire" = DR_HEAVY, "acid" = DR_NONE, "bullet" = DR_NONE) // snowflake armor for dragonhide - a bit worse than hard leather but w/ decent fire resist
