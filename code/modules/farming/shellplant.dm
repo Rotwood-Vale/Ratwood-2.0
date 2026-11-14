@@ -22,7 +22,7 @@
 
 /obj/item/natural/shellplant/pumpkin/examine(mob/user)
 	. = ..()
-	
+
 	if(open)
 		. += span_smallnotice("It is open and I could use a spoon to extract its flesh.\n")
 		. += span_smallnotice("It has [foodamt] chunks remaining.")
