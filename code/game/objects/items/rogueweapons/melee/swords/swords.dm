@@ -85,7 +85,7 @@
 	cursed flesh erupts into holy fire, and unholy bravado twists into mortal fear."
 	icon_state = "silversword"
 	sheathe_icon = "silversword"
-	force = 25
+	force = 22
 	force_wielded = 25
 	minstr = 9
 	wdefense = 5
@@ -950,7 +950,7 @@
 	icon_state = "psysword"
 	sheathe_icon = "psysword"
 	force = 25
-	force_wielded = 30
+	force_wielded = 25
 	minstr = 9
 	wdefense = 6
 	dropshrink = 1

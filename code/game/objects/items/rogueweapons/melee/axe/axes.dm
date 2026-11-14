@@ -223,6 +223,10 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	grid_width = 32
 	grid_height = 96
+	throwforce = 32 //You ever had an axe thrown at you?
+	throw_speed = 4 //not as lightweight as a hurlbat - reduced range.
+	armor_penetration = PEN_HEAVY //Refers to throwing armor penetration. Heavier than tossblades; you get one throw.
+	embedding = list("embedded_pain_multiplier" = 3, "embed_chance" = 40, "embedded_fall_chance" = 30) //high chance at embed, high chance to fall out on its own.
 	is_tool = TRUE//here instead of on stoneaxe so we dont permit battleaxes to be used as tools.
 
 /obj/item/rogueweapon/stoneaxe/woodcut/bronze
@@ -427,14 +431,13 @@
 	desc = "'History prefers legends to men. It prefers nobility to brutality, soaring speeches to \
 	quiet deeds. History remembers the battle, but forgets the blood. However history remembers me, \
 	if it remembers me at all, shall only be a fraction of the truth.'"
-	armor_penetration = 80 //Refers to throwing armor penetration. Heavier than silver tossblades; you get one throw.
 	icon_state = "tomahawk_silver"
 	embedding = list("embedded_pain_multiplier" = 6, "embed_chance" = 100, "embedded_fall_chance" = 30) //high chance at embed, high chance to fall out on its own.
 	gripped_intents = null
 	thrown_damage_flag = "piercing"
 	minstr = 8
 	smeltresult = /obj/item/ingot/silverblessed
-	special = /datum/special_intent/axe_swing //Cannot be wielded, otherwise.
+	special = /datum/special_intent/side_sweep
 	is_tool = FALSE
 	is_silver = TRUE
 	resistance_flags = FIRE_PROOF
@@ -741,6 +744,9 @@
 	force = 30
 	force_wielded = 35
 	throwforce = 30 // Hey it's a throwing axe
+	throw_speed = 4 //not as lightweight as a hurlbat - reduced range.
+	armor_penetration = PEN_BSTEEL
+	embedding = list("embedded_pain_multiplier" = 3, "embed_chance" = 40, "embedded_fall_chance" = 30) //high chance at embed, high chance to fall out on its own.
 	wdefense = 5
 	unenchantable = TRUE
 
