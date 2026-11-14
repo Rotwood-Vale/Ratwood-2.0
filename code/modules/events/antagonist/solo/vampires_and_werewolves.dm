@@ -7,6 +7,7 @@
 	)
 	roundstart = TRUE
 	antag_flag = ROLE_NBEAST
+	candidate_role_bans = list(ROLE_NBEAST, ROLE_VAMPIRE, ROLE_WEREWOLF)
 	shared_occurence_type = SHARED_HIGH_THREAT
 	denominator = 40 // this is the lower chance higher threat version
 
