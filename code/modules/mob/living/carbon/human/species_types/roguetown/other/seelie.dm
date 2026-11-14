@@ -45,10 +45,13 @@
 		STAT_PERCEPTION = 4,
 		STAT_INTELLIGENCE = 2,
 		STAT_CONSTITUTION = -6,
+		STAT_STRENGTH = -6,
 		STAT_WILLPOWER = -1,
 		STAT_SPEED = 7,
 		STAT_FORTUNE = 2
 		)
+	inherent_traits = list(TRAIT_CRITICAL_WEAKNESS)
+	banned_traits = list(TRAIT_CRITICAL_RESISTANCE)
 	enflamed_icon = "widefire"
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
