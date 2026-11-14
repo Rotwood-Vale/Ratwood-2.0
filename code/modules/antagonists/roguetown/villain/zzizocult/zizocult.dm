@@ -21,6 +21,7 @@
 	var/list/innate_traits = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_CABAL,
+		TRAIT_HERESIARCH,
 	)
 
 /datum/antagonist/zizocultist/roundstart
@@ -36,6 +37,7 @@
 		TRAIT_NOMOOD,
 		TRAIT_CRITICAL_RESISTANCE,
 		TRAIT_CABAL,
+		TRAIT_HERESIARCH,
 	)
 
 /datum/antagonist/zizocultist/apply_innate_effects(mob/living/mob_override)
