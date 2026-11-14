@@ -218,16 +218,16 @@
 /datum/crafting_recipe/roguetown/engineering/heavyboltsten
 	name = "Heavy Bolts 10x"
 	reqs = list(/obj/item/natural/wood/plank = 4, /obj/item/ingot/iron = 2)
-	result = list(/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt,
-					/obj/projectile/bullet/reusable/heavy_bolt
+	result = list(/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt,
+					/obj/item/ammo_casing/caseless/rogue/heavy_bolt
 				)
 	structurecraft = /obj/machinery/artificer_table
 	skillcraft = /datum/skill/craft/engineering
