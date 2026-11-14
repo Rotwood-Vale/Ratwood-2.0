@@ -70,6 +70,7 @@
 		/datum/customizer_choice/organ/horns/anthro,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
+		/datum/customizer/organ/butt/humanoid,
 		/datum/customizer/organ/vagina/anthro,
 		/datum/customizer/bodypart_feature/pubes/fuzzy,
 		/datum/customizer/bodypart_feature/pits/fuzzy,

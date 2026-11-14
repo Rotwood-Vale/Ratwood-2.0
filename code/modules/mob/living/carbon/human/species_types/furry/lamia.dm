@@ -89,6 +89,7 @@
 		/datum/customizer/organ/horns/lamia,
 		/datum/customizer/organ/penis/lamia, // only tapered or hemi tapered or tentacle
 		/datum/customizer/organ/breasts/human,
+		/datum/customizer/organ/butt/humanoid,
 		/datum/customizer/organ/vagina/anthro,
 		/datum/customizer/bodypart_feature/pubes/feathered,
 		/datum/customizer/bodypart_feature/pits/feathered,

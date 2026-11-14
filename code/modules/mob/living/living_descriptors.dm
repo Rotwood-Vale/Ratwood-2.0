@@ -63,6 +63,7 @@
 		/datum/mob_descriptor/testicles,
 		/datum/mob_descriptor/breasts,
 		/datum/mob_descriptor/vagina,
+		/datum/mob_descriptor/butt,
 		/datum/mob_descriptor/pits,
 		)
 
@@ -115,6 +116,10 @@
 	if(sixth)
 		lines += sixth
 
+	var/butt_line = build_coalesce_description(desc_copy, described, list(MOB_DESCRIPTOR_SLOT_BUTT), "%THEY% %DESC1%.", watcher)
+	if(butt_line)
+		lines += butt_line
+
 	var/pits_line = build_coalesce_description(desc_copy, described, list(MOB_DESCRIPTOR_SLOT_PITS), "%THEY% %DESC1%.", watcher)
 	if(pits_line)
 		lines += pits_line
@@ -153,6 +158,10 @@
 	var/sixth = build_coalesce_description(desc_copy, described, list(MOB_DESCRIPTOR_SLOT_BREASTS, MOB_DESCRIPTOR_SLOT_VAGINA), "%THEY% %DESC1% and %DESC2%.", watcher)
 	if(sixth)
 		lines += sixth
+
+	var/butt_line = build_coalesce_description(desc_copy, described, list(MOB_DESCRIPTOR_SLOT_BUTT), "%THEY% %DESC1%.", watcher)
+	if(butt_line)
+		lines += butt_line
 
 	var/pits_line = build_coalesce_description(desc_copy, described, list(MOB_DESCRIPTOR_SLOT_PITS), "%THEY% %DESC1%.", watcher)
 	if(pits_line)

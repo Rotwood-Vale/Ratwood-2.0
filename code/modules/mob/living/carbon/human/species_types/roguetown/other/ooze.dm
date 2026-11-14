@@ -70,6 +70,7 @@
 		/datum/customizer/bodypart_feature/legwear,
 		/datum/customizer/organ/penis/anthro,
 		/datum/customizer/organ/breasts/human,
+		/datum/customizer/organ/butt/humanoid,
 		/datum/customizer/organ/vagina/human_anthro,
 		/datum/customizer/organ/testicles/anthro,
 		/datum/customizer/bodypart_feature/pubes,
