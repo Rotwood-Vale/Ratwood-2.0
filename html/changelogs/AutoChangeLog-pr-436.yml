@@ -1,0 +1,4 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - admin: "The storyteller now checks role bans before selecting antagonists."
