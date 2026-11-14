@@ -203,6 +203,11 @@
 	cost = 20
 	contains = list(/obj/item/rogueweapon/mace/steel)
 
+/datum/supply_pack/rogue/Sellsword/steelwarhammer
+	name = "Steel Warhammer"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/mace/warhammer/steel)
+
 /datum/supply_pack/rogue/Sellsword/axe
 	name = "Iron Axe"
 	cost = 10
@@ -243,6 +248,11 @@
 	cost = 40
 	contains = list(/obj/item/rogueweapon/sword/long/kriegmesser)
 
+/datum/supply_pack/rogue/Sellsword/halberd
+	name = "Halberd"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/halberd)
+
 //Specialist swords.
 /datum/supply_pack/rogue/Sellsword/falx
 	name = "Falx"
@@ -273,6 +283,16 @@
 	name = "Silver Long Sword"
 	cost = 80
 	contains = list(/obj/item/rogueweapon/sword/long/silver)
+
+/datum/supply_pack/rogue/Sellsword/SZweihandersword
+	name = "Steel Zweihander"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/greatsword/grenz)
+
+/datum/supply_pack/rogue/Sellsword/SFlamberge
+	name = "Steel Flamberge"
+	cost = 60
+	contains = list(/obj/item/rogueweapon/greatsword/grenz/flamberge)
 
 //////////////////////
 // WEAPONS - RANGED //
