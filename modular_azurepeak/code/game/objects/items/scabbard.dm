@@ -70,6 +70,38 @@
 	..()
 
 
+/obj/item/rogueweapon/scabbard/proc/weapon_check(mob/living/user, obj/item/I)
+	if(!I || !istype(I, /obj/item/rogueweapon))
+		return FALSE
+	if(I.type in invalid_blades)
+		return FALSE
+	if(I.type in valid_blades)
+		return TRUE
+	return valid_blade && istype(I, valid_blade)
+
+/obj/item/rogueweapon/scabbard/proc/eat_sword(mob/living/user, obj/item/I)
+	if(sheathed || !weapon_check(user, I) || !user.Adjacent(src))
+		return FALSE
+	if(!user.dropItemToGround(I))
+		return FALSE
+	sheathed = I
+	I.forceMove(src)
+	playsound(src, sheathe_sound, 50, TRUE)
+	update_icon(user)
+	return TRUE
+
+/obj/item/rogueweapon/scabbard/proc/puke_sword(mob/living/user)
+	if(!sheathed || !user || !user.Adjacent(src))
+		return FALSE
+	var/obj/item/weapon = sheathed
+	sheathed = null
+	weapon.forceMove(get_turf(src))
+	user.put_in_hands(weapon)
+	playsound(src, sheathe_sound, 50, TRUE)
+	update_icon(user)
+	return TRUE
+
+
 /obj/item/rogueweapon/scabbard/attackby(obj/item/I, mob/user, params)
 	if(!sheathed)
 		if(!eat_sword(user, I))

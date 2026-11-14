@@ -41,7 +41,7 @@
 		/datum/skill/combat/knives = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/crossbows = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/combat/wrestling = SKILL_LEVEL_MASTER, //The Prelate gets master wrestling, why can't you?
-		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT, //I KICK ASS FOR GOD
+		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT, //I KICK ASS FOR THE LORD
 		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
 		/datum/skill/misc/medicine = SKILL_LEVEL_EXPERT,
 		/datum/skill/craft/sewing = SKILL_LEVEL_APPRENTICE,
@@ -91,7 +91,7 @@
 	pants = /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan
 	backr = /obj/item/storage/backpack/rogue/satchel/otavan
 	beltl = /obj/item/flashlight/flare/torch/lantern
-	mask = /obj/item/clothing/mask/rogue/facemask/psydonmask
+	mask = /obj/item/clothing/mask/rogue/facemask/steel/maille/fluted
 	head = /obj/item/clothing/head/roguetown/helmet/blacksteel/psythorns
 	wrists = /obj/item/clothing/wrists/roguetown/bracers/arbiter
 	gloves = /obj/item/clothing/gloves/roguetown/otavan/psygloves
@@ -116,7 +116,7 @@
 
 /datum/outfit/job/roguetown/puritan/arbiter/choose_loadout(mob/living/carbon/human/H)
 	. = ..()//All of their weapon choices are easily-concealable.
-	var/weapons = list("Blessed Psydonic Handmace", "Blessed Psydonic Shortsword", "Blessed Psydonic Knuckleduster")
+	var/weapons = list("Blessed Psydonic Handmace", "Daybreak (Whip)", "Blessed Psydonic Shortsword", "Blessed Abboteer Gloves")
 	var/weapon_choice = input(H,"FIND YOUR TRUTHS.", "WIELD THEM IN HIS NAME.") as anything in weapons
 	switch(weapon_choice)
 		if("Blessed Psydonic Handmace")
@@ -134,9 +134,12 @@
 			H.adjust_skillrank_up_to(/datum/skill/combat/swords, 5, TRUE)
 			H.change_stat(STATKEY_STR, -1)
 			H.change_stat(STATKEY_SPD, 2)
-		if("Blessed Psydonic Knuckleduster")
-			H.put_in_hands(new /obj/item/rogueweapon/knuckles/psydon/preblessed(H), TRUE)
+		if("Blessed Abboteer Gloves")
+			H.put_in_hands(new /obj/item/clothing/gloves/roguetown/bandages/abboteer(H), TRUE)
 			H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 5, TRUE)
+			H.change_stat(STATKEY_STR, 1)
+			H.change_stat(STATKEY_PER, 1)
+			ADD_TRAIT(H, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC)
 	//The whole "Sect" shit was stupid and didn't work. Go pick between money or extra virtues.
 	var/sect = list("MIND - Keen Ears & Cicerone", "MATTER - Extra Coinage & Financial Acumen")
 	var/sect_choice = input(H,"FIND YOUR METHODOLOGY", "MIND OR MATTER?") as anything in sect
