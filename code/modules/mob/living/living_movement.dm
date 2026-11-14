@@ -1,3 +1,11 @@
+/// A real carried passenger, including the one-tile gap during normal Move.
+/mob/living/proc/get_mountable_mount()
+	if(!ishuman(buckled) || !isturf(loc) || !isturf(buckled.loc))
+		return null
+	if(HAS_TRAIT(buckled, TRAIT_PONYGIRL_RIDEABLE) && (src in buckled.buckled_mobs) && z == buckled.z && get_dist(src, buckled) <= 1)
+		return buckled
+	return null
+
 /mob/living/Moved()
 	. = ..()
 	stop_looking()
@@ -23,13 +31,12 @@
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
 		return !P.can_hit_target(src, P.permutated, src == P.original, TRUE)
+	// Riders and their mount must pass each other even during a jump/throw.
+	if(buckled == mover || (mover in buckled_mobs))
+		return TRUE
 	if(mover?.throwing)
 		return (!density || !(mobility_flags & MOBILITY_STAND) || wallpressed || (mover.throwing.thrower == src && !ismob(mover)))
-	if(buckled == mover)
-		return TRUE
 	if(ismob(mover))
-		if(mover in buckled_mobs)
-			return TRUE
 		if(isliving(mover))
 			var/mob/living/M = mover
 			if(M.wallpressed)
@@ -43,6 +50,9 @@
 /mob/living/toggle_rogmove_intent()
 	. = ..()
 	update_move_intent_slowdown()
+	if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE))
+		for(var/mob/living/rider in buckled_mobs)
+			rider.refresh_movement_buttons()
 /*
 /mob/living/update_sneak_invis()
 	if(m_intent = MOVE_INTENT_SNEAK)
@@ -136,6 +146,10 @@
 	remove_movespeed_modifier(MOVESPEED_ID_BULKY_DRAGGING)
 
 /mob/living/can_zFall(turf/T, levels)
+	// A passenger shares the mount's fall; do not start a separate fall while
+	// the mount is jumping or holding onto a wall.
+	if(ishuman(buckled) && HAS_TRAIT(buckled, TRAIT_PONYGIRL_RIDEABLE) && loc == buckled.loc && (src in buckled.buckled_mobs))
+		return FALSE
 	if(HAS_TRAIT(src, TRAIT_WOODWALKER))
 		for(var/leaf in T.contents)
 			if(istype(leaf, /obj/structure/flora/newleaf))

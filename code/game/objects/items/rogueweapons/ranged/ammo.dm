@@ -636,6 +636,9 @@
 
 /obj/structure/spider/stickyweb/mirespider/CanPass(atom/movable/mover, turf/target)
 	if(isliving(mover))
+		var/mob/living/passenger = mover
+		if(passenger.get_mountable_mount())
+			return TRUE
 		if(prob(25) && !HAS_TRAIT(mover, TRAIT_WEBWALK))
 			to_chat(mover, "<span class='danger'>I get stuck in \the [src] for a moment.</span>")
 			return FALSE

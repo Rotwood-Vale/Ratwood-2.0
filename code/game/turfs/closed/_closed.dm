@@ -229,7 +229,13 @@
 					above.ScrapeAway()
 	. = ..()
 
-/turf/closed/attack_hand(mob/user)
+/turf/closed/attack_hand(mob/user, params, datum/callback/pilot_check = null)
+	if(wallclimb && isliving(user))
+		var/mob/living/passenger = user
+		var/mob/living/carbon/human/mount = passenger.get_mountable_mount()
+		if(mount)
+			var/datum/component/riding/human/riding = mount.GetComponent(/datum/component/riding)
+			return riding?.handle_climb(user, src)
 	if(istype(user.buckled, /mob/living/simple_animal/hostile/retaliate/rogue/drider))
 		var/mob/living/simple_animal/hostile/retaliate/rogue/drider/mount = user.buckled
 		return mount.climb_terrain(src, user)
@@ -275,7 +281,7 @@
 						has_step_ladder = TRUE
 				if(!has_step_ladder)
 					for(var/mob/living/carbon/human/human in L.loc)
-						if(human == L)
+						if(human == L || human.buckled == L)
 							continue
 						if(!human.cmode && !human.get_active_held_item() && human.mob_size >= MOB_SIZE_HUMAN)
 							myskill += 1
@@ -316,7 +322,7 @@
 			if(user.m_intent != MOVE_INTENT_SNEAK)
 				playsound(user, climbsound, 100, TRUE)
 			user.visible_message(span_warning("[user] starts to climb [src][length(helping_items) ? " with the help of \the [english_list(helping_items)]" : ""]."), span_warning("I start to climb [src][length(helping_items) ? " with the help of \the [english_list(helping_items)]" : ""]..."))
-			if(do_after(L, used_time, target = src))
+			if(do_after(L, used_time, target = src, extra_checks = pilot_check) && (!pilot_check || pilot_check.Invoke()))
 				var/pulling = user.pulling
 				var/mob/living/carbon/human/climber = user
 				var/baseline_stamina_cost = 30 // have to disable stamina regen while on wall bruh in energystamina.dm

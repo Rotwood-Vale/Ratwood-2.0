@@ -197,6 +197,13 @@ SUBSYSTEM_DEF(throwing)
 		var/atom/movable/AM = thing
 		if (AM == thrownthing || (AM == thrower && !ismob(thrownthing)))
 			continue
+		// Attached passengers travel with their thrown/jumping mount.
+		if(AM in thrownthing.buckled_mobs)
+			continue
+		if(isliving(thrownthing))
+			var/mob/living/thrown_mob = thrownthing
+			if(thrown_mob.buckled == AM)
+				continue
 		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
 			finalize(hit=TRUE, target=AM)
 			return TRUE
