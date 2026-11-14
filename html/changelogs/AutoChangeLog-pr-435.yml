@@ -1,4 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - bugfix: "Races with inherent Critical Weakness can no longer select the same vice for free quirk points and loadout points, including through saved character setups."

@@ -470,6 +470,9 @@
       refresh.
   - bugfix: Fixed Gnoll latejoins being sent to town arrival points by Virtues on
       the player's regular character slot.
+  - rscadd: (7erracotta) Added 28 whittling recipes for wooden carvings and a corkable
+      wooden bottle that survives being thrown.
+  - admin: The storyteller now checks role bans before selecting antagonists.
   mypingishuge:
   - rscadd: LOOC typing, including Subtle LOOC, displays a blue typing bubble.
   - spellcheck: Clarified the Enable Extreme ERP Content tooltip.
@@ -485,3 +488,6 @@
       \ until penance is completed, without paying again on recapture."
   - bugfix: Pillories now recognize matching keys inside keyrings for locking and
       unlocking.
+  - bugfix: Races with inherent Critical Weakness can no longer select the same vice
+      for free quirk points and loadout points, including through saved character
+      setups.
