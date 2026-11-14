@@ -74,7 +74,7 @@
 		)
 
 	if(H.mind)
-		var/weapons = list("Ssangsudo +2 CON", "Kanabo +1 STR", "Naginata +2 PER", "Hwando +2 INT", "Kodachi +1 SPD")
+		var/weapons = list("Ssangsudo +2 CON", "Kanabo +1 STR", "Naginata +2 PER", "Hwando +2 INT", "Kodachi +1 SPD", "Nodachi +1 STR +1 PER")
 		var/weapon_choice = input(H, "Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 		H.set_blindness(0)
 		switch(weapon_choice)
@@ -103,7 +103,12 @@
 				r_hand = /obj/item/rogueweapon/sword/short/kazengun
 				beltr = /obj/item/rogueweapon/scabbard/sword/kazengun/kodachi
 				H.change_stat(STATKEY_SPD, 1)
-
+			if("Nodachi +1 STR +1 PER")
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_EXPERT, TRUE)
+				r_hand = /obj/item/rogueweapon/greatsword/nodachi
+				backr = /obj/item/rogueweapon/scabbard/gwstrap/nodachi
+				H.change_stat(STATKEY_STR, 1)
+				H.change_stat(STATKEY_PER, 1)	
 		wretch_select_bounty(H)
 
 /obj/item/clothing/wrists/roguetown/bracers/black

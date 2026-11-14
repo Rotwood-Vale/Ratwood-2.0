@@ -501,6 +501,116 @@
 					"westabove" = 0
 				)
 
+// Kazengun Greatsword strap //
+/obj/item/rogueweapon/scabbard/gwstrap/nodachi
+	name = "saya"
+	desc = "A well maintained strap connected to a lacquered wood scabbard with a metal finish. It appears designed to hold an exceptionally long blade."
+
+	icon_state = "saya0"
+	item_state = "saya"
+	valid_blades = list(/obj/item/rogueweapon/greatsword/nodachi)
+	experimental_onback = TRUE
+
+/obj/item/rogueweapon/scabbard/gwstrap/nodachi/update_icon(mob/living/user)
+	if(sheathed)
+		icon = initial(icon)
+		icon_state = "saya1"
+		worn_x_dimension = 64
+		worn_y_dimension = 64
+		experimental_onback = TRUE
+	else
+		icon = initial(icon)
+		icon_state = initial(icon_state)
+		worn_x_dimension = initial(worn_x_dimension)
+		worn_y_dimension = initial(worn_y_dimension)
+		experimental_onback = TRUE
+	if(user)
+		user.update_inv_back()
+
+/obj/item/rogueweapon/scabbard/gwstrap/weapon_check(mob/living/user, obj/item/A)
+	. = ..()
+	if(.)
+		if(sheathed)
+			return FALSE
+		if(istype(A, /obj/item/rogueweapon))
+			if(A.w_class >= WEIGHT_CLASS_BULKY)
+				return TRUE
+		if(!istype(A, /obj/item/clothing/neck/roguetown/psicross)) //snowflake that bypasses the valid_blades that i made. i will commit seppuku eventually
+			return FALSE
+
+/obj/item/rogueweapon/scabbard/gwstrap/update_icon(mob/living/user)
+	if(sheathed)
+		worn_x_dimension = 64
+		worn_y_dimension = 64
+		icon = sheathed.icon
+		icon_state = sheathed.icon_state
+		experimental_onback = TRUE
+	else
+		icon = initial(icon)
+		icon_state = initial(icon_state)
+		worn_x_dimension = initial(worn_x_dimension)
+		worn_y_dimension = initial(worn_y_dimension)
+		experimental_onback = FALSE
+
+	if(user)
+		user.update_inv_back()
+
+/obj/item/rogueweapon/scabbard/gwstrap/nodachi/getonmobprop(tag)
+	..()
+	if(!sheathed)
+		return
+	if(istype(sheathed, /obj/item/rogueweapon/estoc) || istype(sheathed, /obj/item/rogueweapon/greatsword))
+		switch(tag)
+			if("onback")
+				return list(
+					"shrink" = 0.6,
+					"sx" = -1,
+					"sy" = 2,
+					"nx" = 0,
+					"ny" = 2,
+					"wx" = 2,
+					"wy" = 1,
+					"ex" = 0,
+					"ey" = 1,
+					"nturn" = 0,
+					"sturn" = 0,
+					"wturn" = -70,
+					"eturn" = -15,
+					"nflip" = 0,
+					"sflip" = 0,
+					"wflip" = 0,
+					"eflip" = 0,
+					"northabove" = 1,
+					"southabove" = 0,
+					"eastabove" = 0,
+					"westabove" = 0
+				)
+	else
+		switch(tag)
+			if("onback")
+				return list(
+					"shrink" = 0.7,
+					"sx" = 1,
+					"sy" = -1,
+					"nx" = 1,
+					"ny" = -1,
+					"wx" = 4,
+					"wy" = -1,
+					"ex" = -1,
+					"ey" = -1,
+					"nturn" = 0,
+					"sturn" = 0,
+					"wturn" = 0,
+					"eturn" = 0,
+					"nflip" = 8,
+					"sflip" = 0,
+					"wflip" = 0,
+					"eflip" = 0,
+					"northabove" = 1,
+					"southabove" = 0,
+					"eastabove" = 0,
+					"westabove" = 0
+				)
 
 ///////////////////////
 //	SWORD SCABBARDS  //
