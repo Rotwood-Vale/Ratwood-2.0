@@ -73,6 +73,7 @@
 	var/obj/item/s_store = null
 	var/obj/item/cloak = null
 	var/obj/item/clothing/wear_shirt = null
+	var/datum/special_intent/unarmed_special
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
