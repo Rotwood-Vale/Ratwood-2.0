@@ -194,6 +194,7 @@
 	max_integrity = ARMOR_INT_CHEST_LIGHT_MASTER + 35
 	sellprice = 25
 	blocksound = SOFTUNDERHIT
+	boobed = FALSE
 	blade_dulling = DULLING_BASHCHOP
 	pickup_sound = 'sound/foley/equip/equip_armor.ogg'
 	equip_sound = 'sound/foley/equip/equip_armor.ogg'

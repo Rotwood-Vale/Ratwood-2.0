@@ -247,6 +247,7 @@
 	detail_tag = "_detail"
 	color = "#5E4440"
 	detail_color = "#c08955"
+	boobed = FALSE
 	heat_protection = CHEST
 	max_heat_protection_temperature = BODYTEMP_HEAT_LEVEL_ONE_MAX
 
