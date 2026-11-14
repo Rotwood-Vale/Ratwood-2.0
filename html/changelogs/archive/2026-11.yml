@@ -299,3 +299,10 @@
   ophaq:
   - balance: Lessens Arlette booster pack prices and added two more cards to them.
   - bugfix: Makes the booster packs, cards and deck grid size 1x1 instead of 2x2.
+2026-11-14:
+  Kroto-Ker:
+  - rscadd: Corpulent vice
+  UntoldTactics:
+  - code_imp: Miscellanous lore changes in preparation for new lore primer & timeline.
+  wikimody:
+  - qol: Lux revives now work on excomunicated players, wreches rejoice
