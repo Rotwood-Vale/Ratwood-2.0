@@ -5,6 +5,16 @@
 	user_sex_part = SEX_PART_ANUS
 	target_sex_part = SEX_PART_JAWS
 
+/datum/sex_action/force_rimming/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!(. = ..()))
+		return FALSE
+	return !HAS_TRAIT(user, TRAIT_TINY)
+
+/datum/sex_action/force_rimming/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!(. = ..()))
+		return FALSE
+	return !HAS_TRAIT(user, TRAIT_TINY)
+
 /datum/sex_action/force_rimming/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] shoves [target]'s head against [user.p_their()] butt!"))
 

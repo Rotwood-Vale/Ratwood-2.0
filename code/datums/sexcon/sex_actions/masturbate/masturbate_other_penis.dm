@@ -5,7 +5,12 @@
 	target_sex_part = SEX_PART_COCK
 
 /datum/sex_action/masturbate_penis_other/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.visible_message(span_warning("[user] starts jerking [target]'s cock..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	if(HAS_TRAIT(user, TRAIT_TINY) && !HAS_TRAIT(target, TRAIT_TINY))
+		user.visible_message(span_warning("[user] starts rubbing both hands against [target]'s cock..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	else if(!HAS_TRAIT(user, TRAIT_TINY) && HAS_TRAIT(target, TRAIT_TINY))
+		user.visible_message(span_warning("[user] starts jerking off [target]'s tiny cock between their thumb and finger..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
+	else
+		user.visible_message(span_warning("[user] starts jerking [target]'s cock..."), vision_distance = (user.sexcon.do_subtle_action ? 1 : DEFAULT_MESSAGE_RANGE))
 	user.sexcon.show_progress = 0
 
 /datum/sex_action/masturbate_penis_other/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)

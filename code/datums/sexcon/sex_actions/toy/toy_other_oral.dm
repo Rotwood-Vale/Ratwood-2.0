@@ -8,6 +8,8 @@
 /datum/sex_action/toy_other_oral/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!(. = ..()))
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		return FALSE
 	if(pegging)
 		return get_dildo_on_belt(user)
 	else
@@ -15,6 +17,8 @@
 
 /datum/sex_action/toy_other_oral/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	if(!(. = ..()))
+		return FALSE
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
 		return FALSE
 	if(pegging)
 		return get_dildo_on_belt(user)

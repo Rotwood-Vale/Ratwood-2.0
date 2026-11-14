@@ -22,11 +22,28 @@
 
 /datum/sex_action/toy_other_vagina/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	var/obj/item/dildo/dildo = !pegging ? get_dildo_in_either_hand(user) : get_dildo_on_belt(user)
-	user.visible_message(span_warning("[user] shoves \the [dildo] in [target]'s cunt..."))
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		user.visible_message(span_warning("[user] forces \the [dildo] in [target]'s tiny cunt!"))
+		var/obj/item/bodypart/chest = target.get_bodypart(BODY_ZONE_CHEST)
+		var/obj/item/bodypart/groin = target.get_bodypart(BODY_ZONE_PRECISE_GROIN)
+		if(chest)
+			chest.add_wound(/datum/wound/fracture/chest)
+		if(groin)
+			groin.add_wound(/datum/wound/fracture/groin)
+		target.apply_damage(30, BRUTE, chest)
+	else
+		user.visible_message(span_warning("[user] shoves \the [dildo] in [target]'s cunt..."))
 
 /datum/sex_action/toy_other_vagina/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pleasures [target]'s cunt..."))
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] stuffs [target]'s tiny cunt..."))
+	else
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pleasures [target]'s cunt..."))
 	user.sexcon.outercourse_noise(target, TRUE)
+
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		target.apply_damage(10, BRUTE, target.get_bodypart(BODY_ZONE_CHEST))
+		target.apply_damage(3, BRUTE, target.get_bodypart(BODY_ZONE_PRECISE_GROIN))
 
 	user.sexcon.perform_sex_action(target, 2, 4, TRUE)
 	target.sexcon.handle_passive_ejaculation()
@@ -49,9 +66,16 @@
 	pegging = TRUE
 
 /datum/sex_action/toy_other_vagina/pegging/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s cunt."))
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] stuffs [target]'s tiny cunt..."))
+	else
+		user.sexcon_action_message(user.sexcon.spanify_force("[user] [user.sexcon.get_generic_force_adjective()] pegs [target]'s cunt."))
 	user.sexcon.outercourse_noise(target, TRUE)
 	user.sexcon.do_thrust_animate(target)
+
+	if(HAS_TRAIT(target, TRAIT_TINY) && !HAS_TRAIT(user, TRAIT_TINY))
+		target.apply_damage(10, BRUTE, target.get_bodypart(BODY_ZONE_CHEST))
+		target.apply_damage(3, BRUTE, target.get_bodypart(BODY_ZONE_PRECISE_GROIN))
 
 	if(HAS_TRAIT(user, TRAIT_DEATHBYSNUSNU) || (user.STASTR > 12))
 		if(istype(user.rmb_intent, /datum/rmb_intent/strong))
