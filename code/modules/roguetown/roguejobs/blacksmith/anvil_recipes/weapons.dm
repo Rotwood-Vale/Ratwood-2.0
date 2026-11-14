@@ -450,6 +450,13 @@
 	additional_items = list(/obj/item/ingot/iron, /obj/item/grown/log/tree/small)
 	created_item = /obj/item/rogueweapon/sword/long/broadsword
 
+/datum/anvil_recipe/weapons/iron/nodachi
+	name = "Western Nodachi, Iron (+2 Iron)"
+	req_blade = /obj/item/blade/iron_sword
+	additional_items = list(/obj/item/ingot/iron, /obj/item/ingot/iron)
+	created_item = /obj/item/rogueweapon/greatsword/nodachi/iron
+	display_category = ITEM_CAT_WEAPONS_SWORDS
+
 /datum/anvil_recipe/weapons/iron/shotel
 	name = "Shotel, Iron (+1 Iron)"
 	req_blade = /obj/item/blade/iron_sword

@@ -98,6 +98,51 @@
 	force = 14
 	force_wielded = 35
 
+/obj/item/rogueweapon/greatsword/nodachi
+	name = "nodachi"
+	desc = "A single-edged blade of great length, from the overseas land of Kazengun. Known as the bane of cavalry, to use this weapon in pitched combat takes immense skill."
+	icon_state = "snodachi"
+	smeltresult = /obj/item/ingot/steel
+	smelt_bar_num = 3
+	max_blade_int = 240
+	wdefense = 4
+	force = 14
+	force_wielded = 35
+	alt_grips = list()
+
+/obj/item/rogueweapon/greatsword/nodachi/getonmobprop(tag)
+	. = ..()
+	if(tag == "altgrip" && .)
+		return .
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -6,"sy" = 6,"nx" = 6,"ny" = 7,"wx" = 0,"wy" = 5,"ex" = -1,"ey" = 7,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -50,"sturn" = 40,"wturn" = 50,"eturn" = -50,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 9,"sy" = -2,"nx" = -7,"ny" = 1,"wx" = -9,"wy" = 2,"ex" = 10,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 5,"sturn" = -5,"wturn" = -170,"eturn" = -10,"nflip" = 4,"sflip" = 0,"wflip" = 1,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+			if("altgrip")
+				return list("shrink" = 0.6,"sx" = 4,"sy" = 0,"nx" = -7,"ny" = 1,"wx" = -8,"wy" = 0,"ex" = 8,"ey" = -1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -135,"sturn" = -35,"wturn" = 45,"eturn" = 145,"nflip" = 8,"sflip" = 8,"wflip" = 1,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.6,"sx" = -1,"sy" = 1,"nx" = 0,"ny" = 1,"wx" = 2,"wy" = 0,"ex" = 0,"ey" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
+
+// Iron GS stats
+/obj/item/rogueweapon/greatsword/nodachi/iron
+	name = "western nodachi"
+	desc = "A single-edged blade of great length, a butchered recreation of the nodachi from the overseas land of Kazengun that has seen better days... Its worse than the original, but it still does the job."
+	icon_state = "nodachi"
+	smeltresult = /obj/item/ingot/iron
+	max_blade_int = 200
+	force_wielded = 30
+	wdefense = 4
+
+/obj/item/rogueweapon/greatsword/nodachi/iron/examine(mob/user)
+	. = ..()
+	if(!ishuman(user) || !istype(user.client?.prefs?.origin, /datum/origin/kazengun))
+		return
+	.[2] = span_info("What the fuck is this? The westerners have stolen and butchered our sacred crafts! The smith who forged this should be punished for this monstrosity!")
+
 /obj/item/rogueweapon/greatsword/grenz
 	name = "zweihander"
 	icon_state = "steelzwei"

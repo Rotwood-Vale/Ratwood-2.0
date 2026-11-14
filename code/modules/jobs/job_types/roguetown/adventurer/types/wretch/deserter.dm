@@ -68,6 +68,7 @@
 			"Lance + Kite Shield",
 			"Shamshir",
 			"Ssangsudo",
+			"Nodachi",
 			"Shashka + Shield",
 			"Steel Flameberge",
 			"Grand Mace",
@@ -134,6 +135,10 @@
 				r_hand = /obj/item/rogueweapon/eaglebeak
 				backr = /obj/item/rogueweapon/scabbard/gwstrap
 				H.adjust_skillrank_up_to(/datum/skill/combat/polearms, SKILL_LEVEL_MASTER, TRUE)
+			if("Nodachi")
+				r_hand = /obj/item/rogueweapon/greatsword/nodachi
+				backr = /obj/item/rogueweapon/scabbard/gwstrap/nodachi
+				H.adjust_skillrank_up_to(/datum/skill/combat/swords, SKILL_LEVEL_MASTER, TRUE)
 
 		var/helmets = list(
 			"Pigface Bascinet"	= /obj/item/clothing/head/roguetown/helmet/bascinet/pigface,
