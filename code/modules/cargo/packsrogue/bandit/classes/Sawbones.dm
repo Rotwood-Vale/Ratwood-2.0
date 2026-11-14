@@ -49,7 +49,7 @@
 /datum/supply_pack/rogue/Sawbones/trustworthyrobes
 	name = "Trustworthy Robes"
 	cost = 5
-	contains = list(/obj/item/clothing/suit/roguetown/shirt/robe/physician)
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/robe/physician/plaguebearer)
 
 /datum/supply_pack/rogue/Sawbones/gambeson
 	name = "Gambeson"
@@ -123,15 +123,25 @@
 // WEAPONS //
 /////////////
 
-/datum/supply_pack/rogue/Sawbones/rapier
-	name = "Rapier"
+/datum/supply_pack/rogue/Knave/daggerss
+	name = "Steel Dagger"
 	cost = 20
-	contains = list(/obj/item/rogueweapon/sword/rapier)
+	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel)
 
-/datum/supply_pack/rogue/Sawbones/estoc
-	name = "Estoc"
-	cost = 40
-	contains = list(/obj/item/rogueweapon/estoc)
+/datum/supply_pack/rogue/Knave/parrydag
+	name = "Parry Dagger"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/parrying)
+
+/datum/supply_pack/rogue/Alchemist/shortsword
+	name = "Shortsword"
+	cost = 30
+	contains = list(/obj/item/rogueweapon/sword/short)
+
+/datum/supply_pack/rogue/Alchemist/rapier
+	name = "Rapier"
+	cost = 50
+	contains = list(/obj/item/rogueweapon/sword/rapier)
 
 ///////////
 // BOMBS //
@@ -151,15 +161,30 @@
 // UTILITY //
 /////////////
 
-/datum/supply_pack/rogue/Sawbones/bedroll
+/datum/supply_pack/rogue/Alchemist/bedroll
 	name = "Bedroll"
 	cost = 5
 	contains = list(/obj/item/bedroll)
 
-/datum/supply_pack/rogue/Sawbones/gbottle
+/datum/supply_pack/rogue/Alchemist/gbottle
 	name = "Glass bottle"
 	cost = 5
 	contains = list(/obj/item/reagent_containers/glass/bottle)
+
+/datum/supply_pack/rogue/Alchemist/heartblood
+	name = "Heartblood canister"
+	cost = 5
+	contains = list(/obj/item/heart_blood_canister/filled)
+
+/datum/supply_pack/rogue/Alchemist/cheele
+	name = "Cheele"
+	cost = 15
+	contains = list(/obj/item/natural/worms/leech/cheele)
+
+/datum/supply_pack/rogue/Alchemist/surgery_bag
+	name = "Surgery Bag"
+	cost = 30
+	contains = list(/obj/item/storage/belt/rogue/surgery_bag/full/physician)
 
 ///////////
 // DRUGS //
@@ -179,60 +204,60 @@
 // POTIONS/POISONS //
 /////////////////////
 
-/datum/supply_pack/rogue/Sawbones/strpot
+/datum/supply_pack/rogue/Alchemist/strpot
 	name = "Strength Potion"
-	cost = 10
+	cost = 30
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/strpot)
 
-/datum/supply_pack/rogue/Sawbones/perpot
+/datum/supply_pack/rogue/Alchemist/perpot
 	name = "Perception Potion"
-	cost = 10
+	cost = 30
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/perpot)
 
-/datum/supply_pack/rogue/Sawbones/intpot
+/datum/supply_pack/rogue/Alchemist/intpot
 	name = "Intelligence Potion"
-	cost = 10
+	cost = 30
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/intpot)
 
-/datum/supply_pack/rogue/Sawbones/conpot
+/datum/supply_pack/rogue/Alchemist/conpot
 	name = "Constitution Potion"
-	cost = 10
+	cost = 30
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/conpot)
 
-/datum/supply_pack/rogue/Sawbones/endpot
+/datum/supply_pack/rogue/Alchemist/willpot
 	name = "Willpower Potion"
-	cost = 10
+	cost = 30
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/endpot)
 
-/datum/supply_pack/rogue/Sawbones/spdpot
+/datum/supply_pack/rogue/Alchemist/spdpot
 	name = "Speed Potion"
-	cost = 10
+	cost = 30
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/spdpot)
 
-/datum/supply_pack/rogue/Sawbones/lucpot
+/datum/supply_pack/rogue/Alchemist/lucpot
 	name = "Luck Potion"
-	cost = 10
+	cost = 30
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/lucpot)
 
-/datum/supply_pack/rogue/Sawbones/antidote
+/datum/supply_pack/rogue/Alchemist/antidote
 	name = "Poison Antidote"
 	cost = 10
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/strong_antidote)
 
-/datum/supply_pack/rogue/Sawbones/rotcure
-	name = "Rot Cure Potion"
-	cost = 100
+/datum/supply_pack/rogue/Alchemist/poison
+	name = "High-Potency poison"
+	cost = 4000
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/poison)
+
+/datum/supply_pack/rogue/Alchemist/rotcure
+	name = "Rotcure Potion"
+	cost = 250
 	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/rogue/rotcure)
 
 /datum/supply_pack/rogue/Sawbones/emberwine
 	name = "Emberwine"
 	cost = 50
 	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/emberwine)
-
-/datum/supply_pack/rogue/Sawbones/heartblood
-	name = "Heartblood canister"
-	cost = 5
-	contains = list(/obj/item/heart_blood_canister/filled)
 
 /////////////////
 // PROSTHETICS //

@@ -177,6 +177,21 @@
 	cost = 200
 	contains = list(/obj/item/clothing/ring/active/nomag)
 
+/datum/supply_pack/rogue/Mage/ring_swiftness
+	name = "Ring of Swiftness"
+	cost = 1500
+	contains = list(/obj/item/clothing/ring/statgemerald)
+
+/datum/supply_pack/rogue/Mage/ring_vitality
+	name = "Ring of Vitality"
+	cost = 1500
+	contains = list(/obj/item/clothing/ring/statonyx)
+
+/datum/supply_pack/rogue/Mage/ring_wisdom
+	name = "Ring of Wisdom"
+	cost = 1500
+	contains = list(/obj/item/clothing/ring/statamythortz)
+
 /datum/supply_pack/rogue/Mage/talkstone
 	name = "Talkstone"
 	cost = 100
@@ -200,6 +215,11 @@
 	name = "Scrolls"
 	cost = 2
 	contains = list(/obj/item/paper/scroll)
+
+/datum/supply_pack/rogue/Mage/book
+	name = "Spellbook"
+	cost = 80
+	contains = list(/obj/item/rogueweapon/spellbook)
 
 /datum/supply_pack/rogue/Mage/cinnabar
 	name = "Cinnabar Ore"
@@ -239,3 +259,18 @@
 	name = "Dorpel"
 	cost = 180
 	contains = list(/obj/item/roguegem/diamond)
+
+/datum/supply_pack/rogue/Mage/lesser_implement
+	name = "Lesser Implement"
+	cost = 55
+	contains = list(/obj/item/rogueweapon/woodstaff/implement)
+
+/datum/supply_pack/rogue/Mage/greater_implement
+	name = "Greater Implement"
+	cost = 120
+	contains = list(/obj/item/rogueweapon/woodstaff/implement/greater)
+
+/datum/supply_pack/rogue/Mage/grand_implement
+	name = "Grand Implement"
+	cost = 180
+	contains = list(/obj/item/rogueweapon/woodstaff/implement/grand)
