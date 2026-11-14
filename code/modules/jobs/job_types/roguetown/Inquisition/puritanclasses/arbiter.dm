@@ -153,8 +153,8 @@
 			H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
 
 /*
-Arbiter's old shit. 
-It's ugly, unsprited, and generally just not desired by the community.
+Arbiter's old items. 
+The general community consensus were that they were ugly, unsprited, and generally just outdated compared to the rest of the Inquisition's items.
 Commenting it out for now, just in case any inhand sprites get drawn.
 */
 
