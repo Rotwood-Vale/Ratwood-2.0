@@ -2237,7 +2237,7 @@
 			to_chat(target, span_userdanger("UNIMAGINABLE PAIN!"))
 			target.emote("Agony")
 			target.apply_damage(100, BURN, BODY_ZONE_HEAD)
-			loc.visible_message(span_cult("[target] is violently thrashing atop the rune, writhing, as their former patron punishes their defiance."))
+			loc.visible_message(span_cult("[target] violently thrashes atop the rune, writhing as their former patron punishes their defiance!!"))
 		addtimer(CALLBACK(src, PROC_REF(psydonconversion_stage2), target), 20)
 	if(prompt == "NAE")
 		to_chat(target, span_warning("You brace. Why do you brace? Nothing comes."))

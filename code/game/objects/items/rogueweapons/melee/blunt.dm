@@ -304,15 +304,78 @@
 	max_integrity = 75
 	sellprice = 35
 
-/obj/item/rogueweapon/mace/cudgel/psy
-	name = "psydonic handmace"
-	desc = "A shorter variant of the flanged silver mace, rebalanced for one-handed usage. It isn't uncommon for these sidearms to mysteriously 'vanish' from an Adjudicator's belt, only to be 'rediscovered' - and subsequently kept - by a Confessor."
-	force = 25
-	force_wielded = 30
+/obj/item/rogueweapon/mace/cudgel/flanged/psy
+	name = "psydonic flanged mace"
+	desc = "A flanged mace of blessed silver, wielded by His children. The rosewood handle's curved nature beckons your fingers to curl along its grooves, and to never let go; \
+	no matter the weather nor odds. </br>'Please do not wait for me..' \ </br>'For though I depart, my magic will never die..' </br>'Listen to my laughter in the babbling brook..' \
+	</br>'Hear my song being sung by the bards..' </br>'Feel my warmth in the rays of the morning sun..' </br>'See my light in the twinkling stars at night..' \
+	</br>'..and know that my spirit will always be with you..' </br>'..woven into the very fabric of the world we cherished together.'"
+	force = 30
 	minstr = 9
 	wdefense = 5
 	resistance_flags = FIRE_PROOF
 	icon_state = "psyflangedmace"
+	swingsound = BLUNTWOOSH_LARGE
+	is_silver = TRUE
+	smeltresult = /obj/item/ingot/silverblessed
+
+/obj/item/rogueweapon/mace/cudgel/flanged/psy/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 1,\
+	)
+
+/obj/item/rogueweapon/mace/cudgel/flanged/psy/preblessed/ComponentInitialize()
+	AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN,\
+		added_force = 0,\
+		added_blade_int = 100,\
+		added_int = 50,\
+		added_def = 1,\
+	)
+
+/obj/item/rogueweapon/mace/cudgel/flanged/psy/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -11,"sy" = -8,"nx" = 12,"ny" = -8,"wx" = -5,"wy" = -8,"ex" = 6,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.4,"sx" = -3,"sy" = -4,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 70,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 1,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/obj/item/rogueweapon/mace/cudgel/flanged/psy/old
+	name = "enduring flanged mace"
+	desc = "A flanged mace, weathered by tyme's gaze. It radiates a strange energy; distant, fleeting, but ever-so-familiar. </br>'Please do not wait for me..' \
+	</br>'For though I depart, my magic will never die..' </br>'Listen to my laughter in the babbling brook..' </br>'Hear my song being sung by the bards..' \
+	</br>'Feel my warmth in the rays of the morning sun..' </br>'See my light in the twinkling stars at night..' </br>'..and know that my spirit will always be with you..' \
+	</br>'..woven into the very fabric of the world we cherished together.'"
+	force_wielded = 25
+	wbalance = WBALANCE_NORMAL
+	icon_state = "opsyflangedmace"
+	smeltresult = /obj/item/ingot/iron
+
+/obj/item/rogueweapon/mace/cudgel/flanged/psy/old/ComponentInitialize()
+	return
+
+/obj/item/rogueweapon/mace/cudgel/psy
+	name = "psydonic handmace"
+	desc = "A shorter variant of the flanged silver mace, rebalanced for one-handed usage. It isn't uncommon for these sidearms to mysteriously 'vanish' from an Adjudicator's belt, only to be 'rediscovered' - and subsequently kept - by a Confessor."
+	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/strike/wallop)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/strike/wallop, /datum/intent/mace/smash, /datum/intent/effect/daze)
+	force = 25
+	force_wielded = 30
+	minstr = 7
+	wdefense = 5
+	wbalance = WBALANCE_SWIFT
+	resistance_flags = FIRE_PROOF
+	icon_state = "psycudgel"
 	is_silver = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 
@@ -340,11 +403,12 @@
 
 /obj/item/rogueweapon/mace/cudgel/psy/old
 	name = "enduring handmace"
-	desc = "A shorthanded mace and convenient sleeping aid, its grown harder to swing with age, though it hasn't lost reliability."
+	desc = "A flanged mace, well-balanced for usage in one hand. It radiates with a strange energy: familiar, yet ever-so-distant."
 	force = 20
 	force_wielded = 25
 	wbalance = WBALANCE_NORMAL
-	icon_state = "opsyflangedmace"
+	icon_state = "opsycudgel"
+	is_silver = FALSE
 	smeltresult = /obj/item/ingot/steel
 
 /obj/item/rogueweapon/mace/cudgel/psy/old/ComponentInitialize()
@@ -684,7 +748,7 @@
 	force = 12//Don't one-hand this.
 	force_wielded = 32//-3 compared to grand mace(steel goden). Better intents.
 	possible_item_intents = list(/datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble)
+	gripped_intents = list(/datum/intent/maul, /datum/intent/mace/smash/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble)
 	name = "maul"
 	desc = "Who would need something this large? It looks like it was made for tearing down walls, rather than men."
 	icon_state = "sledge"
@@ -722,6 +786,7 @@
 	Only a lunatic would carry something so heavy, however."
 	icon_state = "cross"
 	force_wielded = 36//+1 compared to grand mace.
+	gripped_intents = list(/datum/intent/maul, /datum/intent/mace/smash/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble)
 	smeltresult = /obj/item/ingot/steel
 	minstr = 15
 	wdefense_wbonus = 5
@@ -774,11 +839,129 @@
 	desc = "Covered in spikes, such is the weapon of a Dwarvish smith. \
 	This one has been well balanced, allowing for a weaker wielder to make use of it."
 	icon_state = "spiky"
-	gripped_intents = list(/datum/intent/maul/spiked, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble)
+	gripped_intents = list(/datum/intent/maul/spiked, /datum/intent/mace/smash/crush, /datum/intent/mace/shatter, /datum/intent/effect/hobble)
 	wdefense_wbonus = 3//7
 	minstr = 10//+1STR from Grudgebearer Smith. It should be fine.
 	smelt_bar_num = 3//Please don't...
 	max_integrity = 320
+
+//Psydonite reliquary maul. Intended for FUCKING SHIT UP.
+/obj/item/rogueweapon/mace/maul/grand/psy
+	name = "L'Melisende"
+	gripped_intents = list(/datum/intent/mace/smash/crush/demolish, /datum/intent/mace/strike/reach, /datum/intent/mace/sweep, /datum/intent/effect/hobble)
+	desc = "A lovingly-named, rune-forged maul inspired by dwarven rock-hammers. Created as the faithful's answer to heretics hiding behind walls, it provides the impure with a sermon of exceptional concussive clarity. A good hit with this is guaranteed to give even the most peppy of heretics some deserved 'respite', and in best scenarios, send them to confess directly to HIM."
+	icon_state = "psyhammer"
+	smeltresult = /obj/item/ingot/silverblessed
+	minstr = 10
+	wdefense_wbonus = 8
+	dropshrink = 1
+	is_silver = TRUE
+	max_integrity = 600 // need a lil more cause destroying walls takes a bit of this
+
+/obj/item/rogueweapon/mace/maul/grand/psy/pickup(mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_PSYDONITE))
+		src.minstr = 10//-4, if you have the ability to use this.
+	else
+		src.minstr = 14
+	..()
+
+/obj/item/rogueweapon/mace/maul/grand/psy/ComponentInitialize()
+	AddComponent(\
+	/datum/component/silverbless,\
+		pre_blessed = BLESSING_NONE,\
+		silver_type = SILVER_PSYDONIAN\
+	)
+
+/obj/item/rogueweapon/mace/maul/grand/psy/preblessed
+	wdefense = 5
+	max_integrity = 650
+
+/obj/item/rogueweapon/mace/maul/grand/psy/preblessed/ComponentInitialize()
+		AddComponent(\
+		/datum/component/silverbless,\
+		pre_blessed = BLESSING_PSYDONIAN,\
+		silver_type = SILVER_PSYDONIAN\
+	)
+
+/obj/item/rogueweapon/mace/attack_turf(turf/T, mob/living/user, multiplier)
+	. = ..()
+	if(. && istype(user?.used_intent, /datum/intent/mace/smash/crush/demolish))
+		demolish_turf(T, user)
+
+/obj/item/rogueweapon/mace/attack_obj(obj/O, mob/living/user)
+	. = ..()
+	if(. && istype(user?.used_intent, /datum/intent/mace/smash/crush/demolish))
+		demolish_obj(O, user)
+
+/obj/item/rogueweapon/mace/proc/demolish_turf(turf/T, mob/living/user)
+	if(QDELETED(T))
+		return FALSE
+
+	if(isnull(T.max_integrity))
+		return FALSE
+
+	if(T.max_integrity > 3000)
+		to_chat(user, "Too hard, sire!")
+		return FALSE
+
+	var/bonus_damage = round(T.max_integrity * 0.15)
+
+	T.take_damage(bonus_damage, BRUTE, d_type, 1)
+	to_chat(user, span_warning("Your blow expertly caves into [T]! (+[bonus_damage])"))
+	return TRUE
+
+/obj/item/rogueweapon/mace/proc/demolish_obj(obj/O, mob/living/user)
+	if(QDELETED(O))
+		return FALSE
+
+	if(isnull(O.max_integrity))
+		return FALSE
+
+	if(O.max_integrity > 3000)
+		to_chat(user, "Too hard, sire!")
+		return FALSE
+
+	var/bonus_damage = round(O.max_integrity * 0.15)
+
+	O.take_damage(bonus_damage, BRUTE, d_type, 1)
+	to_chat(user, span_warning("Your blow expertly caves into [O]! (+[bonus_damage])"))
+	return TRUE
+
+/datum/intent/mace/strike/reach
+	name = "heavy strike"
+	damfactor = 1.25
+	reach = 2
+
+/datum/intent/mace/smash/crush
+	name = "crush"
+	attack_verb = list("crushes")
+	icon_state = "incrush"
+	damfactor = 1.75
+	demolition_mod = 1.25 //Deals 83 DMG when swung from the strongest Maul (at a base of 34 DMG) with XIV STR. For comparison, a Steel Flail (which can be one-handed and swung faster) deals 63 DMG under the same parameters.
+	chargedrain = 1.8 //Note that the Maul series is hardlocked to characters that have abnormally high STR, and is otherwise physically unwieldable.
+	chargetime = 10
+	desc = "A titanic blow that delivers Strength-scaling knockback and slowdown to the target. The amount of inflicted knockback scales off your Strength, ranging from X (1 tile) to XV (5 tiles). </br>Actively drains stamina while being charged up. </br>Cannot inflict any knockback or slowdown if your Strength is below X. </br>Cannot be used consecutively more than every 5 seconds on the same target. </br>Prone targets halve the knockback distance. </br>Not fully charging the attack limits knockback to 1 tile."
+
+/datum/intent/mace/shatter
+	name = "shatter"
+	desc = "A deliberate strike that is much more effective at demolishing structures."
+	icon_state = "incrush"
+	blade_class = BCLASS_SMASH
+	attack_verb = list("demolishes", "crushes", "wrecks")
+	animname = "strike"
+	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
+	item_d_type = "blunt"
+	penfactor = PEN_NONE
+	demolition_mod = 3
+	clickcd = CLICK_CD_HEAVY
+	swingdelay = 10
+
+/datum/intent/mace/smash/crush/demolish
+	name = "demolish"
+	attack_verb = list("demolishes", "crushes", "wrecks")
+	icon_state = "incrush"
+	desc = "A titanic blow that delivers Strength-scaling knockback to living targets, and massive damage to structural targets. The amount of inflicted knockback scales off your Strength, ranging from X (1 tile) to XV (5 tiles). </br>Actively drains stamina while being charged up. </br>Cannot inflict any knockback or slowdown if your Strength is below X. </br>Cannot be used consecutively more than every 5 seconds on the same target. </br>Prone targets halve the knockback distance. </br>Not fully charging the attack limits knockback to 1 tile. </br>Against structures, each attack reduces at least 15% of its maximum integrity."
+	demolition_mod = 3.5
 
 /datum/intent/mace/sweep
 	name = "sweeping strike"
@@ -824,43 +1007,6 @@
 	clickcd = CLICK_CD_HEAVY//Take a guess.
 	icon_state = "instrike"
 	item_d_type = "blunt"
-
-/datum/intent/maul/crush
-	name = "crush"
-	blade_class = BCLASS_SMASH
-	attack_verb = list("crushes")
-	chargetime = 5
-	damfactor = 1.7
-	intent_intdamage_factor = BLUNT_DEFAULT_INT_DAMAGEFACTOR
-	icon_state = "incrush"
-	desc = "This can throw a standing opponent and slow them down. \
-	5 second cooldown on consecutive targets. Prone targets halve the knockback distance. \
-	Not fully charging the attack limits knockback to 1 tile."
-
-//We making it out of the vale with this one. RAAAAAA
-/datum/intent/maul/crush/spec_on_apply_effect(mob/living/H, mob/living/user, params)
-	var/chungus_khan_str = user.STASTR
-	if(H.has_status_effect(/datum/status_effect/debuff/yeetcd))
-		return // Recently knocked back, cannot be knocked back again yet
-	if(chungus_khan_str < 10)
-		return // Too weak to have any effect
-	var/scaling = CLAMP((chungus_khan_str - 10), 1, 4)
-	H.apply_status_effect(/datum/status_effect/debuff/yeetcd)
-	H.Slowdown(scaling)
-	// Copypasta from knockback proc cuz I don't want the math there
-	var/knockback_tiles = scaling // 1 to 4 tiles based on strength
-	if(H.resting)
-		knockback_tiles = max(1, knockback_tiles / 2)
-	if(user?.client?.chargedprog < 100)
-		knockback_tiles = 1 // Minimal knockback on non-charged smash.
-	var/turf/edge_target_turf = get_edge_target_turf(H, get_dir(user, H))
-	if(istype(edge_target_turf))
-		H.safe_throw_at(edge_target_turf, \
-		knockback_tiles, \
-		scaling, \
-		user, \
-		spin = FALSE, \
-		force = H.move_force)
 
 /datum/intent/maul/spiked
 	name = "perforating strike"

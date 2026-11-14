@@ -140,7 +140,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 /datum/status_effect/buff/psydonic_inspire
 	id = "psydonic_inspire"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/psydonic_inspire
-	duration = 2 MINUTES
+	duration = 3 MINUTES
 	effectedstats = list(STATKEY_WIL = 2, STATKEY_CON = 2)
 
 /atom/movable/screen/alert/status_effect/buff/psydonic_inspire
@@ -166,7 +166,7 @@ Given the nature of Psydon, two of these are INTENDED to be refluffed Tennite sp
 	associated_skill = /datum/skill/magic/holy
 	req_items = list(/obj/item/clothing/neck/roguetown/psicross)
 	sound = 'sound/magic/woundheal_crunch.ogg'
-	invocations = list("*whimper")
+	invocations = list("*agony")
 	invocation_type = "shout"
 	antimagic_allowed = TRUE
 	miracle = TRUE

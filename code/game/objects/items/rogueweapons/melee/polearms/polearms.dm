@@ -538,7 +538,7 @@
 	name = "enduring spear"
 	desc = "An ornate spear, its silver tarnished by neglect. HE still guides the faithful's hand, if not this weapon."
 	icon_state = "psyspear"
-	force = 15
+	force = 25
 	force_wielded = 25
 	is_silver = FALSE
 	smeltresult = /obj/item/ingot/steel

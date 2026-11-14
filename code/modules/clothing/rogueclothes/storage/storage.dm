@@ -29,8 +29,9 @@
 		var/obj/item/rogueweapon/huntingknife/K = W
 		if(K.sheathe_icon)
 			for(var/obj/item/rogueweapon/scabbard/sheath/sheath in contents)
-				if(!sheath.sheathed) // if no weapon in there
-					if(sheath.eat_sword(user, K, TRUE))
+				var/datum/component/holster/HC = sheath.GetComponent(/datum/component/holster)
+				if(HC && !HC.sheathed) // if no weapon in there
+					if(HC.eat_sword(user, K))
 						user.visible_message(
 							span_notice("[user] slips [W] into [src]'s sheath."),
 							span_notice("I slip [W] into [src]'s sheath.")
@@ -270,6 +271,13 @@
 	desc = "A made to last leather bag from the Psydonian heart of Otava. It's Otava's finest."
 	icon_state = "osatchel"
 	item_state = "osatchel"
+
+/obj/item/storage/backpack/rogue/satchel/otavan/short
+	name = "otavan short satchel"
+	desc = "A sleek, stylish, and surprisingly sturdy satchel that hails straight from the Sovereignty of Otava. This one is made to clip to a belt or to a pair of pants, freeing the shoulders from any weight."
+	icon_state = "osatchelshort"
+	item_state = "osatchelshort"
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP
 
 /obj/item/storage/backpack/rogue/satchel/mule/PopulateContents()
 	for(var/i in 1 to 3)
