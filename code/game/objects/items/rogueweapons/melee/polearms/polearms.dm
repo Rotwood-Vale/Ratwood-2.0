@@ -358,8 +358,8 @@
 				to_chat(user, span_warning("The patron of this one shields them from being suppressed."))
 				return
 
-			if(HAS_TRAIT(H, TRAIT_PSYDONITE))
-				to_chat(user, span_warning("The followers of the dead god are outside of the ten's light."))
+			if(HAS_TRAIT(H, TRAIT_INQUISITION))
+				to_chat(src, span_warning("Dammed octavian's runic arrays dampen divine punishment directed against their agents!"))
 				return
 
 			if(istype(user.used_intent, /datum/intent/priest_smite))
