@@ -47,6 +47,8 @@
 	/// This "spell" (miracle) is excluded from Priest's round-start selection.
 	var/priest_excluded = FALSE
 
+	/// Mobility spells that cannot escape an existing grab.
+	var/blocked_while_grabbed = FALSE
 	var/skipcharge = FALSE
 
 /obj/effect/proc_holder/Initialize(mapload)
@@ -260,6 +262,30 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			if(!H.getorganslot(ORGAN_SLOT_TONGUE))
 				return "I can't speak the arcane words!"
 	return null
+
+/// Only real, adjacent incoming grabs count; holding someone else does not block teleporting.
+/obj/effect/proc_holder/spell/proc/grab_blocks_cast(mob/living/user, show_message = FALSE)
+	if(!blocked_while_grabbed)
+		return FALSE
+	if(!istype(user) || QDELETED(user))
+		return TRUE
+	var/mob/puller = user.pulledby
+	var/blocked = puller && puller != user && !QDELETED(puller) && puller.pulling == user && puller.Adjacent(user)
+	if(!blocked)
+		for(var/obj/item/grabbing/grab in user.grabbedby)
+			if(QDELETED(grab) || grab.grabbed != user)
+				continue
+			var/mob/living/holder = grab.grabbee
+			if(istype(holder) && !QDELETED(holder) && holder != user && holder.Adjacent(user))
+				blocked = TRUE
+				break
+	if(blocked && show_message)
+		to_chat(user, span_warning("I can't cast [name] while someone is grabbing me!"))
+	return blocked
+
+/// Rechecked during channels without testing or spending the reserved spell charge.
+/obj/effect/proc_holder/spell/proc/arcane_channel_allowed(mob/living/user)
+	return !QDELETED(src) && !grab_blocks_cast(user) && arcane_speech_allowed(user)
 
 /obj/effect/proc_holder/spell/proc/arcane_speech_allowed(mob/living/user, show_message = FALSE)
 	var/error = arcane_speech_error(user)
@@ -486,6 +512,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return FALSE
 
 	if(!arcane_speech_allowed(user, TRUE))
+		return FALSE
+
+	if(grab_blocks_cast(user, TRUE))
 		return FALSE
 
 	if(check_charge && !charge_check(user))
@@ -732,6 +761,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			action.button.update_maptext(recharge_time - charge_counter)
 
 /obj/effect/proc_holder/spell/proc/perform(list/targets, recharge = TRUE, mob/user = usr) //if recharge is started is important for the trigger spells
+	if(grab_blocks_cast(user, TRUE))
+		return FALSE
 	if(!arcane_speech_allowed(user, TRUE))
 		return FALSE
 

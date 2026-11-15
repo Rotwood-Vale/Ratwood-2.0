@@ -625,9 +625,12 @@
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = FALSE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
+/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = FALSE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, mob/living/preserve_pull = null)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))
 		return
+	if(isliving(src) && preserve_pull)
+		var/mob/living/L = src
+		return L.throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force, preserve_pull = preserve_pull)
 	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force)
 
 /atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = FALSE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, extra = FALSE, jumping = FALSE) //If this returns FALSE then callback will not be called.

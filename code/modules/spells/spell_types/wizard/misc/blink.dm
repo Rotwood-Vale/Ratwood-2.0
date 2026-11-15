@@ -1,5 +1,6 @@
 /obj/effect/proc_holder/spell/invoked/blink
 	name = "Blink"
+	blocked_while_grabbed = TRUE
 	desc = "Teleport to a targeted location within your field of view. Limited to a range of 5 tiles. Only works on the same plane as the caster."
 	school = "conjuration"
 	cost = 3
@@ -42,6 +43,10 @@
 	playsound(src_turf,'sound/magic/blink.ogg', 65, TRUE, -5)
 
 /obj/effect/proc_holder/spell/invoked/blink/cast(list/targets, mob/user = usr)
+	if(grab_blocks_cast(user, TRUE))
+		if(!QDELETED(user))
+			revert_cast(user)
+		return FALSE
 	var/turf/T = get_turf(targets[1])
 	var/turf/start = get_turf(user)
 	
