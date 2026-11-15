@@ -1,5 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - bugfix: "The Smollhill manor window curtain can now be operated from inside."
-  - rscadd: "Added a sickle to the Smollhill manor tool rack."

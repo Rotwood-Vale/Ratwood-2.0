@@ -517,3 +517,11 @@
       by default. Tread lightly or whatnot.
   - rscdel: Removed logic from `mind.dm` that prevented `player_card` from being moved
       to shapeshifted bodies.
+  mypingishuge:
+  - rscadd: Lucernes can now be twirled.
+  - bugfix: Weapon twirls remain visible in front of the character.
+  - rscadd: Warden storage now has two brooms on its tool rack.
+  - bugfix: Strong-intent sweeping skips clean tiles, including tiles already cleared
+      by another sweep.
+  - bugfix: The Smollhill manor window curtain can now be operated from inside.
+  - rscadd: Added a sickle to the Smollhill manor tool rack.

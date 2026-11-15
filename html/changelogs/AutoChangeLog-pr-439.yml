@@ -1,7 +1,0 @@
-author: "mypingishuge"
-delete-after: True
-changes:
-  - rscadd: "Lucernes can now be twirled."
-  - bugfix: "Weapon twirls remain visible in front of the character."
-  - rscadd: "Warden storage now has two brooms on its tool rack."
-  - bugfix: "Strong-intent sweeping skips clean tiles, including tiles already cleared by another sweep."
