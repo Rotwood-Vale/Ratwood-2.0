@@ -614,10 +614,10 @@
 	set_light_color("#6e55fc")
 	on = TRUE
 	set_light_on(TRUE)
-	update_light()
 	if(ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inv_hands()
+		M.update_inv_belt()
 	START_PROCESSING(SSobj, src)
 
 //Removes the seelie from the list of occupants
@@ -631,7 +631,6 @@
 	set_light_color(initial(light_color))
 	on = FALSE
 	set_light_on(FALSE)
-	update_light()
 	STOP_PROCESSING(SSobj, src)
 	if(ismob(src.loc))
 		var/mob/M = src.loc
