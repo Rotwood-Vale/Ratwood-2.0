@@ -29771,6 +29771,7 @@
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/natural/bundle/cloth/roll,
 /obj/item/rogueweapon/thresher,
+/obj/item/rogueweapon/sickle,
 /obj/item/rogueweapon/shovel,
 /obj/item/rogueweapon/pitchfork,
 /obj/item/rogueweapon/hoe,
