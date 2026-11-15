@@ -44,7 +44,7 @@
 	. = ..()
 	. += span_info("Sweeping time decreases with higher Cooking skill.")
 	. += span_info("STRONG intent will make you do a power-sweeping, targeting a 3x3 area!")
-	. += span_info("Right-click to twirl it one-handed.")
+	. += span_info("Right-click to twirl it one-handed. Safe at Expert Cooking or Polearms skill.")
 
 /obj/item/broom/proc/sweep_time(mob/living/user)
 	return max(40 - (user.get_skill_level(associated_skill) * 15), 5)
@@ -81,6 +81,21 @@
 		|| istype(A, /obj/item/natural/bundle) \
 		|| istype(A, /obj/item/ammo_casing) \
 		|| istype(A, /obj/item/rogueweapon/huntingknife/throwingknife)
+
+/// Only visit tiles with something this broom can wash, remove or gather.
+/obj/item/broom/proc/needs_sweep(turf/T, turf/center)
+	if(!T || T.density || istype(T, /turf/open/lava) || istype(T, /turf/open/water))
+		return FALSE
+	if(length(T.return_blood_DNA()))
+		return TRUE
+	for(var/atom/movable/A in T)
+		if(QDELETED(A))
+			continue
+		if(istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/decal/remains/human) || ((ismob(A) || (isobj(A) && !istype(A, /obj/effect))) && length(A.return_blood_DNA())))
+			return TRUE
+		if(!A.anchored && is_clutter(A) && (T != center || is_sweep_trash(A)))
+			return TRUE
+	return FALSE
 
 /obj/item/broom/attack_obj(obj/O, mob/living/user)
 	if(!istype(user.used_intent, /datum/intent/use))
@@ -119,28 +134,42 @@
 	sweeping = TRUE
 	var/list/tiles = list()
 	for(var/turf/T in range(1, center))
-		if(T == center || T.density || istype(T, /turf/open/lava) || istype(T, /turf/open/water))
+		if(T == center)
 			continue
-		tiles += T
-	// Sweep each surrounding tile in a random order.
+		if(needs_sweep(T, center))
+			tiles += T
+	var/visited_tile = FALSE
+	// Sweep dirty surrounding tiles in a random order; recheck after other cleaners act.
 	while(length(tiles))
 		if(!sweep_alive(user))
 			sweeping = FALSE
 			return
 		var/turf/T = pick_n_take(tiles)
+		if(!needs_sweep(T, center))
+			continue
 		if(!move_to_sweep(T, user))
 			sweeping = FALSE
 			return
+		visited_tile = TRUE
+		if(!needs_sweep(T, center))
+			continue
 		if(!do_after(user, sweep_move_time(user), target = T))
 			sweeping = FALSE
 			return
 		if(!sweep_alive(user))
 			sweeping = FALSE
 			return
-		perform_sweep(T, user, center)
+		if(needs_sweep(T, center))
+			perform_sweep(T, user, center)
 
+	if(!visited_tile && !needs_sweep(center, center))
+		sweeping = FALSE
+		return
 	// Return to the original tile before finishing the sweep.
 	if(!move_to_sweep(center, user))
+		sweeping = FALSE
+		return
+	if(!needs_sweep(center, center))
 		sweeping = FALSE
 		return
 	if(!do_after(user, sweep_move_time(user), target = center))
@@ -149,7 +178,8 @@
 	if(!sweep_alive(user))
 		sweeping = FALSE
 		return
-	perform_sweep(center, user, center)
+	if(needs_sweep(center, center))
+		perform_sweep(center, user, center)
 	sweeping = FALSE
 
 /obj/item/broom/proc/move_to_sweep(turf/target, mob/living/user)
@@ -261,6 +291,9 @@
 	if(!sweep_alive(user))
 		return FALSE
 	return ..()
+
+/obj/item/broom/twirl_user_skill(mob/living/user)
+	return max(..(), user.get_skill_level(/datum/skill/combat/polearms))
 
 /obj/item/broom/twirl_success(mob/living/user)
 	. = ..()
