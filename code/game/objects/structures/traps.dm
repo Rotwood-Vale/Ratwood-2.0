@@ -602,8 +602,8 @@
 	to_chat(L, span_danger("<B>Something skitters out from the ground!</B>"))
 	playsound(src, 'sound/items/beartrap.ogg', 200, TRUE)
 
-	for(var/dx in 0 to 1)
-		for(var/dy in 0 to 1)
+	for(var/dx in -1 to 1)
+		for(var/dy in -1 to 1)
 			var/turf/T = locate(center.x + dx, center.y + dy, center.z)
 			if(!T || isclosedturf(T))
 				continue
