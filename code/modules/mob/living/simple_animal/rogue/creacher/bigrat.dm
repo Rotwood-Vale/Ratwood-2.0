@@ -54,6 +54,8 @@
 	STACON = 6
 	STASTR = 9
 	STASPD = 10
+	can_buckle = TRUE
+	buckle_lying = 0
 	deaggroprob = 0
 	defprob = 40
 	attack_same = 1
@@ -92,10 +94,30 @@
 	update_icon()
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_type)
 
+/mob/living/simple_animal/hostile/retaliate/rogue/bigrat/tamed()
+	..()
+	if(can_buckle)
+		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 2), TEXT_SOUTH = list(0, 2), TEXT_EAST = list(-2, 2), TEXT_WEST = list(2, 2)))
+		D.set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
+		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
+		D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+		D.vehicle_move_delay = 6	//Slowdown the rous, its too fast
+		move_to_delay = 6
 
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/death(gibbed)
 	..()
+	unbuckle_all_mobs()
 	update_icon()
+
+/mob/living/simple_animal/hostile/retaliate/rogue/bigrat/post_buckle_mob(mob/living/M)
+	. = ..()
+	ai_controller?.reset_ai_status()
+
+/mob/living/simple_animal/hostile/retaliate/rogue/bigrat/post_unbuckle_mob(mob/living/M)
+	. = ..()
+	ai_controller?.reset_ai_status()
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/update_icon()
@@ -106,6 +128,13 @@
 		eye_lights.plane = 19
 		eye_lights.layer = 19
 		add_overlay(eye_lights)
+		if(has_buckled_mobs())
+			if(gender == FEMALE)
+				var/mutable_appearance/mounted = mutable_appearance(icon, "Frat", 4.3)
+				add_overlay(mounted)
+			else
+				var/mutable_appearance/mounted = mutable_appearance(icon, "rat", 4.3)
+				add_overlay(mounted)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/get_sound(input)
 	switch(input)
@@ -126,9 +155,15 @@
 
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/Life()
 	..()
-	if(pulledby)
+	if(pulledby && !tame)
 		Retaliate()
 		GiveTarget(pulledby)
+
+//Only Seelie or other tiny mobs can ride on a rous
+/mob/living/simple_animal/hostile/retaliate/rogue/bigrat/user_buckle_mob(mob/living/M, mob/user)
+	if(!HAS_TRAIT(M, TRAIT_TINY))
+		return
+	. = ..()
 
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat/simple_limb_hit(zone)
 	if(!zone)

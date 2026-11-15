@@ -241,6 +241,28 @@
 	name = "Lux Ripped"
 	desc = "The very essence of my lyfe was roughly torn from me."
 
+/datum/status_effect/buff/seelie/sad
+	id = "Seelie Curse"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/seelie/sad
+	effectedstats = list(STATKEY_LCK = -2)
+	duration = 60 SECONDS
+
+/atom/movable/screen/alert/status_effect/buff/seelie/sad
+	name = "Seelie Curse"
+	desc = "A nearby Seelie has spread their poor mood unto me."
+	icon_state = "stressb"
+
+/datum/status_effect/debuff/seelie_wing_curse
+	id = "seelie_wing_curse"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/seelie_wing_curse
+	effectedstats = list(STATKEY_LCK = -2)
+	duration = 4 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/seelie_wing_curse
+	name = "Curse of the Seelie"
+	desc = "I've been cursed for my horrific deed..."
+	icon_state = "stressb"
+
 /datum/status_effect/debuff/vamp_dreams
 	id = "sleepytime"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/vamp_dreams

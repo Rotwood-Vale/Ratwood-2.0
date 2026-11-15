@@ -6,7 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 
-	allowed_races = RACES_NO_CONSTRUCT
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, /datum/species/seelie)
 	allowed_sexes = list(MALE, FEMALE)
 	display_order = JDO_STEWARD
 	tutorial = "Coin, Coin, Coin! Oh beautiful coin: You're addicted to it, and you hold the position as the Grand Duke's personal treasurer of both coin and information. You know the power silver and gold has on a man's mortal soul, and you know just what lengths they'll go to in order to get even more. Keep your festering economy alive- for it is the only thing you can weigh any trust into anymore."
@@ -32,6 +32,7 @@
 	name = "Steward"
 	tutorial = "Coin, Coin, Coin! Oh beautiful coin: You're addicted to it, and you hold the position as the Grand Duke's personal treasurer of both coin and information. You know the power silver and gold has on a man's mortal soul, and you know just what lengths they'll go to in order to get even more. Keep your festering economy alive- for it is the only thing you can weigh any trust into anymore."
 	outfit = /datum/outfit/job/roguetown/steward/basic
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, /datum/species/seelie)
 
 	category_tags = list(CTAG_STEWARD)
 	subclass_stats = list(
@@ -83,6 +84,12 @@
 		// shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/red//actually dress under overshirt doesn't look too bad
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/appraise/secular)
+	if(isseelie(H) && H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/seelie_dust)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/summon_rat)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/strip)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/splash)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/roustame)
 	H.verbs |= /mob/living/carbon/human/proc/adjust_taxes
 
 GLOBAL_VAR_INIT(steward_tax_cooldown, -50000) // Antispam

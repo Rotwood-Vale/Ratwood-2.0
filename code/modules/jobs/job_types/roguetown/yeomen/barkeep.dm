@@ -6,7 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 
-	allowed_races = ACCEPTED_RACES
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE, /datum/species/seelie)
 
 	tutorial = "Adventurers and warriors alike have two exit plans; the early grave or even earlier retirement. As the proud owner of this fine establishment, you took the latter: The local tavern, inn, and bathhouse! You even have an assortment of staff to help you, and plenty of business from the famished townsfolk looking to eat, weary travelers looking to rest, and characters of dubious repute seeking their own sort of success. Your bladework has gotten a little rusty, and the church across the street gives you the odd evil eye for the extra 'delights' of the bathhouse--but, well...you can't win 'em all!"
 	social_rank = SOCIAL_RANK_YEOMAN
@@ -31,6 +31,7 @@
 	name = "Innkeeper"
 	tutorial = "Adventurers and warriors alike have two exit plans; the early grave or even earlier retirement. As the proud owner of this fine establishment, you took the latter: The local tavern, inn, and bathhouse! You even have an assortment of staff to help you, and plenty of business from the famished townsfolk looking to eat, weary travelers looking to rest, and characters of dubious repute seeking their own sort of success. Your bladework has gotten a little rusty, and the church across the street gives you the odd evil eye for the extra 'delights' of the bathhouse--but, well...you can't win 'em all!"
 	outfit = /datum/outfit/job/roguetown/barkeep/basic
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE, /datum/species/seelie)
 	category_tags = list(CTAG_INNKEEPER)
 	subclass_stats = list(
 		STATKEY_STR = 1,
@@ -86,3 +87,9 @@
 		/obj/item/bottle_kit,
 		/obj/item/mini_flagpole/innkeeper
 	)
+	if(isseelie(H) && H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/seelie_dust)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/summon_rat)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/strip)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/splash)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/roustame)

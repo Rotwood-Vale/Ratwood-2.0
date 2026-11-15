@@ -6,7 +6,7 @@
 	total_positions = 4
 	spawn_positions = 4
 
-	allowed_races = ACCEPTED_RACES
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE, /datum/species/seelie)
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT)
 
@@ -34,6 +34,7 @@
 	name = "Churchling"
 	tutorial = "Your family were zealots. They scolded you with a studded belt and prayed like sinners every waking hour of the day they weren't toiling in the fields. You escaped them by becoming a churchling--and a guaranteed education isn't so bad."
 	outfit = /datum/outfit/job/roguetown/churchling/basic
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE, /datum/species/seelie)
 	cmode_music = 'sound/music/combat_holy.ogg'
 	category_tags = list(CTAG_CHURCHLING)
 	traits_applied = list(TRAIT_HOMESTEAD_EXPERT)
@@ -67,6 +68,12 @@
 	belt = /obj/item/storage/belt/rogue/leather/rope
 	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes
 	beltl = /obj/item/storage/keyring/churchie
+	if(isseelie(H) && H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/seelie_dust)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/summon_rat)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/strip)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/splash)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/roustame)
 
 /datum/outfit/job/roguetown/churchling/basic/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
@@ -103,6 +110,7 @@
 
 /datum/advclass/churchling/neophyte
 	name = "Neophyte"
+	allowed_races = ACCEPTED_RACES
 	tutorial = "You are a Templar-in-training, a prospective holy warrior of the Church with much to learn, and much more to prove. You've been given some hand-me-downs from the Church's armory, and the barest blessings of your chosen Divine."
 	outfit = /datum/outfit/job/roguetown/churchling/neophyte
 	category_tags = list(CTAG_CHURCHLING)

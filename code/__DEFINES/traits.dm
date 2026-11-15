@@ -37,6 +37,7 @@
 #define TRAIT_MAGEARMOR "Magic Barrier"
 #define TRAIT_DECEIVING_MEEKNESS "Deceiving Meekness"
 #define TRAIT_CRITICAL_RESISTANCE "Critical Resistance"
+#define TRAIT_TINY "Tiny"
 #define TRAIT_JOURNEYS_END "Journey's End"
 #define TRAIT_BLOOD_RESISTANCE "Thick Blooded" //50% less bleeding
 #define TRAIT_CRITICAL_WEAKNESS "Critical Weakness"
@@ -721,7 +722,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_WATERLOVING = span_info("I feel at home in the water."),
 	TRAIT_SOFT_FOOTED = span_info("In the far-off land of Kazengun, it's considered impolite to walk noisily. My steps are soft and light."),
 	TRAIT_ANCESTOR_GUARDIAN = span_info("In Avar, we venerate our ancestors, and they ward us from danger. From time to time, they shall guide my hand in battle."),
-	TRAIT_LIGHT_SENSITIVITY = span_info("Living in the dim caverns of the underdark has caused my eyes to adjust. Though I can see well in the dark, bright lights are anathema to me!")
+	TRAIT_LIGHT_SENSITIVITY = span_info("Living in the dim caverns of the underdark has caused my eyes to adjust. Though I can see well in the dark, bright lights are anathema to me!"),
+	TRAIT_TINY = span_info("I am tiny in size and quite fragile!"),
 ))
 
 // trait accessor defines

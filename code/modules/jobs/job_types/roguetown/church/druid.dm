@@ -8,7 +8,7 @@
 	spawn_positions = 4
 
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = ACCEPTED_RACES
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE, /datum/species/seelie)
 	allowed_patrons = ALL_DIVINE_PATRONS //gets set to dendor on the outfit anyways lol
 	outfit = /datum/outfit/job/roguetown/druid
 	social_rank = SOCIAL_RANK_YEOMAN
@@ -36,6 +36,7 @@
 	Your patron claims dominion over all nature--promising bounties to those who act in his name to bring balance to His domain. \
 	The forest is the most comfortable place for you, toiling alongside soilsons and soilbrides...although sometimes what lies beyond the gates fills your soul with a feral yearning."
 	outfit = /datum/outfit/job/roguetown/druid/basic
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE, /datum/species/seelie)
 	category_tags = list(CTAG_DRUID)
 	subclass_languages = list(/datum/language/beast)
 	subclass_stats = list(
@@ -91,6 +92,12 @@
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank_up_to(/datum/skill/magic/holy, 5, TRUE)
 		H.adjust_skillrank_up_to(/datum/skill/magic/druidic, 5, TRUE)
+	if(isseelie(H) && H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/seelie_dust)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/summon_rat)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/strip)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/splash)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/roustame)
 	H.ambushable = FALSE
 
 /datum/job/roguetown/druid/after_spawn(mob/living/L, mob/M, latejoin = TRUE)

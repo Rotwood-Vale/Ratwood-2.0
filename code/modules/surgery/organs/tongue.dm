@@ -29,7 +29,8 @@
 		/datum/language/aavnic,
 		/datum/language/abyssal,
 		/datum/language/merar,
-		/datum/language/undead
+		/datum/language/undead,
+		/datum/language/faexin,
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)

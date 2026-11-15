@@ -48,6 +48,12 @@
 	H.faction += list("orcs", "tribe")
 	if(!H.has_language(/datum/language/draconic))
 		H.grant_language(/datum/language/draconic)
+	if(isseelie(H) && H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/seelie_dust)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/summon_rat)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/strip)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/splash)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/roustame)
 	if(SSmapping.current_map.map_name == "Build Your Own Settlement")
 		head = /obj/item/clothing/head/roguetown/helmet/leather/volfhelm
 		cloak = /obj/item/clothing/cloak/tribal

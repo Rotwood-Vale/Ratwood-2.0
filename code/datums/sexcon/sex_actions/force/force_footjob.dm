@@ -7,6 +7,16 @@
 	user_sex_part = SEX_PART_COCK
 	user_needs_functional = TRUE
 
+/datum/sex_action/force_footjob/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!(. = ..()))
+		return FALSE
+	return !HAS_TRAIT(user, TRAIT_TINY)
+
+/datum/sex_action/force_footjob/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!(. = ..()))
+		return FALSE
+	return !HAS_TRAIT(user, TRAIT_TINY)
+
 /datum/sex_action/force_footjob/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] grabs [target]'s feet and clamps them around [user.p_their()] cock!"))
 

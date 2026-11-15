@@ -161,6 +161,7 @@ GLOBAL_LIST_INIT(peasant_positions, list(
 	"Slave",
 	"Prisoner",
 	"Beggar",
+	"Town Seelie",
 	"Refugee",
 	"Pilgrim",
 ))

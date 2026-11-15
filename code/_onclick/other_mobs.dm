@@ -178,6 +178,11 @@
 	if(!mmb_intent)
 		if(!A.Adjacent(src))
 			return
+		if(isseelie(A) && !(isseelie(src)))
+			var/mob/living/carbon/human/target = A
+			if(target.pulledby == src)
+				target.dna.species.on_wing_removal(A, src)
+			return
 		A.MiddleClick(src, params)
 	else
 		mmb_intent.on_mmb(A, src, params)

@@ -240,6 +240,8 @@
 		if(perception_modifier < 10)
 			perception_modifier = 10
 		BB.damage *= damfactor * (perception_modifier / 10)
+		if(HAS_TRAIT(user, TRAIT_TINY))
+			BB.damage = (BB.damage * 0.3)
 	return ..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/update_icon()

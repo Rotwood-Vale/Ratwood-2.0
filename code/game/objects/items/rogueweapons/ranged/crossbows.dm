@@ -172,6 +172,8 @@
 			else if(perception_modifier < 10)
 				perception_modifier = 10
 			BB.damage *= (perception_modifier / 10)
+		if(HAS_TRAIT(user, TRAIT_TINY))
+			BB.damage = (BB.damage * 0.3)
 
 	cocked = FALSE
 	..()

@@ -19,4 +19,5 @@
 		"Guildmaster",\
 		"Court Magician",\
 		"Keeper",\
+		"Town Seelie",\
 	)

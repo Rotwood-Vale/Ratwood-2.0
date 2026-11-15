@@ -6,7 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 
-	allowed_races = ACCEPTED_RACES
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE, /datum/species/seelie)
 
 	tutorial = "Servitude unto death; that is your motto. You are the manor's major-domo, commanding over the house servants and seeing to the administrative affairs, day to day of the estate. This role has style options for chief butlers and head maids."
 	outfit = /datum/outfit/job/roguetown/seneschal
@@ -25,6 +25,7 @@
 	spells = list(/obj/effect/proc_holder/spell/invoked/takeapprentice)
 
 /datum/advclass/seneschal
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE, /datum/species/seelie)
 	traits_applied = list(TRAIT_CICERONE, TRAIT_KEENEARS, TRAIT_SLEUTH, TRAIT_HOMESTEAD_EXPERT, TRAIT_SEWING_EXPERT, TRAIT_ROYALSERVANT, TRAIT_ROYAL_SUBSIDY) // They have Expert Sewing
 	category_tags = list(CTAG_SENESCHAL)
 
@@ -53,6 +54,15 @@
 
 /datum/outfit/job/roguetown/seneschal
 	has_loadout = TRUE
+
+/datum/outfit/job/roguetown/seneschal/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(isseelie(H) && H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/seelie_dust)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/summon_rat)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/strip)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/splash)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/roustame)
 
 //This applies to all Seneschal subclasses
 /datum/outfit/job/roguetown/seneschal/choose_loadout(mob/living/carbon/human/H)

@@ -246,6 +246,8 @@
 	W.STASTR = 20
 	W.STACON = 20
 	W.STAWIL = 20
+	if(isseelie(W.stored_mob))
+		W.change_stat(STATKEY_SPD, -3)
 
 	W.AddSpell(new /obj/effect/proc_holder/spell/self/howl)
 	W.AddSpell(new /obj/effect/proc_holder/spell/self/claws)

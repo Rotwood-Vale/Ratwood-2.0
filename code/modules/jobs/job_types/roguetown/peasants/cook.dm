@@ -6,7 +6,7 @@
 	total_positions = 1
 	spawn_positions = 1
 
-	allowed_races = ACCEPTED_RACES
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE, /datum/species/seelie)
 	tutorial = "There are many mouths to feed in town, and most look to you for it. You work under the care of the innkeeper and craft such culinary delights that even the crown stops by from time to time. All the while, you try to get the rest of the staff up to speed as well--before you get too many burn marks on your body from slaving over your hot hearths."
 
 	outfit = /datum/outfit/job/roguetown/cook
@@ -31,6 +31,7 @@
 	name = "Cook"
 	tutorial = "There are many mouths to feed in town, and most look to you for it. You work under the care of the innkeeper and craft such culinary delights that even the crown stops by from time to time. All the while, you try to get the rest of the staff up to speed as well--before you get too many burn marks on your body from slaving over your hot hearths."
 	outfit = /datum/outfit/job/roguetown/cook/basic
+	allowed_races = list(RACES_SHUNNED, RACES_TOLERATED, RACES_RESPECTED, RACES_CONSTRUCT, RACES_OOZE, /datum/species/seelie)
 	category_tags = list(CTAG_COOK)
 	subclass_stats = list(
 		STATKEY_CON = 2,
@@ -76,6 +77,12 @@
 		/obj/item/recipe_book/survival,
 		/obj/item/mini_flagpole/innkeeper,
 	)
+	if(isseelie(H) && H.mind)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/seelie_dust)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/summon_rat)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/strip)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/splash)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/roustame)
 
 /datum/outfit/job/roguetown/cook/choose_loadout(mob/living/carbon/human/H)
 	. = ..()

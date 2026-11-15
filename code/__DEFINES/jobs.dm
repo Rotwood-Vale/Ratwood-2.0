@@ -167,6 +167,7 @@
 #define NITEMASTER	(1<<9)
 #define WENCH		(1<<10)
 #define BEGGAR		(1<<11)
+#define SEELIE		(1<<12)
 #define PILGRIM		(1<<13)
 #define VILLAGER	(1<<14)
 #define PRISONERR	(1<<15)
@@ -327,6 +328,7 @@
 #define JDO_GNOLL 30.5
 #define JDO_ASSASSIN 30.6
 #define JDO_TRADER 30.7
+#define JDO_SEELIE 30.8
 
 #define JDO_MERCENARY 31
 #define JDO_GRENZELHOFT 31.1
@@ -407,7 +409,8 @@
 	/datum/job/roguetown/gapprentice,\
 	/datum/job/roguetown/prisonerb,\
 	/datum/job/roguetown/hostage,\
-	/datum/job/roguetown/prisonerr
+	/datum/job/roguetown/prisonerr,\
+	/datum/job/roguetown/seelie
 
 #define YEOMEN_ROLES \
 	/datum/job/roguetown/keeper,\

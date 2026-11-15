@@ -3,6 +3,16 @@
 	user_sex_part = SEX_PART_JAWS
 	target_sex_part = SEX_PART_COCK|SEX_PART_CUNT
 
+/datum/sex_action/crotch_nuzzle/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!(. = ..()))
+		return FALSE
+	return !HAS_TRAIT(target, TRAIT_TINY)
+
+/datum/sex_action/crotch_nuzzle/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!(. = ..()))
+		return FALSE
+	return !HAS_TRAIT(target, TRAIT_TINY)
+
 /datum/sex_action/crotch_nuzzle/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	user.visible_message(span_warning("[user] moves [user.p_their()] head against [target]'s crotch..."))
 
