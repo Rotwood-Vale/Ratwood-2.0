@@ -687,7 +687,8 @@ GLOBAL_LIST_EMPTY(zizo_bestow_areas)
 	if(choice in GLOB.zizo_bestowed)
 		return
 	GLOB.zizo_bestowed += choice
-	zizo_calamity(choice)
+	if(gate_count > 0)
+		zizo_calamity(choice)
 	to_chat(user, span_boldnotice("The [choice] aspect has been unleashed upon Grimoria! Its rites may now be researched."))
 	user.Jitter(4)
 	gate_count++
