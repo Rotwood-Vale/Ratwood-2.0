@@ -517,6 +517,10 @@
       by default. Tread lightly or whatnot.
   - rscdel: Removed logic from `mind.dm` that prevented `player_card` from being moved
       to shapeshifted bodies.
+  _Rarity:
+  - rscadd: Defiled Keyholders can now enter the bandit hideout.
+  - code_imp: Fix Dragonhoard logic to avoid runtimes from non-bandits attempting
+      to access it
   mypingishuge:
   - rscadd: Lucernes can now be twirled.
   - bugfix: Weapon twirls remain visible in front of the character.
