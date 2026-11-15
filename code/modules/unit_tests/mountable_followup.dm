@@ -18,6 +18,18 @@
 	TEST_ASSERT(mount.buckle_mob(rider, TRUE), "Could not mount test passenger")
 	var/datum/component/riding/human/riding = mount.GetComponent(/datum/component/riding)
 
+	TEST_ASSERT(/mob/living/carbon/human/proc/dismount_rider in mount.verbs, "Mountable did not grant the dismount verb")
+	mount.resist()
+	TEST_ASSERT_EQUAL(rider.buckled, mount, "Ordinary Resist ejected the rider")
+	TEST_ASSERT(!rider.IsParalyzed(), "Ordinary Resist paralyzed the rider")
+	mount.next_move = 0
+	mount.dismount_rider()
+	TEST_ASSERT_NULL(rider.buckled, "Dismount Rider did not release the rider")
+	rider.SetParalyzed(0)
+	rider.set_resting(FALSE, TRUE)
+	TEST_ASSERT(mount.buckle_mob(rider, TRUE), "Could not remount after deliberate dismount")
+	riding = mount.GetComponent(/datum/component/riding)
+
 	// Grass contact is suppressed, but tall plants still brush the passenger.
 	var/obj/structure/flora/roguegrass/grass = allocate(/obj/structure/flora/roguegrass, start)
 	var/obj/structure/flora/roguegrass/bush/bush = allocate(/obj/structure/flora/roguegrass/bush, start)

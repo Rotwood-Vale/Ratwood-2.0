@@ -147,10 +147,14 @@
 	var/datum/component/riding/human/riding = GetComponent(/datum/component/riding)
 	if(riding)
 		riding.steering_generation++
+	var/static/list/mount_verbs = list(
+		/mob/living/carbon/human/proc/toggle_rider_steering,
+		/mob/living/carbon/human/proc/dismount_rider,
+	)
 	if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE))
-		verbs |= /mob/living/carbon/human/proc/toggle_rider_steering
+		verbs |= mount_verbs
 	else
-		verbs -= /mob/living/carbon/human/proc/toggle_rider_steering
+		verbs -= mount_verbs
 
 /mob/living/carbon/human/proc/toggle_rider_steering()
 	set name = "Allow Rider Steering"
@@ -164,6 +168,17 @@
 		riding.steering_generation++
 	for(var/mob/living/rider in buckled_mobs)
 		to_chat(rider, span_notice("[src] [allow_rider_steering ? "allows you to steer again" : "takes control of their own movement"]."))
+
+/mob/living/carbon/human/proc/dismount_rider()
+	set name = "Dismount Rider"
+	set category = "IC"
+	if(!HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) || !has_buckled_mobs() || !can_resist() || surrendering || HAS_TRAIT(src, TRAIT_PARALYSIS))
+		return
+	var/datum/component/riding/human/riding = GetComponent(/datum/component/riding)
+	if(!riding)
+		return
+	changeNext_move(CLICK_CD_RESIST)
+	riding.force_dismount(buckled_mobs[1])
 
 /// Called only after a disabling effect has actually been applied.
 /mob/living/carbon/human/proc/dismount_on_forced_fall()
