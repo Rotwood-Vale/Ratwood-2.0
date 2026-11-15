@@ -511,6 +511,17 @@
 	valid_blades = list(/obj/item/rogueweapon/greatsword/nodachi)
 	experimental_onback = TRUE
 
+/obj/item/rogueweapon/scabbard/gwstrap/weapon_check(mob/living/user, obj/item/A)
+	. = ..()
+	if(.)
+		if(sheathed)
+			return FALSE
+		if(istype(A, /obj/item/rogueweapon))
+			if(A.w_class >= WEIGHT_CLASS_BULKY)
+				return TRUE
+		if(!istype(A, /obj/item/clothing/neck/roguetown/psicross)) //snowflake that bypasses the valid_blades that i made. i will commit seppuku eventually
+			return FALSE
+
 /obj/item/rogueweapon/scabbard/gwstrap/nodachi/update_icon(mob/living/user)
 	if(sheathed)
 		icon = initial(icon)
@@ -524,34 +535,6 @@
 		worn_x_dimension = initial(worn_x_dimension)
 		worn_y_dimension = initial(worn_y_dimension)
 		experimental_onback = TRUE
-	if(user)
-		user.update_inv_back()
-
-/obj/item/rogueweapon/scabbard/gwstrap/weapon_check(mob/living/user, obj/item/A)
-	. = ..()
-	if(.)
-		if(sheathed)
-			return FALSE
-		if(istype(A, /obj/item/rogueweapon))
-			if(A.w_class >= WEIGHT_CLASS_BULKY)
-				return TRUE
-		if(!istype(A, /obj/item/clothing/neck/roguetown/psicross)) //snowflake that bypasses the valid_blades that i made. i will commit seppuku eventually
-			return FALSE
-
-/obj/item/rogueweapon/scabbard/gwstrap/update_icon(mob/living/user)
-	if(sheathed)
-		worn_x_dimension = 64
-		worn_y_dimension = 64
-		icon = sheathed.icon
-		icon_state = sheathed.icon_state
-		experimental_onback = TRUE
-	else
-		icon = initial(icon)
-		icon_state = initial(icon_state)
-		worn_x_dimension = initial(worn_x_dimension)
-		worn_y_dimension = initial(worn_y_dimension)
-		experimental_onback = FALSE
-
 	if(user)
 		user.update_inv_back()
 
