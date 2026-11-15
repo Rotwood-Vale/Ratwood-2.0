@@ -204,7 +204,7 @@
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/warden_machete
 	backpack_contents = list(/obj/item/roguekey/baron = 1, /obj/item/storage/keyring/baronretainer = 1, /obj/item/flashlight/flare/torch/lantern = 1, /obj/item/rogueweapon/scabbard/sheath = 1)
 	if(H.mind)
-		var/helmets = list("Warden Bearskull", "Warden Goatskull", "Warden Wolfskull", "Studded Hood and Hound Mask")
+		var/helmets = list("Warden Bearskull", "Warden Goatskull", "Warden Wolfskull", "Warden Rouskull", "Studded Hood and Hound Mask")
 		var/helmet_choice = input(H, "Choose your Outfit", "EQUIP THINESELF") as anything in helmets
 		switch(helmet_choice)
 			if("Warden Bearskull")
@@ -217,6 +217,10 @@
 				cloak = /obj/item/clothing/cloak/wardencloak
 			if("Warden Wolfskull")
 				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf
+				mask = /obj/item/clothing/head/roguetown/roguehood/warden
+				cloak = /obj/item/clothing/cloak/wardencloak
+			if("Warden Rouskull")
+				head = /obj/item/clothing/head/roguetown/helmet/sallet/warden/rat
 				mask = /obj/item/clothing/head/roguetown/roguehood/warden
 				cloak = /obj/item/clothing/cloak/wardencloak
 			if("Studded Hood and Hound Mask")
