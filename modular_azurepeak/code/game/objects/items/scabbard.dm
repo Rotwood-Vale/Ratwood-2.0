@@ -529,7 +529,8 @@
 
 /obj/item/rogueweapon/scabbard/gwstrap/weapon_check(mob/living/user, obj/item/A)
 	. = ..()
-	if(.)
+	if(!.)
+		return
 		if(sheathed)
 			return FALSE
 		if(istype(A, /obj/item/rogueweapon))
