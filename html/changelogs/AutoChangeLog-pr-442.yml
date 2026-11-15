@@ -1,0 +1,5 @@
+author: "_Rarity"
+delete-after: True
+changes:
+  - rscadd: "Defiled Keyholders can now enter the bandit hideout."
+  - code_imp: "Fix Dragonhoard logic to avoid runtimes from non-bandits attempting to access it"
