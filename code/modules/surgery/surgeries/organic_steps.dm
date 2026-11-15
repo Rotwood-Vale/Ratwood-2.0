@@ -131,8 +131,6 @@
 		for(var/datum/wound/bleeder in bodypart.wounds)
 			bleeder.cauterize_wound()
 		bodypart.receive_damage(burn = 30 - skill_level * 5) //down to 0 at legendary medicine
-	if (target.has_status_effect(/datum/status_effect/buff/ozium))
-		target.emote ("groan")
 	if (!target.has_status_effect(/datum/status_effect/buff/ozium))
 		target.emote("scream")
 	return TRUE
@@ -144,8 +142,6 @@
 	var/obj/item/bodypart/bodypart = target.get_bodypart(check_zone(target_zone))
 	if(bodypart)
 		bodypart.receive_damage(burn = 50)
-	if (target.has_status_effect(/datum/status_effect/buff/ozium))
-		target.emote ("groan")
 	if (!target.has_status_effect(/datum/status_effect/buff/ozium))
 		target.emote("scream")
 	return TRUE
