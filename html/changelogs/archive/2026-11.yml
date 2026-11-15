@@ -306,3 +306,7 @@
   - code_imp: Miscellanous lore changes in preparation for new lore primer & timeline.
   wikimody:
   - qol: Lux revives now work on excomunicated players, wreches rejoice
+2026-11-15:
+  eirenxiv:
+  - bugfix: fixed fencing shirt/jacket layering, detail and sleeve issue on female
+      sprites
