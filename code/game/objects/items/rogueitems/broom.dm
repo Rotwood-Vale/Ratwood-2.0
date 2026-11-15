@@ -42,14 +42,14 @@
 
 /obj/item/broom/get_mechanics_examine(mob/user)
 	. = ..()
-	. += span_info("Sweeping time decreases with higher Cooking skill.")
+	. += span_info("Sweeping time decreases with your higher Cooking or Polearms skill.")
 	. += span_info("STRONG intent will make you do a power-sweeping, targeting a 3x3 area!")
 	. += span_info("Right-click to twirl it one-handed. Safe at Expert Cooking or Polearms skill.")
 
 /obj/item/broom/proc/sweep_time(mob/living/user)
-	return max(40 - (user.get_skill_level(associated_skill) * 15), 5)
+	return max(40 - (max(user.get_skill_level(associated_skill), user.get_skill_level(/datum/skill/combat/polearms)) * 15), 5)
 /obj/item/broom/proc/sweep_move_time(mob/living/user)
-	return max(40 - (user.get_skill_level(associated_skill) * 15), 5)
+	return max(40 - (max(user.get_skill_level(associated_skill), user.get_skill_level(/datum/skill/combat/polearms)) * 15), 5)
 
 /obj/item/broom/proc/sweep_alive(mob/living/user)
 	return !QDELETED(src) && !QDELETED(user) && !user.incapacitated() && user.is_holding(src)
