@@ -675,7 +675,7 @@
 			// Flee before trying to pick up a weapon.
 			if(flee_in_pain && target && (target.stat == CONSCIOUS))
 				var/paine = get_complex_pain()
-				if(paine >= ((STAWIL * 10)*0.9))
+				if(paine >= (get_pain_threshold()*0.9))
 					NPC_THINK("Ouch! Entering flee mode!")
 					mode = NPC_AI_FLEE
 					m_intent = MOVE_INTENT_RUN

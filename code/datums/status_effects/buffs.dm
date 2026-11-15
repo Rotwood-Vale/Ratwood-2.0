@@ -106,10 +106,9 @@
 			for(var/X in C.bodyparts)
 				var/obj/item/bodypart/BP = X
 				BP.max_damage *= 10
-				BP.brute_dam *= 10
-				BP.burn_dam *= 10
-		owner.toxloss *= 10
-		owner.oxyloss *= 10
+				BP.set_damage(BP.brute_dam * 10, BP.burn_dam * 10)
+		owner.setToxLoss(owner.getToxLoss() * 10, FALSE, TRUE)
+		owner.setOxyLoss(owner.getOxyLoss() * 10, FALSE, TRUE)
 		owner.cloneloss *= 10
 		owner.staminaloss *= 10
 		owner.updatehealth()
@@ -189,11 +188,10 @@
 		var/mob/living/carbon/C = owner
 		for(var/X in C.bodyparts)
 			var/obj/item/bodypart/BP = X
-			BP.brute_dam *= 0.1
-			BP.burn_dam *= 0.1
+			BP.set_damage(BP.brute_dam * 0.1, BP.burn_dam * 0.1)
 			BP.max_damage /= 10
-	owner.toxloss *= 0.1
-	owner.oxyloss *= 0.1
+	owner.setToxLoss(owner.getToxLoss() * 0.1, FALSE, TRUE)
+	owner.setOxyLoss(owner.getOxyLoss() * 0.1, FALSE, TRUE)
 	owner.cloneloss *= 0.1
 	owner.staminaloss *= 0.1
 	owner.updatehealth()

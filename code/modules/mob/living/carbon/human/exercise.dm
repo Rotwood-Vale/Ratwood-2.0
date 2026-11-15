@@ -94,7 +94,7 @@ Exercise Verbs
 			stamina_loss += 2
 	if(backr || backl)
 		stamina_loss += 3
-	var/painpercent = get_complex_pain() / pain_threshold
+	var/painpercent = get_complex_pain() / get_pain_threshold()
 	if(painpercent > 0.5)
 		stamina_loss += 8
 	if(on_knees)
