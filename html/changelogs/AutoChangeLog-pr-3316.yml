@@ -1,0 +1,5 @@
+author: "MrShibaa"
+delete-after: True
+changes:
+  - balance: "allows court chaplain to be a psydonite."
+  - balance: "gives court chaplain psydonite defy miracle."
